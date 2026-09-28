@@ -78,6 +78,20 @@ Archive policy:
 - Use virtual buckets before physical folder moves when the active tree is large or heavily cross-referenced.
 - Treat WIP-only folders as maintenance friction: revive, merge, or archive them the next time they are touched.
 
+## 2026-09-27 — CSS-token and Spw-interpreter plan pass
+
+Seven folders, each with its reason on the first line of its `index.spw` where one exists:
+
+- [palette-semantics-improvements](./palette-semantics-improvements/PLAN.md): landed 2026-05-29; the plan is its own receipt.
+- [palette-theme-composability-instrumentability](./palette-theme-composability-instrumentability/PLAN.md): landed; the contract lives in `site-semantics.spw#palette_theme_composability_contract`, the flavor-to-motif map in `kernel/shared.js`.
+- [site-color-tuning](./site-color-tuning/PLAN.md): only its plan commit landed; `color-motion` owns color.
+- [minimal-brace-disclosure](./minimal-brace-disclosure/PLAN.md): landed; `navigation-header-disclosure` owns the hamburger contract.
+- [css-scroll-dark-regression](./css-scroll-dark-regression/FIX.md): closed; `css-contracts.mts` guards the selector-comma seam.
+- [theme-text-contrast](./theme-text-contrast/PLAN.md): landed 2026-09-20; `probe.mjs` still runs from here, cited by `settings-theme-packs`.
+- [theming-icon-packs-public-versioning](./theming-icon-packs-public-versioning/PLAN.md): split to `settings-theme-packs`, `shell-logo-branding`, `pwa-experience`, `site-source-layout` L5, and one `settings-theme-wiring` row.
+
+Citations retargeted: root index, `site-source-layout/wip.spw`, `css-cascade-stratification/PLAN.md`, `.spw/caches/wonder-chrome-retune-2026-09.spw`, `.spw/skills/ui-containment.spw`, `about/plans/index.html`.
+
 ## 2026-09-20 — Input handoff
 
 Archived [input-cauldron](./input-cauldron/PLAN.md): implementation and tests

@@ -32,6 +32,12 @@ intent: .{
  regeneration_rule = `Do not regenerate these decisions. Re-read the affected file and edit its disposition deliberately.`
 }[reg=facet]
 
+^"archive_sweep_2026_09_27"{
+ census = `Seven folders moved under archive/ after the CSS-token and Spw-interpreter plan pass: two landed palette plans, the never-implemented site-color-tuning, the landed minimal-brace-disclosure, the closed css-scroll-dark-regression fix, the landed theme-text-contrast receipt (probe.mjs travels with it), and theming-icon-packs-public-versioning split to its four owners. Live PLAN.md 163 -> 156.`
+ rule = `Same as 2026-09-17: citations retargeted in the same patch; moved index.spw carry operation archive, fixity cold; reasons per folder in archive/README.md.`
+ ledger = ~"./archive/README.md"
+}[reg=facet]
+
 ^"archive_sweep_2026_09_17"{
  census = `57 folders moved under archive/: the 30 citation-safe merge dispositions and all 11 completed references from 2026-07-12, plus 16 landed slices with evidence in their own Status or in the tree (zero manual heads remain; resume-record and wrap-job features present)`
  rule = `Physical move only with citations retargeted in the same patch; moved index.spw carry operation archive, fixity cold; hook-region-anatomy stays in place, cited by CSS and the expression harvest.`
@@ -199,21 +205,18 @@ reading_order: .{
 @plan_typescript_integration: ~"./typescript-integration/index.spw"
 ^"media_image_sensory"{
  label = "media image sensory"
- count = 5
+ count = 2
  members = #[
   `image-metaphysics-aesthetic-pass`,
-  `palette-semantics-improvements`,
-  `palette-theme-composability-instrumentability`,
-  `site-color-tuning`,
   `style-image-cohesion`,
  ][reg=set]
 }[reg=facet]
 
 @plan_image_metaphysics_aesthetic_pass: ~"./image-metaphysics-aesthetic-pass/index.spw"
 @plan_image_visit_metaphysics: ~"./archive/image-visit-metaphysics/index.spw"
-@plan_palette_semantics_improvements: ~"./palette-semantics-improvements/index.spw"
-@plan_palette_theme_composability_instrumentability: ~"./palette-theme-composability-instrumentability/index.spw"
-@plan_site_color_tuning: ~"./site-color-tuning/index.spw"
+@plan_palette_semantics_improvements: ~"./archive/palette-semantics-improvements/index.spw"
+@plan_palette_theme_composability_instrumentability: ~"./archive/palette-theme-composability-instrumentability/index.spw"
+@plan_site_color_tuning: ~"./archive/site-color-tuning/index.spw"
 @plan_style_image_cohesion: ~"./style-image-cohesion/index.spw"
 @plan_unsorted_image_rollout: ~"./archive/unsorted-image-rollout/index.spw"
 ^"public_route_proof_genre"{
@@ -249,11 +252,10 @@ reading_order: .{
 @plan_webpage_trope_vocabulary: ~"./webpage-trope-vocabulary/index.spw"
 ^"fix_queue"{
  label = "fix queue"
- count = 6
+ count = 5
  members = #[
   `attention-shell-contrast`,
   `chrome-copy-collision`,
-  `css-scroll-dark-regression`,
   `floating-chrome-stack`,
   `gesture-aria-hygiene`,
   `settings-theme-wiring`,
@@ -269,7 +271,7 @@ reading_order: .{
 @plan_theme_palette_marketability: ~"./archive/theme-palette-marketability/index.spw"
 ^"active_backlog"{
  label = "active backlog"
- count = 73
+ count = 71
  members = #[
   `algorithm-scale-statistics-rpg-bridges`,
   `audience-onboarding-copy`,
@@ -299,7 +301,6 @@ reading_order: .{
   `media-publishing`,
   `microinteraction-motion-lifecycle`,
   `mindful-collection-controls`,
-  `minimal-brace-disclosure`,
   `mobile-runtime-foundation`,
   `model-collaborator-lore-surfaces`,
   `narration-markup-cold-reads`,
@@ -338,7 +339,6 @@ reading_order: .{
   `svg-aesthetic-depth-pass`,
   `svg-surface-integration`,
   `template-shell-refactor`,
-  `theming-icon-packs-public-versioning`,
   `top-level-route-seo`,
   `topic-photo-svg-pass`,
   `typography-reading-groove`,
@@ -397,7 +397,7 @@ reading_order: .{
 @plan_media_feature_brief: ~"./media-feature-brief/index.spw"
 @plan_media_publishing: ~"./media-publishing/index.spw"
 @plan_mindful_collection_controls: ~"./mindful-collection-controls/index.spw"
-@plan_minimal_brace_disclosure: ~"./minimal-brace-disclosure/index.spw"
+@plan_minimal_brace_disclosure: ~"./archive/minimal-brace-disclosure/index.spw"
 @plan_mobile_brace_path_polish: ~"./archive/mobile-brace-path-polish/index.spw"
 @plan_mobile_runtime_foundation: ~"./mobile-runtime-foundation/index.spw"
 @plan_model_collaborator_lore_surfaces: ~"./model-collaborator-lore-surfaces/index.spw"
@@ -450,7 +450,7 @@ reading_order: .{
 @plan_symphonic_loading_layered_editions: ~"./archive/symphonic-loading-layered-editions/index.spw"
 @plan_team_orientation: ~"./archive/team-orientation/index.spw"
 @plan_template_shell_refactor: ~"./template-shell-refactor/index.spw"
-@plan_theming_icon_packs_public_versioning: ~"./theming-icon-packs-public-versioning/index.spw"
+@plan_theming_icon_packs_public_versioning: ~"./archive/theming-icon-packs-public-versioning/index.spw"
 @plan_top_level_route_seo: ~"./top-level-route-seo/index.spw"
 @plan_topic_photo_svg_pass: ~"./topic-photo-svg-pass/index.spw"
 @plan_typography_reading_groove: ~"./typography-reading-groove/index.spw"
@@ -474,8 +474,15 @@ reading_order: .{
 @plan_state_satchel_card_gesture_fixes: ~"./archive/state-satchel-card-gesture-fixes/index.spw"
 ^"archive"{
  label = "archive"
- count = 69
+ count = 76
  members = #[
+  `palette-semantics-improvements`,
+  `palette-theme-composability-instrumentability`,
+  `site-color-tuning`,
+  `minimal-brace-disclosure`,
+  `css-scroll-dark-regression`,
+  `theme-text-contrast`,
+  `theming-icon-packs-public-versioning`,
   `attention-cue-gestures`,
   `author-craft-ramps`,
   `author-rpg-notebooks`,
@@ -560,7 +567,7 @@ reading_order: .{
 }[reg=facet]
 ^"since_2026_07_12"{
  label = "since 2026-07-12"
- count = 28
+ count = 27
  note = `Live folders the 2026-07-12 root index never named. Not automatic backlog. Author index.spw on next touch; do not batch-generate. Open-first without index.spw: history-reflow, dimensional-expression-navigation. Graduated on touch once a hand-authored index declared a bucket: core-css-spend-cut + landing-page-hierarchy-2026-08-21 -> css_layout_interaction; microinteraction-motion-lifecycle + region-attenuation-coverage -> active_backlog. production-season-rhythm and visual-capture-ecology carry an index but no declared bucket yet. 2026-09-17: six folders this index never named join here (component-variant-alignment, interaction-cache, mobile-chrome-alignment, module-contract-overhaul, release-day-resonance-2026-09-13, settings-ornament-resonance); sixteen landed slices left for archive/ (template migrations, catalog-demo-splits, production-season-rhythm, public-entrance-runtime-payload, semantic-classname-layers, resume-record, wrap-job-utility) with team-orientation, plan-wip-index-conventions, and runtime-load-instrumentation. 2026-09-27: eleven folders opened 2026-09-19 through 2026-09-26 join here (cauldron-lens-composition, design-surfaces-discoverability, editorial-readability, lens-seat-and-secondary-materials, portable-css, quest-workbench-feedback, release-day-discovery-2026-09-26, theme-text-contrast, topic-building-blocks, topical-learning-links, wonder-kin-routes); only topic-building-blocks carries an index.spw. The two dated release-day folders are archive candidates once their receipts are written into an owner.`
  members = #[
   `alignment-content-fit`,
@@ -587,7 +594,6 @@ reading_order: .{
   `portable-css`,
   `quest-workbench-feedback`,
   `release-day-discovery-2026-09-26`,
-  `theme-text-contrast`,
   `topic-building-blocks`,
   `topical-learning-links`,
   `wonder-kin-routes`,

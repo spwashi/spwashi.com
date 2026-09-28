@@ -38,7 +38,7 @@ Record each page as same / better / worse here; worse rows become intent or owne
 | pour | file | owners to keep coherent |
 |---|---|---|
 | substrate / flow / governors | `reset/base.css`, `modes/capture.css` | `vertical-rhythm-container-audit`, `floating-chrome-stack`, `css-instruction#containing_block`, `stylesheet-ecology#capture_rule`, `color-motion` |
-| registry / scales / aliases | `tokens/core.css` | `data-attribute-css-token-refinement` (bedrock rule), `palette-semantics-improvements`, `palette-theme-composability-instrumentability`, `chrome-navigation-wonder` Phase 3, `design-surfaces-discoverability`, `deep-link-feature-discovery`, `theming-icon-packs-public-versioning` |
+| registry / scales / aliases | `tokens/core.css` | `data-attribute-css-token-refinement` (bedrock rule), `palette-semantics-improvements` and `palette-theme-composability-instrumentability` (archived 2026-09-27; their contract is `site-semantics.spw#palette_theme_composability_contract`), `chrome-navigation-wonder` Phase 3, `design-surfaces-discoverability`, `deep-link-feature-discovery`, `settings-theme-packs` (theme families, formerly `theming-icon-packs-public-versioning`) |
 | states / arcs / pulses / residue | `components/runtime-states.css`, `systems/interaction-progression.css` | `microinteraction-motion-lifecycle`, `interaction-loop-contract`, `compositional-css-electrostatics`, `hook-region-anatomy`; canon `data-spw-attribute-governance#rhythm` |
 | handles / routes | `handles/operators/*`, `routes/surfaces/*` | `css-state-legibility` owns the intent contract; hottest files in the tree |
 | instruments | `src/styles/entries/debug.css` | `runtime-module-fluency`, `css-architecture-readability` (owner-marker overwrite is documented as expected) |

@@ -25,7 +25,7 @@
 @plan_agent_optimization: ~"../agent-optimization/PLAN.md"
 @plan_pwa_experience: ~"../pwa-experience/PLAN.md"
 @plan_portable_css: ~"../portable-css/PLAN.md"
-@plan_theming_public_versioning: ~"../theming-icon-packs-public-versioning/PLAN.md"
+@plan_theming_public_versioning: ~"../archive/theming-icon-packs-public-versioning/PLAN.md"
 @plan_history_reflow: ~"../history-reflow/PLAN.md"
 @plan_typescript_integration: ~"../typescript-integration/PLAN.md"
 @wip_typescript_integration: ~"../typescript-integration/wip.spw"
