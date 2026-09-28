@@ -4,6 +4,7 @@
  *
  * Usage:
  *   node scripts/maintain-plan-directory-indexes.mjs --check
+ *   node scripts/maintain-plan-directory-indexes.mjs --check --receipt plan-receipt.json
  *   node scripts/maintain-plan-directory-indexes.mjs --force-generated
  *   node scripts/maintain-plan-directory-indexes.mjs --only <slug> [--check]
  *
@@ -26,6 +27,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { PLAN_REFINEMENTS } from './plan-refinements-data.mjs';
 import { extractPlanGoal } from './lib/plan-index-goal.mjs';
+import { problemsInPlanFiles } from './lib/plan-file-problems.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, '..');
@@ -35,6 +37,12 @@ const CHECK = process.argv.includes('--check');
 const FORCE_GENERATED = process.argv.includes('--force-generated');
 const ONLY = (() => {
   const flagIndex = process.argv.indexOf('--only');
+  return flagIndex === -1 ? null : process.argv[flagIndex + 1] || null;
+})();
+const RECEIPT = (() => {
+  const inline = process.argv.find((arg) => arg.startsWith('--receipt='));
+  if (inline) return inline.slice('--receipt='.length);
+  const flagIndex = process.argv.indexOf('--receipt');
   return flagIndex === -1 ? null : process.argv[flagIndex + 1] || null;
 })();
 const REVIEW_MARKER = /^# Review \d{4}-\d{2}-\d{2} — /;
@@ -274,35 +282,27 @@ function listPlanSpwFiles(dir = PLANS_ROOT) {
   return files;
 }
 
-function findMissingLocalIndexRefs(files) {
-  const missing = [];
+function planEntries(files) {
+  return files.map((filePath) => ({
+    path: path.relative(REPO_ROOT, filePath).split(path.sep).join('/'),
+    text: readText(filePath),
+  }));
+}
 
-  for (const filePath of files.filter((candidate) => path.basename(candidate) === 'index.spw').sort()) {
-    const content = readText(filePath);
-    for (const match of content.matchAll(/~"((?:\.\/|\.\.\/)[^"]+)"/g)) {
-      const ref = match[1];
-      const targetRef = ref.split(/[?#]/, 1)[0];
-      if (!targetRef) continue;
-
-      const targetPath = path.resolve(path.dirname(filePath), targetRef);
-      if (fs.existsSync(targetPath)) continue;
-
-      missing.push({
-        file: path.relative(REPO_ROOT, filePath),
-        line: content.slice(0, match.index).split('\n').length,
-        ref,
-        target: path.relative(REPO_ROOT, targetPath),
-      });
-    }
-  }
-
-  return missing.sort(
-    (a, b) =>
-      a.file.localeCompare(b.file) ||
-      a.line - b.line ||
-      a.ref.localeCompare(b.ref) ||
-      a.target.localeCompare(b.target),
-  );
+function writePlanReceipt(problems) {
+  if (!RECEIPT) return;
+  const failures = problems.slice(0, 20).map((problem) => ({
+    where: problem.where,
+    reason: problem.reason,
+    detail: problem.detail,
+  }));
+  fs.mkdirSync(path.dirname(path.resolve(RECEIPT)), { recursive: true });
+  fs.writeFileSync(RECEIPT, `${JSON.stringify({
+    schema: 'plan-receipt.v0',
+    ok: problems.length === 0,
+    failures,
+    truncated: problems.length > 20,
+  }, null, 2)}\n`);
 }
 
 function guardReviewedPlanTree() {
@@ -310,21 +310,24 @@ function guardReviewedPlanTree() {
   const reviewed = files.filter((filePath) => REVIEW_MARKER.test(readText(filePath)));
   if (!reviewed.length) return false;
 
-  const unreviewed = files.filter((filePath) => !REVIEW_MARKER.test(readText(filePath)));
+  const problems = problemsInPlanFiles(planEntries(files), {
+    treeReviewed: true,
+    exists: (rel) => fs.existsSync(path.join(REPO_ROOT, rel)),
+  });
   if (CHECK) {
+    const unreviewed = problems.filter((problem) => problem.reason === 'unreviewed');
+    const missing = problems.filter((problem) => problem.reason === 'missing-target');
+    writePlanReceipt(problems);
     if (unreviewed.length) {
       console.error(`Reviewed plan tree is incomplete: ${unreviewed.length} .spw file(s) lack a first-line review decision.`);
-      process.exit(1);
     }
-
-    const missingRefs = findMissingLocalIndexRefs(reviewed);
-    if (missingRefs.length) {
-      console.error(`Reviewed plan index references are broken: ${missingRefs.length} local target(s) are missing.`);
-      for (const missing of missingRefs) {
-        console.error(`- ${missing.file}:${missing.line} -> ${missing.ref} (missing ${missing.target})`);
+    if (missing.length) {
+      console.error(`Reviewed plan index references are broken: ${missing.length} local target(s) are missing.`);
+      for (const problem of missing) {
+        console.error(`- ${problem.where} -> ${problem.detail}`);
       }
-      process.exit(1);
     }
+    if (problems.length) process.exit(1);
 
     console.log(
       `Reviewed plan .spw artifacts OK (${reviewed.length} authored decisions; local index refs resolved; generation skipped).`,
@@ -1210,6 +1213,10 @@ function main() {
   }
 
   if (CHECK) {
+    const problems = checkedMismatch
+      ? [{ where: 'plans', reason: 'generated-drift', detail: `${checkedMismatch} file(s)` }]
+      : [];
+    writePlanReceipt(problems);
     if (checkedMismatch) {
       console.error(`Plan .spw drift: ${checkedMismatch} file(s) need refresh.`);
       process.exit(1);
@@ -1221,4 +1228,6 @@ function main() {
   console.log(`Updated ${changed} plan .spw file(s) across ${planDirs.length} directories + root index.`);
 }
 
-main();
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main();
+}

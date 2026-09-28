@@ -1,6 +1,7 @@
 #!/bin/sh
-# The deploy job checks out the commit. This runs the same local gate there,
-# so a dirty working tree neither blocks the push nor pretends to be the commit.
+# The deploy job checks out the commit. This runs that gate on the commit,
+# with compile stamps copied in, then the diff-scoped plan and citation check.
+# A dirty working tree neither blocks the push nor pretends to be the commit.
 set -eu
 
 if [ "${SKIP_GIT_HOOKS:-}" = "1" ]; then

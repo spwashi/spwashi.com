@@ -9,8 +9,11 @@
  *   npm run smoke:nav -- --base http://127.0.0.1:4173 --json
  */
 
-import { rm } from 'node:fs/promises';
+import { mkdir, rm, writeFile } from 'node:fs/promises';
+import path from 'node:path';
 import process from 'node:process';
+
+import { smokeReceipt } from './drift-notice.mjs';
 
 import {
   DEFAULT_ROUTES,
@@ -42,6 +45,7 @@ function parseArgs(argv) {
     failOnOverflowX: false,
     help: false,
     json: false,
+    receipt: null,
     port: 0,
     requireSettled: false,
     requireBrowser: false,
@@ -57,6 +61,8 @@ function parseArgs(argv) {
     const arg = argv[i];
     if (arg === '--help' || arg === '-h') options.help = true;
     else if (arg === '--json') options.json = true;
+    else if (arg === '--receipt' && argv[i + 1]) options.receipt = argv[++i];
+    else if (arg.startsWith('--receipt=')) options.receipt = arg.slice('--receipt='.length);
     else if (arg === '--debug-layout') options.debugLayout = true;
     else if (arg === '--debug-qa' || arg === '--agent-qa') options.debugQa = true;
     else if (arg === '--require-settled') options.requireSettled = true;
@@ -81,6 +87,11 @@ function parseArgs(argv) {
   return options;
 }
 
+async function writeSmokeReceipt(file, summary) {
+  await mkdir(path.dirname(path.resolve(file)), { recursive: true });
+  await writeFile(file, `${JSON.stringify(smokeReceipt(summary), null, 2)}\n`);
+}
+
 function printHelp() {
   console.log(`headless-nav — Chrome headless route smoke
 
@@ -103,6 +114,7 @@ Options:
   --timeout-ms N            Load event timeout (default 45000)
   --chrome PATH             Browser binary
   --json                    JSON report on stdout
+  --receipt FILE            Thin route receipt (where, reason, detail). The table stays on stdout.
   -h, --help
 `);
 }
@@ -134,6 +146,7 @@ async function httpFallbackProbe(base, routes, options, reason) {
     results,
   };
 
+  if (options.receipt) await writeSmokeReceipt(options.receipt, summary);
   if (options.json) {
     process.stdout.write(`${JSON.stringify(summary, null, 2)}\n`);
   } else {
@@ -280,6 +293,7 @@ async function main() {
       results: results.map(({ raw, hardOk, ...cell }) => ({ ...cell, hardOk })),
     };
 
+    if (options.receipt) await writeSmokeReceipt(options.receipt, summary);
     if (options.json) {
       process.stdout.write(`${JSON.stringify(summary, null, 2)}\n`);
     } else {

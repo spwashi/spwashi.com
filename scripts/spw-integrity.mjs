@@ -78,6 +78,8 @@
  *   npm run spw:integrity                    # report, exit 1 on missing-file/anchor
  *   npm run spw:integrity -- --json
  *   npm run spw:integrity -- --warn          # never exit non-zero
+ *   npm run spw:integrity -- --files-from list.txt
+ *                                            # citations in those files only
  */
 
 import { readFile, stat } from 'node:fs/promises';
@@ -88,12 +90,18 @@ import { fileURLToPath } from 'node:url';
 import { isFollowablePathRef } from './lib/spw-path-ref.mjs';
 
 const run = promisify(execFile);
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const SCRIPT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const ROOT = process.env.SPW_INTEGRITY_ROOT
+  ? path.resolve(process.env.SPW_INTEGRITY_ROOT)
+  : SCRIPT_ROOT;
+const TOOLS = process.env.SPW_INTEGRITY_TOOLS
+  ? path.resolve(process.env.SPW_INTEGRITY_TOOLS)
+  : SCRIPT_ROOT;
 
 const CLI = [
   '--import',
-  './.spw/_workbench/node_modules/tsx/dist/loader.mjs',
-  '.spw/_workbench/packages/spw-cli/src/main.ts',
+  path.join(TOOLS, '.spw/_workbench/node_modules/tsx/dist/loader.mjs'),
+  path.join(TOOLS, '.spw/_workbench/packages/spw-cli/src/main.ts'),
 ];
 
 /**
@@ -113,8 +121,9 @@ const GENERATED = ['.spw/gen/'];
 const WALK_ROOTS = ['.spw', '.agents/skills'];
 
 /** Ask the parser what the citations are. It knows; a regex does not. */
-async function readPathRefs() {
-  const { stdout } = await run('node', [...CLI, 'query', '--from', WALK_ROOTS.join(','),
+async function readPathRefs(files = null) {
+  const from = files?.length ? files.join(',') : WALK_ROOTS.join(',');
+  const { stdout } = await run('node', [...CLI, 'query', '--from', from,
     '--selector', 'pathRefs', '--json', '-n', '10000'], {
     cwd: ROOT,
     maxBuffer: 64 * 1024 * 1024,
@@ -259,12 +268,28 @@ async function checkExpressions() {
   return { total: seen.size, structured, unstructured, standaloneOk };
 }
 
+function filesFromArgs(args) {
+  const inline = args.find((arg) => arg.startsWith('--files-from='));
+  const file = inline ? inline.slice('--files-from='.length) : null;
+  const index = args.indexOf('--files-from');
+  const listed = file || (index === -1 ? null : args[index + 1]);
+  if (!listed) return null;
+  return readFile(listed, 'utf8').then((text) => text.split('\n').map((line) => line.trim()).filter(Boolean));
+}
+
 async function main() {
   const args = process.argv.slice(2);
   const asJson = args.includes('--json');
   const warnOnly = args.includes('--warn');
+  const onlyFiles = await filesFromArgs(args);
 
-  const rows = await readPathRefs();
+  const read = await readPathRefs(onlyFiles);
+  const wanted = onlyFiles
+    ? new Set(onlyFiles.map((file) => file.split(path.sep).join('/')))
+    : null;
+  const rows = wanted
+    ? read.filter((row) => wanted.has(String(row.file || '').split(path.sep).join('/')))
+    : read;
   const findings = [];
   const total = rows.length;
 
@@ -280,6 +305,10 @@ async function main() {
   const missingFile = byVerdict('missing-file');
   const missingAnchor = byVerdict('missing-anchor');
   const malformed = byVerdict('malformed');
+
+  if (!warnOnly && (missingFile.length || missingAnchor.length)) {
+    process.exitCode = 1;
+  }
 
   if (asJson) {
     console.log(JSON.stringify({
@@ -306,7 +335,7 @@ async function main() {
     console.log('');
   };
 
-  const expressions = await checkExpressions();
+  const expressions = onlyFiles ? null : await checkExpressions();
   if (expressions) {
     console.log(`semantic expressions — ${expressions.structured} of ${expressions.total} parse into a container sequence`);
     console.log(`  parseExpression() standalone consumes only ${expressions.standaloneOk} of them — use parse(), not parseExpression()`);
@@ -323,10 +352,6 @@ async function main() {
   section('malformed — never resolvable, never reported', malformed);
 
   if (!findings.length) console.log('all citations resolve.');
-
-  if (!warnOnly && (missingFile.length || missingAnchor.length)) {
-    process.exitCode = 1;
-  }
 }
 
 main().catch((error) => {

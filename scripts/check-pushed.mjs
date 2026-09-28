@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 /**
- * check:local on the commit a push is sending, plus the plan-index check.
+ * check:local on the commit a push is sending, then the diff-scoped
+ * plan and citation check. Compile stamps are copied in so an unchanged
+ * pass stays warm. The nightly corpus walk is not repeated here.
  *
  * Pre-push feeds "<local ref> <local sha> <remote ref> <remote sha>" on stdin.
  * The working tree is often another session's files. Deploy checks out the
@@ -12,7 +14,7 @@
  *   node scripts/check-pushed.mjs            # stdin, or HEAD from a terminal
  *   node scripts/check-pushed.mjs <sha>      # one commit, for a manual check
  */
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, symlinkSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -65,6 +67,26 @@ function extractPath(sha, rel, scratch) {
 }
 
 /**
+ * Copy `*.stamp` into the scratch. The stamp is a hash of authored inputs,
+ * so a commit whose sources differ misses and compiles. Incremental
+ * tsbuildinfo from the shared tree is left behind: it can describe a
+ * different commit, and a stamp hit does not read it.
+ */
+export function copyCompileStamps(fromRoot, scratch) {
+  const source = path.join(fromRoot, '.tmp', 'tsc');
+  if (!existsSync(source)) return 0;
+  const dest = path.join(scratch, '.tmp', 'tsc');
+  mkdirSync(dest, { recursive: true });
+  let copied = 0;
+  for (const name of readdirSync(source)) {
+    if (!name.endsWith('.stamp')) continue;
+    cpSync(path.join(source, name), path.join(dest, name));
+    copied += 1;
+  }
+  return copied;
+}
+
+/**
  * A detached worktree of `sha` with node_modules linked and the folio
  * directory extracted from that commit. `release` removes the worktree.
  */
@@ -92,6 +114,8 @@ export function materializeCommit(sha) {
     symlinkSync(path.join(ROOT, 'node_modules'), path.join(scratch, 'node_modules'));
     mkdirSync(path.join(scratch, 'public/images/assets'), { recursive: true });
     extractPath(sha, FOLIOS, scratch);
+    const stamps = copyCompileStamps(ROOT, scratch);
+    if (stamps) console.log(`[check:pushed] compile stamps ${stamps}`);
     return { scratch, release };
   } catch (error) {
     release();
@@ -99,8 +123,8 @@ export function materializeCommit(sha) {
   }
 }
 
-function run(command, args, cwd) {
-  const result = spawnSync(command, args, { cwd, stdio: 'inherit', env: gitEnv() });
+function run(command, args, cwd, extraEnv = {}) {
+  const result = spawnSync(command, args, { cwd, stdio: 'inherit', env: { ...gitEnv(), ...extraEnv } });
   if (result.status === 0) return;
   const error = new Error(`${command} ${args.join(' ')} exited ${result.status}`);
   error.status = result.status || 1;
@@ -127,7 +151,9 @@ function main() {
     const tree = materializeCommit(sha);
     try {
       run(process.execPath, ['scripts/check-local.mjs'], tree.scratch);
-      run(process.execPath, ['scripts/maintain-plan-directory-indexes.mjs', '--check'], tree.scratch);
+      run(process.execPath, ['scripts/check-commit-structure.mjs'], tree.scratch, {
+        SPW_INTEGRITY_TOOLS: ROOT,
+      });
     } catch (error) {
       status = error.status || 1;
       console.error(`[check:pushed] ${sha} failed`);
