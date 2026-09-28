@@ -809,7 +809,7 @@ function annotateLivingTermRole(node) {
   const isLink = node.matches('a[href]');
   if (!isLink && !node.hasAttribute('role')) node.setAttribute('role', 'button');
   if (!isLink && !node.hasAttribute('tabindex')) node.tabIndex = 0;
-  node.setAttribute('aria-haspopup', 'dialog');
+  if (node.getAttribute('aria-haspopup') !== 'dialog') node.setAttribute('aria-haspopup', 'dialog');
   if (!node.hasAttribute('aria-expanded')) node.setAttribute('aria-expanded', 'false');
 }
 

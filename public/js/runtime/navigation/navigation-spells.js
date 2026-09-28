@@ -237,9 +237,9 @@ function setLinkDataset(link, entries = {}) {
   });
 }
 
-function applyNavigationSpellRecord(link, record, url) {
+function applyNavigationSpellRecord(link, record, url, { tokenized = 'true' } = {}) {
   setLinkDataset(link, {
-    spwNavTokenized: 'true',
+    spwNavTokenized: tokenized,
     spwGroundable: record.groundable,
     spwOperator: link.dataset.spwOperator || record.operator,
     spwWonder: link.dataset.spwWonder || WONDER_BY_SCOPE[record.scope] || 'orientation',
@@ -391,8 +391,7 @@ function annotateLink(link) {
     applyNavigationSpellRecord(link, {
       ...record,
       isGroundable: false,
-    }, url);
-    link.dataset.spwNavTokenized = 'inspect';
+    }, url, { tokenized: 'inspect' });
     delete link.dataset.spwOperatorGeometry;
     return;
   }

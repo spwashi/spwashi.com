@@ -161,7 +161,7 @@ Gate: measured boot delta on a cold content-rich route before/after, demoed in b
 ### Phase 3 — Write and observe consolidation
 
 - Route unguarded writes through `writeDatasetValue` / `writeStyleValue`, starting with `modules/` (197 raw, 0 guarded), then `interface/` (331 raw, 28 guarded).
-- Guard the bus charge path — `#applyCharge` and `setCharge` write `--charge` and `dataset.spwCharge` unguarded on the pointermove path.
+- [x] Guard the bus charge path — `#applyCharge` and `setCharge` wrote `--charge` and `dataset.spwCharge` unguarded on the pointermove path. Landed 2026-09-28: `writeCharge` in `public/ts/bus.ts` writes each only when it moves; `scripts/tests/change-only-writes.test.mjs` holds it.
 - Migrate the 26 non-hub MutationObservers onto `dom-sync-hub` / `observeAddedMatches`.
 - Add a shared viewport read phase so the 11 scroll listeners measure once per frame; fix the capture-phase non-passive listener at `semantic-chrome.js:719`.
 - Adopt per-mount `AbortController` on `ctx` (`bus.on` already accepts `signal`) to close the 820/331 listener gap.

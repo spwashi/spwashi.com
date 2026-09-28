@@ -195,6 +195,24 @@ const getChargeState = (level: unknown): ChargeState | null => {
     return CHARGE_STATE.find((entry) => numeric <= entry.max)?.label ?? null;
 };
 
+// Every bus event that names an element charges it, and pointer paths repeat
+// one level; --charge and data-spw-charge are written only when they move.
+const writeCharge = (element: ChargeElement, level: number): ChargeState | null => {
+    const value = String(level);
+    if (element.style.getPropertyValue('--charge') !== value) {
+        element.style.setProperty('--charge', value);
+    }
+
+    const state = getChargeState(level);
+    if (!state) {
+        delete element.dataset.spwCharge;
+    } else if (element.dataset.spwCharge !== state) {
+        element.dataset.spwCharge = state;
+    }
+
+    return state;
+};
+
 const normalizeDetail = (detail: unknown): SpwEventDetail => {
     if (detail && typeof detail === 'object' && !Array.isArray(detail)) {
         return detail as SpwEventDetail;
@@ -405,15 +423,7 @@ class SpwBus {
         const numeric = Math.max(0, Math.min(1, Number(level) || 0));
 
         this.#chargeMap.set(element, numeric);
-        element.style.setProperty('--charge', String(numeric));
-
-        const state = getChargeState(numeric);
-
-        if (!state) {
-            delete element.dataset.spwCharge;
-        } else {
-            element.dataset.spwCharge = state;
-        }
+        const state = writeCharge(element, numeric);
 
         if (options.emit !== false) {
             this.emit('field:charged', {
@@ -544,15 +554,7 @@ class SpwBus {
         if (level === undefined) return;
 
         this.#chargeMap.set(element, level);
-        element.style.setProperty('--charge', String(level));
-
-        const state = getChargeState(level);
-
-        if (!state) {
-            delete element.dataset.spwCharge;
-        } else {
-            element.dataset.spwCharge = state;
-        }
+        writeCharge(element, level);
     }
 }
 

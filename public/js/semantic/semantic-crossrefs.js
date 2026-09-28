@@ -1,4 +1,5 @@
 import { bus } from '/public/js/kernel/bus.js';
+import { writeDatasetValue } from '/public/js/kernel/dom-contracts.js';
 import { deriveSemanticBraceExpression } from '/public/js/semantic/semantic-braces.js';
 import { humanizeToken, normalizeText, normalizeToken, unique } from '/public/js/semantic/semantic-utils.js';
 
@@ -12,6 +13,11 @@ const DEFAULT_SELECTOR = [
 
 const SOURCE_ATTRIBUTE = 'spwCrossrefSource';
 const STATE_ATTRIBUTE = 'spwCrossref';
+
+// What the page shows as focused now. pointerover repeats for one target as the
+// pointer crosses its children, and every touch on a phone scroll lands one, so
+// a focus writes only its difference from this and an idle clear is skipped.
+const focused = { token: '', source: null, marked: new Set() };
 
 function splitTokens(value = '') {
   return normalizeText(value)
@@ -109,6 +115,9 @@ function clearState(root = document) {
     delete el.dataset[SOURCE_ATTRIBUTE];
   });
 
+  focused.token = '';
+  focused.source = null;
+  focused.marked = new Set();
   bus.emit('semantic-crossref:cleared', {});
 }
 
@@ -116,22 +125,33 @@ function focusToken(registry, token, source = null) {
   const normalized = normalizeToken(token);
   if (!normalized) return [];
 
-  clearState();
-
   const matches = Array.from(registry.byToken.get(normalized) || []);
-  if (!matches.length) return [];
+  if (!matches.length) {
+    clearState();
+    return [];
+  }
+  if (normalized === focused.token && source === focused.source) return matches;
 
   const html = document.documentElement;
-  html.dataset.spwSemanticCrossref = normalized;
-  html.dataset.spwSemanticCrossrefLabel = humanizeToken(normalized);
+  writeDatasetValue(html, 'spwSemanticCrossref', normalized);
+  writeDatasetValue(html, 'spwSemanticCrossrefLabel', humanizeToken(normalized));
 
-  matches.forEach((el) => {
-    el.dataset[STATE_ATTRIBUTE] = el === source ? 'source' : 'peer';
+  const next = new Map(matches.map((el) => [el, el === source ? 'source' : 'peer']));
+  if (source instanceof Element && !next.has(source)) next.set(source, null);
+
+  focused.marked.forEach((el) => {
+    if (next.has(el)) return;
+    delete el.dataset[STATE_ATTRIBUTE];
+    delete el.dataset[SOURCE_ATTRIBUTE];
+  });
+  next.forEach((state, el) => {
+    writeDatasetValue(el, STATE_ATTRIBUTE, state);
+    writeDatasetValue(el, SOURCE_ATTRIBUTE, el === source ? 'true' : null);
   });
 
-  if (source instanceof Element) {
-    source.dataset[SOURCE_ATTRIBUTE] = 'true';
-  }
+  focused.token = normalized;
+  focused.source = source;
+  focused.marked = new Set(next.keys());
 
   bus.emit('semantic-crossref:focused', {
     token: normalized,
@@ -162,6 +182,7 @@ function installEventHandlers(registry) {
 
   const scheduleClear = () => {
     window.clearTimeout(clearTimer);
+    if (!focused.token) return;
     clearTimer = window.setTimeout(() => clearState(), 80);
   };
 
