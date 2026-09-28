@@ -49,6 +49,9 @@ const ROOT_ENTRYPOINTS = new Set([
   // README reading order #2: the full-catalog entrypoint; site.js imports the
   // families one by one to keep them lazy, so nothing imports the barrel.
   'public/js/runtime/catalog/index.js',
+  // Other origins (texture.website, lore.land) import this to mount one
+  // portable module without site.js; nothing on this site needs it.
+  'public/js/runtime/orchestration/host.js',
 ]);
 // Sources a build script inlines or imports; the page never names them.
 const TEMPLATE_FILE = 'scripts/template.mjs';

@@ -136,7 +136,23 @@ lifecycle record instead of appearing mounted.
 
 ## Portable Modules
 
-These are the best candidates when you want to reuse a file on another site:
+These are the best candidates when you want to reuse a file on another site.
+Before importing one from another origin, read its host view:
+`describeModuleHost(def)` (catalog barrel) says `portable` (its markup and
+stylesheet suffice), `host-policy` (the page must accept the listed needs:
+document writes, origin storage, a bus, platform calls), or `site-only`.
+Mount it with `runtime/orchestration/host.js`:
+
+```js
+import { mountPortableModule } from 'https://spwashi.com/public/js/runtime/orchestration/host.js';
+const slice = await import('https://spwashi.com/public/js/media/texture-slice.js');
+const handle = await mountPortableModule(slice, document);
+// later: await handle.cleanup();
+```
+
+Paths under `/public/js/` are addresses other sites keep once they import
+them; moving a portable file needs the same care as renaming a route.
+
 
 - `compose.js` for a single import surface over the portable runtime helpers.
 - `media/texture-slice.js` plus `/public/css/effects/texture-slice.css` when another origin only needs `[data-spw-texture-slice]`. Motif URLs are stylesheet-relative so they keep resolving from this host. Do not load `site.js` there.
