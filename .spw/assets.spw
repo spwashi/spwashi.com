@@ -36,12 +36,33 @@
 
     folios: {
       path: ~"../public/images/assets/folios/"
-      purpose: "Scanned laminated folios, the creator's original canon; one .spw sidecar per folio carries its source id, alt text, and tiers"
+      purpose: "Scanned laminated folios, the creator's original canon; one .spw sidecar per folio carries its source id, alt text, and tiers, and from the September 27 set on, a draft ^expression and ^dialog the creator develops"
       status: "active"
-      masters: "public/images/renders/_raw/folio-scans-2026-09-26/ (untracked)"
-      formats: "avif + webp, thumb 256 / display 512 / hero 1024; no PNG derivatives"
+      masters: "public/images/renders/_raw/folio-scans-<release>/ (untracked)"
+      formats: "avif + webp, thumb 256 / display 512 / hero 1024; no PNG derivatives; full 2400px WebP for the weekly high-res five"
       record: ~"./surfaces/folio-archive/release-2026-09-26.spw"
-      images: "31 — folio-2026-09-26-00 through -30; the release record lists them"
+      record_second: ~"./surfaces/folio-archive/release-2026-09-27.spw"
+      images: "58 — folio-2026-09-26-00 through -30 and folio-2026-09-27-00 through -26; the release records list them"
+    }
+
+    panels: {
+      path: ~"../public/images/assets/panels/"
+      purpose: "Faces of laminated panel canvases painted on both sides; a sidecar names one scanned face, and which front meets which back stays open"
+      status: "active"
+      masters: "public/images/renders/_raw/folio-scans-2026-09-27/ (untracked)"
+      formats: "avif + webp, thumb 256 / display 512 / hero 1024"
+      record: ~"./surfaces/folio-archive/release-2026-09-27.spw"
+      images: "25 — panel-2026-09-27-front-00 through -12 and -back-00 through -11"
+    }
+
+    worktable: {
+      path: ~"../public/images/assets/worktable/"
+      purpose: "The day's worktable: the planning sheet alone and under pieces, and the groceries of Thanks for groceries"
+      status: "active"
+      masters: "public/images/renders/_raw/folio-scans-2026-09-27/ (untracked)"
+      formats: "avif + webp, thumb 256 / display 512 / hero 1024"
+      record: ~"./surfaces/folio-archive/release-2026-09-27.spw"
+      images: "7 — sheet-2026-09-27-00 through -03, grocery-2026-09-27-00 through -02"
     }
 
     pretext_lab: {

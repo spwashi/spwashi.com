@@ -22,6 +22,8 @@ import { IMAGE_PROVENANCE_RECORDS } from '../../generated/image-provenance.js';
 const RULES = Object.freeze([
   Object.freeze({ match: '/public/images/renders/', kind: 'generated', sigil: '~', word: 'generated', description: 'Generated image.' }),
   Object.freeze({ match: '/public/images/assets/folios/', kind: 'original', sigil: '*', word: 'original', description: 'Original artwork, scanned.' }),
+  Object.freeze({ match: '/public/images/assets/panels/', kind: 'original', sigil: '*', word: 'original', description: 'Original artwork, scanned.' }),
+  Object.freeze({ match: '/public/images/assets/worktable/', kind: 'original', sigil: '*', word: 'original', description: 'Original artwork, scanned.' }),
 ]);
 
 const RECORDED = Object.freeze({

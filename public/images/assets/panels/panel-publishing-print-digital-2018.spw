@@ -1,0 +1,62 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "panel-publishing-print-digital-2018"
+  title: "Publishing, print, digital, 2018"
+  description: "Laminated panel canvas, back face, scanned September 27, 2026."
+}
+
+^"source"{
+  id: "panel-2026-09-27-back-06"
+  station_file: "scans-2026_09_27-A/laminated_folio-or-panel_canvas_46.png"
+  master: "public/images/renders/_raw/folio-scans-2026-09-27/panel-2026-09-27-back-06-scan.png"
+  master_tracked: false
+  scan: { width: 2986, height: 2382, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 10.0 x 7.9 in at 300 dpi; the laminate edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-27.spw"
+}
+
+^"face"{
+  side: "back"
+  panel: "unresolved — fronts and backs were scanned in separate passes, not in pairing order; any front/back combination shown is a demo"
+}
+
+^"usage"{
+  surface: "panels"
+  role: "panel-face"
+  formats_available: ["avif", "webp"]
+  alt_text: "Publishing, print, digital, Spwashi, and 2018 lettered beside an orange block on a pink cloud"
+  tiers: {
+    thumb: { width: 256, height: 204, avif_kib: 2, webp_kib: 3 }
+    display: { width: 512, height: 409, avif_kib: 16, webp_kib: 13 }
+    hero: { width: 1024, height: 817, avif_kib: 83, webp_kib: 57 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip 2048px intermediate"
+  png: "none — AVIF and WebP only, as the September 26 set ships"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["panel", "release-2026-09-27", "2018", "publishing", "print", "digital"]
+  part_of: "folio-release-2026-09-27"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `publishing[print|digital]{2018}<spwashi>`
+  b: `*panel-publishing-print-digital-2018 @2018 &publishing &print &digital`
+  handles: ["@2018", "&publishing", "&print", "&digital"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what did 2018 publish?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

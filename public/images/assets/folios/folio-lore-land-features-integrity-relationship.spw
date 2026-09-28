@@ -1,0 +1,58 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-lore-land-features-integrity-relationship"
+  title: "Lore.land, features, integrity, relationship"
+  description: "Laminated folio, scanned for the September 27, 2026 release set."
+}
+
+^"source"{
+  id: "folio-2026-09-27-18"
+  station_file: "scans-2026_09_27-A/laminated_folio-or-panel_canvas_31.png"
+  master: "public/images/renders/_raw/folio-scans-2026-09-27/folio-2026-09-27-18-scan.png"
+  master_tracked: false
+  scan: { width: 3446, height: 2531, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 11.5 x 8.4 in at 300 dpi; the laminate edge, not a measured size"
+  orientation_note: "lettering runs sideways; kept as scanned"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-27.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "Lore.land lettered beside a drawn face and screens, with hashtags for features, integrity, and relationship"
+  tiers: {
+    thumb: { width: 256, height: 188, avif_kib: 3, webp_kib: 3 }
+    display: { width: 512, height: 376, avif_kib: 16, webp_kib: 13 }
+    hero: { width: 1024, height: 752, avif_kib: 74, webp_kib: 52 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip 2048px intermediate"
+  png: "none — AVIF and WebP only, as the September 26 set ships"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-09-27", "lore-land", "features", "integrity", "relationship"]
+  part_of: "folio-release-2026-09-27"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `lore.land[features|integrity|relationship]{webseries}`
+  b: `*folio-lore-land-features-integrity-relationship <lore.land &features &integrity &relationship`
+  handles: ["<lore.land", "&features", "&integrity", "&relationship"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?which hashtag holds the other two?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

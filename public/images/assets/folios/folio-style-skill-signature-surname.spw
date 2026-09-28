@@ -1,0 +1,58 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-style-skill-signature-surname"
+  title: "Style, skill, signature, surname"
+  description: "Laminated folio, scanned for the September 27, 2026 release set."
+}
+
+^"source"{
+  id: "folio-2026-09-27-10"
+  station_file: "scans-2026_09_27-A/laminated_folio-or-panel_canvas_23.png"
+  master: "public/images/renders/_raw/folio-scans-2026-09-27/folio-2026-09-27-10-scan.png"
+  master_tracked: false
+  scan: { width: 3445, height: 2691, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 11.5 x 9.0 in at 300 dpi; the laminate edge, not a measured size"
+  orientation_note: "lettering runs sideways; kept as scanned"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-27.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "Letters A through E on a pale cloud over slate and sage: style, skill, signature, surname, subjective experience"
+  tiers: {
+    thumb: { width: 256, height: 200, avif_kib: 4, webp_kib: 4 }
+    display: { width: 512, height: 400, avif_kib: 20, webp_kib: 16 }
+    hero: { width: 1024, height: 800, avif_kib: 93, webp_kib: 69 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip 2048px intermediate"
+  png: "none — AVIF and WebP only, as the September 26 set ships"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-09-27", "style", "skill", "signature", "subjective-experience"]
+  part_of: "folio-release-2026-09-27"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `list[style|skill|signature|surname]{subjective.experience}`
+  b: `*folio-style-skill-signature-surname &style &skill &signature &subjective_experience`
+  handles: ["&style", "&skill", "&signature", "&subjective_experience"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?which comes first for you: style, skill, signature, surname, or experience?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

@@ -1,0 +1,58 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-honk-about-a-pie-legal-pad"
+  title: "Honk about a pie, legal pad"
+  description: "Laminated folio, scanned for the September 27, 2026 release set."
+}
+
+^"source"{
+  id: "folio-2026-09-27-16"
+  station_file: "scans-2026_09_27-A/laminated_folio-or-panel_canvas_29.png"
+  master: "public/images/renders/_raw/folio-scans-2026-09-27/folio-2026-09-27-16-scan.png"
+  master_tracked: false
+  scan: { width: 3435, height: 2686, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 11.4 x 9.0 in at 300 dpi; the laminate edge, not a measured size"
+  orientation_note: "lettering runs sideways; kept as scanned"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-27.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "A yellow legal pad drawn with honk about a pie, boon honk, and rank, an infinity sign in the corner"
+  tiers: {
+    thumb: { width: 256, height: 200, avif_kib: 4, webp_kib: 4 }
+    display: { width: 512, height: 400, avif_kib: 21, webp_kib: 18 }
+    hero: { width: 1024, height: 801, avif_kib: 98, webp_kib: 70 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip 2048px intermediate"
+  png: "none — AVIF and WebP only, as the September 26 set ships"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-09-27", "honk", "pie", "boon"]
+  part_of: "folio-release-2026-09-27"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `honk[about.a.pie|boon|rank]<legal.pad>`
+  b: `*folio-honk-about-a-pie-legal-pad &honk <pie &boon`
+  handles: ["&honk", "<pie", "&boon"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what goes on the next line of the legal pad?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

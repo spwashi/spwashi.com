@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-honk-bane-bonk-boon-map"
+  title: "Honk, bane, bonk, boon map"
+  description: "Laminated folio, scanned for the September 27, 2026 release set."
+}
+
+^"source"{
+  id: "folio-2026-09-27-19"
+  station_file: "scans-2026_09_27-A/laminated_folio-or-panel_canvas_32.png"
+  master: "public/images/renders/_raw/folio-scans-2026-09-27/folio-2026-09-27-19-scan.png"
+  master_tracked: false
+  scan: { width: 3447, height: 2692, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 11.5 x 9.0 in at 300 dpi; the laminate edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-27.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "A drawn map on teal: rooms labeled honk, bane, bonk, and boon, a bone, spirals, and a tag reading teal stripes vibes"
+  tiers: {
+    thumb: { width: 256, height: 200, avif_kib: 4, webp_kib: 5 }
+    display: { width: 512, height: 400, avif_kib: 25, webp_kib: 22 }
+    hero: { width: 1024, height: 800, avif_kib: 109, webp_kib: 92 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip 2048px intermediate"
+  png: "none — AVIF and WebP only, as the September 26 set ships"
+  hero_budget: "hero stepped to quality 70 to sit under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-09-27", "honk", "bane", "bonk", "boon", "teal-stripes-vibes"]
+  part_of: "folio-release-2026-09-27"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `map[honk|bane|bonk|boon]{bone.spiral}<teal.stripes.vibes>`
+  b: `*folio-honk-bane-bonk-boon-map &honk &bane &bonk &boon <teal_stripes_vibes`
+  handles: ["&honk", "&bane", "&bonk", "&boon", "<teal_stripes_vibes"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?which room on the map would you enter first?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

@@ -1,0 +1,59 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-boon-bane-bone-land-tree"
+  title: "Boon, bane, bone land tree"
+  description: "Laminated folio, scanned for the September 27, 2026 release set."
+}
+
+^"source"{
+  id: "folio-2026-09-27-22"
+  station_file: "scans-2026_09_27-A/laminated_folio-or-panel_canvas_35.png"
+  master: "public/images/renders/_raw/folio-scans-2026-09-27/folio-2026-09-27-22-scan.png"
+  master_tracked: false
+  scan: { width: 3450, height: 2686, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 11.5 x 9.0 in at 300 dpi; the laminate edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-27.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  highres: "folio-boon-bane-bone-land-tree-full.webp — 2400px WebP, opened in the weekly five (public/data/folio-highres.json)"
+  alt_text: "On violet and magenta, tags for boon.land, bane.land, and bone.land branch from a tree whose trunk reads boon bane bone.com"
+  tiers: {
+    thumb: { width: 256, height: 199, avif_kib: 3, webp_kib: 4 }
+    display: { width: 512, height: 399, avif_kib: 21, webp_kib: 18 }
+    hero: { width: 1024, height: 797, avif_kib: 101, webp_kib: 74 }
+    full: { width: 2400, height: 1869, webp_kib: 450, opened: "2026-W40" }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip 2048px intermediate"
+  png: "none — AVIF and WebP only, as the September 26 set ships"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-09-27", "boon-land", "bane-land", "bone-land"]
+  part_of: "folio-release-2026-09-27"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `tree[boon|bane|bone]{land}`
+  b: `*folio-boon-bane-bone-land-tree <boon.land <bane.land <bone.land`
+  handles: ["<boon.land", "<bane.land", "<bone.land"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?which branch of the tree would you climb?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

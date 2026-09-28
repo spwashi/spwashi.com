@@ -1,0 +1,63 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "panel-october-09-monday-cups"
+  title: "October 09, Monday"
+  description: "Laminated panel canvas, front face, scanned September 27, 2026."
+}
+
+^"source"{
+  id: "panel-2026-09-27-front-09"
+  station_file: "scans-2026_09_27-A/laminated_folio-or-panel_canvas_9.png"
+  master: "public/images/renders/_raw/folio-scans-2026-09-27/panel-2026-09-27-front-09-scan.png"
+  master_tracked: false
+  scan: { width: 2993, height: 2376, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 10.0 x 7.9 in at 300 dpi; the laminate edge, not a measured size"
+  orientation_note: "Monday reads upside down; kept as scanned"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-27.spw"
+}
+
+^"face"{
+  side: "front"
+  panel: "unresolved — fronts and backs were scanned in separate passes, not in pairing order; any front/back combination shown is a demo"
+}
+
+^"usage"{
+  surface: "panels"
+  role: "panel-face"
+  formats_available: ["avif", "webp"]
+  alt_text: "October 09 and Monday lettered around a wine-dark cup marked with hashes and two small bells"
+  tiers: {
+    thumb: { width: 256, height: 203, avif_kib: 3, webp_kib: 4 }
+    display: { width: 512, height: 407, avif_kib: 18, webp_kib: 16 }
+    hero: { width: 1024, height: 813, avif_kib: 119, webp_kib: 97 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip 2048px intermediate"
+  png: "none — AVIF and WebP only, as the September 26 set ships"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["panel", "release-2026-09-27", "october", "monday", "cup"]
+  part_of: "folio-release-2026-09-27"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `calendar[october.09|monday]{cup.bells}`
+  b: `*panel-october-09-monday-cups @october @monday ~cup`
+  handles: ["@october", "@monday", "~cup"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what would you pour for October 9?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

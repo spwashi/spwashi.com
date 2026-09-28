@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "worktable-panel-on-plan-b"
+  title: "Panel on the plan, B"
+  description: "Worktable scan from September 27, 2026: the day's planning sheet, alone or under a piece."
+}
+
+^"source"{
+  id: "sheet-2026-09-27-02"
+  station_file: "scans-2026_09_27-B/SimpleScanStation20260927185611_2.png"
+  master: "public/images/renders/_raw/folio-scans-2026-09-27/sheet-2026-09-27-02-scan.png"
+  master_tracked: false
+  scan: { width: 5096, height: 3307, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 17.0 x 11.0 in at 300 dpi; the laminate edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-27.spw"
+}
+
+^"usage"{
+  surface: "worktable"
+  role: "worktable-sheet"
+  formats_available: ["avif", "webp"]
+  alt_text: "A second laminated panel lying on today's planning sheet"
+  tiers: {
+    thumb: { width: 256, height: 166, avif_kib: 5, webp_kib: 6 }
+    display: { width: 512, height: 332, avif_kib: 27, webp_kib: 27 }
+    hero: { width: 1024, height: 665, avif_kib: 113, webp_kib: 99 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip 2048px intermediate"
+  png: "none — AVIF and WebP only, as the September 26 set ships"
+  hero_budget: "hero stepped to quality 70 to sit under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["sheet", "release-2026-09-27", "2026-09-27", "panel"]
+  part_of: "folio-release-2026-09-27"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `worktable[panel]{plan}`
+  b: `*worktable-panel-on-plan-b @2026-09-27 ~panel`
+  handles: ["@2026-09-27", "~panel"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?which day of the plan is this panel for?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

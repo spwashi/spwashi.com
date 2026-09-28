@@ -1,0 +1,116 @@
+# Release 2026-09-27 — the second scan set: twenty-seven laminated folios, twenty-five panel-canvas faces, and the day's worktable, scanned the day after release day.
+# Operation: cache over a contract. Scans, derivatives, and sidecars are real; form, price, availability, pairings, and every expression are the creator's to set.
+
+#>folio_release_2026_09_27
+#:record #!release #!folios #!panels
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@archive: ~"../folio-archive.spw"
+@previous: ~"./release-2026-09-26.spw"
+@route: ~"../../../design/folios/index.html"
+@image_optimize: ~"../../../.agents/skills/image-optimize/SKILL.md"
+@image_naming: ~"../../../.agents/skills/image-naming-magic/SKILL.md"
+@asset_registry: ~"../../assets.spw"
+
+^"release"{
+  id = `folio-release-2026-09-27`
+  date = `2026-09-27, the Sunday after release day`
+  sources = `twenty-seven folios (folio-2026-09-27-00 through -26), twenty-five panel faces (panel-2026-09-27-front-00 through -12, -back-00 through -11), seven worktable scans (sheet-2026-09-27-00 through -03, grocery-2026-09-27-00 through -02)`
+  purpose = `Creator, 2026-09-27: yesterday's thirty-one were one per day for a calendar; today's aim was one per month.`
+  form = `unset — original, print, or collage is decided per piece`
+  price = `unset`
+  availability = `unset`
+  rule = `A folio source id names one physical folio. A panel id names one scanned face, not a panel.`
+}
+
+^"intake"{
+  scanned = `2026-09-27, SimpleScanStation, 300 dpi sRGB PNG, two batches`
+  order = `Creator, in their words: first the front of some panel canvases, then some laminated folios, then the back of some panel canvases, and one more front and back. Batch A station files _0 through _51 follow that order: _0–_12 fronts, _13–_39 folios, _40–_51 backs. Which of these is the "one more front and back" is not recorded.`
+  batch_b = `SimpleScanStation20260927185611_0–_3 (the day's planning sheet, alone and under two panels and a folio) and SimpleScanStation20260927185745_0–_2 (the groceries)`
+  masters = `public/images/renders/_raw/folio-scans-2026-09-27/<id>-scan.png — copied from the station folder, gitignored, excluded from the dev server and build`
+  derivatives = `folios in public/images/assets/folios/, panel faces in public/images/assets/panels/, worktable in public/images/assets/worktable/; each piece {thumb,display,hero}.{avif,webp} plus one .spw sidecar`
+  extent = `Batch A runs about 10.0 x 7.9 in, the laminate edge; the planning sheet about 11 x 17 in. Paper and panel sizes are still to be measured.`
+  orientation = `Kept as scanned. Each sidecar says where lettering runs sideways, mirrored, or upside down. Rotating a piece is the creator's call.`
+}
+
+^"faces"{
+  claim = `A panel canvas is painted on both sides. Fronts and backs were scanned in separate passes and not in pairing order, so the scans hold faces, not panels.`
+  held = `which front meets which back`
+  demo = `Any front/back combination shown on a page is a demo and says so. The creator does not mind describing that experience with the scans: a pairing held open, like a ~ potential that has not collapsed.`
+}
+
+^"sources"{
+  folios = #[
+    `00 hash-speech-cassette (_13)`, `01 development-teal-stripes-vibes (_14)`, `02 book-i-hold-you-location-inn (_15)`,
+    `03 boon-land-arrows-teal-stripes (_16)`, `04 token-column-grey-wash (_17)`, `05 operator-tiles-signed-copy (_18)`,
+    `06 violet-cutouts-ochre-arrows (_19)`, `07 bean-green-tale-lore (_20)`, `08 enter-scope-teal-blocks (_21)`,
+    `09 style-skill-signature-magenta (_22)`, `10 style-skill-signature-surname (_23)`, `11 rust-yellow-blocks-weathered (_24)`,
+    `12 movies-are-emotions-art-carries-healing (_25)`, `13 boon-bane-honk-pink (_26)`, `14 lavender-scumble-faint-letters (_27)`,
+    `15 honk-about-pi-lavender (_28)`, `16 honk-about-a-pie-legal-pad (_29)`, `17 practice-collaborating-communication (_30)`,
+    `18 lore-land-features-integrity-relationship (_31)`, `19 honk-bane-bonk-boon-map (_32)`, `20 boon-bane-composition-continuity-chaos (_33)`,
+    `21 factshift-open-source-version-test (_34)`, `22 boon-bane-bone-land-tree (_35)`, `23 we-need-new-infrastructure-boon (_36)`,
+    `24 grey-cloud-over-drawings (_37)`, `25 coherent-cohesion-connection-teal (_38)`, `26 shop-logo-vibe-menu-time (_39)`,
+  ][reg=list]
+  fronts = #[
+    `00 are-we-saying-the-same`, `01 two-moons-stepped-violet`, `02 rose-moon-teal-surf`, `03 teal-spiral-arch`,
+    `04 teal-spheres-red-leaf`, `05 white-blot-red-halo`, `06 ochre-drawings-teal-curve`, `07 ember-figure-glyph`,
+    `08 pale-moon-maroon`, `09 october-09-monday-cups`, `10 teal-moon-white-drip`, `11 hatched-green-comet`, `12 pale-blue-cloud-drawings`,
+  ][reg=list]
+  backs = #[
+    `00 gold-glyph-blocks-pink-plume`, `01 rust-arc-grey-serpent`, `02 ochre-map-gold-hashes`, `03 two-pale-moons-green-lozenge`,
+    `04 grey-river-dark-hill`, `05 dark-orb-two-pink-dots`, `06 publishing-print-digital-2018`, `07 rose-arch-bulb-dome`,
+    `08 teal-night-moon-three-stools`, `09 red-field-teal-drips`, `10 blue-sky-grey-moon-rose`, `11 five-columns-beads-boxes`,
+  ][reg=list]
+  worktable = #[
+    `sheet 00 sunday-plan-thanks-for-groceries`, `sheet 01 panel-on-plan-a`, `sheet 02 panel-on-plan-b`, `sheet 03 folio-on-plan`,
+    `grocery 00 grocery-smoked-salmon`, `grocery 01 grocery-squash-crown`, `grocery 02 grocery-squash-base`,
+  ][reg=list]
+  titles = `Working titles named from what is lettered or painted. The creator's titles replace them; slugs follow.`
+}
+
+^"threads"{
+  valence = `folios 03, 13, 16, 19, 20, 22, 23 — boon, bane, bone, bonk, honk; the lands and their tree.`
+  rooms = `folios 03, 07, 18, 21, 22 — boon.land, lore.land, factshift.com.`
+  lists = `folios 09, 10 — style, skill, signature, surname, subjective experience, once under magenta and once plain.`
+  practice = `folios 01, 17, 25, 26 — development, practice, coherence, and a site's shop, logo, vibe, menu, time.`
+  washes = `folios 04, 11, 14, 24; fronts 12 — later paint over an earlier page.`
+  calendar = `front 09 (October 09, Monday) and the planning sheet's week; today's set was scanned toward one piece per month.`
+}
+
+^"thanks_for_groceries"{
+  pieces = `sheet 00 (the planning sheet: thanks for groceries, salmon, chili, tokens; yesterday was release day), grocery 00–02 (the smoked salmon, the squash from both ends)`
+  creator = `2026-09-27: I'm thankful for grocery money and I made art about that today.`
+  placement = `unset — the creator is not sure where it belongs on the site. Any sentence on a route about money, tips, or tokens waits for the creator's wording.`
+}
+
+^"expression_key"{
+  facet = `Each sidecar carries ^"expression" (status, key, readings a and b, handles, creator) and ^"dialog" (opens, turns, answers).`
+  key = `* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count — the canonical sigils (kernel/operator-detection.js), taught once for every piece.`
+  readings = `a is one clause in the dialect module describes use, subject[mode]{direction}<capsule>; b is the piece's constellation of handles. Two readings of the same piece, ready to compare (A/B) against each other and against a style trained on the art.`
+  index = `Handles are decentralized index keys: every piece that carries &honk or <lore.land joins that thread without a central list. The runtime atlas can read them beside module contracts, which speak the same dialect.`
+  dialog = `opens is one question drawn from the piece's own lettering or motif; turns and answers stay empty for the conversation.`
+  status = `draft — read by an agent from what is visible; the creator develops every expression.`
+}
+
+^"primes"{
+  commission = `Take orders for a laminated folio about a topic, from a set of inspirations, with tiers by the number of influences. Tier sizes and prices unset; the request card at /design/folios/#folio-request is its seat.`
+  calendars = `Artists imagine calendars of photos of their own art, sold as bundles that can come with coupons or tokens for future deals. Mechanism and every financial sentence unset until the creator words them.`
+  authors = `Authors imagine updating a site like lore.land.`
+  learnable_perks = `The site's JavaScript has learnable perks; a premium could be how learnable a feature is, through support wiring or description bundling (contracts, Spw descriptions, the atlas).`
+  new_year = `On the newyear route, configure the vibes for the year: an interactive timeline with excellent UX, where Spw expressions or the cauldron set a wish. Model the spirit of the New Year more consistently.`
+  style = `Train a style on the art, and A/B test Spw expressions that describe parts of it.`
+  weekly = `One of today's scans per week somewhere; the weekly promo cycle or the high-res five can carry it.`
+  season = `Make the season feel cozier; model a relationship with economic flow that is supportive and proactively mindful of how everyone is feeling.`
+  reading = `Pages more readable and interactive, so a reader can read through and improvise wonder through a flow.`
+  jazz = `Character motivation, layers of decoration or semantic fields and waves, speech bubbles, changes over time, themes across folios, relationships to routes: perfect openings for Spw jazz to grow more complicated, as a welcome experiment.`
+  shaders = `Glitch art or shaders for specific folios.`
+  minting = `A minting process; the folio-worktable track's minting.spw is its seat.`
+  search = `If search is drastically improved, the laminated folios become a demo of the same wonder.`
+  carousel = `A laminated folio carousel for promo and wonder across the site; a feel decision, shown in a browser first.`
+  interpreter = `A Spw expression interpreter that makes configurable modal dialogs and memory surfaces from ^"dialog" facets; tonight's folio views are its hand-built first case.`
+  order_cards = `Order cards as Spw serializations beautiful enough to share.`
+  ordering = `Creator, 2026-09-27: the best way to order a laminated folio is to DM on Discord, X, TikTok, or Bluesky.`
+  notes = `Notes about each folio collectible locally, including opinions about orientation or framing, so the creator can ask people what they think.`
+}

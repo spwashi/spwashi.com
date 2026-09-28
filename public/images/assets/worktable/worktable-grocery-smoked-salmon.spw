@@ -1,0 +1,58 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "worktable-grocery-smoked-salmon"
+  title: "Grocery, smoked salmon"
+  description: "Part of Thanks for groceries, September 27, 2026: the groceries themselves, scanned flat."
+  series: "thanks-for-groceries"
+}
+
+^"source"{
+  id: "grocery-2026-09-27-00"
+  station_file: "scans-2026_09_27-B/SimpleScanStation20260927185745_0.png"
+  master: "public/images/renders/_raw/folio-scans-2026-09-27/grocery-2026-09-27-00-scan.png"
+  master_tracked: false
+  scan: { width: 2016, height: 2737, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 6.7 x 9.1 in at 300 dpi; the laminate edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-27.spw"
+}
+
+^"usage"{
+  surface: "worktable"
+  role: "grocery-thanks"
+  formats_available: ["avif", "webp"]
+  alt_text: "A package of double-smoked salmon, scanned flat"
+  tiers: {
+    thumb: { width: 189, height: 256, avif_kib: 2, webp_kib: 3 }
+    display: { width: 377, height: 512, avif_kib: 12, webp_kib: 10 }
+    hero: { width: 755, height: 1024, avif_kib: 42, webp_kib: 30 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip 2048px intermediate"
+  png: "none — AVIF and WebP only, as the September 26 set ships"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["grocery", "release-2026-09-27", "thanks-for-groceries", "salmon"]
+  part_of: "folio-release-2026-09-27"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `grocery[salmon]{thanks}`
+  b: `*worktable-grocery-smoked-salmon *thanks_for_groceries &salmon`
+  handles: ["*thanks_for_groceries", "&salmon"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what did this salmon become?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

@@ -1,0 +1,62 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "panel-gold-glyph-blocks-pink-plume"
+  title: "Gold glyph blocks, pink plume"
+  description: "Laminated panel canvas, back face, scanned September 27, 2026."
+}
+
+^"source"{
+  id: "panel-2026-09-27-back-00"
+  station_file: "scans-2026_09_27-A/laminated_folio-or-panel_canvas_40.png"
+  master: "public/images/renders/_raw/folio-scans-2026-09-27/panel-2026-09-27-back-00-scan.png"
+  master_tracked: false
+  scan: { width: 2984, height: 2370, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 9.9 x 7.9 in at 300 dpi; the laminate edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-27.spw"
+}
+
+^"face"{
+  side: "back"
+  panel: "unresolved — fronts and backs were scanned in separate passes, not in pairing order; any front/back combination shown is a demo"
+}
+
+^"usage"{
+  surface: "panels"
+  role: "panel-face"
+  formats_available: ["avif", "webp"]
+  alt_text: "Gold-outlined red blocks with circle glyphs beside a pink plume on violet"
+  tiers: {
+    thumb: { width: 256, height: 203, avif_kib: 2, webp_kib: 2 }
+    display: { width: 512, height: 407, avif_kib: 10, webp_kib: 8 }
+    hero: { width: 1024, height: 814, avif_kib: 54, webp_kib: 34 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip 2048px intermediate"
+  png: "none — AVIF and WebP only, as the September 26 set ships"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["panel", "release-2026-09-27", "glyph", "plume"]
+  part_of: "folio-release-2026-09-27"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `glyphs[gold]{blocks.plume}`
+  b: `*panel-gold-glyph-blocks-pink-plume ~glyph ~plume`
+  handles: ["~glyph", "~plume"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what do the gold glyphs spell?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

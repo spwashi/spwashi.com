@@ -1,0 +1,58 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-we-need-new-infrastructure-boon"
+  title: "We need new infrastructure, boon"
+  description: "Laminated folio, scanned for the September 27, 2026 release set."
+}
+
+^"source"{
+  id: "folio-2026-09-27-23"
+  station_file: "scans-2026_09_27-A/laminated_folio-or-panel_canvas_36.png"
+  master: "public/images/renders/_raw/folio-scans-2026-09-27/folio-2026-09-27-23-scan.png"
+  master_tracked: false
+  scan: { width: 3437, height: 2707, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 11.5 x 9.0 in at 300 dpi; the laminate edge, not a measured size"
+  orientation_note: "tags run sideways; kept as scanned"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-27.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "Sage and pink with boon lettered large; tags read we need new infrastructure and we need more groundedness"
+  tiers: {
+    thumb: { width: 256, height: 202, avif_kib: 2, webp_kib: 3 }
+    display: { width: 512, height: 403, avif_kib: 15, webp_kib: 12 }
+    hero: { width: 1024, height: 807, avif_kib: 77, webp_kib: 55 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip 2048px intermediate"
+  png: "none — AVIF and WebP only, as the September 26 set ships"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-09-27", "we-need-new-infrastructure", "we-need-more-groundedness", "boon"]
+  part_of: "folio-release-2026-09-27"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `need[infrastructure|groundedness]{boon}`
+  b: `*folio-we-need-new-infrastructure-boon !we_need_new_infrastructure !we_need_more_groundedness &boon`
+  handles: ["!we_need_new_infrastructure", "!we_need_more_groundedness", "&boon"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what infrastructure would make you more grounded?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}
