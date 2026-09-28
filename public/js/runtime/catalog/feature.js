@@ -119,6 +119,23 @@ export const FEATURE_DEFS = [
     load: () => import('../../modules/design/folio-shelf.js'),
   },
   {
+    id: 'runtime-atlas',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.VISIBLE,
+    features: ['runtime-atlas'],
+    selector: '[data-runtime-atlas]',
+    rootMode: 'single',
+    describes: 'atlas[families|contracts|edges|moves|handles]{relate.replay}<runtime> filter the modules, open one to read its contract as Spw and who styles what it writes, replay a move, walk the folio handles',
+    updates: [
+      'structural:data-runtime-atlas-state',
+      'inspect:data-runtime-atlas-focus',
+    ],
+    evaluates: ['semantics', 'qa-observation'],
+    timingArc: 'visible-lab',
+    effectScope: ['local-dom', 'element-state', 'network', 'navigation'],
+    load: () => import('../../modules/design/runtime-atlas.js'),
+  },
+  {
     id: 'payment-cards',
     layer: MODULE_LAYERS.FEATURE,
     when: MOUNT_WHEN.VISIBLE,
