@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">Spwashi mark</title>
+  <rect width="512" height="512" fill="#203b36"/>
+  <g fill="none" stroke="#f4e8c9" stroke-width="25" stroke-linecap="round">
+    <path d="M177 151v210M243 151v210"/>
+    <path d="M137 220h139M137 292h139"/>
+  </g>
+  <path d="m304 194 69 62-69 62" fill="none" stroke="#dba84f" stroke-width="29" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
