@@ -48,3 +48,7 @@ Verified: four route tests; init + doctor in a temporary Git consumer with a lin
 existing workbench/dependency tree; repeat init preserved the index. Wrangler 4.135.0
 dry-run bundled successfully (no bindings). Fresh dependency installation and live
 Claude discovery were not exercised. Deployment awaits Wrangler authentication.
+
+## Site page follows the live remote — 2026-09-28
+
+spw.quest answers 200 and serves the three instruction sets (Shell, Claude, Codex), `/init`, `/git.md`, and `/quest.json`. The site page `about/domains/spw.quest/index.html` now says so (commit 7049f2e8): kicker `mount surface`, the job in the lede, a Start strip mirroring `does` and `keeps` from `workers/spw-quest/src/quest.js` with links to `https://spw.quest/#shell|#claude|#codex`, the crawl prompt third with a chip that opens it in the literal parser, and no `coming soon` or `quiet remote` copy. Drift rule: the Start strip restates the worker's `INSTRUCTION_SETS` prose by hand; when a set's `does`, `keeps`, or id changes in the worker, the page strip changes in the same patch. The pin itself is never written on the page; `/init` carries it. Not done: a phone still (no fixture for this route yet; add one to `scripts/lib/viewport-still-recipes.mjs` on the next visual pass) and a browser read of the Start strip's rhythm against the atlas panel.
