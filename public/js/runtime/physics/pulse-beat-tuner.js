@@ -6,6 +6,8 @@
  * interaction/component lifecycle events.
  */
 
+import { isRouteMenuOpen } from '/public/js/kernel/navigation-chrome.js';
+
 const BEAT_CADENCE = 13;
 const PRIME_BEATS = new Set([1, 5, 9, 13]);
 const FRESHNESS_EVENT = 'spw:freshness-pulse';
@@ -100,7 +102,7 @@ function writeBeat(html, beat) {
 }
 
 function pulseFreshness(html, source = 'interaction', detail = {}) {
-  if (!html || document.hidden || !isRhythmEnabled(html)) return;
+  if (!html || document.hidden || !isRhythmEnabled(html) || isRouteMenuOpen()) return;
   const duration = readPulseDurationMs(html);
   html.dataset.spwFreshnessPulse = source;
   document.dispatchEvent(new CustomEvent(FRESHNESS_EVENT, {
@@ -155,6 +157,9 @@ function scheduleBeatCycle(html) {
   scheduledInterval = interval;
 
   beatTimer = window.setInterval(() => {
+    // The beat rests while a reader chooses a route: each tick is a root write
+    // the tap on that route would otherwise wait behind.
+    if (isRouteMenuOpen()) return;
     writeBeat(html, currentBeat >= BEAT_CADENCE ? 1 : currentBeat + 1);
   }, interval);
 

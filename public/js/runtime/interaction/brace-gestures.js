@@ -41,6 +41,7 @@
  * - These are intended for subtle environmental responses in CSS.
  */
 
+import { isNavigationChrome } from '/public/js/kernel/navigation-chrome.js';
 import { bus } from '/public/js/kernel/bus.js';
 import {
   detectOperator,
@@ -290,6 +291,9 @@ function isReadableTextOrigin(origin, host) {
 // itself, so the exclusion below is a no-op and normal resolution proceeds.
 // See .spw/conventions/interaction-microstates.spw#reward_contract.
 function braceTarget(node) {
+  // A route link or floating control is not a brace: capturing its pointer and
+  // writing the body's field state held the tap for half a second.
+  if (isNavigationChrome(node)) return null;
   const cauldronMatch = node?.closest?.('.spw-living-term, [data-spw-living-term], [data-spw-cauldron-candidate="true"]');
   if (cauldronMatch && !cauldronMatch.matches(BRACE_TARGET_SELECTOR)) {
     return null;
