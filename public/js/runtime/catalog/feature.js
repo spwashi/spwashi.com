@@ -119,6 +119,22 @@ export const FEATURE_DEFS = [
     load: () => import('../../modules/design/folio-shelf.js'),
   },
   {
+    id: 'folio-day',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.VISIBLE,
+    selector: '[data-folio-day]',
+    rootMode: 'single',
+    describes: 'folio[day]{date.pick}<question> one piece and the question its sidecar opens with, chosen from the date, the same for every reader, the week ahead listed',
+    updates: [
+      'structural:data-folio-day-state',
+      'temporal:data-folio-day-key',
+    ],
+    evaluates: ['surface'],
+    timingArc: 'visible-lab',
+    effectScope: ['local-dom', 'element-state', 'network'],
+    load: () => import('../../modules/design/folio-day.js'),
+  },
+  {
     id: 'runtime-atlas',
     layer: MODULE_LAYERS.FEATURE,
     when: MOUNT_WHEN.VISIBLE,
