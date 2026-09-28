@@ -1,8 +1,13 @@
 import { parse, SPW_PARSER_BUILD } from '/public/js/semantic/spw-workbench-parser.js';
 
-const SOURCE_PARAM = 'spw_source';
-const NAME_PARAM = 'spw_source_name';
-const MAX_APP_SOURCE_LENGTH = 6000;
+import {
+  createParserAppUrl,
+  PARSER_LINK_MAX_SOURCE as MAX_APP_SOURCE_LENGTH,
+  PARSER_NAME_PARAM as NAME_PARAM,
+  PARSER_SOURCE_PARAM as SOURCE_PARAM,
+} from '../../kernel/parser-link.js';
+
+export { createParserAppUrl };
 const MAX_FILE_BYTES = 256 * 1024;
 
 export const SPW_LITERAL_PARSER_SAMPLES = Object.freeze({
@@ -134,14 +139,6 @@ export function parseLiteralSource(source) {
       types: Object.fromEntries([...astCensus.types.entries()].sort(([a], [b]) => a.localeCompare(b))),
     },
   };
-}
-
-export function createParserAppUrl(source, name = '', base = globalThis.location?.origin || 'https://spwashi.com') {
-  const url = new URL('/tools/spw-parser/', base);
-  url.searchParams.set(SOURCE_PARAM, String(source ?? ''));
-  if (name) url.searchParams.set(NAME_PARAM, String(name).slice(0, 120));
-  url.hash = 'literal-parser';
-  return url;
 }
 
 function tokenDisplayValue(token) {
