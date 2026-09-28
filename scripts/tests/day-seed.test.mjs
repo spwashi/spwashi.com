@@ -26,3 +26,13 @@ test('every item appears once per pass before any repeats', () => {
   assert.deepEqual([...seen].sort(), [...list].sort());
   assert.equal(pickForDay([], new Date()), null);
 });
+
+test('a rotation does not clump neighbors from the list', () => {
+  // 83 items in id order, like the folio feed: a good pass scatters contiguous runs.
+  const list = Array.from({ length: 83 }, (_, index) => index);
+  for (const salt of ['folio-day', 'site-search-pieces', 'home']) {
+    const firstTen = dayWindow(list, new Date(2026, 8, 27), 10, salt).map((entry) => entry.item);
+    const spread = Math.max(...firstTen) - Math.min(...firstTen);
+    assert.ok(spread > 40, `${salt}: first ten span ${spread}`);
+  }
+});

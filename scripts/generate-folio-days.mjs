@@ -44,6 +44,7 @@ for (const dir of DIRS) {
       height: thumb ? Number(thumb[2]) : null,
       alt: text.match(/^\s*alt_text:\s*"((?:[^"\\]|\\.)*)"/m)?.[1]?.replace(/\\"/g, '"') || '',
       opens: text.match(/^\s*opens:\s*`\?([^`]*)`/m)?.[1] || null,
+      handles: [...(text.match(/^\s*handles:\s*\[([^\]]*)\]/m)?.[1] || '').matchAll(/"([^"]+)"/g)].map((match) => match[1]),
     });
   }
 }

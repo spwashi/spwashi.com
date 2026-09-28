@@ -17,6 +17,7 @@
  * Triggers: [data-spw-site-search-open], window.spwSearch
  */
 
+import { dayWindow } from '/public/js/kernel/day-seed.js';
 import {
   annotateFloatingChromeElement,
   requestFloatingChromeSync,
@@ -40,7 +41,10 @@ const FACETS = Object.freeze([
   { id: 'labs', label: 'Labs' },
   { id: 'components', label: 'Components' },
   { id: 'expressions', label: 'Expressions' },
+  { id: 'pieces', label: 'Pieces' },
 ]);
+
+const PIECES_HREF = '/public/data/folio-days.json';
 
 /** Longer prefixes first so `#>` wins over `#`. Matches operator-detection.js. */
 const SIGIL_ALIASES = Object.freeze({
@@ -114,6 +118,7 @@ function passesFacet(entry, facet) {
   if (facet === 'frames') return entry.kind === 'frame';
   if (facet === 'components') return entry.kind === 'component' || Boolean(entry.componentId);
   if (facet === 'expressions') return Array.isArray(entry.expressions) && entry.expressions.length > 0;
+  if (facet === 'pieces') return entry.kind === 'piece';
   return true;
 }
 
@@ -203,7 +208,12 @@ function rankEntries(query, facet = activeFacet) {
       ? pool.filter((entry) => entry.kind === 'frame' && entry.frameOf === here)
       : [];
     const limit = facet === 'operators' || facet === 'expressions' ? 20 : 14;
-    const rest = pool.filter((entry) => !local.includes(entry) && entry.kind !== 'frame').slice(0, Math.max(6, limit - local.length));
+    if (facet === 'pieces') {
+      /* The art, starting from today's piece: the same order for every reader today, a new one tomorrow. */
+      return dayWindow(pool, new Date(), Math.min(limit, pool.length), 'site-search-pieces')
+        .map(({ item }) => ({ entry: item, score: 0, matchedExpression: '' }));
+    }
+    const rest = pool.filter((entry) => !local.includes(entry) && entry.kind !== 'frame' && entry.kind !== 'piece').slice(0, Math.max(6, limit - local.length));
     return local.concat(rest).map((entry) => ({ entry, score: 0, matchedExpression: '' }));
   }
 
@@ -227,16 +237,38 @@ function groupByNest(ranked) {
   return [...groups.entries()].sort((a, b) => a[0].localeCompare(b[0]));
 }
 
+/** Folio and panel pieces as search entries: the original work carries * (value), like its provenance mark. */
+function piecesToEntries(feed) {
+  const pieces = Array.isArray(feed?.pieces) ? feed.pieces : [];
+  return pieces.map((piece) => ({
+    kind: 'piece',
+    title: piece.title,
+    route: piece.href,
+    nestRoot: 'design',
+    nestLabel: piece.id.startsWith('panel-') ? 'panel faces' : 'folios',
+    sigil: '*',
+    operator: 'value',
+    handles: piece.handles || [],
+    wonder: piece.opens ? `?${piece.opens}` : '',
+    surface: 'original',
+    haystack: [piece.title, piece.alt, piece.opens, ...(piece.handles || [])].filter(Boolean).join(' '),
+  }));
+}
+
 function loadIndex() {
   if (indexPromise) return indexPromise;
-  indexPromise = fetch(INDEX_HREF, { credentials: 'same-origin' })
-    .then(async (response) => {
+  indexPromise = Promise.all([
+    fetch(INDEX_HREF, { credentials: 'same-origin' }),
+    // The scanned pieces, read from their sidecars; search still works when they are missing.
+    fetch(PIECES_HREF, { credentials: 'same-origin' }).then((response) => (response.ok ? response.json() : null)).catch(() => null),
+  ])
+    .then(async ([response, piecesFeed]) => {
       if (!response.ok) throw new Error(`search index ${response.status}`);
       const payload = await response.json();
       const routes = Array.isArray(payload?.routes) ? payload.routes : [];
       const components = Array.isArray(payload?.components) ? payload.components : [];
       const frames = Array.isArray(payload?.frames) ? payload.frames : [];
-      entries = routes.concat(frames, components);
+      entries = routes.concat(frames, components, piecesToEntries(piecesFeed));
       facetsMeta = payload?.facets || null;
       geometryLegend = payload?.geometryLegend || null;
       return entries;
