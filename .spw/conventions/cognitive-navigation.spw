@@ -335,6 +335,12 @@ fixity = "stable"
   event_contract: [
     "spw:section-locomotion-state emits the current section snapshot for inspectors and future shell couplings"
   ]
+
+  summary_layers: [
+    "the rail's label is a Spw position, not the heading sentence: #> region (frame address), . path (dot-joined breadcrumb), & component (title around the reading groove's lead beat), ! recent activation",
+    "the reader cycles layers from the operator button; the choice persists locally as data-spw-handle-layer on the shell; the heading stays the link's name and title",
+    "short authored section ids and component headings are what give each layer something to say"
+  ]
 }
 
 ^"semantic_navigation_geometry"{

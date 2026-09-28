@@ -126,6 +126,14 @@ expression = pacing[visit]{distribute.withhold.settle}<falsify>
   reduced_motion_is_not_an_exception = `Do not build a pacing that only exists in the duration term. If the pacing disappears when durations collapse to 1ms, it was decoration — @wonder_doctrine#ambient_decoration, arrived at from the timing side.`
 }
 
+^"the_readers_latency_2026_09_28"{
+  ~#measured: "a tap on a route in the open phone menu reached the page 5–6s after the finger landed (headless, built deploy, load 7–20); the click was never cancelled, it waited behind long tasks, each a full restyle paid for writes other modules made in the meantime"
+  latency_belongs_to_the_reader = `Latency was written as when a change may start. A tap has one too: how long before the thing the reader chose is theirs. Every write the page makes in between spends it, so a surface that pulses, primes, and mounts while a reader decides is spending the reader's time, not its own.`
+  cadence_says_no_to_itself = `While the toggle route menu is open, idle mounting waits and the beat rests (kernel/navigation-chrome.js whenRouteMenuCloses, isRouteMenuOpen): cadence refusing the page's own atmosphere so a destination stays one step away.`
+  engagement_is_authored_latency = `A module that answers a reader may wait for engagement instead of arriving (catalog engages, kernel/engagement.js). Its latency becomes the reader's approach: primed when a touch lands, discharged when intent resolves. A touch that becomes a scroll is not an engagement.`
+  still_open = `3.6–6.6s remained after the fences, behind other modules' pointer handlers and the boot tail. The reader's latency is the measure the runtime work is judged by.`
+}
+
 # ── Wonders ────────────────────────────────────────────────────
 
 #>wonder_pacing_1
