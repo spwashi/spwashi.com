@@ -2,16 +2,12 @@
 /**
  * generate-pwa-icons.mjs
  * ---------------------------------------------------------------------------
- * Compose the derived PWA icon set from the canonical icon artwork
- * (public/images/icon-512.png).
+ * Render the PWA icon set from the canonical SVG artwork
+ * (public/images/app-icon.svg).
  *
- * Launcher-masked surfaces must be full-bleed: Android crops `purpose:
- * maskable` icons to the device tile shape and fills leftover transparency
- * with black, and iOS composites apple-touch icons onto black. Artwork with
- * baked-in rounded corners therefore ships with its own field extended
- * edge-to-edge, scaled so the motif stays inside the maskable safe zone
- * (the central 80% circle) while the artwork's decorative ring falls outside
- * the canvas and the launcher's crop.
+ * The SVG has a full-bleed field. Its central mark fits inside the maskable
+ * safe area, so Android and iOS can crop their own tile shapes without
+ * clipping the mark or revealing transparency.
  *
  * Rendering happens in headless Chrome (canvas → PNG data URL) against a
  * throwaway local static server, so the tool stays dependency-free and the
@@ -31,7 +27,7 @@ import { join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const SOURCE_ICON = '/public/images/icon-512.png';
+const SOURCE_ICON = '/public/images/app-icon.svg';
 const OUTPUT_DIR = join(REPO_ROOT, 'public/images');
 const CHECK_MODE = process.argv.includes('--check');
 
@@ -43,15 +39,11 @@ const CHROME_CANDIDATES = [
   '/usr/bin/chromium-browser',
 ].filter(Boolean);
 
-/**
- * Derived surfaces. `scale` is artwork width relative to the tile: values
- * above 1 push the artwork's own rounded corners and ring off-canvas so the
- * sampled field color reads as the full bleed. The maskable motif must stay
- * within the central 80% circle (motif ≈ 62% of the artwork → scale ≤ ~1.29).
- */
 const ICON_JOBS = [
-  { file: 'icon-maskable-512.png', size: 512, scale: 1.29 },
-  { file: 'apple-touch-icon.png', size: 180, scale: 1.12 },
+  { file: 'icon-192.png', size: 192 },
+  { file: 'icon-512.png', size: 512 },
+  { file: 'icon-maskable-512.png', size: 512 },
+  { file: 'apple-touch-icon.png', size: 180 },
 ];
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -76,6 +68,7 @@ function startStaticServer() {
         return;
       }
       const type = file.endsWith('.png') ? 'image/png'
+        : file.endsWith('.svg') ? 'image/svg+xml'
         : file.endsWith('.html') ? 'text/html; charset=utf-8'
           : 'application/octet-stream';
       res.writeHead(200, { 'Content-Type': type });
@@ -130,29 +123,15 @@ function connect(wsUrl) {
 }
 
 const COMPOSE_FN = String.raw`
-async (size, artScale, srcUrl) => {
+async (size, srcUrl) => {
   const img = new Image();
   await new Promise((res, rej) => { img.onload = res; img.onerror = rej; img.src = srcUrl; });
-
-  // Sample the artwork's field color just inside its shape (below the ring)
-  // so the extended bleed matches the artwork exactly.
-  const probe = document.createElement('canvas');
-  probe.width = img.width; probe.height = img.height;
-  const pctx = probe.getContext('2d');
-  pctx.drawImage(img, 0, 0);
-  const px = pctx.getImageData(Math.round(img.width * 0.5), Math.round(img.height * 0.12), 1, 1).data;
-  const bg = 'rgb(' + px[0] + ',' + px[1] + ',' + px[2] + ')';
-
   const canvas = document.createElement('canvas');
   canvas.width = size; canvas.height = size;
   const ctx = canvas.getContext('2d');
-  ctx.fillStyle = bg;
-  ctx.fillRect(0, 0, size, size);
-  const art = Math.round(size * artScale);
-  const off = Math.round((size - art) / 2);
   ctx.imageSmoothingQuality = 'high';
-  ctx.drawImage(img, off, off, art, art);
-  return { data: canvas.toDataURL('image/png'), bg };
+  ctx.drawImage(img, 0, 0, size, size);
+  return canvas.toDataURL('image/png');
 }
 `;
 
@@ -179,11 +158,11 @@ async function main() {
 
     for (const job of ICON_JOBS) {
       const result = await cdp.send('Runtime.evaluate', {
-        expression: `(${COMPOSE_FN})(${job.size}, ${job.scale}, '${SOURCE_ICON}')`,
+        expression: `(${COMPOSE_FN})(${job.size}, '${SOURCE_ICON}')`,
         awaitPromise: true,
         returnByValue: true,
       });
-      const { data, bg } = result.result.value;
+      const data = result.result.value;
       const bytes = Buffer.from(data.split(',')[1], 'base64');
       const finalPath = join(OUTPUT_DIR, job.file);
       const previous = existsSync(finalPath) ? readFileSync(finalPath) : null;
@@ -191,7 +170,7 @@ async function main() {
       if (changed) dirty += 1;
 
       writeFileSync(join(outDir, job.file), bytes);
-      console.log(`[icons] ${job.file} size=${job.size} scale=${job.scale} bg=${bg} ${changed ? 'changed' : 'unchanged'}`);
+      console.log(`[icons] ${job.file} size=${job.size} ${changed ? 'changed' : 'unchanged'}`);
     }
     cdp.close();
   } finally {

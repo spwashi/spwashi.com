@@ -48,6 +48,12 @@ Craft guard:
 - **Privacy seam**: install-hint dismissals are time-bounded and disclosed alongside Cache Storage and external font behavior.
 - **Do not touch**: creator identity, route information architecture, full-site visual redesign, or speculative offline mirroring.
 
+## Icon alignment — 2026-09-28
+
+- One full-bleed SVG source generates the 192, 512, maskable, and Apple touch PNGs; the central mark stays inside launcher crops.
+- The logo studio compares the current mark with three former install icons and links their original files for review.
+- `npm run icons:pwa:check` verifies generated PNGs remain synchronized with the source.
+
 ## Commits
 
 1. `#[pwa] — capture the feature plan and branch memory for the PWA pass`
