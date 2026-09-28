@@ -15,11 +15,18 @@ export const STRIP_PAGES = Object.freeze(['index.html', 'now/index.html']);
 
 const STRIP_RE = /(<ol\b[^>]*\bdata-folio-highres-strip\b[^>]*>)([\s\S]*?)(\n([ \t]*)<\/ol>)/g;
 
-/** slug → { no, anchor, thumb, width, height, title }, read from the folio page's tiles. */
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+/**
+ * slug → { no, anchor, thumb, width, height, title }, read from the folio page's tiles.
+ * A later scan set prefixes its tiles with MMDD (folio-0927-07); its number
+ * carries the date, so two No. 07s on one strip stay distinct.
+ */
 export function readFolioTiles(pageHtml) {
   const tiles = new Map();
-  for (const tile of pageHtml.matchAll(/<li class="folio-tile" id="(folio-(\d+))"[^>]*>([\s\S]*?)<\/li>/g)) {
-    const [, anchor, no, body] = tile;
+  for (const tile of pageHtml.matchAll(/<li class="folio-tile" id="(folio-(?:(\d{2})(\d{2})-)?(\d+))"[^>]*>([\s\S]*?)<\/li>/g)) {
+    const [, anchor, month, day, number, body] = tile;
+    const no = month ? `${number}, ${MONTHS[Number(month) - 1]} ${Number(day)}` : number;
     const img = /<img src="\/public\/images\/assets\/folios\/folio-([a-z0-9-]+)-thumb\.webp"[^>]*?width="(\d+)" height="(\d+)"/.exec(body);
     const label = /<span class="folio-tile__label"><span class="folio-tile__no">No\. \d+<\/span>\s*([^<]+)<\/span>/.exec(body);
     if (!img || !label) continue;
