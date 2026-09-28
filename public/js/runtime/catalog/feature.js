@@ -7,6 +7,7 @@
 
 import {
   COST_CLASS,
+  ENGAGE_KIND,
   MODULE_LAYERS,
   MOUNT_WHEN,
   PRETEXT_LIVE_SELECTOR,
@@ -557,6 +558,10 @@ export const FEATURE_DEFS = [
     costClass: COST_CLASS.DEMAND_COUPLED,
     selector: '.spw-delimiter, .frame-sigil, .spw-chip, [data-spw-semantic-expression]',
     rootMode: 'single',
+    // Under arming=engage it waits for a hover, focus, or press on those hosts;
+    // a touch hold that wakes it is handed over and opens the menu on mount, so
+    // the first hold on a cold page is not the one that only starts the import.
+    engages: [ENGAGE_KIND.HOVER, ENGAGE_KIND.FOCUS, ENGAGE_KIND.PRESS],
     describes: 'region-menu[inspect|mark|focus] semantic popover',
     updates: [
       'structural:data-spw-region-menu',

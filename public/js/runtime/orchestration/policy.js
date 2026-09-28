@@ -3,6 +3,9 @@ import { runtimeToken } from '/public/js/kernel/text-normalization.js';
 import { MOUNT_WHEN } from '../catalog/constants.js';
 
 const RUNTIME_TIMING_POLICIES = new Set(['normal', 'eager', 'defer', 'quiet', 'manual']);
+/* arrival: every def mounts on its schedule. engage: a def that names the reader
+   intents it answers (engages) waits for one on one of its hosts. */
+const RUNTIME_ARMING_POLICIES = new Set(['arrival', 'engage']);
 const MOUNT_WHEN_VALUES = new Set(Object.values(MOUNT_WHEN));
 const HTML = typeof document !== 'undefined' ? document.documentElement : null;
 const BODY = typeof document !== 'undefined' ? document.body : null;
@@ -13,6 +16,7 @@ const BODY = typeof document !== 'undefined' ? document.body : null;
  */
 export const SPW_RUNTIME_HELPERS_CONTRACT = Object.freeze({
   timingPolicies: Object.freeze([...RUNTIME_TIMING_POLICIES]),
+  armingPolicies: Object.freeze([...RUNTIME_ARMING_POLICIES]),
   mountWhenValues: Object.freeze([...MOUNT_WHEN_VALUES]),
   portableUse:
     'Read query/dataset scheduling policy and inspection posture without importing the bootstrap, scheduler, or registry.',
@@ -76,6 +80,14 @@ export function readRuntimePolicy() {
     || HTML?.dataset.spwModuleAudit
     || BODY?.dataset.spwModuleAudit
     || '';
+  const rawArming =
+    params.get('spw-arming')
+    || HTML?.dataset.spwArming
+    || BODY?.dataset.spwArming
+    || 'arrival';
+  const arming = RUNTIME_ARMING_POLICIES.has(normalizeRuntimeToken(rawArming))
+    ? normalizeRuntimeToken(rawArming)
+    : 'arrival';
   const visualValue =
     params.get('spw-module-visuals')
     || params.get('module-visuals')
@@ -85,6 +97,7 @@ export function readRuntimePolicy() {
 
   return {
     timing,
+    arming,
     audit: ['1', 'true', 'on', 'yes', '*'].includes(String(auditValue).toLowerCase()),
     visuals: ['1', 'true', 'on', 'yes', '*'].includes(String(visualValue).toLowerCase()),
     delay: Number.isFinite(delay) && delay > 0 ? Math.min(delay, 5000) : 0,
@@ -116,6 +129,7 @@ export function inferRuntimePosture(policy) {
   if (
     policy.audit
     || policy.timing !== 'normal'
+    || (policy.arming && policy.arming !== 'arrival')
     || policy.delay
     || policy.only.size
     || policy.skip.size
@@ -139,6 +153,7 @@ export function describeRuntimePolicy(policy) {
     `visuals:${policy.visuals ? 'on' : 'off'}`,
   ];
 
+  if (policy.arming && policy.arming !== 'arrival') parts.push(`arming:${policy.arming}`);
   if (policy.delay) parts.push(`delay:${policy.delay}ms`);
   if (policy.only?.size) parts.push(`only:${[...policy.only].join(',')}`);
   if (policy.skip?.size) parts.push(`skip:${[...policy.skip].join(',')}`);

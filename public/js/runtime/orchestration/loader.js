@@ -455,6 +455,12 @@ function getEffectiveMountWhen(def, ctx) {
   const moduleOverride = ctx.runtimePolicy.timingByModule.get(def.id);
   if (moduleOverride) return moduleOverride;
 
+  // Arming by engagement: a def that names the reader intents it answers waits
+  // for one on one of its hosts, and the scheduler hands it the engagement.
+  if (ctx.runtimePolicy.arming === 'engage' && Array.isArray(def.engages) && def.engages.length) {
+    return applyTimingPolicy(def, ctx, mountWhen.INTERACTION);
+  }
+
   const category = resolvePageCategory(ctx);
   const categoryWhen = resolveCategoryMountWhen(def, baseWhen, category, ctx);
   const staged = categoryWhen || baseWhen;

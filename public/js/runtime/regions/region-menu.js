@@ -111,6 +111,7 @@ export function initSpwRegionMenu(ctx, root) {
   if (body.dataset.spwRegionMenuInit === '1') return unmountSpwRegionMenu;
 
   writeProjectionTier(body, PROJECTION_TIERS.INSPECTION, { spwRegionMenuInit: '1' });
+  finishWakingEngagement(ctx);
   // click, contextmenu, and keydown call preventDefault (alt-click and
   // long-press open the menu, arrows move focus inside it), so they stay
   // cancelable. The pointer handlers never do — they only arm and disarm the
@@ -261,6 +262,25 @@ function onPointerDown(event) {
       openMenu(target);
     }, getHoldOpenDelay()),
   };
+}
+
+/* Under engagement arming this module arrives because a reader engaged one of
+   its hosts, and the scheduler leaves that engagement in ctx.engagements. A
+   touch hold is this module's own gesture: its listeners were not here to see
+   the pointerdown, so finish what the reader started instead of making the
+   first hold on a cold page the one that only loads the menu. */
+function finishWakingEngagement(ctx) {
+  const engagement = ctx?.engagements?.get?.('region-menu');
+  if (!engagement) return;
+  ctx.engagements.delete('region-menu');
+  const { kind, resolution, event } = engagement;
+  if (kind !== 'press' || resolution !== 'hold' || !event) return;
+  const target = resolveTarget(event.target);
+  if (!target || !isOwnAffordanceTarget(target, event.target) || !shouldArmHoldOpen(target, event)) return;
+  previewTarget = target;
+  writeDatasetValue(target, 'spwRegionPreview', 'true');
+  writeDatasetValue(document.documentElement, 'spwRegionPreviewing', 'true');
+  openMenu(target);
 }
 
 function onPointerMove(event) {

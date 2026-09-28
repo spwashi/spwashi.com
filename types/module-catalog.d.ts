@@ -27,6 +27,9 @@ export type SpwModuleMountWhen =
 
 export type SpwModuleRootMode = 'single' | 'each';
 
+/** Reader intents a def can be armed on (ENGAGE_KIND, kernel/engagement.js). */
+export type SpwEngageKind = 'press' | 'hover' | 'focus' | 'key' | 'menu';
+
 export type SpwTimingArcStem =
   | 'boot'
   | 'immediate'
@@ -202,6 +205,8 @@ export type SpwModuleDef = {
   evaluates?: readonly SpwModuleDimension[];
   timingArc?: SpwModuleTimingArc;
   timingChunk?: SpwIdleChunkId;
+  /** schedule: the reader intents that may wake this def when arming=engage. */
+  engages?: readonly SpwEngageKind[];
   /** effect: where writes and holds land; tiers say what a host must provide. */
   effectScope?: readonly SpwModuleEffectScope[];
   visual?: SpwModuleVisualEffect;
