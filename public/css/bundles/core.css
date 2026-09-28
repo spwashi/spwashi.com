@@ -11090,7 +11090,24 @@ html[data-spw-page-section-direction="back"] .spw-section-handle-shell {
   overflow: hidden;
   text-overflow: ellipsis;
   color: var(--ink, rgba(14, 18, 20, 0.92));
-  font-weight: 600;
+  /* A Spw position (#>release_set, folios.release_set), not the heading
+     sentence; the heading is the link's name and title. */
+  font-size: 0.75rem;
+  font-weight: 540;
+}
+
+/* The layer button carries the summary's operator, so the in-link token
+   would print it twice. */
+.spw-section-handle-shell:has(> .spw-section-handle-layer) .spw-section-handle-current-token {
+  display: none;
+}
+
+.spw-section-handle-layer {
+  color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 82%, var(--ink));
+  font-family: var(--grammar-mono-font, var(--site-mono-font, monospace));
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0;
 }
 
 .spw-section-handle-current-form {
@@ -11468,6 +11485,10 @@ body:has(.spw-section-handle-shell[data-spw-handle-enhanced="true"]) > .spw-sect
 
   .spw-section-handle-current-copy {
     gap: 0.2rem;
+  }
+
+  .spw-section-handle-current {
+    padding-inline: 0.4rem;
   }
 
   .spw-section-handle-current-token {
@@ -25662,6 +25683,25 @@ html[data-spw-popup-posture="expressive"] .spw-parallel-nav {
   min-width: 0;
   flex: 1 1 auto;
   overflow: hidden;
+}
+
+/* Expanded on a phone, the summary takes its own row with its layer, and the
+   travel controls wrap beneath it instead of squeezing it to one letter.
+   Written here, after the flex rule above, because this layer outranks shell. */
+@media (max-width: 45rem) {
+  :where([data-spw-floating-chrome="true"][data-spw-chrome-role="section-handle-shell"][data-spw-handle-shell-state="expanded"]) {
+    flex-wrap: wrap;
+    row-gap: 0.3rem;
+  }
+
+  :where([data-spw-floating-chrome="true"][data-spw-chrome-role="section-handle-shell"][data-spw-handle-shell-state="expanded"]) > :where(.spw-section-handle-layer, .spw-section-handle-current) {
+    order: -1;
+  }
+
+  :where([data-spw-floating-chrome="true"][data-spw-chrome-role="section-handle-shell"][data-spw-handle-shell-state="expanded"]) > :where(.spw-section-handle-current) {
+    /* Leave the layer button and the row's gap beside it. */
+    flex: 1 0 calc(100% - var(--spw-floating-control-size, 2.75rem) - 1rem);
+  }
 }
 
 /* Later layers restyle operator buttons as flex; collapsed advanced travel

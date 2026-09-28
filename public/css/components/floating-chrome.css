@@ -159,6 +159,25 @@
   overflow: hidden;
 }
 
+/* Expanded on a phone, the summary takes its own row with its layer, and the
+   travel controls wrap beneath it instead of squeezing it to one letter.
+   Written here, after the flex rule above, because this layer outranks shell. */
+@media (max-width: 45rem) {
+  :where([data-spw-floating-chrome="true"][data-spw-chrome-role="section-handle-shell"][data-spw-handle-shell-state="expanded"]) {
+    flex-wrap: wrap;
+    row-gap: 0.3rem;
+  }
+
+  :where([data-spw-floating-chrome="true"][data-spw-chrome-role="section-handle-shell"][data-spw-handle-shell-state="expanded"]) > :where(.spw-section-handle-layer, .spw-section-handle-current) {
+    order: -1;
+  }
+
+  :where([data-spw-floating-chrome="true"][data-spw-chrome-role="section-handle-shell"][data-spw-handle-shell-state="expanded"]) > :where(.spw-section-handle-current) {
+    /* Leave the layer button and the row's gap beside it. */
+    flex: 1 0 calc(100% - var(--spw-floating-control-size, 2.75rem) - 1rem);
+  }
+}
+
 /* Later layers restyle operator buttons as flex; collapsed advanced travel
    must stay out of the pocket row so the current-room sentence can yield. */
 :where(

@@ -7,7 +7,7 @@ import { appendToDocument } from '/public/js/kernel/dom-render.js';
 import { createMeasuredLane } from '/public/js/kernel/measured-frame.js';
 import { computeLocomotionFieldBalance } from '/public/js/runtime/memory/wonder-memory.js';
 import { describeSpwExpression } from '/public/js/semantic/spw-expression-geometry.js';
-import { describeWrapScan } from '/public/js/semantic/spw-compose.js';
+import { describeWrapScan, sanitizeHandle } from '/public/js/semantic/spw-compose.js';
 import { kinIds, nextKinRelation, pickRegionKin, prevKinRelation } from '/public/js/runtime/regions/region-kin.js';
 import {
   AUTO_HANDLE_MIN_SECTIONS,
@@ -50,6 +50,7 @@ import {
   resolveAttentionDocument,
   writeAttributes,
   writeSectionProgressStyle,
+  READING_BEAT_CURRENT_ATTR,
 } from './shared.js';
 import { applyAttentionCapturePins } from './capture-pins.js';
 import { PHASE_EVENT, readInteractionStory } from '/public/js/runtime/interaction/story.js';
@@ -170,7 +171,7 @@ function syncHandleContent(parts, info, activeIndex, sectionCount, storyOverlay 
     cauldronCount,
   } = parts;
 
-  const scan = resolveHandleScan(info);
+  const scan = resolveHandleScan({ ...info, ...summarizePosition(info) });
 
   if (opNode) opNode.textContent = scan.token || '#>';
   if (labelNode) labelNode.textContent = scan.label || 'section';
@@ -206,12 +207,13 @@ function syncHandleContent(parts, info, activeIndex, sectionCount, storyOverlay 
     }
   }
   if (progressNode) {
-    progressNode.textContent = `${activeIndex + 1} / ${sectionCount}`;
+    progressNode.textContent = `${activeIndex + 1}/${sectionCount}`;
     progressNode.setAttribute('aria-label', `Section ${activeIndex + 1} of ${sectionCount}`);
   }
   if (currentLink instanceof HTMLAnchorElement) {
     currentLink.href = `#${info.id}`;
     currentLink.setAttribute('aria-label', `Jump to ${info.label}`);
+    if (currentLink.title !== info.label) currentLink.title = info.label;
   }
 
   // ARIA hygiene: dynamic prev/next labels using the section that will be targeted
@@ -498,6 +500,9 @@ function createHandleShell(origin, doc = document) {
     <button type="button" class="spw-section-handle-step" data-spw-handle-target="prev" aria-label="Jump to previous section">
       <span aria-hidden="true">‹</span>
     </button>
+    <button type="button" class="spw-section-handle-step spw-section-handle-layer" data-spw-handle-target="layer" aria-label="Summary layer: region. Show path">
+      <span aria-hidden="true">#&gt;</span>
+    </button>
     <a class="spw-section-handle-current" href="#main-content">
       <span class="spw-section-handle-current-token" aria-hidden="true">#&gt;</span>
       <span class="spw-section-handle-current-copy">
@@ -564,6 +569,7 @@ function getSectionHandleRefs(handle, shell) {
     cauldronCount: shell.querySelector('.spw-section-handle-cauldron-count'),
     progressNode: shell.querySelector('.spw-section-handle-progress'),
     toggleButton: shell.querySelector('[data-spw-handle-target="toggle"]'),
+    layerButton: shell.querySelector('[data-spw-handle-target="layer"]'),
     topButton: shell.querySelector('[data-spw-handle-target="top"]'),
     prevButton: shell.querySelector('[data-spw-handle-target="prev"]'),
     nextButton: shell.querySelector('[data-spw-handle-target="next"]'),
@@ -808,6 +814,112 @@ function syncSectionVocabularyHint(sections, activeIndex, handle, shell) {
    so no write sits between two reads, and a passive source whose reading
    matches the last applied one ends before any attribute, text, or root style
    is touched. Explicit sources (travel, story, toggle) always apply. */
+/* The rail summarizes where the reader is as one Spw form, at a layer they
+   choose: the region they are in (#> its frame address), the path to it (a
+   dot-joined breadcrumb), the component being read (&), or what they last
+   engaged (!). The section heading stays in the link's name and title. */
+const RAIL_LAYERS = Object.freeze([
+  Object.freeze({ id: 'region', token: '#>', name: 'region' }),
+  Object.freeze({ id: 'path', token: '.', name: 'path' }),
+  Object.freeze({ id: 'component', token: '&', name: 'component' }),
+  Object.freeze({ id: 'activation', token: '!', name: 'recent activation' }),
+]);
+const RAIL_LAYER_KEY = 'spw-rail-layer';
+const RAIL_HANDLE_MAX = 28;
+const ACTIVATION_SELECTOR = '[data-spw-concept], [data-spw-semantic-expression], .spw-chip, .spw-delimiter, .frame-sigil, [data-spw-operator]';
+
+let railLayer = readRailLayer();
+let lastActivation = '';
+
+function readRailLayer() {
+  try {
+    const stored = globalThis.localStorage?.getItem(RAIL_LAYER_KEY) || '';
+    return RAIL_LAYERS.some((layer) => layer.id === stored) ? stored : 'region';
+  } catch {
+    return 'region';
+  }
+}
+
+function writeRailLayer(id) {
+  railLayer = id;
+  try {
+    globalThis.localStorage?.setItem(RAIL_LAYER_KEY, id);
+  } catch {
+    // Private windows keep the choice for this page only.
+  }
+}
+
+function railHandle(value = '') {
+  const handle = sanitizeHandle(value, '').replace(/-/g, '_');
+  if (handle.length <= RAIL_HANDLE_MAX) return handle;
+  const cut = handle.slice(0, RAIL_HANDLE_MAX);
+  const joint = cut.lastIndexOf('_');
+  return joint > RAIL_HANDLE_MAX / 2 ? cut.slice(0, joint) : cut;
+}
+
+function routeHandle() {
+  const segments = String(globalThis.location?.pathname || '/').split('/').filter(Boolean);
+  return railHandle(segments[segments.length - 1] || 'home') || 'home';
+}
+
+const COMPONENT_SELECTOR = '[data-spw-kind="card"], [data-spw-kind="panel"], [data-spw-kind="lens"], [data-spw-kind="note"], .frame-card, .spw-card';
+
+/* The component being read: the card, panel, lens, or note around the reading
+   groove's lead beat (no layout read of its own), else the section's first
+   named component. Its heading is the title; its kind stands in without one. */
+function readingLead() {
+  return document.querySelector(`[${READING_BEAT_CURRENT_ATTR}="true"]`);
+}
+
+function componentOf(section) {
+  if (!(section instanceof HTMLElement)) return '';
+  const lead = readingLead();
+  const host = (lead && section.contains(lead) ? lead.closest(COMPONENT_SELECTOR) : null)
+    || section.querySelector(COMPONENT_SELECTOR);
+  if (!(host instanceof HTMLElement)) return section.dataset.spwKind || '';
+  const title = host.querySelector('h2, h3, h4, figcaption, .frame-card-title')?.textContent || '';
+  return title.trim().split(/\s+/).slice(0, 4).join(' ') || host.dataset.spwKind || '';
+}
+
+function summarizePosition(info) {
+  const region = railHandle(info?.id || info?.label || '') || 'section';
+  switch (railLayer) {
+    case 'path':
+      return { token: '.', label: `${routeHandle()}.${region}` };
+    case 'component': {
+      const section = info?.id ? document.getElementById(info.id) : null;
+      return { token: '&', label: railHandle(componentOf(section)) || 'frame' };
+    }
+    case 'activation':
+      return lastActivation ? { token: '!', label: lastActivation } : { token: '#>', label: region };
+    default:
+      return { token: '#>', label: region };
+  }
+}
+
+function syncRailLayerButton(button, shell) {
+  const index = RAIL_LAYERS.findIndex((layer) => layer.id === railLayer);
+  const layer = RAIL_LAYERS[Math.max(0, index)];
+  const next = RAIL_LAYERS[(Math.max(0, index) + 1) % RAIL_LAYERS.length];
+  if (shell instanceof HTMLElement && shell.dataset.spwHandleLayer !== layer.id) shell.dataset.spwHandleLayer = layer.id;
+  if (!(button instanceof HTMLButtonElement)) return;
+  const glyph = button.querySelector('span') || button;
+  if (glyph.textContent !== layer.token) glyph.textContent = layer.token;
+  const label = `Summary layer: ${layer.name}. Show ${next.name}`;
+  if (button.getAttribute('aria-label') !== label) button.setAttribute('aria-label', label);
+  if (button.title !== label) button.title = label;
+}
+
+function noteActivation(target) {
+  const el = target?.closest?.(ACTIVATION_SELECTOR);
+  if (!el || el.closest('[data-spw-floating-chrome="true"]')) return false;
+  const source = el.getAttribute('data-spw-concept') || el.getAttribute('aria-label') || el.textContent || '';
+  const handle = railHandle(source.trim().split(/\s+/).slice(0, 4).join(' '));
+  if (!handle || handle === lastActivation) return false;
+  lastActivation = handle;
+  return true;
+}
+
 const PASSIVE_UPDATE_SOURCES = new Set(['scroll', 'resize']);
 
 function measureSectionHandleState(sections, state) {
@@ -834,6 +946,9 @@ function measureSectionHandleState(sections, state) {
     state.storyOverlay,
     state.compact,
     sections.length,
+    railLayer,
+    railLayer === 'activation' ? lastActivation : '',
+    railLayer === 'component' ? (readingLead()?.textContent || '').slice(0, 24) : '',
     root.spwBottomLaneHandle || '',
     root.spwActiveRegionSimilar || root.spwRegionSimilar || '',
     root.spwActiveRegionContrast || root.spwRegionContrast || '',
@@ -1082,6 +1197,13 @@ function createSectionHandleController({
     if (!(button instanceof HTMLButtonElement)) return;
     const target = button.dataset.spwHandleTarget || '';
     switch (target) {
+      case 'layer': {
+        const index = RAIL_LAYERS.findIndex((layer) => layer.id === railLayer);
+        writeRailLayer(RAIL_LAYERS[(index + 1) % RAIL_LAYERS.length].id);
+        syncRailLayerButton(refs.layerButton, shell);
+        updateActiveState('layer');
+        return;
+      }
       case 'toggle':
         state.compact = !state.compact;
         state.manualCompact = true;
@@ -1357,6 +1479,13 @@ function createSectionHandleController({
   }, true);
   shell.addEventListener('click', handleButtonClick);
   shell.addEventListener('keydown', handleShellKeydown);
+  // What the reader last engaged, for the ! layer; passive and capture, so it never delays a tap.
+  const handleActivation = (event) => {
+    if (noteActivation(event.target) && railLayer === 'activation') updateActiveState('activation');
+  };
+  document.addEventListener('pointerdown', handleActivation, { capture: true, passive: true });
+  document.addEventListener('focusin', handleActivation, { capture: true, passive: true });
+  syncRailLayerButton(refs.layerButton, shell);
   shell.addEventListener('pointerdown', handleKinPointerDown);
   shell.addEventListener('pointerup', handleKinPointerUp);
   shell.addEventListener('pointercancel', handleKinPointerUp);
@@ -1431,6 +1560,8 @@ function createSectionHandleController({
   updateActiveState('init');
 
   return () => {
+    document.removeEventListener('pointerdown', handleActivation, { capture: true });
+    document.removeEventListener('focusin', handleActivation, { capture: true });
     shell.removeEventListener('click', handleButtonClick);
     shell.removeEventListener('keydown', handleShellKeydown);
     shell.removeEventListener('pointerdown', handleKinPointerDown);
