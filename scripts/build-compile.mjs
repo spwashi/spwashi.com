@@ -8,12 +8,14 @@
  * `fix-typed-imports` rewrites kernel specifiers in public/js/typed and so
  * waits on the runtime pass only.
  *
- * Unchanged passes are skipped by hashing their authored inputs against a
- * stamp under .tmp/tsc/. CSS starts as soon as build:tools is green so it
- * overlaps the remaining typechecks instead of waiting for the whole wave.
+ * Unchanged TypeScript passes are skipped by hashing their authored inputs
+ * against a stamp under .tmp/tsc/. CSS output is checked every time: an input
+ * stamp cannot prove that all route bundles still match their sources. CSS
+ * starts as soon as build:tools is green and overlaps remaining typechecks.
  *
  * Pass --serial to run one pass at a time when isolating a compile failure.
  * Pass --with-css to run css-build after tools (overlapped unless --serial).
+ * Pass --only=build:tools --with-css for the scoped CSS inspection command.
  * Pass --force or set SPW_TSC_FORCE=1 to ignore stamps.
  */
 import { createHash } from 'node:crypto';
@@ -61,16 +63,6 @@ const PASSES = [
 const CSS_BUILD = {
   name: 'css-build',
   script: 'scripts/css-build.mjs',
-  inputs: [
-    'postcss.config.mjs',
-    'src/styles',
-    'public/css',
-    'scripts/ts/css-build.mts',
-    'scripts/ts/css-bundle.mts',
-    'scripts/ts/css-manifest.mts',
-    'scripts/ts/css-scopes.mts',
-  ],
-  sentinel: 'public/css/bundles/core.css',
 };
 
 function posixRel(from, to) {
@@ -207,34 +199,41 @@ async function runPass(pass, { force = false } = {}) {
   return { ...result, ms: Date.now() - started, cache: false };
 }
 
-async function runCssBuild({ force = false } = {}) {
-  const started = Date.now();
-  const cached = await cachedFingerprint(CSS_BUILD, force);
-  if (cached.cache) {
-    return { label: CSS_BUILD.name, status: 0, output: '', ms: Date.now() - started, cache: true };
-  }
-  const result = await runCommand(process.execPath, [CSS_BUILD.script, '--check', '--strict-budget'], CSS_BUILD.name);
-  if (result.status === 0 && cached.hash) await writeStamp(CSS_BUILD.name, cached.hash);
-  return { ...result, ms: Date.now() - started, cache: false };
+export async function runCssBuild(run = runCommand) {
+  return run(process.execPath, [CSS_BUILD.script, '--check', '--strict-budget'], CSS_BUILD.name);
 }
 
-export async function runCompile({ serial = false, withCss = false, force = false } = {}) {
+export function selectCompilePasses(only = null) {
+  if (only === null) return PASSES;
+  const names = new Set(only);
+  if (!names.size) throw new Error('[compile] --only needs at least one pass');
+  const unknown = [...names].filter((name) => !PASSES.some((pass) => pass.name === name));
+  if (unknown.length) throw new Error(`[compile] unknown pass: ${unknown.join(', ')}`);
+  return PASSES.filter((pass) => names.has(pass.name));
+}
+
+export async function runCompile({ serial = false, withCss = false, force = false, only = null } = {}) {
   const options = { force };
+  const passes = selectCompilePasses(only);
+  if (withCss && !passes.some((pass) => pass.name === 'build:tools')) {
+    throw new Error('[compile] --with-css needs build:tools in the selected passes');
+  }
 
   if (serial) {
     const compileResults = [];
-    for (const pass of PASSES) compileResults.push(await runPass(pass, options));
-    const cssResult = withCss ? await runCssBuild(options) : null;
+    for (const pass of passes) compileResults.push(await runPass(pass, options));
+    const toolsFailed = compileResults.some((result) => result.label === 'build:tools' && result.status !== 0);
+    const cssResult = withCss && !toolsFailed ? await runCssBuild() : null;
     return { compileResults, cssResult };
   }
 
   if (!withCss) {
-    const compileResults = await Promise.all(PASSES.map((pass) => runPass(pass, options)));
+    const compileResults = await Promise.all(passes.map((pass) => runPass(pass, options)));
     return { compileResults, cssResult: null };
   }
 
-  const toolsPass = PASSES.find((pass) => pass.name === 'build:tools');
-  const otherPasses = PASSES.filter((pass) => pass.name !== 'build:tools');
+  const toolsPass = passes.find((pass) => pass.name === 'build:tools');
+  const otherPasses = passes.filter((pass) => pass.name !== 'build:tools');
   const byName = new Map();
 
   const toolsPromise = runPass(toolsPass, options).then((result) => {
@@ -248,7 +247,7 @@ export async function runCompile({ serial = false, withCss = false, force = fals
 
   const toolsResult = await toolsPromise;
   const cssPromise = toolsResult.status === 0
-    ? runCssBuild(options)
+    ? runCssBuild()
     : Promise.resolve({
       label: CSS_BUILD.name,
       status: 1,
@@ -259,7 +258,7 @@ export async function runCompile({ serial = false, withCss = false, force = fals
 
   const [cssResult] = await Promise.all([cssPromise, othersPromise]);
   return {
-    compileResults: PASSES.map((pass) => byName.get(pass.name)),
+    compileResults: passes.map((pass) => byName.get(pass.name)),
     cssResult,
   };
 }
@@ -278,7 +277,9 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const serial = process.argv.includes('--serial');
   const withCss = process.argv.includes('--with-css');
   const force = process.argv.includes('--force') || process.env.SPW_TSC_FORCE === '1';
-  const { compileResults, cssResult } = await runCompile({ serial, withCss, force });
+  const onlyArg = process.argv.find((arg) => arg.startsWith('--only='));
+  const only = onlyArg ? onlyArg.slice('--only='.length).split(',').filter(Boolean) : null;
+  const { compileResults, cssResult } = await runCompile({ serial, withCss, force, only });
   const failed = [
     ...reportStages('compile', compileResults),
     ...(cssResult ? reportStages('css', [cssResult]) : []),
