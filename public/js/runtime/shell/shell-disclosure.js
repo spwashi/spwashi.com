@@ -554,24 +554,22 @@ function syncToggleCopy(toggle, snapshot) {
   const stateNode = toggle.querySelector('.spw-nav-toggle-state');
   const metaNode = toggle.querySelector('.spw-nav-toggle-meta');
 
-  if (labelNode) {
-    labelNode.textContent = 'Routes';
-  }
+  // Every focus and blur inside the header re-syncs; write only what moved.
+  const setText = (node, text) => {
+    if (node && node.textContent !== text) node.textContent = text;
+  };
+  setText(labelNode, 'Routes');
+  setText(stateNode, describeToggleState(snapshot));
+  setText(metaNode, describeToggleMeta(snapshot));
 
-  if (stateNode) {
-    stateNode.textContent = describeToggleState(snapshot);
-  }
-
-  if (metaNode) {
-    metaNode.textContent = describeToggleMeta(snapshot);
-  }
-
-  toggle.setAttribute('aria-label', buildToggleAria(snapshot));
-  toggle.title = snapshot.mode === MODES.INLINE
+  const aria = buildToggleAria(snapshot);
+  if (toggle.getAttribute('aria-label') !== aria) toggle.setAttribute('aria-label', aria);
+  const title = snapshot.mode === MODES.INLINE
     ? 'Routes are visible'
     : snapshot.state === 'open'
       ? 'Close routes'
       : 'Open routes';
+  if (toggle.title !== title) toggle.title = title;
 }
 
 function emitMenuState(snapshot) {

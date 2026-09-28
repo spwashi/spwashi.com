@@ -3,6 +3,7 @@
  * and context from a DOM target so gesture consumers share one reading.
  */
 
+import { isNavigationChrome } from '/public/js/kernel/navigation-chrome.js';
 import { OPERATOR_INFO } from './operator-info.js';
 import { FRAME_SELECTOR } from '/public/js/kernel/dom-contracts.js';
 
@@ -103,6 +104,9 @@ export function resolveSemanticMeta(target, detail = {}) {
 }
 
 export function applyFieldAttrs(meta) {
+  // Header and floating chrome have no field of their own; falling through to
+  // body made every route-link focus restyle the page.
+  if (isNavigationChrome(meta.target) || meta.target.closest('.site-header, body > header')) return;
   const root =
     meta.target.closest('.spw-frame')
     || meta.target.closest('main')
@@ -110,7 +114,12 @@ export function applyFieldAttrs(meta) {
 
   if (!(root instanceof HTMLElement)) return;
 
-  root.dataset.spwInspectFieldWonder = meta.wonder;
-  root.dataset.spwInspectFieldOperator = meta.operator || '';
-  root.dataset.spwInspectFieldContext = meta.context || '';
+  const next = {
+    spwInspectFieldWonder: meta.wonder,
+    spwInspectFieldOperator: meta.operator || '',
+    spwInspectFieldContext: meta.context || '',
+  };
+  for (const [key, value] of Object.entries(next)) {
+    if (root.dataset[key] !== value) root.dataset[key] = value;
+  }
 }

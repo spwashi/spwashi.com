@@ -5,6 +5,7 @@ import { annotateModuleDescribesTarget } from '../catalog/describes-contract.js'
 import { normalizeRuntimeToken } from './policy.js';
 import { onIdle, once } from '/public/js/kernel/browser-primitives.js';
 import { armEngagement } from '../../kernel/engagement.js';
+import { whenRouteMenuCloses } from '../../kernel/navigation-chrome.js';
 
 export function createModuleScheduler({ mountWhen, regionStates, html, setPageState, pageStates, getRoots, shouldScheduleDefinition, mountDefinition, beginMountBatch, endMountBatch, annotateModuleTrigger }) {
   async function mountImmediateLayer(defs, ctx, options = {}) {
@@ -489,6 +490,8 @@ export function createModuleScheduler({ mountWhen, regionStates, html, setPageSt
       writeDatasetValue(html, 'spwRuntimeIdleChunks', chunks.map((entry) => entry.chunk).join(' '));
 
       for (const [index, entry] of chunks.entries()) {
+        // A reader choosing a route is leaving; idle mounting waits for the menu to close.
+        await whenRouteMenuCloses();
         writeDatasetValue(html, 'spwRuntimeIdleChunk', entry.chunk);
         performance.mark(`spw:idle-chunk:${entry.chunk}:start`);
         await mountIdleDefinitionBatch(entry.defs, ctx);

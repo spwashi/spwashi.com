@@ -29,6 +29,7 @@
  * - spell:checkpoint
  */
 
+import { isNavigationChrome } from '/public/js/kernel/navigation-chrome.js';
 import { bus } from '/public/js/kernel/bus.js';
 import { COMPONENT_KIND_MIRROR_SELECTOR, groundInteraction, isOwnAffordanceTarget, observeAddedMatches, writeRuntimeDatasetValues } from '/public/js/kernel/dom-contracts.js';
 import { guardCall } from '/public/js/kernel/dom-render.js';
@@ -744,7 +745,12 @@ function annotateCauldronCandidates(root = document) {
        anywhere; assigning an existing value still queues a mutation record for
        every subtree observer, so only missing values are written. */
     if (!node.dataset.spwCauldronCandidate) node.dataset.spwCauldronCandidate = 'true';
-    if (!node.dataset.spwGestureContract) node.dataset.spwGestureContract = 'tap:inspect hold:prime-to-cauldron';
+    // A route link's tap travels; saying "inspect" promised something else.
+    if (!node.dataset.spwGestureContract) {
+      node.dataset.spwGestureContract = node.matches('a[href]') && isNavigationChrome(node)
+        ? 'tap:travel hold:prime-to-cauldron'
+        : 'tap:inspect hold:prime-to-cauldron';
+    }
     if (!node.title && node.matches(GESTURE_HINT_HOST_SELECTOR)) {
       node.title = 'tap to inspect; hold to gather as a cauldron ingredient';
     }

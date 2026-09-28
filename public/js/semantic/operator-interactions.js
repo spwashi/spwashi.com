@@ -4,6 +4,7 @@
  * Progressive behaviors for operator-bearing controls (probe wiring, ref labels).
  */
 
+import { isNavigationChrome } from '/public/js/kernel/navigation-chrome.js';
 import { bus } from '/public/js/kernel/bus.js';
 import {
   REGION_SELECTOR,
@@ -375,6 +376,8 @@ function findSigilTransitionTarget(event) {
   const target = event.target?.closest?.(SIGIL_TRANSITION_SELECTOR);
   if (!(target instanceof HTMLElement)) return null;
   if (target.matches('.spw-delimiter')) return null;
+  // A route link is somewhere to go; priming it wrote eight root attributes.
+  if (isNavigationChrome(target)) return null;
   return target;
 }
 
