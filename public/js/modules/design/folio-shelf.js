@@ -23,7 +23,8 @@ import { ensureViewTransitionTap } from '/public/js/kernel/view-transition-tap.j
 
 const ROOT_SELECTOR = '.folio-release';
 const VIEW_SELECTOR = '.folio-view';
-const THREAD_SELECTOR = 'input[type="radio"][name="folio-thread"]';
+// Each release shelf names its own radio group (folio-thread, folio-thread-0927, …).
+const THREAD_SELECTOR = 'input[type="radio"][name^="folio-thread"]';
 const SCAN_NAME = 'folio-scan';
 const CARD_NAME = 'folio-view';
 
@@ -186,7 +187,7 @@ function close(view) {
         opener.focus({ preventScroll: true });
       } else {
         // The piece's thread is filtered out; the filter is where focus can act.
-        mounted?.root.querySelector(`${THREAD_SELECTOR}:checked`)?.focus({ preventScroll: true });
+        (view.closest(ROOT_SELECTOR) || mounted?.root)?.querySelector(`${THREAD_SELECTOR}:checked`)?.focus({ preventScroll: true });
       }
     },
     types: ['folio-close'],
@@ -290,7 +291,9 @@ function onKeydown(event) {
 }
 
 export function initFolioShelf() {
-  const root = document.querySelector(ROOT_SELECTOR);
+  // One set of listeners serves every release shelf on the page.
+  const first = document.querySelector(ROOT_SELECTOR);
+  const root = first?.closest('main') || first;
   if (!root || mounted) return;
   mounted = { root, showing: null, thread: root.querySelector(`${THREAD_SELECTOR}:checked`) };
   ensureViewTransitionTap(document);

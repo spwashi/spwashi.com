@@ -13,13 +13,14 @@
  *   4. moves the "View high-res" links on /design/folios/ to the five;
  *   5. runs the audit.
  *
- * Masters live in public/images/renders/_raw/folio-scans-2026-09-26/ on the
+ * Masters live in public/images/renders/_raw/folio-scans-<release>/ on the
  * scanning machine only. A folio whose full file already exists needs no
  * master, so a repeat week runs anywhere.
  *
- *   node scripts/folio-highres-rotate.mjs --ids=03,05,07,12,21 [--week=2026-W40] [--opened=2026-09-28] [--dry-run]
+ *   node scripts/folio-highres-rotate.mjs --ids=03,05,07,12,21 [--release=2026-09-26] [--week=2026-W40] [--opened=2026-09-28] [--dry-run]
  *
- *   --ids      five two-digit source numbers (folio-2026-09-26-NN)
+ *   --ids      five two-digit source numbers (folio-<release>-NN)
+ *   --release  the scan set the five come from; default 2026-09-26
  *   --week     ISO week label; default is the week of --opened or today
  *   --opened   the date the set opens; default today
  *   --dry-run  print every step, write nothing
@@ -38,8 +39,6 @@ const ROOT = process.cwd();
 const RECORD = 'public/data/folio-highres.json';
 const PAGE = 'design/folios/index.html';
 const ASSETS = 'public/images/assets/folios';
-const MASTERS = 'public/images/renders/_raw/folio-scans-2026-09-26';
-const RELEASE = '2026-09-26';
 const QUALITIES = [82, 76, 70, 64, 58, 52];
 
 const args = process.argv.slice(2);
@@ -48,6 +47,8 @@ const flag = (name, fallback) => {
   return hit ? hit.slice(name.length + 3) : fallback;
 };
 const dryRun = args.includes('--dry-run');
+const RELEASE = flag('release', '2026-09-26');
+const MASTERS = `public/images/renders/_raw/folio-scans-${RELEASE}`;
 const ids = flag('ids', '').split(',').map((s) => s.trim()).filter(Boolean);
 const opened = flag('opened', new Date().toISOString().slice(0, 10));
 const week = flag('week', formatWeek(isoWeek(new Date(`${opened}T12:00:00Z`))));
@@ -63,6 +64,7 @@ if (args.includes('--strips-only')) {
   process.exit(0);
 }
 
+if (!/^\d{4}-\d{2}-\d{2}$/.test(RELEASE)) fail(`--release must be YYYY-MM-DD, got ${RELEASE}`);
 if (ids.length !== record.perWeek) fail(`--ids needs exactly ${record.perWeek} source numbers, got ${ids.length}`);
 if (!/^\d{4}-\d{2}-\d{2}$/.test(opened)) fail(`--opened must be YYYY-MM-DD, got ${opened}`);
 if (!parseWeek(week)) fail(`--week must look like 2026-W40, got ${week}`);
@@ -74,7 +76,8 @@ const sidecars = new Map();
 for (const name of execFileSync('ls', [path.join(ROOT, ASSETS)], { encoding: 'utf8' }).split('\n')) {
   if (!name.endsWith('.spw')) continue;
   const text = readFileSync(path.join(ROOT, ASSETS, name), 'utf8');
-  const id = /id: "folio-\d{4}-\d{2}-\d{2}-(\d{2})"/.exec(text)?.[1];
+  // Source numbers repeat across scan sets; only the chosen release's sidecars count.
+  const id = new RegExp(`id: "folio-${RELEASE}-(\\d{2})"`).exec(text)?.[1];
   if (id) sidecars.set(id, { slug: name.slice('folio-'.length, -'.spw'.length), file: name, text });
 }
 const five = ids.map((id) => {

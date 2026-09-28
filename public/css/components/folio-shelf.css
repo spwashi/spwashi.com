@@ -199,7 +199,8 @@
   font-weight: 700;
 }
 
-/* Thread notes: only the checked thread's line shows, so choosing a thread says what ties it. */
+/* Thread notes: only the checked thread's line shows, so choosing a thread says what ties it.
+   Keyed on the radio's value, not its id, so every release shelf on the page shares one rule. */
 .folio-thread-note {
   display: none;
   margin: 0.2rem 0 0;
@@ -207,13 +208,13 @@
   font-size: 0.86rem;
 }
 
-.folio-release:has(#folio-thread-all:checked) [data-folio-thread-note="all"],
-.folio-release:has(#folio-thread-wap:checked) [data-folio-thread-note="wap"],
-.folio-release:has(#folio-thread-operators:checked) [data-folio-thread-note="operators"],
-.folio-release:has(#folio-thread-valence:checked) [data-folio-thread-note="valence"],
-.folio-release:has(#folio-thread-rooms:checked) [data-folio-thread-note="rooms"],
-.folio-release:has(#folio-thread-practice:checked) [data-folio-thread-note="practice"],
-.folio-release:has(#folio-thread-washes:checked) [data-folio-thread-note="washes"] {
+.folio-release:has(.folio-threads [value="all"]:checked) [data-folio-thread-note="all"],
+.folio-release:has(.folio-threads [value="wap"]:checked) [data-folio-thread-note="wap"],
+.folio-release:has(.folio-threads [value="operators"]:checked) [data-folio-thread-note="operators"],
+.folio-release:has(.folio-threads [value="valence"]:checked) [data-folio-thread-note="valence"],
+.folio-release:has(.folio-threads [value="rooms"]:checked) [data-folio-thread-note="rooms"],
+.folio-release:has(.folio-threads [value="practice"]:checked) [data-folio-thread-note="practice"],
+.folio-release:has(.folio-threads [value="washes"]:checked) [data-folio-thread-note="washes"] {
   display: block;
 }
 
@@ -243,6 +244,40 @@
 .folio-view__desc {
   margin: 0.4rem 0 0;
   line-height: 1.45;
+}
+
+/* The question a folio seems to ask, from its sidecar's ^"dialog" opens. It reads
+   as prose with or without JS; the note below answers it where a browser can keep one. */
+.folio-view__question {
+  margin: 0.5rem 0 0;
+  color: var(--ink-soft);
+  font-style: italic;
+  line-height: 1.45;
+}
+
+.folio-note {
+  display: grid;
+  gap: 0.35rem;
+  margin-block: 0.6rem 0;
+  font-size: 0.86rem;
+}
+
+.folio-note textarea {
+  inline-size: 100%;
+  min-block-size: 3.2rem;
+  resize: vertical;
+  font: inherit;
+}
+
+.folio-note .spw-chip {
+  justify-self: start;
+}
+
+/* A note that nothing could keep would be a promise the page cannot honor. */
+@media (scripting: none) {
+  .folio-note {
+    display: none;
+  }
 }
 
 .folio-view__turn {
@@ -559,4 +594,45 @@
 
 @keyframes folio-tile-rise {
   from { opacity: 0; scale: 0.92; }
+}
+
+/* Panel faces: two-sided panel canvases shown one face at a time. The demo pair
+   sits side by side and says it is a demo; the lists keep scan order. */
+.panel-faces__list,
+.panel-faces__pair {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(9rem, 44vw), 1fr));
+  gap: 0.8rem;
+  margin: 0.6rem 0 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+.panel-faces__pair {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-inline-size: 34rem;
+  margin: 0;
+}
+
+.panel-faces__demo {
+  margin: 0.8rem 0 1.2rem;
+}
+
+.panel-faces__demo figcaption {
+  margin-block-start: 0.4rem;
+  color: var(--ink-soft);
+  font-size: 0.86rem;
+}
+
+.panel-face a {
+  display: grid;
+  gap: 0.3rem;
+  color: inherit;
+  font-size: 0.84rem;
+  text-decoration: none;
+}
+
+.panel-face img {
+  inline-size: 100%;
+  block-size: auto;
 }

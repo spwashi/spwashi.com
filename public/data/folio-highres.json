@@ -9,11 +9,52 @@
       "week": "2026-W39",
       "opened": "2026-09-26",
       "folios": [
-        { "id": "folio-2026-09-26-00", "slug": "operator-curriculum-teal" },
-        { "id": "folio-2026-09-26-09", "slug": "octvember-novel-under-test" },
-        { "id": "folio-2026-09-26-14", "slug": "red-eyes-calendar-test" },
-        { "id": "folio-2026-09-26-20", "slug": "what-kind-of-guy-counts-to-pie" },
-        { "id": "folio-2026-09-26-26", "slug": "lore-land-webcomic-zine" }
+        {
+          "id": "folio-2026-09-26-00",
+          "slug": "operator-curriculum-teal"
+        },
+        {
+          "id": "folio-2026-09-26-09",
+          "slug": "octvember-novel-under-test"
+        },
+        {
+          "id": "folio-2026-09-26-14",
+          "slug": "red-eyes-calendar-test"
+        },
+        {
+          "id": "folio-2026-09-26-20",
+          "slug": "what-kind-of-guy-counts-to-pie"
+        },
+        {
+          "id": "folio-2026-09-26-26",
+          "slug": "lore-land-webcomic-zine"
+        }
+      ]
+    },
+    {
+      "week": "2026-W40",
+      "opened": "2026-09-28",
+      "folios": [
+        {
+          "id": "folio-2026-09-27-07",
+          "slug": "bean-green-tale-lore"
+        },
+        {
+          "id": "folio-2026-09-27-17",
+          "slug": "practice-collaborating-communication"
+        },
+        {
+          "id": "folio-2026-09-27-21",
+          "slug": "factshift-open-source-version-test"
+        },
+        {
+          "id": "folio-2026-09-27-22",
+          "slug": "boon-bane-bone-land-tree"
+        },
+        {
+          "id": "folio-2026-09-27-26",
+          "slug": "shop-logo-vibe-menu-time"
+        }
       ]
     }
   ]
