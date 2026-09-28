@@ -947,7 +947,9 @@ test('live capture measure evaluate is bounded and races font wait', async () =>
   assert.doesNotMatch(source, /skipped after closed tab/);
   assert.match(source, /CAPTURE_MEASURE\.fontWaitMs/);
   assert.match(source, /readStillAttention/);
-  assert.match(source, /attention-miss/);
+  assert.match(source, /throw attentionMissError\(/);
+  const planSource = await readFile(new URL('../lib/visual-capture-plan.mjs', import.meta.url), 'utf8');
+  assert.match(planSource, /attention-miss:/);
   assert.match(source, /applyPointerHover/);
   assert.match(source, /applyKeyPrepare/);
   assert.match(source, /overflow-x:/);
