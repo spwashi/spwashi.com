@@ -25,8 +25,8 @@ The desired end state is a coherent operator system where:
 - [NEW] .agents/plans/operator-semantics-refinement/PLAN.md (this file)
 - [NEW] .agents/plans/operator-semantics-refinement/operator-lineage-discovery.spw — how users discover and learn operator lineage
 - [MOD?] topics/software/spw/index.html — enhance operator atlas landing page with lineage and physics overview
-- [MOD?] public/js/spw-interaction-runtime.js — consider adding operator-aware interaction patterns based on priming rules
-- [MOD?] public/css/style.css — consider enhancing operator visibility and grouping by symmetry pairs
+- [MOD?] public/js/runtime/interaction/brace-gestures.js (was `spw-interaction-runtime.js`) — consider operator-aware interaction patterns based on priming rules
+- [MOD?] public/css/handles/operators/*.css (was `style.css`) — consider enhancing operator visibility and grouping by symmetry pairs
 
 ## Craft Guard
 
@@ -110,3 +110,6 @@ Operator pairs create visible relationships in the interface. A screenshot showi
 - **Emergence** — How traditions and new patterns arise from users interacting with the physics and symmetry of operators.
 - **Lore** — The accumulated understanding of what operators mean, how they work together, and what purposes they serve. Grows through use and acknowledgment.
 
+## Landed reading — 2026-09-27
+
+Commit 1 landed (`.spw/conventions/operator-semantics.spw`); commits 3 and 4 were routed to `spw-operator-pages` and `interaction-grammar`. Two facts sharpened since: `public/js/kernel/operator-detection.js` is the one character table (atlas slugs are aliases of it, and `+`, `|`, and the backtick are not operators), and `.spw/language/operator-namespace-alignment.spw` maps the runtime namespace onto the language. Lineage, physics, symmetry, and priming stay here; the character table does not. Keep this plan as the semantics owner the rails cite; do not reopen the file list above as work.

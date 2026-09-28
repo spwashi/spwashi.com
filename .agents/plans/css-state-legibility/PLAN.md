@@ -93,3 +93,7 @@ Validation additions:
 
 - `rg -n -- "--mode-switch-.*-intent" public/css`
 - `rg -n "padding-inline: 0.8rem" public/css/routes` (should return nothing)
+
+## Disposition — 2026-09-27
+
+Landed. The intent-variable contract (2026-06-30 chips, 2026-07-02 mode switches) is what renders under either layer order, and the one item left here, the `play.css` route re-descriptions, moved into `css-cascade-stratification` as its Phase 0 pre-patch. Archive this folder after that plan's Phase 1 browser decision, retargeting the six citations (`css-cascade-stratification` PLAN and index, `runtime-module-fluency` PLAN and index, `.spw/audits/operator-controls-2026-09.spw`, `.spw/caches/css-cascade-stratification-2026-09.spw`) in the same patch.

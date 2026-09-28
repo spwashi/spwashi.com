@@ -824,7 +824,7 @@ Debug browser checks:
 Use these to keep the work bounded:
 
 ```sh
-wc -l public/css/shell/chrome.css public/css/handles/operators.css public/css/grammar/syntax.css public/css/components/cards.css
+wc -l public/css/shell/chrome/*.css public/css/handles/operators/*.css public/css/grammar/syntax.css public/css/components/cards/*.css
 rg -n "!important" public/css
 rg -n "nth-of-type|nth-child" public/css/routes public/css/components public/css/grammar
 rg -n "html\\[data-spw-color-mode=\"dark\"\\]|data-spw-color-mode=\"auto\"" public/css

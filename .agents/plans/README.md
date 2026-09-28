@@ -50,6 +50,8 @@ Tree census: **163 live plans, 64 archived**. Nine folders opened since 2026-09-
 - **Runtime/JS bucket order:** `typescript-integration` now records what landed (build, site-contracts, sitemap compiled from `scripts/ts`; thirteen typed browser modules) and shares three decisions with `site-source-layout`: the M0 ship-list import method, the M2 `public/ts` to `src/ts` tsconfig change, and L3 uncommitted output. Order is M0 decision, M0, M2; the `site/` move waits behind them.
 - **Nearest archive candidates:** `release-day-resonance-2026-09-13` and `release-day-discovery-2026-09-26`, once their receipts are written into an owner plan.
 
+**Deeper pass, same day: CSS tokens the runtime writes, and the Spw interpreter.** Seven folders archived with reasons (`archive/README.md`): two landed palette plans, the never-implemented `site-color-tuning`, `minimal-brace-disclosure`, the closed `css-scroll-dark-regression` fix, the `theme-text-contrast` receipt, and the `theming-icon-packs-public-versioning` umbrella split to four owners. Live count 156. Three ownership gaps closed on paper: `css-sensitive-attribute-writes` now names the property-write sensor (`style-property-contract.mts`; 40 files write 115 properties), `spw-language-v04` Phase 4 owns the parser's arrival in the site (v0.3.0 generated parser, on-demand runtime parser, build-time expression manifest; the v0.4 spec never reached the pinned workbench), and `semantic-html-normalization` owns JS-off parity and names the probe that does not exist yet. Reading order per cluster: `.spw/audits/plan-spw-tree-2026-09.spw#deeper_pass_2026_09_27`.
+
 ## Maintenance Snapshot - 2026-09-20
 
 Tree census: **154 live plans, 64 archived plans**, including untracked work.

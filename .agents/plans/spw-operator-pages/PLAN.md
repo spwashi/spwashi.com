@@ -70,6 +70,10 @@ Fuzz strategy:
 - **Negative controls**: existing page routes, software content, header nav, analytics snippets, and framework-free structure remain intact.
 - **Demo sequence**: open `/topics/software/`, find the Spw operator atlas, open `* stream`, traverse the operator ring on mobile width, then go offline after first load and confirm cached operator pages still resolve.
 
+## Landed — 2026-09-27 reading
+
+The atlas and nineteen operator routes are live under `topics/software/spw/operators/`. The file list above names pre-split files: the operator set lives in `public/js/kernel/operator-detection.js` (with `kernel/shared.js` reading it), and the atlas styles in `public/css/handles/operators/*.css` and `public/css/routes/surfaces/`. Craft guard 3 (every no-op still explains itself in copy, title, link, or route) is the plan's standing rule and the reason the pages read with JavaScript off. This PLAN.md stays as the atlas owner that `operator-semantics-refinement` and `spw-metaphysical-language` cite; `wip.spw` is the notebook the 2026-07-12 review said to archive once page anatomy is promoted.
+
 ## Spw Artifact
 
 `.agents/plans/spw-operator-pages/spw-operator-pages.spw`
