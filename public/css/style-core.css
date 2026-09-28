@@ -28,6 +28,7 @@
 @import url('/public/css/components/signals.css') layer(components);
 @import url('/public/css/components/cards.css') layer(components);
 @import url('/public/css/components/folio-strip.css') layer(components);
+@import url('/public/css/components/hook-visual.css') layer(components);
 /* profile-card.css moved to the tools-profile route bundle 2026-08-12:
    32KB of card CSS for markup only modules/profile/builder.js generates,
    on one route, shipped to every visitor via core. */

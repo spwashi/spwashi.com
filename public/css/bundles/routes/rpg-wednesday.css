@@ -74,6 +74,34 @@
     linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
 }
 
+/* Keep the warm Play palette on the same side of the light/dark switch as
+   the site's inherited heading and control ink. */
+html[data-spw-color-mode="dark"] :where(body[data-spw-surface="play"]) {
+  --bg: #201d21;
+  --bg-deep: #15161b;
+  --surface: rgba(35, 33, 39, 0.9);
+  --surface-strong: rgba(44, 42, 48, 0.96);
+  --surface-soft: rgba(32, 30, 36, 0.82);
+  --ink: rgba(238, 241, 237, 0.96);
+  --ink-soft: rgba(219, 227, 221, 0.88);
+  --line: rgba(231, 238, 232, 0.2);
+  --play-wonder: #f0a0b8;
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-spw-color-mode="auto"] :where(body[data-spw-surface="play"]) {
+    --bg: #201d21;
+    --bg-deep: #15161b;
+    --surface: rgba(35, 33, 39, 0.9);
+    --surface-strong: rgba(44, 42, 48, 0.96);
+    --surface-soft: rgba(32, 30, 36, 0.82);
+    --ink: rgba(238, 241, 237, 0.96);
+    --ink-soft: rgba(219, 227, 221, 0.88);
+    --line: rgba(231, 238, 232, 0.2);
+    --play-wonder: #f0a0b8;
+  }
+}
+
 /* ==========================================================================
    2. Rhythm bias
    ========================================================================== */
