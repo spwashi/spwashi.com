@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<spw-page title="Spwashi • Image Card Studio" description="Try image crops, captions, and frame treatments on a local preview." canonical="https://spwashi.com/design/cards/render/" og_title="Spwashi • Image Card Studio" og_description="A small worktable for images, cards, and frames."></spw-page>
+<html lang="en">
+<head>
+    <spw-site-head></spw-site-head>
+    <link rel="stylesheet" href="/public/css/routes/surfaces/design-studio.css">
+</head>
+<body data-spw-surface="website" data-spw-stylesheet-mode="scoped" data-spw-features="operators navigator" data-spw-page-family="spec" data-spw-page-role="design-reference" data-spw-page-seed="page_design_cards_render" data-spw-route-family="editorial design systems" data-spw-related-routes="/design/|/design/cards/|/design/logos/|/design/theme/colors/|/design/components/">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <spw-site-header current="Image card studio" current_href="/design/cards/render/" indicator="design" nav_items="Design:/design/|Cards:/design/cards/|Logos:/design/logos/|Theme:/design/theme/"></spw-site-header>
+    <main id="main-content" tabindex="-1" aria-labelledby="image-card-title">
+        <article>
+            <section class="spw-frame" id="image-card-studio" data-spw-kind="frame" data-spw-role="orientation" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
+                <p class="spec-kicker">Design / Image cards and frames</p>
+                <h1 id="image-card-title">Set an image inside a frame</h1>
+                <p>Try a source, crop, caption, and frame treatment together. A local image stays in this browser tab and is never uploaded. The specimen below is a preview, not a change to the site's shared components.</p>
+                <nav class="frame-operators" aria-label="Design studio pages"><a class="spw-chip" href="/design/cards/">Cards hub</a><a class="spw-chip" href="/design/logos/">Logo studio</a><a class="spw-chip" href="/design/theme/colors/">Theme colors</a><a class="spw-chip" href="/design/components/">Component glossary</a></nav>
+            </section>
+            <section class="spw-frame" id="image-card-controls" data-spw-kind="frame" data-spw-role="reference" aria-labelledby="image-card-controls-title" data-design-studio="cards" data-crop="portrait" data-frame="paper">
+                <h2 id="image-card-controls-title">Compose a specimen</h2>
+                <div class="design-studio-layout">
+                    <form class="design-studio-controls" aria-label="Image card controls">
+                        <label>Use your image <input type="file" accept="image/*" data-card-file></label>
+                        <label>Crop <select data-card-crop><option value="portrait">Portrait</option><option value="square">Square</option><option value="landscape">Landscape</option></select></label>
+                        <label>Frame <select data-card-frame><option value="paper">Paper</option><option value="rule">Ruled</option><option value="dark">Dark</option></select></label>
+                        <label>Caption <input type="text" value="Color can carry a change of state." maxlength="100" data-card-caption></label>
+                    </form>
+                    <div class="design-studio-preview" aria-live="polite">
+                        <figure class="design-studio-card">
+                            <img src="/public/images/routes/design/color-resonance-swirl-source-display.webp" alt="Teal, gold, cream, and blue swirls" width="383" height="512" data-card-image>
+                            <figcaption data-card-caption-preview>Color can carry a change of state.</figcaption>
+                        </figure>
+                    </div>
+                </div>
+                <p>Look for what the frame contributes: does the image need a quiet edge, a visible rule, or a darker field? For the site's existing anatomy, compare the <a href="/design/components/">component glossary</a>.</p>
+            </section>
+        </article>
+    </main>
+    <spw-site-footer></spw-site-footer>
+    <script type="module" src="/public/js/modules/design/studio-preview.js"></script>
+</body>
+</html>
