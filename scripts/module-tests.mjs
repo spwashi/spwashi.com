@@ -11,6 +11,7 @@ export const MODULE_TEST_FILES = Object.freeze([
   'scripts/tests/field-composition.test.mjs',
   'scripts/tests/care-journal.test.mjs',
   'scripts/tests/annotation-refresh.test.mjs',
+  'scripts/tests/change-only-writes.test.mjs',
   'scripts/tests/engagement-features.test.mjs',
   'scripts/tests/component-fixtures.test.mjs',
   'scripts/tests/visual-capture-plan.test.mjs',

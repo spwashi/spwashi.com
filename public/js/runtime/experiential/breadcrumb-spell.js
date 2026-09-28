@@ -15,6 +15,7 @@
 import { getActiveRecentPathMemory } from '/public/js/semantic/accent-palette.js';
 import { bus } from '/public/js/kernel/bus.js';
 import { escapeAttr as escapeAttribute, escapeHtml } from '/public/js/kernel/dom-render.js';
+import { writeDatasetValues } from '/public/js/kernel/dom-contracts.js';
 import {
   normalizeRouteHref,
   parseRouteList,
@@ -109,6 +110,7 @@ const state = {
   pathExpanded: null,
   pathExpandedManual: false,
   pathCompact: null,
+  pathMarkup: '',
   lastTraceSignature: '',
 };
 
@@ -714,15 +716,10 @@ function syncSpellPathSurfaceDatasets({
     spwPageRegionSurface: surface || '',
   };
 
+  // Every section settle and resize lands here; html and body carry these to
+  // the whole cascade, so only a value that moved is written.
   [document.documentElement, document.body].forEach((node) => {
-    Object.entries(entries).forEach(([key, value]) => {
-      const attr = key.replace(/[A-Z]/g, (char) => `-${char.toLowerCase()}`);
-      if (value) {
-        node.setAttribute(`data-${attr}`, value);
-      } else {
-        node.removeAttribute(`data-${attr}`);
-      }
-    });
+    writeDatasetValues(node, entries);
   });
 }
 
@@ -863,36 +860,40 @@ export function renderBreadcrumbSpell() {
     deepLinkState,
   });
 
-  pathBar.dataset.spwBreadcrumbSurface = surface;
-  pathBar.dataset.spwBreadcrumbDepth = String(items.length);
-  pathBar.dataset.spwBreadcrumbFrame = activeFrameSigil ? 'active' : 'route';
-  pathBar.dataset.spwBreadcrumbMode = activeMode ? 'active' : 'ambient';
-  pathBar.dataset.spwBreadcrumbMenuState = shellSnapshot.state;
-  pathBar.dataset.spwBreadcrumbMenuMode = shellSnapshot.mode;
-  pathBar.dataset.spwBreadcrumbMenuChanged = shellSnapshot.changedAxes.join(' ') || 'none';
-  pathBar.dataset.spwBreadcrumbMenuClarity = shellSnapshot.clarity;
-  pathBar.dataset.spwBreadcrumbMenuPhase = shellSnapshot.phase;
-  pathBar.dataset.spwBreadcrumbMenuTopology = shellSnapshot.topology;
-  pathBar.dataset.spwBreadcrumbMenuPressure = shellSnapshot.pressure;
-  pathBar.dataset.spwBreadcrumbMenuIntent = shellSnapshot.intent;
-  pathBar.dataset.spwBreadcrumbReversible = shellSnapshot.reversible ? 'true' : 'false';
-  pathBar.dataset.spwBreadcrumbFamiliarity = cognitiveState.familiarity;
-  pathBar.dataset.spwBreadcrumbLiminality = cognitiveState.liminality;
-  pathBar.dataset.spwBreadcrumbCognitive = cognitiveState.gradient;
-  pathBar.dataset.spwBreadcrumbMeaningMode = narrationMode;
-  pathBar.dataset.spwBreadcrumbState = pathState;
-  pathBar.dataset.spwBreadcrumbViewport = compact ? 'compact' : 'roomy';
-  pathBar.dataset.spwBreadcrumbRelatedCount = String(relatedRoutes.length);
-  pathBar.dataset.spwBreadcrumbPageRole = pageRole || 'none';
-  pathBar.dataset.spwBreadcrumbPageResponsibility = pageResponsibility || 'none';
-  pathBar.dataset.spwBreadcrumbRegionMenu = isRegionMenuOpen() ? 'open' : 'closed';
-  pathBar.dataset.spwDeepLink = deepLinkState.href;
-  pathBar.dataset.spwDeepLinkLabel = deepLinkState.label;
-  pathBar.dataset.spwDeepLinkState = deepLinkState.hash ? 'hash-anchor' : 'route-anchor';
-  pathBar.dataset.spwSemanticExpression = deepLinkState.semanticExpression;
-  pathBar.dataset.spwHypermediaExtension = 'trail routes regions deep-link';
+  writeDatasetValues(pathBar, {
+    spwBreadcrumbSurface: surface,
+    spwBreadcrumbDepth: String(items.length),
+    spwBreadcrumbFrame: activeFrameSigil ? 'active' : 'route',
+    spwBreadcrumbMode: activeMode ? 'active' : 'ambient',
+    spwBreadcrumbMenuState: shellSnapshot.state,
+    spwBreadcrumbMenuMode: shellSnapshot.mode,
+    spwBreadcrumbMenuChanged: shellSnapshot.changedAxes.join(' ') || 'none',
+    spwBreadcrumbMenuClarity: shellSnapshot.clarity,
+    spwBreadcrumbMenuPhase: shellSnapshot.phase,
+    spwBreadcrumbMenuTopology: shellSnapshot.topology,
+    spwBreadcrumbMenuPressure: shellSnapshot.pressure,
+    spwBreadcrumbMenuIntent: shellSnapshot.intent,
+    spwBreadcrumbReversible: shellSnapshot.reversible ? 'true' : 'false',
+    spwBreadcrumbFamiliarity: cognitiveState.familiarity,
+    spwBreadcrumbLiminality: cognitiveState.liminality,
+    spwBreadcrumbCognitive: cognitiveState.gradient,
+    spwBreadcrumbMeaningMode: narrationMode,
+    spwBreadcrumbState: pathState,
+    spwBreadcrumbViewport: compact ? 'compact' : 'roomy',
+    spwBreadcrumbRelatedCount: String(relatedRoutes.length),
+    spwBreadcrumbPageRole: pageRole || 'none',
+    spwBreadcrumbPageResponsibility: pageResponsibility || 'none',
+    spwBreadcrumbRegionMenu: isRegionMenuOpen() ? 'open' : 'closed',
+    spwDeepLink: deepLinkState.href,
+    spwDeepLinkLabel: deepLinkState.label,
+    spwDeepLinkState: deepLinkState.hash ? 'hash-anchor' : 'route-anchor',
+    spwSemanticExpression: deepLinkState.semanticExpression,
+    spwHypermediaExtension: 'trail routes regions deep-link',
+  }, { allowEmpty: true });
   if (document.documentElement.dataset.spwDimensionalBreadcrumbs === 'on') {
-    pathBar.setAttribute('data-dimensional-breadcrumb', 'spell-path');
+    if (pathBar.getAttribute('data-dimensional-breadcrumb') !== 'spell-path') {
+      pathBar.setAttribute('data-dimensional-breadcrumb', 'spell-path');
+    }
   } else {
     pathBar.removeAttribute('data-dimensional-breadcrumb');
   }
@@ -907,7 +908,7 @@ export function renderBreadcrumbSpell() {
 
   const trailId = 'spw-spell-trail';
   const showTrail = pathState === 'open';
-  pathBar.innerHTML = `
+  const markup = `
     <div class="spw-spell-path__header">
       <button
         class="spw-spell-path-toggle"
@@ -941,6 +942,12 @@ export function renderBreadcrumbSpell() {
     </details>` : ''}
     ${showTrail ? renderGardenTraceOnSpellPath() : ''}
   `;
+  // Identical markup would still replace the trail's subtree, re-fire every
+  // observer under the header, and drop focus or an open inspect disclosure.
+  if (markup !== state.pathMarkup || !pathBar.firstElementChild) {
+    pathBar.innerHTML = markup;
+    state.pathMarkup = markup;
+  }
 
   const traceSignature = [
     pathState,
