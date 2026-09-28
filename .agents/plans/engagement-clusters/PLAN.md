@@ -22,6 +22,7 @@ A page loads what its reader engages, not everything its grammar could support. 
 ## Primed, not built
 
 - **Spw containers prime clusters.** A concept bracket opens a topical boundary (`<`, `kernel/operator-detection.js`) and labels ride edges (`}_A`, `.spw/language/lore-alignment.spw`). Reading `<_foo` as a concept edge labeled `foo`: approaching it primes the cluster `foo` names (imports, no mounts); engaging an item in its `{ … }` direction space resolves a path, choosing which primed behaviors mount, by weight. Primed-but-unchosen behaviors cost a cached import, never a mount or a root write.
+- **Assembly reading.** Wrapping changes an expression's key (content-addressed, the wrap chain as its traveler), thresholds are authored with an inference path, and the marks read as assembly code and functional programming: `.spw/caches/spw-assembly-2026-09.spw`, with a probe over the expression manifest.
 - **Weights.** Candidate sources already on the page: `data-spw-salience-weight`, the operator charge role, familiarity demotion, the module offer ranking (`describeModuleOffer`). No new `data-spw-*` family.
 - **Heuristics as language.** Engagement resolution (dwell, slop, hold) and path weights are heuristics; a dialect could name them so a page tunes them in Spw rather than in constants.
 - **Dialects across dimensions.** How a dialect's vocabulary scales across surfaces, devices, familiarity, and themes without forking the grammar.
