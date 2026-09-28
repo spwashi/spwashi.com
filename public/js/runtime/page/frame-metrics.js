@@ -6,7 +6,7 @@ import {
   readDocumentTypography,
   readPretextSignals,
 } from '/public/js/semantic/pretext-measurement-bus.js';
-import { FRAME_SELECTOR } from '/public/js/kernel/dom-contracts.js';
+import { FRAME_SELECTOR, writeDatasetValues } from '/public/js/kernel/dom-contracts.js';
 
 let initialized = false;
 let cleanupCurrent = null;
@@ -43,7 +43,7 @@ const createMetricsBar = () => {
     return { bar, items };
 };
 
-const measureFrame = async (frame, handleCache) => {
+const measureFrame = async (frame, handleCache, typography) => {
     const liveSignals = readPretextSignals(frame);
     if (liveSignals?.lineCount) {
         return {
@@ -64,7 +64,6 @@ const measureFrame = async (frame, handleCache) => {
     const paddingInline = (Number.parseFloat(frameStyle.paddingLeft) || 0)
         + (Number.parseFloat(frameStyle.paddingRight) || 0);
     const width = Math.max(40, frameWidth - paddingInline);
-    const typography = readDocumentTypography();
 
     let entry = handleCache.get(frame);
     if (
@@ -106,27 +105,36 @@ const measureFrame = async (frame, handleCache) => {
     };
 };
 
-const updateAll = async (tracked, handleCache) => {
+const updateAll = async (tracked, handleCache, lastPublished, publish) => {
+    // Typography is read once per pass; every frame's own read happens before any write.
+    const typography = readDocumentTypography();
     await Promise.all(tracked.map(async ({ frame, bar, items }) => {
-        const metrics = await measureFrame(frame, handleCache);
+        const metrics = await measureFrame(frame, handleCache, typography);
         if (!metrics) return;
 
-        items.textContent = formatMeasurementSummary({
+        const summary = formatMeasurementSummary({
             lineCount: metrics.lineCount,
             heightPx: metrics.height,
             widthPx: metrics.width,
             wrap: metrics.wrap,
             measure: metrics.measure,
         });
+        if (items.textContent !== summary) items.textContent = summary;
 
-        frame.dataset.spwFrameLineCount = String(metrics.lineCount);
-        frame.dataset.spwFrameTextHeight = String(Math.round(metrics.height || 0));
-        frame.dataset.spwFrameMeasureWidth = String(Math.round(metrics.width || 0));
-        frame.dataset.spwFrameWrap = metrics.wrap || '';
-        frame.dataset.spwMeasureKind = 'objective';
-        frame.dataset.spwMeasureSource = metrics.source || 'frame-metrics';
+        writeDatasetValues(frame, {
+            spwFrameLineCount: String(metrics.lineCount),
+            spwFrameTextHeight: String(Math.round(metrics.height || 0)),
+            spwFrameMeasureWidth: String(Math.round(metrics.width || 0)),
+            spwFrameWrap: metrics.wrap || '',
+            spwMeasureKind: 'objective',
+            spwMeasureSource: metrics.source || 'frame-metrics',
+        }, { allowEmpty: true });
 
-        publishMeasurement({
+        // A frame is published when its measurement moves, not on every pass.
+        const key = `${summary}|${metrics.source || ''}`;
+        if (lastPublished.get(frame) === key) return;
+        lastPublished.set(frame, key);
+        publish({
             host: frame,
             lineCount: metrics.lineCount,
             heightPx: metrics.height,
@@ -160,6 +168,18 @@ export async function initFrameMetrics(ctx, root) {
     }
 
     const handleCache = new WeakMap();
+    const lastPublished = new WeakMap();
+    // publishMeasurement dispatches the event this module listens to; its own
+    // publications must not schedule another pass, or it re-measures every frame forever.
+    let publishing = false;
+    const publish = (detail) => {
+        publishing = true;
+        try {
+            publishMeasurement(detail);
+        } finally {
+            publishing = false;
+        }
+    };
 
     const tracked = frames.map((frame) => {
         const existing = frame.querySelector(':scope > .frame-metrics-bar');
@@ -172,10 +192,11 @@ export async function initFrameMetrics(ctx, root) {
 
     let rafId = 0;
     const scheduleUpdate = () => {
+        if (publishing) return;
         if (rafId) cancelAnimationFrame(rafId);
         rafId = requestAnimationFrame(() => {
             rafId = 0;
-            updateAll(tracked, handleCache);
+            updateAll(tracked, handleCache, lastPublished, publish);
         });
     };
 

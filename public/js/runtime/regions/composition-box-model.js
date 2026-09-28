@@ -395,10 +395,13 @@ export function snapshotCompositionBox(target, options = {}) {
 }
 
 export function annotateCompositionBox(target, options = {}) {
-  const snapshot = snapshotCompositionBox(target, options);
   const el = typeof target === 'string'
     ? (options.root || document).querySelector(target)
     : target;
+  return applyCompositionBox(el, snapshotCompositionBox(el, options), options);
+}
+
+function applyCompositionBox(el, snapshot, options = {}) {
   if (!snapshot || !isElement(el)) return null;
 
   writeDatasetValues(el, {
@@ -432,9 +435,8 @@ export function annotateCompositionBox(target, options = {}) {
     }, { missingOnly: options.missingOnly === true });
 
     const readout = el.querySelector('[data-spw-pack-readout]');
-    if (readout) {
-      readout.textContent = `layout: ${packLayout} · fill: ${packFill} · ${Math.round(snapshot.box.inlineSize)}px`;
-    }
+    const readoutText = `layout: ${packLayout} · fill: ${packFill} · ${Math.round(snapshot.box.inlineSize)}px`;
+    if (readout && readout.textContent !== readoutText) readout.textContent = readoutText;
   }
 
   return snapshot;
@@ -442,8 +444,12 @@ export function annotateCompositionBox(target, options = {}) {
 
 export function annotateCompositionBoxes(root = document, options = {}) {
   const selector = options.selector || DEFAULT_SELECTOR;
-  return resolveTargets(root, selector)
-    .map((el) => annotateCompositionBox(el, options))
+  const targets = resolveTargets(root, selector);
+  // Read every box before writing any: a write between two reads makes the
+  // second read pay a full style and layout pass, once per target.
+  const snapshots = targets.map((el) => snapshotCompositionBox(el, options));
+  return targets
+    .map((el, index) => applyCompositionBox(el, snapshots[index], options))
     .filter(Boolean);
 }
 
