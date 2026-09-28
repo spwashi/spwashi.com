@@ -1024,15 +1024,19 @@ export function cellFromProbe(row, { route, viewport = null } = {}) {
   };
 }
 
-/**
- * Shared hard-ok policy for smoke/bench cells.
- * @param {{ ok?: boolean, settled?: boolean, hasConsoleError?: boolean, bodyOverflowX?: boolean, overflowXFrames?: number }} cell
- * @param {{ requireSettled?: boolean, failOnConsoleError?: boolean, failOnOverflowX?: boolean }} [options]
- */
+/** Name every failed smoke/bench gate so a CI failure points to its cause. */
+export function hardFailureReasons(cell, options = {}) {
+  const reasons = [];
+  if (!cell?.ok) reasons.push('navigation');
+  if (options.requireSettled && !cell?.settled) reasons.push('runtime-unsettled');
+  if (options.failOnConsoleError && cell?.hasConsoleError) reasons.push('console-error');
+  if (options.failOnOverflowX && (cell?.bodyOverflowX || (cell?.overflowXFrames || 0) > 0)) {
+    reasons.push('horizontal-overflow');
+  }
+  return reasons;
+}
+
+/** Shared hard-ok policy for smoke/bench cells. */
 export function evaluateHardOk(cell, options = {}) {
-  if (!cell?.ok) return false;
-  if (options.requireSettled && !cell.settled) return false;
-  if (options.failOnConsoleError && cell.hasConsoleError) return false;
-  if (options.failOnOverflowX && (cell.bodyOverflowX || (cell.overflowXFrames || 0) > 0)) return false;
-  return true;
+  return hardFailureReasons(cell, options).length === 0;
 }

@@ -17,7 +17,7 @@ import {
   cellFromProbe,
   closePageTarget,
   createChromeProfileDir,
-  evaluateHardOk,
+  hardFailureReasons,
   installShutdown,
   killProcessTree,
   navigateAndProbe,
@@ -243,11 +243,13 @@ async function main() {
           observationMs: options.observationMs,
         });
         const cell = cellFromProbe(row, { route: pathWithQuery });
-        const hardOk = evaluateHardOk(cell, options);
-        results.push({ ...cell, hardOk, raw: row });
+        const failureReasons = hardFailureReasons(cell, options);
+        const hardOk = failureReasons.length === 0;
+        results.push({ ...cell, hardOk, failureReasons, raw: row });
         const markHint = cell.lastMark ? ` last=${cell.lastMark}` : '';
+        const failureHint = failureReasons.length ? ` reasons=${failureReasons.join(',')}` : '';
         process.stderr.write(
-          `  ${hardOk ? 'ok' : 'FAIL'} ${cell.wallMs}ms ready=${cell.runtimeReady ? 'y' : 'n'} interactive=${cell.interactiveAtMs ?? '-'}ms runtimeReady=${cell.runtimeReadyAtMs ?? '-'}ms observed=${cell.observation?.elapsedMs ?? '-'}ms pending=${cell.pendingModules?.length ?? '-'} surface=${cell.surface || '-'} stage=${cell.runtimeStage || '-'} page=${cell.pageState || '-'} consoleErr=${cell.consoleErrorCount || 0}${markHint}\n`,
+          `  ${hardOk ? 'ok' : 'FAIL'} ${cell.wallMs}ms ready=${cell.runtimeReady ? 'y' : 'n'} interactive=${cell.interactiveAtMs ?? '-'}ms runtimeReady=${cell.runtimeReadyAtMs ?? '-'}ms observed=${cell.observation?.elapsedMs ?? '-'}ms pending=${cell.pendingModules?.length ?? '-'} surface=${cell.surface || '-'} stage=${cell.runtimeStage || '-'} page=${cell.pageState || '-'} consoleErr=${cell.consoleErrorCount || 0} overflowX=${cell.overflowXFrames || 0}${failureHint}${markHint}\n`,
         );
       } finally {
         session.close();

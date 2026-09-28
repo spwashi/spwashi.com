@@ -40,4 +40,5 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
-      - run: npm run smoke:nav -- --routes /,/settings/,/topics/software/ --settle-ms 4000
+      - name: Require settled browser smoke with clean console and layout
+        run: npm run smoke:nav:ci -- --routes /,/settings/,/topics/software/
