@@ -118,6 +118,12 @@ the four family files to the full type checker, so a misspelled token fails
 with a suggestion. An authored field missing from `CATALOG_DEF_FIELDS` fails
 too: a field earns its place by naming who reads it.
 
+`catalog/contract-spw.js` reads any contract back as one Spw sentence
+(derived, never authored). `npm run atlas` gathers every contract, the
+stylesheets that read what each module writes, bus edges, and git's move
+ledger into `public/data/runtime-atlas.json`; `/design/runtime/#runtime-atlas`
+explores it, and `?spw-atlas=<id>` opens one module.
+
 ## Lifecycle Contracts
 
 Portable exports mount with `(ctx, root)`. Catalog adapters mount with

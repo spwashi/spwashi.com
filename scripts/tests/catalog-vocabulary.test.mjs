@@ -61,3 +61,15 @@ test('describes is the only voice field', () => {
   const voices = Object.entries(CATALOG_DEF_FIELDS).filter(([, entry]) => entry.kind === 'voice');
   assert.deepEqual(voices.map(([field]) => field), ['describes']);
 });
+
+test('every contract reads back as one Spw sentence, facet by facet', async () => {
+  const { formatModuleContractSpwLines } = await import('../../public/js/runtime/catalog/contract-spw.js');
+  for (const def of MODULE_DEFS) {
+    const lines = formatModuleContractSpwLines(def);
+    assert.match(lines[0], /^#>[a-z0-9_]+ #:(core|feature|region|enhancement)$/, `${def.id} address`);
+    assert.match(lines[1], /^\$\[[^\]]+\]/, `${def.id} substrate`);
+    assert.match(lines[2], /^~\[(immediate|visible|idle|interaction|invited|region|settled)\]/, `${def.id} potential`);
+    assert.ok(!lines.some((line) => line.includes('[[')), `${def.id} has no doubled brackets`);
+    if (def.updates?.length) assert.ok(lines.some((line) => line.startsWith('![')), `${def.id} acts`);
+  }
+});

@@ -1,0 +1,290 @@
+/* ==========================================================================
+   runtime-atlas.css
+   --------------------------------------------------------------------------
+   The runtime atlas on /design/runtime/: a static family table the page reads
+   without JS, and the explorer modules/design/runtime-atlas.js builds over
+   public/data/runtime-atlas.json. Portability is the one color key, taught
+   once: ground for portable, potential for host-policy, frame for site-only.
+   ========================================================================== */
+
+.runtime-atlas {
+  --atlas-portable: var(--op-ground-color, #3d7a6a);
+  --atlas-host-policy: var(--op-potential-color, #8a6bb8);
+  --atlas-site-only: var(--op-frame-color, #9a5a3a);
+  display: grid;
+  gap: 0.8rem;
+}
+
+.runtime-atlas__ratchets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  margin: 0;
+  font-size: 0.86rem;
+}
+
+.runtime-atlas__ratchets div {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.runtime-atlas__ratchets dt {
+  color: var(--ink-soft);
+}
+
+.runtime-atlas__ratchets dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.runtime-atlas__families {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(15rem, 100%), 1fr));
+  gap: 0.6rem 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.86rem;
+}
+
+.runtime-atlas__families h3 {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.runtime-atlas__families p {
+  margin: 0.15rem 0 0;
+  color: var(--ink-soft);
+}
+
+/* Once the explorer is built, the static table has said what it had to. */
+.runtime-atlas[data-runtime-atlas-state="ready"] .runtime-atlas__static {
+  display: none;
+}
+
+.runtime-atlas__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 0.6rem 1rem;
+}
+
+.runtime-atlas__control {
+  display: grid;
+  gap: 0.2rem;
+  font-size: 0.84rem;
+}
+
+.runtime-atlas__control input {
+  min-inline-size: min(16rem, 100%);
+  font: inherit;
+}
+
+.runtime-atlas__count {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.84rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.runtime-atlas__split {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 60rem) {
+  .runtime-atlas__split {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    align-items: start;
+  }
+
+  .runtime-atlas__detail {
+    position: sticky;
+    inset-block-start: 1rem;
+  }
+}
+
+.runtime-atlas__map {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.runtime-atlas__family h3 {
+  margin: 0 0 0.3rem;
+  font-size: 0.9rem;
+}
+
+.runtime-atlas__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.runtime-atlas__module,
+.runtime-atlas__handle {
+  padding: 0.2rem 0.5rem;
+  border: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+  border-radius: 0.3rem;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.runtime-atlas__module {
+  border-inline-start: 3px solid var(--atlas-portable);
+}
+
+.runtime-atlas__module[data-runtime-atlas-portability="host-policy"] {
+  border-inline-start-color: var(--atlas-host-policy);
+}
+
+.runtime-atlas__module[data-runtime-atlas-portability="site-only"] {
+  border-inline-start-color: var(--atlas-site-only);
+}
+
+.runtime-atlas__module[aria-pressed="true"] {
+  background: color-mix(in srgb, currentColor 10%, transparent);
+}
+
+.runtime-atlas__module:focus-visible,
+.runtime-atlas__handle:focus-visible,
+.runtime-atlas__link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.runtime-atlas__card {
+  display: grid;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+}
+
+.runtime-atlas__card h3 {
+  margin: 0;
+}
+
+.runtime-atlas__card p {
+  margin: 0;
+}
+
+.runtime-atlas__where,
+.runtime-atlas__readers--none {
+  color: var(--ink-soft);
+}
+
+.runtime-atlas__spw {
+  margin: 0;
+  padding: 0.6rem;
+  overflow-x: auto;
+  border-radius: 0.3rem;
+  background: color-mix(in srgb, currentColor 6%, transparent);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.runtime-atlas__host strong {
+  color: var(--atlas-portable);
+}
+
+.runtime-atlas__host[data-runtime-atlas-portability="host-policy"] strong {
+  color: var(--atlas-host-policy);
+}
+
+.runtime-atlas__host[data-runtime-atlas-portability="site-only"] strong {
+  color: var(--atlas-site-only);
+}
+
+.runtime-atlas__writes ul {
+  margin: 0.2rem 0 0;
+  padding-inline-start: 1rem;
+}
+
+.runtime-atlas__writes li {
+  overflow-wrap: anywhere;
+}
+
+.runtime-atlas__role {
+  font-weight: 600;
+}
+
+.runtime-atlas__link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  cursor: pointer;
+}
+
+.runtime-atlas__section > summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.runtime-atlas__timeline {
+  display: grid;
+  gap: 0.3rem;
+  margin: 0.6rem 0;
+  padding-inline-start: 1.2rem;
+  font-size: 0.86rem;
+}
+
+/* The replay: files in one flat heap, then in the families git says they went to. */
+.runtime-atlas__stage {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.runtime-atlas__demo {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.84rem;
+}
+
+.runtime-atlas__flat,
+.runtime-atlas__bins ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.runtime-atlas__bins {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(11rem, 100%), 1fr));
+  gap: 0.6rem;
+}
+
+.runtime-atlas__bins h4 {
+  margin: 0 0 0.2rem;
+  font-size: 0.8rem;
+}
+
+.runtime-atlas__file {
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.25rem;
+  background: color-mix(in srgb, var(--atlas-host-policy) 14%, transparent);
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.runtime-atlas__opens {
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.runtime-atlas__handles-out ul {
+  margin: 0.3rem 0 0;
+  padding-inline-start: 1.1rem;
+}

@@ -13,6 +13,7 @@ export const BEHAVIOR_SCOPE_KEYS = Object.freeze([
   'metrics',
   'pretext-lab',
   'rpg-gameplay',
+  'runtime-atlas',
   'svg-surfaces',
 ]);
 
@@ -25,6 +26,7 @@ export const BEHAVIOR_SCOPE_BUNDLES = Object.freeze({
   'metrics': '/public/css/bundles/behaviors/metrics.css',
   'pretext-lab': '/public/css/bundles/behaviors/pretext-lab.css',
   'rpg-gameplay': '/public/css/bundles/behaviors/rpg-gameplay.css',
+  'runtime-atlas': '/public/css/bundles/behaviors/runtime-atlas.css',
   'svg-surfaces': '/public/css/bundles/behaviors/svg-surfaces.css',
 });
 

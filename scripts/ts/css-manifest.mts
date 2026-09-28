@@ -48,6 +48,9 @@ export const BEHAVIOR_SCOPES: Readonly<Record<string, readonly string[]>> = Obje
   'rpg-gameplay': [
     '/public/css/systems/surfaces/rpg.css',
   ],
+  'runtime-atlas': [
+    '/public/css/components/runtime-atlas.css',
+  ],
   'svg-surfaces': [
     '/public/css/systems/svg-surfaces.css',
     '/public/css/systems/svg-personas.css',

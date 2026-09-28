@@ -23,6 +23,7 @@ import {
 } from '../../kernel/dom-contracts.js';
 import { MODULE_LAYERS, MOUNT_WHEN } from '../catalog/constants.js';
 import { describeModuleOrchestration } from '../catalog/normalize.js';
+import { formatModuleContractSpwLines } from '../catalog/contract-spw.js';
 import {
   annotateModuleDescribesTarget,
   parseModuleDescribes,
@@ -326,6 +327,8 @@ function listModuleDefinitions(ctx) {
       reason: ctx ? describeMountReason(def, ctx, null, effectiveWhen) : (def.reason || ''),
       status: record?.status || 'defined',
       orchestration,
+      // The contract as one Spw sentence (catalog/contract-spw.js), for the console and the atlas.
+      spw: formatModuleContractSpwLines(def),
     };
   });
 }

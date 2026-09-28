@@ -721,6 +721,8 @@ export async function main(): Promise<void> {
 
   if (options.catalog) {
     startGenerator('regenerating design catalog', 'scripts/generate-design-catalog.mjs', ['--out', path.join(options.outDir, 'design', 'catalog')]);
+    // The committed atlas is the version history; the deployed one is always current.
+    startGenerator('regenerating runtime atlas', 'scripts/generate-runtime-atlas.mjs', [`--out=${path.join(options.outDir, 'public', 'data', 'runtime-atlas.json')}`]);
   } else {
     logger.info('[build] skipping design catalog generation');
   }

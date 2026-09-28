@@ -40,6 +40,12 @@ export {
   describeModuleCost,
   isFn,
 } from './constants.js';
+export {
+  formatModuleContractSpw,
+  formatModuleContractSpwLines,
+  groupModuleUpdates,
+  SPW_MODULE_CONTRACT_SPW,
+} from './contract-spw.js';
 export { CORE_DEFS } from './core.js';
 export { FEATURE_DEFS } from './feature.js';
 export { REGION_DEFS } from './region.js';

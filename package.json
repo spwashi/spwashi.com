@@ -76,6 +76,8 @@
     "audit:copy:clock": "node scripts/audit-copy-clock.mjs",
     "audit:folio-highres": "node scripts/audit-folio-highres.mjs",
     "audit:operator-controls": "node --import ./scripts/lib/register-public-imports.mjs scripts/audit-operator-controls.mjs",
+    "atlas": "node scripts/generate-runtime-atlas.mjs",
+    "atlas:check": "node scripts/generate-runtime-atlas.mjs --check",
     "audit:js-tree": "node scripts/js-tree-value.mjs",
     "audit:js-tree:json": "node scripts/js-tree-value.mjs --json",
     "audit:module-writers": "node --import ./scripts/lib/register-public-imports.mjs scripts/module-writer-audit.mjs",
