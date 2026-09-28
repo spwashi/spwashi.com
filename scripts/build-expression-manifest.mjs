@@ -57,6 +57,7 @@ import { readFile, readdir, writeFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { kernelJoinFromTokens, readBodyJoins, readCompoundJoin, readExpressionSlots, readJoinChain } from '../public/js/semantic/expression-query.js';
+import { computeExpressionSourceStamp } from './lib/manifest-stamp.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, 'public/js/generated/spw-expressions.js');
@@ -161,7 +162,8 @@ async function collectSpwProjections(dir = path.join(ROOT, '.spw'), results = { 
     return results;
   }
   for (const entry of entries) {
-    if (entry.name.startsWith('.') || entry.name === '_workbench' || entry.name === 'node_modules') continue;
+    // gen/ is the gitignored workbench corpus cache: local to one machine, never canon.
+    if (entry.name.startsWith('.') || entry.name === '_workbench' || entry.name === 'node_modules' || (entry.name === 'gen' && dir === path.join(ROOT, '.spw'))) continue;
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) {
       await collectSpwProjections(full, results);
@@ -252,6 +254,8 @@ async function main() {
   }
 
   const projections = await collectSpwProjections();
+  // What the harvest read, so the pre-commit check can tell a stale manifest from a current one.
+  const sourceStamp = await computeExpressionSourceStamp();
 
   await mkdir(path.dirname(OUT), { recursive: true });
   const body = `/**
@@ -271,6 +275,7 @@ export const SPW_EXPRESSION_MANIFEST_META = Object.freeze({
   expressions: ${Object.keys(manifest).length},
   handles: ${Object.keys(projections.handles).length},
   perspectives: ${Object.keys(projections.perspectives).length},
+  sourceStamp: '${sourceStamp}',
   builtBy: 'scripts/build-expression-manifest.mjs',
   parser: 'spw-seed parse() — not parseExpression(), which truncates',
 });

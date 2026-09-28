@@ -77,9 +77,17 @@ try {
     for (const output of OUTPUTS) {
       const from = path.join(scratch, output);
       if (!existsSync(from)) throw new Error(`${output} was not produced`);
-      copyFileSync(from, path.join(ROOT, output));
+      // Stage the staged-built bytes directly. The working-tree copy is only
+      // replaced when it still equals what was staged before; otherwise another
+      // session has regenerated it over pages it has open, and it stays theirs.
+      let before = null;
+      try { before = git(['show', `:${output}`]); } catch { before = null; }
+      const onDisk = existsSync(path.join(ROOT, output)) ? readFileSync(path.join(ROOT, output)) : null;
+      const blob = git(['hash-object', '-w', '--', from], { encoding: 'utf8' }).trim();
+      git(['update-index', '--add', '--cacheinfo', `100644,${blob},${output}`]);
+      if (!onDisk || (before && Buffer.compare(onDisk, before) === 0)) copyFileSync(from, path.join(ROOT, output));
+      else say(`${output}: staged the staged-built copy; the working-tree copy differs and was left as it is`);
     }
-    git(['add', '--', ...OUTPUTS]);
     say(`staged ${OUTPUTS.join(' and ')}, built from the staged routes`);
   }
 } finally {
