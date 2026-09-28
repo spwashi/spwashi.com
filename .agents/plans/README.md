@@ -41,6 +41,15 @@ Use these when a task is broad, cross-disciplinary, or likely to create reusable
 
 Small semantic discoveries do not always need a new plan. Use `.agents/plans/model-guided-refinement/templates/semantic-insight-cache.spw` for a single cache/audit/prime entry when implementation should wait.
 
+## Maintenance Snapshot - 2026-09-27
+
+Tree census: **163 live plans, 64 archived**. Nine folders opened since 2026-09-20 and none closed; the archive step in `spw-plan-maintenance` is the priority debt, not more indexes. Details and counts: `.spw/audits/plan-spw-tree-2026-09.spw#recensus_2026_09_27`.
+
+- **Index check green again.** `topical-learning-links/learning-transfer.spw` had no first-line review since 2026-09-23; reviewed in place. Eleven folders opened 2026-09-19 through 2026-09-26 that this index never named now sit in `since_2026_07_12` (author `index.spw` on next touch, not in batch).
+- **Citations:** 1094 root-anchored paths across live plans, 155 unresolved. One had a single new home and was rewritten (`quest-workbench-feedback`, the worker moved to `workers/spw-quest/`). The rest are split files the 2026-09-17 legend above already reads, deliberate non-paths, or never-committed `.agents/state` precipitates. Left as written.
+- **Runtime/JS bucket order:** `typescript-integration` now records what landed (build, site-contracts, sitemap compiled from `scripts/ts`; thirteen typed browser modules) and shares three decisions with `site-source-layout`: the M0 ship-list import method, the M2 `public/ts` to `src/ts` tsconfig change, and L3 uncommitted output. Order is M0 decision, M0, M2; the `site/` move waits behind them.
+- **Nearest archive candidates:** `release-day-resonance-2026-09-13` and `release-day-discovery-2026-09-26`, once their receipts are written into an owner plan.
+
 ## Maintenance Snapshot - 2026-09-20
 
 Tree census: **154 live plans, 64 archived plans**, including untracked work.

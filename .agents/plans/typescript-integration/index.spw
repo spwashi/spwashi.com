@@ -1,4 +1,4 @@
-# Review 2026-07-12 — keep as the TypeScript boundary owner; use types where schema and contracts pay for compilation.
+# Review 2026-09-27 — keep as the TypeScript boundary owner; foundation and most typed-manifest scope landed (PLAN.md 2026-09-27 section); next is the M0 vite import decision shared with site-source-layout.
 # Plan Index — typescript-integration
 #
 # The desired end state is a site repo where TypeScript sharpens the parts that already behave like schema systems: - the static build/export path - the design catalog that…

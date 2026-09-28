@@ -174,6 +174,22 @@ audit_run: .{
   still_inverted = `195 live vs 11 archived. Do not generate indexes to record this.`
 }[reg=facet]
 
+^"recensus_2026_09_27"{
+  operation = "audit"
+  fixity = "tending"
+  before = "154 live PLAN.md; 64 archived (2026-09-20)"
+  after = "163 live PLAN.md; 64 archived"
+  reading = `Nine folders opened in seven days and none closed. The archive rule in spw-plan-maintenance is not being run by the sessions that land work; the quota inverts further each week.`
+  citations = .{
+    method = `backticked repo-root-anchored paths in every live PLAN.md and FIX.md checked against git ls-files; bare basenames and route URLs not counted`
+    counts = `1094 anchored citations; 155 unresolved across 63 plans; 1 had exactly one current home and was rewritten (quest-workbench-feedback worker path); 4 are deliberate non-paths (site-source-layout src/* scope line); the rest are split files the 2026-09-17 README legend reads, or .agents/state precipitates never committed`
+    rule = `Do not rewrite split-file citations plan by plan; the legend is the reader. css-architecture-readability sits at its 850-line budget and keeps 22 pre-split names on purpose.`
+  }[reg=facet]
+  index_check = `plans:index:check was red on topical-learning-links/learning-transfer.spw (no first-line review, since 2026-09-23); reviewed in place. Eleven live folders the root index never named (opened 2026-09-19 through 2026-09-26) wired into since_2026_07_12; only topic-building-blocks carries an index.spw. Buckets hold no archived slugs.`
+  priority = `runtime_js_validation reads in this order today: typescript-integration doc refresh (landed 9ecb64d1), then the M0 vite import decision, then site-source-layout M0, then M2. L1 route move and L3 uncommitted output stay behind those. Two dated release-day folders (2026-09-13, 2026-09-26) are the nearest archive candidates once receipts are written into an owner.`
+  never = `move folders without a citation-safe pass; author eleven index.spw in batch; rewrite the legend's split citations`
+}[reg=facet]
+
 ^"next_slices"{
   done_here = `audit + root-index bucket truth; 2026-09-07 archive of seven citation-safe folders`
   landed_2026_09_08 = `owner-registry wave B; ecology hubs; July caches cold`
