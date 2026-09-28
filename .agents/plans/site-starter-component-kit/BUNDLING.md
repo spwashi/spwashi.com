@@ -53,3 +53,6 @@ Keep creator identity, navigation, analytics, service worker, and route content 
 The first implementation slice ends when texture-slice works independently with
 documented dependencies and repeatable relocation checks. Broader extraction
 waits for consumer evidence. This patch writes the plan and sketch only.
+
+## Host view and host mounting — 2026-09-27
+Creator plan: texture.website and lore.land will reference JavaScript on spwashi.com. The catalog now carries the runtime half of the evidence this track asked for: `effectScope` tokens have host tiers, and `describeModuleHost(def)` reads them into `portable` (41 modules), `host-policy` (74), or `site-only` (21, core plus anything needing this site's chrome), with needs listed per tier. `runtime/orchestration/host.js` mounts one portable export with the loader's own `(ctx, root)` convention and a small host context; the js-tree audit names it as a root entry. `site.js` resolves catalog hints against the origin that served it. Still open: the import-graph half (`audit:portable`: site-coupled imports, document-relative URLs, ctx fields beyond the host context, stylesheets keyed on each module's writes) and a build-emitted manifest; CORS on the deployed host is assumed, not yet observed.

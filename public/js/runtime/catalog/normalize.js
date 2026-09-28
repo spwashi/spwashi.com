@@ -16,6 +16,8 @@ import {
   COST_SPEND,
   COST_SPEND_VALUES,
   EFFECT_SCOPE,
+  EFFECT_SCOPE_TIER,
+  EFFECT_SCOPE_TIERS,
   MODULE_LAYERS,
   MOUNT_WHEN,
   costClassFromModel,
@@ -107,6 +109,45 @@ export function filterEnhancementDefs(defs, includeLayoutAudit = true) {
   return (defs || []).filter((def) => def?.id !== 'layout-shift-audit');
 }
 
+export const MODULE_PORTABILITY = Object.freeze(['portable', 'host-policy', 'site-only']);
+
+/**
+ * What another page must provide before this module may act there, read from
+ * the effectScope host tiers (catalog EFFECT_SCOPE_TIER).
+ *   portable     host tier only: the module's markup and stylesheet suffice.
+ *   host-policy  the page must accept document writes, origin storage, a bus,
+ *                or platform calls; it decides, per need.
+ *   site-only    needs this site's chrome, or is a core module that runs the
+ *                site itself.
+ * This is the runtime half; `npm run audit:portable` adds the import-graph half
+ * (site-coupled imports, document-relative URLs, ctx fields read).
+ */
+export function describeModuleHost(def = {}) {
+  const scope = asList(def.effectScope, { tokens: true });
+  const needs = Object.create(null);
+  let touchesHost = false;
+  for (const token of scope) {
+    const tier = EFFECT_SCOPE_TIER[token];
+    if (!tier) continue;
+    if (tier === 'host') {
+      touchesHost = true;
+      continue;
+    }
+    (needs[tier] ||= []).push(token);
+  }
+  const tiers = EFFECT_SCOPE_TIERS.filter((tier) => (tier === 'host' ? touchesHost : Boolean(needs[tier])));
+  let portability = 'portable';
+  if (def.layer === MODULE_LAYERS.CORE || needs.shell) portability = 'site-only';
+  else if (Object.keys(needs).length) portability = 'host-policy';
+  return {
+    portability,
+    tiers,
+    needs: { ...needs },
+    selector: def.selector || null,
+    rootMode: def.rootMode || 'single',
+  };
+}
+
 /**
  * Derive the loader-facing story from existing catalog fields.
  *
@@ -160,6 +201,7 @@ export function describeModuleOrchestration(def = {}) {
       mount: typeof def.mount === 'function' ? 'catalog-adapter' : 'portable-export',
       cleanup: typeof def.unmount === 'function' ? 'catalog-unmount' : 'mount-result',
     },
+    host: describeModuleHost(def),
     cost: {
       commitment: cost.commitment,
       spend: cost.spend,
@@ -177,6 +219,7 @@ export function listModuleCatalogIndex(defs = []) {
   const bySpend = Object.create(null);
   const byDescribesSubject = Object.create(null);
   const byDescribesGrade = Object.create(null);
+  const byPortability = Object.create(null);
   const rows = [];
   for (const def of defs) {
     if (!def?.id) continue;
@@ -192,6 +235,7 @@ export function listModuleCatalogIndex(defs = []) {
     (byCommitment[cost.commitment] ||= []).push(def.id);
     (bySpend[cost.spend] ||= []).push(def.id);
     if (described.grade) (byDescribesGrade[described.grade] ||= []).push(def.id);
+    (byPortability[orchestration.host.portability] ||= []).push(def.id);
     for (const subject of described.subjects) {
       (byDescribesSubject[subject] ||= []).push(def.id);
     }
@@ -213,6 +257,7 @@ export function listModuleCatalogIndex(defs = []) {
       selector: def.selector || null,
       debugOnly: Boolean(def.debugOnly),
       effectScope: def.effectScope || null,
+      portability: orchestration.host.portability,
       orchestration,
     });
   }
@@ -225,6 +270,7 @@ export function listModuleCatalogIndex(defs = []) {
     bySpend,
     byDescribesSubject,
     byDescribesGrade,
+    byPortability,
     modules: rows,
     optimization: summarizeModuleCatalogOptimization(defs),
   };
@@ -490,7 +536,7 @@ export function summarizeModuleCatalogOptimization(defs = []) {
       'costClass is a derived alias (early→premature_commitment, wide→working_memory_pressure, …).',
       'when / layer remain the schedule contract. INTERACTION is unused when interactionSlotEmpty.',
       'byTimingStem / byIdleChunk come from module-timing-contract.',
-      'orchestration groups the flat authoring fields into schedule, gates, capabilities, effects, lifecycle, and cost.',
+      'orchestration groups the flat authoring fields into schedule, gates, capabilities, effects, lifecycle, host, and cost.',
     ],
   };
 }
@@ -533,5 +579,7 @@ export const MODULE_CATALOG_NORMALIZE_CONTRACT = Object.freeze({
   scheduleOwns:
     'when / timingArc / timingChunk / features remain the runtime schedule; cost is budget/inspect only unless a future loader policy opts in.',
   orchestrationView:
-    'describeModuleOrchestration() derives schedule, gates, capabilities, effects, lifecycle, and cost from one flat catalog definition. The grouped view is for loaders and inspectors; authors do not duplicate it.',
+    'describeModuleOrchestration() derives schedule, gates, capabilities, effects, lifecycle, host, and cost from one flat catalog definition. The grouped view is for loaders and inspectors; authors do not duplicate it.',
+  hostView:
+    'describeModuleHost() reads effectScope tiers into portable | host-policy | site-only and the needs per tier, so another origin knows what it must provide.',
 });

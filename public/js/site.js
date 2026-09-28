@@ -354,7 +354,9 @@ function extractDynamicImportSpecifier(def) {
 }
 
 function moduleSpecifierToUrl(specifier = '') {
-  return resolveRuntimeModuleSpecifier(specifier, window.location.origin, import.meta.url);
+  // Resolve against the origin that served this runtime, not the page: on
+  // another origin, hints must still point at spwashi.com's modules.
+  return resolveRuntimeModuleSpecifier(specifier, new URL(import.meta.url).origin, import.meta.url);
 }
 
 function ensureResourceHint(href, rel = 'modulepreload') {

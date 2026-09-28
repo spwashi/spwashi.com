@@ -45,11 +45,13 @@ export { FEATURE_DEFS } from './feature.js';
 export { REGION_DEFS } from './region.js';
 export { ENHANCEMENT_DEFS } from './enhancement.js';
 export {
+  describeModuleHost,
   describeModuleOrchestration,
   filterEnhancementDefs,
   inferModuleCost,
   inferModuleCostClass,
   MODULE_CATALOG_NORMALIZE_CONTRACT,
+  MODULE_PORTABILITY,
   normalizeCatalogDefinition,
   normalizeCatalogDefinitions,
   resolveModuleCatalogSpecifier,
