@@ -597,6 +597,7 @@ reading_order: .{
   `topic-building-blocks`,
   `topical-learning-links`,
   `wonder-kin-routes`,
+  `engagement-clusters`,
  ][reg=set]
 }[reg=facet]
 @plan_topic_building_blocks: ~"./topic-building-blocks/index.spw"
