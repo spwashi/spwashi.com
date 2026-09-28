@@ -66,6 +66,8 @@ import {
   reviewChapterFor,
   prioritizeCaptureJobs,
   classifyCaptureFailure,
+  attentionMissError,
+  attentionReceipt,
   recaptureJobIds,
   buildCaptureIndex,
   capturePriorityScore,
@@ -1007,12 +1009,32 @@ test('failure kinds distinguish miss from gone, and index names the recapture co
   assert.equal(classifyCaptureFailure(new Error('Inspected target navigated or closed')), 'gone');
   assert.equal(
     classifyCaptureFailure(new Error('CDP call timeout: Runtime.evaluate (8000ms)'), { flow: 'page' }),
-    'failed',
+    'cdp-timeout',
   );
   assert.equal(
     classifyCaptureFailure(new Error('CDP call timeout: Page.captureScreenshot (12000ms)'), { flow: 'page' }),
-    'failed',
+    'cdp-timeout',
   );
+  assert.equal(
+    classifyCaptureFailure(new Error('CDP websocket open timeout (10000ms)')),
+    'cdp-timeout',
+  );
+  const missed = attentionMissError(
+    { id: 'about-opening', fixtureId: 'about-opening', viewportId: 'pocket' },
+    { verdict: 'failed', reason: 'ink-ignores-attention', opacity: 0.42, charge: 0.4, resonance: 0 },
+  );
+  assert.equal(missed.attention.reason, 'ink-ignores-attention');
+  assert.equal(missed.attention.opacity, 0.42);
+  const receipt = attentionReceipt({
+    errorArtifacts: [
+      { attention: missed.attention },
+      { id: 'capture', kind: 'cdp-timeout', message: 'CDP call timeout: Runtime.evaluate (16000ms)' },
+    ],
+  });
+  assert.equal(receipt.ok, false);
+  assert.equal(receipt.failures[0].reason, 'ink-ignores-attention');
+  assert.equal(receipt.failures[0].detail, 'opacity 0.42');
+  assert.equal(receipt.failures[1].reason, 'cdp-timeout');
   const index = buildCaptureIndex({
     captures: [{ id: 'home-opening', file: 'captures/pocket/01-home-opening.jpg', flow: 'page', still: true }],
     errorArtifacts: [

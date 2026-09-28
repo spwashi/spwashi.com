@@ -62,6 +62,8 @@ import {
   REVIEW_CHAPTERS,
   CAPTURE_FAILURE_KINDS,
   classifyCaptureFailure,
+  attentionMissError,
+  attentionReceipt,
   recaptureJobIds,
   reviewChapterFor,
   buildCaptureIndex,
@@ -783,7 +785,7 @@ function errorArtifactRel(kind, job, ext = null) {
   return rel.replace(/\.[^.]+$/, suffix);
 }
 
-async function writeErrorArtifact(outDir, kind, job, { buffer, message, twin } = {}) {
+async function writeErrorArtifact(outDir, kind, job, { buffer, message, twin, attention = null } = {}) {
   const rel = buffer ? errorArtifactRel(kind, job) : errorArtifactRel(kind, job, '.txt');
   const abs = path.join(outDir, rel);
   await mkdir(path.dirname(abs), { recursive: true });
@@ -806,6 +808,7 @@ async function writeErrorArtifact(outDir, kind, job, { buffer, message, twin } =
     fixtureId: job.fixtureId,
     viewport: job.viewportId,
     flow: job.flow,
+    attention: attention || null,
   };
 }
 
@@ -1300,18 +1303,11 @@ async function captureJob(session, job, {
     throw new Error(`overflow-x: ${stillOverflow.reason}${snapshot.clipCulprit ? ' (' + snapshot.clipCulprit + ')' : ''} ${job.selector || ''}`.trim());
   }
   if (!stillAttention.ok) {
-    throw new Error(
-      `attention-miss: ${stillAttention.reason}`
-      + ` opacity=${stillAttention.opacity}`
-      + ` restFloor=${stillAttention.restFloor}`
-      + ` rest=${stillAttention.restOpacity}`
-      + ` charge=${stillAttention.charge}`
-      + ` resonance=${stillAttention.resonance}`
-      + ` light=${stillAttention.light}`
-      + ` opRes=${stillAttention.operatorResonance}`
-      + ` probe=${snapshot.attention?.resonanceProbe || ''}`
-      + ` focus=${snapshot.attention?.focusWithin === true}`,
-    );
+    throw attentionMissError(job, {
+      ...stillAttention,
+      probe: snapshot.attention?.resonanceProbe || '',
+      focusWithin: snapshot.attention?.focusWithin === true,
+    });
   }
   return {
     buffer,
@@ -1563,6 +1559,7 @@ async function main() {
         const kind = classifyCaptureFailure(err, job);
         const artifact = await writeErrorArtifact(options.out, kind, job, {
           message: `${job.id}@${job.viewportId}/${job.aspect || 'qa'} ${job.flow}: ${err.message}`,
+          attention: err.attention || null,
         });
         errorArtifacts.push(artifact);
         errors.push(artifact.message);
@@ -1785,6 +1782,7 @@ async function main() {
             const kind = classifyCaptureFailure(err, job);
             const artifact = await writeErrorArtifact(options.out, kind, job, {
               message: `${job.id}@${job.viewportId}/${job.aspect || 'qa'} ${job.flow}: ${err.message}`,
+              attention: err.attention || null,
             });
             errorArtifacts.push(artifact);
             errors.push(artifact.message);
@@ -1846,6 +1844,10 @@ async function main() {
     manifest.index = captureIndex;
     await mkdir(options.out, { recursive: true });
     await writeFile(path.join(options.out, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);
+    await writeFile(
+      path.join(options.out, 'attention-receipt.json'),
+      `${JSON.stringify(attentionReceipt({ errorArtifacts }), null, 2)}\n`,
+    );
     await writeFile(path.join(options.out, 'index.json'), `${JSON.stringify(captureIndex, null, 2)}\n`);
     await writeFile(path.join(options.out, 'index.html'), galleryHtml(manifest));
     if (runLayout) {
@@ -1982,6 +1984,19 @@ async function main() {
     return errors.length ? 1 : 0;
   } catch (error) {
     console.error('[visual:capture] fatal', error);
+    try {
+      await mkdir(options.out, { recursive: true });
+      await writeFile(
+        path.join(options.out, 'attention-receipt.json'),
+        `${JSON.stringify(attentionReceipt({
+          errorArtifacts: [{
+            id: 'capture',
+            kind: classifyCaptureFailure(error),
+            message: error?.message || String(error),
+          }],
+        }), null, 2)}\n`,
+      );
+    } catch { /* the log line above is the remaining record */ }
     return 1;
   } finally {
     shutdown();

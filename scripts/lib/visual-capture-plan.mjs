@@ -104,7 +104,7 @@ export const COST_BANDS = Object.freeze({
 
 export const SEAT_PRIORITY = Object.freeze(['hook', 'path', 'cluster', 'hub', 'read', 'wide']);
 export const VIEWPORT_PRIORITY = Object.freeze(['pocket', 'fold', 'phablet', 'broadsheet']);
-export const CAPTURE_FAILURE_KINDS = Object.freeze(['miss', 'blank', 'gone', 'collision', 'failed']);
+export const CAPTURE_FAILURE_KINDS = Object.freeze(['miss', 'blank', 'gone', 'collision', 'cdp-timeout', 'failed']);
 
 /**
  * Review progression for stills. Not a new attribute family — jobs inherit
@@ -194,7 +194,7 @@ export function prioritizeCaptureJobs(jobs = [], {
 
 /** Job ids to recapture. Prefer the still that failed, not its fixture family. */
 export function recaptureJobIds(errorArtifacts = []) {
-  const kinds = new Set(['miss', 'gone', 'failed', 'blank']);
+  const kinds = new Set(['miss', 'gone', 'failed', 'blank', 'cdp-timeout']);
   return [...new Set(
     errorArtifacts
       .filter((artifact) => kinds.has(artifact.kind))
@@ -206,12 +206,63 @@ export function recaptureJobIds(errorArtifacts = []) {
 export function classifyCaptureFailure(error, job = {}) {
   const message = String(error?.message || error || '');
   if (/selector-miss|not found or empty|attention-miss|overflow-x:/i.test(message)) return 'miss';
+  // A CDP timeout is its own reason. `gone` used to swallow it and skip
+  // every remaining job that shared the nav. The receipt keeps them apart.
+  if (/CDP (?:call|event|websocket open) timeout|timeout: Runtime\.evaluate/i.test(message)) return 'cdp-timeout';
   if (/navigated or closed|session closed|websocket|target closed/i.test(message)) return 'gone';
   if (/blank/i.test(message)) return 'blank';
   if (/collision|identical to/i.test(message)) return 'collision';
-  // A CDP timeout is a stuck evaluate, not a closed tab. Calling it `gone`
-  // used to skip every remaining job that shared the nav.
   return 'failed';
+}
+
+export function attentionMissError(job, stillAttention) {
+  const error = new Error(
+    `attention-miss: ${stillAttention.reason}`
+    + ` opacity=${stillAttention.opacity}`
+    + ` restFloor=${stillAttention.restFloor}`
+    + ` rest=${stillAttention.restOpacity}`
+    + ` charge=${stillAttention.charge}`
+    + ` resonance=${stillAttention.resonance}`
+    + ` light=${stillAttention.light}`
+    + ` opRes=${stillAttention.operatorResonance}`
+    + ` probe=${stillAttention.probe || ''}`
+    + ` focus=${stillAttention.focusWithin === true}`,
+  );
+  error.attention = {
+    fixtureId: job.fixtureId || job.id,
+    viewport: job.viewportId,
+    verdict: stillAttention.verdict,
+    reason: stillAttention.reason,
+    opacity: stillAttention.opacity ?? null,
+    charge: stillAttention.charge ?? null,
+    resonance: stillAttention.resonance ?? null,
+  };
+  return error;
+}
+
+/** Misses and timeouts only. A passing still stays in the pack, not here. */
+export function attentionReceipt({ errorArtifacts = [] } = {}) {
+  const failures = errorArtifacts.slice(0, 8).map((artifact) => {
+    if (artifact.attention) {
+      const opacity = artifact.attention.opacity;
+      return {
+        where: artifact.attention.fixtureId || artifact.fixtureId || artifact.id,
+        reason: artifact.attention.reason || 'attention-miss',
+        detail: opacity == null ? '' : `opacity ${opacity}`,
+      };
+    }
+    return {
+      where: artifact.fixtureId || artifact.id,
+      reason: artifact.kind || 'failed',
+      detail: String(artifact.message || '').replace(/\s+/g, ' ').trim().slice(0, 180),
+    };
+  });
+  return {
+    schema: 'attention-receipt.v0',
+    ok: errorArtifacts.length === 0,
+    failures,
+    truncated: errorArtifacts.length > 8,
+  };
 }
 
 export function buildCaptureIndex({ captures = [], errorArtifacts = [] } = {}) {
