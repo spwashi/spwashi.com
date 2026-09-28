@@ -253,6 +253,27 @@ expression = consumer[report]{defect.gap.built}<upstream>
   probe: `ls -t .spw/gen/session/corpus-memo/*.product.json | head -2 | xargs -I{} node -e "const j=require('{}');console.log(j.hubTop,j.scannedAt)"`
 }
 
+^"operation_cost_2026_09_27"{
+  ~#note: "Wall time of read-only commands run in sequence on this corpus at pin 3eaab6377672, with a one-minute load average of 165 from concurrent sessions at the start and 82 later. Ratios are the reading; the seconds are the weather that day. The sweep was stopped by a session restart after six commands; the rest are unmeasured here and carry the 2026-09-22 numbers where those exist."
+  measured: .{
+    spw_doctor_s = 7.6
+    spw_format_check_s = 5.9
+    spw_lattice_s = 2.1
+    spw_census_s = 339.2
+    spw_graph_s = 436.3
+    spw_measure_s = 374.5
+    spw_measure_result = `0 subjects, 0 drifted: six minutes to say nothing was declared`
+  }[reg=facet]
+  unmeasured_this_run = #[`analyze`, `tree`, `roots`, `ecology:language`, `ecology`, `spw:dimensions`, `spw:snippets`, `plans:index:check`, `spw:integrity (about 80 s on 2026-09-22; three runs under 300 s today)`][reg=set]
+  classes: .{
+    cheap = `doctor, format check, lattice, and the site-side sensors: seconds, safe in a local gate`
+    scan = `census, graph, measure, integrity: a full corpus parse each, minutes under load, and none shares its parse with the others (see memo_key)`
+    boot = `about one second per call through the tsx loader before any file is read; the parser bundle proves the kernel emits plain JS`
+  }[reg=facet]
+  ~#reading: `a command that reads the whole corpus should say so in its help, and should be the only one that does so per session`
+  probe: `for c in doctor "format ../../.spw --check" lattice census graph measure; do s=$(date +%s); npm run -s spw -- $c >/dev/null 2>&1; echo "$c $(( $(date +%s) - s ))s"; done`
+}[reg=facet]
+
 ^"sensors_to_carry_upstream"{
   ~#note: "Site sensors that answer a question the CLI does not yet ask. Each names its count on this corpus and the command it would become. Consume, do not fork: the site keeps running its script until the command exists at a pin."
   probe_runner: .{

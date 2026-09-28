@@ -33,7 +33,7 @@ intent: .{
 }[reg=facet]
 
 ^"archive_sweep_2026_09_27"{
- census = `Seven folders moved under archive/ after the CSS-token and Spw-interpreter plan pass: two landed palette plans, the never-implemented site-color-tuning, the landed minimal-brace-disclosure, the closed css-scroll-dark-regression fix, the landed theme-text-contrast receipt (probe.mjs travels with it), and theming-icon-packs-public-versioning split to its four owners. Live PLAN.md 163 -> 156.`
+ census = `Seven folders moved under archive/ after the CSS-token and Spw-interpreter plan pass: two landed palette plans, the never-implemented site-color-tuning, the landed minimal-brace-disclosure, the closed css-scroll-dark-regression fix, the landed theme-text-contrast receipt (probe.mjs travels with it), and theming-icon-packs-public-versioning split to its four owners. Live PLAN.md 163 -> 157 after the moves; a concurrent session added one folder during the pass.`
  rule = `Same as 2026-09-17: citations retargeted in the same patch; moved index.spw carry operation archive, fixity cold; reasons per folder in archive/README.md.`
  ledger = ~"./archive/README.md"
 }[reg=facet]

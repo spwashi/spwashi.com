@@ -194,7 +194,7 @@ audit_run: .{
   operation = "align"
   fixity = "tending"
   clusters = `CSS architecture and the tokens the JS runtime writes; Spw interpreter integration and progressive enhancement`
-  archived = `seven folders (see archive_sweep_2026_09_27 in the root index); live PLAN.md 163 -> 156`
+  archived = `seven folders (see archive_sweep_2026_09_27 in the root index); live PLAN.md 163 -> 157 after the moves, one folder having landed from a concurrent session during the pass`
   ownership_closed = #[
     `JS custom-property writes: css-sensitive-attribute-writes names style-property-contract.mts (allowance families, dynamic-write files) and the measurement (40 files, 115 properties); data-attribute-css-token-refinement points at it`,
     `interpreter in the site: spw-language-v04 Phase 4 owns the generated v0.3.0 parser, the on-demand runtime parser, the build-time expression manifest, and expression-query; feature-utilization#dual_path records the path as realized`,
