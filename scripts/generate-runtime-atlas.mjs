@@ -23,6 +23,7 @@
 // so the script also runs when the build spawns it without --import.
 import './lib/register-public-imports.mjs';
 import { execFileSync } from 'node:child_process';
+import { buildCssReaderIndex } from './lib/css-readers.mjs';
 import { readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -74,17 +75,7 @@ const families = sorted(runtimeFiles.map((file) => file.split('/')[3])).map((nam
 });
 
 // ── CSS readers: which stylesheets key on a written attribute or property ───
-const cssFiles = walk('public/css', (file) => file.endsWith('.css') && !file.includes('/bundles/'));
-const readersByToken = new Map();
-for (const file of cssFiles) {
-  const text = read(file);
-  const found = new Set([
-    ...[...text.matchAll(/data-spw-[a-z0-9-]+/g)].map((match) => match[0]),
-    ...[...text.matchAll(/var\(\s*(--[a-z0-9-]+)/g)].map((match) => match[1]),
-    ...[...text.matchAll(/\[(data-[a-z0-9-]+)/g)].map((match) => match[1]),
-  ]);
-  for (const token of found) readersByToken.set(token, [...(readersByToken.get(token) || []), file]);
-}
+const readersByToken = buildCssReaderIndex(ROOT);
 
 // ── Bus edges from each module's entry file ─────────────────────────────────
 function busEdges(file) {

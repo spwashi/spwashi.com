@@ -29,6 +29,7 @@ export function createHostContext({
 } = {}) {
   const cleanups = [];
   const timers = new Set();
+  const observers = new Set();
   const doc = globalThis.document;
   const ctx = {
     version: 'spw-host-v0.1',
@@ -46,9 +47,15 @@ export function createHostContext({
       if (typeof fn === 'function') cleanups.push(fn);
       return fn;
     },
+    timers,
+    observers,
     addTimer(id) {
       timers.add(id);
       return id;
+    },
+    addObserver(observer) {
+      if (observer && typeof observer.disconnect === 'function') observers.add(observer);
+      return observer;
     },
     async cleanup() {
       for (const id of timers) {
@@ -56,6 +63,8 @@ export function createHostContext({
         globalThis.clearInterval?.(id);
       }
       timers.clear();
+      for (const observer of observers) observer.disconnect();
+      observers.clear();
       while (cleanups.length) {
         try {
           await cleanups.pop()();
@@ -88,6 +97,6 @@ export async function mountPortableModule(namespace, root = globalThis.document,
 export const SPW_HOST_CONTRACT = Object.freeze({
   entry: '/public/js/runtime/orchestration/host.js',
   mount: 'mountPortableModule(namespace, root?, { ctx?, id? }) → { cleanup, refresh, ctx }',
-  context: 'createHostContext({ route?, bus?, features?, policy? }) — bus, html, body, main, route, regions, runtimePolicy, addCleanup, addTimer',
+  context: 'createHostContext({ route?, bus?, features?, policy? }) — bus, html, body, main, route, regions, runtimePolicy, timers, observers, addCleanup, addTimer, addObserver',
   portability: 'Read describeModuleHost(def).portability before mounting: portable needs only its markup and stylesheet; host-policy lists needs per tier; site-only needs this site.',
 });

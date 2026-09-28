@@ -159,6 +159,13 @@ const handle = await mountPortableModule(slice, document);
 Paths under `/public/js/` are addresses other sites keep once they import
 them; moving a portable file needs the same care as renaming a route.
 
+`npm run audit:portable` checks the other half: what a module's static
+imports actually pull in (site-settings, the interface layer, the loader),
+strings that would resolve against the host page instead of spwashi.com, and
+context fields a host does not provide. The deploy build writes the modules
+that pass to `/public/data/portable-modules.json`, each with its entry, export,
+weight, and the stylesheets that style it (`css.primary`).
+
 
 - `compose.js` for a single import surface over the portable runtime helpers.
 - `media/texture-slice.js` plus `/public/css/effects/texture-slice.css` when another origin only needs `[data-spw-texture-slice]`. Motif URLs are stylesheet-relative so they keep resolving from this host. Do not load `site.js` there.
