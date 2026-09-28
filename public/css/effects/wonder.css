@@ -55,7 +55,9 @@
   [data-spw-accent-concept],
   [data-spw-visual-cues],
   [data-spw-region-role]
-) {
+):where(:not([data-spw-floating-chrome="true"])) {
+  /* Floating chrome owns its own position; a charge or region role arriving
+     with the idle flourish pack must not turn a fixed rail relative. */
   /* Debug / inspection */
   --spw-debug-layer-owner: "effects";
   --spw-debug-layer-color: #d23669;
