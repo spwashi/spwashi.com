@@ -233,6 +233,72 @@ expression = consumer[report]{defect.gap.built}<upstream>
   builder: ~"../scripts/build-spw-literal-parser.mjs"
 }
 
+^"memo_key"{
+  ~#severity(high): "the memo exists and does not help, which is worse than no memo"
+  pin = `3eaab6377672`
+  claim: "census and graph each write a corpus memo, and the memo fingerprint includes the product option hubTop, so the two commands never share a scan."
+  measured: .{
+    census_s = 339.2
+    graph_s = 436.3
+    load_average = `165 one-minute, 64 five-minute; concurrent sessions; ratios are the finding`
+    memo_census = `7fbbee275600 hubTop=24 resolvePaths=true indexDepth=standard`
+    memo_graph = `3f289c285567 hubTop=12 resolvePaths=true indexDepth=standard`
+    memo_products = 28
+    memo_bytes = `87 MB under .spw/gen/session/corpus-memo`
+    reuse = 0
+  }[reg=facet]
+  ~#reading: `parse is keyed on what the reader asked for, not on what was read`
+  fix: "key the scan on roots plus file content hashes; apply hubTop, indexDepth, and selector at projection time; let query, resolve, lint, census, and graph read one scan memo"
+  ~#consequence: "a consumer that runs census then graph pays twice; a consumer that runs integrity after them pays a third time through a different code path"
+  probe: `ls -t .spw/gen/session/corpus-memo/*.product.json | head -2 | xargs -I{} node -e "const j=require('{}');console.log(j.hubTop,j.scannedAt)"`
+}
+
+^"sensors_to_carry_upstream"{
+  ~#note: "Site sensors that answer a question the CLI does not yet ask. Each names its count on this corpus and the command it would become. Consume, do not fork: the site keeps running its script until the command exists at a pin."
+  probe_runner: .{
+    built = ~"../scripts/spw-snippets.mjs"
+    measured = `194 snippets across 59 surfaces: 108 instruction, 72 shell, 14 spw; none has ever been run by a tool`
+    would_be = `spw probe [--run] [--kind shell]: list, classify, and execute the corpus's executable half; a probe that fails is a claim that failed`
+  }[reg=facet]
+  claim_ledger: .{
+    built = ~"../scripts/spw-language-ecology.mjs"
+    measured = `owner_claim 180, probe_ref 150, hypothesis 135; probe-to-hypothesis ratio 1.11`
+    would_be = `spw claims --unprobed: every owner_claim without a probe_ref, every hypothesis without a falsification`
+  }[reg=facet]
+  expression_kinship: .{
+    built = ~"../scripts/build-expression-manifest.mjs"
+    measured = `912 authored data-spw-semantic-expression values parse; the manifest precipitates subject, mode, parts, projection, scope, and charge for the browser at build time`
+    would_be = `spw kin <root>: the same six fields for every expression in a corpus, grouped by subject and mode; fingerprint already does one expression`
+  }[reg=facet]
+  axes_index: .{
+    built = ~"../scripts/spw-dimensional-index.mjs"
+    measured = `371 anchored surfaces; operation declared on 287, fixity on 249, layer on 318, freshness derivable on all`
+    would_be = `spw axes: the corpus grouped by what it declares about itself; lint already checks the annotation shape, nothing indexes the value`
+  }[reg=facet]
+  first_line_review: .{
+    built = ~"../scripts/maintain-plan-directory-indexes.mjs"
+    measured = `319 authored first-line review decisions across the plan tree; the check refuses a reviewed surface without one`
+    would_be = `spw lint --first-line <pattern>: a profile rule that a surface under a root opens with a dated decision`
+  }[reg=facet]
+  wonder_harvest: .{
+    built = ~"../scripts/wonder.mjs"
+    measured = `115 wonders across 51 surfaces, 24 without a probe`
+    would_be = `spw wonder --unprobed; still an unknown command at 3eaab63 (see wonder_harvest_absent)`
+  }[reg=facet]
+  existence_walk: .{
+    built = ~"../scripts/spw-integrity.mjs"
+    measured = `5166 path references across 373 surfaces resolve; the walk costs about 80 s because it is one more full parse`
+    would_be = `spw resolve --exists: resolve already classifies; existence is one stat per target once the scan memo is shared`
+  }[reg=facet]
+  parser_bundle: .{
+    built = ~"../scripts/build-spw-literal-parser.mjs"
+    measured = `packages/spw-seed/src/parser.ts bundles with esbuild into one plain JS module the browser runs at /tools/spw-parser/ and site search reads; every CLI call still boots through the tsx loader, about 1 s before any file is read`
+    would_be = `ship the CLI's parser as emitted JS beside the tsx route, so a consumer script can import it without the loader`
+  }[reg=facet]
+  ~#reading(the pattern): `the site measures what the corpus claims, runs, and promises; the CLI measures what the corpus is. The second set is where the next commands are.`
+  probe: `node scripts/spw-snippets.mjs; npm run ecology:language; node scripts/spw-dimensional-index.mjs; npm run wonder; npm run plans:index:check`
+}
+
 ^"validation"{
   probe: `npm run spw:integrity && npm run spw:dimensions`
   falsification: "a finding here no longer reproduces from its stated probe against the pinned submodule"
