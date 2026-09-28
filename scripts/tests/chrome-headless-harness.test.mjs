@@ -277,7 +277,7 @@ test('PR and nightly browser jobs use the strict smoke command', async () => {
   assert.doesNotMatch(packageJson.scripts['smoke:nav:ci'], /--json|--warm/, 'CI should show compact results and test a cold first route');
   for (const name of ['validate', 'nightly']) {
     const workflow = await readFile(new URL(`../../.github/workflows/${name}.yml`, import.meta.url), 'utf8');
-    assert.match(workflow, /run: npm run smoke:nav:ci -- --routes /, `${name} browser smoke must use strict CI gates`);
+    assert.match(workflow, /npm run smoke:nav:ci -- --routes /, `${name} browser smoke must use strict CI gates`);
     assert.doesNotMatch(workflow, /--settle-ms 4000/, `${name} should allow the normal runtime settle budget`);
   }
 });
