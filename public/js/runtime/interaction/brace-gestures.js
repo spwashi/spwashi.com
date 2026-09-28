@@ -257,6 +257,13 @@ function isTextFriendlyTarget(el) {
   return Boolean(el?.closest?.(TEXT_FRIENDLY_SELECTOR));
 }
 
+function isReadableTextOrigin(origin, host) {
+  if (!(origin instanceof Element)) return false;
+  const control = origin.closest('a[href], button, summary, input, select, textarea, [contenteditable], [role="button"]');
+  if (control && control !== host) return false;
+  return Boolean(origin.closest('p, li, blockquote, pre, code, h1, h2, h3, h4, h5, h6, [data-spw-readable], [data-reading-region]'));
+}
+
 // Living terms (.spw-living-term / [data-spw-living-term]) and cauldron
 // candidates ([data-spw-cauldron-candidate="true"]) are excluded here on
 // purpose, added 2026-09-03 — but only when the matched element is a BARE
@@ -928,13 +935,7 @@ function onPointerLeave(event) {
   clearHoldTimer(target);
   const meta = state?.meta || classifyTarget(target);
 
-  // Restore normal text selection after gesture ends
-  if (target instanceof HTMLElement) {
-    delete target.dataset.spwGestureArmed;
-    if (target.style.userSelect === 'none' && !target.hasAttribute('data-spw-keep-user-select-none')) {
-      target.style.userSelect = '';
-    }
-  }
+  restoreGestureSelection(target, state);
 
   setGesture(target, meta, 'neutral');
 
@@ -952,6 +953,8 @@ function onPointerDown(event) {
 
   clearResidueTimer(target);
   const meta = classifyTarget(target);
+  const readableTextOrigin = isCoarsePointerEvent(event) && isReadableTextOrigin(event.target, target);
+  const textFriendly = isTextFriendlyTarget(target) || readableTextOrigin;
   setGesture(target, meta, 'active', { source: 'pointer', button: 0 });
 
   emitBraceEvents(
@@ -962,7 +965,7 @@ function onPointerDown(event) {
 
   const timer = window.setTimeout(() => {
     const current = gestureState.get(target);
-    if (!current || current.dragging) return;
+    if (!current || current.dragging || current.readableTextOrigin) return;
 
     current.armed = true;
     setGesture(target, current.meta, 'armed');
@@ -980,8 +983,10 @@ function onPointerDown(event) {
       // data-spw-text-friendly/-gesture-priority are the general opt-in and
       // remain unauthored anywhere on the site; hooks get this by default
       // rather than needing 13 routes to each remember to add one.
-      if (!isTextFriendlyTarget(target)) {
+      if (!current.textFriendly && target.style.userSelect !== 'none') {
+        current.previousUserSelect = target.style.userSelect;
         target.style.userSelect = 'none';
+        current.selectionOverridden = true;
       }
     }
 
@@ -1003,6 +1008,8 @@ function onPointerDown(event) {
     armed: false,
     pointerId: event.pointerId,
     meta,
+    textFriendly,
+    readableTextOrigin,
   });
 
   if (!isCoarsePointerEvent(event) && target.setPointerCapture) {
@@ -1024,6 +1031,7 @@ function onPointerMove(event) {
 
   const state = gestureState.get(target);
   if (!state) return;
+  if (state.readableTextOrigin) return;
 
   const dx = event.clientX - state.startX;
   const dy = event.clientY - state.startY;
@@ -1065,6 +1073,7 @@ function onPointerUp(event) {
 
   if (state) {
     clearTimeout(state.timer);
+    restoreGestureSelection(target, state);
 
     if (state.dragging) {
       emitBraceEvents(
@@ -1116,7 +1125,7 @@ function onPointerUp(event) {
       scheduleCoarseResidue(target, meta);
     } else {
       setGesture(target, meta, 'neutral');
-      if (!isTextFriendlyTarget(target)) {
+      if (!state?.textFriendly && !isTextFriendlyTarget(target)) {
         groundInteraction(target, 'tap-no-arc', { mutator: 'brace-gestures' });
       }
     }
@@ -1150,6 +1159,8 @@ function onPointerCancel(event) {
   const meta = state?.meta || classifyTarget(target);
 
   clearHoldTimer(target);
+  restoreGestureSelection(target, state);
+  gestureState.delete(target);
   setGesture(target, meta, 'neutral');
 
   emitBraceEvents(
@@ -1237,6 +1248,15 @@ function clearHoldTimer(el) {
   if (!state) return;
 
   clearTimeout(state.timer);
+}
+
+function restoreGestureSelection(target, state) {
+  if (!(target instanceof HTMLElement)) return;
+  delete target.dataset.spwGestureArmed;
+  if (state?.selectionOverridden && target.style.userSelect === 'none') {
+    target.style.userSelect = state.previousUserSelect || '';
+    state.selectionOverridden = false;
+  }
 }
 
 function isCoarsePointerEvent(event) {
