@@ -50,7 +50,7 @@ intent: .{
 ^"plan_refinement"{
  tone = `Honest meta-work — celebrate inspectability wins, name inflation costs.`
  accuracy = `The 2026-07-12 manual sweep reviewed all 279 plan .spw files and found widespread owner overlap, stale WIP state, and generated conceptual filler.`
- direction = `Consolidate from the reviewed keep/merge/rework/archive decisions; do not run another mass index expansion.`
+ direction = `Cool stale wip by giving a hot file one sibling and one probe. wonder_plan_wip_hot asks whether that is enough. Another mass index expansion stays refused.`
  inspiration = `The next agent session should cost less discovery than the last.`
  alignment = `commit-skill-induction audit, agentic-dev-contracts, spw-plan-maintenance skill`
 }[reg=facet]
@@ -76,6 +76,11 @@ intent: .{
 @copy_hypermedia_key: ~"../../../.spw/caches/copy-hypermedia-key-2026-09.spw"
 @markdown_spend: ~"../../../.spw/caches/agent-markdown-spend-2026-09.spw"
 @check_agents: ~"../../../scripts/check-agent-contracts.mjs"
+@package_json: ~"../../../package.json"
+@plan_spw_architecture_ecology: ~"../spw-architecture-ecology/index.spw"
+@plan_spw_language_v04: ~"../spw-language-v04/index.spw"
+@plan_typescript_integration: ~"../typescript-integration/wip.spw"
+@readable_by_tooling: ~"../../../.spw/caches/spw-readable-by-tooling-2026-09.spw"
 
 dispatch: .{
  plan = @plan
@@ -118,6 +123,11 @@ dispatch: .{
   `runtime-bootstrap-performance`,
   `modular-experience-slices`,
   `state-satchel-card-gesture-fixes`,
+  `typescript-integration`,
+  `site-source-layout`,
+  `spw-architecture-ecology`,
+  `spw-language-v04`,
+  `language-ladder-runtime-instrumentation`,
  ][reg=set]
 }[reg=facet]
 
@@ -154,3 +164,30 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+# Prime 2026-09-28. Of 183 commits since 2026-09-21, the plan markdown moved
+# and 41 live wip.spw files mostly did not. The two doors are package.json and the corpus.
+
+#>wonder_plan_wip_hot
+?["What would make a wip.spw worth opening when the week's truth landed in PLAN.md?"]{
+  #:depth #!computational ~#lens(inquiry)
+  ~#with: @wip_notebook @plan_agentic_dev_contracts
+  ~#taste: "A wip stays hot only while it names the other plan that owns the other half, and a probe that can fail."
+  ~#hypothesis: "Hot memory is the sibling, the script, and the question still open. A restated goal is a second PLAN.md. A proposed commit is a subject this history would accept, paired with an expression."
+  ~#tension: "This week updated PLAN.md across runtime, TypeScript, quest, and CSS, and left almost every wip as it was. Indexes still paste the goal into the hypothesis."
+  !probe{ "npm run wonder -- --surface wonder_plan_wip_hot" }
+  $%[plan.sibling, plan.probe, plan.wip]
+  ~<"../agentic-dev-contracts/index.spw"> ~<"../typescript-integration/wip.spw"> ~<"../site-source-layout/wip.spw"> ~<"../../../.spw/conventions/wip-notebook.spw">
+}
+
+#>wonder_plan_two_doors
+?["Are the package.json scripts and the Spw corpus two doors into one knowledge base?"]{
+  #:depth #!computational ~#lens(comparison)
+  ~#with: @package_json @readable_by_tooling @plan_spw_architecture_ecology @plan_spw_language_v04
+  ~#taste: "An affordance stays listed only while a command prints it without a person remembering the path."
+  ~#hypothesis: "check:local, wonder, atlas, and spw:integrity are the cheap falsifiers. The corpus is what those commands read. A plan that cites a sibling and a script can be entered from either door."
+  ~#tension: "doctor excludes .agents, so a plan file never enters lattice or census. Until this harvest, wonder stopped at .spw/ and a question written in a plan could not be asked."
+  !probe{ "npm run wonder -- --surface wonder_plan_two_doors" }
+  $%[script.door, corpus.plan, walk.exclusion]
+  ~<"../spw-architecture-ecology/index.spw"> ~<"../spw-language-v04/index.spw"> ~<"../../../.spw/workbench-report.spw">
+}

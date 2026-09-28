@@ -295,13 +295,18 @@ fixity = "tending"
 }
 
 ^["commits"]{
- ~[1]: "#[plan] — add granular TypeScript integration plan and WIP ontology"
- ~[2]: ".[ts] — scope TypeScript to repo-local scripts and define shared script schemas"
- ~[3]: "&[catalog] — type the design-catalog pipeline and its attribute/token contracts"
- ~[4]: "&[manifest] — type route/runtime manifest generation and build-facing contract seams"
- ~[5]: "&[release] — define chunk/layer identity and named-release/hash provenance contracts"
- ~[6]: ".[runtime] — harden browser registries with JSDoc typedefs and extracted contracts"
- ~[7]: "![ts] — verify script validation loop, chunk identity stability, and browser-runtime boundaries"
+  shape = `subject :: expression. The subject is one this history would accept. The expression is the part a tool can file. Landed lines stay as record. Open lines are the only ones a later session should try to commit. The April dashed subjects said the same sequence in a grammar this repo no longer writes.`
+  landed = #[
+    `~[plans] Let the TypeScript plan say what landed, and keep the April list as history :: plan[typescript]{landed.scope}<wip>`,
+    `=[ts] Compile scripts/ts into scripts/typed, and leave thin wrappers at the old paths :: compile[scripts]{tsconfig.scripts}<typed>`,
+    `=[manifest] Type the route manifest, the sitemap, and the runtime contracts :: manifest[typed]{route.sitemap.runtime}<contract>`
+  ][reg=set]
+  open = #[
+    `=[ts] Let vite import the ship list from the compiled module :: import[vite]{ship.list}<topology>`,
+    `~[catalog] Give the catalog's records a type where the generator already agrees :: catalog[record]{attribute.token.file}<contract>`,
+    `.[runtime] Harden kernel settings, page metadata, and shared helpers before any browser compile :: runtime[boundary]{settings.metadata.shared}<jsdoc>`,
+    `?[release] Hold chunk identity until a family has shipped twice :: chunk[identity]{family.hash}<release>`
+  ][reg=set]
 }
 
 ^["cache"]{
@@ -320,4 +325,26 @@ fixity = "tending"
  ~[phase_foundation]: "tsconfig.scripts.json, tsconfig.runtime.json, tsconfig.public-sources.json, tsconfig.public.json; npm run typecheck runs all four"
  ~[typed_manifest]: "scripts/typed/site-contracts, scripts/typed/sitemap, generate-route-runtime-manifest.mts, css-manifest.mts, css-bundle.mts, runtime-contracts.mts, pwa-contracts.mts, json-contracts.mts"
  ~[browser_typed_edges]: "thirteen public/ts modules compile to public/js/typed; source/output parity checked by runtime-contracts/imports.mts"
+}
+
+^"week_2026_09_28"{
+  read = `183 commits since 2026-09-21. This file's PLAN.md learned what landed in scripts/typed. package.json learned the doors: typecheck calls node node_modules/typescript/bin/tsc because PATH tsc exits 0 without compiling; check:local is the local gate; manifest:staged is the index stamp.`
+  owns = `The narrow typecheck door, and whether browser TypeScript waits.`
+  siblings = #[
+    `agentic-dev-contracts owns which script is the site door (wonder_plan_script_door)`,
+    `site-source-layout owns the folder that door lives in, and still shares M0, M2, and L3`,
+    `language-ladder owns the teachable order and stays a handoff until those owners stay separate`
+  ][reg=set]
+}
+
+#>wonder_plan_typecheck_door
+?["Is typecheck the narrow door for this plan, and the folder scripts/ts the blast radius of the next commit?"]{
+  #:depth #!computational ~#lens(comparison)
+  ~#with: @plan @index
+  ~#taste: "A typecheck stays the door only while it fails on a broken contract in scripts/ts and stays quiet about the public pages."
+  ~#hypothesis: "package.json typecheck runs the repo tsc, not a PATH stub. The open commit is import[vite]{ship.list}<topology>, shared with site-source-layout, decided here."
+  ~#tension: "check:local answers did I break the site. Typecheck answers did I break the contract. One commit that does both spreads across bins the layout plan is trying to keep apart."
+  !probe{ `node -e 'import fs from "node:fs"; const typecheck = JSON.parse(fs.readFileSync("package.json","utf8")).scripts.typecheck; if (!typecheck || !typecheck.includes("typescript/bin/tsc")) process.exit(1)'` }
+  $%[typecheck.door, folder.scripts, commit.expression]
+  ~<"../site-source-layout/wip.spw"> ~<"../agentic-dev-contracts/index.spw"> ~<"../language-ladder-runtime-instrumentation/wip.spw">
 }

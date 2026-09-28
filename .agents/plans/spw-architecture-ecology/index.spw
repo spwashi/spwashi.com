@@ -49,7 +49,7 @@ intent: .{
 ^"plan_refinement"{
  tone = `Architectural memo — thin dispatch, no essay duplication of PLAN.md.`
  accuracy = `Typed relations exist, but the 279-file review shows that generated indexes and copied owner claims increased discovery cost.`
- direction = `Use reviewed dispositions to consolidate owners and cool stale WIPs before adding coordinators, registries, or site.spw references.`
+ direction = `Cool stale wip before adding coordinators. A plan joins the knowledge base as the named root .agents/plans, with archive skipped. wonder_plan_corpus_exclusion asks for that cut upstream.`
  inspiration = `Editors route by concept name, not folder archaeology.`
  alignment = `spw-surface-normalization, plan-ecology-semantics audit, agent-optimization`
 }[reg=facet]
@@ -64,6 +64,10 @@ intent: .{
 @spw_conventions_index_spw: ~"../../../.spw/conventions/index.spw"
 @conventions: ~"../../../.spw/conventions/"
 @maintain_plan_directory_indexes: ~"../../../scripts/maintain-plan-directory-indexes.mjs"
+@package_json: ~"../../../package.json"
+@workbench_report: ~"../../../.spw/workbench-report.spw"
+@plan_agentic_dev_contracts: ~"../agentic-dev-contracts/index.spw"
+@plan_agent_optimization: ~"../agent-optimization/index.spw"
 @design_components_index_html: ~"../../../design/components/index.html"
 @spw_slices_index_spw: ~"../../../.spw/slices/index.spw"
 
@@ -90,6 +94,12 @@ dispatch: .{
 
 ^"connection_points"{
  owner_rail = `self`
+ related_plans = #[
+  `agent-optimization`,
+  `agentic-dev-contracts`,
+  `spw-language-v04`,
+  `typescript-integration`,
+ ][reg=set]
 }[reg=facet]
 
 ^"owner_claim"{
@@ -128,3 +138,15 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+#>wonder_plan_corpus_exclusion
+?["Can plan .spw join the knowledge base while the rest of .agents stays excluded?"]{
+  #:depth #!computational ~#lens(constraint)
+  ~#with: @workbench_report @wip_notebook @package_json
+  ~#taste: "A folder stays excluded only while nothing inside it is a claim a later reader must check."
+  ~#hypothesis: "doctor excludes .agents because diaries and state are not corpus. Plan indexes and hot wip files are corpus-shaped: an anchor, an operation, a citation, a probe. The cut is the named root .agents/plans with archive skipped, which is the walk this site's wonder now makes."
+  ~#tension: "Lifting the .agents exclusion would put MEMORY and session state into every census. Leaving it means lattice still cannot see the questions these plans ask."
+  !probe{ "npm run wonder -- --surface wonder_plan_corpus_exclusion" }
+  $%[corpus.plans, corpus.agents, walk.exclusion]
+  ~<"../agent-optimization/index.spw"> ~<"../../../.spw/workbench-report.spw"> ~<"../../../.spw/reviews/upstream-workbench-recommendations.spw">
+}

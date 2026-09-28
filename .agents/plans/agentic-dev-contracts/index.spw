@@ -47,12 +47,17 @@ intent: .{
 ^"plan_refinement"{
  tone = `Engineering checklist — commands over opinions.`
  accuracy = `check:local and runtime contracts largely landed; precipitated indexes partial.`
- direction = `Wire plans-index.json invalidation before expanding agentic caches.`
+ direction = `check:local is the door after the September stamps; manifest:staged names the pages that moved the index; wonder_plan_script_door asks which other scripts that door must leave visible.`
  inspiration = `Did I break it? should be one command away.`
  alignment = `agent-optimization, runtime-bootstrap-performance`
 }[reg=facet]
 
 @plans_root: ~"../../../.agents/plans/index.spw"
+@package_json: ~"../../../package.json"
+@plan_agent_optimization: ~"../agent-optimization/index.spw"
+@plan_typescript_integration: ~"../typescript-integration/wip.spw"
+@plan_spw_architecture_ecology: ~"../spw-architecture-ecology/index.spw"
+@workbench_report: ~"../../../.spw/workbench-report.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
@@ -88,6 +93,13 @@ dispatch: .{
 
 ^"connection_points"{
  owner_rail = `self`
+ related_plans = #[
+  `agent-optimization`,
+  `typescript-integration`,
+  `spw-architecture-ecology`,
+  `spw-language-v04`,
+  `site-source-layout`,
+ ][reg=set]
 }[reg=facet]
 
 ^"owner_claim"{
@@ -133,3 +145,30 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+# Prime 2026-09-28. Week of 183 commits: the local door, the staged stamp, and the atlas
+# landed in package.json. These questions keep that door list checkable.
+
+#>wonder_plan_script_door
+?["Which package.json script is the door for did I break the site, and which scripts must stay visible beside it?"]{
+  #:depth #!computational ~#lens(constraint)
+  ~#with: @package_json @plan_agent_optimization
+  ~#taste: "A script stays on the door list only while a broken tree makes that script fail and a quiet tree finishes without a registry call."
+  ~#hypothesis: "check:local is the door. manifest:staged, atlas, audit:portable, wonder, and spw:integrity are instruments the door calls or leaves for a narrower question. check still runs npm audit before that door."
+  ~#tension: "A plan that still says npm run check sends the next session through the network for a question the local gate already answers."
+  !probe{ `node -e 'import fs from "node:fs"; const scripts = JSON.parse(fs.readFileSync("package.json","utf8")).scripts; const need = ["check:local","manifest:staged","atlas","wonder","spw:integrity","audit:portable","typecheck","ecology:language"]; const missing = need.filter((name) => !scripts[name]); if (missing.length || !scripts.check.includes("audit") || scripts["check:local"].includes("audit")) process.exit(1)'` }
+  $%[script.door, script.audit, script.visible]
+  ~<"../agent-optimization/index.spw"> ~<"../typescript-integration/wip.spw">
+}
+
+#>wonder_plan_stamp
+?["Does a green check:local mean the search index matches the pages this commit staged?"]{
+  #:depth #!computational ~#lens(memory)
+  ~#with: @package_json @generate_route_runtime_manifest
+  ~#taste: "A generated index stays trusted only while its stamp names the pages that moved it."
+  ~#hypothesis: "manifest:staged builds the index from the staged set. check-site compares the stamp to the pages on disk. The pre-commit hook compares it to the pages staged. Those are three readings of one affordance."
+  ~#tension: "Two sessions can share a tree. A stamp built from the other session's pages can look current until the hook, or the hook can omit pages this session meant to include."
+  !probe{ `node -e 'import fs from "node:fs"; const staged = JSON.parse(fs.readFileSync("package.json","utf8")).scripts["manifest:staged"]; if (!staged || !staged.includes("manifest-staged")) process.exit(1)'` }
+  $%[stamp.staged, stamp.disk, stamp.hook]
+  ~<"../site-source-layout/wip.spw">
+}

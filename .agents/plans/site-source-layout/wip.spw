@@ -29,6 +29,10 @@
 @plan_history_reflow: ~"../history-reflow/PLAN.md"
 @plan_typescript_integration: ~"../typescript-integration/PLAN.md"
 @wip_typescript_integration: ~"../typescript-integration/wip.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan_agentic_dev_contracts: ~"../agentic-dev-contracts/index.spw"
+@plan_spw_architecture_ecology: ~"../spw-architecture-ecology/index.spw"
+@package_json: ~"../../../package.json"
 @skill_typescript: ~"../../skills/spw-typescript-affordances/SKILL.md"
 
 operation = "cache"
@@ -123,6 +127,8 @@ source = "2026-09-27 legibility conversation (which trees reduce legibility; src
  deploy_module_graph = .{ see = @plan_deploy_module_graph ; bond = `allow-list topology is the file-level twin of the module graph; L2 route manifest` }[reg=facet]
  runtime_plane_consolidation = .{ see = @plan_runtime_plane_consolidation ; bond = `M2 public/ts -> src/ts and the typed output plane; L2 route manifest is the one file it found read only by site-contracts` }[reg=facet]
  typescript_integration = .{ see = @plan_typescript_integration ; bond = `M0 is its typed build-topology record; M2 is its tsconfig rootDir; L3 is its committed-output question. Decisions live there, mirrored here.` }[reg=facet]
+ agentic_dev_contracts = .{ see = @plan_agentic_dev_contracts ; bond = `L4 waits until package.json is the only caller. Which script is the door is wonder_plan_script_door. The folder that holds that script is this plan's question.` }[reg=facet]
+ spw_architecture_ecology = .{ see = @plan_spw_architecture_ecology ; bond = `.spw/ is the corpus bin. .agents/plans is the plan bin. wonder_plan_corpus_exclusion asks upstream to walk the second without walking the rest of .agents.` }[reg=facet]
  core_css_spend_cut = .{ see = @plan_core_css_spend_cut ; bond = `bundle outputs vs src/styles/entries; L3 stale-bundle risk` }[reg=facet]
  css_architecture_readability = .{ see = @plan_css_architecture_readability ; bond = `literate CSS reads better when source layers and bundles are visibly different bins` }[reg=facet]
  agent_optimization = .{ see = @plan_agent_optimization ; bond = `root legibility is agent I/O spend; success is a smaller next census, fewer excluded-path special cases` }[reg=facet]
@@ -159,6 +165,26 @@ source = "2026-09-27 legibility conversation (which trees reduce legibility; src
 validation = #[`git diff --check`, `npm run check:local`, `npm run build:site:run`, `npm run check:pwa`, `dist/ file-list diff`][reg=set]
 
 status = "ready_for_M0 once the vite import method is decided in typescript-integration"
+
+^"proposed_commits"{
+  shape = `subject :: expression. See @wip_notebook once that convention's proposed_commits facet is the rule. A line stays open only while the tree does not already contain it.`
+  open = #[
+    `=[ts] Let vite import the ship list from the compiled module :: import[vite]{ship.list}<topology>`,
+    `~[plans] Let a plan folder be the blast radius a commit names :: folder[bin]{plan.script.corpus}<blast>`
+  ][reg=set]
+}[reg=facet]
+
+#>wonder_plan_blast_radius
+?["Does a folder earn its boundary when two agents can commit inside it without sharing one hot file?"]{
+  #:depth #!computational ~#lens(constraint)
+  ~#with: @package_json @plan_agentic_dev_contracts @plan_spw_architecture_ecology @wip_typescript_integration
+  ~#taste: "A folder stays a bin only while one kind of change lives there, so an overlapping commit is still one owner's diff."
+  ~#hypothesis: "The four bins already separate served pages, compiled input, generated output, and project control. Inside project control, package.json, scripts/, .spw/, and .agents/plans are different kinds of edit. A commit that names one plan folder can overlap another agent's commit in a different folder and still read as one change."
+  ~#tension: "package.json is every script's door and therefore every agent's file. Splitting the plans tree to reduce overlap would also split the index that makes the plans findable."
+  !probe{ `node -e 'import fs from "node:fs"; const scripts = JSON.parse(fs.readFileSync("package.json","utf8")).scripts; if (!scripts["plans:index:check"] || !scripts["check:local"]) process.exit(1)'` }
+  $%[folder.bin, folder.blast, script.door]
+  ~<"../agent-optimization/index.spw"> ~<"../typescript-integration/wip.spw"> ~<"../agentic-dev-contracts/index.spw">
+}
 
 ^["stream"]{
  >>[2026-04-18 09:40] observe — the repo root mixes public routes, shared assets, build tooling, agent notes, and editor-facing .spw surfaces.

@@ -212,6 +212,29 @@ expression = consumer[recommendations]{performance.cli.intermediate.culture}<ups
 # VALIDATION & FALSIFICATION
 # ==============================================================================
 
+^"week_2026_09_28"{
+  standing = `Walk isolation landed at pin 14b4b47. The remaining cost is a parse that census, graph, measure, and integrity do not share. Measured in @workbench_report under memo_key and operation_cost_2026_09_27. This facet does not restate those seconds.`
+  proposals = #[
+    `+[cli] Let help --json emit group, outcome, flags, examples, and a cost class :: help[json]{group.outcome.cost}<cli>`,
+    `=[cli] Key one scan memo on roots plus file hashes, and apply hubTop at projection :: memo[scan]{roots.hash}<projection>`,
+    `~[corpus] Accept .agents/plans as a named root while .agents itself stays excluded :: corpus[plans]{index.wip}<wonder>`
+  ][reg=set]
+  ~#taste: "A workbench command stays proposed only while the site is still running a script to answer the same question."
+  consume = `The site harvests plan questions with scripts/wonder.mjs. That walk is the consumer until spw wonder exists. It skips archive/ and does not lift the .agents exclusion.`
+}[reg=facet]
+
+#>wonder_plan_help_json_upstream
+?["Which of these three proposals would make a plan folder and a package script the same knowledge base?"]{
+  #:depth #!computational ~#lens(comparison)
+  ~#with: @wonder_script @workbench_report
+  ~#taste: "Ship the command whose absence forces a consumer to parse prose or to time the same corpus twice."
+  ~#hypothesis: "help --json makes the script list a document. A shared scan memo makes the corpus affordable to ask twice. A named .agents/plans root lets a plan question sit in the same walk as a convention, which is the folder boundary the site is already keeping by hand."
+  ~#tension: "Doing all three in one pin mixes a CLI shape, a cache key, and a discovery rule. Each is a different folder in the workbench, and a different blast radius."
+  !probe{ "npm run spw -- --help --json" }
+  $%[cli.helpJson, memo.shared, corpus.plans]
+  ~<"../../.agents/plans/spw-language-v04/index.spw"> ~<"../../.agents/plans/spw-architecture-ecology/index.spw"> ~<"../../.spw/workbench-report.spw">
+}
+
 ^"validation"{
   probe: `npm run spw:integrity && npm run test:modules`
   falsification: "A recommendation here is falsified if upstream implements a command or fix that achieves equal or better developer experience, performance, and composability without regressions."
