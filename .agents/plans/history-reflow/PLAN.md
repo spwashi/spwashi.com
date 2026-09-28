@@ -163,6 +163,9 @@ a commit that overstates.
 - **No references to sessions, agents, or hashes.** The history is the product,
   not a record of who produced it.
 - Subject: `symbol[category] imperative subject`, under ~72 chars.
+- **No `Operation: … Fixity: …` line in the body** (creator, 2026-09-27: it reads as
+  noise on the line). Open with the prose. If an operation must be named, it lives
+  in the `.spw` surface the change touched, not in the commit.
 
 ## Execution
 
