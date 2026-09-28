@@ -39,7 +39,7 @@
 @satchel_proposal: ~"../../.agents/plans/settings-ornament-resonance/PLAN.md"
 @promo_plan: ~"../../.agents/plans/promo-wonder-cycle/PLAN.md"
 @theme_packs_plan: ~"../../.agents/plans/settings-theme-packs/PLAN.md"
-@palette_plan: ~"../../.agents/plans/palette-theme-composability-instrumentability/PLAN.md"
+@palette_plan: ~"../../.agents/plans/archive/palette-theme-composability-instrumentability/PLAN.md"
 @composition_js: ~"../../public/js/runtime/regions/composition-box-model.js"
 @composition_test: ~"../../scripts/tests/composition-flow-authored.test.mjs"
 @content_css: ~"../../public/css/components/content.css"

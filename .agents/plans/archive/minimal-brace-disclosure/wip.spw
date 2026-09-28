@@ -1,3 +1,4 @@
+# Review 2026-09-27 — archived with the plan; landed: runtime/shell/shell-disclosure.js, runtime/interaction/brace-actions.js, calm defaults.
 # Review 2026-07-12 — verifying evidence; promote confirmed defaults and disclosure rules, then cool this notebook.
 # wip — minimal-brace-disclosure
 #
@@ -8,8 +9,8 @@
 
 @plan: ~"./PLAN.md"
 @index: ~"./index.spw"
-@plans_root: ~"../../../.agents/plans/index.spw"
-@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plans_root: ~"../../../../.agents/plans/index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
 
 operation = "cache"
 fixity = "tending"

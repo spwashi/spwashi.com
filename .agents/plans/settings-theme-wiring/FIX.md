@@ -9,6 +9,7 @@
 | 3 | `public/css/blog-surface.css` + `public/js/blog-specimens.js` | Blog route-level theme swatches conflict with global dark mode | ui-visual | P1 |
 | 4 | `settings/index.html` | Settings page exposes speculative controls with no consumers | ui-visual | P1 |
 | 5 | `public/css/effects/grain-texture.css` + `public/js/kernel/site-settings.js` | Grain controls fight each other; semantic density comments do not match runtime behavior | regression | P2 |
+| 6 | `settings/index.html` (three `iconPack` radios + readout) | `iconPack` writes `data-spw-icon-pack` on `<html>` and nothing in `public/css` reads it; the stub came from `theming-icon-packs-public-versioning` (archived 2026-09-27), which never landed its CSS. Wire or remove. | ui-interaction | P2 |
 
 ## Diagnosis
 

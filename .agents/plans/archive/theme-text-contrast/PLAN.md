@@ -11,7 +11,7 @@ alpha-composited token pairs reached 2.87:1 (oxide light) and 3.39:1
 Strengthen secondary pigment while retaining palette hue, and derive muted
 ink from each pack's secondary ink instead of the default palette.
 
-Reproduce: `node .agents/plans/theme-text-contrast/probe.mjs`.
+Reproduce: `node .agents/plans/archive/theme-text-contrast/probe.mjs`.
 The probe uses installed Chrome, real CSS layers, seven packs, light/dark,
 three secondary inks and six grounds. It requires at least 4.5:1.
 The revised soft/mid matrix ranges from 4.62:1 to 9.12:1 at each mode's

@@ -1,3 +1,4 @@
+# Review 2026-09-27 — archived with the plan; never implemented past its own plan commit (739354e4).
 # Review 2026-07-12 — planning evidence; promote measured token changes and archive speculative palette work.
 # wip — site-color-tuning
 #
@@ -8,8 +9,8 @@
 
 @plan: ~"./PLAN.md"
 @index: ~"./index.spw"
-@plans_root: ~"../../../.agents/plans/index.spw"
-@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plans_root: ~"../../../../.agents/plans/index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
 
 operation = "cache"
 fixity = "tending"

@@ -1,3 +1,4 @@
+# Review 2026-09-27 — archived: never implemented past its own plan commit (739354e4); color-motion owns color, b3124bd2 moved ink to color-scheme, 7e92d13f gave the packs their ink.
 # Review 2026-07-12 — keep as the token-level color owner; light/dark material coherence precedes route-specific accents.
 # Plan Index — site-color-tuning
 #
@@ -5,11 +6,11 @@
 
 #>plan_site_color_tuning_index
 #:index #!plan
-#:operation #!prime
+#:operation #!archive
 #:layer #!pragmatics
 
-operation = "prime"
-fixity = "tending"
+operation = "archive"
+fixity = "cold"
 
 intent: .{
  goal = `The desired end state is a site whose light and dark themes feel deliberately composed at the token level, with shared cards, materials, and image chrome responding consistently before any route-specific styling takes over. Route surfaces should still keep their own identity, but they should no longer need to fight a paper-heavy base or literal white fallbacks to look coherent. Taste note: improve expressiveness, layering, and clarity by making the color system feel authored rather than accumulated.`
@@ -40,9 +41,9 @@ intent: .{
 }[reg=facet]
 
 
-@plans_root: ~"../../../.agents/plans/index.spw"
-@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
-@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plans_root: ~"../../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
 

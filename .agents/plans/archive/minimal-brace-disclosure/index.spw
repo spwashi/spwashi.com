@@ -1,3 +1,4 @@
+# Review 2026-09-27 — archived: landed: runtime/shell/shell-disclosure.js, runtime/interaction/brace-actions.js, calm defaults; the hamburger contract lives in navigation-header-disclosure.
 # Review 2026-07-12 — keep as the calm-default owner; primary reading must work before semantic chrome is revealed.
 # Plan Index — minimal-brace-disclosure
 #
@@ -5,11 +6,11 @@
 
 #>plan_minimal_brace_disclosure_index
 #:index #!plan
-#:operation #!prime
+#:operation #!archive
 #:layer #!pragmatics
 
-operation = "prime"
-fixity = "tending"
+operation = "archive"
+fixity = "cold"
 
 intent: .{
  goal = `The site should begin from a minimalist baseline: lighter semantic density, less always-on chrome, and clearer separation between primary reading flow and optional diagnostics. Mobile navigation should disclose intentionally through a hamburger control instead of wrapping the full header list into a noisy block. Brace edges and diagnostic surfaces should read as actionable thresholds with visible entry, projection, dismissal, and return paths. Taste note: improve containment, clarity, and expressiveness without adding a second interaction model.`
@@ -43,12 +44,12 @@ intent: .{
 }[reg=facet]
 
 
-@plans_root: ~"../../../.agents/plans/index.spw"
-@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
-@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plans_root: ~"../../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
-@site: ~"../../../public/js/site.js"
+@site: ~"../../../../public/js/site.js"
 
 dispatch: .{
  plan = @plan
@@ -73,7 +74,7 @@ dispatch: .{
  layer = "pragmatic"
  hypothesis = `The site should begin from a minimalist baseline: lighter semantic density, less always-on chrome, and clearer separation between primary reading flow and optional diagnostics. Mobile navigation should disclose intentionally through a hamburger control instead of wrapping the full header list into a noisy block. Brace edges and diagnostic surfaces should read as actionable thresholds with visible entry, projection, dismissal, and return paths. Taste note: improve containment, clarity, and expressiveness without adding a second interaction model.`
  spec_ref = ~"./PLAN.md"
- impl_ref = ~"../../../public/js/site.js"
+ impl_ref = ~"../../../../public/js/site.js"
  probe_ref = `Hypotheses: the default view feels quieter, the mobile header reads as one compact control surface, and diagnostics no longer dominate reading flow.`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/site.js unchanged or untested.`
  status = "active"

@@ -38,6 +38,10 @@ Those three settings must remain orthogonal and legible in copy, datasets, and r
 - The chooser surfaces could become visually noisy if they compete with resonance controls instead of complementing them.
 - `design/palettes/index.html` already carries local edits, so changes there must stay narrowly scoped to the existing chooser region.
 
+### Landed, and where the pieces live now — 2026-09-27
+
+`themePack` is a canonical setting in `public/js/kernel/site-settings-engine.js` and `site-settings-profiles.js`; the pack tokens live in `public/css/themes/packs.css` (lazy-loaded source CSS, not part of the core bundle) and the chooser chrome in `public/css/components/surfaces.css`. The file list above keeps the pre-split names as history. Secondary-ink contrast across the six packs was measured and fixed 2026-09-20; the receipt and its probe are `archive/theme-text-contrast/` (`node .agents/plans/archive/theme-text-contrast/probe.mjs`). This plan is the theme-family owner that `theming-icon-packs-public-versioning` (archived 2026-09-27) deferred to.
+
 ### Validation
 
 - `node --check public/js/site-settings.js`
