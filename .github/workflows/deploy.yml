@@ -39,6 +39,8 @@ jobs:
           restore-keys: |
             tsc-${{ runner.os }}-node22-${{ hashFiles('package-lock.json') }}-
 
+      # Site gate only. Browser smoke, the plan index, citations, and npm audit
+      # run from nightly.yml on this commit once the workflow completes.
       - name: Validate source and generated contracts
         run: npm run check:local
 

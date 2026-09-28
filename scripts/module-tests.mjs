@@ -73,4 +73,5 @@ export const MODULE_TEST_FILES = Object.freeze([
   'scripts/tests/composition-flow-authored.test.mjs',
   'scripts/tests/rpg-table-physics.test.mjs',
   'scripts/tests/manifest-stamp.test.mjs',
+  'scripts/tests/check-pushed.test.mjs',
 ]);

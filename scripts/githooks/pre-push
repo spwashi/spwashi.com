@@ -1,9 +1,11 @@
 #!/bin/sh
-# Same gate as .github/workflows/deploy.yml: npm run check:local
+# The deploy job checks out the commit. This runs the same local gate there,
+# so a dirty working tree neither blocks the push nor pretends to be the commit.
 set -eu
 
 if [ "${SKIP_GIT_HOOKS:-}" = "1" ]; then
   exit 0
 fi
 
-npm run check:local
+cd "$(git rev-parse --show-toplevel)"
+exec node scripts/check-pushed.mjs
