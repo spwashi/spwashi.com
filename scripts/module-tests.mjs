@@ -15,6 +15,7 @@ export const MODULE_TEST_FILES = Object.freeze([
   'scripts/tests/engagement-features.test.mjs',
   'scripts/tests/component-fixtures.test.mjs',
   'scripts/tests/visual-capture-plan.test.mjs',
+  'scripts/tests/wander-batch.test.mjs',
   'scripts/tests/module-selector-audit.test.mjs',
   'scripts/tests/css-bundle-filter.test.mjs',
   'scripts/tests/css-layer-ablation.test.mjs',

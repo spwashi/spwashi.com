@@ -70,8 +70,16 @@ import {
   reviewChapterFor,
   buildCaptureIndex,
   STILL_ATTENTION_READ_EXPRESSION,
+  captureScriptOff,
+  wanderBatch,
+  formatWanderReceipt,
+  WANDER_DEFAULT_COUNT,
 } from './lib/visual-capture-plan.mjs';
-import { VIEWPORT_STILL_CHECKS, VIEWPORT_STILL_RECIPES } from './lib/viewport-still-recipes.mjs';
+import {
+  VIEWPORT_STILL_CHECKS,
+  VIEWPORT_STILL_RECIPES,
+  VIEWPORT_STILL_WANDERS,
+} from './lib/viewport-still-recipes.mjs';
 import {
   CAPTURE_PROFILES,
   DEFAULT_WALK_ROUTES,
@@ -149,6 +157,8 @@ function parseArgs(argv) {
     themeViewport: null,
     retryErrors: null,
     profile: null,
+    seed: null,
+    count: null,
     timeoutMs: 45000,
     viewports: null,
     tokens: [],
@@ -168,6 +178,10 @@ function parseArgs(argv) {
     else if (arg === '--budget' && argv[i + 1]) options.maxNavs = Number(argv[++i]) || 0;
     else if (arg.startsWith('--budget=')) options.maxNavs = Number(arg.slice(9)) || 0;
     else if (arg === '--retry-errors') options.retryErrors = true;
+    else if (arg === '--seed' && argv[i + 1]) options.seed = argv[++i];
+    else if (arg.startsWith('--seed=')) options.seed = arg.slice(7);
+    else if (arg === '--count' && argv[i + 1]) options.count = Number(argv[++i]) || null;
+    else if (arg.startsWith('--count=')) options.count = Number(arg.slice(8)) || null;
     else if (arg === '--no-components') options.noComponents = true;
     else if (arg === '--social') options.social = true;
     else if (arg === '--social-only') {
@@ -237,6 +251,7 @@ function parseArgs(argv) {
       ...REGION_ECOLOGY_FIXTURES.map((fixture) => fixture.id),
       ...VIEWPORT_STILL_RECIPES.map((recipe) => recipe.id),
       ...VIEWPORT_STILL_CHECKS.map((recipe) => recipe.id),
+      ...VIEWPORT_STILL_WANDERS.map((recipe) => recipe.id),
     ];
     const parsed = parseSpwCaptureTokens(options.tokens, knownIds);
     if (parsed.seats.length) options.seats = [...new Set([...(options.seats || []), ...parsed.seats])];
@@ -260,7 +275,11 @@ function parseArgs(argv) {
     if (options.tokens.includes('stabilize')) {
       options.profile = options.profile || 'stabilize';
     }
+    if (parsed.wander) options.profile = options.profile || 'wander';
   }
+  if (options.seed != null && !options.profile) options.profile = 'wander';
+  // A hand-set --budget caps a wander draw; a profile's own budget stretches to fit it.
+  options.budgetExplicit = options.maxNavs != null;
 
   if (options.profile) {
     const profile = resolveCaptureProfile(options.profile);
@@ -348,7 +367,9 @@ Options:
   --stills           Named viewport stills (device frame after scroll/prepare). Default flow is page.
   --checks           Route/env/theme/attention pin stills (deep link, probe, focus spend, dark, reduced motion).
   --walk             Viewport-tall slices to the bottom of core routes.
-  --profile name     explore | stabilize | ambient | walk | checks | survey
+  --profile name     explore | stabilize | ambient | walk | checks | survey | wander
+  --seed VALUE       Wander seed (default: UTC date). Same seed, same batch. Implies --profile wander.
+  --count N          Wander batch size (default ${WANDER_DEFAULT_COUNT})
   --budget N         Cap specimen navs (explore default 12). Drops lowest-priority combinations.
   --retry-errors     Recapture job ids from the latest pack's named misses into a new run.
   --out PATH         Pack root (default design/components/captures). Runs nest as runs/<day>/<profile>/<clock>--<hash>/
@@ -378,19 +399,42 @@ Retries keep the clip. Header-only hits are miss--, not specimen stills.
 
 function captureQuery(url, job = null) {
   const u = new URL(url);
-  if (!u.searchParams.has('interaction')) u.searchParams.set('interaction', 'calm');
-  if (!u.searchParams.has('precipitate')) u.searchParams.set('precipitate', 'print');
-  if (!u.searchParams.has('capture-mode')) u.searchParams.set('capture-mode', 'screenshot');
   const lens = job?.lens;
   if (lens?.query && lens?.value) u.searchParams.set(lens.query, lens.value);
+  // Conditions before house defaults, so a drawn interaction axis beats calm.
   const extra = captureSearchParams(job?.conditions || {}, job?.attention || {});
   extra.forEach((value, key) => {
     if (!u.searchParams.has(key)) u.searchParams.set(key, value);
   });
+  if (!u.searchParams.has('interaction')) u.searchParams.set('interaction', 'calm');
+  if (!u.searchParams.has('precipitate')) u.searchParams.set('precipitate', 'print');
+  if (!u.searchParams.has('capture-mode')) u.searchParams.set('capture-mode', 'screenshot');
   return u.href;
 }
 
-async function emulateCaptureEnvironment(session, conditions = {}, timeoutMs = CAPTURE_MEASURE.evaluateTimeoutMs) {
+/**
+ * Scripts off must be set before the page loads, and set back after, so it
+ * sits beside applyEmulatedMedia. Tracked per session to skip no-op sends.
+ */
+const scriptStateBySession = new WeakMap();
+const mediaSetBySession = new WeakMap();
+
+async function applyScriptExecution(session, conditions = {}) {
+  const disabled = captureScriptOff(conditions);
+  if ((scriptStateBySession.get(session) || false) === disabled) return;
+  try {
+    await session.send('Emulation.setScriptExecutionDisabled', { value: disabled });
+    scriptStateBySession.set(session, disabled);
+  } catch {
+    // older Chrome: the still then shows the scripted page; the folder name still says js-off
+  }
+}
+
+/**
+ * Media features go on before Page.navigate: boot-time matchMedia readers
+ * (display-mode in site-settings-ui and pwa-update-handler) look once.
+ */
+async function applyEmulatedMedia(session, conditions = {}) {
   const features = [];
   if (conditions.colorMode === 'dark' || conditions.colorScheme === 'dark') {
     features.push({ name: 'prefers-color-scheme', value: 'dark' });
@@ -400,16 +444,31 @@ async function emulateCaptureEnvironment(session, conditions = {}, timeoutMs = C
   if (conditions.reducedMotion === 'reduce' || conditions.reducedMotion === true) {
     features.push({ name: 'prefers-reduced-motion', value: 'reduce' });
   }
-  if (features.length) {
-    try {
-      await session.send('Emulation.setEmulatedMedia', { features });
-    } catch {
-      // optional on older Chrome
-    }
+  if (conditions.displayMode === 'standalone') {
+    features.push({ name: 'display-mode', value: 'standalone' });
   }
+  if (conditions.forcedColors === 'active' || conditions.forcedColors === true) {
+    features.push({ name: 'forced-colors', value: 'active' });
+  }
+  // Send an empty list only to clear what the previous still set, so forced
+  // colors or standalone do not leak into the next boot. An unconditional empty
+  // send before every navigation kept home-cauldron-open's dialog from pinning.
+  const hadFeatures = mediaSetBySession.get(session) === true;
+  if (!features.length && !hadFeatures) return;
+  try {
+    await session.send('Emulation.setEmulatedMedia', { features });
+    mediaSetBySession.set(session, features.length > 0);
+  } catch {
+    // optional on older Chrome
+  }
+}
+
+/** After load: wait for the runtime to write the theme attributes the still asked for. */
+async function awaitCaptureTheme(session, conditions = {}, timeoutMs = CAPTURE_MEASURE.evaluateTimeoutMs) {
   const pack = conditions.themePack || '';
   const mode = conditions.colorMode || '';
-  if (!pack && !mode) return;
+  // Scripts off: nothing will write the theme attributes, so there is nothing to wait for.
+  if ((!pack && !mode) || captureScriptOff(conditions)) return;
   try {
     await session.send('Runtime.evaluate', {
       expression: `(() => new Promise((resolve) => {
@@ -1313,8 +1372,10 @@ async function captureJob(session, job, {
     box = await measureSelector(session, job.selector, evaluateTimeoutMsFor(job))
       || await measureSelector(session, '[data-spw-capture-host="template"]', evaluateTimeoutMsFor(job));
   } else {
-    prepareReport = await applyCapturePrepare(session, job);
-    const pinOverlay = Boolean(job.still && visitorOverlayPinJob(job));
+    // Scripts off: no gestures, pins, or attention reads; measure the HTML as served.
+    const scriptOff = captureScriptOff(job.conditions || {});
+    prepareReport = scriptOff ? null : await applyCapturePrepare(session, job);
+    const pinOverlay = Boolean(!scriptOff && job.still && visitorOverlayPinJob(job));
     if (job.selector) {
       box = await measureSelector(session, job.selector, evaluateTimeoutMsFor(job), {
         skipScroll: pinOverlay,
@@ -1407,7 +1468,23 @@ async function main() {
     process.exit(0);
   }
 
-  if (options.stills && options.checks && !options.ids?.length && !options.dryPlan) {
+  const wanderBudget = options.budgetExplicit && options.maxNavs > 0 ? options.maxNavs : null;
+  const wanderCount = options.count || CAPTURE_PROFILES.wander?.count || WANDER_DEFAULT_COUNT;
+  const wander = options.profile === 'wander'
+    ? wanderBatch({
+      seed: options.seed ?? undefined,
+      // The receipt names only stills the budget will visit, so a replay never claims a dropped one.
+      n: wanderBudget ? Math.min(wanderCount, wanderBudget) : wanderCount,
+    })
+    : null;
+  if (wander && !wanderBudget && options.maxNavs > 0) options.maxNavs = Math.max(options.maxNavs, wander.n);
+  if (wander) {
+    // The receipt picks each still's frame; Chrome needs every one of them.
+    options.viewports = wander.viewports;
+    process.stderr.write(formatWanderReceipt(wander));
+  }
+
+  if (options.stills && options.checks && !options.ids?.length && !options.dryPlan && !wander) {
     process.stderr.write(
       '[visual:checks] full pocket pack is dear. Cheap: npm run sense -- ink about-opening\n',
     );
@@ -1469,6 +1546,7 @@ async function main() {
         checks: options.checks,
         walk: options.walk,
         routes: options.walkRoutes,
+        seed: wander?.seed || null,
       },
     });
     options.out = runLayout.dir;
@@ -1512,6 +1590,7 @@ async function main() {
     format: options.format,
     changedFiles,
     lenses: options.lenses,
+    wander,
   });
 
   if (!plan.jobs.length) throw new Error('No capture jobs selected');
@@ -1523,9 +1602,10 @@ async function main() {
 
   if (options.dryPlan) {
     if (options.json) {
-      process.stdout.write(`${JSON.stringify({ run: runLayout, summary: plan.summary, cost, jobs: plan.jobs }, null, 2)}\n`);
+      process.stdout.write(`${JSON.stringify({ run: runLayout, wander, summary: plan.summary, cost, jobs: plan.jobs }, null, 2)}\n`);
     } else {
       if (runLayout) process.stdout.write(`run = \`${runLayout.rel}\`\n`);
+      if (wander) process.stdout.write(`seed = \`${wander.seed}\`\n`);
       process.stdout.write(formatCapturePlanSpw(plan, { cost }));
     }
     return 0;
@@ -1644,15 +1724,25 @@ async function main() {
 
         async function navSpecimen(job, jobViewport) {
           const specimenUrl = captureQuery(new URL(routeHref(group.route || job.specimenRoute, base), `${base}/`).href, job);
+          const scriptOff = captureScriptOff(job.conditions || {});
+          await applyScriptExecution(session, job.conditions || {});
+          await applyEmulatedMedia(session, job.conditions || {});
+          // Scripts off never reports runtime-ready; settle once, briefly, and read the HTML.
           await navigateAndProbe(session, {
             url: specimenUrl,
             viewport: jobViewport,
-            settleMs: captureRecoverSettleMs(options.settleMs),
+            settleMs: scriptOff ? 1500 : captureRecoverSettleMs(options.settleMs),
             timeoutMs: options.timeoutMs,
             retries: 1,
-            partialGraceMs: 2000,
+            partialGraceMs: scriptOff ? 0 : 2000,
+            observationMs: scriptOff ? 0 : undefined,
           });
-          await emulateCaptureEnvironment(session, job.conditions || {}, evaluateTimeoutMsFor(job));
+          // With execution disabled, timers and rAF never fire, so the measure
+          // probes (which await them) hang to their timeout. The parser has
+          // already skipped the page's scripts, and they do not run on re-enable
+          // (checked: inline, module and defer), so the page stays JS-off.
+          if (scriptOff) await applyScriptExecution(session, {});
+          await awaitCaptureTheme(session, job.conditions || {}, evaluateTimeoutMsFor(job));
         }
 
         async function shotWithRecover(job, jobViewport) {
@@ -1888,6 +1978,7 @@ async function main() {
       flows: options.flows,
       viewports: qaViewports.map((v) => ({ id: v.id, width: v.width, height: v.height })),
       aspects: options.aspects,
+      wander,
       summary: plan.summary,
       skipped,
       captures,
@@ -1926,6 +2017,7 @@ async function main() {
           walk: options.walk,
           routes: options.walkRoutes || null,
           viewports: options.viewports,
+          ...(wander ? { seed: wander.seed, count: wander.n, wander } : {}),
         }, null, 2)}\n`,
       );
       await writeRunPointer(packRoot, runLayout, {
