@@ -7,7 +7,9 @@ import {
   formatStillIds,
   listSenseFixtures,
   parseSenseArgs,
+  parseWanderArgs,
   resolveInkIds,
+  wanderSense,
 } from '../harness-sense.mjs';
 
 test('sense args drop npm -- separators', () => {
@@ -41,4 +43,18 @@ test('menu and id list name the cheap path', () => {
   assert.ok(fixtures.some((recipe) => recipe.id === 'about-opening-dark'));
   assert.ok(fixtures.some((recipe) => recipe.id === 'rpg-wrap-jobs'));
   assert.ok(fixtures.length > 17);
+});
+
+test('wander is dry by default and hands back the replay command', () => {
+  assert.deepEqual(parseWanderArgs(['moss']), { seed: 'moss', count: 6, run: false });
+  assert.deepEqual(parseWanderArgs(['--seed=moss', '--count', '3', '--run']), { seed: 'moss', count: 3, run: true });
+  assert.equal(parseWanderArgs([]).seed, undefined);
+  const sensed = wanderSense(['moss']);
+  assert.equal(sensed.run, false);
+  assert.equal(sensed.receipt.seed, 'moss');
+  assert.match(sensed.text, /#>wander seed=moss n=6/);
+  assert.match(sensed.text, /capture: npm run visual:capture -- --profile wander --seed moss/);
+  assert.deepEqual(wanderSense(['moss']).receipt, sensed.receipt);
+  const menu = formatSenseMenu([{ id: 'about-opening' }]).split('\n');
+  assert.equal(menu.filter((line) => line.startsWith('[sense] wander')).length, 1);
 });

@@ -932,6 +932,7 @@ export const VIEWPORT_STILL_CHECKS = Object.freeze([
     label: 'Recipes hero dark',
     specimenRoute: '/recipes/',
     selector: '.recipe-hero-figure-rail',
+    image: true,
     conditions: Object.freeze({ colorMode: 'dark' }),
     layoutScenarios: Object.freeze(['pocket']),
     wonder: 'Wash and dough stills should seat into dark recipes without bleaching captions.',
@@ -1059,8 +1060,94 @@ export const VIEWPORT_STILL_CHECKS = Object.freeze([
   }),
 ]);
 
+/**
+ * Wander stills: art frames and the spellcraft wander set. They answer to
+ * --ids, sense ink, and the seeded wander, but stay out of the default packs
+ * and the nightly month roster. `image: true` marks a frame whose subject is
+ * a picture, so a wander can promise one per batch. Scans stay whole.
+ */
+export const VIEWPORT_STILL_WANDERS = Object.freeze([
+  Object.freeze({
+    id: 'home-folio-hero',
+    label: 'Home hero folio',
+    specimenRoute: '/',
+    selector: '.home-folio-preview',
+    image: true,
+    layoutScenarios: Object.freeze(['pocket', 'fold', 'broadsheet']),
+    wonder: 'The first picture a visitor meets is a scan, whole, beside its number in the laminated stack and its title.',
+    captureValue: 'Hero folio thumb and its kicker: laminate rim intact, nothing cropped to fill the frame.',
+    sourceFiles: Object.freeze([
+      'index.html',
+      'public/css/routes/surfaces/home.css',
+      'public/css/systems/image-utilization.css',
+    ]),
+  }),
+  Object.freeze({
+    id: 'folio-shelf-first',
+    label: 'Folio shelf first tiles',
+    specimenRoute: '/design/folios/#release-set',
+    selector: '#release-set .folio-shelf',
+    image: true,
+    layoutScenarios: Object.freeze(['pocket', 'fold', 'broadsheet']),
+    wonder: 'A shelf of laminated pages should read as a stack to browse, each tile a whole page.',
+    captureValue: 'First release-set tiles: thumbs, numbers, and titles in scan order.',
+    sourceFiles: Object.freeze([
+      'design/folios/index.html',
+      'public/css/routes/surfaces/design.css',
+      'public/css/systems/image-utilization.css',
+    ]),
+  }),
+  Object.freeze({
+    id: 'folio-view-open',
+    label: 'Folio opened',
+    specimenRoute: '/design/folios/#release-set',
+    selector: '#folio-00-view',
+    image: true,
+    prepare: Object.freeze({
+      click: Object.freeze(['#folio-00 .folio-tile__open']),
+    }),
+    layoutScenarios: Object.freeze(['pocket', 'fold']),
+    wonder: 'Opened, one page fills the eye, shown whole, with its flip and close within reach.',
+    captureValue: 'Native popover view of No. 00: display tier, title, description, flip row.',
+    sourceFiles: Object.freeze([
+      'design/folios/index.html',
+      'public/css/routes/surfaces/design.css',
+      'public/css/systems/image-utilization.css',
+    ]),
+  }),
+  Object.freeze({
+    id: 'spellcraft-wander',
+    label: 'Spellcraft wander spells',
+    specimenRoute: '/design/experiments/spellcraft/#wander-spells',
+    selector: '#wander-spells',
+    layoutScenarios: Object.freeze(['pocket', 'fold']),
+    wonder: 'Named spells for wandering should read as a small set of doors, each saying where it leads.',
+    captureValue: 'Authored wander spells: each host and its spell expression, legible before any gesture.',
+    sourceFiles: Object.freeze([
+      'design/experiments/spellcraft/index.html',
+    ]),
+  }),
+  Object.freeze({
+    id: 'home-art-standalone',
+    label: 'Home art as the phone app',
+    specimenRoute: '/',
+    selector: '.home-folio-preview',
+    image: true,
+    conditions: Object.freeze({ displayMode: 'standalone' }),
+    layoutScenarios: Object.freeze(['pocket']),
+    wonder: 'Opened from a phone home screen, the site should still greet you with a picture, not only chrome.',
+    captureValue: 'Environment check: display-mode standalone at pocket, the hero folio as the installed app opens to it.',
+    sourceFiles: Object.freeze([
+      'index.html',
+      'manifest.webmanifest',
+      'public/css/routes/surfaces/home.css',
+    ]),
+  }),
+]);
+
 export function getViewportStillRecipe(id) {
   return VIEWPORT_STILL_RECIPES.find((recipe) => recipe.id === id)
     || VIEWPORT_STILL_CHECKS.find((recipe) => recipe.id === id)
+    || VIEWPORT_STILL_WANDERS.find((recipe) => recipe.id === id)
     || null;
 }

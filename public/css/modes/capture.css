@@ -23,7 +23,7 @@
   [data-spw-chrome-role="section-handle"],
   [data-pwa-toast],
   .spw-toast,
-  [data-spw-floating-chrome="true"]:not([role="dialog"]):not([role="menu"]):not([role="status"]),
+  [data-spw-floating-chrome="true"]:not(dialog, [role="dialog"], [role="menu"], [role="status"]),
   [data-spw-runtime-status],
   body > .promo-wonder-cycle__card,
   .promo-wonder-cycle__card[data-spw-presentation="modal"]

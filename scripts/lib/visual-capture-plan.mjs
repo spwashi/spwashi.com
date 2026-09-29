@@ -15,10 +15,12 @@
 
 import { createHash } from 'node:crypto';
 
+import { dayWindow, pickForDay } from '../../public/js/kernel/day-seed.js';
 import {
   getViewportStillRecipe,
   VIEWPORT_STILL_CHECKS,
   VIEWPORT_STILL_RECIPES,
+  VIEWPORT_STILL_WANDERS,
 } from './viewport-still-recipes.mjs';
 
 export const FLOWS = Object.freeze(['page', 'region', 'component', 'template']);
@@ -849,6 +851,9 @@ export function nightlyStillState(recipe = {}) {
   if (conditions.colorMode === 'dark') return 'dark';
   if (conditions.highContrast === 'on' || conditions.highContrast === true) return 'high-contrast';
   if (conditions.reducedMotion === 'reduce' || conditions.reducedMotion === true) return 'reduced-motion';
+  if (captureScriptOff(conditions)) return 'js-off';
+  if (conditions.forcedColors === 'active' || conditions.forcedColors === true) return 'forced-colors';
+  if (conditions.displayMode === 'standalone') return 'standalone';
   if (conditions.themePack) return String(conditions.themePack);
   if (recipe.assertAttention === 'spend' || recipe.prepare?.focus) return 'focus';
   if (recipe.attention?.probe) return 'probe';
@@ -904,6 +909,243 @@ export function nightlyMonthReceipt(dayOfMonth) {
     smoke: { routes: nightlySmokeRoutes({ route, state }) },
     reading: nightlyMonthReading({ day, week, still, route, state, weekClose, climate }),
   };
+}
+
+/**
+ * Wander: a seeded, opt-in batch of odd stills. Same seed, same batch, so a
+ * look taken "here or there" can be replayed. Draws come from the tables
+ * above (recipes, device reasons, condition axes) through kernel/day-seed.js
+ * salting, the same scheme folio-day uses at runtime. No second PRNG.
+ */
+export const WANDER_RECEIPT_SCHEMA = 'wander-receipt.v0';
+export const WANDER_DEFAULT_COUNT = 6;
+export const WANDER_MAX_AXES = 2;
+
+/** Pocket twice: the wander is pocket-first, and the other frames visit. */
+export const WANDER_VIEWPORTS = Object.freeze(['pocket', 'pocket', 'phablet', 'fold', 'broadsheet']);
+
+/** Mirrors THEME_PACK_OPTIONS in kernel/site-settings-profiles.js (a test keeps them in step). */
+export const WANDER_THEME_PACKS = Object.freeze([
+  'neutral-paper',
+  'oxide-ledger',
+  'electric-studio',
+  'ritual-vellum',
+  'copper-brace',
+  'glass-console',
+  'banked-ember',
+]);
+
+/**
+ * One axis per entry. `values` are real SETTING_OPTIONS values (checked in
+ * tests); `env` axes are set through CDP rather than the query; `says` is the
+ * phrase a reading uses.
+ */
+export const WANDER_AXES = Object.freeze({
+  colorMode: Object.freeze({ values: Object.freeze(['dark', 'light']), says: (v) => `${v} mode` }),
+  themePack: Object.freeze({ values: WANDER_THEME_PACKS, says: (v) => `the ${v} pack` }),
+  highContrast: Object.freeze({ values: Object.freeze(['on']), says: () => 'high contrast' }),
+  reducedMotion: Object.freeze({ values: Object.freeze(['reduce']), says: () => 'reduced motion' }),
+  enhancement: Object.freeze({ values: Object.freeze(['minimal', 'rich']), says: (v) => `${v} enhancement` }),
+  paletteResonance: Object.freeze({ values: Object.freeze(['hand', 'lattice', 'inquiry', 'ludic', 'studio']), says: (v) => `the ${v} palette` }),
+  componentDensity: Object.freeze({ values: Object.freeze(['dense', 'roomy']), says: (v) => `${v} packing` }),
+  semanticDensity: Object.freeze({ values: Object.freeze(['minimal', 'rich']), says: (v) => `${v} semantic density` }),
+  layoutTuner: Object.freeze({ values: Object.freeze(['newspaper', 'wide', 'atlas']), says: (v) => `the ${v} layout` }),
+  spacingTuner: Object.freeze({ values: Object.freeze(['compact', 'roomy']), says: (v) => `${v} spacing` }),
+  interactionTuner: Object.freeze({ values: Object.freeze(['responsive', 'expressive']), says: (v) => `${v} interaction` }),
+  explorePosture: Object.freeze({ values: Object.freeze(['field', 'workshop']), says: (v) => `the ${v} posture` }),
+  script: Object.freeze({ values: Object.freeze(['off']), env: true, says: () => 'scripts off' }),
+  displayMode: Object.freeze({ values: Object.freeze(['standalone']), env: true, says: () => 'opened as the home-screen app' }),
+  forcedColors: Object.freeze({ values: Object.freeze(['active']), env: true, says: () => 'forced colors' }),
+});
+
+/** Epoch day 0 in local time: dayNumber() reads 0, so the salt alone decides. */
+const WANDER_ORIGIN = new Date(1970, 0, 1);
+/** With scripts off only `close` survives: it names the page's resting state, not a gesture. */
+const SCRIPT_FREE_PREPARE = Object.freeze(['close']);
+
+export function wanderSeedFor(when = new Date()) {
+  return when.toISOString().slice(0, 10);
+}
+
+function wanderDraw(list, salt) {
+  return pickForDay(list, WANDER_ORIGIN, salt);
+}
+
+function wanderDistinct(list, count, salt) {
+  const take = Math.max(0, Math.min(count, list.length));
+  return dayWindow(list, WANDER_ORIGIN, take, salt).map((entry) => entry.item);
+}
+
+export function wanderRecipePool() {
+  return [...VIEWPORT_STILL_RECIPES, ...VIEWPORT_STILL_CHECKS, ...VIEWPORT_STILL_WANDERS];
+}
+
+export function isImageRecipe(recipe = {}) {
+  return recipe.image === true;
+}
+
+/**
+ * Axes the browser applies without the runtime: media features and CDP.
+ * Every other axis is a query the runtime reads, so it means nothing with scripts off.
+ */
+export const WANDER_SCRIPT_FREE_AXES = Object.freeze(['colorMode', 'reducedMotion', 'forcedColors', 'displayMode', 'script']);
+
+function wanderQueryOnlyKeys(conditions = {}) {
+  return Object.keys(conditions).filter((key) => (
+    conditions[key] != null && conditions[key] !== false && !WANDER_SCRIPT_FREE_AXES.includes(key)
+  ));
+}
+
+/**
+ * A recipe whose subject needs a gesture or a pin cannot be read with scripts
+ * off, nor one whose own climate (theme pack, high contrast, enhancement) only
+ * the runtime paints.
+ */
+export function wanderScriptEligible(recipe = {}) {
+  if (recipe.attention || recipe.assertAttention) return false;
+  if (wanderQueryOnlyKeys(recipe.conditions || {}).length) return false;
+  if (RECIPE_PAIR_KINDS.some((kind) => recipe[kind])) return false;
+  const prepare = recipe.prepare || {};
+  return Object.entries(prepare).every(([key, value]) => (
+    SCRIPT_FREE_PREPARE.includes(key) || (Array.isArray(value) ? value.length === 0 : !value)
+  ));
+}
+
+/** A salted walk of the pool that visits a new route before it repeats one. */
+function wanderSpread(pool, count, salt, taken = []) {
+  const order = wanderDistinct(pool, pool.length, salt);
+  const seen = new Set(taken.map((recipe) => nightlySpecimenPath(recipe.specimenRoute)));
+  const picked = [];
+  for (const recipe of order) {
+    if (picked.length >= count) break;
+    const path = nightlySpecimenPath(recipe.specimenRoute);
+    if (seen.has(path)) continue;
+    seen.add(path);
+    picked.push(recipe);
+  }
+  for (const recipe of order) {
+    if (picked.length >= count) break;
+    if (!picked.includes(recipe)) picked.push(recipe);
+  }
+  return picked;
+}
+
+function wanderAxisOpen(recipe, axis) {
+  const own = recipe.conditions || {};
+  if (own[axis] != null) return false;
+  if (axis === 'script') return wanderScriptEligible(recipe);
+  if (axis === 'colorMode' && own.themePack === 'banked-ember') return false;
+  if (axis === 'forcedColors' && (own.highContrast === 'on' || own.highContrast === true)) return false;
+  return true;
+}
+
+function wanderReading(recipe, viewport, drawn) {
+  const phrases = Object.entries(drawn).map(([axis, value]) => WANDER_AXES[axis].says(value));
+  const firstSentence = (text) => String(text || '').trim().split(/(?<=[.!?])\s+/)[0] || '';
+  const wonder = firstSentence(recipe.wonder);
+  const first = (wonder.length >= 32 ? wonder : firstSentence(recipe.captureValue) || wonder) || recipe.label || recipe.id;
+  return `${recipe.label} at ${viewport} with ${phrases.join(' and ')}: ${first.replace(/[.!?]$/, '')}.`;
+}
+
+/**
+ * Draw `n` distinct stills, each with one or two odd axes on top of its own
+ * conditions. Slot 0 comes from the image-bearing recipes, so every batch
+ * holds at least one picture.
+ */
+export function wanderBatch({ seed = wanderSeedFor(), n = WANDER_DEFAULT_COUNT, pool = wanderRecipePool() } = {}) {
+  const key = String(seed ?? '').trim() || wanderSeedFor();
+  const count = Math.max(1, Math.min(Math.trunc(Number(n)) || WANDER_DEFAULT_COUNT, pool.length));
+  const images = pool.filter(isImageRecipe);
+  const first = images.length ? wanderDraw(images, `wander:${key}:image`) : null;
+  const rest = wanderSpread(
+    pool.filter((recipe) => recipe !== first),
+    count - (first ? 1 : 0),
+    `wander:${key}:recipes`,
+    first ? [first] : [],
+  );
+  const recipes = first ? [first, ...rest] : rest;
+  const axisIds = Object.keys(WANDER_AXES);
+
+  const jobs = recipes.map((recipe, index) => {
+    const salt = `wander:${key}:${index}`;
+    const fits = WANDER_VIEWPORTS.filter((id) => viewportMatchesScenario(id, recipe.layoutScenarios));
+    const viewport = wanderDraw(fits.length ? fits : ['pocket'], `${salt}:viewport`);
+    const open = axisIds.filter((axis) => wanderAxisOpen(recipe, axis));
+    const want = wanderDraw([1, 2], `${salt}:width`);
+    const width = Math.min(want, WANDER_MAX_AXES);
+    let picked = wanderDistinct(open, width, `${salt}:axes`);
+    if (picked.includes('script')) {
+      // Scripts off keeps company only with what the browser itself applies.
+      const quiet = open.filter((axis) => axis !== 'script' && WANDER_SCRIPT_FREE_AXES.includes(axis));
+      picked = ['script', ...wanderDistinct(quiet, width - 1, `${salt}:axes:js-off`)];
+    }
+    const drawn = {};
+    for (const axis of picked) {
+      drawn[axis] = wanderDraw(WANDER_AXES[axis].values, `${salt}:${axis}`);
+    }
+    return {
+      id: recipe.id,
+      viewport,
+      axes: Object.keys(drawn),
+      conditions: { ...(recipe.conditions || {}), ...drawn },
+      image: isImageRecipe(recipe),
+      route: recipe.specimenRoute,
+      reading: wanderReading(recipe, viewport, drawn),
+    };
+  });
+
+  const pictures = jobs.filter((job) => job.image).length;
+  const env = jobs.filter((job) => job.axes.some((axis) => WANDER_AXES[axis].env)).length;
+  return {
+    schema: WANDER_RECEIPT_SCHEMA,
+    seed: key,
+    n: jobs.length,
+    ids: jobs.map((job) => job.id),
+    viewports: [...new Set(jobs.map((job) => job.viewport))],
+    jobs,
+    reading: `Seed ${key}: ${jobs.length} odd stills, ${pictures} with a picture, ${env} with the browser itself changed.`,
+  };
+}
+
+/** Receipt rows → still jobs. Scripts off drops every gesture and pin. */
+export function buildWanderJobs(receipt, { format = 'jpeg' } = {}) {
+  const jobs = [];
+  (receipt?.jobs || []).forEach((entry, index) => {
+    const recipe = getViewportStillRecipe(entry.id);
+    if (!recipe) return;
+    const job = stillJobFromRecipe(recipe, { id: entry.viewport }, format);
+    const scriptOff = captureScriptOff(entry.conditions);
+    jobs.push({
+      ...job,
+      conditions: Object.freeze({ ...entry.conditions }),
+      prepare: scriptOff ? null : job.prepare,
+      attention: scriptOff ? null : job.attention,
+      assertAttention: scriptOff ? null : job.assertAttention,
+      chapter: 'climate',
+      wander: Object.freeze({ seed: receipt.seed, index, axes: [...entry.axes], reading: entry.reading }),
+    });
+  });
+  return assignBrowsePaths(jobs, format);
+}
+
+export function formatWanderReceipt(receipt) {
+  const lines = [`#>wander seed=${receipt.seed} n=${receipt.n}`, receipt.reading];
+  receipt.jobs.forEach((job, index) => {
+    const mark = job.image ? ' *' : '';
+    lines.push(`${String(index + 1).padStart(2, ' ')}. ${job.id}<${job.viewport}>{${job.axes.join('.')}}${mark}`);
+    lines.push(`    ${job.reading}`);
+  });
+  return `${lines.join('\n')}\n`;
+}
+
+function shellWord(value) {
+  const text = String(value);
+  return /^[A-Za-z0-9._:@/-]+$/.test(text) ? text : `'${text.replaceAll("'", "'\\''")}'`;
+}
+
+export function wanderCaptureCommand(receipt) {
+  const count = receipt.n !== WANDER_DEFAULT_COUNT ? ` --count ${receipt.n}` : '';
+  return `npm run visual:capture -- --profile wander --seed ${shellWord(receipt.seed)}${count}`;
 }
 
 /**
@@ -1449,7 +1691,7 @@ export function browseStem(job) {
     || 'still';
 }
 
-export function conditionClusterKey(conditions = {}, attention = {}) {
+function climateClusterKey(conditions = {}, attention = {}) {
   const pack = conditions?.themePack ? String(conditions.themePack) : '';
   const dark = conditions?.colorMode === 'dark';
   const hc = conditions?.highContrast === 'on' || conditions?.highContrast === true;
@@ -1466,6 +1708,44 @@ export function conditionClusterKey(conditions = {}, attention = {}) {
   return '';
 }
 
+/**
+ * Settings the capture can pass as a query. Keys are setting names, values
+ * the canonical query key (first alias in settings-query-parity.js
+ * SETTINGS_TO_QUERY; a test keeps them in step).
+ */
+export const CAPTURE_SETTING_QUERY = Object.freeze({
+  paletteResonance: 'palette',
+  componentDensity: 'component-density',
+  semanticDensity: 'semantic-density',
+  layoutTuner: 'layout',
+  spacingTuner: 'spacing',
+  interactionTuner: 'interaction',
+  explorePosture: 'explore-posture',
+});
+
+/** Environment axes CDP sets, not the page: scripts, display mode, forced colors. */
+export function captureScriptOff(conditions = {}) {
+  return conditions?.script === 'off' || conditions?.script === false;
+}
+
+function environmentClusterTokens(conditions = {}) {
+  const tokens = [];
+  for (const [setting, key] of Object.entries(CAPTURE_SETTING_QUERY)) {
+    if (conditions?.[setting]) tokens.push(`${key}-${conditions[setting]}`);
+  }
+  if (conditions?.displayMode === 'standalone') tokens.push('standalone');
+  if (conditions?.forcedColors === 'active' || conditions?.forcedColors === true) tokens.push('forced-colors');
+  if (captureScriptOff(conditions)) tokens.push('js-off');
+  return tokens;
+}
+
+/** Folder suffix: the climate name, then any settings or environment axes. */
+export function conditionClusterKey(conditions = {}, attention = {}) {
+  const base = climateClusterKey(conditions, attention);
+  const extra = environmentClusterTokens(conditions || {});
+  return [base, ...extra].filter(Boolean).join('-');
+}
+
 export function captureSearchParams(conditions = {}, attention = {}) {
   const params = new URLSearchParams();
   if (conditions.colorMode) params.set('color-mode', conditions.colorMode);
@@ -1474,6 +1754,9 @@ export function captureSearchParams(conditions = {}, attention = {}) {
     params.set('high-contrast', 'on');
   }
   if (conditions.enhancement) params.set('enhancement', conditions.enhancement);
+  for (const [setting, key] of Object.entries(CAPTURE_SETTING_QUERY)) {
+    if (conditions[setting]) params.set(key, String(conditions[setting]));
+  }
   if (attention.section) params.set('pin', attention.section);
   if (attention.probe) params.set('probe', attention.probe);
   return params;
@@ -1909,6 +2192,8 @@ export function buildViewportStillJobs(recipes = VIEWPORT_STILL_RECIPES, {
 } = {}) {
   const idFilter = ids instanceof Set ? ids : (ids?.length ? new Set(ids) : null);
   const catalog = includeChecks ? [...recipes, ...checkRecipes] : [...recipes];
+  // Wander stills answer to a named id, never to a bare pack.
+  if (idFilter) catalog.push(...VIEWPORT_STILL_WANDERS.filter((recipe) => idFilter.has(recipe.id)));
   const jobs = [];
   for (const recipe of catalog) {
     const hits = recipeIdHits(recipe, idFilter, catalog);
@@ -2115,6 +2400,7 @@ export function buildCapturePlan({
   maxJobs = 0,
   maxNavs = 0,
   themeViewport = null,
+  wander = null,
 } = {}) {
   const idFilter = ids?.length ? new Set(ids) : null;
   const components = includeComponents
@@ -2129,7 +2415,10 @@ export function buildCapturePlan({
     if (components.length) jobs = jobs.concat(buildComponentJobs(components, { flows, viewports, format }));
     if (ecology.length) jobs = jobs.concat(buildEcologyJobs(ecology, { viewports, seats, format, flows }));
   }
-  if (includeStills) {
+  if (wander) {
+    // A seeded batch stands in for the named stills: its own triples, no cross product.
+    jobs = jobs.concat(buildWanderJobs(wander, { format }));
+  } else if (includeStills) {
     jobs = jobs.concat(buildViewportStillJobs(stillRecipes, {
       viewports,
       format,
@@ -2208,6 +2497,7 @@ export function parseSpwCaptureTokens(tokens = [], knownIds = []) {
   let wantStills = false;
   let wantChecks = false;
   let wantWalk = false;
+  let wantWander = false;
   for (const raw of tokens) {
     const token = String(raw || '').trim();
     if (!token || token.startsWith('-')) continue;
@@ -2217,6 +2507,10 @@ export function parseSpwCaptureTokens(tokens = [], knownIds = []) {
     else if (token === 'still' || token === 'stills' || token === 'page') wantStills = true;
     else if (token === 'check' || token === 'checks') wantChecks = true;
     else if (token === 'walk') wantWalk = true;
+    else if (token === 'wander') {
+      wantWander = true;
+      wantStills = true;
+    }
     else if (token === 'survey') {
       wantStills = true;
       wantChecks = true;
@@ -2252,6 +2546,7 @@ export function parseSpwCaptureTokens(tokens = [], knownIds = []) {
     stills: wantStills,
     checks: wantChecks,
     walk: wantWalk,
+    wander: wantWander,
   };
 }
 

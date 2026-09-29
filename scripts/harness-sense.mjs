@@ -9,16 +9,27 @@
  *   npm run sense -- ink about-opening
  *   npm run sense -- ids
  *   npm run sense -- doctor [--reap]   # QA preflight: sandbox, orphans, bundles
+ *   npm run sense -- wander [seed] [--count N] [--run]   # seeded odd stills; dry unless --run
  */
 
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-import { VIEWPORT_STILL_CHECKS, VIEWPORT_STILL_RECIPES } from './lib/viewport-still-recipes.mjs';
+import {
+  VIEWPORT_STILL_CHECKS,
+  VIEWPORT_STILL_RECIPES,
+  VIEWPORT_STILL_WANDERS,
+} from './lib/viewport-still-recipes.mjs';
+import {
+  WANDER_DEFAULT_COUNT,
+  formatWanderReceipt,
+  wanderBatch,
+  wanderCaptureCommand,
+} from './lib/visual-capture-plan.mjs';
 
 export function listSenseFixtures() {
-  return [...VIEWPORT_STILL_RECIPES, ...VIEWPORT_STILL_CHECKS];
+  return [...VIEWPORT_STILL_RECIPES, ...VIEWPORT_STILL_CHECKS, ...VIEWPORT_STILL_WANDERS];
 }
 
 export const SENSE_KINDS = Object.freeze({
@@ -52,6 +63,31 @@ export function resolveInkIds(rest) {
   return ids.map((id) => id.trim()).filter(Boolean);
 }
 
+/** `wander [seed] [--count N] [--run]`. The seed defaults to the UTC date inside wanderBatch. */
+export function parseWanderArgs(rest = []) {
+  let seed;
+  let count = WANDER_DEFAULT_COUNT;
+  let run = false;
+  for (let i = 0; i < rest.length; i += 1) {
+    const arg = String(rest[i]);
+    if (arg === '--run') run = true;
+    else if (arg === '--count' && rest[i + 1]) count = Number(rest[++i]) || count;
+    else if (arg.startsWith('--count=')) count = Number(arg.slice(8)) || count;
+    else if (arg === '--seed' && rest[i + 1]) seed = rest[++i];
+    else if (arg.startsWith('--seed=')) seed = arg.slice(7);
+    else if (!arg.startsWith('-') && seed === undefined) seed = arg;
+  }
+  return { seed, count, run };
+}
+
+/** Dry by default: the receipt, then the one command that captures it. */
+export function wanderSense(rest = []) {
+  const { seed, count, run } = parseWanderArgs(rest);
+  const receipt = wanderBatch({ seed, n: count });
+  const command = wanderCaptureCommand(receipt);
+  return { receipt, command, run, text: `${formatWanderReceipt(receipt)}\ncapture: ${command}\n` };
+}
+
 export function formatStillIds(recipes = listSenseFixtures()) {
   const width = recipes.reduce((max, recipe) => Math.max(max, recipe.id.length), 0);
   return recipes
@@ -67,6 +103,7 @@ export function formatSenseMenu(recipes = listSenseFixtures()) {
     '[sense] stills  npm run sense -- stills',
     '[sense] ink     npm run sense -- ink <fixture>',
     `[sense] ids     ${recipes.length} fixtures — npm run sense -- ids`,
+    '[sense] wander  npm run sense -- wander [seed]   (seeded odd stills; dry until --run)',
     '[sense] ink without an id lists fixtures instead of starting the full pack.',
   ].join('\n');
 }
@@ -88,6 +125,14 @@ function main(argv = process.argv.slice(2)) {
     const result = spawnSync(process.execPath, [script, ...rest], { stdio: 'inherit' });
     process.exit(result.status ?? 1);
   }
+  if (kind === 'wander') {
+    const { receipt, text, run } = wanderSense(rest);
+    process.stdout.write(text);
+    if (!run) process.exit(0);
+    const extra = ['--profile', 'wander', '--seed', receipt.seed];
+    if (receipt.n !== WANDER_DEFAULT_COUNT) extra.push('--count', String(receipt.n));
+    runNpm('visual:capture', extra);
+  }
   if (kind === 'ids') {
     process.stdout.write(`${formatStillIds()}\n`);
     process.stdout.write('\nink: npm run sense -- ink about-opening\n');
@@ -95,7 +140,7 @@ function main(argv = process.argv.slice(2)) {
   }
   const spec = SENSE_KINDS[kind];
   if (!spec) {
-    process.stderr.write(`[sense] unknown kind "${kind}". Use doctor, copy, nouns, stills, ink, or ids.\n`);
+    process.stderr.write(`[sense] unknown kind "${kind}". Use doctor, copy, nouns, stills, ink, ids, or wander.\n`);
     process.stderr.write(`${formatSenseMenu()}\n`);
     process.exit(2);
   }

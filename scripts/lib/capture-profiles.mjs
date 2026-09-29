@@ -84,6 +84,17 @@ export const CAPTURE_PROFILES = Object.freeze({
     retryErrors: true,
     description: 'Recapture the latest pack\'s named misses at pocket+fold. Keep successful stills.',
   }),
+  wander: Object.freeze({
+    id: 'wander',
+    label: 'seeded wander',
+    stills: true,
+    checks: true,
+    walk: false,
+    viewports: Object.freeze(['pocket']),
+    maxNavs: 8,
+    count: 6,
+    description: 'A seeded handful of odd stills: one or two unusual axes each, pocket-first, at least one picture. --seed replays it.',
+  }),
 });
 
 export function readableSlug(value, fallback = 'ad-hoc') {
