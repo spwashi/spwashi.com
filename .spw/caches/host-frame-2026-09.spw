@@ -42,7 +42,9 @@ expression = host[job]{one.verb}<frame>
     `autonomous.feedback   · note    · a card the reader sends; a desk only when the site asks`,
     `factshift.center      · frame   · one concept held on the canvas`,
     `lore.land             · keep    · a reference entry, credited, when work fits the world`,
-    `spwashi.com           · meet    · the person, the ladder, and every card`
+    `spwashi.com           · meet    · the person, the ladder, and every card`,
+    `tealstripesvibes.com  · vibe    · a designer seed through a mask, as a link and a stamped proof card`,
+    `mutex.buzz            · hold    · the one concept in the frame, until the next close`
   ][reg=set]
   pictures = `attention.productions opens the production season October 1 through New Year 2026. A feature is due in 2027. Its primary door is "Back the season" at spwashi.com/cards/#back-the-film. The card agrees a part; it does not promise a credit.`
   frame = `factshift.center serves the snapshot in workers/factshift-center. @factshift_app names the version and the query keys. The modifiable source is workers/factshift-center/app, revision 5860b39, sixty-seven commits ahead of GitHub main, gitignored. The canvas title is <concept>. One concept is the moment. This pass did not redeploy.`
@@ -83,7 +85,8 @@ expression = host[job]{one.verb}<frame>
 ^"mutex"{
   rule = `One concept in the frame at a time. That is the mechanic behind a picture, not a second app.`
   spend = `attention.productions is the first spend: a picture is one concept held long enough to market.`
-  today = `mutex.buzz is a door onto attention.productions. It is not yet a router that swaps the concept.`
+  today = `mutex.buzz is the lock (2026-09-29): / explains it, /now/ shows the holder and is framed by attention.productions, /now.json says the same. Holds turn over at the 13th, the 26th, and month's end (UTC); with no agreed hold, one folio per cycle rests there (A lined stage facade, B Teal Stripes Vibes wash, C factshift cabinet). HOLDS and QUEUE live in workers/site-hub-next/src/mutex.js and are empty.`
+  vibe = `tealstripesvibes.com (2026-09-29): authored seeds (harbor, ledger, lantern, drafts) under masks (letters pramgs or sigils * # @ ~ . $), filters night, hush, mono; /@hour, /tuple, signed /m/ masks that answer 410 after they close, hourly /stamp/ checks, SVG previews. Signing needs the TSV_SIGNING_KEY secret.`
   proposed = .{
     idea = `creator, 2026-09-28: "mutex.buzz/now/ embedded by attention.productions and generally pointing to a laminated folio." mutex.buzz becomes the lock itself: what holds the one slot of attention right now, where it came from, and when it lets go.`
     now = `mutex.buzz/now/ answers one holder: a picture, a title, a link, a since, and a releases-at. /now.json says the same for machines. attention.productions embeds /now/ as its picture slot instead of choosing its own image.`
