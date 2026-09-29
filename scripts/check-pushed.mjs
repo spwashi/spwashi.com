@@ -7,9 +7,10 @@
  * Pre-push feeds "<local ref> <local sha> <remote ref> <remote sha>" on stdin.
  * The working tree is often another session's files. Deploy checks out the
  * commit, so the local gate has to see that same tree. Images stay in the
- * main checkout. check:local reads two slices of them: the folio directory
- * (about 20 MB) and the five install icons the PWA contract stats. Those
- * are extracted from the commit. The rest of public/images stays out.
+ * main checkout. check:local reads three slices of them: the folio directory
+ * (about 20 MB), the five install icons the PWA contract stats, and the
+ * .spw sidecars the provenance index was built from. Those are extracted
+ * from the commit. Picture bytes outside the folios and the icons stay out.
  *
  *   node scripts/check-pushed.mjs            # stdin, or HEAD from a terminal
  *   node scripts/check-pushed.mjs <sha>      # one commit, for a manual check
@@ -28,6 +29,17 @@ const PWA_SHELL_IMAGES = [
   'public/images/icon-192.png',
   'public/images/icon-512.png',
   'public/images/icon-maskable-512.png',
+];
+// Same folders scripts/lib/image-provenance-records.mjs skips. Their
+// sidecars do not feed the generated index, and the folio directory is
+// already extracted whole.
+const PROVENANCE_SKIP_PREFIXES = [
+  'public/images/renders/',
+  'public/images/assets/folios/',
+  'public/images/assets/panels/',
+  'public/images/assets/worktable/',
+  'public/images/assets/scraps/',
+  'public/images/assets/primes/',
 ];
 const SHA = /^[0-9a-f]{40}$/i;
 
@@ -77,6 +89,12 @@ function extractPath(sha, rel, scratch) {
   extractPaths(sha, [rel], scratch);
 }
 
+function provenanceSidecars(sha) {
+  return git(['ls-tree', '-r', '--name-only', sha, '--', 'public/images'])
+    .split('\n')
+    .filter((name) => name.endsWith('.spw') && !PROVENANCE_SKIP_PREFIXES.some((prefix) => name.startsWith(prefix)));
+}
+
 /**
  * Copy `*.stamp` into the scratch. The stamp is a hash of authored inputs,
  * so a commit whose sources differ misses and compiles. Incremental
@@ -98,8 +116,9 @@ export function copyCompileStamps(fromRoot, scratch) {
 }
 
 /**
- * A detached worktree of `sha` with node_modules linked and the folio
- * directory extracted from that commit. `release` removes the worktree.
+ * A detached worktree of `sha` with node_modules linked, the folio
+ * directory, the install icons, and the provenance sidecars extracted
+ * from that commit. `release` removes the worktree.
  */
 export function materializeCommit(sha) {
   const scratch = mkdtempSync(path.join(tmpdir(), 'spw-push-'));
@@ -129,6 +148,8 @@ export function materializeCommit(sha) {
       .split('\n')
       .filter(Boolean);
     if (icons.length) extractPaths(sha, icons, scratch);
+    const sidecars = provenanceSidecars(sha);
+    if (sidecars.length) extractPaths(sha, sidecars, scratch);
     const stamps = copyCompileStamps(ROOT, scratch);
     if (stamps) console.log(`[check:pushed] compile stamps ${stamps}`);
     return { scratch, release };
