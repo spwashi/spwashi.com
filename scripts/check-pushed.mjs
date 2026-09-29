@@ -7,9 +7,9 @@
  * Pre-push feeds "<local ref> <local sha> <remote ref> <remote sha>" on stdin.
  * The working tree is often another session's files. Deploy checks out the
  * commit, so the local gate has to see that same tree. Images stay in the
- * main checkout. The folio audit is the only check:local reader of image
- * bytes, so that one directory is extracted from the commit (about 20 MB)
- * and the rest of public/images stays out.
+ * main checkout. check:local reads two slices of them: the folio directory
+ * (about 20 MB) and the five install icons the PWA contract stats. Those
+ * are extracted from the commit. The rest of public/images stays out.
  *
  *   node scripts/check-pushed.mjs            # stdin, or HEAD from a terminal
  *   node scripts/check-pushed.mjs <sha>      # one commit, for a manual check
@@ -22,6 +22,13 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const FOLIOS = 'public/images/assets/folios';
+const PWA_SHELL_IMAGES = [
+  'public/images/app-icon.svg',
+  'public/images/apple-touch-icon.png',
+  'public/images/icon-192.png',
+  'public/images/icon-512.png',
+  'public/images/icon-maskable-512.png',
+];
 const SHA = /^[0-9a-f]{40}$/i;
 
 export function gitEnv() {
@@ -51,19 +58,23 @@ export function shasFromPushLines(text) {
   return [...new Set(shas)];
 }
 
-function extractPath(sha, rel, scratch) {
-  const archive = spawnSync('git', ['archive', sha, rel], {
+function extractPaths(sha, rels, scratch) {
+  const archive = spawnSync('git', ['archive', sha, '--', ...rels], {
     cwd: ROOT,
     env: gitEnv(),
     maxBuffer: 80 * 1024 * 1024,
   });
   if (archive.status !== 0) {
-    throw new Error(`git archive ${sha} ${rel} failed: ${archive.stderr || archive.error || ''}`);
+    throw new Error(`git archive ${sha} ${rels.join(' ')} failed: ${archive.stderr || archive.error || ''}`);
   }
   const tar = spawnSync('tar', ['-x', '-C', scratch], { input: archive.stdout, maxBuffer: 1024 * 1024 });
   if (tar.status !== 0) {
-    throw new Error(`tar extract of ${rel} failed: ${tar.stderr || tar.error || ''}`);
+    throw new Error(`tar extract of ${rels.join(' ')} failed: ${tar.stderr || tar.error || ''}`);
   }
+}
+
+function extractPath(sha, rel, scratch) {
+  extractPaths(sha, [rel], scratch);
 }
 
 /**
@@ -114,6 +125,10 @@ export function materializeCommit(sha) {
     symlinkSync(path.join(ROOT, 'node_modules'), path.join(scratch, 'node_modules'));
     mkdirSync(path.join(scratch, 'public/images/assets'), { recursive: true });
     extractPath(sha, FOLIOS, scratch);
+    const icons = git(['ls-tree', '-r', '--name-only', sha, '--', ...PWA_SHELL_IMAGES])
+      .split('\n')
+      .filter(Boolean);
+    if (icons.length) extractPaths(sha, icons, scratch);
     const stamps = copyCompileStamps(ROOT, scratch);
     if (stamps) console.log(`[check:pushed] compile stamps ${stamps}`);
     return { scratch, release };
