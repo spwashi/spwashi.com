@@ -1,0 +1,68 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "prime-jquery-bootstrap-react-typescript"
+  title: "jQuery 2012, Bootstrap 2013, React 2017, TypeScript"
+  description: "Cutout arrangement on a clear sheet, scanned for the September 28, 2026 set."
+}
+
+^"source"{
+  id: "prime-2026-09-28-11"
+  master: "public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-11-scan.png"
+  master_tracked: false
+  scan: { width: 3932, height: 3150, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 13.1 x 10.5 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-28.spw"
+}
+
+^"usage"{
+  surface: "primes"
+  role: "cutout-arrangement"
+  formats_available: ["avif", "webp"]
+  ground: "clear — the black behind the cutouts was the scanner lid seen through a clear sheet (creator, 2026-09-28), so every tier keys it to transparent; a page gives the piece its ground"
+  alt_text: "Cutouts on a clear sheet: TikTok for product engineering; the kraft key; 1. Practice, 2. Operationalize, 3. Boon HONK; jQuery 2012, Bootstrap 2013, React 2017, then implement TypeScript; and a list: talk through paintings, draw and doodle web components, upcycle old content."
+  tiers: {
+    thumb: { width: 256, height: 205, avif_kib: 15, webp_kib: 12 }
+    display: { width: 512, height: 410, avif_kib: 43, webp_kib: 38 }
+    hero: { width: 1024, height: 821, avif_kib: 116, webp_kib: 87 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September 26 and 27 sets ship"
+  alpha: "the lid keyed before tiers are cut: dark, broad enough to survive an opening that drops ink lines, and reached from the scan edge; pure white reached from the edge is uncovered glass (paper sits near 232), and thin light slivers in the edge band clear too"
+  hero_budget: "hero at AVIF quality 75, WebP 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["prime", "release-2026-09-28", "tiktok-card", "kraft-key", "practice-list", "years-to-typescript", "augment-card", "paintings-list"]
+  part_of: "folio-release-2026-09-28"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `steps[practice → operationalize → boonhonk] stack[jquery@2012|bootstrap@2013|react@2017]{typescript}`
+  b: `*prime-jquery-bootstrap-react-typescript *tiktok.card *kraft.key *practice.list *years.to.typescript *augment.card *paintings.list !practice &boonhonk !upcycle`
+  handles: ["*tiktok.card", "*kraft.key", "*practice.list", "*years.to.typescript", "*augment.card", "*paintings.list", "!practice", "&boonhonk", "!upcycle"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what old content wants upcycling next?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}
+
+^"imagine"{
+  status: "open — nothing generated yet; the creator runs Grok Imagine and chooses what returns"
+  motion: `2012, 2013, and 2017 stack up and the TypeScript cutout rises from them`
+  after: { id: "prime-2026-09-28-10", shares: ["*kraft.key", "*tiktok.card"] }
+  before: { id: "prime-2026-09-28-12", shares: ["*kraft.key", "*practice.list", "*augment.card", "*paintings.list"] }
+  seed: "the master as scanned, lid and all; Imagine reads a dark ground more predictably than transparency"
+  returns: "public/images/renders/imagine/2026-09-28/prime-jquery-bootstrap-react-typescript-imagine-NN.<ext>, with a sidecar naming generator: Grok Imagine and source: prime-2026-09-28-11"
+  derivatives: []
+}

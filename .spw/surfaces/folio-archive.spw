@@ -14,10 +14,11 @@
 @asset_registry: ~"../assets.spw"
 @release_2026_09_26: ~"./folio-archive/release-2026-09-26.spw"
 @release_2026_09_27: ~"./folio-archive/release-2026-09-27.spw"
+@release_2026_09_28: ~"./folio-archive/release-2026-09-28.spw"
 
 ^"archive"{
   what = `Laminated folios — printer-paper-sized originals: collage and laminate what is current, paint a season across the stack, paint the same surfaces again the next year.`
-  span = `An archive of wonder over the past few years, still being painted. Scanning began 2026-09-25: thirty-one folios, the September 26 release set (./folio-archive/release-2026-09-26.spw). On 2026-09-27, twenty-seven more folios, twenty-five panel-canvas faces, and the day's worktable (./folio-archive/release-2026-09-27.spw).`
+  span = `An archive of wonder over the past few years, still being painted. Scanning began 2026-09-25: thirty-one folios, the September 26 release set (./folio-archive/release-2026-09-26.spw). On 2026-09-27, twenty-seven more folios, twenty-five panel-canvas faces, and the day's worktable (./folio-archive/release-2026-09-27.spw). On 2026-09-28, eight square scraps, one collectible, and twenty-five folio primes, cutouts rearranged on a clear sheet (./folio-archive/release-2026-09-28.spw).`
   canon = `Original and continuous. The continuing canon overlaps no one else's work; lore.land is a second source for new pieces, never the origin of the archive.`
   owner = `Spwashi. Community art and lore.land contributions are not folio inventory.`
 }

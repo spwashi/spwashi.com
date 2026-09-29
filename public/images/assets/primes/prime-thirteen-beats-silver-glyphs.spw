@@ -1,0 +1,67 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "prime-thirteen-beats-silver-glyphs"
+  title: "Each arc has up to 13 beats"
+  description: "Cutout arrangement on a clear sheet, scanned for the September 28, 2026 set."
+}
+
+^"source"{
+  id: "prime-2026-09-28-04"
+  master: "public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-04-scan.png"
+  master_tracked: false
+  scan: { width: 3053, height: 4227, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 10.2 x 14.1 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-28.spw"
+}
+
+^"usage"{
+  surface: "primes"
+  role: "cutout-arrangement"
+  formats_available: ["avif", "webp"]
+  ground: "as scanned — a black-paper cutout here cannot be told from the lid by color or texture, so the lid stays; a clear tier waits for a hand-drawn mask"
+  alt_text: "Cutouts on a clear sheet over the dark scanner lid: the operator table; my ex got hotter, X.com, I thought it would be obvious, trailing into SPWASHI bubble letters; the kraft key; silver glyphs on black paper; and Production for Lore.Land: each arc has up to 13 beats."
+  tiers: {
+    thumb: { width: 185, height: 256, avif_kib: 6, webp_kib: 8 }
+    display: { width: 370, height: 512, avif_kib: 26, webp_kib: 28 }
+    hero: { width: 740, height: 1024, avif_kib: 102, webp_kib: 70 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September 26 and 27 sets ship"
+  hero_budget: "hero at AVIF quality 75, WebP 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["prime", "release-2026-09-28", "operator-table", "spwashi-bubble", "kraft-key", "silver-glyphs", "production-card"]
+  part_of: "folio-release-2026-09-28"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `production[arc]{beats ≤ 13}<lore.land> glyphs[silver]{# ~ 9 0 % . m , d S}`
+  b: `*prime-thirteen-beats-silver-glyphs *operator.table *spwashi.bubble *kraft.key *silver.glyphs *production.card %13.beats <x.com ~obvious`
+  handles: ["*operator.table", "*spwashi.bubble", "*kraft.key", "*silver.glyphs", "*production.card", "%13.beats", "<x.com", "~obvious"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what is the thirteenth beat?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}
+
+^"imagine"{
+  status: "open — nothing generated yet; the creator runs Grok Imagine and chooses what returns"
+  motion: `thirteen beats tick along Production's bar while the silver glyphs shimmer`
+  after: { id: "prime-2026-09-28-03", shares: ["*operator.table", "*spwashi.bubble", "*production.card", "*kraft.key"] }
+  before: { id: "prime-2026-09-28-05", shares: ["*operator.table", "*kraft.key", "*silver.glyphs", "*production.card"] }
+  seed: "the master as scanned, lid and all; Imagine reads a dark ground more predictably than transparency"
+  returns: "public/images/renders/imagine/2026-09-28/prime-thirteen-beats-silver-glyphs-imagine-NN.<ext>, with a sidecar naming generator: Grok Imagine and source: prime-2026-09-28-04"
+  derivatives: []
+}

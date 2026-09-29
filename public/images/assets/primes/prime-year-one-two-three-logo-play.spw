@@ -1,0 +1,67 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "prime-year-one-two-three-logo-play"
+  title: "Year 1, Year 2, Year 3; play with your logo"
+  description: "Cutout arrangement on a clear sheet, scanned for the September 28, 2026 set."
+}
+
+^"source"{
+  id: "prime-2026-09-28-01"
+  master: "public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-01-scan.png"
+  master_tracked: false
+  scan: { width: 2570, height: 4112, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 8.6 x 13.7 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-28.spw"
+}
+
+^"usage"{
+  surface: "primes"
+  role: "cutout-arrangement"
+  formats_available: ["avif", "webp"]
+  ground: "clear — the black behind the cutouts was the scanner lid seen through a clear sheet (creator, 2026-09-28), so every tier keys it to transparent; a page gives the piece its ground"
+  alt_text: "Cutouts on a clear sheet: Year 1 loose art, Year 2 laminated folios, Year 3 layered painting; a logo design cutout that says play with your logo and branches spwashi.com into educational psychology and software engineering, QA loop since 2023; part of the operator table; the kraft key below."
+  tiers: {
+    thumb: { width: 160, height: 256, avif_kib: 12, webp_kib: 10 }
+    display: { width: 320, height: 512, avif_kib: 35, webp_kib: 29 }
+    hero: { width: 640, height: 1024, avif_kib: 95, webp_kib: 68 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September 26 and 27 sets ship"
+  alpha: "the lid keyed before tiers are cut: dark, broad enough to survive an opening that drops ink lines, and reached from the scan edge; pure white reached from the edge is uncovered glass (paper sits near 232), and thin light slivers in the edge band clear too"
+  hero_budget: "hero at AVIF quality 75, WebP 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["prime", "release-2026-09-28", "three-years", "logo-play", "operator-table", "kraft-key"]
+  part_of: "folio-release-2026-09-28"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `years[loose.art|laminated.folios|layered.painting] logo[play]{educational.psychology|software.engineering}`
+  b: `*prime-year-one-two-three-logo-play *three.years *logo.play *operator.table *kraft.key ~layered.painting <spwashi.com @2023`
+  handles: ["*three.years", "*logo.play", "*operator.table", "*kraft.key", "~layered.painting", "<spwashi.com", "@2023"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?which year is this one?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}
+
+^"imagine"{
+  status: "open — nothing generated yet; the creator runs Grok Imagine and chooses what returns"
+  motion: `Year 1 to Year 3 light in turn: loose art, laminated folios, layered painting`
+  before: { id: "prime-2026-09-28-02", shares: ["*logo.play", "*operator.table", "*kraft.key"] }
+  seed: "the master as scanned, lid and all; Imagine reads a dark ground more predictably than transparency"
+  returns: "public/images/renders/imagine/2026-09-28/prime-year-one-two-three-logo-play-imagine-NN.<ext>, with a sidecar naming generator: Grok Imagine and source: prime-2026-09-28-01"
+  derivatives: []
+}

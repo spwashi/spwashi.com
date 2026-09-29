@@ -1,0 +1,64 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "scrap-reaching-pencil-grove"
+  title: "Reaching"
+  description: "Square scrap, scanned for the September 28, 2026 set."
+}
+
+^"source"{
+  id: "scrap-2026-09-28-04"
+  master: "public/images/renders/_raw/folio-scans-2026-09-28/scrap-2026-09-28-04-scan.png"
+  master_tracked: false
+  scan: { width: 596, height: 601, dpi: 300, orientation: "square" }
+  scan_extent: "about 2.0 x 2.0 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-28.spw"
+}
+
+^"usage"{
+  surface: "scraps"
+  role: "square-scrap"
+  formats_available: ["avif", "webp"]
+  ground: "as scanned — a square of paper on its own; no lid shows"
+  alt_text: "Square pencil scrap titled Reaching: tufted trees and cloud shapes crowd a hillside while long strokes reach diagonally across it."
+  tiers: {
+    thumb: { width: 254, height: 256, avif_kib: 6, webp_kib: 9 }
+    display: { width: 508, height: 512, avif_kib: 26, webp_kib: 29 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at scan size"
+  png: "none — AVIF and WebP only, as the September 26 and 27 sets ship"
+  hero_budget: "no hero — the scan is smaller than 1024px, and tiers never upscale"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["scrap", "release-2026-09-28", "reaching-pencil"]
+  part_of: "folio-release-2026-09-28"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `grove[pencil]{reaching}`
+  b: `*scrap-reaching-pencil-grove &grove ~reaching`
+  handles: ["&grove", "~reaching"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what is the grove reaching for?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}
+
+^"imagine"{
+  status: "open — nothing generated yet; the creator runs Grok Imagine and chooses what returns"
+  motion: `the long strokes reach across the grove like wind through stalks`
+  seed: "the master as scanned, lid and all; Imagine reads a dark ground more predictably than transparency"
+  returns: "public/images/renders/imagine/2026-09-28/scrap-reaching-pencil-grove-imagine-NN.<ext>, with a sidecar naming generator: Grok Imagine and source: scrap-2026-09-28-04"
+  derivatives: []
+}

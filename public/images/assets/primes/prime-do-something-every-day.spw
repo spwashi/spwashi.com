@@ -1,0 +1,68 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "prime-do-something-every-day"
+  title: "Do something every day"
+  description: "Cutout arrangement on a clear sheet, scanned for the September 28, 2026 set."
+}
+
+^"source"{
+  id: "prime-2026-09-28-13"
+  master: "public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-13-scan.png"
+  master_tracked: false
+  scan: { width: 2979, height: 4442, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 9.9 x 14.8 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-28.spw"
+}
+
+^"usage"{
+  surface: "primes"
+  role: "cutout-arrangement"
+  formats_available: ["avif", "webp"]
+  ground: "clear — the black behind the cutouts was the scanner lid seen through a clear sheet (creator, 2026-09-28), so every tier keys it to transparent; a page gives the piece its ground"
+  alt_text: "Cutouts on a clear sheet: the kraft key; I literally can't NOT say the thing; GenreHopper (romance, action, fantasy, mystery, drama via web linking, disposition set in query params) and a Healing Journey list, both upside down; do something every day, post about it sometimes, spwashi.com; Practice, Operationalize, Boon HONK; the edge of the crush chart."
+  tiers: {
+    thumb: { width: 172, height: 256, avif_kib: 16, webp_kib: 12 }
+    display: { width: 343, height: 512, avif_kib: 48, webp_kib: 40 }
+    hero: { width: 687, height: 1024, avif_kib: 113, webp_kib: 95 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September 26 and 27 sets ship"
+  alpha: "the lid keyed before tiers are cut: dark, broad enough to survive an opening that drops ink lines, and reached from the scan edge; pure white reached from the edge is uncovered glass (paper sits near 232), and thin light slivers in the edge band clear too"
+  hero_budget: "hero at AVIF quality 65, WebP 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["prime", "release-2026-09-28", "kraft-key", "cant-not-say", "genre-hopper", "healing-journey", "every-day", "practice-list", "crush-chart"]
+  part_of: "folio-release-2026-09-28"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `day[do.something]{post.sometimes}<spwashi.com> genres[romance|action|fantasy|mystery|drama]{query.params}`
+  b: `*prime-do-something-every-day *kraft.key *cant.not.say *genre.hopper *healing.journey *every.day *practice.list *crush.chart !do.something.every.day <spwashi.com`
+  handles: ["*kraft.key", "*cant.not.say", "*genre.hopper", "*healing.journey", "*every.day", "*practice.list", "*crush.chart", "!do.something.every.day", "<spwashi.com"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what did you do today?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}
+
+^"imagine"{
+  status: "open — nothing generated yet; the creator runs Grok Imagine and chooses what returns"
+  motion: `do something every day: the cutout turns over like a daily calendar page`
+  after: { id: "prime-2026-09-28-12", shares: ["*cant.not.say", "*genre.hopper", "*practice.list", "*kraft.key"] }
+  before: { id: "prime-2026-09-28-14", shares: ["*kraft.key", "*genre.hopper", "*healing.journey", "*every.day", "*practice.list", "*crush.chart"] }
+  seed: "the master as scanned, lid and all; Imagine reads a dark ground more predictably than transparency"
+  returns: "public/images/renders/imagine/2026-09-28/prime-do-something-every-day-imagine-NN.<ext>, with a sidecar naming generator: Grok Imagine and source: prime-2026-09-28-13"
+  derivatives: []
+}

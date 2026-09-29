@@ -1,0 +1,68 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "prime-eighty-laminated-collages"
+  title: "4 daily videos, 80 laminated collages"
+  description: "Cutout arrangement on a clear sheet, scanned for the September 28, 2026 set."
+}
+
+^"source"{
+  id: "prime-2026-09-28-03"
+  master: "public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-03-scan.png"
+  master_tracked: false
+  scan: { width: 4357, height: 2899, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 14.5 x 9.7 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-28.spw"
+}
+
+^"usage"{
+  surface: "primes"
+  role: "cutout-arrangement"
+  formats_available: ["avif", "webp"]
+  ground: "clear — the black behind the cutouts was the scanner lid seen through a clear sheet (creator, 2026-09-28), so every tier keys it to transparent; a page gives the piece its ground"
+  alt_text: "Cutouts on a clear sheet: a plan card reads 4 daily videos and 80 laminated collages: curate, laminate, paint 3 layers; beside it the operator table, making stuff is fun, SPWASHI in bubble letters, the kraft key, and the top of Production for Lore.Land."
+  tiers: {
+    thumb: { width: 256, height: 170, avif_kib: 14, webp_kib: 11 }
+    display: { width: 512, height: 341, avif_kib: 42, webp_kib: 35 }
+    hero: { width: 1024, height: 682, avif_kib: 111, webp_kib: 84 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September 26 and 27 sets ship"
+  alpha: "the lid keyed before tiers are cut: dark, broad enough to survive an opening that drops ink lines, and reached from the scan edge; pure white reached from the edge is uncovered glass (paper sits near 232), and thin light slivers in the edge band clear too"
+  hero_budget: "hero at AVIF quality 75, WebP 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["prime", "release-2026-09-28", "eighty-collages", "operator-table", "making-stuff", "spwashi-bubble", "production-card", "kraft-key"]
+  part_of: "folio-release-2026-09-28"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `plan[4.daily.videos|80.laminated.collages]{curate → laminate → paint×3}`
+  b: `*prime-eighty-laminated-collages *eighty.collages *operator.table *making.stuff *spwashi.bubble *production.card *kraft.key %80.collages !curate !laminate`
+  handles: ["*eighty.collages", "*operator.table", "*making.stuff", "*spwashi.bubble", "*production.card", "*kraft.key", "%80.collages", "!curate", "!laminate"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?which of the eighty is this one on its way to becoming?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}
+
+^"imagine"{
+  status: "open — nothing generated yet; the creator runs Grok Imagine and chooses what returns"
+  motion: `curate, laminate, paint: the plan card's three steps settle like layers`
+  after: { id: "prime-2026-09-28-02", shares: ["*operator.table", "*making.stuff", "*kraft.key"] }
+  before: { id: "prime-2026-09-28-04", shares: ["*operator.table", "*spwashi.bubble", "*production.card", "*kraft.key"] }
+  seed: "the master as scanned, lid and all; Imagine reads a dark ground more predictably than transparency"
+  returns: "public/images/renders/imagine/2026-09-28/prime-eighty-laminated-collages-imagine-NN.<ext>, with a sidecar naming generator: Grok Imagine and source: prime-2026-09-28-03"
+  derivatives: []
+}

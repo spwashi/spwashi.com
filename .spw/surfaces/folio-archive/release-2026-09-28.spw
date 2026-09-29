@@ -1,0 +1,158 @@
+# Release 2026-09-28 — the third scan set: eight square scraps, one collectible by another maker, and twenty-five folio primes, cutouts arranged and rearranged on a clear sheet, with the painted boards they wait beside.
+# Operation: cache over a contract. Scans, derivatives, and sidecars are real; form, price, availability, pairings, and every expression are the creator's to set.
+
+#>folio_release_2026_09_28
+#:record #!release #!scraps #!primes #!collectible
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@archive: ~"../folio-archive.spw"
+@previous: ~"./release-2026-09-27.spw"
+@route: ~"../../../design/folios/index.html"
+@image_optimize: ~"../../../.agents/skills/image-optimize/SKILL.md"
+@image_naming: ~"../../../.agents/skills/image-naming-magic/SKILL.md"
+@asset_registry: ~"../../assets.spw"
+
+^"release"{
+  id = `folio-release-2026-09-28`
+  date = `2026-09-28, the Monday after release weekend`
+  sources = `eight square scraps (scrap-2026-09-28-00 through -07), one collectible's two faces (collectible-2026-09-28-00-front, -back), and twenty-five folio primes (prime-2026-09-28-00 through -24)`
+  name = `The station profile named the batch autumn nostalgia, square scrap, folio prime; the ids keep the last two words.`
+  form = `unset — a prime is a step toward a folio, not yet a piece offered`
+  price = `unset`
+  availability = `unset`
+  rule = `A scrap id names one square of paper; a collectible id names another maker's piece, with a face suffix. A prime id names one scanned arrangement: the cutouts move between scans, so an id holds the arrangement, not the cutouts.`
+}
+
+^"intake"{
+  scanned = `2026-09-28, 300 dpi sRGB PNG, one batch`
+  order = `the collectible's front and back first, then the eight scraps, then the arrangements; the painted boards come late in the batch, each beside a cutout or two`
+  numbering = `Creator, 2026-09-28: renumber. Ids run in scan order within each kind, with no gaps. Station file names stay with the masters.`
+  masters = `public/images/renders/_raw/folio-scans-2026-09-28/<id>-scan.png — copied from the station folder, gitignored, excluded from the dev server and build`
+  derivatives = `scraps in public/images/assets/scraps/, the collectible's front in public/images/assets/collectibles/, primes in public/images/assets/primes/; each piece {thumb,display,hero}.{avif,webp} plus one .spw sidecar; scraps and the collectible have no hero, since their scans are under 1024px and tiers never upscale`
+  extent = `Scraps run about 2 to 3 in square. Arrangements run the scan bed, up to about 14.5 x 16.8 in at the scanned edge; nothing is measured yet.`
+  orientation = `Kept as scanned. Each sidecar says where lettering runs sideways or upside down; rotating a piece is the creator's call.`
+}
+
+^"ground"{
+  claim = `Creator, 2026-09-28: the black paper should technically be clear, because it was the back of the scanner. The cutouts lie on a clear sheet; the black is the lid behind it.`
+  clear = `Every arrangement and board tier keys the lid to transparent: dark, broad enough to survive a morphological opening that drops ink lines, and reached from the scan edge. The white slivers along the scan edges read as the scanner edge rather than paper, so thin light marks inside a narrow edge band clear too, and so does pure white reached from the edge: uncovered glass scans at 255, cutout paper near 232. Ink outlines on the kraft key and the boards' dark paint stay.`
+  held = `prime-04 and prime-05 carry a cutout of black paper lettered in silver. Neither color nor texture tells it from the lid, so those two keep the lid as scanned until a hand-drawn mask separates them. prime-21, the April board, fills the scan and its black paint meets the lid at the edges, so it keeps the lid too. prime-24's teal spiral square is dark enough to read as lid; a chroma guard keeps it, since the lid is neutral grey.`
+  pages = `A clear piece has no ground of its own. The page chooses one (laminate, paper, the reader's theme), and white cutouts need an edge or shadow on a light ground. That is a placement decision, shown in a browser first.`
+}
+
+^"collectible"{
+  claim = `Creator, 2026-09-28: the first two scans are the front and back of a collectible by another maker; anonymize it as a collectible, with a placeholder like < ? >.`
+  maker = `< ? >. No tracked file names the maker; the station map with the masters is the only key.`
+  shown = `the front (collectible-gothic-letters-dark-sun): a small square of hatched gothic letters and a dark sun. The alt text describes the letters without transcribing them.`
+  held = `the back: it carries the maker's mark, so it has no derivatives and stays in the raw archive.`
+  provenance = `unmarked. It is neither the creator's original nor generated, so the original-scan path rules leave collectibles/ out; no ^imagine seat is offered for another maker's work.`
+}
+
+^"arrangements"{
+  claim = `The twenty-five primes are rearrangements of one stock of hand-lettered cutouts. In scan order, cutouts stay, leave, turn over, and return: prime-01 through prime-20 run as one continuous sequence, and prime-22 through -24 as a short second one.`
+  steps = `prime-03 letters the method: 4 daily videos, 80 laminated collages: curate, laminate, paint 3 layers. The arrangements read as curate, before laminate. That reading is the creator's to confirm.`
+  boards = `prime-17, -18, -20, and -21 are painted boards with collage taped or laminated on; whether some are one board rearranged is held open.`
+  census = `Each recurring cutout is a * handle in every sidecar that shows it, so a piece's handles say which cutouts it shares with its neighbours without a central list. The census below is the same index read the other way.`
+}
+
+^"sources"{
+  collectible = #[ `00-front gothic-letters-dark-sun`, `00-back held` ][reg=list]
+  scraps = #[
+    `00 line-face-profile`, `01 may-17-22-open-curve`, `02 stick-figure-great-circle`, `03 prodigious-blueberry`,
+    `04 reaching-pencil-grove`, `05 lattice-towers-pencil`, `06 teal-spiral-blot`, `07 teal-drip-margin`,
+  ][reg=list]
+  primes = #[
+    `00 rpg-wednesday-factshift-wireframes`, `01 year-one-two-three-logo-play`, `02 operator-table-making-stuff-fun`,
+    `03 eighty-laminated-collages`, `04 thirteen-beats-silver-glyphs`, `05 first-plan-now-plan-with`,
+    `06 new-friends-old-friends-lore-land`, `07 radar-introspective-professional`, `08 code-journey-2011-2015`,
+    `09 moving-on-native-evolution`, `10 artist-software-engineer-languages`, `11 jquery-bootstrap-react-typescript`,
+    `12 cant-not-say-the-thing`, `13 do-something-every-day`, `14 intergenerational-media-literacy`,
+    `15 travel-avoidant-playbook-faces`, `16 episode-card-blurting-boonhonk`, `17 boon-pi-bane-bone-board`,
+    `18 like-i-am-wapboy`, `19 pick-a-lens-kraft`, `20 pick-a-pinball-clown-downtown`, `21 april-thirty-hearts`,
+    `22 read-some-vocab-calculus`, `23 read-some-square-face`, `24 read-some-teal-squares`,
+  ][reg=list]
+  titles = `Working titles named from what is lettered or painted. The creator's titles replace them; slugs follow.`
+}
+
+^"cutouts"{
+  #:read from the scans; working names, the creator's to rename
+  census = #[
+    `*kraft.key — prime 01–20, 24`,
+    `*pick.a.lens — prime 14–19`,
+    `*lore.land.sign — prime 05–09`,
+    `*operator.table — prime 01–05`,
+    `*practice.list — prime 11–15`,
+    `*crush.chart — prime 13–16`,
+    `*a.to.b — prime 08–10`,
+    `*genre.hopper — prime 12–14`,
+    `*production.card — prime 03–05`,
+    `*read.some — prime 22–24`,
+    `*tiktok.card — prime 09–11`,
+    `*augment.card — prime 11–12`,
+    `*avoidant.travel — prime 15–16`,
+    `*cant.not.say — prime 12–13`,
+    `*code.journey — prime 08, 10`,
+    `*every.day — prime 13–14`,
+    `*first.plan — prime 05–06`,
+    `*healing.journey — prime 13–14`,
+    `*line.faces — prime 15–16`,
+    `*logo.play — prime 01–02`,
+    `*making.stuff — prime 02–03`,
+    `*media.literacy — prime 14–15`,
+    `*moving.on — prime 08–09`,
+    `*new.friends.bubbles — prime 06, 09`,
+    `*paintings.list — prime 11–12`,
+    `*silver.glyphs — prime 04–05`,
+    `*spwashi.bubble — prime 03–04`,
+    `*teal.spiral — scrap-06, prime 24`,
+    `*april.board — prime 21`,
+    `*artist.card — prime 10`,
+    `*blurting.show — prime 16`,
+    `*boon.pi.board — prime 17`,
+    `*eighty.collages — prime 03`,
+    `*episode.card — prime 16`,
+    `*face.square — prime 23`,
+    `*illinois.note — prime 07`,
+    `*intro.now — prime 12`,
+    `*pinball.board — prime 20`,
+    `*radar.cards — prime 07`,
+    `*rpg.wednesday — prime 00`,
+    `*sigil.strip — prime 12`,
+    `*teal.wash — prime 24`,
+    `*three.years — prime 01`,
+    `*wapboy.board — prime 18`,
+    `*wireframes — prime 00`,
+    `*years.to.typescript — prime 11`,
+  ][reg=list]
+  kraft_key = `The brown kraft shape outlined in ink rides through twenty-one arrangements, turning at a new angle each time: the batch's one constant.`
+  scraps_inside = `scrap-06, the teal spiral blot, lies in prime-24 beside a teal wash square that was not scanned alone.`
+}
+
+^"threads"{
+  valence = `prime-11 through -17, -20: Boon HONK, boon bane bone, Boon PI; the September 27 valence folios (03, 13, 16, 19, 20, 22, 23) are its earlier pages.`
+  rooms = `prime-00 (spwashi.com, lore.land, factshift.com), the Lore.Land sign in prime-05 through -09, and Production for Lore.Land: each arc has up to 13 beats.`
+  operator_table = `prime-01 through -05 carry the Lore.land operator table: ~ Potential, # Vibration, . Ground, ? Wonder, ! Action, * Value, & Subject, @ Perspective, <> Concept, () Scene, [] Mode, {} Structure, ^ Integration, numbered 0–12 and lettered A–M. It is recorded as lettered. Where it meets the site's one character table (kernel/operator-detection.js; .spw/language/operator-namespace-alignment.spw) is the creator's call: history, dialect, or canon.`
+  lens = `Pick a lens, highlights relevant topics and features (prime-14 through -19), with a lens picker of sigils; the site's lens instrument and the lenses-as-Spw-scripts plan answer the same sketch.`
+  wap = `prime-18 (LIKE I AM WAPBOY) and prime-20 (when a clown receives a pie to the face, WAP) join Wonder About Pi(e).`
+  practice = `1. Practice 2. Operationalize 3. Boon HONK (prime-11 through -15); September 27 folio 17 practice-collaborating-communication.`
+  calendar = `prime-21, April 01 through 30 with a heart and a hash mark each; scrap-01 dated 5/17/22; September 27 front 09 (October 09, Monday).`
+  journey = `prime-05, -08, -10: first an Electrical Engineer, now planning with Claude, GPT, Grok, and Gemini; HTML in 2011 to architecture by 2015; fifteen/sixteen years of dev motion.`
+}
+
+^"imagine"{
+  creator = `2026-09-28: later, some of these go to Grok Imagine; prime the assets to be explorable in a more compelling way.`
+  seat = `Each sidecar carries ^"imagine": status, a motion drawn from the piece, the neighbours it shares cutouts with (after, before, shares), where returns land, and an empty derivatives list.`
+  seed = `Send the master as scanned. Imagine reads a dark ground more predictably than transparency; the clear tier is for the page.`
+  returns = `public/images/renders/imagine/2026-09-28/<slug>-imagine-NN.<ext>. The renders/ path marks them generated (~) by rule, and each sidecar names generator: Grok Imagine and source: the piece id, so every generated picture points back at its scan.`
+  keeps = `Generated motion garbles lettering. The scan stays the reading layer: a page shows Imagine's motion and settles back on the scan, never the reverse, and alt text always describes the scan.`
+  sequence = `The primes in scan order are already a stop-motion of rearrangement. The most compelling first experience is a scrubber across prime-01 to -20: cutouts that stay hold still, cutouts that arrive fade in, a reader can pin one * handle and follow it, and an Imagine clip plays in the gap between two neighbours that share cutouts. The rail's motion between Spw positions is the same problem at page scale.`
+  feel = `The scrubber, its timing, and which clips return are a feel decision: a flagged demo, approved in a browser before anything ships.`
+}
+
+^"held"{
+  words = `Some lettering is personal or frank: prime-04 (my ex got hotter), prime-06 and -09 (what makes new friends feel scared, old friends feel helpless), prime-13 through -16 (crush, soul mate, post-nut clarity; the avoidant attachment playbook). Alt text transcribes it; whether a piece is shown, and where, is the creator's call.`
+  schooling = `prime-07 letters: I attended the University of Illinois at Urbana-Champaign and majored in Learning and Education Studies. The alt text transcribes the piece; no page copy restates it.`
+  placement = `unset — no page shows this set yet. The folio shelf, a prime scrubber, or a single weekly piece are all open.`
+}

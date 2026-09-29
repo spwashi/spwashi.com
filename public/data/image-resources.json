@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-28T23:22:00.557Z",
+  "generatedAt": "2026-09-29T00:50:05.862Z",
   "sourceRoot": "/public/images/",
-  "count": 1468,
+  "count": 1689,
   "concepts": [
     "about",
     "algorithm",
@@ -52,6 +52,50 @@
       "role": "thumbnail",
       "concepts": [],
       "swapHint": "Use /public/images/apple-touch-icon.png when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "collectible-gothic-letters-dark-sun",
+      "title": "Collectible Gothic Letters Dark Sun",
+      "path": "/public/images/assets/collectibles/collectible-gothic-letters-dark-sun-display.avif",
+      "directory": "public/images/assets/collectibles",
+      "format": "avif",
+      "bytes": 35234,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/collectibles/collectible-gothic-letters-dark-sun-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "collectible-gothic-letters-dark-sun",
+      "title": "Collectible Gothic Letters Dark Sun",
+      "path": "/public/images/assets/collectibles/collectible-gothic-letters-dark-sun-display.webp",
+      "directory": "public/images/assets/collectibles",
+      "format": "webp",
+      "bytes": 39298,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/collectibles/collectible-gothic-letters-dark-sun-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "collectible-gothic-letters-dark-sun",
+      "title": "Collectible Gothic Letters Dark Sun",
+      "path": "/public/images/assets/collectibles/collectible-gothic-letters-dark-sun-thumb.avif",
+      "directory": "public/images/assets/collectibles",
+      "format": "avif",
+      "bytes": 7265,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/collectibles/collectible-gothic-letters-dark-sun-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "collectible-gothic-letters-dark-sun",
+      "title": "Collectible Gothic Letters Dark Sun",
+      "path": "/public/images/assets/collectibles/collectible-gothic-letters-dark-sun-thumb.webp",
+      "directory": "public/images/assets/collectibles",
+      "format": "webp",
+      "bytes": 10118,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/collectibles/collectible-gothic-letters-dark-sun-thumb.webp when a thumbnail visual needs a stable tracked asset."
     },
     {
       "id": "compression-crystals",
@@ -7880,6 +7924,1728 @@
       "swapHint": "Use /public/images/assets/panels/panel-white-blot-red-halo-thumb.webp when a thumbnail visual needs a stable tracked asset."
     },
     {
+      "id": "prime-april-thirty-hearts",
+      "title": "Prime April Thirty Hearts",
+      "path": "/public/images/assets/primes/prime-april-thirty-hearts-display.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 18239,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-april-thirty-hearts-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-april-thirty-hearts",
+      "title": "Prime April Thirty Hearts",
+      "path": "/public/images/assets/primes/prime-april-thirty-hearts-display.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 20040,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-april-thirty-hearts-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-april-thirty-hearts",
+      "title": "Prime April Thirty Hearts",
+      "path": "/public/images/assets/primes/prime-april-thirty-hearts-hero.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 110275,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-april-thirty-hearts-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-april-thirty-hearts",
+      "title": "Prime April Thirty Hearts",
+      "path": "/public/images/assets/primes/prime-april-thirty-hearts-hero.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 59518,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-april-thirty-hearts-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-april-thirty-hearts",
+      "title": "Prime April Thirty Hearts",
+      "path": "/public/images/assets/primes/prime-april-thirty-hearts-thumb.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 3532,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-april-thirty-hearts-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-april-thirty-hearts",
+      "title": "Prime April Thirty Hearts",
+      "path": "/public/images/assets/primes/prime-april-thirty-hearts-thumb.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 4990,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-april-thirty-hearts-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-artist-software-engineer-languages",
+      "title": "Prime Artist Software Engineer Languages",
+      "path": "/public/images/assets/primes/prime-artist-software-engineer-languages-display.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 43108,
+      "role": "display",
+      "concepts": [
+        "software"
+      ],
+      "swapHint": "Use /public/images/assets/primes/prime-artist-software-engineer-languages-display.avif when a software visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-artist-software-engineer-languages",
+      "title": "Prime Artist Software Engineer Languages",
+      "path": "/public/images/assets/primes/prime-artist-software-engineer-languages-display.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 36032,
+      "role": "display",
+      "concepts": [
+        "software"
+      ],
+      "swapHint": "Use /public/images/assets/primes/prime-artist-software-engineer-languages-display.webp when a software visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-artist-software-engineer-languages",
+      "title": "Prime Artist Software Engineer Languages",
+      "path": "/public/images/assets/primes/prime-artist-software-engineer-languages-hero.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 119209,
+      "role": "hero",
+      "concepts": [
+        "software"
+      ],
+      "swapHint": "Use /public/images/assets/primes/prime-artist-software-engineer-languages-hero.avif when a software visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-artist-software-engineer-languages",
+      "title": "Prime Artist Software Engineer Languages",
+      "path": "/public/images/assets/primes/prime-artist-software-engineer-languages-hero.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 90818,
+      "role": "hero",
+      "concepts": [
+        "software"
+      ],
+      "swapHint": "Use /public/images/assets/primes/prime-artist-software-engineer-languages-hero.webp when a software visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-artist-software-engineer-languages",
+      "title": "Prime Artist Software Engineer Languages",
+      "path": "/public/images/assets/primes/prime-artist-software-engineer-languages-thumb.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 13547,
+      "role": "thumbnail",
+      "concepts": [
+        "software"
+      ],
+      "swapHint": "Use /public/images/assets/primes/prime-artist-software-engineer-languages-thumb.avif when a software visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-artist-software-engineer-languages",
+      "title": "Prime Artist Software Engineer Languages",
+      "path": "/public/images/assets/primes/prime-artist-software-engineer-languages-thumb.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 10444,
+      "role": "thumbnail",
+      "concepts": [
+        "software"
+      ],
+      "swapHint": "Use /public/images/assets/primes/prime-artist-software-engineer-languages-thumb.webp when a software visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-boon-pi-bane-bone-board",
+      "title": "Prime Boon Pi Bane Bone Board",
+      "path": "/public/images/assets/primes/prime-boon-pi-bane-bone-board-display.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 40675,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-boon-pi-bane-bone-board-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-boon-pi-bane-bone-board",
+      "title": "Prime Boon Pi Bane Bone Board",
+      "path": "/public/images/assets/primes/prime-boon-pi-bane-bone-board-display.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 34356,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-boon-pi-bane-bone-board-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-boon-pi-bane-bone-board",
+      "title": "Prime Boon Pi Bane Bone Board",
+      "path": "/public/images/assets/primes/prime-boon-pi-bane-bone-board-hero.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 114967,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-boon-pi-bane-bone-board-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-boon-pi-bane-bone-board",
+      "title": "Prime Boon Pi Bane Bone Board",
+      "path": "/public/images/assets/primes/prime-boon-pi-bane-bone-board-hero.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 96740,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-boon-pi-bane-bone-board-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-boon-pi-bane-bone-board",
+      "title": "Prime Boon Pi Bane Bone Board",
+      "path": "/public/images/assets/primes/prime-boon-pi-bane-bone-board-thumb.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 9685,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-boon-pi-bane-bone-board-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-boon-pi-bane-bone-board",
+      "title": "Prime Boon Pi Bane Bone Board",
+      "path": "/public/images/assets/primes/prime-boon-pi-bane-bone-board-thumb.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 8692,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-boon-pi-bane-bone-board-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-cant-not-say-the-thing",
+      "title": "Prime Cant Not Say The Thing",
+      "path": "/public/images/assets/primes/prime-cant-not-say-the-thing-display.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 55362,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-cant-not-say-the-thing-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-cant-not-say-the-thing",
+      "title": "Prime Cant Not Say The Thing",
+      "path": "/public/images/assets/primes/prime-cant-not-say-the-thing-display.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 45682,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-cant-not-say-the-thing-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-cant-not-say-the-thing",
+      "title": "Prime Cant Not Say The Thing",
+      "path": "/public/images/assets/primes/prime-cant-not-say-the-thing-hero.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 120954,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-cant-not-say-the-thing-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-cant-not-say-the-thing",
+      "title": "Prime Cant Not Say The Thing",
+      "path": "/public/images/assets/primes/prime-cant-not-say-the-thing-hero.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 107126,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-cant-not-say-the-thing-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-cant-not-say-the-thing",
+      "title": "Prime Cant Not Say The Thing",
+      "path": "/public/images/assets/primes/prime-cant-not-say-the-thing-thumb.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 19145,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-cant-not-say-the-thing-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-cant-not-say-the-thing",
+      "title": "Prime Cant Not Say The Thing",
+      "path": "/public/images/assets/primes/prime-cant-not-say-the-thing-thumb.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 14332,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-cant-not-say-the-thing-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-code-journey-2011-2015",
+      "title": "Prime Code Journey 2011 2015",
+      "path": "/public/images/assets/primes/prime-code-journey-2011-2015-display.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 50704,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-code-journey-2011-2015-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-code-journey-2011-2015",
+      "title": "Prime Code Journey 2011 2015",
+      "path": "/public/images/assets/primes/prime-code-journey-2011-2015-display.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 40072,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-code-journey-2011-2015-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-code-journey-2011-2015",
+      "title": "Prime Code Journey 2011 2015",
+      "path": "/public/images/assets/primes/prime-code-journey-2011-2015-hero.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 119223,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-code-journey-2011-2015-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-code-journey-2011-2015",
+      "title": "Prime Code Journey 2011 2015",
+      "path": "/public/images/assets/primes/prime-code-journey-2011-2015-hero.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 100748,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-code-journey-2011-2015-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-code-journey-2011-2015",
+      "title": "Prime Code Journey 2011 2015",
+      "path": "/public/images/assets/primes/prime-code-journey-2011-2015-thumb.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 17427,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-code-journey-2011-2015-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-code-journey-2011-2015",
+      "title": "Prime Code Journey 2011 2015",
+      "path": "/public/images/assets/primes/prime-code-journey-2011-2015-thumb.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 12128,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-code-journey-2011-2015-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-do-something-every-day",
+      "title": "Prime Do Something Every Day",
+      "path": "/public/images/assets/primes/prime-do-something-every-day-display.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 48765,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-do-something-every-day-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-do-something-every-day",
+      "title": "Prime Do Something Every Day",
+      "path": "/public/images/assets/primes/prime-do-something-every-day-display.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 40002,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-do-something-every-day-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-do-something-every-day",
+      "title": "Prime Do Something Every Day",
+      "path": "/public/images/assets/primes/prime-do-something-every-day-hero.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 115606,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-do-something-every-day-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-do-something-every-day",
+      "title": "Prime Do Something Every Day",
+      "path": "/public/images/assets/primes/prime-do-something-every-day-hero.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 96832,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-do-something-every-day-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-do-something-every-day",
+      "title": "Prime Do Something Every Day",
+      "path": "/public/images/assets/primes/prime-do-something-every-day-thumb.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 16233,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-do-something-every-day-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-do-something-every-day",
+      "title": "Prime Do Something Every Day",
+      "path": "/public/images/assets/primes/prime-do-something-every-day-thumb.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 12184,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-do-something-every-day-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-eighty-laminated-collages",
+      "title": "Prime Eighty Laminated Collages",
+      "path": "/public/images/assets/primes/prime-eighty-laminated-collages-display.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 42143,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-eighty-laminated-collages-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-eighty-laminated-collages",
+      "title": "Prime Eighty Laminated Collages",
+      "path": "/public/images/assets/primes/prime-eighty-laminated-collages-display.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 34874,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-eighty-laminated-collages-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-eighty-laminated-collages",
+      "title": "Prime Eighty Laminated Collages",
+      "path": "/public/images/assets/primes/prime-eighty-laminated-collages-hero.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 113137,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-eighty-laminated-collages-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-eighty-laminated-collages",
+      "title": "Prime Eighty Laminated Collages",
+      "path": "/public/images/assets/primes/prime-eighty-laminated-collages-hero.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 85098,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-eighty-laminated-collages-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-eighty-laminated-collages",
+      "title": "Prime Eighty Laminated Collages",
+      "path": "/public/images/assets/primes/prime-eighty-laminated-collages-thumb.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 13866,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-eighty-laminated-collages-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-eighty-laminated-collages",
+      "title": "Prime Eighty Laminated Collages",
+      "path": "/public/images/assets/primes/prime-eighty-laminated-collages-thumb.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 10590,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-eighty-laminated-collages-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-episode-card-blurting-boonhonk",
+      "title": "Prime Episode Card Blurting Boonhonk",
+      "path": "/public/images/assets/primes/prime-episode-card-blurting-boonhonk-display.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 50264,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-episode-card-blurting-boonhonk-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-episode-card-blurting-boonhonk",
+      "title": "Prime Episode Card Blurting Boonhonk",
+      "path": "/public/images/assets/primes/prime-episode-card-blurting-boonhonk-display.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 39244,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-episode-card-blurting-boonhonk-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-episode-card-blurting-boonhonk",
+      "title": "Prime Episode Card Blurting Boonhonk",
+      "path": "/public/images/assets/primes/prime-episode-card-blurting-boonhonk-hero.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 117009,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-episode-card-blurting-boonhonk-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-episode-card-blurting-boonhonk",
+      "title": "Prime Episode Card Blurting Boonhonk",
+      "path": "/public/images/assets/primes/prime-episode-card-blurting-boonhonk-hero.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 96126,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-episode-card-blurting-boonhonk-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-episode-card-blurting-boonhonk",
+      "title": "Prime Episode Card Blurting Boonhonk",
+      "path": "/public/images/assets/primes/prime-episode-card-blurting-boonhonk-thumb.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 17843,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-episode-card-blurting-boonhonk-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-episode-card-blurting-boonhonk",
+      "title": "Prime Episode Card Blurting Boonhonk",
+      "path": "/public/images/assets/primes/prime-episode-card-blurting-boonhonk-thumb.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 12424,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-episode-card-blurting-boonhonk-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-first-plan-now-plan-with",
+      "title": "Prime First Plan Now Plan With",
+      "path": "/public/images/assets/primes/prime-first-plan-now-plan-with-display.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 29919,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-first-plan-now-plan-with-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-first-plan-now-plan-with",
+      "title": "Prime First Plan Now Plan With",
+      "path": "/public/images/assets/primes/prime-first-plan-now-plan-with-display.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 32058,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-first-plan-now-plan-with-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-first-plan-now-plan-with",
+      "title": "Prime First Plan Now Plan With",
+      "path": "/public/images/assets/primes/prime-first-plan-now-plan-with-hero.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 106096,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-first-plan-now-plan-with-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-first-plan-now-plan-with",
+      "title": "Prime First Plan Now Plan With",
+      "path": "/public/images/assets/primes/prime-first-plan-now-plan-with-hero.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 81060,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-first-plan-now-plan-with-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-first-plan-now-plan-with",
+      "title": "Prime First Plan Now Plan With",
+      "path": "/public/images/assets/primes/prime-first-plan-now-plan-with-thumb.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 6610,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-first-plan-now-plan-with-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-first-plan-now-plan-with",
+      "title": "Prime First Plan Now Plan With",
+      "path": "/public/images/assets/primes/prime-first-plan-now-plan-with-thumb.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 8560,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-first-plan-now-plan-with-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-intergenerational-media-literacy",
+      "title": "Prime Intergenerational Media Literacy",
+      "path": "/public/images/assets/primes/prime-intergenerational-media-literacy-display.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 54080,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-intergenerational-media-literacy-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-intergenerational-media-literacy",
+      "title": "Prime Intergenerational Media Literacy",
+      "path": "/public/images/assets/primes/prime-intergenerational-media-literacy-display.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 43222,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-intergenerational-media-literacy-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-intergenerational-media-literacy",
+      "title": "Prime Intergenerational Media Literacy",
+      "path": "/public/images/assets/primes/prime-intergenerational-media-literacy-hero.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 114468,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-intergenerational-media-literacy-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-intergenerational-media-literacy",
+      "title": "Prime Intergenerational Media Literacy",
+      "path": "/public/images/assets/primes/prime-intergenerational-media-literacy-hero.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 103490,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-intergenerational-media-literacy-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-intergenerational-media-literacy",
+      "title": "Prime Intergenerational Media Literacy",
+      "path": "/public/images/assets/primes/prime-intergenerational-media-literacy-thumb.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 18003,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-intergenerational-media-literacy-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-intergenerational-media-literacy",
+      "title": "Prime Intergenerational Media Literacy",
+      "path": "/public/images/assets/primes/prime-intergenerational-media-literacy-thumb.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 12870,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-intergenerational-media-literacy-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-jquery-bootstrap-react-typescript",
+      "title": "Prime Jquery Bootstrap React Typescript",
+      "path": "/public/images/assets/primes/prime-jquery-bootstrap-react-typescript-display.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 43543,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-jquery-bootstrap-react-typescript-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-jquery-bootstrap-react-typescript",
+      "title": "Prime Jquery Bootstrap React Typescript",
+      "path": "/public/images/assets/primes/prime-jquery-bootstrap-react-typescript-display.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 38348,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-jquery-bootstrap-react-typescript-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-jquery-bootstrap-react-typescript",
+      "title": "Prime Jquery Bootstrap React Typescript",
+      "path": "/public/images/assets/primes/prime-jquery-bootstrap-react-typescript-hero.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 118583,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-jquery-bootstrap-react-typescript-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-jquery-bootstrap-react-typescript",
+      "title": "Prime Jquery Bootstrap React Typescript",
+      "path": "/public/images/assets/primes/prime-jquery-bootstrap-react-typescript-hero.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 88332,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-jquery-bootstrap-react-typescript-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-jquery-bootstrap-react-typescript",
+      "title": "Prime Jquery Bootstrap React Typescript",
+      "path": "/public/images/assets/primes/prime-jquery-bootstrap-react-typescript-thumb.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 14621,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-jquery-bootstrap-react-typescript-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-jquery-bootstrap-react-typescript",
+      "title": "Prime Jquery Bootstrap React Typescript",
+      "path": "/public/images/assets/primes/prime-jquery-bootstrap-react-typescript-thumb.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 12008,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-jquery-bootstrap-react-typescript-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-like-i-am-wapboy",
+      "title": "Prime Like I Am Wapboy",
+      "path": "/public/images/assets/primes/prime-like-i-am-wapboy-display.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 31121,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-like-i-am-wapboy-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-like-i-am-wapboy",
+      "title": "Prime Like I Am Wapboy",
+      "path": "/public/images/assets/primes/prime-like-i-am-wapboy-display.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 27636,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-like-i-am-wapboy-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-like-i-am-wapboy",
+      "title": "Prime Like I Am Wapboy",
+      "path": "/public/images/assets/primes/prime-like-i-am-wapboy-hero.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 99970,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-like-i-am-wapboy-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-like-i-am-wapboy",
+      "title": "Prime Like I Am Wapboy",
+      "path": "/public/images/assets/primes/prime-like-i-am-wapboy-hero.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 67362,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-like-i-am-wapboy-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-like-i-am-wapboy",
+      "title": "Prime Like I Am Wapboy",
+      "path": "/public/images/assets/primes/prime-like-i-am-wapboy-thumb.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 9041,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-like-i-am-wapboy-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-like-i-am-wapboy",
+      "title": "Prime Like I Am Wapboy",
+      "path": "/public/images/assets/primes/prime-like-i-am-wapboy-thumb.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 8034,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-like-i-am-wapboy-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-moving-on-native-evolution",
+      "title": "Prime Moving On Native Evolution",
+      "path": "/public/images/assets/primes/prime-moving-on-native-evolution-display.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 52719,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-moving-on-native-evolution-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-moving-on-native-evolution",
+      "title": "Prime Moving On Native Evolution",
+      "path": "/public/images/assets/primes/prime-moving-on-native-evolution-display.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 43930,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-moving-on-native-evolution-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-moving-on-native-evolution",
+      "title": "Prime Moving On Native Evolution",
+      "path": "/public/images/assets/primes/prime-moving-on-native-evolution-hero.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 118524,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-moving-on-native-evolution-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-moving-on-native-evolution",
+      "title": "Prime Moving On Native Evolution",
+      "path": "/public/images/assets/primes/prime-moving-on-native-evolution-hero.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 103840,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-moving-on-native-evolution-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-moving-on-native-evolution",
+      "title": "Prime Moving On Native Evolution",
+      "path": "/public/images/assets/primes/prime-moving-on-native-evolution-thumb.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 17043,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-moving-on-native-evolution-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-moving-on-native-evolution",
+      "title": "Prime Moving On Native Evolution",
+      "path": "/public/images/assets/primes/prime-moving-on-native-evolution-thumb.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 13074,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-moving-on-native-evolution-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-new-friends-old-friends-lore-land",
+      "title": "Prime New Friends Old Friends Lore Land",
+      "path": "/public/images/assets/primes/prime-new-friends-old-friends-lore-land-display.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 42321,
+      "role": "display",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/primes/prime-new-friends-old-friends-lore-land-display.avif when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-new-friends-old-friends-lore-land",
+      "title": "Prime New Friends Old Friends Lore Land",
+      "path": "/public/images/assets/primes/prime-new-friends-old-friends-lore-land-display.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 36102,
+      "role": "display",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/primes/prime-new-friends-old-friends-lore-land-display.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-new-friends-old-friends-lore-land",
+      "title": "Prime New Friends Old Friends Lore Land",
+      "path": "/public/images/assets/primes/prime-new-friends-old-friends-lore-land-hero.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 116040,
+      "role": "hero",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/primes/prime-new-friends-old-friends-lore-land-hero.avif when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-new-friends-old-friends-lore-land",
+      "title": "Prime New Friends Old Friends Lore Land",
+      "path": "/public/images/assets/primes/prime-new-friends-old-friends-lore-land-hero.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 88110,
+      "role": "hero",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/primes/prime-new-friends-old-friends-lore-land-hero.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-new-friends-old-friends-lore-land",
+      "title": "Prime New Friends Old Friends Lore Land",
+      "path": "/public/images/assets/primes/prime-new-friends-old-friends-lore-land-thumb.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 13855,
+      "role": "thumbnail",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/primes/prime-new-friends-old-friends-lore-land-thumb.avif when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-new-friends-old-friends-lore-land",
+      "title": "Prime New Friends Old Friends Lore Land",
+      "path": "/public/images/assets/primes/prime-new-friends-old-friends-lore-land-thumb.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 10752,
+      "role": "thumbnail",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/primes/prime-new-friends-old-friends-lore-land-thumb.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-operator-table-making-stuff-fun",
+      "title": "Prime Operator Table Making Stuff Fun",
+      "path": "/public/images/assets/primes/prime-operator-table-making-stuff-fun-display.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 36806,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-operator-table-making-stuff-fun-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-operator-table-making-stuff-fun",
+      "title": "Prime Operator Table Making Stuff Fun",
+      "path": "/public/images/assets/primes/prime-operator-table-making-stuff-fun-display.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 29832,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-operator-table-making-stuff-fun-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-operator-table-making-stuff-fun",
+      "title": "Prime Operator Table Making Stuff Fun",
+      "path": "/public/images/assets/primes/prime-operator-table-making-stuff-fun-hero.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 98314,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-operator-table-making-stuff-fun-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-operator-table-making-stuff-fun",
+      "title": "Prime Operator Table Making Stuff Fun",
+      "path": "/public/images/assets/primes/prime-operator-table-making-stuff-fun-hero.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 70680,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-operator-table-making-stuff-fun-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-operator-table-making-stuff-fun",
+      "title": "Prime Operator Table Making Stuff Fun",
+      "path": "/public/images/assets/primes/prime-operator-table-making-stuff-fun-thumb.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 12449,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-operator-table-making-stuff-fun-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-operator-table-making-stuff-fun",
+      "title": "Prime Operator Table Making Stuff Fun",
+      "path": "/public/images/assets/primes/prime-operator-table-making-stuff-fun-thumb.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 8928,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-operator-table-making-stuff-fun-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-pick-a-lens-kraft",
+      "title": "Prime Pick A Lens Kraft",
+      "path": "/public/images/assets/primes/prime-pick-a-lens-kraft-display.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 19400,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-pick-a-lens-kraft-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-pick-a-lens-kraft",
+      "title": "Prime Pick A Lens Kraft",
+      "path": "/public/images/assets/primes/prime-pick-a-lens-kraft-display.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 16142,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-pick-a-lens-kraft-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-pick-a-lens-kraft",
+      "title": "Prime Pick A Lens Kraft",
+      "path": "/public/images/assets/primes/prime-pick-a-lens-kraft-hero.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 54648,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-pick-a-lens-kraft-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-pick-a-lens-kraft",
+      "title": "Prime Pick A Lens Kraft",
+      "path": "/public/images/assets/primes/prime-pick-a-lens-kraft-hero.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 38962,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-pick-a-lens-kraft-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-pick-a-lens-kraft",
+      "title": "Prime Pick A Lens Kraft",
+      "path": "/public/images/assets/primes/prime-pick-a-lens-kraft-thumb.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 6894,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-pick-a-lens-kraft-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-pick-a-lens-kraft",
+      "title": "Prime Pick A Lens Kraft",
+      "path": "/public/images/assets/primes/prime-pick-a-lens-kraft-thumb.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 4920,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-pick-a-lens-kraft-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-pick-a-pinball-clown-downtown",
+      "title": "Prime Pick A Pinball Clown Downtown",
+      "path": "/public/images/assets/primes/prime-pick-a-pinball-clown-downtown-display.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 40800,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-pick-a-pinball-clown-downtown-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-pick-a-pinball-clown-downtown",
+      "title": "Prime Pick A Pinball Clown Downtown",
+      "path": "/public/images/assets/primes/prime-pick-a-pinball-clown-downtown-display.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 37596,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-pick-a-pinball-clown-downtown-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-pick-a-pinball-clown-downtown",
+      "title": "Prime Pick A Pinball Clown Downtown",
+      "path": "/public/images/assets/primes/prime-pick-a-pinball-clown-downtown-hero.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 115149,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-pick-a-pinball-clown-downtown-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-pick-a-pinball-clown-downtown",
+      "title": "Prime Pick A Pinball Clown Downtown",
+      "path": "/public/images/assets/primes/prime-pick-a-pinball-clown-downtown-hero.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 105444,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-pick-a-pinball-clown-downtown-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-pick-a-pinball-clown-downtown",
+      "title": "Prime Pick A Pinball Clown Downtown",
+      "path": "/public/images/assets/primes/prime-pick-a-pinball-clown-downtown-thumb.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 9861,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-pick-a-pinball-clown-downtown-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-pick-a-pinball-clown-downtown",
+      "title": "Prime Pick A Pinball Clown Downtown",
+      "path": "/public/images/assets/primes/prime-pick-a-pinball-clown-downtown-thumb.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 9642,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-pick-a-pinball-clown-downtown-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-radar-introspective-professional",
+      "title": "Prime Radar Introspective Professional",
+      "path": "/public/images/assets/primes/prime-radar-introspective-professional-display.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 38202,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-radar-introspective-professional-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-radar-introspective-professional",
+      "title": "Prime Radar Introspective Professional",
+      "path": "/public/images/assets/primes/prime-radar-introspective-professional-display.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 31800,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-radar-introspective-professional-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-radar-introspective-professional",
+      "title": "Prime Radar Introspective Professional",
+      "path": "/public/images/assets/primes/prime-radar-introspective-professional-hero.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 103649,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-radar-introspective-professional-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-radar-introspective-professional",
+      "title": "Prime Radar Introspective Professional",
+      "path": "/public/images/assets/primes/prime-radar-introspective-professional-hero.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 74714,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-radar-introspective-professional-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-radar-introspective-professional",
+      "title": "Prime Radar Introspective Professional",
+      "path": "/public/images/assets/primes/prime-radar-introspective-professional-thumb.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 13142,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-radar-introspective-professional-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-radar-introspective-professional",
+      "title": "Prime Radar Introspective Professional",
+      "path": "/public/images/assets/primes/prime-radar-introspective-professional-thumb.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 9768,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-radar-introspective-professional-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-read-some-square-face",
+      "title": "Prime Read Some Square Face",
+      "path": "/public/images/assets/primes/prime-read-some-square-face-display.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 27273,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-read-some-square-face-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-read-some-square-face",
+      "title": "Prime Read Some Square Face",
+      "path": "/public/images/assets/primes/prime-read-some-square-face-display.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 24794,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-read-some-square-face-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-read-some-square-face",
+      "title": "Prime Read Some Square Face",
+      "path": "/public/images/assets/primes/prime-read-some-square-face-hero.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 78239,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-read-some-square-face-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-read-some-square-face",
+      "title": "Prime Read Some Square Face",
+      "path": "/public/images/assets/primes/prime-read-some-square-face-hero.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 56782,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-read-some-square-face-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-read-some-square-face",
+      "title": "Prime Read Some Square Face",
+      "path": "/public/images/assets/primes/prime-read-some-square-face-thumb.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 9394,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-read-some-square-face-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-read-some-square-face",
+      "title": "Prime Read Some Square Face",
+      "path": "/public/images/assets/primes/prime-read-some-square-face-thumb.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 8048,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-read-some-square-face-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-read-some-teal-squares",
+      "title": "Prime Read Some Teal Squares",
+      "path": "/public/images/assets/primes/prime-read-some-teal-squares-display.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 32060,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-read-some-teal-squares-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-read-some-teal-squares",
+      "title": "Prime Read Some Teal Squares",
+      "path": "/public/images/assets/primes/prime-read-some-teal-squares-display.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 25556,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-read-some-teal-squares-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-read-some-teal-squares",
+      "title": "Prime Read Some Teal Squares",
+      "path": "/public/images/assets/primes/prime-read-some-teal-squares-hero.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 89369,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-read-some-teal-squares-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-read-some-teal-squares",
+      "title": "Prime Read Some Teal Squares",
+      "path": "/public/images/assets/primes/prime-read-some-teal-squares-hero.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 59276,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-read-some-teal-squares-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-read-some-teal-squares",
+      "title": "Prime Read Some Teal Squares",
+      "path": "/public/images/assets/primes/prime-read-some-teal-squares-thumb.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 11427,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-read-some-teal-squares-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-read-some-teal-squares",
+      "title": "Prime Read Some Teal Squares",
+      "path": "/public/images/assets/primes/prime-read-some-teal-squares-thumb.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 8138,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-read-some-teal-squares-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-read-some-vocab-calculus",
+      "title": "Prime Read Some Vocab Calculus",
+      "path": "/public/images/assets/primes/prime-read-some-vocab-calculus-display.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 24537,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-read-some-vocab-calculus-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-read-some-vocab-calculus",
+      "title": "Prime Read Some Vocab Calculus",
+      "path": "/public/images/assets/primes/prime-read-some-vocab-calculus-display.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 21284,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-read-some-vocab-calculus-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-read-some-vocab-calculus",
+      "title": "Prime Read Some Vocab Calculus",
+      "path": "/public/images/assets/primes/prime-read-some-vocab-calculus-hero.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 64148,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-read-some-vocab-calculus-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-read-some-vocab-calculus",
+      "title": "Prime Read Some Vocab Calculus",
+      "path": "/public/images/assets/primes/prime-read-some-vocab-calculus-hero.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 48504,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-read-some-vocab-calculus-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-read-some-vocab-calculus",
+      "title": "Prime Read Some Vocab Calculus",
+      "path": "/public/images/assets/primes/prime-read-some-vocab-calculus-thumb.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 8756,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-read-some-vocab-calculus-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-read-some-vocab-calculus",
+      "title": "Prime Read Some Vocab Calculus",
+      "path": "/public/images/assets/primes/prime-read-some-vocab-calculus-thumb.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 7178,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-read-some-vocab-calculus-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-rpg-wednesday-factshift-wireframes",
+      "title": "Prime Rpg Wednesday Factshift Wireframes",
+      "path": "/public/images/assets/primes/prime-rpg-wednesday-factshift-wireframes-display.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 31176,
+      "role": "display",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/primes/prime-rpg-wednesday-factshift-wireframes-display.avif when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-rpg-wednesday-factshift-wireframes",
+      "title": "Prime Rpg Wednesday Factshift Wireframes",
+      "path": "/public/images/assets/primes/prime-rpg-wednesday-factshift-wireframes-display.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 25880,
+      "role": "display",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/primes/prime-rpg-wednesday-factshift-wireframes-display.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-rpg-wednesday-factshift-wireframes",
+      "title": "Prime Rpg Wednesday Factshift Wireframes",
+      "path": "/public/images/assets/primes/prime-rpg-wednesday-factshift-wireframes-hero.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 81118,
+      "role": "hero",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/primes/prime-rpg-wednesday-factshift-wireframes-hero.avif when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-rpg-wednesday-factshift-wireframes",
+      "title": "Prime Rpg Wednesday Factshift Wireframes",
+      "path": "/public/images/assets/primes/prime-rpg-wednesday-factshift-wireframes-hero.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 62326,
+      "role": "hero",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/primes/prime-rpg-wednesday-factshift-wireframes-hero.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-rpg-wednesday-factshift-wireframes",
+      "title": "Prime Rpg Wednesday Factshift Wireframes",
+      "path": "/public/images/assets/primes/prime-rpg-wednesday-factshift-wireframes-thumb.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 10907,
+      "role": "thumbnail",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/primes/prime-rpg-wednesday-factshift-wireframes-thumb.avif when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-rpg-wednesday-factshift-wireframes",
+      "title": "Prime Rpg Wednesday Factshift Wireframes",
+      "path": "/public/images/assets/primes/prime-rpg-wednesday-factshift-wireframes-thumb.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 8182,
+      "role": "thumbnail",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/primes/prime-rpg-wednesday-factshift-wireframes-thumb.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-thirteen-beats-silver-glyphs",
+      "title": "Prime Thirteen Beats Silver Glyphs",
+      "path": "/public/images/assets/primes/prime-thirteen-beats-silver-glyphs-display.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 26378,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-thirteen-beats-silver-glyphs-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-thirteen-beats-silver-glyphs",
+      "title": "Prime Thirteen Beats Silver Glyphs",
+      "path": "/public/images/assets/primes/prime-thirteen-beats-silver-glyphs-display.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 28470,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-thirteen-beats-silver-glyphs-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-thirteen-beats-silver-glyphs",
+      "title": "Prime Thirteen Beats Silver Glyphs",
+      "path": "/public/images/assets/primes/prime-thirteen-beats-silver-glyphs-hero.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 103730,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-thirteen-beats-silver-glyphs-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-thirteen-beats-silver-glyphs",
+      "title": "Prime Thirteen Beats Silver Glyphs",
+      "path": "/public/images/assets/primes/prime-thirteen-beats-silver-glyphs-hero.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 71198,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-thirteen-beats-silver-glyphs-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-thirteen-beats-silver-glyphs",
+      "title": "Prime Thirteen Beats Silver Glyphs",
+      "path": "/public/images/assets/primes/prime-thirteen-beats-silver-glyphs-thumb.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 5803,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-thirteen-beats-silver-glyphs-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-thirteen-beats-silver-glyphs",
+      "title": "Prime Thirteen Beats Silver Glyphs",
+      "path": "/public/images/assets/primes/prime-thirteen-beats-silver-glyphs-thumb.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 7300,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-thirteen-beats-silver-glyphs-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-travel-avoidant-playbook-faces",
+      "title": "Prime Travel Avoidant Playbook Faces",
+      "path": "/public/images/assets/primes/prime-travel-avoidant-playbook-faces-display.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 48976,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-travel-avoidant-playbook-faces-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-travel-avoidant-playbook-faces",
+      "title": "Prime Travel Avoidant Playbook Faces",
+      "path": "/public/images/assets/primes/prime-travel-avoidant-playbook-faces-display.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 38870,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-travel-avoidant-playbook-faces-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-travel-avoidant-playbook-faces",
+      "title": "Prime Travel Avoidant Playbook Faces",
+      "path": "/public/images/assets/primes/prime-travel-avoidant-playbook-faces-hero.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 120975,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-travel-avoidant-playbook-faces-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-travel-avoidant-playbook-faces",
+      "title": "Prime Travel Avoidant Playbook Faces",
+      "path": "/public/images/assets/primes/prime-travel-avoidant-playbook-faces-hero.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 91484,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-travel-avoidant-playbook-faces-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-travel-avoidant-playbook-faces",
+      "title": "Prime Travel Avoidant Playbook Faces",
+      "path": "/public/images/assets/primes/prime-travel-avoidant-playbook-faces-thumb.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 16849,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-travel-avoidant-playbook-faces-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-travel-avoidant-playbook-faces",
+      "title": "Prime Travel Avoidant Playbook Faces",
+      "path": "/public/images/assets/primes/prime-travel-avoidant-playbook-faces-thumb.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 12008,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/primes/prime-travel-avoidant-playbook-faces-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-year-one-two-three-logo-play",
+      "title": "Prime Year One Two Three Logo Play",
+      "path": "/public/images/assets/primes/prime-year-one-two-three-logo-play-display.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 35822,
+      "role": "display",
+      "concepts": [
+        "play"
+      ],
+      "swapHint": "Use /public/images/assets/primes/prime-year-one-two-three-logo-play-display.avif when a play visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-year-one-two-three-logo-play",
+      "title": "Prime Year One Two Three Logo Play",
+      "path": "/public/images/assets/primes/prime-year-one-two-three-logo-play-display.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 29652,
+      "role": "display",
+      "concepts": [
+        "play"
+      ],
+      "swapHint": "Use /public/images/assets/primes/prime-year-one-two-three-logo-play-display.webp when a play visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-year-one-two-three-logo-play",
+      "title": "Prime Year One Two Three Logo Play",
+      "path": "/public/images/assets/primes/prime-year-one-two-three-logo-play-hero.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 97065,
+      "role": "hero",
+      "concepts": [
+        "play"
+      ],
+      "swapHint": "Use /public/images/assets/primes/prime-year-one-two-three-logo-play-hero.avif when a play visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-year-one-two-three-logo-play",
+      "title": "Prime Year One Two Three Logo Play",
+      "path": "/public/images/assets/primes/prime-year-one-two-three-logo-play-hero.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 69508,
+      "role": "hero",
+      "concepts": [
+        "play"
+      ],
+      "swapHint": "Use /public/images/assets/primes/prime-year-one-two-three-logo-play-hero.webp when a play visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-year-one-two-three-logo-play",
+      "title": "Prime Year One Two Three Logo Play",
+      "path": "/public/images/assets/primes/prime-year-one-two-three-logo-play-thumb.avif",
+      "directory": "public/images/assets/primes",
+      "format": "avif",
+      "bytes": 12091,
+      "role": "thumbnail",
+      "concepts": [
+        "play"
+      ],
+      "swapHint": "Use /public/images/assets/primes/prime-year-one-two-three-logo-play-thumb.avif when a play visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-year-one-two-three-logo-play",
+      "title": "Prime Year One Two Three Logo Play",
+      "path": "/public/images/assets/primes/prime-year-one-two-three-logo-play-thumb.webp",
+      "directory": "public/images/assets/primes",
+      "format": "webp",
+      "bytes": 9268,
+      "role": "thumbnail",
+      "concepts": [
+        "play"
+      ],
+      "swapHint": "Use /public/images/assets/primes/prime-year-one-two-three-logo-play-thumb.webp when a play visual needs a stable tracked asset."
+    },
+    {
       "id": "rpg-character-lndr-rockgnome-study",
       "title": "Rpg Character Lndr Rockgnome Study",
       "path": "/public/images/assets/rpg-wednesday/rpg-character-lndr-rockgnome-study-display.avif",
@@ -8385,6 +10151,374 @@
         "architecture"
       ],
       "swapHint": "Use /public/images/assets/scheduler-clockwork.png when a software / algorithm / architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-lattice-towers-pencil",
+      "title": "Scrap Lattice Towers Pencil",
+      "path": "/public/images/assets/scraps/scrap-lattice-towers-pencil-display.avif",
+      "directory": "public/images/assets/scraps",
+      "format": "avif",
+      "bytes": 29277,
+      "role": "display",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture"
+      ],
+      "swapHint": "Use /public/images/assets/scraps/scrap-lattice-towers-pencil-display.avif when a software / algorithm / architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-lattice-towers-pencil",
+      "title": "Scrap Lattice Towers Pencil",
+      "path": "/public/images/assets/scraps/scrap-lattice-towers-pencil-display.webp",
+      "directory": "public/images/assets/scraps",
+      "format": "webp",
+      "bytes": 33506,
+      "role": "display",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture"
+      ],
+      "swapHint": "Use /public/images/assets/scraps/scrap-lattice-towers-pencil-display.webp when a software / algorithm / architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-lattice-towers-pencil",
+      "title": "Scrap Lattice Towers Pencil",
+      "path": "/public/images/assets/scraps/scrap-lattice-towers-pencil-thumb.avif",
+      "directory": "public/images/assets/scraps",
+      "format": "avif",
+      "bytes": 5875,
+      "role": "thumbnail",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture"
+      ],
+      "swapHint": "Use /public/images/assets/scraps/scrap-lattice-towers-pencil-thumb.avif when a software / algorithm / architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-lattice-towers-pencil",
+      "title": "Scrap Lattice Towers Pencil",
+      "path": "/public/images/assets/scraps/scrap-lattice-towers-pencil-thumb.webp",
+      "directory": "public/images/assets/scraps",
+      "format": "webp",
+      "bytes": 9746,
+      "role": "thumbnail",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture"
+      ],
+      "swapHint": "Use /public/images/assets/scraps/scrap-lattice-towers-pencil-thumb.webp when a software / algorithm / architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-line-face-profile",
+      "title": "Scrap Line Face Profile",
+      "path": "/public/images/assets/scraps/scrap-line-face-profile-display.avif",
+      "directory": "public/images/assets/scraps",
+      "format": "avif",
+      "bytes": 7663,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/scraps/scrap-line-face-profile-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-line-face-profile",
+      "title": "Scrap Line Face Profile",
+      "path": "/public/images/assets/scraps/scrap-line-face-profile-display.webp",
+      "directory": "public/images/assets/scraps",
+      "format": "webp",
+      "bytes": 9914,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/scraps/scrap-line-face-profile-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-line-face-profile",
+      "title": "Scrap Line Face Profile",
+      "path": "/public/images/assets/scraps/scrap-line-face-profile-thumb.avif",
+      "directory": "public/images/assets/scraps",
+      "format": "avif",
+      "bytes": 1493,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/scraps/scrap-line-face-profile-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-line-face-profile",
+      "title": "Scrap Line Face Profile",
+      "path": "/public/images/assets/scraps/scrap-line-face-profile-thumb.webp",
+      "directory": "public/images/assets/scraps",
+      "format": "webp",
+      "bytes": 2370,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/scraps/scrap-line-face-profile-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-may-17-22-open-curve",
+      "title": "Scrap May 17 22 Open Curve",
+      "path": "/public/images/assets/scraps/scrap-may-17-22-open-curve-display.avif",
+      "directory": "public/images/assets/scraps",
+      "format": "avif",
+      "bytes": 10976,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/scraps/scrap-may-17-22-open-curve-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-may-17-22-open-curve",
+      "title": "Scrap May 17 22 Open Curve",
+      "path": "/public/images/assets/scraps/scrap-may-17-22-open-curve-display.webp",
+      "directory": "public/images/assets/scraps",
+      "format": "webp",
+      "bytes": 13668,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/scraps/scrap-may-17-22-open-curve-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-may-17-22-open-curve",
+      "title": "Scrap May 17 22 Open Curve",
+      "path": "/public/images/assets/scraps/scrap-may-17-22-open-curve-thumb.avif",
+      "directory": "public/images/assets/scraps",
+      "format": "avif",
+      "bytes": 1665,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/scraps/scrap-may-17-22-open-curve-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-may-17-22-open-curve",
+      "title": "Scrap May 17 22 Open Curve",
+      "path": "/public/images/assets/scraps/scrap-may-17-22-open-curve-thumb.webp",
+      "directory": "public/images/assets/scraps",
+      "format": "webp",
+      "bytes": 2830,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/scraps/scrap-may-17-22-open-curve-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-prodigious-blueberry",
+      "title": "Scrap Prodigious Blueberry",
+      "path": "/public/images/assets/scraps/scrap-prodigious-blueberry-display.avif",
+      "directory": "public/images/assets/scraps",
+      "format": "avif",
+      "bytes": 8512,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/scraps/scrap-prodigious-blueberry-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-prodigious-blueberry",
+      "title": "Scrap Prodigious Blueberry",
+      "path": "/public/images/assets/scraps/scrap-prodigious-blueberry-display.webp",
+      "directory": "public/images/assets/scraps",
+      "format": "webp",
+      "bytes": 9932,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/scraps/scrap-prodigious-blueberry-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-prodigious-blueberry",
+      "title": "Scrap Prodigious Blueberry",
+      "path": "/public/images/assets/scraps/scrap-prodigious-blueberry-thumb.avif",
+      "directory": "public/images/assets/scraps",
+      "format": "avif",
+      "bytes": 1472,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/scraps/scrap-prodigious-blueberry-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-prodigious-blueberry",
+      "title": "Scrap Prodigious Blueberry",
+      "path": "/public/images/assets/scraps/scrap-prodigious-blueberry-thumb.webp",
+      "directory": "public/images/assets/scraps",
+      "format": "webp",
+      "bytes": 2058,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/scraps/scrap-prodigious-blueberry-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-reaching-pencil-grove",
+      "title": "Scrap Reaching Pencil Grove",
+      "path": "/public/images/assets/scraps/scrap-reaching-pencil-grove-display.avif",
+      "directory": "public/images/assets/scraps",
+      "format": "avif",
+      "bytes": 25986,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/scraps/scrap-reaching-pencil-grove-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-reaching-pencil-grove",
+      "title": "Scrap Reaching Pencil Grove",
+      "path": "/public/images/assets/scraps/scrap-reaching-pencil-grove-display.webp",
+      "directory": "public/images/assets/scraps",
+      "format": "webp",
+      "bytes": 29438,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/scraps/scrap-reaching-pencil-grove-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-reaching-pencil-grove",
+      "title": "Scrap Reaching Pencil Grove",
+      "path": "/public/images/assets/scraps/scrap-reaching-pencil-grove-thumb.avif",
+      "directory": "public/images/assets/scraps",
+      "format": "avif",
+      "bytes": 5562,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/scraps/scrap-reaching-pencil-grove-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-reaching-pencil-grove",
+      "title": "Scrap Reaching Pencil Grove",
+      "path": "/public/images/assets/scraps/scrap-reaching-pencil-grove-thumb.webp",
+      "directory": "public/images/assets/scraps",
+      "format": "webp",
+      "bytes": 8990,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/scraps/scrap-reaching-pencil-grove-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-stick-figure-great-circle",
+      "title": "Scrap Stick Figure Great Circle",
+      "path": "/public/images/assets/scraps/scrap-stick-figure-great-circle-display.avif",
+      "directory": "public/images/assets/scraps",
+      "format": "avif",
+      "bytes": 12727,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/scraps/scrap-stick-figure-great-circle-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-stick-figure-great-circle",
+      "title": "Scrap Stick Figure Great Circle",
+      "path": "/public/images/assets/scraps/scrap-stick-figure-great-circle-display.webp",
+      "directory": "public/images/assets/scraps",
+      "format": "webp",
+      "bytes": 16128,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/scraps/scrap-stick-figure-great-circle-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-stick-figure-great-circle",
+      "title": "Scrap Stick Figure Great Circle",
+      "path": "/public/images/assets/scraps/scrap-stick-figure-great-circle-thumb.avif",
+      "directory": "public/images/assets/scraps",
+      "format": "avif",
+      "bytes": 1784,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/scraps/scrap-stick-figure-great-circle-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-stick-figure-great-circle",
+      "title": "Scrap Stick Figure Great Circle",
+      "path": "/public/images/assets/scraps/scrap-stick-figure-great-circle-thumb.webp",
+      "directory": "public/images/assets/scraps",
+      "format": "webp",
+      "bytes": 3090,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/scraps/scrap-stick-figure-great-circle-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-teal-drip-margin",
+      "title": "Scrap Teal Drip Margin",
+      "path": "/public/images/assets/scraps/scrap-teal-drip-margin-display.avif",
+      "directory": "public/images/assets/scraps",
+      "format": "avif",
+      "bytes": 9733,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/scraps/scrap-teal-drip-margin-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-teal-drip-margin",
+      "title": "Scrap Teal Drip Margin",
+      "path": "/public/images/assets/scraps/scrap-teal-drip-margin-display.webp",
+      "directory": "public/images/assets/scraps",
+      "format": "webp",
+      "bytes": 12624,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/scraps/scrap-teal-drip-margin-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-teal-drip-margin",
+      "title": "Scrap Teal Drip Margin",
+      "path": "/public/images/assets/scraps/scrap-teal-drip-margin-thumb.avif",
+      "directory": "public/images/assets/scraps",
+      "format": "avif",
+      "bytes": 1266,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/scraps/scrap-teal-drip-margin-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-teal-drip-margin",
+      "title": "Scrap Teal Drip Margin",
+      "path": "/public/images/assets/scraps/scrap-teal-drip-margin-thumb.webp",
+      "directory": "public/images/assets/scraps",
+      "format": "webp",
+      "bytes": 2466,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/scraps/scrap-teal-drip-margin-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-teal-spiral-blot",
+      "title": "Scrap Teal Spiral Blot",
+      "path": "/public/images/assets/scraps/scrap-teal-spiral-blot-display.avif",
+      "directory": "public/images/assets/scraps",
+      "format": "avif",
+      "bytes": 14382,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/scraps/scrap-teal-spiral-blot-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-teal-spiral-blot",
+      "title": "Scrap Teal Spiral Blot",
+      "path": "/public/images/assets/scraps/scrap-teal-spiral-blot-display.webp",
+      "directory": "public/images/assets/scraps",
+      "format": "webp",
+      "bytes": 16888,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/scraps/scrap-teal-spiral-blot-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-teal-spiral-blot",
+      "title": "Scrap Teal Spiral Blot",
+      "path": "/public/images/assets/scraps/scrap-teal-spiral-blot-thumb.avif",
+      "directory": "public/images/assets/scraps",
+      "format": "avif",
+      "bytes": 1680,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/scraps/scrap-teal-spiral-blot-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-teal-spiral-blot",
+      "title": "Scrap Teal Spiral Blot",
+      "path": "/public/images/assets/scraps/scrap-teal-spiral-blot-thumb.webp",
+      "directory": "public/images/assets/scraps",
+      "format": "webp",
+      "bytes": 3364,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/scraps/scrap-teal-spiral-blot-thumb.webp when a thumbnail visual needs a stable tracked asset."
     },
     {
       "id": "worktable-folio-on-plan",
@@ -13559,6 +15693,391 @@
       "role": "render",
       "concepts": [],
       "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-27/sheet-2026-09-27-03-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "collectible-2026-09-28-00-back-scan",
+      "title": "Collectible 2026 09 28 00 Back Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/collectible-2026-09-28-00-back-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 1040970,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/collectible-2026-09-28-00-back-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "collectible-2026-09-28-00-front-scan",
+      "title": "Collectible 2026 09 28 00 Front Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/collectible-2026-09-28-00-front-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 1330462,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/collectible-2026-09-28-00-front-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-2026-09-28-00-scan",
+      "title": "Prime 2026 09 28 00 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-00-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 15546012,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-00-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-2026-09-28-01-scan",
+      "title": "Prime 2026 09 28 01 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-01-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 16790695,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-01-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-2026-09-28-02-scan",
+      "title": "Prime 2026 09 28 02 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-02-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 20102296,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-02-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-2026-09-28-03-scan",
+      "title": "Prime 2026 09 28 03 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-03-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 20130158,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-03-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-2026-09-28-04-scan",
+      "title": "Prime 2026 09 28 04 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-04-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 20975621,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-04-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-2026-09-28-05-scan",
+      "title": "Prime 2026 09 28 05 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-05-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 24565277,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-05-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-2026-09-28-06-scan",
+      "title": "Prime 2026 09 28 06 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-06-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 19336271,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-06-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-2026-09-28-07-scan",
+      "title": "Prime 2026 09 28 07 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-07-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 27636290,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-07-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-2026-09-28-08-scan",
+      "title": "Prime 2026 09 28 08 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-08-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 28777134,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-08-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-2026-09-28-09-scan",
+      "title": "Prime 2026 09 28 09 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-09-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 25848725,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-09-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-2026-09-28-10-scan",
+      "title": "Prime 2026 09 28 10 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-10-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 23088402,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-10-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-2026-09-28-11-scan",
+      "title": "Prime 2026 09 28 11 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-11-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 19757951,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-11-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-2026-09-28-12-scan",
+      "title": "Prime 2026 09 28 12 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-12-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 21965408,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-12-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-2026-09-28-13-scan",
+      "title": "Prime 2026 09 28 13 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-13-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 21412212,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-13-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-2026-09-28-14-scan",
+      "title": "Prime 2026 09 28 14 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-14-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 27433549,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-14-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-2026-09-28-15-scan",
+      "title": "Prime 2026 09 28 15 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-15-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 25221013,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-15-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-2026-09-28-16-scan",
+      "title": "Prime 2026 09 28 16 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-16-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 25925859,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-16-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-2026-09-28-17-scan",
+      "title": "Prime 2026 09 28 17 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-17-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 27382895,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-17-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-2026-09-28-18-scan",
+      "title": "Prime 2026 09 28 18 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-18-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 26249243,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-18-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-2026-09-28-19-scan",
+      "title": "Prime 2026 09 28 19 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-19-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 7340110,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-19-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-2026-09-28-20-scan",
+      "title": "Prime 2026 09 28 20 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-20-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 26366645,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-20-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-2026-09-28-21-scan",
+      "title": "Prime 2026 09 28 21 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-21-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 14260349,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-21-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-2026-09-28-22-scan",
+      "title": "Prime 2026 09 28 22 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-22-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 4675788,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-22-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-2026-09-28-23-scan",
+      "title": "Prime 2026 09 28 23 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-23-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 5287511,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-23-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "prime-2026-09-28-24-scan",
+      "title": "Prime 2026 09 28 24 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-24-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 17211450,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-24-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-2026-09-28-00-scan",
+      "title": "Scrap 2026 09 28 00 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/scrap-2026-09-28-00-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 516541,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/scrap-2026-09-28-00-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-2026-09-28-01-scan",
+      "title": "Scrap 2026 09 28 01 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/scrap-2026-09-28-01-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 533736,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/scrap-2026-09-28-01-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-2026-09-28-02-scan",
+      "title": "Scrap 2026 09 28 02 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/scrap-2026-09-28-02-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 1151716,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/scrap-2026-09-28-02-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-2026-09-28-03-scan",
+      "title": "Scrap 2026 09 28 03 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/scrap-2026-09-28-03-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 1071409,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/scrap-2026-09-28-03-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-2026-09-28-04-scan",
+      "title": "Scrap 2026 09 28 04 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/scrap-2026-09-28-04-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 599054,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/scrap-2026-09-28-04-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-2026-09-28-05-scan",
+      "title": "Scrap 2026 09 28 05 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/scrap-2026-09-28-05-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 603827,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/scrap-2026-09-28-05-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-2026-09-28-06-scan",
+      "title": "Scrap 2026 09 28 06 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/scrap-2026-09-28-06-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 515591,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/scrap-2026-09-28-06-scan.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "scrap-2026-09-28-07-scan",
+      "title": "Scrap 2026 09 28 07 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-09-28/scrap-2026-09-28-07-scan.png",
+      "directory": "public/images/renders/_raw/folio-scans-2026-09-28",
+      "format": "png",
+      "bytes": 490331,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-09-28/scrap-2026-09-28-07-scan.png when a render visual needs a stable tracked asset."
     },
     {
       "id": "spwashi_a_seagull_who_is_a_car_salesman_--profile_3q5khel_--sty_b685877d-3450-4dc4-9627-411c4157a125",

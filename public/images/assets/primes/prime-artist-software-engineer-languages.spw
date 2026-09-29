@@ -1,0 +1,68 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "prime-artist-software-engineer-languages"
+  title: "Spwashi, artist, software engineer"
+  description: "Cutout arrangement on a clear sheet, scanned for the September 28, 2026 set."
+}
+
+^"source"{
+  id: "prime-2026-09-28-10"
+  master: "public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-10-scan.png"
+  master_tracked: false
+  scan: { width: 2878, height: 4931, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 9.6 x 16.4 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-28.spw"
+}
+
+^"usage"{
+  surface: "primes"
+  role: "cutout-arrangement"
+  formats_available: ["avif", "webp"]
+  ground: "clear — the black behind the cutouts was the scanner lid seen through a clear sheet (creator, 2026-09-28), so every tier keys it to transparent; a page gives the piece its ground"
+  alt_text: "Cutouts on a clear sheet: Spwashi, Artist, Software Engineer, fifteen/sixteen years of dev motion, pairing structured language with HTML, architecture with PHP, algorithms with Python, language design with TypeScript, organizational dynamics with Rust; A to B illustration; TikTok for product engineering; the code journey."
+  tiers: {
+    thumb: { width: 149, height: 256, avif_kib: 14, webp_kib: 11 }
+    display: { width: 299, height: 512, avif_kib: 43, webp_kib: 36 }
+    hero: { width: 598, height: 1024, avif_kib: 117, webp_kib: 89 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September 26 and 27 sets ship"
+  alpha: "the lid keyed before tiers are cut: dark, broad enough to survive an opening that drops ink lines, and reached from the scan edge; pure white reached from the edge is uncovered glass (paper sits near 232), and thin light slivers in the edge band clear too"
+  hero_budget: "hero at AVIF quality 75, WebP 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["prime", "release-2026-09-28", "kraft-key", "a-to-b", "tiktok-card", "code-journey", "artist-card"]
+  part_of: "folio-release-2026-09-28"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `spwashi[artist|software.engineer]{html|php|python|typescript|rust}`
+  b: `*prime-artist-software-engineer-languages *kraft.key *a.to.b *tiktok.card *code.journey *artist.card &artist %16.years &language.design`
+  handles: ["*kraft.key", "*a.to.b", "*tiktok.card", "*code.journey", "*artist.card", "&artist", "%16.years", "&language.design"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?which pairing comes next?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}
+
+^"imagine"{
+  status: "open — nothing generated yet; the creator runs Grok Imagine and chooses what returns"
+  motion: `each skill meets its language, from structured language and HTML down to organizational dynamics and Rust`
+  after: { id: "prime-2026-09-28-09", shares: ["*kraft.key", "*a.to.b", "*tiktok.card"] }
+  before: { id: "prime-2026-09-28-11", shares: ["*kraft.key", "*tiktok.card"] }
+  seed: "the master as scanned, lid and all; Imagine reads a dark ground more predictably than transparency"
+  returns: "public/images/renders/imagine/2026-09-28/prime-artist-software-engineer-languages-imagine-NN.<ext>, with a sidecar naming generator: Grok Imagine and source: prime-2026-09-28-10"
+  derivatives: []
+}

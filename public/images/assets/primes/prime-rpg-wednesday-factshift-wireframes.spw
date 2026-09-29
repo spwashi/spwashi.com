@@ -1,0 +1,67 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "prime-rpg-wednesday-factshift-wireframes"
+  title: "Today is RPG Wednesday; factshift wireframes"
+  description: "Cutout arrangement on a clear sheet, scanned for the September 28, 2026 set."
+}
+
+^"source"{
+  id: "prime-2026-09-28-00"
+  master: "public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-00-scan.png"
+  master_tracked: false
+  scan: { width: 4130, height: 2366, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 13.8 x 7.9 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-28.spw"
+}
+
+^"usage"{
+  surface: "primes"
+  role: "cutout-arrangement"
+  formats_available: ["avif", "webp"]
+  ground: "clear — the black behind the cutouts was the scanner lid seen through a clear sheet (creator, 2026-09-28), so every tier keys it to transparent; a page gives the piece its ground"
+  alt_text: "Cutouts on a clear sheet, lettered sideways: Today is RPG Wednesday, a weekly holiday for worldbuilding and community on spwashi.com and lore.land, beside a Spwashi signature; across from them, factshift.com wireframes label a setting menu, focal point, title, and ground."
+  orientation_note: "lettering runs sideways; a quarter turn clockwise reads it; kept as scanned"
+  tiers: {
+    thumb: { width: 256, height: 147, avif_kib: 11, webp_kib: 8 }
+    display: { width: 512, height: 293, avif_kib: 31, webp_kib: 26 }
+    hero: { width: 1024, height: 587, avif_kib: 80, webp_kib: 61 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September 26 and 27 sets ship"
+  alpha: "the lid keyed before tiers are cut: dark, broad enough to survive an opening that drops ink lines, and reached from the scan edge; pure white reached from the edge is uncovered glass (paper sits near 232), and thin light slivers in the edge band clear too"
+  hero_budget: "hero at AVIF quality 75, WebP 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["prime", "release-2026-09-28", "rpg-wednesday", "wireframes"]
+  part_of: "folio-release-2026-09-28"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `holiday[weekly]{worldbuilding & community}<spwashi.com|lore.land> wireframe[setting.menu|focal.point|title|ground]{factshift.com}`
+  b: `*prime-rpg-wednesday-factshift-wireframes *rpg.wednesday *wireframes @rpg.wednesday <lore.land <factshift.com`
+  handles: ["*rpg.wednesday", "*wireframes", "@rpg.wednesday", "<lore.land", "<factshift.com"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what does today's RPG Wednesday build?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}
+
+^"imagine"{
+  status: "open — nothing generated yet; the creator runs Grok Imagine and chooses what returns"
+  motion: `the wireframe's arrow travels from the setting menu to the focal point as RPG Wednesday's bubble lifts`
+  seed: "the master as scanned, lid and all; Imagine reads a dark ground more predictably than transparency"
+  returns: "public/images/renders/imagine/2026-09-28/prime-rpg-wednesday-factshift-wireframes-imagine-NN.<ext>, with a sidecar naming generator: Grok Imagine and source: prime-2026-09-28-00"
+  derivatives: []
+}

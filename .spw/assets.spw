@@ -65,6 +65,36 @@
       images: "7 — sheet-2026-09-27-00 through -03, grocery-2026-09-27-00 through -02"
     }
 
+    scraps: {
+      path: ~"../public/images/assets/scraps/"
+      purpose: "Square scraps, two to three inches of ink, pencil, and watercolor on paper; one sits again inside a prime"
+      status: "active"
+      masters: "public/images/renders/_raw/folio-scans-2026-09-28/ (untracked)"
+      formats: "avif + webp, thumb 256 / display 512; no hero, since the scans are under 1024px"
+      record: ~"./surfaces/folio-archive/release-2026-09-28.spw"
+      images: "8 — scrap-2026-09-28-00 through -07"
+    }
+
+    collectibles: {
+      path: ~"../public/images/assets/collectibles/"
+      purpose: "Pieces by other makers that the creator keeps; the maker stays < ? > unless the creator names them, and a face that carries a maker's mark is held back"
+      status: "active"
+      masters: "public/images/renders/_raw/folio-scans-2026-09-28/ (untracked)"
+      formats: "avif + webp, thumb 256 / display 512"
+      record: ~"./surfaces/folio-archive/release-2026-09-28.spw"
+      images: "1 face — collectible-2026-09-28-00-front; its back is held"
+    }
+
+    primes: {
+      path: ~"../public/images/assets/primes/"
+      purpose: "Folio primes: hand-lettered cutouts arranged and rearranged on a clear sheet, and the painted boards beside them; the lid is keyed to transparent, and each sidecar's * handles name the cutouts it shares with its neighbours"
+      status: "active"
+      masters: "public/images/renders/_raw/folio-scans-2026-09-28/ (untracked)"
+      formats: "avif + webp with alpha, thumb 256 / display 512 / hero 1024"
+      record: ~"./surfaces/folio-archive/release-2026-09-28.spw"
+      images: "25 — prime-2026-09-28-00 through -24"
+    }
+
     pretext_lab: {
       path: ~"../public/images/assets/pretext-lab/"
       purpose: "Physics visualization, typography, layout studies"

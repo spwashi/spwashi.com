@@ -1,0 +1,67 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "prime-first-plan-now-plan-with"
+  title: "First my plan; now plan with"
+  description: "Cutout arrangement on a clear sheet, scanned for the September 28, 2026 set."
+}
+
+^"source"{
+  id: "prime-2026-09-28-05"
+  master: "public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-05-scan.png"
+  master_tracked: false
+  scan: { width: 3165, height: 4792, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 10.6 x 16.0 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-28.spw"
+}
+
+^"usage"{
+  surface: "primes"
+  role: "cutout-arrangement"
+  formats_available: ["avif", "webp"]
+  ground: "as scanned — a black-paper cutout here cannot be told from the lid by color or texture, so the lid stays; a clear tier waits for a hand-drawn mask"
+  alt_text: "Cutouts on a clear sheet over the dark scanner lid: first my plan was to be an Electrical Engineer…, now plan with Claude, GPT, Grok, Gemini; the operator table; the kraft key; silver glyphs on black paper; Production for Lore.Land; and the Lore.Land sign."
+  tiers: {
+    thumb: { width: 169, height: 256, avif_kib: 7, webp_kib: 9 }
+    display: { width: 338, height: 512, avif_kib: 30, webp_kib: 32 }
+    hero: { width: 677, height: 1024, avif_kib: 104, webp_kib: 80 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September 26 and 27 sets ship"
+  hero_budget: "hero at AVIF quality 75, WebP 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["prime", "release-2026-09-28", "first-plan", "operator-table", "kraft-key", "silver-glyphs", "production-card", "lore-land-sign"]
+  part_of: "folio-release-2026-09-28"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `plan[first]{electrical.engineer} plan[now]{claude|gpt|grok|gemini}`
+  b: `*prime-first-plan-now-plan-with *first.plan *operator.table *kraft.key *silver.glyphs *production.card *lore.land.sign &electrical.engineer &grok`
+  handles: ["*first.plan", "*operator.table", "*kraft.key", "*silver.glyphs", "*production.card", "*lore.land.sign", "&electrical.engineer", "&grok"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?who do you plan with now?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}
+
+^"imagine"{
+  status: "open — nothing generated yet; the creator runs Grok Imagine and chooses what returns"
+  motion: `first my plan fades back as now plan with brings Claude, GPT, Grok, and Gemini forward one by one`
+  after: { id: "prime-2026-09-28-04", shares: ["*operator.table", "*kraft.key", "*silver.glyphs", "*production.card"] }
+  before: { id: "prime-2026-09-28-06", shares: ["*first.plan", "*kraft.key", "*lore.land.sign"] }
+  seed: "the master as scanned, lid and all; Imagine reads a dark ground more predictably than transparency"
+  returns: "public/images/renders/imagine/2026-09-28/prime-first-plan-now-plan-with-imagine-NN.<ext>, with a sidecar naming generator: Grok Imagine and source: prime-2026-09-28-05"
+  derivatives: []
+}

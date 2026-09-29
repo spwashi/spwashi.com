@@ -24,6 +24,8 @@ const RULES = Object.freeze([
   Object.freeze({ match: '/public/images/assets/folios/', kind: 'original', sigil: '*', word: 'original', description: 'Original artwork, scanned.' }),
   Object.freeze({ match: '/public/images/assets/panels/', kind: 'original', sigil: '*', word: 'original', description: 'Original artwork, scanned.' }),
   Object.freeze({ match: '/public/images/assets/worktable/', kind: 'original', sigil: '*', word: 'original', description: 'Original artwork, scanned.' }),
+  Object.freeze({ match: '/public/images/assets/scraps/', kind: 'original', sigil: '*', word: 'original', description: 'Original artwork, scanned.' }),
+  Object.freeze({ match: '/public/images/assets/primes/', kind: 'original', sigil: '*', word: 'original', description: 'Original artwork, scanned.' }),
 ]);
 
 const RECORDED = Object.freeze({
