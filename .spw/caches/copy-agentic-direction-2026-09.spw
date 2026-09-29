@@ -15,6 +15,7 @@
 @copy_flow: ~"../conventions/copy-flow.spw"
 @copy_ecology: ~"../conventions/copy-ecology.spw"
 @copy_hypermedia_key: ~"./copy-hypermedia-key-2026-09.spw"
+@ai_writing_smells: ~"./ai-writing-smells-2026-09.spw"
 @creative_capacity: ~"./creative-capacity-2026-09.spw"
 @agent_markdown_spend: ~"./agent-markdown-spend-2026-09.spw"
 @agent_ecology: ~"../conventions/agent-ecology.spw"
@@ -188,4 +189,13 @@ source = "chat 2026-09-07: sitewide copy vs recent direction; TikTok on AI / dev
   ][reg=set]
   refuse = `No fourth accessor. No rewrite past the working set. No "soil" on the folio route. No unverified count: every number in a receipt comes from a commit body or a run today.`
   validation = `npm run audit:copy:accessor; npm run spw:integrity; npm run check:local -- --allow-dirty`
+}[reg=facet]
+
+^"ad-009_writing_smells"{
+  id = "ad-009"
+  operation = "cache"
+  fixity = "experimental"
+  source = "2026-09-28: research the smell list, including X, and keep it out of the ledes"
+  claim = `The list, the decay, and the X posts live in @ai_writing_smells. Public copy does not recite them. A paragraph that shelves links is a display case; the pass that turns one into a thought trace is semantic-copy-depth, and the rewrite that says "not a list but a journey" is the smell.`
+  refuse = `Do not scrub em dashes. Do not add a banned-word linter. Do not rewrite /topics/slop/ from this facet.`
 }[reg=facet]

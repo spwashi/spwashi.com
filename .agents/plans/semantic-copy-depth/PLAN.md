@@ -64,3 +64,29 @@ Let readers tune how much copy is visible without splitting the site into separa
 - Consider a topic index for vocabulary clusters once enough culinary, programming, and genre terms have accumulated.
 - Explore exporting annotated components as compact Spw recipe cards, e.g. `card[reason]{produce.artifact}`, for future model expansion and crawler-facing route briefs.
 - Expand emphasis-tier audits across route hubs so primary, secondary, and tertiary meaning can be inspected consistently in screenshots and generated design catalogs.
+
+## Thought trace (2026-09-28)
+
+Operation: cache, then a later align of two paragraphs. The smell research is `.spw/caches/ai-writing-smells-2026-09.spw`. This section is how a link-dense paragraph stops reading like a display case.
+
+A display case is a paragraph whose links are the point. Delete the labels and no claim remains. A thought trace is one claim that turns. The claim survives as plain text, and each link changes the next clause. Chip rows, `ul.spw-route-bridge__links`, and header nav stay shelves. A shelf is an honest index. The miss is a shelf wearing a paragraph.
+
+First slice, when someone edits copy. Two hosts, no others:
+
+- `/topics/slop/#feeling` — three citation paragraphs. The claims are already there (fatigue, cheer, the accusation pulling away from the evidence). The sentences currently are the sources.
+- `/topics/math/#pure-math-routes` — the textbook note. The first two sentences are the trace (why these pages are more textbook-like). The five diagram routes are a shelf inside the paragraph. The reading grammar that follows (notice the move, the invariant, the collapse) is a real three-part structure. Leave it.
+
+Home's field note at "recursive editorial loop" is the same shape and waits. The loop sentence is the trace. "The center of gravity is this site" is a shelf of nine links. Do not open Home in the first slice. The live note `home[live]{cycle.close}(b)<now>` is already a trace.
+
+Markup, on the stems that exist:
+
+- The base paragraph is the trace, with one or two links.
+- The shelf moves to a list, or to a sibling with `data-spw-copy-depth="dense"`. Essential meaning stays in the base paragraph.
+- Expression, same grammar as `home[live]{cycle.close}(b)<now>`. Direction is the turn: `{fatigue.then.gate}`. Scene is `(turn)`. A kept shelf uses mode `[case]` and stays a list. Subject stays shared so kinship still lights the trace and the shelf together: `slop[reading]{fatigue.then.gate}(turn)<paragraph>` beside `slop[case]{source.shelf}<feed>`.
+- Scene is `(turn)`, not `(trace)`. Dose-trace, load-trace, and session traces already own that word.
+- `data-spw-textual-role` stays what it is (lede, note, kicker, narration). Do not add `data-spw-trace`, `data-spw-voice`, or a fourth accessor.
+- Do not infer a trace from a link count. Three links and a claim can be a trace. Three links and no claim are a list.
+
+The rewrite test is the slop page's own test: a reader can restate the point. A rewrite that reaches for "not a list, but a journey", a closing echo, or a fresh rule of three has imported the smell. The cache names that failure.
+
+Validation, when the slice lands: `npm run audit:copy:accessor`, `npm run manifest:expressions` if an expression changed, and the paragraph read aloud. If it still sounds like a contents page, it is still a case.

@@ -1,0 +1,106 @@
+# Cache 2026-09-28 — AI writing smells are a style catalog with a half-life. They describe a texture. They do not name an author.
+# Operation: cache. Sources: Wikipedia:Signs of AI writing (WP:AISIGNS), The Economist's July 2026 house-style study as carried by the Sydney Morning Herald (7 Aug 2026), LigoSocial's LinkedIn counts through September 2026, and X posts from Aug–Sep 2026. Nothing here rewrites a route.
+
+#>ai_writing_smells_2026_09
+#:cache #!copy #!voice #!slop
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@copy_accessor: ~"../conventions/copy-accessor.spw"
+@copy_agentic: ~"./copy-agentic-direction-2026-09.spw"
+@copy_decay: ~"./copy-decay-2026-09.spw"
+@semantic_copy_depth: ~"../../.agents/plans/semantic-copy-depth/PLAN.md"
+@slop_route: ~"../../topics/slop/index.html"
+
+operation = "cache"
+fixity = "experimental"
+source = "2026-09-28 research pass: Wikipedia field guide, Economist punctuation/vocabulary study, LigoSocial LinkedIn pattern counts, X. Public projection already at /topics/slop/. This file holds the list and the decay."
+
+expression = smell[catalog]{word.sentence.paragraph}(decay)<style>
+
+^"thesis"{
+  claim = `A smell is a texture that shows up often in unedited model prose. One smell is a coincidence. A cluster is a style. The lexical cluster decays when people mock it and the models are retrained. The structural cluster — a sentence clearing up a misconception that nobody held, a paragraph where every sentence is the takeaway — lasts longer. Neither cluster identifies the writer.`
+  already_public = `/topics/slop/#tells already says the tell is a paragraph you can finish without being able to say what you learned, and that the patterns describe a style. The page's six panels are hollow fluency, glue, unsourced authority, balance with no case, the same shape, and the picture.`
+  refuse = `Do not build a detector from this list. Do not scrub em dashes out of this site's voice. Do not add a banned-word linter. Do not rewrite /topics/slop/ from this file. The thought-trace pass lives in @semantic_copy_depth.`
+}[reg=facet]
+
+^"ws-001_two_layers"{
+  id = "ws-001"
+  operation = "cache"
+  claim = `Wikipedia:Signs of AI writing is the editor field guide (WP:AISIGNS, WikiProject AI Cleanup). It is descriptive, it says humans are poor detectors, and an August 2026 banner says the parts about recent models need updating. Read it as two layers. The 2023–2025 layer is a word list and a few habits. The 2026 layer is sentence shape and paragraph rhythm.`
+  catalog_2023 = #{
+    significance = `Undue legacy and broader trends: testament, pivotal, crucial role, underscores its importance, evolving landscape, setting the stage, indelible mark, deeply rooted.`
+    notability = `Canned coverage: independent coverage, featured in, active social media presence, trade publications. The sentence is about the sources' status, not about a fact they contain.`
+    participle_tail = `A present-participle clause hung on a fact: highlighting, underscoring, reflecting, symbolizing, contributing to, fostering, ensuring, cultivating. The tail adds importance and no information.`
+    vague_link = `plays a role, is associated with, contributes to the broader. A connection with no particular.`
+    weasel = `Experts argue, observers have cited, studies show, some critics argue, industry reports. A percentage with no name, date, or link. The slop page already calls this unsourced authority.`
+    outline_close = `Despite its promise, X faces challenges. Future outlook. In summary, restating the opening. Challenges as a section shape, not the mention of a real difficulty.`
+    copula = `serves as, stands as, marks, functions as, boasts, features, offers, refers to — where is, are, or has would do. A cited academic count found is/are down more than 10 percent in 2023 writing, with no comparable drop before that.`
+    vocabulary = `Density, not a single word: additionally, align with, boasts, bolstered, crucial, deep dive, delve, emphasizing, enduring, enhance, fostering, garner, highlight, interplay, intricate, key, landscape, meticulous, pivotal, robust, showcase, tapestry, testament, underscore, valuable, vibrant. Wikipedia's list cites the post-2022 frequency studies (Kobak and others). One word is nothing. A pile of them is the tell.`
+    negative_parallelism = `Not just X, but Y. Not X, but Y. Y rather than X. The sentence pretends to correct a belief the reader was not stated to hold.`
+    rule_of_three = `Adjective, adjective, and adjective. Phrase, phrase, and phrase. Stronger when the three items exist to look complete. A real three-part structure on this site (notice the move, notice the invariant, notice the collapse) is the structure, and the smell test does not apply.`
+    residue = `Stronger than style, because a person rarely types them: Markdown in a finished page, "Certainly" and "I hope this helps" and "Would you like", knowledge-cutoff disclaimers, citation leaks (turn0search, grok_card, cite:1, utm_source on a reference, a DOI that resolves somewhere else).`
+  }
+  wiki_only = `Edit summaries, AfC submission statements, wikitext bugs, invented templates, and lead sentences that treat a list title as a proper noun. Useful to Wikipedia. They are not smells of this site's prose.`
+  ineffective = `Wikipedia's own reject list: perfect grammar, a mix of casual and formal, prose that merely sounds bland or fancy, a transition word alone, unsourced text (models cite now; the question is whether the citation holds). Flagging these punishes proficient writing.`
+  historical = `Wikipedia files these as faded: didactic disclaimers (November 2022–2024), section summaries, prompt refusals, abrupt cutoffs, outdated access-dates, elegant variation. Keep them for old text. Do not teach them as the current list.`
+}[reg=facet]
+
+^"ws-002_decay"{
+  id = "ws-002"
+  operation = "cache"
+  claim = `The word layer is an isotope, in the same sense as @copy_decay. People mocked it, the models dropped it, and a new texture took the place. A cache that freezes "delve" and the em dash as the tells will accuse the previous generation and miss the current one.`
+  economist = `The Economist asked ChatGPT, Claude, Gemini, and Grok to rewrite its own articles from the paper's AI summaries, with no web. 55,940 sentences, 1.2 million words, checked against CNN, the New York Times, the Washington Post, and novels from 1950–2022. Carried in full by the Sydney Morning Herald on 7 Aug 2026; Derek Thompson posted the findings the same week (2084271141477113926, 3 Aug 2026). Delve and tapestry had faded. The overused words were long and Latinate: significant, increasingly, consequences, interdependence, parameter, methodology, and nominalizations (expansion from expand). Punctuation went the other way from the rumor: fewer commas, fewer semicolons, hardly any parentheses, longer sentences, and "and" as the most overused word. Only Claude still used more em dashes than the human writers in the study. ChatGPT used markedly fewer than anyone. ChatGPT and Claude used more "not X but Y", "not only but also", and rule-of-three constructions per 1,000 sentences than the other models and than the humans. Paragraphs were rarely cut by a short sentence. Tommie Juzek's observation, quoted there: the models pick up what people find impressive and drop what they do not. Wikipedia's em-dash section already cites this July 2026 study and warns that GPT-5.1 was steered to suppress the dash.`
+  linkedin = `LigoSocial Research, "Em dashes and AI" (https://ligosocial.com/research/em-dash-ai), counts through September 2026, CC BY 4.0. Posts with an em dash: 3.5 percent in 2023, 26 percent in 2025, 20.3 percent in 2026. A fixed panel of 345 people moved with the fashion, so it was not only new writers joining. Same-author posts with a dash got about 7 percent more engagement; posts the study classed as AI-sounding got about 21 percent less. The mocked words (delve, game-changer, ever-evolving landscape) fell from 4.2 percent of posts in 2023 to 0.5 percent in 2026. The structures rose: "Here's why" from 1.3 to 9.6 percent, "It's not X, it's Y" from 1.2 to 5.9 percent, arrow bullets from 0.6 to 12.3 percent. This is one platform's classifier and one company's report. Use it as a count of what traveled, not as a linguistics paper.`
+  paragraph_scale = `Derek Thompson, 1 Sep 2026 (2094780339461787810), reporting Pangram founder Max Spero: the tell widened from the word (delve), to the sentence (it's not X, it's Y), to the paragraph — every sentence trying to be the loudest, pithiest summary of the point, which Spero ties to reinforcement learning that rewards a helpful takeaway. Across a passage that becomes re-summarizing. That paragraph shape is the one this site should refuse in its own editorial prose.`
+}[reg=facet]
+
+^"ws-003_accusation"{
+  id = "ws-003"
+  operation = "cache"
+  claim = `On X the list is now a weapon and a joke, and the people using it often write the smell in the accusation. Style features that once separated model text from human text do not decide who gets called slop.`
+  already_public = `/topics/slop/#feeling already carries the Villanova/Metro result (readers often cannot tell, and they rate the machine story higher when told a person wrote it) and the 23 Sep 2026 comment study (https://www.alphaxiv.org/abs/2606.12073): across 25 million Hacker News and Reddit comments, "slop" went from about 13 percent of pejorative accusations in 2023 to about 94 percent by 2026, the tone moved from mockery toward gatekeeping, and the prose features that separate machine text from human text do not predict which human comments get accused.`
+  x = #[
+    `2089025356829225110 Chawanna, 16 Aug 2026: em dashes, parallel structure, and delve were proficient writing before the models. The hospital-poster word "triage" is now suspect.`,
+    `2104633420622295111 and 2104635610258620756, 28 Sep 2026: the tell discourse accuses rule of three, "it's not X, it's Y", adjective load, and "soulless" as a feeling. The second post's only remaining test is whether the writing has a soul.`,
+    `2077511716011712635 Seth Dillon, 15 Jul 2026: the em dash is not proof — and the post ends by asking if the reader would like more examples, which is the collaborative-leak smell.`,
+    `2104646309634576885, 28 Sep 2026: a parody that stacks the whole current cluster on purpose (worth noting, rapidly evolving landscape, not just X, pivotal, tapestry, here's why, foster, robust, leverage, showcase, moreover, in conclusion). Useful as a specimen of the cluster. Not a study.`,
+    `2104754177083945234, 29 Sep 2026: a short parody of the dramatic-fragment shape. Not because I needed groceries. It was not just an apple.`,
+    `2104756684979683675, 29 Sep 2026: the accusation itself. "It's not just AI slop, it's metadiscourse slop."`,
+    `2104634746265317828 Agape Keleta, 28 Sep 2026: the old word list (delve, tapestry, a testament to, in today's fast-paced world) is still what people can name, beside stock phrases, forced comparisons, hedging, lists of three, and repetitive conclusions.`,
+    `2089770118028951958 Matt Walsh, 18 Aug 2026: "No x. No y. No z." and "That's not x. It's y." The comparison he reaches for is an HR orientation, which matches the slop page's cheerfulness complaint.`,
+    `2104039479061119287 Peter Suzman, 27 Sep 2026, quoting a shape: the tidy self-announcing post. Title promises the payoff, thesis before the first section, a map of the flow, a summary close, an editorial-explainer voice.`
+  ][reg=set]
+  consequence = `A human on this site who writes a real triplet, a dash, or a formal sentence is inside the blast radius. The public page is right: the patterns describe a style.`
+}[reg=facet]
+
+^"ws-004_page_gap"{
+  id = "ws-004"
+  operation = "cache"
+  claim = `/topics/slop/#tells holds the durable feeling. It does not yet hold the 2026 layer, and it still teaches delve, adept, and meticulous as part of "the same shape," which is the decaying layer.`
+  holds = #[`hollow fluency`, `glue, including "in today's fast-paced world", "it's important to note", "a testament to"`, `unsourced authority`, `balance with no case`, `equal shape, lists of three, a closing echo`, `the picture: block letters, fake script, filled corners`][reg=set]
+  missing = #[`negative parallelism`, `copula avoidance (serves as, boasts)`, `participle tails`, `the paragraph where every sentence is the takeaway`, `markdown and citation residue`, `the decay: em dash and delve are the previous generation`][reg=set]
+  later = `A later align of #tells can add the durable structures and move delve into the decay sentence. That is a copy pass on one section, after the thought-trace slice, not a second research file.`
+}[reg=facet]
+
+^"ws-005_display_case"{
+  id = "ws-005"
+  operation = "cache"
+  claim = `A link-dense paragraph that only shelves sources or routes is the paragraph-scale smell in this site's own markup. Each link is a specimen trying to be the point. A thought trace is one claim that turns, with a link as the place the turn touched. Rewriting a shelf into "it is not a list, it is a journey" commits the smell the rewrite was meant to leave.`
+  test = `Delete the link labels. If no claim remains, it was a display case and it wants to be a list. If the claim survives, the links may stay, and each one should change the next clause.`
+  homonym = `This site already uses trace for dose-trace, load-trace, and session traces. The expression scene for this posture is (turn), not (trace).`
+  owner = `@semantic_copy_depth, section "Thought trace (2026-09-28)". First slices named there: /topics/slop/#feeling and the textbook paragraph in /topics/math/#pure-math-routes. Indexes, chip rows, and route bridges stay shelves.`
+}[reg=facet]
+
+^"do_not"{
+  detector = `No GPTZero, Pangram, or banned-word gate on commit. Wikipedia's guide says detectors err, and a high score is not proof.`
+  dash_scrub = `ChatGPT now uses fewer em dashes than the human writers in the Economist study. Deleting dashes from a draft does not give it a claim. LigoSocial's same-author count had dash posts slightly ahead on engagement.`
+  flatten = `Do not answer the list by sanding this site's voice down to short sentences and Saxon words. @copy_accessor#voice_register still holds: do not flatten the magic.`
+  page = `Do not revise public HTML from this cache.`
+}[reg=facet]
+
+^"questions"{
+  tells_align = `When #tells is next touched, does the decaying word set move into one sentence, and do negative parallelism and the paragraph-scale tell become panels?`
+  sensor = `A later audit could list paragraphs with three or more links and no (turn) or [case] expression. Is that list worth a script, or is reading the two named slices enough?`
+}[reg=facet]

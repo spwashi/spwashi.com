@@ -35,6 +35,8 @@ intent: .{
   `entry-normal-dense`,
   `referentiality`,
   `reading-calm`,
+  `thought-trace`,
+  `display-case`,
  ][reg=set]
  surfaces = #[
   `.spw/conventions/copy-ecology.spw`,
@@ -46,7 +48,7 @@ intent: .{
 ^"plan_refinement"{
  tone = `Editorial — respect reading calm on public routes.`
  accuracy = `copy-depth pilots on design/composition; site-wide register is uneven.`
- direction = `Align one high-traffic route to a single depth policy before expanding attributes.`
+ direction = `2026-09-28: a link-dense paragraph is a thought trace or a shelf. First slices are /topics/slop/#feeling and /topics/math/#pure-math-routes. Scene (turn), shelf mode [case], dense layer for the shelf. No new attribute family. Smell list: .spw/caches/ai-writing-smells-2026-09.spw.`
  inspiration = `Readers should feel led, not lectured.`
  alignment = `vocabulary-metaphor-growth-synthesis, component-region-personality`
 }[reg=facet]
@@ -65,12 +67,14 @@ dispatch: .{
   .{ label = `plan_ecology_semantics` ; path = `.spw/audits/plan-ecology-semantics-2026-07.spw` }[reg=facet],
   .{ label = `commit_skill_induction` ; path = `.spw/audits/commit-skill-induction-2026-07/index.spw` }[reg=facet],
   .{ label = `spw_architecture_ecology` ; path = `.spw/conventions/spw-architecture-ecology.spw` }[reg=facet],
+  .{ label = `ai_writing_smells` ; path = `.spw/caches/ai-writing-smells-2026-09.spw` }[reg=facet],
  ][reg=set]
  rule = `Repo-local audits/appendices/conventions — not external web.`
 }[reg=facet]
 
 ^"connection_points"{
  owner_rail = `self`
+ related_plans = #[`audience-onboarding-copy`, `narration-markup-cold-reads`][reg=set]
 }[reg=facet]
 
 ^"owner_claim"{
