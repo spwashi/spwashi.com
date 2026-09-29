@@ -102,6 +102,7 @@ export const ROUTE_SCOPES: Readonly<Record<string, readonly string[]>> = Object.
     '/public/css/systems/scene-interaction.css',
   ],
   privacy: [],
+  projects: [],
   recipes: ['/public/css/routes/surfaces/recipes.css'],
   research: [],
   'rpg-wednesday': [
