@@ -4,6 +4,8 @@ import { initRpgCharacterLab } from '/public/js/modules/rpg-wednesday/character-
 import { RPG_WORKBENCH_COPY, notifyRpgStateChange, workbenchLegendHtml } from '/public/js/modules/rpg-wednesday/contract.js';
 import { ensureRpgCuratorWidget } from '/public/js/modules/rpg-wednesday/curate.js';
 import { initRpgLanguageEvolution } from '/public/js/modules/rpg-wednesday/language-evolution.js';
+import { initNameCadence } from '/public/js/modules/rpg-wednesday/name-cadence.js';
+import { initMoraleCloses } from '/public/js/modules/rpg-wednesday/morale-closes.js';
 import { initRpgWorldLab } from '/public/js/modules/rpg-wednesday/world-lab.js';
 import {
     createElement,
@@ -341,6 +343,10 @@ export const initRpgWednesday = () => {
     if (curator) controllers.push(curator);
     const evidenceCards = initEvidenceProtocolCards();
     if (evidenceCards) controllers.push(evidenceCards);
+    const nameCadence = initNameCadence(document);
+    if (nameCadence) controllers.push(nameCadence);
+    const moraleCloses = initMoraleCloses(document, { emit: emitSpwAction });
+    if (moraleCloses) controllers.push(moraleCloses);
 
     const characterSection = document.querySelector('[data-rpg-character-lab]');
     if (characterSection instanceof HTMLElement && characterSection.dataset.rpgHydrated !== 'true') {
