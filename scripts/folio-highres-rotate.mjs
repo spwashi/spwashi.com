@@ -155,6 +155,11 @@ record.weeks.push({ week, opened, folios: five.map(({ id, slug }) => ({ id: `fol
 say(`${RECORD}: week ${record.weeks.length} appended`);
 if (!dryRun) {
   writeFileSync(path.join(ROOT, RECORD), `${JSON.stringify(record, null, 2)}\n`);
+  // The worker reads the five at install, and install only reruns when sw.js changes.
+  const worker = readFileSync(path.join(ROOT, 'sw.js'), 'utf8');
+  if (!/^const FOLIO_WEEK = '[^']*';$/m.test(worker)) fail('sw.js: no FOLIO_WEEK line to stamp');
+  writeFileSync(path.join(ROOT, 'sw.js'), worker.replace(/^const FOLIO_WEEK = '[^']*';$/m, `const FOLIO_WEEK = '${week}';`));
+  say(`sw.js: FOLIO_WEEK → ${week}`);
   execFileSync(process.execPath, ['scripts/audit-folio-highres.mjs', '--check', `--today=${opened}`], { stdio: 'inherit' });
-  console.log('[folio-highres-rotate] done. Rebuild manifests (npm run manifest) and commit the five files, the sidecars, the record, the page, and the Home and Now strips.');
+  console.log('[folio-highres-rotate] done. Rebuild manifests (npm run manifest) and commit the five files, the sidecars, the record, the page, the Home and Now strips, and sw.js.');
 }

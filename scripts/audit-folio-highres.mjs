@@ -94,6 +94,14 @@ if (latest && parseWeek(latest.week)) {
 }
 
 console.log(`[folio-highres] ${weeks.length} week(s); latest ${latest?.week || 'none'} with ${latestSlugs.size} folio(s); ${linked.size} linked on the page`);
+// The service worker precaches the latest week at install; its stamp must
+// move with the record or installed workers never see the rotation.
+const latestWeek = weeks.at(-1)?.week;
+const workerWeek = (fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8').match(/^const FOLIO_WEEK = '([^']*)';$/m) || [])[1];
+if (latestWeek && workerWeek !== latestWeek) {
+  errors.push(`sw.js FOLIO_WEEK is ${workerWeek || 'missing'}, the record's latest week is ${latestWeek}; installed workers will not precache the new five`);
+}
+
 for (const warning of warnings) console.log(`  ⚠ ${warning}`);
 for (const error of errors) console.log(`  ✗ ${error}`);
 if (check && errors.length) process.exit(1);

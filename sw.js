@@ -39,12 +39,14 @@ const OFFLINE_URL = '/offline/';
 const FALLBACK_IMAGE_URL = '/public/images/icon-192.png';
 const OFFLINE_FOLIO_THUMB_URL = '/public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-thumb.webp';
 
-// The weekly five folio scans (public/data/folio-highres.json, rotated by
-// scripts/folio-highres-rotate.mjs) are read at install, so the worker
-// follows the rotation without a hand-kept list. The shelf's srcset asks a
-// phone (44vw at DPR 2-3) for the 400w display tier, so that tier rides
-// along in avif (the <source type=image/avif> wins wherever it decodes);
-// the thumbs serve DPR-1 screens and the offline page. Under 200KB for the five.
+// The week's five opened folio scans (public/data/folio-highres.json) are
+// read at install. Install only reruns when this file's bytes change, so
+// scripts/folio-highres-rotate.mjs rewrites FOLIO_WEEK below, and
+// audit-folio-highres --check fails when it lags the record. The shelf's
+// srcset asks a phone (44vw at DPR 2-3) for the display tier (400-512w), so that
+// tier rides along in avif (the <source type=image/avif> wins wherever it
+// decodes); the thumbs serve DPR-1 screens. Under 200KB for the five.
+const FOLIO_WEEK = '2026-W40';
 const FOLIO_WEEK_RECORD_URL = '/public/data/folio-highres.json';
 const FOLIO_THUMB_BASE = '/public/images/assets/folios/folio-';
 const FOLIO_THUMB_TIERS = ['-thumb.avif', '-thumb.webp', '-display.avif'];
