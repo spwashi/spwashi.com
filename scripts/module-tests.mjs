@@ -59,6 +59,7 @@ export const MODULE_TEST_FILES = Object.freeze([
   'scripts/tests/physical-model.test.mjs',
   'scripts/tests/cauldron-clusters.test.mjs',
   'scripts/tests/cauldron-editorial.test.mjs',
+  'scripts/tests/cauldron-image-ingredient.test.mjs',
   'scripts/tests/spells.test.mjs',
   'scripts/tests/interaction-story.test.mjs',
   'scripts/tests/section-handle-swipe.test.mjs',
