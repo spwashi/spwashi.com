@@ -45,6 +45,8 @@ import {
   assessStillAttention,
   assessStillOverflow,
   attentionAssertKind,
+  attentionStepKind,
+  attentionStepRequest,
   RECIPE_PAIR_KINDS,
   STILL_ATTENTION_READ_EXPRESSION,
   assessViewportSubject,
@@ -67,10 +69,18 @@ import {
   prioritizeCaptureJobs,
   classifyCaptureFailure,
   attentionMissError,
+  attentionReading,
   attentionReceipt,
+  nightlyStillState,
+  nightlySmokeRoutes,
+  NIGHTLY_SMOKE_ROUTES,
   measuredAttention,
   nightlyClimateId,
   NIGHTLY_CLIMATE_IDS,
+  nightlyMonthId,
+  nightlyAttentionIds,
+  nightlyMonthReceipt,
+  NIGHTLY_MONTH_IDS,
   recaptureJobIds,
   buildCaptureIndex,
   capturePriorityScore,
@@ -372,6 +382,47 @@ test('capture occupancy distinguishes light prose from visual-led presence', () 
   assert.equal(healthyResult.occupancy, 'balanced');
 });
 
+test('occupancy readings tell an advisor what the card is doing', () => {
+  const light = assessCaptureOccupancy({}, {
+    area: 240000,
+    childCount: 1,
+    textLength: 18,
+  });
+  assert.equal(light.occupancy, 'light');
+  assert.equal(light.reason, 'low-presence-density');
+  assert.equal(light.reading, 'The card is light. That is a review clue, not a repair.');
+
+  const visual = assessCaptureOccupancy({}, {
+    area: 240000,
+    childCount: 1,
+    mediaCount: 1,
+    textLength: 0,
+  });
+  assert.equal(visual.reason, 'media-carries-presence');
+  assert.equal(visual.reading, 'The picture carries the card. Few words are the point.');
+
+  const balanced = assessCaptureOccupancy({}, {
+    area: 120000,
+    childCount: 4,
+    textLength: 147,
+  });
+  assert.equal(balanced.occupancy, 'balanced');
+  assert.equal(balanced.reason, null);
+  assert.equal(balanced.reading, 'Words and controls share the card.');
+
+  const dense = assessCaptureOccupancy({}, {
+    area: 10000,
+    childCount: 1,
+    textLength: 50,
+  });
+  assert.equal(dense.occupancy, 'dense');
+  assert.equal(dense.reason, null);
+  assert.equal(dense.reading, 'The card is dense. Read it for packing.');
+
+  assert.equal(assessCaptureOccupancy({}, { area: 400 }).reading, 'Nothing rendered in the box.');
+  assert.equal(assessCaptureOccupancy({}, {}).reading, 'The box was not measured.');
+});
+
 test('capture expression annotates the still without replacing component semantics', () => {
   const expression = formatCaptureExpression({
     id: 'frame-card--fit',
@@ -663,6 +714,8 @@ test('a recipe id is not a fixture family, and press is a pair not a second reci
   assert.deepEqual(hover?.prepare?.hover, ['#about-frame .mode-switch [data-set-mode="kernel"]']);
   assert.deepEqual(keys?.prepare?.keys, ['Tab']);
   assert.equal(keys?.prepare?.focus, '#about-frame .mode-switch [data-set-mode="reading"]');
+  assert.equal(keys?.prepare?.lands, '#about-frame .mode-switch [data-set-mode="kernel"]');
+  assert.equal(attentionStepKind(attentionStepRequest(keys)), 'keys');
   assert.equal(jobs.some((job) => job.id === 'quest-opening'), false);
 
   const pressOnly = buildCapturePlan({
@@ -931,6 +984,130 @@ test('attention capture pins write existing region-mark and probe attributes', a
   assert.equal(rootAttrs['data-spw-resonance-probe'], 'frame');
 });
 
+test('attention steps report where a prepare landed', async () => {
+  const {
+    attentionStepKind: runtimeKind,
+    readAttentionStep,
+  } = await import('../../public/js/runtime/attention/capture-pins.js');
+  const samples = [
+    {},
+    { section: 'memory-buffers' },
+    { probe: 'frame' },
+    { keys: ['Tab'], focus: '#reading', lands: '#kernel' },
+    { focus: '[data-spw-operator="frame"]' },
+    { hover: ['#kernel'] },
+    { click: ['#kernel'] },
+    { check: ['#open'] },
+  ];
+  for (const request of samples) {
+    assert.equal(attentionStepKind(request), runtimeKind(request));
+  }
+
+  const kernel = { id: 'kernel' };
+  const reading = { id: 'reading' };
+  const host = { contains: (node) => node === kernel || node === reading };
+  const doc = {
+    nodeType: 9,
+    documentElement: {
+      getAttribute(name) {
+        if (name === 'data-spw-resonance-probe') return 'frame';
+        if (name === 'data-spw-reading-groove') return 'on';
+        return null;
+      },
+    },
+    body: { tag: 'body' },
+    activeElement: kernel,
+    getElementById(id) {
+      if (id !== 'memory-buffers') return null;
+      return { getAttribute: (name) => (name === 'data-spw-region-mark' ? 'capture' : null) };
+    },
+    querySelector(sel) {
+      if (sel === '#about-frame') return host;
+      if (sel === '#kernel' || sel.endsWith('[data-set-mode="kernel"]')) return kernel;
+      if (sel.endsWith('[data-set-mode="reading"]')) return reading;
+      if (sel === '#open') return { type: 'checkbox', checked: true, getAttribute: () => null };
+      if (sel === '#pressed') return { getAttribute: (name) => (name === 'aria-pressed' ? 'false' : null) };
+      return null;
+    },
+  };
+
+  assert.equal(readAttentionStep(doc, {}).step, 'rest');
+  assert.equal(readAttentionStep(doc, {}).landed, true);
+  assert.equal(readAttentionStep(doc, { section: 'memory-buffers' }).landed, true);
+  assert.equal(readAttentionStep(doc, { section: 'missing' }).landed, false);
+  assert.equal(readAttentionStep(doc, { probe: 'frame' }).step, 'probe');
+  assert.equal(readAttentionStep(doc, { probe: 'topic' }).landed, false);
+  const keys = readAttentionStep(doc, {
+    selector: '#about-frame',
+    focus: '#about-frame .mode-switch [data-set-mode="reading"]',
+    lands: '#about-frame .mode-switch [data-set-mode="kernel"]',
+    keys: ['Tab'],
+  });
+  assert.equal(keys.step, 'keys');
+  assert.equal(keys.landed, true);
+  assert.equal(keys.focusWithin, true);
+  assert.equal(keys.groove, 'on');
+  doc.activeElement = reading;
+  assert.equal(readAttentionStep(doc, {
+    selector: '#about-frame',
+    lands: '#about-frame .mode-switch [data-set-mode="kernel"]',
+    keys: ['Tab'],
+  }).landed, false);
+  doc.activeElement = kernel;
+  assert.equal(readAttentionStep(doc, {
+    selector: '#about-frame',
+    focus: '#about-frame .mode-switch [data-set-mode="kernel"]',
+  }).landed, true);
+  assert.equal(readAttentionStep(doc, { hover: ['#kernel'] }).landed, true);
+  assert.equal(readAttentionStep(doc, { hover: ['#kernel'], hoverMissed: true }).landed, false);
+  assert.equal(readAttentionStep(doc, { hover: ['#missing'] }).landed, false);
+  assert.equal(readAttentionStep(doc, { check: ['#open'] }).landed, true);
+  assert.equal(readAttentionStep(doc, { click: ['#pressed'] }).landed, false);
+
+  const missed = assessStillAttention(
+    { still: true },
+    { attention: { step: 'keys', landed: false, attentionOpacity: '0.96', attentionCharge: '0.4' } },
+  );
+  assert.equal(missed.ok, false);
+  assert.equal(missed.reason, 'step-not-landed');
+  assert.equal(missed.step, 'keys');
+  assert.equal(missed.opacity, 0.96);
+
+  const held = assessStillAttention(
+    { assertAttention: 'spend', prepare: { focus: '[data-spw-operator="frame"]' } },
+    {
+      attention: {
+        step: 'focus',
+        landed: true,
+        focusWithin: true,
+        restFloor: '0.96',
+        attentionOpacity: '0.96',
+        attentionLight: '0.48',
+        attentionCharge: '0',
+      },
+    },
+  );
+  assert.equal(held.ok, true);
+  assert.equal(held.step, 'focus');
+
+  const error = attentionMissError(
+    { id: 'about-opening-keys', fixtureId: 'about-hook', viewportId: 'pocket' },
+    missed,
+  );
+  assert.equal(error.attention.id, 'about-opening-keys');
+  const receipt = attentionReceipt({
+    errorArtifacts: [{ attention: error.attention }],
+    captures: [{
+      id: 'about-opening-hover',
+      attention: { verdict: 'skip', step: 'hover', opacity: 0.9, charge: 0.1, resonance: 0 },
+    }],
+  });
+  assert.equal(receipt.failures[0].where, 'about-opening-keys');
+  assert.equal(receipt.failures[0].detail, 'keys opacity 0.96');
+  assert.equal(receipt.passes[0].step, 'hover');
+  assert.equal(receipt.passes[0].where, 'about-opening-hover');
+});
+
 test('readPinnedProbe reads probe from the live search string', async () => {
   const { readPinnedProbe } = await import('../../public/js/runtime/attention/capture-pins.js');
   const root = {
@@ -952,6 +1129,9 @@ test('live capture measure evaluate is bounded and races font wait', async () =>
   assert.doesNotMatch(source, /skipped after closed tab/);
   assert.match(source, /CAPTURE_MEASURE\.fontWaitMs/);
   assert.match(source, /readStillAttention/);
+  assert.match(source, /readAttentionStep/);
+  assert.match(source, /readPrepareStep/);
+  assert.match(source, /evaluateProbe\(\s*session,\s*\n\s*attentionStepExpression/);
   assert.match(source, /throw attentionMissError\(/);
   const planSource = await readFile(new URL('../lib/visual-capture-plan.mjs', import.meta.url), 'utf8');
   assert.match(planSource, /attention-miss:/);
@@ -1043,6 +1223,13 @@ test('failure kinds distinguish miss from gone, and index names the recapture co
   assert.equal(receipt.failures[0].detail, 'opacity 0.42');
   assert.equal(receipt.failures[1].reason, 'cdp-timeout');
   assert.deepEqual(receipt.passes, []);
+  const gone = attentionReceipt({
+    errorArtifacts: [
+      { kind: 'gone', id: 'about-opening-keys', fixtureId: 'about-hook', message: 'Inspected target navigated or closed' },
+    ],
+  });
+  assert.equal(gone.failures[0].where, 'about-opening-keys');
+  assert.equal(gone.failures[0].reason, 'gone');
   const index = buildCaptureIndex({
     captures: [{ id: 'home-opening', file: 'captures/pocket/01-home-opening.jpg', flow: 'page', still: true }],
     errorArtifacts: [
@@ -1148,6 +1335,232 @@ test('attention receipts keep measured passes and rotate one climate still', () 
   assert.equal(byId('curriculum-hero-focus').assertAttention, 'spend');
   assert.equal(byId('software-frame-probe').attention.probe, 'frame');
   assert.equal(byId('folio-fold-open-reduced').conditions.reducedMotion, 'reduce');
+});
+
+test('a month of nights starts on the 1st and keeps one climate still at each week close', () => {
+  const known = new Set([
+    ...VIEWPORT_STILL_RECIPES.map((recipe) => recipe.id),
+    ...VIEWPORT_STILL_CHECKS.map((recipe) => recipe.id),
+  ]);
+  const nonHome = [...known].filter((id) => id !== 'about-opening' && !id.startsWith('home'));
+  assert.equal(NIGHTLY_MONTH_IDS.length, 31);
+  assert.deepEqual(new Set(NIGHTLY_MONTH_IDS.slice(0, 26)), new Set(nonHome));
+  assert.equal(NIGHTLY_MONTH_IDS.some((id) => id === 'about-opening' || id.startsWith('home')), false);
+  assert.deepEqual(NIGHTLY_MONTH_IDS.slice(0, 4), [...NIGHTLY_CLIMATE_IDS]);
+  assert.deepEqual(NIGHTLY_MONTH_IDS.slice(26), [
+    'about-opening-dark',
+    'curriculum-hero-focus',
+    'software-frame-probe',
+    'folio-fold-open-reduced',
+    'topics-opening-dark',
+  ]);
+
+  assert.equal(nightlyMonthId(1), 'about-opening-dark');
+  assert.equal(nightlyMonthId(7), 'research-opening');
+  assert.equal(nightlyMonthId(8), 'now-opening');
+  assert.equal(nightlyMonthId(26), 'curriculum-memory-pin');
+  assert.equal(nightlyMonthId(27), 'about-opening-dark');
+  assert.equal(nightlyMonthId(31), 'topics-opening-dark');
+  assert.equal(nightlyMonthId(32), 'about-opening-dark');
+  assert.equal(nightlyMonthId(0), 'about-opening-dark');
+  assert.equal(nightlyMonthId(Number.NaN), 'about-opening-dark');
+  assert.equal(nightlyMonthId('nope'), 'about-opening-dark');
+  assert.equal(new Set(Array.from({ length: 26 }, (_, index) => nightlyMonthId(index + 1))).size, 26);
+
+  assert.deepEqual(nightlyAttentionIds(1), ['about-opening', 'about-opening-dark']);
+  assert.deepEqual(nightlyAttentionIds(6), ['about-opening', 'town-opening']);
+  assert.deepEqual(nightlyAttentionIds(7), ['about-opening', 'research-opening', 'about-opening-dark']);
+  assert.deepEqual(nightlyAttentionIds(14), ['about-opening', 'topics-opening-dark', 'curriculum-hero-focus']);
+  assert.deepEqual(nightlyAttentionIds(21), ['about-opening', 'about-boonhonk-ember', 'software-frame-probe']);
+  assert.deepEqual(nightlyAttentionIds(28), ['about-opening', 'curriculum-hero-focus', 'folio-fold-open-reduced']);
+  assert.deepEqual(nightlyAttentionIds(29), ['about-opening', 'software-frame-probe']);
+  assert.equal(nightlyAttentionIds(31).length, 2);
+
+  const weekClose = nightlyMonthReceipt(7);
+  assert.equal(weekClose.schema, 'month-receipt.v0');
+  assert.equal(weekClose.ok, true);
+  assert.equal(weekClose.day, 7);
+  assert.equal(weekClose.week, 1);
+  assert.equal(weekClose.weekClose, true);
+  assert.deepEqual(weekClose.ids, nightlyAttentionIds(7));
+  assert.equal(nightlyMonthReceipt(8).week, 2);
+  assert.equal(nightlyMonthReceipt(8).weekClose, false);
+  assert.equal(nightlyMonthReceipt(31).week, 5);
+  assert.equal(nightlyMonthReceipt('nope').day, 1);
+
+  for (let day = 1; day <= 31; day += 1) {
+    const ids = nightlyAttentionIds(day);
+    assert.equal(new Set(ids).size, ids.length);
+    const { jobs } = buildCapturePlan({
+      componentFixtures: COMPONENT_FIXTURES,
+      includeStills: true,
+      includeChecks: true,
+      viewports: [VIEWPORTS.pocket],
+      ids,
+    });
+    assert.equal(jobs.length, 3 + ids.length, `day ${day}`);
+    assert.equal(jobs.some((job) => job.specimenRoute === '/' || String(job.id).startsWith('home')), false);
+    for (const id of ids) assert.equal(jobs.some((job) => job.id === id), true, `${day} ${id}`);
+  }
+});
+
+test('attention readings use a closed vocabulary an advisor can repeat', () => {
+  assert.equal(attentionReading({ reason: 'step-not-landed', step: 'press', opacity: 0.96 }), 'The press did not sit.');
+  assert.equal(attentionReading({ reason: 'step-not-landed', step: 'keys' }), 'The key did not land.');
+  assert.equal(attentionReading({ reason: 'step-not-landed', step: 'focus' }), 'Focus did not stay.');
+  assert.equal(attentionReading({ reason: 'step-not-landed', step: 'hover' }), 'The hover target was not there.');
+  assert.equal(attentionReading({ reason: 'step-not-landed', step: 'pin' }), 'The section pin did not mark the room.');
+  assert.equal(attentionReading({ reason: 'step-not-landed', step: 'probe' }), 'The probe did not pin.');
+  assert.equal(attentionReading({ reason: 'ink-ignores-attention', opacity: 0.42 }), 'Ink stayed down.');
+  assert.equal(attentionReading({ reason: 'light-ignores-attention' }), 'Light stayed down.');
+  assert.equal(attentionReading({ reason: 'focus-not-held' }), 'Focus did not stay.');
+  assert.equal(attentionReading({ reason: 'rest-floor-ignores-focus' }), 'The rest floor ignored focus.');
+  assert.equal(attentionReading({ reason: 'resonance-report-rest' }), 'Resonance reported rest.');
+  assert.equal(attentionReading({ reason: 'attention-unmeasured' }), 'Attention was not measured.');
+  assert.equal(attentionReading({ reason: 'gone' }), 'The page left before the still settled.');
+  assert.equal(attentionReading({ reason: 'cdp-timeout' }), 'Chrome timed out before the still could be read.');
+  assert.equal(
+    attentionReading({ reason: 'no-attention-assert', verdict: 'skip', opacity: 0.96, step: 'hover' }),
+    'Ink lifted.',
+  );
+  assert.equal(
+    attentionReading({ reason: 'no-attention-assert', verdict: 'skip', opacity: 0.86 }),
+    'This still did not ask for attention.',
+  );
+  assert.equal(attentionReading({ verdict: 'pass', opacity: 0.86 }), 'Ink held the rest.');
+
+  const receipt = attentionReceipt({
+    errorArtifacts: [
+      {
+        attention: {
+          id: 'about-opening-press',
+          reason: 'step-not-landed',
+          step: 'press',
+          opacity: 0.86,
+        },
+      },
+      { kind: 'gone', id: 'about-opening-keys', fixtureId: 'about-hook', message: 'Inspected target navigated or closed' },
+      { kind: 'cdp-timeout', id: 'capture', message: 'CDP call timeout: Runtime.evaluate (16000ms)' },
+    ],
+    captures: [
+      {
+        id: 'about-opening-hover',
+        attention: {
+          verdict: 'skip',
+          reason: 'no-attention-assert',
+          opacity: 0.96,
+          charge: 0.2,
+          resonance: 0,
+          step: 'hover',
+        },
+        captureOccupancy: {
+          occupancy: 'light',
+          reading: 'The card is light. That is a review clue, not a repair.',
+        },
+      },
+    ],
+  });
+  assert.equal(receipt.failures[0].reason, 'step-not-landed');
+  assert.equal(receipt.failures[0].reading, 'The press did not sit.');
+  assert.equal(receipt.failures[1].where, 'about-opening-keys');
+  assert.equal(receipt.failures[1].reading, 'The page left before the still settled.');
+  assert.equal(receipt.failures[2].reading, 'Chrome timed out before the still could be read.');
+  assert.equal(
+    receipt.passes[0].reading,
+    'Ink lifted. The card is light. That is a review clue, not a repair.',
+  );
+});
+
+test('a night names the room and state, and smoke adds one route', () => {
+  const core = [...NIGHTLY_SMOKE_ROUTES];
+  assert.deepEqual(core, ['/', '/settings/', '/topics/software/', '/tools/spw-parser/', '/about/']);
+
+  assert.equal(nightlyStillState({ conditions: { colorMode: 'dark', themePack: 'banked-ember' } }), 'dark');
+  assert.equal(nightlyStillState({ conditions: { highContrast: 'on', themePack: 'ritual-vellum' } }), 'high-contrast');
+  assert.equal(nightlyStillState({
+    conditions: { reducedMotion: 'reduce' },
+    prepare: { focus: '#x' },
+  }), 'reduced-motion');
+  assert.equal(nightlyStillState({ prepare: { check: ['#x'] } }), 'plain');
+  assert.equal(nightlyStillState({}), 'plain');
+  assert.deepEqual(
+    nightlySmokeRoutes({ route: '/about/', state: 'high-contrast' }).at(-1),
+    '/about/?high-contrast=on',
+  );
+  assert.deepEqual(nightlySmokeRoutes({ route: '/', state: 'dark' }), core);
+
+  const day1 = nightlyMonthReceipt(1);
+  assert.equal(day1.still, 'about-opening-dark');
+  assert.equal(day1.state, 'dark');
+  assert.equal(day1.route, '/about/');
+  assert.equal(day1.ok, true);
+  assert.deepEqual(day1.smoke.routes.slice(0, 5), core);
+  assert.equal(day1.smoke.routes.at(-1), '/about/?color-mode=dark');
+  assert.equal(day1.reading, 'Day 1, week 1. The still is about-opening-dark on /about/, state dark.');
+
+  const day2 = nightlyMonthReceipt(2);
+  assert.equal(day2.state, 'focus');
+  assert.equal(day2.route, '/curriculum/');
+  assert.equal(day2.smoke.routes.at(-1), '/curriculum/');
+  assert.equal(day2.smoke.routes.some((route) => route.includes('?')), false);
+  assert.equal(day2.reading, 'Day 2, week 1. The still is curriculum-hero-focus on /curriculum/, state focus.');
+
+  const day4 = nightlyMonthReceipt(4);
+  assert.equal(day4.state, 'reduced-motion');
+  assert.equal(day4.route, '/design/folios/');
+  assert.equal(day4.smoke.routes.at(-1), '/design/folios/');
+
+  const day7 = nightlyMonthReceipt(7);
+  assert.equal(day7.still, 'research-opening');
+  assert.equal(day7.route, '/research/');
+  assert.equal(day7.state, 'plain');
+  assert.equal(day7.smoke.routes.at(-1), '/research/');
+  assert.equal(
+    day7.reading,
+    'Day 7, week 1. The still is research-opening on /research/, state plain. Week close also keeps about-opening-dark.',
+  );
+
+  const day21 = nightlyMonthReceipt(21);
+  assert.equal(day21.state, 'banked-ember');
+  assert.equal(day21.route, '/about/');
+  assert.equal(day21.smoke.routes.filter((route) => route.startsWith('/about')).length, 1);
+  assert.match(day21.reading, /state banked-ember\. Week close also keeps software-frame-probe\.$/);
+
+  const day26 = nightlyMonthReceipt(26);
+  assert.equal(day26.state, 'pin');
+  assert.equal(day26.route, '/curriculum/');
+  assert.equal(day26.smoke.routes.includes('/curriculum/?color-mode=dark'), false);
+
+  const day29 = nightlyMonthReceipt(29);
+  assert.equal(day29.still, 'software-frame-probe');
+  assert.equal(day29.state, 'probe');
+  assert.equal(day29.route, '/topics/software/');
+  assert.equal(day29.weekClose, false);
+  assert.deepEqual(day29.smoke.routes, core);
+  assert.equal(
+    day29.reading,
+    'Day 29, week 5. The still is software-frame-probe on /topics/software/, state probe.',
+  );
+
+  for (let day = 1; day <= 31; day += 1) {
+    const receipt = nightlyMonthReceipt(day);
+    assert.equal(receipt.ok, true, `day ${day}`);
+    assert.deepEqual(receipt.smoke.routes.slice(0, 5), core, `day ${day}`);
+    assert.ok(receipt.smoke.routes.length <= 6, `day ${day}`);
+    assert.equal(
+      receipt.smoke.routes.filter((route) => route === '/' || route.startsWith('/?')).length,
+      1,
+      `day ${day}`,
+    );
+    if (receipt.state !== 'dark' && receipt.state !== 'high-contrast') {
+      assert.equal(receipt.smoke.routes.some((route) => route.includes('?')), false, `day ${day}`);
+    }
+    assert.match(
+      receipt.reading,
+      new RegExp(`^Day ${day}, week ${receipt.week}\\. The still is ${receipt.still} on ${receipt.route.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}, state ${receipt.state}\\.`),
+      `day ${day}`,
+    );
+  }
 });
 
 test('starved clips are misses, and recapture ids skip generic page blanks', () => {

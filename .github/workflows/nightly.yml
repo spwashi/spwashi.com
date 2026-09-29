@@ -5,9 +5,12 @@ name: Drift notice
 # stop Pages. Each job writes a short receipt. The last job assembles
 # notice.json: smoke reasons, the plan index, citation verdicts, high
 # advisories, the day's subjects, and the pocket attention receipt.
-# The receipt is about-opening plus one climate still, rotating by UTC day:
-# dark, curriculum focus, the software frame probe, folio with motion reduced.
-# Passes keep opacity, charge, and resonance.
+# The receipt is about-opening plus the UTC day's still and state. The roster
+# starts on the 1st and walks one non-home still a day. Days 7, 14, 21, and 28
+# also keep that week's climate still. Home stays out.
+# Smoke keeps five core routes and adds that day's route. Dark and
+# high-contrast add a query. Other states stay on the still.
+# Readings use a closed vocabulary. A missed prepare is step-not-landed.
 # A light model reads that file. It follows the commit Deploy just judged,
 # and runs again each morning so a day with no push still gets a look.
 on:
@@ -45,7 +48,13 @@ jobs:
       - name: Require settled browser smoke with clean console and layout
         run: |
           set -o pipefail
-          npm run smoke:nav:ci -- --routes /,/settings/,/topics/software/,/tools/spw-parser/,/about/ --receipt smoke-receipt.json | tee smoke.txt
+          routes=$(node --input-type=module -e "
+            import { nightlyMonthReceipt } from './scripts/lib/visual-capture-plan.mjs';
+            const receipt = nightlyMonthReceipt(new Date().getUTCDate());
+            process.stdout.write(receipt.smoke.routes.join(','));
+          ")
+          echo "routes=${routes}"
+          npm run smoke:nav:ci -- --routes "${routes}" --receipt smoke-receipt.json | tee smoke.txt
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -72,21 +81,29 @@ jobs:
       - run: npm ci
       - name: Commit under test
         run: git rev-parse HEAD && git log -1 --oneline
-      - name: About opening plus one climate still
+      - name: Record the month day
         run: |
-          climate=$(node --input-type=module -e "
-            import { nightlyClimateId } from './scripts/lib/visual-capture-plan.mjs';
-            const start = Date.UTC(new Date().getUTCFullYear(), 0, 0);
-            const day = Math.floor((Date.now() - start) / 86400000);
-            process.stdout.write(nightlyClimateId(day));
-          ")
-          echo "climate=${climate}"
-          node scripts/component-snapshots.mjs --stills --checks --viewports pocket --ids "about-opening,${climate}" --out drift-attention
+          node --input-type=module -e "
+            import { mkdirSync, writeFileSync } from 'node:fs';
+            import { nightlyMonthReceipt } from './scripts/lib/visual-capture-plan.mjs';
+            const receipt = nightlyMonthReceipt(new Date().getUTCDate());
+            mkdirSync('drift-attention', { recursive: true });
+            writeFileSync('drift-attention/month-receipt.json', JSON.stringify(receipt, null, 2) + '\n');
+            writeFileSync('drift-attention/ids.txt', receipt.ids.join(','));
+            process.stdout.write('day=' + receipt.day + ' week=' + receipt.week + ' state=' + receipt.state + ' route=' + receipt.route + ' ids=' + receipt.ids.join(',') + '\n' + receipt.reading + '\n');
+          "
+      - name: About opening plus the day's month still
+        run: |
+          ids=$(cat drift-attention/ids.txt)
+          echo "ids=${ids}"
+          node scripts/component-snapshots.mjs --stills --checks --viewports pocket --ids "${ids}" --out drift-attention
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: drift-attention
-          path: drift-attention/attention-receipt.json
+          path: |
+            drift-attention/attention-receipt.json
+            drift-attention/month-receipt.json
           if-no-files-found: ignore
           retention-days: 14
 
@@ -193,6 +210,7 @@ jobs:
             --citations receipts/drift-citations/citations-receipt.json \
             --audit receipts/drift-audit/audit-receipt.json \
             --attention receipts/drift-attention/attention-receipt.json \
+            --month receipts/drift-attention/month-receipt.json \
             --subjects subjects.txt
       - uses: actions/upload-artifact@v4
         if: always()
