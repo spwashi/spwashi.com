@@ -20,7 +20,6 @@
         "bone.land",
         "boon.land",
         "brainstorm.monster",
-        "factshift.center",
         "mutex.buzz",
         "newyear.life",
         "rpgwednesday.shop",
@@ -52,6 +51,13 @@
       "script": "spw-quest",
       "dir": "workers/spw-quest",
       "hosts": ["spw.quest"],
+      "origin": "worker"
+    },
+    {
+      "id": "factshift-center",
+      "script": "factshift-center",
+      "dir": "workers/factshift-center",
+      "hosts": ["factshift.center"],
       "origin": "worker"
     },
     {

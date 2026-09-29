@@ -10,10 +10,11 @@ Inventory is `cluster.json`. Each unit is `workers/<id>/` with `wrangler.jsonc` 
 
 | Unit | Hosts |
 |------|--------|
-| `site-hub-next` | constellation + `texture.website` grain lab |
+| `site-hub-next` | `texture.website` grain lab, `attention.productions` season page, one door per held name |
 | `smut-today` | `smut.today` |
 | `autonomous-feedback` | `autonomous.feedback` |
 | `spw-quest` | `spw.quest` |
+| `factshift-center` | `factshift.center` — snapshot of app.factshift.com `0.0.2-alpha`. Local source checkout: `workers/factshift-center/app` (gitignored) |
 | `wap-mom` | `wap.mom` |
 
 `wap.mom` is Wondering About Pi: a periodical of record about π and pie, with

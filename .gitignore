@@ -35,6 +35,11 @@ design/components/captures/
 !.references/README.md
 !.references/catalog.json
 
+# Modifiable checkout of factshift/app.factshift.com. The deployable snapshot
+# stays tracked in workers/factshift-center/assets. This clone is local only
+# and is not fast-forwarded by refs:sync.
+workers/factshift-center/app/
+
 # Midjourney session exports — the zip is not a published asset.
 midjourney_session*.zip
 

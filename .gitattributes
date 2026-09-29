@@ -1,0 +1,2 @@
+# Built snapshots keep their bundler output byte for byte; whitespace checks apply to authored files.
+workers/factshift-center/assets/** -whitespace

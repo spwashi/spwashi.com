@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en"
+      itemscope
+      itemtype="https://schema.org/WebApplication"
+      data-app="factshift"
+      data-app-version="0.0.2-alpha">
+<head>
+    <meta charset="UTF-8">
+    <title>&lt;concept&gt;</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="Factshift — a 7-dimensional force simulation environment for conceptual sketching with Spw syntax">
+    <meta itemprop="name" content="Factshift">
+    <meta itemprop="description" content="7D force simulation with Spw command language">
+    <link rel="icon" href="/v0.0.1/favicon/16.png">
+    <link rel="manifest" href="/manifest.json">
+  <script type="module" crossorigin src="/assets/main-q8TJQHcv.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/index-7ql9Nu9h.js">
+  <link rel="stylesheet" crossorigin href="/assets/index-aOiLguaM.css">
+  <link rel="stylesheet" crossorigin href="/assets/main-_qtzgt2L.css">
+</head>
+<body data-mode="nothing"
+      data-interface-depth="standard"
+      data-spw-feature="mode-navigation">
+
+<!-- ── header: title + wonder ─────────────────────────────────── -->
+<header role="banner" data-region="header">
+    <button id="main-wonder-button"
+            aria-label="Open wonder prompt"
+            data-action="wonder">?</button>
+    <h1 itemprop="name">&lt;concept&gt;</h1>
+    <a id="title-md5" tabindex="-1" aria-hidden="true"></a>
+</header>
+
+<!-- ── simulation canvas ──────────────────────────────────────── -->
+<main role="main" data-region="canvas">
+    <div id="content" data-role="simulation-viewport">
+        <svg id="simulation"
+             role="img"
+             aria-label="Force simulation canvas">
+            <g class="simulation-content" data-layer="scene">
+                <g class="simulation-rects" data-layer="rects"></g>
+                <g class="simulation-edges" data-layer="edges"></g>
+                <g class="simulation-nodes" data-layer="nodes"></g>
+            </g>
+        </svg>
+    </div>
+</main>
+
+<!-- ── event log ──────────────────────────────────────────────── -->
+<aside id="main-log" role="log" aria-label="Event log" data-region="log">
+    <ul class="events-log" aria-live="polite"></ul>
+</aside>
+
+<!-- ── media container ────────────────────────────────────────── -->
+<aside id="main-image-container"
+       role="complementary"
+       aria-label="Media preview"
+       data-region="media"></aside>
+
+<!-- ── websocket integration ──────────────────────────────────── -->
+<section id="main-websocket-container"
+         role="complementary"
+         aria-label="WebSocket connection"
+         data-region="websocket">
+    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
+    <spwashi-websocket-container></spwashi-websocket-container>
+</section>
+
+<!-- ── focal controls ─────────────────────────────────────────── -->
+<nav role="toolbar"
+     aria-label="Focal controls"
+     data-region="focal">
+    <button id="focal-square"
+            data-focal-status="active"
+            data-spw-feature="mode-navigation"
+            aria-label="Focal control"
+            title="Focal control: click to reopen the current mode, drag or arrow-key to reposition"></button>
+    <output id="tool-indicator"
+            aria-label="Active tool"
+            data-role="tool-indicator"></output>
+    <div id="tool-palette" role="toolbar" aria-label="Superpower tools" data-role="tool-palette"></div>
+    <button id="ws-toggle"
+            aria-label="Toggle WebSocket panel"
+            data-action="toggle-ws"
+            title="Toggle WebSocket panel">ws</button>
+</nav>
+
+<!-- ── mode panels ────────────────────────────────────────────── -->
+<aside id="mode-container"
+       role="tabpanel"
+       aria-label="Mode panels"
+       data-region="modes"
+       data-spw-feature="mode-navigation">
+    <section id="spw-mode-container" data-mode-panel="spw">
+        <div id="spw-container" data-role="spw-input">
+            <label>
+                <span>Spw input</span>
+                <textarea id="spw-parse-field"
+                          aria-label="Spw expression input"></textarea>
+            </label>
+            <button id="parse-spw"
+                    data-action="parse-spw"
+                    title="Run Spw input (Cmd/Ctrl+Enter)">run</button>
+            <div data-role="spw-prime-controls"
+                 aria-label="Spw spell priming">
+                <button type="button"
+                        data-spw-prime="collapse"
+                        title="Prime collapse boon (*boon{})">*boon</button>
+                <button type="button"
+                        data-spw-prime="observe"
+                        title="Prime observe (@{})">@</button>
+                <button type="button"
+                        data-spw-prime="resonate"
+                        title="Prime resonate (#[...])">#</button>
+                <button type="button"
+                        data-spw-prime="couple"
+                        title="Prime couple (<>[...])">&lt;&gt;</button>
+                <button type="button"
+                        data-action="clear-spw-prime"
+                        title="Clear the current prime">clear</button>
+            </div>
+            <output id="spw-prime-context"
+                    aria-live="polite"
+                    data-role="spw-prime-context"></output>
+            <output id="spw-selection-context"
+                    aria-live="polite"
+                    data-role="spw-selection-context"></output>
+            <output id="spw-prompt-status"
+                    aria-live="polite"
+                    data-role="spw-prompt-status"></output>
+            <p data-role="spw-hint">Shift+2/3/8 or Shift+. primes outside the prompt. Cmd/Ctrl+Shift+2/3/8 or Cmd/Ctrl+Shift+. primes inside it. Esc jumps to the focal control. Alt+click selects nodes.</p>
+        </div>
+    </section>
+    <section id="story-mode-container" data-mode-panel="story">
+        <div class="action-group"></div>
+    </section>
+    <section id="map-mode-container" data-mode-panel="map">
+        <div id="node-mapper" class="code-editor" data-role="node-mapper"></div>
+        <button id="submit-node-mapper" data-action="submit-mapper">submit</button>
+    </section>
+    <section id="filter-mode-container" data-mode-panel="filter">
+        <div id="node-filter" class="code-editor" data-role="node-filter"></div>
+        <button id="submit-node-filter" data-action="submit-filter">submit</button>
+    </section>
+    <section id="querymod-mode-container" data-mode-panel="query">
+        <div id="query-parameters" data-role="query-input">
+            <label>
+                <span>Query Parameters</span>
+                <textarea class="query-value"
+                          aria-label="Query parameters input"></textarea>
+            </label>
+            <button class="query-submit" data-action="submit-query">go</button>
+        </div>
+    </section>
+    <section id="node-mode-container" data-mode-panel="node">
+        <div id="node-input-container" data-role="node-input">
+            <label>
+                <span>Nodes Input</span>
+                <input id="nodes-input" aria-label="Node names input"/>
+            </label>
+            <div class="action-group" data-group="node-input">
+                <button class="replace" data-action="replace-nodes">replace</button>
+                <button class="add" data-action="add-nodes">add</button>
+            </div>
+        </div>
+        <div id="controls" data-role="simulation-controls">
+            <section data-group="data">
+                <label>
+                    <span>Data Buttons</span>
+                </label>
+                <div class="action-group" data-group="data-actions">
+                    <button class="save-nodes" data-action="save-nodes">save</button>
+                    <button class="generate-nodes" data-action="generate-nodes">generate</button>
+                    <button class="clear-saved-nodes" data-action="clear-nodes">clear</button>
+                    <button class="read-nodes" data-action="read-nodes">read</button>
+                    <button class="clear-fixed-positions" data-action="free-positions">free</button>
+                </div>
+            </section>
+            <section data-group="simulation">
+                <label>
+                    <span>Simulation Buttons</span>
+                </label>
+                <div class="action-group" data-group="simulation-actions">
+                    <button class="stop" data-action="sim-stop">stop</button>
+                    <button class="tick" data-action="sim-tick">tick</button>
+                    <button class="start" data-action="sim-start">start</button>
+                    <button class="reinit" data-action="sim-reinit">reinit</button>
+                </div>
+            </section>
+        </div>
+    </section>
+    <section id="color-mode-container" data-mode-panel="color">
+        <div id="colors" role="radiogroup" aria-label="Color palette">
+            <button data-dataindex="spwashi-datum-0" class="color-swatch color-swatch--0" aria-label="Color 0"></button>
+            <button data-dataindex="spwashi-datum-1" class="color-swatch color-swatch--1" aria-label="Color 1"></button>
+            <button data-dataindex="spwashi-datum-2" class="color-swatch color-swatch--2" aria-label="Color 2"></button>
+            <button data-dataindex="spwashi-datum-3" class="color-swatch color-swatch--3" aria-label="Color 3"></button>
+            <button data-dataindex="spwashi-datum-4" class="color-swatch color-swatch--4" aria-label="Color 4"></button>
+            <button data-dataindex="spwashi-datum-5" class="color-swatch color-swatch--5" aria-label="Color 5"></button>
+            <button data-dataindex="spwashi-datum-6" class="color-swatch color-swatch--6" aria-label="Color 6"></button>
+            <button data-dataindex="spwashi-datum-7" class="color-swatch color-swatch--7" aria-label="Color 7"></button>
+            <button data-dataindex="spwashi-datum-8" class="color-swatch color-swatch--8" aria-label="Color 8"></button>
+            <button data-dataindex="spwashi-datum-9" class="color-swatch color-swatch--9" aria-label="Color 9"></button>
+            <button data-dataindex="spwashi-datum-10" class="color-swatch color-swatch--10" aria-label="Color 10"></button>
+            <button data-dataindex="spwashi-datum-11" class="color-swatch color-swatch--11" aria-label="Color 11"></button>
+            <button data-dataindex="spwashi-datum-12" class="color-swatch color-swatch--12" aria-label="Color 12"></button>
+        </div>
+    </section>
+    <section id="reflex-mode-container" data-mode-panel="reflex">
+        <div id="reflexes" role="group" aria-label="Reflex actions"></div>
+    </section>
+    <section id="debug-mode-container" data-mode-panel="debug">
+        <section data-role="debug-output">
+            <output id="output" aria-label="Debug output"></output>
+        </section>
+    </section>
+</aside>
+
+<!-- ── navigation: mode shortcuts + hotkeys ───────────────────── -->
+<nav id="mainmenu-shortcuts"
+     role="navigation"
+     aria-label="Mode shortcuts"
+     data-region="shortcuts"
+     data-spw-feature="mode-navigation">
+    <ol role="list"></ol>
+</nav>
+<button id="hotkey-menu-toggle"
+        aria-label="Toggle keyboard shortcuts"
+        aria-expanded="false"
+        data-action="toggle-hotkeys"
+        data-spw-feature="mode-navigation">[...]</button>
+<nav id="hotkey-container"
+     role="navigation"
+     aria-label="Keyboard shortcuts"
+     data-interface-element="hotkey-menu"
+     data-region="hotkeys"
+     data-spw-feature="mode-navigation">
+    <ul id="keystroke-options" role="list" aria-label="Available shortcuts"></ul>
+</nav>
+</body>
+</html>

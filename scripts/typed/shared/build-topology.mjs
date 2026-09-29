@@ -52,6 +52,8 @@ export const VALIDATION_IGNORED_PREFIXES = [
     'design/catalog/',
     'design/components/captures/',
     'design/experiments/symphony/',
+    // Worker assets and local app checkouts are validated by check:workers, not as site routes.
+    'workers/',
 ];
 export const IMAGE_EXTENSIONS = [
     '.avif',
