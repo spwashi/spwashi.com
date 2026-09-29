@@ -1,12 +1,12 @@
 <spw-page
     title="Spwashi • October, one folio a day"
     description="A demo month for the folio calendar: thirty-one scanned folios on October 2026's thirty-one days, in scan order, the grid drawn from the date."
-    canonical="https://spwashi.com/design/experiments/folio-calendar/"
+    canonical="https://spwashi.com/design/experiments/folios/calendar/"
     og_title="Spwashi • October, one folio a day"
     og_description="Thirty-one folios, thirty-one days. A demo month, not yet a route."
     breadcrumb_label="Folio calendar demo"
     header_current="Folio calendar demo"
-    header_current_href="/design/experiments/folio-calendar/"
+    header_current_href="/design/experiments/folios/calendar/"
     header_indicator="website"
     surface="website"
     page_family="experiment-lab"
@@ -16,7 +16,7 @@
     route_family="design experiments folios"
     layout="wide"
     features="operators"
-    related_routes="/design/folios/|/design/"
+    related_routes="/design/experiments/folios/|/design/folios/|/design/"
     stylesheet_mode="scoped"
 ></spw-page>
 <!DOCTYPE html>
@@ -25,6 +25,7 @@
     <spw-site-head></spw-site-head>
     <style>
         /* Demo-only. If the month is approved, these rules earn a home in a stylesheet. */
+        #folio-calendar-demo > .frame-topline { flex-shrink: 0; }
         .cal-month { display: grid; gap: 0.6rem; }
         .cal-weekdays, .cal-days { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0.45rem; margin: 0; padding: 0; list-style: none; }
         .cal-weekdays li { font-family: var(--site-mono-font, monospace); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-soft); }
@@ -41,7 +42,7 @@
         @media (max-width: 40rem) { .cal-cell__title { display: none; } .cal-cell > a { padding: 0.25rem; } }
         @media print {
             @page { size: landscape; margin: 1cm; }
-            body > header, body > footer, .frame-topline, .cal-notes { display: none; }
+            body > header, body > footer, .frame-topline, #folio-calendar-demo > p, .cal-notes { display: none; }
             .cal-cell > a { border-color: #999; background: none; color: #000; }
             .cal-cell picture { background: none; }
             .cal-cell__title { display: block; font-size: 7pt; }
@@ -59,14 +60,15 @@
     data-spw-page-modes="read compare print"
     data-spw-page-role="calendar-demo"
     data-spw-layout="wide"
-    data-spw-related-routes="/design/folios/|/design/">
+    data-spw-related-routes="/design/experiments/folios/|/design/folios/|/design/">
     <a class="skip-link" href="#main-content">Skip to content</a>
 
     <header class="site-header">
         <nav aria-label="Design experiments">
             <a class="header-sigil" href="/design/">#&gt;design</a>
             <a href="/design/folios/#release-set">Folios</a>
-            <a href="/design/experiments/folio-calendar/" aria-current="page">Calendar demo</a>
+            <a href="/design/experiments/folios/">Folio experiments</a>
+            <a href="/design/experiments/folios/calendar/" aria-current="page">Calendar demo</a>
         </nav>
     </header>
 
@@ -75,8 +77,8 @@
             <header class="frame-topline" data-spw-slot="header">
                 <a class="frame-sigil" href="#folio-calendar-demo" data-spw-operator="potential">~folio_calendar</a>
                 <h1 id="folio-calendar-title">October, one folio a day</h1>
-                <p>Thirty-one scanned folios on October 2026's thirty-one days, in scan order. The grid comes from the date: the month starts on a Thursday, so three cells stay empty. Each day opens its folio on the <a href="/design/folios/#release-set">shelf</a>. Print it for a month on the wall.</p>
             </header>
+            <p>Thirty-one scanned folios on October 2026's thirty-one days, in scan order. The grid comes from the date: the month starts on a Thursday, so three cells stay empty. Each day opens its folio on the <a href="/design/folios/#release-set">shelf</a>. Print it for a month on the wall.</p>
             <div class="cal-month">
                 <ol class="cal-weekdays" aria-hidden="true">
                     <li>Mon</li><li>Tue</li><li>Wed</li><li>Thu</li><li>Fri</li><li>Sat</li><li>Sun</li>
