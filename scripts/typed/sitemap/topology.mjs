@@ -13,6 +13,8 @@ export const EXCLUDED_TOP_LEVEL = new Set([
     'dist',
     'node_modules',
     'scripts',
+    // Workers deploy through Wrangler; their assets are not site pages.
+    'workers',
 ]);
 export const EXCLUDED_PREFIXES = [
     '.spw/_workbench',
