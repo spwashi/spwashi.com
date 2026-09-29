@@ -177,6 +177,7 @@ function main() {
         citations: readJsonFile(flag(args, '--citations')),
         audit: readJsonFile(flag(args, '--audit')),
         attention: readJsonFile(flag(args, '--attention')),
+        month: readJsonFile(flag(args, '--month')),
         subjects,
       },
     });

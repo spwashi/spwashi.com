@@ -15,7 +15,11 @@
 
 import { createHash } from 'node:crypto';
 
-import { VIEWPORT_STILL_CHECKS, VIEWPORT_STILL_RECIPES } from './viewport-still-recipes.mjs';
+import {
+  getViewportStillRecipe,
+  VIEWPORT_STILL_CHECKS,
+  VIEWPORT_STILL_RECIPES,
+} from './viewport-still-recipes.mjs';
 
 export const FLOWS = Object.freeze(['page', 'region', 'component', 'template']);
 export const DEFAULT_QA_FLOWS = Object.freeze(['region', 'component']);
@@ -226,13 +230,16 @@ export function attentionMissError(job, stillAttention) {
     + ` light=${stillAttention.light}`
     + ` opRes=${stillAttention.operatorResonance}`
     + ` probe=${stillAttention.probe || ''}`
-    + ` focus=${stillAttention.focusWithin === true}`,
+    + ` focus=${stillAttention.focusWithin === true}`
+    + ` step=${stillAttention.step || ''}`,
   );
   error.attention = {
+    id: job.id || null,
     fixtureId: job.fixtureId || job.id,
     viewport: job.viewportId,
     verdict: stillAttention.verdict,
     reason: stillAttention.reason,
+    step: stillAttention.step || null,
     opacity: stillAttention.opacity ?? null,
     charge: stillAttention.charge ?? null,
     resonance: stillAttention.resonance ?? null,
@@ -240,35 +247,113 @@ export function attentionMissError(job, stillAttention) {
   return error;
 }
 
+/** Closed sentences. A light model repeats these; it does not invent a verdict. */
+const STEP_MISS_READINGS = Object.freeze({
+  press: 'The press did not sit.',
+  keys: 'The key did not land.',
+  focus: 'Focus did not stay.',
+  hover: 'The hover target was not there.',
+  pin: 'The section pin did not mark the room.',
+  probe: 'The probe did not pin.',
+});
+
+const FAILURE_READINGS = Object.freeze({
+  'ink-ignores-attention': 'Ink stayed down.',
+  'light-ignores-attention': 'Light stayed down.',
+  'focus-not-held': 'Focus did not stay.',
+  'rest-floor-ignores-focus': 'The rest floor ignored focus.',
+  'pin-not-marked': 'The section pin did not mark the room.',
+  'probe-not-pinned': 'The probe did not pin.',
+  'resonance-report-rest': 'Resonance reported rest.',
+  'attention-unmeasured': 'Attention was not measured.',
+  'step-not-landed': 'The prepare step did not land.',
+  gone: 'The page left before the still settled.',
+  'cdp-timeout': 'Chrome timed out before the still could be read.',
+  blank: 'The still came back blank.',
+  collision: 'This still matches another still.',
+  failed: 'The capture failed.',
+  miss: 'The still missed.',
+});
+
+/**
+ * One advisor sentence for a receipt row.
+ * A high opacity outranks "did not ask". A missed prepare outranks the ink.
+ */
+export function attentionReading(row = {}) {
+  const reason = row.reason || row.kind || '';
+  if (reason === 'step-not-landed') {
+    return STEP_MISS_READINGS[row.step] || FAILURE_READINGS['step-not-landed'];
+  }
+  if (FAILURE_READINGS[reason]) return FAILURE_READINGS[reason];
+  const opacity = typeof row.opacity === 'number' ? row.opacity : null;
+  if (opacity != null && opacity > STILL_REST_OPACITY + 0.005) return 'Ink lifted.';
+  if (reason === 'no-attention-assert' || row.verdict === 'skip' || reason === 'skip') {
+    return 'This still did not ask for attention.';
+  }
+  if (row.verdict === 'pass' || reason === 'pass' || reason === '') return 'Ink held the rest.';
+  return 'The still needs a person to look.';
+}
+
+function joinAdvisorReadings(attentionSentence, componentSentence) {
+  if (!componentSentence) return attentionSentence;
+  if (!attentionSentence) return componentSentence;
+  return `${attentionSentence} ${componentSentence}`;
+}
+
 function attentionPassRow(capture) {
   const attention = capture?.attention;
   if (!attention) return null;
   const numbers = ['opacity', 'charge', 'resonance'].filter((key) => typeof attention[key] === 'number');
   if (!numbers.length) return null;
-  return {
+  const row = {
     where: capture.id || capture.fixtureId,
     reason: attention.verdict || 'pass',
     opacity: typeof attention.opacity === 'number' ? attention.opacity : null,
     charge: typeof attention.charge === 'number' ? attention.charge : null,
     resonance: typeof attention.resonance === 'number' ? attention.resonance : null,
   };
+  if (attention.step) row.step = attention.step;
+  row.reading = joinAdvisorReadings(
+    attentionReading({
+      reason: attention.reason,
+      verdict: attention.verdict,
+      step: attention.step,
+      opacity: row.opacity,
+    }),
+    capture.captureOccupancy?.reading || '',
+  );
+  return row;
+}
+
+function attentionFailureDetail(attention) {
+  const parts = [];
+  if (attention.step && attention.step !== 'rest') parts.push(attention.step);
+  if (attention.opacity != null && attention.opacity !== '') parts.push(`opacity ${attention.opacity}`);
+  return parts.join(' ');
 }
 
 /** Failures first. Passes keep the measured ink so a later palette can be compared. */
 export function attentionReceipt({ errorArtifacts = [], captures = [] } = {}) {
   const failures = errorArtifacts.slice(0, 8).map((artifact) => {
     if (artifact.attention) {
-      const opacity = artifact.attention.opacity;
       return {
-        where: artifact.attention.fixtureId || artifact.fixtureId || artifact.id,
+        where: artifact.attention.id || artifact.id || artifact.attention.fixtureId || artifact.fixtureId,
         reason: artifact.attention.reason || 'attention-miss',
-        detail: opacity == null ? '' : `opacity ${opacity}`,
+        detail: attentionFailureDetail(artifact.attention),
+        reading: attentionReading({
+          reason: artifact.attention.reason,
+          verdict: artifact.attention.verdict,
+          step: artifact.attention.step,
+          opacity: artifact.attention.opacity,
+          kind: artifact.kind,
+        }),
       };
     }
     return {
-      where: artifact.fixtureId || artifact.id,
+      where: artifact.id || artifact.fixtureId,
       reason: artifact.kind || 'failed',
       detail: String(artifact.message || '').replace(/\s+/g, ' ').trim().slice(0, 180),
+      reading: attentionReading({ reason: artifact.kind || 'failed', kind: artifact.kind }),
     };
   });
   const passRows = captures.map(attentionPassRow).filter(Boolean);
@@ -534,6 +619,27 @@ export function marketingPrompt(job, snapshot = {}) {
   return null;
 }
 
+/** Advisor sentences for occupancy. Reason codes stay the machine contract. */
+const OCCUPANCY_READINGS = Object.freeze({
+  unknown: 'The box was not measured.',
+  empty: 'Nothing rendered in the box.',
+  'visual-led': 'The picture carries the card. Few words are the point.',
+  light: 'The card is light. That is a review clue, not a repair.',
+  balanced: 'Words and controls share the card.',
+  dense: 'The card is dense. Read it for packing.',
+});
+
+function occupancyReport(occupancy, reason, characterDensity, mediaCount, interactiveCount) {
+  return {
+    occupancy,
+    reason,
+    reading: OCCUPANCY_READINGS[occupancy] || OCCUPANCY_READINGS.unknown,
+    characterDensity,
+    mediaCount,
+    interactiveCount,
+  };
+}
+
 /**
  * Describe what occupies a captured box without treating prose density as
  * layout authority. An image-led card is not vacant merely because it has few
@@ -549,13 +655,13 @@ export function assessCaptureOccupancy(job = {}, snapshot = {}) {
   const characterDensity = area > 0 ? (textLength / area) * 1000 : 0;
 
   if (area <= 0) {
-    return { occupancy: 'unknown', reason: 'unmeasured-box', characterDensity, mediaCount, interactiveCount };
+    return occupancyReport('unknown', 'unmeasured-box', characterDensity, mediaCount, interactiveCount);
   }
   if (!textLength && !mediaCount && !childCount) {
-    return { occupancy: 'empty', reason: 'no-rendered-content', characterDensity, mediaCount, interactiveCount };
+    return occupancyReport('empty', 'no-rendered-content', characterDensity, mediaCount, interactiveCount);
   }
   if (mediaCount > 0 && textLength < 24) {
-    return { occupancy: 'visual-led', reason: 'media-carries-presence', characterDensity, mediaCount, interactiveCount };
+    return occupancyReport('visual-led', 'media-carries-presence', characterDensity, mediaCount, interactiveCount);
   }
 
   const presenceUnits = textLength + (mediaCount * 180) + (interactiveCount * 24);
@@ -566,13 +672,13 @@ export function assessCaptureOccupancy(job = {}, snapshot = {}) {
       ? 'dense'
       : 'balanced';
 
-  return {
+  return occupancyReport(
     occupancy,
-    reason: occupancy === 'light' ? 'low-presence-density' : null,
+    occupancy === 'light' ? 'low-presence-density' : null,
     characterDensity,
     mediaCount,
     interactiveCount,
-  };
+  );
 }
 
 /** Rest ink floor from tokens/core.css --spw-reading-rest-opacity. */
@@ -590,6 +696,36 @@ export function attentionAssertKind(job = {}) {
   if (job.attention?.probe) return 'probe';
   if (job.attention?.section) return 'pin';
   return null;
+}
+
+/** The request readAttentionStep judges. Same priority as the runtime kind. */
+export function attentionStepRequest(job = {}) {
+  const prepare = job.prepare || {};
+  return {
+    selector: job.selector || '',
+    section: job.attention?.section || '',
+    probe: job.attention?.probe || '',
+    focus: prepare.focus || '',
+    lands: prepare.lands || '',
+    keys: Array.isArray(prepare.keys) ? [...prepare.keys] : [],
+    hover: Array.isArray(prepare.hover) ? [...prepare.hover] : [],
+    click: Array.isArray(prepare.click) ? [...prepare.click] : [],
+    check: Array.isArray(prepare.check) ? [...prepare.check] : [],
+  };
+}
+
+/** Pin and probe outrank a gesture. Keys outrank the focus that only starts them. */
+export function attentionStepKind(request = {}) {
+  if (request.section) return 'pin';
+  if (request.probe) return 'probe';
+  if (Array.isArray(request.keys) && request.keys.length) return 'keys';
+  if (request.focus) return 'focus';
+  if (Array.isArray(request.hover) && request.hover.length) return 'hover';
+  if (
+    (Array.isArray(request.click) && request.click.length)
+    || (Array.isArray(request.check) && request.check.length)
+  ) return 'press';
+  return 'rest';
 }
 
 /** Numbers a still actually measured. Absent fields stay absent, so a skip does not invent the rest floor. */
@@ -616,7 +752,7 @@ export const NIGHTLY_CLIMATE_IDS = Object.freeze([
   'folio-fold-open-reduced',
 ]);
 
-/** One climate still per UTC day. `dayOfYear` matches `date -u +%j` (1 on 1 January). */
+/** Four-climate cycle. Index 0 is dark. A month's week 1 passes 0. */
 export function nightlyClimateId(dayOfYear) {
   const day = Number(dayOfYear);
   const index = Number.isFinite(day)
@@ -626,10 +762,180 @@ export function nightlyClimateId(dayOfYear) {
 }
 
 /**
+ * Non-home stills for one UTC month, day 1 at index 0.
+ * Days 1–26 are the distinct rooms. Days 27–31 re-prove the climates, then the dark topics register.
+ */
+export const NIGHTLY_MONTH_IDS = Object.freeze([
+  'about-opening-dark',
+  'curriculum-hero-focus',
+  'software-frame-probe',
+  'folio-fold-open-reduced',
+  'quest-opening',
+  'town-opening',
+  'research-opening',
+  'now-opening',
+  'membership-opening',
+  'svg-storytelling-opening',
+  'curriculum-opening',
+  'software-opening',
+  'math-opening',
+  'topics-opening-dark',
+  'folio-fold-rest',
+  'folio-fold-open',
+  'folio-growth-rest',
+  'folio-growth-branch',
+  'folio-prices',
+  'about-years-dark',
+  'about-boonhonk-ember',
+  'recipes-hero-dark',
+  'rpg-wrap-jobs',
+  'rpg-boonhonk-dark',
+  'rpg-boonhonk-vellum',
+  'curriculum-memory-pin',
+  'about-opening-dark',
+  'curriculum-hero-focus',
+  'software-frame-probe',
+  'folio-fold-open-reduced',
+  'topics-opening-dark',
+]);
+
+function nightlyMonthDay(dayOfMonth) {
+  const day = Number(dayOfMonth);
+  if (!Number.isFinite(day) || day < 1) return 1;
+  return Math.trunc(day);
+}
+
+/** The extra still for a UTC day of the month. Day 1 is the first roster id. */
+export function nightlyMonthId(dayOfMonth) {
+  const day = nightlyMonthDay(dayOfMonth);
+  const index = (day - 1) % NIGHTLY_MONTH_IDS.length;
+  return NIGHTLY_MONTH_IDS[index];
+}
+
+/**
+ * about-opening every night, plus that day's still.
+ * Days 7, 14, 21, and 28 also keep that week's climate still.
+ */
+export function nightlyAttentionIds(dayOfMonth) {
+  const day = nightlyMonthDay(dayOfMonth);
+  const ids = ['about-opening', nightlyMonthId(day)];
+  if (day % 7 === 0 && day <= 28) {
+    const climate = nightlyClimateId(Math.ceil(day / 7) - 1);
+    if (!ids.includes(climate)) ids.push(climate);
+  }
+  return ids;
+}
+
+/** Smoke always walks these five. The day's route is added beside them. */
+export const NIGHTLY_SMOKE_ROUTES = Object.freeze([
+  '/',
+  '/settings/',
+  '/topics/software/',
+  '/tools/spw-parser/',
+  '/about/',
+]);
+
+function nightlySpecimenPath(route) {
+  const path = String(route || '/').trim().split('#')[0].split('?')[0] || '/';
+  return path.startsWith('/') ? path : `/${path}`;
+}
+
+/**
+ * One state name from the recipe that already exists.
+ * Dark and high contrast outrank a theme pack. A gesture on the still is not a second climate.
+ */
+export function nightlyStillState(recipe = {}) {
+  const conditions = recipe.conditions || {};
+  if (conditions.colorMode === 'dark') return 'dark';
+  if (conditions.highContrast === 'on' || conditions.highContrast === true) return 'high-contrast';
+  if (conditions.reducedMotion === 'reduce' || conditions.reducedMotion === true) return 'reduced-motion';
+  if (conditions.themePack) return String(conditions.themePack);
+  if (recipe.assertAttention === 'spend' || recipe.prepare?.focus) return 'focus';
+  if (recipe.attention?.probe) return 'probe';
+  if (recipe.attention?.section) return 'pin';
+  return 'plain';
+}
+
+/** Core routes, plus one visit for the day's room when smoke can actually set that state. */
+export function nightlySmokeRoutes({ route = '/', state = 'plain' } = {}) {
+  const routes = [...NIGHTLY_SMOKE_ROUTES];
+  const path = nightlySpecimenPath(route);
+  if (path === '/') return routes;
+  const query = state === 'dark'
+    ? 'color-mode=dark'
+    : state === 'high-contrast'
+      ? 'high-contrast=on'
+      : '';
+  const target = query ? `${path}?${query}` : path;
+  const coreHasPath = routes.some((entry) => nightlySpecimenPath(entry) === path);
+  if ((!coreHasPath || query) && !routes.includes(target)) routes.push(target);
+  return routes;
+}
+
+function nightlyMonthReading({ day, week, still, route, state, weekClose, climate }) {
+  const sentence = `Day ${day}, week ${week}. The still is ${still} on ${route}, state ${state}.`;
+  if (weekClose && climate && climate !== still) {
+    return `${sentence} Week close also keeps ${climate}.`;
+  }
+  return sentence;
+}
+
+/** Calendar map for the notice. It names the room and the state. It does not judge ink. */
+export function nightlyMonthReceipt(dayOfMonth) {
+  const day = nightlyMonthDay(dayOfMonth);
+  const still = nightlyMonthId(day);
+  const recipe = getViewportStillRecipe(still) || {};
+  const state = nightlyStillState(recipe);
+  const route = nightlySpecimenPath(recipe.specimenRoute || '/');
+  const week = Math.ceil(day / 7);
+  const weekClose = day % 7 === 0 && day <= 28;
+  const climate = weekClose ? nightlyClimateId(Math.ceil(day / 7) - 1) : '';
+  return {
+    schema: 'month-receipt.v0',
+    ok: true,
+    failures: [],
+    day,
+    week,
+    weekClose,
+    ids: nightlyAttentionIds(day),
+    still,
+    state,
+    route,
+    smoke: { routes: nightlySmokeRoutes({ route, state }) },
+    reading: nightlyMonthReading({ day, week, still, route, state, weekClose, climate }),
+  };
+}
+
+/**
  * Judge a still's attention receipt. Pixel goldens stay out of git; this is
  * the test stills can fail. Skip when the job did not ask.
  */
+function withAttentionStep(snapshot, judged) {
+  const step = snapshot.attention?.step;
+  if (!step) return judged;
+  judged.step = step;
+  judged.landed = snapshot.attention.landed === true;
+  return judged;
+}
+
 export function assessStillAttention(job = {}, snapshot = {}) {
+  return withAttentionStep(snapshot, judgeStillAttention(job, snapshot));
+}
+
+function judgeStillAttention(job = {}, snapshot = {}) {
+  const step = snapshot.attention?.step;
+  if (step && step !== 'rest' && snapshot.attention?.landed === false) {
+    const measured = measuredAttention(snapshot);
+    return {
+      ok: false,
+      verdict: 'miss',
+      reason: 'step-not-landed',
+      step,
+      landed: false,
+      ...(measured || {}),
+    };
+  }
+
   const expect = attentionAssertKind(job);
   if (!expect) {
     const measured = measuredAttention(snapshot);
@@ -1550,6 +1856,7 @@ function stillJobFromPair(recipe, viewport, format, kind) {
     prepare.hover = Object.freeze(hover.length ? hover : pairSelectors(pair, 'selector'));
   } else if (kind === 'keys') {
     if (pair.focus) prepare.focus = pair.focus;
+    if (pair.lands) prepare.lands = pair.lands;
     const keys = Array.isArray(pair.keys) ? pair.keys : (pair.keys ? [pair.keys] : []);
     prepare.keys = Object.freeze([...keys]);
   }

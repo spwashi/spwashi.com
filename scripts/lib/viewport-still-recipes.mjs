@@ -275,6 +275,7 @@ export const VIEWPORT_STILL_RECIPES = Object.freeze([
     }),
     keys: Object.freeze({
       focus: '#about-frame .mode-switch [data-set-mode="reading"]',
+      lands: '#about-frame .mode-switch [data-set-mode="kernel"]',
       keys: Object.freeze(['Tab']),
       wonder: 'Tab from .reading must land on ^kernel. If the still has no focus ring, the keyboard path never sat.',
       captureValue: 'About opening after Tab from the reading lens.',

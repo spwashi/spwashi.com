@@ -64,6 +64,8 @@ import {
   classifyCaptureFailure,
   attentionMissError,
   attentionReceipt,
+  attentionStepKind,
+  attentionStepRequest,
   recaptureJobIds,
   reviewChapterFor,
   buildCaptureIndex,
@@ -1174,7 +1176,7 @@ async function applyCapturePrepare(session, job) {
         await new Promise((r) => requestAnimationFrame(r));
       }
     }
-    if (${JSON.stringify(Boolean(job.assertAttention === 'spend' || job.prepare?.focus))}) {
+    if (${JSON.stringify(Boolean((job.assertAttention === 'spend' || job.prepare?.focus) && keys.length === 0))}) {
       const deadline = Date.now() + 1800;
       while (Date.now() < deadline) {
         const groove = html.getAttribute('data-spw-reading-groove');
@@ -1185,7 +1187,45 @@ async function applyCapturePrepare(session, job) {
     return true;
   })()`, evaluateTimeoutMsFor(job));
   if (keys.length) await applyKeyPrepare(session, keys, job);
-  if (hover.length) await applyPointerHover(session, hover, job);
+  const hoverMissed = hover.length ? await applyPointerHover(session, hover, job) : [];
+  return readPrepareStep(session, job, {
+    hoverMissed: hoverMissed.length > 0,
+    waitGroove: keys.length > 0 && Boolean(job.assertAttention === 'spend' || job.prepare?.focus),
+  });
+}
+
+function attentionStepExpression(request, { hoverMissed = false, waitGroove = false } = {}) {
+  const body = { ...request, hoverMissed };
+  return `(async () => {
+    const html = document.documentElement;
+    if (${waitGroove ? 'true' : 'false'}) {
+      const deadline = Date.now() + 1800;
+      while (Date.now() < deadline) {
+        const groove = html?.getAttribute('data-spw-reading-groove');
+        if (groove === 'on' || groove === 'off') break;
+        await new Promise((r) => requestAnimationFrame(r));
+      }
+    }
+    try {
+      const mod = await import('/public/js/runtime/attention/capture-pins.js');
+      return mod.readAttentionStep(document, ${JSON.stringify(body)});
+    } catch {
+      return null;
+    }
+  })()`;
+}
+
+async function readPrepareStep(session, job, { hoverMissed = false, waitGroove = false } = {}) {
+  const request = attentionStepRequest(job);
+  if (attentionStepKind(request) === 'rest') {
+    return { step: 'rest', landed: true, section: '', probe: '', focusWithin: false, groove: '' };
+  }
+  const report = await evaluateProbe(
+    session,
+    attentionStepExpression(request, { hoverMissed, waitGroove }),
+    evaluateTimeoutMsFor(job),
+  );
+  return report && typeof report === 'object' ? report : null;
 }
 
 const KEY_CODES = Object.freeze({
@@ -1212,6 +1252,7 @@ async function applyKeyPrepare(session, keys, job) {
 }
 
 async function applyPointerHover(session, selectors, job) {
+  const missed = [];
   await session.send('Emulation.setEmulatedMedia', {
     features: [
       { name: 'hover', value: 'hover' },
@@ -1232,7 +1273,10 @@ async function applyPointerHover(session, selectors, job) {
         y: r.top + r.height / 2,
       };
     })()`, evaluateTimeoutMsFor(job));
-    if (!point?.found) continue;
+    if (!point?.found) {
+      missed.push(sel);
+      continue;
+    }
     await session.send('Input.dispatchMouseEvent', {
       type: 'mouseMoved',
       x: point.x,
@@ -1242,6 +1286,7 @@ async function applyPointerHover(session, selectors, job) {
     });
   }
   await sleep(180);
+  return missed;
 }
 
 function isTargetGoneError(error) {
@@ -1258,6 +1303,7 @@ async function captureJob(session, job, {
 }) {
   const started = performance.now();
   let box = null;
+  let prepareReport = null;
   if (job.canvas === 'card') {
     const snippet = job.snippet
       ? snippetCache.get(job.snippet) ?? await readFile(path.join(ROOT, job.snippet), 'utf8')
@@ -1267,7 +1313,7 @@ async function captureJob(session, job, {
     box = await measureSelector(session, job.selector, evaluateTimeoutMsFor(job))
       || await measureSelector(session, '[data-spw-capture-host="template"]', evaluateTimeoutMsFor(job));
   } else {
-    await applyCapturePrepare(session, job);
+    prepareReport = await applyCapturePrepare(session, job);
     const pinOverlay = Boolean(job.still && visitorOverlayPinJob(job));
     if (job.selector) {
       box = await measureSelector(session, job.selector, evaluateTimeoutMsFor(job), {
@@ -1301,9 +1347,21 @@ async function captureJob(session, job, {
   }
   const sha256 = createHash('sha256').update(buffer).digest('hex');
   const snapshot = { ...(box?.pretext || {}), ...(box || {}) };
+  if (prepareReport?.step) {
+    snapshot.attention = {
+      ...(snapshot.attention || {}),
+      step: prepareReport.step,
+      landed: prepareReport.landed === true,
+    };
+    if (prepareReport.focusWithin === true) snapshot.attention.focusWithin = true;
+  }
   const captureOccupancy = assessCaptureOccupancy(job, snapshot);
   const subjectFit = assessViewportSubject(job, snapshot, viewport);
   const stillAttention = assessStillAttention(job, snapshot);
+  if (prepareReport?.step && stillAttention.step == null) {
+    stillAttention.step = prepareReport.step;
+    stillAttention.landed = prepareReport.landed === true;
+  }
   const stillOverflow = assessStillOverflow(job, snapshot);
   if (!stillOverflow.ok) {
     throw new Error(`overflow-x: ${stillOverflow.reason}${snapshot.clipCulprit ? ' (' + snapshot.clipCulprit + ')' : ''} ${job.selector || ''}`.trim());

@@ -76,4 +76,31 @@ test('assemble skips a missing job and fails when a present job failed', () => {
   assert.equal(notice.ok, false);
   assert.equal(notice.jobs.attention.skipped, true);
   assert.deepEqual(notice.jobs.subjects.subjects, ['abc subject']);
+
+  const mapped = assembleNotice({
+    sha: 'abc',
+    jobs: {
+      month: null,
+      attention: { ok: true, failures: [] },
+    },
+  });
+  assert.equal(mapped.ok, true);
+  assert.equal(mapped.jobs.month.skipped, true);
+  const kept = assembleNotice({
+    sha: 'abc',
+    jobs: {
+      month: {
+        schema: 'month-receipt.v0',
+        ok: true,
+        day: 7,
+        week: 1,
+        weekClose: true,
+        ids: ['about-opening', 'research-opening', 'about-opening-dark'],
+        failures: [],
+      },
+    },
+  });
+  assert.equal(kept.jobs.month.day, 7);
+  assert.equal(kept.jobs.month.weekClose, true);
+  assert.equal(kept.ok, true);
 });
