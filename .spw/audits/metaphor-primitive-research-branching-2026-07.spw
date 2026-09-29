@@ -82,7 +82,7 @@ audit_run: .{
     modules: #[
       .{ id = `shell-disclosure` ; register = `field` ; carriers = #[`stacked-field`, `pointer-field`, `cycle-resonance`, `explore-posture field`][reg=set] ; guild = `orientation/canopy` }[reg=facet],
       .{ id = `navigation-locomotion` ; register = `technical + spell` ; carriers = #[`data-spw-navigation-locomotion`, `data-spw-spell-momentum`, `#>section.*`][reg=set] ; note = `travel coordinate — avoid ecology nouns here` }[reg=facet],
-      .{ id = `frame-navigator` ; register = `technical` ; carriers = #[`data-spw-nav-state`, keyboard spells`][reg=set] ; gap = `JetBrains metaphor in comments only — no field/ecology contract` }[reg=facet],
+      .{ id = `frame-navigator` ; register = `technical` ; carriers = #[`data-spw-nav-state`, `keyboard spells`][reg=set] ; gap = `JetBrains metaphor in comments only — no field/ecology contract` }[reg=facet],
       .{ id = `attention/section-handle` ; register = `field` ; carriers = #[`--field-balance`, `data-spw-resonance-probe echo`, `data-spw-cauldron-resonance`][reg=set] ; guild = `orientation + symbiosis` }[reg=facet]
     ][reg=set]
     css = #[`shell/chrome/*`, `chrome.css`, `section-context.css`, `floating-chrome.css`][reg=set]
