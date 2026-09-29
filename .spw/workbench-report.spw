@@ -73,6 +73,7 @@ expression = consumer[report]{defect.gap.built}<upstream>
     hypothesis = `memoize alternatives at bracket starts in the record grammar; the retry path has not been traced, so the 32-row block is a regression fixture, not a diagnosis`
   }[reg=facet]
   ~#consequence: "spw:integrity takes about 80 s here, and the gate cannot afford it; it runs nightly in CI instead"
+  ~#reproduced(2026-09-29): `the stray backtick is not only a fixture. .spw/audits/metaphor-primitive-research-branching-2026-07.spw line 85 carried keyboard spells\` with no opening mark: 22 KB in 7062 ms with 54 errors through the parser bundle, the slowest surface in the corpus. One backtick restored: 514 ms, 0 errors (14×). Nine more surfaces carry an odd backtick count; an odd count is not always an error, so they are a probe list, not a fix list`
   probe: `spw query --from .spw --selector pathRefs --count --stats --profile`
 }
 
@@ -160,6 +161,7 @@ expression = consumer[report]{defect.gap.built}<upstream>
   ~#reading: `--json is the only composable path, which undercuts the dual-read premise`
   fix: "make collate products parse as input, so census | query composes"
   ~#note(this matters upstream): "@precipitates states the invariant that every stage renders its precipitate as valid Spw. Rendering is not the same as being re-readable."
+  ~#repeated(2026-09-29, this site): `the wander receipt (npm run sense -- wander <seed>) prints #>wander seed=wash n=6 and rows like recipes-hero-dark<pocket>{}: Spw-shaped lines with a JSON twin (wander-receipt.v0) behind them. The consumer made the same gap it reports here. Name it before calling the receipt Spw`
 }
 
 ^"instrumentation"{
@@ -288,7 +290,7 @@ expression = consumer[report]{defect.gap.built}<upstream>
   }[reg=facet]
   expression_kinship: .{
     built = ~"../scripts/build-expression-manifest.mjs"
-    measured = `912 authored data-spw-semantic-expression values parse; the manifest precipitates subject, mode, parts, projection, scope, and charge for the browser at build time`
+    measured = `914 authored data-spw-semantic-expression values parse (2026-09-29); the manifest precipitates subject, mode, parts, projection, scope, and charge for the browser at build time`
     would_be = `spw kin <root>: the same six fields for every expression in a corpus, grouped by subject and mode; fingerprint already does one expression`
   }[reg=facet]
   axes_index: .{
@@ -319,6 +321,61 @@ expression = consumer[report]{defect.gap.built}<upstream>
   ~#reading(the pattern): `the site measures what the corpus claims, runs, and promises; the CLI measures what the corpus is. The second set is where the next commands are.`
   probe: `node scripts/spw-snippets.mjs; npm run ecology:language; node scripts/spw-dimensional-index.mjs; npm run wonder; npm run plans:index:check`
 }
+
+^"bundle_parse_2026_09_29"{
+  ~#note: "Measured with a quiet machine (load average 2 to 6) through the emitted parser bundle, not the CLI; the 2026-09-22 CLI numbers ran at load 10 to 60, so compare ratios within a row, not across rows."
+  claim: "The plain-JS bundle the site already ships reads the whole consumer corpus in under a minute with no loader, which makes the CLI's per-call boot the larger avoidable cost for small questions."
+  measured: .{
+    surfaces = `923 tracked .spw files outside the mount, 5.94 MB (the tree has grown since the 378-surface run)`
+    import_ms = 3
+    parse_s = 53.3
+    rate = `109 KB/s across the corpus`
+    clean = 839
+    with_errors = 84
+    slowest_twenty_share = `31% of parse time`
+  }[reg=facet]
+  ~#reading: `boot is about 1 s a call through tsx and 3 ms through the bundle; for a one-expression question the loader is the whole bill`
+  fix: "carry parser_bundle upstream: emit the CLI's parser as JS beside the tsx route, and let one-surface commands (fingerprint, lint on a file) take that path"
+  probe: `node -e "…import('./public/js/semantic/spw-workbench-parser.js') then parse every git ls-files '*.spw' outside _workbench, timing each"`
+}[reg=facet]
+
+^"regex_extraction_of_expressions"{
+  ~#severity(reusable): "the second time a consumer's regex disagreed with the parser; the parser was right both times"
+  claim: "Spw written inside HTML attributes is extracted by hand, and a capsule's > ends a naive start-tag match. The site's copy accessor audit matched <tag [^>]*> and cut every design[worktable]{slots.kinds.contracts}(route)<part> short."
+  measured: .{
+    with_expression_before = `35 of 91 copy units`
+    with_expression_after = `76 of 92 on the parser fix alone; 85 of 101 on the final tree`
+    flat_only_before_after = `42 → 5`
+    misread_hosts = `about 41, each carrying a capsule in an attribute value`
+  }[reg=facet]
+  ~#reading: `the language puts < and > inside a value that HTML tooling treats as tag punctuation; every consumer that scans markup will meet this`
+  fix: "a documented quote-aware attribute run for Spw-in-HTML, or spw query --from <html-root> --attr data-spw-semantic-expression so no consumer writes the regex"
+  built = ~"../scripts/lib/page-copy-audit.mjs"
+  probe: `npm run audit:copy:accessor`
+}[reg=facet]
+
+^"ideas_2026_09_29"{
+  ~#note: "Ideas from using the corpus this week. Each already runs on the site side; each is a question the CLI could ask."
+  seeded_sample: .{
+    built = ~"../scripts/lib/visual-capture-plan.mjs"
+    measured = `wanderBatch hashes a seed through public/js/kernel/day-seed.js, the picker the runtime uses; the same seed draws the same six stills`
+    would_be = `spw sample --seed <s> --n <k>: a reproducible handful of surfaces to lint, parse, or fingerprint here and there, when census, graph, and measure cost five to seven minutes each`
+  }[reg=facet]
+  walk_as_record: .{
+    built = ~"../design/experiments/spellcraft/index.html"
+    measured = `six authored spells, each spell[wander]{…}(<slug>)<still> plus a walk, hold, cast, notice, and upkeep line; the wander reads them back from the page`
+    would_be = `a profile for a walk record (seed, route, hold, cast, notice, upkeep) that lint can hold a surface to, the way first-line review decisions are held`
+  }[reg=facet]
+  mode_as_speaker: .{
+    built = ~"./caches/speech-bubble-voices-2026-09.spw"
+    measured = `slop[deskar]{fatigue.then.gate}(turn)<bubble> parses clean: complete, 0 errors, 0 warnings, Sequence`
+    would_be = `spw kin could report the mode slot's vocabulary per subject, so a reader can see when a mode names a character rather than a posture`
+  }[reg=facet]
+  lexer_only_backticks: .{
+    measured = `one unbalanced backtick cost one surface 7062 ms; nine more surfaces have odd counts`
+    would_be = `spw lint --backticks: a lexer-only pass, milliseconds over the corpus, that names the line before anyone parses it`
+  }[reg=facet]
+}[reg=facet]
 
 ^"validation"{
   probe: `npm run spw:integrity && npm run spw:dimensions`
