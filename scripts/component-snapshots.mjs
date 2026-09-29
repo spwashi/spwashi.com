@@ -72,6 +72,7 @@ import {
   STILL_ATTENTION_READ_EXPRESSION,
   captureScriptOff,
   wanderBatch,
+  loadWanderSpell,
   formatWanderReceipt,
   WANDER_DEFAULT_COUNT,
 } from './lib/visual-capture-plan.mjs';
@@ -1473,6 +1474,7 @@ async function main() {
   const wander = options.profile === 'wander'
     ? wanderBatch({
       seed: options.seed ?? undefined,
+      spell: loadWanderSpell(options.seed),
       // The receipt names only stills the budget will visit, so a replay never claims a dropped one.
       n: wanderBudget ? Math.min(wanderCount, wanderBudget) : wanderCount,
     })

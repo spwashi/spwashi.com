@@ -21,6 +21,8 @@ import {
   captureSearchParams,
   conditionClusterKey,
   formatWanderReceipt,
+  loadWanderSpell,
+  readWanderSpell,
   isImageRecipe,
   nightlyStillState,
   parseSpwCaptureTokens,
@@ -234,4 +236,62 @@ test('--count past the profile budget stretches it; a hand-set --budget trims th
   assert.equal(trimmed.wander.n, 5);
   assert.deepEqual(trimmed.jobs.map((job) => job.id).sort(), [...trimmed.wander.ids].sort());
   assert.equal(trimmed.wander.jobs[0].image, true);
+});
+
+const SPELL_FIXTURE = `<ol>
+  <li id="wander-wash" data-spw-spell="wash" data-spw-semantic-expression="spell[wander]{route.image.ink}(wash)<still>">
+    <strong>wash</strong>
+    <dl>
+      <dt>walk</dt><dd><a href="/recipes/#recipe-field">/recipes/#recipe-field</a> with the dark palette on</dd>
+      <dt>hold</dt><dd>an image: the wash</dd>
+      <dt>cast</dt><dd><em>Nourish</em></dd>
+      <dt>notice</dt><dd>ink that collapses</dd>
+      <dt>sense</dt><dd><code>npm run sense -- wander wash</code> · still <code>recipes-hero-dark</code></dd>
+    </dl>
+  </li>
+  <li data-spw-spell="seats"><dl><dt>walk</dt><dd><a href="/design/components/#lens-seats">seats</a></dd><dt>sense</dt><dd>no still yet</dd></dl></li>
+</ol>`;
+
+test('a spell reads its walk, hold, cast, notice and still from the bench', () => {
+  const spell = readWanderSpell(SPELL_FIXTURE, 'wash');
+  assert.equal(spell.route, '/recipes/#recipe-field');
+  assert.equal(spell.walk, '/recipes/#recipe-field with the dark palette on');
+  assert.equal(spell.cast, 'Nourish');
+  assert.equal(spell.still, 'recipes-hero-dark');
+  assert.equal(readWanderSpell(SPELL_FIXTURE, 'seats').still, null);
+  assert.equal(readWanderSpell(SPELL_FIXTURE, 'missing'), null);
+  assert.equal(readWanderSpell(SPELL_FIXTURE, 'wash"><x'), null);
+});
+
+test('a named spell leads with its own still, as written, and the receipt prints its lines', () => {
+  const spell = readWanderSpell(SPELL_FIXTURE, 'wash');
+  const receipt = wanderBatch({ seed: 'wash', n: 5, spell });
+  assert.equal(receipt.ids[0], 'recipes-hero-dark');
+  assert.deepEqual(receipt.jobs[0].axes, []);
+  assert.equal(receipt.n, 5);
+  assert.equal(new Set(receipt.ids).size, 5);
+  assert.ok(receipt.jobs.some((job) => job.image));
+  assert.equal(receipt.spell.pictured, true);
+  const text = formatWanderReceipt(receipt);
+  assert.match(text, /walk\s+\/recipes\/#recipe-field/);
+  assert.match(text, /cast\s+Nourish/);
+  assert.match(text, /as written/);
+  const unpictured = wanderBatch({ seed: 'seats', n: 4, spell: readWanderSpell(SPELL_FIXTURE, 'seats') });
+  assert.equal(unpictured.spell.pictured, false);
+  assert.match(unpictured.reading, /walk it by hand/);
+});
+
+test('every spell on the bench loads, and every still it names exists', () => {
+  const html = readFileSync(new URL('../../design/experiments/spellcraft/index.html', import.meta.url), 'utf8');
+  const slugs = [...html.matchAll(/data-spw-spell="([a-z0-9-]+)"/g)].map((match) => match[1]);
+  assert.ok(slugs.length >= 5);
+  for (const slug of slugs) {
+    const spell = loadWanderSpell(slug);
+    assert.ok(spell, slug);
+    assert.ok(spell.route?.startsWith('/'), `${slug} walks somewhere`);
+    assert.ok(spell.hold && spell.cast && spell.notice, `${slug} names hold, cast, notice`);
+    const named = html.slice(html.indexOf(`data-spw-spell="${slug}"`)).split('</li>')[0].match(/still <code>([a-z0-9-]+)<\/code>/);
+    if (named) assert.equal(spell.still, named[1], `${slug}'s named still is a recipe`);
+  }
+  assert.equal(loadWanderSpell('2026-09-29'), null);
 });

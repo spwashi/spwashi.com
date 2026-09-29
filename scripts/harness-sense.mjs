@@ -25,6 +25,7 @@ import {
   WANDER_DEFAULT_COUNT,
   formatWanderReceipt,
   wanderBatch,
+  loadWanderSpell,
   wanderCaptureCommand,
 } from './lib/visual-capture-plan.mjs';
 
@@ -83,7 +84,7 @@ export function parseWanderArgs(rest = []) {
 /** Dry by default: the receipt, then the one command that captures it. */
 export function wanderSense(rest = []) {
   const { seed, count, run } = parseWanderArgs(rest);
-  const receipt = wanderBatch({ seed, n: count });
+  const receipt = wanderBatch({ seed, n: count, spell: loadWanderSpell(seed) });
   const command = wanderCaptureCommand(receipt);
   return { receipt, command, run, text: `${formatWanderReceipt(receipt)}\ncapture: ${command}\n` };
 }
