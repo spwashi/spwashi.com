@@ -338,10 +338,10 @@
           ".",
           "^"
         ],
-        "title": "Give people a place to begin and a reason to stay",
-        "summary": "A homepage can do both: point to useful work and create enough atmosphere to invite a second look.",
-        "href": "/topics/software/spw/",
-        "cta": "Learn Spw"
+        "title": "Read one page of Spw",
+        "summary": "spw.quest now opens as a guide: one annotated page, twelve sigils and a couple, and four ways to hold things. Installation is one link away.",
+        "href": "/about/domains/spw.quest/",
+        "cta": "Open the guide"
       },
       "wonder": {
         "label": "Daily wonder",
@@ -526,10 +526,11 @@
         "intents": [
           "@"
         ],
-        "title": "Turn curiosity into a clear conversation",
-        "summary": "A good weekly card can invite work, not merely attention.",
-        "href": "/services/",
-        "cta": "See services"
+        "title": "Start with lunch, a fix, or a page check",
+        "summary": "Small jobs price themselves in the bundle composer, with a count where it helps. The month's rhythm quietly marks which lanes are in season.",
+        "href": "/services/#compose-a-bundle",
+        "cta": "Compose a bundle",
+        "why": "A small ask should never have to wait for a proposal."
       },
       "wonder": {
         "label": "Weekly wonder",
@@ -551,25 +552,25 @@
         "intents": [
           "~"
         ],
-        "title": "RPG Wednesday makes art around the lore.land canon",
-        "summary": "The group streak is 314 days and the pet has outfits. Wednesday is still art and story from the lore.land pantry. Bring one small, otherwise inconsequential wonder.",
-        "href": "/play/rpg-wednesday/",
-        "cta": "Sit at the table",
-        "why": "The table is the practice; streak math names the 314-day pet; Art is where a scene can become an object.",
+        "title": "Thirty-one pieces in October",
+        "summary": "Draw along with the RPG Wednesday table on your own time: a piece a day, or a batch scanned by the 31st. Mark cycles A, B, and C as you reach them.",
+        "href": "/play/rpg-wednesday/#inktober-31",
+        "cta": "See the month",
+        "why": "The closes on the 13th, 26th, and 31st give a month of drawing somewhere to land.",
         "presentation": "modal",
         "promotion": {
           "kind": "event",
-          "audience": "players, streak chats, and people who want a physical piece from the world",
-          "offer": "Join Wednesday with one small wonder, then look at the folio worktable",
-          "proof": "RPG Wednesday is the live table; /topics/mental-health/#streak-math names 314 days and outfits; lore.land is the pantry.",
-          "objection": "Community art is not automatically folio inventory.",
-          "urgency": "Wednesday is the repeating door; autumn is a season of small returns.",
+          "audience": "people who draw, doodle, or want a reason to finish a set this month",
+          "offer": "Draw along on your own time and mark each close as you reach it",
+          "proof": "The Inktober section on RPG Wednesday holds the day strip, the three closes, and scanning tips.",
+          "objection": "Nothing to join or sign up for; the table is open whenever you are.",
+          "urgency": "October's closes land on the 13th, 26th, and 31st.",
           "tone": "inviting",
           "theme": "glass",
           "handles": [
             "rpg-wednesday",
+            "inktober",
             "lore.land",
-            "folio",
             "art"
           ],
           "ctaStyle": "primary",
