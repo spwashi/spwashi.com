@@ -7,7 +7,7 @@
 # public/images/renders/_raw/ (gitignored).
 
 #>prompt_seeds_2026_09
-#:cache #!prompts #!seeds #!images #!midjourney
+#:cache #!prompts #!seeds #!images #!midjourney #!grok_imagine
 #:operation #!cache
 #:fixity #!experimental
 #:layer #!pragmatics
@@ -43,6 +43,17 @@ expression = prompt[seed]{render;read;promote}<image>
     `3 · the bulb stands in for the O in ATTENTI(bulb)N., on a grained teal field. Clever but reads as "ATTENTIØN"; teal ties it to tealstripesvibes.`
   ][reg=set]
   promote = `none yet: the mark is the creator's choice between 1 and 2`
+}[reg=facet]
+
+^"grok_imagine"{
+  status = `intake shape only; no Grok Imagine session has been read into this cache yet`
+  source = `a Grok Imagine run starts from one scanned piece, not from text alone: the seed is the piece id (folio-YYYY-MM-DD-NN, prime-YYYY-MM-DD-NN) plus the motion asked for`
+  seed = `the piece id, the motion prompt, the date, and the session folder public/images/renders/_raw/<date>-imagine/ (gitignored, beside the MJ session folders)`
+  read = `every return is looked at and read in one line, as for MJ: what moves well, what fails (motion garbles lettering, so a handwritten folio's words are checked against the scan), which job it could do`
+  promote = `at most one return per session, through optimize-image-asset, to public/images/renders/imagine/<date>/<slug>-imagine-NN.<ext>, so the ~ mark applies by path`
+  sidecar = `generator: "Grok Imagine", source: <piece id>, date, and alt text that describes the scan, since the scan stays the reading layer`
+  lineage = `the source piece's sidecar gains the promoted file in ^"imagine".derivatives as {path, generator, date, status}; tier files (thumb, display, hero, full) are never called derivatives here`
+  promoted = `none`
 }[reg=facet]
 
 do_not = #[

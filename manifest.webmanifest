@@ -45,6 +45,11 @@
   ],
   "shortcuts": [
     {
+      "name": "Art",
+      "short_name": "Art",
+      "url": "/design/folios/"
+    },
+    {
       "name": "Software",
       "short_name": "Software",
       "url": "/topics/software/"

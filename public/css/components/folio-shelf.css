@@ -43,6 +43,10 @@
 
 .folio-tile__open {
   display: grid;
+  /* An auto track's floor is the thumb's intrinsic width, so at pocket the
+     picture ran ~20px past its column to the screen edge. A zero floor lets
+     it take the column; the img's max sizes keep the scan whole. */
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.4rem;
   inline-size: 100%;
   padding: 0.45rem;
