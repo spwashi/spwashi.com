@@ -74,6 +74,7 @@
     "folio:highres:rotate": "node scripts/folio-highres-rotate.mjs",
     "audit:living-terms": "node scripts/audit-living-terms.mjs",
     "audit:route-links": "node scripts/audit-route-links.mjs",
+    "audit:braces": "node scripts/audit-braces.mjs",
     "audit:copy:clock": "node scripts/audit-copy-clock.mjs",
     "audit:folio-highres": "node scripts/audit-folio-highres.mjs",
     "audit:operator-controls": "node --import ./scripts/lib/register-public-imports.mjs scripts/audit-operator-controls.mjs",
