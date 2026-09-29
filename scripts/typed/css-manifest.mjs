@@ -84,6 +84,7 @@ export const ROUTE_SCOPES = Object.freeze({
         '/public/css/systems/scene-interaction.css',
     ],
     privacy: [],
+    projects: [],
     recipes: ['/public/css/routes/surfaces/recipes.css'],
     research: [],
     'rpg-wednesday': [

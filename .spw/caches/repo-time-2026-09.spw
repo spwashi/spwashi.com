@@ -1,0 +1,90 @@
+# Cache 2026-09-29 — time spent across the public repositories, read as a line of work, and the arcs a mentee could walk with analogous wonder.
+# Direction: the creator is combing old repositories to wonder about the time spent and to consider how they might mentor someone with analogous wonder.
+# Operation: prime. The /projects/ hub carries the readings publicly; the mentoring arcs stay here as questions for the creator's own words.
+
+#>repo_time_2026_09
+#:cache #!time #!lineage #!mentoring
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@projects_hub: ~"../../projects/index.html"
+@workbench_project: ~"../../projects/spw-workbench/index.html"
+@site_project: ~"../../projects/spwashi-com/index.html"
+@folios_project: ~"../../projects/folios/index.html"
+@workbench_report: ~"../workbench-report.spw"
+@plan: ~"../../.agents/plans/projects-hub/PLAN.md"
+
+operation = "prime"
+fixity = "experimental"
+
+^"method"{
+  source = `bare, blob-less clones of the public github.com/spwashi repositories; git log --all by author date, each commit counted once`
+  measured = `2026-09-28 for the census; spwashi.com and spw-workbench re-read locally on 2026-09-29 from HEAD`
+  caveat = `a commit is a save, not an hour; an active day is a date with at least one commit; rebased or imported history can shift author dates (spw-js runs 2021 to 2024 by author date)`
+  scope = `a chosen set of public repositories (25 cloned, 24 with history); counts describe that set, not the whole profile; never publish a total; spw is empty on GitHub`
+}[reg=facet]
+
+^"readings"{
+  #:repo = first .. last · commits · active days · busiest month · longest streak
+  factshift = `2016-07-10 .. 2017-01-22 · 60 · 31 · 2016-07 (27) · 4`
+  smjs = `2017-01-29 .. 2019-01-27 · 236 · 89 · 2017-06 (52) · 6`
+  smphp = `2017-07-31 .. 2019-01-27 · 151 · 78 · 2017-09 (31) · 7`
+  wanghorn = `2017-11-14 .. 2018-12-27 · 333 · 110 · 2018-04 (86) · 9`
+  smphp_mysql = `2018-04-11 · 2 · 1`
+  spw_client = `2020-01-16 .. 2020-02-17 · 16 · 10 · 2020-01 (10) · 3`
+  ts_language = `2020-09-14 .. 2021-06-24 · 36 · 14 · 2021-02 (27) · 3`
+  spw_editor = `2020-10-04 .. 2021-11-24 · 33 · 18 · 2021-04 (18) · 2`
+  react_d3 = `2021-02-04 .. 2021-11-17 · 44 · 14 · 2021-03 (21) · 2`
+  spw_js = `2021-02-17 .. 2024-11-08 · 97 · 46 · 2021-10 (28) · 3`
+  frontend_codebase = `2021-12-20 .. 2023-12-24 · 257 · 58 · 2023-04 (132) · 5`
+  spw_parser = `2022-06-14 .. 2025-10-18 · 68 · 22 · 2022-06 (21) · 7`
+  portfolio = `2022-11-15 .. 2022-11-28 · 8 · 2`
+  animation_composition = `2023-07-12 · 2 · 1`
+  golang_images = `2023-10-17 .. 2023-12-14 · 6 · 3`
+  d3v7 = `2023-11-02 .. 2024-05-06 · 276 · 44 · 2023-11 (143) · 10`
+  parser = `2023-11-09 .. 2024-01-11 · 5 · 3`
+  image_wonder = `2023-12-24 · 5 · 1`
+  fullstack = `2023-12-27 · 1 · 1`
+  tealstripesvibes = `2024-01-29 .. 2024-02-19 · 7 · 4`
+  spwashi_com = `2024-01-11 .. 2026-09-29 · 1691 · 126 · 2026-09 (611) · 18 (census streak); by year 30 / 0 / 1661`
+  spw_workbench = `2026-01-08 .. 2026-09-22 · 506 · 69 · 2026-02 (146) · 11`
+  spwashi_click = `2026-02-28 .. 2026-03-01 · 30 · 2`
+  spwashi_work = `2026-02-28 .. 2026-03-01 · 6 · 2`
+  folios_on_site = `2026-06-13 .. 2026-09-29 · 40 commits · 20 active days touching the shelf, scans, and release records; the stack itself predates git`
+}[reg=facet]
+
+^"arcs"{
+  tag_to_fit = `2016–17 factshift: break concepts into linked pages so content fits a learner. A thread the builder read into later repos; unconfirmed by the creator.`
+  frameworks_to_learn_frameworks = `2017–19 SmJS, SmPHP, smphp-mysql, wanghorn: 722 commits building a framework pair and the practice app that ran on both. wanghorn's README calls it practice for learning architecture and interoperability.`
+  language_to_learn_parsing = `2020–21 spw-client, ts-language, spw-editor, spw-js: an interface, a grammar toolkit, an editor, then the grammar-parser-runtime. spw-js names the merge: content tagging for education plus a philosophy project about analogies.`
+  rewrite_and_visualize = `2021–23 frontend-codebase (React; its to-do list in Spw brackets), spw-parser (a from-scratch rewrite), react-d3 alongside.`
+  small_experiments = `2023–24 D3v7 (143 commits in one month), parser in the browser, Go image sketches, a PSD layer compositor that renders short movies, tealstripesvibes.com. Short, many, one-day starts.`
+  surface_and_bench = `2024–26 spwashi.com, then spw-workbench mounted into it. The framework years end in a framework-free site; the parser years end in a workbench that the site reports on.`
+  folios = `The laminated stack runs beside all of it, off git; the site began scanning it in September 2026.`
+}[reg=facet]
+
+^"mentoring"{
+  #:handed back — questions, not prescriptions; none of this is route copy
+  heard = `Creator, 2026-09-29: combing old repositories to wonder about the time spent and to consider how they might mentor someone with analogous wonder.`
+  tiny_framework = `?[mentor]{frameworks_to_learn_frameworks} Would you hand a mentee the SmJS/SmPHP move — write a small framework pair to learn what frameworks do — and what would you tell them to stop at, knowing wanghorn peaked at 86 commits in a month?`
+  language_to_parse = `?[mentor]{language_to_learn_parsing} Is writing a language the way you would teach parsing, or was it the way the question (where do two understandings stop sharing ground) chose for you? Which would a mentee need first?`
+  own_editor = `?[mentor]{own_editor} spw-editor had 18 active days. What does building an editor for your own language teach that a parser alone does not, and is it a step you would recommend or one you would warn about?`
+  publishing_surface = `?[mentor]{publishing_surface} The site went from 30 commits in 2024 and none in 2025 to 1661 in 2026. What changed, and is that change something a mentee can be given or only something they can notice in themselves?`
+  bench_that_reports = `?[mentor]{bench_that_reports} The workbench report measures the tool by using it (a stray backtick, 514 ms to 7062 ms). Would you teach a mentee to keep a report addressed to their own tools, and at what stage?`
+  small_starts = `?[mentor]{small_starts} Nine repositories have fewer than ten commits. Are short starts evidence of wonder to protect, or of a habit to temper? How would you say that to someone early in it?`
+  held_things = `?[mentor]{held_things} The folios run off git for years. Does a mentee with analogous wonder need a practice outside the code, and would you name the folios as yours when you say so?`
+  time_as_evidence = `?[mentor]{time_as_evidence} The public pages read time as commits and active days. Is that the clock you would teach, or would you rather a mentee keep a different one?`
+}[reg=facet]
+
+^"open_questions"{
+  mentoring_page = `Whether a public mentoring room ever exists, and in whose words. Nothing mentoring-shaped is on /projects/ until the creator writes it.`
+  more_projects = `Which of the lineage repositories, if any, earn their own leaf (factshift and D3v7 are the likely candidates by weight).`
+  nav = `Whether Projects joins the global nav; see the plan.`
+}[reg=facet]
+
+validation: #[
+  `git log --format=%ad --date=short HEAD | wc -l`
+  `git -C .spw/_workbench log --format=%ad --date=short | sort -u | wc -l`
+  `npm run spw:integrity`
+][reg=set]
