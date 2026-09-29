@@ -93,6 +93,8 @@ async function main() {
 
   execFileSync(process.execPath, ['--test', 'workers/autonomous-feedback/test/routes.test.mjs'], { cwd: ROOT, stdio: 'inherit' });
   execFileSync(process.execPath, ['--test', 'workers/spw-quest/test/routes.test.mjs'], { cwd: ROOT, stdio: 'inherit' });
+  execFileSync(process.execPath, ['--test', 'workers/site-hub-next/test/doors.test.mjs'], { cwd: ROOT, stdio: 'inherit' });
+  execFileSync(process.execPath, ['--test', 'workers/factshift-center/test/snapshot.test.mjs'], { cwd: ROOT, stdio: 'inherit' });
   console.log(`[check:workers] ${inventory.units.length} units, ${seenHosts.size} hosts; quest and feedback routing verified`);
 }
 

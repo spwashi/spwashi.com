@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en"
+      data-app="factshift"
+      data-app-entry="spwashi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="description" content="spwashi@ — Factshift simulation secondary entry point">
+    <title>spwashi@</title>
+  <script type="module" crossorigin src="/assets/spwashi@-R84x7sg5.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/index-7ql9Nu9h.js">
+  <link rel="stylesheet" crossorigin href="/assets/index-aOiLguaM.css">
+  <link rel="stylesheet" crossorigin href="/assets/spwashi@-g0YoMZaz.css">
+</head>
+<body>
+    <header role="banner" data-region="header">
+        <h1>_spwashi@</h1>
+    </header>
+    <main role="main" data-region="canvas">
+        <a id="title-md5" tabindex="-1" aria-hidden="true"></a>
+        <svg id="simulation"
+             role="img"
+             aria-label="Force simulation canvas">
+            <g class="simulation-content" data-layer="scene">
+                <g class="simulation-rects" data-layer="rects"></g>
+                <g class="simulation-edges" data-layer="edges"></g>
+                <g class="simulation-nodes" data-layer="nodes"></g>
+            </g>
+        </svg>
+    </main>
+    <footer role="contentinfo" data-region="controls">
+        <button class="enable-sounds" data-action="enable-sounds" aria-label="Enable sounds">enable sounds</button>
+        <button class="disable-sounds" data-action="disable-sounds" aria-label="Disable sounds">disable sounds</button>
+    </footer>
+    <output id="timer" aria-label="Timer" data-role="timer"></output>
+</body>
+</html>
