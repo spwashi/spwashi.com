@@ -87,6 +87,7 @@
 @speech_bubble_voices_2026_09: ~"./speech-bubble-voices-2026-09.spw"  # thought trace re-voiced by a character: genre sibling on a (turn), speaker in the mode slot, page_persona altitude; bubbles as scanned image keys; store on the folio/services seed card; {mill.laminate.cure} as the laminate vessel; demo- and creator-gated
 @repo_time_2026_09: ~"./repo-time-2026-09.spw"  # time spent per public repo (commits, active days) read as arcs from factshift 2016 to the workbench; public on /projects/; mentoring arcs handed back as questions, not route copy
 @lore_arcs_2026_09: ~"./lore-arcs-2026-09.spw"  # prime: the arc bench at /projects/#arc-bench, deep-link only and removable; writer names element, audiences, beats; taste[arc] keeps the words; beat names, audiences, ?{} and mirrors stay experiments
+@living_terms_batch_01_2026_09: ~"./living-terms-batch-01-2026-09.spw"  # prime: batch 1 of the living-term voice work; seven decorated concepts with hosts, readings, sparks (drafts, not definitions), wonders and empty chosen slots; delivery (title, <dfn> or both) waits on the parent cache's open question
 
 operation = "align"
 fixity = "tending"
