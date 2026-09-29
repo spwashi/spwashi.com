@@ -5,6 +5,7 @@ import {
 } from '/public/js/kernel/dom-contracts.js';
 import { composeModeSeatExpression } from '/public/js/semantic/spw-compose.js';
 import { ensureViewTransitionTap } from '/public/js/kernel/view-transition-tap.js';
+import './lens-term-note-row.js';
 
 const LENS_MODE_QUERY_KEYS = Object.freeze(['spw-lens', 'lens', 'mode']);
 const DOCUMENT_NODE = 9;

@@ -53,6 +53,7 @@ import {
 import { collapseText as normalizeText } from '/public/js/kernel/text-normalization.js';
 import { detectOperator, getOperatorDefinition } from '/public/js/kernel/shared.js';
 import { bindArcLifecycle } from '/public/js/interface/arc-lifecycle.js';
+import { buildTermNoteContext, readTermNoteRows } from '/public/js/semantic/term-note-rows.js';
 
 /* The grounded memory itself (registry, couplings, sigils) is kernel storage
    in kernel/grounded-registry.js; this file is the hand that writes it.
@@ -891,6 +892,21 @@ function buildConceptPopover(term) {
     row.className = 'spw-concept-popover__row';
     key.className = 'spw-concept-popover__label';
     val.className = 'spw-concept-popover__value';
+    key.textContent = label;
+    val.textContent = value;
+    row.append(key, val);
+    grid.append(row);
+  });
+  // Rows from whatever is mounted (search, cauldron, lens, carried intent),
+  // read now that the note is opening and never before.
+  readTermNoteRows(buildTermNoteContext(term)).forEach(({ label, value, href }) => {
+    const row = document.createElement('div');
+    const key = document.createElement('span');
+    const val = document.createElement(href ? 'a' : 'span');
+    row.className = 'spw-concept-popover__row';
+    key.className = 'spw-concept-popover__label';
+    val.className = 'spw-concept-popover__value';
+    if (href) val.href = href;
     key.textContent = label;
     val.textContent = value;
     row.append(key, val);

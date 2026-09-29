@@ -6,6 +6,7 @@
  * resolution motion so search can group and filter by structure.
  *
  * Output: public/data/site-search-index.json
+ *   (--out=<path> writes a trial copy elsewhere and leaves the stamp alone)
  */
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
@@ -17,6 +18,7 @@ import { buildRouteRuntimeManifest } from './typed/site-contracts/index.mjs';
 import { COMPONENT_FIXTURES } from '../public/js/kernel/component-fixtures.js';
 import { REGION_ECOLOGY_FIXTURES } from '../public/js/kernel/region-ecology-fixtures.js';
 import { componentSearchEntries } from './lib/visual-capture-plan.mjs';
+import { partialName, readLivingTerms } from './lib/living-terms.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -422,7 +424,51 @@ function buildSearchEntry(routeRecord, harvested = { handles: [], operators: [] 
   };
 }
 
-export async function generateSiteSearchIndex() {
+/**
+ * Living terms, one record per concept, listing where each is practised.
+ *
+ * Read through the one living-terms reader (scripts/lib/living-terms.mjs);
+ * this only reshapes its facts. There is no glossary: a record is the word as
+ * written (the spelling used most), the author's own definition when one was
+ * written (title), the first authored expression, and the routes it lives on
+ * with the nearest host id to land beside it. A term authored in a partial
+ * lands on its first including route and says how many routes carry it.
+ * Routes the manifest does not know are left out so no row links nowhere.
+ */
+export function buildTermEntries(read, { knownRoutes = null } = {}) {
+  const byConcept = new Map();
+  for (const term of read?.terms || []) {
+    if (!term.concept) continue;
+    const partial = partialName(term.route);
+    const on = partial ? term.includedOn || [] : [term.route];
+    const route = on[0];
+    if (!route || (knownRoutes && !knownRoutes.has(route))) continue;
+    const row = byConcept.get(term.concept) || { concept: term.concept, spellings: new Map(), definition: null, expression: null, routes: new Map() };
+    const text = String(term.text || '').trim();
+    if (text) row.spellings.set(text, (row.spellings.get(text) || 0) + 1);
+    row.definition ||= term.definition || null;
+    row.expression ||= term.expression || null;
+    const key = `${route}#${term.hostId || ''}`;
+    if (!row.routes.has(key)) {
+      const place = { route, hostId: term.hostId || null };
+      if (partial) Object.assign(place, { via: partial, reach: on.length });
+      row.routes.set(key, place);
+    }
+    byConcept.set(term.concept, row);
+  }
+  const order = new Map((read?.concepts || []).map((c, i) => [c.concept, i]));
+  return [...byConcept.values()]
+    .sort((a, b) => (order.get(a.concept) ?? Infinity) - (order.get(b.concept) ?? Infinity) || a.concept.localeCompare(b.concept))
+    .map((row) => ({
+      concept: row.concept,
+      text: [...row.spellings].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0]?.[0] || row.concept.replace(/-/g, ' '),
+      definition: row.definition,
+      routes: [...row.routes.values()].sort((a, b) => a.route.localeCompare(b.route) || String(a.hostId).localeCompare(String(b.hostId))),
+      expression: row.expression,
+    }));
+}
+
+export async function generateSiteSearchIndex({ output = OUTPUT, stamp = output === OUTPUT } = {}) {
   const manifest = await buildRouteRuntimeManifest();
   const components = componentSearchEntries({
     componentFixtures: COMPONENT_FIXTURES,
@@ -473,6 +519,8 @@ export async function generateSiteSearchIndex() {
     if (entry.motion) byMotion[entry.motion] = (byMotion[entry.motion] || 0) + 1;
   }
 
+  const terms = buildTermEntries(readLivingTerms({ root: ROOT }), { knownRoutes: new Set(routeByPath.keys()) });
+
   const sourceStamp = await computeManifestSourceStamp();
   // No clock in the committed file: the same routes give the same bytes, so
   // sessions that regenerate from the same pages cannot disagree about it.
@@ -482,29 +530,34 @@ export async function generateSiteSearchIndex() {
     routeCount: routes.length,
     componentCount: components.length,
     frameCount: frames.length,
+    termCount: terms.length,
     facets: {
       nestRoots: Object.keys(byNestRoot).sort(),
       kinds: Object.keys(byKind).sort(),
       motions: Object.keys(byMotion).sort(),
-      counts: { byNestRoot, byKind, byMotion, components: components.length, frames: frames.length },
+      counts: { byNestRoot, byKind, byMotion, components: components.length, frames: frames.length, terms: terms.length },
     },
     components,
     geometryLegend: OPERATOR_GEOMETRY_INDEX,
     routes,
     frames,
+    terms,
   };
 
-  await fs.mkdir(path.dirname(OUTPUT), { recursive: true });
-  await fs.writeFile(OUTPUT, `${JSON.stringify(payload)}\n`, 'utf8');
-  await writeManifestCacheStamp(sourceStamp);
+  await fs.mkdir(path.dirname(output), { recursive: true });
+  await fs.writeFile(output, `${JSON.stringify(payload)}\n`, 'utf8');
+  // A trial write elsewhere (--out) leaves the committed index's stamp alone.
+  if (stamp) await writeManifestCacheStamp(sourceStamp);
   return payload;
 }
 
-export async function main() {
-  const payload = await generateSiteSearchIndex();
-  console.log(`[search-index] wrote ${path.relative(ROOT, OUTPUT)}`);
+export async function main(argv = process.argv.slice(2)) {
+  const outArg = argv.find((arg) => arg.startsWith('--out='));
+  const output = outArg ? path.resolve(outArg.slice('--out='.length)) : OUTPUT;
+  const payload = await generateSiteSearchIndex({ output });
+  console.log(`[search-index] wrote ${path.relative(ROOT, output)}`);
   console.log(`[search-index] routes=${payload.routeCount} version=${payload.version}`);
-  console.log(`[search-index] kinds=${payload.facets.kinds.join(',')} components=${payload.componentCount} frames=${payload.frameCount}`);
+  console.log(`[search-index] kinds=${payload.facets.kinds.join(',')} components=${payload.componentCount} frames=${payload.frameCount} terms=${payload.termCount}`);
 }
 
 const isMain = process.argv[1]

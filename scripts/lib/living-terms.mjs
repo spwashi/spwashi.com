@@ -17,7 +17,7 @@
  * The reader reports facts only. It never drafts a definition.
  */
 import { execFileSync } from 'node:child_process';
-import { readdirSync, readFileSync, statSync } from 'node:fs';
+import { readdirSync, readFileSync, realpathSync, statSync } from 'node:fs';
 import path from 'node:path';
 
 /** Note rows @haptics fills from the term (wonder also from an ancestor). */
@@ -414,6 +414,10 @@ export function batchWorksheet({ concepts, terms }, n = 1, size = DEFAULT_BATCH_
 /** List term sources under root: route pages and partials, tracked or untracked, never ignored. */
 export function listTermSources(root) {
   try {
+    // Only a repository's own top level can trust ls-files: a staged snapshot
+    // under the ignored .tmp/ (manifest:staged) lists nothing, so walk it.
+    const top = execFileSync('git', ['rev-parse', '--show-toplevel'], { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+    if (realpathSync(top) !== realpathSync(root)) return walk(root, root).sort();
     const out = execFileSync('git', ['ls-files', '-co', '--exclude-standard', '--', '*index.html', '_partials/*.html'], { cwd: root, encoding: 'utf8', maxBuffer: 16 << 20, stdio: ['ignore', 'pipe', 'ignore'] });
     return [...new Set(out.split('\n').filter(Boolean))].filter((rel) => {
       const top = rel.split('/')[0];
