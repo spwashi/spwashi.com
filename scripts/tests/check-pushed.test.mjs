@@ -34,6 +34,10 @@ test('the pushed checkout is that commit, not the dirty working tree', () => {
     assert.ok(readdirSync(folio).some((name) => name.endsWith('.spw')));
     assert.equal(existsSync(path.join(tree.scratch, 'public/images/icon-192.png')), true);
     assert.equal(existsSync(path.join(tree.scratch, 'public/images/app-icon.svg')), true);
+    assert.equal(
+      existsSync(path.join(tree.scratch, 'public/images/assets/illustrations/garden-bed-atlas.spw')),
+      true,
+    );
     assert.equal(existsSync(path.join(tree.scratch, 'public/images/favicon.ico')), false);
     execFileSync('git', ['-C', tree.scratch, 'diff', '--check']);
     const status = execFileSync('git', ['-C', tree.scratch, 'status', '--short'], { encoding: 'utf8' })
