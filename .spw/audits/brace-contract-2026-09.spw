@@ -1,0 +1,43 @@
+# Brace Contract (2026-09)
+#
+# operation: audit
+# A brace in markup is a promise: `{` opens an objective boundary that a
+# subjective close answers, and a brace host is where brace-actions mounts.
+# The conventions said so; nothing read the routes against them.
+
+#>brace_contract_2026_09
+#:audit #!braces #!sigils #!ornaments #!referential-integrity
+#:operation #!audit
+#:fixity #!tending
+#:layer #!syntax
+
+@sensor: ~"../../scripts/audit-braces.mjs"
+@semantic_braces: ~"../conventions/semantic-braces.spw"
+@ornament_contract: ~"../conventions/ornament-contract.spw"
+@operator_semantics: ~"../conventions/operator-semantics.spw"
+
+operation = "audit"
+fixity = "tending"
+source = "creator, 2026-09-28: improve brace semantics across routes"
+
+expression = brace[contract]{sigil;value;ornament;header;delimiter}<host>
+
+^"sensor"{
+  run = `npm run audit:braces`
+  reads = `every tracked route (design/components and the generated catalog excluded); the host of a sigil or ornament is the nearest opening tag above it with data-spw-kind`
+  kinds = `open-sigil (a frame sigil ending in { on a host without data-spw-form="brace"); brace-value (data-spw-brace outside objective | subjective, the two values grammar/syntax.css paints); ornament-host (.spw-ornament-brace outside a brace host); header-sigil (.header-sigil without data-spw-operator); delimiters (.spw-delimiter { and } counts that differ)`
+  gate = `reports only; not part of check:local`
+}
+
+^"found_2026_09_28"{
+  before = `199 routes: 74 open-sigil, 4 brace-value, 2 ornament-host, 5 header-sigil, 4 delimiters`
+  fixed = `the five header sigils on the experiment pages now name the frame operator; the ornament map's brace specimen, which illustrated the rule it broke, is a brace host`
+  after = `74 open-sigil, 4 brace-value, 1 ornament-host (blog hero), 0 header-sigil, 4 delimiters`
+  values = `topics/search living terms carry braceBias words (objective-to-subjective ×2, balanced) and topics/software/spw a panel carries direction; each still reads as a brace to page-anatomy and key events, but no sheet paints it`
+  delimiters = `about/plans 1/0, recipes 1/0, services 2/1, topics/software 17/15`
+}
+
+^"held"{
+  open_sigils = `Enrolling a host in data-spw-form="brace" mounts brace-actions there, so the 74 open sigils are a felt change across 60 routes: approve one route's brace in a browser before any sweep. The other honest fix is to drop the trailing { where no brace is meant.`
+  values = `Whether a living term's bias belongs in data-spw-brace (and syntax.css learns the bias words) or in an existing stem is the creator's call; no new data-spw-* family either way.`
+}
