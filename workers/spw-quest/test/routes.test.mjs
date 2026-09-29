@@ -91,6 +91,16 @@ test('the front page is a guide to the language, with install one link away', as
   assert.match(page, /href="\/install">Install the workbench/);
   assert.match(page, /id="example"/);
   assert.equal([...page.matchAll(/<span class="sigil"/g)].length, OPERATORS.length);
+  // The hero draws the sigils on one spiral: a titled SVG, one linked node per operator.
+  const svg = page.match(/<svg class="spiral"[\s\S]*?<\/svg>/)?.[0];
+  assert.ok(svg, 'the guide opens on a spiral');
+  assert.match(svg, /aria-labelledby="spiral-title"/);
+  assert.match(svg, /<title id="spiral-title">[^<]+<\/title>/);
+  assert.equal([...svg.matchAll(/<a href="#op-[a-z]+"[^>]*aria-label=/g)].length, OPERATORS.length);
+  for (const op of OPERATORS) assert.match(page, new RegExp(`<li id="op-${op.name}">`));
+  // The shape, not labels: no diagnosis and no God on the guide.
+  const text = page.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, '');
+  assert.doesNotMatch(text, /\bGod\b|\bOCD\b/);
   // Old #claude links forward to the install page.
   assert.match(page, /dataset\.setupSets = "shell claude codex grok paste"/);
   assert.doesNotMatch(page, /role="tablist"/);

@@ -57,3 +57,30 @@ export const READERS = Object.freeze([
   { who: "People who wonder about maintained software", why: "The workbench is kept like a garden: pinned revisions, a doctor command, and plans that say what changed and why." },
   { who: "People who journal", why: "A page stays a page. Spw only adds handles, so last Tuesday's note can be found, linked, and read again." },
 ]);
+
+/**
+ * The spiral the hero draws: an Archimedean turn (r = bθ) with the operators
+ * placed at equal arc lengths from the center outward, so neighbors never
+ * crowd and each sigil keeps a 44px target at phone width. Deterministic:
+ * the worker computes it once per request, and no script is needed to see it.
+ */
+export function spiral({ count = OPERATORS.length, b = 18.8, start = 40, gap = 60, radius = 28, samples = 180 } = {}) {
+  const thetaAt = (arc) => Math.sqrt((2 * arc) / b); // arc ≈ bθ²/2 for r = bθ
+  const round = (n) => Math.round(n * 10) / 10;
+  const point = (theta) => [round(b * theta * Math.cos(theta)), round(b * theta * Math.sin(theta))];
+  const end = thetaAt(start + (count - 1) * gap) + 0.6;
+  const line = Array.from({ length: samples + 1 }, (_, i) => point((end * i) / samples));
+  const path = line.map(([x, y], i) => `${i ? "L" : "M"}${x} ${y}`).join("");
+  const nodes = Array.from({ length: count }, (_, k) => {
+    const [x, y] = point(thetaAt(start + k * gap));
+    return { x, y };
+  });
+  const extent = Math.ceil(b * end) + radius + 4;
+  // Fit the view to what is drawn (nodes with their radius, and the line), so no empty band frames it.
+  const pad = radius + 4;
+  const xs = [...nodes.flatMap((n) => [n.x - pad, n.x + pad]), ...line.map(([x]) => x - 4), ...line.map(([x]) => x + 4)];
+  const ys = [...nodes.flatMap((n) => [n.y - pad, n.y + pad]), ...line.map(([, y]) => y - 4), ...line.map(([, y]) => y + 4)];
+  const [minX, maxX, minY, maxY] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)].map(Math.round);
+  const viewBox = `${minX} ${minY} ${maxX - minX} ${maxY - minY}`;
+  return { path, nodes, extent, radius, viewBox, width: maxX - minX };
+}

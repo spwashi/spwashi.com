@@ -1,4 +1,4 @@
-import { CONTAINERS, EXAMPLE, EXAMPLE_NOTES, OPERATORS, READERS } from "./guide.js";
+import { CONTAINERS, EXAMPLE, EXAMPLE_NOTES, OPERATORS, READERS, spiral } from "./guide.js";
 import { EXPECTED_FILES, GIT_GUIDE, GIT_MARKDOWN, INSTRUCTION_SETS, QUEST_PROMPTS, QUEST_TEXT, WORKBENCH } from "./quest.js";
 import { BASE_SECURITY, escapeHtml, htmlResponse, jsonResponse, layout, wantsJson } from "../../lib/shell.js";
 
@@ -159,7 +159,8 @@ function forwardSetupHash() {
 }
 
 function renderGuide() {
-  const sigils = OPERATORS.map((op) => `<li>
+  const sigils = OPERATORS.map((op, index) => `<li id="op-${escapeHtml(op.name)}">
+      <span class="turn" aria-hidden="true">${String(index + 1).padStart(2, "0")}</span>
       <span class="sigil" aria-hidden="true">${escapeHtml(op.sigil)}</span>
       <p><strong>${escapeHtml(op.name)}</strong> <code>${escapeHtml(op.sigil)}</code></p>
       <p>${escapeHtml(op.reads)}</p>
@@ -169,12 +170,43 @@ function renderGuide() {
   const notes = EXAMPLE_NOTES.map((n) => `<div><dt><code>${escapeHtml(n.code)}</code></dt><dd>${escapeHtml(n.note)}</dd></div>`).join("\n    ");
   const readers = READERS.map((r) => `<li><strong>${escapeHtml(r.who)}.</strong> ${escapeHtml(r.why)}</li>`).join("\n    ");
   const setIds = INSTRUCTION_SETS.map((set) => set.id).join(" ");
+  const turn = spiral();
+  const view = turn.viewBox;
+  const marks = OPERATORS.map((op, index) => {
+    const { x, y } = turn.nodes[index];
+    return `<a href="#op-${escapeHtml(op.name)}" aria-label="${escapeHtml(`${op.name}, ${op.sigil}`)}">
+      <circle cx="${x}" cy="${y}" r="${turn.radius}"/>
+      <text x="${x}" y="${y}" dy=".35em">${escapeHtml(op.sigil)}</text>
+    </a>`;
+  }).join("\n    ");
+  const hero = `<svg class="spiral" viewBox="${view}" aria-labelledby="spiral-title" focusable="false">
+    <title id="spiral-title">The ${OPERATORS.length} sigils on one spiral, from potential at the center to coupling at the edge</title>
+    <path class="spiral__turn" d="${turn.path}"/>
+    ${marks}
+  </svg>`;
   return layout({
     title: "spw.quest — a guide to the Spw language",
     description: "Spw is a small language for the shape of a thought: one character says what a word is doing, and braces say what belongs together. The file stays plain text.",
     canonical: "https://spw.quest/",
     script: `document.documentElement.dataset.setupSets = ${JSON.stringify(setIds)};\n(${forwardSetupHash.toString()})();`,
-    themeCss: `main { width: min(46rem, calc(100% - 2rem)); }
+    themeCss: `main { width: min(52rem, calc(100% - 2rem)); }
+    .hero { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem 2rem; align-items: center; margin: .4rem 0 1.4rem; }
+    @media (min-width: 46rem) { .hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); } }
+    .hero h1 { font-size: clamp(2rem, 6vw, 3.1rem); }
+    .spiral { display: block; width: 100%; max-width: 26rem; height: auto; margin: 0 auto; overflow: visible; }
+    .spiral__turn { fill: none; stroke: var(--accent); stroke-opacity: .32; stroke-width: 1.4; stroke-linecap: round; }
+    .spiral a { outline: none; }
+    .spiral circle { fill: var(--surface); stroke: rgba(94,234,212,.45); stroke-width: 1.2; transition: fill .2s, stroke .2s; }
+    .spiral text { fill: var(--accent); font: 600 22px/1 ui-monospace, SFMono-Regular, monospace; text-anchor: middle; pointer-events: none; }
+    .spiral a:hover circle, .spiral a:focus-visible circle { fill: var(--accent); stroke: var(--fg); stroke-width: 2.5; }
+    .spiral a:hover text, .spiral a:focus-visible text { fill: var(--bg); }
+    @media (prefers-reduced-motion: no-preference) {
+      .spiral__turn { stroke-dasharray: 6 10; animation: spw-flow 18s linear infinite; }
+      @keyframes spw-flow { to { stroke-dashoffset: -320; } }
+    }
+    .sigils li { position: relative; scroll-margin-top: 1rem; }
+    .sigils li:target { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+    .turn { position: absolute; top: .7rem; right: .85rem; color: var(--muted); font: .78rem/1 ui-monospace, SFMono-Regular, monospace; letter-spacing: .08em; }
     .install { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .4rem 1rem; margin: 1.1rem 0 1.6rem; padding: .7rem .9rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
     .install p { margin: 0; }
     .install .chip { margin: 0; }
@@ -191,9 +223,14 @@ function renderGuide() {
     dl.notes dt { margin: 0 0 .15rem; }
     dl.notes dd { margin: 0; color: var(--fg); }
     .readers li { margin: .5rem 0; }`,
-    body: `<p class="kicker">spw.quest · a guide to Spw</p>
-<h1>A small language for the shape of a thought.</h1>
-<p class="lede">In Spw, one character in front of a word says what the word is doing: keeping a path open, asking, committing, weighing. Braces say what belongs together. The file stays plain text you can read, and editors get structure they can navigate.</p>
+    body: `<header class="hero">
+  <div>
+    <p class="kicker">spw.quest · a guide to Spw</p>
+    <h1>A small language for the shape of a thought.</h1>
+    <p class="lede">In Spw, one character in front of a word says what the word is doing: keeping a path open, asking, committing, weighing. Braces say what belongs together. The file stays plain text you can read, and editors get structure they can navigate.</p>
+  </div>
+  ${hero}
+</header>
 <aside class="install" aria-label="Install">
   <p>Want it in a repository? The workbench mounts at <code>.spw/_workbench</code> and stops before any commit.</p>
   <a class="chip" href="/install">Install the workbench →</a>
