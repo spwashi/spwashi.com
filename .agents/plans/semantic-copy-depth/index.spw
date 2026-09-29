@@ -74,7 +74,7 @@ dispatch: .{
 
 ^"connection_points"{
  owner_rail = `self`
- related_plans = #[`audience-onboarding-copy`, `narration-markup-cold-reads`][reg=set]
+ related_plans = #[`audience-onboarding-copy`, `narration-markup-cold-reads`, `copy-localization`, `editorial-readability`][reg=set]
 }[reg=facet]
 
 ^"owner_claim"{

@@ -111,6 +111,10 @@ Naming rules:
 - ids should be stable across wording changes when the semantic role remains the same
 - The dotted key is the **flat localization projection**. Spw `subject[mode]{direction}<capsule>` on `data-spw-semantic-expression` is the multidimensional handle for the same collectible. Extra dots nest categories; they do not add dimensions. Contract: `.spw/conventions/copy-accessor.spw`. Census: `npm run audit:copy:accessor`. Do not invent a fourth accessor family.
 
+## 2026-09-28 — a trace and a shelf are different units
+
+A link-dense paragraph is a thought trace or a display case. The owner is `.agents/plans/semantic-copy-depth/PLAN.md`, section "Thought trace". A trace is one claim that turns: scene `(turn)`, direction `{claim.then.turn}`. A shelf that stays a shelf uses mode `[case]` or a `data-spw-copy-depth="dense"` sibling, and it stays a list. Those slots already exist. A locale edition keeps the scene and the mode. It does not mint a copy-unit family for them, and it does not merge the shelf into the trace sentence. The smell constraints on the restatement are `.spw/caches/ai-writing-smells-2026-09.spw`.
+
 ## Validation
 
 - `git diff --check`
