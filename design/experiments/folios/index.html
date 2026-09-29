@@ -16,7 +16,7 @@
     route_family="design experiments folios"
     layout="wide"
     features="operators"
-    related_routes="/design/folios/|/design/"
+    related_routes="/design/experiments/|/design/folios/|/design/"
     stylesheet_mode="scoped"
 ></spw-page>
 <!DOCTYPE html>
@@ -35,13 +35,13 @@
     data-spw-page-modes="read"
     data-spw-page-role="experiment-hub"
     data-spw-layout="wide"
-    data-spw-related-routes="/design/folios/|/design/">
+    data-spw-related-routes="/design/experiments/|/design/folios/|/design/">
     <a class="skip-link" href="#main-content">Skip to content</a>
 
     <header class="site-header">
         <nav aria-label="Design experiments">
-            <a class="header-sigil" href="/design/">#&gt;design</a>
-            <a href="/design/folios/#release-set">Folios</a>
+            <a class="header-sigil" href="/design/" data-spw-operator="frame">#&gt;design</a>
+            <a href="/design/experiments/">Experiments</a>
             <a href="/design/experiments/folios/" aria-current="page">Folio experiments</a>
         </nav>
     </header>
@@ -49,10 +49,10 @@
     <main id="main-content">
         <section class="spw-frame frame-card" id="folio-experiments" data-spw-kind="frame" data-spw-role="demo" aria-labelledby="folio-experiments-title">
             <header class="frame-topline" data-spw-slot="header">
-                <a class="frame-sigil" href="#folio-experiments" data-spw-operator="potential">~folios</a>
+                <a class="frame-sigil" href="#folio-experiments" data-spw-operator="frame">#&gt;folios</a>
                 <h1 id="folio-experiments-title">Folio experiments</h1>
             </header>
-            <p>Each of these draws on the scanned folios and asks one question of them. None is a route yet: approve or redirect it in a browser first.</p>
+            <p>Each of these draws on the <a href="/design/folios/#release-set">scanned folios</a> and asks one question of them. None is a route yet: approve or redirect it in a browser first.</p>
             <ul>
                 <li><a href="/design/experiments/folios/primes/">Folio primes, frame by frame</a>: one stock of hand-lettered cutouts rearranged twenty-five times on a clear sheet, stepped in scan order. Follow a cutout, choose a ground.</li>
                 <li><a href="/design/experiments/folios/calendar/">October, one folio a day</a>: the September 26 set on October's thirty-one days, the grid drawn from the date.</li>
@@ -63,7 +63,7 @@
 
     <footer class="site-footer">
         <nav class="site-footer__nav" aria-label="Footer">
-            <a href="/design/#design-labs-title">Experiments</a>
+            <a href="/design/experiments/">Experiments</a>
             <a href="/privacy/">Privacy</a>
         </nav>
     </footer>

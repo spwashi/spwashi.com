@@ -46,6 +46,10 @@ expression = link[integrity]{route;anchor;include}<landing>
   ][reg=set]
 }
 
+^"since_2026_09_28"{
+  experiments = `/design/experiments/ is now a hub of its own (creator, 2026-09-28: improve hub UX across routes; routes without dashes). It groups every lab, the folio demos under /design/experiments/folios/; the labs moved to kernel/, symphony/a|b/, menu/, spellcraft/, balance/, resonance/. It was made for readers arriving from each lab, not to satisfy the stale link above`
+}
+
 ^"do_not"{
   invent = `Do not create a page only to satisfy a stale link; point the link at the room that now holds the thing.`
   rename = `When an anchor is renamed, grep for it; the sensor will name the stragglers.`

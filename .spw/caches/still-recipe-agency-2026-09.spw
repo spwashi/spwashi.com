@@ -23,7 +23,7 @@
 @settings_route: ~"../../settings/index.html"
 @settings_profiles: ~"../../public/js/kernel/site-settings-profiles.js"
 @op_tokens: ~"../../public/css/tokens/core.css"
-@theme_resonance: ~"../../design/experiments/theme-resonance/index.html"
+@theme_resonance: ~"../../design/experiments/resonance/index.html"
 @mixer: ~"../../public/js/modules/widgets/boonhonk-mixer.js"
 @creator_masthead: ~"./creator-masthead-2026-09.spw"
 
