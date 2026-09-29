@@ -62,6 +62,7 @@
                 </div>
                 <p class="spec-kicker">Play Surface · Recurring Session</p>
                 <h1 id="rpg-wednesday-title">RPG Wednesday</h1>
+                <p data-spw-textual-role="lede">A homebrew tabletop game my team plays on Wednesdays, with a table you can pull a chair up to on your own time: make a character, bring a doodle for the table to try, or keep a sheet of your own. This page is the table between sessions: who is in town, what the market needs, and how a drawing becomes part of the world.</p>
                 <nav class="hook-invitation wrap-jobs" aria-label="Spw wrap jobs" data-spw-feature="wrap-jobs" data-spw-semantic-expression="rpg[wrap]{rail}">
                     <a class="spw-chip" data-spw-handle="true" href="#rpg-wednesday" data-spw-operator="mode" data-spw-action="sit" data-spw-semantic-expression="rpg[orientation]{open.sit}<display>" aria-label="Sit a lens to change what this room shows"><span data-spw-copy-depth="entry">change view</span><span data-spw-copy-depth="normal">[orientation] sit lens</span><span data-spw-copy-depth="technical">rpg[orientation]{open.sit}&lt;display&gt;</span></a>
                     <a class="spw-chip" data-spw-handle="true" href="#weekly-affairs" data-spw-operator="direction" data-spw-action="travel" data-spw-semantic-expression="rooms{travel}<navigate>" aria-label="Move to this week's market pressure"><span data-spw-copy-depth="entry">next room</span><span data-spw-copy-depth="normal">{rooms} sale clock</span><span data-spw-copy-depth="technical">rooms{travel}&lt;navigate&gt;</span></a>
@@ -141,6 +142,7 @@
                         </div>
                     </div>
                     <nav class="frame-operators" aria-label="Doodler next steps">
+                        <a class="spw-chip" data-spw-handle="true" href="#inktober-31" data-spw-operator="value" data-spw-action="materialize" data-spw-semantic-expression="ink[october]{thirty.one}">*inktober_31</a>
                         <a class="spw-chip" data-spw-handle="true" href="#image-publishing-loop" data-spw-operator="integration" data-spw-action="publish" data-spw-semantic-expression="image[publish]{caption}">^caption</a>
                         <a class="spw-chip" data-spw-handle="true" href="/about/domains/lore.land/#show-production" data-spw-operator="concept-edge" data-spw-action="show" data-spw-semantic-expression="show[table]{seed.close}">&gt;lore.land</a>
                         <a class="spw-chip" data-spw-handle="true" href="/design/folios/#folio-request" data-spw-operator="value" data-spw-action="materialize" data-spw-semantic-expression="folio[table]{issue}">*order_card</a>
@@ -553,6 +555,50 @@
                     <a class="spw-chip" data-spw-handle="true" href="#journal-to-canon" data-spw-operator="potential" data-spw-action="explore">~journal_loop</a>
                     <a class="spw-chip" data-spw-handle="true" href="#weekly-affairs" data-spw-operator="perspective" data-spw-action="enter">@weekly_affairs</a>
                     <a class="spw-chip" data-spw-handle="true" href="#asset-capture-roadmap" data-spw-operator="perspective" data-spw-action="enter">@asset_atlas</a>
+                </nav>
+            </section>
+
+            <section class="spw-frame" id="inktober-31" data-spw-kind="frame" data-spw-role="scenario" data-spw-context="play" data-spw-affordance="read" data-spw-liminality="entry" data-spw-semantic-expression="ink[october]{thirty.one}" aria-labelledby="inktober-31-title">
+                <header class="frame-heading" data-spw-slot="header">
+                    <a class="frame-sigil" href="#inktober-31" data-spw-operator="value">*inktober_31</a>
+                    <h2 id="inktober-31-title">Thirty-one pieces in October</h2>
+                </header>
+                <p data-spw-textual-role="lede">If you draw, October is a good month to draw with the table. Do Inktober one piece a day, or work in batches and scan thirty-one pieces by the 31st. Either way counts.</p>
+                <div class="spw-reason-strip rpg-morale" aria-label="October closes" data-rpg-morale-field>
+                    <div data-rpg-morale="13" data-rpg-morale-reach="support">
+                        <strong>By the 13th</strong>
+                        <p>Thirteen pieces scanned earns bonus morale at the first close. Post them together; the table notices.</p>
+                        <p class="rpg-morale__reach">Cycle <em>A</em></p>
+                        <button type="button" class="spw-chip" data-spw-handle="true" data-spw-operator="value" data-rpg-morale-claim aria-pressed="false" aria-label="Mark the 13th: cycle A" data-spw-semantic-expression="ink[13]{A}" hidden>*ink[13]{A}</button>
+                    </div>
+                    <div data-rpg-morale="26" data-rpg-morale-reach="build">
+                        <strong>By the 26th</strong>
+                        <p>Twenty-six pieces is the second close and a second round of bonus morale. The set is starting to hold a style.</p>
+                        <p class="rpg-morale__reach">Cycle <em>B</em></p>
+                        <button type="button" class="spw-chip" data-spw-handle="true" data-spw-operator="value" data-rpg-morale-claim aria-pressed="false" aria-label="Mark the 26th: cycle B" data-spw-semantic-expression="ink[26]{B}" hidden>*ink[26]{B}</button>
+                    </div>
+                    <div data-rpg-morale="31" data-rpg-morale-reach="refer">
+                        <strong>By the 31st</strong>
+                        <p>Thirty-one finished and scanned. A finished set may be offered as a reference entry on <a href="/about/domains/lore.land/">lore.land</a>, credited to you, if it fits the world and you want it there.</p>
+                        <p class="rpg-morale__reach">Cycle <em>C</em></p>
+                        <button type="button" class="spw-chip" data-spw-handle="true" data-spw-operator="value" data-rpg-morale-claim aria-pressed="false" aria-label="Mark the 31st: cycle C" data-spw-semantic-expression="ink[31]{C}" hidden>*ink[31]{C}</button>
+                    </div>
+                </div>
+                </div>
+                <div class="spec-strip" aria-label="October, one mark per day" data-rpg-morale-days>
+                    <span class="spec-pill">1</span><span class="spec-pill">2</span><span class="spec-pill">3</span><span class="spec-pill">4</span><span class="spec-pill">5</span><span class="spec-pill">6</span><span class="spec-pill">7</span><span class="spec-pill">8</span><span class="spec-pill">9</span><span class="spec-pill">10</span><span class="spec-pill">11</span><span class="spec-pill">12</span><span class="spec-pill" data-cluster="field">13 · close</span><span class="spec-pill">14</span><span class="spec-pill">15</span><span class="spec-pill">16</span><span class="spec-pill">17</span><span class="spec-pill">18</span><span class="spec-pill">19</span><span class="spec-pill">20</span><span class="spec-pill">21</span><span class="spec-pill">22</span><span class="spec-pill">23</span><span class="spec-pill">24</span><span class="spec-pill">25</span><span class="spec-pill" data-cluster="field">26 · close</span><span class="spec-pill">27</span><span class="spec-pill">28</span><span class="spec-pill">29</span><span class="spec-pill">30</span><span class="spec-pill" data-cluster="field">31 · set</span>
+                </div>
+                <p class="rpg-morale__readout" data-rpg-morale-readout data-spw-textual-role="note" aria-live="polite" hidden></p>
+                <div class="spw-panel" id="inktober-shelf" data-rpg-morale-touch="build" data-spw-kind="panel" data-spw-role="reference" data-spw-slot="figure" data-spw-semantic-expression="ink[shelf]{scan.caption}">
+                    <h3>The table shelf</h3>
+                    <p>New table art lands here as it is scanned: mine first, then pieces other artists offer. Each one arrives with a caption someone can read aloud and a line on where it sits in the world.</p>
+                    <p data-spw-textual-role="note">Scanning tips: flat light, the whole page in frame, one file per piece named by day (<code>ink-2026-10-13.jpg</code>). The <a href="#image-publishing-loop">image publishing loop</a> covers what happens next.</p>
+                </div>
+                <nav class="frame-operators" aria-label="October next steps">
+                    <a class="spw-chip" data-spw-handle="true" href="#doodler-door" data-rpg-morale-touch="support" data-spw-operator="potential" data-spw-action="explore">~doodle_first</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/about/domains/lore.land/" data-rpg-morale-touch="refer" data-spw-operator="concept-edge" data-spw-action="show">&gt;lore.land</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/now/" data-spw-operator="ground">.now</a>
+                    <a class="spw-chip" data-spw-handle="true" href="/contact/" data-spw-operator="perspective" data-spw-action="explore">@send_a_set</a>
                 </nav>
             </section>
 
@@ -1100,6 +1146,7 @@
                             <a class="spw-chip" data-spw-handle="true" href="/tools/midjourney/" data-spw-operator="potential" data-spw-action="explore">~midjourney_bench</a>
                         </div>
                         <p data-spw-textual-role="note">When the sheet changes, update the builder first, then move stable versions into the cast register or Midjourney Bench once the canon settles.</p>
+                        <p data-spw-textual-role="note" data-rpg-name-cadence data-spw-semantic-expression="stranger[name]{one.three}">Someone new at the table: <output>Wren Aldercott, who keeps the sale clock honest</output> <button type="button" class="spw-chip" data-spw-handle="true" data-rpg-name-roll data-spw-operator="wonder" aria-label="Meet another stranger" hidden>? another</button></p>
                         <div class="spec-strip" style="margin-top: var(--surface-gap)">
                             <span class="spec-pill" data-cluster="identity">clay-golem</span>
                             <span class="spec-pill" data-cluster="identity">clay-from-here</span>
