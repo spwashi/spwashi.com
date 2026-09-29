@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
@@ -32,6 +32,9 @@ test('the pushed checkout is that commit, not the dirty working tree', () => {
     );
     const folio = path.join(tree.scratch, 'public/images/assets/folios');
     assert.ok(readdirSync(folio).some((name) => name.endsWith('.spw')));
+    assert.equal(existsSync(path.join(tree.scratch, 'public/images/icon-192.png')), true);
+    assert.equal(existsSync(path.join(tree.scratch, 'public/images/app-icon.svg')), true);
+    assert.equal(existsSync(path.join(tree.scratch, 'public/images/favicon.ico')), false);
     execFileSync('git', ['-C', tree.scratch, 'diff', '--check']);
     const status = execFileSync('git', ['-C', tree.scratch, 'status', '--short'], { encoding: 'utf8' })
       .split('\n')
