@@ -264,6 +264,8 @@ export function bindCauldronPanelToggle() {
   document.querySelectorAll('[data-spw-cauldron-panel-toggle]').forEach((button) => {
     if (button.dataset.spwCauldronPanelBound === 'true') return;
     button.dataset.spwCauldronPanelBound = 'true';
+    // The partial ships the toggle hidden: without this module it opens nothing.
+    button.hidden = false;
     button.setAttribute('aria-haspopup', 'dialog');
     button.setAttribute('aria-controls', 'spw-cauldron-dialog');
     button.addEventListener('click', () => {

@@ -8,10 +8,11 @@
    data-spw-cauldron-action, data-spw-cauldron-collected, data-spw-cauldron-cue,
    data-spw-cauldron-discoverability, data-spw-cauldron-garden-phase,
    data-spw-cauldron-output-state, data-spw-cauldron-panel,
-   data-spw-cauldron-resonance(-operators), data-spw-spell-reveal, data-spw-spell-state
-   Contract: public/js/interface/cauldron/contract.js owns every attribute
-   name and the state-bundle grammar; a selector here without a contract
-   entry is a bug.
+   data-spw-cauldron-resonance(-operators), data-spw-spell-reveal, data-spw-spell-state,
+   data-spw-action-tier (authored in _partials/site-footer.html)
+   Contract: public/js/semantic/cauldron/contract.js owns every cauldron
+   attribute name and the state-bundle grammar; a data-spw-cauldron-* selector
+   here without a contract entry is a bug.
    Probe: toggle me wholesale in DevTools > Sources, or set
    html[data-spw-debug-layers="on"] to see layer owners breathe.
    ========================================================================== */
@@ -122,6 +123,22 @@
 }
 
 .site-footer__cauldron:not([data-spw-cauldron-held="true"]) .site-footer__cauldron-actions {
+  display: none;
+}
+
+/* Without scripts the footer pill is a plain hash link. Browsers that reveal a
+   fragment's closed <details> ancestor land here on the compact vessel; the
+   body opens under the target so the held count, the note and its two reading
+   links are there to read, not tucked behind a toggle that needs the module.
+   The vessel switch stays folded away: its buttons only answer once the module
+   runs. Both rules key off data-spw-cauldron-held, which composition.js writes
+   on every render, so a mounted page reached by #memory-garden-cauldron keeps
+   its compact vessel compact. */
+.site-footer__cauldron[data-spw-cauldron-panel="compact"]:not([data-spw-cauldron-held]):target .site-footer__cauldron-body {
+  display: block;
+}
+
+.site-footer__cauldron[data-spw-cauldron-panel="compact"]:not([data-spw-cauldron-held]):target .site-footer__cauldron-tools {
   display: none;
 }
 
@@ -363,6 +380,46 @@
 .cauldron-ingredient-op[data-spw-operator="pragma"] { color: var(--op-action-color, #0d9488); }
 .cauldron-ingredient-op[data-spw-operator="topic"],
 .cauldron-ingredient-op[data-spw-operator="concept"] { color: var(--op-topic-color, #10b981); }
+
+/* An image ingredient carries its picture as a small laminated card. The
+   picture is shown whole (contain, never cover): a folio scan is paper in a
+   clear pouch and keeps every edge, so the square is a mat, not a crop. The
+   rim and edge come from the laminate tokens in systems/image-utilization.css. */
+.spw-cauldron-ingredient__thumb {
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  inline-size: 28px;
+  block-size: 28px;
+  padding: 1px;
+  object-fit: contain;
+  object-position: center;
+  border-radius: calc(var(--shape-control, 0.78rem) * 0.35);
+  background: var(--material-surface-matte, var(--surface-strong, #fff));
+  box-shadow:
+    0 0 0 1px var(--laminate-edge, var(--footer-panel-line)),
+    inset 0 0 0 1px var(--laminate-rim, transparent),
+    0 1px 3px var(--laminate-shadow, transparent);
+}
+
+/* The same * original / ~ generated sigils the image-provenance mark wears,
+   in the same operator inks, set inline beside the thumb instead of over it. */
+.spw-cauldron-ingredient__provenance {
+  --spw-provenance-ink: var(--ink-soft, currentColor);
+  flex: 0 0 auto;
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--spw-provenance-ink);
+}
+
+.spw-cauldron-ingredient__provenance--original {
+  --spw-provenance-ink: var(--op-value-color, var(--op-stream-color, #208259));
+}
+
+.spw-cauldron-ingredient__provenance--generated {
+  --spw-provenance-ink: var(--op-potential-color, var(--op-ref-color, #1d57a3));
+}
 
 .cauldron-ingredient-expr {
   font-weight: 600;
@@ -745,6 +802,72 @@ html[data-spw-cauldron-resonance-operators] .site-footer__cauldron[data-spw-caul
   pointer-events: none;
 }
 
+/* ─── Action Row: one verb, then tend / keep / sweep ────────────────────────
+   The row reads by data-spw-action-tier. Mix (primary) spans the top; tend
+   (growth) and keep (output) sit side by side as two named groups; sweep
+   (cleanup) closes the row behind a dashed rule, its chips smallest and Clear
+   the farthest from Mix. Shell chip styling (shell/chrome/adaptive.css) still
+   paints every chip and keeps its width floor; this layer only arranges and
+   quiets. The track minimum is at least half the row, so the grid makes two
+   columns at most (tend | keep) and folds to one below 2 × 12.5rem; a third
+   track would never collapse, because Mix and sweep span it. */
+.site-footer__cauldron-actions {
+  --spw-cauldron-action-column-gap: 0.75rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, max(12.5rem, calc((100% - var(--spw-cauldron-action-column-gap)) / 2))), 1fr));
+  gap: 0.45rem var(--spw-cauldron-action-column-gap);
+  align-items: start;
+}
+
+.site-footer__cauldron-actions > [data-spw-action-tier="primary"] {
+  grid-column: 1 / -1;
+}
+
+.site-footer__cauldron-action-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+  min-inline-size: 0;
+}
+
+.site-footer__cauldron-action-label {
+  flex: 1 0 100%;
+  color: var(--ink-muted, rgba(14, 18, 20, 0.58));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-2xs, 0.72rem);
+  letter-spacing: 0.06em;
+}
+
+.site-footer__cauldron-action-group .spw-chip {
+  flex: 1 1 auto;
+}
+
+.site-footer__cauldron-action-group--sweep {
+  grid-column: 1 / -1;
+  justify-content: flex-end;
+  padding-block-start: 0.4rem;
+  border-block-start: 1px dashed var(--footer-panel-line, var(--line));
+}
+
+.site-footer__cauldron-action-group--sweep .site-footer__cauldron-action-label {
+  flex: 1 1 auto;
+}
+
+/* Quiet by ink, not by opacity: the shell's 0.72 fade took cleanup below
+   comfortable contrast, and a quiet verb should still read cleanly. */
+.site-footer__cauldron-actions .spw-chip[data-spw-action-tier="cleanup"]:not(:disabled) {
+  opacity: 1;
+}
+
+.site-footer__cauldron-actions .spw-chip[data-spw-action-tier="cleanup"] {
+  flex: 0 0 auto;
+  background: transparent;
+  border-color: color-mix(in srgb, var(--footer-panel-line, var(--line)) 70%, transparent);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.72));
+  font-size: 0.74rem;
+}
+
 @media (max-width: 45rem) {
   .site-footer__cauldron-phase-rail {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -776,8 +899,12 @@ html[data-spw-cauldron-resonance-operators] .site-footer__cauldron[data-spw-caul
     padding-inline: 0.72rem;
   }
 
+  .site-footer__cauldron-action-group--sweep .site-footer__cauldron-action-label {
+    flex-basis: 100%;
+  }
+
   .site-footer__cauldron-actions .spw-chip[data-spw-action-tier="cleanup"] {
-    flex: 1 1 calc(50% - 0.125rem);
+    flex: 1 1 0;
     justify-content: center;
   }
 }
@@ -799,11 +926,16 @@ html[data-spw-cauldron-resonance-operators] .site-footer__cauldron[data-spw-caul
   }
 }
 
-/* One working palette, lifted from its footer seat into the browser top layer. */
+/* One working palette, lifted from its footer seat into the browser top layer.
+   Material: a matte bench (--material-surface-matte-strong) under a glass
+   header (--material-surface-strong through --material-blur) with the surface
+   grain at the site's own ceiling. Every colour is a token, so the dark and
+   theme-pack blocks in tokens/core.css repaint it without a rule here. */
 .spw-cauldron-dialog {
-  --footer-panel-line: var(--line);
-  --footer-panel-bg: var(--surface-strong, #fff);
-  --footer-panel-bg-soft: var(--surface, #fff);
+  --footer-panel-line: var(--material-line, var(--line));
+  --footer-panel-bg: var(--material-surface-matte-strong, var(--surface-strong, #fff));
+  --footer-panel-bg-soft: var(--material-surface-matte, var(--surface, #fff));
+  --spw-cauldron-well: color-mix(in srgb, var(--material-surface-matte, var(--surface, #fff)) 96%, var(--component-accent, var(--active-op-color, var(--teal))) 4%);
   box-sizing: border-box;
   inline-size: min(44rem, calc(100% - 1.5rem));
   max-inline-size: none;
@@ -812,27 +944,44 @@ html[data-spw-cauldron-resonance-operators] .site-footer__cauldron[data-spw-caul
   padding: 0;
   overflow: auto;
   overscroll-behavior: contain;
-  border: 1px solid var(--line);
+  border: 1px solid var(--material-line, var(--line));
   border-radius: var(--shape-panel, 1rem);
-  background: var(--surface-strong, #fff);
-  color: var(--ink, #182324);
-  box-shadow: 0 24px 80px #0004;
+  background: var(--material-surface-matte-strong, var(--surface-strong, #fff));
+  color: var(--material-ink-matte, var(--ink, #182324));
+  box-shadow: var(--grain-panel-inset-highlight, none), var(--material-shadow-lift, 0 12px 32px -4px rgba(0, 0, 0, 0.11));
 }
 
+/* ::backdrop inherits custom properties in current engines; the literal
+   fallbacks carry the older ones. The veil stays charcoal in both schemes. */
 .spw-cauldron-dialog::backdrop {
-  background: #101b20a6;
+  background: rgba(var(--charcoal-rgb, 14, 18, 20), 0.58);
+  backdrop-filter: blur(calc(var(--material-blur, 8px) * 0.5));
 }
 
 .spw-cauldron-dialog__header {
   position: sticky;
   top: 0;
   z-index: 2;
+  isolation: isolate;
   display: flex;
   align-items: start;
   gap: 1rem;
   padding: 1.25rem;
-  border-bottom: 1px solid var(--line);
-  background: var(--surface-strong, #fff);
+  border-bottom: 1px solid var(--material-line, var(--line));
+  background: color-mix(in srgb, var(--material-surface-strong, var(--surface-strong, #fff)) 88%, transparent);
+  backdrop-filter: blur(var(--material-blur, 8px)) saturate(var(--material-saturation, 1));
+}
+
+.spw-cauldron-dialog__header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: var(--grain-texture-surface, none);
+  background-size: var(--grain-surface-scale, 176px);
+  mix-blend-mode: var(--grain-blend, multiply);
+  opacity: clamp(0, var(--grain-surface-opacity, 0.04), 0.08);
+  pointer-events: none;
 }
 
 .spw-cauldron-dialog__header > div {
@@ -849,17 +998,17 @@ html[data-spw-cauldron-resonance-operators] .site-footer__cauldron[data-spw-caul
   margin: 0.4rem 0 0;
   font-size: 0.9rem;
   line-height: 1.5;
-  color: var(--ink-soft, inherit);
+  color: var(--material-ink-matte-soft, var(--ink-soft, inherit));
 }
 
 .spw-cauldron-dialog__close {
   flex-shrink: 0;
   margin-inline-start: auto;
-  min-block-size: 44px;
+  min-block-size: var(--touch-target-min, 2.75rem);
   padding: 0.5rem 0.75rem;
-  border: 1px solid var(--line);
+  border: 1px solid var(--material-line, var(--line));
   border-radius: var(--shape-control, 0.5rem);
-  background: var(--surface-strong, #fff);
+  background: var(--material-surface-matte-strong, var(--surface-strong, #fff));
   color: inherit;
   cursor: pointer;
 }
@@ -902,7 +1051,7 @@ html[data-spw-cauldron-resonance-operators] .site-footer__cauldron[data-spw-caul
 }
 
 .spw-cauldron-dialog .site-footer__cauldron-copy {
-  color: var(--ink, inherit);
+  color: var(--material-ink-matte-strong, var(--ink, inherit));
   font-size: 1.125rem;
   font-weight: 600;
 }
@@ -910,13 +1059,21 @@ html[data-spw-cauldron-resonance-operators] .site-footer__cauldron[data-spw-caul
 .spw-cauldron-dialog :is(.site-footer__cauldron-status, .site-footer__composition-impact, .site-footer__cauldron-tools) {
   font-size: 0.9rem;
   line-height: 1.6;
-  color: var(--ink-soft, inherit);
+  color: var(--material-ink-matte-soft, var(--ink-soft, inherit));
+}
+
+/* The dialog is floating chrome, and that family's :where(label) max-content
+   floor (components layer) outranks the shell's packing; without this the lens
+   select sized to its longest option and ran under Intent. */
+.spw-cauldron-dialog .site-footer__composition-controls :is(p, label) {
+  min-inline-size: 0;
 }
 
 .spw-cauldron-dialog .site-footer__composition-controls {
   padding: 1rem;
-  border: 1px solid var(--line);
+  border: 1px solid var(--material-line, var(--line));
   border-radius: var(--shape-control, 0.5rem);
+  background: var(--spw-cauldron-well);
 }
 
 .spw-cauldron-dialog .site-footer__cauldron-tools summary {
@@ -924,8 +1081,30 @@ html[data-spw-cauldron-resonance-operators] .site-footer__cauldron[data-spw-caul
   padding-block: 0.5rem;
 }
 
+.spw-cauldron-dialog .site-footer__cauldron-ingredients {
+  padding: 0.6rem;
+  border: 1px solid var(--material-line, var(--line));
+  border-radius: var(--shape-control, 0.5rem);
+  background: var(--spw-cauldron-well);
+}
+
+.spw-cauldron-dialog .site-footer__cauldron-output {
+  border-color: var(--material-line, var(--line));
+  background: var(--material-surface-contrast, var(--material-surface-matte-strong, var(--surface-strong, #fff)));
+  box-shadow: var(--material-shadow-rest, none);
+}
+
+/* The dialog is a drawer, not pocket chrome: its controls are ground-control
+   targets on a coarse pointer. On a fine pointer the sweep chips take the
+   compact size so the quiet row stays quiet. */
 .spw-cauldron-dialog :is(button, select, .cauldron-instruction-link) {
-  min-block-size: 44px;
+  min-block-size: var(--touch-target-min, 2.75rem);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .spw-cauldron-dialog .spw-chip[data-spw-action-tier="cleanup"] {
+    min-block-size: var(--touch-target-compact, 2.15rem);
+  }
 }
 
 .spw-cauldron-dialog select {
@@ -933,20 +1112,80 @@ html[data-spw-cauldron-resonance-operators] .site-footer__cauldron[data-spw-caul
 }
 
 .spw-cauldron-dialog .site-footer__cauldron-actions {
-  gap: 0.5rem;
+  --spw-cauldron-action-column-gap: 1rem;
+  gap: 0.75rem var(--spw-cauldron-action-column-gap);
   padding-block-start: 1rem;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--material-line, var(--line));
+}
+
+.spw-cauldron-dialog .site-footer__cauldron-action-group {
+  gap: 0.4rem;
 }
 
 .spw-cauldron-dialog [data-spw-action-tier="primary"] {
-  flex-basis: 100%;
   justify-content: center;
+  font-size: 1rem;
   font-weight: 700;
+}
+
+/* ─── Phase emphasis ─────────────────────────────────────────────────────────
+   The host's data-spw-cauldron-state phase moves the dialog's weight without
+   moving its order (reading and focus order stay the markup's):
+     empty        the invitation leads — the status line is the bench
+     primed       the held fragment leads — the ingredient well lifts
+     mixing, +    the verb and its result lead — Mix fills, output lifts */
+.spw-cauldron-dialog .site-footer__cauldron[data-spw-cauldron-state~="phase:empty"] .site-footer__cauldron-status {
+  padding: 0.85rem 1rem;
+  border: 1px dashed color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 36%, var(--material-line, var(--line)));
+  border-radius: var(--shape-control, 0.5rem);
+  background: var(--spw-cauldron-well);
+  color: var(--material-ink-matte, var(--ink, inherit));
+  font-size: 1rem;
+}
+
+.spw-cauldron-dialog .site-footer__cauldron[data-spw-cauldron-state~="phase:primed"] .site-footer__cauldron-ingredients {
+  border-color: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 40%, var(--material-line, var(--line)));
+  box-shadow: var(--material-shadow-rest, none);
+}
+
+.spw-cauldron-dialog .site-footer__cauldron[data-spw-cauldron-state~="phase:primed"] .site-footer__cauldron-copy {
+  color: color-mix(in srgb, var(--material-ink-matte-strong, var(--ink)) 82%, var(--component-accent, var(--active-op-color, var(--teal))) 18%);
+}
+
+.spw-cauldron-dialog .site-footer__cauldron:is([data-spw-cauldron-state~="phase:mixing"], [data-spw-cauldron-state~="phase:spell-ready"]) [data-spw-action-tier="primary"]:not(:disabled) {
+  background: color-mix(in srgb, var(--material-surface-matte-strong, var(--surface-strong, #fff)) 70%, var(--component-accent, var(--active-op-color, var(--teal))) 30%);
+  border-color: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 55%, transparent);
+  color: var(--material-ink-matte-strong, var(--ink, inherit));
+  box-shadow: var(--material-shadow-rest, none);
+}
+
+.spw-cauldron-dialog .site-footer__cauldron:is([data-spw-cauldron-state~="phase:mixing"], [data-spw-cauldron-state~="phase:spell-ready"]) .site-footer__cauldron-output {
+  border-color: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 36%, var(--material-line, var(--line)));
+  box-shadow: var(--material-shadow-lift, none);
+}
+
+.spw-cauldron-dialog .site-footer__cauldron:is([data-spw-cauldron-state~="phase:mixing"], [data-spw-cauldron-state~="phase:spell-ready"]) .site-footer__cauldron-ingredients {
+  box-shadow: none;
 }
 
 .spw-cauldron-dialog :focus-visible {
   outline: 2px solid var(--active-op-color, teal);
   outline-offset: 3px;
+}
+
+/* A capture is read later, off a phone or by an image model: no blur behind
+   the header, no grain, solid matte everywhere, so every word lands. */
+html[data-spw-capture-mode="screenshot"] .spw-cauldron-dialog__header,
+html[data-spw-capture-mode="screenshot"] .spw-cauldron-dialog::backdrop {
+  backdrop-filter: none;
+}
+
+html[data-spw-capture-mode="screenshot"] .spw-cauldron-dialog__header {
+  background: var(--material-surface-matte-strong, var(--surface-strong, #fff));
+}
+
+html[data-spw-capture-mode="screenshot"] .spw-cauldron-dialog__header::before {
+  content: none;
 }
 
 html:has(.spw-cauldron-dialog[open]) {
