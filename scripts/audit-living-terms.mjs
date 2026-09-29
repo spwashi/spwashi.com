@@ -8,9 +8,9 @@
  * followed to. The runtime deepens that — inspect note, gather, carried
  * intent — and may not be the only thing that makes the word do anything.
  *
- * Per concept this reports how many terms it has, on which routes, whether
- * any term carries a definition, and which anchors on the site could be its
- * home (an element with that id, or a card/section declaring the concept).
+ * The reading lives in scripts/lib/living-terms.mjs (the one reader of
+ * terms); this file prints it. Per concept: how many terms, on which routes,
+ * whether any term carries a definition, which anchors could be its home.
  * It also names two lies and one smell:
  *
  *   affordance  a term whose HTML title advertises tap/hold/double-click.
@@ -22,103 +22,117 @@
  *               when it mounts, and a span that does nothing should not sit
  *               in the Tab order without it.
  *
- *   node scripts/audit-living-terms.mjs [--check] [--top=20] [--json=out.json]
+ * And three counts: waiting (a term with no concept yet, counted by absence
+ * only), note depth (how many of recognition/adjacent/contrast/practice/
+ * wonder a term fills), reach (routes a concept renders on, partials
+ * counted on every route that includes them).
+ *
+ * --batch prints a worksheet: the n-th batch of decorated concepts by use
+ * (ties to wider reach, then name),
+ * each with every sentence it lives in and its route#host. Facts only; the
+ * words it waits for are the creator's.
+ *
+ *   node scripts/audit-living-terms.mjs [--check] [--top=20] [--json[=out.json]]
+ *   node scripts/audit-living-terms.mjs --batch 1 [--size 7] [--json]
  */
-import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { writeFile } from 'node:fs/promises';
-import path from 'node:path';
 import process from 'node:process';
 
-const ROOT = process.cwd();
+import {
+  batchWorksheet,
+  DEFAULT_BATCH_SIZE,
+  NOTE_FIELDS,
+  partialName,
+  reachHistogram,
+  readLivingTerms,
+} from './lib/living-terms.mjs';
+
 const args = process.argv.slice(2);
 const flag = (name, fallback) => {
-  const hit = args.find((arg) => arg.startsWith(`--${name}=`));
-  return hit ? hit.slice(name.length + 3) : fallback;
+  const eq = args.find((arg) => arg.startsWith(`--${name}=`));
+  if (eq) return eq.slice(name.length + 3);
+  const at = args.indexOf(`--${name}`);
+  if (at >= 0 && args[at + 1] && !args[at + 1].startsWith('--')) return args[at + 1];
+  return at >= 0 ? true : fallback;
 };
 const check = args.includes('--check');
 const top = Number(flag('top', '20'));
-const jsonOut = flag('json', '');
-const SKIP = new Set(['node_modules', 'dist', 'dist-vite', 'public', 'scripts', 'workers', 'src', '00.unsorted']);
+const json = flag('json', '');
+const batchArg = flag('batch', '');
+const size = Number(flag('size', String(DEFAULT_BATCH_SIZE))) || DEFAULT_BATCH_SIZE;
 
-function listPages(dir, out = []) {
-  for (const name of readdirSync(dir)) {
-    if (name.startsWith('.') || SKIP.has(name)) continue;
-    const full = path.join(dir, name);
-    if (statSync(full).isDirectory()) listPages(full, out);
-    else if (name === 'index.html') out.push(full);
+const report = readLivingTerms({ root: process.cwd() });
+const { terms, concepts: rows, waiting, lies, depthHistogram } = report;
+
+if (batchArg) {
+  const n = Math.max(1, Number(batchArg === true ? 1 : batchArg) || 1);
+  const sheet = batchWorksheet(report, n, size);
+  if (json) {
+    const text = `${JSON.stringify(sheet, null, 2)}\n`;
+    if (json === true) process.stdout.write(text);
+    else await writeFile(json, text);
   }
-  return out;
+  if (json !== true) printBatch(sheet);
+} else if (json === true) {
+  // exitCode, not exit(): a piped stdout must drain before the process ends.
+  process.stdout.write(`${JSON.stringify({ termCount: terms.length, rows, lies, waiting, depthHistogram, terms }, null, 2)}\n`);
+} else {
+  await printReport();
+}
+// --check holds in every mode: a batch worksheet does not excuse a lie.
+if (check && lies.affordance.length) {
+  process.exitCode = 1;
+  if (batchArg || json === true) console.error(`[living-terms] --check: ${lies.affordance.length} affordance lie${lies.affordance.length === 1 ? '' : 's'} (run without --batch/--json to list)`);
 }
 
-const attr = (tag, name) => new RegExp(`\\b${name}="([^"]*)"`).exec(tag)?.[1];
-const concepts = new Map();
-const homes = new Map();
-const lies = { affordance: [], nested: [], focusable: [] };
-let termCount = 0;
+async function printReport() {
 
-for (const file of listPages(ROOT)) {
-  const rel = path.relative(ROOT, file);
-  const route = `/${path.dirname(rel)}/`.replace('/./', '/');
-  const html = readFileSync(file, 'utf8');
-
-  for (const m of html.matchAll(/<([a-z][a-z0-9]*)\b[^>]*\bdata-spw-living-term\b[^>]*>/g)) {
-    const tag = m[0];
-    const concept = attr(tag, 'data-spw-concept');
-    if (!concept) continue;
-    termCount += 1;
-    const line = html.slice(0, m.index).split('\n').length;
-    const entry = concepts.get(concept) || { concept, terms: 0, routes: new Set(), defined: 0, element: new Set() };
-    entry.terms += 1;
-    entry.routes.add(route);
-    entry.element.add(m[1]);
-    const title = attr(tag, 'title') || '';
-    if (/^tap[: ]/i.test(title)) lies.affordance.push(`${route}:${line} ${concept} · title="${title.slice(0, 40)}…"`);
-    else if (title) entry.defined += 1;
-    if (m[1] === 'span' && /\btabindex="0"/.test(tag)) lies.focusable.push(`${route}:${line} ${concept}`);
-    const before = html.slice(Math.max(0, m.index - 400), m.index);
-    const lastOpen = before.lastIndexOf('<a ');
-    const lastClose = before.lastIndexOf('</a>');
-    if (lastOpen > lastClose) lies.nested.push(`${route}:${line} ${concept}`);
-    concepts.set(concept, entry);
+  const living = rows.filter((r) => r.living);
+  const decorated = rows.filter((r) => !r.living);
+  const partialTerms = terms.filter((t) => partialName(t.route));
+  console.log(`[living-terms] ${terms.length} terms · ${rows.length} concepts · ${living.length} living (a definition or a home) · ${decorated.length} decorated (neither)`);
+  console.log(`  homes: ${rows.filter((r) => r.homes.length).length} concepts could link somewhere · definitions: ${rows.filter((r) => r.defined).length} concepts carry one in a title`);
+  console.log(`  sources: ${report.sources} (route pages + _partials; ignored generated pages are not read) · ${partialTerms.length} terms authored in partials`);
+  console.log(`  waiting: ${waiting.length} term${waiting.length === 1 ? '' : 's'} with no data-spw-concept`);
+  for (const t of waiting.slice(0, top)) console.log(`    ${t.route}:${t.line} ${t.element} «${t.text.slice(0, 40)}»`);
+  const inherited = terms.filter((t) => t.wonderFrom === 'ancestor').length;
+  const fromIncluder = terms.filter((t) => t.wonderFrom === 'includer').length;
+  console.log(`  note depth (${NOTE_FIELDS.join('/')} filled, as rendered): ${depthHistogram.map((count, depth) => `${depth}:${count}`).join(' · ')}${inherited ? ` — wonder inherited from an ancestor on ${inherited}` : ''}${fromIncluder ? `, from the including route on ${fromIncluder} partial term${fromIncluder === 1 ? '' : 's'}` : ''}`);
+  for (const t of partialTerms.filter((x) => x.renderedDepths && Object.keys(x.renderedDepths).length > 1)) {
+    console.log(`    ${t.route}:${t.line} ${t.concept} depth by including route: ${Object.entries(t.renderedDepths).map(([d, n]) => `${d} on ${n}`).join(' · ')}`);
   }
+  console.log(`  reach (routes a concept renders on → concepts): ${reachHistogram(rows).map(([reach, count]) => `${reach}→${count}`).join(' · ')}`);
 
-  for (const id of new Set([...html.matchAll(/\bid="([a-z0-9-]+)"/g)].map((x) => x[1]))) {
-    if (!homes.has(id)) homes.set(id, new Set());
-    homes.get(id).add(`${route}#${id}`);
+  console.log(`\n  most-used decorated concepts (give each a definition or a home):`);
+  for (const r of decorated.slice(0, top)) console.log(`    ${r.concept.padEnd(26)} ×${String(r.terms).padEnd(3)} ${r.routes.slice(0, 3).join(' ')}${r.routes.length > 3 ? ' …' : ''}`);
+  console.log(`\n  widest reach (routes rendered on):`);
+  for (const r of [...rows].sort((a, b) => b.reach - a.reach || b.terms - a.terms || a.concept.localeCompare(b.concept)).slice(0, Math.min(top, 7))) {
+    console.log(`    ${r.concept.padEnd(26)} reach ${String(r.reach).padEnd(4)} ×${String(r.terms).padEnd(3)} ${r.living ? 'living' : 'decorated'} · depth ${r.depth}`);
   }
-  for (const m of html.matchAll(/<(?!span\b)[a-z]+\b[^>]*>/g)) {
-    const tag = m[0];
-    const concept = attr(tag, 'data-spw-concept');
-    const id = attr(tag, 'id');
-    if (concept && id && !/\bdata-spw-living-term\b/.test(tag)) {
-      if (!homes.has(concept)) homes.set(concept, new Set());
-      homes.get(concept).add(`${route}#${id}`);
+  console.log(`\n  concepts with a home, still authored as inert spans:`);
+  for (const r of rows.filter((x) => x.homes.length && !x.elements.includes('a')).slice(0, top)) console.log(`    ${r.concept.padEnd(26)} ×${String(r.terms).padEnd(3)} → ${r.homes[0]}${r.homes.length > 1 ? ` (+${r.homes.length - 1})` : ''}`);
+  for (const [kind, list] of Object.entries(lies)) {
+    if (!list.length) continue;
+    const cap = kind === 'focusable' ? 5 : 40;
+    console.log(`\n  ${kind} (${list.length})${kind === 'affordance' ? ' — HTML promises what only the runtime does' : ''}:`);
+    for (const line of list.slice(0, cap)) console.log(`    ${line}`);
+    if (list.length > cap) console.log(`    … ${list.length - cap} more`);
+  }
+  if (typeof json === 'string' && json) await writeFile(json, `${JSON.stringify({ termCount: terms.length, rows, lies, waiting, depthHistogram, terms }, null, 2)}\n`);
+}
+
+function printBatch(sheet) {
+  const first = (sheet.batch - 1) * sheet.size + 1;
+  if (!sheet.concepts.length) {
+    console.log(`[living-terms] batch ${sheet.batch} is past the last (${sheet.batches} batches of ${sheet.size} over ${sheet.decorated} decorated concepts)`);
+    return;
+  }
+  console.log(`[living-terms] batch ${sheet.batch} of ${sheet.batches} · decorated concepts ${first}–${first + sheet.concepts.length - 1} of ${sheet.decorated}, most used first`);
+  for (const c of sheet.concepts) {
+    console.log(`\n  ${c.concept} ×${c.terms} · reach ${c.reach}`);
+    for (const use of c.uses) {
+      console.log(`    ${use.anchor}  (${use.element}, line ${use.line}${use.expression ? ` · ${use.expression}` : ''}${use.depth ? ` · depth ${use.depth}` : ''})  «${use.text}»`);
+      console.log(`      ${use.sentence}`);
     }
   }
 }
-
-const rows = [...concepts.values()].map((c) => ({
-  concept: c.concept,
-  terms: c.terms,
-  routes: [...c.routes].sort(),
-  defined: c.defined,
-  homes: [...(homes.get(c.concept) || [])].sort(),
-  elements: [...c.element].sort(),
-})).sort((a, b) => b.terms - a.terms || a.concept.localeCompare(b.concept));
-
-const living = rows.filter((r) => r.defined || r.homes.length);
-const decorated = rows.filter((r) => !r.defined && !r.homes.length);
-console.log(`[living-terms] ${termCount} terms · ${rows.length} concepts · ${living.length} living (a definition or a home) · ${decorated.length} decorated (neither)`);
-console.log(`  homes: ${rows.filter((r) => r.homes.length).length} concepts could link somewhere · definitions: ${rows.filter((r) => r.defined).length} concepts carry one in a title`);
-console.log(`\n  most-used decorated concepts (give each a definition or a home):`);
-for (const r of decorated.slice(0, top)) console.log(`    ${r.concept.padEnd(26)} ×${String(r.terms).padEnd(3)} ${r.routes.slice(0, 3).join(' ')}${r.routes.length > 3 ? ' …' : ''}`);
-console.log(`\n  concepts with a home, still authored as inert spans:`);
-for (const r of rows.filter((x) => x.homes.length && !x.elements.includes('a')).slice(0, top)) console.log(`    ${r.concept.padEnd(26)} ×${String(r.terms).padEnd(3)} → ${r.homes[0]}${r.homes.length > 1 ? ` (+${r.homes.length - 1})` : ''}`);
-for (const [kind, list] of Object.entries(lies)) {
-  if (!list.length) continue;
-  console.log(`\n  ${kind} (${list.length})${kind === 'affordance' ? ' — HTML promises what only the runtime does' : ''}:`);
-  for (const line of list.slice(0, kind === 'focusable' ? 5 : 40)) console.log(`    ${line}`);
-  if (list.length > (kind === 'focusable' ? 5 : 40)) console.log(`    … ${list.length - (kind === 'focusable' ? 5 : 40)} more`);
-}
-if (jsonOut) await writeFile(jsonOut, `${JSON.stringify({ termCount, rows, lies }, null, 2)}\n`);
-if (check && lies.affordance.length) process.exit(1);
