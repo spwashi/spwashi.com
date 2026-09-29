@@ -996,9 +996,9 @@ test('live promo feed can pick the folio stack on a known weekday', () => {
   assert.equal(daily.promo.promotion?.kind, 'release');
   assert.match(daily.wonder.href, /lore\.land/);
 
-  const weeklyFolio = liveFeed.weekly.find((entry) => /lore\.land canon/i.test(entry.promo.title));
-  assert.ok(weeklyFolio, 'weekly feed should keep the RPG Wednesday / lore.land promo');
-  assert.equal(weeklyFolio.promo.href, '/play/rpg-wednesday/');
+  const weeklyFolio = liveFeed.weekly.find((entry) => /Thirty-one pieces/i.test(entry.promo.title));
+  assert.ok(weeklyFolio, 'weekly feed should keep the RPG Wednesday promo (October: draw along, no live invite)');
+  assert.equal(weeklyFolio.promo.href, '/play/rpg-wednesday/#inktober-31');
   assert.equal(weeklyFolio.promo.promotion?.kind, 'event');
   assert.equal(weeklyFolio.wonder.href, '/topics/mental-health/#streak-math');
 
