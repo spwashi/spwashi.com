@@ -14,6 +14,7 @@
  */
 
 import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
 
 import { dayWindow, pickForDay } from '../../public/js/kernel/day-seed.js';
 import {
@@ -1044,26 +1045,80 @@ function wanderReading(recipe, viewport, drawn) {
   const firstSentence = (text) => String(text || '').trim().split(/(?<=[.!?])\s+/)[0] || '';
   const wonder = firstSentence(recipe.wonder);
   const first = (wonder.length >= 32 ? wonder : firstSentence(recipe.captureValue) || wonder) || recipe.label || recipe.id;
-  return `${recipe.label} at ${viewport} with ${phrases.join(' and ')}: ${first.replace(/[.!?]$/, '')}.`;
+  const odd = phrases.length ? ` with ${phrases.join(' and ')}` : ', as written';
+  return `${recipe.label} at ${viewport}${odd}: ${first.replace(/[.!?]$/, '')}.`;
 }
 
 /**
  * Draw `n` distinct stills, each with one or two odd axes on top of its own
  * conditions. Slot 0 comes from the image-bearing recipes, so every batch
- * holds at least one picture.
+ * holds at least one picture. A named spell's still leads, walked as written.
  */
-export function wanderBatch({ seed = wanderSeedFor(), n = WANDER_DEFAULT_COUNT, pool = wanderRecipePool() } = {}) {
+/** The spellcraft bench authors the wander spells; the receipt reads them from there. */
+export const WANDER_SPELL_SOURCE = 'design/experiments/spellcraft/index.html';
+
+const plainText = (html) => String(html)
+  .replace(/<[^>]*>/g, '')
+  .replace(/&amp;/g, '&')
+  .replace(/&lt;/g, '<')
+  .replace(/&gt;/g, '>')
+  .replace(/\s+/g, ' ')
+  .trim();
+
+/**
+ * One authored spell as a record: its walk, hold, cast and notice lines, the
+ * first route it links, and the still its sense line names (a <code> that is a
+ * recipe id). Null when the page carries no spell of that name.
+ */
+export function readWanderSpell(html, slug) {
+  const name = String(slug || '').trim();
+  if (!name || !/^[a-z0-9-]+$/.test(name)) return null;
+  const start = String(html).search(new RegExp(`<li\\b[^>]*data-spw-spell="${name}"`));
+  if (start < 0) return null;
+  const end = html.indexOf('</li>', start);
+  const block = html.slice(start, end < 0 ? undefined : end);
+  const lines = {};
+  for (const [, dt, dd] of block.matchAll(/<dt>([\s\S]*?)<\/dt>\s*<dd>([\s\S]*?)<\/dd>/g)) {
+    lines[plainText(dt)] = dd;
+  }
+  const still = [...String(lines.sense || '').matchAll(/<code>([a-z0-9-]+)<\/code>/g)]
+    .map((match) => match[1])
+    .find((id) => getViewportStillRecipe(id)) || null;
+  return {
+    slug: name,
+    walk: plainText(lines.walk || ''),
+    route: (String(lines.walk || '').match(/href="([^"]+)"/) || [])[1] || null,
+    hold: plainText(lines.hold || ''),
+    cast: plainText(lines.cast || ''),
+    notice: plainText(lines.notice || ''),
+    still,
+  };
+}
+
+/** The spell a seed names, read from the bench; null for any other seed. */
+export function loadWanderSpell(seed, root = new URL('../../', import.meta.url)) {
+  try {
+    return readWanderSpell(readFileSync(new URL(WANDER_SPELL_SOURCE, root), 'utf8'), seed);
+  } catch {
+    return null;
+  }
+}
+
+export function wanderBatch({ seed = wanderSeedFor(), n = WANDER_DEFAULT_COUNT, pool = wanderRecipePool(), spell = null } = {}) {
   const key = String(seed ?? '').trim() || wanderSeedFor();
   const count = Math.max(1, Math.min(Math.trunc(Number(n)) || WANDER_DEFAULT_COUNT, pool.length));
-  const images = pool.filter(isImageRecipe);
-  const first = images.length ? wanderDraw(images, `wander:${key}:image`) : null;
+  // A named spell leads with its own still, walked as written; the seed wanders the rest.
+  const lead = spell?.still ? pool.find((recipe) => recipe.id === spell.still) || getViewportStillRecipe(spell.still) : null;
+  const images = pool.filter((recipe) => isImageRecipe(recipe) && recipe !== lead);
+  const first = lead && isImageRecipe(lead) ? null : (images.length ? wanderDraw(images, `wander:${key}:image`) : null);
+  const head = [lead, first].filter(Boolean).slice(0, count);
   const rest = wanderSpread(
-    pool.filter((recipe) => recipe !== first),
-    count - (first ? 1 : 0),
+    pool.filter((recipe) => !head.includes(recipe)),
+    count - head.length,
     `wander:${key}:recipes`,
-    first ? [first] : [],
+    head,
   );
-  const recipes = first ? [first, ...rest] : rest;
+  const recipes = [...head, ...rest];
   const axisIds = Object.keys(WANDER_AXES);
 
   const jobs = recipes.map((recipe, index) => {
@@ -1072,7 +1127,7 @@ export function wanderBatch({ seed = wanderSeedFor(), n = WANDER_DEFAULT_COUNT, 
     const viewport = wanderDraw(fits.length ? fits : ['pocket'], `${salt}:viewport`);
     const open = axisIds.filter((axis) => wanderAxisOpen(recipe, axis));
     const want = wanderDraw([1, 2], `${salt}:width`);
-    const width = Math.min(want, WANDER_MAX_AXES);
+    const width = recipe === lead ? 0 : Math.min(want, WANDER_MAX_AXES);
     let picked = wanderDistinct(open, width, `${salt}:axes`);
     if (picked.includes('script')) {
       // Scripts off keeps company only with what the browser itself applies.
@@ -1096,14 +1151,18 @@ export function wanderBatch({ seed = wanderSeedFor(), n = WANDER_DEFAULT_COUNT, 
 
   const pictures = jobs.filter((job) => job.image).length;
   const env = jobs.filter((job) => job.axes.some((axis) => WANDER_AXES[axis].env)).length;
+  const walked = spell
+    ? (lead ? ` The first is the ${spell.slug} spell's own still, as written.` : ` No still pictures the ${spell.slug} spell's walk yet; walk it by hand.`)
+    : '';
   return {
     schema: WANDER_RECEIPT_SCHEMA,
     seed: key,
     n: jobs.length,
     ids: jobs.map((job) => job.id),
     viewports: [...new Set(jobs.map((job) => job.viewport))],
+    spell: spell ? { ...spell, pictured: Boolean(lead) } : null,
     jobs,
-    reading: `Seed ${key}: ${jobs.length} odd stills, ${pictures} with a picture, ${env} with the browser itself changed.`,
+    reading: `Seed ${key}: ${jobs.length} odd stills, ${pictures} with a picture, ${env} with the browser itself changed.${walked}`,
   };
 }
 
@@ -1130,6 +1189,12 @@ export function buildWanderJobs(receipt, { format = 'jpeg' } = {}) {
 
 export function formatWanderReceipt(receipt) {
   const lines = [`#>wander seed=${receipt.seed} n=${receipt.n}`, receipt.reading];
+  const spell = receipt.spell;
+  if (spell) {
+    for (const [label, value] of [['walk', spell.walk], ['hold', spell.hold], ['cast', spell.cast], ['notice', spell.notice]]) {
+      if (value) lines.push(`    ${label.padEnd(6)} ${value}`);
+    }
+  }
   receipt.jobs.forEach((job, index) => {
     const mark = job.image ? ' *' : '';
     lines.push(`${String(index + 1).padStart(2, ' ')}. ${job.id}<${job.viewport}>{${job.axes.join('.')}}${mark}`);
