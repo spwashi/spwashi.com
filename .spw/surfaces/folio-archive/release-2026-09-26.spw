@@ -98,6 +98,6 @@
     `Form: a printable month, a daily page on the site, or both?`,
     `Year: October 2026 starts on a Thursday; the grid should come from the date, not from a template.`,
   ][reg=set]
-  demo = `design/experiments/folio-calendar/ — October 2026 in scan order, grid from the date (Thursday start, three blanks), each day linking to its shelf tile, a print stylesheet for a month on the wall. Demo-only inline styles; not linked from any nav. Written 2026-09-26, not yet seen in a browser.`
+  demo = `design/experiments/folios/calendar/ — October 2026 in scan order, grid from the date (Thursday start, three blanks), each day linking to its shelf tile, a print stylesheet for a month on the wall. Demo-only inline styles; not linked from any nav. Written 2026-09-26, not yet seen in a browser.`
   gate = `Sensation review: a proposal and one demo month approved in a browser before any route or runtime changes.`
 }

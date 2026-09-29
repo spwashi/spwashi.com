@@ -1,12 +1,12 @@
 <spw-page
     title="Spwashi • A folio a day"
     description="A demo of freshness by day: one scanned piece and the question it asks, chosen from the date, the same for every reader, with nobody editing the page."
-    canonical="https://spwashi.com/design/experiments/folio-day/"
+    canonical="https://spwashi.com/design/experiments/folios/day/"
     og_title="Spwashi • A folio a day"
     og_description="One piece and its question each day, drawn from the folio sidecars. A demo, not yet a placement."
     breadcrumb_label="Folio of the day demo"
     header_current="Folio of the day demo"
-    header_current_href="/design/experiments/folio-day/"
+    header_current_href="/design/experiments/folios/day/"
     header_indicator="website"
     surface="website"
     page_family="experiment-lab"
@@ -16,7 +16,7 @@
     route_family="design experiments folios"
     layout="reading"
     features="operators"
-    related_routes="/design/folios/|/design/experiments/folio-calendar/|/design/"
+    related_routes="/design/experiments/folios/|/design/folios/|/design/experiments/folios/calendar/|/design/"
     stylesheet_mode="scoped"
 ></spw-page>
 <!DOCTYPE html>
@@ -49,14 +49,15 @@
     data-spw-page-modes="read compare"
     data-spw-page-role="rotation-demo"
     data-spw-layout="reading"
-    data-spw-related-routes="/design/folios/|/design/experiments/folio-calendar/|/design/">
+    data-spw-related-routes="/design/experiments/folios/|/design/folios/|/design/experiments/folios/calendar/|/design/">
     <a class="skip-link" href="#main-content">Skip to content</a>
 
     <header class="site-header">
         <nav aria-label="Design experiments">
             <a class="header-sigil" href="/design/">#&gt;design</a>
             <a href="/design/folios/#release-set">Folios</a>
-            <a href="/design/experiments/folio-day/" aria-current="page">Folio of the day</a>
+            <a href="/design/experiments/folios/">Folio experiments</a>
+            <a href="/design/experiments/folios/day/" aria-current="page">Folio of the day</a>
         </nav>
     </header>
 
@@ -65,8 +66,8 @@
             <header class="frame-topline" data-spw-slot="header">
                 <a class="frame-sigil" href="#folio-day-demo" data-spw-operator="potential">~folio_day</a>
                 <h1 id="folio-day-demo-title">A folio a day, and the question it asks</h1>
-                <p>Each day this page holds one scanned piece and the question its sidecar opens with. The choice comes from the date, so every reader sees the same piece today and a different one tomorrow, and nobody edits the page for it to change. Every scan intake grows the rotation.</p>
             </header>
+            <p>Each day this page holds one scanned piece and the question its sidecar opens with. The choice comes from the date, so every reader sees the same piece today and a different one tomorrow, and nobody edits the page for it to change. Every scan intake grows the rotation.</p>
             <div class="folio-day" data-folio-day data-folio-day-src="/public/data/folio-days.json">
                 <p class="folio-day__static">Without script the rotation cannot choose a day; every piece still hangs on <a href="/design/folios/#release-set-0927">the shelf</a>, each with its question.</p>
             </div>
