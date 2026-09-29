@@ -1,0 +1,66 @@
+# Cache 2026-09-29 — the team does QA by wandering through spells; a spell is an ecological feature that stays alive by being walked.
+# Direction: spells as QA wanderings; attention kept through maintained whimsy and wonder, where whimsy is a sincere structure played completely straight.
+# Operation: contract. The spell set and its host contract landed; the wander sensor and the batch belong to other patches; definitions are handed back.
+
+#>wander_spells_2026_09
+#:cache #!spells #!qa #!cauldron #!wonder
+#:operation #!contract
+#:fixity #!tending
+#:layer #!pragmatics
+
+@bench: ~"../../design/experiments/spellcraft/index.html"
+@cauldron_dynamics: ~"../conventions/cauldron-dynamics.spw"
+@copy_accessor: ~"../conventions/copy-accessor.spw"
+@living_terms: ~"./living-terms-2026-09.spw"
+@image_review: ~"./image-review-2026-09.spw"
+@spell_reader: ~"../../public/js/kernel/shared.js"
+@still_recipes: ~"../../scripts/lib/viewport-still-recipes.mjs"
+
+expression = spell[wander]{seed.route.hold.cast.notice.upkeep}(bench)<receipt>
+
+^"concept"{
+  claim = `A spell was a runtime checkpoint in localStorage and nothing a person could walk. An authored wander spell is a named walk: go here, carry this, cast that, look for this crack. The seed is the name, so two walkers on the same spell stand on the same ground and their receipts compare.`
+  ecology = `A spell is a feature of the site's ground, like a path through a garden. A path nobody walks grows over. Upkeep is walking it: the attention paid is the maintenance, and the spell's whimsy — a field guide kept completely straight, with walk / hold / cast / notice lines — is what makes the walk worth taking again.`
+  host = `data-spw-spell="<slug>" (existing stem; @spell_reader reads it at L1086 and L1361 into the spell token) + spell[wander]{…}(<slug>)<capsule> expression + spellcraft.wander.<slug> copy-unit on an id. No new family.`
+  surface = `@bench#wander-spells, section 5, after the decompose walkthrough. HTML-first; every line reads with scripts off.`
+}
+
+^"spells"{
+  lamina = `image review — /design/folios/#release-set then home's No. 20 preview; hold a folio scan; cast Find a prompt; notice a cropped scan, a rimless laminate, a prompt describing a render when paper was held; no still yet; kept by the weekly-five turnover.`
+  wash = `dark ink — /recipes/#recipe-field in the dark palette; hold the cream-and-ochre wash; cast Nourish; notice ink collapsing into the wash; still recipes-hero-dark; kept by the climate chapter after theme or palette changes.`
+  seats = `component-variant customization — /design/components/#lens-seats; hold two panels a seat's lens reveals; cast Mix; notice a script-only variant, a pressed seat lost in high contrast, a mix that cannot tell views apart; no still yet; kept by whoever changes lens-modes.js or variant-selection.js.`
+  siblings = `copy depth — /recipes/#recipe-field-note down the genre notes; hold the term culture day and one genre note; cast Mix; notice a genre sibling duplicated; no still yet; kept by the copy pass that edits the cluster (copy-accessor ^clustered_update).`
+  pocket = `PWA standalone — home installed at pocket width; hold the No. 20 preview then the cauldron chip; cast Save trail; notice a standalone crop, a crowded corner, a saved trail re-entering the cauldron; still home-cauldron-open (named on the page in words, so the pocket line stays free of an unglossed cauldron); kept at each release threshold on a real phone.`
+  anchor = `living term — /topics/search/#spell-ingredients-title; hold the term anchor spell; cast Nourish; notice a highlighted word with no definition and no home when scripts are off; sensor npm run audit:living-terms; kept until the creator's definition lands, then with the census.`
+  verified = `Every route and anchor was checked in the tree on 2026-09-29. Casts use the four verbs in _partials/site-footer.html (mix, nourish, vision "Find a prompt", plant "Save trail"). Still ids exist in @still_recipes.`
+}[reg=facet]
+
+^"upkeep"{
+  law = `attention is the maintenance: a spell is kept by being walked, not by being listed`
+  rule = `each spell names who or what walks it next — a rotation, a review chapter, a release threshold, or the person changing the code it guards`
+  due = `a spell nobody has walked in a season is due, not deleted`
+  receipt = `seed, route, held, cast, noticed — into the wander batch`
+  refuse = `ranking walkers, streaks, or any score on attention; the reward is what the walk finds`
+}
+
+^"questions"{
+  terms = `The most-used spell and cauldron words are still decorated but undefined with scripts off. In your words, a sentence each — what do these mean? spell-navigation (4 routes: rpg-wednesday, its character and library pages, tools/midjourney), cauldron-collection (the same 4), brace-physics (7: home, design/runtime, design/catalog/systems, the rpg-wednesday three, tools/midjourney), anchor-spell and attribute-spell (topics/search, design/catalog/systems). Not written here on purpose.`
+  wander_vs_spell = `Is a wander a kind of spell, or is walking the way any spell is cast? The bench currently says the former (spell[wander]); the latter would put wander in the verb slot.`
+  seed_space = `Should a seed stay the spell's name only, or take a salt (a date, a walker) so the same spell can be walked on different ground each time?`
+  keepers = `Who wanders next — named people on the team, a rotation, or whoever opens the bench? The spells name rules today, not people.`
+  lens = `The legibility lens files [data-spw-spell] under residue, what a visit leaves behind and keeps (legibility-lens.css L16, L261). These six are the first authored spell hosts, so with the lens on they outline as leftovers. Should data-spw-spell also count as an authored stem in the lens, or stay residue only? The CSS is left alone until you say.`
+  count = `Six spells. Is that the right size for a shared practice, or should the list stay at the number a person can walk in one sitting?`
+}
+
+^"handoff"{
+  sensor = `npm run sense -- wander <seed> is built by another patch (scripts/harness-sense.mjs); the bench links it by seed = slug. Commit the sensor first or with the bench, never after, or the page prints six commands that do not run.`
+  stills = `lamina, seats, siblings, and anchor have no still. Populated-state and standalone stills belong to the stills plan.`
+  gate = `Any wander UI, pacing, or seeded ?qa= posture ends at proposal plus a browser demo the creator approves.`
+  manifest = `The new expressions need npm run manifest:staged before the search index sees them.`
+}
+
+validation: #[
+  `grep -c 'data-spw-spell=' design/experiments/spellcraft/index.html`
+  `npm run audit:copy:accessor`
+  `npm run audit:living-terms`
+][reg=set]
