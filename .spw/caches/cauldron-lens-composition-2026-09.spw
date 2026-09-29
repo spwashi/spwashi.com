@@ -6,3 +6,13 @@ evidence = `public/js/runtime/page/lens-modes.js; public/js/interface/compositio
 comparison = `About reading/kernel/lattice/hospitality and Home systems/learning/making carry different page meanings.`
 probe = `Choose a lens, mix the same two ingredients, inspect the prompt and functional mix.`
 next = `Align the active page lens with explicit connect/compare/apply composition intent.`
+
+^"modal_palette"{
+  operation = `align`
+  fixity = `tending`
+  owner = `public/js/interface/cauldron/chrome.js`
+  reading = `gathered fragments → lens and intent → mix → save or copy`
+  device = `native dialog lifts the existing vessel; dismissal returns its node and focus`
+  semantics = `Spw sigils accompany action verbs; vessel vocabulary stays inspectable in a disclosure`
+  probe = `npm run visual:checks -- --ids=home-cauldron-open`
+}

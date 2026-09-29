@@ -7,7 +7,98 @@ import { getCauldron } from '/public/js/semantic/cauldron/storage.js';
 const CHIP_SELECTOR = '.spw-cauldron-chip';
 const PANEL_QUERY = '.site-footer__cauldron, [data-spw-cauldron]';
 const PHASE_RAIL_SELECTOR = '[data-spw-cauldron-phase-rail]';
-const COLLAPSE_QUERY = '(max-width: 720px)';
+let cauldronDialog = null;
+let restorePanel = null;
+
+function ensureCauldronDialog() {
+  if (cauldronDialog) return cauldronDialog;
+  const dialog = document.createElement('dialog');
+  if (typeof dialog.showModal !== 'function') return null;
+  dialog.id = 'spw-cauldron-dialog';
+  dialog.className = 'spw-cauldron-dialog';
+  annotateFloatingChromeElement(dialog, {
+    role: 'cauldron-dialog', island: 'cauldron-dialog', tier: 'drawer',
+    mutator: 'cauldron-chrome', reason: 'cauldron-open', stylingAxis: 'cauldron',
+  });
+  dialog.setAttribute('aria-labelledby', 'spw-cauldron-title');
+  dialog.setAttribute('aria-describedby', 'spw-cauldron-purpose');
+  dialog.innerHTML = `
+    <header class="spw-cauldron-dialog__header">
+      <div><h2 id="spw-cauldron-title" tabindex="-1" autofocus>Cauldron</h2>
+      <p id="spw-cauldron-purpose">Gather fragments. Find a connection. Keep what works.</p></div>
+      <button type="button" class="spw-cauldron-dialog__close" aria-label="Close cauldron">Close <span aria-hidden="true">×</span></button>
+    </header>`;
+  dialog.querySelector('button').addEventListener('click', () => dialog.close());
+  let backdropPress = false;
+  const outside = (event) => {
+    const rect = dialog.getBoundingClientRect();
+    return event.target === dialog && (event.clientX < rect.left || event.clientX > rect.right
+      || event.clientY < rect.top || event.clientY > rect.bottom);
+  };
+  dialog.addEventListener('pointerdown', (event) => { backdropPress = outside(event); });
+  dialog.addEventListener('click', (event) => {
+    if (backdropPress && outside(event)) dialog.close();
+    backdropPress = false;
+  });
+  dialog.addEventListener('close', () => {
+    if (dialog.open) return; // Ignore a queued close from an earlier opening.
+    restorePanel?.();
+    restorePanel = null;
+    safeSyncFloatingChip();
+  });
+  // A source link must leave the modal before the page can receive focus.
+  dialog.addEventListener('click', (event) => {
+    if (event.target.closest('a[href]')) closeCauldronDialog();
+  });
+  document.body.append(dialog);
+  cauldronDialog = dialog;
+  return dialog;
+}
+
+export function openCauldronDialog(trigger = document.activeElement) {
+  const host = document.querySelector(PANEL_QUERY);
+  if (!(host instanceof HTMLElement)) return;
+  const dialog = ensureCauldronDialog();
+  if (!dialog) {
+    host.closest('details')?.setAttribute('open', '');
+    host.dataset.spwCauldronPanel = 'open';
+    syncPanelToggleLabels(host);
+    host.scrollIntoView({ block: 'center' });
+    return;
+  }
+  if (dialog.open) return;
+  restorePanel?.();
+  restorePanel = null;
+  const placeholder = document.createComment('cauldron home');
+  const previousPanel = host.dataset.spwCauldronPanel;
+  host.before(placeholder);
+  restorePanel = () => {
+    placeholder.replaceWith(host);
+    host.dataset.spwCauldronPanel = previousPanel;
+    syncPanelToggleLabels(host);
+    footerPanelVisible = measureFooterPanelVisible(host);
+    safeSyncFloatingChip();
+    if (trigger instanceof HTMLElement && trigger.isConnected) {
+      // Clearing can empty the chip while its modal is open. Keep the opener
+      // available through focus restoration; it may yield after focus leaves.
+      if (trigger === document.querySelector(CHIP_SELECTOR)) trigger.hidden = false;
+      trigger.focus({ preventScroll: true });
+    }
+  };
+  host.dataset.spwCauldronPanel = 'open';
+  dialog.append(host);
+  dialog.showModal();
+  dialog.scrollTop = 0;
+  safeSyncFloatingChip();
+}
+
+export function closeCauldronDialog() {
+  if (!cauldronDialog?.open) return;
+  cauldronDialog.close();
+  // Restore synchronously so a source-jump can focus the page in this event.
+  restorePanel?.();
+  restorePanel = null;
+}
 
 let chipScrollBound = false;
 let pendingChip = null;
@@ -19,6 +110,8 @@ function createFloatingChip() {
   chip.id = 'spw-cauldron-chip';
   chip.dataset.spwHypermediaExtension = 'state resume';
   chip.setAttribute('aria-label', 'Open the cauldron — what you are holding');
+  chip.setAttribute('aria-haspopup', 'dialog');
+  chip.setAttribute('aria-controls', 'spw-cauldron-dialog');
   chip.hidden = true;
   chip.innerHTML = `
     <span class="spw-cauldron-chip__sigil" aria-hidden="true">◎</span>
@@ -34,16 +127,9 @@ function createFloatingChip() {
   });
   chip.addEventListener('click', (event) => {
     event.preventDefault();
-    const host = document.querySelector(PANEL_QUERY);
-    host?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    if (host instanceof HTMLElement) {
-      host.dataset.spwCauldronPanel = 'open';
-      host.dataset.spwCauldronPanelUser = 'open';
-      syncPanelToggleLabels(host);
-      host.classList.add('is-cauldron-focused');
-      window.setTimeout(() => host.classList.remove('is-cauldron-focused'), 1400);
-    }
+    openCauldronDialog(chip);
   });
+  chip.addEventListener('blur', () => safeSyncFloatingChip());
   return chip;
 }
 
@@ -76,7 +162,8 @@ function syncFloatingChip() {
   }
   applyCauldronState(chip, { phase, count });
 
-  const hidden = !(count > 0 && !readFooterPanelVisible());
+  const hidden = cauldronDialog?.open
+    || !(document.activeElement === chip || (count > 0 && !readFooterPanelVisible()));
   if (chip.hidden !== hidden) chip.hidden = hidden;
 }
 
@@ -118,6 +205,18 @@ const safeSyncFloatingChip = guardCall(syncFloatingChip, 'cauldron:floating-chip
 export function setupCauldronChrome() {
   if (!chipScrollBound) {
     chipScrollBound = true;
+    ensureCauldronDialog();
+    document.querySelectorAll('a[href="#memory-garden-cauldron"]').forEach((link) => {
+      link.setAttribute('aria-haspopup', 'dialog');
+      link.setAttribute('aria-controls', 'spw-cauldron-dialog');
+    });
+    document.addEventListener('click', (event) => {
+      const link = event.target.closest('a[href="#memory-garden-cauldron"]');
+      if (!link || link.matches(CHIP_SELECTOR) || event.defaultPrevented
+        || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      openCauldronDialog(link);
+    });
     if (!observeFooterPanel()) {
       window.addEventListener('scroll', safeSyncFloatingChip, { passive: true });
       window.addEventListener('resize', safeSyncFloatingChip, { passive: true });
@@ -132,6 +231,8 @@ export function syncCauldronPhaseRail(phase) {
     rail.querySelectorAll('[data-spw-phase-step]').forEach((step) => {
       const stepPhase = step.getAttribute('data-spw-phase-step');
       step.dataset.spwPhaseActive = stepPhase === phase ? 'true' : 'false';
+      if (stepPhase === phase) step.setAttribute('aria-current', 'step');
+      else step.removeAttribute('aria-current');
       step.dataset.spwPhaseComplete = isPhaseComplete(stepPhase, phase) ? 'true' : 'false';
     });
   });
@@ -140,16 +241,16 @@ export function syncCauldronPhaseRail(phase) {
 function syncPanelToggleLabels(host) {
   const toggle = host.querySelector('[data-spw-cauldron-panel-toggle]');
   if (!(toggle instanceof HTMLButtonElement)) return;
-  const open = host.dataset.spwCauldronPanel !== 'compact';
-  toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-  toggle.textContent = open ? 'hide' : 'show';
-  toggle.title = open ? 'Hide the cauldron' : 'Show the cauldron';
-  toggle.setAttribute('aria-label', open ? 'Hide memory cauldron' : 'Show memory cauldron');
+  toggle.removeAttribute('aria-expanded');
+  toggle.textContent = 'Open cauldron';
+  toggle.title = 'Open the composition palette';
+  toggle.setAttribute('aria-label', 'Open cauldron');
 }
 
 export function syncCauldronPanelCollapse(count) {
   document.querySelectorAll(PANEL_QUERY).forEach((host) => {
     if (!(host instanceof HTMLElement)) return;
+    if (host.closest('dialog[open]')) return;
     if (count > 0) {
       host.dataset.spwCauldronPanel = 'open';
     } else if (host.dataset.spwCauldronPanelUser !== 'open') {
@@ -159,30 +260,14 @@ export function syncCauldronPanelCollapse(count) {
   });
 }
 
-function toggleCauldronPanel(host) {
-  if (!(host instanceof HTMLElement)) return;
-  const next = host.dataset.spwCauldronPanel === 'open' ? 'compact' : 'open';
-  host.dataset.spwCauldronPanel = next;
-  host.dataset.spwCauldronPanelUser = next === 'open' ? 'open' : '';
-  syncPanelToggleLabels(host);
-}
-
 export function bindCauldronPanelToggle() {
   document.querySelectorAll('[data-spw-cauldron-panel-toggle]').forEach((button) => {
     if (button.dataset.spwCauldronPanelBound === 'true') return;
     button.dataset.spwCauldronPanelBound = 'true';
+    button.setAttribute('aria-haspopup', 'dialog');
+    button.setAttribute('aria-controls', 'spw-cauldron-dialog');
     button.addEventListener('click', () => {
-      toggleCauldronPanel(button.closest(PANEL_QUERY));
-    });
-  });
-  document.querySelectorAll(PANEL_QUERY).forEach((host) => {
-    if (!(host instanceof HTMLElement) || host.dataset.spwCauldronHeaderToggle === 'true') return;
-    const header = host.querySelector('.site-footer__cauldron-header');
-    if (!(header instanceof HTMLElement)) return;
-    host.dataset.spwCauldronHeaderToggle = 'true';
-    header.addEventListener('click', (event) => {
-      if (event.target.closest('[data-set-cauldron-vessel], [data-spw-cauldron-panel-toggle], a, button')) return;
-      toggleCauldronPanel(host);
+      openCauldronDialog(button);
     });
   });
 }

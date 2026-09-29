@@ -52,6 +52,8 @@ import {
 } from '/public/js/semantic/cauldron/contract.js';
 import {
   bindCauldronPanelToggle,
+  openCauldronDialog,
+  closeCauldronDialog,
   setupCauldronChrome,
   syncCauldronPanelCollapse,
   syncCauldronPhaseRail,
@@ -143,6 +145,12 @@ function handleCauldronUIActions(e) {
     const result = mixIngredients();
     const html = typeof result === 'string' ? result : result.html || result;
     showOutput(html, mixSignature);
+    announceCauldronStatus(`Mixed ${ingredients.length} fragments. Your composition is ready below; copy it or save the gathering as a trail.`);
+    const resultPanel = document.querySelector('.spw-cauldron-dialog[open] [data-cauldron-output]');
+    if (resultPanel) {
+      resultPanel.focus({ preventScroll: true });
+      resultPanel.scrollIntoView({ block: 'nearest' });
+    }
     flashCauldronAction(mixBtn, 'cast');
     // Functional result available for agents/spells: result.functional
     e.preventDefault();
@@ -314,7 +322,7 @@ function handleCauldronUIActions(e) {
       // Surface the cauldron in the footer so the full history + re-gather affordances are reachable
       const footerCauldron = document.querySelector('.site-footer__cauldron, [data-spw-cauldron]');
       if (footerCauldron) {
-        footerCauldron.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        openCauldronDialog(e.target.closest('button, a'));
         footerCauldron.classList.add('is-recently-tended');
         setTimeout(() => footerCauldron.classList.remove('is-recently-tended'), 1400);
       }
@@ -326,7 +334,7 @@ function handleCauldronUIActions(e) {
     } else {
       // If nothing in cauldron yet but we have a trace, at least surface the footer as the place consequences live
       const footerCauldron = document.querySelector('.site-footer__cauldron, [data-spw-cauldron]');
-      if (footerCauldron) footerCauldron.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (footerCauldron) openCauldronDialog(e.target.closest('button, a'));
     }
     e.preventDefault();
   }
@@ -345,7 +353,7 @@ function handleCauldronUIActions(e) {
 
       const footerCauldron = document.querySelector('.site-footer__cauldron, [data-spw-cauldron]');
       if (footerCauldron) {
-        footerCauldron.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        openCauldronDialog(e.target.closest('button, a'));
         footerCauldron.classList.add('is-recently-tended');
         setTimeout(() => footerCauldron.classList.remove('is-recently-tended'), 1400);
       }
@@ -443,6 +451,12 @@ function handleIngredientInspect(e) {
           window.history.replaceState(window.history.state, '', deepLinkState.href);
         }
       }
+      closeCauldronDialog();
+      if (!first.hasAttribute('tabindex')) {
+        first.setAttribute('tabindex', '-1');
+        first.addEventListener('blur', () => first.removeAttribute('tabindex'), { once: true });
+      }
+      first.focus({ preventScroll: true });
       first.scrollIntoView({ behavior: 'smooth', block: 'center' });
       first.classList.add('is-cauldron-jump-target', 'cauldron-highlight');
       const cat = ingEl.querySelector('[data-spw-wonder]')?.getAttribute('data-spw-wonder') ||
@@ -508,7 +522,7 @@ function findPageTargetsForCauldronIngredient(ingEl, expr) {
     const o = opMeta.getAttribute('data-spw-operator');
     if (o) document.querySelectorAll(`[data-spw-operator="${CSS.escape(o)}"]`).forEach(n => results.add(n));
   }
-  return Array.from(results);
+  return Array.from(results).filter((target) => !target.closest('[data-spw-cauldron], .spw-cauldron-dialog'));
 }
 
 function resolveCaptureDeepLink(detail = {}, sourceElement = null, expression = '') {
@@ -756,9 +770,15 @@ function sitCauldronVessel(name, { persist = true } = {}) {
       if (spec.phases[index]) label.textContent = spec.phases[index];
     });
     const mix = host.querySelector('[data-spw-cauldron-action="mix"]');
-    if (mix) mix.textContent = spec.mix;
+    if (mix) {
+      mix.textContent = '! Mix fragments';
+      mix.title = `${spec.mix} — combine the held fragments using your chosen intent`;
+    }
     const plant = host.querySelector('[data-spw-cauldron-action="plant"]');
-    if (plant) plant.textContent = spec.plant;
+    if (plant) {
+      plant.textContent = '^ Save trail';
+      plant.title = `${spec.plant} — keep this gathering as a trail in this browser`;
+    }
   });
   document.querySelectorAll('[data-set-cauldron-vessel]').forEach((btn) => {
     const seated = btn.getAttribute('data-set-cauldron-vessel') === id;

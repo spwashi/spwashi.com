@@ -801,4 +801,158 @@ html[data-spw-cauldron-resonance-operators] .site-footer__cauldron[data-spw-caul
     animation: none;
   }
 }
+
+/* One working palette, lifted from its footer seat into the browser top layer. */
+.spw-cauldron-dialog {
+  --footer-panel-line: var(--line);
+  --footer-panel-bg: var(--surface-strong, #fff);
+  --footer-panel-bg-soft: var(--surface, #fff);
+  box-sizing: border-box;
+  inline-size: min(44rem, calc(100% - 1.5rem));
+  max-inline-size: none;
+  max-block-size: calc(100dvh - 2rem);
+  margin: auto;
+  padding: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  border: 1px solid var(--line);
+  border-radius: var(--shape-panel, 1rem);
+  background: var(--surface-strong, #fff);
+  color: var(--ink, #182324);
+  box-shadow: 0 24px 80px #0004;
+}
+
+.spw-cauldron-dialog::backdrop {
+  background: #101b20a6;
+}
+
+.spw-cauldron-dialog__header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  align-items: start;
+  gap: 1rem;
+  padding: 1.25rem;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-strong, #fff);
+}
+
+.spw-cauldron-dialog__header > div {
+  min-inline-size: 0;
+}
+
+.spw-cauldron-dialog__header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  line-height: 1.25;
+}
+
+.spw-cauldron-dialog__header p {
+  margin: 0.4rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--ink-soft, inherit);
+}
+
+.spw-cauldron-dialog__close {
+  flex-shrink: 0;
+  margin-inline-start: auto;
+  min-block-size: 44px;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: var(--shape-control, 0.5rem);
+  background: var(--surface-strong, #fff);
+  color: inherit;
+  cursor: pointer;
+}
+
+.spw-cauldron-dialog .site-footer__cauldron {
+  margin: 0;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  min-inline-size: 0;
+}
+
+.spw-cauldron-dialog .site-footer__cauldron-header,
+.spw-cauldron-dialog .site-footer__cauldron-ingredients:empty {
+  display: none;
+}
+
+.spw-cauldron-dialog .site-footer__cauldron-phase-rail {
+  margin: 0 0 1.25rem;
+  padding: 0;
+  list-style: none;
+}
+
+.spw-cauldron-dialog .site-footer__cauldron-phase-step {
+  padding-block: 0.5rem;
+  box-shadow: none;
+  animation: none;
+}
+
+.spw-cauldron-dialog .site-footer__cauldron-body {
+  display: grid;
+  gap: 1rem;
+}
+
+.spw-cauldron-dialog .site-footer__cauldron-body > * {
+  min-inline-size: 0;
+  margin-block: 0;
+}
+
+.spw-cauldron-dialog .site-footer__cauldron-copy {
+  color: var(--ink, inherit);
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.spw-cauldron-dialog :is(.site-footer__cauldron-status, .site-footer__composition-impact, .site-footer__cauldron-tools) {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--ink-soft, inherit);
+}
+
+.spw-cauldron-dialog .site-footer__composition-controls {
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--shape-control, 0.5rem);
+}
+
+.spw-cauldron-dialog .site-footer__cauldron-tools summary {
+  cursor: pointer;
+  padding-block: 0.5rem;
+}
+
+.spw-cauldron-dialog :is(button, select, .cauldron-instruction-link) {
+  min-block-size: 44px;
+}
+
+.spw-cauldron-dialog select {
+  max-inline-size: 100%;
+}
+
+.spw-cauldron-dialog .site-footer__cauldron-actions {
+  gap: 0.5rem;
+  padding-block-start: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.spw-cauldron-dialog [data-spw-action-tier="primary"] {
+  flex-basis: 100%;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.spw-cauldron-dialog :focus-visible {
+  outline: 2px solid var(--active-op-color, teal);
+  outline-offset: 3px;
+}
+
+html:has(.spw-cauldron-dialog[open]) {
+  overflow: hidden;
+}
 }

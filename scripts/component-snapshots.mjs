@@ -979,6 +979,7 @@ async function applyCapturePrepare(session, job) {
     const holdSels = ${JSON.stringify(hold)};
     const menuSels = ${JSON.stringify(contextmenu)};
     const wantsSearch = clickSels.some((sel) => sel.includes('site-search'));
+    const wantsCauldron = clickSels.some((sel) => sel.includes('memory-garden-cauldron'));
     const wantsNote = clickSels.some((sel) => sel.includes('living-term') || sel.includes('spw-living-term') || sel.includes('spw-concept'));
     const wantsLens = clickSels.some((sel) => sel.includes('data-set-mode') || sel.includes('mode-switch'));
     const wantsHint = chargeSels.length > 0;
@@ -988,9 +989,10 @@ async function applyCapturePrepare(session, job) {
       const readyDeadline = Date.now() + 4000;
       while (Date.now() < readyDeadline) {
         const searchReady = !wantsSearch || typeof window.spwSearch?.open === 'function';
+        const cauldronReady = !wantsCauldron || Boolean(document.querySelector('#spw-cauldron-dialog'));
         const noteReady = !wantsNote || Boolean(document.querySelector('.spw-living-term[role="button"], [data-spw-living-term][role="button"]'));
         const lensReady = !wantsLens || Boolean(document.querySelector('.mode-switch [data-set-mode][data-spw-variant-bound="true"]'));
-        if (searchReady && noteReady && lensReady) break;
+        if (searchReady && cauldronReady && noteReady && lensReady) break;
         await new Promise((r) => requestAnimationFrame(r));
       }
       if (wantsSearch && typeof window.spwSearch?.open !== 'function') {
@@ -998,6 +1000,10 @@ async function applyCapturePrepare(session, job) {
           const mod = await import('/public/js/runtime/navigation/site-search.js');
           mod.initSiteSearch?.(null, document);
         } catch { /* catalog may still win */ }
+      }
+      if (wantsCauldron && !document.querySelector('#spw-cauldron-dialog')) {
+        const mod = await import('/public/js/interface/composition.js');
+        mod.initCauldron();
       }
       if (wantsNote && !document.querySelector('.spw-living-term[role="button"], [data-spw-living-term][role="button"]')) {
         try {

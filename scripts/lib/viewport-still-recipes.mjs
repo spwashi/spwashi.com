@@ -500,6 +500,25 @@ export const VIEWPORT_STILL_RECIPES = Object.freeze([
       'public/css/routes/surfaces/design.css',
     ]),
   }),
+  Object.freeze({
+    id: 'home-cauldron-open',
+    fixtureId: 'home-hook',
+    label: 'Cauldron composition palette',
+    specimenRoute: '/',
+    selector: '.spw-cauldron-dialog[open]',
+    prepare: Object.freeze({
+      click: Object.freeze(['.site-footer__pill[href="#memory-garden-cauldron"]']),
+    }),
+    layoutScenarios: Object.freeze(['pocket', 'fold', 'broadsheet']),
+    wonder: 'The cauldron opens above the page with a readable next step and a reachable dismissal.',
+    captureValue: 'Native modal, named composition controls, and quiet Spw vocabulary disclosure.',
+    sourceFiles: Object.freeze([
+      '_partials/site-footer.html',
+      'public/js/interface/cauldron/chrome.js',
+      'public/js/interface/composition.js',
+      'public/css/components/cauldron.css',
+    ]),
+  }),
 ]);
 
 export const VIEWPORT_STILL_CHECKS = Object.freeze([
