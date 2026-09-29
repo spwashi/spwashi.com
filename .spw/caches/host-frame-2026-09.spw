@@ -1,0 +1,124 @@
+# Host Frame (2026-09)
+#
+# operation: cache
+# One job per public host. mutex.buzz names the rule: one concept in the
+# frame at a time. boon, bane, and bone share the Factshift app as a neutral
+# frame with a pull. attention.productions spends that frame on a picture.
+# Not a promise of credit, and not a promise of a mounted land.
+
+#>host_frame_2026_09
+#:cache #!hosts #!factshift #!attention #!mutex #!ecosystem
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@site_hub: ~"../../workers/site-hub-next/src/index.js"
+@domains: ~"../domains.spw"
+@factshift_app: ~"../../workers/factshift-center/version.json"
+@factshift_edge: ~"../../workers/factshift-center/src/index.js"
+@relay_cards: ~"../../cards/index.html"
+@offer_rhythm: ~"./offer-rhythm-2026-10.spw"
+@holidays: ~"./holiday-infrastructure-2026-09.spw"
+@feedback_product: ~"./feedback-product-2026-09.spw"
+@residency_demo: ~"../../design/experiments/residency/index.html"
+
+operation = "cache"
+fixity = "experimental"
+source = "creator and the site-hub session, 2026-09-28: one job per public host, the Factshift frame, attention.productions as the season's picture page; creator, same day: improve this cache's design and its ecosystem value"
+
+expression = host[job]{one.verb}<frame>
+
+^"thesis"{
+  claim = `A hostname is a job. The picture season, the grain, the path, the note, and the long story are already jobs. The frame is the Factshift app: one concept on the canvas, query-string physics, and a viewport that stays words until a picture is earned. mutex.buzz names the rule. attention.productions spends it. boon, bane, and bone are the same codebase with a pull.`
+  design = `Each host is learned by one verb, and a visitor who learns one host's verb can guess the next (learnable surfaces: one role rule, taught once). A host that needs two verbs is two jobs, or a held name.`
+}[reg=facet]
+
+^"jobs"{
+  ~note = `host · verb · what a visit leaves behind`
+  rows = #[
+    `attention.productions · picture · a season to back, through the film card`,
+    `texture.website       · grain   · a grain tried, taken, or commissioned`,
+    `spw.quest             · learn   · one page of Spw read; a mount, if wanted`,
+    `autonomous.feedback   · note    · a card the reader sends; a desk only when the site asks`,
+    `factshift.center      · frame   · one concept held on the canvas`,
+    `lore.land             · keep    · a reference entry, credited, when work fits the world`,
+    `spwashi.com           · meet    · the person, the ladder, and every card`
+  ][reg=set]
+  pictures = `attention.productions opens the production season October 1 through New Year 2026. A feature is due in 2027. Its primary door is "Back the season" at spwashi.com/cards/#back-the-film. The card agrees a part; it does not promise a credit.`
+  frame = `factshift.center serves the snapshot in workers/factshift-center. @factshift_app names the version and the query keys. The modifiable source is workers/factshift-center/app, revision 5860b39, sixty-seven commits ahead of GitHub main, gitignored. The canvas title is <concept>. One concept is the moment. This pass did not redeploy.`
+  held = `A held name (ink, click, biz, rest, brainstorm, trope, teal, shop, new year) keeps one sentence and one place the work already lives. It does not pretend to be the frame.`
+}[reg=facet]
+
+^"ecosystem"{
+  ~note = `What moves between hosts, and what each hand-off is worth. Only links that exist today are stated as fact; the rest are marked proposed.`
+  flow = `attention (a host's one verb) → a card (the reader's own words) → a message sent by the reader (DM or email) → a reply that settles form, price, and credit → a receipt on Now at the next close`
+  currencies = .{
+    attention = `views and returns; the season's promo spends it daily`
+    relationship = `a card sent by hand; the reply is where it becomes work`
+    money = `backing, tips, and commissions; always settled in a reply, never a checkout`
+    proof = `a public receipt at a close; the next reader's reason to trust the first card`
+    reference = `a lore.land entry; credit that outlives the season`
+  }[reg=facet]
+  today = #[
+    `attention.productions → spwashi.com/cards/#back-the-film ("Back the season")`,
+    `attention.productions, texture.website, spw.quest → spwashi.com and each other through the site-hub doors`,
+    `lore.land's site page → spwashi.com/cards/#lore-collab`,
+    `spw.quest → autonomous.feedback for what was hard to follow`
+  ][reg=set]
+  proposed = #[
+    `texture.website "commission a grain" → the bundle composer with a grain line preset, once a grain has a price`,
+    `factshift.center → attention.productions when a concept has earned a picture (the mutex spend, reversed as a door)`,
+    `lore.land entries → the residency demo's terms, if the creator takes the residency public`
+  ][reg=set]
+  value_rule = `A hand-off earns its place when the next host gives the visitor something to keep (a card, a grain, a page read, a note, a reference). A link that only advertises is a promo, and promos rotate through @holidays and the promo feed, not through host doors.`
+}[reg=facet]
+
+^"clock"{
+  claim = `Every host keeps the same season clock, so a visitor who knows one rhythm knows all of them.`
+  closes = `cycles close on the 13th, the 26th, and the last day of the month (@offer_rhythm). A host's receipts, a residency term, a morale mark, and a sponsor's slot all turn on the same three days.`
+  season = `the production season runs October 1 through New Year. Its turns (mask, table, gift, threshold) are @holidays; the residency demo reads the same season as three terms and a round-out.`
+  sponsor = `a sponsored image's agreement ends at a close, so the image cache (see physics.sw) has a date it must stop serving by`
+}[reg=facet]
+
+^"mutex"{
+  rule = `One concept in the frame at a time. That is the mechanic behind a picture, not a second app.`
+  spend = `attention.productions is the first spend: a picture is one concept held long enough to market.`
+  today = `mutex.buzz is a door onto attention.productions. It is not yet a router that swaps the concept.`
+  proposed = .{
+    idea = `creator, 2026-09-28: "mutex.buzz/now/ embedded by attention.productions and generally pointing to a laminated folio." mutex.buzz becomes the lock itself: what holds the one slot of attention right now, where it came from, and when it lets go.`
+    now = `mutex.buzz/now/ answers one holder: a picture, a title, a link, a since, and a releases-at. /now.json says the same for machines. attention.productions embeds /now/ as its picture slot instead of choosing its own image.`
+    default = `when nothing else holds the lock, a laminated folio does: real art, scanned from the stack, linked to its page on /design/folios/. The lock is never empty, and its resting state is the work itself.`
+    hold = `a hold is time-boxed to the clock: it starts at a close and releases at the next (13th, 26th, last day). A film concept, a sponsor's picture, or a lore.land entry can take the lock for one cycle; then the folio returns.`
+    queue = `waiting holders line up in public, in order, like threads waiting on a lock. Being next is visible and fair; nobody jumps it by paying more mid-cycle.`
+    buzz = `the buzz is the hand-off: when the lock changes hands, the old holder gets a receipt on Now and the new one a small announcement. The buzz is the only time the slot is loud.`
+    value = `sponsors get a bounded, honest slot that ends when the agreement does, so the image cache has a date to stop by. Visitors always see real art or one chosen concept, never a carousel. The folio stack gets a standing stage.`
+  }[reg=facet]
+}[reg=facet]
+
+^"lands"{
+  codebase = `boon.land, bane.land, and bone.land are the same app as factshift.center. The frame is neutral. The hostname is the pull: boon toward arrival, bane toward departure, bone held still.`
+  images = `A concept stays words. On some viewports, some concepts link to an image. That image is the sponsored slot. The cache of that image has to be minded, or a sponsor's picture outlives the agreement.`
+  today = `factshift.center serves the built app (script factshift-center). The three land names still open their specimens. Mounting the same app on them is the next route change, after the frame has been public.`
+}[reg=facet]
+
+^"physics"{
+  keys = `The snapshot's version.json lists the query keys the build already reads, including charge, alpha, alphaTarget, alphaDecay, velocityDecay, centerStrength, boundingBox, center, mode, and identity.`
+  link = `A picture on attention.productions links to a factshift.center URL whose query is the pull. Bone is the unset query. Boon and bane are two saved queries. The numbers are not chosen in this cache.`
+  sw = `The app registers /v0.0.2-alpha/service-worker.js. That script cache-firsts its own scope under the name serviceworker@v0.0.1, while the app version is 0.0.2-alpha. Scope stays the version folder, so the document at / is outside it today. Before a sponsored image depends on this cache, the document and the image want network-first, and the cache name wants the app version.`
+}[reg=facet]
+
+^"deploy"{
+  owns = `factshift.center left site-hub-next. This repo's deployable copy is workers/factshift-center. site-hub keeps texture.website, attention.productions, and the doors. The copy was not redeployed; the live script is already that build.`
+  route = `factshift.center/* and www.factshift.center/* point at factshift-center. www redirects to the apex. The document is cached for 60 seconds. Hashed files keep the build cache. Sourcemaps are not uploaded.`
+  commit = `This cache and the door copy stay uncommitted until the creator asks.`
+}[reg=facet]
+
+do_not = #[
+  `tell a visitor the three lands already run the simulation`,
+  `publish a boon or bane charge until the creator picks the two queries`,
+  `put a sitewide Content-Security-Policy on spwashi.com`,
+  `attach a Worker to spwashi.com, resume.spwashi.com, or lore.land`,
+  `give a host a second verb; make it a held name or a new job`,
+  `let a sponsored image outlive the close its agreement ends on`,
+  `promise a credit from any host; the card agrees a part and the reply settles it`
+][reg=set]

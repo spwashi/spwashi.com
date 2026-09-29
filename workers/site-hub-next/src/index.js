@@ -1,113 +1,174 @@
 /**
- * site-hub-next — constellation map, plus a texture lab on texture.website.
+ * site-hub-next — one public job per hostname.
  *
- * Does not serve spwashi.com. Live origin stays GitHub Pages.
+ * texture.website is the grain lab. attention.productions is the pictures.
+ * Every other host this script serves is a door: one sentence, one place
+ * the work already lives, and two neighbors. Does not serve spwashi.com.
  * Do not attach this script to spwashi.com/*.
  */
 
-const LIVE = [
+const PRODUCTS = [
   {
-    domain: "spwashi.com",
+    id: "work",
+    host: "spwashi.com",
     title: "Spwashi",
-    role: "primary",
-    origin: "github-pages",
+    job: "Software and art. The place the other names prove themselves.",
     href: "https://spwashi.com/",
-    description: "Creator site. Software and art.",
   },
   {
-    domain: "resume.spwashi.com",
-    title: "SVG resume",
-    role: "resume",
-    origin: "github-pages",
-    href: "https://resume.spwashi.com/resume.svg",
-    description: "Hand-authored SVG resume.",
+    id: "pictures",
+    host: "attention.productions",
+    title: "Attention Productions",
+    job: "The pictures. A feature in 2027, and a season of daily promo from October 1 through New Year.",
+    href: "https://attention.productions/",
   },
   {
-    domain: "lore.land",
-    title: "lore.land",
-    role: "living-atlas",
-    origin: "github-pages",
-    href: "https://lore.land/",
-    description: "Long-form storytelling and ebook surface.",
-  },
-];
-
-const DOCUMENTED = [
-  {
-    domain: "rpgwednesday.shop",
-    title: "RPG Wednesday",
-    href: "https://spwashi.com/play/rpg-wednesday/",
-    description: "Play table. Public route lives on spwashi.com.",
-  },
-  {
-    domain: "texture.website",
+    id: "grain",
+    host: "texture.website",
     title: "Texture",
+    job: "Grain you can try under your own words, take as one rule and one tile, or commission.",
     href: "https://texture.website/",
-    description: "Grain lab. Materials and patterns as page feeling.",
   },
   {
-    domain: "tealstripesvibes.com",
-    title: "Teal Stripes Vibes",
-    href: "https://spwashi.com/about/domains/tealstripesvibes.com/",
-    description: "Taste and visual identity. Specimen on the primary site.",
-  },
-  {
-    domain: "boon.land",
-    title: "boon.land",
-    href: "https://spwashi.com/about/domains/boon.land/",
-    description: "Positive field in the land cluster.",
-  },
-  {
-    domain: "bane.land",
-    title: "bane.land",
-    href: "https://spwashi.com/about/domains/bane.land/",
-    description: "Counter-field in the land cluster.",
-  },
-  {
-    domain: "bone.land",
-    title: "bone.land",
-    href: "https://spwashi.com/about/domains/bone.land/",
-    description: "Structure in the land cluster.",
-  },
-  {
-    domain: "spw.quest",
+    id: "path",
+    host: "spw.quest",
     title: "spw.quest",
+    job: "A path into Spw. Copy one setup, for yourself or for an agent, and stop before any commit.",
     href: "https://spw.quest/",
-    description: "Paced guide into Spw. Parser door; live specimens stay on spwashi.com.",
   },
   {
-    domain: "autonomous.feedback",
+    id: "note",
+    host: "autonomous.feedback",
     title: "autonomous.feedback",
+    job: "A note any website can take. A desk is kept only when the site asks for one.",
     href: "https://autonomous.feedback/",
-    description: "HTTP climate of public origins. Weather for lore and the Wednesday table.",
   },
   {
-    domain: "factshift.center",
+    id: "story",
+    host: "lore.land",
+    title: "lore.land",
+    job: "A show that is also a book.",
+    href: "https://lore.land/",
+  },
+  {
+    id: "frame",
+    host: "factshift.center",
     title: "Factshift",
-    href: "https://spwashi.com/about/domains/factshift.com/",
-    description: "Observatory. Specimen is under factshift.com on the primary site.",
+    job: "One concept on a neutral frame. A query on the URL is the physics.",
+    href: "https://factshift.center/",
+  },
+  {
+    id: "record",
+    host: "wap.mom",
+    title: "wap.mom",
+    job: "A periodical of record about π and pie.",
+    href: "https://wap.mom/",
+  },
+  {
+    id: "resume",
+    host: "resume.spwashi.com",
+    title: "Resume",
+    job: "A hand-authored SVG resume.",
+    href: "https://resume.spwashi.com/resume.svg",
   },
 ];
 
-/** Hosts this Worker currently serves. */
-const LEGACY_HUB_HOSTS = [
-  "attention.productions",
-  "bane.land",
-  "bone.land",
-  "boon.land",
-  "brainstorm.monster",
-  "factshift.center",
-  "mutex.buzz",
-  "newyear.life",
-  "rpgwednesday.shop",
-  "spw.rest",
-  "spwashi.biz",
-  "spwashi.click",
-  "spwashi.ink",
-  "tealstripesvibes.com",
-  "texture.website",
-  "trope.wiki",
-];
+const productById = (id) => PRODUCTS.find((item) => item.id === id);
+
+/** Hosts this script serves that are not yet their own product. */
+const DOORS = {
+  "boon.land": {
+    title: "boon.land",
+    job: "A neutral frame pulled toward arrival. A concept stays words until a viewport is sponsored to show a picture.",
+    href: "https://spwashi.com/about/domains/boon.land/",
+    cta: "Read the field",
+    neighbors: ["frame", "pictures"],
+  },
+  "bane.land": {
+    title: "bane.land",
+    job: "The same frame, pulled toward departure. A concept stays words until a viewport is sponsored to show a picture.",
+    href: "https://spwashi.com/about/domains/bane.land/",
+    cta: "Read the field",
+    neighbors: ["frame", "pictures"],
+  },
+  "bone.land": {
+    title: "bone.land",
+    job: "The same frame, held still. A concept stays words until a viewport is sponsored to show a picture.",
+    href: "https://spwashi.com/about/domains/bone.land/",
+    cta: "Read the field",
+    neighbors: ["frame", "pictures"],
+  },
+  "tealstripesvibes.com": {
+    title: "Teal Stripes Vibes",
+    job: "Art, social presence, and the look of the work, held as a specimen.",
+    href: "https://spwashi.com/about/domains/tealstripesvibes.com/",
+    cta: "Read the specimen",
+    neighbors: ["grain", "pictures"],
+  },
+  "rpgwednesday.shop": {
+    title: "RPG Wednesday",
+    job: "The play table. The public night is on spwashi.com.",
+    href: "https://spwashi.com/play/rpg-wednesday/",
+    cta: "Sit at the table",
+    neighbors: ["story", "work"],
+  },
+  "trope.wiki": {
+    title: "trope.wiki",
+    job: "A name for story moves. The long form you can read now is lore.land.",
+    href: "https://lore.land/",
+    cta: "Read the long form",
+    neighbors: ["story", "work"],
+  },
+  "spwashi.ink": {
+    title: "spwashi.ink",
+    job: "The press name. The editions you can see now are the folios.",
+    href: "https://spwashi.com/design/folios/",
+    cta: "See the folios",
+    neighbors: ["work", "story"],
+  },
+  "newyear.life": {
+    title: "newyear.life",
+    job: "The year as a threshold you can write on.",
+    href: "https://spwashi.com/newyear/",
+    cta: "Open the year",
+    neighbors: ["work", "pictures"],
+  },
+  "brainstorm.monster": {
+    title: "brainstorm.monster",
+    job: "A name for thinking together. It is quiet. The work is on spwashi.com.",
+    href: "https://spwashi.com/",
+    cta: "Go to the work",
+    neighbors: ["work", "path"],
+  },
+  "mutex.buzz": {
+    title: "mutex.buzz",
+    job: "One concept in the frame at a time. Attention Productions spends that rule on a picture.",
+    href: "https://attention.productions/",
+    cta: "See it on a picture",
+    neighbors: ["pictures", "work"],
+  },
+  "spw.rest": {
+    title: "spw.rest",
+    job: "A resting name. The live path into the language is spw.quest.",
+    href: "https://spw.quest/",
+    cta: "Take the path",
+    neighbors: ["path", "work"],
+  },
+  "spwashi.biz": {
+    title: "spwashi.biz",
+    job: "A held name. Commissions are on the services ladder.",
+    href: "https://spwashi.com/services/",
+    cta: "See the ladder",
+    neighbors: ["work", "pictures"],
+  },
+  "spwashi.click": {
+    title: "spwashi.click",
+    job: "A held name. The site is spwashi.com.",
+    href: "https://spwashi.com/",
+    cta: "Go to the site",
+    neighbors: ["work", "grain"],
+  },
+};
 
 const SLICES = [
   {
@@ -223,19 +284,21 @@ const escapeHtml = (value) =>
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;");
 
-const constellationJson = {
-  worker: "site-hub-next",
-  primary: "https://spwashi.com/",
-  serves_spwashi_com: false,
-  live: LIVE,
-  documented: DOCUMENTED,
-  legacy_hub_hosts: LEGACY_HUB_HOSTS,
+const ecosystemJson = {
+  schema: "ecosystem.v1",
+  products: PRODUCTS.map(({ id, host, title, job, href }) => ({ id, host, title, job, href })),
+  doors: Object.entries(DOORS).map(([host, door]) => ({
+    host,
+    title: door.title,
+    job: door.job,
+    href: door.href,
+    neighbors: door.neighbors,
+  })),
 };
 
 const textureJson = {
   site: "texture.website",
   concept: "grain",
-  worker: "site-hub-next",
   attribute: "data-spw-texture-slice",
   terms: REUSE_TERMS,
   slices: SLICES.map((slice) => ({
@@ -268,82 +331,137 @@ const TEXTURE_FAVICON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32
   <path d="M6 22h20" stroke="#c8ff00" stroke-width="2" stroke-linecap="round"/>
 </svg>`;
 
-function renderConstellation(requestUrl) {
-  const liveCards = LIVE.map(
-    (entry) => `<article>
-  <p><span>${escapeHtml(entry.role)}</span> · ${escapeHtml(entry.origin)}</p>
-  <h3>${escapeHtml(entry.title)}</h3>
-  <p><a href="${escapeHtml(entry.href)}">${escapeHtml(entry.domain)}</a></p>
-  <p>${escapeHtml(entry.description)}</p>
-</article>`
-  ).join("");
+const ATTENTION_FAVICON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="6" fill="#140e18"/>
+  <rect x="6" y="8" width="20" height="14" rx="1.5" fill="none" stroke="#e7d7f2" stroke-width="1.6"/>
+  <path d="M10 26h12" stroke="#c8ff00" stroke-width="2" stroke-linecap="round"/>
+</svg>`;
 
-  const documentedCards = DOCUMENTED.map(
-    (entry) => `<article>
-  <h3>${escapeHtml(entry.title)}</h3>
-  <p><a href="${escapeHtml(entry.href)}">${escapeHtml(entry.domain)}</a></p>
-  <p>${escapeHtml(entry.description)}</p>
-</article>`
-  ).join("");
+const PAGE_STYLE = `
+  :root { color-scheme: dark; --bg:#140e18; --fg:#f6f0ea; --muted:#c3b4c8; --line:rgba(231,215,242,.28); --accent:#c8ff00; --aqua:#9ad7ff; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 1rem/1.55 ui-sans-serif, system-ui, sans-serif; background: var(--bg); color: var(--fg); }
+  main { width: min(40rem, calc(100% - 2rem)); margin: 0 auto; padding: 2.4rem 0 4rem; }
+  h1 { font-size: clamp(1.8rem, 4vw, 2.5rem); letter-spacing: -.03em; line-height: 1.05; margin: .2rem 0 .7rem; }
+  h2 { font-size: 1.05rem; margin: 1.8rem 0 .4rem; }
+  p { color: #f3e9df; }
+  a { color: var(--aqua); }
+  .kicker { color: var(--muted); font-size: .88rem; margin: 0; }
+  .lede { max-width: 38ch; font-size: 1.08rem; }
+  .actions { display: flex; flex-wrap: wrap; gap: .6rem; margin: 1.2rem 0; }
+  .actions a { display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0 1rem; border: 1px solid var(--line); border-radius: 999px; text-decoration: none; }
+  .actions a.primary { background: rgba(200,255,0,.12); border-color: var(--accent); color: var(--fg); }
+  figure { margin: 1.4rem 0 0; }
+  img { display: block; width: 100%; height: auto; border-radius: 1rem; border: 1px solid var(--line); }
+  figcaption { color: var(--muted); font-size: .88rem; margin-top: .45rem; }
+  .grid { display: grid; gap: .8rem; }
+  article { border: 1px solid var(--line); border-radius: 1rem; padding: .9rem 1rem; background: rgba(255,255,255,.03); }
+  article h2 { margin: 0 0 .3rem; font-size: 1rem; }
+  footer { margin-top: 2rem; color: var(--muted); font-size: .92rem; }
+`;
 
-  const legacyList = LEGACY_HUB_HOSTS.map(
-    (host) => `<li><a href="https://${escapeHtml(host)}/">${escapeHtml(host)}</a></li>`
-  ).join("");
+function neighborLine(ids) {
+  return ids
+    .map((id) => {
+      const product = productById(id);
+      return `<a href="${escapeHtml(product.href)}">${escapeHtml(product.title)}</a>`;
+    })
+    .join(" · ");
+}
 
+function renderPage({ title, description, canonical, robots, body }) {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Spwashi constellation hub</title>
-  <meta name="description" content="Map of live Spwashi origins and reserved domains. spwashi.com is not served from this Worker.">
-  <meta name="robots" content="noindex">
+  <title>${escapeHtml(title)}</title>
+  <meta name="description" content="${escapeHtml(description)}">
+  <meta name="robots" content="${escapeHtml(robots)}">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link rel="canonical" href="${escapeHtml(requestUrl.origin + "/")}">
-  <style>
-    :root { color-scheme: dark; --bg:#0d1117; --fg:#ebf2f7; --muted:#98a7b5; --line:rgba(148,163,184,.2); --accent:#c8ff00; --aqua:#5eead4; }
-    * { box-sizing: border-box; }
-    body { margin: 0; font: 1rem/1.55 ui-sans-serif, system-ui, sans-serif; background: var(--bg); color: var(--fg); }
-    main { width: min(44rem, calc(100% - 2rem)); margin: 0 auto; padding: 2rem 0 4rem; }
-    h1, h2, h3 { line-height: 1.2; }
-    h1 { font-size: 1.6rem; letter-spacing: -.02em; }
-    p, li { color: #d5dee6; }
-    a { color: var(--aqua); }
-    .lede { max-width: 42ch; }
-    .grid { display: grid; gap: 1rem; }
-    article, .panel { border: 1px solid var(--line); border-radius: 1rem; padding: 1rem 1.1rem; background: #131a22; }
-    article p:first-child { margin-top: 0; color: var(--muted); font-size: .85rem; }
-    ul { columns: 2; gap: 1.5rem; padding-left: 1.1rem; }
-    @media (max-width: 36rem) { ul { columns: 1; } }
-    footer { margin-top: 2rem; color: var(--muted); font-size: .9rem; }
-  </style>
+  <link rel="canonical" href="${escapeHtml(canonical)}">
+  <meta property="og:title" content="${escapeHtml(title)}">
+  <meta property="og:description" content="${escapeHtml(description)}">
+  <meta property="og:url" content="${escapeHtml(canonical)}">
+  <style>${PAGE_STYLE}</style>
 </head>
 <body>
   <main>
-    <header>
-      <p>site-hub-next</p>
-      <h1>Spwashi constellation</h1>
-      <p class="lede">Live origins first. This Worker is a map. It does not serve <a href="https://spwashi.com/">spwashi.com</a>.</p>
-    </header>
-    <section aria-labelledby="live-title">
-      <h2 id="live-title">Live</h2>
-      <div class="grid">${liveCards}</div>
-    </section>
-    <section aria-labelledby="documented-title">
-      <h2 id="documented-title">Documented on the primary site</h2>
-      <div class="grid">${documentedCards}</div>
-    </section>
-    <section class="panel" aria-labelledby="legacy-title">
-      <h2 id="legacy-title">Also on this map</h2>
-      <p>These hosts resolve here.</p>
-      <ul>${legacyList}</ul>
-    </section>
-    <footer>
-      <p><a href="/registry.json">registry.json</a> · <a href="https://texture.website/">texture.website</a> · <a href="https://spwashi.com/about/">About</a></p>
-    </footer>
+    ${body}
   </main>
 </body>
 </html>`;
+}
+
+function renderDoor(host, door) {
+  return renderPage({
+    title: door.title,
+    description: door.job,
+    canonical: `https://${host}/`,
+    robots: "noindex",
+    body: `<p class="kicker">${escapeHtml(host)}</p>
+    <h1>${escapeHtml(door.title)}</h1>
+    <p class="lede">${escapeHtml(door.job)}</p>
+    <p class="actions"><a class="primary" href="${escapeHtml(door.href)}">${escapeHtml(door.cta)}</a></p>
+    <footer><p>Nearby: ${neighborLine(door.neighbors)}</p></footer>`,
+  });
+}
+
+function renderSet() {
+  const cards = PRODUCTS.map(
+    (product) => `<article>
+  <h2><a href="${escapeHtml(product.href)}">${escapeHtml(product.title)}</a></h2>
+  <p>${escapeHtml(product.job)}</p>
+</article>`
+  ).join("");
+  return renderPage({
+    title: "Spwashi",
+    description: "Software and art, and the names around that work.",
+    canonical: "https://spwashi.com/",
+    robots: "noindex",
+    body: `<p class="kicker">I'm Spwashi.</p>
+    <h1>Software and art, and the names around that work.</h1>
+    <p class="lede">Each name has one job. The work they point at already exists.</p>
+    <div class="grid">${cards}</div>`,
+  });
+}
+
+/** October 1, 2026, Chicago. The season line stays true on either side of that morning. */
+const SEASON_OPEN = Date.parse("2026-10-01T00:00:00-05:00");
+
+function seasonSentence(now) {
+  if (now < SEASON_OPEN) {
+    return "The production season opens October 1 and runs through New Year: a little promo every day.";
+  }
+  return "The production season runs from October 1 through New Year: a little promo every day.";
+}
+
+function renderAttention(now) {
+  return renderPage({
+    title: "Attention Productions",
+    description: "I'm Spwashi. Attention Productions is the name for the pictures: a feature in 2027, and a season of daily promo from October 1 through New Year.",
+    canonical: "https://attention.productions/",
+    robots: "index, follow",
+    body: `<p class="kicker">attention.productions</p>
+    <h1>Attention Productions</h1>
+    <p class="lede">I'm Spwashi. This is the name for the pictures. A feature-length film is due in 2027, and I'm doing its marketing.</p>
+    <p>${escapeHtml(seasonSentence(now))} A moment holds one concept. That rule is <a href="https://mutex.buzz/">mutex.buzz</a>. The frame is <a href="https://factshift.center/">factshift.center</a>. boon, bane, and bone are that same frame with a pull: toward, away, or still. A sponsored viewport can show a picture. A physics setting is a query on the frame, once those three names serve it.</p>
+    <p class="actions">
+      <a class="primary" href="https://spwashi.com/cards/#back-the-film">Back the season</a>
+      <a href="https://spwashi.com/topics/film/">Film paths</a>
+      <a href="https://autonomous.feedback/attention.productions">Leave a note</a>
+    </p>
+    <figure>
+      <img src="https://spwashi.com/public/images/assets/folios/folio-lined-stage-facade-hero.webp" width="1024" height="808" alt="Pale yellow and violet wash over lined paper, a row of faint pencil cards above a wide stage-like facade.">
+      <figcaption>A stage facade from the folio stack. The shot language lives on the film paths.</figcaption>
+    </figure>
+    <h2>What is open</h2>
+    <p>Backing keeps the daily promo daily. The card on spwashi.com asks what being part of it would mean to you. Nothing on that card is a promise; we agree on what fits.</p>
+    <footer>
+      <p>Nearby: ${neighborLine(["work", "story", "grain"])}</p>
+      <p><a href="/ecosystem.json">The set, as data</a></p>
+    </footer>`,
+  });
 }
 
 function renderTexture(requestUrl, nonce) {
@@ -606,6 +724,7 @@ function renderTexture(requestUrl, nonce) {
       <div class="grid">${materialCards}</div>
     </section>
     <footer>
+      <p>In the same set: <a href="https://spwashi.com/">spwashi.com</a> proves the grain, <a href="https://spw.quest/">spw.quest</a> teaches the grammar, <a href="https://attention.productions/">attention.productions</a> is the pictures.</p>
       <p><a href="/textures.json">textures.json</a> · <a href="https://spwashi.com/design/folios/">folios</a> · <a href="https://spwashi.com/topics/craft/">craft</a></p>
     </footer>
   </main>
@@ -657,6 +776,8 @@ export default {
       ? "no-store"
       : "public, max-age=300";
     const isTexture = url.hostname === "texture.website";
+    const isAttention = url.hostname === "attention.productions";
+    const door = DOORS[url.hostname];
 
     if (url.hostname.startsWith("www.")) {
       return Response.redirect(
@@ -666,7 +787,8 @@ export default {
     }
 
     if (url.pathname === "/favicon.svg") {
-      return new Response(isTexture ? TEXTURE_FAVICON : FAVICON, {
+      const icon = isTexture ? TEXTURE_FAVICON : isAttention ? ATTENTION_FAVICON : FAVICON;
+      return new Response(icon, {
         headers: {
           ...BASE_SECURITY,
           "Content-Type": "image/svg+xml; charset=UTF-8",
@@ -679,7 +801,9 @@ export default {
     if (url.pathname === "/robots.txt") {
       const robots = isTexture
         ? "User-agent: *\nAllow: /\nSitemap: https://texture.website/textures.json\n"
-        : "User-agent: *\nDisallow: /\n";
+        : isAttention
+          ? "User-agent: *\nAllow: /\n"
+          : "User-agent: *\nDisallow: /\n";
       return new Response(robots, {
         headers: {
           ...BASE_SECURITY,
@@ -693,8 +817,12 @@ export default {
       return jsonResponse(textureJson, cache);
     }
 
+    if (url.pathname === "/ecosystem.json") {
+      return jsonResponse(ecosystemJson, cache);
+    }
+
     if (url.pathname === "/registry.json") {
-      return jsonResponse(isTexture ? textureJson : constellationJson, cache);
+      return jsonResponse(isTexture ? textureJson : ecosystemJson, cache);
     }
 
     if (url.pathname === "/" || url.pathname === "") {
@@ -709,7 +837,13 @@ export default {
           ),
         });
       }
-      return htmlResponse(renderConstellation(url), { cache, robots: "noindex" });
+      if (isAttention) {
+        return htmlResponse(renderAttention(Date.now()), { cache, robots: "index, follow" });
+      }
+      if (door) {
+        return htmlResponse(renderDoor(url.hostname, door), { cache, robots: "noindex" });
+      }
+      return htmlResponse(renderSet(), { cache, robots: "noindex" });
     }
 
     return new Response("Not found", {
