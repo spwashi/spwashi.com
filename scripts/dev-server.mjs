@@ -348,13 +348,6 @@ async function watchTree(directoryPath) {
   }
 }
 
-function closeWatchers() {
-  for (const watcher of watcherRegistry.values()) {
-    watcher.close();
-  }
-  watcherRegistry.clear();
-}
-
 async function startWatchers() {
   await watchTree(ROOT_DIR);
 }
@@ -490,12 +483,14 @@ server.listen(options.port, options.host, () => {
 });
 
 function shutdown() {
-  closeWatchers();
   for (const client of clients) {
     client.end();
   }
   clients.clear();
-  server.close(() => process.exit(0));
+  // Exit without closing the watchers: closing ~3k fs.watch handles one by one on
+  // macOS ran past a minute, so every SIGTERMed server (each headless probe's)
+  // outlived its parent as an orphan. The OS releases the handles at exit.
+  process.exit(0);
 }
 
 process.on('SIGINT', shutdown);
