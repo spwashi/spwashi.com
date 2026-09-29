@@ -63,7 +63,7 @@ dispatch: .{
 
 ^"connection_points"{
  owner_rail = `model-guided-refinement`
- related_plans = #[`audience-onboarding-copy`, `folio-worktable`][reg=set]
+ related_plans = #[`audience-onboarding-copy`, `folio-worktable`, `semantic-copy-depth`][reg=set]
 }[reg=facet]
 
 ^"owner_claim"{
