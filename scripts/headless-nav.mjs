@@ -14,6 +14,7 @@ import path from 'node:path';
 import process from 'node:process';
 
 import { smokeReceipt } from './drift-notice.mjs';
+import { checkLoopback } from './qa-doctor.mjs';
 
 import {
   DEFAULT_ROUTES,
@@ -116,6 +117,9 @@ Options:
   --json                    JSON report on stdout
   --receipt FILE            Thin route receipt (where, reason, detail). The table stays on stdout.
   -h, --help
+
+Exit 3: 127.0.0.1 unreachable (sandboxed shell) — the environment, not the page.
+Preflight any headless run with: npm run sense -- doctor
 `);
 }
 
@@ -185,6 +189,13 @@ async function main() {
   ]);
 
   try {
+    // 1.5s instead of a 25s dev-server + 45s Page.enable timeout: a sandboxed
+    // shell cannot reach 127.0.0.1, and that is the environment, not the page.
+    const loopback = await checkLoopback();
+    if (!loopback.ok) {
+      process.stderr.write(`[smoke:nav] ${loopback.detail}\n[smoke:nav] → ${loopback.next}\n`);
+      return 3;
+    }
     if (!base) {
       const port = options.port > 0 ? options.port : await pickFreePort();
       process.stderr.write(`[smoke:nav] starting dev-server on ${port}…\n`);
