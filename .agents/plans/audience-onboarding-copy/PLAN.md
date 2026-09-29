@@ -42,3 +42,7 @@ Make the home, about, services, topics, and tools surfaces read like a credible 
 - Copy can become over-guided if every paragraph turns into navigation.
 - The professional tone can flatten if the newcomer ramp is over-explained.
 - Internal references should increase clarity, not create a second menu.
+
+## 2026-09-28 — a paragraph is not a second menu
+
+That navigation risk has an owner: `.agents/plans/semantic-copy-depth/PLAN.md`, section "Thought trace". An entrance sentence may name a next stop. A paragraph whose job is the list of stops is a display case and belongs in a list or a `data-spw-copy-depth="dense"` sibling. The smell constraints on any such rewrite are `.spw/caches/ai-writing-smells-2026-09.spw`. Do not rewrite the entrance routes from this file.

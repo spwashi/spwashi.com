@@ -31,3 +31,4 @@ The site already has portable literary text utilities and strong story surfaces.
 - A full site-wide prose rewrite
 - New JavaScript behavior
 - Route architecture changes
+- Thought-trace versus display-case prose. That distinction is `.agents/plans/semantic-copy-depth/PLAN.md`. Narration markup stays cue, text, and aside. It does not grow a trace role.
