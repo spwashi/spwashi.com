@@ -585,3 +585,53 @@
   :where(main input:not([type]), main input:is([type="text"], [type="search"], [type="email"], [type="url"], [type="tel"], [type="password"]), main textarea),
   .spw-field-picker :is(select, textarea) { font-size: max(1rem, 16px); }
 }
+
+/* Arc bench (/projects/#arc-bench): an opt-in practice surface reached only by
+   deep link. The section is authored [hidden], which keeps it out of runtime
+   section lists and search harvests; :target shows it, and :focus-within
+   keeps it shown while a field holds focus. The !important answers
+   runtime-states.css's :where([hidden]) { display: none !important }, which
+   shares this layer; the extra specificity is what decides it. */
+.arc-bench[hidden]:is(:target, :focus-within) {
+  display: grid !important;
+}
+
+.arc-bench {
+  gap: var(--component-gap, 0.9rem);
+  margin-block: var(--component-gap, 0.9rem);
+  padding: var(--component-pad, 0.9rem);
+  border: 1px dashed var(--line, currentColor);
+  border-radius: var(--component-radius, 10px);
+  min-inline-size: 0;
+}
+
+.arc-bench :where(h2, h3, p) { margin: 0; }
+
+.arc-bench__form { display: grid; gap: var(--component-gap, 0.9rem); min-inline-size: 0; }
+
+.arc-bench :where(.arc-bench__names, .arc-bench__lines) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0.75rem;
+  border: 1px solid var(--line, currentColor);
+  border-radius: var(--component-radius-tight, 0.4rem);
+}
+
+.arc-bench :where(legend) { padding-inline: 0.25rem; font-weight: 700; }
+.arc-bench :where(label) { display: grid; gap: 0.3rem; min-inline-size: 0; }
+.arc-bench :where(input, textarea) { inline-size: 100%; }
+.arc-bench :where(textarea) { min-block-size: 3.4rem; }
+
+.arc-bench__spw {
+  margin: 0;
+  padding: 0.75rem;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  border: 1px solid var(--line, currentColor);
+  border-radius: var(--component-radius-tight, 0.4rem);
+}
+
+.arc-bench__exits { display: flex; flex-wrap: wrap; gap: 0.5rem; }

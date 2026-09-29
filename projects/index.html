@@ -151,6 +151,78 @@
             </aside>
         </section>
     </article>
+
+    <!-- Arc bench: opt-in, reached only by the deep link /projects/#arc-bench.
+         Nothing on the site links here. [hidden] keeps it out of every runtime
+         list of sections; components/controls.css shows it on :target. It may
+         change or go away. Plan: .agents/plans/projects-hub/PLAN.md -->
+    <section class="arc-bench" id="arc-bench" hidden aria-labelledby="arc-bench-title">
+        <h2 id="arc-bench-title">Arc bench</h2>
+        <p>A practice surface, reached only by this link. It may change or go away.</p>
+        <p>Pick one part of your work. Name who is listening and name the beats yourself; the bench has no words of its own for either. Then write one short line per beat for each audience.</p>
+        <form class="arc-bench__form">
+            <fieldset class="arc-bench__names">
+                <legend>The words you choose</legend>
+                <label for="arc-element">Part of your work
+                    <input id="arc-element" name="arc-element" type="text" autocomplete="off" placeholder="one part of a career"></label>
+                <label for="arc-audience-1">Audience 1
+                    <input id="arc-audience-1" name="arc-audience-1" type="text" autocomplete="off" placeholder="first audience"></label>
+                <label for="arc-audience-2">Audience 2
+                    <input id="arc-audience-2" name="arc-audience-2" type="text" autocomplete="off" placeholder="second audience"></label>
+                <label for="arc-audience-3">Audience 3
+                    <input id="arc-audience-3" name="arc-audience-3" type="text" autocomplete="off" placeholder="third audience"></label>
+                <label for="arc-beat-1">Beat 1
+                    <input id="arc-beat-1" name="arc-beat-1" type="text" autocomplete="off" placeholder="first beat name"></label>
+                <label for="arc-beat-2">Beat 2
+                    <input id="arc-beat-2" name="arc-beat-2" type="text" autocomplete="off" placeholder="second beat name"></label>
+                <label for="arc-beat-3">Beat 3
+                    <input id="arc-beat-3" name="arc-beat-3" type="text" autocomplete="off" placeholder="third beat name"></label>
+                <label for="arc-beat-4">Beat 4
+                    <input id="arc-beat-4" name="arc-beat-4" type="text" autocomplete="off" placeholder="fourth beat name"></label>
+            </fieldset>
+            <fieldset class="arc-bench__lines">
+                <legend data-arc-audience-label="1">For audience 1</legend>
+                <label for="arc-line-1-1"><span data-arc-beat-label="1">Line for beat 1</span>
+                    <textarea id="arc-line-1-1" name="arc-line-1-1" rows="2" autocomplete="off"></textarea></label>
+                <label for="arc-line-1-2"><span data-arc-beat-label="2">Line for beat 2</span>
+                    <textarea id="arc-line-1-2" name="arc-line-1-2" rows="2" autocomplete="off"></textarea></label>
+                <label for="arc-line-1-3"><span data-arc-beat-label="3">Line for beat 3</span>
+                    <textarea id="arc-line-1-3" name="arc-line-1-3" rows="2" autocomplete="off"></textarea></label>
+                <label for="arc-line-1-4"><span data-arc-beat-label="4">Line for beat 4</span>
+                    <textarea id="arc-line-1-4" name="arc-line-1-4" rows="2" autocomplete="off"></textarea></label>
+            </fieldset>
+            <fieldset class="arc-bench__lines">
+                <legend data-arc-audience-label="2">For audience 2</legend>
+                <label for="arc-line-2-1"><span data-arc-beat-label="1">Line for beat 1</span>
+                    <textarea id="arc-line-2-1" name="arc-line-2-1" rows="2" autocomplete="off"></textarea></label>
+                <label for="arc-line-2-2"><span data-arc-beat-label="2">Line for beat 2</span>
+                    <textarea id="arc-line-2-2" name="arc-line-2-2" rows="2" autocomplete="off"></textarea></label>
+                <label for="arc-line-2-3"><span data-arc-beat-label="3">Line for beat 3</span>
+                    <textarea id="arc-line-2-3" name="arc-line-2-3" rows="2" autocomplete="off"></textarea></label>
+                <label for="arc-line-2-4"><span data-arc-beat-label="4">Line for beat 4</span>
+                    <textarea id="arc-line-2-4" name="arc-line-2-4" rows="2" autocomplete="off"></textarea></label>
+            </fieldset>
+            <fieldset class="arc-bench__lines">
+                <legend data-arc-audience-label="3">For audience 3</legend>
+                <label for="arc-line-3-1"><span data-arc-beat-label="1">Line for beat 1</span>
+                    <textarea id="arc-line-3-1" name="arc-line-3-1" rows="2" autocomplete="off"></textarea></label>
+                <label for="arc-line-3-2"><span data-arc-beat-label="2">Line for beat 2</span>
+                    <textarea id="arc-line-3-2" name="arc-line-3-2" rows="2" autocomplete="off"></textarea></label>
+                <label for="arc-line-3-3"><span data-arc-beat-label="3">Line for beat 3</span>
+                    <textarea id="arc-line-3-3" name="arc-line-3-3" rows="2" autocomplete="off"></textarea></label>
+                <label for="arc-line-3-4"><span data-arc-beat-label="4">Line for beat 4</span>
+                    <textarea id="arc-line-3-4" name="arc-line-3-4" rows="2" autocomplete="off"></textarea></label>
+            </fieldset>
+        </form>
+        <h3>As Spw</h3>
+        <p>One arc per audience, and a last line that keeps the words you chose, so a team's words can sit side by side. Nothing here leaves this browser unless you copy or save it.</p>
+        <pre class="arc-bench__spw"><code data-arc-output>arc[audience]{"first line"; "next line"}&lt;element&gt;
+taste[arc]{element = "&#8230;"; beats = #["&#8230;"]; audiences = #["&#8230;"]}</code></pre>
+        <div class="arc-bench__exits" data-arc-exits hidden>
+            <button type="button" class="spw-chip" data-action="copy">copy</button>
+            <button type="button" class="spw-chip" data-action="download" title="Save the arcs as a .spw.txt file">download .txt</button>
+        </div>
+    </section>
 </main>
 
 <spw-site-footer></spw-site-footer>

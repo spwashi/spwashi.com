@@ -1,0 +1,54 @@
+# Cache 2026-09-29 — the arc bench: a deep-link practice surface where a writer names the part of a career, the audiences, and the beats.
+# Source: the creator's decisions of 2026-09-29, recorded as heard. Operation: prime. Nothing here is canon; the bench may be removed.
+
+#>lore_arcs_2026_09
+#:cache #!lore #!arc #!taste-profile #!deep-link
+#:operation #!prime
+#:fixity #!tending
+#:layer #!pragmatics
+
+@bench: ~"../../projects/index.html"
+@module: ~"../../public/js/modules/projects/arc-bench.js"
+@test: ~"../../scripts/tests/arc-bench.test.mjs"
+@plan: ~"../../.agents/plans/projects-hub/PLAN.md"
+@living_terms: ~"./living-terms-2026-09.spw"
+@collectible_expressions: ~"./collectible-expressions-2026-09.spw"
+@spw_as_handle: ~"./spw-as-handle-2026-09.spw"
+@repo_time: ~"./repo-time-2026-09.spw"
+
+claim: `Working description from the 2026-09-29 brief, not a definition: a lore arc as a short telling of one's relationship with one part of a career, written here once per audience. The arc bench is where that is practised. The writer names every word the arc uses; the bench keeps the words so a team can see its own taste, and proposes none of its own.`
+
+^"heard_2026_09_29"{
+  inertness = `Living term inertness is a problem and might be updated in batches, with some wonder, to inspire the creator's voice.`
+  beats = `The proposed beat names (origin / turn / now) are not loved. Audiences are ill-defined. Beat names and audience vocabularies are not fixed anywhere.`
+  waiting_word = `The waiting-word marker (?{} was proposed) is an experiment, decided later by semantic physics and feel.`
+  mirror = `The mirror canon (~play mirrored as play^ or play~) is an experiment, decided the same way.`
+  homes = `Terms should generally live where they are practised; no glossary route. More pragmatic, extensible runtime value is wanted, keyed to which modules are available or active and how the current lens or promotional context has been primed.`
+  bench = `The arc-writing instrument is opt-in and reachable only through deep linking. Casual visitors should not grow attached to it, since it may be removed. It builds toward the team's own taste profile.`
+}
+
+^"contract"{
+  address = `/projects/#arc-bench only. No nav item, no chip, no copy link, no sitemap line, no search entry. The section is authored [hidden], so runtime section lists (deep-link annotation, frame navigator, attention) skip it; components/controls.css shows it on :target and keeps it shown on :focus-within.`
+  no_advertising = `No spw-frame class, no frame-sigil, no authored data-spw-* and no copy unit inside the bench (the visible-mount scheduler may annotate the section at runtime; indexes read the static HTML), so the search index, the expression manifest and cauldron candidates never harvest it.`
+  html_first = `With scripts off, a targeted reader gets the labelled form and a static shape of the output: a thinking aid. Copy and download stay [hidden] until the module mounts.`
+  runtime = `modules/projects/arc-bench.js, catalog id arc-bench, route projects, selector #arc-bench, when visible. A hidden section never intersects, so nothing loads until someone arrives at the link.`
+  writer_named = `The element, up to three audiences and up to four beats are free text. Placeholders are ordinal only ("first beat name", "first audience").`
+  serialization = `One arc[<audience_slug>]{"<line>"; "<line>"; …}<element_slug> per audience seat that is named or has a written line (an unnamed or non-ascii name takes audience_<n>; a repeat takes its position), beats joined by ';' (ordinal; '.' collapses into one ident), an unwritten line kept as "" so its seat holds; then taste[arc]{element = "…"; beats = #[…]; audiences = #[…]} with the writer's words verbatim. Every form parses clean in spw-workbench-parser parse() (@test).`
+  local_only = `Nothing is stored or sent. The text leaves only by copy or a .spw.txt download (interface/seed-exits.js).`
+  removable = `Removing the bench is: the section, the controls.css rule set, the catalog entry, the module, the test and its module-tests line.`
+}[reg=facet]
+
+^"experiments"{
+  beat_names = `experiment: no beat vocabulary is canon; the taste lines are the evidence.`
+  audiences = `experiment: no audience vocabulary is canon, and data-spw-audience is not written from the bench.`
+  waiting_word = `experiment: ?{} is not used by the bench.`
+  mirror = `experiment: no mirror form is used by the bench.`
+}[reg=facet]
+
+^"questions"{
+  gather = `How are the team's taste profiles gathered: pasted into a thread, dropped as .spw.txt files, or read from a shared place? The bench only hands text out.`
+  read_back = `How are they read back: side by side by a person, as a tally of beat and audience words, or through search once a home exists? Who reads them, and when?`
+  arc_word = `What is a lore arc, in your words? The claim above is the brief's working description, handed back.`
+  keep_or_remove = `What would tell you the bench has earned a link, or that it should go?`
+  arc_elsewhere = `Should a written arc ever land on a route (for example on a /projects/ leaf), and in whose words?`
+}
