@@ -8,7 +8,7 @@
  * - Prefer network for HTML, prefer cache for versioned/static assets.
  */
 
-const CACHE_SCHEMA_VERSION = 'v6';
+const CACHE_SCHEMA_VERSION = 'v7';
 const CACHE_NAMESPACE = `spw-${CACHE_SCHEMA_VERSION}`;
 
 const CACHE = {
@@ -37,6 +37,17 @@ const LEGACY_CACHE_PREFIXES = [
 
 const OFFLINE_URL = '/offline/';
 const FALLBACK_IMAGE_URL = '/public/images/icon-192.png';
+const OFFLINE_FOLIO_THUMB_URL = '/public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-thumb.webp';
+
+// The weekly five folio scans (public/data/folio-highres.json, rotated by
+// scripts/folio-highres-rotate.mjs) are read at install, so the worker
+// follows the rotation without a hand-kept list. The shelf's srcset asks a
+// phone (44vw at DPR 2-3) for the 400w display tier, so that tier rides
+// along in avif (the <source type=image/avif> wins wherever it decodes);
+// the thumbs serve DPR-1 screens and the offline page. Under 200KB for the five.
+const FOLIO_WEEK_RECORD_URL = '/public/data/folio-highres.json';
+const FOLIO_THUMB_BASE = '/public/images/assets/folios/folio-';
+const FOLIO_THUMB_TIERS = ['-thumb.avif', '-thumb.webp', '-display.avif'];
 
 // Kept in sync with PUBLIC_NAV_ITEMS in scripts/template.mjs (the top-level
 // header nav) plus a few high-value content hubs. /now/ is deliberately
@@ -69,6 +80,9 @@ const CORE_ASSETS = [
   '/public/images/icon-512.png',
   '/public/images/icon-maskable-512.png',
   '/favicon.ico',
+  // The offline page's one folio scan (No. 20, also the home preview), so
+  // a phone with no signal still opens onto art.
+  OFFLINE_FOLIO_THUMB_URL,
 ];
 
 // A failed required shell must fail installation and leave the current worker
@@ -105,16 +119,22 @@ self.addEventListener('install', (event) => {
         OPTIONAL_PRECACHE_URLS.map((url) => precacheUrl(cache, url))
       );
 
-      const failed = optionalResults.filter((result) => result.status === 'rejected');
+      const folioThumbUrls = await readWeeklyFolioThumbUrls();
+      const folioResults = await Promise.allSettled(
+        folioThumbUrls.map((url) => precacheUrl(cache, url))
+      );
+
+      const failed = [...optionalResults, ...folioResults]
+        .filter((result) => result.status === 'rejected');
       if (failed.length) {
         console.warn(
-          `[SW ${CACHE_SCHEMA_VERSION}] Optional precache failure: ${failed.length}/${OPTIONAL_PRECACHE_URLS.length}`
+          `[SW ${CACHE_SCHEMA_VERSION}] Optional precache failure: ${failed.length}/${OPTIONAL_PRECACHE_URLS.length + folioThumbUrls.length}`
         );
       } else {
         console.log(`[SW ${CACHE_SCHEMA_VERSION}] Precache complete`);
       }
 
-      await pruneCacheEntries(CACHE.core, PRECACHE_URLS);
+      await pruneCacheEntries(CACHE.core, [...PRECACHE_URLS, ...folioThumbUrls]);
     })()
   );
 });
@@ -260,6 +280,37 @@ function isMediaAssetRequest(request, url) {
    Install / precache
    ========================================================================== */
 
+async function readWeeklyFolioThumbUrls() {
+  try {
+    const response = await fetch(FOLIO_WEEK_RECORD_URL, { cache: 'no-cache' });
+    if (!response.ok) return [];
+    const record = await response.json();
+    const weeks = Array.isArray(record?.weeks) ? record.weeks : [];
+    const latest = weeks[weeks.length - 1];
+    const folios = Array.isArray(latest?.folios) ? latest.folios : [];
+    return folios
+      .map((folio) => String(folio?.slug || ''))
+      .filter((slug) => /^[a-z0-9-]+$/.test(slug))
+      .flatMap((slug) => FOLIO_THUMB_TIERS.map((tier) => `${FOLIO_THUMB_BASE}${slug}${tier}`));
+  } catch (error) {
+    console.warn(`[SW ${CACHE_SCHEMA_VERSION}] Folio week record unreadable`, error);
+    return [];
+  }
+}
+
+// The week's folio files are chosen at install, so the summary counts the
+// folio scans that actually sit in the core cache (the week's files plus the
+// offline page's one) rather than a list the worker forgets on restart.
+async function countWeeklyFolioEntries() {
+  try {
+    const cache = await caches.open(CACHE.core);
+    const keys = await cache.keys();
+    return keys.filter((request) => new URL(request.url).pathname.startsWith(FOLIO_THUMB_BASE)).length;
+  } catch {
+    return 0;
+  }
+}
+
 async function precacheUrl(cache, url) {
   const request = new Request(url, {
     credentials: 'same-origin',
@@ -338,7 +389,10 @@ async function networkFirst(request, cacheName) {
 async function staleWhileRevalidate(event, request, cacheName) {
   const cache = await caches.open(cacheName);
   const cacheKey = normalizeCacheKey(request);
-  const cached = await cache.match(cacheKey);
+  // Install-time images (icons, the weekly folio thumbs) live in the core
+  // cache; read them there too so they show offline and on first open.
+  const cached = (await cache.match(cacheKey))
+    || (await caches.match(cacheKey, { cacheName: CACHE.core }));
 
   const networkPromise = fetch(request)
     .then(async (response) => {
@@ -476,6 +530,7 @@ async function replyWithPwaStatus(event) {
         fallbackImageUrl: FALLBACK_IMAGE_URL,
         requiredPrecacheCount: REQUIRED_PRECACHE_URLS.length,
         optionalPrecacheCount: OPTIONAL_PRECACHE_URLS.length,
+        folioPrecacheCount: await countWeeklyFolioEntries(),
         cacheLimits: CACHE_LIMITS,
         caches: await collectManagedCacheEntries(),
       },
