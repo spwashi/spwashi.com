@@ -157,3 +157,17 @@ vessel_join = `cauldron[garden]{sow.tend.harvest} — live vessel identifier. No
   boundary = "Exclude credentials, readonly and disabled fields, and controls in dialogs or floating chrome. Preserve selection, maxlength, input/change events, and edits made since insertion."
   probe = "scripts/tests/field-composition.test.mjs plus browser checks on care and profile at pocket and desktop widths."
 }
+
+^"wander_spells"{
+  operation = "contract"
+  fixity = "tending"
+  surface = "design/experiments/spellcraft/index.html#wander-spells"
+  cache = "../caches/wander-spells-2026-09.spw"
+  claim = `A wander spell is a QA walk the team can repeat. The spell is the unit of attention: the site is checked by walking it, and a spell stays alive by being walked.`
+  host = `An <li> or <details> carrying data-spw-spell="<slug>" (existing stem; kernel/shared.js reads it into the spell token) plus a spell[wander]{…}(<slug>)<capsule> semantic-expression, a spellcraft.wander.<slug> copy-unit, and an id so the key is a place.`
+  shape = #[`seed — the slug; one seed, one ground`, `route — a real path and anchor`, `hold — an image, a term, or a component variant`, `cast — one existing cauldron verb: Mix, Nourish, Find a prompt, Save trail`, `notice — the edge this path tends to find`, `upkeep — who or what walks it next`][reg=set]
+  reading = `Every part reads as HTML with scripts off. The runtime may deepen a spell host; it may not be the reason one exists.`
+  receipt = `A wander leaves its receipt in the wander batch: seed, route, held, cast, noticed. Sensing is npm run sense -- wander <seed>, plus the still id when one exists.`
+  refuse = #[`a new data-spw-* family for wanders, seeds, or upkeep`, `a spell whose cast is not a verb the cauldron already has`, `a route or anchor that does not exist`, `felt pacing for a wander UI without a browser demo the creator approves`][reg=set]
+  probe = `for each #wander-* host: the anchor resolves, the expression parses, and the copy-unit sits on an id`
+}[reg=facet]
