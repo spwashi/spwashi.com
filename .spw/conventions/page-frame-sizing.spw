@@ -121,7 +121,7 @@
   motions = #[`pair`, `anchor`, `collapse`, `lift`, `tether`, `seal`, `discharge`][reg=set]
   living = `data-spw-motion + data-spw-geometry on .spw-living-term; collectible via cauldron-candidate`
   brace_physics = `operator-balance-physics.spw resolution moves; soft CSS in effects/living-motions.css`
-  demo = `/design/experiments/subject-balance/`
+  demo = `/design/experiments/balance/`
 }
 
 ^"timing"{

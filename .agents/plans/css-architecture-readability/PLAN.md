@@ -847,4 +847,4 @@ rg -n "data-spw-composition-flow|data-spw-box-model" .
 - Each chapter opens with a literate banner: "Reads as" voice line, "Was" provenance, a genome block (states sensed, custom properties defined, intent hooks consumed), and a live probe hint.
 - `public/css/README.md` gained "Reading The Tree": naming anatomy (place / body part / disposition), moseying tree/rg probes, browser-toggling guidance, and the rule that a chapter whose genome and prose disagree is a bug.
 - Validation posture for future splits: banner-opener line boundaries only (a split at a banner's middle line leaves an unterminated comment seam); assert per-chunk brace balance on comment-stripped text; prove flattened-bundle equivalence before deleting the original.
-- `design/experiments/load-symphony/` added to `VALIDATION_IGNORED_PREFIXES` (review-demo copies, not production routes).
+- `design/experiments/symphony/` added to `VALIDATION_IGNORED_PREFIXES` (review-demo copies, not production routes).

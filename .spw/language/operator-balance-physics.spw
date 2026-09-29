@@ -14,7 +14,7 @@
 @lore_alignment: ~"./lore-alignment.spw"
 @sigil_geometry: ~"./sigil-geometry-lore.spw"
 @definitions: ~"../../public/js/kernel/shared.js"
-@demo: ~"../../design/experiments/subject-balance/index.html"
+@demo: ~"../../design/experiments/balance/index.html"
 @language_index: ~"./index.spw"
 
 operation = "contract prime"

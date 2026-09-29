@@ -124,8 +124,8 @@ const learningPosture = [
   ['play = probe', 'play = explorer probe'],
 ];
 files.push(['topics/index.html', learningPosture]);
-files.push(['design/experiments/load-symphony/a/index.html', learningPosture]);
-files.push(['design/experiments/load-symphony/b/index.html', learningPosture]);
+files.push(['design/experiments/symphony/a/index.html', learningPosture]);
+files.push(['design/experiments/symphony/b/index.html', learningPosture]);
 
 // site-design
 files.push(['topics/site-design/index.html', [

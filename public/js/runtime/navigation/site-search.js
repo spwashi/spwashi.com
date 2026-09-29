@@ -368,7 +368,7 @@ function ensureDialog() {
     '<span class="spw-spell">? ^ ~</span> geometry',
     '<a href="/topics/search/">field guide</a>',
     '<a href="/topics/software/spw/">operator atlas</a>',
-    '<a href="/design/experiments/subject-balance/">brace physics</a>',
+    '<a href="/design/experiments/balance/">brace physics</a>',
   ].join(' · ');
 
   panel.append(header, facetBar, status, list, footer);

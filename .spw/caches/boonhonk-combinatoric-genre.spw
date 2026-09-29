@@ -36,7 +36,7 @@
 @literary_motifs: ~"../conventions/literary-operational-motifs.spw"
 @region_ecology: ~"../conventions/region-component-ecology.spw"
 @still_agency: ~"./still-recipe-agency-2026-09.spw"
-@theme_resonance: ~"../../design/experiments/theme-resonance/index.html"
+@theme_resonance: ~"../../design/experiments/resonance/index.html"
 
 operation = "prime"
 fixity = "tending"

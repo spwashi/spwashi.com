@@ -51,7 +51,7 @@ export const VALIDATION_IGNORED_SEGMENTS = [
 export const VALIDATION_IGNORED_PREFIXES = [
     'design/catalog/',
     'design/components/captures/',
-    'design/experiments/load-symphony/',
+    'design/experiments/symphony/',
 ];
 export const IMAGE_EXTENSIONS = [
     '.avif',

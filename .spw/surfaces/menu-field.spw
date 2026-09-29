@@ -39,7 +39,7 @@ states: .{
 expression = menu[field]{ground.mode.scene.subject}<disclosure>
 
 demo: .{
-  route = ~"../../design/experiments/menu-field/index.html"
+  route = ~"../../design/experiments/menu/index.html"
   plays = `The four postures as a playable cycle: rest breathes (~5s), disclosure
 fans the field without consuming a pathway, staging flickers faster than ground,
 binding travels in one beat and re-grounds at the new route. Each completed cycle
@@ -53,7 +53,7 @@ ends at this demo. Promotion into the shared menu runtime waits on browser appro
     layer = "pragmatic"
     hypothesis = `Menu field states stay falsifiable when each posture maps to an underused operator (.ground [mode] (scene) &subject) and at least one runtime attr or demo serializes the trail.`
     expression = menu[field]{ground.mode.scene.subject}<disclosure>
-    probe_ref = `rg 'data-spw-grounded' public/js/interface && rg 'expression = menu' .spw/surfaces/menu-field.spw && test -f design/experiments/menu-field/index.html`
+    probe_ref = `rg 'data-spw-grounded' public/js/interface && rg 'expression = menu' .spw/surfaces/menu-field.spw && test -f design/experiments/menu/index.html`
     falsification = `States renarrate open/closed without operators, or demo trail loses .from / &to grammar.`
     status = "active"
   }
@@ -62,5 +62,5 @@ ends at this demo. Promotion into the shared menu runtime waits on browser appro
 validation: #[
   `rg 'data-spw-grounded' public/js/interface`
   `rg 'menu_field_surface|claim #menu-field-001' .spw/surfaces`
-  `rg 'menu-field-instrument' design/experiments/menu-field`
+  `rg 'menu-field-instrument' design/experiments/menu`
 ][reg=set]

@@ -87,7 +87,7 @@ Queued for integration, routed per ecology: **pulsing** (vessel heartbeat; micro
 
 ## QA Surface - 2026-07-03
 
-`/design/experiments/spellcraft-bench/` is the deterministic screenshot/QA bench: static vessel-phase specimens (state bundles authored in markup), operator/operand atom grammar including open valences, effect-ledger seed/readout controls, and the decompose walkthrough that serves as this plan's Phase 2 promotion gate. Specimens are contracts made visible - if a screenshot changes, a contract moved.
+`/design/experiments/spellcraft/` is the deterministic screenshot/QA bench: static vessel-phase specimens (state bundles authored in markup), operator/operand atom grammar including open valences, effect-ledger seed/readout controls, and the decompose walkthrough that serves as this plan's Phase 2 promotion gate. Specimens are contracts made visible - if a screenshot changes, a contract moved.
 
 ## Implementation Note - 2026-07-03 Sigil Position, Disposition, And Contours
 

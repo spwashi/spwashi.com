@@ -11,7 +11,7 @@
 
 @lore_alignment: ~"./lore-alignment.spw"
 @sigil_geometry: ~"./sigil-geometry-lore.spw"
-@demo: ~"../../design/experiments/subject-balance/index.html"
+@demo: ~"../../design/experiments/balance/index.html"
 @interaction_reward: ~"../conventions/interaction-microstates.spw"
 @language_index: ~"./index.spw"
 @generalization: ~"./operator-balance-physics.spw"
