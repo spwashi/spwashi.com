@@ -1,0 +1,161 @@
+# Cache 2026-09-29 — living terms, batch 1: seven decorated concepts, each with where it lives, what its sentences imply, three sparks, and one wonder.
+# Creator's direction (2026-09-29): living-term inertness "might be updated in batches with some wonder to inspire my voice." Sparks are drafts to react to. None is a definition until the creator writes the chosen line.
+
+#>living_terms_batch_01_2026_09
+#:cache #!copy #!living-terms #!voice
+#:operation #!prime
+#:fixity #!tending
+#:layer #!pragmatics
+
+@parent: ~"./living-terms-2026-09.spw"
+@sensor: ~"../../scripts/audit-living-terms.mjs"
+@reader: ~"../../scripts/lib/living-terms.mjs"
+@haptics: ~"../../public/js/interface/haptics.js"
+@catalog_enhancement: ~"../../public/js/runtime/catalog/enhancement.js"
+@catalog_feature: ~"../../public/js/runtime/catalog/feature.js"
+
+claim: `A highlighted word is decorated when scripts-off readers get neither its meaning nor its home. This batch hands seven of them back to the creator as material, not answers: the sentences each word already sits in, a factual reading of what those sentences imply, three sparks in three registers, and one question only the creator can answer. Terms live where they are practised; there is no glossary route. The chosen slot is empty on purpose.`
+
+^"batch"{
+  source = `npm run -s audit:living-terms -- --batch 1 (--json), 2026-09-29, after the scripts-off pass. 184 terms · 145 concepts · 47 living · 98 decorated.`
+  order = `cauldron-collection ×4 · spell-navigation ×4 · lattice ×4 · attention-shape ×3 · semantic-enhancement ×3 · dose-trace ×3 · culture-day ×2.`
+  drift = `The parent cache listed brace-physics first in batch 1. It became living in the scripts-off pass the same day: Home's #living-concepts card carries id="brace-physics" and its three terms link to /#brace-physics. It left the batch, and culture-day entered as the seventh. Release-cycle (parent cache, 2026-09-27) is no longer in the top seven. Re-run the batch before relying on this order after any term edit.`
+  quotes = `Sentences are quoted as the reader prints them: the prose of the host element with tags removed and whitespace joined. The highlighted words are marked «like this». An ellipsis at an edge is the reader's; the full sentence is quoted where the reader cut one.`
+  sparks = `Three per concept, one per register: kitchen/garden, physics, plain address. Each is under fourteen words. They are drafts to push against. A spark that sounds right is still the model's sentence, not the creator's. Sparks obey ^"landing".refuse: none names a gesture, so any could land unchanged.`
+  runtime = `practised_by names the catalog modules that make the word do something on its hosts, read from each route's data-spw-features and the module catalog. A definition may mention that value where it helps. It must still hold with scripts off.`
+}
+
+^"cauldron-collection"{
+  hosts = #[
+    `/play/rpg-wednesday/#rpg-wednesday — "That makes links, sigils, recipe terms, and character handles feel like interoperable props instead of decoration. The same «cauldron» (hook for jump-to-highlight on interactables/categories; utility toggle for subtle/balanced/prominent visibility of candidates) and spell trails that live in the Library are at work here; when you plant from the cauldron the trail remembers the gestures that fed it."`,
+    `/play/rpg-wednesday/character/#character-living-tools-desc — "«Cauldron collection» — the quiet garden at the bottom of the page where daily pressures, journal lines, and primed semantic forces rest until you are ready to mix or plant them."`,
+    `/play/rpg-wednesday/library/#living-tools-desc — "«Cauldron collection» — the memory garden at the bottom of every page. Daily observations, journal lines, and primed semantic forces rest here. You mix them, tend them (nourish, prune), and plant what deserves to become a durable vision or character artifact." (expression garden[memory]{mix.tend.plant})`,
+    `/tools/midjourney/#vision-living-tools-desc — "«Cauldron collection» (the memory garden at the bottom of pages) is where daily observations and primed semantic forces rest until they are ready to become a vision seed."`
+  ][reg=set]
+  reading = `Three sentences agree on a place: the bottom of the page (or of every page). What rests there is gathered material — observations, journal lines, primed forces — and it waits. The verbs done to it are mix, tend (nourish, prune) and plant; what it becomes is a vision seed or a character artifact. On the RPG Wednesday page the same word names the runtime hook and the visibility toggle, so one word carries both the place and the tool.`
+  practised_by = `cauldron (interface/composition.js, features console — every host declares console): gather, mix, garden. haptics: hold a living term to gather it as an ingredient. media-cauldron does not apply: no batch-1 host includes _partials/media-cauldron.html. Pragmatic value: what is gathered on one page is still there at the bottom of the next.`
+  sparks = #[
+    `garden: A pot at the page's foot where gathered words wait to be mixed.`,
+    `physics: Where gathered charge settles until two ingredients are close enough to react.`,
+    `plain: What you kept from this page, waiting at the bottom for later.`
+  ][reg=set]
+  wonder = `?[cauldron]{collection.garden} The Library calls it a garden and the name calls it a cauldron. When something rests there, is it growing or is it steeping — and does the answer change once you plant it?`
+  chosen = ``
+}
+
+^"spell-navigation"{
+  hosts = #[
+    `/play/rpg-wednesday/#rpg-wednesday — "The same cauldron (hook for jump-to-highlight on interactables/categories; utility toggle for subtle/balanced/prominent visibility of candidates) and «spell trails» that live in the Library are at work here; when you plant from the cauldron the trail remembers the gestures that fed it."`,
+    `/play/rpg-wednesday/character/#character-living-tools-desc — "«Spell navigation» — the trails your attention leaves. The spell path that travels with you and the spells you cast from gathered material are the memory that survives from one session (or one decade) to the next."`,
+    `/play/rpg-wednesday/library/#living-tools-desc — "«Spell navigation» — the trails and paths your attention leaves. The spell path (the breadcrumb that travels with you) and the spells you cast from the cauldron are replayable, shareable memory. Follow them forward into new work or backward to remember how you arrived." (expression trail[attention]{follow.replay.share})`,
+    `/tools/midjourney/#vision-living-tools-desc — "«Spell navigation» turns the trails of your attention into replayable, shareable memory that can travel with a character or a world across many images and many years."`
+  ][reg=set]
+  reading = `Every host says trail. The trail is made by attention, travels with the reader (a breadcrumb), and is memory that can be replayed and shared, forward into new work or backward to how you arrived. Spells are cast from gathered material, so the trail and the cauldron are two ends of one loop. The time scale runs from a session to a decade.`
+  practised_by = `spells (runtime/memory/spells.js, mounts on header): checkpoint and replay; /play/rpg-wednesday/ also declares the spells feature. navigation-spells (runtime/navigation/navigation-spells.js): route replay on header, footer and chip links. haptics: spell[grounded|checkpoint]. Pragmatic value: the path you walked can be walked again, or handed to someone.`
+  sparks = #[
+    `garden: The path worn through the beds by how you actually walked.`,
+    `physics: A trajectory you can replay, because each turn left a mark.`,
+    `plain: The way you came, kept so you or a friend can retrace it.`
+  ][reg=set]
+  wonder = `?[spell]{trail.share} When you hand someone your spell trail, what should they receive — the route you took, or the reason you turned where you did?`
+  chosen = ``
+}
+
+^"lattice"{
+  hosts = #[
+    `/about/#about-hook — "The kernel is small and stable: I build software and make art. The «lattice» is everything I keep learning to carry around that sentence — a magazine of practice, not a one-sitting bio."`,
+    `/about/#about-hook — "«~lattice»: Medium crossings that turn one concept into code, print, lore, and physical artifacts."`,
+    `/about/#about-frame — "kernel • «lattice» • software • art • Spw language • portable seeds • publishing surfaces"`,
+    `/topics/software/spw/#workbench-improvements — "Do not implement the harvest as a backlog until reading the corpus is cheap. «Lattice» that reports an empty field against thousands of appositions is worse than an error."`
+  ][reg=set]
+  reading = `Two readings share the slug. On /about/ the lattice is paired with the kernel: the kernel is the one stable sentence, the lattice is what is learned around it, and its ~ line says it crosses media (code, print, lore, physical artifacts). On /topics/software/spw/ Lattice is the workbench command (timed in #workbench-cost at 2.1 s) that reads appositions across the corpus. Whether these are one concept or a homonym is not decided by the sentences.`
+  practised_by = `No runtime module on either host names it. On /topics/software/spw/ it is practised by the Spw workbench CLI, off-site. /about/ carries it as structure: the kernel/lattice pairing organises the page. A definition would lean on the page, not on a module.`
+  sparks = #[
+    `garden: The trellis the one sentence climbs, re-strung every season.`,
+    `physics: The repeating structure around a stable kernel; crossings are where it bonds.`,
+    `plain: Everything I keep learning around the sentence that stays the same.`
+  ][reg=set]
+  wonder = `?[lattice]{kernel.crossing} Is the workbench's Lattice the same lattice as the one on /about/ — the tool that reads your practice, named for the practice — or a different word that happens to share the slug?`
+  chosen = ``
+}
+
+^"attention-shape"{
+  hosts = #[
+    `/design/experiments/symphony/a/#topics-hook — "«Start from the question that changed shape», then cross into a neighbor before the thought hardens."`,
+    `/design/experiments/symphony/b/#topics-hook — "«Start from the question that changed shape», then cross into a neighbor before the thought hardens."`,
+    `/topics/#topics-hook — "«Start from the question that changed shape», then cross into a neighbor before the thought hardens. Come back when that neighbor has a new issue."`
+  ][reg=set]
+  reading = `The highlight is a whole clause, not a noun: the slug names a shape of attention and the page shows it as an instruction. A question changes shape; a thought can harden; the move is to cross to a neighbor before it does, and to return when the neighbor has a new issue. The two symphony pages are experiments that copy the /topics/ hook, so the concept really lives on /topics/.`
+  practised_by = `route-discovery and svg-surfaces on all three hosts: the neighbor to cross into is a topic route. No module names attention-shape. The attention-* enhancements (section handle, resonance probe, reading groove, scroll cadence) sense attention but are not declared for this term. Pragmatic value, if wanted: the note could offer the neighbors the page already links.`
+  sparks = #[
+    `kitchen: Dough changes shape while it rests; move before it sets.`,
+    `physics: Where a question bends before it cools into a fixed form.`,
+    `plain: The moment your question changed. Start there, not where you began.`
+  ][reg=set]
+  wonder = `?[attention]{shape.harden} When a thought hardens, is that a failure to cross in time, or a shape worth keeping — how do you tell which one you are holding?`
+  chosen = ``
+}
+
+^"semantic-enhancement"{
+  hosts = #[
+    `/play/rpg-wednesday/character/#character-living-tools-desc — "«Semantic enhancements» — the clear labels and handles that let the character (and the world around them) remember what they are becoming."`,
+    `/play/rpg-wednesday/library/#living-tools-desc — "«Semantic enhancements» — the living inscriptions and handles the site keeps for itself and for you. Every frame, card, and gesture can carry clear labels (data attributes, operator sigils, component tags) so the world remembers what it is and what it can become." (expression label[world]{remember.become})`,
+    `/tools/midjourney/#vision-living-tools-desc — "«Semantic enhancements» give you precise, inspectable language for material, light, gesture, and consequence instead of vague mood words."`
+  ][reg=set]
+  reading = `The sentences name labels, handles and inscriptions carried by frames, cards and gestures, and say what they are for: so a character or a world remembers what it is and what it is becoming. The Library names the mechanism outright (data attributes, operator sigils, component tags). The Midjourney host turns it toward the reader's own language: precise words for material, light, gesture and consequence in place of mood words.`
+  practised_by = `operators (semantic/operators.js, immediate): sigil detection and annotation on every host. haptics: the inspect note reads data-spw-semantic-expression and shows it. semantic-chrome (features inspectability) draws label and seam overlays where inspectability is on; the Library points readers to "read / inspect" mode. prompt-utils on /tools/midjourney/: copy and serialize. Pragmatic value: the label you read is the one a prompt or a search can use.`
+  sparks = #[
+    `garden: Plant markers that say what grows here and what it will become.`,
+    `physics: Labels that let the site measure a thing instead of guessing its mood.`,
+    `plain: Names the page keeps on its parts, so you and it remember.`
+  ][reg=set]
+  wonder = `?[label]{remember.become} A label says what a thing is; these say what it is becoming. Who gets to change the label as it changes — the site, the reader, or only you?`
+  chosen = ``
+}
+
+^"dose-trace"{
+  hosts = #[
+    `/recipes/#recipe-field — "Use cooking verbs when a route should preserve flavor while removing excess explanation. A «dose» is a threshold, not more of the same — math names the curve."`,
+    `/recipes/#soil-companions — "Kitchen beans, garden beans, and light-fed soil bacteria share a plant and a curiosity about microbes. They do not share one mechanism. Name the input, the «dose», the conditions, and the consequence — then cook or tend."`,
+    `/topics/math/#gradient-flavor-tuning — "A gradient is a direction of change. In cooking, it is the path of more acid, less heat, deeper roast, or longer rest. Hold the «dose» before you move a second axis."`
+  ][reg=set]
+  reading = `The recipe field says it most directly: a dose is a threshold, not more of the same, and math names the curve. Soil companions puts it in a sequence — input, dose, conditions, consequence — before you cook or tend. The math page makes it a thing you hold still while you change one axis. The slug says trace; the highlighted word says dose. No host explains the trace half.`
+  practised_by = `cauldron and haptics on both hosts: a held dose becomes an ingredient. The cauldron's numeric reading (semantic/cauldron/helpers.js) recognises "trace" in the slug, but a bare "dose" carries no number and derives no quantifier. recipe-semantics runs on /recipes/ but mounts on #principle-register, #weekly-practice and #flavor-grammar, not on the dose hosts, and does not touch the word.`
+  sparks = #[
+    `kitchen: The pinch that changes the dish; past it, more is only more.`,
+    `physics: The amount at which the curve turns, not a point further along it.`,
+    `plain: How much it takes to make a difference, and not a bit more.`
+  ][reg=set]
+  wonder = `?[dose]{threshold.trace} The slug keeps a trace of the dose. What should the trace remember — the amount you used, the moment it crossed, or what it tasted like just before?`
+  chosen = ``
+}
+
+^"culture-day"{
+  hosts = #[
+    `/recipes/#recipe-field — "A «culture day» is a count. Hold it; the cauldron will derive a quantifier. Kitchen jars and garden microbes are neighbors, not one mechanism — see soil companions."`,
+    `/topics/math/#state-machine-fermentation — "Prep, inoculate, wait, feed, taste, store, serve. Each state allows different actions and different risks. A «culture day» is a count you can gather, not a mood."`
+  ][reg=set]
+  reading = `Both hosts say a culture day is a count, and one adds "not a mood". It sits inside a fermentation state machine (prep through serve) and is something you can hold and gather. The recipe host promises that the cauldron will derive a quantifier from it.`
+  practised_by = `cauldron (interface/composition.js) with semantic/cauldron/helpers.js: isNumericalConcept matches "day", but parseNumericalValue needs a digit, so "culture day" as written derives no quantifier. The recipe sentence promises more than the runtime does today. haptics gathers it on both hosts.`
+  sparks = #[
+    `kitchen: One day on the jar's count, marked in pencil on the lid.`,
+    `physics: A tick of a slow clock the microbes keep, not the kitchen's.`,
+    `plain: A number of days, counted, not felt.`
+  ][reg=set]
+  wonder = `?[culture]{count.mood} Whose clock is a culture day — the jar's, the cook's, or the reader who comes back to the page on day three?`
+  chosen = ``
+}
+
+^"landing"{
+  chosen = `Each concept above has a chosen slot, empty. The creator writes a line there, or strikes every spark and writes one of their own. A spark copied into chosen counts only if the creator put it there.`
+  rule = `A chosen line becomes the definition on every host of that concept, and the same line is what the inspect note's "means" row shows, so scripts on and off say the same thing. How it is delivered is still open: the parent cache's ^"questions".title asks whether a title (hover-only, silent on touch), a <dfn> at the concept's first use, or both. That is the creator's call; nothing here decides it. Linking to a home is a separate step the applier below does not yet do. The line is applied as written: no trimming, no house-style pass.`
+  applier = `No script applies it yet. The later patch adds it beside the sensor: scripts/audit-living-terms.mjs stays read-only, and a small writer (proposed scripts/apply-living-term-definitions.mjs) reads chosen slots from this cache, finds every host through scripts/lib/living-terms.mjs (the one term reader), writes the chosen line in whichever delivery the creator picks (title and/or <dfn>) on each data-spw-concept host that has no authored definition, and prints what it would change before it changes anything. If homes are wanted, a second pass could wrap a host in a link to its home, taking the home from the sensor's homes count and the anchor it found; that is unproposed until the creator answers ^"questions".home in the parent. The sensor then re-runs: each applied concept leaves the decorated list.`
+  refuse = `No chosen line may name a gesture (the parent cache's rule), a diagnostic label, or a price. No beat names or audience words are decided here. The waiting-word marker and the mirror canon are not used.`
+  next = `Batch 2 when the creator has answered this one, or wants the next seven before answering: npm run audit:living-terms -- --batch 2.`
+}
+
+^"findings"{
+  culture_day_promise = `/recipes/#recipe-field says "Hold it; the cauldron will derive a quantifier." The held expression is the slug culture-day. isNumericalConcept matches "day", but parseNumericalValue finds no digit, so no value or quantifier is derived (semantic/cauldron/storage.js still marks it numerical). The authored data-spw-numericity="rhythm" on both hosts is read by no script or stylesheet. Either the copy or parseNumericalValue should move; the creator decides which.`
+  lattice_homonym = `The lattice slug joins the About page's practice structure and the workbench command. A chosen line applied to every host would define both at once; the wonder above asks first.`
+  attention_shape_experiments = `Two of three hosts are symphony experiments copying the /topics/ hook. A chosen line applied there follows the copy; if the experiments are retired, reach drops to 1.`
+}
