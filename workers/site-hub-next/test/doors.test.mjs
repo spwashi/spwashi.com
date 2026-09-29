@@ -17,7 +17,11 @@ test('every site-hub host is a product page or a door', async () => {
   ]);
   for (const host of hosts) {
     assert.equal(named.has(host), true, host);
-    const page = await get(host, '/');
+    let page = await get(host, '/');
+    if (host === 'tealstripesvibes.com') {
+      assert.equal(page.status, 302, host);
+      page = await get(host, page.headers.get('location'));
+    }
     assert.equal(page.status, 200, host);
     const html = await page.text();
     assert.doesNotMatch(html, /site-hub-next|constellation hub|github-pages/);
@@ -46,7 +50,7 @@ test('a held name stays a door', async () => {
   assert.match(html, /about\/domains\/boon\.land/);
   const eco = await (await get('mutex.buzz', '/ecosystem.json')).json();
   const mutex = eco.doors.find((door) => door.host === 'mutex.buzz');
-  assert.equal(mutex.href, 'https://attention.productions/');
+  assert.equal(mutex.href, 'https://mutex.buzz/now/');
 });
 
 test('texture keeps its lab and names the set', async () => {

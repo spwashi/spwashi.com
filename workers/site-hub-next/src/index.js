@@ -7,6 +7,9 @@
  * Do not attach this script to spwashi.com/*.
  */
 
+import { handleTealstripes } from "./tealstripes.js";
+import { handleMutex } from "./mutex.js";
+
 const PRODUCTS = [
   {
     id: "work",
@@ -100,9 +103,9 @@ const DOORS = {
   },
   "tealstripesvibes.com": {
     title: "Teal Stripes Vibes",
-    job: "Art, social presence, and the look of the work, held as a specimen.",
-    href: "https://spwashi.com/about/domains/tealstripesvibes.com/",
-    cta: "Read the specimen",
+    job: "Designer seeds under masks, painted as stripes: every address is a picture, and a screenshot carries its own receipt.",
+    href: "https://tealstripesvibes.com/harbor",
+    cta: "Open a vibe",
     neighbors: ["grain", "pictures"],
   },
   "rpgwednesday.shop": {
@@ -142,9 +145,9 @@ const DOORS = {
   },
   "mutex.buzz": {
     title: "mutex.buzz",
-    job: "One concept in the frame at a time. Attention Productions spends that rule on a picture.",
-    href: "https://attention.productions/",
-    cta: "See it on a picture",
+    job: "The lock: one concept in the frame at a time. Each hold releases at a close, and a laminated folio holds it the rest of the time.",
+    href: "https://mutex.buzz/now/",
+    cta: "See what holds it",
     neighbors: ["pictures", "work"],
   },
   "spw.rest": {
@@ -354,6 +357,7 @@ const PAGE_STYLE = `
   figure { margin: 1.4rem 0 0; }
   img { display: block; width: 100%; height: auto; border-radius: 1rem; border: 1px solid var(--line); }
   figcaption { color: var(--muted); font-size: .88rem; margin-top: .45rem; }
+  .held iframe { display: block; width: 100%; aspect-ratio: 4 / 3; border: 1px solid var(--line); border-radius: 1rem; background: #0d0a10; }
   .grid { display: grid; gap: .8rem; }
   article { border: 1px solid var(--line); border-radius: 1rem; padding: .9rem 1rem; background: rgba(255,255,255,.03); }
   article h2 { margin: 0 0 .3rem; font-size: 1rem; }
@@ -451,9 +455,9 @@ function renderAttention(now) {
       <a href="https://spwashi.com/topics/film/">Film paths</a>
       <a href="https://autonomous.feedback/attention.productions">Leave a note</a>
     </p>
-    <figure>
-      <img src="https://spwashi.com/public/images/assets/folios/folio-lined-stage-facade-hero.webp" width="1024" height="808" alt="Pale yellow and violet wash over lined paper, a row of faint pencil cards above a wide stage-like facade.">
-      <figcaption>A stage facade from the folio stack. The shot language lives on the film paths.</figcaption>
+    <figure class="held">
+      <iframe src="https://mutex.buzz/now/" title="What holds the frame now, from mutex.buzz" loading="lazy"></iframe>
+      <figcaption>What holds the frame this cycle, from <a href="https://mutex.buzz/">mutex.buzz</a>. When nothing else holds it, a laminated folio does. <a href="https://mutex.buzz/now/">Open it on its own</a>.</figcaption>
     </figure>
     <h2>What is open</h2>
     <p>Backing keeps the daily promo daily. The card on spwashi.com asks what being part of it would mean to you. Nothing on that card is a promise; we agree on what fits.</p>
@@ -743,6 +747,9 @@ const BASE_SECURITY = {
 const HTML_CSP =
   "default-src 'none'; img-src https://spwashi.com; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests";
 
+/** attention.productions frames the lock from mutex.buzz. */
+const ATTENTION_CSP = HTML_CSP.replace("default-src 'none';", "default-src 'none'; frame-src https://mutex.buzz;");
+
 const TEXTURE_CSP =
   "default-src 'none'; script-src https://spwashi.com; style-src https://spwashi.com 'unsafe-inline'; img-src https://spwashi.com; font-src https://spwashi.com; connect-src https://spwashi.com; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests";
 
@@ -770,8 +777,11 @@ function htmlResponse(body, { cache, robots, csp = HTML_CSP }) {
 }
 
 export default {
-  async fetch(request) {
+  async fetch(request, env = {}) {
     const url = new URL(request.url);
+    const shared = ["/ecosystem.json", "/registry.json", "/favicon.svg"].includes(url.pathname);
+    if (url.hostname === "tealstripesvibes.com" && !shared) return handleTealstripes(request, env);
+    if (url.hostname === "mutex.buzz" && !shared) return handleMutex(request, env);
     const cache = url.hostname.endsWith(".workers.dev")
       ? "no-store"
       : "public, max-age=300";
@@ -838,7 +848,7 @@ export default {
         });
       }
       if (isAttention) {
-        return htmlResponse(renderAttention(Date.now()), { cache, robots: "index, follow" });
+        return htmlResponse(renderAttention(Date.now()), { cache, robots: "index, follow", csp: ATTENTION_CSP });
       }
       if (door) {
         return htmlResponse(renderDoor(url.hostname, door), { cache, robots: "noindex" });
