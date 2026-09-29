@@ -61,6 +61,7 @@ import {
 } from './cauldron/chrome.js';
 import { deriveNumericityQuantifiers, isNumericalConcept, parseNumericalValue } from '/public/js/semantic/cauldron/helpers.js';
 import { broadcastCauldronSync, clusterIngredients, escapeHtml, getCauldron, inferOperator, ingredientNiche, normalizeIngredient, readSigilPayload, themeClusterCharge, toSpwExpression } from '/public/js/semantic/cauldron/storage.js';
+import { composeVisionSeed, enrichCapturePayload, renderImageIngredientMarkup, watchVariantSelections } from '/public/js/interface/cauldron/image-ingredient.js';
 import { readSpwHydration } from '../semantic/expression-query.js';
 import { cauldronTrace, recordGestureTrace, recordPlantedTrail } from './cauldron/trace.js';
 import {
@@ -90,6 +91,7 @@ export function initCauldron() {
   initialized = true;
 
   const unsubCapture = bus.on('spell:capture', onCapture);
+  const unwatchVariants = watchVariantSelections();
 
   document.body.addEventListener('click', handleCauldronUIActions, true);
   document.body.addEventListener('click', handleIngredientRemoval, true);
@@ -106,6 +108,7 @@ export function initCauldron() {
 
   cleanupHandle = () => {
     unsubCapture();
+    unwatchVariants();
     cleanupLens();
     document.body.removeEventListener('click', handleCauldronUIActions, true);
     document.body.removeEventListener('click', handleIngredientRemoval, true);
@@ -251,12 +254,19 @@ function handleCauldronUIActions(e) {
     if (ingredients.length) {
       const expr = ingredients.map(i => i.expression).join(' + ');
       const gestureHistory = ingredients.map(i => i.primedBy || i.chargeContext).filter(Boolean).join('·');
-      const promptSeed = `Daily observation as vision: ${expr}. Render with quiet domestic light, garden texture, subtle resonance. Use as Library ward or character private vision. Gesture history: ${gestureHistory || 'direct'}.`;
+      // One draft per theme cluster, then the scans/renders the drafts came from.
+      const seed = composeVisionSeed(ingredients, {
+        lead: 'Daily observation as vision',
+        gestureHistory,
+        use: 'Use as Library ward or character private vision.',
+      });
       // Store a lightweight vision seed for the bench to pick up
       try {
         sessionStorage.setItem('spw-pending-vision-seed', JSON.stringify({
           expression: expr,
-          prompt: promptSeed,
+          prompt: seed.prompt,
+          drafts: seed.drafts,
+          provenance: seed.provenance,
           origin: 'cauldron',
           capturedAt: Date.now(),
           gestureHistory,
@@ -369,11 +379,19 @@ function handleCauldronUIActions(e) {
       const expr = ingredients.map(i => i.expression).join(' + ');
       const gestureHistory = ingredients.map(i => i.primedBy || i.chargeContext).filter(Boolean).join('·');
       const trail = spellVision.dataset.spwSpellTrail || '';
-      const promptSeed = `Spell trail as vision: ${expr}. From garden trace: ${gestureHistory || trail || 'direct'}. Render with quiet domestic light, garden texture, subtle resonance. Use as Library ward or character private vision.`;
+      const seed = composeVisionSeed(ingredients, {
+        lead: 'Spell trail as vision',
+        gestureHistory: gestureHistory || trail,
+        traceLabel: 'From garden trace',
+        use: 'Use as Library ward or character private vision.',
+        traceFirst: true,
+      });
       try {
         sessionStorage.setItem('spw-pending-vision-seed', JSON.stringify({
           expression: expr,
-          prompt: promptSeed,
+          prompt: seed.prompt,
+          drafts: seed.drafts,
+          provenance: seed.provenance,
           origin: 'spell-trail',
           capturedAt: Date.now(),
           gestureHistory: gestureHistory || trail,
@@ -1228,7 +1246,7 @@ function renderIngredientChip(ing, idx) {
             data-spw-hypermedia-extension="state-fragment"
             aria-label="Saved hypermedia fragment: ${escapeHtml(ing.expression)}"
             title="${escapeHtml(title)}">
-        ${op}${expr}
+        ${renderImageIngredientMarkup(ing.payload?.image, escapeHtml)}${op}${expr}
         ${meta ? `<span class="cauldron-ingredient-meta-group">${meta}</span>` : ''}
         <button type="button" class="cauldron-ingredient-remove" data-spw-cauldron-remove="${idx}" aria-label="Remove ${escapeHtml(ing.expression)}">×</button>
       </span>
@@ -1346,7 +1364,9 @@ function onCapture(event) {
     // gathered fragment forgot everything about where it was except the surface
     // name. Recording it here makes the ingredient expressible in native Spw
     // (see toSpwExpression) and lets a cast spell honour where it came from.
-    payload: detail.payload || readSigilPayload(sourceElement),
+    // A held picture keeps its key/stem (never a src); a selected component
+    // variant keeps its expression. See interface/cauldron/image-ingredient.js.
+    payload: enrichCapturePayload(detail.payload || readSigilPayload(sourceElement), sourceElement),
     hydration: detail.hydration || (sourceElement ? readSpwHydration(sourceElement) : null),
     // Filled below: the native-Spw rendering and whether it was read naively
     // (string alone) or integrated against the payload it was taken from.
@@ -1585,7 +1605,7 @@ export async function captureBeatAsIngredient() {
     const artifact = mod.captureCurrentBeatArtifact({ source: 'cauldron-capture' });
     if (artifact) {
       const ingredients = getCauldron();
-      ingredients.push({
+      ingredients.push(normalizeIngredient({
         expression: `beat[qa]{${artifact.id || 'current'}}`,
         label: `Observation beat ${artifact.id?.slice(-6) || ''}`,
         operator: '#>',
@@ -1594,10 +1614,10 @@ export async function captureBeatAsIngredient() {
         origin: 'qa-beat',
         context: artifact.mode,
         beatArtifact: artifact,  // full functional payload
-      });
-      const trimmed = ingredients.slice(-6);
-      saveCauldron(trimmed);
-      bus.emit('cauldron:updated', { count: trimmed.length, source: 'beat-capture' });
+      }));
+      // saveCauldron trims to cauldronCapacity(), records undo like onCapture,
+      // and emits cauldron:updated itself.
+      saveCauldron(ingredients);
       return artifact;
     }
   } catch (e) {

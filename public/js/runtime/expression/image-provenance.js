@@ -55,6 +55,9 @@ export function classifyImageSource(src = '') {
 
 function markImage(img, marks) {
   if (marks.has(img)) return;
+  // A held cauldron ingredient draws its own labelled mark beside a 28px thumb;
+  // a second, anchored mark would cover the scan.
+  if (img.closest('.site-footer__cauldron-ingredients')) return;
   const rule = classifyImageSource(img.getAttribute('src') || '');
   if (!rule) return;
   const anchor = `--spw-provenance-${++counter}`;

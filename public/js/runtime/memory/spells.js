@@ -13,7 +13,7 @@ import { getActiveRecentPathMemory } from '/public/js/semantic/accent-palette.js
 import { getGroundedCouplings, getGroundedRegistry, getSigilCollection, restoreGroundedCheckpoint } from '/public/js/kernel/grounded-registry.js';
 import { describeCognitiveState } from '/public/js/runtime/memory/cognitive-state.js';
 import { getSiteSettings } from '/public/js/kernel/site-settings.js';
-import { CAULDRON_CONTRACT } from '/public/js/semantic/cauldron/contract.js';
+import { CAULDRON_CONTRACT, cauldronCapacity } from '/public/js/semantic/cauldron/contract.js';
 import { parseSpwExpression, describeSpwExpression } from '/public/js/semantic/spw-expression-geometry.js';
 
 const SPELL_ACTION = Object.freeze({
@@ -870,7 +870,10 @@ function registerSpellActions() {
       const couplings = parsed.couplings?.global || parsed.couplings?.path
         ? { ...parsed.couplings.global, ...parsed.couplings.path }
         : parsed.couplings || {};
-      registry.slice(0, CAULDRON_CONTRACT.maxIngredients).forEach((key, index) => {
+      /* The capacity in effect now, not the base stat: a granted cauldron
+         reopens as many ingredients as it can hold. */
+      const capacity = cauldronCapacity();
+      registry.slice(0, capacity).forEach((key, index) => {
         const entry = buildSpellEntry(key, couplings[key], index);
         if (!entry) return;
         bus.emit(CAULDRON_CONTRACT.events.capture, {
@@ -889,11 +892,11 @@ function registerSpellActions() {
       });
       bus.emit(CAULDRON_CONTRACT.events.decomposed, {
         name,
-        count: Math.min(registry.length, CAULDRON_CONTRACT.maxIngredients),
+        count: Math.min(registry.length, capacity),
         total: registry.length,
         path: parsed?.path || '',
       });
-      if (button instanceof HTMLElement) button.textContent = `$ reopened as ${Math.min(registry.length, CAULDRON_CONTRACT.maxIngredients)} ingredients`;
+      if (button instanceof HTMLElement) button.textContent = `$ reopened as ${Math.min(registry.length, capacity)} ingredients`;
     },
   };
 }
