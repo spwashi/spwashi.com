@@ -22,3 +22,16 @@ Open: the packing is lane arithmetic, not a designed field. Pocket promo,
 satchel, cauldron, and travel still stack as separate utilities. A later
 pass should improve how they share a corner — what yields, what stays,
 spacing and hierarchy — without new attribute families.
+
+Cauldron modal UX — align / tending; focus: composition palette, element: air.
+The existing vessel moves into a native dialog and returns to its footer seat on
+close. Escape, Close, and backdrop dismiss; source jumps release the modal first.
+Fragments lead; lens/intent follows; vessel vocabulary is a secondary disclosure.
+Primary actions pair Spw sigils with readable verbs. No second ingredient store.
+Owners: cauldron/chrome.js, composition.js, cauldron.css, site-footer partial.
+Probe: home-cauldron-open pocket/fold/broadsheet fixture, syntax, check:local.
+Validation: 70 focused tests pass (cauldron lifecycle/composition and capture plans).
+Local site/CSS/runtime/agent checks pass; full suite 492/493, with an unrelated
+in-progress topic leaf's hub-wiring failure in the shared tree.
+Visual verification remains incomplete: browser attachment/evaluation timed out;
+the modal fixture now prepares the idle-loaded cauldron before clicking.

@@ -18,6 +18,7 @@
                     <a class="site-footer__pill" data-spw-page-feedback data-spw-feedback-kind="appreciation" href="https://autonomous.feedback/spwashi.com/appreciation?at=/" referrerpolicy="no-referrer-when-downgrade">Appreciation</a>
                 </div>
             </div>
+            <p><a class="site-footer__pill" href="#memory-garden-cauldron" aria-haspopup="dialog">Open cauldron <span aria-hidden="true">↗</span></a></p>
             <details class="site-footer__more">
                 <summary>Preferences</summary>
             <div
@@ -38,13 +39,6 @@
                 data-spw-interaction-keyboard="Enter or Space commits the focused semantic brace">
                 <div class="site-footer__cauldron-header">
                     <p class="site-footer__cauldron-kicker" data-cauldron-vessel-kicker>garden bed · what you hold here</p>
-                    <div class="mode-switch site-footer__cauldron-vessels" role="group" aria-label="Sit a vessel">
-                        <button class="frame-sigil" type="button" data-set-cauldron-vessel="garden" aria-pressed="true">garden</button>
-                        <button class="frame-sigil" type="button" data-set-cauldron-vessel="soup" aria-pressed="false">soup</button>
-                        <button class="frame-sigil" type="button" data-set-cauldron-vessel="salad" aria-pressed="false">salad</button>
-                        <button class="frame-sigil" type="button" data-set-cauldron-vessel="toolbox" aria-pressed="false">toolbox</button>
-                        <button class="frame-sigil" type="button" data-set-cauldron-vessel="workbench" aria-pressed="false">workbench</button>
-                    </div>
                     <button
                         class="site-footer__cauldron-panel-toggle"
                         type="button"
@@ -55,7 +49,6 @@
                         Show
                     </button>
                 </div>
-                <p class="site-footer__cauldron-expression" data-cauldron-vessel-expression data-spw-semantic-expression="cauldron[garden]{sow.tend.harvest}">cauldron[garden]{sow.tend.harvest}</p>
                 <ol class="site-footer__cauldron-phase-rail" data-spw-cauldron-phase-rail aria-label="Cauldron phase: gather, prime, compose, extend">
                     <li class="site-footer__cauldron-phase-step" data-spw-phase-step="empty">
                         <p class="site-footer__cauldron-phase-label">gather</p>
@@ -71,18 +64,8 @@
                     </li>
                 </ol>
                 <div class="site-footer__cauldron-body" id="memory-garden-cauldron-body">
-                    <fieldset id="cauldron-composition-controls" class="site-footer__composition-controls" hidden>
-                        <legend>Compose through a lens</legend>
-                        <p><label>Page lens <select id="cauldron-page-lens"></select></label></p>
-                        <p><label>Intent <select id="cauldron-compose-intent">
-                            <option value="connect">Connect</option>
-                            <option value="compare">Compare</option>
-                            <option value="apply">Apply</option>
-                        </select></label></p>
-                        <p id="cauldron-lens-impact" class="site-footer__composition-impact" role="status"></p>
-                    </fieldset>
                     <p class="site-footer__cauldron-copy">
-                        <span data-cauldron-count>0</span> ingredients held — words, links, and settings you pressed and held<span class="site-footer__cauldron-force-note" data-spw-cauldron-operators></span>.
+                        <span data-cauldron-count>0</span> fragments held<span class="site-footer__cauldron-force-note" data-spw-cauldron-operators></span>.
                     </p>
                     <p class="site-footer__cauldron-status" role="status" aria-live="polite">
                         <span data-cauldron-status data-cauldron-status-text>Nothing held. Press and hold a highlighted word to keep it here. Two make a mix you can copy or plant.</span>
@@ -93,23 +76,45 @@
 
                     <!-- Populated by composition.js for inspectability and individual removal -->
                     <div class="site-footer__cauldron-ingredients" data-cauldron-ingredients aria-live="polite"></div>
+                    <fieldset id="cauldron-composition-controls" class="site-footer__composition-controls" hidden>
+                        <legend>Compose through a lens</legend>
+                        <p><label>Page lens <select id="cauldron-page-lens"></select></label></p>
+                        <p><label>Intent <select id="cauldron-compose-intent">
+                            <option value="connect">Connect</option>
+                            <option value="compare">Compare</option>
+                            <option value="apply">Apply</option>
+                        </select></label></p>
+                        <p id="cauldron-lens-impact" class="site-footer__composition-impact" role="status"></p>
+                    </fieldset>
+                    <details class="site-footer__cauldron-tools">
+                        <summary>Vessel &amp; Spw notation</summary>
+                        <p>Choose a vocabulary for the same gathering. Your fragments stay together.</p>
+                        <div class="mode-switch site-footer__cauldron-vessels" role="group" aria-label="Vessel vocabulary">
+                            <button class="frame-sigil" type="button" data-set-cauldron-vessel="garden" aria-pressed="true">garden</button>
+                            <button class="frame-sigil" type="button" data-set-cauldron-vessel="soup" aria-pressed="false">soup</button>
+                            <button class="frame-sigil" type="button" data-set-cauldron-vessel="salad" aria-pressed="false">salad</button>
+                            <button class="frame-sigil" type="button" data-set-cauldron-vessel="toolbox" aria-pressed="false">toolbox</button>
+                            <button class="frame-sigil" type="button" data-set-cauldron-vessel="workbench" aria-pressed="false">workbench</button>
+                        </div>
+                        <p class="site-footer__cauldron-expression" data-cauldron-vessel-expression data-spw-semantic-expression="cauldron[garden]{sow.tend.harvest}">cauldron[garden]{sow.tend.harvest}</p>
+                    </details>
                     <article class="site-footer__spell-preview" data-spw-spell-candidate data-spw-spell-state="empty" data-spw-operator-sequence="~ $ ! ^" hidden>
                         <p class="site-footer__spell-preview-meta" data-spw-slot="meta">extension draft</p>
                         <p class="site-footer__spell-preview-path" data-spw-slot="body">~ link → $ state → ! transform → ^ proof</p>
                     </article>
 
                     <div class="site-footer__cauldron-actions">
-                        <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="mix" data-spw-action-tier="primary" data-spw-groundable="false" data-spw-operator="action" aria-label="Mix held ingredients into an extension">!mix[extension]</button>
-                        <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="nourish" data-spw-action-tier="growth" data-spw-groundable="false" data-spw-operator="potential" data-spw-action="explore" aria-label="Nourish the held ingredients">~nourish</button>
-                        <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="vision" data-spw-action-tier="growth" data-spw-groundable="false" data-spw-intent="daily-to-prompt" data-spw-operator="potential" data-spw-action="explore" aria-label="Create a vision seed">~vision_seed</button>
-                        <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="plant" data-spw-action-tier="output" data-spw-groundable="false" data-spw-operator="integration" aria-label="Plant the current extension">^plant</button>
-                        <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="share" data-spw-action-tier="output" data-spw-groundable="false" data-spw-operator="concept-edge" aria-label="Share the current spell">&gt;share[spell]</button>
-                        <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="copy" data-spw-action-tier="output" data-spw-groundable="false" data-spw-operator="wonder" aria-label="Copy the Spw output to the clipboard">?copy[spw]</button>
-                        <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="undo" data-spw-action-tier="cleanup" data-spw-groundable="false" data-spw-operator="action" aria-label="Undo the last cauldron action" disabled>!undo</button>
-                        <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="prune" data-spw-action-tier="cleanup" data-spw-groundable="false" data-spw-operator="action" aria-label="Prune duplicate ingredients">!prune</button>
-                        <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="clear" data-spw-action-tier="cleanup" data-spw-groundable="false" data-spw-operator="action" aria-label="Clear all held ingredients">!clear</button>
+                        <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="mix" data-spw-action-tier="primary" data-spw-groundable="false" data-spw-operator="action" aria-label="Mix fragments into an extension">! Mix fragments</button>
+                        <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="nourish" data-spw-action-tier="growth" data-spw-groundable="false" data-spw-operator="potential" data-spw-action="explore" aria-label="Nourish the held ingredients"><span aria-hidden="true">~</span> Nourish</button>
+                        <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="vision" data-spw-action-tier="growth" data-spw-groundable="false" data-spw-intent="daily-to-prompt" data-spw-operator="potential" data-spw-action="explore" aria-label="Find a prompt from the held fragments"><span aria-hidden="true">~</span> Find a prompt</button>
+                        <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="plant" data-spw-action-tier="output" data-spw-groundable="false" data-spw-operator="integration" aria-label="Save trail in this browser">^ Save trail</button>
+                        <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="share" data-spw-action-tier="output" data-spw-groundable="false" data-spw-operator="concept-edge" aria-label="Share the current spell"><span aria-hidden="true">&gt;</span> Share</button>
+                        <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="copy" data-spw-action-tier="output" data-spw-groundable="false" data-spw-operator="wonder" aria-label="Copy Spw output to the clipboard"><span aria-hidden="true">?</span> Copy Spw</button>
+                        <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="undo" data-spw-action-tier="cleanup" data-spw-groundable="false" data-spw-operator="action" aria-label="Undo the last cauldron action" disabled><span aria-hidden="true">!</span> Undo</button>
+                        <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="prune" data-spw-action-tier="cleanup" data-spw-groundable="false" data-spw-operator="action" aria-label="Prune duplicate ingredients"><span aria-hidden="true">!</span> Prune</button>
+                        <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="clear" data-spw-action-tier="cleanup" data-spw-groundable="false" data-spw-operator="action" aria-label="Clear all held ingredients"><span aria-hidden="true">!</span> Clear</button>
                     </div>
-                    <div class="site-footer__cauldron-output" data-cauldron-output hidden>
+                    <div class="site-footer__cauldron-output" data-cauldron-output role="region" aria-label="Composition result" tabindex="-1" hidden>
                         <div class="site-footer__cauldron-text" data-cauldron-text></div>
                     </div>
                 </div>
