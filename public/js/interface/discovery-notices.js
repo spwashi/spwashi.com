@@ -19,6 +19,7 @@ import {
 } from '/public/js/kernel/storage-utils.js';
 import { isInspectLabSurface, isReadingQuietChrome } from '/public/js/runtime/orchestration/policy.js';
 import { describeIntent, readVisitIntent } from '/public/js/kernel/visit-intent.js';
+import '/public/js/interface/intent-term-note-row.js';
 
 const FEED_URL = '/public/data/promo-wonder-cycle.json';
 const STORAGE_KEY = STORAGE_KEYS.DISCOVERY_DISMISSALS;

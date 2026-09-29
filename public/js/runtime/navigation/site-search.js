@@ -9,7 +9,8 @@
  *   ? (bare)    → open when not typing
  *
  * Structure:
- *   Facets: all | nest | operators | places | labs
+ *   Facets: all | nest | operators | places | labs | … | terms
+ *   Terms: each living term with the routes it is practiced on (index terms[])
  *   Nest groups by nestRoot (topics/, design/, …)
  *   Sigil queries (#>, ?, ^, ~, !, &, {) boost geometry matches
  *
@@ -24,6 +25,7 @@ import {
 } from '/public/js/kernel/dom-contracts.js';
 import { emitSpwAction, isInputFocused } from '/public/js/kernel/shared.js';
 import { bestExpressionMatch, parseExpressionQuery } from '/public/js/semantic/expression-query.js';
+import { registerTermNoteRow } from '/public/js/semantic/term-note-rows.js';
 import { readMicrointeractionPulseMs } from '../physics/pulse-beat-tuner.js';
 
 const INDEX_HREF = '/public/data/site-search-index.json';
@@ -42,7 +44,11 @@ const FACETS = Object.freeze([
   { id: 'components', label: 'Components' },
   { id: 'expressions', label: 'Expressions' },
   { id: 'pieces', label: 'Pieces' },
+  { id: 'terms', label: 'Terms' },
 ]);
+
+const TERM_SEARCH_PATH = '/topics/search/';
+const MAX_TERM_LIST = 60;
 
 const PIECES_HREF = '/public/data/folio-days.json';
 
@@ -85,6 +91,8 @@ let filterText = '';
 let activeFacet = 'all';
 let debounceTimer = 0;
 let flatResults = [];
+/** concept → index term record; null until the index has loaded. */
+let termsByConcept = null;
 
 function tokenize(query = '') {
   return String(query || '')
@@ -119,6 +127,7 @@ function passesFacet(entry, facet) {
   if (facet === 'components') return entry.kind === 'component' || Boolean(entry.componentId);
   if (facet === 'expressions') return Array.isArray(entry.expressions) && entry.expressions.length > 0;
   if (facet === 'pieces') return entry.kind === 'piece';
+  if (facet === 'terms') return entry.kind === 'term';
   return true;
 }
 
@@ -213,7 +222,10 @@ function rankEntries(query, facet = activeFacet) {
       return dayWindow(pool, new Date(), Math.min(limit, pool.length), 'site-search-pieces')
         .map(({ item }) => ({ entry: item, score: 0, matchedExpression: '' }));
     }
-    const rest = pool.filter((entry) => !local.includes(entry) && entry.kind !== 'frame' && entry.kind !== 'piece').slice(0, Math.max(6, limit - local.length));
+    if (facet === 'terms') {
+      return pool.slice(0, MAX_TERM_LIST).map((entry) => ({ entry, score: 0, matchedExpression: '' }));
+    }
+    const rest = pool.filter((entry) => !local.includes(entry) && entry.kind !== 'frame' && entry.kind !== 'piece' && entry.kind !== 'term').slice(0, Math.max(6, limit - local.length));
     return local.concat(rest).map((entry) => ({ entry, score: 0, matchedExpression: '' }));
   }
 
@@ -258,6 +270,112 @@ function piecesToEntries(feed) {
   }));
 }
 
+/** Where the search page opens on a term: a plain link, readable with scripts off. */
+export function termSearchHref(concept = '') {
+  return `${TERM_SEARCH_PATH}?q=${encodeURIComponent(String(concept || '').trim())}&facet=terms`;
+}
+
+/**
+ * Index terms[] as search entries: one per concept, landing on the first
+ * place it is practiced, with the rest listed beside it. No glossary: the
+ * entry only says where the word lives.
+ */
+export function termsToEntries(terms = []) {
+  return (Array.isArray(terms) ? terms : []).filter((term) => term?.concept).map((term) => {
+    const places = (Array.isArray(term.routes) ? term.routes : []).filter((place) => place?.route);
+    const first = places[0] || { route: termSearchHref(term.concept), hostId: null };
+    const routes = [...new Set(places.map((place) => place.route))];
+    return {
+      kind: 'term',
+      concept: term.concept,
+      title: term.text || term.concept.replace(/-/g, ' '),
+      route: first.route,
+      anchor: first.hostId || '',
+      places,
+      nestRoot: 'terms',
+      nestLabel: 'living terms',
+      definition: term.definition || '',
+      expressions: term.expression ? [term.expression] : [],
+      expressionHosts: term.expression && first.hostId ? { [term.expression]: first.hostId } : {},
+      haystack: [term.concept, term.concept.replace(/-/g, ' '), term.text, term.definition, term.expression, routes.join(' ')]
+        .filter(Boolean).join(' ').toLowerCase(),
+    };
+  });
+}
+
+/**
+ * How many routes practise a term, counting a partial's includers: distinct
+ * routes, or a partial's reach when that is wider. With `here`, that route is
+ * left out. The note row and the Terms facet both count this way.
+ */
+export function countPlaces(record, here = null) {
+  const places = Array.isArray(record?.routes) ? record.routes : [];
+  const routes = new Set(places.map((place) => place?.route).filter(Boolean)).size;
+  const widest = places.reduce((most, place) => Math.max(most, Number(place?.reach) || 1), 0);
+  const total = Math.max(routes, widest);
+  const isHere = here !== null && places.some((place) => place?.route === here);
+  return Math.max(0, total - (isHere || (here !== null && widest > routes) ? 1 : 0));
+}
+
+/** How many other routes practise a term, counting a partial's includers. */
+export function countOtherPlaces(record, here = '/') {
+  return countPlaces(record, here);
+}
+
+/** Each distinct route once, in index order, with the widest reach seen there. */
+export function distinctPlaces(places = []) {
+  const byRoute = new Map();
+  for (const place of Array.isArray(places) ? places : []) {
+    if (!place?.route) continue;
+    const reach = Number(place.reach) || 1;
+    const seen = byRoute.get(place.route);
+    if (!seen) byRoute.set(place.route, { ...place, reach });
+    else if (reach > seen.reach) seen.reach = reach;
+  }
+  return [...byRoute.values()];
+}
+
+function placeLabel(place) {
+  return place.reach > 1 ? `${place.route} (+${place.reach - 1})` : place.route;
+}
+
+/** "practiced on N pages", counted the way the note row counts. */
+function termPlacesMeta(entry) {
+  const count = countPlaces({ routes: entry.places });
+  if (!count) return '';
+  return `practiced on ${count} page${count === 1 ? '' : 's'}`;
+}
+
+/**
+ * The search row in a living term's note (semantic/term-note-rows.js):
+ * a plain link into the terms facet, with the count of other routes only
+ * when the index is already in memory. It never fetches.
+ */
+export const SEARCH_TERM_NOTE_ROW = Object.freeze({
+  id: 'search',
+  when: (ctx) => Boolean(ctx?.concept),
+  render: (ctx) => {
+    const href = termSearchHref(ctx.concept);
+    // Not loaded, loaded without terms[], or a word the index has not met yet
+    // (a stale copy, or a route it filtered): point at search, claim no count.
+    const record = termsByConcept?.get(ctx.concept);
+    if (!record) return { label: 'practiced on', value: 'find it in search', href };
+    const others = countOtherPlaces(record, ctx.route);
+    return {
+      label: 'practiced on',
+      value: others ? `${others} other page${others === 1 ? '' : 's'}` : 'only this page so far',
+      href,
+    };
+  },
+});
+
+registerTermNoteRow(SEARCH_TERM_NOTE_ROW);
+
+/** Test seam: hand the search row an index's terms[] (or null for "not loaded"). */
+export function setLoadedTerms(terms) {
+  termsByConcept = Array.isArray(terms) ? new Map(terms.filter((t) => t?.concept).map((t) => [t.concept, t])) : null;
+}
+
 function loadIndex() {
   if (indexPromise) return indexPromise;
   indexPromise = Promise.all([
@@ -271,7 +389,9 @@ function loadIndex() {
       const routes = Array.isArray(payload?.routes) ? payload.routes : [];
       const components = Array.isArray(payload?.components) ? payload.components : [];
       const frames = Array.isArray(payload?.frames) ? payload.frames : [];
-      entries = routes.concat(frames, components, piecesToEntries(piecesFeed));
+      const terms = Array.isArray(payload?.terms) ? payload.terms : null;
+      setLoadedTerms(terms);
+      entries = routes.concat(frames, components, piecesToEntries(piecesFeed), termsToEntries(terms || []));
       facetsMeta = payload?.facets || null;
       geometryLegend = payload?.geometryLegend || null;
       return entries;
@@ -281,6 +401,7 @@ function loadIndex() {
       entries = [];
       facetsMeta = null;
       geometryLegend = null;
+      setLoadedTerms(null);
       return entries;
     });
   return indexPromise;
@@ -436,7 +557,9 @@ function appendResult(container, entry, index, matchedExpression = '') {
     : '';
   const link = document.createElement('a');
   link.className = 'spw-site-search__result';
-  link.href = hostId ? `${entry.route}#${hostId}` : entry.route;
+  link.href = hostId
+    ? `${entry.route}#${hostId}`
+    : entry.kind === 'term' && entry.anchor ? `${entry.route}#${entry.anchor}` : entry.route;
   link.dataset.index = String(index);
   if (entry.motion) link.dataset.spwMotion = entry.motion;
   if (entry.geometry) link.dataset.spwGeometry = entry.geometry;
@@ -465,7 +588,12 @@ function appendResult(container, entry, index, matchedExpression = '') {
 
   const meta = document.createElement('span');
   meta.className = 'spw-site-search__meta';
-  meta.textContent = [
+  meta.textContent = entry.kind === 'term' ? [
+    entry.concept,
+    entry.definition,
+    entry.expressions[0],
+    termPlacesMeta(entry),
+  ].filter(Boolean).join(' · ') : [
     entry.kind === 'frame' ? (entry.handle || `#${entry.anchor}`) : (entry.nestLabel || entry.route),
     entry.kind === 'frame' ? String(entry.routeTitle || entry.frameOf || '').replace(/^Spwashi\s*[•·]\s*/, '') : entry.kind,
     entry.kind === 'frame' ? entry.regionRole || entry.region : entry.surface,
@@ -488,6 +616,15 @@ function appendResult(container, entry, index, matchedExpression = '') {
   }
   link.append(titleRow, meta);
   item.appendChild(link);
+
+  if (entry.kind === 'term' && distinctPlaces(entry.places).length > 1) {
+    // Where else the word is practiced, as plain text: the option itself is
+    // the one link, so arrow keys and Tab reach the same things.
+    const places = document.createElement('span');
+    places.className = 'spw-site-search__meta';
+    places.textContent = distinctPlaces(entry.places).map(placeLabel).join(' · ');
+    link.appendChild(places);
+  }
 
   if (matchedExpression) {
     const expressionBtn = document.createElement('button');

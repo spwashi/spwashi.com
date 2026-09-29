@@ -194,3 +194,19 @@ test('batchWorksheet breaks a use tie on reach before name', () => {
   assert.deepEqual(batchWorksheet({ concepts, terms }, 1, 2).concepts.map((c) => [c.concept, c.reach]), [['spwashi', 2], ['alpha', 1]]);
   assert.equal(batchWorksheet({ concepts, terms }, 1, 2).concepts[0].uses[0].anchor, '/a/ (via _partials/site-footer, on 2 routes)');
 });
+
+test('a root inside an ignored folder is walked, not listed by git', async () => {
+  const { mkdtempSync, mkdirSync, writeFileSync, rmSync } = await import('node:fs');
+  const { default: path } = await import('node:path');
+  const { listTermSources } = await import('../lib/living-terms.mjs');
+  const repo = new URL('../..', import.meta.url).pathname;
+  mkdirSync(path.join(repo, '.tmp'), { recursive: true });
+  const root = mkdtempSync(path.join(repo, '.tmp', 'terms-root-'));
+  try {
+    mkdirSync(path.join(root, 'about'), { recursive: true });
+    writeFileSync(path.join(root, 'about', 'index.html'), '<main><span class="spw-living-term" data-spw-living-term data-spw-concept="x">x</span></main>');
+    assert.deepEqual(listTermSources(root), ['about/index.html']);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});

@@ -64,6 +64,7 @@ import { broadcastCauldronSync, clusterIngredients, escapeHtml, getCauldron, inf
 import { composeVisionSeed, enrichCapturePayload, renderImageIngredientMarkup, watchVariantSelections } from '/public/js/interface/cauldron/image-ingredient.js';
 import { readSpwHydration } from '../semantic/expression-query.js';
 import { cauldronTrace, recordGestureTrace, recordPlantedTrail } from './cauldron/trace.js';
+import './cauldron/term-note-row.js';
 import {
   clearMixOutputState,
   detectIngredientArrival,
