@@ -256,6 +256,21 @@ export const FEATURE_DEFS = [
     load: () => import('../../modules/tools/spw-literal-parser.js'),
   },
   {
+    /* Deep-link only: #arc-bench is authored [hidden] and shown by :target,
+       so a visible mount waits until someone arrives at the link. */
+    id: 'arc-bench',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.VISIBLE,
+    route: 'projects',
+    selector: '#arc-bench',
+    describes: 'arc[audience]{line;line}<element> taste[arc]{beats|audiences} the writer names every word; copy or download, nothing stored',
+    updates: ['structural:property:textContent', 'structural:hidden'],
+    evaluates: [],
+    timingArc: 'visible-feature',
+    effectScope: ['local-dom', 'listeners'],
+    load: () => import('../../modules/projects/arc-bench.js'),
+  },
+  {
     id: 'operator-phases',
     layer: MODULE_LAYERS.FEATURE,
     when: MOUNT_WHEN.VISIBLE,

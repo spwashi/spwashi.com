@@ -31,3 +31,7 @@ Open:
 Validate: node scripts/check-site.mjs; npm run manifest:staged after staging;
 npm run check:local -- --allow-dirty; npm run audit:copy:accessor;
 npm run audit:route-links; git diff --check.
+
+Arc bench (2026-09-29): /projects/#arc-bench is opt-in and deep-link only; nothing on the site links to it, on purpose.
+It is [hidden] until :target, with no authored data-spw-*, frame class or copy unit, so search and the cauldron never list it.
+The writer names element, audiences and beats; it may be removed. Record and questions: .spw/caches/lore-arcs-2026-09.spw.
