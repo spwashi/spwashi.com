@@ -46,6 +46,15 @@ export const FALLBACK_FONTS = Object.freeze({
 });
 
 const BLOCK_RE = /<(h1|h2|h3|h4|p|li|blockquote|figcaption|dt|dd)(?:\s[^>]*)?>([\s\S]*?)<\/\1>/gi;
+
+// Start-tag attribute run that steps over quoted values whole, so a Spw
+// capsule such as (route)<part> inside an attribute does not end the tag.
+const ATTR_RUN = String.raw`(?:[^>"']|"[^"]*"|'[^']*')*`;
+const COPY_UNIT_HOST_RE = new RegExp(String.raw`<([a-z][a-z0-9]*)\b(${ATTR_RUN}?data-spw-copy-unit\s*=\s*"[^"]+"${ATTR_RUN})>([\s\S]*?)<\/\1>`, 'gi');
+const HOOK_LEDE_HOST_RE = new RegExp(String.raw`<([a-z][a-z0-9]*)\b(${ATTR_RUN}?\bclass\s*=\s*"[^"]*\bhook-lede\b[^"]*"${ATTR_RUN})>([\s\S]*?)<\/\1>`, 'gi');
+const EXPRESSION_HOST_RE = new RegExp(String.raw`<([a-z][a-z0-9]*)\b(${ATTR_RUN}?data-spw-semantic-expression\s*=\s*"[^"]+"${ATTR_RUN})>([\s\S]*?)<\/\1>`, 'gi');
+const MAIN_RE = new RegExp(String.raw`<main\b${ATTR_RUN}>([\s\S]*?)<\/main>`, 'i');
+const BODY_START_RE = new RegExp(String.raw`<body\b(${ATTR_RUN})>`, 'i');
 export const MAX_BLOCKS_PER_BATCH = 60;
 
 export function toRoutePath(repoPath) {
@@ -78,7 +87,7 @@ export function stripMarkup(html) {
 }
 
 export function extractMainHtml(html) {
-  const match = String(html || '').match(/<main\b[^>]*>([\s\S]*?)<\/main>/i);
+  const match = String(html || '').match(MAIN_RE);
   return match ? match[1] : String(html || '');
 }
 
@@ -134,7 +143,7 @@ export function parseCopyUnit(id = '') {
 }
 
 export function extractPageMeta(html = '') {
-  const body = /<body\b([^>]*)>/i.exec(String(html));
+  const body = BODY_START_RE.exec(String(html));
   const attrs = body ? body[1] : '';
   const related = readSpwAttr(attrs, 'related-routes');
   return {
@@ -179,11 +188,11 @@ export function extractCopyUnitHosts(html) {
     });
   };
 
-  for (const match of main.matchAll(/<([a-z][a-z0-9]*)\b([^>]*data-spw-copy-unit\s*=\s*"[^"]+"[^>]*)>([\s\S]*?)<\/\1>/gi)) {
+  for (const match of main.matchAll(COPY_UNIT_HOST_RE)) {
     push(match[1].toLowerCase(), match[2], match[3], { requireUnit: true });
   }
 
-  for (const match of main.matchAll(/<([a-z][a-z0-9]*)\b([^>]*\bclass\s*=\s*"[^"]*\bhook-lede\b[^"]*"[^>]*)>([\s\S]*?)<\/\1>/gi)) {
+  for (const match of main.matchAll(HOOK_LEDE_HOST_RE)) {
     if (/data-spw-copy-unit\s*=/i.test(match[2])) continue;
     push(match[1].toLowerCase(), match[2], match[3], { requireUnit: false });
   }
@@ -213,7 +222,7 @@ export function extractExpressionHosts(html) {
   const main = extractMainHtml(html);
   const blocks = [];
   const seen = new Set();
-  for (const match of main.matchAll(/<([a-z][a-z0-9]*)\b([^>]*data-spw-semantic-expression\s*=\s*"[^"]+"[^>]*)>([\s\S]*?)<\/\1>/gi)) {
+  for (const match of main.matchAll(EXPRESSION_HOST_RE)) {
     const tag = match[1].toLowerCase();
     const expression = readSemanticExpression(match[2]);
     const text = stripMarkup(match[3]);

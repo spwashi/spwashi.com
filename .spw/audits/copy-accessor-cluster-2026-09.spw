@@ -115,6 +115,113 @@ audit_run: .{
   }
 }[reg=facet]
 
+audit_run_2026_09_29: .{
+  at = `2026-09-29`
+  command = `npm run audit:copy:accessor`
+  parser_fix = `scripts/lib/page-copy-audit.mjs start tags now read a quote-aware attribute run (?:[^>"']|"[^"]*"|'[^']*')* in place of [^>]*, for the copy-unit loop, the hook-lede loop, extractExpressionHosts, <main>, and <body>. A capsule such as (route)<part> inside an attribute value no longer ends the tag.`
+  before = .{
+    pages = 201
+    content_blocks = 256
+    copy_units = 91
+    with_expression = 35
+    triple = 66
+    nested = 25
+    hook_ledes_unaddressed = 1
+    flat_only = 42
+    dense_lede = 6
+    unglossed_lattice = 1
+  }[reg=facet]
+  after = .{
+    pages = 201
+    content_blocks = 256
+    copy_units = 92
+    with_expression = 76
+    triple = 67
+    nested = 25
+    hook_ledes_unaddressed = 0
+    flat_only = 5
+    dense_lede = 5
+    unglossed_lattice = 1
+  }[reg=facet]
+  regression = #[
+    `scripts/tests/page-copy-audit.test.mjs — "a capsule inside an attribute value does not end the start tag", a design.hook.lede-shaped fixture carrying design[worktable]{slots.kinds.contracts}(route)<part>`,
+    `scripts/tests/page-copy-audit.test.mjs — "a capsule in an earlier attribute does not hide the attribute being read", where a capsule-bearing attribute on <body>, <main> and <p> comes before the one being read; each of its three assertions fails on HEAD`
+  ][reg=set]
+  working_tree = `before and after were read mid-session, while this session's spellcraft and folios route edits were still landing. The parser fix is what moved them; the route edits added copy-units.`
+  recheck = .{
+    at = `2026-09-29, final tree of the session, before commit`
+    content_blocks = 264
+    copy_units = 101
+    with_expression = 85
+    triple = 76
+    nested = 25
+    hook_ledes_unaddressed = 0
+    flat_only = 5
+    dense_lede = 5
+    note = `The rise from 92 to 101 units is the new wander spells on /design/experiments/spellcraft/ and #where-scans-live on /design/folios/; each carries an expression, so the flat-only list is the same five as f9.`
+  }[reg=facet]
+}[reg=facet]
+
+^"review_2026_09_29"{
+  claim = `The 09-29 numbers are re-recorded, not shifted. The 35 of 91 reading was the parser, not the pages. A '>' inside a capsule cut the start tag short, readSpwAttr then found no closing quote, and the host read as flat. About 41 hosts were misread that way.`
+  f8_parser_truncation {
+    severity = "medium"
+    claim = `Most of the 42 flat-only flags were false. design.hook.lede, the design components/composition ledes, home.hook.lede, the about.perspective trio, the quest ledes, plans.hook.lede and folios.hook.lede all carry an expression with a capsule and now read as tagged.`
+    evidence = #[
+      `with-expression 35 → 76; flat-only 42 → 5`,
+      `about.hook.lede was the one "unaddressed hook-lede" on /about/: the truncated tag hid its copy-unit, so units 91 → 92 and hook-ledes-unaddressed 1 → 0`,
+      `services.entry.lede was a false dense-lede (357c counted the attribute tail " data-spw-copy-lens=..." as text); dense-lede 6 → 5`,
+      `home.hook.live and quest.hook.lede stay dense-lede and drop flat-only`
+    ][reg=set]
+    next = `Read earlier with_expression counts in this file (2 of 23 on 09-04) as possibly low for the same reason. Do not backfill a correction into them.`
+  }
+  f9_tagging_backlog {
+    severity = "low"
+    claim = `The true tagging backlog is 16 copy-units with no Spw handle on the same host. Five are hook ledes and carry the flat-only flag. The other eleven are notes, promos and boundaries the flag does not look at. This is the worklist for mindful Spw tagging: add one expression when a later pass already has the host open, in the page's own imagery, never as a batch.`
+    flat_only = #[
+      `wap.hook.lede — /about/domains/wap.mom/`,
+      `folios.release.lede — /design/folios/`,
+      `folios.release.second.lede — /design/folios/`,
+      `folios.panels.lede — /design/folios/`,
+      `design.runtime.atlas.lede — /design/runtime/`
+    ][reg=set]
+    unit_without_expression = #[
+      `home.promoWonderCycle.cycle.promo — / (article)`,
+      `home.promoWonderCycle.cycle.wonder — / (article)`,
+      `about.boonhonk.lede — /about/ (note)`,
+      `plans.now.note — /about/plans/ (note)`,
+      `plans.production.note — /about/plans/ (note)`,
+      `curriculum.memory.lede — /curriculum/`,
+      `curriculum.memory.boundary — /curriculum/ (note)`,
+      `recipes.soilCompanions.payloadBoundaries — /recipes/ (aside)`,
+      `recipes.season.lede — /recipes/ (note)`,
+      `knowledge.versioned-holdings.lede — /topics/knowledge-bases/`,
+      `math.combinatorics.hero.lede — /topics/math/combinatorics/`
+    ][reg=set]
+    gaps = `0 hook-ledes without a copy-unit remain in the census.`
+    refuse = `The handle names what the passage does in its room. Do not derive it from the dotted key, and do not tag all 16 in one sitting.`
+    question = `Which of these rooms wants its handle first? folios (three ledes on one page) is the densest seam.`
+  }
+  f10_refused_families_in_markup {
+    severity = "medium"
+    claim = `^voice_register.refuse forbids data-spw-voice and data-spw-tone, yet tracked HTML still carries 21 uses. This audit names them and does not edit those routes.`
+    tone = #[
+      `about/index.html:534 data-spw-tone="navigational"`,
+      `about/index.html:1681 data-spw-tone="analytical"`,
+      `about/index.html:1996 data-spw-tone="threshold"`,
+      `recipes/index.html:1861 data-spw-tone="publisher-minded generous precise"`
+    ][reg=set]
+    voice = #[
+      `blog/index.html ×14 — operator sigils; each value repeats its title (e.g. "act · fires once", "bind · join without collapse")`,
+      `topics/software/spw/index.html:509 data-spw-voice="field-guide"`,
+      `topics/software/spw/index.html:514 data-spw-voice="spellbook"`,
+      `topics/software/spw/index.html:519 data-spw-voice="workshop"`
+    ][reg=set]
+    readers = `spwTone still has JS readers and one writer: page-anatomy.js, page-universe.js, region-menu.js, semantic-crossrefs.js read it; component-semantics.js reads and writes it. A migration must move those reads too, or drop them, in the same pass. No spwVoice reader was found.`
+    next = `Tone values move to data-spw-copy-motifs; the blog voice duplicates of title can go; the three spw voice cards can become expression modes such as voice[spellbook]. Human-confirmed, hunk-staged, since about/, recipes/ and blog/ are shared ground.`
+  }
+}[reg=facet]
+
 ^"decision"{
   text = `Name the projection, measure it, stop. No localization runtime. No new data-spw-* family. No public copy rewrite in this pass.`
   later = #[

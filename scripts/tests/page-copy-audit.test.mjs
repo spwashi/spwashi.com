@@ -9,6 +9,7 @@ import {
   classifyExpressionShape,
   extractCopyUnitHosts,
   extractExpressionHosts,
+  extractMainHtml,
   extractPageMeta,
   kindForTag,
   parseCopyUnit,
@@ -236,6 +237,49 @@ test('extractCopyUnitHosts joins the dotted key to the Spw handle', () => {
   assert.equal(gaps.length, 1);
   const meta = extractPageMeta(html);
   assert.equal(meta.pageFamily, 'curriculum');
+});
+
+test('a capsule inside an attribute value does not end the start tag', () => {
+  const html = `
+    <body data-spw-page-family="design">
+      <main data-spw-semantic-expression="design[shelf]{rooms}<page>">
+        <p class="hook-lede spw-playable-hook" data-spw-textual-role="lede" data-spw-copy-unit="design.hook.lede" data-spw-semantic-expression="design[worktable]{slots.kinds.contracts}(route)<part>">
+          Design is a worktable of slots, kinds, and contracts.
+        </p>
+        <p class="hook-lede" data-spw-semantic-expression="lens[variant]{read}<panel>">A lens variant carries a handle but no key.</p>
+      </main>
+    </body>
+  `;
+  const hosts = extractCopyUnitHosts(html);
+  const unit = hosts.find((block) => block.copyUnit === 'design.hook.lede');
+  assert.ok(unit, 'design.hook.lede host is found');
+  assert.equal(unit.expression, 'design[worktable]{slots.kinds.contracts}(route)<part>');
+  assert.equal(unit.text, 'Design is a worktable of slots, kinds, and contracts.');
+  assert.equal(unit.textualRole, 'lede');
+  assert.ok(!flagCopyVoice(unit).includes('flat-only'));
+  assert.equal(hosts.filter((block) => !block.copyUnit && block.kind === 'gap').length, 1);
+
+  const expressions = extractExpressionHosts(html).map((block) => block.expression);
+  assert.deepEqual(expressions, [
+    'design[worktable]{slots.kinds.contracts}(route)<part>',
+    'lens[variant]{read}<panel>',
+  ]);
+  assert.equal(extractPageMeta(html).pageFamily, 'design');
+});
+
+test('a capsule in an earlier attribute does not hide the attribute being read', () => {
+  const html = `
+    <body data-spw-related-routes="lens(route)<part>" data-spw-page-family="design">
+      <main data-spw-copy-lens="shelf(route)<page>" data-spw-semantic-expression="design[shelf]{rooms}<page>">
+        <p data-spw-copy-lens="lede(route)<part>" data-spw-semantic-expression="design[bench]{tools}">A bench holds the tools in reach.</p>
+      </main>
+    </body>
+  `;
+  assert.ok(extractMainHtml(html).trimStart().startsWith('<p'), '<main> start tag is read whole');
+  assert.deepEqual(extractExpressionHosts(html).map((block) => [block.expression, block.text]), [
+    ['design[bench]{tools}', 'A bench holds the tools in reach.'],
+  ]);
+  assert.equal(extractPageMeta(html).pageFamily, 'design');
 });
 
 test('flagCopyVoice and development clusters stay conservative', () => {
