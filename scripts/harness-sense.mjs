@@ -8,6 +8,7 @@
  *   npm run sense -- nouns
  *   npm run sense -- ink about-opening
  *   npm run sense -- ids
+ *   npm run sense -- doctor [--reap]   # QA preflight: sandbox, orphans, bundles
  */
 
 import { spawnSync } from 'node:child_process';
@@ -60,6 +61,7 @@ export function formatStillIds(recipes = listSenseFixtures()) {
 
 export function formatSenseMenu(recipes = listSenseFixtures()) {
   return [
+    '[sense] doctor  npm run sense -- doctor   (preflight before any headless run)',
     '[sense] copy    npm run sense -- copy',
     '[sense] nouns   npm run sense -- nouns',
     '[sense] stills  npm run sense -- stills',
@@ -81,6 +83,11 @@ function main(argv = process.argv.slice(2)) {
     process.stdout.write(`${formatSenseMenu()}\n`);
     process.exit(0);
   }
+  if (kind === 'doctor') {
+    const script = path.join(path.dirname(new URL(import.meta.url).pathname), 'qa-doctor.mjs');
+    const result = spawnSync(process.execPath, [script, ...rest], { stdio: 'inherit' });
+    process.exit(result.status ?? 1);
+  }
   if (kind === 'ids') {
     process.stdout.write(`${formatStillIds()}\n`);
     process.stdout.write('\nink: npm run sense -- ink about-opening\n');
@@ -88,7 +95,7 @@ function main(argv = process.argv.slice(2)) {
   }
   const spec = SENSE_KINDS[kind];
   if (!spec) {
-    process.stderr.write(`[sense] unknown kind "${kind}". Use copy, nouns, ink, or ids.\n`);
+    process.stderr.write(`[sense] unknown kind "${kind}". Use doctor, copy, nouns, stills, ink, or ids.\n`);
     process.stderr.write(`${formatSenseMenu()}\n`);
     process.exit(2);
   }
