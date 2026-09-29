@@ -363,6 +363,8 @@ export const FEATURE_DEFS = [
       'structural:data-bundle-count',
       'structural:data-bundle-lanes',
       'structural:data-checked',
+      'structural:aria-pressed',
+      'structural:data-preset-range',
     ],
     evaluates: [],
     timingArc: 'visible-feature',

@@ -392,6 +392,101 @@
   line-height: 1.4;
 }
 
+:where(body[data-spw-surface="services"] .bundle-skill:has(> .bundle-skill__qty)) {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+}
+
+/* A count sits on the item's own row; typing in it checks the item. */
+:where(body[data-spw-surface="services"] .bundle-skill__qty) {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  align-self: center;
+  inline-size: 3.6rem;
+  min-block-size: 2.25rem;
+  padding: 0.2rem 0.35rem;
+  border: 1px solid var(--services-line-strong);
+  border-radius: var(--shape-element, 0.4rem);
+  background: var(--services-paper, var(--surface, #fff));
+  color: inherit;
+  font: inherit;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  text-align: center;
+}
+
+:where(body[data-spw-surface="services"] .bundle-skill:not([data-checked]) > .bundle-skill__qty) {
+  opacity: 0.7;
+}
+
+:where(body[data-spw-surface="services"] .bundle-lane__note) {
+  margin: 0.55rem 0.5rem 0.2rem;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.7));
+  font-size: var(--text-size-xs, 0.84rem);
+}
+
+:where(body[data-spw-surface="services"] .bundle-lane__note:first-of-type) {
+  margin-top: 0.1rem;
+}
+
+:where(body[data-spw-surface="services"] .bundle-composer__presets) {
+  display: grid;
+  gap: 0.4rem;
+}
+
+:where(body[data-spw-surface="services"] .bundle-composer__presets-title) {
+  margin: 0;
+  font-size: var(--text-size-sm, 0.92rem);
+  font-weight: 600;
+}
+
+:where(body[data-spw-surface="services"] .bundle-composer__preset-group) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+:where(body[data-spw-surface="services"] .bundle-composer__preset-scale) {
+  min-inline-size: 4.2rem;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-2xs, 0.72rem);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.7));
+}
+
+/* Each preset states its range, read from the same inputs the readout sums. */
+:where(body[data-spw-surface="services"] .bundle-composer [data-preset-range])::after {
+  content: " · " attr(data-preset-range);
+  font-size: 0.85em;
+  opacity: 0.75;
+}
+
+:where(body[data-spw-surface="services"] .bundle-composer [data-bundle-preset][aria-pressed="true"]) {
+  background: color-mix(in srgb, var(--services-accent) 18%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--services-accent) 48%, transparent);
+}
+
+/* The 13-day rhythm: lanes in season carry a quiet mark; a deal shows only when the reader turned numericity up. */
+:where(body[data-spw-surface="services"] .bundle-skill[data-rhythm-season] > span)::after {
+  content: " ·";
+  color: var(--services-accent);
+}
+
+:where(body[data-spw-surface="services"] .bundle-skill > small[data-rhythm-deal])::after {
+  content: " · " attr(data-rhythm-deal);
+  color: var(--services-accent);
+  font-weight: 600;
+}
+
+:where(body[data-spw-surface="services"] .bundle-composer__rhythm) {
+  margin: 0;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.7));
+  font-size: var(--text-size-xs, 0.84rem);
+}
+
+/* Before anything is chosen, the starting bundles lead the readout. */
+:where(body[data-spw-surface="services"] .bundle-composer[data-bundle-state="empty"] .bundle-composer__presets) {
+  order: -1;
+}
+
 :where(body[data-spw-surface="services"] .bundle-composer__readout) {
   display: grid;
   gap: 0.6rem;
