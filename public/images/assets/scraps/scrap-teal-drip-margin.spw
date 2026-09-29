@@ -1,0 +1,64 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "scrap-teal-drip-margin"
+  title: "Teal drip, margin"
+  description: "Square scrap, scanned for the September 28, 2026 set."
+}
+
+^"source"{
+  id: "scrap-2026-09-28-07"
+  master: "public/images/renders/_raw/folio-scans-2026-09-28/scrap-2026-09-28-07-scan.png"
+  master_tracked: false
+  scan: { width: 581, height: 619, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 1.9 x 2.1 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-28.spw"
+}
+
+^"usage"{
+  surface: "scraps"
+  role: "square-scrap"
+  formats_available: ["avif", "webp"]
+  ground: "as scanned — a square of paper on its own; no lid shows"
+  alt_text: "Square scrap, nearly blank: one teal drip hangs from the top edge and a thin teal line runs along the bottom."
+  tiers: {
+    thumb: { width: 240, height: 256, avif_kib: 2, webp_kib: 3 }
+    display: { width: 481, height: 512, avif_kib: 10, webp_kib: 13 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at scan size"
+  png: "none — AVIF and WebP only, as the September 26 and 27 sets ship"
+  hero_budget: "no hero — the scan is smaller than 1024px, and tiers never upscale"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["scrap", "release-2026-09-28", "teal-drip"]
+  part_of: "folio-release-2026-09-28"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `drip[teal]{margin}`
+  b: `*scrap-teal-drip-margin ~drip ~teal`
+  handles: ["~drip", "~teal"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what was painted on the other side?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}
+
+^"imagine"{
+  status: "open — nothing generated yet; the creator runs Grok Imagine and chooses what returns"
+  motion: `the teal drip lengthens down the blank page`
+  seed: "the master as scanned, lid and all; Imagine reads a dark ground more predictably than transparency"
+  returns: "public/images/renders/imagine/2026-09-28/scrap-teal-drip-margin-imagine-NN.<ext>, with a sidecar naming generator: Grok Imagine and source: scrap-2026-09-28-07"
+  derivatives: []
+}

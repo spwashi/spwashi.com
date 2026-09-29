@@ -1,0 +1,67 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "prime-read-some-teal-squares"
+  title: "Read some, teal squares"
+  description: "Cutout arrangement on a clear sheet, scanned for the September 28, 2026 set."
+}
+
+^"source"{
+  id: "prime-2026-09-28-24"
+  master: "public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-24-scan.png"
+  master_tracked: false
+  scan: { width: 2673, height: 3473, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 8.9 x 11.6 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-28.spw"
+}
+
+^"usage"{
+  surface: "primes"
+  role: "cutout-arrangement"
+  formats_available: ["avif", "webp"]
+  ground: "clear — the black behind the cutouts was the scanner lid seen through a clear sheet (creator, 2026-09-28), so every tier keys it to transparent; a page gives the piece its ground"
+  alt_text: "Cutouts on a clear sheet: Read SOME, signed SPWASHI; the kraft key; the teal spiral blot square; and a square of pale teal wash rising like a skyline."
+  tiers: {
+    thumb: { width: 197, height: 256, avif_kib: 12, webp_kib: 8 }
+    display: { width: 394, height: 512, avif_kib: 32, webp_kib: 25 }
+    hero: { width: 788, height: 1024, avif_kib: 88, webp_kib: 58 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September 26 and 27 sets ship"
+  alpha: "the lid keyed before tiers are cut: dark, broad enough to survive an opening that drops ink lines, and reached from the scan edge; pure white reached from the edge is uncovered glass (paper sits near 232), and thin light slivers in the edge band clear too; a chroma guard keeps saturated dark paint (the teal blot) from reading as lid"
+  hero_budget: "hero at AVIF quality 75, WebP 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["prime", "release-2026-09-28", "read-some", "kraft-key", "teal-spiral", "teal-wash"]
+  part_of: "folio-release-2026-09-28"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `read[some] squares[teal.spiral|teal.wash]`
+  b: `*prime-read-some-teal-squares *read.some *kraft.key *teal.spiral *teal.wash !read.some ~teal`
+  handles: ["*read.some", "*kraft.key", "*teal.spiral", "*teal.wash", "!read.some", "~teal"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what does the teal skyline read?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}
+
+^"imagine"{
+  status: "open — nothing generated yet; the creator runs Grok Imagine and chooses what returns"
+  motion: `the teal wash rises like a skyline behind the spiral`
+  after: { id: "prime-2026-09-28-23", shares: ["*read.some"] }
+  seed: "the master as scanned, lid and all; Imagine reads a dark ground more predictably than transparency"
+  returns: "public/images/renders/imagine/2026-09-28/prime-read-some-teal-squares-imagine-NN.<ext>, with a sidecar naming generator: Grok Imagine and source: prime-2026-09-28-24"
+  derivatives: []
+}

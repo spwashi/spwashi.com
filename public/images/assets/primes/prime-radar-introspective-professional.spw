@@ -1,0 +1,69 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "prime-radar-introspective-professional"
+  title: "Radar, Introspective, Professional"
+  description: "Cutout arrangement on a clear sheet, scanned for the September 28, 2026 set."
+}
+
+^"source"{
+  id: "prime-2026-09-28-07"
+  master: "public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-07-scan.png"
+  master_tracked: false
+  scan: { width: 3534, height: 4979, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 11.8 x 16.6 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-28.spw"
+}
+
+^"usage"{
+  surface: "primes"
+  role: "cutout-arrangement"
+  formats_available: ["avif", "webp"]
+  ground: "clear — the black behind the cutouts was the scanner lid seen through a clear sheet (creator, 2026-09-28), so every tier keys it to transparent; a page gives the piece its ground"
+  alt_text: "Cutouts on a clear sheet, most lettered upside down: Radar lists How I Met Your Mother, Avengers, Thirty Rock, The Walking Dead, Big Bang Theory; Introspective: nah, I mean it is still a lot to process; Professional: books, restaurants, actors, TikTok; and I attended the University of Illinois at Urbana-Champaign and majored in Learning and Education Studies; with the Lore.Land sign and the kraft key."
+  orientation_note: "the cards read upside down; the Lore.Land sign reads sideways; kept as scanned"
+  tiers: {
+    thumb: { width: 182, height: 256, avif_kib: 13, webp_kib: 10 }
+    display: { width: 364, height: 512, avif_kib: 38, webp_kib: 32 }
+    hero: { width: 727, height: 1024, avif_kib: 102, webp_kib: 73 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September 26 and 27 sets ship"
+  alpha: "the lid keyed before tiers are cut: dark, broad enough to survive an opening that drops ink lines, and reached from the scan edge; pure white reached from the edge is uncovered glass (paper sits near 232), and thin light slivers in the edge band clear too"
+  hero_budget: "hero at AVIF quality 75, WebP 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["prime", "release-2026-09-28", "lore-land-sign", "radar-cards", "kraft-key", "illinois-note"]
+  part_of: "folio-release-2026-09-28"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `cards[radar|introspective|professional]{a.lot.to.process}`
+  b: `*prime-radar-introspective-professional *lore.land.sign *radar.cards *kraft.key *illinois.note &radar ~a.lot.to.process`
+  handles: ["*lore.land.sign", "*radar.cards", "*kraft.key", "*illinois.note", "&radar", "~a.lot.to.process"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what is still a lot to process?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}
+
+^"imagine"{
+  status: "open — nothing generated yet; the creator runs Grok Imagine and chooses what returns"
+  motion: `the upside-down cards turn right way up one at a time`
+  after: { id: "prime-2026-09-28-06", shares: ["*kraft.key", "*lore.land.sign"] }
+  before: { id: "prime-2026-09-28-08", shares: ["*lore.land.sign", "*kraft.key"] }
+  seed: "the master as scanned, lid and all; Imagine reads a dark ground more predictably than transparency"
+  returns: "public/images/renders/imagine/2026-09-28/prime-radar-introspective-professional-imagine-NN.<ext>, with a sidecar naming generator: Grok Imagine and source: prime-2026-09-28-07"
+  derivatives: []
+}

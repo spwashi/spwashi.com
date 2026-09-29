@@ -1,0 +1,69 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "prime-travel-avoidant-playbook-faces"
+  title: "Travel; the avoidant attachment playbook"
+  description: "Cutout arrangement on a clear sheet, scanned for the September 28, 2026 set."
+}
+
+^"source"{
+  id: "prime-2026-09-28-15"
+  master: "public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-15-scan.png"
+  master_tracked: false
+  scan: { width: 3319, height: 4740, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 11.1 x 15.8 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-28.spw"
+}
+
+^"usage"{
+  surface: "primes"
+  role: "cutout-arrangement"
+  formats_available: ["avif", "webp"]
+  ground: "clear — the black behind the cutouts was the scanner lid seen through a clear sheet (creator, 2026-09-28), so every tier keys it to transparent; a page gives the piece its ground"
+  alt_text: "Cutouts on a clear sheet: line-drawn figures with spiral eyes and full lips; pick a lens; The Avoidant Attachment Playbook with a Boon speech bubble; Travel lettered upside down; Practice, Operationalize, Boon HONK; Intergenerational Media Literacy; the crush chart; the kraft key."
+  orientation_note: "Travel and the playbook read upside down; kept as scanned"
+  tiers: {
+    thumb: { width: 179, height: 256, avif_kib: 17, webp_kib: 12 }
+    display: { width: 359, height: 512, avif_kib: 48, webp_kib: 38 }
+    hero: { width: 717, height: 1024, avif_kib: 119, webp_kib: 90 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September 26 and 27 sets ship"
+  alpha: "the lid keyed before tiers are cut: dark, broad enough to survive an opening that drops ink lines, and reached from the scan edge; pure white reached from the edge is uncovered glass (paper sits near 232), and thin light slivers in the edge band clear too"
+  hero_budget: "hero at AVIF quality 70, WebP 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["prime", "release-2026-09-28", "kraft-key", "line-faces", "pick-a-lens", "avoidant-travel", "practice-list", "media-literacy", "crush-chart"]
+  part_of: "folio-release-2026-09-28"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `playbook[avoidant.attachment]{travel} boon`
+  b: `*prime-travel-avoidant-playbook-faces *kraft.key *line.faces *pick.a.lens *avoidant.travel *practice.list *media.literacy *crush.chart ~travel &boon`
+  handles: ["*kraft.key", "*line.faces", "*pick.a.lens", "*avoidant.travel", "*practice.list", "*media.literacy", "*crush.chart", "~travel", "&boon"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?where does the playbook travel?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}
+
+^"imagine"{
+  status: "open — nothing generated yet; the creator runs Grok Imagine and chooses what returns"
+  motion: `Travel turns right way up while the line-drawn faces blink their spiral eyes`
+  after: { id: "prime-2026-09-28-14", shares: ["*media.literacy", "*pick.a.lens", "*crush.chart", "*practice.list", "*kraft.key"] }
+  before: { id: "prime-2026-09-28-16", shares: ["*kraft.key", "*line.faces", "*pick.a.lens", "*avoidant.travel", "*crush.chart"] }
+  seed: "the master as scanned, lid and all; Imagine reads a dark ground more predictably than transparency"
+  returns: "public/images/renders/imagine/2026-09-28/prime-travel-avoidant-playbook-faces-imagine-NN.<ext>, with a sidecar naming generator: Grok Imagine and source: prime-2026-09-28-15"
+  derivatives: []
+}

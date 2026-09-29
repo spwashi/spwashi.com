@@ -1,0 +1,68 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "prime-code-journey-2011-2015"
+  title: "My code beginner's journey, 2011 to 2015"
+  description: "Cutout arrangement on a clear sheet, scanned for the September 28, 2026 set."
+}
+
+^"source"{
+  id: "prime-2026-09-28-08"
+  master: "public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-08-scan.png"
+  master_tracked: false
+  scan: { width: 3282, height: 4757, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 10.9 x 15.9 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-28.spw"
+}
+
+^"usage"{
+  surface: "primes"
+  role: "cutout-arrangement"
+  formats_available: ["avif", "webp"]
+  ground: "clear — the black behind the cutouts was the scanner lid seen through a clear sheet (creator, 2026-09-28), so every tier keys it to transparent; a page gives the piece its ground"
+  alt_text: "Cutouts on a clear sheet: my code beginner's journey steps from 2011 HTML structure through CSS presentation, jQuery behavior, and PHP and MySQL domain modeling to Laravel, CakePHP, Zend, and Symfony, an architecture journey by 2015; moving on, but I'm native so it's evolution; A to B illustration, I study algorithms, Spwashi; the Lore.Land sign; the kraft key."
+  tiers: {
+    thumb: { width: 177, height: 256, avif_kib: 18, webp_kib: 12 }
+    display: { width: 353, height: 512, avif_kib: 50, webp_kib: 40 }
+    hero: { width: 707, height: 1024, avif_kib: 117, webp_kib: 99 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September 26 and 27 sets ship"
+  alpha: "the lid keyed before tiers are cut: dark, broad enough to survive an opening that drops ink lines, and reached from the scan edge; pure white reached from the edge is uncovered glass (paper sits near 232), and thin light slivers in the edge band clear too"
+  hero_budget: "hero at AVIF quality 65, WebP 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["prime", "release-2026-09-28", "a-to-b", "moving-on", "kraft-key", "code-journey", "lore-land-sign"]
+  part_of: "folio-release-2026-09-28"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `journey[html → css → jquery → php.mysql → frameworks]{structure|presentation|behavior|domain.modeling|architecture}@2011–2015`
+  b: `*prime-code-journey-2011-2015 *a.to.b *moving.on *kraft.key *code.journey *lore.land.sign @2011 @2015 ~evolution`
+  handles: ["*a.to.b", "*moving.on", "*kraft.key", "*code.journey", "*lore.land.sign", "@2011", "@2015", "~evolution"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what came after the architecture journey?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}
+
+^"imagine"{
+  status: "open — nothing generated yet; the creator runs Grok Imagine and chooses what returns"
+  motion: `the code journey climbs from 2011 to 2015, one framework box at a time`
+  after: { id: "prime-2026-09-28-07", shares: ["*lore.land.sign", "*kraft.key"] }
+  before: { id: "prime-2026-09-28-09", shares: ["*a.to.b", "*moving.on", "*kraft.key", "*lore.land.sign"] }
+  seed: "the master as scanned, lid and all; Imagine reads a dark ground more predictably than transparency"
+  returns: "public/images/renders/imagine/2026-09-28/prime-code-journey-2011-2015-imagine-NN.<ext>, with a sidecar naming generator: Grok Imagine and source: prime-2026-09-28-08"
+  derivatives: []
+}

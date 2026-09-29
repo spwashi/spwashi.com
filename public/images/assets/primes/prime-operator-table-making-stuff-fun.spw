@@ -1,0 +1,68 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "prime-operator-table-making-stuff-fun"
+  title: "Operator table; making stuff is fun"
+  description: "Cutout arrangement on a clear sheet, scanned for the September 28, 2026 set."
+}
+
+^"source"{
+  id: "prime-2026-09-28-02"
+  master: "public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-02-scan.png"
+  master_tracked: false
+  scan: { width: 2743, height: 4754, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 9.1 x 15.8 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-28.spw"
+}
+
+^"usage"{
+  surface: "primes"
+  role: "cutout-arrangement"
+  formats_available: ["avif", "webp"]
+  ground: "clear — the black behind the cutouts was the scanner lid seen through a clear sheet (creator, 2026-09-28), so every tier keys it to transparent; a page gives the piece its ground"
+  alt_text: "Cutouts on a clear sheet: the Lore.land operator table numbers thirteen sigils from ~ Potential to ^ Integration, lettered A to M; the play-with-your-logo cutout; and a list: making stuff is fun, learning can be engaging, work is a physics concept, roles are not jobs."
+  tiers: {
+    thumb: { width: 148, height: 256, avif_kib: 13, webp_kib: 9 }
+    display: { width: 296, height: 512, avif_kib: 36, webp_kib: 30 }
+    hero: { width: 591, height: 1024, avif_kib: 97, webp_kib: 70 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September 26 and 27 sets ship"
+  alpha: "the lid keyed before tiers are cut: dark, broad enough to survive an opening that drops ink lines, and reached from the scan edge; pure white reached from the edge is uncovered glass (paper sits near 232), and thin light slivers in the edge band clear too"
+  hero_budget: "hero at AVIF quality 75, WebP 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["prime", "release-2026-09-28", "operator-table", "logo-play", "making-stuff", "kraft-key"]
+  part_of: "folio-release-2026-09-28"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `table[~ # . ? ! * & @ <> () [] {} ^]{0–12, A–M}<lore.land> creed[fun|engaging|physics|roles≠jobs]`
+  b: `*prime-operator-table-making-stuff-fun *operator.table *logo.play *making.stuff *kraft.key <lore.land ~roles.not.jobs`
+  handles: ["*operator.table", "*logo.play", "*making.stuff", "*kraft.key", "<lore.land", "~roles.not.jobs"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?if work is a physics concept, what is play?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}
+
+^"imagine"{
+  status: "open — nothing generated yet; the creator runs Grok Imagine and chooses what returns"
+  motion: `the operator table's rows light from ~ Potential down to ^ Integration`
+  after: { id: "prime-2026-09-28-01", shares: ["*logo.play", "*operator.table", "*kraft.key"] }
+  before: { id: "prime-2026-09-28-03", shares: ["*operator.table", "*making.stuff", "*kraft.key"] }
+  seed: "the master as scanned, lid and all; Imagine reads a dark ground more predictably than transparency"
+  returns: "public/images/renders/imagine/2026-09-28/prime-operator-table-making-stuff-fun-imagine-NN.<ext>, with a sidecar naming generator: Grok Imagine and source: prime-2026-09-28-02"
+  derivatives: []
+}

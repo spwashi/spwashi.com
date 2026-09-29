@@ -1,0 +1,67 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "prime-pick-a-pinball-clown-downtown"
+  title: "Pick a pinball; clown downtown"
+  description: "Painted board with collage, scanned for the September 28, 2026 set."
+}
+
+^"source"{
+  id: "prime-2026-09-28-20"
+  master: "public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-20-scan.png"
+  master_tracked: false
+  scan: { width: 4094, height: 3535, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 13.6 x 11.8 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-28.spw"
+}
+
+^"usage"{
+  surface: "primes"
+  role: "painted-board"
+  formats_available: ["avif", "webp"]
+  ground: "clear — the black behind the cutouts was the scanner lid seen through a clear sheet (creator, 2026-09-28), so every tier keys it to transparent; a page gives the piece its ground"
+  alt_text: "A painted board with collage: 1 pick a pinball, 2 select your charms, 3 design the flow; design, usability, creativity, content; a blue square and a gold square lettered boon; a figure in a crystal; and a story strip: when a clown receives a pie to the face, WAP, the boonhonk goes to clown downtown; WAP boy is a mime; it is not appropriate to honk & am. The kraft key waits on the clear sheet beside it."
+  tiers: {
+    thumb: { width: 256, height: 221, avif_kib: 10, webp_kib: 10 }
+    display: { width: 512, height: 442, avif_kib: 40, webp_kib: 37 }
+    hero: { width: 1024, height: 884, avif_kib: 113, webp_kib: 103 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September 26 and 27 sets ship"
+  alpha: "the lid keyed before tiers are cut: dark, broad enough to survive an opening that drops ink lines, and reached from the scan edge; pure white reached from the edge is uncovered glass (paper sits near 232), and thin light slivers in the edge band clear too"
+  hero_budget: "hero at AVIF quality 60, WebP 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["prime", "release-2026-09-28", "kraft-key", "pinball-board"]
+  part_of: "folio-release-2026-09-28"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `flow[pick.a.pinball → select.charms → design.the.flow] story[clown|pie|wap]{boonhonk → clown.downtown}`
+  b: `*prime-pick-a-pinball-clown-downtown *kraft.key *pinball.board !pick.a.pinball &wap.boy &boonhonk`
+  handles: ["*kraft.key", "*pinball.board", "!pick.a.pinball", "&wap.boy", "&boonhonk"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?which charms would you select?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}
+
+^"imagine"{
+  status: "open — nothing generated yet; the creator runs Grok Imagine and chooses what returns"
+  motion: `a pinball runs the flow: pick, select charms, design; the pie lands, WAP`
+  after: { id: "prime-2026-09-28-19", shares: ["*kraft.key"] }
+  seed: "the master as scanned, lid and all; Imagine reads a dark ground more predictably than transparency"
+  returns: "public/images/renders/imagine/2026-09-28/prime-pick-a-pinball-clown-downtown-imagine-NN.<ext>, with a sidecar naming generator: Grok Imagine and source: prime-2026-09-28-20"
+  derivatives: []
+}

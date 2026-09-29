@@ -1,0 +1,60 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "collectible-gothic-letters-dark-sun"
+  title: "Collectible by < ? >: gothic letters, dark sun"
+  description: "Collectible by another maker, front face, scanned for the September 28, 2026 set."
+}
+
+^"source"{
+  id: "collectible-2026-09-28-00-front"
+  master: "public/images/renders/_raw/folio-scans-2026-09-28/collectible-2026-09-28-00-front-scan.png"
+  master_tracked: false
+  maker: "< ? > — another maker, anonymized at the creator's request (2026-09-28)"
+  faces: { front: "shown", back: "held — it carries the maker's mark, so it stays in the raw archive" }
+  scan: { width: 886, height: 887, dpi: 300, orientation: "square" }
+  scan_extent: "about 3.0 x 3.0 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-28.spw"
+}
+
+^"usage"{
+  surface: "collectibles"
+  role: "collectible-face"
+  formats_available: ["avif", "webp"]
+  ground: "as scanned — a square of paper on its own; no lid shows"
+  alt_text: "A small square collectible by another maker: two lines of hatched gothic ink letters, a dark sun scribbled beside them, and a small face in the corner."
+  provenance: "unmarked — not the creator's original, and not generated; the original-scan path rules do not cover collectibles/"
+  imagine: "not offered — another maker's work"
+  tiers: {
+    thumb: { width: 256, height: 256, avif_kib: 8, webp_kib: 10 }
+    display: { width: 511, height: 512, avif_kib: 35, webp_kib: 39 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at scan size"
+  png: "none — AVIF and WebP only, as the September 26 and 27 sets ship"
+  hero_budget: "no hero — the scan is smaller than 1024px, and tiers never upscale"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["collectible", "release-2026-09-28", "gothic-letters"]
+  part_of: "folio-release-2026-09-28"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `lettering[gothic|hatched] sun[dark]{beside}`
+  b: `*collectible-gothic-letters-dark-sun ~gothic.letters ~dark.sun`
+  handles: ["~gothic.letters", "~dark.sun"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?where did this square come from?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

@@ -1,0 +1,68 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "prime-moving-on-native-evolution"
+  title: "Moving on, but I'm native"
+  description: "Cutout arrangement on a clear sheet, scanned for the September 28, 2026 set."
+}
+
+^"source"{
+  id: "prime-2026-09-28-09"
+  master: "public/images/renders/_raw/folio-scans-2026-09-28/prime-2026-09-28-09-scan.png"
+  master_tracked: false
+  scan: { width: 3520, height: 4638, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 11.7 x 15.5 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-09-28.spw"
+}
+
+^"usage"{
+  surface: "primes"
+  role: "cutout-arrangement"
+  formats_available: ["avif", "webp"]
+  ground: "clear — the black behind the cutouts was the scanner lid seen through a clear sheet (creator, 2026-09-28), so every tier keys it to transparent; a page gives the piece its ground"
+  alt_text: "Cutouts on a clear sheet: A to B illustration, I study algorithms, Spwashi; moving on, but I'm native so it's evolution; two upside-down bubbles, catch up … goodbye and dang that impacted me, can I talk about it? oops no; the Lore.Land sign; TikTok for product engineering: creators, series, media enthusiasts, produce compelling media."
+  tiers: {
+    thumb: { width: 194, height: 256, avif_kib: 17, webp_kib: 13 }
+    display: { width: 389, height: 512, avif_kib: 52, webp_kib: 43 }
+    hero: { width: 777, height: 1024, avif_kib: 116, webp_kib: 102 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September 26 and 27 sets ship"
+  alpha: "the lid keyed before tiers are cut: dark, broad enough to survive an opening that drops ink lines, and reached from the scan edge; pure white reached from the edge is uncovered glass (paper sits near 232), and thin light slivers in the edge band clear too"
+  hero_budget: "hero at AVIF quality 60, WebP 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["prime", "release-2026-09-28", "kraft-key", "a-to-b", "moving-on", "new-friends-bubbles", "lore-land-sign", "tiktok-card"]
+  part_of: "folio-release-2026-09-28"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `moving.on[native]{evolution} tiktok[product.engineering]{creators|series|media.enthusiasts → compelling.media}`
+  b: `*prime-moving-on-native-evolution *kraft.key *a.to.b *moving.on *new.friends.bubbles *lore.land.sign *tiktok.card ~evolution &tiktok`
+  handles: ["*kraft.key", "*a.to.b", "*moving.on", "*new.friends.bubbles", "*lore.land.sign", "*tiktok.card", "~evolution", "&tiktok"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what does it mean to be native to a thing you move on from?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}
+
+^"imagine"{
+  status: "open — nothing generated yet; the creator runs Grok Imagine and chooses what returns"
+  motion: `moving on slides past while the evolution scroll unrolls`
+  after: { id: "prime-2026-09-28-08", shares: ["*a.to.b", "*moving.on", "*kraft.key", "*lore.land.sign"] }
+  before: { id: "prime-2026-09-28-10", shares: ["*kraft.key", "*a.to.b", "*tiktok.card"] }
+  seed: "the master as scanned, lid and all; Imagine reads a dark ground more predictably than transparency"
+  returns: "public/images/renders/imagine/2026-09-28/prime-moving-on-native-evolution-imagine-NN.<ext>, with a sidecar naming generator: Grok Imagine and source: prime-2026-09-28-09"
+  derivatives: []
+}
