@@ -1,0 +1,52 @@
+# Prompt Seeds (2026-09)
+#
+# operation: cache
+# Midjourney prompts kept as seeds: each render session is recorded as the
+# prompt that made it, what came back, and what a page may take from it.
+# spwashi.com loads images from promoted seeds only; raw renders stay in
+# public/images/renders/_raw/ (gitignored).
+
+#>prompt_seeds_2026_09
+#:cache #!prompts #!seeds #!images #!midjourney
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@plan: ~"../../.agents/plans/midjourney-design-concepts/PLAN.md"
+@assets: ~"../assets.spw"
+@host_frame: ~"./host-frame-2026-09.spw"
+
+operation = "cache"
+fixity = "experimental"
+source = "creator, 2026-09-28: cache needs for prompts as seeds, and those can be loaded into spwashi.com for images"
+
+expression = prompt[seed]{render;read;promote}<image>
+
+^"needs"{
+  seed = `a prompt is a seed: its text, the host or route it is for, the date, and the session folder under renders/_raw`
+  read = `every render is looked at and read in one line: what works, what fails (garbled type fails a logo), which job it could do`
+  promote = `at most one render per session is promoted, through optimize-image-asset, a .spw sidecar, and @assets, with alt text and one placement`
+  load = `a promoted seed is what spwashi.com may load; a loader reads seed → sidecar → image, so a page can ask for "the attention.productions mark" by seed, not by file path`
+  shader = `a prompt seed can also feed a tealstripesvibes seed as a photo plate ($ substrate), when the creator allows it`
+  taste = `which render becomes a mark is the creator's call; the cache records candidates, not a choice`
+}[reg=facet]
+
+^"session_7"{
+  date = `2026-09-28`
+  folder = `public/images/renders/_raw/2026-09-28-session-7/`
+  prompt = `attention.productions logo with a lightbulb to mark salience (the full prompt text is truncated in the export's file names)`
+  for = `attention.productions (@host_frame jobs.pictures)`
+  reads = #[
+    `0 · stage floor, a bulb on a thin stem beside the name. Lettering is garbled ("ATTEINTKM"); unusable as a mark, keep as mood.`,
+    `1 · a hand-drawn Edison bulb hanging over a script "attention." and spaced PRODUCTIONS, on a stage floor. Warm, theatrical, clean type. Candidate mark.`,
+    `2 · a pendant lamp throwing a cone of light over ATTENTION / PRODUCTIONS in a clean sans. The spotlight is salience itself. Candidate mark.`,
+    `3 · the bulb stands in for the O in ATTENTI(bulb)N., on a grained teal field. Clever but reads as "ATTENTIØN"; teal ties it to tealstripesvibes.`
+  ][reg=set]
+  promote = `none yet: the mark is the creator's choice between 1 and 2`
+}[reg=facet]
+
+do_not = #[
+  `load a raw render on a public page`,
+  `promote more than one render from a session`,
+  `call a render a mark before the creator picks it`
+][reg=set]

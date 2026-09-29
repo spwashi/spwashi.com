@@ -1081,3 +1081,7 @@ Four motif tiles (paper, linen, harlequin, wash) and four stills were promoted a
 
 `data-spw-texture-slice="auto"` on the screenshot-imagine frame stays an authoring alias. Runtime writes the resolved family to `data-spw-slice-family` and hashes the visit key for the crop, so a shared still keeps one seed across routes.
 - Which visual concepts are already canonical enough to document: paper machinery, signal atlas, folded rail, or operator enamel?
+
+## Session 7 — 2026-09-28, attention.productions mark
+
+Four renders of "attention.productions logo with a lightbulb to mark salience", unzipped to `public/images/renders/_raw/2026-09-28-session-7/` and read one by one in `.spw/caches/prompt-seeds-2026-09.spw#session_7`. Render 0 garbles its lettering; 1 (hand-drawn Edison bulb over a script "attention.") and 2 (pendant spotlight over a clean sans) are candidate marks; 3 swaps the O for the bulb on a teal field. Nothing promoted: the creator picks the mark. Prompt seeds now have their own cache so promoted seeds can be loaded by name.
