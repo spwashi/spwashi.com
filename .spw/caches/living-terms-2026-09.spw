@@ -24,6 +24,18 @@ claim: `Highlighted words are the site's central mechanic, and the markup must b
   inspect_note = `The note now opens with a "means" row when the term carries an authored definition in title (the runtime's own affordance title is not a definition), then the expression rows, then gather and the home. Scripts on and off show the same meaning.`
 }
 
+^"census_2026_09_29"{
+  reader = `scripts/lib/living-terms.mjs is now the one reader of terms; audit:living-terms prints it. Sources are route pages and _partials/*.html listed through git (tracked or untracked, never ignored).`
+  pin = `180 vs 182: the other two were not terms. The ignored, generated /design/catalog/systems/ page names the attribute as values (id="attr-data-spw-living-term", data-copy-target="data-spw-living-term"), and a substring scan read them as two term tags with no concept. The audit was right to skip them, by accident; the reader now matches the attribute only in attribute position and never reads ignored pages. The real miss was _partials: three terms the audit never saw.`
+  terms = `At HEAD 28c42787: 184 terms (181 on route pages, 3 in partials) · 145 concepts · 45 living · 100 decorated · 35 concepts carry a title definition, 12 have a home.`
+  partials = `_partials/media-cauldron.html carries source-ingredient and attention-posture with title="tap: inspect • hold to prime" — two affordance lies the 2026-09-27 removal missed, so --check fails until they go. _partials/site-footer.html carries spwashi, decorated, rendered on 193 routes: the widest-reaching term on the site. Ids authored in partials now count as homes on the first including route (/play/#media-cauldron joins /#living-media-vessel), and the worksheet anchors partial terms there (via _partials/<name>). Both titles came off in the scripts-off pass the same day; the runtime supplies its gesture title at mount.`
+  waiting = `0 terms without a data-spw-concept. Counted by absence only; no marker is canon.`
+  depth = `Note depth as rendered (recognition/adjacent/contrast/practice/wonder filled): all 184 at 1, none deeper. Every 1 is an inherited wonder: 181 from an ancestor on the page, 3 partial terms from the ancestor around the include (the template expands includes in place and @haptics reads el.closest('[data-spw-wonder]')). spwashi is 1 on 188 including routes and 0 on 5. No term authors a note field of its own.`
+  reach = `Routes a concept renders on → concepts: 1→128 · 2→10 · 3→3 · 4→2 · 5→1 · 193→1.`
+  smells = `nested 5 · focusable 143 at HEAD; the working tree mid-session read 3 focusable and 47 living while another session was dropping span tabindex and giving the Home atlas cards ids.`
+  batch = `npm run audit:living-terms -- --batch 1 prints the seven most-used decorated concepts with every sentence each lives in and its route#host (--size, --json). Order: most authored tags, ties to wider reach, then name — so spwashi (×1, reach 193) opens the ×1 concepts in batch 3. Batch 1 at HEAD: brace-physics, cauldron-collection, spell-navigation, lattice, attention-shape, semantic-enhancement, dose-trace. --check fails in every mode, --batch included. It prints facts; the words are the creator's.`
+}
+
 ^"rule"{
   living = `A term is living when scripts-off readers get its meaning or its home. Definition in title, or href to the home, or both. Prefer both where a home exists.`
   runtime = `The runtime may add tabindex, role, gesture contract, and the affordance title at mount, and may open the note on tap and Enter. It may not be the reason a highlighted word exists.`

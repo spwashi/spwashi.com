@@ -15,7 +15,7 @@ export const SPW_EXPRESSION_MANIFEST_META = Object.freeze({
   expressions: 935,
   handles: 478,
   perspectives: 1401,
-  sourceStamp: '40d947081eef40af16014b544f64f52e4954215564ad51c52704aa0e5e48b0dd',
+  sourceStamp: '9d5707b7e6dc6aaee04f742d0d7b3b2d46fb31d2ff6eb65f1353bd25b6ce534d',
   builtBy: 'scripts/build-expression-manifest.mjs',
   parser: 'spw-seed parse() — not parseExpression(), which truncates',
 });
