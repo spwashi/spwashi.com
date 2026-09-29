@@ -1,0 +1,157 @@
+# Speech Bubble Voices (2026-09)
+#
+# operation: cache
+# Creator idea, 2026-09-29: draw speech bubbles and sell them through a store;
+# make characters, marketed on TikTok, who each give a thought trace its own
+# voice; let a reader pick a voice to re-tone link-dense copy. Beside it, new
+# art to laminate and new layering techniques. This file maps the idea onto
+# stems that already exist. Do not implement from this cache.
+
+#>speech_bubble_voices_2026_09
+#:cache #!copy #!voice #!store #!laminate
+#:operation #!cache
+#:fixity #!seed
+#:layer #!pragmatics
+
+@copy_accessor: ~"../conventions/copy-accessor.spw"
+@viewing_reason: ~"../conventions/viewing-reason.spw"
+@cauldron_dynamics: ~"../conventions/cauldron-dynamics.spw"
+@site_semantics: ~"../conventions/site-semantics.spw"
+@ai_writing_smells: ~"./ai-writing-smells-2026-09.spw"
+@folio_soil: ~"./folio-soil-ecosystem-2026-09.spw"
+@feedback_product: ~"./feedback-product-2026-09.spw"
+@semantic_copy_depth: ~"../../.agents/plans/semantic-copy-depth/PLAN.md"
+@cauldron_contract: ~"../../public/js/semantic/cauldron/contract.js"
+@coloring_depth: ~"../../public/css/systems/coloring-depth.css"
+@image_utilization: ~"../../public/css/systems/image-utilization.css"
+@provenance_records: ~"../../scripts/lib/image-provenance-records.mjs"
+@services: ~"../../services/index.html"
+@folios: ~"../../design/folios/index.html"
+@cast: ~"../../play/rpg-wednesday/cast/index.html"
+
+operation = "cache"
+fixity = "seed"
+measured_at = `2026-09-29`
+source = `Creator request relayed 2026-09-29. Stems read from the files above on the same day. No price, product name, or character was given.`
+do_not = `No data-spw-voice, data-spw-tone, or data-spw-trace. No new data-spw-* family. No public HTML, CSS, or JS from this cache.`
+
+expression = bubble[voice]{draw.trace.laminate}(turn)<store>
+
+^"thesis"{
+  claim = `A speech bubble is a character saying one thought trace out loud. The trace is already an owned form: one claim that turns, with each link changing the next clause. A character is a second way of saying that same turn. The bubble is the drawing that holds it, and it can be sold, laminated, and collected. Tone is not a new axis; it is which authored sibling the reader is shown.`
+  lore = `@site_semantics already holds this: the l'n'd'r clay-golem entry (~L1113-1181) reads speech bubbles as operators spoken as acts, "the labeled operator is the bubble". At runtime a bubble is only a toast ping today ("noted ·" in guide-badge.js, "speech bubble noted" in experiments.js).`
+  owner = `The thought trace belongs to @semantic_copy_depth, section "Thought trace (2026-09-28)", and to @ai_writing_smells ws-005. This cache adds the character and the store. It does not re-own the trace.`
+}[reg=facet]
+
+^"sbv-001_trace_is_a_turn"{
+  id = "sbv-001"
+  operation = "cache"
+  claim = `A thought trace is a (turn) scene with a [case] shelf beside it. The base paragraph carries the claim with one or two links. The shelf is a list, or a data-spw-copy-depth="dense" sibling. The subject is shared so kinship lights both.`
+  form = `slop[reading]{fatigue.then.gate}(turn)<paragraph> beside slop[case]{source.shelf}<feed>`
+  homonym = `Public copy may say "thought trace". The Spw scene is (turn), never (trace): dose-trace, load-trace, and session traces own that word.`
+  check = `Delete the link labels. A claim remains, and a reader can restate it.`
+}[reg=facet]
+
+^"sbv-002_character_is_a_sibling"{
+  id = "sbv-002"
+  operation = "cache"
+  claim = `A character voice is an additive data-spw-copy-depth="genre" sibling of a (turn) paragraph. data-spw-copy-label names the speaker, visibly, through attr(). data-spw-semantic-expression keeps the trace's subject and direction and puts the character in the mode slot. The capsule says it is a bubble.`
+  form = `slop[reading]{fatigue.then.gate}(turn)<paragraph> with a genre sibling slop[deskar]{fatigue.then.gate}(turn)<bubble>, copy-label "Deskar Null"`
+  example_note = `Deskar is only the grammar example: @cast calls Deskar Null incidental, a table sheet, not town canon. Which character speaks first is the creator's call.`
+  js_off = `The base paragraph keeps the essential claim. With JS off and no density or posture set, the genre sibling stays hidden by @coloring_depth and nothing is lost. A voice only ever adds.`
+  refuse = `No stem names the character. The mode slot does. No sibling replaces the base paragraph.`
+}[reg=facet]
+
+^"sbv-003_reader_choice_altitude"{
+  id = "sbv-003"
+  operation = "cache"
+  claim = `Choosing a voice is how the reader is holding the whole page, so it rides page_persona (data-spw-persona: viewer, doodler, scribe) from @viewing_reason. One altitude, not three.`
+  mechanism = `A later reveal can let @coloring_depth show genre siblings under html[data-spw-persona] as well as under runtime posture (resonant, theatrical), the only reveal today; no density value shows a genre sibling. Which persona reveals which voice is recorded in @viewing_reason page_persona, not in a new key.`
+  not_card_audience = `data-spw-audience is card altitude (disclosure tone, comedic timing on one island). It stays for cards. Do not use it for a page-wide voice, and do not mirror the choice into it.`
+  not_svg_persona = `data-spw-svg-persona is figure altitude. A drawn bubble in a figure may carry its own facets. That is not the reader's voice choice.`
+  not_content_tone = `data-spw-content-tone means density (composition-box-model.js). It is not a voice.`
+  gate = `Reader-facing tone switching changes feel. Proposal plus a browser demo; the creator approves before it lands.`
+}[reg=facet]
+
+^"sbv-004_bubble_is_a_picture"{
+  id = "sbv-004"
+  operation = "cache"
+  claim = `A drawn bubble is an image asset with a .spw sidecar beside it, as every picture under public/images already is. A scanned, laminated bubble is an original scan. It carries data-spw-image-key, and that alone makes it a cauldron candidate (haptics CAULDRON_CANDIDATE_SELECTORS).`
+  provenance = `@provenance_records reads kind from path rules and sidecars. A scan under a path-ruled scan folder reads as original; a generated bubble names its tool in the sidecar. Nothing is guessed.`
+  scans = `Scans stay primary and are never cropped. A generated bubble is at most one promoted render per session, with sidecar, registry, and one placement.`
+  gap = `Collected image ingredients keep no image today (onCapture stores no src, renderIngredientChip has no thumbnail). A collected bubble reads as text until the image-ingredient patch lands. Store the key and resolve src at render time.`
+}[reg=facet]
+
+^"sbv-005_character_as_vessel"{
+  id = "sbv-005"
+  operation = "cache"
+  claim = `A character could be a vessel in CAULDRON_VESSELS (@cauldron_contract): kicker, expression, phases, mix, plant. The same gathering, re-voiced. Vessel choice is already persisted (spw:cauldron-vessel), so a character vessel needs no new storage and no new attribute.`
+  shape = `{ kicker, expression: cauldron[<character>]{<three phase verbs>}, phases: [four], mix, plant }, beside garden, soup, salad, toolbox, workbench`
+  ping = `A later demo could let collecting a (turn) paragraph answer in a bubble: emitTransientBadgeToast in guide-badge.js, speaker read from data-spw-copy-label or the expression's mode. That is a felt change and waits for a browser demo.`
+  owner = `Implementation belongs in a small module beside contract.js, not in composition.js.`
+}[reg=facet]
+
+^"sbv-006_store_is_a_seed_card"{
+  id = "sbv-006"
+  operation = "cache"
+  claim = `The bubble store sits in the order-by-screenshot family. /services/#services-card already serializes as spw-seed-block with state contract empty:filling:complete:sealed. /design/folios/#folio-request is an order card: name the piece, copy the seed, download .txt, or screenshot it and send it. A bubble order is a template beside folio on that seed card, not a checkout.`
+  merchant_voice = `Merchant voice stays on services and folio-request surfaces, not in curriculum routes.`
+  tiktok = `Characters are marketed on TikTok. The site holds the character's source (sbv-008) and the order card. It does not embed a feed.`
+  gate = `Any price, tier, or merchant wording is confirmed by the creator in their words before it reaches HTML. No price is set for bubbles anywhere in the repo.`
+}[reg=facet]
+
+^"sbv-007_laminate_vessel"{
+  id = "sbv-007"
+  operation = "cache"
+  claim = `Lamination and layering are the {mill.laminate.cure} workshop set in @cauldron_dynamics, which already teaches the join. As a vessel, its layers are image ingredients: a scan, a drawn bubble, a mat. Mill gathers, laminate stacks, cure seals.`
+  knobs = `The picture side already has knobs: --laminate-rim, --laminate-edge, --laminate-shadow, --laminate-glare, --laminate-glare-angle, --laminate-tilt, --laminate-lift, and --laminate-mat (@image_utilization, content.css). New layering techniques are new values on these tokens, or a named set of them, before any new token.`
+  folio_soil = `@folio_soil already reads laminated folios as soil that artists add to over years. A laminated bubble is one more layer in that soil.`
+  gate = `How a new laminate looks on screen is a sensation call. Demo in the browser; the creator approves.`
+}[reg=facet]
+
+^"sbv-008_character_source"{
+  id = "sbv-008"
+  operation = "cache"
+  claim = `Each voice needs one source a trace sibling, a bubble, and a vessel can all point back to. The cast page already gives characters a "Voice and contradiction" panel. A handle and an expression there (character[voice]{contradiction}) would be that source.`
+  refuse = `Do not touch the Lndr redesign; it is the creator's. Character copy is the creator's words, not drafted from this cache.`
+}[reg=facet]
+
+^"do_not"{
+  families = `No data-spw-voice, data-spw-tone, or data-spw-trace. data-spw-tone and data-spw-voice already sit in tracked HTML against @copy_accessor ^voice_register; do not add more.`
+  shelves = `Do not target ul.spw-route-bridge__links, chip rows, footers, or header nav. They are honest shelves (75 files carry the bridge). Only paragraph-scale (turn) traces take a voice.`
+  inference = `Do not infer a trace from a link count. Three links and a claim can be a trace. Three links and no claim are a list.`
+  flatten = `Do not sand the cookbook, boonhonk, or magazine voice to make room for characters. A character adds a sibling; it does not rewrite the base.`
+  smell = `A voiced rewrite that reaches for "not a list, but a journey", a closing echo, or a fresh rule of three has imported the smell (@ai_writing_smells ws-005).`
+  merge = `Do not merge page_persona, svg_persona, and card_audience to carry a voice.`
+  page = `Do not revise public HTML, CSS, or JS from this cache.`
+}[reg=facet]
+
+^"gates"{
+  feel = `Tone switching, persona reveal of genre siblings, and bubble pings: proposal plus browser demo, creator approves.`
+  money = `Any price, tier, or merchant wording: the creator confirms.`
+  characters = `Character names, personas, and voiced copy: the creator's words.`
+  art = `Bubble art: scans primary, never cropped; at most one promoted render with sidecar, registry, and one placement; withheld references stay off the site.`
+}[reg=facet]
+
+^"first_slice"{
+  claim = `Land the two named thought-trace slices first, as authoring only: /topics/slop/#feeling and the textbook note in /topics/math/#pure-math-routes, each a (turn) paragraph with a [case] shelf. No voice, no store, no runtime.`
+  why = `A character needs a real (turn) to re-voice. Today no page shows the pairing.`
+  then = `One genre sibling on one of those two paragraphs, in a character's words from the creator, hidden by default. Then the persona reveal as a demo.`
+  validation = `npm run audit:copy:accessor; npm run manifest:expressions if an expression changed; read the paragraph aloud.`
+}[reg=facet]
+
+^"questions"{
+  first_voices = `Which character speaks first, and is it someone from the cast page, someone new made for TikTok, or l'n'd'r?`
+  bubble_medium = `Are the bubbles physical (drawn, laminated, mailed), digital (a file or a card), or both? If both, does the physical one come first?`
+  reader_choice = `Should a reader pick a character, or should the persona they already chose (viewer, doodler, scribe) bring a character with it?`
+  one_or_many = `Does a paragraph carry one alternate voice, or can several characters answer the same turn?`
+  store_shape = `Is a bubble order a new template on the folio seed card, or its own card on /services/?`
+  laminate = `Which of the new layering techniques should the site show first, and is it a new mat, a new glare, or a new stack order?`
+  bubble_as_ping = `When someone collects a turn, should it answer in a bubble at all, or stay a quiet ping?`
+}[reg=facet]
+
+validation: #[
+  `rg 'speech_bubble_voices_2026_09' .spw/caches/index.spw`
+  `rg -n 'data-spw-(voice|tone|trace)=' .spw/caches/speech-bubble-voices-2026-09.spw`
+  `npm run spw:doctor`
+][reg=set]

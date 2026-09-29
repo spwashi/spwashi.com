@@ -84,6 +84,7 @@
 @css_cascade_stratification_2026_09: ~"./css-cascade-stratification-2026-09.spw"  # layer list as care signal: reach / cure / hand per layer; two cascades (declared vs shipped); reset care ledger; owner .agents/plans/css-cascade-stratification
 @portable_css_2026_09: ~"./portable-css-2026-09.spw"  # seed: one built sheet other origins can link; not style.css, not core, no shell chrome; unbuilt
 @wander_spells_2026_09: ~"./wander-spells-2026-09.spw"  # QA by walking spells: seed = slug, route, hold, cast, notice, upkeep; six on the spellcraft bench #wander-spells; spell-term definitions handed back
+@speech_bubble_voices_2026_09: ~"./speech-bubble-voices-2026-09.spw"  # thought trace re-voiced by a character: genre sibling on a (turn), speaker in the mode slot, page_persona altitude; bubbles as scanned image keys; store on the folio/services seed card; {mill.laminate.cure} as the laminate vessel; demo- and creator-gated
 
 operation = "align"
 fixity = "tending"
