@@ -1,0 +1,565 @@
+<spw-page
+    title="Spwashi • Folio primes, frame by frame"
+    description="A demo sequence: twenty-five scanned arrangements of one stock of hand-lettered cutouts on a clear sheet, in scan order, with a cutout to follow and a ground to choose."
+    canonical="https://spwashi.com/design/experiments/folios/primes/"
+    og_title="Spwashi • Folio primes, frame by frame"
+    og_description="One stock of cutouts, rearranged twenty-five times. A demo sequence, not yet a route."
+    breadcrumb_label="Folio primes demo"
+    header_current="Folio primes demo"
+    header_current_href="/design/experiments/folios/primes/"
+    header_indicator="website"
+    surface="website"
+    page_family="experiment-lab"
+    page_role="sequence-demo"
+    page_modes="read compare"
+    wonder="memory resonance projection"
+    route_family="design experiments folios"
+    layout="wide"
+    features="operators"
+    related_routes="/design/experiments/folios/|/design/folios/|/design/"
+    stylesheet_mode="scoped"
+></spw-page>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <spw-site-head></spw-site-head>
+    <style>
+        /* Demo-only. If the sequence is approved, these rules earn a home in a stylesheet. */
+        /* A long frame shrinks its flex-column header below the heading; keep the header whole. */
+        #folio-primes-demo > .frame-topline { flex-shrink: 0; }
+        .primes { --primes-ground: #efe7d6; display: grid; gap: 0.9rem; }
+        .primes:has(#pg-dusk:checked) { --primes-ground: #1d2629; }
+        .primes:has(#pg-lid:checked) { --primes-ground: #2c2930; }
+        .primes fieldset { display: flex; flex-wrap: wrap; gap: 0.35rem 0.8rem; margin: 0; padding: 0.5rem 0.7rem; border: 1px solid color-mix(in srgb, var(--line) 70%, transparent); border-radius: 0.4rem; }
+        .primes legend { padding-inline: 0.3rem; font-family: var(--site-mono-font, monospace); font-size: 0.74rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-soft); }
+        .primes-stage { display: grid; }
+        .primes-frame { display: none; gap: 0.5rem; margin: 0; }
+        .primes:has(#pf-00:checked) #primes-frame-00,
+        .primes:has(#pf-01:checked) #primes-frame-01,
+        .primes:has(#pf-02:checked) #primes-frame-02,
+        .primes:has(#pf-03:checked) #primes-frame-03,
+        .primes:has(#pf-04:checked) #primes-frame-04,
+        .primes:has(#pf-05:checked) #primes-frame-05,
+        .primes:has(#pf-06:checked) #primes-frame-06,
+        .primes:has(#pf-07:checked) #primes-frame-07,
+        .primes:has(#pf-08:checked) #primes-frame-08,
+        .primes:has(#pf-09:checked) #primes-frame-09,
+        .primes:has(#pf-10:checked) #primes-frame-10,
+        .primes:has(#pf-11:checked) #primes-frame-11,
+        .primes:has(#pf-12:checked) #primes-frame-12,
+        .primes:has(#pf-13:checked) #primes-frame-13,
+        .primes:has(#pf-14:checked) #primes-frame-14,
+        .primes:has(#pf-15:checked) #primes-frame-15,
+        .primes:has(#pf-16:checked) #primes-frame-16,
+        .primes:has(#pf-17:checked) #primes-frame-17,
+        .primes:has(#pf-18:checked) #primes-frame-18,
+        .primes:has(#pf-19:checked) #primes-frame-19,
+        .primes:has(#pf-20:checked) #primes-frame-20,
+        .primes:has(#pf-21:checked) #primes-frame-21,
+        .primes:has(#pf-22:checked) #primes-frame-22,
+        .primes:has(#pf-23:checked) #primes-frame-23,
+        .primes:has(#pf-24:checked) #primes-frame-24 { display: grid; }
+        .primes-frame picture { display: grid; place-items: center; padding: clamp(0.5rem, 2vw, 1.25rem); border-radius: 0.5rem; background: var(--primes-ground); }
+        /* The lid is keyed out, so the shadow falls from each cutout's own edge. */
+        .primes-frame img { inline-size: auto; block-size: auto; max-inline-size: 100%; max-block-size: 72vh; filter: drop-shadow(0 0.12rem 0.3rem rgb(0 0 0 / 0.38)); }
+        .primes-frame figcaption { display: grid; gap: 0.2rem; font-size: 0.9rem; }
+        .primes-no, .primes-count { font-family: var(--site-mono-font, monospace); font-variant-numeric: tabular-nums; color: var(--ink-soft); }
+        .primes-seed { color: var(--ink-soft); }
+        .primes-seed__label { font-family: var(--site-mono-font, monospace); color: var(--active-op-color, var(--teal, #008080)); }
+        .primes .primes-strip { display: grid; grid-template-columns: repeat(auto-fill, minmax(3.6rem, 1fr)); }
+        .primes-strip label { position: relative; display: grid; gap: 0.15rem; justify-items: center; padding: 0.2rem; border: 1px solid transparent; border-radius: 0.3rem; cursor: pointer; transition: opacity 160ms ease; }
+        .primes-strip label.is-break { border-inline-start: 1px dashed color-mix(in srgb, var(--line) 90%, transparent); }
+        .primes-strip input { position: absolute; inset: 0; margin: 0; opacity: 0; cursor: pointer; }
+        .primes-strip img { inline-size: 100%; block-size: 3rem; object-fit: contain; border-radius: 0.2rem; background: var(--primes-ground); }
+        .primes-strip span { font-family: var(--site-mono-font, monospace); font-size: 0.72rem; font-variant-numeric: tabular-nums; }
+        .primes-strip label:has(input:checked) { border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 70%, var(--line)); }
+        .primes-strip label:has(input:focus-visible) { outline: 2px solid var(--active-op-color, var(--teal, #008080)); outline-offset: 2px; }
+        .primes:has(#pin-kraft-key:checked) .primes-strip label:not(.cut-kraft-key),
+        .primes:has(#pin-pick-a-lens:checked) .primes-strip label:not(.cut-pick-a-lens),
+        .primes:has(#pin-lore-land-sign:checked) .primes-strip label:not(.cut-lore-land-sign),
+        .primes:has(#pin-operator-table:checked) .primes-strip label:not(.cut-operator-table),
+        .primes:has(#pin-practice-list:checked) .primes-strip label:not(.cut-practice-list),
+        .primes:has(#pin-crush-chart:checked) .primes-strip label:not(.cut-crush-chart),
+        .primes:has(#pin-a-to-b:checked) .primes-strip label:not(.cut-a-to-b),
+        .primes:has(#pin-genre-hopper:checked) .primes-strip label:not(.cut-genre-hopper),
+        .primes:has(#pin-production-card:checked) .primes-strip label:not(.cut-production-card),
+        .primes:has(#pin-read-some:checked) .primes-strip label:not(.cut-read-some),
+        .primes:has(#pin-tiktok-card:checked) .primes-strip label:not(.cut-tiktok-card) { opacity: 0.25; }
+        .primes-pins label, .primes-ground label { display: inline-flex; gap: 0.3rem; align-items: center; min-block-size: var(--touch-target-compact, 2rem); }
+        .primes-sr { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+        @media (prefers-reduced-motion: reduce) { .primes-strip label { transition: none; } }
+    </style>
+</head>
+<body
+    data-spw-surface="website"
+    data-spw-stylesheet-mode="scoped"
+    data-spw-features="operators"
+    data-spw-route-family="design experiments folios"
+    data-spw-context="reading"
+    data-spw-wonder="memory resonance projection"
+    data-spw-page-family="experiment-lab"
+    data-spw-page-modes="read compare"
+    data-spw-page-role="sequence-demo"
+    data-spw-layout="wide"
+    data-spw-related-routes="/design/experiments/folios/|/design/folios/|/design/">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-header">
+        <nav aria-label="Design experiments">
+            <a class="header-sigil" href="/design/">#&gt;design</a>
+            <a href="/design/folios/#release-set">Folios</a>
+            <a href="/design/experiments/folios/">Folio experiments</a>
+            <a href="/design/experiments/folios/primes/" aria-current="page">Primes demo</a>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <section class="spw-frame frame-card" id="folio-primes-demo" data-spw-kind="frame" data-spw-role="demo" aria-labelledby="folio-primes-title">
+            <header class="frame-topline" data-spw-slot="header">
+                <a class="frame-sigil" href="#folio-primes-demo" data-spw-operator="potential">~folio_primes</a>
+                <h1 id="folio-primes-title">Folio primes, frame by frame</h1>
+            </header>
+            <p>One stock of hand-lettered cutouts, laid on a clear sheet and rearranged twenty-five times, scanned in order. The black behind them was the scanner lid, so it is gone: pick a ground, and the cutouts cast their own shadows. Step through the frames with the arrow keys, or follow one cutout and watch where it goes.</p>
+            <div class="primes">
+                <fieldset class="primes-ground">
+                    <legend>Ground</legend>
+                <label><input type="radio" name="prime-ground" id="pg-paper" checked> paper</label>
+                <label><input type="radio" name="prime-ground" id="pg-dusk"> dusk</label>
+                <label><input type="radio" name="prime-ground" id="pg-lid"> the lid, as scanned</label>
+                </fieldset>
+                <div class="primes-stage">
+                <figure class="primes-frame" id="primes-frame-00">
+                    <picture>
+                        <source type="image/avif" srcset="/public/images/assets/primes/prime-rpg-wednesday-factshift-wireframes-display.avif 512w, /public/images/assets/primes/prime-rpg-wednesday-factshift-wireframes-hero.avif 1024w" sizes="(max-width: 60rem) 92vw, 56rem">
+                        <img src="/public/images/assets/primes/prime-rpg-wednesday-factshift-wireframes-display.webp" srcset="/public/images/assets/primes/prime-rpg-wednesday-factshift-wireframes-display.webp 512w, /public/images/assets/primes/prime-rpg-wednesday-factshift-wireframes-hero.webp 1024w" sizes="(max-width: 60rem) 92vw, 56rem" width="1024" height="587" alt="Cutouts on a clear sheet, lettered sideways: Today is RPG Wednesday, a weekly holiday for worldbuilding and community on spwashi.com and lore.land, beside a Spwashi signature; across from them, factshift.com wireframes label a setting menu, focal point, title, and ground." loading="lazy" decoding="async">
+                    </picture>
+                    <figcaption>
+                        <strong><span class="primes-no">No. 00</span> Today is RPG Wednesday; factshift wireframes</strong>
+                        <span>Shares no cutout with the frame before it. Lettering runs sideways; a quarter turn clockwise reads it.</span>
+                        <span class="primes-seed"><span class="primes-seed__label">~imagine</span> the wireframe's arrow travels from the setting menu to the focal point as RPG Wednesday's bubble lifts</span>
+                    </figcaption>
+                </figure>
+                <figure class="primes-frame" id="primes-frame-01">
+                    <picture>
+                        <source type="image/avif" srcset="/public/images/assets/primes/prime-year-one-two-three-logo-play-display.avif 320w, /public/images/assets/primes/prime-year-one-two-three-logo-play-hero.avif 640w" sizes="(max-width: 60rem) 92vw, 56rem">
+                        <img src="/public/images/assets/primes/prime-year-one-two-three-logo-play-display.webp" srcset="/public/images/assets/primes/prime-year-one-two-three-logo-play-display.webp 320w, /public/images/assets/primes/prime-year-one-two-three-logo-play-hero.webp 640w" sizes="(max-width: 60rem) 92vw, 56rem" width="640" height="1024" alt="Cutouts on a clear sheet: Year 1 loose art, Year 2 laminated folios, Year 3 layered painting; a logo design cutout that says play with your logo and branches spwashi.com into educational psychology and software engineering, QA loop since 2023; part of the operator table; the kraft key below." loading="lazy" decoding="async">
+                    </picture>
+                    <figcaption>
+                        <strong><span class="primes-no">No. 01</span> Year 1, Year 2, Year 3; play with your logo</strong>
+                        <span>Shares no cutout with the frame before it.</span>
+                        <span class="primes-seed"><span class="primes-seed__label">~imagine</span> Year 1 to Year 3 light in turn: loose art, laminated folios, layered painting</span>
+                    </figcaption>
+                </figure>
+                <figure class="primes-frame" id="primes-frame-02">
+                    <picture>
+                        <source type="image/avif" srcset="/public/images/assets/primes/prime-operator-table-making-stuff-fun-display.avif 296w, /public/images/assets/primes/prime-operator-table-making-stuff-fun-hero.avif 591w" sizes="(max-width: 60rem) 92vw, 56rem">
+                        <img src="/public/images/assets/primes/prime-operator-table-making-stuff-fun-display.webp" srcset="/public/images/assets/primes/prime-operator-table-making-stuff-fun-display.webp 296w, /public/images/assets/primes/prime-operator-table-making-stuff-fun-hero.webp 591w" sizes="(max-width: 60rem) 92vw, 56rem" width="591" height="1024" alt="Cutouts on a clear sheet: the Lore.land operator table numbers thirteen sigils from ~ Potential to ^ Integration, lettered A to M; the play-with-your-logo cutout; and a list: making stuff is fun, learning can be engaging, work is a physics concept, roles are not jobs." loading="lazy" decoding="async">
+                    </picture>
+                    <figcaption>
+                        <strong><span class="primes-no">No. 02</span> Operator table; making stuff is fun</strong>
+                        <span>Stays from No. 01: logo play, operator table, kraft key.</span>
+                        <span class="primes-seed"><span class="primes-seed__label">~imagine</span> the operator table's rows light from ~ Potential down to ^ Integration</span>
+                    </figcaption>
+                </figure>
+                <figure class="primes-frame" id="primes-frame-03">
+                    <picture>
+                        <source type="image/avif" srcset="/public/images/assets/primes/prime-eighty-laminated-collages-display.avif 512w, /public/images/assets/primes/prime-eighty-laminated-collages-hero.avif 1024w" sizes="(max-width: 60rem) 92vw, 56rem">
+                        <img src="/public/images/assets/primes/prime-eighty-laminated-collages-display.webp" srcset="/public/images/assets/primes/prime-eighty-laminated-collages-display.webp 512w, /public/images/assets/primes/prime-eighty-laminated-collages-hero.webp 1024w" sizes="(max-width: 60rem) 92vw, 56rem" width="1024" height="682" alt="Cutouts on a clear sheet: a plan card reads 4 daily videos and 80 laminated collages: curate, laminate, paint 3 layers; beside it the operator table, making stuff is fun, SPWASHI in bubble letters, the kraft key, and the top of Production for Lore.Land." loading="lazy" decoding="async">
+                    </picture>
+                    <figcaption>
+                        <strong><span class="primes-no">No. 03</span> 4 daily videos, 80 laminated collages</strong>
+                        <span>Stays from No. 02: operator table, making stuff, kraft key.</span>
+                        <span class="primes-seed"><span class="primes-seed__label">~imagine</span> curate, laminate, paint: the plan card's three steps settle like layers</span>
+                    </figcaption>
+                </figure>
+                <figure class="primes-frame" id="primes-frame-04">
+                    <picture>
+                        <source type="image/avif" srcset="/public/images/assets/primes/prime-thirteen-beats-silver-glyphs-display.avif 370w, /public/images/assets/primes/prime-thirteen-beats-silver-glyphs-hero.avif 740w" sizes="(max-width: 60rem) 92vw, 56rem">
+                        <img src="/public/images/assets/primes/prime-thirteen-beats-silver-glyphs-display.webp" srcset="/public/images/assets/primes/prime-thirteen-beats-silver-glyphs-display.webp 370w, /public/images/assets/primes/prime-thirteen-beats-silver-glyphs-hero.webp 740w" sizes="(max-width: 60rem) 92vw, 56rem" width="740" height="1024" alt="Cutouts on a clear sheet over the dark scanner lid: the operator table; my ex got hotter, X.com, I thought it would be obvious, trailing into SPWASHI bubble letters; the kraft key; silver glyphs on black paper; and Production for Lore.Land: each arc has up to 13 beats." loading="lazy" decoding="async">
+                    </picture>
+                    <figcaption>
+                        <strong><span class="primes-no">No. 04</span> Each arc has up to 13 beats</strong>
+                        <span>Stays from No. 03: operator table, spwashi bubble, production card, kraft key. Keeps the lid: a black-paper cutout here reads as the lid.</span>
+                        <span class="primes-seed"><span class="primes-seed__label">~imagine</span> thirteen beats tick along Production's bar while the silver glyphs shimmer</span>
+                    </figcaption>
+                </figure>
+                <figure class="primes-frame" id="primes-frame-05">
+                    <picture>
+                        <source type="image/avif" srcset="/public/images/assets/primes/prime-first-plan-now-plan-with-display.avif 338w, /public/images/assets/primes/prime-first-plan-now-plan-with-hero.avif 677w" sizes="(max-width: 60rem) 92vw, 56rem">
+                        <img src="/public/images/assets/primes/prime-first-plan-now-plan-with-display.webp" srcset="/public/images/assets/primes/prime-first-plan-now-plan-with-display.webp 338w, /public/images/assets/primes/prime-first-plan-now-plan-with-hero.webp 677w" sizes="(max-width: 60rem) 92vw, 56rem" width="677" height="1024" alt="Cutouts on a clear sheet over the dark scanner lid: first my plan was to be an Electrical Engineer…, now plan with Claude, GPT, Grok, Gemini; the operator table; the kraft key; silver glyphs on black paper; Production for Lore.Land; and the Lore.Land sign." loading="lazy" decoding="async">
+                    </picture>
+                    <figcaption>
+                        <strong><span class="primes-no">No. 05</span> First my plan; now plan with</strong>
+                        <span>Stays from No. 04: operator table, kraft key, silver glyphs, production card. Keeps the lid: a black-paper cutout here reads as the lid.</span>
+                        <span class="primes-seed"><span class="primes-seed__label">~imagine</span> first my plan fades back as now plan with brings Claude, GPT, Grok, and Gemini forward one by one</span>
+                    </figcaption>
+                </figure>
+                <figure class="primes-frame" id="primes-frame-06">
+                    <picture>
+                        <source type="image/avif" srcset="/public/images/assets/primes/prime-new-friends-old-friends-lore-land-display.avif 512w, /public/images/assets/primes/prime-new-friends-old-friends-lore-land-hero.avif 1024w" sizes="(max-width: 60rem) 92vw, 56rem">
+                        <img src="/public/images/assets/primes/prime-new-friends-old-friends-lore-land-display.webp" srcset="/public/images/assets/primes/prime-new-friends-old-friends-lore-land-display.webp 512w, /public/images/assets/primes/prime-new-friends-old-friends-lore-land-hero.webp 1024w" sizes="(max-width: 60rem) 92vw, 56rem" width="1024" height="685" alt="Cutouts on a clear sheet: speech bubbles run off the left edge: impacted me, talk about it?, what makes new friends feel scared, old friends feel helpless, catch up, you're supposed to be good at this, never mind, goodbye; the kraft key stands upright beside first my plan, now plan with, and the Lore.Land sign." loading="lazy" decoding="async">
+                    </picture>
+                    <figcaption>
+                        <strong><span class="primes-no">No. 06</span> New friends, old friends, Lore.Land</strong>
+                        <span>Stays from No. 05: first plan, kraft key, lore land sign.</span>
+                        <span class="primes-seed"><span class="primes-seed__label">~imagine</span> the speech bubbles arrive one at a time, then goodbye drifts off the edge</span>
+                    </figcaption>
+                </figure>
+                <figure class="primes-frame" id="primes-frame-07">
+                    <picture>
+                        <source type="image/avif" srcset="/public/images/assets/primes/prime-radar-introspective-professional-display.avif 364w, /public/images/assets/primes/prime-radar-introspective-professional-hero.avif 727w" sizes="(max-width: 60rem) 92vw, 56rem">
+                        <img src="/public/images/assets/primes/prime-radar-introspective-professional-display.webp" srcset="/public/images/assets/primes/prime-radar-introspective-professional-display.webp 364w, /public/images/assets/primes/prime-radar-introspective-professional-hero.webp 727w" sizes="(max-width: 60rem) 92vw, 56rem" width="727" height="1024" alt="Cutouts on a clear sheet, most lettered upside down: Radar lists How I Met Your Mother, Avengers, Thirty Rock, The Walking Dead, Big Bang Theory; Introspective: nah, I mean it is still a lot to process; Professional: books, restaurants, actors, TikTok; and I attended the University of Illinois at Urbana-Champaign and majored in Learning and Education Studies; with the Lore.Land sign and the kraft key." loading="lazy" decoding="async">
+                    </picture>
+                    <figcaption>
+                        <strong><span class="primes-no">No. 07</span> Radar, Introspective, Professional</strong>
+                        <span>Stays from No. 06: kraft key, lore land sign. The cards read upside down; the Lore.Land sign reads sideways.</span>
+                        <span class="primes-seed"><span class="primes-seed__label">~imagine</span> the upside-down cards turn right way up one at a time</span>
+                    </figcaption>
+                </figure>
+                <figure class="primes-frame" id="primes-frame-08">
+                    <picture>
+                        <source type="image/avif" srcset="/public/images/assets/primes/prime-code-journey-2011-2015-display.avif 353w, /public/images/assets/primes/prime-code-journey-2011-2015-hero.avif 707w" sizes="(max-width: 60rem) 92vw, 56rem">
+                        <img src="/public/images/assets/primes/prime-code-journey-2011-2015-display.webp" srcset="/public/images/assets/primes/prime-code-journey-2011-2015-display.webp 353w, /public/images/assets/primes/prime-code-journey-2011-2015-hero.webp 707w" sizes="(max-width: 60rem) 92vw, 56rem" width="707" height="1024" alt="Cutouts on a clear sheet: my code beginner's journey steps from 2011 HTML structure through CSS presentation, jQuery behavior, and PHP and MySQL domain modeling to Laravel, CakePHP, Zend, and Symfony, an architecture journey by 2015; moving on, but I'm native so it's evolution; A to B illustration, I study algorithms, Spwashi; the Lore.Land sign; the kraft key." loading="lazy" decoding="async">
+                    </picture>
+                    <figcaption>
+                        <strong><span class="primes-no">No. 08</span> My code beginner's journey, 2011 to 2015</strong>
+                        <span>Stays from No. 07: lore land sign, kraft key.</span>
+                        <span class="primes-seed"><span class="primes-seed__label">~imagine</span> the code journey climbs from 2011 to 2015, one framework box at a time</span>
+                    </figcaption>
+                </figure>
+                <figure class="primes-frame" id="primes-frame-09">
+                    <picture>
+                        <source type="image/avif" srcset="/public/images/assets/primes/prime-moving-on-native-evolution-display.avif 389w, /public/images/assets/primes/prime-moving-on-native-evolution-hero.avif 777w" sizes="(max-width: 60rem) 92vw, 56rem">
+                        <img src="/public/images/assets/primes/prime-moving-on-native-evolution-display.webp" srcset="/public/images/assets/primes/prime-moving-on-native-evolution-display.webp 389w, /public/images/assets/primes/prime-moving-on-native-evolution-hero.webp 777w" sizes="(max-width: 60rem) 92vw, 56rem" width="777" height="1024" alt="Cutouts on a clear sheet: A to B illustration, I study algorithms, Spwashi; moving on, but I'm native so it's evolution; two upside-down bubbles, catch up … goodbye and dang that impacted me, can I talk about it? oops no; the Lore.Land sign; TikTok for product engineering: creators, series, media enthusiasts, produce compelling media." loading="lazy" decoding="async">
+                    </picture>
+                    <figcaption>
+                        <strong><span class="primes-no">No. 09</span> Moving on, but I'm native</strong>
+                        <span>Stays from No. 08: a to b, moving on, kraft key, lore land sign.</span>
+                        <span class="primes-seed"><span class="primes-seed__label">~imagine</span> moving on slides past while the evolution scroll unrolls</span>
+                    </figcaption>
+                </figure>
+                <figure class="primes-frame" id="primes-frame-10">
+                    <picture>
+                        <source type="image/avif" srcset="/public/images/assets/primes/prime-artist-software-engineer-languages-display.avif 299w, /public/images/assets/primes/prime-artist-software-engineer-languages-hero.avif 598w" sizes="(max-width: 60rem) 92vw, 56rem">
+                        <img src="/public/images/assets/primes/prime-artist-software-engineer-languages-display.webp" srcset="/public/images/assets/primes/prime-artist-software-engineer-languages-display.webp 299w, /public/images/assets/primes/prime-artist-software-engineer-languages-hero.webp 598w" sizes="(max-width: 60rem) 92vw, 56rem" width="598" height="1024" alt="Cutouts on a clear sheet: Spwashi, Artist, Software Engineer, fifteen/sixteen years of dev motion, pairing structured language with HTML, architecture with PHP, algorithms with Python, language design with TypeScript, organizational dynamics with Rust; A to B illustration; TikTok for product engineering; the code journey." loading="lazy" decoding="async">
+                    </picture>
+                    <figcaption>
+                        <strong><span class="primes-no">No. 10</span> Spwashi, artist, software engineer</strong>
+                        <span>Stays from No. 09: kraft key, a to b, tiktok card.</span>
+                        <span class="primes-seed"><span class="primes-seed__label">~imagine</span> each skill meets its language, from structured language and HTML down to organizational dynamics and Rust</span>
+                    </figcaption>
+                </figure>
+                <figure class="primes-frame" id="primes-frame-11">
+                    <picture>
+                        <source type="image/avif" srcset="/public/images/assets/primes/prime-jquery-bootstrap-react-typescript-display.avif 512w, /public/images/assets/primes/prime-jquery-bootstrap-react-typescript-hero.avif 1024w" sizes="(max-width: 60rem) 92vw, 56rem">
+                        <img src="/public/images/assets/primes/prime-jquery-bootstrap-react-typescript-display.webp" srcset="/public/images/assets/primes/prime-jquery-bootstrap-react-typescript-display.webp 512w, /public/images/assets/primes/prime-jquery-bootstrap-react-typescript-hero.webp 1024w" sizes="(max-width: 60rem) 92vw, 56rem" width="1024" height="821" alt="Cutouts on a clear sheet: TikTok for product engineering; the kraft key; 1. Practice, 2. Operationalize, 3. Boon HONK; jQuery 2012, Bootstrap 2013, React 2017, then implement TypeScript; and a list: talk through paintings, draw and doodle web components, upcycle old content." loading="lazy" decoding="async">
+                    </picture>
+                    <figcaption>
+                        <strong><span class="primes-no">No. 11</span> jQuery 2012, Bootstrap 2013, React 2017, TypeScript</strong>
+                        <span>Stays from No. 10: kraft key, tiktok card.</span>
+                        <span class="primes-seed"><span class="primes-seed__label">~imagine</span> 2012, 2013, and 2017 stack up and the TypeScript cutout rises from them</span>
+                    </figcaption>
+                </figure>
+                <figure class="primes-frame" id="primes-frame-12">
+                    <picture>
+                        <source type="image/avif" srcset="/public/images/assets/primes/prime-cant-not-say-the-thing-display.avif 435w, /public/images/assets/primes/prime-cant-not-say-the-thing-hero.avif 871w" sizes="(max-width: 60rem) 92vw, 56rem">
+                        <img src="/public/images/assets/primes/prime-cant-not-say-the-thing-display.webp" srcset="/public/images/assets/primes/prime-cant-not-say-the-thing-display.webp 435w, /public/images/assets/primes/prime-cant-not-say-the-thing-hero.webp 871w" sizes="(max-width: 60rem) 92vw, 56rem" width="871" height="1024" alt="Cutouts on a clear sheet: ah sh-t, I literally can't NOT say the thing, oh neat, THIS; a strip of sigils # ( @ [ &amp; ] ) .; components as markup and worldbuilding via interaction; INTRO, where we are NOW; Practice, Operationalize, Boon HONK upside down; augment: challenging problems, great team; talk through paintings; the kraft key." loading="lazy" decoding="async">
+                    </picture>
+                    <figcaption>
+                        <strong><span class="primes-no">No. 12</span> I literally can't NOT say the thing</strong>
+                        <span>Stays from No. 11: kraft key, practice list, augment card, paintings list.</span>
+                        <span class="primes-seed"><span class="primes-seed__label">~imagine</span> THIS pops, and the sigil strip lights one sigil at a time</span>
+                    </figcaption>
+                </figure>
+                <figure class="primes-frame" id="primes-frame-13">
+                    <picture>
+                        <source type="image/avif" srcset="/public/images/assets/primes/prime-do-something-every-day-display.avif 343w, /public/images/assets/primes/prime-do-something-every-day-hero.avif 687w" sizes="(max-width: 60rem) 92vw, 56rem">
+                        <img src="/public/images/assets/primes/prime-do-something-every-day-display.webp" srcset="/public/images/assets/primes/prime-do-something-every-day-display.webp 343w, /public/images/assets/primes/prime-do-something-every-day-hero.webp 687w" sizes="(max-width: 60rem) 92vw, 56rem" width="687" height="1024" alt="Cutouts on a clear sheet: the kraft key; I literally can't NOT say the thing; GenreHopper (romance, action, fantasy, mystery, drama via web linking, disposition set in query params) and a Healing Journey list, both upside down; do something every day, post about it sometimes, spwashi.com; Practice, Operationalize, Boon HONK; the edge of the crush chart." loading="lazy" decoding="async">
+                    </picture>
+                    <figcaption>
+                        <strong><span class="primes-no">No. 13</span> Do something every day</strong>
+                        <span>Stays from No. 12: cant not say, genre hopper, practice list, kraft key.</span>
+                        <span class="primes-seed"><span class="primes-seed__label">~imagine</span> do something every day: the cutout turns over like a daily calendar page</span>
+                    </figcaption>
+                </figure>
+                <figure class="primes-frame" id="primes-frame-14">
+                    <picture>
+                        <source type="image/avif" srcset="/public/images/assets/primes/prime-intergenerational-media-literacy-display.avif 341w, /public/images/assets/primes/prime-intergenerational-media-literacy-hero.avif 681w" sizes="(max-width: 60rem) 92vw, 56rem">
+                        <img src="/public/images/assets/primes/prime-intergenerational-media-literacy-display.webp" srcset="/public/images/assets/primes/prime-intergenerational-media-literacy-display.webp 341w, /public/images/assets/primes/prime-intergenerational-media-literacy-hero.webp 681w" sizes="(max-width: 60rem) 92vw, 56rem" width="681" height="1024" alt="Cutouts on a clear sheet: Intergenerational Media Literacy: skill acquisition, motivation maintenance, development coordination; pick a lens, highlights relevant topics and features; do something every day; a chart from crush to soul mate to post-nut clarity; GenreHopper; Healing Journey: professional listener, practice, pragmatics specialists, community, TikTok; the kraft key." loading="lazy" decoding="async">
+                    </picture>
+                    <figcaption>
+                        <strong><span class="primes-no">No. 14</span> Intergenerational media literacy</strong>
+                        <span>Stays from No. 13: kraft key, genre hopper, healing journey, every day, practice list, crush chart.</span>
+                        <span class="primes-seed"><span class="primes-seed__label">~imagine</span> the lens picker's sigils light, and each highlights part of the table around it</span>
+                    </figcaption>
+                </figure>
+                <figure class="primes-frame" id="primes-frame-15">
+                    <picture>
+                        <source type="image/avif" srcset="/public/images/assets/primes/prime-travel-avoidant-playbook-faces-display.avif 359w, /public/images/assets/primes/prime-travel-avoidant-playbook-faces-hero.avif 717w" sizes="(max-width: 60rem) 92vw, 56rem">
+                        <img src="/public/images/assets/primes/prime-travel-avoidant-playbook-faces-display.webp" srcset="/public/images/assets/primes/prime-travel-avoidant-playbook-faces-display.webp 359w, /public/images/assets/primes/prime-travel-avoidant-playbook-faces-hero.webp 717w" sizes="(max-width: 60rem) 92vw, 56rem" width="717" height="1024" alt="Cutouts on a clear sheet: line-drawn figures with spiral eyes and full lips; pick a lens; The Avoidant Attachment Playbook with a Boon speech bubble; Travel lettered upside down; Practice, Operationalize, Boon HONK; Intergenerational Media Literacy; the crush chart; the kraft key." loading="lazy" decoding="async">
+                    </picture>
+                    <figcaption>
+                        <strong><span class="primes-no">No. 15</span> Travel; the avoidant attachment playbook</strong>
+                        <span>Stays from No. 14: media literacy, pick a lens, crush chart, practice list, kraft key. Travel and the playbook read upside down.</span>
+                        <span class="primes-seed"><span class="primes-seed__label">~imagine</span> Travel turns right way up while the line-drawn faces blink their spiral eyes</span>
+                    </figcaption>
+                </figure>
+                <figure class="primes-frame" id="primes-frame-16">
+                    <picture>
+                        <source type="image/avif" srcset="/public/images/assets/primes/prime-episode-card-blurting-boonhonk-display.avif 363w, /public/images/assets/primes/prime-episode-card-blurting-boonhonk-hero.avif 727w" sizes="(max-width: 60rem) 92vw, 56rem">
+                        <img src="/public/images/assets/primes/prime-episode-card-blurting-boonhonk-display.webp" srcset="/public/images/assets/primes/prime-episode-card-blurting-boonhonk-display.webp 363w, /public/images/assets/primes/prime-episode-card-blurting-boonhonk-hero.webp 727w" sizes="(max-width: 60rem) 92vw, 56rem" width="727" height="1024" alt="Cutouts on a clear sheet: Travel and The Avoidant Attachment Playbook; an Episode Card: obvious, no Boon HONK, blurt, your fidelious!; Blurting Boon HONK show; the crush chart; pick a lens; the line-drawn figures; the kraft key." loading="lazy" decoding="async">
+                    </picture>
+                    <figcaption>
+                        <strong><span class="primes-no">No. 16</span> Episode card; Blurting Boon HONK</strong>
+                        <span>Stays from No. 15: kraft key, line faces, pick a lens, avoidant travel, crush chart. Most cutouts read sideways or upside down.</span>
+                        <span class="primes-seed"><span class="primes-seed__label">~imagine</span> Blurting Boon HONK: the speech bubbles blurt in turn</span>
+                    </figcaption>
+                </figure>
+                <figure class="primes-frame" id="primes-frame-17">
+                    <picture>
+                        <source type="image/avif" srcset="/public/images/assets/primes/prime-boon-pi-bane-bone-board-display.avif 372w, /public/images/assets/primes/prime-boon-pi-bane-bone-board-hero.avif 743w" sizes="(max-width: 60rem) 92vw, 56rem">
+                        <img src="/public/images/assets/primes/prime-boon-pi-bane-bone-board-display.webp" srcset="/public/images/assets/primes/prime-boon-pi-bane-bone-board-display.webp 372w, /public/images/assets/primes/prime-boon-pi-bane-bone-board-hero.webp 743w" sizes="(max-width: 60rem) 92vw, 56rem" width="743" height="1024" alt="A painted board in red and plum holds a collage under laminate: Boon HONK, boon BANE bone, Boon PI in bubbles, chains of hash marks over bane, bone, onk, honk, and a hatched drawing crowded with spirals and bones; beside it on the clear sheet, the kraft key and pick a lens." loading="lazy" decoding="async">
+                    </picture>
+                    <figcaption>
+                        <strong><span class="primes-no">No. 17</span> Boon PI, bane, bone</strong>
+                        <span>Stays from No. 16: pick a lens, kraft key.</span>
+                        <span class="primes-seed"><span class="primes-seed__label">~imagine</span> boon, bane, bone, and honk bubbles pop along the hash-mark chains</span>
+                    </figcaption>
+                </figure>
+                <figure class="primes-frame" id="primes-frame-18">
+                    <picture>
+                        <source type="image/avif" srcset="/public/images/assets/primes/prime-like-i-am-wapboy-display.avif 367w, /public/images/assets/primes/prime-like-i-am-wapboy-hero.avif 735w" sizes="(max-width: 60rem) 92vw, 56rem">
+                        <img src="/public/images/assets/primes/prime-like-i-am-wapboy-display.webp" srcset="/public/images/assets/primes/prime-like-i-am-wapboy-display.webp 367w, /public/images/assets/primes/prime-like-i-am-wapboy-hero.webp 735w" sizes="(max-width: 60rem) 92vw, 56rem" width="735" height="1024" alt="A painted board with taped collage: a striped {bone} in pastel segments, a glyph sequence of spirals and hashes stepping right in green frames, LIKE I AM WAPBOY in white on black, and chapters 10 through 13; beside it on the clear sheet, the kraft key and pick a lens." loading="lazy" decoding="async">
+                    </picture>
+                    <figcaption>
+                        <strong><span class="primes-no">No. 18</span> Like I am WAPBOY</strong>
+                        <span>Stays from No. 17: kraft key, pick a lens.</span>
+                        <span class="primes-seed"><span class="primes-seed__label">~imagine</span> the glyph sequence steps right across the green frames toward chapter 13</span>
+                    </figcaption>
+                </figure>
+                <figure class="primes-frame" id="primes-frame-19">
+                    <picture>
+                        <source type="image/avif" srcset="/public/images/assets/primes/prime-pick-a-lens-kraft-display.avif 512w, /public/images/assets/primes/prime-pick-a-lens-kraft-hero.avif 1024w" sizes="(max-width: 60rem) 92vw, 56rem">
+                        <img src="/public/images/assets/primes/prime-pick-a-lens-kraft-display.webp" srcset="/public/images/assets/primes/prime-pick-a-lens-kraft-display.webp 512w, /public/images/assets/primes/prime-pick-a-lens-kraft-hero.webp 1024w" sizes="(max-width: 60rem) 92vw, 56rem" width="1024" height="398" alt="Two cutouts on a clear sheet: the kraft key, a brown paper shape outlined in ink, and pick a lens, a sketch of a page whose lens highlights relevant topics and features, with a lens picker of sigils." loading="lazy" decoding="async">
+                    </picture>
+                    <figcaption>
+                        <strong><span class="primes-no">No. 19</span> Pick a lens, kraft key</strong>
+                        <span>Stays from No. 18: kraft key, pick a lens.</span>
+                        <span class="primes-seed"><span class="primes-seed__label">~imagine</span> the lens swings across the sketch and the highlighted rows brighten</span>
+                    </figcaption>
+                </figure>
+                <figure class="primes-frame" id="primes-frame-20">
+                    <picture>
+                        <source type="image/avif" srcset="/public/images/assets/primes/prime-pick-a-pinball-clown-downtown-display.avif 512w, /public/images/assets/primes/prime-pick-a-pinball-clown-downtown-hero.avif 1024w" sizes="(max-width: 60rem) 92vw, 56rem">
+                        <img src="/public/images/assets/primes/prime-pick-a-pinball-clown-downtown-display.webp" srcset="/public/images/assets/primes/prime-pick-a-pinball-clown-downtown-display.webp 512w, /public/images/assets/primes/prime-pick-a-pinball-clown-downtown-hero.webp 1024w" sizes="(max-width: 60rem) 92vw, 56rem" width="1024" height="884" alt="A painted board with collage: 1 pick a pinball, 2 select your charms, 3 design the flow; design, usability, creativity, content; a blue square and a gold square lettered boon; a figure in a crystal; and a story strip: when a clown receives a pie to the face, WAP, the boonhonk goes to clown downtown; WAP boy is a mime; it is not appropriate to honk &amp; am. The kraft key waits on the clear sheet beside it." loading="lazy" decoding="async">
+                    </picture>
+                    <figcaption>
+                        <strong><span class="primes-no">No. 20</span> Pick a pinball; clown downtown</strong>
+                        <span>Stays from No. 19: kraft key.</span>
+                        <span class="primes-seed"><span class="primes-seed__label">~imagine</span> a pinball runs the flow: pick, select charms, design; the pie lands, WAP</span>
+                    </figcaption>
+                </figure>
+                <figure class="primes-frame" id="primes-frame-21">
+                    <picture>
+                        <source type="image/avif" srcset="/public/images/assets/primes/prime-april-thirty-hearts-display.avif 404w, /public/images/assets/primes/prime-april-thirty-hearts-hero.avif 808w" sizes="(max-width: 60rem) 92vw, 56rem">
+                        <img src="/public/images/assets/primes/prime-april-thirty-hearts-display.webp" srcset="/public/images/assets/primes/prime-april-thirty-hearts-display.webp 404w, /public/images/assets/primes/prime-april-thirty-hearts-hero.webp 808w" sizes="(max-width: 60rem) 92vw, 56rem" width="808" height="1024" alt="A board painted black inside a red frame: April 01 through April 30 in white, each day with a heart and a hash mark, grouped in fives beside six boxes that each hold a spiral." loading="lazy" decoding="async">
+                    </picture>
+                    <figcaption>
+                        <strong><span class="primes-no">No. 21</span> April, thirty hearts</strong>
+                        <span>Shares no cutout with the frame before it. Keeps the lid: a black-paper cutout here reads as the lid.</span>
+                        <span class="primes-seed"><span class="primes-seed__label">~imagine</span> April's hearts fill one a day</span>
+                    </figcaption>
+                </figure>
+                <figure class="primes-frame" id="primes-frame-22">
+                    <picture>
+                        <source type="image/avif" srcset="/public/images/assets/primes/prime-read-some-vocab-calculus-display.avif 512w, /public/images/assets/primes/prime-read-some-vocab-calculus-hero.avif 1024w" sizes="(max-width: 60rem) 92vw, 56rem">
+                        <img src="/public/images/assets/primes/prime-read-some-vocab-calculus-display.webp" srcset="/public/images/assets/primes/prime-read-some-vocab-calculus-display.webp 512w, /public/images/assets/primes/prime-read-some-vocab-calculus-hero.webp 1024w" sizes="(max-width: 60rem) 92vw, 56rem" width="1024" height="720" alt="Cutout on a clear sheet, lettered sideways: Read SOME: #vocab, #calculus, #org strategy, #web design, #chemistry, signed SPWASHI." loading="lazy" decoding="async">
+                    </picture>
+                    <figcaption>
+                        <strong><span class="primes-no">No. 22</span> Read some</strong>
+                        <span>Shares no cutout with the frame before it. Lettering runs sideways.</span>
+                        <span class="primes-seed"><span class="primes-seed__label">~imagine</span> the hashtags lift off the list one at a time</span>
+                    </figcaption>
+                </figure>
+                <figure class="primes-frame" id="primes-frame-23">
+                    <picture>
+                        <source type="image/avif" srcset="/public/images/assets/primes/prime-read-some-square-face-display.avif 512w, /public/images/assets/primes/prime-read-some-square-face-hero.avif 1024w" sizes="(max-width: 60rem) 92vw, 56rem">
+                        <img src="/public/images/assets/primes/prime-read-some-square-face-display.webp" srcset="/public/images/assets/primes/prime-read-some-square-face-display.webp 512w, /public/images/assets/primes/prime-read-some-square-face-hero.webp 1024w" sizes="(max-width: 60rem) 92vw, 56rem" width="1024" height="997" alt="Cutouts on a clear sheet: Read SOME tilted across the top, and a small framed square below with a looped cloud over a face of two hash-mark eyes and a B." loading="lazy" decoding="async">
+                    </picture>
+                    <figcaption>
+                        <strong><span class="primes-no">No. 23</span> Read some, square face</strong>
+                        <span>Stays from No. 22: read some.</span>
+                        <span class="primes-seed"><span class="primes-seed__label">~imagine</span> the square face's cloud loops once</span>
+                    </figcaption>
+                </figure>
+                <figure class="primes-frame" id="primes-frame-24">
+                    <picture>
+                        <source type="image/avif" srcset="/public/images/assets/primes/prime-read-some-teal-squares-display.avif 394w, /public/images/assets/primes/prime-read-some-teal-squares-hero.avif 788w" sizes="(max-width: 60rem) 92vw, 56rem">
+                        <img src="/public/images/assets/primes/prime-read-some-teal-squares-display.webp" srcset="/public/images/assets/primes/prime-read-some-teal-squares-display.webp 394w, /public/images/assets/primes/prime-read-some-teal-squares-hero.webp 788w" sizes="(max-width: 60rem) 92vw, 56rem" width="788" height="1024" alt="Cutouts on a clear sheet: Read SOME, signed SPWASHI; the kraft key; the teal spiral blot square; and a square of pale teal wash rising like a skyline." loading="lazy" decoding="async">
+                    </picture>
+                    <figcaption>
+                        <strong><span class="primes-no">No. 24</span> Read some, teal squares</strong>
+                        <span>Stays from No. 23: read some.</span>
+                        <span class="primes-seed"><span class="primes-seed__label">~imagine</span> the teal wash rises like a skyline behind the spiral</span>
+                    </figcaption>
+                </figure>
+                </div>
+                <fieldset class="primes-strip">
+                    <legend>Frame</legend>
+                <label class="cut-rpg-wednesday cut-wireframes is-break" title="No. 00 Today is RPG Wednesday; factshift wireframes">
+                    <input type="radio" name="prime-frame" id="pf-00" checked>
+                    <img src="/public/images/assets/primes/prime-rpg-wednesday-factshift-wireframes-thumb.webp" width="256" height="147" alt="" loading="lazy" decoding="async">
+                    <span>00<span class="primes-sr"> Today is RPG Wednesday; factshift wireframes</span></span>
+                </label>
+                <label class="cut-three-years cut-logo-play cut-operator-table cut-kraft-key is-break" title="No. 01 Year 1, Year 2, Year 3; play with your logo">
+                    <input type="radio" name="prime-frame" id="pf-01">
+                    <img src="/public/images/assets/primes/prime-year-one-two-three-logo-play-thumb.webp" width="160" height="256" alt="" loading="lazy" decoding="async">
+                    <span>01<span class="primes-sr"> Year 1, Year 2, Year 3; play with your logo</span></span>
+                </label>
+                <label class="cut-operator-table cut-logo-play cut-making-stuff cut-kraft-key" title="No. 02 Operator table; making stuff is fun">
+                    <input type="radio" name="prime-frame" id="pf-02">
+                    <img src="/public/images/assets/primes/prime-operator-table-making-stuff-fun-thumb.webp" width="148" height="256" alt="" loading="lazy" decoding="async">
+                    <span>02<span class="primes-sr"> Operator table; making stuff is fun</span></span>
+                </label>
+                <label class="cut-eighty-collages cut-operator-table cut-making-stuff cut-spwashi-bubble cut-production-card cut-kraft-key" title="No. 03 4 daily videos, 80 laminated collages">
+                    <input type="radio" name="prime-frame" id="pf-03">
+                    <img src="/public/images/assets/primes/prime-eighty-laminated-collages-thumb.webp" width="256" height="170" alt="" loading="lazy" decoding="async">
+                    <span>03<span class="primes-sr"> 4 daily videos, 80 laminated collages</span></span>
+                </label>
+                <label class="cut-operator-table cut-spwashi-bubble cut-kraft-key cut-silver-glyphs cut-production-card" title="No. 04 Each arc has up to 13 beats">
+                    <input type="radio" name="prime-frame" id="pf-04">
+                    <img src="/public/images/assets/primes/prime-thirteen-beats-silver-glyphs-thumb.webp" width="185" height="256" alt="" loading="lazy" decoding="async">
+                    <span>04<span class="primes-sr"> Each arc has up to 13 beats</span></span>
+                </label>
+                <label class="cut-first-plan cut-operator-table cut-kraft-key cut-silver-glyphs cut-production-card cut-lore-land-sign" title="No. 05 First my plan; now plan with">
+                    <input type="radio" name="prime-frame" id="pf-05">
+                    <img src="/public/images/assets/primes/prime-first-plan-now-plan-with-thumb.webp" width="169" height="256" alt="" loading="lazy" decoding="async">
+                    <span>05<span class="primes-sr"> First my plan; now plan with</span></span>
+                </label>
+                <label class="cut-new-friends-bubbles cut-kraft-key cut-first-plan cut-lore-land-sign" title="No. 06 New friends, old friends, Lore.Land">
+                    <input type="radio" name="prime-frame" id="pf-06">
+                    <img src="/public/images/assets/primes/prime-new-friends-old-friends-lore-land-thumb.webp" width="256" height="171" alt="" loading="lazy" decoding="async">
+                    <span>06<span class="primes-sr"> New friends, old friends, Lore.Land</span></span>
+                </label>
+                <label class="cut-lore-land-sign cut-radar-cards cut-kraft-key cut-illinois-note" title="No. 07 Radar, Introspective, Professional">
+                    <input type="radio" name="prime-frame" id="pf-07">
+                    <img src="/public/images/assets/primes/prime-radar-introspective-professional-thumb.webp" width="182" height="256" alt="" loading="lazy" decoding="async">
+                    <span>07<span class="primes-sr"> Radar, Introspective, Professional</span></span>
+                </label>
+                <label class="cut-a-to-b cut-moving-on cut-kraft-key cut-code-journey cut-lore-land-sign" title="No. 08 My code beginner's journey, 2011 to 2015">
+                    <input type="radio" name="prime-frame" id="pf-08">
+                    <img src="/public/images/assets/primes/prime-code-journey-2011-2015-thumb.webp" width="177" height="256" alt="" loading="lazy" decoding="async">
+                    <span>08<span class="primes-sr"> My code beginner's journey, 2011 to 2015</span></span>
+                </label>
+                <label class="cut-kraft-key cut-a-to-b cut-moving-on cut-new-friends-bubbles cut-lore-land-sign cut-tiktok-card" title="No. 09 Moving on, but I'm native">
+                    <input type="radio" name="prime-frame" id="pf-09">
+                    <img src="/public/images/assets/primes/prime-moving-on-native-evolution-thumb.webp" width="194" height="256" alt="" loading="lazy" decoding="async">
+                    <span>09<span class="primes-sr"> Moving on, but I'm native</span></span>
+                </label>
+                <label class="cut-kraft-key cut-a-to-b cut-tiktok-card cut-code-journey cut-artist-card" title="No. 10 Spwashi, artist, software engineer">
+                    <input type="radio" name="prime-frame" id="pf-10">
+                    <img src="/public/images/assets/primes/prime-artist-software-engineer-languages-thumb.webp" width="149" height="256" alt="" loading="lazy" decoding="async">
+                    <span>10<span class="primes-sr"> Spwashi, artist, software engineer</span></span>
+                </label>
+                <label class="cut-tiktok-card cut-kraft-key cut-practice-list cut-years-to-typescript cut-augment-card cut-paintings-list" title="No. 11 jQuery 2012, Bootstrap 2013, React 2017, TypeScript">
+                    <input type="radio" name="prime-frame" id="pf-11">
+                    <img src="/public/images/assets/primes/prime-jquery-bootstrap-react-typescript-thumb.webp" width="256" height="205" alt="" loading="lazy" decoding="async">
+                    <span>11<span class="primes-sr"> jQuery 2012, Bootstrap 2013, React 2017, TypeScript</span></span>
+                </label>
+                <label class="cut-cant-not-say cut-genre-hopper cut-sigil-strip cut-intro-now cut-practice-list cut-augment-card cut-paintings-list cut-kraft-key" title="No. 12 I literally can't NOT say the thing">
+                    <input type="radio" name="prime-frame" id="pf-12">
+                    <img src="/public/images/assets/primes/prime-cant-not-say-the-thing-thumb.webp" width="218" height="256" alt="" loading="lazy" decoding="async">
+                    <span>12<span class="primes-sr"> I literally can't NOT say the thing</span></span>
+                </label>
+                <label class="cut-kraft-key cut-cant-not-say cut-genre-hopper cut-healing-journey cut-every-day cut-practice-list cut-crush-chart" title="No. 13 Do something every day">
+                    <input type="radio" name="prime-frame" id="pf-13">
+                    <img src="/public/images/assets/primes/prime-do-something-every-day-thumb.webp" width="172" height="256" alt="" loading="lazy" decoding="async">
+                    <span>13<span class="primes-sr"> Do something every day</span></span>
+                </label>
+                <label class="cut-media-literacy cut-pick-a-lens cut-every-day cut-crush-chart cut-practice-list cut-genre-hopper cut-healing-journey cut-kraft-key" title="No. 14 Intergenerational media literacy">
+                    <input type="radio" name="prime-frame" id="pf-14">
+                    <img src="/public/images/assets/primes/prime-intergenerational-media-literacy-thumb.webp" width="170" height="256" alt="" loading="lazy" decoding="async">
+                    <span>14<span class="primes-sr"> Intergenerational media literacy</span></span>
+                </label>
+                <label class="cut-kraft-key cut-line-faces cut-pick-a-lens cut-avoidant-travel cut-practice-list cut-media-literacy cut-crush-chart" title="No. 15 Travel; the avoidant attachment playbook">
+                    <input type="radio" name="prime-frame" id="pf-15">
+                    <img src="/public/images/assets/primes/prime-travel-avoidant-playbook-faces-thumb.webp" width="179" height="256" alt="" loading="lazy" decoding="async">
+                    <span>15<span class="primes-sr"> Travel; the avoidant attachment playbook</span></span>
+                </label>
+                <label class="cut-avoidant-travel cut-episode-card cut-blurting-show cut-crush-chart cut-pick-a-lens cut-line-faces cut-kraft-key" title="No. 16 Episode card; Blurting Boon HONK">
+                    <input type="radio" name="prime-frame" id="pf-16">
+                    <img src="/public/images/assets/primes/prime-episode-card-blurting-boonhonk-thumb.webp" width="182" height="256" alt="" loading="lazy" decoding="async">
+                    <span>16<span class="primes-sr"> Episode card; Blurting Boon HONK</span></span>
+                </label>
+                <label class="cut-kraft-key cut-pick-a-lens cut-boon-pi-board" title="No. 17 Boon PI, bane, bone">
+                    <input type="radio" name="prime-frame" id="pf-17">
+                    <img src="/public/images/assets/primes/prime-boon-pi-bane-bone-board-thumb.webp" width="186" height="256" alt="" loading="lazy" decoding="async">
+                    <span>17<span class="primes-sr"> Boon PI, bane, bone</span></span>
+                </label>
+                <label class="cut-kraft-key cut-pick-a-lens cut-wapboy-board" title="No. 18 Like I am WAPBOY">
+                    <input type="radio" name="prime-frame" id="pf-18">
+                    <img src="/public/images/assets/primes/prime-like-i-am-wapboy-thumb.webp" width="184" height="256" alt="" loading="lazy" decoding="async">
+                    <span>18<span class="primes-sr"> Like I am WAPBOY</span></span>
+                </label>
+                <label class="cut-kraft-key cut-pick-a-lens" title="No. 19 Pick a lens, kraft key">
+                    <input type="radio" name="prime-frame" id="pf-19">
+                    <img src="/public/images/assets/primes/prime-pick-a-lens-kraft-thumb.webp" width="256" height="99" alt="" loading="lazy" decoding="async">
+                    <span>19<span class="primes-sr"> Pick a lens, kraft key</span></span>
+                </label>
+                <label class="cut-kraft-key cut-pinball-board" title="No. 20 Pick a pinball; clown downtown">
+                    <input type="radio" name="prime-frame" id="pf-20">
+                    <img src="/public/images/assets/primes/prime-pick-a-pinball-clown-downtown-thumb.webp" width="256" height="221" alt="" loading="lazy" decoding="async">
+                    <span>20<span class="primes-sr"> Pick a pinball; clown downtown</span></span>
+                </label>
+                <label class="cut-april-board is-break" title="No. 21 April, thirty hearts">
+                    <input type="radio" name="prime-frame" id="pf-21">
+                    <img src="/public/images/assets/primes/prime-april-thirty-hearts-thumb.webp" width="202" height="256" alt="" loading="lazy" decoding="async">
+                    <span>21<span class="primes-sr"> April, thirty hearts</span></span>
+                </label>
+                <label class="cut-read-some is-break" title="No. 22 Read some">
+                    <input type="radio" name="prime-frame" id="pf-22">
+                    <img src="/public/images/assets/primes/prime-read-some-vocab-calculus-thumb.webp" width="256" height="180" alt="" loading="lazy" decoding="async">
+                    <span>22<span class="primes-sr"> Read some</span></span>
+                </label>
+                <label class="cut-read-some cut-face-square" title="No. 23 Read some, square face">
+                    <input type="radio" name="prime-frame" id="pf-23">
+                    <img src="/public/images/assets/primes/prime-read-some-square-face-thumb.webp" width="256" height="249" alt="" loading="lazy" decoding="async">
+                    <span>23<span class="primes-sr"> Read some, square face</span></span>
+                </label>
+                <label class="cut-read-some cut-kraft-key cut-teal-spiral cut-teal-wash" title="No. 24 Read some, teal squares">
+                    <input type="radio" name="prime-frame" id="pf-24">
+                    <img src="/public/images/assets/primes/prime-read-some-teal-squares-thumb.webp" width="197" height="256" alt="" loading="lazy" decoding="async">
+                    <span>24<span class="primes-sr"> Read some, teal squares</span></span>
+                </label>
+                </fieldset>
+                <fieldset class="primes-pins">
+                    <legend>Follow a cutout</legend>
+                <label><input type="radio" name="prime-pin" id="pin-none" checked> none</label>
+                <label><input type="radio" name="prime-pin" id="pin-kraft-key"> kraft key <span class="primes-count">21</span></label>
+                <label><input type="radio" name="prime-pin" id="pin-pick-a-lens"> pick a lens <span class="primes-count">6</span></label>
+                <label><input type="radio" name="prime-pin" id="pin-lore-land-sign"> lore land sign <span class="primes-count">5</span></label>
+                <label><input type="radio" name="prime-pin" id="pin-operator-table"> operator table <span class="primes-count">5</span></label>
+                <label><input type="radio" name="prime-pin" id="pin-practice-list"> practice list <span class="primes-count">5</span></label>
+                <label><input type="radio" name="prime-pin" id="pin-crush-chart"> crush chart <span class="primes-count">4</span></label>
+                <label><input type="radio" name="prime-pin" id="pin-a-to-b"> a to b <span class="primes-count">3</span></label>
+                <label><input type="radio" name="prime-pin" id="pin-genre-hopper"> genre hopper <span class="primes-count">3</span></label>
+                <label><input type="radio" name="prime-pin" id="pin-production-card"> production card <span class="primes-count">3</span></label>
+                <label><input type="radio" name="prime-pin" id="pin-read-some"> read some <span class="primes-count">3</span></label>
+                <label><input type="radio" name="prime-pin" id="pin-tiktok-card"> tiktok card <span class="primes-count">3</span></label>
+                </fieldset>
+            </div>
+            <div class="primes-notes frame-card">
+                <h2>What this demo decides, and what it does not</h2>
+                <p>It decides that a sequence of arrangements can be stepped and followed with no script: the frames are radio buttons, so the arrow keys move one frame at a time and a dashed edge marks where no cutout carries over. It does not decide timing, motion between frames, or which ground a page uses. Each frame's <code>~imagine</code> line is the seed its sidecar holds for Grok Imagine; a clip that returns would play in the gap between two frames that share cutouts, then settle back on the scan, which stays the reading layer. Approve or redirect it in a browser before this becomes a route.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <nav class="site-footer__nav" aria-label="Footer">
+            <a href="/design/#design-labs-title">Experiments</a>
+            <a href="/privacy/">Privacy</a>
+        </nav>
+    </footer>
+</body>
+</html>
