@@ -1,12 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import worker from '../src/index.js';
+import { readFileSync, existsSync } from 'node:fs';
 import { EXPECTED_FILES, INIT_PROMPT, WORKBENCH } from '../src/quest.js';
+import { OPERATORS, CONTAINERS } from '../src/guide.js';
 
 const get = (host, path, options) => worker.fetch(new Request(`https://${host}${path}`, options));
 
 test('quest discovery is independent of cache and network APIs', async () => {
-  for (const path of ['/', '/init', '/init.md', '/llms.txt', '/git.txt', '/git.md', '/quest.json', '/prompts.json', '/ready']) {
+  for (const path of ['/install', '/init', '/init.md', '/llms.txt', '/git.txt', '/git.md', '/quest.json', '/prompts.json', '/ready']) {
     const response = await get('spw.quest', path);
     assert.equal(response.status, 200, path);
     if (!['/ready'].includes(path)) assert.match(await response.text(), /\.spw\/_workbench/);
@@ -24,14 +26,14 @@ test('quest negotiation, HEAD, methods, and redirects', async () => {
   assert.equal(plain.headers.get('vary'), 'Accept');
   const json = await get('spw.quest', '/', { headers: { accept: 'application/json' } });
   assert.equal((await json.json()).schema, 'quest.v2');
-  for (const path of ['/', '/init', '/quest.json', '/missing']) {
+  for (const path of ['/', '/install', '/init', '/quest.json', '/missing']) {
     assert.equal(await (await get('spw.quest', path, { method: 'HEAD' })).text(), '');
   }
   assert.equal((await get('spw.quest', '/init', { method: 'POST' })).status, 405);
   assert.equal((await get('www.spw.quest', '/init')).headers.get('location'), 'https://spw.quest/init');
   const health = await (await get('spw.quest', '/health')).json();
   assert.equal(health.worker, 'spw-quest');
-  const page = await (await get('spw.quest', '/')).text();
+  const page = await (await get('spw.quest', '/install')).text();
   // Instruction sets are tabs, Shell first and selected.
   assert.match(page, /role="tablist" aria-label="Who runs the setup"/);
   assert.match(page, /var __name = /);
@@ -49,7 +51,7 @@ test('quest negotiation, HEAD, methods, and redirects', async () => {
   assert.match(page, /Codex/);
   assert.match(page, /Grok/);
   assert.match(page, /Git, in this order/);
-  assert.match(page, /https:\/\/autonomous\.feedback\/spw\.quest\?at=\/"/);
+  assert.match(page, /https:\/\/autonomous\.feedback\/spw\.quest\?at=\/install"/);
   // The page says what the choice does, where to run it, and what success looks like.
   assert.match(page, /Choose who runs the setup\. Copy one block\. Run it from the repository root\. It stops before any commit\./);
   assert.match(page, /It needs Git and Node 20\.19\+ or 22\.12\+\./);
@@ -79,4 +81,28 @@ test('quest negotiation, HEAD, methods, and redirects', async () => {
 
 test('the page and the recipe name the same expected files', () => {
   for (const file of EXPECTED_FILES) assert.ok(INIT_PROMPT.includes(file), `${file} is missing from the recipe`);
+});
+
+test('the front page is a guide to the language, with install one link away', async () => {
+  const response = await get('spw.quest', '/');
+  assert.equal(response.status, 200);
+  const page = await response.text();
+  assert.match(page, /A small language for the shape of a thought\./);
+  assert.match(page, /href="\/install">Install the workbench/);
+  assert.match(page, /id="example"/);
+  assert.equal([...page.matchAll(/<span class="sigil"/g)].length, OPERATORS.length);
+  // Old #claude links forward to the install page.
+  assert.match(page, /dataset\.setupSets = "shell claude codex grok paste"/);
+  assert.doesNotMatch(page, /role="tablist"/);
+});
+
+const THEORY = new URL('../../../.spw/_workbench/docs/theory/spw/operators.spw', import.meta.url);
+test('guide operator names follow the workbench reader vocabulary', { skip: !existsSync(THEORY) }, () => {
+  const theory = readFileSync(THEORY, 'utf8');
+  for (const op of OPERATORS) {
+    assert.ok(theory.includes(`\`${op.sigil}\` = ${op.name}`), `${op.sigil} should read as ${op.name}`);
+  }
+  for (const c of CONTAINERS) {
+    assert.ok(theory.includes(`\`${c.open}${c.open === '<' ? ' ' : ''}${c.close}\` = ${c.name}`), `${c.open}${c.close} should read as ${c.name}`);
+  }
 });
