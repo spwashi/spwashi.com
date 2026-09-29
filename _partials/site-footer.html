@@ -18,7 +18,7 @@
                     <a class="site-footer__pill" data-spw-page-feedback data-spw-feedback-kind="appreciation" href="https://autonomous.feedback/spwashi.com/appreciation?at=/" referrerpolicy="no-referrer-when-downgrade">Appreciation</a>
                 </div>
             </div>
-            <p><a class="site-footer__pill" href="#memory-garden-cauldron" aria-haspopup="dialog">Open cauldron <span aria-hidden="true">↗</span></a></p>
+            <p><a class="site-footer__pill" href="#memory-garden-cauldron">Open cauldron <span aria-hidden="true">↗</span></a></p>
             <details class="site-footer__more">
                 <summary>Preferences</summary>
             <div
@@ -45,7 +45,8 @@
                         data-spw-cauldron-panel-toggle
                         aria-expanded="false"
                         aria-controls="memory-garden-cauldron-body"
-                        aria-label="Show memory cauldron">
+                        aria-label="Show memory cauldron"
+                        hidden>
                         Show
                     </button>
                 </div>
@@ -105,14 +106,23 @@
 
                     <div class="site-footer__cauldron-actions">
                         <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="mix" data-spw-action-tier="primary" data-spw-groundable="false" data-spw-operator="action" aria-label="Mix fragments into an extension">! Mix fragments</button>
-                        <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="nourish" data-spw-action-tier="growth" data-spw-groundable="false" data-spw-operator="potential" data-spw-action="explore" aria-label="Nourish the held ingredients"><span aria-hidden="true">~</span> Nourish</button>
-                        <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="vision" data-spw-action-tier="growth" data-spw-groundable="false" data-spw-intent="daily-to-prompt" data-spw-operator="potential" data-spw-action="explore" aria-label="Find a prompt from the held fragments"><span aria-hidden="true">~</span> Find a prompt</button>
-                        <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="plant" data-spw-action-tier="output" data-spw-groundable="false" data-spw-operator="integration" aria-label="Save trail in this browser">^ Save trail</button>
-                        <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="share" data-spw-action-tier="output" data-spw-groundable="false" data-spw-operator="concept-edge" aria-label="Share the current spell"><span aria-hidden="true">&gt;</span> Share</button>
-                        <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="copy" data-spw-action-tier="output" data-spw-groundable="false" data-spw-operator="wonder" aria-label="Copy Spw output to the clipboard"><span aria-hidden="true">?</span> Copy Spw</button>
-                        <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="undo" data-spw-action-tier="cleanup" data-spw-groundable="false" data-spw-operator="action" aria-label="Undo the last cauldron action" disabled><span aria-hidden="true">!</span> Undo</button>
-                        <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="prune" data-spw-action-tier="cleanup" data-spw-groundable="false" data-spw-operator="action" aria-label="Prune duplicate ingredients"><span aria-hidden="true">!</span> Prune</button>
-                        <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="clear" data-spw-action-tier="cleanup" data-spw-groundable="false" data-spw-operator="action" aria-label="Clear all held ingredients"><span aria-hidden="true">!</span> Clear</button>
+                        <div class="site-footer__cauldron-action-group site-footer__cauldron-action-group--tend" role="group" aria-labelledby="cauldron-actions-tend">
+                            <span class="site-footer__cauldron-action-label" id="cauldron-actions-tend">tend</span>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="nourish" data-spw-action-tier="growth" data-spw-groundable="false" data-spw-operator="potential" data-spw-action="explore" aria-label="Nourish the held ingredients"><span aria-hidden="true">~</span> Nourish</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="vision" data-spw-action-tier="growth" data-spw-groundable="false" data-spw-intent="daily-to-prompt" data-spw-operator="potential" data-spw-action="explore" aria-label="Find a prompt from the held fragments"><span aria-hidden="true">~</span> Find a prompt</button>
+                        </div>
+                        <div class="site-footer__cauldron-action-group site-footer__cauldron-action-group--keep" role="group" aria-labelledby="cauldron-actions-keep">
+                            <span class="site-footer__cauldron-action-label" id="cauldron-actions-keep">keep</span>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="plant" data-spw-action-tier="output" data-spw-groundable="false" data-spw-operator="integration" aria-label="Save trail in this browser">^ Save trail</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="share" data-spw-action-tier="output" data-spw-groundable="false" data-spw-operator="concept-edge" aria-label="Share the current spell"><span aria-hidden="true">&gt;</span> Share</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="copy" data-spw-action-tier="output" data-spw-groundable="false" data-spw-operator="wonder" aria-label="Copy Spw output to the clipboard"><span aria-hidden="true">?</span> Copy Spw</button>
+                        </div>
+                        <div class="site-footer__cauldron-action-group site-footer__cauldron-action-group--sweep" role="group" aria-labelledby="cauldron-actions-sweep">
+                            <span class="site-footer__cauldron-action-label" id="cauldron-actions-sweep">sweep</span>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="undo" data-spw-action-tier="cleanup" data-spw-groundable="false" data-spw-operator="action" aria-label="Undo the last cauldron action" disabled><span aria-hidden="true">!</span> Undo</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="prune" data-spw-action-tier="cleanup" data-spw-groundable="false" data-spw-operator="action" aria-label="Prune duplicate ingredients"><span aria-hidden="true">!</span> Prune</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-spw-cauldron-action="clear" data-spw-action-tier="cleanup" data-spw-groundable="false" data-spw-operator="action" aria-label="Clear all held ingredients"><span aria-hidden="true">!</span> Clear</button>
+                        </div>
                     </div>
                     <div class="site-footer__cauldron-output" data-cauldron-output role="region" aria-label="Composition result" tabindex="-1" hidden>
                         <div class="site-footer__cauldron-text" data-cauldron-text></div>

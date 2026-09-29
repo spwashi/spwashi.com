@@ -104,6 +104,13 @@
   position: relative;
 }
 
+/* What a reader holds is content, not ornament: the cauldron groups held
+   fragments in ornament clusters, and the rest opacity above left them at
+   0.28 ink, a scan thumbnail included. */
+.site-footer__cauldron-ingredients .spw-ornament-cluster {
+  opacity: 1;
+}
+
 /* Stage-aware ornament opacity can be inherited from container contexts. */
 :where([data-spw-stage="entry"]) {
   --ornament-stage-opacity: var(--ornament-stage-entry-opacity);
