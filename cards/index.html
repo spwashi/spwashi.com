@@ -202,6 +202,121 @@
             </div>
         </section>
 
+        <section class="spw-frame" id="back-the-film" aria-labelledby="back-the-film-title" data-spw-kind="frame" data-spw-role="vessel" data-spw-form="circle" data-spw-liminality="threshold" data-spw-region="compose" data-spw-affordance="act" data-spw-serializes-as="spw-seed-block">
+            <header class="frame-heading" data-spw-slot="header">
+                <a class="frame-sigil" href="#back-the-film" data-spw-operator="value">*back_the_film</a>
+                <h2 id="back-the-film-title">Back the film&#x27;s season</h2>
+            </header>
+            <p>A feature-length film is due in 2027, and I'm doing its marketing. Through the production season, October to New Year, that means a little promo every day. Backing it keeps the daily part daily. Choose a shape, say what being part of it would mean to you, and send the message the card writes.</p>
+            <div class="settings-form" role="group" data-relay-card data-relay-seed="Film.Backing" data-relay-file="film-backing" data-relay-subject="Backing the film&#x27;s season promo" data-relay-opening="Hi Spwashi, I&#x27;d like to back the film&#x27;s daily promo this production season." data-relay-closing="Let&#x27;s agree on what credit fits." aria-labelledby="back-the-film-title">
+                <div class="frame-grid">
+                    <div class="settings-form">
+                    <fieldset class="settings-fieldset">
+                        <legend>How you&#x27;d back it</legend>
+                        <label class="settings-option"><input type="radio" name="shape" value="a day of promo" data-relay-line="I&#x27;m thinking about backing {}."> <span class="settings-option-copy"><strong>A day of promo</strong><span>About $50, the same as a full day on the support ladder.</span></span></label>
+                        <label class="settings-option"><input type="radio" name="shape" value="a week of promo" data-relay-line="I&#x27;m thinking about backing {}."> <span class="settings-option-copy"><strong>A week of promo</strong><span>About $150, a weekly gap closed.</span></span></label>
+                        <label class="settings-option"><input type="radio" name="shape" value="the season, October to New Year" data-relay-line="I&#x27;m thinking about backing {}."> <span class="settings-option-copy"><strong>The season</strong><span>October to New Year. We set the number together.</span></span></label>
+                        <label class="settings-option"><input type="radio" name="shape" value="something that isn&#x27;t money" data-relay-line="I&#x27;d like to offer {}."> <span class="settings-option-copy"><strong>Something that isn&#x27;t money</strong><span>A skill, an introduction, a room for a screening.</span></span></label>
+                    </fieldset>
+                    <label class="settings-option-copy" for="back-the-film-part"><strong>What being part of it would mean to you</strong><span>Optional. Nothing is promised by this card; we agree on what fits.</span></label>
+                    <input id="back-the-film-part" type="text" name="part" autocomplete="off" placeholder="a name in the thanks, a scene you&#x27;d like to see, a question for the crew" data-relay-line="Being part of it would mean {} to me.">
+                    <label class="settings-option-copy" for="back-the-film-name"><strong>What to call you</strong><span>Optional. A name or a handle.</span></label>
+                    <input id="back-the-film-name" type="text" name="name" autocomplete="off" placeholder="a name or @handle" data-relay-line="You can call me {}.">
+                    </div>
+                    <article class="frame-card" data-relay-preview aria-label="Back the film&#x27;s season card">
+                        <header class="spw-card__header" data-spw-slot="header">
+                            <span class="frame-card-sigil" data-spw-operator="value">*back_the_film</span>
+                            <h3>Back the film&#x27;s season</h3>
+                        </header>
+                        <dl class="spw-card__body" data-spw-slot="body">
+                        <div><dt>backing</dt><dd data-relay-slot="shape" data-relay-empty="choose a shape">choose a shape</dd></div>
+                        <div><dt>part of it</dt><dd data-relay-slot="part" data-relay-empty="we&#x27;ll agree what fits">we&#x27;ll agree what fits</dd></div>
+                        <div><dt>from</dt><dd data-relay-slot="name" data-relay-empty="—">—</dd></div>
+                        </dl>
+                        <footer class="spw-card__footer" data-spw-slot="footer"><span>spwashi.com/cards/#back-the-film</span></footer>
+                    </article>
+                </div>
+                <label class="settings-option-copy" for="back-the-film-message"><strong>The message</strong><span>It rewrites itself as you choose. Edit it freely; your words stay until you ask for a rewrite.</span></label>
+                <textarea id="back-the-film-message" name="body" rows="5" data-relay-message>Hi Spwashi, I&#x27;d like to back the film&#x27;s daily promo this production season.
+Let&#x27;s agree on what credit fits.</textarea>
+                <div class="settings-actions frame-operators" aria-label="Send it">
+                    <a class="spw-chip" data-spw-handle="true" data-relay-mail data-relay-address="hello@spwashi.com" href="mailto:hello@spwashi.com?subject=Backing%20the%20film%27s%20season%20promo&amp;body=Hi%20Spwashi%2C%20I%27d%20like%20to%20back%20the%20film%27s%20daily%20promo%20this%20production%20season.%0ALet%27s%20agree%20on%20what%20credit%20fits." data-spw-operator="action">!email_it</a>
+                    <button type="button" class="spw-chip" data-spw-handle="true" hidden data-action="copy-message" data-spw-operator="wonder">? copy message</button>
+                    <button type="button" class="spw-chip" data-spw-handle="true" hidden data-action="rewrite" data-spw-operator="ground">. rewrite from choices</button>
+                    <button type="button" class="spw-chip" data-spw-handle="true" hidden data-action="screenshot" data-spw-operator="value">* screenshot</button>
+                    <button type="button" class="spw-chip" data-spw-handle="true" hidden data-action="download" data-spw-operator="value">*download .txt</button>
+                </div>
+                <nav class="frame-operators" aria-label="Or send it as a DM">
+                        <a class="spw-chip" data-spw-handle="true" data-relay-dm="X" href="https://x.com/spwashi" target="_blank" rel="noopener noreferrer" data-spw-operator="potential">~x_dm</a>
+                        <a class="spw-chip" data-spw-handle="true" data-relay-dm="TikTok" href="https://www.tiktok.com/@spwashi" target="_blank" rel="noopener noreferrer" data-spw-operator="perspective">@tiktok_dm</a>
+                        <a class="spw-chip" data-spw-handle="true" data-relay-dm="Instagram" href="https://www.instagram.com/spwashi/" target="_blank" rel="noopener noreferrer" data-spw-operator="concept-edge">&gt;instagram_dm</a>
+                        <a class="spw-chip" data-spw-handle="true" data-relay-dm="Bluesky" href="https://bsky.app/profile/spwashi.com" target="_blank" rel="noopener noreferrer" data-spw-operator="potential">~bluesky</a>
+                </nav>
+                <p class="settings-status" data-relay-status aria-live="polite">Copy the message above, then paste it into a DM.</p>
+                <p data-spw-textual-role="note">Money amounts are starting points, not a price list, and nothing moves until we have talked. What credit fits is agreed together, case by case.</p>
+            </div>
+        </section>
+        <section class="spw-frame" id="lore-collab" aria-labelledby="lore-collab-title" data-spw-kind="frame" data-spw-role="vessel" data-spw-form="circle" data-spw-liminality="threshold" data-spw-region="compose" data-spw-affordance="act" data-spw-serializes-as="spw-seed-block">
+            <header class="frame-heading" data-spw-slot="header">
+                <a class="frame-sigil" href="#lore-collab" data-spw-operator="integration">^lore_collab</a>
+                <h2 id="lore-collab-title">Collaborate on lore.land</h2>
+            </header>
+            <p><a href="/about/domains/lore.land/">lore.land</a> is a show that is also a book, and a pantry for homebrew campaigns. If you want to add to the pantry, choose what you'd bring, name the world or piece, and send the message the card writes. Finished work may be offered as a credited reference entry when it fits the world.</p>
+            <div class="settings-form" role="group" data-relay-card data-relay-seed="Lore.Collab" data-relay-file="lore-collab" data-relay-subject="Collaborating on lore.land" data-relay-opening="Hi Spwashi, I&#x27;d like to collaborate on lore.land." data-relay-closing="Happy to talk through what fits the world." aria-labelledby="lore-collab-title">
+                <div class="frame-grid">
+                    <div class="settings-form">
+                    <fieldset class="settings-fieldset">
+                        <legend>What you&#x27;d bring</legend>
+                        <label class="settings-option"><input type="radio" name="bring" value="art: a piece or a set" data-relay-line="I&#x27;d bring {}."> <span class="settings-option-copy"><strong>Art</strong><span>A piece, a set, or a batch of scans.</span></span></label>
+                        <label class="settings-option"><input type="radio" name="bring" value="writing: a scene or a character" data-relay-line="I&#x27;d bring {}."> <span class="settings-option-copy"><strong>Writing</strong><span>A scene, a character, a place with a history.</span></span></label>
+                        <label class="settings-option"><input type="radio" name="bring" value="a world to cross over with" data-relay-line="I&#x27;d bring {}."> <span class="settings-option-copy"><strong>A world</strong><span>Your own setting, meeting this one at an edge.</span></span></label>
+                        <label class="settings-option"><input type="radio" name="bring" value="something else" data-relay-line="I&#x27;d bring {}."> <span class="settings-option-copy"><strong>Something else</strong><span>Music, a map, a mechanic, a recipe.</span></span></label>
+                    </fieldset>
+                    <fieldset class="settings-fieldset">
+                        <legend>A reference entry</legend>
+                        <label class="settings-option"><input type="radio" name="entry" value="considered as a credited reference entry" data-relay-line="I&#x27;d like it {}."> <span class="settings-option-copy"><strong>Consider it for an entry</strong><span>Credited to you, if it fits the world.</span></span></label>
+                        <label class="settings-option"><input type="radio" name="entry" value="kept between us for now" data-relay-line="I&#x27;d like it {}."> <span class="settings-option-copy"><strong>Keep it between us for now</strong><span>A conversation first.</span></span></label>
+                    </fieldset>
+                    <label class="settings-option-copy" for="lore-collab-world"><strong>Which world or piece</strong><span>Optional. A title, a link, or a sentence.</span></label>
+                    <input id="lore-collab-world" type="text" name="world" autocomplete="off" placeholder="a world, a character, a piece you&#x27;ve made" data-relay-line="It&#x27;s about {}.">
+                    <label class="settings-option-copy" for="lore-collab-name"><strong>What to call you</strong><span>Optional. A name or a handle.</span></label>
+                    <input id="lore-collab-name" type="text" name="name" autocomplete="off" placeholder="a name or @handle" data-relay-line="You can call me {}.">
+                    </div>
+                    <article class="frame-card" data-relay-preview aria-label="Collaborate on lore.land card">
+                        <header class="spw-card__header" data-spw-slot="header">
+                            <span class="frame-card-sigil" data-spw-operator="integration">^lore_collab</span>
+                            <h3>Collaborate on lore.land</h3>
+                        </header>
+                        <dl class="spw-card__body" data-spw-slot="body">
+                        <div><dt>bringing</dt><dd data-relay-slot="bring" data-relay-empty="choose what you&#x27;d bring">choose what you&#x27;d bring</dd></div>
+                        <div><dt>world</dt><dd data-relay-slot="world" data-relay-empty="—">—</dd></div>
+                        <div><dt>entry</dt><dd data-relay-slot="entry" data-relay-empty="we&#x27;ll decide together">we&#x27;ll decide together</dd></div>
+                        <div><dt>from</dt><dd data-relay-slot="name" data-relay-empty="—">—</dd></div>
+                        </dl>
+                        <footer class="spw-card__footer" data-spw-slot="footer"><span>spwashi.com/cards/#lore-collab</span></footer>
+                    </article>
+                </div>
+                <label class="settings-option-copy" for="lore-collab-message"><strong>The message</strong><span>It rewrites itself as you choose. Edit it freely; your words stay until you ask for a rewrite.</span></label>
+                <textarea id="lore-collab-message" name="body" rows="5" data-relay-message>Hi Spwashi, I&#x27;d like to collaborate on lore.land.
+Happy to talk through what fits the world.</textarea>
+                <div class="settings-actions frame-operators" aria-label="Send it">
+                    <a class="spw-chip" data-spw-handle="true" data-relay-mail data-relay-address="hello@spwashi.com" href="mailto:hello@spwashi.com?subject=Collaborating%20on%20lore.land&amp;body=Hi%20Spwashi%2C%20I%27d%20like%20to%20collaborate%20on%20lore.land.%0AHappy%20to%20talk%20through%20what%20fits%20the%20world." data-spw-operator="action">!email_it</a>
+                    <button type="button" class="spw-chip" data-spw-handle="true" hidden data-action="copy-message" data-spw-operator="wonder">? copy message</button>
+                    <button type="button" class="spw-chip" data-spw-handle="true" hidden data-action="rewrite" data-spw-operator="ground">. rewrite from choices</button>
+                    <button type="button" class="spw-chip" data-spw-handle="true" hidden data-action="screenshot" data-spw-operator="value">* screenshot</button>
+                    <button type="button" class="spw-chip" data-spw-handle="true" hidden data-action="download" data-spw-operator="value">*download .txt</button>
+                </div>
+                <nav class="frame-operators" aria-label="Or send it as a DM">
+                        <a class="spw-chip" data-spw-handle="true" data-relay-dm="X" href="https://x.com/spwashi" target="_blank" rel="noopener noreferrer" data-spw-operator="potential">~x_dm</a>
+                        <a class="spw-chip" data-spw-handle="true" data-relay-dm="TikTok" href="https://www.tiktok.com/@spwashi" target="_blank" rel="noopener noreferrer" data-spw-operator="perspective">@tiktok_dm</a>
+                        <a class="spw-chip" data-spw-handle="true" data-relay-dm="Instagram" href="https://www.instagram.com/spwashi/" target="_blank" rel="noopener noreferrer" data-spw-operator="concept-edge">&gt;instagram_dm</a>
+                        <a class="spw-chip" data-spw-handle="true" data-relay-dm="Bluesky" href="https://bsky.app/profile/spwashi.com" target="_blank" rel="noopener noreferrer" data-spw-operator="potential">~bluesky</a>
+                </nav>
+                <p class="settings-status" data-relay-status aria-live="polite">Copy the message above, then paste it into a DM.</p>
+                <p data-spw-textual-role="note">A reference entry is offered, not owed: it goes in when it fits the world and you want it there, with your name on it.</p>
+            </div>
+        </section>
+
         <section class="spw-frame" id="definition" aria-labelledby="definition-title" data-spw-kind="frame" data-spw-role="definition" data-spw-form="brace" data-spw-liminality="threshold" data-spw-region="read">
             <header class="frame-heading" data-spw-slot="header">
                 <a class="frame-sigil" href="#definition" data-spw-operator="wonder">?definition</a>
