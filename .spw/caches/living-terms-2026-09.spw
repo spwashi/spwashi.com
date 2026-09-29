@@ -47,7 +47,7 @@ claim: `Highlighted words are the site's central mechanic, and the markup must b
   2 = `Landed 2026-09-27 for twelve terms on seven routes (media-cauldron, cauldron, memory-garden, svg-storytelling, surface, capability, receipt): <a class="spw-living-term" href> with typography/base.css keeping the dashed underline. Skipped: two on develop-your-sound that already sit inside their home, cadence on film/editing and join on the Spw atlas whose slugs collide with unrelated homes, the nested five, and Home's own terms while another session holds index.html.`
   3 = `Definition titles for the most-used decorated concepts, in the creator's words: brace-physics, spell-navigation, lattice, cauldron-collection, attention-shape, release-cycle, dose-trace. A sentence each.`
   4 = `Landed 2026-09-27: the note's first row is the definition when one is authored.`
-  5 = `Drop authored tabindex="0" from span terms once 2 and 3 have made each term either a link or a defined word; the runtime adds focus at mount.`
+  5 = `Landed 2026-09-29 ahead of 3: an authored tabindex on a span was a keyboard stop that did nothing with scripts off, and @haptics annotateLivingTermRole writes role=button and tabindex at mount. Dropped from 140 span terms across 36 files (34 routes, 2 partials); the three tap:prime hold:cauldron-capture contracts keep theirs. Home's seven #living-concepts cards now carry their slug as id, so six of the 140 became links and 134 stay spans: brace-physics ×3 to /#brace-physics, living-concepts ×2 to #living-concepts (the one inside the atlas stays a span), memory-garden ×1 to #living-garden-vessel, its established home (play's term already points there).`
 }
 
 ^"questions"{
