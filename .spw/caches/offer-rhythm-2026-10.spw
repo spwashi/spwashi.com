@@ -1,0 +1,37 @@
+# Offer Rhythm (2026-10)
+#
+# operation: prime
+# The month's 13-day rhythm, applied to offers: which lanes are in season,
+# and which carry a small deal. Numbers are the creator's to set.
+
+#>offer_rhythm_2026_10
+#:cache #!pricing #!rhythm #!marketing
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@module: ~"../../public/js/modules/services/offer-rhythm.js"
+@composer: ~"../../public/js/modules/services/bundle-composer.js"
+@site_semantics: ~"../conventions/site-semantics.spw"
+@pricing_lattice: ~"./pricing-lattice-2026-09.spw"
+@promo_feed: ~"../../public/data/promo-wonder-cycle.json"
+
+source = "creator, 2026-09-28: pricing fluctuation based on the service, Spw operation aligned with the progression of 13 and the day of the month; deals and variable emphasis; mindfulness for marketing configurability"
+
+expression = .month[cycle·step]{sigil operator}
+
+^"model"{
+  cycles = `A closes the 13th, B the 26th, C the last day. Cycle C counts back from its close, so the last day of every month is integration.`
+  sequence = `creator, 2026-09-28: potential, vibration, ground, wonder, action, value, subject, perspective, concept, scene, mode, definition, integration — one operator per day of a cycle`
+  emphasis = `the day's operator puts lanes in season on /services/#compose-a-bundle; a quiet mark, always`
+  mutation = `readers can ~rotate the sequence or %names it another way (canon, workbench, mnemonic) and .ground back; emphasis follows the mutation, prices never do. New linguistic mechanics arrive as NAME_SETS or new mutations`
+  deals = `DEAL_RULES names the day algorithms (edges, closes, primes, none); DEALS.rule picks one (edges today) and ?deal-rule= tests another. Deals land on the canonical operator's lanes, 10% off, never on small jobs, and show only with numericity emphasis up or ?rhythm=deals`
+  primes = `creator, 2026-09-28: prime days need no public acknowledgement, but a configurable, testable rule is welcome — primes is a rule, not a default`
+}[reg=facet]
+
+do_not = #[
+  `show a deal in main prose or a headline`,
+  `discount small jobs`,
+  `let a reader mutation move a price`,
+  `treat a deal as a checkout; the reply settles the number`
+][reg=set]
