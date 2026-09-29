@@ -370,6 +370,23 @@ export const FEATURE_DEFS = [
     load: () => import('../../modules/services/bundle-composer.js'),
   },
   {
+    id: 'relay-card',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.VISIBLE,
+    route: 'cards',
+    selector: '[data-relay-card]',
+    describes: 'card[relay]{choose.compose.send} film backing and lore.land collaboration as an easy first message',
+    updates: [
+      'structural:data-relay-state',
+      'structural:data-checked',
+      'structural:data-screenshot-mode',
+    ],
+    evaluates: [],
+    timingArc: 'visible-feature',
+    effectScope: ['local-dom', 'listeners'],
+    load: () => import('../../modules/cards/relay-card.js'),
+  },
+  {
     id: 'rpg-wednesday',
     layer: MODULE_LAYERS.FEATURE,
     when: MOUNT_WHEN.VISIBLE,

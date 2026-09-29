@@ -142,5 +142,5 @@ export const SPW_SEED_EXITS_CONTRACT = Object.freeze({
   id: 'seed-exits',
   describes: 'seed[copy|download|screenshot]{exits} one block leaves as clipboard text, a .spw.txt file, or a capture posture',
   transport: 'kernel/copy.js copyWithFallback · Blob + <a download> · attribute or class hook',
-  consumers: ['modules/cards/seed-card.js', 'modules/services/bundle-composer.js', 'modules/services/care-intake.js'],
+  consumers: ['modules/cards/seed-card.js', 'modules/services/bundle-composer.js', 'modules/services/care-intake.js', 'modules/cards/relay-card.js'],
 });
