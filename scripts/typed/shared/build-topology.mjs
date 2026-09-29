@@ -24,6 +24,8 @@ export const BUILD_EXCLUDED_TOP_LEVEL = [
     'tsconfig.runtime.json',
     'tsconfig.scripts.json',
     'vite.config.ts',
+    // Workers deploy through Wrangler, not GitHub Pages.
+    'workers',
 ];
 export const BUILD_EXCLUDED_BASENAMES = [
     '.DS_Store',
