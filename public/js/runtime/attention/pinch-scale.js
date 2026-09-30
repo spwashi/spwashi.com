@@ -42,6 +42,14 @@ function isPinchTextScaleEnabled(doc = document) {
   return getRootPreference('spwPinchTextScale', 'on', doc) !== 'off';
 }
 
+/** Same step the live scaler uses before it changes a font size. */
+const PINCH_STEP = 0.12;
+
+function pinchStepChange(startDistance, distance) {
+  if (!(startDistance > 0) || !(distance > 0)) return 0;
+  return Math.round(Math.log2(distance / startDistance) / PINCH_STEP);
+}
+
 /* interaction-microstates.spw's reward_contract: a gesture that moves
    nothing should reveal potential instead of being silently absorbed. A
    real two-finger pinch over readable content is a deliberate, legible
@@ -94,6 +102,17 @@ export function initPinchTextScale(root) {
     startIndex: clampFontScaleIndex(FONT_SCALE_STEPS.indexOf(getCurrentFontScale(doc))),
     previewIndex: clampFontScaleIndex(FONT_SCALE_STEPS.indexOf(getCurrentFontScale(doc))),
   };
+  const disabledHint = {
+    armed: false,
+    startDistance: 0,
+    announced: false,
+  };
+
+  const clearDisabledHint = () => {
+    disabledHint.armed = false;
+    disabledHint.startDistance = 0;
+    disabledHint.announced = false;
+  };
 
   const clearPinchState = () => {
     state.active = false;
@@ -131,9 +150,13 @@ export function initPinchTextScale(root) {
       return;
     }
     if (!isPinchTextScaleEnabled(doc)) {
-      announcePinchDisabledHint(doc);
+      // Two resting contacts are not a pinch. Wait for a separation step.
+      disabledHint.armed = true;
+      disabledHint.startDistance = getTouchDistance(event.touches);
+      disabledHint.announced = false;
       return;
     }
+    clearDisabledHint();
 
     state.active = true;
     state.startDistance = getTouchDistance(event.touches);
@@ -159,6 +182,18 @@ export function initPinchTextScale(root) {
   };
 
   const handleTouchMove = (event) => {
+    if (disabledHint.armed) {
+      if (event.touches.length !== 2) {
+        clearDisabledHint();
+        return;
+      }
+      if (disabledHint.announced) return;
+      const distance = getTouchDistance(event.touches);
+      if (pinchStepChange(disabledHint.startDistance, distance) === 0) return;
+      disabledHint.announced = true;
+      announcePinchDisabledHint(doc);
+      return;
+    }
     if (!state.active) return;
     if (event.touches.length !== 2 || !isPinchTextScaleEnabled(doc)) {
       clearPinchState();
@@ -170,7 +205,7 @@ export function initPinchTextScale(root) {
 
     const ratio = distance / state.startDistance;
     const delta = Math.log2(ratio);
-    const stepChange = Math.round(delta / 0.12);
+    const stepChange = pinchStepChange(state.startDistance, distance);
     const nextIndex = clampFontScaleIndex(state.startIndex + stepChange);
 
     event.preventDefault();
@@ -201,6 +236,7 @@ export function initPinchTextScale(root) {
   };
 
   const handleTouchEnd = () => {
+    clearDisabledHint();
     if (!state.active) return;
     clearPinchState();
   };

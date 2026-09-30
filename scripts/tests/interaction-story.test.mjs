@@ -11,6 +11,8 @@ import {
   landmarkHashFromHref,
   resolveHeaderRoomHop,
   headerRoomCurrentIndex,
+  bindInteractionHops,
+  installSwipeClickGuard,
 } from '../../public/js/runtime/interaction/hops.js';
 import { readInteractionStory } from '../../public/js/runtime/interaction/story.js';
 
@@ -142,6 +144,50 @@ test('header room current index prefers aria-current then path', () => {
   assert.equal(headerRoomCurrentIndex(header, '/topics/'), 1);
   links[1] = { getAttribute: (name) => (name === 'href' ? '/about/' : null) };
   assert.equal(headerRoomCurrentIndex(header, '/topics/'), 2);
+});
+
+test('a header swipe keeps the room activation and swallows the click behind it', () => {
+  const clicks = [];
+  const header = {
+    addEventListener(type, fn) { clicks.push(fn); },
+    removeEventListener() {},
+  };
+  installSwipeClickGuard(header, { skipUntrusted: 1 });
+  const roomClick = { isTrusted: false, defaultPrevented: false, preventDefault() { this.defaultPrevented = true; } };
+  const fingerClick = { isTrusted: true, defaultPrevented: false, preventDefault() { this.defaultPrevented = true; } };
+  clicks[0](roomClick);
+  clicks[0](fingerClick);
+  assert.equal(roomClick.defaultPrevented, false);
+  assert.equal(fingerClick.defaultPrevented, true);
+});
+
+test('progression owns hop phase writes after the shell binder', async () => {
+  const seen = [];
+  const controller = new AbortController();
+  const api = bindInteractionHops({
+    html: document.documentElement,
+    root: document,
+    writePhase: () => seen.push('shell'),
+    signal: controller.signal,
+  });
+  bindInteractionHops({
+    html: document.documentElement,
+    root: document,
+    writePhase: () => seen.push('progression'),
+    signal: controller.signal,
+    phaseOwner: true,
+  });
+  await new Promise((resolve) => setTimeout(resolve, 100));
+  api.hop('probe', 'room');
+  bindInteractionHops({
+    html: document.documentElement,
+    root: document,
+    writePhase: () => seen.push('shell-later'),
+  });
+  await new Promise((resolve) => setTimeout(resolve, 100));
+  api.hop('probe', 'again');
+  controller.abort();
+  assert.deepEqual(seen, ['progression', 'progression']);
 });
 
 test('interaction story joins existing attrs rather than inventing one', () => {

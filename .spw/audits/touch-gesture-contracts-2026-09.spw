@@ -259,10 +259,11 @@ audit_run: .{
   }[reg=facet]
   pinch_recognition = .{
     severity = `medium`
+    status = `fixed 2026-09-29`
     evidence = `pinch-scale.js handleTouchStart checks touches.length === 2 and readable target, then immediately announces the disabled hint. It checks no distance change before claiming a pinch was noticed.`
     gap = `Two stationary contacts or a two-finger pan can be described as a recognized pinch. Notification delivery is repaired, but gesture recognition and consequence still differ.`
     falsify = `Turn pinch text scaling off; place two fingers on allowed prose without changing their separation. Check whether the pinch-specific reward appears before movement.`
-    next = `Require pinch movement evidence before the disabled-gesture explanation, or accurately describe the contact that was detected.`
+    fix = `The disabled hint waits until separation changes by one font-scale step (log2 ratio / 0.12). Resting contacts and a two-finger pan below that step stay quiet. Native zoom is not cancelled.`
   }[reg=facet]
   verification = .{
     targeted = `native-affordance + module-timing-contract: 14 tests passed. These prove predicate cases and timing declarations, not browser default activation or first-event delivery.`

@@ -29,6 +29,7 @@ const LENS_FEEDBACK_MS = 720;
 const PRIME_SETTLE_MS = 1600;
 const DEFAULT_LENS_CUES = ['probe', 'frame', 'surface'];
 const settleTimers = new WeakMap();
+const lensTimers = new WeakMap();
 
 let initialized = false;
 
@@ -68,17 +69,40 @@ function setInteractionState(figure, state) {
   syncEffectInterpretation(figure);
 }
 
-function setLens(figure, lens) {
+function setLens(figure, lens, { announce = true } = {}) {
   if (!lens) return;
+  const previous = figure.dataset.spwImageLensActive || '';
   figure.dataset.spwImageLensActive = lens;
   if (figure.matches(DISCOVERY_SELECTOR)) {
     figure.dataset.spwDiscoveryMotion = `${lens} lens`;
   }
+  syncEffectInterpretation(figure);
+  // Assigning the default lens during prime is not a reader gesture.
+  if (!announce || previous === lens) return;
   figure.dispatchEvent(new CustomEvent('spw:image-lens', {
     detail: { lens, figure },
     bubbles: true,
   }));
-  syncEffectInterpretation(figure);
+}
+
+function clearLensed(figure) {
+  const pending = lensTimers.get(figure);
+  if (!pending) return;
+  window.clearTimeout(pending);
+  lensTimers.delete(figure);
+}
+
+function presentLensed(figure) {
+  clearPrimeSettle(figure);
+  clearLensed(figure);
+  setInteractionState(figure, 'lensed');
+  const timer = window.setTimeout(() => {
+    lensTimers.delete(figure);
+    if (figure.dataset.spwImageInteractionState !== 'lensed') return;
+    setInteractionState(figure, 'primed');
+    schedulePrimeSettle(figure);
+  }, LENS_FEEDBACK_MS);
+  lensTimers.set(figure, timer);
 }
 
 function cycleLens(figure, direction = 1) {
@@ -92,13 +116,7 @@ function cycleLens(figure, direction = 1) {
     : (index + direction + cues.length) % cues.length;
 
   setLens(figure, cues[nextIndex]);
-  setInteractionState(figure, 'lensed');
-  window.setTimeout(() => {
-    if (figure.dataset.spwImageInteractionState === 'lensed') {
-      setInteractionState(figure, 'primed');
-      schedulePrimeSettle(figure);
-    }
-  }, LENS_FEEDBACK_MS);
+  presentLensed(figure);
 }
 
 function clearPrimeSettle(figure) {
@@ -136,7 +154,7 @@ function primeFigure(figure) {
     figure.setAttribute('data-spw-interaction-affordance', isDiscovery ? 'discover' : 'prime');
   }
   if (!figure.dataset.spwImageLensActive) {
-    setLens(figure, readLensCues(figure)[0]);
+    setLens(figure, readLensCues(figure)[0], { announce: false });
   }
   if (isDiscovery && !figure.hasAttribute('tabindex')) {
     figure.setAttribute('tabindex', '0');
@@ -177,6 +195,7 @@ function bindFigure(figure, controller) {
   const onIdle = () => {
     clearHold();
     clearPrimeSettle(figure);
+    clearLensed(figure);
     if (figure.dataset.spwImageInteractionState === 'inspecting') return;
     setInteractionState(figure, readDiscovered(figure) ? 'discovered' : 'idle');
   };
@@ -200,6 +219,7 @@ function bindFigure(figure, controller) {
     startY = event.clientY;
     clearHold();
     clearPrimeSettle(figure);
+    clearLensed(figure);
 
     if (readDiscovered(figure)) return;
 
@@ -286,12 +306,7 @@ function bindLensChipSelection(root, controller) {
 
     event.preventDefault();
     setLens(figure, lens);
-    setInteractionState(figure, 'lensed');
-    window.setTimeout(() => {
-      if (figure.dataset.spwImageInteractionState === 'lensed') {
-        setInteractionState(figure, figure.matches(':hover') ? 'primed' : 'idle');
-      }
-    }, 220);
+    presentLensed(figure);
   }, { signal: controller.signal });
 }
 
