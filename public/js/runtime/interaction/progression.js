@@ -105,7 +105,7 @@ export function initInteractionProgression(root = document) {
   const writePhase = phases.write;
   const bumpPhase = phases.bump;
   commitPhase(html, 'idle', { source: 'boot', force: true });
-  const hops = bindInteractionHops({ html, root, writePhase, signal });
+  const hops = bindInteractionHops({ html, root, writePhase, signal, phaseOwner: true });
 
   const onImageLens = (event) => {
     writePhase(html, 'charge', { source: 'image-lens', lens: event.detail?.lens, force: true });

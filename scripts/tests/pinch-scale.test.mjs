@@ -73,6 +73,19 @@ test('pinch scaling owns only two reading contacts and releases interrupted gest
     assert.equal(emit('touchmove', pair(paragraph, 120)).defaultPrevented, false);
     assert.equal(isActive(), false);
     assert.equal(doc.documentElement.properties.size, 0);
+
+    const notices = [];
+    doc.addEventListener('spw:discovery-reward', (event) => notices.push(event.detail?.title));
+    emit('touchstart', pair());
+    emit('touchmove', pair(paragraph, 104));
+    assert.deepEqual(notices, []);
+    emit('touchmove', pair(paragraph, 130));
+    emit('touchmove', pair(paragraph, 180));
+    assert.deepEqual(notices, ['Pinch-to-resize text is off']);
+    emit('touchend', []);
+    emit('touchstart', pair());
+    emit('touchmove', pair(paragraph, 160));
+    assert.deepEqual(notices, ['Pinch-to-resize text is off', 'Pinch-to-resize text is off']);
     doc.documentElement.dataset.spwPinchTextScale = 'on';
 
     for (const end of ['touchend', 'touchcancel']) {

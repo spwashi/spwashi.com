@@ -128,10 +128,37 @@ function cycleLandmarkNav(nav, direction = 1) {
 
 let hopsBound = false;
 let hopsPhaseWriter = null;
+let hopsWriterRank = 0;
 let hopsApi = null;
 
-export function bindInteractionHops({ html, root = document, writePhase, signal }) {
-  if (typeof writePhase === 'function') hopsPhaseWriter = writePhase;
+/**
+ * A recognized swipe still owes the browser a click. Skip one untrusted
+ * activation (the room we mean to open) and swallow the click that follows.
+ */
+export function installSwipeClickGuard(header, { signal, skipUntrusted = 0 } = {}) {
+  if (!header || typeof header.addEventListener !== 'function') return () => {};
+  let remaining = skipUntrusted;
+  const onClick = (event) => {
+    if (!event?.isTrusted && remaining > 0) {
+      remaining -= 1;
+      return;
+    }
+    event?.preventDefault?.();
+    event?.stopPropagation?.();
+    header.removeEventListener('click', onClick, true);
+  };
+  header.addEventListener('click', onClick, { capture: true, signal });
+  return () => header.removeEventListener('click', onClick, true);
+}
+
+export function bindInteractionHops({ html, root = document, writePhase, signal, phaseOwner = false }) {
+  if (typeof writePhase === 'function') {
+    const rank = phaseOwner ? 2 : 1;
+    if (rank >= hopsWriterRank) {
+      hopsPhaseWriter = writePhase;
+      hopsWriterRank = rank;
+    }
+  }
   if (hopsBound) return hopsApi;
 
   hopsBound = true;
@@ -238,14 +265,10 @@ export function bindInteractionHops({ html, root = document, writePhase, signal 
     event.preventDefault();
     const rooms = [...header.querySelectorAll('nav[aria-label="Primary"] a[href]')];
     const room = rooms[intent.index];
-    header.addEventListener('click', (clickEvent) => {
-      const dest = clickEvent.target instanceof Element
-        ? clickEvent.target.closest('nav[aria-label="Primary"] a[href]')
-        : null;
-      if (dest) return;
-      clickEvent.preventDefault();
-      clickEvent.stopPropagation();
-    }, { once: true, capture: true, signal });
+    installSwipeClickGuard(header, {
+      signal,
+      skipUntrusted: room instanceof HTMLAnchorElement ? 1 : 0,
+    });
     hop('header-swipe', intent.href);
     if (room instanceof HTMLAnchorElement) {
       room.click();
@@ -297,6 +320,7 @@ export function bindInteractionHops({ html, root = document, writePhase, signal 
     headerSwipe = null;
     hopsBound = false;
     hopsPhaseWriter = null;
+    hopsWriterRank = 0;
     hopsApi = null;
   }, { once: true });
   hopsApi = { hop, readHopHash, syncLandmarkLoopState };
