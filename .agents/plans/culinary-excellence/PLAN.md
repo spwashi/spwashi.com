@@ -168,3 +168,13 @@ User note: "considering cooking as a domain that can be developed into expertise
 This shifts the stance from "recipes as rich lens and product line" toward "cooking (especially the social/hosting version) as a first-class craft domain one can develop genuine expertise in, with transferable projection power."
 
 All edits kept minimal and surgical. `git diff --check` clean.
+
+## Recipe component alignment — 2026-09-30
+
+Operation `align`; fixity `stable`. One slice: recipe runtime readback follows authored component architecture.
+
+- Common envelope: existing component IDs, section/source, expressions, cadence. No new DOM attribute family.
+- Read composition panels and recipe methods/participation. Marked ingredients are concept references, not a shopping list.
+- Preserve existing APIs; export current annotations and reading state; restore disclosure on unmount.
+- Owners: recipe-semantics.js, runtime catalog feature.js, site-semantics.spw. Route copy stays authored.
+- Validate focused recipe regressions, selector audit, ecology, syntax, and check:local.
