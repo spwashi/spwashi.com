@@ -30,6 +30,17 @@ test('the pushed checkout is that commit, not the dirty working tree', () => {
       execFileSync('git', ['-C', tree.scratch, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
       sha,
     );
+    const pin = execFileSync('git', ['ls-tree', sha, '--', '.spw/_workbench'], { cwd: ROOT, encoding: 'utf8' })
+      .match(/^160000 commit ([0-9a-f]{40})\t/)[1];
+    const workbench = path.join(tree.scratch, '.spw/_workbench');
+    // Compare with pinned Git blobs, even when the live mount has advanced.
+    // Citation targets and parser sources must follow the committed gitlink.
+    for (const rel of ['.spw/conventions/selection.spw', 'packages/spw-seed/src/canonical/derived-marks.ts']) {
+      const pinned = execFileSync('git', ['show', `${pin}:${rel}`], { cwd: path.join(process.env.SPW_PUSH_SOURCE_ROOT || ROOT, '.spw/_workbench') });
+      assert.deepEqual(readFileSync(path.join(workbench, rel)), pinned);
+    }
+    assert.equal(existsSync(path.join(workbench, 'node_modules/tsx/dist/loader.mjs')), true);
+    assert.equal(existsSync(path.join(workbench, '.git')), false);
     const folio = path.join(tree.scratch, 'public/images/assets/folios');
     assert.ok(readdirSync(folio).some((name) => name.endsWith('.spw')));
     assert.equal(existsSync(path.join(tree.scratch, 'public/images/icon-192.png')), true);

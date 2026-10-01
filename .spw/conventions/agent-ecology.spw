@@ -66,6 +66,7 @@ fixity = "tending"
   gpt_sensors = #[`npm run audit:module-selectors`, `npm run visual:checks -- --ids=<fixture>`][reg=set]
   gemini_sensors = #[`npm run visual:checks`, `npm run wonder`, `npm run spw:lattice`, `npm run reasons`][reg=set]
   astra = `Coordinator, not a fifth adapter. Prime wonder-architecture.spw; harvest with npm run wonder. Do not write public HTML from a prime. Do not add ASTRA.md.`
+  push_checkout = `Pre-push validates the site commit in a temporary worktree. Extract workbench citation targets and tool sources at that commit's gitlink; reuse installed dependencies only. A live mount can be newer and is not the pushed contract.`
   host = @write_gate
   claude_host = @claude_settings
   prove = `npm run check:agents`
