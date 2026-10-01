@@ -80,3 +80,9 @@ No plan owned the parser's arrival in the site, so this plan does, as the workbe
 - `public/js/semantic/expression-query.js` reads brace slots for search and the cauldron; `.spw/caches/spw-as-handle-2026-09.spw` (2026-09-27) is the prime for one grammar across search, cauldron, satchel, and texture.website, with a typed example. That cache is this phase's next slice; it lands as web-experiment patches, never bundled with a pillar change.
 
 Invariants: build-time parse first, runtime parse on demand, the page complete without either; the site consumes the pinned grammar and forks nothing. A grammar bump is a workbench pin plus `build:spw-parser` plus `manifest:expressions` in one commit, verified by `spw:integrity`, `ecology:language`, and `check:local`.
+
+## Workbench consumer pin — 2026-09-30
+
+Operation `align`: advance the site mount from `3eaab6377672` to upstream main `229aedcf` (seven commits). Consume CLI citation-resolution, plan-index, and stream timestamp improvements; this does not claim Phase 2 has landed. Rebuild the browser parser and expression manifest from the same revision. The workbench dependency graph is unchanged; no packages installed.
+
+Validation: `build:spw-parser`, `manifest:expressions`, `spw:integrity`, `ecology:language`, and `check:local`. Pre-push now extracts workbench sources and citation targets at the site commit's exact gitlink, reusing installed dependencies only. A regression compares the extracted parser source and citation file with their pinned Git blobs.

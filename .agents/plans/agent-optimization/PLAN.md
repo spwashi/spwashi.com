@@ -52,6 +52,7 @@ Do not apply AI onto a 12k PLAN as if that were the process.
 - `--force-generated` plan indexes must not concatenate Goal bullets. Goal is first paragraph or `PLAN_REFINEMENTS[slug].goal`.
 - `npm run census` rewrites tracked `.spw/audits/language-census.spw`. As a sensor, revert it.
 - A headless timeout is ground before it is page. `npm run sense -- doctor` (<1s) names sandboxed loopback, orphaned probes (`--reap`), stale bundles, sibling CSS. `smoke:nav` exits 3 on loopback.
+- A push scratch checkout omits submodules. Archive workbench sources at the commit's gitlink before citation validation; borrow dependencies only. Contract: `agent-ecology.spw#harness`; regression: `check-pushed.test.mjs`.
 - `spw:integrity` is ~80s of workbench parse (`.spw/workbench-report.spw#parse_cost`). Nightly CI runs it; locally, only when citations moved.
 - A plan `.spw` without a first-line `# Review YYYY-MM-DD — ` decision fails `plans:index:check` for the whole tree (nightly too).
 

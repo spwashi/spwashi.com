@@ -70,9 +70,9 @@ export function shasFromPushLines(text) {
   return [...new Set(shas)];
 }
 
-function extractPaths(sha, rels, scratch) {
+function extractPaths(sha, rels, scratch, repository = ROOT) {
   const archive = spawnSync('git', ['archive', sha, '--', ...rels], {
-    cwd: ROOT,
+    cwd: repository,
     env: gitEnv(),
     maxBuffer: 80 * 1024 * 1024,
   });
@@ -93,6 +93,23 @@ function provenanceSidecars(sha) {
   return git(['ls-tree', '-r', '--name-only', sha, '--', 'public/images'])
     .split('\n')
     .filter((name) => name.endsWith('.spw') && !PROVENANCE_SKIP_PREFIXES.some((prefix) => name.startsWith(prefix)));
+}
+
+// A live mount can be ahead of this site commit. Archive its gitlink revision,
+// including citation targets and tool sources; share only installed dependencies.
+function materializePinnedWorkbench(sha, scratch) {
+  const rel = '.spw/_workbench';
+  const entry = git(['ls-tree', sha, '--', rel]).trim();
+  const match = entry.match(/^160000 commit ([0-9a-f]{40})\t/);
+  if (!match) throw new Error(`Commit ${sha} has no workbench gitlink`);
+  const pin = match[1];
+  // Nested checkout tests still need the original mount's Git objects.
+  const source = path.join(process.env.SPW_PUSH_SOURCE_ROOT || ROOT, rel);
+  const destination = path.join(scratch, rel);
+  mkdirSync(destination, { recursive: true });
+  extractPaths(pin, [], destination, source);
+  symlinkSync(path.join(source, 'node_modules'), path.join(destination, 'node_modules'));
+  console.log(`[check:pushed] workbench ${pin.slice(0, 12)}`);
 }
 
 /**
@@ -118,7 +135,8 @@ export function copyCompileStamps(fromRoot, scratch) {
 /**
  * A detached worktree of `sha` with node_modules linked, the folio
  * directory, the install icons, and the provenance sidecars extracted
- * from that commit. `release` removes the worktree.
+ * from that commit. The workbench is archived at its pinned revision, with
+ * dependencies linked. `release` removes the worktree.
  */
 export function materializeCommit(sha) {
   const scratch = mkdtempSync(path.join(tmpdir(), 'spw-push-'));
@@ -138,6 +156,7 @@ export function materializeCommit(sha) {
       '!/public/images/',
     ], { cwd: scratch });
     git(['checkout', '--detach', sha], { cwd: scratch });
+    materializePinnedWorkbench(sha, scratch);
     // A directory pattern in .gitignore does not match this symlink, so
     // `git status` lists it. `git diff --check` does not, and that is the
     // whitespace gate check:local runs.
@@ -186,9 +205,11 @@ function main() {
     console.log(`[check:pushed] ${sha}`);
     const tree = materializeCommit(sha);
     try {
-      run(process.execPath, ['scripts/check-local.mjs'], tree.scratch);
+      run(process.execPath, ['scripts/check-local.mjs'], tree.scratch, {
+        SPW_PUSH_SOURCE_ROOT: process.env.SPW_PUSH_SOURCE_ROOT || ROOT,
+      });
       run(process.execPath, ['scripts/check-commit-structure.mjs'], tree.scratch, {
-        SPW_INTEGRITY_TOOLS: ROOT,
+        SPW_INTEGRITY_TOOLS: tree.scratch,
       });
     } catch (error) {
       status = error.status || 1;
