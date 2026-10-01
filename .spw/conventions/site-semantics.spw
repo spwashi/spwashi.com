@@ -726,6 +726,10 @@ frame #social-kitchen-grammar
   concept culinary hosting holiday planning projection budgeting expertise
   note "The six social kitchen skills (mise for presence, batch bases & provisions, service as reading/repair, recovery & byproduct alchemy, flexible technique verbs, rhythm & layered attention) form a coherent grammar for cooking for friends and family. They also project cleanly as a budgeting and concept development lens for holidays and annual rituals. Cooking is treated as a primary developable expertise domain with its own progression, not only a metaphor source for other surfaces."
 
+  runtime_alignment = "window.spwRecipes projects authored cards, composition panels, and recipe articles into a common component envelope: sectionId/source, componentId/componentAddress when mounted, kind/role, expression/sectionExpression, operator, brace, and cadence. Read-time extraction follows component annotations without creating a second ID system."
+  recipe_projection = "Method steps and participation groups preserve order and expression. Ingredients list only explicitly marked concepts in the method; it is not a complete shopping list and supplies no inferred quantities. Existing principle/practice/flavor fields remain available; version 2 includes reading state and recipe records in the page-universe handoff."
+  recipe_disclosure = "Compact/full and low/high hide and restore supporting nodes in their registers, preserving links, expressions, and original hidden state. Exported authored content remains complete in every reading posture; unmount restores the owned disclosure and root state."
+
 frame #culinary-sensory-media
   role extension
   surface recipes settings home

@@ -14,6 +14,8 @@
  *   window.spwRecipes.principles    — ordered array of principle objects
  *   window.spwRecipes.flavors       — flavor dimension definitions
  *   window.spwRecipes.practice      — weekly practice schedule
+ *   window.spwRecipes.recipes       — authored method and participation components
+ *   window.spwRecipes.state         — current reading disclosure
  *   window.spwRecipes.setComplexity — toggle between 'low' | 'high' context
  *   window.spwRecipes.setDetail     — toggle between 'compact' | 'full' detail
  */
@@ -23,151 +25,186 @@ import { bus } from '/public/js/kernel/bus.js';
 const COMPLEXITY_ATTR = 'data-spw-recipe-complexity';
 const DETAIL_ATTR = 'data-spw-recipe-detail';
 
+const REGISTERS = {
+    principles: '#principle-register .frame-card',
+    practice: '#weekly-practice .frame-card',
+    flavors: '#composition-register .spw-panel, #composition-register .frame-card',
+    recipes: '[data-spw-role="recipe"]',
+};
+
+const text = (el) => el?.textContent.trim().replace(/\s+/g, ' ') ?? '';
+const read = (el, selector) => text(el.querySelector(selector));
+
+// Share the component registry's vocabulary without inventing component IDs.
+// The authored section and ordinal remain usable before inspection mounts.
+function componentRecord(element, index) {
+    const section = element.closest('.spw-frame[id]');
+    const sectionId = section?.id ?? null;
+    const anchor = element.id || sectionId;
+    const source = anchor ? `${window.location.pathname}#${anchor}` : window.location.pathname;
+    return {
+        index,
+        id: element.id || null,
+        get componentId() { return element.dataset.spwComponentId || null; },
+        get componentAddress() { return element.dataset.spwComponentAddress || null; },
+        sectionId,
+        source,
+        kind: element.dataset.spwKind || (element.matches('.frame-card') ? 'card' : 'panel'),
+        role: element.dataset.spwRole || '',
+        expression: element.dataset.spwSemanticExpression || '',
+        sectionExpression: section?.dataset.spwSemanticExpression || '',
+        operator: element.dataset.spwOperator || '',
+        brace: element.dataset.spwBrace || section?.dataset.spwBrace || '',
+        cadence: element.dataset.spwCadence || section?.dataset.spwCadence || '',
+        cadenceMotion: element.dataset.spwCadenceMotion || section?.dataset.spwCadenceMotion || '',
+        title: read(element, 'h3, strong'),
+        element,
+    };
+}
+
 function parsePrinciples() {
-    const cards = Array.from(
-        document.querySelectorAll('#principle-register .frame-card')
-    );
-    return cards.map((card, i) => {
-        const sigil = card.querySelector('.frame-card-sigil')?.textContent.trim() ?? '';
-        const title = card.querySelector('strong')?.textContent.trim() ?? '';
-        const description = card.querySelector('span:last-of-type')?.textContent.trim() ?? '';
-        const kicker = card.querySelector('.spec-kicker')?.textContent.trim() ?? '';
-        const operator = card.dataset.spwOperator ?? '';
-        const brace = card.dataset.spwBrace ?? '';
-        const href = card.getAttribute('href') ?? null;
-        const [stepNum, phase] = kicker.split('—').map(s => s.trim());
+    return Array.from(document.querySelectorAll(REGISTERS.principles), (card, index) => {
+        const [step, phase] = read(card, '.spec-kicker').split('—').map(s => s.trim());
         return {
-            index: i,
-            step: parseInt(stepNum) || i + 1,
+            ...componentRecord(card, index),
+            step: Number.parseInt(step, 10) || index + 1,
             phase: phase || '',
-            sigil,
-            title,
-            description,
-            operator,
-            brace,
-            href,
-            element: card
+            sigil: read(card, '.frame-card-sigil'),
+            description: read(card, 'span:last-of-type'),
+            href: card.getAttribute('href'),
         };
     });
 }
 
 function parsePractice() {
-    const cards = Array.from(
-        document.querySelectorAll('#weekly-practice .frame-card')
-    );
-    return cards.map(card => {
-        const kicker = card.querySelector('.spec-kicker')?.textContent.trim() ?? '';
-        const [day, phase] = kicker.split('—').map(s => s.trim());
+    return Array.from(document.querySelectorAll(REGISTERS.practice), (card, index) => {
+        const [day, phase] = read(card, '.spec-kicker').split('—').map(s => s.trim());
         return {
+            ...componentRecord(card, index),
             day: day || '',
             phase: phase || '',
-            sigil: card.querySelector('.frame-card-sigil')?.textContent.trim() ?? '',
-            title: card.querySelector('strong')?.textContent.trim() ?? '',
-            instruction: card.querySelector('span:last-of-type')?.textContent.trim() ?? '',
-            operator: card.dataset.spwOperator ?? '',
-            element: card
+            sigil: read(card, '.frame-card-sigil'),
+            instruction: read(card, 'span:last-of-type'),
         };
     });
 }
 
 function parseFlavors() {
-    const panels = Array.from(
-        document.querySelectorAll('#flavor-grammar .spw-panel, #flavor-grammar .frame-panel')
-    );
-    const cards = Array.from(
-        document.querySelectorAll('#flavor-grammar .frame-card')
-    );
-    return [...panels, ...cards].map(el => {
-        const title = el.querySelector('h3, strong')?.textContent.trim() ?? '';
-        const [name, role] = title.split('—').map(s => s.trim());
+    return Array.from(document.querySelectorAll(REGISTERS.flavors), (panel, index) => {
+        const component = componentRecord(panel, index);
+        const [name, role] = component.title.split('—').map(s => s.trim());
         return {
-            name: name || title,
-            role: role || '',
-            description: el.querySelector('p, span:last-of-type')?.textContent.trim() ?? '',
-            brace: el.dataset.spwBrace ?? '',
-            operator: el.dataset.spwOperator ?? '',
-            element: el
+            ...component,
+            name,
+            // Preserve the legacy flavor role without overwriting component role.
+            dimensionRole: role || '',
+            description: read(panel, 'p, span:last-of-type'),
         };
     });
 }
 
-function setComplexity(level) {
-    const root = document.documentElement;
-    root.setAttribute(COMPLEXITY_ATTR, level);
-    bus.emit('recipe:complexity', { level });
-
-    // Low context: hide substrate linguistics, flavor grammar details
-    // High context: show everything
-    const contextSections = document.querySelectorAll(
-        '#substrate-linguistics, #flavor-grammar .spec-grid'
-    );
-    contextSections.forEach(el => {
-        el.style.display = level === 'low' ? 'none' : '';
-    });
-}
-
-function setDetail(level) {
-    const root = document.documentElement;
-    root.setAttribute(DETAIL_ATTR, level);
-    bus.emit('recipe:detail', { level });
-
-    // Compact: truncate descriptions, hide kickers
-    // Full: show everything
-    const descriptions = document.querySelectorAll(
-        '.frame-card span:last-of-type, .spw-panel p, .frame-panel p'
-    );
-    const kickers = document.querySelectorAll('.spec-kicker');
-
-    if (level === 'compact') {
-        descriptions.forEach(el => {
-            if (!el.dataset.fullText) el.dataset.fullText = el.textContent;
-            const words = el.textContent.split(' ');
-            if (words.length > 12) {
-                el.textContent = words.slice(0, 12).join(' ') + '…';
-            }
-        });
-        kickers.forEach(el => el.style.display = 'none');
-    } else {
-        descriptions.forEach(el => {
-            if (el.dataset.fullText) {
-                el.textContent = el.dataset.fullText;
-                delete el.dataset.fullText;
-            }
-        });
-        kickers.forEach(el => el.style.display = '');
-    }
+function parseRecipes() {
+    return Array.from(document.querySelectorAll(REGISTERS.recipes), (element, index) => ({
+        ...componentRecord(element, index),
+        sourceNote: read(element, ':scope > p:not(.spec-kicker)'),
+        ingredients: Array.from(element.querySelectorAll('ol [data-spw-concept]'), (ingredient) => ({
+            concept: ingredient.dataset.spwConcept,
+            label: text(ingredient),
+        })),
+        method: Array.from(element.querySelectorAll(':scope > ol > li'), (step, i) => ({
+            step: i + 1,
+            title: read(step, 'strong'),
+            instruction: text(step),
+        })),
+        participation: Array.from(element.querySelectorAll('.production-season-participation > div'), (group) => ({
+            title: read(group, 'strong'),
+            expression: group.dataset.spwSemanticExpression || '',
+            instruction: read(group, 'p'),
+        })),
+    }));
 }
 
 export function initRecipeSemantics() {
     if (!document.querySelector('[data-spw-surface="recipes"]')) return;
 
-    const principles = parsePrinciples();
-    const practice = parsePractice();
-    const flavors = parseFlavors();
+    const root = document.documentElement;
+    const previousApi = window.spwRecipes;
+    const previousAttrs = new Map([COMPLEXITY_ATTR, DETAIL_ATTR].map(attr => [attr, root.getAttribute(attr)]));
+    const concealed = new Map();
+    const state = { complexity: 'high', detail: 'full' };
 
-    window.spwRecipes = {
-        principles,
-        practice,
-        flavors,
+    function conceal(group, selector, hide) {
+        if (!concealed.has(group)) concealed.set(group, new Map());
+        const originals = concealed.get(group);
+        if (hide) {
+            document.querySelectorAll(selector).forEach(el => {
+                if (!originals.has(el)) originals.set(el, el.hidden);
+                el.hidden = true;
+            });
+        } else {
+            originals.forEach((hidden, el) => { el.hidden = hidden; });
+            originals.clear();
+        }
+    }
+
+    function setComplexity(level) {
+        if (!['low', 'high'].includes(level)) throw new RangeError('Recipe complexity must be low or high');
+        state.complexity = level;
+        conceal('complexity', '#composition-register .spec-grid', level === 'low');
+        root.setAttribute(COMPLEXITY_ATTR, level);
+        bus.emit('recipe:complexity', { level });
+    }
+
+    function setDetail(level) {
+        if (!['compact', 'full'].includes(level)) throw new RangeError('Recipe detail must be compact or full');
+        state.detail = level;
+        // Scope disclosure to exported registers; never replace authored nodes.
+        conceal('detail', '#principle-register .frame-card > span:last-of-type, #weekly-practice .frame-card > span:last-of-type, #principle-register .spec-kicker, #weekly-practice .spec-kicker, #composition-register .spw-panel > p', level === 'compact');
+        root.setAttribute(DETAIL_ATTR, level);
+        bus.emit('recipe:detail', { level });
+    }
+
+    const api = {
+        version: '2.0',
+        get principles() { return parsePrinciples(); },
+        get practice() { return parsePractice(); },
+        get flavors() { return parseFlavors(); },
+        get recipes() { return parseRecipes(); },
+        get state() { return { ...state }; },
         setComplexity,
         setDetail,
-        // Convenience: get principle by phase name
-        byPhase: (phase) => principles.find(p => p.phase === phase),
-        // Convenience: get today's practice
-        today: () => {
+        byPhase: phase => api.principles.find(p => p.phase === phase),
+        today: (date = new Date()) => {
             const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-            const today = days[new Date().getDay()];
-            return practice.find(p => p.day.toLowerCase() === today);
+            return api.practice.find(p => p.day.toLowerCase() === days[date.getDay()]);
         },
-        // Structured JSON export for agent handoff
-        toJSON: () => ({
-            principles: principles.map(({ element, ...rest }) => rest),
-            practice: practice.map(({ element, ...rest }) => rest),
-            flavors: flavors.map(({ element, ...rest }) => rest)
-        })
+        toJSON: () => {
+            const portable = records => records.map(({ element, ...record }) => record);
+            return {
+                version: api.version,
+                state: api.state,
+                principles: portable(api.principles),
+                practice: portable(api.practice),
+                flavors: portable(api.flavors),
+                recipes: portable(api.recipes),
+            };
+        },
     };
+    window.spwRecipes = api;
+    root.setAttribute(COMPLEXITY_ATTR, state.complexity);
+    root.setAttribute(DETAIL_ATTR, state.detail);
 
-    // Set defaults
-    document.documentElement.setAttribute(COMPLEXITY_ATTR, 'high');
-    document.documentElement.setAttribute(DETAIL_ATTR, 'full');
+    return {
+        cleanup() {
+            // A newer mount owns its own state and must not be torn down here.
+            if (window.spwRecipes !== api) return;
+            concealed.forEach(originals => originals.forEach((hidden, el) => { el.hidden = hidden; }));
+            previousAttrs.forEach((value, attr) => {
+                if (value === null) root.removeAttribute(attr);
+                else root.setAttribute(attr, value);
+            });
+            if (previousApi === undefined) delete window.spwRecipes;
+            else window.spwRecipes = previousApi;
+        },
+    };
 }
