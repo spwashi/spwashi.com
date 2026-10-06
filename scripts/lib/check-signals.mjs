@@ -69,6 +69,32 @@ export function stageHeadline(output = '', { tests = false, tag = null } = {}) {
 }
 
 /**
+ * What a failed test stage shows: its count and node's closing "failing tests"
+ * section, without the runner's own stack frames. Hundreds of passing lines
+ * before it cost a reader (and an agent's context) and say nothing about the
+ * failure; they stay in the log. Output without that section (a crash before
+ * the summary) is returned whole.
+ */
+export function testFailureExcerpt(output = '') {
+  const lines = String(output).trimEnd().split('\n');
+  const start = lines.findIndex((line) => line.startsWith('✖ failing tests:'));
+  if (start < 0) return lines;
+  const counts = stageHeadline(output, { tests: true }).filter((line) => line.startsWith('ℹ tests'));
+  const section = lines.slice(start).filter((line) => !/^\s+at (?:async )?.*\(?node:internal\//.test(line));
+  return [...counts, ...section];
+}
+
+/** The test files node named in its failing section ("test at <file>:line:col"). */
+export function failingTestFiles(output = '') {
+  const files = new Set();
+  for (const line of String(output).split('\n')) {
+    const match = /^test at (.+?):\d+:\d+$/.exec(line.trim());
+    if (match) files.add(match[1]);
+  }
+  return [...files];
+}
+
+/**
  * A warning's identity across runs: its words without the numbers that move
  * (dates, weeks, counts), so "stale for 1 week" and "stale for 2 weeks" are
  * one standing warning, not two new ones.

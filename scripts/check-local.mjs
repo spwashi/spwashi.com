@@ -33,6 +33,7 @@ import path from 'node:path';
 import process from 'node:process';
 
 import { isVerboseRun, reportStages, runCommand, runCompile } from './build-compile.mjs';
+import { MODULE_TEST_IMPORTS } from './module-tests.mjs';
 import {
   RECEIPT_SCHEMA,
   compareRuns,
@@ -75,7 +76,11 @@ const VALIDATORS = [
   {
     label: 'test:modules',
     args: ['scripts/run-module-tests.mjs', ...(process.argv.includes('--force') ? [] : ['--cached'])],
-    headline: { tests: true, tag: 'test:modules' },
+    headline: {
+      tests: true,
+      tag: 'test:modules',
+      fileCommand: [process.execPath, ...MODULE_TEST_IMPORTS.flatMap((specifier) => ['--import', specifier]), '--test'],
+    },
   },
 ];
 
