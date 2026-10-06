@@ -1,0 +1,92 @@
+# Tangibility contours (2026-10)
+#
+# operation: prime
+# A research project between materials science and education: how attention
+# moves across one graphic as it becomes more tangible, from a glance on a
+# screen to a varnished folio in the hand, and whether those contours can be
+# taught. The site already holds most of the ground; this cache names it and
+# leaves the public proposal for the creator to write.
+
+#>tangibility_contours_2026_10
+#:cache #!research #!materials #!education #!attention #!tangibility #!print
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@materials_topic: ~"../../topics/materials/index.html"
+@design_materials: ~"../../design/materials/index.html"
+@history_appendix: ~"../audits/appendices/edpsych-materials-science-history-500y.spw"
+@dimension_vocabulary: ~"../conventions/dimension-vocabulary.spw"
+@attention_field: ~"../conventions/attention-field.spw"
+@capture_ecology: ~"../conventions/capture-ecology.spw"
+@folio_shelf: ~"../../design/folios/index.html"
+@research: ~"../../research/index.html"
+@edpsych: ~"../../topics/fields/educational-psychology/index.html"
+@andragogy: ~"../../topics/andragogy/index.html"
+@now: ~"../../now/index.html"
+@ways: ~"./ways-2026-10.spw"
+
+operation = "prime"
+fixity = "experimental"
+source = "creator, 2026-10-05: develop a project related to Materials Science and Education, something related to attentional contours along gradients of tangibility for digital and print graphics applications; a goal of my learning is to develop tacit knowledge that I can intentionally teach"
+
+expression = contour[attention]{screen.print.laminate}(tangibility)<teach>
+
+^"question"{
+  title = `Attentional contours along gradients of tangibility, for digital and print graphics`
+  ask = `When one graphic moves from a screen to paper to a laminated, painted folio, where does attention land first, how long does it stay, and what does a reader keep a day later? Can the shape of that attention be named well enough to teach?`
+}[reg=facet]
+
+^"grounds"{
+  tangibility = `tangibility is already a site dimension: tau from 0 to 1 for substrate density, inertia, opacity, and tactile resistance (@dimension_vocabulary), authored on hero frames such as pedagogy 0.75, craft 0.80, recipes 0.65, and home 0.95`
+  attention = `attention is already modeled as a field that diffuses and decays, with a collecting floor and gradient against nutrient readings (@attention_field); its budget and sink probes have not run yet`
+  bench = `the folio is a small manufacturing loop on @materials_topic: printer paper, collage, thermal laminate, tempera, and matte varnish, failing in the ways large processes fail`
+  history = `@history_appendix keeps five hundred years of educational psychology and materials science side by side, with the rule that the cognition register and the field register meet in one public paragraph only through a named lexicon`
+  learning = `the learning-science roots are on @edpsych (construction-integration, the testing effect, bounded working memory) and @andragogy (experience as material)`
+  capture = `screenshots and scans already have to read on camera and in model interpretation (@capture_ecology), so a capture is a station of its own`
+}[reg=facet]
+
+^"gradient"{
+  stations = #[
+    `0.10 a glance in a phone feed`,
+    `0.30 a page read on a screen`,
+    `0.50 a screenshot or capture card`,
+    `0.70 a print on paper`,
+    `0.85 a laminated folio in the hand`,
+    `0.95 a painted, varnished folio returned to a year later`
+  ][reg=set]
+  constant = `the same graphic at every station, so the gradient is the only thing that moves`
+}[reg=facet]
+
+^"measures"{
+  first = `what a reader names first, as the salience of the contour`
+  dwell = `how long attention stays before it moves on`
+  recall = `what a reader recalls the next day, as the testing effect read across stations`
+  stayed = `what stayed, asked in the words of the costume sheet, so a change in the reader counts as a finding`
+  hand = `what a reader marks by hand on paper against what they tap on a screen`
+  site = `the attention-field budget probe on pages that carry a declared tau, as the on-site half`
+}[reg=facet]
+
+^"teaching"{
+  aim = `turn tacit knowledge about making and reading graphics into something taught on purpose, in the words the creator set down on @now`
+  form = `each station yields a card the learner fills, and the contours are drawn back over the graphic as a layer a class can compare`
+  ways = `regard names the station, gather collects readings, give hands a card on, keep time sets the return, remember keeps the record (@ways)`
+}[reg=facet]
+
+^"keeps"{
+  framing = `the project is described as research work and practice, in words the creator writes, on @research once written`
+  consent = `any reader beyond the creator is asked first, and what is recorded about them is said before it is recorded`
+  sources = `materials claims cite their source; a tau value on a page is a design claim until a measure stands behind it`
+}[reg=facet]
+
+#>wonder_tangibility_contours
+?["Does one folio draw the eye to the same first place on a screen, in print, and under laminate?"]{
+  #:depth #!educational ~#lens(comparison)
+  ~#with: @attention_field @materials_topic
+  ~#hypothesis: "the first-named element shifts with tangibility: texture and edge rise as tau rises, and text falls"
+  ~#tension: "a reader who has seen the screen version first carries it into print, so order has to vary"
+  !probe{ "show one folio at three stations to three readers in varied order; record what each names first and what they recall the next day; if the first-named element moves with tau, the contour exists and can be drawn" }
+  $%[contour.first, contour.recall, station.tau]
+}
+
+validation = #[`npm run wonder`, `npm run spw:integrity`][reg=set]

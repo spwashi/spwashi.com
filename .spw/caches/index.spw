@@ -90,6 +90,7 @@
 @living_terms_batch_01_2026_09: ~"./living-terms-batch-01-2026-09.spw"  # prime: batch 1 of the living-term voice work; seven decorated concepts with hosts, readings, sparks (drafts, not definitions), wonders and empty chosen slots; delivery (title, <dfn> or both) waits on the parent cache's open question
 @inktober_items_2026_10: ~"./inktober-items-2026-10.spw"  # thirty-one October slots: official 2026 words, closes A/B/C, one ChatGPT line and one Midjourney line each, no scans yet
 @ways_2026_10: ~"./ways-2026-10.spw"  # prime: ways are calendar-free clusters of Spw applications (regard, gather, give, cross, keep time, remember), each acting on one expression slot; a season is a path through them
+@tangibility_contours_2026_10: ~"./tangibility-contours-2026-10.spw"  # prime: a research project between materials science and education; attention contours as one graphic moves from screen to print to laminated folio, and how to teach them
 
 operation = "align"
 fixity = "tending"
@@ -162,6 +163,7 @@ fixity = "tending"
   feedback_product_2026_09 = @feedback_product_2026_09
   inktober_items_2026_10 = @inktober_items_2026_10
   ways_2026_10 = @ways_2026_10
+  tangibility_contours_2026_10 = @tangibility_contours_2026_10
 }[reg=facet]
 
 ^"cache_rules"{
