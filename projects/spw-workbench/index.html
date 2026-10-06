@@ -38,7 +38,7 @@
         </div>
         <p class="spec-kicker">Projects / Spw Workbench</p>
         <h1 id="workbench-title">Spw Workbench</h1>
-        <p data-spw-textual-role="lede" data-spw-copy-unit="projects.workbench.lede" data-spw-copy-depth="entry" data-spw-semantic-expression="workbench[mount]{parse.run.answer}&lt;tool&gt;"><span class="spw-living-term" data-spw-living-term data-spw-concept="spw">Spw</span> is a small notation I write ideas in. The workbench is where it is kept working: a parser, a runtime, a language server, a command line, and extensions for VS Code, IntelliJ and Neovim. This site mounts it at <code>.spw/_workbench</code> and reads its own <code>.spw</code> files through it.</p>
+        <p id="projects-workbench-lede" data-spw-textual-role="lede" data-spw-copy-unit="projects.workbench.lede" data-spw-copy-depth="entry" data-spw-semantic-expression="workbench[mount]{parse.run.answer}&lt;tool&gt;"><span class="spw-living-term" data-spw-living-term data-spw-concept="spw">Spw</span> is a small notation I write ideas in. The workbench is where it is kept working: a parser, a runtime, a language server, a command line, and extensions for VS Code, IntelliJ and Neovim. This site mounts it at <code>.spw/_workbench</code> and reads its own <code>.spw</code> files through it.</p>
         <div class="spw-reason-strip" aria-label="How the workbench works and where to touch it">
             <div data-spw-emphasis="primary">
                 <strong>How it works</strong>
@@ -81,7 +81,7 @@
             <a class="frame-sigil" href="#workbench-taught" data-spw-operator="probe">?taught</a>
             <h2 id="workbench-taught-title">What using it taught</h2>
         </header>
-        <p data-spw-textual-role="lede" data-spw-copy-unit="projects.workbench.taught" data-spw-semantic-expression="workbench[consumer]{measure.report}&lt;record&gt;">This site keeps a report addressed to the workbench: what it learned by using Spw, "measured on a mounted consumer, not theorised." Eight of its findings have been fixed upstream, one of them after a day spent superseded. The rest are still open, most with the probe that found them.</p>
+        <p id="projects-workbench-taught" data-spw-textual-role="lede" data-spw-copy-unit="projects.workbench.taught" data-spw-semantic-expression="workbench[consumer]{measure.report}&lt;record&gt;">This site keeps a report addressed to the workbench: what it learned by using Spw, "measured on a mounted consumer, not theorised." Eight of its findings have been fixed upstream, one of them after a day spent superseded. The rest are still open, most with the probe that found them.</p>
         <ul class="frame-list">
             <li><strong>One character can cost seconds.</strong> A single stray backtick took one file from 514 ms to 7,062 ms to parse. Restoring it brought the errors to zero.</li>
             <li><strong>The whole corpus fits in a minute.</strong> A bundled parser read all 923 of the site's <code>.spw</code> files, 5.94 MB, in 53.3 seconds: 839 clean, 84 with errors.</li>

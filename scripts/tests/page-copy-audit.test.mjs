@@ -321,4 +321,17 @@ test('flagCopyVoice and development clusters stay conservative', () => {
     assignDevelopmentClusters('quest.hook.lede', { route: '/about/domains/spw.quest/' }),
     ['quest-agentic'],
   );
+  // Namespaces track routes: the play table is its own working set, not the agent guide's.
+  assert.deepEqual(
+    assignDevelopmentClusters('play.perspective.table', { route: '/play/' }),
+    ['play-table'],
+  );
+  assert.deepEqual(
+    assignDevelopmentClusters('now.hook.lede', { route: '/now/' }),
+    ['person-magazine', 'ways-season'],
+  );
+  assert.deepEqual(
+    assignDevelopmentClusters('projects.folios.lede', { route: '/projects/folios/' }),
+    ['folio-practice'],
+  );
 });

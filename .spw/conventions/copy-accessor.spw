@@ -78,6 +78,9 @@ fixity = "stable"
     services-offer = `/services/`
     topics-shelf = `/topics/`
     design-surface = `/design/`
+    ways-season = `/holidays/ /holidays/costuming/ /topics/fields/culture/ /now/`
+    play-table = `/play/ /play/rpg-wednesday/ /rpg/ /town/ /about/domains/lore.land/`
+    folio-practice = `/design/folios/ /projects/folios/ /topics/materials/ /design/ornaments/`
   }
   rule = `When a cluster update changes a mechanism or a term, edit every copy-unit in that cluster's working set in the same pass — or name why a sibling was left. Related_routes is the IA graph; copy-units are the collectibles on it.`
   not_runtime = `This is a reference grouping for editors and agents. It is not a client lookup table and not a new data-spw-* family.`

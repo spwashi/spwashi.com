@@ -42,6 +42,23 @@ export const DEVELOPMENT_CLUSTERS = Object.freeze({
     unitPrefixes: [],
     seeds: ['/about/domains/spw.quest/', '/topics/software/spw/'],
   },
+  // The season's working sets (2026-10): a change to a way, a table rhythm, or
+  // a folio term retunes every unit in its set, not one route's lede.
+  'ways-season': {
+    namespaces: ['holidays', 'culture'],
+    unitPrefixes: ['home.hook.live', 'now.hook'],
+    seeds: ['/holidays/', '/holidays/costuming/', '/topics/fields/culture/', '/now/'],
+  },
+  'play-table': {
+    namespaces: ['play', 'rpg', 'lore', 'town'],
+    unitPrefixes: [],
+    seeds: ['/play/', '/play/rpg-wednesday/', '/rpg/', '/town/', '/about/domains/lore.land/'],
+  },
+  'folio-practice': {
+    namespaces: ['folios', 'materials', 'ornaments'],
+    unitPrefixes: ['projects.folios'],
+    seeds: ['/design/folios/', '/projects/folios/', '/topics/materials/', '/design/ornaments/'],
+  },
 });
 
 const JARGON = Object.freeze([

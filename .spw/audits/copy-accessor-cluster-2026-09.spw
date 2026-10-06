@@ -222,6 +222,41 @@ audit_run_2026_09_29: .{
   }
 }[reg=facet]
 
+^"review_2026_10_06"{
+  claim = `An identifier pass. Namespaces track routes again, a key is a place on 43 more hosts, the five flat-only hook ledes carry a handle, and three dense ledes are back under the measure.`
+  f11_namespace_tracks_route {
+    severity = "medium"
+    claim = `Six units on the play routes carried the quest namespace, so the audit clustered RPG Wednesday copy with the Spw agent guide. They move to play and rpg. Five more ids take the shape of their siblings.`
+    renamed = #[
+      `quest.play.perspective.{orientation,memory,making,table} → play.perspective.* — /play/`,
+      `quest.rpg.doodler.lede → rpg.doodler.lede — /play/rpg-wednesday/`,
+      `quest.rpg.hook.lede → rpg.hook.lede — /rpg/`,
+      `holidays.costuming.sheet → holidays.costuming.sheet.lede`,
+      `holidays.costuming.returning → holidays.costuming.returning.note (sibling: culture.returning.note)`,
+      `culture.card.anatomy → culture.card.lede`,
+      `folios.hook.doodler → folios.doodler.note (sibling: rpg.doodler.lede)`,
+      `knowledge.versioned-holdings.lede → knowledge.versionedHoldings.lede (the one hyphenated cluster; camelCase is the nested form the contract cites)`
+    ][reg=set]
+    kept = `math.combinatorics.hero.lede keeps hero, since the contract cites it by name; the five-part symphony ids stay a tree.`
+  }
+  f12_working_sets {
+    severity = "low"
+    claim = `Three working sets join the cluster table, so a change to a way, a table rhythm or a folio term opens every unit it retunes: ways-season, play-table, folio-practice. Unclustered units 55 → 31.`
+    seeds = `@copy_accessor#clustered_update`
+  }
+  f13_key_is_a_place {
+    severity = "low"
+    claim = `43 units sat on hosts with no id, so the key named a string and not a place (@copy_hypermedia_key#hk-001). Each now carries the id its siblings already use: the dotted key with hook dropped and dots as hyphens (quest.start.lede on #quest-start-lede). Lens panels under perspective stay unanchored, as lens variants.`
+    remaining = `24 perspective units without an id, by design.`
+  }
+  f14_voice {
+    severity = "low"
+    claim = `flat-only 5 → 0: wap.hook.lede, folios.release.lede, folios.release.second.lede, folios.panels.lede and design.runtime.atlas.lede each gain a handle read from the passage. dense-lede 3 → 0: quest.hook.lede hands its install walk to a new quest.install.note; ornaments.hook.lede and math.hook.lede lose a clause each.`
+    held = `spw.workbench.cost stays flagged unglossed:lattice. There the word is a command name in a timing report, not the concept.`
+    backlog = `Eleven units still carry no handle (f9 unit_without_expression); f10 tone and voice attributes still wait for a human-confirmed migration.`
+  }
+}[reg=facet]
+
 ^"decision"{
   text = `Name the projection, measure it, stop. No localization runtime. No new data-spw-* family. No public copy rewrite in this pass.`
   later = #[
