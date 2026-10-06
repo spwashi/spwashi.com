@@ -126,3 +126,14 @@ That makes it a plausible source object for future Spw-informed translation work
 ## Recommendation
 
 Treat the blog blob as an optional intermediate object between interpreter seed and post: stable enough to inspect, loose enough to evolve, and rich enough to carry future translation seams. Build the concept first in `.spw` and planning notes before deciding whether it becomes a public route affordance, an author-only file shape, or both.
+
+## Starter (2026-10-05)
+
+The blob gets its public name: **Starter**, a culture you feed over time, divide, and pass on. The lifecycle above is unchanged; "starter" reads where "blog blob" did.
+
+- **Files:** `blog/<slug>/index.html` (the post, readable with JS off) and `blog/<slug>/starter.spw` (fed over time, linked from the post). Frame id `#>blog_starter_<slug>`, tag `#!blog_starter`; the bare `#!starter` tag and `npm run starter:inventory` belong to the site-starter component kit.
+- **Feeding:** dated `>>` stream entries with the wip-notebook verbs. An entry may record which slot of the starter's expression moved, following the season of an expression in `.spw/caches/ways-2026-10.spw`.
+- **Status:** `live | cooling | projected`, read as visit cadence (hot, warm, cold) per `visit_policy` in `.spw/workbench-report.spw`.
+- **Weave:** `scripts/blog-weave.mjs` (`npm run blog:weave`, `blog:weave:check` in `check:local`) reads live and cooling starters with the bundled parser and writes only between existing weave markers: a dated feed, the topics a starter passes through, open wonders, a starter index on `/blog/`, and passing-through asides on topic hubs.
+- **Twin rule:** a `starter.spw` beside its post follows the folio-sidecar precedent; it is not a `.spw/<route>/index.spw` twin (`^"hk_002_reading"` in `blog-blob-spw.spw`).
+- **Gate:** one real starter before any of this becomes convention, as the 2026-07-12 review asked.
