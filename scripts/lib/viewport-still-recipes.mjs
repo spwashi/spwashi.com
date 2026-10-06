@@ -276,9 +276,11 @@ export const VIEWPORT_STILL_RECIPES = Object.freeze([
     keys: Object.freeze({
       focus: '#about-frame .mode-switch [data-set-mode="reading"]',
       lands: '#about-frame .mode-switch [data-set-mode="kernel"]',
-      keys: Object.freeze(['Tab']),
-      wonder: 'Tab from .reading must land on ^kernel. If the still has no focus ring, the keyboard path never sat.',
-      captureValue: 'About opening after Tab from the reading lens.',
+      // The lens switch is a roving group (runtime/page/lens-modes.js): arrows
+      // move within it and select as they go; Tab leaves the group.
+      keys: Object.freeze(['ArrowRight']),
+      wonder: 'ArrowRight from .reading must land on ^kernel. If the still has no focus ring, the keyboard path never sat.',
+      captureValue: 'About opening after ArrowRight from the reading lens.',
     }),
     sourceFiles: Object.freeze([
       'about/index.html',

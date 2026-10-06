@@ -712,7 +712,8 @@ test('a recipe id is not a fixture family, and press is a pair not a second reci
   assert.ok(keys);
   assert.deepEqual(press?.prepare?.click, ['#about-frame .mode-switch [data-set-mode="kernel"]']);
   assert.deepEqual(hover?.prepare?.hover, ['#about-frame .mode-switch [data-set-mode="kernel"]']);
-  assert.deepEqual(keys?.prepare?.keys, ['Tab']);
+  // The lens switch is a roving group: an arrow moves within it, Tab leaves it.
+  assert.deepEqual(keys?.prepare?.keys, ['ArrowRight']);
   assert.equal(keys?.prepare?.focus, '#about-frame .mode-switch [data-set-mode="reading"]');
   assert.equal(keys?.prepare?.lands, '#about-frame .mode-switch [data-set-mode="kernel"]');
   assert.equal(attentionStepKind(attentionStepRequest(keys)), 'keys');
