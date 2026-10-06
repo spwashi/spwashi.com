@@ -377,8 +377,139 @@ expression = consumer[report]{defect.gap.built}<upstream>
   }[reg=facet]
 }[reg=facet]
 
+^"editor_host_shadows_server"{
+  ~#severity(high): "the editor shows the weaker of two outlines while the stronger one is already running"
+  pin = `229aedcf9b6f`
+  host = `WebStorm 2026.2.3, build 262.10968.77; plugin 0.3.0, compiled against 2024.2.1`
+  claim: "The IntelliJ plugin draws Structure View, folding, and gutter marks with line regexes registered for the Spw language. The host registers its own LSP Structure View for any language, so the language-specific regex copy is the one shown. The server answers documentSymbol and foldingRange from the parser."
+  measured: .{
+    surface = `.spw/caches/inktober-items-2026-10.spw, 415 lines, 35 frames`
+    fold_ik_001 = `regex 27 to 57; server 27 to 43`
+    fold_prompts_2026 = `regex none; server 51 to 57`
+    fold_cause = `the brace matcher opens a string on a single quote and does not know backticks, so an apostrophe in backtick prose hides the closing brace`
+    hash_cause = `the matcher also reads any hash as a line comment, so a mid-line ~#landed(...) hides the closing brace of its own row`
+    this_report = `a port of the matcher leaves two of the 22 frames this report held on 2026-10-04 unfoldable: built_because_absent by a mid-line ~#landed, ideas_2026_09_29 by an apostrophe in the mode-slot sentence`
+    comment_headings = `the four hash-space comment lines of the file header become § headings`
+    outline = `35 flat rows named by frame id; no label, no children`
+    comment_toggle = `three answers: the commenter writes hash-space, the TextMate configuration writes //, the fold scan treats any hash as a comment start`
+    deprecated_shape = `the frame live template and the workspace symbol list both present frames as ^["name"], the shape grammar-unification deprecates`
+  }[reg=facet]
+  fixture = "any frame whose backtick value holds an apostrophe, such as note = Jake Parker's list"
+  ~#reading: `two parsers answer one outline, and the one shown is the one that is not the parser`
+  fix: "let the server own outline and folding once outline_reparse lands; keep the regex builders as a fallback for a host where the server is not running; present frames as ^\"name\" in the template and the symbol list"
+  source = ~"./_workbench/extensions/intellij-spw/src/main/kotlin/com/spwashi/spw/SpwFoldingBuilder.kt"
+  probe: `WebStorm with the plugin: Cmd+7 and Collapse All on the surface; then the same file through npm run lsp and textDocument/foldingRange`
+}[reg=facet]
+
+^"outline_reparse"{
+  ~#severity(high): "the outline is nine tenths of what a warm server spends answering the editor"
+  pin = `229aedcf9b6f`
+  claim: "The server parses a document when it opens or changes and keeps the result. Folding, tokens, hints, lenses, highlights, and hover read that held parse. The outline does not: documentSymbol parses the text again on every request."
+  measured: .{
+    surface = `.spw/caches/inktober-items-2026-10.spw, 28.7 KB`
+    first_open_ms = `documentSymbol 689; inlayHint 334; every other request under 10`
+    warm_ms = `documentSymbol 267; foldingRange 3; semanticTokens 5; inlayHint 3; codeLens 5; documentHighlight 2; hover 1`
+    after_one_edit_ms = `documentSymbol 510; every other request 6 or less`
+    boot_ms = `1471 from spawn to initialize through npm and tsx`
+    load_average = `4 to 7`
+  }[reg=facet]
+  cause = `handlers/outline.ts calls parse(text); handlers/analysis.ts reads doc.parseResult first`
+  ~#reading: `the server already keeps the intermediate form; one request forgets to ask for it`
+  fix: "pass the held parse into outlineFromSource"
+  ~#order: "land this before editor_host_shadows_server: a host that asks for documentSymbol after every change would pay 267 to 510 ms where the regex outline pays nothing"
+  probe: `drive npm run lsp over stdio: didOpen, then documentSymbol and foldingRange twice each, then one didChange and both again`
+}[reg=facet]
+
+^"instrument_round_trip"{
+  ~#severity(medium): "the slowest loop in the editor is the one built to look closer"
+  pin = `229aedcf9b6f`
+  claim: "Tools | Spw Instruments shells out to the CLI on the saved file. The server already routes spw/formContext, spw/resonance, spw/geometry, and spw/cacheReflection against the open buffer."
+  measured: .{
+    inspect_form_ms = `2865 and 2851 for npm run spw -- form <surface> --resonance --spw on the 28.7 KB surface`
+    server_warm_ms = `1 to 8 for every warm request except the outline`
+    saved_only = `a dirty buffer is refused; save, then rerun`
+  }[reg=facet]
+  ~#reading: `the loop is save, spawn, boot, parse, measure; the server has already done four of the five`
+  fix: "let file instruments ask the running server, through the native client or the typed bridge the intellij-lsp4ij plan weighs; keep the CLI for corpus refactors that need a walk"
+  catalog_drift = `spw exp lists form.formContext as proposed while the server routes spw/formContext`
+  probe: `time npm run --silent spw -- form .spw/caches/inktober-items-2026-10.spw --resonance --spw`
+}[reg=facet]
+
+^"unrolled_rows"{
+  ~#severity(widest): "the largest opening here is a form, not a speed"
+  pin = `229aedcf9b6f`
+  claim: "A cache of thirty-one day packets is a loop written out by hand: thirty-one frames with the same eight keys in the same order, and the shared ^\"plate\" frame retyped into every packet."
+  measured: .{
+    surface = `.spw/caches/inktober-items-2026-10.spw`
+    keys = `day word close file spw caption chatgpt midjourney`
+    plate_share = `11,904 of 28,749 bytes (41%) repeat four plate phrases 31 times each`
+    parse_as_frames_ms = 370
+    parse_as_rows_ms = `585 as one #[ .{ }[reg=facet] ][reg=set] row set (+58%); the outline shows one row with no children where it showed 31`
+    parse_plate_lifted_ms = `331 at 16.8 KB (11% less time for 41% fewer bytes)`
+    handle_quoted = `a backtick-quoted ink[apple]{bite.coaster.margin}<A> fingerprints as one Literal: 38 nodes in the probe surface`
+    handle_bare = `the same value unquoted is complete: Frame, Capsule, Parameter, 46 nodes; the file already writes expression = ink[2026]{prompt.scan.close} bare`
+  }[reg=facet]
+  ~#reading: `repetition is a reading cost more than a parse cost, and the loop form the grammar already has, records in a set, is the one the parser pays most for`
+  ~#taste(creator, 2026-10-05): "A slower parse is acceptable for a more elegant form. Cost becomes a question of which surfaces are visited and how often, set by project configuration, not a veto on the form."
+  existing = `spw expand projects a whole template inline through a reflexive path edge and writes <surface>.expanded.spw, keeping the source as the canonical fold; its help names no slot a row could fill`
+  would_be: .{
+    row_template = `a row form that names its template frame, so a packet is plate plus caption, and expand writes the paste-ready packets as the cached expansion`
+    shape_guard = `with no syntax change: completion offers the sibling key order inside a new frame, and a diagnostic names a packet missing a key or drifting from its plate`
+    bare_handles = `quote nothing that parses: 31 handles join kinship, rename, query, and the outline`
+  }[reg=facet]
+  ~#question: "The file says the prose travels: a packet is meant to be pasted whole. Is the authored surface the fold, with packets projected, or the packets, with the fold checked against them?"
+  probe: `import parse from public/js/semantic/spw-workbench-parser.js and time the surface as authored, as a row set, and with the plate phrases removed`
+}[reg=facet]
+
+^"visit_policy"{
+  ~#severity(design): "where a slower, more elegant parse becomes affordable"
+  claim: "Every cost in this report is a count of visits times the price of one. The CLI keys its memo on the product asked for, the server parses again for the outline, and the instruments boot again for each look. None of them reads a project setting for how often a surface needs reading."
+  inputs_already_declared = `operation on 287 surfaces, fixity on 249, layer on 318 (sensors_to_carry_upstream, axes_index); the v04 editor lenses already name memory tiers: hot wip, warm review, cold convention`
+  would_be: .{
+    schedule = `a visits frame beside ^"roots" in the workspace manifest: open buffers on change; tending and experimental surfaces on save; stable contracts once per content hash; archives on demand`
+    cache_key = `roots plus file content hash plus dialect, as memo_key asks; the schedule decides when to look, the hash decides whether looking costs anything`
+    shared_plane = `one parse plane the server writes and the CLI reads, so the held parse, the corpus memo, and the instrument answer are one intermediate form`
+  }[reg=facet]
+  ~#reading: `a form that parses in 585 ms costs 585 ms once per edit of that file, not once per question, when visits are scheduled and parses are addressed by content`
+  related = #[`memo_key`, `outline_reparse`, `instrument_round_trip`, `unrolled_rows`, `spw exp show channel.stability`][reg=set]
+  ~#refuse: "Do not author the visits frame into the workspace manifest from this report. It stays a proposal until the CLI reads it at a pin."
+  probe: `node scripts/spw-dimensional-index.mjs; npm run spw -- exp show channel.stability`
+}[reg=facet]
+
+^"optimization_axes"{
+  ~#goal(creator, 2026-10-05): "Make categories of optimization differentially valuable across language features, so that choosing how to write a thing stirs wonder about which expression is worth it, and tokens and snippets carry a reason to look closer."
+  axes = #[`parse: milliseconds to read once`, `visit: how often a surface is read, set by the project`, `reader: bytes and repetition a person scrolls past`, `reach: whether the editor can outline, fold, link, and rename it`, `kin: whether it joins kinship, query, and collection`][reg=set]
+  measured: .{
+    quoted_handle = `parse: one Literal; reach: none; kin: none`
+    bare_handle = `parse: eight more nodes; reach: outline and rename; kin: joins the expression table`
+    frames = `parse: 370 ms; reader: 28.7 KB; reach: 31 outline rows`
+    record_rows = `parse: 585 ms; reader: about the same; reach: one outline row, each row still folds`
+    plate_lifted = `parse: 331 ms; reader: 16.8 KB; reach: unchanged`
+    path_literal = `parse: one Literal; reach: no link and no existence check`
+    path_ref = `parse: a ~ reference; reach: link, resolved-target hint, and an existence check in spw:integrity`
+  }[reg=facet]
+  ~#reading: `no form wins every axis; the spread is the material, and a writer who can see it has a reason to choose`
+  mechanics: .{
+    cost_card = `hover a value and read its five axes, the way spw form --stdin already reads a contour`
+    sleeping_token = `a quoted value that would parse as an expression shows as dormant; one action wakes it, and the outline, kinship, and rename find it`
+    snippet_receipt = `a collected snippet carries what it costs and what it reaches, so collecting one teaches a trade`
+  }[reg=facet]
+  ~#refuse: "Do not rank features on one axis. A single speed score turns a material into a leaderboard."
+}[reg=facet]
+
+#>wonder_workbench_report_axes
+?["Which way of writing a thing is worth its cost here, and can the editor make that a question worth asking rather than a lint?"]{
+  #:depth #!computational ~#lens(comparison)
+  ~#with: @wonder @expression_formations
+  ~#hypothesis: "a quoted handle and a bare one differ on every axis but the reader's; showing the spread at the token turns an optimization into a choice about what the expression should be able to do"
+  ~#tension: "a cost card that names a winner is a lint with better typography; one that names trades is a reason to wonder"
+  !probe{ "hover a quoted handle and a bare one in the server; if nothing differs, the trade is invisible. Count backtick values in the corpus that parse complete as expressions: each is a sleeping token." }
+  $%[feature.axes, token.dormant, snippet.receipt]
+}
+
 ^"validation"{
   probe: `npm run spw:integrity && npm run spw:dimensions`
   falsification: "a finding here no longer reproduces from its stated probe against the pinned submodule"
   ~#note(pin): "measured against the submodule as mounted; re-run after a bump before carrying anything upstream"
+  ~#note(2026-10-05): "the frames from editor_host_shadows_server to optimization_axes are measured at pin 229aedcf9b6f; earlier frames keep the pin they name"
 }
