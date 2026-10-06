@@ -633,8 +633,13 @@ function shouldScheduleDefinition(def, ctx, expectedWhen = null) {
   return allowed;
 }
 
+// A module hosted on <html> or <body> keeps its state in the registry, not on
+// the root: host marks there (rail, region state, invitation) restyle the
+// whole page, and rules written for hosts on the page match the page itself.
+const isPageRoot = (el) => el === document.documentElement || el === document.body;
+
 function annotateModuleTarget(target, record) {
-  if (!(target instanceof HTMLElement)) return;
+  if (!(target instanceof HTMLElement) || isPageRoot(target)) return;
   writeProjectionTier(target, PROJECTION_TIERS.INSPECTION, {
     spwModule: record.baseId,
     spwModuleId: record.id,
@@ -659,7 +664,7 @@ function annotateModuleTarget(target, record) {
 }
 
 function annotateModuleTrigger(target, def, ctx, effectiveWhen, status = 'queued') {
-  if (!(target instanceof HTMLElement)) return;
+  if (!(target instanceof HTMLElement) || isPageRoot(target)) return;
   const reason = describeMountReason(def, ctx, target, effectiveWhen);
   writeProjectionTier(target, PROJECTION_TIERS.INSPECTION, {
     spwModuleTrigger: def.id,
@@ -1015,7 +1020,7 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
   performance.mark(`spw:module:${def.id}:scheduled`);
 
   try {
-    if (root instanceof HTMLElement) setRegionState(root, regionStates.HYDRATING);
+    if (root instanceof HTMLElement && !isPageRoot(root)) setRegionState(root, regionStates.HYDRATING);
 
     const startedAt = performance.now();
     performance.mark(`spw:module:${def.id}:start`);
@@ -1142,7 +1147,7 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
       durationMs: Math.round(record.durationMs),
     });
 
-    if (root instanceof HTMLElement) {
+    if (root instanceof HTMLElement && !isPageRoot(root)) {
       const state =
         def.layer === moduleLayers.ENHANCEMENT || def.layer === moduleLayers.REGION
           ? regionStates.ENHANCED
@@ -1219,7 +1224,7 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
       error: error?.message || String(error),
     });
 
-    if (root instanceof HTMLElement) setRegionState(root, regionStates.QUEUED);
+    if (root instanceof HTMLElement && !isPageRoot(root)) setRegionState(root, regionStates.QUEUED);
 
     ctx.bus.emit('spw:module-failed', {
       id: recordId,
