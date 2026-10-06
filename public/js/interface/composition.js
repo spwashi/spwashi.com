@@ -51,6 +51,8 @@ import {
   normalizeCauldronVessel,
 } from '/public/js/semantic/cauldron/contract.js';
 import { renderLiveExpression } from '/public/js/interface/cauldron/live-expression.js';
+import { appendixIndex, readTape } from '/public/js/interface/cauldron/tape.js';
+import { readEncounter } from '/public/js/semantic/cauldron/rehearsal.js';
 import {
   bindCauldronPanelToggle,
   openCauldronDialog,
@@ -1226,6 +1228,15 @@ function renderIngredientChip(ing, idx) {
     .map(([lane, chips]) => `<span class="cauldron-ingredient-lane" data-spw-breadcrumb="${lane}">${chips.join('')}</span>`)
     .join('');
 
+  // The tape window: how often this construct has been returned to, read
+  // from the rehearsal ledger. The take-up reel grows with spaced returns.
+  const tape = readTape(readEncounter(rawOp || ing.expression));
+  const tapeWindow = `<span class="cauldron-ingredient-tape" style="--tape-wound: ${tape.wound}" data-spw-tape-wound="${tape.wound}" title="${escapeHtml(tape.title)}">`
+    + '<i class="cauldron-ingredient-reel" data-reel="taken" aria-hidden="true"></i>'
+    + '<i class="cauldron-ingredient-tape-run" aria-hidden="true"></i>'
+    + '<i class="cauldron-ingredient-reel" data-reel="supply" aria-hidden="true"></i>'
+    + `<span class="cauldron-ingredient-tape-readout">${escapeHtml(tape.readout)}</span></span>`;
+
   const title = `${ing.expression}${originText ? ` (from ${originText})` : ''}${ing.deepLink ? ` - ${ing.deepLink}` : ''}`;
   const region = ing.payload?.region || '';
   const liminality = ing.payload?.liminality || '';
@@ -1255,7 +1266,9 @@ function renderIngredientChip(ing, idx) {
             data-spw-hypermedia-extension="state-fragment"
             aria-label="Saved hypermedia fragment: ${escapeHtml(ing.expression)}"
             title="${escapeHtml(title)}">
-        ${renderImageIngredientMarkup(ing.payload?.image, escapeHtml)}${op}${expr}
+        <span class="cauldron-ingredient-index" aria-hidden="true">${appendixIndex(idx)}</span>
+        <span class="cauldron-ingredient-label">${renderImageIngredientMarkup(ing.payload?.image, escapeHtml)}${op}${expr}</span>
+        ${tapeWindow}
         ${meta ? `<span class="cauldron-ingredient-meta-group">${meta}</span>` : ''}
         <button type="button" class="cauldron-ingredient-remove" data-spw-cauldron-remove="${idx}" aria-label="Remove ${escapeHtml(ing.expression)}">×</button>
       </span>

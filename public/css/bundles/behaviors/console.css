@@ -459,6 +459,121 @@
   letter-spacing: 0.01em;
 }
 
+/* ─── A held fragment as a tape ──────────────────────────────────────────
+   Appendix number, label, and a window with two reels. The reels are a
+   reading (interface/cauldron/tape.js): tape moves from the supply reel on
+   the right to the take-up reel on the left as a reader comes back to that
+   construct after time away. In the footer strip the tape stays a small
+   inline window; in the cauldron dialog each fragment opens into a card. */
+
+.cauldron-ingredient-index {
+  color: var(--ink-muted, rgba(14, 18, 20, 0.52));
+  font-size: 0.78em;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
+}
+
+.cauldron-ingredient-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+
+.cauldron-ingredient-tape {
+  --tape-wound: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  padding: 0.14rem 0.42rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ink, #161c1d) 8%, transparent);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.72));
+  font-size: 0.78em;
+}
+
+.cauldron-ingredient-reel {
+  --reel: 0;
+  flex: none;
+  inline-size: calc(0.45rem + 0.8rem * var(--reel));
+  aspect-ratio: 1;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  background: radial-gradient(circle, currentColor 0 24%, transparent 27%);
+}
+
+.cauldron-ingredient-reel[data-reel="taken"] { --reel: var(--tape-wound); }
+.cauldron-ingredient-reel[data-reel="supply"] { --reel: calc(1 - var(--tape-wound)); }
+
+.cauldron-ingredient-tape-run {
+  flex: 1 1 1.1rem;
+  min-inline-size: 1.1rem;
+  block-size: 2px;
+  background: currentColor;
+  opacity: 0.45;
+}
+
+.cauldron-ingredient-tape-readout {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The handles layer keeps a fragment inline-flex, so the card is a wrapping
+   row: number, label and remove on the first line, then the tape window,
+   then the origin and reach lines. */
+.spw-cauldron-dialog .cauldron-ingredient {
+  flex: 1 1 14rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.4rem 0.5rem;
+  max-inline-size: 100%;
+  padding: 0.5rem 0.6rem 0.55rem;
+  border-radius: 0.45rem;
+  text-align: start;
+  position: relative;
+  isolation: isolate;
+}
+
+/* The shell of the tape. The handles layer keeps an expression-bearing span
+   transparent, so the card face is drawn behind it: a paper face, a hairline,
+   and a band in the accent along the top edge like a cassette label. */
+.spw-cauldron-dialog .cauldron-ingredient::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--material-surface, var(--surface-strong, #fff));
+  box-shadow:
+    inset 0 0 0 1px var(--material-line, var(--line, rgba(14, 18, 20, 0.14))),
+    inset 0 3px 0 0 color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal, #008080))) 55%, transparent);
+}
+
+.spw-cauldron-dialog .cauldron-ingredient-label {
+  flex: 1 1 0;
+}
+
+.spw-cauldron-dialog .cauldron-ingredient-remove {
+  order: 1;
+}
+
+.spw-cauldron-dialog .cauldron-ingredient-tape {
+  order: 2;
+  flex: 1 0 100%;
+  display: flex;
+  min-block-size: 1.9rem;
+  padding: 0.3rem 0.55rem;
+  border-radius: 0.4rem;
+  background: color-mix(in srgb, var(--ink, #161c1d) 10%, transparent);
+}
+
+.spw-cauldron-dialog .cauldron-ingredient-meta-group {
+  order: 3;
+  flex: 1 0 100%;
+}
+
 .cauldron-ingredient-meta-group {
   display: inline-flex;
   align-items: center;

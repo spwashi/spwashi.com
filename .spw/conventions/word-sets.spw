@@ -20,6 +20,7 @@
 @cauldron_fluency: ~"../../public/js/runtime/memory/cauldron-fluency.js"
 @rehearsal: ~"../../public/js/semantic/cauldron/rehearsal.js"
 @live_expression: ~"../../public/js/interface/cauldron/live-expression.js"
+@tape: ~"../../public/js/interface/cauldron/tape.js"
 @footer: ~"../../_partials/site-footer.html"
 @region_profiler: ~"../../public/js/runtime/regions/region-profiler.js"
 @reward_ui: ~"../../public/js/runtime/memory/reward-ui.js"
@@ -66,6 +67,16 @@ source = "creator, 2026-10-06: sets of words like live/cooling/projected should 
   thresholds = `nothing held; one or two held; three or more held; a mix of two or more is showing`
   status = "in use"
   reading = `landed 2026-10-06 as the count line of the panel: .cauldron{} becomes ~cauldron{costume}, then *cauldron{costume.recipe.ink}, then ^cauldron{...} while a mix shows. The four prefixes are canon operators (ground, potential, value, integration), so the line teaches them. It replaces the sentence that repeated the count; the phase rail and the vessel words above are unchanged and still wait for the demo.`
+}[reg=facet]
+
+^"cauldron_tape"{
+  coordinate = `how often a held construct has been returned to, read from the rehearsal ledger`
+  owner = @tape
+  words = #[`new tape`, `met`, `spaced`, `/wk`][reg=set]
+  anatomy = `appendix number (A·1), label (operator and expression), tape window with two reels, then the origin and reach lines`
+  reading = `landed 2026-10-06: each held fragment in the cauldron dialog is a small tape. Tape moves from the supply reel to the take-up reel as a reader comes back to that operator after time away; four spaced returns wind a whole tape. The readout gives meetings, spaced returns, and meetings per week, which is the velocity of the wonder.`
+  status = "in use"
+  open = `the ledger counts by operator, so two held words with the same operator share a tape reading; a reading per held word needs the ledger to key on the expression`
 }[reg=facet]
 
 ^"cauldron_actions"{
