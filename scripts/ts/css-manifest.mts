@@ -85,10 +85,13 @@ export const ROUTE_SCOPES: Readonly<Record<string, readonly string[]>> = Object.
     '/public/css/routes/surfaces/home.css',
     '/public/css/routes/surfaces/home-panels.css',
     '/public/css/components/spw-paste.css',
+    '/public/css/components/folio-day.css',
   ],
   membership: [],
   newyear: ['/public/css/components/cards/seed-card.css'],
-  now: [],
+  now: [
+    '/public/css/components/folio-day.css',
+  ],
   offline: [],
   plans: [
     '/public/css/routes/surfaces/plans.css',
