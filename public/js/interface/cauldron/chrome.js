@@ -1,12 +1,10 @@
 import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
 import { appendToDocument, guardCall } from '/public/js/kernel/dom-render.js';
 import { applyCauldronState, computeCauldronPhase } from '/public/js/semantic/cauldron/contract.js';
-import { isPhaseComplete } from './resonance.js';
 import { getCauldron } from '/public/js/semantic/cauldron/storage.js';
 
 const CHIP_SELECTOR = '.spw-cauldron-chip';
 const PANEL_QUERY = '.site-footer__cauldron, [data-spw-cauldron]';
-const PHASE_RAIL_SELECTOR = '[data-spw-cauldron-phase-rail]';
 let cauldronDialog = null;
 let restorePanel = null;
 
@@ -223,19 +221,6 @@ export function setupCauldronChrome() {
     }
   }
   safeSyncFloatingChip();
-}
-
-export function syncCauldronPhaseRail(phase) {
-  document.querySelectorAll(PHASE_RAIL_SELECTOR).forEach((rail) => {
-    applyCauldronState(rail, { phase });
-    rail.querySelectorAll('[data-spw-phase-step]').forEach((step) => {
-      const stepPhase = step.getAttribute('data-spw-phase-step');
-      step.dataset.spwPhaseActive = stepPhase === phase ? 'true' : 'false';
-      if (stepPhase === phase) step.setAttribute('aria-current', 'step');
-      else step.removeAttribute('aria-current');
-      step.dataset.spwPhaseComplete = isPhaseComplete(stepPhase, phase) ? 'true' : 'false';
-    });
-  });
 }
 
 function syncPanelToggleLabels(host) {

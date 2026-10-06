@@ -122,7 +122,6 @@ export const CAULDRON_CONTRACT = Object.freeze({
     outputState: 'data-spw-cauldron-output-state',
     panel: 'data-spw-cauldron-panel',
     panelToggle: 'data-spw-cauldron-panel-toggle',
-    phaseRail: 'data-spw-cauldron-phase-rail',
     remove: 'data-spw-cauldron-remove',
     visibility: 'data-spw-cauldron-visibility',
     chipCount: 'data-spw-cauldron-chip-count',
@@ -158,35 +157,30 @@ export const CAULDRON_VESSELS = Object.freeze({
   garden: {
     kicker: 'garden bed · what you hold here',
     expression: 'cauldron[garden]{sow.tend.harvest}',
-    phases: ['sow', 'tend', 'mix', 'harvest'],
     mix: '!mix[harvest]',
     plant: '^plant',
   },
   soup: {
     kicker: 'stock pot',
     expression: 'cauldron[soup]{stock.simmer.serve}',
-    phases: ['stock', 'simmer', 'taste', 'serve'],
     mix: '!mix[serve]',
     plant: '^ladle',
   },
   salad: {
     kicker: 'toss bowl',
     expression: 'cauldron[salad]{wash.toss.plate}',
-    phases: ['wash', 'cut', 'toss', 'plate'],
     mix: '!toss',
     plant: '^plate',
   },
   toolbox: {
     kicker: 'toolbox',
     expression: 'cauldron[toolbox]{pick.fit.return}',
-    phases: ['pick', 'fit', 'check', 'return'],
     mix: '!fit',
     plant: '^return',
   },
   workbench: {
     kicker: 'workbench',
     expression: 'cauldron[workbench]{clamp.cut.assemble}',
-    phases: ['clamp', 'cut', 'join', 'assemble'],
     mix: '!join',
     plant: '^assemble',
   },
@@ -203,7 +197,6 @@ export function getCauldronVesselSpec(name) {
   return CAULDRON_VESSELS[id] || {
     kicker: id,
     expression: `cauldron[${id}]{gather.mix.cast}`,
-    phases: ['gather', 'prime', 'mix', 'cast'],
     mix: '!mix',
     plant: '^plant',
   };

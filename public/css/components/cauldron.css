@@ -104,51 +104,8 @@
   color: var(--ink, rgba(14, 18, 20, 0.92));
 }
 
-.site-footer__cauldron-phase-rail {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.28rem;
-  margin: 0.12rem 0 0.2rem;
-}
-
-.site-footer__cauldron-phase-step {
-  display: grid;
-  gap: 0.08rem;
-  padding: 0.28rem 0.34rem;
-  border: 1px solid color-mix(in srgb, var(--footer-panel-line) 88%, transparent);
-  border-radius: calc(var(--shape-control, 0.78rem) - 0.22rem);
-  background: color-mix(in srgb, var(--surface-strong, #fff) 90%, transparent);
-  text-align: center;
-  transition:
-    border-color var(--spw-control-transition-fast, 120ms ease),
-    background-color var(--spw-control-transition-fast, 120ms ease);
-}
-
-.site-footer__cauldron-phase-step[data-spw-phase-active="true"] {
-  border-color: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 52%, var(--footer-panel-line));
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 14%, transparent), transparent 72%),
-    color-mix(in srgb, var(--surface-strong, #fff) 88%, transparent);
-  box-shadow: 0 0 8px color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 20%, transparent);
-}
-
-.site-footer__cauldron-phase-label {
-  margin: 0;
-  color: var(--ink-muted, rgba(14, 18, 20, 0.58));
-  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
-  font-size: var(--text-size-2xs, 0.72rem);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  font-weight: 600;
-}
-
-.site-footer__cauldron-phase-step[data-spw-phase-active="true"] .site-footer__cauldron-phase-label {
-  color: var(--ink, rgba(14, 18, 20, 0.95));
-}
-
 .site-footer__cauldron[data-spw-cauldron-panel="compact"] .site-footer__cauldron-body,
-.site-footer__cauldron[data-spw-cauldron-panel="compact"] .site-footer__cauldron-expression,
-.site-footer__cauldron[data-spw-cauldron-panel="compact"] .site-footer__cauldron-phase-rail {
+.site-footer__cauldron[data-spw-cauldron-panel="compact"] .site-footer__cauldron-expression {
   display: none;
 }
 
@@ -252,14 +209,6 @@
   border-color: color-mix(in srgb, var(--op-action-color, var(--teal-deep)) 32%, var(--line));
 }
 
-.site-footer__cauldron-phase-step[data-spw-phase-complete="true"] {
-  border-color: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 22%, var(--footer-panel-line));
-}
-
-.site-footer__cauldron-phase-step[data-spw-phase-complete="true"] .site-footer__cauldron-phase-label {
-  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 72%, var(--ink-muted, rgba(14, 18, 20, 0.58)));
-}
-
 .site-footer__cauldron[data-spw-cauldron-state~="phase:primed"] {
   border-color: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 22%, var(--footer-panel-line));
 }
@@ -304,10 +253,6 @@
 .site-footer__cauldron-actions .spw-chip:disabled {
   transform: none;
   cursor: not-allowed;
-}
-
-.site-footer__cauldron[data-spw-cauldron-discoverability="primable"] .site-footer__cauldron-phase-step[data-spw-phase-step="empty"] {
-  animation: cauldron-discover-pulse 2.4s ease-in-out infinite;
 }
 
 .site-footer__cauldron[data-spw-cauldron-discoverability="compose-next"] [data-spw-cauldron-action="mix"] {
@@ -1014,9 +959,6 @@ html[data-spw-cauldron-resonance-operators] .site-footer__cauldron[data-spw-caul
 }
 
 @media (max-width: 45rem) {
-  .site-footer__cauldron-phase-rail {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 
   .spw-cauldron-chip {
     inset: auto max(0.65rem, env(safe-area-inset-right)) var(--spw-floating-slot-cauldron, calc(max(0.65rem, env(safe-area-inset-bottom)) + 2.6rem)) auto;
@@ -1061,7 +1003,6 @@ html[data-spw-cauldron-resonance-operators] .site-footer__cauldron[data-spw-caul
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .site-footer__cauldron[data-spw-cauldron-discoverability="primable"] .site-footer__cauldron-phase-step[data-spw-phase-step="empty"],
   .cauldron-ingredient.is-cauldron-ingredient-new,
   .site-footer__cauldron.is-cauldron-pulsing,
   .spw-cauldron-chip.is-cauldron-pulsing,
@@ -1171,18 +1112,6 @@ html[data-spw-cauldron-resonance-operators] .site-footer__cauldron[data-spw-caul
 .spw-cauldron-dialog .site-footer__cauldron-header,
 .spw-cauldron-dialog .site-footer__cauldron-ingredients:empty {
   display: none;
-}
-
-.spw-cauldron-dialog .site-footer__cauldron-phase-rail {
-  margin: 0 0 1.25rem;
-  padding: 0;
-  list-style: none;
-}
-
-.spw-cauldron-dialog .site-footer__cauldron-phase-step {
-  padding-block: 0.5rem;
-  box-shadow: none;
-  animation: none;
 }
 
 .spw-cauldron-dialog .site-footer__cauldron-body {

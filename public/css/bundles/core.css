@@ -9098,7 +9098,6 @@ html[data-spw-base-metamaterial="matte"] .spw-discovery-notice .spw-discovery-no
    html[data-spw-debug-layers="on"] to see layer owners breathe.
    ========================================================================== */
 
-
 /* ==========================================================================
    4. Responsive
    ========================================================================== */
@@ -9599,50 +9598,6 @@ html[data-spw-base-metamaterial="matte"] .spw-discovery-notice .spw-discovery-no
 
 .site-footer__cauldron[data-spw-hypermedia-extension] {
   border-color: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 18%, var(--footer-panel-line));
-}
-
-.site-footer__cauldron-phase-rail {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.22rem;
-  margin: 0.02rem 0 0.04rem;
-  padding: 0;
-  list-style: none;
-}
-
-.site-footer__cauldron-phase-step {
-  display: grid;
-  align-items: center;
-  min-block-size: 1.55rem;
-  padding: 0.16rem 0.28rem;
-  border: 1px solid color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 12%, var(--footer-panel-line));
-  border-radius: calc(var(--shape-component, 6px) + 1px);
-  background: color-mix(in srgb, var(--footer-panel-bg) 92%, var(--component-accent, var(--active-op-color, var(--teal))) 8%);
-  color: color-mix(in srgb, var(--ink-muted, rgba(14, 18, 20, 0.58)) 84%, var(--component-accent, var(--active-op-color, var(--teal))) 16%);
-}
-
-.site-footer__cauldron-phase-step[data-spw-phase-complete="true"] {
-  border-color: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 22%, var(--footer-panel-line));
-  color: color-mix(in srgb, var(--ink-soft, rgba(14, 18, 20, 0.72)) 74%, var(--component-accent, var(--active-op-color, var(--teal))) 26%);
-}
-
-.site-footer__cauldron-phase-step[data-spw-phase-active="true"] {
-  border-color: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 40%, var(--footer-panel-line));
-  background:
-    linear-gradient(90deg, color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 15%, transparent), transparent 78%),
-    color-mix(in srgb, var(--footer-panel-bg) 82%, var(--component-accent, var(--active-op-color, var(--teal))) 18%);
-  color: var(--ink, rgba(14, 18, 20, 0.92));
-  font-weight: 800;
-}
-
-.site-footer__cauldron-phase-label {
-  margin: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
-  font-size: var(--text-size-2xs, 0.72rem);
-  letter-spacing: 0.04em;
 }
 
 .site-footer__cauldron .site-footer__cauldron-status + .site-footer__cauldron-ingredients {

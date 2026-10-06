@@ -1,5 +1,4 @@
 import {
-  CAULDRON_PHASES,
   computeCauldronBrew,
   computeIngredientPhase,
   publishCauldronCapacity,
@@ -217,10 +216,4 @@ export function shouldHideStaleMixOutput(ingredients) {
 
 export function clearMixOutputState() {
   lastMixSignature = '';
-}
-
-export function isPhaseComplete(stepPhase, activePhase) {
-  const stepIndex = CAULDRON_PHASES.indexOf(stepPhase);
-  const activeIndex = CAULDRON_PHASES.indexOf(activePhase);
-  return stepIndex >= 0 && activeIndex >= 0 && stepIndex < activeIndex;
 }
