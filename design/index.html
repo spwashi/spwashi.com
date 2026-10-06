@@ -227,6 +227,55 @@
                 </div>
             </section>
 
+            <section class="spw-frame" id="bench-live" aria-labelledby="bench-live-title" data-spw-kind="frame" data-spw-role="lab" data-spw-context="analysis" data-spw-wonder="projection orientation locality" data-spw-affordance="inspect" data-spw-liminality="deep" data-spw-form="brace" data-spw-semantic-expression="bench[live]{runtime.root.combinations}&lt;readout&gt;" data-bench-live>
+                <header class="frame-heading" data-spw-slot="header">
+                    <a class="frame-sigil" href="#bench-live" data-spw-operator="wonder">?bench_live</a>
+                    <h2 id="bench-live-title">The Bench, Live</h2>
+                </header>
+                <p id="design-bench-live-lede" data-spw-textual-role="lede" data-spw-copy-unit="design.bench.live.lede" data-spw-semantic-expression="bench[live]{mounted.changing.combining}&lt;reader&gt;">Three readings of this page, taken while you look at it: what the runtime has mounted, what the root state is doing, and how many cards one specimen can be.</p>
+                <div class="frame-grid">
+                    <article class="spw-panel" data-spw-kind="panel" data-spw-role="reference">
+                        <h3>Running on this page</h3>
+                        <p><code data-bench-runtime-expression data-spw-semantic-expression="runtime[design]{mounted}&lt;page&gt;">runtime[design]{mounted}&lt;page&gt;</code></p>
+                        <details class="spw-inline-disclosure">
+                            <summary data-bench-layers>The modules mounted here, by name</summary>
+                            <div class="spec-strip" data-bench-modules aria-label="Modules mounted on this page"></div>
+                            <p data-spw-textual-role="note">Each name is a module the runtime mounted for this page. Hover or focus one to read its contract as a Spw sentence. With scripts off the list stays empty.</p>
+                        </details>
+                        <nav class="frame-operators" aria-label="Runtime readings">
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-bench-action="read" data-spw-operator="action">!read again</button>
+                            <a class="spw-chip" data-spw-handle="true" href="/design/runtime/" data-spw-operator="potential">~runtime atlas</a>
+                        </nav>
+                    </article>
+                    <article class="spw-panel" data-spw-kind="panel" data-spw-role="reference">
+                        <h3>The root, as it changes</h3>
+                        <p>The page keeps its shared state on one element. <strong data-bench-register-count>Many</strong> registers are set on it now. Change a theme, open a menu, or hold a word, and the last five changes land here.</p>
+                        <ul class="frame-list" data-bench-root-log aria-live="polite">
+                            <li><code>·</code></li>
+                            <li><code>·</code></li>
+                            <li><code>·</code></li>
+                            <li><code>·</code></li>
+                            <li><code>·</code></li>
+                        </ul>
+                        <nav class="frame-operators" aria-label="Root state">
+                            <a class="spw-chip" data-spw-handle="true" href="#context-stack" data-spw-operator="frame">#&gt;context_stack</a>
+                            <a class="spw-chip" data-spw-handle="true" href="/settings/" data-spw-operator="binding">=settings</a>
+                        </nav>
+                    </article>
+                    <article class="spw-panel" data-spw-kind="panel" data-spw-role="reference">
+                        <h3>One specimen, many cards</h3>
+                        <p>Environment, variant, behavior, posture: <strong data-bench-combo-product>3 × 3 × 4 × 3 = 108</strong>. The card showing below is this one.</p>
+                        <p><code data-bench-combo-expression data-spw-semantic-expression="specimen[calm]{soft.rest.split}">specimen[calm]{soft.rest.split}</code></p>
+                        <p data-spw-textual-role="note" data-bench-combo-tried></p>
+                        <nav class="frame-operators" aria-label="Specimen combinations">
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-bench-action="shuffle" data-spw-operator="action">!shuffle</button>
+                            <a class="spw-chip" data-spw-handle="true" href="#component-ecology-specimens" data-spw-operator="potential">~open the specimen</a>
+                        </nav>
+                    </article>
+                </div>
+                <p data-spw-textual-role="note">To ask the page about itself, the <a href="#render-ladder">render ladder</a> keeps seven probes that answer against this document.</p>
+            </section>
+
             <section class="spw-frame" id="component-anatomy" data-spw-role="schema" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="projection orientation locality" data-spw-affordance="inspect" data-spw-liminality="deep" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="projection" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_design_design_hub__anatomy" data-spw-context-relevance="component anatomy slots structure options utilities">
                 <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#component-anatomy" data-spw-operator="integration">^"component_options"</a>
@@ -709,8 +758,7 @@
                                 </div>
                             </dl>
                         </div>
-                    </section>
-                </div>
+            </section>
 
             <section class="spw-frame" id="design-stubs" data-spw-kind="frame" data-spw-role="routing" data-spw-region="path" data-spw-liminality="settled" data-spw-wonder="orientation comparison projection" data-spw-seed="page_design_design_hub__design_stubs">
                 <i class="spw-ornament-corner" aria-hidden="true"></i>
@@ -752,7 +800,12 @@
                 </aside>
             </section>
 
-            <section class="spw-panel" id="lab-behavior" aria-labelledby="lab-behavior-title" data-spw-kind="panel" data-spw-role="lab-behavior" data-spw-wonder="browser console query theming">
+            <section class="spw-frame" id="render-ladder" aria-labelledby="render-ladder-title" data-spw-kind="frame" data-spw-role="reference" data-spw-context="analysis" data-spw-wonder="projection orientation locality" data-spw-affordance="inspect" data-spw-liminality="nested" data-spw-semantic-expression="render[ladder]{root.frame.component.token}&lt;probe&gt;">
+                <header class="frame-heading" data-spw-slot="header">
+                    <a class="frame-sigil" href="#render-ladder" data-spw-operator="wonder">?render_ladder</a>
+                    <h2 id="render-ladder-title">The Render Ladder, And Seven Ways To Ask It</h2>
+                </header>
+                <section class="spw-panel" id="lab-behavior" aria-labelledby="lab-behavior-title" data-spw-kind="panel" data-spw-role="lab-behavior" data-spw-wonder="browser console query theming">
                     <p data-spw-textual-role="note">Lab behavior</p>
                     <h3 id="lab-behavior-title">Expose behavior as links before hiding it in runtime state</h3>
                     <p>Use query links to test color, palette, density, and reflow disposition. Use the console helpers when a script spell needs to show what it touched. This is also the start of performance puppetry: named controls moving visible surfaces, including SVG art later.</p>
@@ -1209,6 +1262,8 @@ spwCompose.inspect('#lab-behavior');</code></pre>
                         </div>
                         <p class="design-qa-copy">After resetting, compare the route against the render and component labs.</p>
                     </article>
+                </div>
+            </section>
             </div>
 
             <div data-spw-cluster="collaboration-tools">
@@ -1361,11 +1416,13 @@ spwCompose.inspect('#lab-behavior');</code></pre>
             <nav class="page-index" aria-label="Design hub sections">
                 <ul>
                     <li><a href="#design-hub">Hub</a></li>
+                    <li><a href="#bench-live">Bench, Live</a></li>
                     <li><a href="#component-ecology-specimens">Component Ecology</a></li>
                     <li><a href="#design-circuits">Circuits</a></li>
                     <li><a href="#context-stack">QA Bench</a></li>
                     <li><a href="#promptability-studio">Prompt Studio</a></li>
                     <li><a href="#rendering-contexts">Rendering Tests</a></li>
+                    <li><a href="#render-ladder">Render Ladder</a></li>
                     <li><a href="#component-anatomy">Component Options</a></li>
                     <li><a href="#mobile-interactions">Mobile</a></li>
                     <li><a href="#team-prompts">Prompts</a></li>
