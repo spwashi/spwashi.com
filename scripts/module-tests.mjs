@@ -90,6 +90,7 @@ export const MODULE_TEST_FILES = Object.freeze([
   'scripts/tests/check-commit-structure.test.mjs',
   'scripts/tests/drift-notice.test.mjs',
   'scripts/tests/check-built-modules.test.mjs',
+  'scripts/tests/root-write-census.test.mjs',
   'scripts/tests/arc-bench.test.mjs',
   'scripts/tests/term-note-rows.test.mjs',
   'scripts/tests/seed-templates.test.mjs',

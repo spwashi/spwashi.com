@@ -52,9 +52,30 @@ A page loads what its reader engages, not everything its grammar could support. 
 - Where weights come from, and whether a reader can see them.
 - Whether `operators navigator console` stay page boilerplate or become shell.
 
+## Arrival census — 2026-10-06 (slice 1)
+
+`npm run audit:root-writes` (`npm run sense -- roots`). Source build, headless, 12 s past settle, no input. The probe hooks the root's four write doors (attribute methods, dataset, inline style, classList) before any script runs, keeps each write's call stack, and gives the write to the catalog module on that stack. `styled` counts changed writes on a token some stylesheet reads.
+
+| route | mounted | write to root | quiet | changed writes | styled |
+|---|---|---|---|---|---|
+| `/` | 70 | 28 | 42 | 782 | 405 |
+| `/about/` | 60 | 25 | 35 | 789 | 408 |
+| `/topics/software/` | 62 | 28 | 34 | 909 | 419 |
+| `/contact/` | 60 | 29 | 31 | 862 | 436 |
+| `/blog/` | 62 | 29 | 33 | 908 | 439 |
+| `/design/folios/` | 63 | 30 | 33 | 854 | 432 |
+
+- **Quiet on all six (27):** attention-pinch-scale, brace-actions, cognition, component-semantics, concept-salience, console, discovery-notices, effect-ledger, expression-resonance, frame-navigator, frame-size-memory, gesture-anatomy, guide, guide-badge, haptics, module-effects, page-region-rail, pronunciation-hints, region-enhancer, semantic-crossrefs, semantics-gate, settings-momentum, sigil-anatomy, site-search, spells, spw-block-association, variant-selection. Nothing they do on arrival is root state. The census does not see writes to a module's own hosts, so "quiet" is the candidate list for arming, not the verdict.
+- **Write on all six (23):** attention-reading-groove, brace-physics, cauldron, cauldron-fluency, charge-field, component-collection, experiential, hydration-passes, interactive-medium, learnability-ledger, loading-ecology, navigation-spells, operators, precipitation-request, pulse-beat-tuner, pwa-update-handler, region-menu, reward-ui, shell-disclosure, site-settings, state-inspector, topical-payload, tuning-discovery.
+- **The runtime outranks most modules.** Styled writes summed over the six routes: site-settings 852 (one burst of ~25 ms per page), the loader 284, the pre-paint inline script 198, `site.js` 135, `updates-contract` 127, `page-state` 120, `dom-contracts` 114, `region-profiler` 79, `describes-contract` 37.
+- **Body carries one module's annotation.** The loader and the two contract files write `data-spw-module-*` on a module's mount target. For a body-rooted module the target is `<body>`. The loader's attributes are written only when missing, so `<body>` keeps the first such module's; the describes and updates attributes are rewritten by each one (four to six times a page). Stylesheets read them, mostly under `data-spw-module-visuals="on"`. Taking the annotation off the root may change what those selectors match: a browser look first.
+- **Unchanged rewrites.** `dom-contracts` writes the fifteen floating-chrome slot properties seven times a page; a third of its writes change a value. The caller is lost through its batch.
+
+Limits: stacks name files only from source, so this is the dev graph; times are stretched by the probe; `observed` above `writes` in the output means an unhooked door.
+
 ## Next Slices
 
-1. A census of the 56: arrival writes vs handler-only, per module, measured, not read from code alone.
+1. Done above. Next from it: read each quiet module's arrival writes to its own hosts, and decide the body annotation in a browser.
 2. Cluster keys: arm an entry per container rather than per module (the kernel already takes arbitrary keys).
 3. Warm-on-approach for a cluster, then mount-by-weight on engagement, behind the same flag, on one route.
 
