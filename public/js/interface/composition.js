@@ -1506,7 +1506,7 @@ export function mixIngredients() {
   // Build a readable "Combination Record" using Spw-style markup
   let combinationHtml = `
     <div class="cauldron-combination-record">
-      <p class="cauldron-section-label">Combination Record — what was actually combined</p>
+      <p class="cauldron-section-label">What you mixed</p>
       <div class="cauldron-forces">
         ${operators.length ? `Forces: ${operators.map(rawOp => {
           const def = getOperatorDefinition(rawOp) || detectOperator(rawOp);
@@ -1519,7 +1519,7 @@ export function mixIngredients() {
         ${expressions.map(expr => `<code data-spw-semantic-expression="${escapeHtml(expr)}">${escapeHtml(expr)}</code>`).join(' <span class="cauldron-plus">+</span> ')}
       </div>
       <details class="cauldron-functional" data-spw-functional-application>
-        <summary>Functional mix (for agents/spells)</summary>
+        <summary>As data, for scripts</summary>
         <pre data-spw-semantic-expression="mix[functional]{${operators.join('+')}}"><code>${escapeHtml(JSON.stringify(functionalMix, null, 2))}</code></pre>
       </details>
     </div>
@@ -1537,10 +1537,10 @@ export function mixIngredients() {
 
   let crystallizationHtml = `
     <div class="cauldron-crystallization" data-spw-cast-form="${escapeHtml(castForm)}" data-spw-liminality="${suggestedLiminality}" data-spw-brace-physics="${functionalMix.braceContext}">
-      <p class="cauldron-section-label">One possible crystallization (mnemonic / prompt) — brace/physics aware</p>
-      <p class="cauldron-mnemonic-note">This is one contingent phrasing someone derived from the combination above. Its value is not general — test it specifically against your own material and observe what actually transfers. Includes current brace form and site physics for richer emergence.</p>
+      <p class="cauldron-section-label">One way to say it</p>
+      <p class="cauldron-mnemonic-note">One phrasing of the mix, with the page it was made on. Try it on your own material.</p>
       <div class="cauldron-mnemonic">${escapeHtml(prompt)}</div>
-      <p class="cauldron-test-prompt">Try using the exact expressions from the Combination Record on a real page or frame. Notice what the operators actually do in situ. Suggested cast form: <code data-spw-semantic-expression="${escapeHtml(castForm)}">${escapeHtml(castForm)}</code></p>
+      <p class="cauldron-test-prompt">Cast form: <code data-spw-semantic-expression="${escapeHtml(castForm)}">${escapeHtml(castForm)}</code></p>
     </div>
   `;
 
