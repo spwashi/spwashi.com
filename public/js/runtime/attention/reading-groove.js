@@ -75,12 +75,11 @@ export function initReadingGroove(root) {
   const abort = new AbortController();
   const { signal } = abort;
 
+  // One root: the stylesheets read the groove on <html>.
   const syncReadingGroovePreference = () => {
-    [doc.documentElement, doc.body].forEach((node) => {
-      writeAttributes(node, {
-        [READING_GROOVE_ATTR]: isReadingGrooveEnabled(doc) ? 'on' : 'off',
-        [READING_GROOVE_COUNT_ATTR]: beats.length,
-      });
+    writeAttributes(doc.documentElement, {
+      [READING_GROOVE_ATTR]: isReadingGrooveEnabled(doc) ? 'on' : 'off',
+      [READING_GROOVE_COUNT_ATTR]: beats.length,
     });
   };
 
@@ -188,12 +187,10 @@ export function initReadingGroove(root) {
         READING_BEAT_FOCUS_ATTR,
       ]);
     });
-    [doc.documentElement, doc.body].forEach((node) => {
-      clearAttributes(node, [
-        READING_GROOVE_ATTR,
-        READING_GROOVE_COUNT_ATTR,
-      ]);
-    });
+    clearAttributes(doc.documentElement, [
+      READING_GROOVE_ATTR,
+      READING_GROOVE_COUNT_ATTR,
+    ]);
   };
 }
 

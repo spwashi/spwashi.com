@@ -716,11 +716,10 @@ function syncSpellPathSurfaceDatasets({
     spwPageRegionSurface: surface || '',
   };
 
-  // Every section settle and resize lands here; html and body carry these to
-  // the whole cascade, so only a value that moved is written.
-  [document.documentElement, document.body].forEach((node) => {
-    writeDatasetValues(node, entries);
-  });
+  // Every section settle and resize lands here; <html> carries these to the
+  // whole cascade, so they are written to that one root, and only a value
+  // that moved is written.
+  writeDatasetValues(document.documentElement, entries);
 }
 
 export function renderBreadcrumbSpell() {

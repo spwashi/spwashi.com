@@ -157,7 +157,9 @@
    3b. Reading Groove (Scroll Activation)
    ========================================================================== */
 
-:where(html[data-spw-reading-groove="on"], body[data-spw-reading-groove="on"]) {
+/* Declared on <body> as well as <html>: the mixes below read --ink, which a
+   surface may set on <body>, and the groove's colors follow the surface. */
+:where(html[data-spw-reading-groove="on"], html[data-spw-reading-groove="on"] > body) {
   --spw-reading-rest-opacity: 0.86;
   --spw-reading-near-opacity: 0.96;
   --spw-reading-lead-opacity: 1;
@@ -178,7 +180,7 @@
     inset 0.08rem 0 0 var(--spw-reading-lead-accent, transparent);
 }
 
-:where(html[data-spw-reading-groove="off"], body[data-spw-reading-groove="off"]) {
+:where(html[data-spw-reading-groove="off"], html[data-spw-reading-groove="off"] > body) {
   --spw-reading-rest-opacity: 1;
   --spw-reading-near-opacity: 1;
   --spw-reading-lead-opacity: 1;
@@ -256,10 +258,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :where(
-    html[data-spw-reading-groove="on"] [data-spw-reading-beat],
-    body[data-spw-reading-groove="on"] [data-spw-reading-beat]
-  ) {
+  :where(html[data-spw-reading-groove="on"] [data-spw-reading-beat]) {
     transition: none;
     transform: none;
     filter: none;

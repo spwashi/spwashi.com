@@ -75,9 +75,18 @@ A page loads what its reader engages, not everything its grammar could support. 
 
 Limits: stacks name files only from source, so this is the dev graph; times are stretched by the probe; `observed` above `writes` in the output means an unhooked door.
 
+## Root precision — 2026-10-06 (slice 2)
+
+`npm run audit:root-ablation` answers what the census leaves open: does any element's style depend on a root token where it sits now? With transitions and animations frozen, it reads every element's computed style (and `::before`/`::after`) in one synchronous pass, removes a token set, reads again, restores, and halves the set until each moved element has a token. Sets: `body-mirror` (`<body>` copies of `<html>` tokens the markup did not author), `root-modules` (the loader's per-module annotation), `html-to-body` (the reverse, for checking a move), or one `side:name`.
+
+- **Copies, removed.** `<body>` carried a copy of every setting, the loader's last-module summary, the section handle's scroll state, breadcrumb spell's path and the reading groove: 116–125 tokens per route, each write made twice. On six routes only two copies moved any element. The rest now go to `<html>` alone. The groove's colors mix `--ink`, which a surface sets on `<body>`, so its declarations reach `<body>` through `html[…] > body`. A copy on `<body>` recomputes any token that reads a surface token; the packing pair does too, though with the other copies gone it changes nothing. Checked: the reverse set on the edited tree, and a full computed-style diff of `/topics/software/` against HEAD, within the noise of the same tree served twice.
+- **Kept.** Settings keep `component-lifecycle` on `<body>` (below). Hydration and capture-mode copies stay: `index.html` authors both on `<body>`, so they move with an HTML pass.
+- **Component rules that match the root.** Three rules written for hosts on the page also match `<html>` and `<body>`, because the root carries the same attribute. `[data-spw-component-lifecycle]` (a setting) draws a 3px border on both roots: a dark frame that arrives with settings after first paint and moves the page 6px. `[data-spw-module]::after` (a module hosted on the root) narrows the body's atmosphere veil to a 2–3px stripe and gives `<body>` a component shadow. `[data-spw-module-trigger-status]::before` gives `html::before` a 0.4s discharge flash. `controls.css` and `foundation.css` already exclude the roots from two such rules. The fix (a root-hosted module keeps its state in the registry; the lifecycle rule skips the roots) changes what a reader sees, so it waits for a browser review.
+- **Scripts off.** `audit:page-structure` now counts `script-only` buttons: 544 on 49 pages (225 settings chips, 96 mode switches, 66 `data-spw-action`). Mode panels are authored `hidden`, so with scripts off three of four lenses on `/about/` cannot be read. `html:not([data-spw-runtime-stage])` is the scripts-off hook: the pre-paint script stamps it before `<body>` parses, so a scripted visit never matches it.
+
 ## Next Slices
 
-1. Done above. Next from it: read each quiet module's arrival writes to its own hosts, and decide the body annotation in a browser.
+1. Done above. Next from it: read each quiet module's arrival writes to its own hosts. The body annotation is slice 2's root-host fix, waiting on its browser review.
 2. Cluster keys: arm an entry per container rather than per module (the kernel already takes arbitrary keys).
 3. Warm-on-approach for a cluster, then mount-by-weight on engagement, behind the same flag, on one route.
 

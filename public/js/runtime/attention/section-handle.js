@@ -1635,18 +1635,16 @@ function createSectionHandleController({
     sections.forEach((section) => {
       clearAttributes(section, [SECTION_STATE_ATTR, SECTION_INDEX_ATTR, SECTION_TIER_ATTR, APPROACH_ATTR]);
     });
-    [document.documentElement, document.body].forEach((node) => {
-      clearAttributes(node, [
-        PAGE_SECTION_CURRENT_ATTR,
-        PAGE_SECTION_INDEX_ATTR,
-        PAGE_SECTION_COUNT_ATTR,
-        PAGE_SECTION_PHASE_ATTR,
-        PAGE_SECTION_EDGE_ATTR,
-        PAGE_SECTION_DIRECTION_ATTR,
-      ]);
-      node.style.removeProperty('--spw-section-progress');
-      node.style.removeProperty('--spw-section-step');
-    });
+    clearAttributes(document.documentElement, [
+      PAGE_SECTION_CURRENT_ATTR,
+      PAGE_SECTION_INDEX_ATTR,
+      PAGE_SECTION_COUNT_ATTR,
+      PAGE_SECTION_PHASE_ATTR,
+      PAGE_SECTION_EDGE_ATTR,
+      PAGE_SECTION_DIRECTION_ATTR,
+    ]);
+    document.documentElement.style.removeProperty('--spw-section-progress');
+    document.documentElement.style.removeProperty('--spw-section-step');
     if (document.documentElement.dataset.spwWonderMemoryState !== 'active') {
       document.documentElement.style.removeProperty('--field-balance');
     }
@@ -1728,17 +1726,18 @@ function writePageSectionDatasets(snapshot) {
     ? (snapshot.currentIndex + 1) / snapshot.sectionCount
     : 1;
 
-  [document.documentElement, document.body].forEach((node) => {
-    writeAttributes(node, {
-      [PAGE_SECTION_CURRENT_ATTR]: snapshot.currentId,
-      [PAGE_SECTION_INDEX_ATTR]: snapshot.currentIndex + 1,
-      [PAGE_SECTION_COUNT_ATTR]: snapshot.sectionCount,
-      [PAGE_SECTION_PHASE_ATTR]: snapshot.phase,
-      [PAGE_SECTION_EDGE_ATTR]: edge,
-      [PAGE_SECTION_DIRECTION_ATTR]: direction,
-    });
-    writeSectionProgressStyle(node, progress, step);
+  // Every section change while scrolling lands here, so the state is written
+  // to one root: <html>, where the stylesheets read it.
+  const root = document.documentElement;
+  writeAttributes(root, {
+    [PAGE_SECTION_CURRENT_ATTR]: snapshot.currentId,
+    [PAGE_SECTION_INDEX_ATTR]: snapshot.currentIndex + 1,
+    [PAGE_SECTION_COUNT_ATTR]: snapshot.sectionCount,
+    [PAGE_SECTION_PHASE_ATTR]: snapshot.phase,
+    [PAGE_SECTION_EDGE_ATTR]: edge,
+    [PAGE_SECTION_DIRECTION_ATTR]: direction,
   });
+  writeSectionProgressStyle(root, progress, step);
   lastSectionIndex = snapshot.currentIndex;
 
   document.dispatchEvent(new CustomEvent(PAGE_SECTION_EVENT, {

@@ -1008,6 +1008,17 @@ const buildDatasetEntries = (normalized, modifiers, deviations, climate) => {
   return entries;
 };
 
+/* Settings live on <html>. <body> used to carry a copy of every one, which
+   doubled each settings write on the root; `npm run audit:root-ablation`
+   found that no style reads the copy except component-lifecycle, where a
+   component rule matches <body> itself and draws a frame around the page.
+   That copy stays until the frame is reviewed in a browser. */
+const BODY_SETTING_COPIES = Object.freeze(['spwComponentLifecycle']);
+
+const pickBodySettingCopies = (entries = {}) => Object.fromEntries(
+  BODY_SETTING_COPIES.filter((key) => Object.hasOwn(entries, key)).map((key) => [key, entries[key]]),
+);
+
 class SiteSettingsManager {
   constructor() {
     this.root = document.documentElement;
@@ -1036,10 +1047,7 @@ class SiteSettingsManager {
     const datasetEntries = buildDatasetEntries(normalized, modifiers, deviations, climate);
 
     setDatasetEntries(this.root, datasetEntries);
-    if (this.body) {
-      const { spwLayout, ...bodyEntries } = datasetEntries;
-      setDatasetEntries(this.body, bodyEntries);
-    }
+    if (this.body) setDatasetEntries(this.body, pickBodySettingCopies(datasetEntries));
 
     // Theme packs are token overrides in a stylesheet kept out of the core
     // bundle (themes/packs.css). Fetch it only once a non-default pack is

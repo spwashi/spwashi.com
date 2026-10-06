@@ -96,15 +96,9 @@ function createModuleEffectsInstance(ctx) {
   initialized = true;
 
   const html = document.documentElement;
-  const body = document.body;
   // Theme-independent timing tokens only need one computed-style read per mount.
   pulseDurationMs = readModulePulseDurationMs();
 
-  if (body?.dataset?.spwRuntimeMountedModules) {
-    normalizeEffectScope(body.dataset.spwRuntimeLastModuleEffectScope).forEach((token) => {
-      EFFECT_TOKENS.add(token);
-    });
-  }
   syncModuleEffects(html);
 
   if (ctx?.bus?.on) {
