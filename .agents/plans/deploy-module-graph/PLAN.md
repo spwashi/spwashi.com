@@ -66,7 +66,9 @@ Measured, built site, headless, 19 s after load:
 
 Boot closure is unchanged (9 files, 87.5 KB gzip). One fold remains: the `kernel/site-settings.js` barrel rides in `foundation`.
 
-Open, from the pack ledger: three visible packs (`interaction-progression`, `smart-console`, `spw-key-events`) and `variant-selection` statically import a module that lives in `idle-lab`, so the first of them to mount brings the whole idle pack early. `idle-default` and `idle-residue` import `seed-cards` and `region-menu`, so those two "visible" packs arrive at idle on every page. Each is a source import to move or a schedule to restate, one per patch.
+Pack ledger, same day: three visible packs (`interaction-progression`, `spw-key-events`, `variant-selection`) and `idle-chrome` reached into `idle-lab` for one function, the pulse duration, which lived in `pulse-beat-tuner`. The first of them to mount brought the whole idle pack early. The reader moved to a leaf, `runtime/physics/pulse-timing.js`; those four no longer import `idle-lab`.
+
+Open: `smart-console` imports `cognitive-core` (it reads the knowledge map), so it still brings `idle-lab`. `idle-default` and `idle-residue` import `seed-cards` and `region-menu`, so those two "visible" packs arrive at idle on every page. Each is a source import to move or a schedule to restate, one per patch.
 
 ## Non-Goals & Boundaries
 - Vite is not the deploy artifact (`dist-vite/` stays a smoke build)

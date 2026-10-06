@@ -6,7 +6,7 @@
  * keyboard navigation land.
  */
 
-import { readMicrointeractionPulseMs } from './pulse-beat-tuner.js';
+import { readMicrointeractionPulseMs } from './pulse-timing.js';
 
 // The palette probes are now one feature in the generic field guide, not a
 // bespoke reward mechanism. It declares its contract here; the engine owns
