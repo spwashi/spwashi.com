@@ -148,7 +148,15 @@ test('the comparison groups rows under one label each, and says when nothing mov
   ]);
   assert.match(lines[0], /^── since cccccccc \+2 uncommitted ─+$/);
   assert.deepEqual(formatComparison({ last: { sha: 'd' }, newWarnings: [], cleared: [], standing: [], moved: [] }, { style: plain }).slice(1),
-    ['quiet     nothing new, cleared, moved or waiting']);
+    ['quiet     nothing new, cleared, moved, asked or waiting']);
+  assert.deepEqual(formatComparison({
+    last: { sha: 'd' }, newWarnings: [], cleared: [], standing: [], moved: [],
+    asked: [{ question: 'Can a reader see which slot moved?', where: '.spw/c.spw:1' }],
+    settled: [{ question: 'Which probe settles the cauldron words?' }],
+  }, { style: plain }).slice(1), [
+    'asked     ? Can a reader see which slot moved? · .spw/c.spw:1',
+    'settled   ✓ Which probe settles the cauldron words?',
+  ]);
   assert.match(formatComparison({ last: null }, { style: plain })[1], /^first     run with a history here/);
 });
 
@@ -168,12 +176,14 @@ test('the digest reads as rows under its own rule', () => {
     bundles: { core: { first: 1700, last: 1712.1, max: 1712.1 } },
     near: ['core'],
     standing: [{ id: 'a', text: 'a, in words', kind: 'decision', runs: 3, since: '2026-10-01T00:00:00Z' }],
+    wonders: { first: 129, last: 131, unprobed: 25 },
   }, { style: plain });
   assert.match(lines[0], /^── gate history · 3 runs, 2026-10-01 → 2026-10-03 · 2 passed ─+$/);
   assert.deepEqual(lines.slice(1), [
     'tests     600 → 643',
     'bundles   core 1700.0 → 1712.1 KiB',
     'near      core',
+    'wonder    129 → 131 open · 25 without a probe',
     'decide    a, in words · 3 runs since 2026-10-01',
   ]);
   assert.match(formatDigest({ runs: 0 }, { style: plain })[1], /^empty     no runs yet/);

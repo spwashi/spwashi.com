@@ -71,6 +71,9 @@ const VALIDATORS = [
   { label: 'audit-folio-highres', args: ['scripts/audit-folio-highres.mjs', '--check'] },
   { label: 'check-agents', script: 'scripts/check-agent-contracts.mjs' },
   { label: 'check-workers', script: 'scripts/check-workers.mjs', headline: { tests: true, tag: 'check:workers' } },
+  // Open questions (scripts/wonder.mjs): reports only. The closing block says
+  // which were asked or settled since the last run.
+  { label: 'wonder', args: ['scripts/wonder.mjs', '--summary'] },
   // Skipped when the tree matches the last green run (see run-module-tests.mjs);
   // --force re-runs it.
   {
@@ -149,13 +152,21 @@ function finish(verdict, failedAt = null) {
     signals,
     log: logFile,
   };
-  const comparison = compareRuns(signals, history);
+  let previousWonders = {};
+  try {
+    previousWonders = JSON.parse(readFileSync(receiptFile, 'utf8')).signals?.wonders?.items || {};
+  } catch {
+    previousWonders = {};
+  }
+  const comparison = compareRuns(signals, history, { previousWonders });
   receipt.comparison = {
     since: comparison.last ? comparison.last.sha : null,
     newWarnings: comparison.newWarnings.map((warning) => warning.text),
     cleared: comparison.cleared,
     moved: comparison.moved,
     standing: comparison.standing.map(({ id, kind, runs, since }) => ({ id, kind, runs, since })),
+    asked: comparison.asked,
+    settled: comparison.settled,
   };
   try {
     mkdirSync(path.dirname(logFile), { recursive: true });

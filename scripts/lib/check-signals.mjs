@@ -20,6 +20,9 @@ export const CHATTER = /^\[check\] phase=|^\[check:agents\] spend$|\bmodule audi
 const TEST_COUNT = /^ℹ (tests|fail) (\d+)/;
 const TEST_TIME = /^\s*✔ (.+) \((\d+(?:\.\d+)?)ms\)$/;
 const BUNDLE_SIZE = /^\s*bundle: ([\w-]+):([\w-]+) (\d+(?:\.\d+)?) KiB\b/;
+// scripts/wonder.mjs --summary: a count line, then one line a question.
+const WONDER_COUNT = /^\[wonder\] (\d+) open on (\d+) surfaces · (\d+) without a probe/;
+const WONDER_ITEM = /^\? ([0-9a-f]{8}) (\S+) (.+)$/;
 
 /** The longest passing tests in a node:test listing, slowest first. */
 export function slowestTests(output = '', { limit = 3, minMs = 2000 } = {}) {
@@ -133,6 +136,7 @@ export function readSignals(stages = [], { previousTests = {} } = {}) {
   const near = [];
   const bundles = {};
   const tests = {};
+  let wonders = null;
   for (const stage of stages) {
     const output = String(stage.output || '');
     let count = 0;
@@ -146,6 +150,12 @@ export function readSignals(stages = [], { previousTests = {} } = {}) {
       near.push(...parseNearItems(line));
       const bundle = BUNDLE_SIZE.exec(line);
       if (bundle) bundles[bundle[1] === 'core' ? 'core' : `${bundle[1]}:${bundle[2]}`] = Number(bundle[3]);
+      const wonderCount = WONDER_COUNT.exec(line);
+      if (wonderCount) {
+        wonders = { open: Number(wonderCount[1]), surfaces: Number(wonderCount[2]), unprobed: Number(wonderCount[3]), items: {} };
+      }
+      const wonderItem = wonders && WONDER_ITEM.exec(line);
+      if (wonderItem) wonders.items[wonderItem[1]] = { where: wonderItem[2], question: wonderItem[3] };
       const testCount = TEST_COUNT.exec(line);
       if (testCount) {
         sawTests = true;
@@ -156,7 +166,7 @@ export function readSignals(stages = [], { previousTests = {} } = {}) {
     if (sawTests) tests[stage.label] = { count, failed };
     else if (/\bcache\b/.test(output) && previousTests[stage.label]) tests[stage.label] = { ...previousTests[stage.label], cached: true };
   }
-  return { warnings: [...warnings.values()], near, bundles, tests };
+  return { warnings: [...warnings.values()], near, bundles, tests, wonders };
 }
 
 /** One history line: small enough that two hundred of them stay cheap to read. */
@@ -172,15 +182,24 @@ export function historyEntry(receipt) {
     near: receipt.signals.near.map((entry) => entry.key),
     bundles: receipt.signals.bundles,
     tests: receipt.signals.tests,
+    ...(receipt.signals.wonders ? {
+      wonders: {
+        open: receipt.signals.wonders.open,
+        unprobed: receipt.signals.wonders.unprobed,
+        keys: Object.keys(receipt.signals.wonders.items),
+      },
+    } : {}),
   };
 }
 
 /**
  * This run against the history before it (oldest first): warnings that are
- * new or cleared since the last run, bundles whose size moved, and for each
- * warning still here how many runs in a row have carried it and since when.
+ * new or cleared since the last run, bundles whose size moved, questions
+ * asked or settled (a wonder settles by leaving the files; its words come
+ * from `previousWonders`, the last receipt's items), and for each warning
+ * still here how many runs in a row have carried it and since when.
  */
-export function compareRuns(signals, history = [], { minDeltaKiB = 0.05 } = {}) {
+export function compareRuns(signals, history = [], { minDeltaKiB = 0.05, previousWonders = {} } = {}) {
   const last = history.at(-1) || null;
   const ids = signals.warnings.map((warning) => warning.id);
   const lastIds = new Set(last?.warnings || []);
@@ -206,7 +225,16 @@ export function compareRuns(signals, history = [], { minDeltaKiB = 0.05 } = {}) 
     }
     moved.sort((a, b) => Math.abs(b.delta) - Math.abs(a.delta));
   }
-  return { last, newWarnings, cleared, standing, moved };
+  const asked = [];
+  const settled = [];
+  const lastKeys = last?.wonders?.keys;
+  if (signals.wonders && Array.isArray(lastKeys)) {
+    const before = new Set(lastKeys);
+    for (const [key, item] of Object.entries(signals.wonders.items)) if (!before.has(key)) asked.push({ key, ...item });
+    const now = signals.wonders.items;
+    for (const key of lastKeys) if (!now[key]) settled.push({ key, ...(previousWonders[key] || { question: `(question ${key})` }) });
+  }
+  return { last, newWarnings, cleared, standing, moved, asked, settled };
 }
 
 /** How to rerun one stage alone, from the command the gate spawned. */
@@ -238,6 +266,7 @@ export function digestHistory(entries = []) {
     if (series.length) bundles[name] = { first: series[0], last: series.at(-1), max: Math.max(...series) };
   }
   const totalTests = (entry) => Object.values(entry.tests || {}).reduce((sum, row) => sum + row.count, 0);
+  const withWonders = entries.filter((entry) => entry.wonders);
   const standing = (last.warnings || []).map((id) => {
     let firstAt = last.at;
     let runs = 0;
@@ -257,5 +286,10 @@ export function digestHistory(entries = []) {
     bundles,
     near: last.near || [],
     standing,
+    wonders: withWonders.length ? {
+      first: withWonders[0].wonders.open,
+      last: withWonders.at(-1).wonders.open,
+      unprobed: withWonders.at(-1).wonders.unprobed,
+    } : null,
   };
 }
