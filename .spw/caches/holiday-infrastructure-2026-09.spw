@@ -17,6 +17,7 @@
 @dregg_lineage: ~"../conventions/dregg-lineage.spw"
 @promo_feed: ~"../../public/data/promo-wonder-cycle.json"
 @holiday_tropes: ~"../../public/css/ornament/holiday-tropes.css"
+@ways: ~"./ways-2026-10.spw"
 
 operation = "prime"
 fixity = "experimental"
@@ -49,6 +50,16 @@ expression = holiday[threshold]{table;toast;name}<meaning>
   ornament = `seasonal dress stays in @holiday_tropes under flourish-pack, never core (@wonder_architecture refuse)`
   tables = `a holiday session format for RPG Wednesday and a long-table recipe cluster`
   edition = `a folio holiday edition, requested by card`
+}[reg=facet]
+
+^"festivities_2026_10"{
+  ways = `the four turns are now applications of the ways (@ways): mask applies regard, gift applies give, the threshold applies cross, the almanac applies keep time, and a long table would apply gather`
+  routes = #[`/holidays/mask/`, `/holidays/gift/`, `/holidays/almanac/`][reg=set]
+  route_shape = `each festivity is a child of /holidays/, links back to #holiday-season, and links across to /topics/fields/culture/`
+  mask = `costume[sheet]{appeared.source.said.stayed}(mask)<regard>. Regard supersedes the try-on wording in the season frame and on /holidays/; the public line waits for wording from the creator.`
+  gift = `ledger[gift]{given.guessed.taught}(season)<reader>. A gift is a guess about someone, made solid; the page carries no money.`
+  almanac = `almanac[practice]{weekly.close.month.threshold}(season)<tradition>, hand-authored from the production-season slice until a second year repeats the practice`
+  keeps = `what these pages cultivate is held once, in the keeps frame of @ways`
 }[reg=facet]
 
 do_not = #[
