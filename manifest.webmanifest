@@ -8,16 +8,31 @@
   "display": "standalone",
   "display_override": ["standalone", "browser"],
   "launch_handler": {
-    "client_mode": "navigate-existing"
+    "client_mode": "focus-existing"
   },
   "file_handlers": [
     {
-      "action": "/tools/spw-parser/",
+      "action": "/open/",
       "accept": {
+        "application/x-spw": [".spw"],
         "text/plain": [".spw"]
-      }
+      },
+      "launch_type": "single-client"
     }
   ],
+  "share_target": {
+    "action": "/share/spw",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "files": [
+        {
+          "name": "spw",
+          "accept": [".spw", "application/x-spw"]
+        }
+      ]
+    }
+  },
   "background_color": "#faf5ed",
   "theme_color": "#1a9999",
   "orientation": "portrait-primary",
@@ -63,6 +78,11 @@
       "name": "Spw Operators",
       "short_name": "Operators",
       "url": "/topics/software/spw/"
+    },
+    {
+      "name": "Open a Spw document",
+      "short_name": "Open",
+      "url": "/open/"
     },
     {
       "name": "Literal Spw Parser",

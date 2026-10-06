@@ -96,6 +96,9 @@ import { createModuleLoader } from './runtime/orchestration/loader.js';
 import { describePageCategory, readPageCategory } from './runtime/page/page-category.js';
 import * as expressionGeometry from './semantic/spw-expression-geometry.js';
 import * as moduleTimingContract from './kernel/module-timing-contract.js';
+import { installDocumentLaunchConsumer } from './runtime/shell/spw-document-launch.js';
+
+installDocumentLaunchConsumer();
 
 function loadCompositionBox() {
   return import('./runtime/regions/composition-box-model.js');

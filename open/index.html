@@ -1,0 +1,110 @@
+<spw-page
+    title="Open a Spw document · Spwashi"
+    description="Open a local .spw file in the browser. The file stays on the device and becomes a room you can read, edit, and export."
+    canonical="https://spwashi.com/open/"
+    og_title="Open a Spw document · Spwashi"
+    og_description="A .spw file opens as a room: seed, clusters, bridges, and the source underneath. Nothing is uploaded."
+    og_image="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"
+    og_image_alt="Spwashi, a place to open a Spw document."
+    keywords="Spw, .spw, document, PWA, local file, parser"
+    breadcrumb_label="Open"
+    header_current="Open"
+    header_current_href="/open/"
+    header_indicator="probe"
+    surface="tools"
+    page_family="toolbench"
+    page_role="document-room"
+    page_modes="read inspect edit"
+    wonder="memory consequence"
+    route_family="toolbench language"
+    layout="atlas"
+    features="operators navigator console"
+    related_routes="/tools/spw-parser/|/tools/|/privacy/|/settings/"
+    stylesheet_mode="scoped"
+></spw-page>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <spw-site-head></spw-site-head>
+</head>
+<body data-spw-surface="tools"
+    data-spw-stylesheet-mode="scoped"
+    data-spw-features="operators navigator console"
+    data-spw-route-family="toolbench language"
+    data-spw-context="analysis"
+    data-spw-wonder="memory consequence"
+    data-spw-page-family="toolbench"
+    data-spw-page-modes="read inspect edit"
+    data-spw-page-seed="page_open"
+    data-spw-page-role="document-room"
+    data-spw-layout="atlas"
+    data-spw-section-handle-desktop="auto"
+    data-spw-related-routes="/tools/spw-parser/|/tools/|/privacy/|/settings/">
+    <a class="skip-link" href="#main-content">Skip to document</a>
+
+    <spw-site-header
+        current="Open"
+        current_href="/open/"
+        indicator="probe"
+        seed="page_open__site_header"
+        related_routes="/tools/spw-parser/|/tools/|/privacy/|/settings/"
+        context_relevance="open a local spw document as a room"
+        nav_items="Home:/|Tools:/tools/|Parser:/tools/spw-parser/|Privacy:/privacy/|Settings:/settings/"
+    ></spw-site-header>
+
+    <main id="main-content" tabindex="-1" aria-labelledby="open-title"
+        data-spw-kind="surface"
+        data-spw-role="reference"
+        data-spw-context="analysis"
+        data-spw-seed="page_open__main">
+        <article>
+            <section class="spw-frame" data-spw-region-role="entry-spine" id="spw-document"
+                data-spw-kind="frame"
+                data-spw-role="orientation"
+                data-spw-form="brace"
+                data-spw-context="analysis"
+                data-spw-wonder="memory consequence"
+                data-spw-affordance="orient"
+                data-spw-liminality="entry"
+                data-spw-category-family="workshop"
+                data-spw-locality="high"
+                data-spw-consequence="framing"
+                data-spw-promptability="visible"
+                data-spw-collectability="high"
+                data-spw-seed="page_open__room"
+                data-spw-semantic-expression="document[spw]{parse.room.export}&lt;local&gt;"
+                data-spw-region-purpose="public-spine"
+                data-spw-region-role="entry-spine">
+                <header class="frame-heading" data-spw-slot="header">
+                    <a class="frame-sigil" href="#spw-document" data-spw-operator="frame">#&gt;open</a>
+                    <h1 id="open-title">Open a Spw document</h1>
+                </header>
+                <p data-spw-textual-role="lede">A <code>.spw</code> file opens here as a room. Parsing stays in this browser. Double-click on desktop Chromium, share into the installed app, or choose a file. The text is not uploaded.</p>
+                <p data-spw-textual-role="note">Named blocks such as <code>^"seed"</code>, <code>^"clusters"</code>, <code>^"bridges"</code>, <code>^"operators"</code>, and <code>^"queries"</code> become the room. Anything else stays in the source. A handoff between pages uses <code>sessionStorage</code> and is cleared when this page reads it. A system share waits in Cache Storage as <code>spw-document-share</code> until this page reads it and deletes it. Installed file association is a desktop Chromium feature. Other browsers use the file field.</p>
+                <form>
+                    <label for="spw-document-file">Choose a .spw file</label>
+                    <input id="spw-document-file" data-document-file type="file" accept=".spw,application/x-spw">
+                </form>
+                <p data-document-status data-spw-textual-role="note">Choose a .spw file, or open one with the installed app.</p>
+                <div data-document-room></div>
+                <div class="spec-strip" role="group" aria-label="Document views">
+                    <button type="button" class="spw-chip" data-spw-handle="true" data-spw-operator="frame" data-document-view="room" aria-pressed="true">#&gt; room</button>
+                    <button type="button" class="spw-chip" data-spw-handle="true" data-spw-operator="concept" data-document-view="raw" aria-pressed="false">&lt; raw</button>
+                    <button type="button" class="spw-chip" data-spw-handle="true" data-spw-operator="integration" data-document-view="graph" aria-pressed="false">^ graph</button>
+                    <button type="button" class="spw-chip" data-spw-handle="true" data-spw-operator="action" data-document-view="mutate" aria-pressed="false">! mutate</button>
+                    <button type="button" class="spw-chip" data-spw-handle="true" data-spw-operator="value" data-document-save>* save</button>
+                    <button type="button" class="spw-chip" data-spw-handle="true" data-spw-operator="concept-edge" data-document-export>&gt; export</button>
+                </div>
+                <div data-document-extra hidden>
+                    <label for="spw-document-editor">Source</label>
+                    <textarea id="spw-document-editor" class="spw-textarea" data-document-editor rows="16" spellcheck="false" hidden></textarea>
+                    <div data-document-graph></div>
+                </div>
+                <p><a data-document-parser href="/tools/spw-parser/" hidden>Inspect this source in the literal parser</a></p>
+            </section>
+        </article>
+    </main>
+
+    <spw-site-footer></spw-site-footer>
+</body>
+</html>

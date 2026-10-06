@@ -134,7 +134,7 @@
             </article>
             <article class="spw-panel">
                 <h3>Install prompts and offline files</h3>
-                <p>Choosing “Later” on an install hint stores a local timestamp for up to 30 days. The service worker keeps the offline shell and recently used site files in Cache Storage.</p>
+                <p>Choosing “Later” on an install hint stores a local timestamp for up to 30 days. The service worker keeps the offline shell and recently used site files in Cache Storage. Opening a <code>.spw</code> file on <a href="/open/">/open/</a> keeps the text in this browser. A handoff between pages uses session storage and is deleted when that page reads it. A system share waits in Cache Storage as <code>spw-document-share</code> until the page reads it and deletes it. The file is not uploaded.</p>
                 <code>spw-pwa-install-dismissed</code><br>
                 <code>spw-pwa-ios-hint-dismissed</code>
             </article>
