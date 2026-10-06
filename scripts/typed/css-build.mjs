@@ -380,6 +380,13 @@ function logBuildSummary(params) {
                 : '';
             log(`  bundle: ${bundle.kind}:${bundle.scope} ${(bundle.bytes / 1024).toFixed(1)} KiB ${bundle.ms}ms${suffix}${budgetNote}`);
         }
+        // The room left is what a reader acts on; thirty sizes that held are not.
+        const near = bundleResults.filter((bundle) => !bundle.overBudget && bundle.budgetBytes
+            && bundle.bytes >= bundle.budgetBytes * 0.9);
+        if (near.length) {
+            log(`[css-build] near soft budget: ${near.map((bundle) => `${bundle.kind === 'core' ? 'core' : `${bundle.kind}:${bundle.scope}`} `
+                + `${(bundle.bytes / 1024).toFixed(1)} of ${((bundle.budgetBytes || 0) / 1024).toFixed(0)} KiB`).join(', ')}`);
+        }
     }
     if (behaviorScopeResult) {
         log(`  runtime: ${behaviorScopeResult.href} (${(behaviorScopeResult.bytes / 1024).toFixed(1)} KiB)`

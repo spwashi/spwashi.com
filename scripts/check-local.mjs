@@ -13,14 +13,21 @@
  * run reads the same as a serial one. Pass --serial to run every stage
  * end-to-end when isolating a failure.
  *
+ * A passing stage prints its headline (tagged result lines, warnings, a test
+ * count); a failing one prints everything. --verbose, SPW_CHECK_VERBOSE=1 or
+ * CI prints everything. The full text of every stage goes to SPW_CHECK_LOG
+ * (default .agents/state/runtime/check-local-last.log).
+ *
  * Deploy's extra step is `npm run build:site:run` (catalog bundle into dist/).
  * This gate does not copy dist/. Catalog Node imports are covered by
  * infrastructure-contracts via scripts/lib/register-public-imports.mjs.
  */
+import { mkdirSync, writeFileSync } from 'node:fs';
 import { availableParallelism } from 'node:os';
+import path from 'node:path';
 import process from 'node:process';
 
-import { reportStages, runCommand, runCompile } from './build-compile.mjs';
+import { isVerboseRun, reportStages, runCommand, runCompile } from './build-compile.mjs';
 
 const allowDirty = process.argv.includes('--allow-dirty') || process.argv.includes('--dirty');
 
@@ -47,12 +54,13 @@ const VALIDATORS = [
   // latest week's set. A stale week prints a warning and does not fail.
   { label: 'audit-folio-highres', args: ['scripts/audit-folio-highres.mjs', '--check'] },
   { label: 'check-agents', script: 'scripts/check-agent-contracts.mjs' },
-  { label: 'check-workers', script: 'scripts/check-workers.mjs' },
+  { label: 'check-workers', script: 'scripts/check-workers.mjs', headline: { tests: true, tag: 'check:workers' } },
   // Skipped when the tree matches the last green run (see run-module-tests.mjs);
   // --force re-runs it.
   {
     label: 'test:modules',
     args: ['scripts/run-module-tests.mjs', ...(process.argv.includes('--force') ? [] : ['--cached'])],
+    headline: { tests: true, tag: 'test:modules' },
   },
 ];
 
@@ -60,11 +68,30 @@ const serial = process.argv.includes('--serial');
 const force = process.argv.includes('--force') || process.env.SPW_TSC_FORCE === '1';
 const started = Date.now();
 
-const runNode = ({ label, script, args }) => runCommand(process.execPath, script ? [script] : args, label);
+const runNode = ({ label, script, args, headline }) => runCommand(process.execPath, script ? [script] : args, label)
+  .then((result) => ({ ...result, headline }));
+
+const verbose = isVerboseRun();
+const logFile = process.env.SPW_CHECK_LOG || path.join(process.cwd(), '.agents/state/runtime/check-local-last.log');
+const logged = [];
+
+function writeLog() {
+  try {
+    mkdirSync(path.dirname(logFile), { recursive: true });
+    writeFileSync(logFile, logged.map(({ prefix, label, status, ms, output }) => (
+      `[${prefix}] ${label} ${status === 0 ? 'ok' : 'FAILED'} ${(ms / 1000).toFixed(2)}s\n${(output || '').trimEnd()}\n`
+    )).join('\n'));
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 function bail(prefix, results) {
-  const failed = reportStages(prefix, results);
+  logged.push(...results.map((result) => ({ prefix, ...result })));
+  const failed = reportStages(prefix, results, { verbose });
   if (!failed.length) return;
+  writeLog();
   console.log(`[check:local] failed at ${prefix}: ${failed.map((result) => result.label).join(', ')}`);
   process.exit(1);
 }
@@ -93,4 +120,6 @@ bail('compile', compileResults);
 if (cssResult) bail('css', [cssResult]);
 bail('validate', await runWave(VALIDATORS, serial ? 1 : Math.max(2, availableParallelism() - 1)));
 
-console.log(`[check:local] passed ${((Date.now() - started) / 1000).toFixed(2)}s`);
+const shownLog = path.relative(process.cwd(), logFile).startsWith('..') ? logFile : path.relative(process.cwd(), logFile);
+const where = writeLog() && !verbose ? `; every stage in full: ${shownLog}` : '';
+console.log(`[check:local] passed ${((Date.now() - started) / 1000).toFixed(2)}s${where}`);
