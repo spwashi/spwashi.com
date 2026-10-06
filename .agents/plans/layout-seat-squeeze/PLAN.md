@@ -77,3 +77,10 @@ Readers can distinguish card titles, supporting copy, metadata, and actions at p
 - Topline descriptors: `whimsy.css` no longer re-seats `.spec-pill` as inline-block; non-focusable topline pills take the compact handle floor. `sigils-and-chips.css`.
 - Spw: `.spw/caches/component-fit-lens-journey-2026-09.spw#flj-007`, `#flj-008`.
 - Held: 5/7/8-member sets; `.header-surface` 6px settle shift at broadsheet (~0.008); JS-off pocket nav is `display:none` under the coarse query (pre-existing, not touched).
+
+## 2026-10-06 Container fold and late chrome
+
+- Evidence: home (broadsheet, dev, foreground tab) shifted 22px about 15s after every load (CLS 0.307). The cause was component semantics classing header actions as components, which gave them `container-type: inline-size` and route-state padding. Fixed by `isInsideShellChrome` (`kernel/dom-contracts.js`) at the four writers, plus the header exclusion in `foundation.css`. 53717ed7.
+- Same class, other seat: a start-aligned container in a card column folded to its border (folios: six cards about 2px wide). The card-column stretch rule in `foundation.css` fixes it. a740b10d. A sweep found no collapsed or overflowing element on /, /about/, /topics/, /services/, /now/, /projects/, /recipes/, /play/rpg-wednesday/ or /topics/software/spw/.
+- Now: home totals about 0.005. The header settles 4px at about 1.1s, and the badge and search action grow 6px at about 3s as the chrome floor arrives.
+- Held: the lens hook nav sometimes wraps (about 0.05, variable timing, chips gain about 3px); not seen on the 2026-10-06 load. Font swap is about 0.010; every face is `display: swap` with no metric overrides. A fallback `size-adjust` tuned for Georgia would be wrong where the fallback is Noto Serif, and preloading the 129 KiB Newsreader on every page competes with core CSS, so neither shipped.
