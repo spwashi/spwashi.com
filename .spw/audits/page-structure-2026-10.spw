@@ -54,8 +54,15 @@ expression = page[structure]{close.address.level}<editor>
   after = `0 heading-skip`
 }
 
+^"design_hub_2026_10_06"{
+  before = `four unbalanced findings, all on @design_hub`
+  cause = `Two QA cards were lifted out of #context-stack at some point. The material bench landed in the interactive-experiments cluster with one closing div too many, which closed that cluster early. #context-stack was left with no closing tags for its grid, itself or its cluster. The render ladder after #lab-behavior had lost the opening tag and header of its frame.`
+  fixed = `The stray div is gone. #context-stack closes its grid, itself and the rendering-physics cluster, so the collaboration cluster and #team-prompts are top-level again. The ladder is a frame once more, #render-ladder, with lab behavior as its first panel and the seven probes at its foot.`
+  added = `#bench-live after the hero: the modules the runtime has mounted on the page, written as one expression; the last five changes to the root state as they happen; and the count of cards the ecology specimen can be, with a shuffle that presses its controls. The design surface shares the website bundle, which is at its budget, so the frame uses existing classes only.`
+  after = `0 unbalanced on all 206 routes`
+}
+
 ^"held"{
-  design_hub = `@design_hub still has four findings. The render ladder after #lab-behavior lost the opening tag of its frame, the interactive-experiments cluster closes one div early, and #context-stack and the rendering-physics cluster never close. The route was reorganized into clusters several times; which frame the ladder belongs to is a call for the creator.`
   care_figures = `@care draws two flow diagrams 960 wide inside a 402px column, so 12.8px labels render at 5.4px. Letting a frame that holds a wide figure span its row is a layout change that waits for the creator to see it.`
   design = `Reported and not swept: 11 routes carry a style block and 4 carry more than eight inline styles; three recipe compare poles hold a living term inside a chip (audit:living-terms nested).`
 }

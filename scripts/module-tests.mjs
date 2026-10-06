@@ -24,6 +24,7 @@ export const MODULE_TEST_FILES = Object.freeze([
   'scripts/tests/cauldron-live-expression.test.mjs',
   'scripts/tests/cauldron-tape.test.mjs',
   'scripts/tests/care-handle.test.mjs',
+  'scripts/tests/design-bench-live.test.mjs',
   'scripts/tests/audit-page-structure.test.mjs',
   'scripts/tests/expression-tone.test.mjs',
   'scripts/tests/rename-residue.test.mjs',
