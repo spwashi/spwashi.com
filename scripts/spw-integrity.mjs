@@ -82,7 +82,7 @@
  *                                            # citations in those files only
  */
 
-import { readFile, stat } from 'node:fs/promises';
+import { readFile, readdir, stat } from 'node:fs/promises';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import path from 'node:path';
@@ -144,6 +144,36 @@ async function exists(target) {
   } catch {
     return false;
   }
+}
+
+const listingCache = new Map();
+
+async function listing(dir) {
+  if (!listingCache.has(dir)) {
+    listingCache.set(dir, readdir(dir).then((names) => new Set(names), () => null));
+  }
+  return listingCache.get(dir);
+}
+
+/**
+ * The name on disk where a cited path differs from it only by letter case, or
+ * null when every segment matches. macOS resolves `Plan.md` to `PLAN.md`; the
+ * checkout the Drift notice runs on does not, so the same citation is fine
+ * here and missing there.
+ */
+async function caseMismatch(resolved) {
+  const relative = path.relative(ROOT, resolved);
+  if (!relative || relative.startsWith('..')) return null;
+  let dir = ROOT;
+  for (const segment of relative.split(path.sep)) {
+    const names = await listing(dir);
+    if (names && !names.has(segment)) {
+      const actual = [...names].find((name) => name.toLowerCase() === segment.toLowerCase());
+      return actual || null;
+    }
+    dir = path.join(dir, segment);
+  }
+  return null;
 }
 
 const anchorCache = new Map();
@@ -211,6 +241,14 @@ async function checkRef(file, target) {
     // not a rename the citation failed to follow.
     if (isGitIgnored(relative, { cwd: ROOT })) return { verdict: 'ok', generated: true };
     return { verdict: 'missing-file', detail: rawPath, resolved: relative };
+  }
+  const onDisk = await caseMismatch(resolved);
+  if (onDisk) {
+    return {
+      verdict: 'missing-file',
+      detail: `${rawPath} (the file on disk is spelled ${onDisk}; a case-sensitive checkout cannot find this)`,
+      resolved: path.relative(ROOT, resolved),
+    };
   }
   if (fragment && resolved.endsWith('.spw')) {
     const anchors = await anchorsOf(resolved);

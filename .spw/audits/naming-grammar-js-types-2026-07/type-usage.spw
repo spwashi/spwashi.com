@@ -6,7 +6,7 @@
 #:fixity #!tending
 
 @index: ~"./index.spw"
-@agents_md: ~"../../../Agents.md"
+@agents_md: ~"../../../AGENTS.md"
 @tsconfig_root: ~"../../../tsconfig.json"
 @tsconfig_runtime: ~"../../../tsconfig.runtime.json"
 @tsconfig_scripts: ~"../../../tsconfig.scripts.json"
