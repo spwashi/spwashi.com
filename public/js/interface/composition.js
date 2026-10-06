@@ -59,7 +59,6 @@ import {
   closeCauldronDialog,
   setupCauldronChrome,
   syncCauldronPanelCollapse,
-  syncCauldronPhaseRail,
   syncFloatingChip,
 } from './cauldron/chrome.js';
 import { deriveNumericityQuantifiers, isNumericalConcept, parseNumericalValue } from '/public/js/semantic/cauldron/helpers.js';
@@ -791,9 +790,6 @@ function sitCauldronVessel(name, { persist = true } = {}) {
       expr.textContent = spec.expression;
       expr.setAttribute('data-spw-semantic-expression', spec.expression);
     }
-    host.querySelectorAll('[data-spw-phase-step] [data-cauldron-phase-label], [data-spw-phase-step] .site-footer__cauldron-phase-label').forEach((label, index) => {
-      if (spec.phases[index]) label.textContent = spec.phases[index];
-    });
     const mix = host.querySelector('[data-spw-cauldron-action="mix"]');
     if (mix) {
       mix.textContent = '! Mix fragments';
@@ -1013,7 +1009,6 @@ function syncCauldronState() {
   renderIngredientsList(ingredients);
   renderCauldronMirrors(ingredients, phase);
   syncSpellPreview(ingredients, phase);
-  syncCauldronPhaseRail(phase);
   syncCauldronPanelCollapse(count);
   syncFloatingChip();
 }

@@ -45,20 +45,11 @@ source = "creator, 2026-10-06: sets of words like live/cooling/projected should 
 ^"cauldron_progress"{
   coordinate = `how many fragments are held: 0, 1, 2, 3 or more`
   owner = @cauldron_contract
-  sets = #[
-    `code: empty, primed, mixing, spell-ready`,
-    `rail (footer): gather, prime, compose, extend`,
-    `chip: gather, prime, compose, cast`,
-    `garden: sow, tend, mix, harvest`,
-    `soup: stock, simmer, taste, serve`,
-    `salad: wash, cut, toss, plate`,
-    `toolbox: pick, fit, check, return`,
-    `workbench: clamp, cut, join, assemble`,
-    `fallback: gather, prime, mix, cast`
-  ][reg=set]
-  status = "collision"
-  reading = `nine vocabularies for four states; the creator, 2026-10-06: the four buttons are not clear and gardening may not apply cleanly to the cauldron; Spw learnability and the tangibility of the cauldron come first`
-  proposal = `no progress words: the braces show the parts held, and each operator reads in the solution words below; demo on the Precipitate Bench, browser-gated`
+  code = #[`empty`, `primed`, `mixing`, `spell-ready`][reg=set]
+  chip = #[`gather`, `prime`, `compose`, `cast`][reg=set]
+  status = "in use"
+  retired_2026_10_06 = `The phase rail is gone, and with it eight vocabularies for this one count: the footer rail words (gather, prime, compose, extend) and four words per vessel (sow, tend, mix, harvest; stock, simmer, taste, serve; wash, cut, toss, plate; pick, fit, check, return; clamp, cut, join, assemble; gather, prime, mix, cast). The creator found the four steps unclear and read them as buttons. The count is carried by the live expression and its prefix now (cauldron_state_prefix below).`
+  kept = `The code words stay as the state the runtime writes. The floating chip keeps its four words. A vessel still names its own expression, such as cauldron[garden]{sow.tend.harvest}, under Vessel and Spw notation.`
 }[reg=facet]
 
 ^"cauldron_state_prefix"{
@@ -67,7 +58,7 @@ source = "creator, 2026-10-06: sets of words like live/cooling/projected should 
   words = #[`. resting`, `~ held`, `* ready`, `^ mixed`][reg=set]
   thresholds = `nothing held; one or two held; three or more held; a mix of two or more is showing`
   status = "in use"
-  reading = `landed 2026-10-06 as the count line of the panel: .cauldron{} becomes ~cauldron{costume}, then *cauldron{costume.recipe.ink}, then ^cauldron{...} while a mix shows. The four prefixes are canon operators (ground, potential, value, integration), so the line teaches them. It replaces the sentence that repeated the count; the phase rail and the vessel words above are unchanged and still wait for the demo.`
+  reading = `landed 2026-10-06 as the count line of the panel: .cauldron{} becomes ~cauldron{costume}, then *cauldron{costume.recipe.ink}, then ^cauldron{...} while a mix shows. The four prefixes are canon operators (ground, potential, value, integration), so the line teaches them. It replaces the sentence that repeated the count, and since the same day it stands in for the phase rail.`
 }[reg=facet]
 
 ^"cauldron_tape"{
