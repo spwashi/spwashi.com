@@ -14,20 +14,35 @@
  * end-to-end when isolating a failure.
  *
  * A passing stage prints its headline (tagged result lines, warnings, a test
- * count); a failing one prints everything. --verbose, SPW_CHECK_VERBOSE=1 or
- * CI prints everything. The full text of every stage goes to SPW_CHECK_LOG
- * (default .agents/state/runtime/check-local-last.log).
+ * count); a failing one prints everything and the command that reruns it
+ * alone. --verbose, SPW_CHECK_VERBOSE=1 or CI prints everything. Each run
+ * writes the full text to SPW_CHECK_LOG (default
+ * .agents/state/runtime/check-local-last.log), a JSON receipt beside it, and
+ * one line to check-history.jsonl there; the run closes with what changed
+ * since the last one (scripts/lib/check-signals.mjs). npm run check:signals
+ * reads the history without running anything.
  *
  * Deploy's extra step is `npm run build:site:run` (catalog bundle into dist/).
  * This gate does not copy dist/. Catalog Node imports are covered by
  * infrastructure-contracts via scripts/lib/register-public-imports.mjs.
  */
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { availableParallelism } from 'node:os';
 import path from 'node:path';
 import process from 'node:process';
 
 import { isVerboseRun, reportStages, runCommand, runCompile } from './build-compile.mjs';
+import {
+  RECEIPT_SCHEMA,
+  compareRuns,
+  formatComparison,
+  historyEntry,
+  readSignals,
+  rerunCommand,
+  stageHeadline,
+  trimHistory,
+} from './lib/check-signals.mjs';
 
 const allowDirty = process.argv.includes('--allow-dirty') || process.argv.includes('--dirty');
 
@@ -75,24 +90,91 @@ const verbose = isVerboseRun();
 const logFile = process.env.SPW_CHECK_LOG || path.join(process.cwd(), '.agents/state/runtime/check-local-last.log');
 const logged = [];
 
-function writeLog() {
+const receiptFile = logFile.replace(/\.log$/, '') + '.json';
+const historyFile = process.env.SPW_CHECK_HISTORY || path.join(path.dirname(logFile), 'check-history.jsonl');
+const shown = (file) => (path.relative(process.cwd(), file).startsWith('..') ? file : path.relative(process.cwd(), file));
+
+/** Which tree this run judged: the commit, and how many files differ from it. */
+function readTree() {
   try {
-    mkdirSync(path.dirname(logFile), { recursive: true });
-    writeFileSync(logFile, logged.map(({ prefix, label, status, ms, output }) => (
-      `[${prefix}] ${label} ${status === 0 ? 'ok' : 'FAILED'} ${(ms / 1000).toFixed(2)}s\n${(output || '').trimEnd()}\n`
-    )).join('\n'));
-    return true;
+    const sha = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+    // A push checkout links node_modules in; that link is not a change to the tree.
+    const dirty = execFileSync('git', ['status', '--porcelain'], { encoding: 'utf8' }).split('\n')
+      .filter((line) => line && line !== '?? node_modules');
+    return { sha, dirty: { count: dirty.length, files: dirty.slice(0, 20).map((line) => line.slice(3)) } };
   } catch {
-    return false;
+    return { sha: null, dirty: { count: 0, files: [] } };
   }
 }
+
+function readHistory() {
+  try {
+    return readFileSync(historyFile, 'utf8').split('\n').filter(Boolean).map((line) => JSON.parse(line));
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Leave the run behind for whoever reads it next: the full text, a receipt an
+ * agent can parse, and one history line. Returns the closing comparison lines.
+ */
+function finish(verdict, failedAt = null) {
+  const tree = readTree();
+  const stages = logged.map((result) => ({
+    prefix: result.prefix,
+    label: result.label,
+    status: result.status,
+    ms: result.ms,
+    cache: Boolean(result.cache),
+    rerun: rerunCommand(result),
+    headline: stageHeadline(result.output || '', result.headline),
+    output: result.output,
+  }));
+  const history = readHistory();
+  const signals = readSignals(stages, { previousTests: history.at(-1)?.tests || {} });
+  const receipt = {
+    schema: RECEIPT_SCHEMA,
+    at: new Date().toISOString(),
+    ...tree,
+    verdict,
+    failedAt,
+    ms: Date.now() - started,
+    stages: stages.map(({ output, ...stage }) => ({ ...stage })),
+    signals,
+    log: logFile,
+  };
+  const comparison = compareRuns(signals, history);
+  receipt.comparison = {
+    since: comparison.last ? comparison.last.sha : null,
+    newWarnings: comparison.newWarnings.map((warning) => warning.text),
+    cleared: comparison.cleared,
+    moved: comparison.moved,
+    standing: comparison.standing.map(({ id, kind, runs, since }) => ({ id, kind, runs, since })),
+  };
+  try {
+    mkdirSync(path.dirname(logFile), { recursive: true });
+    writeFileSync(logFile, stages.map(({ prefix, label, status, ms, output }) => (
+      `[${prefix}] ${label} ${status === 0 ? 'ok' : 'FAILED'} ${(ms / 1000).toFixed(2)}s\n${(output || '').trimEnd()}\n`
+    )).join('\n'));
+    writeFileSync(receiptFile, `${JSON.stringify(receipt, null, 2)}\n`);
+    const lines = trimHistory([...history.map((entry) => JSON.stringify(entry)), JSON.stringify(historyEntry(receipt))]);
+    writeFileSync(historyFile, `${lines.join('\n')}\n`);
+  } catch (error) {
+    console.log(`[check:local] could not write the receipt: ${error.message}`);
+  }
+  return { tree, lines: formatComparison(comparison) };
+}
+
+const describeTree = (tree) => (tree.sha ? ` on ${tree.sha.slice(0, 8)}${tree.dirty.count ? ` +${tree.dirty.count} uncommitted` : ''}` : '');
 
 function bail(prefix, results) {
   logged.push(...results.map((result) => ({ prefix, ...result })));
   const failed = reportStages(prefix, results, { verbose });
   if (!failed.length) return;
-  writeLog();
-  console.log(`[check:local] failed at ${prefix}: ${failed.map((result) => result.label).join(', ')}`);
+  const { tree, lines } = finish('failed', prefix);
+  for (const line of lines) console.log(line);
+  console.log(`[check:local] failed at ${prefix}${describeTree(tree)}: ${failed.map((result) => result.label).join(', ')}; receipt ${shown(receiptFile)}`);
   process.exit(1);
 }
 
@@ -120,6 +202,7 @@ bail('compile', compileResults);
 if (cssResult) bail('css', [cssResult]);
 bail('validate', await runWave(VALIDATORS, serial ? 1 : Math.max(2, availableParallelism() - 1)));
 
-const shownLog = path.relative(process.cwd(), logFile).startsWith('..') ? logFile : path.relative(process.cwd(), logFile);
-const where = writeLog() && !verbose ? `; every stage in full: ${shownLog}` : '';
-console.log(`[check:local] passed ${((Date.now() - started) / 1000).toFixed(2)}s${where}`);
+const { tree, lines } = finish('passed');
+for (const line of lines) console.log(line);
+const where = verbose ? '' : `; full text ${shown(logFile)}, receipt ${shown(receiptFile)}`;
+console.log(`[check:local] passed ${((Date.now() - started) / 1000).toFixed(2)}s${describeTree(tree)}${where}`);
