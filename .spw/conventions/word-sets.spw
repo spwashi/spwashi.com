@@ -1,0 +1,127 @@
+# Word Sets
+#
+# One registry for the ordered words the site shows for one coordinate: a
+# status, a tier, a phase, a set of achievements. The coordinate is fixed in
+# code; the words are a lexicon over it, so they can be replaced here first and
+# in code second (@lexicon#thesis: freeze the coordinate, reproject the
+# lexicon). A set earns an entry when a reader sees its words, or when it is
+# proposed for a reader to see.
+
+#>word_sets
+#:convention #!copy #!vocabulary #!ontology #!learnability
+#:operation #!contract
+#:fixity #!tending
+#:layer #!pragmatics
+
+@lexicon: ~"./metaphor-dimensional-lexicon.spw"
+@wonder_vocabulary: ~"./wonder-vocabulary.spw"
+@learnability_ledger: ~"./learnability-ledger.spw"
+@cauldron_contract: ~"../../public/js/semantic/cauldron/contract.js"
+@cauldron_fluency: ~"../../public/js/runtime/memory/cauldron-fluency.js"
+@rehearsal: ~"../../public/js/semantic/cauldron/rehearsal.js"
+@footer: ~"../../_partials/site-footer.html"
+@region_profiler: ~"../../public/js/runtime/regions/region-profiler.js"
+@reward_ui: ~"../../public/js/runtime/memory/reward-ui.js"
+@collection: ~"../../public/js/runtime/memory/component-collection.js"
+@ways: ~"../caches/ways-2026-10.spw"
+@blog_starter: ~"../../.agents/plans/blog-blob-spw/blog-blob-spw.spw"
+@workbench_report: ~"../workbench-report.spw"
+
+operation = "contract"
+fixity = "tending"
+source = "creator, 2026-10-06: sets of words like live/cooling/projected should be documented so their ontologies may be updated; consider this also for the copy of the cauldron or achievement chrome"
+
+^"entry"{
+  shape = `coordinate, words in order, owner file, status, and what changing the words would change`
+  status = #[`in use`, `unseen`, `collision`, `proposed`][reg=set]
+  unseen = `computed and written, but no reader sees the words`
+  collision = `more than one set of words names the same coordinate, or a word names a move its glyph does not make`
+  update = `change the words here first, then in the owner file, then in the copy units that quote them; a coordinate never changes because its words went stale`
+}[reg=facet]
+
+^"cauldron_progress"{
+  coordinate = `how many fragments are held: 0, 1, 2, 3 or more`
+  owner = @cauldron_contract
+  sets = #[
+    `code: empty, primed, mixing, spell-ready`,
+    `rail (footer): gather, prime, compose, extend`,
+    `chip: gather, prime, compose, cast`,
+    `garden: sow, tend, mix, harvest`,
+    `soup: stock, simmer, taste, serve`,
+    `salad: wash, cut, toss, plate`,
+    `toolbox: pick, fit, check, return`,
+    `workbench: clamp, cut, join, assemble`,
+    `fallback: gather, prime, mix, cast`
+  ][reg=set]
+  status = "collision"
+  reading = `nine vocabularies for four states; the creator, 2026-10-06: the four buttons are not clear and gardening may not apply cleanly to the cauldron; Spw learnability and the tangibility of the cauldron come first`
+  proposal = `no progress words: the braces show the parts held, and each operator reads in the solution words below; demo on the Precipitate Bench, browser-gated`
+}[reg=facet]
+
+^"cauldron_actions"{
+  coordinate = `what a reader can do with what is held`
+  owner = @footer
+  words = #[`Mix fragments`, `Nourish`, `Find a prompt`, `Save trail`, `Share`, `Copy Spw`, `Undo`, `Prune`, `Clear`][reg=set]
+  groups = #[`tend`, `keep`, `sweep`][reg=set]
+  status = "collision"
+  reading = `the glyphs on the buttons do not match the moves: copy wears the wonder glyph, share wears a concept edge, and undo, prune and clear all wear the action glyph`
+  proposal = `four handles whose glyph is the move: !precipitate, ~copy, #>keep, .clear; the lens and the projection are slots of the expression, tapped in place`
+}[reg=facet]
+
+^"solution_state"{
+  coordinate = `held count of one construct over its solubility (3, plus 2 per spaced rehearsal)`
+  owner = @rehearsal
+  words = #[`dissolving`, `saturated`, `supersaturated`][reg=set]
+  threshold = `saturated at 1, supersaturated at 1.5; the excess comes out as a precipitate`
+  status = "unseen"
+  reading = `written to the root by @cauldron_fluency and never shown; it is the cauldron metaphor the code already holds`
+}[reg=facet]
+
+^"diversity_tier"{
+  coordinate = `distinct component kinds seen in a region`
+  owner = @region_profiler
+  words = #[`singular`, `paired`, `varied`, `rich`, `teeming`][reg=set]
+  status = "in use"
+}[reg=facet]
+
+^"reward_salience"{
+  coordinate = `how loud a reward is allowed to be on this page`
+  owner = @reward_ui
+  words = #[`subtle`, `notable`, `vivid`][reg=set]
+  status = "in use"
+}[reg=facet]
+
+^"achievements"{
+  coordinate = `thresholds over kinds seen, tiers reached, and routes visited`
+  owner = @collection
+  words = #[`First Sight`, `Varied Eye`, `Rich Field`, `Teeming Field`, `Collector V`, `Collector X`, `Wayfarer`, `Hooked`, `Lens Keen`, `Measured`, `Kind Spectrum`][reg=set]
+  status = "collision"
+  reading = `counts and tiers rather than acts a reader can repeat; the chrome retune asks for one repeatable act per way, read as progress along a curriculum across semantic and pragmatic layers`
+}[reg=facet]
+
+^"ways"{
+  coordinate = `the slot of an expression a practice acts on`
+  owner = @ways
+  words = #[`regard`, `gather`, `give`, `cross`, `keep time`, `remember`][reg=set]
+  status = "in use"
+}[reg=facet]
+
+^"starter_status"{
+  coordinate = `how often a blog starter is fed and read`
+  owner = @blog_starter
+  words = #[`live`, `cooling`, `projected`][reg=set]
+  alternate = #[`fed`, `resting`, `baked`][reg=set]
+  maps_to = `visit cadence hot, warm, cold (@workbench_report)`
+  status = "proposed"
+  reading = `chosen at the demo`
+}[reg=facet]
+
+^"spw_fixity"{
+  coordinate = `how settled a .spw file is`
+  words = #[`seed`, `experimental`, `provisional`, `tending`, `stable`, `settled`, `cold`][reg=set]
+  counts_2026_10_06 = `seed 2, experimental 81, provisional 1, tending 160, stable 35, settled 1, cold 4`
+  status = "collision"
+  reading = `provisional and settled appear once each and overlap experimental and stable`
+}[reg=facet]
+
+validation = #[`npm run spw:integrity`, `git diff --check`][reg=set]
