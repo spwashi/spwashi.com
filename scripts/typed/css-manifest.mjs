@@ -57,7 +57,7 @@ export const ROUTE_SCOPES = Object.freeze({
         '/public/css/routes/surfaces/blog-layouts.css',
         '/public/css/routes/surfaces/blog-motion.css',
     ],
-    care: ['/public/css/routes/widgets/care-intake.css'],
+    care: ['/public/css/routes/widgets/care-intake.css', '/public/css/routes/widgets/care-handle.css'],
     cards: [],
     contact: ['/public/css/routes/surfaces/contact.css'],
     coordination: [],

@@ -1,0 +1,196 @@
+/* ==========================================================================
+   routes/widgets/care-handle.css
+   --------------------------------------------------------------------------
+   A handle for a feeling: four rows of choices, and three forms the choices
+   precipitate into. Reads as: a calm form on the left, a plain card on the
+   right that a camera can hold. modules/services/care-handle.js keeps the
+   card in step; with scripts off the form and a resting example still read.
+
+   States sensed: data-care-handle-state, data-spw-operator (on the prefix).
+   ========================================================================== */
+
+.care-handle {
+  --care-handle-accent: var(--op-ref-color, hsl(215 58% 42%));
+  --care-handle-line: color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 88%, var(--care-handle-accent) 12%);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+  gap: clamp(0.9rem, 2.2vw, 1.5rem);
+  align-items: start;
+}
+
+.care-handle__form {
+  display: grid;
+  gap: 0.9rem;
+  min-inline-size: 0;
+}
+
+.care-handle__row {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-inline-size: 0;
+}
+
+.care-handle__row > legend {
+  padding: 0;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-xs, 0.8rem);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.72));
+}
+
+.care-handle__row > legend b {
+  color: var(--care-handle-accent);
+  font-weight: 700;
+}
+
+.care-handle__choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+/* A radio dressed as a chip: the input stays in the tab order and the label
+   carries the look, so arrow keys, focus and form reset all work natively. */
+.care-handle__choice {
+  position: relative;
+  display: inline-flex;
+}
+
+.care-handle__choice input {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.care-handle__choice span {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.1rem;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--care-handle-line);
+  border-radius: 999px;
+  background: var(--surface-strong, #fff);
+  font-size: var(--text-size-sm, 0.9rem);
+  line-height: 1.2;
+}
+
+.care-handle__choice input:checked + span {
+  border-color: var(--care-handle-accent);
+  background: color-mix(in srgb, var(--care-handle-accent) 12%, var(--surface-strong, #fff));
+  font-weight: 600;
+}
+
+.care-handle__choice input:focus-visible + span {
+  outline: 2px solid var(--care-handle-accent);
+  outline-offset: 2px;
+}
+
+@media (pointer: coarse) {
+  .care-handle__choice span {
+    min-block-size: var(--touch-target-min, 44px);
+  }
+}
+
+.care-handle__own {
+  display: grid;
+  gap: 0.2rem;
+  font-size: var(--text-size-xs, 0.8rem);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.72));
+}
+
+.care-handle__own input {
+  inline-size: 100%;
+  max-inline-size: 22rem;
+  min-block-size: 2.3rem;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--care-handle-line);
+  border-radius: var(--shape-control, 0.5rem);
+  background: var(--surface-strong, #fff);
+  color: inherit;
+  font: inherit;
+  font-size: var(--text-size-sm, 0.9rem);
+}
+
+/* The card: three forms of one choice, large enough to read on a stream. */
+.care-handle__card {
+  display: grid;
+  gap: 0.9rem;
+  min-inline-size: 0;
+  padding: clamp(0.9rem, 2.4vw, 1.4rem);
+  border: 1px solid var(--care-handle-line);
+  border-radius: var(--shape-panel, 0.75rem);
+  background: var(--surface-strong, #fff);
+  position: sticky;
+  inset-block-start: calc(var(--spw-top-chrome-clearance, 4rem) + 0.5rem);
+}
+
+.care-handle__form-label {
+  margin: 0;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-2xs, 0.72rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-muted, rgba(14, 18, 20, 0.56));
+}
+
+.care-handle__expression,
+.care-handle__name {
+  margin: 0;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  overflow-wrap: anywhere;
+}
+
+.care-handle__expression {
+  font-size: clamp(1.05rem, 2.6vw, 1.4rem);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.care-handle__prefix {
+  color: var(--care-handle-accent);
+  font-weight: 700;
+}
+
+.care-handle__prefix[data-spw-operator="wonder"] { color: var(--op-wonder-color, var(--care-handle-accent)); }
+.care-handle__prefix[data-spw-operator="binding"] { color: var(--op-binding-color, var(--care-handle-accent)); }
+.care-handle__prefix[data-spw-operator="potential"] { color: var(--op-potential-color, var(--care-handle-accent)); }
+.care-handle__prefix[data-spw-operator="perspective"] { color: var(--op-perspective-color, var(--care-handle-accent)); }
+.care-handle__prefix[data-spw-operator="action"] { color: var(--op-action-color, var(--care-handle-accent)); }
+.care-handle__prefix[data-spw-operator="ground"] { color: var(--op-ground-color, var(--care-handle-accent)); }
+
+.care-handle__sentence {
+  margin: 0;
+  font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+  line-height: 1.45;
+}
+
+.care-handle__name {
+  font-size: var(--text-size-md, 1rem);
+}
+
+.care-handle__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+/* The handle bench and any frame that holds a wide diagram take the whole
+   row: the bench needs two columns, and a diagram drawn 960 wide needs room
+   for its labels to be read. The frames sit in a wrapping flex row. */
+[data-spw-surface="care"] .spw-frame:is(#name-it, :has(> .spw-svg-figure[data-spw-svg-scale="wide"])) {
+  flex: 1 1 100%;
+  grid-column: 1 / -1;
+  max-inline-size: 100%;
+}
+
+/* The wide measure draws these 960-unit diagrams at about 650px, where a
+   12.8-unit label lands near 9px. A little more room brings it past 11px. */
+[data-spw-surface="care"][data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-scale="wide"] {
+  --spw-svg-surface-max: min(100%, 54rem);
+}
