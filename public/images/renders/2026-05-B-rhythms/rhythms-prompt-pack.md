@@ -38,28 +38,6 @@ Large open sunflower at golden hour, pollinator flight paths traced as glowing g
 - "...a spirit flower whose pollinators carry messages between the living and the remembered"
 - "...the crown of a god whose thoughts grow in perfect spirals"
 
-### Knife-Rhythm Lattice
-**Core:**
-```
-Wooden cutting board holding a perfect geometric lattice of precisely diced root vegetables, chef's knife resting at the edge, small herb sprigs with spiral growth, warm amber light, the cuts suggesting hidden order and rhythmic practice
-```
-
-**RPG Extension examples:**
-- "...the ritual preparation table of a chef-priest who carves the future into vegetables"
-- "...a war-table where troop movements are decided by the geometry of the dice"
-- "...the work surface of a hedge-witch who reads the future in the pattern of the cut"
-
-### Dough Tide Fold
-**Core:**
-```
-Folded simple dough on floured wood, layers forming soft repeating wave patterns like slow tides, salt crystals catching light, domestic and ancient feeling, warm amber tones, the dough holding memory of cycles
-```
-
-**RPG Extension examples:**
-- "...the daily bread of a village that has never forgotten the moon"
-- "...a living map dough used by sailors to navigate the memory of the sea"
-- "...the offering bread of a cult that believes time itself can be folded and tasted"
-
 ### Brassica Twilight Transformation
 **Core:**
 ```
