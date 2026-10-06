@@ -172,7 +172,7 @@
   transform: translateY(-1px);
 }
 
-:where(.spw-resonance-lab h3) {
+:where(.spw-resonance-lab :is(h3, [data-spw-textual-role="subhead"])) {
   margin: 0;
   font-size: 0.95rem;
   color: var(--ink-strong);

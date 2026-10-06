@@ -138,11 +138,13 @@
   min-width: 0;
 }
 
-:where(.spw-route-bridge h3) {
+:where(.spw-route-bridge :is(h3, [data-spw-textual-role="subhead"])) {
   margin: 0;
   color: var(--ink, rgba(14, 18, 20, 0.92));
   font-size: clamp(1rem, 1.7vw, 1.2rem);
+  font-weight: 600;
   line-height: 1.2;
+  letter-spacing: -0.018em;
 }
 
 :where(.spw-route-bridge p) {

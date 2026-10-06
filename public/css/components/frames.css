@@ -192,7 +192,9 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   letter-spacing: -0.02em;
 }
 
-:where(.spw-frame, [data-spw-kind="frame"]) h3 {
+/* The level follows the outline; the size follows the seat. A heading marked
+   subhead (an h2 under a hero h1, say) sits at the same scale as an h3 here. */
+:where(.spw-frame, [data-spw-kind="frame"]) :is(h3, :where([data-spw-textual-role="subhead"])) {
   font-size: clamp(0.92rem, 0.85rem + 0.5cqi, 1.05rem);
   font-weight: 600;
   line-height: 1.28;

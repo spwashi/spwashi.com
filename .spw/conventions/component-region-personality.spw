@@ -198,6 +198,7 @@ fixity = "tending"
     copy_depth = `data-spw-copy-depth per coloring_depth ladder`
     semantic_expression = `data-spw-semantic-expression is the multidimensional handle (subject[mode]{direction}<capsule>) for the same collectible`
     collectible_role = `data-spw-textual-role="lede|note|aside|kicker|invitation|narration"`
+    subhead_role = `data-spw-textual-role="subhead" on a heading: the level follows the outline and the size follows the seat. An h2 under a hero h1 that labels a panel, a bridge or a lab card carries it and is set at the h3 scale of that seat (components/frames.css). It is a value of the existing stem, not a new family.`
   }[reg=facet]
   team_workflow: #[
     `Author in HTML with copy-unit ids on collectibles.`,

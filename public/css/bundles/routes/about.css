@@ -213,6 +213,14 @@ body[data-spw-surface="about"] {
     row-gap: clamp(1.25rem, 2.4vw, 1.8rem);
   }
 
+  /* Clusters place themselves below. Anything else that sits directly in
+     main (a domain page's frames, a bridge) takes the whole row; without
+     this each one lands in a single twelfth. */
+  [data-spw-surface="about"] main > :not([data-spw-cluster]) {
+    grid-column: 1 / -1;
+    min-inline-size: 0;
+  }
+
   [data-spw-surface="about"] main > [data-spw-cluster] {
     grid-column: 1 / -1;
     display: grid;
@@ -263,6 +271,14 @@ body[data-spw-surface="about"] {
 /* ==========================================================================
    2. Generic frame tuning
    ========================================================================== */
+
+/* Domain pages name each land in a few short panels (role, relation, visit).
+   The grid class had no grid; the panels sit side by side when there is room. */
+[data-spw-surface="about"] .domain-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: clamp(0.6rem, 1.4vw, 1rem);
+}
 
 [data-spw-surface="about"] .spw-frame > .frame-actions:has(> .spw-delimiter:only-child) {
   margin-block: 0;
@@ -770,7 +786,7 @@ body[data-spw-surface="about"] {
   transform: translateY(-1px);
 }
 
-[data-spw-surface="about"] :is(.spw-panel, .frame-panel) h3 {
+[data-spw-surface="about"] :is(.spw-panel, .frame-panel) :is(h3, :where([data-spw-textual-role="subhead"])) {
   color: color-mix(in srgb, var(--about-ink) 90%, var(--about-accent-2));
   font-family: var(--site-sans-font, Inter, sans-serif);
   font-size: 1rem;
@@ -1168,7 +1184,7 @@ body[data-spw-surface="about"] {
   line-height: 1.08;
 }
 
-[data-spw-surface="about"] h3 {
+[data-spw-surface="about"] :is(h3, :where([data-spw-textual-role="subhead"])) {
   color: color-mix(in srgb, var(--about-ink) 88%, var(--about-accent));
   font-family: var(--site-sans-font, Inter, sans-serif);
   font-size: 1rem;
