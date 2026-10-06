@@ -1,0 +1,106 @@
+# Craft shelves (2026-10)
+#
+# operation: prime
+# Tools change fast now. The craft keeps a few slow structures a learner can
+# stand on: shelves of stability. This cache names how the site settles its own
+# interactivity so change reads as a slot that moved rather than a spiral, where
+# live Spw state expressions can carry that reading across surfaces, and which
+# traditions of craft practice could grow from it.
+
+#>craft_shelves_2026_10
+#:cache #!craft #!stability #!fluency #!traditions #!state_expressions
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@word_sets: ~"../conventions/word-sets.spw"
+@ways: ~"./ways-2026-10.spw"
+@lexicon: ~"../conventions/metaphor-dimensional-lexicon.spw"
+@page_anatomy_vocabulary: ~"../conventions/page-anatomy-vocabulary.spw"
+@breadcrumb_spell: ~"../../public/js/runtime/experiential/breadcrumb-spell.js"
+@cauldron_rehearsal: ~"../../public/js/semantic/cauldron/rehearsal.js"
+@css_tree: ~"../../scripts/css-tree.mjs"
+@css_delivery: ~"../../scripts/ts/css-delivery.mts"
+@chrome_retune: ~"./wonder-chrome-retune-2026-09.spw"
+@learnability_ledger: ~"../conventions/learnability-ledger.spw"
+
+operation = "prime"
+fixity = "experimental"
+source = "creator, 2026-10-06: consider the changes that AI brings and reasons to mind stabilizing interactivity to avoid spiraling about change, and encourage focused development of fluency into structures that may evolve or reach shelves of stability with the transparency learned through the wisdom of software engineering; mind the cultural reception of AI; consider new collections of skill development, perhaps entertaining; consider traditions about craft skill application and consideration; more live Spw state expressions in other places; revisit the component anatomy abstraction driving breadcrumbs"
+
+expression = shelf[craft]{draft.practice.shelf}<learner>
+
+^"shelves"{
+  meaning = `a shelf is a structure stable enough to teach from: a reader can return in a year and find it where it was, with its history readable`
+  ladder = `draft, practiced, shelved, revisited; the words already exist as fixity experimental, tending and stable, and the revisit of @ways, so no new vocabulary is coined (@word_sets)`
+  examples = #[
+    `a word set bound to its coordinate (@word_sets)`,
+    `a way and the slot it acts on (@ways)`,
+    `a module contract that names what it reads and writes`,
+    `a dated edition of a card, so a copy shows its age`
+  ][reg=set]
+  transparency = `what software engineering taught: version the shelf, keep its changelog, test what it promises, and let a reader see the diff rather than the churn`
+}[reg=facet]
+
+^"stabilizing_interactivity"{
+  claim = `interactivity that settles teaches; interactivity that keeps moving asks the reader to keep relearning`
+  practices = #[
+    `settle first, resettle once: geometry before first paint, paint that may arrive later, and nothing that moves the page twice (@css_delivery strips comments from the delivered CSS by default)`,
+    `mutate in place: a state change rewrites one slot of an expression already on screen instead of opening new chrome`,
+    `batch change into editions: a surface changes on a date, together, with its diff named`,
+    `name the moved slot: when something changes, say which part moved and which stayed`
+  ][reg=set]
+  ai = `tools now change cost and speed weekly; a token budget is an expense line on a dated card, not a reason to reprice or redesign each week`
+}[reg=facet]
+
+^"live_state_expressions"{
+  ladder = `one glyph ladder for state, borrowed from the canon: . resting, ~ stirring, * close to the line, ^ precipitated; the cauldron reads it from solution state (@cauldron_rehearsal)`
+  places = #[
+    `the cauldron prefix: . empty, ~ dissolving, * saturated, ^ precipitated`,
+    `a module row in the lens or satchel: the same ladder over module interest`,
+    `breadcrumbs: each crumb already carries data-spw-semantic-expression, but as the generic trail[kind]{route|hash} (@breadcrumb_spell); it could carry the anatomy of its target instead`,
+    `the bottom rail: where a reader is and where they are heading, as one expression whose slots change`,
+    `a seed card source line: the page and section a seed was held on`
+  ][reg=set]
+  anatomy = `one anatomy reader composes route, frame, component and slot into an expression such as #>culture_ways[reflect]{topics.fields.culture}; the breadcrumb, the rail, the cauldron provenance and the seed source all read that one function instead of each assembling a trail (@page_anatomy_vocabulary)`
+  gate = `each surface ends at a browser demo the creator approves (@chrome_retune)`
+}[reg=facet]
+
+^"reception"{
+  note = `some readers arrive wary of AI, some curious, some tired of it; the page shows what a person decided and what a tool proposed, with receipts, and does not argue about it`
+  receipts = `provenance lines, dated editions, the author named on what the author wrote`
+}[reg=facet]
+
+^"skill_collections"{
+  note = `new collections of skill a reader can gather, each with one repeatable act and a shelf to reach (@learnability_ledger)`
+  collections = #[
+    `naming a folder: read what its files style and choose a word that fits (@css_tree)`,
+    `reading a diff: say which slot moved and which stayed`,
+    `turning a request into an expression: the ask becomes a seed with slots`,
+    `scoping a piece of work: task, project, day, retainer, year`,
+    `keeping a tradition: return on a date and write what stayed`
+  ][reg=set]
+  play = `collections can be entertaining when the act is real: a seed that rehydrates, a folder that earns its name, a mix that precipitates`
+}[reg=facet]
+
+^"traditions"{
+  note = `craft traditions are dated returns to a practice, held by the keep time way (@ways)`
+  candidates = #[
+    `edition day: a surface changes on its date, with its diff`,
+    `the naming: a refactor opens as an ontology review, one folder at a time`,
+    `the one resettle: a page settles once, the same way each time, and a learner can watch it`,
+    `the shelf review: once a month, what reached stable, what went back to draft`
+  ][reg=set]
+}[reg=facet]
+
+#>wonder_craft_shelves
+?["Does batching change into dated editions lower the churn a reader and the author feel?"]{
+  #:depth #!pragmatics ~#lens(comparison)
+  ~#with: @word_sets @ways
+  ~#hypothesis: "a surface that changes on a named date, with its diff, is relearned faster and revisited more than one that changes whenever a tool does"
+  ~#tension: "editions slow a fix that a reader needs today"
+  !probe{ "for one surface, count edits per week and reader returns for a month before and after editions; ask two readers to name what moved" }
+  $%[edition.cadence, reader.returns, slot.named]
+}
+
+validation = #[`npm run wonder`, `npm run spw:integrity`][reg=set]
