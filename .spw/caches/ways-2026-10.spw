@@ -1,0 +1,126 @@
+# Ways (2026-10)
+#
+# operation: prime
+# The holiday turns, lifted off the calendar. A way is a cluster of Spw
+# applications named by what it does. Each way acts on one slot of an
+# expression and makes one optimization axis felt. Holidays are one
+# application of the ways; a season is one path through them.
+
+#>ways_2026_10
+#:cache #!ways #!season #!expression #!culture #!holidays #!blog_starter
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!semantics
+
+@holidays: ~"./holiday-infrastructure-2026-09.spw"
+@operator_canon: ~"../../public/js/kernel/operator-detection.js"
+@kinship: ~"../../public/js/runtime/expression/expression-resonance.js"
+@workbench_report: ~"../workbench-report.spw"
+@season_rhythm: ~"../slices/production-season-rhythm/index.spw"
+@blog_starter: ~"../../.agents/plans/blog-blob-spw/blog-blob-spw.spw"
+@hypermedia: ~"../../topics/hypermedia/index.html"
+@daily_kernel: ~"../conventions/daily-kernel.spw"
+
+operation = "prime"
+fixity = "experimental"
+source = "creator, 2026-10-05: the holiday season's four turns should be abstracted to consider different clusters of Spw applications; calendar-free; one table carrying verb, operators, applications, and axis; the perspective way is regard; describe how a Spw expression in its most abstract form might change over a season"
+
+expression = way[cluster]{verb.operators.slot.axis}<application>
+
+^"ways"{
+  regard = .{
+    does = `look from a position and hold a thing in a light; nothing is promised back`
+    operators = `@ perspective, [mode], (scene)`
+    slot = `mode and scene`
+    applications = `lenses, voices, dialects, character sheets, costume sheets`
+    axis = `reach`
+    expression = way[regard]{lens.voice.sheet}(scene)<perspective>
+  }[reg=facet]
+  gather = .{
+    does = `bring parts to one place and let them sit together`
+    operators = `& subject (merge), {direction}`
+    slot = `parts`
+    applications = `the cauldron, recipes, kinship, a potluck map`
+    axis = `kin`
+    expression = way[gather]{cauldron.kin.table}<parts>
+  }[reg=facet]
+  give = .{
+    does = `let a potential become a value someone else holds`
+    operators = `~ potential becoming * value (collapse)`
+    slot = `projection`
+    applications = `.spw.txt seed exits, screenshot cards, snippets with receipts`
+    axis = `reader`
+    expression = way[give]{seed.card.snippet}<projection>
+  }[reg=facet]
+  cross = .{
+    does = `commit to a form, or reopen it as a question`
+    operators = `^ integration, ? wonder`
+    slot = `prefix charge`
+    applications = `seeds, vows, starters, wonders, revisits`
+    axis = `visit`
+    expression = way[cross]{seed.vow.revisit}<charge>
+  }[reg=facet]
+  keep_time = .{
+    does = `count, bind, and hold a rhythm`
+    operators = `% measure, = binding`
+    slot = `postfix register`
+    applications = `closes on the 13th and 26th, folio days, visit policy, editions`
+    axis = `parse`
+    expression = way[keep_time]{close.edition.visit}<register>
+  }[reg=facet]
+  remember = .{
+    does = `give a thing a handle that outlives the moment, on ground that stays`
+    operators = `#> frame address, . ground`
+    slot = `anchor and ground`
+    applications = `caches, sidecars, time receipts, copy-decay renewals, precipitate deltas`
+    axis = `open; it may hold the receipts of the other five`
+    expression = way[remember]{cache.sidecar.receipt}<anchor>
+  }[reg=facet]
+}[reg=facet]
+
+^"season_of_an_expression"{
+  abstract = `◌[◌]{◌}(◌)<◌>, with a prefix charge and a postfix register; every slot empty`
+  path = #[
+    `regard: ◌[regard]{◌}(mask)<◌>. Posture and scene are set; nothing is promised back.`,
+    `gather: ◌[regard]{a.b.c}(table)<◌>. Parts accrue.`,
+    `give: ◌[regard]{a.b.c}(gift)<you>. The projection lands on someone.`,
+    `cross: ^◌[regard]{c}(threshold)<you>. Committed; the parts kept are what deserves another cycle.`,
+    `keep time: ^◌[regard]{c}<you>[reg=edition]. The year gets a register.`,
+    `remember: #>◌_2026 ^◌[regard]{c}<you>. A handle outlives the season.`,
+    `revisit: ?◌[regard]{c}<you>. Reopened after the first charge fades.`
+  ][reg=set]
+  reading = `No later way unsets the mode that regard set. What stayed is written into the grammar, not promised back out of it.`
+  axes = `each step moves a different slot and makes a different axis felt: reach, kin, reader, visit, parse; remember keeps the receipts`
+  paths = `this is the production season (@season_rhythm), one path among many; a blog starter walks its own, and another host can declare its own season`
+}[reg=facet]
+
+^"applications"{
+  holidays = `mask applies regard; gift applies give; the almanac applies keep time; /newyear/ applies cross; a long table would apply gather and is not built. Festivity routes are children of /holidays/ (@holidays).`
+  culture = `/topics/fields/culture/ sorts traditions met by the six ways. Each reflection names where it was met, who taught it, and what is not mine to claim.`
+  starters = `a blog starter is fed with dated stream entries; an entry may record which slot moved, so the weave can show one expression across a season (@blog_starter)`
+  kinship = `pages carry way[verb]{…}<…> in data-spw-semantic-expression, and @kinship groups them by subject and mode with no new attribute. move[…] stays with @hypermedia, where it names single-operator moves.`
+  intent = `probe: how many of the 62 authored lens mode names fall onto the six ways; if most do, a way is the operator-shaped intent a rail can carry from page to page`
+  onboarding = `a newcomer walks one way a day for a week: regard the culture field through a lens, gather in the cauldron, give a .spw.txt seed, cross by writing a starter entry, keep time with the almanac, remember by finding that entry again`
+  routines = `keep time owns cadence: a seeded daily way, one way held for a week across six weeks, and scan-class work on the closes of the 13th and 26th (@daily_kernel)`
+  whitelabel = `a host declares its own season as its own path through the same ways`
+}[reg=facet]
+
+^"keeps"{
+  regard = `perspective is regard, and a sheet asks what stayed`
+  trades = `each way shows its trade on its own axis (@workbench_report)`
+  paths = `a season is one path among many`
+  voice = `the creator writes the reflections and names their sources`
+  owners = `limits live with their owners and are cited here rather than restated: data-spw-* families in CLAUDE.md, provenance in @season_rhythm, single-axis ranking in @workbench_report`
+}[reg=facet]
+
+#>wonder_ways_season
+?["Does a season read as one expression changing, and can a reader see which slot moved?"]{
+  #:depth #!computational ~#lens(arc)
+  ~#with: @season_rhythm @blog_starter
+  ~#hypothesis: "if each way acts on one slot, a dated stream of slot changes is a season a reader can follow without a calendar"
+  ~#tension: "a path that reads as progress would promise growth; regard sets a mode that stays, and staying is not progress"
+  !probe{ "feed one starter the production season as stream entries and fingerprint its expression at each entry; if the fingerprints do not show which slot moved, the claim fails" }
+  $%[way.slot, season.path, expression.fingerprint]
+}
+
+validation = #[`npm run wonder`, `npm run spw:integrity`][reg=set]
