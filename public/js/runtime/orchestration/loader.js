@@ -423,6 +423,23 @@ function snapshotRuntimeAsSpellbook(ctx) {
   };
 }
 
+/**
+ * Load a catalog module through its own loader and mount nothing.
+ * The built-site check calls this for every id: a chunk that cannot evaluate
+ * rejects here, where a mount would hide the cause behind a missing host.
+ */
+async function loadModuleById(id) {
+  const def = findModuleDefinition(id);
+  if (!def) return null;
+  const startedAt = performance.now();
+  try {
+    await def.load();
+    return { id: def.id, ok: true, ms: performance.now() - startedAt, error: null };
+  } catch (error) {
+    return { id: def.id, ok: false, ms: performance.now() - startedAt, error: error?.message || String(error) };
+  }
+}
+
 async function mountModuleById(id, ctx, options = {}) {
   if (!ctx) return null;
   const def = findModuleDefinition(id);
@@ -1313,6 +1330,7 @@ function refreshRuntime(ctx) {
     normalizeModuleUpdates,
     summarizeModuleUpdates,
     mountModuleById,
+    loadModuleById,
     unmountModuleById,
     unmountAllModules,
     buildLoadDiscoverySnapshot,

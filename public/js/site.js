@@ -668,6 +668,7 @@ const {
   snapshotRuntimeModules,
   snapshotRuntimeAsSpellbook,
   mountModuleById,
+  loadModuleById,
   unmountModuleById,
   unmountAllModules,
   buildLoadDiscoverySnapshot,
@@ -1144,6 +1145,8 @@ window.__SPW_SITE__ = {
   /** BRP-oriented rollup: byCostClass, enhancementImmediate, reclassCandidates. */
   catalogOptimization: () => summarizeModuleCatalogOptimization(MODULE_DEFS),
   mountModule: (id, options = {}) => mountModuleById(id, runtimeCtx, options),
+  /** Load without mounting; `npm run check:built` asks this of every id. */
+  loadModule: (id) => loadModuleById(id),
   unmountModule: (id, options = {}) => unmountModuleById(id, runtimeCtx, options),
   unmountAllModules: () => unmountAllModules(runtimeCtx),
   snapshotModules: () => snapshotRuntimeModules(runtimeCtx),

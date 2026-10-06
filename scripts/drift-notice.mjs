@@ -10,7 +10,8 @@
  *   node scripts/drift-notice.mjs assemble --sha <sha> --out notice.json \
  *     --smoke smoke-receipt.json --plans plan-receipt.json \
  *     --citations citations-receipt.json --audit audit-receipt.json \
- *     --attention attention-receipt.json --subjects subjects.txt
+ *     --attention attention-receipt.json --built built-receipt.json \
+ *     --subjects subjects.txt
  */
 
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
@@ -178,6 +179,7 @@ function main() {
         audit: readJsonFile(flag(args, '--audit')),
         attention: readJsonFile(flag(args, '--attention')),
         month: readJsonFile(flag(args, '--month')),
+        built: readJsonFile(flag(args, '--built')),
         subjects,
       },
     });
