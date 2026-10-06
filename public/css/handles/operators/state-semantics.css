@@ -142,9 +142,10 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
 
 /* Hidden panels: handles outranks routes. Topics lanes set display:grid in
    the routes layer, which beats the components-layer display:none. Do not
-   wrap [hidden] in :where(). */
-.mode-panel[hidden],
-[data-mode-panel][hidden] {
+   wrap [hidden] in :where(). Only once scripts run (modes/hydration.css):
+   without them, nothing could open a hidden panel. */
+:where(html[data-spw-runtime-stage]) .mode-panel[hidden],
+:where(html[data-spw-runtime-stage]) [data-mode-panel][hidden] {
   display: none;
 }
 

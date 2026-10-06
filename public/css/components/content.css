@@ -293,8 +293,8 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
    hidden lens panel still paints, so tapping Study/Build/Play looks like a
    no-op. Do not wrap [hidden] in :where(). Topics lanes and other hosts use
    [data-mode-panel] without .mode-panel. */
-.mode-panel[hidden],
-[data-mode-panel][hidden] {
+:where(html[data-spw-runtime-stage]) .mode-panel[hidden],
+:where(html[data-spw-runtime-stage]) [data-mode-panel][hidden] {
   display: none;
 }
 

@@ -83,3 +83,24 @@ html[data-spw-page-arrival="entering"] :where(.spw-frame, [data-spw-kind="frame"
 body[aria-busy="true"] {
   cursor: progress;
 }
+
+/* Scripts never ran. The pre-paint script stamps data-spw-runtime-stage on
+   <html> before <body> parses, so a scripted visit never matches below. A
+   lens is a set of panels a script switches between; without scripts every
+   panel stays open (in its own authored display; block only beats the
+   browser's [hidden], and runtime-states.css steps its [hidden] rule aside)
+   and the switch, which nothing would answer, is not offered. !important as
+   in capture.css: a page mode governs later layers. */
+html:not([data-spw-runtime-stage]) :is(.mode-panel, [data-mode-panel])[hidden] {
+  display: block;
+}
+
+/* A panel fills its lens's one slot (min-height: 100% from the card rule);
+   stacked, each would claim the whole slot and spill past the section. */
+html:not([data-spw-runtime-stage]) :is(.mode-panel, [data-mode-panel]) {
+  min-block-size: auto !important;
+}
+
+html:not([data-spw-runtime-stage]) :is(.mode-switch:has([data-set-mode]), [data-set-mode]) {
+  display: none !important;
+}
