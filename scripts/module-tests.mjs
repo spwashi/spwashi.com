@@ -87,4 +87,5 @@ export const MODULE_TEST_FILES = Object.freeze([
   'scripts/tests/term-note-rows.test.mjs',
   'scripts/tests/seed-templates.test.mjs',
   'scripts/tests/spw-paste.test.mjs',
+  'scripts/tests/image-tour.test.mjs',
 ]);

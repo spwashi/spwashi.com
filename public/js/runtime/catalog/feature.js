@@ -135,6 +135,21 @@ export const FEATURE_DEFS = [
     load: () => import('../../modules/tools/spw-paste.js'),
   },
   {
+    id: 'image-tour',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.VISIBLE,
+    selector: '[data-image-tour]',
+    rootMode: 'single',
+    describes: 'tour[image]{recent.rotate}<source> a day of pictures from across the site: the newest batch leads while it is recent and rotates by day, older work tours on quieter weeks, each picture linking to the page that keeps it',
+    updates: [
+      'structural:data-image-tour-state',
+    ],
+    evaluates: ['surface'],
+    timingArc: 'visible-feature',
+    effectScope: ['local-dom', 'element-state', 'network'],
+    load: () => import('../../modules/design/image-tour.js'),
+  },
+  {
     id: 'folio-day',
     layer: MODULE_LAYERS.FEATURE,
     when: MOUNT_WHEN.VISIBLE,

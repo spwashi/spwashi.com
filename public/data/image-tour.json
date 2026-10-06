@@ -1,0 +1,1276 @@
+{
+ "about": "Pictures the public pages show, newest first, each with the page that keeps it. Written by scripts/generate-image-tour.mjs.",
+ "recentDays": 21,
+ "count": 141,
+ "pieces": [
+  {
+   "src": "/public/images/assets/folios/folio-bean-green-tale-lore-thumb.webp",
+   "width": 200,
+   "height": 256,
+   "label": "Bean green tale lore",
+   "kind": "scan",
+   "href": "/design/folios/#folio-0927-07",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-book-i-hold-you-location-inn-thumb.webp",
+   "width": 201,
+   "height": 256,
+   "label": "Book i hold you location inn",
+   "kind": "scan",
+   "href": "/design/folios/#folio-0927-02",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-boon-bane-bone-land-tree-thumb.webp",
+   "width": 256,
+   "height": 199,
+   "label": "Boon bane bone land tree",
+   "kind": "scan",
+   "href": "/design/folios/#folio-0927-22",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-boon-bane-composition-continuity-chaos-thumb.webp",
+   "width": 256,
+   "height": 200,
+   "label": "Boon bane composition continuity chaos",
+   "kind": "scan",
+   "href": "/design/folios/#folio-0927-20",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-boon-bane-honk-pink-thumb.webp",
+   "width": 199,
+   "height": 256,
+   "label": "Boon bane honk pink",
+   "kind": "scan",
+   "href": "/design/folios/#folio-0927-13",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-boon-land-arrows-teal-stripes-thumb.webp",
+   "width": 256,
+   "height": 200,
+   "label": "Boon land arrows teal stripes",
+   "kind": "scan",
+   "href": "/design/folios/#folio-0927-03",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-coherent-cohesion-connection-teal-thumb.webp",
+   "width": 200,
+   "height": 256,
+   "label": "Coherent cohesion connection teal",
+   "kind": "scan",
+   "href": "/design/folios/#folio-0927-25",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-development-teal-stripes-vibes-thumb.webp",
+   "width": 199,
+   "height": 256,
+   "label": "Development teal stripes vibes",
+   "kind": "scan",
+   "href": "/design/folios/#folio-0927-01",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-enter-scope-teal-blocks-thumb.webp",
+   "width": 256,
+   "height": 199,
+   "label": "Enter scope teal blocks",
+   "kind": "scan",
+   "href": "/design/folios/#folio-0927-08",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-factshift-open-source-version-test-thumb.webp",
+   "width": 200,
+   "height": 256,
+   "label": "Factshift open source version test",
+   "kind": "scan",
+   "href": "/design/folios/#folio-0927-21",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-grey-cloud-over-drawings-thumb.webp",
+   "width": 256,
+   "height": 201,
+   "label": "Grey cloud over drawings",
+   "kind": "scan",
+   "href": "/design/folios/#folio-0927-24",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-hash-speech-cassette-thumb.webp",
+   "width": 256,
+   "height": 199,
+   "label": "Hash speech cassette",
+   "kind": "scan",
+   "href": "/design/folios/#folio-0927-00",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-honk-about-a-pie-legal-pad-thumb.webp",
+   "width": 256,
+   "height": 200,
+   "label": "Honk about a pie legal pad",
+   "kind": "scan",
+   "href": "/design/folios/#folio-0927-16",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-honk-about-pi-lavender-thumb.webp",
+   "width": 256,
+   "height": 199,
+   "label": "Honk about pi lavender",
+   "kind": "scan",
+   "href": "/design/folios/#folio-0927-15",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-honk-bane-bonk-boon-map-thumb.webp",
+   "width": 256,
+   "height": 200,
+   "label": "Honk bane bonk boon map",
+   "kind": "scan",
+   "href": "/design/folios/#folio-0927-19",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-lavender-scumble-faint-letters-thumb.webp",
+   "width": 256,
+   "height": 201,
+   "label": "Lavender scumble faint letters",
+   "kind": "scan",
+   "href": "/design/folios/#folio-0927-14",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-lore-land-features-integrity-relationship-thumb.webp",
+   "width": 256,
+   "height": 188,
+   "label": "Lore land features integrity relationship",
+   "kind": "scan",
+   "href": "/design/folios/#folio-0927-18",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-movies-are-emotions-art-carries-healing-thumb.webp",
+   "width": 256,
+   "height": 200,
+   "label": "Movies are emotions art carries healing",
+   "kind": "scan",
+   "href": "/design/folios/#folio-0927-12",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-operator-tiles-signed-copy-thumb.webp",
+   "width": 256,
+   "height": 196,
+   "label": "Operator tiles signed copy",
+   "kind": "scan",
+   "href": "/design/folios/#folio-0927-05",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-practice-collaborating-communication-thumb.webp",
+   "width": 199,
+   "height": 256,
+   "label": "Practice collaborating communication",
+   "kind": "scan",
+   "href": "/design/folios/#folio-0927-17",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-rust-yellow-blocks-weathered-thumb.webp",
+   "width": 256,
+   "height": 199,
+   "label": "Rust yellow blocks weathered",
+   "kind": "scan",
+   "href": "/design/folios/#folio-0927-11",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-shop-logo-vibe-menu-time-thumb.webp",
+   "width": 256,
+   "height": 200,
+   "label": "Shop logo vibe menu time",
+   "kind": "scan",
+   "href": "/design/folios/#folio-0927-26",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-style-skill-signature-magenta-thumb.webp",
+   "width": 256,
+   "height": 200,
+   "label": "Style skill signature magenta",
+   "kind": "scan",
+   "href": "/design/folios/#folio-0927-09",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-style-skill-signature-surname-thumb.webp",
+   "width": 256,
+   "height": 200,
+   "label": "Style skill signature surname",
+   "kind": "scan",
+   "href": "/design/folios/#folio-0927-10",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-token-column-grey-wash-thumb.webp",
+   "width": 256,
+   "height": 199,
+   "label": "Token column grey wash",
+   "kind": "scan",
+   "href": "/design/folios/#folio-0927-04",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-violet-cutouts-ochre-arrows-thumb.webp",
+   "width": 256,
+   "height": 198,
+   "label": "Violet cutouts ochre arrows",
+   "kind": "scan",
+   "href": "/design/folios/#folio-0927-06",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-we-need-new-infrastructure-boon-thumb.webp",
+   "width": 256,
+   "height": 202,
+   "label": "We need new infrastructure boon",
+   "kind": "scan",
+   "href": "/design/folios/#folio-0927-23",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/panels/panel-are-we-saying-the-same-thumb.webp",
+   "width": 256,
+   "height": 203,
+   "label": "Ink on white canvas: a speech cloud asks are we saying the same, over c…",
+   "kind": "scan",
+   "href": "/design/folios/#panel-faces-lede",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/panels/panel-blue-sky-grey-moon-rose-thumb.webp",
+   "width": 256,
+   "height": 205,
+   "label": "A grey moon in a pale blue sky meeting a rose cliff",
+   "kind": "scan",
+   "href": "/design/folios/#panel-faces-backs",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/panels/panel-dark-orb-two-pink-dots-thumb.webp",
+   "width": 256,
+   "height": 203,
+   "label": "A dark orb holding two pink dots, with small hash sparks around it",
+   "kind": "scan",
+   "href": "/design/folios/#panel-faces-backs",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/panels/panel-ember-figure-glyph-thumb.webp",
+   "width": 256,
+   "height": 205,
+   "label": "Ember reds and ochres around a dark shape and a drawn figure glyph",
+   "kind": "scan",
+   "href": "/design/folios/#panel-faces-fronts",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/panels/panel-five-columns-beads-boxes-thumb.webp",
+   "width": 256,
+   "height": 205,
+   "label": "Five columns of beads descending into five boxes on sage",
+   "kind": "scan",
+   "href": "/design/folios/#panel-faces-backs",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/panels/panel-gold-glyph-blocks-pink-plume-thumb.webp",
+   "width": 256,
+   "height": 203,
+   "label": "Gold-outlined red blocks with circle glyphs beside a pink plume on viol…",
+   "kind": "scan",
+   "href": "/design/folios/#panel-faces-backs",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/panels/panel-grey-river-dark-hill-thumb.webp",
+   "width": 256,
+   "height": 205,
+   "label": "A grey river curving past a dark hill over ochre and teal",
+   "kind": "scan",
+   "href": "/design/folios/#panel-faces-backs",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/panels/panel-hatched-green-comet-thumb.webp",
+   "width": 256,
+   "height": 203,
+   "label": "A hatched green circle trailing a grey tail across violet",
+   "kind": "scan",
+   "href": "/design/folios/#panel-faces-fronts",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/panels/panel-ochre-drawings-teal-curve-thumb.webp",
+   "width": 256,
+   "height": 204,
+   "label": "Ink drawings on ochre and sage under a sweeping teal curve",
+   "kind": "scan",
+   "href": "/design/folios/#panel-faces-fronts",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/panels/panel-ochre-map-gold-hashes-thumb.webp",
+   "width": 203,
+   "height": 256,
+   "label": "An ochre map shape drawn over in gold hashes beside a grey figure with…",
+   "kind": "scan",
+   "href": "/design/folios/#panel-faces-backs",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/panels/panel-october-09-monday-cups-thumb.webp",
+   "width": 256,
+   "height": 203,
+   "label": "October 09 and Monday lettered around a wine-dark cup marked with hashe…",
+   "kind": "scan",
+   "href": "/design/folios/#panel-faces-fronts",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/panels/panel-pale-blue-cloud-drawings-thumb.webp",
+   "width": 256,
+   "height": 199,
+   "label": "A pale blue cloud brushed over faint pencil drawings",
+   "kind": "scan",
+   "href": "/design/folios/#panel-faces-fronts",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/panels/panel-pale-moon-maroon-thumb.webp",
+   "width": 256,
+   "height": 203,
+   "label": "A large pale moon over maroon with a grey crescent",
+   "kind": "scan",
+   "href": "/design/folios/#panel-faces-fronts",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/panels/panel-publishing-print-digital-2018-thumb.webp",
+   "width": 256,
+   "height": 204,
+   "label": "Publishing, print, digital, Spwashi, and 2018 lettered beside an orange…",
+   "kind": "scan",
+   "href": "/design/folios/#panel-faces-backs",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/panels/panel-red-field-teal-drips-thumb.webp",
+   "width": 256,
+   "height": 204,
+   "label": "Dark green bands beside a red field run through with teal drips, over a…",
+   "kind": "scan",
+   "href": "/design/folios/#panel-faces-backs",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/panels/panel-rose-arch-bulb-dome-thumb.webp",
+   "width": 256,
+   "height": 204,
+   "label": "A rose arch beside a drawn bulb and a dome with small sad faces",
+   "kind": "scan",
+   "href": "/design/folios/#panel-faces-backs",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/panels/panel-rose-moon-teal-surf-thumb.webp",
+   "width": 256,
+   "height": 206,
+   "label": "A rose moon, pale bubbles, and a teal surf on a dark ground",
+   "kind": "scan",
+   "href": "/design/folios/#panel-faces-fronts",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/panels/panel-rust-arc-grey-serpent-thumb.webp",
+   "width": 256,
+   "height": 204,
+   "label": "A rust arc crossed by pale lines and a grey serpent over sage",
+   "kind": "scan",
+   "href": "/design/folios/#panel-faces-backs",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/panels/panel-teal-moon-white-drip-thumb.webp",
+   "width": 256,
+   "height": 205,
+   "label": "A teal moon, a white drip, and an orange curl over layered reds",
+   "kind": "scan",
+   "href": "/design/folios/#panel-faces-fronts",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/panels/panel-teal-night-moon-three-stools-thumb.webp",
+   "width": 256,
+   "height": 201,
+   "label": "A teal night with a moon and a dark saucer over hills, a pale cloud, an…",
+   "kind": "scan",
+   "href": "/design/folios/#panel-faces-backs",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/panels/panel-teal-spheres-red-leaf-thumb.webp",
+   "width": 256,
+   "height": 203,
+   "label": "Two teal spheres over a red leaf shape and a green wave",
+   "kind": "scan",
+   "href": "/design/folios/#panel-faces-fronts",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/panels/panel-teal-spiral-arch-thumb.webp",
+   "width": 256,
+   "height": 203,
+   "label": "Teal spirals beneath a red and cream arch",
+   "kind": "scan",
+   "href": "/design/folios/#panel-faces-fronts",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/panels/panel-two-moons-stepped-violet-thumb.webp",
+   "width": 256,
+   "height": 203,
+   "label": "Two moons, lilac and grey, on a stepped violet ground",
+   "kind": "scan",
+   "href": "/design/folios/#panel-faces-fronts",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/panels/panel-two-pale-moons-green-lozenge-thumb.webp",
+   "width": 256,
+   "height": 205,
+   "label": "Two pale moons, a green blot, and a green lozenge on a green ground",
+   "kind": "scan",
+   "href": "/design/folios/#panel-faces-lede",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/panels/panel-white-blot-red-halo-thumb.webp",
+   "width": 256,
+   "height": 205,
+   "label": "A white blot with a teal mark inside a red halo, a teal line running th…",
+   "kind": "scan",
+   "href": "/design/folios/#panel-faces-fronts",
+   "added": "2026-09-27"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-acceptance-ritual-checklist-thumb.webp",
+   "width": 201,
+   "height": 256,
+   "label": "Acceptance ritual checklist",
+   "kind": "scan",
+   "href": "/design/folios/#folio-29",
+   "added": "2026-09-25"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-ampersand-hair-cube-thumb.webp",
+   "width": 200,
+   "height": 256,
+   "label": "Ampersand hair cube",
+   "kind": "scan",
+   "href": "/design/folios/#folio-21",
+   "added": "2026-09-25"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-bone-box-launch-thumb.webp",
+   "width": 199,
+   "height": 256,
+   "label": "Bone box launch",
+   "kind": "scan",
+   "href": "/design/folios/#folio-07",
+   "added": "2026-09-25"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-boof-boonberry-pool-thumb.webp",
+   "width": 256,
+   "height": 200,
+   "label": "Boof boonberry pool",
+   "kind": "scan",
+   "href": "/design/folios/#folio-03",
+   "added": "2026-09-25"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-boon-bane-bone-mnemonic-thumb.webp",
+   "width": 199,
+   "height": 256,
+   "label": "Boon bane bone mnemonic",
+   "kind": "scan",
+   "href": "/design/folios/#folio-05",
+   "added": "2026-09-25"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-business-courses-weekdays-thumb.webp",
+   "width": 512,
+   "height": 397,
+   "label": "White cards on black list business kinds, courses in HTML, CSS, JS, and…",
+   "kind": "scan",
+   "href": "/curriculum/#curriculum-title",
+   "added": "2026-09-25"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-copy-paste-component-library-thumb.webp",
+   "width": 398,
+   "height": 512,
+   "label": "A dense ink map of a website practice: build a website, code projects,…",
+   "kind": "scan",
+   "href": "/about/website/#website-philosophy",
+   "added": "2026-09-25"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-deliberate-poor-performance-thumb.webp",
+   "width": 200,
+   "height": 256,
+   "label": "Deliberate poor performance",
+   "kind": "scan",
+   "href": "/design/folios/#folio-28",
+   "added": "2026-09-25"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-factshift-cabinet-thumb.webp",
+   "width": 398,
+   "height": 512,
+   "label": "A cabinet of ink drawers and slots washed in pink and sea green, with f…",
+   "kind": "scan",
+   "href": "/care/#care-title",
+   "added": "2026-09-25"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-glyph-arrows-pale-thumb.webp",
+   "width": 256,
+   "height": 199,
+   "label": "Glyph arrows pale",
+   "kind": "scan",
+   "href": "/design/folios/#folio-18",
+   "added": "2026-09-25"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-honk-mixing-board-thumb.webp",
+   "width": 256,
+   "height": 201,
+   "label": "Honk mixing board",
+   "kind": "scan",
+   "href": "/design/folios/#folio-02",
+   "added": "2026-09-25"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-how-to-make-honk-thumb.webp",
+   "width": 256,
+   "height": 200,
+   "label": "How to make honk",
+   "kind": "scan",
+   "href": "/design/folios/#folio-24",
+   "added": "2026-09-25"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-lined-stage-facade-thumb.webp",
+   "width": 256,
+   "height": 202,
+   "label": "Lined stage facade",
+   "kind": "scan",
+   "href": "/design/folios/#folio-25",
+   "added": "2026-09-25"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-lore-cloud-wonder-forms-thumb.webp",
+   "width": 256,
+   "height": 202,
+   "label": "Lore cloud wonder forms",
+   "kind": "scan",
+   "href": "/design/folios/#folio-19",
+   "added": "2026-09-25"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-lore-land-drift-shapes-thumb.webp",
+   "width": 512,
+   "height": 400,
+   "label": "Spirals, wedges, and a long bone-like form drift across a white clearin…",
+   "kind": "scan",
+   "href": "/about/domains/lore.land/#signal-studies",
+   "added": "2026-09-25"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-lore-land-webcomic-zine-thumb.webp",
+   "width": 202,
+   "height": 256,
+   "label": "Lore land webcomic zine",
+   "kind": "scan",
+   "href": "/design/folios/#folio-26",
+   "added": "2026-09-25"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-mimes-against-wap-blue-wash-thumb.webp",
+   "width": 256,
+   "height": 199,
+   "label": "Mimes against wap blue wash",
+   "kind": "scan",
+   "href": "/design/folios/#folio-30",
+   "added": "2026-09-25"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-mimes-against-wap-lightning-thumb.webp",
+   "width": 512,
+   "height": 398,
+   "label": "A sea-green page of flow diagrams under Mimes Against WAP, with a yello…",
+   "kind": "scan",
+   "href": "/coordination/#coordination-description",
+   "added": "2026-09-25"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-octvember-novel-under-test-thumb.webp",
+   "width": 256,
+   "height": 203,
+   "label": "Octvember novel under test",
+   "kind": "scan",
+   "href": "/design/folios/#folio-09",
+   "added": "2026-09-25"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-operator-curriculum-teal-thumb.webp",
+   "width": 400,
+   "height": 512,
+   "label": "Thirteen operator words hand-lettered in blue down a teal-washed page,…",
+   "kind": "scan",
+   "href": "/about/#typography-register-title",
+   "added": "2026-09-25"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-operator-ladder-pencil-thumb.webp",
+   "width": 200,
+   "height": 256,
+   "label": "Operator ladder pencil",
+   "kind": "scan",
+   "href": "/design/folios/#folio-22",
+   "added": "2026-09-25"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-operator-rhythm-training-video-thumb.webp",
+   "width": 200,
+   "height": 256,
+   "label": "Operator rhythm training video",
+   "kind": "scan",
+   "href": "/design/folios/#folio-11",
+   "added": "2026-09-25"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-pi-day-mimes-against-wap-thumb.webp",
+   "width": 201,
+   "height": 256,
+   "label": "Pi day mimes against wap",
+   "kind": "scan",
+   "href": "/design/folios/#folio-06",
+   "added": "2026-09-25"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-pink-hash-stack-thumb.webp",
+   "width": 201,
+   "height": 256,
+   "label": "Pink hash stack",
+   "kind": "scan",
+   "href": "/design/folios/#folio-04",
+   "added": "2026-09-25"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-poem-count-the-boring-ones-thumb.webp",
+   "width": 256,
+   "height": 201,
+   "label": "Poem count the boring ones",
+   "kind": "scan",
+   "href": "/design/folios/#folio-12",
+   "added": "2026-09-25"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-red-eyes-calendar-test-thumb.webp",
+   "width": 256,
+   "height": 198,
+   "label": "Red eyes calendar test",
+   "kind": "scan",
+   "href": "/design/folios/#folio-14",
+   "added": "2026-09-25"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-spiral-chip-ochre-thumb.webp",
+   "width": 512,
+   "height": 397,
+   "label": "A violet-outlined chip with a spiral at its center, set in a clearing o…",
+   "kind": "scan",
+   "href": "/about/domains/lore.land/#signal-studies",
+   "added": "2026-09-25"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-teal-stripes-vibes-wash-thumb.webp",
+   "width": 201,
+   "height": 256,
+   "label": "Teal stripes vibes wash",
+   "kind": "scan",
+   "href": "/design/folios/#folio-16",
+   "added": "2026-09-25"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-wap-boy-invented-pie-thumb.webp",
+   "width": 198,
+   "height": 256,
+   "label": "Wap boy invented pie",
+   "kind": "scan",
+   "href": "/design/folios/#folio-01",
+   "added": "2026-09-25"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-what-kind-of-guy-counts-to-pie-thumb.webp",
+   "width": 256,
+   "height": 200,
+   "label": "What kind of guy counts to pie",
+   "kind": "scan",
+   "href": "/design/folios/#folio-20",
+   "added": "2026-09-25"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-zine-design-declaration-thumb.webp",
+   "width": 256,
+   "height": 199,
+   "label": "Zine design declaration",
+   "kind": "scan",
+   "href": "/design/folios/#folio-23",
+   "added": "2026-09-25"
+  },
+  {
+   "src": "/public/images/assets/illustrations/item-boonhonk-apparatus-thumb.webp",
+   "width": 383,
+   "height": 512,
+   "label": "A vertical brass mechanical apparatus with tactile dials, measurement g…",
+   "kind": "render",
+   "href": "/tools/midjourney/#specimen-gallery",
+   "added": "2026-09-10"
+  },
+  {
+   "src": "/public/images/assets/rpg-wednesday/rpg-item-boonhonk-blort-reactor-thumb.webp",
+   "width": 640,
+   "height": 640,
+   "label": "A tactile brass machine with mechanical gears, levers, and a warm glowi…",
+   "kind": "drawing",
+   "href": "/play/rpg-wednesday/#rpg-doodler-lede",
+   "added": "2026-09-10"
+  },
+  {
+   "src": "/public/images/renders/_staged-primitives/text-tile/r0c0-512.webp",
+   "width": 512,
+   "height": 512,
+   "label": "Typographical text tile texture with teal and ochre glyph seams.",
+   "kind": "render",
+   "href": "/design/materials/#staged-theme-sets",
+   "added": "2026-09-10"
+  },
+  {
+   "src": "/public/images/assets/motifs/ornament-scaffold-lattice-display.webp",
+   "width": 768,
+   "height": 432,
+   "label": "Cream handmade-paper lattice with teal grid lines and brass pins, laid…",
+   "kind": "image",
+   "href": "/topics/software/distributed/#distributed-hero",
+   "added": "2026-09-07"
+  },
+  {
+   "src": "/public/images/renders/_staged-primitives/algorithm-lattice/r1c1-512.webp",
+   "width": 512,
+   "height": 512,
+   "label": "Amber asterisk over a teal inscribed orb — staged algorithm climate.",
+   "kind": "render",
+   "href": "/design/materials/#staged-theme-sets",
+   "added": "2026-09-04"
+  },
+  {
+   "src": "/public/images/renders/_staged-primitives/boonhonk-abstract/r0c1-512.webp",
+   "width": 512,
+   "height": 512,
+   "label": "Abstract web design study with comic pressure, playful shapes, and teal…",
+   "kind": "render",
+   "href": "/design/materials/#staged-theme-sets",
+   "added": "2026-09-04"
+  },
+  {
+   "src": "/public/images/renders/_staged-primitives/library-cozy/r1c0-512.webp",
+   "width": 512,
+   "height": 512,
+   "label": "Cozy library background with wooden shelves and warm book-lined compart…",
+   "kind": "render",
+   "href": "/design/materials/#staged-theme-sets",
+   "added": "2026-09-04"
+  },
+  {
+   "src": "/public/images/renders/_staged-primitives/neutral-hex/r1c0-512.webp",
+   "width": 512,
+   "height": 512,
+   "label": "Cream hex crease against blush paper — staged vellum climate.",
+   "kind": "render",
+   "href": "/design/materials/#staged-theme-sets",
+   "added": "2026-09-04"
+  },
+  {
+   "src": "/public/images/renders/_staged-primitives/papergami-cubes/r0c0-512.webp",
+   "width": 512,
+   "height": 512,
+   "label": "Folded paper architectural cube facets in teal, gold, and cream.",
+   "kind": "render",
+   "href": "/design/materials/#staged-theme-sets",
+   "added": "2026-09-04"
+  },
+  {
+   "src": "/public/images/assets/illustrations/boon-crown-splash-thumb.webp",
+   "width": 512,
+   "height": 512,
+   "label": "A luminous pearl stands in teal mist while molten gold splashes upward…",
+   "kind": "render",
+   "href": "/about/#boonhonk-valence-study",
+   "added": "2026-08-31"
+  },
+  {
+   "src": "/public/images/assets/illustrations/boon-dough-pearl-skin-thumb.webp",
+   "width": 512,
+   "height": 512,
+   "label": "A pearl wrapped in translucent dumpling dough on a floured board, with…",
+   "kind": "render",
+   "href": "/recipes/#cuisine-taxonomy-title",
+   "added": "2026-08-31"
+  },
+  {
+   "src": "/public/images/assets/illustrations/craft-paper-crane-unfurling-thumb.webp",
+   "width": 410,
+   "height": 512,
+   "label": "A pale paper crane on a teal surface releases a trail of warm sparks in…",
+   "kind": "render",
+   "href": "/tools/midjourney/#dismiss-pending-vision",
+   "added": "2026-08-31"
+  },
+  {
+   "src": "/public/images/assets/illustrations/lore-seed-pod-nebula-thumb.webp",
+   "width": 410,
+   "height": 512,
+   "label": "A hanging teal seed pod splits to show a cluster of warm lights inside…",
+   "kind": "render",
+   "href": "/about/domains/lore.land/#signal-studies",
+   "added": "2026-08-31"
+  },
+  {
+   "src": "/public/images/assets/motifs/texture-cream-ochre-wash-display.webp",
+   "width": 768,
+   "height": 430,
+   "label": "A cream-to-ochre wash with a quiet teal edge, like reduction settling o…",
+   "kind": "image",
+   "href": "/recipes/#cuisine-taxonomy-title",
+   "added": "2026-08-31"
+  },
+  {
+   "src": "/public/images/assets/illustrations/math-fabric-local-curvature-thumb.webp",
+   "width": 1024,
+   "height": 1024,
+   "label": "A close woven membrane bends into teal, amber, and coral ridges with vi…",
+   "kind": "render",
+   "href": "/topics/math/#math-studies",
+   "added": "2026-08-23"
+  },
+  {
+   "src": "/public/images/assets/illustrations/math-vector-field-flux-fold-thumb.webp",
+   "width": 1024,
+   "height": 1024,
+   "label": "Teal and amber currents fold through one another in a continuous fluid…",
+   "kind": "render",
+   "href": "/topics/math/#math-studies",
+   "added": "2026-08-23"
+  },
+  {
+   "src": "/public/images/assets/illustrations/research-question-horizon-thumb.webp",
+   "width": 1024,
+   "height": 1024,
+   "label": "A lone figure stands beneath an immense glowing question-shaped cloud i…",
+   "kind": "render",
+   "href": "/research/#wisdom-ladder-title",
+   "added": "2026-08-23"
+  },
+  {
+   "src": "/public/images/assets/rpg-wednesday/rpg-scene-library-provisional-drawer-thumb.webp",
+   "width": 1024,
+   "height": 576,
+   "label": "'l'n'd'r, a blue-grey clay-bodied figure with a pointed hat, slides a b…",
+   "kind": "drawing",
+   "href": "/play/rpg-wednesday/#rpgw-library-build",
+   "added": "2026-08-23"
+  },
+  {
+   "src": "/public/images/assets/rpg-wednesday/rpg-scene-wapboy-one-drop-prophecy-thumb.webp",
+   "width": 1024,
+   "height": 576,
+   "label": "A performer portraying WAPboy braces a huge berry pie on a metal tray w…",
+   "kind": "drawing",
+   "href": "/play/rpg-wednesday/#wap-production-note-title",
+   "added": "2026-08-23"
+  },
+  {
+   "src": "/public/images/assets/rpg-wednesday/rpg-wapboy-market-pie-balance-thumb.webp",
+   "width": 640,
+   "height": 640,
+   "label": "A physical brass balance scale holding market pies, showing physical we…",
+   "kind": "drawing",
+   "href": "/play/rpg-wednesday/#image-publishing-loop",
+   "added": "2026-08-23"
+  },
+  {
+   "src": "/public/images/assets/illustrations/artifact-ovoid-monolith-study-thumb.webp",
+   "width": 512,
+   "height": 512,
+   "label": "A dense monolithic ovoid sculpture resting with grounded physical weigh…",
+   "kind": "render",
+   "href": "/topics/craft/#collaboration-loop",
+   "added": "2026-08-15"
+  },
+  {
+   "src": "/public/images/assets/illustrations/craft-biofilm-papyrus-substrate-thumb.webp",
+   "width": 512,
+   "height": 512,
+   "label": "Papyrus and biofilm material study demonstrating cellulose grain and wa…",
+   "kind": "render",
+   "href": "/design/materials/#metamaterial-attributes",
+   "added": "2026-08-15"
+  },
+  {
+   "src": "/public/images/assets/illustrations/design-papergami-layout-machine-thumb.webp",
+   "width": 512,
+   "height": 512,
+   "label": "Papergami layout apparatus with translucent geometric apertures and spa…",
+   "kind": "render",
+   "href": "/design/materials/#metamaterial-attributes",
+   "added": "2026-08-15"
+  },
+  {
+   "src": "/public/images/assets/illustrations/material-weathered-copper-moss-study-thumb.webp",
+   "width": 512,
+   "height": 512,
+   "label": "Weathered copper and moss living surface study with organic matte patin…",
+   "kind": "render",
+   "href": "/design/materials/#metamaterial-attributes",
+   "added": "2026-08-15"
+  },
+  {
+   "src": "/public/images/assets/rpg-wednesday/rpg-character-lndr-rockgnome-study-thumb.webp",
+   "width": 640,
+   "height": 640,
+   "label": "Lndr the rockgnome artisan working meticulously with miniature tools at…",
+   "kind": "drawing",
+   "href": "/play/rpg-wednesday/character/#character-living-tools-desc",
+   "added": "2026-08-15"
+  },
+  {
+   "src": "/public/images/assets/illustrations/boonhonk-attentional-fluid-thumb.webp",
+   "width": 512,
+   "height": 512,
+   "label": "Contour-bounded attentional fluid study showing high-contrast presence…",
+   "kind": "render",
+   "href": "/design/affordance/#state-affordance",
+   "added": "2026-08-13"
+  },
+  {
+   "src": "/public/images/assets/illustrations/papergami-cognitive-thumb.webp",
+   "width": 512,
+   "height": 512,
+   "label": "Papergami cognitive layout study with calibrated metric ladders and pro…",
+   "kind": "render",
+   "href": "/design/density/#density-measure",
+   "added": "2026-08-13"
+  },
+  {
+   "src": "/public/images/assets/illustrations/papergami-layout-thumb.webp",
+   "width": 512,
+   "height": 512,
+   "label": "Translucent sheets of printed paper layered with cubes, discs and spher…",
+   "kind": "render",
+   "href": "/design/folios/#folio-growth-probe",
+   "added": "2026-08-13"
+  },
+  {
+   "src": "/public/images/home/luminous-geometry-study-0-thumb.webp",
+   "width": 512,
+   "height": 512,
+   "label": "Abstract luminous geometry study illustrating clear deterministic proje…",
+   "kind": "render",
+   "href": "/topics/software/#software-surface",
+   "added": "2026-08-13"
+  },
+  {
+   "src": "/public/images/home/luminous-geometry-study-1-thumb.webp",
+   "width": 512,
+   "height": 512,
+   "label": "Abstract luminous geometry study illustrating the creator kernel and st…",
+   "kind": "render",
+   "href": "/about/#about-hook",
+   "added": "2026-08-13"
+  },
+  {
+   "src": "/public/images/renders/2026-05-B-rhythms/pollination-golden-spiral-thumb.webp",
+   "width": 960,
+   "height": 640,
+   "label": "Golden spiral pollination — release turn after the fermentation hold.",
+   "kind": "render",
+   "href": "/topics/film/scene-composition/fermentation-hold/#ferment-bed-title",
+   "added": "2026-05-26"
+  },
+  {
+   "src": "/public/images/routes/design/color-resonance-swirl-source-thumb.webp",
+   "width": 383,
+   "height": 512,
+   "label": "Teal, gold, cream, and blue swirls",
+   "kind": "render",
+   "href": "/design/cards/render/#image-card-controls-title",
+   "added": "2026-05-17"
+  },
+  {
+   "src": "/public/images/routes/play/boonhonk-machine-prop-source-thumb.webp",
+   "width": 512,
+   "height": 512,
+   "label": "A glowing teal and coral boonhonk machine with round lights and a cabin…",
+   "kind": "render",
+   "href": "/play/rpg-wednesday/#image-publishing-loop",
+   "added": "2026-05-17"
+  },
+  {
+   "src": "/public/images/routes/recipes/traveling-pantry-machine-source-thumb.webp",
+   "width": 383,
+   "height": 512,
+   "label": "A teal glowing traveling pantry machine with warm lights and small cont…",
+   "kind": "render",
+   "href": "/recipes/#cuisine-taxonomy-title",
+   "added": "2026-05-17"
+  },
+  {
+   "src": "/public/images/renders/unsorted-curation/algorithm-lattice-0.webp",
+   "width": 768,
+   "height": 768,
+   "label": "A dark signal lattice of glowing amber lines, operator marks, and suspe…",
+   "kind": "render",
+   "href": "/blog/#recording-cues-title",
+   "added": "2026-04-16"
+  },
+  {
+   "src": "/public/images/routes/about-attention-register-hero.webp",
+   "width": 1600,
+   "height": 960,
+   "label": "A warm-to-cool register of vessels, shelves, seed packets, syntax marks…",
+   "kind": "render",
+   "href": "/about/#about-production-note-title",
+   "added": "2026-04-16"
+  },
+  {
+   "src": "/public/images/routes/blog-thread-laboratory-hero.webp",
+   "width": 1600,
+   "height": 960,
+   "label": "A soft editorial field of notebook marks, wash textures, and route seam…",
+   "kind": "render",
+   "href": "/blog/#blog-hero-note",
+   "added": "2026-04-16"
+  },
+  {
+   "src": "/public/images/routes/blog-thread-laboratory-square.webp",
+   "width": 1600,
+   "height": 1600,
+   "label": "Soft teal-and-amber studio textures, notebook marks, and wash-like laye…",
+   "kind": "render",
+   "href": "/blog/",
+   "added": "2026-04-16"
+  },
+  {
+   "src": "/public/images/routes/craft-fragment-studio-hero.webp",
+   "width": 1600,
+   "height": 960,
+   "label": "Warmly lit architectural study — palette as physical dimension cue for…",
+   "kind": "render",
+   "href": "/design/palettes/#palette-projection",
+   "added": "2026-04-16"
+  },
+  {
+   "src": "/public/images/routes/craft-fragment-studio-square.webp",
+   "width": 1600,
+   "height": 1600,
+   "label": "Books, notebook fragments, and craft materials merged into a warm studi…",
+   "kind": "render",
+   "href": "/topics/craft/fragments/",
+   "added": "2026-04-16"
+  },
+  {
+   "src": "/public/images/routes/math-signal-field-hero.webp",
+   "width": 1600,
+   "height": 960,
+   "label": "A cool signal field with teal lattice lines and amber proof nodes, read…",
+   "kind": "render",
+   "href": "/research/#research-ladder-svg-desc",
+   "added": "2026-04-16"
+  },
+  {
+   "src": "/public/images/routes/math-signal-field-square.webp",
+   "width": 1600,
+   "height": 1600,
+   "label": "A violet and teal math signal field with graph waves, luminous points,…",
+   "kind": "render",
+   "href": "/topics/math/",
+   "added": "2026-04-16"
+  },
+  {
+   "src": "/public/images/routes/site-design-resonance-hero.webp",
+   "width": 1600,
+   "height": 960,
+   "label": "A readable surface study blending threshold architecture, orbital trace…",
+   "kind": "render",
+   "href": "/design/#design-nav-spine-title",
+   "added": "2026-04-16"
+  },
+  {
+   "src": "/public/images/routes/site-design-resonance-square.webp",
+   "width": 1600,
+   "height": 1600,
+   "label": "A green and teal site design resonance field with component panels, pal…",
+   "kind": "render",
+   "href": "/topics/site-design/",
+   "added": "2026-04-16"
+  },
+  {
+   "src": "/public/images/routes/software-parser-weather-square.webp",
+   "width": 1600,
+   "height": 1600,
+   "label": "A software parser weather field with teal syntax paths, amber signal no…",
+   "kind": "render",
+   "href": "/topics/software/",
+   "added": "2026-04-16"
+  },
+  {
+   "src": "/public/images/routes/topics-atlas-register-square.webp",
+   "width": 1600,
+   "height": 1600,
+   "label": "Notebook marks, studio fragments, and route weather layered into a teal…",
+   "kind": "render",
+   "href": "/topics/#topic-lane-current-title",
+   "added": "2026-04-16"
+  },
+  {
+   "src": "/public/images/routes/website-field-instrument-hero.webp",
+   "width": 1600,
+   "height": 960,
+   "label": "A layered website instrument made of threshold light, orbital traces, a…",
+   "kind": "render",
+   "href": "/about/website/#website-title",
+   "added": "2026-04-16"
+  },
+  {
+   "src": "/public/images/play/rpg-wednesday/sticker-canon-field-study.webp",
+   "width": 1200,
+   "height": 1200,
+   "label": "Glowing RPG Wednesday study with green ritual light, sigils, and table-…",
+   "kind": "image",
+   "href": "/play/rpg-wednesday/#image-publishing-loop",
+   "added": "2026-04-15"
+  },
+  {
+   "src": "/public/images/services/studio-house-hero.webp",
+   "width": 1600,
+   "height": 720,
+   "label": "A studio-house threshold with warm light, teal structure, and a service…",
+   "kind": "image",
+   "href": "/services/#services-description",
+   "added": "2026-04-15"
+  },
+  {
+   "src": "/public/images/topics/math/algorithm-signal-field-study.webp",
+   "width": 1200,
+   "height": 1200,
+   "label": "A luminous algorithm field with structured marks, graph-like branches,…",
+   "kind": "image",
+   "href": "/topics/software/algorithms/#algorithms-title",
+   "added": "2026-04-15"
+  },
+  {
+   "src": "/public/images/assets/compression-crystals.png",
+   "width": 1024,
+   "height": 1024,
+   "label": "A crystal-like study of clustered facets and luminous planes suggesting…",
+   "kind": "image",
+   "href": "/topics/math/field-theory/#field-theory-title",
+   "added": "2026-04-11"
+  },
+  {
+   "src": "/public/images/assets/scheduler-clockwork.png",
+   "width": 1024,
+   "height": 1024,
+   "label": "An intricate clockwork-like illustration of gears, timing structures, a…",
+   "kind": "image",
+   "href": "/topics/math/complexity/#complexity-title",
+   "added": "2026-04-11"
+  },
+  {
+   "src": "/public/images/creatures/lndr-garden.webp",
+   "width": 640,
+   "height": 960,
+   "label": "The vocabulary garden: 'l'n'd'r, a clay-bodied wonder figure with glowi…",
+   "kind": "image",
+   "href": "/play/rpg-wednesday/#rpgw-character",
+   "added": "2026-04-11"
+  },
+  {
+   "src": "/public/images/renders/papergami/papergami-architecture.webp",
+   "width": 420,
+   "height": 280,
+   "label": "Papergami architecture study with layered folded forms and warm structu…",
+   "kind": "render",
+   "href": "/services/#three-paths",
+   "added": "2026-04-11"
+  },
+  {
+   "src": "/public/images/renders/papergami/papergami-botanical.webp",
+   "width": 600,
+   "height": 400,
+   "label": "A papergami design resembling organized botanical patterns.",
+   "kind": "render",
+   "href": "/design/folios/#folio-fold-result",
+   "added": "2026-04-11"
+  },
+  {
+   "src": "/public/images/renders/papergami/papergami-collage.webp",
+   "width": 1200,
+   "height": 800,
+   "label": "Collage panels with visible seams, reading like storyboard compartments.",
+   "kind": "render",
+   "href": "/topics/film/storyboard/#board-title",
+   "added": "2026-04-11"
+  },
+  {
+   "src": "/public/images/renders/papergami/papergami-kinetic.webp",
+   "width": 600,
+   "height": 400,
+   "label": "A kinetic papergami artwork with geometric folds and shadows.",
+   "kind": "render",
+   "href": "/design/folios/#seed-studies",
+   "added": "2026-04-11"
+  },
+  {
+   "src": "/public/images/home/constellation-studio-1600.webp",
+   "width": 1600,
+   "height": 900,
+   "label": "A braided studio field of nodes, marks, and connective lines that reads…",
+   "kind": "render",
+   "href": "/design/#design-circuits",
+   "added": "2026-04-10"
+  }
+ ]
+}
