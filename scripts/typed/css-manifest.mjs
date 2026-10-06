@@ -66,6 +66,7 @@ export const ROUTE_SCOPES = Object.freeze({
     home: [
         '/public/css/routes/surfaces/home.css',
         '/public/css/routes/surfaces/home-panels.css',
+        '/public/css/components/spw-paste.css',
     ],
     membership: [],
     newyear: ['/public/css/components/cards/seed-card.css'],

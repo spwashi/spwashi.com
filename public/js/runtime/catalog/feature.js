@@ -120,6 +120,21 @@ export const FEATURE_DEFS = [
     load: () => import('../../modules/design/folio-shelf.js'),
   },
   {
+    id: 'spw-paste',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.IDLE,
+    selector: '[data-paste-open]',
+    rootMode: 'single',
+    describes: 'paste[spw]{read.highlight.act}<room> reads pasted Spw with the bundled parser, highlights it in the operator canon, and orders the next move by what the text is: a document opens as a room, an expression reads in the parser, a dropped .spw file goes to the room',
+    updates: [
+      'structural:data-paste-open-state',
+    ],
+    evaluates: ['surface'],
+    timingArc: 'idle-inspection',
+    effectScope: ['local-dom', 'element-state', 'listeners', 'storage', 'window'],
+    load: () => import('../../modules/tools/spw-paste.js'),
+  },
+  {
     id: 'folio-day',
     layer: MODULE_LAYERS.FEATURE,
     when: MOUNT_WHEN.VISIBLE,
