@@ -40,11 +40,18 @@
  *   node scripts/wonder.mjs --surface wonder_plan
  *   node scripts/wonder.mjs --json
  *   node scripts/wonder.mjs --canon         # include the workbench's 176
+ *   node scripts/wonder.mjs --summary       # one count line, then one line a question
+ *
+ * --summary is what check:local runs: "[wonder] N open on S surfaces · U without
+ * a probe", then "? <key> <file>:<line> <question>" per wonder. The key is a
+ * hash of the question's words, so a wonder keeps it when lines above it move,
+ * and the gate can say which questions opened or settled since its last run.
  *
  * Live plan .spw under .agents/plans is part of the harvest. archive/ is not.
  * The rest of .agents stays out: diaries and state are not questions.
  */
 
+import { createHash } from 'node:crypto';
 import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -397,6 +404,18 @@ function renderSummary(wonders, files) {
   return out.join('\n');
 }
 
+/** A question's identity: its words, so it survives lines moving around it. */
+export function wonderKey(wonder) {
+  const words = String(wonder.question || '').toLowerCase().replace(/\s+/g, ' ').trim();
+  return createHash('sha1').update(words).digest('hex').slice(0, 8);
+}
+
+export function renderCountLine(wonders) {
+  const surfaces = new Set(wonders.map((wonder) => wonder.file)).size;
+  const unprobed = wonders.filter((wonder) => !wonder.probes.length).length;
+  return `[wonder] ${wonders.length} open on ${surfaces} surfaces · ${unprobed} without a probe`;
+}
+
 async function main() {
   const args = process.argv.slice(2);
   const asJson = args.includes('--json');
@@ -419,6 +438,11 @@ async function main() {
 
   if (asJson) {
     console.log(JSON.stringify({ generatedAt: new Date().toISOString(), wonders }, null, 2));
+    return;
+  }
+  if (args.includes('--summary')) {
+    console.log(renderCountLine(wonders));
+    for (const wonder of wonders) console.log(`? ${wonderKey(wonder)} ${wonder.file}:${wonder.line} ${wonder.question}`);
     return;
   }
   if (args.includes('--measures')) {
@@ -444,7 +468,9 @@ async function main() {
   console.log(renderSummary(wonders, files));
 }
 
-main().catch((error) => {
-  console.error('[wonder]', error);
-  process.exitCode = 1;
-});
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main().catch((error) => {
+    console.error('[wonder]', error);
+    process.exitCode = 1;
+  });
+}

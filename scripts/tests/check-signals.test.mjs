@@ -175,3 +175,24 @@ test('the failing section names the files to rerun, once each', () => {
   const output = 'test at scripts/tests/a.test.mjs:4:1\n✖ one\ntest at scripts/tests/a.test.mjs:9:1\n✖ two\ntest at scripts/tests/b.test.mjs:2:1';
   assert.deepEqual(failingTestFiles(output), ['scripts/tests/a.test.mjs', 'scripts/tests/b.test.mjs']);
 });
+
+test('wonders keep their keys across runs: a new key was asked, a missing one settled', () => {
+  const stage = (lines) => [{ label: 'wonder', output: lines.join('\n') }];
+  const before = readSignals(stage([
+    '[wonder] 2 open on 2 surfaces · 1 without a probe',
+    '? aaaaaaaa .spw/a.spw:3 Does the season read as one expression changing?',
+    '? bbbbbbbb .spw/b.spw:9 Which probe settles the cauldron words?',
+  ]));
+  assert.deepEqual([before.wonders.open, before.wonders.surfaces, before.wonders.unprobed], [2, 2, 1]);
+  const history = [{ at: 't', sha: 'ffffffff', warnings: [], bundles: {}, ...historyEntry({ at: 't', sha: 'ffffffff', signals: before }) }];
+  assert.deepEqual(history[0].wonders, { open: 2, unprobed: 1, keys: ['aaaaaaaa', 'bbbbbbbb'] });
+  const after = readSignals(stage([
+    '[wonder] 2 open on 2 surfaces · 0 without a probe',
+    '? aaaaaaaa .spw/a.spw:5 Does the season read as one expression changing?',
+    '? cccccccc .spw/c.spw:1 Can a reader see which slot moved?',
+  ]));
+  const comparison = compareRuns(after, history, { previousWonders: before.wonders.items });
+  assert.deepEqual(comparison.asked.map((item) => [item.key, item.where]), [['cccccccc', '.spw/c.spw:1']]);
+  assert.deepEqual(comparison.settled.map((item) => item.question), ['Which probe settles the cauldron words?']);
+  assert.deepEqual(compareRuns(after, []).asked, [], 'no history, nothing to call asked');
+});

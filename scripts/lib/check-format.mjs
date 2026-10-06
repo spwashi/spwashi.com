@@ -239,7 +239,7 @@ const ageOf = (entry, style) => style.dim(` · ${entry.runs} run${entry.runs ===
 
 /** What changed since the last run, as labelled rows under one rule. */
 export function formatComparison(comparison, { style = createStyle(), limit = 5 } = {}) {
-  const { last, newWarnings, cleared, standing, moved } = comparison;
+  const { last, newWarnings, cleared, standing, moved, asked = [], settled = [] } = comparison;
   if (!last) return [rule('history', style), ...row('first', 'run with a history here; the next run will say what changed', style)];
   const lines = [rule(`since ${shortSha(last.sha)}${last.dirty ? ` +${last.dirty} uncommitted` : ''}`, style)];
   const decisions = standing.filter((warning) => warningKind(warning.text) === 'decision');
@@ -248,6 +248,10 @@ export function formatComparison(comparison, { style = createStyle(), limit = 5 
     ...newWarnings.slice(0, limit).map((warning) => ['new', `${style.yellow('⚠')} ${words(warning.text)}`, style.yellow]),
     ...(newWarnings.length > limit ? [['new', `… ${newWarnings.length - limit} more in the receipt`, style.yellow]] : []),
     ...cleared.slice(0, limit).map((id) => ['cleared', id, style.green]),
+    ...asked.slice(0, limit).map((item) => ['asked', `${style.magenta('?')} ${item.question}`, style.magenta, style.dim(` · ${item.where}`)]),
+    ...(asked.length > limit ? [['asked', `… ${asked.length - limit} more in the receipt`, style.magenta]] : []),
+    ...settled.slice(0, limit).map((item) => ['settled', `${style.green('✓')} ${item.question}`, style.green]),
+    ...(settled.length > limit ? [['settled', `… ${settled.length - limit} more in the receipt`, style.green]] : []),
     ...decisions.map((warning) => ['decide', words(warning.text), style.magenta, age(warning, style)]),
     ...drift.map((warning) => ['standing', words(warning.text), style.dim, age(warning, style)]),
   ];
@@ -255,7 +259,7 @@ export function formatComparison(comparison, { style = createStyle(), limit = 5 
     const items = moved.slice(0, 6).map((entry) => `${entry.name} ${entry.delta > 0 ? '+' : '−'}${Math.abs(entry.delta).toFixed(1)} KiB → ${entry.to.toFixed(1)}`);
     rows.push(['moved', `${items.join(' · ')}${moved.length > 6 ? ` · … ${moved.length - 6} more` : ''}`, style.yellow]);
   }
-  if (!rows.length) rows.push(['quiet', 'nothing new, cleared, moved or waiting', style.green]);
+  if (!rows.length) rows.push(['quiet', 'nothing new, cleared, moved, asked or waiting', style.green]);
   let previous = null;
   for (const [label, text, paint, suffix = ''] of rows) {
     lines.push(...row(label === previous ? '' : label, text, style, { paint, suffix }));
@@ -296,6 +300,10 @@ export function formatDigest(digest, { style = createStyle() } = {}) {
     .map(([name, entry]) => `${name} ${entry.first.toFixed(1)} → ${entry.last.toFixed(1)} KiB`);
   if (grown.length) lines.push(...row('bundles', grown.join(' · '), style, { paint: style.yellow }));
   if (digest.near.length) lines.push(...row('near', digest.near.join(', '), style, { paint: style.yellow }));
+  if (digest.wonders) {
+    const open = digest.wonders.first === digest.wonders.last ? `${digest.wonders.last}` : `${digest.wonders.first} → ${digest.wonders.last}`;
+    lines.push(...row('wonder', `${open} open · ${digest.wonders.unprobed} without a probe`, style, { paint: style.magenta }));
+  }
   let previous = null;
   for (const entry of digest.standing) {
     const label = entry.kind === 'decision' ? 'decide' : 'standing';
