@@ -8,7 +8,8 @@
  * source and cannot see it. This serves dist/, opens one route in headless
  * Chrome, and asks the runtime to load each module through its own loader
  * (`__SPW_SITE__.loadModule`). Nothing mounts, so a route that lacks a
- * module's host cannot read as a failure.
+ * module's host cannot read as a failure. It also fails on any chunk cycle
+ * the build recorded in asset-manifest.json.
  *
  *   node scripts/check-built-modules.mjs
  *   node scripts/check-built-modules.mjs --dist dist --route / --receipt built-receipt.json
@@ -53,9 +54,11 @@ function clip(value) {
 /**
  * Sort the page's load results into a receipt. `ids` is the catalog, `loads`
  * one `{ id, ok, ms, error }` per answered load, `timedOut` the ids whose
- * loader never answered.
+ * loader never answered, `chunkCycles` the groups of chunks the build could
+ * not untangle (asset-manifest.json). A cycle fails the check even when every
+ * module loads today: it is what makes load order matter.
  */
-export function classifyBuiltModules({ ids = [], loads = [], timedOut = [] } = {}, cap = CAP) {
+export function classifyBuiltModules({ ids = [], loads = [], timedOut = [], chunkCycles = [] } = {}, cap = CAP) {
   const byId = new Map(loads.filter((row) => row?.id).map((row) => [row.id, row]));
   const slow = new Set(timedOut);
   const failing = [];
@@ -77,6 +80,9 @@ export function classifyBuiltModules({ ids = [], loads = [], timedOut = [] } = {
     }
   }
   if (!ids.length) failing.push({ where: 'runtime', reason: 'empty-catalog', detail: '' });
+  for (const cycle of chunkCycles) {
+    failing.push({ where: String(cycle?.[0] || 'chunk'), reason: 'chunk-cycle', detail: clip((cycle || []).join(' <-> ')) });
+  }
   return {
     schema: 'built-modules-receipt.v0',
     ok: failing.length === 0,
@@ -259,7 +265,13 @@ async function main() {
       return 2;
     }
 
-    const receipt = { ...classifyBuiltModules(page), route };
+    let chunkCycles = [];
+    try {
+      chunkCycles = JSON.parse(await readFile(path.join(dist, 'asset-manifest.json'), 'utf8')).chunkCycles || [];
+    } catch {
+      chunkCycles = [];
+    }
+    const receipt = { ...classifyBuiltModules({ ...page, chunkCycles }), route };
     writeReceipt(receiptFile, receipt);
     for (const row of receipt.failures) say(`FAIL ${row.where} ${row.reason}${row.detail ? ` — ${row.detail}` : ''}`);
     say(`${receipt.ok ? 'ok' : 'FAIL'} ${receipt.loaded}/${receipt.modules} modules load from the built site${receipt.slowest ? `; slowest ${receipt.slowest.id} ${receipt.slowest.ms}ms` : ''}`);

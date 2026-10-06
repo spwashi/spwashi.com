@@ -10,6 +10,8 @@ import { cssForDelivery } from '../css-delivery.mjs';
 import { assertPwaContract, collectOfflineDocumentDependencies, formatPwaContractSummary, injectBuildPrecacheAssets, } from '../pwa-contracts.mjs';
 import { assertSafeOutputDir, checkImageRedundancy, copyRepo, countFiles, createLogger, listFilesRecursive, listSourceRepoPaths, logDuplicateImages, parseArgs, printHelp, relRepo, rmrf, runNodeScript, writeNoJekyll, ROOT_DIR, } from './ops.mjs';
 import { isErrnoCode, toPosixPath } from '../shared/build-topology.mjs';
+/** Folding a cycle can close another; a few passes settle the graphs this site makes. */
+const MAX_FOLD_ROUNDS = 4;
 function fingerprint(content) {
     return createHash('sha256').update(content).digest('hex').slice(0, 10);
 }
@@ -55,6 +57,11 @@ function resolveCatalogEntryPath(outDir, specifier) {
  */
 export function semanticPackIdForDefinition(definition) {
     const when = String(definition.when || 'immediate');
+    // A module that mounts only under a debug posture is addressed by itself,
+    // so the packs every reader downloads do not carry it.
+    if (definition.debugOnly || definition.timingArc === 'enhance-debug') {
+        return `debug-${slugifyChunkName(definition.id)}`;
+    }
     if (when === 'immediate')
         return 'foundation';
     if (when === 'idle')
@@ -118,6 +125,140 @@ export function createSemanticModulePlan(definitions, outDir) {
     }))
         .sort((a, b) => a.id.localeCompare(b.id));
     return { packs, chunkNameByEntryPath };
+}
+/**
+ * A pack that takes only its entry leaves the entry's private dependencies in
+ * the chunk rolldown makes for the dynamic import. Pack and chunk then import
+ * each other, and whichever runs first reads the other before it exists.
+ * Discovery already groups an entry with the modules that travel only with
+ * it, so those modules join the entry's pack. A discovery chunk whose entries
+ * belong to two packs is left to rolldown.
+ */
+export function assignPackCompanions(chunkNameByEntryPath, discoveryChunks) {
+    const assigned = new Map(chunkNameByEntryPath);
+    for (const chunk of discoveryChunks) {
+        const moduleIds = chunk.moduleIds.map(normalizeModuleId);
+        const packs = new Set();
+        for (const moduleId of moduleIds) {
+            const pack = chunkNameByEntryPath.get(moduleId);
+            if (pack)
+                packs.add(pack);
+        }
+        if (packs.size !== 1)
+            continue;
+        const [pack] = [...packs];
+        for (const moduleId of moduleIds) {
+            if (!assigned.has(moduleId))
+                assigned.set(moduleId, pack);
+        }
+    }
+    return assigned;
+}
+/**
+ * Groups of chunks that import each other, by static import. An acyclic
+ * module graph can still be cut into a cyclic chunk graph, and a cycle makes
+ * load order decide whether a module reads an initialised binding.
+ */
+export function findChunkCycles(chunks) {
+    const edges = new Map(chunks.map((chunk) => [chunk.fileName, chunk.imports]));
+    const index = new Map();
+    const low = new Map();
+    const stack = [];
+    const onStack = new Set();
+    const cycles = [];
+    let next = 0;
+    const visit = (fileName) => {
+        index.set(fileName, next);
+        low.set(fileName, next);
+        next += 1;
+        stack.push(fileName);
+        onStack.add(fileName);
+        for (const target of edges.get(fileName) || []) {
+            if (!edges.has(target))
+                continue;
+            if (!index.has(target)) {
+                visit(target);
+                low.set(fileName, Math.min(low.get(fileName), low.get(target)));
+            }
+            else if (onStack.has(target)) {
+                low.set(fileName, Math.min(low.get(fileName), index.get(target)));
+            }
+        }
+        if (low.get(fileName) !== index.get(fileName))
+            return;
+        const group = [];
+        let member = '';
+        do {
+            member = stack.pop();
+            onStack.delete(member);
+            group.push(member);
+        } while (member !== fileName);
+        if (group.length > 1 || (edges.get(fileName) || []).includes(fileName))
+            cycles.push(group.sort());
+    };
+    for (const fileName of edges.keys()) {
+        if (!index.has(fileName))
+            visit(fileName);
+    }
+    return cycles.sort((left, right) => left[0].localeCompare(right[0]));
+}
+/** Earlier arrivals host a fold: the pack a page already spends first carries the rest. */
+function packArrivalRank(pack) {
+    if (pack.when === 'immediate')
+        return 0;
+    if (pack.when === 'idle')
+        return 1;
+    if (pack.when === 'settled')
+        return 2;
+    return 3;
+}
+/**
+ * Chunks that import each other always load together, so one chunk can carry
+ * them at no cost in transport. Each cycle folds into the pack in it that
+ * arrives first. A cycle that touches the boot closure, or holds no pack, is
+ * left alone and stays a warning: folding it would move boot code into a
+ * deferred pack or the reverse.
+ */
+export function foldChunkCycles(cycles, chunks, packs, packNameByModuleId, bootFileNames = new Set()) {
+    const chunkByFile = new Map(chunks.map((chunk) => [chunk.fileName, chunk]));
+    const packByChunkName = new Map(packs.map((pack) => [pack.chunkName, pack]));
+    const next = new Map(packNameByModuleId);
+    const folds = [];
+    for (const cycle of cycles) {
+        if (cycle.some((fileName) => bootFileNames.has(fileName)))
+            continue;
+        const members = cycle.map((fileName) => chunkByFile.get(fileName)).filter((chunk) => chunk != null);
+        const hosts = members
+            .filter((chunk) => packByChunkName.has(chunk.name))
+            .sort((left, right) => (packArrivalRank(packByChunkName.get(left.name)) - packArrivalRank(packByChunkName.get(right.name))
+            || left.name.localeCompare(right.name)));
+        if (!hosts.length)
+            continue;
+        const host = hosts[0].name;
+        for (const chunk of members) {
+            for (const moduleId of chunk.moduleIds)
+                next.set(normalizeModuleId(moduleId), host);
+        }
+        folds.push({ host, members: members.map((chunk) => chunk.name).filter((name) => name !== host).sort() });
+    }
+    return { packNameByModuleId: next, folds };
+}
+/** The module imports that hold a chunk cycle together, so a warning names what to move. */
+export function describeCycleEdges(cycle, chunkByModuleId, importsByModuleId) {
+    const members = new Set(cycle);
+    const edges = [];
+    for (const [from, imports] of importsByModuleId) {
+        const fromChunk = chunkByModuleId.get(from);
+        if (!fromChunk || !members.has(fromChunk))
+            continue;
+        for (const to of imports) {
+            const toChunk = chunkByModuleId.get(to);
+            if (!toChunk || toChunk === fromChunk || !members.has(toChunk))
+                continue;
+            edges.push({ from, fromChunk, to, toChunk });
+        }
+    }
+    return edges.sort((left, right) => left.from.localeCompare(right.from) || left.to.localeCompare(right.to));
 }
 let publicImportHookReady = null;
 /**
@@ -201,13 +342,14 @@ async function bundleSiteRuntimeGraph(outDir, logger) {
         minify: true,
         sourcemap: false,
         // Off deliberately. Strict order wraps every module in a lazy `init_x()`
-        // held in a `var`, and the semantic groups below hand rolldown chunk
-        // graphs with cycles in them even though the module graph has none. A
-        // `var` binding is not hoisted like a function declaration, so the first
+        // held in a `var`, and the semantic groups below once handed rolldown
+        // chunk graphs with cycles in them even though the module graph has none.
+        // A `var` binding is not hoisted like a function declaration, so the first
         // chunk into a cycle called an initializer that was still undefined and
         // every module mount after it died on `is not a function`. Native ESM
         // ordering is already correct for an acyclic module graph, which this
-        // one is; the wrappers were buying nothing and costing the runtime.
+        // one is; the wrappers were buying nothing and costing the runtime. The
+        // cut into packs is now folded until it has no cycles either (below).
         strictExecutionOrder: false,
         entryFileNames: 'site.js',
         chunkFileNames: '[name]-[hash].js',
@@ -231,23 +373,54 @@ async function bundleSiteRuntimeGraph(outDir, logger) {
         return !residentModuleIds.has(normalizeModuleId(resolveCatalogEntryPath(outDir, specifier)));
     });
     const semanticPlan = createSemanticModulePlan(deferredDefinitions, outDir);
-    const result = await rolldownBuild({
-        ...sharedOptions,
-        write: false,
-        output: {
-            ...sharedOutput,
-            codeSplitting: {
-                includeDependenciesRecursively: false,
-                groups: [{
-                        name(moduleId) {
-                            return semanticPlan.chunkNameByEntryPath.get(normalizeModuleId(moduleId)) || null;
-                        },
-                        entriesAware: false,
-                    }],
+    let packNameByModuleId = assignPackCompanions(semanticPlan.chunkNameByEntryPath, discoveryChunks);
+    const importsByModuleId = new Map();
+    const bundleWithPacks = async (packNames) => {
+        const result = await rolldownBuild({
+            ...sharedOptions,
+            plugins: [
+                ...sharedOptions.plugins,
+                {
+                    name: 'static-import-ledger',
+                    moduleParsed(info) {
+                        importsByModuleId.set(normalizeModuleId(info.id), info.importedIds.map(normalizeModuleId));
+                    },
+                },
+            ],
+            write: false,
+            output: {
+                ...sharedOutput,
+                codeSplitting: {
+                    includeDependenciesRecursively: false,
+                    groups: [{
+                            name(moduleId) {
+                                return packNames.get(normalizeModuleId(moduleId)) || null;
+                            },
+                            entriesAware: false,
+                        }],
+                },
             },
-        },
-    });
-    const chunks = result.output.filter((output) => output.type === 'chunk');
+        });
+        return result.output.filter((output) => output.type === 'chunk');
+    };
+    // The module graph has no cycles; a cut of it into packs can. Fold each
+    // cycle into one pack and cut again, until the chunk graph is a DAG too.
+    let chunks = await bundleWithPacks(packNameByModuleId);
+    let chunkCycles = findChunkCycles(chunks);
+    const folds = [];
+    for (let round = 0; chunkCycles.length && round < MAX_FOLD_ROUNDS; round += 1) {
+        const bootFileNames = new Set(collectStaticChunkClosure(chunks).map((chunk) => chunk.fileName));
+        const folded = foldChunkCycles(chunkCycles, chunks, semanticPlan.packs, packNameByModuleId, bootFileNames);
+        if (!folded.folds.length)
+            break;
+        folds.push(...folded.folds);
+        packNameByModuleId = folded.packNameByModuleId;
+        chunks = await bundleWithPacks(packNameByModuleId);
+        chunkCycles = findChunkCycles(chunks);
+    }
+    for (const fold of folds) {
+        logger.info(`[build] folded ${fold.members.join(', ')} into ${fold.host}: they import each other and load together`);
+    }
     const emittedHrefs = [];
     let bytes = 0;
     for (const chunk of chunks) {
@@ -265,12 +438,21 @@ async function bundleSiteRuntimeGraph(outDir, logger) {
         gzipBytes: bootChunks.reduce((total, chunk) => total + gzipSync(chunk.code).length, 0),
     };
     const chunksByName = new Map(chunks.map((chunk) => [chunk.name, chunk]));
+    const chunkByModuleId = new Map();
+    for (const chunk of chunks) {
+        for (const moduleId of chunk.moduleIds)
+            chunkByModuleId.set(normalizeModuleId(moduleId), chunk);
+    }
+    const packIdByChunkName = new Map(semanticPlan.packs.map((pack) => [pack.chunkName, pack.id]));
     const modulePacks = {};
     for (const pack of semanticPlan.packs) {
-        const chunk = chunksByName.get(pack.chunkName);
+        // A folded pack has no chunk of its own name; its entry says where it went.
+        const chunk = chunksByName.get(pack.chunkName) || chunkByModuleId.get(pack.entryPaths[0]);
         if (!chunk)
             continue;
+        const foldedInto = chunk.name === pack.chunkName ? null : packIdByChunkName.get(chunk.name) || null;
         modulePacks[pack.id] = {
+            ...(foldedInto ? { foldedInto } : {}),
             href: `/public/js/${path.basename(chunk.fileName)}`,
             when: pack.when,
             timingChunk: pack.timingChunk,
@@ -283,11 +465,25 @@ async function bundleSiteRuntimeGraph(outDir, logger) {
             gzipBytes: gzipSync(chunk.code).length,
         };
     }
+    for (const cycle of chunkCycles) {
+        logger.warn(`[build] chunk cycle: ${cycle.map((fileName) => path.basename(fileName)).join(' <-> ')}`);
+        const fileByModuleId = new Map([...chunkByModuleId].map(([moduleId, chunk]) => [moduleId, chunk.fileName]));
+        for (const edge of describeCycleEdges(cycle, fileByModuleId, importsByModuleId)) {
+            logger.warn(`[build]   ${path.relative(jsRoot, edge.from)} (${path.basename(edge.fromChunk)}) imports ${path.relative(jsRoot, edge.to)} (${path.basename(edge.toChunk)})`);
+        }
+    }
     const ms = Date.now() - startedAt;
     logger.info(`[build] bundled site runtime graph: boot=${boot.hrefs.join(', ') || '(none)'} `
-        + `packs=${Object.keys(modulePacks).length} chunks=${chunks.length} `
+        + `packs=${Object.keys(modulePacks).length} chunks=${chunks.length} cycles=${chunkCycles.length} `
         + `(${bytes} bytes total, ${boot.bytes} boot, ${ms}ms)`);
-    return { boot, emittedHrefs, modulePacks, bytes, ms };
+    return {
+        boot,
+        emittedHrefs,
+        modulePacks,
+        chunkCycles: chunkCycles.map((cycle) => cycle.map((fileName) => path.basename(fileName))),
+        bytes,
+        ms,
+    };
 }
 const SITE_SCRIPT_RE = /(<script\b[^>]*\bsrc=["']\/public\/js\/site\.js["'][^>]*>\s*<\/script>)/i;
 async function injectBootModulePreloads(outDir, hrefs) {
@@ -495,6 +691,7 @@ async function hashAndRewritePublicAssets(outDir, options, runtimeBundle) {
             hrefs: runtimeBundle.boot.hrefs.map(resolveAssetHref),
         },
         modulePacks,
+        chunkCycles: runtimeBundle.chunkCycles,
     };
     await fs.writeFile(path.join(outDir, 'asset-manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
     return manifest;
@@ -568,6 +765,7 @@ export async function main() {
         },
         emittedHrefs: ['/public/js/site.js'],
         modulePacks: {},
+        chunkCycles: [],
         bytes: 0,
         ms: 0,
     };
