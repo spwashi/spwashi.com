@@ -16161,6 +16161,25 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
   container-type: inline-size;
 }
 
+/* Cards and panels are flex columns that align their items to start, so a
+   chip or a button keeps its own width. An inline-size container has no width
+   of its own to keep: placed there it folds to its border (a figure, a lens,
+   a seed card in a folio panel). Containers, and wrappers whose direct child
+   is one, fill the card column; everything else still hugs its content. */
+:where(
+  :where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .spw-panel, .frame-panel, .mode-panel, .plan-card, .compare-card, .spec-column, .ref-card, .settings-state-card, .math-lens-card, .topic-reference-card)
+  > :is(
+    [data-spw-component-kind],
+    [data-spw-kind],
+    .spw-frame, .spw-card, .frame-card, .media-card, .media-focus-card, .topic-reference-card,
+    .software-card, .operator-card, .spw-panel, .frame-panel, .mode-panel, .plan-card,
+    .compare-card, .spec-column, .ref-card, .payment-card, .seed-card,
+    :has(> :is([data-spw-component-kind], [data-spw-kind], .spw-card, .frame-card, .spw-panel, .frame-panel))
+  ):not([data-spw-slot], .spw-component-tag, .mode-switch, [data-spw-floating-chrome="true"], .spw-chip, a, button)
+) {
+  align-self: stretch;
+}
+
 :where(.spw-card, .frame-card, .spw-chip) {
   transition:
     transform 80ms var(--ease-settle, ease),
