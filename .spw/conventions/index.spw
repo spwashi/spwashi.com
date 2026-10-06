@@ -117,6 +117,7 @@
 @runtime_medium_ecology: ~"./runtime-medium-ecology.spw"
 @js_architecture_cognition: ~"./js-architecture-cognition.spw"
 @metaphor_dimensional_lexicon: ~"./metaphor-dimensional-lexicon.spw"
+@word_sets: ~"./word-sets.spw"  # ordered words per coordinate; change the words here first
 @js_architecture_aerodynamics: ~"./js-architecture-aerodynamics.spw"  # archive stub
 @module_export_contract: ~"./module-export-contract.spw"
 @module_export_audit: ~"../audits/module-export-standalone-2026-07.spw"
@@ -253,6 +254,7 @@ dispatch: .{
  runtime_medium_ecology = @runtime_medium_ecology
  js_architecture_cognition = @js_architecture_cognition
  metaphor_dimensional_lexicon = @metaphor_dimensional_lexicon
+ word_sets = @word_sets
  js_architecture_aerodynamics = @js_architecture_aerodynamics
  module_export_contract = @module_export_contract
  module_export_audit = @module_export_audit
