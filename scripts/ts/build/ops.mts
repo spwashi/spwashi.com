@@ -144,6 +144,12 @@ export function parseArgs(argv: string[]): BuildOptions {
       continue;
     }
 
+    // Ship the CSS essays to the browser too, for a build meant to be read in DevTools.
+    if (arg === '--keep-css-comments') {
+      options.minifyCss = false;
+      continue;
+    }
+
     if (arg === '--quiet') {
       options.quiet = true;
       continue;
@@ -192,6 +198,8 @@ Modes:
   --preserve-asset-names   Alias for --skip-fingerprint.
   --skip-minify            Skip per-file minify of dist/public/js (rolldown)
                            and the comment strip of dist/public/css.
+  --keep-css-comments      Keep comments in dist/public/css; JS still minifies.
+                           Stripping is the default.
 
 Paths:
   --out <dir>              Output directory. Default: dist

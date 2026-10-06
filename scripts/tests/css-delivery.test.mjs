@@ -4,6 +4,7 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 
+import { parseArgs } from '../typed/build/ops.mjs';
 import { cssForDelivery, stripCssComments } from '../typed/css-delivery.mjs';
 
 describe('css delivery form', () => {
@@ -47,5 +48,14 @@ describe('css delivery form', () => {
 
   it('treats an unterminated comment as running to the end', () => {
     assert.equal(stripCssComments('.a{} /* open'), '.a{} ');
+  });
+});
+
+describe('css delivery in the build', () => {
+  it('strips comments by default; --keep-css-comments keeps them and still minifies js', () => {
+    assert.equal(parseArgs([]).minifyCss, true);
+    const kept = parseArgs(['--keep-css-comments']);
+    assert.equal(kept.minifyCss, false);
+    assert.equal(kept.minifyJs, true);
   });
 });
