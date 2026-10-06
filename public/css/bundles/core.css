@@ -12146,6 +12146,27 @@ html:not([data-spw-runtime-stage]) :is(.mode-panel, [data-mode-panel]) {
 html:not([data-spw-runtime-stage]) :is(.mode-switch:has([data-set-mode]), [data-set-mode]) {
   display: none !important;
 }
+
+/* A settings chip sets a site setting through a script. Without one the
+   chips are shown switched off, and a <noscript> note after each group
+   (_partials/scripts-off-tuning.html) says why. */
+html:not([data-spw-runtime-stage]) [data-site-setting-set] {
+  opacity: 0.5 !important;
+  filter: saturate(0) !important;
+  pointer-events: none !important;
+}
+
+html:not([data-spw-runtime-stage]) noscript:has(> .spw-scripts-off-note) {
+  display: block;
+  flex-basis: 100%;
+  grid-column: 1 / -1;
+}
+
+.spw-scripts-off-note {
+  margin-block: 0.35rem 0;
+  color: var(--ink-soft, currentColor);
+  font-size: var(--text-size-xs, 0.8rem);
+}
 }
 
 /* /public/css/modes/capture.css */

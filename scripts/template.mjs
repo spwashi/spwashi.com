@@ -907,7 +907,10 @@ async function expandSiteDirectives(text, scopeVars, warnings) {
   });
 
   if (/<spw-site-footer\b/i.test(output)) {
-    const footerTemplate = await loadSiteFooterTemplate();
+    // The footer is a partial like any other, so its own <spw-include>s expand.
+    const footerTemplate = await expandIncludes(
+      await loadSiteFooterTemplate(), scopeVars, 1, new Set([resolvePartialPath('site-footer')]), warnings,
+    );
     output = output.replace(cloneRegex(SPW_SITE_FOOTER_RE), (_match, attrString) => {
       const vars = mergeScopeVars(scopeVars, parseAttrs(attrString), warnings);
       return substituteVars(footerTemplate, vars, warnings);
