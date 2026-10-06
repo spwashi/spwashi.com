@@ -89,6 +89,7 @@
     "audit:js-tree:json": "node scripts/js-tree-value.mjs --json",
     "audit:module-writers": "node --import ./scripts/lib/register-public-imports.mjs scripts/module-writer-audit.mjs",
     "audit:root-writes": "node scripts/root-write-census.mjs",
+    "audit:root-ablation": "node scripts/root-state-ablation.mjs",
     "audit:css-custom-properties": "node scripts/css-custom-property-audit.mjs",
     "ecology": "node scripts/spw-ecology-inventory.mjs",
     "ecology:json": "node scripts/spw-ecology-inventory.mjs --json",
