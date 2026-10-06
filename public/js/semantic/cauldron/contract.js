@@ -317,20 +317,13 @@ export function computeCauldronPhase(ingredients = []) {
 }
 
 export function getCauldronStatusCopy(count, phase) {
-  const available = countPrimeableSources();
-  const availabilityCopy = available
-    ? `${available} highlighted words on this page can be held.`
-    : 'Nothing on this screen can be held yet; scroll to a highlighted word.';
-  if (phase === 'empty') {
-    return `Nothing held. Press and hold a highlighted word to keep it here. ${availabilityCopy}`;
-  }
-  if (phase === 'primed') {
-    return '1 ingredient in the cauldron. Hold one more to make a mix, or nourish this one for later.';
-  }
-  if (phase === 'mixing') {
-    return '2 ingredients in the cauldron. Mix them to see the extension they make before you plant it.';
-  }
-  return `${count} ingredients in the cauldron. The extension is ready: refine it, copy it, plant it, or turn it into a vision seed.`;
+  // One next move per state. The count and the held words are the live
+  // expression above this line (interface/cauldron/live-expression.js), and
+  // what can be held on this page is the availability note beside it.
+  if (phase === 'empty') return 'Press and hold a highlighted word to keep it here.';
+  if (phase === 'primed') return 'Hold one more to make a mix.';
+  if (phase === 'mixing') return 'Mix them to see what they make.';
+  return `Mix these ${count}, then copy or keep what they make.`;
 }
 
 export function countPrimeableSources() {

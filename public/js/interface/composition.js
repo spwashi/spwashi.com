@@ -50,6 +50,7 @@ import {
   getCauldronVesselSpec,
   normalizeCauldronVessel,
 } from '/public/js/semantic/cauldron/contract.js';
+import { renderLiveExpression } from '/public/js/interface/cauldron/live-expression.js';
 import {
   bindCauldronPanelToggle,
   openCauldronDialog,
@@ -690,6 +691,7 @@ function showOutput(htmlContent, signature = '') {
     textBox.innerHTML = htmlContent;
     output.hidden = false;
     output.dataset.spwCauldronOutputState = 'fresh';
+    renderLiveExpression(getCauldron(), { mixed: true });
     setLastMixSignature(signature);
     pulseCauldronFeedback('mix');
   }
@@ -700,6 +702,7 @@ function hideOutput() {
   if (output) {
     output.hidden = true;
     delete output.dataset.spwCauldronOutputState;
+    renderLiveExpression(getCauldron(), { mixed: false });
   }
   clearMixOutputState();
 }
@@ -713,7 +716,7 @@ function syncIngredientAvailability() {
   document.documentElement.dataset.spwIngredientAvailability = count > 0 ? 'available' : 'scarce';
   document.documentElement.dataset.spwIngredientSourceCount = String(count);
   document.querySelectorAll('[data-cauldron-availability]').forEach((node) => {
-    node.textContent = count > 0 ? ` ${count} possible ingredients nearby.` : ' Move through the page to find primeable handles.';
+    node.textContent = count > 0 ? ` ${count} on this page can be held.` : ' Scroll to a highlighted word.';
   });
 }
 
@@ -755,7 +758,8 @@ function setupCompositionLens() {
   };
   const unsubscribe = bus.on('frame:mode', () => { hideOutput(); sync(); });
   controls.addEventListener('change', change);
-  controls.hidden = false;
+  // A lens and an intent shape a mix, so they wait until there is one to shape.
+  controls.hidden = getCauldron().length < 2;
   sync();
   return () => { unsubscribe(); controls.removeEventListener('change', change); };
 }
@@ -964,6 +968,10 @@ function syncCauldronState() {
   document.querySelectorAll('[data-cauldron-status-text]').forEach((node) => {
     node.textContent = getCauldronStatusCopy(count, phase);
   });
+  const mixOutput = document.querySelector('[data-cauldron-output]');
+  renderLiveExpression(ingredients, { mixed: Boolean(mixOutput && !mixOutput.hidden) });
+  const lensControls = document.getElementById('cauldron-composition-controls');
+  if (lensControls) lensControls.hidden = count < 2;
   document.querySelectorAll('[data-cauldron-count]').forEach((node) => {
     node.textContent = String(count);
   });

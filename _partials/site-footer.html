@@ -65,11 +65,12 @@
                     </li>
                 </ol>
                 <div class="site-footer__cauldron-body" id="memory-garden-cauldron-body">
-                    <p class="site-footer__cauldron-copy">
-                        <span data-cauldron-count>0</span> fragments held<span class="site-footer__cauldron-force-note" data-spw-cauldron-operators></span>.
+                    <p class="site-footer__cauldron-copy site-footer__cauldron-live" data-cauldron-live-expression title="0 held, resting: nothing held">
+                        <span class="site-footer__cauldron-live-expression"><span class="site-footer__cauldron-live-op" data-cauldron-live-op data-spw-operator="ground">.</span>cauldron{<span data-cauldron-live-parts></span>}</span>
+                        <span class="site-footer__cauldron-live-count"><span data-cauldron-count>0</span> held<span class="site-footer__cauldron-force-note" data-spw-cauldron-operators></span></span>
                     </p>
                     <p class="site-footer__cauldron-status" role="status" aria-live="polite">
-                        <span data-cauldron-status data-cauldron-status-text>Nothing held. Press and hold a highlighted word to keep it here. Two make a mix you can copy or plant.</span>
+                        <span data-cauldron-status data-cauldron-status-text>Press and hold a highlighted word to keep it here. Two make a mix.</span>
                         <span class="site-footer__cauldron-availability" data-cauldron-availability></span>
                         <a href="/#living-concepts" class="cauldron-instruction-link" aria-label="Open living concepts on the home atlas">Living concepts</a>
                         <a href="/design/palettes/#spell-cauldron-hooks" class="cauldron-instruction-link" aria-label="Learn how saved fragments and extensions work">How it works</a>
@@ -89,7 +90,7 @@
                     </fieldset>
                     <details class="site-footer__cauldron-tools">
                         <summary>Vessel &amp; Spw notation</summary>
-                        <p>Choose a vocabulary for the same gathering. Your fragments stay together.</p>
+                        <p>Other words for the same gathering.</p>
                         <div class="mode-switch site-footer__cauldron-vessels" role="group" aria-label="Vessel vocabulary">
                             <button class="frame-sigil" type="button" data-set-cauldron-vessel="garden" aria-pressed="true">garden</button>
                             <button class="frame-sigil" type="button" data-set-cauldron-vessel="soup" aria-pressed="false">soup</button>
