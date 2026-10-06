@@ -19,7 +19,11 @@
  *   script-only  a <button> outside a form, without popovertarget or
  *                commandfor, that the markup does not hide: with scripts off
  *                it offers a press nothing answers. The note names the hook
- *                a script would answer (data-site-setting-set, data-set-mode…)
+ *                a script would answer (data-site-setting-set, data-set-mode…).
+ *                Without scripts, modes/hydration.css withdraws lens switches
+ *                (data-set-mode), which never count, and shows settings
+ *                chips switched off, so a group of them counts only when no
+ *                scripts-off note follows it
  *
  * Reports only; it does not gate check:local. Record:
  * .spw/audits/page-structure-2026-10.spw
@@ -37,6 +41,7 @@ const OPTIONAL_END = new Set(['p', 'li', 'dt', 'dd', 'option', 'tr', 'td', 'th',
 const KNOWN = new Set(('a abbr address article aside audio b bdi bdo blockquote button canvas cite code data datalist del details dfn dialog div dl em fieldset figcaption figure footer form h1 h2 h3 h4 h5 h6 header hgroup i iframe ins kbd label legend main map mark menu meter nav noscript object ol optgroup output picture pre progress q rp rt ruby s samp search section select slot small span strong sub summary sup table template textarea time u ul var video').split(' '));
 const KINDS = ['unbalanced', 'raw-capsule', 'heading-skip', 'section-id', 'img-size', 'button-type', 'script-only'];
 const HIDDEN_ATTR = /(?:^|\s)hidden(?=[\s=/]|$)/;
+const SCRIPTS_OFF_NOTE = '<spw-include src="scripts-off-tuning">';
 // The attribute a script reads to answer a press, so findings group by behavior.
 const scriptHook = (attrs) => /\s(data-(?:site-setting-set|set-mode|spw-action|action|spw-copy|copy)[a-z-]*)=/.exec(attrs)?.[1]
   || /\s(data-(?!spw-operator|spw-handle)[a-z-]+)=/.exec(attrs)?.[1]
@@ -65,6 +70,10 @@ export function auditPage(file, source) {
   const add = (kind, index, note) => findings.push({ kind, file, line: lineAt(index), note });
 
   const ids = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map((m) => m[1]));
+  const settle = (entry, end) => {
+    if (!entry.chips || main.slice(end).trimStart().startsWith(SCRIPTS_OFF_NOTE)) return;
+    for (const index of entry.chips) add('script-only', index, 'data-site-setting-set, no scripts-off note');
+  };
   const stack = [];
   let lastHeading = 0;
   for (const m of main.matchAll(TAG)) {
@@ -79,7 +88,12 @@ export function auditPage(file, source) {
       if (tag === 'img' && !(/\bwidth=/.test(attrs) && /\bheight=/.test(attrs))) add('img-size', m.index, /\bsrc="([^"]*)"/.exec(attrs)?.[1] || 'img');
       if (tag === 'button' && !/\btype=/.test(attrs)) add('button-type', m.index, 'no type');
       if (tag === 'button' && !/\s(popovertarget|commandfor)=/.test(attrs) && !HIDDEN_ATTR.test(attrs)
-        && !stack.some((entry) => entry.tag === 'form' || entry.hidden)) add('script-only', m.index, scriptHook(attrs));
+        && !stack.some((entry) => entry.tag === 'form' || entry.hidden)) {
+        const hook = scriptHook(attrs);
+        // A settings chip waits for its group to close: a scripts-off note after it answers the press.
+        if (hook === 'data-site-setting-set' && stack.length) (stack.at(-1).chips ||= []).push(m.index);
+        else if (hook !== 'data-set-mode') add('script-only', m.index, hook);
+      }
       if (tag === 'section' && !/\sid="/.test(attrs)) {
         const label = /aria-labelledby="([^"\s]+)-title"/.exec(attrs)?.[1];
         if (label && !ids.has(label)) add('section-id', m.index, `could be #${label}`);
@@ -88,13 +102,15 @@ export function auditPage(file, source) {
     }
     if (VOID.has(tag) || OPTIONAL_END.has(tag) || selfClosing || tag.includes('-') || !KNOWN.has(tag)) continue;
     if (!close) { stack.push({ tag, index: m.index, hidden: HIDDEN_ATTR.test(attrs) }); continue; }
-    if (stack.length && stack.at(-1).tag === tag) { stack.pop(); continue; }
+    if (stack.length && stack.at(-1).tag === tag) { settle(stack.pop(), m.index + m[0].length); continue; }
     const open = stack.findLastIndex((entry) => entry.tag === tag);
     if (open < 0) { add('unbalanced', m.index, `stray </${tag}>`); continue; }
     for (const entry of stack.slice(open + 1)) add('unbalanced', entry.index, `<${entry.tag}> never closed (met </${tag}> at line ${lineAt(m.index)})`);
+    for (const entry of stack.slice(open)) settle(entry, m.index + m[0].length);
     stack.length = open;
   }
   for (const entry of stack.slice(1)) add('unbalanced', entry.index, `<${entry.tag}> never closed before </main>`);
+  for (const entry of stack) settle(entry, main.length);
   return findings;
 }
 

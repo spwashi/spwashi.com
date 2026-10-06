@@ -40,8 +40,18 @@ describe('page structure audit', () => {
       '<button type="button" class="frame-sigil">x</button>',
     ].join('\n')));
     assert.deepEqual(found.map((f) => [f.kind, f.note]), [
-      ['script-only', 'data-site-setting-set'],
       ['script-only', '.frame-sigil'],
+      ['script-only', 'data-site-setting-set, no scripts-off note'],
     ]);
+  });
+
+  it('counts a settings chip group as answered when the scripts-off note follows it', () => {
+    const group = '<div role="group"><button type="button" data-site-setting-set="colorMode:dark">Dark</button></div>';
+    assert.deepEqual(kinds(`${group}\n<spw-include src="scripts-off-tuning"></spw-include>`), []);
+    assert.deepEqual(kinds(group), ['script-only']);
+  });
+
+  it('never counts a lens switch, which scripts-off CSS withdraws', () => {
+    assert.deepEqual(kinds('<div class="mode-switch"><button type="button" data-set-mode="a">a</button></div>'), []);
   });
 });
