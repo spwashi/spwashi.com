@@ -20001,7 +20001,7 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
   padding-block: 0.15rem;
 }
 
-:where(.spw-resonance-lab h3) {
+:where(.spw-resonance-lab :is(h3, [data-spw-textual-role="subhead"])) {
   margin: 0 0 0.35rem;
   color: var(--ink, rgba(14, 18, 20, 0.92));
   font-size: clamp(0.98rem, 1.8vw, 1.16rem);
@@ -20510,11 +20510,13 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
   min-width: 0;
 }
 
-:where(.spw-route-bridge h3) {
+:where(.spw-route-bridge :is(h3, [data-spw-textual-role="subhead"])) {
   margin: 0;
   color: var(--ink, rgba(14, 18, 20, 0.92));
   font-size: clamp(1rem, 1.7vw, 1.2rem);
+  font-weight: 600;
   line-height: 1.2;
+  letter-spacing: -0.018em;
 }
 
 :where(.spw-route-bridge p) {
@@ -21272,7 +21274,9 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   letter-spacing: -0.02em;
 }
 
-:where(.spw-frame, [data-spw-kind="frame"]) h3 {
+/* The level follows the outline; the size follows the seat. A heading marked
+   subhead (an h2 under a hero h1, say) sits at the same scale as an h3 here. */
+:where(.spw-frame, [data-spw-kind="frame"]) :is(h3, :where([data-spw-textual-role="subhead"])) {
   font-size: clamp(0.92rem, 0.85rem + 0.5cqi, 1.05rem);
   font-weight: 600;
   line-height: 1.28;
@@ -35882,7 +35886,7 @@ html[data-spw-page-section-phase="idle"] {
   transform: translateY(-1px);
 }
 
-:where(.spw-resonance-lab h3) {
+:where(.spw-resonance-lab :is(h3, [data-spw-textual-role="subhead"])) {
   margin: 0;
   font-size: 0.95rem;
   color: var(--ink-strong);

@@ -46,9 +46,16 @@ expression = page[structure]{close.address.level}<editor>
   after = `4 unbalanced (all on the design hub), 0 raw-capsule, 20 heading-skip, 0 section-id, 0 img-size, 0 button-type`
 }
 
+^"headings_2026_10_06"{
+  before = `20 heading-skip findings on 18 routes: an h3 group directly under the hero h1, and two h2 to h4 groups on the palettes page`
+  fixed = `62 headings move up one level, so no outline skips a level. 54 of them are h2 marked data-spw-textual-role="subhead" and keep the size they had: five sizing rules that named h3 (frames, route bridge, resonance lab twice, the about surface) now read the role too. Eight palettes specimens become plain h3 at the panel scale.`
+  measured = `computed size, weight, tracking and margins of every promoted heading before and after on all 18 routes: identical on 54; the eight palettes h3 settle at 15.1px from 13.1px and 19.8px`
+  found_on_the_way = `The about surface lays main out in twelve columns and placed only clusters, so every frame on the eight /about/domains/ pages has sat in one twelfth of the row since 2026-08-19. Non-cluster children take the whole row now, and .domain-grid, which had no grid, sets its panels side by side.`
+  after = `0 heading-skip`
+}
+
 ^"held"{
   design_hub = `@design_hub still has four findings. The render ladder after #lab-behavior lost the opening tag of its frame, the interactive-experiments cluster closes one div early, and #context-stack and the rendering-physics cluster never close. The route was reorganized into clusters several times; which frame the ladder belongs to is a call for the creator.`
-  headings = `20 heading skips, nearly all an h3 in a hero panel directly under the h1. Promoting them changes their size, so each is a browser decision. Styling an h2 at the panel size would let the level follow the outline.`
   care_figures = `@care draws two flow diagrams 960 wide inside a 402px column, so 12.8px labels render at 5.4px. Letting a frame that holds a wide figure span its row is a layout change that waits for the creator to see it.`
   design = `Reported and not swept: 11 routes carry a style block and 4 carry more than eight inline styles; three recipe compare poles hold a living term inside a chip (audit:living-terms nested).`
 }

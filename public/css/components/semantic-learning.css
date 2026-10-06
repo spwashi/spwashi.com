@@ -180,7 +180,7 @@
   padding-block: 0.15rem;
 }
 
-:where(.spw-resonance-lab h3) {
+:where(.spw-resonance-lab :is(h3, [data-spw-textual-role="subhead"])) {
   margin: 0 0 0.35rem;
   color: var(--ink, rgba(14, 18, 20, 0.92));
   font-size: clamp(0.98rem, 1.8vw, 1.16rem);
