@@ -1,7 +1,7 @@
 {
  "about": "Pictures the public pages show, newest first, each with the page that keeps it. Written by scripts/generate-image-tour.mjs.",
  "recentDays": 21,
- "count": 143,
+ "count": 144,
  "pieces": [
   {
    "src": "/public/images/assets/folios/folio-bean-green-tale-lore-thumb.webp",
@@ -1271,6 +1271,15 @@
    "kind": "render",
    "href": "/design/folios/#seed-studies",
    "added": "2026-04-11"
+  },
+  {
+   "src": "/public/images/home/abstract-wash-study-1.webp",
+   "width": 600,
+   "height": 600,
+   "label": "Abstract wash study suggesting liquid borders and fluid connections bet…",
+   "kind": "render",
+   "href": "/topics/#topics-register",
+   "added": "2026-04-10"
   },
   {
    "src": "/public/images/home/constellation-studio-1600.webp",

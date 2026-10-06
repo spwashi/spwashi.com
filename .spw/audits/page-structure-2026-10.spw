@@ -1,0 +1,61 @@
+# Page Structure (2026-10)
+#
+# operation: audit
+# A browser forgives an unclosed section by nesting everything after it
+# inside, so a frame can swallow the rest of a page and still render. This
+# audit reads each route for what it opens and closes, and for whether an
+# editor can point at each part of it.
+
+#>page_structure_2026_10
+#:audit #!structure #!nesting #!addressability #!headings
+#:operation #!audit
+#:fixity #!tending
+#:layer #!syntax
+
+@sensor: ~"../../scripts/audit-page-structure.mjs"
+@brace_contract: ~"./brace-contract-2026-09.spw"
+@copy_accessor_cluster: ~"./copy-accessor-cluster-2026-09.spw"
+@page_template_authoring: ~"../conventions/page-template-authoring.spw"
+@design_hub: ~"../../design/index.html"
+@care: ~"../../care/index.html"
+
+operation = "audit"
+fixity = "tending"
+source = "creator, 2026-10-06: improve the architecture of each page toward the modular physics, with the eventual goal of Spw-fluent editors improving the wonder of navigating the site"
+
+expression = page[structure]{close.address.level}<editor>
+
+^"sensor"{
+  run = `npm run audit:page-structure`
+  reads = `the tags inside main on every tracked route, with a stack; comments, code, pre, svg, script and style are skipped`
+  kinds = `unbalanced (never closed, or a close with nothing open); raw-capsule (an unknown tag such as <offer>, a capsule written without &lt; &gt;); heading-skip; section-id (a section labelled by name-title with no id); img-size; button-type`
+  gate = `reports only; not part of check:local`
+}
+
+^"found_2026_10_06"{
+  before = `206 routes: 13 unbalanced across 6 routes, 1 raw-capsule, 20 heading-skip, 27 section-id, 25 img-size, 38 button-type`
+  nesting = #[
+    `topics/software: #spw-grammar-surface had no closing tag, so every later frame nested inside a 458px card; a stray close followed #language-philosophy`,
+    `topics/software/compression: #dictionary-methods never closed before the next frame`,
+    `tools/midjourney: #reference-packets never closed before the next frame`,
+    `design/materials: the ledger material article never closed`,
+    `play/rpg-wednesday: a stray div close in the Inktober strip`
+  ][reg=set]
+  capsule = `topics/math/combinatorics: a chip wrote beat[unary]<offer> as a raw tag, so browsers dropped the word offer; escaped`
+  fixed = `the five routes above; 27 labelled sections take the id their heading implies; 25 images take their intrinsic size; 38 buttons declare type=button`
+  after = `4 unbalanced (all on the design hub), 0 raw-capsule, 20 heading-skip, 0 section-id, 0 img-size, 0 button-type`
+}
+
+^"held"{
+  design_hub = `@design_hub still has four findings. The render ladder after #lab-behavior lost the opening tag of its frame, the interactive-experiments cluster closes one div early, and #context-stack and the rendering-physics cluster never close. The route was reorganized into clusters several times; which frame the ladder belongs to is a call for the creator.`
+  headings = `20 heading skips, nearly all an h3 in a hero panel directly under the h1. Promoting them changes their size, so each is a browser decision. Styling an h2 at the panel size would let the level follow the outline.`
+  care_figures = `@care draws two flow diagrams 960 wide inside a 402px column, so 12.8px labels render at 5.4px. Letting a frame that holds a wide figure span its row is a layout change that waits for the creator to see it.`
+  design = `Reported and not swept: 11 routes carry a style block and 4 carry more than eight inline styles; three recipe compare poles hold a living term inside a chip (audit:living-terms nested).`
+}
+
+^"reading"{
+  for_editors = `A frame that closes, a section that has an id, and a copy unit that sits on an id (@copy_accessor_cluster#review_2026_10_06) are the three things that make a part of a page addressable from Spw: route, hash, key.`
+  braces = `Five frames that opened a brace now close it (@brace_contract#found_2026_10_06).`
+}
+
+validation = #[`npm run audit:page-structure`, `npm run spw:integrity`][reg=set]
