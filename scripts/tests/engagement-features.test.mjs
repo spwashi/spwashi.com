@@ -674,7 +674,14 @@ test('a wave probes the selector only of a def that passed its cheap gates', asy
   assert.deepEqual(probed, ['visible-hit', 'visible-miss']);
 
   probed.length = 0;
-  await loader.prefetchRuntimeResources(makeCtx(true), definitions, MOUNT_WHEN.VISIBLE, 'modulepreload');
+  // The audit logs each skip through console.info; the probe list is the assertion.
+  const info = console.info;
+  console.info = () => {};
+  try {
+    await loader.prefetchRuntimeResources(makeCtx(true), definitions, MOUNT_WHEN.VISIBLE, 'modulepreload');
+  } finally {
+    console.info = info;
+  }
   assert.deepEqual(probed, definitions.map((def) => def.id), 'the audit still asks every def why it was skipped');
 });
 

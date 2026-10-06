@@ -207,6 +207,8 @@ function main() {
     try {
       run(process.execPath, ['scripts/check-local.mjs'], tree.scratch, {
         SPW_PUSH_SOURCE_ROOT: process.env.SPW_PUSH_SOURCE_ROOT || ROOT,
+        // The scratch checkout is removed after the run; keep the full log here.
+        SPW_CHECK_LOG: process.env.SPW_CHECK_LOG || path.join(ROOT, '.agents/state/runtime/check-pushed-last.log'),
       });
       run(process.execPath, ['scripts/check-commit-structure.mjs'], tree.scratch, {
         SPW_INTEGRITY_TOOLS: tree.scratch,

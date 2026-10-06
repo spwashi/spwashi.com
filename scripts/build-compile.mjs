@@ -264,11 +264,57 @@ export async function runCompile({ serial = false, withCss = false, force = fals
 }
 
 /** Print one line per stage plus any captured output; returns the failed stages. */
-export function reportStages(prefix, results) {
-  for (const { label, status, ms, output, cache } of results) {
+const TAGGED = /^\[[\w:./-]+\]\s/;
+const WARNED = /⚠|^\s*warn\b/i;
+// Tagged lines that say nothing a reader acts on.
+const CHATTER = /^\[check\] phase=|^\[check:agents\] spend$|\bmodule audit \|/;
+const TEST_COUNT = /^ℹ (tests|fail) (\d+)/;
+
+/**
+ * What a passing stage shows by default: the lines it tags with its own name
+ * ("[js-tree] ok …"), anything marked as a warning, and for a test runner one
+ * count. A reader of a green gate needs what is near a limit and what is new,
+ * not the hundreds of checks that held; those stay in the log. A test stage
+ * keeps tagged lines only from its own `tag`, because tests print other
+ * tools' lines while exercising them.
+ */
+export function stageHeadline(output = '', { tests = false, tag = null } = {}) {
+  const lines = String(output).trimEnd().split('\n');
+  if (!tests) return lines.filter((line) => (TAGGED.test(line) || WARNED.test(line)) && !CHATTER.test(line));
+  let count = 0;
+  let failed = 0;
+  let runs = 0;
+  const kept = [];
+  for (const line of lines) {
+    const match = TEST_COUNT.exec(line);
+    if (match) {
+      if (match[1] === 'tests') {
+        count += Number(match[2]);
+        runs += 1;
+      } else {
+        failed += Number(match[2]);
+      }
+      continue;
+    }
+    if ((tag && line.startsWith(`[${tag}]`)) || WARNED.test(line)) kept.push(line);
+  }
+  if (runs) kept.unshift(`ℹ tests ${count} · fail ${failed}`);
+  return kept;
+}
+
+/** Everything a stage said, for --verbose, SPW_CHECK_VERBOSE=1 and CI logs. */
+export const isVerboseRun = (argv = process.argv, env = process.env) => argv.includes('--verbose')
+  || env.SPW_CHECK_VERBOSE === '1'
+  || Boolean(env.CI);
+
+/** A failed stage prints everything it said; a passing one its headline. */
+export function reportStages(prefix, results, { verbose = isVerboseRun() } = {}) {
+  for (const { label, status, ms, output, cache, headline } of results) {
     const cacheMark = cache ? ' cache' : '';
     console.log(`[${prefix}] ${label} ${status === 0 ? 'ok' : 'FAILED'} ${(ms / 1000).toFixed(2)}s${cacheMark}`);
-    if (output && output.trim()) console.log(output.trimEnd());
+    if (!output || !output.trim()) continue;
+    const lines = verbose || status !== 0 ? [output.trimEnd()] : stageHeadline(output, headline);
+    if (lines.length) console.log(lines.join('\n'));
   }
   return results.filter((result) => result.status !== 0);
 }

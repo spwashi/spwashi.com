@@ -374,6 +374,20 @@ function formatSpendLine(reports) {
     .join(' ');
 }
 
+/** Files within 5% of a word or line cap: the next edit there is the one that fails. */
+export function nearBudget(reports, share = 0.95) {
+  const near = [];
+  for (const report of reports) {
+    if (!report.ok) continue;
+    const { maxWords, maxLines } = report.spec;
+    const parts = [];
+    if (maxWords && report.words >= maxWords * share) parts.push(`${report.words}/${maxWords}w`);
+    if (maxLines && report.lines >= maxLines * share) parts.push(`${report.lines}/${maxLines}L`);
+    if (parts.length) near.push(`${report.spec.file} ${parts.join(' ')}`);
+  }
+  return [...new Set(near)];
+}
+
 function printSpendTable(adapterReports, alwaysOnReports, harnessReports = [], openFirstReports = []) {
   const rows = [...alwaysOnReports, ...adapterReports, ...harnessReports, ...openFirstReports];
   process.stdout.write('[check:agents] spend\n');
@@ -404,6 +418,8 @@ function main() {
   if (!quiet) {
     printSpendTable(adapterReports, alwaysOnReports, harnessReports, openFirstReports);
   }
+  const near = nearBudget(reports);
+  if (near.length) process.stdout.write(`[check:agents] near budget: ${near.join(', ')}\n`);
   if (failed) {
     process.stderr.write('[check:agents] FAILED\n');
     process.exit(1);
