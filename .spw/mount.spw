@@ -43,8 +43,8 @@
 workbench: .{
  # Pin tracks submodule HEAD (see git submodule status .spw/_workbench).
  version = `0.3.0`
- workbench_pin = `3eaab6377672`
- pin_note = `3eaab63 preserves a valence modifier chain on the expression (boon.honk rides the noun; no prose-degradation). Prior pin 14b4b47763aa closed consumer-cli-instruments`
+ workbench_pin = `229aedcf9b6f`
+ pin_note = `229aedc resolves a citation against the citing file, then the consumer root, and names the base that resolved it. Prior pin 3eaab6377672 kept a valence modifier chain on the expression`
  canon = @canon
  canon_mount = @canon_mount
  workspace = @workbench_workspace
