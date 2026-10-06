@@ -179,3 +179,11 @@ describe('renderTemplate body personality', () => {
     );
   });
 });
+
+describe('site footer', () => {
+  it('expands the includes its partial holds', async () => {
+    const { output: html } = await renderTemplate('<spw-page title="t"></spw-page><body><main></main><spw-site-footer></spw-site-footer></body>', { sourceLabel: 'test-footer' });
+    assert.ok(!html.includes('<spw-include'), 'no include is left for the browser');
+    assert.match(html, /class="spw-scripts-off-note"/);
+  });
+});
