@@ -20,7 +20,7 @@ import {
   composeWrapJobExpression,
   formatWrapJobVariants,
 } from '/public/js/semantic/spw-compose.js';
-import { readMicrointeractionPulseMs } from '../physics/pulse-beat-tuner.js';
+import { readMicrointeractionPulseMs } from '../physics/pulse-timing.js';
 
 const SCENE_HOST_SELECTOR = [
   '[data-spw-scene-interpret]',

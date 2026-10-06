@@ -26,7 +26,7 @@ import {
 import { emitSpwAction, isInputFocused } from '/public/js/kernel/shared.js';
 import { bestExpressionMatch, parseExpressionQuery } from '/public/js/semantic/expression-query.js';
 import { registerTermNoteRow } from '/public/js/semantic/term-note-rows.js';
-import { readMicrointeractionPulseMs } from '../physics/pulse-beat-tuner.js';
+import { readMicrointeractionPulseMs } from '../physics/pulse-timing.js';
 
 const INDEX_HREF = '/public/data/site-search-index.json';
 const ROOT_ATTR = 'data-spw-site-search';

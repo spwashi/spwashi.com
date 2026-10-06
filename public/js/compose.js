@@ -397,8 +397,9 @@ export {
 export {
   SPW_PULSE_BEAT_TUNER_CONTRACT,
   describePulseBeatTunerState,
-  readMicrointeractionPulseMs,
 } from './runtime/physics/pulse-beat-tuner.js';
+
+export { readMicrointeractionPulseMs } from './runtime/physics/pulse-timing.js';
 
 export {
   SPW_WONDER_MEMORY_CONTRACT,
