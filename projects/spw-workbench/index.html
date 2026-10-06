@@ -86,6 +86,8 @@
             <li><strong>One character can cost seconds.</strong> A single stray backtick took one file from 514 ms to 7,062 ms to parse. Restoring it brought the errors to zero.</li>
             <li><strong>The whole corpus fits in a minute.</strong> A bundled parser read all 923 of the site's <code>.spw</code> files, 5.94 MB, in 53.3 seconds: 839 clean, 84 with errors.</li>
             <li><strong>Paths can be checked.</strong> An integrity walk confirms that 5,166 path references across 373 surfaces resolve, in about 80 seconds.</li>
+            <li><strong>The editor can show the weaker outline.</strong> In WebStorm the plugin draws its own outline and folds with a line scanner, and the editor shows that copy instead of the language server's. One apostrophe inside a backtick sentence, <q>Jake Parker's list</q>, left a frame that would not fold. The server folds it correctly.</li>
+            <li><strong>Repetition costs the reader more than the parser.</strong> A month of drawing prompts repeated one plate of instructions 31 times, 41% of the file. Taking it out made the parse only 11% faster. Writing the days as rows made it 58% slower. I would take a slower parse for a form that reads better, so the question becomes how often each file needs reading, which a project can set.</li>
             <li><strong>One command said something new.</strong> The report singles out <code>spw form --stdin</code> as "the only command that said something countable-by-hand was not already known."</li>
         </ul>
         <nav class="frame-operators" aria-label="Workbench bridges">
