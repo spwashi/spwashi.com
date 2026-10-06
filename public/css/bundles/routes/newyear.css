@@ -24,6 +24,9 @@
    ========================================================================== */
 
 .seed-card {
+  /* A card fills its column even where its host aligns items to start
+     (/design/folios/#folio-request), so an empty card never collapses. */
+  align-self: stretch;
   --card-charge: 0; /* 0 → 1, driven by JS as fields fill */
   --seed-depth: 1;
   --seed-surface-opacity: calc(0.92 + (var(--card-charge) * 0.04));

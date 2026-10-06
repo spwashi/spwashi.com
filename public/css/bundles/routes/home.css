@@ -2908,6 +2908,9 @@ html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
      --paste-op from --op-<type>-color (tokens/core.css), so a pasted ~ wears
      the color a ~ wears everywhere else on the site. Plain text keeps --ink.
    - The dialog is native; Esc and Close both dismiss it.
+   - A pasted seed opens as its own card. Its sheet,
+     components/cards/seed-card.css, is deferred (kernel/deferred-styles.js)
+     and arrives the first time a card opens, so home pays nothing for it.
    ========================================================================== */
 
 .spw-paste {
@@ -2982,6 +2985,16 @@ html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
   border-radius: var(--shape-control, 0.375rem);
 }
 
+/* Global code styles size code to its content; inside the reading it wraps instead of scrolling sideways. */
+.spw-paste__source code {
+  display: block;
+  inline-size: auto;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
 .spw-paste__op {
   color: var(--paste-op, var(--ink));
   font-weight: 650;
@@ -3025,6 +3038,10 @@ html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
 
 .spw-paste__keep {
   margin: 0;
+}
+
+.spw-paste__card {
+  margin-block-start: 0.25rem;
 }
 }
 

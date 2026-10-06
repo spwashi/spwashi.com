@@ -9,10 +9,13 @@
  *
  * State transitions: empty → filling → complete → sealed
  * Storage: localStorage under key `seed-card:{id}`
- * Serialization: ^seed[Template year:YYYY]{...} Spw block
+ * Serialization: ^seed[Template year:YYYY]{...} Spw block, one `key: "value"`
+ * line per field with the value JSON-escaped, so a copied seed reads back
+ * exactly. readSeedText reads one back; hydrate fills a card from it.
  */
 
 import { copySeed, downloadSpwText, toggleScreenshotMode } from '/public/js/interface/seed-exits.js';
+import { ensureDeferredStyles } from '/public/js/kernel/deferred-styles.js';
 
 const STORAGE_PREFIX = 'seed-card:';
 const SAVE_DEBOUNCE = 600;
@@ -105,14 +108,125 @@ export const SEED_TEMPLATES = {
 };
 
 /** Generate the Spw seed block from current field values */
-function buildSeedText(template, year, values) {
+export function buildSeedText(template, year, values) {
   const { sigil, fields } = template;
   const header = `${sigil}${year}]`;
   const lines = fields.map(f => {
     const val = values[f.key] || '';
-    return `  ${f.key.padEnd(10)}: "${val}"`;
+    return `  ${f.key.padEnd(10)}: ${JSON.stringify(val)}`;
   });
   return `${header}{\n${lines.join('\n')}\n}`;
+}
+
+/** Where each template's card lives, so a pasted seed can go home and fill it. */
+export const SEED_HOMES = Object.freeze({
+  newyear: { href: '/newyear/#seed-card', card: 'newyear-seed-2026', place: 'New Year' },
+  session: { href: '/newyear/#seed-card', card: 'newyear-seed-2026', place: 'New Year' },
+  wonder: { href: '/newyear/#seed-card', card: 'newyear-seed-2026', place: 'New Year' },
+  services: { href: '/services/#spw-services-card', card: 'spw-services-card', place: 'Services' },
+  ask: { href: '/services/#spw-ask-card', card: 'spw-ask-card', place: 'Services' },
+  folio: { href: '/design/folios/#folio-request', card: 'folio-request-2026', place: 'Art' },
+  costuming: { href: '/holidays/costuming/#costume-sheet', card: 'costuming-seed-2026', place: 'Costuming' },
+});
+
+export const SEED_HANDOFF_KEY = 'spw.seed.handoff';
+
+const ESCAPES = Object.freeze({ n: '\n', t: '\t', r: '\r', '"': '"', '\\': '\\', '/': '/', b: '\b', f: '\f' });
+
+/**
+ * Read one quoted value starting at its opening quote. Escapes are honored.
+ * Seeds copied before values were escaped can hold a bare quote or a line
+ * break, so a quote closes the value only where the rest of its line is empty
+ * or closes the block.
+ */
+function readQuoted(text, quoteAt) {
+  let value = '';
+  let i = quoteAt + 1;
+  for (; i < text.length; i += 1) {
+    const ch = text[i];
+    if (ch === '\\' && i + 1 < text.length) {
+      const next = text[i + 1];
+      const hex = text.slice(i + 2, i + 6);
+      if (next === 'u' && /^[0-9a-fA-F]{4}$/.test(hex)) {
+        value += String.fromCharCode(parseInt(hex, 16));
+        i += 5;
+      } else {
+        value += ESCAPES[next] ?? next;
+        i += 1;
+      }
+      continue;
+    }
+    if (ch === '"') {
+      const lineEnd = text.indexOf('\n', i + 1);
+      const rest = text.slice(i + 1, lineEnd < 0 ? text.length : lineEnd);
+      if (/^\s*\}?\s*$/.test(rest)) return { value, end: i + 1 };
+    }
+    value += ch;
+  }
+  return { value, end: i };
+}
+
+/**
+ * Read a copied seed back: which template it came from, its year or ref, and
+ * the value of each field the template knows. Returns null for text that holds
+ * no seed. The earliest seed in the text wins.
+ */
+export function readSeedText(source) {
+  const text = String(source ?? '');
+  let found = null;
+  for (const [key, template] of Object.entries(SEED_TEMPLATES)) {
+    const at = text.indexOf(template.sigil);
+    if (at >= 0 && (!found || at < found.at)) found = { at, key, template };
+  }
+  if (!found) return null;
+  const { at, key, template } = found;
+  const close = text.indexOf(']', at + template.sigil.length);
+  const open = close < 0 ? -1 : text.indexOf('{', close);
+  if (open < 0) return null;
+  const known = new Set(template.fields.map((field) => field.key));
+  const values = {};
+  const line = /([A-Za-z_][\w-]*)\s*:\s*"/g;
+  line.lastIndex = open + 1;
+  let match;
+  while ((match = line.exec(text))) {
+    const { value, end } = readQuoted(text, match.index + match[0].length - 1);
+    if (known.has(match[1]) && !(match[1] in values)) values[match[1]] = value;
+    line.lastIndex = end;
+    if (/^\s*\}/.test(text.slice(end))) break;
+  }
+  return {
+    templateKey: key,
+    template,
+    mark: text.slice(at + template.sigil.length, close).trim(),
+    values,
+    filled: Object.values(values).filter((value) => value.trim()).length,
+  };
+}
+
+/** Carry a seed to the page whose card it belongs to; that card fills itself on arrival. */
+export function deliverSeedHome(seed) {
+  const home = SEED_HOMES[seed?.templateKey];
+  if (!home) return false;
+  try {
+    sessionStorage.setItem(SEED_HANDOFF_KEY, JSON.stringify({
+      templateKey: seed.templateKey, mark: seed.mark, values: seed.values, card: home.card,
+    }));
+  } catch {
+    return false;
+  }
+  globalThis.location?.assign(home.href);
+  return true;
+}
+
+function takeSeedHandoff() {
+  try {
+    const raw = sessionStorage.getItem(SEED_HANDOFF_KEY);
+    if (!raw) return null;
+    sessionStorage.removeItem(SEED_HANDOFF_KEY);
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
 }
 
 /** Compute charge ratio: how many fields have content */
@@ -274,11 +388,13 @@ export class SeedCard {
       }
     });
 
-    // Paste sanitization — plain text only
+    // Paste sanitization — plain text only. A whole seed this card can hold fills every field instead.
     el.addEventListener('paste', e => {
       if (!e.target.closest('[data-spw-touch="edit"]')) return;
       e.preventDefault();
       const text = e.clipboardData?.getData('text/plain') || '';
+      const seed = readSeedText(text);
+      if (seed && this.hydrate(seed)) return;
       document.execCommand('insertText', false, text);
     });
 
@@ -338,6 +454,7 @@ export class SeedCard {
       if (action === 'download') this._download(btn);
       if (action === 'screenshot') this._toggleScreenshot();
       if (action === 'clear') this._clear();
+      if (action === 'undo-hydrate') this._undoHydrate();
     });
 
     // Pivot
@@ -528,6 +645,53 @@ export class SeedCard {
     this._saveTimer = setTimeout(() => this._save(), SAVE_DEBOUNCE);
   }
 
+  /**
+   * Fill this card from a read seed (readSeedText): switch to its template if
+   * the card offers it, write each line through the usual input path, and keep
+   * what the card held so one tap can put it back.
+   */
+  hydrate(seed) {
+    if (!seed?.templateKey || !this.templateKeys.includes(seed.templateKey)) return false;
+    const yearEl = () => this.el.querySelector('.seed-card-year');
+    const before = { templateKey: this.templateKey, values: { ...this.values }, mark: yearEl()?.textContent.trim() ?? '' };
+    if (seed.templateKey !== this.templateKey) this._pivot(seed.templateKey);
+    for (const field of this.template.fields) this.fill(field.key, seed.values?.[field.key] ?? '');
+    if (seed.mark && yearEl()) yearEl().textContent = seed.mark;
+    this._update();
+    this._save();
+    const held = Object.values(before.values).some((value) => String(value).trim());
+    this._beforeHydrate = held ? before : null;
+    this._showUndoHydrate(held);
+    this._showSaveStatus('filled from a pasted seed', 3200);
+    return true;
+  }
+
+  _showUndoHydrate(show) {
+    const row = this.el.querySelector('.seed-card-actions');
+    row?.querySelector('[data-action="undo-hydrate"]')?.remove();
+    if (!show || !row) return;
+    const undo = document.createElement('button');
+    undo.type = 'button';
+    undo.className = 'seed-action';
+    undo.dataset.action = 'undo-hydrate';
+    undo.textContent = 'put back what was here';
+    row.append(undo);
+  }
+
+  _undoHydrate() {
+    const before = this._beforeHydrate;
+    if (!before) return;
+    this._beforeHydrate = null;
+    if (before.templateKey !== this.templateKey) this._pivot(before.templateKey);
+    for (const field of this.template.fields) this.fill(field.key, before.values[field.key] ?? '');
+    const yearEl = this.el.querySelector('.seed-card-year');
+    if (yearEl && before.mark) yearEl.textContent = before.mark;
+    this._update();
+    this._save();
+    this._showUndoHydrate(false);
+    this._showSaveStatus('put back', 1600);
+  }
+
   /** Write a field as if typed, so charge, output, and autosave follow the usual input path. */
   fill(key, text) {
     const valueEl = this.el.querySelector(`[data-field-key="${key}"]`);
@@ -553,15 +717,38 @@ function onSeedPieceClick(event) {
 
 const activeInstances = new Set();
 
+/**
+ * A card's sheet rides in the route bundles of the surfaces that usually host
+ * it. Where a card appears without it (a surface whose bundle is full, or a
+ * pasted seed opened on home), --seed-depth, which only that sheet sets, reads
+ * empty, and the sheet loads deferred instead of the card collapsing unstyled.
+ */
+export function ensureSeedCardStyles(el) {
+  if (!el || typeof getComputedStyle !== 'function') return false;
+  if (getComputedStyle(el).getPropertyValue('--seed-depth').trim()) return true;
+  return ensureDeferredStyles('spw-seed-card-styles', '/public/css/components/cards/seed-card.css');
+}
+
 /** Initialize all .seed-card elements on the page */
 export function initSeedCards() {
   document.addEventListener('click', onSeedPieceClick);
-  document.querySelectorAll('.seed-card[data-seed-card]').forEach(el => {
+  const hosts = document.querySelectorAll('.seed-card[data-seed-card]');
+  if (hosts.length) ensureSeedCardStyles(hosts[0]);
+  hosts.forEach(el => {
     if (el._seedCardInstance) return;
     const card = new SeedCard(el);
     el._seedCardInstance = card;
     activeInstances.add(card);
   });
+
+  // A seed carried here from a paste fills the card it names, or the first card that offers its template.
+  const handoff = takeSeedHandoff();
+  if (handoff) {
+    const cards = [...activeInstances];
+    const target = cards.find((card) => card.id === handoff.card && card.templateKeys.includes(handoff.templateKey))
+      || cards.find((card) => card.templateKeys.includes(handoff.templateKey));
+    if (target?.hydrate(handoff)) target.el.scrollIntoView?.({ block: 'center' });
+  }
 }
 
 export function unmountSeedCards() {
