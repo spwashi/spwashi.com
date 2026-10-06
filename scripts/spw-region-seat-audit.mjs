@@ -43,12 +43,15 @@ const findings = [];
 
 for (const file of files) {
   const src = readFileSync(path.join(ROOT, file), 'utf8');
-  const re = /data-spw-region="([a-z-]+)"/g;
-  let match;
-  while ((match = re.exec(src))) {
-    const tagStart = src.lastIndexOf('<', match.index);
-    const tagEnd = src.indexOf('>', match.index);
-    const tag = src.slice(tagStart, tagEnd + 1);
+  // Read whole start tags with their quoted values, so a capsule such as
+  // <product> inside an expression attribute does not cut the tag short.
+  const tagRe = /<[a-zA-Z][^\s>]*(?:"[^"]*"|'[^']*'|[^>"'])*>/g;
+  let tagMatch;
+  while ((tagMatch = tagRe.exec(src))) {
+    const tag = tagMatch[0];
+    const region = /\bdata-spw-region="([a-z-]+)"/.exec(tag);
+    if (!region) continue;
+    const match = { 1: region[1], index: tagMatch.index + region.index };
     const hasFrameClass = /class="[^"]*\bspw-frame\b[^"]*"/.test(tag);
     if (hasFrameClass) continue;
     const line = src.slice(0, match.index).split('\n').length;

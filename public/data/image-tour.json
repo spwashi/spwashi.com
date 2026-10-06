@@ -1,7 +1,7 @@
 {
  "about": "Pictures the public pages show, newest first, each with the page that keeps it. Written by scripts/generate-image-tour.mjs.",
  "recentDays": 21,
- "count": 141,
+ "count": 143,
  "pieces": [
   {
    "src": "/public/images/assets/folios/folio-bean-green-tale-lore-thumb.webp",
@@ -522,7 +522,7 @@
    "height": 397,
    "label": "White cards on black list business kinds, courses in HTML, CSS, JS, and…",
    "kind": "scan",
-   "href": "/curriculum/#curriculum-title",
+   "href": "/curriculum/#curriculum-lede",
    "added": "2026-09-25"
   },
   {
@@ -1021,6 +1021,15 @@
    "added": "2026-08-13"
   },
   {
+   "src": "/public/images/renders/2026-05-B-rhythms/fermentation-bubble-choir-thumb.webp",
+   "width": 512,
+   "height": 358,
+   "label": "Glass fermentation vessel where rising bubbles form rhythmic wave patte…",
+   "kind": "render",
+   "href": "/recipes/fermentation/#fermentation-rhythm",
+   "added": "2026-05-26"
+  },
+  {
    "src": "/public/images/renders/2026-05-B-rhythms/pollination-golden-spiral-thumb.webp",
    "width": 960,
    "height": 640,
@@ -1270,6 +1279,15 @@
    "label": "A braided studio field of nodes, marks, and connective lines that reads…",
    "kind": "render",
    "href": "/design/#design-circuits",
+   "added": "2026-04-10"
+  },
+  {
+   "src": "/public/images/home/papergami-study-1.webp",
+   "width": 600,
+   "height": 600,
+   "label": "Papergami study with folded structures arranged as a gradual progressio…",
+   "kind": "render",
+   "href": "/topics/pedagogy/#pedagogy-studies",
    "added": "2026-04-10"
   }
  ]

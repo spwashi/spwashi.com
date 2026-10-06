@@ -369,9 +369,15 @@
 
 :where(footer:not(.site-footer)) {
     position: relative;
+    border-top: 1px solid var(--line, rgba(14, 18, 20, 0.14));
+}
+
+/* A footer that holds only `}` is a frame's closing brace, not a page footer.
+   It keeps the hairline and takes its size from components/frames.css; the
+   page-footer spacing below would put 156px of air above one glyph. */
+:where(footer:not(.site-footer):not(:has(> .spw-delimiter:only-child))) {
     margin-top: var(--space-3xl, 4rem);
     padding: var(--space-xl, 2rem) 0;
-    border-top: 1px solid var(--line, rgba(14, 18, 20, 0.14));
 }
 
 :where(footer:not(.site-footer)::before) {
