@@ -8,8 +8,6 @@ import test from 'node:test';
 import {
   compareRuns,
   digestHistory,
-  formatComparison,
-  formatDigest,
   historyEntry,
   readSignals,
   rerunCommand,
@@ -73,18 +71,15 @@ test('a run says what is new, what cleared, what moved, and how long the rest ha
   assert.deepEqual(comparison.moved.map((row) => [row.name, Number(row.delta.toFixed(1))]), [['core', 0.6]]);
   assert.equal(comparison.standing[0].runs, 3);
   assert.equal(comparison.standing[0].since, '2026-10-02T10:00:00Z');
-  const lines = formatComparison(comparison);
-  assert.ok(lines.some((line) => line.startsWith('[check:local] cleared since cccccccc (+2 uncommitted): old thing')));
-  assert.ok(lines.some((line) => line.includes('moved since cccccccc') && line.includes('core +0.6 KiB → 1712.1')));
-  assert.ok(lines.some((line) => line.includes('standing: 1 warning(s) carried over; the oldest for 3 runs since 2026-10-02')));
+  assert.equal(comparison.last.sha, 'cccccccc3');
 });
 
 test('a warning not in the last run is new; with no history the run says so', () => {
   const signals = readSignals(STAGES);
   const comparison = compareRuns(signals, [{ at: 'x', sha: 'dddddddd', warnings: [], bundles: {} }]);
   assert.equal(comparison.newWarnings.length, 1);
-  assert.match(formatComparison(comparison)[0], /^\[check:local\] new since dddddddd: ⚠ high-res set stale/);
-  assert.match(formatComparison(compareRuns(signals, []))[0], /first run with a history here/);
+  assert.match(comparison.newWarnings[0].text, /^⚠ high-res set stale/);
+  assert.equal(compareRuns(signals, []).last, null);
 });
 
 test('a warning that asks for a confirmation waits on a director, apart from drift', () => {
@@ -92,9 +87,11 @@ test('a warning that asks for a confirmation waits on a director, apart from dri
   const signals = readSignals([...STAGES, decide]);
   assert.deepEqual(signals.warnings.map((warning) => warning.kind), ['drift', 'decision']);
   const ids = signals.warnings.map((warning) => warning.id);
-  const lines = formatComparison(compareRuns(signals, [{ at: '2026-10-05T00:00:00Z', sha: 'eeeeeeee', warnings: ids, bundles: {} }]));
-  assert.ok(lines.some((line) => line.startsWith('[check:local] awaiting a decision, 2 runs since 2026-10-05: [runtime] cognition is ungated')));
-  assert.ok(lines.some((line) => line.startsWith('[check:local] standing: 1 warning(s) carried over')));
+  const standing = compareRuns(signals, [{ at: '2026-10-05T00:00:00Z', sha: 'eeeeeeee', warnings: ids, bundles: {} }]).standing;
+  assert.deepEqual(standing.map((warning) => [warning.kind, warning.runs, warning.since]), [
+    ['drift', 2, '2026-10-05T00:00:00Z'],
+    ['decision', 2, '2026-10-05T00:00:00Z'],
+  ]);
 });
 
 test('a cached test stage carries its last known count instead of reading as none', () => {
@@ -121,7 +118,11 @@ test('a failed stage names the command that reruns it alone', () => {
 test('the slowest tests lead a test headline, and only past two seconds', () => {
   const output = '✔ quick (12ms)\n✔ the pushed checkout is that commit (15351.3ms)\n✔ mount arity (5292.1ms)\nℹ tests 3\nℹ fail 0';
   assert.deepEqual(slowestTests(output).map((row) => row.name), ['the pushed checkout is that commit', 'mount arity']);
-  assert.match(stageHeadline(output, { tests: true })[0], /^ℹ tests 3 · fail 0 · slowest the pushed checkout is that commit 15\.4s, mount arity 5\.3s$/);
+  assert.deepEqual(stageHeadline(output, { tests: true }), [
+    'ℹ tests 3 · fail 0',
+    'ℹ slow 15.4s  the pushed checkout is that commit',
+    'ℹ slow  5.3s  mount arity',
+  ]);
 });
 
 test('a window of runs reads as one picture for a director', () => {
@@ -134,12 +135,12 @@ test('a window of runs reads as one picture for a director', () => {
   assert.equal(digest.passed, 2);
   assert.deepEqual(digest.tests, { first: 600, last: 643 });
   assert.deepEqual(digest.standing.map((row) => [row.id, row.runs]), [['a', 3], ['b', 2]]);
-  const lines = formatDigest(digest);
-  assert.equal(lines[0], '[check:signals] 3 runs 2026-10-01 → 2026-10-03; 2 passed');
-  assert.ok(lines.includes('[check:signals] bundles moved: core 1700.0 → 1712.1 KiB'));
-  assert.ok(lines.includes('[check:signals] standing 3 run(s) since 2026-10-01: a, in words'));
-  assert.ok(lines.includes('[check:signals] standing 2 run(s) since 2026-10-02: b'));
-  assert.deepEqual(formatDigest(digestHistory([])), ['[check:signals] no history yet: run npm run check:local']);
+  assert.deepEqual(digest.bundles.core, { first: 1700, last: 1712.1, max: 1712.1 });
+  assert.deepEqual(digest.standing.map((entry) => [entry.text, entry.runs, entry.since]), [
+    ['a, in words', 3, '2026-10-01T00:00:00Z'],
+    ['b', 2, '2026-10-02T00:00:00Z'],
+  ]);
+  assert.deepEqual(digestHistory([]), { runs: 0 });
 });
 
 test('a failed test stage shows its count and the failing section, not the runner frames', () => {

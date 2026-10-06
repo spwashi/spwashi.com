@@ -94,6 +94,7 @@ export const MODULE_TEST_FILES = Object.freeze([
   'scripts/tests/root-state-ablation.test.mjs',
   'scripts/tests/check-output.test.mjs',
   'scripts/tests/check-signals.test.mjs',
+  'scripts/tests/check-format.test.mjs',
   'scripts/tests/arc-bench.test.mjs',
   'scripts/tests/term-note-rows.test.mjs',
   'scripts/tests/seed-templates.test.mjs',

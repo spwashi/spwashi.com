@@ -32,7 +32,6 @@ export function slowestTests(output = '', { limit = 3, minMs = 2000 } = {}) {
 }
 
 const seconds = (ms) => `${(ms / 1000).toFixed(1)}s`;
-const clip = (text, width = 56) => (text.length > width ? `${text.slice(0, width - 1)}…` : text);
 
 /**
  * What a passing stage shows by default: the lines it tags with its own name
@@ -61,9 +60,8 @@ export function stageHeadline(output = '', { tests = false, tag = null } = {}) {
     if ((tag && line.startsWith(`[${tag}]`)) || WARNED.test(line)) kept.push(line);
   }
   if (runs) {
-    const slow = slowestTests(output);
-    const slowNote = slow.length ? ` · slowest ${slow.map((row) => `${clip(row.name, 48)} ${seconds(row.ms)}`).join(', ')}` : '';
-    kept.unshift(`ℹ tests ${count} · fail ${failed}${slowNote}`);
+    const slow = slowestTests(output).map((row) => `ℹ slow ${seconds(row.ms).padStart(5)}  ${row.name}`);
+    kept.unshift(`ℹ tests ${count} · fail ${failed}`, ...slow);
   }
   return kept;
 }
@@ -211,38 +209,6 @@ export function compareRuns(signals, history = [], { minDeltaKiB = 0.05 } = {}) 
   return { last, newWarnings, cleared, standing, moved };
 }
 
-const shortSha = (sha) => (sha ? String(sha).slice(0, 8) : 'the last run');
-const day = (iso) => (iso ? String(iso).slice(0, 10) : '');
-
-/** The closing lines of a gate run: only what changed, and how long the rest has waited. */
-export function formatComparison(comparison, { prefix = '[check:local]', limit = 5 } = {}) {
-  const { last, newWarnings, cleared, standing, moved } = comparison;
-  if (!last) return [`${prefix} first run with a history here; the next run will say what changed`];
-  const since = `since ${shortSha(last.sha)}${last.dirty ? ` (+${last.dirty} uncommitted)` : ''}`;
-  const lines = [];
-  for (const warning of newWarnings.slice(0, limit)) lines.push(`${prefix} new ${since}: ${warning.text}`);
-  if (newWarnings.length > limit) lines.push(`${prefix} … ${newWarnings.length - limit} more new warnings (receipt)`);
-  for (const id of cleared.slice(0, limit)) lines.push(`${prefix} cleared ${since}: ${id}`);
-  if (moved.length) {
-    const items = moved.slice(0, 6).map((row) => `${row.name} ${row.delta > 0 ? '+' : '−'}${Math.abs(row.delta).toFixed(1)} KiB → ${row.to.toFixed(1)}`);
-    lines.push(`${prefix} moved ${since}: ${items.join(', ')}${moved.length > 6 ? `, … ${moved.length - 6} more` : ''}`);
-  }
-  const words = (warning) => warning.text.replace(/^(?:⚠\s*|warn:\s*)+/i, '');
-  const decisions = standing.filter((warning) => warningKind(warning.text) === 'decision');
-  const drift = standing.filter((warning) => warningKind(warning.text) !== 'decision');
-  if (decisions.length) {
-    const oldest = decisions.reduce((a, b) => (b.runs > a.runs ? b : a));
-    const when = oldest.since ? ` since ${day(oldest.since)}` : '';
-    lines.push(`${prefix} awaiting a decision, ${oldest.runs} runs${when}: ${decisions.map((warning) => clip(words(warning), 48)).join(' · ')}`);
-  }
-  if (drift.length) {
-    const oldest = drift.reduce((a, b) => (b.runs > a.runs ? b : a));
-    const when = oldest.since ? ` since ${day(oldest.since)}` : '';
-    lines.push(`${prefix} standing: ${drift.length} warning(s) carried over; the oldest for ${oldest.runs} runs${when}: ${clip(words(oldest), 72)}`);
-  }
-  return lines;
-}
-
 /** How to rerun one stage alone, from the command the gate spawned. */
 export function rerunCommand(result) {
   if (!Array.isArray(result?.command) || !result.command.length) return null;
@@ -292,22 +258,4 @@ export function digestHistory(entries = []) {
     near: last.near || [],
     standing,
   };
-}
-
-export function formatDigest(digest, { prefix = '[check:signals]' } = {}) {
-  if (!digest.runs) return [`${prefix} no history yet: run npm run check:local`];
-  const lines = [`${prefix} ${digest.runs} runs ${day(digest.from)} → ${day(digest.to)}; ${digest.passed} passed`];
-  const grown = Object.entries(digest.bundles)
-    .filter(([, row]) => Math.abs(row.last - row.first) >= 0.05)
-    .sort((a, b) => Math.abs(b[1].last - b[1].first) - Math.abs(a[1].last - a[1].first))
-    .slice(0, 8)
-    .map(([name, row]) => `${name} ${row.first.toFixed(1)} → ${row.last.toFixed(1)} KiB`);
-  if (grown.length) lines.push(`${prefix} bundles moved: ${grown.join(', ')}`);
-  if (digest.tests.first || digest.tests.last) lines.push(`${prefix} tests ${digest.tests.first} → ${digest.tests.last}`);
-  if (digest.near.length) lines.push(`${prefix} near a limit now: ${digest.near.join(', ')}`);
-  for (const row of digest.standing) {
-    const label = row.kind === 'decision' ? 'awaiting a decision' : 'standing';
-    lines.push(`${prefix} ${label} ${row.runs} run(s) since ${day(row.since)}: ${row.text || row.id}`);
-  }
-  return lines;
 }
