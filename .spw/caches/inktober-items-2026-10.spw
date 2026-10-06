@@ -1,0 +1,415 @@
+# Inktober items (2026-10)
+#
+# operation: cache
+# Thirty-one October slots for the table shelf. The official 2026 words
+# are optional sparks. Scans are absent until a file lands.
+
+#>inktober_items_2026_10
+#:cache #!inktober #!october #!prompts #!shelf
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@shelf: ~"../../play/rpg-wednesday/index.html"
+@closes: ~"../../public/js/modules/rpg-wednesday/morale-closes.js"
+@season: ~"../slices/production-season-rhythm/index.spw"
+@recipes: ~"../../recipes/index.html"
+@holidays: ~"./holiday-infrastructure-2026-09.spw"
+@bench: ~"../../tools/midjourney/index.html"
+@seeds: ~"./prompt-seeds-2026-09.spw"
+
+operation = "cache"
+fixity = "experimental"
+source = "route #inktober-31 plus the 2026 official list as repeated by SVS Learn (2026-09-01), artbase (updated 2026-09-03), and the 2000 AD forum (2026-09-03). inktober.com/rules says the list posts there on September 1; a text fetch of that page did not include the words."
+
+expression = ink[2026]{prompt.scan.close}
+
+^"ik-001"{
+  id = "ik-001"
+  operation = "cache"
+  fixity = "experimental"
+  source = "route + corroborated 2026 prompt list"
+  claim = `An Inktober item is one October day: a prompt word, a close (A 1–13, B 14–26, C 27–31), and a scan that is missing until a file named ink-2026-10-DD.jpg exists.`
+  evidence = #[
+    `play/rpg-wednesday/index.html#inktober-31`,
+    `play/rpg-wednesday/index.html#inktober-shelf`,
+    `public/js/modules/rpg-wednesday/morale-closes.js#CLOSES`,
+    `recipes/index.html#production-season`
+  ][reg=set]
+  pattern_consideration = `The shelf already counts pieces, not prompts. @season calls October a daily mark of any kind. @holidays names October as the mask turn. This list does not replace either.`
+  expansion_prime = `Run one day's chatgpt or midjourney line, then attach a kept scan to that day on the shelf with its caption. Leave the prompt word off the public page until a patch asks for it.`
+  validation = `rg 'ink-2026-10-' play/rpg-wednesday public; the example name in the shelf note is the only hit until a scan is added.`
+  do_not_promote_until = `One real scan is in the tree under the day-file name, and a public patch asks to show prompt words.`
+}[reg=facet]
+
+^"closes"{
+  a = `Days 1–13, cycle A, reach support. Close word: Flimsy.`
+  b = `Days 14–26, cycle B, reach build. Close word: Zip.`
+  c = `Days 27–31, cycle C, reach refer. Close word: Flex. A finished set may be offered to lore.land; this cache does not file one.`
+}[reg=facet]
+
+^"prompts_2026"{
+  note = `Official words, day order. Jake Parker's list, optional. Each day below is one packet: a Spw handle, a caption, a ChatGPT Images line, and a Midjourney line. The prose travels; only the Midjourney line carries --v 8.2.`
+  a = `1 Apple, 2 Relic, 3 Miniature, 4 Cactus, 5 Smack, 6 Ogre, 7 Panic, 8 Stinky, 9 Ram, 10 Mystical, 11 Rescue, 12 Toss, 13 Flimsy`
+  b = `14 Lady, 15 Hooray, 16 Gangly, 17 Contraption, 18 Flightless, 19 Confused, 20 Lounge, 21 Hero, 22 Beacon, 23 Dapper, 24 Bake, 25 Fracture, 26 Zip`
+  c = `27 Dumb, 28 Trophy, 29 Tusk, 30 Cookie, 31 Flex`
+  scans = `none in the tree`
+}[reg=facet]
+
+^"plate"{
+  paper = `warm sketchbook page, black ink only, pen weight visible, no wash`
+  camera = `straight-on scan, whole page in frame, flat light, wide blank margin for a handwritten caption`
+  guardrail = `no letters, no numbers, no logo, no watermark, no color`
+  world = `one object or figure the RPG Wednesday table can caption aloud`
+  mj = `--v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph`
+}[reg=facet]
+
+^"d01"{
+  day = 1
+  word = `Apple`
+  close = `A`
+  file = `ink-2026-10-01.jpg`
+  spw = `ink[apple]{bite.coaster.margin}<A>`
+  caption = `A table apple with one bite taken, stem still on, sitting on a coaster.`
+  chatgpt = `Black ink drawing on a warm sketchbook page. Straight-on, whole page, flat light, wide blank margin. No letters, numbers, logo, or color. Draw a table apple with one bite taken, stem still on, sitting on a round coaster. Pen weight stays visible.`
+  midjourney = `black ink line drawing on warm sketchbook paper, straight-on scan of the whole page, flat light, wide blank margin, visible pen weight, a table apple with one bite taken and the stem still on, sitting on a round coaster --v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph`
+}[reg=facet]
+
+^"d02"{
+  day = 2
+  word = `Relic`
+  close = `A`
+  file = `ink-2026-10-02.jpg`
+  spw = `ink[relic]{crack.cloth.fist}<A>`
+  caption = `A cracked stone figure the size of a fist, crossed once by a strip of cloth.`
+  chatgpt = `Black ink drawing on a warm sketchbook page. Straight-on, whole page, flat light, wide blank margin. No letters, numbers, logo, or color. Draw a cracked stone figure the size of a fist, crossed once by a strip of cloth. Pen weight stays visible.`
+  midjourney = `black ink line drawing on warm sketchbook paper, straight-on scan of the whole page, flat light, wide blank margin, visible pen weight, a cracked stone figure the size of a fist crossed once by a strip of cloth --v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph`
+}[reg=facet]
+
+^"d03"{
+  day = 3
+  word = `Miniature`
+  close = `A`
+  file = `ink-2026-10-03.jpg`
+  spw = `ink[miniature]{house.fingertip.scale}<A>`
+  caption = `A tiny house sitting on a fingertip, drawn large enough that the finger shows the scale.`
+  chatgpt = `Black ink drawing on a warm sketchbook page. Straight-on, whole page, flat light, wide blank margin. No letters, numbers, logo, or color. Draw a tiny house sitting on one fingertip, large on the page so the finger shows the scale. Pen weight stays visible.`
+  midjourney = `black ink line drawing on warm sketchbook paper, straight-on scan of the whole page, flat light, wide blank margin, visible pen weight, a tiny house sitting on one fingertip, the finger showing the scale --v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph`
+}[reg=facet]
+
+^"d04"{
+  day = 4
+  word = `Cactus`
+  close = `A`
+  file = `ink-2026-10-04.jpg`
+  spw = `ink[cactus]{pot.sill.arms}<A>`
+  caption = `A potted cactus with two arms on a library windowsill.`
+  chatgpt = `Black ink drawing on a warm sketchbook page. Straight-on, whole page, flat light, wide blank margin. No letters, numbers, logo, or color. Draw a potted cactus with two arms on a library windowsill. Pen weight stays visible.`
+  midjourney = `black ink line drawing on warm sketchbook paper, straight-on scan of the whole page, flat light, wide blank margin, visible pen weight, a potted cactus with two arms on a library windowsill --v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph`
+}[reg=facet]
+
+^"d05"{
+  day = 5
+  word = `Smack`
+  close = `A`
+  file = `ink-2026-10-05.jpg`
+  spw = `ink[smack]{palm.table.ticks}<A>`
+  caption = `An open palm just above a tabletop, with a few short ticks in the gap.`
+  chatgpt = `Black ink drawing on a warm sketchbook page. Straight-on, whole page, flat light, wide blank margin. No letters, numbers, logo, or color. Draw an open palm just above a tabletop, with a few short ticks in the gap where the hand met the wood. Pen weight stays visible.`
+  midjourney = `black ink line drawing on warm sketchbook paper, straight-on scan of the whole page, flat light, wide blank margin, visible pen weight, an open palm just above a tabletop with a few short impact ticks in the gap --v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph`
+}[reg=facet]
+
+^"d06"{
+  day = 6
+  word = `Ogre`
+  close = `A`
+  file = `ink-2026-10-06.jpg`
+  spw = `ink[ogre]{shoulders.tusk.frame}<A>`
+  caption = `Head and shoulders of a large person with small tusks, crowded by the top of the page.`
+  chatgpt = `Black ink drawing on a warm sketchbook page. Straight-on, whole page, flat light, wide blank margin. No letters, numbers, logo, or color. Draw the head and shoulders of a large friendly person with small tusks, crowded by the top edge of the page. Pen weight stays visible.`
+  midjourney = `black ink line drawing on warm sketchbook paper, straight-on scan of the whole page, flat light, wide blank margin, visible pen weight, head and shoulders of a large friendly person with small tusks crowded by the top of the page --v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph`
+}[reg=facet]
+
+^"d07"{
+  day = 7
+  word = `Panic`
+  close = `A`
+  file = `ink-2026-10-07.jpg`
+  spw = `ink[panic]{turn.papers.hands}<A>`
+  caption = `A person turned halfway around, three sheets of paper leaving their hands.`
+  chatgpt = `Black ink drawing on a warm sketchbook page. Straight-on, whole page, flat light, wide blank margin. No letters, numbers, logo, or color. Draw a person turned halfway around, three blank sheets of paper leaving their hands. The papers carry the rush. Pen weight stays visible.`
+  midjourney = `black ink line drawing on warm sketchbook paper, straight-on scan of the whole page, flat light, wide blank margin, visible pen weight, a person turned halfway around with three blank sheets of paper leaving their hands --v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph`
+}[reg=facet]
+
+^"d08"{
+  day = 8
+  word = `Stinky`
+  close = `A`
+  file = `ink-2026-10-08.jpg`
+  spw = `ink[stinky]{cork.waves.tag}<A>`
+  caption = `A corked bottle with three wavy lines leaving the neck and a blank tag.`
+  chatgpt = `Black ink drawing on a warm sketchbook page. Straight-on, whole page, flat light, wide blank margin. No letters, numbers, logo, or color. Draw a corked bottle with three wavy lines leaving the neck and a blank tie-on tag. Pen weight stays visible.`
+  midjourney = `black ink line drawing on warm sketchbook paper, straight-on scan of the whole page, flat light, wide blank margin, visible pen weight, a corked bottle with three wavy stink lines leaving the neck and a blank tie-on tag --v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph`
+}[reg=facet]
+
+^"d09"{
+  day = 9
+  word = `Ram`
+  close = `A`
+  file = `ink-2026-10-09.jpg`
+  spw = `ink[ram]{horns.profile.gate}<A>`
+  caption = `A ram in profile at a low gate, horns filling the upper margin.`
+  chatgpt = `Black ink drawing on a warm sketchbook page. Straight-on, whole page, flat light, wide blank margin. No letters, numbers, logo, or color. Draw a ram in profile standing at a low gate, horns filling the upper margin. Pen weight stays visible.`
+  midjourney = `black ink line drawing on warm sketchbook paper, straight-on scan of the whole page, flat light, wide blank margin, visible pen weight, a ram in profile at a low gate with horns filling the upper margin --v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph`
+}[reg=facet]
+
+^"d10"{
+  day = 10
+  word = `Mystical`
+  close = `A`
+  file = `ink-2026-10-10.jpg`
+  spw = `ink[mystical]{chalk.floor.candle}<A>`
+  caption = `A chalk circle on floorboards and one candle at its edge.`
+  chatgpt = `Black ink drawing on a warm sketchbook page. Straight-on, whole page, flat light, wide blank margin. No letters, numbers, logo, or color. Draw a chalk circle on floorboards with one candle at its edge. Keep it table-sized. Pen weight stays visible.`
+  midjourney = `black ink line drawing on warm sketchbook paper, straight-on scan of the whole page, flat light, wide blank margin, visible pen weight, a chalk circle on floorboards with one candle at its edge, table-sized --v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph`
+}[reg=facet]
+
+^"d11"{
+  day = 11
+  word = `Rescue`
+  close = `A`
+  file = `ink-2026-10-11.jpg`
+  spw = `ink[rescue]{wrist.ledge.haul}<A>`
+  caption = `One hand hauling another wrist up over a stone lip.`
+  chatgpt = `Black ink drawing on a warm sketchbook page. Straight-on, whole page, flat light, wide blank margin. No letters, numbers, logo, or color. Draw one hand hauling another wrist up over a stone lip. Pen weight stays visible.`
+  midjourney = `black ink line drawing on warm sketchbook paper, straight-on scan of the whole page, flat light, wide blank margin, visible pen weight, one hand hauling another wrist up over a stone lip --v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph`
+}[reg=facet]
+
+^"d12"{
+  day = 12
+  word = `Toss`
+  close = `A`
+  file = `ink-2026-10-12.jpg`
+  spw = `ink[toss]{hand.fruit.arc}<A>`
+  caption = `An open hand, a small round fruit just leaving it, three ticks for the arc.`
+  chatgpt = `Black ink drawing on a warm sketchbook page. Straight-on, whole page, flat light, wide blank margin. No letters, numbers, logo, or color. Draw an open hand with a small round fruit just leaving it, and three short ticks marking the arc. Pen weight stays visible.`
+  midjourney = `black ink line drawing on warm sketchbook paper, straight-on scan of the whole page, flat light, wide blank margin, visible pen weight, an open hand with a small round fruit just leaving it and three short ticks for the arc --v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph`
+}[reg=facet]
+
+^"d13"{
+  day = 13
+  word = `Flimsy`
+  close = `A`
+  file = `ink-2026-10-13.jpg`
+  spw = `ink[flimsy]{paper.books.sag}<A>`
+  caption = `A sheet of paper sagging as a bridge between two closed books. Cycle A closes here.`
+  chatgpt = `Black ink drawing on a warm sketchbook page. Straight-on, whole page, flat light, wide blank margin. No letters, numbers, logo, or color. Draw a sheet of paper sagging as a bridge between two closed books. Pen weight stays visible.`
+  midjourney = `black ink line drawing on warm sketchbook paper, straight-on scan of the whole page, flat light, wide blank margin, visible pen weight, a sheet of paper sagging as a bridge between two closed books --v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph`
+}[reg=facet]
+
+^"d14"{
+  day = 14
+  word = `Lady`
+  close = `B`
+  file = `ink-2026-10-14.jpg`
+  spw = `ink[lady]{coat.desk.lamp}<B>`
+  caption = `A woman at the library desk, coat still on, one lamp beside the book.`
+  chatgpt = `Black ink drawing on a warm sketchbook page. Straight-on, whole page, flat light, wide blank margin. No letters, numbers, logo, or color. Draw a woman at a library desk, coat still on, one lamp beside an open book. Pen weight stays visible.`
+  midjourney = `black ink line drawing on warm sketchbook paper, straight-on scan of the whole page, flat light, wide blank margin, visible pen weight, a woman at a library desk with her coat still on and one lamp beside an open book --v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph`
+}[reg=facet]
+
+^"d15"{
+  day = 15
+  word = `Hooray`
+  close = `B`
+  file = `ink-2026-10-15.jpg`
+  spw = `ink[hooray]{arms.crown.ticks}<B>`
+  caption = `Two arms up, a paper crown, and short ticks in the air.`
+  chatgpt = `Black ink drawing on a warm sketchbook page. Straight-on, whole page, flat light, wide blank margin. No letters, numbers, logo, or color. Draw a person with both arms up, wearing a simple paper crown, and short ticks in the air around them. Pen weight stays visible.`
+  midjourney = `black ink line drawing on warm sketchbook paper, straight-on scan of the whole page, flat light, wide blank margin, visible pen weight, a person with both arms raised wearing a simple paper crown and short ticks in the air --v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph`
+}[reg=facet]
+
+^"d16"{
+  day = 16
+  word = `Gangly`
+  close = `B`
+  file = `ink-2026-10-16.jpg`
+  spw = `ink[gangly]{limbs.chair.knees}<B>`
+  caption = `A long-limbed person folded into a low chair, knees above the table.`
+  chatgpt = `Black ink drawing on a warm sketchbook page. Straight-on, whole page, flat light, wide blank margin. No letters, numbers, logo, or color. Draw a person with very long limbs folded into a low chair, knees higher than the table. Pen weight stays visible.`
+  midjourney = `black ink line drawing on warm sketchbook paper, straight-on scan of the whole page, flat light, wide blank margin, visible pen weight, a very long-limbed person folded into a low chair with knees above the table --v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph`
+}[reg=facet]
+
+^"d17"{
+  day = 17
+  word = `Contraption`
+  close = `B`
+  file = `ink-2026-10-17.jpg`
+  spw = `ink[contraption]{gear.string.crank}<B>`
+  caption = `Gears, string, a funnel, and a crank, all connected on a tabletop.`
+  chatgpt = `Black ink drawing on a warm sketchbook page. Straight-on, whole page, flat light, wide blank margin. No letters, numbers, logo, or color. Draw a tabletop machine of gears, string, a funnel, and a crank, all connected. Pen weight stays visible.`
+  midjourney = `black ink line drawing on warm sketchbook paper, straight-on scan of the whole page, flat light, wide blank margin, visible pen weight, a tabletop machine of gears, string, a funnel, and a crank all connected --v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph`
+}[reg=facet]
+
+^"d18"{
+  day = 18
+  word = `Flightless`
+  close = `B`
+  file = `ink-2026-10-18.jpg`
+  spw = `ink[flightless]{bird.wings.stand}<B>`
+  caption = `A large bird standing, wings too small to lift it.`
+  chatgpt = `Black ink drawing on a warm sketchbook page. Straight-on, whole page, flat light, wide blank margin. No letters, numbers, logo, or color. Draw a large bird standing on the ground, wings clearly too small to lift it. Pen weight stays visible.`
+  midjourney = `black ink line drawing on warm sketchbook paper, straight-on scan of the whole page, flat light, wide blank margin, visible pen weight, a large bird standing on the ground with wings too small to lift it --v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph`
+}[reg=facet]
+
+^"d19"{
+  day = 19
+  word = `Confused`
+  close = `B`
+  file = `ink-2026-10-19.jpg`
+  spw = `ink[confused]{signpost.arrows.person}<B>`
+  caption = `A person facing a signpost whose three arrows are blank.`
+  chatgpt = `Black ink drawing on a warm sketchbook page. Straight-on, whole page, flat light, wide blank margin. No letters, numbers, logo, or color. Draw a person facing a signpost with three blank arrows pointing different ways. Pen weight stays visible.`
+  midjourney = `black ink line drawing on warm sketchbook paper, straight-on scan of the whole page, flat light, wide blank margin, visible pen weight, a person facing a signpost with three blank arrows pointing different ways --v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph`
+}[reg=facet]
+
+^"d20"{
+  day = 20
+  word = `Lounge`
+  close = `B`
+  file = `ink-2026-10-20.jpg`
+  spw = `ink[lounge]{chair.cup.recline}<B>`
+  caption = `A person nearly horizontal in a deep chair, one cup on the arm.`
+  chatgpt = `Black ink drawing on a warm sketchbook page. Straight-on, whole page, flat light, wide blank margin. No letters, numbers, logo, or color. Draw a person nearly horizontal in a deep chair, with one cup on the chair arm. Pen weight stays visible.`
+  midjourney = `black ink line drawing on warm sketchbook paper, straight-on scan of the whole page, flat light, wide blank margin, visible pen weight, a person nearly horizontal in a deep chair with one cup on the arm --v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph`
+}[reg=facet]
+
+^"d21"{
+  day = 21
+  word = `Hero`
+  close = `B`
+  file = `ink-2026-10-21.jpg`
+  spw = `ink[hero]{coat.shield.door}<B>`
+  caption = `A small person in an ordinary coat, holding a shield that is too big, standing in a doorway.`
+  chatgpt = `Black ink drawing on a warm sketchbook page. Straight-on, whole page, flat light, wide blank margin. No letters, numbers, logo, or color. Draw a small person in an ordinary coat holding a shield that is too big, standing in a doorway. Pen weight stays visible.`
+  midjourney = `black ink line drawing on warm sketchbook paper, straight-on scan of the whole page, flat light, wide blank margin, visible pen weight, a small person in an ordinary coat holding an oversized shield in a doorway --v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph`
+}[reg=facet]
+
+^"d22"{
+  day = 22
+  word = `Beacon`
+  close = `B`
+  file = `ink-2026-10-22.jpg`
+  spw = `ink[beacon]{lantern.post.beam}<B>`
+  caption = `A lantern on a post, its beam drawn as parallel lines across the page.`
+  chatgpt = `Black ink drawing on a warm sketchbook page. Straight-on, whole page, flat light, wide blank margin. No letters, numbers, logo, or color. Draw a lantern on a post, the beam shown as parallel lines crossing the page. Pen weight stays visible.`
+  midjourney = `black ink line drawing on warm sketchbook paper, straight-on scan of the whole page, flat light, wide blank margin, visible pen weight, a lantern on a post with its beam drawn as parallel lines across the page --v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph`
+}[reg=facet]
+
+^"d23"{
+  day = 23
+  word = `Dapper`
+  close = `B`
+  file = `ink-2026-10-23.jpg`
+  spw = `ink[dapper]{jacket.flower.shoes}<B>`
+  caption = `A pressed jacket, one flower at the lapel, and shoes left as clean gaps in the ink.`
+  chatgpt = `Black ink drawing on a warm sketchbook page. Straight-on, whole page, flat light, wide blank margin. No letters, numbers, logo, or color. Draw a person in a pressed jacket with one flower at the lapel, shoes left as clean white gaps in the ink. Pen weight stays visible.`
+  midjourney = `black ink line drawing on warm sketchbook paper, straight-on scan of the whole page, flat light, wide blank margin, visible pen weight, a person in a pressed jacket with one flower at the lapel and shoes left as clean gaps in the ink --v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph`
+}[reg=facet]
+
+^"d24"{
+  day = 24
+  word = `Bake`
+  close = `B`
+  file = `ink-2026-10-24.jpg`
+  spw = `ink[bake]{board.hands.loaf}<B>`
+  caption = `A floured board, two hands, and a loaf with a split top.`
+  chatgpt = `Black ink drawing on a warm sketchbook page. Straight-on, whole page, flat light, wide blank margin. No letters, numbers, logo, or color. Draw two hands over a floured board and one loaf with a split top. Pen weight stays visible.`
+  midjourney = `black ink line drawing on warm sketchbook paper, straight-on scan of the whole page, flat light, wide blank margin, visible pen weight, two hands over a floured board and one loaf with a split top --v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph`
+}[reg=facet]
+
+^"d25"{
+  day = 25
+  word = `Fracture`
+  close = `B`
+  file = `ink-2026-10-25.jpg`
+  spw = `ink[fracture]{cup.three.still}<B>`
+  caption = `A ceramic cup in three pieces, still arranged in the shape of a cup.`
+  chatgpt = `Black ink drawing on a warm sketchbook page. Straight-on, whole page, flat light, wide blank margin. No letters, numbers, logo, or color. Draw a ceramic cup broken into three pieces, still arranged in the shape of a cup. Pen weight stays visible.`
+  midjourney = `black ink line drawing on warm sketchbook paper, straight-on scan of the whole page, flat light, wide blank margin, visible pen weight, a ceramic cup broken into three pieces still arranged in the shape of a cup --v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph`
+}[reg=facet]
+
+^"d26"{
+  day = 26
+  word = `Zip`
+  close = `B`
+  file = `ink-2026-10-26.jpg`
+  spw = `ink[zip]{coat.teeth.half}<B>`
+  caption = `A coat zipper half undone, teeth drawn as a column of ticks. Cycle B closes here.`
+  chatgpt = `Black ink drawing on a warm sketchbook page. Straight-on, whole page, flat light, wide blank margin. No letters, numbers, logo, or color. Draw a coat with the zipper half undone, the teeth as a column of short ticks. Pen weight stays visible.`
+  midjourney = `black ink line drawing on warm sketchbook paper, straight-on scan of the whole page, flat light, wide blank margin, visible pen weight, a coat with the zipper half undone and the teeth drawn as a column of short ticks --v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph`
+}[reg=facet]
+
+^"d27"{
+  day = 27
+  word = `Dumb`
+  close = `C`
+  file = `ink-2026-10-27.jpg`
+  spw = `ink[dumb]{straw.stand.arm}<C>`
+  caption = `A straw training dummy on a stand, one arm a little too long. The word stays the official prompt; the drawing is the dummy, not a person.`
+  chatgpt = `Black ink drawing on a warm sketchbook page. Straight-on, whole page, flat light, wide blank margin. No letters, numbers, logo, or color. Draw a straw training dummy on a wooden stand, stitched, with one arm a little too long. Do not caricature a person. Pen weight stays visible.`
+  midjourney = `black ink line drawing on warm sketchbook paper, straight-on scan of the whole page, flat light, wide blank margin, visible pen weight, a stitched straw training dummy on a wooden stand with one arm a little too long --v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph, caricature`
+}[reg=facet]
+
+^"d28"{
+  day = 28
+  word = `Trophy`
+  close = `C`
+  file = `ink-2026-10-28.jpg`
+  spw = `ink[trophy]{cup.handles.shelf}<C>`
+  caption = `A two-handled cup, a little too large for the shelf it sits on.`
+  chatgpt = `Black ink drawing on a warm sketchbook page. Straight-on, whole page, flat light, wide blank margin. No letters, numbers, logo, or color. Draw a two-handled cup that is a little too large for the small shelf it sits on. Pen weight stays visible.`
+  midjourney = `black ink line drawing on warm sketchbook paper, straight-on scan of the whole page, flat light, wide blank margin, visible pen weight, a two-handled cup a little too large for the small shelf it sits on --v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph`
+}[reg=facet]
+
+^"d29"{
+  day = 29
+  word = `Tusk`
+  close = `C`
+  file = `ink-2026-10-29.jpg`
+  spw = `ink[tusk]{curve.cloth.tag}<C>`
+  caption = `One curved tusk on folded cloth, with a blank tie-on tag.`
+  chatgpt = `Black ink drawing on a warm sketchbook page. Straight-on, whole page, flat light, wide blank margin. No letters, numbers, logo, or color. Draw one curved tusk resting on folded cloth, with a blank tie-on tag. Pen weight stays visible.`
+  midjourney = `black ink line drawing on warm sketchbook paper, straight-on scan of the whole page, flat light, wide blank margin, visible pen weight, one curved tusk resting on folded cloth with a blank tie-on tag --v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph`
+}[reg=facet]
+
+^"d30"{
+  day = 30
+  word = `Cookie`
+  close = `C`
+  file = `ink-2026-10-30.jpg`
+  spw = `ink[cookie]{round.break.crumbs}<C>`
+  caption = `One round cookie broken in two, crumbs as dots.`
+  chatgpt = `Black ink drawing on a warm sketchbook page. Straight-on, whole page, flat light, wide blank margin. No letters, numbers, logo, or color. Draw one round cookie broken in two, with crumbs as small dots. Pen weight stays visible.`
+  midjourney = `black ink line drawing on warm sketchbook paper, straight-on scan of the whole page, flat light, wide blank margin, visible pen weight, one round cookie broken in two with crumbs as small dots --v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph`
+}[reg=facet]
+
+^"d31"{
+  day = 31
+  word = `Flex`
+  close = `C`
+  file = `ink-2026-10-31.jpg`
+  spw = `ink[flex]{sleeve.arm.bend}<C>`
+  caption = `A rolled sleeve and a bent arm, ordinary and confident. Cycle C closes here.`
+  chatgpt = `Black ink drawing on a warm sketchbook page. Straight-on, whole page, flat light, wide blank margin. No letters, numbers, logo, or color. Draw one rolled sleeve and a bent arm, ordinary and confident, not a poster pose. Pen weight stays visible.`
+  midjourney = `black ink line drawing on warm sketchbook paper, straight-on scan of the whole page, flat light, wide blank margin, visible pen weight, one rolled sleeve and a bent arm, ordinary and confident --v 8.2 --ar 3:4 --stylize 60 --no text, letters, logo, watermark, color, photograph`
+}[reg=facet]
+
+do_not = #[
+  `publish this word list from the cache alone`,
+  `treat a missing scan as a failed day`,
+  `use the Inktober name as a product title; a sale subtitle is a separate decision`,
+  `require the official words; a batch of thirty-one by the 31st already counts`,
+  `put the word, a hashtag, or the Inktober mark inside the drawing`,
+  `load a raw render on the shelf before a scan is chosen`
+][reg=set]
