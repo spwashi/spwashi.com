@@ -13,11 +13,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: true
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            .spw/_workbench/package-lock.json
       - run: npm ci
+      - run: npm ci --prefix .spw/_workbench --ignore-scripts
       # tsc incremental state and input-hash stamps. A stale entry is safe: a pass
       # whose inputs changed misses its stamp and runs. Test stamps are not cached,
       # so the module suite always runs here.
