@@ -26,7 +26,22 @@ describe('page structure audit', () => {
   it('flags a heading skip, a labelled section with no id, a sizeless image and an untyped button', () => {
     assert.deepEqual(
       kinds('<h1>A</h1><section aria-labelledby="part-title"><h3 id="part-title">B</h3><img src="/x.webp" alt=""><button>go</button></section>'),
-      ['section-id', 'heading-skip', 'img-size', 'button-type'],
+      ['section-id', 'heading-skip', 'img-size', 'button-type', 'script-only'],
     );
+  });
+
+  it('names a button only a script can answer, by the hook it would read', () => {
+    const found = auditPage('fixture.html', page([
+      '<button type="button" class="spw-chip" data-spw-handle="true" data-site-setting-set="palette:hand">~hand</button>',
+      '<form><button type="button" data-set-mode="a">a</button></form>',
+      '<div hidden><button type="button" data-set-mode="b">b</button></div>',
+      '<button type="button" hidden data-set-mode="c">c</button>',
+      '<button type="button" popovertarget="tip">?</button>',
+      '<button type="button" class="frame-sigil">x</button>',
+    ].join('\n')));
+    assert.deepEqual(found.map((f) => [f.kind, f.note]), [
+      ['script-only', 'data-site-setting-set'],
+      ['script-only', '.frame-sigil'],
+    ]);
   });
 });

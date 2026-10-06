@@ -16,6 +16,10 @@
  *   section-id   a section labelled by "<name>-title" with no id of its own
  *   img-size     an <img> without width and height, so its room is not reserved
  *   button-type  a <button> with no type
+ *   script-only  a <button> outside a form, without popovertarget or
+ *                commandfor, that the markup does not hide: with scripts off
+ *                it offers a press nothing answers. The note names the hook
+ *                a script would answer (data-site-setting-set, data-set-mode…)
  *
  * Reports only; it does not gate check:local. Record:
  * .spw/audits/page-structure-2026-10.spw
@@ -31,7 +35,12 @@ const IGNORED = [/^design\/components\//, /^design\/catalog\//, /^00\./, /^publi
 const VOID = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr']);
 const OPTIONAL_END = new Set(['p', 'li', 'dt', 'dd', 'option', 'tr', 'td', 'th', 'thead', 'tbody', 'tfoot', 'colgroup', 'caption']);
 const KNOWN = new Set(('a abbr address article aside audio b bdi bdo blockquote button canvas cite code data datalist del details dfn dialog div dl em fieldset figcaption figure footer form h1 h2 h3 h4 h5 h6 header hgroup i iframe ins kbd label legend main map mark menu meter nav noscript object ol optgroup output picture pre progress q rp rt ruby s samp search section select slot small span strong sub summary sup table template textarea time u ul var video').split(' '));
-const KINDS = ['unbalanced', 'raw-capsule', 'heading-skip', 'section-id', 'img-size', 'button-type'];
+const KINDS = ['unbalanced', 'raw-capsule', 'heading-skip', 'section-id', 'img-size', 'button-type', 'script-only'];
+const HIDDEN_ATTR = /(?:^|\s)hidden(?=[\s=/]|$)/;
+// The attribute a script reads to answer a press, so findings group by behavior.
+const scriptHook = (attrs) => /\s(data-(?:site-setting-set|set-mode|spw-action|action|spw-copy|copy)[a-z-]*)=/.exec(attrs)?.[1]
+  || /\s(data-(?!spw-operator|spw-handle)[a-z-]+)=/.exec(attrs)?.[1]
+  || `.${/\sclass="([^"\s]+)/.exec(attrs)?.[1] || 'button'}`;
 // Whole start or end tags with their quoted values, so a capsule inside an attribute does not end the tag.
 const TAG = /<(\/?)([a-zA-Z][a-zA-Z0-9-]*)\b((?:"[^"]*"|'[^']*'|[^>"'])*?)(\/?)>/g;
 
@@ -69,6 +78,8 @@ export function auditPage(file, source) {
       }
       if (tag === 'img' && !(/\bwidth=/.test(attrs) && /\bheight=/.test(attrs))) add('img-size', m.index, /\bsrc="([^"]*)"/.exec(attrs)?.[1] || 'img');
       if (tag === 'button' && !/\btype=/.test(attrs)) add('button-type', m.index, 'no type');
+      if (tag === 'button' && !/\s(popovertarget|commandfor)=/.test(attrs) && !HIDDEN_ATTR.test(attrs)
+        && !stack.some((entry) => entry.tag === 'form' || entry.hidden)) add('script-only', m.index, scriptHook(attrs));
       if (tag === 'section' && !/\sid="/.test(attrs)) {
         const label = /aria-labelledby="([^"\s]+)-title"/.exec(attrs)?.[1];
         if (label && !ids.has(label)) add('section-id', m.index, `could be #${label}`);
@@ -76,7 +87,7 @@ export function auditPage(file, source) {
       if (!KNOWN.has(tag) && !VOID.has(tag) && !OPTIONAL_END.has(tag) && !tag.includes('-')) add('raw-capsule', m.index, `<${tag}>`);
     }
     if (VOID.has(tag) || OPTIONAL_END.has(tag) || selfClosing || tag.includes('-') || !KNOWN.has(tag)) continue;
-    if (!close) { stack.push({ tag, index: m.index }); continue; }
+    if (!close) { stack.push({ tag, index: m.index, hidden: HIDDEN_ATTR.test(attrs) }); continue; }
     if (stack.length && stack.at(-1).tag === tag) { stack.pop(); continue; }
     const open = stack.findLastIndex((entry) => entry.tag === tag);
     if (open < 0) { add('unbalanced', m.index, `stray </${tag}>`); continue; }
