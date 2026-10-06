@@ -31,6 +31,7 @@
     "check:agents": "node scripts/check-agent-contracts.mjs",
     "check:workers": "node scripts/check-workers.mjs",
     "check:built": "node scripts/check-built-modules.mjs",
+    "check:signals": "node scripts/check-signals.mjs",
     "harness": "node scripts/harness-write-gate.mjs --status",
     "sense": "node scripts/harness-sense.mjs",
     "check:css": "npm run build:css:check && node scripts/css-contracts.mjs && node scripts/css-custom-property-audit.mjs",

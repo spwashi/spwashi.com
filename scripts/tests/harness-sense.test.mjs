@@ -34,6 +34,8 @@ test('menu and id list name the cheap path', () => {
   assert.match(menu, /npm run sense -- stills/);
   assert.match(menu, /npm run sense -- roots/);
   assert.equal(SENSE_KINDS.roots.script, 'audit:root-writes');
+  assert.match(menu, /npm run sense -- signals/);
+  assert.equal(SENSE_KINDS.signals.script, 'check:signals');
   assert.match(menu, /full pack/);
   const listed = formatStillIds([
     { id: 'about-opening', specimenRoute: '/about/', label: 'About opening' },
