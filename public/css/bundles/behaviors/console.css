@@ -34,6 +34,36 @@
   gap: 0.22rem;
 }
 
+/* The count line is one Spw expression: the prefix is the state, the braces
+   hold what is held. interface/cauldron/live-expression.js rewrites it. */
+.site-footer__cauldron-live {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.15rem 0.75rem;
+}
+
+.site-footer__cauldron-live-expression {
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  overflow-wrap: anywhere;
+}
+
+.site-footer__cauldron-live-op {
+  color: var(--active-op-color, var(--teal, #008080));
+  font-weight: 700;
+}
+
+.site-footer__cauldron-live-op[data-spw-operator="ground"] { color: var(--op-ground-color, var(--ink-soft, inherit)); }
+.site-footer__cauldron-live-op[data-spw-operator="potential"] { color: var(--op-potential-color, var(--ink-soft, inherit)); }
+.site-footer__cauldron-live-op[data-spw-operator="value"] { color: var(--op-value-color, var(--ink-soft, inherit)); }
+.site-footer__cauldron-live-op[data-spw-operator="integration"] { color: var(--op-integration-color, var(--ink-soft, inherit)); }
+
+.site-footer__cauldron-live-count {
+  font-size: 0.72em;
+  font-weight: 400;
+  color: var(--ink-muted, inherit);
+}
+
 .site-footer__cauldron-expression {
   margin: 0;
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
