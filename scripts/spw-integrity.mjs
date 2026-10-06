@@ -88,6 +88,7 @@ import { promisify } from 'node:util';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isFollowablePathRef } from './lib/spw-path-ref.mjs';
+import { isGitIgnored } from './lib/git-ignored.mjs';
 
 const run = promisify(execFile);
 const SCRIPT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -204,7 +205,12 @@ async function checkRef(file, target) {
     : path.resolve(path.dirname(file), rawPath);
 
   if (!(await exists(resolved))) {
-    return { verdict: 'missing-file', detail: rawPath, resolved: path.relative(ROOT, resolved) };
+    const relative = path.relative(ROOT, resolved);
+    // A gitignored target (dist/, the generated catalog, local state) exists
+    // after a build or on one machine and never in a fresh checkout. That is
+    // not a rename the citation failed to follow.
+    if (isGitIgnored(relative, { cwd: ROOT })) return { verdict: 'ok', generated: true };
+    return { verdict: 'missing-file', detail: rawPath, resolved: relative };
   }
   if (fragment && resolved.endsWith('.spw')) {
     const anchors = await anchorsOf(resolved);
@@ -291,10 +297,12 @@ async function main() {
     ? read.filter((row) => wanted.has(String(row.file || '').split(path.sep).join('/')))
     : read;
   const findings = [];
+  let generatedRefs = 0;
   const total = rows.length;
 
   for (const row of rows) {
     const result = await checkRef(path.join(ROOT, row.file), row.target);
+    if (result.generated) generatedRefs += 1;
     if (result.verdict === 'ok') continue;
     findings.push({ file: row.file, line: row.line, target: row.target, ...result });
   }
@@ -315,6 +323,7 @@ async function main() {
       generatedAt: new Date().toISOString(),
       scanned: files.size,
       pathRefs: total,
+      generatedRefs,
       findings,
     }, null, 2));
     return;
@@ -323,6 +332,7 @@ async function main() {
   console.log('.spw integrity — can every citation still be followed?');
   console.log('='.repeat(66));
   console.log(`${files.size} surfaces, ${total} path references, ${total - findings.length} resolve`);
+  if (generatedRefs) console.log(`${generatedRefs} of them point at gitignored paths (built or local-only) and are not checked for existence`);
   console.log('');
 
   const section = (label, rows, note) => {

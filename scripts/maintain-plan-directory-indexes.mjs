@@ -28,6 +28,7 @@ import { fileURLToPath } from 'node:url';
 import { PLAN_REFINEMENTS } from './plan-refinements-data.mjs';
 import { extractPlanGoal } from './lib/plan-index-goal.mjs';
 import { problemsInPlanFiles } from './lib/plan-file-problems.mjs';
+import { isGitIgnored } from './lib/git-ignored.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, '..');
@@ -312,7 +313,9 @@ function guardReviewedPlanTree() {
 
   const problems = problemsInPlanFiles(planEntries(files), {
     treeReviewed: true,
-    exists: (rel) => fs.existsSync(path.join(REPO_ROOT, rel)),
+    // A gitignored target (the generated catalog, raw renders, local runtime
+    // state) is real on a machine that built and absent in a fresh checkout.
+    exists: (rel) => fs.existsSync(path.join(REPO_ROOT, rel)) || isGitIgnored(rel, { cwd: REPO_ROOT }),
   });
   if (CHECK) {
     const unreviewed = problems.filter((problem) => problem.reason === 'unreviewed');
