@@ -1,5 +1,6 @@
 import {
   annotateFloatingChromeElement,
+  isInsideShellChrome,
   SEMANTIC_CHROME_SELECTOR,
   writeRuntimeDatasetValues,
 } from '/public/js/kernel/dom-contracts.js';
@@ -86,6 +87,8 @@ function shouldSkipTarget(host) {
   if (!(host instanceof HTMLElement)) return true;
   if (host.matches('main[data-spw-kind="surface"], article[data-spw-kind="surface"]')) return true;
   if (host.matches('.site-header, body > header, nav[data-spw-kind="shell"]')) return true;
+  // Meta and guide rows seated inside chrome reflow the header after load (kernel/dom-contracts.js).
+  if (isInsideShellChrome(host)) return true;
   return false;
 }
 
