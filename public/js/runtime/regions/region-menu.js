@@ -21,6 +21,7 @@ import {
 } from '/public/js/semantic/semantic-braces.js';
 import { normalizeText, normalizeToken } from '/public/js/semantic/semantic-utils.js';
 import { detectOperatorFromElement, getOperatorGeometry } from '/public/js/kernel/operator-detection.js';
+import { readElementTone } from '/public/js/semantic/expression-tone.js';
 
 const TARGET_SELECTOR = [
   '.spw-delimiter',
@@ -824,7 +825,7 @@ function buildContract(target, semantic, frame) {
     ['Cue', source?.dataset.spwReadingCue || target.dataset.spwReadingCue],
     ['Input', source?.dataset.spwInput || target.dataset.spwInput || semantic.rootLabel],
     ['Return', source?.dataset.spwReturn || target.dataset.spwReturn || frame?.dataset?.spwConsequence],
-    ['Tone', source?.dataset.spwTone || target.dataset.spwTone || frame?.dataset?.spwContext],
+    ['Tone', readElementTone(source) || readElementTone(target) || frame?.dataset?.spwContext],
   ];
 
   return fields.filter(([, value]) => normalizeText(value));

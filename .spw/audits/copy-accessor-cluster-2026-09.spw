@@ -255,6 +255,18 @@ audit_run_2026_09_29: .{
     held = `spw.workbench.cost stays flagged unglossed:lattice. There the word is a command name in a timing report, not the concept.`
     backlog = `Eleven units still carry no handle (f9 unit_without_expression); f10 tone and voice attributes still wait for a human-confirmed migration.`
   }
+  f15_tone_in_expression {
+    severity = "medium"
+    claim = `f10 is closed. The creator chose Spw semantics for tone: English tokens in an expression carry valence as written. The 21 authored uses are gone and the runtime no longer reads or writes a tone attribute.`
+    moved = #[
+      `about #about-index, #attention-register, #about-reentry: the tone word is the mode of a new expression on the frame (index[navigational], attention[analytical], kernel[threshold])`,
+      `recipes #culture-register: culture[publisher]{generous.precise.gather}<scene>`,
+      `topics/software/spw voice cards: voice[field_guide], voice[spellbook], voice[workshop]`,
+      `blog operator sigils: 14 voice values that repeated the title are removed`
+    ][reg=set]
+    readers = `semantic/expression-tone.js reads the mode slot, led by any boonhonk charge, and falls back to data-spw-context. component-semantics.js stops writing data-spw-tone; page-anatomy.js, page-universe.js, region-menu.js and semantic-crossrefs.js read through it.`
+    kept = `data-spw-inline-tone is a page-anatomy stem with its own sheet and is not part of this.`
+  }
 }[reg=facet]
 
 ^"decision"{
