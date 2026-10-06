@@ -34,6 +34,7 @@ import {
   COMPONENT_SELECTOR,
   buildAxisGenome,
   inferTopographyKind,
+  isInsideShellChrome,
   resolveCompositionTier,
   writeDatasetValue,
   writeDatasetValueIfMissing,
@@ -709,7 +710,8 @@ function applySemanticSnapshot(el, snapshot, options = {}) {
   const { overwrite = true } = options;
   const writer = overwrite ? setOrReplace : setIfMissing;
 
-  writer(el, 'spwKind', snapshot.kind);
+  // Chrome is described, not classed as a component (kernel/dom-contracts.js).
+  if (!isInsideShellChrome(el)) writer(el, 'spwKind', snapshot.kind);
   writer(el, 'spwRole', snapshot.role);
   writer(el, 'spwMeaning', snapshot.meaning);
   writer(el, 'spwForm', snapshot.form);
@@ -740,7 +742,7 @@ function applySemanticSnapshot(el, snapshot, options = {}) {
   writer(el, 'spwSemanticVersion', snapshot.semanticVersion);
   writer(el, 'spwComponentId', snapshot.componentId);
   writer(el, 'spwComponentName', snapshot.componentName);
-  writer(el, 'spwComponentKind', snapshot.kind);
+  if (!isInsideShellChrome(el)) writer(el, 'spwComponentKind', snapshot.kind);
   writer(el, 'spwComponentAddress', snapshot.componentAddress);
   writer(el, 'spwComponentGenome', snapshot.componentGenome);
   writer(el, 'spwSemanticOwner', snapshot.semanticOwner);

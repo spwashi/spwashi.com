@@ -4,6 +4,7 @@
 
 import {
   buildAxisGenome,
+  isInsideShellChrome,
   writeDatasetValue,
   writeDatasetValueIfMissing,
   writeStyleValue,
@@ -425,7 +426,7 @@ export function describeRegionProfile(profile) {
 }
 
 export function applyRegionProfile(el, profile) {
-  if (profile.kind !== 'slot' && !el.matches?.('.frame-topline, .frame-heading')) {
+  if (profile.kind !== 'slot' && !el.matches?.('.frame-topline, .frame-heading') && !isInsideShellChrome(el)) {
     writeDatasetValueIfMissing(el, 'spwKind', profile.kind);
   }
   writeDatasetValueIfMissing(el, 'spwRole', profile.role);

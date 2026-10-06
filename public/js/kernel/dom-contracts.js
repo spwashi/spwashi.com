@@ -103,6 +103,18 @@ export const COMPONENT_KIND_VALUES = Object.freeze([
 
 export const COMPONENT_KIND_SHELL_EXCLUSION = ':not(body):not(main)';
 
+/**
+ * Shell and floating chrome are hosts, not page components. Annotators may read
+ * and describe what sits inside them, but never stamp a component kind there:
+ * the component rules in components/foundation.css (containment, padding)
+ * then reflow the header after load and push the page down.
+ */
+export const SHELL_CHROME_SELECTOR = '.site-header, body > header, nav[data-spw-kind="shell"], [data-spw-floating-chrome="true"]';
+
+export function isInsideShellChrome(el) {
+  return Boolean(el?.parentElement?.closest?.(SHELL_CHROME_SELECTOR));
+}
+
 export const COMPONENT_KIND_MIRROR_SELECTOR = [
   `[data-spw-component-kind]${COMPONENT_KIND_SHELL_EXCLUSION}`,
   `[data-spw-kind]${COMPONENT_KIND_SHELL_EXCLUSION}`,
@@ -1544,6 +1556,7 @@ export function syncComponentKindMirror(el, options = {}) {
   if (!el?.dataset) return false;
 
   const { missingOnly = true } = options;
+  if (isInsideShellChrome(el)) return false;
   const kind = normalizeTopographyToken(el.dataset.spwKind || el.dataset.spwComponentKind || '');
   if (!kind) return false;
 
