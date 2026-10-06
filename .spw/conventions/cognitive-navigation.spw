@@ -404,7 +404,7 @@ fixity = "stable"
 
   app_loading: .{
     url = `spw_source and spw_source_name load exact source into /tools/spw-parser/ within the PWA scope.`
-    file = `manifest file_handlers routes .spw text files to the parser tool; launchQueue reads the chosen file locally.`
+    file = `manifest file_handlers routes .spw files to /open/; launchQueue reads the chosen file locally and does not upload it. The literal parser remains the proof surface for tokens and the AST.`
     storage = `Source remains URL- or file-owned. The parser tool does not create a second canonical localStorage owner.`
     honesty = `Link capture and file handling depend on installed-app and operating-system support; ordinary browsers still open the same proof route.`
   }[reg=facet]

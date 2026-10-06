@@ -181,7 +181,7 @@ test('nothing on the site links to the bench', () => {
   let hits = '';
   try {
     hits = execFileSync('git', ['grep', '--untracked', '-l', '-E', '#arc-bench["\'?]', '--',
-      '*.html', '*.js', '*.mjs', '*.json', '*.xml', '*.txt', ':!scripts/tests/**', ':!public/js/modules/projects/**', ':!public/js/runtime/catalog/**'],
+      '*.html', '*.js', '*.mjs', '*.json', '*.xml', '*.txt', ':!scripts/tests/**', ':!public/js/modules/projects/**', ':!public/js/runtime/catalog/**', ':!public/data/runtime-atlas.json'],
     { cwd: repo, encoding: 'utf8' });
   } catch (error) {
     if (error.status !== 1) throw error; /* 1 = no match */

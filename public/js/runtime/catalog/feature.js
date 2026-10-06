@@ -256,6 +256,19 @@ export const FEATURE_DEFS = [
     load: () => import('../../modules/tools/spw-literal-parser.js'),
   },
   {
+    id: 'spw-document-room',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.VISIBLE,
+    route: 'tools',
+    selector: '#spw-document',
+    describes: 'document[spw]{parse.room.export}<local> open a .spw file in the browser and read it as a room',
+    updates: ['structural:property:textContent', 'structural:hidden', 'structural:aria-pressed'],
+    evaluates: [],
+    timingArc: 'visible-feature',
+    effectScope: ['local-dom', 'listeners'],
+    load: () => import('../../modules/tools/spw-document-room.js'),
+  },
+  {
     /* Deep-link only: #arc-bench is authored [hidden] and shown by :target,
        so a visible mount waits until someone arrives at the link. */
     id: 'arc-bench',

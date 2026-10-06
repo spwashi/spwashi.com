@@ -375,19 +375,6 @@ function initLiteralParser(root) {
   const launched = readLaunchSource();
   loadSource(launched.source || input.value || SPW_LITERAL_PARSER_SAMPLES.contract, launched.name);
 
-  if ('launchQueue' in window && typeof window.launchQueue?.setConsumer === 'function') {
-    window.launchQueue.setConsumer(async ({ files = [] }) => {
-      const handle = files[0];
-      if (!handle) return;
-      const file = await handle.getFile();
-      if (file.size > MAX_FILE_BYTES) {
-        if (status instanceof HTMLElement) status.textContent = 'That file is larger than the 256 KiB browser-demo limit.';
-        return;
-      }
-      loadSource(await file.text(), file.name);
-    });
-  }
-
   initAppInstallAction(root.querySelector('[data-parser-install]'));
 
   const provenance = root.querySelector('[data-parser-provenance]');

@@ -66,6 +66,7 @@ const CORE_ROUTES = [
   '/design/folios/',
   '/services/',
   '/settings/',
+  '/open/',
   '/blog/',
   '/topics/craft/',
   '/topics/software/',
@@ -193,8 +194,48 @@ self.addEventListener('message', (event) => {
   }
 });
 
+const DOCUMENT_SHARE_CACHE = 'spw-document-share';
+const DOCUMENT_SHARE_PENDING = '/share/spw-pending';
+const DOCUMENT_SHARE_LIMIT = 256 * 1024;
+
+function shareRedirect(query) {
+  const url = new URL(`/open/?${query}`, self.location.origin);
+  return Response.redirect(url.href, 303);
+}
+
+async function handleDocumentShare(request) {
+  try {
+    const form = await request.formData();
+    const file = form.get('spw');
+    if (!file || typeof file.text !== 'function' || typeof file.size !== 'number') {
+      return shareRedirect('shared=empty');
+    }
+    const name = file.name || 'shared.spw';
+    const type = String(file.type || '').toLowerCase();
+    const allowed = name.toLowerCase().endsWith('.spw') || type === 'application/x-spw';
+    if (!allowed) return shareRedirect('shared=rejected');
+    if (file.size > DOCUMENT_SHARE_LIMIT) return shareRedirect('shared=large');
+    const cache = await caches.open(DOCUMENT_SHARE_CACHE);
+    await cache.put(DOCUMENT_SHARE_PENDING, new Response(await file.text(), {
+      headers: {
+        'content-type': 'text/plain; charset=utf-8',
+        'x-spw-name': encodeURIComponent(name),
+      },
+    }));
+    return shareRedirect('shared=1');
+  } catch {
+    return shareRedirect('shared=empty');
+  }
+}
+
 self.addEventListener('fetch', (event) => {
   const { request } = event;
+  const shareUrl = new URL(request.url);
+
+  if (shareUrl.origin === self.location.origin && shareUrl.pathname === '/share/spw' && request.method === 'POST') {
+    event.respondWith(handleDocumentShare(request));
+    return;
+  }
 
   if (!shouldHandleRequest(request)) return;
 

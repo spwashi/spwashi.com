@@ -39,6 +39,7 @@ export const MODULE_TEST_FILES = Object.freeze([
   'scripts/tests/region-kin.test.mjs',
   'scripts/tests/spw-expression-geometry.test.mjs',
   'scripts/tests/spw-literal-parser-tool.test.mjs',
+  'scripts/tests/spw-document-room.test.mjs',
   'scripts/tests/module-timing-contract.test.mjs',
   'scripts/tests/module-cost-contract.test.mjs',
   'scripts/tests/catalog-vocabulary.test.mjs',
