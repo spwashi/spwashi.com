@@ -92,7 +92,6 @@ export function createModuleLoader(config = {}) {
   const mountWhen = config.mountWhen || MOUNT_WHEN;
   const regionStates = config.regionStates || REGION_STATES;
   const html = config.html || document.documentElement;
-  const body = config.body || document.body;
   const logLabel = config.logLabel || 'module-loader';
   const logger = config.logger || null;
   const logRelationships = config.logRelationships || null;
@@ -771,26 +770,6 @@ function syncRuntimeModuleSummary(ctx, record) {
   writeDatasetValue(html, 'spwRuntimeModuleLifecycleLatest', timingSnapshot.latest?.lifecycle
     ? timingSnapshot.latest.lifecycle.map((entry) => entry.stage).join(' > ')
     : null);
-
-  if (body) {
-    writeDatasetValue(body, 'spwRuntimeLastModule', record.baseId || record.id);
-    writeDatasetValue(body, 'spwRuntimeLastModuleStatus', record.status);
-    writeDatasetValue(body, 'spwRuntimeLastModuleStage', record.stage || record.status);
-    writeDatasetValue(body, 'spwRuntimeLastModuleWhen', record.effectiveWhen);
-    writeDatasetValue(body, 'spwRuntimeLastModuleReason', record.reason);
-    writeDatasetValue(body, 'spwRuntimeLastModuleEvaluates', record.evaluates);
-    writeDatasetValue(body, 'spwRuntimeLastModuleDescribes', record.describes || null);
-    writeDatasetValue(body, 'spwRuntimeLastModuleTimingArc', record.timingArc || null);
-    writeDatasetValue(body, 'spwRuntimeLastModuleEffectScope', record.effectScope || null);
-    writeDatasetValue(body, 'spwRuntimeModuleCount', String(mounted.length));
-    writeDatasetValue(body, 'spwRuntimeModuleLifecycleStages', stageSummary);
-    writeDatasetValue(body, 'spwRuntimeModuleLifecycleSummary', timingSnapshot.latest
-      ? `${timingSnapshot.latest.baseId || timingSnapshot.latest.id}:${timingSnapshot.latest.stage}`
-      : null);
-    writeDatasetValue(body, 'spwRuntimeModuleLifecycleLatest', timingSnapshot.latest?.lifecycle
-      ? timingSnapshot.latest.lifecycle.map((entry) => entry.stage).join(' > ')
-      : null);
-  }
 }
 
 function recordModuleAudit(ctx, entry) {

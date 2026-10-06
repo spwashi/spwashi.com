@@ -641,7 +641,6 @@ async function loadNonCoreCatalog() {
 const moduleLoader = createModuleLoader({
   moduleDefs: MODULE_DEFS,
   html: HTML,
-  body: BODY,
   logger: runtimeLogger,
   logRelationships: SPW_LOG_RELATIONSHIPS,
   logLabel: 'site.js',

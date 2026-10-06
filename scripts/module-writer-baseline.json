@@ -113,10 +113,7 @@
       "attr:data-spw-discovery-notices-active"
     ],
     "experiential": [
-      "attr:data-spw-experiential-init",
-      "attr:data-spw-inspect-field-context",
-      "attr:data-spw-inspect-field-operator",
-      "attr:data-spw-inspect-field-wonder"
+      "attr:data-spw-experiential-init"
     ],
     "haptics": [
       "attr:data-spw-sigil-collection-count"
