@@ -8,9 +8,11 @@
  * route from source in headless Chrome, hooks the root's write paths before
  * any script runs, keeps the call stack of each write, and names the catalog
  * module on that stack. No input is sent, so everything counted is arrival.
+ * It watches for at least --observe ms and then until --quiet ms pass with no
+ * new mount, so a loaded machine lengthens the watch and not the miss.
  *
  *   npm run audit:root-writes
- *   npm run audit:root-writes -- --routes /,/about/ --observe 12000
+ *   npm run audit:root-writes -- --routes /,/about/ --observe 12000 --quiet 6000
  *   npm run audit:root-writes -- --json --receipt census.json
  *
  * Reading the table: `writes` is every call, `changed` the ones that altered
@@ -256,6 +258,33 @@ export function summarizeRootWrites(
   };
 }
 
+/**
+ * When each module arrived: one line per catalog id. A module mounted on
+ * several hosts keeps its earliest mount, the sum of its mount time and the
+ * count of hosts. Times are the page's own clock, stretched by the probe.
+ */
+export function summarizeModuleTiming(records = []) {
+  const byId = new Map();
+  for (const row of records) {
+    if (!row?.id) continue;
+    const entry = byId.get(row.id) || { id: row.id, when: row.when || null, status: row.status, hosts: 0, mountedAt: null, loadMs: null, mountMs: 0 };
+    entry.hosts += 1;
+    if (row.status === 'mounted') entry.status = 'mounted';
+    if (Number.isFinite(row.mountedAt)) entry.mountedAt = entry.mountedAt == null ? row.mountedAt : Math.min(entry.mountedAt, row.mountedAt);
+    if (Number.isFinite(row.loadMs)) entry.loadMs = entry.loadMs == null ? row.loadMs : Math.max(entry.loadMs, row.loadMs);
+    if (Number.isFinite(row.mountMs)) entry.mountMs += row.mountMs;
+    byId.set(row.id, entry);
+  }
+  return [...byId.values()]
+    .map((entry) => ({
+      ...entry,
+      mountedAt: entry.mountedAt == null ? null : Math.round(entry.mountedAt),
+      loadMs: entry.loadMs == null ? null : Math.round(entry.loadMs),
+      mountMs: Math.round(entry.mountMs),
+    }))
+    .sort((left, right) => (left.mountedAt ?? Infinity) - (right.mountedAt ?? Infinity) || left.id.localeCompare(right.id));
+}
+
 export function formatRootWriteCensus(route, census, { top = 30 } = {}) {
   const lines = [
     `[root-writes] ${route}: ${census.mounted} mounted · ${census.writers.length} write to the root on arrival · ${census.quiet.length} quiet`,
@@ -318,6 +347,8 @@ async function main() {
 
   const routes = (flag(args, '--routes') || '/').split(',').map((route) => route.trim()).filter(Boolean);
   const observeMs = Number(flag(args, '--observe')) || 12000;
+  const quietMs = Number(flag(args, '--quiet')) || 6000;
+  const maxObserveMs = Math.max(observeMs, Number(flag(args, '--max-observe')) || 90000);
   const receiptFile = flag(args, '--receipt');
 
   const loopback = await checkLoopback();
@@ -346,7 +377,7 @@ async function main() {
       devChild = spawned.child;
       base = await spawned.ready;
     }
-    say(`source at ${base}; ${observeMs}ms of arrival per route, no input`);
+    say(`source at ${base}; at least ${observeMs}ms of arrival per route, until ${quietMs}ms pass with no new mount; no input`);
 
     const debugPort = 9333 + Math.floor(Math.random() * 400);
     chromeChild = await harness.openChrome(chromePath, await harness.createChromeProfileDir('spw-roots-'), debugPort);
@@ -360,17 +391,35 @@ async function main() {
         await session.send('Page.enable');
         await session.send('Page.addScriptToEvaluateOnNewDocument', { source: ROOT_WRITE_PROBE_SOURCE });
         await harness.navigateAndProbe(session, { url: `${base}${route}`, settleMs: 10000, timeoutMs: 45000, logBrowser: false });
-        await harness.sleep(observeMs);
+        // A busy machine stretches arrival. Watch until no module has mounted
+        // for a quiet spell, so a slow page is not read as a short one.
+        const startedAt = Date.now();
+        let lastCount = -1;
+        let lastChangeAt = Date.now();
+        while (Date.now() - startedAt < maxObserveMs) {
+          await harness.sleep(1500);
+          const count = await harness.evaluateProbe(session, `(window.__SPW_SITE__?.snapshotModules?.() || []).filter((row) => row.status === 'mounted').length`, 20000).catch(() => lastCount);
+          if (count !== lastCount) {
+            lastCount = count;
+            lastChangeAt = Date.now();
+          }
+          if (Date.now() - startedAt >= observeMs && Date.now() - lastChangeAt >= quietMs) break;
+        }
+        const observedMs = Date.now() - startedAt;
         const page = await harness.evaluateProbe(session, `(() => {
           if (typeof window.__spwRootWrites !== 'function' || !window.__SPW_SITE__) return { missing: true };
-          const mounted = window.__SPW_SITE__.snapshotModules().filter((row) => row.status === 'mounted').map((row) => row.baseId);
-          return { ...window.__spwRootWrites(), mounted };
+          const records = window.__SPW_SITE__.snapshotModules().map((row) => ({
+            id: row.baseId, status: row.status, when: row.effectiveWhen,
+            mountedAt: row.mountedAt, loadMs: row.loadMs, mountMs: row.mountMs,
+          }));
+          const mounted = records.filter((row) => row.status === 'mounted').map((row) => row.id);
+          return { ...window.__spwRootWrites(), mounted, records };
         })()`, 20000);
         if (!page || page.missing) {
           say(`${route}: the probe or the runtime did not come up`);
           return 2;
         }
-        const census = summarizeRootWrites(page, entryFiles, isStyled);
+        const census = { ...summarizeRootWrites(page, entryFiles, isStyled), observedMs, modules: summarizeModuleTiming(page.records) };
         report.routes[route] = census;
         if (!args.includes('--json')) process.stdout.write(`${formatRootWriteCensus(route, census)}\n`);
       } finally {

@@ -71,6 +71,8 @@ A page loads what its reader engages, not everything its grammar could support. 
 - **Body carries one module's annotation.** The loader and the two contract files write `data-spw-module-*` on a module's mount target. For a body-rooted module the target is `<body>`. The loader's attributes are written only when missing, so `<body>` keeps the first such module's; the describes and updates attributes are rewritten by each one (four to six times a page). Stylesheets read them, mostly under `data-spw-module-visuals="on"`. Taking the annotation off the root may change what those selectors match: a browser look first.
 - **Unchanged rewrites.** `dom-contracts` writes the fifteen floating-chrome slot properties seven times a page; a third of its writes change a value. The caller is lost through its batch.
 
+- **Timing words against arrival (same day, second run).** The census also records each module's mount. Taken as a share of a route's arrival (navigation to last mount, median over the routes a module appeared on): immediate 19%, visible 72%, idle 67%, settled 95%. Visible and idle do not separate. Of 80 visible definitions, 14 mount on all six routes (13 with no gate) and 61 on none; of 50 idle, 35 mount on all six. 11 modules hosted on `html`, `body`, `main` or nothing mount and never write the root; 20 write the root and mark no update `html:`. The machine was loaded during this run, so the shares are sound and the seconds are not.
+
 Limits: stacks name files only from source, so this is the dev graph; times are stretched by the probe; `observed` above `writes` in the output means an unhooked door.
 
 ## Next Slices

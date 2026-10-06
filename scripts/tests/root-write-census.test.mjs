@@ -7,6 +7,7 @@ import {
   formatRootWriteCensus,
   isStyledToken,
   ownerOfWrite,
+  summarizeModuleTiming,
   summarizeRootWrites,
 } from '../root-write-census.mjs';
 
@@ -93,6 +94,20 @@ test('the census ranks owners by styled writes and names who stayed quiet', () =
   const text = formatRootWriteCensus('/', census);
   assert.match(text, /3 mounted · 1 write to the root on arrival · 2 quiet/);
   assert.match(text, /quiet: site-search, spells/);
+});
+
+test('module timing keeps one line per id: earliest mount, summed mount time, host count', () => {
+  const timing = summarizeModuleTiming([
+    { id: 'frame-size-memory', status: 'mounted', when: 'immediate', mountedAt: 1410.6, loadMs: 12.2, mountMs: 3.4 },
+    { id: 'frame-size-memory', status: 'mounted', when: 'immediate', mountedAt: 1402.2, loadMs: 0.4, mountMs: 2.2 },
+    { id: 'spells', status: 'mounted', when: 'idle', mountedAt: 9050, loadMs: 31, mountMs: 8 },
+    { id: 'annotation-layer', status: 'idle', when: 'visible', mountedAt: null, loadMs: null, mountMs: null },
+  ]);
+  assert.deepEqual(timing, [
+    { id: 'frame-size-memory', when: 'immediate', status: 'mounted', hosts: 2, mountedAt: 1402, loadMs: 12, mountMs: 6 },
+    { id: 'spells', when: 'idle', status: 'mounted', hosts: 1, mountedAt: 9050, loadMs: 31, mountMs: 8 },
+    { id: 'annotation-layer', when: 'visible', status: 'idle', hosts: 1, mountedAt: null, loadMs: null, mountMs: 0 },
+  ]);
 });
 
 test('the probe is one self-contained expression and hooks all four doors', () => {
