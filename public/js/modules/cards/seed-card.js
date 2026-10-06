@@ -88,6 +88,20 @@ export const SEED_TEMPLATES = {
       { key: 'relay',     op: '~', label: 'relay',     placeholder: 'how to send or respond', hint: 'A link, an address, a method. Make the path frictionless.' },
     ],
   },
+
+  // Pinned: offered only where a host names it (data-templates="costuming").
+  costuming: {
+    label: 'costume sheet',
+    sigil: '^seed[Costuming.Way year:',
+    pinned: true,
+    fields: [
+      { key: 'appeared',  op: '@', label: 'who you appeared as', placeholder: 'a figure, a character, a name', hint: 'The figure, character, or name. A costume, a character, a voice.' },
+      { key: 'source',    op: '~', label: 'where you met it, who taught it', placeholder: 'where it came from', hint: 'Where the costume or the practice came from, and what is not yours to claim.' },
+      { key: 'said',      op: '^', label: 'what it let you say', placeholder: 'what you said or made', hint: 'What you said or made that you would not have otherwise.' },
+      { key: 'stayed',    op: '.', label: 'what stayed', placeholder: 'what remained after the night', hint: 'What remained after the night. It may be more than you expected.' },
+      { key: 'revisit',   op: '?[', label: 'revisit', placeholder: 'when to look at this again', hint: 'When to look at this again.' },
+    ],
+  },
 };
 
 /** Generate the Spw seed block from current field values */
@@ -117,15 +131,16 @@ function chargeToState(charge) {
 
 /**
  * A host names the templates it offers with data-templates="folio,ask"; a host
- * that names none offers every template. The pivot only shows when there is a
+ * that names none offers every template that is not pinned. A pinned template
+ * appears only where a host names it. The pivot only shows when there is a
  * choice to make.
  */
-function readTemplateKeys(el) {
+export function readTemplateKeys(el) {
   const named = String(el.dataset.templates || '')
     .split(/[\s,]+/)
     .map((key) => key.trim())
     .filter((key) => key && SEED_TEMPLATES[key]);
-  return named.length ? named : Object.keys(SEED_TEMPLATES);
+  return named.length ? named : Object.keys(SEED_TEMPLATES).filter((key) => !SEED_TEMPLATES[key].pinned);
 }
 
 export class SeedCard {

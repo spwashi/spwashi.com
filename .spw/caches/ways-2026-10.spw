@@ -82,7 +82,7 @@ expression = way[cluster]{verb.operators.slot.axis}<application>
 ^"season_of_an_expression"{
   abstract = `◌[◌]{◌}(◌)<◌>, with a prefix charge and a postfix register; every slot empty`
   path = #[
-    `regard: ◌[regard]{◌}(mask)<◌>. Posture and scene are set; nothing is promised back.`,
+    `regard: ◌[regard]{◌}(costume)<◌>. Posture and scene are set; nothing is promised back.`,
     `gather: ◌[regard]{a.b.c}(table)<◌>. Parts accrue.`,
     `give: ◌[regard]{a.b.c}(gift)<you>. The projection lands on someone.`,
     `cross: ^◌[regard]{c}(threshold)<you>. Committed; the parts kept are what deserves another cycle.`,
@@ -96,7 +96,7 @@ expression = way[cluster]{verb.operators.slot.axis}<application>
 }[reg=facet]
 
 ^"applications"{
-  holidays = `mask applies regard; gift applies give; the almanac applies keep time; /newyear/ applies cross; a long table would apply gather and is not built. Festivity routes are children of /holidays/ (@holidays).`
+  holidays = `costuming applies regard; gift applies give; the almanac applies keep time; /newyear/ applies cross; a long table would apply gather and is not built. Festivity routes are children of /holidays/ (@holidays).`
   culture = `@culture_field sorts traditions met by the six ways. Each reflection names where it was met, who taught it, and what is not mine to claim.`
   starters = `a blog starter is fed with dated stream entries; an entry may record which slot moved, so the weave can show one expression across a season (@blog_starter)`
   kinship = `pages carry way[verb]{…}<…> in data-spw-semantic-expression, and @kinship groups them by subject and mode with no new attribute. move[…] stays with @hypermedia, where it names single-operator moves.`
