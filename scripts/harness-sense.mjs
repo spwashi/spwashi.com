@@ -9,6 +9,7 @@
  *   npm run sense -- ink about-opening
  *   npm run sense -- ids
  *   npm run sense -- doctor [--reap]   # QA preflight: sandbox, orphans, bundles
+ *   npm run sense -- roots [--routes /,/about/]   # who writes to the page root on arrival
  *   npm run sense -- wander [seed] [--count N] [--run]   # seeded odd stills; dry unless --run
  */
 
@@ -38,6 +39,7 @@ export const SENSE_KINDS = Object.freeze({
   nouns: { script: 'audit:module-selectors', label: 'catalog nouns' },
   stills: { script: 'audit:stills', label: 'still / module coverage' },
   ink: { script: 'visual:checks', label: 'ink / chrome', needsId: true },
+  roots: { script: 'audit:root-writes', label: 'root writes on arrival', passArgs: true },
 });
 
 export function parseSenseArgs(argv) {
@@ -102,6 +104,7 @@ export function formatSenseMenu(recipes = listSenseFixtures()) {
     '[sense] copy    npm run sense -- copy',
     '[sense] nouns   npm run sense -- nouns',
     '[sense] stills  npm run sense -- stills',
+    '[sense] roots   npm run sense -- roots [--routes /,/about/]   (headless; who writes to the page root on arrival)',
     '[sense] ink     npm run sense -- ink <fixture>',
     `[sense] ids     ${recipes.length} fixtures — npm run sense -- ids`,
     '[sense] wander  npm run sense -- wander [seed]   (seeded odd stills; dry until --run)',
@@ -141,7 +144,7 @@ function main(argv = process.argv.slice(2)) {
   }
   const spec = SENSE_KINDS[kind];
   if (!spec) {
-    process.stderr.write(`[sense] unknown kind "${kind}". Use doctor, copy, nouns, stills, ink, ids, or wander.\n`);
+    process.stderr.write(`[sense] unknown kind "${kind}". Use doctor, copy, nouns, stills, roots, ink, ids, or wander.\n`);
     process.stderr.write(`${formatSenseMenu()}\n`);
     process.exit(2);
   }
@@ -155,7 +158,7 @@ function main(argv = process.argv.slice(2)) {
     }
     runNpm(spec.script, [`--ids=${ids.join(',')}`]);
   }
-  runNpm(spec.script);
+  runNpm(spec.script, spec.passArgs ? rest : []);
 }
 
 const isMain = process.argv[1]
