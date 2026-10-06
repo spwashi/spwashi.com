@@ -21,6 +21,11 @@
 @hypermedia: ~"../../topics/hypermedia/index.html"
 @daily_kernel: ~"../conventions/daily-kernel.spw"
 @culture_field: ~"../../topics/fields/culture/index.html"
+@costuming: ~"../../holidays/costuming/index.html"
+@collection: ~"../../public/js/runtime/memory/component-collection.js"
+@fluency: ~"../../public/js/semantic/cauldron/fluency.js"
+@seed_exits: ~"../../public/js/interface/seed-exits.js"
+@geometry: ~"../../public/js/semantic/spw-expression-geometry.js"
 
 operation = "prime"
 fixity = "experimental"
@@ -112,6 +117,25 @@ expression = way[cluster]{verb.operators.slot.axis}<application>
   paths = `a season is one path among many`
   voice = `the creator writes the reflections and names their sources`
   owners = `limits live with their owners and are cited here rather than restated: data-spw-* families in CLAUDE.md, provenance in @season_rhythm, single-axis ranking in @workbench_report`
+}[reg=facet]
+
+^"octvember"{
+  practices = `costuming, ink, writing, and casting share one season: @costuming regards, the Inktober shelf keeps a daily time, November writing feeds starters, and casting gathers people into parts`
+  casting = `which casting is meant (a cast for a show, a spell cast on a walk, a role given) is for the creator to say; until then it is named and not built`
+  source = "creator, 2026-10-05: mask isn't a stable name; I wonder about costuming; there's now a cultural charge associated with medical masking; Octvember is also a time of ink, writing, casting"
+}[reg=facet]
+
+^"openings_2026_10_05"{
+  note = `directions the creator raised while the first slice was built; each is held with one probe and left unbuilt`
+  journaling = `a .spw journal is a starter fed one dated entry at a time; the editor already has a stream live template, and sibling-shape completion would offer the next line. Probe: write seven entries by hand and count the keystrokes the editor could have offered.`
+  research = `a research desk reads open wonders, unprobed claims, and precipitate deltas together, the way npm run wonder reads one corpus. Probe: list the wonders that name a starter and see whether any already has a probe that runs.`
+  perspective = `perspective develops when a page asks what stayed rather than what was learned. Probe: count the pages whose closing note names a reader position; those are where regard already works.`
+  transitions = `moving between routes or topics is an expression changing; the slot that moved between the page left and the page entered could be what the transition shows (@kinship already knows both). Probe: diff the semantic expressions of ten linked pairs and see whether one slot usually explains the move.`
+  screenshots = `a screenshot tells a story when it carries where it came from: the page expression, its way, and a date in the frame. Seed cards already have a screenshot mode (@seed_exits). Probe: capture three pages and ask a reader, from the image alone, which way each was in.`
+  geometry = `resonance through linguistic geometry: two expressions resonate when their forms, channels, operators, wake, and signature rhyme (@geometry). Probe: rank page pairs by shared geometry and compare with the pairs authors already link.`
+  acoustics = `how a construct sounds is part of its design: read aloud, and read by a screen reader, which speaks a frame sigil character by character. The six ways run two, two, one, one, two, and three syllables. Probe: run the costuming page through a screen reader and write down what each sigil says.`
+  cauldron = `the achievements in @collection count component kinds met in passing (First Sight, Collector V and X, Kind Spectrum), so none names an action a reader can repeat; @fluency reads coverage, but in operator names. Each achievement could become one repeatable act in one way: regard a page through two lenses, gather three fragments that share a subject, give a seed out, seal a card, return on a second day, find an entry made before. Clearing the cauldron stays open; the challenge is the act, stated so it can be done again.`
+  gate = `feel and pacing for transitions, screenshots, sound, and achievements end at a browser demo the creator approves`
 }[reg=facet]
 
 #>wonder_ways_season
