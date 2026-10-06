@@ -141,6 +141,16 @@
                 <p id="home-frame-note" data-spw-textual-role="lede" data-spw-copy-unit="home.hook.lede" data-spw-semantic-expression="home[hook]{software.art}(atlas)<person>">
                     This is a working atlas of my software, my art, and the practices between them, kept for wandering and for work; most visits turn out to be a little of each. Meet <a href="/about/">the person</a>, browse <a href="/topics/">the topics</a>, explore <a href="/play/">the games and stories</a>, wander through <a href="/design/folios/#release-set">the laminated folios</a>, or bring a project to <a href="/services/">the studio</a>.
                 </p>
+                <form class="spw-paste" id="home-paste" action="/tools/spw-parser/" method="get" data-paste-open="page" aria-labelledby="home-paste-label">
+                    <label class="spw-paste__title" id="home-paste-label" for="home-paste-source"><strong>Have some Spw?</strong> Paste it here to read its structure, or open a whole <code>.spw</code> file as a room.</label>
+                    <textarea class="spw-paste__field" id="home-paste-source" name="spw_source" rows="3" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="^&quot;note&quot;{ stayed = ?[&quot;what stayed&quot;] }"></textarea>
+                    <input type="hidden" name="spw_source_name" value="pasted.spw">
+                    <div class="spw-paste__exits frame-operators">
+                        <button type="submit" class="spw-chip">Read in the parser</button>
+                        <a class="spw-chip" href="/open/">Open a .spw file</a>
+                    </div>
+                    <div class="spw-paste__out" data-paste-out aria-live="polite"></div>
+                </form>
                 <p class="home-hero-note" data-spw-textual-role="note">
                     Highlighted words are <a href="#living-concepts" class="spw-living-term" data-spw-living-term data-spw-concept="living-concepts" data-spw-cauldron-candidate="true">living concepts</a> — tap to inspect, hold to prime. <a href="#living-concepts">Open the atlas</a>.
                 </p>
