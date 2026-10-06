@@ -91,6 +91,7 @@
 @inktober_items_2026_10: ~"./inktober-items-2026-10.spw"  # thirty-one October slots: official 2026 words, closes A/B/C, one ChatGPT line and one Midjourney line each, no scans yet
 @ways_2026_10: ~"./ways-2026-10.spw"  # prime: ways are calendar-free clusters of Spw applications (regard, gather, give, cross, keep time, remember), each acting on one expression slot; a season is a path through them
 @tangibility_contours_2026_10: ~"./tangibility-contours-2026-10.spw"  # prime: a research project between materials science and education; attention contours as one graphic moves from screen to print to laminated folio, and how to teach them
+@craft_shelves_2026_10: ~"./craft-shelves-2026-10.spw"  # prime: shelves of stability for craft while tools change; settling interactivity, live state expressions, one anatomy reader for breadcrumbs and rails, skill collections, traditions
 
 operation = "align"
 fixity = "tending"
@@ -164,6 +165,7 @@ fixity = "tending"
   inktober_items_2026_10 = @inktober_items_2026_10
   ways_2026_10 = @ways_2026_10
   tangibility_contours_2026_10 = @tangibility_contours_2026_10
+  craft_shelves_2026_10 = @craft_shelves_2026_10
 }[reg=facet]
 
 ^"cache_rules"{
