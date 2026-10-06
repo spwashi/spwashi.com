@@ -14,7 +14,9 @@ import {
   readSignals,
   rerunCommand,
   slowestTests,
+  failingTestFiles,
   stageHeadline,
+  testFailureExcerpt,
   trimHistory,
   warningId,
 } from '../lib/check-signals.mjs';
@@ -138,4 +140,37 @@ test('a window of runs reads as one picture for a director', () => {
   assert.ok(lines.includes('[check:signals] standing 3 run(s) since 2026-10-01: a, in words'));
   assert.ok(lines.includes('[check:signals] standing 2 run(s) since 2026-10-02: b'));
   assert.deepEqual(formatDigest(digestHistory([])), ['[check:signals] no history yet: run npm run check:local']);
+});
+
+test('a failed test stage shows its count and the failing section, not the runner frames', () => {
+  const output = [
+    '✔ holds (0.4ms)',
+    'ℹ tests 2',
+    'ℹ fail 1',
+    '✖ failing tests:',
+    '',
+    'test at scripts/tests/x.test.mjs:4:1',
+    '✖ breaks (1.9ms)',
+    '  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:',
+    '      at TestContext.<anonymous> (file:///repo/scripts/tests/x.test.mjs:4:29)',
+    '      at Test.runInAsyncScope (node:async_hooks:211:14)',
+    '      at Test.run (node:internal/test_runner/test:934:25)',
+    '      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:297:3) {',
+  ].join('\n');
+  assert.deepEqual(testFailureExcerpt(output), [
+    'ℹ tests 2 · fail 1',
+    '✖ failing tests:',
+    '',
+    'test at scripts/tests/x.test.mjs:4:1',
+    '✖ breaks (1.9ms)',
+    '  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:',
+    '      at TestContext.<anonymous> (file:///repo/scripts/tests/x.test.mjs:4:29)',
+    '      at Test.runInAsyncScope (node:async_hooks:211:14)',
+  ]);
+  assert.deepEqual(testFailureExcerpt('Error: cannot find module'), ['Error: cannot find module']);
+});
+
+test('the failing section names the files to rerun, once each', () => {
+  const output = 'test at scripts/tests/a.test.mjs:4:1\n✖ one\ntest at scripts/tests/a.test.mjs:9:1\n✖ two\ntest at scripts/tests/b.test.mjs:2:1';
+  assert.deepEqual(failingTestFiles(output), ['scripts/tests/a.test.mjs', 'scripts/tests/b.test.mjs']);
 });

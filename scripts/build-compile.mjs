@@ -25,7 +25,7 @@ import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
-import { rerunCommand, stageHeadline } from './lib/check-signals.mjs';
+import { failingTestFiles, rerunCommand, stageHeadline, testFailureExcerpt } from './lib/check-signals.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const STAMP_DIR = path.join(ROOT, '.tmp', 'tsc');
@@ -283,11 +283,17 @@ export function reportStages(prefix, results, { verbose = isVerboseRun() } = {})
     const cacheMark = cache ? ' cache' : '';
     console.log(`[${prefix}] ${label} ${status === 0 ? 'ok' : 'FAILED'} ${(ms / 1000).toFixed(2)}s${cacheMark}`);
     if (output && output.trim()) {
-      const lines = verbose || status !== 0 ? [output.trimEnd()] : stageHeadline(output, headline);
+      let lines;
+      if (verbose) lines = [output.trimEnd()];
+      else if (status === 0) lines = stageHeadline(output, headline);
+      else lines = headline?.tests ? testFailureExcerpt(output) : [output.trimEnd()];
       if (lines.length) console.log(lines.join('\n'));
     }
     const rerun = status !== 0 ? rerunCommand(result) : null;
     if (rerun) console.log(`[${prefix}] rerun ${label} alone: ${rerun}`);
+    // A test stage that knows how its files run can name the one file to rerun.
+    const files = status !== 0 && headline?.fileCommand ? failingTestFiles(output) : [];
+    if (files.length) console.log(`[${prefix}] rerun the failing file(s): ${rerunCommand({ command: [...headline.fileCommand, ...files] })}`);
   }
   return results.filter((result) => result.status !== 0);
 }
