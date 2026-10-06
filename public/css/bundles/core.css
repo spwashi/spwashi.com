@@ -12125,6 +12125,27 @@ html[data-spw-page-arrival="entering"] :where(.spw-frame, [data-spw-kind="frame"
 body[aria-busy="true"] {
   cursor: progress;
 }
+
+/* Scripts never ran. The pre-paint script stamps data-spw-runtime-stage on
+   <html> before <body> parses, so a scripted visit never matches below. A
+   lens is a set of panels a script switches between; without scripts every
+   panel stays open (in its own authored display; block only beats the
+   browser's [hidden], and runtime-states.css steps its [hidden] rule aside)
+   and the switch, which nothing would answer, is not offered. !important as
+   in capture.css: a page mode governs later layers. */
+html:not([data-spw-runtime-stage]) :is(.mode-panel, [data-mode-panel])[hidden] {
+  display: block;
+}
+
+/* A panel fills its lens's one slot (min-height: 100% from the card rule);
+   stacked, each would claim the whole slot and spill past the section. */
+html:not([data-spw-runtime-stage]) :is(.mode-panel, [data-mode-panel]) {
+  min-block-size: auto !important;
+}
+
+html:not([data-spw-runtime-stage]) :is(.mode-switch:has([data-set-mode]), [data-set-mode]) {
+  display: none !important;
+}
 }
 
 /* /public/css/modes/capture.css */
@@ -22122,8 +22143,8 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
    hidden lens panel still paints, so tapping Study/Build/Play looks like a
    no-op. Do not wrap [hidden] in :where(). Topics lanes and other hosts use
    [data-mode-panel] without .mode-panel. */
-.mode-panel[hidden],
-[data-mode-panel][hidden] {
+:where(html[data-spw-runtime-stage]) .mode-panel[hidden],
+:where(html[data-spw-runtime-stage]) [data-mode-panel][hidden] {
   display: none;
 }
 
@@ -28113,7 +28134,9 @@ html[data-spw-site-rhythm-authority="runtime"] {
    26. Accessibility and visibility
    ========================================================================== */
 
-:where([hidden]) {
+/* Except a lens panel when scripts never ran: nothing could open it, so it
+   stays open (modes/hydration.css). */
+:where([hidden]):not(:where(html:not([data-spw-runtime-stage]) :is(.mode-panel, [data-mode-panel]))) {
   display: none !important;
 }
 
@@ -42191,9 +42214,10 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
 
 /* Hidden panels: handles outranks routes. Topics lanes set display:grid in
    the routes layer, which beats the components-layer display:none. Do not
-   wrap [hidden] in :where(). */
-.mode-panel[hidden],
-[data-mode-panel][hidden] {
+   wrap [hidden] in :where(). Only once scripts run (modes/hydration.css):
+   without them, nothing could open a hidden panel. */
+:where(html[data-spw-runtime-stage]) .mode-panel[hidden],
+:where(html[data-spw-runtime-stage]) [data-mode-panel][hidden] {
   display: none;
 }
 

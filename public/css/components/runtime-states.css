@@ -1132,7 +1132,9 @@ html[data-spw-site-rhythm-authority="runtime"] {
    26. Accessibility and visibility
    ========================================================================== */
 
-:where([hidden]) {
+/* Except a lens panel when scripts never ran: nothing could open it, so it
+   stays open (modes/hydration.css). */
+:where([hidden]):not(:where(html:not([data-spw-runtime-stage]) :is(.mode-panel, [data-mode-panel]))) {
   display: none !important;
 }
 
