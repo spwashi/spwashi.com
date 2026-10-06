@@ -426,9 +426,14 @@ export function unmountChargeField() {
   }
 }
 
+// PHASE_INTENSITY is read through getters, not while this module loads. The
+// deploy build puts this file in a pack and its contract in the chunk that
+// imports the pack, so the two chunks import each other and this one runs
+// first. Reading the import at load time threw "Cannot access before
+// initialization", and the module never mounted in a built site.
 export const SPW_CHARGE_FIELD_CONTRACT = Object.freeze({
-  phases: Object.freeze(Object.keys(PHASE_INTENSITY)),
-  phaseIntensity: PHASE_INTENSITY,
+  get phases() { return Object.freeze(Object.keys(PHASE_INTENSITY)); },
+  get phaseIntensity() { return PHASE_INTENSITY; },
   operatorDischarge: OPERATOR_DISCHARGE,
   readoutKeys: READOUT_KEYS,
   rewardProperties: RELATION_STYLE_PROPERTIES,
