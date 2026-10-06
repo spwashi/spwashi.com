@@ -1,0 +1,54 @@
+name: Built site modules
+
+# The deploy bundle packs catalog modules into chunks that import each other.
+# A module can then fail to load in dist/ and nowhere else. This builds dist/
+# and loads every catalog module from it (npm run check:built).
+# It runs when a push changes what decides the bundle's shape: the lockfile,
+# the build scripts, or the module catalog. Other pushes wait for the morning
+# Drift notice, which runs the same check.
+# It reports. It does not stand between a push and Pages.
+on:
+  push:
+    branches: [main]
+    paths:
+      - package-lock.json
+      - scripts/build.mjs
+      - scripts/ts/build/**
+      - scripts/typed/build/**
+      - public/js/runtime/catalog/**
+      - scripts/check-built-modules.mjs
+      - .github/workflows/built-modules.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: built-modules
+  cancel-in-progress: true
+
+jobs:
+  built-modules:
+    name: Every catalog module loads from dist
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Commit under test
+        run: git rev-parse HEAD && git log -1 --oneline
+      - name: Build the deploy artifact
+        run: npm run build
+      - name: Load every catalog module
+        run: npm run check:built -- --receipt built-receipt.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: built-modules
+          path: built-receipt.json
+          if-no-files-found: ignore
+          retention-days: 14

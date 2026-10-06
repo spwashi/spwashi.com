@@ -13,6 +13,8 @@ name: Drift notice
 # Readings use a closed vocabulary. A missed prepare is step-not-landed.
 # A light model reads that file. It follows the commit Deploy just judged,
 # and runs again each morning so a day with no push still gets a look.
+# The morning run also builds dist/ and loads every catalog module from it.
+# built-modules.yml does the same on a push that changes the bundle's shape.
 on:
   schedule:
     - cron: '17 9 * * *'
@@ -184,9 +186,35 @@ jobs:
           if-no-files-found: ignore
           retention-days: 14
 
+  built-modules:
+    name: Built site modules
+    if: github.event_name != 'workflow_run'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Commit under test
+        run: git rev-parse HEAD && git log -1 --oneline
+      - name: Build the deploy artifact
+        run: npm run build
+      - name: Every catalog module loads from dist
+        run: npm run check:built -- --receipt built-receipt.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: drift-built
+          path: built-receipt.json
+          if-no-files-found: ignore
+          retention-days: 14
+
   notice:
     name: Notice
-    needs: [browser-smoke, citations, dependencies, attention]
+    needs: [browser-smoke, citations, dependencies, attention, built-modules]
     if: always() && (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion != 'cancelled')
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -211,6 +239,7 @@ jobs:
             --audit receipts/drift-audit/audit-receipt.json \
             --attention receipts/drift-attention/attention-receipt.json \
             --month receipts/drift-attention/month-receipt.json \
+            --built receipts/drift-built/built-receipt.json \
             --subjects subjects.txt
       - uses: actions/upload-artifact@v4
         if: always()
