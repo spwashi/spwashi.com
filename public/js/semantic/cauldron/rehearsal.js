@@ -107,6 +107,13 @@ export function recordEncounter(construct, now = Date.now()) {
   return { construct, kind: spaced ? 'rehearsal' : 'massed', interval, spaced: ledger[construct].spaced };
 }
 
+/** The ledger record for one construct, or null: first, last, met, spaced. */
+export function readEncounter(construct) {
+  if (!construct) return null;
+  const record = readLedger()[construct];
+  return record && typeof record === 'object' ? { ...record } : null;
+}
+
 /** What one construct can currently hold, given what has been rehearsed. */
 export function solubilityOf(construct) {
   const record = readLedger()[construct];
