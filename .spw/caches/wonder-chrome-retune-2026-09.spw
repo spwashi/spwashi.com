@@ -229,6 +229,20 @@ expression = retune[wonder]{settings.footer.nav.satchel}<altitudes>
   rule_candidate = `structural: updates keep authored values (missingOnly) unless the module's describes line says it resolves a conflict. Promote to @composition_box_model or dom-contracts PROJECTION_TIERS once the census confirms the second instance.`
 }[reg=facet]
 
+^"wr-017_chrome_that_pays_to_learn"{
+  id = "wr-017"
+  operation = "prime"
+  fixity = "experimental"
+  source = "creator, 2026-10-05: the floating chrome is prominent but not yet intuitive, and learning it does not feel rewarding along the axes of utility now in view; the state satchel is too symmetric to read and should become a Spw expression or pill, perhaps a complex operator, more of an inspection lens or kaleidoscope for latent fragments, shards, and snippets and the textures loaded modules or renderers afford, with module loading, unloading, or dependency UX behind an advanced flag; the bottom rail could describe regional and aspirational state; the cauldron achievements could describe progression along authored or generated curricula across layers of semantics or pragmatics, and its n compose could be a Spw expression"
+  rule = `each chrome control names the way it serves and the axis a reader gains by learning it (.spw/caches/ways-2026-10.spw); a control that cannot name both is ornament, and ornament stays quiet`
+  satchel = `wr-005 keeps the patch bay; the direction changes: the satchel becomes a lens, written as one expression pill (a compound operator such as @~ for regarding what is latent), asymmetric in the way the home lens switcher now is, that turns latent fragments, shards, and snippets through whatever renderers the page has loaded. The paste reader in modules/tools/spw-paste.js is the first renderer it could borrow.`
+  modules = `an advanced flag on /settings/ shows which modules are loaded, what each depends on, and lets a reader unload or wake one; the module catalog and the runtime atlas at /design/runtime/ already hold the facts`
+  rail = `the bottom rail says where the reader is (the region in view) and where they are heading (the intent they set with a lens, read as an operator per intent-across-pages); it stops repeating the header`
+  cauldron = `achievements become repeatable acts, one per way (regard a page through two lenses, gather three fragments that share a subject, give a seed out, seal a card, return on a second day, find an entry made before), and progression reads along a curriculum, authored or generated, across the semantic and pragmatic layers .spw surfaces already declare; the n compose count becomes the expression the mix makes, such as cauldron[compose]{a.b.c}<mix>`
+  probe = `count the floating controls on home and settings, and for each write its way and axis; count the achievements that name an act a reader can repeat today (expected: none of the eleven in component-collection.js)`
+  gate = `each piece ends at a browser demo the creator approves before it replaces what ships`
+}[reg=facet]
+
 validation: #[
   `node --import ./scripts/tests/setup-dom-globals.mjs --import ./scripts/tests/register-public-imports.mjs --test scripts/tests/composition-flow-authored.test.mjs`
   `npm run sense -- copy`
