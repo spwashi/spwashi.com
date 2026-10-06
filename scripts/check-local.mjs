@@ -34,10 +34,10 @@ import process from 'node:process';
 
 import { isVerboseRun, reportStages, runCommand, runCompile } from './build-compile.mjs';
 import { MODULE_TEST_IMPORTS } from './module-tests.mjs';
+import { formatComparison, formatVerdict, styleForStream } from './lib/check-format.mjs';
 import {
   RECEIPT_SCHEMA,
   compareRuns,
-  formatComparison,
   historyEntry,
   readSignals,
   rerunCommand,
@@ -168,18 +168,26 @@ function finish(verdict, failedAt = null) {
   } catch (error) {
     console.log(`[check:local] could not write the receipt: ${error.message}`);
   }
-  return { tree, lines: formatComparison(comparison) };
+  return { tree, lines: formatComparison(comparison, { style }) };
 }
 
-const describeTree = (tree) => (tree.sha ? ` on ${tree.sha.slice(0, 8)}${tree.dirty.count ? ` +${tree.dirty.count} uncommitted` : ''}` : '');
+const style = styleForStream();
 
 function bail(prefix, results) {
   logged.push(...results.map((result) => ({ prefix, ...result })));
-  const failed = reportStages(prefix, results, { verbose });
+  const failed = reportStages(prefix, results, { verbose, style });
   if (!failed.length) return;
   const { tree, lines } = finish('failed', prefix);
-  for (const line of lines) console.log(line);
-  console.log(`[check:local] failed at ${prefix}${describeTree(tree)}: ${failed.map((result) => result.label).join(', ')}; receipt ${shown(receiptFile)}`);
+  console.log([...lines, ...formatVerdict({
+    passed: false,
+    ms: Date.now() - started,
+    tree,
+    failedAt: prefix,
+    failed: failed.map((result) => result.label),
+    log: shown(logFile),
+    receipt: shown(receiptFile),
+    verbose,
+  }, { style })].join('\n'));
   process.exit(1);
 }
 
@@ -208,6 +216,11 @@ if (cssResult) bail('css', [cssResult]);
 bail('validate', await runWave(VALIDATORS, serial ? 1 : Math.max(2, availableParallelism() - 1)));
 
 const { tree, lines } = finish('passed');
-for (const line of lines) console.log(line);
-const where = verbose ? '' : `; full text ${shown(logFile)}, receipt ${shown(receiptFile)}`;
-console.log(`[check:local] passed ${((Date.now() - started) / 1000).toFixed(2)}s${describeTree(tree)}${where}`);
+console.log([...lines, ...formatVerdict({
+  passed: true,
+  ms: Date.now() - started,
+  tree,
+  log: shown(logFile),
+  receipt: shown(receiptFile),
+  verbose,
+}, { style })].join('\n'));

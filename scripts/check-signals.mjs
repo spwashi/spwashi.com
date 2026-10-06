@@ -16,7 +16,8 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 
-import { digestHistory, formatDigest } from './lib/check-signals.mjs';
+import { formatDigest, styleForStream } from './lib/check-format.mjs';
+import { digestHistory } from './lib/check-signals.mjs';
 
 const args = process.argv.slice(2);
 const flag = (name) => {
@@ -34,4 +35,4 @@ const last = Number(flag('--last')) || 0;
 if (last > 0) entries = entries.slice(-last);
 const digest = digestHistory(entries);
 if (args.includes('--json')) process.stdout.write(`${JSON.stringify(digest, null, 2)}\n`);
-else process.stdout.write(`${formatDigest(digest).join('\n')}\n`);
+else process.stdout.write(`${formatDigest(digest, { style: styleForStream() }).join('\n')}\n`);
