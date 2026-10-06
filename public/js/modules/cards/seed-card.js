@@ -96,10 +96,10 @@ export const SEED_TEMPLATES = {
     pinned: true,
     fields: [
       { key: 'appeared',  op: '@', label: 'who you appeared as', placeholder: 'a figure, a character, a name', hint: 'The figure, character, or name. A costume, a character, a voice.' },
+      { key: 'affirms',   op: '^', label: 'what it affirms', placeholder: 'what the costume says yes to', hint: 'What the costume says yes to: a self you are growing into, a value, a joy. Name it plainly.' },
       { key: 'source',    op: '~', label: 'where you met it, who taught it', placeholder: 'where it came from', hint: 'Where the costume or the practice came from, and what is not yours to claim.' },
-      { key: 'said',      op: '^', label: 'what it let you say', placeholder: 'what you said or made', hint: 'What you said or made that you would not have otherwise.' },
       { key: 'stayed',    op: '.', label: 'what stayed', placeholder: 'what remained after the night', hint: 'What remained after the night. It may be more than you expected.' },
-      { key: 'revisit',   op: '?[', label: 'revisit', placeholder: 'when to look at this again', hint: 'When to look at this again.' },
+      { key: 'learning',  op: '?[', label: 'what you are still learning', placeholder: 'what you are still working out', hint: 'Change is a practice. Name what you are still working out, and when you will look again.' },
     ],
   },
 };
