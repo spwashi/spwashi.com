@@ -40,11 +40,13 @@ only adds *resolution*: does the path exist, and does the `#fragment` name
 anything in the target. All 2480 citations currently resolve.
 
 **Known workbench gaps** (this consumer is a use case the workbench predates).
-Pin `3eaab6377672`. Details: `.spw/workbench-report.spw`.
+Pin `229aedcf9b6f`. Details: `.spw/workbench-report.spw`.
 
-Landed on this pin: a valence modifier chain stays on the expression
-(`boon.honk` rides the noun; the five words stay modifiers). Still
-present from `14b4b47763aa`: `spw resolve`, `spw lint`, `spw fingerprint`,
+Landed on this pin: `spw resolve` tries the citing file's directory, then
+the consumer root, in the language server's order, and names the base that
+resolved each target. From `3eaab6377672`: a valence modifier chain stays on
+the expression (`boon.honk` rides the noun; the five words stay modifiers).
+Still present from `14b4b47763aa`: `spw resolve`, `spw lint`, `spw fingerprint`,
 default walk isolation (`_workbench` skipped; `--include-infrastructure`
 opts in), `spw query --stats`, lattice `~#name:` as a colon species,
 `~>` as one project-join token.
