@@ -59,6 +59,7 @@ fixity = "stable"
   opener_rule = `Home and about already lead with "I'm Spwashi. I build software and make art." Neighbor landings may keep the rooms-as-map lede if that sentence is visible in the same fold.`
   gloss_rule = `Boonhonk, cauldron, lattice, pretext, semantic resonance: wrap first use in a living term or define in the same block. A definition block whose copy-unit cluster is the term is the gloss.`
   refuse = `Do not add data-spw-voice or data-spw-tone. Do not split a lede into i18n fragments to "fix" density.`
+  tone_in_expression = `Tone is read from the expression. The English tokens of an expression carry their valence as written, so the posture of a host is the mode slot of its data-spw-semantic-expression, led by any boonhonk charge (creator, 2026-10-06). The runtime reads it with semantic/expression-tone.js and writes no tone attribute. A host that needs a tone gets an expression whose words say it.`
 }[reg=facet]
 
 ^"audience_states"{

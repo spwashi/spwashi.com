@@ -7,6 +7,7 @@ import {
   anatomyToken as normalizeToken,
   collapseText as normalizeText,
 } from '/public/js/kernel/text-normalization.js';
+import { expressionTone, readElementTone } from '/public/js/semantic/expression-tone.js';
 
 const ANATOMY_SELECTOR = '[data-spw-anatomy]';
 const INTERACTIVE_SELECTOR = 'a[href], button, input, select, textarea, summary, [role="button"], [tabindex]';
@@ -759,7 +760,7 @@ function collectPublisherSignals(root = document) {
       disclosure: element.dataset.spwDisclosure || '',
       timing: element.dataset.spwComedicTiming || '',
       affordance: element.dataset.spwSpatialAffordance || '',
-      tone: element.dataset.spwInlineTone || element.dataset.spwTone || '',
+      tone: element.dataset.spwInlineTone || readElementTone(element),
       label: readElementLabel(element),
       path: describeElementPath(element),
     }));
@@ -789,7 +790,7 @@ export function buildPageAnatomySnapshot(root = document) {
     publisher: {
       audience: body?.dataset?.spwAudience || '',
       disclosure: body?.dataset?.spwDisclosure || '',
-      tone: body?.dataset?.spwTone || '',
+      tone: expressionTone(body?.dataset?.spwSemanticExpression || ''),
       signals: collectPublisherSignals(root),
     },
     relatedRoutes: getRelatedRoutes().slice(0, 12),

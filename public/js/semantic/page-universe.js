@@ -30,6 +30,7 @@
 
 import { bus } from '/public/js/kernel/bus.js';
 import { collapseText as cleanText } from '/public/js/kernel/text-normalization.js';
+import { expressionTone, readElementTone } from '/public/js/semantic/expression-tone.js';
 
 const GESTURE_VOCABULARY = {
     tap:        'charge — begins accumulation on the target',
@@ -126,7 +127,7 @@ function getPublisherSignals() {
         disclosure: el.dataset.spwDisclosure || '',
         timing: el.dataset.spwComedicTiming || '',
         affordance: el.dataset.spwSpatialAffordance || '',
-        tone: el.dataset.spwInlineTone || el.dataset.spwTone || '',
+        tone: el.dataset.spwInlineTone || readElementTone(el),
         label: cleanText(el.dataset.spwLabel || el.getAttribute('aria-label') || el.textContent || '').slice(0, 160),
         section: el.closest('[id]')?.id || '',
     }));
@@ -136,7 +137,7 @@ function getPublisherProfile() {
     return {
         audience: document.body.dataset.spwAudience || '',
         disclosure: document.body.dataset.spwDisclosure || '',
-        tone: document.body.dataset.spwTone || '',
+        tone: expressionTone(document.body.dataset.spwSemanticExpression || ''),
         readingPosture: document.documentElement.dataset.spwExplorePosture || 'reading',
         popupPosture: document.documentElement.dataset.spwPopupPosture || document.documentElement.dataset.spwInteractionTuner || 'calm',
         paletteTrace: document.documentElement.dataset.spwPaletteTraceRecent || '',

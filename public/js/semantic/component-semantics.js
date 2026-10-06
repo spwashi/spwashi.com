@@ -55,6 +55,7 @@ import {
 } from '/public/js/semantic/semantic-braces.js';
 import { describeRelationship } from '/public/js/semantic/component-relationships.js';
 import { inferComponentRole } from '/public/js/semantic/role-inference.js';
+import { expressionTone } from '/public/js/semantic/expression-tone.js';
 
 const DEFAULT_SELECTOR = COMPONENT_SELECTOR;
 
@@ -510,7 +511,7 @@ function inferFunctionalContract(el, snapshotBase = {}) {
     || ''
   );
   const tone = normalizeText(
-    el.dataset.spwTone
+    expressionTone(el.dataset.spwSemanticExpression || '')
     || el.dataset.spwContext
     || snapshotBase.context
     || ''
@@ -759,7 +760,6 @@ function applySemanticSnapshot(el, snapshot, options = {}) {
   if (snapshot.input) writer(el, 'spwInput', snapshot.input);
   if (snapshot.operation) writer(el, 'spwOperation', snapshot.operation);
   if (snapshot.returnValue) writer(el, 'spwReturn', snapshot.returnValue);
-  if (snapshot.tone) writer(el, 'spwTone', snapshot.tone);
   if (snapshot.signature) writer(el, 'spwSignature', snapshot.signature);
   if (snapshot.semanticBrace?.expression) writer(el, 'spwSemanticExpression', snapshot.semanticBrace.expression);
   if (snapshot.semanticBrace?.key) writer(el, 'spwSemanticKey', snapshot.semanticBrace.key);

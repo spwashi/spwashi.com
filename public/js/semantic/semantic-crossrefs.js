@@ -2,6 +2,7 @@ import { bus } from '/public/js/kernel/bus.js';
 import { writeDatasetValue } from '/public/js/kernel/dom-contracts.js';
 import { deriveSemanticBraceExpression } from '/public/js/semantic/semantic-braces.js';
 import { humanizeToken, normalizeText, normalizeToken, unique } from '/public/js/semantic/semantic-utils.js';
+import { readElementTone } from '/public/js/semantic/expression-tone.js';
 
 const DEFAULT_SELECTOR = [
   '[data-spw-semantic-cluster]',
@@ -49,7 +50,7 @@ function getElementTokens(el) {
     normalizeToken(el.dataset.spwInput || ''),
     normalizeToken(el.dataset.spwOperation || ''),
     normalizeToken(el.dataset.spwReturn || ''),
-    normalizeToken(el.dataset.spwTone || ''),
+    normalizeToken(readElementTone(el)),
     getTopicToken(el),
   ];
 
@@ -73,7 +74,7 @@ function describeElement(el, tokens) {
     input: normalizeText(el.dataset.spwInput || ''),
     operation: normalizeText(el.dataset.spwOperation || ''),
     returnValue: normalizeText(el.dataset.spwReturn || ''),
-    tone: normalizeText(el.dataset.spwTone || ''),
+    tone: normalizeText(readElementTone(el)),
     signature: normalizeText(el.dataset.spwSignature || ''),
     tokens,
   };
