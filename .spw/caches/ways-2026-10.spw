@@ -20,6 +20,7 @@
 @blog_starter: ~"../../.agents/plans/blog-blob-spw/blog-blob-spw.spw"
 @hypermedia: ~"../../topics/hypermedia/index.html"
 @daily_kernel: ~"../conventions/daily-kernel.spw"
+@culture_field: ~"../../topics/fields/culture/index.html"
 
 operation = "prime"
 fixity = "experimental"
@@ -96,7 +97,7 @@ expression = way[cluster]{verb.operators.slot.axis}<application>
 
 ^"applications"{
   holidays = `mask applies regard; gift applies give; the almanac applies keep time; /newyear/ applies cross; a long table would apply gather and is not built. Festivity routes are children of /holidays/ (@holidays).`
-  culture = `/topics/fields/culture/ sorts traditions met by the six ways. Each reflection names where it was met, who taught it, and what is not mine to claim.`
+  culture = `@culture_field sorts traditions met by the six ways. Each reflection names where it was met, who taught it, and what is not mine to claim.`
   starters = `a blog starter is fed with dated stream entries; an entry may record which slot moved, so the weave can show one expression across a season (@blog_starter)`
   kinship = `pages carry way[verb]{…}<…> in data-spw-semantic-expression, and @kinship groups them by subject and mode with no new attribute. move[…] stays with @hypermedia, where it names single-operator moves.`
   intent = `probe: how many of the 62 authored lens mode names fall onto the six ways; if most do, a way is the operator-shaped intent a rail can carry from page to page`
