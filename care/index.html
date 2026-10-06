@@ -6,7 +6,7 @@
     og_description="Cards for people I already know to reflect, revisit a conversation, and choose what to share next."
     og_image="https://spwashi.com/public/images/assets/folios/folio-factshift-cabinet-hero.webp"
     og_image_alt="A cabinet of ink drawers and slots washed in pink and sea green, with factshift.com lettered small."
-    keywords="care interface, therapy prep, engineers, CBT, peer support, local-first journaling, mental health language, AI safety, community protocols"
+    keywords="care interface, therapeutic practices, engineers, peer support, local-first journaling, language for feelings, AI safety, community protocols"
     breadcrumb_label="Care Interface"
     header_current="Care Interface"
     header_current_href="/care/"
@@ -66,6 +66,7 @@
                     <p>I offer software and art as a service. When the work is personal, or the client is public, the brief stays small: what they need to know, not a story for the web. People in my family who counsel are not listed here and will not be.</p>
                     <p>If you are in crisis in the United States, call or text <strong>988</strong>. That is a different door from this page.</p>
                     <nav class="frame-operators" aria-label="Care interface sections">
+                        <a class="spw-chip" data-spw-handle="true" href="#name-it" data-spw-operator="binding">=name_it</a>
                         <a class="spw-chip" data-spw-handle="true" href="#model" data-spw-operator="frame" data-spw-action="address">#&gt;model</a>
                         <a class="spw-chip" data-spw-handle="true" href="#stabilize-first" data-spw-operator="action" data-spw-action="apply">!stabilize</a>
                         <a class="spw-chip" data-spw-handle="true" href="#engineers" data-spw-operator="integration" data-spw-action="publish">^engineers</a>
@@ -82,6 +83,86 @@
                         <span>Care can start as a holding pattern: name the signal, store the fragment, and reach for the next drawer only when it is safe.</span>
                     </figcaption>
                 </figure>
+            </section>
+
+            <section class="spw-frame" id="name-it" aria-labelledby="name-it-title" data-spw-kind="frame" data-spw-role="vessel" data-spw-context="reflection" data-spw-wonder="translation consequence locality" data-spw-affordance="act" data-spw-liminality="threshold" data-spw-region="practice" data-spw-form="brace" data-spw-semantic-expression="care[handle]{state.practice.toward.witness}&lt;form&gt;">
+                <header class="frame-heading" data-spw-slot="header">
+                    <a class="frame-sigil" href="#name-it" data-spw-operator="binding">=name_it</a>
+                    <h2 id="name-it-title">Give a feeling a handle</h2>
+                </header>
+                <p id="care-handle-lede" data-spw-textual-role="lede" data-spw-copy-unit="care.handle.lede" data-spw-semantic-expression="care[handle]{choose.fill.say.type}&lt;form&gt;">Four choices. They fill one Spw expression, a line you could say out loud, and a name you could type every day. Nothing here is saved or sent.</p>
+                <div class="care-handle" data-care-handle data-spw-semantic-expression="?unsure[notice]&lt;myself&gt;">
+                    <form class="care-handle__form" aria-describedby="care-handle-lede">
+                        <fieldset class="care-handle__row">
+                            <legend><b>subject</b> · the state, in the smallest honest word</legend>
+                            <div class="care-handle__choices">
+                                <label class="care-handle__choice"><input type="radio" name="care-state" value="unsure" checked><span>unsure</span></label>
+                                <label class="care-handle__choice"><input type="radio" name="care-state" value="overloaded"><span>overloaded</span></label>
+                                <label class="care-handle__choice"><input type="radio" name="care-state" value="activated"><span>activated</span></label>
+                                <label class="care-handle__choice"><input type="radio" name="care-state" value="disconnected"><span>disconnected</span></label>
+                                <label class="care-handle__choice"><input type="radio" name="care-state" value="confused"><span>confused</span></label>
+                                <label class="care-handle__choice"><input type="radio" name="care-state" value="angry"><span>angry</span></label>
+                                <label class="care-handle__choice"><input type="radio" name="care-state" value="ashamed"><span>ashamed</span></label>
+                            </div>
+                            <label class="care-handle__own">or your own word<input type="text" name="care-state-own" maxlength="48" autocomplete="off"></label>
+                        </fieldset>
+                        <fieldset class="care-handle__row">
+                            <legend><b>[mode]</b> · the practice</legend>
+                            <div class="care-handle__choices">
+                                <label class="care-handle__choice"><input type="radio" name="care-practice" value="notice" checked><span>? notice</span></label>
+                                <label class="care-handle__choice"><input type="radio" name="care-practice" value="name"><span>= name</span></label>
+                                <label class="care-handle__choice"><input type="radio" name="care-practice" value="hold"><span>~ hold</span></label>
+                                <label class="care-handle__choice"><input type="radio" name="care-practice" value="share"><span>@ share</span></label>
+                                <label class="care-handle__choice"><input type="radio" name="care-practice" value="practice"><span>! practice</span></label>
+                                <label class="care-handle__choice"><input type="radio" name="care-practice" value="rest"><span>. rest</span></label>
+                            </div>
+                        </fieldset>
+                        <fieldset class="care-handle__row">
+                            <legend><b>{direction}</b> · where it is heading, if there is a word</legend>
+                            <div class="care-handle__choices">
+                                <label class="care-handle__choice"><input type="radio" name="care-toward" value="" checked><span>no word yet</span></label>
+                                <label class="care-handle__choice"><input type="radio" name="care-toward" value="steady"><span>steady</span></label>
+                                <label class="care-handle__choice"><input type="radio" name="care-toward" value="curious"><span>curious</span></label>
+                                <label class="care-handle__choice"><input type="radio" name="care-toward" value="rested"><span>rested</span></label>
+                                <label class="care-handle__choice"><input type="radio" name="care-toward" value="clear"><span>clear</span></label>
+                                <label class="care-handle__choice"><input type="radio" name="care-toward" value="connected"><span>connected</span></label>
+                            </div>
+                            <label class="care-handle__own">or your own word<input type="text" name="care-toward-own" maxlength="48" autocomplete="off"></label>
+                        </fieldset>
+                        <fieldset class="care-handle__row">
+                            <legend><b>&lt;projection&gt;</b> · who it is for</legend>
+                            <div class="care-handle__choices">
+                                <label class="care-handle__choice"><input type="radio" name="care-witness" value="myself" checked><span>myself</span></label>
+                                <label class="care-handle__choice"><input type="radio" name="care-witness" value="friend"><span>a friend</span></label>
+                                <label class="care-handle__choice"><input type="radio" name="care-witness" value="group"><span>a group</span></label>
+                                <label class="care-handle__choice"><input type="radio" name="care-witness" value="professional"><span>a professional</span></label>
+                            </div>
+                        </fieldset>
+                        <label class="care-handle__own">one small step, if you have one<input type="text" name="care-step" maxlength="80" autocomplete="off"></label>
+                        <p><button class="spw-chip" data-spw-handle="true" type="reset" data-spw-operator="ground">.clear</button></p>
+                    </form>
+                    <div class="care-handle__card" role="group" aria-label="The three forms" aria-live="polite">
+                        <div>
+                            <p class="care-handle__form-label">Handle</p>
+                            <p class="care-handle__expression"><span class="care-handle__prefix" data-care-handle-prefix data-spw-operator="wonder">?</span><span data-care-handle-body>unsure[notice]&lt;myself&gt;</span></p>
+                        </div>
+                        <div>
+                            <p class="care-handle__form-label">A line to say</p>
+                            <p class="care-handle__sentence" data-care-handle-sentence>Note to self: I am noticing that I feel unsure.</p>
+                        </div>
+                        <div>
+                            <p class="care-handle__form-label">A name to type</p>
+                            <p class="care-handle__name"><code data-care-handle-name>unsure-notice</code></p>
+                        </div>
+                        <div class="care-handle__actions">
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-care-handle-copy="expression" data-spw-operator="potential">~copy handle</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-care-handle-copy="sentence" data-spw-operator="potential">~copy line</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-care-handle-copy="name" data-spw-operator="potential">~copy name</button>
+                            <button class="spw-chip" data-spw-handle="true" type="button" data-care-handle-copy="all" data-spw-operator="integration">^copy all three</button>
+                        </div>
+                    </div>
+                </div>
+                <p data-spw-textual-role="note">The name is here because we type the names we choose for years: a branch, a folder, a package. A name can be an affirmation.</p>
             </section>
 
             <section class="spw-frame" id="stabilize-first" data-spw-role="re-entry" data-spw-kind="frame" data-spw-context="reflection" data-spw-wonder="translation consequence locality" data-spw-affordance="revisit" data-spw-liminality="threshold" data-spw-region="path" data-spw-category-family="protocol" data-spw-feature="stabilize-first" data-spw-seed="page_care__stabilize_first">
@@ -101,7 +182,7 @@
                     </article>
                     <article class="spw-panel">
                         <h3>Choose the witness</h3>
-                        <p>Decide whether this belongs with yourself, a trusted person, a group, a therapist, or immediate crisis support.</p>
+                        <p>Decide whether this belongs with yourself, a trusted person, a group, a professional, or immediate crisis support.</p>
                     </article>
                     <article class="spw-panel">
                         <h3>Leave a local record</h3>
@@ -166,8 +247,8 @@
                     <div class="spw-panel"><h3>1. Notice</h3><p>What is happening? Start with the observable parts: situation, body state, repeated thought, behavior, and context.</p></div>
                     <div class="spw-panel"><h3>2. Name</h3><p>Which language helps without flattening the experience? Algorithms, family systems, grief, faith, workplace incentives, and nervous-system words can all be useful.</p></div>
                     <div class="spw-panel"><h3>3. Structure</h3><p>Put the thought into a card. A card makes the next conversation less dependent on memory, mood, or performance under pressure.</p></div>
-                    <div class="spw-panel"><h3>4. Share</h3><p>Choose the audience deliberately: private note, therapist handoff, trusted friend, peer circle, anonymous post, public video, or nothing yet.</p></div>
-                    <div class="spw-panel"><h3>5. Practice</h3><p>Pick a small repeatable action. CBT-style thought testing, a walk, a food baseline, a local note, or one honest check-in can be enough to learn from.</p></div>
+                    <div class="spw-panel"><h3>4. Share</h3><p>Choose the audience deliberately: private note, a handoff to a professional, trusted friend, peer circle, anonymous post, public video, or nothing yet.</p></div>
+                    <div class="spw-panel"><h3>5. Practice</h3><p>Pick a small repeatable action. Thought testing, a walk, a food baseline, a local note, or one honest check-in can be enough to learn from.</p></div>
                     <div class="spw-panel"><h3>6. Escalate</h3><p>Know when this page is the wrong tool. Crisis risk, loss of control, or condition-specific care needs belong with immediate support or licensed professionals.</p></div>
                 </div>
             </section>
@@ -188,8 +269,8 @@
                         <p>"I get stuck when the conversation stays abstract" is useful data. So is "I need examples," "I need a worksheet," "I need you to challenge the interpretation," or "I need you to slow down the body-state part."</p>
                     </div>
                     <div class="spw-panel">
-                        <h3>Use therapy as one layer</h3>
-                        <p>CBT can fit analytical processors because it asks for observations, interpretations, evidence, and experiments. Some needs require different modalities or specialist care. The care stack should stay honest about that.</p>
+                        <h3>Use a practice as one layer</h3>
+                        <p>Thought-testing practices can fit analytical processors because they ask for observations, interpretations, evidence, and experiments. Some needs call for other practices or for specialist care. The care stack should stay honest about that.</p>
                     </div>
                     <div class="spw-panel">
                         <h3>Do not optimize away people</h3>
@@ -203,7 +284,7 @@
                     <a class="frame-sigil" href="#cards" data-spw-operator="integration">^"care_cards"</a>
                     <h2>Starter Cards</h2>
                 </header>
-                <p data-spw-textual-role="note">These are text-first artifacts you can paste into a note, screenshot, bring to therapy, or share with a trusted person. Keep private details local unless sharing is the point.</p>
+                <p data-spw-textual-role="note">These are text-first artifacts you can paste into a note, screenshot, bring to a session, or share with a trusted person. Keep private details local unless sharing is the point.</p>
                 <div class="frame-grid">
                     <article class="spw-panel" id="debug-log">
                         <h3>Debug Log</h3>
@@ -218,7 +299,7 @@
                         </ul>
                     </article>
                     <article class="spw-panel" id="translation-sheet">
-                        <h3>Therapist Translation Sheet</h3>
+                        <h3>Helper Translation Sheet</h3>
                         <ul class="frame-list">
                             <li><strong>My background:</strong> context I should not have to re-explain from scratch.</li>
                             <li><strong>What I have tried:</strong> therapy, CBT, books, community, medication conversations, movement, rest.</li>
@@ -289,8 +370,8 @@
                 <div class="frame-grid">
                     <div class="spw-panel"><h3>Prompt</h3><p>A post or question makes you notice a new angle. Save the prompt without assuming the platform is the safest place for the full answer.</p></div>
                     <div class="spw-panel"><h3>Process</h3><p>Talk it out in a private note, draft video, or stream segment. Let the opinion move when new evidence or better language appears.</p></div>
-                    <div class="spw-panel"><h3>Package</h3><p>Turn the useful part into a card: debug log, witness card, both-can-be-true card, or therapist translation sheet.</p></div>
-                    <div class="spw-panel"><h3>Route</h3><p>Choose the next audience: self, friend, group, therapist, public post, or crisis support. The audience is part of the care decision.</p></div>
+                    <div class="spw-panel"><h3>Package</h3><p>Turn the useful part into a card: debug log, witness card, both-can-be-true card, or helper translation sheet.</p></div>
+                    <div class="spw-panel"><h3>Route</h3><p>Choose the next audience: self, friend, group, professional, public post, or crisis support. The audience is part of the care decision.</p></div>
                 </div>
                 <figure class="spw-svg-figure" data-spw-svg-host="social-care-routing" data-spw-svg-kind="addressable-diagram" data-spw-svg-scale="wide" data-spw-svg-persona="client friend facilitator publisher">
                     <svg class="spw-svg-surface spw-svg-flow-diagram" viewBox="0 0 960 300" role="img" aria-labelledby="social-care-svg-title social-care-svg-desc" xmlns="http://www.w3.org/2000/svg">
@@ -335,7 +416,7 @@
                     </svg>
                     <figcaption>
                         <strong>Discovery is not the same as disclosure.</strong>
-                        <span>A social prompt can become a private card before it becomes a public opinion, a peer check-in, or a therapy handoff.</span>
+                        <span>A social prompt can become a private card before it becomes a public opinion, a peer check-in, or a handoff to a professional.</span>
                     </figcaption>
                 </figure>
             </section>

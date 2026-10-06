@@ -21,6 +21,7 @@
 @rehearsal: ~"../../public/js/semantic/cauldron/rehearsal.js"
 @live_expression: ~"../../public/js/interface/cauldron/live-expression.js"
 @tape: ~"../../public/js/interface/cauldron/tape.js"
+@care_handle: ~"../../public/js/modules/services/care-handle.js"
 @footer: ~"../../_partials/site-footer.html"
 @region_profiler: ~"../../public/js/runtime/regions/region-profiler.js"
 @reward_ui: ~"../../public/js/runtime/memory/reward-ui.js"
@@ -77,6 +78,19 @@ source = "creator, 2026-10-06: sets of words like live/cooling/projected should 
   reading = `landed 2026-10-06: each held fragment in the cauldron dialog is a small tape. Tape moves from the supply reel to the take-up reel as a reader comes back to that operator after time away; four spaced returns wind a whole tape. The readout gives meetings, spaced returns, and meetings per week, which is the velocity of the wonder.`
   status = "in use"
   open = `the ledger counts by operator, so two held words with the same operator share a tape reading; a reading per held word needs the ledger to key on the expression`
+}[reg=facet]
+
+^"care_handle"{
+  coordinate = `the four slots of one expression that names a feeling: subject, mode, direction, projection`
+  owner = @care_handle
+  states = #[`unsure`, `overloaded`, `activated`, `disconnected`, `confused`, `angry`, `ashamed`][reg=set]
+  practices = #[`? notice`, `= name`, `~ hold`, `@ share`, `! practice`, `. rest`][reg=set]
+  toward = #[`steady`, `curious`, `rested`, `clear`, `connected`][reg=set]
+  witnesses = #[`myself`, `a friend`, `a group`, `a professional`][reg=set]
+  forms = #[`handle (the expression)`, `a line to say`, `a name to type`][reg=set]
+  status = "proposed"
+  reading = `on /care/#name-it since 2026-10-06. The states come from the page's own stabilize panel; unsure stands for its "not sure yet". Each practice takes the canon operator whose intent it shares, so choosing a practice changes the prefix. A person may type their own word for the state and the direction. The words wait for the creator to confirm them.`
+  keeps = `everyday words for states, no diagnostic labels; nothing is stored or sent`
 }[reg=facet]
 
 ^"cauldron_actions"{
