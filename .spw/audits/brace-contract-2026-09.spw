@@ -37,6 +37,14 @@ expression = brace[contract]{sigil;value;ornament;header;delimiter}<host>
   delimiters = `about/plans 1/0, recipes 1/0, services 2/1, topics/software 17/15`
 }
 
+^"found_2026_10_06"{
+  before = `207 routes: 74 open-sigil, 4 brace-value, 1 ornament-host, 0 header-sigil, 4 delimiters`
+  fixed = `the five frames that opened a brace and never closed it (about/plans #plan-buckets, recipes #recipe-field, services #b2b-share, topics/software #software-surface and #spw-grammar-surface) take the closing footer their siblings use`
+  after = `74 open-sigil, 4 brace-value, 1 ornament-host, 0 header-sigil, 0 delimiters`
+  closer_cost = `On surfaces with no rule of their own (plans, craft, services, recipes, software) a closing brace took 72px of margin and an 84px row, because ornament/whimsy.css gave every footer page-footer spacing. A footer that holds only the brace is now exempt and takes its size from components/frames.css: a 20px row with the hairline. About, topics and home measure the same as before.`
+  values = `Painting the bias words in grammar/syntax.css was tried and reverted: on all three hosts the .spw-panel border overrides the brace rails, for objective and subjective siblings too, so the rule would add bytes and show nothing.`
+}
+
 ^"held"{
   open_sigils = `Enrolling a host in data-spw-form="brace" mounts brace-actions there, so the 74 open sigils are a felt change across 60 routes: approve one route's brace in a browser before any sweep. The other honest fix is to drop the trailing { where no brace is meant.`
   values = `Whether a living term's bias belongs in data-spw-brace (and syntax.css learns the bias words) or in an existing stem is the creator's call; no new data-spw-* family either way.`

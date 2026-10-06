@@ -57,6 +57,7 @@
 @root_property_invalidation: ~"./root-property-invalidation-2026-09.spw"
 @route_link_integrity: ~"./route-link-integrity-2026-09.spw"
 @brace_contract: ~"./brace-contract-2026-09.spw"
+@page_structure: ~"./page-structure-2026-10.spw"  # audit: do routes close what they open, and can each part be addressed; npm run audit:page-structure
 
 operation = "align"
 fixity = "tending"
