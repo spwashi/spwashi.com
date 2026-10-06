@@ -43,7 +43,7 @@
 ^"discovery"{
   tags: ["fermentation", "rhythm", "waves", "patience", "microbes", "harmony", "rpg-worldbuilding", "prompt-seed"]
   part_of: "culinary-gardening-rhythms-2026-05-B"
-  related_assets: ["dough-tide-fold", "brassica-twilight-transformation"]
+  related_assets: ["brassica-twilight-transformation"]
   audiences: ["chefs", "gardeners", "parents", "rpg-players"]
 }
 
