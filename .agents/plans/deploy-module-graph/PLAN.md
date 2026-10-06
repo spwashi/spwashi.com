@@ -43,6 +43,31 @@ Targets from the pre-flight measurement:
 
 The static boot closure is 11,332 B gzip larger than the former single-file entry because the full graph now carries Rolldown's loader and shared boundaries. That is an explicit trade for demand-coupled semantic transport and fewer unbundled module requests, not reported as a byte win.
 
+## Acyclic Cut (2026-10-06)
+
+Operation: `align` · fixity: `tending`.
+
+The module graph has no cycles. The cut into packs had 16: a pack took only its entry, the entry's private dependencies stayed in the chunk rolldown makes for the dynamic import, and the two imported each other. Load order then decided whether a module read an initialised binding; `charge-field` never loaded on the live site for this reason.
+
+- **Companions.** Discovery already groups an entry with the modules that travel only with it. Those join the entry's pack (`assignPackCompanions`). 16 cycles became 2.
+- **Fold.** Chunks that import each other always load together, so one chunk carries them at no transport cost. Each remaining cycle folds into the pack in it that arrives first (`foldChunkCycles`), and the cut is made again. A cycle that touches the boot closure is not folded; it stays a warning that names the imports holding it.
+- **Debug packs.** A definition with `debugOnly` or `timingArc: 'enhance-debug'` is addressed as `debug-<id>`. `layout-shift-audit` and `observation-beats` left `idle-lab`, and the ring through `composition-box-model` and `variant-selection` went with them.
+- **Ledger.** `asset-manifest.json` carries `chunkCycles` (empty is the contract) and `foldedInto` on a pack another carries. `npm run check:built` fails on a recorded cycle.
+
+Measured, built site, headless, 19 s after load:
+
+| | before | after |
+|---|---|---|
+| chunk cycles | 16 | 0 |
+| emitted chunks | 188 | 168 |
+| `idle-lab` pack | 148,294 B / 44,496 gzip | 138,426 B / 40,591 gzip |
+| script requests, `/care/` `/settings/` `/play/rpg-wednesday/` `/topics/software/spw/` | 108 · 107 · 109 · 107 | 91 · 90 · 91 · 90 |
+| script gzip on the same routes | 532 · 520 · 549 · 522 KB | 512 · 500 · 527 · 501 KB |
+
+Boot closure is unchanged (9 files, 87.5 KB gzip). One fold remains: the `kernel/site-settings.js` barrel rides in `foundation`.
+
+Open, from the pack ledger: three visible packs (`interaction-progression`, `smart-console`, `spw-key-events`) and `variant-selection` statically import a module that lives in `idle-lab`, so the first of them to mount brings the whole idle pack early. `idle-default` and `idle-residue` import `seed-cards` and `region-menu`, so those two "visible" packs arrive at idle on every page. Each is a source import to move or a schedule to restate, one per patch.
+
 ## Non-Goals & Boundaries
 - Vite is not the deploy artifact (`dist-vite/` stays a smoke build)
 - No SPA, client router, or new npm packages (rolldown already ships with Vite 8)

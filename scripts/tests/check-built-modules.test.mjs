@@ -54,6 +54,20 @@ test('a loader that never answers fails, and an empty catalog is not a pass', ()
   assert.equal(empty.failures[0].reason, 'empty-catalog');
 });
 
+test('a chunk cycle the build left fails the check though every module loads', () => {
+  const receipt = classifyBuiltModules({
+    ids: ['a'],
+    loads: [{ id: 'a', ok: true, ms: 1, error: null }],
+    timedOut: [],
+    chunkCycles: [['bus-1.js', 'spw-idle-lab-2.js']],
+  });
+  assert.equal(receipt.ok, false);
+  assert.equal(receipt.loaded, 1);
+  assert.deepEqual(receipt.failures, [
+    { where: 'bus-1.js', reason: 'chunk-cycle', detail: 'bus-1.js <-> spw-idle-lab-2.js' },
+  ]);
+});
+
 test('the failure list is capped and says so', () => {
   const ids = Array.from({ length: 5 }, (_, index) => `m${index}`);
   const receipt = classifyBuiltModules({ ids, loads: [], timedOut: [] }, 2);

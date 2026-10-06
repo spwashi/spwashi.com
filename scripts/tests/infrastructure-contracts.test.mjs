@@ -62,7 +62,11 @@ import {
   shouldIgnoreRelativePath,
 } from '../generate-design-catalog.mjs';
 import {
+  assignPackCompanions,
   createSemanticModulePlan,
+  describeCycleEdges,
+  findChunkCycles,
+  foldChunkCycles,
   semanticPackIdForDefinition,
 } from '../typed/build/index.mjs';
 
@@ -682,6 +686,14 @@ test('deploy packs preserve catalog timing language and module addresses', () =>
   assert.equal(semanticPackIdForDefinition(definitions[0]), 'foundation');
   assert.equal(semanticPackIdForDefinition(definitions[1]), 'idle-chrome');
   assert.equal(semanticPackIdForDefinition(definitions[2]), 'visible-page-anatomy');
+  assert.equal(
+    semanticPackIdForDefinition({ id: 'observation-beats', when: 'idle', timingChunk: 'idle-lab', debugOnly: true }),
+    'debug-observation-beats',
+  );
+  assert.equal(
+    semanticPackIdForDefinition({ id: 'layout-shift-audit', when: 'idle', timingChunk: 'idle-lab', timingArc: 'enhance-debug' }),
+    'debug-layout-shift-audit',
+  );
 
   const plan = createSemanticModulePlan(definitions, path.join(ROOT, 'dist-test'));
   assert.deepEqual(plan.packs.map((pack) => pack.id), [
@@ -690,6 +702,77 @@ test('deploy packs preserve catalog timing language and module addresses', () =>
     'visible-page-anatomy',
   ]);
   assert.deepEqual(plan.packs[0].moduleIds, ['shell']);
+});
+
+test('a pack keeps the modules that travel only with its entry', () => {
+  const entries = new Map([
+    ['/js/charge-field.js', 'spw-visible-charge-field'],
+    ['/js/console.js', 'spw-idle-chrome'],
+    ['/js/navigator.js', 'spw-idle-residue'],
+  ]);
+  const assigned = assignPackCompanions(entries, [
+    { moduleIds: ['/js/charge-field.js', '/js/physical-model.js'] },
+    { moduleIds: ['/js/console.js', '/js/navigator.js', '/js/shared-by-two-packs.js'] },
+    { moduleIds: ['/js/bus.js'] },
+  ]);
+  assert.equal(assigned.get('/js/physical-model.js'), 'spw-visible-charge-field');
+  assert.equal(assigned.has('/js/shared-by-two-packs.js'), false);
+  assert.equal(assigned.has('/js/bus.js'), false);
+  assert.equal(entries.has('/js/physical-model.js'), false);
+});
+
+test('chunk cycles are found, named by their imports, and folded into the first arrival', () => {
+  const chunks = [
+    { fileName: 'site.js', name: 'site', imports: ['bus.js'], moduleIds: ['/js/site.js'] },
+    { fileName: 'bus.js', name: 'bus', imports: [], moduleIds: ['/js/bus.js'] },
+    { fileName: 'lab.js', name: 'spw-idle-lab', imports: ['box.js', 'bus.js'], moduleIds: ['/js/beats.js', '/js/tuner.js'] },
+    { fileName: 'box.js', name: 'spw-visible-box', imports: ['variant.js'], moduleIds: ['/js/box.js'] },
+    { fileName: 'variant.js', name: 'spw-visible-variant', imports: ['lab.js'], moduleIds: ['/js/variant.js'] },
+    { fileName: 'settings.js', name: 'site-settings', imports: ['foundation.js'], moduleIds: ['/js/site-settings.js'] },
+    { fileName: 'foundation.js', name: 'spw-foundation', imports: ['settings.js'], moduleIds: ['/js/engine.js', '/js/utility-row.js'] },
+  ];
+  const cycles = findChunkCycles(chunks);
+  assert.deepEqual(cycles, [
+    ['box.js', 'lab.js', 'variant.js'],
+    ['foundation.js', 'settings.js'],
+  ]);
+
+  const fileByModuleId = new Map(chunks.flatMap((chunk) => chunk.moduleIds.map((id) => [id, chunk.fileName])));
+  const edges = describeCycleEdges(cycles[1], fileByModuleId, new Map([
+    ['/js/site-settings.js', ['/js/engine.js']],
+    ['/js/utility-row.js', ['/js/site-settings.js', '/js/bus.js']],
+  ]));
+  assert.deepEqual(edges.map((edge) => `${edge.from}>${edge.to}`), [
+    '/js/site-settings.js>/js/engine.js',
+    '/js/utility-row.js>/js/site-settings.js',
+  ]);
+
+  const packs = [
+    { chunkName: 'spw-idle-lab', when: 'idle' },
+    { chunkName: 'spw-visible-box', when: 'visible' },
+    { chunkName: 'spw-visible-variant', when: 'visible' },
+    { chunkName: 'spw-foundation', when: 'immediate' },
+  ];
+  const folded = foldChunkCycles(cycles, chunks, packs, new Map([['/js/box.js', 'spw-visible-box']]));
+  assert.deepEqual(folded.folds, [
+    { host: 'spw-idle-lab', members: ['spw-visible-box', 'spw-visible-variant'] },
+    { host: 'spw-foundation', members: ['site-settings'] },
+  ]);
+  assert.equal(folded.packNameByModuleId.get('/js/box.js'), 'spw-idle-lab');
+  assert.equal(folded.packNameByModuleId.get('/js/variant.js'), 'spw-idle-lab');
+  assert.equal(folded.packNameByModuleId.get('/js/site-settings.js'), 'spw-foundation');
+
+  const folded2 = findChunkCycles([
+    { fileName: 'site.js', imports: ['bus.js'] },
+    { fileName: 'bus.js', imports: ['lab.js'] },
+    { fileName: 'lab.js', imports: ['bus.js'] },
+  ]);
+  const guarded = foldChunkCycles(folded2, [
+    { fileName: 'bus.js', name: 'bus', moduleIds: ['/js/bus.js'] },
+    { fileName: 'lab.js', name: 'spw-idle-lab', moduleIds: ['/js/beats.js'] },
+  ], packs, new Map(), new Set(['site.js', 'bus.js', 'lab.js']));
+  assert.deepEqual(guarded.folds, []);
+  assert.equal(guarded.packNameByModuleId.size, 0);
 });
 
 test('source PWA contract keeps manifest, icons, routes, assets, and offline shell aligned', async () => {
