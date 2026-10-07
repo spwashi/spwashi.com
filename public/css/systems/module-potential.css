@@ -60,7 +60,9 @@
    only the second is true.
    -------------------------------------------------------------------------- */
 
-[data-spw-module-trigger-status='waiting']::before {
+/* The shell's brand sigil draws the Spw mark in its own ::before (header.css),
+   so no state here may claim it; every pseudo rule below skips it. */
+[data-spw-module-trigger-status='waiting']:not(:where(.header-sigil))::before {
   content: '';
   position: absolute;
   inset-block: 0;
@@ -80,7 +82,7 @@
 }
 
 /* Nothing is drawn for an offer of zero. */
-[data-spw-module-offer='diagnostic'][data-spw-module-trigger-status='waiting']::before {
+[data-spw-module-offer='diagnostic'][data-spw-module-trigger-status='waiting']:not(:where(.header-sigil))::before {
   content: none;
 }
 
@@ -111,7 +113,7 @@
   }
 }
 
-[data-spw-module-trigger-status='triggered']::before {
+[data-spw-module-trigger-status='triggered']:not(:where(.header-sigil))::before {
   content: '';
   position: absolute;
   inset-block: 0;
@@ -130,7 +132,7 @@
    noisy.
    -------------------------------------------------------------------------- */
 
-[data-spw-module-trigger-status='queued']::before {
+[data-spw-module-trigger-status='queued']:not(:where(.header-sigil))::before {
   content: none;
 }
 
@@ -140,11 +142,11 @@
    -------------------------------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
-  [data-spw-module-trigger-status='waiting']::before {
+  [data-spw-module-trigger-status='waiting']:not(:where(.header-sigil))::before {
     transition: none;
   }
 
-  [data-spw-module-trigger-status='triggered']::before {
+  [data-spw-module-trigger-status='triggered']:not(:where(.header-sigil))::before {
     animation: none;
     opacity: 0;
   }
@@ -155,12 +157,12 @@
    accept, so it is dropped rather than frozen mid-offer.
    -------------------------------------------------------------------------- */
 
-[data-spw-capture-mode] [data-spw-module-trigger-status]::before {
+[data-spw-capture-mode] [data-spw-module-trigger-status]:not(:where(.header-sigil))::before {
   content: none;
 }
 
 @media print {
-  [data-spw-module-trigger-status]::before {
+  [data-spw-module-trigger-status]:not(:where(.header-sigil))::before {
     content: none;
   }
 }
