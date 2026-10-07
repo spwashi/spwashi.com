@@ -108,12 +108,12 @@ html[data-spw-reduce-motion="on"] .header-sigil::after {
 }
 
 /* Captures show the shell at rest. */
-html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"]) .header-sigil::before {
+:is(html, body):is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"]) .header-sigil::before {
   transform: none;
   transition: none;
 }
 
-html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"]) .header-sigil::after {
+:is(html, body):is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"]) .header-sigil::after {
   display: none;
 }
 
