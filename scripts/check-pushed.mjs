@@ -212,6 +212,9 @@ function main() {
       });
       run(process.execPath, ['scripts/check-commit-structure.mjs'], tree.scratch, {
         SPW_INTEGRITY_TOOLS: tree.scratch,
+        // This checkout leaves most pictures out, so a citation into an image
+        // folder resolves against the commit's tree instead of the disk.
+        SPW_SPARSE_CHECKOUT: '1',
       });
     } catch (error) {
       status = error.status || 1;

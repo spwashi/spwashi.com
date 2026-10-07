@@ -88,7 +88,7 @@ import { promisify } from 'node:util';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isFollowablePathRef } from './lib/spw-path-ref.mjs';
-import { isGitIgnored } from './lib/git-ignored.mjs';
+import { isGitIgnored, isTrackedInHead } from './lib/git-ignored.mjs';
 
 const run = promisify(execFile);
 const SCRIPT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -240,6 +240,10 @@ async function checkRef(file, target) {
     // after a build or on one machine and never in a fresh checkout. That is
     // not a rename the citation failed to follow.
     if (isGitIgnored(relative, { cwd: ROOT })) return { verdict: 'ok', generated: true };
+    // The push checks a sparse checkout that leaves pictures out on purpose
+    // (check-pushed.mjs sets SPW_SPARSE_CHECKOUT); a path the commit tracks
+    // is there, only not extracted.
+    if (process.env.SPW_SPARSE_CHECKOUT === '1' && isTrackedInHead(relative, { cwd: ROOT })) return { verdict: 'ok', unextracted: true };
     return { verdict: 'missing-file', detail: rawPath, resolved: relative };
   }
   const onDisk = await caseMismatch(resolved);
