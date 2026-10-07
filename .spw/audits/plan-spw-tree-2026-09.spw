@@ -201,7 +201,8 @@ audit_run: .{
     counts = `311 broken before the pass; 10 after. Retargeted by the move, by a unique tracked-file suffix match, and by a hand map of the runtime family and catalog renames. Left: one false positive, a never-committed sigil-property-matrix.spw, a workbench path, three files deleted in history`
     rule = `Root-anchored ~"..." in wip.spw roots blocks were rewritten relative, matching what plans:index generates. Backticked split names in css-architecture-readability stay, per the 2026-09-27 rule.`
   }[reg=facet]
-  ownership = `Each live plan under 800 lines opens with a dated Status and Related links; owners list what they absorbed. Shared seams got one owner: kernel extraction (runtime-module-decomposition), settings-changed consolidation (module-contract-overhaul), the design bundling pilot (site-starter-component-kit).`
+  ownership = `Each live plan opens with a dated Status and Related links; owners list what they absorbed. Shared seams got one owner: kernel extraction (runtime-module-decomposition), settings-changed consolidation (module-contract-overhaul), the design bundling pilot (site-starter-component-kit).`
+  oversized = `midjourney-design-concepts, color-motion and css-architecture-readability checked patch by patch; 146 history lines moved to sibling HISTORY.md files; css-architecture-readability 850 -> 801 lines, open-first cap ratcheted to 810.`
   readme = ~"../../.agents/plans/README.md"
   ledger = ~"../../.agents/plans/archive/README.md"
 }[reg=facet]

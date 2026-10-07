@@ -47,7 +47,7 @@ export const openFirstLineBudget = (file) => (String(file).endsWith('.spw') ? SP
  * fails. Reduce toward the default; delete the entry once the file fits.
  */
 export const OPEN_FIRST_LINE_OVERRIDES = Object.freeze({
-  '.agents/plans/css-architecture-readability/PLAN.md': 850,
+  '.agents/plans/css-architecture-readability/PLAN.md': 810,
   '.agents/plans/history-reflow/PLAN.md': 230,
 });
 
