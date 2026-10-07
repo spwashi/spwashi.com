@@ -107,13 +107,23 @@ async function collectSpw(dir, out = [], { includeCanon = false, skipArchive = f
  * Parse `#>wonder_x` / `?["…"]{ … }` blocks by brace depth rather than by line
  * shape, so a probe containing braces does not truncate the block.
  */
-function parseWonders(source, file) {
+// The form opening a wonder, unless it sits inside a backtick span: a value
+// that shows the syntax (`?["Question"]{ … }`) documents a wonder, it is not one.
+const WONDER_OPEN = /\?\[["`](.+?)["`]\]\s*\{/;
+export function matchWonderOpen(line = '') {
+  const match = WONDER_OPEN.exec(line);
+  if (!match) return null;
+  const ticks = (line.slice(0, match.index).match(/`/g) || []).length;
+  return ticks % 2 === 0 ? match : null;
+}
+
+export function parseWonders(source, file) {
   const wonders = [];
   const lines = source.split('\n');
 
   for (let i = 0; i < lines.length; i += 1) {
     const idMatch = lines[i].match(/^#>(\w*wonder\w*)/i);
-    const openMatch = lines[i].match(/\?\[["`](.+?)["`]\]\s*\{/);
+    const openMatch = matchWonderOpen(lines[i]);
     // A wonder is either an id line followed by the question, or a bare `?[…]{`.
     let id = null;
     let questionLine = i;
@@ -124,7 +134,7 @@ function parseWonders(source, file) {
       continue;
     }
 
-    const qMatch = lines[questionLine]?.match(/\?\[["`](.+?)["`]\]\s*\{/);
+    const qMatch = matchWonderOpen(lines[questionLine]);
     if (!qMatch) continue;
 
     // Walk to the matching close brace.
