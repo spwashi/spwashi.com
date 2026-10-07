@@ -9,6 +9,8 @@ import {
   SHARED_EMPHASIS,
   SHARED_WRITE_DENY,
   SHUNT_MIN_LINES,
+  SPW_OPEN_FIRST_LINES,
+  openFirstLineBudget,
   collectOpenFirstTargets,
   countLines,
   countWords,
@@ -107,14 +109,14 @@ test('open-first targets are derived from the gate and stay inside their line bu
   for (const file of Object.keys(OPEN_FIRST_LINE_OVERRIDES)) {
     assert.ok(targets.includes(file), `${file} has a line override but is no longer an Open first target`);
     assert.ok(
-      OPEN_FIRST_LINE_OVERRIDES[file] > SHUNT_MIN_LINES,
-      `${file} override is at or under SHUNT_MIN_LINES — drop the entry instead`,
+      OPEN_FIRST_LINE_OVERRIDES[file] > openFirstLineBudget(file),
+      `${file} override is at or under its default budget — drop the entry instead`,
     );
   }
 
   const { specs } = openFirstSpecs();
   for (const spec of specs) {
-    assert.ok(spec.maxLines >= SHUNT_MIN_LINES, spec.file);
+    assert.ok(spec.maxLines >= openFirstLineBudget(spec.file), spec.file);
   }
 
   const reports = inspectOpenFirstFiles({ requireTracked: false });
@@ -148,4 +150,10 @@ test('AGENTS.md Sense first is a failing check, not a suggestion', () => {
   assert.ok(agents.requiredPhrases.includes(SHARED_WRITE_DENY));
   assert.ok(agents.requiredPhrases.includes('visual:checks -- --ids'));
   assert.ok(agents.requiredPhrases.includes('npm run sense'));
+});
+
+test('a .spw open-first target gets the longer budget; a plan keeps the prose one', () => {
+  assert.equal(openFirstLineBudget('.spw/conventions/css-instruction.spw'), SPW_OPEN_FIRST_LINES);
+  assert.equal(openFirstLineBudget('.agents/plans/history-reflow/PLAN.md'), SHUNT_MIN_LINES);
+  assert.ok(SPW_OPEN_FIRST_LINES > SHUNT_MIN_LINES);
 });

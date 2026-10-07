@@ -30,14 +30,24 @@ export const SHARED_WRITE_DENY = 'Explore/plan do not write';
 export const SHUNT_MIN_LINES = 200;
 
 /**
- * Open-first targets already measured above SHUNT_MIN_LINES. A ratchet, not
- * amnesty: each cap sits just above today's count, so growth fails. Reduce
- * toward SHUNT_MIN_LINES; delete the entry once the file fits.
+ * The line budget for a .spw open-first target. A .spw line is usually one
+ * key, one value, or a frame's brace, so the same reading costs about twice
+ * the lines it takes in a PLAN.md; the prose budget left the .spw
+ * conventions at their caps with room for nothing (creator, 2026-10-06:
+ * "the .spw budget needs to be longer").
+ */
+export const SPW_OPEN_FIRST_LINES = 400;
+
+/** The default line budget for an open-first target, by what it is. */
+export const openFirstLineBudget = (file) => (String(file).endsWith('.spw') ? SPW_OPEN_FIRST_LINES : SHUNT_MIN_LINES);
+
+/**
+ * Open-first targets already measured above their default budget. A
+ * ratchet, not amnesty: each cap sits just above today's count, so growth
+ * fails. Reduce toward the default; delete the entry once the file fits.
  */
 export const OPEN_FIRST_LINE_OVERRIDES = Object.freeze({
   '.agents/plans/css-architecture-readability/PLAN.md': 850,
-  '.spw/conventions/attention-field.spw': 390,
-  '.spw/language/feature-utilization.spw': 330,
   '.agents/plans/history-reflow/PLAN.md': 230,
 });
 
@@ -328,7 +338,7 @@ export function openFirstSpecs(options = {}) {
   const { targets, unresolved } = collectOpenFirstTargets(options);
   const specs = targets.map((file) => ({
     file,
-    maxLines: OPEN_FIRST_LINE_OVERRIDES[file] ?? SHUNT_MIN_LINES,
+    maxLines: OPEN_FIRST_LINE_OVERRIDES[file] ?? openFirstLineBudget(file),
     kind: 'open-first',
   }));
   return { specs, unresolved };
@@ -425,7 +435,7 @@ function main() {
     process.exit(1);
   }
   process.stdout.write(
-    `[check:agents] PASSED (${MODEL_SPECS.length} adapters; ${HARNESS_SPECS.length} harness; ${openFirstReports.length} open-first ≤${SHUNT_MIN_LINES}L; always-on ${formatSpendLine(alwaysOnReports)})\n`,
+    `[check:agents] PASSED (${MODEL_SPECS.length} adapters; ${HARNESS_SPECS.length} harness; ${openFirstReports.length} open-first ≤${SHUNT_MIN_LINES}L, .spw ≤${SPW_OPEN_FIRST_LINES}L; always-on ${formatSpendLine(alwaysOnReports)})\n`,
   );
 }
 
