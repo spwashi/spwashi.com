@@ -69,13 +69,16 @@ export function syncHeaderActions(header) {
   const label = pill?.querySelector('[data-spw-attention-posture-label]');
   const panel = header.querySelector('.spw-attention-posture-panel');
 
+  // The utility row's measured sync calls this every pass: write only what moved.
   if (pill instanceof HTMLElement) {
-    pill.dataset.spwAttentionPosture = `${posture.self} ${posture.local} ${posture.global}`;
-    pill.dataset.spwAttentionSelfRelation = posture.self;
-    pill.dataset.spwAttentionLocalRelation = posture.local;
-    pill.dataset.spwAttentionGlobalRelation = posture.global;
-    pill.setAttribute('aria-label', `Preview attention posture. Current posture: ${posture.label}.`);
-    pill.title = `Preview attention posture: ${posture.label}.`;
+    writeDatasetValue(pill, 'spwAttentionPosture', `${posture.self} ${posture.local} ${posture.global}`);
+    writeDatasetValue(pill, 'spwAttentionSelfRelation', posture.self);
+    writeDatasetValue(pill, 'spwAttentionLocalRelation', posture.local);
+    writeDatasetValue(pill, 'spwAttentionGlobalRelation', posture.global);
+    const ariaLabel = `Preview attention posture. Current posture: ${posture.label}.`;
+    if (pill.getAttribute('aria-label') !== ariaLabel) pill.setAttribute('aria-label', ariaLabel);
+    const title = `Preview attention posture: ${posture.label}.`;
+    if (pill.title !== title) pill.title = title;
   }
 
   if (label) {

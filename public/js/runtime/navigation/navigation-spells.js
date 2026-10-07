@@ -431,10 +431,10 @@ function syncSectionLocomotionExpression(detail = {}) {
   );
   hashLinks.forEach((link) => {
     if (!(link instanceof HTMLAnchorElement)) return;
-    link.dataset.spwNavSectionCurrent = 'true';
-    link.dataset.spwNavExpression = detail.currentToken
+    writeDatasetValue(link, 'spwNavSectionCurrent', 'true');
+    writeDatasetValue(link, 'spwNavExpression', detail.currentToken
       ? `${detail.currentToken} ${detail.currentLabel || sectionId}`
-      : (detail.currentLabel || sectionId);
+      : (detail.currentLabel || sectionId));
   });
 
   document.querySelectorAll('[data-spw-nav-section-current="true"]').forEach((link) => {

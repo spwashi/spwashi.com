@@ -2,6 +2,7 @@ import { GESTURE_MEASURE } from '/public/js/kernel/gesture-measure.js';
 import {
   annotateFloatingChromeElement,
   requestFloatingChromeSync,
+  writeTextContent,
 } from '/public/js/kernel/dom-contracts.js';
 import { appendToDocument } from '/public/js/kernel/dom-render.js';
 import { createMeasuredLane } from '/public/js/kernel/measured-frame.js';
@@ -82,6 +83,12 @@ export function resolveSectionHandleSwipeContract({ compact = false } = {}) {
 
 export function describeSectionHandleSwipe({ compact = false } = {}) {
   return compact ? 'swipe to cycle rooms' : 'swipe to cycle nearby kin';
+}
+
+/* A reflected boolean re-sets its attribute on every assignment, so a reading
+   that changes nothing still queues a record. Assign only on change. */
+function writeFlag(node, prop, value) {
+  if (node[prop] !== value) node[prop] = value;
 }
 
 function setHandleState(handle, state) {
@@ -173,57 +180,52 @@ function syncHandleContent(parts, info, activeIndex, sectionCount, storyOverlay 
 
   const scan = resolveHandleScan({ ...info, ...summarizePosition(info) });
 
-  if (opNode) opNode.textContent = scan.token || '#>';
-  if (labelNode) labelNode.textContent = scan.label || 'section';
-  if (currentToken) currentToken.textContent = scan.token || '#>';
-  if (currentLabel) currentLabel.textContent = scan.label || 'section';
+  writeTextContent(opNode, scan.token || '#>');
+  writeTextContent(labelNode, scan.label || 'section');
+  writeTextContent(currentToken, scan.token || '#>');
+  writeTextContent(currentLabel, scan.label || 'section');
   if (currentForm instanceof HTMLElement) {
-    if (storyOverlay) {
-      currentForm.textContent = storyOverlay;
-      currentForm.title = storyOverlay;
-      currentForm.hidden = false;
-    } else {
-      currentForm.textContent = info.syntaxWake || '';
-      currentForm.title = info.syntaxDescription
-        ? `Spw geometry: ${info.syntaxDescription}`
-        : '';
-      currentForm.hidden = !info.syntaxWake;
-    }
+    const form = storyOverlay || info.syntaxWake || '';
+    writeTextContent(currentForm, form);
+    writeAttributes(currentForm, {
+      title: storyOverlay || (info.syntaxDescription ? `Spw geometry: ${info.syntaxDescription}` : ''),
+    });
+    writeFlag(currentForm, 'hidden', !form);
   }
   if (currentCadence instanceof HTMLElement) {
-    currentCadence.textContent = info.cadence || '';
-    currentCadence.title = info.cadenceMotion
-      ? `Cadence motion: ${info.cadenceMotion}`
-      : '';
-    currentCadence.hidden = !info.cadence;
+    writeTextContent(currentCadence, info.cadence || '');
+    writeAttributes(currentCadence, {
+      title: info.cadenceMotion ? `Cadence motion: ${info.cadenceMotion}` : '',
+    });
+    writeFlag(currentCadence, 'hidden', !info.cadence);
   }
   if (cauldronNode instanceof HTMLElement) {
-    if (info.ingredientsCount > 0) {
-      cauldronNode.hidden = false;
-      if (cauldronCount) cauldronCount.textContent = String(info.ingredientsCount);
-      cauldronNode.title = `${info.ingredientsCount} gatherable concept(s): ${info.ingredientNames}`;
-    } else {
-      cauldronNode.hidden = true;
+    const gathered = info.ingredientsCount > 0;
+    writeFlag(cauldronNode, 'hidden', !gathered);
+    if (gathered) {
+      writeTextContent(cauldronCount, String(info.ingredientsCount));
+      writeAttributes(cauldronNode, {
+        title: `${info.ingredientsCount} gatherable concept(s): ${info.ingredientNames}`,
+      });
     }
   }
-  if (progressNode) {
-    progressNode.textContent = `${activeIndex + 1}/${sectionCount}`;
-    progressNode.setAttribute('aria-label', `Section ${activeIndex + 1} of ${sectionCount}`);
-  }
+  // The progress label also carries the swipe hint, so
+  // syncSectionHandleSwipeHint writes it right after this, once.
+  writeTextContent(progressNode, `${activeIndex + 1}/${sectionCount}`);
   if (currentLink instanceof HTMLAnchorElement) {
-    currentLink.href = `#${info.id}`;
-    currentLink.setAttribute('aria-label', `Jump to ${info.label}`);
-    if (currentLink.title !== info.label) currentLink.title = info.label;
+    writeAttributes(currentLink, {
+      href: `#${info.id}`,
+      'aria-label': `Jump to ${info.label}`,
+      title: info.label,
+    });
   }
 
   // ARIA hygiene: dynamic prev/next labels using the section that will be targeted
   if (prevButton instanceof HTMLButtonElement) {
-    const prevLabel = info.prevLabel || 'previous section';
-    prevButton.setAttribute('aria-label', `Jump to previous: ${prevLabel}`);
+    writeAttributes(prevButton, { 'aria-label': `Jump to previous: ${info.prevLabel || 'previous section'}` });
   }
   if (nextButton instanceof HTMLButtonElement) {
-    const nextLabel = info.nextLabel || 'next section';
-    nextButton.setAttribute('aria-label', `Jump to next: ${nextLabel}`);
+    writeAttributes(nextButton, { 'aria-label': `Jump to next: ${info.nextLabel || 'next section'}` });
   }
 }
 
@@ -588,31 +590,28 @@ function getSectionHandleRefs(handle, shell) {
 function syncSectionHandleSwipeHint(shell, compact, activeIndex = 0, sectionCount = 0) {
   if (!(shell instanceof HTMLElement)) return;
   const hint = describeSectionHandleSwipe({ compact });
-  shell.setAttribute('data-spw-gesture-contract', resolveSectionHandleSwipeContract({ compact }));
-  shell.setAttribute(
-    'aria-label',
-    compact ? 'Page locomotion. Swipe to cycle rooms' : 'Page locomotion. Swipe to cycle nearby kin',
-  );
+  writeAttributes(shell, {
+    'data-spw-gesture-contract': resolveSectionHandleSwipeContract({ compact }),
+    'aria-label': compact ? 'Page locomotion. Swipe to cycle rooms' : 'Page locomotion. Swipe to cycle nearby kin',
+  });
   const progressNode = shell.querySelector('.spw-section-handle-progress');
   if (!(progressNode instanceof HTMLElement)) return;
-  progressNode.title = hint;
   const count = sectionCount > 0
     ? `Section ${activeIndex + 1} of ${sectionCount}`
     : (progressNode.getAttribute('aria-label') || '').split('.')[0].trim() || 'Section progress';
-  progressNode.setAttribute('aria-label', `${count}. ${hint}`);
+  writeAttributes(progressNode, { title: hint, 'aria-label': `${count}. ${hint}` });
 }
 
 function syncSectionHandleShellState(shell, toggleButton, compact) {
-  shell.setAttribute(HANDLE_SHELL_STATE_ATTR, compact ? 'collapsed' : 'expanded');
+  writeAttributes(shell, { [HANDLE_SHELL_STATE_ATTR]: compact ? 'collapsed' : 'expanded' });
   syncSectionHandleSwipeHint(shell, compact);
   if (!(toggleButton instanceof HTMLButtonElement)) return;
-  toggleButton.setAttribute('aria-expanded', compact ? 'false' : 'true');
-  toggleButton.setAttribute(
-    'aria-label',
-    compact ? 'Expand page travel rail' : 'Collapse page travel rail'
-  );
-  toggleButton.title = compact ? 'Open page travel rail' : 'Compact page travel rail';
-  toggleButton.textContent = compact ? 'rail' : 'trim';
+  writeAttributes(toggleButton, {
+    'aria-expanded': compact ? 'false' : 'true',
+    'aria-label': compact ? 'Expand page travel rail' : 'Collapse page travel rail',
+    title: compact ? 'Open page travel rail' : 'Compact page travel rail',
+  });
+  writeTextContent(toggleButton, compact ? 'rail' : 'trim');
 }
 
 function syncSectionHandlePhase(shell, handle, phase) {
@@ -639,8 +638,8 @@ function syncSectionHandleAvailability(refs, activeIndex, sectionCount) {
     [refs.bottomButton, hasNext],
   ].forEach(([button, enabled]) => {
     if (!(button instanceof HTMLButtonElement)) return;
-    button.disabled = !enabled;
-    button.setAttribute('aria-disabled', enabled ? 'false' : 'true');
+    writeFlag(button, 'disabled', !enabled);
+    writeAttributes(button, { 'aria-disabled': enabled ? 'false' : 'true' });
   });
 }
 
@@ -669,23 +668,25 @@ function syncRegionKinTravel(refs, sections, activeIndex) {
   buttons.forEach(([button, id, relation]) => {
     if (!(button instanceof HTMLButtonElement)) return;
     const enabled = Boolean(id);
-    button.disabled = !enabled;
-    button.setAttribute('aria-disabled', enabled ? 'false' : 'true');
-    button.dataset.spwRegionTarget = id || '';
-    button.dataset.spwRegionRelation = relation;
+    writeFlag(button, 'disabled', !enabled);
+    writeAttributes(button, {
+      'aria-disabled': enabled ? 'false' : 'true',
+      'data-spw-region-target': id || '',
+      'data-spw-region-relation': relation,
+    });
     if (enabled) {
       const target = sections.find((section, index) => (
         (section.id || ensureSectionId(section, index)) === id
       ));
       const label = target ? getSectionLabel(target) : relation;
-      button.setAttribute('aria-label', `Jump to ${relation} region: ${label}`);
+      writeAttributes(button, { 'aria-label': `Jump to ${relation} region: ${label}` });
     }
   });
-  if (refs.shell instanceof HTMLElement) {
-    refs.shell.dataset.spwRegionSimilar = ids.similar || '';
-    refs.shell.dataset.spwRegionContrast = ids.contrast || '';
-    refs.shell.dataset.spwRegionResonate = ids.resonate || '';
-  }
+  writeAttributes(refs.shell, {
+    'data-spw-region-similar': ids.similar || '',
+    'data-spw-region-contrast': ids.contrast || '',
+    'data-spw-region-resonate': ids.resonate || '',
+  });
 }
 
 function syncSectionHandleAttributes(handle, shell, info, activeIndex, sectionCount, snapshot, source) {
@@ -707,29 +708,31 @@ function syncSectionHandleAttributes(handle, shell, info, activeIndex, sectionCo
 
   [handle, shell].forEach((node) => {
     if (!(node instanceof HTMLElement)) return;
-    if (info.cadence) node.setAttribute(HANDLE_CADENCE_ATTR, info.cadence);
+    if (info.cadence) writeAttributes(node, { [HANDLE_CADENCE_ATTR]: info.cadence });
     else node.removeAttribute(HANDLE_CADENCE_ATTR);
-    if (info.cadenceMotion) node.setAttribute(HANDLE_CADENCE_MOTION_ATTR, info.cadenceMotion);
+    if (info.cadenceMotion) writeAttributes(node, { [HANDLE_CADENCE_MOTION_ATTR]: info.cadenceMotion });
     else node.removeAttribute(HANDLE_CADENCE_MOTION_ATTR);
   });
 
   if (info.consequence) {
-    handle.setAttribute('data-spw-consequence', info.consequence);
-    shell.setAttribute('data-spw-consequence', info.consequence);
+    writeAttributes(handle, { 'data-spw-consequence': info.consequence });
+    writeAttributes(shell, { 'data-spw-consequence': info.consequence });
   } else {
     handle.removeAttribute('data-spw-consequence');
     shell.removeAttribute('data-spw-consequence');
   }
 
   if (info.operator) {
-    handle.setAttribute('data-spw-operator', info.operator);
-    shell.setAttribute('data-spw-operator', info.operator);
+    writeAttributes(handle, { 'data-spw-operator': info.operator });
+    writeAttributes(shell, { 'data-spw-operator': info.operator });
   }
 
-  shell.dataset.spwHandleCurrent = info.id;
-  shell.dataset.spwHandleIndex = String(activeIndex + 1);
-  shell.dataset.spwHandleCount = String(sectionCount);
-  shell.dataset.spwHandleSource = source;
+  writeAttributes(shell, {
+    'data-spw-handle-current': info.id,
+    'data-spw-handle-index': String(activeIndex + 1),
+    'data-spw-handle-count': String(sectionCount),
+    'data-spw-handle-source': source,
+  });
   writeSectionProgressStyle(shell, progress, step);
 }
 
@@ -743,7 +746,7 @@ function syncSectionHandleSections(sections, activeIndex, approach = '') {
     const current = index === activeIndex && locomotionApproach;
     const existing = section.getAttribute(APPROACH_ATTR);
     if (current) {
-      section.setAttribute(APPROACH_ATTR, approach);
+      writeAttributes(section, { [APPROACH_ATTR]: approach });
     } else if (!current && (existing === 'approaching' || existing === 'arrival' || existing === 'distant')) {
       section.removeAttribute(APPROACH_ATTR);
     }
@@ -784,8 +787,7 @@ function syncChromeLocomotionExpression(snapshot, visible, phase, handle, shell)
   [handle, shell].forEach((node) => {
     if (!(node instanceof HTMLElement)) return;
     if (activeTrail) {
-      node.setAttribute(WONDER_ENTRY_ATTR, 'section-locomotion');
-      node.setAttribute(APPROACH_ATTR, approach);
+      writeAttributes(node, { [WONDER_ENTRY_ATTR]: 'section-locomotion', [APPROACH_ATTR]: approach });
     } else {
       node.removeAttribute(WONDER_ENTRY_ATTR);
       node.removeAttribute(APPROACH_ATTR);
