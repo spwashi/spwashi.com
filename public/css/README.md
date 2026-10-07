@@ -57,6 +57,8 @@ still feel coherent when a reader moves to neighboring routes.
 
 Layer-owner debug labels use `--spw-debug-layer-owner` and `--spw-debug-layer-color` as inherited diagnostic markers. They show the cascade-resolved owner marker for selected elements when `html[data-spw-debug-layers="on"]` or `data-spw-debug="layers"` is active. They are not complete CSS provenance and should not be described as proof of which file supplied every declaration.
 
+A route surface sets its marker once, in the token block on `:where(body[data-spw-surface="..."])`, and nowhere on inner classes.
+
 Route surfaces can split under `routes/surfaces/` when a route grows into clear domains. Import those fragments directly from `style.css`; do not add one-file aliases or route shims.
 
 Focused review slices can live under `routes/surfaces/` as well when they are meant to sit beside a longer catalog or experiment page. Keep them narrow and route-local, and let shared enhancement JS fill in any generated rail or SVG summary.

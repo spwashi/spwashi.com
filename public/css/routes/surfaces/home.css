@@ -15,6 +15,10 @@
    ========================================================================== */
 
 :where(body[data-spw-surface="home"]) {
+  /* Debug / inspection */
+  --spw-debug-layer-owner: "routes";
+  --spw-debug-layer-color: #a67c00;
+
   --home-accent-primary: color-mix(in oklab, var(--teal, #0f7f7d) 86%, #f2c46d 14%);
   --home-accent-secondary: color-mix(in oklab, var(--home-accent-primary) 42%, var(--amber, #c79a3b));
   --home-accent-tertiary: color-mix(in oklab, var(--home-accent-primary) 24%, transparent);
