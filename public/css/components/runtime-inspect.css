@@ -89,15 +89,6 @@
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 }
 
-/* Mount pulse: brief learnable flash when a module writes effect tokens. */
-:where(html[data-spw-module-visuals="on"][data-spw-module-effect-pulse]) {
-  --spw-module-effect-pulse-ring:
-    inset 0 0 0 2px color-mix(in srgb, var(--op-action-color, #006666) 22%, transparent);
-  outline: 2px solid color-mix(in srgb, var(--op-action-color, #006666) 28%, transparent);
-  outline-offset: -2px;
-  transition: outline-color 320ms var(--ease-smooth, ease);
-}
-
 /* Ecology phase label for inspect postures — teaches reflow as a sequence.
    html::before keeps body free for grain texture. */
 :where(

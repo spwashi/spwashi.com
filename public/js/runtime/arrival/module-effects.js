@@ -1,157 +1,140 @@
 // module-effects.js
 //
-// Surfaces runtime module side effects on the document root so CSS ornament,
-// interaction semantics, and inspectors can read what changed.
+// The page's tools waking, shown on the shell mark. Every module that mounts
+// after idle turns the #>spwashi mark a notch, like a spool, and pays out one
+// stitch beneath it. When mounts go quiet the thread runs out, fades, and the
+// mark finishes its turn. One small element carries the cue; the root keeps
+// only the ledger of side-effect scopes, written when it grows.
+//
+// Look: ornament/module-arrival.css.
 
-import { writeDatasetValue } from '/public/js/kernel/dom-contracts.js';
+import { resolveOwnerDocument } from '/public/js/kernel/browser-primitives.js';
+import { ensureModuleArrivalStyles } from '/public/js/kernel/deferred-styles.js';
+import { writeDatasetValue, writeStyleProperty } from '/public/js/kernel/dom-contracts.js';
 
-let initialized = false;
-let cleanupFns = [];
-let pulseTimer = 0;
-
-const EFFECT_TOKENS = new Set();
-/** Fallback when --spw-module-effect-pulse-duration is unavailable (matches --touch-recover). */
-const MODULE_PULSE_MS_FALLBACK = 520;
-const MODULE_PULSE_DURATION_VAR = '--spw-module-effect-pulse-duration';
+const SPOOL_SELECTOR = '.site-header .header-sigil, body > header .header-sigil';
+/** Degrees the mark turns for each module that wakes. */
+const NOTCH_DEG = 15;
+/** Mounts closer together than this read as one wake; this long without one settles it. */
+const QUIET_MS = 1800;
 
 export const MODULE_EFFECTS_CONTRACT = Object.freeze({
-  pulseDurationVar: MODULE_PULSE_DURATION_VAR,
-  pulseDurationMs: MODULE_PULSE_MS_FALLBACK,
+  spoolSelector: SPOOL_SELECTOR,
+  notchDeg: NOTCH_DEG,
+  quietMs: QUIET_MS,
   attributes: Object.freeze({
     active: 'data-spw-module-effects-active',
-    count: 'data-spw-module-effect-count',
     pulse: 'data-spw-module-effect-pulse',
+  }),
+  properties: Object.freeze({
+    stitches: '--spw-module-effect-stitches',
+    turn: '--spw-module-effect-turn',
   }),
 });
 
-function readCssDurationMs(varName, fallbackMs) {
-  try {
-    const root = document.documentElement;
-    if (!root) return fallbackMs;
-    const raw = getComputedStyle(root).getPropertyValue(varName).trim();
-    if (!raw) return fallbackMs;
-    if (raw.endsWith('ms')) {
-      const n = Number.parseFloat(raw);
-      return Number.isFinite(n) && n > 0 ? n : fallbackMs;
-    }
-    if (raw.endsWith('s')) {
-      const n = Number.parseFloat(raw) * 1000;
-      return Number.isFinite(n) && n > 0 ? n : fallbackMs;
-    }
-    const n = Number.parseFloat(raw);
-    return Number.isFinite(n) && n > 0 ? n : fallbackMs;
-  } catch {
-    return fallbackMs;
-  }
-}
-
-function readModulePulseDurationMs() {
-  return readCssDurationMs(MODULE_PULSE_DURATION_VAR, MODULE_PULSE_MS_FALLBACK);
-}
-
-let pulseDurationMs = MODULE_PULSE_MS_FALLBACK;
+let activeModuleEffectsCleanup = null;
 
 function normalizeEffectScope(value = '') {
-  return String(value || '')
-    .split(/[\s,+]+/)
-    .map((token) => token.trim())
-    .filter(Boolean);
+  const tokens = Array.isArray(value) ? value : String(value || '').split(/[\s,+]+/);
+  return tokens.map((token) => String(token || '').trim()).filter(Boolean);
 }
 
-function syncModuleEffects(html) {
-  if (!html) return;
+const requestFrame = (fn) => (typeof window.requestAnimationFrame === 'function'
+  ? window.requestAnimationFrame(fn)
+  : window.setTimeout(fn, 16));
+const cancelFrame = (id) => (typeof window.cancelAnimationFrame === 'function'
+  ? window.cancelAnimationFrame(id)
+  : window.clearTimeout(id));
 
-  const tokens = [...EFFECT_TOKENS].sort();
-  writeDatasetValue(html, 'spwModuleEffectsActive', tokens.length ? tokens : null);
-  writeDatasetValue(html, 'spwModuleEffectCount', tokens.length ? String(tokens.length) : null);
-}
+function createModuleEffectsInstance(ctx, doc) {
+  const html = doc.documentElement;
+  const spool = doc.querySelector(SPOOL_SELECTOR);
+  const scopes = new Set();
+  let stitches = 0;
+  let turn = 0;
+  let pending = 0;
+  let frame = 0;
+  let quietTimer = 0;
 
-function pulseModuleEffect(html, moduleId = '') {
-  if (!html || !moduleId) return;
+  const syncLedger = () => {
+    writeDatasetValue(html, 'spwModuleEffectsActive', scopes.size ? [...scopes].sort() : null);
+  };
 
-  writeDatasetValue(html, 'spwModuleEffectPulse', moduleId);
-  if (pulseTimer) window.clearTimeout(pulseTimer);
-  pulseTimer = window.setTimeout(() => {
-    pulseTimer = 0;
-    if (html.dataset.spwModuleEffectPulse === moduleId) {
-      delete html.dataset.spwModuleEffectPulse;
-    }
-  }, pulseDurationMs);
-}
-
-function onModuleMounted(detail = {}, html) {
-  normalizeEffectScope(detail.effectScope).forEach((token) => EFFECT_TOKENS.add(token));
-  syncModuleEffects(html);
-  pulseModuleEffect(html, detail.baseId || detail.id || '');
-}
-
-function onRuntimeTokensUpdated(detail = {}, html) {
-  writeDatasetValue(html, 'spwRuntimeEnhancementActive', detail.enhancementIntensity > 0.5 ? 'true' : null);
-  writeDatasetValue(html, 'spwRuntimeFeatureActive', detail.featureIntensity > 0.5 ? 'true' : null);
-  writeDatasetValue(html, 'spwRuntimeLayerPulse', detail.layerCount > 2 ? 'dense' : 'light');
-}
-
-function createModuleEffectsInstance(ctx) {
-  if (initialized) return () => {};
-  initialized = true;
-
-  const html = document.documentElement;
-  // Theme-independent timing tokens only need one computed-style read per mount.
-  pulseDurationMs = readModulePulseDurationMs();
-
-  syncModuleEffects(html);
-
-  if (ctx?.bus?.on) {
-    cleanupFns.push(
-      ctx.bus.on('spw:module-mounted', (detail) => onModuleMounted(detail, html)),
-      ctx.bus.on('spw:runtime-tokens-updated', (detail) => onRuntimeTokensUpdated(detail, html)),
-    );
+  // Modules that mounted before this one still belong in the ledger.
+  for (const record of ctx?.registry?.values?.() || []) {
+    if (record?.status === 'mounted') normalizeEffectScope(record.effectScope).forEach((scope) => scopes.add(scope));
   }
+  syncLedger();
+
+  if (spool) ensureModuleArrivalStyles();
+
+  const settle = () => {
+    quietTimer = 0;
+    turn = Math.ceil(turn / 360) * 360;
+    writeStyleProperty(spool, '--spw-module-effect-turn', `${turn}deg`);
+    writeDatasetValue(spool, 'spwModuleEffectPulse', 'settled');
+  };
+
+  // A burst of mounts in one frame is one notch-and-stitch write.
+  const flush = () => {
+    frame = 0;
+    if (!pending) return;
+    if (spool.dataset.spwModuleEffectPulse !== 'waking') stitches = 0;
+    stitches += pending;
+    turn += pending * NOTCH_DEG;
+    pending = 0;
+    writeStyleProperty(spool, '--spw-module-effect-stitches', String(stitches));
+    writeStyleProperty(spool, '--spw-module-effect-turn', `${turn}deg`);
+    writeDatasetValue(spool, 'spwModuleEffectPulse', 'waking');
+    if (quietTimer) window.clearTimeout(quietTimer);
+    quietTimer = window.setTimeout(settle, QUIET_MS);
+  };
+
+  const onModuleMounted = (detail = {}) => {
+    const known = scopes.size;
+    normalizeEffectScope(detail.effectScope).forEach((scope) => scopes.add(scope));
+    if (scopes.size !== known) syncLedger();
+    if (!spool) return;
+    pending += 1;
+    if (!frame) frame = requestFrame(flush);
+  };
+
+  const off = ctx?.bus?.on?.('spw:module-mounted', onModuleMounted);
 
   return () => {
-    if (pulseTimer) {
-      window.clearTimeout(pulseTimer);
-      pulseTimer = 0;
-    }
-    cleanupFns.forEach((fn) => {
-      try {
-        fn?.();
-      } catch {
-        /* ignore */
-      }
-    });
-    cleanupFns = [];
-    EFFECT_TOKENS.clear();
-    syncModuleEffects(html);
-    delete html.dataset.spwModuleEffectPulse;
-    delete html.dataset.spwRuntimeEnhancementActive;
-    delete html.dataset.spwRuntimeFeatureActive;
-    delete html.dataset.spwRuntimeLayerPulse;
-    initialized = false;
+    if (typeof off === 'function') off();
+    if (frame) cancelFrame(frame);
+    if (quietTimer) window.clearTimeout(quietTimer);
+    frame = 0;
+    quietTimer = 0;
+    pending = 0;
+    writeDatasetValue(html, 'spwModuleEffectsActive', null);
+    if (!spool) return;
+    writeDatasetValue(spool, 'spwModuleEffectPulse', null);
+    writeStyleProperty(spool, '--spw-module-effect-stitches', null);
+    // The turn stays at a whole revolution: removing it would spin the mark
+    // backwards through every turn it made.
+    writeStyleProperty(spool, '--spw-module-effect-turn', `${Math.ceil(turn / 360) * 360}deg`);
   };
 }
 
-let activeModuleEffectsCleanup = null;
-
 export function initModuleEffects(ctx, root = document) {
   unmountModuleEffects();
-  activeModuleEffectsCleanup = createModuleEffectsInstance(ctx, root);
-  return activeModuleEffectsCleanup;
+  activeModuleEffectsCleanup = createModuleEffectsInstance(ctx, root?.nodeType === 9 ? root : document);
+  return unmountModuleEffects;
 }
 
 export function unmountModuleEffects() {
-  if (activeModuleEffectsCleanup) {
-    try { activeModuleEffectsCleanup(); } catch (_) {}
-    activeModuleEffectsCleanup = null;
-  }
+  if (!activeModuleEffectsCleanup) return;
+  try { activeModuleEffectsCleanup(); } catch (_) {}
+  activeModuleEffectsCleanup = null;
 }
 
 export { unmountModuleEffects as unmount };
 
-export const spwModule = {
-  updates: [
-    'attr:data-spw-module-effects-active',
-    'attr:data-spw-module-effect-pulse',
-  ],
-  mount: (mod, ctx, root) => initModuleEffects(ctx, root),
-};
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'module-effects',
+  mount: (ctx, root) => initModuleEffects(ctx, resolveOwnerDocument(ctx, root)),
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

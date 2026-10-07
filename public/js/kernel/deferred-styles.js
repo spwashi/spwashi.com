@@ -159,6 +159,11 @@ export function ensureLayoutAssumptionStyles() {
   return ensureDeferredStyles('spw-layout-assumption-styles', '/public/css/ornament/layout-assumptions.css');
 }
 
+/** The shell mark as a spool for modules waking after idle, loaded with module-effects.js. */
+export function ensureModuleArrivalStyles() {
+  return ensureDeferredStyles('spw-module-arrival-styles', '/public/css/ornament/module-arrival.css');
+}
+
 /** Frame focus, arrival, and relation cues, loaded when interactions bind. */
 export function ensureRelationalStateStyles() {
   return ensureDeferredStyles('spw-relational-state-styles', '/public/css/ornament/relational-state.css');

@@ -2010,7 +2010,6 @@ html[data-spw-reduce-motion="on"] *::after {
   --spw-effect-pulse: 0;
   /* Pulse windows: JS reads these for setTimeout; CSS spends them for outline/tempo. */
   --spw-effect-pulse-duration: var(--duration-ceremonial, 720ms);
-  --spw-module-effect-pulse-duration: var(--touch-recover, 520ms);
   --spw-ecology-phase-pulse-duration: var(--duration-deliberate, 360ms);
 
   /* Section locomotion progress (attention-architecture writes on section nodes). */
@@ -27913,19 +27912,8 @@ html[data-spw-site-rhythm-authority="runtime"] {
     color-mix(in srgb, var(--component-accent, var(--teal, #008080)) 72%, var(--ink-soft, rgba(14, 18, 20, 0.72)) 28%);
 }
 
-/* Module effect surface — root-level tokens derived from mounted module side effects.
-   Pulse window: --spw-module-effect-pulse-duration (module-effects.js). */
-:where(html[data-spw-module-effects-active]) {
-  --spw-module-effect-surface: 1;
-}
-
-:where(html[data-spw-module-effect-pulse]) {
-  --spw-module-effect-pulse: 1;
-  /* Mount blip: barely audible tempo nudge, not a tempo shift. */
-  --spw-site-rhythm-tempo: 1.035;
-  transition:
-    --spw-site-rhythm-tempo var(--spw-module-effect-pulse-duration, 520ms) var(--ease-settle, ease);
-}
+/* Modules waking after idle are drawn on the shell mark, not the root:
+   ornament/module-arrival.css, loaded with module-effects.js. */
 
 /* Effect ledger flourishes — precipitated residue as soft ornament knobs.
    Defaults live in tokens/core.css; effect-ledger.js overrides on html when residue lands.
@@ -27949,33 +27937,11 @@ html[data-spw-site-rhythm-authority="runtime"] {
   --spw-microinteraction-pulse-intensity: 1;
 }
 
-:where(html[data-spw-reduce-motion="on"][data-spw-module-effect-pulse]) {
-  --spw-module-effect-pulse: 0;
-  --spw-site-rhythm-tempo: 1;
-}
-
 @media (prefers-reduced-motion: reduce) {
   :where(html[data-spw-effect-pulse]) {
     --spw-effect-pulse-active: 0;
     --spw-microinteraction-pulse-intensity: 1;
   }
-
-  :where(html[data-spw-module-effect-pulse]) {
-    --spw-module-effect-pulse: 0;
-    --spw-site-rhythm-tempo: 1;
-  }
-}
-
-:where(html[data-spw-runtime-enhancement-active="true"]) {
-  --spw-runtime-enhancement-intensity: max(var(--spw-runtime-enhancement-intensity, 0.32), 0.72);
-}
-
-:where(html[data-spw-runtime-feature-active="true"]) {
-  --spw-runtime-feature-intensity: max(var(--spw-runtime-feature-intensity, 0.22), 0.62);
-}
-
-:where(html[data-spw-runtime-layer-pulse="dense"]) {
-  --spw-site-rhythm-density: max(var(--spw-site-rhythm-density, 0.5), 0.92);
 }
 
 :where([data-spw-interaction-contract]) {

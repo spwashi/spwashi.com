@@ -25,12 +25,11 @@
   },
   "public/css/components/runtime-states.css": {
     "--spw-region-profile-intensity": 2,
-    "--spw-runtime-enhancement-intensity": 4,
+    "--spw-runtime-enhancement-intensity": 3,
     "--spw-site-rhythm-tempo": 4,
     "--component-accent": 1,
-    "--spw-runtime-feature-intensity": 1,
-    "--spw-site-rhythm-density": 2,
     "--spw-layout-cascade-hold": 1,
+    "--spw-site-rhythm-density": 1,
     "--spw-ecology-readiness-ring-strength": 1
   },
   "public/css/components/semantic-variants.css": {
