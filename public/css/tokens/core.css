@@ -1351,7 +1351,6 @@
   --spw-effect-pulse: 0;
   /* Pulse windows: JS reads these for setTimeout; CSS spends them for outline/tempo. */
   --spw-effect-pulse-duration: var(--duration-ceremonial, 720ms);
-  --spw-module-effect-pulse-duration: var(--touch-recover, 520ms);
   --spw-ecology-phase-pulse-duration: var(--duration-deliberate, 360ms);
 
   /* Section locomotion progress (attention-architecture writes on section nodes). */

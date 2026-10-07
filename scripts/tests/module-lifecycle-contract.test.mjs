@@ -137,10 +137,7 @@ test('portable exports receive context and root, and retain export refresh with 
 
 // The loader calls an export's mount as (ctx, root). An export written with the
 // catalog adapter's (mod, ctx, root) reads the context as a module namespace and
-// the root as undefined. Held: module-effects, whose bus subscription that
-// silences waits on a browser review before it is restored or retired.
-const HELD_ADAPTER_SIGNATURE_EXPORTS = new Set(['runtime/arrival/module-effects.js']);
-
+// the root as undefined.
 test('portable export mounts take (ctx, root), not the catalog adapter signature', async () => {
   const jsRoot = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../public/js');
   const files = (await readdir(jsRoot, { recursive: true }))
@@ -154,12 +151,7 @@ test('portable export mounts take (ctx, root), not the catalog adapter signature
       if (adapterMountRe.test(body)) offenders.push(file.split(path.sep).join('/'));
     }
   }
-  assert.deepEqual(offenders.filter((file) => !HELD_ADAPTER_SIGNATURE_EXPORTS.has(file)), []);
-  assert.deepEqual(
-    [...HELD_ADAPTER_SIGNATURE_EXPORTS].filter((file) => !offenders.includes(file)),
-    [],
-    'a held export no longer takes three arguments; drop it from the hold',
-  );
+  assert.deepEqual(offenders, []);
 });
 
 test('catalog adapters receive module/context/root and returned refresh wins over export refresh', async () => {

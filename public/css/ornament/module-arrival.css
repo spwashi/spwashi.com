@@ -1,0 +1,120 @@
+/* ==========================================================================
+   ornament/module-arrival.css
+   --------------------------------------------------------------------------
+   The shell mark as a spool. For every module that wakes after idle,
+   module-effects.js turns the #>spwashi mark a notch and pays out one stitch
+   beneath it. When mounts go quiet the stitch line runs out to the mark's
+   full width, holds a beat and fades, and the mark finishes its turn upright.
+
+   Paint and transform only: nothing here moves the header or the page.
+   Loaded with module-effects.js (kernel/deferred-styles.js).
+
+   Knobs, on .header-sigil:
+   - --spw-module-arrival-stitch / -pitch: dash length and dash + gap
+   - --spw-module-arrival-ink: thread colour
+   Written by the runtime, on the same element:
+   - --spw-module-effect-stitches: modules woken in this wake
+   - --spw-module-effect-turn: the mark's accumulated turn
+   - data-spw-module-effect-pulse: waking | settled
+   ========================================================================== */
+
+@layer reset, tokens, shell, typography, grammar, components, systems, routes, handles, effects, ornament;
+
+@layer ornament {
+
+.header-sigil {
+  /* Spool geometry */
+  --spw-module-arrival-stitch: 3px;
+  --spw-module-arrival-pitch: 6px;
+
+  /* Thread */
+  --spw-module-arrival-ink: color-mix(in srgb, var(--op-action-color, #006666) 64%, currentColor);
+
+  /* Anchor for the stitch line; no offsets, so the sigil does not move.
+     The sigil paints contained (an operator chip), so the line sits inside its box. */
+  position: relative;
+}
+
+/* The mark (header.css draws it) turns a notch per woken module. */
+.header-sigil::before {
+  transform: rotate(var(--spw-module-effect-turn, 0deg));
+  transition: transform 460ms var(--ease-spring, ease);
+}
+
+/* The thread: one stitch per woken module, paid out from the leading edge. */
+.header-sigil::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0.16rem;
+  block-size: 1.5px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      var(--spw-module-arrival-ink) 0 var(--spw-module-arrival-stitch),
+      transparent var(--spw-module-arrival-stitch) var(--spw-module-arrival-pitch)
+    );
+  clip-path: inset(0 max(0px, calc(100% - var(--spw-module-effect-stitches, 0) * var(--spw-module-arrival-pitch))) 0 0);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    clip-path 260ms var(--ease-settle, ease),
+    opacity 160ms linear;
+}
+
+.header-sigil[data-spw-module-effect-pulse="waking"]::after {
+  opacity: 1;
+}
+
+/* Quiet: the mark winds home slowly; the thread runs out, holds, and fades. */
+.header-sigil[data-spw-module-effect-pulse="settled"]::before {
+  transition-duration: 720ms;
+  transition-timing-function: var(--ease-settle, ease);
+}
+
+.header-sigil[data-spw-module-effect-pulse="settled"]::after {
+  clip-path: inset(0);
+  opacity: 0;
+  transition:
+    clip-path 520ms var(--ease-settle, ease),
+    opacity 700ms ease 620ms;
+}
+
+/* Inspecting modules: the count of what woke stays readable after the wake. */
+html[data-spw-module-visuals="on"] .header-sigil[data-spw-module-effect-pulse="settled"]::after {
+  clip-path: inset(0 max(0px, calc(100% - var(--spw-module-effect-stitches, 0) * var(--spw-module-arrival-pitch))) 0 0);
+  opacity: 1;
+}
+
+/* Reduced motion: the thread still counts; nothing turns or sweeps. */
+html[data-spw-reduce-motion="on"] .header-sigil::before {
+  transform: none;
+  transition: none;
+}
+
+html[data-spw-reduce-motion="on"] .header-sigil::after {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header-sigil::before {
+    transform: none;
+    transition: none;
+  }
+
+  .header-sigil::after {
+    transition: none;
+  }
+}
+
+/* Captures show the shell at rest. */
+html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"]) .header-sigil::before {
+  transform: none;
+  transition: none;
+}
+
+html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"]) .header-sigil::after {
+  display: none;
+}
+
+}

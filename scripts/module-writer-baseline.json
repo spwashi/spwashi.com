@@ -143,9 +143,6 @@
       "attr:data-spw-learnability-slot-count",
       "attr:data-spw-learnability-tuning"
     ],
-    "module-effects": [
-      "attr:data-spw-module-effect-count"
-    ],
     "navigation-spells": [
       "attr:data-spw-navigation-spells-init"
     ],
