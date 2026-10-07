@@ -178,5 +178,5 @@ expression = surface[cognitive]{legibility.attention.record}<traverse>
   @spatial_grammar: ~"./spatial-grammar.spw"
   @site_semantics: ~"../conventions/site-semantics.spw"
   @screenshot_plan: ~"../../.agents/plans/screenshot-semantics/screenshot-semantics.spw"
-  @nav_plan: ~"../../.agents/plans/cognitive-navigation/cognitive-navigation.spw"
+  @nav_plan: ~"../../.agents/plans/archive/cognitive-navigation/cognitive-navigation.spw"
 }

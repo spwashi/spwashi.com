@@ -25,18 +25,18 @@ fixity = "tending"
  operation = "prime"
  bucket = "active_backlog"
  validation = #[ `Hypotheses: most routes should converge on the same top-level semantic skeleton; repeated section frames should expose clearer accessible names; and the runtime should be able to infer more metadata with less HTML boilerplate.`, `Negative controls: page copy, route order, and existing interactive settings/image behaviors should remain functionally unchanged.`, `Demo sequence: open representative pages from /, /about/website/, /settings/, /topics/math/, /topics/software/parsers/, and /topics/software/spw/operators/ref/; verify skip-link behavior, main targeting, section labeling, and semantic metadata overlays still make sense.`, ][reg=set]
- hot_files = #[ `about/website/index.html`, `settings/index.html`, `topics/math/index.html`, `topics/site-design/index.html`, `topics/software/index.html`, `.agents/plans/vibe-setting-widgets/wip.spw`, ][reg=set]
+ hot_files = #[ `about/website/index.html`, `settings/index.html`, `topics/math/index.html`, `topics/site-design/index.html`, `topics/software/index.html`, `.agents/plans/archive/vibe-setting-widgets/wip.spw`, ][reg=set]
 }[reg=facet]
 ^["roots"]{
- @plan: ~".agents/plans/semantic-html-normalization/PLAN.md"
- @home: ~"index.html"
- @website: ~"about/website/index.html"
- @settings: ~"settings/index.html"
- @topics_math: ~"topics/math/index.html"
- @parsers: ~"topics/software/parsers/index.html"
- @operator_ref: ~"topics/software/spw/operators/ref/index.html"
- @page_metadata: ~"public/js/spw-page-metadata.js"
- @semantic_chrome: ~"public/js/spw-semantic-chrome.js"
+ @plan: ~"PLAN.md"
+ @home: ~"../../../index.html"
+ @website: ~"../../../about/website/index.html"
+ @settings: ~"../../../settings/index.html"
+ @topics_math: ~"../../../topics/math/index.html"
+ @parsers: ~"../../../topics/software/parsers/index.html"
+ @operator_ref: ~"../../../topics/software/spw/operators/ref/index.html"
+ @page_metadata: ~"../../../public/js/semantic/page-metadata.js"
+ @semantic_chrome: ~"../../../public/js/interface/semantic-chrome.js"
  @components_css: ~"public/css/spw-components.css"
 }
 

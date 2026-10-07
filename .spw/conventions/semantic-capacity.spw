@@ -7,7 +7,7 @@
 #:conventions #!semantics #!memory #!audit #!expansion
 #:layer #!pragmatics
 
-@surface_normalization_plan: ~"../../.agents/plans/spw-surface-normalization/PLAN.md"
+@surface_normalization_plan: ~"../../.agents/plans/archive/spw-surface-normalization/PLAN.md"
 @surface_normalization_review: ~"../reviews/spw-surface-normalization.spw"
 @model_guided_refinement: ~"./model-guided-refinement.spw"
 @planning_ecology: ~"./planning-ecology.spw"

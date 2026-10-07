@@ -1,0 +1,115 @@
+# Review 2026-10-06 — archived: landed: the public goal landed: runtime/page/page-state.js exists and runtime-contracts.mts is wired into check:runtime; every 2026-06 and 08 pass recorded done; last real edit 91f7fa1c (2026-08-24); module-contract-overhaul owns what remains
+# Review 2026-07-12 — keep as the extraction/composition owner; reduce site.js only where a reusable boundary is already visible.
+# Plan Index — JS Runtime Composability
+#
+# Reduce the size and cognitive load of public/js/site.js by extracting the page-state / attention lifecycle contract into a dedicated runtime module, while keeping the runtime…
+
+#>plan_js_runtime_composability_index
+#:index #!plan
+#:operation #!archive
+#:layer #!pragmatics
+
+operation = "archive"
+fixity = "tending"
+
+intent: .{
+ goal = `Reduce the size and cognitive load of public/js/site.js by extracting the page-state / attention lifecycle contract into a dedicated runtime module, while keeping the runtime behavior and datasets stable.`
+ owner = `js-runtime-composability`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Reduce the size and cognitive load of public/js/site.js by extracting the page-state / attention lifecycle contract…`
+ concepts = #[
+  `runtime`,
+  `composability`,
+  `reduce`,
+  `size`,
+  `cognitive`,
+ ][reg=set]
+ surfaces = #[
+  `js/site.js`,
+  `js/runtime/page/page-state.js`,
+  `js/README.md`,
+  `scripts/ts/runtime-contracts.mts`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
+@plans_root: ~"../../index.spw"
+@plan_index_convention: ~"../../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@site: ~"../../../../public/js/site.js"
+@page_state: ~"../../../../public/js/runtime/page/page-state.js"
+@readme: ~"../../../../public/js/README.md"
+@runtime_contracts: ~"../../../../scripts/ts/runtime-contracts.mts"
+@check_site: ~"../../../../scripts/ts/check-site.mts"
+@lifecycles: ~"../../../../.spw/reviews/runtime-audit/lifecycles.spw"
+@public_js_runtime_module_catalog_js: ~"../../../../public/js/runtime/catalog/index.js"
+
+dispatch: .{
+ plan = @plan
+ site = @site
+ page_state = @page_state
+ readme = @readme
+ runtime_contracts = @runtime_contracts
+ check_site = @check_site
+ lifecycles = @lifecycles
+ public_js_runtime_module_catalog_js = @public_js_runtime_module_catalog_js
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `runtime-bootstrap-performance`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-js_runtime_composability-001"
+ layer = "pragmatic"
+ hypothesis = `Reduce the size and cognitive load of public/js/site.js by extracting the page-state / attention lifecycle contract into a dedicated runtime module, while keeping the runtime behavior and datasets stable.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../../public/js/site.js"
+ probe_ref = `node --check public/js/site.js`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../../public/js/site.js unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `Extract page lifecycle helpers from public/js/site.js into a focused runtime module.`,
+  `Keep the shared page-state vocabulary, timing behavior, and dataset writes centralized.`,
+  `Update documentation that currently says the page-state contract lives only in site.js.`,
+  `Add runtime architecture checks that make module definitions, generated typed outputs, and root-level entrypoint boundaries fail visibly when they drift.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `node --check public/js/site.js`,
+ `node --check public/js/runtime/page/page-state.js`,
+ `npm run check:runtime`,
+ `git diff --check`,
+ `npm run check`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does js-runtime-composability own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of js-runtime-composability?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether js-runtime-composability still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Reduce the size and cognitive load of public/js/site.js by extracting the page-state / attention lifecycle contract into a dedicated…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]

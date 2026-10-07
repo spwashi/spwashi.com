@@ -1,5 +1,9 @@
 # Plan: interaction-grammar
 
+**Status 2026-10-06.** `public/js/semantic/component-semantics.js` exists and the interaction files live in `runtime/interaction/`, so the Status below that calls it unwritten is stale. Holds the loop contract (interaction-loop-contract) and the hysteresis cache (interaction-cache). Next: audit the 24 unaudited gesture contracts.
+
+**Related:** [interaction-cache](../archive/interaction-cache/PLAN.md) (archived) · [gesture-state-refinement](../gesture-state-refinement/PLAN.md). **Absorbed 2026-10-06:** [interaction-loop-contract](../archive/interaction-loop-contract/PLAN.md) · [microinteraction-motion-lifecycle](../archive/microinteraction-motion-lifecycle/PLAN.md).
+
 Develop practical interactive circuits that become satisfying and familiar over time, and rethink brace physics toward vocabulary that is more cognitively accessible — while using Spw to exercise spatial relationship and let other languages and notations shine through it.
 
 ## Status — 2026-09-04

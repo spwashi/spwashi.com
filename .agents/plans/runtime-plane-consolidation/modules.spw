@@ -333,7 +333,7 @@ fixity = "tending"
 }[reg=facet]
 
 ^"runtime_module_export_contract"[#runtime #contract #dead]{
- @self: ~"../../../public/js/runtime/module-export-contract.js"
+ @self: ~"../../../public/js/runtime/catalog/export-contract.js"
 
  identity( id: $runtime.module_export_contract ; guild: #runtime ; layer: #shared ; mount: ~static )
 
@@ -413,7 +413,7 @@ fixity = "tending"
 }[reg=facet]
 
 ^"runtime_module_updates_contract"[#runtime #contract #declared-data]{
- @self: ~"../../../public/js/runtime/module-updates-contract.js"
+ @self: ~"../../../public/js/runtime/catalog/updates-contract.js"
 
  identity( id: $runtime.module_updates ; guild: #runtime ; layer: #shared ; mount: ~static )
 
@@ -744,7 +744,7 @@ fixity = "tending"
 }[reg=facet]
 
 ^"runtime_module_loader"[#runtime #orchestrator #eager]{
- @self: ~"../../../public/js/runtime/module-loader.js"
+ @self: ~"../../../public/js/runtime/orchestration/loader.js"
 
  identity( id: $runtime.module_loader ; guild: #runtime ; layer: #shared ; mount: ~static )
 
@@ -897,14 +897,14 @@ fixity = "tending"
 }[reg=facet]
 
 ^"runtime_module_catalog"[#runtime #registry #declaration]{
- @self: ~"../../../public/js/runtime/module-catalog.js"
+ @self: ~"../../../public/js/runtime/catalog/index.js"
  ~parts: [
-   ~"../../../public/js/runtime/module-catalog-core.js"
-   ~"../../../public/js/runtime/module-catalog-feature.js"
-   ~"../../../public/js/runtime/module-catalog-enhancement.js"
-   ~"../../../public/js/runtime/module-catalog-region.js"
-   ~"../../../public/js/runtime/module-catalog-normalize.js"
-   ~"../../../public/js/runtime/module-catalog-constants.js"
+   ~"../../../public/js/runtime/catalog/core.js"
+   ~"../../../public/js/runtime/catalog/feature.js"
+   ~"../../../public/js/runtime/catalog/enhancement.js"
+   ~"../../../public/js/runtime/catalog/region.js"
+   ~"../../../public/js/runtime/catalog/normalize.js"
+   ~"../../../public/js/runtime/catalog/constants.js"
  ]
 
  identity( id: $runtime.module_catalog ; guild: #runtime ; layer: #declaration ; mount: ~static )

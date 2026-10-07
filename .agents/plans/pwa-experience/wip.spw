@@ -28,11 +28,11 @@ fixity = "tending"
 }[reg=facet]
 ^["roots"]{
  @cluster: ~".agents/plans/plan-ecology-clustering/plan-ecology-clustering.spw"
- @plan: ~".agents/plans/pwa-experience/PLAN.md"
+ @plan: ~"PLAN.md"
  @pattern: ~".spw/patterns/literate-ui.spw"
  @manifest: ~"manifest.webmanifest"
- @client: ~"public/js/pwa-update-handler.js"
- @worker: ~"sw.js"
+ @client: ~"../../../public/js/runtime/shell/pwa-update-handler.js"
+ @worker: ~"../../../sw.js"
 }
 
 ^["intent"]{

@@ -1,5 +1,9 @@
 # Visual Capture Ecology
 
+**Status 2026-10-06.** Attention receipts (4771b685) and the chapter walk (38c50eec) landed.
+
+**Related:** [compositional-css-electrostatics](../compositional-css-electrostatics/PLAN.md) · [screenshot-semantics](../screenshot-semantics/PLAN.md) · [spellcraft-authoring](../spellcraft-authoring/PLAN.md). **Absorbed 2026-10-06:** [rpg-asset-capture-frames](../archive/rpg-asset-capture-frames/PLAN.md).
+
 ## Public Goal
 
 Give editors a fast visual-test loop for components and region seats: QA stills at device-reason media queries, unique content-fit cards sized to copy-flow measure tokens, and optional visibility lenses that ask Spw/sizing questions. Precipitated images are named stills + hashes, not git goldens. Intermediate measures (wrap, leftover tracks, unique ratios, lens asks) double as marketing teasers a human may post.

@@ -28,19 +28,19 @@ fixity = "tending"
  hot_files = #[ `.agents/plans/screenshot-semantics/screenshot-semantics.spw`, ][reg=set]
 }[reg=facet]
 ^["roots"]{
- @plan: ~".agents/plans/screenshot-semantics/PLAN.md"
- @artifact: ~".agents/plans/screenshot-semantics/screenshot-semantics.spw"
- @semantics: ~".spw/conventions/site-semantics.spw"
- @style_development: ~".spw/conventions/style-development.spw"
- @runtime_plan: ~".agents/plans/mobile-runtime-foundation/wip.spw"
- @css_plan: ~".agents/plans/css-progressive-ornaments/wip.spw"
- @nav_plan: ~".agents/plans/cognitive-navigation/wip.spw"
- @components: ~"public/js/spw-component-semantics.js"
- @shared: ~"public/js/spw-shared.js"
- @css: ~"public/css/style.css?v=0.0.2"
- @home: ~"index.html"
- @software: ~"topics/software/index.html"
- @spw_atlas: ~"topics/software/spw/index.html"
+ @plan: ~"PLAN.md"
+ @artifact: ~"screenshot-semantics.spw"
+ @semantics: ~"../../../.spw/conventions/site-semantics.spw"
+ @style_development: ~"../../../.spw/conventions/style-development.spw"
+ @runtime_plan: ~"../mobile-runtime-foundation/wip.spw"
+ @css_plan: ~"../archive/css-progressive-ornaments/wip.spw"
+ @nav_plan: ~"../archive/cognitive-navigation/wip.spw"
+ @components: ~"../../../public/js/semantic/component-semantics.js"
+ @shared: ~"../../../public/js/kernel/shared.js"
+ @css: ~"../../../public/css/style.css"
+ @home: ~"../../../index.html"
+ @software: ~"../../../topics/software/index.html"
+ @spw_atlas: ~"../../../topics/software/spw/index.html"
 }
 
 ^["intent"]{

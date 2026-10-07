@@ -28,17 +28,17 @@ fixity = "tending"
  hot_files = #[ `.agents/plans/mobile-runtime-foundation/mobile-runtime-foundation.spw`, ][reg=set]
 }[reg=facet]
 ^["roots"]{
- @plan: ~".agents/plans/mobile-runtime-foundation/PLAN.md"
- @artifact: ~".agents/plans/mobile-runtime-foundation/mobile-runtime-foundation.spw"
- @site: ~".spw/site.spw"
- @semantics: ~".spw/conventions/site-semantics.spw"
- @surfaces: ~".spw/surfaces.spw"
- @shared: ~"public/js/spw-shared.js"
- @core: ~"public/js/site.js?v=0.0.2"
- @components: ~"public/js/spw-component-semantics.js"
- @navigator: ~"public/js/frame-navigator.js"
- @console: ~"public/js/spw-console.js"
- @css: ~"public/css/style.css?v=0.0.2"
+ @plan: ~"PLAN.md"
+ @artifact: ~"mobile-runtime-foundation.spw"
+ @site: ~"../../../.spw/site.spw"
+ @semantics: ~"../../../.spw/conventions/site-semantics.spw"
+ @surfaces: ~"../../../.spw/surfaces.spw"
+ @shared: ~"../../../public/js/kernel/shared.js"
+ @core: ~"../../../public/js/site.js"
+ @components: ~"../../../public/js/semantic/component-semantics.js"
+ @navigator: ~"../../../public/js/runtime/navigation/frame-navigator.js"
+ @console: ~"../../../public/js/interface/console.js"
+ @css: ~"../../../public/css/style.css"
 }
 
 ^["intent"]{

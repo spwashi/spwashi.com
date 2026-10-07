@@ -19,15 +19,15 @@
  bucket = "active_backlog"
 }[reg=facet]
 ^["roots"]{
- @site: ~".spw/site.spw"
- @site_semantics: ~".spw/conventions/site-semantics.spw"
- @surfaces: ~".spw/surfaces.spw"
- @shared: ~"public/js/spw-shared.js"
- @core: ~"public/js/site.js?v=0.0.2"
- @components: ~"public/js/spw-component-semantics.js"
- @navigator: ~"public/js/frame-navigator.js"
- @console: ~"public/js/spw-console.js"
- @css: ~"public/css/style.css?v=0.0.2"
+ @site: ~"../../../.spw/site.spw"
+ @site_semantics: ~"../../../.spw/conventions/site-semantics.spw"
+ @surfaces: ~"../../../.spw/surfaces.spw"
+ @shared: ~"../../../public/js/kernel/shared.js"
+ @core: ~"../../../public/js/site.js"
+ @components: ~"../../../public/js/semantic/component-semantics.js"
+ @navigator: ~"../../../public/js/runtime/navigation/frame-navigator.js"
+ @console: ~"../../../public/js/interface/console.js"
+ @css: ~"../../../public/css/style.css"
 }
 
 ^["thesis"]{

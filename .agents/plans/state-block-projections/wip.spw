@@ -29,11 +29,11 @@ fixity = "tending"
 }[reg=facet]
 ^["roots"]{
  @cluster: ~".agents/plans/plan-ecology-clustering/plan-ecology-clustering.spw"
- @plan: ~".agents/plans/state-block-projections/PLAN.md"
+ @plan: ~"PLAN.md"
  @pattern: ~".spw/patterns/literate-ui.spw"
- @references: ~".agents/plans/interaction-grammar/PLAN.md"
- @references: ~".agents/plans/archive/brace-literacy-guides/PLAN.md"
- @artifact: ~".agents/plans/state-block-projections/state-block-projections.spw"
+ @references: ~"../interaction-grammar/PLAN.md"
+ @references: ~"../archive/brace-literacy-guides/PLAN.md"
+ @artifact: ~"state-block-projections.spw"
 }
 
 ^["intent"]{

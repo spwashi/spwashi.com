@@ -1,5 +1,9 @@
 # Plan: svg-surface-integration
 
+**Status 2026-10-06.** The host contract and depth landed (`spw-svg-figure`, `svg-surfaces.css`, `svg-tunability.js`). Open: touch and keyboard node inspection on one route; a shared runtime waits for a second widget.
+
+**Related:** [image-metaphysics-aesthetic-pass](../archive/image-metaphysics-aesthetic-pass/PLAN.md) (archived). **Absorbed 2026-10-06:** [canopy-material-depth](../archive/canopy-material-depth/PLAN.md) · [svg-aesthetic-depth-pass](../archive/svg-aesthetic-depth-pass/PLAN.md).
+
 Integrate SVG widgets, illustrations, and interactive components into the site's design ecosystem without adding build tooling or breaking the hand-authored page structure.
 
 ## Goal

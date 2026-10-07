@@ -73,7 +73,7 @@ intent: .{
 @plan_css_sensitive_writes: ~"../css-sensitive-attribute-writes/index.spw"
 @plan_css_architecture: ~"../css-architecture-readability/index.spw"
 @plan_navigation_geometry: ~"../archive/semantic-navigation-geometry/PLAN.md"
-@plan_js_runtime_composability: ~"../js-runtime-composability/index.spw"
+@plan_js_runtime_composability: ~"../archive/js-runtime-composability/index.spw"
 
 @site: ~"../../../public/js/site.js"
 @module_loader: ~"../../../public/js/runtime/orchestration/loader.js"

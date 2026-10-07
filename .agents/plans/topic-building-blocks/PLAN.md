@@ -1,5 +1,9 @@
 # topic-building-blocks
 
+**Status 2026-10-06.** Next slice from Remaining: parallel theories for programs and data structures.
+
+**Related:** [living-learning-surface](../living-learning-surface/PLAN.md). **Absorbed 2026-10-06:** [calculus-trigonometry-field-guides](../archive/calculus-trigonometry-field-guides/PLAN.md) · [learning-science-enhancement](../archive/learning-science-enhancement/PLAN.md) · [pure-math-routes](../archive/pure-math-routes/PLAN.md) · [topical-learning-links](../archive/topical-learning-links/PLAN.md).
+
 ## Public Goal
 Topics read as a course, not only a shelf. Each area has building blocks in order, each leaf points to a next page, and portals from the fields of the creator's peers, mentors, and family route into the topics where those fields' questions already live.
 

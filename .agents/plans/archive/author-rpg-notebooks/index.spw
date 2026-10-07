@@ -53,7 +53,7 @@ intent: .{
 @topics_craft_index_html: ~"../../../../topics/craft/index.html"
 @play_rpg_wednesday_index_html: ~"../../../../play/rpg-wednesday/index.html"
 @play_rpg_wednesday_sessions_index_html: ~"../../../../play/rpg-wednesday/sessions/index.html"
-@rpg_local_gameplay: ~"../../../../.agents/plans/rpg-local-gameplay/rpg-local-gameplay.spw"
+@rpg_local_gameplay: ~"../rpg-local-gameplay/rpg-local-gameplay.spw"
 
 dispatch: .{
  plan = @plan

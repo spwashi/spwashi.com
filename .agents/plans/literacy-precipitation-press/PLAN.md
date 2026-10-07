@@ -1,5 +1,9 @@
 # Plan: literacy-precipitation-press
 
+**Status 2026-10-06.** Rung 1 landed (`runtime/memory/effect-ledger.js`, through spellcraft). Next: the bulletin-board specimen. Rungs 2–5 wait on the creator.
+
+**Related:** [visual-capture-ecology](../visual-capture-ecology/PLAN.md).
+
 North-star lore and staged architecture for spwashi.com as a place where literacy precipitates into physical form: named abilities become tangible items, learning leaves printable residue on bulletin boards, the site becomes a publishing surface, and eventually - literally - a paper manufacturer for aesthetics tuned to learnability and genre preferences. (Spwashi direction, 2026-07-03.)
 
 ## The Lore (kept intact)

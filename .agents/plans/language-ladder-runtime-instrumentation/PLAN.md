@@ -1,5 +1,9 @@
 # Language Ladder + Runtime Instrumentation
 
+**Status 2026-10-06.** Instrumentation landed (`load-trace.js`, `module-timing-contract.ts`). The JS-to-TS curriculum has not moved since 2026-05-31; it needs a first exemplar, or it folds into typescript-integration.
+
+**Related:** [module-contract-overhaul](../module-contract-overhaul/PLAN.md).
+
 ## Public Goal
 
 Make the development experience on spwashi.com feel progressively teachable rather than merely executable. The codebase should help a developer relate to code as a staged practice: first read the structure, then observe the runtime, then tune the timing, then compare the effect of different JavaScript forms, and eventually use TypeScript where it sharpens contracts and makes philosophy-like distinctions between shape, behavior, and proof more explicit.

@@ -1,0 +1,95 @@
+# Review 2026-10-06 — archived: landed: all four JS items landed 2026-05-28/06-10: aria-description in brace-gestures.js, aria-current in navigation-spells.js, live region in section-handle.js, aria-labelledby in frame-navigator.js
+# Review 2026-07-12 — rework from the actual failure and WCAG behavior; “proposed by another agent” is not a sufficient goal.
+# Plan Index — Gesture & Navigation Interactive Semantics (ARIA Hygiene)
+#
+# Origin: Proposed by another agent session. Captured here for tracking and execution.
+
+#>plan_gesture_aria_hygiene_index
+#:index #!plan
+#:operation #!archive
+#:layer #!pragmatics
+
+operation = "archive"
+fixity = "tending"
+
+intent: .{
+ goal = `Origin: Proposed by another agent session. Captured here for tracking and execution.`
+ owner = `gesture-aria-hygiene`
+ kind = `fix`
+ bucket = `fix_queue`
+ artifact_shape = `FIX.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "observation | gesture"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "exchange"
+ memory_tier = "hot"
+ bucket = "fix_queue"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Origin: Proposed by another agent session. Captured here for tracking and execution.`
+ concepts = #[
+  `gesture`,
+  `navigation`,
+  `interactive`,
+  `semantics`,
+  `aria`,
+ ][reg=set]
+ surfaces = #[
+  `js/runtime/interaction/brace-gestures.js`,
+  `js/runtime/navigation/navigation-spells.js`,
+  `js/runtime/attention/attention-architecture.js`,
+  `js/runtime/navigation/frame-navigator.js`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
+@plans_root: ~"../../index.spw"
+@plan_index_convention: ~"../../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
+@fix: ~"./FIX.md"
+@brace_gestures: ~"../../../../public/js/runtime/interaction/brace-gestures.js"
+@navigation_spells: ~"../../../../public/js/runtime/navigation/navigation-spells.js"
+@attention_architecture: ~"../../../../public/js/runtime/attention/attention-architecture.js"
+@frame_navigator: ~"../../../../public/js/runtime/navigation/frame-navigator.js"
+
+dispatch: .{
+ fix = @fix
+ brace_gestures = @brace_gestures
+ navigation_spells = @navigation_spells
+ attention_architecture = @attention_architecture
+ frame_navigator = @frame_navigator
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `rework`
+ note = `rework from the actual failure and WCAG behavior`
+ rescope = `required`
+ status = `active`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-gesture_aria_hygiene-001"
+ layer = "pragmatic"
+ hypothesis = `Origin: Proposed by another agent session. Captured here for tracking and execution.`
+ spec_ref = ~"./FIX.md"
+ impl_ref = ~"../../../../public/js/runtime/interaction/brace-gestures.js"
+ probe_ref = `rg 'gesture-aria-hygiene' .agents/plans/archive/gesture-aria-hygiene`
+ falsification = `The listed failure mode returns after the planned fix lands.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does gesture-aria-hygiene own, and what should stay out of scope?`, see = @fix }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of gesture-aria-hygiene?`, see = @index }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Origin: Proposed by another agent session. Captured here for tracking and execution.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]

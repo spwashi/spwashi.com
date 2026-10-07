@@ -68,7 +68,7 @@ route_hooks: .{
  pedagogy = ~"../../topics/pedagogy/index.html"
  topics = ~"../../topics/index.html"
  home = ~"../../index.html"
- plan = ~"../../.agents/plans/discovery-powerups/PLAN.md"
+ plan = ~"../../.agents/plans/archive/discovery-powerups/PLAN.md"
 }[reg=facet]
 
 validation: #[

@@ -1,5 +1,9 @@
 # Modular Experience Slices & Earthy Rhythms of Participation
 
+**Status 2026-10-06.** Pilot A's note that the math labs are uncommitted worktree work is stale; the 2026-09-20 reconciliation found them in this checkout. Next: the math-practice-labs review. Holds the dimensional navigation slice contract (`.spw/slices/dimensional-expression-navigation/`).
+
+**Related:** [page-region-discoverability](../page-region-discoverability/PLAN.md). **Absorbed 2026-10-06:** [dimensional-expression-navigation](../archive/dimensional-expression-navigation/PLAN.md).
+
 ## Public Goal
 
 Evolve the file tree and collaboration surfaces *of this repository* so that stable "experience slices" (operator grammar, attention/resonance field, cauldron/composition, musical/rhythmic projection, wonder/ornament, brace physics, region harmony, creative play surfaces, math practice labs, etc.) can be owned and iteratively tended by human developer teams over years — like layers of an abstract painting or beds in a long-lived garden — while preserving core Spw contracts and inspectability. The planning target stays local to this repository; the slice model should help humans coordinate work here, not become an upstream workbench proposal.

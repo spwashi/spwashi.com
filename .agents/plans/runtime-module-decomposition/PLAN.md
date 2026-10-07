@@ -1,5 +1,9 @@
 # Plan: runtime-module-decomposition
 
+**Status 2026-10-06.** Landed: `kernel/storage-utils.js` (a6cdf035), `shell/measurement.js` (638b2629), breadcrumb-spell and sample-dock (0cb1dbfd, 2026-09-12), the 0c lens writer. Owns the kernel-extraction seam that runtime-plane-consolidation Phase 6 names.
+
+**Related:** [runtime-plane-consolidation](../runtime-plane-consolidation/PLAN.md) · [module-contract-overhaul](../module-contract-overhaul/PLAN.md) · [settings-ornament-resonance](../settings-ornament-resonance/PLAN.md).
+
 Decompose overloaded runtime modules by extracting **generalizable kernel contracts first**, then thinning feature modules into orchestrators. Splits that precede shared primitives just move complexity sideways.
 
 ## Public goal

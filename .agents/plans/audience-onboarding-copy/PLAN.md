@@ -1,5 +1,9 @@
 # Plan: audience-onboarding-copy
 
+**Status 2026-10-06.** Entrance copy landed. Open: the first-fold lines `audit:copy:accessor` flags. Once they clear, this folds into semantic-copy-depth.
+
+**Related:** [landing-visual-hierarchy](../landing-visual-hierarchy/PLAN.md).
+
 Refine the public copy on the main entrance routes so the site better orients experienced professionals, emerging students, and collaborators from adjacent careers.
 
 ## Goal

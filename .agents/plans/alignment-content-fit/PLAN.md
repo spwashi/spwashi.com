@@ -1,5 +1,9 @@
 # Alignment Content Fit
 
+**Status 2026-10-06.** Brochure fit landed 2026-08-19 (6b93a85a, `npm run qa:alignment`). Next: one shared inset token for the home pocket sibling ladders, then the settings near-flush edges.
+
+**Related:** [vertical-rhythm-container-audit](../archive/vertical-rhythm-container-audit/PLAN.md) (archived) · [layout-seat-squeeze](../layout-seat-squeeze/PLAN.md) · [page-frame-sizing](../archive/page-frame-sizing/PLAN.md) (archived).
+
 ## Public Goal
 
 Keep reading, controls, and inspectable frames aligned from phone to wide desktop, including after a reader changes text scale with pinch or settings. Give the brochure-facing home, about, and services routes a shared outer rhythm while preserving a memorable local arrangement for each route.

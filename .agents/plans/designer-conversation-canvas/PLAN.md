@@ -1,5 +1,9 @@
 # Plan: designer-conversation-canvas
 
+**Status 2026-10-06.** Bus, preview, metrics and canvas frame landed. Next slice: an export bundle (specimen URL, tokens, telemetry) for the starter pilot to consume.
+
+**Related:** [design-hub](../design-hub/PLAN.md) · [pretext-whimsy-lab](../pretext-whimsy-lab/PLAN.md).
+
 Make spwashi.com legible as a **conversation between author, designer, and runtime** — touchable specimens, named tokens, and a shared measurement bus on the public route.
 
 ## Goal

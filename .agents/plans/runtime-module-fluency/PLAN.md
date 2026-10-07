@@ -1,5 +1,9 @@
 # Runtime Module Fluency
 
+**Status 2026-10-06.** Console helpers and query recipes landed; the orchestration view was named 2026-08-31. No next slice is named; without one, this folds into module-contract-overhaul.
+
+**Related:** [module-contract-overhaul](../module-contract-overhaul/PLAN.md) · [runtime-plane-consolidation](../runtime-plane-consolidation/PLAN.md) · [language-ladder-runtime-instrumentation](../language-ladder-runtime-instrumentation/PLAN.md).
+
 ## Public Goal
 
 Make the site behave like a learnable visual instrument: calm at rest, expressive when practiced, and inspectable when a reader wants to understand which scripts changed behavior or visuals. The complexity should feel closer to a French horn than a random control panel: stable ground, repeated fingerings, and visually legible resonance.

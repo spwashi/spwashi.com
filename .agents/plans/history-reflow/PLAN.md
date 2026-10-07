@@ -1,5 +1,7 @@
 # Plan: history-reflow
 
+**Status 2026-10-06.** The 2026-08 reflow is executed and pushed; this plan is now the commit grammar and the rebase recipe. No sequence is pending.
+
 ## Public Goal
 
 Rewrite the unpushed sequence so each commit reads as though we knew then what we

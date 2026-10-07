@@ -1,5 +1,9 @@
 # Mindful Collection Controls
 
+**Status 2026-10-06.** Undo and clear landed (`guide-badge.js` clearToday and clearAll, rewardDisplay). Open: the 2026-09-19 lens-reward proposal, waiting on browser approval.
+
+**Related:** [state-block-projections](../state-block-projections/PLAN.md).
+
 ## Goal
 
 Make guide-badge collections easier to undo and easier to clear in bulk without turning collection into a sticky reward trap.

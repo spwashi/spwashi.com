@@ -1,5 +1,9 @@
 # Plan: living-learning-surface (Curriculum Integration — Teaching Technical Fundamentals Through Economic Theory)
 
+**Status 2026-10-06.** The Phase 1 route and nav landed. The boundary test, Learning Mode presets and `curriculum-state.js` are not built; it needs one concept-first lesson, or it folds into topic-building-blocks.
+
+**Related:** [topic-building-blocks](../topic-building-blocks/PLAN.md). **Absorbed 2026-10-06:** [rpg-wednesday-learning-library](../archive/rpg-wednesday-learning-library/PLAN.md).
+
 **Public Goal**: Turn the 16-page curriculum report into interactive, concept-first learning experiences on spwashi.com. Learners progress through 6 economic-analogy CS modules as quests, manipulate bounded analogies in simulations + mandatory boundary tests, produce exportable proof-card artifacts, track progress locally (no login), and synthesize in capstone portfolios. The site becomes a *living, usable LMS* that demonstrates its own principles (readable systems, developmental climate as equity, constructive play, local-first, recursive notice→name→fold→note→return loop).
 
 This directly extends the existing Town Library / RPG Wednesday learning library (Cask guide already maps to Memory/Buffers), learning-science-enhancement work, proof cards, quests, settings climates, math-lab interactivity patterns, and Spw operator/frame grammar.

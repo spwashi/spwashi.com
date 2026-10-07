@@ -61,4 +61,4 @@
 
 @semantic_braces: ~"../../../conventions/semantic-braces.spw"
 @site_semantics: ~"../../../conventions/site-semantics.spw"
-@spell_cauldron_lifecycle: ~"../../spell-cauldron-lifecycle-memory-gardening/PLAN.md"
+@spell_cauldron_lifecycle: ~"../spell-cauldron-lifecycle-memory-gardening/PLAN.md"

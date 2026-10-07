@@ -1,5 +1,9 @@
 # Plan: typescript-integration
 
+**Status 2026-10-06.** Landed Scope and Shared Layout Steps below are the current state; the April Current Context predates landing.
+
+**Related:** [pwa-experience](../pwa-experience/PLAN.md) · [core-css-spend-cut](../core-css-spend-cut/PLAN.md).
+
 Integrate TypeScript into `spwashi.com` in a way that makes build/export tooling, contract documentation, and large runtime registries safer without forcing the published site into a framework migration or a browser-first bundler architecture.
 
 ## Public Goal

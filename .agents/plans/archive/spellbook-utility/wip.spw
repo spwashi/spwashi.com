@@ -1,0 +1,47 @@
+# Review 2026-07-12 — retain as a concise cache; choose one restore/resume macro before expanding the spell catalog.
+^"selection_probes"{
+ probes = #[ `rg 'spellbook-utility' settings/index.html`, `Hypotheses: a utility-first spellboard will make repeat visits more valuable; checkpoint restore will become the first spell people actually use; pinned working-set replay will make the bookmark registry feel alive instead of archival.`, `test -f settings/index.html`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
+^"plan_context"{
+ goal = `The desired end state is a spell surface that earns its metaphor by doing useful work. Right now the spell board and header dock serialize grounded tokens into a readable snippet, but they mostly act as documentation of prior interaction. The next step is not more serialization depth; it is executable value. The spellbook should become the inspectable catalog of a few proven interaction macros: things that restore a saved cognitive state, reopen a pinned working set, or otherwise reduce the cost of returning to an in-progress line of thought. The taste note is earned fluency + working memory recovery: spells should feel like learned reflexes that help a person resume, compare, and continue, not like ritual language layered on top of ordinary navigation.`
+ owner = `spellbook-utility`
+ operation = "prime"
+ bucket = "active_backlog"
+ validation = #[ `Hypotheses: a utility-first spellboard will make repeat visits more valuable; checkpoint restore will become the first spell people actually use; pinned working-set replay will make the bookmark registry feel alive instead of archival.`, `Negative controls: empty-state spell surfaces remain calm and legible; users who never save checkpoints or pins still encounter a complete site; normal route navigation continues without spell knowledge.`, `Demo sequence:`, `Ground several links or concepts, save a checkpoint, reset haptics, restore the checkpoint from the spell board, and verify grounded state returns.`, `Pin several frames, visit /settings/#bookmarks and /settings/#spell-board, trigger resume_pins, and verify the working set becomes a guided sequence rather than a dead listing.`, `Confirm reset and back-out paths remain obvious after each spell.`, ][reg=set]
+ hot_files = #[ `settings/index.html`, `.agents/plans/archive/spellbook-utility/PLAN.md`, `.agents/plans/archive/spellbook-utility/wip.spw`, ][reg=set]
+}[reg=facet]
+# wip — spellbook-utility
+#
+#>plan_spellbook_utility_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@plans_root: ~"../../index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
+# spellbook-utility
+# Narrow the spellbook toward replayable outcomes.
+
+^["stream"]{
+ >>[2026-04-17] observe - The current spellboard in `public/js/spw-spells.js` is mostly a serialization layer: grounded tokens become a readable snippet, prefix counts, destination counts, and compact previews. It is inspectable, but it does not yet reduce the cost of resuming work.
+ >>[2026-04-17] observe - `public/js/spw-haptics.js` already has the strongest primitive needed for a useful spell: `saveCheckpoint()` and `restoreCheckpoint(name)`. The runtime can already recover a grounded registry and couplings; the spellbook simply does not surface that recovery path.
+ >>[2026-04-17] observe - `public/js/spw-experiential.js` already stores pinned frames in `spw-pins` and renders them as a readable ledger. The next useful move is not better ledger styling but replay: treat those pins as a working set that can be resumed in sequence.
+ >>[2026-04-17] decide - The spellbook should be defined as the inspectable catalog of proven macros, not the place where arbitrary new incantations are authored.
+ >>[2026-04-17] decide - The first useful spells are `restore_checkpoint` and `resume_pins` because both sit on top of existing persisted state and produce immediate, legible outcomes.
+ >>[2026-04-17] taste - A spell should feel like recovering working memory, not entering a command. The right comparison is a good editor shortcut or a "restore tabs" action, not a parser demo.
+}
+
+^["open"]{
+ ?[checkpoint_inventory]: "What is the smallest helper surface needed in `spw-haptics.js` to enumerate saved checkpoints with name, savedAt, count, and path?"
+ ?[resume_pins_shape]: "Should `resume_pins` mean a guided next/previous sequence, a temporary page-local register, or a lightweight overlay that lists the pinned frames in navigable order?"
+ ?[spellboard_copy]: "How explicit should the board be about utility language ('restore state', 'resume working set') versus retaining the full spell metaphor in labels?"
+ ?[spell_discovery]: "Where should first discovery happen: in `/settings/`, in the header dock once data exists, or through subtle console/runtime feedback after a save/pin event?"
+ ?[reversibility]: "What is the minimal reset/back-out path after each spell so the feature feels safe to try repeatedly?"
+}

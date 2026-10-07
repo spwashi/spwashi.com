@@ -38,9 +38,9 @@ intent: .{
   `capture-frame`,
  ][reg=set]
  surfaces = #[
-  `.agents/plans/rpg-asset-capture-frames/PLAN.md`,
-  `.agents/plans/town-atlas-story-kit/PLAN.md`,
-  `.agents/plans/promptable-image-library-pass/PLAN.md`,
+  `.agents/plans/archive/rpg-asset-capture-frames/PLAN.md`,
+  `.agents/plans/archive/town-atlas-story-kit/PLAN.md`,
+  `.agents/plans/archive/promptable-image-library-pass/PLAN.md`,
   `design/folios/index.html`,
  ][reg=set]
  fixity_tier = `experimental`
@@ -49,9 +49,9 @@ intent: .{
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @plan: ~"./PLAN.md"
-@capture_frames: ~"../rpg-asset-capture-frames/PLAN.md"
-@town_atlas: ~"../town-atlas-story-kit/PLAN.md"
-@image_library: ~"../promptable-image-library-pass/PLAN.md"
+@capture_frames: ~"../archive/rpg-asset-capture-frames/PLAN.md"
+@town_atlas: ~"../archive/town-atlas-story-kit/PLAN.md"
+@image_library: ~"../archive/promptable-image-library-pass/PLAN.md"
 @folio_soil: ~"../../../.spw/caches/folio-soil-ecosystem-2026-09.spw"
 @capture_ecology: ~"../../../.spw/conventions/capture-ecology.spw"
 

@@ -1,5 +1,9 @@
 # Fix: attention-shell-contrast
 
+**Status 2026-10-06.** Rows 3–5 landed (`shell/layout.css`; `chrome/header.css` hides `.spw-semantic-seam`). Rows 1–2, mode-switch and menu-toggle contrast, each need one pocket `visual:checks` fixture; then this FIX closes into chrome-navigation-wonder.
+
+**Related:** [chrome-navigation-wonder](../chrome-navigation-wonder/PLAN.md).
+
 ## Failures
 
 | # | File | Test/Error | Class | Priority |

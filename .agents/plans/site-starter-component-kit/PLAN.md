@@ -1,5 +1,9 @@
 # Site Starter And Component Kit
 
+**Status 2026-10-06.** Next: the inventory path-resolution repair, ahead of the texture-slice pilot. Owns the bundling pilot that design-hub and designer-conversation-canvas feed.
+
+**Related:** [portable-css](../portable-css/PLAN.md) · [typescript-integration](../typescript-integration/PLAN.md) · [component-variant-alignment](../archive/component-variant-alignment/PLAN.md) (archived).
+
 ## Public Goal
 
 Make this repository useful as a source for new static sites and new component work without turning `spwashi.com` into a generic framework. A future builder should be able to answer three questions quickly:

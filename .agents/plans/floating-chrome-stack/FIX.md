@@ -1,5 +1,9 @@
 # Fix: Floating Chrome Stack
 
+**Status 2026-10-06.** The tier fix and lane lifecycle landed. This FIX closes after the Step 2 browser decision and the console button sizing call.
+
+**Related:** [shell-model-vocabulary-consolidation](../shell-model-vocabulary-consolidation/PLAN.md) · [navigation-header-disclosure](../navigation-header-disclosure/PLAN.md). **Absorbed 2026-10-06:** [chrome-copy-collision](../archive/chrome-copy-collision/FIX.md) · [mobile-chrome-alignment](../archive/mobile-chrome-alignment/PLAN.md) · [narrative-grammar-infrastructure](../archive/narrative-grammar-infrastructure/PLAN.md).
+
 ## Failures
 
 - Floating UI roles used the shared `data-spw-floating-chrome` marker inconsistently.

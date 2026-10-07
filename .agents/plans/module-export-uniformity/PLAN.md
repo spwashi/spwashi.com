@@ -1,5 +1,9 @@
 # Plan: module-export-uniformity
 
+**Status 2026-10-06.** Phase 0, Phase 1 and the spwModule alias migration landed; only `interface/state-inspector.js` still exports a bare spwModule. Open: check-standalone and the storage envelope.
+
+**Related:** [runtime-plane-consolidation](../runtime-plane-consolidation/PLAN.md) · [module-contract-overhaul](../module-contract-overhaul/PLAN.md) · [js-surface-ecology](../js-surface-ecology/PLAN.md).
+
 Unify JavaScript module export patterns, document the standalone-script audit in `.spw`, and begin categorizing runtime modules under a **runtime medium ecology** metaphor — an agricultural organism that minds nutrients fractally, supports in-place growth, and stays legible as a holistic codebase.
 
 ## Public goal

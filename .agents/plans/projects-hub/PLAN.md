@@ -1,4 +1,8 @@
 # Projects hub
+**Status 2026-10-06.** Three leaves and the arc bench landed 2026-09-29. Next: Projects in `PUBLIC_NAV_ITEMS`, or the 31-scanned count on `/design/folios/`.
+
+**Related:** [folio-worktable](../folio-worktable/PLAN.md) · [creator-pathways](../archive/creator-pathways/PLAN.md) (archived).
+
 Operation: prime. Fixity: experimental. Focus: memory consequence. Element: earth.
 A public /projects/ room for the work itself, not a portfolio grid of blurbs.
 First three: /projects/spw-workbench/, /projects/spwashi-com/, /projects/folios/.

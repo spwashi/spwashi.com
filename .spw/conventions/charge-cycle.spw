@@ -122,7 +122,7 @@
 }
 
 ^"dispatch"{
-  @explore_anatomy: ~"../../.agents/plans/explore-anatomy/PLAN.md"
+  @explore_anatomy: ~"../../.agents/plans/archive/explore-anatomy/PLAN.md"
   @attention_field: ~"./attention-field.spw"
   @operator_alignment: ~"./operator-alignment.spw"
 }

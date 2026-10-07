@@ -16,8 +16,8 @@
 @standalone_audit: ~"../../../.spw/audits/module-export-standalone-2026-07.spw"
 @decomposition_plan: ~"../runtime-module-decomposition/PLAN.md"
 @compose_plan: ~"../archive/javascript-standalone-utility/PLAN.md"
-@catalog: ~"../../../public/js/runtime/module-catalog.js"
-@loader: ~"../../../public/js/runtime/module-loader.js"
+@catalog: ~"../../../public/js/runtime/catalog/index.js"
+@loader: ~"../../../public/js/runtime/orchestration/loader.js"
 @compose: ~"../../../public/js/compose.js"
 
 operation = "cache"

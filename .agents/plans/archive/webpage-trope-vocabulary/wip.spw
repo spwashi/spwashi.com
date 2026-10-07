@@ -1,0 +1,62 @@
+# Review 2026-07-12 — retain as a concise copy cache; promote tested literal labels into the owner plan.
+^"selection_probes"{
+ probes = #[ `rg 'webpage-trope-vocabulary' public/css/components/page-anatomy.css`, `node --check for touched JS modules.`, `test -f public/css/components/page-anatomy.css`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
+^"plan_context"{
+ goal = `Make the site introduce itself as a literal website and reference document before it asks visitors to understand broader metaphors. The home page should refer to itself as the home page, while supporting routes can introduce more illustrative anchors for page anatomy, restaurant ownership, and garden maintenance.`
+ owner = `webpage-trope-vocabulary`
+ operation = "prime"
+ bucket = "public_route_proof_genre"
+ validation = #[ `node --check for touched JS modules.`, `git diff --check.`, `npm run check:local, with generated CSS bundle changes kept when they mirror source CSS.`, `Targeted rg checks for data-spw-anatomy, page-anatomy, region-menu-popover, and home-page self-reference.`, `Targeted rg checks for data-spw-parallel, data-spw-inline-tone, data-spw-audience, data-spw-disclosure, and __SPW_PAGE_ANATOMY__.`, ][reg=set]
+ hot_files = #[ `public/css/components/page-anatomy.css`, `public/js/runtime/page/page-anatomy.js`, `public/js/runtime/regions/region-menu.js`, `.spw/conventions/page-anatomy-vocabulary.spw`, ][reg=set]
+}[reg=facet]
+# wip — webpage-trope-vocabulary
+#
+#>plan_webpage_trope_vocabulary_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@plans_root: ~"../../index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
+# Webpage Trope Vocabulary WIP
+
+#>webpage_trope_vocabulary
+#:plan #!semantics #!css #!js #!copy
+
+operation = "contract"
+fixity = "stable vocabulary, tending route copy, experimental timing"
+source = "user request 2026-06-19: literal home page, page anatomy vocabularies, website-as-reference-document trope, restaurant ownership, garden maintenance, floating chrome islands"
+
+claim: "The site should teach page anatomy with literal website vocabulary first, then let restaurant and garden metaphors operate as route-specific anchors."
+
+affected_surfaces = #[
+  "../index.html",
+  "../about/website/index.html",
+  "../topics/site-design/index.html",
+  "../recipes/index.html",
+  "../public/css/components/page-anatomy.css",
+  "../public/js/runtime/page/page-anatomy.js",
+  "../public/js/runtime/regions/region-menu.js",
+  "../public/js/interface/state-inspector.js",
+  "../public/js/semantic/page-universe.js",
+  "../.spw/conventions/page-anatomy-vocabulary.spw"
+][reg=set]
+
+pattern_consideration: #[
+  "Home page: literal first-viewport orientation.",
+  "Website field guide: reference document and publishing-surface anatomy.",
+  "Site design: diagrammatic anatomy and reusable web tropes.",
+  "Recipes: restaurant ownership and garden maintenance as service/season anchors.",
+  "Publisher layer: audience, disclosure, trope timing, inline tone, and spatial affordance metadata.",
+  "Portability: future parallel publishing forks can specialize genre and audience without changing base runtime contracts."
+][reg=set]
+
+validation = "rg data-spw-anatomy data-spw-parallel data-spw-inline-tone data-spw-audience __SPW_PAGE_ANATOMY__; node --check touched JS; npm run check:local"

@@ -65,7 +65,7 @@ intent: .{
 @folios_index_html: ~"../../../design/folios/index.html"
 @component_region_personality_plan: ~"../component-region-personality/PLAN.md"
 @page_region_discoverability_plan: ~"../page-region-discoverability/PLAN.md"
-@hook_region_anatomy_plan: ~"../hook-region-anatomy/PLAN.md"
+@hook_region_anatomy_plan: ~"../archive/hook-region-anatomy/PLAN.md"
 
 dispatch: .{
  plan = @plan

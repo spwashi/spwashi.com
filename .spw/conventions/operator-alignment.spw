@@ -242,5 +242,5 @@
   @operator_site_projection: ~"./operator-site-projection.spw"
   @charge_cycle: ~"./charge-cycle.spw"
   @measurement_contract: ~"./measurement-contract.spw"
-  @promptable_image_library_pass: ~"../../.agents/plans/promptable-image-library-pass/PLAN.md"
+  @promptable_image_library_pass: ~"../../.agents/plans/archive/promptable-image-library-pass/PLAN.md"
 }

@@ -1,5 +1,7 @@
 # Engagement Clusters
 
+**Related:** [deploy-module-graph](../deploy-module-graph/PLAN.md) · [navigation-header-disclosure](../navigation-header-disclosure/PLAN.md) · [chrome-navigation-wonder](../chrome-navigation-wonder/PLAN.md).
+
 Operation: prime. Fixity: experimental. Owner rail: `module-contract-overhaul` (the `@` wakes facet).
 
 ## Public Goal

@@ -29,7 +29,7 @@
 @creative_capacity: ~"./creative-capacity-2026-09.spw"
 @touch_control_class: ~"./touch-control-class-2026-09.spw"
 @promo_wonder_plan: ~"../../.agents/plans/promo-wonder-cycle/PLAN.md"
-@fidget_plan: ~"../../.agents/plans/expressive-layout-tropes-fidget-manuscript/PLAN.md"
+@fidget_plan: ~"../../.agents/plans/archive/expressive-layout-tropes-fidget-manuscript/PLAN.md"
 @promo_feed: ~"../../public/data/promo-wonder-cycle.json"
 @charge_field: ~"../../public/js/runtime/physics/charge-field.js"
 @brace_gestures: ~"../../public/js/runtime/interaction/brace-gestures.js"

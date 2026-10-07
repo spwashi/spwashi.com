@@ -19,7 +19,7 @@
 @spend: ~"../../.agents/plans/core-css-spend-cut/PLAN.md"
 @readability: ~"../../.agents/plans/css-architecture-readability/PLAN.md"
 @tokens: ~"../../.agents/plans/data-attribute-css-token-refinement/PLAN.md"
-@runtime: ~"../../.agents/plans/js-runtime-composability/PLAN.md"
+@runtime: ~"../../.agents/plans/archive/js-runtime-composability/PLAN.md"
 @mobile: ~"../../.agents/plans/mobile-runtime-foundation/PLAN.md"
 
 operation = "cache"

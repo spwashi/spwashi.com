@@ -1,5 +1,9 @@
 # Model-Guided Refinement Rails
 
+**Status 2026-10-06.** Five of seven setup items are done. Open: the first model-guided component trace and the first musician- or artist-facing pilot. The consequential-editorial pass (370de54b, 2026-09-04) is copy, so it does not close the trace.
+
+**Related:** [modular-experience-slices](../modular-experience-slices/PLAN.md).
+
 ## Public Goal
 
 Prepare this codebase for refinement by a model that can read `.spw`, follow explicit connections, and make competent local changes, but should not be expected to improvise tastefully through the full CSS and JavaScript surface.

@@ -4,7 +4,7 @@
 #:slice #!language #!navigation #!responsive
 #:layer #!pragmatics
 
-@plan: ~"../../../.agents/plans/dimensional-expression-navigation/PLAN.md"
+@plan: ~"../../../.agents/plans/archive/dimensional-expression-navigation/PLAN.md"
 @dimensional_ascent: ~"../../conventions/dimensional-ascent-script-patterns.spw"
 @expression_geometry: ~"../../../public/js/semantic/spw-expression-geometry.js"
 @expression_runtime: ~"../../../public/js/runtime/labs/interactive-expression-lab.js"

@@ -1,0 +1,109 @@
+# Review 2026-10-06 — archived: landed: 6a39dc65 (2026-04-17) shipped it: media/image-metaphysics.js labels pixel, wash and settle and shows auto and manual in its helper; helper tokens in effects/metaphysical-paper.css; style-image-cohesion owns what remains
+# Review 2026-07-12 — keep as the current image-treatment owner; state labels and device parity outrank new effects.
+# Plan Index — image-metaphysics-aesthetic-pass
+#
+# Keep the existing semantic image-treatment contract, but make the control chrome explain state more clearly and make each treatment read as a distinct image grammar across mobile,…
+
+#>plan_image_metaphysics_aesthetic_pass_index
+#:index #!plan
+#:operation #!archive
+#:layer #!pragmatics
+
+operation = "archive"
+fixity = "tending"
+
+intent: .{
+ goal = `Keep the existing semantic image-treatment contract, but make the control chrome explain state more clearly and make each treatment read as a distinct image grammar across mobile, tablet, and wide hero surfaces. Taste note: interactive wonder with composure.`
+ owner = `image-metaphysics-aesthetic-pass`
+ kind = `plan`
+ bucket = `media_image_sensory`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "media_image_sensory"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Keep the existing semantic image-treatment contract, but make the control chrome explain state more clearly and make…`
+ concepts = #[
+  `image-metaphysics-aesthetic-pass`,
+  `existing`,
+  `semantic`,
+  `image-treatment`,
+  `contract`,
+ ][reg=set]
+ surfaces = #[
+  `.agents/plans/archive/image-metaphysics-aesthetic-pass/PLAN.md`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
+@plans_root: ~"../../index.spw"
+@plan_index_convention: ~"../../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+
+dispatch: .{
+ plan = @plan
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `vocabulary_metaphor` ; path = `.spw/audits/vocabulary-metaphor-growth-synthesis-2026-07.spw` }[reg=facet],
+  .{ label = `metaphor_primitive_research` ; path = `.spw/audits/metaphor-primitive-research-branching-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"absorbs"{
+ reviewed = `2026-07-12`
+ plans = #[
+  `image-visit-metaphysics`,
+  `palette-resonance`,
+  `mobile-image-effects`,
+ ][reg=set]
+ rule = `Absorbed by 2026-07-12 review; see each source review_disposition and archive/2026-07-12-review-execution.md.`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-image_metaphysics_aesthetic_pass-001"
+ layer = "pragmatic"
+ hypothesis = `Keep the existing semantic image-treatment contract, but make the control chrome explain state more clearly and make each treatment read as a distinct image grammar across mobile, tablet, and wide hero surfaces. Taste note: interactive wonder with composure.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"./PLAN.md"
+ probe_ref = `node --check public/js/spw-image-metaphysics.js`
+ falsification = `A patch cannot satisfy the public goal while leaving ./PLAN.md unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `In scope: shared helper layout, helper state wording, responsive helper behavior, and the raster/vector presentation of pixelize, watercolor, and clarify.`,
+ ][reg=set]
+ out = #[
+  `: new dependencies, route-specific rewrites, new stored settings, and renaming the canonical effect values in JS.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `node --check public/js/spw-image-metaphysics.js`,
+ `git diff --check`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does image-metaphysics-aesthetic-pass own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of image-metaphysics-aesthetic-pass?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether image-metaphysics-aesthetic-pass still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Keep the existing semantic image-treatment contract, but make the control chrome explain state more clearly and make each treatment read as…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]

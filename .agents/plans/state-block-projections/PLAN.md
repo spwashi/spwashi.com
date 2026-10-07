@@ -1,5 +1,9 @@
 # Plan: state-block-projections
 
+**Status 2026-10-06.** The inspector runtime landed (`interface/state-inspector.js`). Open: the A/B/C lens choice at `/design/components/#lens-seats`, then moving the treatment into `state-semantics.css`.
+
+**Absorbed 2026-10-06:** [lens-seat-and-secondary-materials](../archive/lens-seat-and-secondary-materials/PLAN.md).
+
 Add interactive Spw state blocks to components that already expose real mutable state, so visitors can read and manipulate a small slice of runtime/configuration through operator, brace, and value swaps.
 
 ## Goal

@@ -1,0 +1,92 @@
+# Review 2026-10-06 — archived: landed: 2b677fa8 (2026-04-22) added /play/rpg-wednesday/character/ with the character lab; cast and the RPG route link it; profile-character-card-development owns what remains
+# Review 2026-07-12 — keep as the cast route owner; character development and stable reference cards are the concrete goal.
+# Plan Index — RPG Character Hub
+#
+# Turn the existing /play/rpg-wednesday/cast/ route into the practical character-development hub for RPG Wednesday.
+
+#>plan_rpg_character_hub_index
+#:index #!plan
+#:operation #!archive
+#:layer #!pragmatics
+
+operation = "archive"
+fixity = "tending"
+
+intent: .{
+ goal = `Turn the existing /play/rpg-wednesday/cast/ route into the practical character-development hub for RPG Wednesday.`
+ owner = `rpg-character-hub`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Turn the existing /play/rpg-wednesday/cast/ route into the practical character-development hub for RPG Wednesday.`
+ concepts = #[
+  `rpg`,
+  `hub`,
+  `character`,
+  `turn`,
+  `existing`,
+ ][reg=set]
+ surfaces = #[
+  `play/rpg-wednesday/cast/index.html`,
+  `play/rpg-wednesday/index.html`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
+@plans_root: ~"../../index.spw"
+@plan_index_convention: ~"../../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@play_rpg_wednesday_cast_index_html: ~"../../../../play/rpg-wednesday/cast/index.html"
+@play_rpg_wednesday_index_html: ~"../../../../play/rpg-wednesday/index.html"
+
+dispatch: .{
+ plan = @plan
+ play_rpg_wednesday_cast_index_html = @play_rpg_wednesday_cast_index_html
+ play_rpg_wednesday_index_html = @play_rpg_wednesday_index_html
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-rpg_character_hub-001"
+ layer = "pragmatic"
+ hypothesis = `Turn the existing /play/rpg-wednesday/cast/ route into the practical character-development hub for RPG Wednesday.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../../play/rpg-wednesday/cast/index.html"
+ probe_ref = `node --check on touched JS files`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../../play/rpg-wednesday/cast/index.html unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+validation: #[
+ `node --check on touched JS files`,
+ `git diff --check`,
+ `npm run check`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does rpg-character-hub own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of rpg-character-hub?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether rpg-character-hub still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Turn the existing /play/rpg-wednesday/cast/ route into the practical character-development hub for RPG Wednesday.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]

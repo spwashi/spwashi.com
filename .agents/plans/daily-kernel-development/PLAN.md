@@ -1,5 +1,9 @@
 # Daily Kernel Development Exercise
 
+**Status 2026-10-06.** Both first kernels exist: the no-code `boonhonk-dimensional-flow-2026-08-21.spw` and the implementation `layout-resonance-loop-2026-08-24.spw`.
+
+**Related:** [model-guided-refinement](../model-guided-refinement/PLAN.md) · [modular-experience-slices](../modular-experience-slices/PLAN.md).
+
 ## Public Goal
 
 Create a repeatable "daily kernel" development exercise: a small, tunable practice loop for improving this codebase's semantic capacity, brand physics, regional experience design, and cross-discipline collaboration.
@@ -194,5 +198,5 @@ When implementation touches code:
 - [x] Plan created
 - [x] `.spw/conventions/daily-kernel.spw` wired into dispatch
 - [x] daily-kernel-note template added
-- [ ] first no-code daily kernel audit completed
-- [ ] first implementation kernel completed
+- [x] first no-code daily kernel audit completed (`boonhonk-dimensional-flow-2026-08-21.spw`)
+- [x] first implementation kernel completed (`layout-resonance-loop-2026-08-24.spw`)

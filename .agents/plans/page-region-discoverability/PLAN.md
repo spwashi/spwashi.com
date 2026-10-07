@@ -1,5 +1,9 @@
 # Page Region Discoverability
 
+**Status 2026-10-06.** All patches landed by 2026-06-28; the durable contract is `.spw/slices/page-region-discoverability/`. Owner of record for the region, rail and anatomy plans archived 2026-10-06.
+
+**Related:** [region-attenuation-coverage](../region-attenuation-coverage/PLAN.md) · [floating-chrome-stack](../floating-chrome-stack/FIX.md). **Absorbed 2026-10-06:** [deep-link-feature-discovery](../archive/deep-link-feature-discovery/PLAN.md) · [explore-anatomy](../archive/explore-anatomy/PLAN.md) · [hook-region-anatomy](../archive/hook-region-anatomy/PLAN.md) · [webpage-trope-vocabulary](../archive/webpage-trope-vocabulary/PLAN.md).
+
 ## Public Goal
 
 Make page regions across the site easier to discover, compare, and move through. A visitor should be able to understand both the local region they are in and the nearby page routes that carry the same concept forward.

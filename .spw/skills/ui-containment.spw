@@ -95,7 +95,7 @@ fixity = "tending"
   packing_logic: "At 26rem the component spends two columns and lets the return path span both. At 44rem six structural tracks form a balanced 3 + 2. At 64rem the complete five-part field opens in one row."
   touch_target: "Every destination card exceeds the 44px local target floor in both axes; HUD buttons and links use a 2.75rem minimum block size."
   unmeasured: "A final physical-device pass and 4K screenshot remain useful aesthetic checks; the mechanical width states above are browser measurements."
-  owner = ".agents/plans/dimensional-expression-navigation/PLAN.md + .spw/slices/dimensional-expression-navigation/index.spw"
+  owner = ".agents/plans/archive/dimensional-expression-navigation/PLAN.md + .spw/slices/dimensional-expression-navigation/index.spw"
 }
 
 ^"alignment_content_fit_2026_08_19"{

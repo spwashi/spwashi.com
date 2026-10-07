@@ -1,5 +1,9 @@
 # Plan: shell-model-vocabulary-consolidation
 
+**Status 2026-10-06.** The census landed 2026-07-03. The Phase 2 glossary gate has waited on creator review since July.
+
+**Related:** [homonym-renaming](../homonym-renaming/PLAN.md) · [chrome-navigation-wonder](../chrome-navigation-wonder/PLAN.md) · [runtime-module-decomposition](../runtime-module-decomposition/PLAN.md).
+
 Reconsider the shell/chrome/edge/overlay model across CSS and JavaScript as the pilot for a broader goal: consolidate design vocabularies so growth in other dimensions (routes, physics, editions, collaborators) stays workable for human teams.
 
 ## Public Goal
