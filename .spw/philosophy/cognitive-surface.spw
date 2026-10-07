@@ -142,6 +142,8 @@ expression = surface[cognitive]{legibility.attention.record}<traverse>
   ~#tension: "constructivism wants the learner to build the model; a surface that models the learner's attention is doing some of that construction for them"
   ~#note(not mechanically probeable): "kept open deliberately — this wants a reader, not a script"
   ~#partial: "@wonder_doctrine#earned_depth is the closest testable proxy: depth that requires prior engagement is scaffolding, and scaffolding is constructivist"
+  !probe{ "a probe for a reader, not a script: a first-time reader spends ten minutes on one teaching route (/topics/software/spw/operators/), then explains the grammar back unprompted; an explanation that builds structure the page never stated means the site scaffolded construction; one that repeats the page means it instructed" }
+  $%[reader.explanation, page.stated_structure, depth.earned]
 }
 
 #>wonder_cognitive_surface_3

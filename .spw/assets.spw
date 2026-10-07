@@ -233,9 +233,21 @@
 }
 
 ^"open_questions"{
-  ?["Which images from the Midjourney render study are candidates for extraction to asset/illustrations?"]{ #:open }
-  ?["What thematic motifs should be generated or commissioned for the motifs/ directory?"]{ #:open }
-  ?["Should the naming-magic skill analyze image pixels, or primarily work from user description?"]{ #:open }
+  ?["Which images from the Midjourney render study are candidates for extraction to asset/illustrations?"]{
+    #:open
+    !probe{ "for each render under public/images/renders/, check whether any tracked page names its file stem (git grep -l <stem> -- '*.html'); bring the unplaced renders whose sidecar spirit fits a route to the creator as a shortlist of five; a candidate is one they place on a page this season" }
+    $%[render.sidecar_spirit, route.reference, creator.placement]
+  }
+  ?["What thematic motifs should be generated or commissioned for the motifs/ directory?"]{
+    #:open
+    !probe{ "list what public/images/assets/motifs/ holds and which pages use each (git grep -l <stem> -- '*.html'); a motif to make is one a page family or wonder names that no held motif serves; bring those gaps to the creator as prompts and count which they keep after a week" }
+    $%[motif.held, motif.placed, route.page_family, creator.kept]
+  }
+  ?["Should the naming-magic skill analyze image pixels, or primarily work from user description?"]{
+    #:open
+    !probe{ "name ten recent renders twice with the skill's grammar, once from the creator's description alone and once from the pixels alone; the creator picks the better name of each pair without knowing its source; the source that wins seven of ten becomes the default, and the skill records what the other caught" }
+    $%[name.from_description, name.from_pixels, creator.blind_pick]
+  }
 }
 
 ^"cross_references"{
