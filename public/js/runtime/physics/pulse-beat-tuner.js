@@ -6,6 +6,7 @@
  * interaction/component lifecycle events.
  */
 
+import { resolveOwnerDocument } from '/public/js/kernel/browser-primitives.js';
 import { isRouteMenuOpen } from '/public/js/kernel/navigation-chrome.js';
 import {
   invalidateTimingCache,
@@ -241,7 +242,9 @@ export function describePulseBeatTunerState(root = document) {
 
 export { FRESHNESS_EVENT, BEAT_CADENCE, PRIME_BEATS };
 
-export const spwModule = {
-  updates: ['attr:data-spw-beat-cadence', 'attr:data-spw-pulse-freshness'],
-  mount: (mod, ctx, root) => initPulseBeatTuner(root),
-};
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'pulse-beat-tuner',
+  mount: (ctx, root) => initPulseBeatTuner(resolveOwnerDocument(ctx, root)),
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

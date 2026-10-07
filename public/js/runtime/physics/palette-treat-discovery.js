@@ -6,6 +6,7 @@
  * keyboard navigation land.
  */
 
+import { resolveOwnerDocument } from '/public/js/kernel/browser-primitives.js';
 import { readMicrointeractionPulseMs } from './pulse-timing.js';
 
 // The palette probes are now one feature in the generic field guide, not a
@@ -506,7 +507,9 @@ export function initPaletteTreatDiscovery(root = document) {
 
 export { TREAT_EVENT, BEAT_TO_PROBE, RESONANCE_TO_PROBE };
 
-export const spwModule = {
-  updates: ['attr:data-spw-palette-resonance', 'attr:data-spw-discovery-cache'],
-  mount: (mod, ctx, root) => initPaletteTreatDiscovery(root),
-};
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'palette-treat-discovery',
+  mount: (ctx, root) => initPaletteTreatDiscovery(resolveOwnerDocument(ctx, root)),
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
@@ -132,6 +133,33 @@ test('portable exports receive context and root, and retain export refresh with 
   assert.equal(record.status, 'unmounted');
   assert.equal(ctx.registry.has(def.id), false);
   assert.deepEqual(calls[2], ['destroy']);
+});
+
+// The loader calls an export's mount as (ctx, root). An export written with the
+// catalog adapter's (mod, ctx, root) reads the context as a module namespace and
+// the root as undefined. Held: module-effects, whose bus subscription that
+// silences waits on a browser review before it is restored or retired.
+const HELD_ADAPTER_SIGNATURE_EXPORTS = new Set(['runtime/arrival/module-effects.js']);
+
+test('portable export mounts take (ctx, root), not the catalog adapter signature', async () => {
+  const jsRoot = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../public/js');
+  const files = (await readdir(jsRoot, { recursive: true }))
+    .filter((file) => file.endsWith('.js') && !file.startsWith('generated'));
+  const exportRe = /export const (?:SPW_MODULE_EXPORT|spwModule) = (?:Object\.freeze\()?\{([\s\S]*?)\n\}\)?;/g;
+  const adapterMountRe = /\bmount(?::\s*(?:async\s*)?|\s*)\(\s*\w+\s*,\s*\w+\s*,\s*\w+\s*\)/;
+  const offenders = [];
+  for (const file of files) {
+    const source = await readFile(path.join(jsRoot, file), 'utf8');
+    for (const [, body] of source.matchAll(exportRe)) {
+      if (adapterMountRe.test(body)) offenders.push(file.split(path.sep).join('/'));
+    }
+  }
+  assert.deepEqual(offenders.filter((file) => !HELD_ADAPTER_SIGNATURE_EXPORTS.has(file)), []);
+  assert.deepEqual(
+    [...HELD_ADAPTER_SIGNATURE_EXPORTS].filter((file) => !offenders.includes(file)),
+    [],
+    'a held export no longer takes three arguments; drop it from the hold',
+  );
 });
 
 test('catalog adapters receive module/context/root and returned refresh wins over export refresh', async () => {
