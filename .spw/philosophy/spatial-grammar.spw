@@ -89,11 +89,31 @@
 }
 
 ^"open_questions"{
-  ?["Which spatial relationship is hardest to perceive for first-time Spw readers, and how should the site address that?"]{ #:open }
-  ?["Is the spatial grammar teachable through the site alone, or does it require direct instruction?"]{ #:open }
-  ?["What does it mean to 'get fluent' at Spw spatially — what new perceptions become available?"]{ #:open }
-  ?["How should multi-language surfaces be annotated so the visitor knows which parts are guest and which are Spw frame?"]{ #:open }
-  ?["What languages or notations on this site have the most to teach about their own spatial structure when hosted by Spw?"]{ #:open }
+  ?["Which spatial relationship is hardest to perceive for first-time Spw readers, and how should the site address that?"]{
+    #:open
+    !probe{ "give five first-time readers one expression that holds a brace pair, a ~ reference, a [ ] selection, a > projection and an elevation, and ask each to say what is inside what; the relationship most often misplaced is the hardest; change how its route teaches it, and ask the next five" }
+    $%[reader.misplaced_relation, exercise.kind, route.change]
+  }
+  ?["Is the spatial grammar teachable through the site alone, or does it require direct instruction?"]{
+    #:open
+    !probe{ "two groups of first-time readers: one spends twenty minutes on the site alone, the other hears five minutes of explanation first; both then read the same unseen expression in /tools/spw-parser/ and name its containment and references; if the site-alone group reads as well, the site teaches it" }
+    $%[reader.group, expression.reading_accuracy, instruction.minutes]
+  }
+  ?["What does it mean to 'get fluent' at Spw spatially — what new perceptions become available?"]{
+    #:open
+    !probe{ "the creator and a reader with one week of practice each mark the structure they see on the same plain page (a recipe, a proof); what the creator marks and the newer reader does not is what fluency adds; sort it by the five exercises above" }
+    $%[annotation.structure, reader.practice_weeks, exercise.covered]
+  }
+  ?["How should multi-language surfaces be annotated so the visitor knows which parts are guest and which are Spw frame?"]{
+    #:open
+    !probe{ "list the pages that host a guest notation inside a Spw frame (math, music, code, recipes); ask a reader on each to mark which characters belong to the guest and which to the frame; a page where they mark wrongly needs annotation, and the next reader judges the fix" }
+    $%[surface.guest_notation, reader.guest_marking, frame.annotation]
+  }
+  ?["What languages or notations on this site have the most to teach about their own spatial structure when hosted by Spw?"]{
+    #:open
+    !probe{ "for each guest notation the site hosts, count the structures the Spw frame makes explicit that the notation leaves implicit (containment, reference, projection, selection), and check the guest still reads with the frame removed; the notation with the most revealed structure that still reads alone has the most to teach" }
+    $%[notation.hosted, frame.revealed_structure, guest.legible_alone]
+  }
 }
 
 ^"cross_references"{

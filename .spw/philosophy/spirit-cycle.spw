@@ -52,11 +52,31 @@
 
 ^"phase_questions"{
   ~#note: "Questions that belong specifically to individual phases."
-  ?["What makes initiation legible on a page that tries to be calm at rest?"]{ #:open }
-  ?["How should the site signal that resistance is productive rather than broken?"]{ #:open }
-  ?["What is the minimum structural change that earns the name transformation rather than just navigation?"]{ #:open }
-  ?["How does expression differ from just reaching a deep page — what makes it feel like discharge rather than arrival?"]{ #:open }
-  ?["How does return differ from abandonment? What does the surface retain that marks the difference?"]{ #:open }
+  ?["What makes initiation legible on a page that tries to be calm at rest?"]{
+    #:open
+    !probe{ "capture the first second of three routes on a first visit and on a return visit (npm run sense -- ink with each route's recipe), and name what differs only on the first (entry liminality, data-spw-page-arrival); if nothing a reader can see differs, initiation is not legible yet" }
+    $%[liminality.entry, page.arrival, visit.first_vs_return]
+  }
+  ?["How should the site signal that resistance is productive rather than broken?"]{
+    #:open
+    !probe{ "watch three readers on an unfamiliar operator page (/topics/software/spw/operators/) and mark each pause; ask at each whether the page felt hard or broken; compare what the surface showed at hard moments (charge building, data-spw-charge) with broken ones, and give the broken moments the signal the hard ones had" }
+    $%[reader.pause, reader.hard_or_broken, charge.visible]
+  }
+  ?["What is the minimum structural change that earns the name transformation rather than just navigation?"]{
+    #:open
+    !probe{ "list the pivots the runtime makes (mode switch, spell, lens change, liminality depth) and record what each changes in the page expression and root state (npm run audit:root-ablation before and after); a pivot that changes only scroll or URL is navigation; the smallest change a reader then names as something changed is the threshold" }
+    $%[pivot.kind, expression.slot_changed, reader.named_change]
+  }
+  ?["How does expression differ from just reaching a deep page — what makes it feel like discharge rather than arrival?"]{
+    #:open
+    !probe{ "compare two readers: one who reached a deep route by links, one who made something there (a cauldron mix, a .spw.txt seed download, a screenshot card); ask each what they leave with; discharge is an answer that names something made, arrival one that names a place" }
+    $%[reader.made, reader.reached, artifact.exported]
+  }
+  ?["How does return differ from abandonment? What does the surface retain that marks the difference?"]{
+    #:open
+    !probe{ "list what a second visit restores (visited surfaces, ingredient phase, journey tokens; the first wonder in cognitive-surface.spw names them) and compare a return against a cleared visit; return is legible if a reader of the second visit can point at the mark; abandonment is a visit whose storage the site never reads again" }
+    $%[storage.persisted, visit.return, reader.points_at_mark]
+  }
 }
 
 ^"navigation_mapping"{
@@ -79,11 +99,31 @@
 }
 
 ^"open_questions"{
-  ?["Which operator semantics most naturally embody each phase?"]{ #:open }
-  ?["Should the spirit cycle be legible to visitors who have not read about it, or only to practitioners?"]{ #:open }
-  ?["How does the cycle relate to the valence pentad — are boon, bane, bone, bonk, honk phase qualities or phase outcomes?"]{ #:open }
-  ?["Can a single interaction (a tap, a keypress) trace a full cycle, or does the cycle always require time?"]{ #:open }
-  ?["What is the relationship between the spirit cycle and a screenshot's meaning — which phases produce screenshot-worthy states?"]{ #:open }
+  ?["Which operator semantics most naturally embody each phase?"]{
+    #:open
+    !probe{ "check each phase's operator_resonance pair above against the canon intents in kernel/operator-detection.js, then tag twenty authored expressions from the expression manifest by phase and see whether their leading operators cluster as the pairs predict; a pair with no cluster is wrong" }
+    $%[phase.operator_resonance, operator.intent, expression.leading_operator]
+  }
+  ?["Should the spirit cycle be legible to visitors who have not read about it, or only to practitioners?"]{
+    #:open
+    !probe{ "show five readers who have not read this file a recorded visit cut into five clips, one a phase, and ask them to order the clips; ordering better than chance means the cycle reads at the surface; whether it should is the creator's call, made with that result in hand" }
+    $%[reader.clip_order, phase.named, practitioner.status]
+  }
+  ?["How does the cycle relate to the valence pentad — are boon, bane, bone, bonk, honk phase qualities or phase outcomes?"]{
+    #:open
+    !probe{ "the pentad is written as an expression's charge (semantic/expression-tone.js reads it), and few authored expressions carry one; tag each charged host's page by phase; a charge that holds within one phase across pages is a quality, one that appears only where a visit ends and varies with how it went is an outcome" }
+    $%[expression.charge, phase.tagged, visit.outcome]
+  }
+  ?["Can a single interaction (a tap, a keypress) trace a full cycle, or does the cycle always require time?"]{
+    #:open
+    !probe{ "record one mastered spell (the spell_arc above) with the interaction phase and story the runtime writes (runtime/interaction/progression.js, story.js) and timestamps; if all five phases appear within one gesture, a single interaction can trace the cycle; a phase that needs a second gesture or a wait means it takes time" }
+    $%[gesture.count, interaction.phase, phase.duration]
+  }
+  ?["What is the relationship between the spirit cycle and a screenshot's meaning — which phases produce screenshot-worthy states?"]{
+    #:open
+    !probe{ "tag the stills the creator kept or posted (capture runs under design/components/captures/, screenshot card exports) by the phase their page was in; the phases that recur among kept stills are the screenshot-worthy ones, which tests this file's claim that expression is the screenshot moment" }
+    $%[still.kept, still.phase, phase.expression]
+  }
 }
 
 ^"cross_references"{

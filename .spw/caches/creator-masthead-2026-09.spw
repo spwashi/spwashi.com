@@ -29,7 +29,7 @@ element = "air"
   grok = "Yes to 5rem desktop and 54ch map. Keep pocket heading size. Risk: mid-width wrap; 54ch can look sparse on a wide pane."
   evidence = "Resume stills 3/3: design/components/captures/runs/2026-09-07/ambient/22-34-17--8369c8 — name one line at pocket/fold/broadsheet; working view usable; broadsheet map shorter than the column."
   unpaid = "Pocket @media (max-width: 32rem) h1/lede sizes sit above the 5rem rule and lose. Fold takes the jump (~46px → 55px at 820). 5rem only caps near 1440px. 54ch air is taste, not a fill."
-  probe = "npm run sense -- ink home-opening — recipe id, not --ids=home-hook. @still_recipes#sr-007 @agent_ecology#harness"
+  !probe{ "npm run sense -- ink home-opening — recipe id, not --ids=home-hook. @still_recipes#sr-007 @agent_ecology#harness" }
   falsification = "The name clips, the map overflows, or the working-view controls become unusable."
   refuse = "Do not wire this cache into site.spw while that file is dirty with a sibling session. Do not grow the art plate to fill 54ch air. Do not leave model replies in /tmp."
 }

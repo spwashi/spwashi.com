@@ -428,9 +428,21 @@ fixity = "stable"
 }[reg=facet]
 
 ^"open_seams"{
-  ?["Which recurring cross-document relation still lacks an owner or observable consequence?"]{ #:open }
-  ?["Which active edge can be removed because it no longer changes routing, validation, or editing decisions?"]{ #:open }
-  ?["Should a repeated local relation become a slice contract instead of another global graph edge?"]{ #:open }
+  ?["Which recurring cross-document relation still lacks an owner or observable consequence?"]{
+    #:open
+    !probe{ "list pairs of .spw documents that cite each other (@ reference or ~ path) in three or more files outside graph.spw, skipping _workbench; a pair with no relationship_edges entry, or whose edge has no consequence, answers the question" }
+    $%[spw.citation_pair, graph.edge, edge.consequence]
+  }
+  ?["Which active edge can be removed because it no longer changes routing, validation, or editing decisions?"]{
+    #:open
+    !probe{ "for each active edge, look for a reader of its id outside graph.spw (rg <edge id> .spw .agents scripts) and for a commit that cites it in the last ninety days (git log -S <edge id> --since=90.days); an edge with neither changes no decision, and removing it leaves npm run spw:integrity green" }
+    $%[graph.edge.id, edge.readers, edge.last_cited]
+  }
+  ?["Should a repeated local relation become a slice contract instead of another global graph edge?"]{
+    #:open
+    !probe{ "find edges whose source and target both live under one .spw/slices/<name>/ folder or one plan; move one into that slice's contract, and keep the move if npm run spw:integrity stays green and nothing outside the slice cited the edge" }
+    $%[edge.locality, slice.contract, graph.global_readers]
+  }
 }[reg=facet]
 
 ^"validation"{
