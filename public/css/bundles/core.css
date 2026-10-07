@@ -34903,10 +34903,16 @@ html[data-spw-page-section-phase="idle"] {
    below are exactly the ones the loader writes.
 
      waiting      potential is stored, and the root says so
-     triggered    the circuit closed; the module is arriving
-     queued       scheduled by something other than the reader — drawn as
-                  nothing, because a reader cannot accept what they did not
+     triggered    the circuit closed; the module is arriving. Drawn only
+                  when the reader closed it (trigger-when "invited"): a
+                  root that scrolled into view or met an idle frame did
+                  not choose anything
+     queued       scheduled by something other than the reader — left as
+                  authored, because a reader cannot accept what they did not
                   choose, and pretending otherwise teaches a false affordance
+
+   Every rule below draws in ::before, which some hosts already use for
+   themselves, so a state the reader did not choose matches no rule here.
 
    Strength follows the offer, not the module. `data-spw-module-offer` is
    derived from the channels a module declares it writes, so a module that
@@ -34947,9 +34953,9 @@ html[data-spw-page-section-phase="idle"] {
    only the second is true.
    -------------------------------------------------------------------------- */
 
-/* The shell's brand sigil draws the Spw mark in its own ::before (header.css),
-   so no state here may claim it; every pseudo rule below skips it. */
-[data-spw-module-trigger-status='waiting']:not(:where(.header-sigil))::before {
+/* The header sigil and the footer brand draw the Spw mark in their own
+   ::before (header.css), so no state here may claim it. */
+[data-spw-module-trigger-status='waiting']:not(:where([data-spw-module-offer='diagnostic'], .header-sigil, .site-footer__brand))::before {
   content: '';
   position: absolute;
   inset-block: 0;
@@ -34968,10 +34974,7 @@ html[data-spw-page-section-phase="idle"] {
   pointer-events: none;
 }
 
-/* Nothing is drawn for an offer of zero. */
-[data-spw-module-offer='diagnostic'][data-spw-module-trigger-status='waiting']:not(:where(.header-sigil))::before {
-  content: none;
-}
+/* Nothing is drawn for an offer of zero: the edge above skips diagnostic offers. */
 
 /* --------------------------------------------------------------------------
    Approach raises the potential. The reveal is the reward for looking, and it
@@ -35000,7 +35003,7 @@ html[data-spw-page-section-phase="idle"] {
   }
 }
 
-[data-spw-module-trigger-status='triggered']:not(:where(.header-sigil))::before {
+[data-spw-module-trigger-status='triggered'][data-spw-module-trigger-when='invited']:not(:where(.header-sigil, .site-footer__brand))::before {
   content: '';
   position: absolute;
   inset-block: 0;
@@ -35014,14 +35017,10 @@ html[data-spw-page-section-phase="idle"] {
 
 /* --------------------------------------------------------------------------
    Queued roots are scheduled by scroll or idle rather than chosen, so they get
-   no invitation. Stated as a rule rather than left implicit, because the
-   temptation to decorate every pending module is exactly what makes a page
-   noisy.
+   no invitation, and no rule. The temptation to decorate every pending module
+   is exactly what makes a page noisy; so is erasing what a host draws for
+   itself, which is all that `content: none` on a queued host ever did.
    -------------------------------------------------------------------------- */
-
-[data-spw-module-trigger-status='queued']:not(:where(.header-sigil))::before {
-  content: none;
-}
 
 /* --------------------------------------------------------------------------
    Reduced motion keeps the potential and drops the discharge animation; the
@@ -35029,11 +35028,11 @@ html[data-spw-page-section-phase="idle"] {
    -------------------------------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
-  [data-spw-module-trigger-status='waiting']:not(:where(.header-sigil))::before {
+  [data-spw-module-trigger-status='waiting']:not(:where([data-spw-module-offer='diagnostic'], .header-sigil, .site-footer__brand))::before {
     transition: none;
   }
 
-  [data-spw-module-trigger-status='triggered']:not(:where(.header-sigil))::before {
+  [data-spw-module-trigger-status='triggered'][data-spw-module-trigger-when='invited']:not(:where(.header-sigil, .site-footer__brand))::before {
     animation: none;
     opacity: 0;
   }
@@ -35041,15 +35040,23 @@ html[data-spw-page-section-phase="idle"] {
 
 /* --------------------------------------------------------------------------
    Capture and print. A screenshot of an invitation is an invitation nobody can
-   accept, so it is dropped rather than frozen mid-offer.
+   accept, so it is dropped rather than frozen mid-offer. Only the two drawn
+   states are dropped; every other host keeps what it draws for itself.
    -------------------------------------------------------------------------- */
 
-[data-spw-capture-mode] [data-spw-module-trigger-status]:not(:where(.header-sigil))::before {
+:is(html, body):is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
+  :is(
+    [data-spw-module-trigger-status='waiting']:not([data-spw-module-offer='diagnostic']),
+    [data-spw-module-trigger-status='triggered'][data-spw-module-trigger-when='invited']
+  ):not(:where(.header-sigil, .site-footer__brand))::before {
   content: none;
 }
 
 @media print {
-  [data-spw-module-trigger-status]:not(:where(.header-sigil))::before {
+  :is(
+    [data-spw-module-trigger-status='waiting']:not([data-spw-module-offer='diagnostic']),
+    [data-spw-module-trigger-status='triggered'][data-spw-module-trigger-when='invited']
+  ):not(:where(.header-sigil, .site-footer__brand))::before {
     content: none;
   }
 }

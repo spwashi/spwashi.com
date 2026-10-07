@@ -53,7 +53,7 @@ A page loads what its reader engages, not everything its grammar could support. 
 - The operator mapping for container priming: what `<_foo` and `{ … }` mean at runtime (`module-contract-overhaul` names this decision).
 - Where weights come from, and whether a reader can see them.
 - Whether `operators navigator console` stay page boilerplate or become shell.
-- Whether invited offers show at all. `systems/module-potential.css` drops every trigger host's `::before` under `[data-spw-capture-mode]`, and every body carries `data-spw-capture-mode="default"`, so the waiting edge and the discharge have drawn on no page since abc7acf7 (2026-08-14). Narrowing that rule to `screenshot`/`study` turns invitations on site-wide; judge it in a browser first. The brand sigil is a trigger host (its `data-spw-semantic-expression` matches `brace-physics`) and is now excluded from those rules, so the Spw mark it draws stays.
+- Invited offers now draw (2026-10-07): the capture guard in `systems/module-potential.css` matches only clean, screenshot and study, the discharge plays only for `trigger-when="invited"`, and states the reader did not choose match no rule, so a host keeps the `::before` it draws for itself (card rails, the topic `<`, both Spw marks). Still nothing waits on a default page: when two modules share a root, a later visible trigger rewrites `data-spw-module-trigger-status` from `waiting` to `queued` (the image-reward figures on `/`). One status slot per root is the next loader decision.
 
 ## Arrival census — 2026-10-06 (slice 1)
 
