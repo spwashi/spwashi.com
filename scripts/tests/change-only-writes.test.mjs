@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { bus } from '../../public/js/kernel/bus.js';
 import { initSpwSemanticCrossrefs } from '../../public/js/semantic/semantic-crossrefs.js';
+import { syncUtilityRow } from '../../public/js/runtime/shell/utility-row.js';
 
 // Scroll and pointer paths repeat one state many times a second; a writer that
 // rewrites an unchanged value still queues mutation records and dirties style.
@@ -126,5 +127,64 @@ test('touch lights kin only through an open note, which holds them until it clos
     assert.equal(html.spwSemanticCrossref, 'stone', 'hover previews again once the note is closed');
   } finally {
     cleanup?.();
+  }
+});
+
+// A utility-row button: attributes and its argument's text count each write.
+class UtilityButton extends globalThis.HTMLElement {
+  constructor(action) {
+    super();
+    this.action = action;
+    this.writes = 0;
+    this.attrs = new Map();
+    const button = this;
+    let text = '';
+    this.argument = {
+      get textContent() { return text; },
+      set textContent(value) { button.writes += 1; text = String(value); },
+    };
+  }
+
+  querySelector() { return this.argument; }
+  get title() { return this.getAttribute('title') ?? ''; }
+  set title(value) { this.setAttribute('title', value); }
+  getAttribute(name) { return this.attrs.get(name) ?? null; }
+  setAttribute(name, value) { this.writes += 1; this.attrs.set(name, String(value)); }
+  toggleAttribute(name, force) {
+    if (force === this.attrs.has(name)) return force;
+    this.writes += 1;
+    if (force) this.attrs.set(name, ''); else this.attrs.delete(name);
+    return force;
+  }
+}
+
+test('the utility row writes pressed state, titles and labels once, not on every measured pass', () => {
+  const buttons = ['color-light', 'color-dark', 'font-down', 'font-up', 'path-toggle']
+    .map((action) => new UtilityButton(action));
+  const row = new WriteCountingElement();
+  row.querySelectorAll = (selector) => buttons.filter((button) => selector.includes(`"${button.action}"`));
+  row.closest = () => null;
+  const writes = () => row.writes + buttons.reduce((sum, button) => sum + button.writes, 0);
+
+  syncUtilityRow(row);
+  assert.equal(buttons[0].getAttribute('aria-pressed'), 'false');
+  assert.equal(buttons[4].getAttribute('title'), 'Open the link trail when the header trace finishes mounting');
+  assert.equal(row.dataset.spwPathAvailable, 'false');
+  assert.ok(writes() > 0);
+
+  row.writes = 0;
+  buttons.forEach((button) => { button.writes = 0; });
+  syncUtilityRow(row);
+  assert.equal(writes(), 0, 'a pass that finds the same settings rewrites nothing');
+
+  document.documentElement.dataset.spwColorMode = 'dark';
+  try {
+    syncUtilityRow(row);
+    assert.equal(buttons[1].getAttribute('aria-pressed'), 'true');
+    assert.equal(buttons[1].getAttribute('title'), 'Dark mode active');
+    assert.equal(buttons[0].writes, 0, 'auto to dark leaves the light button as it was');
+    assert.equal(writes(), 3, 'auto to dark moves the row mode and the dark button\'s pressed state and title');
+  } finally {
+    delete document.documentElement.dataset.spwColorMode;
   }
 });

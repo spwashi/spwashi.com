@@ -14,7 +14,7 @@
  */
 
 import { getSiteSettings } from '/public/js/kernel/site-settings.js';
-import { writeTextContent } from '/public/js/kernel/dom-contracts.js';
+import { writeDatasetValue, writeTextContent } from '/public/js/kernel/dom-contracts.js';
 import { syncHeaderActions } from './attention-posture-panel.js';
 
 const FONT_SCALE_STEPS = Object.freeze(['70', '80', '90', '100', '110', '120']);
@@ -153,6 +153,12 @@ export function ensureUtilityRow(header) {
   return row;
 }
 
+/* The shell's measured sync runs this on every pass, so each write is
+   change-only: a same-value setAttribute still queues a mutation record. */
+function writeAttribute(node, name, value) {
+  if (node.getAttribute(name) !== value) node.setAttribute(name, value);
+}
+
 export function syncUtilityRow(row) {
   if (!(row instanceof HTMLElement)) return;
 
@@ -165,41 +171,41 @@ export function syncUtilityRow(row) {
     || document.documentElement.dataset.spwPointerMode === 'coarse';
   const labels = compact ? UTILITY_LABELS.compact : UTILITY_LABELS.regular;
 
-  row.dataset.spwFontScale = current;
-  row.dataset.spwColorMode = currentColorMode;
-  row.dataset.spwPathAvailable = pathToggle ? 'true' : 'false';
-  row.dataset.spwUtilityMode = compact ? 'compact' : 'regular';
+  writeDatasetValue(row, 'spwFontScale', current);
+  writeDatasetValue(row, 'spwColorMode', currentColorMode);
+  writeDatasetValue(row, 'spwPathAvailable', pathToggle ? 'true' : 'false');
+  writeDatasetValue(row, 'spwUtilityMode', compact ? 'compact' : 'regular');
 
   syncHeaderActions(row.closest('.site-header, body > header'));
 
   row.querySelectorAll('[data-spw-shell-action="color-light"]').forEach((button) => {
     const arg = button.querySelector('.spw-utility-argument');
     if (arg) writeTextContent(arg, labels['color-light']);
-    button.setAttribute('aria-pressed', currentColorMode === 'light' ? 'true' : 'false');
-    button.title = currentColorMode === 'light' ? 'Light mode active' : 'Switch to light mode';
+    writeAttribute(button, 'aria-pressed', currentColorMode === 'light' ? 'true' : 'false');
+    writeAttribute(button, 'title', currentColorMode === 'light' ? 'Light mode active' : 'Switch to light mode');
   });
 
   row.querySelectorAll('[data-spw-shell-action="color-dark"]').forEach((button) => {
     const arg = button.querySelector('.spw-utility-argument');
     if (arg) writeTextContent(arg, labels['color-dark']);
-    button.setAttribute('aria-pressed', currentColorMode === 'dark' ? 'true' : 'false');
-    button.title = currentColorMode === 'dark' ? 'Dark mode active' : 'Switch to dark mode';
+    writeAttribute(button, 'aria-pressed', currentColorMode === 'dark' ? 'true' : 'false');
+    writeAttribute(button, 'title', currentColorMode === 'dark' ? 'Dark mode active' : 'Switch to dark mode');
   });
 
   row.querySelectorAll('[data-spw-shell-action="font-down"]').forEach((button) => {
     const arg = button.querySelector('.spw-utility-argument');
     if (arg) writeTextContent(arg, labels['font-down']);
     button.toggleAttribute('disabled', current === min);
-    button.setAttribute('aria-disabled', current === min ? 'true' : 'false');
-    button.title = current === min ? 'Already at the smallest readable size' : 'Make text smaller';
+    writeAttribute(button, 'aria-disabled', current === min ? 'true' : 'false');
+    writeAttribute(button, 'title', current === min ? 'Already at the smallest readable size' : 'Make text smaller');
   });
 
   row.querySelectorAll('[data-spw-shell-action="font-up"]').forEach((button) => {
     const arg = button.querySelector('.spw-utility-argument');
     if (arg) writeTextContent(arg, labels['font-up']);
     button.toggleAttribute('disabled', current === max);
-    button.setAttribute('aria-disabled', current === max ? 'true' : 'false');
-    button.title = current === max ? 'Already at the largest readable size' : 'Make text larger';
+    writeAttribute(button, 'aria-disabled', current === max ? 'true' : 'false');
+    writeAttribute(button, 'title', current === max ? 'Already at the largest readable size' : 'Make text larger');
   });
 
   row.querySelectorAll('[data-spw-shell-action="path-toggle"]').forEach((button) => {
@@ -207,10 +213,10 @@ export function syncUtilityRow(row) {
     if (arg) writeTextContent(arg, labels['path-toggle']);
     const pathExpanded = pathToggle?.getAttribute('aria-expanded') === 'true';
     button.toggleAttribute('disabled', !pathToggle);
-    button.setAttribute('aria-disabled', pathToggle ? 'false' : 'true');
-    button.setAttribute('aria-pressed', pathExpanded ? 'true' : 'false');
-    button.title = pathToggle
+    writeAttribute(button, 'aria-disabled', pathToggle ? 'false' : 'true');
+    writeAttribute(button, 'aria-pressed', pathExpanded ? 'true' : 'false');
+    writeAttribute(button, 'title', pathToggle
       ? (pathExpanded ? 'Collapse the link trail' : 'Expand the link trail')
-      : 'Open the link trail when the header trace finishes mounting';
+      : 'Open the link trail when the header trace finishes mounting');
   });
 }

@@ -1,6 +1,6 @@
 # Runtime Bootstrap Performance
 
-**Status 2026-10-06.** Next: the open writers named in the 2026-09-28 receipt (section-handle title and aria, utility-row aria-pressed). Holds the five threads of locomotion-collapse-redistribution.
+**Status 2026-10-07.** The section handle, utility row and posture pill write only what moved. On a `/about/` pocket scroll, two interleaved runs a side with HEAD served through CDP Fetch, their same-value records went 680/504 → 10/10 and handle childList 14/14 → 0/0; `change-only-writes.test.mjs` holds the utility row. What remains is `data-spw-nav-expression` on hash links, which two modules write (`semantic/link-copy.js`, `navigation/navigation-spells.js`) and which returns to its value within one batch. Next: the reader layer's operator-geometry flip from the same receipt. Holds the five threads of locomotion-collapse-redistribution.
 
 **Related:** [runtime-plane-consolidation](../runtime-plane-consolidation/PLAN.md) · [module-contract-overhaul](../module-contract-overhaul/PLAN.md) · [interaction-cache](../archive/interaction-cache/PLAN.md) (archived). **Absorbed 2026-10-06:** [locomotion-collapse-redistribution](../archive/locomotion-collapse-redistribution/PLAN.md).
 
