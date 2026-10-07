@@ -16,6 +16,10 @@
    ========================================================================== */
 
 :where(body[data-spw-surface="blog"]) {
+  /* Debug / inspection */
+  --spw-debug-layer-owner: "routes";
+  --spw-debug-layer-color: #a67c00;
+
   /* surface identity */
   --blog-measure: 68ch;
   --spw-main-width: 1100px;
