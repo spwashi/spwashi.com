@@ -5,6 +5,7 @@
  * and active scene context — serializable to Spw and JSON for LM handoff.
  */
 
+import { resolveOwnerDocument } from '/public/js/kernel/browser-primitives.js';
 import { bus } from '/public/js/kernel/bus.js';
 import { writeDatasetValue } from '/public/js/kernel/dom-contracts.js';
 import { projectFeatureRouteContext } from '/public/js/kernel/feature-route-context.js';
@@ -356,7 +357,9 @@ export function initTopicalPayload(root = document) {
   };
 }
 
-export const spwModule = {
-  updates: ['attr:data-spw-topic-payload-active'],
-  mount: (mod, ctx, root) => initTopicalPayload(root),
-};
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'topical-payload',
+  mount: (ctx, root) => initTopicalPayload(resolveOwnerDocument(ctx, root)),
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

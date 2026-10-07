@@ -4,6 +4,7 @@
  * Query-driven condensation and print preparation from Spw projection requests.
  */
 
+import { resolveOwnerDocument } from '/public/js/kernel/browser-primitives.js';
 import { writeRuntimeDatasetValues } from '/public/js/kernel/dom-contracts.js';
 import { parseModularQuery, serializeSpwQuery } from '/public/js/kernel/query-composer.js';
 
@@ -70,7 +71,9 @@ export function initPrecipitationRequest(root = document) {
   return () => window.removeEventListener('popstate', onPopState);
 }
 
-export const spwModule = {
-  updates: ['attr:data-spw-precipitation-active', 'attr:data-spw-precipitation-mode'],
-  mount: (mod, ctx, root) => initPrecipitationRequest(root),
-};
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'precipitation-request',
+  mount: (ctx, root) => initPrecipitationRequest(resolveOwnerDocument(ctx, root)),
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

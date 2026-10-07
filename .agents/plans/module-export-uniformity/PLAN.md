@@ -1,6 +1,6 @@
 # Plan: module-export-uniformity
 
-**Status 2026-10-06.** Phase 0, Phase 1 and the spwModule alias migration landed; only `interface/state-inspector.js` still exports a bare spwModule. Open: check-standalone and the storage envelope.
+**Status 2026-10-07.** Phase 0, Phase 1 and the spwModule alias migration landed. Every export now has the `SPW_MODULE_EXPORT` shape except `runtime/arrival/module-effects.js`. Its mount takes the catalog adapter's `(mod, ctx, root)`, so the loader's `(ctx, root)` hands the `<html>` root to its `ctx` parameter. It never subscribes to the bus, and the pulse `core.css` styles for it never fires. Restoring it adds `<html>` writes after idle, so it waits on a browser review; `module-lifecycle-contract.test.mjs` holds it by name. Open: that review, check-standalone and the storage envelope.
 
 **Related:** [runtime-plane-consolidation](../runtime-plane-consolidation/PLAN.md) · [module-contract-overhaul](../module-contract-overhaul/PLAN.md) · [js-surface-ecology](../js-surface-ecology/PLAN.md).
 

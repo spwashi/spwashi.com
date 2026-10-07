@@ -1273,6 +1273,9 @@ export function initStateInspector() {
   };
 }
 
-export const spwModule = {
-  mount: initStateInspector,
-};
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'state-inspector',
+  mount: () => initStateInspector(),
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

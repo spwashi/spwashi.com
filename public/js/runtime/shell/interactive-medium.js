@@ -6,6 +6,7 @@
  * for page anatomy / topical handoff.
  */
 
+import { resolveOwnerDocument } from '/public/js/kernel/browser-primitives.js';
 import { writeDatasetValues } from '/public/js/kernel/dom-contracts.js';
 import { createMeasuredLane } from '/public/js/kernel/measured-frame.js';
 import { projectFeatureRouteContext } from '/public/js/kernel/feature-route-context.js';
@@ -465,7 +466,9 @@ function cleanup() {
   delete window.spwInteractiveMedium;
 }
 
-export const spwModule = {
-  updates: ['attr:data-spw-medium-mounted', 'attr:data-spw-medium-target'],
-  mount: (mod, ctx, root) => initInteractiveMedium(root),
-};
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'interactive-medium',
+  mount: (ctx, root) => initInteractiveMedium(resolveOwnerDocument(ctx, root)),
+});
+
+export const spwModule = SPW_MODULE_EXPORT;
