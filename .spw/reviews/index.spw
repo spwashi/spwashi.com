@@ -17,7 +17,7 @@
 @spw_surface_normalization: ~"./spw-surface-normalization.spw"
 @spw_maintenance_2026_06: ~"./spw-maintenance-2026-06.spw"
 @upstream_workbench_recommendations: ~"./upstream-workbench-recommendations.spw"
-@interaction_loop_contract: ~"../../.agents/plans/interaction-loop-contract/PLAN.md"
+@interaction_loop_contract: ~"../../.agents/plans/archive/interaction-loop-contract/PLAN.md"
 @gesture_state_refinement: ~"../../.agents/plans/gesture-state-refinement/PLAN.md"
 @navigation_header_disclosure: ~"../../.agents/plans/navigation-header-disclosure/PLAN.md"
 @floating_chrome_stack: ~"../../.agents/plans/floating-chrome-stack/FIX.md"

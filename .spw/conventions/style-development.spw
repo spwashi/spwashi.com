@@ -112,7 +112,7 @@
     question: "Decision logged: objective/subjective is the primary brace axis; boon/bane remains secondary valence. Future surfaces should test how physical intuition makes that axis legible."
   }
   filetype_visual_grammar: {
-    plan: ".agents/plans/cognitive-navigation"
+    plan: ".agents/plans/archive/cognitive-navigation"
     commit: "2 — filetype taxonomy"
     question: "What visual signatures distinguish register, probe, reference, projection, surface, and metric — and do those signatures feel coherent with the existing operator color vocabulary?"
   }
@@ -136,5 +136,5 @@
   @screenshot_plan: ~"../../.agents/plans/screenshot-semantics/wip.spw"
   @cinematic_plan: ~"../../.agents/plans/color-motion/PLAN.md"
   @circuits_plan: ~"../../.agents/plans/interaction-grammar/wip.spw"
-  @nav_plan: ~"../../.agents/plans/cognitive-navigation/wip.spw"
+  @nav_plan: ~"../../.agents/plans/archive/cognitive-navigation/wip.spw"
 }

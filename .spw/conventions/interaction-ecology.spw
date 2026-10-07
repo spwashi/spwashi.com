@@ -13,7 +13,7 @@
 @interaction_microstates: ~"./interaction-microstates.spw"
 @attention_field: ~"./attention-field.spw"
 @page_anatomy: ~"./page-anatomy-vocabulary.spw"
-@interaction_loop_plan: ~"../../.agents/plans/interaction-loop-contract/PLAN.md"
+@interaction_loop_plan: ~"../../.agents/plans/archive/interaction-loop-contract/PLAN.md"
 @gesture_plan: ~"../../.agents/plans/gesture-state-refinement/PLAN.md"
 @header_plan: ~"../../.agents/plans/navigation-header-disclosure/PLAN.md"
 @floating_chrome_fix: ~"../../.agents/plans/floating-chrome-stack/FIX.md"

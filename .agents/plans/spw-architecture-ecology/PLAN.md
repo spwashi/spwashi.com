@@ -1,5 +1,9 @@
 # Spw Architecture Ecology
 
+**Status 2026-10-06.** Waves R, A and B landed; C is superseded by `census:json` and `ecology:json`; D–I are open. The 2026-07-12 review rejected generated indexes (C, I).
+
+**Related:** [visual-capture-ecology](../visual-capture-ecology/PLAN.md). **Absorbed 2026-10-06:** [spw-surface-normalization](../archive/spw-surface-normalization/PLAN.md).
+
 ## Public Goal
 
 Strengthen the site's `.spw` layer as an inspectable ecology: explicit topology, typed relational design, promotion protocol, ecology coordinators, owner registry, component-template surface, slimmer `site.spw`, review graduation metadata, language-ecology alignment, slice promotion, convention hygiene, and precipitated agent/editor indexes — so agents and editors can route work without reconstructing meaning from file names or re-scanning 182 plan folders.

@@ -1,5 +1,9 @@
 # Plan: pwa-experience
 
+**Status 2026-10-06.** Root worker, offline shell and icons landed (bc47ecf6, 2026-09-28: icons built from one SVG). Maintenance contract only.
+
+**Related:** [spw-document-room](../spw-document-room/PLAN.md) · [site-source-layout](../site-source-layout/PLAN.md) · [shell-logo-branding](../shell-logo-branding/PLAN.md).
+
 Improve the site's installability, offline behavior, update flow, and production QA without changing the hand-written page structure.
 
 ## Goal

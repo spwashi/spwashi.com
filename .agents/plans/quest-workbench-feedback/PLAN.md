@@ -1,5 +1,9 @@
 # Quest workbench and feedback entry
 
+**Status 2026-10-06.** The quest guide landed (dcf23bdb) and waits on a Wrangler deploy. The feedback inbox is proposed seams only.
+
+**Related:** [workers-wonder-kit](../workers-wonder-kit/PLAN.md) · [agentic-dev-contracts](../agentic-dev-contracts/PLAN.md).
+
 Operation: align. Fixity: experimental presentation; stable consumer/workbench ownership.
 Named patch: source-backed initialization and reference-first feedback entry.
 

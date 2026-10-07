@@ -16,7 +16,7 @@
 @product_lines: ~"../surfaces/product-lines.spw"
 @musical: ~"../reviews/runtime-audit/selector-timing-chunking-musical-ontology.spw"
 @fashion: ~"../audits/appendices/fashion-history-500y.spw"
-@dimensional_nav: ~"../../.agents/plans/dimensional-expression-navigation/PLAN.md"
+@dimensional_nav: ~"../../.agents/plans/archive/dimensional-expression-navigation/PLAN.md"
 @register: ~"../../about/index.html#boonhonk-register"
 @rpg: ~"../../play/rpg-wednesday/index.html#rpgw-boonhonk"
 @fit: ~"../../play/rpg-wednesday/library/index.html#boonhonk-fit"

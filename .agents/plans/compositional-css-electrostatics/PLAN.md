@@ -1,5 +1,9 @@
 # Compositional CSS Electrostatics
 
+**Status 2026-10-06.** Finite pulses landed (ecc3da8c). No first slice is named; the remaining workstreams go through Owner Handoffs below until one is.
+
+**Related:** [css-state-legibility](../archive/css-state-legibility/PLAN.md) (archived) · [microinteraction-motion-lifecycle](../archive/microinteraction-motion-lifecycle/PLAN.md) (archived).
+
 ## Public Goal
 
 Make CSS read as a compositional projection of authored meaning, available space, interaction tendency, and attention state—while reducing first-paint spend and keeping every richer behavior progressively enhanced, inspectable, and useful to design collaborators.

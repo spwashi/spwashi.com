@@ -1,5 +1,9 @@
 # Style Image Cohesion
 
+**Status 2026-10-06.** Nothing has landed yet. A first batch would be three routes with captions through image-naming-magic.
+
+**Related:** [compositional-css-electrostatics](../compositional-css-electrostatics/PLAN.md) · [promptable-image-library-pass](../archive/promptable-image-library-pass/PLAN.md) (archived). **Absorbed 2026-10-06:** [image-metaphysics-aesthetic-pass](../archive/image-metaphysics-aesthetic-pass/PLAN.md) · [production-demonstration-pass](../archive/production-demonstration-pass/PLAN.md) · [topic-photo-svg-pass](../archive/topic-photo-svg-pass/PLAN.md).
+
 ## Public Goal
 
 Define a small, coherent image grammar for the site so creator identity, route atmosphere, and reference-document anatomy feel related without turning every page into the same screenshot.

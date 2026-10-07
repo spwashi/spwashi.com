@@ -1,0 +1,115 @@
+# Review 2026-10-06 — archived: landed: both deliverables exist (.agents/prompts/svg-infrastructure.md, the depth-pass memo); 2026-07-08 slice landed media/svg-tunability.js and data-spw-svg-persona on 43 pages; remaining items repeat svg-surface-integration; svg-surface-integration owns what remains
+# Review 2026-07-12 — keep as a prompt/architecture brief, not implementation; grounding in the real SVG host contract is required.
+# Plan Index — svg-aesthetic-depth-pass
+#
+# The desired end state is a prompt + architecture brief pair that makes a downstream model start from the site's actual shape: - hand-authored HTML - shell-driven responsive…
+
+#>plan_svg_aesthetic_depth_pass_index
+#:index #!plan
+#:operation #!archive
+#:layer #!pragmatics
+
+operation = "archive"
+fixity = "tending"
+
+intent: .{
+ goal = `The desired end state is a prompt + architecture brief pair that makes a downstream model start from the site's actual shape: - hand-authored HTML - shell-driven responsive layouts - additive wonder states - SVG host contracts - diagrammatic warmth + inspectable restraint The immediate task is not implementation. It is to make the later analysis phase cheaper to ground, more aesthetically coherent, and more attentive to mobile, tablet, wide, and long-display behavior.`
+ owner = `svg-aesthetic-depth-pass`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `The desired end state is a prompt + architecture brief pair that makes a downstream model start from the site's actual…`
+ concepts = #[
+  `svg-aesthetic-depth-pass`,
+  `desired`,
+  `end`,
+  `state`,
+  `prompt`,
+ ][reg=set]
+ surfaces = #[
+  `design/experiments/svg/index.html`,
+  `css/systems/svg-surfaces.css`,
+  `js/media/svg-tunability.js`,
+  `topics/craft/svg/index.html`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
+@plans_root: ~"../../index.spw"
+@plan_index_convention: ~"../../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@plan_svg_surface_integration: ~"../../svg-surface-integration/index.spw"
+@plan_agentic_dev_contracts: ~"../../agentic-dev-contracts/index.spw"
+@design_experiments_svg_index_html: ~"../../../../design/experiments/svg/index.html"
+@svg_surfaces: ~"../../../../public/css/systems/svg-surfaces.css"
+@svg_tunability: ~"../../../../public/js/media/svg-tunability.js"
+@topics_craft_svg_index_html: ~"../../../../topics/craft/svg/index.html"
+@about_index_html: ~"../../../../about/index.html"
+@svg_surface_integration: ~"../../svg-surface-integration/svg-surface-integration.spw"
+@svg_infrastructure: ~"../../../prompts/svg-infrastructure.md"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+ plan_svg_surface_integration = @plan_svg_surface_integration
+ plan_agentic_dev_contracts = @plan_agentic_dev_contracts
+ design_experiments_svg_index_html = @design_experiments_svg_index_html
+ svg_surfaces = @svg_surfaces
+ svg_tunability = @svg_tunability
+ topics_craft_svg_index_html = @topics_craft_svg_index_html
+ about_index_html = @about_index_html
+ svg_surface_integration = @svg_surface_integration
+ svg_infrastructure = @svg_infrastructure
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+ related_plans = #[
+  `svg-surface-integration`,
+  `agentic-dev-contracts`,
+ ][reg=set]
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-svg_aesthetic_depth_pass-001"
+ layer = "pragmatic"
+ hypothesis = `The desired end state is a prompt + architecture brief pair that makes a downstream model start from the site's actual shape: - hand-authored HTML - shell-driven responsive layouts - additive wonder states - SVG host contracts - diagrammatic warmth + inspectable restraint The immediate task is not implementation. It is to make the later analysis phase cheaper to ground, more aesthetically coherent, and more attentive to mobile, tablet, wide, and long-display behavior.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../../design/experiments/svg/index.html"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../../design/experiments/svg/index.html unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `rg -n "svg-aesthetic-depth-pass|SVG Aesthetic Depth Pass For Opus 4.7" .agents/prompts .agents/plans`,
+ `rg -n "spw-svg-env|data-spw-svg-environment|svg-screenshot-model-packet" design/experiments/svg public/css public/js .agents/plans`,
+ `rg -n "data-spw-svg-persona|persona-specific|rendering-model" design topics recipes about care blog public/js .agents/plans`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does svg-aesthetic-depth-pass own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of svg-aesthetic-depth-pass?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether svg-aesthetic-depth-pass still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: The desired end state is a prompt + architecture brief pair that makes a downstream model start from the site's actual shape: -…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]

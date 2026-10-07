@@ -10,7 +10,7 @@
 #:fixity #!tending
 #:layer #!pragmatics
 
-@plan: ~"../../.agents/plans/interaction-cache/PLAN.md"
+@plan: ~"../../.agents/plans/archive/interaction-cache/PLAN.md"
 @hysteresis_config: ~"../../public/js/runtime/interaction/hysteresis.js"
 @arc_taxonomy: ~"../../public/js/runtime/interaction/arc-taxonomy.js"
 @phase_queue: ~"../../public/js/runtime/interaction/phase-queue.js"

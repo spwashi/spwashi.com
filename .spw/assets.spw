@@ -253,7 +253,7 @@
 ^"cross_references"{
   @style_development: ~"./conventions/style-development.spw"
   @asset_management: ~"./conventions/asset-management.spw"
-  @rpg_asset_capture: ~"../.agents/plans/rpg-asset-capture-frames/rpg-asset-capture-frames.spw"
+  @rpg_asset_capture: ~"../.agents/plans/archive/rpg-asset-capture-frames/rpg-asset-capture-frames.spw"
   @naming_skill: ~"../.agents/skills/image-naming-magic/SKILL.md"
   @optimize_skill: ~"../.agents/skills/image-optimize/SKILL.md"
 }

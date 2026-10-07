@@ -1,5 +1,9 @@
 # Plan: pretext-whimsy-lab
 
+**Status 2026-10-06.** The measurement bus landed (`pretext-measurement-bus.js`, `pretext-physics.js`). The whimsy runtime (commits 3–5) has not started and resumes only from a named experiment.
+
+**Related:** [designer-conversation-canvas](../designer-conversation-canvas/PLAN.md).
+
 Explore Pretext capabilities toward whimsy and text-physics in a bounded experimental lab that stays honest about what the library can actually compute.
 
 ## Goal

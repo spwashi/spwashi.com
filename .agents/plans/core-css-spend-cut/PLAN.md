@@ -1,5 +1,7 @@
 # core-css-spend-cut
 
+**Status 2026-10-06.** Budgets are measured on the commented source bundle, and the deploy strips comments: shipped core was 1293 KiB on 2026-10-06. The ~1630 KiB and 1679 KiB figures below are source-bundle readings from their dates.
+
 ## Public Goal
 First paint ships structure. Wonder, grain, cinematic, and ornament arrive after interactive so core CSS can shrink. Late restyle may only add atmosphere — not hide, move, or resize what the visitor already read.
 

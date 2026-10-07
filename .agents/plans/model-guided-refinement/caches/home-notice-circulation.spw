@@ -12,13 +12,13 @@
 #:fixity #!tending
 #:layer #!pragmatics
 
-@product_lines: ~"../../../.spw/surfaces/product-lines.spw"
-@marketing: ~"../../../.spw/conventions/model-guided-refinement.spw"
-@attention_field: ~"../../../.spw/conventions/attention-field.spw"
-@ornament_contract: ~"../../../.spw/conventions/ornament-contract.spw"
-@circuit_components: ~"../../../.spw/conventions/circuit-components.spw"
-@home: ~"../../../index.html"
-@midjourney: ~"../../../tools/midjourney/index.html"
+@product_lines: ~"../../../../.spw/surfaces/product-lines.spw"
+@marketing: ~"../../../../.spw/conventions/model-guided-refinement.spw"
+@attention_field: ~"../../../../.spw/conventions/attention-field.spw"
+@ornament_contract: ~"../../../../.spw/conventions/ornament-contract.spw"
+@circuit_components: ~"../../../../.spw/conventions/circuit-components.spw"
+@home: ~"../../../../index.html"
+@midjourney: ~"../../../../tools/midjourney/index.html"
 
 operation = "cache"
 fixity = "tending"

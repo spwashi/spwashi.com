@@ -1,5 +1,9 @@
 # Promo / Wonder Cycle Plan
 
+**Status 2026-10-06.** The rotating layer landed (the TS module, feed, CSS and tests), so Why This Exists below is history. Release-day receipts are at the end.
+
+**Related:** [ecosystem-offer-2026-10](../ecosystem-offer-2026-10/PLAN.md) · [discovery-powerups](../archive/discovery-powerups/PLAN.md) (archived). **Absorbed 2026-10-06:** [cadence-text-resonance](../archive/cadence-text-resonance/PLAN.md) · [release-day-discovery-2026-09-26](../archive/release-day-discovery-2026-09-26/PLAN.md) · [release-day-resonance-2026-09-13](../archive/release-day-resonance-2026-09-13/PLAN.md) · [rpg-playable-copy](../archive/rpg-playable-copy/PLAN.md).
+
 ## Public Goal
 Create site structures that can change by day and by week, with separate lanes for:
 - **promo**: conversion-facing highlights, CTA cards, services, work samples, and contact nudges
@@ -58,3 +62,9 @@ The current site already has rich route surfaces, but the rotating layer is not 
 ## Notice attention refinement — 2026-09-18
 The creator's critique of the daily wonder: no closure or way back, one CTA shape, little relevance to what a page can do, and module-load prompts that are noise. The cache `.spw/caches/notice-attention-refinement-2026-09.spw` holds the seven dimensions a notice must answer (subject, meaning, value, closure, shape, relevance, cadence) and what landed: a close control and presentation-aware exits that return focus to main, three CTA shapes by destination (`data-spw-cta-shape` here | there | out), and feature-learning collapsed to one "On this page" card that names verbs from frame contracts. Next: measure shown / accepted / closed per cadence, prefer a here-shaped promo when the current route offers the capability, and gate new modal promos on a phone demo.
 
+## Release-day receipts
+
+Each release close was its own one-day plan; the receipts live here and the folders moved to `archive/` on 2026-10-06.
+
+- 2026-09-13, A-cycle close on Home and `/now/`: [release-day-resonance](../archive/release-day-resonance-2026-09-13/PLAN.md), landed in `98821df8` and `52508d6e`, follow-ups `a0ed3849` and `0a93f6ab`.
+- 2026-09-26, the release as an invitation to explore: [release-day-discovery](../archive/release-day-discovery-2026-09-26/PLAN.md), landed in `c8b35417`; `/now/` holds the receipts.

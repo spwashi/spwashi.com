@@ -1,5 +1,9 @@
 # Plan: screenshot-semantics
 
+**Status 2026-10-06.** Stills recipes and the 2026-08-31 crop seed landed; commits 2–5 (priming and journey tokens) are open.
+
+**Related:** [visual-capture-ecology](../visual-capture-ecology/PLAN.md) · [rpg-asset-capture-frames](../archive/rpg-asset-capture-frames/PLAN.md) (archived).
+
 Extend selection and priming semantics so screenshots capture meaningful cognitive states — turning the site into a useful capture tool for artists who value the visual record of a developing idea.
 
 ## Goal

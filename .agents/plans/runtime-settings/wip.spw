@@ -28,13 +28,13 @@ fixity = "tending"
  hot_files = #[ `settings/index.html`, `public/js/site.js`, `public/css/style.css`, `public/js/kernel/site-settings-profiles.js`, `public/js/kernel/site-settings-engine.js`, `public/js/interface/site-settings-ui.js`, ][reg=set]
 }[reg=facet]
 ^["roots"]{
- @plan: ~".agents/plans/runtime-settings/PLAN.md"
- @settings: ~"public/js/site-settings.js"
- @site: ~"public/js/site.js?v=0.0.2"
- @navigator: ~"public/js/frame-navigator.js"
- @console: ~"public/js/spw-console.js"
- @css: ~"public/css/style.css?v=0.0.2"
- @page: ~"settings/index.html"
+ @plan: ~"PLAN.md"
+ @settings: ~"../../../public/js/kernel/site-settings.js"
+ @site: ~"../../../public/js/site.js"
+ @navigator: ~"../../../public/js/runtime/navigation/frame-navigator.js"
+ @console: ~"../../../public/js/interface/console.js"
+ @css: ~"../../../public/css/style.css"
+ @page: ~"../../../settings/index.html"
 }
 
 ^["intent"]{

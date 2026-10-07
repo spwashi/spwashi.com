@@ -1,0 +1,101 @@
+# Review 2026-10-06 — archived: landed: all five Current Patch items visible: topics/search/index.html, search links on index, topics and pedagogy, .spw/conventions/discovery-powerups.spw; no commits since 2026-07-12; spellcraft-authoring owns what remains
+# Review 2026-07-12 — keep only the notice→understand→gather proof; avoid turning every term into collectible chrome.
+# Plan Index — Discovery Powerups
+#
+# Make vocabulary and route regions behave like rediscoverable material: a visitor should be able to find a term, understand why it matters, gather it into the cauldron, and use it…
+
+#>plan_discovery_powerups_index
+#:index #!plan
+#:operation #!archive
+#:layer #!pragmatics
+
+operation = "archive"
+fixity = "tending"
+
+intent: .{
+ goal = `Make vocabulary and route regions behave like rediscoverable material: a visitor should be able to find a term, understand why it matters, gather it into the cauldron, and use it to compose an arc across the site.`
+ owner = `discovery-powerups`
+ kind = `plan`
+ bucket = `semantic_rails`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "semantic_rails"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Make vocabulary and route regions behave like rediscoverable material: a visitor should be able to find a term,…`
+ concepts = #[
+  `discovery`,
+  `powerups`,
+  `vocabulary`,
+  `regions`,
+  `behave`,
+ ][reg=set]
+ surfaces = #[
+  `.spw/conventions/discovery-powerups.spw`,
+  `topics/search`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
+@plans_root: ~"../../index.spw"
+@plan_index_convention: ~"../../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@discovery_powerups: ~"../../../../.spw/conventions/discovery-powerups.spw"
+@search: ~"../../../../topics/search"
+
+dispatch: .{
+ plan = @plan
+ discovery_powerups = @discovery_powerups
+ search = @search
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `plan_ecology_semantics` ; path = `.spw/audits/plan-ecology-semantics-2026-07.spw` }[reg=facet],
+  .{ label = `commit_skill_induction` ; path = `.spw/audits/commit-skill-induction-2026-07/index.spw` }[reg=facet],
+  .{ label = `spw_architecture_ecology` ; path = `.spw/conventions/spw-architecture-ecology.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `self`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-discovery_powerups-001"
+ layer = "pragmatic"
+ hypothesis = `Make vocabulary and route regions behave like rediscoverable material: a visitor should be able to find a term, understand why it matters, gather it into the cauldron, and use it to compose an arc across the site.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../../.spw/conventions/discovery-powerups.spw"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../../.spw/conventions/discovery-powerups.spw unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `npm run check:local`,
+ `targeted route/contract search for topics/search and discovery-powerups`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does discovery-powerups own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of discovery-powerups?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether discovery-powerups still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Make vocabulary and route regions behave like rediscoverable material: a visitor should be able to find a term, understand why it matters,…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]

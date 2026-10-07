@@ -1,5 +1,9 @@
 # css-cascade-stratification
 
+**Status 2026-10-06.** Phase 0 landed (332d98bd). Next: the Phase 1 browser review; 0 of 19 bundles recorded.
+
+**Absorbed 2026-10-06:** [css-state-legibility](../archive/css-state-legibility/PLAN.md) · [vertical-rhythm-container-audit](../archive/vertical-rhythm-container-audit/PLAN.md).
+
 Operation: prime. Fixity: experimental. Owner rail: `css-architecture-readability`.
 
 ## Public Goal
@@ -40,7 +44,7 @@ Record each page as same / better / worse here; worse rows become intent or owne
 | substrate / flow / governors | `reset/base.css`, `modes/capture.css` | `vertical-rhythm-container-audit`, `floating-chrome-stack`, `css-instruction#containing_block`, `stylesheet-ecology#capture_rule`, `color-motion` |
 | registry / scales / aliases | `tokens/core.css` | `data-attribute-css-token-refinement` (bedrock rule), `palette-semantics-improvements` and `palette-theme-composability-instrumentability` (archived 2026-09-27; their contract is `site-semantics.spw#palette_theme_composability_contract`), `chrome-navigation-wonder` Phase 3, `design-surfaces-discoverability`, `deep-link-feature-discovery`, `settings-theme-packs` (theme families, formerly `theming-icon-packs-public-versioning`) |
 | states / arcs / pulses / residue | `components/runtime-states.css`, `systems/interaction-progression.css` | `microinteraction-motion-lifecycle`, `interaction-loop-contract`, `compositional-css-electrostatics`, `hook-region-anatomy`; canon `data-spw-attribute-governance#rhythm` |
-| handles / routes | `handles/operators/*`, `routes/surfaces/*` | `css-state-legibility` owns the intent contract; hottest files in the tree |
+| handles / routes | `handles/operators/*`, `routes/surfaces/*` | the intent contract is `.spw/conventions/site-semantics.spw#pressed_handle_state_contract` (`css-state-legibility` landed and archived 2026-10-06); hottest files in the tree |
 | instruments | `src/styles/entries/debug.css` | `runtime-module-fluency`, `css-architecture-readability` (owner-marker overwrite is documented as expected) |
 
 ## Not this

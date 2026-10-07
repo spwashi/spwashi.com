@@ -1,5 +1,7 @@
 # Plan: agentic-dev-contracts
 
+**Status 2026-10-06.** The manifest and the unified `check:local` landed; `check:local` writes `.agents/state/runtime/check-local-last.json` where this plan named last-local-check.json. plans-index.json and skills-index.json were never built. Live work: `wonder_plan_script_door` in `index.spw`.
+
 Make the site cheaper for agents to understand and verify by giving the repo one explicit validation entrypoint and one generated route/runtime manifest derived from the authored HTML and staged runtime definitions.
 
 ## Goal

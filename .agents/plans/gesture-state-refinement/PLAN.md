@@ -1,5 +1,9 @@
 # Plan: gesture-state-refinement
 
+**Status 2026-10-06.** Brace and region cleanup, the console gestures helper and leaf-control skips landed. Next slice: settings-page gesture copy only.
+
+**Related:** [interaction-grammar](../interaction-grammar/PLAN.md) · [engagement-clusters](../engagement-clusters/PLAN.md) · [interaction-loop-contract](../archive/interaction-loop-contract/PLAN.md) (archived).
+
 Refine gesture handling and page / region / component state logic so semantic inspection feels intentional, reversible, and easier to discover.
 
 ## Goal

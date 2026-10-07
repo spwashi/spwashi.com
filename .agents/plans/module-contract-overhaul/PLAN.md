@@ -1,5 +1,9 @@
 # Module Contract Overhaul
 
+**Status 2026-10-06.** Phase 0 done (`audit:module-writers`); Phase 1 partial (engages only); Phases 2–4 open, with the 2026-09-27 Next list primed. Owns the settings-changed consolidation that language-reclustering cites.
+
+**Related:** [language-reclustering](../language-reclustering/PLAN.md) · [js-surface-ecology](../js-surface-ecology/PLAN.md) · [runtime-plane-consolidation](../runtime-plane-consolidation/PLAN.md). **Absorbed 2026-10-06:** [js-runtime-composability](../archive/js-runtime-composability/PLAN.md).
+
 ## Public Goal
 
 A settled page rests. Every module can say, in Spw, what it mounts on, what wakes it, what it reads, what it writes, and what it promises to leave unchanged. Those statements become checks and inspector queries instead of annotation that only reads well.

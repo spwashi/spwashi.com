@@ -1,5 +1,9 @@
 # Runtime Plane Consolidation
 
+**Status 2026-10-06.** Phase 1 is partly done: the breadcrumb and sample-dock extraction (0cb1dbfd) and device-context delegation (638b2629) landed through runtime-module-decomposition, which owns that seam.
+
+**Related:** [module-contract-overhaul](../module-contract-overhaul/PLAN.md) · [interaction-loop-contract](../archive/interaction-loop-contract/PLAN.md) (archived) · [core-css-spend-cut](../core-css-spend-cut/PLAN.md).
+
 ## Public Goal
 
 Make the runtime's canonical contracts the *default path* rather than one option among several, so that the JS planes (`kernel/`, `runtime/`, `semantic/`, `interface/`, `modules/`) stop re-growing local copies of decisions that already have an owner.

@@ -1,5 +1,9 @@
 # Plan: profile-character-card-development
 
+**Status 2026-10-06.** Substrate and slots landed (`data-spw-slot` in `modules/profile/builder.js`). The cast lens and author handoff have not started.
+
+**Related:** [skill-folio-operating-system](../archive/skill-folio-operating-system/PLAN.md) (archived). **Absorbed 2026-10-06:** [rpg-character-hub](../archive/rpg-character-hub/PLAN.md) · [rpg-session-notes](../archive/rpg-session-notes/PLAN.md).
+
 Refine the shared concept behind the existing profile builder, character sheet builder, and future cast references so they read as one development model instead of adjacent tools with overlapping language, and so their editorial utility is explicit rather than incidental.
 
 ## Goal
@@ -44,7 +48,7 @@ It should not require:
 [MOD?] public/js/spw-profile-tool.js — if presets should become named lenses instead of route-specific presets only
 [MOD?] public/css/profile-card.css — if development-state and family semantics need clearer variable contracts
 [MOD?] .agents/plans/blog-blob-spw/PLAN.md — if blobs become a source object for some profile/character cards
-[MOD?] .agents/plans/rpg-session-notes/PLAN.md — if session notes become a source object for cast-card promotion
+[MOD?] .agents/plans/archive/rpg-session-notes/PLAN.md — if session notes become a source object for cast-card promotion
 
 Craft guard:
 - The card substrate must stay shared enough to feel like one family.
@@ -240,7 +244,7 @@ Author-handoff rule:
 - semantic read-through against `tools/profile/index.html`
 - semantic read-through against `tools/character-sheet/index.html`
 - semantic read-through against `.agents/plans/blog-blob-spw/PLAN.md`
-- semantic read-through against `.agents/plans/rpg-session-notes/PLAN.md`
+- semantic read-through against `.agents/plans/archive/rpg-session-notes/PLAN.md`
 - confirm the distinctions between profile card, character card, cast card, and translation lens are crisp enough to guide later implementation
 
 ## Failure Modes

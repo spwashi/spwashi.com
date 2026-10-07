@@ -1,5 +1,9 @@
 # Deploy Module Graph
 
+**Status 2026-10-06.** The acyclic cut landed 2026-10-06: 0 chunk cycles, guarded by `check:built`. Open: `smart-console` still brings `idle-lab` through `cognitive-core`, and `idle-default` and `idle-residue` pull `seed-cards` and `region-menu` at idle (end of Acyclic Cut).
+
+**Related:** [engagement-clusters](../engagement-clusters/PLAN.md) · [module-contract-overhaul](../module-contract-overhaul/PLAN.md) · [runtime-module-decomposition](../runtime-module-decomposition/PLAN.md).
+
 ## Public Goal
 A first visit should feel like a local introduction: a small boot graph arrives first, richer catalogs introduce themselves by address, and `timings()` can name those dimensions. Authored `public/js` stays native ESM so the locality remains readable.
 

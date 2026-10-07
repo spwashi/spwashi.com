@@ -1,4 +1,8 @@
 # Cauldron lens composition
+**Status 2026-10-06.** The native dialog landed (326eb119). Next: the home-cauldron-open pocket visual receipt, then the corner-sharing design pass. Lane arithmetic belongs to floating-chrome-stack.
+
+**Related:** [floating-chrome-stack](../floating-chrome-stack/FIX.md) · [mobile-chrome-alignment](../archive/mobile-chrome-alignment/PLAN.md) (archived).
+
 Operation: align. Fixity: tending. Focus: composition consequence. Element: water.
 Readers choose a page lens and connect/compare/apply intent in the cauldron.
 Existing page modes provide semantic context to prompts and functional mixes.

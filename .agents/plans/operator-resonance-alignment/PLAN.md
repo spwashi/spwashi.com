@@ -1,5 +1,9 @@
 # Plan: Operator Resonance Alignment
 
+**Status 2026-10-06.** Slices 1 and 3 landed: `sigil-annotation.js` writes the resolved, family and transformation attributes. Next: Slice 4; the family ring is partial in `wonder.css`.
+
+**Related:** [spw-metaphysical-language](../spw-metaphysical-language/PLAN.md) · [spw-language-v04](../spw-language-v04/PLAN.md).
+
 ## Public Goal
 
 Make Spw sigils easier to read as semantic handles for transformations across routes, chips, cards, settings, prompt mining, and evidence capture.

@@ -1,5 +1,7 @@
 # Plan: design studio
 
+**Status 2026-10-06.** Landed 594076ab (2026-09-28): `/design/logos/`, `/design/cards/render/`, `/design/theme/colors/`, `studio-preview.js`, `design-studio.css`. Open: the creator chooses a logo direction.
+
 ## Goal
 
 Give collaborators three small, linked review surfaces for a logo, image card and frame composition, and theme colors. The output is a concrete preference or specimen to discuss, not an automatic change to the site's shared design system.

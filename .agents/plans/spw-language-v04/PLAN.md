@@ -1,5 +1,9 @@
 # Plan: spw-language-v04
 
+**Status 2026-10-06.** The v0.4 worktree is gone; work lands on main. The 2026-09-27 Status below is current.
+
+**Related:** [spw-metaphysical-language](../spw-metaphysical-language/PLAN.md) · [operator-semantics-refinement](../operator-semantics-refinement/PLAN.md) · [spw-document-room](../spw-document-room/PLAN.md).
+
 Elaborate Spw as a language toward v0.4: profiles, typed references, executable claims, stem projection, register precipitates, and workbench submodule alignment — expressed as dimensionally rich `.spw` artifacts on spwashi.com before upstream grammar lands.
 
 ## Public Goal

@@ -1,5 +1,9 @@
 # Layout Seat Squeeze
 
+**Status 2026-10-06.** The seat and squeeze invariants are settled (CLS fixes 53717ed7, a740b10d). Next held item: the lens hook nav wrap. Holds the layout work of four archived plans.
+
+**Related:** [landing-visual-hierarchy](../landing-visual-hierarchy/PLAN.md) · [alignment-content-fit](../alignment-content-fit/PLAN.md). **Absorbed 2026-10-06:** [card-grid-density-audit](../archive/card-grid-density-audit/PLAN.md) · [content-responsive-layout](../archive/content-responsive-layout/PLAN.md) · [context-sensitive-variants-and-agent-qa](../archive/context-sensitive-variants-and-agent-qa/PLAN.md) · [page-frame-sizing](../archive/page-frame-sizing/PLAN.md).
+
 ## Public Goal
 
 Flagship pages sit in named seats (hook, hub, cluster, path, read, wide). Cards squeeze from their own box and leftover room, not from a guessed breakpoint.

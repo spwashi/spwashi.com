@@ -1,5 +1,9 @@
 # Semantic Copy Depth
 
+**Status 2026-10-06.** The Proficiency Production Note slice landed (`.spw-production-note` in `content.css`, `/about/`, `/play/rpg-wednesday/`). Next: the thought trace. Holds tone and voice, the reading groove and editorial readability.
+
+**Absorbed 2026-10-06:** [editorial-readability](../archive/editorial-readability/PLAN.md) · [fairytale-cookbook-theory](../archive/fairytale-cookbook-theory/PLAN.md) · [narration-markup-cold-reads](../archive/narration-markup-cold-reads/PLAN.md) · [typography-reading-groove](../archive/typography-reading-groove/PLAN.md) · [voice-grounding-pass](../archive/voice-grounding-pass/PLAN.md).
+
 ## Public Goal
 
 Let readers tune how much copy is visible without splitting the site into separate versions. The base page should remain readable and crawlable; optional layers should reveal theory, genre, culinary vocabulary, and route bridges when semantic density or runtime posture asks for more depth. This plan now also covers the entry/normal/dense distinction that route-register and inspect surfaces need to stay legible.

@@ -106,7 +106,7 @@
   lifecycle = `unchanged: raw input, local reading, draft seed, then the starter in place of the blob, projecting into a post, a route section, a translation surface, or private residue`
   status = `live, cooling, or projected, read as visit cadence: live is hot and parsed on every weave, cooling is warm and parsed on save, projected is cold and frozen until --all (visit_policy in .spw/workbench-report.spw)`
   feeding = `dated stream entries with the wip-notebook verbs; an entry may record which slot of the starter expression moved, so a season of one expression can be read (.spw/caches/ways-2026-10.spw)`
-  passes = `passes = #[~"../../topics/math/"][reg=set] names the topics a starter wanders through`
+  passes = `passes = #[~"../../../topics/math/"][reg=set] names the topics a starter wanders through`
   wonders = `?["…"]{ !probe{…} } blocks, harvested once wonder.mjs reads blog/*/starter.spw`
   weave = `scripts/blog-weave.mjs (npm run blog:weave and blog:weave:check) writes only between weave markers that already exist: a dated feed, passes, open wonders, a starter index on /blog/, and passing-through asides on topic hubs`
   review = `one real starter before convention, as the 2026-07-12 review asked of the blob`

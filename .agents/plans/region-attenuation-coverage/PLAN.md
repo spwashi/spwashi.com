@@ -1,5 +1,9 @@
 # Region Attenuation Coverage
 
+**Status 2026-10-06.** Next: the Wave 0 coverage script. `scripts/spw-region-coverage-audit.mjs` and `audit:region-coverage` do not exist yet; `audit:region-seats` does.
+
+**Related:** [layout-seat-squeeze](../layout-seat-squeeze/PLAN.md).
+
 ## Public Goal
 
 Give every `.spw-frame` region on the public site an honest, read-and-judged seat (`data-spw-region="hook|hub|cluster|path|read|wide"`, or an authored decision that it deliberately carries none) so `--spw-wonder-hold` attenuation in `projection-attenuation.css` reflects real spatial and reading relationships everywhere, not only on the handful of routes that happen to have been touched by hand. Six seats stay six; this plan populates the existing ladder, it does not retune or extend it.

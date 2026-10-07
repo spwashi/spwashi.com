@@ -13,7 +13,7 @@
 @svg_tunability: ~"../../public/js/media/svg-tunability.js"
 @svg_surfaces_css: ~"../../public/css/systems/svg-surfaces.css"
 @hypermedia_2d: ~"../conventions/hypermedia-2d.spw"
-@svg_depth_wip: ~"../../.agents/plans/svg-aesthetic-depth-pass/wip.spw"
+@svg_depth_wip: ~"../../.agents/plans/archive/svg-aesthetic-depth-pass/wip.spw"
 @component_anatomy_audit: ~"./component-anatomy-device-packing-2026-07.spw"
 @component_harmony_audit: ~"./component-philosophy-harmony-2026-07.spw"
 

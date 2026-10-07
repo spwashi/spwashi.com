@@ -16,11 +16,11 @@
 @insight_cache_template: ~"../model-guided-refinement/templates/semantic-insight-cache.spw"
 
 @site: ~"../../../public/js/site.js"
-@module_loader: ~"../../../public/js/runtime/module-loader.js"
+@module_loader: ~"../../../public/js/runtime/orchestration/loader.js"
 @dom_contracts: ~"../../../public/js/kernel/dom-contracts.js"
 @dom_render: ~"../../../public/js/kernel/dom-render.js"
 @dom_sync_hub: ~"../../../public/js/runtime/orchestration/dom-sync-hub.js"
-@module_export_contract: ~"../../../public/js/runtime/module-export-contract.js"
+@module_export_contract: ~"../../../public/js/runtime/catalog/export-contract.js"
 @region_profiler: ~"../../../public/js/runtime/regions/region-profiler.js"
 @spatial_gravity: ~"../../../public/js/runtime/physics/spatial-gravity.js"
 @expression_geometry: ~"../../../public/js/semantic/spw-expression-geometry.js"

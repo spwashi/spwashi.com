@@ -1,5 +1,9 @@
 # Plan: spellcraft-authoring
 
+**Status 2026-10-06.** Phases 1–2 landed 2026-07-03; the contract moved to `semantic/cauldron/`. Open: SPELL_CONTRACT, the decompose browser demo, the Phase 3–4 gates.
+
+**Related:** [operator-semantics-refinement](../operator-semantics-refinement/PLAN.md) · [spw-language-v04](../spw-language-v04/PLAN.md) · [visual-capture-ecology](../visual-capture-ecology/PLAN.md). **Absorbed 2026-10-06:** [cognitive-navigation](../archive/cognitive-navigation/PLAN.md) · [discovery-powerups](../archive/discovery-powerups/PLAN.md) · [spell-cauldron-lifecycle-memory-gardening](../archive/spell-cauldron-lifecycle-memory-gardening/PLAN.md) · [spell-cognition-familiarity](../archive/spell-cognition-familiarity/PLAN.md) · [spellbook-utility](../archive/spellbook-utility/PLAN.md).
+
 Reorganize the spell and cauldron concepts around authorship: writing and editing spells, and selecting and styling elements, concepts, and artifacts. Consolidates five prior tracks into one owner model, applies the Stagecraft glossary and the G1/G2 attribute grammar (per Spwashi, 2026-07-03), and treats every authoring surface as simultaneously a live-performance and screenshot-interpretation surface.
 
 ## Public Goal

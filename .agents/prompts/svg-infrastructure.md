@@ -189,7 +189,7 @@ The memo is successful if:
 
 Read these before writing:
 
-- `.agents/plans/svg-aesthetic-depth-pass/PLAN.md`
+- `.agents/plans/archive/svg-aesthetic-depth-pass/PLAN.md`
 - `.agents/state/svg-aesthetic-depth-pass-memo.md`
 - `.agents/plans/svg-surface-integration/PLAN.md`
 - `.agents/plans/svg-surface-integration/svg-surface-integration.spw`

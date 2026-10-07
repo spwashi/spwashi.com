@@ -30,7 +30,7 @@
 @design_catalog: ~"../../scripts/generate-design-catalog.mjs"
 @harmony_audit: ~"../audits/component-philosophy-harmony-2026-07.spw"
 @component_packing: ~"./component-packing.spw"
-@deep_link_plan: ~"../../.agents/plans/deep-link-feature-discovery/PLAN.md"
+@deep_link_plan: ~"../../.agents/plans/archive/deep-link-feature-discovery/PLAN.md"
 @aesthetic_alignment: ~"../audits/aesthetic-alignment-2026-08.spw"
 @history_strands: ~"../caches/history-conflict-strands-2026-09.spw"
 
@@ -42,7 +42,7 @@ fixity = "tending"
   fixity = "stable"
   claim = "Authored text/content variants outrank inferred text, climate, and content tone. Compact and rich content layouts consume shared component spacing tokens."
   runtime = "Unavailable mode requests preserve visibility, keyboard selection, and events; selection marks belong to the activated panel."
-  plan = ~"../../.agents/plans/component-variant-alignment/PLAN.md"
+  plan = ~"../../.agents/plans/archive/component-variant-alignment/PLAN.md"
 }
 
 ^"thesis"{

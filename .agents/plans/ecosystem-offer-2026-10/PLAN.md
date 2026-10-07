@@ -1,5 +1,9 @@
 # Ecosystem offer, production season 2026-10
 
+**Status 2026-10-06.** Copy landed 2026-09-28 (9a465ef4); three creator decisions are open. Archive when October closes or prices land. Holds funding-proof-cards' rule: every card points to evidence and a next action.
+
+**Related:** [folio-worktable](../folio-worktable/PLAN.md). **Absorbed 2026-10-06:** [funding-proof-cards](../archive/funding-proof-cards/PLAN.md) · [lore-land-marketing](../archive/lore-land-marketing/PLAN.md) · [services-ladder-and-topic-ctas](../archive/services-ladder-and-topic-ctas/PLAN.md).
+
 operation: align (copy across person-magazine, services-offer, topics-shelf clusters)
 
 Source: creator thought dump, 2026-09-28. Engineering years, art practice, reach, and

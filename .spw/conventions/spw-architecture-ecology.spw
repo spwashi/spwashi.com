@@ -15,7 +15,7 @@
 @planning_ecology: ~"./planning-ecology.spw"
 @plan_index: ~"./plan-index.spw"
 @semantic_capacity: ~"./semantic-capacity.spw"
-@surface_normalization_plan: ~"../../.agents/plans/spw-surface-normalization/PLAN.md"
+@surface_normalization_plan: ~"../../.agents/plans/archive/spw-surface-normalization/PLAN.md"
 @surface_normalization_review: ~"../reviews/spw-surface-normalization.spw"
 @agent_optimization: ~"../../.agents/plans/agent-optimization/PLAN.md"
 @agentic_contracts: ~"../../.agents/plans/agentic-dev-contracts/PLAN.md"

@@ -8,8 +8,8 @@
 #:conventions #!semantics #!css #!js #!copy
 #:layer #!stable
 
-@plan: ~"../../.agents/plans/webpage-trope-vocabulary/PLAN.md"
-@wip: ~"../../.agents/plans/webpage-trope-vocabulary/wip.spw"
+@plan: ~"../../.agents/plans/archive/webpage-trope-vocabulary/PLAN.md"
+@wip: ~"../../.agents/plans/archive/webpage-trope-vocabulary/wip.spw"
 @page_model: ~"../surfaces/page-model.spw"
 @css_instruction: ~"./css-instruction.spw"
 @model_guided_refinement: ~"./model-guided-refinement.spw"

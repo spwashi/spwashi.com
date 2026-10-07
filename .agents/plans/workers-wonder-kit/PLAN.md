@@ -1,5 +1,9 @@
 # Plan: workers-wonder-kit
 
+**Status 2026-10-06.** The kit lives in `workers/lib/` (`shell.js`). smut.today landed (94a0dc27); the wap.mom wonder section is superseded.
+
+**Related:** [quest-workbench-feedback](../quest-workbench-feedback/PLAN.md) · [ecosystem-offer-2026-10](../ecosystem-offer-2026-10/PLAN.md).
+
 Operation: prime. Fixity: experimental. Named slice: wap.mom and smut.today, maintainability and wonder.
 
 ## Public goal

@@ -1,5 +1,9 @@
 # Navigation Header Disclosure
 
+**Status 2026-10-06.** The contract is live, and the fixes `FIX.md` planned landed: the posture preview button and the Open settings link in `attention-posture-panel.js`. Its deferred items are the open work.
+
+**Related:** [shell-model-vocabulary-consolidation](../shell-model-vocabulary-consolidation/PLAN.md) · [chrome-navigation-wonder](../chrome-navigation-wonder/PLAN.md) · [relational-attention-media](../relational-attention-media/PLAN.md).
+
 ## Goal
 
 Reduce header overload while keeping the site's semantic controls discoverable:

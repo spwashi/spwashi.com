@@ -1,5 +1,9 @@
 # Plan: operator-semantics-refinement
 
+**Status 2026-10-06.** Reference owner for operator semantics (`.spw/conventions/operator-semantics.spw`); no open slice. The rebase target under Commits is stale.
+
+**Related:** [operator-resonance-alignment](../operator-resonance-alignment/PLAN.md) · [spw-language-v04](../spw-language-v04/PLAN.md) · [spw-metaphysical-language](../spw-metaphysical-language/PLAN.md). **Absorbed 2026-10-06:** [spw-operator-pages](../archive/spw-operator-pages/PLAN.md).
+
 Refine Spw operators to be more true to the established lore and original set, with room for interpretation based on the physics of the language and traditions that emerge through acknowledgment of symmetry and priming.
 
 ## Goal
@@ -113,3 +117,7 @@ Operator pairs create visible relationships in the interface. A screenshot showi
 ## Landed reading — 2026-09-27
 
 Commit 1 landed (`.spw/conventions/operator-semantics.spw`); commits 3 and 4 were routed to `spw-operator-pages` and `interaction-grammar`. Two facts sharpened since: `public/js/kernel/operator-detection.js` is the one character table (atlas slugs are aliases of it, and `+`, `|`, and the backtick are not operators), and `.spw/language/operator-namespace-alignment.spw` maps the runtime namespace onto the language. Lineage, physics, symmetry, and priming stay here; the character table does not. Keep this plan as the semantics owner the rails cite; do not reopen the file list above as work.
+
+## Inherited from spw-operator-pages — 2026-10-06
+
+The atlas and nineteen operator routes landed ([spw-operator-pages](../archive/spw-operator-pages/PLAN.md), archived 2026-10-06). Its standing rule moves here: craft guard 3, every no-op still explains itself in copy, title, link, or route, which is why the operator pages read with JavaScript off.

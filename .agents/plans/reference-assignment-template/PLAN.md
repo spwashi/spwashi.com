@@ -1,5 +1,9 @@
 # Reference Assignment Template
 
+**Status 2026-10-06.** Evergreen template; no backlog.
+
+**Related:** [daily-kernel-development](../daily-kernel-development/PLAN.md) · [model-guided-refinement](../model-guided-refinement/PLAN.md).
+
 ## Purpose
 
 Turn site references into small UX improvements or reversible experiments.

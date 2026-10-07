@@ -1,5 +1,9 @@
 # Plan: design-hub
 
+**Status 2026-10-06.** Hub, specimens and stubs landed. One open slice: reproduce one specimen in a second site through the starter bundling pilot, which site-starter-component-kit owns.
+
+**Related:** [design-surfaces-discoverability](../archive/design-surfaces-discoverability/PLAN.md) (archived) · [design-studio](../design-studio/PLAN.md).
+
 ## Public Goal
 
 Create a top-level `/design/` hub that declares design as a first-class public surface on the site, gives collaborators a shared page for team communication, and exposes real rendering-context tests built from the existing Spw/Pretext contracts.

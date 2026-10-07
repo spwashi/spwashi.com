@@ -1,5 +1,9 @@
 # Plan: copy-localization
 
+**Status 2026-10-06.** Phase 0 is in progress (`copy-accessor.spw`, `audit:copy:accessor`). Phase 1, a one-route locale build seam on `/` or `/about/`, has not started.
+
+**Related:** [blog-blob-spw](../blog-blob-spw/PLAN.md) · [component-region-personality](../component-region-personality/PLAN.md).
+
 Design a localization architecture for `spwashi.com` that preserves hand-authored routes, keeps English source legible, and prepares the site for Spw-authored translation work rather than flattening copy into generic string tables.
 
 ## Goal

@@ -21,14 +21,14 @@
 ^["roots"]{
  @runtime_plan: ~"../mobile-runtime-foundation/mobile-runtime-foundation.spw"
  @svg_plan: ~"../svg-surface-integration/svg-surface-integration.spw"
- @css_plan: ~"../css-progressive-ornaments/css-progressive-ornaments.spw"
- @pretext_page: ~"topics/software/pretext/index.html"
- @design_page: ~"design/index.html#rendering-contexts"
- @module_catalog: ~"public/js/runtime/module-catalog.js"
- @lab: ~"public/js/semantic/pretext-lab.js"
- @physics: ~"public/js/semantic/pretext-physics.js"
- @utils: ~"public/js/semantic/pretext-utils.js"
- @css: ~"public/css/systems/pretext-physics.css"
+ @css_plan: ~"../archive/css-progressive-ornaments/css-progressive-ornaments.spw"
+ @pretext_page: ~"../../../topics/software/pretext/index.html"
+ @design_page: ~"../../../design/index.html#rendering-contexts"
+ @module_catalog: ~"../../../public/js/runtime/catalog/index.js"
+ @lab: ~"../../../public/js/semantic/pretext-lab.js"
+ @physics: ~"../../../public/js/semantic/pretext-physics.js"
+ @utils: ~"../../../public/js/semantic/pretext-utils.js"
+ @css: ~"../../../public/css/systems/pretext-physics.css"
 }
 
 ^["thesis"]{

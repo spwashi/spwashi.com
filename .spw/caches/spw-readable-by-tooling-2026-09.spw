@@ -22,7 +22,7 @@
 @copy_accessor: ~"../conventions/copy-accessor.spw"
 @living_terms: ~"./living-terms-2026-09.spw"
 @spw_as_handle: ~"./spw-as-handle-2026-09.spw"
-@expression_navigation_plan: ~"../../.agents/plans/dimensional-expression-navigation/PLAN.md"
+@expression_navigation_plan: ~"../../.agents/plans/archive/dimensional-expression-navigation/PLAN.md"
 @v04_plan: ~"../../.agents/plans/spw-language-v04/PLAN.md"
 
 operation = "prime"

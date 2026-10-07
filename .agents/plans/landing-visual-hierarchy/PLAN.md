@@ -1,5 +1,9 @@
 # Landing Visual Hierarchy
 
+**Status 2026-10-06.** The early visual pass landed on Home, Play and Design (3a95fe06, 2026-09-27). Parcel progress is kept in the measured companion, landing-page-hierarchy-2026-08-21.
+
+**Related:** [layout-seat-squeeze](../layout-seat-squeeze/PLAN.md) · [alignment-content-fit](../alignment-content-fit/PLAN.md).
+
 ## Public Goal
 A first visit to a public landing should read as identity, then one notice, then one action cluster, then one proof — not as several chip rows and essays competing in the same frame.
 

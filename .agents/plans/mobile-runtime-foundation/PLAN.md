@@ -1,5 +1,9 @@
 # Plan: mobile-runtime-foundation
 
+**Status 2026-10-06.** The doctrine stands; commits 1–5 partly landed (d4e50466, d80be25f). The 2026-09-28 menu note belongs to navigation-header-disclosure.
+
+**Related:** [gesture-state-refinement](../gesture-state-refinement/PLAN.md) · [navigation-header-disclosure](../navigation-header-disclosure/PLAN.md) · [runtime-plane-consolidation](../runtime-plane-consolidation/PLAN.md).
+
 Define a mobile-first interaction/runtime foundation for page regions, portable inspect/invoke semantics, register behavior, semantic reflection, and future block/script UI.
 
 ## Goal

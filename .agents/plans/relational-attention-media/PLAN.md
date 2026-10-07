@@ -1,5 +1,9 @@
 # Relational Attention Media
 
+**Status 2026-10-06.** Every scope file landed. Next slice: the one-route proof the 2026-07-12 review asked for.
+
+**Related:** [navigation-header-disclosure](../navigation-header-disclosure/PLAN.md) · [runtime-settings](../runtime-settings/PLAN.md).
+
 ## Public Goal
 
 Make attention and meditation practical relational dimensions across the site: self relation, local context, and global horizon. Use those dimensions to generate stable, copyable media seeds across prose, lyric, visual, storyboard, audio, and curriculum work.

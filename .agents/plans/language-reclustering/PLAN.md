@@ -1,5 +1,9 @@
 # Plan: language-reclustering
 
+**Status 2026-10-06.** The first slice, the timing cluster, has not started. Census 2026-09: 357 full-trace, 823 unregistered. module-contract-overhaul Phase 3 owns the settings-changed consolidation; this plan records its vocabulary verdict.
+
+**Related:** [module-contract-overhaul](../module-contract-overhaul/PLAN.md) · [shell-model-vocabulary-consolidation](../shell-model-vocabulary-consolidation/PLAN.md) · [data-attribute-css-token-refinement](../data-attribute-css-token-refinement/PLAN.md).
+
 Recluster the codebase's language — 1,212 `data-spw-*` attributes, 140 events, ~10 metaphor families — into declared dimensional clusters so the lexicon grows like tended soil instead of sprawl. The census (`scripts/language-census.mjs` → `.spw/audits/language-census.spw`) is the soil test; this plan is the tending practice.
 
 ## Public Goal

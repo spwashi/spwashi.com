@@ -1,5 +1,9 @@
 # Plan: spw-document-room
 
+**Status 2026-10-06.** Landed 8089be91 (2026-10-05); no next slice. It folds into pwa-experience at the next census.
+
+**Related:** [pwa-experience](../pwa-experience/PLAN.md) · [spw-language-v04](../spw-language-v04/PLAN.md).
+
 `.spw` opens as a local document. The installed app handles the file. `/open/` parses it in the browser and shows a room. The source stays available to read, edit, and export.
 
 ## Scope

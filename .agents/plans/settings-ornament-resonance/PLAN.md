@@ -1,5 +1,9 @@
 # Settings Ornament Resonance
 
+**Status 2026-10-06.** Quick-start controls landed; the satchel synthesizer is at its sensation gate (d0244132, `?spw-satchel=rail`). Next: the `/settings/` specimen bay.
+
+**Related:** [runtime-settings](../runtime-settings/PLAN.md) · [floating-chrome-stack](../floating-chrome-stack/FIX.md) · [chrome-navigation-wonder](../chrome-navigation-wonder/PLAN.md).
+
 ## Public Goal
 
 Let a reader make immediate lighting, theme, type-scale, flourish, and memory choices from the Settings quick start, with visible comparisons and accessible pressed states.

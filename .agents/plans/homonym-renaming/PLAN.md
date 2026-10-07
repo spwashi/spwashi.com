@@ -1,5 +1,9 @@
 # Plan: homonym-renaming
 
+**Status 2026-10-06.** No rename has landed. The page-tempo `settle` waits on a browser sensation gate; `ground` waits on spw-metaphysical-language.
+
+**Related:** [shell-model-vocabulary-consolidation](../shell-model-vocabulary-consolidation/PLAN.md).
+
 Resolve the load-bearing homonyms — `settle` (52 files, six meanings), `prime`, `ground`, `phase` — by semantic geometry: rename only true homonyms (different meaning-shape sharing selector space), keep fractal echoes (same shape at different altitudes), and route disputed assignments through the spw-metaphysical-language drift ledger.
 
 ## Public Goal

@@ -16,7 +16,7 @@
 @data_spw_attribute_governance: ~"./data-spw-attribute-governance.spw"
 @spatial_gravity: ~"./spatial-gravity.spw"
 @audit: ~"../audits/viewing-reason-cross-media-2026-07.spw"
-@svg_depth_wip: ~"../../.agents/plans/svg-aesthetic-depth-pass/wip.spw"
+@svg_depth_wip: ~"../../.agents/plans/archive/svg-aesthetic-depth-pass/wip.spw"
 
 operation = "contract"
 fixity = "tending"

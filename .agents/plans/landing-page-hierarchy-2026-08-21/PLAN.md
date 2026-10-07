@@ -1,5 +1,9 @@
 # Landing Page HTML Hierarchy — 2026-08-21
 
+**Status 2026-10-06.** Parcel D started 2026-09-26 (home masthead, pocket padding); its browser matrix is pending. Parcels A, B, C, E and F are open. The Session State below predates parcel D.
+
+**Related:** [layout-seat-squeeze](../layout-seat-squeeze/PLAN.md) · [alignment-content-fit](../alignment-content-fit/PLAN.md).
+
 ## Owner Relationship
 
 This dated folder is the measured primary-navigation companion to `../landing-visual-hierarchy/`, which remains the active implementation owner. Use this folder for the eight-route census, 0–4D review lens, and responsive gates; claim implementation work in the owner plan so concurrent agents do not create competing patches.

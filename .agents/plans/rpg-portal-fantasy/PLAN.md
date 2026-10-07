@@ -1,5 +1,9 @@
 # RPG Portal Fantasy: Projecting Semantic Wonder & Topic Merits into RPG Wednesday
 
+**Status 2026-10-06.** Patches 001–012 landed, the last 2026-05-27, so the Patch 004 line below is stale. Next: the Kernel Codex station.
+
+**Related:** [profile-character-card-development](../profile-character-card-development/PLAN.md) · [spellcraft-authoring](../spellcraft-authoring/PLAN.md) · [living-learning-surface](../living-learning-surface/PLAN.md). **Absorbed 2026-10-06:** [rpg-boonwap-fabric](../archive/rpg-boonwap-fabric/PLAN.md) · [rpg-local-gameplay](../archive/rpg-local-gameplay/PLAN.md).
+
 **Status:** Active — Patch 003 (cozy copy) landed; Patch 004 (Midjourney + daily prompt mapping + character UX + blended artifacts) in progress  
 **Date:** 2026-05 (builds on generational Library, kernel projection, tag visual refinements, and cozy wizard media tone)  
 **Core vision:** The Town Library / RPG Wednesday is not a separate "game" corner. It is the living fantasy frame into which the site's computational and artistic systems (the small kernel, component grammar, data-spw semantics, resonance/attention physics, inspector surfaces, design tokens, proof cards, topic models, painted artifacts) are projected as *useful, wondrous, inspectable artifacts* that characters, guides, and players can actually wield. The "portal" is the bidirectional crossing: real site structures gain fantasy weight and narrative consequence; the fantasy gains real computational teeth and artistic depth.

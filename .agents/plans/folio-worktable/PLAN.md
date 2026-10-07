@@ -1,5 +1,9 @@
 # Folio worktable
 
+**Status 2026-10-06.** Four gates are open: the primes demo, the calendar demo, prices and shipping, the first card request. The weekly five runs through `npm run folio:highres:rotate`.
+
+**Related:** [ecosystem-offer-2026-10](../ecosystem-offer-2026-10/PLAN.md) · [lore-land-marketing](../archive/lore-land-marketing/PLAN.md) (archived) · [visual-capture-ecology](../visual-capture-ecology/PLAN.md). **Absorbed 2026-10-06:** [professional-skill-development-worldbuilding](../archive/professional-skill-development-worldbuilding/PLAN.md) · [skill-folio-operating-system](../archive/skill-folio-operating-system/PLAN.md).
+
 Public goal: see the studies, try a reading, and distinguish future folio purchases from current commissioned work.
 
 ## Audit

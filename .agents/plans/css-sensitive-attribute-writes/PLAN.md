@@ -1,5 +1,9 @@
 # CSS-Sensitive Attribute Writes
 
+**Status 2026-10-06.** The shared writers and the style-property sensor landed. Open: confirm brace-gestures never rewrites `data-spw-context`, `wonder` or `operator`; the design.css alias consolidation is unverified.
+
+**Related:** [runtime-plane-consolidation](../runtime-plane-consolidation/PLAN.md) · [runtime-module-decomposition](../runtime-module-decomposition/PLAN.md) · [engagement-clusters](../engagement-clusters/PLAN.md).
+
 ## Public Goal
 
 Keep interaction state visually responsive without letting runtime discovery casually rewrite author-owned semantic attributes that CSS uses for route, context, wonder, and operator styling.

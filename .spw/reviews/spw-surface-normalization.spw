@@ -4,11 +4,11 @@
 #:review #!architecture #!collaboration
 #:layer #!pragmatics
 
-@plan: ~"../../.agents/plans/spw-surface-normalization/PLAN.md"
+@plan: ~"../../.agents/plans/archive/spw-surface-normalization/PLAN.md"
 @fundamentals_practice: ~"./fundamentals-practice-rhythms.spw"
 @modular_slices: ~"./modular-experience-slices-volleyball.spw"
 @modular_experience_slices_plan: ~"../../.agents/plans/modular-experience-slices/PLAN.md"
-@interaction_loop_contract: ~"../../.agents/plans/interaction-loop-contract/PLAN.md"
+@interaction_loop_contract: ~"../../.agents/plans/archive/interaction-loop-contract/PLAN.md"
 @gesture_state_refinement: ~"../../.agents/plans/gesture-state-refinement/PLAN.md"
 @navigation_header_disclosure: ~"../../.agents/plans/navigation-header-disclosure/PLAN.md"
 @floating_chrome_stack: ~"../../.agents/plans/floating-chrome-stack/FIX.md"

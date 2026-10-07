@@ -20,7 +20,7 @@ The feature should strengthen the existing local-first posture. Private notes st
 ## Affected Files
 
 - `.agents/plans/archive/author-rpg-notebooks/PLAN.md`
-- `.agents/plans/rpg-local-gameplay/rpg-local-gameplay.spw`
+- `.agents/plans/archive/rpg-local-gameplay/rpg-local-gameplay.spw`
 - `topics/craft/index.html`
 - `tools/character-sheet/index.html`
 - `play/rpg-wednesday/index.html`

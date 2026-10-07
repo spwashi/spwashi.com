@@ -23,7 +23,7 @@
 @component_taxonomy: ~"./component-taxonomy.spw"
 @materials: ~"../caches/region-ecology-materials.spw"
 @page_region_plan: ~"../../.agents/plans/page-region-discoverability/PLAN.md"
-@hook_region_plan: ~"../../.agents/plans/hook-region-anatomy/PLAN.md"
+@hook_region_plan: ~"../../.agents/plans/archive/hook-region-anatomy/PLAN.md"
 @harmony_audit: ~"../audits/component-philosophy-harmony-2026-07.spw"
 
 operation = "align"

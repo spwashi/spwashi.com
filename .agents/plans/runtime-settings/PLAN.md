@@ -1,5 +1,9 @@
 # Plan: runtime-settings
 
+**Status 2026-10-06.** The 2026-06-30 extension landed. This is the settings umbrella over settings-theme-wiring and settings-ornament-resonance.
+
+**Related:** [settings-theme-wiring](../settings-theme-wiring/FIX.md) · [settings-ornament-resonance](../settings-ornament-resonance/PLAN.md) · [mindful-collection-controls](../mindful-collection-controls/PLAN.md). **Absorbed 2026-10-06:** [vibe-setting-widgets](../archive/vibe-setting-widgets/PLAN.md).
+
 Add a local-only settings surface for Spw runtime chrome.
 
 ## Goal

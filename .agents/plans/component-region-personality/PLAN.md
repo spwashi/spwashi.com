@@ -1,5 +1,9 @@
 # Component Region Personality
 
+**Status 2026-10-06.** Waves 0–2 landed (copy-unit ids, `audit:copy:accessor`). Next: Wave 3, the visual-link-card on services and recipes; only topics has it. Holds the anatomy vocabulary from webpage-trope-vocabulary.
+
+**Related:** [webpage-trope-vocabulary](../archive/webpage-trope-vocabulary/PLAN.md) (archived).
+
 ## Public Goal
 
 Develop meaningful component real estate and region personality across spwashi.com so public copy relates to a growing component ecology — not repeated meta-documentation. Editing-team surfaces should stay inspiration-ready for a media launch; screenshots should remain interpretable by humans and models; copy should be named for later translation.

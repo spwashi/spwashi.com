@@ -1,5 +1,9 @@
 # Plan: js-surface-ecology
 
+**Status 2026-10-06.** The tree moves are done (2026-05, 2026-09-27). Open: 17 orphans, 32 upward imports, and the innerWidth and getComputedStyle readers.
+
+**Related:** [runtime-plane-consolidation](../runtime-plane-consolidation/PLAN.md) · [module-contract-overhaul](../module-contract-overhaul/PLAN.md) · [runtime-module-decomposition](../runtime-module-decomposition/PLAN.md).
+
 ## Goal
 
 Make the shape of `public/js` legible before attempting deep refactors. The desired end state is a tree where a new reader can distinguish durable primitives, semantic machinery, runtime behavior, interface affordances, and feature modules at a glance.

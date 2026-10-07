@@ -1,5 +1,9 @@
 # Plan: semantic-html-normalization
 
+**Status 2026-10-06.** The landmark and skip-link sweep landed on 203 of 210 routes. Next slice: the JS-off parity probe.
+
+**Related:** [gesture-aria-hygiene](../archive/gesture-aria-hygiene/FIX.md) (archived) · [page-region-discoverability](../page-region-discoverability/PLAN.md).
+
 Normalize the site's HTML semantics so landmarks, ids, and ARIA relationships are more consistent, while reducing how much semantic bookkeeping has to be hand-authored inline.
 
 ## Goal
@@ -57,7 +61,7 @@ This pass touches many HTML files, so the danger is churn without a tighter cont
 
 - Rebase target: `main@9511b53`
 - Rebase cadence: before commit 2 and before merge
-- Hygiene split: the worktree already carries uncommitted follow-up edits in `about/website/index.html`, `index.html`, `settings/index.html`, `topics/math/index.html`, `topics/site-design/index.html`, `topics/software/index.html`, `public/css/settings-surface.css`, `public/css/components/surfaces.css`, `public/js/kernel/site-settings.js`, `public/js/kernel/palette-resonance.js`, and `.agents/plans/vibe-setting-widgets/wip.spw`; this pass will preserve that drift, integrate only the overlapping HTML files deliberately, and avoid unrelated settings/runtime files unless a direct semantic consolidation requires them.
+- Hygiene split: the worktree already carries uncommitted follow-up edits in `about/website/index.html`, `index.html`, `settings/index.html`, `topics/math/index.html`, `topics/site-design/index.html`, `topics/software/index.html`, `public/css/settings-surface.css`, `public/css/components/surfaces.css`, `public/js/kernel/site-settings.js`, `public/js/kernel/palette-resonance.js`, and `.agents/plans/archive/vibe-setting-widgets/wip.spw`; this pass will preserve that drift, integrate only the overlapping HTML files deliberately, and avoid unrelated settings/runtime files unless a direct semantic consolidation requires them.
 
 ## Dependencies
 

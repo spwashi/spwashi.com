@@ -1,5 +1,9 @@
 # Agent Optimization for spwashi.com
 
+**Status 2026-10-06.** Live counts are in the plans README snapshot and `.spw/audits/plan-spw-tree-2026-09.spw`; the 2026-09-20 baseline below is history.
+
+**Related:** [history-reflow](../history-reflow/PLAN.md).
+
 ## Public Goal
 
 Active implementation: [Hypermedia geometry](./HYPERMEDIA.md) — canonical module

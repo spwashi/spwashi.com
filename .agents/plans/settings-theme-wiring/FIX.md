@@ -1,5 +1,9 @@
 # Fix: settings-theme-wiring
 
+**Status 2026-10-06.** Row 3's files (`blog-surface.css`, `blog-specimens.js`) are gone from the tree; rows 1, 2, 4 and 5 are unverified against it. Row 6, wire or remove `iconPack`, is the open P2.
+
+**Related:** [runtime-settings](../runtime-settings/PLAN.md) · [settings-theme-packs](../archive/settings-theme-packs/PLAN.md) (archived). **Absorbed 2026-10-06:** [design-surfaces-discoverability](../archive/design-surfaces-discoverability/PLAN.md).
+
 ## Failures
 
 | # | File | Test/Error | Class | Priority |
@@ -37,3 +41,10 @@
 
 - Broader CSS architecture consolidation around grammar, handles, and ornaments remains in `.agents/plans/archive/spw-css-architecture/`.
 - Route-specific surfaces beyond the blog will continue to use their existing palettes; this fix only makes the global controls materially truthful.
+
+## Inherited from design-surfaces-discoverability — 2026-10-06
+
+That pass ([plan](../archive/design-surfaces-discoverability/PLAN.md), archived 2026-10-06) recorded two saved settings that do not reach panels and left them here, beside row 4's inert controls:
+
+- `componentDensity` and `spacingTuner` move the root attributes and the packing state, but on a profiled page measured occupancy holds `--spw-pack-pad-active`, and `typography-packing.css` re-declares `--component-pad` after the tier rules at the same specificity; neither the base tier nor a panel's `data-spw-density` moves a panel's padding.
+- `baseMetamaterial` writes the root attribute, but frames do not receive `data-spw-metamaterial` from the base, so the materials page hero and the footer do not answer.

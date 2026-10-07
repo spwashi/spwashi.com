@@ -1,5 +1,9 @@
 # Shell Logo Branding
 
+**Status 2026-10-06.** Landed 2026-04-22 (30ed4eec), with the mark scope inherited from theming-icon-packs-public-versioning. No next slice is named; without one, it folds into pwa-experience.
+
+**Related:** [pwa-experience](../pwa-experience/PLAN.md) · [chrome-navigation-wonder](../chrome-navigation-wonder/PLAN.md).
+
 ## Goal
 - Tighten mobile shell motion and clarify the section/path controls.
 - Increase Spwashi branding with shared header/footer mark treatment and a home hero brand plate.

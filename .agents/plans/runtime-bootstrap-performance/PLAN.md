@@ -1,5 +1,9 @@
 # Runtime Bootstrap Performance
 
+**Status 2026-10-06.** Next: the open writers named in the 2026-09-28 receipt (section-handle title and aria, utility-row aria-pressed). Holds the five threads of locomotion-collapse-redistribution.
+
+**Related:** [runtime-plane-consolidation](../runtime-plane-consolidation/PLAN.md) · [module-contract-overhaul](../module-contract-overhaul/PLAN.md) · [interaction-cache](../archive/interaction-cache/PLAN.md) (archived). **Absorbed 2026-10-06:** [locomotion-collapse-redistribution](../archive/locomotion-collapse-redistribution/PLAN.md).
+
 ## Public Goal
 
 Reduce main-thread blocking time, serial dynamic import penalties, and observer/listener fragmentation in the shared JS runtime bootstrap (`site.js` + kernel/runtime modules) while preserving (and strengthening) the existing staged lifecycle model, policy-driven tuning surface, rich `spw:*` observability, and progressive-enhancement guarantees.

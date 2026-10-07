@@ -1,5 +1,9 @@
 # Plan: blog-blob-spw
 
+**Status 2026-10-06.** The lifecycle and the Starter unit are designed; `scripts/blog-weave.mjs` and `npm run blog:weave` are planned, not built. Next: the first `blog/<slug>/starter.spw`.
+
+**Related:** [site-starter-component-kit](../site-starter-component-kit/PLAN.md) · [media-publishing](../archive/media-publishing/PLAN.md) (archived).
+
 Define a `blog blob` concept for `spwashi.com`: a durable, inspectable Spw-adjacent content unit that sits between raw input and a published post.
 
 ## Goal

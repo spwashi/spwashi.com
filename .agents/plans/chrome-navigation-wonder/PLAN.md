@@ -1,5 +1,9 @@
 # Chrome, Navigation, and Metaphysical Wonder (2026 review)
 
+**Status 2026-10-06.** Open, in order: the open-drawer swipe, Phase 2 breadcrumbs (inherited from cognitive-navigation), the Phase 3 operator and accent doc pass. The dated Status headers below are history.
+
+**Related:** [floating-chrome-stack](../floating-chrome-stack/FIX.md) · [mobile-chrome-alignment](../archive/mobile-chrome-alignment/PLAN.md) (archived).
+
 ## Status — 2026-09-09: coarse/pocket glyph hamburger (`b893cec3`)
 
 Closed-toggle swipe still cycles rooms (`02c7757a`). The disclosure itself is

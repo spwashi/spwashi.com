@@ -1,5 +1,9 @@
 # Plan: site-source-layout
 
+**Status 2026-10-06.** M0, the import decision, is pending in typescript-integration; M2 is next; the `site/` move is parked.
+
+**Related:** [deploy-module-graph](../deploy-module-graph/PLAN.md) · [site-starter-component-kit](../site-starter-component-kit/PLAN.md).
+
 Reframe the repository around an explicit authored-site boundary so the root stops doubling as both source tree and project-control surface. The target shape is `site/` for publishable source, `dist/` for generated output, `scripts/` for the pipeline, and optional `docs/` only for maintainer-facing documentation.
 
 ## Public Goal

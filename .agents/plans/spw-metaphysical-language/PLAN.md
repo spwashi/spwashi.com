@@ -1,5 +1,9 @@
 # Plan: spw-metaphysical-language
 
+**Status 2026-10-06.** 1 of 10 phased commits landed; there is no codex, matrix or protocol yet. Next slice: the construct-codex shell, which is also spw-architecture-ecology wave D.
+
+**Related:** [spw-language-v04](../spw-language-v04/PLAN.md) · [compositional-css-electrostatics](../compositional-css-electrostatics/PLAN.md) · [language-reclustering](../language-reclustering/PLAN.md).
+
 Mature Spw from a site grammar into a described metaphysical language: a complete
 construct codex, a sigil-property study that arbitrates semantic alignment, a
 production-and-manufacturing ladder that carries the language into physical and

@@ -9,9 +9,9 @@
 #:fixity #!tending
 #:layer #!pragmatics
 
-@product_lines: ~"../../../.spw/surfaces/product-lines.spw"
-@electrostatic: ~"../../../.spw/conventions/electrostatic-affordances.spw"
-@marketing: ~"../../../.spw/conventions/model-guided-refinement.spw"
+@product_lines: ~"../../../../.spw/surfaces/product-lines.spw"
+@electrostatic: ~"../../../../.spw/conventions/electrostatic-affordances.spw"
+@marketing: ~"../../../../.spw/conventions/model-guided-refinement.spw"
 
 operation = "cache"
 fixity = "tending"

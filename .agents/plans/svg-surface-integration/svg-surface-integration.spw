@@ -20,11 +20,11 @@
 }[reg=facet]
 ^["roots"]{
  @runtime_plan: ~"../mobile-runtime-foundation/mobile-runtime-foundation.spw"
- @site: ~".spw/site.spw"
- @site_semantics: ~".spw/conventions/site-semantics.spw"
- @shared: ~"public/js/spw-shared.js"
- @components: ~"public/js/spw-component-semantics.js"
- @css: ~"public/css/style.css?v=0.0.2"
+ @site: ~"../../../.spw/site.spw"
+ @site_semantics: ~"../../../.spw/conventions/site-semantics.spw"
+ @shared: ~"../../../public/js/kernel/shared.js"
+ @components: ~"../../../public/js/semantic/component-semantics.js"
+ @css: ~"../../../public/css/style.css"
 }
 
 ^["thesis"]{

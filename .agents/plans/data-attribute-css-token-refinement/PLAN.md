@@ -1,5 +1,9 @@
 # Data Attribute and CSS Token Refinement Pass
 
+**Status 2026-10-06.** Token bedrock and attribute bridges landed (`dimensions.css`). Item 3, fallback hygiene, is unverified. The plan stands as the bedrock rule.
+
+**Related:** [portable-css](../portable-css/PLAN.md) · [core-css-spend-cut](../core-css-spend-cut/PLAN.md).
+
 ## Public Goal
 
 Establish clear bedrock anchors for shared CSS custom properties across the site, eliminate unanchored variable references, bridge authored thermodynamic and accent-strength HTML data attributes into active CSS properties, and preserve traceability across the design catalog and Spw conventions.

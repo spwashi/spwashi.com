@@ -21,7 +21,7 @@
 @plans_root: ~"../../.agents/plans/index.spw"
 @plans_readme: ~"../../.agents/plans/README.md"
 @review_execution: ~"../../.agents/plans/archive/2026-07-12-review-execution.md"
-@surface_normalization: ~"../../.agents/plans/spw-surface-normalization/PLAN.md"
+@surface_normalization: ~"../../.agents/plans/archive/spw-surface-normalization/PLAN.md"
 @maintain_script: ~"../../scripts/maintain-plan-directory-indexes.mjs"
 
 operation = "audit"
@@ -188,6 +188,22 @@ audit_run: .{
   index_check = `plans:index:check was red on topical-learning-links/learning-transfer.spw (no first-line review, since 2026-09-23); reviewed in place. Eleven live folders the root index never named (opened 2026-09-19 through 2026-09-26) wired into since_2026_07_12; only topic-building-blocks carries an index.spw. Buckets hold no archived slugs.`
   priority = `runtime_js_validation reads in this order today: typescript-integration doc refresh (landed 9ecb64d1), then the M0 vite import decision, then site-source-layout M0, then M2. L1 route move and L3 uncommitted output stay behind those. Two dated release-day folders (2026-09-13, 2026-09-26) are the nearest archive candidates once receipts are written into an owner.`
   never = `move folders without a citation-safe pass; author eleven index.spw in batch; rewrite the legend's split citations`
+}[reg=facet]
+
+^"recensus_2026_10_06"{
+  operation = "audit"
+  fixity = "tending"
+  before = "162 live PLAN.md (168 folders); 70 archived"
+  after = "84 live PLAN.md (88 folders); 148 archived"
+  reading = `Every live folder read against the tree and its own git history. 80 archived with a reason on the first line of each moved index.spw: 65 landed, 10 dormant with a named owner, 5 superseded by their own ownership notes. Owed content went to owners before the move. The quota stops inverting when sessions that land work archive in the same patch.`
+  citations = .{
+    method = `relative markdown ](path) and spw ~"path" links in live plans (archive excluded), resolved from each file's folder`
+    counts = `311 broken before the pass; 10 after. Retargeted by the move, by a unique tracked-file suffix match, and by a hand map of the runtime family and catalog renames. Left: one false positive, a never-committed sigil-property-matrix.spw, a workbench path, three files deleted in history`
+    rule = `Root-anchored ~"..." in wip.spw roots blocks were rewritten relative, matching what plans:index generates. Backticked split names in css-architecture-readability stay, per the 2026-09-27 rule.`
+  }[reg=facet]
+  ownership = `Each live plan under 800 lines opens with a dated Status and Related links; owners list what they absorbed. Shared seams got one owner: kernel extraction (runtime-module-decomposition), settings-changed consolidation (module-contract-overhaul), the design bundling pilot (site-starter-component-kit).`
+  readme = ~"../../.agents/plans/README.md"
+  ledger = ~"../../.agents/plans/archive/README.md"
 }[reg=facet]
 
 ^"deeper_pass_2026_09_27"{

@@ -10,10 +10,10 @@
 #:fixity #!experimental
 #:layer #!pragmatics
 
-@harmony_audit: ~"../../../.spw/audits/component-philosophy-harmony-2026-07.spw"
-@plan_index: ~"../../../.spw/conventions/plan-index.spw"
-@capacity: ~"../../../.spw/conventions/semantic-capacity.spw"
-@materials: ~"../../../.spw/caches/region-ecology-materials.spw"
+@harmony_audit: ~"../../../../.spw/audits/component-philosophy-harmony-2026-07.spw"
+@plan_index: ~"../../../../.spw/conventions/plan-index.spw"
+@capacity: ~"../../../../.spw/conventions/semantic-capacity.spw"
+@materials: ~"../../../../.spw/caches/region-ecology-materials.spw"
 
 ^"use_when"{
   trigger = `A plan caches two or more models for the same seating, climate, or meaning job.`

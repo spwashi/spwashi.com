@@ -1,5 +1,9 @@
 # Plan: model-collaborator-lore-surfaces
 
+**Status 2026-10-06.** Proposed; blocked on the creator-written terms card (step 1).
+
+**Related:** [designer-conversation-canvas](../designer-conversation-canvas/PLAN.md). **Absorbed 2026-10-06:** [town-atlas-story-kit](../archive/town-atlas-story-kit/PLAN.md).
+
 Operation: prime. Fixity: experimental. Named slice: tools and lore a human model can work from.
 
 ## Public goal
@@ -16,11 +20,11 @@ plates, seed cards) are the first outputs.
 
 ## What already exists — 2026-09-19
 
-- `.agents/plans/rpg-asset-capture-frames` — stable screenshot-friendly frames for
+- `.agents/plans/archive/rpg-asset-capture-frames` — stable screenshot-friendly frames for
   character, item, place, and artifact images (RPG Wednesday, local uploads).
-- `.agents/plans/town-atlas-story-kit` — the town atlas as story substrate, indexable and
+- `.agents/plans/archive/town-atlas-story-kit` — the town atlas as story substrate, indexable and
   cross-linkable, separate from visitor utility.
-- `.agents/plans/promptable-image-library-pass` — promptable links as shareable seeds; the
+- `.agents/plans/archive/promptable-image-library-pass` — promptable links as shareable seeds; the
   image bench; Midjourney session artifacts promoted only with a role.
 - `/design/folios/#folio-request` — the request seed card; the folio soil ecosystem
   (`.spw/caches/folio-soil-ecosystem-2026-09.spw`) with production triad seed / frame /
