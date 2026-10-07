@@ -164,7 +164,7 @@ Tree census: **88 live folders (84 PLAN.md), 148 archived PLAN.md**. All 168 liv
 - **Archived 80** with a reason each (`archive/README.md`): 65 landed, 10 dormant with a named owner, 5 superseded by their own ownership notes. Content still owed went to its owner first: release-day receipts to `promo-wonder-cycle`, design-surfaces findings to `settings-theme-wiring/FIX.md`, craft guard 3 to `operator-semantics-refinement`.
 - **Three shared seams given one owner** (named in the map above): kernel extraction, settings-changed consolidation, and the design bundling pilot.
 - **Four folders no bucket named** now sit in `since_2026_07_12` in `index.spw`: design-studio, ecosystem-offer-2026-10, projects-hub, spw-document-room.
-- **Oversized, still live:** midjourney-design-concepts (1087 lines), color-motion (908), css-architecture-readability (850), rpg-portal-fantasy (537), spw-metaphysical-language (520). The last two open with a dated status; the first three need a patch-by-patch check before theirs.
+- **Oversized, still live:** midjourney-design-concepts (1052 lines), color-motion (860), css-architecture-readability (801), rpg-portal-fantasy (537), spw-metaphysical-language (520). The first three were checked patch by patch and open with what landed; their commit series, roadmaps and landing notes moved to a sibling `HISTORY.md` (146 lines), and the css-architecture-readability cap ratcheted 850 → 810. The next split is by patch family, not by date.
 - Snapshots before 2026-09-27 moved to `archive/plan-index-snapshots-2026.md`.
 
 ## Maintenance Snapshot - 2026-09-27

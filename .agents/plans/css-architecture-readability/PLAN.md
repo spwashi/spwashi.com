@@ -1,5 +1,9 @@
 # CSS Architecture Readability Series
 
+**Status 2026-10-06.** No patch has fully landed. Partial: 1A (owner labels are their own selector group), 2/2A/2B (route markers in six surfaces; home, blog and design lack them), 4 (`shell/chrome/` and `handles/operators/` split in bd0d7951; `cards.css` and `grammar/syntax.css` are not), 5 (token-only dark blocks and a css-contracts guard, d4b0ea94; `home.css` and `wonder.css` still branch), 6 (a7bfa3de; 39 nth selectors remain), 8 (README clustering and owner semantics; `css-instruction.spw:65` names a stale `public/css/debug.css`). Not started: 1, 1B, 3/3A/3B, 7, 9; Patch 9 would add a value to `data-spw-layout-contract`, which `learnability-ledger.css` already uses. Next: the markers at `home.css:17` and `blog.css:15`, which finish 2A/2B, then 1B compact mode. The `@layer` order statement lives in `style-core.css:1`; pre-split file names below stay on purpose. Commit series, roadmap and the 2026-07-03 note: [HISTORY.md](./HISTORY.md).
+
+**Related:** [css-state-legibility](../archive/css-state-legibility/PLAN.md) (archived).
+
 ## Public Goal
 
 Make the site's CSS easier to read, inspect, and refactor while improving the developer experience of changing UX behavior. The next series should turn the first debug-label pass into a literate maintainability program: clearer ownership boundaries, behavior-facing names, smaller files, stronger local tokens, less selector guesswork, and repeatable validation.
@@ -544,6 +548,7 @@ Validation:
 - `npm run check`
 - `git diff --check`
 - `rg -n "@import url\\('/public/css/(shell|handles|components)/" public/css/style.css`
+- Validation posture for future splits: banner-opener line boundaries only (a split at a banner's middle line leaves an unterminated comment seam); assert per-chunk brace balance on comment-stripped text; prove flattened-bundle equivalence before deleting the original.
 
 ## Patch 5 - Dark Mode And Auto Mode Symmetry
 
@@ -729,52 +734,6 @@ Validation:
 - Browser check on every route family that already carries composition metadata.
 - Update `.spw/conventions/composition-box-model.spw` before shipping any new contract.
 
-## Suggested Commit Series
-
-1. `Harden CSS layer debug overlay`
-2. `Add route CSS owner markers`
-3. `Map UX behavior contracts in CSS`
-4. `Extract reusable component surface tokens`
-5. `Split shell chrome CSS responsibilities`
-6. `Split operator handle CSS responsibilities`
-7. `Normalize dark mode token overrides`
-8. `Replace fragile route structural selectors`
-9. `Document CSS architecture conventions in Spw`
-10. `Evaluate composition layout contract`
-
-Each commit should be independently reviewable and should avoid mixing file splits with behavior changes.
-
-Preferred first implementation sequence:
-
-```text
-Harden CSS layer debug overlay
-Add route CSS owner markers
-Map UX behavior contracts in CSS
-```
-
-## Combined Roadmap
-
-This plan is part of the broader design-system track:
-
-1. Harden CSS layer debug overlay.
-2. Add route CSS owner markers.
-3. Map visible UX behaviors to named CSS and runtime contracts.
-4. Audit color, motion, and site personality signals.
-5. Add interaction timing bands.
-6. Normalize operator chip microinteractions.
-7. Document concept-inspiration workflow for UX prototypes.
-8. Add focused design prompt bank.
-9. Run SuperGrok animation study sprint.
-10. Prototype `/design/` grammar atlas concept.
-11. Extract reusable component surface tokens.
-12. Begin large CSS file responsibility split.
-
-Strategic rule:
-
-```text
-Use external inspiration and visual tuning to strengthen the repo-native system: UX behavior, site personality, tokens, semantics, CSS contracts, .spw conventions, and inspectable route/component boundaries.
-```
-
 ## Validation Loop For Each Patch
 
 Always run:
@@ -840,11 +799,3 @@ rg -n "data-spw-composition-flow|data-spw-box-model" .
 - Should compact debug mode be the default for layer labels on small screens?
 - Which component tokens are genuinely reused enough to deserve names?
 - Should `.spw/conventions/css-instruction.spw` become the canonical inspectable contract, or is `public/css/README.md` enough for now?
-
-## Implementation Note - 2026-07-03 Chapter Split And Genome Banners
-
-- Split the two largest surfaces into chapter files with rule order preserved verbatim and cascade equivalence proven against the flattened core bundle (comment-stripped, same-layer wrapper seams normalized): `handles/operators.css` (4578 lines) -> `handles/operators/` (ten chapters), `shell/chrome.css` (5623 lines) -> `shell/chrome/` (five chapters).
-- Each chapter opens with a literate banner: "Reads as" voice line, "Was" provenance, a genome block (states sensed, custom properties defined, intent hooks consumed), and a live probe hint.
-- `public/css/README.md` gained "Reading The Tree": naming anatomy (place / body part / disposition), moseying tree/rg probes, browser-toggling guidance, and the rule that a chapter whose genome and prose disagree is a bug.
-- Validation posture for future splits: banner-opener line boundaries only (a split at a banner's middle line leaves an unterminated comment seam); assert per-chunk brace balance on comment-stripped text; prove flattened-bundle equivalence before deleting the original.
-- `design/experiments/symphony/` added to `VALIDATION_IGNORED_PREFIXES` (review-demo copies, not production routes).

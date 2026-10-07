@@ -1,5 +1,9 @@
 # Midjourney-Inspired Focused Design Concepts Plan
 
+**Status 2026-10-06.** Landed: Patch 4 (`texture-slice.css`, dfafb7ef; the ornament-scaffold plates), 5B (texture slices on home, about, RPG Wednesday and lore.land) and 6/6A/6B (tiers and sidecars; the keep/replace/cut log in `image-review-2026-09.spw`). Partial: 1/1A/1B (the registry is `renders.studies` in `.spw/assets.spw` and the staging rules are in `.spw/conventions/asset-management.spw`; `public/images/README.md` carries neither), 2/2A/2B (no prompt bank; seeds in `.spw/caches/prompt-seeds-2026-09.spw` and `/tools/midjourney/`), 3/3A/3B, 5/5A (no grammar atlas). Not started: 2.5, 7/7A/7B. Next: Patch 1 with 1B, writing the states, sidecar fields and CSS-first threshold into `public/images/README.md` with links to the registry and the review log. Promoting the session-7 mark (a9fa3ca7) waits on the creator's pick. Session notes and the old commit series: [HISTORY.md](./HISTORY.md).
+
+**Related:** [visual-capture-ecology](../visual-capture-ecology/PLAN.md) · [reference-assignment-template](../reference-assignment-template/PLAN.md). **Absorbed 2026-10-06:** [promptable-image-library-pass](../archive/promptable-image-library-pass/PLAN.md).
+
 ## Public Goal
 
 Use Midjourney as an inspiration and concept-sketching tool for focused UX directions, then translate the best ideas into repo-native CSS, HTML semantics, image treatments, behavior notes, and `.spw` inspection notes. The output should be design direction and interaction personality, not unfiltered generated-image decoration.
@@ -1003,38 +1007,9 @@ Validation:
 
 - Do not promote them into tokens until they survive route/component use.
 
-## Suggested Commit Series
-
-1. `Document Midjourney inspiration workflow`
-2. `Add focused design prompt bank`
-3. `Run SuperGrok animation study sprint`
-4. `Prototype design route grammar atlas concept`
-5. `Extract palette candidates from visual studies`
-6. `Translate material study into CSS surfaces`
-7. `Promote selected generated asset with sidecar`
-8. `Document reusable visual concepts`
-
-## Combined Roadmap Position
-
-This plan supplies steps 6-9 in the combined design-system track:
-
-```text
-6. Document Midjourney inspiration workflow
-7. Add focused design prompt bank
-8. Run SuperGrok animation study sprint
-9. Prototype /design/ grammar atlas concept
-```
+## Position
 
 The key constraint is token efficiency: inspiration should sharpen the repo-native system, not add unused visual vocabulary.
-
-Preferred first implementation sequence:
-
-```text
-Document Midjourney inspiration workflow
-Add focused design prompt bank
-Run SuperGrok animation study sprint
-Prototype design route grammar atlas concept
-```
 
 Midjourney remains a concept-sketching and reference tool. It should strengthen the repo-native system: tokens, semantics, CSS contracts, `.spw` conventions, and inspectable route/component boundaries.
 
@@ -1074,14 +1049,4 @@ Manual review:
 - Which route deserves the first focused concept study?
 - Should raw Midjourney prompts live in repo docs, `.spw` sidecars, or stay outside until a candidate is promoted?
 - What is the threshold for promoting an image versus translating the idea into CSS?
-
-## Landed 2026-08-31 — morning material tiles as CSS slices
-
-Four motif tiles (paper, linen, harlequin, wash) and four stills were promoted as optimized AVIF/WebP, then translated into an opt-in overlay (`data-spw-texture-slice`) instead of full-bleed backgrounds. Stills sit on about, lore.land, creator, craft, recipes, and the Midjourney bench. Culture hosts: home hook (wash), about years (paper), RPG boonhonk (harlequin). Crop and glitch live in flourish CSS/JS; capture and reduced motion freeze the crop. This is Patch 4 (material translation) plus a small Patch 6 promotion — CSS still owns the behavior.
-
-`data-spw-texture-slice="auto"` on the screenshot-imagine frame stays an authoring alias. Runtime writes the resolved family to `data-spw-slice-family` and hashes the visit key for the crop, so a shared still keeps one seed across routes.
 - Which visual concepts are already canonical enough to document: paper machinery, signal atlas, folded rail, or operator enamel?
-
-## Session 7 — 2026-09-28, attention.productions mark
-
-Four renders of "attention.productions logo with a lightbulb to mark salience", unzipped to `public/images/renders/_raw/2026-09-28-session-7/` and read one by one in `.spw/caches/prompt-seeds-2026-09.spw#session_7`. Render 0 garbles its lettering; 1 (hand-drawn Edison bulb over a script "attention.") and 2 (pendant spotlight over a clean sans) are candidate marks; 3 swaps the O for the bulb on a teal field. Nothing promoted: the creator picks the mark. Prompt seeds now have their own cache so promoted seeds can be loaded by name.
