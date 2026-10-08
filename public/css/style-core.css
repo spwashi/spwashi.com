@@ -38,6 +38,7 @@
 @import url('/public/css/components/card-ecology.css') layer(components);
 @import url('/public/css/components/frames.css') layer(components);
 @import url('/public/css/components/content.css') layer(components);
+@import url('/public/css/components/readout-ledger.css') layer(components);
 @import url('/public/css/components/controls.css') layer(components);
 @import url('/public/css/components/shell-controls.css') layer(components);
 @import url('/public/css/components/gesture-anatomy.css') layer(components);

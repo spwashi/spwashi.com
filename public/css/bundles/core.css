@@ -23282,6 +23282,120 @@ main :where(.frame-card-media, .image-study, .topic-photo-card, figure) figcapti
 }
 }
 
+/* /public/css/components/readout-ledger.css */
+@layer components {
+/* ==========================================================================
+   readout-ledger.css
+   --------------------------------------------------------------------------
+   Purpose
+   - A readout (dl.context-readout > div > dt + dd) reads as a ledger. Keys sit
+     in a quiet column, right-aligned so they meet the values on one shared
+     edge; the eye runs down the values and glances left to learn what each
+     one is. Hairlines part the pairs.
+   - The ledger is as wide as its values: four short settings make a small
+     receipt, a year of sentences fills the measure.
+
+   Reading
+   - Proximity carries the grouping: a key sits on its value's first baseline,
+     and the room between pairs is wider than the room inside one.
+   - A value says what it is with its own element, so no class names a type:
+     code is an identifier you could copy, data is a count, time is a date
+     with even figures, meter is a gauge across the value column.
+   - Routes tune ink and rules through the --readout-* tokens on any
+     ancestor, never the geometry (about.css wires its resume years this way).
+     The tokens are read with fallbacks and never declared here, so an
+     ancestor's value reaches the ledger.
+
+   Tokens
+   - --readout-key-ink, --readout-value-ink, --readout-rule
+   - --readout-gap (key to value), --readout-pair-space (pair to pair)
+   - --readout-chip-accent (the identifier chip's ink)
+   ========================================================================== */
+
+:where(.context-readout) {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  inline-size: fit-content;
+  min-inline-size: min(100%, 16rem);
+  max-inline-size: 100%;
+  margin-block: 0.55rem 0;
+  padding: 0;
+}
+
+/* The last pair has no rule under it, so whatever follows needs its own room. */
+:where(.context-readout:not(:last-child)) {
+  margin-block-end: 0.75rem;
+}
+
+:where(.context-readout > div) {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  align-items: baseline;
+  column-gap: var(--readout-gap, 0.8rem);
+  min-inline-size: 0;
+  margin: 0;
+  padding-block: var(--readout-pair-space, 0.34rem);
+  border-block-start: 1px solid var(--readout-rule, color-mix(in srgb, var(--line, currentColor) 72%, transparent));
+}
+
+:where(.context-readout > div:first-child) {
+  padding-block-start: 0.1rem;
+  border-block-start: 0;
+}
+
+:where(.context-readout > div:last-child) {
+  padding-block-end: 0;
+}
+
+:where(.context-readout dt) {
+  justify-self: end;
+  margin: 0;
+  color: var(--readout-key-ink, var(--ink-soft));
+  font-family: var(--grammar-mono-font, var(--site-mono-font, monospace));
+  font-size: var(--text-size-xs, 0.7rem);
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.06em;
+  text-align: end;
+  text-transform: uppercase;
+}
+
+:where(.context-readout dd) {
+  min-inline-size: 0;
+  margin: 0;
+  color: var(--readout-value-ink, inherit);
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+/* An identifier reads as a chip you could copy; it keeps the line's height. */
+:where(.context-readout dd > code:only-child) {
+  --readout-chip: var(--readout-chip-accent, var(--component-accent, var(--active-op-color, var(--teal, #0f6f6c))));
+  padding: 0 0.42em;
+  border: 1px solid color-mix(in srgb, var(--readout-chip) 34%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--readout-chip) 8%, transparent);
+  color: color-mix(in srgb, var(--readout-chip) 82%, var(--ink, currentColor));
+  font-size: 0.9em;
+  line-height: inherit;
+}
+
+/* Figures line up down the column; a lone count reads as the figure it is. */
+:where(.context-readout :is(dt, dd) :is(time, data)) {
+  font-variant-numeric: tabular-nums;
+}
+
+:where(.context-readout dd > data:only-child) {
+  font-weight: 700;
+}
+
+:where(.context-readout dd > meter:only-child) {
+  display: block;
+  inline-size: min(100%, 10rem);
+}
+}
+
 /* /public/css/components/controls.css */
 @layer components {
 /* ==========================================================================
@@ -36527,31 +36641,6 @@ html[data-spw-page-section-phase="idle"] {
 :where([data-theme-pack-preview="banked-ember"]) {
   --theme-pack-preview-light: linear-gradient(135deg, #e4ece7 0%, #b8d4c8 100%);
   --theme-pack-preview-dark: linear-gradient(135deg, #1c2b2c 0%, #0d1617 100%);
-}
-
-:where(.context-readout) {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 8.5rem), 1fr));
-  gap: 0.45rem 0.6rem;
-}
-
-:where(.context-readout > div) {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-  min-width: 0;
-}
-
-:where(.context-readout dt, .context-readout dd) {
-  margin: 0;
-}
-
-:where(.context-readout dt) {
-  color: var(--ink-soft);
-  font-size: var(--text-size-xs, 0.78rem);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
 }
 
 @media (max-width: 40rem) {
