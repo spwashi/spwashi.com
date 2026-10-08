@@ -7,7 +7,8 @@
  * or whose anchor no longer appears on the page it names. Partials pulled in
  * with <spw-include src="…"> count toward a page's anchors, and commented-out
  * examples are not links. Anchors a runtime module creates on mount cannot be
- * seen here; name them in RUNTIME_ANCHORS with the module that makes them.
+ * seen here; name them in RUNTIME_ANCHORS (lib/page-anchors.mjs) with the
+ * module that makes them.
  *
  * Reports only; it does not gate check:local. Record: .spw/audits/route-link-integrity-2026-09.spw
  *
@@ -16,12 +17,10 @@
 import { readdirSync, readFileSync, existsSync } from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
+import { anchorsOfPage, stripComments } from './lib/page-anchors.mjs';
 
 const ROOT = process.cwd();
 const SKIP = new Set(['node_modules', 'dist', 'dist-vite', '.git', '.references', 'captures', '.claude', '.spw', '.agents', 'public', 'scripts', 'workers', '_partials', 'types', 'coverage', 'tmp', '.tmp']);
-const RUNTIME_ANCHORS = Object.freeze({
-  '/play/rpg-wednesday/': ['rpgw-state-curator'], // public/js/modules/rpg-wednesday/curate.js
-});
 
 function routes(dir = ROOT, out = new Map()) {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
@@ -36,23 +35,10 @@ function routes(dir = ROOT, out = new Map()) {
   return out;
 }
 
-const stripComments = (html) => html.replace(/<!--[\s\S]*?-->/g, '');
-
-function withPartials(html) {
-  return html.replace(/<spw-include\s+src="([^"]+)"\s*>\s*<\/spw-include>/g, (whole, src) => {
-    const partial = path.join(ROOT, '_partials', `${src}.html`);
-    return existsSync(partial) ? readFileSync(partial, 'utf8') : whole;
-  });
-}
-
 export function auditRouteLinks() {
   const pages = routes();
   const anchors = new Map();
-  for (const [route, html] of pages) {
-    const ids = new Set([...stripComments(withPartials(html)).matchAll(/\bid="([^"]+)"/g)].map((m) => m[1]));
-    for (const id of RUNTIME_ANCHORS[route] || []) ids.add(id);
-    anchors.set(route, ids);
-  }
+  for (const [route, html] of pages) anchors.set(route, anchorsOfPage(html, route, ROOT));
   const missingRoutes = new Map();
   const missingAnchors = new Map();
   for (const [from, html] of pages) {

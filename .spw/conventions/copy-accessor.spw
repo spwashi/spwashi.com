@@ -21,6 +21,10 @@
 @copy_hypermedia_key: ~"../caches/copy-hypermedia-key-2026-09.spw"
 @copy_agentic_direction: ~"../caches/copy-agentic-direction-2026-09.spw"
 @runner: ~"../../scripts/page-copy-audit.mjs"
+@home_lede: ~"/#home-frame-note"
+@home_lede_atlas: ~"/#home-lede-atlas"
+@home_lede_traditions: ~"/#home-lede-traditions"
+@home_lede_rooms: ~"/#home-lede-rooms"
 
 operation = "contract"
 fixity = "stable"
@@ -37,6 +41,8 @@ fixity = "stable"
     shape = `namespace.cluster.slot`
     example = `curriculum.hook.lede`
     nested_ok = `A fourth dot (home.promoWonderCycle.daily.promo, math.combinatorics.hero.lede) nests a category inside the cluster. Extra dots are still a tree, not a new dimension.`
+    nested_hosts = `A unit may sit inside another unit when its id extends the outer id (home.hook.lede.atlas inside home.hook.lede): the DOM tree and the dotted tree agree, and the audit flags nest-off-tree where they do not. The outer key stays; it is still the place the whole paragraph is cited from. A nested unit reads the outer expression unless it carries its own, so a sentence unit does not need a handle (or the hover and kin an expression host draws) to be addressed.`
+    no_echo = `Never copy the outer expression onto a nested unit: expression resonance would light the sentences as kin of each other and of their own paragraph. A nested unit gets its own expression only when its posture leans away from the outer one; the audit flags echo-expression.`
     job = `Stable semantic id for audit, translation, and clustered edit. Never raw English.`
   }[reg=facet]
   expression = .{
@@ -49,7 +55,7 @@ fixity = "stable"
     attrs = #[`data-spw-copy-depth`, `data-spw-textual-role`, `data-spw-living-term`, `data-spw-copy-motifs`][reg=set]
     job = `Register and first-use gloss. Depth and term_policy answer density complaints; they are not extra dotted segments.`
   }[reg=facet]
-  mapping = `namespace ≈ subject or route. cluster ≈ surface or mode. slot ≈ textual role (lede, note, promo). Mode, direction, and capsule stay in the expression.`
+  mapping = `The key names place and role and stays frozen for translators; the expression names posture and direction and is retuned as the voice moves. They rhyme at mint (namespace ≈ subject or route, slot ≈ textual role) and then part on purpose: tone lives in the mode slot, so a key that tracked the mode would churn the catalog on every retune. 2026-10-08: 11 of 109 units match subject and mode to namespace and cluster. Do not rename a key to match its expression.`
 }[reg=facet]
 
 ^"voice_register"{
@@ -90,6 +96,8 @@ fixity = "stable"
 ^"authoring"{
   collectible = `Frame-notes and page-ledes get both ids when an editing team will audit or translate them: copy-unit for the catalog, expression when kinship or packing should read the host.`
   hypermedia_key = `A copy-unit that will be audited should sit on a host with an id so the key is a place (route + hash). That is the hypermedia localization key — not a fourth family. See @copy_hypermedia_key#hk-001.`
+  cite_by_place = `Cite a unit from .spw by its place, the route and host id (as @home_lede_atlas cites /#home-lede-atlas), not by its key in prose. spw:integrity reads the page's ids, so a renamed or removed host reports missing-anchor instead of leaving the citation looking alive.`
+  sentence_floor = `The finest unit is a sentence a translator can carry whole. Cutting inside a sentence (one unit per linked clause) is the fragment the refuse rule names: word order moves between languages and the clauses cannot. 2026-10-08: home.hook.lede holds atlas, traditions, rooms.`
   lens_panels = `Mode-switch hook-ledes (read view / join view) are not automatically collectibles. Address the canonical lede; leave lens variants unkeyed unless they will be translated separately.`
   no_fourth = `Do not add data-spw-copy-key, data-spw-i18n, or a second dotted scheme. If a host needs more meaning, enrich the expression or the living term.`
 }[reg=facet]

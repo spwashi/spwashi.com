@@ -27,9 +27,14 @@
  * idealized grammar — a checker that reports false positives gets ignored, and
  * an ignored checker is worse than none:
  *   - a leading `/` is a site route, resolved from the repo root, not the fs root
- *   - a trailing `/` is a directory citation and only needs the directory
+ *   - a trailing `/` is a directory citation and only needs the directory,
+ *     unless it carries a `#fragment`: then it cites that route's page
  *   - anchors are matched against every declaration form in use: `#>name`,
  *     `^"name"{`, `^name[…]`, `frame #name`, and top-level `name:` / `name =`
+ *   - a fragment on a page (`/about/#id`, `../about/index.html#id`) must name
+ *     an id the page answers to, read the way audit:route-links reads it
+ *     (lib/page-anchors.mjs). This is how a copy unit is cited by its place:
+ *     the id is the address, so a renamed host shows here instead of in prose.
  *
  * Extraction is delegated to the workbench rather than re-implemented here:
  * `spw query --selector pathRefs --json` returns AST-accurate references. The
@@ -89,6 +94,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isFollowablePathRef } from './lib/spw-path-ref.mjs';
 import { isGitIgnored, isTrackedInHead } from './lib/git-ignored.mjs';
+import { anchorsOfPage, routeOfPage } from './lib/page-anchors.mjs';
 
 const run = promisify(execFile);
 const SCRIPT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -264,7 +270,32 @@ async function checkRef(file, target) {
       };
     }
   }
+  const page = fragment ? await citedPage(resolved) : null;
+  if (page && !(await pageAnchorsOf(page)).has(fragment)) {
+    return {
+      verdict: 'missing-anchor',
+      detail: `#${fragment}`,
+      resolved: path.relative(ROOT, page),
+    };
+  }
   return { verdict: 'ok' };
+}
+
+/** The page a fragment citation lands on: an .html file, or a route's index.html. */
+async function citedPage(resolved) {
+  if (resolved.endsWith('.html')) return resolved;
+  const index = path.join(resolved, 'index.html');
+  const isDir = await stat(resolved).then((info) => info.isDirectory(), () => false);
+  return isDir && (await exists(index)) ? index : null;
+}
+
+async function pageAnchorsOf(file) {
+  const key = `page:${file}`;
+  if (!anchorCache.has(key)) {
+    const html = await readFile(file, 'utf8').catch(() => '');
+    anchorCache.set(key, anchorsOfPage(html, routeOfPage(file, ROOT), ROOT));
+  }
+  return anchorCache.get(key);
 }
 
 /**

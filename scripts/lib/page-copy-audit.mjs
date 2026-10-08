@@ -50,7 +50,7 @@ const BLOCK_RE = /<(h1|h2|h3|h4|p|li|blockquote|figcaption|dt|dd)(?:\s[^>]*)?>([
 // Start-tag attribute run that steps over quoted values whole, so a Spw
 // capsule such as (route)<part> inside an attribute does not end the tag.
 const ATTR_RUN = String.raw`(?:[^>"']|"[^"]*"|'[^']*')*`;
-const COPY_UNIT_HOST_RE = new RegExp(String.raw`<([a-z][a-z0-9]*)\b(${ATTR_RUN}?data-spw-copy-unit\s*=\s*"[^"]+"${ATTR_RUN})>([\s\S]*?)<\/\1>`, 'gi');
+const COPY_UNIT_START_RE = new RegExp(String.raw`<([a-z][a-z0-9]*)\b(${ATTR_RUN}?data-spw-copy-unit\s*=\s*"[^"]+"${ATTR_RUN})>`, 'gi');
 const HOOK_LEDE_HOST_RE = new RegExp(String.raw`<([a-z][a-z0-9]*)\b(${ATTR_RUN}?\bclass\s*=\s*"[^"]*\bhook-lede\b[^"]*"${ATTR_RUN})>([\s\S]*?)<\/\1>`, 'gi');
 const EXPRESSION_HOST_RE = new RegExp(String.raw`<([a-z][a-z0-9]*)\b(${ATTR_RUN}?data-spw-semantic-expression\s*=\s*"[^"]+"${ATTR_RUN})>([\s\S]*?)<\/\1>`, 'gi');
 const MAIN_RE = new RegExp(String.raw`<main\b${ATTR_RUN}>([\s\S]*?)<\/main>`, 'i');
@@ -156,13 +156,72 @@ export function extractPageMeta(html = '') {
   };
 }
 
+// Index of the close tag that balances an open host, or -1. Counting depth
+// lets a unit hold other units (home.hook.lede around home.hook.lede.atlas)
+// and same-name children without ending at the first inner close.
+function closeOfHost(html, tag, from) {
+  const tagRe = new RegExp(String.raw`<(/?)${tag}\b${ATTR_RUN}>`, 'gi');
+  tagRe.lastIndex = from;
+  let depth = 1;
+  for (let match = tagRe.exec(html); match; match = tagRe.exec(html)) {
+    depth += match[1] ? -1 : 1;
+    if (depth === 0) return match.index;
+  }
+  return -1;
+}
+
+// Copy-unit hosts in document order, each with the unit it nests inside.
+// A nested unit reads its parent's expression unless it carries its own.
+function walkCopyUnitHosts(main) {
+  const hosts = [];
+  const open = [];
+  for (const match of main.matchAll(COPY_UNIT_START_RE)) {
+    const tag = match[1].toLowerCase();
+    const innerStart = match.index + match[0].length;
+    const innerEnd = closeOfHost(main, tag, innerStart);
+    if (innerEnd < 0) continue;
+    while (open.length && open.at(-1).innerEnd <= match.index) open.pop();
+    const parent = open.at(-1);
+    const host = {
+      tag,
+      attrs: match[2],
+      start: match.index,
+      innerStart,
+      innerEnd,
+      inner: main.slice(innerStart, innerEnd),
+      copyUnit: readSpwAttr(match[2], 'copy-unit'),
+      parentUnit: parent?.copyUnit || '',
+      inheritedExpression: parent
+        ? readSpwAttr(parent.attrs, 'semantic-expression') || parent.inheritedExpression
+        : '',
+      children: [],
+    };
+    parent?.children.push(host);
+    open.push(host);
+    hosts.push(host);
+  }
+  return hosts;
+}
+
+// A parent's own copy is what its nested units do not hold, so each string
+// is voiced once, by the innermost unit that carries it.
+function ownInner(host, main) {
+  let own = '';
+  let cursor = host.innerStart;
+  for (const child of host.children) {
+    own += main.slice(cursor, child.start);
+    cursor = main.indexOf('>', child.innerEnd) + 1;
+  }
+  return own + main.slice(cursor, host.innerEnd);
+}
+
 export function extractCopyUnitHosts(html) {
   const pageMeta = extractPageMeta(html);
   const main = extractMainHtml(html);
   const blocks = [];
   const seen = new Set();
 
-  const push = (tag, attrs, inner, { requireUnit = true } = {}) => {
+  const push = (tag, attrs, inner, { requireUnit = true, nesting = {} } = {}) => {
     const copyUnit = readSpwAttr(attrs, 'copy-unit');
     if (requireUnit && !copyUnit) return;
     const text = stripMarkup(inner);
@@ -183,13 +242,25 @@ export function extractCopyUnitHosts(html) {
       textualRole: readSpwAttr(attrs, 'textual-role'),
       locale: readSpwAttr(attrs, 'locale'),
       className,
+      parentUnit: '',
+      inheritedExpression: '',
+      ...nesting,
       ...parsed,
       ...pageMeta,
     });
   };
 
-  for (const match of main.matchAll(COPY_UNIT_HOST_RE)) {
-    push(match[1].toLowerCase(), match[2], match[3], { requireUnit: true });
+  for (const host of walkCopyUnitHosts(main)) {
+    const nesting = {
+      parentUnit: host.parentUnit,
+      inheritedExpression: host.inheritedExpression,
+    };
+    if (host.children.length) {
+      const own = ownInner(host, main);
+      nesting.ownHtml = own;
+      nesting.ownText = stripMarkup(own);
+    }
+    push(host.tag, host.attrs, host.inner, { requireUnit: true, nesting });
   }
 
   for (const match of main.matchAll(HOOK_LEDE_HOST_RE)) {
