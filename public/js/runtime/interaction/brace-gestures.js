@@ -56,6 +56,7 @@ import {
   writeDatasetValue,
   writeStyleValue,
   FRAME_SELECTOR,
+  SHELL_CHROME_SELECTOR,
 } from '/public/js/kernel/dom-contracts.js';
 import {
   buildPinRecord,
@@ -299,7 +300,14 @@ function braceTarget(node) {
     return null;
   }
   if (isLensModeControl(node)) return null;
-  return node?.closest?.(BRACE_TARGET_SELECTOR) || null;
+  const target = node?.closest?.(BRACE_TARGET_SELECTOR) || null;
+  // The shell is not a brace either. A press on the route menu's toggle
+  // resolved to the header itself (it carries data-spw-form), and the charging
+  // scale made the header the containing block for the menu's fixed sheet, so
+  // the sheet opened above a phone's screen. It also wrote "hover active" into
+  // the banner's accessible description.
+  if (target?.closest?.(SHELL_CHROME_SELECTOR)) return null;
+  return target;
 }
 
 function classifyTarget(el) {
