@@ -638,6 +638,38 @@ function shouldScheduleDefinition(def, ctx, expectedWhen = null) {
 // whole page, and rules written for hosts on the page match the page itself.
 const isPageRoot = (el) => el === document.documentElement || el === document.body;
 
+// One root can host several modules: an invited one, and others its selectors
+// share. Each keeps its own trigger record here, and the root shows one of
+// them, so the status and the timing it is drawn with always belong to the
+// same module. A pending invitation (waiting, or accepted and arriving) is
+// what a reader can act on, so it outranks the latest record.
+const triggerRecordsByRoot = new WeakMap();
+
+const isInvitationRecord = (entry) => entry.status === 'waiting'
+  || (entry.status === 'triggered' && entry.when === mountWhen.INVITED);
+
+function settleTriggerRecord(target, id, entry) {
+  let records = triggerRecordsByRoot.get(target);
+  if (!records) {
+    records = new Map();
+    triggerRecordsByRoot.set(target, records);
+  }
+  // Re-inserting keeps the Map in write order, so the last entry is the latest.
+  records.delete(id);
+  records.set(id, { ...entry, id });
+
+  const entries = [...records.values()];
+  const invitations = entries.filter(isInvitationRecord);
+  const shown = (invitations.length ? invitations : entries).at(-1);
+  writeProjectionTier(target, PROJECTION_TIERS.TRANSIENT, {
+    // A trigger host names the module it shows; a root no trigger ever
+    // annotated stays unmarked.
+    ...(target.dataset.spwModuleTrigger ? { spwModuleTrigger: shown.id } : {}),
+    spwModuleTriggerStatus: shown.status,
+    spwModuleTriggerWhen: shown.when || null,
+  });
+}
+
 function annotateModuleTarget(target, record) {
   if (!(target instanceof HTMLElement) || isPageRoot(target)) return;
   writeProjectionTier(target, PROJECTION_TIERS.INSPECTION, {
@@ -655,9 +687,7 @@ function annotateModuleTarget(target, record) {
     spwModuleHydration: record.status === 'mounted' ? 'ready' : record.status,
     spwModuleDurationMs: Number.isFinite(record.durationMs) ? String(Math.round(record.durationMs)) : null,
   });
-  writeProjectionTier(target, PROJECTION_TIERS.TRANSIENT, {
-    spwModuleTriggerStatus: record.status,
-  });
+  settleTriggerRecord(target, record.baseId || record.id, { status: record.status, when: record.effectiveWhen });
 
   annotateModuleDescribesTarget(target, record.describes);
   annotateModuleUpdatesTarget(target, record.updates);
@@ -669,16 +699,13 @@ function annotateModuleTrigger(target, def, ctx, effectiveWhen, status = 'queued
   writeProjectionTier(target, PROJECTION_TIERS.INSPECTION, {
     spwModuleTrigger: def.id,
     spwModuleTriggerLayer: def.layer,
-    spwModuleTriggerWhen: effectiveWhen,
     spwModuleTriggerReason: reason,
     spwModuleTriggerTimingArc: def.timingArc || null,
     spwModuleTriggerEffectScope: normalizeModuleIntentValue(def.effectScope),
     spwFeatureMountTrigger: `${def.id}:${effectiveWhen}`,
     spwModuleTriggerSelector: def.selector || null,
   });
-  writeProjectionTier(target, PROJECTION_TIERS.TRANSIENT, {
-    spwModuleTriggerStatus: status,
-  });
+  settleTriggerRecord(target, def.id, { status, when: effectiveWhen });
 }
 
 function updateRuntimeStateTokens(ctx) {

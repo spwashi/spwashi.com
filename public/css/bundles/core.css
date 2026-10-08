@@ -34903,10 +34903,10 @@ html[data-spw-page-section-phase="idle"] {
    below are exactly the ones the loader writes.
 
      waiting      potential is stored, and the root says so
-     triggered    the circuit closed; the module is arriving. Drawn only
-                  when the reader closed it (trigger-when "invited"): a
-                  root that scrolled into view or met an idle frame did
-                  not choose anything
+     triggered    the circuit closed; the module is arriving (then
+                  loading, the same arrival). Drawn only when the reader
+                  closed it (trigger-when "invited"): a root that scrolled
+                  into view or met an idle frame did not choose anything
      queued       scheduled by something other than the reader — left as
                   authored, because a reader cannot accept what they did not
                   choose, and pretending otherwise teaches a false affordance
@@ -34953,9 +34953,13 @@ html[data-spw-page-section-phase="idle"] {
    only the second is true.
    -------------------------------------------------------------------------- */
 
-/* The header sigil and the footer brand draw the Spw mark in their own
-   ::before (header.css), so no state here may claim it. */
-[data-spw-module-trigger-status='waiting']:not(:where([data-spw-module-offer='diagnostic'], .header-sigil, .site-footer__brand))::before {
+/* Hosts that keep their own ::before are skipped in every rule here: the
+   header sigil and the footer brand draw the Spw mark in it (header.css); an
+   image seed announces its own offer ("? image seed", content.css) over an
+   image overlay, and a second invitation for the same offer is noise; a host
+   with a role wears its phase line there (ornament/whimsy.css), a later layer
+   whose full width would turn this edge into a wash over the host. */
+[data-spw-module-trigger-status='waiting']:not(:where([data-spw-module-offer='diagnostic'], .header-sigil, .site-footer__brand, [data-spw-image-reward], [data-spw-image-discovery], [data-spw-role]))::before {
   content: '';
   position: absolute;
   inset-block: 0;
@@ -35003,7 +35007,7 @@ html[data-spw-page-section-phase="idle"] {
   }
 }
 
-[data-spw-module-trigger-status='triggered'][data-spw-module-trigger-when='invited']:not(:where(.header-sigil, .site-footer__brand))::before {
+:is([data-spw-module-trigger-status='triggered'], [data-spw-module-trigger-status='loading'])[data-spw-module-trigger-when='invited']:not(:where(.header-sigil, .site-footer__brand, [data-spw-image-reward], [data-spw-image-discovery], [data-spw-role]))::before {
   content: '';
   position: absolute;
   inset-block: 0;
@@ -35028,11 +35032,11 @@ html[data-spw-page-section-phase="idle"] {
    -------------------------------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
-  [data-spw-module-trigger-status='waiting']:not(:where([data-spw-module-offer='diagnostic'], .header-sigil, .site-footer__brand))::before {
+  [data-spw-module-trigger-status='waiting']:not(:where([data-spw-module-offer='diagnostic'], .header-sigil, .site-footer__brand, [data-spw-image-reward], [data-spw-image-discovery], [data-spw-role]))::before {
     transition: none;
   }
 
-  [data-spw-module-trigger-status='triggered'][data-spw-module-trigger-when='invited']:not(:where(.header-sigil, .site-footer__brand))::before {
+  :is([data-spw-module-trigger-status='triggered'], [data-spw-module-trigger-status='loading'])[data-spw-module-trigger-when='invited']:not(:where(.header-sigil, .site-footer__brand, [data-spw-image-reward], [data-spw-image-discovery], [data-spw-role]))::before {
     animation: none;
     opacity: 0;
   }
@@ -35047,16 +35051,16 @@ html[data-spw-page-section-phase="idle"] {
 :is(html, body):is([data-spw-capture-mode="clean"], [data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"])
   :is(
     [data-spw-module-trigger-status='waiting']:not([data-spw-module-offer='diagnostic']),
-    [data-spw-module-trigger-status='triggered'][data-spw-module-trigger-when='invited']
-  ):not(:where(.header-sigil, .site-footer__brand))::before {
+    :is([data-spw-module-trigger-status='triggered'], [data-spw-module-trigger-status='loading'])[data-spw-module-trigger-when='invited']
+  ):not(:where(.header-sigil, .site-footer__brand, [data-spw-image-reward], [data-spw-image-discovery], [data-spw-role]))::before {
   content: none;
 }
 
 @media print {
   :is(
     [data-spw-module-trigger-status='waiting']:not([data-spw-module-offer='diagnostic']),
-    [data-spw-module-trigger-status='triggered'][data-spw-module-trigger-when='invited']
-  ):not(:where(.header-sigil, .site-footer__brand))::before {
+    :is([data-spw-module-trigger-status='triggered'], [data-spw-module-trigger-status='loading'])[data-spw-module-trigger-when='invited']
+  ):not(:where(.header-sigil, .site-footer__brand, [data-spw-image-reward], [data-spw-image-discovery], [data-spw-role]))::before {
     content: none;
   }
 }
