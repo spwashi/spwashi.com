@@ -97,8 +97,10 @@ function definesTerm(text = '', term = '', copyUnit = '') {
 }
 
 export function flagCopyVoice(block = {}) {
-  const text = block.text || '';
-  const html = block.html || '';
+  // A unit that holds nested units voices only its own copy; density still
+  // reads the whole.
+  const text = block.ownText ?? block.text ?? '';
+  const html = block.ownHtml ?? block.html ?? '';
   const copyUnit = block.copyUnit || '';
   const flags = [];
   if (/\bin a world\b|\bunlock(?:s|ing)?\b|\belevate(?:s|d|ing)?\b/i.test(text)) {
@@ -113,7 +115,15 @@ export function flagCopyVoice(block = {}) {
     || isHookLede
     || /\.lede$/i.test(copyUnit);
   if (isLongCopy && (block.chars || text.length) > 320) flags.push('dense-lede');
-  if (copyUnit && !block.expression && isHookLede) flags.push('flat-only');
+  if (copyUnit && !block.expression && !block.inheritedExpression && isHookLede) {
+    flags.push('flat-only');
+  }
+  if (copyUnit && block.parentUnit && !copyUnit.startsWith(`${block.parentUnit}.`)) {
+    flags.push('nest-off-tree');
+  }
+  if (block.expression && block.expression === block.inheritedExpression) {
+    flags.push('echo-expression');
+  }
   if (!copyUnit && /\bhook-lede\b/.test(block.className || '')) {
     flags.push('hook-lede-unaddressed');
   }
@@ -180,6 +190,8 @@ export function decorateAccessorPages(pages = []) {
   let uniqueUnits = new Set();
   let unitHosts = 0;
   let unaddressedHooks = 0;
+  let held = 0;
+  let inherit = 0;
 
   const pagesByRoute = new Map(pages.map((page) => [page.route, page]));
   for (const page of pages) {
@@ -192,6 +204,8 @@ export function decorateAccessorPages(pages = []) {
         unitHosts += 1;
         uniqueUnits.add(unit.copyUnit);
         if (unit.expression) withExpression += 1;
+        if (unit.parentUnit) held += 1;
+        if (unit.parentUnit && !unit.expression) inherit += 1;
         tally(namespaces, unit.namespace);
       } else {
         unaddressedHooks += 1;
@@ -233,6 +247,8 @@ export function decorateAccessorPages(pages = []) {
     uniqueUnits: uniqueUnits.size,
     withExpression,
     unaddressedHooks,
+    held,
+    inherit,
   };
 }
 
@@ -244,6 +260,9 @@ function printAccessorReport(report) {
     + `triple=${totals.triple || 0}  nested=${totals.nested || 0}  short=${totals.short || 0}  `
     + `hook-ledes-unaddressed=${report.unaddressedHooks || 0}\n`,
   );
+  // held: units sitting inside another unit; inherit: held units reading the
+  // outer expression instead of carrying their own.
+  process.stdout.write(`held=${report.held || 0}  inherit=${report.inherit || 0}\n`);
 
   process.stdout.write('\nnamespaces\n');
   for (const [name, count] of Object.entries(report.namespaces || {})) {

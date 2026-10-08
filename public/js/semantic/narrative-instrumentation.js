@@ -394,6 +394,18 @@ function showInspectorDrawer(token) {
   wireInspectorDrawer(drawer, occurrences, seed);
 }
 
+// A nested copy unit (home.hook.lede.atlas inside home.hook.lede) reads the
+// expression of the unit it sits in unless it carries its own.
+function inheritedUnitExpression(owner) {
+  if (!owner.dataset.spwCopyUnit) return '';
+  let unit = owner.parentElement?.closest('[data-spw-copy-unit]');
+  while (unit) {
+    if (unit.dataset.spwSemanticExpression) return unit.dataset.spwSemanticExpression;
+    unit = unit.parentElement?.closest('[data-spw-copy-unit]');
+  }
+  return '';
+}
+
 function collectNarrativeMetadata(token) {
   const owner = token.closest(NARRATIVE_METADATA_SELECTOR);
 
@@ -417,7 +429,7 @@ function collectNarrativeMetadata(token) {
     copyUnit: owner.dataset.spwCopyUnit || '',
     copyRole: owner.dataset.spwCopyRole || '',
     copyPurpose: owner.dataset.spwCopyPurpose || '',
-    semanticExpression: owner.dataset.spwSemanticExpression || '',
+    semanticExpression: owner.dataset.spwSemanticExpression || inheritedUnitExpression(owner),
     semanticCluster: owner.dataset.spwSemanticCluster || '',
     vocab: owner.dataset.spwVocab || '',
     narrativeCopy: owner.dataset.spwNarrativeCopy || '',

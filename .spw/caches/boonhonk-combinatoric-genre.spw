@@ -23,7 +23,7 @@
 @combinatorics: ~"../../topics/math/combinatorics/index.html#combinatorics-lab"
 @first_beat: ~"../../services/creator/index.html#first-beat"
 @regions: ~"../../services/ecosystem/index.html#regions"
-@holdings: ~"../../topics/knowledge-bases/index.html#dregg-tokenomics"
+@holdings: ~"../../topics/knowledge-bases/index.html#versioned-holdings"
 @software_path: ~"../../topics/software/index.html#dimensional-expression-path"
 @mixer: ~"../../public/js/modules/widgets/boonhonk-mixer.js"
 @wapboy_image: ~"../../public/images/assets/rpg-wednesday/rpg-scene-wapboy-one-drop-prophecy.spw"

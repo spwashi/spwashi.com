@@ -239,6 +239,52 @@ test('extractCopyUnitHosts joins the dotted key to the Spw handle', () => {
   assert.equal(meta.pageFamily, 'curriculum');
 });
 
+test('a unit can hold sentence units that read its expression', () => {
+  const html = `
+    <body data-spw-page-family="person-magazine">
+      <main>
+        <p id="home-frame-note" data-spw-textual-role="lede" data-spw-copy-unit="home.hook.lede" data-spw-semantic-expression="home[hook]{software.art.practice}(atlas)<person>">
+          <span id="home-lede-atlas" data-spw-copy-unit="home.hook.lede.atlas">A working atlas, <span class="spw-living-term">kept</span> for wandering.</span>
+          Between sentences.
+          <span id="home-lede-rooms" data-spw-copy-unit="home.hook.lede.rooms">Meet <a href="/about/">the person</a>.</span>
+          <span data-spw-copy-unit="about.hook.lede">A key from another tree.</span>
+          <span data-spw-copy-unit="home.hook.lede.echo" data-spw-semantic-expression="home[hook]{software.art.practice}(atlas)<person>">A copied handle.</span>
+          <span data-spw-copy-unit="home.hook.lede.lean" data-spw-semantic-expression="home[hush]{tradition}<person>">A sentence that leans.</span>
+        </p>
+      </main>
+    </body>
+  `;
+  const hosts = extractCopyUnitHosts(html);
+  const byUnit = Object.fromEntries(hosts.map((block) => [block.copyUnit, block]));
+  assert.deepEqual(Object.keys(byUnit), [
+    'home.hook.lede',
+    'home.hook.lede.atlas',
+    'home.hook.lede.rooms',
+    'about.hook.lede',
+    'home.hook.lede.echo',
+    'home.hook.lede.lean',
+  ]);
+
+  const lede = byUnit['home.hook.lede'];
+  assert.equal(lede.parentUnit, '');
+  assert.ok(lede.text.startsWith('A working atlas, kept for wandering. Between sentences.'));
+  assert.ok(lede.text.endsWith('A sentence that leans.'));
+  assert.equal(lede.ownText, 'Between sentences.');
+
+  const atlas = byUnit['home.hook.lede.atlas'];
+  assert.equal(atlas.text, 'A working atlas, kept for wandering.');
+  assert.equal(atlas.parentUnit, 'home.hook.lede');
+  assert.equal(atlas.expression, '');
+  assert.equal(atlas.inheritedExpression, 'home[hook]{software.art.practice}(atlas)<person>');
+  assert.ok(!flagCopyVoice(atlas).includes('flat-only'));
+  assert.ok(!flagCopyVoice(atlas).includes('nest-off-tree'));
+
+  assert.ok(flagCopyVoice(byUnit['about.hook.lede']).includes('nest-off-tree'));
+  assert.ok(flagCopyVoice(byUnit['home.hook.lede.echo']).includes('echo-expression'));
+  assert.ok(!flagCopyVoice(byUnit['home.hook.lede.lean']).includes('echo-expression'));
+  assert.ok(!flagCopyVoice(lede).includes('echo-expression'));
+});
+
 test('a capsule inside an attribute value does not end the start tag', () => {
   const html = `
     <body data-spw-page-family="design">
