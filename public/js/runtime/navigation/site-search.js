@@ -111,6 +111,24 @@ function extractSigilHints(query = '') {
   return hints;
 }
 
+/* A copy unit's key (home.reason.why.issue) is the address an editor reads
+   in the inspector, the copy audit, or a .spw citation. Typed back whole it
+   lands on that sentence; typed as a prefix it lands on the outermost unit
+   that starts with it. */
+const KEY_QUERY_RE = /^[a-z][\w-]*(?:\.[a-z][\w-]*)+\.?$/i;
+
+export function matchUnitKey(unitHosts, query = '') {
+  const typed = String(query || '').trim().toLowerCase();
+  if (!unitHosts || !KEY_QUERY_RE.test(typed)) return null;
+  let best = null;
+  for (const key of Object.keys(unitHosts)) {
+    const lower = key.toLowerCase();
+    if (lower === typed) return { key, exact: true };
+    if (lower.startsWith(typed) && (!best || key.length < best.key.length)) best = { key, exact: false };
+  }
+  return best;
+}
+
 function hasBoundaryMatch(text, token) {
   if (!text || !token) return false;
   if (text === token) return true;
@@ -134,6 +152,9 @@ function passesFacet(entry, facet) {
 function scoreEntry(entry, tokens, sigilHints, query = '') {
   let score = 0;
   let matchedExpression = '';
+  const unit = matchUnitKey(entry.unitHosts, query);
+  const matchedUnit = unit?.key || '';
+  if (unit) score += unit.exact ? 260 : 120;
   const title = String(entry.title || '').toLowerCase();
   const route = String(entry.route || '').toLowerCase();
   const haystack = String(entry.haystack || '').toLowerCase();
@@ -163,7 +184,7 @@ function scoreEntry(entry, tokens, sigilHints, query = '') {
     if (hint.label && (title.includes(hint.label) || haystack.includes(hint.label))) score += 8;
   }
 
-  if (!tokens.length && !sigilHints.length) return score;
+  if (!tokens.length && !sigilHints.length) return { score, matchedExpression, matchedUnit };
 
   for (const token of tokens) {
     // Skip pure punctuation already handled as sigils
@@ -201,13 +222,15 @@ function scoreEntry(entry, tokens, sigilHints, query = '') {
     }
   }
 
-  return { score, matchedExpression };
+  return { score, matchedExpression, matchedUnit };
 }
 
 function rankEntries(query, facet = activeFacet) {
   const tokens = tokenize(query);
-  const sigilHints = extractSigilHints(query);
   const pool = entries.filter((entry) => passesFacet(entry, facet));
+  // A key that names a unit is an address, so its dots are not ground sigils.
+  const isKey = pool.some((entry) => matchUnitKey(entry.unitHosts, query));
+  const sigilHints = isKey ? [] : extractSigilHints(query);
 
   if (!tokens.length && !sigilHints.length) {
     /* Nothing typed yet: start where the reader is. The frames of the current
@@ -232,7 +255,7 @@ function rankEntries(query, facet = activeFacet) {
   return pool
     .map((entry) => {
       const scored = scoreEntry(entry, tokens, sigilHints, query);
-      return { entry, score: scored.score, matchedExpression: scored.matchedExpression };
+      return { entry, score: scored.score, matchedExpression: scored.matchedExpression, matchedUnit: scored.matchedUnit };
     })
     .filter((row) => row.score > 0)
     .sort((a, b) => b.score - a.score || a.entry.route.localeCompare(b.entry.route))
@@ -546,15 +569,14 @@ function geometryMeta(entry) {
   ].filter(Boolean).join(' · ');
 }
 
-function appendResult(container, entry, index, matchedExpression = '') {
+function appendResult(container, entry, index, matchedExpression = '', matchedUnit = '') {
   const item = document.createElement('div');
   item.className = 'spw-site-search__item';
   item.setAttribute('role', 'option');
   item.id = `spw-site-search-option-${index}`;
 
-  const hostId = matchedExpression && entry.expressionHosts
-    ? entry.expressionHosts[matchedExpression]
-    : '';
+  const hostId = (matchedUnit && entry.unitHosts?.[matchedUnit])
+    || (matchedExpression && entry.expressionHosts ? entry.expressionHosts[matchedExpression] : '');
   const link = document.createElement('a');
   link.className = 'spw-site-search__result';
   link.href = hostId
@@ -594,6 +616,7 @@ function appendResult(container, entry, index, matchedExpression = '') {
     entry.expressions[0],
     termPlacesMeta(entry),
   ].filter(Boolean).join(' · ') : [
+    matchedUnit,
     entry.kind === 'frame' ? (entry.handle || `#${entry.anchor}`) : (entry.nestLabel || entry.route),
     entry.kind === 'frame' ? String(entry.routeTitle || entry.frameOf || '').replace(/^Spwashi\s*[•·]\s*/, '') : entry.kind,
     entry.kind === 'frame' ? entry.regionRole || entry.region : entry.surface,
@@ -682,7 +705,7 @@ function renderResults() {
       heading.textContent = `here · ${local.length}`;
       group.appendChild(heading);
       local.forEach((row) => {
-        appendResult(group, row.entry, index, row.matchedExpression);
+        appendResult(group, row.entry, index, row.matchedExpression, row.matchedUnit);
         index += 1;
       });
       list.appendChild(group);
@@ -699,14 +722,14 @@ function renderResults() {
       group.appendChild(heading);
 
       rows.forEach((row) => {
-        appendResult(group, row.entry, index, row.matchedExpression);
+        appendResult(group, row.entry, index, row.matchedExpression, row.matchedUnit);
         index += 1;
       });
       list.appendChild(group);
     });
   } else {
     ranked.forEach((row) => {
-      appendResult(list, row.entry, index, row.matchedExpression);
+      appendResult(list, row.entry, index, row.matchedExpression, row.matchedUnit);
       index += 1;
     });
   }

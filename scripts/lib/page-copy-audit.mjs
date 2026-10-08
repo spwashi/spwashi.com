@@ -159,7 +159,7 @@ export function extractPageMeta(html = '') {
 // Index of the close tag that balances an open host, or -1. Counting depth
 // lets a unit hold other units (home.hook.lede around home.hook.lede.atlas)
 // and same-name children without ending at the first inner close.
-function closeOfHost(html, tag, from) {
+export function closeOfHost(html, tag, from) {
   const tagRe = new RegExp(String.raw`<(/?)${tag}\b${ATTR_RUN}>`, 'gi');
   tagRe.lastIndex = from;
   let depth = 1;
@@ -201,6 +201,21 @@ function walkCopyUnitHosts(main) {
     hosts.push(host);
   }
   return hosts;
+}
+
+/**
+ * Copy units that are also places: a key on a host with an id, in document
+ * order, with the offset of the host's start tag. Search reads these so a
+ * typed key lands on its sentence.
+ */
+export function copyUnitPlaces(html = '') {
+  return [...String(html).matchAll(COPY_UNIT_START_RE)]
+    .map((match) => ({
+      copyUnit: readSpwAttr(match[2], 'copy-unit'),
+      id: /\sid\s*=\s*"([^"]+)"/.exec(match[2])?.[1] || '',
+      at: match.index,
+    }))
+    .filter((unit) => unit.copyUnit && unit.id);
 }
 
 // A parent's own copy is what its nested units do not hold, so each string

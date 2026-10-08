@@ -40,6 +40,7 @@ export const MODULE_TEST_FILES = Object.freeze([
   'scripts/tests/chrome-headless-harness.test.mjs',
   'scripts/tests/page-copy-audit.test.mjs',
   'scripts/tests/page-anchors.test.mjs',
+  'scripts/tests/site-search-units.test.mjs',
   'scripts/tests/audit-living-terms.test.mjs',
   'scripts/tests/agent-contracts.test.mjs',
   'scripts/tests/harness-write-gate.test.mjs',
