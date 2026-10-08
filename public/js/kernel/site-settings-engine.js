@@ -1055,6 +1055,10 @@ class SiteSettingsManager {
     }
 
     setStyleProperties(this.root, {
+      // prepaint-state.js writes this inline before first paint, so it outranks
+      // the html[data-spw-color-mode] rules; a live change must move it too, or
+      // every light-dark() token (all of themes/packs.css) keeps the old side.
+      'color-scheme': normalized.colorMode === 'auto' ? 'light dark' : normalized.colorMode,
       '--author-annotation-strength': modifiers.author.annotationStrength,
       '--author-margin-presence': modifiers.author.marginPresence,
       '--author-thread-density': modifiers.author.threadDensity,
