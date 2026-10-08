@@ -19,6 +19,7 @@ import { COMPONENT_FIXTURES } from '../public/js/kernel/component-fixtures.js';
 import { REGION_ECOLOGY_FIXTURES } from '../public/js/kernel/region-ecology-fixtures.js';
 import { componentSearchEntries } from './lib/visual-capture-plan.mjs';
 import { partialName, readLivingTerms } from './lib/living-terms.mjs';
+import { closeOfHost, copyUnitPlaces } from './lib/page-copy-audit.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -124,21 +125,31 @@ function harvestRouteExpressions(html = '') {
 /* Frames are the site's navigable unit below the route: every
    section.spw-frame[id] carries a sigil (#>collect_a_folio), a heading, an
    expression, and region attributes. Indexing them lets a reader type the
-   sigil they see on one page and land on that frame on another. */
+   sigil they see on one page and land on that frame on another. A section
+   named by its heading (section[id][aria-labelledby]) is the same unit on
+   pages built from panels: a region a screen reader lists is a place search
+   can land.
+
+   unitHosts maps each copy unit's key to its host id, on the innermost frame
+   that holds it, so a typed key (home.reason.why.issue) lands on the
+   sentence. Units outside every frame ride on the route entry. */
 function stripTags(html = '') {
   return decodeHtmlEntities(String(html).replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim();
 }
 
-function harvestRouteFrames(html = '', route = '') {
+export function harvestRouteFrames(html = '', route = '', units = []) {
   const frames = [];
-  const pattern = /<section\b([^>]*\bclass=["'][^"']*\bspw-frame\b[^"']*["'][^>]*)>/g;
+  const ranges = [];
+  const pattern = /<section\b([^>]*)>/g;
   let match;
   while ((match = pattern.exec(html))) {
     const attrs = match[1];
-    const id = (attrs.match(/\bid=["']([^"']+)["']/) || [])[1];
+    const isFrame = /\bclass=["'][^"']*\bspw-frame\b/.test(attrs);
+    if (!isFrame && !/\saria-labelledby=/.test(attrs)) continue;
+    const id = (attrs.match(/\sid=["']([^"']+)["']/) || [])[1];
     if (!id) continue;
     const start = match.index + match[0].length;
-    const end = html.indexOf('</section>', start);
+    const end = closeOfHost(html, 'section', start);
     const body = html.slice(start, end === -1 ? start + 6000 : Math.min(end, start + 12000));
     const sigilRaw = (body.match(/class=["'][^"']*\bframe-sigil\b[^"']*["'][^>]*>([\s\S]*?)<\/a>/) || [])[1] || '';
     const handle = decodeChipText(sigilRaw).slice(0, 80);
@@ -153,6 +164,7 @@ function harvestRouteFrames(html = '', route = '') {
        enough to match a term a reader remembers, and keeps 780 frames near
        the weight of the route index rather than four times it. */
     const text = stripTags(body).slice(0, 280);
+    ranges.push({ start, end: end === -1 ? html.length : end });
     frames.push({
       route: `${route}#${id}`,
       frameOf: route,
@@ -174,7 +186,16 @@ function harvestRouteFrames(html = '', route = '') {
         .filter(Boolean).join(' ').toLowerCase(),
     });
   }
-  return frames;
+  const loose = {};
+  for (const unit of units) {
+    let inner = -1;
+    ranges.forEach((range, index) => {
+      if (unit.at >= range.start && unit.at < range.end && (inner < 0 || range.start > ranges[inner].start)) inner = index;
+    });
+    const hosts = inner < 0 ? loose : (frames[inner].unitHosts ||= {});
+    hosts[unit.copyUnit] = unit.id;
+  }
+  return { frames, unitHosts: loose };
 }
 
 /**
@@ -478,16 +499,20 @@ export async function generateSiteSearchIndex({ output = OUTPUT, stamp = output 
   const frames = [];
   for (const record of manifest.routes || []) {
     let harvested = { handles: [], operators: [], expressions: [], expressionHosts: {} };
+    let routeUnitHosts = {};
     if (record.file) {
       try {
         const html = await fs.readFile(path.join(ROOT, record.file), 'utf8');
         harvested = harvestRouteHandles(html);
-        frames.push(...harvestRouteFrames(html, record.route));
+        const placed = harvestRouteFrames(html, record.route, copyUnitPlaces(html));
+        frames.push(...placed.frames);
+        routeUnitHosts = placed.unitHosts;
       } catch {
         harvested = { handles: [], operators: [], expressions: [], expressionHosts: {} };
       }
     }
     const entry = buildSearchEntry(record, harvested);
+    if (entry && Object.keys(routeUnitHosts).length) entry.unitHosts = routeUnitHosts;
     if (entry) {
       const extras = components.filter((item) => item.route.split('#')[0] === record.route);
       if (extras.length) {
