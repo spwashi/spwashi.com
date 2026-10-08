@@ -11,6 +11,11 @@
    file absent the :root defaults in tokens/core.css already apply, so the
    only cost of arriving late is that a non-default pack paints after the
    default one. Default (neutral-paper) visitors never fetch it at all.
+
+   The palette blocks also match .spw-theme-specimen[data-spw-theme-pack], so an
+   element can wear a pack's paper and ink while the page wears another: the
+   look boxes on /settings/ are photographed this way. Pages that show
+   specimens load this file through ensureThemePackStyles({ specimens: true }).
    ========================================================================== */
 
 @layer reset, tokens, shell, typography, grammar, components, systems, routes, handles, effects, ornament;
@@ -19,12 +24,14 @@
 
 /* Theme packs. Secondary text retains each palette's hue with enough pigment
    for small labels on both page grounds and raised panels. */
-html[data-spw-theme-pack] {
+html[data-spw-theme-pack],
+.spw-theme-specimen[data-spw-theme-pack] {
   --ink-muted: var(--ink-mid);
 }
 
 /* Theme packs */
-html[data-spw-theme-pack="neutral-paper"] {
+html[data-spw-theme-pack="neutral-paper"],
+.spw-theme-specimen[data-spw-theme-pack="neutral-paper"] {
   --bg: light-dark(hsl(42 28% 93%), hsl(34 14% 11%));
   --bg-field: light-dark(hsl(44 32% 97%), hsl(36 12% 14%));
   --paper: light-dark(hsl(42 30% 97%), hsl(34 12% 14%));
@@ -47,7 +54,8 @@ html[data-spw-theme-pack="neutral-paper"] {
   --line-strong: light-dark(rgba(22, 110, 118, 0.26), rgba(112, 196, 196, 0.3));
 }
 
-html[data-spw-theme-pack="ritual-vellum"] {
+html[data-spw-theme-pack="ritual-vellum"],
+.spw-theme-specimen[data-spw-theme-pack="ritual-vellum"] {
   --bg: light-dark(hsl(34 48% 86%), hsl(18 18% 11%));
   --bg-field: light-dark(hsl(40 40% 94%), hsl(24 18% 14%));
   --surface: light-dark(rgba(252, 244, 232, 0.78), rgba(36, 26, 22, 0.78));
@@ -71,7 +79,8 @@ html[data-spw-theme-pack="ritual-vellum"] {
   --line-strong: light-dark(rgba(126, 82, 39, 0.26), rgba(196, 145, 86, 0.32));
 }
 
-html[data-spw-theme-pack="oxide-ledger"] {
+html[data-spw-theme-pack="oxide-ledger"],
+.spw-theme-specimen[data-spw-theme-pack="oxide-ledger"] {
   --bg: light-dark(hsl(164 24% 84%), hsl(166 24% 10%));
   --bg-field: light-dark(hsl(170 30% 94%), hsl(170 22% 13%));
   --paper: light-dark(hsl(164 30% 95%), hsl(168 20% 13%));
@@ -94,7 +103,8 @@ html[data-spw-theme-pack="oxide-ledger"] {
   --line-strong: light-dark(hsla(172, 58%, 26%, 0.32), rgba(92, 204, 183, 0.32));
 }
 
-html[data-spw-theme-pack="electric-studio"] {
+html[data-spw-theme-pack="electric-studio"],
+.spw-theme-specimen[data-spw-theme-pack="electric-studio"] {
   --bg: light-dark(hsl(208 54% 91%), hsl(226 26% 11%));
   --bg-field: light-dark(hsl(212 62% 97%), hsl(220 24% 14%));
   --paper: light-dark(hsl(208 58% 96%), hsl(222 22% 14%));
@@ -119,7 +129,8 @@ html[data-spw-theme-pack="electric-studio"] {
   --line-strong: light-dark(rgba(34, 138, 156, 0.3), rgba(105, 191, 224, 0.34));
 }
 
-html[data-spw-theme-pack="copper-brace"] {
+html[data-spw-theme-pack="copper-brace"],
+.spw-theme-specimen[data-spw-theme-pack="copper-brace"] {
   --bg: light-dark(hsl(28 56% 86%), hsl(20 22% 10%));
   --bg-field: light-dark(hsl(34 50% 95%), hsl(28 22% 13%));
   --paper: light-dark(hsl(30 54% 95%), hsl(24 20% 13%));
@@ -143,7 +154,8 @@ html[data-spw-theme-pack="copper-brace"] {
   --line-strong: light-dark(rgba(153, 91, 31, 0.28), rgba(214, 141, 77, 0.32));
 }
 
-html[data-spw-theme-pack="glass-console"] {
+html[data-spw-theme-pack="glass-console"],
+.spw-theme-specimen[data-spw-theme-pack="glass-console"] {
   --bg: light-dark(hsl(204 28% 88%), hsl(214 18% 10%));
   --bg-field: light-dark(hsl(206 34% 95%), hsl(210 18% 13%));
   --paper: light-dark(hsl(206 34% 96%), hsl(212 16% 13%));
@@ -181,7 +193,8 @@ html[data-spw-theme-pack="glass-console"] {
    resting state; the ember only shows where charge is present, which is what
    makes it a material rather than a color swap. See the charge-responsive
    seam block below. */
-html[data-spw-theme-pack="banked-ember"] {
+html[data-spw-theme-pack="banked-ember"],
+.spw-theme-specimen[data-spw-theme-pack="banked-ember"] {
   /* ── banked-ember: 7-color spec ──────────────────────────────────────────
      From the palette study (2026-08-12): three hue families at two values
      each, plus a single flame. Left column deep, right column pale, and each
@@ -234,7 +247,8 @@ html[data-spw-theme-pack="banked-ember"] {
    read in reflection instead of emission. The shell and the paper are one
    substance seen lit from outside vs. from within, which is why this is a
    color-mode variant rather than a seventh pack. */
-html[data-spw-color-mode="light"][data-spw-theme-pack="banked-ember"] {
+html[data-spw-color-mode="light"][data-spw-theme-pack="banked-ember"],
+html[data-spw-color-mode="light"] .spw-theme-specimen[data-spw-theme-pack="banked-ember"] {
   /* Same seven swatches, values traded: the pale column becomes the ground
      and the deep column becomes ink and accent. The flame does not change —
      a point-source reads as the same fire in either room. */

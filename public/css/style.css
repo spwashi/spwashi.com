@@ -49,6 +49,7 @@
 @import url('/public/css/routes/surfaces/settings-notes.css') layer(routes);
 @import url('/public/css/routes/surfaces/settings-runtime.css') layer(routes);
 @import url('/public/css/routes/surfaces/settings-cues.css') layer(routes);
+@import url('/public/css/routes/surfaces/settings-shelf.css') layer(routes);
 @import url('/public/css/routes/surfaces/review-surfaces.css') layer(routes);
 @import url('/public/css/routes/surfaces/recipes.css') layer(routes);
 @import url('/public/css/routes/surfaces/play.css') layer(routes);

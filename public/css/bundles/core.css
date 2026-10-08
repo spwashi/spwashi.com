@@ -21934,7 +21934,6 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   .settings-state-grid,
   .settings-navigator-grid,
   .settings-structures-grid,
-  .settings-quickstart-grid,
   .vibe-widget-grid,
   .spw-principle-grid,
   .pwa-status-grid
@@ -21982,7 +21981,6 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   .settings-state-grid,
   .settings-navigator-grid,
   .settings-structures-grid,
-  .settings-quickstart-grid,
   .vibe-widget-grid,
   .spw-principle-grid,
   .pwa-status-grid
@@ -22090,7 +22088,6 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
       .settings-state-grid,
       .settings-navigator-grid,
       .settings-structures-grid,
-      .settings-quickstart-grid,
       .vibe-widget-grid,
       .spw-principle-grid,
       .pwa-status-grid,
@@ -28300,7 +28297,7 @@ html[data-spw-site-rhythm-authority="runtime"] {
     grid-template-columns: 1fr;
   }
 
-  :where(.settings-state-grid, .settings-navigator-grid, .settings-structures-grid, .settings-quickstart-grid) {
+  :where(.settings-state-grid, .settings-navigator-grid, .settings-structures-grid) {
     grid-template-columns: 1fr;
   }
 }

@@ -64,7 +64,6 @@
   .settings-state-grid,
   .settings-navigator-grid,
   .settings-structures-grid,
-  .settings-quickstart-grid,
   .vibe-widget-grid,
   .spw-principle-grid,
   .pwa-status-grid
@@ -112,7 +111,6 @@
   .settings-state-grid,
   .settings-navigator-grid,
   .settings-structures-grid,
-  .settings-quickstart-grid,
   .vibe-widget-grid,
   .spw-principle-grid,
   .pwa-status-grid
@@ -220,7 +218,6 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
       .settings-state-grid,
       .settings-navigator-grid,
       .settings-structures-grid,
-      .settings-quickstart-grid,
       .vibe-widget-grid,
       .spw-principle-grid,
       .pwa-status-grid,

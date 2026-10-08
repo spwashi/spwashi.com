@@ -66,13 +66,15 @@ export const DEFAULT_THEME_PACK = 'neutral-paper';
 
 /**
  * Theme packs (themes/packs.css). The default pack is the :root palette, so
- * a default visitor never fetches anything.
+ * a default visitor never fetches anything, unless the page shows specimens:
+ * elements that wear another pack's palette (.spw-theme-specimen).
  * @param {string} [pack] defaults to the current root attribute.
+ * @param {{ specimens?: boolean }} [options]
  */
-export function ensureThemePackStyles(pack) {
+export function ensureThemePackStyles(pack, { specimens = false } = {}) {
   if (typeof document === 'undefined') return false;
   const active = pack || document.documentElement.dataset.spwThemePack || DEFAULT_THEME_PACK;
-  if (active === DEFAULT_THEME_PACK) return LOADED.has('spw-theme-packs');
+  if (active === DEFAULT_THEME_PACK && !specimens) return LOADED.has('spw-theme-packs');
   return ensureDeferredStyles('spw-theme-packs', '/public/css/themes/packs.css');
 }
 

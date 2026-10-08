@@ -1,0 +1,465 @@
+/* ==========================================================================
+   routes/surfaces/settings-shelf.css
+   --------------------------------------------------------------------------
+   The settings shelf (/settings/#presets): each cluster of settings is an
+   aisle, a row of boxes standing on a shelf board. The box you are wearing
+   lifts off the board. A look's box wears that look's own tokens
+   (.spw-theme-specimen, themes/packs.css), so the seven can be compared before
+   one is picked. The "wearing now" window keeps a sample frame and the live
+   readouts in view while you browse.
+
+   Knobs, on .settings-shelf:
+   - --settings-shelf-pitch: box width in a row
+   - --settings-shelf-board: the board's colour
+   ========================================================================== */
+
+.settings-shelf__kicker {
+  margin: 0;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-soft, #555);
+}
+
+/* Aisle index: jump straight to a cluster. Sticks under the shell header. */
+.settings-shelf__aisles {
+  position: sticky;
+  top: var(--shell-header-height, 4rem);
+  z-index: 2;
+  display: flex;
+  gap: 0.4rem;
+  overflow-x: auto;
+  padding-block: 0.45rem;
+  background: var(--settings-panel-bg, var(--surface-panel-strong, var(--paper, #fff)));
+  scrollbar-width: none;
+}
+
+.settings-shelf__aisles a {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.4rem;
+  padding: 0 0.85rem;
+  border: 1px solid var(--line-strong, var(--line, #ccc));
+  border-radius: 999px;
+  background: var(--surface-strong, #fff);
+  color: var(--ink, #222);
+  font-size: 0.86rem;
+  text-decoration: none;
+}
+
+.settings-shelf__aisles a:last-child {
+  border-style: dashed;
+  color: var(--ink-soft, #555);
+}
+
+.settings-shelf {
+  --settings-shelf-pitch: 9.75rem;
+  --settings-shelf-board: color-mix(in srgb, var(--ink, #222) 16%, var(--paper, #f5f0e6));
+  --settings-shelf-accent: var(--teal, #0f7f7d);
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 17rem;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* The settings route holds sections and lists to a reading measure; a shelf runs the width of the room. */
+.settings-shelf :is(.settings-shelf__stack, .settings-shelf__aisle, .settings-shelf__row) {
+  max-inline-size: none;
+}
+
+.settings-shelf__stack {
+  display: grid;
+  gap: 1.6rem;
+  min-inline-size: 0;
+}
+
+.settings-shelf__aisle {
+  display: grid;
+  gap: 0.55rem;
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  scroll-margin-top: 8rem;
+}
+
+.settings-shelf__tag {
+  margin: 0;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink, #222);
+}
+
+.settings-shelf__tag span {
+  margin-inline-start: 0.6rem;
+  text-transform: none;
+  color: var(--ink-soft, #555);
+}
+
+/* The board the boxes stand on. */
+.settings-shelf__row {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: var(--settings-shelf-pitch);
+  gap: 0.75rem;
+  align-items: end;
+  margin: 0;
+  padding: 0.9rem 0.25rem 0.85rem;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  border-block-end: 7px solid var(--settings-shelf-board);
+  box-shadow: 0 14px 12px -14px color-mix(in srgb, #000 45%, transparent);
+  scrollbar-width: thin;
+}
+
+.settings-shelf__row > li {
+  margin: 0;
+  scroll-snap-align: start;
+}
+
+.settings-shelf__box {
+  position: relative;
+  display: grid;
+  gap: 0.5rem;
+  inline-size: 100%;
+  min-block-size: 2.75rem;
+  margin: 0;
+  padding: 0.55rem;
+  border: 1px solid var(--line, #ccc);
+  border-radius: var(--shape-component, 6px);
+  background: var(--surface-strong, #fff);
+  color: var(--ink, #222);
+  font: inherit;
+  text-align: start;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 2px 0 color-mix(in srgb, var(--ink, #000) 10%, transparent);
+  transition:
+    transform 160ms var(--ease-spring, ease),
+    box-shadow 160ms var(--ease-settle, ease);
+}
+
+.settings-shelf__box:is(:hover, :focus-visible) {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 14px -6px color-mix(in srgb, #000 30%, transparent);
+}
+
+.settings-shelf__box:focus-visible {
+  outline: 2px solid var(--settings-shelf-accent);
+  outline-offset: 2px;
+}
+
+/* The one you are wearing is lifted off the board. */
+.settings-shelf__box[aria-pressed="true"] {
+  transform: translateY(-7px);
+  border-color: var(--settings-shelf-accent);
+  box-shadow:
+    0 12px 18px -8px color-mix(in srgb, #000 34%, transparent),
+    0 0 0 1px var(--settings-shelf-accent);
+}
+
+.settings-shelf__box[aria-pressed="true"]::after {
+  content: "wearing";
+  position: absolute;
+  inset-block-start: -0.6rem;
+  inset-inline-end: 0.45rem;
+  padding: 0.05rem 0.4rem;
+  border-radius: 999px;
+  background: var(--settings-shelf-accent);
+  color: var(--paper, #fff);
+  font: 600 0.62rem/1.4 var(--site-mono-font, monospace);
+  letter-spacing: 0.04em;
+}
+
+.settings-shelf__label {
+  display: grid;
+  gap: 0.1rem;
+  line-height: 1.2;
+}
+
+.settings-shelf__label b {
+  font-size: 0.9rem;
+  font-weight: 650;
+}
+
+.settings-shelf__label small {
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft, #555);
+}
+
+/* Shelf tag hanging off a look's box. */
+.settings-shelf__price {
+  justify-self: start;
+  padding: 0.05rem 0.45rem 0.05rem 0.6rem;
+  border: 1px dashed var(--line-strong, var(--line, #bbb));
+  border-radius: 0 999px 999px 0;
+  font: 0.62rem/1.5 var(--site-mono-font, monospace);
+  color: var(--ink-soft, #555);
+}
+
+/* A look, photographed in its own paper and ink. */
+.settings-shelf__swatch {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto 1fr;
+  gap: 0.25rem 0.4rem;
+  aspect-ratio: 4 / 3;
+  max-inline-size: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--line, #ccc);
+  border-radius: var(--shape-element, 4px);
+  background: var(--bg, var(--paper, #f6f1e7));
+  color: var(--ink, #222);
+  overflow: hidden;
+}
+
+.settings-shelf__swatch-brace {
+  grid-row: 1 / 4;
+  color: var(--teal, teal);
+  font: 300 2.4rem/1 var(--site-mono-font, monospace);
+}
+
+.settings-shelf__swatch-aa {
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink-strong, var(--ink, #111));
+}
+
+.settings-shelf__swatch-chips { display: flex; gap: 0.25rem; }
+
+.settings-shelf__swatch-chips i {
+  inline-size: 1.1rem;
+  block-size: 0.5rem;
+  border-radius: 999px;
+  background: var(--teal, teal);
+}
+
+.settings-shelf__swatch-chips i:nth-child(2) { background: var(--amber, #c58b2a); }
+.settings-shelf__swatch-chips i:nth-child(3) { background: var(--violet, var(--line-strong, #888)); }
+
+.settings-shelf__swatch-lines {
+  display: grid;
+  gap: 0.2rem;
+  align-content: end;
+}
+
+.settings-shelf__swatch-lines i {
+  block-size: 0.3rem;
+  border: 1px solid var(--line, #ccc);
+  border-radius: 2px;
+  background: var(--paper, #fff);
+}
+
+.settings-shelf__swatch-lines i:last-child { inline-size: 60%; }
+
+/* Reading: the size, felt. */
+.settings-shelf__type {
+  display: grid;
+  gap: 0.2rem;
+  align-content: center;
+  aspect-ratio: 4 / 3;
+  max-inline-size: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--line, #ccc);
+  border-radius: var(--shape-element, 4px);
+  background: var(--paper, #fff);
+  overflow: hidden;
+}
+
+.settings-shelf__type b {
+  font-size: calc(var(--settings-shelf-scale, 1) * 1.7rem);
+  line-height: 1;
+}
+
+.settings-shelf__type span {
+  font-size: calc(var(--settings-shelf-scale, 1) * 0.72rem);
+  line-height: 1.35;
+  color: var(--ink-soft, #555);
+}
+
+.settings-shelf__glyph {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  max-inline-size: 100%;
+  border-radius: var(--shape-element, 4px);
+  background: color-mix(in srgb, var(--settings-shelf-accent) 9%, var(--paper, #fff));
+  color: var(--settings-shelf-accent);
+  font: 600 1.6rem/1 var(--site-mono-font, monospace);
+}
+
+/* A kit lists what is in the box. */
+.settings-shelf__contents {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+}
+
+.settings-shelf__contents span {
+  padding: 0.05rem 0.35rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--settings-shelf-accent) 12%, transparent);
+  font: 0.62rem/1.5 var(--site-mono-font, monospace);
+}
+
+.settings-shelf__edge {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+}
+
+.settings-shelf__edge > span {
+  margin-inline-end: 0.25rem;
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-soft, #555);
+}
+
+.settings-shelf__edge button {
+  min-block-size: 2.4rem;
+  padding: 0 0.85rem;
+  border: 1px solid var(--line-strong, #bbb);
+  border-radius: 999px;
+  background: var(--surface-strong, #fff);
+  color: var(--ink, #222);
+  font: inherit;
+  cursor: pointer;
+}
+
+.settings-shelf__edge button[aria-pressed="true"] {
+  border-color: var(--settings-shelf-accent);
+  background: var(--settings-shelf-accent);
+  color: var(--paper, #fff);
+}
+
+.settings-shelf__note {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--ink-soft, #555);
+}
+
+/* The window: a small page that wears whatever you pick. */
+.settings-shelf__window {
+  position: sticky;
+  top: calc(var(--shell-header-height, 4rem) + 3.5rem);
+  display: grid;
+  gap: 0.6rem;
+  padding: 0.8rem;
+  border: 1px solid var(--line-strong, #bbb);
+  border-radius: var(--shape-component, 6px);
+  background: var(--surface-strong, #fff);
+}
+
+.settings-shelf__window-kicker,
+.settings-shelf__deviations {
+  margin: 0;
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-soft, #555);
+}
+
+.settings-shelf__window-page {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.75rem;
+  border: 1px solid var(--line, #ccc);
+  border-radius: var(--shape-element, 4px);
+  background: var(--bg, var(--paper, #fff));
+}
+
+.settings-shelf__window-page p { margin: 0; }
+
+.settings-shelf__window-sigil {
+  color: var(--teal, teal);
+  font: 0.78rem/1.3 var(--site-mono-font, monospace);
+}
+
+.settings-shelf__window-sigil span { color: var(--ink-soft, #555); }
+
+.settings-shelf__window-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.settings-shelf__window-body {
+  color: var(--ink, #222);
+  font-size: 0.9rem;
+  line-height: var(--site-line-height, 1.6);
+}
+
+.settings-shelf__window-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.settings-shelf__window-chips span {
+  padding: 0.1rem 0.45rem;
+  border: 1px solid var(--line-strong, #bbb);
+  border-radius: 999px;
+  color: var(--teal, teal);
+  font: 0.72rem/1.4 var(--site-mono-font, monospace);
+}
+
+.settings-shelf__window-chips span:nth-child(2) { color: var(--violet, #6a3fb8); }
+.settings-shelf__window-chips span:nth-child(3) { color: var(--amber, #a46a12); }
+
+.settings-shelf__readout {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.15rem 0.6rem;
+  margin: 0;
+  font: 0.72rem/1.45 var(--site-mono-font, monospace);
+}
+
+.settings-shelf__readout div { display: contents; }
+
+/* The deviation register (one reset per changed setting) keeps the window's small type. */
+.settings-shelf__window .site-deviation-surface { font-size: 0.8rem; }
+.settings-shelf__readout dt { color: var(--ink-soft, #555); }
+.settings-shelf__readout dd { margin: 0; color: var(--ink, #222); }
+
+@media (max-width: 52rem) {
+  .settings-shelf {
+    --settings-shelf-pitch: 8.25rem;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* On a phone the page itself is the window; this one follows the aisles. */
+  .settings-shelf__window { position: static; }
+}
+
+@media (pointer: coarse) {
+  .settings-shelf__aisles a,
+  .settings-shelf__edge button {
+    min-block-size: var(--touch-target-min, 2.75rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .settings-shelf__box { transition: none; }
+
+  .settings-shelf__box:is(:hover, :focus-visible, [aria-pressed="true"]) { transform: none; }
+}
+
+:is(html, body)[data-spw-reduce-motion="on"] .settings-shelf__box {
+  transition: none;
+  transform: none;
+}

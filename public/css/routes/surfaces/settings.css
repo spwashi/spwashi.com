@@ -101,14 +101,6 @@
   color: var(--settings-ink-soft);
 }
 
-:where(body[data-spw-surface="settings"] .settings-quickstart-grid) {
-  margin-top: var(--space-md, 1rem);
-}
-
-:where(body[data-spw-surface="settings"] .settings-quickstart-grid .vibe-widget-status) {
-  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
-}
-
 :where(body[data-spw-surface="settings"] .settings-hero-actions) {
   display: flex;
   align-items: stretch;

@@ -1,6 +1,6 @@
 # Settings Ornament Resonance
 
-**Status 2026-10-06.** Quick-start controls landed; the satchel synthesizer is at its sensation gate (d0244132, `?spw-satchel=rail`). Next: the `/settings/` specimen bay.
+**Status 2026-10-08.** The `/settings/` specimen bay landed as the settings shelf, which replaced Quick Start: aisles of boxes (looks, reading, fixes, kits, writing, motion, views, instruments), each look photographed in its own pack (`.spw-theme-specimen`), and a "wearing now" window with the readouts and the deviation register (`routes/surfaces/settings-shelf.css`). The wonder-memory rail ornament went with Quick Start. The satchel synthesizer is still at its sensation gate (d0244132, `?spw-satchel=rail`). Next: guided or pivot-oriented ways to try looks, chosen from a mock; the creator ruled out a random pick as ambiguous. The shelf's words wait on the creator's copy-unit pass.
 
 **Related:** [runtime-settings](../runtime-settings/PLAN.md) · [floating-chrome-stack](../floating-chrome-stack/FIX.md) · [chrome-navigation-wonder](../chrome-navigation-wonder/PLAN.md).
 
