@@ -408,31 +408,6 @@
   --theme-pack-preview-dark: linear-gradient(135deg, #1c2b2c 0%, #0d1617 100%);
 }
 
-:where(.context-readout) {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 8.5rem), 1fr));
-  gap: 0.45rem 0.6rem;
-}
-
-:where(.context-readout > div) {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-  min-width: 0;
-}
-
-:where(.context-readout dt, .context-readout dd) {
-  margin: 0;
-}
-
-:where(.context-readout dt) {
-  color: var(--ink-soft);
-  font-size: var(--text-size-xs, 0.78rem);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
 @media (max-width: 40rem) {
   :where(:is(.vibe-widget, .palette-probe)-actions, .palette-probe-paths) {
     display: grid;
