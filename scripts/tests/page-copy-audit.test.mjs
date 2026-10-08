@@ -285,6 +285,24 @@ test('a unit can hold sentence units that read its expression', () => {
   assert.ok(!flagCopyVoice(lede).includes('echo-expression'));
 });
 
+test('a missing handle is reported once, on the outermost unit', () => {
+  const html = `
+    <main>
+      <p id="home-note" data-spw-textual-role="note" data-spw-copy-unit="home.hook.note">
+        <span id="home-note-terms" data-spw-copy-unit="home.hook.note.terms">Highlighted words are living concepts.</span>
+        <span id="home-note-atlas" data-spw-copy-unit="home.hook.note.atlas">Open the atlas.</span>
+      </p>
+    </main>
+  `;
+  const flagged = extractCopyUnitHosts(html)
+    .filter((block) => flagCopyVoice(block).includes('flat-only'))
+    .map((block) => block.copyUnit);
+  assert.deepEqual(flagged, ['home.hook.note']);
+  assert.deepEqual(assignDevelopmentClusters('home.reason.why.issue'), ['person-magazine']);
+  assert.deepEqual(assignDevelopmentClusters('home.folios.note'), ['folio-practice']);
+  assert.deepEqual(assignDevelopmentClusters('home.library.lede.role'), ['play-table']);
+});
+
 test('a capsule inside an attribute value does not end the start tag', () => {
   const html = `
     <body data-spw-page-family="design">
