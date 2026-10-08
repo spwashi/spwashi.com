@@ -13,6 +13,7 @@ export const MODULE_TEST_FILES = Object.freeze([
   'scripts/tests/annotation-refresh.test.mjs',
   'scripts/tests/change-only-writes.test.mjs',
   'scripts/tests/module-effects.test.mjs',
+  'scripts/tests/module-trigger-records.test.mjs',
   'scripts/tests/engagement-features.test.mjs',
   'scripts/tests/component-fixtures.test.mjs',
   'scripts/tests/recipe-semantics.test.mjs',
