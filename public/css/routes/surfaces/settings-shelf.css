@@ -22,10 +22,11 @@
   color: var(--ink-soft, #555);
 }
 
-/* Aisle index: jump straight to a cluster. Sticks under the shell header. */
+/* Aisle index: jump straight to a cluster. The shell header scrolls away, so
+   the index sticks to the top of the screen. */
 .settings-shelf__aisles {
   position: sticky;
-  top: var(--shell-header-height, 4rem);
+  top: 0;
   z-index: 2;
   display: flex;
   gap: 0.4rem;
@@ -355,7 +356,7 @@
 /* The window: a small page that wears whatever you pick. */
 .settings-shelf__window {
   position: sticky;
-  top: calc(var(--shell-header-height, 4rem) + 3.5rem);
+  top: 4rem;
   display: grid;
   gap: 0.6rem;
   padding: 0.8rem;
