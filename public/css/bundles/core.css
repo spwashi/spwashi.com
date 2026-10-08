@@ -5412,6 +5412,25 @@ body > header:empty {
   transition: border-color 160ms var(--shell-ease);
 }
 
+/* The header is never a containing block for fixed descendants: the route
+   menu's sheet and the header's popovers are fixed to the viewport. Generic
+   rules kept reaching it anyway (a hover lift on [data-spw-interaction-contract],
+   a gesture scale on [data-spw-gesture], boot-time containment), and on a phone,
+   where hover sticks after a tap, the menu opened above the screen. These are
+   the properties that make one; !important so no later layer can set them here
+   (css-instruction.spw#flow_ownership). */
+:where(.site-header, body > header) {
+  transform: none !important;
+  translate: none !important;
+  scale: none !important;
+  rotate: none !important;
+  perspective: none !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+  will-change: auto !important;
+  contain: none !important;
+}
+
 /* The header's painted surface: base gradient, elevation, and backdrop blur.
    `z-index: -1` places it above the header's own (now empty) background box and
    below in-flow header content, so it never washes over the nav. It cannot
@@ -12052,8 +12071,12 @@ body > header[data-spw-menu-mode="inline"] .spw-route-menu-panel {
   transition-property: opacity, transform, filter, box-shadow, border-color;
 }
 
-html[data-spw-hydration="static"] :where(.site-header, body > header, .site-header nav, body > header nav, [data-spw-frame="hero"] .frame-topline, [data-spw-activates]),
-html[data-spw-hydration="activating"] :where(.site-header, body > header, .site-header nav, body > header nav, [data-spw-frame="hero"] .frame-topline, [data-spw-activates]) {
+/* The header itself is left out: it holds floating chrome. Layout containment
+   makes it the containing block for the route menu's fixed sheet, which then
+   opened off-screen above a phone's header until hydration finished
+   (css-instruction.spw#flow_ownership, containing_block). */
+html[data-spw-hydration="static"] :where(.site-header nav, body > header nav, [data-spw-frame="hero"] .frame-topline, [data-spw-activates]),
+html[data-spw-hydration="activating"] :where(.site-header nav, body > header nav, [data-spw-frame="hero"] .frame-topline, [data-spw-activates]) {
   contain: layout style;
 }
 

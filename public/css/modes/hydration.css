@@ -11,8 +11,12 @@
   transition-property: opacity, transform, filter, box-shadow, border-color;
 }
 
-html[data-spw-hydration="static"] :where(.site-header, body > header, .site-header nav, body > header nav, [data-spw-frame="hero"] .frame-topline, [data-spw-activates]),
-html[data-spw-hydration="activating"] :where(.site-header, body > header, .site-header nav, body > header nav, [data-spw-frame="hero"] .frame-topline, [data-spw-activates]) {
+/* The header itself is left out: it holds floating chrome. Layout containment
+   makes it the containing block for the route menu's fixed sheet, which then
+   opened off-screen above a phone's header until hydration finished
+   (css-instruction.spw#flow_ownership, containing_block). */
+html[data-spw-hydration="static"] :where(.site-header nav, body > header nav, [data-spw-frame="hero"] .frame-topline, [data-spw-activates]),
+html[data-spw-hydration="activating"] :where(.site-header nav, body > header nav, [data-spw-frame="hero"] .frame-topline, [data-spw-activates]) {
   contain: layout style;
 }
 
