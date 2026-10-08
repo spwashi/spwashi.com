@@ -269,6 +269,27 @@ audit_run_2026_09_29: .{
   }
 }[reg=facet]
 
+^"review_2026_10_08"{
+  claim = `A granularity pass on the home page. A unit can hold units; the first fold, the three reason cards and fifteen frame ledes are keys and places, and every one of two or more sentences holds a unit per sentence. Units 123 → 186; 47 held, all reading the outer handle. The visible text is unchanged.`
+  f16_nested_units {
+    severity = "low"
+    claim = `The audit balances tags, so a unit inside a unit is seen. Held units inherit the outer expression; nest-off-tree and echo-expression guard the tree; flat-only is reported once, on the outermost unit.`
+    contract = `@copy_accessor nested_hosts, no_echo, sentence_floor, cite_by_place`
+  }
+  f17_reason_cards {
+    severity = "low"
+    claim = `The unkeyed #home-reason-why named in hk-001 is a key. The three reason articles carry home.reason.{why,readers,takeaway} on the ids they already had, beside their expressions, and each title and sentence is a unit inside.`
+  }
+  f18_held_handles {
+    severity = "low"
+    claim = `Three keyed hosts have no expression: home.hook.note, home.library.lede, home.record.lede. An expression's mode word sets tone and draws the help cursor, hover tint and kin glow, so their handles wait for a browser look.`
+  }
+  f19_working_sets {
+    severity = "low"
+    claim = `home.reason joins person-magazine, home.folios joins folio-practice, home.library joins play-table. The other frame ledes are the page's own wayfinding and stay unclustered.`
+  }
+}[reg=facet]
+
 ^"decision"{
   text = `Name the projection, measure it, stop. No localization runtime. No new data-spw-* family. No public copy rewrite in this pass.`
   later = #[

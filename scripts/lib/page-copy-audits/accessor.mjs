@@ -19,7 +19,7 @@ export const DEVELOPMENT_CLUSTERS = Object.freeze({
   },
   'person-magazine': {
     namespaces: ['about', 'now', 'membership'],
-    unitPrefixes: ['home.hook', 'home.promoWonderCycle'],
+    unitPrefixes: ['home.hook', 'home.promoWonderCycle', 'home.reason'],
     seeds: ['/', '/about/', '/now/', '/membership/'],
   },
   'services-offer': {
@@ -51,12 +51,12 @@ export const DEVELOPMENT_CLUSTERS = Object.freeze({
   },
   'play-table': {
     namespaces: ['play', 'rpg', 'lore', 'town'],
-    unitPrefixes: [],
+    unitPrefixes: ['home.library'],
     seeds: ['/play/', '/play/rpg-wednesday/', '/rpg/', '/town/', '/about/domains/lore.land/'],
   },
   'folio-practice': {
     namespaces: ['folios', 'materials', 'ornaments'],
-    unitPrefixes: ['projects.folios'],
+    unitPrefixes: ['projects.folios', 'home.folios'],
     seeds: ['/design/folios/', '/projects/folios/', '/topics/materials/', '/design/ornaments/'],
   },
 });
@@ -115,7 +115,9 @@ export function flagCopyVoice(block = {}) {
     || isHookLede
     || /\.lede$/i.test(copyUnit);
   if (isLongCopy && (block.chars || text.length) > 320) flags.push('dense-lede');
-  if (copyUnit && !block.expression && !block.inheritedExpression && isHookLede) {
+  // A nested unit's handle is its parent's to supply, so a missing one is
+  // reported once, on the outermost unit.
+  if (copyUnit && !block.parentUnit && !block.expression && isHookLede) {
     flags.push('flat-only');
   }
   if (copyUnit && block.parentUnit && !copyUnit.startsWith(`${block.parentUnit}.`)) {

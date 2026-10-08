@@ -158,11 +158,15 @@
                     </div>
                     <div class="spw-paste__out" data-paste-out aria-live="polite"></div>
                 </form>
-                <p class="home-hero-note" data-spw-textual-role="note">
-                    Highlighted words are <a href="#living-concepts" class="spw-living-term" data-spw-living-term data-spw-concept="living-concepts" data-spw-cauldron-candidate="true">living concepts</a> — tap to inspect, hold to prime. <a href="#living-concepts">Open the atlas</a>.
+                <p class="home-hero-note" id="home-note" data-spw-textual-role="note" data-spw-copy-unit="home.hook.note">
+                    <span id="home-note-terms" data-spw-copy-unit="home.hook.note.terms">Highlighted words are <a href="#living-concepts" class="spw-living-term" data-spw-living-term data-spw-concept="living-concepts" data-spw-cauldron-candidate="true">living concepts</a> — tap to inspect, hold to prime.</span>
+                    <span id="home-note-atlas" data-spw-copy-unit="home.hook.note.atlas"><a href="#living-concepts">Open the atlas</a>.</span>
                 </p>
                 <p class="home-live-note home-production-note" id="home-live-note" data-spw-textual-role="note" data-spw-copy-unit="home.hook.live" data-spw-semantic-expression="home[live]{season.close}(production)<now>">
-                    <span class="spw-living-term" data-spw-living-term data-spw-concept="release-cycle" data-spw-gesture-contract="tap:prime hold:cauldron-capture" title="Production season runs from October 1 to the New Year; closes land on the 13th and the 26th.">Production season</span> runs from <time datetime="2026-10-01">October 1</time> to the New Year. Octvember is for <a href="/holidays/costuming/">costuming</a>, <a href="/play/rpg-wednesday/#inktober-31">ink</a>, writing, and casting, and the <a href="/topics/fields/culture/">culture field</a> keeps the traditions I have met. Next close <time datetime="2026-10-13">October 13</time>. <a href="/now/">What I'm making now</a>.
+                    <span id="home-live-season" data-spw-copy-unit="home.hook.live.season"><span class="spw-living-term" data-spw-living-term data-spw-concept="release-cycle" data-spw-gesture-contract="tap:prime hold:cauldron-capture" title="Production season runs from October 1 to the New Year; closes land on the 13th and the 26th.">Production season</span> runs from <time datetime="2026-10-01">October 1</time> to the New Year.</span>
+                    <span id="home-live-octvember" data-spw-copy-unit="home.hook.live.octvember">Octvember is for <a href="/holidays/costuming/">costuming</a>, <a href="/play/rpg-wednesday/#inktober-31">ink</a>, writing, and casting, and the <a href="/topics/fields/culture/">culture field</a> keeps the traditions I have met.</span>
+                    <span id="home-live-close" data-spw-copy-unit="home.hook.live.close">Next close <time datetime="2026-10-13">October 13</time>.</span>
+                    <span id="home-live-now" data-spw-copy-unit="home.hook.live.now"><a href="/now/">What I'm making now</a>.</span>
                 </p>
                 </div>
 
@@ -264,17 +268,30 @@
                 </ul>
 
                 <section class="spw-reason-strip" aria-label="Home page reasons" data-spw-role="schema" data-spw-box-model="reason-strip" data-spw-composition-flow="grid" data-spw-attention="scan" data-spw-behavior="invite">
-                    <article id="home-reason-why" data-spw-form="brace" data-spw-semantic-expression="home[why]{notice}">
-                        <strong>Why this home page exists</strong>
-                        <p>Come back the way you would open an issue. Sentences name what you might notice this week; the rooms are still here when you return. One world holds across a folio, a card, and a session. <a href="/topics/">Topics</a> names the shelves. <a href="/now/">Now</a> keeps the release record.</p>
+                    <article id="home-reason-why" data-spw-form="brace" data-spw-copy-unit="home.reason.why" data-spw-semantic-expression="home[why]{notice}">
+                        <strong id="home-reason-why-title" data-spw-copy-unit="home.reason.why.title">Why this home page exists</strong>
+                        <p>
+                            <span id="home-reason-why-issue" data-spw-copy-unit="home.reason.why.issue">Come back the way you would open an issue.</span>
+                            <span id="home-reason-why-notice" data-spw-copy-unit="home.reason.why.notice">Sentences name what you might notice this week; the rooms are still here when you return.</span>
+                            <span id="home-reason-why-world" data-spw-copy-unit="home.reason.why.world">One world holds across a folio, a card, and a session.</span>
+                            <span id="home-reason-why-topics" data-spw-copy-unit="home.reason.why.topics"><a href="/topics/">Topics</a> names the shelves.</span>
+                            <span id="home-reason-why-now" data-spw-copy-unit="home.reason.why.now"><a href="/now/">Now</a> keeps the release record.</span>
+                        </p>
                     </article>
-                    <article id="home-reason-readers" data-spw-form="brace" data-spw-semantic-expression="home[reader]{patron}">
-                        <strong>Primary readers</strong>
-                        <p>People who return for the next close — a recipe, a session note, a proof — not a one-sitting landing page. <a href="/about/">About</a> is the person. <a href="/membership/">Membership</a> is how you stay near.</p>
+                    <article id="home-reason-readers" data-spw-form="brace" data-spw-copy-unit="home.reason.readers" data-spw-semantic-expression="home[reader]{patron}">
+                        <strong id="home-reason-readers-title" data-spw-copy-unit="home.reason.readers.title">Primary readers</strong>
+                        <p>
+                            <span id="home-reason-readers-return" data-spw-copy-unit="home.reason.readers.return">People who return for the next close — a recipe, a session note, a proof — not a one-sitting landing page.</span>
+                            <span id="home-reason-readers-about" data-spw-copy-unit="home.reason.readers.about"><a href="/about/">About</a> is the person.</span>
+                            <span id="home-reason-readers-membership" data-spw-copy-unit="home.reason.readers.membership"><a href="/membership/">Membership</a> is how you stay near.</span>
+                        </p>
                     </article>
-                    <article id="home-reason-takeaway" data-spw-form="brace" data-spw-semantic-expression="home[takeaway]{handle}">
-                        <strong>Concrete things you can leave with</strong>
-                        <p>A current map, a feel for how <a href="/topics/software/spw/">Spw</a> behaves, and one thing worth carrying: a <a href="/cards/">proof card</a>, a <a href="/design/folios/#collect-a-folio">laminated folio</a>, a prompt packet from the <a href="/tools/midjourney/">depiction bench</a>, a session trace from <a href="/play/rpg-wednesday/">RPG Wednesday</a>. The next close — 13th or 26th — should have another of those, not a different site.</p>
+                    <article id="home-reason-takeaway" data-spw-form="brace" data-spw-copy-unit="home.reason.takeaway" data-spw-semantic-expression="home[takeaway]{handle}">
+                        <strong id="home-reason-takeaway-title" data-spw-copy-unit="home.reason.takeaway.title">Concrete things you can leave with</strong>
+                        <p>
+                            <span id="home-reason-takeaway-carry" data-spw-copy-unit="home.reason.takeaway.carry">A current map, a feel for how <a href="/topics/software/spw/">Spw</a> behaves, and one thing worth carrying: a <a href="/cards/">proof card</a>, a <a href="/design/folios/#collect-a-folio">laminated folio</a>, a prompt packet from the <a href="/tools/midjourney/">depiction bench</a>, a session trace from <a href="/play/rpg-wednesday/">RPG Wednesday</a>.</span>
+                            <span id="home-reason-takeaway-next" data-spw-copy-unit="home.reason.takeaway.next">The next close — 13th or 26th — should have another of those, not a different site.</span>
+                        </p>
                     </article>
                 </section>
 
@@ -414,7 +431,11 @@
             <h2 id="home-folios-title">Wonder through the stack and the studio</h2>
         </header>
         <div class="frame-body" data-spw-slot="body">
-            <p class="folio-strip__lede" data-spw-textual-role="note">Collaged, laminated, scanned, drawn, rendered. Today's tour leads with the newest pieces and walks back through older ones on quieter weeks; each opens on the page that keeps it. Below, one folio comes forward with the question it asks.</p>
+            <p class="folio-strip__lede" id="home-folios-note" data-spw-textual-role="note" data-spw-copy-unit="home.folios.note">
+                <span id="home-folios-note-media" data-spw-copy-unit="home.folios.note.media">Collaged, laminated, scanned, drawn, rendered.</span>
+                <span id="home-folios-note-tour" data-spw-copy-unit="home.folios.note.tour">Today's tour leads with the newest pieces and walks back through older ones on quieter weeks; each opens on the page that keeps it.</span>
+                <span id="home-folios-note-forward" data-spw-copy-unit="home.folios.note.forward">Below, one folio comes forward with the question it asks.</span>
+            </p>
             <ol class="folio-strip__list" data-folio-highres-strip data-image-tour data-image-tour-salt="home" aria-label="This week's high-res five">
                 <li><a href="/design/folios/#folio-0927-07"><img src="/public/images/assets/folios/folio-bean-green-tale-lore-thumb.webp" width="200" height="256" alt="" loading="lazy" decoding="async"><span><span class="folio-strip__no">No. 07, Sep 27</span> Bean, green tale, lore</span></a></li>
                 <li><a href="/design/folios/#folio-0927-17"><img src="/public/images/assets/folios/folio-practice-collaborating-communication-thumb.webp" width="199" height="256" alt="" loading="lazy" decoding="async"><span><span class="folio-strip__no">No. 17, Sep 27</span> Practice, collaborating, communication</span></a></li>
@@ -452,7 +473,7 @@
         </header>
 
         <div class="frame-body" data-spw-slot="body">
-        <p class="entrance-lede" data-spw-textual-role="note">
+        <p class="entrance-lede" id="home-entrance-note" data-spw-textual-role="note" data-spw-copy-unit="home.entrance.note">
             Pick one door for this visit — not your whole identity.
         </p>
 
@@ -854,8 +875,9 @@
         </header>
 
         <div class="frame-body" data-spw-slot="body">
-            <p data-spw-textual-role="note" data-spw-copy-depth="normal">
-                Four first loops: components, the table, the kitchen, a texture surface. The working view above reweights which cards stay bright.
+            <p id="home-loops-note" data-spw-textual-role="note" data-spw-copy-depth="normal" data-spw-copy-unit="home.loops.note">
+                <span id="home-loops-note-four" data-spw-copy-unit="home.loops.note.four">Four first loops: components, the table, the kitchen, a texture surface.</span>
+                <span id="home-loops-note-view" data-spw-copy-unit="home.loops.note.view">The working view above reweights which cards stay bright.</span>
             </p>
 
             <div class="spw-grid frame-grid frame-grid--dense">
@@ -985,8 +1007,9 @@
         </header>
 
         <div class="frame-body" data-spw-slot="body" data-spw-hydration="ready">
-            <p class="promo-wonder-cycle__intro" data-spw-textual-role="note" data-spw-copy-depth="normal">
-                The latest change of this cycle is already live. Read the receipt, carry one question with you, then check how many days remain before the next close.
+            <p class="promo-wonder-cycle__intro" id="home-promo-wonder-cycle-intro" data-spw-textual-role="note" data-spw-copy-depth="normal" data-spw-copy-unit="home.promoWonderCycle.intro">
+                <span id="home-promo-wonder-cycle-intro-live" data-spw-copy-unit="home.promoWonderCycle.intro.live">The latest change of this cycle is already live.</span>
+                <span id="home-promo-wonder-cycle-intro-receipt" data-spw-copy-unit="home.promoWonderCycle.intro.receipt">Read the receipt, carry one question with you, then check how many days remain before the next close.</span>
             </p>
 
             <!-- First paint and crawlers: kept in sync with promo-wonder-cycle DEFAULT_FEED.cycle, which hydration keeps as the primary pair. -->
@@ -1235,12 +1258,13 @@
         </header>
 
         <div class="frame-body" data-spw-slot="body">
-            <p data-spw-textual-role="lede" data-spw-copy-depth="normal" data-spw-semantic-expression="concepts[living]{inspect;prime;carry}">
-                A
+            <p id="home-concepts-lede" data-spw-textual-role="lede" data-spw-copy-depth="normal" data-spw-copy-unit="home.concepts.lede" data-spw-semantic-expression="concepts[living]{inspect;prime;carry}">
+                <span id="home-concepts-lede-handle" data-spw-copy-unit="home.concepts.lede.handle">A
                 <span class="spw-living-term" data-spw-living-term data-spw-concept="living-concepts" data-spw-cauldron-candidate="true" data-spw-gesture-hint>living term</span>
                 is a handle on this page: tap inspects it, hold primes it into the
                 <span class="spw-living-term" data-spw-living-term data-spw-concept="memory-garden" data-spw-cauldron-candidate="true">garden cauldron</span>
-                at the foot. Open a card when you want the room that can carry the same idea.
+                at the foot.</span>
+                <span id="home-concepts-lede-card" data-spw-copy-unit="home.concepts.lede.card">Open a card when you want the room that can carry the same idea.</span>
             </p>
 
             <div class="spw-metric-grid" data-spw-kind="metric" data-spw-role="schema" aria-label="Living term gestures">
@@ -1486,8 +1510,9 @@
         </header>
 
         <div class="frame-body" data-spw-slot="body">
-            <p data-spw-textual-role="note" data-spw-copy-depth="normal">
-                A prerequisite is only useful if something is built from it. One question in, one artifact out: a note, a card, or a brief you can hand to a later collaborator.
+            <p id="home-learning-note" data-spw-textual-role="note" data-spw-copy-depth="normal" data-spw-copy-unit="home.learning.note">
+                <span id="home-learning-note-prerequisite" data-spw-copy-unit="home.learning.note.prerequisite">A prerequisite is only useful if something is built from it.</span>
+                <span id="home-learning-note-artifact" data-spw-copy-unit="home.learning.note.artifact">One question in, one artifact out: a note, a card, or a brief you can hand to a later collaborator.</span>
             </p>
 
             <div class="spw-reason-strip" aria-label="Learning surface reasons" data-spw-role="schema">
@@ -1566,8 +1591,9 @@
         </header>
 
         <div class="frame-body" data-spw-slot="body">
-            <p class="reader-paths-lede" data-spw-textual-role="note" data-spw-copy-depth="normal">
-                Story or apparatus. Each path should leave you with one next move.
+            <p class="reader-paths-lede" id="home-paths-note" data-spw-textual-role="note" data-spw-copy-depth="normal" data-spw-copy-unit="home.paths.note">
+                <span id="home-paths-note-fork" data-spw-copy-unit="home.paths.note.fork">Story or apparatus.</span>
+                <span id="home-paths-note-move" data-spw-copy-unit="home.paths.note.move">Each path should leave you with one next move.</span>
             </p>
 
             <p class="spw-playable-hook reader-paths-hook" data-spw-semantic-expression="component[machine]{attention}" data-spw-gesture-contract="tap:prime hold:inspect">
@@ -1646,8 +1672,9 @@
         </header>
 
         <div class="frame-body" data-spw-slot="body">
-            <p data-spw-textual-role="lede" data-spw-copy-depth="normal">
-                A playable library: session notes, guides, quests, and curriculum. Choose a role, make one artifact, carry the evidence forward.
+            <p id="home-library-lede" data-spw-textual-role="lede" data-spw-copy-depth="normal" data-spw-copy-unit="home.library.lede">
+                <span id="home-library-lede-shelves" data-spw-copy-unit="home.library.lede.shelves">A playable library: session notes, guides, quests, and curriculum.</span>
+                <span id="home-library-lede-role" data-spw-copy-unit="home.library.lede.role">Choose a role, make one artifact, carry the evidence forward.</span>
             </p>
 
             <p data-spw-textual-role="note" data-spw-semantic-expression="library[story]{atlas}">
@@ -1736,7 +1763,7 @@
         </header>
 
         <div class="frame-body" data-spw-slot="body">
-            <p data-spw-textual-role="lede" data-spw-copy-depth="normal">
+            <p id="home-record-lede" data-spw-textual-role="lede" data-spw-copy-depth="normal" data-spw-copy-unit="home.record.lede">
                 A screenshot is a local record — an ask, offer, agreement, or reference point that says what happened here without asking anyone to guess.
             </p>
 
@@ -1805,8 +1832,9 @@
         </header>
 
         <div class="frame-body" data-spw-slot="body">
-            <p data-spw-textual-role="note" data-spw-copy-depth="normal">
-                Action layer. Start with a topic route, a live playtest, a kitchen, or the tools that help someone describe their work well.
+            <p id="home-field-note" data-spw-textual-role="note" data-spw-copy-depth="normal" data-spw-copy-unit="home.field.note">
+                <span id="home-field-note-layer" data-spw-copy-unit="home.field.note.layer">Action layer.</span>
+                <span id="home-field-note-start" data-spw-copy-unit="home.field.note.start">Start with a topic route, a live playtest, a kitchen, or the tools that help someone describe their work well.</span>
             </p>
 
             <nav class="frame-operators frame-operators--probe" aria-label="Start here" data-spw-slot="actions">
@@ -1866,8 +1894,9 @@
         </header>
 
         <div class="frame-body" data-spw-slot="body">
-            <p data-spw-textual-role="note" data-spw-copy-depth="normal">
-                The center of gravity moves. Learning weeks, research weeks, playtest weeks, and publishing weeks deserve different doors.
+            <p id="home-returner-note" data-spw-textual-role="note" data-spw-copy-depth="normal" data-spw-copy-unit="home.returner.note">
+                <span id="home-returner-note-gravity" data-spw-copy-unit="home.returner.note.gravity">The center of gravity moves.</span>
+                <span id="home-returner-note-doors" data-spw-copy-unit="home.returner.note.doors">Learning weeks, research weeks, playtest weeks, and publishing weeks deserve different doors.</span>
             </p>
 
             <div class="returner-grid">
@@ -1951,8 +1980,9 @@
         </header>
 
         <div class="frame-body" data-spw-slot="body">
-            <p data-spw-textual-role="note" data-spw-copy-depth="normal">
-                These are sideways doors — not a second homepage. Each loop names a pressure, a reusable component family, and a place on the site where the idea can become evidence, fiction, or a tuned behavior.
+            <p id="home-integration-note" data-spw-textual-role="note" data-spw-copy-depth="normal" data-spw-copy-unit="home.integration.note">
+                <span id="home-integration-note-sideways" data-spw-copy-unit="home.integration.note.sideways">These are sideways doors — not a second homepage.</span>
+                <span id="home-integration-note-loop" data-spw-copy-unit="home.integration.note.loop">Each loop names a pressure, a reusable component family, and a place on the site where the idea can become evidence, fiction, or a tuned behavior.</span>
             </p>
 
             <div class="spw-wisdom-deck" aria-label="Cross-site integration loops" data-spw-box-model="wisdom-deck" data-spw-composition-flow="grid">
@@ -2063,7 +2093,7 @@
         </header>
 
         <div class="frame-body" data-spw-slot="body">
-            <p data-spw-textual-role="note" data-spw-copy-depth="normal">
+            <p id="home-rewards-note" data-spw-textual-role="note" data-spw-copy-depth="normal" data-spw-copy-unit="home.rewards.note">
                 A skill surface should return something for the attention it asks: a clearer question, a usable pattern, a replayable spell, or a next move you can actually take.
             </p>
 
@@ -2169,8 +2199,9 @@
         </header>
 
         <div class="frame-body" data-spw-slot="body">
-            <p data-spw-textual-role="note" data-spw-copy-depth="normal">
-                Settings stay in this browser. Palette bias, color atmosphere, and wonder memory — tunable without touching the kernel.
+            <p id="home-climate-note" data-spw-textual-role="note" data-spw-copy-depth="normal" data-spw-copy-unit="home.climate.note">
+                <span id="home-climate-note-local" data-spw-copy-unit="home.climate.note.local">Settings stay in this browser.</span>
+                <span id="home-climate-note-tune" data-spw-copy-unit="home.climate.note.tune">Palette bias, color atmosphere, and wonder memory — tunable without touching the kernel.</span>
             </p>
 
             <div class="vibe-widget-grid vibe-widget-grid--compact">
@@ -2292,7 +2323,10 @@
             <a class="frame-sigil" href="#wonder-kin" data-spw-operator="wonder">?[same_questions]</a>
             <h2 id="wonder-kin-title">Same Questions, Other Rooms</h2>
         </header>
-        <p data-spw-textual-role="note" data-spw-copy-depth="normal">The front door asks where am I (orient), what responds (respond), and what differs (differ). Each chip names the room and, in brackets, which of those it shares.</p>
+        <p id="home-kin-note" data-spw-textual-role="note" data-spw-copy-depth="normal" data-spw-copy-unit="home.kin.note">
+            <span id="home-kin-note-asks" data-spw-copy-unit="home.kin.note.asks">The front door asks where am I (orient), what responds (respond), and what differs (differ).</span>
+            <span id="home-kin-note-chips" data-spw-copy-unit="home.kin.note.chips">Each chip names the room and, in brackets, which of those it shares.</span>
+        </p>
         <nav class="frame-operators" aria-labelledby="wonder-kin-title">
             <a class="spw-chip" data-spw-handle="true" href="/about/" data-spw-operator="concept-edge" data-spw-wonder="orientation resonance" title="where am I · what responds. The method behind the door, read as a practice rather than a bio.">&gt;about[orient.respond]</a>
             <a class="spw-chip" data-spw-handle="true" href="/topics/" data-spw-operator="concept-edge" data-spw-wonder="orientation comparison" title="where am I · what differs. The atlas sorts every register by the attention it invites.">&gt;topics[orient.differ]</a>
