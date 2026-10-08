@@ -548,11 +548,10 @@
   margin: auto;
   padding: clamp(1rem, 3vw, 1.5rem);
   overflow: auto;
-  border: 1px solid var(--line, currentColor);
   border-radius: var(--component-radius, 0.75rem);
   background: var(--bg-field, var(--bg));
   color: var(--ink);
-  box-shadow: 0 1rem 4rem #0004;
+  /* It draws from the cauldron, so it wears the vessel's halo (components/dialog-edges.css). */
 }
 
 .spw-field-picker[open] { display: grid; gap: 0.8rem; }

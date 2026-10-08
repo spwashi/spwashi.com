@@ -1033,11 +1033,11 @@ html[data-spw-cauldron-resonance-operators] .site-footer__cauldron[data-spw-caul
   padding: 0;
   overflow: auto;
   overscroll-behavior: contain;
-  border: 1px solid var(--material-line, var(--line));
   border-radius: var(--shape-panel, 1rem);
   background: var(--material-surface-matte-strong, var(--surface-strong, #fff));
   color: var(--material-ink-matte, var(--ink, #182324));
-  box-shadow: var(--grain-panel-inset-highlight, none), var(--material-shadow-lift, 0 12px 32px -4px rgba(0, 0, 0, 0.11));
+  /* The halo comes from components/dialog-edges.css: the cauldron is a vessel. */
+  --dialog-inset: var(--grain-panel-inset-highlight, 0 0 #0000);
 }
 
 /* ::backdrop inherits custom properties in current engines; the literal

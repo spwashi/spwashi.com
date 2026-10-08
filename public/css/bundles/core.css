@@ -23948,11 +23948,10 @@ main :where(.frame-card-media, .image-study, .topic-photo-card, figure) figcapti
   margin: auto;
   padding: clamp(1rem, 3vw, 1.5rem);
   overflow: auto;
-  border: 1px solid var(--line, currentColor);
   border-radius: var(--component-radius, 0.75rem);
   background: var(--bg-field, var(--bg));
   color: var(--ink);
-  box-shadow: 0 1rem 4rem #0004;
+  /* It draws from the cauldron, so it wears the vessel's halo (components/dialog-edges.css). */
 }
 
 .spw-field-picker[open] { display: grid; gap: 0.8rem; }
@@ -26757,6 +26756,70 @@ html:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) :wher
     padding-inline: 0.55rem;
     gap: 0;
   }
+}
+}
+
+/* /public/css/components/dialog-edges.css */
+@layer components {
+/* ==========================================================================
+   dialog-edges.css
+   --------------------------------------------------------------------------
+   Purpose
+   - A modal's edge says what it holds, so a visitor learns two edges once:
+       specimen → mat. A made thing shown whole sits inside a paper mat and
+         an ink rule, like a framed print. Folio views.
+       vessel → halo. A place you put things and work in is ringed in its
+         accent, a gap of backdrop between ring and wall, so it reads as lit
+         rather than framed. The cauldron and the picker that draws from it.
+   - The edge also parts the dialog from its backdrop. In dark mode the two
+     are nearly one colour; the mat's ink rule and the halo's ring carry the
+     separation there.
+
+   Reading
+   - The lists below are the role rule. A new modal joins a list; it does not
+     paint its own border or shadow. Owners keep size, radius (vessels),
+     surface and layout. The roles live here, not as data-spw-role on the
+     dialogs: that attribute makes an element a region host, and runtime
+     stamped about 35 attributes onto each of the 58 hidden folio views
+     (probe 2026-10-08).
+   - The mat is the border itself, so content scrolling inside a tall view
+     passes under it, never over it. The halo is an outline, which forced
+     colours keep.
+
+   Tokens
+   - --dialog-edge-color   the mat's rule or the halo's ring
+   - --dialog-mat          the mat band, --dialog-mat-size its width
+   - --dialog-lift         the drop shadow under either edge
+   ========================================================================== */
+
+:is(.folio-view, .spw-cauldron-dialog, .spw-field-picker) {
+  --dialog-lift: 0 1.6rem 3rem -1rem rgb(0 0 0 / 0.5);
+}
+
+/* specimen → mat */
+:is(.folio-view) {
+  --dialog-edge-color: var(--ink, #182324);
+  --dialog-mat: var(--paper-warm, var(--paper, #f4efe4));
+  --dialog-mat-size: 0.55rem;
+  padding: 0.8rem;
+  border: var(--dialog-mat-size) solid var(--dialog-mat);
+  border-radius: 0.3rem;
+  box-shadow:
+    0 0 0 2px var(--dialog-edge-color),
+    inset 0 0 0 1px var(--line-strong, rgb(0 0 0 / 0.24)),
+    var(--dialog-lift);
+}
+
+/* vessel → halo */
+:is(.spw-cauldron-dialog, .spw-field-picker) {
+  --dialog-edge-color: var(--component-accent, var(--active-op-color, var(--teal, #0f6f6c)));
+  border: 1px solid color-mix(in srgb, var(--dialog-edge-color) 65%, transparent);
+  outline: 2px solid color-mix(in srgb, var(--dialog-edge-color) 75%, transparent);
+  outline-offset: 5px;
+  box-shadow:
+    var(--dialog-inset, 0 0 #0000),
+    0 0 0 11px color-mix(in srgb, var(--dialog-edge-color) 13%, transparent),
+    var(--dialog-lift);
 }
 }
 
