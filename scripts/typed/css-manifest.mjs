@@ -117,6 +117,7 @@ export const ROUTE_SCOPES = Object.freeze({
         '/public/css/routes/surfaces/settings-notes.css',
         '/public/css/routes/surfaces/settings-runtime.css',
         '/public/css/routes/surfaces/settings-cues.css',
+        '/public/css/routes/surfaces/settings-shelf.css',
     ],
     topics: [
         '/public/css/routes/surfaces/topics.css',

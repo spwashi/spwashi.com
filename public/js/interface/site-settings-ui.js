@@ -3,6 +3,7 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
+import { ensureThemePackStyles } from '/public/js/kernel/deferred-styles.js';
 import { writeDatasetValue, writeTextContent } from '/public/js/kernel/dom-contracts.js';
 import {
   AUTHOR_WORKFLOW_DEFINITIONS,
@@ -597,23 +598,6 @@ const syncSettingsReadouts = (root = document, settings = getSiteSettings()) => 
   syncSettingTriggers(root, normalized);
 };
 
-const WONDER_MEMORY_ORNAMENT = Object.freeze({
-  off: Object.freeze({state: 'idle', density: 'low'}),
-  nearby: Object.freeze({state: 'settled', density: 'medium'}),
-  sitewide: Object.freeze({state: 'active', density: 'high'}),
-});
-
-const syncSettingsResonanceRails = (root = document, settings = getSiteSettings()) => {
-  const normalized = normalizeSiteSettings(settings);
-  const ornament = WONDER_MEMORY_ORNAMENT[normalized.wonderMemory] || WONDER_MEMORY_ORNAMENT.nearby;
-
-  root.querySelectorAll?.('.settings-resonance-rail').forEach((rail) => {
-    if (!(rail instanceof HTMLElement)) return;
-    rail.dataset.spwOrnamentState = ornament.state;
-    rail.dataset.spwOrnamentDensity = ornament.density;
-  });
-};
-
 const RHYTHM_AUTHORITY_READOUT = Object.freeze({
   authored: 'the authored baseline',
   tuner: 'your interaction tuner',
@@ -646,7 +630,6 @@ const syncSiteRhythmReadouts = (root = document, settings = getSiteSettings()) =
 const syncSettingsUx = (root = document, settings = getSiteSettings()) => {
   syncSettingsReadouts(root, settings);
   syncSiteRhythmReadouts(root, settings);
-  syncSettingsResonanceRails(root, settings);
   syncDeviationReadouts(root, settings);
   syncPresetControls(root, settings);
   syncUxRecipeControls(root);
@@ -1496,6 +1479,8 @@ export const initSiteSettingsPage = () => {
   const bindings = initSiteSettingsBindings(manager);
   const routing = initSettingsCategoryRouting(manager);
   const queryLab = bindSettingsQueryLab();
+  /* The shelf's look boxes wear their own packs' palettes. */
+  if (document.querySelector('.spw-theme-specimen')) ensureThemePackStyles(undefined, { specimens: true });
   /* The live runtime tempo changes as modules mount, without a settings change. */
   const onRuntimeTokens = () => syncSiteRhythmReadouts(document);
   document.addEventListener('spw:runtime-tokens-updated', onRuntimeTokens);
@@ -1540,7 +1525,6 @@ export {
   syncFeatureScopeReadouts,
   syncPresetControls,
   syncSettingsReadouts,
-  syncSettingsResonanceRails,
   syncSettingsUx,
   syncUxRecipeControls,
   writeSettingsToScope,

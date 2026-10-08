@@ -135,6 +135,7 @@ export const ROUTE_SCOPES: Readonly<Record<string, readonly string[]>> = Object.
     '/public/css/routes/surfaces/settings-notes.css',
     '/public/css/routes/surfaces/settings-runtime.css',
     '/public/css/routes/surfaces/settings-cues.css',
+    '/public/css/routes/surfaces/settings-shelf.css',
   ],
   topics: [
     '/public/css/routes/surfaces/topics.css',

@@ -1278,7 +1278,7 @@ html[data-spw-site-rhythm-authority="runtime"] {
     grid-template-columns: 1fr;
   }
 
-  :where(.settings-state-grid, .settings-navigator-grid, .settings-structures-grid, .settings-quickstart-grid) {
+  :where(.settings-state-grid, .settings-navigator-grid, .settings-structures-grid) {
     grid-template-columns: 1fr;
   }
 }
