@@ -23,6 +23,7 @@ const PAGE = `
       <p data-spw-copy-unit="design.runtime.atlas.lede">A key with no place stays out.</p>
     </section>
     <section class="spw-panel" id="unnamed-panel"><h2>Not a named region</h2></section>
+    <section class="arc-bench" id="arc-bench" hidden aria-labelledby="arc-bench-title"><h2 id="arc-bench-title">Arc bench</h2></section>
     <p id="loose-note" data-spw-copy-unit="home.loose.note">Outside every frame.</p>
   </main>
 `;

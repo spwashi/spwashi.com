@@ -146,6 +146,9 @@ export function harvestRouteFrames(html = '', route = '', units = []) {
     const attrs = match[1];
     const isFrame = /\bclass=["'][^"']*\bspw-frame\b/.test(attrs);
     if (!isFrame && !/\saria-labelledby=/.test(attrs)) continue;
+    // A hidden section is out of the accessibility tree and out of reach;
+    // the /projects/ arc bench is opt-in by deep link, never by search.
+    if (/(?:^|\s)hidden(?=[\s=]|$)/.test(attrs)) continue;
     const id = (attrs.match(/\sid=["']([^"']+)["']/) || [])[1];
     if (!id) continue;
     const start = match.index + match[0].length;
