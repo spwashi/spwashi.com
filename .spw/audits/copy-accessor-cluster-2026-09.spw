@@ -288,6 +288,18 @@ audit_run_2026_09_29: .{
     severity = "low"
     claim = `home.reason joins person-magazine, home.folios joins folio-practice, home.library joins play-table. The other frame ledes are the page's own wayfinding and stay unclustered.`
   }
+  f20_design_pages {
+    severity = "low"
+    claim = `The same pass through /design/: the hub's hero, spokes note and eleven frame ledes, and the opening lede of seventeen design pages, are keys and places, with a unit per sentence. Units 186 → 281; design-surface 8 → 98. Experiment labs below /design/experiments/ keep their pages unkeyed until one becomes a route. Search lands a typed key on its sentence (unitHosts in the index).`
+  }
+  f21_design_handles_held {
+    severity = "low"
+    claim = `Fifteen of those page ledes have no expression: accessibility, affordance, cards, cards.render, density, experiments, interaction, logos, materials, palettes, runtime, slots, theme, theme.colors, website. Held for the same reason as f18: each would set a page's opening tone and draw hover and kin.`
+  }
+  f22_newly_visible {
+    severity = "low"
+    claim = `Keying the affordance lede surfaced unglossed:cauldron in its runtime sentence. The flag was always true; the lede was simply not counted. Left for a copy pass, per the contract's do_not rewrite_now.`
+  }
 }[reg=facet]
 
 ^"decision"{
