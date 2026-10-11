@@ -23,7 +23,7 @@
 @measurement: ~"./measurement-contract.spw"
 @sidecar: ~"./sidecar-references.spw"
 @clutch: ~"https://github.com/emberian/dragons-clutch/tree/main/.spw"
-@editorial_cache: ~"../../.agents/plans/model-guided-refinement/caches/consequential-ecosystem-editorial-2026-09.spw"
+@editorial_cache: ~"../../.agents/plans/archive/model-guided-refinement/caches/consequential-ecosystem-editorial-2026-09.spw"
 
 operation = "prime"
 fixity = "experimental"

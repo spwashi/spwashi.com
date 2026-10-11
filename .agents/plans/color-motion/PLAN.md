@@ -1,6 +1,6 @@
 # Color And Microinteraction Timing Improvement Plan
 
-**Status 2026-10-06.** Patches 4 and 5 landed: the timing bands (f721879d, 2026-09-08; reduced motion shrinks the base durations) and their control and settings consumers (55ef2737). The bands now include `--spw-time-travel` and `--spw-spring-*` (cbcf7045, 2026-09-26) beyond the six listed. Left from Patch 5: `.spw-expression-badge` in `sigils-and-chips.css` still uses `--duration-fast`. Patches 1–3 and 6–9 have not started. Next: Patch 6, moving `material.css` and `cards.css` onto the bands with bundles rebuilt in the same commit; then the families in `.spw/caches/timing-bands-handoff-2026-09.spw`. The 2026-08-31 texture slice predates the bands. Landing notes, commit series and answered questions: [HISTORY.md](./HISTORY.md).
+**Status 2026-10-10.** Patches 4 and 5 landed: the timing bands in f721879d (2026-09-08; reduced motion shrinks the base durations) and their control and settings consumers in 55ef2737. Beyond the six bands listed, they now include `--spw-time-travel` and `--spw-spring-*` (cbcf7045, 2026-09-26). Left from Patch 5: `.spw-expression-badge` in `handles/operators/sigils-and-chips.css` still uses `--duration-fast`. Patches 1–3 and 6–9 have not started. Today `effects/material.css` has 17 `--duration-*` references and no band references, and `components/cards.css` has 2 and none. Next: Patch 6, with `ornament/whimsy.css:98-103` as co-target and bundles rebuilt in the same commit. It runs after `css-cascade-stratification` Phase 1, and the feel is the creator's call in the browser. The families in `.spw/caches/timing-bands-handoff-2026-09.spw` follow. The 2026-08-31 texture slice predates the bands. Landing notes and the commit series are in [HISTORY.md](./HISTORY.md). Its review questions are unanswered except the alias one (the bands alias the primitives), and the first is a wonder in `index.spw`.
 
 **Related:** [microinteraction-motion-lifecycle](../archive/microinteraction-motion-lifecycle/PLAN.md) (archived) · [css-state-legibility](../archive/css-state-legibility/PLAN.md) (archived). **Absorbed 2026-10-06:** [settings-theme-packs](../archive/settings-theme-packs/PLAN.md).
 
@@ -60,7 +60,7 @@ Known issue pattern:
 - Reduced-motion mode keeps state legible while removing nonessential movement.
 - Repeated behaviors communicate a stable personality: tactile, inspectable, precise, and authored.
 - Interaction states can be described in plain language before implementation: acknowledge, settle, reveal, invite, warn, or resonate.
-- `npm run check:css`, `npm run check`, and `git diff --check` pass after each patch.
+- `npm run check:css`, `npm run check:local`, and `git diff --check` pass after each patch.
 
 ## Out Of Scope
 
@@ -681,14 +681,17 @@ Validation:
 
 - Keyboard tab through nav, mode switches, cards, and settings controls.
 - Check pointer hover on dense operator lists.
-- `npm run check`
+- `npm run check:local`
 
 ## Patch 6 - Card And Surface Timing Pass
 
 Goal: make cards and material panels respond with a shared surface timing grammar.
 
+Order: after `css-cascade-stratification` Phase 1. `material.css` sits in the effects layer, and Phase 1 changes whether route rules outrank effects and ornament, so card timing reviewed before the flip could change after it.
+
 Files:
 
+- `public/css/ornament/whimsy.css:98-103` (co-target). In the ornament layer it sets `.plan-card`, `.frame-card` and `.media-focus-card` border and background transitions with `--spw-fold-duration`, which outranks `material.css` by layer. Decide which sheet owns card timing before migrating it.
 - `public/css/effects/material.css`
 - `public/css/components/cards.css`
 - `public/css/components/foundation.css`
@@ -815,7 +818,7 @@ Document:
 Validation:
 
 - `rg -n "spw-time|spw-ease|palette|operator color|reduced motion" public/css/README.md .spw`
-- `npm run check`
+- `npm run check:local`
 
 ## Validation Loop
 
@@ -829,7 +832,7 @@ git diff --check
 Run for token, mode, or broad interaction changes:
 
 ```sh
-npm run check
+npm run check:local
 ```
 
 Run after editing generated-source CSS:

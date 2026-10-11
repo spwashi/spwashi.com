@@ -1,6 +1,6 @@
 # Plan: blog-blob-spw
 
-**Status 2026-10-06.** The lifecycle and the Starter unit are designed; `scripts/blog-weave.mjs` and `npm run blog:weave` are planned, not built. Next: the first `blog/<slug>/starter.spw`.
+**Status 2026-10-10.** The lifecycle and the Starter unit are designed (1c6b3c98), but `blog/` holds only its index: there is no post and no `starter.spw` yet. The first slice is a post the creator writes, `blog/<slug>/index.html` readable with JS off, with its starter beside it; its subject is the creator's call (`#>wonder_blog_blob_spw_first_post` in `index.spw`). `scripts/blog-weave.mjs` and `npm run blog:weave` stay unbuilt until real starters exist to weave.
 
 **Related:** [site-starter-component-kit](../site-starter-component-kit/PLAN.md) · [media-publishing](../archive/media-publishing/PLAN.md) (archived).
 
@@ -40,7 +40,7 @@ It should not require:
 [NEW] .agents/plans/blog-blob-spw/blog-blob-spw.spw
 [MOD?] .agents/plans/archive/blog-input-interpreter/PLAN.md — reference blob as the next durable state after local interpretation
 [MOD?] blog/index.html — add visible blob framing only when the public blog route needs it
-[MOD?] public/js/spw-blog-interpreter.js — optional future output mode that emits a blob scaffold instead of only a seed
+[MOD?] public/js/modules/blog/interpreter.js — optional future output mode that emits a blob scaffold instead of only a seed
 [MOD?] .spw/conventions/copy-localization.spw — if blobs become translation-facing source objects for multilingual editorial work
 [MOD?] .spw/site.spw — if blob semantics become part of the durable site bridge rather than only a plan artifact
 

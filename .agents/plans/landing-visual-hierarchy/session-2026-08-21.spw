@@ -21,9 +21,9 @@ date = "2026-08-21"
 @models: ~"./climate-models.spw"
 @harmony: ~"./ontology-harmony.spw"
 @grower: ~"./pnsb-grower.spw"
-@measured_companion: ~"../landing-page-hierarchy-2026-08-21/index.spw"
-@route_census: ~"../landing-page-hierarchy-2026-08-21/route-census.spw"
-@hierarchy_lens: ~"../landing-page-hierarchy-2026-08-21/hierarchy-lens.spw"
+@measured_companion: ~"../archive/landing-page-hierarchy-2026-08-21/index.spw"
+@route_census: ~"../archive/landing-page-hierarchy-2026-08-21/route-census.spw"
+@hierarchy_lens: ~"../archive/landing-page-hierarchy-2026-08-21/hierarchy-lens.spw"
 
 ^"daily_kernel"{
   id = "landing-visual-hierarchy-2026-08-21"

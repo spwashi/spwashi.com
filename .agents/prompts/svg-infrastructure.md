@@ -77,7 +77,7 @@ Read these as real constraints, not optional vibes:
 
 ### 3. SVG ecosystem logic
 
-- The canonical SVG ecosystem vision lives in `.agents/plans/svg-surface-integration/PLAN.md`.
+- The canonical SVG ecosystem vision lives in `.agents/plans/archive/svg-surface-integration/PLAN.md`.
 - The taxonomy there matters:
   - static illustration
   - addressable illustration
@@ -191,8 +191,8 @@ Read these before writing:
 
 - `.agents/plans/archive/svg-aesthetic-depth-pass/PLAN.md`
 - `.agents/state/svg-aesthetic-depth-pass-memo.md`
-- `.agents/plans/svg-surface-integration/PLAN.md`
-- `.agents/plans/svg-surface-integration/svg-surface-integration.spw`
+- `.agents/plans/archive/svg-surface-integration/PLAN.md`
+- `.agents/plans/archive/svg-surface-integration/svg-surface-integration.spw`
 - `.agents/plans/agentic-dev-contracts/PLAN.md`
 - `scripts/site-contracts.mjs`
 - `scripts/generate-route-runtime-manifest.mjs`

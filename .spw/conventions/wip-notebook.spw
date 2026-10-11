@@ -8,7 +8,7 @@
 
 @planning_ecology: ~"./planning-ecology.spw"
 @semantic_capacity: ~"./semantic-capacity.spw"
-@insight_cache_template: ~"../../.agents/plans/model-guided-refinement/templates/semantic-insight-cache.spw"
+@insight_cache_template: ~"../../.agents/plans/reference-assignment-template/templates/semantic-insight-cache.spw"
 @plan_index: ~"./plan-index.spw"
 @plans_root: ~"../../.agents/plans/index.spw"
 @history_reflow: ~"../../.agents/plans/history-reflow/PLAN.md"
@@ -76,7 +76,7 @@ fixity = "stable"
   ~#tension: "A realistic subject about work that already landed sends the next session to redo it. An expression with no subject cannot be committed."
   !probe{ "npm run wonder -- --surface wonder_plan_proposed_commit" }
   $%[commit.subject, commit.expression, commit.landed]
-  ~<"../../.agents/plans/typescript-integration/index.spw">
+  ~<"../../.agents/plans/archive/typescript-integration/index.spw">
 }
 
 ^"dispatch"{

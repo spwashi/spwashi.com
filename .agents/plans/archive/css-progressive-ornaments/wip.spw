@@ -34,9 +34,9 @@ fixity = "tending"
  @worker: ~"sw.js"
  @manifest: ~"manifest.webmanifest"
  @semantics: ~".spw/conventions/site-semantics.spw"
- @mobile_runtime: ~".agents/plans/mobile-runtime-foundation/mobile-runtime-foundation.spw"
- @svg_plan: ~".agents/plans/svg-surface-integration/svg-surface-integration.spw"
- @pretext_plan: ~".agents/plans/pretext-whimsy-lab/pretext-whimsy-lab.spw"
+ @mobile_runtime: ~".agents/plans/archive/mobile-runtime-foundation/mobile-runtime-foundation.spw"
+ @svg_plan: ~".agents/plans/archive/svg-surface-integration/svg-surface-integration.spw"
+ @pretext_plan: ~".agents/plans/archive/pretext-whimsy-lab/pretext-whimsy-lab.spw"
  @operator_plan: ~".agents/plans/archive/spw-operator-pages/spw-operator-pages.spw"
 }
 

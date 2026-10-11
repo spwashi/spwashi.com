@@ -12,9 +12,9 @@
 @runtime_contracts: ~"../../scripts/runtime-contracts.mjs"
 @readme: ~"../../public/js/README.md"
 @deploy_plan: ~"../../.agents/plans/deploy-module-graph/PLAN.md"
-@decomposition_plan: ~"../../.agents/plans/runtime-module-decomposition/PLAN.md"
+@decomposition_plan: ~"../../.agents/plans/archive/runtime-module-decomposition/PLAN.md"
 @consolidation_plan: ~"../../.agents/plans/runtime-plane-consolidation/PLAN.md"
-@surface_plan: ~"../../.agents/plans/js-surface-ecology/PLAN.md"
+@surface_plan: ~"../../.agents/plans/archive/js-surface-ecology/PLAN.md"
 @manifest: ~"../../dist/asset-manifest.json"
 
 ^"rubric"{

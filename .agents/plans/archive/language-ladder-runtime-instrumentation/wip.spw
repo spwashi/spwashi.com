@@ -1,0 +1,61 @@
+# Review 2026-07-12 — retain as a small handoff cache; do not expand it until curriculum and instrumentation have separate owners.
+# wip — language-ladder-runtime-instrumentation
+#
+#>plan_language_ladder_runtime_instrumentation_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@plans_root: ~"../../index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
+
+^"selection_probes"{
+ probes = #[ `rg 'language-ladder-runtime-instrumentation' public/js/site.js`, `git diff --check`, `test -f public/js/site.js`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
+^"plan_context"{
+ goal = `Make the development experience on spwashi.com feel progressively teachable rather than merely executable. The codebase should help a developer relate to code as a staged practice: first read the structure, then observe the runtime, then tune the timing, then compare the effect of different JavaScript forms, and eventually use TypeScript where it sharpens contracts and makes philosophy-like distinctions between shape, behavior, and proof more explicit. The experience should stay hand-authored, progressively enhanced, and inspectable. Static HTML remains the readable baseline, JavaScript adds learning and observation affordances when present, and TypeScript is introduced where it improves the contract layer without turning the site into a framework demo.`
+ owner = `language-ladder-runtime-instrumentation`
+ operation = "prime"
+ bucket = "active_backlog"
+ validation = #[ `git diff --check`, `node --check on edited JS modules`, `targeted browser smoke for the runtime stages and console helpers`, `npm run check when build/runtime contracts or public surfaces change`, `review that the ladder remains understandable without runtime features enabled`, ][reg=set]
+ hot_files = #[ `public/js/site.js`, `public/js/kernel/instrumentation.js`, `public/js/runtime/runtime-helpers.js`, `settings/index.html`, `public/js/README.md`, `.spw/conventions/`, ][reg=set]
+}[reg=facet]
+@plan_runtime_module_fluency: ~"../runtime-module-fluency/PLAN.md"
+@plan_runtime_load_instrumentation: ~"../runtime-load-instrumentation/PLAN.md"
+@plan_typescript_integration: ~"../typescript-integration/wip.spw"
+@plan_agentic_dev_contracts: ~"../../agentic-dev-contracts/index.spw"
+@package_json: ~"../../../../package.json"
+
+#>language_ladder_runtime_instrumentation
+
+~#goal: "Make the development experience progressively teachable: static HTML first, JavaScript as a readable runtime ladder, TypeScript as contract sharpening, and module integration timing as an inspectable sequence."
+
+@tags: [#progressive_enhancement, #module_timing, #instrumentation, #javascript, #typescript, #programming_paradigms]
+
+>>[2026-05-31] note - This track is about making the site itself a clearer learning surface for developers: what a module is, when it runs, how to observe it, and when stronger typing should replace incidental runtime assumptions.
+
+^"proposed_commits"{
+  shape = `One open line. This handoff does not grow a second toolchain.`
+  open = #[
+    `~[ladder] Let the next rung be a script the package already names :: ladder[rung]{wonder.ecology.typecheck}<script>`
+  ][reg=set]
+}[reg=facet]
+
+#>wonder_plan_ladder_rung
+?["Which package.json script is the next rung, and which plan folder owns the teaching?"]{
+  #:depth #!educational ~#lens(orientation)
+  ~#with: @package_json @plan_typescript_integration @plan_agentic_dev_contracts
+  ~#taste: "A rung stays on the ladder only while a named script performs it and a different plan folder owns the contract underneath."
+  ~#hypothesis: "Read is the file. Observe is wonder and the atlas. Tune is the bench and css:payload. The contract rung is typecheck, and typescript-integration owns that folder. ecology:language is the corpus rung, and spw-language-v04 owns that one."
+  ~#tension: "This file was kept small until curriculum and instrumentation had separate owners. The scripts now exist. The owners live in other folders. Growing the curriculum here would put two blast radii back in one handoff."
+  !probe{ `node -e 'import fs from "node:fs"; const scripts = JSON.parse(fs.readFileSync("package.json","utf8")).scripts; if (!scripts.wonder || !scripts["ecology:language"] || !scripts.typecheck || !scripts.atlas) process.exit(1)'` }
+  $%[ladder.rung, script.name, folder.owner]
+  ~<"../typescript-integration/wip.spw"> ~<"../../spw-language-v04/index.spw"> ~<"../../agentic-dev-contracts/index.spw">
+}

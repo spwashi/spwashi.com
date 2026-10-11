@@ -1,0 +1,37 @@
+# Review 2026-07-12 — keep as an analog-worldbuilding cache; require one campaign artifact before expansion.
+^"plan_linkage"{
+ plan = ~"./PLAN.md"
+ index = ~"../../index.spw"
+ goal = `Prepare this codebase for refinement by a model that can read .spw, follow explicit connections, and make competent local changes, but should not be expected to improvise tastefully through the full CSS and JavaScript surface. The plan turns broad creative direction into rails: - where to look first - what not to touch - how CSS, HTML, JS, and .spw names should line up - which semantic concepts are fixed, stable, tending, experimental, or volatile - how creative/marketing surfaces should become coherent enough that musicians and artists want to explore and extend them This is not a new framework. It is a focus contract for future agents and collaborators.`
+ cache_topic = `rpg-analog-worldbuilding`
+ operation = "cache"
+}[reg=facet]
+#>semantic_insight_cache
+#:model_guided_refinement
+
+^"rpg_realworld_analog_worldbuilding"{
+  operation: "align"
+  fixity: "tending"
+  public_goal: "deepen RPG Wednesday immersion by grounding worldbuilding in real-world expertise that changes table interaction"
+  source_surfaces: [
+    "play/rpg-wednesday/index.html",
+    "play/rpg-wednesday/world/index.html",
+    "play/rpg-wednesday/library/index.html",
+    "recipes/index.html",
+    "topics/pedagogy/index.html",
+    "topics/knowledge-bases/index.html"
+  ]
+  claim: "A real-world analog should become a playable constraint before it becomes lore. Library science, hospitality, civic wayfinding, workshop practice, archives, gardens, and markets deepen the setting when they give players actions, bottlenecks, policies, repair paths, or consequences."
+  interaction_rule: {
+    analog: "the real practice or institution being borrowed"
+    table_action: "what a player can attempt because the analog exists"
+    promotion_test: "whether the pattern recurs enough to leave the session log and enter world canon"
+    artifact: "map, guide card, policy, recipe, proof card, diagram, route note, or scene prompt"
+  }
+  editor_guidance: [
+    "Prefer one concrete mechanism from a real analog over a broad atmospheric reference.",
+    "Ask what the analog lets a player do: borrow, barter, repair, route, cook, archive, teach, refuse, appeal, or preserve.",
+    "Promote details to the world page only after they recur or change future scenes.",
+    "Use the Town Library as the bridge between study practice, portfolio artifact, and RPG interaction."
+  ]
+}

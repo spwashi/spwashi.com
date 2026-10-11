@@ -122,3 +122,23 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+#>wonder_midjourney_design_concepts_cauldron
+?["Two things are called a cauldron: the Media Cauldron on /play/ and the memory-garden cauldron in the footer. Should one be renamed?"]{
+  #:depth #!semantic ~#lens(naming)
+  ~#with: @plan @illustrations
+  ~#hypothesis: "The Media Cauldron (_partials/media-cauldron.html, on nine routes) turns the self/local/global attention triad into copyable seeds. The footer cauldron (#memory-garden-cauldron) holds words a reader presses and keeps. This plan art-directs the footer one (PLAN.md 'Next prompts', a skillet-cauldron of paper slips). A reader who meets both learns two meanings for one word. The copy has already started to split them: media-cauldron.html:33 calls the footer one 'the garden bed' and itself 'this workbench', while the footer pill still says 'Open cauldron' (site-footer.html:21)."
+  ~#tension: "Both cook something from ingredients, so the shared word may be a deliberate echo, like prime in homonym-renaming, rather than a collision. Renaming either touches public copy, a partial name and search keys. The creator decides whether it is an echo to ledger or a homonym to split."
+  !probe{ "rg -l 'media-cauldron|memory-garden-cauldron' --glob '*.html' ." }
+  ~<"../../../_partials/media-cauldron.html"> ~<"../../../.spw/conventions/relational-attention-media.spw"> ~<"../homonym-renaming/PLAN.md">
+}
+
+#>wonder_midjourney_design_concepts_mark
+?["Which mark becomes the logo: one of the three directions on /design/logos/, the session-7 attention.productions bulb, or another?"]{
+  #:depth #!aesthetic ~#lens(identity)
+  ~#with: @plan @raw
+  ~#hypothesis: "/design/logos/ offers three spwashi.com directions (A frame and direction, which is the current install icon; B threshold opening; C frame and flow) and was design-studio's open pick. Session 7 (a9fa3ca7) produced four attention.productions renders: render 1 is a hand-drawn Edison bulb over a script 'attention.', render 2 a pendant spotlight over a clean sans, and render 3 swaps the O for the bulb on teal. Nothing is promoted."
+  ~#tension: "The two picks may belong to different names: spwashi.com's mark and attention.productions' mark. If one mark serves both, the bulb carries salience into the shell. If they stay separate, the install icon (bc47ecf6) keeps direction A until the creator chooses. A render becomes an asset only with a sidecar, a registry entry and one placement."
+  !probe{ "ls public/images/renders/_raw/2026-09-28-session-7/ design/logos/" }
+  ~<"../../../design/logos/index.html"> ~<"../../../.spw/caches/prompt-seeds-2026-09.spw"> ~<"../archive/design-studio/PLAN.md">
+}

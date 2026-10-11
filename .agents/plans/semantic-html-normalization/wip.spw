@@ -37,7 +37,7 @@ fixity = "tending"
  @operator_ref: ~"../../../topics/software/spw/operators/ref/index.html"
  @page_metadata: ~"../../../public/js/semantic/page-metadata.js"
  @semantic_chrome: ~"../../../public/js/interface/semantic-chrome.js"
- @components_css: ~"public/css/spw-components.css"
+ @grammar_css: ~"../../../public/css/grammar/syntax.css"
 }
 
 ^["intent"]{
@@ -49,7 +49,7 @@ fixity = "tending"
  lane: #execution_truth
  ladder: #page
  develops: [#html_semantics, #runtime_inference, #semantic_contract]
- review_surfaces: [@plan, @page_metadata, @semantic_chrome, @components_css]
+ review_surfaces: [@plan, @page_metadata, @semantic_chrome, @grammar_css]
  snippet_routes: [#landmarks, #aria_relationships, #metadata_reduction]
 }
 
@@ -74,7 +74,7 @@ fixity = "tending"
 ^["parallel_work"]{
  critical_path: [#html_landmarks, #page_metadata_runtime]
  parallelizable: [#html_family_passes, #css_cleanup]
- shared_hot_files: ["public/js/spw-page-metadata.js", "public/css/spw-components.css", "about/website/index.html", "settings/index.html", "topics/math/index.html", "topics/software/index.html"]
+ shared_hot_files: ["public/js/semantic/page-metadata.js", "public/js/interface/semantic-chrome.js", "about/website/index.html", "settings/index.html", "topics/math/index.html", "topics/software/index.html"]
  merge_risks: [#dirty_worktree_overlap, #duplicate_ids, #over_inference]
  handoff_artifacts: [@plan]
 }
@@ -116,28 +116,18 @@ fixity = "tending"
  >>[2026-04-16 14:16] implement — moved repeated role-family selector groups in `spw-handles.css`, `spw-grammar.css`, and `spw-ornament.css` onto `data-spw-role-cluster`, making the runtime the canonical translator from detailed role names to style families.
  >>[2026-04-16 14:22] implement — `site-settings.js` now primes declarative setting triggers with button semantics, keyboard activation, and shared active-state wiring while the root apply path uses grouped dataset/style helpers instead of a long run of one-off assignments.
  >>[2026-04-16 14:25] validate — `git diff --check`, `node --check public/js/site-settings.js`, `node --check public/js/spw-page-metadata.js`, and audits for skip links plus `main[aria-labelledby]` all passed.
+ >>[2026-10-10] review — the sweep holds (207 route pages carry `main`, 202 the skip link). The commit series and rebase notes above this entry are done or never ran, and were cut. Scripts-off sensors landed in 8d1ed950, 768c5c09 and 73f200f2; the open slice is the JS-on/off landmark, heading and link diff (PLAN.md, JS-off parity).
 }
 
 ^["open"]{
 }
 
-^["commits"]{
- ~[1]: "#[semantic-html-normalization] — record the plan artifacts and hygiene baseline"
- ~[2]: "&[semantic-html-normalization] — normalize route landmarks, skip targets, and top-level page semantics across HTML families"
- ~[3]: "&[semantic-html-normalization] — derive repeated region ids and ARIA relationships from the page-metadata runtime"
- ~[4]: ".[semantic-html-normalization] — simplify semantic display rules and document the reduced authored contract"
- ~[5]: "![semantic-html-normalization] — verify markup integrity, metadata inference, and accessibility-oriented selectors"
-}
-
 ^["cache"]{
- ~#status: "implementing"
- ~#base_ref: "main@9511b53"
- ~#rebased_at: ""
- ~#hygiene_split: "preserve the open settings/resonance follow-up; integrate only overlapping HTML files and avoid unrelated JS/CSS drift"
- ~#files_hot: "about/website/index.html, settings/index.html, topics/math/index.html, topics/site-design/index.html, topics/software/index.html, topics/software/parsers/index.html, topics/software/spw/operators/*/index.html, public/js/spw-page-metadata.js, public/js/spw-semantic-chrome.js, public/css/spw-components.css"
- ~#next_commit: "2"
+ ~#status: "sensing"
+ ~#files_hot: "scripts/lib/chrome-headless-harness.mjs, scripts/audit-page-structure.mjs, scripts/component-snapshots.mjs, public/js/semantic/page-metadata.js, public/js/interface/semantic-chrome.js"
+ ~#next_commit: "+[sense] diff a route's landmarks, headings and links with scripts off and on"
  ~#open_count: "0"
- ~#last_stream: "2026-04-16 14:25"
+ ~#last_stream: "2026-10-10"
  ~#taste_debt: "the next cleanup can decide whether section-level labels should become more authored in HTML or stay runtime-derived; the current pass keeps the static contract strongest at the page landmark level"
 }
 

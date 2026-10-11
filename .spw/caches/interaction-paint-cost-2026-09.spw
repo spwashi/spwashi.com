@@ -34,7 +34,7 @@
 @state_inspector_js: ~"../../public/js/interface/state-inspector.js"
 @headless_nav: ~"../../scripts/headless-nav.mjs"
 @runtime_bootstrap_plan: ~"../../.agents/plans/runtime-bootstrap-performance/PLAN.md"
-@runtime_decomposition_plan: ~"../../.agents/plans/runtime-module-decomposition/PLAN.md"
+@runtime_decomposition_plan: ~"../../.agents/plans/archive/runtime-module-decomposition/PLAN.md"
 @shell_lifecycle_audit:
   ~"../audits/alignment-shell-lifecycle-sensitivity-2026-07/index.spw"
 @pointer_device_audit: ~"../audits/pointer-device-detection-2026-09.spw"

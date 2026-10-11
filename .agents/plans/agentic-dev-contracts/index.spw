@@ -55,8 +55,8 @@ intent: .{
 @plans_root: ~"../../../.agents/plans/index.spw"
 @package_json: ~"../../../package.json"
 @plan_agent_optimization: ~"../agent-optimization/index.spw"
-@plan_typescript_integration: ~"../typescript-integration/wip.spw"
-@plan_spw_architecture_ecology: ~"../spw-architecture-ecology/index.spw"
+@plan_typescript_integration: ~"../archive/typescript-integration/wip.spw"
+@plan_spw_architecture_ecology: ~"../archive/spw-architecture-ecology/index.spw"
 @workbench_report: ~"../../../.spw/workbench-report.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -158,7 +158,7 @@ invariants: #[
   ~#tension: "A plan that still says npm run check sends the next session through the network for a question the local gate already answers."
   !probe{ `node -e 'import fs from "node:fs"; const scripts = JSON.parse(fs.readFileSync("package.json","utf8")).scripts; const need = ["check:local","manifest:staged","atlas","wonder","spw:integrity","audit:portable","typecheck","ecology:language"]; const missing = need.filter((name) => !scripts[name]); if (missing.length || !scripts.check.includes("audit") || scripts["check:local"].includes("audit")) process.exit(1)'` }
   $%[script.door, script.audit, script.visible]
-  ~<"../agent-optimization/index.spw"> ~<"../typescript-integration/wip.spw">
+  ~<"../agent-optimization/index.spw"> ~<"../archive/typescript-integration/wip.spw">
 }
 
 #>wonder_plan_stamp

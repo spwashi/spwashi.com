@@ -97,3 +97,13 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+#>wonder_screenshot_semantics_journey
+?["Should a still show how the visit got here, and should that mark persist across sessions?"]{
+  #:depth #!pragmatic ~#lens(capture)
+  ~#with: @plan @wip @screenshot_semantics
+  ~#hypothesis: "A still already shows where you are: frame address, pressed lens, texture crop held by the visit key. A journey token would add the path, as a sparse earned mark that is readable without hover or JavaScript. That serves the creator's practice of screenshotting a page and feeding it to Midjourney or Grok."
+  ~#tension: "A path mark is a second layer on a calm default, and it can read as tracking rather than a notebook. Session-local marks vanish before the next recording. Persistent marks need storage and a reset, and they change what a returning visitor's stills say about them. wip.spw's taste_debt defers this decision to commit 2; until it is made, commits 2-5 have no visual form to build."
+  !probe{ "npm run visual:capture -- --stills --ids <opening> --viewports pocket" }
+  ~<"./PLAN.md"> ~<"./wip.spw"> ~<"../../../public/css/modes/capture.css">
+}

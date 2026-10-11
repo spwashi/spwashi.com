@@ -104,3 +104,12 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+#>wonder_blog_blob_spw_first_post
+?["What is the first post's subject: the one piece of writing worth feeding as a starter over the season?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#with: @plan @blog_index @ways_cache
+  ~#tension: "The Starter lifecycle, its tags and its weave are designed, but the gate asks for one real starter before any of it becomes convention. Tooling built ahead of a post would be the bureaucracy the plan's own non-negotiable rules out."
+  !probe{ "Name one subject already alive in a recent stream or session note, write blog/<slug>/index.html readable with scripts off, and start blog/<slug>/starter.spw with one dated feeding." }
+  ~<"./PLAN.md"> ~<"../../../blog/index.html"> ~<"../../../.spw/caches/ways-2026-10.spw">
+}

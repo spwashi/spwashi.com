@@ -4,7 +4,7 @@
 #:slice #!attention #!navigation #!components
 #:layer #!pragmatics
 
-@plan: ~"../../../.agents/plans/page-region-discoverability/PLAN.md"
+@plan: ~"../../../.agents/plans/archive/page-region-discoverability/PLAN.md"
 @page_region_rail_js: ~"../../../public/js/runtime/regions/page-region-rail.js"
 @attention_section_handle_js: ~"../../../public/js/runtime/attention/section-handle.js"
 @page_region_rail_css: ~"../../../public/css/handles/page-region-rail.css"

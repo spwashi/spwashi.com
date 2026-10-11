@@ -1,8 +1,8 @@
 # topic-building-blocks
 
-**Status 2026-10-06.** Next slice from Remaining: parallel theories for programs and data structures.
+**Status 2026-10-10.** The building-block stubs, hubs and field portals landed (dae5c297, 5eacfbc0), and `scripts/tests/topic-wiring.test.mjs` guards their wiring. Next slice: the Parallel and Competing Theories frame on `/topics/software/programs/`; `/topics/math/logic/` already carries the shape. It cites only what a stable source attributes, so a page with nothing sourced waits; data structures, probability, optimization and forecasting follow one page a session.
 
-**Related:** [living-learning-surface](../living-learning-surface/PLAN.md). **Absorbed 2026-10-06:** [calculus-trigonometry-field-guides](../archive/calculus-trigonometry-field-guides/PLAN.md) · [learning-science-enhancement](../archive/learning-science-enhancement/PLAN.md) · [pure-math-routes](../archive/pure-math-routes/PLAN.md) · [topical-learning-links](../archive/topical-learning-links/PLAN.md).
+**Related:** [living-learning-surface](../archive/living-learning-surface/PLAN.md) (absorbed 2026-10-10, below). **Absorbed 2026-10-06:** [calculus-trigonometry-field-guides](../archive/calculus-trigonometry-field-guides/PLAN.md) · [learning-science-enhancement](../archive/learning-science-enhancement/PLAN.md) · [pure-math-routes](../archive/pure-math-routes/PLAN.md) · [topical-learning-links](../archive/topical-learning-links/PLAN.md).
 
 ## Public Goal
 Topics read as a course, not only a shelf. Each area has building blocks in order, each leaf points to a next page, and portals from the fields of the creator's peers, mentors, and family route into the topics where those fields' questions already live.
@@ -39,3 +39,11 @@ Hero (what it is, why it matters here, 2 chips + hub chip) → Essentials (2–4
 ## Non-Goals
 - No new components or `data-spw-*` families; stubs reuse `ref-card`, `spw-route-bridge`, `frame-operators`.
 - No generated filler: a stub with nothing specific to say waits.
+
+## Absorbed 2026-10-10 — living-learning-surface
+
+[living-learning-surface](../archive/living-learning-surface/PLAN.md) planned `/curriculum/` as a six-module course teaching computer science through economic analogies. The route and its Memory & Buffers module landed (893876ea, 2026-05-30), with a boundary-test checklist that an inline script saves locally. Nothing curriculum-specific has landed since. Learning Mode presets, `curriculum-state.js` and the simulations were never built.
+
+- Still owed: the other five modules are spec entries on the public page (`curriculum/index.html:317-333`). A second module waits for the creator's ask. When it comes, it takes this plan's stub shape (hero, essentials, route bridge) as plain HTML, not a new kernel store.
+- Rule kept: every analogy ends in a visible boundary test that says where the mapping breaks, then returns to the native technical model. The source report's own caution is analogy overextension.
+- Rule kept: no new `data-spw-*` families. `data-spw-curriculum-module` (13 uses on `/curriculum/`, not in `.spw/site.spw`) maps onto an existing stem before another module adds to it.

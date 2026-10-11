@@ -1,6 +1,6 @@
 # Component Region Personality
 
-**Status 2026-10-06.** Waves 0–2 landed (copy-unit ids, `audit:copy:accessor`). Next: Wave 3, the visual-link-card on services and recipes; only topics has it. Holds the anatomy vocabulary from webpage-trope-vocabulary.
+**Status 2026-10-10.** Waves 0–2 have landed: copy-unit ids, and `npm run audit:copy:accessor` (c0fa1767). The one next slice is the Wave 3 cards: `spw-visual-link-card` on the services and recipes heroes, in HTML and CSS. Topics has 30 of these cards; services and recipes have none. Which two or three children get a card is the creator's call in a browser review. The three new `data-spw-*` attributes Waves 3–4 proposed are struck. The plan still holds the anatomy vocabulary from webpage-trope-vocabulary.
 
 **Related:** [webpage-trope-vocabulary](../archive/webpage-trope-vocabulary/PLAN.md) (archived).
 
@@ -19,7 +19,7 @@ Develop meaningful component real estate and region personality across spwashi.c
 | `.spw` | Referentiality tiers, vocabulary register, linking contour, edit waves |
 | Route HTML | Hub voice surgery, copy collectibles, contour redistribution |
 | Partials | `perspective-pair`, `agent-anatomy`, `leaf-neighbor-rail`, visual-link-card promotion |
-| Settings / runtime | Label posture (`named` → `familiar` → `silent`) |
+| Settings / runtime | ~~Label posture (`named` → `familiar` → `silent`)~~ struck 2026-10-10 with its attribute (Wave 4) |
 | Build / catalog | Copy-unit manifest from `extract-site-copy.mjs`; design catalog cross-ref |
 | Plans | Bridges to `semantic-copy-depth`, `copy-localization`, `page-model` |
 
@@ -73,7 +73,7 @@ Develop meaningful component real estate and region personality across spwashi.c
 |------|--------|
 | Visual cards | Promote `spw-visual-link-card` to `topics/`, `services/`, `recipes/` heroes (2–3 major children each) |
 | Chip caps | Split `frame-operators` rows >8 into card grid or collapsible route drawer |
-| Link contour attr | Introduce `data-spw-link-contour`; align `public/js/semantic/link-copy.js` |
+| ~~Link contour attr~~ | ~~Introduce `data-spw-link-contour`~~. Struck 2026-10-10: no new `data-spw-*` families; map the contour onto existing stems in `.spw/site.spw` if it is needed |
 | Query intent | Add tuning links on `topics/`, `play/` where posture variants help |
 
 ### Wave 4 — Leaves, familiarity, vocabulary
@@ -82,9 +82,9 @@ Develop meaningful component real estate and region personality across spwashi.c
 |------|--------|
 | Leaf template | `leaf-neighbor-rail` on topic leaf routes via template partial |
 | Glossary specimens | `perspective-pair`, `agent-anatomy` in `design/components/` |
-| Label posture | Settings control for `data-spw-label-posture` (named / familiar / silent) |
+| ~~Label posture~~ | ~~Settings control for `data-spw-label-posture` (named / familiar / silent)~~. Struck 2026-10-10: no new `data-spw-*` families |
 | Vocabulary pass | Rotate atlas, proof card, resting point, legible per vocabulary_register |
-| Region motifs | Assign `data-spw-vocabulary` + `data-spw-copy-motifs` per hub family |
+| Region motifs | Assign the existing `data-spw-vocabulary` per hub family. `data-spw-copy-motifs` is struck (2026-10-10): no new `data-spw-*` families, and tone lives in the expression, not an attribute (7a62b2b4) |
 | Component audit | Run design catalog + rg audit dimensions from `.spw` |
 
 ### Wave 5 — Pocket-frame density and variety (2026-09-04 stills)

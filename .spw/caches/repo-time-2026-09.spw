@@ -13,7 +13,7 @@
 @site_project: ~"../../projects/spwashi-com/index.html"
 @folios_project: ~"../../projects/folios/index.html"
 @workbench_report: ~"../workbench-report.spw"
-@plan: ~"../../.agents/plans/projects-hub/PLAN.md"
+@plan: ~"../../.agents/plans/archive/projects-hub/PLAN.md"
 
 operation = "prime"
 fixity = "experimental"

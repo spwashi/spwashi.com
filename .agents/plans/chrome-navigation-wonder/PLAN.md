@@ -1,8 +1,8 @@
 # Chrome, Navigation, and Metaphysical Wonder (2026 review)
 
-**Status 2026-10-06.** Open, in order: the open-drawer swipe, Phase 2 breadcrumbs (inherited from cognitive-navigation), the Phase 3 operator and accent doc pass. The dated Status headers below are history.
+**Status 2026-10-10.** Landed: the closed-header swipe (`02c7757a`), the coarse-pointer hamburger (`b893cec3`), and the pocket rail that shows the reader's position in Spw at a layer they choose (`7018898c`), now fixed under the flourish pack (`c348c0f7`). Next slice: pages author short section ids and component headings so each rail layer (`#>` region, `.` path, `&` component) says something, starting with home, the design hub and one long topic route. Nothing gates it but the copy. Motion between layers waits on a designed pass, the open-drawer swipe waits on the creator's answer in `index.spw`, and Phase 3 is dormant. The dated Status headers below are history.
 
-**Related:** [floating-chrome-stack](../floating-chrome-stack/FIX.md) · [mobile-chrome-alignment](../archive/mobile-chrome-alignment/PLAN.md) (archived).
+**Related:** [floating-chrome-stack](../floating-chrome-stack/FIX.md) · [spellcraft-authoring](../spellcraft-authoring/PLAN.md) (breadcrumb spell) · [mobile-chrome-alignment](../archive/mobile-chrome-alignment/PLAN.md) (archived). **Absorbed 2026-10-10:** [navigation-header-disclosure](../archive/navigation-header-disclosure/PLAN.md) · [page-region-discoverability](../archive/page-region-discoverability/PLAN.md).
 
 ## Status — 2026-09-09: coarse/pocket glyph hamburger (`b893cec3`)
 
@@ -188,8 +188,8 @@ Next concrete patch or deeper modeling session should reference this plan.
 
 ### Next
 
-- Phase 2: dimensional breadcrumbs as a first-class collectible surface.
-- Phase 3: operator-forces / semantic-accent two-layer doc pass in `tokens/core.css` and operator atlas.
+- Phase 2, re-scoped 2026-10-10: the rail's `.` path layer (`7018898c`) is now the on-page breadcrumb, and `runtime/experiential/breadcrumb-spell.js` assembles the trail and the live spell path. What remains: the path layer says little on pages without authored section ids (the Status slice), and whether the header's spell path should follow the rail's layer. Who owns breadcrumbs, this plan or spellcraft-authoring, is a question for the creator in `index.spw`.
+- Phase 3, dormant 2026-10-10: the operator-forces / semantic-accent two-layer doc pass in `tokens/core.css` and the operator atlas. Nothing in `public/css/tokens/` names operators as forces yet, and no live plan picks it up.
 - Re-run `npm run check:local` after landing; validate mobile on home, design hub, and one long topic route.
 
 ## Shell offset receipt — 2026-09-17
@@ -198,3 +198,20 @@ Next concrete patch or deeper modeling session should reference this plan.
 
 ## The rail as a Spw summary — 2026-09-28
 Tapping the pocket rail's toggle made it vanish: the tap charged the shell and `effects/wonder.css` (flourish pack) turned every charged host `position: relative`, beating `position: fixed`; floating chrome is now excluded (c348c0f7). The rail's title is no longer the heading sentence: it shows a Spw position at a layer the reader cycles from an operator button, `#>` region (frame address), `.` path (dot-joined breadcrumb), `&` component (title around the reading groove's lead), `!` recent activation; the choice persists locally, the heading stays the link's name, and an expanded pocket rail wraps the summary onto its own row (7018898c). Open: motion between Spw positions (creator: later, designed); pages authoring short section ids and component headings so each layer says something; whether the header's spell path should follow the rail's layer.
+
+## Absorbed 2026-10-10 — navigation-header-disclosure
+
+Landed: the glyph hamburger on a coarse pointer or pocket width, with labeled `Routes` only in inline mode. Also landed: the Cauldron and Attention posture header actions (`scripts/template.mjs`), the posture preview button with its explicit `Open settings` link (`runtime/shell/attention-posture-panel.js`), and the `Display` disclosure. Rules worth keeping:
+- CSS and JS share `DRAWER_MENU_QUERY` (`shell-disclosure.js`), so the strip and the toggle cannot both paint.
+- `data-spw-menu="open"` is the disclosure source, and `data-spw-menu-overlay="active"` is the visual drawer state.
+- A control that JS intercepts is a button, not a link; navigation sits in an explicit link beside it.
+
+Still owed: a page-aware de-emphasis of the header Cauldron action on `/play/`, where it links to its own page (`template.mjs:846`). Revisit header hierarchy only if route actions, cauldron, posture and display still compete. Source: [navigation-header-disclosure](../archive/navigation-header-disclosure/PLAN.md).
+
+## Absorbed 2026-10-10 — page-region-discoverability
+
+This plan is now the owner of record for regions, rails and anatomy. The page-region rail (`runtime/regions/page-region-rail.js`, `handles/page-region-rail.css`), `route-discovery` and region profiling all landed by 2026-06-28. The durable contract is `.spw/slices/page-region-discoverability/index.spw`. Rules worth keeping:
+- No page-region-owned client-side store. Region diversity is an input signal; persistence belongs to `runtime/memory/component-collection.js`.
+- No mass restructuring of route HTML.
+
+Nothing is owed except a check: validation was skipped for its 2026-06-28 stabilization patch at the creator's request. Source: [page-region-discoverability](../archive/page-region-discoverability/PLAN.md).

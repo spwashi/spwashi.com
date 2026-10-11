@@ -1,5 +1,5 @@
 # Cauldron lens composition
-**Status 2026-10-06.** The native dialog landed (326eb119). Next: the home-cauldron-open pocket visual receipt, then the corner-sharing design pass. Lane arithmetic belongs to floating-chrome-stack.
+**Status 2026-10-10.** Landed: the lens-aware mix with pocket slots (`604d4a1d`) and the native dialog (`326eb119`). Next slice: the pocket receipt for the `home-cauldron-open` still (`scripts/lib/viewport-still-recipes.mjs:507`), via `npm run visual:checks -- --ids=home-cauldron-open`. The 326eb119 session could not take it because the browser timed out. The receipt needs a local server and a browser the sandbox allows. Corner sharing moved to floating-chrome-stack.
 
 **Related:** [floating-chrome-stack](../floating-chrome-stack/FIX.md) · [mobile-chrome-alignment](../archive/mobile-chrome-alignment/PLAN.md) (archived).
 
@@ -22,10 +22,9 @@ Measured at 320px about: overflow 0; promo 440–622; cauldron 651–695; satche
 Page buttons may author existing data-spw-lens-impact to specialize a mode.
 Validation: 394 module tests; check:local -- --allow-dirty (generated CSS included).
 
-Open: the packing is lane arithmetic, not a designed field. Pocket promo,
-satchel, cauldron, and travel still stack as separate utilities. A later
-pass should improve how they share a corner — what yields, what stays,
-spacing and hierarchy — without new attribute families.
+Moved 2026-10-10: the packing is lane arithmetic, not a designed field. The corner-sharing
+pass (what yields, what stays, spacing and hierarchy) now lives in
+[floating-chrome-stack](../floating-chrome-stack/FIX.md) under "Corner sharing".
 
 Cauldron modal UX — align / tending; focus: composition palette, element: air.
 The existing vessel moves into a native dialog and returns to its footer seat on

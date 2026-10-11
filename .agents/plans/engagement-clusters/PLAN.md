@@ -1,6 +1,8 @@
 # Engagement Clusters
 
-**Related:** [deploy-module-graph](../deploy-module-graph/PLAN.md) · [navigation-header-disclosure](../navigation-header-disclosure/PLAN.md) · [chrome-navigation-wonder](../chrome-navigation-wonder/PLAN.md).
+**Status 2026-10-10.** Landed: `kernel/engagement.js` and catalog `engages` behind `?spw-arming=engage` (0a974b23; three defs carry `engages`), the arrival census and root precision slices (2026-10-06), and the shelf decision for invited instruments (2026-10-08). Next slice: read each quiet module's arrival writes to its own hosts, which the root census cannot see. Gates: making `engage` the default is a sensation call (Human Decisions); container priming waits on the facet operator mapping, asked once in `../module-contract-overhaul/wip.spw` `#>wonder_module_contract_overhaul_facet_operators`.
+
+**Related:** [deploy-module-graph](../deploy-module-graph/PLAN.md) · [navigation-header-disclosure](../archive/navigation-header-disclosure/PLAN.md) · [chrome-navigation-wonder](../chrome-navigation-wonder/PLAN.md).
 
 Operation: prime. Fixity: experimental. Owner rail: `module-contract-overhaul` (the `@` wakes facet).
 
@@ -24,12 +26,9 @@ A page loads what its reader engages, not everything its grammar could support. 
 ## Primed, not built
 
 - **Spw containers prime clusters.** A concept bracket opens a topical boundary (`<`, `kernel/operator-detection.js`) and labels ride edges (`}_A`, `.spw/language/lore-alignment.spw`). Reading `<_foo` as a concept edge labeled `foo`: approaching it primes the cluster `foo` names (imports, no mounts); engaging an item in its `{ … }` direction space resolves a path, choosing which primed behaviors mount, by weight. Primed-but-unchosen behaviors cost a cached import, never a mount or a root write.
-- **Assembly reading.** Wrapping changes an expression's key (content-addressed, the wrap chain as its traveler), thresholds are authored with an inference path, and the marks read as assembly code and functional programming: `.spw/caches/spw-assembly-2026-09.spw`, with a probe over the expression manifest.
 - **Weights.** Candidate sources already on the page: `data-spw-salience-weight`, the operator charge role, familiarity demotion, the module offer ranking (`describeModuleOffer`). No new `data-spw-*` family.
-- **Heuristics as language.** Engagement resolution (dwell, slop, hold) and path weights are heuristics; a dialect could name them so a page tunes them in Spw rather than in constants.
-- **Dialects across dimensions.** How a dialect's vocabulary scales across surfaces, devices, familiarity, and themes without forking the grammar.
-- **Attention toward theme material variance.** Retune attentional architecture (dwell, emphasis, reward) to vary with the theme's material rather than one global posture.
 - **Arrival halves.** Split modules into a small arrival projection (often CSS, or a shared residue restorer) and an engagement half, so arming does not hide what a module draws on arrival (brace pins, grounded haptics, brace actions).
+- Parked 2026-10-10, with no slice or sensor here: assembly reading (`.spw/caches/spw-assembly-2026-09.spw`), engagement heuristics named as a dialect, dialects across dimensions, and attention that varies with theme material.
 
 ## Cross-references
 

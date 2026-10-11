@@ -7,8 +7,8 @@
 #:conventions #!practice #!brand-physics #!regions #!collaboration
 #:layer #!pragmatics
 
-@plan: ~"../../.agents/plans/daily-kernel-development/PLAN.md"
-@template: ~"../../.agents/plans/daily-kernel-development/templates/daily-kernel-note.spw"
+@plan: ~"../../.agents/plans/archive/daily-kernel-development/PLAN.md"
+@template: ~"../../.agents/plans/archive/daily-kernel-development/templates/daily-kernel-note.spw"
 @model_guided_refinement: ~"./model-guided-refinement.spw"
 @semantic_capacity: ~"./semantic-capacity.spw"
 @site_semantics: ~"./site-semantics.spw"
@@ -147,7 +147,7 @@
     layer = "pragmatic"
     hypothesis = "Daily kernel exercises will improve semantic capacity without overwhelming the codebase if each exercise declares focus, disciplines, region, brand physics, intensity, semantic operation, output, validation, and do-not-touch."
     spec_ref = ".spw/conventions/daily-kernel.spw#kernel_shape"
-    impl_ref = ".agents/plans/daily-kernel-development/PLAN.md + daily-kernel-note template + future insight caches"
+    impl_ref = ".agents/plans/archive/daily-kernel-development/PLAN.md + daily-kernel-note template + future insight caches"
     probe_ref = "Review a daily kernel note; confirm it can be completed or audited in one session without broad CSS/JS exploration."
     falsification = "A daily kernel turns into broad redesign, broad runtime cleanup, or unbounded metaphor with no validation path."
     status = "active"

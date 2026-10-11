@@ -1,0 +1,23 @@
+# Review 2026-10-10 — two open questions for the creator (prices as shipped, film backer); archive when October closes.
+# Plan Index — ecosystem-offer-2026-10
+#
+# PLAN.md sequences the season's offer copy. This file carries the questions
+# only the creator can settle; financial and sponsorship wording waits on them.
+
+#>wonder_ecosystem_offer_prices
+?["Do the prices shipped in b5bf993c on the /services/ bundle composer stand as the creator set them, or should any figure change?"]{
+  #:depth #!sociological ~#lens(projection)
+  ~#with: @plan @services_bundle_composer
+  ~#tension: "The creator asked for granular options on 2026-09-28, and the figures shipped the same day from the plan's draft list. Financial wording waits on the creator's confirmation by design, so the figures on the page are provisional until then."
+  !probe{ "Open /services/ and read the small-jobs lane, the add-ons and the care plans line by line; confirm each figure or name the change." }
+  ~<"./PLAN.md"> ~<"../../../services/index.html">
+}
+
+#>wonder_ecosystem_offer_film_backer
+?["What does a film backer receive for backing the film's production-season promotion?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#with: @plan @film_topic @services_support
+  ~#tension: "The offer speaks of backers who become part of the movie, but no page says what that means: a credit, a cameo, thanks, or something else. Sponsorship wording waits on the creator's confirmation before it appears."
+  !probe{ "Name what a backer receives, in the creator's words. One card on /services/ with a DM link and a prefilled message can then carry it." }
+  ~<"./PLAN.md"> ~<"../../../topics/film/index.html">
+}

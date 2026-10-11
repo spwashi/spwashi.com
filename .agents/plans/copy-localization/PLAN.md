@@ -1,6 +1,6 @@
 # Plan: copy-localization
 
-**Status 2026-10-06.** Phase 0 is in progress (`copy-accessor.spw`, `audit:copy:accessor`). Phase 1, a one-route locale build seam on `/` or `/about/`, has not started.
+**Status 2026-10-10.** Phase 0 now pays off in search: a typed copy key lands on its sentence (898917a9), and the home and design ledes are keyed by sentence (9c8a7d97, 6aa94d90). Next slice: key the next page's ledes the same way when a pass already has that host open; `.spw/audits/copy-accessor-cluster-2026-09.spw` is the ledger and `npm run audit:copy:accessor` the sensor. Phase 1 onward is dormant until the creator names a locale. `scripts/template.mjs` already emits `lang`, `spw:source-locale`, `og:locale` and `hreflang` alternates (since ccafd1ac), so the metadata half of the build seam exists.
 
 **Related:** [blog-blob-spw](../blog-blob-spw/PLAN.md) · [component-region-personality](../component-region-personality/PLAN.md).
 
@@ -25,7 +25,7 @@ The desired end state is a site that can publish multiple language variants with
 [MOD?] scripts/template.mjs — support locale-scoped copy includes or translation projection hooks
 [MOD?] scripts/build.mjs — emit locale variants and preserve a source-vs-derived distinction in the build
 [MOD?] scripts/generate-sitemap.mjs — emit per-locale canonicals and alternate-language links
-[MOD?] _partials/head-meta.html — locale-aware canonical, `lang`, and `hreflang` metadata
+[REF] scripts/template.mjs — already emits `lang`, `spw:source-locale`, `og:locale`, and `hreflang` alternates from page vars (`locale`, `source_locale`, `alternate_locales`); canonical rules land here too
 [MOD?] route `index.html` files — shift selected copy into locale-addressable authored units without flattening page structure
 [NEW?] source locale copy surfaces under a dedicated top-level like `content/` or `locales/`
 [NEW?] `.agents/plans/copy-localization/localization-architecture.spw` — only if implementation grows beyond the convention note
@@ -84,12 +84,12 @@ Craft guard:
 
 ## Implementation Phases
 
-1. **Phase 0: semantic preparation**
-   Define stable copy-unit ids, locale naming rules, and Spw translation vocabulary.
+1. **Phase 0: semantic preparation (keys land search on a sentence)**
+   Define stable copy-unit ids, locale naming rules, and Spw translation vocabulary. The felt outcome today is search: a typed key lands a reader on its sentence (898917a9). Home and design ledes are keyed by sentence (9c8a7d97, 6aa94d90); the audit ledger is `.spw/audits/copy-accessor-cluster-2026-09.spw`.
    A copy-unit becomes a **hypermedia localization key** when its host has an `id` (route + hash). Track claims and intended tone in `.spw` audits, not a fourth HTML family. Do not twin routes with `.spw/<route>/index.spw`. See `.spw/caches/copy-hypermedia-key-2026-09.spw` and `.spw/conventions/copy-accessor.spw#authoring`.
 
-2. **Phase 1: build seam**
-   Add locale-aware template/build support without changing every route. Prove it on one route such as `/` or `/about/`.
+2. **Phase 1: build seam** (dormant until the creator names a locale)
+   Add locale-aware template/build support without changing every route. Prove it on one route such as `/` or `/about/`. The head metadata already exists in `scripts/template.mjs`; what is missing is emitting a locale variant route and its sitemap alternates.
 
 3. **Phase 2: first locale slice**
    Add one non-English locale for a small, high-signal route cluster and wire canonical/alternate metadata correctly.

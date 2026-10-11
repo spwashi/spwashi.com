@@ -1,8 +1,8 @@
 # Plan: profile-character-card-development
 
-**Status 2026-10-06.** Substrate and slots landed (`data-spw-slot` in `modules/profile/builder.js`). The cast lens and author handoff have not started.
+**Status 2026-10-10.** Substrate and slots landed (`data-spw-slot` in `public/js/modules/profile/builder.js`). Since 2026-10-10 this plan also owns the RPG Wednesday route, whose current direction is the Inktober table (0814de8e). The cast lens and author handoff have not started: `/play/rpg-wednesday/cast/` has no cards. Next slice: one cast card promoted from one session note. Gate: the creator picks the figure and the session.
 
-**Related:** [skill-folio-operating-system](../archive/skill-folio-operating-system/PLAN.md) (archived). **Absorbed 2026-10-06:** [rpg-character-hub](../archive/rpg-character-hub/PLAN.md) · [rpg-session-notes](../archive/rpg-session-notes/PLAN.md).
+**Related:** [skill-folio-operating-system](../archive/skill-folio-operating-system/PLAN.md) (archived). **Absorbed 2026-10-06:** [rpg-character-hub](../archive/rpg-character-hub/PLAN.md) · [rpg-session-notes](../archive/rpg-session-notes/PLAN.md). **Absorbed 2026-10-10:** [rpg-portal-fantasy](../archive/rpg-portal-fantasy/PLAN.md) (route ownership).
 
 Refine the shared concept behind the existing profile builder, character sheet builder, and future cast references so they read as one development model instead of adjacent tools with overlapping language, and so their editorial utility is explicit rather than incidental.
 
@@ -44,9 +44,9 @@ It should not require:
 [MOD?] tools/profile/index.html — if the route copy should explicitly describe lensing rather than a single professional use case
 [MOD?] tools/character-sheet/index.html — if the route copy should explicitly describe shared substrate plus translation lens
 [MOD?] play/rpg-wednesday/cast/index.html — if future cast entries should be framed as character-card promotions rather than generic references
-[MOD?] public/js/spw-profile-builder.js — if the data model should expose lens, development state, or card family more explicitly
-[MOD?] public/js/spw-profile-tool.js — if presets should become named lenses instead of route-specific presets only
-[MOD?] public/css/profile-card.css — if development-state and family semantics need clearer variable contracts
+[MOD?] public/js/modules/profile/builder.js — if the data model should expose lens, development state, or card family more explicitly
+[MOD?] public/js/modules/profile/tool.js — if presets should become named lenses instead of route-specific presets only
+[MOD?] public/css/components/cards/profile-card.css — if development-state and family semantics need clearer variable contracts
 [MOD?] .agents/plans/blog-blob-spw/PLAN.md — if blobs become a source object for some profile/character cards
 [MOD?] .agents/plans/archive/rpg-session-notes/PLAN.md — if session notes become a source object for cast-card promotion
 
@@ -84,7 +84,7 @@ The concept gap is not renderer capability. The gap is doctrine: what kind of th
    - `cast lens` for recurring campaign references
 
 ## 2026 Self-Imagination + Funding/Services Tranche (Cross-Ref)
-This tranche (detailed in expressive-layout-tropes-fidget-manuscript/PLAN.md "Funding, Services..." section and funding-proof-cards/PLAN.md) makes the character/profile card system an explicit instrument for **self-imagination as funding and capacity development**:
+This tranche (detailed in ../archive/expressive-layout-tropes-fidget-manuscript/PLAN.md "Funding, Services..." section and ../archive/funding-proof-cards/PLAN.md) makes the character/profile card system an explicit instrument for **self-imagination as funding and capacity development**:
 
 - Character Sheet Builder is reframed (in copy + optional flows) as the place where a creator practices the personality, theme, and developmental posture of the self/work that will later commission or be commissioned.
 - Optional process flows (playful random seeds, wonder-primed generation, lens cycling, priming pressures to cauldron) reduce friction while inviting depth. The card becomes a living record of "who I am becoming in order to do the next work."
@@ -96,8 +96,8 @@ This tranche (detailed in expressive-layout-tropes-fidget-manuscript/PLAN.md "Fu
 No change to the shared renderer or core data model unless a future patch requires it. This work keeps the card substrate honest as a portable, multi-lens identity instrument while giving it a clear role in the funding/self-prep ecology.
 
 See also:
-- expressive-layout-tropes-fidget-manuscript/PLAN.md (primary coordination + execution log)
-- funding-proof-cards/PLAN.md (funding surface evolution)
+- ../archive/expressive-layout-tropes-fidget-manuscript/PLAN.md (archived; execution log)
+- ../archive/funding-proof-cards/PLAN.md (archived; funding surface evolution)
 
 ### Clarity of Semantic Layers, Option/Subitem Flow/Wrapping/Hierarchy, Component Composition (Current Pass)
 This pass directly addressed "clarity of semantic layers, option or subitem flow/wrapping/hierarchy; component composition":
@@ -260,3 +260,9 @@ Author-handoff rule:
 ## Recommendation
 
 Treat the existing profile-card system as a shared identity-card substrate with explicit lenses rather than route-specific one-off concepts. Keep the renderer family unified, let routes choose projection rules, and let future blog blobs and RPG session notes serve as source seams for deeper card development. Editorially, treat cards as compact recurring reference objects that help prose stay anchored, not only as exportable artifacts. For future hired authors, treat cards as compact briefing surfaces that preserve identity, pressure, and terminology without replacing a fuller assignment brief.
+
+## Absorbed 2026-10-10 — rpg-portal-fantasy (RPG Wednesday route)
+
+Source: [rpg-portal-fantasy](../archive/rpg-portal-fantasy/PLAN.md). Its patches 001–012 landed by 2026-05-27; Patch 012's home consequence block left `index.html` in a7cacb5d, and its Kernel Codex station never started. It is not carried here. This plan now answers for `/play/rpg-wednesday/`.
+- Current direction (0814de8e, creator 2026-09-28): the table is joined on your own time (make a character, bring a doodle, keep a sheet). `#inktober-31` offers a piece a day or a batch scanned by the 31st. Its closes `*ink[13]{A}`, `*ink[26]{B}`, `*ink[31]{C}` light through `public/js/modules/rpg-wednesday/morale-closes.js`, stay in the reader's browser, and read as plain milestones with JS off.
+- Keep: no invitation to live sessions, and no copy that assumes a fixed group. The legal name stays off the name-cadence easter egg. The fantasy is a projection layer that never replaces the home's identity, and portal language must feel earned rather than bolted on.

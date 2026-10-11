@@ -17,7 +17,7 @@ Phase 1 + 1b deliverable. Measurements are file counts (`rg -l`), not occurrence
 | panel | 77 | 50 | 131 | topology workhorse (also inflated: generic panels) |
 | vessel | 5 | 3 | 1 | topology word, barely realized |
 | dock | 8 | 8 | 14 | a state (docked), not a place |
-| pocket | 1 | 2 | 3 | one metaphor, one component (section-context) |
+| pocket | 1 (15 on 2026-10-10) | 2 (7) | 3 (48) | July: one metaphor, one component (section-context). October: the phone-frame word across the shell ("pocket chrome" in CLAUDE.md); recount excludes bundles, generated JS, `.agents` and the workbench |
 | section-context | 2 | 0 | 0 | the pocket's formal name |
 | disclosure | 9 | 7 | 67 | behavior word, owned by navigation-header-disclosure |
 | trace | 11 | 19 | 211 | inflated in .spw; header trace is the structural sense |

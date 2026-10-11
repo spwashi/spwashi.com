@@ -1,6 +1,8 @@
 # Semantic Copy Depth
 
-**Status 2026-10-06.** The Proficiency Production Note slice landed (`.spw-production-note` in `content.css`, `/about/`, `/play/rpg-wednesday/`). Next: the thought trace. Holds tone and voice, the reading groove and editorial readability.
+**Status 2026-10-10.** The Proficiency Production Note slice landed (eba561ba: `.spw-production-note` in `content.css`, `/about/`, `/play/rpg-wednesday/`). Next slice: the thought trace on `/topics/slop/#feeling` and `/topics/math/#pure-math-routes`; neither host carries a `(turn)` expression yet. It waits on the creator's answer to whether the slop citation paragraphs are a display case at all (`#>wonder_semantic_copy_depth_slop_feeling` in `index.spw`). Holds tone and voice, the reading groove, editorial readability, and the entrance routes.
+
+**Related:** [audience-onboarding-copy](../archive/audience-onboarding-copy/PLAN.md) (absorbed 2026-10-10, below).
 
 **Absorbed 2026-10-06:** [editorial-readability](../archive/editorial-readability/PLAN.md) · [fairytale-cookbook-theory](../archive/fairytale-cookbook-theory/PLAN.md) · [narration-markup-cold-reads](../archive/narration-markup-cold-reads/PLAN.md) · [typography-reading-groove](../archive/typography-reading-groove/PLAN.md) · [voice-grounding-pass](../archive/voice-grounding-pass/PLAN.md).
 
@@ -94,3 +96,13 @@ Markup, on the stems that exist:
 The rewrite test is the slop page's own test: a reader can restate the point. A rewrite that reaches for "not a list, but a journey", a closing echo, or a fresh rule of three has imported the smell. The cache names that failure.
 
 Validation, when the slice lands: `npm run audit:copy:accessor`, `npm run manifest:expressions` if an expression changed, and the paragraph read aloud. If it still sounds like a contents page, it is still a case.
+
+## Absorbed 2026-10-10 — audience-onboarding-copy
+
+[audience-onboarding-copy](../archive/audience-onboarding-copy/PLAN.md) refined the entrance routes (`/`, `/about/`, `/services/`, `/topics/`, `/tools/`). That copy landed.
+
+- Settled by the creator (4d4b7262): entrance copy speaks to the visit a reader is on, not to who they are. A reader may be an academic, a business reader, both, or neither on a given visit. The old plan's freshman-and-professional ramp retires with it.
+- Landed: the first-fold miss it named, the unkeyed `#home-reason-why`, now has a key (9c8a7d97; `.spw/audits/copy-accessor-cluster-2026-09.spw`).
+- Still owed: whatever `npm run audit:copy:accessor` flags in those five routes' first folds. A first-fold sentence either names a control and its receipt, or is identity that does not pretend to be a mechanism (`.spw/caches/copy-hypermedia-key-2026-09.spw`).
+- Rule kept: an entrance sentence may name a next stop. A paragraph whose job is the list of stops is a display case (Thought trace, above). Internal references add clarity; they must not become a second menu.
+- The site is the résumé: `/about/#about-years` and `/about/#career-register` hold the year and practice records.

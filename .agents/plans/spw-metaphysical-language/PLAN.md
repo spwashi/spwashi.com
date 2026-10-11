@@ -1,8 +1,8 @@
 # Plan: spw-metaphysical-language
 
-**Status 2026-10-06.** 1 of 10 phased commits landed; there is no codex, matrix or protocol yet. Next slice: the construct-codex shell, which is also spw-architecture-ecology wave D.
+**Status 2026-10-10.** Only commit 1 of 10 has landed (plan, wip and index, 009acd60); there is still no codex, matrix or protocol, and `.spw/conventions/construct-codex.spw` does not exist. The one next slice is that file as a minimal shell: header, a drift_ledger facet, and operator entry stubs that cite their owner conventions. The shell has no gate; any change to an operator's meaning needs creator sign-off.
 
-**Related:** [spw-language-v04](../spw-language-v04/PLAN.md) · [compositional-css-electrostatics](../compositional-css-electrostatics/PLAN.md) · [language-reclustering](../language-reclustering/PLAN.md).
+**Related:** [spw-language-v04](../spw-language-v04/PLAN.md) · [compositional-css-electrostatics](../archive/compositional-css-electrostatics/PLAN.md) · [language-reclustering](../archive/language-reclustering/PLAN.md). **Absorbed 2026-10-10:** [spw-architecture-ecology](../archive/spw-architecture-ecology/PLAN.md) (wave D).
 
 Mature Spw from a site grammar into a described metaphysical language: a complete
 construct codex, a sigil-property study that arbitrates semantic alignment, a
@@ -28,14 +28,17 @@ it is the product line maturing.
 
 The canon has grown faster than its self-description, and the seams show:
 
-- **Registry drift.** The original set (`~ # . ? ! * & @ ^ <> () [] {}`) in
-  `operator-semantics.spw#lineage`, the site registry in
-  `operator-alignment.spw`, and the fourteen-family list in
-  `spw-operator-pages/wip.spw` (`#> #: . ^ ~ ? @ * & = $ % ! >`) do not agree
-  on membership, and no surface says which list is authoritative for which
-  layer.
-- **Assignment drift.** `@` is glossed "enters perspective" in
-  `operator-alignment.spw` but corrected to **ref** in author feedback; `%` is
+- **Registry drift (resolved 2026-09, 868e9b6b).** There was never a second
+  sigil table. `public/js/kernel/operator-detection.js` is the one character
+  table, and every authority assigns the same character to the same force.
+  What coexists is two name sets, canonical types and atlas slugs, mapped
+  row by row in `.spw/language/operator-namespace-alignment.spw` (`^"table"`).
+  Drift left over: the blog Spw.b legend words and the stale `site_aliases`
+  under `@` in `operator-site-projection.spw` (both in that file's open rows).
+- **Assignment drift.** `@` is two layers on one character: perspective as a
+  semantic operator, ref/address as a `.spw` notation sigil
+  (`operator-semantics.spw#workbench_canon` holds this as the one open
+  decision); `%` is
   listed as "meta"/"normalize" while the author reads the glyph as
   **measurement/reduction** (ratio, partition, collapse-to-a-measure); `&`
   (subject) sits ambiguously between `.` and `^` and may reduce into `.`
@@ -172,7 +175,7 @@ drift-ledger entry (Workstream B), not a silent rewrite.
 
 | id | tension | evidence to gather |
 |---|---|---|
-| drift-at-001 | `@` = ref (author) vs perspective (registry) | glyph lineage (@ = address/handle), atlas copy, runtime `data-spw-operator='@'` uses; candidate synthesis: *ref-as-entered-perspective* — a reference you can stand inside |
+| drift-at-001 | `@` layering: perspective in the operator set (operator-detection.js, atlas, AGENTS.md agree) vs ref/address in `.spw` notation (`@name: ~"path"`); keep the layers or unify them (`operator-semantics.spw#workbench_canon`) | glyph lineage (@ = address/handle), `operator-namespace-alignment.spw` table row `@`; candidate synthesis: *ref-as-entered-perspective*, a reference you can stand inside |
 | drift-pct-002 | `%` = meta/normalize vs measurement/reduction | glyph geometry (two masses over a divider), `measurement-contract.spw`, `%` chip uses |
 | drift-amp-003 | `&` subject placement; possible reduction into `.` (subject-as-traversal: pointing and reaching-into as one gesture) | composition-family uses of `&`, brace-gesture data, confluence copy |
 | drift-hash-004 | `#`-repetition as dimensional channel tuning (d1 time … d5 meaning) — undocumented | `#`/`##` uses in .spw files, dimension-vocabulary.spw, cognitive-navigation dimensions |
@@ -454,7 +457,7 @@ research and arbitration never fork.
 
 ## Validation Loop
 
-- `git diff --check`; `npm run check` after any HTML/CSS/JS touch.
+- `git diff --check`; `npm run check:local` after any HTML/CSS/JS touch.
 - Codex completeness probe: every `data-spw-operator` value and every sigil in
   `operator-alignment.spw#operator_registry` has a codex entry (`rg` audit).
 - Drift-ledger probe: each ledger row has claim_id, evidence refs, and status.
@@ -507,6 +510,15 @@ research and arbitration never fork.
   needs props before cards?
 - Do sound signatures need a notation of their own, or does the existing
   expression syntax suffice as a score?
+
+## Absorbed 2026-10-10 — spw-architecture-ecology
+
+[spw-architecture-ecology](../archive/spw-architecture-ecology/PLAN.md) landed its relational graph, ecology coordinators and owner registry (2248aea8). Two things are still owed, and both are here now:
+
+- **Wave D, the codex shell.** `.spw/conventions/construct-codex.spw` with a header, a `drift_ledger` facet, and operator entry stubs. It is this plan's next slice (Status above).
+- **Rule kept: the minimal shell first.** The shell bridges to owner conventions with `@refs` and adds only shape and drift notes. This plan owns any expansion past it.
+
+Not carried: `scripts/validate-conventions.mjs` was never written, and `.spw` checks now go through the workbench CLI (`spw:doctor`, `spw:format:check`). Wave H, slimming `site.spw`, goes to [agent-optimization](../agent-optimization/PLAN.md).
 
 ## Agentic Hygiene
 

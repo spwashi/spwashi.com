@@ -5,7 +5,7 @@
 #:layer #!pragmatics
 
 @modular_slices: ~"./modular-experience-slices-volleyball.spw"
-@language_ladder: ~"../../.agents/plans/language-ladder-runtime-instrumentation/PLAN.md"
+@language_ladder: ~"../../.agents/plans/archive/language-ladder-runtime-instrumentation/PLAN.md"
 @reference_assignment: ~"../../.agents/plans/reference-assignment-template/PLAN.md"
 @agent_optimization: ~"../../.agents/plans/agent-optimization/PLAN.md"
 @css_instruction: ~"../conventions/css-instruction.spw"

@@ -20,7 +20,7 @@
 @region_ecology: ~"./region-component-ecology.spw"
 @layout_qa: ~"../audits/layout-qa-measurement-2026-07/index.spw"
 @perf_matrix: ~"../../scripts/perf-matrix.mjs"
-@visual_plan: ~"../../.agents/plans/visual-capture-ecology/PLAN.md"
+@visual_plan: ~"../../.agents/plans/archive/visual-capture-ecology/PLAN.md"
 
 ^"thesis"{
   claim = `Screenshot value comes from named capture *tracks* (qa device-reason vs social content-fit) plus a manifest agents can read — not from dumping full-page PNGs into git.`

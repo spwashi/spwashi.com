@@ -1,12 +1,12 @@
 # Settings Ornament Resonance
 
-**Status 2026-10-08.** The `/settings/` specimen bay landed as the settings shelf, which replaced Quick Start: aisles of boxes (looks, reading, fixes, kits, writing, motion, views, instruments), each look photographed in its own pack (`.spw-theme-specimen`), and a "wearing now" window with the readouts and the deviation register (`routes/surfaces/settings-shelf.css`). The wonder-memory rail ornament went with Quick Start. The satchel synthesizer is still at its sensation gate (d0244132, `?spw-satchel=rail`). Next: guided or pivot-oriented ways to try looks, chosen from a mock; the creator ruled out a random pick as ambiguous. The shelf's words wait on the creator's copy-unit pass.
+**Status 2026-10-10.** The settings shelf landed (b2eda400) and replaced Quick Start: 53 boxes in eight aisles, each look's box worn in its own pack, and a "wearing now" window with the live readouts and the deviation register. This plan is now the settings umbrella; runtime-settings landed and was archived 2026-10-10. Next slice: a mock of guided or pivot-oriented ways to try a look, gated by the creator's pick in the browser (a random pick was ruled out as ambiguous). The shelf's words wait on the creator's copy-unit pass.
 
-**Related:** [runtime-settings](../runtime-settings/PLAN.md) · [floating-chrome-stack](../floating-chrome-stack/FIX.md) · [chrome-navigation-wonder](../chrome-navigation-wonder/PLAN.md).
+**Related:** [runtime-settings](../archive/runtime-settings/PLAN.md) (absorbed 2026-10-10) · [settings-theme-wiring](../settings-theme-wiring/FIX.md) · [floating-chrome-stack](../floating-chrome-stack/FIX.md) · [chrome-navigation-wonder](../chrome-navigation-wonder/PLAN.md).
 
 ## Public Goal
 
-Let a reader make immediate lighting, theme, type-scale, flourish, and memory choices from the Settings quick start, with visible comparisons and accessible pressed states.
+Let a reader pick up a look, reading size, fix, kit, writing mode, motion level, view or instrument from the `/settings/` shelf, see the change on the box and in the "wearing now" window before scrolling away, and find the box they are wearing pressed.
 
 ## Non-Goals & Boundaries
 
@@ -16,9 +16,17 @@ Let a reader make immediate lighting, theme, type-scale, flourish, and memory ch
 
 ## Seams & Minimal Touch Files
 
-- Route HTML: `settings/index.html` adds direct native-button controls with full labels.
-- Route CSS: `public/css/routes/surfaces/settings-forms.css` makes compact scales compare safely in horizontal and vertical space.
-- Runtime JS: `public/js/interface/site-settings-ui.js` projects saved wonder-memory state into the existing ornament vocabulary; all other controls use the canonical trigger binding.
+- Route HTML: `settings/index.html` `#presets` holds the shelf: native `button` boxes with `data-site-setting-set`, aisle chips, and the "wearing now" window. The ids other pages link to (`#presets`, `#reader-builder-modes`, `#live-interaction-playground`) stay.
+- Route CSS: `public/css/routes/surfaces/settings-shelf.css` (registered in `style.css` and the settings bundle); look specimens match `.spw-theme-specimen[data-spw-theme-pack]` in `public/css/themes/packs.css`.
+- Runtime JS: `public/js/interface/site-settings-ui.js` calls `ensureThemePackStyles(undefined, { specimens: true })` when a `.spw-theme-specimen` is on the page, so every look's box wears its pack on the default look; boxes use the canonical trigger binding. The wonder-memory rail sync left with Quick Start.
+
+## Absorbed 2026-10-10 — runtime-settings
+
+[runtime-settings](../archive/runtime-settings/PLAN.md) landed: `/settings/`, the engine (`public/js/kernel/site-settings-engine.js`), `rewardDisplay`, and the `component-collection` persistence register. The rules still binding the umbrella:
+
+- Settings stay local-only, with no account sync, and pages stay usable with JavaScript off.
+- Unavailable storage must not crash the runtime; quiet and hidden modes must not remove a route's way back to `/settings/`.
+- Clearing collections calls `window.spwComponentCollection.reset('settings-clear')` when present (`site-settings-engine.js:589-591`); only the registry fallback removes the storage key directly. `component-collection.js` owns the data model.
 
 ## Validation Steps
 
@@ -29,6 +37,8 @@ Let a reader make immediate lighting, theme, type-scale, flourish, and memory ch
 
 ## The satchel as a site-nav synthesizer — proposal, 2026-09-19
 
+**Owner 2026-10-10:** the satchel rebuild goes to [runtime-plane-consolidation](../runtime-plane-consolidation/PLAN.md), which absorbed `runtime-module-decomposition`; this section stays as the proposal and its sensation gate.
+
 What landed: the satchel's seams and tags toggles are settings now (`debugMode`, `showSemanticMetadata`), owned by the engine and mirrored by the satchel. That removes the reason it read as decorative: a toggle that did not persist and that the next settings apply reset.
 
 What is proposed, ending at a demo:
@@ -37,7 +47,7 @@ What is proposed, ending at a demo:
 - **Synthesizer, not inspector.** Replace the toggle list with a small patch bay: the four or five settings that change what a page *is* right now (lighting, type scale, semantic density, operator presentation, reward display), each a `data-site-setting-set` control the settings page already binds, each showing its current value and the deviation from default the engine already computes (`listDeviations`). Nav lives in the same bay: the frame navigator's current room and the two adjacent rooms, so the satchel is where you tune the page and where you move through it.
 - **Tokens as the readout.** Each control shows the token it drives (`--site-root-font-size`, `--spw-operator-saturation`, …) the way the token navigator does, so the satchel is the live end of that index.
 - **Snapshot and copy stay.** `copy page Spw` is the satchel's best feature; it stays as the bay's output jack.
-- **Kill the drag.** Corner snapping and drag state are most of `state-inspector.js` (1,251 lines); a bay that lives in the bottom lane with the section handle needs neither.
+- **Kill the drag.** Corner snapping and drag state are most of `state-inspector.js` (1,281 lines on 2026-10-10); a bay that lives in the bottom lane with the section handle needs neither.
 
 Seams: `public/js/interface/state-inspector.js` (rename to `state-satchel.js` per `runtime-module-decomposition` Phase 1.4 when it is rebuilt), `public/js/kernel/site-settings-engine.js` (`listDeviations`, `saveSiteSettings`, `data-site-setting-set` binding), `public/js/runtime/navigation/frame-navigator.js` (rooms), `settings/index.html#token-navigator` (token families), `floating-chrome-coherence.spw`. No new `data-spw-*` family: the bay is `[data-spw-chrome-role="state-inspector"]` with settings controls inside it.
 

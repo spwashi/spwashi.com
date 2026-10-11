@@ -1,8 +1,8 @@
 # Fix: Floating Chrome Stack
 
-**Status 2026-10-06.** The tier fix and lane lifecycle landed. This FIX closes after the Step 2 browser decision and the console button sizing call.
+**Status 2026-10-10.** Landed: the tier fix, the lane lifecycle (`848a0b46`), and Step 1's single control-size token (`a5f56bec`). Every floating control now reads `--spw-floating-control-size` from one block in `components/floating-chrome.css`. Next slice: the Step 2 browser demo, with a compact base and a coarse-pointer step keyed to pointer rather than width. It includes whether `ornament/whimsy.css`'s 48rem `:where(button, .spw-chip, label)` min-height should keep reaching floating chrome. It is gated on the creator's sensation review and on the console sizing question in `index.spw`. Corner sharing in the pocket lane moved here from cauldron-lens-composition (below).
 
-**Related:** [shell-model-vocabulary-consolidation](../shell-model-vocabulary-consolidation/PLAN.md) · [navigation-header-disclosure](../navigation-header-disclosure/PLAN.md). **Absorbed 2026-10-06:** [chrome-copy-collision](../archive/chrome-copy-collision/FIX.md) · [mobile-chrome-alignment](../archive/mobile-chrome-alignment/PLAN.md) · [narrative-grammar-infrastructure](../archive/narrative-grammar-infrastructure/PLAN.md).
+**Related:** [shell-model-vocabulary-consolidation](../shell-model-vocabulary-consolidation/PLAN.md) · [navigation-header-disclosure](../archive/navigation-header-disclosure/PLAN.md) · [cauldron-lens-composition](../cauldron-lens-composition/PLAN.md). **Absorbed 2026-10-06:** [chrome-copy-collision](../archive/chrome-copy-collision/FIX.md) · [mobile-chrome-alignment](../archive/mobile-chrome-alignment/PLAN.md) · [narrative-grammar-infrastructure](../archive/narrative-grammar-infrastructure/PLAN.md).
 
 ## Failures
 
@@ -61,3 +61,9 @@ The site already has the right ownership model: floating chrome belongs to a sha
 - The console's abortable listener adapter called itself instead of `document.addEventListener`, overflowing before the idle module could finish mounting. The same abort signal now owns each document subscription and teardown still removes the console, timer, and lane participant.
 - Floating chrome observation is lifecycle wiring, so annotation observes the element even when its descriptor was already complete. Remounted or authored chrome can therefore announce later size and departure changes without requiring a dataset mutation.
 - Regression gates cover the listener/abort pairing and idempotent observation. A settled Home navigation completed with zero console errors; the full module suite passed 330 tests.
+
+## Corner sharing — from cauldron-lens-composition, 2026-10-10
+
+The pocket lane packs by arithmetic, not by design. `kernel/dom-contracts.js` allocates the collection and cauldron slots, the pocket collection reduces to a 44px trigger, and `components/cauldron.css` takes its slot (`604d4a1d`). At 320px on `/about/` that measured promo 440–622, cauldron 651–695 and satchel 697–741. The promo, satchel, cauldron and travel rail still stack as separate utilities.
+
+Open, as a design pass after Step 2 settles control size: how these four share a corner, meaning what yields, what stays, spacing and hierarchy. No new attribute families. Feel is sensation-gated, so the pass ends at a browser demo. Measurements and history: [cauldron-lens-composition](../cauldron-lens-composition/PLAN.md).

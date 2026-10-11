@@ -163,5 +163,5 @@
   @size_tiers: ~"../../.agents/skills/image-optimize/references/size-tiers.spw"
   @slicing_script: ~"../../scripts/slice-render-primitives.mjs"
   @midjourney_promotion_rule: ~"../../.agents/plans/midjourney-design-concepts/PLAN.md"
-  @style_cohesion: ~"../../.agents/plans/style-image-cohesion/PLAN.md"
+  @style_cohesion: ~"../../.agents/plans/archive/style-image-cohesion/PLAN.md"
 }

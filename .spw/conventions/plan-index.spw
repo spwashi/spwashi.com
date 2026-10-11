@@ -113,7 +113,7 @@ fixity = "stable"
 
 ^"ontology_harmony"{
   when = `A plan holds two or more experimental or unstable models for the same job.`
-  template = ~"../../.agents/plans/model-guided-refinement/templates/ontology-harmony.spw"
+  template = ~"../../.agents/plans/reference-assignment-template/templates/ontology-harmony.spw"
   specimen = ~"../../.agents/plans/landing-visual-hierarchy/ontology-harmony.spw"
   job = `Make the chord indexed (named voices + status), structured (one seating voice), and responsive (question picks laboratory).`
   rule = `Optional. Do not add the block to plans with a single ontology. Status values: keep | climate | authored | flavor | demote | compare | private.`

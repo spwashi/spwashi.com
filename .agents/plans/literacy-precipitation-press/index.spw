@@ -95,3 +95,15 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+#>wonder_literacy_precipitation_press_rung_two
+?["Is the folio release shelf, or the RPG table shelf, already rung 2's bulletin board?"]{
+  #:depth #!educational ~#lens(arc)
+  ~#with: @bulletin_board @folio_release_shelf @inktober_table_shelf @seed_card
+  ~#taste: "A board is curation, not a feed: what pins there is residue a reader made or earned."
+  ~#hypothesis: "/design/folios/#release-set lays out the scanned set with native popovers and an ask that fills a seed card. /play/rpg-wednesday/#inktober-shelf waits for readers' art by the 31st. Either could be the first public board without a new route family."
+  ~#tension: "The ladder asks for seed cards, spell records and proof cards pinned together. The release shelf holds the creator's work and the table shelf holds readers' work, so naming either one the board decides whose residue the board is for."
+  !probe{ `rg -n 'id="release-set"|id="inktober-shelf"' design/folios/index.html play/rpg-wednesday/index.html` }
+  $%[board.rungTwo, board.whoseResidue]
+  ~<"./PLAN.md"> ~<"../folio-worktable/PLAN.md">
+}

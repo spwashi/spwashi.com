@@ -1,8 +1,8 @@
 # Reference Assignment Template
 
-**Status 2026-10-06.** Evergreen template; no backlog.
+**Status 2026-10-10.** The single owner for mentee and intern work: a brief to do the work, an insight cache when it should wait, a tending note to hand it off. Absorbed daily-kernel-development and language-ladder-runtime-instrumentation today, and took model-guided-refinement's templates. No filled brief exists yet. Next slice: one worked brief with its result note, the example every later brief copies; whether it hands out the sensory word lists is gated on `wonder_reference_assignment_word_lists` in `index.spw`.
 
-**Related:** [daily-kernel-development](../daily-kernel-development/PLAN.md) · [model-guided-refinement](../model-guided-refinement/PLAN.md).
+**Related:** [daily-kernel-development](../archive/daily-kernel-development/PLAN.md) (absorbed 2026-10-10) · [model-guided-refinement](../archive/model-guided-refinement/PLAN.md) (archived 2026-10-10; its templates live in `templates/`) · [language-ladder-runtime-instrumentation](../archive/language-ladder-runtime-instrumentation/PLAN.md) (absorbed 2026-10-10) · [modular-experience-slices](../modular-experience-slices/PLAN.md) (owns the tending note).
 
 ## Purpose
 
@@ -13,6 +13,14 @@ A reference can be a route, component, CSS selector, token, `.spw` note, screens
 Copy posture: make the assignment feel like a small chart. A component can play it, a route can answer it, and a result note can say whether the take should stay.
 
 Prompt posture: keep the work topically dense without becoming vague. A good prompt hook names a material, behavior, light cue, grounding point, and result note. Metaphor is useful when it gives the next editor or learner a handle they can test on a component.
+
+## Three Forms, One Key
+
+A mentee meets one key, taught once: name the owner, change one thing, leave a note the next person can read.
+
+- **Do the work:** the Assignment Brief below. It ends in a result note.
+- **Hold it for later:** `templates/semantic-insight-cache.spw`, when the insight is real and the patch should wait. Use `templates/ontology-harmony.spw` when one plan holds more than one experimental ontology.
+- **Hand it off:** `../modular-experience-slices/templates/tending-note.spw`, when work inside a slice passes to the next person.
 
 ## Assignment Brief
 
@@ -171,8 +179,31 @@ Runtime assignment:
 
 ```sh
 node --check public/js/<changed-file>.js
-npm run check
+npm run check:local
 git diff --check
 ```
 
 Manual checks should name the route, viewport, color mode, reduced-motion state, and keyboard interaction checked.
+
+## Absorbed 2026-10-10 — daily-kernel-development
+
+[daily-kernel-development](../archive/daily-kernel-development/PLAN.md) landed (`.spw/conventions/daily-kernel.spw`; kernels of 2026-08-21 and 2026-08-24, 64e09acc). Pair one primary discipline with one bridge discipline per brief:
+
+| discipline | enters through | watch for |
+|---|---|---|
+| engineer | site-semantics, dom-contracts, runtime module definitions | optimizing before the sensory or audience value is clear |
+| animator | attention field, motion tokens, operator resonance, cauldron gestures | motion where the page needs calm or reduced motion |
+| illustrator | palettes, image sidecars, grain, frame cards, seed cards | flourishes that do not map to route meaning |
+| designer | `/design/`, `/design/components/`, component contracts | renaming or wrapping components and losing inspectability |
+| musician | promo/wonder cadence, attention rhythm, play sessions, operator voices | metaphor with no timing or interaction contract |
+| actor, puppeteer | play routes, operator chips, frame/body/scope/capsule, spell replay | performance or puppet language with no beat, operator or brace |
+| fashion designer | tokens, material physics, product lines | a collection with no season boundary |
+
+Tune one brand-physics variable per brief. Default intensity is `quiet` or `studio`. Still open: two of the three no-code audits it asked for (studio, lab; theater ran 2026-08-21, 4c2ad94b); either makes a first brief.
+
+## Absorbed 2026-10-10 — language-ladder-runtime-instrumentation
+
+[language-ladder-runtime-instrumentation](../archive/language-ladder-runtime-instrumentation/PLAN.md): its instrumentation landed under other names (`public/js/runtime/arrival/load-trace.js`, `public/ts/module-timing-contract.ts`, 41f3311e). The curriculum half stays open here as a candidate brief:
+
+- **JS→TS ladder brief:** read the route as static HTML; observe runtime state; inspect one module's inputs, outputs and timing; compare two JS forms for one task; type the contract once its shape holds still. Follow the promotion rule in [site-starter-component-kit](../site-starter-component-kit/PLAN.md#component-fixture-and-typescript-promotion-2026-07).
+- Choices it left open: the first exemplar cascade (page boot, settings or composition) and the first typed boundary (settings state, runtime manifest or module registry shape).

@@ -67,7 +67,7 @@ This creates mild but growing friction for long-term human collaboration: return
 **3. References (consistency & navigability)**
 - Use the explicit short-name pattern everywhere possible:
   ```
-  @language_ladder: ~"../../.agents/plans/language-ladder-runtime-instrumentation/PLAN.md"
+  @language_ladder: ~"../../.agents/plans/archive/language-ladder-runtime-instrumentation/PLAN.md"
   @precipitates: ~"../conventions/precipitates-and-projections.spw"
   ```
 - Maintain a small "dispatch" or "roots" block near the top of index/review surfaces so readers (and future tools) have a single place to start traversal.
@@ -98,7 +98,7 @@ This creates mild but growing friction for long-term human collaboration: return
   - `contract`: promote repeated patterns into durable guidance
   - `archive`: reduce active semantic load while preserving context
 - Use `.spw/conventions/semantic-capacity.spw` as the canonical reference.
-- Use `.agents/plans/model-guided-refinement/templates/semantic-insight-cache.spw` when a small insight is enough.
+- Use `.agents/plans/reference-assignment-template/templates/semantic-insight-cache.spw` when a small insight is enough.
 
 ## Concrete Before/After Illustrations
 
@@ -298,7 +298,7 @@ Validation steps for any concrete patch:
 - [x] Plan written (with concrete examples, priority targets, dimensional sketch, sedimentation convention, and sibling integration)
 - [x] Companion .spw living spec exists at `.spw/reviews/spw-surface-normalization.spw` (points here; can be expanded with examples later)
 - [x] Semantic-capacity operation convention added at `.spw/conventions/semantic-capacity.spw`
-- [x] Insight-cache template added at `.agents/plans/model-guided-refinement/templates/semantic-insight-cache.spw`
+- [x] Insight-cache template added at `.agents/plans/reference-assignment-template/templates/semantic-insight-cache.spw`
 - [ ] Core conventions documented in planning-ecology.spw + css-instruction.spw (Phase 1)
 - [ ] Pilot surfaces (fundamentals + slices + precipitates + 1–2 indexes) updated
 - [ ] Sedimentation note convention piloted on at least one real cross-review movement

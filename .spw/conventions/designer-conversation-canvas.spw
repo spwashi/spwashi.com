@@ -8,7 +8,7 @@
 #:layer #!pragmatics
 
 @measurement_contract: ~"./measurement-contract.spw"
-@pretext_plan: ~"../../.agents/plans/pretext-whimsy-lab/PLAN.md"
+@pretext_plan: ~"../../.agents/plans/archive/pretext-whimsy-lab/PLAN.md"
 @designer_plan: ~"../../.agents/plans/designer-conversation-canvas/PLAN.md"
 @measurement_bus: ~"../../public/js/semantic/pretext-measurement-bus.js"
 

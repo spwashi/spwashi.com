@@ -1,6 +1,6 @@
 # Runtime Bootstrap Performance
 
-**Status 2026-10-07.** The section handle, utility row and posture pill write only what moved. On a `/about/` pocket scroll, two interleaved runs a side with HEAD served through CDP Fetch, their same-value records went 680/504 → 10/10 and handle childList 14/14 → 0/0; `change-only-writes.test.mjs` holds the utility row. What remains is `data-spw-nav-expression` on hash links, which two modules write (`semantic/link-copy.js`, `navigation/navigation-spells.js`) and which returns to its value within one batch. Next: the reader layer's operator-geometry flip from the same receipt. Holds the five threads of locomotion-collapse-redistribution.
+**Status 2026-10-10.** Landed in f1d0f74c: the section handle, utility row and posture pill write only what moved. On a `/about/` pocket scroll (two interleaved runs a side, HEAD served through CDP Fetch) their same-value records went 680/504 → 10/10 and handle childList 14/14 → 0/0; `change-only-writes.test.mjs` holds the utility row. Next slice: the reader layer's operator-geometry flip. `applyOperatorGeometry` (`semantic/sigil-annotation.js:64`) writes seven attributes and the reader strips one, reached from both `semantic/link-copy.js` and `runtime/navigation/navigation-spells.js`, which also share `data-spw-nav-expression` on hash links. Gate: the same scroll receipt, before and after. Holds the five threads of locomotion-collapse-redistribution.
 
 **Related:** [runtime-plane-consolidation](../runtime-plane-consolidation/PLAN.md) · [module-contract-overhaul](../module-contract-overhaul/PLAN.md) · [interaction-cache](../archive/interaction-cache/PLAN.md) (archived). **Absorbed 2026-10-06:** [locomotion-collapse-redistribution](../archive/locomotion-collapse-redistribution/PLAN.md).
 
@@ -86,17 +86,12 @@ When a reusable concept emerges (e.g., "load budget", "module cost class", "obse
 
 ## Patch Sequence (Phased, Reviewable)
 
-**Phase 0 — Orientation (this document)**
-- Create `.agents/plans/runtime-bootstrap-performance/PLAN.md`.
-- Cross-reference from `agent-optimization/PLAN.md`, `runtime-load-instrumentation/PLAN.md`, `runtime-module-fluency/PLAN.md`, and `js-runtime-composability/PLAN.md`.
-- Run initial `spw-plan-maintenance` hygiene after the file lands (if the skill is active).
-
 **Phase 1 — Parallel Immediate Mounts (smallest, highest-ROI patch)**
 - Refactor `mountImmediateLayer` (and any identical patterns) to collect qualifying definitions then `await Promise.all(...)` (or small concurrent batches) while preserving any ordering invariants that actually exist.
 - Add a single `performance.measure('spw:immediate-layer-parallel')` (or similar) so the existing instrumentation immediately shows the win.
 - Keep the per-module `spw:module:*` marks/measures and logger events unchanged.
 - Update the module contract comment in `site.js` to note the parallel expectation for independent immediate work.
-- Validation: `node --check`, `git diff --check`, `npm run check`, smoke on home + a long content route with `?spw-runtime-timing=normal` and with `quiet`.
+- Validation: `node --check`, `git diff --check`, `npm run check:local`, smoke on home + a long content route with `?spw-runtime-timing=normal` and with `quiet`.
 
 Implementation note: the per-layer mount loop is now concurrent, `site.js` keeps core immediate modules ordered first, and feature/enhancement immediate layers mount together with label-safe marks (`spw:immediate-layer:core:parallel`, `spw:immediate-layer:feature:parallel`, `spw:immediate-layer:enhancement:parallel`) plus `spw:immediate-non-core-layers` for the overlapped wave. Independent visible/idle prefetch hinting also runs concurrently after the immediate wave.
 
@@ -133,7 +128,7 @@ the console feature.
 For every landed patch:
 - `git diff --check`
 - `node --check public/js/site.js` (and any edited kernel/runtime modules)
-- `npm run check` (full, or at minimum the typecheck + runtime build + check-site + generated checks portions)
+- `npm run check:local` (full, or at minimum the typecheck + runtime build + check-site + generated checks portions)
 - Targeted `rg` for the changed mount loops, policy paths, and any new timing marks
 - Browser smoke (multiple routes, multiple timing policies):
   - DevTools Performance recording shows reduced "immediate layer" duration and better parallel network/parse lanes.

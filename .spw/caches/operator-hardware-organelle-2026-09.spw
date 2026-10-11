@@ -30,7 +30,7 @@
 @module_kinship: ~"../audits/module-ecology-kinship-2026-09.spw"
 @touch_class: ~"./touch-control-class-2026-09.spw"
 @interaction_microstates: ~"../conventions/interaction-microstates.spw"
-@insight_template: ~"../../.agents/plans/model-guided-refinement/templates/semantic-insight-cache.spw"
+@insight_template: ~"../../.agents/plans/reference-assignment-template/templates/semantic-insight-cache.spw"
 
 operation = "prime"
 fixity = "experimental"

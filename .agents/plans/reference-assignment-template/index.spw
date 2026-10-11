@@ -83,3 +83,15 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+#>wonder_reference_assignment_word_lists
+?["Should a mentee receive the sensory word lists and the math-to-recipe ladder as given, or derive their own set before the first brief?"]{
+  #:depth #!educational ~#lens(choice)
+  ~#with: @plan
+  ~#taste: "Tacit knowledge taught on purpose: a list handed over teaches the creator's taste, a list derived teaches how taste forms."
+  ~#hypothesis: "PLAN.md names fixed axes: materials (paper, vellum, broth, enamel), motions, lights, math handles, and a ladder from abstraction to recipe to owner. No filled brief exists yet, so no mentee has used them."
+  ~#tension: "Given lists make the first brief fast and on-voice; derived lists make it slower and the mentee's own. The worked example will set the habit either way."
+  !probe{ `rg -n "Material:|Motion:|Light:|Math handle:" .agents/plans/reference-assignment-template/PLAN.md` }
+  $%[mentee.wordList, brief.example]
+  ~<"./PLAN.md"> ~<"../modular-experience-slices/templates/tending-note.spw">
+}

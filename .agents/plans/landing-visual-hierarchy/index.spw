@@ -22,9 +22,9 @@ date = "2026-08-21"
 @harmony: ~"./ontology-harmony.spw"
 @grower: ~"./pnsb-grower.spw"
 @session: ~"./session-2026-08-21.spw"
-@measured_companion: ~"../landing-page-hierarchy-2026-08-21/index.spw"
-@route_census: ~"../landing-page-hierarchy-2026-08-21/route-census.spw"
-@hierarchy_lens: ~"../landing-page-hierarchy-2026-08-21/hierarchy-lens.spw"
+@measured_companion: ~"../archive/landing-page-hierarchy-2026-08-21/index.spw"
+@route_census: ~"../archive/landing-page-hierarchy-2026-08-21/route-census.spw"
+@hierarchy_lens: ~"../archive/landing-page-hierarchy-2026-08-21/hierarchy-lens.spw"
 @wrap_jobs: ~"../archive/wrap-job-utility/PLAN.md"
 @card_grid: ~"../archive/card-grid-density-audit/PLAN.md"
 @typography_packing: ~"../../../.spw/conventions/typography-packing.spw"
@@ -148,3 +148,27 @@ validation: #[
   `npm run audit:copy:align`,
   `npm run check:local`
 ][reg=set]
+
+#>wonder_landing_visual_hierarchy_projects_nav
+?["Should Projects join the eight primary navigation items?"]{
+  #:depth #!experiential ~#lens(threshold)
+  ~#with: @public_nav_items @sw_core_routes @projects_hub @route_census
+  ~#taste: "A route earns the primary nav when a first visit would miss it, not when it is finished."
+  ~#hypothesis: "Home, Now and about/website/ already link /projects/. The nav would make it a ninth landing that every phone menu carries."
+  ~#tension: "Joining the nav also means sw.js CORE_ROUTES and a ninth route in this plan's census and gates. Staying out keeps the eight-route fingerprints as they are."
+  !probe{ `rg -n "href: '/projects/'" scripts/template.mjs sw.js` }
+  $%[nav.primary, nav.coreRoutes, landing.census]
+  ~<"../archive/projects-hub/PLAN.md">
+}
+
+#>wonder_landing_visual_hierarchy_one_rail
+?["Which rule wins at the top of a landing: at most one above-fold action rail, or no universal hero shape?"]{
+  #:depth #!stylistic ~#lens(constraint)
+  ~#with: @validation_rail_cap @route_fingerprints @session_packets
+  ~#taste: "A first visit reads identity, one notice, one action, one proof, but each landing keeps its own silhouette."
+  ~#hypothesis: "Validation 2 caps above-fold action clusters at one rail on every landing. The absorbed companion forbids a universal hero, action slot or grid and keeps eight distinct route fingerprints."
+  ~#tension: "Applied literally, the rail cap becomes the shared silhouette the fingerprints rule refuses. Settings is a workbench, and Play is a threshold with more than one door."
+  !probe{ `rg -n "action clusters|action rails|universal hero|one silhouette" .agents/plans/landing-visual-hierarchy .agents/plans/archive/landing-page-hierarchy-2026-08-21` }
+  $%[landing.railCap, landing.fingerprints]
+  ~<"./session-2026-08-21.spw"> ~<"../archive/landing-page-hierarchy-2026-08-21/PLAN.md">
+}

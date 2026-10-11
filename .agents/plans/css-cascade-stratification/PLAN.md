@@ -1,6 +1,6 @@
 # css-cascade-stratification
 
-**Status 2026-10-06.** Phase 0 landed (332d98bd). Next: the Phase 1 browser review; 0 of 19 bundles recorded.
+**Status 2026-10-10.** Phase 0 landed (332d98bd, play's paint as intents), and so did the Phase 1 review kit: `audit:layer-flip` with the `?spw-layer-order=declared` switch (4759a02f) and the `perf:layer-ablation` probe (01c34f01). The bundler still strips the order statement (`scripts/ts/css-bundle.mts:45`), so `bundles/core.css` ships none. Next: Phase 1 prep, which means `audit:layer-flip` rows plus declared-vs-shipped phone stills for home (71 flagged rules at landing) and play (25). No route has been recorded yet, and `bundles/routes/` now holds 23 sheets against 19 at landing. The gate is the creator's look in the browser, and the ablation's Chrome half has not yet run outside the sandbox.
 
 **Absorbed 2026-10-06:** [css-state-legibility](../archive/css-state-legibility/PLAN.md) · [vertical-rhythm-container-audit](../archive/vertical-rhythm-container-audit/PLAN.md).
 

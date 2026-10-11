@@ -12,7 +12,7 @@
 @lifecycle: ~"./lifecycle.spw"
 @granularity: ~"./granularity.spw"
 @inertia: ~"./inertia.spw"
-@decomposition: ~"../../../.agents/plans/runtime-module-decomposition/PLAN.md"
+@decomposition: ~"../../../.agents/plans/archive/runtime-module-decomposition/PLAN.md"
 @bootstrap: ~"../../../.agents/plans/runtime-bootstrap-performance/PLAN.md"
 @brp: ~"../build-runtime-performance-2026-07/index.spw"
 @kernel_audit: ~"../runtime-kernel-consolidation-2026-07.spw"

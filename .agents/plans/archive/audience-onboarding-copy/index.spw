@@ -1,0 +1,119 @@
+# Review 2026-10-10 — archived: merged: the entrance copy landed and its one named first-fold miss (#home-reason-why) is keyed (9c8a7d97); its identity-framed goal was settled by the creator in 4d4b7262: copy speaks to the visit a reader is on; semantic-copy-depth
+# Review 2026-07-12 — keep; creator-first audience entrances are distinct from services pricing and general voice cleanup.
+# Plan Index — audience-onboarding-copy
+#
+# Make the home, about, services, topics, and tools surfaces read like a credible invitation into a decentralized team: one that can onboard developers, illustrators, authors, and a…
+
+#>plan_audience_onboarding_copy_index
+#:index #!plan
+#:operation #!archive
+#:layer #!pragmatics
+
+operation = "archive"
+fixity = "tending"
+
+intent: .{
+ goal = `Make the home, about, services, topics, and tools surfaces read like a credible invitation into a decentralized team: one that can onboard developers, illustrators, authors, and a college freshman who is still deciding what they want to study. The copy should assume the reader is smart, busy, and professionally fluent, while also naming the internal routes that help them start.`
+ owner = `audience-onboarding-copy`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Make the home, about, services, topics, and tools surfaces read like a credible invitation into a decentralized team:…`
+ concepts = #[
+  `audience-onboarding-copy`,
+  `home`,
+  `about`,
+  `services`,
+  `topics`,
+ ][reg=set]
+ surfaces = #[
+  `index.html`,
+  `about/index.html`,
+  `topics/index.html`,
+  `.agents/plans/archive/audience-onboarding-copy/PLAN.md`,
+  `.spw/caches/copy-hypermedia-key-2026-09.spw`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
+@plans_root: ~"../../index.spw"
+@plan_index_convention: ~"../../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@about_index_html: ~"../../../../about/index.html"
+@topics_index_html: ~"../../../../topics/index.html"
+@home_index_html: ~"../../../../index.html"
+@copy_accessor: ~"../../../../.spw/conventions/copy-accessor.spw"
+@copy_hypermedia_key: ~"../../../../.spw/caches/copy-hypermedia-key-2026-09.spw"
+
+dispatch: .{
+ plan = @plan
+ about_index_html = @about_index_html
+ topics_index_html = @topics_index_html
+ home_index_html = @home_index_html
+ copy_accessor = @copy_accessor
+ copy_hypermedia_key = @copy_hypermedia_key
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+ related_plans = #[`copy-localization`, `folio-worktable`, `hook-region-anatomy`, `semantic-copy-depth`][reg=set]
+}[reg=facet]
+
+^"absorbs"{
+ reviewed = `2026-07-12`
+ plans = #[
+  `learning-science-community-pass`,
+ ][reg=set]
+ rule = `Absorbed by 2026-07-12 review; see each source review_disposition and archive/2026-07-12-review-execution.md.`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-audience_onboarding_copy-001"
+ layer = "pragmatic"
+ hypothesis = `Make the home, about, services, topics, and tools surfaces read like a credible invitation into a decentralized team: one that can onboard developers, illustrators, authors, and a college freshman who is still deciding what they want to study. The copy should assume the reader is smart, busy, and professionally fluent, while also naming the internal routes that help them start.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../../about/index.html"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../../about/index.html unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `In scope: route intro copy, internal links, section labels, and page-level metadata on the primary entry surfaces.`,
+ ][reg=set]
+ out = #[
+  `: visual redesign, new runtime behavior, new routes, or restructuring the overall site taxonomy.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `targeted rg for the updated route labels and links`,
+ `visual spot check in a browser if the diff shifts hierarchy or nav density`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does audience-onboarding-copy own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of audience-onboarding-copy?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether audience-onboarding-copy still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Make the home, about, services, topics, and tools surfaces read like a credible invitation into a decentralized team: one that can onboard…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]

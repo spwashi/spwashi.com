@@ -1,8 +1,8 @@
 # Folio worktable
 
-**Status 2026-10-06.** Four gates are open: the primes demo, the calendar demo, prices and shipping, the first card request. The weekly five runs through `npm run folio:highres:rotate`.
+**Status 2026-10-10.** Landed: the release shelf (7a95da5b), the request card at `#folio-request`, the primes demo (8703ed24) and the calendar demo (27b616e8). Next: the creator reviews `/design/experiments/folios/calendar/` in a browser. It lays out October in scan order, so the review is worth most before the month ends. Still the creator's calls: the primes demo, prices and shipping, and the first card request. The weekly five runs through `npm run folio:highres:rotate`.
 
-**Related:** [ecosystem-offer-2026-10](../ecosystem-offer-2026-10/PLAN.md) · [lore-land-marketing](../archive/lore-land-marketing/PLAN.md) (archived) · [visual-capture-ecology](../visual-capture-ecology/PLAN.md). **Absorbed 2026-10-06:** [professional-skill-development-worldbuilding](../archive/professional-skill-development-worldbuilding/PLAN.md) · [skill-folio-operating-system](../archive/skill-folio-operating-system/PLAN.md).
+**Related:** [ecosystem-offer-2026-10](../ecosystem-offer-2026-10/PLAN.md) · [lore-land-marketing](../archive/lore-land-marketing/PLAN.md) (archived) · [visual-capture-ecology](../archive/visual-capture-ecology/PLAN.md). **Absorbed 2026-10-06:** [professional-skill-development-worldbuilding](../archive/professional-skill-development-worldbuilding/PLAN.md) · [skill-folio-operating-system](../archive/skill-folio-operating-system/PLAN.md).
 
 Public goal: see the studies, try a reading, and distinguish future folio purchases from current commissioned work.
 

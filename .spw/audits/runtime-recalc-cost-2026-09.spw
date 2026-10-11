@@ -14,7 +14,7 @@
 @hot_paths: ~"../../.agents/plans/runtime-bootstrap-performance/PLAN.md"
 @plane_consolidation: ~"../../.agents/plans/runtime-plane-consolidation/PLAN.md"
 @css_spend: ~"../../.agents/plans/core-css-spend-cut/PLAN.md"
-@decomposition: ~"../../.agents/plans/runtime-module-decomposition/PLAN.md"
+@decomposition: ~"../../.agents/plans/archive/runtime-module-decomposition/PLAN.md"
 @measured_frame: ~"../../public/js/kernel/measured-frame.js"
 @chrome_lane: ~"../../public/js/kernel/dom-contracts.js"
 @lens_writer: ~"../../public/js/runtime/page/lens-modes.js"

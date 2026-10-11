@@ -7,7 +7,7 @@
 #:conventions #!agents #!semantics #!css #!marketing
 #:layer #!pragmatics
 
-@plan: ~"../../.agents/plans/model-guided-refinement/PLAN.md"
+@plan: ~"../../.agents/plans/archive/model-guided-refinement/PLAN.md"
 @site_semantics: ~"./site-semantics.spw"
 @operator_site_projection: ~"./operator-site-projection.spw"
 @attention_field: ~"./attention-field.spw"
@@ -155,7 +155,7 @@
     layer = "pragmatic"
     hypothesis = "Future model-guided refinement patches will be safer and more useful when they declare focus dimension, fixity tier, elemental effect, owner surface, and validation before touching HTML/CSS/JS."
     spec_ref = ".spw/conventions/model-guided-refinement.spw#model_handoff_checklist"
-    impl_ref = ".agents/plans/model-guided-refinement/PLAN.md + any future slice or plan-local handoff note"
+    impl_ref = ".agents/plans/archive/model-guided-refinement/PLAN.md + any future slice or plan-local handoff note"
     probe_ref = "Read a proposed patch or plan note; confirm it names the checklist fields and does not edit outside its declared tier."
     falsification = "A patch makes broad CSS or JS changes while describing only a general vibe, with no focus dimension, fixity tier, or validation path."
     status = "active"

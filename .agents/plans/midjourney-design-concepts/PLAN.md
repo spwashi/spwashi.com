@@ -1,8 +1,8 @@
 # Midjourney-Inspired Focused Design Concepts Plan
 
-**Status 2026-10-06.** Landed: Patch 4 (`texture-slice.css`, dfafb7ef; the ornament-scaffold plates), 5B (texture slices on home, about, RPG Wednesday and lore.land) and 6/6A/6B (tiers and sidecars; the keep/replace/cut log in `image-review-2026-09.spw`). Partial: 1/1A/1B (the registry is `renders.studies` in `.spw/assets.spw` and the staging rules are in `.spw/conventions/asset-management.spw`; `public/images/README.md` carries neither), 2/2A/2B (no prompt bank; seeds in `.spw/caches/prompt-seeds-2026-09.spw` and `/tools/midjourney/`), 3/3A/3B, 5/5A (no grammar atlas). Not started: 2.5, 7/7A/7B. Next: Patch 1 with 1B, writing the states, sidecar fields and CSS-first threshold into `public/images/README.md` with links to the registry and the review log. Promoting the session-7 mark (a9fa3ca7) waits on the creator's pick. Session notes and the old commit series: [HISTORY.md](./HISTORY.md).
+**Status 2026-10-10.** Landed: Patch 4 (texture slices, dfafb7ef), 5B, and 6/6A/6B. The creator's keep/replace/cut review (b87c59f5, `.spw/caches/image-review-2026-09.spw`) set the image rule, a wonder that belongs to its page, and supersedes `style-image-cohesion` (archived 2026-10-10), whose remaining image work this plan holds. Partial: 1/1A/1B (registry in `.spw/assets.spw` `renders.studies`, staging in `.spw/conventions/asset-management.spw`; `public/images/README.md` is 13 lines and names neither), 2/2A/2B (seeds in `.spw/caches/prompt-seeds-2026-09.spw`), 3/3A/3B, and 5/5A. Patches 2.5 and 7/7A/7B were not started and have no owner. Next slice: Patch 1B as a short pointer from `public/images/README.md` to the registry, the staging rules and the review log. Promoting a mark waits on the creator's pick (`index.spw#wonder_midjourney_design_concepts_mark`; session 7, a9fa3ca7). Session notes and the old commit series: [HISTORY.md](./HISTORY.md).
 
-**Related:** [visual-capture-ecology](../visual-capture-ecology/PLAN.md) · [reference-assignment-template](../reference-assignment-template/PLAN.md). **Absorbed 2026-10-06:** [promptable-image-library-pass](../archive/promptable-image-library-pass/PLAN.md).
+**Related:** [visual-capture-ecology](../archive/visual-capture-ecology/PLAN.md) · [reference-assignment-template](../reference-assignment-template/PLAN.md). **Absorbed 2026-10-06:** [promptable-image-library-pass](../archive/promptable-image-library-pass/PLAN.md).
 
 ## Public Goal
 
@@ -662,6 +662,8 @@ Validation:
 
 ## Patch 2.5 - Animation Study Sprint
 
+**Not started (2026-10-10); no owner.**
+
 Goal: use the temporary SuperGrok animation window to explore motion principles for Spw surfaces, operators, ornament, and route identity without committing raw animated outputs to production.
 
 Outputs:
@@ -928,6 +930,8 @@ Validation:
 - `npm run check`
 
 ## Patch 7 - Concept Library
+
+**Not started (2026-10-10), including 7A and 7B; no owner.**
 
 Goal: build a small library of reusable visual concepts from successful studies.
 

@@ -14,8 +14,8 @@
 @attention_field: ~"./attention-field.spw"
 @page_anatomy: ~"./page-anatomy-vocabulary.spw"
 @interaction_loop_plan: ~"../../.agents/plans/archive/interaction-loop-contract/PLAN.md"
-@gesture_plan: ~"../../.agents/plans/gesture-state-refinement/PLAN.md"
-@header_plan: ~"../../.agents/plans/navigation-header-disclosure/PLAN.md"
+@gesture_plan: ~"../../.agents/plans/archive/gesture-state-refinement/PLAN.md"
+@header_plan: ~"../../.agents/plans/archive/navigation-header-disclosure/PLAN.md"
 @floating_chrome_fix: ~"../../.agents/plans/floating-chrome-stack/FIX.md"
 @chrome_wonder_plan: ~"../../.agents/plans/chrome-navigation-wonder/PLAN.md"
 

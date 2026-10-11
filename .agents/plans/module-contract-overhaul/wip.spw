@@ -1,0 +1,28 @@
+# Review 2026-10-10 — holds the facet operator-mapping question that blocks this plan and engagement-clusters.
+# wip - module contract overhaul
+#
+# Open questions for the creator. PLAN.md sequences the work; this file holds
+# the decision the Spw projection of contracts waits on.
+
+#>plan_module_contract_overhaul_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@contract_spw: ~"../../../public/js/runtime/catalog/contract-spw.js"
+@operator_detection: ~"../../../public/js/kernel/operator-detection.js"
+@engagement: ~"../../../public/js/kernel/engagement.js"
+
+operation = "cache"
+fixity = "tending"
+
+#>wonder_module_contract_overhaul_facet_operators
+?["Which operator names each contract facet, and what do a concept edge <_foo and its { … } direction space mean at runtime?"]{
+  #:depth #!semantic ~#lens(projection)
+  ~#with: @plan @contract_spw @operator_detection @engagement
+  ~#tension: "PLAN.md's facet table maps address, layer, substrate, wakes, probes, acts, binds, measure, ground, integrates and scene onto operators, and catalog/contract-spw.js already derives one sentence per module from it, marked as undecided. engagement-clusters waits on the same answer to prime clusters from Spw containers. One decision unblocks both; until then contracts stay flat fields and the sentence stays derived, never authored."
+  !probe{ "open /design/runtime/?spw-atlas=pulse-beat-tuner and read its contract as Spw against the facet table" }
+  $%[contract.facets, operator.canon, engagement.clusters]
+  ~<"./PLAN.md"> ~<"../engagement-clusters/PLAN.md">
+}

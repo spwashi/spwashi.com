@@ -23,10 +23,10 @@
 @workbench_report: ~"../workbench-report.spw"
 @dual_path: ~"../language/feature-utilization.spw"
 @copy_localization_plan: ~"../../.agents/plans/copy-localization/PLAN.md"
-@audience_onboarding: ~"../../.agents/plans/audience-onboarding-copy/PLAN.md"
+@audience_onboarding: ~"../../.agents/plans/archive/audience-onboarding-copy/PLAN.md"
 @core_css_spend: ~"../../.agents/plans/core-css-spend-cut/PLAN.md"
 @agent_optimization: ~"../../.agents/plans/agent-optimization/PLAN.md"
-@insight_template: ~"../../.agents/plans/model-guided-refinement/templates/semantic-insight-cache.spw"
+@insight_template: ~"../../.agents/plans/reference-assignment-template/templates/semantic-insight-cache.spw"
 
 operation = "cache"
 fixity = "tending"

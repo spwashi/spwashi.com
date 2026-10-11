@@ -130,3 +130,23 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+#>wonder_chrome_navigation_wonder_breadcrumbs
+?["Who owns breadcrumbs: this plan, as the rail's path layer, or spellcraft-authoring, as the trail a spell is made from?"]{
+  #:depth #!pragmatic ~#lens(choice)
+  ~#with: @plan @section_handle
+  ~#hypothesis: "This plan calls breadcrumbs its Phase 2, inherited from cognitive-navigation. spellcraft-authoring says it absorbed cognitive-navigation. The live code sits on both sides: the rail's `.` path layer (7018898c) and runtime/experiential/breadcrumb-spell.js, which assembles the trail and the live spell path."
+  ~#tension: "If chrome owns breadcrumbs, the trail is a place to stand. If spellcraft owns them, the trail is an ingredient to carry. With two owners, neither plan finishes the seam."
+  !probe{ "rg -n 'breadcrumb' public/js/runtime/attention/section-handle.js public/js/runtime/experiential/breadcrumb-spell.js public/js/runtime/memory/spells.js | head -40" }
+  ~<"./PLAN.md"> ~<"../spellcraft-authoring/PLAN.md">
+}
+
+#>wonder_chrome_navigation_wonder_drawer_swipe
+?["Should an open route drawer answer a swipe at all, or does tap-to-choose stay its only verb?"]{
+  #:depth #!pragmatic ~#lens(choice)
+  ~#with: @plan @navigation
+  ~#hypothesis: "The closed header (02c7757a), the section-handle rail and the landmark rail already cycle rooms on swipe. shell-disclosure.js has no swipe handling, so the open drawer is the last of the four edges this plan named."
+  ~#tension: "Finishing the set makes the gesture learnable everywhere. But an open drawer is a list a reader scrolls and taps, and gesture-state-refinement spent its passes removing accidental activations during scrolling. A swipe that travels from inside a list can land somewhere the reader did not choose. wonder_history_drawer asks how the drawer should swipe; this question asks whether it should."
+  !probe{ "grep -c swipe public/js/runtime/shell/shell-disclosure.js; then on a phone, open the drawer on /about/ and try to scroll the list sideways" }
+  ~<"./PLAN.md"> ~<"../../../public/js/runtime/shell/shell-disclosure.js"> ~<"../../../.spw/caches/history-conflict-strands-2026-09.spw">
+}

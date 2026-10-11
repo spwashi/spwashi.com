@@ -18,7 +18,7 @@
 @shell: ~"../../workers/lib/shell.js"
 @inbox: ~"./cluster-feedback-inbox-2026-09.spw"
 @pricing: ~"./pricing-lattice-2026-09.spw"
-@plan: ~"../../.agents/plans/quest-workbench-feedback/PLAN.md"
+@plan: ~"../../.agents/plans/archive/quest-workbench-feedback/PLAN.md"
 @desk_flow: ~"../slices/feedback-desk-flow/index.spw"
 
 operation = "prime"

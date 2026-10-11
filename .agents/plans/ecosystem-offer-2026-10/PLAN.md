@@ -1,6 +1,6 @@
 # Ecosystem offer, production season 2026-10
 
-**Status 2026-10-06.** Copy landed 2026-09-28 (9a465ef4); three creator decisions are open. Archive when October closes or prices land. Holds funding-proof-cards' rule: every card points to evidence and a next action.
+**Status 2026-10-10.** Copy landed 2026-09-28 (9a465ef4), and the granular prices shipped the same day in the `/services/` bundle composer (b5bf993c). Two creator questions are open in `index.spw`: whether the shipped prices stand as the creator's, and what a film backer receives. Archive when October closes. Holds funding-proof-cards' rule: every card points to evidence and a next action.
 
 **Related:** [folio-worktable](../folio-worktable/PLAN.md). **Absorbed 2026-10-06:** [funding-proof-cards](../archive/funding-proof-cards/PLAN.md) · [lore-land-marketing](../archive/lore-land-marketing/PLAN.md) · [services-ladder-and-topic-ctas](../archive/services-ladder-and-topic-ctas/PLAN.md).
 
@@ -26,8 +26,6 @@ the topic shelves.
   /topics/film/ hero: film marketing + play + speech team.
 
 ## Waiting on the creator
-- Granular web-dev price items for the bundle composer (lunch $20, one fix $75, half hour
-  $120, page check $150, single page $900, hour block $1,000/5h, author site $3,500,
-  add-ons, care plans $150/$600 mo). Prices are the creator's call.
-- Film backer offer: what "be part of the movie" gives a backer (credit, cameo, thanks).
-- Legal name (Sam Washington) and the high-school play title in public copy.
+- Prices: the small-job items, add-ons and care plans shipped in b5bf993c (`services/index.html`, bundle composer), built on the creator's 2026-09-28 ask for granular options. Open: whether the shipped figures stand as the creator's (`#>wonder_ecosystem_offer_prices`). Prices are the creator's call.
+- Film backer offer: what "be part of the movie" gives a backer (credit, cameo, thanks) (`#>wonder_ecosystem_offer_film_backer`).
+- The legal name: answered 2026-10-10. It may have its own page at `/about/sam-washington/`, in copy the creator writes or approves; elsewhere the copy leads with Spwashi. The high-school play title stays out of copy until the creator supplies the rest of it; never invent it.

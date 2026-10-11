@@ -1,8 +1,8 @@
 # Runtime Plane Consolidation
 
-**Status 2026-10-06.** Phase 1 is partly done: the breadcrumb and sample-dock extraction (0cb1dbfd) and device-context delegation (638b2629) landed through runtime-module-decomposition, which owns that seam.
+**Status 2026-10-10.** Phases 0, 1, 4 and 5 are landed, each with one deferred item; Phase 2 is half done (selector asked last, 2026-09-28) and Phase 3's read side landed as `kernel/measured-frame.js` and `kernel/viewport.js`. Next slice: make the capture-phase scroll listener at `interface/semantic-chrome.js:722` passive, and move the four runtime `window.innerWidth` readers (`diagnostics/layout-qa.js`, `diagnostics/observation-beats.js`, `physics/spatial-gravity.js`, `regions/positioning-orchestration.js`) onto `kernel/viewport.js`. Gate: a pocket scroll trace before and after, per this plan's Phase 3 gate. Now owns the decomposition seam (absorbed below).
 
-**Related:** [module-contract-overhaul](../module-contract-overhaul/PLAN.md) · [interaction-loop-contract](../archive/interaction-loop-contract/PLAN.md) (archived) · [core-css-spend-cut](../core-css-spend-cut/PLAN.md).
+**Related:** [module-contract-overhaul](../module-contract-overhaul/PLAN.md) · [interaction-loop-contract](../archive/interaction-loop-contract/PLAN.md) (archived) · [core-css-spend-cut](../core-css-spend-cut/PLAN.md). **Absorbed 2026-10-10:** [runtime-module-decomposition](../archive/runtime-module-decomposition/PLAN.md), the leftovers of [js-surface-ecology](../archive/js-surface-ecology/PLAN.md).
 
 ## Public Goal
 
@@ -27,10 +27,10 @@ This plan does not replace the existing runtime owners. It is the cross-plane ad
 ### What already works
 
 - Staged lifecycle with explicit `MODULE_LAYERS` / `MOUNT_WHEN`, policy overrides, `only`/`skip`, debug gating.
-- `writeDatasetValue` (`kernel/dom-contracts.js:1103`) already does change-only writes — reads, compares, returns `false` without touching the DOM.
-- `dom-sync-hub.js` — one MutationObserver, one rAF, ordered task batch. The correct federation primitive.
-- `observeAddedMatches` (`kernel/dom-contracts.js:1205`) — gates on matching added nodes, coalesces through rAF. Its docblock documents the two-modules-reacting-to-each-other hard freeze.
-- `mountVisibleFeatures` (`runtime/module-loader.js:1222`) — drains IntersectionObserver waves through a 10 ms frame-budgeted queue.
+- `writeDatasetValue` (`kernel/dom-contracts.js:1474`) already does change-only writes — reads, compares, returns `false` without touching the DOM.
+- `runtime/orchestration/dom-sync-hub.js` — one MutationObserver, one rAF, ordered task batch. The correct federation primitive.
+- `observeAddedMatches` (`kernel/dom-contracts.js:1641`) — gates on matching added nodes, coalesces through rAF. Its docblock documents the two-modules-reacting-to-each-other hard freeze.
+- `mountVisibleFeatures` (`runtime/orchestration/scheduler.js:86`) — drains IntersectionObserver waves through a 10 ms frame-budgeted queue.
 - `IDLE_CHUNK_ORDER` — staggers idle mounts so residue listeners attach before collectible flourishes.
 - `public/ts/bus.ts` — single emit path, frozen enriched payloads, history ring, `onAny`, legacy bridging.
 
@@ -43,7 +43,7 @@ This plan does not replace the existing runtime owners. It is the cross-plane ad
 
 **Scheduling**
 - 96 module definitions. **13 declare `route:`.** 91 declare `selector:`.
-- `ctx.routeFamily` is parsed at `site.js:467` and **consumed by nothing** — absent from `module-loader.js`, `module-catalog-normalize.js`, `runtime-helpers.js`.
+- `ctx.routeFamily` is parsed at `site.js:498` and **consumed by nothing** — absent from `runtime/orchestration/` and `runtime/catalog/normalize.js` (rechecked 2026-10-10).
 - `hasSelector` → `safeQuery` → uncached `document.querySelector` per def, per filter pass. The filter runs ~8 times per boot (immediate ×3, prefetch ×2, visible, interaction, region, idle, settled): **~650+ uncached `querySelector` calls during boot**, several against 4-way selector lists.
 - `.agents/state/runtime/route-runtime-manifest.json` (832 KB, with `routes`, `surfaces`, `runtimeDefinitions`) is generated at build time and **read only by `scripts/typed/site-contracts/index.mjs`** — never at runtime.
 
@@ -167,7 +167,7 @@ Gate: measured boot delta on a cold content-rich route before/after, demoed in b
 - Route unguarded writes through `writeDatasetValue` / `writeStyleValue`, starting with `modules/` (197 raw, 0 guarded), then `interface/` (331 raw, 28 guarded).
 - [x] Guard the bus charge path — `#applyCharge` and `setCharge` wrote `--charge` and `dataset.spwCharge` unguarded on the pointermove path. Landed 2026-09-28: `writeCharge` in `public/ts/bus.ts` writes each only when it moves; `scripts/tests/change-only-writes.test.mjs` holds it.
 - Migrate the 26 non-hub MutationObservers onto `dom-sync-hub` / `observeAddedMatches`.
-- Add a shared viewport read phase so the 11 scroll listeners measure once per frame; fix the capture-phase non-passive listener at `semantic-chrome.js:719`.
+- Add a shared viewport read phase so the scroll listeners (13 `addEventListener('scroll'` sites, 2026-10-10) measure once per frame; fix the capture-phase non-passive listener at `interface/semantic-chrome.js:722`.
 - Adopt per-mount `AbortController` on `ctx` (`bus.on` already accepts `signal`) to close the 820/331 listener gap.
 
 Gate: this changes interaction latency and settle timing. Demo before landing.
@@ -185,35 +185,21 @@ Gate: this changes interaction latency and settle timing. Demo before landing.
 - [x] Feed `spatial-gravity` measured outputs (`spwEdgeGravity`, `spwExtent`, `spwMeasureBand`, `spwSalienceRank`) and box measurements into `region-profiler.js`.
 - [x] Ground `inferRegionHarmony`, `inferRegionTempo`, `inferRegionDensity`, and `inferRegionAttentionalWeight` in measured geometry and salience ranks when present, keeping authored attributes as first-class overrides.
 - [x] Pass `(el, profile)` across region inference pipeline in `buildRegionProfile`.
-- [ ] Derive module dimensions directly from the role-annotated `updates:` contract in `module-loader.js`.
+- [ ] Derive module dimensions directly from the role-annotated `updates:` contract in `runtime/orchestration/loader.js`.
 
 ### Phase 6 — Decompose the overloaded modules
 
-Two modules hold fifteen concerns between them. Full anatomy in `modules.spw`.
+File extracts are done; what is left is catalog gating. Anatomy in `modules.spw` (dated 2026-08).
 
-**Progress (2026-08-11):** internal file extracts landed without catalog splits. Parents still own the single mount; extracted siblings are import-time modules, not independent defs.
+**`runtime/shell/shell-disclosure.js`** — 2,315 → 1,249 lines (2026-10-10), one export, `IMMEDIATE`. Landed: `scroll-lock.js`, `attention-posture-panel.js`, `utility-row.js`, and `measurement.js` with device context (638b2629); the scroll model reads in the measured lane (`createMeasuredLane`).
 
-**`runtime/shell/shell-disclosure.js`** — was 2,315 / now ~1,461 lines, **one export**, mounted `IMMEDIATE` on every page.
-
-- [x] Extract `scroll-lock` → `runtime/shell/scroll-lock.js`.
-- [x] Extract `attention-posture-panel` → `runtime/shell/attention-posture-panel.js`.
-- [x] Extract utility/settings row → `runtime/shell/utility-row.js` (was "shell-tuning-panel" in the original split list).
 - [ ] Extract `disclosure-a11y` (focus management, toggle aria, open/close) — generic, reusable by `region-menu` and the posture panel.
-- [ ] Delegate device context to `interactive-medium.js`; delete the local copy.
-- [ ] Join the shared viewport read phase for the scroll model (depends on Phase 3).
 - [ ] Own catalog defs / idle gates for panels that are not first-paint shell.
-- Target remainder: nav-fit + menu state machine, plausibly under 600 lines, still `IMMEDIATE`.
 
-**`runtime/experiential/experiential.js`** — was 2,168 / now ~1,758 lines, **one export**.
+**`runtime/experiential/experiential.js`** — 2,168 → 223 lines; breadcrumb-spell and sample-dock left in 0cb1dbfd. `experiential` is still the one catalog def (`runtime/catalog/enhancement.js:1705`).
 
-- [x] Extract bookmark registry, contextual memos, operator-info, operator learning, QA beat gestures under `runtime/experiential/`.
-- [ ] Extract spell breadcrumbs and sample dock (still the bulk of the parent).
-- [ ] Each feature becomes its own catalog def with its own `when`/`selector`/`features` gate.
-- [ ] Most should not be `IMMEDIATE` — sample dock and QA beats are idle or debug-gated work.
-- [ ] Delete private escape/text utilities in favor of `dom-render` and `kernel/text-normalization`.
-- [ ] Fold `OPERATOR_INFO` into the single expression reader (Phase 4).
-
-**Sequencing.** Further shell extract after Phase 3 (write/observe consolidation). Experiential catalog splits pair with Phase 4. File-only extracts already landed are safe checkpoints.
+- [ ] Give each extracted feature its own catalog def and gate; sample dock and QA beats are idle or debug-gated work, not `IMMEDIATE`.
+- [ ] Fold `OPERATOR_INFO` (`runtime/experiential/operator-info.js`) into the single expression reader (Phase 4).
 
 Gate: both are visible chrome. Demo before catalog/gating changes that alter when panels appear.
 
@@ -253,3 +239,16 @@ The read side of write/observe consolidation landed as two kernel contracts, and
 ## Phase 3 receipt, second slice — 2026-09-19
 
 The direct callers the first receipt listed have adopted the lane: thirteen fire-and-forget `syncFloatingChromeState` calls (state-inspector, discovery-notices, section-handle ×2, attention-posture-panel, navigation-locomotion ×2, site-search ×2, region-menu ×2, frame-navigator ×2) now `requestFloatingChromeSync`; `layout-assumptions` keeps its two synchronous calls because it reads the snapshot. Four interleaved phone traces on `/about/`: the stranding read (`measureFloatingChromeStranding`, six forced passes in one baseline) is gone from the script-forced table; script-forced style time 6.3–8.7s → 4.3–7.1s; total style time unchanged within the machine's noise. Where a phone pass actually goes — selector matching 5%, per-element resolution against the live root registers the rest — is measured in `.spw/audits/runtime-recalc-cost-2026-09.spw`, which also lists the six single-read mount sites still forcing a pass each and the two attempts that did not land (loader selector cache, boot-phase hold on the viewport-correction lane).
+
+## Absorbed 2026-10-10 — runtime-module-decomposition
+
+[runtime-module-decomposition](../archive/runtime-module-decomposition/PLAN.md) held the "extract kernel contracts before splitting files" seam. Landed through it: `kernel/storage-utils.js` (a6cdf035), `writeProjectionTier` (`kernel/dom-contracts.js:1614`), the lens writer (`runtime/page/lens-modes.js`, 2026-09-19), the shell and experiential extracts in Phase 6. Rule kept: build a primitive before carving a feature file. It needs a second unrelated importer, a frozen `SPW_*_CONTRACT`, DOM writes through `writeDatasetValue(s)` or `writeProjectionTier`, outward events through `bus.emit`, and honest catalog `updates`/`effectScope`/`describes`. Never split by line count alone. Still owed, each one patch with two adopters:
+
+- Bus audit: 69 `dispatchEvent(new CustomEvent(` sites (2026-10-10); move to `bus.emit` where `bus.js` `LEGACY` maps the event.
+- `media/image-metaphysics.js` (1,056 lines): visit memory and effect controls as two organs; the host keeps its loop registration.
+- `kernel/shared.js` (1,521 lines): climate tokens and feature helpers out; operators already left for `kernel/operator-detection.js`.
+- `interface/state-inspector.js` (1,281 lines) → state satchel naming, after the `shell-model-vocabulary-consolidation` gate.
+
+## Absorbed 2026-10-10 — js-surface-ecology leftovers
+
+[js-surface-ecology](../archive/js-surface-ecology/PLAN.md) landed the tree (families 80c7b305; zero orphans and `audit:js-tree --check` in `check:local`). Owed here: the four runtime `innerWidth` readers (Status next slice); then the 13 files that call `getComputedStyle(document.documentElement)` on their own schedule; then the two halves `interface/haptics.js` (1,452 lines) could stand alone, the concept inspector and the sigil collection (`.spw/audits/js-tree-value-2026-09.spw` `next.6`).

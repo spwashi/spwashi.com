@@ -142,3 +142,15 @@ invariants: #[
  `No new layer name before the Phase 1 browser review lands.`,
  `Promote durable layer promises to css-instruction.spw when a pour lands.`,
 ][reg=set]
+
+#>wonder_css_cascade_stratification_layer_names
+?["Should a layer's name promise how far a rule reaches, how long it lives and whose hand owns it, or is one honest order, the one the source declares and the bundle ships, enough?"]{
+  #:depth #!pragmatics ~#lens(projection)
+  ~#with: @plan @cache @css_instruction
+  ~#taste: "Someone exploring the CSS learns how much care a change deserves from where it lives, not from a second vocabulary they have to memorize first."
+  ~#hypothesis: "Phase 1 alone fixes what misleads a reader today: style-core.css:1 says handles beat routes, and the shipped bundle says the opposite. The Phase 2 pours rename layers to carry reach, cure and hand; that is a new ontology, and so far no reader-felt outcome has been named for it."
+  ~#tension: "Six pours touch fifteen deferred sheets, the contracts and the hottest route files in one patch each. If the names teach care, that buys legibility; if they only restate the order, it buys churn."
+  !probe{ "npm run audit:layer-flip -- --bundle=home --limit=20" }
+  $%[cascade.declaredOrder, cascade.shippedOrder, layer.promise]
+  ~<"./PLAN.md"> ~<"../../../.spw/caches/css-cascade-stratification-2026-09.spw">
+}

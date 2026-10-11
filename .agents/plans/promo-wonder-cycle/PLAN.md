@@ -1,6 +1,6 @@
 # Promo / Wonder Cycle Plan
 
-**Status 2026-10-06.** The rotating layer landed (the TS module, feed, CSS and tests), so Why This Exists below is history. Release-day receipts are at the end.
+**Status 2026-10-10.** The rotating layer landed (the module, feed and CSS in 603f18d8, typed in ccafd1ac), so Why This Exists below is history. 1a61dc53 landed the notice the 09-18 refinement asked for: one feed entry picked by the visit's intent, spoken as a toast from a resting seat, never a modal. Only a shown / accepted / closed counter for that notice remains, and it waits on the creator approving the 1a61dc53 demo in a browser. Release-day receipts are at the end.
 
 **Related:** [ecosystem-offer-2026-10](../ecosystem-offer-2026-10/PLAN.md) · [discovery-powerups](../archive/discovery-powerups/PLAN.md) (archived). **Absorbed 2026-10-06:** [cadence-text-resonance](../archive/cadence-text-resonance/PLAN.md) · [release-day-discovery-2026-09-26](../archive/release-day-discovery-2026-09-26/PLAN.md) · [release-day-resonance-2026-09-13](../archive/release-day-resonance-2026-09-13/PLAN.md) · [rpg-playable-copy](../archive/rpg-playable-copy/PLAN.md).
 
@@ -61,6 +61,8 @@ The current site already has rich route surfaces, but the rotating layer is not 
 
 ## Notice attention refinement — 2026-09-18
 The creator's critique of the daily wonder: no closure or way back, one CTA shape, little relevance to what a page can do, and module-load prompts that are noise. The cache `.spw/caches/notice-attention-refinement-2026-09.spw` holds the seven dimensions a notice must answer (subject, meaning, value, closure, shape, relevance, cadence) and what landed: a close control and presentation-aware exits that return focus to main, three CTA shapes by destination (`data-spw-cta-shape` here | there | out), and feature-learning collapsed to one "On this page" card that names verbs from frame contracts. Next: measure shown / accepted / closed per cadence, prefer a here-shaped promo when the current route offers the capability, and gate new modal promos on a phone demo.
+
+Landed 2026-09-27 (1a61dc53): each feed entry names the intents it serves, `kernel/visit-intent.js` holds the visit's intent, and `interface/discovery-notices.js` picks one entry for it and speaks only from a resting seat, as a toast. That covers relevance and the no-modal rule. Still open: the shown / accepted / closed counter; `discovery-notices.js` records dismissals but counts nothing.
 
 ## Release-day receipts
 

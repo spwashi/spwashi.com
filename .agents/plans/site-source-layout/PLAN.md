@@ -1,8 +1,8 @@
 # Plan: site-source-layout
 
-**Status 2026-10-06.** M0, the import decision, is pending in typescript-integration; M2 is next; the `site/` move is parked.
+**Status 2026-10-10.** Nothing has moved yet. `build-topology.mts` has no `SITE_ENTRIES`, `vite.config.ts:10` keeps its own `ignoredSegments`, and `public/ts` is still in place. Next slice: M0, one positive list of what ships, imported by `vite.config.ts`. It is blocked by one decision, how `vite.config.ts` imports that list (`index.spw` `#>wonder_site_source_layout_vite_import`). M2 follows as one commit; the `site/` move stays parked. This plan now owns the TypeScript decisions (absorbed below).
 
-**Related:** [deploy-module-graph](../deploy-module-graph/PLAN.md) · [site-starter-component-kit](../site-starter-component-kit/PLAN.md).
+**Related:** [deploy-module-graph](../deploy-module-graph/PLAN.md) · [site-starter-component-kit](../site-starter-component-kit/PLAN.md) · [pwa-experience](../archive/pwa-experience/PLAN.md). **Absorbed 2026-10-10:** [typescript-integration](../archive/typescript-integration/PLAN.md).
 
 Reframe the repository around an explicit authored-site boundary so the root stops doubling as both source tree and project-control surface. The target shape is `site/` for publishable source, `dist/` for generated output, `scripts/` for the pipeline, and optional `docs/` only for maintainer-facing documentation.
 
@@ -180,7 +180,7 @@ Recommended implementation seam:
 - `git diff --check`
 - `node --check` for each edited script module
 - `npm run build`
-- `npm run check`
+- `npm run check:local`
 - targeted route checks in local dev on:
   - `/`
   - `/about/`
@@ -203,12 +203,12 @@ Choose `docs/` only for maintainer documentation, not as a second home for publi
 
 ## Shared Steps - 2026-09-27
 
-`wip.spw` now holds the refined concept (one-hop URL invariant, four bins) and the near-term moves M0 through M3. Two of those moves change TypeScript configs, so their decisions belong to `typescript-integration/PLAN.md` and are recorded in both plans' `wip.spw`:
+`wip.spw` now holds the refined concept (one-hop URL invariant, four bins) and the near-term moves M0 through M3. Two of those moves change TypeScript configs; since 2026-10-10 their decisions are this plan's (see the absorbed section below):
 
-- M0, the positive ship list in `build-topology.mts` imported by `vite.config.ts`: the import method is that plan's call.
-- M2, `public/ts` to `src/ts`: the `rootDir` and `include` changes are that plan's call. Output, path alias, and URLs do not move.
+- M0, the positive ship list in `build-topology.mts` imported by `vite.config.ts`: the import method.
+- M2, `public/ts` to `src/ts`: the `rootDir` and `include` changes. Output, path alias, and URLs do not move.
 
-Order: refresh of the TypeScript plan (done 2026-09-27), then the M0 import decision, then M0, then M2 as one commit. The four bins are promoted into this file only after M0 and M2 land.
+Order: the M0 import decision, then M0, then M2 as one commit. The four bins are promoted into this file only after M0 and M2 land.
 
 ## Active Refinement - 2026-06-19 Conversation Audit
 
@@ -226,3 +226,12 @@ Redistributed elsewhere:
 - CSS selector/layer cleanup: `css-maintainability-refactor/PLAN.md`
 - Runtime lifecycle/inspectability: `runtime-module-fluency/PLAN.md`
 - `.spw` dispatch and file style: `spw-surface-normalization/PLAN.md`
+
+## Absorbed 2026-10-10 — typescript-integration
+
+[typescript-integration](../archive/typescript-integration/PLAN.md) landed scripts-first TypeScript. `tsconfig.scripts.json` compiles `scripts/ts/**/*.mts` to committed `scripts/typed/`. Thirteen typed browser modules in `public/ts/` compile to `public/js/typed/`. `types/*.d.ts` carries mirror shapes. Rule kept: no public-runtime TS-plus-bundler path unless it becomes its own explicit project. Still owed, decided here:
+
+- **M0 import method.** There are three ways: cast the compiled `.mjs`, import the `.mts` source with `allowImportingTsExtensions`, or add a hand-written sibling declaration as `scripts/template.d.mts` already does (root `tsconfig.json` includes `scripts/**/*.d.mts`). This is the creator question.
+- **M2.** `rootDir` and `include` in `tsconfig.runtime.json`, `tsconfig.public-sources.json` and `tsconfig.public.json`; update the `spw-typescript-affordances` matrix in the same commit.
+- **L3.** Whether committed `public/js/typed/` and `scripts/typed/` can become gitignored output. Not decided; do not act on it.
+- **Precache as a built artifact (Workstream 2.75).** `sw.js:94` `REQUIRED_PRECACHE_URLS` is still a hand-kept list, and `?v=` bumps are editorial. Derive the list from build output, coordinated with `pwa-experience` (its built-artifact contract).

@@ -18,8 +18,8 @@
 @block: ~"../conventions/html-spw-block-association.spw"
 @capture: ~"../conventions/component-capture-pipeline.spw"
 @recursive: ~"../conventions/recursive-improvement.spw"
-@visual_plan: ~"../../.agents/plans/visual-capture-ecology/PLAN.md"
-@kernel: ~"../../.agents/plans/daily-kernel-development/layout-resonance-loop-2026-08-24.spw"
+@visual_plan: ~"../../.agents/plans/archive/visual-capture-ecology/PLAN.md"
+@kernel: ~"../../.agents/plans/archive/daily-kernel-development/layout-resonance-loop-2026-08-24.spw"
 
 operation = "align"
 fixity = "tending"

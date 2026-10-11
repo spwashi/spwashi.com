@@ -1,8 +1,8 @@
 # Plan: state-block-projections
 
-**Status 2026-10-06.** The inspector runtime landed (`interface/state-inspector.js`). Open: the A/B/C lens choice at `/design/components/#lens-seats`, then moving the treatment into `state-semantics.css`.
+**Status 2026-10-10.** Landed: the inspector runtime (`public/js/interface/state-inspector.js`) and the lens-seat bench at `/design/components/#lens-seats` (`dc7c35a7`). Next slice: move the chosen seat treatment out of `routes/surfaces/design.css` and into `handles/operators/state-semantics.css` as a lens-chrome value, then opt routes in one switch at a time. It is gated on the creator choosing seat A, B or C in a browser. That one review also settles the absorbed mode-switch contrast and lens-reward gates below, and the lens offer to the cauldron.
 
-**Absorbed 2026-10-06:** [lens-seat-and-secondary-materials](../archive/lens-seat-and-secondary-materials/PLAN.md).
+**Absorbed 2026-10-06:** [lens-seat-and-secondary-materials](../archive/lens-seat-and-secondary-materials/PLAN.md). **Absorbed 2026-10-10:** [attention-shell-contrast](../archive/attention-shell-contrast/FIX.md) · [mindful-collection-controls](../archive/mindful-collection-controls/PLAN.md). **Related:** [cauldron-lens-composition](../cauldron-lens-composition/PLAN.md).
 
 Add interactive Spw state blocks to components that already expose real mutable state, so visitors can read and manipulate a small slice of runtime/configuration through operator, brace, and value swaps.
 
@@ -15,38 +15,14 @@ The site should expose more of its live state through its own notation instead o
 - **In scope**: a generic state-block runtime; interactive operator/brace/value tokens for swappable frames, mode-switch surfaces, image metaphysics surfaces, and selected settings form surfaces; small copy/markup changes to mark eligible components; repair of the partial image-metaphysics edit so this feature can mount safely.
 - **Out of scope**: a full state-editor for every route, replacing current settings UX, large copy rewrites, new persistence models, or a broad rewrite of persona/projection semantics.
 
-## Files
+## Owners
 
-[NEW] .agents/plans/state-block-projections/PLAN.md  
-[NEW] .agents/plans/state-block-projections/wip.spw  
-[NEW] .agents/plans/state-block-projections/state-block-projections.spw  
-[MOD] public/js/spw-state-inspector.js — replace the shallow inspector draft with a generic state-block runtime tied to real component state  
-[MOD] public/js/site.js — keep the new runtime in init order and avoid duplicate/invalid mounts  
-[MOD] public/js/spw-image-metaphysics.js — remove the malformed partial edit and expose image state cleanly to the inspector  
-[MOD] public/css/spw-components.css — make the state blocks read as compact code surfaces with clickable tokens  
-[MOD] index.html — mark eligible home surfaces for inspection  
-[MOD] topics/software/pretext/index.html — mark the hero lens as inspectable and swappable  
-[MOD] settings/index.html — mark runtime preferences (and possibly curriculum control) as inspectable state surfaces
-
-Current owners (2026-09-27): `public/js/interface/state-inspector.js` (was `spw-state-inspector.js`), `public/js/media/image-metaphysics.js`, `public/css/components/*.css`; the lens bench below is the live slice.
+`public/js/interface/state-inspector.js`, `public/js/media/image-metaphysics.js`, and `public/css/components/*.css`. For the lens seat, the bench treatment is in `public/css/routes/surfaces/design.css` and its destination is `public/css/handles/operators/state-semantics.css`. The lens bench below is the live slice.
 
 Craft guard:
-- `public/js/spw-state-inspector.js` should stay single-purpose: derive, render, and mutate state-blocks only.
-- `public/css/spw-components.css` is already large; keep the additions grouped and avoid bleeding inspector concerns into unrelated component rules.
+- `public/js/interface/state-inspector.js` should stay single-purpose: derive, render, and mutate state-blocks only.
+- Component CSS is already large; keep the additions grouped and avoid bleeding inspector concerns into unrelated component rules.
 - HTML edits should be limited to data attributes and one or two short helper notes, not structural rewrites.
-
-## Commits
-
-1. `#[state-blocks] — capture the projection/state-block plan and semantics`
-2. `&[state-blocks] — implement interactive Spw state blocks for mode, operator, brace, and image state`
-3. `&[state-blocks] — wire inspectable surfaces on home, pretext, and settings`
-4. `![state-blocks] — verify runtime mounts, state mutation, and CSS containment`
-
-## Agentic Hygiene
-
-- Rebase target: `main@e04c8c0`
-- Rebase cadence: before commit 1, before merge
-- Hygiene split: current working tree already contains in-scope concurrent edits in `public/js/site.js`, `public/css/spw-components.css`, `public/css/spw-grammar.css`, and `public/js/media/image-metaphysics.js`; preserve and extend those local changes rather than reverting them
 
 ## Dependencies
 
@@ -84,3 +60,20 @@ Bench: `/design/components/#lens-seats`, three live copies of the same four seat
 Choosing which panel a frame shows is the same act as reading the block: the seat you press is the token that changes in the expression. That is the "tuning/priming" value the lens was missing — it names its own consequence in the site's notation rather than in a humanized feedback string.
 
 Gate: sensation. Approve A, B, or C in a browser before any route changes. If B or C, the treatment moves from `routes/surfaces/design.css` (scoped to `page_design_components`) into `handles/operators/state-semantics.css` as a lens-chrome value, and routes opt in per switch. Nothing on `/about/`, `/`, or the topics lanes changes until then.
+
+## Absorbed 2026-10-10 — attention-shell-contrast
+
+Landed there: the `reading`/`split` layout selectors in `public/css/shell/layout.css`, and the hidden empty `.spw-semantic-seam` in `shell/chrome/header.css`. Still owed:
+- **Row 1.** Shared `.mode-switch` buttons keep inactive chips too faint, and the selected state sits too close to the surface on mobile. This is the same switch as the lens seat above, so judge contrast during the A/B/C review. No pocket still covers a mode switch yet.
+- **Row 2.** The mobile menu toggle read as ambient chrome. It has been a glyph hamburger since `b893cec3`, so recheck it with one `home-nav-open` still (`scripts/lib/viewport-still-recipes.mjs:84`) before any fix.
+
+The FIX's planned files (`spw-handles.css`, `spw-chrome.css`, `spw-shell.css`) no longer exist; the owners are `public/css/handles/operators/` and `public/css/shell/chrome/navigation.css`. Source: [attention-shell-contrast](../archive/attention-shell-contrast/FIX.md).
+
+## Absorbed 2026-10-10 — mindful-collection-controls
+
+Landed there: undo and bulk clear (`clearToday` and `clearAll` in `public/js/interface/guide-badge.js`), the `rewardDisplay` setting, and the collection reset through settings persistence. Still owed, as its 2026-09-19 proposal:
+- A lens change emits `spw:variant-selected`, but `public/js/runtime/memory/component-collection.js` has no listener for it, so the lens readers use most is never rewarded. Add one ingest of `{ kinds: ['lens'], reason: 'lens' }` per group per session.
+- Add a `seat-changer` achievement for three distinct `group:mode` seats, with no new storage key.
+- The reward toast should read the seat expression, and the cauldron should be offered the seat on the second use, not the first.
+
+The toast depends on the A/B/C choice, so both sit behind one browser review. Rule: never silent absorption (`interaction-microstates.spw#awareness`). Source: [mindful-collection-controls](../archive/mindful-collection-controls/PLAN.md).

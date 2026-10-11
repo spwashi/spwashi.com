@@ -52,6 +52,11 @@ git diff --check
  * Who runs the setup. Shell is first and the default: it is the whole setup
  * with nothing hidden, git included. The agent sets hand the same recipe to a
  * model and can carry the git guide along; the shell set already runs it.
+ *
+ * Drift rule: the Start strip on about/domains/spw.quest/index.html restates
+ * each set's `does` and `keeps` by hand and links /install#<id>. When a set's
+ * does, keeps, or id changes here, change that strip in the same patch. The
+ * pin never goes on the page; /init carries it.
  */
 export const INSTRUCTION_SETS = Object.freeze([
   {

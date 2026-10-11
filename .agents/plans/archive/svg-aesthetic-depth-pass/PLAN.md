@@ -94,7 +94,7 @@ Without this priming, the model is more likely to recommend:
 
 ### SVG logic
 
-- `.agents/plans/svg-surface-integration/PLAN.md` and `.agents/plans/svg-surface-integration/svg-surface-integration.spw` are the canonical local references.
+- `.agents/plans/archive/svg-surface-integration/PLAN.md` and `.agents/plans/archive/svg-surface-integration/svg-surface-integration.spw` are the canonical local references.
 - The SVG taxonomy already distinguishes:
   - static illustration
   - addressable illustration
@@ -115,8 +115,8 @@ Without this priming, the model is more likely to recommend:
 - `.agents/prompts/svg-infrastructure.md`
 - `.agents/state/svg-aesthetic-depth-pass-memo.md`
 - `.agents/plans/archive/svg-aesthetic-depth-pass/PLAN.md`
-- `.agents/plans/svg-surface-integration/PLAN.md`
-- `.agents/plans/svg-surface-integration/svg-surface-integration.spw`
+- `.agents/plans/archive/svg-surface-integration/PLAN.md`
+- `.agents/plans/archive/svg-surface-integration/svg-surface-integration.spw`
 - `.agents/plans/agentic-dev-contracts/PLAN.md`
 - `public/css/spw-shell.css`
 - `public/css/effects/wonder.css`

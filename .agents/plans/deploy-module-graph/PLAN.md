@@ -1,8 +1,8 @@
 # Deploy Module Graph
 
-**Status 2026-10-06.** The acyclic cut landed 2026-10-06: 0 chunk cycles, guarded by `check:built`. Open: `smart-console` still brings `idle-lab` through `cognitive-core`, and `idle-default` and `idle-residue` pull `seed-cards` and `region-menu` at idle (end of Acyclic Cut).
+**Status 2026-10-10.** The acyclic cut landed 2026-10-06 (f05b02d2): 0 chunk cycles, guarded by `check:built`. Next slice: `interface/smart-console.js:20` still imports `runtime/memory/cognitive-core.js` for `getKnowledgeMap`, which brings `idle-lab` with it. Move that read to a leaf, as `runtime/physics/pulse-timing.js` was. After it, `idle-default` and `idle-residue` still pull `seed-cards` and `region-menu` at idle, one source import or one schedule per patch. Gate: `npm run check:built` and the pack ledger in `dist/asset-manifest.json`.
 
-**Related:** [engagement-clusters](../engagement-clusters/PLAN.md) · [module-contract-overhaul](../module-contract-overhaul/PLAN.md) · [runtime-module-decomposition](../runtime-module-decomposition/PLAN.md).
+**Related:** [engagement-clusters](../engagement-clusters/PLAN.md) · [module-contract-overhaul](../module-contract-overhaul/PLAN.md) · [runtime-module-decomposition](../archive/runtime-module-decomposition/PLAN.md). **Absorbed 2026-10-10:** the expression-harvest leftover of [js-surface-ecology](../archive/js-surface-ecology/PLAN.md).
 
 ## Public Goal
 A first visit should feel like a local introduction: a small boot graph arrives first, richer catalogs introduce themselves by address, and `timings()` can name those dimensions. Authored `public/js` stays native ESM so the locality remains readable.
@@ -84,14 +84,18 @@ Open: `smart-console` imports `cognitive-core` (it reads the knowledge map), so 
 
 ## Seams & Minimal Touch Files
 - Build: `scripts/ts/build/index.mts`, `scripts/ts/css-bundle.mts`, `scripts/template.mjs`, `sw.js`
-- Runtime: `public/js/site.js`, `public/js/runtime/module-catalog*.js`
+- Runtime: `public/js/site.js`, `public/js/runtime/catalog/*.js`
 - Contracts: `scripts/tests/infrastructure-contracts.test.mjs`, `.spw/surfaces/runtime-module-medium.spw`
 - Track here; cross-link `runtime-bootstrap-performance` only
 
 ## Validation Steps
-1. `node --check public/js/site.js public/js/runtime/module-catalog.js public/js/runtime/module-catalog-normalize.js`
+1. `node --check public/js/site.js public/js/runtime/catalog/index.js public/js/runtime/catalog/normalize.js`
 2. `npm run build:tools`
 3. `npm run check:runtime` and `npm run check:pwa`
 4. `npm run check:local`
 5. Browser: home, settings, services/new-year, and play — one script entry, a bounded static preload closure, and catalog packs still arrive as `import()`s
 6. Inspect `dist/asset-manifest.json`: every semantic pack names its member modules and only the static closure is preloaded
+
+## Absorbed 2026-10-10 — js-surface-ecology (expression harvest)
+
+From [js-surface-ecology](../archive/js-surface-ecology/PLAN.md) (`.spw/audits/js-tree-value-2026-09.spw` `next.3`). `public/js/generated/spw-expressions.js` holds every route's expressions. It is 326 KB raw on 2026-10-10, up from 264 KB at the audit, and `runtime/expression/expression-resonance.js:644` loads it whole at idle to build a kin index. Split it per route, with precomputed kin edges as the only cross-route part, and measure idle gzip before and after.

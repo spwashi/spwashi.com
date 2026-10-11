@@ -1,8 +1,8 @@
 # Module Contract Overhaul
 
-**Status 2026-10-06.** Phase 0 done (`audit:module-writers`); Phase 1 partial (engages only); Phases 2–4 open, with the 2026-09-27 Next list primed. Owns the settings-changed consolidation that language-reclustering cites.
+**Status 2026-10-10.** Landed: writers declared (`audit:module-writers`, 47bab2ea), closed effect vocabularies and the derived Spw sentence plus atlas (6ff2aa8d), and `engages` as the first `@` wakes content (0a974b23). Flat `wakes`/`rests` fields do not exist yet. Next slice: `rests: change-only` as a check. Add the flat field, and fail a def that declares it while an observer or sync-task path does a raw `dataset.x =` or `textContent =`. `scripts/tests/change-only-writes.test.mjs` already holds the bus charge, crossref focus and utility row by hand. No gate: flat fields need no operator decision; the Spw projection of facets waits on `wip.spw` `#>wonder_module_contract_overhaul_facet_operators`. Atlas growth is parked. Owns the settings-changed consolidation that language-reclustering cites.
 
-**Related:** [language-reclustering](../language-reclustering/PLAN.md) · [js-surface-ecology](../js-surface-ecology/PLAN.md) · [runtime-plane-consolidation](../runtime-plane-consolidation/PLAN.md). **Absorbed 2026-10-06:** [js-runtime-composability](../archive/js-runtime-composability/PLAN.md).
+**Related:** [language-reclustering](../archive/language-reclustering/PLAN.md) · [js-surface-ecology](../archive/js-surface-ecology/PLAN.md) · [runtime-plane-consolidation](../runtime-plane-consolidation/PLAN.md). **Absorbed 2026-10-06:** [js-runtime-composability](../archive/js-runtime-composability/PLAN.md). **Absorbed 2026-10-10:** [runtime-module-fluency](../archive/runtime-module-fluency/PLAN.md).
 
 ## Public Goal
 
@@ -134,10 +134,18 @@ Creator asks: describe module behavior with Spw expressions so viewers have stru
 
 Landed: `catalog/contract-spw.js` derives one Spw sentence per contract from the facet table above (`#>` address, `#:` layer, `$` substrate and reach, `~` wake, `?` dimensions, `!` writes per role, `%` cost, `(` visual). It is derived, never authored, and the operator mapping is still this plan's human decision; loader records carry it (`__SPW_SITE__.listModules()`). `npm run atlas` writes `public/data/runtime-atlas.json` (families, contracts, one reader index from written names to the stylesheets that key on them, bus edges, git's rename ledger, readability ratchets, folio handles) and a static family table into `/design/runtime/`; the committed file's history is the version axis, and the deploy build regenerates a current copy. The explorer (`modules/design/runtime-atlas.js`, feature `runtime-atlas`) filters by family, host tier, and write role, opens a contract as Spw, follows a stylesheet back to every module that feeds it, replays a move from the rename ledger (the refactor animation, labeled a demo), and walks shared folio handles. Settings → Developer links it; `?spw-atlas=<id>` opens a module.
 
-Next, primed: settings and ornaments as further actors in the same `[scope:]role:name` grammar with bus events as edges; per-commit ratchet series from the atlas history; `atlas:check` as a gate once its freshness cost is known.
+Parked 2026-10-10 (atlas growth waits until `rests` is a check): settings and ornaments as further actors in the same `[scope:]role:name` grammar with bus events as edges; per-commit ratchet series from the atlas history; `atlas:check` as a gate once its freshness cost is known.
 
 ## A scroll trace for the rest facet — 2026-09-28
 Headless Chrome, /topics/software/ at 390 px, three touch gestures over ~12 s (the scroll-frame method): 130–350 root, body, header, and handle mutations and 55–70 long tasks per run. spatial-gravity's overlap pass cleared and re-added `data-spw-yielded` on every tracked element each frame, 35 rewrites of an unchanged state; it now decides yields first and writes differences (0–1 per run). Skipping pulse-beat-tuner and palette-treat-discovery did not move the long-task count, so ornament beats are not the scroll cost; a burst of ~100 `--spw-preset-*` root writes from pretext-presets lands once at idle. The long tasks stay open for a CDP trace per project_runtime_recalc_hot_paths. Shell direction hysteresis held: no oscillating header state. This is the change-only constraint (`rests`) measured in one module; the writer audit can grow a same-state rewrite detector from it.
 
 ## Gates that do not gate — 2026-09-28
 56 modules mounted on all six sampled routes: the `$` substrate gate asks whether a host exists, and every page shares the shell and grammar, so it is always yes; `INTERACTION` fired everything on the first input and f5 took its users off it. `engages` (closed `ENGAGE_KIND`) and `kernel/engagement.js` arm a def per host under `?spw-arming=engage` and hand it the engagement (0a974b23); it is the first concrete content of the `@` wakes facet. Clusters, Spw-container priming, weights, and the cross-references live in `../engagement-clusters/PLAN.md`.
+
+## Absorbed 2026-10-10 — runtime-module-fluency
+
+[runtime-module-fluency](../archive/runtime-module-fluency/PLAN.md) asked that the runtime stay calm at rest and inspectable when asked. Its console helpers are live (`listModules`, `snapshotModules`, `auditModules` at `public/js/site.js:1140-1151`), and the atlas at `/design/runtime/` is the inspector it wanted. Still owed, as the test for any contract facet: a mounted module should answer three questions when inspected.
+
+- What did this script notice in the authored page?
+- What did it change, defer, remember, or decline to mount?
+- How can a reader or editor return to the prior state?

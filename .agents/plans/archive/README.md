@@ -78,6 +78,70 @@ Archive policy:
 - Use virtual buckets before physical folder moves when the active tree is large or heavily cross-referenced.
 - Treat WIP-only folders as maintenance friction: revive, merge, or archive them the next time they are touched.
 
+## 2026-10-10 — Intent, detail and value review
+
+40 folders, after a review of all 88 live folders for intent, detail and value in implementation. Each moved `index.spw` carries its reason on its first line. Live folders 88 → 48. The three open questions inside moved folders were carried or answered first: `corpus_exclusion` moved to `agent-optimization`; `typecheck_door` is asked again in `site-source-layout`; `ladder_rung` (who owns the teaching) is answered by `reference-assignment-template`. `model-guided-refinement/templates/` moved to `reference-assignment-template/templates/` before the folder did.
+
+### Merged (14)
+
+Merged: the owner plan now carries an `Absorbed 2026-10-10` section with what was still owed.
+
+- [alignment-content-fit](./alignment-content-fit/PLAN.md): brochure fit and qa:alignment landed in 6b93a85a; what is left is one queue of near-miss edges measured 2026-09-17; merged into layout-seat-squeeze, as its edges queue (next: one inset for #home-entry-panels).
+- [attention-shell-contrast](./attention-shell-contrast/FIX.md): rows 3–5 landed (shell/layout.css; chrome/header.css hides .spw-semantic-seam); the files its commit plan named do not exist; rows 1–2 are open; merged into state-block-projections: row 1 rides the seat review, row 2 is rechecked with one home-nav-open still.
+- [audience-onboarding-copy](./audience-onboarding-copy/PLAN.md): the entrance copy landed and its one named first-fold miss (#home-reason-why) is keyed (9c8a7d97); its identity-framed goal was settled by the creator in 4d4b7262: copy speaks to the visit a reader is on; merged into semantic-copy-depth.
+- [css-sensitive-attribute-writes](./css-sensitive-attribute-writes/PLAN.md): its open item is settled in code: brace-gestures.js skips the context, wonder and operator keys unless a page opts in, and the only direct write is the reader's own operator swap; style-property-contract.mts enforces the custom-property rule through check:runtime; merged into data-attribute-css-token-refinement, with the author-owned / transient / inspection-hint split.
+- [gesture-state-refinement](./gesture-state-refinement/PLAN.md): brace and region cleanup, __SPW_SITE__.gestures, the texture-slice fine-pointer gate and isLensModeControl (6ccab1bb) landed; the settings gesture copy was never written; merged into interaction-grammar: the gesture census, with the settings copy as its receipt.
+- [landing-page-hierarchy-2026-08-21](./landing-page-hierarchy-2026-08-21/PLAN.md): parcel A landed (no heading jump on /play/); parcels B, C and D and the gates moved to the companion; merged into landing-visual-hierarchy.
+- [language-ladder-runtime-instrumentation](./language-ladder-runtime-instrumentation/PLAN.md): the instrumentation landed under other names (runtime/arrival/load-trace.js, public/ts/module-timing-contract.ts, 41f3311e); the JS-to-TS curriculum has not moved since 2026-05-31; its ladder-rung question (which folder owns the teaching) is answered by this move; merged into reference-assignment-template, as a candidate JS-to-TS ladder brief.
+- [language-reclustering](./language-reclustering/PLAN.md): its first slice (the timing cluster) never started after 009acd60 (2026-07-07); .spw/conventions/word-sets.spw (917608e5, creator-sourced) now does the coordinate-registry job; merged into homonym-renaming; the settings-changed consolidation stays with module-contract-overhaul.
+- [living-learning-surface](./living-learning-surface/PLAN.md): /curriculum/ and its memory module landed in 893876ea (2026-05-30); nothing curriculum-specific since; its Phase 1 waited on answers that never came; merged into topic-building-blocks holds the five outlined modules and the boundary-test rule.
+- [mindful-collection-controls](./mindful-collection-controls/PLAN.md): undo and clear landed (guide-badge.js, rewardDisplay); the lens-reward proposal is open: component-collection.js has no spw:variant-selected listener; merged into state-block-projections, behind the same browser review.
+- [portable-css](./portable-css/PLAN.md): a seven-line routing note over .spw/caches/portable-css-2026-09.spw; public/css/compose.css is already the portable entrypoint and style-portable.css was never built; merged into site-starter-component-kit.
+- [region-attenuation-coverage](./region-attenuation-coverage/PLAN.md): the wave 0 coverage script was never written; 618 of 1,025 .spw-frame elements still have no seat (2026-10-10 count), the same 60% as on 09-06; merged into layout-seat-squeeze, as its seat-coverage queue with a phone still per wave.
+- [runtime-module-decomposition](./runtime-module-decomposition/PLAN.md): its extractions landed (storage-utils a6cdf035, writeProjectionTier, the lens writer, experiential 2184 to 223 lines 0cb1dbfd, shell measurement 638b2629); the remaining splits duplicated plane Phase 6; merged into runtime-plane-consolidation.
+- [runtime-module-fluency](./runtime-module-fluency/PLAN.md): the console helpers are live (site.js) and the runtime atlas (6ff2aa8d) is the inspector it asked for; it named no next slice; merged into module-contract-overhaul, with its three inspect questions.
+
+### Landed (17)
+
+Landed: the routes, modules or conventions exist and are cited; where work remains, the named owner holds it.
+
+- [daily-kernel-development](./daily-kernel-development/PLAN.md): all five status boxes checked; kernels ran 2026-08-21 (4c2ad94b) and 2026-08-24 (64e09acc); the convention is .spw/conventions/daily-kernel.spw; reference-assignment-template holds the discipline table and the open studio and lab audits.
+- [design-hub](./design-hub/PLAN.md): hub cc8f33a0; #component-ecology-specimens and modules/design/experiments.js are live; its open slice pointed at a bundling pilot that never named this specimen; designer-conversation-canvas holds the second-site reproduction test.
+- [design-studio](./design-studio/PLAN.md): 594076ab: /design/logos/, /design/cards/render/ and /design/theme/colors/ exist; the only open item is the creator's logo pick; midjourney-design-concepts holds the logo pick.
+- [js-surface-ecology](./js-surface-ecology/PLAN.md): runtime families landed in 80c7b305; orphans have been 0 since 2026-09-19 and audit:js-tree --check gates check:local; runtime-plane-consolidation holds the innerWidth and root getComputedStyle readers and the haptics halves; deploy-module-graph holds the per-route expression harvest.
+- [module-export-uniformity](./module-export-uniformity/PLAN.md): every export has the SPW_MODULE_EXPORT shape, held by module-lifecycle-contract.test.mjs; runtime/catalog/export-contract.js and the two conventions exist; its two leftovers (check-standalone.mjs, a storage envelope) have no consumer.
+- [navigation-header-disclosure](./navigation-header-disclosure/PLAN.md): the posture preview and Open settings link are live (runtime/shell/attention-posture-panel.js), the Cauldron and posture header actions render from scripts/template.mjs, the shared DRAWER_MENU_QUERY and the glyph hamburger (b893cec3) landed; no FAVORITES label remains; chrome-navigation-wonder holds the /play/ Cauldron de-emphasis.
+- [operator-semantics-refinement](./operator-semantics-refinement/PLAN.md): commit 1 landed .spw/conventions/operator-semantics.spw; commits 3–4 went to spw-operator-pages and interaction-grammar; its own 2026-10-06 status said no open slice; operator-resonance-alignment holds craft guard 3; operator-semantics.spw stays the reference.
+- [page-region-discoverability](./page-region-discoverability/PLAN.md): every patch landed by 2026-06-28; runtime/regions/page-region-rail.js and handles/page-region-rail.css exist, route-discovery is on 20 routes, and the contract is .spw/slices/page-region-discoverability/; chrome-navigation-wonder is owner of record for regions, rails and anatomy.
+- [projects-hub](./projects-hub/PLAN.md): the projects hub and three leaves landed 2026-09-29; Home, Now and about/website link /projects/; landing-visual-hierarchy holds the primary-nav question.
+- [pwa-experience](./pwa-experience/PLAN.md): bc47ecf6: root worker, offline shell, and icons drawn from one SVG; its open list has been empty since 2026-09-05; npm run check:pwa and icons:pwa:check carry the contract; site-source-layout holds the worker precache list as a built artifact.
+- [relational-attention-media](./relational-attention-media/PLAN.md): the media-cauldron partial is on 9 routes; legibility-lens.css and attention-posture-panel.js read the attention triad; the contract is .spw/conventions/relational-attention-media.spw; midjourney-design-concepts holds the cauldron naming question.
+- [runtime-settings](./runtime-settings/PLAN.md): /settings/, site-settings-engine.js, rewardDisplay (reward-ui.js) and the collection register and reset are in the tree; wip last dated 2026-07-12; no next slice; settings-ornament-resonance holds the umbrella role and its local-only, JS-off and reset rules.
+- [shell-logo-branding](./shell-logo-branding/PLAN.md): 30ed4eec (2026-04-22): brand plate and handles; spw-brand-plate.svg, logo-runtime.js and handles/logo.css exist; no next slice; midjourney-design-concepts holds the open logo pick.
+- [spw-document-room](./spw-document-room/PLAN.md): 8089be91 (2026-10-05) opens a local .spw as a room at /open/; scripts/tests/spw-document-room.test.mjs holds it; no next slice.
+- [svg-surface-integration](./svg-surface-integration/PLAN.md): the host contract and depth live in systems/svg-surfaces.css and media/svg-tunability.js; spw-svg-figure is on 36 routes; node inspection runs through rail chips on focus and click; a shared runtime waits for a second widget, a trigger rather than a slice.
+- [typescript-integration](./typescript-integration/PLAN.md): workstreams 1, 2 and 4 landed: tsconfig.scripts.json compiles to scripts/typed/ and 13 public/ts modules compile to public/js/typed/; its typecheck-door question is asked again in site-source-layout; site-source-layout holds M0, M2, L3 and the sw.js precache list.
+- [visual-capture-ecology](./visual-capture-ecology/PLAN.md): attention receipts 4771b685 and chapter walk 38c50eec, then nightly walk 9f3aae2a and wander 73f200f2; the loop is .spw/conventions/component-capture-pipeline.spw; screenshot-semantics holds the reader-facing still state.
+
+### Superseded (2)
+
+Superseded: a later owner or cache already does the job.
+
+- [quest-workbench-feedback](./quest-workbench-feedback/PLAN.md): the spw.quest guide landed (dcf23bdb, 0d0380d2) and its drift rule now sits above INSTRUCTION_SETS in workers/spw-quest/src/quest.js; the inbox half is overtaken by the D1 desk (.spw/caches/feedback-product-2026-09.spw); workers-wonder-kit for the shared shell.
+- [style-image-cohesion](./style-image-cohesion/PLAN.md): never landed and dormant since 2026-04-30; the creator's image review (b87c59f5, .spw/caches/image-review-2026-09.spw) set the rule (a wonder that belongs to its page) and swapped 49 placements on 34 pages; midjourney-design-concepts.
+
+### Dormant (7)
+
+Dormant: no slice moved in months; the named owner holds what remains, or nothing does.
+
+- [compositional-css-electrostatics](./compositional-css-electrostatics/PLAN.md): never named a first slice; the only landed work is ecc3da8c (2026-09-14); every commit since is plan upkeep; each workstream already pointed at another owner; css-architecture-readability, core-css-spend-cut and interaction-grammar, per workstream.
+- [mobile-runtime-foundation](./mobile-runtime-foundation/PLAN.md): its only commits are the two 2026-04-09 doctrine commits; commits 3–5 name files that do not exist and no fuzz scripts exist; touch intent lives in kernel/engagement.js; interaction-grammar links its UX Considerations.
+- [model-guided-refinement](./model-guided-refinement/PLAN.md): its two open items have not moved; the runtime atlas (6ff2aa8d) largely answers the component trace; its rules live on in .spw/conventions/model-guided-refinement.spw and semantic-capacity.spw; reference-assignment-template holds templates/ (semantic-insight-cache, ontology-harmony).
+- [pretext-whimsy-lab](./pretext-whimsy-lab/PLAN.md): the measurement bus landed (semantic/pretext-measurement-bus.js, pretext-physics.js); whimsy commits 3–5 never started and no experiment was named; wip last dated 2026-06-15.
+- [recent-plan-templates](./recent-plan-templates/index.spw): four of five templates are cited nowhere and its own index left one out of dispatch; last touched 4058ed4e (2026-07-12); its index said it may be removed when unused.
+- [rpg-portal-fantasy](./rpg-portal-fantasy/PLAN.md): patches 001–012 landed by 2026-05-27; patch 012's home block left index.html in a7cacb5d; the Kernel Codex station, named since May, never started; the route's current direction is 0814de8e (Inktober); profile-character-card-development owns the RPG Wednesday route.
+- [spw-architecture-ecology](./spw-architecture-ecology/PLAN.md): waves R, A and B landed (owner-registry.spw and the ecology coordinators, 2248aea8); C was superseded by census:json and ecology:json; E–G never moved (no component-templates.spw, no validate-conventions.mjs, promotion_status on 1 of 12 reviews); the 2026-07-12 review rejected more generated indexes; spw-metaphysical-language holds the wave D codex shell; agent-optimization holds wave H (site.spw slimness) and the corpus-exclusion question.
+
 ## 2026-10-06 — Read-through sweep
 
 80 folders, after reading all 168 live folders. Each moved `index.spw` carries its reason on its first line. Live PLAN.md 162 → 84.

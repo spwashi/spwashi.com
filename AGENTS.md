@@ -79,7 +79,7 @@ Explore/plan do not write. Patch is the only write role. `npm run harness` · `n
 | model adapters (Claude, Grok, Gemini, GPT) | `CLAUDE.md`, `GROK.md`, `GEMINI.md`, `GPT.md` (backed by this file). No adapter for your model yet: this file alone is the gate — do not write a speculative `<MODEL>.md` |
 | skill wrappers vs workbench | `.agents/README.md` |
 | repo gotchas another agent already found | `.agents/MEMORY.md` — verified misses, not a note dump |
-| PWA / service worker | `.agents/plans/pwa-experience/` plus `npm run check:pwa` |
+| PWA / service worker | `npm run check:pwa` plus `npm run icons:pwa:check` |
 
 ## Commits
 
@@ -95,9 +95,9 @@ When proposing or writing a commit message:
 
 Use these rails before broad creative, semantic, CSS, JS, or marketing work:
 
-- **Model-guided refinement:** Use `.spw/conventions/model-guided-refinement.spw` and `.agents/plans/model-guided-refinement/PLAN.md` when a task needs explicit focus dimensions, semantic fixity tiers, elemental effects, cross-language CSS/HTML/JS/.spw tracing, or a creative marketing contract.
-- **Semantic capacity:** Use `.spw/conventions/semantic-capacity.spw` when adding `.spw` meaning. Name the operation first: `cache`, `audit`, `align`, `prime`, `contract`, or `archive`. For small valuable insights that are not ready for implementation, use `.agents/plans/model-guided-refinement/templates/semantic-insight-cache.spw`.
-- **Daily kernel:** Use `.spw/conventions/daily-kernel.spw` and `.agents/plans/daily-kernel-development/PLAN.md` when engineering work intersects animators, illustrators, designers, musicians, artists, or other collaborators. A daily kernel must name one focus, one discipline pair, one region, one brand-physics variable, one intensity, one semantic operation, one output, one validation path, and what not to touch.
+- **Model-guided refinement:** Use `.spw/conventions/model-guided-refinement.spw` when a task needs explicit focus dimensions, semantic fixity tiers, elemental effects, cross-language CSS/HTML/JS/.spw tracing, or a creative marketing contract.
+- **Semantic capacity:** Use `.spw/conventions/semantic-capacity.spw` when adding `.spw` meaning. Name the operation first: `cache`, `audit`, `align`, `prime`, `contract`, or `archive`. For small valuable insights that are not ready for implementation, use `.agents/plans/reference-assignment-template/templates/semantic-insight-cache.spw`.
+- **Daily kernel:** Use `.spw/conventions/daily-kernel.spw` when engineering work intersects animators, illustrators, designers, musicians, artists, or other collaborators. A daily kernel must name one focus, one discipline pair, one region, one brand-physics variable, one intensity, one semantic operation, one output, one validation path, and what not to touch.
 - **Creative marketing engine:** Use `.spw/surfaces/product-lines.spw` plus `.spw/conventions/model-guided-refinement.spw#creative_marketing_engine` before changing promo/wonder, artist, musician, commission, or collaborator-facing offers. Each offer should name audience, offer, proof, resonance, extension, and next action.
 - **Experience slices:** Use `.agents/plans/modular-experience-slices/PLAN.md` and `.spw/slices/` contracts when work needs durable ownership across route HTML, CSS, JS, `.spw`, validation, and practice beds.
 - **Copy accessor:** Use `.spw/conventions/copy-accessor.spw` when naming or translating collectible copy. The dotted `data-spw-copy-unit` is the flat localization projection; `data-spw-semantic-expression` is the multidimensional handle. Extra dots nest categories; they are not extra dimensions. Do not invent a fourth accessor family.

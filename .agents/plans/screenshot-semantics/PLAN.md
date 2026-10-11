@@ -1,8 +1,8 @@
 # Plan: screenshot-semantics
 
-**Status 2026-10-06.** Stills recipes and the 2026-08-31 crop seed landed; commits 2–5 (priming and journey tokens) are open.
+**Status 2026-10-10.** Named viewport-still recipes landed (de06af3c; nightly and wander walks since, 9f3aae2a, 73f200f2), and the 2026-08-31 crop seed (aba9c1e4). Capture mode (`data-spw-capture-mode`) already gives clean-capture visibility and pauses SVG flows (`public/css/modes/capture.css`) and texture crops (`effects/texture-slice.css`). Commits 2–5 (priming and journey tokens) have not started. The next slice is one screenshottable state on one route with a named still id, and it waits on the creator's answer to `index.spw#wonder_screenshot_semantics_journey`: should a still show how the visit got here, and should that persist across sessions?
 
-**Related:** [visual-capture-ecology](../visual-capture-ecology/PLAN.md) · [rpg-asset-capture-frames](../archive/rpg-asset-capture-frames/PLAN.md) (archived).
+**Related:** [visual-capture-ecology](../archive/visual-capture-ecology/PLAN.md) · [rpg-asset-capture-frames](../archive/rpg-asset-capture-frames/PLAN.md) (archived).
 
 Extend selection and priming semantics so screenshots capture meaningful cognitive states — turning the site into a useful capture tool for artists who value the visual record of a developing idea.
 
@@ -23,8 +23,8 @@ The desired end state is a site where a screenshot at any moment captures someth
 [MOD?] .spw/conventions/site-semantics.spw — extend selection and priming axes with screenshottability rules
 [MOD?] .spw/conventions/style-development.spw — add journey token vocabulary as a style development record
 [MOD?] public/css/style.css — ensure selection, priming, and liminality state survive as visible CSS without hover/focus
-[MOD?] public/js/spw-component-semantics.js — write priming and address state into data attributes at interaction time
-[MOD?] public/js/spw-shared.js — helpers for persisting address and journey state into markup attributes
+[MOD?] public/js/semantic/component-semantics.js — write priming and address state into data attributes at interaction time
+[MOD?] public/js/kernel/shared.js — helpers for persisting address and journey state into markup attributes
 [MOD] scripts/lib/visual-capture-plan.mjs — viewport still vs region anatomy; --stills track
 [NEW] scripts/lib/viewport-still-recipes.mjs — named device-frame subjects (tooling-only)
 [MOD] scripts/component-snapshots.mjs — prepare, blank/target retry, shared screenshotBuffer
@@ -50,16 +50,10 @@ Craft guard:
 4. `&[runtime] — write priming and address state into data attributes at interaction time`
 5. `![screenshot] — verify screenshottable states across routes, interactions, and static load`
 
-Fuzz strategy:
-- Explore loop: `fuzz:explore --target=screenshot-semantics`
-- Stabilize loop: `fuzz:stabilize --target=screenshot-semantics`
-- Ship gate: `fuzz:ship --target=screenshot-semantics`
-
-## Agentic Hygiene
-
-- Rebase target: `main@14442d42b8fe4d9d5bfec5906e652fbca98d5f22`
-- Rebase cadence: before commit 1, before merge
-- Hygiene split: none
+Capture loop (the `fuzz:*` scripts never existed):
+- Explore: `npm run visual:explore`
+- Recapture misses: `npm run visual:stabilize`
+- One state: `npm run visual:capture -- --stills --ids <still> --viewports pocket`
 
 ## Dependencies
 

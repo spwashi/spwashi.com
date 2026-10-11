@@ -1,8 +1,8 @@
 # Layout Seat Squeeze
 
-**Status 2026-10-06.** The seat and squeeze invariants are settled (CLS fixes 53717ed7, a740b10d). Next held item: the lens hook nav wrap. Holds the layout work of four archived plans.
+**Status 2026-10-10.** The seat and squeeze invariants are settled, including the CLS fixes 53717ed7 and a740b10d. This is now the single layout owner, with three queues: held CLS items (below), edges, and seat coverage (both under Absorbed 2026-10-10). Next: the edges queue's shared inset for `#home-entry-panels`. It is gated by an `npm run qa:alignment` reading before and after, plus a phone still for the creator's look. The lens hook nav wrap stays held because it is intermittent and was not reproduced on 2026-10-06.
 
-**Related:** [landing-visual-hierarchy](../landing-visual-hierarchy/PLAN.md) · [alignment-content-fit](../alignment-content-fit/PLAN.md). **Absorbed 2026-10-06:** [card-grid-density-audit](../archive/card-grid-density-audit/PLAN.md) · [content-responsive-layout](../archive/content-responsive-layout/PLAN.md) · [context-sensitive-variants-and-agent-qa](../archive/context-sensitive-variants-and-agent-qa/PLAN.md) · [page-frame-sizing](../archive/page-frame-sizing/PLAN.md).
+**Related:** [landing-visual-hierarchy](../landing-visual-hierarchy/PLAN.md). **Absorbed 2026-10-10:** [alignment-content-fit](../archive/alignment-content-fit/PLAN.md) · [region-attenuation-coverage](../archive/region-attenuation-coverage/PLAN.md). **Absorbed 2026-10-06:** [card-grid-density-audit](../archive/card-grid-density-audit/PLAN.md) · [content-responsive-layout](../archive/content-responsive-layout/PLAN.md) · [context-sensitive-variants-and-agent-qa](../archive/context-sensitive-variants-and-agent-qa/PLAN.md) · [page-frame-sizing](../archive/page-frame-sizing/PLAN.md).
 
 ## Public Goal
 
@@ -88,3 +88,21 @@ Readers can distinguish card titles, supporting copy, metadata, and actions at p
 - Same class, other seat: a start-aligned container in a card column folded to its border (folios: six cards about 2px wide). The card-column stretch rule in `foundation.css` fixes it. a740b10d. A sweep found no collapsed or overflowing element on /, /about/, /topics/, /services/, /now/, /projects/, /recipes/, /play/rpg-wednesday/ or /topics/software/spw/.
 - Now: home totals about 0.005. The header settles 4px at about 1.1s, and the badge and search action grow 6px at about 3s as the chrome floor arrives.
 - Held: the lens hook nav sometimes wraps (about 0.05, variable timing, chips gain about 3px); not seen on the 2026-10-06 load. Font swap is about 0.010; every face is `display: swap` with no metric overrides. A fallback `size-adjust` tuned for Georgia would be wrong where the fallback is Noto Serif, and preloading the 129 KiB Newsreader on every page competes with core CSS, so neither shipped.
+
+## Absorbed 2026-10-10 — alignment-content-fit
+
+The edges queue. Plan: [alignment-content-fit](../archive/alignment-content-fit/PLAN.md). Brochure fit landed in 6b93a85a, and its sensor is `npm run qa:alignment` (`scripts/alignment-audit.mjs`).
+
+- Rules kept: the main shell padding is the one public left/right datum, so route CSS adds no second gutter. Route CSS may change `align-items` and `gap` on `.frame-topline` and `.frame-heading`, never `flex-direction`. Inline highlights bleeding into frame padding are accepted and excluded from clipped-overflow triage.
+- Next: one shared inset token for `#home-entry-panels` (`index.html:768`). At pocket width on 2026-09-17, its six panels had content edges at 44/44/44/44/47/44.
+- Then, from the same 2026-09-17 reading: the promo-wonder-cycle cards (4.5px spread), the returner grid (2px), and `#choose-your-entrance` (`index.html:460`) role hooks against the depth disclosure (6px). After that, settings at pocket width (153 near-flush edges in 36 sites).
+- Validation: `qa:alignment` before and after, and a phone still.
+
+## Absorbed 2026-10-10 — region-attenuation-coverage
+
+The seat-coverage queue. Plan: [region-attenuation-coverage](../archive/region-attenuation-coverage/PLAN.md). On 2026-10-10 a regex count found 618 of 1,025 `.spw-frame` elements in 212 HTML files with no seat and no `entry-spine`/`reading` role alias. That is 60%, the same share as the 2026-09-06 count of 487 of 816. Most unseated, per route: `about/website/`, `play/rpg-wednesday/` and `topics/software/spw/` (15 each), `design/` (14), then `town/` and `topics/knowledge-bases/` (10 each). Wave 1 (`design/folios/`) is the reference.
+
+- Wave 0: `scripts/spw-region-coverage-audit.mjs` and `audit:region-coverage` do not exist yet. They are report-only and sit beside `audit:region-seats`, never as a `check:local` gate.
+- Each wave covers one route. Read every unseated frame, then either seat it, record it as deliberately regionless, or give it a `data-spw-region-role` companion. No bulk fill, no seventh seat, no retuning of `--spw-wonder-hold`.
+- Validation per wave: a seat repaints the frame (wash, seam and the dashed cluster border; `systems/region-seats.css:48-66`), so each wave carries a phone still of the route before and after, alongside `node scripts/spw-region-seat-audit.mjs`, `npm run component:check` and `npm run check:local`.
+- Question for the creator: `#>wonder_layout_seat_squeeze_unseated_default` in `wip.spw`.

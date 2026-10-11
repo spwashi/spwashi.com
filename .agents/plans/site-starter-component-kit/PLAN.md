@@ -1,8 +1,8 @@
 # Site Starter And Component Kit
 
-**Status 2026-10-06.** Next: the inventory path-resolution repair, ahead of the texture-slice pilot. Owns the bundling pilot that design-hub and designer-conversation-canvas feed.
+**Status 2026-10-10.** Landed: the host mount (6b75bc59) and `audit:portable` (480d92bc), which walks each catalog module's closure and already resolves `/public/js/` imports (`scripts/portable-audit.mjs:92`). One next door: fix the compose walk at `scripts/starter-inventory.mjs:166`, which still joins the four root-relative compose re-exports onto `public/js/`, with that same rule and a test for relative and root-relative specifiers. Folding the walk into `audit:portable` waits, because that audit starts from the module catalog, not `compose.js`, and exports no resolver. The texture-slice pilot after it is gated on `wonder_site_starter_first_portable` in `index.spw`: capability or design specimen first.
 
-**Related:** [portable-css](../portable-css/PLAN.md) · [typescript-integration](../typescript-integration/PLAN.md) · [component-variant-alignment](../archive/component-variant-alignment/PLAN.md) (archived).
+**Related:** [portable-css](../archive/portable-css/PLAN.md) (absorbed 2026-10-10) · [typescript-integration](../archive/typescript-integration/PLAN.md) · [component-variant-alignment](../archive/component-variant-alignment/PLAN.md) (archived).
 
 ## Public Goal
 
@@ -174,6 +174,16 @@ from becoming a maintenance burden.
 - `node --check scripts/starter-inventory.mjs`
 - `git diff --check`
 - `npm run check:local` when CSS, JS, route HTML, or build behavior changes
+
+## Absorbed 2026-10-10 — portable-css
+
+[portable-css](../archive/portable-css/PLAN.md) only routed to `.spw/caches/portable-css-2026-09.spw`; its entry was never built (`public/css/style-portable.css` does not exist). What is still owed:
+
+- `public/css/compose.css` is already the portable CSS entrypoint (see Portable Boundary). Reconcile toward it; do not add a second entry beside it.
+- pc-006's layer set differs. It ships reset, tokens, typography, grammar and the `.spw-frame` / `.spw-chip` components, and refuses shell/chrome, systems and routes. `compose.css:11` declares `tokens, typography, grammar, components, systems, handles, effects`: no reset, and it carries systems. Choose one set before emitting a portable bundle.
+- pc-007 holds: the autonomous-feedback and spw-quest workers keep `workers/lib/shell.js` until that bundle exists.
+
+The claims stay in the cache; this section only names what is open.
 
 ## Status
 

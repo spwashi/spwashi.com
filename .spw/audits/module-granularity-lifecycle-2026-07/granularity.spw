@@ -10,7 +10,7 @@
 @index: ~"./index.spw"
 @lifecycle: ~"./lifecycle.spw"
 @inertia: ~"./inertia.spw"
-@decomposition: ~"../../../.agents/plans/runtime-module-decomposition/PLAN.md"
+@decomposition: ~"../../../.agents/plans/archive/runtime-module-decomposition/PLAN.md"
 @medium: ~"../../surfaces/runtime-module-medium.spw"
 @brp_runtime: ~"../build-runtime-performance-2026-07/runtime.spw"
 @catalog: ~"../../../public/js/runtime/catalog/index.js"

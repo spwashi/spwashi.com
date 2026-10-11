@@ -68,9 +68,9 @@ intent: .{
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 
 @plan_bootstrap_performance: ~"../runtime-bootstrap-performance/index.spw"
-@plan_module_export_uniformity: ~"../module-export-uniformity/index.spw"
-@plan_module_decomposition: ~"../runtime-module-decomposition/index.spw"
-@plan_css_sensitive_writes: ~"../css-sensitive-attribute-writes/index.spw"
+@plan_module_export_uniformity: ~"../archive/module-export-uniformity/index.spw"
+@plan_module_decomposition: ~"../archive/runtime-module-decomposition/index.spw"
+@plan_css_sensitive_writes: ~"../archive/css-sensitive-attribute-writes/index.spw"
 @plan_css_architecture: ~"../css-architecture-readability/index.spw"
 @plan_navigation_geometry: ~"../archive/semantic-navigation-geometry/PLAN.md"
 @plan_js_runtime_composability: ~"../archive/js-runtime-composability/index.spw"
@@ -168,3 +168,23 @@ invariants: #[
  `Adoption before decomposition — splitting before consolidating moves complexity sideways.`,
  `Every count re-probes before it is trusted; measurements are dated 2026-07-26.`,
 ][reg=set]
+
+#>wonder_runtime_plane_consolidation_arrival_lever
+?["When 56 modules mount on every route, which lever owns the fix: scoping by route family, or arming on a reader's engagement?"]{
+  #:depth #!pragmatic ~#lens(arrival)
+  ~#with: @plan @site @module_loader
+  ~#tension: "Phase 2 here scopes modules by route family (ctx.routeFamily is parsed at site.js:498 and read by nothing). engagement-clusters arms a module per host when a reader engages it (kernel/engagement.js, 0a974b23). Both answer the same census and are two theories of how a page arrives; neither plan names the other, and building both doubles the gates a def can carry."
+  !probe{ "npm run audit:root-writes" }
+  $%[runtime.arrival, catalog.gates]
+  ~<"./PLAN.md"> ~<"../engagement-clusters/PLAN.md">
+}
+
+#>wonder_runtime_plane_consolidation_file_ceiling
+?["Is 600 lines a real ceiling for a runtime file, or a hint that yields to the generalizability rule?"]{
+  #:depth #!craft ~#lens(legibility)
+  ~#with: @plan @modules @plan_module_decomposition @shell_disclosure
+  ~#tension: "The absorbed decomposition plan guarded 'no file over 600 lines' and also said never to split by line count alone. interface/haptics.js grew 1,168 to 1,452 lines while the rule stood; shell-disclosure.js is 1,249. If the number is real, it drives splits; if not, the two-adopter rule alone decides."
+  !probe{ "wc -l public/js/interface/haptics.js public/js/runtime/shell/shell-disclosure.js public/js/kernel/shared.js" }
+  $%[runtime.decomposition, craft.guard]
+  ~<"./PLAN.md"> ~<"../archive/runtime-module-decomposition/PLAN.md">
+}

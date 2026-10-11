@@ -1,8 +1,8 @@
 # Agent Optimization for spwashi.com
 
-**Status 2026-10-06.** Live counts are in the plans README snapshot and `.spw/audits/plan-spw-tree-2026-09.spw`; the 2026-09-20 baseline below is history.
+**Status 2026-10-10.** The gate holds: `AGENTS.md` is 3179 words against its 3200 budget (`scripts/check-agent-contracts.mjs:149`), and 70ac9e0e and 1893ee91 gave `.spw` open-first files their own line budget and made a green check print only what it learned. Next slice: an `AGENTS.md` cut that moves the Build pipeline section (about 540 words, a command table every session reads) behind a one-line pointer, proved with `npm run check:agents -- --spend`. It waits for the 2026-10-10 removal of lines for archived plans to land, and for creator review, since `AGENTS.md` is the gate.
 
-**Related:** [history-reflow](../history-reflow/PLAN.md).
+**Related:** [history-reflow](../history-reflow/PLAN.md) · [spw-architecture-ecology](../archive/spw-architecture-ecology/PLAN.md) (wave H absorbed 2026-10-10).
 
 ## Public Goal
 
@@ -67,3 +67,11 @@ Do not apply AI onto a 12k PLAN as if that were the process.
 - Generate more `index.spw` to record a census.
 - Paint AI onto inherited diary workflow.
 - Add `ASTRA.md` or symlink adapters. Astra primes `wonder-architecture.spw`; harvest with `npm run wonder`.
+
+## Absorbed 2026-10-10 — spw-architecture-ecology wave H
+
+`.spw/site.spw` slimness lives here, because every agent that opens the dispatch hub pays for it. Measured 2026-10-10: 426 lines and 182 `@name:` refs; 21 point into `.agents/plans/`, 4 of those into `archive/`.
+
+- Landed: the `translations.ecologies` facet (`site.spw:232`) routes through the coordinator conventions.
+- Owed: remove per-plan `@` refs that the coordinators and `conventions/owner-registry.spw` already cover. Keep `planning_tracks`, `operational_layer`, `surfaces` and `integration_contract`.
+- Rule kept: no new per-plan `@` ref in `site.spw` without an owner-registry entry.

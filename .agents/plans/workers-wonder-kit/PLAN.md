@@ -1,122 +1,64 @@
 # Plan: workers-wonder-kit
 
-**Status 2026-10-06.** The kit lives in `workers/lib/` (`shell.js`). smut.today landed (94a0dc27); the wap.mom wonder section is superseded.
+**Status 2026-10-10.** The shared kit is `workers/lib/shell.js` (74503ca7). spw-quest, site-hub-next and autonomous-feedback import it; smut-today and wap-mom still carry their own copies. smut.today's two registers landed (94a0dc27). Next slice: move smut-today and wap-mom onto `shell.js` and check with `npm run check:workers`. Gate: neither worker is dirty in another session's tree.
 
-**Related:** [quest-workbench-feedback](../quest-workbench-feedback/PLAN.md) · [ecosystem-offer-2026-10](../ecosystem-offer-2026-10/PLAN.md).
+**Related:** [quest-workbench-feedback](../archive/quest-workbench-feedback/PLAN.md) (archived) · [ecosystem-offer-2026-10](../ecosystem-offer-2026-10/PLAN.md).
 
-Operation: prime. Fixity: experimental. Named slice: wap.mom and smut.today, maintainability and wonder.
+Operation: prime. Fixity: experimental. Named slice: wap.mom and smut.today onto the shared shell.
 
 ## Public goal
 
 Two small Cloudflare workers (`workers/wap-mom`, `workers/smut-today`) each carry a whole
-site in one file: data, layout, security headers, favicon, JSON endpoint, router. They were
-written a day apart and share about a third of their lines by copy. Make the shared third
-one thing, keep each worker's voice its own, and give both a reason to be returned to.
+site: data, layout, security headers, favicon, JSON endpoint, router. They share their
+skeleton by copy. Make the shared part one thing, and keep each worker's voice its own.
 
 wap.mom aims at mothers who hold master's degrees and professionals who own verticals and
 brands. Not on the nose: the domain does the wink, the copy earns the reader with depth.
 smut.today is a daily erotic zine for adults; its wonder is pacing and variety, not volume.
 
-## Sense — 2026-09-19
+## Sense — 2026-10-10
 
-- `wap-mom/src/index.js` (581 lines, untracked, in another session's working tree) —
-  ISSUES ×3, MOMS ×8, a filing cabinet on KV (`FILINGS`), cabinet login by shared key.
-- `smut-today/src/index.js` (364 lines at HEAD, modified in another session's tree) —
-  STORIES, a day index that picks today's story, `/today.json`.
-- `site-hub-next`, `feedback-quest` — same skeleton again (escapeHtml, BASE_SECURITY,
-  jsonResponse, favicon SVG, `layout()`), four copies in all.
-- Both workers are being edited by the sibling session right now. Nothing here lands until
-  their tree is clean; this plan is the proposal they can pick up or hand back.
+- `workers/lib/shell.js` exports `BASE_SECURITY` (:4), `escapeHtml` (:28), `jsonResponse(body, cache, status)` (:35), `htmlResponse` (:49) and `layout` (:387).
+- `workers/smut-today/src/index.js` (874 lines) defines its own `escapeHtml` (:149), `BASE_SECURITY` (:156), `FAVICON` (:166) and `layout` (:358).
+- `workers/wap-mom/src/layout.js` defines its own `escapeHtml` (:13), `BASE_SECURITY` (:20), `FAVICON` (:30) and `jsonResponse(body, extra)` (:303).
+- The three `escapeHtml` bodies are identical. The CSPs are not: wap.mom allows `script-src 'self'` for `/figures.js`, and shell allows `'unsafe-inline'`.
 
-## Maintainability
+## The slice
 
-- `workers/_kit/` (plain ESM, no build): `html.js` (escapeHtml, `layout({title, description,
-  canonical, body, robots})` with the security headers and favicon as parameters, not
-  constants), `respond.js` (html, htmlPrivate, jsonResponse, notFound), `router.js` (a
-  `routes` table of `[method, pattern, handler]` instead of the if-ladder), `time.js`
-  (dayIndex, date keys). Each worker imports what it uses; wrangler bundles it.
-- Content out of code: `ISSUES`, `MOMS`, `STORIES` become `content/*.json` (or `.spw` when
-  the folio pipeline can read it) beside `src/`, so an issue can be added without touching
-  the router. The site's `.spw` tree already holds WAP lineage
-  (`.spw/caches/folio-soil-ecosystem-2026-09.spw`, WAP = Wonder About Pi(e)); the worker
-  content should cite it, not restate it.
-- One `workers/README.md` naming the kit, the per-worker voice rule, and the deploy step.
-- Tests: `node --test workers/_kit/*.test.mjs` for escapeHtml, router matching, dayIndex.
-
-## Wonder — wap.mom
-
-- **Issues that hold.** Each issue keeps its three-paragraph shape but gains one real
-  mathematical object the reader can take away (a construction, an inequality, a recipe
-  ratio that is a proof). The reader who owns a vertical wants something to be right, not
-  just charming.
-- **Offices, not personas.** "Kinds of mom" reads as characters; recast each as an office
-  of the ministry with a brief and a standing question, so the register is institutional
-  wonder rather than mommy-blog. Same slugs, same eight.
-- **Filing as the reward.** The cabinet is the best idea in the worker: a wonder you file is
-  a wonder the ministry answers. Show the count of filed wonders on the home page and
-  answer one per issue, credited by office. That is the return-visit loop.
-- **Pass-along.** A `/pass/<slug>/` view with no chrome, sized for a screenshot, so an issue
-  can be sent without a synopsis — the site's seed-card discipline applied to a periodical.
-
-## Wonder — smut.today
-
-- **Pacing over count.** Keep one story a day, but let the day index rotate through a small
-  set of *forms* (setup-only, two-voice, a single sustained paragraph) so return visits feel
-  like a zine, not a queue.
-- **Consent and adulthood as frame, not banner.** An age gate that is one honest sentence
-  and a cookie, a content note per story, and a `robots` posture that does not leak to the
-  main site. It is attached only to its own domain today; keep it that way.
-- **Craft notes.** A `/notes/` page in the author's voice about how a story was built,
-  which is the same reflection register as the site's `what-im-learning` convention and
-  gives the zine a second reason to exist.
+- Import `escapeHtml` and any other byte-identical helper from `../../lib/shell.js` in both workers; delete the local copies.
+- Keep each worker's header object and CSP. Do not widen shell's policy to fit one worker or narrow it for the other three.
+- Keep each worker's `layout`/`page`, mastheads, favicon and copy local. Voice stays with the worker.
+- The `jsonResponse` signatures differ. Adapt the call sites or keep a local wrapper; do not change shell's signature.
+- Add one line to `workers/README.md` naming `workers/lib/shell.js` as the shared kit.
+- If a page script is serialized with `fn.toString()`, it needs the `__name`/`__defProp` shim that `shell.js` already carries.
 
 ## Boundaries
 
 - No new packages, no framework, no build step beyond wrangler.
-- (2026-09-24: no repo link reached `/moms/*`, `/file`, or `/ministry`; wap.mom removed them. The wap.mom half of this plan's "Wonder" section is superseded by the
-  straight-man periodical in `workers/README.md`.)
-- Do not change routes that are already linked from outside (`/`, `/<slug>/`, `/moms/*`,
-  `/file`, `/cabinet*`, `/today.json`).
+- Do not change routes that are already linked from outside (`/`, `/<slug>/`, `/cabinet*`, `/today.json`).
 - Do not touch either worker while it is dirty in another session's tree.
 
 ## Validation
 
-- `node --check` on every worker entry and kit module; `node --test workers/_kit`.
-- `wrangler dev` for each worker: the eight wap.mom routes and the four smut.today routes
-  answer as before; new routes answer; the security header set is unchanged.
-- Read both home pages aloud once for the audience rule.
+- `node --check` on every touched worker file.
+- `npm run check:workers` (part of `npm run check:local`).
+- Import each worker in Node and fetch its routes before and after. Status codes and the security header set must not change.
+
+## Wonder — wap.mom (superseded)
+
+Superseded 2026-09-24 by the straight-man periodical described in `workers/README.md` (ad4773ad, ce4ed4b7). `/moms/*`, `/file` and `/ministry` were removed, and the issues now carry their own instruments and uses.
+
+## Wonder — smut.today
+
+- Consent and adulthood as frame, not banner: landed. There is one plain sentence for adults with a Leave link (`index.js:549`), a `noindex` meta and `X-Robots-Tag` headers (:368, :816, :827), and its own `robots.txt` (:800).
+- Pacing over count: partly landed as the two registers (94a0dc27) and the reader's settle preferences.
+- Craft notes at `/notes/` remain an idea in the author's voice, not part of this slice.
 
 ## Landed and held — 2026-09-19
 
 - **smut.today, landed (94a0dc27):** two pieces, one register each. "Before the meeting" is
   slow and written to be read; "The last car" is dirty and four paragraphs. Each piece names
   the phrases it keeps, dated to the day it ran, shown at its foot and exposed in
-  `today.json` as `language`; each links the other register. Only those hunks were
-  committed; eight pre-existing uncommitted hunks in that file (a letter, pitches, index
-  cards, routes) belong to another author and stay in the worktree.
-- **wap.mom, edited in place, uncommitted:** the file is untracked and its author has not
-  staged it, so the UX changes wait there. What changed: a skip link and `main` landmark;
-  the footer links are a `nav`; the home page leads with the issue on the counter today
-  (one a day, in order) and a pass-along link, lists issues as an ordered list with their
-  kickers, shows the offices as 44px chips, and ends with a file-a-wish card; issue pages
-  gain previous/next and a chrome-free `?pass=1` copy with `noindex` and the canonical
-  pointing home; the filing form groups the two wish fields in a fieldset with hints wired
-  by `aria-describedby`; the filed page links to today's issue. Verified by importing the
-  worker in Node and fetching thirteen routes (all 200/404 as expected); `check:workers`
-  passes; no banned lemma.
-- **autonomous.feedback, proposal only:** the worker was modified twice by someone else
-  during this session (11:43, 11:49), so nothing was edited. Proposed:
-  - The weather page leads with a sentence, not a word: `clear · five origins answered in
-    under a second` reads; `CLEAR` alone does not. Keep the big glyph, add the sentence.
-  - The probe table names hosts, not roles: `primary` and `grain` mean nothing to a
-    visitor; `spwashi.com` and `texture.website` do. Role becomes the secondary label.
-  - `/for/{host}` drawers open with what a gift is and what happens to it, in two lines,
-    before the contract JSON; the four contexts are chips with their prompt as the visible
-    label (`The thing that would not round.`), and `accepting: false` is said in words
-    ("not taking gifts yet") rather than left to the JSON.
-  - The quest page shows the three quests as a numbered path with the first step of each
-    visible and the rest disclosed, so the page reads as a walk rather than a manual.
-  - Server-Timing already rides on HTML responses; surface it as a footer line
-    (`this page: 84ms`) so the climate page demonstrates its own subject.
-  - Shared with wap.mom through the kit once it exists: skip link, `nav` footer, chip
-    targets, the bare pass-along layout.
+  `today.json` as `language`; each links the other register.
+- **wap.mom UX edits (superseded):** the uncommitted pass recorded here was overtaken when the worker was committed and rebuilt as the periodical.
+- **autonomous.feedback proposal (superseded):** `/for/{host}` was retired on 2026-09-22 (`workers/README.md`), and the desk model now lives in `.spw/caches/feedback-product-2026-09.spw` and `.spw/slices/feedback-desk-flow/index.spw`.

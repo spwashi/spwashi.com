@@ -1,8 +1,8 @@
 # Plan: spw-language-v04
 
-**Status 2026-10-06.** The v0.4 worktree is gone; work lands on main. The 2026-09-27 Status below is current.
+**Status 2026-10-10.** Phase 1 (the twelve pillars) and Phase 4 (the in-site parser plus the build-time expression manifest) have landed, and the workbench mount is pinned at `229aedcf` (a4572202). Phase 2 has not started; it is upstream workbench work that the creator gates. The one next slice is patch 2 of `.spw/caches/spw-as-handle-2026-09.spw`: prefix sigils in `parseExpressionQuery` (`public/js/semantic/expression-query.js`), tested in `scripts/tests/expression-query.test.mjs`. Its trailing-`?#` half waits on the creator (wonder block in `index.spw`).
 
-**Related:** [spw-metaphysical-language](../spw-metaphysical-language/PLAN.md) · [operator-semantics-refinement](../operator-semantics-refinement/PLAN.md) · [spw-document-room](../spw-document-room/PLAN.md).
+**Related:** [spw-metaphysical-language](../spw-metaphysical-language/PLAN.md) · [operator-semantics-refinement](../archive/operator-semantics-refinement/PLAN.md) · [spw-document-room](../archive/spw-document-room/PLAN.md).
 
 Elaborate Spw as a language toward v0.4: profiles, typed references, executable claims, stem projection, register precipitates, and workbench submodule alignment — expressed as dimensionally rich `.spw` artifacts on spwashi.com before upstream grammar lands.
 
@@ -50,7 +50,7 @@ All pillars live under `.spw/language/v04/pillars/` and dispatch from `.spw/lang
 ### Phase 3 — Precipitate to runtime
 
 - Emit agent manifest slices from `register-serialization.spw`.
-- Wire claim probes into `npm run check` where safe.
+- Wire claim probes into `npm run check:local` where safe.
 - Promote stable stems into `.spw/conventions/` via semantic-capacity contract operation.
 
 ## Submodule Update Procedure
@@ -72,7 +72,7 @@ All pillars live under `.spw/language/v04/pillars/` and dispatch from `.spw/lang
 
 - Phase 1 landed: the twelve pillars exist under `.spw/language/v04/pillars/`, the atlas carries `#language-evolution-v04`, and `npm run ecology:language` reports the claim and probe counts.
 - Phase 2 has not started upstream. The pinned workbench (`3eaab6377672`, 2026-09-22) has no `docs/specs/spw/v04/` and no `feature/spw-language-v04` branch in the checkout; `submodule-bridge.spw` still describes the target layout. The worktree this plan named (`../wt-spw-language-v04`) is gone; work lands on `main`.
-- Phase 3 is partly realized by other means: `npm run spw:integrity` parses every authored expression (912 today), the expression manifest below precipitates the parse into the runtime, and `ecology:language` is the probe. Claim probes are not yet in `npm run check`.
+- Phase 3 is partly realized by other means: `npm run spw:integrity` parses every authored expression (912 today), the expression manifest below precipitates the parse into the runtime, and `ecology:language` is the probe. Claim probes are not yet in `npm run check:local`.
 
 ## Phase 4 — Interpreter in the site (landed under v0.3.0)
 

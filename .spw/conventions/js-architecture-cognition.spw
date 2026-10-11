@@ -26,7 +26,7 @@
 @site_entry: ~"../../public/js/site.js"
 @compose_entry: ~"../../public/js/compose.js"
 @js_readme: ~"../../public/js/README.md"
-@decomposition_plan: ~"../../.agents/plans/runtime-module-decomposition/PLAN.md"
+@decomposition_plan: ~"../../.agents/plans/archive/runtime-module-decomposition/PLAN.md"
 @archived_aero: ~"./js-architecture-aerodynamics.spw"
 @metaphor_dimensional_lexicon: ~"./metaphor-dimensional-lexicon.spw"
 

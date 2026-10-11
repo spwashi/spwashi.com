@@ -14,7 +14,7 @@
 @relational_attention_media: ~"./relational-attention-media.spw"
 @product_lines: ~"../surfaces/product-lines.spw"
 @spellcraft_plan: ~"../../.agents/plans/spellcraft-authoring/PLAN.md"
-@relational_media_plan: ~"../../.agents/plans/relational-attention-media/PLAN.md"
+@relational_media_plan: ~"../../.agents/plans/archive/relational-attention-media/PLAN.md"
 @literacy_press_plan: ~"../../.agents/plans/literacy-precipitation-press/PLAN.md"
 @rpg_capture_plan: ~"../../.agents/plans/archive/rpg-asset-capture-frames/PLAN.md"
 @screenshot_semantics_plan: ~"../../.agents/plans/screenshot-semantics/PLAN.md"

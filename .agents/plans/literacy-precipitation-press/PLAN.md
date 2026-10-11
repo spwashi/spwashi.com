@@ -1,8 +1,8 @@
 # Plan: literacy-precipitation-press
 
-**Status 2026-10-06.** Rung 1 landed (`runtime/memory/effect-ledger.js`, through spellcraft). Next: the bulletin-board specimen. Rungs 2–5 wait on the creator.
+**Status 2026-10-10.** Reference: the north-star ladder, not a work queue. Rung 1 landed (bd0d7951): `public/js/runtime/memory/effect-ledger.js`, mounted as the `effect-ledger` feature in `public/js/runtime/catalog/feature.js`. No bulletin-board route exists, and rungs 2–5 are the creator's calls. The open question is whether the folio release shelf or the RPG table shelf already serves as rung 2 (index.spw).
 
-**Related:** [visual-capture-ecology](../visual-capture-ecology/PLAN.md).
+**Related:** [visual-capture-ecology](../archive/visual-capture-ecology/PLAN.md).
 
 North-star lore and staged architecture for spwashi.com as a place where literacy precipitates into physical form: named abilities become tangible items, learning leaves printable residue on bulletin boards, the site becomes a publishing surface, and eventually - literally - a paper manufacturer for aesthetics tuned to learnability and genre preferences. (Spwashi direction, 2026-07-03.)
 

@@ -56,7 +56,7 @@ const FOLIO_THUMB_TIERS = ['-thumb.avif', '-thumb.webp', '-display.avif'];
 // excluded — its own nav note calls it "current sprint, asks, and live
 // notes"; hard-precaching it would let an install serve a stale snapshot
 // offline as if it were current, which the plan's trust/containment taste
-// note (.agents/plans/pwa-experience/PLAN.md) rules out. It still becomes
+// note (.agents/plans/archive/pwa-experience/PLAN.md) rules out. It still becomes
 // available offline the ordinary way once visited once, same as any route.
 const CORE_ROUTES = [
   '/',

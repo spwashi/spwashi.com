@@ -50,7 +50,7 @@ fixity = "tending"
  @operators_js: ~"../../../public/js/semantic/operators.js"
  @shared_kernel: ~"../../../public/js/kernel/shared.js"
  @operators_css: ~"../../../public/css/handles/operators/"
- @sibling_semantics_plan: ~"../operator-semantics-refinement/PLAN.md"
+ @sibling_semantics_plan: ~"../archive/operator-semantics-refinement/PLAN.md"
  @sibling_pages_plan: ~"../archive/spw-operator-pages/PLAN.md"
  @sibling_production_plan: ~"../archive/production-demonstration-pass/PLAN.md"
 }

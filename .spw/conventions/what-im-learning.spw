@@ -17,7 +17,7 @@
 @recipes: ~"../../recipes/index.html"
 @about: ~"../../about/index.html"
 @resume_record: ~"./resume-record.spw"
-@consequential_editorial: ~"../../.agents/plans/model-guided-refinement/caches/consequential-ecosystem-editorial-2026-09.spw"
+@consequential_editorial: ~"../../.agents/plans/archive/model-guided-refinement/caches/consequential-ecosystem-editorial-2026-09.spw"
 
 operation = "prime"
 fixity = "tending"

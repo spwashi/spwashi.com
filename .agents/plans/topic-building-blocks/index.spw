@@ -52,3 +52,12 @@ intent: .{
   `git diff --check`
  ][reg=set]
 }[reg=facet]
+
+#>wonder_topic_building_blocks_regional_lenses
+?["Should the regional lenses on /topics/fields/, which pair continents with kinds of infrastructure, stay public as written?"]{
+  #:depth #!sociological ~#lens(projection)
+  ~#with: @plan @fields_hub @regional_lenses
+  ~#tension: "The lenses read regions as parallel and competing theories, as the creator frames them. Pairing China and India with technical infrastructure; Africa, Europe and Australia with social infrastructure; and Central and South America with cultural infrastructure can also read as assigning each region one kind of strength."
+  !probe{ "Open /topics/fields/#fields-regions-title and read the lenses as a visitor from each named region would. Keep, reword, or trade the pairings for questions each region's own scholars have asked." }
+  ~<"./PLAN.md"> ~<"../../../topics/fields/index.html">
+}

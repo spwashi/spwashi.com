@@ -1,6 +1,6 @@
 # CSS Architecture Readability Series
 
-**Status 2026-10-07.** Landed: 2/2A/2B (route markers in eight surfaces; `design.css` is scoped to one page seed and rides the website bundle, which sits at its 140 KiB soft budget, so it carries none). Partial: 1A (owner labels are their own selector group), 4 (`shell/chrome/` and `handles/operators/` split in bd0d7951; `cards.css` and `grammar/syntax.css` are not), 5 (token-only dark blocks and a css-contracts guard, d4b0ea94; `home.css` and `wonder.css` still branch), 6 (a7bfa3de; 39 nth selectors remain), 8 (README clustering and owner semantics; `css-instruction.spw:65` names a stale `public/css/debug.css`). Not started: 1, 1B, 3/3A/3B, 7, 9; Patch 9 would add a value to `data-spw-layout-contract`, which `learnability-ledger.css` already uses. Next: 1B compact mode. The `@layer` order statement lives in `style-core.css:1`; pre-split file names below stay on purpose. Commit series, roadmap and the 2026-07-03 note: [HISTORY.md](./HISTORY.md).
+**Status 2026-10-10.** Landed: 2/2A/2B. Eight surfaces carry route markers, the last two being home and blog (7d2968fa). `design.css` carries none because it rides the website bundle, which sits at its 140 KiB soft budget. Partial: 1A, 4, 6 and 8. For 4, `shell/chrome/` and `handles/operators/` were split in bd0d7951, while `components/cards.css` (1359 lines) and `grammar/syntax.css` (2528) are not. For 6, a7bfa3de landed and structural `:nth-` selectors remain. For 8, `css-instruction.spw` now names `public/css/effects/debug.css`. Patches 3, 5 and 7 now belong to other plans (see each patch). Not started: 1, 1B and 9. Patch 9 would add a value to `data-spw-layout-contract`, which `learnability-ledger.css` already uses. Next: 1B compact mode in `src/styles/entries/debug.css`, which has no compact rule yet. It is gated by a manual browser pass on `/`, `/settings/` and `/design/`. The `@layer` order statement lives in `style-core.css:1`; pre-split file names below stay on purpose. Commit series, roadmap and the 2026-07-03 note: [HISTORY.md](./HISTORY.md).
 
 **Related:** [css-state-legibility](../archive/css-state-legibility/PLAN.md) (archived).
 
@@ -115,7 +115,7 @@ Intern-sized examples:
 - Component sessions produce small readability improvements while preserving the authored HTML as the source of meaning.
 - CSS comments and `.spw` notes explain non-obvious behavior contracts, not routine declarations.
 - Dark and auto color-mode overrides become token-only wherever possible.
-- Validation is deterministic through `npm run check:css`, `npm run check`, and `git diff --check`.
+- Validation is deterministic through `npm run check:css`, `npm run check:local`, and `git diff --check`.
 
 ## Out Of Scope
 
@@ -385,6 +385,8 @@ Validation:
 
 ## Patch 3 - Component Token Extraction
 
+**Owner 2026-10-10:** `color-motion` Patch 2 (palette role tokens). This plan keeps the literate-cluster rules below and does not run this patch on its own.
+
 Goal: reduce repeated visual math in component rules by introducing local component tokens that make rule bodies readable.
 
 Primary files:
@@ -545,12 +547,14 @@ Guardrails:
 Validation:
 
 - `npm run check:css`
-- `npm run check`
+- `npm run check:local`
 - `git diff --check`
 - `rg -n "@import url\\('/public/css/(shell|handles|components)/" public/css/style.css`
 - Validation posture for future splits: banner-opener line boundaries only (a split at a banner's middle line leaves an unterminated comment seam); assert per-chunk brace balance on comment-stripped text; prove flattened-bundle equivalence before deleting the original.
 
 ## Patch 5 - Dark Mode And Auto Mode Symmetry
+
+**Owner 2026-10-10:** `color-motion` Patch 8 (color mode and theme pack QA). d4b0ea94 and its css-contracts guard stay here as the landed half; the `home.css` and `wonder.css` branches go there.
 
 Goal: make color-mode overrides easier to reason about by keeping dark/auto branches token-oriented and parallel.
 
@@ -645,6 +649,8 @@ Validation:
 
 ## Patch 7 - `!important` Containment Audit
 
+**Owner 2026-10-10:** `css-cascade-stratification`. Its Phase 2 reader pour is where governors lose `!important`, and that waits on the Phase 1 browser review.
+
 Goal: document or remove high-priority overrides so cascade behavior is explainable.
 
 Files:
@@ -693,7 +699,7 @@ Changes:
 Validation:
 
 - `rg -n "css-instruction|debug-layer|property cluster|composition-flow" .spw public/css/README.md`
-- `npm run check`
+- `npm run check:local`
 
 ## Patch 9 - Optional Composition Layout Contract
 
@@ -747,7 +753,7 @@ git diff --check
 Run for broader patches:
 
 ```sh
-npm run check
+npm run check:local
 ```
 
 For documentation-only changes:

@@ -14,7 +14,7 @@
 @plan: ~"./plan.spw"
 @kernel_audit: ~"../runtime-kernel-consolidation-2026-07.spw"
 @theme_churn: ~"../commit-history-deep-2026-07/theme-churn.spw"
-@decomposition: ~"../../../.agents/plans/runtime-module-decomposition/PLAN.md"
+@decomposition: ~"../../../.agents/plans/archive/runtime-module-decomposition/PLAN.md"
 @typescript_skill: ~"../../../.agents/skills/spw-typescript-affordances/SKILL.md"
 
 ^"method"{

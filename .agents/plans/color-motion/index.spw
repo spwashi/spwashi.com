@@ -118,3 +118,15 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+#>wonder_color_motion_first_color_change
+?["When color work starts, should the first visible change make operator hues easier to tell apart, or warm the surfaces they sit on?"]{
+  #:depth #!pragmatics ~#lens(projection)
+  ~#with: @core @material @cards @plan
+  ~#taste: "An operator chip should read as its operator at a glance, on camera and in dense UI, without the page losing the warmth that makes it feel authored."
+  ~#hypothesis: "Patches 1-3 (inventory, role tokens, operator hues) have not started, and the timing bands already landed. Operator distinction serves learnability: a sigil teaches its operator once and keeps meaning it. Surface warmth serves the reading room. Whichever goes first sets the role tokens that Patch 2 and css-architecture-readability Patch 3 will name."
+  ~#tension: "Sharper operator hues can make a calm page feel busy. Warmer surfaces can blur hues that already sit close together. This first change is likely the one a returning reader notices."
+  !probe{ "open /design/palettes/ at phone width in light and dark, and name the two operator chips that blur first" }
+  $%[palette.operatorDistinction, palette.surfaceWarmth, tokens.role]
+  ~<"./PLAN.md"> ~<"./HISTORY.md">
+}
