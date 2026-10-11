@@ -1,8 +1,8 @@
 # Plan: Operator Resonance Alignment
 
-**Status 2026-10-06.** Slices 1 and 3 landed: `sigil-annotation.js` writes the resolved, family and transformation attributes. Next: Slice 4; the family ring is partial in `wonder.css`.
+**Status 2026-10-10.** Slices 1–3 have landed. The chip audit (`npm run audit:operator-controls`, 4e96100b) gates `check:local`, and `public/js/semantic/sigil-annotation.js` writes the resolver attributes. Slice 4 has landed in part: wonder.css rings same-family kin through `data-spw-resonance-family` on `<html>`. Nothing reads the per-element `data-spw-operator-family` or `data-spw-transformation` yet. `operator-alignment.spw` keeps both as an additive inspection contract, and since no selector names them they cost no style invalidation. The one next slice is the creator's open decision (wonder block in `index.spw`): spend them on per-family colour in a browser review, or stop writing them.
 
-**Related:** [spw-metaphysical-language](../spw-metaphysical-language/PLAN.md) · [spw-language-v04](../spw-language-v04/PLAN.md).
+**Related:** [spw-metaphysical-language](../spw-metaphysical-language/PLAN.md) · [spw-language-v04](../spw-language-v04/PLAN.md). **Absorbed 2026-10-10:** [operator-semantics-refinement](../archive/operator-semantics-refinement/PLAN.md) (craft guard 3).
 
 ## Public Goal
 
@@ -57,7 +57,7 @@ Weak examples to normalize over time:
 
 ### Slice 1: Registry and Copy Discipline
 
-- Status: in progress.
+- Status: landed (`.spw/conventions/operator-alignment.spw`; `$` is substrate in the canonical table).
 - Files: `.spw/conventions/operator-alignment.spw`, this plan, `public/js/kernel/shared.js`, `public/js/semantic/operators.js`.
 - Outcome: canonical public gloss, runtime gloss, examples, anti-examples, and `$` as substrate.
 
@@ -76,7 +76,7 @@ Weak examples to normalize over time:
 
 ### Slice 4: CSS Family Resonance
 
-- Candidate files: `public/css/effects/operator-resonance.css`, `public/css/shell/chrome.css`, `public/css/components/cards.css`.
+- Candidate files: `public/css/effects/wonder.css` (where the family ring landed; no `operator-resonance.css` was created), `public/css/shell/chrome/`, `public/css/components/cards.css`.
 - Style families subtly: inquiry, potential/config, location/scope, action/resolution, resource/output, relation.
 - Avoid noisy one-color-per-sigil treatment except where the operator is the actual teaching surface.
 - 2026-09-03: landed the narrower "pinned resonance shares its family" version of this, in `public/css/effects/wonder.css` rather than a new file — `data-spw-operator-family` (already written by `applyOperatorMetadata`) was unread by any CSS. The resonance probe (`public/js/runtime/attention/resonance-probe.js`) now also writes `data-spw-resonance-family` on `<html>`, and wonder.css gives same-family kin a fainter `--spw-resonance` ring than an exact match gets. Covers the four multi-member families that OPERATOR_DEFINITIONS actually has (resonance, grounding, relational, conceptual) — the other ten families are singletons, so there is nothing to group yet. Broader per-family color/background treatment (the "location/scope", "action/resolution" style buckets above) stays open.
@@ -100,3 +100,9 @@ Weak examples to normalize over time:
 - `operator-semantics-refinement`: deeper lineage, physics, symmetry, and priming.
 - `promptable-image-library-pass`: prompt mining and RPG image publishing.
 - `css-sensitive-attribute-writes`: runtime must add inspection metadata without mutating author-owned semantic routing attributes.
+
+## Absorbed 2026-10-10 — operator-semantics-refinement
+
+[operator-semantics-refinement](../archive/operator-semantics-refinement/PLAN.md) landed `.spw/conventions/operator-semantics.spw` (lineage, physics, symmetry, priming), and that file stays the semantics reference. The character table is `public/js/kernel/operator-detection.js`, mapped onto the language in `.spw/language/operator-namespace-alignment.spw`. One rule moves here, first inherited from the archived spw-operator-pages:
+
+- **Craft guard 3.** Every no-op still explains itself in copy, title, link or route. That is why the operator pages read with JavaScript off. Any chip or sigil this plan normalizes keeps that reading without the runtime.

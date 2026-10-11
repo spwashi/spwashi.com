@@ -23,15 +23,15 @@
 @plan_core_css_spend_cut: ~"../core-css-spend-cut/PLAN.md"
 @plan_css_architecture_readability: ~"../css-architecture-readability/PLAN.md"
 @plan_agent_optimization: ~"../agent-optimization/PLAN.md"
-@plan_pwa_experience: ~"../pwa-experience/PLAN.md"
-@plan_portable_css: ~"../portable-css/PLAN.md"
+@plan_pwa_experience: ~"../archive/pwa-experience/PLAN.md"
+@plan_portable_css: ~"../archive/portable-css/PLAN.md"
 @plan_theming_public_versioning: ~"../archive/theming-icon-packs-public-versioning/PLAN.md"
 @plan_history_reflow: ~"../history-reflow/PLAN.md"
-@plan_typescript_integration: ~"../typescript-integration/PLAN.md"
-@wip_typescript_integration: ~"../typescript-integration/wip.spw"
+@plan_typescript_integration: ~"../archive/typescript-integration/PLAN.md"
+@wip_typescript_integration: ~"../archive/typescript-integration/wip.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan_agentic_dev_contracts: ~"../agentic-dev-contracts/index.spw"
-@plan_spw_architecture_ecology: ~"../spw-architecture-ecology/index.spw"
+@plan_spw_architecture_ecology: ~"../archive/spw-architecture-ecology/index.spw"
 @package_json: ~"../../../package.json"
 @skill_typescript: ~"../../skills/spw-typescript-affordances/SKILL.md"
 
@@ -142,7 +142,7 @@ source = "2026-09-27 legibility conversation (which trees reduce legibility; src
 ^"open"{
  ~[1]: "Does anything outside build-topology still crawl the root with its own ignore list (sitemap topology, audit-route-links, operator audits)?"
  ~[2]: "answered — root sw.js is canonical; public/sw.js is a compat shim (see M3_sw_owner)"
- ~[6]: "How does vite.config.ts import the M0 ship list: cast compiled .mjs or import .mts source? (decided in typescript-integration)"
+ ~[6]: "How does vite.config.ts import the M0 ship list: cast compiled .mjs, import .mts source, or a sibling .d.mts? (decided here since 2026-10-10; index.spw #>wonder_site_source_layout_vite_import)"
  ~[3]: "Where does design/ belong: served hub routes in site/design, capture archive as project_control?"
  ~[4]: "Can the dev orchestrator regenerate the precipitate fast enough to stop committing it (L3)?"
  ~[5]: "Should split-css.js at root be archived or moved under scripts/?"
@@ -157,14 +157,14 @@ source = "2026-09-27 legibility conversation (which trees reduce legibility; src
   `git stash or run a broad move while other sessions have a dirty tree`,
   `create docs/ as a catch-all`,
   `introduce npm dependencies`,
-  `decide the vite import method, tsconfig rootDir, or committed-output question from this plan alone; those are typescript-integration decisions`
+  `decide the vite import method or the committed-output question without the creator; they are this plan's since 2026-10-10`
  ][reg=set]
  promotion_rule = `Promote the four bins into PLAN.md only after M0 and M2 land and the bins survive contact with real consumers.`
 }[reg=facet]
 
 validation = #[`git diff --check`, `npm run check:local`, `npm run build:site:run`, `npm run check:pwa`, `dist/ file-list diff`][reg=set]
 
-status = "ready_for_M0 once the vite import method is decided in typescript-integration"
+status = "ready_for_M0 once the creator decides the vite import method"
 
 ^"proposed_commits"{
   shape = `subject :: expression. See @wip_notebook once that convention's proposed_commits facet is the rule. A line stays open only while the tree does not already contain it.`
@@ -183,7 +183,7 @@ status = "ready_for_M0 once the vite import method is decided in typescript-inte
   ~#tension: "package.json is every script's door and therefore every agent's file. Splitting the plans tree to reduce overlap would also split the index that makes the plans findable."
   !probe{ `node -e 'import fs from "node:fs"; const scripts = JSON.parse(fs.readFileSync("package.json","utf8")).scripts; if (!scripts["plans:index:check"] || !scripts["check:local"]) process.exit(1)'` }
   $%[folder.bin, folder.blast, script.door]
-  ~<"../agent-optimization/index.spw"> ~<"../typescript-integration/wip.spw"> ~<"../agentic-dev-contracts/index.spw">
+  ~<"../agent-optimization/index.spw"> ~<"../archive/typescript-integration/wip.spw"> ~<"../agentic-dev-contracts/index.spw">
 }
 
 ^["stream"]{
@@ -198,4 +198,5 @@ status = "ready_for_M0 once the vite import method is decided in typescript-inte
  >>[2026-09-27 21:08] observe — root sw.js is the authored worker and public/sw.js is a compat shim that importScripts('/sw.js'); M3 answered without a patch.
  >>[2026-09-27 21:12] observe — the M2 touch list is longer than the tsconfigs: six .spw tilde paths, two test fixtures, AGENTS.md, and the JS README name public/ts; spw:integrity joins M2 validation.
  >>[2026-09-27 21:18] decide — M0, M2, and L3 are shared with typescript-integration; that plan owns the decisions, this plan owns the order.
+ >>[2026-10-10] decide — typescript-integration archived as landed; M0, M2, L3 and the precache-as-artifact step now live here. A third M0 option surfaced: a sibling .d.mts, as scripts/template.d.mts already is.
 }

@@ -1,0 +1,24 @@
+# Review 2026-10-10 — one open question for the creator; the grammar itself stays in PLAN.md.
+# wip — history-reflow
+#
+# Questions the commit grammar cannot answer from the tree alone.
+
+#>history_reflow_wip
+#:practice #!handoff
+
+@plan: ~"./PLAN.md"
+@history: ~"./HISTORY.md"
+@workbench_commit_command: ~"../../../.spw/_workbench/.claude/commands/commit.md"
+@patch_consolidator: ~"../../skills/patch-consolidator/SKILL.md"
+
+#>wonder_history_reflow_symbols
+?["What does each commit subject symbol mean on this site: & . + ~ ! ^ = ?"]{
+  #:depth #!linguistic ~#lens(constraint)
+  ~#with: @plan @workbench_commit_command @patch_consolidator
+  ~#taste: "A symbol a reader sees on every subject line should be learnable from one table on this repo's side."
+  ~#hypothesis: "Since 2026-09-01 the subjects use & 189, . 147, + 119, ~ 108, ! 92, ^ 38, = 9, ? 3. The only table is the workbench's commit command, which names . & ! ^seed # and vocab, and reads ! as test/verify."
+  ~#tension: "On this site ! marks a fix and + an addition, and + is not a Spw operator. Copying the workbench table would teach the wrong reading; writing a site table is the creator's call."
+  !probe{ `git log --since=2026-09-01 --format=%s | cut -c1-2 | sort | uniq -c | sort -rn` }
+  $%[commit.symbol, commit.grammar]
+  ~<"./PLAN.md"> ~<"../agent-optimization/index.spw">
+}

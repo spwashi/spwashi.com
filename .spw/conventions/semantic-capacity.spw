@@ -191,7 +191,7 @@
     layer = "pragmatic"
     hypothesis = "Leaflet precipitation will let the site retain useful byproducts of development and weekly connection without forcing every insight into a full plan."
     spec_ref = ".spw/conventions/semantic-capacity.spw#leaflet_precipitation"
-    impl_ref = ".agents/plans/recent-plan-templates/leaflet-precipitation.template.spw"
+    impl_ref = ".agents/plans/archive/recent-plan-templates/leaflet-precipitation.template.spw"
     probe_ref = "Review a future leaflet and confirm it names evidence, nutrient, organism, byproduct, merge target, and decay rule."
     falsification = "Leaflets accumulate as charming notes that future agents cannot merge, validate, archive, or apply."
     status = "active"

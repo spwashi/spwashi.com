@@ -1,8 +1,13 @@
 # Plan: spellcraft-authoring
 
-**Status 2026-10-06.** Phases 1–2 landed 2026-07-03; the contract moved to `semantic/cauldron/`. Open: SPELL_CONTRACT, the decompose browser demo, the Phase 3–4 gates.
+**Status 2026-10-10.** Landed: the decompose verb and the `data-spw-cauldron-state` bundle in `semantic/cauldron/contract.js` (`bd0d7951`, 2026-07-03), and saved trails that survive clearing the current one (`7b5f0a63`). Phase 1's attribute fold did not land:
+- Source still carries 33 distinct `data-spw-cauldron-*` names against a target of about 4.
+- `data-spw-cauldron-phase` is still written (`interface/cauldron/resonance.js:102`) and listed (`runtime/orchestration/dom-sync-hub.js:71`).
+- No SPELL_CONTRACT exists.
 
-**Related:** [operator-semantics-refinement](../operator-semantics-refinement/PLAN.md) · [spw-language-v04](../spw-language-v04/PLAN.md) · [visual-capture-ecology](../visual-capture-ecology/PLAN.md). **Absorbed 2026-10-06:** [cognitive-navigation](../archive/cognitive-navigation/PLAN.md) · [discovery-powerups](../archive/discovery-powerups/PLAN.md) · [spell-cauldron-lifecycle-memory-gardening](../archive/spell-cauldron-lifecycle-memory-gardening/PLAN.md) · [spell-cognition-familiarity](../archive/spell-cognition-familiarity/PLAN.md) · [spellbook-utility](../archive/spellbook-utility/PLAN.md).
+Next slice: the decompose browser demo on `/design/experiments/spellcraft/`, a creator walk through hold-prime, decompose and re-mix. It is the Phase 2 promotion gate, owed since 2026-07-03. Phases 3–4 stay sensation-gated.
+
+**Related:** [operator-semantics-refinement](../archive/operator-semantics-refinement/PLAN.md) · [spw-language-v04](../spw-language-v04/PLAN.md) · [visual-capture-ecology](../archive/visual-capture-ecology/PLAN.md). **Absorbed 2026-10-06:** [cognitive-navigation](../archive/cognitive-navigation/PLAN.md) · [discovery-powerups](../archive/discovery-powerups/PLAN.md) · [spell-cauldron-lifecycle-memory-gardening](../archive/spell-cauldron-lifecycle-memory-gardening/PLAN.md) · [spell-cognition-familiarity](../archive/spell-cognition-familiarity/PLAN.md) · [spellbook-utility](../archive/spellbook-utility/PLAN.md).
 
 Reorganize the spell and cauldron concepts around authorship: writing and editing spells, and selecting and styling elements, concepts, and artifacts. Consolidates five prior tracks into one owner model, applies the Stagecraft glossary and the G1/G2 attribute grammar (per Spwashi, 2026-07-03), and treats every authoring surface as simultaneously a live-performance and screenshot-interpretation surface.
 
@@ -22,7 +27,7 @@ A visitor (or Spwashi on camera) can *write* a spell, not merely accumulate one:
 - Verify save → clear → restore → reopen, unchanged control identity, event batching/cleanup, pocket containment, `audit:module-selectors`, `visual:checks`, and `check:local`.
 
 - `runtime/memory/spells.js` (864 lines): spells are serialized navigation paths over grounded tokens; actions cast/checkpoint/reset; no edit, no selection verb, no styling verb.
-- `interface/cauldron/` (contract.js, storage.js, trace.js, resonance.js, undo.js, chrome.js, helpers.js): real bones - `CAULDRON_CONTRACT` centralizes phases (`empty -> primed -> mixing -> spell-ready`), ingredient lifecycle (`gathering -> resonant -> mature -> decayed`), eight actions, max six ingredients, garden pruning. Composes "extension drafts," not reopenable spells.
+- `semantic/cauldron/` (contract.js, storage.js, helpers.js) and `interface/cauldron/` (trace.js, resonance.js, undo.js, chrome.js): real bones - `CAULDRON_CONTRACT` centralizes phases (`empty -> primed -> mixing -> spell-ready`), ingredient lifecycle (`gathering -> resonant -> mature -> decayed`), eight actions, max six ingredients, garden pruning. Composes "extension drafts," not reopenable spells.
 - `components/cauldron.css` (332 lines) + `handles/operators/spell-breadcrumbs.css` (869-line chapter).
 - Attribute families: `data-spw-cauldron-*` 26 names (19 JS-written), `data-spw-spell-*` 9, `data-spw-ingredient-*` 4.
 
@@ -40,7 +45,7 @@ Styling authority: spells style through the sanctioned channels only - `-intent`
 - Vocabulary: cauldron dock and spellbook are **tier** citizens (floating above content); the expanded editing surface is an **overlay**; the phase indicator is a **rail**. No new structural words; `spell/cauldron/ingredient` are domain words, not strata words.
 - G2 role enum: the ~12 role-flavored cauldron names (`-panel`, `-panel-toggle`, `-remove`, `-mirror`, `-phase-rail`, `-candidate`, `-cue`, `-action`, ...) fold into `data-spw-cauldron="host|panel|toggle|remove|mirror|phase-rail|candidate|cue"` plus `data-spw-cauldron-action="mix|plant|nourish|prune|vision|clear|undo|re-gather|decompose"`.
 - G1 axis bundle: the state/axis names (`-phase`, `-garden-phase`, `-resonance`, `-count`, `-collected`, `-visibility`, `-discoverability`, `-output-state`, ...) fold into `data-spw-cauldron-state="phase:mixing garden:tending resonance:2 count:4"`.
-- Target: cauldron 26 -> ~4 names, spell 9 -> ~3, ingredient 4 -> 1. `semantic/cauldron/contract.js` is the single refit point for writers; CSS readers migrate in the same patch (family is 73% JS-written - cheap per the census cost model).
+- Target: cauldron 26 -> ~4 names, spell 9 -> ~3, ingredient 4 -> 1. Recount 2026-10-10: cauldron 33, rising rather than falling. `semantic/cauldron/contract.js` is the single refit point for writers; CSS readers migrate in the same patch (family is 73% JS-written - cheap per the census cost model).
 
 ## Performance And Capture Constraints (Spwashi, 2026-07-03)
 
@@ -66,7 +71,7 @@ This plan supersedes as owner (each keeps its file with a merged-into note; idea
 
 ## Validation
 
-- Attribute census before/after (26+9+4 -> ~8) with no orphaned CSS readers (`rg` per family).
+- Attribute census before/after (26+9+4 -> ~8) with no orphaned CSS readers (`rg` per family). For the cauldron count, take `data-spw-cauldron-*` from `public/`, `_partials/` and `scripts/` (bundles excluded) plus camelCase `spwCauldron*` dataset writes.
 - A spell written, cast, edited, and re-cast in one take on a phone-width viewport (the TikTok test).
 - A screenshot of a serialized spell interpreted by Grok Imagine yields the spell's intent (the capture test).
 - No-JS: spell surfaces degrade to readable prose traces; nothing sole-source hides behind the overlay.
@@ -80,7 +85,7 @@ This plan supersedes as owner (each keeps its file with a merged-into note; idea
 ## Implementation Note - 2026-07-03 Phase 1 + 2 Landed
 
 - `semantic/cauldron/contract.js` now names every live cauldron attribute (23 documented), owns the G1 state-bundle grammar (`composeCauldronState` / `readCauldronState` / `applyCauldronState`, axes: phase, count, garden, resonance, collected, discoverability), documents the top-down/bottom-up selectability principle, and registers the `decompose` action + `spell:decomposed` event.
-- Consolidated the quadruplicated vessel state: `data-spw-cauldron-phase`, `-count`, `-force-count`, and host/preview `data-spw-ingredient-count` all retired into `data-spw-cauldron-state="phase:x count:n"`. Writers migrated: composition.js (root, hosts, mirrors), cauldron/chrome.js (chip, rail), site-settings-engine.js (kernel-side literal with contract pointer), module-catalog.js manifest. Reader migrated: observation-beats.js via `readCauldronState`.
+- Consolidated the quadruplicated vessel state: `data-spw-cauldron-phase`, `-count`, `-force-count`, and host/preview `data-spw-ingredient-count` all retired into `data-spw-cauldron-state="phase:x count:n"`. Writers migrated: composition.js (root, hosts, mirrors), cauldron/chrome.js (chip, rail), site-settings-engine.js (kernel-side literal with contract pointer), module-catalog.js manifest. Reader migrated: observation-beats.js via `readCauldronState`. Correction 2026-10-10: `data-spw-cauldron-phase` was not fully retired. `interface/cauldron/resonance.js:102` writes it on the root for the dominant resonance, and `runtime/orchestration/dom-sync-hub.js:71` still lists it, so Phase 1 is partial, not landed.
 - CSS matchers rewritten to token grammar (`[data-spw-cauldron-state~="phase:empty"]`) in `shell/chrome/adaptive.css` and `components/cauldron.css`; genome banners regenerated; cauldron.css gained its chapter banner naming the contract as source of truth.
 - **Decompose verb landed:** spellbook bundle cards gain `$ decompose`; `window.spwSpells.decompose(name)` replays a checkpoint's registry through the `spell:capture` front door (cauldron owns all storage mutations), capped at maxIngredients, emitting `spell:decomposed`. Edit = decompose, adjust, re-mix is now real.
 - Validation: `check:local` passed; contract helpers smoke-tested (write/merge/read round-trip). Browser gesture-path verification (hold-prime -> decompose -> re-mix) still owed per the Phase 2 gate - demo before promotion.

@@ -1,8 +1,8 @@
 # Plan: interaction-grammar
 
-**Status 2026-10-06.** `public/js/semantic/component-semantics.js` exists and the interaction files live in `runtime/interaction/`, so the Status below that calls it unwritten is stale. Holds the loop contract (interaction-loop-contract) and the hysteresis cache (interaction-cache). Next: audit the 24 unaudited gesture contracts.
+**Status 2026-10-10.** The phase ladder and reward contract live in `.spw/conventions/interaction-microstates.spw`. Leaf controls stay out of brace gestures through `isLensModeControl` (`6ccab1bb`). Next slice: the gesture-contract census. Run `rg -o --no-filename 'data-spw-gesture-contract="[^"]*"' --glob '*.html' | sort | uniq -c` (10 distinct strings over 36 authorings today), then look up each verb's handler in `public/js` (`rg -l '<verb>' public/js`) and in inline page scripts (`settings/index.html:663` handles `cycle-variant`, `surface-current` and `open-companion`). Record silent verbs in `interaction-microstates.spw#wonder_interaction_microstates_1`. The census's readable receipt is the settings "do this / expect this" copy absorbed below. Nothing gates it. Cross-session familiarity stays unscoped.
 
-**Related:** [interaction-cache](../archive/interaction-cache/PLAN.md) (archived) · [gesture-state-refinement](../gesture-state-refinement/PLAN.md). **Absorbed 2026-10-06:** [interaction-loop-contract](../archive/interaction-loop-contract/PLAN.md) · [microinteraction-motion-lifecycle](../archive/microinteraction-motion-lifecycle/PLAN.md).
+**Related:** [interaction-cache](../archive/interaction-cache/PLAN.md) (archived). **Absorbed 2026-10-06:** [interaction-loop-contract](../archive/interaction-loop-contract/PLAN.md) · [microinteraction-motion-lifecycle](../archive/microinteraction-motion-lifecycle/PLAN.md). **Absorbed 2026-10-10:** [gesture-state-refinement](../archive/gesture-state-refinement/PLAN.md).
 
 Develop practical interactive circuits that become satisfying and familiar over time, and rethink brace physics toward vocabulary that is more cognitively accessible — while using Spw to exercise spatial relationship and let other languages and notations shine through it.
 
@@ -19,9 +19,9 @@ much larger implemented system. Reconciling that drift:
   itself (`site-semantics.spw#brace_physics`, `operator-semantics.spw` caution note).
   That is a bridge, not a replacement — the taste note in this plan's Goal held.
 - **Circuit/familiarity ladder — landed as `interaction-microstates.spw`, not the
-  planned files.** `public/js/semantic/component-semantics.js` and
-  `public/js/spw-interaction-runtime.js` (listed below under Files) were never
-  written under those names; the runtime reorganized into `public/js/runtime/` and
+  planned files.** The 2026-04 plan's `public/js/spw-interaction-runtime.js` was
+  never written, and `public/js/semantic/component-semantics.js` does not carry
+  circuit levels; the runtime reorganized into `public/js/runtime/` and
   `public/js/semantic/`. The actual circuit grammar is a phase ladder —
   `idle → approach → prime → charge → inspect → discover → settle`
   (`data-spw-interaction-phase`, owned by `interaction-progression.js`,
@@ -49,9 +49,9 @@ much larger implemented system. Reconciling that drift:
   unaudited (see `interaction-microstates.spw#wonder_interaction_microstates_1`).
   See `wip.spw` for the refreshed open-question list and probe queue.
 
-The Goal, Scope, and Craft guard below are still the right target; the Files list
-and Commits sequence describe a 2026-04 implementation path that a different,
-better-documented path already superseded. Route new work through
+The Goal, Scope, and Craft guard below are still the right target. The 2026-04
+Files list, commit sequence and rebase notes described a path that a different,
+better-documented one superseded; they were removed 2026-10-10. Route new work through
 `interaction-microstates.spw` first, and land here only what that convention
 cannot own (cross-session familiarity, vocabulary taste calls, multi-language
 framing).
@@ -65,44 +65,14 @@ The desired end state is a site interaction system that rewards familiarity: rep
 - **In scope**: interactive circuit design (entry-level, practiced, fluent, habitual patterns); brace physics vocabulary audit (boon/bane legibility test, candidate alternatives, bridge terms, and the case for keeping them); progressive enhancement as a skill ladder; familiarity feedback design (repetition rewards, feedback quality, learning gradient); Spw as spatial cognitive exercise; multi-language surfaces where Spw frames other notations.
 - **Out of scope**: gamification, points, badges, or explicit skill tracking; replacing the Spw vocabulary outright; making content or interactions gated by proficiency; implementing a browser-side Spw parser.
 
-## Files
+## Craft guard
 
-[NEW] .agents/plans/interaction-grammar/PLAN.md
-[NEW] .agents/plans/interaction-grammar/wip.spw
-[NEW] .agents/plans/interaction-grammar/interaction-grammar.spw
-[MOD?] .spw/conventions/site-semantics.spw — extend brace physics with accessible vocabulary options and circuit definitions
-[MOD?] .spw/conventions/style-development.spw — log brace physics vocabulary decision and circuit ladder as explicit taste choices
-[MOD?] public/js/spw-component-semantics.js — encode circuit level and familiarity state into component metadata
-[MOD?] public/js/spw-interaction-runtime.js — implement circuit recognition, practice feedback quality, and spatial address
-[MOD?] public/css/style.css → public/css/enhancements.css — circuit-level progressive enhancement keyed by familiarity state
-[MOD?] topics/software/index.html — demonstrate multi-language surfaces where Spw frames other notations
-
-Craft guard:
 - Interactive circuits must have an entry level requiring no prior knowledge; depth should be available but never mandatory.
 - Brace physics vocabulary changes must be bridged — any new terms must coexist with existing operator atlas documentation and site-semantics.spw.
 - Familiarity feedback should be subtle — the site should feel practiced-in, not gamified.
 - No circuit may trap focus, require specific timing, or penalize error states.
 - The vocabulary decision (boon/bane vs. alternatives) must be logged as an explicit taste choice in the stream before any commit changes terminology.
 - Spw framing of other languages must make those languages more legible, not subordinate them to Spw.
-
-## Commits
-
-1. `#[circuits] — capture interaction grammar plan, circuit taxonomy, and brace physics vocabulary audit`
-2. `.[semantics] — formalize circuit levels, familiarity model, brace physics vocabulary decision, and multi-language framing rules`
-3. `&[runtime] — implement circuit recognition and practice-level feedback in the interaction runtime`
-4. `&[circuits] — add familiarity-keyed enhancement rules and multi-language surface patterns`
-5. `![circuits] — verify entry-level accessibility, practice feedback, brace physics legibility, and spatial address`
-
-Fuzz strategy:
-- Explore loop: `fuzz:explore --target=interaction-grammar`
-- Stabilize loop: `fuzz:stabilize --target=interaction-grammar`
-- Ship gate: `fuzz:ship --target=interaction-grammar`
-
-## Agentic Hygiene
-
-- Rebase target: `main@14442d42b8fe4d9d5bfec5906e652fbca98d5f22`
-- Rebase cadence: before commit 1, before merge
-- Hygiene split: none
 
 ## Dependencies
 
@@ -130,3 +100,16 @@ Fuzz strategy:
 ## Spw Artifact
 
 `.agents/plans/interaction-grammar/interaction-grammar.spw`
+
+## Absorbed 2026-10-10 — gesture-state-refinement
+
+Landed: calmer brace and region-menu gestures on coarse pointers, `window.__SPW_SITE__.gestures`, and texture-slice pointer crop that binds only to a fine pointer. Leaf controls stay themselves through `isLensModeControl` in `kernel/dom-contracts.js` (`6ccab1bb`), and the image prime readout names swipe and hold.
+
+Still owed: one settings-page "do this / expect this" passage for gestures. `settings/index.html` names the console helpers (:583, :2524) but teaches no gesture. Write it from the census above, one row per authored contract, and keep it concrete rather than theoretical.
+
+Rules worth keeping:
+- Gesture hosts never claim leaf controls.
+- A prime names the next verb, not just a glow.
+- Do not teach swipe on the home Study/Build/Play strip.
+
+Reference: [mobile-runtime-foundation](../archive/mobile-runtime-foundation/PLAN.md), UX Considerations (lines 103–115): inspect before invoke on touch, no dead-end clicks, pivots preserve orientation. Source: [gesture-state-refinement](../archive/gesture-state-refinement/PLAN.md).

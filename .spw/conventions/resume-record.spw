@@ -9,7 +9,7 @@
 #:fixity #!experimental
 #:layer #!pragmatics
 
-@audience_onboarding: ~"../../.agents/plans/audience-onboarding-copy/PLAN.md"
+@audience_onboarding: ~"../../.agents/plans/archive/audience-onboarding-copy/PLAN.md"
 @component_region: ~"./component-region-personality.spw"
 @expression_consequence: ~"./semantic-expression-consequence.spw"
 @cauldron: ~"./cauldron-dynamics.spw"

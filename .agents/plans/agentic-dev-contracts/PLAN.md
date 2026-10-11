@@ -1,6 +1,6 @@
 # Plan: agentic-dev-contracts
 
-**Status 2026-10-06.** The manifest and the unified `check:local` landed; `check:local` writes `.agents/state/runtime/check-local-last.json` where this plan named last-local-check.json. plans-index.json and skills-index.json were never built. Live work: `wonder_plan_script_door` in `index.spw`.
+**Status 2026-10-10.** Landed: the route/runtime manifest and the one door, `npm run check:local`, which writes `.agents/state/runtime/check-local-last.json`. The `wonder_plan_script_door` probe in `index.spw` passes today: every instrument it names exists, `check` still runs `npm audit` first, and `check:local` does not. The plans-index and skills-index caches were never built and are struck. Next slice: none here; once the plans name `check:local` instead of `check`, this plan can be archived as landed.
 
 Make the site cheaper for agents to understand and verify by giving the repo one explicit validation entrypoint and one generated route/runtime manifest derived from the authored HTML and staged runtime definitions.
 
@@ -12,10 +12,10 @@ The next optimization layer is agentic development caching: derived, invalidatab
 
 ## Scope
 
-- In scope: a generated route/runtime manifest, a unified `npm run check` entrypoint, and validation for required route metadata plus shared entry assets.
+- In scope: a generated route/runtime manifest, a unified `npm run check:local` entrypoint, and validation for required route metadata plus shared entry assets.
 - In scope: SVG/spec maps derived from route HTML and public SVG assets so agents can find structural diagram surfaces without grepping the repo.
 - In scope: repo-local script helpers that read route HTML and the `site.js` staged runtime registry.
-- In scope: future repo-local cache surfaces that summarize plan ownership, skill availability, validation posture, route metadata, and recent maintenance sweeps.
+- In scope: repo-local cache surfaces that summarize validation posture, route metadata, and recent maintenance sweeps.
 - Out of scope: build tooling migration, browser E2E automation, production bundling, or a broader rewrite of page metadata conventions.
 - Out of scope: caching model opinions, hiding source files behind generated summaries, or treating a past validation result as current without a source-tree invalidation check.
 
@@ -43,7 +43,6 @@ Useful cache families:
 
 - **Route/runtime manifest:** generated from route HTML and runtime module definitions. Answers "what route is this?" and "which modules may mount here?"
 - **Plan census / owner map:** generated or manually refreshed from `.agents/plans/`. Answers "which plan owns this class of work?" without scanning 170 folders.
-- **Skill availability index:** derived from `.agents/skills/README.md` and local `SKILL.md` wrappers. Answers "which site-local workflow applies?"
 - **Validation posture memo:** short generated or manually recorded summary of the last relevant check command, command scope, date, and source tree identity. It may guide work, but it never replaces rerunning validation before landing.
 - **Semantic dispatch cache:** `.spw/site.spw`, `.spw/conventions/index.spw`, and `planning-ecology.spw` references that route agents to owner concepts.
 - **Patch boundary cache:** plan-local or archive notes that summarize what a prior broad conversation became, so future agents do not re-expand it into parallel work.
@@ -65,14 +64,13 @@ same generated evidence when the editor cache is not writable.
 Initial candidate artifacts:
 
 - `.agents/state/runtime/route-runtime-manifest.json` remains the canonical generated route/runtime cache.
-- Future `.agents/state/plans-index.json` can summarize plan buckets, `PLAN.md`/`FIX.md`/`wip.spw` status, archive records, and oversized/empty-folder flags.
-- Future `.agents/state/skills-index.json` can summarize local skill wrappers, shared workflow refs, and likely trigger domains.
-- Future `.agents/state/checks/last-local-check.json` can record the last local validation command, timestamp, exit status, and git tree identity. It must be treated as advisory until validation is rerun.
+- `.agents/state/runtime/check-local-last.json` records the last local validation run (`check:local` writes it). It is advisory until validation is rerun.
+- Struck 2026-10-10: `plans-index.json` and `skills-index.json` were never built. The plans README owner map and `.agents/skills/README.md` answer those questions by hand.
 
 ## Validation
 
 - `node scripts/generate-route-runtime-manifest.mjs`
-- `npm run check`
+- `npm run check:local`
 - `git diff --check`
 - `node --check` for new/edited script modules
 - For future generated agent caches: verify the artifact names its source files and invalidation basis, and keep generated outputs out of commits unless the repo already tracks that artifact class.

@@ -22,7 +22,7 @@
 @runtime_kernel: ~"../runtime-kernel-consolidation-2026-07.spw"
 @javascript_module_census: ~"../javascript-module-census-2026-07.spw"
 @module_impact: ~"../module-impact-audit-2026-07.spw"
-@decomposition_plan: ~"../../../.agents/plans/runtime-module-decomposition/PLAN.md"
+@decomposition_plan: ~"../../../.agents/plans/archive/runtime-module-decomposition/PLAN.md"
 @bootstrap_plan: ~"../../../.agents/plans/runtime-bootstrap-performance/PLAN.md"
 @module_catalog: ~"../../../public/js/runtime/catalog/index.js"
 @module_normalize: ~"../../../public/js/runtime/catalog/normalize.js"

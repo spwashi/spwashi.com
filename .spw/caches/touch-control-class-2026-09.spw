@@ -22,7 +22,7 @@
 @gesture_contract_js: ~"../../public/js/runtime/interaction/gesture-contract.js"
 @interaction_vocabulary: ~"../../public/js/runtime/interaction/vocabulary.js"
 @foundation_css: ~"../../public/css/components/foundation.css"
-@insight_template: ~"../../.agents/plans/model-guided-refinement/templates/semantic-insight-cache.spw"
+@insight_template: ~"../../.agents/plans/reference-assignment-template/templates/semantic-insight-cache.spw"
 
 operation = "cache"
 fixity = "tending"

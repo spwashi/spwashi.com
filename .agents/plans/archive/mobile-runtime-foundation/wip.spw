@@ -1,0 +1,183 @@
+# Review 2026-07-12 — archive the broad planning notebook after extracting any still-unowned mobile contract.
+# wip — mobile-runtime-foundation
+#
+#>plan_mobile_runtime_foundation_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@plans_root: ~"../../index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
+
+^"selection_probes"{
+ probes = #[ `rg 'mobile-runtime-foundation' .agents/plans/archive/mobile-runtime-foundation/mobile-runtime-foundation.spw`, `Hypotheses: a shared region/register model will reduce runtime duplication; complete operator interaction semantics will prevent decorative grammar; portable inspect/invoke semantics will make mobile behavior easier to teach; prefix/postfix symmetry will let keyboard and touch feel like different entrances into the same grammar; semantic reflection into native HTML structures will keep the runtime honest across modalities; inspectable charge and bias can make brace physics useful without hidden state; recursive/fractal surface geometry can improve learnability if the same boundary/inspect/pivot pattern repeats across scales; block/script UI can be prepared without running the full language runtime in-browser.`, `test -f .agents/plans/archive/mobile-runtime-foundation/mobile-runtime-foundation.spw`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
+^"plan_context"{
+ goal = `The desired end state is a site runtime that treats mobile and coarse-pointer use as the primary case rather than a degraded desktop fallback. The immediate task is not to ship new chrome, but to formalize the implementation surface: page regions with ownership, portable interaction semantics that do not depend on hover, complete operator interaction meanings, inspectable registers that back navigator/console projections, semantic HTML structures that act as the canonical reflection surface, and a clean preparation layer for future Spw blocks and scripts as UI. The longer arc is a cognitive machine that can produce wonder without becoming noisy: structure should become more legible as the user engages it, Spw symmetry should remain checkable across modalities, charge/bias metaphysics should be inspectable rather than hidden, and future Spw-backed components/pages should inherit that same ecosystem rather than bypass it. The taste note is clarity + containment: preserve the site's calm surface while making its deeper machinery easier to reason about, inspect, and extend.`
+ owner = `mobile-runtime-foundation`
+ operation = "prime"
+ bucket = "active_backlog"
+ validation = #[ `Hypotheses: a shared region/register model will reduce runtime duplication; complete operator interaction semantics will prevent decorative grammar; portable inspect/invoke semantics will make mobile behavior easier to teach; prefix/postfix symmetry will let keyboard and touch feel like different entrances into the same grammar; semantic reflection into native HTML structures will keep the runtime honest across modalities; inspectable charge and bias can make brace physics useful without hidden state; recursive/fractal surface geometry can improve learnability if the same boundary/inspect/pivot pattern repeats across scales; block/script UI can be prepared without running the full language runtime in-browser.`, `Negative controls: route structure, current visual voice, and basic static-site simplicity remain intact.`, `Demo sequence: identify the active region on mobile, inspect a component without hover, invoke the same component with touch or keyboard, pivot into a deeper surface without losing orientation, and confirm navigator/console can describe the same underlying register state.`, ][reg=set]
+ hot_files = #[ `.agents/plans/archive/mobile-runtime-foundation/mobile-runtime-foundation.spw`, ][reg=set]
+}[reg=facet]
+^["roots"]{
+ @plan: ~"PLAN.md"
+ @artifact: ~"mobile-runtime-foundation.spw"
+ @site: ~"../../../../.spw/site.spw"
+ @semantics: ~"../../../../.spw/conventions/site-semantics.spw"
+ @surfaces: ~"../../../../.spw/surfaces.spw"
+ @shared: ~"../../../../public/js/kernel/shared.js"
+ @core: ~"../../../../public/js/site.js"
+ @components: ~"../../../../public/js/semantic/component-semantics.js"
+ @navigator: ~"../../../../public/js/runtime/navigation/frame-navigator.js"
+ @console: ~"../../../../public/js/interface/console.js"
+ @css: ~"../../../../public/css/style.css"
+}
+
+^["intent"]{
+ ~#goal: "Define a mobile-first runtime model for page regions, portable interaction semantics, inspectable registers, semantic reflection, and future block/script UI so implementation can stay calm, coherent, and capable of producing structural wonder."
+ ~#taste: "clarity, containment, mobile-first learnability, semantic reflection, and earned wonder"
+}
+
+^["development"]{
+ lane: #execution_truth
+ ladder: #service
+ develops: [#semantics, #runtime, #interaction_design]
+ review_surfaces: [@plan, @artifact, @semantics]
+ snippet_routes: [#example, #query, #spec]
+}
+
+^["concept_index"]{
+ primary: [#page_regions, #portable_interaction, #operator_interaction_semantics, #register_runtime, #block_ui, #script_ui, #prefix_postfix_symmetry, #reflection_symmetry, #html_landmarks, #fractal_surface_geometry, #brace_physics, #charge_bias, #pivots]
+ surfaces: [#mobile, #navigator, #console, #inspection, #wonder, #a11y]
+ tensions: [#hover_bias, #state_duplication, #metaphor_drift, #scope, #ornament, #semantic_drift, #dead_end_clicks]
+ transfers: [#page, #region, #component, #runtime, #authoring]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? reread the local semantic grammar before inventing new metaphors",
+  "< name one runtime boundary at a time",
+  "$ record the invariant and the counterexample together",
+  "^ require every operator to expose interaction intent before behavior",
+  "^ make the semantic mirror as truthful as the visual surface",
+  "^ make each surface inspectable before making it magical",
+  "% keep charge and bias inspectable or remove them",
+  "% preserve calm defaults while deepening the implementation surface",
+  "& require prefix/postfix and visual/semantic reflection paths to collapse into one semantic account"
+ ]
+ gates: [#claim_discipline, #mobile_truth, #inspectability, #symmetry_truth]
+}
+
+^["parallel_work"]{
+ critical_path: [#shared_runtime_boundary, #operator_semantics_contract, #semantic_reflection_contract]
+ parallelizable: [#semantics_note, #region_inventory, #ux_criteria, #html_landmark_inventory]
+ shared_hot_files: [".spw/conventions/site-semantics.spw", "public/js/site.js?v=0.0.2", "public/js/spw-component-semantics.js", "public/js/spw-operators.js", "public/css/style.css?v=0.0.2", "public/js/spw-shared.js"]
+ merge_risks: [#state_duplication, #naming_drift, #interaction_collision, #symmetry_drift, #semantic_reflection_drift, #charge_bias_drift]
+ handoff_artifacts: [@plan, @artifact]
+}
+
+^["supporting_documents"]{
+ must_ship: [@plan, @artifact]
+ helpful: [@site, @semantics, @surfaces]
+ carries: [#review_notes, #glossary, #operator_semantics, #implementation_order, #ux_constraints, #authoring_contract, #reflection_contract]
+}
+
+^["interaction_depth"]{
+ subjects: [#navigation, #inspection, #portable_input, #containment, #mobile_regions, #pivots, #wonder, #semantic_reflection, #fractal_scale, #charge_bias, #no_dead_end_interaction]
+ questions: [#what_is_primary, #what_is_reversible, #what_is_visible]
+ qualities: [#clarity, #containment, #learnability, #wonder]
+}
+
+^["risk_model"]{
+ hard_failures: [#hover_only_affordance, #private_state_silos, #operator_without_interaction_semantics, #prefix_postfix_divergence, #semantic_reflection_drift, #dead_end_click]
+ soft_failures: [#mobile_overlay_conflict, #script_host_leakage, #ornamental_wonder, #hidden_charge_bias, #fractal_metaphor_only]
+ recoveries: [#shared_registers, #region_ownership, #portable_intent, #operator_intent_metadata, #pivot_contract, #semantic_mirror, #safe_noop]
+ non_negotiables: [#coarse_pointer_first, #keyboard_path, #inspectability]
+}
+
+^["validation"]{
+ hypotheses: [#shared_register_projection_reduces_duplication, #complete_operator_semantics_reduce_decorative_grammar, #portable_inspect_is_teachable, #block_host_can_precede_parser_runtime, #prefix_postfix_paths_can_normalize, #semantic_reflection_preserves_truth, #charge_bias_can_be_inspectable, #safe_noop_preserves_exploration, #fractal_repetition_improves_learnability]
+ negative_controls: [#route_structure_unchanged, #visual_voice_preserved]
+ demo_path: ["/", "/topics/software/", "/topics/software/pretext/", "#local_pivot"]
+}
+
+^["stream"]{
+ >>[2026-04-09 20:09] observe - The current site already has semantic tagging, frame activation, and lightweight eventing, but it still treats hover and page-local modules as stronger organizing surfaces than mobile-first regions and shared runtime state.
+ >>[2026-04-09 20:09] observe - `site.js` owns global frame/mode activation and the spirit easter egg, while `frame-navigator.js` separately owns `g`, `[ ]`, `/`, and `Escape`; this is enough machinery to prove the next gap is arbitration and shared runtime, not lack of metaphoric vocabulary.
+ >>[2026-04-09 20:09] observe - `spw-component-semantics.js` already derives kind, form, role, liminality, and selection, which makes it the natural bridge from authored semantics into portable runtime intent.
+ >>[2026-04-09 20:09] observe - CSS is already rich in hover states and floating surfaces, but the governing model is not yet explicitly mobile-first; region ownership and coarse-pointer behavior remain implicit.
+ >>[2026-04-09 20:09] decide - Plan around four foundations: named page regions, portable inspect/invoke semantics, shared inspectable registers, and block/script host contracts.
+ >>[2026-04-09 20:09] taste - Keep magic summonable and inspectable; the calm default should survive even as the runtime surface deepens.
+ >>[2026-04-09 20:12] decide - Wrote a distilled semantics note so future implementation can test counterexamples instead of letting metaphor drift across modules.
+ >>[2026-04-09 20:12] verify - `poll-review.sh --scope=changed` passed cleanly for the new plan surfaces and `.spw` artifacts.
+ >>[2026-04-09 20:20] decide - The user is not attached to current keybindings, which means the runtime can center semantic symmetry rather than preserving arbitrary legacy keys.
+ >>[2026-04-09 20:20] revise - The plan now treats prefix/postfix symmetry, brace pivots, and structural wonder as first-class UX constraints instead of secondary aesthetic concerns.
+ >>[2026-04-09 20:20] taste - Wonder should arrive as a pivot into clearer structure while preserving orientation, not as decorative motion layered onto already-legible surfaces.
+ >>[2026-04-09 20:20] rebase - Refreshed `base_ref` to the current `main` commit after the plan artifact landed so the maintenance surface matches the active lineage.
+ >>[2026-04-09 22:08] decide - Spw symmetry should be treated as more than prefix/postfix parity: visual surfaces, keyboard paths, touch paths, and semantic HTML reflection should converge on the same runtime facts.
+ >>[2026-04-09 22:08] observe - The site already uses meaningful landmarks, heading structure, and aria state in many places; the missing step is to elevate that accessibility tree into the canonical reflection surface instead of treating it as a parallel concern.
+ >>[2026-04-09 22:08] decide - Fractal geometry is useful here only as recursive surface structure: page -> region -> frame -> panel -> widget -> node should repeat the same boundary, name, inspect, pivot, and return logic across scales.
+ >>[2026-04-09 22:08] taste - Intuitive reflection on the modern web should feel like native semantic HTML becoming deeper and more self-similar under inspection, not like an abstract math story pasted onto arbitrary markup.
+ >>[2026-04-09 22:08] rebase - Refreshed `base_ref` to the current `main` commit while integrating symmetry, accessibility, and fractal-surface considerations.
+ >>[2026-04-09 22:36] decide - Every operator should have inspectable interaction semantics before it is allowed to function as behavior; color alone is not enough.
+ >>[2026-04-09 22:36] revise - The metaphysics model now treats charge and projection bias as bounded, inspectable runtime tendencies rather than hidden magical state.
+ >>[2026-04-09 22:36] decide - No-response interaction paths are valid only when they preserve exploration: invoke, inspect, explain unavailable state, or pass through without trapping focus/register state.
+ >>[2026-04-09 22:36] verify - Expanded the executable operator registry so visible sigils can carry operator type, intent, and interaction metadata across the full operator family.
+ >>[2026-04-09 22:36] rebase - Refreshed `base_ref` to current `main` after the SVG/Pretext/reflection plan commit.
+ >>[2026-04-09] style - Interaction semantics is personal style. The timing quality of a brace pivot, the texture of an inspect reveal, the decay rate of charge — these are aesthetic decisions, not just engineering constants. They should be made deliberately and logged as taste choices in the stream, not derived from whatever browser defaults happen to provide.
+ >>[2026-04-09] observe - The spirit cycle already exists as a site-level metaphor with five phases (initiation, resistance, transformation, expression, return). If any interaction sequence can trace a phase, that tracing should be legible enough to inspect and reversible enough to not trap the visitor in a phase they cannot identify.
+ >>[2026-04-09] style - Interaction style on this site will become recognizable through three qualities: timing texture (not speed, but quality of pace — does it feel deliberate or snappy?), reversibility depth (how far back can the visitor return without losing address?), and inspect legibility (does revealing a node feel more like reading or like touching?). Each of those is a taste decision to be made and logged.
+}
+
+^["open"]{
+ ?[regions]: "Which page regions should be universal across routes versus optional per-surface?"
+ ?[intent]: "What is the smallest portable interaction vocabulary that cleanly spans touch, pointer, and keyboard?"
+ ?[registers]: "Which runtime registers must be first-class before navigator and console can become honest projections?"
+ ?[blocks]: "What host contract should exist before Spw blocks and scripts are allowed to shape UI?"
+ ?[symmetry]: "What is the canonical normalization from prefix and postfix interaction paths into one semantic register trace?"
+ ?[operators]: "What exact runtime behavior, inspect state, or unavailable explanation should each operator expose on first implementation?"
+ ?[reflection]: "What is the canonical normalization from visual runtime state into the HTML accessibility tree and other semantic reflection surfaces?"
+ ?[a11y]: "Which native HTML structures should be considered the primary semantic hosts for regions, pivots, lenses, and block-backed components?"
+ ?[fractal]: "Which recursive scale model is operational enough to improve learnability without turning fractal language into metaphor drift?"
+ ?[charge]: "Which braces are allowed to store charge, what creates it, how does it decay, and which projections may it bias?"
+ ?[no_response]: "What is the visible or semantic feedback threshold for no-op and unavailable interactions?"
+ ?[pivots]: "Which structure changes count as local pivots rather than route changes or overlays?"
+ ?[wonder]: "Which moments of structural revelation are strong enough to feel magical without violating calm defaults?"
+ ?[authoring]: "What is the smallest authoring contract that lets a page become Spw-backed without requiring a full in-browser parser?"
+ ?[interaction_personality]: "What is the signature quality of interaction on this site — handwriting, grammar, physics, something else? What does that imply for timing constants and transition behavior?"
+ ?[spirit_phase_interaction]: "Should interaction sequences trace spirit phases? Which input mode most naturally embodies initiation, resistance, transformation, expression, or return — and should that tracing be legible or ambient?"
+ ?[timing_vocabulary]: "Should timing tokens be named after Spw concepts (charge-decay, pivot-arc, boon-settle) rather than generic design-system durations — and would that naming change how implementers choose values?"
+ ?[inspect_texture]: "What does inspecting a node on this site feel like — revealing language or revealing physical state? What does that imply for inspect animation and label placement?"
+ ?[style_log_moment]: "At which commit should the first set of timing/transition constants be logged as explicit taste decisions in this stream rather than left as implementation details?"
+}
+
+^["commits"]{
+ ~[1]: "#[mobile-runtime] - capture the planning artifacts and distilled semantics note"
+ ~[2]: ".[semantics] - formalize UX invariants, prefix/postfix symmetry, brace physics, pivots, and register invariants"
+ ~[3]: "&[runtime] - extract shared keyboard, interaction, and register runtime foundations from page-local behavior"
+ ~[4]: "&[blocks] - add region/page hosts plus contracts for declarative blocks, scripts, and inspect surfaces"
+ ~[5]: "![mobile-runtime] - verify coarse-pointer behavior, inspectability, and region containment"
+}
+
+^["cache"]{
+ ~#status: "planned"
+ ~#base_ref: "main@afae5c402a2f7e25116f9cdf820e8fdfef6e73f4"
+ ~#rebased_at: ""
+ ~#hygiene_split: "none"
+ ~#files_hot: ".spw/conventions/site-semantics.spw, public/js/site.js, public/js/spw-shared.js, public/js/spw-operators.js, public/js/spw-component-semantics.js, public/js/frame-navigator.js, public/js/spw-console.js, public/css/style.css?v=0.0.2"
+ ~#next_commit: "1"
+ ~#open_count: "14"
+ ~#last_stream: "2026-04-09 22:36"
+ ~#taste_debt: "Do not let mobile-first runtime work become a desktop spell system in disguise, let semantic reflection drift away from visible state, let charge/bias become hidden state, or let fractal language collapse into metaphor. Timing and transition constants are aesthetic decisions — name them from the site's own vocabulary and log them as taste choices at commit 2."
+}
+
+^["done"]{
+}

@@ -28,7 +28,7 @@
 @mixer: ~"../../public/js/modules/widgets/boonhonk-mixer.js"
 @wapboy_image: ~"../../public/images/assets/rpg-wednesday/rpg-scene-wapboy-one-drop-prophecy.spw"
 @drawer_image: ~"../../public/images/assets/rpg-wednesday/rpg-scene-library-provisional-drawer.spw"
-@kernel: ~"../../.agents/plans/daily-kernel-development/boonhonk-dimensional-flow-2026-08-21.spw"
+@kernel: ~"../../.agents/plans/archive/daily-kernel-development/boonhonk-dimensional-flow-2026-08-21.spw"
 @voyager_window: ~"./golden-voyager-window.spw"
 @operator_semantics: ~"../conventions/operator-semantics.spw"
 @css_instruction: ~"../conventions/css-instruction.spw"

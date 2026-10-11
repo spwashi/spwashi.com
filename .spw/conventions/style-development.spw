@@ -42,17 +42,17 @@
     question: "What visual grammar does the first ornament belong to — and why this one?"
   }
   svg_visual_vocabulary: {
-    plan: ".agents/plans/svg-surface-integration"
+    plan: ".agents/plans/archive/svg-surface-integration"
     commit: "4 — first authored illustration"
     question: "What does the site's diagram language commit to with this first illustration?"
   }
   pretext_physics_seed: {
-    plan: ".agents/plans/pretext-whimsy-lab"
+    plan: ".agents/plans/archive/pretext-whimsy-lab"
     commit: "4 — first physical projection"
     question: "Which Spw metaphysical concept seeds the first physics profile — and how?"
   }
   interaction_timing_vocabulary: {
-    plan: ".agents/plans/mobile-runtime-foundation"
+    plan: ".agents/plans/archive/mobile-runtime-foundation"
     commit: "2 — semantics formalization"
     question: "What naming and value choices characterize timing and transition constants on this site?"
   }
@@ -130,9 +130,9 @@
   @semantics: ~"./site-semantics.spw"
   @css_instruction: ~"./css-instruction.spw"
   @css_plan: ~"../../.agents/plans/css-architecture-readability/PLAN.md"
-  @svg_plan: ~"../../.agents/plans/svg-surface-integration/wip.spw"
-  @pretext_plan: ~"../../.agents/plans/pretext-whimsy-lab/wip.spw"
-  @runtime_plan: ~"../../.agents/plans/mobile-runtime-foundation/wip.spw"
+  @svg_plan: ~"../../.agents/plans/archive/svg-surface-integration/wip.spw"
+  @pretext_plan: ~"../../.agents/plans/archive/pretext-whimsy-lab/wip.spw"
+  @runtime_plan: ~"../../.agents/plans/archive/mobile-runtime-foundation/wip.spw"
   @screenshot_plan: ~"../../.agents/plans/screenshot-semantics/wip.spw"
   @cinematic_plan: ~"../../.agents/plans/color-motion/PLAN.md"
   @circuits_plan: ~"../../.agents/plans/interaction-grammar/wip.spw"

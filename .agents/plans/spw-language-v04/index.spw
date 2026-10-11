@@ -66,7 +66,7 @@ intent: .{
 @package_json: ~"../../../package.json"
 @readable_by_tooling: ~"../../../.spw/caches/spw-readable-by-tooling-2026-09.spw"
 @workbench_report: ~"../../../.spw/workbench-report.spw"
-@plan_spw_architecture_ecology: ~"../spw-architecture-ecology/index.spw"
+@plan_spw_architecture_ecology: ~"../archive/spw-architecture-ecology/index.spw"
 @upstream_recommendations: ~"../../../.spw/reviews/upstream-workbench-recommendations.spw"
 
 dispatch: .{
@@ -152,5 +152,16 @@ invariants: #[
   ~#tension: "Parsing help text on the site invents a second grammar for a document the CLI already structured. The upstream command is the realistic commit: +[cli] Let help --json emit the same sections the manual already prints."
   !probe{ "npm run spw -- --help --json" }
   $%[cli.helpJson, cli.costClass, language.ecology]
-  ~<"../../../.spw/caches/spw-readable-by-tooling-2026-09.spw"> ~<"../spw-architecture-ecology/index.spw">
+  ~<"../../../.spw/caches/spw-readable-by-tooling-2026-09.spw"> ~<"../archive/spw-architecture-ecology/index.spw">
+}
+
+#>wonder_spw_language_v04_trailing_probe
+?["Does a trailing ?# mean probe frames, the facet, or probe this frame, the one the reader is in?"]{
+  #:depth #!semantic ~#lens(position)
+  ~#with: @plan @v04 @workbench
+  ~#taste: "Position grammar says a postfix is residue. The reading should say whose residue it is before search spends it."
+  ~#hypothesis: "Patch 2 of the spw-as-handle cache can ship prefix sigils on parseExpressionQuery without this answer. The postfix half needs it, because search either widens to every frame or narrows to the one in view."
+  ~#tension: "Probe frames is a facet query that search can run with no reader context. Probe this frame needs the reader's position, which a search box does not have unless a lens or region supplies it."
+  !probe{ "node --test scripts/tests/expression-query.test.mjs" }
+  ~<"../../../.spw/caches/spw-as-handle-2026-09.spw"> ~<"../../../public/js/semantic/expression-query.js">
 }

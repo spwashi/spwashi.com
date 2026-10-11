@@ -10,7 +10,7 @@
  operation = "prime"
  bucket = "active_backlog"
  validation = #[ `git diff --check`, `rg -n "svg-aesthetic-depth-pass|SVG Aesthetic Depth Pass For Opus 4.7" .agents/prompts .agents/plans`, `rg -n "spw-svg-env|data-spw-svg-environment|svg-screenshot-model-packet" design/experiments/svg public/css public/js .agents/plans`, `rg -n "data-spw-svg-persona|persona-specific|rendering-model" design topics recipes about care blog public/js .agents/plans`, ][reg=set]
- hot_files = #[ `design/experiments/svg/index.html`, `public/css/systems/svg-surfaces.css`, `public/js/media/svg-tunability.js`, `topics/craft/svg/index.html`, `about/index.html`, `.agents/plans/svg-surface-integration/PLAN.md`, ][reg=set]
+ hot_files = #[ `design/experiments/svg/index.html`, `public/css/systems/svg-surfaces.css`, `public/js/media/svg-tunability.js`, `topics/craft/svg/index.html`, `about/index.html`, `.agents/plans/archive/svg-surface-integration/PLAN.md`, ][reg=set]
 }[reg=facet]
 # SVG Aesthetic Depth Pass WIP
 #

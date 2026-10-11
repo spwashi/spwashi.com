@@ -27,7 +27,7 @@ Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 ## 📐 Semantic Capacity Operations
 
 ```text
-cache    → Ephemeral observation (use template under .agents/plans/model-guided-refinement/templates/).
+cache    → Ephemeral observation (use template under .agents/plans/reference-assignment-template/templates/).
 audit    → Measure cross-layer drift, unused tokens, or orphan data attributes.
 align    → Synchronize terminology across HTML, CSS tokens, JS bus events, and .spw.
 prime    → Prepare structured semantic foundations prior to a major feature rollout.

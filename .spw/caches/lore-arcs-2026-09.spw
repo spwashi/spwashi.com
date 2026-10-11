@@ -10,7 +10,7 @@
 @bench: ~"../../projects/index.html"
 @module: ~"../../public/js/modules/projects/arc-bench.js"
 @test: ~"../../scripts/tests/arc-bench.test.mjs"
-@plan: ~"../../.agents/plans/projects-hub/PLAN.md"
+@plan: ~"../../.agents/plans/archive/projects-hub/PLAN.md"
 @living_terms: ~"./living-terms-2026-09.spw"
 @collectible_expressions: ~"./collectible-expressions-2026-09.spw"
 @spw_as_handle: ~"./spw-as-handle-2026-09.spw"

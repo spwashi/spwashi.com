@@ -1,0 +1,113 @@
+# Plan: js-surface-ecology
+
+**Status 2026-10-06.** The tree moves are done (2026-05, 2026-09-27). Open: 17 orphans, 32 upward imports, and the innerWidth and getComputedStyle readers.
+
+**Related:** [runtime-plane-consolidation](../../runtime-plane-consolidation/PLAN.md) · [module-contract-overhaul](../../module-contract-overhaul/PLAN.md) · [runtime-module-decomposition](../runtime-module-decomposition/PLAN.md).
+
+## Goal
+
+Make the shape of `public/js` legible before attempting deep refactors. The desired end state is a tree where a new reader can distinguish durable primitives, semantic machinery, runtime behavior, interface affordances, and feature modules at a glance.
+
+## Public principle
+
+```txt
+Move what is obvious.
+Label what is suspicious.
+Merge only what is proven.
+```
+
+## 2026-08 inspect primitives
+- Runtime organs report through frozen `SPW_*_CONTRACT` + `describe*` helpers. That is the inspect primitive, not a new folder.
+- `runtime/physics/physical-model.js` gathers gravity / charge / beat / wonder / climate. It is pollinator (`compose.js`) and console (`spwCompose.controls.physics`), not a catalog-mounted writer.
+- Interface press uses `--spw-control-press-depth` / `--spw-micro-press-scale` on handles and card anchors. Do not invent a second :active scale.
+
+## Proposed topology
+
+```txt
+public/js/
+  kernel/
+  semantic/
+  runtime/
+  interface/
+  modules/
+  content/
+  media/
+  legacy/
+```
+
+## Layer model
+
+```txt
+kernel → semantic → runtime → interface → modules
+```
+
+- `kernel`: bus, core, runtime environment, shared utilities, state, DOM contracts
+- `semantic`: operators, lattice, projection, semantic utilities, component semantics, pretext mechanics
+- `runtime`: gates, interaction loops, visitation, navigation spells, state inspectors, update handlers
+- `interface`: contextual UI, semantic chrome, guide badges, palette resonance, canvas accents, haptics, local controls
+- `modules`: blog, RPG Wednesday, services, tools, profile, payment, budgeting, care intake, and page/feature bundles
+
+## Scope
+
+- In scope for the first pass: inspect `public/js` only, ignore generated/build-heavy directories, classify files by responsibility, move obvious files, update import paths, and stop.
+- Out of scope for the first pass: deduplicating shadow twins, deleting suspicious files, collapsing typed/generated/plain variants into one module, or touching `dist`, `dist-vite`, or `node_modules`.
+
+## Risks
+
+- Prefixed and non-prefixed twins may look redundant but serve different roles.
+- Typed variants and generated outputs can create false signals if inspected too early.
+- A flat mechanical move can break imports if the obvious layer boundary is assumed instead of verified.
+
+## Validation
+
+- constrain inspection to `public/js`
+- classify before merging
+- preserve suspicious files in place or move them to `legacy/`
+- verify updated import paths after each small move set
+
+## Implementation pass: 2026-05-05
+
+The first mechanical pass now exists.
+
+- `public/js/site.js` remains the public runtime entrypoint.
+- Root-level `public/js/*.js` compatibility wrappers preserve existing route, service-worker, and test URLs.
+- Implementation files moved into `kernel/`, `semantic/`, `runtime/`, `interface/`, `modules/`, and `media/`.
+- `public/js/typed/` remains generated output and was not moved.
+- Internal moved-module imports now resolve through stable `/public/js/*.js` wrappers, keeping this pass mechanical rather than a dependency-graph rewrite.
+- `public/css/style.css` now imports layered implementation files from folders matching the cascade layer order.
+- Root-level `public/css/*.css` files remain compatibility wrappers for older direct stylesheet links.
+
+The remaining cleanup is semantic, not mechanical: inspect root wrappers that represent real shadow twins, then merge only where call sites prove they share a contract.
+
+## Deduplication pass: 2026-05-05
+
+The first wrapper-chain cleanup landed after the tree move.
+
+- `public/js/site.js` now imports mounted implementation modules from their semantic folders.
+- Legacy root aliases such as `blog-interpreter.js`, `payment-card.js`, and `seed-card.js` now point directly to canonical `spw-*` module implementations.
+- Redundant folder-level alias files were removed where they only re-exported another wrapper.
+- Public root URLs remain available for route HTML, service-worker entries, tests, and older external links.
+
+Next candidates should be real call graph reallocations, not alias deletion: inspect repeated imports of `/public/js/spw-bus.js`, `/public/js/spw-shared.js`, and `/public/js/site-settings.js` inside layer folders, then move those call sites inward only when the target dependency belongs to the same or lower layer.
+
+## Wrapper removal pass: 2026-05-05
+
+The JS root wrapper surface has now been removed.
+
+- `public/js/site.js` remains the stable public runtime entrypoint.
+- Direct feature imports in route HTML now point at `public/js/modules/...`.
+- Service-worker core assets now point at semantic implementation paths.
+- Internal imports now use canonical folder paths instead of root wrappers.
+- `spw-wonder-memory.js` moved into `public/js/interface/`.
+
+CSS wrappers still exist at the root because route-level stylesheets are part of the public stylesheet contract; remove those only after updating route links and the CSS contract in a dedicated CSS pass.
+
+## Kernel measurement seam — 2026-09-17
+
+Two kernel modules now own timing and geometry reads that runtime and interface files used to take for themselves: `kernel/measured-frame.js` (when to measure: one shared pass after the frame's style pass) and `kernel/viewport.js` (what the viewport is: one cached box). This is the call-graph reallocation the 2026-05-05 note asked for, moved inward to the kernel layer because every layer above reads geometry. Next reallocations, in order of boot cost: the four `runtime/` readers of `window.innerWidth` (`layout-qa`, `observation-beats`, `spatial-gravity`, `positioning-orchestration`), then any module that calls `getComputedStyle(document.documentElement)` on its own schedule (`rg 'getComputedStyle\(document\.documentElement' public/js`).
+
+## Per-file value — 2026-09-18
+`npm run audit:js-tree` now measures what the 2026-05 wrapper pass left implicit: reach, wiring, and layer direction per file. Ledger: `.spw/audits/js-tree-value-2026-09.spw`. Landed: `browser-primitives.js` moved into `kernel/` (it was kernel by role and five semantic files reached up for it), the unreachable duplicate `runtime/state-inspector.js` deleted, and `kernel/route-utils.js` freed of its semantic import. Open: 17 orphans (3,867 lines nothing loads, four of them tool modules whose routes are live), 32 upward imports led by `interface/site-settings-ui.js` and the interface hubs (haptics, accent-palette, wonder-memory, cauldron) that lower layers consume.
+
+## Runtime families — 2026-09-27
+Operation: `align`. Fixity: `stable`. The 88 loose files under `public/js/runtime/` moved into sixteen families (arrival, attention, catalog, diagnostics, discovery, experiential, expression, interaction, labs, memory, navigation, orchestration, page, physics, regions, shell). Basenames did not change, so an id or a file name still greps; facades joined the folders their children already lived in (`attention/attention-architecture.js`, `experiential/experiential.js`, `shell/shell-disclosure.js`). The move ran as `runtime-families.mjs` here: relative specifiers recomputed from each file's new seat, then every `runtime/<file>.js` address in tracked text rewritten, workbench excluded. `check:runtime` now fails on a loose runtime file or an unnamed family (`ALLOWED_RUNTIME_FAMILIES`); the family table lives in `public/js/README.md`. The move landed before texture.website and lore.land import anything from `/public/js/`, because after that a path is a public address.

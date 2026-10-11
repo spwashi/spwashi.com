@@ -15,7 +15,7 @@
 @naming_structured_values: ~"./naming-and-structured-values.spw"
 @operator_semantics: ~"./operator-semantics.spw"
 @metaphysical_plan: ~"../../.agents/plans/spw-metaphysical-language/PLAN.md"
-@reclustering_plan: ~"../../.agents/plans/language-reclustering/PLAN.md"
+@reclustering_plan: ~"../../.agents/plans/archive/language-reclustering/PLAN.md"
 @homonym_plan: ~"../../.agents/plans/homonym-renaming/PLAN.md"
 @v04_plan: ~"../../.agents/plans/spw-language-v04/PLAN.md"
 @shell_vocab_plan: ~"../../.agents/plans/shell-model-vocabulary-consolidation/PLAN.md"

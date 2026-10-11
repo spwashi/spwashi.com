@@ -10,7 +10,7 @@
 
 @capture: ~"../conventions/component-capture-pipeline.spw"
 @copy_flow: ~"../conventions/copy-flow.spw"
-@plan: ~"../../.agents/plans/visual-capture-ecology/PLAN.md"
+@plan: ~"../../.agents/plans/archive/visual-capture-ecology/PLAN.md"
 @search: ~"../../scripts/generate-site-search-index.mjs"
 
 operation = "cache"

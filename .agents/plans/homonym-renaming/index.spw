@@ -96,3 +96,14 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+#>wonder_homonym_renaming_unseen_word
+?["Does renaming a word no reader sees, the tempo value settle, need a browser review, or can it land on a diff review?"]{
+  #:depth #!pragmatic ~#lens(sensation)
+  ~#with: @plan @language_census
+  ~#taste: "A sensation gate protects what a reader feels. A word that never reaches a page may only need to read well to the next editor."
+  ~#hypothesis: "data-spw-page-tempo=settle is written by prepaint-state.js and region-profiler.js and read by signals.css. Settings shows tempo as a multiplier (1.00x), not as the word, so the rename changes source legibility and not felt pacing."
+  ~#tension: "A tempo word could reach readers later, through settings, the satchel or captured stills. Choosing it on a diff now would mean choosing reader vocabulary without the bench."
+  !probe{ "rg -n 'tempo=\"settle\"|tempo-field~=\"settle\"|spwPageTempo' public settings --glob '!**/bundles/**'" }
+  ~<"../../../public/css/components/signals.css"> ~<"../../../.spw/conventions/word-sets.spw">
+}

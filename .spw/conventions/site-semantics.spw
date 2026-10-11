@@ -1077,7 +1077,7 @@ claim #model-guided-refinement-001 {
   layer = "pragmatic"
   hypothesis = "Patches prepared for lower-creativity models become safer when they declare focus dimension, fixity tier, primary element, owner surface, validation, and out-of-scope files before editing."
   spec_ref = ".spw/conventions/model-guided-refinement.spw#model_handoff_checklist"
-  impl_ref = ".agents/plans/model-guided-refinement/PLAN.md + plan-local templates + future slice handoff notes"
+  impl_ref = ".agents/plans/archive/model-guided-refinement/PLAN.md + plan-local templates + future slice handoff notes"
   probe_ref = "Open the patch plan or .spw note; confirm the checklist fields exist and the diff stays inside the declared owner surface."
   falsification = "A broad CSS/JS/HTML patch lands from a general instruction with no focus dimension, no fixity tier, and no explicit files to avoid."
   status = "active"
@@ -1087,7 +1087,7 @@ claim #semantic-capacity-diff-value-001 {
   layer = "semantic"
   hypothesis = ".spw diffs remain useful during semantic expansion when each addition declares an operation (cache, audit, align, prime, contract, archive), evidence, pattern consideration, expansion prime, and validation."
   spec_ref = ".spw/conventions/semantic-capacity.spw#diff_value_rules + #insight_cache_shape"
-  impl_ref = ".spw/conventions, .spw/reviews, .spw/slices, .agents/plans/model-guided-refinement/templates/semantic-insight-cache.spw"
+  impl_ref = ".spw/conventions, .spw/reviews, .spw/slices, .agents/plans/reference-assignment-template/templates/semantic-insight-cache.spw"
   probe_ref = "Review a new .spw addition and classify whether it changes selection, validation, comparison, or extension behavior."
   falsification = "New .spw surfaces accumulate evocative but operationally identical prose and future agents still cannot tell where to focus."
   status = "active"
@@ -1097,7 +1097,7 @@ claim #daily-kernel-ergonomics-001 {
   layer = "pragmatic"
   hypothesis = "Cross-discipline creative/product exploration becomes safer when a daily kernel names one focus, one discipline pair, one university-style region, one brand-physics variable, one intensity, one semantic operation, and one validation path."
   spec_ref = ".spw/conventions/daily-kernel.spw#kernel_shape"
-  impl_ref = ".agents/plans/daily-kernel-development/PLAN.md + daily-kernel-note template + future route/CSS/HTML/product-line kernels"
+  impl_ref = ".agents/plans/archive/daily-kernel-development/PLAN.md + daily-kernel-note template + future route/CSS/HTML/product-line kernels"
   probe_ref = "Review a daily-kernel note or patch; confirm an engineer, animator, illustrator, designer, or musician can identify their entry point and what not to touch."
   falsification = "A cross-discipline patch mixes CSS, HTML, JS, copy, and metaphor broadly without declaring region, brand physics, intensity, or validation."
   status = "active"
@@ -1435,7 +1435,7 @@ frame #shell_instrument_navigation_rail
 
 frame #header_action_disclosure_contract
   role contract
-  surface scripts/template.mjs + public/js/runtime/shell/shell-disclosure.js + public/css/shell/chrome.css + .agents/plans/navigation-header-disclosure/PLAN.md
+  surface scripts/template.mjs + public/js/runtime/shell/shell-disclosure.js + public/css/shell/chrome.css + .agents/plans/archive/navigation-header-disclosure/PLAN.md
   concept reduce header overload by separating primary routing, primary creative action, posture state, and secondary tuning controls.
   data-spw-feature = "shell-primary-actions | shell-tune-disclosure"
   data-spw-shell-action = "open-media-cauldron | tune-attention-posture | secondary display actions"

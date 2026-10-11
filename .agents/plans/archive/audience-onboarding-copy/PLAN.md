@@ -1,0 +1,52 @@
+# Plan: audience-onboarding-copy
+
+**Status 2026-10-06.** Entrance copy landed. Open: the first-fold lines `audit:copy:accessor` flags. Once they clear, this folds into semantic-copy-depth.
+
+**Related:** [landing-visual-hierarchy](../../landing-visual-hierarchy/PLAN.md).
+
+Refine the public copy on the main entrance routes so the site better orients experienced professionals, emerging students, and collaborators from adjacent careers.
+
+## Goal
+
+Make the home, about, services, topics, and tools surfaces read like a credible invitation into a decentralized team: one that can onboard developers, illustrators, authors, and a college freshman who is still deciding what they want to study. The copy should assume the reader is smart, busy, and professionally fluent, while also naming the internal routes that help them start.
+
+## Scope
+
+- **In scope**: route intro copy, internal links, section labels, and page-level metadata on the primary entry surfaces.
+- **Out of scope**: visual redesign, new runtime behavior, new routes, or restructuring the overall site taxonomy.
+
+## Files
+
+[NEW] `.agents/plans/archive/audience-onboarding-copy/PLAN.md`
+[MOD] `index.html`
+[MOD] `about/index.html`
+[MOD] `services/index.html`
+[MOD] `topics/index.html`
+[MOD] `tools/index.html`
+
+## Copy Strategy
+
+- Lead with the creator identity first, then the site surface.
+- Make internal references explicit enough that a visitor can self-select a next stop without needing prior context.
+- Frame the site as a place to join work, explore tools, and find neighboring topics.
+- Include a light ramp for college-freshman curiosity without talking down to the reader.
+- Preserve the site’s professional register and avoid generic “for everyone” language.
+- The site is the résumé. `/about/#about-years` and `/about/#career-register` host walkable year and practice records; they do not replace other component families. See `.agents/plans/archive/resume-record/PLAN.md`.
+- First-fold copy should pass a no-context clicker test: a sentence either names a control and a receipt, or is identity that does not pretend to be a mechanism. Whimsy stays with the human team. Cluster: person-magazine. Cache: `.spw/caches/copy-hypermedia-key-2026-09.spw`.
+
+## Validation
+
+- `git diff --check`
+- targeted `rg` for the updated route labels and links
+- visual spot check in a browser if the diff shifts hierarchy or nav density
+- After a person-magazine copy pass: `npm run audit:copy:accessor`. First-fold shop-talk and unkeyed mechanism lines are named in `.spw/caches/copy-hypermedia-key-2026-09.spw`, not rewritten from that cache.
+
+## Risks
+
+- Copy can become over-guided if every paragraph turns into navigation.
+- The professional tone can flatten if the newcomer ramp is over-explained.
+- Internal references should increase clarity, not create a second menu.
+
+## 2026-09-28 — a paragraph is not a second menu
+
+That navigation risk has an owner: `.agents/plans/semantic-copy-depth/PLAN.md`, section "Thought trace". An entrance sentence may name a next stop. A paragraph whose job is the list of stops is a display case and belongs in a list or a `data-spw-copy-depth="dense"` sibling. The smell constraints on any such rewrite are `.spw/caches/ai-writing-smells-2026-09.spw`. Do not rewrite the entrance routes from this file.

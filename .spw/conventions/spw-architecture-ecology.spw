@@ -11,7 +11,7 @@
 #:fixity #!tending
 #:layer #!editor_inspectability
 
-@plan: ~"../../.agents/plans/spw-architecture-ecology/PLAN.md"
+@plan: ~"../../.agents/plans/archive/spw-architecture-ecology/PLAN.md"
 @planning_ecology: ~"./planning-ecology.spw"
 @plan_index: ~"./plan-index.spw"
 @semantic_capacity: ~"./semantic-capacity.spw"
@@ -22,7 +22,7 @@
 @modular_experience_slices: ~"../../.agents/plans/modular-experience-slices/PLAN.md"
 @spw_language_v04: ~"../language/v04/index.spw"
 @spw_metaphysical_language: ~"../../.agents/plans/spw-metaphysical-language/PLAN.md"
-@language_reclustering: ~"../../.agents/plans/language-reclustering/PLAN.md"
+@language_reclustering: ~"../../.agents/plans/archive/language-reclustering/PLAN.md"
 @component_region_personality: ~"./component-region-personality.spw"
 @operational_semantics: ~"./operational-semantics.spw"
 @owner_registry: ~"./owner-registry.spw"
@@ -406,8 +406,8 @@ fixity = "tending"
  layer = "pragmatic"
  hypothesis = `An explicit .spw ecology with a typed relation graph, coordinators, owner-registry, promotion protocol, and precipitates reduces agent/editor discovery cost while keeping hand-authored routes primary.`
  spec_ref = ~"./spw-architecture-ecology.spw"
- impl_ref = ~"../../.agents/plans/spw-architecture-ecology/PLAN.md"
- probe_ref = `rg 'spw-architecture-ecology|ecology_coordinators|owner-registry' .spw .agents/plans/spw-architecture-ecology`
+ impl_ref = ~"../../.agents/plans/archive/spw-architecture-ecology/PLAN.md"
+ probe_ref = `rg 'spw-architecture-ecology|ecology_coordinators|owner-registry' .spw .agents/plans/archive/spw-architecture-ecology`
  falsification = `Agents still reconstruct authority and dependencies from file names, graph edges remain prose strings, or site.spw still lists >80 plan-level @ refs without coordinator routing.`
  status = "active"
 }[reg=facet]

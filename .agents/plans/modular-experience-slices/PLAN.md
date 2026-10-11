@@ -1,8 +1,8 @@
 # Modular Experience Slices & Earthy Rhythms of Participation
 
-**Status 2026-10-06.** Pilot A's note that the math labs are uncommitted worktree work is stale; the 2026-09-20 reconciliation found them in this checkout. Next: the math-practice-labs review. Holds the dimensional navigation slice contract (`.spw/slices/dimensional-expression-navigation/`).
+**Status 2026-10-10.** Landed: five slice contracts in `.spw/slices/` and the attention scheduling slice (c2d5da00, 73d6f2ad). Next slice: review the math labs, which are committed in this checkout, and write one tending note in `.spw/slices/math-practice-labs/`. The review opens on `public/js/modules/math/diagrams.js:1250`, where the arrow marker id `arrow-vector` is fixed rather than per lab. Phases 3–6 are speculative and wait for that note. Holds the dimensional navigation slice contract (`.spw/slices/dimensional-expression-navigation/`).
 
-**Related:** [page-region-discoverability](../page-region-discoverability/PLAN.md). **Absorbed 2026-10-06:** [dimensional-expression-navigation](../archive/dimensional-expression-navigation/PLAN.md).
+**Related:** [page-region-discoverability](../archive/page-region-discoverability/PLAN.md). **Absorbed 2026-10-06:** [dimensional-expression-navigation](../archive/dimensional-expression-navigation/PLAN.md).
 
 ## Public Goal
 
@@ -37,7 +37,7 @@ These reviews and this plan together define:
 - Define and stabilize the major experience slices as first-class concepts (initially in .spw).
 - Prototype bolder file tree structures (starting with CSS `slices/` parallel or embedded, with possible JS symmetry).
 - Develop and document earthy participation rhythms (per-slice .spw contracts, sedimentation notes, seasonal or cyclical review practices, and natural handoff surfaces), especially for the first concrete pilots that already have nearby review surfaces.
-- Pilot with 1-2 slices, starting with the concrete math-practice-labs work already emerging in a sibling worktree, then generalizing only what proves useful.
+- Pilot with 1-2 slices, starting with the math-practice-labs work now committed in this checkout, then generalizing only what proves useful.
 - Allow route visual redesign when the redesign clarifies semantic flow, exposes practice beds, improves accessibility, or makes the slice easier to inspect.
 - Allow CSS layer-order changes only when a specific semantic-flow problem cannot be solved by file redistribution, import manifests, or clearer ownership inside the existing layers.
 
@@ -50,7 +50,7 @@ These reviews and this plan together define:
 
 **Pilot A — math-practice-labs**
 
-This is the first concrete pilot because it already exists as uncommitted work in the Gemini worktree (`enhance-educational-semantic-structure`) and can be reviewed as a real practice-bed patch rather than a theory exercise. The current candidate files are:
+This is the first concrete pilot because it began as worktree work and is now committed here (the 2026-09-20 reconciliation below), so it can be reviewed as a real practice-bed patch rather than a theory exercise. The files are:
 - `public/js/modules/math/diagrams.js`
 - `topics/math/vector-calculus/index.html`
 - `topics/math/numerical-methods/index.html`
@@ -59,7 +59,7 @@ The slice goal is to turn math vocabulary into playable reading/observation/gest
 
 Review posture before landing:
 - Keep the patch focused on the two math routes and the shared math diagram module.
-- Confirm generated SVG IDs are unique per lab instance before the work lands, especially marker IDs referenced with `url(#...)`.
+- Confirm generated SVG IDs are unique per lab instance, especially marker IDs referenced with `url(#...)`. Today the vector-field marker id is the fixed `arrow-vector` (`diagrams.js:1250`).
 - Run `node --check public/js/modules/math/diagrams.js`, `git diff --check`, and a browser smoke on both math routes.
 - Add a tending note after review that records what the math labs taught about practice-bed structure.
 
@@ -71,20 +71,7 @@ The first ownership seam is now explicit: attention emits coarse settled-section
 
 ### Landed scheduling slice — independent attention children
 
-**Public intent:** keep authored reading and static section travel intact, then load each attention affordance only when its own region, timing, and input posture can use it. This is a tending implementation around stable public attributes and events; it does not rename the attention contract.
-
-**Non-goals:** no new storage in attention, no per-hover history, no viewport polling loop, no required content hidden behind enhancement, no rich reveal on ordinary reading routes, and no change to the CSS layer order.
-
-**Runtime blueprint:**
-
-- `attention-section-handle` — first idle residue tranche; eligible authored sections or a static handle; owns section locomotion and the handle-local cauldron nudge. Idle avoids making deep-link correctness depend on a pre-settle viewport observation, while the first tranche lets fragment ownership settle before collectible or lab flourishes.
-- `attention-resonance-probe` — visible; operator/concept/ingredient targets; keyboard focus everywhere and hover only on fine hover pointers.
-- `attention-reading-groove` — idle; substantial article/section prose; remains plain text when observers are unavailable and honors reduced-motion CSS.
-- `attention-pinch-scale` — interaction; mounts listeners only for multi-touch/coarse-pointer capability and leaves settings as the scale authority.
-- `attention-scroll-cadence` — idle; sectioned routes only; projects the preference consumed by existing section-state CSS.
-- `attention-architecture.js` remains a compatibility facade for direct consumers, not the catalog transport for every child.
-
-**Validation:** runtime catalog/definition contracts, module import architecture, focused submodule lifecycle tests, `node --check` on edited modules, `npm run check:runtime`, `npm run ecology`, and a zero-JS/reduced-motion inspection of the long-form fallback contract.
+Landed in c2d5da00 and 73d6f2ad: each attention affordance (section handle, resonance probe, reading groove, pinch scale, scroll cadence) loads only when its own region, timing and input posture can use it; `attention-architecture.js` stays a compatibility facade. The catalog definitions now hold the blueprint. Guards that still apply: no new storage in attention, no per-hover history, no viewport polling loop, no required content behind enhancement, and no CSS layer-order change.
 
 ## Practice Beds
 
@@ -140,28 +127,17 @@ The slice should support both rhythms:
 - Record one note for `math-practice-labs` once the vector-calculus / numerical-methods pilot is accepted, rejected, or split.
 - Prefer `.spw` notes for durable concepts and plan-local template notes for draft coordination.
 
-**Phase 3 — Bolder Tree Prototype (CSS first)**
-- Implement one of the bolder proposals from the review (e.g., `public/css/slices/<slice-name>/` with layer-specific contribution files), or a manifest pattern that makes slice ownership visible without moving files.
-- Update style.css imports only after proving the manifest does not obscure the cascade.
-- If layer order changes are proposed, land them as their own patch with route screenshots, reduced-motion checks, and a rollback note.
+**Speculative, not scheduled (Phases 3–6).** These wait until the math-labs tending note exists and shows the slice model reduced friction for someone.
 
-**Phase 4 — JS + Runtime Symmetry (optional but powerful)**
-- Explore parallel `public/js/slices/` structure or formalize ownership within the existing kernel/semantic/runtime/interface/modules layout using the same slice contracts.
-- Enhance MODULE_DEFS or add slice metadata so the runtime itself knows which modules "belong" to which painted slice.
-
-**Phase 5 — Volleyball Rituals & Tooling**
-- Pilot human session → handoff using the protocol in the review.
-- Enhance or document use of spw-plan-maintenance, spw-ontology-workbench, and existing spell/checkpoint surfaces for between-volley maintenance.
-- Add lightweight session review templates.
-
-**Phase 6 — Measurement & Refinement**
-- After several real human volleys, assess friction reduction for new/returning contributors.
-- Refine the slice boundaries and tree as the painting reveals what works.
+- Phase 3, bolder tree prototype: a `public/css/slices/<slice>/` tree or a manifest that shows slice ownership without moving files. Any layer-order change lands alone, with route screenshots, reduced-motion checks and a rollback note.
+- Phase 4, JS and runtime symmetry: slice metadata on module definitions, so the runtime knows which modules belong to which slice.
+- Phase 5, volleyball rituals: a human session-to-handoff pilot using the protocol in the volleyball review.
+- Phase 6, measurement: after several real handoffs, ask whether new or returning contributors found the work easier.
 
 ## Validation
 
 - Strict respect for AGENTS.md (css-instruction.spw, surgical changes, no un-planned deps). If the CSS layer order itself changes, that patch must update AGENTS.md and the relevant `.spw` convention in the same reviewable unit.
-- `git diff --check`, `npm run check` (CSS and full subsets), manual review on key routes.
+- `git diff --check`, `npm run check:local`, manual review on key routes.
 - A new contributor (or returning one after months) should be able to make a coherent change to one slice by primarily working inside that slice's directories + its .spw contract.
 - Existing editor surfaces (design catalog, runtime timings, state inspector) continue to work and ideally become more useful because ownership is clearer.
 
@@ -175,11 +151,11 @@ The slice should support both rhythms:
 
 - [x] Plan created with primary artifact in `.spw/reviews/modular-experience-slices-volleyball.spw`
 - [x] Practice-bed pilot and tending-note template path added
-- [x] Initial slice definitions formalized in `.spw/slices/` (math, page-region discovery, dimensional navigation, production rhythm; source verified 2026-09-20)
+- [x] Initial slice definitions formalized in `.spw/slices/` (math, page-region discovery, dimensional navigation, production rhythm, feedback desk flow; five, verified 2026-10-10)
 - [ ] `math-practice-labs` pilot reviewed and either ported, split, or rejected with a tending note
-- [ ] Bolder tree prototype (CSS) implemented and validated
-- [ ] First human volleyball pilot completed with handoff artifacts
-- [ ] Tooling and instruction updates landed
+- [ ] Bolder tree prototype (CSS) implemented and validated (speculative)
+- [ ] First human volleyball pilot completed with handoff artifacts (speculative)
+- [ ] Tooling and instruction updates landed (speculative)
 - [x] First `attention-resonance-field` ownership seam clarified: attention observes; feature discovery owns opt-in bounded memory
 - [x] Attention children independently scheduled with the authored HTML/CSS prior preserved
 - [ ] Full `attention-resonance-field` slice contract clarified alongside the current attention-field / wonder / ornament surfaces

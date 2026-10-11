@@ -61,7 +61,7 @@ intent: .{
 @sigil_physics_research: ~"./sigil-physics-research.spw"
 @workbench: ~"../../../.spw/_workbench/"
 @conventions: ~"../../../.spw/conventions/"
-@compositional_css_electrostatics: ~"../compositional-css-electrostatics/index.spw"
+@compositional_css_electrostatics: ~"../archive/compositional-css-electrostatics/index.spw"
 
 dispatch: .{
  plan = @plan

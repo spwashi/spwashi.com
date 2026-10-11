@@ -1,0 +1,42 @@
+# Review 2026-07-12 — keep as an editorial cache; promote only phrasing tested in creator-first public copy.
+#>semantic_insight_cache
+#:cache #!semantics #!handoff
+#:layer #!pragmatics
+
+^"plan_linkage"{
+ plan = ~"./PLAN.md"
+ index = ~"../../index.spw"
+ goal = `Prepare this codebase for refinement by a model that can read .spw, follow explicit connections, and make competent local changes, but should not be expected to improvise tastefully through the full CSS and JavaScript surface. The plan turns broad creative direction into rails: - where to look first - what not to touch - how CSS, HTML, JS, and .spw names should line up - which semantic concepts are fixed, stable, tending, experimental, or volatile - how creative/marketing surfaces should become coherent enough that musicians and artists want to explore and extend them This is not a new framework. It is a focus contract for future agents and collaborators.`
+ cache_topic = `voice-flow`
+ operation = "cache"
+}[reg=facet]
+
+^"insight"{
+  id = "site-voice-flow-jazz-and-process-states"
+  operation = "cache"
+  fixity = "tending"
+  source = "chat"
+  claim = "Public site copy should read like a sequence with motifs and transitions rather than a list of claims, and it should explicitly name cauldron, spell, midprocess, and screenshot states when those states help the reader understand how the work moves."
+  evidence = #[
+    `index.html`
+    `about/index.html`
+    `services/index.html`
+    `contact/index.html`
+    `now/index.html`
+    `membership/index.html`
+    `coordination/index.html`
+    `cards/index.html`
+    `topics/index.html`
+    `recipes/index.html`
+    `curriculum/index.html`
+    `tools/index.html`
+  ][reg=set]
+  pattern_consideration = #[
+    `pages that use long prose lists to describe offerings or process`,
+    `routes that can benefit from a visible "state in motion" explanation`,
+    `screenshot-native surfaces that should foreground midprocess value`
+  ][reg=set]
+  expansion_prime = "This direction has now been reused across portal, kitchen, curriculum, and tool surfaces. Prefer route-local prose plus existing components (`spw-reason-strip`, `spw-route-bridge`, `returner-grid`) before adding new CSS or JS for copy flow."
+  validation = "manual reread, diff check, and route-by-route tone pass."
+  do_not_promote_until = "This pattern has been reused on multiple routes without making the voice feel repetitive or over-literal."
+}

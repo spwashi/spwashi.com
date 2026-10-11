@@ -1,8 +1,8 @@
 # Plan: designer-conversation-canvas
 
-**Status 2026-10-06.** Bus, preview, metrics and canvas frame landed. Next slice: an export bundle (specimen URL, tokens, telemetry) for the starter pilot to consume.
+**Status 2026-10-10.** Landed: the measurement bus (1621ac6c), settings typography preview, frame metrics and the `/design/#conversation-canvas` frame; browser behaviour is not revalidated. Now holds design-hub's success test (Absorbed, below). Next slice: one real designer reviews the `#component-ecology-specimens` specimen from a bundle shaped by what that review asks for. Gate: the creator names that reviewer; no bundle schema before then.
 
-**Related:** [design-hub](../design-hub/PLAN.md) · [pretext-whimsy-lab](../pretext-whimsy-lab/PLAN.md).
+**Related:** [pretext-whimsy-lab](../archive/pretext-whimsy-lab/PLAN.md). **Absorbed 2026-10-10:** [design-hub](../archive/design-hub/PLAN.md).
 
 Make spwashi.com legible as a **conversation between author, designer, and runtime** — touchable specimens, named tokens, and a shared measurement bus on the public route.
 
@@ -60,7 +60,17 @@ frame metrics, and `design/#conversation-canvas` are present in source. This
 supports implementation presence, not a fresh claim of browser correctness.
 The three Next items remain proposals; exports and transitions were not proved.
 For one integrated handoff, pair a specimen URL and chosen token values with
-optional telemetry and separately labeled author observations. Use the
-[capability pilot](../site-starter-component-kit/BUNDLING.md) as the consumer:
-its artifact manifest describes dependencies; the review describes intent.
+optional telemetry and separately labeled author observations. The consumer is
+a named reviewer, not the starter bundling pilot: that pilot is texture-slice
+(`site-starter-component-kit/BUNDLING.md`) and does not list this specimen.
 Test reproduction by a second author before generalizing the export schema.
+
+## Absorbed 2026-10-10 — design-hub
+
+Source: [design-hub](../archive/design-hub/PLAN.md). The `/design/` hub (cc8f33a0), the
+`#component-ecology-specimens` specimen (`public/js/modules/design/experiments.js`,
+`public/css/routes/surfaces/design.css`) and the design-facing links landed. Still owed,
+as this plan's success test: a second-site author reproduces the specimen and explains
+one token change without loading the site shell. Keep the hub site-first: route HTML and
+shared CSS contracts carry it, with no new design-system runtime and no new `.spw`
+ontology unless a reusable contract appears.

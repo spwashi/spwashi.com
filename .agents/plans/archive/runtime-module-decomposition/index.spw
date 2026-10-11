@@ -1,0 +1,106 @@
+# Review 2026-10-10 — archived: merged: its extractions landed (storage-utils a6cdf035, writeProjectionTier, the lens writer, experiential 2184 to 223 lines 0cb1dbfd, shell measurement 638b2629); the remaining splits duplicated plane Phase 6; runtime-plane-consolidation
+# Review 2026-07-12 — keep only where persist/project/toggle/emit remove real duplication; do not force modules into a slogan.
+# Plan Index — runtime-module-decomposition
+#
+# A contributor (human or agent) should recognize the same four primitives everywhere: persist, project, toggle, emit. Feature modules (shell-disclosure, experiential, haptics, …)…
+
+#>plan_runtime_module_decomposition_index
+#:index #!plan
+#:operation #!archive
+#:layer #!pragmatics
+
+operation = "archive"
+fixity = "tending"
+
+intent: .{
+ goal = `A contributor (human or agent) should recognize the same four primitives everywhere: persist, project, toggle, emit. Feature modules (shell-disclosure, experiential, haptics, …) become thin composers over those primitives plus existing contracts (interaction-loop, module-updates, floating-chrome).`
+ owner = `runtime-module-decomposition`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `A contributor (human or agent) should recognize the same four primitives everywhere: persist, project, toggle, emit.…`
+ concepts = #[
+  `primitives`,
+  `runtime-module-decomposition`,
+  `contributor`,
+  `human`,
+  `agent`,
+ ][reg=set]
+ surfaces = #[
+  `js/kernel/dom-contracts.js`,
+  `js/kernel/bus.js`,
+  `js/interface/state-inspector.js`,
+  `js/runtime/state-inspector.js`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
+@plans_root: ~"../../index.spw"
+@plan_index_convention: ~"../../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@kinship_audit: ~"../../../../.spw/audits/module-ecology-kinship-2026-09.spw"
+@dom_contracts: ~"../../../../public/js/kernel/dom-contracts.js"
+@bus: ~"../../../../public/js/kernel/bus.js"
+@public_js_interface_state_inspector_js: ~"../../../../public/js/interface/state-inspector.js"
+@public_js_runtime_state_inspector_js: ~"../../../../public/js/interface/state-inspector.js"
+@shared: ~"../../../../public/js/kernel/shared.js"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+ kinship_audit = @kinship_audit
+ dom_contracts = @dom_contracts
+ bus = @bus
+ public_js_interface_state_inspector_js = @public_js_interface_state_inspector_js
+ public_js_runtime_state_inspector_js = @public_js_runtime_state_inspector_js
+ shared = @shared
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `runtime-bootstrap-performance`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-runtime_module_decomposition-001"
+ layer = "pragmatic"
+ hypothesis = `A contributor (human or agent) should recognize the same four primitives everywhere: persist, project, toggle, emit. Feature modules (shell-disclosure, experiential, haptics, …) become thin composers over those primitives plus existing contracts (interaction-loop, module-updates, floating-chrome).`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../../public/js/kernel/dom-contracts.js"
+ probe_ref = `npm run check:local + npm run check:runtime after each primitive lands`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../../public/js/kernel/dom-contracts.js unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+validation: #[
+ `npm run check:local + npm run check:runtime after each primitive lands`,
+ `node --check on every new kernel module`,
+ `Generalizability smoke: two adopters per primitive (e.g. pin-registry + haptics for storage; variant-selection + lens-modes for mode-switch)`,
+ `No file > 600 lines after orchestrator split (craft guard from interaction-loop-contract)`,
+ `Debug: ?debug=layout module update chips still accurate on mounted triggers`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does runtime-module-decomposition own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of runtime-module-decomposition?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether runtime-module-decomposition still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: A contributor (human or agent) should recognize the same four primitives everywhere: persist, project, toggle, emit. Feature modules…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]

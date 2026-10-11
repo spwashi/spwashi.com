@@ -1,0 +1,104 @@
+# Plan: module-export-uniformity
+
+**Status 2026-10-07.** Phase 0, Phase 1 and the spwModule alias migration landed; every export has the `SPW_MODULE_EXPORT` shape, and `module-lifecycle-contract.test.mjs` fails on a mount that takes the catalog adapter's `(mod, ctx, root)`. `module-effects` was the last: it never heard the bus from 2026-09-03 until its fix, which also moved its cue from `<html>` to the shell mark (`ornament/module-arrival.css`). Open: check-standalone and the storage envelope.
+
+**Related:** [runtime-plane-consolidation](../../runtime-plane-consolidation/PLAN.md) · [module-contract-overhaul](../../module-contract-overhaul/PLAN.md) · [js-surface-ecology](../js-surface-ecology/PLAN.md).
+
+Unify JavaScript module export patterns, document the standalone-script audit in `.spw`, and begin categorizing runtime modules under a **runtime medium ecology** metaphor — an agricultural organism that minds nutrients fractally, supports in-place growth, and stays legible as a holistic codebase.
+
+## Public goal
+
+Every runtime module should expose a predictable export surface for catalog mounting, compose portability, and inspection — without forcing browser modules to pretend they are Node scripts. The codebase should read like one living medium: nutrients (state contracts) flow through guilds (behavior clusters), roots (kernel) and canopy (chrome) stay distinct, and growth can happen in-place (incremental refactors) or holistically (compose/catalog alignment).
+
+## Semantic operation
+
+`audit` → `contract` → `align` (per `semantic-capacity.spw`)
+
+## Phase 0 — Document and categorize (this worktree)
+
+- [x] Create worktree `../wt-module-export-uniformity` on `feature/module-export-uniformity`
+- [ ] Land `.spw/audits/module-export-standalone-2026-07.spw` (syntax + standalone grades)
+- [ ] Land `.spw/conventions/runtime-medium-ecology.spw` (metaphor + guild taxonomy)
+- [ ] Land `.spw/surfaces/runtime-module-medium.spw` (initial 92-module guild assignment)
+- [ ] Land `.spw/conventions/module-export-contract.spw` (target export shape)
+- [ ] Wire conventions into `index.spw`, `site.spw`, `planning-ecology.spw`
+
+## 2026-08 inspect pattern (landed, not the export shape)
+Several organs now export `SPW_*_CONTRACT` + `describe*` without migrating to `SPW_MODULE_EXPORT`. Treat that as the inspect primitive for compose/console. Do not force those files through Phase 2 until a catalog mount needs the adapter.
+
+## Phase 1 — Export contract (code, small)
+
+- [ ] Add `public/js/runtime/module-export-contract.js` with `SPW_MODULE_EXPORT_SHAPE`, `normalizeModuleExport()`, `describeModuleExport()`
+- [ ] Adapter in `module-loader.js` mount path: accept `initX`, `spwModule`, or `SPW_MODULE_EXPORT`
+- [ ] Export contract helpers from `compose.js`
+- [ ] Extend `runtime-contracts.mts` to warn on catalog modules whose import target lacks any export mount
+
+## Phase 2 — Guild alignment (incremental)
+
+- [ ] Migrate 6 `spwModule` files to `SPW_MODULE_EXPORT` + re-export `spwModule` alias (one release tolerance)
+- [ ] Promote Grade B contract modules to compose (batch by guild)
+- [ ] Add `kernel/storage.js` as rhizosphere nutrient envelope (feeds memory guild)
+
+## Phase 3 — Holistic growth checks
+
+- [ ] `scripts/check-standalone.mjs` — per-file grade + compose gap (optional `check:local` hook)
+- [ ] Module medium map in design catalog from `runtime-module-medium.spw` stems
+
+## Metaphor map (runtime medium ecology)
+
+| Medium term | Code term |
+|-------------|-----------|
+| rhizosphere | `kernel/` contracts, storage, bus |
+| canopy | shell, navigation, floating chrome |
+| guild | behavior cluster (navigation, memory, inspection, …) |
+| nutrient | `updates` token (attr, css-var, event, …) |
+| taproot | `site.js` orchestrator |
+| pollinator | `compose.js` portable re-exports |
+| field bed | `MODULE_LAYERS.FEATURE` route modules |
+| compost pass | `MOUNT_WHEN.SETTLED` / side-effect inits |
+
+## Teardown ownership alignment — 2026-09-06
+
+Operation: align; fixity: stable. Focus: component lifecycle composition.
+Public outcome: overlapping release and remount requests cannot dispose a
+component's listeners, observers or resources twice, or remount before release.
+
+Evidence: `unmountModuleRecord` awaits cleanup while its record still says
+mounted. Two callers can therefore enter cleanup before either removes the
+record. `mountDefinition` returns that same retiring record during the wait.
+The existing ownership contract promises one returned handle per mounted module;
+the loader must coordinate callers of that handle, rather than requiring each
+component to invent its own concurrent-disposal guard.
+
+Patch: loader-local in-flight teardown promises keyed by record. Single-module
+and whole-runtime unmounts join the same release; remount waits for it. Extend
+the existing export contract and regression tests. No scheduling, catalog gates,
+new DOM attribute families, component file splits or dependencies.
+
+Validation: deferred cleanup tests cover overlapping callers, remount ordering,
+cleanup failure and later fresh mounts; module suite, syntax, check:local and
+diff whitespace. No visual verification requested.
+
+Result: regression reproduced three cleanup calls and an early remount before
+the fix; now both successful and throwing cleanup paths pass. All 254 module
+tests, syntax and whitespace checks passed. `check:local` failed only its
+generated-output gate for the pre-existing uncommitted core CSS bundle.
+
+## Out of scope
+
+- Renaming `state-inspector` files (tracked in `runtime-module-decomposition`)
+- Splitting `shell-disclosure` / `experiential` (after export contract lands)
+- npm dependencies
+
+## Validation
+
+- `node --check` on new JS
+- `npm run check:runtime`
+- Spw parser on new `.spw` surfaces
+- `git diff --check`
+
+## Relationship
+
+- `runtime-module-decomposition/PLAN.md` — split orchestrators after primitives
+- `archive/javascript-standalone-utility/PLAN.md` — compose/console/portable trilogy
+- `module-updates-contract.js` — nutrient declaration layer

@@ -22,5 +22,5 @@ Each skill names a default operation. The invoker may override. Sense before act
 | [`spw-ontology-workbench`](./spw-ontology-workbench/SKILL.md) | `contract` | `.spw/` surfaces | `npm run spw:doctor && npm run spw:roots` | [`.spw/index.spw`](../../.spw/index.spw) |
 | [`spw-operator-lattice`](./spw-operator-lattice/SKILL.md) | `audit` | Operators / Chips | `npm run spw:lattice && npm run spw:analyze` | [`.spw/conventions/operator-site-projection.spw`](../../.spw/conventions/operator-site-projection.spw) |
 | [`spw-privacy-engineering`](./spw-privacy-engineering/SKILL.md) | `audit` | PWA / Storage | `npm run check:pwa` | [`.spw/conventions/site-semantics.spw`](../../.spw/conventions/site-semantics.spw) |
-| [`spw-research-rigor`](./spw-research-rigor/SKILL.md) | `cache` | Research notes | `npm run wonder && npm run wonder:measures` | `.agents/plans/model-guided-refinement/` |
+| [`spw-research-rigor`](./spw-research-rigor/SKILL.md) | `cache` | Research notes | `npm run wonder && npm run wonder:measures` | `.agents/plans/archive/model-guided-refinement/` |
 | [`spw-math-algorithm-radar`](./spw-math-algorithm-radar/SKILL.md) | `prime` | Curriculum / Labs | Zero-JS static rendering test | `topics/software/` |

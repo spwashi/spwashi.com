@@ -1,0 +1,144 @@
+# Review 2026-07-12 — verified evidence; retain probes and cool the implementation journal.
+# wip — pwa-experience
+#
+#>plan_pwa_experience_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@plans_root: ~"../../index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
+
+^"selection_probes"{
+ probes = #[ `rg 'pwa-experience' public`, `Hypotheses: the root worker will control page navigations; the update prompt will only appear when a waiting worker exists; install affordances will appear only when the browser can install or when iOS needs a manual hint.`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
+^"plan_context"{
+ goal = `The desired end state is a static site that behaves like a credible lightweight web app: it can be installed cleanly, it serves a graceful offline fallback, and it only asks the user to reload when a real update is waiting. This addresses correctness first, because the current worker scope and cache keys do not line up with how the site is actually routed. The taste note is trust + containment: the PWA shell should feel deliberate, legible, and non-intrusive instead of optimistic but brittle.`
+ owner = `pwa-experience`
+ operation = "prime"
+ bucket = "active_backlog"
+ validation = #[ `Hypotheses: the root worker will control page navigations; the update prompt will only appear when a waiting worker exists; install affordances will appear only when the browser can install or when iOS needs a manual hint.`, `Negative controls: directory routing, existing HTML content, and shared stylesheet usage remain unchanged.`, `Demo sequence: load /, confirm worker registration, reload into a controlled session, simulate offline navigation to a cached route and to an uncached route, and confirm update/install prompts behave sanely.`, ][reg=set]
+}[reg=facet]
+^["roots"]{
+ @cluster: ~".agents/plans/plan-ecology-clustering/plan-ecology-clustering.spw"
+ @plan: ~"PLAN.md"
+ @pattern: ~".spw/patterns/literate-ui.spw"
+ @manifest: ~"manifest.webmanifest"
+ @client: ~"../../../../public/js/runtime/shell/pwa-update-handler.js"
+ @worker: ~"../../../../sw.js"
+}
+
+^["intent"]{
+ ~#goal: "Make the static site feel like a real lightweight app by fixing service worker scope, aligning install assets, and making offline/update behavior trustworthy."
+ ~#taste: "trust, correctness, and containment"
+}
+
+^["development"]{
+ lane: #execution_truth
+ ladder: #service
+ develops: [#taste, #design_transfer, #service_worker]
+ review_surfaces: [@cluster, @plan, @pattern]
+ snippet_routes: [#example, #query, #snippet]
+}
+
+^["concept_index"]{
+ primary: [#pwa, #installability, #offline_navigation]
+ surfaces: [#manifest, #service_worker, #static_site]
+ tensions: [#scope, #cache_coherence, #annoyance]
+ transfers: [#page, #service, #assets]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? reread the current worker, manifest, and client shell before widening claims",
+  "< ship one small PWA shell improvement at a time",
+  "$ record which failures became impossible or more legible",
+  "^ fold the result back into plan and artifact truth",
+  "% keep page structure stable while improving the shell"
+ ]
+ gates: [#preview_truth, #claim_discipline, #route_integrity]
+}
+
+^["parallel_work"]{
+ critical_path: [#root_scope]
+ parallelizable: [#asset_generation, #offline_shell]
+ shared_hot_files: ["manifest.webmanifest", "public/js/pwa-update-handler.js", "sw.js"]
+ merge_risks: [#hot_file, #pwa_version_drift]
+ handoff_artifacts: [@plan, @manifest, @client, @worker]
+}
+
+^["supporting_documents"]{
+ must_ship: [@plan]
+ helpful: [@manifest]
+ carries: [#review_notes, #source_map, #external_contracts]
+}
+
+^["interaction_depth"]{
+ subjects: [#navigation, #feedback, #install, #trust, #latency]
+ questions: [#what_is_primary, #what_is_reversible, #what_is_visible]
+ qualities: [#clarity, #containment, #rhythm]
+}
+
+^["risk_model"]{
+ hard_failures: [#wrong_scope, #broken_installability]
+ soft_failures: [#dismissed_install_prompt, #stale_cached_asset]
+ recoveries: [#offline_fallback, #update_prompt]
+ non_negotiables: [#route_integrity, #no_content_churn]
+}
+
+^["validation"]{
+ hypotheses: [#root_worker_controls_pages, #update_prompt_is_real, #install_ui_is_contextual]
+ negative_controls: [#html_structure_unchanged, #shared_css_unchanged]
+ demo_path: ["/", "/about", "/offline"]
+}
+
+^["stream"]{
+ >>[2026-04-09 19:37] observe — Existing PWA wiring is present across the site, but the worker is registered from `/public/sw.js`, which limits scope to `/public/*` on static hosting.
+ >>[2026-04-09 19:37] observe — The current precache list uses route forms like `/about/index.html`, while the site navigates with mixed `/about` and `/topics/software/` URLs.
+ >>[2026-04-09 19:37] observe — `manifest.webmanifest` references icon and screenshot assets that are not present under `public/images`.
+ >>[2026-04-09 19:37] decide — Improve the PWA shell with a root-scoped worker, real install assets, contextual install/update prompts, and a dedicated offline page.
+ >>[2026-04-09 19:37] taste — Favor trust and containment: only promise install/offline/update behavior the static shell can actually honor.
+ >>[2026-04-09 19:44] implement — Added a canonical root `sw.js`, kept `/public/sw.js` as a compatibility wrapper, and switched the shell logic to navigation-aware caching with an explicit offline route.
+ >>[2026-04-09 19:45] implement — Replaced manifest version polling with service-worker lifecycle handling, contextual install prompts, and generated install icon assets from existing site artwork.
+ >>[2026-04-09 19:51] verify — `node --check` passed for `sw.js` and `public/js/pwa-update-handler.js`; `python3 -m json.tool manifest.webmanifest` passed; generated icons match declared sizes; local static-server HEAD checks returned `200` for `/sw.js`, `/manifest.webmanifest`, `/offline/`, `/public/images/icon-192.png`, `/about/`, and `301` for `/about`.
+ >>[2026-04-17 16:45] observe — Shell assets are still served stale-while-revalidate, so updates can require an extra reload even after a waiting worker activates.
+ >>[2026-04-17 16:45] observe — Cache naming still depends on a manual app-version bump, which is the wrong lever for a hand-authored static site with no build step.
+ >>[2026-04-17 16:45] decide — Move CSS/JS/manifest into a network-first shell path, stabilize cache namespaces by schema instead of deploy version, and register the worker with `updateViaCache: "none"` so offline stays possible while updates arrive promptly.
+ >>[2026-04-17 16:53] observe — The manifest still declares `orientation: any`, which makes the installed Android shell rotate too eagerly for a reading-first site.
+ >>[2026-04-17 16:53] decide — Lock the installed shell to `portrait-primary`; wide and landscape exploration can still happen in the normal browser surface without fighting phone orientation preferences.
+ >>[2026-08-16 00:44] implement — Added a service-worker status handshake so the client can inspect the active worker version, cache roles, entry counts, offline URL, and precache posture without changing page structure.
+ >>[2026-09-05 00:00] observe — Hygiene pass against PUBLIC_NAV_ITEMS (scripts/template.mjs, the current top-level nav: Home/About/Topics/Play/Art/Services/Now/Settings) found CORE_ROUTES in sw.js had drifted: it precached /topics/craft/ and /topics/software/ but never /topics/ itself, and never /design/folios/ (Art) or /services/ at all — three real nav destinations. offline/index.html had drifted further and independently: its nav_items, related_routes, and "Cached routes" chips still named a pre-restructure nav (Plans/Software/Craft as top-level items), unlike every other route's index.html, which template.mjs already keeps synced to PUBLIC_NAV_ITEMS. LEGACY_CACHE_PREFIXES carried a 'spw-v2' entry made redundant by the existing generic 'spw-v' prefix (same array) since the schema-versioning scheme landed. manifest.webmanifest carried a "version" field left over from the pre-schema manual-bump scheme this file's own 2026-04-17 entries record moving away from — not a real manifest field, read by nothing in the codebase. pwa-update-handler.js's toast hardcoded font-family: 'JetBrains Mono' instead of var(--site-mono-font, ...), the pattern every other font-family declaration site-wide uses, so the toast would not follow a reader's chosen monospace variant.
+ >>[2026-09-05 00:00] fixed — sw.js CORE_ROUTES now lists /, /about/, /topics/, /play/, /design/folios/, /services/, /settings/, /blog/, /topics/craft/, /topics/software/ (deliberately not /now/ — its own nav note calls it "current sprint, asks, and live notes"; hard-precaching it would let an install serve a stale snapshot offline as if current, against this plan's own trust/containment taste note. It still becomes available offline the ordinary way once visited). offline/index.html's nav_items now matches the canonical string every other route carries; its related_routes and chip list now name the routes actually precached instead of the old nav. Dropped the redundant spw-v2 legacy prefix. Removed manifest.webmanifest's dead version field. pwa-update-handler.js's toast font-family now reads var(--site-mono-font, ...).
+}
+
+^["open"]{
+}
+
+^["commits"]{
+ ~[1]: "#[pwa] — capture the feature plan and branch memory for the PWA pass"
+ ~[2]: "&[pwa] — move service worker control to the site root and normalize offline navigation handling"
+ ~[3]: "#[pwa] — align manifest metadata with real install assets and install UX"
+ ~[4]: "![pwa] — verify registration, offline fallback, and update/install behavior"
+}
+
+^["cache"]{
+ ~#status: "verified"
+ ~#base_ref: "main@2bb6d4f1bc39126af15f5c705f591a86e5f33cbe"
+ ~#rebased_at: ""
+ ~#hygiene_split: "none"
+ ~#files_hot: "manifest.webmanifest, public/js/pwa-update-handler.js, sw.js, offline/index.html"
+ ~#next_commit: "4"
+ ~#open_count: "0"
+ ~#last_stream: "2026-09-05 00:00"
+ ~#taste_debt: ""
+}
+
+^["done"]{
+}

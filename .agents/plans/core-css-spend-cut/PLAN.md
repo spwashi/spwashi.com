@@ -1,6 +1,6 @@
 # core-css-spend-cut
 
-**Status 2026-10-06.** Budgets are measured on the commented source bundle, and the deploy strips comments: shipped core was 1293 KiB on 2026-10-06. The ~1630 KiB and 1679 KiB figures below are source-bundle readings from their dates.
+**Status 2026-10-10.** The committed `bundles/core.css` is 1720 KiB, up from 1679 KiB on 2026-09-22. Its soft budget is 1.7 MiB (about 1741 KiB, `scripts/ts/css-manifest.mts:573`), raised from 1.6 MiB in 7148e43c on 2026-09-12. The deploy strips comments, and shipped core was 1293 KiB on 2026-10-06. No measured next cut is named yet. Before anything moves, a `css:payload` reading has to name a core file that holds atmosphere rather than first-paint structure. Per-pass recalc cost is not this plan's: it belongs to `runtime-bootstrap-performance` (see Research bridges).
 
 ## Public Goal
 First paint ships structure. Wonder, grain, cinematic, and ornament arrive after interactive so core CSS can shrink. Late restyle may only add atmosphere — not hide, move, or resize what the visitor already read.
@@ -49,7 +49,7 @@ The literature is the selectors: `>` a child, `+` the next sibling, `:has()` a p
 - Combinator literature is practice when touching ornament or wonder, not a new plan.
 
 ## Load-literate tolerance
-The 1638 KiB core line is a **soft** budget (`--strict-budget` to fail); current core is under that line after climate/enrichment left. Named first-paint PE — `@property` interpolation, reading-groove tokens, no-JS section-handle focus / scroll-timeline, CSS `:has()` operator kinship — may sit over that line. An audience that already understands how assets load can live with the warning. Do not strip those names to go green. Still fail a late restyle that hides, moves, or resizes what they already read.
+The core line is a **soft** budget of 1.7 MiB, about 1741 KiB (`CSS_BUNDLE_SOFT_BUDGETS.core`, `scripts/ts/css-manifest.mts:573`; `--strict-budget` to fail). Committed core was 1720 KiB on 2026-10-10, under that line but over the 1638 KiB line this plan used before 7148e43c. Named first-paint PE — `@property` interpolation, reading-groove tokens, no-JS section-handle focus / scroll-timeline, CSS `:has()` operator kinship — may sit over that line. An audience that already understands how assets load can live with the warning. Do not strip those names to go green. Still fail a late restyle that hides, moves, or resizes what they already read.
 
 ## Non-Goals & Boundaries
 - Do not reorder `@layer` here. The one plan that may is `css-cascade-stratification`; its Phase 1 (bundle emits the order statement) changes cascade, not delivery.
@@ -59,7 +59,7 @@ The 1638 KiB core line is a **soft** budget (`--strict-budget` to fail); current
 - Do not treat a soft core overage as a blocker when the extra is PE substrate.
 
 ## Research bridges
-- Evidence 2026-09-17: on the about route at pocket, every full style recalculation forced from script costs ~300ms against the current core bundle (devtools.timeline trace; `runtime-bootstrap-performance/PLAN.md` Phase 3 data). The runtime now halves how often it forces one; the per-pass cost is this plan's to cut.
+- Evidence 2026-09-17: on the about route at pocket, every full style recalculation forced from script costs ~300ms against the current core bundle (devtools.timeline trace; `runtime-bootstrap-performance/PLAN.md` Phase 3 data). The runtime now halves how often it forces one. The per-pass cost belongs to `runtime-bootstrap-performance`, not to this plan: the 2026-09-19 section below shows that layers are non-additive and that selector matching is about 5% of a pass, so cutting bytes from core buys download and parse time, not a cheaper recalc.
 - `.spw/conventions/css-instruction.spw#cascade_vs_delivery`
 - `.spw/conventions/stylesheet-ecology.spw#progressive_enhancement`
 - `.spw/audits/progressive-css-module-scopes-2026-07`

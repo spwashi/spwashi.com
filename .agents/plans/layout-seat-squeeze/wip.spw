@@ -1,0 +1,29 @@
+# Review 2026-10-10 — holds the unseated-frame question; the seat, coverage and edges queues stay in PLAN.md.
+# wip — layout-seat-squeeze
+#
+# Open questions for the creator. This folder has no index.spw yet; the
+# wonder harvester reads any .spw under .agents/plans.
+#
+#>plan_layout_seat_squeeze_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@plans_root: ~"../../../.agents/plans/index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@attenuation: ~"../../../public/css/systems/projection-attenuation.css"
+@region_seats: ~"../../../public/css/systems/region-seats.css"
+@region_ecology: ~"../../../.spw/conventions/region-component-ecology.spw"
+
+#>wonder_layout_seat_squeeze_unseated_default
+?["Should a frame with no seat default to a calmer wonder hold, or should the roughly 620 unseated frames be seated by hand, one route at a time?"]{
+  #:depth #!pragmatics ~#lens(projection)
+  ~#with: @attenuation @region_seats @region_ecology @plan
+  ~#taste: "Prose should feel calm because a reader is reading it, not because an agent remembered to tag it."
+  ~#hypothesis: "projection-attenuation.css gives every unseated .spw-frame --spw-wonder-hold: 1, the hub's intensity, while read sits at 0.55 and cluster at 0.85. On 2026-10-10, 618 of 1,025 frames carried no seat. One default value would reach all of them, and hand seating would remain for frames whose layout or wash the seat should change."
+  ~#tension: "A seat also repaints a frame (wash, seam, dashed cluster border), so hand seating is a visible change on every route; a calmer default is one line but quiets every hook and hub that was never tagged."
+  !probe{ "rg -n 'spw-wonder-hold' public/css/systems/projection-attenuation.css" }
+  $%[region.seat, attenuation.wonderHold, coverage.unseated]
+  ~<"./PLAN.md"> ~<"../../../.spw/conventions/projection-attenuation.spw">
+}

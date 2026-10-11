@@ -99,3 +99,12 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+#>wonder_semantic_copy_depth_slop_feeling
+?["Are the citation paragraphs on /topics/slop/#feeling a display case to rewrite as one claim that turns, or are sources standing as the sentences deliberate on a page about evidence?"]{
+  #:depth #!stylistic ~#lens(projection)
+  ~#with: @plan @slop_feeling @ai_writing_smells
+  ~#tension: "The thought-trace rule says a paragraph whose links are the point is a shelf wearing a paragraph. A page about slop may want its evidence to speak in the sources' own words, and a rewrite into claims could import the smell the page names."
+  !probe{ "Read /topics/slop/#feeling aloud, then restate its point without the links. If the point survives, it is a trace already; if nothing remains, it is a case." }
+  ~<"./PLAN.md"> ~<"../../../topics/slop/index.html"> ~<"../../../.spw/caches/ai-writing-smells-2026-09.spw">
+}

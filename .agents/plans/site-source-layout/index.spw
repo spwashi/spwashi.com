@@ -53,7 +53,7 @@ intent: .{
 @wip: ~"./wip.spw"
 @plan_semantic_html_normalization: ~"../semantic-html-normalization/index.spw"
 @plan_css_maintainability_refactor: ~"../archive/css-maintainability-refactor/index.spw"
-@plan_runtime_module_fluency: ~"../runtime-module-fluency/index.spw"
+@plan_runtime_module_fluency: ~"../archive/runtime-module-fluency/index.spw"
 @plan_spw_surface_normalization: ~"../archive/spw-surface-normalization/index.spw"
 @scripts: ~"../../../scripts/"
 @spw: ~"../../../.spw/"
@@ -143,3 +143,13 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+#>wonder_site_source_layout_vite_import
+?["How should vite.config.ts import the one list of what ships: cast the compiled .mjs, import the .mts source, or read a sibling .d.mts?"]{
+  #:depth #!computational ~#lens(topology)
+  ~#with: @plan @wip @build @template
+  ~#tension: "M0 moves the ship list into scripts/ts/shared/build-topology.mts and retires vite.config.ts's own ignoredSegments (vite.config.ts:10). The root tsconfig.json is strict and includes vite.config.ts and scripts/**/*.d.mts. A cast hides the type; allowImportingTsExtensions makes Vite read source the build compiles elsewhere; a hand-written .d.mts beside the compiled file (scripts/template.d.mts already is one) is a second place to keep in step. M2 and the site/ move wait on this."
+  !probe{ "npm run typecheck" }
+  $%[build.topology, vite.config, typed.output]
+  ~<"./PLAN.md"> ~<"./wip.spw">
+}

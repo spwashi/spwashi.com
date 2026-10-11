@@ -15,7 +15,7 @@
 @module_updates_contract: ~"../../public/js/runtime/catalog/updates-contract.js"
 @compose_entry: ~"../../public/js/compose.js"
 @module_catalog: ~"../../public/js/runtime/catalog/index.js"
-@plan: ~"../../.agents/plans/module-export-uniformity/PLAN.md"
+@plan: ~"../../.agents/plans/archive/module-export-uniformity/PLAN.md"
 @naming_grammar_js_types_audit: ~"./naming-grammar-js-types-2026-07/index.spw"
 
 audit_run: .{

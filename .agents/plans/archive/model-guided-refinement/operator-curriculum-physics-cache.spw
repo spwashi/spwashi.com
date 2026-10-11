@@ -1,0 +1,35 @@
+# Review 2026-07-12 — keep as a hypothesis cache; operator physics must be taught through a route before becoming doctrine.
+^"plan_linkage"{
+ plan = ~"./PLAN.md"
+ index = ~"../../index.spw"
+ goal = `Prepare this codebase for refinement by a model that can read .spw, follow explicit connections, and make competent local changes, but should not be expected to improvise tastefully through the full CSS and JavaScript surface. The plan turns broad creative direction into rails: - where to look first - what not to touch - how CSS, HTML, JS, and .spw names should line up - which semantic concepts are fixed, stable, tending, experimental, or volatile - how creative/marketing surfaces should become coherent enough that musicians and artists want to explore and extend them This is not a new framework. It is a focus contract for future agents and collaborators.`
+ cache_topic = `operator-curriculum-physics`
+ operation = "cache"
+}[reg=facet]
+#>semantic_insight_cache
+#:model_guided_refinement
+
+^"operator_curriculum_physics_alignment"{
+  operation: "align"
+  fixity: "tending"
+  public_goal: "represent every public Spw operator while keeping the atlas aligned with workbench physics and a latent learner path"
+  source_surfaces: [
+    "public/js/kernel/shared.js",
+    ".spw/_workbench/packages/spw-cli/src/ls/constants.ts",
+    ".spw/_workbench/packages/spw-lsp/src/server-index.ts",
+    "topics/software/spw/index.html",
+    "topics/software/spw/operators/*/index.html"
+  ]
+  claim: "The public operator atlas should behave as a curriculum, not only a glossary. Resonance, ground, relation, possibility, inquiry, perspective, materialization, composition, constraint, measure, substrate, surface, concept, scene, mode, and direction are partial moves in a compositional physics."
+  composition_calculus: {
+    input: "the material currently held by a page, prompt, screenshot, note, or spell"
+    operator: "the bounded move that changes attention or structure"
+    residue: "the obligation, boundary term, or context that survives the move"
+    projection: "the visible next state after the move"
+  }
+  editor_guidance: [
+    "When adding an operator page, name the public token, runtime/workbench physics, interaction contract, and learner role.",
+    "Prefer internal anchors such as current anchor, return path, route bridge, and practice bed over explicit changelog language.",
+    "Treat screenshots and prompts as scenes that can carry partial state, not just illustrations after the fact."
+  ]
+}

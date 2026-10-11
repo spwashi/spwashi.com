@@ -49,7 +49,7 @@ intent: .{
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
 @interaction_grammar: ~"./interaction-grammar.spw"
-@compositional_css_electrostatics: ~"../compositional-css-electrostatics/index.spw"
+@compositional_css_electrostatics: ~"../archive/compositional-css-electrostatics/index.spw"
 @interaction_microstates: ~"../../../.spw/conventions/interaction-microstates.spw"
 @site_semantics: ~"../../../.spw/conventions/site-semantics.spw"
 

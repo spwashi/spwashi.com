@@ -77,9 +77,9 @@ intent: .{
 @markdown_spend: ~"../../../.spw/caches/agent-markdown-spend-2026-09.spw"
 @check_agents: ~"../../../scripts/check-agent-contracts.mjs"
 @package_json: ~"../../../package.json"
-@plan_spw_architecture_ecology: ~"../spw-architecture-ecology/index.spw"
+@plan_spw_architecture_ecology: ~"../archive/spw-architecture-ecology/index.spw"
 @plan_spw_language_v04: ~"../spw-language-v04/index.spw"
-@plan_typescript_integration: ~"../typescript-integration/wip.spw"
+@plan_typescript_integration: ~"../archive/typescript-integration/wip.spw"
 @readable_by_tooling: ~"../../../.spw/caches/spw-readable-by-tooling-2026-09.spw"
 
 dispatch: .{
@@ -177,7 +177,7 @@ invariants: #[
   ~#tension: "This week updated PLAN.md across runtime, TypeScript, quest, and CSS, and left almost every wip as it was. Indexes still paste the goal into the hypothesis."
   !probe{ "npm run wonder -- --surface wonder_plan_wip_hot" }
   $%[plan.sibling, plan.probe, plan.wip]
-  ~<"../agentic-dev-contracts/index.spw"> ~<"../typescript-integration/wip.spw"> ~<"../site-source-layout/wip.spw"> ~<"../../../.spw/conventions/wip-notebook.spw">
+  ~<"../agentic-dev-contracts/index.spw"> ~<"../archive/typescript-integration/wip.spw"> ~<"../site-source-layout/wip.spw"> ~<"../../../.spw/conventions/wip-notebook.spw">
 }
 
 #>wonder_plan_two_doors
@@ -189,5 +189,18 @@ invariants: #[
   ~#tension: "doctor excludes .agents, so a plan file never enters lattice or census. Until this harvest, wonder stopped at .spw/ and a question written in a plan could not be asked."
   !probe{ "npm run wonder -- --surface wonder_plan_two_doors" }
   $%[script.door, corpus.plan, walk.exclusion]
-  ~<"../spw-architecture-ecology/index.spw"> ~<"../spw-language-v04/index.spw"> ~<"../../../.spw/workbench-report.spw">
+  ~<"../archive/spw-architecture-ecology/index.spw"> ~<"../spw-language-v04/index.spw"> ~<"../../../.spw/workbench-report.spw">
+}
+
+# Carried 2026-10-10 from spw-architecture-ecology (archived), whose wave H this plan holds.
+#>wonder_plan_corpus_exclusion
+?["Can plan .spw join the knowledge base while the rest of .agents stays excluded?"]{
+  #:depth #!computational ~#lens(constraint)
+  ~#with: @workbench_report @wip_notebook @package_json
+  ~#taste: "A folder stays excluded only while nothing inside it is a claim a later reader must check."
+  ~#hypothesis: "doctor excludes .agents because diaries and state are not corpus. Plan indexes and hot wip files are corpus-shaped: an anchor, an operation, a citation, a probe. The cut is the named root .agents/plans with archive skipped, which is the walk this site's wonder now makes."
+  ~#tension: "Lifting the .agents exclusion would put MEMORY and session state into every census. Leaving it means lattice still cannot see the questions these plans ask."
+  !probe{ "npm run wonder -- --surface wonder_plan_corpus_exclusion" }
+  $%[corpus.plans, corpus.agents, walk.exclusion]
+  ~<"../archive/spw-architecture-ecology/index.spw"> ~<"../../../.spw/workbench-report.spw"> ~<"../../../.spw/reviews/upstream-workbench-recommendations.spw">
 }

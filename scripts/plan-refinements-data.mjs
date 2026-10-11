@@ -78,7 +78,7 @@ export const PLAN_REFINEMENTS = {
     conceptual: {
       thesis: 'One-session kernels pair disciplines without broad rewrites — one focus, one pair, one output, one validation.',
       concepts: ['daily-kernel', 'discipline-pair', 'brand-physics', 'semantic-operation', 'validation-path'],
-      surfaces: ['.spw/conventions/daily-kernel.spw', '.agents/plans/daily-kernel-development/'],
+      surfaces: ['.spw/conventions/daily-kernel.spw', '.agents/plans/archive/daily-kernel-development/'],
     },
     refinement: {
       tone: 'Workshop schedule — concrete enough to start today.',

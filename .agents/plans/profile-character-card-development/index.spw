@@ -117,3 +117,15 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+#>wonder_profile_character_card_development_first_cast
+?["Which recurring figure earns the first cast card, and which session note does it come from?"]{
+  #:depth #!experiential ~#lens(memory)
+  ~#with: @cast_lens @session_notes @rpg_wednesday_route @craft_guard_recurrence
+  ~#taste: "A cast card is earned by a figure who keeps returning to the story, whoever is at the table that week."
+  ~#hypothesis: "One published session note exists (sessions/2026-05-13/) and the cast page has no cards. A figure that recurs across that note and the Inktober table can be promoted without a roster."
+  ~#tension: "A card that leans on who played turns a campaign figure into a membership record. Seats change from week to week, so the card should hold the figure's story, not its players."
+  !probe{ `ls play/rpg-wednesday/sessions/ && rg -c "profile-card" play/rpg-wednesday/cast/index.html` }
+  $%[cast.firstCard, cast.sourceSession]
+  ~<"./PLAN.md"> ~<"../archive/rpg-session-notes/PLAN.md">
+}

@@ -13,7 +13,7 @@
 @index: ~"./index.spw"
 @plans_root: ~"../../../.agents/plans/index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
-@insight_cache_template: ~"../model-guided-refinement/templates/semantic-insight-cache.spw"
+@insight_cache_template: ~"../reference-assignment-template/templates/semantic-insight-cache.spw"
 
 @site: ~"../../../public/js/site.js"
 @module_loader: ~"../../../public/js/runtime/orchestration/loader.js"
@@ -30,9 +30,9 @@
 @route_manifest: ~"../../../.agents/state/runtime/route-runtime-manifest.json"
 
 @plan_bootstrap_performance: ~"../runtime-bootstrap-performance/index.spw"
-@plan_module_export_uniformity: ~"../module-export-uniformity/index.spw"
-@plan_module_decomposition: ~"../runtime-module-decomposition/index.spw"
-@plan_css_sensitive_writes: ~"../css-sensitive-attribute-writes/index.spw"
+@plan_module_export_uniformity: ~"../archive/module-export-uniformity/index.spw"
+@plan_module_decomposition: ~"../archive/runtime-module-decomposition/index.spw"
+@plan_css_sensitive_writes: ~"../archive/css-sensitive-attribute-writes/index.spw"
 @plan_css_architecture: ~"../css-architecture-readability/index.spw"
 @plan_navigation_geometry: ~"../archive/semantic-navigation-geometry/PLAN.md"
 

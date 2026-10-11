@@ -101,10 +101,10 @@ one capability
   engineering_success = "Relocatable artifacts, bounded dependency graph, cleanup, style isolation, and measured payload."
   failure = "A visually attractive demo needs undocumented global state, or a technically portable bundle loses the authored effect."
   related = #[
-    ~"../design-hub/PLAN.md",
+    ~"../archive/design-hub/PLAN.md",
     ~"../designer-conversation-canvas/PLAN.md",
     ~"../modular-experience-slices/PLAN.md",
-    ~"../daily-kernel-development/PLAN.md",
+    ~"../archive/daily-kernel-development/PLAN.md",
     ~"../module-contract-overhaul/PLAN.md"
   ][reg=set]
   boundary = "Workers-wonder-kit shares the reuse question but keeps server routing and deployment separate from browser capability bundles."

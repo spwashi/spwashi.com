@@ -1,8 +1,8 @@
 # Plan: shell-model-vocabulary-consolidation
 
-**Status 2026-10-06.** The census landed 2026-07-03. The Phase 2 glossary gate has waited on creator review since July.
+**Status 2026-10-10.** The census landed in bd0d7951 (2026-07-03), and its `pocket` row was recounted 2026-10-10. `pocket` has grown from 1 CSS and 2 JS files to 15 and 7, but both glossary candidates still retire it. The one next slice is the Phase 2 glossary choice, which has waited on creator review since July. The first question for that review is whether `pocket` stays (wonder block in `index.spw`).
 
-**Related:** [homonym-renaming](../homonym-renaming/PLAN.md) · [chrome-navigation-wonder](../chrome-navigation-wonder/PLAN.md) · [runtime-module-decomposition](../runtime-module-decomposition/PLAN.md).
+**Related:** [homonym-renaming](../homonym-renaming/PLAN.md) · [chrome-navigation-wonder](../chrome-navigation-wonder/PLAN.md) · [runtime-module-decomposition](../archive/runtime-module-decomposition/PLAN.md).
 
 Reconsider the shell/chrome/edge/overlay model across CSS and JavaScript as the pilot for a broader goal: consolidate design vocabularies so growth in other dimensions (routes, physics, editions, collaborators) stays workable for human teams.
 

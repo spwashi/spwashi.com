@@ -1,8 +1,8 @@
 # Data Attribute and CSS Token Refinement Pass
 
-**Status 2026-10-06.** Token bedrock and attribute bridges landed (`dimensions.css`). Item 3, fallback hygiene, is unverified. The plan stands as the bedrock rule.
+**Status 2026-10-10.** Items 1 and 2 have landed. All ten named bedrock tokens are defined: nine in `tokens/core.css`, plus `--ornament-radius-pill` in `tokens/flourish-defaults.css`. The typed `attr()` bridges sit at `tokens/dimensions.css:436-441`. Item 3, fallback hygiene, is unverified and has no sensor: `audit:css-custom-properties` checks only self-references and periodic root writes. If item 3 is wanted, its slice is a report-only check for `var()` references with no definition and no fallback in the five files it names. The plan stands as the bedrock rule, and it now also holds the JS-side write rule (below).
 
-**Related:** [portable-css](../portable-css/PLAN.md) · [core-css-spend-cut](../core-css-spend-cut/PLAN.md).
+**Related:** [portable-css](../archive/portable-css/PLAN.md) · [core-css-spend-cut](../core-css-spend-cut/PLAN.md). **Absorbed 2026-10-10:** [css-sensitive-attribute-writes](../archive/css-sensitive-attribute-writes/PLAN.md).
 
 ## Public Goal
 
@@ -36,6 +36,16 @@ Tokens that travel to other hosts are specified in `.spw/caches/portable-css-202
 - **Bedrock first**: All shared tokens belong in `tokens/` layer (`core.css`, `dimensions.css`, `flourish-defaults.css`) before component or route usage. If `css-cascade-stratification` splits `tokens/` into `registry` (`@property`), `scales`, and `aliases`, bedrock is the lowest of the three and this rule stands.
 - **Attr bridge**: `[data-spw-tangibility]` sets `--spw-tangibility` from the authored number when the browser can type `attr()`.
 - **Backward compatibility**: All existing classes, structures, and cascade priorities remain intact.
+
+## Absorbed 2026-10-10 — css-sensitive-attribute-writes
+
+Plan: [css-sensitive-attribute-writes](../archive/css-sensitive-attribute-writes/PLAN.md). Attributes that CSS observes fall into three groups. Runtime discovery writes only the third.
+
+- **Author-owned routing:** `data-spw-context`, `data-spw-wonder` and `data-spw-operator`. Runtime may change these only on an explicit user action (an operator swap) or behind an explicit opt-in.
+- **Transient visual state:** `data-spw-gesture`, `-charge`, `-field-wonder`, `-pinned` and `-latched`.
+- **Inspection hints:** `data-spw-resolved-context`, `-wonder`, `-operator` and `-affordance`.
+
+Landed: `brace-gestures.js:175-179` and `:643-645` skip the routing keys unless the opt-in is set (`:608`), and the only direct write is the user swap at `:750`. Writes go through `kernel/dom-contracts.js` (`writeDatasetValue`, `writeDatasetValueIfMissing` and `writeStyleValue`), which do nothing when the value is unchanged. Custom-property rule: a property family a module writes for the first time joins `RUNTIME_PROPERTY_ALLOWANCES` with an owner, or its file joins `DYNAMIC_STYLE_WRITE_FILES`, in the same commit. The sensor is `scripts/ts/style-property-contract.mts`, run by `npm run check:runtime`. Still open: whether the `routes/surfaces/design.css` alias consolidation landed is unverified.
 
 ## Validation
 

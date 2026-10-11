@@ -15,7 +15,7 @@
 @composition: ~"../../public/js/interface/composition.js"
 @resonance: ~"../../public/js/runtime/expression/expression-resonance.js"
 @dot_join: ~"../language/dot-join.spw"
-@consequential_editorial: ~"../../.agents/plans/model-guided-refinement/caches/consequential-ecosystem-editorial-2026-09.spw"
+@consequential_editorial: ~"../../.agents/plans/archive/model-guided-refinement/caches/consequential-ecosystem-editorial-2026-09.spw"
 
 operation = "contract"
 fixity = "tending"

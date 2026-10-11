@@ -232,7 +232,7 @@ expression = consumer[recommendations]{performance.cli.intermediate.culture}<ups
   ~#tension: "Doing all three in one pin mixes a CLI shape, a cache key, and a discovery rule. Each is a different folder in the workbench, and a different blast radius."
   !probe{ "npm run spw -- --help --json" }
   $%[cli.helpJson, memo.shared, corpus.plans]
-  ~<"../../.agents/plans/spw-language-v04/index.spw"> ~<"../../.agents/plans/spw-architecture-ecology/index.spw"> ~<"../../.spw/workbench-report.spw">
+  ~<"../../.agents/plans/spw-language-v04/index.spw"> ~<"../../.agents/plans/archive/spw-architecture-ecology/index.spw"> ~<"../../.spw/workbench-report.spw">
 }
 
 ^"validation"{

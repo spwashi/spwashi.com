@@ -123,5 +123,5 @@
   @site_semantics: ~"../conventions/site-semantics.spw"
   @brace_physics: ~"../_workbench/.spw/registries/brace-physics.spw"
   @circuits_plan: ~"../../.agents/plans/interaction-grammar/interaction-grammar.spw"
-  @pretext_plan: ~"../../.agents/plans/pretext-whimsy-lab/pretext-whimsy-lab.spw"
+  @pretext_plan: ~"../../.agents/plans/archive/pretext-whimsy-lab/pretext-whimsy-lab.spw"
 }

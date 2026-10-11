@@ -14,7 +14,7 @@
 @behavior_scopes: ~"../../public/js/runtime/orchestration/behavior-scopes.js"
 @module_catalog: ~"../../public/js/runtime/catalog/index.js"
 @compose_entry: ~"../../public/js/compose.js"
-@decomposition_plan: ~"../../.agents/plans/runtime-module-decomposition/PLAN.md"
+@decomposition_plan: ~"../../.agents/plans/archive/runtime-module-decomposition/PLAN.md"
 @kernel_rhizosphere: ~"./kernel-rhizosphere.spw"
 @runtime_kernel_audit: ~"../audits/runtime-kernel-consolidation-2026-07.spw"
 @js_architecture_cognition: ~"./js-architecture-cognition.spw"

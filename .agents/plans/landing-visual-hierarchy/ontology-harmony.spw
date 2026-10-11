@@ -14,7 +14,7 @@ operation = "cache"
 fixity = "experimental"
 date = "2026-08-21"
 
-@template: ~"../model-guided-refinement/templates/ontology-harmony.spw"
+@template: ~"../reference-assignment-template/templates/ontology-harmony.spw"
 @harmony_audit: ~"../../../.spw/audits/component-philosophy-harmony-2026-07.spw"
 @materials: ~"../../../.spw/caches/region-ecology-materials.spw"
 @ownership: ~"./region-ownership.spw"

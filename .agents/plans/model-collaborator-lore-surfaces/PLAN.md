@@ -1,6 +1,6 @@
 # Plan: model-collaborator-lore-surfaces
 
-**Status 2026-10-06.** Proposed; blocked on the creator-written terms card (step 1).
+**Status 2026-10-10.** Parked until a shoot is booked. Nothing has landed: no terms card exists, and `/play/rpg-wednesday/lore/` is absent. When a shoot is booked, the next slice is step 1, the terms card, and it is gated on the creator writing its copy.
 
 **Related:** [designer-conversation-canvas](../designer-conversation-canvas/PLAN.md). **Absorbed 2026-10-06:** [town-atlas-story-kit](../archive/town-atlas-story-kit/PLAN.md).
 

@@ -290,7 +290,7 @@ if (JSON_OUT) {
 @governance: ~"../conventions/data-spw-attribute-governance.spw"
 @recursive_improvement: ~"../conventions/recursive-improvement.spw"
 @audits_index: ~"./index.spw"
-@reclustering_plan: ~"../../.agents/plans/language-reclustering/index.spw"
+@reclustering_plan: ~"../../.agents/plans/archive/language-reclustering/index.spw"
 @homonym_plan: ~"../../.agents/plans/homonym-renaming/index.spw"
 
 operation = "observe"

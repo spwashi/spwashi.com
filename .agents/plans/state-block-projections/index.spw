@@ -100,3 +100,13 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+#>wonder_state_block_projections_lens_seat
+?["Which lens seat should the site wear: A, the authored chassis; B, a seat row that shows its own expression; or C, a silent row?"]{
+  #:depth #!experiential ~#lens(choice)
+  ~#with: @plan
+  ~#hypothesis: "One review at /design/components/#lens-seats settles four gates. They are the seat treatment, the faint inactive mode-switch chips (from attention-shell-contrast), the lens-use reward toast that reads the seat expression (from mindful-collection-controls), and when a sat seat is offered to the cauldron (cauldron-lens-composition). On a phone the seats measure about 170px (A), 121px (B) and 100px (C)."
+  ~#tension: "B teaches the notation: the seat a reader presses is the token that changes in about[kernel]{open.sit}. C is the quietest and spends the least height. A keeps the feedback line and state dot that some readers may lean on. The pick is a feel decision, so it is made in a browser and not by measurement."
+  !probe{ "Open /design/components/#lens-seats on a phone and a desktop, press each seat in A, B and C, and pick one; then rg -n 'lens-chrome' public/css/routes/surfaces/design.css public/css/handles/operators/state-semantics.css" }
+  ~<"./PLAN.md"> ~<"../../../design/components/index.html">
+}
