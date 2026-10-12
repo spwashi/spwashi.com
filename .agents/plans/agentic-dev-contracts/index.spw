@@ -115,7 +115,7 @@ dispatch: .{
 
 scope: .{
  in = #[
-  `In scope: a generated route/runtime manifest, a unified npm run check:local entrypoint, and validation for required route metadata plus shared entry assets.`,
+  `In scope: a generated route/runtime manifest, a unified check entrypoint, and validation for required route metadata plus shared entry assets.`,
   `In scope: SVG/spec maps derived from route HTML and public SVG assets so agents can find structural diagram surfaces without grepping the repo.`,
   `In scope: repo-local script helpers that read route HTML and the site.js staged runtime registry.`,
   `In scope: future repo-local cache surfaces that summarize plan ownership, skill availability, validation posture, route metadata, and recent maintenance sweeps.`,
@@ -155,7 +155,7 @@ invariants: #[
   ~#with: @package_json @plan_agent_optimization
   ~#taste: "A script stays on the door list only while a broken tree makes that script fail and a quiet tree finishes without a registry call."
   ~#hypothesis: "check:local is the door. manifest:staged, atlas, audit:portable, wonder, and spw:integrity are instruments the door calls or leaves for a narrower question. check still runs npm audit before that door."
-  ~#tension: "A plan that still says npm run check:local sends the next session through the network for a question the local gate already answers."
+  ~#tension: "A plan that still names the bare check script sends the next session through npm audit and the network for a question the local gate already answers."
   !probe{ `node -e 'import fs from "node:fs"; const scripts = JSON.parse(fs.readFileSync("package.json","utf8")).scripts; const need = ["check:local","manifest:staged","atlas","wonder","spw:integrity","audit:portable","typecheck","ecology:language"]; const missing = need.filter((name) => !scripts[name]); if (missing.length || !scripts.check.includes("audit") || scripts["check:local"].includes("audit")) process.exit(1)'` }
   $%[script.door, script.audit, script.visible]
   ~<"../agent-optimization/index.spw"> ~<"../archive/typescript-integration/wip.spw">
