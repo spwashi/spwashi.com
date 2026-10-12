@@ -7,6 +7,8 @@
 #>spw_ornament_contract
 #:model #!ornament
 #:layer #!pragmatics
+#:operation #!contract
+#:fixity #!tending
 
 @attention_field: ~"./attention-field.spw"
 @page_model: ~"../surfaces/page-model.spw"

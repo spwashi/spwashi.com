@@ -10,6 +10,9 @@
 
 #>timeline_copy_resonance_2026_09
 #:audit #!copy #!timeline #!factshift #!practice
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
 
 ^"thesis"{
   claim = `The biography becomes more resonant when each dated turn names what a visitor can practice now, not only what happened then.`

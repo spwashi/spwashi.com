@@ -3,6 +3,8 @@
 
 #>runtime_audit_lifecycles
 #:review #!surface
+#:operation #!audit
+#:fixity #!tending
 #:layer #!pragmatics
 
 @runtime: ~"../../../public/js/site.js"

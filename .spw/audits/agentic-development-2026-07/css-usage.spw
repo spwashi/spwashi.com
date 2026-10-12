@@ -4,6 +4,7 @@
 #:audit #!css #!agents
 #:operation #!audit
 #:fixity #!tending
+#:layer #!pragmatics
 
 @index: ~"./index.spw"
 @css_readme: ~"../../../public/css/README.md"

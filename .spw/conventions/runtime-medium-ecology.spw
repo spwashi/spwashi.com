@@ -6,6 +6,8 @@
 #>runtime_medium_ecology
 #:convention #!runtime #!javascript #!ecology
 #:layer #!pragmatics
+#:operation #!contract
+#:fixity #!tending
 
 @audit: ~"../audits/module-export-standalone-2026-07.spw"
 @module_export_contract: ~"./module-export-contract.spw"

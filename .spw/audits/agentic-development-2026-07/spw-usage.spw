@@ -4,6 +4,7 @@
 #:audit #!spw #!agents
 #:operation #!audit
 #:fixity #!tending
+#:layer #!pragmatics
 
 @index: ~"./index.spw"
 @semantic_capacity: ~"../../conventions/semantic-capacity.spw"

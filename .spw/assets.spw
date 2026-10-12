@@ -1,5 +1,10 @@
+# Asset Index — semantic asset register: images organized by purpose/surface with sidecar .spw metadata
+
 #>asset_index
 #:index #!assets
+#:operation #!align
+#:fixity #!tending
+#:layer #!pragmatics
 
 ^"asset_discovery"{
   ~#note: "Semantic asset register — images organized by purpose/surface with sidecar .spw metadata. Each image has a paired .spw sidecar documenting spirit name, thematic mapping, usage, and optimization metadata."

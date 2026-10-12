@@ -7,6 +7,7 @@
 #>operator_operand_semantics
 #:convention #!operators #!grammar #!runtime #!inspection
 #:layer #!semantics
+#:operation #!contract
 #:fixity #!stable
 
 ^"thesis"{

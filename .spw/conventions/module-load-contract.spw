@@ -7,7 +7,7 @@
 #>module_load_contract
 #:convention #!runtime #!electrostatics #!affordances #!ecology #!subfeatures
 #:operation #!contract
-#:fixity #!settled
+#:fixity #!stable
 #:layer #!pragmatics
 
 @runtime_medium_ecology: ~"./runtime-medium-ecology.spw"
@@ -25,7 +25,7 @@
 @catalog_types: ~"../../types/module-catalog.d.ts"  # SpwModuleDef + cost axes; costClass is the projection
 
 operation = "contract"
-fixity = "settled"
+fixity = "stable"
 
 ^"selector_host_nouns"{
   rule: "A catalog `selector` is a depth claim. It must name the same public nouns as CORE_COMPONENT_SELECTORS in kernel/dom-contracts.js."

@@ -7,6 +7,7 @@
 #>page_component_census_2026_07
 #:audit #!components #!routes #!html
 #:operation #!audit
+#:fixity #!tending
 #:layer #!pragmatics
 
 @component_taxonomy: ~"../conventions/component-taxonomy.spw"

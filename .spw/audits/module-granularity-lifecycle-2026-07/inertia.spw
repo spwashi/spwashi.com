@@ -7,6 +7,7 @@
 #:audit #!churn #!inertia #!primitives #!types #!architecture
 #:operation #!audit
 #:fixity #!tending
+#:layer #!pragmatics
 
 @index: ~"./index.spw"
 @lifecycle: ~"./lifecycle.spw"

@@ -7,6 +7,7 @@
 #>javascript_module_census_2026_07
 #:audit #!javascript #!runtime #!modules
 #:operation #!audit
+#:fixity #!tending
 #:layer #!pragmatics
 
 @module_catalog: ~"../../public/js/runtime/catalog/index.js"

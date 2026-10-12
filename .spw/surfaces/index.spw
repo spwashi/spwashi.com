@@ -4,6 +4,8 @@
 
 #>spw_site_surfaces_index
 #:index #!surfaces
+#:operation #!align
+#:fixity #!stable
 #:layer #!pragmatics
 
 @registry: ~"../surfaces.spw"
@@ -13,6 +15,7 @@
 @approach_topography: ~"./approach-topography.spw"
 @runtime_module_medium: ~"./runtime-module-medium.spw"
 @component_inventory: ~"./component-inventory.spw"
+@folio_archive: ~"./folio-archive.spw"  # the laminated folio archive as a walkable record: release sets, scans and sidecars
 
 dispatch: .{
  registry = @registry

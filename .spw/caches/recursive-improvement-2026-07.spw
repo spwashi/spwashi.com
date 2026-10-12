@@ -8,6 +8,7 @@
 #:cache #!agents #!features #!scripts
 #:operation #!cache
 #:fixity #!cold
+#:layer #!pragmatics
 
 @recursive_improvement: ~"../conventions/recursive-improvement.spw"
 @feature_utilization: ~"../conventions/feature-utilization.spw"

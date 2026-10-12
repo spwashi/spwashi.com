@@ -6,6 +6,8 @@
 #>copy_localization
 #:semantics #!conventions
 #:layer #!pragmatics
+#:operation #!contract
+#:fixity #!tending
 
 @copy_accessor: ~"./copy-accessor.spw"
 @copy_hypermedia_key: ~"../caches/copy-hypermedia-key-2026-09.spw"

@@ -6,6 +6,7 @@
 #>component_anatomy_theme_module_2026_07
 #:audit #!anatomy #!themes #!modules #!interactivity
 #:operation #!audit
+#:fixity #!tending
 #:layer #!pragmatics
 
 @html_component_audit: ~"./html-component-audit-2026-07.spw"

@@ -77,7 +77,7 @@
 }
 
 ^"cutouts"{
-  #:read from the scans; working names, the creator's to rename
+  # read from the scans; working names, the creator's to rename
   census = #[
     `*kraft.key — prime 01–20, 24`,
     `*pick.a.lens — prime 14–19`,

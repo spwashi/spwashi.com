@@ -4,6 +4,7 @@
 #:audit #!javascript #!reusability
 #:operation #!audit
 #:fixity #!tending
+#:layer #!pragmatics
 
 @index: ~"./index.spw"
 @export_audit: ~"../module-export-standalone-2026-07.spw"

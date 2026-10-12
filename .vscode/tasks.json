@@ -100,11 +100,35 @@
       ]
     },
     {
+      "label": "spw: tree and headers (audit:spw-tree)",
+      "detail": "Every .spw file's header marks against the semantic-capacity canon, duplicate aliases, index coverage and size",
+      "type": "shell",
+      "command": "npm run -s audit:spw-tree",
+      "presentation": { "reveal": "silent", "panel": "dedicated" },
+      "problemMatcher": [
+        {
+          "owner": "spw-audit-tree",
+          "source": "audit:spw-tree",
+          "fileLocation": ["relative", "${workspaceFolder}"],
+          "severity": "error",
+          "pattern": { "regexp": "^(\\S+?):(\\d+): hard (.+)$", "file": 1, "line": 2, "message": 3 }
+        },
+        {
+          "owner": "spw-audit-tree-warn",
+          "source": "audit:spw-tree",
+          "fileLocation": ["relative", "${workspaceFolder}"],
+          "severity": "warning",
+          "pattern": { "regexp": "^(\\S+?):(\\d+): warn (.+)$", "file": 1, "line": 2, "message": 3 }
+        }
+      ]
+    },
+    {
       "label": "spw: quick sensors",
-      "detail": "Plan claims, plan index, operator controls and agent budgets, in order (spw:integrity stays separate)",
+      "detail": "Plan claims, .spw tree, plan index, operator controls and agent budgets, in order (spw:integrity stays separate)",
       "dependsOrder": "sequence",
       "dependsOn": [
         "spw: plan claims (audit:plans)",
+        "spw: tree and headers (audit:spw-tree)",
         "spw: plan index (plans:index:check)",
         "spw: operator controls (audit:operator-controls)",
         "spw: agent budgets (check:agents)"

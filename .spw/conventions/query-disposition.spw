@@ -6,6 +6,8 @@
 #>query_disposition
 #:convention #!runtime
 #:layer #!pragmatics
+#:operation #!contract
+#:fixity #!stable
 
 claim = .{
  statement = `Query parameters are a design surface when they describe reproducible conditions instead of incidental debug switches.`

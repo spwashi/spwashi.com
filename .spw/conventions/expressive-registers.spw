@@ -8,6 +8,8 @@
 #>spw_expressive_registers
 #:model #!field #!css #!semantics
 #:layer #!pragmatics
+#:operation #!contract
+#:fixity #!tending
 
 @tokens_core: ~"../../public/css/tokens/core.css"
 @registers_css: ~"../../public/css/systems/registers.css"

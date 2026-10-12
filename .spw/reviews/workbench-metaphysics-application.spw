@@ -2,6 +2,8 @@
 
 #>spw_workbench_metaphysics_application
 #:review #!ontology #!architecture #!metaphysics
+#:operation #!align
+#:fixity #!cold
 #:layer #!pragmatics
 
 @workbench_index: ~"../_workbench/.spw/index.spw"

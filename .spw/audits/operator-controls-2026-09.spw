@@ -18,7 +18,7 @@
 @resonance_plan: ~"../../.agents/plans/operator-resonance-alignment/PLAN.md"
 
 ^"rubric"{
-  #:what a control is asked, in the order a reader asks
+  # what a control is asked, in the order a reader asks
   grammar = `Does the label follow the chip grammar — a sigil bound tight to its noun, !verb[target] for actions, spaced prose only after # and ?`
   agreement = `When the label opens with a sigil and the element authors data-spw-operator, do they name one operator? The kernel table is canon; atlas slugs resolve through its alias map.`
   presence = `Does a sigil-led control author the attribute at all? The operators module backfills it after boot; the CSS rails keyed on it hold with JS off only if the markup carries it.`
@@ -26,7 +26,7 @@
 }
 
 ^"census_2026_09_19"{
-  #:after this pass; the first honest run of the controls audit is in the scene line of commit 4e96100b
+  # after this pass; the first honest run of the controls audit is in the scene line of commit 4e96100b
   routes = 149
   controls = 4570
   grammar = `tight 2974 · container 155 · inline-payload 225 · composite 13 · prose 529 · spaced-violation 0`

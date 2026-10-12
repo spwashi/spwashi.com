@@ -1,5 +1,9 @@
+# Asset Management — standard workflow for adding and managing semantic image assets across the site
 #>asset_management_convention
 #:convention #!assets
+#:operation #!contract
+#:fixity #!tending
+#:layer #!pragmatics
 
 ^"workflow"{
   ~#note: "Standard workflow for adding and managing semantic image assets across the site"

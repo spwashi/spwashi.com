@@ -6,6 +6,7 @@
 #>appendix_film_history_500y
 #:audit #!appendix #!history #!film #!hypermedia
 #:operation #!cache
+#:fixity #!tending
 #:layer #!pragmatics
 
 @appendices_index: ~"./index.spw"

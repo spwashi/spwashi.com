@@ -6,6 +6,8 @@
 #>charge_cycle
 #:convention #!runtime #!wonder #!operators
 #:layer #!pragmatics
+#:operation #!contract
+#:fixity #!stable
 
 @site_semantics: ~"./site-semantics.spw#metaphysics_model"
 @operator_alignment: ~"./operator-alignment.spw"

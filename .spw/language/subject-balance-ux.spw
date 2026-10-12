@@ -8,6 +8,7 @@
 #:language #!sigils #!interaction #!physics #!ux
 #:operation #!prime #!contract
 #:fixity #!tending
+#:layer #!pragmatics
 
 @lore_alignment: ~"./lore-alignment.spw"
 @sigil_geometry: ~"./sigil-geometry-lore.spw"

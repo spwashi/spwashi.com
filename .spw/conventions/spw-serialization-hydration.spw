@@ -1,3 +1,4 @@
+# Spw Serialization and Hydration — the lossless two-way bridge between plain-text grammar, static HTML, CSS physical fields, and interactive runtime state
 #>spw_serialization_hydration
 #:convention #!serialization #!hydration #!runtime #!contracts
 #:operation #!contract

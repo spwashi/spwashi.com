@@ -2,6 +2,8 @@
 
 #>spw_fundamentals_practice_rhythms
 #:review #!learning #!collaboration #!architecture
+#:operation #!prime
+#:fixity #!tending
 #:layer #!pragmatics
 
 @modular_slices: ~"./modular-experience-slices-volleyball.spw"

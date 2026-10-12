@@ -2,6 +2,8 @@
 
 #>spw_css_architecture_alignment
 #:review #!css #!semantics #!architecture
+#:operation #!align
+#:fixity #!tending
 #:layer #!pragmatics
 
 @style_css: ~"../../public/css/style.css"

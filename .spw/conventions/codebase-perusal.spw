@@ -6,6 +6,7 @@
 
 #>codebase_perusal
 #:conventions #!orientation #!maintenance #!human
+#:operation #!prime
 #:layer #!pragmatics
 
 @site: ~"../site.spw"

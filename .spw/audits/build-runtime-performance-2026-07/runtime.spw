@@ -6,6 +6,7 @@
 #:audit #!runtime #!performance
 #:operation #!audit
 #:fixity #!tending
+#:layer #!pragmatics
 
 @index: ~"./index.spw"
 @catalog: ~"../../../public/js/runtime/catalog/index.js"

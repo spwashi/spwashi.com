@@ -4,6 +4,7 @@
 #:audit #!javascript #!conventions
 #:operation #!audit
 #:fixity #!tending
+#:layer #!pragmatics
 
 @index: ~"./index.spw"
 @export_contract: ~"../../conventions/module-export-contract.spw"

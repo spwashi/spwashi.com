@@ -6,6 +6,8 @@
 #>operator_site_projection
 #:conventions #!operators #!runtime #!validation
 #:layer #!pragmatics
+#:operation #!align
+#:fixity #!stable
 
 ^"thesis"{
   claim: "Operators are not merely symbolic typography or palette sources; they are executable handles for codebase work, coordinating HTML markup, CSS layout styles, JS events, and validation contracts."

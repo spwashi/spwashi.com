@@ -5,6 +5,7 @@
 #:surface #!settings
 #:operation #!contract
 #:fixity #!stable
+#:layer #!pragmatics
 
 @component_packing: ~"./component-packing.spw"
 @component_taxonomy: ~"./component-taxonomy.spw"

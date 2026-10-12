@@ -7,6 +7,7 @@
 #>internal_external_vocabulary_clusters_2026_07
 #:audit #!copy #!semantics #!vocabulary #!metaphor
 #:operation #!audit
+#:fixity #!tending
 #:layer #!pragmatics
 
 @component_region_personality: ~"../conventions/component-region-personality.spw"

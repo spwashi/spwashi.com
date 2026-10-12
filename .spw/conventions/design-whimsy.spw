@@ -1,6 +1,9 @@
+# Design Whimsy — earned delight through structural revelation and purposeful interaction
 #>design_whimsy
 #:conventions #!style
 #:layer #!pragmatics
+#:operation #!contract
+#:fixity #!tending
 
 ^"thesis"{
   ~#note: "Whimsy is not decoration. It is earned delight through structural revelation and purposeful interaction."

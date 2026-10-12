@@ -6,6 +6,8 @@
 #>module_export_contract
 #:convention #!runtime #!javascript
 #:layer #!pragmatics
+#:operation #!contract
+#:fixity #!stable
 
 @audit: ~"../audits/module-export-standalone-2026-07.spw"
 @naming_grammar_js_types_audit: ~"../audits/naming-grammar-js-types-2026-07/index.spw"

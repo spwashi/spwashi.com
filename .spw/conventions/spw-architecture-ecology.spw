@@ -282,8 +282,9 @@ fixity = "tending"
   `invariants [reg=set]`
   `validation [reg=set] when checks exist`
  ][reg=set]
- validator: "scripts/validate-conventions.mjs using language/v04/pillars/profiles-and-validator.spw rules (wave D partial)"
+ validator: "npm run audit:spw-tree (scripts/audit-spw-tree.mjs, 2026-10-12): header marks against the semantic-capacity canon, duplicate aliases, index coverage, size. The planned validate-conventions.mjs was never written; profile rules in language/v04/pillars/profiles-and-validator.spw are not yet read."
  baseline_gap: "As of 2026-07 audit: 54 conventions; few declare dimensions; one owner_claim; language census ~18% full-trace."
+ baseline_2026_10_12: "audit:spw-tree reads 390 surfaces: every one has a title, an anchor, and operation, fixity and layer in the semantic-capacity canon; no alias is declared twice; every file is named by an index; spw lint finds one malformed axis, a linter misread inside a phrase. Eight durable files run over 400 lines; site-semantics.spw holds 44 frames in 1,473 lines."
  on_touch_rule: "Any touched convention in an architecture-ecology wave must meet hygiene checklist."
 }
 

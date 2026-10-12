@@ -6,6 +6,8 @@
 #>spw_semantic_braces
 #:semantics #!surface
 #:layer #!pragmatics
+#:operation #!contract
+#:fixity #!stable
 
 ^"grammar"{
   root: "The stable concept anchor. This is the thing that should resonate across instances."

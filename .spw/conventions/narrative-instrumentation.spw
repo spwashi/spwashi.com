@@ -3,6 +3,8 @@
 #>narrative_instrumentation
 #:layer #!runtime
 #:status #!active
+#:operation #!contract
+#:fixity #!stable
 
 purpose: `Turn selected prose into inspectable narrative handles while preserving static readability.`
 

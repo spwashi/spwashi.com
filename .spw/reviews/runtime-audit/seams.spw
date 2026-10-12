@@ -3,6 +3,8 @@
 
 #>runtime_audit_seams
 #:review #!surface
+#:operation #!audit
+#:fixity #!tending
 #:layer #!pragmatics
 
 @runtime: ~"../../../public/js/site.js"

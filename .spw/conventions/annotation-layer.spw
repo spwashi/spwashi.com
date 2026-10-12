@@ -6,6 +6,8 @@
 #>annotation_layer
 #:runtime #!convention
 #:layer #!pragmatics
+#:operation #!contract
+#:fixity #!tending
 
 claim = .{
  statement = `Annotations should behave like small handles into the current page structure, not like decorative labels.`

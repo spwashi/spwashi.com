@@ -7,6 +7,7 @@
 #:cache #!layout #!resonance #!ecology #!parser #!capture
 #:operation #!align
 #:fixity #!tending
+#:layer #!pragmatics
 
 @page_model: ~"../surfaces/page-model.spw"
 @region: ~"../conventions/region-component-ecology.spw"

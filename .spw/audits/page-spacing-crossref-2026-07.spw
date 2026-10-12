@@ -7,6 +7,7 @@
 #>page_spacing_crossref_2026_07
 #:audit #!crossref #!routes #!css #!components
 #:operation #!audit
+#:fixity #!tending
 #:layer #!pragmatics
 
 @page_component_census: ~"./page-component-census-2026-07.spw"

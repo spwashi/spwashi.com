@@ -6,6 +6,8 @@
 #>semantic_capacity
 #:conventions #!semantics #!memory #!audit #!expansion
 #:layer #!pragmatics
+#:operation #!contract
+#:fixity #!stable
 
 @surface_normalization_plan: ~"../../.agents/plans/archive/spw-surface-normalization/PLAN.md"
 @surface_normalization_review: ~"../reviews/spw-surface-normalization.spw"

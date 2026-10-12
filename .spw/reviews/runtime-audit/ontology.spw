@@ -3,6 +3,8 @@
 
 #>runtime_audit_ontology
 #:review #!semantics
+#:operation #!align
+#:fixity #!tending
 #:layer #!pragmatics
 
 @runtime: ~"../../../public/js/site.js"

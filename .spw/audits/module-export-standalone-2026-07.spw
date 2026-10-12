@@ -7,6 +7,7 @@
 #>module_export_standalone_audit_2026_07
 #:audit #!runtime #!javascript
 #:operation #!audit
+#:fixity #!tending
 #:layer #!editor_inspectability
 
 @runtime_medium_ecology: ~"../conventions/runtime-medium-ecology.spw"

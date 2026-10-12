@@ -7,7 +7,7 @@
 
 #>runtime_recalc_cost_2026_09
 #:audit #!runtime #!css #!performance
-#:operation #!measure
+#:operation #!audit
 #:fixity #!tending
 #:layer #!pragmatics
 
@@ -20,7 +20,7 @@
 @lens_writer: ~"../../public/js/runtime/page/lens-modes.js"
 @harness: ~"../../scripts/lib/chrome-headless-harness.mjs"
 
-operation = "measure"
+operation = "audit"
 fixity = "tending"
 
 expression = recalc[cost]{selector.element.state}<phone>

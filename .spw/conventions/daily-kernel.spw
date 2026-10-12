@@ -6,6 +6,8 @@
 #>daily_kernel
 #:conventions #!practice #!brand-physics #!regions #!collaboration
 #:layer #!pragmatics
+#:operation #!prime
+#:fixity #!tending
 
 @plan: ~"../../.agents/plans/archive/daily-kernel-development/PLAN.md"
 @template: ~"../../.agents/plans/archive/daily-kernel-development/templates/daily-kernel-note.spw"

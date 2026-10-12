@@ -9,6 +9,7 @@
 #:language #!sigils #!geometry #!lore #!projection
 #:operation #!audit #!prime
 #:fixity #!tending
+#:layer #!semantics
 
 @definitions: ~"../../public/js/kernel/shared.js"
 @annotation: ~"../../public/js/semantic/sigil-annotation.js"

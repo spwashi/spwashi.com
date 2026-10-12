@@ -3,6 +3,8 @@
 
 #>collectible_expressions
 #:cache #!prime #!experimental
+#:operation #!prime
+#:fixity #!experimental
 #:layer #!semantics
 
 @feature_utilization: ~"../language/feature-utilization.spw"
@@ -43,7 +45,7 @@
 }
 
 ^"product_note"{
-  #:creator note, same day
+  # creator note, same day
   toy = `Toys "R" Us is reopening stores. Aspiration: a product someone finds relatable and worth wondering about for a long time. A folio is the physical candidate; a pocket of atoms is the linguistic one. Both should pass the same test: still worth wondering about a year later.`
   boundary = `Do not print "collectible" on a route until the atom grammar has an owner and a demo; do not add data-spw-collectible.`
 }

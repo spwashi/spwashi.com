@@ -3,6 +3,8 @@
 
 #>runtime_audit_composition_ownership
 #:review #!structure
+#:operation #!audit
+#:fixity #!cold
 #:layer #!pragmatics
 
 @site_semantics: ~"../../conventions/site-semantics.spw"

@@ -7,6 +7,7 @@
 #:cache #!language #!operators #!v04
 #:operation #!cache
 #:fixity #!cold
+#:layer #!semantics
 
 @language_utilization: ~"../language/feature-utilization.spw"
 @language_recursive: ~"../language/recursive-improvement.spw"

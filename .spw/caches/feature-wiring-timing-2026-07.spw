@@ -7,6 +7,7 @@
 #:cache #!features #!runtime #!catalog
 #:operation #!cache
 #:fixity #!cold
+#:layer #!pragmatics
 
 @module_catalog: ~"../../public/js/runtime/catalog/index.js"
 @runtime_contracts: ~"../../scripts/ts/runtime-contracts.mts"

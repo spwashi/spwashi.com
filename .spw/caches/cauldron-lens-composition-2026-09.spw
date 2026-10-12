@@ -1,6 +1,9 @@
+# Cauldron lens composition — page lens impacts do not reach mixIngredients
+
 #>cauldron_lens_composition
 #:operation #!audit
 #:fixity #!tending
+#:layer #!pragmatics
 claim = `Page lens impacts do not reach mixIngredients; its context contains only brace and physics.`
 evidence = `public/js/runtime/page/lens-modes.js; public/js/interface/composition.js`
 comparison = `About reading/kernel/lattice/hospitality and Home systems/learning/making carry different page meanings.`

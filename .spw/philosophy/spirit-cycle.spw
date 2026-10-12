@@ -5,6 +5,8 @@
 
 #>spw_spirit_cycle
 #:philosophy #!cycle
+#:operation #!prime
+#:fixity #!tending
 #:layer #!pragmatics
 
 ^"thesis"{

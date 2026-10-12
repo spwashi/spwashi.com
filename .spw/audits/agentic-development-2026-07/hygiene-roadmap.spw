@@ -6,6 +6,7 @@
 #:audit #!hygiene #!typescript #!css #!runtime
 #:operation #!prime
 #:fixity #!tending
+#:layer #!pragmatics
 
 @index: ~"./index.spw"
 @brp: ~"../build-runtime-performance-2026-07/index.spw"

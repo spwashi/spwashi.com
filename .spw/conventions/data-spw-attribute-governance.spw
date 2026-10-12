@@ -6,6 +6,9 @@
 
 #>data_spw_attribute_governance
 #:conventions #!attributes #!interaction-state #!runtime
+#:operation #!contract
+#:fixity #!stable
+#:layer #!pragmatics
 
 @site_semantics: ~"./site-semantics.spw"
 @interaction_microstates: ~"./interaction-microstates.spw"

@@ -3,6 +3,8 @@
 #>commit_history_deep_milestones
 #:audit #!git #!history
 #:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
 
 @index: ~"./index.spw"
 @epochs: ~"./epochs-from-origin.spw"

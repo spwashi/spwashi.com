@@ -6,6 +6,7 @@
 #:audit #!induction #!architecture
 #:operation #!audit
 #:fixity #!tending
+#:layer #!pragmatics
 
 @index: ~"./index.spw"
 @history: ~"./commit-history.spw"

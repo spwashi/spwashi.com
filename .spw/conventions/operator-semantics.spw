@@ -1,6 +1,9 @@
+# Operator Semantics — bridging original intent, workbench canon, and site-specific interpretation through the physics and symmetry of the language
 #>operator_semantics_refined
 #:convention #!operators
 #:layer #!pragmatics
+#:operation #!align
+#:fixity #!tending
 
 ^"lineage"{
   ~#note: "Spw operators are rooted in an original set with deep meanings. This document bridges original intent, workbench canon, and site-specific interpretation through the physics and symmetry of the language."

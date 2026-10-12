@@ -4,6 +4,7 @@
 #:audit #!naming
 #:operation #!audit
 #:fixity #!tending
+#:layer #!pragmatics
 
 @index: ~"./index.spw"
 @naming_structured: ~"../../conventions/naming-and-structured-values.spw"

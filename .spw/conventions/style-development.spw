@@ -7,6 +7,8 @@
 #>spw_style_development
 #:conventions #!style
 #:layer #!pragmatics
+#:operation #!prime
+#:fixity #!tending
 
 ^"vocabulary"{
   ~#note: "Terms the site already uses to talk about its own aesthetic direction. These are starting points, not definitions."

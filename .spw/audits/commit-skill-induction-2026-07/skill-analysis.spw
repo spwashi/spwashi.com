@@ -4,6 +4,7 @@
 #:audit #!skills #!agents
 #:operation #!audit
 #:fixity #!tending
+#:layer #!pragmatics
 
 @index: ~"./index.spw"
 @readme: ~"../../../.agents/skills/README.md"

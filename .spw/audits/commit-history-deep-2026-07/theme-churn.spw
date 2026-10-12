@@ -3,6 +3,8 @@
 #>commit_history_deep_theme_churn
 #:audit #!git #!history
 #:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
 
 @index: ~"./index.spw"
 @commit_skill_induction: ~"../commit-skill-induction-2026-07/index.spw"

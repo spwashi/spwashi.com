@@ -24,7 +24,7 @@
 }
 
 ^"record_shapes"{
-  #:from minting.spw#lineage — one file per record under this surface once scanning begins
+  # from minting.spw#lineage — one file per record under this surface once scanning begins
   source = .{
     id = `stable id, one physical folio`
     scan = `master front/back scans and a detail photo`

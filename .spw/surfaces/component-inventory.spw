@@ -1,3 +1,5 @@
+# Component Inventory — component species and the slot contract every component adheres to
+
 #>component_inventory
 #:layer #!semantics
 #:operation #!contract

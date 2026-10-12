@@ -6,6 +6,7 @@
 #:audit #!catalog #!modules #!decomposition
 #:operation #!audit
 #:fixity #!tending
+#:layer #!pragmatics
 
 @index: ~"./index.spw"
 @lifecycle: ~"./lifecycle.spw"

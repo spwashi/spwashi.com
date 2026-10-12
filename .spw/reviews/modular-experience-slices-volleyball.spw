@@ -2,6 +2,8 @@
 
 #>spw_modular_experience_slices_volleyball
 #:review #!architecture #!collaboration #!ontology
+#:operation #!prime
+#:fixity #!tending
 #:layer #!pragmatics
 
 @css_alignment: ~"./css-architecture-alignment.spw"

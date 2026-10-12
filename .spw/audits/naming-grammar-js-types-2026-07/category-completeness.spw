@@ -4,6 +4,7 @@
 #:audit #!taxonomy #!diversity
 #:operation #!audit
 #:fixity #!tending
+#:layer #!pragmatics
 
 @index: ~"./index.spw"
 @ecology: ~"../../conventions/runtime-medium-ecology.spw"

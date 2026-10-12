@@ -15,7 +15,7 @@
 @precipitates: ~"../conventions/precipitates-and-projections.spw"
 
 operation = "audit"
-fixity = "snapshot"
+fixity = "cold"
 audited_at = "2026-07-08"
 
 ^"precipitate"{

@@ -1,5 +1,8 @@
 # learnability-ledger
 #>learnability_ledger
+#:operation #!align
+#:fixity #!stable
+#:layer #!pragmatics
 # Metacognitive accounting layer: posture, process attention, gesture/feature
 # discoverability, and layout-contract alignment across the static runtime.
 
