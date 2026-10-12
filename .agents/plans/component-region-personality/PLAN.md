@@ -65,7 +65,7 @@ Develop meaningful component real estate and region personality across spwashi.c
 | Copy-unit ids | Add `data-spw-copy-unit="route.surface.block"` to ledes, notes, hooks on touched hubs |
 | Roles | Add `data-spw-textual-role`, `data-spw-referentiality` on collectibles |
 | Extract script | Extend `scripts/extract-site-copy.mjs` to output manifest keyed by copy-unit |
-| Partials | Scaffold `_partials/perspective-pair.html`, `_partials/leaf-neighbor-rail.html` when ids stable |
+| Partials | Scaffold (proposed) `_partials/perspective-pair.html`, `_partials/leaf-neighbor-rail.html` when ids stable |
 
 ### Wave 3 — Linking contour
 

@@ -17,7 +17,7 @@ operation = "prime"
 fixity = "tending"
 
 ^"selection_probes"{
- probes = #[ `rg 'spw-metaphysical-language' .spw/_workbench/`, `git diff --check; npm run check after any HTML/CSS/JS touch.`, `test -f .spw/_workbench/`, ][reg=set]
+ probes = #[ `rg 'spw-metaphysical-language' .spw/_workbench/`, `git diff --check; npm run check:local after any HTML/CSS/JS touch.`, `test -f .spw/_workbench/`, ][reg=set]
  rule = "Run probes before trusting cached plan_context."
 }[reg=facet]
 
@@ -26,7 +26,7 @@ fixity = "tending"
  owner = `spw-metaphysical-language`
  operation = "prime"
  bucket = "semantic_rails"
- validation = #[ `git diff --check; npm run check after any HTML/CSS/JS touch.`, `Codex completeness probe: every data-spw-operator value and every sigil in`, `Drift-ledger probe: each ledger row has claim_id, evidence refs, and status.`, `Bridge probe: rg confirms codex entries cite (not restate) owner`, `Print pilot probe: operator-deck print stylesheet renders one legible card`, `Industry pilot probe: each load-bearing brief names an existing route or`, ][reg=set]
+ validation = #[ `git diff --check; npm run check:local after any HTML/CSS/JS touch.`, `Codex completeness probe: every data-spw-operator value and every sigil in`, `Drift-ledger probe: each ledger row has claim_id, evidence refs, and status.`, `Bridge probe: rg confirms codex entries cite (not restate) owner`, `Print pilot probe: operator-deck print stylesheet renders one legible card`, `Industry pilot probe: each load-bearing brief names an existing route or`, ][reg=set]
  hot_files = #[ `.spw/_workbench/`, `.spw/conventions/`, ][reg=set]
 }[reg=facet]
 ^["roots"]{

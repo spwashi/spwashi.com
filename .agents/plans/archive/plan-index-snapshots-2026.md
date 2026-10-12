@@ -1,6 +1,17 @@
-# Plan Index Snapshots, 2026-06-19 to 2026-09-20
+# Plan Index Snapshots, 2026-06-19 to 2026-09-27
 
 Moved out of [the plan index](../README.md) on 2026-10-06 so the index stays an index. Counts and owner names are as they stood on each date; many owners named here have since been archived (reasons in [the archive ledger](./README.md)).
+
+## Maintenance Snapshot - 2026-09-27
+
+Tree census: **163 live plans, 64 archived**. Nine folders opened since 2026-09-20 and none closed; the archive step in `spw-plan-maintenance` is the priority debt, not more indexes. Details and counts: `.spw/audits/plan-spw-tree-2026-09.spw#recensus_2026_09_27`.
+
+- **Index check green again.** `topical-learning-links/learning-transfer.spw` had no first-line review since 2026-09-23; reviewed in place. Eleven folders opened 2026-09-19 through 2026-09-26 that this index never named now sit in `since_2026_07_12` (author `index.spw` on next touch, not in batch).
+- **Citations:** 1094 root-anchored paths across live plans, 155 unresolved. One had a single new home and was rewritten (`quest-workbench-feedback`, the worker moved to `workers/spw-quest/`). The rest are split files the 2026-09-17 legend above already reads, deliberate non-paths, or never-committed `.agents/state` precipitates. Left as written.
+- **Runtime/JS bucket order:** `typescript-integration` now records what landed (build, site-contracts, sitemap compiled from `scripts/ts`; thirteen typed browser modules) and shares three decisions with `site-source-layout`: the M0 ship-list import method, the M2 `public/ts` to `src/ts` tsconfig change, and L3 uncommitted output. Order is M0 decision, M0, M2; the `site/` move waits behind them.
+- **Nearest archive candidates:** `release-day-resonance-2026-09-13` and `release-day-discovery-2026-09-26`, once their receipts are written into an owner plan.
+
+**Deeper pass, same day: CSS tokens the runtime writes, and the Spw interpreter.** Seven folders archived with reasons (`archive/README.md`): two landed palette plans, the never-implemented `site-color-tuning`, `minimal-brace-disclosure`, the closed `css-scroll-dark-regression` fix, the `theme-text-contrast` receipt, and the `theming-icon-packs-public-versioning` umbrella split to four owners. Live count 157 after the moves (a folder landed from a concurrent session during the pass). Three ownership gaps closed on paper: `css-sensitive-attribute-writes` now names the property-write sensor (`style-property-contract.mts`; 40 files write 115 properties), `spw-language-v04` Phase 4 owns the parser's arrival in the site (v0.3.0 generated parser, on-demand runtime parser, build-time expression manifest; the v0.4 spec never reached the pinned workbench), and `semantic-html-normalization` owns JS-off parity and names the probe that does not exist yet. Reading order per cluster: `.spw/audits/plan-spw-tree-2026-09.spw#deeper_pass_2026_09_27`.
 
 ## Maintenance Snapshot - 2026-09-20
 

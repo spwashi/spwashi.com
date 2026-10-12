@@ -14,7 +14,7 @@ Each skill names a default operation. The invoker may override. Sense before act
 | [`spw-fix-planning`](./spw-fix-planning/SKILL.md) | `audit` | `.agents/plans/` | Browser repro + route check | `.agents/plans/<slug>/FIX.md` |
 | [`spw-interactive-medium`](./spw-interactive-medium/SKILL.md) | `contract` | Play / Scenes / JS | `npm run check:runtime` | [`.spw/conventions/interaction-microstates.spw`](../../.spw/conventions/interaction-microstates.spw) |
 | [`spw-typescript-affordances`](./spw-typescript-affordances/SKILL.md) | `contract` | `scripts/ts/`, `public/ts/` | `npm run typecheck` | `tsconfig.*.json` |
-| [`spw-plan-maintenance`](./spw-plan-maintenance/SKILL.md) | `archive` | `.agents/plans/` | `npm run spw:plan:check --` | [`.spw/conventions/planning-ecology.spw`](../../.spw/conventions/planning-ecology.spw) |
+| [`spw-plan-maintenance`](./spw-plan-maintenance/SKILL.md) | `archive` | `.agents/plans/` | `npm run audit:plans` | [`.spw/conventions/planning-ecology.spw`](../../.spw/conventions/planning-ecology.spw) |
 | [`patch-consolidator`](./patch-consolidator/SKILL.md) | `align` | Git staging | `git status --short` | Git working tree |
 | [`spw-css-dom-lab`](./spw-css-dom-lab/SKILL.md) | `cache` | Route HTML / CSS | Route visual preview | `public/css/routes/` |
 | [`image-optimize`](./image-optimize/SKILL.md) | `contract` | `public/images/` | `npm run images:manifest` | `public/images/` |

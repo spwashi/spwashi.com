@@ -125,7 +125,7 @@ scope: .{
 
 validation: #[
  `Strict respect for AGENTS.md (css-instruction.spw, surgical changes, no un-planned deps). If the CSS layer order itself changes, that patch must update AGENTS.md and the relevant .spw convention in the same reviewable unit.`,
- `git diff --check, npm run check (CSS and full subsets), manual review on key routes.`,
+ `git diff --check, npm run check:local (CSS and full subsets), manual review on key routes.`,
  `A new contributor (or returning one after months) should be able to make a coherent change to one slice by primarily working inside that slice's directories + its .spw contract.`,
  `Existing editor surfaces (design catalog, runtime timings, state inspector) continue to work and ideally become more useful because ownership is clearer.`,
 ][reg=set]

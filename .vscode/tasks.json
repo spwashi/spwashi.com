@@ -77,10 +77,34 @@
       }
     },
     {
+      "label": "spw: plan claims (audit:plans)",
+      "detail": "Each live plan's Status, links, npm scripts, named paths and cited commits, checked against the tree",
+      "type": "shell",
+      "command": "npm run -s audit:plans",
+      "presentation": { "reveal": "silent", "panel": "dedicated" },
+      "problemMatcher": [
+        {
+          "owner": "spw-audit-plans",
+          "source": "audit:plans",
+          "fileLocation": ["relative", "${workspaceFolder}"],
+          "severity": "error",
+          "pattern": { "regexp": "^(\\S+?):(\\d+): hard (.+)$", "file": 1, "line": 2, "message": 3 }
+        },
+        {
+          "owner": "spw-audit-plans-warn",
+          "source": "audit:plans",
+          "fileLocation": ["relative", "${workspaceFolder}"],
+          "severity": "warning",
+          "pattern": { "regexp": "^(\\S+?):(\\d+): warn (.+)$", "file": 1, "line": 2, "message": 3 }
+        }
+      ]
+    },
+    {
       "label": "spw: quick sensors",
-      "detail": "Plan index, operator controls and agent budgets, in order (spw:integrity stays separate)",
+      "detail": "Plan claims, plan index, operator controls and agent budgets, in order (spw:integrity stays separate)",
       "dependsOrder": "sequence",
       "dependsOn": [
+        "spw: plan claims (audit:plans)",
         "spw: plan index (plans:index:check)",
         "spw: operator controls (audit:operator-controls)",
         "spw: agent budgets (check:agents)"

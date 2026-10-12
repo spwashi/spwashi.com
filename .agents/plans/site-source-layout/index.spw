@@ -127,7 +127,7 @@ validation: #[
  `git diff --check`,
  `node --check for each edited script module`,
  `npm run build`,
- `npm run check`,
+ `npm run check:local`,
  `targeted route checks in local dev on:`,
  `/`,
 ][reg=set]

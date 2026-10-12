@@ -39,11 +39,13 @@ Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
 ## 🌌 Tooling & Validation Ladder
 
-Use the mounted `spw` CLI (root aliases; no need to enter the workbench) to check plan drift and verify link hygiene:
+Check plan drift with the site's own sensor. The `spw:plan:*` aliases read the workbench's plans, not these, and fail here with "no active feature plan".
 
 ```bash
-# 1. Check plan status and drift:
-npm run spw:plan:check --
+# 1. What each live plan claims, checked against the tree (stale Status, broken links,
+#    missing scripts, renamed paths, unknown commits); --check fails on a broken instruction:
+npm run audit:plans -- --check
+npm run plans:index:check
 
 # 2. Census: active plans and empty indexes (compare before and after; `spw tree` resolves inside the workbench and does not see these)
 find .agents/plans -name PLAN.md -not -path '*/archive/*' | wc -l
