@@ -314,10 +314,14 @@ async function checkExpressions() {
     return null; // Parser unavailable (no tsx loader); skip rather than fail.
   }
 
+  // Scratch checkouts (.tmp), agent worktrees (.claude) and other sites kept for
+  // reference (.references) hold copies, not this site's routes; a broken
+  // expression there would be reported against the copy's path.
   const { stdout } = await run('find', [
     ROOT, '-name', 'index.html',
     '-not', '-path', '*/node_modules/*', '-not', '-path', '*/dist*',
     '-not', '-path', '*/.spw/*', '-not', '-path', '*/.git/*',
+    '-not', '-path', '*/.tmp/*', '-not', '-path', '*/.claude/*', '-not', '-path', '*/.references/*',
   ], { maxBuffer: 16 * 1024 * 1024 });
 
   const seen = new Map();

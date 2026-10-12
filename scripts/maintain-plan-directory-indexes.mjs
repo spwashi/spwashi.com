@@ -323,6 +323,10 @@ function guardReviewedPlanTree() {
     writePlanReceipt(problems);
     if (unreviewed.length) {
       console.error(`Reviewed plan tree is incomplete: ${unreviewed.length} .spw file(s) lack a first-line review decision.`);
+      // Line 1 is where the review line belongs, so an editor can open it there.
+      for (const problem of unreviewed) {
+        console.error(`- ${problem.where}:1 -> ${problem.detail}`);
+      }
     }
     if (missing.length) {
       console.error(`Reviewed plan index references are broken: ${missing.length} local target(s) are missing.`);

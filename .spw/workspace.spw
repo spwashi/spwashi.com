@@ -30,6 +30,7 @@
  @caches: ~"./caches"
  @skills: ~"./skills"
  @slices: ~"./slices"
+ @scenes: ~"./scenes"
  @workbench: ~"./_workbench"
 }
 

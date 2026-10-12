@@ -25,6 +25,8 @@
 @kinetic_stage: ~"../../_partials/spw-hero-kinetic-stage.html"
 @footer: ~"../../_partials/site-footer.html"
 @sensor: ~"../../scripts/spw-language-ecology.mjs"
+@lite_scanner: ~"../_workbench/packages/spw-seed/src/lite.ts"
+@upstream_asks: ~"../reviews/upstream-workbench-recommendations.spw"
 
 operation = "align"
 fixity = "tending"
@@ -92,4 +94,14 @@ expression = sigil[canon]{alias.copy}<one_table>
   probe_ref = `npm run ecology:language && rg -n '@action|&amp;stream|\*merge|\$pragma|operator="(state|#>)"' --glob '*.html' --glob '!node_modules'`
   falsification = `Any route that prints a sigil whose atlas page shows a different character; any data-spw-operator whose type column disagrees with the visible nav token or label on the same host.`
   status = "active"
+}[reg=facet]
+
+^"direction_2026_10_11"{
+  creator = `Spw operators should be in the workbench so they can be studied more mindfully within the ethos of Spw development.`
+  means = `The character table moves upstream, and the site imports it rather than owning it. The workbench already exports SPW_OPERATORS and SPW_BOUNDS from @lite_scanner; the lexer, the lite scanner, the editor grammar and this site would read one table.`
+  until_then = `@definitions stays the working reference for characters and canonical types. This file keeps mapping site names to characters; it does not become a second table.`
+  difference_now = `The lite scanner lists 13 operators. @definitions lists 19 prefixes: it adds the frame and layer particles, and five characters the lite scanner reads as bounds.`
+  open = `Which meanings move with the characters (names, speech, intent) and which stay as site presentation is the creator's call.`
+  boundary = `No edit to .spw/_workbench from this repo. The move is an upstream ask in @upstream_asks (week_2026_10_11).`
+  status = "direction"
 }[reg=facet]

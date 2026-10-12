@@ -99,7 +99,6 @@
 @operational_semantics: ~"./conventions/operational-semantics.spw"
 @measurement_contract: ~"./conventions/measurement-contract.spw"
 @model_guided_refinement: ~"./conventions/model-guided-refinement.spw"
-@semantic_capacity: ~"./conventions/semantic-capacity.spw"
 @discovery_powerups: ~"./conventions/discovery-powerups.spw"
 @daily_kernel: ~"./conventions/daily-kernel.spw"
 @data_spw_attribute_governance: ~"./conventions/data-spw-attribute-governance.spw"
@@ -190,9 +189,7 @@
 @projection_attenuation: ~"./conventions/projection-attenuation.spw"
 @expression_card: ~"./conventions/expression-card.spw"
 
-@operational_semantics: ~"./conventions/operational-semantics.spw"
 @owner_registry: ~"./conventions/owner-registry.spw"
-@measurement_contract: ~"./conventions/measurement-contract.spw"
 
 operational_layer: .{
   registry = @operational_semantics
