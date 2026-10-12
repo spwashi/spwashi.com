@@ -1,0 +1,332 @@
+# Editor — VS Code workbench asks
+#
+# The extension (vscode-spw 0.3.0) and the language server: what a hover,
+# reference, diagnostic, view and capture should answer (2026-10-11), and time,
+# tending, plan context and triggers (2026-10-12).
+#
+# Detail for the review hub beside this folder
+# (upstream-workbench-recommendations.spw). Every ask keeps the same slots in
+# the same order: rank, claim, exists, gap, measured, recommendation, replaces,
+# probe, question. Workbench code is cited at the pin (229aedcf); nothing here
+# writes to .spw/_workbench.
+
+#>workbench_asks_editor
+#:review #!workbench #!developer_experience
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@hub: ~"../upstream-workbench-recommendations.spw"
+
+operation = "audit"
+fixity = "tending"
+
+expression = asks[editor]{hover.references.views.time.tending.triggers}<upstream>
+
+# ==============================================================================
+# 1b. VS CODE — the extension (vscode-spw 0.3.0) and the language server
+# ==============================================================================
+
+^"vscode"{
+
+  spw_beyond_spw_files: .{
+    rank = 1
+    claim: "Most of the Spw this repo writes is not in .spw files."
+    exists: "The extension registers language spw for .spw only, with one grammar (source.spw) and no injections."
+    gap: "No highlighting or diagnostics for Spw inside HTML attributes, Markdown or commit messages."
+    measured: .{
+      route_expressions = 998
+      commit_episode_blocks = "one per commit; check:local does not validate commit grammar (AGENTS.md)"
+      found_today_by = "spw:integrity, after the fact"
+    }[reg=facet]
+    recommendation = #[
+      `injection grammars for data-spw-semantic-expression attributes in HTML`,
+      `injection grammars for Spw snippets in Markdown`,
+      `an injection grammar for #[episode]{…} in git-commit`,
+      `parse diagnostics in those hosts, so a malformed expression squiggles while you type`,
+    ][reg=set]
+    replaces: "running spw:integrity to find a malformed expression"
+    probe: `grep -n injectTo .spw/_workbench/extensions/vscode-spw/package.json`
+    question: "Which host matters most first: route HTML or commit messages?"
+  }[reg=facet]
+
+  diagnostics_match_the_parser: .{
+    rank = 2
+    claim: "The editor and the CLI disagree about what is a citation."
+    exists: "The parser's pathRefs, used by spw query, resolve and spw:integrity."
+    gap: "selectPathRefs runs a regex first and uses the parser only when the regex finds nothing (spw-selector.ts:300-304)."
+    measured: .{
+      cli_pathrefs_in_this_file = 9
+      lsp_hits_in_this_file = 10
+      false_hit = "a tilde-quoted example inside a backtick string, flagged as an unresolved reference"
+      regex = "spw-selector.ts:130, with no notion of backtick strings, comments or labels"
+      prior_art = "spw-integrity.mjs records the same failure for its first, regex-based version"
+    }[reg=facet]
+    recommendation = #[
+      `use the parser's pathRefs first, and the regex only when the parse fails`,
+      `apply the CLI's label classification before reporting an unresolved reference`,
+      `one extraction shared by diagnostics, document links, lenses and the CLI`,
+    ][reg=set]
+    replaces: "rewording examples so the editor stops flagging them"
+    probe: `grep -n "fallbackPathRefs(source)" .spw/_workbench/packages/spw-lsp/src/spw-selector.ts`
+    question: "Should the regex stay as a fallback for files that fail to parse?"
+  }[reg=facet]
+
+  hovers_that_answer: .{
+    rank = 3
+    claim: "Hovers describe parse geometry; editing needs where a thing goes and what it means."
+    exists: "A first-match chain in display.ts:460: experimental syntax, annotations, form coupling and label site, frames, then paths."
+    gap: "The first layer that matches answers, so citations get geometry, fragments get misread and bodies are shown whole."
+    measured: .{
+      probed_with = "the stdio server, probed 2026-10-11 with what is now scripts/lsp-probe.mjs"
+      path_citation = "the wonder_script citation: Label site, path_node, exterior; no target and no exists"
+      route_anchor = "copy-accessor.spw:24, home_lede: read as topic #home in 0 files; it points at index.html:146, copy unit home.hook.lede"
+      frame = "the landed_since frame: called a capsule boundary <…>"
+      facet_key = "move_with_citations: the whole 24-line body shown as its surface"
+      scalar = "rank = 1 in move_with_citations: six mobility rewrites (rank to !rank, [rank], @(rank) and three more)"
+      registry = "the reg=facet after its measured block: Label site reg, frame_param, and no meaning"
+      false_unresolved = "the backtick example in the 2026-10-11 screenshot, shown above form geometry"
+    }[reg=facet]
+    recommendation = #[
+      `citations: resolved repo path, exists, the target's first meaningful line, cited-by count by resolved path`,
+      `route anchors: the element, its copy unit, its expression and its sentence (scripts/lib/page-anchors.mjs has the lookup)`,
+      `route on the parser node under the cursor, not the first layer that matches`,
+      `lead with one plain line in the site's words; link Spw: Inspect Form for the geometry`,
+      `expressions: name subject, mode, direction and capsule, and list the route hosts that carry it`,
+      `tokens: a one-line gloss from word-sets.spw and operator-semantics.spw`,
+      `actions: open target, peek references, copy the citation, run a wonder probe`,
+      `unresolved: suggest the nearest existing path, often the same name under archive/`,
+      `cap the surface at one line; keep one fixed layout; capture mode keeps only the first line`,
+    ][reg=set]
+    replaces: "the resolved-path inlay plus a terminal rg to learn where a citation goes"
+    probe: `node scripts/lsp-probe.mjs . .spw/conventions/copy-accessor.spw hover 24:20`
+    question: "In a citation hover, should the target preview or the cited-by count come first?"
+  }[reg=facet]
+
+  references_that_navigate: .{
+    rank = 4
+    claim: "Reference lenses show a count you cannot follow, over an index wider than the declared roots."
+    exists: "Lenses ↗ N file ref(s) and ◇ anchor — no cross-file refs (display.ts:1101, :1106)."
+    gap: "Lens command is empty; lenses find anchors with a line regex (display.ts:36, :1091) that matches inside strings; the index walks the workspace root."
+    measured: .{
+      lens_command = "''"
+      false_anchor = "53 refs counted for a hash-angle wonder anchor written inside a quoted string"
+      index_skips_only = ".git, node_modules, dist, release, .claude, _workbench (server-index.ts:123)"
+      watcher = "**/*.spw across the workspace"
+    }[reg=facet]
+    recommendation = #[
+      `make each lens open a references peek`,
+      `find anchors and citations with the parser, so text inside strings never counts`,
+      `take index roots from workspace.spw lsp.roots, scan_exclusion and .gitignore`,
+      `a setting for whether archived plans count as references`,
+    ][reg=set]
+    replaces: "deleting stale scratch copies by hand (now swept by manifest:staged, de23118d)"
+    probe: `grep -n "IGNORED_DIRS = " .spw/_workbench/packages/spw-lsp/src/server-index.ts`
+    question: "Should archive/ count as references, or only live plans?"
+  }[reg=facet]
+
+  move_updates_citations: .{
+    rank = 5
+    claim: "Dragging a file in the Explorer breaks its citations."
+    exists: "A **/*.spw file watcher; no workspace/willRenameFiles handler."
+    gap: "No edits are offered when a file or folder moves."
+    measured: .{
+      see = "asks.move_with_citations (188 and 212 files rewritten by hand)"
+    }[reg=facet]
+    recommendation = #[
+      `answer willRenameFiles with the edits spw refactor path:from=to would make`,
+      `preview the edits before applying, the way the refactor plan does`,
+    ][reg=set]
+    replaces: "a scratch move script per consolidation"
+    probe: `grep -rn willRenameFiles .spw/_workbench/packages/spw-lsp/src`
+    question: "Preview always, or apply directly under a threshold?"
+  }[reg=facet]
+
+  plans_and_questions_views: .{
+    rank = 6
+    claim: "The sidebar knows concepts and roots, not plans or open questions."
+    exists: "Workspace and Concepts views; spw:plan:* run on the workbench's own plans."
+    gap: "No Plans view, no plans-touching-this-file, no Questions view."
+    measured: .{
+      live_plans = 48
+      open_questions = 158
+    }[reg=facet]
+    recommendation = #[
+      `a Plans view grouped by the README owner-map areas, with each Status line and next slice`,
+      `plans touching the open file`,
+      `a Questions view of open wonder blocks, each with a run-probe action`,
+    ][reg=set]
+    replaces: "reading the owner map, and npm run wonder in a terminal"
+    probe: `npm run wonder -- --summary`
+    question: "Should the Questions view group by plan, or by what each question unblocks?"
+  }[reg=facet]
+
+  workspace_view: .{
+    rank = 7
+    claim: "The Spw sidebar's Workspace view says the index is empty, shows a home path, and leaves out the plans."
+    exists: "Roots from the manifest (16), Memory as Hot, Warm and Cold, and a Spirit phase distribution."
+    gap: "Spirit reads an annotation copy fetched once at activation; roots carry no tiers or counts; Memory tracks gitignored scratch."
+    measured: .{
+      spirit = "No annotations indexed yet (workspace-tree.ts:633), with 440 annotated .spw files in the tree"
+      fetched_once = "annotation-index.ts:41-42 asks the server at activation, then only on a .spw save or a Concepts refresh"
+      index_fill = "a hover count for #!audit read 3 files after 15s, 74 after 60s, 120 after 150s"
+      repo_root = "@repo shows the absolute home path; every other root is relative"
+      workbench_root = "@workbench listed beside consumer roots; workspace.spw says it must not masquerade as consumer content"
+      missing_roots = #[ `.agents/plans (48 live, 158 open questions)`, `.spw/scenes (11 files)` ][reg=set]
+      memory_hot = "the gitignored .tmp asks file, which is in no root; reasons truncated (hot…, warm · …)"
+    }[reg=facet]
+    recommendation = #[
+      `refresh the view when the server reports the index ready, and show Indexing N of M until then`,
+      `show @repo as . or the repo name`,
+      `group mounted roots (@workbench) apart from consumer roots`,
+      `per root: files, unresolved citations and open questions`,
+      `Memory: skip or label scratch, give the reason as one plain line, link the plans that touch the file`,
+      `a Plans node fed by .agents/plans with archive/ skipped`,
+    ][reg=set]
+    replaces: "reading the empty Spirit node as a fact, and the owner map to find plans"
+    probe: `WAIT=60000 node scripts/lsp-probe.mjs . .spw/reviews/upstream-workbench-recommendations/context.spw hover 14:14`
+    creator_call = "2026-10-11: indexing plans is a good idea"
+    question: "Should Memory stay a record of attention, or become a list of what needs a decision?"
+  }[reg=facet]
+
+  capture_mode: .{
+    rank = 8
+    claim: "What helps while working crowds the frame while recording."
+    exists: "Toggles for inlayHints.paths, .annotations, .frames and five surface highlights; none for lenses."
+    gap: "No single switch, and lenses cannot be turned off."
+    measured: .{
+      on_screen = #[ `resolved path after every citation`, `|scope inlays on facets`, `reference lenses`, `header pragmatics · 3^ · 11# · d3 · ^↑` ][reg=set]
+    }[reg=facet]
+    recommendation = #[
+      `a Spw: Capture Mode command with a status-bar indicator`,
+      `preset: lenses and inlay hints off, semantic colours and brace highlights kept`,
+      `a setting to turn lenses off on their own`,
+    ][reg=set]
+    replaces: "toggling settings one kind at a time before recording"
+    probe: `grep -n codeLens .spw/_workbench/extensions/vscode-spw/package.json`
+    question: "Which decorations should stay on camera?"
+  }[reg=facet]
+
+  trace_hover: .{
+    rank = 9
+    claim: "A data-spw-* attribute in HTML, CSS or JS says nothing about where it is defined or read."
+    exists: "Hover inside .spw only."
+    gap: "No hover in the files where the attributes live; depends on spw_beyond_spw_files."
+    measured: .{
+      see = "asks.cross_language_trace (viewportActivation, iconPack, five unread operator attributes)"
+    }[reg=facet]
+    recommendation = #[
+      `hover a data-spw-* attribute or dataset.spwX key to see its defining convention`,
+      `list its readers and writers in both spellings in the hover`,
+    ][reg=set]
+    replaces: "rg in two spellings per question"
+    probe: `rg -n 'dataset\.spwOperatorFamily|data-spw-operator-family' public`
+    question: "Should the hover live in the spw extension, or in a site-side extension?"
+  }[reg=facet]
+}
+
+# ==============================================================================
+# 1b2. VS CODE, 2026-10-12 — time, tending, plan context, triggers
+# ==============================================================================
+# Written after the wip notebooks, the tending queue and the site clock
+# landed (781764d1, 6797d4cb). Gestures are in gestures.spw and placement in
+# placement.spw.
+
+^"vscode_2026_10_12"{
+
+  stream_time: .{
+    rank = 2
+    claim: "Stream entries now carry a grounded time on the site clock; the editor can make that time useful instead of typed."
+    exists: "The stream snippet: >>[${1:timestamp}] ${2:action} — ${3:description}. The time is typed by hand and the type is free text."
+    gap: "No stamp from the site clock, no schema type list, no hover on an entry, no view of entries over time."
+    measured: .{
+      corpus = "386 entries; 327 grounded on 2026-10-12 (npm run streams:stamp), 59 whose times fit no commit in either zone"
+      zones_before = "of the timed entries git could place, about 3 in 5 were Central time and 2 in 5 UTC"
+      hover_today = "spw-quest wip.spw:20, a >>[2026-10-12 10:59] verify entry: form coupling only"
+    }[reg=facet]
+    recommendation = #[
+      `completion after >>[ inserts the site-clock stamp (zone from .spw/site.spw ^"clock"; a spw.clock.zone setting overrides), then a choice of the schema's types`,
+      `hover on an entry: "4h ago · verify · first carried by 781764d1", and "estimated?" for the 59 that fit no commit`,
+      `a Timeline provider: the open file's stream entries beside its git commits in VS Code's Timeline view`,
+      `% lens above ^"stream": entry count, last entry age, entries this week`,
+      `! diagnostic: an entry stamped earlier than the one above it, or a stamp in the future`,
+    ][reg=set]
+    replaces: "npm run -s clock in a terminal, and git log beside the notebook"
+    probe: `npm run -s streams:stamp -- --list`
+    question: "Should the Timeline interleave every plan's entries (a workspace velocity view), or stay per file?"
+  }[reg=facet]
+
+  tending_view: .{
+    rank = 3
+    claim: "The sidebar's Memory tiers measure the server's attention; the work's own tending order now exists and is not shown."
+    exists: "Memory: Hot, Warm, Cold from workspace temperature (access age in requests, write count), 4 tracked."
+    gap: "Hot means read recently by the server, not due. 50 wip notebooks and 58 tending audits are invisible there."
+    measured: .{
+      memory = "2026-10-12 screenshot: Hot 1 (the .tmp asks file), Warm 2, Cold 1"
+      queue = "npm run tending:queue: 58 audits, 50 plans, 28 cooling candidates"
+    }[reg=facet]
+    recommendation = #[
+      `a Tending view fed by npm run tending:queue --json: oldest first, with the next step on each row`,
+      `row actions: run its sensor (as a task), add a verify entry with the site stamp, open its wip ^"cache"`,
+      `cooling candidates as their own group, labelled the creator's call`,
+      `rename Memory to Recently read, or fold it under Tending as a filter`,
+    ][reg=set]
+    replaces: "the tending:queue VS Code task and its terminal table"
+    probe: `npm run -s tending:queue -- --json --limit=5`
+    question: "Should the Tending view replace Memory, or sit beside it?"
+  }[reg=facet]
+
+  plan_context: .{
+    rank = 4
+    claim: "Inside a plan folder the status bar shows grammar context; the plan's own cache says more."
+    exists: "Status item: Spw: case · mood #:layer · #!pragmatics."
+    gap: "Nothing tells you the plan's status, gate or next commit while you edit its files."
+    measured: .{
+      fields = "every wip.spw ^\"cache\" now has ~#status, ~#next_commit, ~#files_hot, ~#gate, ~#last_stream"
+      wonder_pointer = "spw-quest wip.spw:24 look = ~\"./index.spw#wonder_spw_quest_look\": the hover shows the path, not the question"
+      cold_index = "~#gate hover on a cold start: 2 files, while 50 notebooks carry it"
+    }[reg=facet]
+    recommendation = #[
+      `[ mode status item in .agents/plans/<slug>/: slug · status · gate; click opens wip.spw at ^"cache"`,
+      `in any file named in a plan's ~#files_hot: the plans touching it, as a lens at line 1`,
+      `hover a wonder pointer: the ?["…"] question and its ~#taste line`,
+      `show Indexing N of M on counts until the index is ready`,
+    ][reg=set]
+    replaces: "opening wip.spw to remember what a plan is waiting on"
+    probe: `node scripts/lsp-probe.mjs . .agents/plans/spw-quest/wip.spw hover 24:12 33:6`
+    question: "Should files_hot drive a lens, or is a plan-per-file lens too much on camera?"
+  }[reg=facet]
+
+  triggers: .{
+    rank = 6
+    claim: "When the plugin acts matters as much as what it shows; today it acts on open, save and refresh."
+    exists: "Activation on the spw language and the two views; geometry on save (compute.geometryOnSave); decorations on a timer."
+    gap: "No trigger at the moments the work changes: typing >>[, creating a .spw file, committing, the index becoming ready."
+    measured: .{
+      config = "activation onLanguage:spw, onView:spwConcepts, onView:spwWorkspace; no keybindings"
+    }[reg=facet]
+    recommendation = #[
+      `on open: plan context and tending age; read only`,
+      `on typing >>[: the stamp completion (stream_time)`,
+      `on creating a .spw file: offer the header the folder's convention requires (wip.spw gets the notebook skeleton with a stamp)`,
+      `on save: lint and freshness (a notebook behind its Status line) as diagnostics; never write`,
+      `on index ready: refresh views once, and drop the Indexing note`,
+      `on commit (opt-in): list the plans whose files_hot the commit touched, offering a verify entry for each`,
+      `never on a timer when nothing changed; capture mode silences all but on-save diagnostics`,
+    ][reg=set]
+    replaces: "remembering to stamp, header and refresh by hand"
+    probe: `node -e "console.log(require('./.spw/_workbench/extensions/vscode-spw/package.json').activationEvents)"`
+    question: "Should the commit trigger exist at all, or is a stream entry always a deliberate act?"
+  }[reg=facet]
+}
+#>wonder_editor_tending_or_memory
+?["Should the sidebar show what the server read recently, what the work says is due, or both?"]{
+  #:depth #!pragmatics ~#lens(comparison)
+  ~#with: @hub
+  ~#taste: "A tier called Hot should name something a person can act on."
+  ~#hypothesis: "Memory's tiers come from workspace temperature: how many requests ago the server read a file, and how often it was written. The tending queue orders the same tree by the dates its files carry. Side by side, Recently read answers where was I, and Tending answers what is due."
+  ~#tension: "Two lists of the same files in one sidebar can read as two opinions; keeping one loses either the session's trail or the work's own clock."
+  !probe{ "npm run -s tending:queue -- --limit=8" }
+  $%[sidebar.memory, sidebar.tending, file.lastTended]
+  ~<"../../../scripts/tending-queue.mjs"> ~<"../../audits/index.spw">
+}

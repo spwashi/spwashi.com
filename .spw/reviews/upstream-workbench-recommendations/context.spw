@@ -1,0 +1,90 @@
+# Context — where the workbench asks came from
+#
+# Sessions, instruments, the creator's calls and standing rules; what the pin
+# ships and what is still open; and what the site changed on its own side.
+#
+# Detail for the review hub beside this folder
+# (upstream-workbench-recommendations.spw). Every ask keeps the same slots in
+# the same order: rank, claim, exists, gap, measured, recommendation, replaces,
+# probe, question. Workbench code is cited at the pin (229aedcf); nothing here
+# writes to .spw/_workbench.
+
+#>workbench_asks_context
+#:review #!workbench #!developer_experience
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@hub: ~"../upstream-workbench-recommendations.spw"
+
+operation = "audit"
+fixity = "tending"
+
+expression = asks[context]{sessions.instruments.calls.landed}<upstream>
+
+^"context"{
+  sessions = #[
+    `2026-10-10 — reviewed all 88 live plans for intent, detail and value; archived 40 (280c5a84); every move script and citation fix was written by hand`,
+    `2026-10-11 — spw:integrity ran 10 minutes and a bare query was killed; measured alone it takes 50s, so the cost is memory pressure plus an unshared parse`,
+    `2026-10-11 — the creator opened this file in VS Code and sent three screenshots: a code lens, a false unresolved warning with a geometry hover, and the Workspace view`,
+    `2026-10-12 — wip notebooks for all 50 plans, the tending queue and the site clock landed; the creator sent two screenshots of the Spw sidebar and a hover on the new clock frame`,
+    `2026-10-12 — the asks moved from the gitignored scratch file into this folder, one file per theme`,
+  ][reg=set]
+  instruments = #[
+    `spw query, spw resolve and spw lint on this file (parser-side)`,
+    `selectPathRefs from spw-lsp, run directly on this file (editor-side)`,
+    `.tmp/hover_probe.mjs on 2026-10-11 — hover requests to the real stdio server; now scripts/lsp-probe.mjs hover (2b31e156), with WAIT for the index`,
+    `/usr/bin/time -l for wall time and peak memory`,
+    `.tmp/lsp_probe.mjs on 2026-10-11 — semantic tokens, definition, references, symbols and diagnostics from the same server; now scripts/lsp-probe.mjs`,
+    `seed.lex() and lite scan() run directly, to see what the lexer already knows`,
+  ][reg=set]
+  creator_calls = #[
+    `2026-10-11 — indexing plans is a good idea`,
+    `2026-10-11 — Spw operators should be in the workbench so they can be studied more mindfully within the ethos of Spw development`,
+    `2026-10-11 — delete the stale scratch checkout (done; manifest:staged now sweeps, de23118d)`,
+    `2026-10-12 — timestamps grounded in one parseable format, to sync developmental velocity with humans; the zone configurable in the workspace; no offset on each entry`,
+    `2026-10-12 — think through the VS Code plugin: the semantics of its interactions and triggers, and a leaf.spw to see what a construct or query would do at a tree's root`,
+    `2026-10-12 — the comprehensive asks are preferred in the codebase; file length matters little; break them into a readable tree`,
+  ][reg=set]
+  standing_rules = #[
+    `never write to .spw/_workbench from this repo; record findings here and in the review file`,
+    `run spw:integrity alone, never beside check:local or manifest:staged`,
+  ][reg=set]
+}[reg=facet]
+
+# ==============================================================================
+# 0. SINCE THE LAST REVIEW — what the pin (229aedcf) ships, what is still open
+# ==============================================================================
+
+^"landed_since"{
+  landed = #[
+    `walk isolation — fs-walk.ts INFRASTRUCTURE_DIRS skips _workbench by default`,
+    `spw resolve — classifies pathRefs into file, route, directory, external`,
+    `spw lint`,
+    `spw fingerprint`,
+    `spw refactor — renames marks, anchors, case and mood particles, byte-identical elsewhere`,
+    `LSP — definition, references, rename, documentLink, workspaceSymbol, codeLens, hover`,
+  ][reg=set]
+  still_open = #[
+    `content-addressed parse cache (cache_hits is always 0)`,
+    `one scan memo keyed on roots plus file hashes`,
+    `.agents/plans as a named corpus root`,
+    `help --json`,
+  ][reg=set]
+}[reg=facet]
+
+^"site_side"{
+  landed = #[
+    `de23118d — manifest:staged sweeps scratch older than an hour and always reaches its cleanup`,
+    `0cbcafa3 — .vscode/tasks.json runs spw:integrity, plans:index:check, audit:operator-controls and check:agents into the Problems panel`,
+    `2b31e156 — the asks promoted to the review file as week_2026_10_11, with scripts/lsp-probe.mjs; the operator direction recorded; site.spw duplicate aliases removed; @scenes root; plans:index:check names unreviewed files; spw:integrity skips copy roots`,
+    `781764d1 — every live plan has a wip.spw; npm run tending:queue orders tending audits and plans`,
+    `6797d4cb — the site clock in .spw/site.spw ^"clock"; npm run -s clock; npm run streams:stamp grounded 327 stream entries`,
+    `37d3ab05 — scripts/lsp-probe.mjs starts from a relative repo path`,
+  ][reg=set]
+  open = #[
+    `operator-detection.js and operator-namespace-alignment.spw name the site table as canon; when the workbench holds the operator table, the site imports it (creator call 2026-10-11)`,
+    `workspace.spw: add .agents/plans as a root (scenes landed in 2b31e156; creator: indexing plans is a good idea); held until the server can tag archive/ instead of counting it as live`,
+    `the stream snippet still asks for a typed timestamp; npm run -s clock is the site's stamp until the editor offers one (editor.spw stream_time)`,
+  ][reg=set]
+}[reg=facet]

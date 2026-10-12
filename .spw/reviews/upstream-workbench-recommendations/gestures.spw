@@ -1,0 +1,66 @@
+# Gestures — what each editor gesture means in Spw
+#
+# A proposal from 2026-10-12: tie every editor gesture to the operator whose
+# meaning it already carries, so each surface is predictable from its gesture.
+#
+# Detail for the review hub beside this folder
+# (upstream-workbench-recommendations.spw). Every ask keeps the same slots in
+# the same order: rank, claim, exists, gap, measured, recommendation, replaces,
+# probe, question. Workbench code is cited at the pin (229aedcf); nothing here
+# writes to .spw/_workbench.
+
+#>workbench_asks_gestures
+#:review #!workbench #!developer_experience
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@hub: ~"../upstream-workbench-recommendations.spw"
+
+operation = "audit"
+fixity = "tending"
+
+expression = gesture[operator]{hover.references.outline.inlay.lens.diagnostic.rename}<editor>
+
+^"gestures"{
+
+  gesture_semantics: .{
+    rank = 1
+    claim: "Each editor gesture already behaves like one Spw operator; naming which one would make every surface predictable."
+    exists: "Hovers, lenses, inlays, diagnostics and actions each chose their own content and tone (hovers_that_answer measured the drift)."
+    gap: "No rule says what a hover may contain, what a lens must show, or which gestures may write."
+    measured: .{
+      canon = "public/js/kernel/operator-detection.js: #> frame address, #: layer vibration, # vibration, . ground, ^ integration, ~ potential, ? wonder, @ perspective, * value, & subject, = binding, $ substrate, % normalization, ! action, > concept edge, < concept, ( scene, [ mode, { direction"
+      hover_today = "site.spw ^\"clock\" (2026-10-12): Label site, free, exterior; zone = …: form coupling, label site, and six mobility rewrites of zone"
+    }[reg=facet]
+    recommendation = #[
+      `? wonder — hover: asks what this is, answers in one plain line first, never writes`,
+      `@ perspective — references: who regards this, grouped by root, archive last`,
+      `#> frame address — outline, breadcrumbs, workspace symbols: named handles only`,
+      `. ground — inlay hints: the resolved value (path, date, count), never prose`,
+      `% normalization — code lens: one measure with its unit and age ("12 entries · last 4h ago")`,
+      `! action — diagnostics and quick fixes: something to do, previewed before it writes`,
+      `= binding — rename: rebinding a name everywhere it is cited, archive included`,
+      `$ substrate — completion: what is in scope here (aliases, anchors, word sets, stream types)`,
+      `^ integration — snippets and file templates: known forms assembled (header, notebook, wonder)`,
+      `~ potential — preview: what a construct would do if placed (see leaf_placement)`,
+      `* value — tasks and sensors: the verify step, results in Problems`,
+      `[ mode — status bar: the context you are in (plan, layer, capture mode)`,
+      `rule: a gesture only does what its operator does; a ? surface that writes, or a % lens with no unit, is a bug`,
+    ][reg=set]
+    replaces: "learning each surface's habits one by one"
+    probe: `node scripts/lsp-probe.mjs . .spw/site.spw hover 283:4 284:5`
+    question: "Is the table right? Two calls are yours: whether ~ potential is the preview gesture, and whether diagnostics are ! action or * value."
+  }[reg=facet]
+}
+#>wonder_editor_gesture_operators
+?["Which operator does each editor gesture carry, and is ~ potential the gesture that previews a placement?"]{
+  #:depth #!linguistic ~#lens(constraint)
+  ~#with: @hub
+  ~#taste: "A reader who learns one gesture's operator should be able to guess what every surface of that gesture will do."
+  ~#hypothesis: "Hover is ? wonder and never writes; references are @ perspective; outline is #> frame address; inlays are . ground; lenses are % normalization; rename is = binding; quick fixes are ! action; a preview of an unplaced construct is ~ potential."
+  ~#tension: "Diagnostics are both something to do (! action) and a checked claim (* value). The table also reads a canon the creator wants the workbench to hold, so it may move when the workbench does."
+  !probe{ "node scripts/lsp-probe.mjs . .spw/site.spw hover 283:4 284:5" }
+  $%[gesture.operator, surface.writes, operator.canon]
+  ~<"../../../public/js/kernel/operator-detection.js"> ~<"../../language/operator-namespace-alignment.spw">
+}

@@ -1,0 +1,197 @@
+# Architecture — one model under the CLI and the editor
+#
+# The shared cause under most asks: each tool extracts its own facts from the
+# parser, or skips it. Each record names the asks it makes cheap.
+#
+# Detail for the review hub beside this folder
+# (upstream-workbench-recommendations.spw). Every ask keeps the same slots in
+# the same order: rank, claim, exists, gap, measured, recommendation, replaces,
+# probe, question. Workbench code is cited at the pin (229aedcf); nothing here
+# writes to .spw/_workbench.
+
+#>workbench_asks_architecture
+#:review #!workbench #!developer_experience
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@hub: ~"../upstream-workbench-recommendations.spw"
+
+operation = "audit"
+fixity = "tending"
+
+expression = asks[architecture]{facts.store.scope.adapters.layers.questions.edits}<upstream>
+
+# ==============================================================================
+# 1c. ARCHITECTURE — one model under the CLI and the editor
+# ==============================================================================
+# Most asks above share a cause: the parser is shared, but each tool extracts
+# its own facts from it, or skips it. The CLI has selectors.ts, the server has
+# spw-selector.ts (regex first), hovers try a fixed chain of line regexes, the
+# extension keeps an annotation copy fetched once, the CLI memo stores corpus
+# products rather than per-file facts, and the server cache lives in memory.
+#
+#   spw-seed parser
+#     -> facts per file   (citations, anchors, annotations, expressions, questions; content-hashed; tiered)
+#     -> workspace store  (incremental, readiness state, manifest-scoped)
+#     -> resolvers        (core, plus consumer adapters: routes, ids, dataset keys, CSS readers)
+#     -> views            (CLI, diagnostics, hover, lens, links, rename, trees, agent summaries)
+
+^"architecture"{
+
+  one_fact_model: .{
+    rank = 1
+    claim: "Every tool reads the same per-file facts, built from the parser tree."
+    exists: "One parser (spw-seed) under separate extractors in the CLI, the server, the hover chain and the extension."
+    gap: "Extractors disagree, and the regex ones read text inside strings and comments."
+    measured: .{
+      extractors = #[ `spw-cli/src/selectors.ts`, `spw-lsp/src/spw-selector.ts (regex first, :300-304)`, `display.ts hover chain (:460) and lens ANCHOR_RE (:36, :1091)`, `extension annotation-index.ts (copy fetched at :41-42)` ][reg=set]
+      disagreement = "9 citations in this file by spw query, 10 by the editor until an example was reworded"
+      misreads = #[ `a route anchor citation read as topic #home in 0 files`, `a frame called a capsule boundary`, `a hash-angle anchor inside a quoted string counted as 53 references` ][reg=set]
+    }[reg=facet]
+    recommendation = #[
+      `one facts module over the parse tree: citations with spans, anchors, annotations, expressions, wonder questions`,
+      `diagnostics, hover, lens, links, rename, trees and the CLI read only from it`,
+      `keep a regex path only for files that fail to parse, and mark its answers as recovered`,
+    ][reg=set]
+    replaces: "four extractors that answer the same question differently"
+    unlocks = #[ `diagnostics_match_the_parser`, `hovers_that_answer`, `references_that_navigate`, `move_with_citations`, `symbol_resolution`, `syntax_highlighting` ][reg=set]
+    probe: `spw query --from <file> --selector pathRefs --count, beside selectPathRefs from spw-lsp on the same file`
+    question: "Should the facts module live in spw-seed, or in a package both the CLI and the server import?"
+  }[reg=facet]
+
+  fact_store_with_readiness: .{
+    rank = 2
+    claim: "Facts persist by content hash, update per file, and say whether they are complete."
+    exists: "A corpus memo of finished corpus products under .spw/gen/session/corpus-memo/ (corpus-memo.ts); an in-memory server cache read back as attention (cache-reflection.ts)."
+    gap: "No per-file facts on disk; every start re-parses; no view shows that counts are partial."
+    measured: .{
+      index_fill = "3 files after 15s, 74 after 60s, 120 after 150s for one hover count"
+      integrity_alone_s = 49.56
+      query_alone = "61.64s, 560 MB peak"
+      under_pressure = "10 minutes at 44% CPU with 1.8 GB swapped; a bare query SIGKILLed"
+      cache_hits = 0
+    }[reg=facet]
+    recommendation = #[
+      `store facts per file keyed by sha256(content), on disk, shared by the CLI and the server`,
+      `update only changed files from the watcher`,
+      `make readiness a reported state (building N of M, ready, stale) and show it in every view that counts`,
+    ][reg=set]
+    replaces: "minutes of undercounted hovers and an empty Spirit view after each start"
+    unlocks = #[ `shared_parse_cache`, `workspace_view`, `file_navigation` ][reg=set]
+    probe: `WAIT=15000 node scripts/lsp-probe.mjs . .spw/reviews/upstream-workbench-recommendations/context.spw hover 14:14`
+    question: "Should the store live under .spw/gen (gitignored, per checkout) or a user cache directory?"
+  }[reg=facet]
+
+  manifest_scope_with_tiers: .{
+    rank = 3
+    claim: "The index covers what the manifest declares, and every fact knows its tier: authored, generated, mounted, archived or scratch."
+    exists: "workspace.spw declares lsp.roots, scan_exclusion and consumer_owns; spw doctor reads the exclusions."
+    gap: "The server walks the filesystem with a fixed skip list (server-index.ts:123); the watcher is **/*.spw; the tree lists @workbench as a root."
+    measured: .{
+      skip_list = ".git, node_modules, dist, release, .claude, _workbench"
+      scratch_indexed = "a 41 MB manifest:staged checkout from 2026-09-28 showed up in lenses (removed; sweep in de23118d)"
+      archive_counted = "archived plans count as references beside live ones"
+      plans_root = "absent; the creator calls indexing plans a good idea"
+    }[reg=facet]
+    recommendation = #[
+      `index lsp.roots and honor scan_exclusion and .gitignore`,
+      `accept .agents/plans as a root with archive/ tagged archived, not skipped silently`,
+      `tag every fact with its tier so views can say 3 live, 2 archived`,
+      `never count scratch`,
+    ][reg=set]
+    replaces: "deleting scratch by hand, and reading archived plans as live"
+    unlocks = #[ `lsp_index_scope`, `consumer_plans`, `workspace_view` ][reg=set]
+    probe: `grep -n "IGNORED_DIRS = " .spw/_workbench/packages/spw-lsp/src/server-index.ts`
+    creator_call = "2026-10-11: indexing plans is a good idea"
+    question: "Should archived plans appear in references at all, or only behind a toggle?"
+  }[reg=facet]
+
+  consumer_adapters: .{
+    rank = 4
+    claim: "The workbench owns how a reference resolves; the consumer supplies adapters for its own hosts."
+    exists: "spw resolve classifies file, route, directory and external; the site resolves page anchors and attributes in its own scripts."
+    gap: "The editor never sees route anchors, copy units or attribute readers and writers."
+    measured: .{
+      site_resolvers = #[ `scripts/lib/page-anchors.mjs`, `audit:module-selectors`, `audit:root-writes`, `audit-operator-controls` ][reg=set]
+      route_anchor_hover = "home_lede in copy-accessor.spw points at index.html:146, copy unit home.hook.lede; the hover read it as topic #home"
+      blind_spot = "data-spw-x and dataset.spwX must both be searched"
+    }[reg=facet]
+    recommendation = #[
+      `an adapter interface declared in workspace.spw`,
+      `route adapter: a route to its HTML file`,
+      `anchor adapter: an id to its copy unit, expression and sentence`,
+      `attribute adapter: data-spw-x to dataset.spwX, and the CSS selectors that read it`,
+    ][reg=set]
+    replaces: "rg in two spellings, and page-anchors.mjs reachable only from scripts"
+    unlocks = #[ `cross_language_trace`, `trace_hover`, `hovers_that_answer`, `file_navigation` ][reg=set]
+    probe: `node --import ./.spw/_workbench/node_modules/tsx/dist/loader.mjs ./.spw/_workbench/packages/spw-cli/src/main.ts resolve --help`
+    question: "Should adapters be JavaScript modules the manifest names, or declarative rules in the manifest?"
+  }[reg=facet]
+
+  layered_presentation: .{
+    rank = 5
+    claim: "Every view renders a fact in three layers: meaning, then evidence, then geometry."
+    exists: "Hovers lead with form coupling, label site and mobility; inlay hints and lenses toggle one kind at a time."
+    gap: "No consumer vocabulary, no layers, no presentation profiles."
+    measured: .{
+      hover_vocabulary = "form coupling, occupancy, payload, liminal, label site"
+      body_dump = "a 24-line facet shown whole as a hover surface"
+      on_camera = "the absolute home path in the Workspace view; lenses and inlays in every frame"
+      glossary_sources = #[ `.spw/conventions/word-sets.spw`, `.spw/conventions/operator-semantics.spw` ][reg=set]
+    }[reg=facet]
+    recommendation = #[
+      `line one in the consumer's words, from the glossaries the manifest names`,
+      `layer two: where it points, who cites it`,
+      `layer three: geometry, behind Spw: Inspect Form`,
+      `profiles for work, review and capture that every view honors`,
+    ][reg=set]
+    replaces: "turning decorations off one kind at a time before recording"
+    unlocks = #[ `hovers_that_answer`, `capture_mode`, `workspace_view` ][reg=set]
+    probe: `node scripts/lsp-probe.mjs . .spw/conventions/copy-accessor.spw hover 24:20`
+    question: "Should the first line ever name the Spw form, or only say what the thing is for?"
+  }[reg=facet]
+
+  questions_as_facts: .{
+    rank = 6
+    claim: "Open questions and plan decisions are facts with a state, a probe, an owner and what they unblock."
+    exists: "Wonder blocks in the canon; scripts/wonder.mjs harvests the site's; .agents is excluded from the corpus (corpus-scan.ts:46)."
+    gap: "The editor cannot list, filter or run the questions that decide the next slice."
+    measured: .{
+      open = 158
+      surfaces = 84
+      added_2026_10_10 = 31
+      unblocking_several = #[ `the arrival lever`, `the facet operator mapping`, `the Projects nav`, `the lens seat` ][reg=set]
+    }[reg=facet]
+    recommendation = #[
+      `a question fact: text, state, probe, owner plan, unblocks`,
+      `a plan fact: Status date, next slice, gate, files it names`,
+      `views: a Questions inbox, plans touching this file, what this file waits on`,
+    ][reg=set]
+    replaces: "npm run wonder in a terminal and the README owner map"
+    unlocks = #[ `wonder_harvest`, `plans_and_questions_views`, `consumer_plans` ][reg=set]
+    probe: `npm run wonder -- --summary`
+    creator_call = "2026-10-11: indexing plans is a good idea"
+    question: "Should answering a question in the editor write back to the wonder block?"
+  }[reg=facet]
+
+  edits_from_facts: .{
+    rank = 7
+    claim: "Moves and renames are edit plans computed from the fact store, previewed, then applied."
+    exists: "spw refactor renames marks, anchors, case and mood particles, plan-only by default (refactor.ts)."
+    gap: "No path kind; no willRenameFiles; moves are hand-written scripts."
+    measured: .{
+      hand_rewrites = "188 files on 2026-10-06, 212 on 2026-10-10"
+      missed = "150 references whose first segment starts with a dot, caught by plans:index:check"
+    }[reg=facet]
+    recommendation = #[
+      `path:from=to as a refactor kind, using citation spans from the fact store`,
+      `the same plan answers willRenameFiles in the editor`,
+      `a preview listing the links it cannot own (Markdown, HTML)`,
+    ][reg=set]
+    replaces: "a scratch move script per consolidation"
+    unlocks = #[ `move_with_citations`, `move_updates_citations` ][reg=set]
+    probe: `node --import ./.spw/_workbench/node_modules/tsx/dist/loader.mjs ./.spw/_workbench/packages/spw-cli/src/main.ts refactor --help`
+    question: "Should a move with unowned links refuse, or apply and list them?"
+  }[reg=facet]
+}
