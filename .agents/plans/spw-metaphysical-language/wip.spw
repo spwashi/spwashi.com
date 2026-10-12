@@ -1,10 +1,10 @@
-# Review 2026-07-12 — planning evidence; use the drift ledger, but route grammar, show, and public workshop work to separate owners.
+# Review 2026-10-12 — hot notes for the construct-codex shell; the workstreams, drift seeds and show program stay in PLAN.md and the plan's named .spw files.
 # wip — spw-metaphysical-language
 #
 # Spw already behaves like a language on this site — operators prime attention, braces hold charge, positions carry force — but its description is distributed…
 
 #>plan_spw_metaphysical_language_wip
-#:operation #!prime
+#:operation #!cache
 #:fixity #!tending
 #:layer #!pragmatics
 
@@ -13,7 +13,7 @@
 @plans_root: ~"../../../.agents/plans/index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 
-operation = "prime"
+operation = "cache"
 fixity = "tending"
 
 ^"selection_probes"{
@@ -32,7 +32,6 @@ fixity = "tending"
 ^["roots"]{
  @plan: ~"PLAN.md"
  @index: ~"index.spw"
- @matrix: ~".agents/plans/spw-metaphysical-language/sigil-property-matrix.spw"
  @research: ~"sigil-physics-research.spw"
  @operator_semantics: ~"../../../.spw/conventions/operator-semantics.spw"
  @operator_alignment: ~"../../../.spw/conventions/operator-alignment.spw"
@@ -44,9 +43,9 @@ fixity = "tending"
  @planning_ecology: ~"../../../.spw/conventions/planning-ecology.spw"
  @product_lines: ~"../../../.spw/surfaces/product-lines.spw"
  @spatial_grammar: ~"../../../.spw/philosophy/spatial-grammar.spw"
- @brace_physics: ~".spw/_workbench/.spw/registries/brace-physics.spw"
+ @brace_physics: ~"../../../.spw/_workbench/.spw/registries/brace-physics.spw"
  @atlas: ~"../../../topics/software/spw/index.html"
- @operators_route: ~"topics/software/spw/operators/"
+ @operators_route: ~"../../../topics/software/spw/operators/"
  @operators_js: ~"../../../public/js/semantic/operators.js"
  @shared_kernel: ~"../../../public/js/kernel/shared.js"
  @operators_css: ~"../../../public/css/handles/operators/"
@@ -64,7 +63,7 @@ fixity = "tending"
  lane: #semantic_rail
  ladder: #convention_to_manufacture
  develops: [#construct_codex, #sigil_properties, #drift_arbitration, #production_ladder, #industry_projection]
- review_surfaces: [@plan, @matrix, @operator_alignment, @atlas]
+ review_surfaces: [@plan, @operator_alignment, @atlas]
 }
 
 ^["concept_index"]{
@@ -103,6 +102,7 @@ fixity = "tending"
  >>[2026-07-07 10:17] maintain - sigil-physics-research.spw written with five claim chains (skim-001, verso-002, sound-003, motion-004, evolution-005), all untested; PLAN.md gained Workstream E, show risks, segment validation probes, and renumbered commits; show-production industry brief upgraded exploratory -> near-term since the show is its pilot.
  >>[2026-07-07 11:02] semantics - fable_charm section minted: ten cross-surface observations, each with saw/wisdom/toward shape, each discharging toward one plan direction. Strongest cross-site reading: the domain register is an operator atlas at biographical scale (newyear.life = threshold held annually, brainstorm.monster = ~ potential in public, clit.video = ! immediacy layered) — four longitudinal selection environments already running for the evolution fabric.
  >>[2026-07-07 11:04] taste - A charm is not doctrine: it spends charge when read and recharges only through disagreement plus evidence. The discharge_rule routes charm mismatches back into this stream so the charm stays falsifiable like everything else in the plan.
+ >>[2026-10-12] read — only commit 1 of 10 has landed (009acd60), so its line left the commits block. .spw/conventions/construct-codex.spw does not exist, and neither does a sigil property matrix or an alignment protocol. The next slice is the codex as a minimal shell: a header, a drift_ledger facet, and one stub per operator citing its owner convention; the shell has no gate, and any change to what an operator means needs the creator's sign-off. On touch, @matrix was removed (the file was never written) and @brace_physics and @operators_route now resolve from this folder.
 }
 
 ^["open"]{
@@ -181,7 +181,6 @@ fixity = "tending"
 }
 
 ^["commits"]{
- ~[1]: "#[spw-lang] - plan, wip, and index for the metaphysical-language track"
  ~[2]: "&[codex] - construct codex convention with census, entry shape, and bridges"
  ~[3]: "%[sigils] - sigil property matrix, drift ledger, and evidence gathering"
  ~[4]: "?[show] - sigil-physics research program, axes, claims, and segment format"
@@ -195,11 +194,11 @@ fixity = "tending"
 
 ^["cache"]{
  ~#status: "planned"
- ~#hygiene_split: "none"
- ~#files_hot: ".agents/plans/spw-metaphysical-language/PLAN.md, .agents/plans/spw-metaphysical-language/index.spw, .agents/plans/spw-metaphysical-language/wip.spw, .agents/plans/spw-metaphysical-language/sigil-physics-research.spw"
- ~#next_commit: "1"
+ ~#next_commit: "+[codex] Open the construct codex as a shell: a drift ledger, and one stub per operator citing its owner"
+ ~#files_hot: ".spw/conventions/operator-semantics.spw, .spw/conventions/operator-alignment.spw, .spw/conventions/sigil-identifier-contract.spw, .spw/conventions/index.spw"
+ ~#gate: "nothing for the shell; any change to an operator's meaning needs the creator's sign-off"
  ~#open_count: "11"
- ~#last_stream: "2026-07-07 11:04"
+ ~#last_stream: "2026-10-12"
  ~#mantlepiece: "fable_charm — ten saw/wisdom/toward objects; recharge by disagreement plus evidence"
  ~#taste_debt: "Do not let the codex restate owner conventions; do not arbitrate operator meanings by fiat; do not let industry briefs enter conventions without a pilot artifact; do not let stage excitement write canon or let segments air without a pre-registered expectation."
 }

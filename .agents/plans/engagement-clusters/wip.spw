@@ -1,0 +1,37 @@
+# Review 2026-10-12 — hot notes for the host-write census of quiet modules; the evidence, census tables and human decisions stay in PLAN.md.
+# wip — engagement-clusters
+#
+#>plan_engagement_clusters_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@engagement: ~"../../../public/js/kernel/engagement.js"
+@root_census: ~"../../../scripts/root-write-census.mjs"
+@root_ablation: ~"../../../scripts/root-state-ablation.mjs"
+@module_contract_wip: ~"../module-contract-overhaul/wip.spw"
+
+operation = "cache"
+fixity = "tending"
+
+^"stream"{
+ >>[2026-10-12] read — kernel/engagement.js and the two root sensors stand; since the Status, public/js has changed only in generated expressions and the promo cycle, and the sensors not at all. Two catalog defs carry engages, field-composition and region-menu (enhancement.js:50, feature.js:655); the third match the Status counted is the field's own entry in constants.js. The next slice, reading what the 27 quiet modules write to their own hosts on arrival, has not started.
+}
+
+^"open"{
+ default_arming = "Does engage become the default arming, and how long may a first engagement take before it reads as a wait? The creator's sensation call."
+ first_cluster = "Which modules join a cluster first, given what each draws on arrival? The creator's call."
+ facet_operators = ~"../module-contract-overhaul/wip.spw#wonder_module_contract_overhaul_facet_operators"
+ weights = "Where do cluster weights come from, and can a reader see them? The creator's call."
+ boilerplate = "Do operators, navigator and console stay page boilerplate or become shell? The creator's call."
+}
+
+^"cache"{
+ ~#status: "planned"
+ ~#next_commit: "+[sense] Read what each quiet module writes to its own hosts on arrival, which the root census cannot see"
+ ~#files_hot: "scripts/root-write-census.mjs, public/js/kernel/engagement.js, public/js/runtime/catalog/feature.js, public/js/runtime/catalog/enhancement.js"
+ ~#gate: "nothing for the host census beyond a headless browser the sandbox allows (npm run sense -- doctor first); default arming and container priming wait on the open calls"
+ ~#last_stream: "2026-10-12"
+}

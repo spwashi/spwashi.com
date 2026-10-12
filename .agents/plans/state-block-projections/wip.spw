@@ -1,4 +1,4 @@
-# Review 2026-07-12 — implementation evidence; promote proven targets and rendering rules, then cool the planning notebook.
+# Review 2026-10-12 — hot notes for the lens-seat choice; the April facets below are history, and the seat options and absorbed gates stay in PLAN.md.
 # wip — state-block-projections
 #
 #>plan_state_block_projections_wip
@@ -28,9 +28,8 @@ fixity = "tending"
  hot_files = #[ `public/js/site.js`, `.agents/plans/state-block-projections/state-block-projections.spw`, ][reg=set]
 }[reg=facet]
 ^["roots"]{
- @cluster: ~".agents/plans/plan-ecology-clustering/plan-ecology-clustering.spw"
  @plan: ~"PLAN.md"
- @pattern: ~".spw/patterns/literate-ui.spw"
+ @pattern: ~"../../../.spw/_workbench/.spw/patterns/literate-ui.spw"
  @references: ~"../interaction-grammar/PLAN.md"
  @references: ~"../archive/brace-literacy-guides/PLAN.md"
  @artifact: ~"state-block-projections.spw"
@@ -45,7 +44,7 @@ fixity = "tending"
  lane: #execution_truth
  ladder: #service
  develops: [#interaction_grammar, #runtime_legibility, #state_projection]
- review_surfaces: [@cluster, @plan, @pattern]
+ review_surfaces: [@plan, @pattern]
  snippet_routes: [#example, #query, #snippet]
 }
 
@@ -101,10 +100,12 @@ fixity = "tending"
  >>[2026-04-11 09:34] align — copy now frames the block as an epistemic boundary handle: stance, containment, and persisted mode/setting changes remain visible and reversible
  >>[2026-04-11 09:53] refine — state blocks now expose a small explicit loop state (preview, activated, resolved) so actions read as deliberate processes rather than anonymous clicks
  >>[2026-04-11 09:57] integrate — image helper, hold-to-visit, mode switches, and settings changes now resolve through shared refresh / change paths instead of isolated flashes
+ >>[2026-10-12] read — the cache's "implementing" from April no longer holds. The inspector runtime (public/js/interface/state-inspector.js) and the lens-seat bench at /design/components/#lens-seats (dc7c35a7) are built, and the next slice, moving the chosen seat out of routes/surfaces/design.css into handles/operators/state-semantics.css, waits on the creator picking A, B or C in a browser. The same review settles the faint mode-switch chips and the lens reward; runtime/memory/component-collection.js still has no spw:variant-selected listener.
 }
 
 ^["open"]{
  ?[settings_scope]: "Which settings fields should be mutable from the state block without making the block too noisy?"
+ lens_seat = ~"./index.spw#wonder_state_block_projections_lens_seat"
 }
 
 ^["commits"]{
@@ -115,14 +116,11 @@ fixity = "tending"
 }
 
 ^["cache"]{
- ~#status: "implementing"
- ~#base_ref: "main@e04c8c0"
- ~#rebased_at: ""
- ~#hygiene_split: "none"
- ~#files_hot: "public/js/site.js, public/css/spw-components.css, public/js/spw-image-metaphysics.js"
- ~#next_commit: "2"
- ~#open_count: "1"
- ~#last_stream: "2026-04-11 09:57"
+ ~#status: "waiting"
+ ~#next_commit: "~[css] Give lens switches the chosen seat as a lens-chrome value, and opt one route in"
+ ~#files_hot: "public/css/routes/surfaces/design.css, public/css/handles/operators/state-semantics.css, public/js/interface/state-inspector.js, public/js/runtime/memory/component-collection.js"
+ ~#gate: "the creator's pick of seat A, B or C at /design/components/#lens-seats, on a phone and a desktop"
+ ~#last_stream: "2026-10-12"
  ~#taste_debt: "Keep the settings state block from becoming a full dashboard"
 }
 

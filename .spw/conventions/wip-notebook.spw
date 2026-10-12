@@ -39,6 +39,13 @@ fixity = "stable"
     `operation and fixity fields when using facet blocks`
   ][reg=set]
   rule = "New wip files should follow semantic-insight-cache.spw unless the plan needs a fuller development stream."
+  current_shape = "The 2026-10-12 notebooks hold three blocks: ^\"stream\" (dated >>[YYYY-MM-DD] entries), ^\"open\" (pointers to index.spw wonder anchors or plain questions naming whose call each is), and ^\"cache\" (~#status, ~#next_commit, ~#files_hot, ~#gate, ~#last_stream). The spw-quest notebook is the example."
+}
+
+^"freshness"{
+  rule = "Every live plan has a wip.spw, and its last dated entry is not older than the plan's Status line. Changing the Status line means adding a stream entry."
+  sensor = "npm run audit:plans warns when a wip.spw is missing, behind its Status line, or missing a required header mark."
+  queue = "npm run tending:queue orders the plans by their last entry, beside the tending audits (.spw/audits/index.spw ^\"tending_queue\")."
 }
 
 ^"legacy_stream"{

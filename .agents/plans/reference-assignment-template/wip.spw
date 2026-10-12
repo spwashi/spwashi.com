@@ -1,0 +1,34 @@
+# Review 2026-10-12 — hot notes for the first worked brief; the three forms, the brief shape and the absorbed curricula stay in PLAN.md.
+# wip — reference-assignment-template
+#
+#>plan_reference_assignment_template_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@insight_cache: ~"./templates/semantic-insight-cache.spw"
+@tending_note: ~"../modular-experience-slices/templates/tending-note.spw"
+@color_motion: ~"../color-motion/PLAN.md"
+
+operation = "cache"
+fixity = "tending"
+
+^"stream"{
+ >>[2026-10-12] read — the three forms are in place: the brief in PLAN.md, the insight cache and ontology-harmony in templates/, and the tending note in modular-experience-slices. No brief anywhere has a result note yet. color-motion's PLAN.md holds four intern assignment candidates in this shape, such as design-palette-woven-signal, and spellcraft-authoring has two briefs; either could become the first worked example once the word-list question is answered.
+}
+
+^"open"{
+ word_lists = ~"./index.spw#wonder_reference_assignment_word_lists"
+ first_exemplar = "Which cascade does the JS-to-TS ladder brief start from: page boot, settings or composition? The creator's call."
+}
+
+^"cache"{
+ ~#status: "waiting"
+ ~#next_commit: "+[plans] Work one assignment brief through to its result note, so every later brief has an example to copy"
+ ~#files_hot: ".agents/plans/reference-assignment-template/PLAN.md, .agents/plans/reference-assignment-template/templates/semantic-insight-cache.spw, .agents/plans/modular-experience-slices/templates/tending-note.spw"
+ ~#gate: "the creator's answer on whether a mentee gets the sensory word lists as given or derives their own"
+ ~#last_stream: "2026-10-12"
+}

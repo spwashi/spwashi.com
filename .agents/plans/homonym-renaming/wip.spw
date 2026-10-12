@@ -1,0 +1,35 @@
+# Review 2026-10-12 — hot notes for the tempo-ladder collision entry; the ledger, geometry rules and mechanics stay in PLAN.md.
+# wip — homonym-renaming
+#
+#>plan_homonym_renaming_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@word_sets: ~"../../../.spw/conventions/word-sets.spw"
+@signals_css: ~"../../../public/css/components/signals.css"
+@prepaint_state: ~"../../../public/js/runtime/arrival/prepaint-state.js"
+@region_profiler: ~"../../../public/js/runtime/regions/region-profiler.js"
+
+operation = "cache"
+fixity = "tending"
+
+^"stream"{
+ >>[2026-10-12] read — no rename has landed. data-spw-page-tempo="settle" is still read at public/css/components/signals.css:248 and written by runtime/arrival/prepaint-state.js and runtime/regions/region-profiler.js, and .spw/conventions/word-sets.spw has no tempo entry yet. The next slice, a collision entry for snap|fast|base|deliberate|settle with two candidate speed words, needs no decision; the rename itself waits on the creator, and ground waits on spw-metaphysical-language.
+}
+
+^"open"{
+ unseen_word = ~"./index.spw#wonder_homonym_renaming_unseen_word"
+ ground = "Do electrical grounding, memory grounding and the $ substrate share one shape? Arbitrated in spw-metaphysical-language's sigil study, with the creator's sign-off, not here."
+}
+
+^"cache"{
+ ~#status: "planned"
+ ~#next_commit: "+[words] Mark settle on the tempo ladder as a collision, and offer two speed words for it"
+ ~#files_hot: ".spw/conventions/word-sets.spw, public/css/components/signals.css, public/js/runtime/arrival/prepaint-state.js, public/js/runtime/regions/region-profiler.js"
+ ~#gate: "nothing for the word-set entry; the rename waits on the creator's call on whether an unseen word needs a browser review"
+ ~#last_stream: "2026-10-12"
+}

@@ -1,0 +1,34 @@
+# Review 2026-10-12 — hot notes while the plan is parked; the surfaces, boundaries and sequence stay in PLAN.md.
+# wip — model-collaborator-lore-surfaces
+#
+#>plan_model_collaborator_lore_surfaces_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@folios: ~"../../../design/folios/index.html"
+@seed_card: ~"../../../public/js/modules/cards/seed-card.js"
+@capture_ecology: ~"../../../.spw/conventions/capture-ecology.spw"
+
+operation = "cache"
+fixity = "tending"
+
+^"stream"{
+ >>[2026-10-12] read — parked until a shoot is booked, and the tree agrees: no terms card exists and /play/rpg-wednesday/lore/ is absent. When a shoot is booked, the first slice is the terms card, exported through the folio .spw.txt path, and its copy is the creator's to write.
+}
+
+^"open"{
+ booking = "When is a shoot booked? That unparks the plan; the creator's call."
+ terms_copy = "What does the terms card say? The creator writes or approves its copy before any plate."
+}
+
+^"cache"{
+ ~#status: "held"
+ ~#next_commit: "+[folios] Open a terms card a collaborator can read and save before any shoot"
+ ~#files_hot: "design/folios/index.html, public/js/modules/cards/seed-card.js"
+ ~#gate: "a booked shoot, then the creator's copy for the terms card"
+ ~#last_stream: "2026-10-12"
+}

@@ -1,4 +1,4 @@
-# Review 2026-07-12 — implementation evidence; promote proven patterns by route family and cool the broad notebook.
+# Review 2026-10-12 — hot notes for the scripts-off landmark diff; the April facets below are history, and the parity doctrine and sensors stay in PLAN.md.
 # wip — semantic-html-normalization
 #
 #>plan_semantic_html_normalization_wip
@@ -125,7 +125,8 @@ fixity = "tending"
 ^["cache"]{
  ~#status: "sensing"
  ~#files_hot: "scripts/lib/chrome-headless-harness.mjs, scripts/audit-page-structure.mjs, scripts/component-snapshots.mjs, public/js/semantic/page-metadata.js, public/js/interface/semantic-chrome.js"
- ~#next_commit: "+[sense] diff a route's landmarks, headings and links with scripts off and on"
+ ~#next_commit: "+[sense] Diff a route's landmarks, headings and links with scripts off and on"
+ ~#gate: "nothing; the diff reports per route and joins check:local only after its counts are read once in a browser"
  ~#open_count: "0"
  ~#last_stream: "2026-10-10"
  ~#taste_debt: "the next cleanup can decide whether section-level labels should become more authored in HTML or stay runtime-derived; the current pass keeps the static contract strongest at the page landmark level"

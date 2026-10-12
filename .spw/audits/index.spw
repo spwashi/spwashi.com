@@ -373,6 +373,24 @@ fixity = "tending"
   }
 }[reg=facet]
 
+^"tending_queue"{
+  ~#note: "Audits marked tending and live plans, least recently tended first. The order is computed, so there is no list to keep; tending an item writes a date into it, and the date sends it to the back."
+  command = `npm run tending:queue`
+  dated_by = #[
+    `audit: the latest date written in the file; with none, the month in its name or the day git added it (shown as ≥)`
+    `folder audit: one item, its index.spw, dated by its newest member`
+    `plan: its wip.spw's last >>[date] entry, or its Status line when it has no wip.spw`
+  ][reg=set]
+  tend_the_head = #[
+    `audit with a sensor: run it, compare with the numbers it recorded, add a dated line saying what held and what moved`
+    `audit with none: read it against the tree; add a dated line, or leave it listed for cooling`
+    `plan: read the Status line against the tree; add a >>[date] entry and a fresh ^"cache" to wip.spw (wip-notebook.spw)`
+  ][reg=set]
+  cooling = `An audit with no sensor and nothing dated in 60 days shows "cool?". Cooling (fixity cold, operation archive) is the creator's call; the queue names candidates and changes nothing.`
+  expression = tending[queue]{audit.plan}<oldest>
+  ~see = ~"../conventions/wip-notebook.spw"
+}[reg=facet]
+
 ^"owner_claim"{
   claim #audits-index-001 {
     layer = "pragmatic"

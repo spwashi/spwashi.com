@@ -1,0 +1,33 @@
+# Review 2026-10-12 — hot notes for the thought-trace slice on two hosts; the copy-depth contract, the trace rules and the absorbed plans stay in PLAN.md.
+# wip — semantic-copy-depth
+#
+#>plan_semantic_copy_depth_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@slop: ~"../../../topics/slop/index.html"
+@math: ~"../../../topics/math/index.html"
+@ai_writing_smells: ~"../../../.spw/caches/ai-writing-smells-2026-09.spw"
+
+operation = "cache"
+fixity = "tending"
+
+^"stream"{
+ >>[2026-10-12] read — the production note from eba561ba is still on /about/ and /play/rpg-wednesday/. Neither /topics/slop/ nor /topics/math/ has a (turn) expression, and neither page has changed since. The slop half waits on the creator; the math half does not: its textbook note is two sentences of claim, then a sentence naming the five diagram routes (eight links in the note), and the ten lens cards below it are already a shelf.
+}
+
+^"open"{
+ slop_feeling = ~"./index.spw#wonder_semantic_copy_depth_slop_feeling"
+}
+
+^"cache"{
+ ~#status: "planned"
+ ~#next_commit: "~[copy] Let the pure-math note make its one claim, and move its five diagram routes into a list beside it"
+ ~#files_hot: "topics/math/index.html, topics/slop/index.html, .spw/caches/ai-writing-smells-2026-09.spw"
+ ~#gate: "nothing for the math note; the slop paragraphs wait on the creator's call on #feeling"
+ ~#last_stream: "2026-10-12"
+}

@@ -123,6 +123,14 @@
       ]
     },
     {
+      "label": "spw: tending queue (tending:queue)",
+      "detail": "Tending audits and live plans, the least recently tended first, with what tending each one means",
+      "type": "shell",
+      "command": "npm run -s tending:queue -- --limit=24",
+      "presentation": { "reveal": "always", "panel": "dedicated" },
+      "problemMatcher": []
+    },
+    {
       "label": "spw: quick sensors",
       "detail": "Plan claims, .spw tree, plan index, operator controls and agent budgets, in order (spw:integrity stays separate)",
       "dependsOrder": "sequence",
