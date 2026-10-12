@@ -27,7 +27,7 @@ export function atom() {
   return `<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>${NAME}</title>
-  <subtitle>A periodical of wonder about π and pie, with a supplement on e.</subtitle>
+  <subtitle>A periodical of record about π and pie, with a supplement on e.</subtitle>
   <link href="${ORIGIN}/feed.xml" rel="self"/>
   <link href="${ORIGIN}/"/>
   <id>${ORIGIN}/</id>

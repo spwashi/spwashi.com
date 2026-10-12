@@ -7,7 +7,7 @@ import { SERIES } from "./room.js";
 import { inSeries, printedIn } from "./catalog.js";
 
 export const NAME = SERIES.pi.name;
-export const VERSION = "0.2.0";
+export const VERSION = "0.2.1";
 export const ORIGIN = "https://wap.mom";
 
 export const escapeHtml = (value) =>
@@ -265,7 +265,7 @@ export function fleuron(series) {
 function colophon() {
   return `<footer class="colophon">
   <p>${NAME} is numbered by the decimal expansion of π; its supplement, by e. Each issue adds a place.</p>
-  <p>It is written in <a href="/room">a room</a>, in conversation. <span class="printers-mark">e<sup>iπ</sup> + 1 = 0</span>. ${VERSION}.</p>
+  <p>It is written in <a href="/room">a room</a>, in conversation. <span class="printers-mark">e<sup>iπ</sup> + 1 = 0</span>. Printing ${VERSION}.</p>
   <ul class="links" aria-label="${NAME}">
     <li><a href="/">Front page</a></li>
     <li><a href="/contents/">Contents</a></li>
