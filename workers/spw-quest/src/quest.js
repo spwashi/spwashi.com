@@ -1,7 +1,7 @@
 // The browser and agent surfaces share one source-backed initialization recipe.
 export const WORKBENCH = Object.freeze({
   repository: "https://github.com/spwashi/spw-workbench",
-  revision: "3eaab637767222ffe248449da7262a251c4c608b",
+  revision: "4fe8b9d8b5167c4ed97b4e97bfc539c3a8295f73",
   mount: ".spw/_workbench",
   node: "^20.19.0 || >=22.12.0",
 });
@@ -13,6 +13,7 @@ export const EXPECTED_FILES = Object.freeze([
   ".spw/mount.spw",
   ".spw/workspace.spw",
   ".agents/workflows/commit-review.md",
+  ".spw/quest/index.spw",
 ]);
 
 export const JOB = `Read https://spw.quest/init and initialize .spw/_workbench in this repository. Verify with doctor. Stop before any commit.`;
@@ -43,7 +44,7 @@ export const SHELL_STEPS = `test -d .git || git init
 git submodule add ${WORKBENCH.repository} .spw/_workbench
 git -C .spw/_workbench checkout ${WORKBENCH.revision}
 npm --prefix .spw/_workbench ci --ignore-scripts
-npm --prefix .spw/_workbench run spw:init -- ../..
+npm --prefix .spw/_workbench run spw:init -- ../.. --preset quest
 npm --prefix .spw/_workbench run spw:doctor -- ../..
 git diff --check
 `;
@@ -111,6 +112,12 @@ export const INSTRUCTION_SETS = Object.freeze([
   },
 ]);
 
+/** The quest's last step, grow, as an agent runs it after doctor: lint and resolve the consumer's .spw. */
+export const GROW_CHECKS = `   npm --prefix .spw/_workbench run spw -- lint .spw
+   npm --prefix .spw/_workbench run spw -- resolve --from .spw
+   git diff --check
+`;
+
 export const INIT_PROMPT = `Initialize the current repository with Spw Workbench at .spw/_workbench.
 Read this entire recipe before editing. Follow the target repository's existing instructions.
 The section "Git, in this order" is the only git procedure. Use the one command that matches the folder you have.
@@ -118,6 +125,10 @@ The section "Git, in this order" is the only git procedure. Use the one command 
 Spw supplies language, parser, CLI, and editor tooling. The consumer owns .spw/;
 the mounted workbench owns .spw/_workbench. Keep this repository's own instructions,
 framework, and identity.
+
+Expected core files: .spw/README.md, .spw/index.spw, .spw/mount.spw,
+.spw/workspace.spw, .spw/quest/index.spw, plus .agents/workflows/commit-review.md. The pinned initializer
+may seed additional authored surfaces; inspect its output and report those names.
 
 1. Inspect the working directory, git status, existing instructions, .gitmodules,
    .spw/, and git config core.hooksPath. Preserve unrelated changes and existing files.
@@ -130,8 +141,9 @@ framework, and identity.
    npm --prefix .spw/_workbench ci --ignore-scripts
    Leave the consumer's own dependency graph alone.
 4. From the consumer root, run:
-   npm --prefix .spw/_workbench run spw:init -- ../..
+   npm --prefix .spw/_workbench run spw:init -- ../.. --preset quest
    The ../.. target is relative to npm's mounted package working directory.
+   --preset quest adds .spw/quest/: forks, experiments, shelves, wonders and asks.
    Init seeds consumer files and leaves existing scaffold files in place. It may
    install a commit-review workflow and .git/hooks/pre-commit. Read the existing
    hook first. Report when core.hooksPath means that hook will not run.
@@ -144,11 +156,12 @@ framework, and identity.
    Default consumer scans exclude _workbench. Leave the workbench grammar in place.
 6. Report the mount revision, created and skipped files, hook changes, doctor result,
    and any blocked step. Run the checks before you call the setup done.
+7. Play once. Read .spw/quest/index.spw and make one of its moves inside .spw/ only:
+   fork a form, run a probe, move a claim along the shelves, or write an ask for the
+   workbench in .spw/quest/asks.spw. If that folder is missing, take one move from the
+   Grow section of .spw/README.md instead. Then verify from the consumer root:
+${GROW_CHECKS}   Report the file you added or changed and what both commands said.
    Stop before any commit, push, or deploy.
-
-Expected core files: .spw/README.md, .spw/index.spw, .spw/mount.spw,
-.spw/workspace.spw, plus .agents/workflows/commit-review.md. The pinned initializer
-may seed additional authored surfaces; inspect its output and report those names.
 `;
 
 export const QUEST_PROMPTS = Object.freeze([
@@ -163,6 +176,12 @@ npm --prefix .spw/_workbench run spw -- tree @spw --depth 3
 Use the mounted-consumer review skill only as an instrument, following this repo's rules.
 Record evidence under consumer-owned .spw/audits/ with consumer and workbench revisions.
 Keep this repository's own CSS nouns, copy, and framework.` },
+  { id: "grow", title: "Play once", hint: "The last step, after doctor: one move in .spw/quest.", body: `Read .spw/quest/index.spw and make one of its moves, inside .spw/ only: fork a form,
+run a probe, move a claim along the shelves, or write an ask in .spw/quest/asks.spw.
+If .spw/quest is missing, follow the Grow section of .spw/README.md once instead.
+Then verify from the consumer root:
+${GROW_CHECKS.replace(/^ {3}/gm, "")}Report the file you added or changed and what both commands said.
+Stop before any commit, push, or deploy.` },
 ]);
 
 export const QUEST_TEXT = `# spw.quest — initialize a mounted Spw workbench

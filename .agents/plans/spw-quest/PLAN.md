@@ -1,6 +1,6 @@
 # Plan: spw-quest
 
-**Status 2026-10-12.** spw.quest serves a guide to the language (dcf23bdb, 0d0380d2) and an install page, and nobody has used it. The creator asked for it to be more aesthetically pleasing and easier to run with, and for this plan to be a surface agents can review. Next slice: A, try before installing. Its only gate is the creator's read of this plan.
+**Status 2026-10-12.** Committed, not yet deployed: the guide leads with seven storyboard panels from the workbench's quest.spw on spwashi.com's paper material, each line read by the parser in the page and by the worker at /read with scripts off. A path walks the panels, the twelve sigils read as a table, and Put one together (/build) builds one line and swaps one slot at a time. It waits on the creator's look at a phone before the Wrangler deploy.
 
 **Related:** [workers-wonder-kit](../workers-wonder-kit/PLAN.md) (shared worker shell) · [spw-language-v04](../spw-language-v04/PLAN.md) (the parser's arrival in the site) · [upstream workbench asks](../../../.spw/reviews/upstream-workbench-recommendations.spw) (`week_2026_10_11`).
 

@@ -1,4 +1,4 @@
-# Review 2026-10-12 — hot notes for slice A; the slices, prompts and guards stay in PLAN.md.
+# Review 2026-10-12 — the panel rewrite, the build surface and the creator's direction for spw.quest; the slices, prompts and guards stay in PLAN.md.
 # wip — spw-quest
 #
 #>plan_spw_quest_wip
@@ -6,30 +6,169 @@
 #:fixity #!tending
 #:layer #!pragmatics
 
+# Handles the blocks below use. ^"architecture" says what each worker part does and how they connect.
 @plan: ~"./PLAN.md"
 @index: ~"./index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @worker: ~"../../../workers/spw-quest/src/index.js"
+@steps: ~"../../../workers/spw-quest/src/steps.js"
+@panel: ~"../../../workers/spw-quest/src/panel.js"
+@reader: ~"../../../workers/spw-quest/src/reader.js"
+@build: ~"../../../workers/spw-quest/src/build.js"
 @guide: ~"../../../workers/spw-quest/src/guide.js"
+@paper: ~"../../../workers/spw-quest/src/paper.js"
+@carry_parser: ~"../../../workers/spw-quest/carry-parser.mjs"
+@routes_test: ~"../../../workers/spw-quest/test/routes.test.mjs"
+@quest_source: ~"../../../.spw/_workbench/docs/learn/quest.spw"
+@domain_page: ~"../../../about/domains/spw.quest/index.html"
+@workbench_page: ~"../../../projects/spw-workbench/index.html"
 @parser_link: ~"../../../public/js/kernel/parser-link.js"
+@operator_physics: ~"../../../public/js/kernel/operator-detection.js"
+@brace_pivots: ~"../../../public/js/runtime/interaction/brace-pivots.js"
+@corpus_completion: ~"../../../.spw/conventions/corpus-completion.spw"
+@expression_query: ~"../../../public/js/semantic/expression-query.js"
+@expression_geometry: ~"../../../public/js/semantic/spw-expression-geometry.js"
 
 operation = "cache"
 fixity = "tending"
 
 ^"stream"{
  >>[2026-10-12 10:59] verify — spw.quest serves the guide and the install page and has no recorded use. The plan (72c4a3eb) ranks six slices; A is an Open in the parser link on Read one page, then a scripts-off GET box, both landing on spwashi.com/tools/spw-parser/ through spw_source. Phone at 390 px holds; the narrow-desktop crop is Chrome's minimum window, not overflow.
+ >>[2026-10-12 15:45] verify — Uncommitted, not deployed: the guide now leads with seven storyboard panels at one door, copied verbatim from the workbench's docs/learn/quest.spw into workers/spw-quest/src/steps.js (a route test compares them whenever the mount carries that file). Each panel names its scene and speaker, holds its try line in a balloon shaped by its bubble kind, and is read by the site's parser bundle: in the page through /parser.js, carried as src/parser-text.js by carry-parser.mjs, and in the worker for /read?step=&line= with scripts off. The checks walk the parse AST; hold fails on hinge.frame.key and passes on commas; grow says it runs in a terminal. spwashi.com's paper tokens replace the dark identity on every page, light with the site's dark substrate when the system asks; the spiral is gone, the origin paragraphs stay verbatim, /init and the prompts end with grow, and only the guide's CSP adds script-src 'self'. check:workers passes; phone stills are in .tmp/spw-quest-look/.
+ >>[2026-10-12 18:22] implement — styles tuned, uncommitted: a numbered path of the seven panels (current node lit on :target and on /read), prev/next edges on each panel, operator and brace entries link back to the panels that use them, braces in a reading link to their entry, # self-links on section headings, a hairline frame with a settle ring on landing, Notice/Grow/Layer as a label column with a four-step layer scale. Site mount and installer both at 4fe8b9d8 (549ae139).
+ >>[2026-10-12 18:32] implement — nuances scan as rows: a panel whose lines differ by one mark (act: ~door ?door !door) shows them aligned, the changed mark lit, with balloon and operator beside each; the sigils are a table of sigil, name, reading, runtime and the panels that use it. Twelve sigils: the <> couple is no longer shown as one (creator: the count of 13 included the containers). The spiral line is a source comment on about/website, not copy.
+ >>[2026-10-12 18:32] decide — creator direction for the next look: each operator's physical model (operator-detection.js carries one per sigil: ~ superposition defer, ? measurement onset, ! kinetic injection…); braces that select their group in a line; Spw as a nuanced query language; room to experiment with geometry. Felt, not named in the copy.
+ >>[2026-10-12 18:38] implement — Put one together, on the guide after the panels and at /build: a mark, a word and the four brace slots make one line; the reading names each part, and with a mode and a definition it counts what { } holds, so {hinge, frame, key} reads as three parts and {hinge.frame.key} as one name. One row per slot swaps that slot and keeps the rest, every swap a link; pointing at a row lights its part of the line. The lede now says the first act in two sentences. Route tests 13 of 13.
+ >>[2026-10-12 18:46] implement — committed together at the creator's word: the panels, the path, the nuance rows, the sigil table, Put one together, and this notebook's architecture block. Not deployed.
 }
 
+^"architecture"{
+  summary = "A request reaches @worker, which answers with a page put together from parts: the panels' words from @steps, the reading of each line from @reader, one panel's markup from @panel, the build surface from @build, the language reference from @guide, and the look from @paper. Every page reads with scripts off; the guide adds one module script that reads lines in the page with the same parser."
+  flow = `@quest_source → @steps → @reader → @panel → @worker → the page; @paper dresses every page; @carry_parser → /parser.js → the page's own reading`
+
+  worker = .{
+    is = @worker
+    does = `routes each request: / the guide, /read one panel with your line, /build one line put together, /install, /init and /quest.json for agents, /parser.js the parser as a script`
+    composes = #[@steps, @panel, @build, @guide, @paper, @reader][reg=set]
+    shell = `workers/lib/shell.js lays out every page (head, security policy, footer); @worker hands it a body and its CSS`
+  }[reg=facet]
+
+  steps = .{
+    is = @steps
+    does = `holds the seven panels as data: id, scene, speaker, bubble, layer, the try line and its then lines, reads, notice, check, grow`
+    from = @quest_source
+    rule = `copied word for word; @routes_test compares the two whenever the mount carries @quest_source`
+  }[reg=facet]
+
+  reader = .{
+    is = @reader
+    does = `reads one line for one panel: parses it, runs the panel's check, names each operator and brace pair it finds, and picks the balloon the leading mark asks for`
+    twice = `on the worker it imports the site's parser bundle directly, for /read, /build and the guide with scripts off; in the page it imports /parser.js, the same bundle carried in by @carry_parser, so a reading changes as you type`
+  }[reg=facet]
+
+  panel = .{
+    is = @panel
+    does = `draws one panel: its number linked to its own address, the scene, the speaker and balloon kind, the line in a balloon inside a plain GET form to /read, the reading, nuance rows when the panel's lines differ by one mark, Notice, Grow and Layer, and on the guide, links to the panels on either side`
+    reads = #[@reader, @steps][reg=set]
+    css = `PANEL_CSS: the frame and its settle ring on landing, the balloons by kind, the reading, the nuance rows, the label column and the four-step layer scale`
+  }[reg=facet]
+
+  build = .{
+    is = @build
+    does = `puts one line together from a mark, a word and the four brace slots; reads it with @reader and counts what { } holds; draws one swap row per slot, each swap a link that keeps the other slots`
+    css = `BUILD_CSS: pointing at a row or a field lights its part of the line through :has()`
+  }[reg=facet]
+
+  guide = .{
+    is = @guide
+    does = `the language reference the guide shows: the twelve sigils with their reading and runtime, the four brace pairs, the journal page and its line notes, and who might find Spw interesting`
+    names = `the workbench's reader vocabulary; @routes_test holds each name to it`
+  }[reg=facet]
+
+  paper = .{
+    is = @paper
+    does = `spwashi.com's paper material as one block of CSS: custom properties for the linen ground, ink, the teal accent, the field shadow and the manuscript and mono faces, the dark substrate when the reader's system asks for dark, and a few element rules for headings, links, chips and fields`
+    why = `inlined, so spw.quest looks like the site without loading anything from spwashi.com`
+    feeds = `every spw.quest page, through the layout's themeCss; @panel and @build only use its variables`
+  }[reg=facet]
+
+  carry_parser = .{
+    is = @carry_parser
+    does = `copies public/js/semantic/spw-workbench-parser.js into the worker as text, src/parser-text.js`
+    when = `after npm run build:spw-parser, which follows each workbench bump; --check says when the copy has drifted from the bundle`
+  }[reg=facet]
+
+  sensors = .{
+    is = @routes_test
+    does = `13 tests: every route answers, the panels match @quest_source, the names match the workbench, each panel links its neighbors, and /build keeps the other slots when one changes`
+    also = `npm run check:workers routes every host the workers answer`
+  }[reg=facet]
+
+  around = .{
+    pages = #[@domain_page, @workbench_page][reg=set]
+    does = `spwashi.com's own pages about spw.quest: the domain page (install, the crawl prompt, the register, keyed by sentence) and the workbench page, which opens with the invitation tile`
+    superseded = `@parser_link, a plain link into spwashi.com's parser, was slice A's first idea; the page now reads lines itself`
+  }[reg=facet]
+}[reg=facet]
+
+^"direction"{
+  received = "2026-10-12, from the creator, while the panels were being tuned."
+  feel = #[
+    `links all the way down: every part of a reading lands somewhere, and the state of a page lives in its address`,
+    `Spw's physics: focus and hover charge a thing, a landing settles it, and nothing on the page jumps`,
+    `math intuition: aligned columns, tabular numerals, a visible sequence, and differences shown rather than described`,
+    `moving along edges: panel to panel, mark to sigil, sigil back to the panels that use it`,
+  ][reg=set]
+  rule = "Felt, never named. None of those words belong in the copy."
+  focus = #[ `expression construction`, `pivoting: change one slot, keep the rest`, `play`, `onboarding clarity` ][reg=set]
+  next = #[ `the physical model of each operator`, `braces that select their group`, `Spw as a nuanced query language`, `room to experiment with geometry` ][reg=set]
+  counts = "Twelve sigils. The creator's thirteen counted the containers; <> is not shown as a sigil here."
+  spiral = "The spiral overstated the idea. 'My thoughts were already spirals' was a note to the agent, now a source comment beside the 2017 entry on about/website."
+}
+
+^"built"{
+  state = "In the tree, not committed and not deployed. The panels came first (15:45 entry); the rest was layered on them the same evening."
+  surfaces = #[
+    `seven panels from @quest_source, each line read by the parser in the page and by the worker at /read with scripts off`,
+    `a numbered path of the panels; the node of the panel you land on lights, and /read and /build carry the same path`,
+    `previous and next links at the foot of each panel; the panel number links to the panel's own address`,
+    `nuance rows where a panel's lines differ by one mark (act), the changed mark lit, balloon and operator beside each`,
+    `the twelve sigils as a table: sigil, name, reading, runtime, and the panels whose lines use it; brace entries link back the same way`,
+    `Put one together (@build): the line, its reading with the parts count, one swap row per slot, and the slots as a GET form`,
+    `# self-links on section headings; a hairline frame that settles with a fading ring on landing; Notice, Grow and Layer as a label column with a four-step layer scale`,
+    `spwashi.com's paper material (@paper); the parser bundle carried into the worker as text by @carry_parser`,
+  ][reg=set]
+  sensors = #[ `node --test workers/spw-quest/test/routes.test.mjs (13)`, `npm run check:workers`, `stills at phone and laptop width, light and dark, with no horizontal overflow` ][reg=set]
+}
+
+^"next_moves"{
+  physical_model = "@operator_physics carries one per sigil: ~ superposition defer, ? measurement onset, ! kinetic injection, @ perspective push, * materialization, . bound handle, ^ upward emission, # resonance tag, & entanglement, = bias field, % scalar observation, $ addressing potential. A fourth column in the sigil table, or a small drawing per sigil. Three names differ between the workbench's reader vocabulary and the site canon (^ ascension or integration, = configuration or binding, % measure or normalization)."
+  braces_select = "In the built line, pointing at a row already lights its slot through :has(). Next: in any reading, a brace pair selects its group inside the line. @brace_pivots frames the walls as objective on the left and subjective on the right, and @corpus_completion names a pivot as a subject, its modes and its parts."
+  query = "Run an expression query (@expression_query) over the journal page, such as what the entry holds under wonder, and show the matches; swap rows then refine a query instead of a line."
+  geometry = "@expression_geometry lays an expression out in space on spwashi.com. A small view of the built line, its slots as a shape whose sides are the braces, is the play surface."
+  onboarding = "On a phone, the kicker, the title, the two-sentence lede, the path and panel 1's head now sit near the first screen. If first visits stall, fold Grow and Layer behind one disclosure."
+}
+
+^"proposed_commits"{
+  panels = `+[quest] Lead the guide with seven panels at one door, read by the parser in the page and by the worker with scripts off :: quest[panels]{line.reading.scripts_off}<door>`
+  build = `+[quest] Put one expression together, and change one slot while the rest hold :: quest[build]{mark.word.braces.swap}<play>`
+  path = `~[quest] Walk the panels as a path, and let each sigil point back to the panels that use it :: quest[path]{edges.backlinks}<walk>`
+  physics = `+[quest] Give each sigil its physical model beside its reading :: sigil[physics]{model.reading}<table>`
+}[reg=facet]
+
 ^"open"{
+ origin_wording = "The origin paragraph now opens 'The difficulty was not having language…'. Keep it, or put it in the creator's own words? The creator's call."
+ operator_voice = "When the physical model is shown, which names does spw.quest speak: the workbench's (ascension, configuration, measure) or the site canon's (integration, binding, normalization)? The creator's call."
+ commit_shape = "Commit the panels, the path and the build surface together after the look, or as the three proposed commits? The creator's call."
  look = ~"./index.spw#wonder_spw_quest_look"
  public_plan = ~"./index.spw#wonder_spw_quest_public_plan"
  published_cli = ~"./index.spw#wonder_spw_quest_published_cli"
 }
 
 ^"cache"{
- ~#status: "planned"
- ~#next_commit: "+[quest] Open the journal page in the parser, and write your own line with scripts off"
- ~#files_hot: "workers/spw-quest/src/guide.js, workers/spw-quest/src/index.js, public/js/kernel/parser-link.js"
- ~#gate: "the creator's read of PLAN.md; D waits on a browser review"
+ ~#status: "committed, awaiting the creator's look and deploy"
+ ~#next_commit: "+[quest] Give each sigil its physical model beside its reading"
+ ~#files_hot: "workers/spw-quest/src/index.js, workers/spw-quest/src/panel.js, workers/spw-quest/src/build.js, workers/spw-quest/src/reader.js, workers/spw-quest/src/steps.js, workers/spw-quest/test/routes.test.mjs"
+ ~#gate: "the creator's look on a phone (panels, path, nuance rows, sigil table, Put one together), then the Wrangler deploy"
  ~#last_stream: "2026-10-12"
 }
