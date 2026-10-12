@@ -30,6 +30,11 @@
 @dimensions_script: ~"../../scripts/spw-dimensional-index.mjs"
 @wonder_script: ~"../../scripts/wonder.mjs"
 @precipitate_script: ~"../../scripts/spw-precipitate.mjs"
+@lsp_probe: ~"../../scripts/lsp-probe.mjs"
+@editor_tasks: ~"../../.vscode/tasks.json"
+@workspace_manifest: ~"../workspace.spw"
+@operator_namespace: ~"../language/operator-namespace-alignment.spw"
+@plans_index: ~"../../.agents/plans/README.md"
 
 operation = "align"
 fixity = "tending"
@@ -221,6 +226,43 @@ expression = consumer[recommendations]{performance.cli.intermediate.culture}<ups
   ][reg=set]
   ~#taste: "A workbench command stays proposed only while the site is still running a script to answer the same question."
   consume = `The site harvests plan questions with scripts/wonder.mjs. That walk is the consumer until spw wonder exists. It skips archive/ and does not lift the .agents exclusion.`
+}[reg=facet]
+
+^"week_2026_10_11"{
+  standing = `Measured while consolidating the site's plans (88 to 48) and opening the asks in VS Code. Each tool extracts its own facts from the shared parser, or skips it: the CLI selectors, the server's regex-first selectors, the hover's line regexes, and the extension's annotation copy. So the editor and the CLI disagree, and the index takes minutes to fill.`
+  creator_calls = #[
+    `2026-10-11 — indexing plans is a good idea`,
+    `2026-10-11 — Spw operators should be in the workbench so they can be studied more mindfully within the ethos of Spw development (recorded in @operator_namespace)`
+  ][reg=set]
+  proposals = #[
+    `&[seed] One facts module over the parse tree that the CLI, the server and the extension all read :: facts[file]{citations.anchors.annotations.expressions.questions}<parse>`,
+    `=[store] Persist facts per file by content hash, update per change, and report readiness to every view :: store[facts]{hash.incremental.ready}<workspace>`,
+    `~[scope] Index what workspace.spw declares, plans included, and tag each fact authored, generated, mounted, archived or scratch :: scope[manifest]{roots.tiers}<index>`,
+    `&[seed] One operator table in the workbench that the lexer, the lite scanner, the editor grammar and the site read :: operators[table]{lex.lite.grammar.site}<one>`,
+    `+[lsp] A binder for file-scoped aliases: definition, references, rename, duplicate and unused :: alias[bind]{declare.use.target}<file>`,
+    `+[resolve] Consumer adapters declared in the manifest: routes, element ids, dataset keys, CSS readers :: resolve[adapter]{route.id.dataset.css}<consumer>`,
+    `=[lsp] Hovers lead with meaning, then evidence, then geometry, in the consumer's words :: hover[layer]{meaning.evidence.geometry}<profile>`,
+    `+[refactor] A path rename kind from citation spans that also answers willRenameFiles :: refactor[path]{spans.preview}<rename>`
+  ][reg=set]
+  measured = .{
+    regex_first = `selectPathRefs (spw-lsp spw-selector.ts:300-304) runs a regex and asks the parser only when the regex finds nothing: 10 citations against the parser's 9 on one file; a backtick example flagged unresolved; a hash-angle anchor inside a string counted as 53 references`
+    aliases = `3977 alias declarations and 2947 uses in 252 site files; definition and references on a use return nothing (site.spw:195)`
+    fragments_and_routes = `a fragment becomes part of the opened filename; a leading slash resolves to the filesystem root, not the site root`
+    highlighting = `a hash-equals divider line returns 78 property tokens, one per equals sign; lex() reads it as one hash-prose comment`
+    index_fill = `one hover count read 3 files after 15s, 74 after 60s, 120 after 150s; the Spirit view fetches annotations once at activation and says none are indexed`
+    hover = `geometry first; a route anchor read as a topic in 0 files; a frame called a capsule boundary; a 24-line body shown as a surface`
+    cost = `spw:integrity 50s and 490 MB alone; 10 minutes at 44% CPU with 1.8 GB swapped; a bare query SIGKILLed under that pressure`
+    tokenizers = `lex() and the lite scanner read this site correctly; the server's semantic tokens, the TextMate grammar and the site's own operator and expression readers do not use them; the site imports the lite scanner nowhere`
+  }[reg=facet]
+  probes = #[
+    `node scripts/lsp-probe.mjs . .spw/site.spw definition 195:15`,
+    `node scripts/lsp-probe.mjs . .spw/conventions/copy-accessor.spw hover 24:20`,
+    `node scripts/lsp-probe.mjs . .spw/conventions/charge-cycle.spw definition 10:30`,
+    `node scripts/lsp-probe.mjs . .spw/reviews/upstream-workbench-recommendations.spw tokens 39-41`,
+    `WAIT=60000 node scripts/lsp-probe.mjs . .spw/conventions/copy-accessor.spw workspace copy_accessor`
+  ][reg=set]
+  ~#taste: "An editor that answers wrong teaches its reader to stop asking; agreement with the CLI comes before any new view."
+  consume = `Until these land, the site keeps its own instruments: @editor_tasks puts spw:integrity, plans:index:check, audit:operator-controls and check:agents in the Problems panel; manifest:staged sweeps its scratch so the server stops indexing stale copies; @lsp_probe reproduces each finding above and should turn each one green after a workbench bump. The plans root waits in @workspace_manifest until archived plans can be tagged rather than counted as live.`
 }[reg=facet]
 
 #>wonder_plan_help_json_upstream
