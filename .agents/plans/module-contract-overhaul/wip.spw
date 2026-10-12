@@ -1,4 +1,4 @@
-# Review 2026-10-10 — holds the facet operator-mapping question that blocks this plan and engagement-clusters.
+# Review 2026-10-12 — hot notes for rests: change-only as a check, and the facet operator question; phases, evidence and the atlas stay in PLAN.md.
 # wip - module contract overhaul
 #
 # Open questions for the creator. PLAN.md sequences the work; this file holds
@@ -10,9 +10,12 @@
 #:layer #!pragmatics
 
 @plan: ~"./PLAN.md"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @contract_spw: ~"../../../public/js/runtime/catalog/contract-spw.js"
 @operator_detection: ~"../../../public/js/kernel/operator-detection.js"
 @engagement: ~"../../../public/js/kernel/engagement.js"
+@writer_audit: ~"../../../scripts/module-writer-audit.mjs"
+@change_only_writes: ~"../../../scripts/tests/change-only-writes.test.mjs"
 
 operation = "cache"
 fixity = "tending"
@@ -25,4 +28,21 @@ fixity = "tending"
   !probe{ "open /design/runtime/?spw-atlas=pulse-beat-tuner and read its contract as Spw against the facet table" }
   $%[contract.facets, operator.canon, engagement.clusters]
   ~<"./PLAN.md"> ~<"../engagement-clusters/PLAN.md">
+}
+
+^"stream"{
+ >>[2026-10-12] read — writers are declared (47bab2ea), contracts derive one Spw sentence each (6ff2aa8d), and engages is the first content of the wakes facet (0a974b23). No def carries a flat wakes or rests field yet, and the last change to runtime/catalog is 5bea15a1 (2026-10-07), which did not add one. The next slice needs no decision: add rests, and fail a def that declares change-only while an observer or sync-task path writes dataset or textContent raw; scripts/tests/change-only-writes.test.mjs already holds three writers by hand.
+}
+
+^"open"{
+ facet_operators = ~"./wip.spw#wonder_module_contract_overhaul_facet_operators"
+ prime_beat_consumers = "Should a prime beat reach only the rail, probe chips and settle windows, rather than every chip, operator and module? A sensation call for the creator, in a browser."
+}
+
+^"cache"{
+ ~#status: "implementing"
+ ~#next_commit: "+[runtime] Let a module declare rests: change-only, and fail it when an observer writes raw"
+ ~#files_hot: "public/js/runtime/catalog/constants.js, types/module-catalog.d.ts, scripts/module-writer-audit.mjs, scripts/tests/change-only-writes.test.mjs"
+ ~#gate: "nothing for the flat field; the Spw projection of facets waits on the operator question"
+ ~#last_stream: "2026-10-12"
 }

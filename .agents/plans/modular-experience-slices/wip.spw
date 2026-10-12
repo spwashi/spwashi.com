@@ -1,0 +1,33 @@
+# Review 2026-10-12 — hot notes for the math-labs review; the slice model, practice beds and phases stay in PLAN.md.
+# wip — modular-experience-slices
+#
+#>plan_modular_experience_slices_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@diagrams: ~"../../../public/js/modules/math/diagrams.js"
+@math_slice: ~"../../../.spw/slices/math-practice-labs/index.spw"
+@tending_note: ~"./templates/tending-note.spw"
+
+operation = "cache"
+fixity = "tending"
+
+^"stream"{
+ >>[2026-10-12] read — five slice contracts sit in .spw/slices/, and the attention children load on their own (c2d5da00, 73d6f2ad). The math labs are committed and unreviewed: diagrams.js:1251 still gives every vector field the fixed marker id arrow-vector, and .spw/slices/math-practice-labs/ holds only its index.spw, no tending note. Phases 3–6 wait for that note.
+}
+
+^"open"{
+ math_pilot = "Does the math-labs pilot port as is, split, or get rejected? The review decides, and the tending note records it."
+}
+
+^"cache"{
+ ~#status: "implementing"
+ ~#next_commit: "![math] Give each vector field its own arrow marker, and leave the math slice its first tending note"
+ ~#files_hot: "public/js/modules/math/diagrams.js, topics/math/vector-calculus/index.html, topics/math/numerical-methods/index.html, .spw/slices/math-practice-labs/index.spw"
+ ~#gate: "a browser smoke on both math routes; nothing else"
+ ~#last_stream: "2026-10-12"
+}

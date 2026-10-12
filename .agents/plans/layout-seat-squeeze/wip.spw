@@ -1,4 +1,4 @@
-# Review 2026-10-10 — holds the unseated-frame question; the seat, coverage and edges queues stay in PLAN.md.
+# Review 2026-10-12 — holds the unseated-frame question and hot notes for the edges queue; the seat, coverage and edges queues stay in PLAN.md.
 # wip — layout-seat-squeeze
 #
 # Open questions for the creator. This folder has no index.spw yet; the
@@ -16,6 +16,9 @@
 @region_seats: ~"../../../public/css/systems/region-seats.css"
 @region_ecology: ~"../../../.spw/conventions/region-component-ecology.spw"
 
+operation = "cache"
+fixity = "tending"
+
 #>wonder_layout_seat_squeeze_unseated_default
 ?["Should a frame with no seat default to a calmer wonder hold, or should the roughly 620 unseated frames be seated by hand, one route at a time?"]{
   #:depth #!pragmatics ~#lens(projection)
@@ -26,4 +29,20 @@
   !probe{ "rg -n 'spw-wonder-hold' public/css/systems/projection-attenuation.css" }
   $%[region.seat, attenuation.wonderHold, coverage.unseated]
   ~<"./PLAN.md"> ~<"../../../.spw/conventions/projection-attenuation.spw">
+}
+
+^"stream"{
+ >>[2026-10-12] read — The edges queue's next step still points at real lines: the six entry panels open at index.html:768 and the entrance role hooks at :460, and qa:alignment (scripts/alignment-audit.mjs) is the sensor. Home changed today (efcd875d), so the 2026-09-17 edge reading of 44/44/44/44/47/44 needs a fresh before. The coverage queue's audit:region-coverage script still does not exist, and the lens hook nav wrap stays held.
+}
+
+^"open"{
+ unseated_default = ~"./wip.spw#wonder_layout_seat_squeeze_unseated_default"
+}
+
+^"cache"{
+ ~#status: "implementing"
+ ~#next_commit: "~[home] Give the six entry panels one shared inset, so their text starts on one edge at phone width"
+ ~#files_hot: "index.html, public/css/routes/surfaces/home.css, public/css/systems/layout-squeeze.css, scripts/alignment-audit.mjs"
+ ~#gate: "a qa:alignment reading before and after, and a phone still for the creator's look"
+ ~#last_stream: "2026-10-12"
 }

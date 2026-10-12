@@ -15,7 +15,10 @@
  *          history, so a line that says a file is proposed, never written,
  *          renamed or gone is skipped); a cited commit in neither this repo
  *          nor the workbench;
- *          `npm run check`, which runs npm audit before check:local.
+ *          `npm run check`, which runs npm audit before check:local; no
+ *          wip.spw, a wip.spw whose last dated entry is older than the
+ *          Status line, or one missing a required header mark
+ *          (.spw/conventions/wip-notebook.spw).
  *
  * Live plans are the folders under .agents/plans/ outside archive/. Fenced
  * code blocks are examples and are not read for links or paths. A gitignored
@@ -33,6 +36,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isGitIgnored } from './lib/git-ignored.mjs';
+import { readWip } from './lib/plan-wip.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PLANS = path.join(ROOT, '.agents', 'plans');
@@ -119,6 +123,14 @@ for (const slug of plans) {
     const days = Math.round((today - new Date(`${status[1]}T00:00:00Z`)) / 86400000);
     statusAges.push([slug, days]);
     if (days > staleDays) add(slug, doc, docText.slice(0, status.index).split('\n').length, 'warn', `Status is ${days} days old (${status[1]})`);
+  }
+
+  const wip = readWip(dir, slug);
+  if (!wip) add(slug, doc, 1, 'warn', 'no wip.spw beside it (.spw/conventions/wip-notebook.spw)');
+  else {
+    if (wip.gaps.length) add(slug, wip.file, 1, 'warn', `wip.spw lacks ${wip.gaps.join(', ')}`);
+    if (!wip.last) add(slug, wip.file, 1, 'warn', 'wip.spw has no dated stream entry');
+    else if (status && wip.last < status[1]) add(slug, wip.file, 1, 'warn', `wip.spw last tended ${wip.last}, before the Status line (${status[1]})`);
   }
 
   for (const file of walk(dir)) {

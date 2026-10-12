@@ -1,0 +1,36 @@
+# Review 2026-10-12 — hot notes for parcel B and the parcels behind it; the findings, seams and gates stay in PLAN.md.
+# wip — landing-visual-hierarchy
+#
+#>plan_landing_visual_hierarchy_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@session: ~"./session-2026-08-21.spw"
+@services: ~"../../../services/index.html"
+@home: ~"../../../index.html"
+@settings_page: ~"../../../settings/index.html"
+
+operation = "cache"
+fixity = "tending"
+
+^"stream"{
+ >>[2026-10-12] read — The early visual pass (3a95fe06) and parcel D's masthead (b5dfea29) hold, and parcel B is untouched: in services/index.html the tuning section still opens at line 215, ahead of the three paths at 338 and pricing at 615. Home moved again today (efcd875d), so D keeps waiting. Parcel C still says to group Quick Start, but Quick Start became the eight-aisle settings shelf on 2026-10-08 (b2eda400), so C needs a fresh read before anyone claims it.
+}
+
+^"open"{
+ projects_nav = ~"./index.spw#wonder_landing_visual_hierarchy_projects_nav"
+ one_rail = ~"./index.spw#wonder_landing_visual_hierarchy_one_rail"
+ parcel_c = "Do the shelf's eight aisles already answer parcel C, or does settings still want authored clusters? The creator's call."
+}
+
+^"cache"{
+ ~#status: "implementing"
+ ~#next_commit: "~[services] Put the offer, the three paths and the pricing ahead of the tuning panel"
+ ~#files_hot: "services/index.html, public/css/routes/surfaces/services.css, index.html, settings/index.html"
+ ~#gate: "nothing for B beyond its own checks; D waits while Home is moving"
+ ~#last_stream: "2026-10-12"
+}

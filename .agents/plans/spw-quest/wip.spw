@@ -1,0 +1,35 @@
+# Review 2026-10-12 — hot notes for slice A; the slices, prompts and guards stay in PLAN.md.
+# wip — spw-quest
+#
+#>plan_spw_quest_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@worker: ~"../../../workers/spw-quest/src/index.js"
+@guide: ~"../../../workers/spw-quest/src/guide.js"
+@parser_link: ~"../../../public/js/kernel/parser-link.js"
+
+operation = "cache"
+fixity = "tending"
+
+^"stream"{
+ >>[2026-10-12] read — spw.quest serves the guide and the install page and has no recorded use. The plan (72c4a3eb) ranks six slices; A is an Open in the parser link on Read one page, then a scripts-off GET box, both landing on spwashi.com/tools/spw-parser/ through spw_source. Phone at 390 px holds; the narrow-desktop crop is Chrome's minimum window, not overflow.
+}
+
+^"open"{
+ look = ~"./index.spw#wonder_spw_quest_look"
+ public_plan = ~"./index.spw#wonder_spw_quest_public_plan"
+ published_cli = ~"./index.spw#wonder_spw_quest_published_cli"
+}
+
+^"cache"{
+ ~#status: "planned"
+ ~#next_commit: "+[quest] Open the journal page in the parser, and write your own line with scripts off"
+ ~#files_hot: "workers/spw-quest/src/guide.js, workers/spw-quest/src/index.js, public/js/kernel/parser-link.js"
+ ~#gate: "the creator's read of PLAN.md; D waits on a browser review"
+ ~#last_stream: "2026-10-12"
+}

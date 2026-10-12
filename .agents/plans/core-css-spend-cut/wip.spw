@@ -1,0 +1,33 @@
+# Review 2026-10-12 — hot notes for the reading that names the next cut; the landed moves, tolerance and boundaries stay in PLAN.md.
+# wip — core-css-spend-cut
+#
+#>plan_core_css_spend_cut_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@payload_report: ~"../../../scripts/css-payload-report.mjs"
+@css_manifest: ~"../../../scripts/ts/css-manifest.mts"
+@deferred_styles: ~"../../../public/js/kernel/deferred-styles.js"
+
+operation = "cache"
+fixity = "tending"
+
+^"stream"{
+ >>[2026-10-12] read — The committed bundles/core.css is 1720 KiB against the 1741 KiB soft line (css-manifest.mts:573), as the Status line says, and css:payload reads 1297 KiB delivered and 196 KiB over the wire. No cut is named, and css:payload cannot name one: it reports bundles and surfaces, not the 103 sheets whose provenance lines sit inside core. The website route bundle is exactly 140 KiB, its soft budget.
+}
+
+^"open"{
+ website_ceiling = "Does the website route bundle get a hard ceiling, now that it sits exactly at its 140 KiB soft budget? The creator's call."
+}
+
+^"cache"{
+ ~#status: "sensing"
+ ~#next_commit: "+[css] List each sheet's share of core in css:payload, so the next cut can name a file"
+ ~#files_hot: "scripts/css-payload-report.mjs, public/css/bundles/core.css, scripts/ts/css-manifest.mts, public/js/kernel/deferred-styles.js"
+ ~#gate: "nothing for the reading; a move after it needs a first-paint probe showing the sheet is atmosphere"
+ ~#last_stream: "2026-10-12"
+}

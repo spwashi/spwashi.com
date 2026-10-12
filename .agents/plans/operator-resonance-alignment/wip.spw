@@ -1,0 +1,33 @@
+# Review 2026-10-12 — hot notes for the one decision left on slice 4; the alignment rules, slices and craft guard stay in PLAN.md.
+# wip — operator-resonance-alignment
+#
+#>plan_operator_resonance_alignment_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@sigil_annotation: ~"../../../public/js/semantic/sigil-annotation.js"
+@wonder_css: ~"../../../public/css/effects/wonder.css"
+@operator_alignment: ~"../../../.spw/conventions/operator-alignment.spw"
+
+operation = "cache"
+fixity = "tending"
+
+^"stream"{
+ >>[2026-10-12] read — the Status holds. The wonder's probe finds only the two writes in sigil-annotation.js (lines 141 and 146) and no reader in public/js or public/css. Since the Status, only header marks touched operator-alignment.spw (cf793f47). Slice 5, operator paths in prompts and evidence, has not started and sits behind this decision.
+}
+
+^"open"{
+ family_attributes = ~"./index.spw#wonder_operator_resonance_family_attributes"
+}
+
+^"cache"{
+ ~#status: "waiting"
+ ~#next_commit: "~[operators] Stop writing operator-family and transformation on each sigil, since nothing on the page reads them"
+ ~#files_hot: "public/js/semantic/sigil-annotation.js, public/css/effects/wonder.css, .spw/conventions/operator-alignment.spw"
+ ~#gate: "the creator's call: spend the two attributes on per-family colour, which then needs a browser review, or stop writing them, which is this commit"
+ ~#last_stream: "2026-10-12"
+}

@@ -1,0 +1,30 @@
+# Review 2026-10-12 — hot notes for the one owed receipt, the open cauldron at pocket width; owners, measurements and the modal notes stay in PLAN.md.
+# wip — cauldron-lens-composition
+#
+#>plan_cauldron_lens_composition_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@evidence: ~"../../../.spw/caches/cauldron-lens-composition-2026-09.spw"
+@still_recipes: ~"../../../scripts/lib/viewport-still-recipes.mjs"
+@cauldron_chrome: ~"../../../public/js/interface/cauldron/chrome.js"
+
+operation = "cache"
+fixity = "tending"
+
+^"stream"{
+ >>[2026-10-12] read — the lens-aware mix (604d4a1d) and the native dialog (326eb119) stand, and the home-cauldron-open recipe is still at viewport-still-recipes.mjs:507. Its fixture receipt has not been taken. The nearest evidence is fdafcd6f on October 8, whose verify opened the cauldron dialog at desktop and pocket widths for the dialog edges, which is not this receipt. Corner sharing lives in floating-chrome-stack now.
+}
+
+^"open"{ }
+
+^"cache"{
+ ~#status: "sensing"
+ ~#next_commit: ".[cauldron] Record the pocket receipt for the open cauldron, the composition plan's last owed check"
+ ~#files_hot: "scripts/lib/viewport-still-recipes.mjs, .spw/caches/cauldron-lens-composition-2026-09.spw, public/js/interface/cauldron/chrome.js, public/css/components/cauldron.css"
+ ~#gate: "a local server and a browser the sandbox allows, for npm run visual:checks -- --ids=home-cauldron-open; check npm run sense -- doctor first"
+ ~#last_stream: "2026-10-12"
+}

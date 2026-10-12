@@ -1,0 +1,32 @@
+# Review 2026-10-12 — hot notes for moving two workers onto the shared shell; the sense, slice and boundaries stay in PLAN.md.
+# wip — workers-wonder-kit
+#
+#>plan_workers_wonder_kit_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@shell: ~"../../../workers/lib/shell.js"
+@smut_today: ~"../../../workers/smut-today/src/index.js"
+@wap_layout: ~"../../../workers/wap-mom/src/layout.js"
+@workers_readme: ~"../../../workers/README.md"
+
+operation = "cache"
+fixity = "tending"
+
+^"stream"{
+ >>[2026-10-12] read — spw-quest, site-hub-next and autonomous-feedback import workers/lib/shell.js (74503ca7); smut-today and wap-mom still carry their own escapeHtml, BASE_SECURITY and FAVICON. Both took copy commits today (0e2942ae, a53d0f15) that left those copies alone, and both are clean in this tree. smut-today-crew's first slice also edits workers/smut-today/src/index.js.
+}
+
+^"open"{ }
+
+^"cache"{
+ ~#status: "implementing"
+ ~#next_commit: "&[workers] Let wap.mom and smut.today take escapeHtml from the shared shell, and keep their own headers and voice"
+ ~#files_hot: "workers/lib/shell.js, workers/smut-today/src/index.js, workers/wap-mom/src/layout.js, workers/README.md"
+ ~#gate: "neither worker dirty in another session's tree; both are clean today"
+ ~#last_stream: "2026-10-12"
+}

@@ -1,0 +1,36 @@
+# Review 2026-10-12 — hot notes while the calendar demo waits on a browser review; the minting rules, slices and landing access stay in PLAN.md.
+# wip — folio-worktable
+#
+#>plan_folio_worktable_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@folios: ~"../../../design/folios/index.html"
+@calendar: ~"../../../design/experiments/folios/calendar/index.html"
+@primes: ~"../../../design/experiments/folios/primes/index.html"
+@seed_card: ~"../../../public/js/modules/cards/seed-card.js"
+
+operation = "cache"
+fixity = "tending"
+
+^"stream"{
+ >>[2026-10-12] read — the release shelf (7a95da5b), the request card at #folio-request, the primes demo (8703ed24) and the calendar demo (27b616e8) are in the tree; since 2026-10-10 only copy and .spw headers touched the folio pages. The calendar demo is linked from the experiments shelf, not from /design/folios/, and waits on the creator's browser review, which is worth most before October ends. Forms, prices, shipping, the primes demo and the first card request stay the creator's calls.
+}
+
+^"open"{
+ calendar = "Should October's calendar keep scan order or take chosen days, and live as a site page or a printable sheet? The creator's call, in a browser."
+ primes = "Does the primes demo's scan-order walk hold before any route shows the set? The creator's call, in a browser."
+ offer = "Which forms, prices and shipping does a first folio sale carry? The creator's call; sales stay closed until then."
+ first_request = "Has a request arrived through the #folio-request card yet? Only the creator can say."
+}
+
+^"cache"{
+ ~#status: "waiting"
+ ~#next_commit: "+[folios] Hang October's calendar from the folio shelf, in the order the creator's review chose"
+ ~#files_hot: "design/experiments/folios/calendar/index.html, design/folios/index.html"
+ ~#gate: "the creator's browser review of /design/experiments/folios/calendar/"
+ ~#last_stream: "2026-10-12"
+}

@@ -1,0 +1,34 @@
+# Review 2026-10-12 — hot notes for archiving this plan as landed; the cache contract and validation boundary stay in PLAN.md.
+# wip — agentic-dev-contracts
+#
+#>plan_agentic_dev_contracts_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@check_site: ~"../../../scripts/check-site.mjs"
+@site_contracts: ~"../../../scripts/site-contracts.mjs"
+@route_manifest: ~"../../../scripts/generate-route-runtime-manifest.mjs"
+
+operation = "cache"
+fixity = "tending"
+
+^"stream"{
+ >>[2026-10-12] read — the manifest scripts and check:local stand, and both wonder probes in index.spw pass today. The condition the Status sets for archiving has been met: d13a532f turned the last twenty audit-first check steps into check:local, and no live plan validates with the audit-first script now. That same pass also rewrote the script_door wonder's tension to name check:local as the network detour, which inverted it; the tension was restored the same day to name the bare check script.
+}
+
+^"open"{
+ script_door = ~"./index.spw#wonder_plan_script_door"
+ stamp = ~"./index.spw#wonder_plan_stamp"
+}
+
+^"cache"{
+ ~#status: "tending"
+ ~#next_commit: "&[plans] Archive agentic-dev-contracts as landed, now that every plan names check:local, and carry its two questions to agent-optimization"
+ ~#files_hot: "scripts/check-site.mjs, scripts/site-contracts.mjs, scripts/generate-route-runtime-manifest.mjs, package.json"
+ ~#gate: "nothing; the two wonders need a new home in agent-optimization's index.spw before the folder moves"
+ ~#last_stream: "2026-10-12"
+}

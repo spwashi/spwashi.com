@@ -1,4 +1,4 @@
-# Review 2026-07-12 — planning reference; promote tested capture states and archive speculative taxonomy.
+# Review 2026-10-12 — hot notes while the journey question is open; the commits, guards and capture loop stay in PLAN.md.
 # wip — screenshot-semantics
 #
 #>plan_screenshot_semantics_wip
@@ -84,6 +84,7 @@ fixity = "tending"
  >>[2026-09-04] observe - Pocket stills of the new niche hooks proved labeled diagrams and pressed lenses photograph. They also proved a cloned extra stack (climate rail + landmarks + diagram on every hook) makes the still name the scaffold.
  >>[2026-09-04] decide - First pocket frame: identity + lens + one extra. Figure slots on non-hero-split frames stay in document order. Climate rails live in the topline as a wrap row, not slot=meta.
  >>[2026-09-04] taste - Research keeps the ladder; town the atlas path; membership the role field; svg the motif kit; about must not clip the person. Next hubs must pick a different extra.
+ >>[2026-10-12] read — named viewport stills (de06af3c), the nightly and wander walks (9f3aae2a, 73f200f2) and the crop seed (aba9c1e4) are in the tree, and capture mode pauses SVG flows and texture crops. Commit 1 landed with the plan (64f264e0), so it leaves the commits list; 2–5 have not started. The next slice, one screenshottable state on one route with a named still id, waits on the creator's answer to the journey question.
 }
 
 ^["open"]{
@@ -98,7 +99,6 @@ fixity = "tending"
 }
 
 ^["commits"]{
- ~[1]: "#[screenshot] — capture screenshot semantics plan and priming/selection vocabulary"
  ~[2]: ".[semantics] — formalize screenshottable state taxonomy, priming rules, and journey token grammar"
  ~[3]: "&[css] — ensure selection and liminality states persist visually without JavaScript"
  ~[4]: "&[runtime] — write priming and address state into data attributes at interaction time"
@@ -106,13 +106,13 @@ fixity = "tending"
 }
 
 ^["cache"]{
- ~#status: "planning"
- ~#base_ref: "main@14442d42b8fe4d9d5bfec5906e652fbca98d5f22"
+ ~#status: "waiting"
  ~#hygiene_split: "none"
- ~#files_hot: "public/css/style.css, public/js/spw-component-semantics.js, public/js/spw-shared.js, .spw/conventions/site-semantics.spw"
- ~#next_commit: "1"
+ ~#files_hot: "scripts/lib/viewport-still-recipes.mjs, public/css/modes/capture.css, public/js/semantic/component-semantics.js, .spw/conventions/site-semantics.spw"
+ ~#next_commit: "+[capture] Name one still of an addressed frame on the software page, readable with scripts off"
+ ~#gate: "the creator's answer to index.spw#wonder_screenshot_semantics_journey"
  ~#open_count: "8"
- ~#last_stream: "2026-09-04"
+ ~#last_stream: "2026-10-12"
  ~#taste_debt: "Priming is the underrepresented axis — make it legible without making it loud. Journey tokens should feel earned and sparse, not tracked and comprehensive. Log the visual form decision as a taste choice at commit 2."
 }
 

@@ -1,4 +1,4 @@
-# Review 2026-09-27 — refreshed tending memory; concept refined from "move routes into site/" to "one-hop source-to-URL mapping plus four bins". No file moves are active. M0/M2 decisions shared with typescript-integration; M3 answered.
+# Review 2026-10-12 — hot notes for M0 and the vite import question; the four bins, phases and decision rule stay in PLAN.md. No file moves are active.
 # wip — site-source-layout
 #
 # Hot planning memory. The April stream is preserved at the bottom as history;
@@ -143,6 +143,7 @@ source = "2026-09-27 legibility conversation (which trees reduce legibility; src
  ~[1]: "Does anything outside build-topology still crawl the root with its own ignore list (sitemap topology, audit-route-links, operator audits)?"
  ~[2]: "answered — root sw.js is canonical; public/sw.js is a compat shim (see M3_sw_owner)"
  ~[6]: "How does vite.config.ts import the M0 ship list: cast compiled .mjs, import .mts source, or a sibling .d.mts? (decided here since 2026-10-10; index.spw #>wonder_site_source_layout_vite_import)"
+ vite_import = ~"./index.spw#wonder_site_source_layout_vite_import"
  ~[3]: "Where does design/ belong: served hub routes in site/design, capture archive as project_control?"
  ~[4]: "Can the dev orchestrator regenerate the precipitate fast enough to stop committing it (L3)?"
  ~[5]: "Should split-css.js at root be archived or moved under scripts/?"
@@ -199,4 +200,13 @@ status = "ready_for_M0 once the creator decides the vite import method"
  >>[2026-09-27 21:12] observe — the M2 touch list is longer than the tsconfigs: six .spw tilde paths, two test fixtures, AGENTS.md, and the JS README name public/ts; spw:integrity joins M2 validation.
  >>[2026-09-27 21:18] decide — M0, M2, and L3 are shared with typescript-integration; that plan owns the decisions, this plan owns the order.
  >>[2026-10-10] decide — typescript-integration archived as landed; M0, M2, L3 and the precache-as-artifact step now live here. A third M0 option surfaced: a sibling .d.mts, as scripts/template.d.mts already is.
+ >>[2026-10-12] read — nothing has moved, as the Status line says. scripts/ts/shared/build-topology.mts has no SITE_ENTRIES, vite.config.ts:10 still keeps its own ignoredSegments, and public/ts is in place; the only commit since to touch these paths (efcd875d) edited copy in public/ts/promo-wonder-cycle.ts. M0 waits on the creator choosing how vite.config.ts imports the list, then M2 lands as one commit.
+}
+
+^"cache"{
+ ~#status: "waiting"
+ ~#next_commit: "~[build] Name what ships in one list in build-topology, and let vite.config.ts read that list"
+ ~#files_hot: "scripts/ts/shared/build-topology.mts, vite.config.ts, tsconfig.json, scripts/template.d.mts"
+ ~#gate: "the creator's pick of how vite.config.ts imports the list: cast the compiled .mjs, import the .mts source, or add a sibling .d.mts"
+ ~#last_stream: "2026-10-12"
 }

@@ -1,0 +1,34 @@
+# Review 2026-10-12 — hot notes for the guided try-a-look mock; the shelf's contract, the absorbed settings rules and the satchel proposal stay in PLAN.md.
+# wip — settings-ornament-resonance
+#
+#>plan_settings_ornament_resonance_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@settings_page: ~"../../../settings/index.html"
+@shelf_css: ~"../../../public/css/routes/surfaces/settings-shelf.css"
+@settings_ui: ~"../../../public/js/interface/site-settings-ui.js"
+
+operation = "cache"
+fixity = "tending"
+
+^"stream"{
+ >>[2026-10-12] read — The shelf holds (b2eda400, with its aisle index pinned in 39d66d28): eight aisles under the presets id in settings/index.html, styled by settings-shelf.css, and site-settings-ui.js:1483 loads the pack specimens so each look's box wears its pack. No mock of a guided way to try a look exists yet. The satchel bay now belongs to runtime-plane-consolidation, and its rail demo behind ?spw-satchel=rail still lives in section-handle.js.
+}
+
+^"open"{
+ try_a_look = "Which guided or pivot-oriented way to try a look does the shelf offer? The creator's pick in the browser, from a mock; a random pick is ruled out."
+ shelf_words = "Do the shelf's words stand? They wait on the creator's copy-unit pass."
+ satchel_bay = "Does the bay replace the satchel launcher outright? The creator's call at the sensation gate; the rebuild belongs to runtime-plane-consolidation."
+}
+
+^"cache"{
+ ~#status: "implementing"
+ ~#next_commit: "+[settings] Mock two guided ways to try a look, each showing where the step lands before you take it"
+ ~#files_hot: "settings/index.html, public/css/routes/surfaces/settings-shelf.css, public/js/interface/site-settings-ui.js"
+ ~#gate: "nothing for the mock; which way ships is the creator's pick in the browser"
+ ~#last_stream: "2026-10-12"
+}

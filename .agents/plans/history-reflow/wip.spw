@@ -1,15 +1,22 @@
-# Review 2026-10-10 — one open question for the creator; the grammar itself stays in PLAN.md.
+# Review 2026-10-12 — one open question for the creator, the symbol table; the grammar, method and rebase recipe stay in PLAN.md.
 # wip — history-reflow
 #
 # Questions the commit grammar cannot answer from the tree alone.
 
-#>history_reflow_wip
+#>plan_history_reflow_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
 #:practice #!handoff
 
 @plan: ~"./PLAN.md"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @history: ~"./HISTORY.md"
 @workbench_commit_command: ~"../../../.spw/_workbench/.claude/commands/commit.md"
 @patch_consolidator: ~"../../skills/patch-consolidator/SKILL.md"
+
+operation = "cache"
+fixity = "tending"
 
 #>wonder_history_reflow_symbols
 ?["What does each commit subject symbol mean on this site: & . + ~ ! ^ = ?"]{
@@ -21,4 +28,20 @@
   !probe{ `git log --since=2026-09-01 --format=%s | cut -c1-2 | sort | uniq -c | sort -rn` }
   $%[commit.symbol, commit.grammar]
   ~<"./PLAN.md"> ~<"../agent-optimization/index.spw">
+}
+
+^"stream"{
+ >>[2026-10-12] read — the grammar, the reflow method and the rebase recipe stand; the last rule is still aa1c9c48, and d13a532f only moved the August brief into HISTORY.md. No sequence is pending. The symbol question is still open: no file on this repo's side says what & . + ~ ! ^ = mean, and the counts since 2026-09-01 are now & 192, . 147, + 123, ~ 110, ! 96.
+}
+
+^"open"{
+ symbols = ~"./wip.spw#wonder_history_reflow_symbols"
+}
+
+^"cache"{
+ ~#status: "waiting"
+ ~#next_commit: "+[history] Say what each subject symbol means here, in one table beside the grammar"
+ ~#files_hot: ".agents/plans/history-reflow/PLAN.md, .agents/plans/history-reflow/HISTORY.md"
+ ~#gate: "the creator's call on what each symbol means on this site"
+ ~#last_stream: "2026-10-12"
 }

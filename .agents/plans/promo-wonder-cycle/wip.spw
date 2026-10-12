@@ -1,4 +1,22 @@
-# Review 2026-07-12 — retain as a small cache; move live offer copy and cadence decisions into the owner plan.
+# Review 2026-10-12 — hot notes for the notice counter; the lanes, constraints and release receipts stay in PLAN.md.
+# wip — promo-wonder-cycle
+#
+#>plan_promo_wonder_cycle_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@plans_root: ~"../../../.agents/plans/index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@notices: ~"../../../public/js/interface/discovery-notices.js"
+@visit_intent: ~"../../../public/js/kernel/visit-intent.js"
+@feed: ~"../../../public/data/promo-wonder-cycle.json"
+
+operation = "cache"
+fixity = "tending"
+
 ^"selection_probes"{
  probes = #[ `rg 'promo-wonder-cycle' public`, `Confirm day/week selection is deterministic for a given date.`, ][reg=set]
  rule = "Run probes before trusting cached plan_context."
@@ -11,21 +29,6 @@
  bucket = "active_backlog"
  validation = #[ `Confirm day/week selection is deterministic for a given date.`, `Confirm static fallback renders without the feed.`, `Confirm route copy still reads cleanly for human visitors.`, `Run git diff --check after edits.`, `Run node --check for any edited JS modules.`, ][reg=set]
 }[reg=facet]
-# wip — promo-wonder-cycle
-#
-#>plan_promo_wonder_cycle_wip
-#:operation #!cache
-#:fixity #!tending
-#:layer #!pragmatics
-
-@plan: ~"./PLAN.md"
-@index: ~"./index.spw"
-@plans_root: ~"../../../.agents/plans/index.spw"
-@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
-
-operation = "cache"
-fixity = "tending"
-@plan: ~"../promo-wonder-cycle/PLAN.md"
 
 promo_wonder_cycle:
   goal: `Rotate promo and wonder structures by day and week with optional JSON hydration.`
@@ -42,3 +45,19 @@ promo_wonder_cycle:
     - `Keep the feed secondary to hand-authored HTML.`
     - `Make the structure legible to other developers.`
     - `Prefer explicit names over generic slots.`
+
+^"stream"{
+ >>[2026-10-12] read — the rotating layer (603f18d8, typed in ccafd1ac) and the intent-picked toast (1a61dc53) are in the tree. discovery-notices.js still records dismissals and counts nothing, so the shown / accepted / closed counter is the one open slice, and it waits on the creator approving the 1a61dc53 demo in a browser. Today's A-cycle release (efcd875d) moved the feed's cycle pair and daily record to the October 13 close; PLAN.md's release receipts do not list that close yet.
+}
+
+^"open"{
+ notice_demo = "Does the 1a61dc53 toast read well on a phone, spoken from a resting seat? The creator's call, in a browser."
+}
+
+^"cache"{
+ ~#status: "waiting"
+ ~#next_commit: "+[promo] Count each notice shown, accepted or closed, per cadence"
+ ~#files_hot: "public/js/interface/discovery-notices.js, public/js/kernel/visit-intent.js, public/data/promo-wonder-cycle.json"
+ ~#gate: "the creator's browser approval of the 1a61dc53 demo"
+ ~#last_stream: "2026-10-12"
+}

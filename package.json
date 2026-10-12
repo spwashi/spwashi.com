@@ -133,6 +133,7 @@
     "plans:index:check": "node scripts/maintain-plan-directory-indexes.mjs --check",
     "audit:plans": "node scripts/audit-plans.mjs",
     "audit:spw-tree": "node scripts/audit-spw-tree.mjs",
+    "tending:queue": "node scripts/tending-queue.mjs",
     "preview:open": "node scripts/preview-open.mjs",
     "preview": "vite preview",
     "starter:inventory": "node scripts/starter-inventory.mjs",

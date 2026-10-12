@@ -1,0 +1,35 @@
+# Review 2026-10-12 — hot notes for prefix sigils in the query parser; the pillars, phases and pin ritual stay in PLAN.md.
+# wip — spw-language-v04
+#
+#>plan_spw_language_v04_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@expression_query: ~"../../../public/js/semantic/expression-query.js"
+@expression_query_test: ~"../../../scripts/tests/expression-query.test.mjs"
+@spw_as_handle: ~"../../../.spw/caches/spw-as-handle-2026-09.spw"
+
+operation = "cache"
+fixity = "tending"
+
+^"stream"{
+ >>[2026-10-12] read — the twelve pillars and the in-site parser have landed, and the workbench gitlink is still 229aedcf (a4572202). parseExpressionQuery in public/js/semantic/expression-query.js still reads only boon|bane|bone|bonk|honk as a prefix and drops other leading sigils, so patch 2 of the spw-as-handle cache is still the next slice. Its prefix half needs no decision; the trailing ?# half and Phase 2 upstream wait on the creator.
+}
+
+^"open"{
+ trailing_probe = ~"./index.spw#wonder_spw_language_v04_trailing_probe"
+ help_json = ~"./index.spw#wonder_plan_help_json"
+ phase_two = "Does feature/spw-language-v04 open upstream in spw-workbench now, or after the site-side patches? The creator's call."
+}
+
+^"cache"{
+ ~#status: "implementing"
+ ~#next_commit: "+[search] Read leading sigils in a typed query as force, and test it with the cache's worked example"
+ ~#files_hot: "public/js/semantic/expression-query.js, scripts/tests/expression-query.test.mjs, .spw/caches/spw-as-handle-2026-09.spw"
+ ~#gate: "nothing for the prefix half; the trailing ?# half waits on the creator's reading"
+ ~#last_stream: "2026-10-12"
+}

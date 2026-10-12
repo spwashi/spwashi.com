@@ -1,0 +1,35 @@
+# Review 2026-10-12 — hot notes for the next Parallel and Competing Theories frame; the stub shape, voice and remaining list stay in PLAN.md.
+# wip — topic-building-blocks
+#
+#>plan_topic_building_blocks_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@programs: ~"../../../topics/software/programs/index.html"
+@logic: ~"../../../topics/math/logic/index.html"
+@topic_wiring: ~"../../../scripts/tests/topic-wiring.test.mjs"
+
+operation = "cache"
+fixity = "tending"
+
+^"stream"{
+ >>[2026-10-12] read — the Status holds. Logic and linear algebra carry the Parallel and Competing Theories frame; programs, data structures, probability, optimization and forecasting do not, and none of those pages has changed since. topic-wiring.test.mjs still guards the hubs. Programs is next, one page a session, citing only what a stable source attributes.
+}
+
+^"open"{
+ regional_lenses = ~"./index.spw#wonder_topic_building_blocks_regional_lenses"
+ pnsb = "Does PNSB mean purple non-sulfur bacteria? The creator's call, before any public page names it."
+ second_module = "Which curriculum module comes second, and when? It waits for the creator's ask."
+}
+
+^"cache"{
+ ~#status: "implementing"
+ ~#next_commit: "+[topics] Give the programs page its parallel and competing theories, each one a stable source attributes"
+ ~#files_hot: "topics/software/programs/index.html, topics/math/logic/index.html, scripts/tests/topic-wiring.test.mjs"
+ ~#gate: "nothing, as long as each theory has a stable source; with nothing sourced, the page waits"
+ ~#last_stream: "2026-10-12"
+}

@@ -1,0 +1,34 @@
+# Review 2026-10-12 — hot notes for row 4, the controls nothing reads; the failure table and planned commits stay in FIX.md.
+# wip — settings-theme-wiring
+#
+#>plan_settings_theme_wiring_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./FIX.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@settings_page: ~"../../../settings/index.html"
+@engine: ~"../../../public/js/kernel/site-settings-engine.js"
+@profiles: ~"../../../public/js/kernel/site-settings-profiles.js"
+
+operation = "cache"
+fixity = "tending"
+
+^"stream"{
+ >>[2026-10-12] read — Rows 2 and 3 are closed in the tree: settings/index.html has no viewportActivation fieldset (08f060d6), and the blog files are gone. Row 6 is unchanged: the three iconPack radios sit under Icon pack (considering) at settings/index.html:1292, the engine writes spwIconPack, and nothing in public/css reads data-spw-icon-pack. Row 4's sweep, each remaining control checked against public/css and public/js in kebab and camelCase, has not started.
+}
+
+^"open"{
+ icon_packs = ~"./index.spw#wonder_settings_theme_wiring_icon_packs"
+ browser_rows = "Do rows 1 and 5, and the inherited density and metamaterial findings, still show on a page? Waits on a browser pass."
+}
+
+^"cache"{
+ ~#status: "implementing"
+ ~#next_commit: "![settings] Take the controls nothing reads off the settings page, and keep their saved keys inert"
+ ~#files_hot: "settings/index.html, public/js/kernel/site-settings-engine.js, public/js/kernel/site-settings-profiles.js"
+ ~#gate: "nothing for row 4; row 6 waits on the icon-pack answer, rows 1 and 5 on a browser pass"
+ ~#last_stream: "2026-10-12"
+}

@@ -1,0 +1,36 @@
+# Review 2026-10-12 — hot notes for the rail's authored ids and headings; the review, phases and absorbed rules stay in PLAN.md.
+# wip — chrome-navigation-wonder
+#
+#>plan_chrome_navigation_wonder_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@fix: ~"./FIX.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@section_handle: ~"../../../public/js/runtime/attention/section-handle.js"
+@breadcrumb_spell: ~"../../../public/js/runtime/experiential/breadcrumb-spell.js"
+@home: ~"../../../index.html"
+
+operation = "cache"
+fixity = "tending"
+
+^"stream"{
+ >>[2026-10-12] read — The rail's four layers hold (7018898c, c348c0f7): section-handle.js names the region from the section id, cut at 28 characters, the path from the route and that id, and the component from the nearest card or panel heading. The Status slice, short section ids and component headings on home, the design hub and one long topic route, has not started; the last commits to section-handle.js were runtime write fixes (face97b8, f1d0f74c). The header Cauldron action still links to /play/ from /play/ itself (scripts/template.mjs:846).
+}
+
+^"open"{
+ breadcrumbs = ~"./index.spw#wonder_chrome_navigation_wonder_breadcrumbs"
+ drawer_swipe = ~"./index.spw#wonder_chrome_navigation_wonder_drawer_swipe"
+ rail_motion = "How does the rail move between Spw positions? The creator said later, as a designed pass."
+}
+
+^"cache"{
+ ~#status: "implementing"
+ ~#next_commit: "+[rail] Name home's sections and cards briefly, so each rail layer says where the reader is"
+ ~#files_hot: "index.html, design/index.html, public/js/runtime/attention/section-handle.js"
+ ~#gate: "nothing but the copy"
+ ~#last_stream: "2026-10-12"
+}

@@ -1,0 +1,35 @@
+# Review 2026-10-12 — hot notes for the Phase 2 glossary review; the census, candidates and migration rules stay in PLAN.md and vocabulary-census.md.
+# wip — shell-model-vocabulary-consolidation
+#
+#>plan_shell_model_vocabulary_consolidation_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@census: ~"./vocabulary-census.md"
+@dom_contracts: ~"../../../public/js/kernel/dom-contracts.js"
+@shell_chrome: ~"../../../public/css/shell/chrome/"
+
+operation = "cache"
+fixity = "tending"
+
+^"stream"{
+ >>[2026-10-12] read — the census (bd0d7951) offers two glossary candidates, A "Stagecraft" and B "Tightened Chrome", plus two attribute-grammar candidates, and nothing has been renamed. pocket still sits in 15 CSS and 7 JS files, outside bundles and generated files, as the Status line says, and both candidates still retire it. The Phase 2 choice has waited on the creator since July, and whether pocket stays is the first question for that review.
+}
+
+^"open"{
+ pocket = ~"./index.spw#wonder_shell_model_vocabulary_pocket"
+ glossary = "Candidate A, which retires chrome, or candidate B, which keeps it? The creator's call, against the census."
+ attribute_grammar = "Which attribute-grammar candidate, if either, sets how a data-spw-* value may fold several axes? The creator's call, before any migration."
+}
+
+^"cache"{
+ ~#status: "waiting"
+ ~#next_commit: "+[shell] Name the shell's words in one glossary: what each holds, and what it replaces"
+ ~#files_hot: ".agents/plans/shell-model-vocabulary-consolidation/vocabulary-census.md, public/js/kernel/dom-contracts.js, public/css/shell/chrome/section-context.css"
+ ~#gate: "the creator's glossary choice, starting with whether pocket stays"
+ ~#last_stream: "2026-10-12"
+}
