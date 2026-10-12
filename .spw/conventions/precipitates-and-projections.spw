@@ -1,6 +1,9 @@
+# Precipitates and Projections — patches as semantic crystallizations of change, tracked across layers through Spw projections
 #>precipitates_and_projections
 #:layer #!pragmatics
 #:conventions #!versioning
+#:operation #!prime
+#:fixity #!experimental
 
 ^"thesis"{
   claim: "Patches and updates are not arbitrary diffs—they're semantic crystallizations (precipitates) of change. Through Spw projections, a single idea's manifestation can be tracked across layers, files, and abstractions."
@@ -272,7 +275,7 @@
 
     content: "#>cognitive_handles_patch
 #:patches #!versioning
-#:phase expression
+#:phase #!expression
 #:operator ^
 
 ^\"metadata\"{

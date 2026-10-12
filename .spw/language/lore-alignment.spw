@@ -9,6 +9,7 @@
 #:language #!sigils #!lore #!perspective #!alignment
 #:operation #!cache #!prime #!audit
 #:fixity #!tending
+#:layer #!semantics
 
 @sigil_geometry: ~"./sigil-geometry-lore.spw"
 @definitions: ~"../../public/js/kernel/shared.js"

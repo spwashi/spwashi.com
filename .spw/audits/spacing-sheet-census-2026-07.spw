@@ -7,6 +7,7 @@
 #>spacing_sheet_census_2026_07
 #:audit #!css #!spacing #!layout
 #:operation #!audit
+#:fixity #!tending
 #:layer #!pragmatics
 
 @dimension_vocabulary: ~"../conventions/dimension-vocabulary.spw"

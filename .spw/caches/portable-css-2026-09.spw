@@ -7,7 +7,7 @@
 #>portable_css_2026_09
 #:cache #!css #!delivery #!tokens
 #:operation #!cache
-#:fixity #!seed
+#:fixity #!experimental
 #:layer #!pragmatics
 
 @stylesheet_ecology: ~"../conventions/stylesheet-ecology.spw"
@@ -23,7 +23,7 @@
 @mobile: ~"../../.agents/plans/archive/mobile-runtime-foundation/PLAN.md"
 
 operation = "cache"
-fixity = "seed"
+fixity = "experimental"
 measured_at = `2026-09-22`
 do_not = `Do not reorder @layer in style.css. Do not add a data-spw family. Do not mount site.js on a foreign origin. Do not grow bundles/core.css to serve other hosts.`
 

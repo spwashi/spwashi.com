@@ -6,6 +6,8 @@
 #>hypermedia_2d
 #:convention #!hypermedia #!layout #!spells
 #:layer #!semantics
+#:operation #!align
+#:fixity #!stable
 
 @site_semantics: ~"./site-semantics.spw"
 @dimension_vocabulary: ~"./dimension-vocabulary.spw"

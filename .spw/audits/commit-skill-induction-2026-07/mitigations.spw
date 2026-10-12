@@ -4,6 +4,7 @@
 #:audit #!skills #!process
 #:operation #!prime
 #:fixity #!tending
+#:layer #!pragmatics
 
 @index: ~"./index.spw"
 @pain: ~"./induction-pain.spw"

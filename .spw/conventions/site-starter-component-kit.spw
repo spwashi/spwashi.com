@@ -7,6 +7,8 @@
 #>site_starter_component_kit
 #:convention #!starter #!components #!portable
 #:layer #!pragmatics
+#:operation #!contract
+#:fixity #!stable
 
 @plan: ~"../../.agents/plans/site-starter-component-kit/PLAN.md"
 @compose_css: ~"../../public/css/compose.css"

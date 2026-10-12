@@ -4,6 +4,7 @@
 #:audit #!typescript #!agents
 #:operation #!audit
 #:fixity #!tending
+#:layer #!pragmatics
 
 @index: ~"./index.spw"
 @skill: ~"../../../.agents/skills/spw-typescript-affordances/SKILL.md"

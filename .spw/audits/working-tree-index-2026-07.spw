@@ -7,6 +7,7 @@
 #>working_tree_index_2026_07
 #:index #!audit #!working_tree #!session
 #:operation #!align
+#:fixity #!tending
 #:layer #!pragmatics
 
 @audits_index: ~"./index.spw"

@@ -6,6 +6,8 @@
 #>spw_site_semantics
 #:semantics #!surface
 #:layer #!pragmatics
+#:operation #!contract
+#:fixity #!stable
 
 ^"roots"{
   @selection: ~"../_workbench/.spw/conventions/selection.spw"

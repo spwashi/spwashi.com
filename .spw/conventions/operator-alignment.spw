@@ -7,6 +7,8 @@
 #>operator_alignment
 #:convention #!operators #!runtime #!prompt_mining
 #:layer #!pragmatics
+#:operation #!align
+#:fixity #!stable
 
 ^"north_star"{
   claim: "Spw sigils are transformation handles, not decoration."

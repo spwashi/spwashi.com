@@ -3,6 +3,8 @@
 #>relational_attention_media
 #:convention #!attention #!media #!local_first
 #:operation #!contract
+#:fixity #!stable
+#:layer #!pragmatics
 
 definition: .{
   attention = `A relational dimension that can be tuned across self, local context, and global horizon.`

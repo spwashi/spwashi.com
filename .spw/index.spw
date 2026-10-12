@@ -36,6 +36,8 @@
 @mounted_docs: ~"./_workbench/docs/runtime/md/mounted-workbench.md"
 @language: ~"./language/index.spw"
 @language_v04: ~"./language/v04/index.spw"
+@assets: ~"./assets.spw"  # the image register: images by purpose and surface, each with a .spw sidecar
+@graph: ~"./graph.spw"  # typed relations between documents: authority, dependency, projection, navigation, evidence, validation, lifecycle
 
 intent: .{
  goal = `Provide one stable site-local entrypoint that bridges publishing decisions on spwashi.com to the installed spw-workbench canon.`

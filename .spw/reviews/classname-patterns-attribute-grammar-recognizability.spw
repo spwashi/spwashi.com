@@ -2,6 +2,8 @@
 
 #>spw_classname_attribute_grammar_recognizability
 #:review #!css #!semantics #!cognition #!collaboration
+#:operation #!audit
+#:fixity #!tending
 #:layer #!pragmatics
 
 @css_instruction: ~"../conventions/css-instruction.spw"

@@ -2,6 +2,8 @@
 
 #>spw_html_css_structure_audit
 #:review #!html #!css #!performance #!semantics
+#:operation #!audit
+#:fixity #!tending
 #:layer #!pragmatics
 
 @css_instruction: ~"../conventions/css-instruction.spw"

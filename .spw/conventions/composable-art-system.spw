@@ -5,6 +5,8 @@
 #>composable_art_system
 #:conventions #!style #!narrative #!art #!storytelling
 #:layer #!pragmatics
+#:operation #!align
+#:fixity #!tending
 
 @harmony_audit: ~"../audits/component-philosophy-harmony-2026-07.spw"
 @expressive_registers: ~"./expressive-registers.spw"

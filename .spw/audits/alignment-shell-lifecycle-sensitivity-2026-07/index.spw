@@ -10,6 +10,7 @@
 #>alignment_shell_lifecycle_sensitivity_2026_07
 #:audit #!runtime #!css #!shell #!lifecycle #!responsive #!dimensions
 #:operation #!audit
+#:fixity #!tending
 #:layer #!pragmatics
 
 @layout_assumptions: ~"../../../public/js/runtime/regions/layout-assumptions.js"

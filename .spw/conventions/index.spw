@@ -6,6 +6,8 @@
 #>spw_site_conventions
 #:index #!conventions
 #:layer #!pragmatics
+#:operation #!align
+#:fixity #!tending
 
 @spw: ~".."
 @site_semantics: ~"./site-semantics.spw"
@@ -25,6 +27,7 @@
 @operator_semantics: ~"./operator-semantics.spw"
 @operator_alignment: ~"./operator-alignment.spw"
 @operator_operand_semantics: ~"./operator-operand-semantics.spw"
+@operator_chip_grammar: ~"./operator-chip-grammar.spw"  # the grammar an operator chip follows in HTML, grounded in the workbench parser
 @annotation_layer: ~"./annotation-layer.spw"
 @query_disposition: ~"./query-disposition.spw"
 @planning_ecology: ~"./planning-ecology.spw"
@@ -80,9 +83,13 @@
 @surface_interaction_combinatorics: ~"./surface-interaction-combinatorics.spw"  # Combinatorics across scroll, tap, drag, hover, and swipe channels
 @component_biome: ~"./component-biome.spw"  # components as land features; light, canopy, exchange, succession
 @material_physics: ~"./material-physics.spw"  # what a surface does with the light canopy delivers
+@material_projection: ~"./material-projection.spw"  # how a .spw declaration becomes HTML, and what the runtime does with it there
+@world_physics: ~"./world-physics.spw"  # choosing which physics a world runs on, the way a designer picks a series' mechanics
 @cauldron_dynamics: ~"./cauldron-dynamics.spw"  # intake, digestion, absorption, return — and what an editor writes to feed it
+@cauldron_registers: ~"./cauldron-registers.spw"  # the spaces an ingredient has coordinates in, and how each one composes
 @wonder_vocabulary: ~"./wonder-vocabulary.spw"
 @wonder_architecture: ~"./wonder-architecture.spw"  # doctrine/types/field/ornament/loop; no new wonder-type
+@ornament_contract: ~"./ornament-contract.spw"  # how ornaments read semantic and field state to express the site's identity
 @wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
 @page_anatomy_vocabulary: ~"./page-anatomy-vocabulary.spw"
 @page_template_authoring: ~"./page-template-authoring.spw"
@@ -125,6 +132,7 @@
 @component_philosophy_harmony_audit: ~"../audits/component-philosophy-harmony-2026-07.spw"
 @composition_box_model: ~"./composition-box-model.spw"
 @region_component_ecology: ~"./region-component-ecology.spw"
+@region_passes: ~"./region-passes.spw"  # what each zone of a page is for, so a pass over it knows what to improve
 @projection_attenuation: ~"./projection-attenuation.spw"  # page → region → slot field hold; live CSS
 @literary_operational_motifs: ~"./literary-operational-motifs.spw"  # cookbook/magazine/research discharge registers
 @expression_card: ~"./expression-card.spw"  # one primitive under lab, toolmaker, and cauldron expression hosts
@@ -160,6 +168,9 @@
 @recursive_improvement: ~"./recursive-improvement.spw"
 @audits_index: ~"../audits/index.spw"
 @caches_recursive: ~"../caches/recursive-improvement-2026-07.spw"  # cold 2026-09-08; successor: ./recursive-improvement.spw
+@learnability_ledger: ~"./learnability-ledger.spw"  # posture, process attention, discoverability and layout-contract alignment across the runtime
+@narrative_instrumentation: ~"./narrative-instrumentation.spw"  # selected prose as inspectable narrative handles, readable without scripts
+@sidecar_references: ~"./sidecar-references.spw"  # neighboring checkouts kept gitignored under .references/ for reading and crawling
 
 ecologies: .{
  note = `Coordinator dispatch per spw-architecture-ecology.spw#ecology_coordinators: route cross-plan work through one coordinator before adding leaf refs here or to site.spw.`

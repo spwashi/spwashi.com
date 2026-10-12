@@ -8,7 +8,7 @@
 #>timing_bands_handoff_2026_09
 #:cache #!prime #!css #!motion #!svg #!agents
 #:operation #!prime
-#:fixity #!provisional
+#:fixity #!tending
 #:layer #!pragmatics
 
 @plan: ~"../../.agents/plans/color-motion/PLAN.md"
@@ -21,7 +21,7 @@
 @attention_field: ~"../conventions/attention-field.spw"
 
 operation = "prime"
-fixity = "provisional"
+fixity = "tending"
 source = "session 2026-09-08: Fable Patch 4; Grok Patch 5 55ef2737; remaining Patches 6-7"
 
 ^"landed"{

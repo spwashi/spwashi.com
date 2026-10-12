@@ -6,6 +6,8 @@
 
 #>spw_approach_topography
 #:model #!motion
+#:operation #!prime
+#:fixity #!tending
 #:layer #!pragmatics
 
 @page_model: ~"./page-model.spw"

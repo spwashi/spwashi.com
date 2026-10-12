@@ -10,7 +10,7 @@
 #>speech_bubble_voices_2026_09
 #:cache #!copy #!voice #!store #!laminate
 #:operation #!cache
-#:fixity #!seed
+#:fixity #!experimental
 #:layer #!pragmatics
 
 @copy_accessor: ~"../conventions/copy-accessor.spw"
@@ -30,7 +30,7 @@
 @cast: ~"../../play/rpg-wednesday/cast/index.html"
 
 operation = "cache"
-fixity = "seed"
+fixity = "experimental"
 measured_at = `2026-09-29`
 source = `Creator request relayed 2026-09-29. Stems read from the files above on the same day. No price, product name, or character was given.`
 do_not = `No data-spw-voice, data-spw-tone, or data-spw-trace. No new data-spw-* family. No public HTML, CSS, or JS from this cache.`

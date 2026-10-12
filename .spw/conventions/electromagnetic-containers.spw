@@ -1,6 +1,9 @@
+# Electromagnetic Containers — containers as computational fields, not passive boxes
 #>electromagnetic_containers
 #:layer #!pragmatics
 #:conventions #!cognition
+#:operation #!contract
+#:fixity #!tending
 
 ^"thesis"{
   claim: "Containers are computational fields, not passive boxes. They embody electromagnetic metaphors (charge, potential, resonance) to enable cognitive computation across conceptions of a single idea."

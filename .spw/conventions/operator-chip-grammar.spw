@@ -8,6 +8,7 @@
 #>operator_chip_grammar
 #:convention #!operators #!grammar #!audit #!parts_of_speech
 #:layer #!semantics
+#:operation #!contract
 #:fixity #!stable
 
 ^"thesis"{

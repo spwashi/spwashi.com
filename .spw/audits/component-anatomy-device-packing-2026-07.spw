@@ -7,6 +7,7 @@
 #>component_anatomy_device_packing_2026_07
 #:audit #!layout #!components #!responsive
 #:operation #!audit
+#:fixity #!tending
 #:layer #!pragmatics
 
 @composition_box_model: ~"../conventions/composition-box-model.spw"

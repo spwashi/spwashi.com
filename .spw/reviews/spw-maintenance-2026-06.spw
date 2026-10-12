@@ -4,6 +4,7 @@
 
 #>spw_maintenance_2026_06
 #:review #!spw #!integrity #!grammar
+#:operation #!audit
 #:layer #!pragmatics
 
 @site: ~"../site.spw"

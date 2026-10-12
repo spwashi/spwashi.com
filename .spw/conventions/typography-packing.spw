@@ -18,6 +18,8 @@
 #>typography_packing_plan
 #:convention #!typography #!layout #!components
 #:layer #!pragmatics
+#:operation #!contract
+#:fixity #!stable
 
 @css: ~"../../public/css/components/typography-packing.css"
 @dimensions: ~"./dimension-vocabulary.spw"

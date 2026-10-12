@@ -6,6 +6,7 @@
 #:audit #!lifecycle #!runtime #!events
 #:operation #!audit
 #:fixity #!tending
+#:layer #!pragmatics
 
 @index: ~"./index.spw"
 @loader: ~"../../../public/js/runtime/orchestration/loader.js"

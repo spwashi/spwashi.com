@@ -2,6 +2,8 @@
 
 #>spw_workbench_alignment_audit
 #:review #!architecture #!ontology #!agent_ecology
+#:operation #!align
+#:fixity #!tending
 #:layer #!pragmatics
 
 @site: ~"../site.spw"

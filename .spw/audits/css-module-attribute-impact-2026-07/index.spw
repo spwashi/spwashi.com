@@ -10,6 +10,7 @@
 #>css_module_attribute_impact_2026_07
 #:audit #!css #!runtime #!performance #!cascade
 #:operation #!audit
+#:fixity #!tending
 #:layer #!pragmatics
 
 @style_core: ~"../../../public/css/style-core.css"

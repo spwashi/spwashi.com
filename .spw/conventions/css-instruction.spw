@@ -5,6 +5,8 @@
 #>spw_css_instruction
 #:conventions #!css #!instruction
 #:layer #!pragmatics
+#:operation #!contract
+#:fixity #!stable
 
 ^"purpose"{
   statement: "Every CSS file should teach its ownership boundary before it styles a surface."

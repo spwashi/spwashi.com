@@ -5,6 +5,8 @@
 
 #>runtime_module_medium
 #:surface #!runtime #!catalog
+#:operation #!align
+#:fixity #!tending
 #:layer #!editor_inspectability
 
 @ecology: ~"../conventions/runtime-medium-ecology.spw"

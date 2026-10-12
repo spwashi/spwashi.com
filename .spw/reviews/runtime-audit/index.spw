@@ -3,6 +3,8 @@
 
 #>runtime_audit_index
 #:review #!surface
+#:operation #!audit
+#:fixity #!tending
 #:layer #!pragmatics
 
 @spw: ~"../../index.spw"

@@ -8,6 +8,7 @@
 #:convention #!layout #!tokens #!css
 #:layer #!pragmatics
 #:operation #!align
+#:fixity #!stable
 
 @css_layout: ~"../../public/css/shell/layout.css"
 @css_core: ~"../../public/css/tokens/core.css"

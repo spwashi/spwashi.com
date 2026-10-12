@@ -18,7 +18,7 @@
 @manifest: ~"../../dist/asset-manifest.json"
 
 ^"rubric"{
-  #:per-file value, in the order a reader asks
+  # per-file value, in the order a reader asks
   reach = `Does anything load it — an importer, a catalog def, a route's script tag? No reach, no runtime value; the file is reference at best.`
   wiring = `Is its way in named — a catalog def with describes / updates / when — or does it rely on a side import? check:runtime seats: catalog-export, catalog-init-only, unwired-init, export-unwired.`
   layer = `Does it import only from below? kernel < semantic < runtime (media beside it) < interface < modules; the catalog's dynamic loads are the sanctioned crossing.`
@@ -27,7 +27,7 @@
 }
 
 ^"census_2026_09_18"{
-  #:after this pass; before it: 268 files, 103,877 lines, 18 orphans (4,797 lines), 38 upward imports
+  # after this pass; before it: 268 files, 103,877 lines, 18 orphans (4,797 lines), 38 upward imports
   files = 270
   lines = 103500
   by_dir = `after the moves: kernel 34 · semantic 43 (+6 cauldron) · runtime 84 (+7 attention, 10 catalog, 9 experiential, 8 interaction, 5 orchestration, 4 shell) · interface 23 (+4 cauldron) · media 6 · modules 31 across 12 folders · roots 2`
@@ -60,7 +60,7 @@
 }
 
 ^"orphans"{
-  #:zero after 2026-09-18. What the list was, and where each went, so the next reader does not re-derive it.
+  # zero after 2026-09-18. What the list was, and where each went, so the next reader does not re-derive it.
   instrument_blind_spots = #[
     `runtime/arrival/prepaint-state.js — inlined into <head> by scripts/template.mjs; the audit reads the template now`,
     `kernel/component-fixtures.js and kernel/region-ecology-fixtures.js — imported by build scripts; the audit reads scripts/ now`,
@@ -81,7 +81,7 @@
 }
 
 ^"load_precedence"{
-  #:what each mount tier means to a visitor, so a def's `when` is a claim about attention, not a scheduling knob. Counts from check:runtime after the tool wiring.
+  # what each mount tier means to a visitor, so a def's `when` is a claim about attention, not a scheduling knob. Counts from check:runtime after the tool wiring.
   immediate = `6 — the page's ground: settings, shell disclosure, medium register, the minimal core. Nothing here answers a question; it keeps the first paint honest. A feature def never belongs here.`
   visible = `65 — a thing the reader is looking at starts working: benches, cards, composers, brace physics. The selector names the host; the loader waits for it to enter the viewport. The four tools sit here because their host is the thing the route is for.`
   idle = `43 — texture that can arrive late without anyone noticing it was late: collectibles, chrome residue, lab instruments. If a reader would notice its absence in the first second it is not idle.`

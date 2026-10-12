@@ -7,6 +7,8 @@
 #>dimension_vocabulary
 #:convention #!tokens #!layout #!color #!lifecycle
 #:layer #!pragmatics
+#:operation #!align
+#:fixity #!stable
 
 @css: ~"../../public/css/tokens/dimensions.css"
 @typography_packing: ~"./typography-packing.spw"

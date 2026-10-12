@@ -6,6 +6,8 @@
 #>designer_conversation_canvas
 #:convention #!design #!conversation #!measurement
 #:layer #!pragmatics
+#:operation #!contract
+#:fixity #!stable
 
 @measurement_contract: ~"./measurement-contract.spw"
 @pretext_plan: ~"../../.agents/plans/archive/pretext-whimsy-lab/PLAN.md"

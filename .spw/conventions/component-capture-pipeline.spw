@@ -7,6 +7,7 @@
 #:convention #!components #!screenshots #!publishing #!starter
 #:operation #!contract
 #:fixity #!tending
+#:layer #!pragmatics
 
 @starter_kit: ~"./site-starter-component-kit.spw"
 @fixtures: ~"../../public/ts/component-fixtures.ts"

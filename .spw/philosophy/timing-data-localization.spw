@@ -6,6 +6,8 @@
 
 #>timing_data_localization
 #:semantics #!philosophy
+#:operation #!contract
+#:fixity #!stable
 #:layer #!pragmatics
 
 ^"thesis"{

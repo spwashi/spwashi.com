@@ -283,7 +283,9 @@ if (JSON_OUT) {
 
 #>language_census
 #:audit #!language #!attributes #!events
-#:operation observe
+#:operation #!audit
+#:fixity #!volatile
+#:layer #!pragmatics
 
 @generator: ~"../../scripts/language-census.mjs"
 @inventory_core: ~"../../scripts/lib/spw-inventory-core.mjs"
@@ -293,7 +295,7 @@ if (JSON_OUT) {
 @reclustering_plan: ~"../../.agents/plans/archive/language-reclustering/index.spw"
 @homonym_plan: ~"../../.agents/plans/homonym-renaming/index.spw"
 
-operation = "observe"
+operation = "audit"
 fixity = "tending"
 
 ${spwFacet('audit_run', {

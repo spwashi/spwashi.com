@@ -8,6 +8,7 @@
 #>metaphor_primitive_research_branching_2026_07
 #:audit #!metaphor #!research #!navigation #!interaction #!rendering
 #:operation #!audit
+#:fixity #!tending
 #:layer #!pragmatics
 
 @metaphor_dimensional_lexicon: ~"../conventions/metaphor-dimensional-lexicon.spw"

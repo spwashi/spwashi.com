@@ -9,6 +9,7 @@
 #:language #!sigils #!operators #!copy #!alignment
 #:operation #!align
 #:fixity #!tending
+#:layer #!semantics
 
 @definitions: ~"../../public/js/kernel/operator-detection.js"
 @operators_theory: ~"../_workbench/docs/theory/spw/operators.spw"

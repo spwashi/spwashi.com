@@ -7,6 +7,7 @@
 #:cache #!ecology #!structure
 #:operation #!audit
 #:fixity #!tending
+#:layer #!pragmatics
 
 @resume_record: ~"../conventions/resume-record.spw"
 @copy_ecology: ~"../conventions/copy-ecology.spw"

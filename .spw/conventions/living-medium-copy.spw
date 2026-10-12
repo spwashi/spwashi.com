@@ -6,6 +6,9 @@
 
 #>spw_living_medium_copy
 #:convention #!pragmatics
+#:operation #!contract
+#:fixity #!tending
+#:layer #!pragmatics
 
 @site_bridge: ~"./site-semantics.spw"
 @copy_localization: ~"./copy-localization.spw"

@@ -6,6 +6,7 @@
 #:cache #!prime #!inbox
 #:operation #!prime
 #:fixity #!experimental
+#:layer #!pragmatics
 
 operation = "prime"
 fixity = "experimental"

@@ -4,6 +4,7 @@
 #:audit #!agents
 #:operation #!audit
 #:fixity #!tending
+#:layer #!pragmatics
 
 @index: ~"./index.spw"
 @contracts_plan: ~"../../../.agents/plans/agentic-dev-contracts/PLAN.md"

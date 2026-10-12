@@ -5,6 +5,8 @@
 
 #>spw_spatial_grammar
 #:philosophy #!spatial
+#:operation #!prime
+#:fixity #!tending
 #:layer #!pragmatics
 
 ^"thesis"{

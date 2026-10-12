@@ -4,6 +4,7 @@
 #:audit #!grammar #!language
 #:operation #!audit
 #:fixity #!tending
+#:layer #!pragmatics
 
 @index: ~"./index.spw"
 @v04: ~"../../language/v04/index.spw"

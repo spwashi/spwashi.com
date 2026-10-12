@@ -23,7 +23,6 @@
 @cognitive_surface: ~"../philosophy/cognitive-surface.spw"
 @expressive_registers: ~"./expressive-registers.spw"
 @circuit_components: ~"./circuit-components.spw"
-@ornament_contract: ~"./ornament-contract.spw"
 @harmony_audit: ~"../audits/component-philosophy-harmony-2026-07.spw"
 @metaphor_dimensional_lexicon: ~"./metaphor-dimensional-lexicon.spw"
 

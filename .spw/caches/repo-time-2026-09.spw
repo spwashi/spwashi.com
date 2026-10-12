@@ -65,7 +65,7 @@ fixity = "experimental"
 }[reg=facet]
 
 ^"mentoring"{
-  #:handed back — questions, not prescriptions; none of this is route copy
+  # handed back — questions, not prescriptions; none of this is route copy
   heard = `Creator, 2026-09-29: combing old repositories to wonder about the time spent and to consider how they might mentor someone with analogous wonder.`
   tiny_framework = `?[mentor]{frameworks_to_learn_frameworks} Would you hand a mentee the SmJS/SmPHP move — write a small framework pair to learn what frameworks do — and what would you tell them to stop at, knowing wanghorn peaked at 86 commits in a month?`
   language_to_parse = `?[mentor]{language_to_learn_parsing} Is writing a language the way you would teach parsing, or was it the way the question (where do two understandings stop sharing ground) chose for you? Which would a mentee need first?`

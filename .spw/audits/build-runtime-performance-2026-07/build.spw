@@ -6,6 +6,7 @@
 #:audit #!build #!performance
 #:operation #!audit
 #:fixity #!tending
+#:layer #!pragmatics
 
 @index: ~"./index.spw"
 @package: ~"../../../package.json"

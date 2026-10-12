@@ -7,6 +7,7 @@
 #>viewing_reason_cross_media_2026_07
 #:audit #!svg #!media #!copy
 #:operation #!audit
+#:fixity #!tending
 #:layer #!pragmatics
 
 @viewing_reason: ~"../conventions/viewing-reason.spw"

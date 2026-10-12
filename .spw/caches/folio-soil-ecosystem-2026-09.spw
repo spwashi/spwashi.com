@@ -4,6 +4,8 @@
 
 #>folio_soil_ecosystem
 #:cache #!prime #!experimental
+#:operation #!prime
+#:fixity #!experimental
 #:layer #!pragmatics
 
 ^"insight"{

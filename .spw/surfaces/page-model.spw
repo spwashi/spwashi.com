@@ -6,6 +6,8 @@
 
 #>spw_page_model
 #:model #!structure
+#:operation #!contract
+#:fixity #!stable
 #:layer #!pragmatics
 
 @site_semantics: ~"../conventions/site-semantics.spw"

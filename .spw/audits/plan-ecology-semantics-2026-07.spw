@@ -7,6 +7,7 @@
 #>plan_ecology_semantics_2026_07
 #:audit #!plans #!agents #!ecology
 #:operation #!audit
+#:fixity #!tending
 #:layer #!editor_inspectability
 
 @planning_ecology: ~"../conventions/planning-ecology.spw"

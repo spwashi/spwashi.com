@@ -7,6 +7,7 @@
 #>appendix_technolinguistics_web_history_2007_2026
 #:audit #!appendix #!history #!copy #!culture #!technolinguistics
 #:operation #!cache
+#:fixity #!tending
 #:layer #!pragmatics
 
 @appendices_index: ~"./index.spw"

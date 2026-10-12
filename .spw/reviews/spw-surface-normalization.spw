@@ -2,6 +2,8 @@
 
 #>spw_surface_normalization
 #:review #!architecture #!collaboration
+#:operation #!align
+#:fixity #!tending
 #:layer #!pragmatics
 
 @plan: ~"../../.agents/plans/archive/spw-surface-normalization/PLAN.md"

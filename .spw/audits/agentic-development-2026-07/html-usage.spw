@@ -4,6 +4,7 @@
 #:audit #!html #!agents
 #:operation #!audit
 #:fixity #!tending
+#:layer #!pragmatics
 
 @index: ~"./index.spw"
 @site_contracts: ~"../../../scripts/ts/site-contracts/types.mts"

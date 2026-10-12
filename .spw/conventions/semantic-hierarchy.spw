@@ -7,6 +7,7 @@
 #:convention #!semantics #!structure
 #:layer #!pragmatics
 #:operation #!contract
+#:fixity #!stable
 
 @page_model: ~"../surfaces/page-model.spw"
 @site_semantics: ~"./site-semantics.spw"

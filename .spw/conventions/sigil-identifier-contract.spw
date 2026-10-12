@@ -6,6 +6,8 @@
 #>sigil_identifier_contract
 #:convention #!operators #!hypermedia
 #:layer #!pragmatics
+#:operation #!contract
+#:fixity #!stable
 
 @operators_js: ~"../../public/js/semantic/operators.js"
 @dimension_vocabulary: ~"./dimension-vocabulary.spw"

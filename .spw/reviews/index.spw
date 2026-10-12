@@ -3,6 +3,8 @@
 
 #>spw_reviews_index
 #:index #!review
+#:operation #!align
+#:fixity #!tending
 #:layer #!pragmatics
 
 @runtime_audit: ~"./runtime-audit/index.spw"

@@ -4,6 +4,7 @@
 #:audit #!typescript #!types
 #:operation #!audit
 #:fixity #!tending
+#:layer #!pragmatics
 
 @index: ~"./index.spw"
 @agents_md: ~"../../../AGENTS.md"

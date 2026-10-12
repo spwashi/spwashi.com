@@ -7,6 +7,8 @@
 #>operational_semantics_registry
 #:registry #!operational #!contracts
 #:layer #!pragmatics
+#:operation #!align
+#:fixity #!stable
 
 @planning_ecology: ~"./planning-ecology.spw#operational_semantics_template"
 @site_semantics: ~"./site-semantics.spw"

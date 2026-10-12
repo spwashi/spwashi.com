@@ -4,6 +4,7 @@
 #:audit #!agents #!direction
 #:operation #!prime
 #:fixity #!tending
+#:layer #!pragmatics
 
 @index: ~"./index.spw"
 @csi: ~"../commit-skill-induction-2026-07/mitigations.spw"

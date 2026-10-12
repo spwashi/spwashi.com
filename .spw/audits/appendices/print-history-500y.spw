@@ -6,6 +6,7 @@
 #>appendix_print_history_500y
 #:audit #!appendix #!history #!print #!typography
 #:operation #!cache
+#:fixity #!tending
 #:layer #!pragmatics
 
 @appendices_index: ~"./index.spw"

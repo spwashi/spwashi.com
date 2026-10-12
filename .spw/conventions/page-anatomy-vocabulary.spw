@@ -6,7 +6,8 @@
 
 #>page_anatomy_vocabulary
 #:conventions #!semantics #!css #!js #!copy
-#:layer #!stable
+#:fixity #!stable
+#:layer #!semantics
 
 @plan: ~"../../.agents/plans/archive/webpage-trope-vocabulary/PLAN.md"
 @wip: ~"../../.agents/plans/archive/webpage-trope-vocabulary/wip.spw"

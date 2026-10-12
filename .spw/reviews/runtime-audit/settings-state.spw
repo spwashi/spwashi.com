@@ -3,6 +3,8 @@
 
 #>runtime_audit_settings_state
 #:review #!surface
+#:operation #!audit
+#:fixity #!tending
 #:layer #!pragmatics
 
 @settings: ~"../../../public/js/kernel/site-settings.js"

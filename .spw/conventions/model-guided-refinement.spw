@@ -6,6 +6,8 @@
 #>model_guided_refinement
 #:conventions #!agents #!semantics #!css #!marketing
 #:layer #!pragmatics
+#:operation #!contract
+#:fixity #!stable
 
 @plan: ~"../../.agents/plans/archive/model-guided-refinement/PLAN.md"
 @site_semantics: ~"./site-semantics.spw"

@@ -5,6 +5,8 @@
 
 #>spw_philosophy_index
 #:index #!philosophy
+#:operation #!align
+#:fixity #!tending
 #:layer #!pragmatics
 
 @spirit_cycle: ~"./spirit-cycle.spw"

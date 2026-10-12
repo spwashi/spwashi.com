@@ -10,6 +10,7 @@
 #>page_region_hydration_memory_2026_07
 #:audit #!runtime #!hydration #!navigation #!memory #!spells
 #:operation #!audit
+#:fixity #!tending
 #:layer #!pragmatics
 
 @page_state: ~"../../../public/js/runtime/page/page-state.js"
