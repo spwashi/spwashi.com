@@ -1,0 +1,117 @@
+# Review 2026-10-12 — new: spw.quest as a guide people use and a plan surface agents review; slice A (try before installing) first.
+# Plan Index — spw-quest
+#
+# Status 2026-10-12. spw.quest serves a guide to the language (dcf23bdb, 0d0380d2) and an install page, and nobody has used it. The creator asked for it to be more aesthetically…
+
+#>plan_spw_quest_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Status 2026-10-12. spw.quest serves a guide to the language (dcf23bdb, 0d0380d2) and an install page, and nobody has used it. The creator asked for it to be more aesthetically pleasing and easier to run with, and for this plan to be a surface agents can review. Next slice: A, try before installing. Its only gate is the creator's read of this plan.`
+ owner = `spw-quest`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Status 2026-10-12. spw.quest serves a guide to the language (dcf23bdb, 0d0380d2) and an install page, and nobody has…`
+ concepts = #[
+  `creator`,
+  `spw-quest`,
+  `status`,
+  `spw`,
+  `quest`,
+ ][reg=set]
+ surfaces = #[
+  `scripts/lib/chrome-headless-harness.mjs`,
+  `about/domains/spw.quest/index.html`,
+  `.agents/plans/spw-quest/PLAN.md`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@chrome_headless_harness: ~"../../../scripts/lib/chrome-headless-harness.mjs"
+@index: ~"../../../about/domains/spw.quest/index.html"
+
+dispatch: .{
+ plan = @plan
+ chrome_headless_harness = @chrome_headless_harness
+ index = @index
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `spw-architecture-ecology`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-spw_quest-001"
+ layer = "pragmatic"
+ hypothesis = `Status 2026-10-12. spw.quest serves a guide to the language (dcf23bdb, 0d0380d2) and an install page, and nobody has used it. The creator asked for it to be more aesthetically pleasing and easier to run with, and for this plan to be a surface agents can review. Next slice: A, try before installing. Its only gate is the creator's read of this plan.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../scripts/lib/chrome-headless-harness.mjs"
+ probe_ref = `npm run check:workers, which runs workers/spw-quest/test/routes.test.mjs.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../scripts/lib/chrome-headless-harness.mjs unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+validation: #[
+ `npm run check:workers, which runs workers/spw-quest/test/routes.test.mjs.`,
+ `node --check on touched files.`,
+ `Phone stills through the harness for any slice D change.`,
+ `For slice B, a real install on a scratch repository through spw:doctor.`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does spw-quest own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of spw-quest?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether spw-quest still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Status 2026-10-12. spw.quest serves a guide to the language (dcf23bdb, 0d0380d2) and an install page, and nobody has used it. The creator…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+
+#>wonder_spw_quest_published_cli
+?["Should Spw be runnable without a git submodule, through a published CLI, or is the mounted workbench the point?"]{
+  ~#with: @plan
+  ~#taste: "A first reward in seconds earns the minutes an install costs; a mount that keeps its revision honest earns the trust a package can lose."
+  ~#tension: "Publishing spw-cli makes npx init possible and moves a release cadence into the workbench; keeping the submodule keeps one pinned, reviewed revision per consumer."
+  !probe{ "node -e \"for (const p of ['spw-cli','spw-seed']) console.log(p, require('./.spw/_workbench/packages/' + p + '/package.json').private)\"" }
+}
+
+#>wonder_spw_quest_public_plan
+?["Should spw.quest show what is next for Spw in public at /plan, or keep plans in the repository only?"]{
+  ~#with: @plan
+  ~#taste: "An agent can already be sent to spw.quest/init; a public plan lets the same sentence send it to review what comes next."
+  ~#tension: "A public plan is a promise readers can hold the site to; a private one moves without witnesses."
+  !probe{ "rg -n 'plan' workers/spw-quest/src/index.js" }
+}
+
+#>wonder_spw_quest_look
+?["Should spw.quest keep its own dark spiral identity, or borrow spwashi.com's paper material?"]{
+  ~#with: @plan
+  ~#taste: "The spiral is the creator's own figure for a thought; the material around it decides whether it reads as a sibling site or a separate room."
+  ~#tension: "A shared material ties the ecosystem together; a distinct one lets the language stand apart from any one site."
+  !probe{ "rg -n 'background|--bg|color-scheme' workers/spw-quest/src/index.js" }
+}
