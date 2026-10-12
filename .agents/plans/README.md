@@ -99,6 +99,7 @@ Every live folder, once, by area. Open a plan's `index.spw` for its disposition 
 - `folio-worktable/` — folio studies and readings.
 - `model-collaborator-lore-surfaces/` — tools and lore for a human model; parked until a shoot is booked.
 - `workers-wonder-kit/` — the workers' shared shell.
+- `smut-today-crew/` — smut.today as a crew world: staff as the leads, a daily draw with pins.
 
 **Reuse, agents and practice**
 

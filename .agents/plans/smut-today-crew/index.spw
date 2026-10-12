@@ -1,0 +1,129 @@
+# Review 2026-10-12 — new: smut.today as a crew world, staff as the leads, a daily draw with pins; nothing built until the creator answers.
+# Plan Index — smut-today-crew
+#
+# Status 2026-10-12. The creator set a new direction for smut.today: a crew world, its staff as the leads, a story you can put together, daily variance with pins, and no attachment…
+
+#>plan_smut_today_crew_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Status 2026-10-12. The creator set a new direction for smut.today: a crew world, its staff as the leads, a story you can put together, daily variance with pins, and no attachment to the current URLs. Nothing is built yet. The 2026-10-12 copy pass (0e2942ae) is what ships at the October 13 close. Next slice: the village and the first arc, for the October 26 close. It is gated on the creator's answers to the open questions.`
+ owner = `smut-today-crew`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Status 2026-10-12. The creator set a new direction for smut.today: a crew world, its staff as the leads, a story you…`
+ concepts = #[
+  `creator`,
+  `october`,
+  `close`,
+  `smut-today-crew`,
+  `status`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+
+dispatch: .{
+ plan = @plan
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-smut_today_crew-001"
+ layer = "pragmatic"
+ hypothesis = `Status 2026-10-12. The creator set a new direction for smut.today: a crew world, its staff as the leads, a story you can put together, daily variance with pins, and no attachment to the current URLs. Nothing is built yet. The 2026-10-12 copy pass (0e2942ae) is what ships at the October 13 close. Next slice: the village and the first arc, for the October 26 close. It is gated on the creator's answers to the open questions.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"./PLAN.md"
+ probe_ref = `npm run check:workers; node --check; every route rendered through the fetch handler before and after.`
+ falsification = `A patch cannot satisfy the public goal while leaving ./PLAN.md unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+validation: #[
+ `npm run check:workers; node --check; every route rendered through the fetch handler before and after.`,
+ `Phone stills through the harness phone viewport.`,
+ `The creator reads the first arc in a browser before it ships.`,
+][reg=set]
+
+open_questions: #[
+ .{ ask = `Who writes the prose: the creator, a draft for the creator to edit, or text generated per visit? This plan assumes authored.` }[reg=facet],
+ .{ ask = `Is putting a story together the reader's act, the creator's authoring tool, or both?` }[reg=facet],
+ .{ ask = `Does the crew get names, or roles only?` }[reg=facet],
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does smut-today-crew own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of smut-today-crew?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether smut-today-crew still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Status 2026-10-12. The creator set a new direction for smut.today: a crew world, its staff as the leads, a story you can put together,…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+
+#>wonder_smut_crew_prose
+?["Who writes the prose: the creator, a draft for the creator to edit, or text generated per visit?"]{
+  ~#with: @plan
+  ~#taste: "Authored scenes keep the voice the site was built on; generated text would vary every visit and answer to no one."
+  ~#tension: "Daily variance asks for more pieces than one hand writes quickly; the draw can vary which authored pieces meet, not the sentences."
+  !probe{ "rg -n 'body: \\[' workers/smut-today/src/index.js" }
+}
+
+#>wonder_smut_crew_assembly
+?["Is putting a story together the reader's act, the creator's authoring tool, or both?"]{
+  ~#with: @plan
+  ~#taste: "The same slots can serve a reader choosing tonight and an author planning a season."
+  ~#tension: "A reader tool wants few, legible choices; an authoring tool wants every facet at once."
+  !probe{ "rg -n 'SETTLE' workers/smut-today/src/index.js" }
+}
+
+#>wonder_smut_crew_names
+?["Does the crew get names, or roles only?"]{
+  ~#with: @plan
+  ~#taste: "Names make a village; roles keep everyone a composite."
+  ~#tension: "A name is the first thing a real person could be read into; a role alone can feel like a cast list."
+  !probe{ "rg -n 'pairing:' workers/smut-today/src/index.js" }
+}
+
+#>wonder_smut_crew_existing
+?["Should the two stories, the letter and the shelf fold into the crew world, keep a hall of their own, or retire?"]{
+  ~#with: @plan
+  ~#taste: "What a returning reader already knows should land somewhere, not vanish."
+  ~#tension: "The letter is addressed to one sitter, and that casting fell through; folding it in would re-address it."
+  !probe{ "rg -n 'slug: "' workers/smut-today/src/index.js" }
+}
+
+#>wonder_smut_crew_limits
+?["What are the hard limits for the crew world?"]{
+  ~#with: @plan
+  ~#taste: "A list set once, in the creator's words, lets every draft be checked against it."
+  ~#tension: "Limits written by anyone else would be a guess about someone else's heat."
+  !probe{ "rg -n 'Guards' .agents/plans/smut-today-crew/PLAN.md" }
+}
