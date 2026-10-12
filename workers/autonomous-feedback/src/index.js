@@ -7,7 +7,8 @@ import { renderCard, renderDesk, renderDeskLock, renderHome, renderInbox, render
 
 /**
  * autonomous.feedback — a feedback form for any website. A note becomes a card
- * the writer sends by hand; nothing is stored. A site can shape its form and
+ * the writer sends by hand; nothing is stored unless the site has an open desk
+ * (desk.js), which keeps it three days. A site can shape its form and
  * theme with /.well-known/autonomous-feedback.json (config.js). This script
  * does not serve spw.quest.
  */
@@ -67,7 +68,7 @@ function inboxContract(host, context = null, org = null, desk = "none") {
       requested: desk !== "none",
       path: `/${host}/inbox`,
       note: desk === "open"
-        ? "A desk is open for this site. Reading it takes the desk token."
+        ? "A desk is open for this site. Reading it takes the owner's key or the operator token."
         : desk === "requested"
           ? "The site's client file asks for a desk. None is open yet, so nothing is kept."
           : "No desk is open. Routing names the site and does not grant a read.",
