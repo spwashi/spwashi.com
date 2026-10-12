@@ -226,7 +226,7 @@ export function readConfig(raw, host) {
     const unknown = wanted.filter((slug) => !resolveSlug(slug));
     if (unknown.length) problems.push(`kinds has unknown entries (${unknown.map((k) => cleanText(String(k), 20)).join(", ")}); known kinds are ${CONTEXTS.map((c) => c.slug).join(", ")}.`);
     if (known.length) config.kinds = known;
-    else problems.push("kinds names no known kind; showing all four.");
+    else problems.push("kinds names no known kind; showing every kind.");
   }
 
   if (raw.labels != null && typeof raw.labels === "object" && !Array.isArray(raw.labels)) {

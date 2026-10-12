@@ -70,11 +70,14 @@ function clientMain() {
     const fills = (name) => document.querySelectorAll(`[data-fill="${name}"]`);
     let frameTimer = 0;
 
+    // The same words the server writes: no kind means the reader has to write; a kind makes words optional.
+    const escape = (text) => String(text).split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;").split('"').join("&quot;");
     const fill = (template, domain, kind) => template
       .split("{{host}}").join(domain)
       .split("{{kindpath}}").join(kind.slug === "note" ? "" : `/${kind.slug}`)
       .split("{{kind}}").join(kind.slug)
-      .split("{{title}}").join(kind.title);
+      .split("{{label}}").join(kind.slug === "note" ? `Feedback for ${domain}` : `${escape(kind.title)} for ${domain} <span>Optional detail</span>`)
+      .split("{{placeholder}}").join(kind.slug === "note" ? "What happened?" : "Optional detail");
 
     const paint = () => {
       const typed = normalizeHost(host.value);

@@ -31,12 +31,12 @@ export const SNIPPETS = Object.freeze({
   form: {
     label: "HTML form",
     choice: "A plain form that sends one kind of note. No script, styled by your own CSS. The kind is enough; the box is an optional detail.",
-    where: "Paste it where the form should appear. Readers land on their card after sending. With a kind selected above, an empty box still sends and is counted with no words. With None, the reader has to write. To name the page, add a hidden input: name=\"path\" value=\"/this/page\".",
+    where: "Paste it where the form should appear. Readers land on their card after sending. With a kind selected above, the reader can send without writing. With None, the reader has to write. To name the page, add a hidden input: name=\"path\" value=\"/this/page\".",
     language: "html",
     template: `<form method="post" action="${ORIGIN}/{{host}}">
   <input type="hidden" name="kind" value="{{kind}}">
-  <label for="feedback-note">{{title}} for {{host}} <span>Optional detail</span></label>
-  <textarea id="feedback-note" name="note" rows="5" maxlength="${NOTE_MAX}" placeholder="Optional detail"></textarea>
+  <label for="feedback-note">{{label}}</label>
+  <textarea id="feedback-note" name="note" rows="5" maxlength="${NOTE_MAX}" placeholder="{{placeholder}}"></textarea>
   <button type="submit">Send</button>
 </form>`,
   },
@@ -59,11 +59,14 @@ export const TEST_TEMPLATE = `curl -X POST ${ORIGIN}/{{host}} \\
   -d '{"kind":"{{kind}}","note":"Testing the feedback form."}'`;
 
 export function fillTemplate(template, host, context) {
+  // With no kind chosen, the plain form needs words; a chosen kind makes them optional.
+  const open = context.slug === NOTE.slug;
   return template
     .replaceAll("{{host}}", host)
-    .replaceAll("{{kindpath}}", context.slug === NOTE.slug ? "" : `/${context.slug}`)
+    .replaceAll("{{kindpath}}", open ? "" : `/${context.slug}`)
     .replaceAll("{{kind}}", context.slug)
-    .replaceAll("{{title}}", context.title);
+    .replaceAll("{{label}}", open ? `Feedback for ${host}` : `${escapeHtml(context.title)} for ${host} <span>Optional detail</span>`)
+    .replaceAll("{{placeholder}}", open ? "What happened?" : "Optional detail");
 }
 
 function kicker() {
@@ -153,13 +156,13 @@ export function renderHome(host = "") {
   const today = new Date().toISOString().slice(0, 10);
   return layout({
     title: "autonomous.feedback — tell a website what happened",
-    description: "Name a site, say what was hard or what worked, and it becomes a card for whoever runs it. Nothing to install.",
+    description: "Name a site and say what was hard or what worked. You get a card to send to whoever runs it. Nothing to install.",
     canonical: `${ORIGIN}/`,
     quiet: true,
     script: CLIENT_SCRIPT,
     body: `<p class="kicker">autonomous.feedback</p>
 <h1>Tell a website what happened</h1>
-<p class="lede">Name a site, say what was hard or what worked, and it becomes a card for whoever runs it.</p>
+<p class="lede">Name a site and say what was hard or what worked. You get a card to send to whoever runs it, in a message or in a post that names the site.</p>
 <form method="post" action="/note" class="write begin" id="begin">
   <article class="card live" data-live-card aria-label="Your card">
     <header>
@@ -184,7 +187,7 @@ export function renderHome(host = "") {
 <p class="try">Or try one that is set up: <a href="/lore.land">lore.land</a> · <a href="/spw.quest">spw.quest</a></p>
 <section class="owners" aria-labelledby="owners-title">
   <h2 id="owners-title">Run a site?</h2>
-  <p>Put a link, a frame, or a form on it, and notes arrive shaped by your own site: its parts, the things you hear most, your answers to them.</p>
+  <p>Put a link, a frame, or a form on it. Readers who write there get a card to send you, by message or in a post that names your site. An optional file fits the form to your site: its parts, the notes you hear most, your answers to them.</p>
   <form method="get" action="/start" class="panel">
     ${hostField({ host, label: "Your site" })}
     <figure class="codeblock snippet-line">
@@ -199,14 +202,14 @@ export function renderHome(host = "") {
     <ol class="steps">
       <li><strong>Add a link, frame, or form.</strong> <span>The setup page writes the code with your domain filled in.</span></li>
       <li><strong>A reader taps or writes.</strong> <span>A tap is a whole note. Words are optional.</span></li>
-      <li><strong>The card reaches you.</strong> <span>In your inbox if you have one; otherwise the reader sends it to you.</span></li>
+      <li><strong>The card reaches you.</strong> <span>In your inbox if you have one. Otherwise only when a reader sends it, by message or in a post that names your site.</span></li>
     </ol>
     <ol class="steps">
       <li><strong>Any site: free.</strong> <span>Readers can write about any public site.</span></li>
       <li><strong>Your site: free.</strong> <span>One file sets your form's parts, common notes, and colours. <a href="/start">The setup page</a> writes it.</span></li>
       <li><strong>An inbox: on request.</strong> <span>Add <code>"queue": { "want": true }</code> to your file to ask for one.</span></li>
     </ol>
-    <p class="note"><a href="/privacy">How notes are kept</a> · <a href="/meter">Check a site responds</a></p>
+    <p class="note"><a href="/privacy">How notes are kept</a> · <a href="/meter">Check that a site responds</a></p>
   </details>
 </section>`,
   });
@@ -221,24 +224,24 @@ export function renderPrivacy() {
     quiet: true,
     body: `${kicker()}
 <h1>How notes are kept</h1>
-<p class="lede">A note goes to the person who runs the site, and you keep a card of it. That is most of it. The rest is here.</p>
+<p class="lede">Unless the site has an inbox, nothing you write is kept: you get a card and send it yourself. Where there is an inbox, here is what it keeps and for how long.</p>
 <h2>Where a note goes</h2>
 <p>If the site has an inbox, the note waits there for its owner. If it doesn't, nothing is kept: the card is yours, and you send it yourself, by message or in a post.</p>
-<h2>How long its words stay</h2>
+<h2>How long an inbox keeps the words</h2>
 <p>Three days, unless the owner saves the note. After that the words are deleted, and what remains is a count: which part of the site, which kind of note, which week. Owners can save a small number of notes to keep their words longer, and can delete any note.</p>
 <h2>What is on it</h2>
 <p>What you wrote, the page you were on, and your name only if you wrote it. There are no accounts. Readers get no cookies. An unsent note stays in your own browser so it is not lost if you step away.</p>
 <h2>Who can read it</h2>
 <p>The site's owner, with a key only they hold. The person who runs autonomous.feedback can open inboxes too, to keep the service working.</p>
 <h2>What is never kept</h2>
-<p>Who you are beyond what you wrote. To slow down floods, a scrambled form of your network address is held for ten minutes and then dropped. Like any website, requests are briefly logged by the host.</p>
+<p>Who you are beyond what you wrote. To slow down floods, a scrambled form of your network address is held for ten minutes and then dropped. Like any website, requests are briefly logged by the hosting provider.</p>
 <p class="actions"><a class="door" href="/"><strong>Write a note</strong><span>autonomous.feedback</span></a></p>`,
   });
 }
 
 export function renderStart({ host = "", how = "link", kind = NOTE.slug, error = "", config = null, desk = "none" } = {}) {
   // "None" comes first: a preselected kind files every untouched note under it.
-  const none = { ...NOTE, title: "None (recommended)", prompt: "Readers tap a common note or write their own; nothing is chosen for them." };
+  const none = { ...NOTE, title: "None (recommended)", prompt: "Readers pick for themselves, or just write." };
   const offered = [none, ...(config?.found ? siteKinds(config) : CONTEXTS)];
   const context = offered.find((c) => c.slug === (contextBySlug(kind)?.slug)) || none;
   const snippet = SNIPPETS[how] || SNIPPETS.link;
@@ -298,7 +301,7 @@ export function renderStart({ host = "", how = "link", kind = NOTE.slug, error =
 </section>
 <section aria-labelledby="config-title">
   <h2 id="config-title">Customize (optional)</h2>
-  <p>Publish a JSON file at <code data-fill="config-url">https://${escapeHtml(named)}${CONFIG_PATH}</code> to choose which kinds of note appear and in what order, rename them, add an intro, ask for the writer's name, set the note length, allow the frame on other sites you own, and match your colours. The file only affects your own domain.</p>
+  <p>Publish a JSON file at <code data-fill="config-url">https://${escapeHtml(named)}${CONFIG_PATH}</code> to fit the form to your site: the parts of your site and the notes you hear most, which kinds of note appear, where you take cards by message, a thanks line, and your colours. The file only affects your own domain.</p>
   ${configStatus(host, config, desk)}
   <figure class="codeblock">
     <figcaption><span>${ownFile ? "Your file, as applied" : "Starter file"} · autonomous-feedback.json</span><button type="button" data-copy="config-snippet">Copy</button></figcaption>
@@ -316,8 +319,8 @@ export function renderStart({ host = "", how = "link", kind = NOTE.slug, error =
       <dt><code>labels</code></dt><dd>Rename a kind and change its prompt or example. Title up to 40 characters, prompt up to 160.</dd>
       <dt><code>name</code>, <code>intro</code>, <code>button</code></dt><dd>Your site's display name, a line above the form (up to 300 characters), and the submit button text.</dd>
       <dt><code>contact</code></dt><dd>Where you take cards by direct message: <code>{ "bluesky": "example.com", "x": "example" }</code>. The card page shows Message buttons and puts your handle in the Post links.</dd>
-      <dt><code>from</code></dt><dd><code>"off"</code>, <code>"optional"</code>, or <code>"required"</code>: a field for the writer's name or handle, printed on the card. Nothing is stored either way. Do not put a token or password in this file.</dd>
-      <dt><code>note</code></dt><dd><code>min</code> applies only when a reader writes and does not pick a type. A chosen kind is enough to send and is stored as a count, with no words. <code>max</code> limits either way, up to ${NOTE_MAX.toLocaleString("en-US")}.</dd>
+      <dt><code>from</code></dt><dd><code>"off"</code>, <code>"optional"</code>, or <code>"required"</code>: a field for the writer's name or handle, printed on the card. It is kept only where your inbox is open, with the rest of the note. Do not put a token or password in this file.</dd>
+      <dt><code>note</code></dt><dd><code>min</code> applies only when a reader writes without choosing anything. A chosen kind or common note is enough to send on its own, with no words. <code>max</code> limits either way, up to ${NOTE_MAX.toLocaleString("en-US")}.</dd>
       <dt><code>queue.want</code></dt><dd><code>true</code> asks for an inbox that keeps each card for your site. Until the inbox opens, nothing is kept and readers send cards by hand. The status above says which.</dd>
       <dt><code>inbox.key</code></dt><dd><code>"sha256:"</code> and the hash of a key only you keep. The key opens <code>/yoursite/inbox</code>; the file holds only its hash. See “Make an inbox key” below.</dd>
       <dt><code>frame.ancestors</code></dt><dd>Other https origins that may show the frame, such as a blog on a different domain. Up to 10.</dd>
@@ -604,7 +607,7 @@ export function renderCard(filing, embed = false, config = null) {
   const sendTo = dms.length && !filing.stored
     ? `<section class="send-to" aria-labelledby="send-title">
   <h2 id="send-title">Send it to ${escapeHtml(display)}</h2>
-  <p class="note">Save the image or copy the text first: a link can open ${escapeHtml(display)}'s profile, but it cannot fill in a direct message. Use Message on the profile, then paste or attach the card.</p>
+  <p class="note">Save or screenshot the card first. Each button opens ${escapeHtml(display)}'s profile: start a message there and attach the card, or paste its text.</p>
   <div class="actions">
     ${dms.join("\n    ")}
   </div>
@@ -621,15 +624,15 @@ export function renderCard(filing, embed = false, config = null) {
     body: `${embed ? "" : kicker()}
 <h1>${filing.stored ? `Sent to ${escapeHtml(display)}` : "Your card is ready"}</h1>
 ${site.thanks ? `<p class="owner-thanks"><strong>${escapeHtml(display)}:</strong> ${escapeHtml(site.thanks)}</p>` : ""}
-<p class="lede">${filing.worded === false ? "No written detail. This is a count of what you picked. " : ""}${filing.stored
+<p class="lede">${filing.worded === false ? "No written detail: the card says what you picked. " : ""}${filing.stored
     ? "It is in their inbox now. Keep a copy or pass it on if you like."
     : filing.queue === "full"
       ? `${escapeHtml(display)}'s inbox is full, so this one was not kept. Send the card yourself:`
       : filing.queue === "requested"
         ? `${escapeHtml(display)} has asked for an inbox, but it is not open yet, so this was not kept. Send the card yourself:`
         : dms.length
-          ? `Send it to ${escapeHtml(display)}: save the image or copy the text, then message them below. Or post it and mention them.`
-          : `Send it to whoever runs ${escapeHtml(display)}: save the image or copy the text, then message them or post about it.`}</p>
+          ? `Screenshot the card or save it as an image, then message it to ${escapeHtml(display)} below. Or post it and mention them.`
+          : `Screenshot the card or save it as an image, then message it to whoever runs ${escapeHtml(display)}, or post it and name the site.`}</p>
 ${cardMarkup({ context: filing.context, host: filing.host, note: filing.note, issued: filing.issued, id: "card", name: site.name, from: filing.from, path: filing.path, routeName: filing.route, subject: filing.subject?.name || "", thread: filing.thread?.name || "", asks: filing.asks || [], worded: filing.worded !== false , kept: Boolean(filing.stored) })}
 ${filing.thread?.stance ? `<section class="stance-reply" aria-labelledby="stance-title">
   <h2 id="stance-title">${escapeHtml(display)} has said about this</h2>
@@ -647,7 +650,7 @@ ${filing.thread?.stance ? `<section class="stance-reply" aria-labelledby="stance
 ${sendTo}
 <p class="note">${filing.stored
     ? "Kept for three days, longer if they save it. After that it becomes a count, and the words are deleted."
-    : "Nothing was stored. The card lives on this page and in whatever you save or send."}</p>
+    : `Nothing was stored. The card lives on this page and in whatever you save or send. Whoever sees it can write their own at ${escapeHtml(address)}.`}</p>
 <pre id="slip" hidden>${escapeHtml(filing.markdown)}</pre>
 <p class="actions"><a class="door" href="${escapeHtml(back)}"><strong>Write another</strong><span>for ${escapeHtml(filing.host)}</span></a></p>`,
   });
