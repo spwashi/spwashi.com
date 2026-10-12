@@ -14,13 +14,20 @@
  * Images are left out of the scratch checkout; the generators read routes,
  * .spw, and scripts, not pixels.
  *
+ * The scratch is a full checkout under .tmp/, and the Spw language server
+ * walks .tmp/ as if it were the site, so a leftover copy shows up in
+ * references and code lenses. A run removes its scratch when it ends,
+ * including after Ctrl-C, SIGTERM or SIGHUP, and sweeps any manifest-staged-*
+ * folder older than an hour that an earlier run could not remove (SIGKILL, a
+ * crash, --keep).
+ *
  *   npm run manifest:staged             stage the rebuilt outputs
  *   npm run manifest:staged -- --check  compare with what is staged; write nothing
- *   npm run manifest:staged -- --keep   leave the scratch folder for inspection
+ *   npm run manifest:staged -- --keep   leave the scratch folder for inspection (swept after an hour)
  */
 
 import { execFileSync, spawnSync } from 'node:child_process';
-import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync, symlinkSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -33,8 +40,42 @@ const say = (line) => console.log(`[manifest:staged] ${line}`);
 
 const git = (args, options = {}) => execFileSync('git', args, { cwd: ROOT, maxBuffer: 256 * 1024 * 1024, ...options });
 
-mkdirSync(path.join(ROOT, '.tmp'), { recursive: true });
-const scratch = mkdtempSync(path.join(ROOT, '.tmp', 'manifest-staged-'));
+const TMP = path.join(ROOT, '.tmp');
+const SWEEP_AFTER_MS = 60 * 60 * 1000;
+mkdirSync(TMP, { recursive: true });
+// A younger folder may be another session's run in progress; leave it.
+for (const name of readdirSync(TMP)) {
+  if (!name.startsWith('manifest-staged-')) continue;
+  const dir = path.join(TMP, name);
+  try {
+    if (Date.now() - statSync(dir).mtimeMs < SWEEP_AFTER_MS) continue;
+    rmSync(dir, { recursive: true, force: true });
+    say(`swept ${path.relative(ROOT, dir)}, left by an earlier run`);
+  } catch {
+    // Another session swept it first.
+  }
+}
+
+const scratch = mkdtempSync(path.join(TMP, 'manifest-staged-'));
+let removed = false;
+const removeScratch = () => {
+  if (removed) return;
+  removed = true;
+  if (keep) say(`scratch kept at ${path.relative(ROOT, scratch)}`);
+  else rmSync(scratch, { recursive: true, force: true });
+};
+// Without a listener a signal ends the process before finally runs. With one,
+// the run always reaches finally. A Ctrl-C also stops the generator child, so
+// the run ends there with that child's error; a SIGTERM to this process alone
+// lets the run finish. The run is synchronous, so the handler only fires if a
+// signal lands between steps.
+for (const [signal, code] of [['SIGINT', 130], ['SIGTERM', 143], ['SIGHUP', 129]]) {
+  process.once(signal, () => {
+    removeScratch();
+    process.exit(code);
+  });
+}
+
 try {
   const staged = git(['ls-files', '-z', '--cached'], { encoding: 'utf8' }).split('\0').filter(Boolean)
     .filter((file) => !SKIP.some((pattern) => pattern.test(file)));
@@ -91,6 +132,5 @@ try {
     say(`staged ${OUTPUTS.join(' and ')}, built from the staged routes`);
   }
 } finally {
-  if (keep) say(`scratch kept at ${path.relative(ROOT, scratch)}`);
-  else rmSync(scratch, { recursive: true, force: true });
+  removeScratch();
 }
