@@ -16,7 +16,7 @@ operation = "cache"
 fixity = "tending"
 
 ^"stream"{
- >>[2026-10-12] read — the season's offer copy (23acc4ae) and the /services/ bundle composer (1b5fb817) are in the tree. Nothing in services/, topics/film/ or about/ changed after 2026-10-10; today's A-cycle release (9bb8c2e2) touched Home, /now/ and the promo feed only. Both open questions still wait on the creator, and the plan archives when October closes.
+ >>[2026-10-12 10:59] verify — the season's offer copy (23acc4ae) and the /services/ bundle composer (1b5fb817) are in the tree. Nothing in services/, topics/film/ or about/ changed after 2026-10-10; today's A-cycle release (9bb8c2e2) touched Home, /now/ and the promo feed only. Both open questions still wait on the creator, and the plan archives when October closes.
 }
 
 ^"open"{

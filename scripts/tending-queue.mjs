@@ -44,6 +44,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { planStatus, readWip } from './lib/plan-wip.mjs';
+import { siteToday } from './lib/site-clock.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const TREE = path.join(ROOT, '.spw');
@@ -53,7 +54,7 @@ const SKIP = new Set(['_workbench', 'gen']);
 const args = process.argv.slice(2);
 const flag = (name) => args.includes(`--${name}`);
 const option = (name, fallback) => args.find((arg) => arg.startsWith(`--${name}=`))?.slice(name.length + 3) ?? fallback;
-const todayIso = option('today', new Date().toISOString().slice(0, 10));
+const todayIso = option('today', siteToday());
 const today = new Date(`${todayIso}T00:00:00Z`);
 const limit = Number(option('limit', 12));
 const kind = option('kind', null);

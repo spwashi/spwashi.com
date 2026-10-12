@@ -78,13 +78,13 @@ fixity = "tending"
 }
 
 ^["stream"]{
- >>[2026-04-09] observe - Liminality currently functions as a visual/semantic decoration axis; it is not yet a traversal axis. You cannot deliberately move from settled to nested liminality as a navigation act — it happens incidentally through interaction, not intentionally through a named path.
- >>[2026-04-09] observe - Breadcrumbs on most sites are URL lists. Cognitive breadcrumbs should capture something else: the liminality depth you've been at, the operators you've addressed, the frames you've activated. That trail has meaning independent of the URL.
+ >>[2026-04-09 23:39] observe - Liminality currently functions as a visual/semantic decoration axis; it is not yet a traversal axis. You cannot deliberately move from settled to nested liminality as a navigation act — it happens incidentally through interaction, not intentionally through a named path.
+ >>[2026-04-09 23:39] observe - Breadcrumbs on most sites are URL lists. Cognitive breadcrumbs should capture something else: the liminality depth you've been at, the operators you've addressed, the frames you've activated. That trail has meaning independent of the URL.
  >>[2026-04-09] decide - Spells are the fluency tier of the interaction grammar. The design constraint that makes spells work is discoverability: you should be able to watch a skilled user and infer the shape of a spell before you know its name. The name arrives from inspection, not from documentation.
- >>[2026-04-09] observe - The accessibility landmark structure of the existing pages is already good in places but is not treated as the canonical cognitive map. It should be: if a region can be named in the ARIA tree, it should be the same region you'd describe to a new user explaining the page.
+ >>[2026-04-09 23:39] observe - The accessibility landmark structure of the existing pages is already good in places but is not treated as the canonical cognitive map. It should be: if a region can be named in the ARIA tree, it should be the same region you'd describe to a new user explaining the page.
  >>[2026-04-09] taste - Spells should feel like reflexes, not incantations — the goal is muscle memory and cognitive fluency, not ritual. The right register is the way a developer reaches for a keyboard shortcut without looking — the hand knows before the mind decides.
- >>[2026-04-09] style - Filetype/state components are a visual vocabulary decision: what does a "register frame" look like vs. a "probe frame" vs. a "reference"? Each should be immediately distinguishable without requiring a legend — visual grammar, not labeling.
- >>[2026-04-09] observe - The cognitive tool for artists angle is most visible in breadcrumbs: an artist wants to retrace a path of insight, not a path of URLs. The breadcrumb trail should capture the cognitive arc — what was deepened, what was resolved, what was left open.
+ >>[2026-04-09 23:39] style - Filetype/state components are a visual vocabulary decision: what does a "register frame" look like vs. a "probe frame" vs. a "reference"? Each should be immediately distinguishable without requiring a legend — visual grammar, not labeling.
+ >>[2026-04-09 23:39] observe - The cognitive tool for artists angle is most visible in breadcrumbs: an artist wants to retrace a path of insight, not a path of URLs. The breadcrumb trail should capture the cognitive arc — what was deepened, what was resolved, what was left open.
 }
 
 ^["open"]{

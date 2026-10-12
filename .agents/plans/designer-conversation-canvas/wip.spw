@@ -17,7 +17,7 @@ operation = "cache"
 fixity = "tending"
 
 ^"stream"{
- >>[2026-10-12] read — the measurement bus (1621ac6c), the settings typography preview, frame metrics and the /design/#conversation-canvas frame are in the tree, and the #component-ecology-specimens specimen sits in design/index.html and experiments.js. Nothing in these files changed after 2026-10-08, and no browser has checked them since the 2026-09-20 read. The next slice is one named reviewer reading that specimen; no bundle schema gets written before the creator names who.
+ >>[2026-10-12 10:59] verify — the measurement bus (1621ac6c), the settings typography preview, frame metrics and the /design/#conversation-canvas frame are in the tree, and the #component-ecology-specimens specimen sits in design/index.html and experiments.js. Nothing in these files changed after 2026-10-08, and no browser has checked them since the 2026-09-20 read. The next slice is one named reviewer reading that specimen; no bundle schema gets written before the creator names who.
 }
 
 ^"open"{

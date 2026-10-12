@@ -59,13 +59,13 @@ fixity = "tending"
 }
 
 ^["stream"]{
- >>[2026-04-09 23:40] observe - `public/css/style.css` is 2576 lines and mixes tokens, base shell, Spw components, Pretext lab, operator atlas, navigator, console, responsive rules, and spirit sequence styling.
- >>[2026-04-09 23:40] decide - Keep `/public/css/style.css` as the linked GitHub Pages entrypoint and split behind it first, rather than changing every HTML page or adding a build pipeline.
- >>[2026-04-09 23:40] decide - Treat seasonal features as progressive ornaments: opt-in, cacheable, reduced-motion safe, and unable to own core layout or navigation.
- >>[2026-04-09 23:40] taste - The refactor should make future SVG/Pretext/operator CSS easier to place without increasing visible noise. Ornament layers should feel like a removable glaze, not a second design system.
- >>[2026-04-09] style - The first seasonal proof is a character test, not a feature test. If the ornament could belong to any minimalist site's seasonal palette, it has not yet earned this one. The site's own grammar — operator geometry, brace topology, sigil forms, spirit arc sequences — is the source to draw from first.
- >>[2026-04-09] observe - Token names are style decisions. `--ornament-spring-accent` is a calendar entry. `--ornament-boon-field` or `--ornament-threshold-glow` arrive from the site's metaphysical vocabulary and carry different authoring residue — they connect the ornament to an already-live semantic web rather than importing a disconnected seasonal idiom.
- >>[2026-04-09] style - Personal ornament style should emerge under constraint: what does a motif look like when it can only use named tokens, respects reduced motion, and limits itself to a small surface footprint? That constraint is a creative filter as much as a safety rule.
+ >>[2026-04-09 18:40] observe - `public/css/style.css` is 2576 lines and mixes tokens, base shell, Spw components, Pretext lab, operator atlas, navigator, console, responsive rules, and spirit sequence styling.
+ >>[2026-04-09 18:40] decide - Keep `/public/css/style.css` as the linked GitHub Pages entrypoint and split behind it first, rather than changing every HTML page or adding a build pipeline.
+ >>[2026-04-09 18:40] decide - Treat seasonal features as progressive ornaments: opt-in, cacheable, reduced-motion safe, and unable to own core layout or navigation.
+ >>[2026-04-09 18:40] taste - The refactor should make future SVG/Pretext/operator CSS easier to place without increasing visible noise. Ornament layers should feel like a removable glaze, not a second design system.
+ >>[2026-04-09 23:39] style - The first seasonal proof is a character test, not a feature test. If the ornament could belong to any minimalist site's seasonal palette, it has not yet earned this one. The site's own grammar — operator geometry, brace topology, sigil forms, spirit arc sequences — is the source to draw from first.
+ >>[2026-04-09 23:39] observe - Token names are style decisions. `--ornament-spring-accent` is a calendar entry. `--ornament-boon-field` or `--ornament-threshold-glow` arrive from the site's metaphysical vocabulary and carry different authoring residue — they connect the ornament to an already-live semantic web rather than importing a disconnected seasonal idiom.
+ >>[2026-04-09 23:39] style - Personal ornament style should emerge under constraint: what does a motif look like when it can only use named tokens, respects reduced motion, and limits itself to a small surface footprint? That constraint is a creative filter as much as a safety rule.
 }
 
 ^["open"]{

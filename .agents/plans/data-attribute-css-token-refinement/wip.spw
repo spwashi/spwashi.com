@@ -17,7 +17,7 @@ operation = "cache"
 fixity = "tending"
 
 ^"stream"{
- >>[2026-10-12] read — Items 1 and 2 hold: all eleven named bedrock tokens are declared, ten in tokens/core.css and --ornament-radius-pill in flourish-defaults.css (the Status line counts ten and nine), and the typed attr() bridges open at tokens/dimensions.css:436. Item 3 still has no sensor; css-custom-property-audit.mjs checks self-references and periodic root writes only. routes/surfaces/design.css has no block named as aliases, so the absorbed design.css alias question stays unverified.
+ >>[2026-10-12 10:59] verify — Items 1 and 2 hold: all eleven named bedrock tokens are declared, ten in tokens/core.css and --ornament-radius-pill in flourish-defaults.css (the Status line counts ten and nine), and the typed attr() bridges open at tokens/dimensions.css:436. Item 3 still has no sensor; css-custom-property-audit.mjs checks self-references and periodic root writes only. routes/surfaces/design.css has no block named as aliases, so the absorbed design.css alias question stays unverified.
 }
 
 ^"open"{

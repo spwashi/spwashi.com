@@ -17,7 +17,7 @@ operation = "cache"
 fixity = "tending"
 
 ^"stream"{
- >>[2026-10-12] read — parked until a shoot is booked, and the tree agrees: no terms card exists and /play/rpg-wednesday/lore/ is absent. When a shoot is booked, the first slice is the terms card, exported through the folio .spw.txt path, and its copy is the creator's to write.
+ >>[2026-10-12 10:59] verify — parked until a shoot is booked, and the tree agrees: no terms card exists and /play/rpg-wednesday/lore/ is absent. When a shoot is booked, the first slice is the terms card, exported through the folio .spw.txt path, and its copy is the creator's to write.
 }
 
 ^"open"{

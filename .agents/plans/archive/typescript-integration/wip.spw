@@ -269,10 +269,10 @@ fixity = "tending"
  >>[2026-04-19 00:46] observe — site.js already mounts behavior through route/selector-gated dynamic imports, so JS chunk preparation should start by manifesting those seams rather than replacing them.
  >>[2026-04-19 00:48] decide — generated asset identity and route-asset manifests should land before any serious CSS or TS compile pipeline.
  >>[2026-06-14 01:03] implement — scoped CSS delivery now has a typed behavior-scope bridge: scripts/ts/css-manifest.mts owns BEHAVIOR_SCOPES, scripts/ts/css-bundle.mts emits public/js/runtime/orchestration/behavior-scopes.js, check-generated tracks that runtime module, and runtime-contracts verifies module def.features against the same CSS behavior-scope set.
- >>[2026-09-27 21:10] observe — build.mjs, site-contracts.mjs, and generate-sitemap.mjs are now wrappers over scripts/typed; the April convert-early list was three-fifths done without this file saying so. The catalog (3000 lines) and dev-server are the two still in plain JS.
- >>[2026-09-27 21:12] observe — the old browser paths public/js/site-settings.js, spw-page-metadata.js, spw-shared.js are gone; hardening targets are kernel/site-settings.js, semantic/page-metadata.js, kernel/shared.js.
- >>[2026-09-27 21:15] decide — execution_strategy is answered by what landed: compiled, committed output with thin .mjs wrappers at the old script paths. Closed below.
- >>[2026-09-27 21:18] decide — site-source-layout M0 and M2 are shared steps; the vite import method (M0), the tsconfig rootDir/include (M2), and the committed-output question (L3) are decided here and mirrored in that plan's wip.spw.
+ >>[2026-09-27 16:10] observe — build.mjs, site-contracts.mjs, and generate-sitemap.mjs are now wrappers over scripts/typed; the April convert-early list was three-fifths done without this file saying so. The catalog (3000 lines) and dev-server are the two still in plain JS.
+ >>[2026-09-27 16:12] observe — the old browser paths public/js/site-settings.js, spw-page-metadata.js, spw-shared.js are gone; hardening targets are kernel/site-settings.js, semantic/page-metadata.js, kernel/shared.js.
+ >>[2026-09-27 16:15] decide — execution_strategy is answered by what landed: compiled, committed output with thin .mjs wrappers at the old script paths. Closed below.
+ >>[2026-09-27 16:18] decide — site-source-layout M0 and M2 are shared steps; the vite import method (M0), the tsconfig rootDir/include (M2), and the committed-output question (L3) are decided here and mirrored in that plan's wip.spw.
 }
 
 ^["open"]{

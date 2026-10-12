@@ -17,7 +17,7 @@ operation = "cache"
 fixity = "tending"
 
 ^"stream"{
- >>[2026-10-12] read — the production note from eba561ba is still on /about/ and /play/rpg-wednesday/. Neither /topics/slop/ nor /topics/math/ has a (turn) expression, and neither page has changed since. The slop half waits on the creator; the math half does not: its textbook note is two sentences of claim, then a sentence naming the five diagram routes (eight links in the note), and the ten lens cards below it are already a shelf.
+ >>[2026-10-12 10:59] verify — the production note from eba561ba is still on /about/ and /play/rpg-wednesday/. Neither /topics/slop/ nor /topics/math/ has a (turn) expression, and neither page has changed since. The slop half waits on the creator; the math half does not: its textbook note is two sentences of claim, then a sentence naming the five diagram routes (eight links in the note), and the ten lens cards below it are already a shelf.
 }
 
 ^"open"{

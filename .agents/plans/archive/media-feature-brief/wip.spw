@@ -101,10 +101,10 @@ fixity = "tending"
 }
 
 ^["stream"]{
- >>[2026-04-10 00:00] hygiene — worktree clean; base main@14442d42b8fe4d9d5bfec5906e652fbca98d5f22.
- >>[2026-04-10 00:00] taste — field guide should describe the website as an inspectable media surface while avoiding press-kit voice and unfinished-feature overclaiming.
- >>[2026-04-10 00:00] implement — added /about/website/ as a static field guide and linked it from home, about, and software.
- >>[2026-04-10 00:00] revise — registered the route in .spw/site.spw and .spw/surfaces.spw, then included it in the PWA core route cache.
+ >>[2026-04-09 19:00] hygiene — worktree clean; base main@14442d42b8fe4d9d5bfec5906e652fbca98d5f22.
+ >>[2026-04-09 19:00] taste — field guide should describe the website as an inspectable media surface while avoiding press-kit voice and unfinished-feature overclaiming.
+ >>[2026-04-09 19:00] implement — added /about/website/ as a static field guide and linked it from home, about, and software.
+ >>[2026-04-09 19:00] revise — registered the route in .spw/site.spw and .spw/surfaces.spw, then included it in the PWA core route cache.
 }
 
 ^["open"]{

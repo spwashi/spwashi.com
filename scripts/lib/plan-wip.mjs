@@ -3,6 +3,8 @@
  * tended, its cached status and gate, and which required header marks it
  * lacks (.spw/conventions/wip-notebook.spw ^"required_shape").
  *
+ * Stamps are >>[YYYY-MM-DD HH:MM] on the site clock (wip-notebook.spw ^"stamps").
+ *
  * Shared by audit-plans.mjs (is the notebook behind its plan?) and
  * tending-queue.mjs (which plan is next to tend?).
  */
@@ -31,7 +33,10 @@ export function readWip(dir, slug = path.basename(dir)) {
   const file = path.join(dir, 'wip.spw');
   if (!fs.existsSync(file)) return null;
   const text = fs.readFileSync(file, 'utf8');
-  const streamed = [...text.matchAll(/>>\[(\d{4}-\d{2}-\d{2})/g)].map((m) => m[1]);
+  const entries = [...text.matchAll(/>>\[(\d{4}-\d{2}-\d{2})( \d{2}:\d{2})?\]/g)];
+  const streamed = entries.map((m) => m[1]);
+  /* The last entry in the file is the newest; it should carry a time (site-clock.mjs). */
+  const lastStamped = entries.length ? Boolean(entries.at(-1)[2]) : null;
   const cached = cacheField(text, 'last_stream');
   const last = [...streamed, ...(cached ? [cached] : [])].sort().at(-1) ?? null;
   const anchor = `plan_${slug.replace(/-/g, '_')}_wip`;
@@ -47,5 +52,6 @@ export function readWip(dir, slug = path.basename(dir)) {
     gate: cacheField(text, 'gate'),
     next: cacheField(text, 'next_commit'),
     gaps,
+    lastStamped,
   };
 }

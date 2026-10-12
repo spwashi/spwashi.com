@@ -17,7 +17,7 @@ operation = "cache"
 fixity = "tending"
 
 ^"stream"{
- >>[2026-10-12] read — The committed bundles/core.css is 1720 KiB against the 1741 KiB soft line (css-manifest.mts:573), as the Status line says, and css:payload reads 1297 KiB delivered and 196 KiB over the wire. No cut is named, and css:payload cannot name one: it reports bundles and surfaces, not the 103 sheets whose provenance lines sit inside core. The website route bundle is exactly 140 KiB, its soft budget.
+ >>[2026-10-12 10:59] verify — The committed bundles/core.css is 1720 KiB against the 1741 KiB soft line (css-manifest.mts:573), as the Status line says, and css:payload reads 1297 KiB delivered and 196 KiB over the wire. No cut is named, and css:payload cannot name one: it reports bundles and surfaces, not the 103 sheets whose provenance lines sit inside core. The website route bundle is exactly 140 KiB, its soft budget.
 }
 
 ^"open"{

@@ -103,12 +103,12 @@ fixity = "tending"
 }
 
 ^["stream"]{
- >>[2026-04-10 00:00] hygiene — base main@14442d42b8fe4d9d5bfec5906e652fbca98d5f22; media-feature-brief is already uncommitted and shares PWA files.
- >>[2026-04-10 00:00] decide — implement as route-specific progressive enhancement using localStorage, not as published campaign content.
- >>[2026-04-10 00:00] implement — added static local-gameplay-kit hosts to every RPG Wednesday route so the frame is navigable before hydration.
- >>[2026-04-10 00:00] implement — added public/js/rpg-wednesday.js with scene, objective, party, initiative, clocks, notes, seeds, export, import, and clear controls.
- >>[2026-04-10 00:00] revise — added the RPG routes and module to the PWA cache list and bumped the manifest/service-worker version.
- >>[2026-04-10 00:00] verify — node syntax checks, manifest JSON validation, diff whitespace check, and workbench Spw lint passed.
+ >>[2026-04-09 19:00] hygiene — base main@14442d42b8fe4d9d5bfec5906e652fbca98d5f22; media-feature-brief is already uncommitted and shares PWA files.
+ >>[2026-04-09 19:00] decide — implement as route-specific progressive enhancement using localStorage, not as published campaign content.
+ >>[2026-04-09 19:00] implement — added static local-gameplay-kit hosts to every RPG Wednesday route so the frame is navigable before hydration.
+ >>[2026-04-09 19:00] implement — added public/js/rpg-wednesday.js with scene, objective, party, initiative, clocks, notes, seeds, export, import, and clear controls.
+ >>[2026-04-09 19:00] revise — added the RPG routes and module to the PWA cache list and bumped the manifest/service-worker version.
+ >>[2026-04-09 19:00] verify — node syntax checks, manifest JSON validation, diff whitespace check, and workbench Spw lint passed.
 }
 
 ^["open"]{

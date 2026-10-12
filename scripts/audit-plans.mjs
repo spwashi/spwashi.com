@@ -17,8 +17,8 @@
  *          nor the workbench;
  *          `npm run check`, which runs npm audit before check:local; no
  *          wip.spw, a wip.spw whose last dated entry is older than the
- *          Status line, or one missing a required header mark
- *          (.spw/conventions/wip-notebook.spw).
+ *          Status line, one missing a required header mark, or one whose
+ *          last entry has no time (.spw/conventions/wip-notebook.spw).
  *
  * Live plans are the folders under .agents/plans/ outside archive/. Fenced
  * code blocks are examples and are not read for links or paths. A gitignored
@@ -37,6 +37,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isGitIgnored } from './lib/git-ignored.mjs';
 import { readWip } from './lib/plan-wip.mjs';
+import { siteToday } from './lib/site-clock.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PLANS = path.join(ROOT, '.agents', 'plans');
@@ -48,7 +49,7 @@ const option = (name, fallback) => {
   const hit = args.find((arg) => arg.startsWith(`--${name}=`));
   return hit ? hit.slice(name.length + 3) : fallback;
 };
-const today = new Date(`${option('today', new Date().toISOString().slice(0, 10))}T00:00:00Z`);
+const today = new Date(`${option('today', siteToday())}T00:00:00Z`);
 const staleDays = Number(option('stale', 21));
 const onlySlug = option('slug', null);
 
@@ -131,6 +132,7 @@ for (const slug of plans) {
     if (wip.gaps.length) add(slug, wip.file, 1, 'warn', `wip.spw lacks ${wip.gaps.join(', ')}`);
     if (!wip.last) add(slug, wip.file, 1, 'warn', 'wip.spw has no dated stream entry');
     else if (status && wip.last < status[1]) add(slug, wip.file, 1, 'warn', `wip.spw last tended ${wip.last}, before the Status line (${status[1]})`);
+    if (wip.lastStamped === false) add(slug, wip.file, 1, 'warn', 'wip.spw\'s last entry has no time (npm run -s clock)');
   }
 
   for (const file of walk(dir)) {
