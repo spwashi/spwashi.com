@@ -16,7 +16,7 @@ operation = "cache"
 fixity = "tending"
 
 ^"stream"{
- >>[2026-10-12] read — the lens-aware mix (604d4a1d) and the native dialog (326eb119) stand, and the home-cauldron-open recipe is still at viewport-still-recipes.mjs:507. Its fixture receipt has not been taken. The nearest evidence is fdafcd6f on October 8, whose verify opened the cauldron dialog at desktop and pocket widths for the dialog edges, which is not this receipt. Corner sharing lives in floating-chrome-stack now.
+ >>[2026-10-12 10:59] verify — the lens-aware mix (604d4a1d) and the native dialog (326eb119) stand, and the home-cauldron-open recipe is still at viewport-still-recipes.mjs:507. Its fixture receipt has not been taken. The nearest evidence is fdafcd6f on October 8, whose verify opened the cauldron dialog at desktop and pocket widths for the dialog edges, which is not this receipt. Corner sharing lives in floating-chrome-stack now.
 }
 
 ^"open"{ }

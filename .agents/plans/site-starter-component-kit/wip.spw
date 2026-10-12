@@ -17,7 +17,7 @@ operation = "cache"
 fixity = "tending"
 
 ^"stream"{
- >>[2026-10-12] read — the host mount (6b75bc59) and audit:portable (480d92bc) are in, and portable-audit.mjs:92 resolves /public/js/ specifiers. starter-inventory.mjs:166 still joins compose.js's four root-relative re-exports (lines 225, 407, 415, 420) onto public/js/, and no test covers it; that fix needs no one's call. The texture-slice pilot after it waits on the first-portable question.
+ >>[2026-10-12 10:59] verify — the host mount (6b75bc59) and audit:portable (480d92bc) are in, and portable-audit.mjs:92 resolves /public/js/ specifiers. starter-inventory.mjs:166 still joins compose.js's four root-relative re-exports (lines 225, 407, 415, 420) onto public/js/, and no test covers it; that fix needs no one's call. The texture-slice pilot after it waits on the first-portable question.
 }
 
 ^"open"{

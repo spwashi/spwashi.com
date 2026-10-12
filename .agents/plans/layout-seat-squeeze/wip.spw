@@ -32,7 +32,7 @@ fixity = "tending"
 }
 
 ^"stream"{
- >>[2026-10-12] read — The edges queue's next step still points at real lines: the six entry panels open at index.html:768 and the entrance role hooks at :460, and qa:alignment (scripts/alignment-audit.mjs) is the sensor. Home changed today (efcd875d), so the 2026-09-17 edge reading of 44/44/44/44/47/44 needs a fresh before. The coverage queue's audit:region-coverage script still does not exist, and the lens hook nav wrap stays held.
+ >>[2026-10-12 10:59] verify — The edges queue's next step still points at real lines: the six entry panels open at index.html:768 and the entrance role hooks at :460, and qa:alignment (scripts/alignment-audit.mjs) is the sensor. Home changed today (efcd875d), so the 2026-09-17 edge reading of 44/44/44/44/47/44 needs a fresh before. The coverage queue's audit:region-coverage script still does not exist, and the lens hook nav wrap stays held.
 }
 
 ^"open"{

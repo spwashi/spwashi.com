@@ -17,7 +17,7 @@ operation = "cache"
 fixity = "tending"
 
 ^"stream"{
- >>[2026-10-12] read — nothing has landed on the copy keys since 6aa94d90 on October 8; the Status holds. A grep of lede tags finds 74 pages with a lede, 37 keyed throughout, 9 partly and 28 with no key; the five browser pages under /topics/software/browser/ are one unkeyed cluster. Phase 1 still waits for the creator to name a locale.
+ >>[2026-10-12 10:59] verify — nothing has landed on the copy keys since 6aa94d90 on October 8; the Status holds. A grep of lede tags finds 74 pages with a lede, 37 keyed throughout, 9 partly and 28 with no key; the five browser pages under /topics/software/browser/ are one unkeyed cluster. Phase 1 still waits for the creator to name a locale.
 }
 
 ^"open"{

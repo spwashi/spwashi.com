@@ -17,7 +17,7 @@ operation = "cache"
 fixity = "tending"
 
 ^"stream"{
- >>[2026-10-12] read — spw.quest serves the guide and the install page and has no recorded use. The plan (72c4a3eb) ranks six slices; A is an Open in the parser link on Read one page, then a scripts-off GET box, both landing on spwashi.com/tools/spw-parser/ through spw_source. Phone at 390 px holds; the narrow-desktop crop is Chrome's minimum window, not overflow.
+ >>[2026-10-12 10:59] verify — spw.quest serves the guide and the install page and has no recorded use. The plan (72c4a3eb) ranks six slices; A is an Open in the parser link on Read one page, then a scripts-off GET box, both landing on spwashi.com/tools/spw-parser/ through spw_source. Phone at 390 px holds; the narrow-desktop crop is Chrome's minimum window, not overflow.
 }
 
 ^"open"{

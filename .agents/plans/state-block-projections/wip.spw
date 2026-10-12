@@ -100,7 +100,7 @@ fixity = "tending"
  >>[2026-04-11 09:34] align — copy now frames the block as an epistemic boundary handle: stance, containment, and persisted mode/setting changes remain visible and reversible
  >>[2026-04-11 09:53] refine — state blocks now expose a small explicit loop state (preview, activated, resolved) so actions read as deliberate processes rather than anonymous clicks
  >>[2026-04-11 09:57] integrate — image helper, hold-to-visit, mode switches, and settings changes now resolve through shared refresh / change paths instead of isolated flashes
- >>[2026-10-12] read — the cache's "implementing" from April no longer holds. The inspector runtime (public/js/interface/state-inspector.js) and the lens-seat bench at /design/components/#lens-seats (dc7c35a7) are built, and the next slice, moving the chosen seat out of routes/surfaces/design.css into handles/operators/state-semantics.css, waits on the creator picking A, B or C in a browser. The same review settles the faint mode-switch chips and the lens reward; runtime/memory/component-collection.js still has no spw:variant-selected listener.
+ >>[2026-10-12 10:59] verify — the cache's "implementing" from April no longer holds. The inspector runtime (public/js/interface/state-inspector.js) and the lens-seat bench at /design/components/#lens-seats (dc7c35a7) are built, and the next slice, moving the chosen seat out of routes/surfaces/design.css into handles/operators/state-semantics.css, waits on the creator picking A, B or C in a browser. The same review settles the faint mode-switch chips and the lens reward; runtime/memory/component-collection.js still has no spw:variant-selected listener.
 }
 
 ^["open"]{

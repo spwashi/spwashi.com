@@ -39,13 +39,20 @@ fixity = "stable"
     `operation and fixity fields when using facet blocks`
   ][reg=set]
   rule = "New wip files should follow semantic-insight-cache.spw unless the plan needs a fuller development stream."
-  current_shape = "The 2026-10-12 notebooks hold three blocks: ^\"stream\" (dated >>[YYYY-MM-DD] entries), ^\"open\" (pointers to index.spw wonder anchors or plain questions naming whose call each is), and ^\"cache\" (~#status, ~#next_commit, ~#files_hot, ~#gate, ~#last_stream). The spw-quest notebook is the example."
+  current_shape = "The 2026-10-12 notebooks hold three blocks: ^\"stream\" (stamped >>[YYYY-MM-DD HH:MM] type — entries, on the site clock), ^\"open\" (pointers to index.spw wonder anchors or plain questions naming whose call each is), and ^\"cache\" (~#status, ~#next_commit, ~#files_hot, ~#gate, ~#last_stream). The spw-quest notebook is the example."
 }
 
 ^"freshness"{
   rule = "Every live plan has a wip.spw, and its last dated entry is not older than the plan's Status line. Changing the Status line means adding a stream entry."
   sensor = "npm run audit:plans warns when a wip.spw is missing, behind its Status line, or missing a required header mark."
   queue = "npm run tending:queue orders the plans by their last entry, beside the tending audits (.spw/audits/index.spw ^\"tending_queue\")."
+}
+
+^"stamps"{
+  form = ">>[2026-10-12 10:54] verify — content: a date and a time on the site clock, whose zone .spw/site.spw ^\"clock\" says once. Paste the output of npm run -s clock (or clock -- --entry=verify); never write a time from your own sense of it, and convert from any other zone before writing."
+  types = "observe, decide, surprise, revise, blocked, taste, rebase, hygiene, implement, verify, note: the workbench wip schema's words. Reading a Status line against the tree is verify."
+  backfill = "npm run streams:stamp grounded the older entries on 2026-10-12: a date-only entry took the time of the commit that first carried it, and a time an agent wrote in UTC was converted to the site clock once the commit showed its zone. 59 entries whose times fit no commit in either zone stay as written; npm run streams:stamp -- --list names them."
+  sensor = "npm run audit:plans warns when a notebook's last entry has no time; npm run streams:stamp -- --check fails on any entry dated 2026-10-12 or later with no time."
 }
 
 ^"legacy_stream"{

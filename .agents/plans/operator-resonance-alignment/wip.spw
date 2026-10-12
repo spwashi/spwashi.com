@@ -17,7 +17,7 @@ operation = "cache"
 fixity = "tending"
 
 ^"stream"{
- >>[2026-10-12] read — the Status holds. The wonder's probe finds only the two writes in sigil-annotation.js (lines 141 and 146) and no reader in public/js or public/css. Since the Status, only header marks touched operator-alignment.spw (cf793f47). Slice 5, operator paths in prompts and evidence, has not started and sits behind this decision.
+ >>[2026-10-12 10:59] verify — the Status holds. The wonder's probe finds only the two writes in sigil-annotation.js (lines 141 and 146) and no reader in public/js or public/css. Since the Status, only header marks touched operator-alignment.spw (cf793f47). Slice 5, operator paths in prompts and evidence, has not started and sits behind this decision.
 }
 
 ^"open"{

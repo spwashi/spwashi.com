@@ -192,15 +192,15 @@ status = "ready_for_M0 once the creator decides the vite import method"
  >>[2026-04-18 09:47] decide — prefer site/ over src/ because the authored files are website-shaped.
  >>[2026-04-18 09:50] decide — partials stay inside the site tree as non-routable authoring surfaces.
  >>[2026-04-18 10:00] decide — phases: path abstraction, source move, parity, reference update.
- >>[2026-09-27 20:20] observe — build-topology.mts is a deny-list; vite.config.ts duplicates it; public/ts is already excluded from deploy; src/styles/entries already gives src/ a compiled-input meaning.
- >>[2026-09-27 20:24] decide — refine to one-hop URL invariant plus four bins; site/ and src/ coexist with distinct meanings.
- >>[2026-09-27 20:26] decide — near-term moves (M0-M3) need no route move; L1 site move waits on M0.
- >>[2026-09-27 21:05] observe — PLAN.md's out-of-scope line rejected src/ts by name while M2 proposes it; reworded: served files never live in src/, compiled input may.
- >>[2026-09-27 21:08] observe — root sw.js is the authored worker and public/sw.js is a compat shim that importScripts('/sw.js'); M3 answered without a patch.
- >>[2026-09-27 21:12] observe — the M2 touch list is longer than the tsconfigs: six .spw tilde paths, two test fixtures, AGENTS.md, and the JS README name public/ts; spw:integrity joins M2 validation.
- >>[2026-09-27 21:18] decide — M0, M2, and L3 are shared with typescript-integration; that plan owns the decisions, this plan owns the order.
- >>[2026-10-10] decide — typescript-integration archived as landed; M0, M2, L3 and the precache-as-artifact step now live here. A third M0 option surfaced: a sibling .d.mts, as scripts/template.d.mts already is.
- >>[2026-10-12] read — nothing has moved, as the Status line says. scripts/ts/shared/build-topology.mts has no SITE_ENTRIES, vite.config.ts:10 still keeps its own ignoredSegments, and public/ts is in place; the only commit since to touch these paths (efcd875d) edited copy in public/ts/promo-wonder-cycle.ts. M0 waits on the creator choosing how vite.config.ts imports the list, then M2 lands as one commit.
+ >>[2026-09-27 15:20] observe — build-topology.mts is a deny-list; vite.config.ts duplicates it; public/ts is already excluded from deploy; src/styles/entries already gives src/ a compiled-input meaning.
+ >>[2026-09-27 15:24] decide — refine to one-hop URL invariant plus four bins; site/ and src/ coexist with distinct meanings.
+ >>[2026-09-27 15:26] decide — near-term moves (M0-M3) need no route move; L1 site move waits on M0.
+ >>[2026-09-27 16:05] observe — PLAN.md's out-of-scope line rejected src/ts by name while M2 proposes it; reworded: served files never live in src/, compiled input may.
+ >>[2026-09-27 16:08] observe — root sw.js is the authored worker and public/sw.js is a compat shim that importScripts('/sw.js'); M3 answered without a patch.
+ >>[2026-09-27 16:12] observe — the M2 touch list is longer than the tsconfigs: six .spw tilde paths, two test fixtures, AGENTS.md, and the JS README name public/ts; spw:integrity joins M2 validation.
+ >>[2026-09-27 16:18] decide — M0, M2, and L3 are shared with typescript-integration; that plan owns the decisions, this plan owns the order.
+ >>[2026-10-10 21:06] decide — typescript-integration archived as landed; M0, M2, L3 and the precache-as-artifact step now live here. A third M0 option surfaced: a sibling .d.mts, as scripts/template.d.mts already is.
+ >>[2026-10-12 10:59] verify — nothing has moved, as the Status line says. scripts/ts/shared/build-topology.mts has no SITE_ENTRIES, vite.config.ts:10 still keeps its own ignoredSegments, and public/ts is in place; the only commit since to touch these paths (efcd875d) edited copy in public/ts/promo-wonder-cycle.ts. M0 waits on the creator choosing how vite.config.ts imports the list, then M2 lands as one commit.
 }
 
 ^"cache"{

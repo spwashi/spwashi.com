@@ -17,7 +17,7 @@ operation = "cache"
 fixity = "tending"
 
 ^"stream"{
- >>[2026-10-12] read — the card substrate and its slots are in builder.js, and the plan answers for /play/rpg-wednesday/, whose direction is the Inktober table (0814de8e). The cast page still has no profile cards, and one session note exists (sessions/2026-05-13/). The first cast card waits on the creator picking the figure and the session.
+ >>[2026-10-12 10:59] verify — the card substrate and its slots are in builder.js, and the plan answers for /play/rpg-wednesday/, whose direction is the Inktober table (0814de8e). The cast page still has no profile cards, and one session note exists (sessions/2026-05-13/). The first cast card waits on the creator picking the figure and the session.
 }
 
 ^"open"{

@@ -116,7 +116,7 @@ fixity = "tending"
  >>[2026-04-16 14:16] implement — moved repeated role-family selector groups in `spw-handles.css`, `spw-grammar.css`, and `spw-ornament.css` onto `data-spw-role-cluster`, making the runtime the canonical translator from detailed role names to style families.
  >>[2026-04-16 14:22] implement — `site-settings.js` now primes declarative setting triggers with button semantics, keyboard activation, and shared active-state wiring while the root apply path uses grouped dataset/style helpers instead of a long run of one-off assignments.
  >>[2026-04-16 14:25] validate — `git diff --check`, `node --check public/js/site-settings.js`, `node --check public/js/spw-page-metadata.js`, and audits for skip links plus `main[aria-labelledby]` all passed.
- >>[2026-10-10] review — the sweep holds (207 route pages carry `main`, 202 the skip link). The commit series and rebase notes above this entry are done or never ran, and were cut. Scripts-off sensors landed in 8d1ed950, 768c5c09 and 73f200f2; the open slice is the JS-on/off landmark, heading and link diff (PLAN.md, JS-off parity).
+ >>[2026-10-10 21:06] verify — the sweep holds (207 route pages carry `main`, 202 the skip link). The commit series and rebase notes above this entry are done or never ran, and were cut. Scripts-off sensors landed in 8d1ed950, 768c5c09 and 73f200f2; the open slice is the JS-on/off landmark, heading and link diff (PLAN.md, JS-off parity).
 }
 
 ^["open"]{

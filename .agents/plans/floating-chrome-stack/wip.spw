@@ -17,7 +17,7 @@ operation = "cache"
 fixity = "tending"
 
 ^"stream"{
- >>[2026-10-12] read — Step 1 holds (a5f56bec): --spw-floating-control-size is assigned in components/floating-chrome.css and read there, in handles/operators/tokens.css and in components/runtime-states.css. whimsy.css:403-406 still gives every button, chip and label the 44px floor below 48rem, so it still reaches floating chrome. The Step 2 demo has not been built, and floating-chrome.css has not changed since d0244132 on 2026-09-28.
+ >>[2026-10-12 10:59] verify — Step 1 holds (a5f56bec): --spw-floating-control-size is assigned in components/floating-chrome.css and read there, in handles/operators/tokens.css and in components/runtime-states.css. whimsy.css:403-406 still gives every button, chip and label the 44px floor below 48rem, so it still reaches floating chrome. The Step 2 demo has not been built, and floating-chrome.css has not changed since d0244132 on 2026-09-28.
 }
 
 ^"open"{

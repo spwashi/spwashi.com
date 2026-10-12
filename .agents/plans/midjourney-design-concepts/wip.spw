@@ -18,7 +18,7 @@ operation = "cache"
 fixity = "tending"
 
 ^"stream"{
- >>[2026-10-12] read — Patches 4 (dfafb7ef), 5B and 6/6A/6B are in, and the review log (b87c59f5) sets the image rule. public/images/README.md is still 13 lines and names neither the renders.studies registry in .spw/assets.spw nor the staging rules in asset-management.spw, so Patch 1B is open and needs no one's call. Promoting a mark waits on the creator's pick, and Patches 2.5 and 7 still have no owner.
+ >>[2026-10-12 10:59] verify — Patches 4 (dfafb7ef), 5B and 6/6A/6B are in, and the review log (b87c59f5) sets the image rule. public/images/README.md is still 13 lines and names neither the renders.studies registry in .spw/assets.spw nor the staging rules in asset-management.spw, so Patch 1B is open and needs no one's call. Promoting a mark waits on the creator's pick, and Patches 2.5 and 7 still have no owner.
 }
 
 ^"open"{

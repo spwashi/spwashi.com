@@ -110,16 +110,16 @@ fixity = "tending"
 }
 
 ^["stream"]{
- >>[2026-04-09 21:06] observe - The site currently has no committed SVG assets; the most illustration-like surface on the home page is still a raster image with layered PNG overlays in `#constellation-frame`.
- >>[2026-04-09 21:06] observe - Existing interactive surfaces already point toward the need for SVG hosts: interactive codeblocks on the software page, the Pretext lab's projection surfaces, and the land-cluster / constellation material all want diagrams that can stay linked to semantics.
- >>[2026-04-09 21:06] observe - `spw-component-semantics.js` and `style.css` already provide orthogonal kind/form/role/liminality/selection axes, which means SVG should enter as another host surface in the same grammar rather than as a separate mini-framework.
- >>[2026-04-09 21:06] decide - Plan around a four-part split: SVG surface taxonomy, inline-versus-external asset rules, host/runtime contracts, and an authoring ladder for future Spw-backed components and pages.
- >>[2026-04-09 21:06] decide - Keep the runtime dependency explicit: mobile runtime doctrine, prefix/postfix symmetry, and brace pivots come first; SVG should intensify the surface model, not fork it.
- >>[2026-04-09 21:06] taste - Wonder should come from layers becoming structurally legible on inspection, not from perpetual animated SVG decoration.
- >>[2026-04-09] style - The constellation frame is the only place the site has made a visual vocabulary commitment: sparse points, relational arcs, depth through proximity and layering rather than perspective. New SVG should acknowledge that grammar before departing from it — or explicitly name the departure as a deliberate choice.
- >>[2026-04-09] observe - The site's primary relational content is already named: operator families, surface-to-surface bridges, domain adjacencies, spirit phase sequences. Illustrations that make those visible would feel native. Illustrations that don't reference that material would feel borrowed.
- >>[2026-04-09] style - Diagrammatic warmth on this site likely means: legible relation over decorative form, operator color tokens carrying semantic hierarchy, whitespace proportioned for inspection, and enough label residue that a diagram could become an inspectable surface rather than a static image.
- >>[2026-04-09] observe - SVG is a style development moment: the first authored illustration will establish whether this site's visual language is sparse, relational, annotated, geometric, or something else — log that choice explicitly when it is made.
+ >>[2026-04-09 16:06] observe - The site currently has no committed SVG assets; the most illustration-like surface on the home page is still a raster image with layered PNG overlays in `#constellation-frame`.
+ >>[2026-04-09 16:06] observe - Existing interactive surfaces already point toward the need for SVG hosts: interactive codeblocks on the software page, the Pretext lab's projection surfaces, and the land-cluster / constellation material all want diagrams that can stay linked to semantics.
+ >>[2026-04-09 16:06] observe - `spw-component-semantics.js` and `style.css` already provide orthogonal kind/form/role/liminality/selection axes, which means SVG should enter as another host surface in the same grammar rather than as a separate mini-framework.
+ >>[2026-04-09 16:06] decide - Plan around a four-part split: SVG surface taxonomy, inline-versus-external asset rules, host/runtime contracts, and an authoring ladder for future Spw-backed components and pages.
+ >>[2026-04-09 16:06] decide - Keep the runtime dependency explicit: mobile runtime doctrine, prefix/postfix symmetry, and brace pivots come first; SVG should intensify the surface model, not fork it.
+ >>[2026-04-09 16:06] taste - Wonder should come from layers becoming structurally legible on inspection, not from perpetual animated SVG decoration.
+ >>[2026-04-09 23:39] style - The constellation frame is the only place the site has made a visual vocabulary commitment: sparse points, relational arcs, depth through proximity and layering rather than perspective. New SVG should acknowledge that grammar before departing from it — or explicitly name the departure as a deliberate choice.
+ >>[2026-04-09 23:39] observe - The site's primary relational content is already named: operator families, surface-to-surface bridges, domain adjacencies, spirit phase sequences. Illustrations that make those visible would feel native. Illustrations that don't reference that material would feel borrowed.
+ >>[2026-04-09 23:39] style - Diagrammatic warmth on this site likely means: legible relation over decorative form, operator color tokens carrying semantic hierarchy, whitespace proportioned for inspection, and enough label residue that a diagram could become an inspectable surface rather than a static image.
+ >>[2026-04-09 23:39] observe - SVG is a style development moment: the first authored illustration will establish whether this site's visual language is sparse, relational, annotated, geometric, or something else — log that choice explicitly when it is made.
 }
 
 ^["open"]{

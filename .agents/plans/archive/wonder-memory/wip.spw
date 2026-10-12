@@ -100,16 +100,16 @@ fixity = "tending"
 }
 
 ^["stream"]{
- >>[2026-04-15 22:26] observe — settings are already centralized in public/js/site-settings.js, which is the right place to add a normalized wonder-memory model instead of inventing page-local state.
- >>[2026-04-15 22:27] observe — palette resonance already tracks recent route/operator clicks in public/js/spw-accent-palette.js, but the memory does not yet drive shared ornament or explicit controls.
- >>[2026-04-15 22:28] decide — use a first slice centered on wonder memory: one new setting, declarative route-local triggers, and matched ornament states on flagship pages.
- >>[2026-04-15 22:29] hygiene — base ref recorded as main@346e944; unrelated uncommitted worktree edits exist outside scope and will be avoided.
- >>[2026-04-15 22:29] taste — the control language should read like guidance in the page copy, not like a hidden debug console.
- >>[2026-04-15 22:42] decide — use concrete mode names (`off`, `nearby`, `sitewide`) so the setting reads clearly in both `/settings/` and route-local control strips.
- >>[2026-04-15 22:49] implement — wired wonder-memory through public/js/site-settings.js, including presets, derived modifiers, root datasets/variables, and declarative `data-site-setting-set` triggers that work outside `/settings/`.
- >>[2026-04-15 22:53] implement — added public/js/spw-wonder-memory.js so recent-path resonance can tint matched cards, links, and hero figures without overloading the canvas renderer.
- >>[2026-04-15 22:57] implement — added wonder-memory control strips and explanatory copy to software, parser, and math heroes, plus a first-class field/readout on the settings page.
- >>[2026-04-15 23:00] verify — node --check passed for site-settings.js, spw-accent-palette.js, spw-canvas-accents.js, and spw-wonder-memory.js; git diff --check passed.
+ >>[2026-04-15 17:26] observe — settings are already centralized in public/js/site-settings.js, which is the right place to add a normalized wonder-memory model instead of inventing page-local state.
+ >>[2026-04-15 17:27] observe — palette resonance already tracks recent route/operator clicks in public/js/spw-accent-palette.js, but the memory does not yet drive shared ornament or explicit controls.
+ >>[2026-04-15 17:28] decide — use a first slice centered on wonder memory: one new setting, declarative route-local triggers, and matched ornament states on flagship pages.
+ >>[2026-04-15 17:29] hygiene — base ref recorded as main@346e944; unrelated uncommitted worktree edits exist outside scope and will be avoided.
+ >>[2026-04-15 17:29] taste — the control language should read like guidance in the page copy, not like a hidden debug console.
+ >>[2026-04-15 17:42] decide — use concrete mode names (`off`, `nearby`, `sitewide`) so the setting reads clearly in both `/settings/` and route-local control strips.
+ >>[2026-04-15 17:49] implement — wired wonder-memory through public/js/site-settings.js, including presets, derived modifiers, root datasets/variables, and declarative `data-site-setting-set` triggers that work outside `/settings/`.
+ >>[2026-04-15 17:53] implement — added public/js/spw-wonder-memory.js so recent-path resonance can tint matched cards, links, and hero figures without overloading the canvas renderer.
+ >>[2026-04-15 17:57] implement — added wonder-memory control strips and explanatory copy to software, parser, and math heroes, plus a first-class field/readout on the settings page.
+ >>[2026-04-15 18:00] verify — node --check passed for site-settings.js, spw-accent-palette.js, spw-canvas-accents.js, and spw-wonder-memory.js; git diff --check passed.
 }
 
 ^["open"]{

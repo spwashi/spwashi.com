@@ -18,7 +18,7 @@ operation = "cache"
 fixity = "tending"
 
 ^"stream"{
- >>[2026-10-12] read — Phase 0 and the review kit hold (332d98bd, 4759a02f, 01c34f01), and css-bundle.mts:45 still strips the order statement, so bundles/core.css ships none. Today audit:layer-flip lists 363 route rules across 19 of the 23 route bundles: home 67 (71 at landing), about 45, rpg-wednesday 42, website 37, play 25. No route is recorded as same, better or worse yet, and the ablation's Chrome half still needs a run outside the sandbox.
+ >>[2026-10-12 10:59] verify — Phase 0 and the review kit hold (332d98bd, 4759a02f, 01c34f01), and css-bundle.mts:45 still strips the order statement, so bundles/core.css ships none. Today audit:layer-flip lists 363 route rules across 19 of the 23 route bundles: home 67 (71 at landing), about 45, rpg-wednesday 42, website 37, play 25. No route is recorded as same, better or worse yet, and the ablation's Chrome half still needs a run outside the sandbox.
 }
 
 ^"open"{

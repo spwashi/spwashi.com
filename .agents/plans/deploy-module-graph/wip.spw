@@ -17,7 +17,7 @@ operation = "cache"
 fixity = "tending"
 
 ^"stream"{
- >>[2026-10-12] read — the deploy graph has no chunk cycles since f05b02d2, and check:built fails on a recorded one. The next slice is unchanged: interface/smart-console.js:20 still imports getKnowledgeMap from runtime/memory/cognitive-core.js, which brings idle-lab; move that read to a leaf, as pulse-timing.js was. After it come the seed-cards and region-menu imports in idle-default and idle-residue, then the expression-manifest split: public/js/generated/spw-expressions.js is 331,864 B today, and expression-resonance.js:644 still loads it whole.
+ >>[2026-10-12 10:59] verify — the deploy graph has no chunk cycles since f05b02d2, and check:built fails on a recorded one. The next slice is unchanged: interface/smart-console.js:20 still imports getKnowledgeMap from runtime/memory/cognitive-core.js, which brings idle-lab; move that read to a leaf, as pulse-timing.js was. After it come the seed-cards and region-menu imports in idle-default and idle-residue, then the expression-manifest split: public/js/generated/spw-expressions.js is 331,864 B today, and expression-resonance.js:644 still loads it whole.
 }
 
 ^"open"{ }

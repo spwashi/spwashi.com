@@ -31,7 +31,7 @@ fixity = "tending"
 }
 
 ^"stream"{
- >>[2026-10-12] read — the grammar, the reflow method and the rebase recipe stand; the last rule is still aa1c9c48, and d13a532f only moved the August brief into HISTORY.md. No sequence is pending. The symbol question is still open: no file on this repo's side says what & . + ~ ! ^ = mean, and the counts since 2026-09-01 are now & 192, . 147, + 123, ~ 110, ! 96.
+ >>[2026-10-12 10:59] verify — the grammar, the reflow method and the rebase recipe stand; the last rule is still aa1c9c48, and d13a532f only moved the August brief into HISTORY.md. No sequence is pending. The symbol question is still open: no file on this repo's side says what & . + ~ ! ^ = mean, and the counts since 2026-09-01 are now & 192, . 147, + 123, ~ 110, ! 96.
 }
 
 ^"open"{

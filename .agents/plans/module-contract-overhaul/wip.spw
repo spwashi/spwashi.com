@@ -31,7 +31,7 @@ fixity = "tending"
 }
 
 ^"stream"{
- >>[2026-10-12] read — writers are declared (47bab2ea), contracts derive one Spw sentence each (6ff2aa8d), and engages is the first content of the wakes facet (0a974b23). No def carries a flat wakes or rests field yet, and the last change to runtime/catalog is 5bea15a1 (2026-10-07), which did not add one. The next slice needs no decision: add rests, and fail a def that declares change-only while an observer or sync-task path writes dataset or textContent raw; scripts/tests/change-only-writes.test.mjs already holds three writers by hand.
+ >>[2026-10-12 10:59] verify — writers are declared (47bab2ea), contracts derive one Spw sentence each (6ff2aa8d), and engages is the first content of the wakes facet (0a974b23). No def carries a flat wakes or rests field yet, and the last change to runtime/catalog is 5bea15a1 (2026-10-07), which did not add one. The next slice needs no decision: add rests, and fail a def that declares change-only while an observer or sync-task path writes dataset or textContent raw; scripts/tests/change-only-writes.test.mjs already holds three writers by hand.
 }
 
 ^"open"{

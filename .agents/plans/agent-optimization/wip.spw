@@ -17,7 +17,7 @@ operation = "cache"
 fixity = "tending"
 
 ^"stream"{
- >>[2026-10-12] read — AGENTS.md is still 3179 words against 3200, and its Build pipeline section is about 540 of them. The archived-plan line removal the Status waits on already landed in 280c5a84, so the cut now waits only on the creator's review; check:agents prints spend by default, and --spend is a no-op alias. site.spw is 423 lines with 175 @ refs, 21 into .agents/plans/ and now 12 of those into archive/, not the 4 the wave H note counts.
+ >>[2026-10-12 10:59] verify — AGENTS.md is still 3179 words against 3200, and its Build pipeline section is about 540 of them. The archived-plan line removal the Status waits on already landed in 280c5a84, so the cut now waits only on the creator's review; check:agents prints spend by default, and --spend is a no-op alias. site.spw is 423 lines with 175 @ refs, 21 into .agents/plans/ and now 12 of those into archive/, not the 4 the wave H note counts.
 }
 
 ^"open"{

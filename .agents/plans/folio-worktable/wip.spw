@@ -17,7 +17,7 @@ operation = "cache"
 fixity = "tending"
 
 ^"stream"{
- >>[2026-10-12] read — the release shelf (7a95da5b), the request card at #folio-request, the primes demo (8703ed24) and the calendar demo (27b616e8) are in the tree; since 2026-10-10 only copy and .spw headers touched the folio pages. The calendar demo is linked from the experiments shelf, not from /design/folios/, and waits on the creator's browser review, which is worth most before October ends. Forms, prices, shipping, the primes demo and the first card request stay the creator's calls.
+ >>[2026-10-12 10:59] verify — the release shelf (7a95da5b), the request card at #folio-request, the primes demo (8703ed24) and the calendar demo (27b616e8) are in the tree; since 2026-10-10 only copy and .spw headers touched the folio pages. The calendar demo is linked from the experiments shelf, not from /design/folios/, and waits on the creator's browser review, which is worth most before October ends. Forms, prices, shipping, the primes demo and the first card request stay the creator's calls.
 }
 
 ^"open"{

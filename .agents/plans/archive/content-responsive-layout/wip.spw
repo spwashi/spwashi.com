@@ -85,13 +85,13 @@ fixity = "tending"
 }
 
 ^["stream"]{
- >>[2026-04-11 08:44] observe — current shell and surface CSS still lean on fixed repeat grids and a single 720px shell breakpoint
- >>[2026-04-11 08:45] observe — pretext lab widths are hardcoded ratios in JS instead of shared layout variables
- >>[2026-04-11 08:46] observe — mobile screenshot of settings confirms chrome density and overlay pressure rather than isolated route markup failure
- >>[2026-04-11 08:46] decide — keep this pass scoped to shared CSS and pretext width tokens; do not touch unrelated dirty interaction-loop files
- >>[2026-04-11 09:03] implement — added shared content/measure tokens and retuned shell, frame, grid, settings, console, and persona responsiveness around container width
- >>[2026-04-11 09:07] implement — wired pretext lab width projections to CSS variables so the demo follows the same ergonomic layout token surface
- >>[2026-04-11 09:09] verify — node --check public/js/pretext-lab.js and git diff --check both pass after the responsive token pass
+ >>[2026-04-11 03:44] observe — current shell and surface CSS still lean on fixed repeat grids and a single 720px shell breakpoint
+ >>[2026-04-11 03:45] observe — pretext lab widths are hardcoded ratios in JS instead of shared layout variables
+ >>[2026-04-11 03:46] observe — mobile screenshot of settings confirms chrome density and overlay pressure rather than isolated route markup failure
+ >>[2026-04-11 03:46] decide — keep this pass scoped to shared CSS and pretext width tokens; do not touch unrelated dirty interaction-loop files
+ >>[2026-04-11 04:03] implement — added shared content/measure tokens and retuned shell, frame, grid, settings, console, and persona responsiveness around container width
+ >>[2026-04-11 04:07] implement — wired pretext lab width projections to CSS variables so the demo follows the same ergonomic layout token surface
+ >>[2026-04-11 04:09] verify — node --check public/js/pretext-lab.js and git diff --check both pass after the responsive token pass
 }
 
 ^["open"]{

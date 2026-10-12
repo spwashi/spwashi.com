@@ -105,7 +105,7 @@ fixity = "tending"
  >>[2026-04-11 04:45] implement — Refactored the state inspector into a collapsible/dismissable diagnostic surface with restore controls and collapsed-by-default behavior when cognitive handles are off.
  >>[2026-04-11 04:47] taste — Container surfaces now read flatter and more statement-like through top-line syntax rules instead of heavier floating-card treatment.
  >>[2026-04-11 04:49] verify — node --check passed for site.js, site-settings.js, spw-shell-disclosure.js, spw-brace-actions.js, and spw-state-inspector.js; git diff --check passed.
- >>[2026-04-11 13:12] integrate — Minimal defaults now hide the console, the settings page checked states match runtime defaults before JS boots, and statement-line treatment extends to presets, categories, operator cards, mode panels, and smart resonance cards.
+ >>[2026-04-11 08:12] integrate — Minimal defaults now hide the console, the settings page checked states match runtime defaults before JS boots, and statement-line treatment extends to presets, categories, operator cards, mode panels, and smart resonance cards.
 }
 
 ^["open"]{

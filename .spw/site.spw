@@ -280,6 +280,13 @@ integration_contract: .{
  mount_vs_canon = `@local_mount is the site bridge; @workbench_mount / @workbench_workspace are instruments — never reverse the authority order.`
 }[reg=facet]
 
+^"clock"{
+  zone = "America/Chicago"
+  stamp = `YYYY-MM-DD HH:MM on this clock, with the zone said here rather than on every entry: >>[2026-10-12 10:54]`
+  note = `The site keeps the creator's clock. Stream entries, Status dates and every script's "today" read this zone; SPW_TZ overrides it for one run. An agent working in another zone converts to this one before it writes. npm run -s clock prints the stamp to paste.`
+  reader = ~"../scripts/lib/site-clock.mjs"
+}[reg=facet]
+
 ^"spw_convention_use"{
   ~source = @language_utilization
   ~capacity = @semantic_capacity

@@ -17,7 +17,7 @@ operation = "cache"
 fixity = "tending"
 
 ^"stream"{
- >>[2026-10-12] read — five slice contracts sit in .spw/slices/, and the attention children load on their own (c2d5da00, 73d6f2ad). The math labs are committed and unreviewed: diagrams.js:1251 still gives every vector field the fixed marker id arrow-vector, and .spw/slices/math-practice-labs/ holds only its index.spw, no tending note. Phases 3–6 wait for that note.
+ >>[2026-10-12 10:59] verify — five slice contracts sit in .spw/slices/, and the attention children load on their own (c2d5da00, 73d6f2ad). The math labs are committed and unreviewed: diagrams.js:1251 still gives every vector field the fixed marker id arrow-vector, and .spw/slices/math-practice-labs/ holds only its index.spw, no tending note. Phases 3–6 wait for that note.
 }
 
 ^"open"{

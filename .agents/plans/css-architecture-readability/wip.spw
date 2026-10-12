@@ -17,7 +17,7 @@ operation = "cache"
 fixity = "tending"
 
 ^"stream"{
- >>[2026-10-12] read — Patches 2, 2A and 2B hold (7d2968fa), and the Patch 4 split is still partial: components/cards.css is 1359 lines and grammar/syntax.css 2528, both whole. Patch 1B has not started: src/styles/entries/debug.css only answers data-spw-debug-layers set to on and has no compact rule, and nothing in the tree writes that attribute, so a reader sets it by hand. The website bundle that design.css would ride is exactly 140 KiB, its soft budget.
+ >>[2026-10-12 10:59] verify — Patches 2, 2A and 2B hold (7d2968fa), and the Patch 4 split is still partial: components/cards.css is 1359 lines and grammar/syntax.css 2528, both whole. Patch 1B has not started: src/styles/entries/debug.css only answers data-spw-debug-layers set to on and has no compact rule, and nothing in the tree writes that attribute, so a reader sets it by hand. The website bundle that design.css would ride is exactly 140 KiB, its soft budget.
 }
 
 ^"open"{

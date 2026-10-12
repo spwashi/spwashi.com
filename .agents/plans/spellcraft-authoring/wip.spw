@@ -18,7 +18,7 @@ operation = "cache"
 fixity = "tending"
 
 ^"stream"{
- >>[2026-10-12] read — the Status holds: 33 distinct cauldron attribute names by its own count, nothing in the cauldron folders since October 6, and no SPELL_CONTRACT (breadcrumb-spell.js has SPW_BREADCRUMB_SPELL_CONTRACT, a different thing). The decompose walk on /design/experiments/spellcraft/ still waits on the creator. Meanwhile the leftover phase 1 write can move without that walk: resonance.js:102 sets data-spw-cauldron-phase on html, dom-sync-hub.js:71 lists it, and six html rules in palette-depth.css read it.
+ >>[2026-10-12 10:59] verify — the Status holds: 33 distinct cauldron attribute names by its own count, nothing in the cauldron folders since October 6, and no SPELL_CONTRACT (breadcrumb-spell.js has SPW_BREADCRUMB_SPELL_CONTRACT, a different thing). The decompose walk on /design/experiments/spellcraft/ still waits on the creator. Meanwhile the leftover phase 1 write can move without that walk: resonance.js:102 sets data-spw-cauldron-phase on html, dom-sync-hub.js:71 lists it, and six html rules in palette-depth.css read it.
 }
 
 ^"open"{

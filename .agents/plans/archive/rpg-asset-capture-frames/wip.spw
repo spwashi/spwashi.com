@@ -103,9 +103,9 @@ fixity = "tending"
 }
 
 ^["stream"]{
- >>[2026-04-10 00:00] hygiene — base main@7643d88ec9f4e30c2784a7dca4f36e825a659c8b; existing screenshot-semantics plan is untracked and adjacent.
- >>[2026-04-10 00:00] decide — use IndexedDB for image blobs and localStorage for metadata/active customization only.
- >>[2026-04-10 00:00] taste — unlockable customization should reward exploration of Spw/operator/site features, never gate table utility or create manipulative progression.
+ >>[2026-04-09 19:00] hygiene — base main@7643d88ec9f4e30c2784a7dca4f36e825a659c8b; existing screenshot-semantics plan is untracked and adjacent.
+ >>[2026-04-09 19:00] decide — use IndexedDB for image blobs and localStorage for metadata/active customization only.
+ >>[2026-04-09 19:00] taste — unlockable customization should reward exploration of Spw/operator/site features, never gate table utility or create manipulative progression.
 }
 
 ^["open"]{

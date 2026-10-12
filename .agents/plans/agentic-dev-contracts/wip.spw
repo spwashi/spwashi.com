@@ -17,7 +17,7 @@ operation = "cache"
 fixity = "tending"
 
 ^"stream"{
- >>[2026-10-12] read — the manifest scripts and check:local stand, and both wonder probes in index.spw pass today. The condition the Status sets for archiving has been met: d13a532f turned the last twenty audit-first check steps into check:local, and no live plan validates with the audit-first script now. That same pass also rewrote the script_door wonder's tension to name check:local as the network detour, which inverted it; the tension was restored the same day to name the bare check script.
+ >>[2026-10-12 10:59] verify — the manifest scripts and check:local stand, and both wonder probes in index.spw pass today. The condition the Status sets for archiving has been met: d13a532f turned the last twenty audit-first check steps into check:local, and no live plan validates with the audit-first script now. That same pass also rewrote the script_door wonder's tension to name check:local as the network detour, which inverted it; the tension was restored the same day to name the bare check script.
 }
 
 ^"open"{

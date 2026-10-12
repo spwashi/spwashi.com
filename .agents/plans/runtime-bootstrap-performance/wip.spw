@@ -18,7 +18,7 @@ operation = "cache"
 fixity = "tending"
 
 ^"stream"{
- >>[2026-10-12] read — the last landing is still f1d0f74c (section handle, utility row and posture pill write only what moved); nothing has touched the scroll writers since. The next slice is the operator-geometry flip: applyOperatorGeometry (semantic/sigil-annotation.js:64) writes seven attributes on every same-origin link through link-copy.js, and on shell nav links in the reader layer navigation-spells.js:395 deletes data-spw-operator-geometry right after. Landing it needs the /about/ pocket scroll receipt, before and after.
+ >>[2026-10-12 10:59] verify — the last landing is still f1d0f74c (section handle, utility row and posture pill write only what moved); nothing has touched the scroll writers since. The next slice is the operator-geometry flip: applyOperatorGeometry (semantic/sigil-annotation.js:64) writes seven attributes on every same-origin link through link-copy.js, and on shell nav links in the reader layer navigation-spells.js:395 deletes data-spw-operator-geometry right after. Landing it needs the /about/ pocket scroll receipt, before and after.
 }
 
 ^"open"{ }

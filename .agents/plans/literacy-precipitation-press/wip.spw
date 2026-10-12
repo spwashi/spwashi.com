@@ -17,7 +17,7 @@ operation = "cache"
 fixity = "tending"
 
 ^"stream"{
- >>[2026-10-12] read — rung 1 is in the tree: effect-ledger.js (bd0d7951), mounted as the effect-ledger feature in the catalog. No bulletin-board route exists, and both candidates for rung 2 stand: /design/folios/#release-set and /play/rpg-wednesday/#inktober-shelf. The plan is a reference ladder, not a work queue, so nothing moves until the creator names rung 2's board.
+ >>[2026-10-12 10:59] verify — rung 1 is in the tree: effect-ledger.js (bd0d7951), mounted as the effect-ledger feature in the catalog. No bulletin-board route exists, and both candidates for rung 2 stand: /design/folios/#release-set and /play/rpg-wednesday/#inktober-shelf. The plan is a reference ladder, not a work queue, so nothing moves until the creator names rung 2's board.
 }
 
 ^"open"{

@@ -18,7 +18,7 @@ operation = "cache"
 fixity = "tending"
 
 ^"stream"{
- >>[2026-10-12] read — spw-quest, site-hub-next and autonomous-feedback import workers/lib/shell.js (74503ca7); smut-today and wap-mom still carry their own escapeHtml, BASE_SECURITY and FAVICON. Both took copy commits today (0e2942ae, a53d0f15) that left those copies alone, and both are clean in this tree. smut-today-crew's first slice also edits workers/smut-today/src/index.js.
+ >>[2026-10-12 10:59] verify — spw-quest, site-hub-next and autonomous-feedback import workers/lib/shell.js (74503ca7); smut-today and wap-mom still carry their own escapeHtml, BASE_SECURITY and FAVICON. Both took copy commits today (0e2942ae, a53d0f15) that left those copies alone, and both are clean in this tree. smut-today-crew's first slice also edits workers/smut-today/src/index.js.
 }
 
 ^"open"{ }

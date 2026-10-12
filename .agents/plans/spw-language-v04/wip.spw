@@ -17,7 +17,7 @@ operation = "cache"
 fixity = "tending"
 
 ^"stream"{
- >>[2026-10-12] read — the twelve pillars and the in-site parser have landed, and the workbench gitlink is still 229aedcf (a4572202). parseExpressionQuery in public/js/semantic/expression-query.js still reads only boon|bane|bone|bonk|honk as a prefix and drops other leading sigils, so patch 2 of the spw-as-handle cache is still the next slice. Its prefix half needs no decision; the trailing ?# half and Phase 2 upstream wait on the creator.
+ >>[2026-10-12 10:59] verify — the twelve pillars and the in-site parser have landed, and the workbench gitlink is still 229aedcf (a4572202). parseExpressionQuery in public/js/semantic/expression-query.js still reads only boon|bane|bone|bonk|honk as a prefix and drops other leading sigils, so patch 2 of the spw-as-handle cache is still the next slice. Its prefix half needs no decision; the trailing ?# half and Phase 2 upstream wait on the creator.
 }
 
 ^"open"{

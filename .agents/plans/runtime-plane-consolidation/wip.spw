@@ -460,7 +460,7 @@ fixity = "tending"
   `[2026-08-11] land — phase 1: operator-detection.js split (shared out of eager graph); 88 mount adapters deleted; dist JS minify 55.7%; eager graph 38→33 modules / 631→503 KB. Bundle deferred.`,
   `[2026-08-11] prep — HTML region hygiene before phase 2: every site-frame now has id+kind+role; entry spines declare region-purpose=public-spine; scripts/check-region-hygiene.mjs reports 777 frames / 0 issues. Public routes already on spw-page (captures pack left as generated offline).`,
  ][reg=set]
- >>[2026-10-12] read — Phases 0, 1, 4 and 5 are landed, Phase 2 is half done (the loader asks the selector last), and Phase 3's read side is kernel/measured-frame.js and kernel/viewport.js. The next slice has not moved: interface/semantic-chrome.js:722 still adds a capture-phase scroll listener with no passive flag, and layout-qa.js, observation-beats.js, spatial-gravity.js and positioning-orchestration.js still read window.innerWidth themselves; none of those files has changed since 53717ed7 (2026-10-06). The counts in the evidence facets above are from 2026-07-26 and were not re-probed today.
+ >>[2026-10-12 10:59] verify — Phases 0, 1, 4 and 5 are landed, Phase 2 is half done (the loader asks the selector last), and Phase 3's read side is kernel/measured-frame.js and kernel/viewport.js. The next slice has not moved: interface/semantic-chrome.js:722 still adds a capture-phase scroll listener with no passive flag, and layout-qa.js, observation-beats.js, spatial-gravity.js and positioning-orchestration.js still read window.innerWidth themselves; none of those files has changed since 53717ed7 (2026-10-06). The counts in the evidence facets above are from 2026-07-26 and were not re-probed today.
 }[reg=facet]
 
 ^"open"{

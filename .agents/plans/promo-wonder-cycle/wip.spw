@@ -47,7 +47,7 @@ promo_wonder_cycle:
     - `Prefer explicit names over generic slots.`
 
 ^"stream"{
- >>[2026-10-12] read — the rotating layer (603f18d8, typed in ccafd1ac) and the intent-picked toast (1a61dc53) are in the tree. discovery-notices.js still records dismissals and counts nothing, so the shown / accepted / closed counter is the one open slice, and it waits on the creator approving the 1a61dc53 demo in a browser. Today's A-cycle release (efcd875d) moved the feed's cycle pair and daily record to the October 13 close; PLAN.md's release receipts do not list that close yet.
+ >>[2026-10-12 10:59] verify — the rotating layer (603f18d8, typed in ccafd1ac) and the intent-picked toast (1a61dc53) are in the tree. discovery-notices.js still records dismissals and counts nothing, so the shown / accepted / closed counter is the one open slice, and it waits on the creator approving the 1a61dc53 demo in a browser. Today's A-cycle release (efcd875d) moved the feed's cycle pair and daily record to the October 13 close; PLAN.md's release receipts do not list that close yet.
 }
 
 ^"open"{

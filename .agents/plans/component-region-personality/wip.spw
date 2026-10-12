@@ -18,7 +18,7 @@ operation = "cache"
 fixity = "tending"
 
 ^"stream"{
- >>[2026-10-12] read — Waves 0–2 hold: copy-unit ids, and audit:copy:accessor (c0fa1767). Wave 3 has not started: topics/index.html carries 6 spw-visual-link-card cards, and services/index.html and recipes/index.html carry none; the Status line's 30 counts class mentions with each card's four parts, not cards. The card styles already ship in components/content.css, so the slice is HTML on two heroes once the creator picks the children.
+ >>[2026-10-12 10:59] verify — Waves 0–2 hold: copy-unit ids, and audit:copy:accessor (c0fa1767). Wave 3 has not started: topics/index.html carries 6 spw-visual-link-card cards, and services/index.html and recipes/index.html carry none; the Status line's 30 counts class mentions with each card's four parts, not cards. The card styles already ship in components/content.css, so the slice is HTML on two heroes once the creator picks the children.
 }
 
 ^"open"{

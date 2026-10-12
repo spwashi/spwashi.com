@@ -18,7 +18,7 @@ operation = "cache"
 fixity = "tending"
 
 ^"stream"{
- >>[2026-10-12] read — no rename has landed. data-spw-page-tempo="settle" is still read at public/css/components/signals.css:248 and written by runtime/arrival/prepaint-state.js and runtime/regions/region-profiler.js, and .spw/conventions/word-sets.spw has no tempo entry yet. The next slice, a collision entry for snap|fast|base|deliberate|settle with two candidate speed words, needs no decision; the rename itself waits on the creator, and ground waits on spw-metaphysical-language.
+ >>[2026-10-12 10:59] verify — no rename has landed. data-spw-page-tempo="settle" is still read at public/css/components/signals.css:248 and written by runtime/arrival/prepaint-state.js and runtime/regions/region-profiler.js, and .spw/conventions/word-sets.spw has no tempo entry yet. The next slice, a collision entry for snap|fast|base|deliberate|settle with two candidate speed words, needs no decision; the rename itself waits on the creator, and ground waits on spw-metaphysical-language.
 }
 
 ^"open"{

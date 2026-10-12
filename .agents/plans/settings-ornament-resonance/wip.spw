@@ -16,7 +16,7 @@ operation = "cache"
 fixity = "tending"
 
 ^"stream"{
- >>[2026-10-12] read — The shelf holds (b2eda400, with its aisle index pinned in 39d66d28): eight aisles under the presets id in settings/index.html, styled by settings-shelf.css, and site-settings-ui.js:1483 loads the pack specimens so each look's box wears its pack. No mock of a guided way to try a look exists yet. The satchel bay now belongs to runtime-plane-consolidation, and its rail demo behind ?spw-satchel=rail still lives in section-handle.js.
+ >>[2026-10-12 10:59] verify — The shelf holds (b2eda400, with its aisle index pinned in 39d66d28): eight aisles under the presets id in settings/index.html, styled by settings-shelf.css, and site-settings-ui.js:1483 loads the pack specimens so each look's box wears its pack. No mock of a guided way to try a look exists yet. The satchel bay now belongs to runtime-plane-consolidation, and its rail demo behind ?spw-satchel=rail still lives in section-handle.js.
 }
 
 ^"open"{
