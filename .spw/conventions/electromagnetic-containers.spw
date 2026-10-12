@@ -11,6 +11,29 @@
   visual: "Containers show charge through crease weight, folded-corner bias, braced labels, and bounded outline state. No visual effect should imply energy unless the state is inspectable through data attributes."
 }
 
+@module: ~"../../public/js/modules/effects/electromagnetic-containers.js"
+@module_catalog: ~"../../public/js/runtime/catalog/enhancement.js"
+@module_ecology_kinship: ~"../audits/module-ecology-kinship-2026-09.spw"
+
+^"opt_in"{
+  rule: "The field is opt-in. An element is a container only when its markup says data-container-type. No class, card or region becomes one on its own."
+  today: "No public page authors data-container-type (2026-10-12), so the module mounts nowhere. @module_ecology_kinship lists it as an unspent host: keep it gated, and author one seat when a page actually wants a paper container."
+  why: "A field on every card would make charge decoration instead of state: the click handler and the + and - keys would reach cards that never asked to hold a phase."
+  ~#taste: "Documented opt-in for now. A global field stays open (wonder_electromagnetic_global_field)."
+}
+
+#>wonder_electromagnetic_global_field
+?["Should charge ever be a global field, one every container sits in, rather than a state a page opts into one host at a time?"]{
+  #:depth #!pragmatics ~#lens(projection)
+  ~#with: @module @module_catalog @module_ecology_kinship
+  ~#taste: "Charge should mean something where it shows. The creator is open to global fields at another time."
+  ~#hypothesis: "A global field could be read-only: the room carries a charge that containers reflect through CSS, while a click or a key that steps charge stays on authored hosts. That keeps the reading of state apart from the right to change it."
+  ~#tension: "The click handler advances on any click inside a host, links included, so a global host would capture clicks the page meant for something else. A field nobody can change may also read as ornament."
+  !probe{ "git grep -l 'data-container-type' -- '*.html'" }
+  $%[container.charge, field.scope, host.authored]
+  ~<"../audits/module-ecology-kinship-2026-09.spw">
+}
+
 ^"charge_states"{
   ~#note: "Four states along the conception→realization continuum, mapped to electromagnetic charge"
 
@@ -146,8 +169,8 @@
 
   holds_relations: "Container doesn't just show content, it holds relational fields"
   responds_to_attention: "Charge and coherence respond to interaction and focus"
-  influences_neighbors: "Field resonance propagates to related containers"
-  tracks_state: "Current charge state persists across navigation"
+  influences_neighbors: "Field resonance between containers is not built; see future_extensions"
+  tracks_state: "Charge lives on the host's data-charge for the life of the page; nothing stores it across navigation"
   emits_events: "Changes trigger events for other systems to respond"
   exposes_perspective: "Multiple slices show different framings of the same idea"
   manifests_potential: "Progressive states show idea becoming real"
@@ -174,30 +197,30 @@
     meaning: "This heading represents the abstract idea level, styled lightly and italicized"
   }
 
-  automatic_upgrade: {
+  not_upgraded: {
     markup: "<div class='frame-card'> ... </div>",
-    description: "JavaScript automatically adds data-container-type to all .frame-card elements and initializes electromagnetic behavior"
+    description: "A .frame-card stays a card. Nothing adds data-container-type to it; author the attribute to make it a container (^\"opt_in\")."
   }
+
+  without_script: "Every markup form above is read by electromagnetic-container.css alone, so an authored container shows its charge with scripts off. JavaScript adds the steps."
 }
 
 ^"api_and_control"{
-  global_access: "window.ElectromagneticField.containers, .setCharge(), .advanceCharge(), .getContainer()"
+  host: "Only elements that author data-container-type. There is no window global and no setCharge or advanceCharge function to call."
 
-  setCharge: {
-    usage: "window.ElectromagneticField.setCharge(element, 'manifest')"
-    effect: "Jump container directly to specified charge state"
-  }
+  mount: "The enhancement catalog mounts the module when a [data-container-type] element is visible (@module_catalog, id electromagnetic-containers). With no host on the page, it does not load."
 
-  advanceCharge: {
-    usage: "window.ElectromagneticField.advanceCharge(element)"
-    effect: "Move from current state to next (conception → potential → kinetic → manifest)"
-  }
+  writes: "On each host: data-charge (one of conception, potential, kinetic, manifest; anything else reads as potential), data-charge-index, data-charge-label as #{state}, data-charge-transitioning for 800 ms after a change, and --spw-container-density from the semantic density setting (minimal 0.86, normal 1, rich 1.12)."
 
-  events: [
-    "electromagnetic:charge-change — fired when container charge changes",
-    "electromagnetic:slice-change — fired when perspective slice changes",
-    "electromagnetic:initialized — fired when system initializes"
-  ]
+  click: "A click anywhere inside a host steps it forward one state, stopping at manifest. A click never steps back."
+
+  keys: "With focus inside a host, + or = steps forward and - steps back."
+
+  setting: "When the settings change (bus settings:changed), every host rewrites its density weight; its charge is kept."
+
+  event: "A step emits bus field:charged with { element, oldCharge, newCharge, chargeIndex }. The bus dispatches it as spw:field:charged, and its legacy table maps it to electromagnetic:charge-change. No slice-change or initialized event exists."
+
+  author_instead: "To set a starting state, author data-charge on the host. To change it from another module, write data-charge on the element."
 }
 
 ^"accessibility"{
@@ -243,8 +266,8 @@
   @system: ~"../../public/js/modules/effects/electromagnetic-containers.js"
   @styles: ~"../../public/css/effects/electromagnetic-container.css"
 
-  init: "initElectromagneticContainers() runs on DOMContentLoaded"
-  class: "ElectromagneticContainer manages individual container state"
-  resonance: "FieldResonance manages relationships between containers"
-  integration: "Hooks to spw:settings-change for semantic-density aware field intensity"
+  init: "initElectromagneticContainers(root) runs when the catalog mounts the module; it loads the stylesheet through ensureElectromagneticContainerStyles() and binds each [data-container-type] under root"
+  state: "Plain functions over dataset; there is no container class and no resonance manager"
+  integration: "Listens on the bus for settings:changed (spw:settings-change) to reweight density"
+  teardown: "The mount returns a function that removes the click, key and settings listeners"
 }
