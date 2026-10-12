@@ -47,13 +47,13 @@
             </div>
             <h1 id="spw-quest-title">spw.quest</h1>
             <p id="quest-lede" data-spw-textual-role="lede" data-spw-copy-unit="quest.hook.lede" data-spw-semantic-expression="quest[spw]{mount.doctor.stop}<guide>">
-                <a href="https://spw.quest">spw.quest</a> opens with a guide to the Spw language: one page to read, the twelve sigils and their couple, and the four brace pairs. This page is the guide beside it: constructs you can reuse, sensors you should run, and grammar you should not fork.
+                <span id="quest-lede-guide" data-spw-copy-unit="quest.hook.lede.guide"><a href="https://spw.quest">spw.quest</a> opens with a guide to the Spw language: one page to read, the twelve sigils, and the four brace pairs.</span> <span id="quest-lede-beside" data-spw-copy-unit="quest.hook.lede.beside">This page is the guide beside it: constructs you can reuse, sensors you should run, and grammar you should not fork.</span>
             </p>
             <p id="quest-install-note" data-spw-textual-role="note" data-spw-copy-unit="quest.install.note" data-spw-semantic-expression="quest[install]{choose.copy.run}(root)<doctor>">
-                The <a href="https://spw.quest/install">install page</a> puts the Spw Workbench into a repository. You choose who runs the setup, copy one block, run it from the repository root, and <code>doctor</code> tells you it worked. It stops before any commit.
+                <span id="quest-install-note-page" data-spw-copy-unit="quest.install.note.page">The <a href="https://spw.quest/install">install page</a> puts the Spw Workbench into a repository.</span> <span id="quest-install-note-steps" data-spw-copy-unit="quest.install.note.steps">You choose who runs the setup, copy one block, run it from the repository root, and <code>doctor</code> tells you it worked.</span> <span id="quest-install-note-stop" data-spw-copy-unit="quest.install.note.stop">It stops before any commit.</span>
             </p>
-            <p data-spw-textual-role="note">
-                Neighbor: <a href="https://texture.website">texture.website</a> keeps material cues and language texture next door. Quest is the path; texture is the grain.
+            <p id="quest-neighbor" data-spw-textual-role="note" data-spw-copy-unit="quest.hook.neighbor" data-spw-semantic-expression="quest[neighbor]{path.grain}&lt;texture&gt;">
+                <span id="quest-neighbor-texture" data-spw-copy-unit="quest.hook.neighbor.texture">Neighbor: <a href="https://texture.website">texture.website</a> keeps material cues and language texture next door.</span> <span id="quest-neighbor-grain" data-spw-copy-unit="quest.hook.neighbor.grain">Quest is the path; texture is the grain.</span>
             </p>
         </section>
 
@@ -63,24 +63,24 @@
                 <h2 id="start-title">Start: who runs the setup</h2>
             </header>
             <p id="quest-start-lede" data-spw-textual-role="lede" data-spw-copy-unit="quest.start.lede" data-spw-semantic-expression="quest[start]{choose.copy.run}(root)<doctor>">
-                Three blocks, one result. Each mounts the pinned workbench at <code>.spw/_workbench</code>, leaves your repository its own <code>.spw/</code>, and ends with <code>doctor</code>. Git and Node are the only things you bring.
+                <span id="quest-start-lede-result" data-spw-copy-unit="quest.start.lede.result">Three blocks, one result.</span> <span id="quest-start-lede-mount" data-spw-copy-unit="quest.start.lede.mount">Each mounts the pinned workbench at <code>.spw/_workbench</code>, leaves your repository its own <code>.spw/</code>, and ends with <code>doctor</code>.</span> <span id="quest-start-lede-bring" data-spw-copy-unit="quest.start.lede.bring">Git and Node are the only things you bring.</span>
             </p>
             <div class="spw-reason-strip" aria-label="Three ways to run the setup">
                 <div data-spw-emphasis="primary">
                     <strong>Shell</strong>
-                    <p>You run every step yourself, git included. Nothing is committed. <a href="https://spw.quest/install#shell">Copy the commands</a>.</p>
+                    <p id="quest-start-shell" data-spw-copy-unit="quest.start.shell"><span id="quest-start-shell-self" data-spw-copy-unit="quest.start.shell.self">You run every step yourself, git included.</span> <span id="quest-start-shell-commit" data-spw-copy-unit="quest.start.shell.commit">Nothing is committed.</span> <span id="quest-start-shell-copy" data-spw-copy-unit="quest.start.shell.copy"><a href="https://spw.quest/install#shell">Copy the commands</a>.</span></p>
                 </div>
                 <div data-spw-emphasis="secondary">
                     <strong>Claude</strong>
-                    <p>One command. Claude reads the recipe and runs it in this repository, then stops before any commit. <a href="https://spw.quest/install#claude">Copy the command</a>.</p>
+                    <p id="quest-start-claude" data-spw-copy-unit="quest.start.claude"><span id="quest-start-claude-one" data-spw-copy-unit="quest.start.claude.one">One command.</span> <span id="quest-start-claude-recipe" data-spw-copy-unit="quest.start.claude.recipe">Claude reads the recipe and runs it in this repository, then stops before any commit.</span> <span id="quest-start-claude-copy" data-spw-copy-unit="quest.start.claude.copy"><a href="https://spw.quest/install#claude">Copy the command</a>.</span></p>
                 </div>
                 <div data-spw-emphasis="tertiary">
                     <strong>Codex</strong>
-                    <p>One command. Codex runs the recipe without prompting. <a href="https://spw.quest/install#codex">Copy the command</a>.</p>
+                    <p id="quest-start-codex" data-spw-copy-unit="quest.start.codex"><span id="quest-start-codex-one" data-spw-copy-unit="quest.start.codex.one">One command.</span> <span id="quest-start-codex-recipe" data-spw-copy-unit="quest.start.codex.recipe">Codex runs the recipe without prompting.</span> <span id="quest-start-codex-copy" data-spw-copy-unit="quest.start.codex.copy"><a href="https://spw.quest/install#codex">Copy the command</a>.</span></p>
                 </div>
             </div>
-            <p data-spw-textual-role="note">
-                For an agent reading this without a browser: <a href="https://spw.quest/init">spw.quest/init</a> is the whole recipe as text, <a href="https://spw.quest/git.md">git.md</a> is the five git commands in the order to run them, and <a href="https://spw.quest/quest.json">quest.json</a> is the same recipe as data. When it worked, <code>spw:doctor</code> finishes with no errors and nothing was committed; read the diff, then commit it yourself.
+            <p data-spw-textual-role="note" id="quest-start-agents" data-spw-copy-unit="quest.start.agents">
+                <span id="quest-start-agents-text" data-spw-copy-unit="quest.start.agents.text">For an agent reading this without a browser: <a href="https://spw.quest/init">spw.quest/init</a> is the whole recipe as text, <a href="https://spw.quest/git.md">git.md</a> is the five git commands in the order to run them, and <a href="https://spw.quest/quest.json">quest.json</a> is the same recipe as data.</span> <span id="quest-start-agents-worked" data-spw-copy-unit="quest.start.agents.worked">When it worked, <code>spw:doctor</code> finishes with no errors and nothing was committed; read the diff, then commit it yourself.</span>
             </p>
         </section>
 
@@ -89,8 +89,8 @@
                 <a class="frame-sigil" href="#crawl-prompt" data-spw-operator="wonder">?crawl_spwashi</a>
                 <h2 id="crawl-title">Prompt for agents who crawl this site</h2>
             </header>
-            <p data-spw-textual-role="note">
-                Paste this block into the agent you just gave the repository. Walk one path: consume the pinned workbench, or experiment through web semantics, not both in one patch. It is valid Spw, so you can check it before you trust it.
+            <p data-spw-textual-role="note" id="quest-crawl-note" data-spw-copy-unit="quest.crawl.note">
+                <span id="quest-crawl-note-paste" data-spw-copy-unit="quest.crawl.note.paste">Paste this block into the agent you just gave the repository.</span> <span id="quest-crawl-note-path" data-spw-copy-unit="quest.crawl.note.path">Walk one path: consume the pinned workbench, or experiment through web semantics, not both in one patch.</span> <span id="quest-crawl-note-valid" data-spw-copy-unit="quest.crawl.note.valid">It is valid Spw, so you can check it before you trust it.</span>
             </p>
             <nav class="frame-operators" aria-label="Check the crawl prompt">
                 <a class="spw-chip" data-spw-handle="true" href="/tools/spw-parser/?spw_source=%23%3Ecrawl_spwashi%0A%3F%5Bwhat%20is%20this%20site%20doing%20that%20I%20could%20reuse%5D%7B%0A%20%20open_first%20%3D%20%23%5B%60AGENTS.md%60%2C%20%60.spw%2Fconventions%2Fcopy-accessor.spw%60%2C%20%60%2Fabout%2Fdomains%2Fspw.quest%2F%60%2C%20%60%2Ftopics%2Fsoftware%2Fspw%2F%60%5D%0A%20%20operation%20%3D%20%60declare%20cache%7Caudit%7Calign%7Cprime%7Ccontract%7Carchive%20before%20editing%60%0A%20%20sense%20%3D%20%60npm%20run%20sense%20--%20copy%7Cnouns%7Cink%20%20%20ink%20needs%20a%20fixture%20id%60%0A%20%20person%20%3D%20%60I%27m%20Spwashi.%20I%20build%20software%20and%20make%20art.%60%0A%20%20dual_path%20%3D%20%60consume%20pinned%20workbench%20XOR%20experiment%20through%20web%20semantics%60%0A%20%20write_deny%20%3D%20%60Explore%2Fplan%20do%20not%20write.%20Patch%20is%20one%20named%20slice.%60%0A%20%20braces%20%3D%20%60%5Bmode%5D%20keeps%20alternatives%3B%20%28scene%29%20stages%20midprocess%20%E2%80%94%20not%20decoration%60%0A%20%20wonder%20%3D%20%60page%20types%20on%20body%3B%20harvest%20with%20npm%20run%20wonder%20%E2%80%94%20two%20inventories%2C%20not%20a%20backlog%60%0A%20%20report%20%3D%20%60.spw%2Fworkbench-report.spw%20and%20%2Ftopics%2Fsoftware%2Fspw%2F%23workbench-improvements%60%0A%20%20walk%20%3D%20%60Do%20not%20build%20a%20lens%20on%20an%20unpruned%20--from%20.spw%20walk%60%0A%20%20refuse%20%3D%20%23%5B%0A%20%20%20%20%60fork%20Spw%20grammar%60%2C%0A%20%20%20%20%60kitchen-sink%20implement%20from%20plans%60%2C%0A%20%20%20%20%60fourth%20copy-accessor%20family%60%2C%0A%20%20%20%20%60data-spw-wonder-type%60%2C%0A%20%20%20%20%60git%20stash%20on%20a%20shared%20main%60%2C%0A%20%20%20%20%60advertise%20physics%20the%20runtime%20does%20not%20spend%60%0A%20%20%5D%0A%20%20analog%20%3D%20%60Spotify%20Portal%3A%20always-on%20markdown%20is%20I%2FO%3B%20a%20failing%20check%20is%20the%20block%60%0A%20%20synthesis%20%3D%20%60If%20you%20can%20read%20X%2C%20cite%20a%20construct%20here.%20Mood%20is%20not%20a%20receipt.%60%0A%7D&spw_source_name=crawl_spwashi#literal-parser" data-spw-operator="probe">?parse[crawl_spwashi]</a>
@@ -119,7 +119,7 @@
   analog = `Spotify Portal: always-on markdown is I/O; a failing check is the block`
   synthesis = `If you can read X, cite a construct here. Mood is not a receipt.`
 }</code></pre>
-            <p data-spw-textual-role="note">Source of record: <code>.spw/caches/copy-agentic-direction-2026-09.spw#crawl_prompt</code>. When the prompt changes there, it changes here.</p>
+            <p data-spw-textual-role="note" id="quest-crawl-source" data-spw-copy-unit="quest.crawl.source"><span id="quest-crawl-source-record" data-spw-copy-unit="quest.crawl.source.record">Source of record: <code>.spw/caches/copy-agentic-direction-2026-09.spw#crawl_prompt</code>.</span> <span id="quest-crawl-source-sync" data-spw-copy-unit="quest.crawl.source.sync">When the prompt changes there, it changes here.</span></p>
         </section>
 
         <section class="spw-frame" id="direction" aria-labelledby="direction-title" data-spw-kind="frame" data-spw-role="reference" data-spw-form="brace" data-spw-context="reading">
@@ -127,46 +127,46 @@
                 <a class="frame-sigil" href="#direction" data-spw-operator="potential">~direction</a>
                 <h2 id="direction-title">What the parser you just mounted keeps whole</h2>
             </header>
-            <p data-spw-textual-role="note">
-                This site is useful when a reading can be tried, checked, and refused. Opening <code>{</code> leans objective. Closing <code>}</code> leans subjective. The crawl is <code>{mill}.{laminate}.{cure}</code> — complete workshop practices. Tight <code>{mill.laminate.cure}</code> is one identifier the parser keeps whole, not a lifestyle list, and not cure-about-laminate-about-mill.
+            <p data-spw-textual-role="note" id="quest-direction-note" data-spw-copy-unit="quest.direction.note">
+                <span id="quest-direction-note-tried" data-spw-copy-unit="quest.direction.note.tried">This site is useful when a reading can be tried, checked, and refused.</span> <span id="quest-direction-note-open" data-spw-copy-unit="quest.direction.note.open">Opening <code>{</code> leans objective.</span> <span id="quest-direction-note-close" data-spw-copy-unit="quest.direction.note.close">Closing <code>}</code> leans subjective.</span> <span id="quest-direction-note-crawl" data-spw-copy-unit="quest.direction.note.crawl">The crawl is <code>{mill}.{laminate}.{cure}</code> — complete workshop practices.</span> <span id="quest-direction-note-tight" data-spw-copy-unit="quest.direction.note.tight">Tight <code>{mill.laminate.cure}</code> is one identifier the parser keeps whole, not a lifestyle list, and not cure-about-laminate-about-mill.</span>
             </p>
             <div class="semantic-contract-grid" data-spw-feature="join-specimens">
                 <article class="semantic-contract-card" data-spw-join="common" data-spw-semantic-expression="bin[feedstock]{cullet,grog,fiber}">
                     <span class="semantic-contract-token">{cullet,grog,fiber}</span>
                     <strong>Common</strong>
-                    <p>Reclaimed glass, crushed clay, plant fiber.</p>
+                    <p id="quest-direction-common" data-spw-copy-unit="quest.direction.common">Reclaimed glass, crushed clay, plant fiber.</p>
                 </article>
                 <article class="semantic-contract-card" data-spw-join="ident" data-spw-semantic-expression="board[workshop]{mill.laminate.cure}">
                     <span class="semantic-contract-token">{mill.laminate.cure}</span>
                     <strong>Identifier</strong>
-                    <p>One name. Parser keeps it whole.</p>
+                    <p id="quest-direction-identifier" data-spw-copy-unit="quest.direction.identifier"><span id="quest-direction-identifier-name" data-spw-copy-unit="quest.direction.identifier.name">One name.</span> <span id="quest-direction-identifier-whole" data-spw-copy-unit="quest.direction.identifier.whole">Parser keeps it whole.</span></p>
                 </article>
                 <article class="semantic-contract-card" data-spw-join="crawl">
                     <span class="semantic-contract-token">{mill}.{laminate}.{cure}</span>
                     <strong>Crawl</strong>
-                    <p>Complete workshop practices.</p>
+                    <p id="quest-direction-crawl" data-spw-copy-unit="quest.direction.crawl">Complete workshop practices.</p>
                 </article>
                 <article class="semantic-contract-card" data-spw-join="project">
                     <span class="semantic-contract-token">scrap ~&gt; mill ~&gt; temper</span>
                     <strong>Project</strong>
-                    <p>A path that does not collapse.</p>
+                    <p id="quest-direction-project" data-spw-copy-unit="quest.direction.project">A path that does not collapse.</p>
                 </article>
             </div>
-            <p>
-                Check a reading with the <a href="/tools/spw-parser/">literal parser</a>, which runs the same pinned parser in the browser. Neighboring systems can keep <code>.spw</code> as sidecar curriculum, teaching beside their code without replacing the executable grammar. Since the 2026-09-03 pin, <code>;</code> and <code>||</code> are real sequence marks; an <em>or</em> is still open.
+            <p id="quest-direction-check" data-spw-copy-unit="quest.direction.check">
+                <span id="quest-direction-check-parser" data-spw-copy-unit="quest.direction.check.parser">Check a reading with the <a href="/tools/spw-parser/">literal parser</a>, which runs the same pinned parser in the browser.</span> <span id="quest-direction-check-sidecar" data-spw-copy-unit="quest.direction.check.sidecar">Neighboring systems can keep <code>.spw</code> as sidecar curriculum, teaching beside their code without replacing the executable grammar.</span> <span id="quest-direction-check-sequence" data-spw-copy-unit="quest.direction.check.sequence">Since the 2026-09-03 pin, <code>;</code> and <code>||</code> are real sequence marks; an <em>or</em> is still open.</span>
             </p>
             <div class="spw-reason-strip" aria-label="Where to read next">
                 <div data-spw-emphasis="primary">
                     <strong>Specimens</strong>
-                    <p>The <a href="/topics/software/spw/">operator atlas</a> teaches each operator; the <a href="/tools/spw-parser/">literal parser</a> shows the tree a line becomes.</p>
+                    <p id="quest-direction-specimens" data-spw-copy-unit="quest.direction.specimens">The <a href="/topics/software/spw/">operator atlas</a> teaches each operator; the <a href="/tools/spw-parser/">literal parser</a> shows the tree a line becomes.</p>
                 </div>
                 <div data-spw-emphasis="secondary">
                     <strong>Kernel</strong>
-                    <p><a href="https://github.com/spwashi/spw-workbench">spw-workbench</a> — parser, runtime, projection. Static seed first; kinetic hydration second.</p>
+                    <p id="quest-direction-kernel" data-spw-copy-unit="quest.direction.kernel"><span id="quest-direction-kernel-kernel" data-spw-copy-unit="quest.direction.kernel.kernel"><a href="https://github.com/spwashi/spw-workbench">spw-workbench</a> — parser, runtime, projection.</span> <span id="quest-direction-kernel-order" data-spw-copy-unit="quest.direction.kernel.order">Static seed first; kinetic hydration second.</span></p>
                 </div>
                 <div data-spw-emphasis="tertiary">
                     <strong>Grain</strong>
-                    <p><a href="https://texture.website">texture.website</a> holds the material language, so quest can stay a path.</p>
+                    <p id="quest-direction-grain" data-spw-copy-unit="quest.direction.grain"><a href="https://texture.website">texture.website</a> holds the material language, so quest can stay a path.</p>
                 </div>
             </div>
         </section>
@@ -177,20 +177,20 @@
                 <h2 id="agentic-title">What an agent gets from the mount</h2>
             </header>
             <p id="quest-agentic-lede" data-spw-textual-role="lede" data-spw-copy-unit="quest.agentic.lede" data-spw-semantic-expression="quest[agent]{try.check.refuse}(sensor)<map>">
-                Spw is useful to an agent when a claim can be tried, checked, and refused. The language is the map. The sensors are the block. A guide without a sensor is a suggestion.
+                <span id="quest-agentic-lede-claim" data-spw-copy-unit="quest.agentic.lede.claim">Spw is useful to an agent when a claim can be tried, checked, and refused.</span> <span id="quest-agentic-lede-map" data-spw-copy-unit="quest.agentic.lede.map">The language is the map.</span> <span id="quest-agentic-lede-block" data-spw-copy-unit="quest.agentic.lede.block">The sensors are the block.</span> <span id="quest-agentic-lede-guide" data-spw-copy-unit="quest.agentic.lede.guide">A guide without a sensor is a suggestion.</span>
             </p>
             <div class="spw-reason-strip" aria-label="Constructs, tooling, synthesis">
                 <div data-spw-emphasis="primary">
                     <strong>Constructs</strong>
-                    <p>Copy-unit plus expression. Operator chips. Operations <code>cache</code> <code>audit</code> <code>align</code> <code>prime</code> <code>contract</code> <code>archive</code>. Explore/plan do not write.</p>
+                    <p id="quest-agentic-constructs" data-spw-copy-unit="quest.agentic.constructs"><span id="quest-agentic-constructs-unit" data-spw-copy-unit="quest.agentic.constructs.unit">Copy-unit plus expression.</span> <span id="quest-agentic-constructs-chips" data-spw-copy-unit="quest.agentic.constructs.chips">Operator chips.</span> <span id="quest-agentic-constructs-operations" data-spw-copy-unit="quest.agentic.constructs.operations">Operations <code>cache</code> <code>audit</code> <code>align</code> <code>prime</code> <code>contract</code> <code>archive</code>.</span> <span id="quest-agentic-constructs-write" data-spw-copy-unit="quest.agentic.constructs.write">Explore/plan do not write.</span></p>
                 </div>
                 <div data-spw-emphasis="secondary">
                     <strong>Tooling</strong>
-                    <p><a href="https://github.com/spwashi/spw-workbench">spw-workbench</a> parser, CLI, LSP. On this site: <a href="/tools/spw-parser/">literal parser</a>, <code>npm run sense</code>, <code>npm run check:agents</code>, <code>npm run wonder</code>. Consumer defects and design targets: <a href="/topics/software/spw/#workbench-improvements">atlas #&gt;workbench_improvements</a> and <code>.spw/workbench-report.spw</code>.</p>
+                    <p id="quest-agentic-tooling" data-spw-copy-unit="quest.agentic.tooling"><span id="quest-agentic-tooling-kernel" data-spw-copy-unit="quest.agentic.tooling.kernel"><a href="https://github.com/spwashi/spw-workbench">spw-workbench</a> parser, CLI, LSP.</span> <span id="quest-agentic-tooling-site" data-spw-copy-unit="quest.agentic.tooling.site">On this site: <a href="/tools/spw-parser/">literal parser</a>, <code>npm run sense</code>, <code>npm run check:agents</code>, <code>npm run wonder</code>.</span> <span id="quest-agentic-tooling-defects" data-spw-copy-unit="quest.agentic.tooling.defects">Consumer defects and design targets: <a href="/topics/software/spw/#workbench-improvements">atlas #&gt;workbench_improvements</a> and <code>.spw/workbench-report.spw</code>.</span></p>
                 </div>
                 <div data-spw-emphasis="tertiary">
                     <strong>Synthesis</strong>
-                    <p>A week of AI talk — developers shipping, policymakers arguing, models reading X — is a corpus. The test is whether the result cites a construct here, or only a mood.</p>
+                    <p id="quest-agentic-synthesis" data-spw-copy-unit="quest.agentic.synthesis"><span id="quest-agentic-synthesis-corpus" data-spw-copy-unit="quest.agentic.synthesis.corpus">A week of AI talk — developers shipping, policymakers arguing, models reading X — is a corpus.</span> <span id="quest-agentic-synthesis-test" data-spw-copy-unit="quest.agentic.synthesis.test">The test is whether the result cites a construct here, or only a mood.</span></p>
                 </div>
             </div>
         </section>
@@ -199,15 +199,15 @@
             <div class="domain-grid">
                 <div class="spw-panel">
                     <h3>Role</h3>
-                    <p>The mount. spw.quest puts the pinned workbench into a repository and proves it with <code>doctor</code>; the paced guide into the language grows from that first verified step.</p>
+                    <p id="quest-register-role" data-spw-copy-unit="quest.register.role"><span id="quest-register-role-mount" data-spw-copy-unit="quest.register.role.mount">The mount.</span> <span id="quest-register-role-proof" data-spw-copy-unit="quest.register.role.proof">spw.quest puts the pinned workbench into a repository and proves it with <code>doctor</code>; the paced guide into the language grows from that first verified step.</span></p>
                 </div>
                 <div class="spw-panel">
                     <h3>Relation</h3>
-                    <p>This site's operator atlas is the proving ground and the workbench is the kernel. texture.website keeps material cues next door; lore.land is long-form story.</p>
+                    <p id="quest-register-relation" data-spw-copy-unit="quest.register.relation"><span id="quest-register-relation-atlas" data-spw-copy-unit="quest.register.relation.atlas">This site's operator atlas is the proving ground and the workbench is the kernel.</span> <span id="quest-register-relation-neighbors" data-spw-copy-unit="quest.register.relation.neighbors">texture.website keeps material cues next door; lore.land is long-form story.</span></p>
                 </div>
                 <div class="spw-panel">
                     <h3>Visit</h3>
-                    <p><a href="https://spw.quest">Open spw.quest</a> and pick who runs the setup. Then: the <a href="#crawl-prompt">crawl prompt</a> for the agent, and the <a href="/topics/software/spw/">operator atlas</a> for you.</p>
+                    <p id="quest-register-visit" data-spw-copy-unit="quest.register.visit"><span id="quest-register-visit-open" data-spw-copy-unit="quest.register.visit.open"><a href="https://spw.quest">Open spw.quest</a> and pick who runs the setup.</span> <span id="quest-register-visit-then" data-spw-copy-unit="quest.register.visit.then">Then: the <a href="#crawl-prompt">crawl prompt</a> for the agent, and the <a href="/topics/software/spw/">operator atlas</a> for you.</span></p>
                 </div>
             </div>
         </section>
