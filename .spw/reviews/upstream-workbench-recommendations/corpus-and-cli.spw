@@ -1,0 +1,176 @@
+# Corpus and CLI — workbench asks
+#
+# What the 2026-10-10 plan consolidation had to do by hand: moves with
+# citations, consumer plans, a shared parse cache, cross-language trace, the
+# wonder harvest and the server's index scope.
+#
+# Detail for the review hub beside this folder
+# (upstream-workbench-recommendations.spw). Every ask keeps the same slots in
+# the same order: rank, claim, exists, gap, measured, recommendation, replaces,
+# probe, question. Workbench code is cited at the pin (229aedcf); nothing here
+# writes to .spw/_workbench.
+
+#>workbench_asks_corpus_and_cli
+#:review #!workbench #!developer_experience
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@hub: ~"../upstream-workbench-recommendations.spw"
+
+operation = "audit"
+fixity = "tending"
+
+expression = asks[corpus]{move.plans.cache.trace.wonder.scope}<upstream>
+
+# ==============================================================================
+# 1. ASKS, RANKED BY WHAT THE CONSOLIDATION HAD TO DO BY HAND
+# ==============================================================================
+
+^"asks"{
+
+  move_with_citations: .{
+    rank = 1
+    claim: "Moving a file or folder breaks every citation to it, and every relative citation inside it."
+    exists: "spw refactor renames marks and particles by structure; the LSP renames symbols."
+    gap: "No path rename kind, and the LSP does not answer workspace/willRenameFiles."
+    measured: .{
+      files_rewritten_2026_10_06 = 188
+      files_rewritten_2026_10_10 = 212
+      refs_missed_by_handrolled_regex = 150
+      refs_fixed_after = 227
+      caught_by = "plans:index:check, not the move script"
+      miss_pattern = `../../../.spw/… — a relative path whose first segment starts with a dot`
+    }[reg=facet]
+    recommendation = #[
+      `spw refactor --rename path:from=to`,
+      `rewrite relative and root-anchored path citations`,
+      `depth-aware for citing files that move with the folder`,
+      `list the Markdown and HTML links it cannot own`,
+      `answer workspace/willRenameFiles in the LSP with the same edits`,
+    ][reg=set]
+    replaces: "the scratch plan_moves.py written for each consolidation"
+    probe: `spw refactor --help` and `grep -r willRenameFiles .spw/_workbench/packages/spw-lsp/src`
+    question: "Are folder moves frequent enough to ask for this now?"
+  }[reg=facet]
+
+  consumer_plans: .{
+    rank = 2
+    claim: "The plan tooling never reaches this repo's plans."
+    exists: "spw:plan:status, spw:plan:check, spw:plan:index --touch <path> — run inside the workbench, on its own plans, one feature branch per plan."
+    gap: "On this repo they print: Error: no active feature plan found for current branch. Its 48 plans live on main."
+    measured: .{
+      live_plans = 48
+      archived_2026_10_10 = 40
+      broken_relative_links_before = 55
+      broken_relative_links_after = 2
+      stale_check_citations = "npm run check (runs npm audit) named as validation in plans across every area"
+      script_rot = "CONTRACT_RAILS in maintain-plan-directory-indexes.mjs still names archived slugs"
+    }[reg=facet]
+    recommendation = #[
+      `accept .agents/plans as a named root, archive/ skipped`,
+      `claims check: cited paths that do not exist`,
+      `claims check: cited commit hashes that do not exist`,
+      `claims check: npm scripts not in package.json`,
+      `claims check: Status date against the last commit touching the files the plan names`,
+    ][reg=set]
+    replaces: "eight read-only review agents doing the same check by reading"
+    probe: `npm run spw:plan:status`
+    creator_call = "2026-10-11: indexing plans is a good idea"
+    question: "Should plan claims checking live upstream, or beside plans:index:check?"
+  }[reg=facet]
+
+  shared_parse_cache: .{
+    rank = 3
+    claim: "Every corpus command parses the whole tree again, and memory grows with the corpus."
+    exists: "Walk isolation; per-command memos keyed on projection (hubTop)."
+    gap: "No content-addressed cache; census, graph, measure and integrity share no scan."
+    measured: .{
+      integrity_alone_s = 49.56
+      integrity_alone_rss_mb = 490
+      query_alone_s = 61.64
+      query_alone_rss_mb = 560
+      corpus_mb = 4
+      integrity_under_swap_s = 595
+      integrity_under_swap_cpu = "44%"
+      swap_used_gb = 1.8
+      bare_query_under_pressure = "SIGKILL (137)"
+      conventions_folder = "45.1s / 448 MB for 1.2 MB"
+      census_graph_measure_each = "5 to 7 min"
+    }[reg=facet]
+    recommendation = #[
+      `cache parse results by sha256(fileContent)`,
+      `share the cache between the CLI and the LSP`,
+      `make the cost a visit policy (which files, how often), not a parser rewrite`,
+    ][reg=set]
+    replaces: "the rule to run spw:integrity alone, never beside check:local or manifest:staged"
+    probe: `/usr/bin/time -l npm run -s spw:integrity`
+    question: "Which commands should share the first cache: integrity and query, or census and graph?"
+  }[reg=facet]
+
+  cross_language_trace: .{
+    rank = 4
+    claim: "Who writes, reads and documents a term is the question behind most of the fixes, and it spans four languages."
+    exists: "The LSP finds references inside .spw only."
+    gap: "No answer that joins HTML hosts, CSS selectors, JS writers in kebab and camelCase, and .spw citations."
+    measured: .{
+      dead_setting = "viewportActivation: no reader, shouldUseViewportActivation has no caller"
+      unread_setting = "iconPack: no CSS reader (labelled considering)"
+      unread_attributes = "5 of 8 operator attributes written at sigil-annotation.js:139-146 have no reader"
+      blind_spot = "data-spw-x and dataset.spwX must both be searched"
+      site_pieces = #[ `audit:module-selectors`, `audit:root-writes`, `audit-operator-controls` ][reg=set]
+    }[reg=facet]
+    recommendation = #[
+      `input: a stem in site.spw, or a convention anchor`,
+      `list HTML hosts and data-spw-semantic-expression uses`,
+      `list CSS selectors that read it`,
+      `list JS that writes or reads it, kebab and camelCase`,
+      `list .spw files that cite it`,
+      `editor: find-references from a convention into HTML, CSS and JS`,
+    ][reg=set]
+    replaces: "per-question rg sweeps in two spellings"
+    probe: `rg -n 'viewportActivation|viewport-activation' public settings`
+    question: "Upstream, or a site pilot first, since most of the pieces live here?"
+  }[reg=facet]
+
+  wonder_harvest: .{
+    rank = 5
+    claim: "The creator's decision queue now lives in plan wonder blocks only the site can see."
+    exists: "The workbench canon carries its own wonder blocks."
+    gap: "No spw wonder; .agents is excluded from the corpus, so plan questions never reach lattice, census or the LSP."
+    measured: .{
+      open = 158
+      surfaces = 84
+      added_2026_10_10 = 31
+      without_probe = 0
+    }[reg=facet]
+    recommendation = #[
+      `an upstream wonder harvest`,
+      `an LSP code lens that shows each open question and runs its probe in place`,
+    ][reg=set]
+    replaces: "scripts/wonder.mjs"
+    probe: `npm run wonder -- --summary`
+    question: "Should a code lens run a probe, or only show it?"
+  }[reg=facet]
+
+  lsp_index_scope: .{
+    rank = 6
+    claim: "The language server indexes more than the roots this repo declares."
+    exists: "workspace.spw names lsp.roots (all under .spw/) and scan_exclusion."
+    gap: "Code lenses cite files outside those roots, and only spw doctor reads scan_exclusion."
+    measured: .{
+      lens_on = "the exists line of the wonder_harvest ask: 53 file refs, counted for a hash-angle wonder anchor written inside a quoted string"
+      cites_archive = ".agents/plans/archive/mobile-runtime-foundation/wip.spw"
+      cites_scratch = ".tmp/manifest-staged-vujjt9/.agents/plans/mobile-runtime-foundation/wip.spw"
+      scratch_copy = "41 MB, left by a manifest:staged run on 2026-09-28; removed 2026-10-11"
+    }[reg=facet]
+    recommendation = #[
+      `index lsp.roots, not the whole editor folder`,
+      `honor scan_exclusion and .gitignore in the LSP walk`,
+      `find anchors with the parser, not a line regex that matches inside strings`,
+    ][reg=set]
+    replaces: "deleting scratch checkouts by hand so references stop landing in them"
+    probe: `ls -d .tmp/manifest-staged-*`
+    question: "Should archive/ plans count as references, or only live ones?"
+  }[reg=facet]
+}

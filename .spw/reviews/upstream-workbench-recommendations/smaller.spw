@@ -1,0 +1,38 @@
+# Smaller workbench asks
+#
+# Items too small for a rank of their own.
+#
+# Detail for the review hub beside this folder
+# (upstream-workbench-recommendations.spw). Every ask keeps the same slots in
+# the same order: rank, claim, exists, gap, measured, recommendation, replaces,
+# probe, question. Workbench code is cited at the pin (229aedcf); nothing here
+# writes to .spw/_workbench.
+
+#>workbench_asks_smaller
+#:review #!workbench #!developer_experience
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@hub: ~"../upstream-workbench-recommendations.spw"
+
+operation = "audit"
+fixity = "tending"
+
+expression = asks[smaller]{query}<upstream>
+
+# ==============================================================================
+# 2. SMALLER
+# ==============================================================================
+
+^"smaller"{
+  expression_query_grammar: .{
+    claim: "Site search parses expression queries with its own grammar."
+    recommendation = #[
+      `move the query grammar (prefix and postfix sigils, ?#) into spw-seed`,
+      `share it between site search, LSP workspace symbols and query --where`,
+    ][reg=set]
+    replaces: "parseExpressionQuery in public/js/semantic/expression-query.js"
+    question: "Does a trailing ?# mean probe frames, or probe this frame? (open in spw-language-v04)"
+  }[reg=facet]
+}

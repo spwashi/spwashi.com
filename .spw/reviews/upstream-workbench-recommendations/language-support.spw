@@ -1,0 +1,141 @@
+# Language support — tokens, symbols, highlighting, navigation
+#
+# What the lexer already knows that the editor does not use.
+#
+# Detail for the review hub beside this folder
+# (upstream-workbench-recommendations.spw). Every ask keeps the same slots in
+# the same order: rank, claim, exists, gap, measured, recommendation, replaces,
+# probe, question. Workbench code is cited at the pin (229aedcf); nothing here
+# writes to .spw/_workbench.
+
+#>workbench_asks_language_support
+#:review #!workbench #!developer_experience
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@hub: ~"../upstream-workbench-recommendations.spw"
+
+operation = "audit"
+fixity = "tending"
+
+expression = asks[language]{tokens.symbols.highlighting.navigation}<upstream>
+
+# ==============================================================================
+# 1d. LANGUAGE SUPPORT — tokens, symbols, highlighting, navigation
+# ==============================================================================
+# Measured with .tmp/lsp_probe.mjs (now scripts/lsp-probe.mjs) against the real server, and with seed.lex()
+# and lite scan() run directly. The lexer and the lite scanner already read
+# this repo's files correctly; the editor and the site do not use them.
+
+^"language_support"{
+
+  tokenizer_integration: .{
+    rank = 1
+    claim: "One language is tokenized six ways, and the two correct tokenizers are used by neither the editor nor the site."
+    exists: "spw-seed lex() and the lite scanner (published as lite-parser in the spwashi scope: browser target, zero dependencies, size-budgeted) share SPW_OPERATORS and SPW_BOUNDS."
+    gap: "Semantic tokens use a regex scanner, the TextMate grammar keeps its own taxonomy, and the site keeps its own operator table and expression readers."
+    measured: .{
+      tokenizers = #[
+        `spw-seed lex(): correct (comments as hash-prose, strings and phrases whole)`,
+        `lite scan(): correct on site expressions, with offsets and bound kinds`,
+        `spw-lsp semantic-tokens.ts: a line scanner of regexes`,
+        `spw.tmLanguage.json: 15 repositories, its own operator taxonomy (arrows, ranges, streams)`,
+        `site operator-detection.js: 19 prefixes, the meaning table`,
+        `site expression-query.js: its own slot reader, query parser and join readers`,
+      ][reg=set]
+      lite_on_a_site_expression = "home[hook]{software.art.practice}(atlas)<person> scans into an identifier, a frame bound and a body bound, with offsets"
+      operator_tables = "lite has 13 operators; the site table has 19 prefixes, adding the frame and layer particles and five characters lite reads as bounds"
+      site_imports_of_lite = 0
+      unused_tools = "seed exports compareLex and classifyTokenGaps"
+    }[reg=facet]
+    recommendation = #[
+      `move the operator table into the workbench as the one character table`,
+      `the lexer and the lite scanner read that table; the TextMate grammar is generated from it, with a fixture check that the two agree`,
+      `semantic tokens come from lex()`,
+      `the site's expression-query.js scans with lite scan()`,
+      `the site's operator-detection.js imports the table and keeps only what the creator decides stays site-side`,
+      `a sensor that runs compareLex across the tokenizers over the corpus and reports where they differ`,
+    ][reg=set]
+    replaces: "hand-kept tables in four places that drift apart"
+    unlocks = #[ `syntax_highlighting`, `symbol_resolution`, `spw_beyond_spw_files`, `expression_query_grammar` ][reg=set]
+    probe: `node --import ./.spw/_workbench/node_modules/tsx/dist/loader.mjs -e "import('./.spw/_workbench/packages/spw-seed/src/lite.ts').then((m) => console.log(m.SPW_OPERATORS))"`
+    creator_call = "2026-10-11: Spw operators should be in the workbench so they can be studied more mindfully within the ethos of Spw development"
+    question: "Which operator meanings move with the characters (names, speech, intent), and which stay as site presentation?"
+  }[reg=facet]
+
+  symbol_resolution: .{
+    rank = 2
+    claim: "Local aliases carry most of the corpus's links, and none of them can be followed."
+    exists: "Go-to-definition on a path citation; diagnostics for root references."
+    gap: "No binder: a use of an alias has no definition or references; duplicates and unused aliases pass; the root-reference regex reads inside phrases."
+    measured: .{
+      alias_declarations = 3977
+      alias_uses = 2947
+      files_using_an_alias = 252
+      definition_on_a_use = "0 results for the operational_semantics use at site.spw:198 and the architecture_ecology use at capture-ecology.spw:44"
+      references_on_a_use = 0
+      duplicate_declaration = "operational_semantics is declared twice in site.spw (lines 99 and 193), unflagged"
+      false_root_reference = "an npm package name inside a backtick phrase (build-runtime-performance-2026-07/build.spw:28) flagged unresolved; the scoped lite-parser name tripped it in this file too until reworded"
+      lint_reads_phrases = "spw lint reports malformed-axis inside a backtick phrase (audits/naming-grammar-js-types-2026-07/naming.spw, the stem_families facet), the same regex-over-parser shape"
+    }[reg=facet]
+    recommendation = #[
+      `a binder over the parse tree: an alias declaration is scoped to its file`,
+      `a use jumps to its declaration; a second jump reaches the file it names`,
+      `references and rename across every use of an alias`,
+      `diagnostics for duplicate, unused and undeclared aliases`,
+      `phrases and strings never bind`,
+      `workspace roots from workspace.spw resolve through the same binder at workspace scope`,
+    ][reg=set]
+    replaces: "searching the file for the alias by hand"
+    unlocks = #[ `file_navigation`, `references_that_navigate` ][reg=set]
+    probe: `node scripts/lsp-probe.mjs . .spw/site.spw definition 198:15`
+    question: "Should an alias jump to its declaration first, or straight to the file it names?"
+  }[reg=facet]
+
+  syntax_highlighting: .{
+    rank = 3
+    claim: "Comments in this repo's style are coloured as code."
+    exists: "The TextMate grammar treats hash lines as comments only as box-drawing dividers, dash banners, wip headers and metadata; the semantic-token scanner documents double-slash comments."
+    gap: "Neither matches the lexer, which reads every hash-space line as a hash-prose comment."
+    measured: .{
+      divider = "a hash-equals divider line returns 78 property.readonly tokens, one per equals sign (upstream-workbench-recommendations.spw:39 and :41)"
+      prose_comment = "a numbered section comment returns number, operator and declaration tokens for its digits, periods and parentheses"
+      strings_and_phrases = "returned whole, as single tokens"
+      legend = "9 token types, 6 modifiers"
+    }[reg=facet]
+    recommendation = #[
+      `semantic tokens from lex()`,
+      `the TextMate grammar reads a hash-space line as a comment, so the first paint agrees with the lexer`,
+      `modifiers that carry meaning: alias declaration and use, anchor declaration, an archived target dimmed, an unresolved citation marked`,
+    ][reg=set]
+    replaces: "dividers and section notes that read as code in every .spw file here"
+    unlocks = #[ `capture_mode` ][reg=set]
+    probe: `node scripts/lsp-probe.mjs . .spw/reviews/upstream-workbench-recommendations.spw tokens 55-57`
+    question: "Should comments read as quiet prose, or as a distinct voice the way the site sets annotations?"
+  }[reg=facet]
+
+  file_navigation: .{
+    rank = 4
+    claim: "A plain citation opens its file; fragments, routes and nested facets do not."
+    exists: "Go-to-definition lands on file line 1; document symbols; workspace symbols over frames and annotations; document links."
+    gap: "A fragment becomes part of the filename; a leading slash reads as the filesystem root; the outline is flat; workspace symbols are partial while indexing."
+    measured: .{
+      fragment = "the metaphysics_model fragment on site-semantics.spw opens a nonexistent file named with the fragment; the frame is at line 489"
+      route = "the home-frame-note route citation (copy-accessor.spw:24) resolves to ../../../.. instead of index.html:146"
+      outline = "35 flat entries for this file when probed: the anchor, alias declarations and 7 frames, no facets"
+      workspace_symbols = "copy_accessor returned only the 2026-09 audit anchor after 90s; metaphysics_model returned nothing after 60s"
+    }[reg=facet]
+    recommendation = #[
+      `resolve a fragment against the target's parsed anchors, with the anchor rules spw:integrity uses`,
+      `a route adapter: a leading slash is the site root, then the element by id`,
+      `hierarchical document symbols (frames, facets, keys) for the outline, breadcrumbs and sticky scroll`,
+      `workspace symbols from the fact store, with its readiness shown`,
+      `plans and open questions as symbols once plans are indexed`,
+    ][reg=set]
+    replaces: "a search for the anchor name after every jump to line 1"
+    unlocks = #[ `plans_and_questions_views` ][reg=set]
+    probe: `node scripts/lsp-probe.mjs . .spw/conventions/charge-cycle.spw definition 10:30`
+    question: "Should Go to Symbol in a file list facets, or only frames and anchors?"
+  }[reg=facet]
+}

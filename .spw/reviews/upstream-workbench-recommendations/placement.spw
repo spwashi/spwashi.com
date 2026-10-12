@@ -1,0 +1,57 @@
+# Placement — a leaf.spw that previews what a construct means where it lands
+#
+# A proposal from 2026-10-12: a file at a tree's root that the server reads
+# as if it lived there, so placement can be seen before it is chosen.
+#
+# Detail for the review hub beside this folder
+# (upstream-workbench-recommendations.spw). Every ask keeps the same slots in
+# the same order: rank, claim, exists, gap, measured, recommendation, replaces,
+# probe, question. Workbench code is cited at the pin (229aedcf); nothing here
+# writes to .spw/_workbench.
+
+#>workbench_asks_placement
+#:review #!workbench #!developer_experience
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@hub: ~"../upstream-workbench-recommendations.spw"
+
+operation = "audit"
+fixity = "tending"
+
+expression = leaf[placement]{aliases.citations.index.marks.expression.wonders}<root>
+
+^"placement"{
+
+  leaf_placement: .{
+    rank = 5
+    claim: "A leaf.spw at a tree's root could show what any construct or query would mean if placed there, before it is placed."
+    exists: "Placement already decides meaning: relative citations resolve from the file, index coverage depends on the folder, dimensions.spw files by header marks, and the expression manifest parses subject[mode]{parts}<scene>."
+    gap: "Nothing previews placement; you learn by writing the file and running integrity, spw-tree, wonder and the manifest."
+    measured: .{
+      sensors = "five separate commands answer the question today: spw:integrity, audit:spw-tree, spw:dimensions, wonder, manifest:staged"
+    }[reg=facet]
+    recommendation = #[
+      `convention: leaf.spw sits at a tree root (.spw/, a plan folder, the workbench), is gitignored, is never cited, and audit:spw-tree skips it`,
+      `the server reads it as if it lived at that root and answers in place: aliases in scope, each citation resolved or not, which index would have to name it, where its marks would file it, the expression it parses to, the wonders whose $%[slots] it touches`,
+      `a ?["…"] or an expression query placed there runs against the corpus; results arrive as a peek list`,
+      `~ potential lens: "placed at .spw/ · try .spw/conventions/ · try .agents/plans/<slug>/" re-resolves without moving the file`,
+      `site-side first: npm run spw:leaf -- <file> --at=<dir> composing the five sensors, before any workbench change`,
+    ][reg=set]
+    replaces: "writing a file to find out where it belongs, then moving it and fixing its citations"
+    probe: `npm run -s audit:spw-tree -- --json`
+    question: "Is leaf the name? In the route vocabulary a leaf is an end page (hub/leaf/bridge, leaf-neighbor-rail), and seed is taken by seed cards."
+  }[reg=facet]
+}
+#>wonder_leaf_placement
+?["What would a construct or a query mean if it were placed at the root of a .spw tree, before anyone places it?"]{
+  #:depth #!computational ~#lens(projection)
+  ~#with: @hub
+  ~#taste: "Placement should be something you can try on and take back, the way a citation can be followed and returned from."
+  ~#hypothesis: "Placement already decides meaning in five places: relative citations, index coverage, the dimensional filing of header marks, the expression manifest, and the wonders whose slots a construct touches. A file at a root, read as if it lived there, answers all five at once, and a site-side npm run spw:leaf could compose the five sensors before the workbench does."
+  ~#tension: "A file that is never cited and never indexed is a new kind of file. Its name is open: in the route vocabulary a leaf is an end page (hub/leaf/bridge, leaf-neighbor-rail), so a leaf at the root reads against it, and seed is taken by seed cards."
+  !probe{ "npm run -s audit:spw-tree -- --json" }
+  $%[leaf.placement, leaf.name, construct.meaning]
+  ~<"../../../scripts/audit-spw-tree.mjs"> ~<"../../conventions/component-region-personality.spw">
+}

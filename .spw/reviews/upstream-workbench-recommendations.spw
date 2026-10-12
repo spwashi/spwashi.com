@@ -9,6 +9,9 @@
 # 2. CLI Shape & Unix Composability (dual-read piping, resolver, linter, onboarding-arc)
 # 3. Intermediate Forms (fingerprints, resolved citations, expression geometry, precipitates)
 # 4. Culture of Snippets, Scripts, Dialects & Expressions (runnable philosophy, herbarium)
+#
+# From 2026-10-11 the detailed asks live in the folder beside this file, one
+# file per theme (^"asks_tree"); the week blocks below are their short form.
 
 #>upstream_workbench_recommendations
 #:review #!workbench #!compiler #!pragmatics #!developer_experience #!agent_ecology
@@ -35,6 +38,14 @@
 @workspace_manifest: ~"../workspace.spw"
 @operator_namespace: ~"../language/operator-namespace-alignment.spw"
 @plans_index: ~"../../.agents/plans/README.md"
+@asks_context: ~"./upstream-workbench-recommendations/context.spw"
+@asks_corpus: ~"./upstream-workbench-recommendations/corpus-and-cli.spw"
+@asks_editor: ~"./upstream-workbench-recommendations/editor.spw"
+@asks_gestures: ~"./upstream-workbench-recommendations/gestures.spw"
+@asks_placement: ~"./upstream-workbench-recommendations/placement.spw"
+@asks_architecture: ~"./upstream-workbench-recommendations/architecture.spw"
+@asks_language: ~"./upstream-workbench-recommendations/language-support.spw"
+@asks_smaller: ~"./upstream-workbench-recommendations/smaller.spw"
 
 operation = "align"
 fixity = "tending"
@@ -217,6 +228,28 @@ expression = consumer[recommendations]{performance.cli.intermediate.culture}<ups
 # VALIDATION & FALSIFICATION
 # ==============================================================================
 
+^"asks_tree"{
+  note = `The detailed asks, one file per theme. Each ask keeps the same slots in the same order: rank, claim, exists, gap, measured, recommendation, replaces, probe, question. Read context first, then the theme you are working in.`
+  reading_order = #[
+    `context.spw — sessions, instruments, the creator's calls, what the pin ships, what the site changed on its own side`,
+    `corpus-and-cli.spw — moves with citations, consumer plans, a shared parse cache, cross-language trace, the wonder harvest, the server's index scope`,
+    `editor.spw — hovers, references, diagnostics, views, capture and trace (2026-10-11); stream time, tending, plan context and triggers (2026-10-12)`,
+    `gestures.spw — one operator per editor gesture`,
+    `placement.spw — a file at a tree's root that previews what a construct means there`,
+    `architecture.spw — one model under the CLI and the editor`,
+    `language-support.spw — tokens, symbols, highlighting, navigation`,
+    `smaller.spw — items too small to rank`,
+  ][reg=set]
+  context = @asks_context
+  corpus = @asks_corpus
+  editor = @asks_editor
+  gestures = @asks_gestures
+  placement = @asks_placement
+  architecture = @asks_architecture
+  language = @asks_language
+  smaller = @asks_smaller
+}[reg=facet]
+
 ^"week_2026_09_28"{
   standing = `Walk isolation landed at pin 14b4b47. The remaining cost is a parse that census, graph, measure, and integrity do not share. Measured in @workbench_report under memo_key and operation_cost_2026_09_27. This facet does not restate those seconds.`
   proposals = #[
@@ -258,7 +291,7 @@ expression = consumer[recommendations]{performance.cli.intermediate.culture}<ups
     `node scripts/lsp-probe.mjs . .spw/site.spw definition 195:15`,
     `node scripts/lsp-probe.mjs . .spw/conventions/copy-accessor.spw hover 24:20`,
     `node scripts/lsp-probe.mjs . .spw/conventions/charge-cycle.spw definition 10:30`,
-    `node scripts/lsp-probe.mjs . .spw/reviews/upstream-workbench-recommendations.spw tokens 39-41`,
+    `node scripts/lsp-probe.mjs . .spw/reviews/upstream-workbench-recommendations.spw tokens 55-57`,
     `WAIT=60000 node scripts/lsp-probe.mjs . .spw/conventions/copy-accessor.spw workspace copy_accessor`
   ][reg=set]
   ~#taste: "An editor that answers wrong teaches its reader to stop asking; agreement with the CLI comes before any new view."
@@ -276,6 +309,39 @@ expression = consumer[recommendations]{performance.cli.intermediate.culture}<ups
   $%[cli.helpJson, memo.shared, corpus.plans]
   ~<"../../.agents/plans/spw-language-v04/index.spw"> ~<"../../.agents/plans/archive/spw-architecture-ecology/index.spw"> ~<"../../.spw/workbench-report.spw">
 }
+
+^"week_2026_10_12"{
+  standing = `Measured while giving every live plan a wip notebook, grounding 327 stream entries on one site clock, and probing what the editor shows for them. The detail is in @asks_editor, @asks_gestures and @asks_placement.`
+  creator_calls = #[
+    `2026-10-12 — timestamps grounded in one parseable format, to sync developmental velocity with humans; the zone said once in the workspace, no offset on each entry`,
+    `2026-10-12 — think through the plugin: the semantics of its interactions and triggers, and a leaf.spw to see what a construct or query would do at a tree's root`,
+    `2026-10-12 — the comprehensive asks belong in the codebase, as a readable tree`,
+  ][reg=set]
+  proposals = #[
+    `+[lsp] Offer the site-clock stamp after >>[, then the schema's stream types :: stream[stamp]{clock.types}<completion>`,
+    `+[editor] Show a notebook's stream entries beside its commits in the Timeline view :: stream[timeline]{entries.commits}<file>`,
+    `+[editor] A Tending view fed by tending:queue, with run-sensor and stamp-entry actions :: tending[view]{queue.sensor.stamp}<sidebar>`,
+    `+[editor] Plan status and gate in the status bar inside a plan folder, and a wonder pointer's question in its hover :: plan[context]{status.gate.wonder}<mode>`,
+    `=[editor] One operator per gesture: hover is ? wonder and never writes; references @, inlays ., lenses %, rename =, fixes ! :: gesture[operator]{hover.references.inlay.lens.rename.fix}<editor>`,
+    `+[lsp] Read a file at a tree's root as if it lived there, and answer its placement in place :: leaf[placement]{citations.index.marks.expression.wonders}<root>`,
+    `+[editor] Act at the moments the work changes: typing >>[, creating a .spw file, saving, the index becoming ready :: trigger[moment]{stamp.header.freshness.ready}<editor>`,
+  ][reg=set]
+  measured = .{
+    hover = `site.spw ^"clock": label site, free, exterior; zone = …: form coupling and six mobility rewrites; a stamped stream entry: form coupling only; a wonder pointer: its path, not its question`
+    symbols = `^clock is a document symbol (site.spw:283); the breadcrumb's … in the 2026-10-12 screenshot was a blank line between frames`
+    memory = `Memory's Hot, Warm and Cold come from workspace temperature (requests since a read, and writes): 4 files tracked, beside 50 wip notebooks and 58 tending audits`
+    cold_index = `~#gate on a cold start counted 2 files; 50 notebooks carry it`
+    snippet = `the stream snippet asks for a typed timestamp and a free-text action`
+    stamps = `386 stream entries: 327 grounded against the commit that first carried them, 59 whose times fit no commit in either zone`
+  }[reg=facet]
+  probes = #[
+    `node scripts/lsp-probe.mjs . .spw/site.spw hover 283:4 284:5`,
+    `node scripts/lsp-probe.mjs . .agents/plans/spw-quest/wip.spw hover 20:5 24:12 33:6`,
+    `npm run -s tending:queue -- --json --limit=5`,
+    `npm run -s streams:stamp -- --list`,
+  ][reg=set]
+  ~#taste: "A gesture should do only what its operator does, and a stamp should say when the entry was written."
+}[reg=facet]
 
 ^"validation"{
   probe: `npm run spw:integrity && npm run test:modules`
