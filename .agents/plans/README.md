@@ -32,7 +32,7 @@ Use these when a task is broad, cross-disciplinary, or likely to create reusable
 
 Small semantic discoveries do not always need a new plan. Use `.agents/plans/reference-assignment-template/templates/semantic-insight-cache.spw` for a single cache/audit/prime entry when implementation should wait.
 
-## Owner Map - 2026-10-10
+## Owner Map - 2026-10-12
 
 Every live folder, once, by area. Open a plan's `index.spw` for its disposition and its open questions (`npm run wonder`); this map only says where work goes. Where two plans touch one seam, the first named owns it and the other cites. "Holds" names an archived plan whose remaining work moved here.
 
@@ -110,12 +110,25 @@ Every live folder, once, by area. Open a plan's `index.spw` for its disposition 
 - `agentic-dev-contracts/` — one validation entrypoint and one manifest.
 - `history-reflow/` — commit grammar and the reflow method.
 
+## Maintenance Snapshot - 2026-10-12
+
+Tree census: **50 live folders (48 PLAN.md, 3 FIX.md)**. Two plans opened today: `spw-quest` and `smut-today-crew`, both written to be reviewed by agents before anything is built.
+
+- **A plan sensor exists now.** `npm run audit:plans` checks each live plan against the tree: a dated Status and its age, relative links, `npm run` names, named repo paths, and cited commits (here or in the workbench). It prints a headline when clean and findings otherwise, and `--check` fails on a broken instruction. The plan-maintenance and feature-planning skills used `spw:plan:check` and `spw:plan:status`, which read the workbench's plans and fail here; they now point at this sensor. It is also an editor task that fills the Problems panel.
+- **First run: 5 hard, 99 warn. Now 0 and 0.**
+  - Twenty `npm run check` steps became `check:local`.
+  - Renamed paths point at their successors: `handles/operators/`, `shell/chrome/`, `routes/surfaces/*.css`.
+  - Proposed files are marked proposed: the codex, the sigil-property matrix, the blog weave script, two partials, and the Midjourney patches.
+  - Two citations of a matrix that was never written now cite the plan that specifies it.
+  - The audit learned to read a line that already says a file is proposed, gone or split, so history is not reported as drift.
+- `history-reflow/BRIEF.md`, the August run's hand-off, moved into `HISTORY.md`.
+
 ## Maintenance Snapshot - 2026-10-10
 
 Tree census: **48 live folders (46 PLAN.md, 3 FIX.md), 40 more archived**. Every live folder was reviewed for intent, detail and value in implementation; reasons per folder are in `archive/README.md`.
 
 - **Archived 40:** 17 landed, 14 merged into an owner (each owner carries an `Absorbed 2026-10-10` section), 7 dormant, 2 superseded. The citations in 212 files followed the folders, including the GitHub links on `/about/plans/`. Broken relative links in live plans: 55 → 2. The two left were already broken (`spw-metaphysical-language` cites a `sigil-property-matrix.spw` that was never written).
-- **Every live plan opens with a Status dated 2026-10-10:** what landed, the one next slice, and its gate. Status claims were checked against the tree, and stale paths, counts and `npm run check` (which runs `npm audit`) were corrected to `check:local`.
+- **Every live plan opens with a Status dated 2026-10-10:** what landed, the one next slice, and its gate. Status claims were checked against the tree, and stale paths, counts and `npm run check:local` (which runs `npm audit`) were corrected to `check:local`.
 - **Questions for the creator are now harvestable:** 31 new `#>wonder` blocks in the owner plans, so `npm run wonder` lists them (158 open on 84 surfaces). The ones that unblock more than one plan: the arrival lever (`runtime-plane-consolidation`), the facet operator mapping (`module-contract-overhaul`), the Projects nav (`landing-visual-hierarchy`) and the lens seat (`state-block-projections`).
 - **Small fixes found by the review landed with it:** the dead viewport-activation setting is gone from `/settings/`, the folio pill says 58 scanned, the curriculum description says what is built, and the spw.quest drift rule sits beside `INSTRUCTION_SETS`.
 
@@ -127,18 +140,7 @@ Tree census: **88 live folders (84 PLAN.md), 148 archived PLAN.md**. All 168 liv
 - **Three shared seams given one owner** (named in the map above): kernel extraction, settings-changed consolidation, and the design bundling pilot.
 - **Four folders no bucket named** now sit in `since_2026_07_12` in `index.spw`: design-studio, ecosystem-offer-2026-10, projects-hub, spw-document-room.
 - **Oversized, still live:** midjourney-design-concepts (1052 lines), color-motion (860), css-architecture-readability (801), rpg-portal-fantasy (537), spw-metaphysical-language (520). The first three were checked patch by patch and open with what landed; their commit series, roadmaps and landing notes moved to a sibling `HISTORY.md` (146 lines), and the css-architecture-readability cap ratcheted 850 → 810. The next split is by patch family, not by date.
-- Snapshots before 2026-09-27 moved to `archive/plan-index-snapshots-2026.md`.
-
-## Maintenance Snapshot - 2026-09-27
-
-Tree census: **163 live plans, 64 archived**. Nine folders opened since 2026-09-20 and none closed; the archive step in `spw-plan-maintenance` is the priority debt, not more indexes. Details and counts: `.spw/audits/plan-spw-tree-2026-09.spw#recensus_2026_09_27`.
-
-- **Index check green again.** `topical-learning-links/learning-transfer.spw` had no first-line review since 2026-09-23; reviewed in place. Eleven folders opened 2026-09-19 through 2026-09-26 that this index never named now sit in `since_2026_07_12` (author `index.spw` on next touch, not in batch).
-- **Citations:** 1094 root-anchored paths across live plans, 155 unresolved. One had a single new home and was rewritten (`quest-workbench-feedback`, the worker moved to `workers/spw-quest/`). The rest are split files the 2026-09-17 legend above already reads, deliberate non-paths, or never-committed `.agents/state` precipitates. Left as written.
-- **Runtime/JS bucket order:** `typescript-integration` now records what landed (build, site-contracts, sitemap compiled from `scripts/ts`; thirteen typed browser modules) and shares three decisions with `site-source-layout`: the M0 ship-list import method, the M2 `public/ts` to `src/ts` tsconfig change, and L3 uncommitted output. Order is M0 decision, M0, M2; the `site/` move waits behind them.
-- **Nearest archive candidates:** `release-day-resonance-2026-09-13` and `release-day-discovery-2026-09-26`, once their receipts are written into an owner plan.
-
-**Deeper pass, same day: CSS tokens the runtime writes, and the Spw interpreter.** Seven folders archived with reasons (`archive/README.md`): two landed palette plans, the never-implemented `site-color-tuning`, `minimal-brace-disclosure`, the closed `css-scroll-dark-regression` fix, the `theme-text-contrast` receipt, and the `theming-icon-packs-public-versioning` umbrella split to four owners. Live count 157 after the moves (a folder landed from a concurrent session during the pass). Three ownership gaps closed on paper: `css-sensitive-attribute-writes` now names the property-write sensor (`style-property-contract.mts`; 40 files write 115 properties), `spw-language-v04` Phase 4 owns the parser's arrival in the site (v0.3.0 generated parser, on-demand runtime parser, build-time expression manifest; the v0.4 spec never reached the pinned workbench), and `semantic-html-normalization` owns JS-off parity and names the probe that does not exist yet. Reading order per cluster: `.spw/audits/plan-spw-tree-2026-09.spw#deeper_pass_2026_09_27`.
+- Snapshots before 2026-10-06 moved to `archive/plan-index-snapshots-2026.md`.
 
 ## Archived Notes
 

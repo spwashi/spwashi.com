@@ -9,7 +9,7 @@
 
 ^"operational_hooks"{
  selectors = #[ `.spw/_workbench/`, `.spw/conventions/`, ][reg=set]
- probe_ref = `git diff --check; npm run check after any HTML/CSS/JS touch.`
+ probe_ref = `git diff --check; npm run check:local after any HTML/CSS/JS touch.`
  owner_claim = ~"./index.spw#owner_claim"
 }[reg=facet]# Sigil Physics Research Program & Show
 #
@@ -24,7 +24,8 @@
 
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
-@matrix: ~"./sigil-property-matrix.spw"
+# The sigil-property matrix is proposed and not yet written; the plan specifies it.
+@matrix: ~"./PLAN.md"
 @operator_semantics: ~"../../../.spw/conventions/operator-semantics.spw"
 @charge_cycle: ~"../../../.spw/conventions/charge-cycle.spw"
 @semantic_braces: ~"../../../.spw/conventions/semantic-braces.spw"

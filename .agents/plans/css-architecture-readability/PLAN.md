@@ -222,7 +222,7 @@ Files:
 
 - `src/styles/entries/debug.css`
 - `public/css/effects/debug.css`
-- `public/css/effects/debug.css.map`
+- `public/css/effects/debug.css.map` (removed 2026-09-22, 97b8a303)
 - `public/css/README.md`
 
 Changes:
@@ -261,7 +261,7 @@ Files:
 
 - `src/styles/entries/debug.css`
 - `public/css/effects/debug.css`
-- `public/css/effects/debug.css.map`
+- `public/css/effects/debug.css.map` (removed 2026-09-22, 97b8a303)
 
 Changes:
 
@@ -282,7 +282,7 @@ Files:
 
 - `src/styles/entries/debug.css`
 - `public/css/effects/debug.css`
-- `public/css/effects/debug.css.map`
+- `public/css/effects/debug.css.map` (removed 2026-09-22, 97b8a303)
 - `public/css/README.md`
 
 Changes:
@@ -307,10 +307,10 @@ Files:
 - `public/css/routes/surfaces/home.css`
 - `public/css/routes/surfaces/settings.css`
 - `public/css/routes/surfaces/settings-forms.css`
-- `public/css/routes/website-surface.css`
-- `public/css/routes/about-surface.css`
-- `public/css/routes/topics-surface.css`
-- `public/css/routes/design-surface.css`
+- `public/css/routes/surfaces/website.css`
+- `public/css/routes/surfaces/about.css`
+- `public/css/routes/surfaces/topics.css`
+- `public/css/routes/surfaces/design.css`
 - `public/css/routes/surfaces/blog.css`
 - route files touched only if an existing page-level selector is already present
 
@@ -350,7 +350,7 @@ Files:
 - `public/css/routes/surfaces/home.css`
 - `public/css/routes/surfaces/settings.css`
 - `public/css/routes/surfaces/settings-forms.css`
-- `public/css/routes/website-surface.css`
+- `public/css/routes/surfaces/website.css`
 
 Changes:
 
@@ -368,9 +368,9 @@ Goal: extend route markers to the remaining high-traffic routes.
 
 Files:
 
-- `public/css/routes/about-surface.css`
-- `public/css/routes/topics-surface.css`
-- `public/css/routes/design-surface.css`
+- `public/css/routes/surfaces/about.css`
+- `public/css/routes/surfaces/topics.css`
+- `public/css/routes/surfaces/design.css`
 - `public/css/routes/surfaces/blog.css`
 
 Changes:
@@ -492,8 +492,8 @@ Goal: make the largest CSS files navigable by separating clear ownership domains
 
 Primary candidates by size:
 
-- `public/css/shell/chrome.css` at roughly 3000 lines.
-- `public/css/handles/operators.css` at roughly 2200 lines.
+- `public/css/shell/chrome.css` at roughly 3000 lines (split into `public/css/shell/chrome/` on 2026-07-03).
+- `public/css/handles/operators.css` at roughly 2200 lines (split into `public/css/handles/operators/` on 2026-07-03).
 - `public/css/grammar/syntax.css` at roughly 1900 lines.
 - `public/css/components/cards.css` at roughly 1250 lines.
 
@@ -508,7 +508,7 @@ Start with `chrome.css` only if its major sections are already clean and contigu
 
 `chrome.css` split proposal:
 
-- Keep `public/css/shell/chrome.css` as the imported registry for shell chrome.
+- Keep `public/css/shell/chrome.css` as the imported registry for shell chrome. (It was split into `public/css/shell/chrome/` on 2026-07-03.)
 - Add sibling files only if `style.css` imports them directly or `chrome.css` becomes a documented internal import source.
 - Candidate modules:
   - `public/css/shell/chrome-header.css`
@@ -564,7 +564,7 @@ Files to inspect:
 - `public/css/routes/surfaces/home.css`
 - `public/css/routes/surfaces/settings.css`
 - `public/css/routes/surfaces/settings-forms.css`
-- `public/css/routes/website-surface.css`
+- `public/css/routes/surfaces/website.css`
 - `public/css/effects/material.css`
 - `public/css/effects/wonder.css` (idle-loads with flourish-pack; tokens in `flourish-defaults.css`)
 - `public/css/ornament/canvas-accents.css`

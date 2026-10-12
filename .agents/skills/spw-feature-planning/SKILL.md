@@ -60,9 +60,9 @@ One concise sentence describing the user/reader outcome.
 
 ## 🌌 Tooling & Validation Ladder
 
-1. **Pre-flight Plan Status Probe:**
+1. **Pre-flight Plan Status Probe** (site plans live on main; the workbench's `spw:plan:status` reads its own):
    ```bash
-   npm run spw:plan:status --
+   npm run audit:plans -- --slug=<slug>
    ```
 2. **Local Contract Verification:**
    ```bash

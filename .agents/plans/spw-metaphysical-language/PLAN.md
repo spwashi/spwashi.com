@@ -117,9 +117,9 @@ drift-ledger entry (Workstream B), not a silent rewrite.
 ## Workstream B — Sigil Property Study & Alignment Protocol
 
 **Deliverables:**
-- `.agents/plans/spw-metaphysical-language/sigil-property-matrix.spw` — the
+- `.agents/plans/spw-metaphysical-language/sigil-property-matrix.spw` (proposed, never written) — the
   study artifact (plan-local until stable).
-- `.spw/conventions/sigil-alignment-protocol.spw` — the durable arbitration
+- `.spw/conventions/sigil-alignment-protocol.spw` (proposed) — the durable arbitration
   rule, promoted once the matrix has evidence.
 - A **drift ledger** section in the matrix with one claim chain per open drift.
 
@@ -490,7 +490,7 @@ research and arbitration never fork.
 ## Open Questions
 
 - Should the codex live as one dense file or a directory
-  (`.spw/conventions/codex/`) once entries exceed ~20? (Split rule from
+  (`.spw/conventions/codex/`, proposed) once entries exceed ~20? (Split rule from
   spw-surface-normalization applies.)
 - Is the sigil-craft correspondence (charged compressed intent) public copy or
   editor-layer lore? It is the strongest metaphysical claim and the easiest to

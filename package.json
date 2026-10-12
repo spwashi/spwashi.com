@@ -131,6 +131,7 @@
     "search:index": "node scripts/generate-site-search-index.mjs",
     "plans:index": "node scripts/maintain-plan-directory-indexes.mjs",
     "plans:index:check": "node scripts/maintain-plan-directory-indexes.mjs --check",
+    "audit:plans": "node scripts/audit-plans.mjs",
     "preview:open": "node scripts/preview-open.mjs",
     "preview": "vite preview",
     "starter:inventory": "node scripts/starter-inventory.mjs",

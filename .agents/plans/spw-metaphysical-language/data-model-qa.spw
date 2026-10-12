@@ -9,7 +9,7 @@
 
 ^"operational_hooks"{
  selectors = #[ `.spw/_workbench/`, `.spw/conventions/`, ][reg=set]
- probe_ref = `git diff --check; npm run check after any HTML/CSS/JS touch.`
+ probe_ref = `git diff --check; npm run check:local after any HTML/CSS/JS touch.`
  owner_claim = ~"./index.spw#owner_claim"
 }[reg=facet]^"plan_linkage"{
  plan = ~"./PLAN.md"
@@ -33,7 +33,8 @@
 @wip: ~"./wip.spw"
 @index: ~"./index.spw"
 @research: ~"./sigil-physics-research.spw"
-@matrix: ~"./sigil-property-matrix.spw"
+# The sigil-property matrix is proposed and not yet written; the plan specifies it.
+@matrix: ~"./PLAN.md"
 @planning_ecology: ~"../../../.spw/conventions/planning-ecology.spw"
 @attr_governance: ~"../../../.spw/conventions/data-spw-attribute-governance.spw"
 @semantic_capacity: ~"../../../.spw/conventions/semantic-capacity.spw"

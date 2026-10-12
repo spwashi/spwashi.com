@@ -17,7 +17,7 @@ Primary source of truth:
 - `public/css/tokens/core.css` owns primitive colors, operator colors, material aliases, timing durations, easing curves, dark mode, theme packs, contrast, and reduced-motion tokens.
 - `public/css/effects/material.css` owns material lift, hover/focus/active depth, and component surface transitions.
 - `public/css/effects/wonder.css` owns delight, charge, resonance, and ambient semantic effects. It now idle-loads with the flourish pack; tokens stay in `flourish-defaults.css`.
-- `public/css/handles/operators.css` owns operator chips, sigils, compact handles, pressed states, and graspable affordances.
+- `public/css/handles/operators/` owns operator chips, sigils, compact handles, pressed states, and graspable affordances.
 - `public/css/ornament/ornament.css` owns decorative/semi-semantic rails, seams, ribbons, and staged ornament. Same delivery: atmosphere after first paint. Sibling/child combinators are the readable grammar.
 - Route files such as `home.css` and `settings.css` bias local identity and should consume shared tokens rather than redefine interaction systems.
 - SVG hosts (`public/css/systems/svg-surfaces.css`) should lift with `--material-shadow-lift` and `--duration-base`, not a one-off 10px/28px diagram shadow. Reduced motion may keep the inset and drop the tilt transform.
@@ -319,7 +319,7 @@ Files to inspect:
 - `public/css/tokens/core.css`
 - `public/css/effects/material.css`
 - `public/css/effects/wonder.css`
-- `public/css/handles/operators.css`
+- `public/css/handles/operators/`
 - `public/css/components/cards.css`
 - `public/css/components/foundation.css`
 - `public/css/ornament/ornament.css`
@@ -358,7 +358,7 @@ Files:
 - `public/css/tokens/core.css`
 - `public/css/effects/material.css`
 - `public/css/effects/wonder.css`
-- `public/css/handles/operators.css`
+- `public/css/handles/operators/`
 
 Changes:
 
@@ -379,7 +379,7 @@ Files:
 - `public/css/effects/material.css`
 - `public/css/effects/wonder.css`
 - `public/css/components/cards.css`
-- `public/css/handles/operators.css`
+- `public/css/handles/operators/`
 
 Changes:
 
@@ -401,7 +401,7 @@ Primary file:
 Secondary consumers:
 
 - `public/css/effects/material.css`
-- `public/css/handles/operators.css`
+- `public/css/handles/operators/`
 - `public/css/components/cards.css`
 - `public/css/effects/wonder.css`
 
@@ -479,7 +479,7 @@ Files:
 
 - `public/css/effects/material.css`
 - `public/css/components/cards.css`
-- `public/css/handles/operators.css`
+- `public/css/handles/operators/`
 
 Changes:
 
@@ -501,7 +501,7 @@ Primary file:
 
 Consumers:
 
-- `public/css/handles/operators.css`
+- `public/css/handles/operators/`
 - `public/css/grammar/syntax.css`
 - `public/css/effects/wonder.css`
 - `public/css/ornament/ornament.css`
@@ -572,7 +572,7 @@ Goal: propagate the operator palette changes into chips, grammar, and ornament.
 
 Files:
 
-- `public/css/handles/operators.css`
+- `public/css/handles/operators/`
 - `public/css/grammar/syntax.css`
 - `public/css/effects/wonder.css`
 - `public/css/ornament/ornament.css`
@@ -598,7 +598,7 @@ Primary file:
 Consumers:
 
 - `public/css/effects/material.css`
-- `public/css/handles/operators.css`
+- `public/css/handles/operators/`
 - `public/css/components/cards.css`
 - `public/css/components/controls.css`
 - `public/css/effects/wonder.css`
@@ -645,7 +645,7 @@ Normalize `.operator-chip` first, then bring `.frame-sigil`, mode switches, and 
 
 Files:
 
-- `public/css/handles/operators.css`
+- `public/css/handles/operators/`
 - `public/css/handles/phase-controls.css`
 - `public/css/components/controls.css`
 - `public/css/routes/surfaces/settings-forms.css`

@@ -353,7 +353,7 @@ Design questions:
 Possible outputs:
 
 - Operator color distinction notes for `public/css/tokens/core.css`.
-- Handle refinements in `public/css/handles/operators.css`.
+- Handle refinements in `public/css/handles/operators/`.
 - Brace/grammar refinements in `public/css/grammar/syntax.css`.
 - `.spw` notes if grammar visuals become canonical.
 
@@ -609,7 +609,7 @@ Goal: create reusable focused prompt templates tied to actual site surfaces.
 
 Files:
 
-- `.agents/plans/midjourney-design-concepts/prompt-bank.md`
+- `.agents/plans/midjourney-design-concepts/prompt-bank.md` (not started)
 
 Prompt families:
 
@@ -633,7 +633,7 @@ Goal: define one reusable prompt structure before writing many prompts.
 
 Files:
 
-- `.agents/plans/midjourney-design-concepts/prompt-bank.md`
+- `.agents/plans/midjourney-design-concepts/prompt-bank.md` (not started)
 
 Changes:
 
@@ -708,8 +708,8 @@ Files:
 
 - `public/css/tokens/core.css`
 - `public/css/routes/surfaces/home.css`
-- `public/css/routes/design-surface.css`
-- `public/css/routes/website-surface.css`
+- `public/css/routes/surfaces/design.css`
+- `public/css/routes/surfaces/website.css`
 - sidecars for selected studies
 
 Changes:
@@ -816,7 +816,7 @@ Rules:
 Validation:
 
 - Browser check mobile and desktop.
-- `npm run check`
+- `npm run check:local`
 - Design catalog check if images are promoted.
 
 ## Patch 5A - `/design/` Prototype
@@ -825,7 +825,7 @@ Goal: prototype the first concept on `/design/` only.
 
 Files:
 
-- `public/css/routes/design-surface.css`
+- `public/css/routes/surfaces/design.css`
 - route HTML only if needed for a semantic hook
 
 Changes:
@@ -891,7 +891,7 @@ Validation:
 
 - `npm run catalog`
 - `/design/catalog/` review
-- `npm run check`
+- `npm run check:local`
 - file existence checks for route references
 
 ## Patch 6A - Select Candidate
@@ -927,7 +927,7 @@ Changes:
 Validation:
 
 - `npm run catalog`
-- `npm run check`
+- `npm run check:local`
 
 ## Patch 7 - Concept Library
 
@@ -961,7 +961,7 @@ Keep as emerging until proven in route/component work:
 
 Files:
 
-- `.spw/conventions/visual-concepts.spw`
+- `.spw/conventions/visual-concepts.spw` (not started)
 - `public/css/README.md`
 - optional route docs or design route content
 
@@ -985,7 +985,7 @@ Goal: document the concepts that are already mature enough to name.
 
 Files:
 
-- `.spw/conventions/visual-concepts.spw`
+- `.spw/conventions/visual-concepts.spw` (not started)
 
 Changes:
 
@@ -1001,7 +1001,7 @@ Goal: capture the ideas that are promising but not yet durable.
 
 Files:
 
-- `.spw/conventions/visual-concepts.spw`
+- `.spw/conventions/visual-concepts.spw` (not started)
 
 Changes:
 
@@ -1029,7 +1029,7 @@ git diff --check
 For route or image integration:
 
 ```sh
-npm run check
+npm run check:local
 npm run catalog
 git diff --check
 ```
