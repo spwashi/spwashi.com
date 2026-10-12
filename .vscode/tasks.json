@@ -1,0 +1,91 @@
+{
+  // Site sensors as editor tasks. Each one's findings land in the Problems
+  // panel as clickable file:line entries (Terminal > Run Task).
+  // spw:integrity parses every .spw file (about a minute); run it alone, not
+  // beside check:local or manifest:staged.
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "spw: citations (spw:integrity)",
+      "detail": "Every ~\"…\" citation in .spw and skill files resolves, anchors included",
+      "type": "shell",
+      "command": "npm run -s spw:integrity",
+      "presentation": { "reveal": "silent", "panel": "dedicated" },
+      "problemMatcher": [
+        {
+          "owner": "spw-integrity",
+          "source": "spw:integrity",
+          "fileLocation": ["relative", "${workspaceFolder}"],
+          "severity": "error",
+          "pattern": [
+            { "regexp": "^  (\\S+\\.spw):(\\d+)$", "file": 1, "line": 2 },
+            { "regexp": "^    (~\".*)$", "message": 1 }
+          ]
+        },
+        {
+          "owner": "spw-integrity-expressions",
+          "source": "spw:integrity",
+          "fileLocation": ["relative", "${workspaceFolder}"],
+          "severity": "warning",
+          "pattern": [
+            { "regexp": "^  unstructured: (\\S+)$", "file": 1 },
+            { "regexp": "^    (.+)$", "message": 1 }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "spw: plan index (plans:index:check)",
+      "detail": "Plan index.spw and wip.spw references resolve and every .spw opens with a review line",
+      "type": "shell",
+      "command": "npm run -s plans:index:check",
+      "presentation": { "reveal": "silent", "panel": "dedicated" },
+      "problemMatcher": {
+        "owner": "spw-plans-index",
+        "source": "plans:index:check",
+        "fileLocation": ["relative", "${workspaceFolder}"],
+        "severity": "error",
+        "pattern": { "regexp": "^- (\\S+?):(\\d+) -> (.+)$", "file": 1, "line": 2, "message": 3 }
+      }
+    },
+    {
+      "label": "spw: operator controls (audit:operator-controls)",
+      "detail": "A visible sigil and its authored data-spw-operator agree; lists the three categories --check fails on",
+      "type": "shell",
+      "command": "npm run -s audit:operator-controls -- --list=disagreement && npm run -s audit:operator-controls -- --list=missing && npm run -s audit:operator-controls -- --list=unknown-operator && npm run -s audit:operator-controls -- --check",
+      "presentation": { "reveal": "silent", "panel": "dedicated" },
+      "problemMatcher": {
+        "owner": "spw-operator-controls",
+        "source": "audit:operator-controls",
+        "fileLocation": ["relative", "${workspaceFolder}"],
+        "severity": "error",
+        "pattern": { "regexp": "^(\\S+?\\.html):(\\d+) (<[\\w-]+> .*)$", "file": 1, "line": 2, "message": 3 }
+      }
+    },
+    {
+      "label": "spw: agent budgets (check:agents)",
+      "detail": "Always-on agent files stay inside their word and line budgets",
+      "type": "shell",
+      "command": "npm run -s check:agents",
+      "presentation": { "reveal": "silent", "panel": "dedicated" },
+      "problemMatcher": {
+        "owner": "spw-check-agents",
+        "source": "check:agents",
+        "fileLocation": ["relative", "${workspaceFolder}"],
+        "severity": "error",
+        "pattern": { "regexp": "^\\[check:agents\\] ([^\\s:]+\\.(?:md|spw|json)): (.+)$", "file": 1, "message": 2 }
+      }
+    },
+    {
+      "label": "spw: quick sensors",
+      "detail": "Plan index, operator controls and agent budgets, in order (spw:integrity stays separate)",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "spw: plan index (plans:index:check)",
+        "spw: operator controls (audit:operator-controls)",
+        "spw: agent budgets (check:agents)"
+      ],
+      "problemMatcher": []
+    }
+  ]
+}
