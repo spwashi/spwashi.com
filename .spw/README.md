@@ -40,9 +40,12 @@ only adds *resolution*: does the path exist, and does the `#fragment` name
 anything in the target. All 2480 citations currently resolve.
 
 **Known workbench gaps** (this consumer is a use case the workbench predates).
-Pin `229aedcf9b6f`. Details: `.spw/workbench-report.spw`.
+Pin `4fe8b9d8b516`. Details: `.spw/workbench-report.spw`.
 
-Landed on this pin: `spw resolve` tries the citing file's directory, then
+Landed on this pin: definition lands a citation's fragment on its anchor
+line; `~#lens()` readings are indexed where wonders are read; graph and
+census resolve roots as `spw resolve` does; `spw quest`, and
+`spw init --preset quest`. From `229aedcf9b6f`: `spw resolve` tries the citing file's directory, then
 the consumer root, in the language server's order, and names the base that
 resolved each target. From `3eaab6377672`: a valence modifier chain stays on
 the expression (`boon.honk` rides the noun; the five words stay modifiers).

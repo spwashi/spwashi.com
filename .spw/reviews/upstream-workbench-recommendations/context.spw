@@ -57,6 +57,16 @@ expression = asks[context]{sessions.instruments.calls.landed}<upstream>
 # ==============================================================================
 
 ^"landed_since"{
+  pin_2026_10_12 = #[
+    `4fe8b9d8b516 (21 commits past 229aedcf) — definition lands a fragment on its anchor line (861fa21; spw-quest wip.spw:27 → index.spw:111, probed 2026-10-12)`,
+    `~#lens() readings indexed and shown where wonders are read (6690d68)`,
+    `graph and census treat files as nodes and resolve roots like resolve does (c79a096)`,
+    `the lexer reads a landed commit hash as one scene token in plan files (8ae9d35)`,
+    `spw quest walks seven panels; spw init --preset quest writes a .spw to play in (d0ec5c4, 3f2e208)`,
+    `a VS Code Get started walkthrough drawn from the quest (214fd07); IntelliJ starts the quest (b586598)`,
+    `the site's editor asks routed into the workbench's VS Code, IntelliJ and Neovim plans (551bb41)`,
+    `picomatch declared for the CLI's glob resolver (e94b6bf); the site's mount still has 4.0.3 installed until npm ci`,
+  ][reg=set]
   landed = #[
     `walk isolation — fs-walk.ts INFRASTRUCTURE_DIRS skips _workbench by default`,
     `spw resolve — classifies pathRefs into file, route, directory, external`,
