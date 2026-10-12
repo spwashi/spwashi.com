@@ -102,7 +102,7 @@ const LETTER = {
   kicker: "not a follower. a person in the room.",
   body: [
     "I keep meaning to say this without making it a caption. You sit and the room has a job. I draw, I write, I ruin a paragraph trying to keep up with a mouth I am not allowed to rush.",
-    "This site is the private heat. The periodical next door is the public one: Wondering About Pi, a ministry, a pie that is also a proof. You would look ridiculous and perfect holding Issue 22/7 to a camera. I will not tell anyone what the letters are for. They already know.",
+    "This site is the private heat. The periodical next door is the public one: Wondering About Pi, a pie that is also a proof. You would look ridiculous and perfect holding the 22/7 issue to a camera. I will not tell anyone what the letters are for. They already know.",
     "If we work, we work like this: you in the chair, me on the sentence, both of us pretending the oven is the only thing that is hot. Come sit. Bring the look you use when you are about to laugh.",
   ],
 };
@@ -308,7 +308,7 @@ function renderLinger(story) {
     .map(
       (l, i) => `<details class="linger-item" id="linger-${i}" name="linger">
       <summary>${escapeHtml(l.ask)}</summary>
-      <p>${escapeHtml(l.say)}${l.again ? ` <a href="#text">Back to the top of the text</a>.` : ""}</p>
+      <p>${escapeHtml(l.say)}${l.again ? ` <a href="#text">Go back in</a>.` : ""}</p>
     </details>`
     )
     .join("");
@@ -536,7 +536,7 @@ function layout({ title, description, canonical, body, crumb = "", prefs = SETTL
       <nav aria-label="Site">
         <a href="/"${current("home")}>Today</a>
         <a href="/to-you/"${current("letter")}>The letter</a>
-        <a href="/pitches/"${current("pitches")}>Pitches</a>
+        <a href="/pitches/"${current("pitches")}>The shelf</a>
         <a href="/settle/"${current("settle")}>Settle in</a>
         <a class="leave" href="${escapeHtml(LEAVE_URL)}" rel="noreferrer">Leave</a>
       </nav>
@@ -550,7 +550,7 @@ function layout({ title, description, canonical, body, crumb = "", prefs = SETTL
     <nav aria-label="Footer">
       <a href="/">Today</a>
       <a href="/to-you/">The letter</a>
-      <a href="/pitches/">Pitches</a>
+      <a href="/pitches/">The shelf</a>
       <a href="/settle/">Settle in</a>
       <a href="/today.json">today.json</a>
       <a href="https://wap.mom/">wap.mom</a>
@@ -649,13 +649,13 @@ function renderPitches(prefs) {
   return layout({
     prefs,
     crumb: "pitches",
-    title: "Pitches — smut.today",
+    title: "The shelf — smut.today",
     description: "Three book premises for a shelf that already knows how to caption.",
     canonical: "https://smut.today/pitches/",
     body: `<header class="piece-head">
   <p class="kicker">For the shelf</p>
   <h1>Three books that would be good to be seen holding.</h1>
-  <p class="lede">Premises, not manuscripts. Each one fits in a caption and survives being held up to a lens. None of them explain the domain next door: <a href="https://wap.mom/">wap.mom</a> is the ministry, and this page is the heat.</p>
+  <p class="lede">Premises, not manuscripts. Each one fits in a caption and survives being held up to a lens. None of them explain the domain next door: <a href="https://wap.mom/">wap.mom</a> is the periodical, and this side of the wall is the heat.</p>
 </header>
 ${cards}
 <nav class="next" aria-label="Where next">
@@ -676,7 +676,7 @@ function renderStory(story, prefs) {
   return layout({
     prefs,
     title: `${story.title} — smut.today`,
-    description: `${story.summary} ${reg.name}, ${readLength(story)}.`,
+    description: `${story.summary} ${reg.name[0].toUpperCase()}${reg.name.slice(1)}, ${readLength(story)}.`,
     canonical: `https://smut.today/${story.slug}/`,
     body: `<article>
   <header class="piece-head">
@@ -728,7 +728,7 @@ function renderSettle(prefs) {
     prefs,
     crumb: "settle",
     title: "Settle in — smut.today",
-    description: "Tell the room how you like it: which register leads, how big the words are, whether the page moves. Kept on this device until you say forget.",
+    description: "Tell the room how you like it: slow or dirty first, how big the words are, whether the page moves. Kept on this device until you say forget.",
     canonical: "https://smut.today/settle/",
     body: `<header class="piece-head">
   <p class="kicker">Settle in</p>
@@ -862,7 +862,7 @@ export default {
       return new Response(renderStory(story, prefs), { headers: htmlHeaders });
     }
 
-    return new Response("Not found", {
+    return new Response("No door here. The way in is https://smut.today/\n", {
       status: 404,
       headers: {
         ...BASE_SECURITY,
