@@ -9,6 +9,8 @@ import { NAME, ORIGIN, escapeHtml, expansion, fleuron, framed, masthead, page } 
 const SCRIPTS = ["/figures.js"];
 const seriesClass = (issue) => (issue.series === "e" ? "series-e" : "");
 const label = (issue) => `${SERIES[issue.series].label} ${issue.no}`;
+/* After a series name, as a citation sets it: "The e Supplement, no. 2.7". */
+const citedNo = (issue) => `no. ${issue.no}`;
 
 function kicker(issue) {
   const dept = DEPARTMENTS[issue.department]?.name;
@@ -17,7 +19,7 @@ function kicker(issue) {
 }
 
 export function citation(issue) {
-  return `“${escapeHtml(issue.title)}.” <i>${escapeHtml(SERIES[issue.series].name)}</i>, ${escapeHtml(label(issue).toLowerCase())}${
+  return `“${escapeHtml(issue.title)}.” <i>${escapeHtml(SERIES[issue.series].name)}</i>, ${escapeHtml(citedNo(issue))}${
     issue.date ? ` (${escapeHtml(dateline(issue.date))})` : ""
   }. wap.mom/${escapeHtml(issue.slug)}/`;
 }
@@ -66,7 +68,7 @@ export function renderFront() {
   const ahead = [...forthcomingIn("pi"), ...forthcomingIn("e")];
   return framed({
     title: `${NAME} — wap.mom`,
-    description: "A periodical of wonder about π and pie, with a supplement on e. Numbered by the constants themselves.",
+    description: "A periodical of record about π and pie, with a supplement on e. Numbered by the constants themselves.",
     canonical: `${ORIGIN}/`,
     body: `${masthead({ heading: true })}
 <article class="lead" aria-labelledby="lead-title">
@@ -103,8 +105,8 @@ export function renderIssue(issue, searchParams) {
   const next = siblings[index + 1];
   const pull = issue.clip ? `<figure class="pull"><blockquote>${escapeHtml(issue.clip)}</blockquote></figure>` : "";
   return framed({
-    title: `${issue.title} — ${SERIES[issue.series].name}, ${label(issue).toLowerCase()}`,
-    description: `${issue.dek} ${SERIES[issue.series].name}, ${label(issue).toLowerCase()}.`,
+    title: `${issue.title} — ${SERIES[issue.series].name}, ${citedNo(issue)}`,
+    description: `${issue.dek} ${SERIES[issue.series].name}, ${citedNo(issue)}.`,
     canonical: `${ORIGIN}/${issue.slug}/`,
     type: "article",
     bodyClass: seriesClass(issue),
@@ -142,7 +144,7 @@ export function renderIssue(issue, searchParams) {
 export function renderOffprint(issue) {
   return page({
     title: `${issue.title} — offprint from ${SERIES[issue.series].name}`,
-    description: `${issue.dek} Offprint from ${SERIES[issue.series].name}, ${label(issue).toLowerCase()}.`,
+    description: `${issue.dek} Offprint from ${SERIES[issue.series].name}, ${citedNo(issue)}.`,
     canonical: `${ORIGIN}/${issue.slug}/`,
     type: "article",
     robots: "noindex",
@@ -167,7 +169,7 @@ export function renderOffprint(issue) {
 export function renderClip(issue) {
   return page({
     title: `“${issue.clip}” — ${SERIES[issue.series].name}`,
-    description: `A clipping from ${SERIES[issue.series].name}, ${label(issue).toLowerCase()}.`,
+    description: `A clipping from ${SERIES[issue.series].name}, ${citedNo(issue)}.`,
     canonical: `${ORIGIN}/${issue.slug}/`,
     robots: "noindex",
     bodyClass: `clipping ${seriesClass(issue)}`.trim(),
@@ -200,7 +202,7 @@ export function renderContents() {
     canonical: `${ORIGIN}/contents/`,
     body: `${masthead({ compact: true })}
 <h1>Contents.</h1>
-<p>${printed.length} issues in print across two series. ${SERIES.pi.about} ${SERIES.e.name}: ${SERIES.e.about.toLowerCase()}</p>
+<p>Every issue in print, by department: ${printedIn("pi").length} of ${NAME} and ${printedIn("e").length} of ${SERIES.e.name}.</p>
 ${sections}
 ${open.length ? `<section aria-labelledby="open-head">
   <p class="caps head" id="open-head">Forthcoming</p>
@@ -235,7 +237,7 @@ export function renderColophon() {
 </section>
 <section aria-labelledby="made-head">
   <p class="caps head" id="made-head">Making</p>
-  <p>Issues are written in <a href="/room">the room</a>, in conversation, under a <a href="/room">house style</a>. Errors are fixed in <a href="/corrections/">Corrections</a>, never silently. Issues are also available as a <a href="/feed.xml">feed</a>.</p>
+  <p>Issues are written in <a href="/room">the room</a>, in conversation, under a <a href="/room#style-head">house style</a>. Errors are fixed in <a href="/corrections/">Corrections</a>, never silently. Each new issue also arrives by <a href="/feed.xml">feed</a>.</p>
 </section>`,
   });
 }
@@ -264,7 +266,7 @@ export function renderRoom() {
   const galleys = printed.filter((i) => i.status === "draft");
   const people = ROOM.length
     ? `<ul class="questions">${ROOM.map((p) => `<li>${escapeHtml(p)}</li>`).join("")}</ul>`
-    : `<p class="muted">No names yet. Names appear here only with the person's say-so.</p>`;
+    : `<p class="muted">No names yet. Names appear here only with the person’s say-so.</p>`;
   const open = numbered.filter((i) => i.status === "open");
   return framed({
     title: `The room — ${NAME}`,

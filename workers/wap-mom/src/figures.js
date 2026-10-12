@@ -86,7 +86,7 @@ export function figureKit() {
 
     tins: {
       params: [
-        { name: "a", label: "Recipe's tin", min: 6, max: 14, step: 0.5, value: 9, unit: " in" },
+        { name: "a", label: "Recipe’s tin", min: 6, max: 14, step: 0.5, value: 9, unit: " in" },
         { name: "b", label: "Your tin", min: 6, max: 14, step: 0.5, value: 10, unit: " in" },
       ],
       render({ a, b }) {

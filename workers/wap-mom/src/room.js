@@ -52,7 +52,7 @@ export const SERIES = {
     digits: "3.14159265358979323846264338327950288419716939937510",
     volume: "Vol. 3",
     label: "No.",
-    about: "The periodical. Circles, approximations, and pie.",
+    about: "Circles, approximations, and pie.",
   },
   e: {
     name: "The e Supplement",
@@ -60,7 +60,7 @@ export const SERIES = {
     digits: "2.71828182845904523536028747135266249775724709369995",
     volume: "Vol. 2",
     label: "Supplement",
-    about: "Bound in with the periodical. Growth, rising, and things that compound.",
+    about: "Growth, rising, and things that compound.",
   },
 };
 
@@ -68,7 +68,7 @@ export const SERIES = {
 export const DEPARTMENTS = {
   constants: { name: "Constants", about: "The numbers themselves." },
   approximations: { name: "Approximations", about: "Close, and by how much." },
-  kitchen: { name: "Kitchen", about: "Pie, treated with the same care." },
+  kitchen: { name: "Kitchen", about: "Pie, treated with the same care as π." },
   chance: { name: "Chance", about: "Constants that turn up in random things." },
   proofs: { name: "Proofs", about: "What can be shown, and what cannot." },
   series: { name: "Series", about: "Sums that go on forever and still arrive." },
@@ -92,11 +92,11 @@ export const ISSUES = [
     dek: "It does not close.",
     body: [
       "Wrap a string around a pie tin, then lay the same string across the middle. The string around is a little more than three times as long as the string across.",
-      "It is the same amount more for every tin, every plate, every round thing in the house. That amount is π. Its digits never end and never settle into a pattern. Every digit is exact, and there is always another: an infinite courtesy.",
+      "It is the same amount more for every tin, every plate, every round thing in the house. That amount is π. Its digits never end and never settle into a repeating pattern. Every digit is exact, and there is always another: an infinite courtesy.",
       "This periodical is numbered by it. Each issue adds a digit. We will not run out.",
     ],
     clip: "Every digit is exact, and there is always another: an infinite courtesy.",
-    figure: { kind: "unroll", caption: "Change the width. The circle's edge, unrolled, is always a little over three widths long." },
+    figure: { kind: "unroll", caption: "The circle’s edge, unrolled, is always a little over three widths long." },
     uses: {
       hand: "Measure across a round pan and multiply by a little over three to know how much ribbon goes around it. A 10-inch pan takes about 31½ inches.",
       table: "Every round thing on the table, plate or glass rim, carries the same ratio. Anyone with a string can check.",
@@ -118,7 +118,7 @@ export const ISSUES = [
       "Close is not cheap. Close is hospitality.",
     ],
     clip: "Close is not cheap. Close is hospitality.",
-    figure: { kind: "polygons", caption: "Archimedes' trap. Double the sides and the inside and outside close in on π from both directions." },
+    figure: { kind: "polygons", caption: "Archimedes’ trap. Double the sides and the inside and outside close in on π from both directions." },
     uses: {
       hand: "A 7-inch plate is 22 inches around, near enough. Multiply a width by 22, divide by 7, and you are within a hair.",
       table: "An answer someone can use now is often kinder than an exact one that arrives late.",
@@ -201,12 +201,12 @@ export const ISSUES = [
     title: "Needles",
     dek: "π, found by dropping things.",
     body: [
-      "Draw straight lines across a sheet of paper, each one a toothpick's length from the next. Drop a toothpick on it, again and again, and count how often it lands across a line.",
+      "Draw straight lines across a sheet of paper, each one a toothpick’s length from the next. Drop a toothpick on it, again and again, and count how often it lands across a line.",
       "It crosses about 64 times in every 100. The exact share is two divided by π. The Comte de Buffon asked this question in the 1700s. Floors have been answering it ever since.",
       "Drop enough toothpicks and you can work π backwards from your count. It takes a while: ten thousand drops usually gets you within a few hundredths.",
     ],
     clip: "Floors have been answering it ever since.",
-    figure: { kind: "buffon", caption: "Needles one line-width long. Those that cross a line are marked. The same drops fall for every reader." },
+    figure: { kind: "buffon", caption: "Each needle is as long as the gap between lines. Those that cross a line are marked. The same drops fall for every reader." },
     uses: {
       hand: "Any stick and any parallel lines will do, as long as the lines are one stick-length apart. A hundred drops often lands within a quarter of π.",
       table: "Two people dropping toothpicks can race to the better π. Whoever loses has still found π.",
@@ -303,7 +303,7 @@ export const ISSUES = [
     title: "Interest",
     dek: "Growth that never stops to count.",
     body: [
-      "In 1683, Jacob Bernoulli asked a banker's question. Lend one coin for a year at one hundred percent. Paid once, it becomes two. Paid half at midyear and the rest at the end, with the half already earning, it becomes 2.25.",
+      "In 1683, Jacob Bernoulli asked a banker’s question. Lend one coin for a year at one hundred percent. Paid once, it becomes two. Paid half at midyear and the rest at the end, with the half already earning, it becomes 2.25.",
       "Pay more often and it grows more, but not without limit. Monthly gives about 2.613. Daily gives about 2.715. Paid every instant, it gives 2.71828…, and that number is e.",
       "e is what growth comes to when it never stops to count.",
     ],
@@ -313,7 +313,7 @@ export const ISSUES = [
       hand: "Divide 72 by a yearly rate to find how many years it takes to double. At 6 percent, about 12.",
       table: "Paying more often always helps, and past monthly it barely does: 2.613 monthly against 2.718 forever.",
       work: "Small gains taken often add up to a ceiling, not to infinity. Know where the ceiling is.",
-      mind: "Somewhere between once a year and every instant, the answer stops being a banker's and becomes a constant.",
+      mind: "Somewhere between once a year and every instant, the answer stops being a banker’s and becomes a constant.",
     },
   },
   {
