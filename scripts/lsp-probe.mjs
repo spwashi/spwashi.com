@@ -27,8 +27,8 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const [repo, file, mode, ...rest] = process.argv.slice(2);
 const server = spawn(process.execPath, [
-  '--import', path.join(repo, '.spw/_workbench/node_modules/tsx/dist/loader.mjs'),
-  path.join(repo, '.spw/_workbench/packages/spw-lsp/src/stdio-server.ts'), '--stdio',
+  '--import', pathToFileURL(path.resolve(repo, '.spw/_workbench/node_modules/tsx/dist/loader.mjs')).href,
+  path.resolve(repo, '.spw/_workbench/packages/spw-lsp/src/stdio-server.ts'), '--stdio',
 ], { cwd: repo, stdio: ['pipe', 'pipe', 'ignore'] });
 
 let buffer = Buffer.alloc(0);
