@@ -57,6 +57,15 @@ expression = asks[context]{sessions.instruments.calls.landed}<upstream>
 # ==============================================================================
 
 ^"landed_since"{
+  pin_749899e = #[
+    `749899ee8a66 (12 commits past 4fe8b9d, 2026-10-12) — citations come from the parser first (e6c5697), the regex-first selector the 10-11 asks measured`,
+    `>>[ completes its stamp (e6c5697), the editor half of vscode_2026_10_12 stream_time; plan hashes hover with their commit`,
+    `spw refactor plans citation rewrites when a file or folder moves, and the server answers willRenameFiles with the same plan (56844e6): move_with_citations and move_updates_citations`,
+    `a mounted run reads relative paths and measure targets from the consumer root (ed606b3, 7759945)`,
+    `VS Code: inspection instruments, a capture mode, reference lenses that open a peek (99e6d99): capture_mode and references_that_navigate; IntelliJ and Neovim follow (155cfd5, 1bb4f68)`,
+    `highlighting reads Spw as the lexer does: comments, stream entries, commit lines, tight dots, a role per operator (17b3a4a): syntax_highlighting`,
+    `npm run bundle:parser cuts dated, immutable browser parser builds with a manifest, named YYYY.MM.DD, -pre.N or -patch.N (17b0d6d, a6d6964, 749899e); spw.quest carries them`,
+  ][reg=set]
   pin_2026_10_12 = #[
     `4fe8b9d8b516 (21 commits past 229aedcf) — definition lands a fragment on its anchor line (861fa21; spw-quest wip.spw:27 → index.spw:111, probed 2026-10-12)`,
     `~#lens() readings indexed and shown where wonders are read (6690d68)`,

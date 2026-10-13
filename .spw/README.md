@@ -40,9 +40,12 @@ only adds *resolution*: does the path exist, and does the `#fragment` name
 anything in the target. All 2480 citations currently resolve.
 
 **Known workbench gaps** (this consumer is a use case the workbench predates).
-Pin `4fe8b9d8b516`. Details: `.spw/workbench-report.spw`.
+Pin `749899ee8a66`. Details: `.spw/workbench-report.spw`.
 
-Landed on this pin: definition lands a citation's fragment on its anchor
+Landed on this pin: citations come from the parser first, `>>[` completes
+its stamp, `spw refactor` plans citation rewrites when a file moves, a
+mounted run reads paths from the consumer root, and `npm run bundle:parser`
+cuts dated parser releases. From `4fe8b9d8b516`: definition lands a citation's fragment on its anchor
 line; `~#lens()` readings are indexed where wonders are read; graph and
 census resolve roots as `spw resolve` does; `spw quest`, and
 `spw init --preset quest`. From `229aedcf9b6f`: `spw resolve` tries the citing file's directory, then

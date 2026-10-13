@@ -19,6 +19,7 @@ fixity = "tending"
 ^"stream"{
  >>[2026-10-12 10:59] verify — the twelve pillars and the in-site parser have landed, and the workbench gitlink is still 229aedcf (a4572202). parseExpressionQuery in public/js/semantic/expression-query.js still reads only boon|bane|bone|bonk|honk as a prefix and drops other leading sigils, so patch 2 of the spw-as-handle cache is still the next slice. Its prefix half needs no decision; the trailing ?# half and Phase 2 upstream wait on the creator.
  >>[2026-10-12 18:14] implement — the site mount moved from 229aedcf to 4fe8b9d8 (21 commits), the in-site parser bundle was rebuilt from it and carried into the spw.quest worker, and mount.spw records the new pin. spw:integrity, test:modules, check:workers and check:local pass; spw:doctor's pin warning cleared.
+ >>[2026-10-12 20:45] implement — the site mount moved from 4fe8b9d8 to 749899ee (12 commits); the in-site parser bundle was rebuilt and carried into spw.quest, and only its provenance line changed. mount.spw records the pin.
 }
 
 ^"open"{
