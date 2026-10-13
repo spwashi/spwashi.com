@@ -40,6 +40,12 @@ design/components/captures/
 # and is not fast-forwarded by refs:sync.
 workers/factshift-center/app/
 
+# spw.quest parser prereleases (YYYY.MM.DD-pre.N/ and prereleases.json), carried by
+# workers/spw-quest/carry-parser-release.mjs and deployed from the working tree
+# with Wrangler. Releases and patches beside them stay tracked.
+workers/spw-quest/assets/parser/*-pre.*/
+workers/spw-quest/assets/parser/prereleases.json
+
 # Midjourney session exports — the zip is not a published asset.
 midjourney_session*.zip
 

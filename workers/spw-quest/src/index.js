@@ -7,6 +7,7 @@ import { BUILD_CSS, BUILD_DEFAULTS, MAX_SCRIPT, assemble, buildSurface, focusSlo
 import { PAPER_CSS, PAPER_THEME } from "./paper.js";
 import { PARSER_JS } from "./parser-text.js";
 import { handleParser, isParserPath } from "./parser-releases.js";
+import { SWITCH_CSS, parserSwitch, switchBanner, switchLoader, switchModulePath } from "./parser-switch.js";
 import { BASE_SECURITY, escapeHtml, htmlResponse, jsonResponse, layout, wantsJson } from "../../lib/shell.js";
 
 const VERSION = "0.1.0";
@@ -223,7 +224,8 @@ function pathNav(current = -1) {
 </nav>`;
 }
 
-function renderGuide() {
+/** The guide. With `parser` ({ value, from }, from a valid ?parser=), a banner leads and the page reads with that build. */
+function renderGuide(parser = null) {
   const sigils = OPERATORS.map((op) => `<li id="op-${escapeHtml(op.name)}">
       <span class="sigil" aria-hidden="true">${escapeHtml(op.sigil)}</span>
       <p><strong>${escapeHtml(op.name)}</strong> <code>${escapeHtml(op.sigil)}</code></p>
@@ -281,8 +283,8 @@ function renderGuide() {
     dl.notes dt { margin: 0 0 .15rem; }
     dl.notes dd { margin: 0; }
     .readers li { margin: .5rem 0; }
-    #origin p { max-width: 38rem; }`,
-    body: `<header class="opening">
+    #origin p { max-width: 38rem; }${parser ? `\n    ${SWITCH_CSS}` : ""}`,
+    body: `${parser ? `${switchBanner(parser.value, parser.from)}\n` : ""}<header class="opening">
   <p class="kicker">spw.quest · a guide to Spw · <a href="/install">install</a></p>
   <h1>A small language for the shape of a thought.</h1>
 </header>
@@ -348,7 +350,7 @@ ${pathNav()}
   <p><a class="chip" href="https://spwashi.com/tools/spw-parser/">Try the parser</a> <a class="chip" href="https://spwashi.com/topics/software/spw/">Operator atlas</a> <a class="chip" href="${QUEST.repository}">Read the source</a> <a class="chip" href="/install">Install</a></p>
 </section>
 <p><a href="/init">Recipe for agents</a> · <a href="/quest.json">quest.json</a> · <a href="https://autonomous.feedback/spw.quest?at=/">What was hard to follow</a></p>
-${liveScript()}`,
+${liveScript(parser ? switchLoader(parser.from) : undefined)}`,
   });
 }
 
@@ -480,7 +482,9 @@ async function handleQuest(request, url) {
   } else if (url.pathname === "/install") {
     response = htmlResponse(renderInstall());
   } else if (url.pathname === "/") {
-    response = htmlResponse(renderGuide());
+    // ?parser= tries another build in the page; an invalid value is ignored, and the page is the default.
+    const value = parserSwitch(url.searchParams);
+    response = htmlResponse(renderGuide(value && { value, from: switchModulePath(value) }));
     response.headers.set("Content-Security-Policy", GUIDE_CSP);
   } else if (url.pathname === "/build") {
     response = htmlResponse(renderBuild(slotsFrom(url.searchParams)), { cache: "public, max-age=300" });
