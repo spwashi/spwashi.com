@@ -243,11 +243,20 @@ function liveReader(kit, parseLine) {
   }
 }
 
-/** The module script the guide carries. The guide's CSP allows it: script-src 'self' (for /parser.js) and 'unsafe-inline'. */
-export function liveScript() {
+/**
+ * The module script the guide carries. The guide's CSP allows it: script-src 'self' (for /parser.js) and 'unsafe-inline'.
+ * A loader (the guide's ?parser= switch) replaces the static import: `before` binds parse, `after` runs once the reader is live.
+ */
+export function liveScript(loader) {
   const data = JSON.stringify(READER_DATA).replace(/</g, "\\u003c");
-  return `<script type="module">
+  const start = `(${liveReader.toString()})((${readingKit.toString()})(${data}), parse);`;
+  if (!loader) return `<script type="module">
 import { parse } from "/parser.js";
-(${liveReader.toString()})((${readingKit.toString()})(${data}), parse);
+${start}
+</script>`;
+  return `<script type="module">
+${loader.before}
+${start}
+${loader.after}
 </script>`;
 }
