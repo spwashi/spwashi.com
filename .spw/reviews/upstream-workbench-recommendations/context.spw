@@ -57,6 +57,15 @@ expression = asks[context]{sessions.instruments.calls.landed}<upstream>
 # ==============================================================================
 
 ^"landed_since"{
+  pin_138d2a2 = #[
+    `138d2a28da2b (29 commits past 813444d, 2026-10-13) — one hash resolution strategy: a landed commit takes a commitRef token, and every hash git confirms hovers and links to its commit (a80a5df); in VS Code the link opens a read-only diff (00c6a56)`,
+    `a hash-shaped run git does not hold takes a hashlike token and its hover says so (1ea9ac1); the editor reads a word as one unit, with no digits painted inside names (8c74556): syntax_highlighting`,
+    `frame lenses name what they count, in the plural, and incoming refs show once, as the anchor lens (c3ecbb3): the % lens with a unit in gestures.spw`,
+    `the annotation index holds only files the workspace walk would hold, and a deleted folder drops what it held (e99e167): lsp_index_scope`,
+    `the server registers file watchers with every client that takes dynamic registration (198f687); Neovim gains commit links, lenses and configurable hints (bdd4894)`,
+    `npm run spw:reset only previews; discarding .spw work takes bash scripts/spw-reset.sh --force (cdbb691)`,
+    `the workbench's own caches move into a living tree and a dated journal (.spw/caches/tree, .spw/caches/journal); the site cites none of the moved paths`,
+  ][reg=set]
   pin_813444d = #[
     `813444dcd951 (7 commits past 749899e, 2026-10-12) — stream entries read the same in every dialect, and their bodies are prose with figures (866826f)`,
     `@ names in entry prose read as root links, and spaced >> [ entries are rewritten (940ef67)`,

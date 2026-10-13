@@ -40,9 +40,11 @@ only adds *resolution*: does the path exist, and does the `#fragment` name
 anything in the target. All 2480 citations currently resolve.
 
 **Known workbench gaps** (this consumer is a use case the workbench predates).
-Pin `813444dcd951`. Details: `.spw/workbench-report.spw`.
+Pin `138d2a28da2b`. Details: `.spw/workbench-report.spw`.
 
-Landed on this pin: stream entries read the same in every dialect, and `@`
+Landed on this pin: a commit hash git confirms hovers and links to its
+commit, frame lenses name what they count, and the annotation index holds
+only what the workspace walk holds. From `813444dcd951`: stream entries read the same in every dialect, and `@`
 names in their prose read as root links; read-only walkers read `.agents`.
 From `749899ee8a66`: citations come from the parser first, `>>[` completes
 its stamp, `spw refactor` plans citation rewrites when a file moves, a

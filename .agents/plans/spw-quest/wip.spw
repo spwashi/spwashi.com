@@ -45,6 +45,7 @@ fixity = "tending"
  >>[2026-10-12 20:50] implement — /init re-pinned from 4fe8b9d8 to a6d69642 (workbench plan onboarding-quest, pin_spw_quest): on upstream, carries the mounted-root measure fix, init templates unchanged; parser-text.js stays at 4fe8b9d8 until the mount moves. Committed with the named parser builds at the creator's word; not deployed.
  >>[2026-10-12 20:58] revise — 227365c3 moved the mount and parser-text.js to 749899ee, now on upstream, so /init follows it: one revision for the mount, the built-in parser, /init and 2026.10.13-pre.1. The CLI is unchanged between a6d69642 and 749899ee.
  >>[2026-10-13 09:51] implement — /init pins 813444dc, the revision the mount and the built-in parser now run (the rule from d4e42c5b); /parser.js carries the 74.0 KiB bundle with the new stream-entry lexer.
+ >>[2026-10-13 18:55] implement — /init pins 138d2a28, the revision the mount and the built-in parser now run; the parser bytes are unchanged from 813444dc.
 }
 
 ^"architecture"{
