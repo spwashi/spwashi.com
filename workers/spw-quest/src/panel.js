@@ -2,7 +2,7 @@
 // speaker named, and the line in a balloon whose shape follows the bubble kind.
 // The shape is decoration; the kind is also written beside the speaker.
 import { escapeHtml } from "../../lib/shell.js";
-import { BALLOON_WORDS, LAYERS, LINE_LIMIT, readLine, renderReading } from "./reader.js";
+import { BALLOON_WORDS, LINE_LIMIT, readLine, renderReading } from "./reader.js";
 import { STEPS } from "./steps.js";
 
 /** A jagged rim for the burst balloon: spikes on the outer edge, valleys on the balloon's own edge. */
@@ -28,7 +28,6 @@ export const PANEL_CSS = `:root { --ink-line: rgba(14, 18, 20, .72); --caption: 
     .step .n { min-width: 2.2ch; color: var(--muted); font: 600 .9rem/1 var(--mono); font-variant-numeric: tabular-nums; text-align: right; text-decoration: none; }
     .step a.n:hover, .step a.n:focus-visible, .step:target a.n { color: var(--accent); }
     .scene { margin: 0; padding: .05rem .5rem; border: 1px solid var(--ink-line); background: var(--caption); font: .85rem/1.5 var(--mono); }
-    .step .reads { margin: 0 0 .5rem; }
     form.line { margin: 0; }
     form.line label.speaker { display: flex; flex-wrap: wrap; align-items: baseline; gap: .1rem .45rem; margin: .4rem 0 0; color: var(--fg); font: 600 .92rem/1.3 var(--mono); }
     .speaker .kind { color: var(--muted); font: 400 .88rem/1.3 var(--font); }
@@ -52,12 +51,11 @@ export const PANEL_CSS = `:root { --ink-line: rgba(14, 18, 20, .72); --caption: 
     .line-actions button { min-width: 5.5rem; margin: 0; }
     .then { margin: 0; color: var(--muted); font-size: .92rem; }
     .then a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 .15rem; font-family: var(--mono); }
-    .nuance { display: grid; grid-template-columns: max-content max-content minmax(0, 1fr); margin: .8rem 0 0; padding: 0; border-top: 1px solid var(--line); list-style: none; }
+    .nuance { display: grid; grid-template-columns: max-content minmax(0, 1fr); margin: .8rem 0 0; padding: 0; border-top: 1px solid var(--line); list-style: none; }
     .nuance li { display: grid; grid-column: 1 / -1; grid-template-columns: subgrid; gap: .1rem .9rem; align-items: baseline; margin: 0; padding: .1rem .35rem; border-bottom: 1px solid var(--line); }
     .nuance li[aria-current] { background: var(--accent-soft); }
     .nuance .try { display: inline-flex; align-items: center; min-height: 44px; color: var(--muted); font: 1rem/1.25 var(--mono); text-decoration: none; overflow-wrap: anywhere; }
     .nuance mark { background: none; color: var(--accent); font-weight: 700; }
-    .nuance .kind { color: var(--muted); font-size: .86rem; }
     .nuance .said a { font-weight: 600; }
     @media (max-width: 30rem) { .nuance li { column-gap: .6rem; } .nuance .said { font-size: .94rem; } }
     .reading { margin: .8rem 0 0; padding: .7rem .85rem .75rem; border-left: 3px solid var(--edge); border-radius: 0 calc(var(--radius) * .8) calc(var(--radius) * .8) 0; background: var(--field); }
@@ -71,13 +69,8 @@ export const PANEL_CSS = `:root { --ink-line: rgba(14, 18, 20, .72); --caption: 
     .parts li { display: grid; grid-template-columns: 2.6rem minmax(0, 1fr); gap: .5rem; align-items: baseline; margin: 0; }
     .mark { color: var(--accent); font: 600 1.05rem/1.35 var(--mono); white-space: nowrap; }
     .parts a { font-weight: 600; }
+    .parts .held { color: var(--accent); font-family: var(--mono); }
     .reading .note { margin: .5rem 0 0; }
-    .about-step { display: grid; gap: .4rem; margin: .85rem 0 0; }
-    .about-step div { display: grid; grid-template-columns: 4.4rem minmax(0, 1fr); gap: .6rem; align-items: baseline; }
-    .about-step dt { margin: 0; color: var(--muted); font-size: .74rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
-    .about-step dd { margin: 0; }
-    .about-step dd[data-level]::before { content: ""; display: inline-block; width: 2.6rem; height: .5rem; margin-right: .55rem; vertical-align: .05em; background: linear-gradient(to right, var(--accent) calc(var(--level) * 25%), var(--line) 0); -webkit-mask: repeating-linear-gradient(to right, #000 0 calc(25% - 2px), transparent 0 25%); mask: repeating-linear-gradient(to right, #000 0 calc(25% - 2px), transparent 0 25%); }
-    .about-step dd[data-level="1"] { --level: 1; } .about-step dd[data-level="2"] { --level: 2; } .about-step dd[data-level="3"] { --level: 3; } .about-step dd[data-level="4"] { --level: 4; }
     .edges { display: flex; justify-content: space-between; gap: .5rem; margin: .9rem -.4rem -.35rem; padding-top: .55rem; border-top: 1px solid var(--line); font: .86rem/1.2 var(--mono); }
     .edges a { display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; padding: 0 .4rem; border-radius: 4px; text-decoration: none; }
     .edges a[rel="next"] { margin-left: auto; }
@@ -113,7 +106,7 @@ function nuances(step, current) {
     const reading = readLine(step.id, line);
     const op = reading.operators[0];
     const said = op ? `${op.name ? `<a href="/#op-${escapeHtml(op.name)}">${escapeHtml(op.name)}</a> ` : ""}${escapeHtml(op.reads)}` : escapeHtml(reading.says);
-    return `<li${line === current ? ' aria-current="true"' : ""}><a class="try" href="/read?step=${encodeURIComponent(step.id)}&amp;line=${encodeURIComponent(line)}" data-then="${escapeHtml(step.id)}"><code>${shown}</code></a><span class="kind">${escapeHtml(BALLOON_WORDS[reading.balloon] || reading.balloon)}</span><span class="said">${said}</span></li>`;
+    return `<li${line === current ? ' aria-current="true"' : ""}><a class="try" href="/read?step=${encodeURIComponent(step.id)}&amp;line=${encodeURIComponent(line)}" data-then="${escapeHtml(step.id)}"><code>${shown}</code></a><span class="said">${said}</span></li>`;
   });
   return `
     <ul class="nuance" aria-label="${escapeHtml(lines.join(", "))}">
@@ -132,13 +125,11 @@ export function stepSurface(step, { index, line = step.try, heading = "h2" }) {
   const reading = readLine(step.id, line);
   const compared = step.then ? nuances(step, line) : null;
   const then = compared || !step.then ? [] : step.then.map((t) => `<a href="/read?step=${encodeURIComponent(step.id)}&amp;line=${encodeURIComponent(t)}" data-then="${id}">${escapeHtml(t)}</a>`);
-  const layer = LAYERS[step.layer] ? `${step.layer.replace("_", " ")}: ${LAYERS[step.layer]}` : step.layer;
   return `<section class="step" id="${id}" aria-labelledby="${id}-title">
     <div class="panel-head">
       <${heading} id="${id}-title"><a class="n" href="${home}#${id}">${index + 1}</a> ${id}</${heading}>
       <p class="scene"><span class="sr-only">Scene: </span>${escapeHtml(step.scene)}</p>
     </div>
-    <p class="reads">${escapeHtml(step.reads)}</p>
     <form class="line" id="form-${id}" method="get" action="/read">
       <input type="hidden" name="step" value="${id}">
       <label class="speaker" for="line-${id}"><span class="who">${escapeHtml(step.speaker)}</span> <span class="kind">${escapeHtml(BALLOON_WORDS[reading.balloon] || reading.balloon)}</span><span class="sr-only"> balloon, ${terminal ? "the commands" : "your line"}</span></label>
@@ -150,11 +141,6 @@ export function stepSurface(step, { index, line = step.try, heading = "h2" }) {
         ${then.length ? `<p class="then">Then try ${then.join(" and ")}.</p>` : ""}
       </div>
     </form>
-    <div class="reading" id="reading-${id}">${renderReading(reading)}</div>${compared || ""}
-    <dl class="about-step">
-      <div><dt>Notice</dt><dd>${escapeHtml(step.notice)}</dd></div>
-      <div><dt>Grow</dt><dd>${escapeHtml(step.grow)}</dd></div>
-      <div><dt>Layer</dt><dd${/^level_\d$/.test(step.layer) ? ` data-level="${step.layer.slice(6)}"` : ""}>${escapeHtml(layer)}</dd></div>
-    </dl>${home ? "" : edges(index)}
+    <div class="reading" id="reading-${id}">${renderReading(reading)}</div>${compared || ""}${home ? "" : edges(index)}
   </section>`;
 }
