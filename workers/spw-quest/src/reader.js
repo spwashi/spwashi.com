@@ -139,20 +139,31 @@ export function readingKit(data) {
         reading.containers.push({ pair: `${c.open} ${c.close}`, name: c.name, reads: c.reads });
       }
     }
+    const held = text.match(/\{([^{}]*)\}/);
+    const entry = held && reading.containers.find((c) => c.name === "definition");
+    if (entry) {
+      const body = held[1];
+      if (body.includes(",")) {
+        const count = body.split(",").map((part) => part.trim()).filter(Boolean).length;
+        entry.count = `${count} part${count === 1 ? "" : "s"}`;
+      } else if (body.includes(".")) entry.count = "1 name";
+      else if (body.trim()) entry.count = "1 part";
+    }
     return reading;
   }
 
   const LABELS = { pass: "Passes.", fail: "Not yet.", empty: "Empty.", terminal: "Runs in a terminal." };
   function render(reading) {
     const id = esc(reading.step);
-    const html = `<p class="check" id="check-${id}" data-state="${reading.state}"><strong>${LABELS[reading.state]}</strong> ${esc(reading.says)}</p>`;
+    const says = reading.state === "pass" ? "" : ` ${esc(reading.says)}`;
+    const html = `<p class="check" id="check-${id}" data-state="${reading.state}"><strong>${LABELS[reading.state]}</strong>${says}</p>`;
     if (reading.state === "terminal") {
       return `${html}<p class="note"><a href="/install">Install the workbench</a>, or give an agent <a href="/init">the recipe</a>; it ends with this panel.</p>`;
     }
     if (reading.state === "empty") return html;
     const items = [
       ...reading.operators.map((op) => `<li><code class="mark">${esc(op.sigil)}</code><span>${op.name ? `<a href="/#op-${esc(op.name)}">${esc(op.name)}</a> ` : ""}${esc(op.reads)}</span></li>`),
-      ...reading.containers.map((c) => `<li><code class="mark">${esc(c.pair)}</code><span><a href="/#brace-${esc(c.name)}">${esc(c.name)}</a> ${esc(c.reads)}</span></li>`),
+      ...reading.containers.map((c) => `<li><code class="mark">${esc(c.pair)}</code><span><a href="/#brace-${esc(c.name)}">${esc(c.name)}</a> ${esc(c.reads)}${c.count ? ` <span class="held">${esc(c.count)}</span>` : ""}</span></li>`),
     ];
     return html
       + (items.length ? `<ul class="parts" aria-label="What Spw reads in the line">${items.join("")}</ul>` : `<p class="note">No marks and no braces: Spw keeps these as words.</p>`)

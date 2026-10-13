@@ -3,9 +3,10 @@ import { EXPECTED_FILES, GIT_GUIDE, GIT_MARKDOWN, INSTRUCTION_SETS, QUEST_PROMPT
 import { STEPS } from "./steps.js";
 import { LINE_LIMIT, liveScript, readLine } from "./reader.js";
 import { PANEL_CSS, stepSurface } from "./panel.js";
-import { BUILD_CSS, BUILD_DEFAULTS, buildSurface, slotsFrom } from "./build.js";
+import { BUILD_CSS, BUILD_DEFAULTS, MAX_SCRIPT, assemble, buildSurface, focusSlots, formatScript, safeName, slotsFrom, toolActions } from "./build.js";
 import { PAPER_CSS, PAPER_THEME } from "./paper.js";
 import { PARSER_JS } from "./parser-text.js";
+import { handleParser, isParserPath } from "./parser-releases.js";
 import { BASE_SECURITY, escapeHtml, htmlResponse, jsonResponse, layout, wantsJson } from "../../lib/shell.js";
 
 const VERSION = "0.1.0";
@@ -237,9 +238,9 @@ function renderGuide() {
   const steps = STEPS.map((step, index) => `<li>${stepSurface(step, { index })}</li>`).join("\n  ");
   return layout({
     title: "spw.quest — a guide to the Spw language",
-    description: "Seven panels at one door: write a line and see what Spw reads in it. One mark says what a word is doing, and braces say what belongs together.",
+    description: "Change one slot of a Spw expression, see what that slot means, then copy, format, or download the script.",
     canonical: "https://spw.quest/",
-    script: `document.documentElement.dataset.setupSets = ${JSON.stringify(setIds)};\n(${forwardSetupHash.toString()})();`,
+    script: `document.documentElement.dataset.setupSets = ${JSON.stringify(setIds)};\n(${forwardSetupHash.toString()})();\n(${toolActions.toString()})();`,
     themeCss: `${PAPER_CSS}
     ${PANEL_CSS}
     ${PATH_CSS}
@@ -253,14 +254,15 @@ function renderGuide() {
     .edges-in .n { color: var(--muted); font-variant-numeric: tabular-nums; }
     .braces .edges-in { display: inline-flex; margin: 0 0 0 .4rem; padding: 0; vertical-align: baseline; }
     .braces li:target { background: var(--accent-soft); }
-    .opening { margin: .4rem 0 1.3rem; }
-    .opening .lede { max-width: 36rem; }
+    .opening { margin: .15rem 0 .7rem; }
+    .opening h1 { font-size: clamp(1.45rem, 4.4vw, 1.9rem); margin: 0; }
     .quest { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.4rem; }
     .quest > li { margin: 0; }
     .install { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .4rem 1rem; margin: 1.6rem 0; padding: .8rem 1rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
     .install p { margin: 0; }
     .install .chip { margin: 0; }
     section:not(.step) { margin: 2.4rem 0; }
+    #build { margin-top: .2rem; }
     .sigils { display: grid; grid-template-columns: 3.1rem max-content minmax(0, 1fr); margin: 1rem 0 0; padding: 0; border-top: 1px solid var(--line); list-style: none; }
     .sigils li { display: grid; grid-column: 1 / -1; grid-template-columns: subgrid; column-gap: 1rem; align-items: baseline; margin: 0; padding: .55rem .4rem; border-bottom: 1px solid var(--line); }
     .sigils li:target { background: var(--accent-soft); box-shadow: inset 3px 0 0 var(--accent); }
@@ -283,17 +285,15 @@ function renderGuide() {
     body: `<header class="opening">
   <p class="kicker">spw.quest · a guide to Spw · <a href="/install">install</a></p>
   <h1>A small language for the shape of a thought.</h1>
-  <p class="lede">Write a line and Spw reads it back. Each of the seven panels changes one thing, so you can see what that one thing does.</p>
 </header>
+<section id="build" aria-labelledby="build-title">
+  <h2 id="build-title">Put one together${selfLink("build", "build-title")}</h2>
+  ${buildSurface(BUILD_DEFAULTS)}
+</section>
 ${pathNav()}
 <ol class="quest" role="list" aria-label="Seven panels">
   ${steps}
 </ol>
-<section id="build" aria-labelledby="build-title">
-  <h2 id="build-title">Put one together${selfLink("build", "build-title")}</h2>
-  <p>The four ways to hold things read as one line after a word. Change one slot and keep the rest, and watch what Spw reads change with it.</p>
-  ${buildSurface(BUILD_DEFAULTS)}
-</section>
 <aside class="install" aria-label="Install">
   <p>Want it in a repository? The workbench mounts at <code>.spw/_workbench</code> and stops before any commit.</p>
   <a class="chip" href="/install">Install the workbench →</a>
@@ -352,11 +352,12 @@ ${liveScript()}`,
   });
 }
 
-function renderBuild(slots) {
+function renderBuild(slots, script = assemble(slots), filename = `${slots.word || "line"}.spw`) {
   return layout({
     title: "spw.quest — put one together",
-    description: "Write a mark, a word and four kinds of braces as one line, and change one slot at a time to see what Spw reads.",
+    description: "Change one slot, see what it means, then copy, format, or download the .spw.",
     canonical: "https://spw.quest/#build",
+    script: `(${toolActions.toString()})();`,
     themeCss: `${PAPER_CSS}
     ${PANEL_CSS}
     ${PATH_CSS}
@@ -368,7 +369,7 @@ function renderBuild(slots) {
 ${pathNav(STEPS.length)}
 <section id="build" aria-labelledby="build-title">
   <h1 id="build-title">Put one together</h1>
-  ${buildSurface(slots)}
+  ${buildSurface(slots, script, filename)}
 </section>
 <nav class="step-nav" aria-label="Panels">
   <a class="chip" href="/#build">Back to the guide</a>
@@ -428,7 +429,36 @@ function handleRead(url) {
   return htmlResponse(renderRead(step, given.slice(0, LINE_LIMIT), { cut: given.length > LINE_LIMIT }), { cache: "public, max-age=300" });
 }
 
-function handleQuest(request, url) {
+function scriptFile(body, filename) {
+  const text = body && !body.endsWith("\n") ? `${body}\n` : body;
+  return new Response(text, {
+    headers: {
+      ...BASE_SECURITY,
+      "Content-Type": "text/plain; charset=UTF-8",
+      "Content-Disposition": `attachment; filename="${filename}"`,
+      "Cache-Control": "no-store",
+      "X-Robots-Tag": "noindex",
+    },
+  });
+}
+
+async function handleTool(request, url) {
+  let form;
+  try {
+    form = await request.formData();
+  } catch {
+    return new Response("Bad request", { status: 400, headers: BASE_SECURITY });
+  }
+  const script = String(form.get("script") ?? "").slice(0, MAX_SCRIPT);
+  const filename = safeName(form.get("filename") || "line.spw");
+  if (url.pathname === "/script.spw" || form.get("tool") === "download") return scriptFile(script, filename);
+  const formatted = form.get("tool") === "format" ? formatScript(script) : script;
+  const slots = focusSlots(formatted) || { ...BUILD_DEFAULTS };
+  return htmlResponse(renderBuild(slots, formatted, filename), { cache: "no-store" });
+}
+
+async function handleQuest(request, url) {
+  if (request.method === "POST" && (url.pathname === "/build" || url.pathname === "/script.spw")) return handleTool(request, url);
   if (!["GET", "HEAD"].includes(request.method)) {
     return new Response("Method not allowed", { status: 405, headers: { ...BASE_SECURITY, Allow: "GET, HEAD" } });
   }
@@ -454,6 +484,9 @@ function handleQuest(request, url) {
     response.headers.set("Content-Security-Policy", GUIDE_CSP);
   } else if (url.pathname === "/build") {
     response = htmlResponse(renderBuild(slotsFrom(url.searchParams)), { cache: "public, max-age=300" });
+  } else if (url.pathname === "/script.spw") {
+    const slots = slotsFrom(url.searchParams);
+    response = scriptFile(assemble(slots), `${slots.word || "line"}.spw`);
   } else if (url.pathname === "/read") {
     response = handleRead(url);
   } else if (url.pathname === "/parser.js") {
@@ -474,11 +507,13 @@ function handleQuest(request, url) {
 }
 
 export default {
-  async fetch(request) {
+  async fetch(request, env) {
     const url = new URL(request.url);
     if (url.hostname === "www.spw.quest") {
       return Response.redirect(`https://spw.quest${url.pathname}${url.search}`, 302);
     }
+    // Dated parser releases come from static assets (src/parser-releases.js); /parser.js is not one of them.
+    if (isParserPath(url.pathname)) return handleParser(request, url, env);
     return handleQuest(request, url);
   },
 };

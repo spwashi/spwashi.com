@@ -104,6 +104,11 @@ test('the guide leads with seven panels, each a line in a balloon and a GET form
   assert.equal(response.status, 200);
   const page = await response.text();
   assert.match(page, /A small language for the shape of a thought\./);
+  assert.ok(page.indexOf('id="build"') < page.indexOf('<section class="step" id="write"'), 'the script tool comes before the panels');
+  assert.match(page, /data-tool="copy"/);
+  assert.match(page, /name="tool" value="format"/);
+  assert.match(page, /formaction="\/script\.spw"/);
+  assert.doesNotMatch(page, /<dt>Notice<\/dt>/);
   assert.match(page, /href="\/install">install<\/a>/);
   assert.match(page, /href="\/install">Install the workbench/);
   // The spiral is retired as the organizing shape.
@@ -207,7 +212,7 @@ test('/read reads each try line with the worker parser, and links back to its pa
   // Tight dots lex as one identifier, so the braces hold one part; commas make three.
   const dots = (await read('hold', 'door[closed]{hinge.frame.key}')).page;
   assert.match(dots, /The braces hold one part\./);
-  assert.match((await read('hold', 'door[closed]{hinge, frame, key}')).page, /3 parts held in \{ \}/);
+  assert.match((await read('hold', 'door[closed]{hinge, frame, key}')).page, /<span class="held">3 parts<\/span>/);
   // The operator in front of the word picks the balloon; @ before a word also counts as a mark.
   assert.match((await read('act', '!door')).page, /data-bubble="burst"/);
   assert.match((await read('act', '?door')).page, /data-bubble="question"/);
@@ -304,15 +309,47 @@ test('guide operator names follow the workbench reader vocabulary', { skip: !exi
 test('put one together: slots make a line, each pivot holds the rest, and nothing breaks its braces', async () => {
   const page = await (await get('spw.quest', '/build?mark=%3F&word=door&concept=&scene=threshold&mode=ajar&definition=hinge.frame.key')).text();
   assert.match(page, /aria-label="\?door\(threshold\)\[ajar\]\{hinge\.frame\.key\}"/);
-  assert.match(page, /The braces hold one part\. Words joined by dots read as one name/);
+  assert.match(page, /1 name\. Dots join the words\./);
   // Changing the mark keeps every other slot.
   assert.ok(page.includes('href="/build?mark=!&amp;word=door&amp;concept=&amp;scene=threshold&amp;mode=ajar&amp;definition=hinge.frame.key#build"'), 'mark pivot holds the rest');
   assert.match(page, /<form class="slots" method="get" action="\/build#build">/);
+  assert.match(page, /data-tool="copy"/);
   const three = await (await get('spw.quest', '/build?definition=hinge%2C%20frame%2C%20key')).text();
-  assert.match(three, /3 parts held in \{ \}/);
+  assert.match(three, /3 parts/);
   const hostile = await (await get('spw.quest', '/build?mark=%3Cscript%3E&word=a%7Bb%7D&mode=x%5Dy')).text();
   assert.match(hostile, /aria-label="ab\(morning\)\[xy\]\{hinge, frame, key\}"/);
   assert.ok(!hostile.includes('&lt;script'), 'a mark outside the twelve is dropped, not echoed');
   const guide = await (await get('spw.quest', '/')).text();
   assert.match(guide, /<section id="build" aria-labelledby="build-title">/);
+});
+
+test('a script can be formatted and downloaded', async () => {
+  const spaced = "~ door ( morning ) [ closed ] { hinge , frame , key }";
+  const form = new URLSearchParams({ script: spaced, filename: "door.spw", tool: "format" });
+  const formatted = await get('spw.quest', '/build', {
+    method: 'POST',
+    headers: { 'content-type': 'application/x-www-form-urlencoded' },
+    body: form,
+  });
+  assert.equal(formatted.status, 200);
+  const page = await formatted.text();
+  assert.match(page, />~door\(morning\)\[closed\]\{hinge, frame, key\}\n?<\/textarea>/);
+  const download = await get('spw.quest', '/script.spw?word=door&scene=morning&mode=closed&definition=hinge%2C%20frame%2C%20key');
+  assert.equal(download.status, 200);
+  assert.equal(download.headers.get('content-type'), 'text/plain; charset=UTF-8');
+  assert.equal(download.headers.get('content-disposition'), 'attachment; filename="door.spw"');
+  assert.equal(await download.text(), '~door(morning)[closed]{hinge, frame, key}\n');
+  const posted = await get('spw.quest', '/script.spw', {
+    method: 'POST',
+    headers: { 'content-type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({ script: '#>notes\n', filename: '../notes.spw', tool: 'download' }),
+  });
+  assert.equal(posted.headers.get('content-disposition'), 'attachment; filename="notes.spw"');
+  assert.equal(await posted.text(), '#>notes\n');
+  const rejected = await get('spw.quest', '/build', {
+    method: 'POST',
+    headers: { 'content-type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({ script: 'door[ {', tool: 'format' }),
+  });
+  assert.match(await rejected.text(), />door\[ \{\n?<\/textarea>/);
 });
