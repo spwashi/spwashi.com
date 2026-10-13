@@ -40,9 +40,11 @@ only adds *resolution*: does the path exist, and does the `#fragment` name
 anything in the target. All 2480 citations currently resolve.
 
 **Known workbench gaps** (this consumer is a use case the workbench predates).
-Pin `749899ee8a66`. Details: `.spw/workbench-report.spw`.
+Pin `813444dcd951`. Details: `.spw/workbench-report.spw`.
 
-Landed on this pin: citations come from the parser first, `>>[` completes
+Landed on this pin: stream entries read the same in every dialect, and `@`
+names in their prose read as root links; read-only walkers read `.agents`.
+From `749899ee8a66`: citations come from the parser first, `>>[` completes
 its stamp, `spw refactor` plans citation rewrites when a file moves, a
 mounted run reads paths from the consumer root, and `npm run bundle:parser`
 cuts dated parser releases. From `4fe8b9d8b516`: definition lands a citation's fragment on its anchor
