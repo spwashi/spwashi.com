@@ -57,6 +57,12 @@ expression = asks[context]{sessions.instruments.calls.landed}<upstream>
 # ==============================================================================
 
 ^"landed_since"{
+  pin_813444d = #[
+    `813444dcd951 (7 commits past 749899e, 2026-10-12) — stream entries read the same in every dialect, and their bodies are prose with figures (866826f)`,
+    `@ names in entry prose read as root links, and spaced >> [ entries are rewritten (940ef67)`,
+    `read-only walkers read .agents, and census and lint skip worktree copies (a4e548d): the plans root the 10-11 asks wanted indexed`,
+    `spw lint over the site's 763 tracked .spw files at this pin: one finding, the naming.spw backtick misread already on record`,
+  ][reg=set]
   pin_749899e = #[
     `749899ee8a66 (12 commits past 4fe8b9d, 2026-10-12) — citations come from the parser first (e6c5697), the regex-first selector the 10-11 asks measured`,
     `>>[ completes its stamp (e6c5697), the editor half of vscode_2026_10_12 stream_time; plan hashes hover with their commit`,
