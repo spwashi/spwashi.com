@@ -77,7 +77,8 @@ export function fileKit(data) {
       } else if (n.type === "Annotation" && n.name) {
         reading.notes.push({ name: n.name.value, value: unquote(n.value && n.value.token ? n.value.token.value : spanText(text, n.value)) });
       }
-      if (n.type === "Operation" && n.operator && n.operatorLabel && n.operatorLabel.type === "IDENTIFIER") {
+      // A word after = is a field's value or a mode (reg=facet), not a marked word.
+      if (n.type === "Operation" && n.operator && n.operator.value !== "=" && n.operatorLabel && n.operatorLabel.type === "IDENTIFIER") {
         reading.marked.push({ sigil: n.operator.value, word: n.operatorLabel.value });
       }
       if (n.type === "Operation" && n.operator && n.operator.value === "^" && n.subject && n.subject.token && n.body) {
@@ -193,7 +194,7 @@ export function fileKit(data) {
     // A probe already shows under the question it answers.
     const marked = reading.marked.filter((m) => !(m.sigil === "!" && m.word === "probe" && reading.questions.length));
     if (marked.length) {
-      facts.push(row("Marked words", `<ul class="fields">${marked.map((m) => `<li>${mark(m.sigil, data.types[m.sigil] || "")}<span><span class="key">${esc(m.word)}</span> ${esc(NAMES.get(m.sigil) || "")}</span></li>`).join("")}</ul>`));
+      facts.push(row("Marked words", `<ul class="pairs">${marked.map((m) => `<li>${mark(m.sigil, data.types[m.sigil] || "")}<span><span class="key">${esc(m.word)}</span> ${esc(NAMES.get(m.sigil) || "")}</span></li>`).join("")}</ul>`));
     }
     if (reading.blocks.length) {
       facts.push(row("Holds", reading.blocks.map((b) => `<code>^"${esc(b)}"</code>`).join(" ")));
@@ -215,7 +216,7 @@ export function fileKit(data) {
       facts.push(row("Frames", `<ul class="frames">${reading.frames.map((f) => `<li>${mark(f.sigil, data.types[f.sigil] || "")}<span class="key">[${esc(f.word)}]</span><span>${esc(f.text)}</span></li>`).join("")}</ul>`));
     }
     if (reading.fields.length) {
-      facts.push(row("Fields", `<ul class="fields">${reading.fields.map((f) => `<li><span class="key">${esc(f.key)}</span><span>${esc(f.value)}</span></li>`).join("")}</ul>`));
+      facts.push(row("Fields", `<ul class="pairs">${reading.fields.map((f) => `<li><span class="key">${esc(f.key)}</span><span>${esc(f.value)}</span></li>`).join("")}</ul>`));
     }
     if (reading.links.length) {
       facts.push(row("Points to", `<ul class="links">${reading.links.map((l) => `<li><span class="key">@${esc(l.name)}</span><code>${esc(l.path)}</code></li>`).join("")}</ul>`));
@@ -375,11 +376,11 @@ export const FILE_CSS = `.try { margin: 0; }
     .facts .span { color: var(--muted); font: .8rem/1.4 var(--mono); }
     .facts .kinds { display: flex; flex-wrap: wrap; gap: .3rem; }
     .facts .kind { padding: 0 .4rem; border-radius: 3px; background: color-mix(in srgb, var(--op-stream-color) 12%, transparent); color: var(--op-stream-color); font: .78rem/1.5 var(--mono); }
-    .entries, .frames, .fields, .links { display: grid; gap: .3rem; margin: .3rem 0 0; padding: 0; list-style: none; }
+    .entries, .frames, .pairs, .links { display: grid; gap: .3rem; margin: .3rem 0 0; padding: 0; list-style: none; }
     .entries li { display: grid; grid-template-columns: 5.6rem 4.4rem minmax(0, 1fr); gap: .5rem; align-items: baseline; margin: 0; }
     .entries .when { color: var(--muted); font: .78rem/1.4 var(--mono); font-variant-numeric: tabular-nums; }
     .entries .kind { justify-self: start; }
-    .frames li, .fields li, .links li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .45rem; align-items: baseline; margin: 0; }
+    .frames li, .pairs li, .links li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .45rem; align-items: baseline; margin: 0; }
     .frames li { grid-template-columns: 1rem auto minmax(0, 1fr); }
     .facts .key { color: var(--fg); font: 600 .82rem/1.4 var(--mono); }
     .facts .q { font-family: var(--manuscript); font-size: 1.05rem; line-height: 1.35; }

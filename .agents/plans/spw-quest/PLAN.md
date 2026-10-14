@@ -1,6 +1,6 @@
 # Plan: spw-quest
 
-**Status 2026-10-13.** Committed, not yet deployed: the guide opens with five files people keep (a notebook, a question with its probe, a decision, reading notes, a commit note) in an editor painted in the site's operator colors, and beside it what a tool reads from the file, with checks that change as the file does. The seven panels moved to /learn, /build takes a recipe line apart, and every page wears the site's tokens and faces through the peer kit (`npm run build:peer-kit`, checked by `check:workers`). It waits on the creator's look at a phone before the Wrangler deploy.
+**Status 2026-10-14.** Committed, not yet deployed: the guide opens with five files from reading, writing and study (a reading log, a seminar question with its probe, a narrator's persona held in regard, reading notes, a revision note) in an editor painted in the site's operator colors, and beside it what a tool reads from the file, with checks that change as the file does. The seven panels moved to /learn, /build takes a writing line apart, and every page wears the site's tokens and faces through the peer kit (`npm run build:peer-kit`, checked by `check:workers`). It waits on the creator's look at a phone before the Wrangler deploy.
 
 **Related:** [workers-wonder-kit](../workers-wonder-kit/PLAN.md) (shared worker shell) · [spw-language-v04](../spw-language-v04/PLAN.md) (the parser's arrival in the site) · [upstream workbench asks](../../../.spw/reviews/upstream-workbench-recommendations.spw) (`week_2026_10_11`).
 

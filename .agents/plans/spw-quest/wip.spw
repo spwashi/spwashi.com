@@ -56,6 +56,7 @@ fixity = "tending"
  >>[2026-10-13 21:50] implement — creator: the UX still is not good and the examples are toys. The guide now opens with five files people keep (garden notebook, mildew question with its probe, a decision, reading notes, a commit note) in an editor whose paint sits under the field, and beside it what a tool reads: names, entries by kind, questions and probes, frames, fields, links, and checks that turn when a file's point is taken out (no *[verify], no !probe, an entry without a kind). Panels moved to /learn (old #act links forward); /build takes !bake<sourdough>(kitchen)[overnight]{flour, water, salt, starter} apart. scripts/build-peer-kit.mjs generates workers/lib/peer-kit.js from core.css and fonts.css and carries Newsreader and JetBrains Mono into assets/fonts under hashed names; pages allow font-src 'self'. The site gives $ and % no dark value. 43 tests; not deployed.
  >>[2026-10-13 23:05] implement — /init pins c17f57a8, the revision the mount and the built-in parser now run. Upstream's release now carries a reader with highlighted HTML and a workbench build; neither is carried into assets/parser/ yet, and the reader could replace the guide's own paint once a release ships it.
  >>[2026-10-13 23:19] implement — /init pins 0eb1d1c0. Release 2026.10.13 is cut again in place from 0eb1d1c0, at the creator's word and before anyone fetched it (no new name): reader and workbench join full and lite, and the release page says what each variant is for and gives its import line.
+ >>[2026-10-14 18:33] revise — creator: the examples read with a negative valence (mildew, a duplicated watering, readers stopping at the install step); choose examples for persona modeling and literary and academic development. The five files are now a reading log (Middlemarch: read, notice, draft), a seminar question with its probe (a question before reading, recall a week later), a narrator's persona held in regard (voice, regards, affirms, stayed: the regard and what-stayed framing, never try on), reading notes (Make It Stick applied to a syllabus week), and a revision note in the episode form (a chapter read aloud, a turn found in workshop). /build's line is !draft<chapter>(study)[second_pass]{voice, scene, turn}. The reading's field lists are .pairs, out of the shell's two-column .fields, and a word after = is a field, not a marked word.
 }
 
 ^"architecture"{
@@ -204,5 +205,5 @@ fixity = "tending"
  ~#next_commit: "+[quest] Give each sigil its physical model beside its reading"
  ~#files_hot: "workers/spw-quest/src/index.js, workers/spw-quest/src/panel.js, workers/spw-quest/src/build.js, workers/spw-quest/src/reader.js, workers/spw-quest/src/steps.js, workers/spw-quest/test/routes.test.mjs"
  ~#gate: "the creator's look on a phone (panels, path, nuance rows, sigil table, Put one together), then the Wrangler deploy"
- ~#last_stream: "2026-10-13"
+ ~#last_stream: "2026-10-14"
 }
