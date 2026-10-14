@@ -40,9 +40,11 @@ only adds *resolution*: does the path exist, and does the `#fragment` name
 anything in the target. All 2480 citations currently resolve.
 
 **Known workbench gaps** (this consumer is a use case the workbench predates).
-Pin `c17f57a80c55`. Details: `.spw/workbench-report.spw`.
+Pin `0eb1d1c0e454`. Details: `.spw/workbench-report.spw`.
 
-Landed on this pin: the parser release gains a reader (outline, anchors and
+Landed on this pin: one content hash across seed, the runtime and the CLI, and
+the workbench build reads the form under a caret (formAt, formHover).
+From `c17f57a80c55`: the parser release gains a reader (outline, anchors and
 highlighted HTML, browser-safe) and a workbench build of seed, the runtime
 and the reader; seed hashes without node:crypto, so it bundles for a browser.
 From `76e17bd46810`: a Concepts row in VS Code shows the plan that holds it.
