@@ -384,7 +384,7 @@ const SHELL = `
     }
 `;
 
-export function layout({ title, description, canonical, climate, body, quiet = false, embed = false, script = "", themeCss = "" }) {
+export function layout({ title, description, canonical, climate, body, quiet = false, embed = false, script = "", themeCss = "", head = "" }) {
   const weather = climate?.weather || "clear";
   const spwClimate = climate?.atmosphere?.climate || "garden";
   return `<!DOCTYPE html>
@@ -395,7 +395,7 @@ export function layout({ title, description, canonical, climate, body, quiet = f
   <title>${escapeHtml(title)}</title>
   <meta name="description" content="${escapeHtml(description)}">
   <meta name="robots" content="noindex, nofollow">
-  <link rel="canonical" href="${escapeHtml(canonical)}">
+  <link rel="canonical" href="${escapeHtml(canonical)}">${head ? `\n  ${head}` : ""}
   <style>${SHELL}</style>${themeCss ? `\n  <style>${themeCss}</style>` : ""}
 </head>
 <body class="${[embed ? "embed" : "", quiet ? "quiet" : ""].filter(Boolean).join(" ")}" data-spw-climate="${escapeHtml(spwClimate)}" data-weather="${escapeHtml(weather)}">

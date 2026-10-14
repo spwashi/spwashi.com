@@ -30,6 +30,7 @@
     "check:local:serial": "node scripts/check-local.mjs --serial",
     "check:agents": "node scripts/check-agent-contracts.mjs",
     "check:workers": "node scripts/check-workers.mjs",
+    "build:peer-kit": "node scripts/build-peer-kit.mjs",
     "check:built": "node scripts/check-built-modules.mjs",
     "check:signals": "node scripts/check-signals.mjs",
     "harness": "node scripts/harness-write-gate.mjs --status",

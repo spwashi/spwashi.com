@@ -1,14 +1,19 @@
-import { CONTAINERS, EXAMPLE, EXAMPLE_NOTES, OPERATORS, READERS } from "./guide.js";
+import { CONTAINERS, OPERATORS } from "./guide.js";
+import { EXAMPLES, exampleById } from "./examples.js";
 import { EXPECTED_FILES, GIT_GUIDE, GIT_MARKDOWN, INSTRUCTION_SETS, QUEST_PROMPTS, QUEST_TEXT, WORKBENCH } from "./quest.js";
 import { STEPS } from "./steps.js";
 import { LINE_LIMIT, liveScript, readLine } from "./reader.js";
+import { FILE_CSS, editorField, liveFileScript, outlineFile, readFile } from "./file-reader.js";
 import { PANEL_CSS, stepSurface } from "./panel.js";
 import { BUILD_CSS, BUILD_DEFAULTS, MAX_SCRIPT, assemble, buildFrom, buildSurface, focusSlots, formatScript, safeName, toolActions } from "./build.js";
-import { PAPER_CSS, PAPER_THEME } from "./paper.js";
+import { PAPER_CSS, PAPER_HEAD, PAPER_THEME } from "./paper.js";
+import { LIVE_CSP, PAGE_CSS, masthead, page } from "./page.js";
 import { PARSER_JS } from "./parser-text.js";
 import { handleParser, isParserPath } from "./parser-releases.js";
 import { SWITCH_CSS, parserSwitch, switchBanner, switchLoader, switchModulePath } from "./parser-switch.js";
-import { BASE_SECURITY, escapeHtml, htmlResponse, jsonResponse, layout, wantsJson } from "../../lib/shell.js";
+import { BASE_SECURITY, escapeHtml, jsonResponse, layout, wantsJson } from "../../lib/shell.js";
+import { PEER_BRACES, PEER_SIGILS } from "../../lib/peer-kit.js";
+import { isPeerFontPath, servePeerFont } from "../../lib/peer-assets.js";
 
 const VERSION = "0.1.0";
 const FEEDBACK_CONFIG = {
@@ -25,8 +30,8 @@ const FEEDBACK_CONFIG = {
   frame: { ancestors: ["https://spw.quest", "https://spwashi.com"] },
   theme: { mode: "light", ...PAPER_THEME, corners: "round", font: "system" },
 };
-/** The guide alone loads a script by URL (/parser.js, same origin); every other route keeps the shell's policy. */
-const GUIDE_CSP = BASE_SECURITY["Content-Security-Policy"].replace("script-src 'unsafe-inline'", "script-src 'self' 'unsafe-inline'");
+const SIGIL_TYPES = new Map(PEER_SIGILS.map(({ sigil, type }) => [sigil, type]));
+const BRACE_TYPES = new Map(PEER_BRACES.map(({ open, type }) => [open, type]));
 const QUEST = Object.freeze({
   designer: "Spwashi",
   ...WORKBENCH,
@@ -112,12 +117,15 @@ function renderInstall() {
     title: "spw.quest — initialize Spw Workbench",
     description: "Choose who runs the setup, copy one block, and run it from the repository root. It stops before any commit.",
     canonical: "https://spw.quest/install",
+    head: PAPER_HEAD,
     script: `(${questTabs.toString()})();`,
     themeCss: `${PAPER_CSS}
+    ${PAGE_CSS}
+    main > :not(.masthead) { max-width: 46rem; }
     html:not(.js) label.check, html:not(.js) .git-added { display: none; }
     html.js .tabpanel .git-added { display: none; margin: .2rem 0 .7rem; }
     html.js .tabpanel:has([data-include-git]:checked) .git-added { display: block; }`,
-    body: `<p class="kicker"><a href="/">spw.quest</a> · install</p>
+    body: `${masthead("/install")}
 <h1>Initialize the workbench in this repository.</h1>
 <p class="lede">Choose who runs the setup. Copy one block. Run it from the repository root. It stops before any commit.</p>
 <p>Spw Workbench adds the Spw language, parser, CLI, and editor tooling. It mounts at <code>.spw/_workbench</code>; your repository keeps its own <code>.spw/</code>. It needs Git and Node ${escapeHtml(readableNode(WORKBENCH.node))}.</p>
@@ -162,11 +170,13 @@ function renderInstall() {
   });
 }
 
-/** Old links carried the setup choice on the front page (#claude); send them to the install page. */
-function forwardSetupHash() {
+/** Old links carried the setup choice (#claude) or a panel (#act) on the front page; send them where those live now. */
+function forwardOldHash() {
   const sets = document.documentElement.dataset.setupSets.split(" ");
+  const panels = document.documentElement.dataset.panels.split(" ");
   const id = location.hash.slice(1);
   if (sets.includes(id)) location.replace(`/install#${id}`);
+  else if (panels.includes(id)) location.replace(`/learn#${id}`);
 }
 
 /** Which panels' lines use each operator and each brace pair: the edges back from a card to the panels. */
@@ -186,7 +196,7 @@ const EDGES_IN = (() => {
 
 /** Links to the panels in a set, as number and name. */
 const panelLinks = (indexes) => [...(indexes || [])].sort((a, b) => a - b)
-  .map((i) => `<a href="#${escapeHtml(STEPS[i].id)}"><span class="n">${i + 1}</span> ${escapeHtml(STEPS[i].id)}</a>`).join(" ");
+  .map((i) => `<a href="/learn#${escapeHtml(STEPS[i].id)}"><span class="n">${i + 1}</span> ${escapeHtml(STEPS[i].id)}</a>`).join(" ");
 
 /** A heading's own address, named by the heading. */
 const selfLink = (section, title) => `<a class="self" href="#${section}" aria-labelledby="${title}">#</a>`;
@@ -224,159 +234,198 @@ function pathNav(current = -1) {
 </nav>`;
 }
 
+/** The guide's own sections below the file. */
+const GUIDE_CSS = `.opening { margin: 0 0 1.4rem; }
+    .opening h1 { max-width: 17ch; margin: 0 0 .7rem; }
+    .opening .lede { max-width: 40rem; margin: 0; color: var(--ink-soft); font-size: clamp(1.05rem, 2.4vw, 1.2rem); line-height: 1.5; }
+    .eyebrow { margin: 0 0 .5rem; color: var(--muted); font: 600 .78rem/1.2 var(--font); letter-spacing: .08em; text-transform: uppercase; }
+    section.band { margin: 3.2rem 0 0; padding: 2rem 0 0; border-top: 1px solid var(--line); }
+    section.band > p { max-width: 46rem; }
+    [id] { scroll-margin-top: 1.25rem; }
+    h2 .self { margin-left: .45rem; color: var(--muted); font: 400 .7em var(--mono); text-decoration: none; opacity: .5; }
+    h2 .self:hover, h2 .self:focus-visible, section:target h2 .self { color: var(--accent); opacity: 1; }
+    .sigils { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15.5rem), 1fr)); gap: .6rem; margin: 1.2rem 0 0; padding: 0; list-style: none; }
+    .sigils li { display: grid; grid-template-columns: 2.4rem minmax(0, 1fr); gap: .1rem .7rem; align-content: start; margin: 0; padding: .75rem .85rem .8rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+    .sigils li:target { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+    .sigils .sigil { grid-row: span 4; font: 600 1.7rem/1 var(--mono); }
+    .sigils p { margin: 0; }
+    .sigils .name { font-weight: 650; }
+    .sigils .name code { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .sigils .reads { font-size: .95rem; line-height: 1.45; }
+    .sigils .note { margin-top: .2rem; font-size: .8rem; line-height: 1.4; }
+    @media (max-width: 40rem) { .sigils { gap: 0; } .sigils li { padding: .65rem 0 .7rem; border: 0; border-top: 1px solid var(--line); border-radius: 0; background: none; } .sigils li:target { box-shadow: inset 3px 0 0 var(--accent); padding-left: .6rem; } }
+    .edges-in { display: flex; flex-wrap: wrap; gap: 0 .6rem; padding-top: .3rem; font: .78rem/1.2 var(--mono); }
+    .edges-in a { display: inline-flex; align-items: center; gap: .25rem; min-height: 32px; text-decoration: none; }
+    .edges-in .n { color: var(--muted); font-variant-numeric: tabular-nums; }
+    .braces { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr)); gap: 0 1.4rem; margin: 1.2rem 0 0; padding: 0; list-style: none; }
+    .braces li { display: grid; grid-template-columns: 3.4rem minmax(0, 1fr); gap: .1rem .6rem; align-items: baseline; margin: 0; padding: .55rem 0; border-top: 1px solid var(--line); }
+    .braces li:target { background: var(--accent-soft); }
+    .braces .pair { font: 600 1.15rem/1.2 var(--mono); }
+    .braces .edges-in { grid-column: 2; padding-top: 0; }
+    .doors { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); gap: .7rem; margin: 1.2rem 0 0; }
+    .door { display: grid; align-content: start; gap: .35rem; margin: 0; padding: 1rem 1rem 1.05rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); box-shadow: none; }
+    .door:has(a:hover, a:focus-visible) { border-color: var(--accent); }
+    .door h3 { margin: 0; }
+    .door h3 a { color: var(--fg); text-decoration: none; }
+    .door h3 a::after { content: " →"; color: var(--accent); }
+    .door p { margin: 0; color: var(--ink-soft); font-size: .95rem; line-height: 1.45; }
+    .door code { overflow-wrap: anywhere; font-size: .82rem; }
+    #origin p { max-width: 40rem; font-family: var(--manuscript); font-size: 1.12rem; line-height: 1.55; }`;
+
 /** The guide. With `parser` ({ value, from }, from a valid ?parser=), a banner leads and the page reads with that build. */
-function renderGuide(parser = null) {
+function renderGuide(parser = null, example = EXAMPLES[0]) {
   const sigils = OPERATORS.map((op) => `<li id="op-${escapeHtml(op.name)}">
-      <span class="sigil" aria-hidden="true">${escapeHtml(op.sigil)}</span>
-      <p><strong>${escapeHtml(op.name)}</strong> <code>${escapeHtml(op.sigil)}</code></p>
-      <p>${escapeHtml(op.reads)}</p>
+      <span class="sigil" data-t="${escapeHtml(SIGIL_TYPES.get(op.sigil) || "")}" aria-hidden="true">${escapeHtml(op.sigil)}</span>
+      <p class="name">${escapeHtml(op.name)} <code>${escapeHtml(op.sigil)}</code></p>
+      <p class="reads">${escapeHtml(op.reads)}</p>
       <p class="note">Runtime: ${escapeHtml(op.does)}</p>${EDGES_IN.ops.has(op.name) ? `
       <p class="edges-in">${panelLinks(EDGES_IN.ops.get(op.name))}</p>` : ""}
     </li>`).join("\n    ");
-  const braces = CONTAINERS.map((c) => `<li id="brace-${escapeHtml(c.name)}"><code class="pair">${escapeHtml(c.open)} ${escapeHtml(c.close)}</code> <strong>${escapeHtml(c.name)}</strong> ${escapeHtml(c.reads)}${EDGES_IN.braces.has(c.name) ? ` <span class="edges-in">${panelLinks(EDGES_IN.braces.get(c.name))}</span>` : ""}</li>`).join("\n    ");
-  const notes = EXAMPLE_NOTES.map((n) => `<div><dt><code>${escapeHtml(n.code)}</code></dt><dd>${escapeHtml(n.note)}</dd></div>`).join("\n    ");
-  const readers = READERS.map((r) => `<li><strong>${escapeHtml(r.who)}.</strong> ${escapeHtml(r.why)}</li>`).join("\n    ");
+  const braces = CONTAINERS.map((c) => `<li id="brace-${escapeHtml(c.name)}"><code class="pair" data-t="b-${escapeHtml(BRACE_TYPES.get(c.open) || "")}">${escapeHtml(c.open)} ${escapeHtml(c.close)}</code><span><strong>${escapeHtml(c.name)}</strong> ${escapeHtml(c.reads)}</span>${EDGES_IN.braces.has(c.name) ? `<span class="edges-in">${panelLinks(EDGES_IN.braces.get(c.name))}</span>` : ""}</li>`).join("\n    ");
   const setIds = INSTRUCTION_SETS.map((set) => set.id).join(" ");
-  const steps = STEPS.map((step, index) => `<li>${stepSurface(step, { index })}</li>`).join("\n  ");
   return layout({
     title: "spw.quest — a guide to the Spw language",
-    description: "Change one slot of a Spw expression, see what that slot means, then copy, format, or download the script.",
+    description: "Spw is plain text with a few marks. Open a file people keep, change it, and see what a tool can read from it.",
     canonical: "https://spw.quest/",
-    script: `document.documentElement.dataset.setupSets = ${JSON.stringify(setIds)};\n(${forwardSetupHash.toString()})();\n(${toolActions.toString()})();`,
+    head: PAPER_HEAD,
+    script: `document.documentElement.dataset.setupSets = ${JSON.stringify(setIds)};\ndocument.documentElement.dataset.panels = ${JSON.stringify(STEPS.map((step) => step.id).join(" "))};\n(${forwardOldHash.toString()})();\n(${toolActions.toString()})();`,
     themeCss: `${PAPER_CSS}
-    ${PANEL_CSS}
-    ${PATH_CSS}
-    ${BUILD_CSS}
-    main { width: min(46rem, calc(100% - 2rem)); }
-    [id] { scroll-margin-top: 1.25rem; }
-    h2 .self { margin-left: .45rem; color: var(--muted); font: 400 .8em var(--mono); text-decoration: none; opacity: .55; }
-    h2 .self:hover, h2 .self:focus-visible, section:target h2 .self { color: var(--accent); opacity: 1; }
-    .edges-in { display: flex; flex-wrap: wrap; gap: .1rem .7rem; margin: auto 0 0; padding-top: .45rem; font: .8rem/1.2 var(--mono); }
-    .edges-in a { display: inline-flex; align-items: center; gap: .3rem; min-height: 32px; text-decoration: none; }
-    .edges-in .n { color: var(--muted); font-variant-numeric: tabular-nums; }
-    .braces .edges-in { display: inline-flex; margin: 0 0 0 .4rem; padding: 0; vertical-align: baseline; }
-    .braces li:target { background: var(--accent-soft); }
-    .opening { margin: .15rem 0 .7rem; }
-    .opening h1 { font-size: clamp(1.45rem, 4.4vw, 1.9rem); margin: 0; }
-    .quest { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.4rem; }
-    .quest > li { margin: 0; }
-    .install { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .4rem 1rem; margin: 1.6rem 0; padding: .8rem 1rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
-    .install p { margin: 0; }
-    .install .chip { margin: 0; }
-    section:not(.step) { margin: 2.4rem 0; }
-    #build { margin-top: .2rem; }
-    .sigils { display: grid; grid-template-columns: 3.1rem max-content minmax(0, 1fr); margin: 1rem 0 0; padding: 0; border-top: 1px solid var(--line); list-style: none; }
-    .sigils li { display: grid; grid-column: 1 / -1; grid-template-columns: subgrid; column-gap: 1rem; align-items: baseline; margin: 0; padding: .55rem .4rem; border-bottom: 1px solid var(--line); }
-    .sigils li:target { background: var(--accent-soft); box-shadow: inset 3px 0 0 var(--accent); }
-    .sigils p { grid-column: 3; margin: 0; }
-    .sigils li > p:first-of-type { grid-column: 2; grid-row: 1 / span 3; }
-    .sigils li > p:first-of-type code { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-    .sigils .note { font-size: .84rem; }
-    .sigils .edges-in { margin: 0; padding-top: .15rem; }
-    .sigil { grid-row: 1 / span 3; color: var(--accent); font: 600 1.55rem/1.1 var(--mono); }
-    @media (max-width: 34rem) { .sigils { grid-template-columns: 3.1rem minmax(0, 1fr); } .sigils li > p, .sigils li > p:first-of-type { grid-column: 2; grid-row: auto; } .sigil { grid-row: 1 / span 4; } }
-    .braces { list-style: none; padding: 0; }
-    .braces li { padding: .45rem 0; border-top: 1px solid var(--line); }
-    .pair { display: inline-block; min-width: 3.2rem; color: var(--accent); font-size: 1.05rem; }
-    dl.notes { margin: 0; }
-    dl.notes div { padding: .5rem 0; border-top: 1px solid var(--line); }
-    dl.notes dt { margin: 0 0 .15rem; }
-    dl.notes dd { margin: 0; }
-    .readers li { margin: .5rem 0; }
-    #origin p { max-width: 38rem; }${parser ? `\n    ${SWITCH_CSS}` : ""}`,
-    body: `${parser ? `${switchBanner(parser.value, parser.from)}\n` : ""}<header class="opening">
-  <p class="kicker">spw.quest · a guide to Spw · <a href="/install">install</a></p>
-  <h1>A small language for the shape of a thought.</h1>
-</header>
-<section id="build" aria-labelledby="build-title">
-  <h2 id="build-title">Put one together${selfLink("build", "build-title")}</h2>
-  ${buildSurface(BUILD_DEFAULTS)}
+    ${PAGE_CSS}
+    ${FILE_CSS}
+    ${GUIDE_CSS}${parser ? `\n    ${SWITCH_CSS}` : ""}`,
+    body: `${masthead("/")}
+${parser ? `${switchBanner(parser.value, parser.from)}\n` : ""}<section class="opening" aria-labelledby="title">
+  <h1 id="title">A small language for the shape of a thought.</h1>
+  <p class="lede">Spw is plain text with a few marks. A mark in front of a word says what the word is doing, and braces say what belongs together. A note stays readable as a note, and a tool can still find it, check it and follow its links.</p>
 </section>
-${pathNav()}
-<ol class="quest" role="list" aria-label="Seven panels">
-  ${steps}
-</ol>
-<aside class="install" aria-label="Install">
-  <p>Want it in a repository? The workbench mounts at <code>.spw/_workbench</code> and stops before any commit.</p>
-  <a class="chip" href="/install">Install the workbench →</a>
-</aside>
+${fileWorkspace(example)}
 
-<section id="read" aria-labelledby="read-title">
-  <h2 id="read-title">Read one page${selfLink("read", "read-title")}</h2>
-  <p>A journal entry, written in Spw. Every line is still readable as a note.</p>
-  <figure class="codeblock">
-    <figcaption><span>morning_pages.spw</span><button type="button" data-copy="example">Copy</button></figcaption>
-    <pre id="example">${escapeHtml(EXAMPLE)}</pre>
-  </figure>
-  <dl class="notes">
-    ${notes}
-  </dl>
-</section>
-
-<section id="operators" aria-labelledby="operators-title">
-  <h2 id="operators-title">Twelve sigils${selfLink("operators", "operators-title")}</h2>
-  <p>Each operator has a reader's name, which is how you think with it, and a runtime behavior, which is what the interpreter does today. They are kept separate on purpose: a name is not a promise about evaluation.</p>
+<section id="operators" class="band" aria-labelledby="operators-title">
+  <h2 id="operators-title">Twelve marks, four braces${selfLink("operators", "operators-title")}</h2>
+  <p>Each mark has a reader's name, which is how you think with it, and a runtime behavior, which is what the interpreter does today. They are kept separate on purpose: a name is not a promise about evaluation. The numbers under a mark are the panels in <a href="/learn">Learn</a> that use it.</p>
   <ul class="sigils">
     ${sigils}
   </ul>
-</section>
-
-<section id="braces" aria-labelledby="braces-title">
-  <h2 id="braces-title">Four ways to hold things${selfLink("braces", "braces-title")}</h2>
-  <p>Brace pairs are containers. Read together, they make a sentence: <code>&lt;concept&gt;(scene)[mode]{definition}</code>, what it is about, where, through which lens, and what belongs inside.</p>
-  <ul class="braces">
+  <ul class="braces" id="braces" aria-label="Four ways to hold things">
     ${braces}
   </ul>
-  <p class="note">Operators and containers compose: <code>#[…]</code> is a set, <code>.{…}</code> is a property sheet.</p>
+  <p class="note">Read together, the braces make a sentence: <code>&lt;concept&gt;(scene)[mode]{definition}</code>, what it is about, where, through which lens, and what belongs inside. Marks and braces compose: <code>#[…]</code> is a set, <code>.{…}</code> is a property sheet.</p>
 </section>
 
-<section id="readers" aria-labelledby="readers-title">
-  <h2 id="readers-title">You might find it interesting if…${selfLink("readers", "readers-title")}</h2>
-  <ul class="readers">
-    ${readers}
-  </ul>
+<section id="ways" class="band" aria-labelledby="ways-title">
+  <h2 id="ways-title">Ways in${selfLink("ways", "ways-title")}</h2>
+  <div class="doors">
+    <article class="door"><h3><a href="/learn">Learn it a mark at a time</a></h3><p>Seven panels, one line each, from plain words to a question that carries its own probe. Each line is read again as you change it.</p></article>
+    <article class="door"><h3><a href="/build">Take one line apart</a></h3><p>Change the mark, the scene, or what the braces hold, and the rest of the line holds still.</p><p><code>${escapeHtml(assemble(BUILD_DEFAULTS))}</code></p></article>
+    <article class="door"><h3><a href="/install">Keep it in a repository</a></h3><p>The workbench mounts at <code>.spw/_workbench</code> with a parser, a CLI and an editor language server. Setup stops before any commit.</p></article>
+    <article class="door"><h3><a href="/parser/">Read it on your own page</a></h3><p>Dated builds of the parser this page runs, one ES module each, with an integrity hash to pin.</p></article>
+  </div>
 </section>
 
-<section id="origin" aria-labelledby="origin-title">
+<section id="origin" class="band" aria-labelledby="origin-title">
   <h2 id="origin-title">The shape it came from${selfLink("origin", "origin-title")}</h2>
   <p>The difficulty was not having language for what I was thinking about, so I could not tell when a thought was ready to set down. Spw gives a thought somewhere to land: one character says what a word is doing, braces say what belongs together, and a thought can be set down whole instead of chased.</p>
   <p>It started in 2017, alongside reading about how people learn from text and helping with research in an adult learning lab. Part of it was wanting language to share what I was learning, in a place where I could keep learning what I wanted to. The question it keeps asking is about cognition: where do two understandings stop sharing ground, and what would help them share more?</p>
   <p>And it wonders about geometry: how a mind represents the thoughts it holds, what shape a circuit of thought might take on a page, and how findings from different fields could sit side by side in one form you can read.</p>
   <p>It is not built for anyone in particular. It has been designed with care, and it has turned out to be useful, most of all toward a culture where media literacy can grow across generations.</p>
 </section>
+<p class="also"><a href="/init">Recipe for agents</a> · <a href="/quest.json">quest.json</a> · <a href="${QUEST.repository}">Source</a> · <a href="https://autonomous.feedback/spw.quest?at=/">What was hard to follow</a></p>
+${liveFileScript(EXAMPLES, parser ? switchLoader(parser.from) : undefined)}`,
+  });
+}
 
-<section id="next" aria-labelledby="next-title">
-  <h2 id="next-title">Keep going${selfLink("next", "next-title")}</h2>
-  <p><a class="chip" href="https://spwashi.com/tools/spw-parser/">Try the parser</a> <a class="chip" href="https://spwashi.com/topics/software/spw/">Operator atlas</a> <a class="chip" href="${QUEST.repository}">Read the source</a> <a class="chip" href="/install">Install</a></p>
+/** The file area: a tab per example, the file as an editor, and what a tool reads from it. */
+function fileWorkspace(example) {
+  const reading = readFile(example.script);
+  const tabs = EXAMPLES.map((item) => `<a href="/?example=${escapeHtml(item.id)}#try" data-example="${escapeHtml(item.id)}"${item === example ? ' aria-current="page"' : ""}><span class="tab">${escapeHtml(item.tab)}</span><span class="file">${escapeHtml(item.file)}</span></a>`).join("\n    ");
+  return `<section id="try" class="try" aria-labelledby="try-title">
+  <h2 id="try-title" class="eyebrow">Five files, written in Spw</h2>
+  <nav class="examples" aria-label="Files">
+    ${tabs}
+  </nav>
+  <div class="workspace">
+    <form class="file" data-file method="post" action="/build#build">
+      <div class="file-head">
+        <p class="file-name"><code data-file-name>${escapeHtml(example.file)}</code></p>
+        <div class="file-actions">
+          <button type="button" data-tool="copy">Copy</button>
+          <button type="submit" name="tool" value="download" formaction="/script.spw">Download</button>
+        </div>
+      </div>
+      <p class="says" data-file-says>${escapeHtml(example.says)}</p>
+      <input type="hidden" name="filename" value="${escapeHtml(example.file)}">
+      ${editorField({ id: "script", value: example.script, label: "The file", describedBy: "file-try" })}
+      <div class="file-foot">
+        <p class="try-this" id="file-try"><span class="label">Try</span> <span data-file-try>${escapeHtml(example.try)}</span></p>
+        <button type="submit" name="tool" value="read" data-tool="read" class="quiet-button">Open in the editor →</button>
+      </div>
+    </form>
+    <aside class="reading-card" aria-labelledby="reading-title">
+      <h2 id="reading-title">What a tool reads</h2>
+      <div id="reading">${outlineFile(reading)}</div>
+    </aside>
+  </div>
+</section>`;
+}
+
+/** The seven panels from the workbench's quest, walked as a path; each line is read as it changes. */
+function renderLearn() {
+  const steps = STEPS.map((step, index) => `<li>${stepSurface(step, { index })}</li>`).join("\n  ");
+  return layout({
+    title: "spw.quest — learn Spw a mark at a time",
+    description: "Seven panels, one line each, from plain words to a question that carries its own probe.",
+    canonical: "https://spw.quest/learn",
+    head: PAPER_HEAD,
+    themeCss: `${PAPER_CSS}
+    ${PAGE_CSS}
+    ${PANEL_CSS}
+    ${PATH_CSS}
+    .opening { margin: 0 0 1.2rem; }
+    .opening h1 { margin: 0 0 .5rem; font-size: clamp(1.8rem, 5vw, 2.4rem); }
+    .opening .lede { margin: 0; color: var(--ink-soft); }
+    .learn { max-width: 46rem; }
+    .quest { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.4rem; }
+    .quest > li { margin: 0; }`,
+    body: `${masthead("/learn")}
+<div class="learn">
+<section class="opening" aria-labelledby="learn-title">
+  <h1 id="learn-title">Learn it a mark at a time</h1>
+  <p class="lede">Seven panels, one line each. Change a line and it is read again; with scripts off, Read sends it to the worker, which reads it the same way.</p>
 </section>
-<p><a href="/init">Recipe for agents</a> · <a href="/quest.json">quest.json</a> · <a href="https://autonomous.feedback/spw.quest?at=/">What was hard to follow</a></p>
-${liveScript(parser ? switchLoader(parser.from) : undefined)}`,
+${pathNav()}
+<ol class="quest" role="list" aria-label="Seven panels">
+  ${steps}
+</ol>
+<p class="also"><a href="/">Back to the guide</a> · <a href="/build">Take one line apart</a> · <a href="/install">Install the workbench</a></p>
+</div>
+${liveScript()}`,
   });
 }
 
 function renderBuild(slots, script = assemble(slots), filename = `${slots.word || "line"}.spw`) {
   return layout({
-    title: "spw.quest — put one together",
-    description: "Change one slot, see what it means, then copy, format, or download the .spw.",
-    canonical: "https://spw.quest/#build",
+    title: "spw.quest — take one line apart",
+    description: "A whole file you can edit, what a tool reads from it, and its first line taken apart: change one part and the rest holds.",
+    canonical: "https://spw.quest/build",
+    head: PAPER_HEAD,
     script: `(${toolActions.toString()})();`,
     themeCss: `${PAPER_CSS}
-    ${PANEL_CSS}
-    ${PATH_CSS}
+    ${PAGE_CSS}
+    ${FILE_CSS}
     ${BUILD_CSS}
-    .path { margin: .4rem 0 1.1rem; }
-    .step-nav { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.2rem 0 0; }
-    .step-nav .chip { margin: 0; }`,
-    body: `<p class="kicker"><a href="/">spw.quest</a> · put one together</p>
-${pathNav(STEPS.length)}
+    .opening { margin: 0 0 1.2rem; }
+    .opening h1 { margin: 0 0 .5rem; font-size: clamp(1.8rem, 5vw, 2.4rem); }
+    .opening .lede { max-width: 42rem; margin: 0; color: var(--ink-soft); }`,
+    body: `${masthead("/build")}
+<section class="opening" aria-labelledby="build-title">
+  <h1 id="build-title">Take one line apart</h1>
+  <p class="lede">The whole file is yours to edit, and the reading follows it. Below it, the file's first line is taken apart: change one part, and the rest of the line holds still.</p>
+</section>
 <section id="build" aria-labelledby="build-title">
-  <h1 id="build-title">Put one together</h1>
   ${buildSurface(slots, script, filename)}
 </section>
-<nav class="step-nav" aria-label="Panels">
-  <a class="chip" href="/#build">Back to the guide</a>
-  <a class="chip" href="/install">Install the workbench</a>
-</nav>`,
+<p class="also"><a href="/">Back to the guide</a> · <a href="/learn">Learn it a mark at a time</a> · <a href="/install">Install the workbench</a></p>
+${liveFileScript()}`,
   });
 }
 
@@ -389,19 +438,23 @@ function renderRead(step, line, { cut = false } = {}) {
   return layout({
     title: `spw.quest — ${step.id}, panel ${index + 1} of ${STEPS.length}`,
     description: step.reads,
-    canonical: `https://spw.quest/#${step.id}`,
+    canonical: `https://spw.quest/learn#${step.id}`,
+    head: PAPER_HEAD,
     themeCss: `${PAPER_CSS}
+    ${PAGE_CSS}
     ${PANEL_CSS}
     ${PATH_CSS}
+    main > :not(.masthead) { max-width: 46rem; }
     .path { margin: .4rem 0 1.1rem; }
     .step-nav { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.2rem 0 0; }
     .step-nav .chip { margin: 0; }`,
-    body: `<p class="kicker"><a href="/">spw.quest</a> · panel ${index + 1} of ${STEPS.length}</p>
+    body: `${masthead("/learn")}
+<p class="kicker">Panel ${index + 1} of ${STEPS.length}</p>
 ${pathNav(index)}
 ${stepSurface(step, { index, line, heading: "h1" })}
 ${cut ? `<p class="note">Only the first ${LINE_LIMIT} characters were read.</p>` : ""}
 <nav class="step-nav" aria-label="Panels">
-  <a class="chip" href="/#${escapeHtml(step.id)}">Back to the panel</a>
+  <a class="chip" href="/learn#${escapeHtml(step.id)}">Back to the panel</a>
   ${onward}
 </nav>`,
   });
@@ -413,8 +466,10 @@ function renderNoStep(asked) {
     title: "spw.quest — no such panel",
     description: "The panels spw.quest can read a line for.",
     canonical: "https://spw.quest/",
-    themeCss: PAPER_CSS,
-    body: `<p class="kicker"><a href="/">spw.quest</a> · reading</p>
+    head: PAPER_HEAD,
+    themeCss: `${PAPER_CSS}
+    ${PAGE_CSS}`,
+    body: `${masthead("/learn")}
 <h1>No panel named ${asked ? `“${escapeHtml(asked)}”` : "in this link"}.</h1>
 <p>These are the panels:</p>
 <ol>
@@ -426,9 +481,9 @@ function renderNoStep(asked) {
 function handleRead(url) {
   const asked = url.searchParams.get("step") || "";
   const step = STEPS.find((s) => s.id === asked);
-  if (!step) return htmlResponse(renderNoStep(asked), { status: 404 });
+  if (!step) return page(renderNoStep(asked), { status: 404 });
   const given = url.searchParams.has("line") ? url.searchParams.get("line") : step.try;
-  return htmlResponse(renderRead(step, given.slice(0, LINE_LIMIT), { cut: given.length > LINE_LIMIT }), { cache: "public, max-age=300" });
+  return page(renderRead(step, given.slice(0, LINE_LIMIT), { cut: given.length > LINE_LIMIT }), { cache: "public, max-age=300" });
 }
 
 function scriptFile(body, filename) {
@@ -456,7 +511,7 @@ async function handleTool(request, url) {
   if (url.pathname === "/script.spw" || form.get("tool") === "download") return scriptFile(script, filename);
   const formatted = form.get("tool") === "format" ? formatScript(script) : script;
   const slots = focusSlots(formatted) || { ...BUILD_DEFAULTS };
-  return htmlResponse(renderBuild(slots, formatted, filename), { cache: "no-store" });
+  return page(renderBuild(slots, formatted, filename), { cache: "no-store" }, LIVE_CSP);
 }
 
 async function handleQuest(request, url) {
@@ -480,15 +535,18 @@ async function handleQuest(request, url) {
   } else if (url.pathname === "/prompts.json") {
     response = jsonResponse({ version: VERSION, schema: "prompts.v1", prompts: QUEST_PROMPTS }, "public, max-age=300");
   } else if (url.pathname === "/install") {
-    response = htmlResponse(renderInstall());
+    response = page(renderInstall());
   } else if (url.pathname === "/") {
     // ?parser= tries another build in the page; an invalid value is ignored, and the page is the default.
+    // ?example= opens one of the files; an unknown one opens the first.
     const value = parserSwitch(url.searchParams);
-    response = htmlResponse(renderGuide(value && { value, from: switchModulePath(value) }));
-    response.headers.set("Content-Security-Policy", GUIDE_CSP);
+    const example = exampleById(url.searchParams.get("example")) || EXAMPLES[0];
+    response = page(renderGuide(value && { value, from: switchModulePath(value) }, example), {}, LIVE_CSP);
+  } else if (url.pathname === "/learn") {
+    response = page(renderLearn(), {}, LIVE_CSP);
   } else if (url.pathname === "/build") {
     const asked = buildFrom(url.searchParams);
-    response = htmlResponse(renderBuild(asked.slots, asked.script, asked.filename), { cache: "public, max-age=300" });
+    response = page(renderBuild(asked.slots, asked.script, asked.filename), { cache: "public, max-age=300" }, LIVE_CSP);
   } else if (url.pathname === "/script.spw") {
     const asked = buildFrom(url.searchParams);
     response = scriptFile(asked.script, asked.filename);
@@ -519,6 +577,8 @@ export default {
     }
     // Dated parser releases come from static assets (src/parser-releases.js); /parser.js is not one of them.
     if (isParserPath(url.pathname)) return handleParser(request, url, env);
+    // The site's faces, carried by scripts/build-peer-kit.mjs into assets/fonts/.
+    if (isPeerFontPath(url.pathname)) return servePeerFont(request, url, env);
     return handleQuest(request, url);
   },
 };

@@ -91,6 +91,8 @@ async function main() {
     }
   }
 
+  // The peer kit carries the site's tokens and faces to the workers; a drift here is a stale copy of the site.
+  execFileSync(process.execPath, ['scripts/build-peer-kit.mjs', '--check'], { cwd: ROOT, stdio: 'inherit' });
   execFileSync(process.execPath, ['--test', 'workers/autonomous-feedback/test/routes.test.mjs'], { cwd: ROOT, stdio: 'inherit' });
   execFileSync(process.execPath, ['--test', 'workers/spw-quest/test/routes.test.mjs', 'workers/spw-quest/test/parser-releases.test.mjs', 'workers/spw-quest/test/parser-prereleases.test.mjs'], { cwd: ROOT, stdio: 'inherit' });
   execFileSync(process.execPath, ['--test', 'workers/site-hub-next/test/doors.test.mjs', 'workers/site-hub-next/test/tealstripes.test.mjs', 'workers/site-hub-next/test/mutex.test.mjs'], { cwd: ROOT, stdio: 'inherit' });

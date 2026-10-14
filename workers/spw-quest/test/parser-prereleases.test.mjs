@@ -255,7 +255,9 @@ test('unknown prerelease paths 404 with what exists; short forms redirect; HEAD 
   }
 });
 
-const GUIDE_CSP = BASE_SECURITY['Content-Security-Policy'].replace("script-src 'unsafe-inline'", "script-src 'self' 'unsafe-inline'");
+const GUIDE_CSP = BASE_SECURITY['Content-Security-Policy']
+  .replace("style-src 'unsafe-inline';", "style-src 'unsafe-inline'; font-src 'self';")
+  .replace("script-src 'unsafe-inline'", "script-src 'self' 'unsafe-inline'");
 const STATIC_IMPORT = '<script type="module">\nimport { parse } from "/parser.js";';
 
 test('?parser= switches the guide to a /parser/ build, with a banner that says so', async () => {
@@ -278,8 +280,8 @@ test('?parser= switches the guide to a /parser/ build, with a banner that says s
     assert.match(page, /<p id="parser-running" data-state="pending"><span class="scripts-on">Loading it…<\/span><span class="scripts-off">Scripts are off, so it did not load\.<\/span><\/p>/);
     assert.ok(page.includes("With scripts off, and at <code>/read</code>, every line is read by the worker's built-in parser"), value);
     assert.ok(page.includes('<a href="/">Back to the default parser</a>'), value);
-    assert.ok(page.indexOf('class="parser-switch"') < page.indexOf('<header class="opening">'), 'the banner leads');
-    assert.match(page, /<section class="step" id="act"[\s\S]*?data-state="pass"/, `${value}: the worker still reads the panels`);
+    assert.ok(page.indexOf('class="parser-switch"') < page.indexOf('<section class="opening"'), 'the banner leads');
+    assert.ok(page.includes('<li data-state="pass">Spw read the whole file.</li>'), `${value}: the worker still reads the file`);
   }
 });
 
