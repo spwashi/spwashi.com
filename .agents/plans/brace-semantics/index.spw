@@ -1,0 +1,102 @@
+# Review 2026-10-13 — new: what each brace pair means, labels the parser checks, one serializer for page, region and component, the `< & >` instrument, and a home door into spw.quest; five decisions go to the creator first.
+# Plan Index — brace-semantics
+#
+# Status 2026-10-13. Proposed; nothing built. The braces mean different things in different files, the parser reads labels as words, and eleven serializers each invent a shape. This…
+
+#>plan_brace_semantics_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Status 2026-10-13. Proposed; nothing built. The braces mean different things in different files, the parser reads labels as words, and eleven serializers each invent a shape. This plan asks the creator five decisions (section A), then gives pages, regions and components one way into Spw, a < & > instrument as the first authored element, and a door from the home page into spw.quest.`
+ owner = `brace-semantics`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Status 2026-10-13. Proposed; nothing built. The braces mean different things in different files, the parser reads…`
+ concepts = #[
+  `different`,
+  `spw`,
+  `brace-semantics`,
+  `status`,
+  `proposed`,
+ ][reg=set]
+ surfaces = #[
+  `.spw/_workbench`,
+  `js/kernel/operator-detection.js`,
+  `scripts/build-expression-manifest.mjs`,
+  `scripts/build-peer-kit.mjs`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@workbench: ~"../../../.spw/_workbench"
+@operator_detection: ~"../../../public/js/kernel/operator-detection.js"
+@build_expression_manifest: ~"../../../scripts/build-expression-manifest.mjs"
+@build_peer_kit: ~"../../../scripts/build-peer-kit.mjs"
+@spw_workbench_parser: ~"../../../public/js/semantic/spw-workbench-parser.js"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+ workbench = @workbench
+ operator_detection = @operator_detection
+ build_expression_manifest = @build_expression_manifest
+ build_peer_kit = @build_peer_kit
+ spw_workbench_parser = @spw_workbench_parser
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-brace_semantics-001"
+ layer = "pragmatic"
+ hypothesis = `Status 2026-10-13. Proposed; nothing built. The braces mean different things in different files, the parser reads labels as words, and eleven serializers each invent a shape. This plan asks the creator five decisions (section A), then gives pages, regions and components one way into Spw, a < & > instrument as the first authored element, and a door from the home page into spw.quest.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.spw/_workbench"
+ probe_ref = `npm run audit:plans -- --slug=brace-semantics.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/_workbench unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+validation: #[
+ `npm run audit:plans -- --slug=brace-semantics.`,
+ `Serializer fixtures parse back through public/js/semantic/spw-workbench-parser.js with no prose fallback and matched labels.`,
+ `npm run check:workers and npm run build:peer-kit -- --check for anything carried to spw.quest.`,
+ `npm run audit:root-writes and phone stills for the instrument; npm run check:local.`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does brace-semantics own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of brace-semantics?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether brace-semantics still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Status 2026-10-13. Proposed; nothing built. The braces mean different things in different files, the parser reads labels as words, and…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
