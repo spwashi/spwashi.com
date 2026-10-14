@@ -124,27 +124,93 @@
       pointer-events: none;
     }
 
+    /* The field: the source painted under a clear textarea. Both sit in one grid cell with one
+       font, padding and wrap, so each painted character lies under its own typed one. The paint
+       is laid out from the start (hidden until the module marks the field live), so the field
+       never changes height when color arrives. The field scrolls; the textarea grows with it. */
+    & .literal-parser-field {
+      position: relative;
+      display: grid;
+      min-height: clamp(15rem, 34vw, 25rem);
+      max-height: 70vh;
+      overflow: auto;
+      overscroll-behavior: contain;
+      color-scheme: dark;
+      background:
+        linear-gradient(90deg, color-mix(in srgb, #1a9999 8%, transparent) 1px, transparent 1px) 0 0 / 2rem 100%,
+        var(--literal-parser-code);
+      /* .spw-source (components/spw-source.css) gives the dark operator colors this panel wears. */
+    }
+
+    & .literal-parser-paint,
     & .literal-parser-editor textarea {
-      display: block;
+      grid-area: 1 / 1;
       box-sizing: border-box;
       width: 100%;
-      min-height: clamp(15rem, 34vw, 25rem);
-      resize: vertical;
+      margin: 0;
       padding: 1rem;
       border: 0;
       border-radius: 0;
-      outline: 0;
-      background:
-        linear-gradient(90deg, color-mix(in srgb, var(--op-frame-color, #1a9999) 8%, transparent) 1px, transparent 1px) 0 0 / 2rem 100%,
-        var(--literal-parser-code);
-      color: var(--literal-parser-control-ink);
-      caret-color: var(--op-object-color, #d69a3a);
       font: 0.88rem/1.65 var(--font-mono, "JetBrains Mono", monospace);
+      letter-spacing: 0;
       tab-size: 2;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      word-break: normal;
     }
 
-    & .literal-parser-editor textarea:focus-visible {
+    & .literal-parser-paint {
+      visibility: hidden;
+      overflow: hidden;
+      pointer-events: none;
+      background: transparent;
+      color: var(--literal-parser-control-ink);
+    }
+
+    /* The base pre > code rule (reset/base.css) refuses to wrap; the paint must wrap exactly as the textarea does. */
+    & .literal-parser-paint code {
+      display: inline;
+      min-width: 0;
+      padding: 0;
+      background: none;
+      font: inherit;
+      white-space: inherit;
+      overflow-wrap: inherit;
+    }
+
+    & .literal-parser-editor textarea {
+      display: block;
+      min-height: 100%;
+      resize: none;
+      overflow: hidden;
+      outline: 0;
+      background: transparent;
+      color: var(--literal-parser-control-ink);
+      caret-color: var(--op-object-color, #d69a3a);
+    }
+
+    & .literal-parser-field[data-live] > .literal-parser-paint {
+      visibility: visible;
+    }
+
+    & .literal-parser-field[data-live] > textarea {
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+
+    & .literal-parser-field[data-live] > textarea::selection {
+      background: color-mix(in srgb, #1a9999 40%, transparent);
+    }
+
+    & .literal-parser-field:focus-within {
       box-shadow: inset 0 0 0 2px var(--op-frame-color, #1a9999);
+    }
+
+    & .literal-parser-keys {
+      margin: 0;
+      padding: 0.45rem 1rem 0;
+      color: var(--literal-parser-soft);
+      font: 0.72rem/1.45 var(--font-mono, monospace);
     }
 
     & .literal-parser-editor > [data-spw-textual-role="note"] {
@@ -301,41 +367,10 @@
       font: 0.78rem/1.5 var(--font-mono, monospace);
     }
 
-    /* As your editor reads it: the workbench reader's role classes (spw-role-*) on the same dark
-       code panel as the AST, painted with the dark values of the site's operator colors, because
-       this panel stays dark in either theme. */
+    /* The outline, as the editor shows it: each row a button that puts the caret on its line. */
     & .literal-parser-reading-panel {
       grid-column: 1 / -1;
     }
-
-    & .literal-parser-reading {
-      box-sizing: border-box;
-      width: 100%;
-      max-height: 24rem;
-      margin: 0;
-      padding: 1rem;
-      overflow: auto;
-      overscroll-behavior: contain;
-      background: var(--literal-parser-code);
-      color: var(--literal-parser-control-ink);
-      font: 0.8rem/1.6 var(--font-mono, monospace);
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
-    }
-
-    & .spw-role-keyword { color: hsl(180 62% 62%); }
-    & .spw-role-type { color: #c9d4d0; }
-    & .spw-role-function { color: hsl(176 58% 58%); }
-    & .spw-role-function.spw-role-async { color: hsl(268 48% 72%); }
-    & .spw-role-property { color: hsl(214 58% 68%); }
-    & .spw-role-variable { color: hsl(188 42% 64%); }
-    & .spw-role-number { color: hsl(95 30% 66%); }
-    & .spw-role-string,
-    & .spw-role-operator { color: #9fb3ad; }
-    & .spw-role-comment { color: #8a9c97; font-style: italic; }
-    & .spw-role-commitRef,
-    & .spw-role-hashlike { color: hsl(220 38% 72%); text-decoration: underline dotted; text-underline-offset: 0.18em; }
-    & .spw-role-declaration { font-weight: 600; }
 
     & .literal-parser-outline,
     & .literal-parser-outline ol {
@@ -351,7 +386,30 @@
     }
 
     & .literal-parser-outline li {
-      margin: 0.15rem 0;
+      margin: 0.1rem 0;
+    }
+
+    & .literal-parser-outline__go,
+    & .literal-parser-diagnostic__go {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      min-height: 2rem;
+      margin: 0;
+      padding: 0.15rem 0.35rem;
+      border: 1px solid transparent;
+      border-radius: 0.4rem;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      text-align: start;
+      cursor: pointer;
+    }
+
+    & .literal-parser-outline__go:is(:hover, :focus-visible),
+    & .literal-parser-diagnostic__go:is(:hover, :focus-visible) {
+      border-color: var(--literal-parser-line);
+      background: color-mix(in srgb, var(--literal-parser-line) 22%, transparent);
     }
 
     & .literal-parser-outline__detail,
