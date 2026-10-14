@@ -5,6 +5,7 @@
 import { parse } from "../../../public/js/semantic/spw-workbench-parser.js";
 import { PEER_BRACES, PEER_SIGILS } from "../../lib/peer-kit.js";
 import { escapeHtml } from "../../lib/shell.js";
+import { noteKit } from "./note.js";
 import { OPERATORS } from "./guide.js";
 
 export const FILE_LIMIT = 65536;
@@ -256,13 +257,17 @@ export function editorField({ id, name = "script", value, label, limit = FILE_LI
  * Scripts on: read the file again as it changes, repaint it, and redraw its
  * reading. Example tabs swap the file in place and keep the address.
  */
-function liveFile(kit, parseFile, examples) {
+function liveFile(kit, parseFile, examples, noteApi) {
   const form = document.querySelector("form[data-file]");
   if (!form) return;
   const field = form.querySelector("textarea");
   const paintCode = form.querySelector(".paint code");
   const out = document.getElementById("reading");
   const editor = form.querySelector(".editor");
+  // The guide's note (noteBoot set form.spwNote); /build has none, and its tabs and edits behave as before.
+  const note = noteApi && form.spwNote ? form.spwNote : null;
+  const limit = field.maxLength > 0 ? field.maxLength : 65536;
+  const nameInput = form.querySelector('input[name="filename"]');
   let queued = false;
   const run = () => {
     queued = false;
@@ -270,44 +275,115 @@ function liveFile(kit, parseFile, examples) {
     paintCode.innerHTML = `${kit.paint(field.value, reading.tokens)}\n`;
     if (out) out.innerHTML = kit.outline(reading);
   };
+  const keep = () => {
+    if (!note) return;
+    const decision = noteApi.decideInput({ choiceOpen: form.dataset.noteChoice === "open", field: field.value, shelf: examples, filename: nameInput ? nameInput.value : "line.spw", limit, search: location.search });
+    if (!decision.write) return;
+    note.write(decision.write);
+    note.show("");
+    if (decision.from) note.chrome(decision.from);
+    if (decision.url !== `${location.pathname}${location.search}${location.hash}`) history.replaceState(null, "", decision.url);
+  };
   const soon = () => {
     if (queued) return;
     queued = true;
-    requestAnimationFrame(run);
+    requestAnimationFrame(() => {
+      run();
+      keep();
+    });
   };
   run();
   editor.dataset.live = "";
   field.addEventListener("input", soon);
+  // A choice resolved, or boot painted the note: repaint, never write.
+  form.addEventListener("spw:note-painted", () => requestAnimationFrame(run));
 
   const tabs = [...document.querySelectorAll("[data-example]")];
   const byId = new Map(examples.map((example) => [example.id, example]));
+  const apply = (example) => {
+    field.value = example.script;
+    for (const other of tabs) {
+      if (other.dataset.example === example.id) other.setAttribute("aria-current", "page");
+      else other.removeAttribute("aria-current");
+    }
+    const set = (selector, text) => { const node = document.querySelector(selector); if (node) node.textContent = text; };
+    set("[data-file-name]", example.file);
+    set("[data-file-says]", example.says);
+    set("[data-file-try]", example.try);
+    if (nameInput) nameInput.value = example.file;
+    run();
+  };
   for (const tab of tabs) {
     tab.addEventListener("click", (event) => {
       const example = byId.get(tab.dataset.example);
       if (!example || event.metaKey || event.ctrlKey || event.shiftKey) return;
       event.preventDefault();
-      field.value = example.script;
-      for (const other of tabs) {
-        if (other === tab) other.setAttribute("aria-current", "page");
-        else other.removeAttribute("aria-current");
+      if (!note) {
+        apply(example);
+        history.replaceState(null, "", `?example=${example.id}#try`);
+        return;
       }
-      const set = (selector, text) => { const node = document.querySelector(selector); if (node) node.textContent = text; };
-      set("[data-file-name]", example.file);
-      set("[data-file-says]", example.says);
-      set("[data-file-try]", example.try);
-      const filename = form.querySelector('input[name="filename"]');
-      if (filename) filename.value = example.file;
-      history.replaceState(null, "", `?example=${example.id}#try`);
-      run();
+      const current = byId.get(tabs.find((other) => other.getAttribute("aria-current"))?.dataset.example || "");
+      const decision = noteApi.decideTemplate({ choiceOpen: form.dataset.noteChoice === "open", field: field.value, currentScript: current ? current.script : null, stored: note.read(), target: example, search: location.search, limit });
+      if (decision.ask) {
+        note.openChoice(example.id);
+        return;
+      }
+      if (!decision.assign) return;
+      apply(example);
+      if (decision.write) note.write(decision.write);
+      note.show("");
+      history.replaceState(null, "", decision.url);
+    });
+  }
+
+  // Another tab wrote the note. An idle field follows it; a field being edited asks first. Nothing merges or writes.
+  if (note) {
+    window.addEventListener("storage", (event) => {
+      if (event.key !== noteApi.key || form.dataset.noteChoice === "open") return;
+      const stored = noteApi.fromJson(event.newValue, limit);
+      if (!stored || stored.script === field.value) return;
+      const load = () => {
+        field.value = stored.script;
+        if (nameInput) nameInput.value = stored.filename;
+        const name = document.querySelector("[data-file-name]");
+        if (name) name.textContent = stored.filename;
+        note.chrome(stored.from);
+        note.show("");
+        run();
+      };
+      if (document.activeElement !== field) {
+        load();
+        return;
+      }
+      note.show("This note changed in another tab.");
+      const state = form.querySelector("[data-note-state]");
+      if (state && !state.querySelector("button")) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "quiet-button";
+        button.textContent = "Load it";
+        button.addEventListener("click", () => {
+          const latest = noteApi.fromJson(localStorage.getItem(noteApi.key), limit);
+          if (latest) {
+            stored.script = latest.script;
+            stored.filename = latest.filename;
+            stored.from = latest.from;
+          }
+          load();
+        }, { once: true });
+        state.append(" ", button);
+      }
     });
   }
 }
 
 /** The module script that starts liveFile with /parser.js (or a switched build). */
-export function liveFileScript(examples = [], loader) {
+export function liveFileScript(examples = [], loader, { note = false } = {}) {
   const data = JSON.stringify(FILE_DATA).replace(/</g, "\\u003c");
   const shelf = JSON.stringify(examples.map(({ id, file, says, try: attempt, script }) => ({ id, file, says, try: attempt, script }))).replace(/</g, "\\u003c");
-  const start = `(${liveFile.toString()})((${fileKit.toString()})(${data}), parse, ${shelf});`;
+  const noteApi = note ? `(${noteKit.toString()})()` : "null";
+  const start = `(${liveFile.toString()})((${fileKit.toString()})(${data}), parse, ${shelf}, ${noteApi});`;
   if (!loader) return `<script type="module">
 import { parse } from "/parser.js";
 ${start}
@@ -341,6 +417,11 @@ export const FILE_CSS = `.try { margin: 0; }
     .file-name code { font-size: .86rem; font-weight: 600; }
     .file-actions { display: flex; flex-wrap: wrap; gap: .15rem; }
     .says { margin: 0; padding: .7rem 1rem 0; color: var(--ink-soft); font-size: .92rem; line-height: 1.45; }
+    .note-choice, .note-state { margin: 0; padding: .6rem 1rem 0; font-size: .9rem; line-height: 1.4; }
+    .note-choice { display: grid; gap: .15rem; padding-bottom: .45rem; border-bottom: 1px solid var(--line); background: var(--accent-soft); color: var(--fg); }
+    .note-choice > span:first-child { font-weight: 600; }
+    .note-choice-actions { display: flex; flex-wrap: wrap; gap: .25rem; margin-inline-start: -.75rem; }
+    .note-state { color: var(--muted); }
     .editor { position: relative; display: grid; margin: .2rem 0 0; }
     .editor > .paint, .editor > textarea { grid-area: 1 / 1; box-sizing: border-box; width: 100%; margin: 0; padding: .6rem 1rem .9rem; border: 0; border-radius: 0; font: .92rem/1.65 var(--mono); letter-spacing: 0; tab-size: 2; white-space: pre-wrap; overflow-wrap: anywhere; word-break: normal; }
     .editor > .paint { visibility: hidden; overflow: hidden; pointer-events: none; color: var(--fg); background: transparent; }

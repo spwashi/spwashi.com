@@ -3,7 +3,8 @@ import { EXAMPLES, exampleById } from "./examples.js";
 import { EXPECTED_FILES, GIT_GUIDE, GIT_MARKDOWN, INSTRUCTION_SETS, QUEST_PROMPTS, QUEST_TEXT, WORKBENCH } from "./quest.js";
 import { STEPS } from "./steps.js";
 import { LINE_LIMIT, liveScript, readLine } from "./reader.js";
-import { FILE_CSS, editorField, liveFileScript, outlineFile, readFile } from "./file-reader.js";
+import { FILE_CSS, FILE_LIMIT, editorField, liveFileScript, outlineFile, readFile } from "./file-reader.js";
+import { noteBootScript } from "./note.js";
 import { PANEL_CSS, stepSurface } from "./panel.js";
 import { BUILD_CSS, BUILD_DEFAULTS, MAX_SCRIPT, assemble, buildFrom, buildSurface, focusSlots, formatScript, safeName, toolActions } from "./build.js";
 import { PAPER_CSS, PAPER_HEAD, PAPER_THEME } from "./paper.js";
@@ -330,7 +331,7 @@ ${fileWorkspace(example)}
   <p>It is not built for anyone in particular. It has been designed with care, and it has turned out to be useful, most of all toward a culture where media literacy can grow across generations.</p>
 </section>
 <p class="also"><a href="/init">Recipe for agents</a> · <a href="/quest.json">quest.json</a> · <a href="${QUEST.repository}">Source</a> · <a href="https://autonomous.feedback/spw.quest?at=/">What was hard to follow</a></p>
-${liveFileScript(EXAMPLES, parser ? switchLoader(parser.from) : undefined)}`,
+${liveFileScript(EXAMPLES, parser ? switchLoader(parser.from) : undefined, { note: true })}`,
   });
 }
 
@@ -349,9 +350,12 @@ function fileWorkspace(example) {
         <p class="file-name"><code data-file-name>${escapeHtml(example.file)}</code></p>
         <div class="file-actions">
           <button type="button" data-tool="copy">Copy</button>
-          <button type="submit" name="tool" value="download" formaction="/script.spw">Download</button>
+          <button type="submit" name="tool" value="download" formaction="/script.spw" data-tool="download">Download</button>
         </div>
       </div>
+      <p class="note-choice" data-note-choice-line hidden><span>A note on this device differs from this template.</span> <span class="note-choice-actions"><button type="button" class="quiet-button" data-note-keep>Keep this note</button> <button type="button" class="quiet-button" data-note-use>Use this template</button></span></p>
+      <p class="note-state" data-note-state role="status" hidden></p>
+      <noscript><p class="note-state">Scripts are off, so this field is a template. A note kept in this browser is not shown. Nothing is sent unless you use Download or Open in the editor.</p></noscript>
       <p class="says" data-file-says>${escapeHtml(example.says)}</p>
       <input type="hidden" name="filename" value="${escapeHtml(example.file)}">
       ${editorField({ id: "script", value: example.script, label: "The file", describedBy: "file-try" })}
@@ -360,6 +364,7 @@ function fileWorkspace(example) {
         <button type="submit" name="tool" value="read" data-tool="read" class="quiet-button">Open in the editor →</button>
       </div>
     </form>
+    ${noteBootScript(EXAMPLES, FILE_LIMIT)}
     <aside class="reading-card" aria-labelledby="reading-title">
       <h2 id="reading-title">What a tool reads</h2>
       <div id="reading">${outlineFile(reading)}</div>
