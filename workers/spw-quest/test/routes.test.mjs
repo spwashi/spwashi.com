@@ -121,6 +121,8 @@ test('the guide opens with a file people keep, read by the worker with scripts o
   assert.match(page, /<pre class="paint" aria-hidden="true"><code><span data-t="frame">#&gt;reading_log<\/span>/);
   assert.match(page, /formaction="\/script\.spw"/);
   assert.match(page, /data-tool="copy"/);
+  // Download: a blob with scripts on (data-tool), the same POST with scripts off (formaction).
+  assert.match(page, /<button type="submit" name="tool" value="download" formaction="\/script\.spw" data-tool="download">Download<\/button>/);
   // The worker already read it: the checks and the facts are in the page before any script runs.
   assert.ok(page.includes('<li data-state="pass">Spw read the whole file.</li>'));
   assert.ok(page.includes('<li data-state="pass">Every entry has a date and a kind.</li>'));
@@ -390,6 +392,7 @@ test('put one together: slots make a line, each pivot holds the rest, and nothin
   assert.match(hostile, /aria-label="ab&lt;chapter&gt;\(study\)\[xy\]\{voice, scene, turn\}"/);
   assert.ok(!hostile.includes('&lt;script'), 'a mark outside the twelve is dropped, not echoed');
   assert.match(page, /<section id="build" aria-labelledby="build-title">/);
+  assert.doesNotMatch(page, /data-tool="download"/, "/build's Download stays a POST with scripts on");
   assert.ok((await (await get('spw.quest', '/')).text()).includes('<a href="/build">Take one line apart</a>'), 'the guide links the build page');
 });
 
