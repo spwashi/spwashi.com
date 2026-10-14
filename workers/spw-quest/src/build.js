@@ -3,7 +3,7 @@
 // text; format only tightens spacing when the parser accepts the whole script.
 import { parse } from "../../../public/js/semantic/spw-workbench-parser.js";
 import { escapeHtml } from "../../lib/shell.js";
-import { CONTAINERS, OPERATORS, PARTICLE_AIMS } from "./guide.js";
+import { CONTAINERS, EXAMPLE, OPERATORS, PARTICLE_AIMS } from "./guide.js";
 
 const MAX = 60;
 export const MAX_SCRIPT = 65536;
@@ -31,8 +31,8 @@ export const SLOTS = Object.freeze([
 export const BUILD_DEFAULTS = Object.freeze({ mark: "~", word: "door", concept: "", scene: "morning", mode: "closed", definition: "hinge, frame, key" });
 
 /** Slots from a query string; anything missing keeps its default, and no slot can break another's braces. */
-export function slotsFrom(params) {
-  const slots = { ...BUILD_DEFAULTS };
+export function slotsFrom(params, base = BUILD_DEFAULTS) {
+  const slots = { ...base };
   for (const { name } of SLOTS) {
     if (!params.has(name)) continue;
     const raw = String(params.get(name) || "").slice(0, MAX);
@@ -66,6 +66,56 @@ export function focusSlots(script) {
     definition: match[6] || "",
   };
 }
+
+/** The script's focus: the first line shaped like one expression, or -1. */
+export function focusIndex(script) {
+  return String(script || "").split("\n").findIndex((line) => EXPRESSION.test(line.trim()));
+}
+
+/** The script with its focus line rewritten from slots; indentation and every other line stay. */
+export function withSlots(script, slots) {
+  const text = String(script ?? "");
+  const line = assemble(slots);
+  if (!text.trim()) return line;
+  const lines = text.split("\n");
+  const at = focusIndex(text);
+  if (at < 0) return `${line}\n\n${text}`;
+  lines[at] = `${(lines[at].match(/^[ \t]*/) || [""])[0]}${line}`;
+  return lines.join("\n");
+}
+
+/** An address that carries the whole script holds this many characters at most; past it, links carry slots. */
+export const SHARE_MAX = 1800;
+
+/**
+ * What /build was asked for: ?script= is the source when present; slot
+ * parameters then rewrite only its focus line. Without a script, the slots
+ * make the line on their own.
+ */
+export function buildFrom(params) {
+  const given = params.has("script") ? String(params.get("script") || "").slice(0, MAX_SCRIPT) : null;
+  const base = (given != null && focusSlots(given)) || { ...BUILD_DEFAULTS };
+  const touched = SLOTS.some(({ name }) => params.has(name));
+  const slots = touched ? slotsFrom(params, base) : base;
+  const script = given == null ? assemble(slots) : touched ? withSlots(given, slots) : given;
+  const filename = safeName(params.get("filename") || `${nameOf(slots.word) || "line"}.spw`);
+  return { slots, script, filename };
+}
+
+/** The address of a script, when it fits; otherwise null. */
+export const scriptAddress = (script, hash = "build") => {
+  const text = String(script ?? "");
+  return text.length <= SHARE_MAX ? `/build?script=${encodeURIComponent(text)}#${hash}` : null;
+};
+
+/** Small things to open, change and keep: each is a whole script, and each opens by its address. */
+export const SNIPPETS = Object.freeze([
+  { label: "One word, three marks", script: "~door\n?door\n!door" },
+  { label: "A name and a citation", script: "#>my_notes\n@yesterday: ~\"./yesterday.spw\"\nnoticed = `the same door`" },
+  { label: "A question with a probe", script: "?[\"why the same door\"]{\n  !probe{ \"count the doors this week\" }\n}" },
+  { label: "A day's entry", script: "^\"stream\"{\n >>[2026-10-13 21:00] observe — the door held\n}" },
+  { label: "A morning page", script: EXAMPLE },
+]);
 
 /** A download name: one segment, ending in .spw. */
 export function safeName(raw) {
@@ -218,18 +268,19 @@ function altLabel(slot, value, slots) {
   return escapeHtml(`${BRACES[slot].open}${value}${BRACES[slot].close}`);
 }
 
-function pivots(slots) {
+function pivots(slots, script) {
   return SLOTS.map(({ name: slot, alts }) => {
     const options = alts.includes(slots[slot]) ? alts : [slots[slot], ...alts];
     const links = options.map((value) => {
       const next = { ...slots, [slot]: value };
       const current = value === slots[slot] ? ' aria-current="true"' : "";
-      return `<a href="/build?${query(next)}#build"${current}>${altLabel(slot, value, slots)}</a>`;
+      const href = scriptAddress(withSlots(script, next), `pivot-${slot}`) || `/build?${query(next)}#pivot-${slot}`;
+      return `<a href="${escapeHtml(href)}"${current}>${altLabel(slot, value, slots)}</a>`;
     }).join("");
     const own = slot === "mark"
       ? `<label class="own" data-slot="mark"><span class="sr-only">mark</span><select name="mark">${["", ...MARKS].map((mark) => `<option value="${escapeHtml(mark)}"${mark === slots.mark ? " selected" : ""}>${mark ? escapeHtml(mark) : "—"}</option>`).join("")}</select></label>`
       : `<label class="own" data-slot="${slot}"><span class="sr-only">${slot}</span><input name="${slot}" value="${escapeHtml(slots[slot])}" maxlength="${MAX}" spellcheck="false" autocomplete="off" autocapitalize="none"></label>`;
-    return `<div class="pivot" data-slot="${slot}"><div class="head"><span class="slot"><span class="role">${escapeHtml(slot === "mark" || slot === "word" ? slot : `${BRACES[slot].open} ${BRACES[slot].close} ${slot}`)}</span> ${escapeHtml(ROLE[slot])}</span>${own}</div><span class="alts">${links}</span></div>`;
+    return `<div class="pivot" id="pivot-${slot}" data-slot="${slot}"><div class="head"><span class="slot"><span class="role">${escapeHtml(slot === "mark" || slot === "word" ? slot : `${BRACES[slot].open} ${BRACES[slot].close} ${slot}`)}</span> ${escapeHtml(ROLE[slot])}</span>${own}</div><span class="alts">${links}</span></div>`;
   }).join("\n      ");
 }
 
@@ -258,6 +309,22 @@ export function toolActions() {
     status.textContent = "";
     setTimeout(() => { status.textContent = message; }, 50);
   };
+  field.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" || !(event.metaKey || event.ctrlKey)) return;
+    event.preventDefault();
+    box.requestSubmit(box.querySelector("[data-tool='read']"));
+  });
+  const share = box.querySelector("[data-tool='share']");
+  share?.addEventListener("click", async (event) => {
+    if (!navigator.clipboard) return;
+    event.preventDefault();
+    try {
+      await navigator.clipboard.writeText(new URL(share.getAttribute("href"), location.href).href);
+      say("Copied a link to this script.");
+    } catch {
+      location.href = share.href;
+    }
+  });
   const copy = box.querySelector("[data-tool='copy']");
   copy?.addEventListener("click", async () => {
     const idle = copy.textContent;
@@ -290,34 +357,66 @@ export function toolActions() {
   });
 }
 
-/** The surface: the script, what it means, and one control per slot. */
+/** Snippets to open: each link opens the tool on that whole script. */
+function shelf() {
+  const items = SNIPPETS.map(({ label, script }) => {
+    const first = script.split("\n")[0];
+    return `<li><a href="${escapeHtml(scriptAddress(script) || "/build#build")}"><span class="label">${escapeHtml(label)}</span><code>${escapeHtml(first)}${script.includes("\n") ? " …" : ""}</code></a></li>`;
+  });
+  return `<p class="shelf-title" id="snippets-title">Start from a snippet</p>
+    <ul class="snippets" aria-labelledby="snippets-title">
+      ${items.join("\n      ")}
+    </ul>`;
+}
+
+/** The surface: the script, what it means, one control per slot, and snippets to start from. */
 export function buildSurface(slots, script = assemble(slots), filename = `${slots.word || "line"}.spw`) {
   const line = assemble(slots);
   const shown = String(script ?? "");
   const rows = Math.min(18, Math.max(4, shown.split("\n").length + 1));
+  const address = scriptAddress(shown);
   return `<div class="build">
-    <form class="script" method="post" action="/build">
+    <form class="script" method="post" action="/build#build">
       <div class="tool">
         <label class="filename"><span class="sr-only">File name</span><input name="filename" value="${escapeHtml(safeName(filename))}" maxlength="80" spellcheck="false" autocomplete="off" autocapitalize="none"></label>
-        <button type="button" data-tool="copy">Copy</button>
+        <button type="submit" name="tool" value="read" data-tool="read">Read</button>
         <button type="submit" name="tool" value="format">Format</button>
+        <button type="button" data-tool="copy">Copy</button>
         <button type="submit" name="tool" value="download" formaction="/script.spw">Download</button>
       </div>
       <label class="script-label" for="script">Script</label>
-      <textarea class="script" id="script" name="script" rows="${rows}" maxlength="${MAX_SCRIPT}" spellcheck="false" autocomplete="off" autocapitalize="none">${escapeHtml(shown)}</textarea>
+      <textarea class="script" id="script" name="script" rows="${rows}" maxlength="${MAX_SCRIPT}" spellcheck="false" autocomplete="off" autocapitalize="none" aria-describedby="script-keys">${escapeHtml(shown)}</textarea>
+      <p class="keys" id="script-keys"><span class="hint">Read shows what changed; <kbd>⌘</kbd>/<kbd>Ctrl</kbd> + <kbd>Enter</kbd> reads too.</span>${address ? ` <a class="share" href="${escapeHtml(address)}" data-tool="share">Link to this script</a>` : ""}</p>
     </form>
     <p class="built-line"><code class="built" aria-label="${escapeHtml(line)}">${segments(slots) || "&nbsp;"}</code></p>
     ${ledger(shown, slots)}
     <form class="slots" method="get" action="/build#build">
+      <input type="hidden" name="script" value="${escapeHtml(shown.length <= SHARE_MAX ? shown : line)}">
       <div class="pivots" aria-label="Change one slot, keep the rest">
-        ${pivots(slots)}
+        ${pivots(slots, shown.length <= SHARE_MAX ? shown : line)}
       </div>
       <button type="submit">Put together</button>
     </form>
+    ${shelf()}
+    <p class="note parser-note">This page reads with the site's parser. To read Spw on your own page, take a dated build from <a href="/parser/">spw.quest/parser</a>; to lint and resolve <code>.spw</code> files in a repository, <a href="/install">install the workbench</a>.</p>
   </div>`;
 }
 
 const SLOT_NAMES = SLOTS.map((slot) => slot.name);
+const SHELF_CSS = `.keys { margin: .35rem 0 0; color: var(--muted); font-size: .84rem; }
+    .keys kbd { padding: 0 .3rem; border: 1px solid var(--line); border-radius: 3px; font: .78rem/1.4 var(--mono); }
+    .keys .share { margin-left: .5rem; }
+    @media (pointer: coarse) { .keys .hint { display: none; } .keys .share { margin-left: 0; } }
+    .shelf-title { margin: 1.2rem 0 0; color: var(--muted); font: 600 .8rem/1.2 var(--font); letter-spacing: .06em; text-transform: uppercase; }
+    .shelf-title + .snippets { margin-top: .5rem; }
+    .pivot { scroll-margin-top: 5rem; }
+    .snippets { display: grid; grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr)); gap: .5rem; margin: 1.1rem 0 0; padding: 0; list-style: none; }
+    .snippets li { margin: 0; }
+    .snippets a { display: grid; gap: .25rem; min-height: 44px; padding: .55rem .7rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--field); color: var(--fg); text-decoration: none; }
+    .snippets a:hover, .snippets a:focus-visible { border-color: var(--accent); background: var(--accent-soft); }
+    .snippets .label { font-size: .9rem; font-weight: 600; }
+    .snippets code { overflow: hidden; color: var(--muted); font: .82rem/1.3 var(--mono); text-overflow: ellipsis; white-space: nowrap; }
+    .parser-note { margin: 1rem 0 0; }`;
 export const BUILD_CSS = `.build { padding: .9rem 1rem 1rem; border: 1px solid var(--edge); border-radius: 4px; background: var(--surface); box-shadow: var(--shadow); }
     .tool { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; margin: 0 0 .7rem; }
     .tool button { margin: 0; }
@@ -356,4 +455,5 @@ export const BUILD_CSS = `.build { padding: .9rem 1rem 1rem; border: 1px solid v
     form.slots button { margin-top: .8rem; }
     ${SLOT_NAMES.map((slot) => `.build:has(.pivot[data-slot="${slot}"]:is(:hover, :focus-within)) .built [data-slot="${slot}"], .build:has(label[data-slot="${slot}"]:focus-within) .built [data-slot="${slot}"]`).join(",\n    ")} { background: var(--accent-soft); box-shadow: inset 0 -2px 0 var(--accent); }
     ${SLOT_NAMES.map((slot) => `.build:has(.built [data-slot="${slot}"]:hover) .pivot[data-slot="${slot}"]`).join(",\n    ")} { background: var(--accent-soft); }
-    @media (max-width: 36rem) { .semantics li { grid-template-columns: 3.2rem minmax(0, 1fr); } .semantics .name { grid-column: 2; } }`;
+    @media (max-width: 36rem) { .semantics li { grid-template-columns: 3.2rem minmax(0, 1fr); } .semantics .name, .semantics li > span:last-child { grid-column: 2; } }
+    ${SHELF_CSS}`;

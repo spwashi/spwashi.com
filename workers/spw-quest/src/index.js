@@ -3,7 +3,7 @@ import { EXPECTED_FILES, GIT_GUIDE, GIT_MARKDOWN, INSTRUCTION_SETS, QUEST_PROMPT
 import { STEPS } from "./steps.js";
 import { LINE_LIMIT, liveScript, readLine } from "./reader.js";
 import { PANEL_CSS, stepSurface } from "./panel.js";
-import { BUILD_CSS, BUILD_DEFAULTS, MAX_SCRIPT, assemble, buildSurface, focusSlots, formatScript, safeName, slotsFrom, toolActions } from "./build.js";
+import { BUILD_CSS, BUILD_DEFAULTS, MAX_SCRIPT, assemble, buildFrom, buildSurface, focusSlots, formatScript, safeName, toolActions } from "./build.js";
 import { PAPER_CSS, PAPER_THEME } from "./paper.js";
 import { PARSER_JS } from "./parser-text.js";
 import { handleParser, isParserPath } from "./parser-releases.js";
@@ -487,10 +487,11 @@ async function handleQuest(request, url) {
     response = htmlResponse(renderGuide(value && { value, from: switchModulePath(value) }));
     response.headers.set("Content-Security-Policy", GUIDE_CSP);
   } else if (url.pathname === "/build") {
-    response = htmlResponse(renderBuild(slotsFrom(url.searchParams)), { cache: "public, max-age=300" });
+    const asked = buildFrom(url.searchParams);
+    response = htmlResponse(renderBuild(asked.slots, asked.script, asked.filename), { cache: "public, max-age=300" });
   } else if (url.pathname === "/script.spw") {
-    const slots = slotsFrom(url.searchParams);
-    response = scriptFile(assemble(slots), `${slots.word || "line"}.spw`);
+    const asked = buildFrom(url.searchParams);
+    response = scriptFile(asked.script, asked.filename);
   } else if (url.pathname === "/read") {
     response = handleRead(url);
   } else if (url.pathname === "/parser.js") {
