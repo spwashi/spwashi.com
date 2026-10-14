@@ -24,6 +24,7 @@ fixity = "tending"
  >>[2026-10-13 18:55] implement — the site mount moved from 813444dc to 138d2a28 (29 commits, mostly editor and language-server work, and the workbench's caches reorganized into a tree and a journal). The parser is the same, so the in-site bundle changed only its provenance line. spw:integrity resolves 6149 of 6149, and the site cites none of the moved cache paths.
  >>[2026-10-13 20:59] implement — the site mount moved from 138d2a28 to 76e17bd4 (5 commits: plans, and a VS Code Concepts row that names its plan). The parser is the same; the bundle changed only its provenance line.
  >>[2026-10-13 23:05] implement — the site mount moved from 76e17bd4 to c17f57a8 (12 commits: a reader and a workbench build in the parser release, seed bundling for a browser, a portable runtime root, plans). The parser is the same; the bundle changed its provenance line and two minified names.
+ >>[2026-10-13 23:19] implement — the mount moved again, c17f57a8 to 0eb1d1c0, the creator's last upstream of the day (4 commits: one content hash, caret form context in the workbench build). The parser is the same. npm run build:spw-parser now also writes public/js/semantic/spw-workbench-reader.js, the editor's reading with parse, built as the release builds it, and /tools/spw-parser/ imports it alone: a reading panel (highlighted roles, outline) and an anchors metric beside tokens, AST and diagnostics.
 }
 
 ^"open"{

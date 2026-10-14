@@ -1,4 +1,6 @@
-import { parse, SPW_PARSER_BUILD } from '/public/js/semantic/spw-workbench-parser.js';
+// The reader bundle carries parse with the editor's reading (roles, outline, anchors, highlightHtml),
+// so the tool proves a source the way the editor reads it without loading the parser twice.
+import { anchors, highlightHtml, outline, parse, SPW_PARSER_BUILD } from '/public/js/semantic/spw-workbench-reader.js';
 
 import {
   createParserAppUrl,
@@ -183,6 +185,51 @@ function renderTokens(host, tokens) {
   host.append(fragment);
 }
 
+/** Role classes are prefixed so the editor's role names never meet the site's own spw-* classes. */
+export const READER_CLASS_PREFIX = 'spw-role-';
+
+export function readAsEditor(source) {
+  const input = String(source ?? '');
+  return {
+    html: highlightHtml(input, { classPrefix: READER_CLASS_PREFIX }),
+    outline: outline(input),
+    anchors: anchors(input),
+  };
+}
+
+function renderOutline(host, symbols) {
+  host.replaceChildren();
+  const add = (list, symbol) => {
+    const item = document.createElement('li');
+    const name = document.createElement('code');
+    name.textContent = symbol.name;
+    item.append(name);
+    if (symbol.detail) {
+      const detail = document.createElement('span');
+      detail.className = 'literal-parser-outline__detail';
+      detail.textContent = symbol.detail;
+      item.append(detail);
+    }
+    const line = document.createElement('span');
+    line.className = 'literal-parser-outline__line';
+    line.textContent = `L${(symbol.range?.start?.line ?? 0) + 1}`;
+    item.append(line);
+    if (symbol.children?.length) {
+      const children = document.createElement('ol');
+      symbol.children.forEach((child) => add(children, child));
+      item.append(children);
+    }
+    list.append(item);
+  };
+  symbols.forEach((symbol) => add(host, symbol));
+  if (!symbols.length) {
+    const item = document.createElement('li');
+    item.dataset.tone = 'empty';
+    item.textContent = 'No frames, anchors or wonders to outline.';
+    host.append(item);
+  }
+}
+
 function renderDiagnostics(host, output) {
   host.replaceChildren();
   const diagnostics = [
@@ -288,6 +335,8 @@ function initLiteralParser(root) {
   const fileInput = root.querySelector('[data-parser-file]');
   const sourceName = root.querySelector('[data-parser-source-name]');
   const status = root.querySelector('[data-parser-status]');
+  const reading = root.querySelector('[data-parser-reading]');
+  const outlineList = root.querySelector('[data-parser-outline]');
 
   if (!(input instanceof HTMLTextAreaElement)
     || !(tokenList instanceof HTMLElement)
@@ -316,6 +365,11 @@ function initLiteralParser(root) {
       setMetric(root, 'depth', astCensus.maxDepth);
       setMetric(root, 'reconstruction', result.reconstructsExactly ? 'exact' : 'changed', result.reconstructsExactly ? 'ok' : 'error');
       setMetric(root, 'time', `${output.duration.toFixed(2)} ms`);
+      const editor = readAsEditor(source);
+      // highlightHtml escapes every character it emits, so its markup can be set as HTML.
+      if (reading instanceof HTMLElement) reading.innerHTML = editor.html;
+      if (outlineList instanceof HTMLElement) renderOutline(outlineList, editor.outline);
+      setMetric(root, 'anchors', editor.anchors.length);
       setAppLink(appLink, source, activeName);
       if (status instanceof HTMLElement) {
         status.textContent = output.success && !output.errors.length
@@ -325,6 +379,8 @@ function initLiteralParser(root) {
     } catch (error) {
       tokenList.replaceChildren();
       ast.textContent = 'null';
+      if (reading instanceof HTMLElement) reading.textContent = source;
+      if (outlineList instanceof HTMLElement) outlineList.replaceChildren();
       diagnostics.replaceChildren();
       const item = document.createElement('li');
       item.dataset.tone = 'error';
