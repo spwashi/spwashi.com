@@ -40,9 +40,12 @@ only adds *resolution*: does the path exist, and does the `#fragment` name
 anything in the target. All 2480 citations currently resolve.
 
 **Known workbench gaps** (this consumer is a use case the workbench predates).
-Pin `76e17bd46810`. Details: `.spw/workbench-report.spw`.
+Pin `c17f57a80c55`. Details: `.spw/workbench-report.spw`.
 
-Landed on this pin: a Concepts row in VS Code shows the plan that holds it.
+Landed on this pin: the parser release gains a reader (outline, anchors and
+highlighted HTML, browser-safe) and a workbench build of seed, the runtime
+and the reader; seed hashes without node:crypto, so it bundles for a browser.
+From `76e17bd46810`: a Concepts row in VS Code shows the plan that holds it.
 From `138d2a28da2b`: a commit hash git confirms hovers and links to its
 commit, frame lenses name what they count, and the annotation index holds
 only what the workspace walk holds. From `813444dcd951`: stream entries read the same in every dialect, and `@`
