@@ -135,6 +135,22 @@ export const FEATURE_DEFS = [
     load: () => import('../../modules/tools/spw-paste.js'),
   },
   {
+    id: 'spw-code',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.VISIBLE,
+    selector: 'pre > code.language-spw',
+    rootMode: 'each',
+    describes: 'code[spw]{read.highlight.edit}<parser> paints each Spw code block as the editor reads it, every mark in its operator color, with Edit (the literal parser, carrying this source) and Copy over its corner',
+    updates: [
+      'structural:property:innerHTML',
+      'structural:property:childList',
+    ],
+    evaluates: ['surface'],
+    timingArc: 'visible-feature',
+    effectScope: ['local-dom', 'listeners', 'network', 'window'],
+    load: () => import('../../modules/tools/spw-code.js'),
+  },
+  {
     id: 'image-tour',
     layer: MODULE_LAYERS.FEATURE,
     when: MOUNT_WHEN.VISIBLE,

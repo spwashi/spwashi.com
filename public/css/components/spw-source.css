@@ -1,0 +1,151 @@
+/* ==========================================================================
+   components/spw-source.css
+   --------------------------------------------------------------------------
+   Spw source, highlighted: the reader's role spans (spw-role-*) from
+   semantic/spw-highlight.js, each mark wearing its operator color through
+   data-op, the attribute the paste tool and the spirit sequence already
+   color by. Used by Spw code blocks on any page (modules/tools/spw-code.js)
+   and by the literal parser's editor, a .spw-source field.
+
+   Delivery is deferred (kernel/deferred-styles.js ensureSpwSourceStyles):
+   the module that paints Spw loads this sheet, so pages without Spw pay
+   nothing. Cascade stays components: a standalone late link restates the
+   geology, or these rules would beat every layer. Every color rule sits in
+   :where(), so a route can retint a surface without fighting it.
+   ========================================================================== */
+
+@layer reset, tokens, shell, typography, grammar, components, systems, routes, handles, effects, ornament;
+
+@layer components {
+  /* The surface. Spw source sits on the site's code surface (--surface-code), dark in either
+     theme, so a code block and the parser's editor take the operator canon's dark values here:
+     the same hues tokens/core.css gives dark mode. Local names (--spw-op-*), so nothing else
+     inside the block (its action chips) is recolored. Off a dark surface the rules below fall
+     back to the theme's own --op-*-color. */
+  :where(pre:has(> code.language-spw), .spw-source) {
+    color-scheme: dark;
+    --spw-source-ink: #f9e8bf;
+    --spw-source-soft: rgba(249, 232, 191, 0.72);
+    --spw-source-faint: rgba(249, 232, 191, 0.5);
+    --spw-op-frame: hsl(180 62% 62%);
+    --spw-op-layer: rgba(214, 224, 220, 0.9);
+    --spw-op-vibration: hsl(180 62% 62%);
+    --spw-op-ground: hsl(42 24% 68%);
+    --spw-op-integration: hsl(36 70% 64%);
+    --spw-op-potential: hsl(214 58% 68%);
+    --spw-op-wonder: hsl(268 48% 72%);
+    --spw-op-perspective: hsl(176 58% 58%);
+    --spw-op-value: hsl(160 42% 62%);
+    --spw-op-subject: hsl(188 42% 64%);
+    --spw-op-binding: hsl(24 48% 66%);
+    --spw-op-substrate: hsl(220 38% 72%);
+    --spw-op-normalize: hsl(95 30% 66%);
+    --spw-op-action: hsl(176 58% 58%);
+    --spw-op-stream: hsl(160 42% 62%);
+    --spw-op-concept: hsl(168 52% 62%);
+    --spw-op-scene: hsl(180 48% 62%);
+    --spw-op-mode: hsl(268 48% 72%);
+    --spw-op-direction: hsl(180 62% 62%);
+  }
+
+  /* Roles: what the editor paints. Marks below override with their operator color. */
+  :where(.spw-role-string) { color: var(--spw-source-soft, var(--ink-mid)); }
+  :where(.spw-role-comment) { color: var(--spw-source-faint, var(--ink-faint)); font-style: italic; }
+  :where(.spw-role-number) { color: var(--spw-op-normalize, var(--op-normalize-color)); }
+  :where(.spw-role-property) { color: var(--spw-op-potential, var(--op-potential-color)); }
+  :where(.spw-role-variable) { color: var(--spw-op-subject, var(--op-subject-color)); }
+  :where(.spw-role-commitRef, .spw-role-hashlike) {
+    color: var(--spw-op-substrate, var(--op-meta-color));
+    text-decoration: underline dotted;
+    text-underline-offset: 0.18em;
+  }
+
+  /* Marks: each operator type in its own color, the same everywhere on the site. */
+  :where([class*="spw-role-"][data-op="frame"]) { color: var(--spw-op-frame, var(--op-frame-color)); }
+  :where([class*="spw-role-"][data-op="layer"]) { color: var(--spw-op-layer, var(--op-layer-color)); }
+  :where([class*="spw-role-"][data-op="vibration"]) { color: var(--spw-op-vibration, var(--op-vibration-color)); }
+  :where([class*="spw-role-"][data-op="ground"]) { color: var(--spw-op-ground, var(--op-ground-color)); }
+  :where([class*="spw-role-"][data-op="integration"]) { color: var(--spw-op-integration, var(--op-integration-color)); }
+  :where([class*="spw-role-"][data-op="potential"]) { color: var(--spw-op-potential, var(--op-potential-color)); }
+  :where([class*="spw-role-"][data-op="wonder"]) { color: var(--spw-op-wonder, var(--op-wonder-color)); }
+  :where([class*="spw-role-"][data-op="perspective"]) { color: var(--spw-op-perspective, var(--op-perspective-color)); }
+  :where([class*="spw-role-"][data-op="value"]) { color: var(--spw-op-value, var(--op-value-color)); }
+  :where([class*="spw-role-"][data-op="subject"]) { color: var(--spw-op-subject, var(--op-subject-color)); }
+  :where([class*="spw-role-"][data-op="binding"]) { color: var(--spw-op-binding, var(--op-binding-color)); }
+  :where([class*="spw-role-"][data-op="substrate"]) { color: var(--spw-op-substrate, var(--op-substrate-color)); }
+  :where([class*="spw-role-"][data-op="normalize"]) { color: var(--spw-op-normalize, var(--op-normalize-color)); }
+  :where([class*="spw-role-"][data-op="action"]) { color: var(--spw-op-action, var(--op-action-color)); }
+  :where([class*="spw-role-"][data-op="stream"]) { color: var(--spw-op-stream, var(--op-stream-color)); }
+  :where([class*="spw-role-"][data-op="concept"]) { color: var(--spw-op-concept, var(--op-concept-color)); }
+  :where([class*="spw-role-"][data-op="scene"]) { color: var(--spw-op-scene, var(--op-scene-color)); }
+  :where([class*="spw-role-"][data-op="mode"]) { color: var(--spw-op-mode, var(--op-mode-color)); }
+  :where([class*="spw-role-"][data-op="direction"]) { color: var(--spw-op-direction, var(--op-direction-color)); }
+  :where([class*="spw-role-"][data-op="concept-edge"]) { color: var(--spw-op-concept, var(--op-concept-color)); }
+
+  /* A brace and its partner, while the caret sits on one of them. Color only, so nothing moves. */
+  :where(.spw-paired) {
+    border-radius: 2px;
+    background: color-mix(in srgb, currentColor 18%, transparent);
+    box-shadow: 0 0 0 1px color-mix(in srgb, currentColor 45%, transparent);
+  }
+
+  /* A Spw code block: its actions sit over the top corner, so the block never moves when they arrive. */
+  :where(pre:has(> code.language-spw)) {
+    position: relative;
+  }
+
+  :where(.spw-code-actions) {
+    position: absolute;
+    inset-block-start: 0.35rem;
+    inset-inline-end: 0.35rem;
+    display: flex;
+    gap: 0.25rem;
+    opacity: 0;
+    transition: opacity 140ms ease;
+  }
+
+  :where(pre:hover, pre:focus-within) > :where(.spw-code-actions) {
+    opacity: 1;
+  }
+
+  :where(.spw-code-actions) > :where(a, button) {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2rem;
+    margin: 0;
+    padding: 0 0.6rem;
+    border: 1px solid rgba(249, 232, 191, 0.28);
+    border-radius: 999px;
+    background: rgba(18, 23, 27, 0.92);
+    color: var(--spw-source-ink, #f9e8bf);
+    font: 500 0.75rem/1 var(--font-sans, system-ui, sans-serif);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  :where(.spw-code-actions) > :where(a, button):is(:hover, :focus-visible) {
+    border-color: var(--spw-op-frame, var(--op-frame-color));
+    color: var(--spw-op-frame, var(--op-frame-color));
+  }
+
+  :where(.spw-code-actions) > :where(a, button):focus-visible {
+    outline: 2px solid var(--spw-op-frame, var(--op-frame-color));
+    outline-offset: 2px;
+  }
+
+  @media (pointer: coarse) {
+    :where(.spw-code-actions) {
+      opacity: 1;
+    }
+
+    :where(.spw-code-actions) > :where(a, button) {
+      min-height: var(--touch-target-compact, 2.25rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :where(.spw-code-actions) {
+      transition: none;
+    }
+  }
+}
