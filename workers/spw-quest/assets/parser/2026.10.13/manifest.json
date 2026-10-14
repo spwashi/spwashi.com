@@ -1,0 +1,76 @@
+{
+  "schema": "spw.parser-release/2",
+  "name": "2026.10.13",
+  "kind": "release",
+  "day": "2026.10.13",
+  "workbench": {
+    "package": "spw-workbench",
+    "version": "0.3.0",
+    "revision": "76e17bd468102ca2f9fe4319d4ce646eb0022c6b"
+  },
+  "grammar": "0.3.0",
+  "default": {
+    "variant": "full",
+    "form": "min",
+    "path": "parser.js"
+  },
+  "files": [
+    {
+      "path": "full.min.js",
+      "variant": "full",
+      "form": "min",
+      "bytes": 75850,
+      "sha256": "012e4324e25631702ec84bd18100794a12c03c6af85936a2e1d38ef02c584e33",
+      "integrity": "sha384-GJ7kj6Leijm5oTZ+VvJQnyQv5Hgm5O+hF4uQq5moKlxS+yacwpH4Pa/L1q0xg5YW"
+    },
+    {
+      "path": "full.debug.js",
+      "variant": "full",
+      "form": "debug",
+      "bytes": 162092,
+      "sha256": "ca5d16131dc7526c48eacee30fa493325057a2ccc1566e8fb38a7ff185d1853c",
+      "integrity": "sha384-VYGXED5crDHtRSL0g9SB4e3pASawruWQU6P/hfibKTpCCh3nQt58xcjELiQ+uMg/"
+    },
+    {
+      "path": "full.debug.js.map",
+      "variant": "full",
+      "form": "debug",
+      "kind": "map",
+      "bytes": 371399,
+      "sha256": "86fc2cf2f1642c4e3ecca15b3832ab30212ee5528d9591a73980709363e4e10e",
+      "integrity": "sha384-lJCXbKF4xBWoOTqNFBXAf+TXybSuTk/B9eeLc3a8wPq/1XGIM9fKRqyFe4sNyZzs"
+    },
+    {
+      "path": "lite.min.js",
+      "variant": "lite",
+      "form": "min",
+      "bytes": 3206,
+      "sha256": "44bf6baca6e364ad7fcfe3c530a87eaf64e8b17b283031831e2a0668d7e5fa09",
+      "integrity": "sha384-yrsXiAWOTjX5pVXoHlt7zbQN98bPgZCxxyIagSheBNXACTgp7sdTyuNLMoV2naEP"
+    },
+    {
+      "path": "lite.debug.js",
+      "variant": "lite",
+      "form": "debug",
+      "bytes": 6152,
+      "sha256": "fc4b08f2f01452bbc5dfeb3f88d8643ad967d819929b1cef69bde39869d8ead2",
+      "integrity": "sha384-fkEYECLA+euJ1HtiHlEv+G2LiSLTqt3zLQGEuB2YqTYxp/kepP/bQMWQCNHq0F7P"
+    },
+    {
+      "path": "lite.debug.js.map",
+      "variant": "lite",
+      "form": "debug",
+      "kind": "map",
+      "bytes": 15651,
+      "sha256": "717560de32293728b60b2d2af3552678eaf486f8bdc35193b133f58533ba9cf2",
+      "integrity": "sha384-Gop5Fq9soaSICx25ExTnJBTIHNj2wGxGd5Cx3duzxWozjP1hGi477Wd+j232RNCo"
+    },
+    {
+      "path": "parser.js",
+      "alias": "full.min.js",
+      "bytes": 75850,
+      "sha256": "012e4324e25631702ec84bd18100794a12c03c6af85936a2e1d38ef02c584e33",
+      "integrity": "sha384-GJ7kj6Leijm5oTZ+VvJQnyQv5Hgm5O+hF4uQq5moKlxS+yacwpH4Pa/L1q0xg5YW"
+    }
+  ]
+}

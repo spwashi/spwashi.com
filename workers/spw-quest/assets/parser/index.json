@@ -1,4 +1,11 @@
 {
   "schema": "spw.parser-index/2",
-  "releases": []
+  "releases": [
+    {
+      "name": "2026.10.13",
+      "kind": "release",
+      "day": "2026.10.13",
+      "revision": "76e17bd468102ca2f9fe4319d4ce646eb0022c6b"
+    }
+  ]
 }
