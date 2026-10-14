@@ -4,9 +4,10 @@
 //
 // One folder per name: a release day (YYYY.MM.DD), a prerelease headed for a day
 // (YYYY.MM.DD-pre.N), or a patch of a published day (YYYY.MM.DD-patch.N). Within a day the
-// order is ours, not semver's: pre.N < the release < patch.N; across days, by day. Every folder
-// holds the same files (parser.js, the default, byte for byte full.min.js; full.debug.js and its
-// map; lite.min.js; lite.debug.js and its map; manifest.json). A name is cut once and its bytes
+// order is ours, not semver's: pre.N < the release < patch.N; across days, by day. A folder holds
+// what its manifest lists: parser.js, the default, byte for byte full.min.js; full, lite, and from
+// workbench c17f57a on, reader and workbench, each min and debug with a map; manifest.json. The page
+// reads the variants from the manifest, so an older folder simply lists fewer. A name is cut once and its bytes
 // never change, so its files cache for a year. Releases and patches are published: tracked in
 // git and listed in index.json. Prereleases are gitignored, deploy from the working tree, are
 // listed in prereleases.json, and a pruned one simply 404s. /parser/latest.js moves to the
@@ -195,10 +196,20 @@ ${releases.length ? `<ul class="releases">\n    ${releases.map(releaseItem).join
   });
 }
 
-/** The import line a page would write: the full parser reads, lite scans. */
+/** What each variant is for, as the workbench's release script describes it. */
+const VARIANT_WORDS = {
+  full: "The parser: parse and parseExpression.",
+  lite: "The scanner: marks operators and braces without parsing.",
+  reader: "What the editor reads from a file: highlighted HTML, the outline, the anchors and the role stream, with parse.",
+  workbench: "Seed's whole API, the runtime (runSpw and hot sessions), the reader, and the form under a caret (formAt, formHover).",
+};
+
+/** The import line a page would write: the full parser reads, lite scans, the reader highlights, the workbench runs. */
 function importLine(variant, url) {
   if (variant === "full") return `import { parse } from "${url}";`;
   if (variant === "lite") return `import { scan } from "${url}";`;
+  if (variant === "reader") return `import { parse, highlightHtml, outline, anchors } from "${url}";`;
+  if (variant === "workbench") return `import { parse, runSpw, highlightHtml } from "${url}";`;
   return `import * as spw from "${url}";`;
 }
 
@@ -209,7 +220,7 @@ function fileSection(manifest, file, origin) {
   const variant = file.variant ?? target?.variant;
   const form = file.form ?? target?.form;
   const facts = [
-    ["Variant", escapeHtml(variant ?? "—")],
+    ["Variant", `${escapeHtml(variant ?? "—")}${VARIANT_WORDS[variant] ? ` <span class="note">${escapeHtml(VARIANT_WORDS[variant])}</span>` : ""}`],
     ["Form", escapeHtml(form ?? "—")],
     ...(file.kind ? [["Kind", escapeHtml(file.kind)]] : []),
     ...(target ? [["Same bytes as", `<a href="${escapeHtml(file.alias)}"><code>${escapeHtml(file.alias)}</code></a>`]] : []),
