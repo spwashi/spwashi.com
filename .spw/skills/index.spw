@@ -63,7 +63,7 @@ fixity = "tending"
 }[reg=facet]
 
 ^"coverage"{
-  note: "17 skills documented in @skills_readme; 3 have a measurement surface. The gap is the work, not an oversight."
+  note: "17 local skills and one mounted workbench skill documented in @skills_readme; 3 have a measurement surface. The gap is the work, not an oversight."
   surfaced = 3
   documented = 17
   next: "A skill earns a surface when it has been run twice and produced a number worth keeping both times."

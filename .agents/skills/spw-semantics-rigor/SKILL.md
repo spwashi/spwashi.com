@@ -33,7 +33,7 @@ description: Clean up naming and meaning across copy, data-spw attributes, CSS t
 ## 3. 🛡️ Constitutional Guardrails
 
 * 🚫 **No Attribute Proliferation:** Add a `data-spw-*` attribute to HTML only when a CSS rule, JS consumer (check `el.dataset.spwFoo` writes too, not just the literal string), or inspectable `.spw` contract depends on it.
-* 🚫 **No Ad-Hoc Stems:** Do not invent synonyms for existing operators. The character table in `public/js/kernel/operator-detection.js` is canon; atlas slugs are aliases.
+* 🚫 **No Ad-Hoc Stems:** Do not invent synonyms for existing operators. The character table in `public/js/kernel/operator-detection.js` is the reference until it moves upstream (`spw-operator-lattice` says how); atlas slugs are aliases.
 * 🚫 **Preserve Creator Truth:** Do not rephrase author copy into mechanical machine-speak. Spwashi is a creator first.
 * 🚫 **Public nouns:** `.spw-frame` / `.spw-chip`. Do not author `site-frame` or `operator-chip` on public routes. Catalog `selector` strings must name the same nouns (`npm run audit:module-selectors`).
 * 🚫 **Migration tools:** `scripts/rewrite-semantic-nouns.mjs` can empty `class=""` via a 500-char lookahead. Diff for dropped `data-spw-textual-role` before committing a bulk rename.

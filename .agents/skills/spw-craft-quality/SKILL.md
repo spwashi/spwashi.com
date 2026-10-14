@@ -29,7 +29,7 @@ description: Improve visual hierarchy, accessibility (a11y), device parity, or c
 
 ## 3. 🛡️ Constitutional Guardrails
 
-* 🚫 **No Cascade Disruption:** Honor the CSS layer order. Do not add `!important` outside `ornament`. About 165 existing uses in components and routes are debt, not precedent; leave them unless removing them is the slice.
+* 🚫 **No Cascade Disruption:** Honor the CSS layer order. Do not add `!important` outside `ornament`. The existing uses in every other layer are debt, not precedent; leave them unless removing them is the slice. The count and its probe live in [`craft-quality.spw#important_distribution`](../../../.spw/skills/craft-quality.spw), and it is still climbing.
 * 🚫 **No Cosmetic Attribute Sprawl:** Do not invent one-off `data-spw-*` attributes for visual-only tweaks.
 * 🚫 **No Hover-Only Disclosures:** Navigation and controls must work on touch/coarse pointers.
 * 🚫 **A11y Baselines:** Touch targets per the matrix below. Clear `:focus-visible` rings. WCAG AA contrast (4.5:1 minimum).

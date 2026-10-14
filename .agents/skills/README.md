@@ -20,7 +20,8 @@ Each skill names a default operation. The invoker may override. Sense before act
 | [`image-optimize`](./image-optimize/SKILL.md) | `contract` | `public/images/` | `npm run images:manifest` | `public/images/` |
 | [`image-naming-magic`](./image-naming-magic/SKILL.md) | `align` | Assets / Alt text | Visual inspection + HTML audit | `public/images/` |
 | [`spw-ontology-workbench`](./spw-ontology-workbench/SKILL.md) | `contract` | `.spw/` surfaces | `npm run spw:doctor && npm run spw:roots` | [`.spw/index.spw`](../../.spw/index.spw) |
-| [`spw-operator-lattice`](./spw-operator-lattice/SKILL.md) | `audit` | Operators / Chips | `npm run spw:lattice && npm run spw:analyze` | [`.spw/conventions/operator-site-projection.spw`](../../.spw/conventions/operator-site-projection.spw) |
+| [`spw-operator-lattice`](./spw-operator-lattice/SKILL.md) | `audit` | Operators / Chips | `npm run spw:lattice` | [`.spw/conventions/operator-site-projection.spw`](../../.spw/conventions/operator-site-projection.spw) |
 | [`spw-privacy-engineering`](./spw-privacy-engineering/SKILL.md) | `audit` | PWA / Storage | `npm run check:pwa` | [`.spw/conventions/site-semantics.spw`](../../.spw/conventions/site-semantics.spw) |
 | [`spw-research-rigor`](./spw-research-rigor/SKILL.md) | `cache` | Research notes | `npm run wonder && npm run wonder:measures` | `.agents/plans/archive/model-guided-refinement/` |
 | [`spw-math-algorithm-radar`](./spw-math-algorithm-radar/SKILL.md) | `prime` | Curriculum / Labs | Zero-JS static rendering test | `topics/software/` |
+| [`spw-mounted-consumer-review`](../../.spw/_workbench/.agents/skills/spw-mounted-consumer-review/SKILL.md) (workbench, no wrapper) | `audit` | Mounted CLI / LSP / editor | `npm run spw:doctor` | [`.spw/reviews/upstream-workbench-recommendations.spw`](../../.spw/reviews/upstream-workbench-recommendations.spw) |

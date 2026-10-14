@@ -44,12 +44,12 @@ Prove adapters with `npm run check:agents` (files must be git-tracked; always-on
 
 ## 4. Tunability & Runtime Postures
 
-The site's runtime is fully tunable across multiple semantic registers via `public/js/kernel/site-settings.js`:
+Settings enter through `public/js/kernel/site-settings.js`. Defaults are `DEFAULT_SITE_SETTINGS` and allowed values are `SETTING_OPTIONS`, both in `site-settings-profiles.js`; read them there before naming a value. Four that skills lean on:
 
-* **`enhancementLevel`** (`subtle` | `balanced` | `rich` | `theatrical`): Modulates motion amplitude, notice verbosity, and decorative field weight.
-* **`authorMode`** (`reader` | `tender` | `cartographer` | `architect`): Changes disclosure depth and inspectable handles.
-* **`baseMetamaterial`** (`glass` | `matte` | `paper` | `canvas`): Global physical rendering substrate (matte provides clear contrast safeguards).
-* **`physicsReason`** (`string`): Modulates spring damping, attentional echoes, and gesture dynamics across interactive cards.
+* **`enhancementLevel`** (`minimal` default | `balanced` | `rich`): Modulates motion amplitude, notice verbosity, and decorative field weight.
+* **`authorMode`** (`draft` default | `revise` | `polish` | `publish`, from `AUTHOR_WORKFLOW_MODES` in `shared.js`): Changes disclosure depth and inspectable handles.
+* **`baseMetamaterial`** (`glass` default | `paper` | `matte` | `field`): Global physical rendering substrate (matte provides clear contrast safeguards).
+* **`physicsReason`** (empty by default, or a named reason such as `calm`, `precise`, `playful`): Written as `data-spw-physics-reason`; tunes spring damping, attentional echoes, and gesture dynamics.
 
 ---
 
@@ -58,16 +58,18 @@ The site's runtime is fully tunable across multiple semantic registers via `publ
 ```text
 reset
   ↓ tokens (core.css, dimensions.css)
-  ↓ shell (layout.css, chrome/*.css)
-  ↓ typography (type.css)
+  ↓ shell (layout.css, chrome/*.css, modes/*.css)
+  ↓ typography (base.css, context.css, typesetting.css)
   ↓ grammar (syntax.css)
-  ↓ components (cards.css, controls.css, frames.css)
+  ↓ components (foundation.css, cards.css, frames.css, …)
   ↓ systems (surfaces/*.css)
-  ↓ routes (surfaces/*.css, tools-*.css)
-  ↓ handles (section-handles.css)
-  ↓ effects (material.css, wonder.css)
-  ↓ ornament (ornament.css) [ONLY place where !important is permitted]
+  ↓ routes (surfaces/*.css; route bundles only, not core)
+  ↓ handles (cognitive-handles.css, operators/*.css)
+  ↓ effects (material.css)
+  ↓ ornament (whimsy.css, canvas-accents.css) [new !important goes here only]
 ```
+
+Line 1 of `public/css/style-core.css` declares this order, and a layer's files sit in the folder of that name under `public/css/` (`modes/` loads into shell). Built bundles omit that statement, so on the deployed site a layer ranks where it first appears: `routes` arrives last, in the route bundle, and beats handles, effects and ornament. Do not reorder layers without a browser review.
 
 *Never edit files in `public/css/bundles/*` directly; bundles are generated build artifacts.*
 

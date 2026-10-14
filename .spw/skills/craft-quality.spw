@@ -39,21 +39,23 @@ fixity = "tending"
 }
 
 ^"important_distribution"{
-  claim: "`!important` is not confined to the ornament layer, and any invariant saying so is contradicted by the tree 160 times."
-  total = 173
+  claim: "`!important` is not confined to the ornament layer, and any invariant saying so is contradicted by the tree 187 times."
+  measured = "2026-10-13"
+  total = 199
   by_layer: .{
-    effects = 35
+    effects = 31
+    systems = 26
+    components = 25
+    modes = 22
+    shell = 20
     routes = 19
-    components = 18
-    systems = 18
     grammar = 16
     handles = 14
     reset = 13
-    shell = 13
-    ornament = 13
-    modes = 10
-    typography = 4
+    ornament = 12
+    typography = 1
   }[reg=facet]
+  trend: "160 outside ornament on 2026-08-13, 165 on 2026-09-24, 187 on 2026-10-13. The no-new rule is not holding; modes grew most, 10 to 22."
   probe: `for d in reset tokens shell typography grammar components systems routes handles effects ornament modes; do printf "%-12s %s\n" "$d" "$(find public/css/$d -name '*.css' -exec grep -o '!important' {} \; 2>/dev/null | wc -l)"; done`
   status: "open — a measurement, not yet a rule"
 }
