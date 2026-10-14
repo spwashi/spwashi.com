@@ -190,3 +190,13 @@ export function ensureDevelopmentalClimateStyles() {
 export function ensureEnrichmentStyles() {
   return ensureDeferredStyles('spw-enrichment-styles', '/public/css/effects/enrichment.css');
 }
+
+/**
+ * Spw source colors (components/spw-source.css): the reader's roles and each
+ * mark's operator color. Runtime-owned: modules/tools/spw-code.js and the
+ * literal parser load it when they first paint Spw, so pages without Spw
+ * never fetch it. Cascade stays components.
+ */
+export function ensureSpwSourceStyles() {
+  return ensureDeferredStyles('spw-source-styles', '/public/css/components/spw-source.css');
+}
