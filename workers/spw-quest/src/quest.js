@@ -1,7 +1,7 @@
 // The browser and agent surfaces share one source-backed initialization recipe.
 export const WORKBENCH = Object.freeze({
   repository: "https://github.com/spwashi/spw-workbench",
-  revision: "c17f57a80c55994135453bb1ecd1808932eaf4eb",
+  revision: "0eb1d1c0e4549d44fb9680c679bbd6c96b84992a",
   mount: ".spw/_workbench",
   node: "^20.19.0 || >=22.12.0",
 });

@@ -57,6 +57,11 @@ expression = asks[context]{sessions.instruments.calls.landed}<upstream>
 # ==============================================================================
 
 ^"landed_since"{
+  pin_0eb1d1c = #[
+    `0eb1d1c0e454 (4 commits past c17f57a, 2026-10-13, the day's last) — one content hash: hashString, geometry cards and transform preconditions take 16 hex of SHA-256 over UTF-8, the CLI uses seed's, and the runtime's three hashes call textHash (eb34e6c, 7509cbb): portability`,
+    `caret form context reads from text alone, and the workbench build ships formAt and formHover (e810b68): parser_release`,
+    `plans: runtime-maintenance lands one_hash_module and settles persisted_hashes (0eb1d1c)`,
+  ][reg=set]
   pin_c17f57a = #[
     `c17f57a80c55 (12 commits past 76e17bd, 2026-10-13) — the parser release gains a reader: the role stream, outline, anchors and highlighted HTML, browser-safe (603f6b5), and a workbench build of seed, the runtime and the reader (b082d50): parser_release`,
     `seed hashes with a synchronous SHA-256 over UTF-8 and leaves node:crypto, so the whole package bundles for a browser (0bf89a7); the runtime root is portable, with mount resolution and composition evaluation in @spwashi/spw-runtime/node (900e2b9); four seed root re-export files deleted (ca9ae1b): portability`,
