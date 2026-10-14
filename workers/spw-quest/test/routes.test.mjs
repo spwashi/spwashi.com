@@ -311,7 +311,7 @@ test('put one together: slots make a line, each pivot holds the rest, and nothin
   assert.match(page, /aria-label="\?door\(threshold\)\[ajar\]\{hinge\.frame\.key\}"/);
   assert.match(page, /1 name\. Dots join the words\./);
   // Changing the mark keeps every other slot.
-  assert.ok(page.includes('href="/build?mark=!&amp;word=door&amp;concept=&amp;scene=threshold&amp;mode=ajar&amp;definition=hinge.frame.key#build"'), 'mark pivot holds the rest');
+  assert.ok(page.includes('href="/build?script=!door(threshold)%5Bajar%5D%7Bhinge.frame.key%7D#pivot-mark"'), 'mark pivot holds the rest, and lands on its own row');
   assert.match(page, /<form class="slots" method="get" action="\/build#build">/);
   assert.match(page, /data-tool="copy"/);
   const three = await (await get('spw.quest', '/build?definition=hinge%2C%20frame%2C%20key')).text();
@@ -352,4 +352,21 @@ test('a script can be formatted and downloaded', async () => {
     body: new URLSearchParams({ script: 'door[ {', tool: 'format' }),
   });
   assert.match(await rejected.text(), />door\[ \{\n?<\/textarea>/);
+});
+
+test('the script leads: a swap rewrites only its focus line, and any script has an address', async () => {
+  const script = '#>notes\n\n  ~door(morning)[closed]{hinge, frame, key}\n@yesterday: ~"./y.spw"';
+  const page = await (await get('spw.quest', `/build?script=${encodeURIComponent(script)}`)).text();
+  assert.ok(page.includes(`>${escapeHtml(script)}</textarea>`), 'the script opens whole');
+  const ajar = decodeURIComponent(page.match(/href="\/build\?script=([^"#]*)#pivot-mode">\[ajar\]/)[1]);
+  assert.equal(ajar, '#>notes\n\n  ~door(morning)[ajar]{hinge, frame, key}\n@yesterday: ~"./y.spw"', 'only the focus line changed, indentation kept');
+  const slotted = await (await get('spw.quest', `/build?script=${encodeURIComponent(script)}&mark=%3F`)).text();
+  assert.ok(slotted.includes(`>${escapeHtml(script.replace('~door', '?door'))}</textarea>`), 'a slot parameter rewrites the focus line of the given script');
+  assert.match(page, /<a class="share" href="\/build\?script=/);
+  assert.match(page, /<button type="submit" name="tool" value="read" data-tool="read">Read<\/button>/);
+  assert.match(page, /<ul class="snippets"/);
+  assert.match(page, /href="\/parser\/"/);
+  const download = await get('spw.quest', `/script.spw?script=${encodeURIComponent(script)}&filename=notes`);
+  assert.equal(await download.text(), `${script}\n`);
+  assert.equal(download.headers.get('content-disposition'), 'attachment; filename="notes.spw"');
 });
