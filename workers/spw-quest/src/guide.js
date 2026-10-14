@@ -26,40 +26,9 @@ export const CONTAINERS = Object.freeze([
   { open: "{", close: "}", name: "definition", reads: "What belongs together inside it." },
 ]);
 
-/** Parsed with the workbench CLI (`spw fingerprint`): complete, no stray prose. */
-export const EXAMPLE = `#>morning_pages
-#:journal #!sunday
-
-@yesterday: ~"./2026-09-27.spw"
-
-^"entry"{
-  noticed = \`the dream kept circling back\`
-  wonder = \`why the same door every time\`
-  next = #[\`one page\`, \`the walk\`]
-}[reg=facet]`;
-
-export const EXAMPLE_NOTES = Object.freeze([
-  { code: "#>morning_pages", note: "A frame: the name this file answers to. Other files can point here." },
-  { code: "#:journal #!sunday", note: "A layer line: what kind of writing this is, and a tag for this one." },
-  { code: "@yesterday: ~\"./2026-09-27.spw\"", note: "A perspective held as potential: yesterday's page, reachable but not pulled in." },
-  { code: "^\"entry\"{ … }", note: "Ascension over a definition: the parts inside are one entry you can inspect whole." },
-  { code: "noticed = `…`", note: "Configuration: a value kept under a name. Backticks hold a phrase as written." },
-  { code: "next = #[ … ]", note: "Vibration over a mode bracket: a set, two things to do next." },
-  { code: "[reg=facet]", note: "A mode after the braces: read this entry as a facet, a property sheet." },
-]);
-
-/** What a # particle's aim adds when the reader meets one in a line (from the notes above). */
+/** What a # particle's aim adds when the reader meets one in a line. */
 export const PARTICLE_AIMS = Object.freeze({
   ">": "A frame address: the name this page answers to, so other pages can point here.",
   ":": "A layer: what kind of writing this is.",
   "!": "A tag for this one.",
 });
-
-/** Who might enjoy it. It was not built for any of them; it may still be for them. */
-export const READERS = Object.freeze([
-  { who: "People who wonder why languages are shaped the way they are", why: "Each sigil is a small claim about what a word is doing. The claims are argued in the open, in the repository's theory files." },
-  { who: "People who enjoy symmetry", why: "Open and close, before and after, prefix and postfix. Four brace pairs, and operators that compose with them into register frames like #[…] and .{…}." },
-  { who: "People who like plugins and IDEs", why: "A parser, a CLI, and a language server. Plain-text files gain frames, references, and structure an editor can navigate." },
-  { who: "People who wonder about maintained software", why: "The workbench is kept like a garden: pinned revisions, a doctor command, and plans that say what changed and why." },
-  { who: "People who journal", why: "A page stays a page. Spw only adds handles, so last Tuesday's note can be found, linked, and read again." },
-]);

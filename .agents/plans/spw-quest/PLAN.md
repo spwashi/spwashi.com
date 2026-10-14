@@ -1,12 +1,12 @@
 # Plan: spw-quest
 
-**Status 2026-10-12.** Committed, not yet deployed: the guide leads with seven storyboard panels from the workbench's quest.spw on spwashi.com's paper material, each line read by the parser in the page and by the worker at /read with scripts off. A path walks the panels, the twelve sigils read as a table, and Put one together (/build) builds one line and swaps one slot at a time. It waits on the creator's look at a phone before the Wrangler deploy.
+**Status 2026-10-13.** Committed, not yet deployed: the guide opens with five files people keep (a notebook, a question with its probe, a decision, reading notes, a commit note) in an editor painted in the site's operator colors, and beside it what a tool reads from the file, with checks that change as the file does. The seven panels moved to /learn, /build takes a recipe line apart, and every page wears the site's tokens and faces through the peer kit (`npm run build:peer-kit`, checked by `check:workers`). It waits on the creator's look at a phone before the Wrangler deploy.
 
 **Related:** [workers-wonder-kit](../workers-wonder-kit/PLAN.md) (shared worker shell) · [spw-language-v04](../spw-language-v04/PLAN.md) (the parser's arrival in the site) · [upstream workbench asks](../../../.spw/reviews/upstream-workbench-recommendations.spw) (`week_2026_10_11`).
 
 ## What it is now (measured 2026-10-12)
 
-- **Routes** (`workers/spw-quest/src/index.js`): `/` guide, `/install`, `/init` (also `/init.md`, `/llms.txt`, and `/` with a text Accept header), `/git.txt`, `/git.md`, `/quest.json`, `/prompts.json`, `/.well-known/autonomous-feedback.json`, `/robots.txt`, `/health`. Pages are rendered by the worker with no client framework, and agents can already read `/init`, `/llms.txt` and `/prompts.json`.
+- **Routes** (`workers/spw-quest/src/index.js`): `/` guide, `/learn` the seven panels, `/build` one line taken apart, `/fonts/` the site's faces, `/install`, `/init` (also `/init.md`, `/llms.txt`, and `/` with a text Accept header), `/git.txt`, `/git.md`, `/quest.json`, `/prompts.json`, `/.well-known/autonomous-feedback.json`, `/robots.txt`, `/health`. Pages are rendered by the worker with no client framework, and agents can already read `/init`, `/llms.txt` and `/prompts.json`.
 - **Guide** (`src/guide.js`): a headline, then thirteen sigils on an Archimedean spiral. Each sigil links to its own section: *The shape it came from*, *Read one page* (a journal entry with line notes), *Twelve sigils and a couple*, *Four ways to hold things*, *You might find it interesting if…*, *Keep going*.
 - **Install** (`src/quest.js`): five instruction sets (Shell, Claude, Codex, Grok, Another agent), one block each, then *When it worked* and *Then, if you want*.
 - **Phone**: emulated at 390 px with the harness, both pages are exactly 390 px wide. Long install commands scroll inside their block. A narrow desktop window crops the page; that is Chrome's minimum window width, not overflow.

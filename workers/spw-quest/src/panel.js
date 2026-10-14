@@ -119,7 +119,7 @@ const rowsFor = (line) => Math.min(5, Math.max(1, Math.ceil(String(line).length 
 
 /** One panel: the line in a balloon inside a GET form to /read, and the worker's reading of that line. */
 export function stepSurface(step, { index, line = step.try, heading = "h2" }) {
-  const home = heading === "h1" ? "/" : "";
+  const home = heading === "h1" ? "/learn" : "";
   const id = escapeHtml(step.id);
   const terminal = step.check === "commands_pass";
   const reading = readLine(step.id, line);

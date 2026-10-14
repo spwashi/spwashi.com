@@ -13,8 +13,9 @@
 // newest release or patch and never to a prerelease; /parser/next.js moves to the newest
 // prerelease. Pages, manifests and indexes keep a short cache.
 import { WORKBENCH } from "./quest.js";
-import { PAPER_CSS } from "./paper.js";
-import { BASE_SECURITY, escapeHtml, htmlResponse, layout, wantsJson } from "../../lib/shell.js";
+import { PAPER_CSS, PAPER_HEAD } from "./paper.js";
+import { PAGE_CSS, masthead, page } from "./page.js";
+import { BASE_SECURITY, escapeHtml, layout, wantsJson } from "../../lib/shell.js";
 
 export const RELEASE_SCHEMA = "spw.parser-release/2";
 export const INDEX_SCHEMA = "spw.parser-index/2";
@@ -184,8 +185,9 @@ function renderIndex({ releases, prereleases }) {
     title: "spw.quest — parser releases",
     description: "Dated builds of the Spw parser, newest first. A dated path never changes.",
     canonical: "https://spw.quest/parser/",
-    themeCss: `${PAPER_CSS}\n    ${RELEASE_CSS}`,
-    body: `<p class="kicker"><a href="/">spw.quest</a> · parser</p>
+    head: PAPER_HEAD,
+    themeCss: `${PAPER_CSS}\n    ${PAGE_CSS}\n    main > :not(.masthead) { max-width: 52rem; }\n    ${RELEASE_CSS}`,
+    body: `${masthead("/parser/")}
 <h1>Parser releases</h1>
 <p class="lede">Dated builds of the Spw parser, newest first. A file under a dated path never changes, so another page can import it by its full address. A published day is never cut again; a fix to it is a patch, <code>-patch.1</code> and on, listed above its day.</p>
 ${releases.length ? `<ul class="releases">\n    ${releases.map(releaseItem).join("\n    ")}\n  </ul>` : `<p>No release has been carried here yet.</p>`}
@@ -255,8 +257,10 @@ function renderRelease(manifest, origin) {
     title: `spw.quest — parser ${words.label}${name}`,
     description: `Spw parser ${kind} ${name}: every file with its size, hash and integrity, cut from one workbench revision.`,
     canonical: `https://spw.quest/parser/${name}/`,
-    themeCss: `${PAPER_CSS}\n    ${RELEASE_CSS}`,
-    body: `<p class="kicker"><a href="/">spw.quest</a> · <a href="/parser/">parser</a> · ${pre ? `<a href="/parser/#prereleases">prereleases</a> · ` : ""}${escapeHtml(name)}</p>
+    head: PAPER_HEAD,
+    themeCss: `${PAPER_CSS}\n    ${PAGE_CSS}\n    main > :not(.masthead) { max-width: 52rem; }\n    ${RELEASE_CSS}`,
+    body: `${masthead("/parser/")}
+<p class="kicker"><a href="/parser/">parser</a> · ${pre ? `<a href="/parser/#prereleases">prereleases</a> · ` : ""}${escapeHtml(name)}</p>
 <h1>Parser ${words.label}${escapeHtml(name)}</h1>
 <p class="lede">${words.lede(escapeHtml(day))}</p>
 <dl class="fields">
@@ -283,14 +287,14 @@ async function route(request, url, fetchAsset) {
     if (manifest) return manifest;
   } else if (named && rest === "") {
     const manifest = await readManifest(fetchAsset, name);
-    if (manifest) return htmlResponse(renderRelease(manifest, url.origin), { cache: SHORT });
+    if (manifest) return page(renderRelease(manifest, url.origin), { cache: SHORT });
   } else if (named && FILE_PATTERN.test(rest)) {
     const file = await serveFile(fetchAsset, path, IMMUTABLE);
     if (file) return file;
   }
   const indexes = await readIndexes(fetchAsset);
   if (named) return notFound(request, url, existingPaths(indexes, await readManifest(fetchAsset, name)));
-  if (path === "/parser/") return htmlResponse(renderIndex(indexes), { cache: SHORT });
+  if (path === "/parser/") return page(renderIndex(indexes), { cache: SHORT });
   if (path === INDEX_PATH) {
     const file = await serveFile(fetchAsset, path, SHORT);
     if (file) return file;

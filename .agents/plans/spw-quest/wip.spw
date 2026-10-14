@@ -17,6 +17,10 @@
 @build: ~"../../../workers/spw-quest/src/build.js"
 @guide: ~"../../../workers/spw-quest/src/guide.js"
 @paper: ~"../../../workers/spw-quest/src/paper.js"
+@peer_kit: ~"../../../workers/lib/peer-kit.js"
+@peer_kit_script: ~"../../../scripts/build-peer-kit.mjs"
+@examples: ~"../../../workers/spw-quest/src/examples.js"
+@file_reader: ~"../../../workers/spw-quest/src/file-reader.js"
 @carry_parser: ~"../../../workers/spw-quest/carry-parser.mjs"
 @routes_test: ~"../../../workers/spw-quest/test/routes.test.mjs"
 @quest_source: ~"../../../.spw/_workbench/docs/learn/quest.spw"
@@ -47,8 +51,9 @@ fixity = "tending"
  >>[2026-10-13 09:51] implement — /init pins 813444dc, the revision the mount and the built-in parser now run (the rule from d4e42c5b); /parser.js carries the 74.0 KiB bundle with the new stream-entry lexer.
  >>[2026-10-13 18:55] implement — /init pins 138d2a28, the revision the mount and the built-in parser now run; the parser bytes are unchanged from 813444dc.
  >>[2026-10-13 20:59] implement — /init pins 76e17bd4, the revision the mount and the built-in parser now run.
- >>[2026-10-13 21:02] implement — release day: the workbench at 76e17bd4 cut parser 2026.10.13 (npm run bundle:parser -- --release 2026.10.13 --out a scratch folder, so nothing was written in the mount), and carry-parser-release.mjs carried it into assets/parser/2026.10.13/ with every sha256 and integrity matching. full.min.js and parser.js 75,850 B (19,164 gzipped), lite.min.js 3,206 B, debug builds with maps. Through the worker: /parser/2026.10.13/ lists each file with its import line and integrity, the files are immutable with CORS *, /parser/latest.js now answers 302 to it, and the served parser.js imports and parses. Not deployed.
+ >>[2026-10-13 21:02] implement — release day: the workbench at 76e17bd4 cut parser 2026.10.13 (npm --prefix .spw/_workbench run bundle:parser -- --release 2026.10.13 --out a scratch folder, so nothing was written in the mount), and carry-parser-release.mjs carried it into assets/parser/2026.10.13/ with every sha256 and integrity matching. full.min.js and parser.js 75,850 B (19,164 gzipped), lite.min.js 3,206 B, debug builds with maps. Through the worker: /parser/2026.10.13/ lists each file with its import line and integrity, the files are immutable with CORS *, /parser/latest.js now answers 302 to it, and the served parser.js imports and parses. Not deployed.
  >>[2026-10-13 21:06] implement — the script leads the tool (creator: editing, expression mutation, snippets, the workbench and parser within reach). A swap rewrites only the script's focus line, the first line shaped like one expression, keeping its indentation and every other line, and lands on the row that was used (#pivot-<slot>). /build?script= opens any script by address; slot parameters then rewrite only its focus line, and /script.spw takes the same address. Read re-reads the edited script without formatting, and ⌘/Ctrl+Enter reads too. A link to the script when it fits in 1,800 characters copies itself. A shelf of five snippets: one word with three marks, a name and a citation, a question with a probe, a day's entry, the morning page. A note points to /parser/ for a dated build and to /install for linting a repository. Worker tests 40 of 40.
+ >>[2026-10-13 21:50] implement — creator: the UX still is not good and the examples are toys. The guide now opens with five files people keep (garden notebook, mildew question with its probe, a decision, reading notes, a commit note) in an editor whose paint sits under the field, and beside it what a tool reads: names, entries by kind, questions and probes, frames, fields, links, and checks that turn when a file's point is taken out (no *[verify], no !probe, an entry without a kind). Panels moved to /learn (old #act links forward); /build takes !bake<sourdough>(kitchen)[overnight]{flour, water, salt, starter} apart. scripts/build-peer-kit.mjs generates workers/lib/peer-kit.js from core.css and fonts.css and carries Newsreader and JetBrains Mono into assets/fonts under hashed names; pages allow font-src 'self'. The site gives $ and % no dark value. 43 tests; not deployed.
 }
 
 ^"architecture"{
@@ -96,9 +101,27 @@ fixity = "tending"
 
   paper = .{
     is = @paper
-    does = `spwashi.com's paper material as one block of CSS: custom properties for the linen ground, ink, the teal accent, the field shadow and the manuscript and mono faces, the dark substrate when the reader's system asks for dark, and a few element rules for headings, links, chips and fields`
-    why = `inlined, so spw.quest looks like the site without loading anything from spwashi.com`
-    feeds = `every spw.quest page, through the layout's themeCss; @panel and @build only use its variables`
+    does = `how spw.quest sets its elements on the site's material: headings, links, chips, fields, and a color per token kind for the paint`
+    from = @peer_kit
+    feeds = `every spw.quest page, through the layout's themeCss; @panel, @build and @file_reader only use its variables`
+  }[reg=facet]
+
+  peer_kit = .{
+    is = @peer_kit
+    does = `the site's tokens (light, and dark where the site restates them), the names workers/lib/shell.js speaks, the faces and each sigil's color, generated from public/css/tokens/core.css and fonts.css`
+    carried_by = @peer_kit_script
+    why = `inlined and self-hosted, so spw.quest looks like the site without loading anything from spwashi.com, and without a hand copy that drifts`
+    sensor = `npm run check:workers runs build-peer-kit --check`
+  }[reg=facet]
+
+  examples = .{
+    is = @examples
+    does = `five files people keep, each with what it is for and one edit whose effect shows in the reading`
+  }[reg=facet]
+
+  file_reader = .{
+    is = @file_reader
+    does = `reads a whole file into facts and checks, paints its tokens, and draws the editor; the same kit runs in the worker and travels to the page by toString`
   }[reg=facet]
 
   carry_parser = .{

@@ -7,6 +7,7 @@ import { BASE_SECURITY, escapeHtml } from '../../lib/shell.js';
 import { CarryError, DEFAULT_ASSETS, carryRelease, checkAssets } from '../carry-parser-release.mjs';
 import { FILES, IMMUTABLE, REV_A, REV_B, REV_C, SHORT, assetsFrom, editManifest, get, rewriteListed, run, scratch, writeRelease } from './parser-fixtures.mjs';
 
+const PAGE_CSP = BASE_SECURITY['Content-Security-Policy'].replace("style-src 'unsafe-inline';", "style-src 'unsafe-inline'; font-src 'self';");
 const freshDir = scratch('spw-quest-parser-');
 const readJson = (file) => JSON.parse(readFileSync(file, 'utf8'));
 
@@ -166,7 +167,7 @@ test('/parser/ lists releases newest first; /parser/index.json is the index, sho
   const page = await get('/parser/', { env });
   assert.equal(page.status, 200);
   assert.match(page.headers.get('content-type'), /^text\/html/);
-  assert.equal(page.headers.get('content-security-policy'), BASE_SECURITY['Content-Security-Policy']);
+  assert.equal(page.headers.get('content-security-policy'), PAGE_CSP, 'the shell policy, plus the faces from this origin');
   const html = await page.text();
   assert.ok(html.indexOf('href="/parser/2026.10.14/"') < html.indexOf('href="/parser/2026.10.13/"'), 'newest first');
   assert.ok(html.includes('href="/parser/2026.10.13/parser.js"'));
@@ -293,8 +294,7 @@ test('with no releases carried, /parser/ says so; /parser.js and the other route
   assert.equal(await bundle.text(), PARSER_JS);
   assert.equal(bundle.headers.get('cache-control'), 'public, max-age=3600');
   assert.equal(bundle.headers.get('access-control-allow-origin'), null);
-  assert.equal((await get('/', { env })).headers.get('content-security-policy'),
-    BASE_SECURITY['Content-Security-Policy'].replace("script-src 'unsafe-inline'", "script-src 'self' 'unsafe-inline'"));
-  assert.equal((await get('/install', { env })).headers.get('content-security-policy'), BASE_SECURITY['Content-Security-Policy']);
+  assert.equal((await get('/', { env })).headers.get('content-security-policy'), PAGE_CSP.replace("script-src 'unsafe-inline'", "script-src 'self' 'unsafe-inline'"));
+  assert.equal((await get('/install', { env })).headers.get('content-security-policy'), PAGE_CSP);
   assert.equal(await (await get('/missing', { env })).text(), 'Not found');
 });

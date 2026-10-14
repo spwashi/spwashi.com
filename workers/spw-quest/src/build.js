@@ -3,7 +3,9 @@
 // text; format only tightens spacing when the parser accepts the whole script.
 import { parse } from "../../../public/js/semantic/spw-workbench-parser.js";
 import { escapeHtml } from "../../lib/shell.js";
-import { CONTAINERS, EXAMPLE, OPERATORS, PARTICLE_AIMS } from "./guide.js";
+import { CONTAINERS, OPERATORS, PARTICLE_AIMS } from "./guide.js";
+import { EXAMPLES } from "./examples.js";
+import { editorField, outlineFile, readFile } from "./file-reader.js";
 
 const MAX = 60;
 export const MAX_SCRIPT = 65536;
@@ -21,14 +23,15 @@ const ROLE = {
 /** The slots in the order the line is written, each with the alternatives a reader can swap in. */
 export const SLOTS = Object.freeze([
   { name: "mark", alts: ["", "~", "?", "!", "@", "*"] },
-  { name: "word", alts: ["door", "key", "morning"] },
-  { name: "concept", alts: ["", "entry", "home"] },
-  { name: "scene", alts: ["", "morning", "threshold", "kitchen"] },
-  { name: "mode", alts: ["", "closed", "open", "ajar"] },
-  { name: "definition", alts: ["", "hinge, frame, key", "hinge.frame.key", "key"] },
+  { name: "word", alts: ["bake", "proof", "feed"] },
+  { name: "concept", alts: ["", "sourdough", "rye"] },
+  { name: "scene", alts: ["", "kitchen", "market"] },
+  { name: "mode", alts: ["", "overnight", "same_day"] },
+  { name: "definition", alts: ["", "flour, water, salt, starter", "flour.water.salt", "starter"] },
 ]);
 
-export const BUILD_DEFAULTS = Object.freeze({ mark: "~", word: "door", concept: "", scene: "morning", mode: "closed", definition: "hinge, frame, key" });
+/** A recipe line: act (!) on bake, about sourdough, in the kitchen, overnight, with four things inside. */
+export const BUILD_DEFAULTS = Object.freeze({ mark: "!", word: "bake", concept: "sourdough", scene: "kitchen", mode: "overnight", definition: "flour, water, salt, starter" });
 
 /** Slots from a query string; anything missing keeps its default, and no slot can break another's braces. */
 export function slotsFrom(params, base = BUILD_DEFAULTS) {
@@ -108,13 +111,10 @@ export const scriptAddress = (script, hash = "build") => {
   return text.length <= SHARE_MAX ? `/build?script=${encodeURIComponent(text)}#${hash}` : null;
 };
 
-/** Small things to open, change and keep: each is a whole script, and each opens by its address. */
+/** Files to open, change and keep: each is whole, and each opens by its address. */
 export const SNIPPETS = Object.freeze([
-  { label: "One word, three marks", script: "~door\n?door\n!door" },
-  { label: "A name and a citation", script: "#>my_notes\n@yesterday: ~\"./yesterday.spw\"\nnoticed = `the same door`" },
-  { label: "A question with a probe", script: "?[\"why the same door\"]{\n  !probe{ \"count the doors this week\" }\n}" },
-  { label: "A day's entry", script: "^\"stream\"{\n >>[2026-10-13 21:00] observe — the door held\n}" },
-  { label: "A morning page", script: EXAMPLE },
+  ...EXAMPLES.map(({ tab, file, script }) => ({ label: tab, file, script })),
+  { label: "One word, three marks", file: "bake.spw", script: "~bake\n?bake\n!bake" },
 ]);
 
 /** A download name: one segment, ending in .spw. */
@@ -262,7 +262,7 @@ function segments(slots) {
 const query = (slots) => SLOTS.map(({ name: slot }) => `${slot}=${encodeURIComponent(slots[slot])}`).join("&amp;");
 
 function altLabel(slot, value, slots) {
-  if (slot === "mark") return `<mark>${escapeHtml(value)}</mark>${escapeHtml(nameOf(slots.word) || "door")}`;
+  if (slot === "mark") return `<mark>${escapeHtml(value)}</mark>${escapeHtml(nameOf(slots.word) || "word")}`;
   if (slot === "word") return escapeHtml(nameOf(value));
   if (!value) return `<span aria-hidden="true">—</span><span class="sr-only">without ${slot}</span>`;
   return escapeHtml(`${BRACES[slot].open}${value}${BRACES[slot].close}`);
@@ -299,7 +299,7 @@ function ledger(source, slots) {
 
 /** Copy, format, and download read the script field. Slot changes are links, so they work with scripts off. */
 export function toolActions() {
-  const box = document.querySelector("form.script");
+  const box = document.querySelector("form[data-file]");
   if (!box) return;
   const field = box.elements.script;
   const filename = box.elements.filename;
@@ -359,51 +359,64 @@ export function toolActions() {
 
 /** Snippets to open: each link opens the tool on that whole script. */
 function shelf() {
-  const items = SNIPPETS.map(({ label, script }) => {
+  const items = SNIPPETS.map(({ label, file, script }) => {
     const first = script.split("\n")[0];
-    return `<li><a href="${escapeHtml(scriptAddress(script) || "/build#build")}"><span class="label">${escapeHtml(label)}</span><code>${escapeHtml(first)}${script.includes("\n") ? " …" : ""}</code></a></li>`;
+    const address = scriptAddress(script);
+    const href = address ? address.replace("/build?", `/build?filename=${encodeURIComponent(file)}&`) : "/build#build";
+    return `<li><a href="${escapeHtml(href)}"><span class="label">${escapeHtml(label)}</span><code>${escapeHtml(first)}${script.includes("\n") ? " …" : ""}</code></a></li>`;
   });
-  return `<p class="shelf-title" id="snippets-title">Start from a snippet</p>
+  return `<p class="shelf-title" id="snippets-title">Open another file</p>
     <ul class="snippets" aria-labelledby="snippets-title">
       ${items.join("\n      ")}
     </ul>`;
 }
 
-/** The surface: the script, what it means, one control per slot, and snippets to start from. */
+/** The surface: the file and its reading, its first line taken apart one slot per row, and files to open. */
 export function buildSurface(slots, script = assemble(slots), filename = `${slots.word || "line"}.spw`) {
   const line = assemble(slots);
   const shown = String(script ?? "");
-  const rows = Math.min(18, Math.max(4, shown.split("\n").length + 1));
   const address = scriptAddress(shown);
+  const held = shown.length <= SHARE_MAX ? shown : line;
   return `<div class="build">
-    <form class="script" method="post" action="/build#build">
-      <div class="tool">
-        <label class="filename"><span class="sr-only">File name</span><input name="filename" value="${escapeHtml(safeName(filename))}" maxlength="80" spellcheck="false" autocomplete="off" autocapitalize="none"></label>
-        <button type="submit" name="tool" value="read" data-tool="read">Read</button>
-        <button type="submit" name="tool" value="format">Format</button>
-        <button type="button" data-tool="copy">Copy</button>
-        <button type="submit" name="tool" value="download" formaction="/script.spw">Download</button>
-      </div>
-      <label class="script-label" for="script">Script</label>
-      <textarea class="script" id="script" name="script" rows="${rows}" maxlength="${MAX_SCRIPT}" spellcheck="false" autocomplete="off" autocapitalize="none" aria-describedby="script-keys">${escapeHtml(shown)}</textarea>
-      <p class="keys" id="script-keys"><span class="hint">Read shows what changed; <kbd>⌘</kbd>/<kbd>Ctrl</kbd> + <kbd>Enter</kbd> reads too.</span>${address ? ` <a class="share" href="${escapeHtml(address)}" data-tool="share">Link to this script</a>` : ""}</p>
-    </form>
-    <p class="built-line"><code class="built" aria-label="${escapeHtml(line)}">${segments(slots) || "&nbsp;"}</code></p>
-    ${ledger(shown, slots)}
-    <form class="slots" method="get" action="/build#build">
-      <input type="hidden" name="script" value="${escapeHtml(shown.length <= SHARE_MAX ? shown : line)}">
-      <div class="pivots" aria-label="Change one slot, keep the rest">
-        ${pivots(slots, shown.length <= SHARE_MAX ? shown : line)}
-      </div>
-      <button type="submit">Put together</button>
-    </form>
+    <div class="workspace">
+      <form class="script" data-file method="post" action="/build#build">
+        <div class="file-head">
+          <label class="filename"><span class="sr-only">File name</span><input name="filename" value="${escapeHtml(safeName(filename))}" maxlength="80" spellcheck="false" autocomplete="off" autocapitalize="none"></label>
+          <div class="file-actions">
+            <button type="submit" name="tool" value="read" data-tool="read">Read</button>
+            <button type="submit" name="tool" value="format">Format</button>
+            <button type="button" data-tool="copy">Copy</button>
+            <button type="submit" name="tool" value="download" formaction="/script.spw">Download</button>
+          </div>
+        </div>
+        ${editorField({ id: "script", value: shown, label: "Script", limit: MAX_SCRIPT, describedBy: "script-keys" })}
+        <p class="keys file-foot" id="script-keys"><span class="hint">Read takes the first line apart again; <kbd>⌘</kbd>/<kbd>Ctrl</kbd> + <kbd>Enter</kbd> does too.</span>${address ? ` <a class="share" href="${escapeHtml(address)}" data-tool="share">Link to this file</a>` : ""}</p>
+      </form>
+      <aside class="reading-card" aria-labelledby="reading-title">
+        <h2 id="reading-title">What a tool reads</h2>
+        <div id="reading">${outlineFile(readFile(shown))}</div>
+      </aside>
+    </div>
+    <section class="apart" aria-labelledby="apart-title">
+      <h2 id="apart-title">The first line, taken apart</h2>
+      <p class="built-line"><code class="built" aria-label="${escapeHtml(line)}">${segments(slots) || "&nbsp;"}</code></p>
+      ${ledger(shown, slots)}
+      <form class="slots" method="get" action="/build#build">
+        <input type="hidden" name="script" value="${escapeHtml(held)}">
+        <input type="hidden" name="filename" value="${escapeHtml(safeName(filename))}">
+        <div class="pivots" aria-label="Change one slot, keep the rest">
+          ${pivots(slots, held)}
+        </div>
+        <button type="submit">Put together</button>
+      </form>
+    </section>
     ${shelf()}
     <p class="note parser-note">This page reads with the site's parser. To read Spw on your own page, take a dated build from <a href="/parser/">spw.quest/parser</a>; to lint and resolve <code>.spw</code> files in a repository, <a href="/install">install the workbench</a>.</p>
   </div>`;
 }
 
 const SLOT_NAMES = SLOTS.map((slot) => slot.name);
-const SHELF_CSS = `.keys { margin: .35rem 0 0; color: var(--muted); font-size: .84rem; }
+const SHELF_CSS = `.keys { margin: 0; color: var(--muted); font-size: .84rem; }
     .keys kbd { padding: 0 .3rem; border: 1px solid var(--line); border-radius: 3px; font: .78rem/1.4 var(--mono); }
     .keys .share { margin-left: .5rem; }
     @media (pointer: coarse) { .keys .hint { display: none; } .keys .share { margin-left: 0; } }
@@ -417,13 +430,12 @@ const SHELF_CSS = `.keys { margin: .35rem 0 0; color: var(--muted); font-size: .
     .snippets .label { font-size: .9rem; font-weight: 600; }
     .snippets code { overflow: hidden; color: var(--muted); font: .82rem/1.3 var(--mono); text-overflow: ellipsis; white-space: nowrap; }
     .parser-note { margin: 1rem 0 0; }`;
-export const BUILD_CSS = `.build { padding: .9rem 1rem 1rem; border: 1px solid var(--edge); border-radius: 4px; background: var(--surface); box-shadow: var(--shadow); }
-    .tool { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; margin: 0 0 .7rem; }
-    .tool button { margin: 0; }
-    .tool .filename { flex: 1 1 9rem; margin: 0; }
-    .tool .filename input { width: 100%; min-height: 44px; margin: 0; font-family: var(--mono); }
-    .script-label { margin: 0; }
-    textarea.script { display: block; width: 100%; min-height: 6.5rem; margin: .25rem 0 .8rem; font: 1rem/1.45 var(--mono); resize: vertical; }
+export const BUILD_CSS = `.build { display: grid; gap: 1.2rem; }
+    .build .filename { flex: 1 1 10rem; margin: 0; }
+    .build .file-head .filename input[name="filename"] { width: 100%; min-height: 36px; margin: 0; padding: .2rem .4rem; border-color: transparent; border-radius: 4px; background: transparent; font: 600 .86rem/1.2 var(--mono); }
+    .build .file-head .filename input[name="filename"]:is(:hover, :focus) { border-color: var(--edge); background: var(--field); }
+    .apart { padding: .95rem 1.05rem 1.05rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+    .apart > h2 { margin: 0 0 .7rem; font-size: 1.12rem; }
     .built-line { margin: 0 0 .7rem; }
     .built { display: block; padding: .75rem .9rem; border-radius: var(--radius); background: var(--field); color: var(--fg); font: 600 1.2rem/1.5 var(--mono); overflow-wrap: anywhere; }
     .built [data-slot] { border-radius: 3px; box-shadow: inset 0 -2px 0 var(--line); }

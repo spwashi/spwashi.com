@@ -8,6 +8,9 @@ import { OPERATORS, CONTAINERS } from '../src/guide.js';
 import { CHECKS, STEPS, STORYBOARD } from '../src/steps.js';
 import { BALLOON_BY_OPERATOR, BALLOON_WORDS, LAYERS, LINE_LIMIT, panelBalloon } from '../src/reader.js';
 import { PARSER_JS } from '../src/parser-text.js';
+import { EXAMPLES, exampleById } from '../src/examples.js';
+import { paintFile, readFile } from '../src/file-reader.js';
+import { PEER_FONTS } from '../../lib/peer-kit.js';
 import { BASE_SECURITY, escapeHtml } from '../../lib/shell.js';
 import { readConfig } from '../../autonomous-feedback/src/config.js';
 
@@ -98,21 +101,89 @@ const ORIGIN = [
 ];
 const SITE_BUNDLE = new URL('../../../public/js/semantic/spw-workbench-parser.js', import.meta.url);
 const SHELL_CSP = BASE_SECURITY['Content-Security-Policy'];
+const PAGE_CSP = SHELL_CSP.replace("style-src 'unsafe-inline';", "style-src 'unsafe-inline'; font-src 'self';");
+const LIVE_CSP = PAGE_CSP.replace("script-src 'unsafe-inline'", "script-src 'self' 'unsafe-inline'");
 
-test('the guide leads with seven panels, each a line in a balloon and a GET form', async () => {
+test('the guide opens with a file people keep, read by the worker with scripts off', async () => {
   const response = await get('spw.quest', '/');
   assert.equal(response.status, 200);
   const page = await response.text();
   assert.match(page, /A small language for the shape of a thought\./);
-  assert.ok(page.indexOf('id="build"') < page.indexOf('<section class="step" id="write"'), 'the script tool comes before the panels');
-  assert.match(page, /data-tool="copy"/);
-  assert.match(page, /name="tool" value="format"/);
+  // Four places to go, from every page's masthead.
+  for (const href of ['/learn', '/build', '/parser/', '/install']) assert.ok(page.includes(`<nav class="top" aria-label="spw.quest">`) && page.includes(`<a href="${href}">`), href);
+  // One tab per file; the first is open, and each opens by its own address.
+  const tabs = [...page.matchAll(/<a href="\/\?example=([a-z]+)#try" data-example="\1"( aria-current="page")?>/g)];
+  assert.deepEqual(tabs.map((m) => m[1]), EXAMPLES.map((example) => example.id));
+  assert.deepEqual(tabs.map((m) => Boolean(m[2])), EXAMPLES.map((_, index) => index === 0));
+  // The file is a field in a form that works with scripts off, with the same file painted behind it.
+  assert.match(page, /<form class="file" data-file method="post" action="\/build#build">/);
+  assert.ok(page.includes(`>${escapeHtml(EXAMPLES[0].script)}</textarea>`), 'the first file opens whole');
+  assert.match(page, /<pre class="paint" aria-hidden="true"><code><span data-t="frame">#&gt;garden_log<\/span>/);
   assert.match(page, /formaction="\/script\.spw"/);
-  assert.doesNotMatch(page, /<dt>Notice<\/dt>/);
-  assert.match(page, /href="\/install">install<\/a>/);
-  assert.match(page, /href="\/install">Install the workbench/);
-  // The spiral is retired as the organizing shape.
-  assert.doesNotMatch(page, /<svg|class="spiral"/);
+  assert.match(page, /data-tool="copy"/);
+  // The worker already read it: the checks and the facts are in the page before any script runs.
+  assert.ok(page.includes('<li data-state="pass">Spw read the whole file.</li>'));
+  assert.ok(page.includes('<li data-state="pass">Every entry has a date and a kind.</li>'));
+  assert.match(page, /<dt>Entries <span class="count">3<\/span><\/dt>/);
+  // Below the file: the marks, the ways in, and the origin, in that order.
+  const at = (marker) => page.indexOf(marker);
+  const order = ['id="try"', 'id="operators"', 'id="ways"', 'id="origin"'].map(at);
+  assert.ok(order.every((n) => n > 0), 'every section is present');
+  assert.deepEqual(order, [...order].sort((a, b) => a - b), 'sections keep their order');
+  assert.equal([...page.matchAll(/<span class="sigil" data-t="[a-z-]+"/g)].length, OPERATORS.length);
+  for (const op of OPERATORS) assert.match(page, new RegExp(`<li id="op-${op.name}">[\\s\\S]*?Runtime: `));
+  for (const c of CONTAINERS) assert.ok(page.includes(`<strong>${c.name}</strong>`), c.name);
+  for (const paragraph of ORIGIN) assert.ok(page.includes(`<p>${paragraph}</p>`), 'origin paragraph verbatim');
+  // The panels moved to /learn; a mark's numbers lead there.
+  assert.doesNotMatch(page, /<section class="step"/);
+  assert.match(page, /<a href="\/learn#act"><span class="n">2<\/span> act<\/a>/);
+  // The shape, not labels: no God and no diagnosis on the guide.
+  const text = page.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, '');
+  assert.doesNotMatch(text, /\bGod\b|\bOCD\b|\bADHD\b|\bautis(m|tic)\b|\bbipolar\b|\bdiagnos/i);
+  // Scripts on, the page reads with the parser it serves itself, and the site's faces come from this origin.
+  assert.match(page, /<script type="module">\nimport \{ parse \} from "\/parser\.js";/);
+  assert.doesNotMatch(page, /src="https?:|url\("https?:/);
+  for (const face of PEER_FONTS) {
+    assert.ok(page.includes(`<link rel="preload" href="/fonts/${face.file}" as="font" type="font/woff2" crossorigin>`), face.file);
+    assert.ok(page.includes(`src: url("/fonts/${face.file}") format("woff2")`), face.file);
+  }
+  // Old #claude links forward to the install page, and old #act links to /learn.
+  assert.match(page, /dataset\.setupSets = "shell claude codex grok paste"/);
+  assert.match(page, /dataset\.panels = "write act hold name point ask grow"/);
+  assert.doesNotMatch(page, /role="tablist"/);
+});
+
+test('each file opens by address, and its check turns when its point is taken out', async () => {
+  const commit = await (await get('spw.quest', '/?example=commit')).text();
+  assert.ok(commit.includes(`>${escapeHtml(exampleById('commit').script)}</textarea>`));
+  assert.ok(commit.includes('<a href="/?example=commit#try" data-example="commit" aria-current="page">'));
+  assert.ok(commit.includes('<li data-state="pass">Says what happened, what changed, and how it was checked.</li>'));
+  assert.equal(await (await get('spw.quest', '/?example=nope')).text(), await (await get('spw.quest', '/')).text(), 'an unknown file opens the first');
+  for (const example of EXAMPLES) {
+    const reading = readFile(example.script);
+    assert.ok(reading.ok && !reading.prose, `${example.id} parses whole`);
+    assert.equal(reading.checks.filter((check) => check.state === 'fail').length, 0, `${example.id} passes its checks`);
+    assert.ok(example.file.endsWith('.spw') && example.says && example.try, example.id);
+  }
+  const without = (id, pattern) => readFile(exampleById(id).script.replace(pattern, '')).checks.filter((check) => check.state === 'fail').map((check) => check.says);
+  assert.deepEqual(without('commit', /\n {2}\*\[verify\][^\n]*/), ['No [verify] yet: it does not say how the change was checked.']);
+  assert.deepEqual(without('question', /\n {2}!probe[^\n]*/), ['A question has no !probe yet: nothing says what would answer it.']);
+  assert.deepEqual(without('notebook', /\] decide — /), ['1 of 3 entries has no [date] and kind yet.']);
+  assert.deepEqual(readFile('door[ {').checks.map((check) => check.state), ['fail']);
+  const links = readFile(exampleById('reading').script);
+  assert.deepEqual(links.links.map((link) => link.path), ['./sources/make-it-stick.spw', './plans/onboarding.spw']);
+  // The paint gives every character back, in order.
+  for (const example of EXAMPLES) {
+    const painted = paintFile(readFile(example.script)).replace(/<[^>]+>/g, '').replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&quot;', '"').replaceAll('&amp;', '&');
+    assert.equal(painted, example.script, example.id);
+  }
+});
+
+test('/learn walks the seven panels, each a line in a balloon and a GET form', async () => {
+  const response = await get('spw.quest', '/learn');
+  assert.equal(response.status, 200);
+  const page = await response.text();
+  assert.match(page, /<a href="\/learn" aria-current="page">Learn<\/a>/);
   const panels = [...page.matchAll(/<section class="step" id="([a-z]+)"/g)].map((m) => m[1]);
   assert.deepEqual(panels, STEPS.map((step) => step.id));
   assert.equal(panels.length, 7);
@@ -136,24 +207,7 @@ test('the guide leads with seven panels, each a line in a balloon and a GET form
     assert.match(panel, step.check === 'commands_pass' ? /data-state="terminal"/ : /data-state="pass"/, step.id);
     for (const line of step.then || []) assert.ok(panel.includes(`href="/read?step=${step.id}&amp;line=${encodeURIComponent(line)}"`), `${step.id} then ${line}`);
   }
-  // Below the panels: one page, the sigils, the braces, the readers, the origin, install.
-  const at = (marker) => page.indexOf(marker);
-  const order = ['id="grow"', '<aside class="install"', 'id="read"', 'id="operators"', 'id="braces"', 'id="readers"', 'id="origin"', 'id="next"'].map(at);
-  assert.ok(order.every((n) => n > 0), 'every section is present');
-  assert.deepEqual(order, [...order].sort((a, b) => a - b), 'sections keep their order');
-  assert.equal([...page.matchAll(/<span class="sigil"/g)].length, OPERATORS.length);
-  for (const op of OPERATORS) assert.match(page, new RegExp(`<li id="op-${op.name}">[\\s\\S]*?Runtime: `));
-  for (const c of CONTAINERS) assert.ok(page.includes(`<strong>${c.name}</strong>`), c.name);
-  for (const paragraph of ORIGIN) assert.ok(page.includes(`<p>${paragraph}</p>`), 'origin paragraph verbatim');
-  // The shape, not labels: no God and no diagnosis on the guide.
-  const text = page.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, '');
-  assert.doesNotMatch(text, /\bGod\b|\bOCD\b|\bADHD\b|\bautis(m|tic)\b|\bbipolar\b|\bdiagnos/i);
-  // Scripts on, the page reads with the parser it serves itself.
   assert.match(page, /<script type="module">\nimport \{ parse \} from "\/parser\.js";/);
-  assert.doesNotMatch(page, /src="https?:/);
-  // Old #claude links forward to the install page.
-  assert.match(page, /dataset\.setupSets = "shell claude codex grok paste"/);
-  assert.doesNotMatch(page, /role="tablist"/);
 });
 
 test('/parser.js is the site bundle, as JavaScript', async () => {
@@ -166,15 +220,31 @@ test('/parser.js is the site bundle, as JavaScript', async () => {
   assert.equal(await (await get('spw.quest', '/parser.js', { method: 'HEAD' })).text(), '');
 });
 
-test('the guide alone allows a same-origin script; every other route keeps the shell policy', async () => {
-  const guide = (await get('spw.quest', '/')).headers.get('content-security-policy');
-  assert.equal(guide, SHELL_CSP.replace("script-src 'unsafe-inline'", "script-src 'self' 'unsafe-inline'"));
-  assert.notEqual(guide, SHELL_CSP);
-  for (const path of ['/install', '/read?step=act', '/read?step=nope', '/init', '/parser.js', '/quest.json', '/git.txt', '/missing']) {
+test('pages take the site faces from this origin; pages that read as you type also load /parser.js', async () => {
+  for (const path of ['/', '/learn', '/build']) assert.equal((await get('spw.quest', path)).headers.get('content-security-policy'), LIVE_CSP, path);
+  for (const path of ['/install', '/read?step=act', '/read?step=nope']) assert.equal((await get('spw.quest', path)).headers.get('content-security-policy'), PAGE_CSP, path);
+  for (const path of ['/init', '/parser.js', '/quest.json', '/git.txt', '/missing']) {
     assert.equal((await get('spw.quest', path)).headers.get('content-security-policy'), SHELL_CSP, path);
   }
-  // The shared shell, which autonomous.feedback also uses, still allows no script by URL.
+  // The shared shell, which autonomous.feedback also uses, still allows no script by URL and no fonts.
   assert.match(SHELL_CSP, /script-src 'unsafe-inline';/);
+  assert.doesNotMatch(SHELL_CSP, /font-src/);
+});
+
+test('the faces are served from assets under their hashed names, for a year', async () => {
+  const assets = { fetch: async (request) => {
+    const file = new URL(`../assets${new URL(request.url).pathname}`, import.meta.url);
+    return existsSync(file) ? new Response(readFileSync(file)) : new Response('nf', { status: 404 });
+  } };
+  for (const face of PEER_FONTS) {
+    const response = await worker.fetch(new Request(`https://spw.quest/fonts/${face.file}`), { ASSETS: assets });
+    assert.equal(response.status, 200, face.file);
+    assert.equal(response.headers.get('content-type'), 'font/woff2');
+    assert.equal(response.headers.get('cache-control'), 'public, max-age=31536000, immutable');
+    assert.equal((await response.arrayBuffer()).byteLength, face.bytes, face.file);
+  }
+  assert.equal((await worker.fetch(new Request('https://spw.quest/fonts/other.woff2'), { ASSETS: assets })).status, 404);
+  assert.equal((await worker.fetch(new Request('https://spw.quest/fonts/newsreader-latin.woff2'), { ASSETS: assets })).status, 404, 'only hashed names');
 });
 
 test('/read reads each try line with the worker parser, and links back to its panel', async () => {
@@ -191,7 +261,7 @@ test('/read reads each try line with the worker parser, and links back to its pa
       assert.equal(status, 200, step.id);
       assert.equal(state(page), expected, `${step.id}: ${line}`);
       assert.ok(page.includes(`>${escapeHtml(line)}</textarea>`), `${step.id} keeps the line in the form`);
-      assert.ok(page.includes(`href="/#${step.id}">Back to the panel</a>`), step.id);
+      assert.ok(page.includes(`href="/learn#${step.id}">Back to the panel</a>`), step.id);
       assert.doesNotMatch(page, /<script type="module">/);
     }
     // Without a line, /read reads the try line.
@@ -317,10 +387,10 @@ test('put one together: slots make a line, each pivot holds the rest, and nothin
   const three = await (await get('spw.quest', '/build?definition=hinge%2C%20frame%2C%20key')).text();
   assert.match(three, /3 parts/);
   const hostile = await (await get('spw.quest', '/build?mark=%3Cscript%3E&word=a%7Bb%7D&mode=x%5Dy')).text();
-  assert.match(hostile, /aria-label="ab\(morning\)\[xy\]\{hinge, frame, key\}"/);
+  assert.match(hostile, /aria-label="ab&lt;sourdough&gt;\(kitchen\)\[xy\]\{flour, water, salt, starter\}"/);
   assert.ok(!hostile.includes('&lt;script'), 'a mark outside the twelve is dropped, not echoed');
-  const guide = await (await get('spw.quest', '/')).text();
-  assert.match(guide, /<section id="build" aria-labelledby="build-title">/);
+  assert.match(page, /<section id="build" aria-labelledby="build-title">/);
+  assert.ok((await (await get('spw.quest', '/')).text()).includes('<a href="/build">Take one line apart</a>'), 'the guide links the build page');
 });
 
 test('a script can be formatted and downloaded', async () => {
@@ -334,7 +404,7 @@ test('a script can be formatted and downloaded', async () => {
   assert.equal(formatted.status, 200);
   const page = await formatted.text();
   assert.match(page, />~door\(morning\)\[closed\]\{hinge, frame, key\}\n?<\/textarea>/);
-  const download = await get('spw.quest', '/script.spw?word=door&scene=morning&mode=closed&definition=hinge%2C%20frame%2C%20key');
+  const download = await get('spw.quest', '/script.spw?mark=~&word=door&concept=&scene=morning&mode=closed&definition=hinge%2C%20frame%2C%20key');
   assert.equal(download.status, 200);
   assert.equal(download.headers.get('content-type'), 'text/plain; charset=UTF-8');
   assert.equal(download.headers.get('content-disposition'), 'attachment; filename="door.spw"');
@@ -358,8 +428,8 @@ test('the script leads: a swap rewrites only its focus line, and any script has 
   const script = '#>notes\n\n  ~door(morning)[closed]{hinge, frame, key}\n@yesterday: ~"./y.spw"';
   const page = await (await get('spw.quest', `/build?script=${encodeURIComponent(script)}`)).text();
   assert.ok(page.includes(`>${escapeHtml(script)}</textarea>`), 'the script opens whole');
-  const ajar = decodeURIComponent(page.match(/href="\/build\?script=([^"#]*)#pivot-mode">\[ajar\]/)[1]);
-  assert.equal(ajar, '#>notes\n\n  ~door(morning)[ajar]{hinge, frame, key}\n@yesterday: ~"./y.spw"', 'only the focus line changed, indentation kept');
+  const sameDay = decodeURIComponent(page.match(/href="\/build\?script=([^"#]*)#pivot-mode">\[same_day\]/)[1]);
+  assert.equal(sameDay, '#>notes\n\n  ~door(morning)[same_day]{hinge, frame, key}\n@yesterday: ~"./y.spw"', 'only the focus line changed, indentation kept');
   const slotted = await (await get('spw.quest', `/build?script=${encodeURIComponent(script)}&mark=%3F`)).text();
   assert.ok(slotted.includes(`>${escapeHtml(script.replace('~door', '?door'))}</textarea>`), 'a slot parameter rewrites the focus line of the given script');
   assert.match(page, /<a class="share" href="\/build\?script=/);
