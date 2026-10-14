@@ -1,0 +1,42 @@
+# Review 2026-10-13 — opened from two read-only surveys (brace meanings; serializers, cauldron, pins, clipboard, home); nothing built.
+# wip - brace-semantics
+#
+#>plan_brace_semantics_wip
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@operator_registry: ~"../../../public/js/kernel/operator-detection.js"
+@semantic_braces: ~"../../../.spw/conventions/semantic-braces.spw"
+@brace_pivots: ~"../../../public/js/runtime/interaction/brace-pivots.js"
+@peer_kit_script: ~"../../../scripts/build-peer-kit.mjs"
+@upstream_asks: ~"../../../.spw/reviews/upstream-workbench-recommendations.spw"
+
+operation = "prime"
+fixity = "experimental"
+
+^"stream"{
+ >>[2026-10-13 22:10] observe — the creator asked for a plan to revise brace semantics while asking for a `< & >` hero on spw.quest (handles that answer tap, swipe and drag; ghost boxes that take `.` or `~`; `{` labeled into `{_paper`), a runtime improved "this way", a home door into spw.quest from the cauldron, clipboard or pins, and a rethink of page, region and component serialization, noting that expressions reached elements through copy units before there was granular enhancement or edge preweighting.
+ >>[2026-10-13 22:20] verify — two read-only surveys. Braces: each pair has four to six meanings across WB canon, the site registry, the conventions and WB theory; `{ }` is definition in canon and direction in the registry. The parser sets no label: `{_paper a }_paper` reads `_paper` as words and reports success; the AST's openLabel and closeLabel fields are never set. Serialization: eleven serializers, eleven shapes; the cauldron writes fallback words onto data-spw-semantic-expression; pins keep no expression; nothing reads the clipboard; the kin index is built in the page on every load.
+ >>[2026-10-13 22:30] decide — plan written, nothing built. Five decisions go to the creator before any slice that depends on what a pair means; slices 2 and 3 wait on nothing.
+}
+
+^"open"{
+ names = "Decision 1: one name per pair; `{ }` as definition, direction, or behavior read as one of them. The creator's call."
+ walls = "Decision 2: objective and subjective walls for every pair or for `{ }` only. The creator's call."
+ angle = "Decision 3: `< >` as one pair, or `<` and `>` as marks of their own. The creator's call."
+ labels = "Decision 4: nesting only or overlap; whether a label closes only its own pair; whether a mismatch is an error. The creator's call, then an upstream ask."
+ side_marks = "Decision 5: whether `.` and `~` beside a container bind to it, and on which side. The creator's call."
+ door = "Where the spw.quest door sits on home, and whether the clipboard source is wanted at all, given the permission prompt. The creator's call, in a browser."
+}
+
+^"cache"{
+ ~#status: "proposed, nothing built"
+ ~#next_commit: "+[runtime] Let a pin keep the expression it was made with, and stop the cauldron writing words onto the page"
+ ~#files_hot: "PLAN.md"
+ ~#gate: "the five decisions; a browser look for the instrument and the door"
+ ~#last_stream: "2026-10-13"
+}

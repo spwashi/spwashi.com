@@ -41,6 +41,7 @@ Every live folder, once, by area. Open a plan's `index.spw` for its disposition 
 - `spw-metaphysical-language/` — the language itself: codex, sigil alignment, drift ledger; holds the codex shell from `spw-architecture-ecology`.
 - `spw-language-v04/` — the parser's arrival in the site; profiles and typed references.
 - `spw-quest/` — spw.quest, the guide and the install: a first reward before installing, and a plan surface agents review.
+- `brace-semantics/` — what each brace pair means, labels the parser checks, one serializer for page, region and component, and the `< & >` instrument; five decisions go to the creator first.
 - `operator-resonance-alignment/` — sigils as handles across routes, chips and capture; holds craft guard 3 from `operator-semantics-refinement`.
 - `homonym-renaming/` — the lexicon: true homonyms and the attribute and event clusters; holds `language-reclustering`.
 - `shell-model-vocabulary-consolidation/` — shell, chrome, edge and overlay words.
