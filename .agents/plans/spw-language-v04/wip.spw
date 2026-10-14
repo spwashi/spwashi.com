@@ -23,6 +23,7 @@ fixity = "tending"
  >>[2026-10-13 09:51] implement — the site mount moved from 749899ee to 813444dc (7 commits): the lexer reads stream entries the same in every dialect and @ names in their prose as root links, so the in-site parser bundle grew from 72.5 to 74.0 KiB and was carried into spw.quest. spw:integrity resolves 6149 of 6149; spw lint over 763 tracked files finds only the known naming.spw misread.
  >>[2026-10-13 18:55] implement — the site mount moved from 813444dc to 138d2a28 (29 commits, mostly editor and language-server work, and the workbench's caches reorganized into a tree and a journal). The parser is the same, so the in-site bundle changed only its provenance line. spw:integrity resolves 6149 of 6149, and the site cites none of the moved cache paths.
  >>[2026-10-13 20:59] implement — the site mount moved from 138d2a28 to 76e17bd4 (5 commits: plans, and a VS Code Concepts row that names its plan). The parser is the same; the bundle changed only its provenance line.
+ >>[2026-10-13 23:05] implement — the site mount moved from 76e17bd4 to c17f57a8 (12 commits: a reader and a workbench build in the parser release, seed bundling for a browser, a portable runtime root, plans). The parser is the same; the bundle changed its provenance line and two minified names.
 }
 
 ^"open"{
