@@ -57,6 +57,10 @@ expression = asks[context]{sessions.instruments.calls.landed}<upstream>
 # ==============================================================================
 
 ^"landed_since"{
+  pin_76e17bd = #[
+    `76e17bd46810 (5 commits past 138d2a2, 2026-10-13) — a Concepts row shows what its parents do not, the plan that holds it, and the Concepts title actions take icons (cee49ed): workspace_view`,
+    `plans: fragment pointers as @bc#hash in a tracked .spw/bc store, Spirit as a contour counted by operators, and rereading over rewriting (a124b66, 5960769, dad9c62, 76e17bd)`,
+  ][reg=set]
   pin_138d2a2 = #[
     `138d2a28da2b (29 commits past 813444d, 2026-10-13) — one hash resolution strategy: a landed commit takes a commitRef token, and every hash git confirms hovers and links to its commit (a80a5df); in VS Code the link opens a read-only diff (00c6a56)`,
     `a hash-shaped run git does not hold takes a hashlike token and its hover says so (1ea9ac1); the editor reads a word as one unit, with no digits painted inside names (8c74556): syntax_highlighting`,
