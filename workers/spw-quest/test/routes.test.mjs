@@ -118,7 +118,7 @@ test('the guide opens with a file people keep, read by the worker with scripts o
   // The file is a field in a form that works with scripts off, with the same file painted behind it.
   assert.match(page, /<form class="file" data-file method="post" action="\/build#build">/);
   assert.ok(page.includes(`>${escapeHtml(EXAMPLES[0].script)}</textarea>`), 'the first file opens whole');
-  assert.match(page, /<pre class="paint" aria-hidden="true"><code><span data-t="frame">#&gt;garden_log<\/span>/);
+  assert.match(page, /<pre class="paint" aria-hidden="true"><code><span data-t="frame">#&gt;reading_log<\/span>/);
   assert.match(page, /formaction="\/script\.spw"/);
   assert.match(page, /data-tool="copy"/);
   // The worker already read it: the checks and the facts are in the page before any script runs.
@@ -154,10 +154,10 @@ test('the guide opens with a file people keep, read by the worker with scripts o
 });
 
 test('each file opens by address, and its check turns when its point is taken out', async () => {
-  const commit = await (await get('spw.quest', '/?example=commit')).text();
-  assert.ok(commit.includes(`>${escapeHtml(exampleById('commit').script)}</textarea>`));
-  assert.ok(commit.includes('<a href="/?example=commit#try" data-example="commit" aria-current="page">'));
-  assert.ok(commit.includes('<li data-state="pass">Says what happened, what changed, and how it was checked.</li>'));
+  const revision = await (await get('spw.quest', '/?example=revision')).text();
+  assert.ok(revision.includes(`>${escapeHtml(exampleById('revision').script)}</textarea>`));
+  assert.ok(revision.includes('<a href="/?example=revision#try" data-example="revision" aria-current="page">'));
+  assert.ok(revision.includes('<li data-state="pass">Says what happened, what changed, and how it was checked.</li>'));
   assert.equal(await (await get('spw.quest', '/?example=nope')).text(), await (await get('spw.quest', '/')).text(), 'an unknown file opens the first');
   for (const example of EXAMPLES) {
     const reading = readFile(example.script);
@@ -166,12 +166,12 @@ test('each file opens by address, and its check turns when its point is taken ou
     assert.ok(example.file.endsWith('.spw') && example.says && example.try, example.id);
   }
   const without = (id, pattern) => readFile(exampleById(id).script.replace(pattern, '')).checks.filter((check) => check.state === 'fail').map((check) => check.says);
-  assert.deepEqual(without('commit', /\n {2}\*\[verify\][^\n]*/), ['No [verify] yet: it does not say how the change was checked.']);
+  assert.deepEqual(without('revision', /\n {2}\*\[verify\][^\n]*/), ['No [verify] yet: it does not say how the change was checked.']);
   assert.deepEqual(without('question', /\n {2}!probe[^\n]*/), ['A question has no !probe yet: nothing says what would answer it.']);
-  assert.deepEqual(without('notebook', /\] decide — /), ['1 of 3 entries has no [date] and kind yet.']);
+  assert.deepEqual(without('notebook', /\] notice — /), ['1 of 3 entries has no [date] and kind yet.']);
   assert.deepEqual(readFile('door[ {').checks.map((check) => check.state), ['fail']);
   const links = readFile(exampleById('reading').script);
-  assert.deepEqual(links.links.map((link) => link.path), ['./sources/make-it-stick.spw', './plans/onboarding.spw']);
+  assert.deepEqual(links.links.map((link) => link.path), ['./sources/make-it-stick.spw', './syllabus/week-3.spw']);
   // The paint gives every character back, in order.
   for (const example of EXAMPLES) {
     const painted = paintFile(readFile(example.script)).replace(/<[^>]+>/g, '').replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&quot;', '"').replaceAll('&amp;', '&');
@@ -387,7 +387,7 @@ test('put one together: slots make a line, each pivot holds the rest, and nothin
   const three = await (await get('spw.quest', '/build?definition=hinge%2C%20frame%2C%20key')).text();
   assert.match(three, /3 parts/);
   const hostile = await (await get('spw.quest', '/build?mark=%3Cscript%3E&word=a%7Bb%7D&mode=x%5Dy')).text();
-  assert.match(hostile, /aria-label="ab&lt;sourdough&gt;\(kitchen\)\[xy\]\{flour, water, salt, starter\}"/);
+  assert.match(hostile, /aria-label="ab&lt;chapter&gt;\(study\)\[xy\]\{voice, scene, turn\}"/);
   assert.ok(!hostile.includes('&lt;script'), 'a mark outside the twelve is dropped, not echoed');
   assert.match(page, /<section id="build" aria-labelledby="build-title">/);
   assert.ok((await (await get('spw.quest', '/')).text()).includes('<a href="/build">Take one line apart</a>'), 'the guide links the build page');
@@ -428,8 +428,8 @@ test('the script leads: a swap rewrites only its focus line, and any script has 
   const script = '#>notes\n\n  ~door(morning)[closed]{hinge, frame, key}\n@yesterday: ~"./y.spw"';
   const page = await (await get('spw.quest', `/build?script=${encodeURIComponent(script)}`)).text();
   assert.ok(page.includes(`>${escapeHtml(script)}</textarea>`), 'the script opens whole');
-  const sameDay = decodeURIComponent(page.match(/href="\/build\?script=([^"#]*)#pivot-mode">\[same_day\]/)[1]);
-  assert.equal(sameDay, '#>notes\n\n  ~door(morning)[same_day]{hinge, frame, key}\n@yesterday: ~"./y.spw"', 'only the focus line changed, indentation kept');
+  const aloud = decodeURIComponent(page.match(/href="\/build\?script=([^"#]*)#pivot-mode">\[aloud\]/)[1]);
+  assert.equal(aloud, '#>notes\n\n  ~door(morning)[aloud]{hinge, frame, key}\n@yesterday: ~"./y.spw"', 'only the focus line changed, indentation kept');
   const slotted = await (await get('spw.quest', `/build?script=${encodeURIComponent(script)}&mark=%3F`)).text();
   assert.ok(slotted.includes(`>${escapeHtml(script.replace('~door', '?door'))}</textarea>`), 'a slot parameter rewrites the focus line of the given script');
   assert.match(page, /<a class="share" href="\/build\?script=/);

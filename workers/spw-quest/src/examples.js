@@ -1,47 +1,52 @@
-// Files people keep, written in Spw. Each is whole and practical: a log, a
-// question, a decision, reading notes, a commit note. The guide opens one at a
-// time in its editor, and the reading beside it says what a tool can take from
-// the file. `try` names one edit whose effect shows in that reading.
+// Files people keep, written in Spw. Each is whole and practical, and each
+// belongs to reading, writing, study or a persona held in regard: a reading
+// log, a seminar question, a narrator's persona, reading notes, a revision
+// note. The guide opens one at a time in its editor, and the reading beside it
+// says what a tool can take from the file. `try` names one edit whose effect
+// shows in that reading.
 
 export const EXAMPLES = Object.freeze([
   {
     id: "notebook",
-    tab: "Notebook",
-    file: "garden.spw",
-    says: "Dated entries, each with a kind, so a tool can sort them and count what was decided.",
-    try: "Add a line inside the braces: >>[2026-10-14 07:30] verify — no new spots on bed B",
-    script: `#>garden_log
-#:log #!beds
+    tab: "Reading log",
+    file: "reading-log.spw",
+    says: "Dated entries, each with a kind, so a tool can sort them and count what was read, noticed and drafted.",
+    try: "Add a line inside the braces: >>[2026-10-14 07:30] draft — a second paragraph, on Dorothea's letters",
+    script: `#>reading_log
+#:log #!seminar
 
 ^"stream"{
- >>[2026-10-09 07:30] observe — mildew on the squash in bed B
- >>[2026-10-10 18:10] decide — water bed B at dawn for two weeks
- >>[2026-10-13 07:45] verify — fewer spotted leaves on new growth
+ >>[2026-10-09 07:30] read — Middlemarch, chapters 1 to 3
+ >>[2026-10-11 21:10] notice — the narrator forgives a character before the reader does
+ >>[2026-10-13 08:00] draft — one paragraph on sympathy as a way of reading
 }`,
   },
   {
     id: "question",
     tab: "Question",
-    file: "mildew.spw",
+    file: "seminar.spw",
     says: "A question that says what would answer it, so it can be tested instead of argued.",
     try: "Delete the !probe line, and the check beside it changes.",
-    script: `?["Does watering at dusk bring more mildew?"]{
-  ~#hypothesis: \`leaves that stay wet overnight spot first\`
-  !probe{ "water bed A at dusk and bed B at dawn; count spotted leaves each Sunday" }
+    script: `?["Does writing a question before reading help a seminar recall a chapter?"]{
+  ~#hypothesis: \`a question gives the reading somewhere to land\`
+  !probe{ "one group writes a question first, one reads cold; compare their summaries a week later" }
 }`,
   },
   {
-    id: "decision",
-    tab: "Decision",
-    file: "decision.spw",
-    says: "What was chosen, why, and when to look again, under names a tool can read back.",
-    try: "Change the status from \"trial\" to \"kept\".",
-    script: `^"decision_2026_10_13"{
-  chose = \`one shared calendar for the garden beds\`
-  because = \`two lists drifted, and bed B was watered twice\`
-  revisit = \`after the first frost\`
-  status = "trial"
-}`,
+    id: "persona",
+    tab: "Persona",
+    file: "narrator.spw",
+    says: "A persona held in regard: its voice, where it looks from, what it affirms, and what stayed.",
+    try: "Add a line inside the braces: still_learning = `when to leave a question open`",
+    script: `#>narrator_persona
+#:persona #!novel
+
+^"persona"{
+  voice = \`patient, exact, fond of margins\`
+  regards = \`the town from the library window\`
+  affirms = \`a second reading is a new reading\`
+  stayed = \`the habit of dating every note\`
+}[reg=facet]`,
   },
   {
     id: "reading",
@@ -51,23 +56,23 @@ export const EXAMPLES = Object.freeze([
     try: "Add a source: @also: ~\"./sources/how-people-learn.spw\"",
     script: `#>reading_notes
 @source: ~"./sources/make-it-stick.spw"
-@applies_to: ~"./plans/onboarding.spw"
+@applies_to: ~"./syllabus/week-3.spw"
 
 ^"chapter_2"{
   claim = \`recalling something fixes it better than rereading it\`
-  use = \`end each lesson with a question, not a summary\`
+  use = \`close each seminar with a question, not a summary\`
 }[reg=facet]`,
   },
   {
-    id: "commit",
-    tab: "Commit note",
-    file: "commit.spw",
-    says: "A change, why it happened, and how it was checked: the form this site's own commits close with.",
+    id: "revision",
+    tab: "Revision note",
+    file: "revision.spw",
+    says: "A revision, why it happened, and how it was checked: the form this site's own commits close with.",
     try: "Delete the *[verify] line, and the check beside it changes.",
     script: `#[episode]{
-  ~[scene]{ new readers stopped at the install step }
-  ![change]{ the guide opens with a file you can edit }
-  *[verify]{ routes test passes, and nothing overflows at phone width }
+  ~[scene]{ the second chapter reads more clearly aloud than on the page }
+  ![change]{ the letters now arrive before the garden scene }
+  *[verify]{ a reader in the workshop found the turn on the first pass }
 }`,
   },
 ]);

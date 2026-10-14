@@ -23,15 +23,15 @@ const ROLE = {
 /** The slots in the order the line is written, each with the alternatives a reader can swap in. */
 export const SLOTS = Object.freeze([
   { name: "mark", alts: ["", "~", "?", "!", "@", "*"] },
-  { name: "word", alts: ["bake", "proof", "feed"] },
-  { name: "concept", alts: ["", "sourdough", "rye"] },
-  { name: "scene", alts: ["", "kitchen", "market"] },
-  { name: "mode", alts: ["", "overnight", "same_day"] },
-  { name: "definition", alts: ["", "flour, water, salt, starter", "flour.water.salt", "starter"] },
+  { name: "word", alts: ["draft", "read", "revise"] },
+  { name: "concept", alts: ["", "chapter", "essay"] },
+  { name: "scene", alts: ["", "study", "seminar"] },
+  { name: "mode", alts: ["", "second_pass", "aloud"] },
+  { name: "definition", alts: ["", "voice, scene, turn", "voice.scene.turn", "turn"] },
 ]);
 
-/** A recipe line: act (!) on bake, about sourdough, in the kitchen, overnight, with four things inside. */
-export const BUILD_DEFAULTS = Object.freeze({ mark: "!", word: "bake", concept: "sourdough", scene: "kitchen", mode: "overnight", definition: "flour, water, salt, starter" });
+/** A writing line: act (!) on draft, about the chapter, in the study, on a second pass, with three things inside. */
+export const BUILD_DEFAULTS = Object.freeze({ mark: "!", word: "draft", concept: "chapter", scene: "study", mode: "second_pass", definition: "voice, scene, turn" });
 
 /** Slots from a query string; anything missing keeps its default, and no slot can break another's braces. */
 export function slotsFrom(params, base = BUILD_DEFAULTS) {
@@ -114,7 +114,7 @@ export const scriptAddress = (script, hash = "build") => {
 /** Files to open, change and keep: each is whole, and each opens by its address. */
 export const SNIPPETS = Object.freeze([
   ...EXAMPLES.map(({ tab, file, script }) => ({ label: tab, file, script })),
-  { label: "One word, three marks", file: "bake.spw", script: "~bake\n?bake\n!bake" },
+  { label: "One word, three marks", file: "draft.spw", script: "~draft\n?draft\n!draft" },
 ]);
 
 /** A download name: one segment, ending in .spw. */
