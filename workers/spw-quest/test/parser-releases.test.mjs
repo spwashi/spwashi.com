@@ -200,12 +200,14 @@ test('a release page names every file with its variant, form, bytes, integrity, 
     assert.ok(section, file.path);
     // parser.js names only its alias, and shows the variant and form of the file it aliases.
     const { variant, form } = file.alias ? first.manifest.files.find((other) => other.path === file.alias) : file;
-    assert.ok(section.includes(`<dt>Variant</dt><dd>${variant}</dd>`) && section.includes(`<dt>Form</dt><dd>${form}</dd>`), file.path);
+    // The variant names itself, then says what it is for.
+    assert.ok(section.includes(`<dt>Variant</dt><dd>${variant} <span class="note">`) && section.includes(`<dt>Form</dt><dd>${form}</dd>`), file.path);
     assert.ok(section.includes(`<dt>Bytes</dt><dd>${file.bytes.toLocaleString('en-US')}</dd>`), file.path);
     assert.ok(section.includes(`<code>${file.integrity}</code>`), file.path);
     const url = `https://spw.quest/parser/2026.10.13/${file.path}`;
     if (file.path.endsWith('.js')) {
-      assert.ok(section.includes(escapeHtml(`import { ${variant === 'full' ? 'parse' : 'scan'} } from "${url}";`)), `${file.path} import`);
+      const names = { full: 'parse', lite: 'scan', reader: 'parse, highlightHtml, outline, anchors', workbench: 'parse, runSpw, highlightHtml' }[variant];
+      assert.ok(section.includes(escapeHtml(`import { ${names} } from "${url}";`)), `${file.path} import`);
       assert.ok(section.includes(escapeHtml(`<script type="module" src="${url}" integrity="${file.integrity}" crossorigin="anonymous"></script>`)), `${file.path} script tag`);
     } else {
       assert.doesNotMatch(section, /<pre id="(import|script)-/, `${file.path} is not a script`);
