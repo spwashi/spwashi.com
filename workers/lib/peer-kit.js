@@ -80,8 +80,10 @@ export const PEER_DARK = `  --bg: hsl(218 20% 8.5%);
   --op-action-color: hsl(176 58% 58%);
   --op-topic-color: hsl(168 52% 62%);
   --op-surface-color: hsl(180 48% 62%);
+  --op-meta-color: hsl(220 38% 72%);
   --op-stream-color: hsl(160 42% 62%);
-  --op-baseline-color: hsl(42 24% 68%);`;
+  --op-baseline-color: hsl(42 24% 68%);
+  --op-normalize-color: hsl(95 30% 66%);`;
 
 /** The names workers/lib/shell.js speaks, said in site tokens. */
 export const PEER_ALIASES = `  --fg: var(--ink);

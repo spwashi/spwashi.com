@@ -2791,6 +2791,9 @@ html[data-spw-color-mode="auto"] {
     --op-surface-color: light-dark(hsl(180 52% 30%), hsl(180 48% 62%));
     --op-baseline-color: light-dark(hsl(42 18% 30%), hsl(42 24% 68%));
     --op-stream-color: light-dark(hsl(160 44% 32%), hsl(160 42% 62%));
+    --op-meta-color: light-dark(hsl(220 34% 36%), hsl(220 38% 72%));
+    --op-normalize-color: light-dark(hsl(95 28% 34%), hsl(95 30% 66%));
+    --op-pragma-color: light-dark(hsl(0 34% 38%), hsl(0 44% 72%));
 
     --op-frame-bg-soft: light-dark(
       color-mix(in srgb, var(--op-frame-color) 7%, transparent),
@@ -2909,6 +2912,9 @@ html[data-spw-color-mode="dark"] {
   --op-surface-color: hsl(180 48% 62%);
   --op-baseline-color: hsl(42 24% 68%);
   --op-stream-color: hsl(160 42% 62%);
+  --op-meta-color: hsl(220 38% 72%);
+  --op-normalize-color: hsl(95 30% 66%);
+  --op-pragma-color: hsl(0 44% 72%);
   --op-frame-bg-soft: color-mix(in srgb, var(--op-frame-color) 16%, transparent);
   --op-probe-bg-soft: color-mix(in srgb, var(--op-probe-color) 16%, transparent);
   --op-ref-bg-soft: color-mix(in srgb, var(--op-ref-color) 16%, transparent);
