@@ -20,7 +20,7 @@ Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
 ## 🛡️ Constitutional Guardrails
 
-* 🚫 **No Tracking Cookies:** The site does not use invasive tracking or fingerprinting cookies.
+* 🚫 **No Tracking Cookies:** The site does not use invasive tracking or fingerprinting cookies. A preference cookie the visitor asked for is allowed when it has the matrix row's limits.
 * 🚫 **No Covert Data Leaks:** Do not put interaction traces or settings state into third-party query strings.
 * 🚫 **Clear Reset Surfaces:** `/settings/` offers a visible way back to defaults that clears modified state cleanly.
 
@@ -34,6 +34,7 @@ Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 | **Service Worker Cache** | CacheStorage API via `sw.js` | Static assets & offline shell routes | Enforce cache quotas & clean eviction |
 | **Volatile Interaction** | In-memory `SpwBus` / WeakMaps | Current browsing session only | Garbage collected on page unload |
 | **Public Assets** | `public/images/` | Static media | Strip EXIF geolocation & device metadata |
+| **Worker Preference Cookie** | First-party `HttpOnly` cookie a worker sets when the visitor submits a form (`smut-today` settle) | Known preference keys only; one year at most | Unknown keys dropped on read; a forget path clears it (`Max-Age=0`) |
 | **Visitor Submissions** | Worker KV / D1 (`workers/*/wrangler.jsonc`) | Only fields the submission needs | Retention stated; deletion path exists; no IP or user-agent kept unless the feature needs it |
 
 ---
