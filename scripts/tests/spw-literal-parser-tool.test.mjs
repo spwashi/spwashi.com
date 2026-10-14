@@ -2,9 +2,12 @@ import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 
 import { SPW_PARSER_BUILD } from '../../public/js/semantic/spw-workbench-parser.js';
+import { SPW_PARSER_BUILD as SPW_READER_BUILD } from '../../public/js/semantic/spw-workbench-reader.js';
 import {
   createParserAppUrl,
   parseLiteralSource,
+  readAsEditor,
+  READER_CLASS_PREFIX,
   SPW_LITERAL_PARSER_SAMPLES,
 } from '../../public/js/modules/tools/spw-literal-parser.js';
 
@@ -14,6 +17,24 @@ describe('literal Spw parser proof', () => {
     assert.match(SPW_PARSER_BUILD.version, /^\d+\.\d+\.\d+$/);
     assert.match(SPW_PARSER_BUILD.commit, /^[a-f0-9]{12}$/);
     assert.equal(SPW_PARSER_BUILD.source, 'packages/spw-seed/src/parser.ts');
+  });
+
+  it('reads with a reader bundle cut from the same workbench revision as the parser', () => {
+    assert.equal(SPW_READER_BUILD.commit, SPW_PARSER_BUILD.commit);
+    assert.equal(SPW_READER_BUILD.version, SPW_PARSER_BUILD.version);
+    assert.equal(SPW_READER_BUILD.source, 'packages/spw-lsp/src/reader.ts');
+  });
+
+  it('reads a source as the editor does: every character back, prefixed roles, an outline and anchors', () => {
+    const source = SPW_LITERAL_PARSER_SAMPLES.profiles;
+    const editor = readAsEditor(source);
+    const text = editor.html.replace(/<[^>]+>/g, '').replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&quot;', '"').replaceAll('&amp;', '&');
+    assert.equal(text, source, 'the highlight gives back the source');
+    const classes = [...editor.html.matchAll(/class="([^"]+)"/g)].flatMap((m) => m[1].split(' '));
+    assert.ok(classes.length > 5);
+    assert.ok(classes.every((name) => name.startsWith(READER_CLASS_PREFIX)), 'no role class meets a site class');
+    assert.deepEqual(editor.anchors.map((anchor) => anchor.name), ['convention_profile']);
+    assert.ok(editor.outline.some((symbol) => symbol.name === '#>convention_profile'));
   });
 
   it('produces a real AST and lossless token reconstruction', () => {

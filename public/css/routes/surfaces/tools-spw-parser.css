@@ -300,6 +300,66 @@
       border-bottom: 1px solid color-mix(in srgb, var(--literal-parser-line) 58%, transparent);
       font: 0.78rem/1.5 var(--font-mono, monospace);
     }
+
+    /* As your editor reads it: the workbench reader's role classes (spw-role-*) on the same dark
+       code panel as the AST, painted with the dark values of the site's operator colors, because
+       this panel stays dark in either theme. */
+    & .literal-parser-reading-panel {
+      grid-column: 1 / -1;
+    }
+
+    & .literal-parser-reading {
+      box-sizing: border-box;
+      width: 100%;
+      max-height: 24rem;
+      margin: 0;
+      padding: 1rem;
+      overflow: auto;
+      overscroll-behavior: contain;
+      background: var(--literal-parser-code);
+      color: var(--literal-parser-control-ink);
+      font: 0.8rem/1.6 var(--font-mono, monospace);
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    & .spw-role-keyword { color: hsl(180 62% 62%); }
+    & .spw-role-type { color: #c9d4d0; }
+    & .spw-role-function { color: hsl(176 58% 58%); }
+    & .spw-role-function.spw-role-async { color: hsl(268 48% 72%); }
+    & .spw-role-property { color: hsl(214 58% 68%); }
+    & .spw-role-variable { color: hsl(188 42% 64%); }
+    & .spw-role-number { color: hsl(95 30% 66%); }
+    & .spw-role-string,
+    & .spw-role-operator { color: #9fb3ad; }
+    & .spw-role-comment { color: #8a9c97; font-style: italic; }
+    & .spw-role-commitRef,
+    & .spw-role-hashlike { color: hsl(220 38% 72%); text-decoration: underline dotted; text-underline-offset: 0.18em; }
+    & .spw-role-declaration { font-weight: 600; }
+
+    & .literal-parser-outline,
+    & .literal-parser-outline ol {
+      margin: 0;
+      padding: 0 0 0 1rem;
+      list-style: none;
+    }
+
+    & .literal-parser-outline {
+      padding: 0.6rem 1rem 0.9rem;
+      border-top: 1px solid color-mix(in srgb, var(--literal-parser-line) 58%, transparent);
+      font: 0.74rem/1.6 var(--font-mono, monospace);
+    }
+
+    & .literal-parser-outline li {
+      margin: 0.15rem 0;
+    }
+
+    & .literal-parser-outline__detail,
+    & .literal-parser-outline__line {
+      margin-left: 0.6rem;
+      color: var(--literal-parser-soft);
+      font-variant-numeric: tabular-nums;
+    }
 }
 
 @media (max-width: 56rem) {

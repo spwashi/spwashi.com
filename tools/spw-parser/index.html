@@ -188,6 +188,10 @@
                             <span>parser time</span>
                             <output data-parser-metric="time">—</output>
                         </div>
+                        <div>
+                            <span>anchors</span>
+                            <output data-parser-metric="anchors">—</output>
+                        </div>
                     </aside>
                 </div>
 
@@ -202,6 +206,11 @@
                 </noscript>
 
                 <div class="literal-parser-output" id="proof-output">
+                    <details open class="literal-parser-reading-panel">
+                        <summary><span>As your editor reads it</span><small>roles, outline + anchors from the workbench reader</small></summary>
+                        <pre class="literal-parser-reading" data-parser-reading aria-label="The source as the editor highlights it"></pre>
+                        <ol class="literal-parser-outline" data-parser-outline aria-label="Outline, as the editor shows it"></ol>
+                    </details>
                     <details open>
                         <summary><span>Tokens</span><small>lexer order + source positions</small></summary>
                         <ol class="literal-parser-token-list" data-parser-tokens></ol>
