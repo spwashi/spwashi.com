@@ -74,7 +74,8 @@ export function mount(ctxOrRoot, rootArg) {
     if (!canCompose(field) || !root.contains(field)) return;
     if (target !== field) status.textContent = '';
     target = field;
-    const anchor = field.closest('label') || field;
+    // A painted field (.spw-source wraps a textarea and the paint under it) takes its tools after the wrapper.
+    const anchor = field.closest('label') || (field.parentElement?.classList.contains('spw-source') ? field.parentElement : field);
     if (anchor.nextElementSibling !== toolbar) anchor.after(toolbar);
     toolbar.hidden = false;
     rememberSelection();

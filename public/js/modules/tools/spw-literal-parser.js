@@ -1,6 +1,7 @@
-// The reader bundle carries parse with the editor's reading (roles, outline, anchors, highlightHtml),
+// The reader bundle carries parse with the editor's reading (roles, outline, anchors),
 // so the tool proves a source the way the editor reads it without loading the parser twice.
-import { anchors, highlightHtml, outline, parse, SPW_PARSER_BUILD } from '/public/js/semantic/spw-workbench-reader.js';
+import { anchors, outline, parse, roles, SPW_PARSER_BUILD } from '/public/js/semantic/spw-workbench-reader.js';
+import { bracePairAt, highlightSpw, lineStarts } from '/public/js/semantic/spw-highlight.js';
 
 import {
   createParserAppUrl,
@@ -188,32 +189,40 @@ function renderTokens(host, tokens) {
 /** Role classes are prefixed so the editor's role names never meet the site's own spw-* classes. */
 export const READER_CLASS_PREFIX = 'spw-role-';
 
-export function readAsEditor(source) {
+/** The source as the editor reads it: highlighted HTML (shared with Spw code blocks), the outline, the anchors. */
+export function readAsEditor(source, { emphasize = null } = {}) {
   const input = String(source ?? '');
   return {
-    html: highlightHtml(input, { classPrefix: READER_CLASS_PREFIX }),
+    html: highlightSpw(input, roles(input), { emphasize }),
     outline: outline(input),
     anchors: anchors(input),
   };
 }
 
-function renderOutline(host, symbols) {
+/** Each outline row is a button that puts the caret on its line. */
+function renderOutline(host, symbols, jump) {
   host.replaceChildren();
   const add = (list, symbol) => {
     const item = document.createElement('li');
+    const go = document.createElement('button');
+    go.type = 'button';
+    go.className = 'literal-parser-outline__go';
+    const at = symbol.selectionRange?.start || symbol.range?.start || { line: 0, character: 0 };
+    go.addEventListener('click', () => jump(at.line, at.character));
     const name = document.createElement('code');
     name.textContent = symbol.name;
-    item.append(name);
+    go.append(name);
     if (symbol.detail) {
       const detail = document.createElement('span');
       detail.className = 'literal-parser-outline__detail';
       detail.textContent = symbol.detail;
-      item.append(detail);
+      go.append(detail);
     }
     const line = document.createElement('span');
     line.className = 'literal-parser-outline__line';
-    line.textContent = `L${(symbol.range?.start?.line ?? 0) + 1}`;
-    item.append(line);
+    line.textContent = `L${at.line + 1}`;
+    go.append(line);
+    item.append(go);
     if (symbol.children?.length) {
       const children = document.createElement('ol');
       symbol.children.forEach((child) => add(children, child));
@@ -230,7 +239,7 @@ function renderOutline(host, symbols) {
   }
 }
 
-function renderDiagnostics(host, output) {
+function renderDiagnostics(host, output, jump) {
   host.replaceChildren();
   const diagnostics = [
     ...output.errors.map((event) => ({ tone: 'error', event })),
@@ -251,7 +260,17 @@ function renderDiagnostics(host, output) {
     const position = event.position
       ? `L${event.position.line}:C${event.position.column}`
       : 'unknown position';
-    item.textContent = `${position} — ${messageFromEvent(event)}`;
+    const said = `${position} — ${messageFromEvent(event)}`;
+    if (event.position && jump) {
+      const go = document.createElement('button');
+      go.type = 'button';
+      go.className = 'literal-parser-diagnostic__go';
+      go.textContent = said;
+      go.addEventListener('click', () => jump(event.position.line - 1, Math.max(0, event.position.column - 1)));
+      item.append(go);
+    } else {
+      item.textContent = said;
+    }
     host.append(item);
   });
 }
@@ -335,8 +354,9 @@ function initLiteralParser(root) {
   const fileInput = root.querySelector('[data-parser-file]');
   const sourceName = root.querySelector('[data-parser-source-name]');
   const status = root.querySelector('[data-parser-status]');
-  const reading = root.querySelector('[data-parser-reading]');
   const outlineList = root.querySelector('[data-parser-outline]');
+  const field = root.querySelector('[data-parser-field]');
+  const paint = root.querySelector('[data-parser-paint]');
 
   if (!(input instanceof HTMLTextAreaElement)
     || !(tokenList instanceof HTMLElement)
@@ -345,6 +365,57 @@ function initLiteralParser(root) {
 
   let activeName = '';
   let timer = 0;
+  // The last full reading, kept so the caret can light a brace pair without parsing again.
+  let read = { text: null, tokens: [], spans: [], pair: null };
+
+  /* ---- The painted field: the source drawn under a clear textarea, character for character. ---- */
+  const live = field instanceof HTMLElement && paint instanceof HTMLElement;
+  const paintPlain = () => {
+    if (live) paint.textContent = `${input.value}\n`;
+  };
+  const paintRead = () => {
+    if (!live || read.text !== input.value) return;
+    const emphasize = read.pair ? new Set(read.pair) : null;
+    paint.innerHTML = `${highlightSpw(read.text, read.spans, { emphasize })}\n`;
+  };
+  if (live) {
+    // The sheet loader reaches the bus, which needs a document, so it comes in only here.
+    import('/public/js/kernel/deferred-styles.js').then((styles) => styles.ensureSpwSourceStyles()).catch(() => {});
+    paintPlain();
+    field.dataset.live = '';
+  }
+
+  /** Put the caret on a 0-based line and column, and bring it into view. */
+  const jump = (line = 0, column = 0) => {
+    const starts = lineStarts(input.value);
+    const lineStart = starts[Math.max(0, Math.min(line, starts.length - 1))] ?? 0;
+    const lineEnd = input.value.indexOf('\n', lineStart);
+    const offset = Math.min(lineStart + column, lineEnd < 0 ? input.value.length : lineEnd);
+    input.focus({ preventScroll: true });
+    input.setSelectionRange(offset, offset);
+    field?.scrollIntoView?.({ block: 'nearest' });
+    if (live) {
+      const lineHeight = parseFloat(getComputedStyle(input).lineHeight) || 20;
+      const top = line * lineHeight;
+      if (top < field.scrollTop || top > field.scrollTop + field.clientHeight - lineHeight * 2) {
+        field.scrollTop = Math.max(0, top - field.clientHeight / 3);
+      }
+    }
+    updatePair();
+  };
+
+  /** Light the brace under the caret and its partner. */
+  const updatePair = () => {
+    if (read.text !== input.value || input.selectionStart !== input.selectionEnd) {
+      if (read.pair) { read.pair = null; paintRead(); }
+      return;
+    }
+    const pair = bracePairAt(read.tokens, input.selectionStart);
+    const same = pair && read.pair && pair[0] === read.pair[0] && pair[1] === read.pair[1];
+    if (same || (!pair && !read.pair)) return;
+    read.pair = pair;
+    paintRead();
+  };
 
   const render = () => {
     const source = input.value;
@@ -352,7 +423,7 @@ function initLiteralParser(root) {
       const result = parseLiteralSource(source);
       const { output, astCensus } = result;
       renderTokens(tokenList, output.tokens);
-      renderDiagnostics(diagnostics, output);
+      renderDiagnostics(diagnostics, output, jump);
       ast.textContent = JSON.stringify(output.ast ?? null, null, 2);
       const parseState = !output.success
         ? 'partial'
@@ -365,11 +436,11 @@ function initLiteralParser(root) {
       setMetric(root, 'depth', astCensus.maxDepth);
       setMetric(root, 'reconstruction', result.reconstructsExactly ? 'exact' : 'changed', result.reconstructsExactly ? 'ok' : 'error');
       setMetric(root, 'time', `${output.duration.toFixed(2)} ms`);
-      const editor = readAsEditor(source);
-      // highlightHtml escapes every character it emits, so its markup can be set as HTML.
-      if (reading instanceof HTMLElement) reading.innerHTML = editor.html;
-      if (outlineList instanceof HTMLElement) renderOutline(outlineList, editor.outline);
-      setMetric(root, 'anchors', editor.anchors.length);
+      read = { text: source, tokens: output.tokens, spans: roles(source), pair: null };
+      if (document.activeElement === input) read.pair = bracePairAt(read.tokens, input.selectionStart);
+      paintRead();
+      if (outlineList instanceof HTMLElement) renderOutline(outlineList, outline(source), jump);
+      setMetric(root, 'anchors', anchors(source).length);
       setAppLink(appLink, source, activeName);
       if (status instanceof HTMLElement) {
         status.textContent = output.success && !output.errors.length
@@ -379,7 +450,8 @@ function initLiteralParser(root) {
     } catch (error) {
       tokenList.replaceChildren();
       ast.textContent = 'null';
-      if (reading instanceof HTMLElement) reading.textContent = source;
+      read = { text: null, tokens: [], spans: [], pair: null };
+      paintPlain();
       if (outlineList instanceof HTMLElement) outlineList.replaceChildren();
       diagnostics.replaceChildren();
       const item = document.createElement('li');
@@ -402,10 +474,75 @@ function initLiteralParser(root) {
     if (sourceName instanceof HTMLElement) {
       sourceName.textContent = name || 'editable literal';
     }
+    paintPlain();
     render();
   };
 
-  input.addEventListener('input', scheduleRender);
+  // Every keystroke repaints plain at once, so the text under the caret never drifts;
+  // color follows on the next read.
+  input.addEventListener('input', () => {
+    paintPlain();
+    scheduleRender();
+  });
+  for (const type of ['keyup', 'click', 'select', 'focus']) input.addEventListener(type, updatePair);
+  input.addEventListener('blur', () => {
+    releaseTab = false;
+    if (read.pair) { read.pair = null; paintRead(); }
+  });
+
+  /* ---- Keys: indent with Tab, keep the indent on Enter, Esc then Tab to leave. ---- */
+  let releaseTab = false;
+  const insert = (text) => {
+    // execCommand keeps the edit on the textarea's own undo stack; setRangeText is the fallback.
+    if (!document.execCommand?.('insertText', false, text)) {
+      input.setRangeText(text, input.selectionStart, input.selectionEnd, 'end');
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+  };
+  const indentLines = (outdent) => {
+    const { value, selectionStart: from, selectionEnd: to } = input;
+    const start = value.lastIndexOf('\n', from - 1) + 1;
+    if (!outdent && !value.slice(from, to).includes('\n')) {
+      insert('  ');
+      return;
+    }
+    const block = value.slice(start, to);
+    const changed = block.split('\n').map((line) => (outdent ? line.replace(/^( {1,2}|\t)/, '') : `  ${line}`)).join('\n');
+    if (changed === block) return;
+    input.setSelectionRange(start, to);
+    insert(changed);
+    input.setSelectionRange(start, start + changed.length);
+  };
+  input.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      releaseTab = true;
+      if (status instanceof HTMLElement) status.textContent = 'Tab now leaves the editor.';
+      return;
+    }
+    if (event.key === 'Tab') {
+      if (releaseTab || event.altKey || event.ctrlKey || event.metaKey) return;
+      event.preventDefault();
+      indentLines(event.shiftKey);
+      return;
+    }
+    releaseTab = false;
+    if (event.key === 'Enter' && !event.shiftKey && !event.altKey && !event.ctrlKey && !event.metaKey && input.selectionStart === input.selectionEnd) {
+      const { value, selectionStart: at } = input;
+      const start = value.lastIndexOf('\n', at - 1) + 1;
+      const indent = (value.slice(start).match(/^[ \t]*/) || [''])[0];
+      const before = value[at - 1];
+      const opens = before === '{' || before === '[' || before === '(';
+      const closes = opens && value[at] === { '{': '}', '[': ']', '(': ')' }[before];
+      event.preventDefault();
+      if (closes) {
+        insert(`\n${indent}  \n${indent}`);
+        const caret = at + 1 + indent.length + 2;
+        input.setSelectionRange(caret, caret);
+      } else {
+        insert(`\n${indent}${opens ? '  ' : ''}`);
+      }
+    }
+  });
 
   root.querySelectorAll('[data-parser-sample]').forEach((button) => {
     button.addEventListener('click', () => {

@@ -155,11 +155,15 @@
                                 <input type="file" accept=".spw,text/plain" data-parser-file>
                             </label>
                         </header>
-                        <textarea data-parser-source aria-label="Literal Spw source" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="parser-live-status">^[literal_parser]{
+                        <div class="literal-parser-field spw-source" data-parser-field>
+                            <pre class="literal-parser-paint" aria-hidden="true"><code data-parser-paint></code></pre>
+                            <textarea data-parser-source aria-label="Literal Spw source" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="parser-live-status parser-keys">^[literal_parser]{
   source = "Spw stays readable."
   proof = #[tokens, ast, diagnostics]
   ~&lt;authority&gt;"spw-workbench"
 }</textarea>
+                        </div>
+                        <p class="literal-parser-keys" id="parser-keys">Tab indents, Shift + Tab outdents, Enter keeps the indent. Press Esc, then Tab, to leave the editor. A brace lights with its partner under the caret.</p>
                         <p data-spw-textual-role="note" id="parser-live-status" data-parser-status aria-live="polite">Waiting for the parser.</p>
                     </section>
 
@@ -207,8 +211,7 @@
 
                 <div class="literal-parser-output" id="proof-output">
                     <details open class="literal-parser-reading-panel">
-                        <summary><span>As your editor reads it</span><small>roles, outline + anchors from the workbench reader</small></summary>
-                        <pre class="literal-parser-reading" data-parser-reading aria-label="The source as the editor highlights it"></pre>
+                        <summary><span>Outline</span><small>as your editor shows it; select a row to go there</small></summary>
                         <ol class="literal-parser-outline" data-parser-outline aria-label="Outline, as the editor shows it"></ol>
                     </details>
                     <details open>
