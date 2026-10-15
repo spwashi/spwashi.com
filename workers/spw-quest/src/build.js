@@ -6,6 +6,7 @@ import { escapeHtml } from "../../lib/shell.js";
 import { CONTAINERS, OPERATORS, PARTICLE_AIMS } from "./guide.js";
 import { EXAMPLES } from "./examples.js";
 import { editorField, outlineFile, readFile } from "./file-reader.js";
+import { displayMenu } from "./display.js";
 
 const MAX = 60;
 export const MAX_SCRIPT = 65536;
@@ -377,18 +378,21 @@ export function buildSurface(slots, script = assemble(slots), filename = `${slot
   const shown = String(script ?? "");
   const address = scriptAddress(shown);
   const held = shown.length <= SHARE_MAX ? shown : line;
+  const display = displayMenu();
   return `<div class="build">
     <div class="workspace">
       <form class="script" data-file method="post" action="/build#build">
         <div class="file-head">
           <label class="filename"><span class="sr-only">File name</span><input name="filename" value="${escapeHtml(safeName(filename))}" maxlength="80" spellcheck="false" autocomplete="off" autocapitalize="none"></label>
           <div class="file-actions">
+            ${display.toggle}
             <button type="submit" name="tool" value="read" data-tool="read">Read</button>
             <button type="submit" name="tool" value="format">Format</button>
             <button type="button" data-tool="copy">Copy</button>
             <button type="submit" name="tool" value="download" formaction="/script.spw">Download</button>
           </div>
         </div>
+        ${display.panel}
         ${editorField({ id: "script", value: shown, label: "Script", limit: MAX_SCRIPT, describedBy: "script-keys" })}
         <p class="keys file-foot" id="script-keys"><span class="hint">Read takes the first line apart again; <kbd>⌘</kbd>/<kbd>Ctrl</kbd> + <kbd>Enter</kbd> does too.</span>${address ? ` <a class="share" href="${escapeHtml(address)}" data-tool="share">Link to this file</a>` : ""}</p>
       </form>
