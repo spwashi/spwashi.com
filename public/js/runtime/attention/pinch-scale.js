@@ -1,3 +1,4 @@
+import { bindPinchTextScale, supportsPinchTextScaleInput } from '/public/js/kernel/pinch-text-scale.js';
 import {
   FONT_SCALE_STEPS,
   PINCH_ACTIVE_ATTR,
@@ -13,41 +14,8 @@ function getCurrentFontScale(doc = document) {
   return FONT_SCALE_STEPS.includes(String(current)) ? String(current) : '100';
 }
 
-function clampFontScaleIndex(index) {
-  return Math.max(0, Math.min(FONT_SCALE_STEPS.length - 1, index));
-}
-
-function getTouchDistance(touches) {
-  if (!touches || touches.length < 2) return 0;
-  const [first, second] = touches;
-  return Math.hypot(second.clientX - first.clientX, second.clientY - first.clientY);
-}
-
-function getTouchCenter(touches) {
-  if (!touches || touches.length < 2) return { x: 0, y: 0 };
-  const [first, second] = touches;
-  return {
-    x: Math.round((first.clientX + second.clientX) / 2),
-    y: Math.round((first.clientY + second.clientY) / 2),
-  };
-}
-
-function getVariantForIndex(index) {
-  if (index <= 1) return 'compact';
-  if (index >= 4) return 'roomy';
-  return 'balanced';
-}
-
 function isPinchTextScaleEnabled(doc = document) {
   return getRootPreference('spwPinchTextScale', 'on', doc) !== 'off';
-}
-
-/** Same step the live scaler uses before it changes a font size. */
-const PINCH_STEP = 0.12;
-
-function pinchStepChange(startDistance, distance) {
-  if (!(startDistance > 0) || !(distance > 0)) return 0;
-  return Math.round(Math.log2(distance / startDistance) / PINCH_STEP);
 }
 
 /* interaction-microstates.spw's reward_contract: a gesture that moves
@@ -75,182 +43,29 @@ function announcePinchDisabledHint(doc) {
   }));
 }
 
-/* Deliberately any-pointer, not the plain pointer/hover check most of the
-   runtime uses elsewhere (see dom-contracts.js isMobileBottomLane /
-   supportsFinePointerHover): a touchscreen laptop reports pointer:fine
-   because the mouse is primary, but any-pointer:coarse still holds because a
-   coarse pointer is available at all — exactly the device a two-finger
-   pinch needs to reach. Do not "fix" this to match the majority pattern. */
-export function supportsPinchTextScaleInput(environment = globalThis) {
-  const touchPoints = Number(environment.navigator?.maxTouchPoints) || 0;
-  const coarsePointer = environment.matchMedia?.('(any-pointer: coarse)').matches === true;
-  return touchPoints >= 2 || coarsePointer;
-}
+// The gesture lives in kernel/pinch-text-scale.js, import-free, so spw.quest's peer
+// build can carry it; this module binds it to the site's settings and attention helpers.
+export { supportsPinchTextScaleInput };
 
 export function initPinchTextScale(root) {
   if (!supportsPinchTextScaleInput()) return () => {};
   const main = root?.matches?.('main') ? root : root?.querySelector?.('main');
   if (!(main instanceof HTMLElement)) return () => {};
   const doc = main.ownerDocument || document;
-  const html = doc.documentElement;
-  const abort = new AbortController();
-  const { signal } = abort;
-
-  const state = {
-    active: false,
-    startDistance: 0,
-    startIndex: clampFontScaleIndex(FONT_SCALE_STEPS.indexOf(getCurrentFontScale(doc))),
-    previewIndex: clampFontScaleIndex(FONT_SCALE_STEPS.indexOf(getCurrentFontScale(doc))),
-  };
-  const disabledHint = {
-    armed: false,
-    startDistance: 0,
-    announced: false,
-  };
-
-  const clearDisabledHint = () => {
-    disabledHint.armed = false;
-    disabledHint.startDistance = 0;
-    disabledHint.announced = false;
-  };
-
-  const clearPinchState = () => {
-    state.active = false;
-    state.startDistance = 0;
-    state.startIndex = clampFontScaleIndex(FONT_SCALE_STEPS.indexOf(getCurrentFontScale(doc)));
-    state.previewIndex = state.startIndex;
-
-    html.style.removeProperty('--spw-pinch-factor');
-    html.style.removeProperty('--spw-pinch-delta');
-    html.style.removeProperty('--spw-pinch-origin-x');
-    html.style.removeProperty('--spw-pinch-origin-y');
-
-    [html, doc.body, main].forEach((node) => {
-      if (!(node instanceof HTMLElement)) return;
-      node.removeAttribute(PINCH_ACTIVE_ATTR);
-      node.removeAttribute('data-spw-pinch-direction');
-      node.removeAttribute('data-spw-pinch-variant');
-    });
-  };
-
-  const isAllowedTarget = (target) => {
-    if (!(target instanceof Element)) return false;
-    if (!main.contains(target)) return false;
-    return !target.closest(
-      'a, button, input, select, textarea, label, summary, details, video, audio, iframe'
-    ) && !target.isContentEditable;
-  };
-
-  const handleTouchStart = (event) => {
-    // TouchEvent.target names only one contact. Every contact must belong to
-    // the reading surface before this enhancement can take over native zoom.
-    if (event.touches.length !== 2
-      || !Array.from(event.touches).every((touch) => isAllowedTarget(touch.target))) {
-      if (state.active) clearPinchState();
-      return;
-    }
-    if (!isPinchTextScaleEnabled(doc)) {
-      // Two resting contacts are not a pinch. Wait for a separation step.
-      disabledHint.armed = true;
-      disabledHint.startDistance = getTouchDistance(event.touches);
-      disabledHint.announced = false;
-      return;
-    }
-    clearDisabledHint();
-
-    state.active = true;
-    state.startDistance = getTouchDistance(event.touches);
-    state.startIndex = clampFontScaleIndex(FONT_SCALE_STEPS.indexOf(getCurrentFontScale(doc)));
-    state.previewIndex = state.startIndex;
-
-    const center = getTouchCenter(event.touches);
-    html.style.setProperty('--spw-pinch-origin-x', `${center.x}px`);
-    html.style.setProperty('--spw-pinch-origin-y', `${center.y}px`);
-    html.style.setProperty('--spw-pinch-factor', '1');
-    html.style.setProperty('--spw-pinch-delta', '0');
-
-    const variant = getVariantForIndex(state.startIndex);
-
-    [html, doc.body, main].forEach((node) => {
-      if (!(node instanceof HTMLElement)) return;
-      writeAttributes(node, {
-        [PINCH_ACTIVE_ATTR]: 'true',
-        'data-spw-pinch-direction': 'neutral',
-        'data-spw-pinch-variant': variant,
-      });
-    });
-  };
-
-  const handleTouchMove = (event) => {
-    if (disabledHint.armed) {
-      if (event.touches.length !== 2) {
-        clearDisabledHint();
-        return;
-      }
-      if (disabledHint.announced) return;
-      const distance = getTouchDistance(event.touches);
-      if (pinchStepChange(disabledHint.startDistance, distance) === 0) return;
-      disabledHint.announced = true;
-      announcePinchDisabledHint(doc);
-      return;
-    }
-    if (!state.active) return;
-    if (event.touches.length !== 2 || !isPinchTextScaleEnabled(doc)) {
-      clearPinchState();
-      return;
-    }
-
-    const distance = getTouchDistance(event.touches);
-    if (!(distance > 0) || !(state.startDistance > 0)) return;
-
-    const ratio = distance / state.startDistance;
-    const delta = Math.log2(ratio);
-    const stepChange = pinchStepChange(state.startDistance, distance);
-    const nextIndex = clampFontScaleIndex(state.startIndex + stepChange);
-
-    event.preventDefault();
-
-    html.style.setProperty('--spw-pinch-factor', ratio.toFixed(3));
-    html.style.setProperty('--spw-pinch-delta', delta.toFixed(3));
-
-    const direction = delta > 0.04 ? 'expand' : delta < -0.04 ? 'contract' : 'neutral';
-    const variant = getVariantForIndex(nextIndex);
-
-    [html, doc.body, main].forEach((node) => {
-      if (!(node instanceof HTMLElement)) return;
-      writeAttributes(node, {
-        'data-spw-pinch-direction': direction,
-        'data-spw-pinch-variant': variant,
-      });
-    });
-
-    if (nextIndex === state.previewIndex) return;
-    state.previewIndex = nextIndex;
-
-    const nextScale = FONT_SCALE_STEPS[nextIndex];
-    if (nextScale && nextScale !== getCurrentFontScale(doc)) {
+  return bindPinchTextScale({
+    main,
+    steps: FONT_SCALE_STEPS,
+    getScale: () => getCurrentFontScale(doc),
+    setScale: (nextScale) => {
       const view = doc.defaultView || window;
       if (view.spwSettings?.setFontSizeScale) view.spwSettings.setFontSizeScale(nextScale);
       else view.spwSettings?.save?.({ fontSizeScale: nextScale });
-    }
-  };
-
-  const handleTouchEnd = () => {
-    clearDisabledHint();
-    if (!state.active) return;
-    clearPinchState();
-  };
-
-  // Observe the full touch set, including a third contact outside main.
-  doc.addEventListener('touchstart', handleTouchStart, { passive: true, signal });
-  doc.addEventListener('touchmove', handleTouchMove, { passive: false, signal });
-  doc.addEventListener('touchend', handleTouchEnd, { passive: true, signal });
-  doc.addEventListener('touchcancel', handleTouchEnd, { passive: true, signal });
-
-  return () => {
-    abort.abort();
-    clearPinchState();
-  };
+    },
+    isEnabled: () => isPinchTextScaleEnabled(doc),
+    onDisabledPinch: () => announcePinchDisabledHint(doc),
+    activeAttr: PINCH_ACTIVE_ATTR,
+    write: writeAttributes,
+  });
 }
 
 export const SPW_MODULE_EXPORT = Object.freeze({
