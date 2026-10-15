@@ -247,6 +247,23 @@ export const PEER_FONTS = Object.freeze([
   }
 ]);
 
+/** Site script modules a peer serves from its own origin under /peer/, named by content hash. */
+export const PEER_SCRIPTS = Object.freeze([
+  {
+    "name": "pinch-text-scale",
+    "file": "pinch-text-scale.c898b03dd8.js",
+    "bytes": 3662,
+    "sha256": "c898b03dd84f7d6d4d863cd0b4640305987326d097726c5fa3be3de22274e9b7",
+    "source": "public/js/kernel/pinch-text-scale.js"
+  }
+]);
+
+/** The address of a carried script by name, or null. */
+export function peerScriptPath(name, base = "/peer/") {
+  const script = PEER_SCRIPTS.find((item) => item.name === name);
+  return script ? `${base}${script.file}` : null;
+}
+
 /**
  * The tokens as one stylesheet. dark: "system" follows the reader's system,
  * "never" keeps the light material (a peer that forces light).

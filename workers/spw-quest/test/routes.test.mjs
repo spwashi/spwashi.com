@@ -10,7 +10,7 @@ import { BALLOON_BY_OPERATOR, BALLOON_WORDS, LAYERS, LINE_LIMIT, panelBalloon } 
 import { PARSER_JS } from '../src/parser-text.js';
 import { EXAMPLES, exampleById } from '../src/examples.js';
 import { paintFile, readFile } from '../src/file-reader.js';
-import { PEER_FONTS } from '../../lib/peer-kit.js';
+import { PEER_FONTS, PEER_SCRIPTS } from '../../lib/peer-kit.js';
 import { BASE_SECURITY, escapeHtml } from '../../lib/shell.js';
 import { readConfig } from '../../autonomous-feedback/src/config.js';
 
@@ -245,6 +245,15 @@ test('the faces are served from assets under their hashed names, for a year', as
     assert.equal(response.headers.get('cache-control'), 'public, max-age=31536000, immutable');
     assert.equal((await response.arrayBuffer()).byteLength, face.bytes, face.file);
   }
+  // The site's script modules the peer kit carries are served the same way, as JavaScript.
+  for (const script of PEER_SCRIPTS) {
+    const response = await worker.fetch(new Request(`https://spw.quest/peer/${script.file}`), { ASSETS: assets });
+    assert.equal(response.status, 200, script.file);
+    assert.equal(response.headers.get('content-type'), 'text/javascript; charset=UTF-8');
+    assert.equal(response.headers.get('cache-control'), 'public, max-age=31536000, immutable');
+    assert.equal((await response.arrayBuffer()).byteLength, script.bytes, script.file);
+  }
+  assert.equal((await worker.fetch(new Request('https://spw.quest/peer/other.js'), { ASSETS: assets })).status, 404);
   assert.equal((await worker.fetch(new Request('https://spw.quest/fonts/other.woff2'), { ASSETS: assets })).status, 404);
   assert.equal((await worker.fetch(new Request('https://spw.quest/fonts/newsreader-latin.woff2'), { ASSETS: assets })).status, 404, 'only hashed names');
 });

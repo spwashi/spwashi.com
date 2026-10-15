@@ -2,6 +2,11 @@
 // quiet buttons, and the policy that lets a page set the site's faces from
 // this origin (workers/lib/peer-assets.js serves them under /fonts/).
 import { BASE_SECURITY, htmlResponse } from "../../lib/shell.js";
+import { DISPLAY_CSS, DISPLAY_HEAD } from "./display.js";
+import { PAPER_HEAD } from "./paper.js";
+
+/** Every quest page's head: the site's faces, then the reader's display choices, applied before the body paints. */
+export const QUEST_HEAD = `${PAPER_HEAD}\n  ${DISPLAY_HEAD}`;
 
 /** spw.quest's pages set the site's faces from their own origin; text and JSON keep the shell's policy. */
 export const PAGE_CSP = BASE_SECURITY["Content-Security-Policy"].replace("style-src 'unsafe-inline';", "style-src 'unsafe-inline'; font-src 'self';");
@@ -39,4 +44,5 @@ export const PAGE_CSS = `main { width: min(72rem, calc(100% - 2rem)); padding-to
     @media (pointer: coarse) { .quiet-button, .file-actions button { min-height: 44px; } }
     html:not(.js) [data-tool="copy"] { display: none; }
     .also { margin: 2.5rem 0 0; color: var(--muted); font-size: .9rem; }
-    footer { margin-top: 2rem; }`;
+    footer { margin-top: 2rem; }
+    ${DISPLAY_CSS}`;

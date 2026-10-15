@@ -7,14 +7,15 @@ import { FILE_CSS, FILE_LIMIT, editorField, liveFileScript, outlineFile, readFil
 import { noteBootScript } from "./note.js";
 import { PANEL_CSS, stepSurface } from "./panel.js";
 import { BUILD_CSS, BUILD_DEFAULTS, MAX_SCRIPT, assemble, buildFrom, buildSurface, focusSlots, formatScript, safeName, toolActions } from "./build.js";
-import { PAPER_CSS, PAPER_HEAD, PAPER_THEME } from "./paper.js";
-import { LIVE_CSP, PAGE_CSS, masthead, page } from "./page.js";
+import { PAPER_CSS, PAPER_THEME } from "./paper.js";
+import { LIVE_CSP, PAGE_CSS, QUEST_HEAD, masthead, page } from "./page.js";
+import { displayMenu, displayScript } from "./display.js";
 import { PARSER_JS } from "./parser-text.js";
 import { handleParser, isParserPath } from "./parser-releases.js";
 import { SWITCH_CSS, parserSwitch, switchBanner, switchLoader, switchModulePath } from "./parser-switch.js";
 import { BASE_SECURITY, escapeHtml, jsonResponse, layout, wantsJson } from "../../lib/shell.js";
 import { PEER_BRACES, PEER_SIGILS } from "../../lib/peer-kit.js";
-import { isPeerFontPath, servePeerFont } from "../../lib/peer-assets.js";
+import { isPeerAssetPath, servePeerAsset } from "../../lib/peer-assets.js";
 
 const VERSION = "0.1.0";
 const FEEDBACK_CONFIG = {
@@ -118,7 +119,7 @@ function renderInstall() {
     title: "spw.quest — initialize Spw Workbench",
     description: "Choose who runs the setup, copy one block, and run it from the repository root. It stops before any commit.",
     canonical: "https://spw.quest/install",
-    head: PAPER_HEAD,
+    head: QUEST_HEAD,
     script: `(${questTabs.toString()})();`,
     themeCss: `${PAPER_CSS}
     ${PAGE_CSS}
@@ -288,7 +289,7 @@ function renderGuide(parser = null, example = EXAMPLES[0]) {
     title: "spw.quest — a guide to the Spw language",
     description: "Spw is plain text with a few marks. Open a file people keep, change it, and see what a tool can read from it.",
     canonical: "https://spw.quest/",
-    head: PAPER_HEAD,
+    head: QUEST_HEAD,
     script: `document.documentElement.dataset.setupSets = ${JSON.stringify(setIds)};\ndocument.documentElement.dataset.panels = ${JSON.stringify(STEPS.map((step) => step.id).join(" "))};\n(${forwardOldHash.toString()})();\n(${toolActions.toString()})();`,
     themeCss: `${PAPER_CSS}
     ${PAGE_CSS}
@@ -331,13 +332,15 @@ ${fileWorkspace(example)}
   <p>It is not built for anyone in particular. It has been designed with care, and it has turned out to be useful, most of all toward a culture where media literacy can grow across generations.</p>
 </section>
 <p class="also"><a href="/init">Recipe for agents</a> · <a href="/quest.json">quest.json</a> · <a href="${QUEST.repository}">Source</a> · <a href="https://autonomous.feedback/spw.quest?at=/">What was hard to follow</a></p>
-${liveFileScript(EXAMPLES, parser ? switchLoader(parser.from) : undefined, { note: true })}`,
+${liveFileScript(EXAMPLES, parser ? switchLoader(parser.from) : undefined, { note: true })}
+${displayScript()}`,
   });
 }
 
 /** The file area: a tab per example, the file as an editor, and what a tool reads from it. */
 function fileWorkspace(example) {
   const reading = readFile(example.script);
+  const display = displayMenu();
   const tabs = EXAMPLES.map((item) => `<a href="/?example=${escapeHtml(item.id)}#try" data-example="${escapeHtml(item.id)}"${item === example ? ' aria-current="page"' : ""}><span class="tab">${escapeHtml(item.tab)}</span><span class="file">${escapeHtml(item.file)}</span></a>`).join("\n    ");
   return `<section id="try" class="try" aria-labelledby="try-title">
   <h2 id="try-title" class="eyebrow">Five files, written in Spw</h2>
@@ -349,10 +352,12 @@ function fileWorkspace(example) {
       <div class="file-head">
         <p class="file-name"><code data-file-name>${escapeHtml(example.file)}</code></p>
         <div class="file-actions">
+          ${display.toggle}
           <button type="button" data-tool="copy">Copy</button>
           <button type="submit" name="tool" value="download" formaction="/script.spw" data-tool="download">Download</button>
         </div>
       </div>
+      ${display.panel}
       <p class="note-choice" data-note-choice-line hidden><span>A note on this device differs from this template.</span> <span class="note-choice-actions"><button type="button" class="quiet-button" data-note-keep>Keep this note</button> <button type="button" class="quiet-button" data-note-use>Use this template</button></span></p>
       <p class="note-state" data-note-state role="status" hidden></p>
       <noscript><p class="note-state">Scripts are off, so this field is a template. A note kept in this browser is not shown. Nothing is sent unless you use Download or Open in the editor.</p></noscript>
@@ -380,7 +385,7 @@ function renderLearn() {
     title: "spw.quest — learn Spw a mark at a time",
     description: "Seven panels, one line each, from plain words to a question that carries its own probe.",
     canonical: "https://spw.quest/learn",
-    head: PAPER_HEAD,
+    head: QUEST_HEAD,
     themeCss: `${PAPER_CSS}
     ${PAGE_CSS}
     ${PANEL_CSS}
@@ -403,7 +408,8 @@ ${pathNav()}
 </ol>
 <p class="also"><a href="/">Back to the guide</a> · <a href="/build">Take one line apart</a> · <a href="/install">Install the workbench</a></p>
 </div>
-${liveScript()}`,
+${liveScript()}
+${displayScript()}`,
   });
 }
 
@@ -412,7 +418,7 @@ function renderBuild(slots, script = assemble(slots), filename = `${slots.word |
     title: "spw.quest — take one line apart",
     description: "A whole file you can edit, what a tool reads from it, and its first line taken apart: change one part and the rest holds.",
     canonical: "https://spw.quest/build",
-    head: PAPER_HEAD,
+    head: QUEST_HEAD,
     script: `(${toolActions.toString()})();`,
     themeCss: `${PAPER_CSS}
     ${PAGE_CSS}
@@ -430,7 +436,8 @@ function renderBuild(slots, script = assemble(slots), filename = `${slots.word |
   ${buildSurface(slots, script, filename)}
 </section>
 <p class="also"><a href="/">Back to the guide</a> · <a href="/learn">Learn it a mark at a time</a> · <a href="/install">Install the workbench</a></p>
-${liveFileScript()}`,
+${liveFileScript()}
+${displayScript()}`,
   });
 }
 
@@ -444,7 +451,7 @@ function renderRead(step, line, { cut = false } = {}) {
     title: `spw.quest — ${step.id}, panel ${index + 1} of ${STEPS.length}`,
     description: step.reads,
     canonical: `https://spw.quest/learn#${step.id}`,
-    head: PAPER_HEAD,
+    head: QUEST_HEAD,
     themeCss: `${PAPER_CSS}
     ${PAGE_CSS}
     ${PANEL_CSS}
@@ -471,7 +478,7 @@ function renderNoStep(asked) {
     title: "spw.quest — no such panel",
     description: "The panels spw.quest can read a line for.",
     canonical: "https://spw.quest/",
-    head: PAPER_HEAD,
+    head: QUEST_HEAD,
     themeCss: `${PAPER_CSS}
     ${PAGE_CSS}`,
     body: `${masthead("/learn")}
@@ -582,8 +589,8 @@ export default {
     }
     // Dated parser releases come from static assets (src/parser-releases.js); /parser.js is not one of them.
     if (isParserPath(url.pathname)) return handleParser(request, url, env);
-    // The site's faces, carried by scripts/build-peer-kit.mjs into assets/fonts/.
-    if (isPeerFontPath(url.pathname)) return servePeerFont(request, url, env);
+    // The site's faces and script modules, carried by scripts/build-peer-kit.mjs into assets/fonts/ and assets/peer/.
+    if (isPeerAssetPath(url.pathname)) return servePeerAsset(request, url, env);
     return handleQuest(request, url);
   },
 };

@@ -13,8 +13,10 @@
  *   operator-detection.js        which operator color each sigil wears
  *
  *   workers/lib/peer-kit.js            tokens (light and dark), the peer vocabulary
- *                                      shell.js speaks, faces, and sigil colors
+ *                                      shell.js speaks, faces, sigil colors, and scripts
  *   workers/<unit>/assets/fonts/       the faces a unit serves, named by content hash
+ *   workers/<unit>/assets/peer/        site script modules a unit runs, bundled from
+ *                                      public/js and named by content hash
  *
  * Tokens are taken with everything they refer to, so a value written as
  * var(--charcoal-rgb) arrives with --charcoal-rgb. A token the site stops
@@ -66,6 +68,18 @@ const ALIASES = Object.freeze([
 
 /** The braces wear the site's scene, mode, direction and concept colors. */
 const BRACE_TYPES = Object.freeze({ '<': 'concept', '(': 'scene', '[': 'mode', '{': 'direction' });
+
+/**
+ * Site script modules each unit runs, bundled with esbuild from public/js (the
+ * workbench's esbuild, as build:spw-parser uses). An entry should be import-free
+ * or close to it: the bundle carries whatever it imports.
+ */
+const SCRIPTS = Object.freeze({
+  'spw-quest': [
+    { name: 'pinch-text-scale', entry: 'public/js/kernel/pinch-text-scale.js' },
+  ],
+});
+const ESBUILD = path.join(ROOT, '.spw/_workbench/node_modules/esbuild/lib/main.js');
 
 /** Which faces each unit serves from its own assets. */
 const UNITS = Object.freeze({
@@ -209,6 +223,34 @@ function build() {
       }
     }
 
+    // Scripts: one bundle per entry, absolute /public/ imports resolved from the repo.
+    const { build: bundle } = await import(pathToFileURL(ESBUILD).href);
+    const publicRoot = { name: 'public-root', setup(b) { b.onResolve({ filter: /^\/public\// }, (args) => ({ path: path.join(ROOT, args.path) })); } };
+    const scriptFiles = new Map();
+    const scripts = [];
+    for (const [unit, entries] of Object.entries(SCRIPTS)) {
+      for (const { name, entry } of entries) {
+        const result = await bundle({
+          entryPoints: [path.join(ROOT, entry)],
+          bundle: true,
+          format: 'esm',
+          platform: 'browser',
+          target: ['es2022'],
+          minify: true,
+          legalComments: 'none',
+          write: false,
+          logLevel: 'silent',
+          plugins: [publicRoot],
+          banner: { js: `/* ${entry}, carried by scripts/build-peer-kit.mjs; do not edit. */` },
+        });
+        const bytes = Buffer.from(result.outputFiles[0].contents);
+        const sha256 = createHash('sha256').update(bytes).digest('hex');
+        const file = `${name}.${sha256.slice(0, 10)}.js`;
+        scriptFiles.set(`${unit}/${file}`, { unit, file, bytes });
+        if (!scripts.some((s) => s.file === file)) scripts.push({ name, file, bytes: bytes.length, sha256, source: entry });
+      }
+    }
+
     const sigils = types
       .filter((t) => light.has(`--op-${t.type}-color`))
       .map((t) => ({ sigil: t.sigil, type: t.type, color: `--op-${t.type}-color` }));
@@ -237,6 +279,15 @@ export const PEER_BRACES = Object.freeze(${JSON.stringify(braces, null, 2)});
 /** Faces a peer serves from its own origin, named by content hash. */
 export const PEER_FONTS = Object.freeze(${JSON.stringify(fonts, null, 2)});
 
+/** Site script modules a peer serves from its own origin under /peer/, named by content hash. */
+export const PEER_SCRIPTS = Object.freeze(${JSON.stringify(scripts, null, 2)});
+
+/** The address of a carried script by name, or null. */
+export function peerScriptPath(name, base = "/peer/") {
+  const script = PEER_SCRIPTS.find((item) => item.name === name);
+  return script ? \`\${base}\${script.file}\` : null;
+}
+
 /**
  * The tokens as one stylesheet. dark: "system" follows the reader's system,
  * "never" keeps the light material (a peer that forces light).
@@ -257,12 +308,12 @@ export function peerFontPreloads(base = "/fonts/") {
   return PEER_FONTS.map((face) => \`<link rel="preload" href="\${base}\${face.file}" as="font" type="font/woff2" crossorigin>\`).join("\\n  ");
 }
 `;
-    return { module, fontFiles, undarkened };
+    return { module, fontFiles, scriptFiles, undarkened };
   })();
 }
 
 const check = process.argv.includes('--check');
-const { module, fontFiles, undarkened } = await build();
+const { module, fontFiles, scriptFiles, undarkened } = await build();
 if (undarkened.length) console.log(`[build:peer-kit] note: the site gives no dark value for ${undarkened.join(', ')}`);
 const drift = [];
 
@@ -277,10 +328,20 @@ for (const unit of Object.keys(UNITS)) {
   }
   for (const name of have) if (!want.some((f) => f.file === name)) drift.push(`${rel(path.join(dir, name))} (stale)`);
 }
+for (const unit of Object.keys(SCRIPTS)) {
+  const dir = path.join(ROOT, 'workers', unit, 'assets', 'peer');
+  const want = [...scriptFiles.values()].filter((f) => f.unit === unit);
+  const have = fs.existsSync(dir) ? fs.readdirSync(dir).filter((name) => name.endsWith('.js')) : [];
+  for (const f of want) {
+    const at = path.join(dir, f.file);
+    if (!fs.existsSync(at) || !fs.readFileSync(at).equals(f.bytes)) drift.push(rel(at));
+  }
+  for (const name of have) if (!want.some((f) => f.file === name)) drift.push(`${rel(path.join(dir, name))} (stale)`);
+}
 
 if (check) {
   if (drift.length) fail(`drifted from the site: ${drift.join(', ')}. Run npm run build:peer-kit.`);
-  console.log(`[build:peer-kit] current: ${rel(OUT)} and ${fontFiles.size} font file(s)`);
+  console.log(`[build:peer-kit] current: ${rel(OUT)}, ${fontFiles.size} font file(s) and ${scriptFiles.size} script(s)`);
 } else {
   fs.writeFileSync(OUT, module);
   for (const unit of Object.keys(UNITS)) {
@@ -288,6 +349,13 @@ if (check) {
     fs.mkdirSync(dir, { recursive: true });
     const want = [...fontFiles.values()].filter((f) => f.unit === unit);
     for (const name of fs.readdirSync(dir)) if (name.endsWith('.woff2') && !want.some((f) => f.file === name)) fs.rmSync(path.join(dir, name));
+    for (const f of want) fs.writeFileSync(path.join(dir, f.file), f.bytes);
+  }
+  for (const unit of Object.keys(SCRIPTS)) {
+    const dir = path.join(ROOT, 'workers', unit, 'assets', 'peer');
+    fs.mkdirSync(dir, { recursive: true });
+    const want = [...scriptFiles.values()].filter((f) => f.unit === unit);
+    for (const name of fs.readdirSync(dir)) if (name.endsWith('.js') && !want.some((f) => f.file === name)) fs.rmSync(path.join(dir, name));
     for (const f of want) fs.writeFileSync(path.join(dir, f.file), f.bytes);
   }
   console.log(`[build:peer-kit] wrote ${rel(OUT)}${drift.length ? ` (changed: ${drift.join(', ')})` : ' (unchanged)'}`);
