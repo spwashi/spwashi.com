@@ -46,6 +46,7 @@
 @asks_architecture: ~"./upstream-workbench-recommendations/architecture.spw"
 @asks_language: ~"./upstream-workbench-recommendations/language-support.spw"
 @asks_plugins: ~"./upstream-workbench-recommendations/plugins-and-tooling.spw"
+@asks_density: ~"./upstream-workbench-recommendations/density-and-voice.spw"
 @asks_smaller: ~"./upstream-workbench-recommendations/smaller.spw"
 
 operation = "align"
@@ -240,6 +241,7 @@ expression = consumer[recommendations]{performance.cli.intermediate.culture}<ups
     `architecture.spw — one model under the CLI and the editor`,
     `language-support.spw — tokens, symbols, highlighting, navigation; a valence word leading a fragment (2026-10-25)`,
     `plugins-and-tooling.spw — one character table, Spw in host files, one probe, one plugin, the slow loop, and the quest's grow step (2026-10-25)`,
+    `density-and-voice.spw — a register that selects a sink, slopes read apart, a geometry field that stays a sitting (2026-10-25)`,
     `smaller.spw — items too small to rank`,
   ][reg=set]
   context = @asks_context
@@ -250,6 +252,7 @@ expression = consumer[recommendations]{performance.cli.intermediate.culture}<ups
   architecture = @asks_architecture
   language = @asks_language
   plugins = @asks_plugins
+  density = @asks_density
   smaller = @asks_smaller
 }[reg=facet]
 
@@ -347,15 +350,18 @@ expression = consumer[recommendations]{performance.cli.intermediate.culture}<ups
 }[reg=facet]
 
 ^"week_2026_10_25"{
-  standing = `Read the three editors, the CLI, and the plugin protocol beside the asks already filed. The detail is in @asks_plugins. Query already prints --stats. Walk isolation already landed. The same day also noted projection freshness in @asks_editor, sibling route shapes in @asks_corpus, and a valence word in @asks_language.`
+  standing = `Read the three editors, the CLI, and the plugin protocol beside the asks already filed. Plugin detail is in @asks_plugins. Register, slope, and geometry detail is in @asks_density. Query already prints --stats. Walk isolation already landed. spw form --scheme stays a weight scheme. The same day also noted projection freshness in @asks_editor, sibling route shapes in @asks_corpus, and a valence word in @asks_language.`
   proposals = #[
     `=[lsp] One probe that takes buffer text and answers form, stack, tokens, structure, and trace :: probe[buffer]{form.stack.tokens}<unsaved>`,
     `+[plugin] One .spw plugin emits the expression manifest and fails when its selector matches nothing :: plugin[emit]{expressions}<one>`,
     `+[quest] The grow step opens the first failure from spw doctor or spw cite :: quest[grow]{doctor.cite}<first>`,
     `=[cli] doctor and lint print the stats query already prints :: stats[walk]{files.parse.cache}<doctor>`,
+    `=[cli] A register rename is a plan, the way a mark rename is :: refactor[reg]{from.to}<plan>`,
+    `=[cli] A slope reading reports form, syntax, semantics, and pragmatics without averaging them :: slope[frame]{form.syntax.semantics.pragmatics}<separate>`,
+    `=[measure] A geometry field stays a sitting; a named relation is banked with cycle or delta :: geometry[receipt]{relation}<cycle>`,
   ][reg=set]
-  ~#taste: "A second plugin waits until the first one fails closed."
-  consume = `Until a plugin exists, the site keeps building the expression manifest by script. The editor asks it points at stay where they were measured.`
+  ~#taste: "A second plugin waits until the first one fails closed. A second slope waits until the first reading refuses to average."
+  consume = `Until a plugin exists, the site keeps building the expression manifest by script. Until a slope flag exists, charge and boonhonk stay the two dispositions already contracted, and a voice stays a genre sibling.`
 }[reg=facet]
 
 ^"validation"{

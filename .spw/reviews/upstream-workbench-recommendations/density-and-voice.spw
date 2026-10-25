@@ -1,0 +1,140 @@
+# Density and voice — a mark pays when a later reading can use it
+#
+# The 2026-10-25 reading of registers, slopes, and geometry. Directions that
+# already have a ranked ask point at it and are not remeasured. Nothing here
+# writes to .spw/_workbench, and nothing adds a voice attribute.
+#
+# Detail for the review hub beside this folder
+# (upstream-workbench-recommendations.spw). Every ask keeps the same slots in
+# the same order: rank, claim, exists, gap, measured, recommendation, replaces,
+# probe, question.
+
+#>workbench_asks_density
+#:review #!workbench #!developer_experience #!voice
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@hub: ~"../upstream-workbench-recommendations.spw"
+@asks_language: ~"./language-support.spw"
+@asks_corpus: ~"./corpus-and-cli.spw"
+@registers: ~"../../language/v04/pillars/register-serialization.spw"
+@living: ~"../../conventions/living-medium-copy.spw"
+@voices: ~"../../caches/speech-bubble-voices-2026-09.spw"
+@pacing: ~"../../philosophy/pacing.spw"
+@geometry_cache: ~"../../caches/hypermedia-geometry-2026-09.spw"
+@decay: ~"../../caches/copy-decay-2026-09.spw"
+@copy_depth: ~"../../../.agents/plans/semantic-copy-depth/PLAN.md"
+
+operation = "cache"
+fixity = "tending"
+
+expression = asks[density]{register.slope.receipt}<upstream>
+
+# ==============================================================================
+# DENSITY AND VOICE — read 2026-10-25
+# ==============================================================================
+# A tooling argument selects an intermediate node. A cache keeps a node that
+# discriminates. A geometry reading makes a relation available for one sitting.
+# Texture and voice are slopes of that node, read apart.
+
+^"density_and_voice"{
+
+  register_sink: .{
+    rank = 1
+    claim: "A register earns its mark when it selects a sink the brace does not already name."
+    exists: "The normalizer assigns reg=facet to a record and reg=set to a list. @registers names probe, projection, and stream as the sinks that precipitate a check, an emit shape, or an order. spw refactor renames mark, anchor, case, mood, and path. spw form --scheme is a weight scheme: default, agent, or thrift."
+    gap: "facet and set are almost the whole authored vocabulary, and no rename kind can move a register. --scheme cannot name a semiotic frame without colliding with the weight scheme."
+    measured: .{
+      census = "2026-10-25, site .spw outside _workbench: 11142 [reg=] stamps in 662 files"
+      facet = "6109"
+      set = "4951"
+      stream = "58, used as an ordered reading ?< @a, @b >[reg=stream] in .spw/audits/index.spw"
+      projection = "2"
+      probe = "1"
+      other = "list 8, and a handful of one-off stamps such as sink@ and density@compact"
+    }[reg=facet]
+    recommendation = #[
+      `keep stream, probe, and projection when the node must precipitate an order, a check, or an emit shape`,
+      `drop a facet or set stamp that only repeats the brace`,
+      `add refactor kind reg:from=to, planned like mark:, so a stamp can move without a hand edit`,
+      `leave --scheme as the weight scheme`,
+    ][reg=set]
+    replaces: "a closing [reg=facet] on every frame, and a hand edit when the word should have been stream"
+    probe: `rg -o '\[reg=[^]]+\]' .spw -g '!_workbench/**' -g '!gen/**'`
+    question: "Should refactor gain a reg: kind, or should the normalizer be the only writer of facet and set?"
+  }[reg=facet]
+
+  slopes_stay_separate: .{
+    rank = 2
+    claim: "Texture and voice stay available when one host is read on separate slopes, and a single score spends one slope to imitate another."
+    exists: "Copy depth is entry, normal, rich, dense, technical, or genre. @living assigns charge to technical-symbolic intensity and a boonhonk chain to playful-social generosity. @voices puts a character in the mode slot of the same expression, names the speaker with data-spw-copy-label, and shows that sibling at genre depth. @pacing says that above the base rung the duration follows the scope of what changes, and that reduced motion keeps order, weight, density, and copy. spw taste collects one vocabulary from ~#taste."
+    gap: "taste --vocab is one bag. form reports brace weight, not which slope moved. Settings do not preview the same paragraph at entry and at dense. The flat outline in @asks_language still does not show a facet key, and the site's expression manifest writes every header claim onto every handle in the file."
+    measured: .{
+      outline_skip = "skimOutline in packages/spw-cli/src/view.ts skips a line that starts with #, so a column-0 handle and a #: claim never become landmarks"
+      claim_smear = "scripts/build-expression-manifest.mjs copies each #: claim onto every #> handle in that file"
+      voice_stem = "no data-spw-voice, data-spw-tone, or data-spw-trace; @voices and @copy_depth already refuse them"
+      decay = "@decay: the product of a move along the operation gradient is a voice change of the same sentence, with a receipt"
+    }[reg=facet]
+    recommendation = #[
+      `a slope reading, on a flag other than --scheme, that reports form, syntax, semantics, and pragmatics and refuses to average them`,
+      `taste splits a charge chain from a boonhonk chain`,
+      `spw delta between a base paragraph and its genre sibling passes when the subject and the direction stay and only the mode and the copy-label change`,
+      `the copy-depth preview @copy_depth already names: the same paragraph at entry and at dense`,
+      `a column-0 handle is an outline landmark, and a claim binds to the nearest preceding handle`,
+    ][reg=set]
+    replaces: "a voice attribute, a banned-word pass, and an effort setting used as an edit"
+    probe: `rg -n 'data-spw-voice|data-spw-tone|data-spw-trace' .spw public --glob '!_workbench/**'`
+    question: "Which flag carries the slope reading, while --scheme stays the weight scheme?"
+  }[reg=facet]
+
+  geometry_is_a_sitting: .{
+    rank = 3
+    claim: "A geometry field makes a relation available for one sitting. A cache keeps a node that discriminates. The field is a poor standing record."
+    exists: "spw form is effect.l0.measure and refuses --write. Its help says the bytecode is for cache keys and similarity. A dump under .spw/gen/ is not canon. spw cycle, spw delta, and spw atlas bank a receipt. The expression manifest keeps subject, mode, parts, capsule, scene, and charge, and it dropped tree depth after the scores did not vary. @geometry_cache says to name the relation before calling an arrangement a symmetry."
+    gap: "Nothing in the command says which relation is worth keeping, so a field can be treated as a second source."
+    measured: .{
+      help = "packages/spw-cli/src/geometry.ts: bytecode for cache keys and similarity; effect.l0.measure only"
+      relation = "adjacency, reading order, destination, or a shared subject, as @geometry_cache already lists"
+    }[reg=facet]
+    recommendation = #[
+      `bank a named relation with spw cycle or spw delta`,
+      `leave the field uncached`,
+      `a bytecode hash may key a similarity lookup, and it does not become a canon file`,
+    ][reg=set]
+    replaces: "a geometry cache command"
+    probe: `rg -n "effect.l0.measure|cache keys" .spw/_workbench/packages/spw-cli/src/geometry.ts`
+    question: "Is the bytecode hash enough of a receipt, or does a relation need cycle or delta before it is kept?"
+  }[reg=facet]
+
+  wonder_contour: .{
+    rank = 4
+    claim: "The site harvest and the lattice share one contour, and an assignment-shaped wonder reaches neither."
+    exists: "The upstream harvest is wonder_harvest in @asks_corpus. scripts/wonder.mjs opens on ?[\"…\"]{, stores ~#hypothesis: and ~#tension:, and counts ~#lens() as the cell spw lattice reads. The question's words are the cache key."
+    gap: "A wonder written as hypothesis = \"…\" is a room row and nothing else. .agents stays outside the corpus, which wonder_harvest already records, and this facet does not remeasure that queue."
+    measured: .{
+      contour = "#>id then ?[\"question\"]{ #:depth ~#lens() ~#hypothesis: !probe{} $%[] }"
+      invisible = "hypothesis =, and a // lens: comment"
+      this_tree = "the plugin wonder in plugins-and-tooling.spw uses the contour"
+    }[reg=facet]
+    recommendation = #[
+      `keep the question text stable and put the moving thought in ~#hypothesis: and ~#tension:`,
+      `write the lens as ~#lens() so the lattice can count it`,
+      `an upstream harvest, when it lands, reads this contour rather than a second dialect`,
+    ][reg=set]
+    replaces: "a [reg=wonder] stamp, and a second wonder syntax for the workbench"
+    probe: `rg -n "WONDER_OPEN|~#hypothesis" scripts/wonder.mjs`
+    question: "Should an assignment-shaped wonder be harvested, or is the contour the point of the form?"
+  }[reg=facet]
+}
+
+#>wonder_register_stamp
+?["Should a register be renamed by a tool, or should facet and set stop being written?"]{
+  #:depth #!pragmatics ~#lens(comparison)
+  ~#with: @registers
+  ~#hypothesis: "A reg: rename makes the rare sinks playable the way a ~# mark is. Stopping the facet and set stamps removes a word no index reads. The two moves answer different stamps."
+  ~#tension: "A rename kind invites more facet stamps, because they become easy to move. Omitting them leaves a caret frame with no register until a tool reads the brace."
+  !probe{ "rg -o '\\[reg=[^]]+\\]' .spw -g '!_workbench/**' -g '!gen/**'" }
+  $%[reg.rename, stamp.omit, scheme.weight]
+  ~<"../upstream-workbench-recommendations.spw">
+}
