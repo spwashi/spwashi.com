@@ -1,0 +1,169 @@
+# Motions — reduce, expand, place, extend and diff, each naming the ground it keeps
+#
+# The 2026-10-25 reading of the moves that turn one Spw form into another.
+# Spw was built to find where two understandings stop sharing ground. Each
+# motion here asks that along one axis: a diff holds a revision or a sibling
+# against another, a placement holds the text and moves the root, an extension
+# holds the core reading and adds a sink, and a reduction holds an instance
+# against its form. A motion earns a verb when its output says what it kept,
+# what it dropped, and how to come back. Directions that already have a ranked
+# ask point at it and are not remeasured. Nothing here writes to
+# .spw/_workbench, and nothing adds a dialect or an attribute.
+#
+# Detail for the review hub beside this folder
+# (upstream-workbench-recommendations.spw). Every ask keeps the same slots in
+# the same order: rank, claim, exists, gap, measured, recommendation, replaces,
+# probe, question. Workbench code is read at the pin (0eb1d1c0).
+
+#>workbench_asks_motions
+#:review #!workbench #!intermediate_forms #!developer_experience
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@hub: ~"../upstream-workbench-recommendations.spw"
+@asks_placement: ~"./placement.spw"
+@asks_plugins: ~"./plugins-and-tooling.spw"
+@asks_density: ~"./density-and-voice.spw"
+@asks_trees: ~"./claims-and-trees.spw"
+@asks_corpus: ~"./corpus-and-cli.spw"
+@routes_script: ~"../../../scripts/spw-routes.mjs"
+@expression_query: ~"../../../public/js/semantic/expression-query.js"
+@registers: ~"../../language/v04/pillars/register-serialization.spw"
+@surfaces: ~"../../surfaces.spw"
+
+operation = "cache"
+fixity = "tending"
+
+expression = asks[motions]{ground.edge.residue}<upstream>
+
+# ==============================================================================
+# THE MOTIONS — what each holds still, keeps, drops, and how it comes back
+# ==============================================================================
+
+^"motions"{
+  diff = .{
+    holds = `two forms on one axis: a revision, a sibling, a root, a plugin, or a time`
+    keeps = `the ground both hold, short enough to skim`
+    names = `the edge: the first slot, in reading order, where the two part`
+    back = `spw delta --patch, for a revision`
+  }[reg=facet]
+  reduce = .{
+    holds = `an instance against its form: an expression, an outline, a fingerprint, a shape it follows`
+    keeps = `the form, the value it fills the form's slot with, and what it holds alone`
+    drops = `the body, and where an own part sat`
+    back = `expand, from the form and that residue`
+  }[reg=facet]
+  expand = .{
+    holds = `a form and one value for its slot`
+    keeps = `the line each part came from, the form or the instance`
+    back = `reduce; a round trip that does not come back says what it lost`
+  }[reg=facet]
+  place = .{
+    holds = `the text, while the root moves`
+    keeps = `the words; the citations, index, marks and wonders they touch are the edge`
+    back = `take it back; the file never moved`
+    see = @asks_placement
+  }[reg=facet]
+  extend = .{
+    holds = `the core reading, while one plugin adds a sink`
+    keeps = `the core output unchanged`
+    names = `the edge the plugin adds; an empty edge fails closed`
+    see = @asks_plugins
+  }[reg=facet]
+  develop = .{
+    holds = `one claim id, across time`
+    names = `the move from one operation and fixity to the next, with a receipt`
+    see = @asks_trees
+  }[reg=facet]
+}[reg=facet]
+
+^"architectures"{  # what the motions are to a reader, a machine, a meaning, and an attention budget
+  cognitive = `a reduction is a chunk a reader can hold; a shape with a slot is a schema with a default; a diff opens where two readers stop sharing ground`
+  computational = `a shape earns a name when stating it once and citing it costs fewer tokens than stating it in every member; a reduction is checked by expanding it back`
+  semantic = `the edge is read by slot: subject, mode, body, projection, scope and charge, then shape, then the name a member puts in the shape's slot`
+  attentional = `ground is what a reader may skim, so it arrives as a shape handle or a count; the edge is where attention is spent, so it arrives whole and first = says where to look`
+}[reg=facet]
+
+# ==============================================================================
+# MOTIONS — read 2026-10-25
+# ==============================================================================
+
+^"motions_asks"{
+
+  ground_then_edge: .{
+    rank = 1
+    claim: "Two forms that are not revisions of each other are read as the ground they share, then the first slot where they part, then what each holds alone."
+    exists: "spw delta is a lex and nest-path ChangeReport for two revisions of one surface, and --patch freezes the apply product. @expression_query reads subject, mode, body, projection, scope and charge from an expression. @routes_script --diff reads two route trees as ground, edge and own, with first = naming the kind where they part."
+    gap: "On two siblings, delta counts the name each one carries as edits, and its shape strings say the nests moved without saying which slot. Nothing in the CLI reads two surfaces by slot."
+    measured: .{
+      delta = "spw delta bane.land.spw boon.land.spw: lexOps=52 (insert 26, delete 3, replace 23), brace=kind, nest=moved, labels=moved, labelDelta +reg"
+      routes_diff = "spw:routes --diff bane.land boon.land: ground is _family.spw#shape_2, five sections, three wonder types, nine routes both link to; edge is first = name, bane against boon; neither holds anything alone"
+      same_shape = "action against probe on the 19 operator pages: the same reading, one edge at the name"
+      across = "/topics/slop/ against /about/: first = expression, four slots moved (subject, mode, body, projection), keeps written against unwritten, sections part at 1, no link either way"
+      parse = "six --diff readings parse with spw-seed"
+    }[reg=facet]
+    recommendation = #[
+      `a reading of two surfaces as ground, first, edge and own, with the edge read by slot`,
+      `the slot reader shared with the expression manifest and site search, so the CLI and the site name the same slots`,
+      `ground arrives short (a shape handle, a count) and the edge arrives whole`,
+      `output that parses as Spw, as dual_read_roundtrip asks of every --spw card`,
+      `delta stays the revision reading`,
+    ][reg=set]
+    replaces: "a line diff of two siblings that reads a shared name as 26 inserts"
+    probe: `npm run -s spw:routes -- --diff /about/domains/bane.land/ /about/domains/boon.land/`
+    question: "Is ground-then-edge a flag on delta, or its own verb, since the two surfaces are not revisions of each other?"
+  }[reg=facet]
+
+  template_with_a_slot: .{
+    rank = 2
+    claim: "A shape whose ids carry each member's name is a template with one slot, and an instance could state only its value and what it adds."
+    exists: "spw expand reads a reflexive path edge ={ ~\"template.spw\" } as provenance, projects the template inline in a << … >> stream, bounds depth, guards cycles, and never rewrites the source. @routes_script writes slot and saves on each family shape, and fills on each member."
+    gap: "expand inlines a template as written, so a slot cannot take a member's value. No site-authored .spw file uses a template edge. Whether a shape should be named is a call the creator has no number for."
+    measured: .{
+      template_edges = "0 reflexive path edges in .spw and .agents outside _workbench and gen/"
+      shapes = "32 shapes across 22 families; 27 carry each member's name in a slot (bane-frame and boon-frame read as frame, filled with bane and boon)"
+      saves = "17 would save section tokens if named; operators shape_1 saves 53 (19 members, 4 tokens); about/domains shape_2 saves 7; 13 cost more than they save, all one- or two-token orders"
+      literal_slot = "about/domains shape_1 is {domain_frame.domain_register} with no slot: its five members already share literal ids"
+    }[reg=facet]
+    recommendation = #[
+      `expand takes a value for a template's slot at the edge, in whatever form the grammar chooses; the site does not propose the syntax`,
+      `the inverse is a reduction: given an instance and a template, print the value and the residue`,
+      `name a shape only when it saves tokens; a shape that costs is left as a family reading`,
+    ][reg=set]
+    replaces: "a family pass in each consumer, and a naming call made without a count"
+    probe: `npm run -s spw:routes -- --write && rg -n 'saves|costs|slot' .spw/gen/routes/topics/software/spw/operators/_family.spw`
+    question: "Should a named shape become a form with a variable slot, and is a positive saves count the bar for naming one?"
+  }[reg=facet]
+
+  reduction_names_its_residue: .{
+    rank = 3
+    claim: "A reduction is worth keeping when it says what it dropped and where that lives, and when expanding it back shows what did not return."
+    exists: "spw skim prints an outline card, spw fingerprint counts node types, the site's expression manifest keeps subject, mode, parts, capsule, scene and charge, and the route trees reduce each shaped route to follows, fills and own. @registers names stream as the sink that precipitates an order."
+    gap: "No reduction says what it left out. The manifest copies each #: claim onto every handle in its file (claim_smear in @asks_density), a reduction that invents ground. own is a set, so a route whose own section sits inside its shape loses that position."
+    measured: .{
+      skim = "spw skim bane.land.spw: 24 entries for a 94-line tree, 18 of them handle declarations; fills, the one slot where bane parts from boon, is not shown, and the card does not say what it left out"
+      round_trip = "follows + own rebuilds the section order of 97 of 122 shaped routes; 25 hold an own section before or inside their shape"
+    }[reg=facet]
+    recommendation = #[
+      `every reduction prints what it dropped, as a count and a citation back to the dropped part`,
+      `a round-trip check, expand after reduce, reports what did not come back`,
+      `an own part that sits inside an order is the case [reg=stream] exists for`,
+      `an outline that spends its lines on handle declarations folds them to a count, as the ground does`,
+    ][reg=set]
+    replaces: "a summary that cannot be audited, and an outline whose first screen is aliases"
+    probe: `npm run -s spw -- skim $PWD/.spw/gen/routes/about/domains/bane.land.spw`
+    question: "Should own keep its position as a stream, or stay a set that says how many it misplaces?"
+  }[reg=facet]
+}
+
+#>wonder_ground_or_edge
+?["Should a reading of two forms open on the ground they share, or on the edge where they part?"]{
+  #:depth #!pragmatics ~#lens(comparison)
+  ~#with: @routes_script
+  ~#hypothesis: "Opening on the ground tells a reader how much they may skip before the difference. Opening on the edge spends the first glance where the two disagree. spw:routes --diff opens on a short ground, a shape handle and a count, and names the edge with first =, so both fit the first screen."
+  ~#tension: "A long ground buries the edge, which is why shared reach became a count. An edge without its ground reads as a complaint, not a difference."
+  !probe{ "npm run -s spw:routes -- --diff /topics/slop/ /about/" }
+  $%[diff.ground, diff.edge, diff.first]
+  ~<"../upstream-workbench-recommendations.spw"> ~<"../../../scripts/spw-routes.mjs">
+}

@@ -46,13 +46,14 @@ expression = asks[density]{register.slope.receipt}<upstream>
     exists: "The normalizer assigns reg=facet to a record and reg=set to a list. @registers names probe, projection, and stream as the sinks that precipitate a check, an emit shape, or an order. spw refactor renames mark, anchor, case, mood, and path. spw form --scheme is a weight scheme: default, agent, or thrift."
     gap: "facet and set are almost the whole authored vocabulary, and no rename kind can move a register. --scheme cannot name a semiotic frame without colliding with the weight scheme."
     measured: .{
-      census = "2026-10-25, site .spw outside _workbench: 11142 [reg=] stamps in 662 files"
-      facet = "6109"
-      set = "4951"
-      stream = "58, used as an ordered reading ?< @a, @b >[reg=stream] in .spw/audits/index.spw"
+      census = "2026-10-25, authored .spw outside _workbench and gen/: 6235 [reg=] stamps in 400 files"
+      facet = "3355"
+      set = "2792"
+      stream = "61, used as an ordered reading ?< @a, @b >[reg=stream] in .spw/audits/index.spw"
       projection = "2"
       probe = "1"
       other = "list 8, and a handful of one-off stamps such as sink@ and density@compact"
+      recount = "the first census, 11142 in 662 files, also counted the 4968 stamps spw:routes writes into the gitignored .spw/gen/; a glob of !_workbench/** under .spw does not exclude .spw/_workbench, and !**/_workbench/** does"
     }[reg=facet]
     recommendation = #[
       `keep stream, probe, and projection when the node must precipitate an order, a check, or an emit shape`,
@@ -61,7 +62,7 @@ expression = asks[density]{register.slope.receipt}<upstream>
       `leave --scheme as the weight scheme`,
     ][reg=set]
     replaces: "a closing [reg=facet] on every frame, and a hand edit when the word should have been stream"
-    probe: `rg -o '\[reg=[^]]+\]' .spw -g '!_workbench/**' -g '!gen/**'`
+    probe: `rg -o '\[reg=[^]]+\]' . -g '*.spw' -g '!**/_workbench/**' -g '!**/gen/**'`
     question: "Should refactor gain a reg: kind, or should the normalizer be the only writer of facet and set?"
   }[reg=facet]
 
@@ -134,7 +135,7 @@ expression = asks[density]{register.slope.receipt}<upstream>
   ~#with: @registers
   ~#hypothesis: "A reg: rename makes the rare sinks playable the way a ~# mark is. Stopping the facet and set stamps removes a word no index reads. The two moves answer different stamps."
   ~#tension: "A rename kind invites more facet stamps, because they become easy to move. Omitting them leaves a caret frame with no register until a tool reads the brace."
-  !probe{ "rg -o '\\[reg=[^]]+\\]' .spw -g '!_workbench/**' -g '!gen/**'" }
+  !probe{ "rg -o '\\[reg=[^]]+\\]' . -g '*.spw' -g '!**/_workbench/**' -g '!**/gen/**'" }
   $%[reg.rename, stamp.omit, scheme.weight]
   ~<"../upstream-workbench-recommendations.spw">
 }

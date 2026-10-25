@@ -127,6 +127,7 @@ expression = asks[language]{tokens.symbols.highlighting.navigation}<upstream>
       workspace_symbols = "copy_accessor returned only the 2026-09 audit anchor after 90s; metaphysics_model returned nothing after 60s"
       route_resolve_2026_10_25 = "spw resolve now settles a leading-slash route through the consumer root (via_root), and also passes ~\"/about/domains/bane.land/#no-such-id\": a page fragment is not read"
       anchor_lines_2026_10_25 = "anchor-lines.ts lands only on #> deixis; the route trees cite HTML ids (#bane-frame) and facet keys (_family.spw#shape_2), both of which spw:integrity accepts, and both open at line 1"
+      rooted_warnings_2026_10_25 = "the editor marks 1512 rooted citations unresolved across 209 generated route trees, 7 on bane.land.spw, while spw resolve and spw:routes --check land every one: the CLI and the editor read a leading slash from different roots"
     }[reg=facet]
     recommendation = #[
       `resolve a fragment against the target's parsed anchors, with the anchor rules spw:integrity uses`,

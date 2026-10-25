@@ -48,6 +48,7 @@
 @asks_plugins: ~"./upstream-workbench-recommendations/plugins-and-tooling.spw"
 @asks_density: ~"./upstream-workbench-recommendations/density-and-voice.spw"
 @asks_trees: ~"./upstream-workbench-recommendations/claims-and-trees.spw"
+@asks_motions: ~"./upstream-workbench-recommendations/motions.spw"
 @asks_smaller: ~"./upstream-workbench-recommendations/smaller.spw"
 
 operation = "align"
@@ -244,6 +245,7 @@ expression = consumer[recommendations]{performance.cli.intermediate.culture}<ups
     `plugins-and-tooling.spw — one character table, Spw in host files, one probe, one plugin, the slow loop, and the quest's grow step (2026-10-25)`,
     `density-and-voice.spw — a register that selects a sink, slopes read apart, a geometry field that stays a sitting (2026-10-25)`,
     `claims-and-trees.spw — a claim is the unit, development keeps a receipt, a citation lands on the claim (2026-10-25)`,
+    `motions.spw — reduce, expand, place, extend and diff as one reading: ground, then the edge by slot, then the residue; a shape with a slot, and a reduction that says what it dropped (2026-10-25)`,
     `smaller.spw — items too small to rank`,
   ][reg=set]
   context = @asks_context
@@ -256,6 +258,7 @@ expression = consumer[recommendations]{performance.cli.intermediate.culture}<ups
   plugins = @asks_plugins
   density = @asks_density
   trees = @asks_trees
+  motions = @asks_motions
   smaller = @asks_smaller
 }[reg=facet]
 
@@ -353,7 +356,7 @@ expression = consumer[recommendations]{performance.cli.intermediate.culture}<ups
 }[reg=facet]
 
 ^"week_2026_10_25"{
-  standing = `Read the three editors, the CLI, and the plugin protocol beside the asks already filed. Plugin detail is in @asks_plugins. Register, slope, and geometry detail is in @asks_density. Architecture, business logic, and knowledge trees are in @asks_trees. The tool model under the CLI stays in @asks_architecture. Query already prints --stats. Walk isolation already landed. spw form --scheme stays a weight scheme. The same day also noted projection freshness in @asks_editor, sibling route shapes in @asks_corpus, and a valence word in @asks_language.`
+  standing = `Read the three editors, the CLI, and the plugin protocol beside the asks already filed. Plugin detail is in @asks_plugins. Register, slope, and geometry detail is in @asks_density. Architecture, business logic, and knowledge trees are in @asks_trees. Reduce, expand, place, extend, and diff, read as ground then edge, are in @asks_motions. The tool model under the CLI stays in @asks_architecture. Query already prints --stats. Walk isolation already landed. spw form --scheme stays a weight scheme. The same day also noted projection freshness in @asks_editor, sibling route shapes in @asks_corpus, and a valence word in @asks_language.`
   proposals = #[
     `=[lsp] One probe that takes buffer text and answers form, stack, tokens, structure, and trace :: probe[buffer]{form.stack.tokens}<unsaved>`,
     `+[plugin] One .spw plugin emits the expression manifest and fails when its selector matches nothing :: plugin[emit]{expressions}<one>`,
@@ -364,9 +367,12 @@ expression = consumer[recommendations]{performance.cli.intermediate.culture}<ups
     `=[measure] A geometry field stays a sitting; a named relation is banked with cycle or delta :: geometry[receipt]{relation}<cycle>`,
     `=[tree] A knowledge tree hangs from a claim id, and a citation lands on it :: tree[claim]{hypothesis.probe.fixity}<citation>`,
     `=[logic] A rule's development is the operation move with a receipt :: rule[receipt]{cache.contract}<development>`,
+    `+[cli] Two surfaces that are not revisions read as ground, first edge by slot, and own :: diff[ground]{edge.slot.own}<sibling>`,
+    `+[expand] A template takes a value for its slot, and its inverse prints the value and the residue :: template[slot]{value.residue}<expand>`,
+    `=[reduce] A reduction prints what it dropped, and a round trip says what did not come back :: reduce[residue]{dropped.back}<receipt>`,
   ][reg=set]
   ~#taste: "A second plugin waits until the first one fails closed. A second slope waits until the first reading refuses to average."
-  consume = `Until a plugin exists, the site keeps building the expression manifest by script. Until a slope flag exists, charge and boonhonk stay the two dispositions already contracted, and a voice stays a genre sibling.`
+  consume = `Until a plugin exists, the site keeps building the expression manifest by script. Until a slope flag exists, charge and boonhonk stay the two dispositions already contracted, and a voice stays a genre sibling. Until a ground reading exists, the site reads two routes with npm run spw:routes -- --diff, and each family shape says whether a name would pay.`
 }[reg=facet]
 
 ^"validation"{

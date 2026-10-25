@@ -35,4 +35,18 @@ expression = asks[smaller]{query}<upstream>
     replaces: "parseExpressionQuery in public/js/semantic/expression-query.js"
     question: "Does a trailing ?# mean probe frames, or probe this frame? (open in spw-language-v04)"
   }[reg=facet]
+
+  signed_number: .{
+    claim: "A bare negative number does not tokenize, and the site counts valence from -1 to +1."
+    measured: .{
+      parse = "spw-seed, 2026-10-25: x = -1 fails at 1:5 with Unexpected character: -; x = `-1`, x = 1 and x = 0.5 parse"
+      authored = "no .spw file outside _workbench and gen/ writes a bare negative; expressive-registers.spw keeps the valence range inside a backtick"
+      generated = "spw:routes wrote saves = -1 on 13 family shapes and failed its own check, so it writes costs = 1 instead"
+    }[reg=facet]
+    recommendation = #[
+      `a signed number literal, or a lint message at the minus that names the backtick form`,
+    ][reg=set]
+    replaces: "a rename from a signed count to a word, made so the file parses"
+    question: "Is a minus before a digit a sign, or kept free for an operator?"
+  }[reg=facet]
 }
