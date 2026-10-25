@@ -1,6 +1,6 @@
 # Semantic Copy Depth
 
-**Status 2026-10-10.** The Proficiency Production Note slice landed (eba561ba: `.spw-production-note` in `content.css`, `/about/`, `/play/rpg-wednesday/`). Next slice: the thought trace on `/topics/slop/#feeling` and `/topics/math/#pure-math-routes`; neither host carries a `(turn)` expression yet. It waits on the creator's answer to whether the slop citation paragraphs are a display case at all (`#>wonder_semantic_copy_depth_slop_feeling` in `index.spw`). Holds tone and voice, the reading groove, editorial readability, and the entrance routes.
+**Status 2026-10-25.** The Proficiency Production Note slice landed (eba561ba: `.spw-production-note` in `content.css`, `/about/`, `/play/rpg-wednesday/`). Next slice: the thought trace on `/topics/slop/#feeling` and `/topics/math/#pure-math-routes`; neither host carries a `(turn)` expression yet. It waits on the creator's answer to whether the slop citation paragraphs are a display case at all (`#>wonder_semantic_copy_depth_slop_feeling` in `index.spw`). The smell cache's October pass does not replace that slice: a higher effort setting is not the edit. Holds tone and voice, the reading groove, editorial readability, and the entrance routes.
 
 **Related:** [audience-onboarding-copy](../archive/audience-onboarding-copy/PLAN.md) (absorbed 2026-10-10, below).
 
@@ -96,6 +96,14 @@ Markup, on the stems that exist:
 The rewrite test is the slop page's own test: a reader can restate the point. A rewrite that reaches for "not a list, but a journey", a closing echo, or a fresh rule of three has imported the smell. The cache names that failure.
 
 Validation, when the slice lands: `npm run audit:copy:accessor`, `npm run manifest:expressions` if an expression changed, and the paragraph read aloud. If it still sounds like a contents page, it is still a case.
+
+## 2026-10-25 — effort is not the pass
+
+The smell cache now holds an October pass (`.spw/caches/ai-writing-smells-2026-09.spw`, ws-006 and ws-007). Comparing models across reasoning-effort settings does not retire the structural smells, and it does not replace the two hosts above.
+
+ToneBench, board of 23 Oct 2026, ranks the same model at each effort setting on one creator's YouTube scripts. Across the eleven models with an explicit ladder, the median climb from the lowest setting to the highest is +132 Writing Elo, at about 4.6 times the cost. The top setting is not always the best one. Claude Opus 5.5 peaks at xhigh. Grok 4.7 peaks at medium, and that card says the low-to-high climb is mostly length: voice and substance barely move. The least-slop configuration on that board is not the writing leader. SlopShape (arXiv:2609.15369v3) names the shape this section already refuses: a thesis and a map of the flow before the first section, then a close that restates the thesis. Rewording leaves the shape in place.
+
+The slice stays the two paragraphs. A higher effort setting is not the edit.
 
 ## Absorbed 2026-10-10 — audience-onboarding-copy
 

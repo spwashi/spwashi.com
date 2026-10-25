@@ -48,7 +48,7 @@ intent: .{
 ^"plan_refinement"{
  tone = `Editorial — respect reading calm on public routes.`
  accuracy = `copy-depth pilots on design/composition; site-wide register is uneven.`
- direction = `2026-09-28: a link-dense paragraph is a thought trace or a shelf. First slices are /topics/slop/#feeling and /topics/math/#pure-math-routes. Scene (turn), shelf mode [case], dense layer for the shelf. No new attribute family. Smell list: .spw/caches/ai-writing-smells-2026-09.spw.`
+ direction = `2026-09-28: a link-dense paragraph is a thought trace or a shelf. First slices are /topics/slop/#feeling and /topics/math/#pure-math-routes. Scene (turn), shelf mode [case], dense layer for the shelf. No new attribute family. Smell list: .spw/caches/ai-writing-smells-2026-09.spw. 2026-10-25: a higher effort setting is not the pass (cache ws-006).`
  inspiration = `Readers should feel led, not lectured.`
  alignment = `vocabulary-metaphor-growth-synthesis, component-region-personality`
 }[reg=facet]
