@@ -105,6 +105,7 @@ Every live folder, once, by area. Open a plan's `index.spw` for its disposition 
 **Reuse, agents and practice**
 
 - `site-starter-component-kit/` — the portable artifact; owns the bundling pilot; holds `portable-css`.
+- `ecosystem-architecture/` — ranks CSS and runtime slices by what they are worth to peers, adoption and the codebase, and lists what may travel through the peer kit; every slice cites its owner, and it holds no seam another plan holds.
 - `modular-experience-slices/` — slice contracts; holds dimensional navigation.
 - `reference-assignment-template/` — canonical; intern-sized briefs plus the insight-cache and tending templates; holds the ergonomics from `daily-kernel-development`.
 - `agent-optimization/` — the agent gate.
