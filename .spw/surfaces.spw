@@ -24,6 +24,9 @@
 @literate_ui: ~"./_workbench/.spw/patterns/literate-ui.spw"
 @symmetry_ui: ~"./_workbench/.spw/applications/symmetry/symmetry-ui-design.spw"
 @ocean_ux: ~"./_workbench/.spw/biome/ocean/ux.spw"
+@spw_routes: ~"../scripts/spw-routes.mjs"  # projects every route into .spw/gen/routes/, merging keeps from public_routes
+@template: ~"../scripts/template.mjs"
+@wonder_architecture: ~"./conventions/wonder-architecture.spw"
 
 public_routes: .{
  index = .{ path = ~"../index.html", role = hub, bridge = `entry surface into the wider grammar` }[reg=facet]
@@ -37,6 +40,41 @@ public_routes: .{
  play = .{ path = ~"../play/index.html", role = `world surface`, bridge = `creative and game-facing routes shaped by the same operator logic` }[reg=facet]
  rpg_wednesday = .{ path = ~"../play/rpg-wednesday/index.html", role = `local gameplay surface`, bridge = `table-facing RPG route with private localStorage registers for scene, initiative, clocks, notes, and session seeds` }[reg=facet]
  recipes = .{ path = ~"../recipes/index.html", role = `craft domain`, bridge = `social kitchen and hosting grammar as a developable expertise domain — skills, progression, practice, and projection into ritual/annual planning` }[reg=facet]
+ topics = .{
+  path = ~"../topics/index.html"
+  role = `topic atlas`
+  bridge = `routes chosen by the kind of attention a reader has, beside neighbors that share their questions`
+  keeps = `start from the question that changed shape, cross into a neighbor before the thought hardens, and return by drift rather than by taxonomy`
+  status = "proposed"
+ }[reg=facet]
+ slop = .{
+  path = ~"../topics/slop/index.html"
+  role = `field guide`
+  bridge = `from the slop feeling to the tells in the writing, and to measures another project can borrow`
+  keeps = `a reader should be able to say what a paragraph taught; the tells describe a style and do not reliably name an author`
+  status = "proposed"
+ }[reg=facet]
+ hypermedia = .{
+  path = ~"../topics/hypermedia/index.html"
+  role = `practice note`
+  bridge = `hypermedia as practised here, with Spw as the move set`
+  keeps = `a surface you can re-read, a link that is an offered move, and a receipt another reader can check`
+  status = "proposed"
+ }[reg=facet]
+ knowledge_bases = .{
+  path = ~"../topics/knowledge-bases/index.html"
+  role = `hub`
+  bridge = `notes as working memory, and the path from private notes to public claims with portable receipts`
+  keeps = `a relation preserved across retrieval, revision, rendering, and handoff, with enough evidence that another reader can verify the result`
+  status = "proposed"
+ }[reg=facet]
+ math = .{
+  path = ~"../topics/math/index.html"
+  role = `topic atlas`
+  bridge = `the math half of a computer-science curriculum, beside its software neighbors`
+  keeps = `abstraction grounded in something you can taste or touch; breadth is the cluster list, and depth is one lab you can hold`
+  status = "proposed"
+ }[reg=facet]
 }[reg=facet]
 
 canon_alignment: .{
@@ -65,6 +103,7 @@ integration_contract: .{
  canon_role = `Installed workbench surfaces remain deeper references and reusable machinery.`
  routing_rule = `Public routes belong here first, then cite canon surfaces that inform them.`
  archetype_rule = `@canon_archetypes names function/cadence/evidence; @domains names hostnames — do not collapse them.`
+ keeps_rule = `keeps is what a route cultivates, its ethos, in the page's own words. It is written once here because the HTML has no slot for it; @spw_routes merges it into the route's tree beside what the page declares. A keeps line stays "proposed" until the creator confirms it.`
 }[reg=facet]
 
 dispatch: .{
@@ -118,6 +157,24 @@ expression = surfaces[route]{path.role.archetype}<publish>
     status = "active"
   }
 }[reg=facet]
+
+#>wonder_surfaces_route_tree_source
+?["Should a route's .spw tree become the source its <spw-page> block is built from, so the HTML holds the copy and the tree holds what the page is?"]{
+  #:depth #!computational ~#lens(projection)
+  ~#with: @spw_routes @template @site_semantics
+  ~#tension: "The creator reads a tree more easily than the attribute block, and @spw_routes already prints one per route from the HTML. Each route already says its surface, wonder, family, role and modes twice, in <spw-page> and again on its source <body> (191 of 208 on 2026-10-25, identical in all 191), and scripts such as page-reasons read the body copy. A tree as the source could retire both copies through renderTemplate, or it could become a third."
+  !probe{ "Author /topics/slop/'s page fields as a tree, let renderTemplate read it, and diff the built page against today's. The projection is honest when the bytes match." }
+  ~<"../scripts/spw-routes.mjs"> ~<"../scripts/template.mjs"> ~<"../topics/slop/index.html">
+}
+
+#>wonder_surfaces_projection_in_copy
+?["Where would a route's own tree read as copy: its section#wonder-kin drawn from the tree's kin and near facets, a line that says what the page keeps, or the page shown as Spw?"]{
+  #:depth #!experiential ~#lens(comparison)
+  ~#with: @spw_routes @wonder_architecture @site_semantics
+  ~#tension: "A projection that lands in copy has to read with JS off and stay in the page's voice. A block of Spw on a reading page can also read as schema rather than as the page talking. Kin by two shared types is loose (median 26 routes each), so a kin strip needs the near facet's shared subject before it can choose."
+  !probe{ "Render /topics/slop/'s near and reached kin as its wonder-kin section in a local build, read it beside today's page in the browser, and keep it only if it reads as the page talking." }
+  ~<"../scripts/spw-routes.mjs"> ~<"./conventions/wonder-architecture.spw"> ~<"../topics/slop/index.html">
+}
 
 validation: #[
   `rg 'claim #surfaces-routes-001|expression = surfaces' .spw/surfaces.spw`,
