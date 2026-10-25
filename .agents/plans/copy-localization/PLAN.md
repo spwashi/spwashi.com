@@ -1,6 +1,6 @@
 # Plan: copy-localization
 
-**Status 2026-10-10.** Phase 0 now pays off in search: a typed copy key lands on its sentence (898917a9), and the home and design ledes are keyed by sentence (9c8a7d97, 6aa94d90). Next slice: key the next page's ledes the same way when a pass already has that host open; `.spw/audits/copy-accessor-cluster-2026-09.spw` is the ledger and `npm run audit:copy:accessor` the sensor. Phase 1 onward is dormant until the creator names a locale. `scripts/template.mjs` already emits `lang`, `spw:source-locale`, `og:locale` and `hreflang` alternates (since ccafd1ac), so the metadata half of the build seam exists.
+**Status 2026-10-25.** Phase 0 now pays off in search: a typed copy key lands on its sentence (898917a9), and the home and design ledes are keyed by sentence (9c8a7d97, 6aa94d90). Next slice: key the next page's ledes the same way when a pass already has that host open; `.spw/audits/copy-accessor-cluster-2026-09.spw` is the ledger and `npm run audit:copy:accessor` the sensor. Phase 1 onward is dormant until the creator names a locale. A restatement still follows the smell cache: a higher effort setting is not a translation pass. `scripts/template.mjs` already emits `lang`, `spw:source-locale`, `og:locale` and `hreflang` alternates (since ccafd1ac), so the metadata half of the build seam exists.
 
 **Related:** [blog-blob-spw](../blog-blob-spw/PLAN.md) · [component-region-personality](../component-region-personality/PLAN.md).
 
@@ -117,7 +117,7 @@ Naming rules:
 
 ## 2026-09-28 — a trace and a shelf are different units
 
-A link-dense paragraph is a thought trace or a display case. The owner is `.agents/plans/semantic-copy-depth/PLAN.md`, section "Thought trace". A trace is one claim that turns: scene `(turn)`, direction `{claim.then.turn}`. A shelf that stays a shelf uses mode `[case]` or a `data-spw-copy-depth="dense"` sibling, and it stays a list. Those slots already exist. A locale edition keeps the scene and the mode. It does not mint a copy-unit family for them, and it does not merge the shelf into the trace sentence. The smell constraints on the restatement are `.spw/caches/ai-writing-smells-2026-09.spw`.
+A link-dense paragraph is a thought trace or a display case. The owner is `.agents/plans/semantic-copy-depth/PLAN.md`, section "Thought trace". A trace is one claim that turns: scene `(turn)`, direction `{claim.then.turn}`. A shelf that stays a shelf uses mode `[case]` or a `data-spw-copy-depth="dense"` sibling, and it stays a list. Those slots already exist. A locale edition keeps the scene and the mode. It does not mint a copy-unit family for them, and it does not merge the shelf into the trace sentence. The smell constraints on the restatement are `.spw/caches/ai-writing-smells-2026-09.spw`. A 2026-10-25 pass there compares models across effort levels. A higher setting is not a translation pass. A restatement that announces its flow and then repeats it has imported the shape (cache ws-006, ws-007).
 
 ## Validation
 
