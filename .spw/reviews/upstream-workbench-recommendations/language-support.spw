@@ -125,6 +125,8 @@ expression = asks[language]{tokens.symbols.highlighting.navigation}<upstream>
       route = "the home-frame-note route citation (copy-accessor.spw:24) resolves to ../../../.. instead of index.html:146"
       outline = "35 flat entries for this file when probed: the anchor, alias declarations and 7 frames, no facets"
       workspace_symbols = "copy_accessor returned only the 2026-09 audit anchor after 90s; metaphysics_model returned nothing after 60s"
+      route_resolve_2026_10_25 = "spw resolve now settles a leading-slash route through the consumer root (via_root), and also passes ~\"/about/domains/bane.land/#no-such-id\": a page fragment is not read"
+      anchor_lines_2026_10_25 = "anchor-lines.ts lands only on #> deixis; the route trees cite HTML ids (#bane-frame) and facet keys (_family.spw#shape_2), both of which spw:integrity accepts, and both open at line 1"
     }[reg=facet]
     recommendation = #[
       `resolve a fragment against the target's parsed anchors, with the anchor rules spw:integrity uses`,
@@ -137,5 +139,24 @@ expression = asks[language]{tokens.symbols.highlighting.navigation}<upstream>
     unlocks = #[ `plans_and_questions_views` ][reg=set]
     probe: `node scripts/lsp-probe.mjs . .spw/conventions/charge-cycle.spw definition 10:30`
     question: "Should Go to Symbol in a file list facets, or only frames and anchors?"
+  }[reg=facet]
+
+  valence_fragment: .{
+    rank = 5
+    claim: "A fragment that begins with a valence word does not tokenize."
+    exists: "The lexer reads boon, bane, bone, bonk and honk as a valence chain that rides a noun (3eaab63)."
+    gap: "After # it reads those words as the chain, so a hyphen after one is an unexpected character. This site names anchors with them: bane-frame, boon-crossings, bone-role."
+    measured: .{
+      fails = "x = @page#bane-frame, #boon-frame, #bone-role and #honk-x: Unexpected character: - at the hyphen (seed parse, 2026-10-25)"
+      parses = "#slop-hero, #lore-frame and #bane_frame"
+      cost = "the bane.land, bone.land and boon.land route trees did not parse until their anchors were cited as full path refs"
+    }[reg=facet]
+    recommendation = #[
+      `read a valence word after # as part of the name when a hyphen or word character follows`,
+      `a lexer fixture with each of the five words leading a hyphenated anchor`,
+    ][reg=set]
+    replaces: "citing a valence-named anchor through a full path ref so the file parses"
+    probe: `node --import ./.spw/_workbench/node_modules/tsx/dist/loader.mjs -e "import('./.spw/_workbench/packages/spw-seed/src/index.ts').then((s) => console.log(s.parse('x = @page#bane-frame\\n').errors?.[0]?.data))"`
+    question: "Should @handle#fragment be a citation the server resolves, so a tree can cite a page anchor through its @page handle instead of a path?"
   }[reg=facet]
 }

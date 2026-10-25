@@ -163,6 +163,7 @@ expression = asks[corpus]{move.plans.cache.trace.wonder.scope}<upstream>
       cites_archive = ".agents/plans/archive/mobile-runtime-foundation/wip.spw"
       cites_scratch = ".tmp/manifest-staged-vujjt9/.agents/plans/mobile-runtime-foundation/wip.spw"
       scratch_copy = "41 MB, left by a manifest:staged run on 2026-09-28; removed 2026-10-11"
+      generated_2026_10_25 = "the walk skips node_modules, .git, .claude and _workbench only (helpers.ts), so it now reads the 231 route trees under .spw/gen/routes/; each cites /.spw/surfaces.spw, and surfaces.spw gains 208 incoming references from a projection. Honoring .gitignore drops them, and the projection registry (editor.spw#projection_registry) still marks an open tree as generated"
     }[reg=facet]
     recommendation = #[
       `index lsp.roots, not the whole editor folder`,
@@ -172,5 +173,43 @@ expression = asks[corpus]{move.plans.cache.trace.wonder.scope}<upstream>
     replaces: "deleting scratch checkouts by hand so references stop landing in them"
     probe: `ls -d .tmp/manifest-staged-*`
     question: "Should archive/ plans count as references, or only live ones?"
+  }[reg=facet]
+
+  explicit_generated_paths: .{
+    rank = 7
+    claim: "A path named on the command line is dropped when it sits under .spw/gen/."
+    exists: "Walk isolation skips .spw/gen/ (fs-walk.ts through shouldSkipCorpusSurface), which keeps generated projections out of census, graph and lint."
+    gap: "spw lint and spw resolve apply the same skip to explicit arguments, so a generator cannot ask the workbench to check what it wrote."
+    measured: .{
+      lint = "spw lint .spw/gen/routes/topics/slop.spw and three more trees: files=0 findings=0, 2026-10-25"
+      resolve = "spw resolve on a probe file under .spw/gen/routes/: total=0; the same probe under .spw/ resolved 3 of 4"
+      cover = "the site wrote its own parse-and-resolve pass for the trees: npm run spw:routes -- --check, 231 files and 5759 citations"
+    }[reg=facet]
+    recommendation = #[
+      `honor explicit file and directory arguments, and keep the skip for walks that start at a root`,
+      `or an --include-generated flag on lint and resolve`,
+    ][reg=set]
+    replaces: "a parse and resolve pass inside each generator"
+    probe: `npm run -s spw -- lint .spw/gen/routes/index.spw`
+    question: "Should resolve check a generated file's citations but leave the file out of incoming-reference counts?"
+  }[reg=facet]
+
+  sibling_shapes: .{
+    rank = 8
+    claim: "Sibling surfaces share a section order, and no verb reads it."
+    exists: "census counts a population, graph finds hubs and strands, and formula catalogs math-modeling families; none compares the files in one folder."
+    gap: "What a family shares, the orders its members follow, and what one member holds alone are read by this site's spw:routes, for routes only."
+    measured: .{
+      routes = "22 families, 32 shapes followed by 122 routes; 141 routes hold a section or subject no sibling holds (2026-10-25)"
+      domains = "about/domains: {domain_frame.domain_register} for five members, {frame.role.examples.crossings.cluster_register} for three"
+      operators = "19 operator pages follow one order; 5 lack the two wonder types the other 14 name"
+    }[reg=facet]
+    recommendation = #[
+      `a family reading over any folder of surfaces: baseline, shared orders written as {a.b.c}, and each member's own frames and keys`,
+      `the same reading over a consumer's generated projections when they are registered`,
+    ][reg=set]
+    replaces: "a projection-specific family pass in each consumer"
+    probe: `npm run -s spw:routes -- --write && sed -n '/^\\^"shapes"/,/^}/p' .spw/gen/routes/about/domains/_family.spw`
+    question: "Should a named shape become a language form with a variable slot, so an instance states only its value (bane, bone, boon) and what it adds?"
   }[reg=facet]
 }

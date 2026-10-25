@@ -120,7 +120,7 @@ kernel: .{
  }[reg=facet]
 
  generated = .{
-  owns = `design catalog, route manifest, sitemap, dist output, generated audits`
+  owns = `design catalog, route manifest, sitemap, dist output, generated audits, route trees`
   sources = #[~"../scripts", ~"../design/catalog", ~"../dist"][reg=set]
   invariant = `Generated surfaces are rebuildable or explicitly marked as review artifacts.`
  }[reg=facet]
@@ -130,7 +130,7 @@ memory_locations: .{
  hot = `.agents/plans/* and active review/tending notes for current work`
  warm = `.spw/reviews/* and .spw/slices/* for curated observations and handoffs`
  cold = `.spw/conventions/*, .spw/site.spw, .spw/workspace.spw for durable contracts`
- generated = `design/catalog/, route manifests, dist outputs, and other rebuildable projections`
+ generated = `design/catalog/, route manifests, .spw/gen/routes/ (npm run spw:routes), dist outputs, and other rebuildable projections`
  invariant = `Working memory should move from hot to warm to cold only when the claim has evidence and an owner surface.`
 }[reg=facet]
 
