@@ -1,0 +1,55 @@
+# Review 2026-10-25 — the survey behind the ranking: owner-plan rows the tree no longer matches, the probes, and the creator's open calls.
+# wip — ecosystem-architecture
+#
+#>plan_ecosystem_architecture_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@peer_kit_script: ~"../../../scripts/build-peer-kit.mjs"
+@expression_manifest: ~"../../../scripts/build-expression-manifest.mjs"
+@expression_resonance: ~"../../../public/js/runtime/expression/expression-resonance.js"
+@operator_detection: ~"../../../public/js/kernel/operator-detection.js"
+@css_bundle: ~"../../../scripts/ts/css-bundle.mts"
+@spw_quest: ~"../spw-quest/PLAN.md"
+
+operation = "cache"
+fixity = "tending"
+
+^"stream"{
+ >>[2026-10-25 17:10] verify — Read the CSS, the runtime and spw.quest against their owner plans. The plan ranks eight site slices by what they are worth to peers, adoption, the codebase as an asset, and risk; spw.quest gains G, H and I. Two findings had no owner. 195 KB of the 338 KB expression manifest (SPW_PROJECTION_SEEDS, 33 KB gzip) loads wherever a page carries an expression, and getProjectionSeeds() has no caller. Three services route bundles are byte-identical.
+ >>[2026-10-25 17:21] verify — The parser equivalence probe: spw-workbench-reader.js parse and spw-workbench-parser.js parse agree on success, completeness, AST, tokens, errors, warnings and events for 990 of 990 git-tracked .spw files outside the workbench, once duration and event timestamps are left out. S3 loses its gate.
+}
+
+^"s0_rows"{  # owner plan text the tree no longer matches, measured 2026-10-25
+ catalog_defs = "146 live defs (core 4, feature 49, region 1, enhancement 92); runtime-plane-consolidation cites 96, module-contract-overhaul 114, deploy-module-graph 105"
+ bundle_note = "runtime-plane-consolidation says no bundle step; deploy-module-graph shipped the packs (f05b02d2)"
+ bootstrap_baseline = "runtime-bootstrap-performance cites site.js at 121 KB and site-settings.js at 102 KB; today 52.6 KB and a 659 B barrel"
+ layer_order_home = "css-architecture-readability and css-instruction.spw import_manifest say style.css declares the layer order; it is public/css/style-core.css:1"
+ flip_counts = "css-cascade-stratification cites 365 flips (home 71, about 43); audit:layer-flip gives 363 (home 67, about 45)"
+ ecology_figures = "stylesheet-ecology.spw cites 1595 of 1638 KiB core, tokens/core.css about 91 KiB, and 151 of 155 sheets; today 1721 of 1741 KiB, 103 KiB, and 188 source files; metaphysical-paper.css already idle-loads"
+ workbench_pin = "spw-language-v04 cites 229aedcf; the mount and both generated parsers are at 0eb1d1c0"
+ browser_parser = "interaction-grammar puts a browser-side Spw parser out of scope; the site has shipped one since Phase 4 of spw-language-v04"
+ engages = "engagement-clusters cites 3 engages fields; the catalog has 2"
+ quest_now = "spw-quest What it is now (measured 2026-10-12) lacks /read, /parser/ releases and /script.spw"
+ expression_reader = "runtime-plane-consolidation Phase 4 names spw-expression-geometry.js the one reader; spw-language-v04 extends expression-query.js"
+ recalc_owner = "core-css-spend-cut hands recalc to runtime-bootstrap-performance; runtime-plane-consolidation Phase 7 claims core CSS decomposition"
+}
+
+^"probes"{
+ seeds_reader = `rg -n "getProjectionSeeds" --glob '!**/node_modules/**' --glob '!**/_workbench/**' --glob '!dist/**' .`
+ parser_equivalence = `import both bundles from public/js/semantic/, parse every git-tracked .spw outside the workbench, and compare the results with duration left out`
+ services_bundles = `md5 public/css/bundles/routes/services-*.css`
+ layer_flip = `npm run -s audit:layer-flip`
+}
+
+^"open"{
+ what_travels = ~"./index.spw#wonder_ecosystem_what_travels"
+ specimen_host = ~"./index.spw#wonder_ecosystem_specimen_host"
+ first_portable = "site-starter-component-kit's wonder: a capability or the design specimen. This plan proposes a third answer, the Spw instrument, because spw.quest already consumes the peer kit. The creator's call."
+ arrival_lever = "runtime-plane-consolidation's wonder: route family or engagement. ctx.routeFamily is computed and unread. The creator's call."
+ quest_motion = ~"../spw-quest/index.spw#wonder_spw_quest_motion"
+}

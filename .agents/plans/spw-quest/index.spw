@@ -115,3 +115,12 @@ invariants: #[
   ~#tension: "A shared material ties the ecosystem together; a distinct one lets the language stand apart from any one site."
   !probe{ "rg -n 'background|--bg|color-scheme' workers/spw-quest/src/index.js" }
 }
+
+#>wonder_spw_quest_motion
+?["Should how Spw is developing read as a feed of changes, or as the same specimen read by two releases?"]{
+  ~#with: @plan
+  ~#taste: "A change a reader can open on a line they already know teaches more than a subject line about it."
+  ~#hypothesis: "Two releases reading one specimen show the language moving as ground and an edge; a feed of commit subjects says that something moved without showing what."
+  ~#tension: "A pair of readings needs two releases and a specimen whose reading changed; a feed needs only the log, and its subjects need the creator's wording before they go public."
+  !probe{ "node -e \"console.log(require('./workers/spw-quest/assets/parser/index.json').releases?.length)\"" }
+}

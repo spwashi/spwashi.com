@@ -1,6 +1,6 @@
 # Plan: spw-quest
 
-**Status 2026-10-14.** Committed, not yet deployed: the guide opens with five files from reading, writing and study (a reading log, a seminar question with its probe, a narrator's persona held in regard, reading notes, a revision note) in an editor painted in the site's operator colors, and beside it what a tool reads from the file, with checks that change as the file does. The seven panels moved to /learn, /build takes a writing line apart, and every page wears the site's tokens and faces through the peer kit (`npm run build:peer-kit`, checked by `check:workers`). The guide now keeps one note on the device (localStorage, `?note`), PR 1 of the [note and shell design](./note-shell-design.md); PRs 2 to 4 (pin the reader, the service worker, the manifest) follow it in order, and the shell must not ship before the note is deployed. It waits on the creator's look at a phone before the Wrangler deploy.
+**Status 2026-10-25.** Proposed: slices G (a shelf of specimens to read, query and compare), H (how Spw is developing, as one specimen read by two releases) and I (the same for agents), sequenced with [ecosystem-architecture](../ecosystem-architecture/PLAN.md). Nothing below has changed since 2026-10-14. Committed, not yet deployed: the guide opens with five files from reading, writing and study (a reading log, a seminar question with its probe, a narrator's persona held in regard, reading notes, a revision note) in an editor painted in the site's operator colors, and beside it what a tool reads from the file, with checks that change as the file does. The seven panels moved to /learn, /build takes a writing line apart, and every page wears the site's tokens and faces through the peer kit (`npm run build:peer-kit`, checked by `check:workers`). The guide now keeps one note on the device (localStorage, `?note`), PR 1 of the [note and shell design](./note-shell-design.md); PRs 2 to 4 (pin the reader, the service worker, the manifest) follow it in order, and the shell must not ship before the note is deployed. It waits on the creator's look at a phone before the Wrangler deploy.
 
 **Related:** [workers-wonder-kit](../workers-wonder-kit/PLAN.md) (shared worker shell) · [spw-language-v04](../spw-language-v04/PLAN.md) (the parser's arrival in the site) · [upstream workbench asks](../../../.spw/reviews/upstream-workbench-recommendations.spw) (`week_2026_10_11`).
 
@@ -25,7 +25,7 @@ These are hypotheses for a reviewer to test, not findings.
 
 ## Slices, ranked
 
-**A. Try before installing.** *Read one page* gets an *Open in the parser* link to `https://spwashi.com/tools/spw-parser/?spw_source=…`, with the example preloaded; the parser reads `spw_source` (`public/js/kernel/parser-link.js:10`). Then a one-line *write your own* box as a plain GET form to the same parser, so it works with scripts off. Value: high, the first reward in seconds. Cost: small; the worker test pins the link.
+**A. Try before installing.** Superseded: `/read` and `/build` read a line on the worker with scripts off, and the file editor reads as you type. Kept for its history. *Read one page* gets an *Open in the parser* link to `https://spwashi.com/tools/spw-parser/?spw_source=…`, with the example preloaded; the parser reads `spw_source` (`public/js/kernel/parser-link.js:10`). Then a one-line *write your own* box as a plain GET form to the same parser, so it works with scripts off. Value: high, the first reward in seconds. Cost: small; the worker test pins the link.
 
 **B. Pin what spwashi.com runs.** Read the seven commits from `3eaab637` to `229aedcf`, bump `WORKBENCH.revision`, and rerun the install on a scratch repository to `spw:doctor`. Value: an installer that matches the reference consumer. Cost: one constant, plus a real run.
 
@@ -41,7 +41,37 @@ These are hypotheses for a reviewer to test, not findings.
 
 **E. A plan surface on spw.quest.** `/plan`, and `/plan.json`, say what is next for Spw and its tools in plain words, drawn from the workbench review (`week_2026_10_11`). An agent can then be pointed at `spw.quest/plan`, the same way `/init` already works. Public or private is the creator's call; see the open questions.
 
-**F. Show motion.** After each close, a short *what changed* strip, so a returning reader sees the language moving.
+**F. Show motion.** After each close, a short *what changed* strip, so a returning reader sees the language moving. H below is this slice made concrete.
+
+### Playground and motion (2026-10-25)
+
+Proposed with [ecosystem-architecture](../ecosystem-architecture/PLAN.md), which ranks the site-side work these lean on. G, H and I are new routes: they leave the note shell alone and ship after the note is deployed. The wip's next commit, each sigil's physical model beside its reading, stays first.
+
+**G. Specimens.** `/specimens` is a shelf of constructs, each read on the worker with scripts off.
+- **Sources,** carried at build time by a carry script the way `carry-parser.mjs` carries the parser:
+  - the parser tool's v0.4 gallery (claims and probes, profiles, dot-crawl joins, stem projections, combinatoric genre, path count, gradient slices);
+  - the herbarium's pressed forms (`.spw/language/expressions/`);
+  - a sample of the 974 expressions on spwashi.com's routes.
+- **Each specimen** shows its line, its reading, and where it lives (the route and section on spwashi.com, as a link). It opens in the file editor when scripts run.
+- **Compare:** any two specimens read as ground, then the edge by slot, the reading `npm run spw:routes -- --diff` gives two routes. That puts the moment two forms stop sharing ground in a reader's hands.
+- **Query box:** `?q=` filters by partial slot (`show[*]`, `[pi]`, `{seed}`) on the worker, and `expression-query.js` does the same live once the instrument travels (ecosystem-architecture S4). This is the creator's 2026-10-12 direction: Spw as a query language.
+- **Value:** a corpus to play with instead of one example, and links that send readers back into spwashi.com.
+- **Gate:** the creator's look at a phone.
+
+**H. Motion.** Shows how Spw is developing: the same specimen read by the previous parser release and the current one, ground then edge, so a change in the language is something a reader can open.
+- **Built from public sources only:**
+  - the release index (`/parser/index.json`, already public);
+  - the workbench log between pins;
+  - the site's `^[workbench]` commit subjects.
+- **The guide carries a strip,** and a page holds the rest.
+- **A count of open questions** says the language is alive without publishing the plan. The `/plan` wonder stays the creator's.
+- **Needs two releases.** Today there is 2026.10.13 and a gitignored `-pre.1`; `?parser=next` already switches between them.
+- **Gate:** the creator confirms that motion is public, and the wording of every subject that goes out.
+
+**I. Agents.** `/specimens.json`, and a `/read` that answers in Spw when asked (`Accept: text/plain`, or a `.spw` path).
+- An agent sent to spw.quest can then read a line and compare two, beside `/init` and `/llms.txt`.
+- The output parses as Spw, so it can be piped.
+- **Gate:** worker usage is the creator's call.
 
 ## Review prompts
 

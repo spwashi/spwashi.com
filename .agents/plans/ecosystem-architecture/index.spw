@@ -1,0 +1,129 @@
+# Review 2026-10-25 — new: a ranked route through the CSS and runtime owner plans by what each move is worth to peers, adoption and the codebase, then spw.quest's specimens and motion; S0 and S1 first.
+# Plan Index — ecosystem-architecture
+#
+# Status 2026-10-25. Proposed; nothing built. A ranked route through the CSS and runtime owner plans, chosen by what each move is worth beyond one page. Then the phase that spends…
+
+#>plan_ecosystem_architecture_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Status 2026-10-25. Proposed; nothing built. A ranked route through the CSS and runtime owner plans, chosen by what each move is worth beyond one page. Then the phase that spends it: spw.quest shows how Spw is developing and becomes a playground for constructs and specimens (slices G–I in [spw-quest](../spw-quest/PLAN.md)). Every slice names its owner, and this plan owns three things: the ranking, the list of what may travel, and one unowned item (S6). Next slice: S0 then S1; neither is gated, and neither is S3 now that the two parser bundles are shown to agree. The cascade (S5), what travels first (S4), and the playground's look wait on the creator.`
+ owner = `ecosystem-architecture`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Status 2026-10-25. Proposed; nothing built. A ranked route through the CSS and runtime owner plans, chosen by what each…`
+ concepts = #[
+  `what`,
+  `owner`,
+  `one`,
+  `then`,
+  `spw`,
+ ][reg=set]
+ surfaces = #[
+  `css/`,
+  `scripts/ts/css-manifest.mts`,
+  `js/`,
+  `js/kernel/operator-detection.js`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@css: ~"../../../public/css/"
+@css_manifest: ~"../../../scripts/ts/css-manifest.mts"
+@js: ~"../../../public/js/"
+@operator_detection: ~"../../../public/js/kernel/operator-detection.js"
+@template: ~"../../../scripts/template.mjs"
+@public: ~"../../../public/"
+@core: ~"../../../public/css/tokens/core.css"
+@fonts: ~"../../../public/css/tokens/fonts.css"
+
+dispatch: .{
+ plan = @plan
+ css = @css
+ css_manifest = @css_manifest
+ js = @js
+ operator_detection = @operator_detection
+ template = @template
+ public = @public
+ core = @core
+ fonts = @fonts
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-ecosystem_architecture-001"
+ layer = "pragmatic"
+ hypothesis = `Status 2026-10-25. Proposed; nothing built. A ranked route through the CSS and runtime owner plans, chosen by what each move is worth beyond one page. Then the phase that spends it: spw.quest shows how Spw is developing and becomes a playground for constructs and specimens (slices G–I in [spw-quest](../spw-quest/PLAN.md)). Every slice names its owner, and this plan owns three things: the ranking, the list of what may travel, and one unowned item (S6). Next slice: S0 then S1; neither is gated, and neither is S3 now that the two parser bundles are shown to agree. The cascade (S5), what travels first (S4), and the playground's look wait on the creator.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/css/"
+ probe_ref = `npm run audit:plans after S0.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/css/ unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+validation: #[
+ `npm run audit:plans after S0.`,
+ `npm run check:local for every slice.`,
+ `npm run check:workers and npm run build:peer-kit -- --check for S2, S4 and the quest.`,
+ `npm run audit:layer-flip for S5.`,
+ `npm run css:payload before and after S1 and S6.`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does ecosystem-architecture own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of ecosystem-architecture?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether ecosystem-architecture still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Status 2026-10-25. Proposed; nothing built. A ranked route through the CSS and runtime owner plans, chosen by what each move is worth…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+
+
+#>wonder_ecosystem_what_travels
+?["Should what a peer may take from public/ be a list the peer kit reads, or a folder the site keeps for it?"]{
+  #:depth #!computational ~#lens(comparison)
+  ~#with: @plan
+  ~#taste: "A fork should find what it may take without reading a build script."
+  ~#hypothesis: "A list in scripts/build-peer-kit.mjs keeps each file beside the organ it belongs to and lets the kit check drift. A folder such as public/js/peer/ makes the boundary visible in the tree."
+  ~#tension: "The runtime gave every file a family so a reader finds the organ before the file (80c7b305); a travel folder would cut across those families."
+  !probe{ "rg -n 'SCRIPTS = Object.freeze' -A4 scripts/build-peer-kit.mjs" }
+  $%[peer.list, peer.folder, fork.legibility]
+}
+
+#>wonder_ecosystem_specimen_host
+?["Should a specimen's host be the site's first runtime custom element, or stay pre > code.language-spw mounted by a catalog def?"]{
+  #:depth #!pragmatics ~#lens(projection)
+  ~#with: @plan
+  ~#hypothesis: "A light-DOM element keeps a specimen's state on the specimen and travels to a peer as one tag, while the authored pre > code inside it still reads with scripts off. A catalog def keeps one mount path for the whole site."
+  ~#tension: "The runtime defines no custom element today; the first one is a second mount path that every later module may take."
+  !probe{ "rg -c 'customElements.define' public/js workers" }
+  $%[specimen.host, catalog.def, peer.tag]
+}
