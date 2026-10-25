@@ -60,6 +60,8 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SPW_ROOT = path.join(ROOT, '.spw');
 const PLANS_ROOT = path.join(ROOT, '.agents', 'plans');
 const CANON = path.join(SPW_ROOT, '_workbench');
+// Generated projections (route trees, session memos) restate surfaces; a question there would be harvested twice.
+const GENERATED = path.join(SPW_ROOT, 'gen');
 
 /**
  * One hue per operator, matching how the editor colours them. Similarity is a
@@ -93,6 +95,7 @@ async function collectSpw(dir, out = [], { includeCanon = false, skipArchive = f
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) {
       if (!includeCanon && full === CANON) continue;
+      if (full === GENERATED) continue;
       if (entry.name === 'node_modules') continue;
       if (skipArchive && entry.name === 'archive') continue;
       await collectSpw(full, out, { includeCanon, skipArchive });

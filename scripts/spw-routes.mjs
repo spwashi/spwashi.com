@@ -15,6 +15,10 @@
  * land in .spw/gen/ (gitignored, skipped by spw:integrity and audit:spw-tree)
  * and are rebuilt, never edited. What a page cannot say about itself — what it
  * keeps — is authored once in .spw/surfaces.spw public_routes and merged in.
+ * A run also registers the trees as a projection in .spw/gen/index.spw, so the
+ * editor marks each tree as generated from surfaces.spw. Pages are cited from
+ * the site root (~"/topics/slop/index.html#feeling"); trees cite each other
+ * relatively.
  *
  *   keeps     public_routes keeps / role / bridge, when the route is listed
  *   shape     the route against its folder's family (_family.spw beside it):
@@ -67,6 +71,12 @@ const cite = (from, file, fragment = '') => {
   const relative = path.relative(path.dirname(from), file);
   return `~"${relative.startsWith('.') ? relative : `./${relative}`}${fragment ? `#${fragment}` : ''}"`;
 };
+/**
+ * A citation from the site root. A leading slash is a site route to
+ * spw:integrity and to spw resolve (via the consumer root), so a page reads as
+ * its path and not as five ../ climbs out of .spw/gen/routes/.
+ */
+const rooted = (file, fragment = '') => `~"/${path.relative(ROOT, file)}${fragment ? `#${fragment}` : ''}"`;
 
 /**
  * Quote-aware attribute run. An expression attribute holds a raw `>` (its
@@ -84,13 +94,14 @@ const plain = (html) => stripMarkup(html).replace(/\s+([,.;:!?])/g, '$1');
  * sentence after it to say what the page is.
  */
 function sentences(text, reach = 140) {
-  const parts = String(text).match(/[^.!?]+[.!?]+["'”’)\]]*(?=\s|$)|[^.!?]+$/g) || [];
+  // A sentence ends at punctuation followed by a space, so bane.land stays one word.
+  const parts = String(text).trim().split(/(?<=[.!?]["'”’)\]]*)\s+/);
   let out = '';
   for (const part of parts) {
-    out += part;
+    out = out ? `${out} ${part}` : part;
     if (out.length >= reach) break;
   }
-  return out.trim();
+  return out;
 }
 
 /** Route path from an href, or null when it leaves the site or names no route. */
@@ -436,8 +447,8 @@ function render(page, { kin, byRoute, topicWords, registry, questions, families 
     ...(page.family ? [`#:family ${words(page.family).map((word) => `#!${word}`).join(' ')}`] : []),
     ...(page.role ? [`#:role ${words(page.role).map((word) => `#!${word}`).join(' ')}`] : []),
     '',
-    `@page: ${cite(from, path.join(ROOT, page.file))}`,
-    `@registry: ${cite(from, REGISTRY)}`,
+    `@page: ${rooted(path.join(ROOT, page.file))}`,
+    `@registry: ${rooted(REGISTRY)}`,
     ...(family ? [`@family: ${cite(from, path.join(family.dir, FAMILY_FILE))}`] : []),
     ...handles,
     '',
@@ -465,7 +476,7 @@ function render(page, { kin, byRoute, topicWords, registry, questions, families 
   for (const mark of page.sections) {
     lines.push(`  ${mark.id.replace(/[^a-z0-9]+/gi, '_')} = .{`);
     if (mark.heading) lines.push(`    heading = ${tick(mark.heading)}`);
-    lines.push(`    at = ${cite(from, path.join(ROOT, page.file), mark.id)}`);
+    lines.push(`    at = ${rooted(path.join(ROOT, page.file), mark.id)}`);
     for (const expression of mark.says) lines.push(`    says = ${expression}`);
     if (mark.links) lines.push(`    links = ${mark.links}`);
     lines.push('  }[reg=facet]');
@@ -476,7 +487,7 @@ function render(page, { kin, byRoute, topicWords, registry, questions, families 
   if (page.trail.length) lines.push(`  trail = ${set(page.trail.map((route) => `@${handleOf(route)}`))}`);
   if (page.related.length) {
     lines.push(`  related = ${set(page.related.map(({ route, fragment }) => (fragment
-      ? cite(from, path.join(ROOT, route.slice(1), 'index.html'), fragment)
+      ? rooted(path.join(ROOT, route.slice(1), 'index.html'), fragment)
       : `@${handleOf(route)}`)))}`);
   }
   const relatedRoutes = new Set(page.related.map(({ route }) => route));
@@ -523,7 +534,7 @@ function renderIndex(pages, registry, families) {
     '#>routes_index',
     '#:route #!index',
     '',
-    `@registry: ${cite(from, REGISTRY)}`,
+    `@registry: ${rooted(REGISTRY)}`,
     ...pages.map((page) => `@${handleOf(page.route)}: ${cite(from, treeOf(page.route))}`),
     ...[...families.keys()].map((dir) => `${familyHandle(dir)}: ${cite(from, path.join(dir, FAMILY_FILE))}`),
     '',
@@ -561,6 +572,41 @@ const outputs = () => new Map([
   [path.join(OUT, 'index.spw'), renderIndex(pages, context.registry, context.families)],
 ]);
 
+/**
+ * The language server's projection registry. It reads ^projection[name]{}
+ * blocks from .spw/gen/index.spw: a file under root gets a "generated from"
+ * lens, the spec owner gets a "projects" lens, and the owner reports the
+ * projection stale when it is newer than root. Other generators may keep
+ * their own blocks in that file, so a run replaces only this one.
+ */
+const GEN_INDEX = path.join(ROOT, '.spw/gen/index.spw');
+const PROJECTION_RE = /^\^projection\[routes\]\{[\s\S]*?^\}\n?/m;
+function genIndexText(existing = '') {
+  const block = [
+    '^projection[routes]{',
+    `  root: "${path.relative(ROOT, OUT)}"`,
+    '  source: "every route index.html that carries a <spw-page> block"',
+    `  spec_owner: "${path.relative(ROOT, REGISTRY)}"`,
+    '  generator_owner: "scripts/spw-routes.mjs"',
+    '  status: "rebuilt by npm run spw:routes -- --write"',
+    '}',
+    '',
+  ].join('\n');
+  if (!existing.trim()) {
+    return [
+      '# .spw/gen — generated projections, one ^projection block per generator.',
+      '# The language server reads these blocks for its generated-from and projects lenses.',
+      '',
+      '#>gen_index',
+      '#:index #!gen',
+      '',
+      block,
+    ].join('\n');
+  }
+  return PROJECTION_RE.test(existing) ? existing.replace(PROJECTION_RE, block) : `${existing.replace(/\s*$/, '\n\n')}${block}`;
+}
+const readGenIndex = () => readFile(GEN_INDEX, 'utf8').catch(() => '');
+
 /** Anchors a generated tree declares, by the forms spw-integrity reads. */
 const anchorsOfTree = (text) => new Set([
   ...[...text.matchAll(/^#>([\w-]+)/gm)].map((match) => match[1]),
@@ -584,6 +630,7 @@ async function checkTrees() {
   }
   const written = outputs();
   const trees = new Set(written.keys());
+  written.set(GEN_INDEX, genIndexText(await readGenIndex()));
   const idsByFile = new Map();
   const anchorsByTree = new Map();
   const problems = [];
@@ -600,7 +647,7 @@ async function checkTrees() {
     for (const [, target] of text.matchAll(/~"([^"]+)"/g)) {
       citations += 1;
       const [relative, fragment] = target.split('#');
-      const absolute = path.resolve(path.dirname(from), relative);
+      const absolute = relative.startsWith('/') ? path.join(ROOT, relative) : path.resolve(path.dirname(from), relative);
       const repoFile = path.relative(ROOT, absolute);
       if (!trees.has(absolute) && !htmlByFile.has(repoFile) && absolute !== REGISTRY) {
         problems.push(`${label} cites ${target}, which is no tree, route or registry`);
@@ -614,7 +661,7 @@ async function checkTrees() {
     }
   }
   for (const line of problems) console.log(`  ${line}`);
-  console.log(`[spw:routes] check: ${trees.size} files, ${citations} citations, ${seed ? 'parsed with spw-seed' : 'parse skipped (run through npm run spw:routes for the tsx loader)'}; ${problems.length ? `${problems.length} problems` : 'all trees parse and every citation lands'}`);
+  console.log(`[spw:routes] check: ${written.size} files, ${citations} citations, ${seed ? 'parsed with spw-seed' : 'parse skipped (run through npm run spw:routes for the tsx loader)'}; ${problems.length ? `${problems.length} problems` : 'all trees parse and every citation lands'}`);
   return problems.length;
 }
 
@@ -643,11 +690,12 @@ if (args.includes('--check')) {
       await mkdir(path.dirname(file), { recursive: true });
       await writeFile(file, text.endsWith('\n') ? text : `${text}\n`);
     }
+    await writeFile(GEN_INDEX, genIndexText(await readGenIndex()));
   }
   console.log(`[spw:routes] ${pages.length} routes; ${listed} in public_routes, ${kept} with keeps; ${unnamed} name no wonder type`);
   console.log(`[spw:routes] kin by two shared types: median ${kinCounts[Math.floor(kinCounts.length / 2)]} routes each; ${nearPairs} near pairs share a subject or keyword and link neither way`);
   console.log(`[spw:routes] ${families.length} families; ${families.reduce((sum, family) => sum + family.shapes.length, 0)} shapes followed by ${shaped} routes; ${owning} routes hold something no sibling holds; ${lacking} lack what most siblings hold`);
   console.log(write
-    ? `[spw:routes] wrote ${path.relative(ROOT, OUT)}/ (${pages.length} trees, ${families.length} families, index.spw)`
+    ? `[spw:routes] wrote ${path.relative(ROOT, OUT)}/ (${pages.length} trees, ${families.length} families, index.spw) and the routes projection in ${path.relative(ROOT, GEN_INDEX)}`
     : '[spw:routes] --write rebuilds .spw/gen/routes/; --route /path/ prints one tree; --check parses and resolves');
 }

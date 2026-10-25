@@ -31,6 +31,7 @@ npm run spw:graph                                           # hubs, cycles, fami
 npm run spw:lattice                                         # ~#name(reading) apposition cells
 npm run wonder                                              # open questions + their probes
 npm run wonder:measures                                     # $%[…] substrates ↔ producers
+npm run spw:routes -- --write                               # each route as a tree, beside its family (gen/routes/)
 ```
 
 `spw:integrity` enforces `caches/index.spw#cache_rules` r4, which named the

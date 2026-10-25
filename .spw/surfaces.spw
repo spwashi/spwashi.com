@@ -25,6 +25,7 @@
 @symmetry_ui: ~"./_workbench/.spw/applications/symmetry/symmetry-ui-design.spw"
 @ocean_ux: ~"./_workbench/.spw/biome/ocean/ux.spw"
 @spw_routes: ~"../scripts/spw-routes.mjs"  # projects every route into .spw/gen/routes/, merging keeps from public_routes
+@routes: ~"./gen/routes/index.spw"  # that projection: a tree per route and a _family.spw per folder; gitignored, rebuilt with npm run spw:routes -- --write
 @template: ~"../scripts/template.mjs"
 @wonder_architecture: ~"./conventions/wonder-architecture.spw"
 

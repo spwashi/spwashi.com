@@ -232,12 +232,12 @@ expression = consumer[recommendations]{performance.cli.intermediate.culture}<ups
   note = `The detailed asks, one file per theme. Each ask keeps the same slots in the same order: rank, claim, exists, gap, measured, recommendation, replaces, probe, question. Read context first, then the theme you are working in.`
   reading_order = #[
     `context.spw — sessions, instruments, the creator's calls, what the pin ships, what the site changed on its own side`,
-    `corpus-and-cli.spw — moves with citations, consumer plans, a shared parse cache, cross-language trace, the wonder harvest, the server's index scope`,
-    `editor.spw — hovers, references, diagnostics, views, capture and trace (2026-10-11); stream time, tending, plan context and triggers (2026-10-12)`,
+    `corpus-and-cli.spw — moves with citations, consumer plans, a shared parse cache, cross-language trace, the wonder harvest, the server's index scope; explicit paths under gen/ and sibling shapes (2026-10-25)`,
+    `editor.spw — hovers, references, diagnostics, views, capture and trace (2026-10-11); stream time, tending, plan context and triggers (2026-10-12); the projection registry (2026-10-25)`,
     `gestures.spw — one operator per editor gesture`,
     `placement.spw — a file at a tree's root that previews what a construct means there`,
     `architecture.spw — one model under the CLI and the editor`,
-    `language-support.spw — tokens, symbols, highlighting, navigation`,
+    `language-support.spw — tokens, symbols, highlighting, navigation; a valence word leading a fragment (2026-10-25)`,
     `smaller.spw — items too small to rank`,
   ][reg=set]
   context = @asks_context

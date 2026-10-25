@@ -319,6 +319,35 @@ expression = asks[editor]{hover.references.views.time.tending.triggers}<upstream
     question: "Should the commit trigger exist at all, or is a stream entry always a deliberate act?"
   }[reg=facet]
 }
+
+# ==============================================================================
+# 1b3. VS CODE, 2026-10-25 — generated projections
+# ==============================================================================
+# Written after npm run spw:routes began writing a tree per route under
+# .spw/gen/routes/ and registered it in .spw/gen/index.spw.
+
+^"vscode_2026_10_25"{
+
+  projection_registry: .{
+    rank = 1
+    claim: "The projection registry works, and nothing tells a consumer it exists."
+    exists: "The server reads ^projection[name]{root, source, spec_owner, generator_owner, status} from .spw/gen/index.spw: a generated-from lens on files under root, a projects lens and a stale diagnostic on the spec owner, and generated in a citation's hover."
+    gap: "This site kept .spw/gen/ for months with no index. Staleness compares the one spec owner with the root directory's mtime, so a projection built from many inputs is fresh by its folder, not by what it reads."
+    measured: .{
+      absent = ".spw/gen/index.spw did not exist until 2026-10-25; the routes projection is now written by npm run spw:routes -- --write"
+      inputs = "the routes projection reads 208 route pages and .spw/surfaces.spw; spec_owner holds one of them"
+      mtime = "a directory's mtime moves when an entry is added or removed, not when a file is rewritten in place; spw:routes removes and rewrites its root, so it reads fresh only by that habit"
+    }[reg=facet]
+    recommendation = #[
+      `name the ^projection block in spw init and spw mount scaffolds, beside the .spw/gen/ skip it explains`,
+      `let source take a set or a glob, and stale the projection when any input is newer than the newest file under root`,
+      `spw doctor lists each projection with its root, owners and freshness`,
+    ][reg=set]
+    replaces: "a GENERATED line in each file's own header as the only sign it is a projection"
+    probe: `cat .spw/gen/index.spw`
+    question: "Should a projection name its generator command, so the stale diagnostic can offer to run it?"
+  }[reg=facet]
+}
 #>wonder_editor_tending_or_memory
 ?["Should the sidebar show what the server read recently, what the work says is due, or both?"]{
   #:depth #!pragmatics ~#lens(comparison)
