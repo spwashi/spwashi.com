@@ -1,0 +1,117 @@
+# Claims and trees — one block for a decision, a rule, and a citation
+#
+# The 2026-10-25 reading of what would make Spw carry a senior architecture,
+# the development of business logic, and a dense knowledge tree. Directions
+# that already have a ranked ask point at it and are not remeasured. Nothing
+# here writes to .spw/_workbench, and nothing adds a dialect or an attribute.
+#
+# Detail for the review hub beside this folder
+# (upstream-workbench-recommendations.spw). Every ask keeps the same slots in
+# the same order: rank, claim, exists, gap, measured, recommendation, replaces,
+# probe, question.
+
+#>workbench_asks_trees
+#:review #!workbench #!architecture #!knowledge
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@hub: ~"../upstream-workbench-recommendations.spw"
+@asks_architecture: ~"./architecture.spw"
+@asks_language: ~"./language-support.spw"
+@asks_corpus: ~"./corpus-and-cli.spw"
+@asks_density: ~"./density-and-voice.spw"
+@capacity: ~"../../conventions/semantic-capacity.spw"
+@claims: ~"../../language/v04/pillars/claim-probe-syntax.spw"
+@decay: ~"../../caches/copy-decay-2026-09.spw"
+@surfaces: ~"../../surfaces.spw"
+
+operation = "cache"
+fixity = "tending"
+
+expression = asks[trees]{claim.receipt.citation}<upstream>
+
+# ==============================================================================
+# CLAIMS AND TREES — read 2026-10-25
+# ==============================================================================
+# An architecture decision, a business rule, and an academic claim are one
+# block at three fixities. The tree hangs from that block. The tool model
+# under the CLI and the editor stays in @asks_architecture.
+
+^"claims_and_trees"{
+
+  claim_is_the_unit: .{
+    rank = 1
+    claim: "A decision someone may act on is a claim with a fixity, a probe, and a way to be wrong. A backtick paragraph is a note."
+    exists: "@claims gives the block: hypothesis, spec_ref, impl_ref, probe_ref, falsification, status. @capacity gives the operation that sets how senior the block is: cache and prime hold a possibility, audit and align check a shared name, contract is a rule, archive keeps why the old path mattered. One stem projects to HTML, CSS, JS, and .spw without a rename per language."
+    gap: "Most senior prose in this corpus is a sentence inside a frame. It can be read and it cannot be cited, falsified, or told from a note. An architecture written only there drifts from the build. A business rule written only there has no tense."
+    measured: .{
+      claim_shape = "claim <id> { hypothesis, spec_ref, impl_ref, probe_ref, falsification, status }"
+      operations = "cache, audit, align, prime, contract, archive"
+      fixity = "fixed, stable, tending, experimental, volatile; archive is cold"
+      trace = "cross_language_trace in @asks_corpus is the join from a stem to its HTML host, CSS selector, JS writer, and .spw citation. This facet does not restate that ask's measurements."
+    }[reg=facet]
+    recommendation = #[
+      `promote a repeated decision to a claim id when someone may act on it`,
+      `leave a one-sitting insight as a cache, with its next question`,
+      `an architecture stays honest when the stem's four projections are listed beside the claim`,
+      `do not add an architecture dialect or a business-logic attribute`,
+    ][reg=set]
+    replaces: "a frame of prose that future readers cannot tell whether to edit, validate, or avoid"
+    probe: `rg -n 'claim_id|probe_ref|falsification' .spw/language/v04/pillars/claim-probe-syntax.spw .spw/conventions/semantic-capacity.spw`
+    question: "Which decisions in a file are claims, and which sentences should stay notes?"
+  }[reg=facet]
+
+  development_is_a_receipt: .{
+    rank = 2
+    claim: "Documenting how a rule developed is the move from one operation to the next, kept as a receipt. Rewriting the rule as if it had always been stable erases the seniority."
+    exists: "@decay treats a sentence that names a time as an isotope. Each operation implies what a reader may do, and the implication has a half-life. A contract decays to an archive when its counter-receipt lands. @asks_density says a named relation is banked with cycle or delta, and a field is not a standing record."
+    gap: "A business rule's history usually disappears into the paragraph that replaced it. The reader sees the current tense and not the cache it grew out of, the audit that checked it, or the receipt that closed it."
+    measured: .{
+      receipt = "a <time datetime>, the git date of the line, a dated entry on /now, or a scene change in the expression"
+      vector = "from operation and fixity, to operation and fixity, on one claim id"
+      idempotent = "spw refactor is a no-op when the name already matches; a development receipt should read as no potential once the files show the move landed"
+    }[reg=facet]
+    recommendation = #[
+      `when a cache becomes a contract, keep the claim id and record the from and the to`,
+      `a counter-receipt closes a rule the way a sold or retired line closes a contract`,
+      `the differential worth keeping is that vector on the claim, not both full texts`,
+    ][reg=set]
+    replaces: "a senior paragraph that was edited until the earlier tense is gone"
+    probe: `rg -n 'decays_to|half_life' .spw/caches/copy-decay-2026-09.spw`
+    question: "Does the receipt live on the claim, or is the git history enough?"
+  }[reg=facet]
+
+  tree_lands_on_the_claim: .{
+    rank = 3
+    claim: "A knowledge tree is dense when a citation opens the claim, the outline nests frame then claim then probe, and a reading order is a stream."
+    exists: "@surfaces writes keeps once per route, the ethos the HTML has no slot for, and the route trees merge it. A stream register already orders a reading as ?< @a, @b >[reg=stream]. Wonder questions stay open until a probe settles them. file_navigation and the valence-fragment ask live in @asks_language. The upstream harvest lives in @asks_corpus."
+    gap: "A fragment, an HTML id, and a facet key still open at line 1. A flat outline lists frames and skips the claims inside them. An anchor that starts with a valence word and a hyphen does not tokenize. A tree of those citations looks like a bibliography and behaves like a search for the title."
+    measured: .{
+      keeps = "one ethos line per route, proposed until the creator confirms it"
+      unit = "the claim id, not the frame name alone, because one frame holds several decisions"
+      order = "a syllabus is a stream of handles, not a deeper brace"
+    }[reg=facet]
+    recommendation = #[
+      `resolve a citation against the claim id, with the anchor rules spw:integrity already uses`,
+      `hierarchical symbols: frame, then claim, then probe`,
+      `a reading order stays [reg=stream]`,
+      `keeps stays the one ethos line until the creator confirms it`,
+      `do not add a bibliography format or a wonder type`,
+    ][reg=set]
+    replaces: "a folder of notes whose links open the top of the file"
+    probe: `rg -n 'keeps_rule|knowledge_bases' .spw/surfaces.spw`
+    question: "Should the tree hang from the claim id, the frame, or the keeps line?"
+  }[reg=facet]
+}
+
+#>wonder_tree_unit
+?["Should a knowledge tree hang from the claim id, the frame, or the keeps line?"]{
+  #:depth #!pragmatics ~#lens(comparison)
+  ~#with: @claims
+  ~#hypothesis: "The claim id is the node a citation can falsify. The frame is the room a person scans. The keeps line is the ethos of a route, and a route holds many claims."
+  ~#tension: "Hanging the tree from the frame is what the outline can see today. Hanging it from the claim asks the citation work file_navigation already names. Hanging it from keeps gives one line per route and no place for a second decision."
+  !probe{ "rg -n 'claim_id|keeps_rule' .spw/language/v04/pillars/claim-probe-syntax.spw .spw/surfaces.spw" }
+  $%[tree.claim, tree.frame, tree.keeps]
+  ~<"../upstream-workbench-recommendations.spw">
+}
