@@ -22,8 +22,11 @@
  *
  *   keeps     public_routes keeps / role / bridge, when the route is listed
  *   shape     the route against its folder's family (_family.spw beside it):
- *             the section order it follows, what it holds alone, and what most
- *             siblings hold and it does not
+ *             the section order it follows, the name it fills that order's
+ *             slot with, what it holds alone, and what most siblings hold and
+ *             it does not. Follows, fills and own are the route reduced to its
+ *             shape; the family says whether naming the shape would save more
+ *             than it costs
  *   subjects  keywords, header context, and the subject and modes of every
  *             expression in the copy
  *   copy      the lede, then each section[id] with its heading, its anchor,
@@ -37,6 +40,8 @@
  * Usage:
  *   node scripts/spw-routes.mjs                     # report
  *   node scripts/spw-routes.mjs --route /topics/slop/   # one tree on stdout
+ *   node scripts/spw-routes.mjs --diff /about/domains/bane.land/ /about/domains/boon.land/
+ *                                                   # ground, edge, own of two routes
  *   node scripts/spw-routes.mjs --write             # rebuild .spw/gen/routes/
  *   npm run spw:routes -- --check                    # every tree parses, every citation lands
  */
@@ -57,6 +62,8 @@ const WONDER_TYPES = ['orientation', 'constraint', 'memory', 'resonance', 'inqui
 const args = process.argv.slice(2);
 const write = args.includes('--write');
 const only = args.includes('--route') ? args[args.indexOf('--route') + 1] : null;
+const diffPair = args.includes('--diff') ? args.slice(args.indexOf('--diff') + 1, args.indexOf('--diff') + 3) : null;
+const asRoute = (value = '') => (value === '/' || value.endsWith('/') ? value : `${value}/`);
 
 const decode = (value = '') => String(value)
   .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')
@@ -240,14 +247,30 @@ const FAMILY_FILE = '_family.spw';
 const FAMILY_KINDS = ['section', 'wonder', 'subject'];
 const familyDirOf = (route) => path.dirname(treeOf(route));
 const token = (value) => String(value).toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+const slugOf = (page) => (page.route === '/' ? ['home'] : page.route.split('/').filter(Boolean).pop().toLowerCase().split(/[^a-z0-9]+/));
 
-function shapeTokensOf(page) {
-  const slug = page.route === '/' ? ['home'] : page.route.split('/').filter(Boolean).pop().toLowerCase().split(/[^a-z0-9]+/);
-  return [...new Set(page.sections.map(({ id }) => {
+/**
+ * Each section's shape token, with the words of the route's own name its id
+ * carried: bane-frame reads as frame and carries bane. The carried words are
+ * the value a named shape would hold in its slot.
+ */
+function sectionTokensOf(page) {
+  const slug = slugOf(page);
+  const tokens = new Map();
+  for (const { id } of page.sections) {
     const parts = id.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
     const kept = parts.filter((part) => !slug.includes(part));
-    return (kept.length ? kept : parts).join('_');
-  }))];
+    const shapeToken = (kept.length ? kept : parts).join('_');
+    if (!tokens.has(shapeToken)) tokens.set(shapeToken, kept.length && kept.length < parts.length ? parts.filter((part) => slug.includes(part)) : []);
+  }
+  return tokens;
+}
+const shapeTokensOf = (page) => [...sectionTokensOf(page).keys()];
+
+/** The name a route puts in a shape's slot: the slug words its slot ids carry, in slug order. */
+function fillOf(page, slot) {
+  const carried = new Set(slot.flatMap((item) => sectionTokensOf(page).get(item) || []));
+  return slugOf(page).filter((word) => carried.has(word)).join('_');
 }
 
 function describeFamily(dir, members) {
@@ -294,9 +317,17 @@ function describeFamily(dir, members) {
     if (!orders.has(key)) orders.set(key, { order, members: [] });
     orders.get(key).members.push(page.route);
   }
+  // slot: the order's tokens whose ids carry every member's own name.
+  // saves: tokens stated across the members, less the order stated once and cited once by each.
+  const byRoute = new Map(members.map((page) => [page.route, page]));
   const shapes = [...orders.values()].filter((shape) => shape.members.length > 1)
     .sort((a, b) => b.members.length - a.members.length || b.order.length - a.order.length || a.order.join('.').localeCompare(b.order.join('.')))
-    .map((shape, index) => ({ key: `shape_${index + 1}`, ...shape }));
+    .map((shape, index) => ({
+      key: `shape_${index + 1}`,
+      ...shape,
+      slot: shape.order.filter((item) => shape.members.every((route) => sectionTokensOf(byRoute.get(route)).get(item)?.length)),
+      saves: shape.members.length * shape.order.length - (shape.order.length + shape.members.length),
+    }));
   const shapeOf = new Map(shapes.flatMap((shape) => shape.members.map((route) => [route, shape.key])));
   return { dir, members, baseline, common, missing, own, shapes, shapeOf };
 }
@@ -349,7 +380,12 @@ function renderFamily(family) {
 
   lines.push('^"shapes"{  # section orders two or more members share, each member\'s own sections left out');
   for (const shape of family.shapes) {
-    lines.push(`  ${shape.key} = .{`, `    order = {${shape.order.join('.')}}`, `    members = ${set(shape.members.map(at))}`, '  }[reg=facet]');
+    lines.push(`  ${shape.key} = .{`, `    order = {${shape.order.join('.')}}`, `    members = ${set(shape.members.map(at))}`);
+    if (shape.slot.length) lines.push(`    slot = ${set(shape.slot)}  # each member's ids carry its own name here, as its fills line shows`);
+    // A bare negative number does not tokenize in spw-seed, so a name that costs more than it saves says costs.
+    const tally = `${shape.members.length * shape.order.length} section tokens stated across members; ${shape.order.length + shape.members.length} if this order were named once and each member cited it`;
+    lines.push(shape.saves < 0 ? `    costs = ${-shape.saves}  # ${tally}` : `    saves = ${shape.saves}  # ${tally}`);
+    lines.push('  }[reg=facet]');
   }
   const unshaped = family.members.filter((page) => !family.shapeOf.has(page.route)).map((page) => page.route);
   if (unshaped.length) lines.push(`  unshaped = ${set(unshaped.map(at))}  # no section order shared with a sibling`);
@@ -375,6 +411,8 @@ function renderShape(page, family) {
   const lines = ['^"shape"{  # against the other routes in this folder (@family)', `  among = ${family.members.length}`];
   const shape = family.shapeOf.get(page.route);
   if (shape) lines.push(`  follows = ${cite(from, path.join(family.dir, FAMILY_FILE), shape)}`);
+  const slot = family.shapes.find((candidate) => candidate.key === shape)?.slot || [];
+  if (slot.length) lines.push(`  fills = ${tick(fillOf(page, slot))}  # the name its ids put in the shape's slot`);
   const mine = family.own.get(page.route);
   if (mine?.section.length) lines.push(`  own = ${set(mine.section)}`);
   if (mine?.subject.length) lines.push(`  own_subjects = ${set(mine.subject)}`);
@@ -515,6 +553,123 @@ function render(page, { kin, byRoute, topicWords, registry, questions, families 
   }
   lines.push('}[reg=facet]', '');
   return lines.join('\n');
+}
+
+/**
+ * Two routes read the way Spw was built to read two understandings: the
+ * ground they share, then the edge where they stop sharing, then what each
+ * holds alone. The edge opens on the first kind, in the order a tree is read,
+ * where the two part (EDGE_ORDER). A line delta of the two trees counts edits;
+ * this names the slot. Printed only, never written: a diff is a sitting.
+ */
+const EDGE_ORDER = ['expression', 'keeps', 'shape', 'sections', 'name', 'links'];
+const EXPRESSION_SLOTS = ['subject', 'mode', 'body', 'projection', 'scope', 'charge'];
+
+function renderDiff(a, b, { registry, families }) {
+  const set = (items) => `#[${items.join(', ')}][reg=set]`;
+  const at = (route) => `@${handleOf(route)}`;
+  const shared = (x, y) => x.filter((item) => y.includes(item));
+  const alone = (x, y) => x.filter((item) => !y.includes(item));
+  const factsOf = (page) => {
+    const family = families.get(familyDirOf(page.route));
+    const shape = family?.shapeOf.get(page.route) || '';
+    const slot = family?.shapes.find((candidate) => candidate.key === shape)?.slot || [];
+    const slots = page.expression ? readExpressionSlots(page.expression) : null;
+    return {
+      shape: shape ? rooted(path.join(family.dir, FAMILY_FILE), shape) : '',
+      fills: slot.length ? fillOf(page, slot) : '',
+      sections: shapeTokensOf(page),
+      wonder: page.wonder,
+      subjects: [...page.subjects.keys()],
+      reach: [...reachOf(page)].filter((route) => route !== a.route && route !== b.route).sort(),
+      slots: slots && Object.fromEntries(EXPRESSION_SLOTS.map((key) => [key, [].concat(slots[key] || []).join('.')])),
+      keeps: registry.get(page.route)?.keeps ? 'written' : 'unwritten',
+    };
+  };
+  const fa = factsOf(a);
+  const fb = factsOf(b);
+  const pair = (x, y) => [`    a = ${x}`, `    b = ${y}`];
+
+  const ground = [];
+  const edge = new Map();
+  if (fa.slots && fb.slots) {
+    const same = EXPRESSION_SLOTS.filter((key) => fa.slots[key] && fa.slots[key] === fb.slots[key]);
+    const moved = EXPRESSION_SLOTS.filter((key) => fa.slots[key] !== fb.slots[key]);
+    if (same.length) ground.push('  expression = .{', ...same.map((key) => `    ${key} = ${tick(fa.slots[key])}`), '  }[reg=facet]');
+    if (moved.length) {
+      edge.set('expression', ['  expression = .{  # the slots that moved', ...moved.flatMap((key) => [
+        `    ${key} = .{`, `      a = ${tick(fa.slots[key] || 'none')}`, `      b = ${tick(fb.slots[key] || 'none')}`, '    }[reg=facet]',
+      ]), '  }[reg=facet]']);
+    }
+  } else if (a.expression || b.expression) {
+    edge.set('expression', ['  expression = .{', ...pair(tick(a.expression || 'none'), tick(b.expression || 'none')), '  }[reg=facet]']);
+  }
+  if (fa.keeps !== fb.keeps) edge.set('keeps', ['  keeps = .{', ...pair(fa.keeps, fb.keeps), '  }[reg=facet]']);
+  if (fa.shape && fa.shape === fb.shape) ground.push(`  shape = ${fa.shape}`);
+  else if (fa.shape || fb.shape) edge.set('shape', ['  shape = .{', ...pair(fa.shape || 'none', fb.shape || 'none'), '  }[reg=facet]']);
+  const common = shared(fa.sections, fb.sections);
+  if (common.length) ground.push(`  sections = {${common.join('.')}}  # in the first route's order`);
+  const parting = fa.sections.findIndex((item, index) => item !== fb.sections[index]);
+  const split = parting === -1 && fb.sections.length > fa.sections.length ? fa.sections.length : parting;
+  if (split !== -1) {
+    edge.set('sections', [`  sections = .{  # read in order, they part at section ${split + 1}`, `    at = ${split + 1}`,
+      ...pair(tick(fa.sections[split] || 'none'), tick(fb.sections[split] || 'none')), '  }[reg=facet]']);
+  }
+  if ((fa.fills || fb.fills) && fa.fills !== fb.fills) {
+    edge.set('name', ['  name = .{  # the value each puts in its shape\'s slot', ...pair(tick(fa.fills || 'none'), tick(fb.fills || 'none')), '  }[reg=facet]']);
+  }
+  const aToB = reachOf(a).has(b.route) ? 1 : 0;
+  const bToA = reachOf(b).has(a.route) ? 1 : 0;
+  if (aToB && bToA) ground.push('  links = `each links to the other`');
+  else edge.set('links', ['  links = .{', `    a_to_b = ${aToB}`, `    b_to_a = ${bToA}`, '  }[reg=facet]']);
+  for (const [key, label] of [['wonder', 'wonder'], ['subjects', 'subjects']]) {
+    const both = shared(fa[key], fb[key]);
+    if (both.length) ground.push(`  ${label} = ${set(both)}`);
+  }
+  // The ground is what a reader may skim, so shared reach is a count; the edge and own keep their lists.
+  const reachBoth = shared(fa.reach, fb.reach);
+  if (reachBoth.length) ground.push(`  reach = ${reachBoth.length}  # other routes both link to`);
+
+  const ownOf = (x, y) => {
+    const lines = [];
+    for (const [key, items] of [
+      ['sections', alone(x.sections, y.sections)],
+      ['wonder', alone(x.wonder, y.wonder)],
+      ['subjects', alone(x.subjects, y.subjects)],
+      ['reach', alone(x.reach, y.reach).map(at)],
+    ]) if (items.length) lines.push(`    ${key} = ${set(items)}`);
+    return lines;
+  };
+  const cited = [...new Set([a.route, b.route, ...alone(fa.reach, fb.reach), ...alone(fb.reach, fa.reach)])].sort();
+  const first = EDGE_ORDER.find((kind) => edge.has(kind));
+  return [
+    `# ${a.route} against ${b.route} — the ground they share, the edge where they stop sharing, and what each holds alone.`,
+    '# GENERATED by npm run spw:routes -- --diff from the two route trees. Read ground, then edge, then own.',
+    '',
+    `#>diff_${handleOf(a.route)}__${handleOf(b.route)}`,
+    '#:route #!diff',
+    '',
+    ...cited.map((route) => `${at(route)}: ${rooted(treeOf(route))}`),
+    '',
+    `a = ${at(a.route)}`,
+    `b = ${at(b.route)}`,
+    '',
+    '^"ground"{  # what both hold',
+    ...(ground.length ? ground : ['  none = `no slot read here is shared`']),
+    '}[reg=facet]',
+    '',
+    `^"edge"{  # where they stop sharing, in the order a tree is read: ${EDGE_ORDER.join(', ')}`,
+    `  first = ${first ? tick(first) : '`none`'}`,
+    ...EDGE_ORDER.flatMap((kind) => edge.get(kind) || []),
+    '}[reg=facet]',
+    '',
+    '^"own"{  # what one holds and the other does not',
+    ...[['a', ownOf(fa, fb)], ['b', ownOf(fb, fa)]].flatMap(([key, lines]) => (lines.length
+      ? [`  ${key} = .{`, ...lines, '  }[reg=facet]']
+      : [`  ${key} = \`nothing the other lacks\``])),
+    '}[reg=facet]',
+    '',
+  ].join('\n');
 }
 
 function renderIndex(pages, registry, families) {
@@ -667,6 +822,13 @@ async function checkTrees() {
 
 if (args.includes('--check')) {
   process.exit(await checkTrees() ? 1 : 0);
+} else if (diffPair) {
+  const [a, b] = diffPair.map((route) => context.byRoute.get(asRoute(route)));
+  if (diffPair.length < 2 || !a || !b) {
+    console.error(`[spw:routes] --diff needs two routes with a <spw-page> block; got ${diffPair.join(' ') || 'none'}`);
+    process.exit(1);
+  }
+  process.stdout.write(renderDiff(a, b, context));
 } else if (only) {
   const page = pages.find((candidate) => candidate.route === only);
   if (!page) {
@@ -684,6 +846,16 @@ if (args.includes('--check')) {
   const shaped = families.reduce((sum, family) => sum + family.shapeOf.size, 0);
   const owning = families.reduce((sum, family) => sum + family.own.size, 0);
   const lacking = families.reduce((sum, family) => sum + family.missing.size, 0);
+  // A shaped route reduces to follows, fills and own. own is a set, so the
+  // reduction loses where an own section sat when one comes before or inside the order.
+  const shapeList = families.flatMap((family) => family.shapes.map((shape) => ({ family, shape })));
+  const paying = shapeList.filter(({ shape }) => shape.saves > 0).sort((x, y) => y.shape.saves - x.shape.saves);
+  const slotted = shapeList.filter(({ shape }) => shape.slot.length).length;
+  const misplaced = families.flatMap((family) => family.shapes.flatMap((shape) => shape.members.filter((route) => {
+    const tokens = shapeTokensOf(context.byRoute.get(route));
+    const rebuilt = [...shape.order, ...tokens.filter((item) => !shape.order.includes(item))];
+    return tokens.join('.') !== rebuilt.join('.');
+  }))).length;
   if (write) {
     await rm(OUT, { recursive: true, force: true });
     for (const [file, text] of outputs()) {
@@ -695,6 +867,7 @@ if (args.includes('--check')) {
   console.log(`[spw:routes] ${pages.length} routes; ${listed} in public_routes, ${kept} with keeps; ${unnamed} name no wonder type`);
   console.log(`[spw:routes] kin by two shared types: median ${kinCounts[Math.floor(kinCounts.length / 2)]} routes each; ${nearPairs} near pairs share a subject or keyword and link neither way`);
   console.log(`[spw:routes] ${families.length} families; ${families.reduce((sum, family) => sum + family.shapes.length, 0)} shapes followed by ${shaped} routes; ${owning} routes hold something no sibling holds; ${lacking} lack what most siblings hold`);
+  console.log(`[spw:routes] ${paying.length} of ${shapeList.length} shapes would save section tokens if named${paying.length ? ` (most: /${familyLabelOf(paying[0].family.dir)}/ ${paying[0].shape.key}, ${paying[0].shape.saves})` : ''}; ${slotted} carry each member's name in a slot; follows + own rebuilds the section order of ${shaped - misplaced} of ${shaped} shaped routes, and ${misplaced} hold an own section before or inside their shape`);
   console.log(write
     ? `[spw:routes] wrote ${path.relative(ROOT, OUT)}/ (${pages.length} trees, ${families.length} families, index.spw) and the routes projection in ${path.relative(ROOT, GEN_INDEX)}`
     : '[spw:routes] --write rebuilds .spw/gen/routes/; --route /path/ prints one tree; --check parses and resolves');

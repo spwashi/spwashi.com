@@ -32,6 +32,7 @@ npm run spw:lattice                                         # ~#name(reading) ap
 npm run wonder                                              # open questions + their probes
 npm run wonder:measures                                     # $%[…] substrates ↔ producers
 npm run spw:routes -- --write                               # each route as a tree, beside its family (gen/routes/)
+npm run spw:routes -- --diff /a/ /b/                        # two routes: the ground they share, then the edge where they part
 ```
 
 `spw:integrity` enforces `caches/index.spw#cache_rules` r4, which named the
