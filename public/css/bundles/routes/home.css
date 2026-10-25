@@ -775,16 +775,41 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
 }
 
 @media (min-width: 72rem) {
+  /* Broadsheet is two columns. The copy's children join the hero grid, so the
+     masthead holds the left and the right gives the hook the top and the rail
+     the foot. The empty 1fr row between them takes the masthead's extra
+     height: a lens whose panel runs a line longer moves nothing below it, and
+     the rail's foot meets the masthead's. */
   :where([data-spw-feature="home-kernel-entry"] .home-hero-grid) {
-    grid-template-columns: minmax(0, 1.08fr) minmax(14rem, 17rem);
-    grid-template-areas: "copy rail";
+    grid-template-columns: minmax(24rem, 0.82fr) minmax(0, 1fr);
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      "masthead hook"
+      "masthead ."
+      "masthead rail"
+      "motifs motifs"
+      "reasons reasons"
+      "narration narration"
+      "rooms rooms";
     column-gap: clamp(0.95rem, 1.9vw, 1.6rem);
     align-items: start;
   }
 
+  :where([data-spw-feature="home-kernel-entry"] .home-hero-copy) {
+    display: contents;
+  }
+
+  /* The plate and the picture share the rail's row; the rail spans the hook's
+     width, past the 72ch a region aside keeps elsewhere. */
+  :where([data-spw-feature="home-kernel-entry"] .home-hero-rail) {
+    grid-template-columns: minmax(11rem, 13.25rem) minmax(0, 1fr);
+    align-items: start;
+    max-inline-size: none;
+  }
+
   :where([data-spw-feature="home-kernel-entry"] .home-hero-rail > .home-brand-plate) {
-    justify-self: end;
-    inline-size: min(100%, 13.25rem);
+    justify-self: stretch;
+    inline-size: 100%;
     margin-block-start: 0;
     position: static;
   }
