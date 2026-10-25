@@ -1,0 +1,184 @@
+# Plugins and tooling — one reading, then one plugin
+#
+# The 2026-10-25 brainstorm of the workbench's editors, CLI, and plugin
+# protocol. Directions that already have a ranked ask point at it and are not
+# remeasured. Nothing here writes to .spw/_workbench.
+#
+# Detail for the review hub beside this folder
+# (upstream-workbench-recommendations.spw). Every ask keeps the same slots in
+# the same order: rank, claim, exists, gap, measured, recommendation, replaces,
+# probe, question.
+
+#>workbench_asks_plugins
+#:review #!workbench #!developer_experience #!plugins
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@hub: ~"../upstream-workbench-recommendations.spw"
+@asks_editor: ~"./editor.spw"
+@asks_language: ~"./language-support.spw"
+@asks_corpus: ~"./corpus-and-cli.spw"
+
+operation = "cache"
+fixity = "tending"
+
+expression = asks[plugins]{one.reading.then.one.plugin}<upstream>
+
+# ==============================================================================
+# PLUGINS AND TOOLING — read 2026-10-25
+# ==============================================================================
+# Read from the mounted workbench: the three editor clients, the CLI command
+# list, surface-decorations.ts, commit-view.ts, and PLUGIN-PROTOCOL.md.
+# The protocol's own line still says no concrete plugin has been implemented.
+
+^"plugins_and_tooling"{
+
+  one_character_table: .{
+    rank = 1
+    claim: "The sigils should be read from one table, and the grammars and palettes generated from it."
+    exists: "spw-seed exports SPW_OPERATORS. The lexer and the lite scanner already share it. The ranked ask is tokenizer_integration in @asks_language."
+    gap: "VS Code's surface decorations, the TextMate grammar, Neovim's syntax file, and the site's operator table each name the characters on their own."
+    measured: .{
+      decoration = "surface-decorations.ts maps ! to phaseAction (fire / inject) and ~ to phasePotential (defer / wavefunction)"
+      site = "the public table names ! action and ~ potential"
+      detail = "the six tokenizers and the creator's 2026-10-11 call stay in @asks_language; this facet does not recount them"
+    }[reg=facet]
+    recommendation = #[
+      `generate the TextMate grammar, the Neovim syntax, and the decoration palette from the operator table`,
+      `a fixture fails when a client names a sigil the table does not, or gives it a different word`,
+      `semantic tokens come from lex(), as the language ask already says`,
+    ][reg=set]
+    replaces: "four palettes that drift, including a decoration layer that calls ! inject"
+    probe: `rg -n "phaseAction|phasePotential" .spw/_workbench/extensions/vscode-spw/src/surface-decorations.ts`
+    question: "Which words travel with the character, and which stay as a client's presentation?"
+  }[reg=facet]
+
+  spw_in_host_files: .{
+    rank = 2
+    claim: "The editors should read Spw in the files where this repo writes it."
+    exists: "The extension registers language spw for .spw only. The ranked ask is spw_beyond_spw_files in @asks_editor. The site parser highlights under the caret in tools/spw-parser."
+    gap: "No injection grammar for an HTML attribute, a Markdown fence, or a commit message. The commit view opens a diff and does not read the episode."
+    measured: .{
+      injection = "vscode-spw/package.json has no injectTo; the word injection there is a color description"
+      commit_view = "commit-view.ts serves a spw-commit: link as git show, sets the language to diff, and does not parse #[episode]{}"
+      detail = "the route-expression count stays in @asks_editor"
+    }[reg=facet]
+    recommendation = #[
+      `an injection for data-spw-semantic-expression, for a Spw fence in Markdown, and for #[episode]{} in a commit message`,
+      `those hosts squiggle through the same lite scan the site parser already uses`,
+      `the commit view keeps the diff, and adds the episode's grammar beside it`,
+    ][reg=set]
+    replaces: "finding a bad expression only when spw:integrity runs"
+    probe: `rg -n injectTo .spw/_workbench/extensions/vscode-spw/package.json`
+    question: "Which host is first: a route attribute, or the commit episode?"
+  }[reg=facet]
+
+  one_probe: .{
+    rank = 3
+    claim: "Form, stack, and inspect should be one request that takes the buffer text."
+    exists: "VS Code probes the live document through the LSP and bundles the server. Neovim's :SpwInspect can pass a command range as --text, and otherwise reads the saved file through the CLI. IntelliJ's Form, Surface Stack, and Cache read the saved file, and its LSP is optional."
+    gap: "The same question has three transports. Neovim and IntelliJ still start the server with npm run lsp from the mount. VS Code does not offer tokens, structure, and trace as the progressive inspect Neovim does."
+    measured: .{
+      vscode = "extensions/vscode-spw/README.md: file probes include unsaved text; the runtime is dist/server/spw-lsp.cjs, with no tsx fallback"
+      neovim = "lua/spw/inspect.lua: a range goes inline through --text; no range uses the saved file"
+      intellij = "extensions/intellij-spw/README.md: saved-file instruments; Node is required for the LSP and the CLI"
+    }[reg=facet]
+    recommendation = #[
+      `one LSP probe that takes the buffer text and answers form, stack, tokens, structure, and trace`,
+      `Neovim's three steps are the shape the other two clients show`,
+      `Neovim and IntelliJ ship the bundled server VS Code already builds`,
+    ][reg=set]
+    replaces: "a live buffer in one editor, a saved file in another, and a CLI range in the third"
+    probe: `rg -n "unsaved|Saved-file|--text" .spw/_workbench/extensions/vscode-spw/README.md .spw/_workbench/extensions/intellij-spw/README.md .spw/_workbench/extensions/neovim-spw/lua/spw/inspect.lua`
+    question: "Does the probe belong on the language server, or is the CLI's --text enough if every client sends the buffer?"
+  }[reg=facet]
+
+  alias_and_hover: .{
+    rank = 4
+    claim: "Follow the alias, and let a hover say what the sigil means."
+    exists: "Go-to-definition follows a path citation. Hover reports parse geometry. The ranked asks are symbol_resolution in @asks_language and hovers_that_answer in @asks_editor."
+    gap: "A file-scoped alias cannot be followed. A hover can answer with geometry before meaning, and it has no place to say that the site and the workbench name a sigil differently."
+    measured: .{
+      detail = "alias counts and the hover chain stay in those two asks; this facet does not recount them"
+      added = "when the site word and the workbench word for a sigil differ, the hover says both"
+    }[reg=facet]
+    recommendation = #[
+      `keep the binder and the hover order already asked`,
+      `a sigil hover names the table's word, and the site's word when the host is this repo`,
+    ][reg=set]
+    replaces: "searching the file for the alias, and guessing which table a color came from"
+    probe: `node scripts/lsp-probe.mjs . .spw/site.spw definition 198:15`
+    question: "Should an alias jump to its declaration first, or straight to the file it names?"
+  }[reg=facet]
+
+  one_plugin: .{
+    rank = 5
+    claim: "The first plugin should be one .spw file that emits a manifest, and a second plugin waits."
+    exists: "PLUGIN-PROTOCOL.md describes discovery, validation, select, hooks, transform, and emit. spw emit is a CLI command. This site's expression manifest is a script."
+    gap: "The protocol says no concrete plugin has been implemented. A changelog generator and a taxonomy builder are named as v0.4 candidates, and neither is a plugin file."
+    measured: .{
+      protocol = "lib/spw-v0.3.0/surfaces/PLUGIN-PROTOCOL.md: no concrete plugins have been implemented yet"
+      health = "the protocol already says every selector must match at least one frame"
+      refuse = "a plugin directory, a marketplace, and a compatibility score are not the next step"
+    }[reg=facet]
+    recommendation = #[
+      `one plugin, a .spw file, that selects expression hosts and emits the expression manifest`,
+      `a selector that matches nothing fails the run`,
+      `no second plugin until that one has been run on this corpus`,
+    ][reg=set]
+    replaces: "the expression manifest living only as a site script, and a protocol with nothing to run"
+    probe: `rg -n "No concrete plugins" .spw/_workbench/lib/spw-v0.3.0/surfaces/PLUGIN-PROTOCOL.md`
+    question: "Is the expression manifest the first plugin, or is a doctor reading of projection freshness the smaller one?"
+  }[reg=facet]
+
+  slow_loop: .{
+    rank = 6
+    claim: "The slow commands should say what they walked, and a squiggle should say when its tree is stale."
+    exists: "spw query accepts --stats. Walk isolation landed (week_2026_09_28 on the hub). A shared scan memo is still proposed there and in week_2026_10_11. VS Code's Inspect Cache separates the editor TTL from the LSP session."
+    gap: "doctor and lint do not take --stats. Inspect Cache does not say that a diagnostic was drawn from a tree older than the buffer."
+    measured: .{
+      query = "packages/spw-cli/src/query.ts documents --stats as files, bytes, parse_ms, and total_ms on stderr"
+      absent = "doctor.ts and the lint sources do not mention --stats"
+      detail = "the integrity timing stays in week_2026_10_11; this facet does not restate those seconds"
+    }[reg=facet]
+    recommendation = #[
+      `doctor and lint print the same stats query already prints`,
+      `Inspect Cache names a diagnostic whose tree is older than the buffer`,
+      `the shared memo stays the ask already filed; this facet does not reopen it`,
+    ][reg=set]
+    replaces: "timing the corpus by hand, and a cache view that cannot explain a stale squiggle"
+    probe: `rg -n -- --stats .spw/_workbench/packages/spw-cli/src/query.ts .spw/_workbench/packages/spw-cli/src/doctor.ts`
+    question: "Should a stale diagnostic clear itself, or stay until the next explicit probe?"
+  }[reg=facet]
+
+  quest_grow: .{
+    rank = 7
+    claim: "The quest's last step should open the first failure in the mounted repo."
+    exists: "docs/learn/quest.spw feeds spw quest, the VS Code walkthrough, the IntelliJ scratch file, and spw.quest. Neovim has :SpwQuest."
+    gap: "The grow step opens a terminal with spw lint and spw resolve typed in, or reopens the scratch file. It does not open a broken citation."
+    measured: .{
+      vscode = "extensions/vscode-spw/README.md: with a mounted workbench, the grow step opens a terminal with those two commands typed in"
+      intellij = "extensions/intellij-spw/README.md: Start the Spw quest opens quest.spw as a scratch file outside the project"
+    }[reg=facet]
+    recommendation = #[
+      `the grow step runs spw doctor or spw cite and opens the first failure`,
+      `with no failure, it stays the terminal it opens now`,
+    ][reg=set]
+    replaces: "a tutorial that ends on an empty prompt"
+    probe: `rg -n "spw lint|scratch" .spw/_workbench/extensions/vscode-spw/README.md .spw/_workbench/extensions/intellij-spw/README.md`
+    question: "Is the first failure a doctor check, or the first unresolved citation?"
+  }[reg=facet]
+}
+
+#>wonder_workbench_first_plugin
+?["Which one plugin should exist before any second one?"]{
+  #:depth #!pragmatics ~#lens(comparison)
+  ~#with: @hub
+  ~#taste: "A protocol with nothing to run teaches the reader that plugins are a document."
+  ~#hypothesis: "An expression-manifest plugin proves select and emit on the corpus this site already builds by script. A doctor reading of projection freshness is smaller, and it answers a registry that already exists."
+  ~#tension: "The manifest plugin touches the publish path. The doctor reading touches a view. Shipping both is the second plugin."
+  !probe{ "rg -n \"No concrete plugins\" .spw/_workbench/lib/spw-v0.3.0/surfaces/PLUGIN-PROTOCOL.md" }
+  $%[plugin.manifest, doctor.projection, plugin.second]
+  ~<"../upstream-workbench-recommendations.spw">
+}

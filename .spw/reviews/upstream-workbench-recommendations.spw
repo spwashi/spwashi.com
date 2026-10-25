@@ -45,6 +45,7 @@
 @asks_placement: ~"./upstream-workbench-recommendations/placement.spw"
 @asks_architecture: ~"./upstream-workbench-recommendations/architecture.spw"
 @asks_language: ~"./upstream-workbench-recommendations/language-support.spw"
+@asks_plugins: ~"./upstream-workbench-recommendations/plugins-and-tooling.spw"
 @asks_smaller: ~"./upstream-workbench-recommendations/smaller.spw"
 
 operation = "align"
@@ -238,6 +239,7 @@ expression = consumer[recommendations]{performance.cli.intermediate.culture}<ups
     `placement.spw — a file at a tree's root that previews what a construct means there`,
     `architecture.spw — one model under the CLI and the editor`,
     `language-support.spw — tokens, symbols, highlighting, navigation; a valence word leading a fragment (2026-10-25)`,
+    `plugins-and-tooling.spw — one character table, Spw in host files, one probe, one plugin, the slow loop, and the quest's grow step (2026-10-25)`,
     `smaller.spw — items too small to rank`,
   ][reg=set]
   context = @asks_context
@@ -247,6 +249,7 @@ expression = consumer[recommendations]{performance.cli.intermediate.culture}<ups
   placement = @asks_placement
   architecture = @asks_architecture
   language = @asks_language
+  plugins = @asks_plugins
   smaller = @asks_smaller
 }[reg=facet]
 
@@ -341,6 +344,18 @@ expression = consumer[recommendations]{performance.cli.intermediate.culture}<ups
     `npm run -s streams:stamp -- --list`,
   ][reg=set]
   ~#taste: "A gesture should do only what its operator does, and a stamp should say when the entry was written."
+}[reg=facet]
+
+^"week_2026_10_25"{
+  standing = `Read the three editors, the CLI, and the plugin protocol beside the asks already filed. The detail is in @asks_plugins. Query already prints --stats. Walk isolation already landed. The same day also noted projection freshness in @asks_editor, sibling route shapes in @asks_corpus, and a valence word in @asks_language.`
+  proposals = #[
+    `=[lsp] One probe that takes buffer text and answers form, stack, tokens, structure, and trace :: probe[buffer]{form.stack.tokens}<unsaved>`,
+    `+[plugin] One .spw plugin emits the expression manifest and fails when its selector matches nothing :: plugin[emit]{expressions}<one>`,
+    `+[quest] The grow step opens the first failure from spw doctor or spw cite :: quest[grow]{doctor.cite}<first>`,
+    `=[cli] doctor and lint print the stats query already prints :: stats[walk]{files.parse.cache}<doctor>`,
+  ][reg=set]
+  ~#taste: "A second plugin waits until the first one fails closed."
+  consume = `Until a plugin exists, the site keeps building the expression manifest by script. The editor asks it points at stay where they were measured.`
 }[reg=facet]
 
 ^"validation"{
