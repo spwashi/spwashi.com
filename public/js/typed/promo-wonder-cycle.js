@@ -78,7 +78,7 @@ const DEFAULT_FEED = Object.freeze({
                 offer: 'Six ways a tradition works, with where each one was met and who taught it',
                 proof: 'The culture field sorts traditions by regard, gather, give, cross, keep time, and remember, and names a source for each.',
                 objection: 'Read first; nothing here asks you to take a tradition as your own.',
-                urgency: 'Octvember runs through October 31; the A-cycle closed October 13.',
+                urgency: 'The next close is October 26. The A-cycle closed October 13.',
                 tone: 'clear',
                 theme: 'glass',
                 handles: ['culture', 'season', 'traditions', 'cycle'],
