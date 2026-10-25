@@ -998,7 +998,7 @@ test('live promo feed can pick the folio stack on a known weekday', () => {
   assert.match(settingsDay.wonder.href, /\/settings\//);
 
   const daily = pickDaily(liveFeed, thursday);
-  assert.match(daily.promo.title, /laminated folio stack/i);
+  assert.match(daily.promo.title, /September scans/i);
   assert.equal(daily.promo.href, '/design/folios/#release-set');
   assert.equal(daily.promo.promotion?.kind, 'release');
   assert.match(daily.wonder.href, /lore\.land/);
