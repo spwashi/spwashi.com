@@ -182,3 +182,158 @@ expression = asks[plugins]{one.reading.then.one.plugin}<upstream>
   $%[plugin.manifest, doctor.projection, plugin.second]
   ~<"../upstream-workbench-recommendations.spw">
 }
+
+# ==============================================================================
+# PLUGINS IN USE — read 2026-10-25, later the same day
+# ==============================================================================
+# Read from the VS Code extension while the route trees, the family files and
+# the plan notebooks were open, then from the sources that drew what it showed:
+# packages/spw-lsp/src/handlers/display.ts, the runtime's register bank, and the
+# parser releases spw.quest serves. Where an ask already holds the direction
+# (hovers_that_answer, file_navigation, ground_then_edge, one_plugin), these
+# point at it and add only what the editor showed.
+
+^"plugins_in_use"{
+
+  emit_names_its_reader: .{
+    rank = 8
+    claim: "An emit plugin names who reads each field it writes, and a field with no reader fails the run, the way a selector that matches nothing does."
+    exists: "one_plugin above: the expression manifest as the first plugin, and the protocol's rule that every selector matches a frame. scripts/build-expression-manifest.mjs emits SPW_EXPRESSION_MANIFEST and SPW_PROJECTION_SEEDS."
+    gap: "Nothing checks the other end, so a field nobody imports ships on every page that loads the module."
+    measured: .{
+      seeds = "SPW_PROJECTION_SEEDS: 195 KB of the 338 KB module, 33 of its 64 KB gzip, emitted since d779d339 (2026-08-14)"
+      reader = "getProjectionSeeds() in public/js/runtime/expression/expression-resonance.js has no caller in the repository"
+      site = "the site cuts it as slice S1 of .agents/plans/ecosystem-architecture"
+    }[reg=facet]
+    recommendation = #[
+      `an emit declares its readers, as module paths or the selectors they read`,
+      `the run fails when a declared reader is gone, or a field has none`,
+      `this is the first plugin's second health rule, not a second plugin`,
+    ][reg=set]
+    replaces: "a payload kept because nothing said it was unread"
+    probe: `rg -n "getProjectionSeeds" --glob '!**/node_modules/**' --glob '!**/_workbench/**' --glob '!dist/**' .`
+    question: "Should a reader be named by module path, or by the selector it reads?"
+  }[reg=facet]
+
+  lens_counts_citations: .{
+    rank = 9
+    claim: "A file's reference lens counts the files that cite it, by path and by key, and not only the files that repeat its anchor's name."
+    exists: "display.ts:992-1008 counts annotations named like the anchor in other files. spw resolve and spw:integrity resolve path citations and their fragments."
+    gap: "A file that is cited by path, and never by its anchor's name, reads as cited by no one."
+    measured: .{
+      family = "about/domains/_family.spw: 8 member trees cite it 16 times, the file and its #shape_n keys; its lens reads ◇ anchor — no cross-file refs"
+      routes = "343 citations of a _family.spw from 200 files under .spw/gen/routes, the index among them"
+    }[reg=facet]
+    recommendation = #[
+      `count path citations of the file on line 0, and of each key on the key's line, from the resolver's index`,
+      `keep annotation references as a second count, named as such`,
+    ][reg=set]
+    replaces: "a lens that says no one points here while eight files do"
+    probe: `rg --no-ignore -c '_family\.spw' .spw/gen/routes/about/domains`
+    question: "Should a key's lens count the citations that name that key, or only the file's?"
+  }[reg=facet]
+
+  reg_names_one_thing: .{
+    rank = 10
+    claim: "The lens's reg and a file's [reg=] stamps are two counts under one word, and the lens reruns the file for every anchor."
+    exists: "display.ts:1011-1027 draws ◆ n reg · phase:x from a trial run's register bank, which =, & and * write as the interpreter walks the file. A [reg=] stamp names a serialization sink (register_sink in density-and-voice.spw)."
+    gap: "A reader takes the lens for the stamp census. The trial run of the whole document repeats for each #> anchor line."
+    measured: .{
+      family = "about/domains/_family.spw: the lens reads ◆ 14 reg · phase:pragmatic; the file holds 17 [reg=] stamps"
+      runs = "codeLens calls trialRunSpw(doc.text) inside its per-line loop at each anchor; the most anchors in one site file is 7 (arrival-electrostatics.spw)"
+    }[reg=facet]
+    recommendation = #[
+      `name the runtime count for what it holds, or show the rare sinks (stream, probe, projection) the stamps select`,
+      `one trial run per document version, reused at every anchor`,
+    ][reg=set]
+    replaces: "a number that means a different thing than the same word in the file"
+    probe: `rg -n "trialRunSpw|reg \\\\u00b7" .spw/_workbench/packages/spw-lsp/src/handlers/display.ts`
+    question: "Which count earns the lens: the register bank's entries, or the stamps that name a sink?"
+  }[reg=facet]
+
+  handle_in_prose: .{
+    rank = 11
+    claim: "A handle the file declares should link and hover inside a quoted or backtick string, where most of this repo's prose names it."
+    exists: "Document links and definitions work on a handle in code position. hovers_that_answer in editor.spw already asks hovers to lead with meaning; this facet adds the prose case."
+    gap: "Inside a string, the hover leads with form coupling and repeats the whole string as a label site; the handle is never followed."
+    measured: .{
+      count = "1238 uses of a handle declared in the same file, inside a quoted or backtick string, in 190 of 992 .spw files"
+      seen = "spw-quest/wip.spw next_moves query: the hover on (@expression_query) shows Form coupling, boundary, then the string; @expression_query is declared at the top of the same file"
+    }[reg=facet]
+    recommendation = #[
+      `a declared handle inside a string gets a document link and its declaration's hover`,
+      `geometry stays last, as hovers_that_answer asks`,
+    ][reg=set]
+    replaces: "copying the handle into a search after reading it in a sentence"
+    probe: `rg -n '@expression_query' .agents/plans/spw-quest/wip.spw`
+    question: "Should a handle in prose link only when this file declares it, or also through a file it cites?"
+  }[reg=facet]
+
+  generated_from_the_page: .{
+    rank = 12
+    claim: "A generated file should open its own source, and say so before a hand edit is lost."
+    exists: "The projection registry gives a generated file ⚠ generated surface and ← generated from <spec owner>. Each route tree cites its page as @page on line 10 and names it in its first comment."
+    gap: "The lens names the spec owner (.spw/surfaces.spw) for all 208 trees. The page each was read from, and the generator that rebuilds it, are a citation and a comment. Nothing warns on save."
+    measured: .{
+      lens = "display.ts builds the line from proj.specOwner only"
+      registry = "^projection[routes] in .spw/gen/index.spw names source, spec_owner and generator_owner"
+      edit = "a route tree was open with unsaved edits during this session; npm run spw:routes -- --write replaces it"
+    }[reg=facet]
+    recommendation = #[
+      `the banner offers Open source (the tree's @page, or a per-file source pattern in the registry) and Rebuild (generator_owner)`,
+      `saving a generated file asks first, and names what the next rebuild replaces`,
+    ][reg=set]
+    replaces: "an edit made in the projection and lost at the next build"
+    probe: `sed -n '/projection\[routes\]/,/^}/p' .spw/gen/index.spw`
+    question: "Should a save in a generated file be refused, or allowed with the rebuild named?"
+  }[reg=facet]
+
+  compare_in_the_editor: .{
+    rank = 13
+    claim: "The line that names a shape should offer to compare its members, ground first, then the edge by slot."
+    exists: "ground_then_edge in motions.spw asks the CLI for the reading. npm run spw:routes -- --diff /a/ /b/ gives it for routes today, and its output parses as Spw."
+    gap: "In the editor, comparing two siblings is two tabs and a reader's eye."
+    measured: .{
+      follows = "each shaped route tree has follows = ~\"./_family.spw#shape_n\"; 122 routes follow a shape"
+      reading = "bane.land against boon.land parts only at the name; spw delta counts 52 edits"
+    }[reg=facet]
+    recommendation = #[
+      `a lens on follows, and on a shape's members line: compare with a sibling, opening the reading in a read-only document`,
+      `Compare with in the explorer for any two .spw files, through the same reading once the CLI has it`,
+    ][reg=set]
+    replaces: "two tabs side by side and a line diff"
+    probe: `npm run -s spw:routes -- --diff /about/domains/bane.land/ /about/domains/boon.land/`
+    question: "Should comparing be a lens on the line that names the shape, or a command on any two files?"
+  }[reg=facet]
+
+  one_browser_build: .{
+    rank = 14
+    claim: "One browser build of the reader per release is enough, and the parser build can be its alias."
+    exists: "A parser release spw.quest serves carries full, lite, reader and workbench builds, each with a debug build and a map. The site's highlighter paints from the reader's roles(), which is what VS Code paints."
+    gap: "The site and the quest import two bundles from one revision that read the same."
+    measured: .{
+      release = "2026.10.13: full.min 75,850 B (parser.js is the same size), reader.min 87,605 B, lite.min 3,206 B, workbench.min 425,588 B"
+      agree = "reader parse and full parse give the same AST, tokens, errors, warnings and events on 990 of 990 site .spw files"
+      superset = "the reader also exports roles, outline, anchors and highlightHtml"
+    }[reg=facet]
+    recommendation = #[
+      `name the reader the browser build of a release, and keep full as an alias for one release`,
+      `the site and the quest then carry one bundle (ecosystem-architecture S3)`,
+    ][reg=set]
+    replaces: "two browser bundles of one revision"
+    probe: `ls -la workers/spw-quest/assets/parser/2026.10.13/`
+    question: "Does the reader's extra 12 KB earn its place on pages that only parse, or should lite carry those?"
+  }[reg=facet]
+}
+
+#>wonder_workbench_compare_where
+?["Should comparing two forms be a lens on the line that names their shape, or a command on any two files?"]{
+  #:depth #!pragmatics ~#lens(comparison)
+  ~#with: @hub
+  ~#taste: "The question a reader has at a shape is which sibling to hold this one against; the editor should offer the answer where the question forms."
+  ~#hypothesis: "A lens on follows teaches the shape and the reading together, because the members are already named there. A command on any two files reaches pairs no shape names, such as a route against its old revision."
+  ~#tension: "A lens is one more line on a screen that already carries generated, reg and anchor lenses; a command is invisible until someone knows to look for it."
+  !probe{ "npm run -s spw:routes -- --diff /topics/software/spw/operators/action/ /topics/software/spw/operators/probe/" }
+  $%[compare.lens, compare.command, shape.members]
+  ~<"../upstream-workbench-recommendations.spw"> ~<"./motions.spw">
+}
