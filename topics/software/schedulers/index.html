@@ -98,7 +98,7 @@
                         <figure class="spw-panel">
                             <img src="/public/images/assets/folios/folio-octvember-novel-under-test-display.webp" srcset="/public/images/assets/folios/folio-octvember-novel-under-test-display.webp 512w, /public/images/assets/folios/folio-octvember-novel-under-test-hero.webp 1024w" sizes="(max-width: 48rem) 92vw, 28rem" alt="White cut-paper cards on black lay out a Halloween season: Octvember, promo, launch, teasers, and a Novel Under Test flowing into an ePub" loading="lazy" style="border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); margin-bottom: 1.5rem;" width="512" height="405">
                         </figure>
-                        <p>How we orchestrate time determines how readable a system feels once it starts to move. Schedulers manage the 'tick' of the machine, ensuring that priority tasks and cooperative background work stay in balance.</p>
+                        <p>How we orchestrate time determines how readable a system feels once it starts to move. A scheduler sets the machine's tick: which priority task runs now, and which background work waits its turn.</p>
                     </section>
                 </div>
                 <div class="frame-topline" data-spw-slot="header">
@@ -250,7 +250,7 @@
                     <div class="ref-card" data-spw-form="square">
                         <span class="ref-card-sigil">idle</span>
                         <h3>requestIdleCallback</h3>
-                        <p>The original cooperative primitive. It allows background processing when the main thread is quiet, ensuring expensive metadata calculation doesn't block critical frame timing.</p>
+                        <p>The original cooperative primitive. It runs background work while the main thread is quiet, so an expensive metadata pass does not cost a frame.</p>
                         <ul class="ref-terms"><li>deadline</li><li>timeRemaining</li><li>didTimeout</li></ul>
                         <div class="ref-links">
                             <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback" target="_blank">mdn: requestIdleCallback</a>
@@ -259,7 +259,7 @@
                     <div class="ref-card" data-spw-form="square">
                         <span class="ref-card-sigil">yield</span>
                         <h3>Yielding and Signal</h3>
-                        <p><code>scheduler.yield()</code> creates a continuation point in a task chain. It lets the browser breathe without losing the application's current state—crucial for heavy parsers and simulators.</p>
+                        <p><code>scheduler.yield()</code> creates a continuation point in a task chain. It lets the browser breathe without losing the task's state, so a long parse or a simulation can pause partway and pick up where it stopped.</p>
                         <ul class="ref-terms"><li>AbortSignal</li><li>TaskController</li><li>Microtask</li></ul>
                         <div class="ref-links">
                             <a href="https://developer.mozilla.org/en-US/docs/Web/API/Scheduler/yield" target="_blank">mdn: scheduler.yield</a>
