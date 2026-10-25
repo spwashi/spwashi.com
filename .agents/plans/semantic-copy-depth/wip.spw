@@ -1,4 +1,4 @@
-# Review 2026-10-25 — hot notes for the thought-trace slice on two hosts; the copy-depth contract, the trace rules and the absorbed plans stay in PLAN.md. The October smell pass says effort is not this slice.
+# Review 2026-10-25 — hot notes for the thought-trace slice on two hosts; the copy-depth contract, the trace rules and the absorbed plans stay in PLAN.md.
 # wip — semantic-copy-depth
 #
 #>plan_semantic_copy_depth_wip
@@ -18,7 +18,7 @@ fixity = "tending"
 
 ^"stream"{
  >>[2026-10-12 10:59] verify — the production note from eba561ba is still on /about/ and /play/rpg-wednesday/. Neither /topics/slop/ nor /topics/math/ has a (turn) expression, and neither page has changed since. The slop half waits on the creator; the math half does not: its textbook note is two sentences of claim, then a sentence naming the five diagram routes (eight links in the note), and the ten lens cards below it are already a shelf.
- >>[2026-10-25] cache — the smell file records that a higher effort setting is not this slice. ToneBench's Grok 4.7 climb is mostly length. SlopShape names the tidy self-announcing close. The two hosts are unchanged.
+ >>[2026-10-25] cache — @ai_writing_smells gained ws-006 (effort ladders; ToneBench's Grok 4.7 climb is mostly length) and ws-007 (SlopShape's tidy self-announcing close). The two hosts are unchanged.
 }
 
 ^"open"{
