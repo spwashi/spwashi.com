@@ -1,6 +1,8 @@
 # Modular Experience Slices & Earthy Rhythms of Participation
 
-**Status 2026-10-10.** Landed: five slice contracts in `.spw/slices/` and the attention scheduling slice (c2d5da00, 73d6f2ad). Next slice: review the math labs, which are committed in this checkout, and write one tending note in `.spw/slices/math-practice-labs/`. The review opens on `public/js/modules/math/diagrams.js:1250`, where the arrow marker id `arrow-vector` is fixed rather than per lab. Phases 3–6 are speculative and wait for that note. Holds the dimensional navigation slice contract (`.spw/slices/dimensional-expression-navigation/`).
+**Status 2026-10-25.** Landed: five slice contracts in `.spw/slices/` and the attention scheduling slice (c2d5da00, 73d6f2ad). Next slice: review the math labs, which are committed in this checkout, and write one tending note in `.spw/slices/math-practice-labs/`. The review opens on `public/js/modules/math/diagrams.js:1251`, where the arrow marker id `arrow-vector` is fixed rather than per lab; no page mounts two vector fields today, so nothing collides yet. The smoke runs live, then with scripts off, at `/topics/math/vector-calculus/#vector-field-lab` and `/topics/math/numerical-methods/#numerical-stepping-lab`. Phases 3–6 are speculative and wait for that note. Holds the dimensional navigation slice contract (`.spw/slices/dimensional-expression-navigation/`).
+
+**Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — topics.math_labs, access.math_inputs.
 
 **Related:** [page-region-discoverability](../archive/page-region-discoverability/PLAN.md). **Absorbed 2026-10-06:** [dimensional-expression-navigation](../archive/dimensional-expression-navigation/PLAN.md).
 
@@ -59,8 +61,9 @@ The slice goal is to turn math vocabulary into playable reading/observation/gest
 
 Review posture before landing:
 - Keep the patch focused on the two math routes and the shared math diagram module.
-- Confirm generated SVG IDs are unique per lab instance, especially marker IDs referenced with `url(#...)`. Today the vector-field marker id is the fixed `arrow-vector` (`diagrams.js:1250`).
-- Run `node --check public/js/modules/math/diagrams.js`, `git diff --check`, and a browser smoke on both math routes.
+- Confirm generated SVG IDs are unique per lab instance, especially marker IDs referenced with `url(#...)`. Today the vector-field marker id is the fixed `arrow-vector` (`diagrams.js:1251`). There is no live collision: only `/topics/math/vector-calculus/` mounts a vector-field lab, once.
+- Read the labs with scripts off. The vector-field lab's select and range inputs stay live and do nothing, and its SVG holds only its title and desc, so the figure is its figcaption (`topics/math/vector-calculus/index.html:138-167`). The stepping lab reads the same way (`topics/math/numerical-methods/index.html:138-150`).
+- Run `node --check public/js/modules/math/diagrams.js`, `git diff --check`, and a browser smoke on both math routes: live, then with scripts off, at `/topics/math/vector-calculus/#vector-field-lab` and `/topics/math/numerical-methods/#numerical-stepping-lab`.
 - Add a tending note after review that records what the math labs taught about practice-bed structure.
 
 **Pilot B — attention-resonance-field**
@@ -84,7 +87,7 @@ Practice beds are the durable participation units inside each slice. They should
 - `sedimentation`: notes or code comments that record why a pattern now belongs to the stable ground.
 - `succession`: handoff notes for the next contributor or a later season of work.
 
-The initial template lives at `.agents/plans/modular-experience-slices/templates/tending-note.spw`. Slice-specific notes may later move under `.spw/slices/<slice>/tending-notes/` once `.spw/slices/` exists.
+The initial template lives at `.agents/plans/modular-experience-slices/templates/tending-note.spw`. Slice-specific notes may later move under `.spw/slices/<slice>/tending-notes/`; `.spw/slices/` exists.
 
 ## Slice Composability And Discoverability
 
@@ -118,9 +121,9 @@ The slice should support both rhythms:
 - Cross-links from css-architecture-alignment.spw, spw-css-architecture/PLAN.md, runtime-bootstrap-performance/PLAN.md, and agent-optimization/PLAN.md.
 
 **Phase 1 — Slice Definition & Contracts**
-- Create `.spw/slices/` (or equivalent) with one canonical .spw per major slice containing runtime contract, CSS/JS ownership map, current state, and open seams.
+- Done: `.spw/slices/` holds one canonical .spw per major slice containing runtime contract, CSS/JS ownership map, current state, and open seams (five, verified 2026-10-10).
 - Update css-instruction.spw and planning-ecology.spw with slice ownership + volleyball guidance.
-- Start with `math-practice-labs` as a pilot contract only after the Gemini math-lab patch is reviewed or ported.
+- The `math-practice-labs` contract already exists (`.spw/slices/math-practice-labs/index.spw`, since 546d6ccc); the pilot review tends it rather than creating it.
 
 **Phase 2 — Tending Notes & Practice Artifacts**
 - Use the tending-note template after a real review or implementation session.

@@ -19,6 +19,7 @@ fixity = "tending"
 ^"stream"{
  >>[2026-10-12 10:59] verify — the production note from eba561ba is still on /about/ and /play/rpg-wednesday/. Neither /topics/slop/ nor /topics/math/ has a (turn) expression, and neither page has changed since. The slop half waits on the creator; the math half does not: its textbook note is two sentences of claim, then a sentence naming the five diagram routes (eight links in the note), and the ten lens cards below it are already a shelf.
  >>[2026-10-25] cache — @ai_writing_smells gained ws-006 (effort ladders; ToneBench's Grok 4.7 climb is mostly length) and ws-007 (SlopShape's tidy self-announcing close). The two hosts are unchanged.
+ >>[2026-10-25 17:42] verify — read against the tree for the UI review sitting: the Status now matches this notebook, with the math note landing now and the slop half waiting on #feeling. Home's loop and shelf were rewritten by eff5abfd (shelf at index.html:313-323) and its live note reads home[live]{season.close}(production)<now> (index.html:165); PLAN.md keeps the 09-28 quotes and adds a dated note. PLAN.md also names this plan owner of the entrance words, with component-region-personality holding their cards and chips.
 }
 
 ^"open"{

@@ -1,6 +1,8 @@
 # Plan: state-block-projections
 
-**Status 2026-10-10.** Landed: the inspector runtime (`public/js/interface/state-inspector.js`) and the lens-seat bench at `/design/components/#lens-seats` (`dc7c35a7`). Next slice: move the chosen seat treatment out of `routes/surfaces/design.css` and into `handles/operators/state-semantics.css` as a lens-chrome value, then opt routes in one switch at a time. It is gated on the creator choosing seat A, B or C in a browser. That one review also settles the absorbed mode-switch contrast and lens-reward gates below, and the lens offer to the cauldron.
+**Status 2026-10-25.** Landed: the inspector runtime (`public/js/interface/state-inspector.js`) and the lens-seat bench at `/design/components/#lens-seats` (`dc7c35a7`). `handles/operators/state-semantics.css` already holds the `silent` and `quiet` lens-chrome values (named at :135-136, rules at :229-279), so the next slice moves only `seat`, the expression shown as the switch's consequence, out of `routes/surfaces/design.css` (:1686) and into `state-semantics.css`, then opts routes in one switch at a time. It is gated on the creator choosing seat A, B or C live, on a phone and a desktop at `/design/components/#lens-seats`; judge Row 1's faint inactive chips in the same look. That one review also settles the absorbed mode-switch contrast and lens-reward gates below, and the lens offer to the cauldron.
+
+**Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — design.lens_seats, seams.lens, seams.menu_toggle.
 
 **Absorbed 2026-10-06:** [lens-seat-and-secondary-materials](../archive/lens-seat-and-secondary-materials/PLAN.md). **Absorbed 2026-10-10:** [attention-shell-contrast](../archive/attention-shell-contrast/FIX.md) · [mindful-collection-controls](../archive/mindful-collection-controls/PLAN.md). **Related:** [cauldron-lens-composition](../cauldron-lens-composition/PLAN.md).
 
@@ -27,12 +29,12 @@ Craft guard:
 ## Dependencies
 
 - `interaction-grammar` — the state blocks should feel like learnable interaction circuits, not isolated widgets
-- `brace-literacy-guides` — operator/brace swaps should reinforce conceptual vs realized differentiation instead of flattening it
+- [brace-literacy-guides](../archive/brace-literacy-guides/PLAN.md) (archived) — operator/brace swaps should reinforce conceptual vs realized differentiation instead of flattening it
 
 ## Failure Modes
 
 - **Hard**: the inspector mutates decorative state instead of real component state, making the feature feel fake
-- **Hard**: malformed runtime wiring in `site.js` or `spw-image-metaphysics.js` breaks module evaluation
+- **Hard**: malformed runtime wiring in `site.js` or `public/js/media/image-metaphysics.js` breaks module evaluation
 - **Soft**: blocks become visually noisy or overlap content on smaller viewports
 - **Soft**: settings blocks mutate form state without dispatching the real change events, causing UI and persisted settings to diverge
 - **Non-negotiable**: operator/brace swaps must stay scoped to components that explicitly opt in; no silent global state mutation
@@ -65,7 +67,7 @@ Gate: sensation. Approve A, B, or C in a browser before any route changes. If B 
 
 Landed there: the `reading`/`split` layout selectors in `public/css/shell/layout.css`, and the hidden empty `.spw-semantic-seam` in `shell/chrome/header.css`. Still owed:
 - **Row 1.** Shared `.mode-switch` buttons keep inactive chips too faint, and the selected state sits too close to the surface on mobile. This is the same switch as the lens seat above, so judge contrast during the A/B/C review. No pocket still covers a mode switch yet.
-- **Row 2.** The mobile menu toggle read as ambient chrome. It has been a glyph hamburger since `b893cec3`, so recheck it with one `home-nav-open` still (`scripts/lib/viewport-still-recipes.mjs:84`) before any fix.
+- **Row 2.** The mobile menu toggle read as ambient chrome. It has been a glyph hamburger since `b893cec3`, so recheck it with one `home-nav-open` still (`scripts/lib/viewport-still-recipes.mjs:84`) before any fix. Row 2 belongs to [chrome-navigation-wonder](../chrome-navigation-wonder/PLAN.md), which owns the header; this plan cites it.
 
 The FIX's planned files (`spw-handles.css`, `spw-chrome.css`, `spw-shell.css`) no longer exist; the owners are `public/css/handles/operators/` and `public/css/shell/chrome/navigation.css`. Source: [attention-shell-contrast](../archive/attention-shell-contrast/FIX.md).
 

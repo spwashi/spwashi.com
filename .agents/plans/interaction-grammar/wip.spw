@@ -90,6 +90,7 @@ fixity = "tending"
  >>[2026-09-04 12:55] observe - The 2026-09-03 reward-contract probe (interaction-microstates.spw#wonder_interaction_microstates_1) is the closest thing this plan has had to its own "test brace physics vocabulary with a user unfamiliar with Spw" validation step, except it tested contract-holding rather than vocabulary legibility: 13 of 37 gesture-contract authorings (every route's hero hook) were silently unwired. The failure mode this plan should watch for is not "too Spw-coded to learn" but "declared and not actually reachable" — a different, more mechanical risk than the one this plan anticipated in 2026-04.
  >>[2026-09-04 12:55] observe - The per-interaction phase ladder (idle/approach/prime/charge/inspect/discover/settle) is thorough and cross-component (landmark hops, cauldron gather/inspect/release, tap:travel, swipe:cycle all resolve into it). It is still exactly one visit's arc. Nothing in interaction-microstates.spw distinguishes a first encounter from a tenth — the "practiced → fluent → habitual" half of this plan's Goal is the one piece of the original scope that is still genuinely open, not landed-elsewhere.
  >>[2026-10-12 10:59] verify — the census is the next slice and has not run. Today the tree holds 37 gesture-contract authorings on 36 lines across 21 route pages, over the same 10 distinct strings; the Status line counts 36. Next is to look up each verb's handler in public/js and in inline page scripts (settings/index.html near line 663 answers cycle-variant, surface-current and open-companion), record the silent ones in interaction-microstates.spw, then write the settings "do this / expect this" passage from it. Nothing gates it.
+ >>[2026-10-25 17:45] verify — Read against the tree for the UI review sitting: the census count holds at 37 authorings on 36 lines in 21 files over 10 strings, and Status now says so. Fixed drifted pointers: the settings gesture helpers sit at :2509-2510 and :2585-2587 (08f060d6 removed 15 lines, so :2524 reads "No extra runtime bus UI."), the phase owners live in public/js/runtime/interaction/, and four dependencies are marked archived; the census also settles the verb rule chrome-navigation-wonder's drawer swipe waits on.
 }
 
 ^["open"]{
@@ -121,7 +122,7 @@ fixity = "tending"
  ~#files_hot: ".spw/conventions/interaction-microstates.spw, settings/index.html, public/js/runtime/interaction/brace-gestures.js"
  ~#gate: "nothing"
  ~#open_count: "6"
- ~#last_stream: "2026-10-12"
+ ~#last_stream: "2026-10-25"
  ~#taste_debt: "Multi-language surfaces must remain honest: the guest language teaches itself; Spw provides the frame without subordinating the guest. Cross-session familiarity must not cross the stated privacy property (senses without remembering who) without a deliberate, logged decision to do so."
 }
 

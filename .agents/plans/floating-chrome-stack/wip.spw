@@ -18,6 +18,7 @@ fixity = "tending"
 
 ^"stream"{
  >>[2026-10-12 10:59] verify — Step 1 holds (a5f56bec): --spw-floating-control-size is assigned in components/floating-chrome.css and read there, in handles/operators/tokens.css and in components/runtime-states.css. whimsy.css:403-406 still gives every button, chip and label the 44px floor below 48rem, so it still reaches floating chrome. The Step 2 demo has not been built, and floating-chrome.css has not changed since d0244132 on 2026-09-28.
+ >>[2026-10-25 17:44] verify — Read against the tree for the UI review sitting: .spw-console-toggle no longer exists anywhere, so the 09-13 note is resolved for the selector while the sizing call stays open. Status now names Step 2's place, live on / at pocket and /about/ at 320px, since capture.css hides floating chrome and pauses SVG flows in stills, and records that this plan owns control sizes and the pocket corner.
 }
 
 ^"open"{
@@ -31,5 +32,5 @@ fixity = "tending"
  ~#next_commit: "+[chrome] Demo one floating control size: a compact base, and a step up for a coarse pointer"
  ~#files_hot: "public/css/components/floating-chrome.css, public/css/ornament/whimsy.css, public/css/components/runtime-states.css"
  ~#gate: "the creator's answer on console button size, then a sensation review of the demo in the browser"
- ~#last_stream: "2026-10-12"
+ ~#last_stream: "2026-10-25"
 }

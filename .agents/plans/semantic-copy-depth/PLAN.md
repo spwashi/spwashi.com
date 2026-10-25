@@ -1,6 +1,10 @@
 # Semantic Copy Depth
 
-**Status 2026-10-25.** The Proficiency Production Note slice landed (eba561ba: `.spw-production-note` in `content.css`, `/about/`, `/play/rpg-wednesday/`). Next slice: the thought trace on `/topics/slop/#feeling` and `/topics/math/#pure-math-routes`; neither host carries a `(turn)` expression yet. It waits on the creator's answer to whether the slop citation paragraphs are a display case at all (`#>wonder_semantic_copy_depth_slop_feeling` in `index.spw`). The smell cache's October pass does not replace that slice: a higher effort setting is not the edit. Holds tone and voice, the reading groove, editorial readability, and the entrance routes.
+**Status 2026-10-25.** The Proficiency Production Note slice landed (eba561ba: `.spw-production-note` in `content.css`, `/about/`, `/play/rpg-wednesday/`). Next slice: the thought trace on `/topics/math/#pure-math-routes`, which has no gate and lands now. The `/topics/slop/#feeling` half waits on the creator's answer to whether the slop citation paragraphs are a display case at all (`#>wonder_semantic_copy_depth_slop_feeling` in `index.spw`). Neither host carries a `(turn)` expression yet. The smell cache's October pass does not replace that slice: a higher effort setting is not the edit. Holds tone and voice, the reading groove, editorial readability, and the entrance routes.
+
+**Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — ungated.math_note, topics.slop_feeling, seams.entrance_copy.
+
+**Entrances:** this plan owns the words on the `/`, `/about/`, `/services/` and `/topics/` entrances, and `npm run audit:copy:accessor` reports to it. [component-region-personality](../component-region-personality/PLAN.md) owns their cards and chips.
 
 **Related:** [audience-onboarding-copy](../archive/audience-onboarding-copy/PLAN.md) (absorbed 2026-10-10, below).
 
@@ -83,6 +87,8 @@ First slice, when someone edits copy. Two hosts, no others:
 - `/topics/math/#pure-math-routes` — the textbook note. The first two sentences are the trace (why these pages are more textbook-like). The five diagram routes are a shelf inside the paragraph. The reading grammar that follows (notice the move, the invariant, the collapse) is a real three-part structure. Leave it.
 
 Home's field note at "recursive editorial loop" is the same shape and waits. The loop sentence is the trace. "The center of gravity is this site" is a shelf of nine links. Do not open Home in the first slice. The live note `home[live]{cycle.close}(b)<now>` is already a trace.
+
+2026-10-25: the Home quotes above predate eff5abfd (2026-10-25 13:45), which rewrote both sentences: the loop sentence is now "Make, name the relation, test it, leave a receipt, and carry it to the next close.", and the nine-link shelf now opens "The work sits in" (`index.html:313-323`). The live note is now `home[live]{season.close}(production)<now>` (`index.html:165`, since c05126f8). Markup below cites the old expression only for its grammar, which the new one shares. Home still waits.
 
 Markup, on the stems that exist:
 

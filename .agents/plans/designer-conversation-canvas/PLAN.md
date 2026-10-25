@@ -2,6 +2,8 @@
 
 **Status 2026-10-10.** Landed: the measurement bus (1621ac6c), settings typography preview, frame metrics and the `/design/#conversation-canvas` frame; browser behaviour is not revalidated. Now holds design-hub's success test (Absorbed, below). Next slice: one real designer reviews the `#component-ecology-specimens` specimen from a bundle shaped by what that review asks for. Gate: the creator names that reviewer; no bundle schema before then.
 
+**Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — calls.reviewer, calls.first_portable.
+
 **Related:** [pretext-whimsy-lab](../archive/pretext-whimsy-lab/PLAN.md). **Absorbed 2026-10-10:** [design-hub](../archive/design-hub/PLAN.md).
 
 Make spwashi.com legible as a **conversation between author, designer, and runtime** — touchable specimens, named tokens, and a shared measurement bus on the public route.
@@ -74,3 +76,12 @@ as this plan's success test: a second-site author reproduces the specimen and ex
 one token change without loading the site shell. Keep the hub site-first: route HTML and
 shared CSS contracts carry it, with no new design-system runtime and no new `.spw`
 ontology unless a reusable contract appears.
+
+2026-10-25: the specimen's 15 buttons (`design/index.html:392-462`: thirteen set
+environment, variant, behavior and posture; two copy the expression and the link)
+work only with scripts on. A reproduction without the site shell has to bring that
+script along or say what each button sets. The plans disagree on what travels first:
+site-starter-component-kit's first-portable wonder assumes this plan builds the
+specimen's export bundle, this plan writes no bundle schema before the review, and
+[ecosystem-architecture](../ecosystem-architecture/PLAN.md) S4 proposes the Spw
+instrument travel first.

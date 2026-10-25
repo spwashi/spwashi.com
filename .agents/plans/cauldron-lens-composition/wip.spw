@@ -17,6 +17,7 @@ fixity = "tending"
 
 ^"stream"{
  >>[2026-10-12 10:59] verify — the lens-aware mix (604d4a1d) and the native dialog (326eb119) stand, and the home-cauldron-open recipe is still at viewport-still-recipes.mjs:507. Its fixture receipt has not been taken. The nearest evidence is fdafcd6f on October 8, whose verify opened the cauldron dialog at desktop and pocket widths for the dialog edges, which is not this receipt. Corner sharing lives in floating-chrome-stack now.
+ >>[2026-10-25 17:46] verify — Read against the tree for the UI review sitting: the home-cauldron-open recipe still sits at viewport-still-recipes.mjs:507 and its receipt is still untaken. Status now orders it before spellcraft-authoring's phase-attribute fold, which moves its baseline, and the plan records that it receives state-block-projections' second-use lens seat offer.
 }
 
 ^"open"{ }
@@ -26,5 +27,5 @@ fixity = "tending"
  ~#next_commit: ".[cauldron] Record the pocket receipt for the open cauldron, the composition plan's last owed check"
  ~#files_hot: "scripts/lib/viewport-still-recipes.mjs, .spw/caches/cauldron-lens-composition-2026-09.spw, public/js/interface/cauldron/chrome.js, public/css/components/cauldron.css"
  ~#gate: "a local server and a browser the sandbox allows, for npm run visual:checks -- --ids=home-cauldron-open; check npm run sense -- doctor first"
- ~#last_stream: "2026-10-12"
+ ~#last_stream: "2026-10-25"
 }

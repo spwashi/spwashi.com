@@ -1,6 +1,8 @@
 # Chrome, Navigation, and Metaphysical Wonder (2026 review)
 
-**Status 2026-10-10.** Landed: the closed-header swipe (`02c7757a`), the coarse-pointer hamburger (`b893cec3`), and the pocket rail that shows the reader's position in Spw at a layer they choose (`7018898c`), now fixed under the flourish pack (`c348c0f7`). Next slice: pages author short section ids and component headings so each rail layer (`#>` region, `.` path, `&` component) says something, starting with home, the design hub and one long topic route. Nothing gates it but the copy. Motion between layers waits on a designed pass, the open-drawer swipe waits on the creator's answer in `index.spw`, and Phase 3 is dormant. The dated Status headers below are history.
+**Status 2026-10-25.** Landed: the closed-header swipe (`02c7757a`), the coarse-pointer hamburger (`b893cec3`), and the pocket rail that shows the reader's position in Spw at a layer they choose (`7018898c`), now fixed under the flourish pack (`c348c0f7`). Next slice: pages author short section ids and component headings so each rail layer (`#>` region, `.` path, `&` component) says something. Home first: short ids on home's five sections that have no id (the four lens panels and the reason strip), following the headings `eff5abfd` (2026-10-25) and `efcd875d` (2026-10-12) wrote; both rewrote home's h2/h3 copy and added no ids. Then `/design/`. Nothing gates it but the copy. Motion between layers waits on a designed pass, the open-drawer swipe waits on the creator's answer in `index.spw`, and Phase 3 is dormant. The dated Status headers below are history.
+
+**Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — ungated.home_rail_ids, home.menu_toggle, calls.drawer_swipe, seams.home, seams.breadcrumbs, seams.menu_toggle.
 
 **Related:** [floating-chrome-stack](../floating-chrome-stack/FIX.md) · [spellcraft-authoring](../spellcraft-authoring/PLAN.md) (breadcrumb spell) · [mobile-chrome-alignment](../archive/mobile-chrome-alignment/PLAN.md) (archived). **Absorbed 2026-10-10:** [navigation-header-disclosure](../archive/navigation-header-disclosure/PLAN.md) · [page-region-discoverability](../archive/page-region-discoverability/PLAN.md).
 
@@ -27,7 +29,7 @@ public/js/runtime/attention/section-handle.js`:
   compact swipes through prev/next section travel, matching the visible
   ‹ › hop (`c7da1438`).
 - **Landmark rail** — already `swipe:cycle` via `LANDMARK_CONTRACT` in
-  `interaction-hops.js` (landed earlier, `724caa1b`).
+  `public/js/runtime/interaction/hops.js:23` (landed earlier, `724caa1b`).
 
 **Open**: shell disclosure (the drawer/menu once it's *open*) has zero swipe
 handling — `grep -c swipe public/js/runtime/shell/shell-disclosure.js` is 0. The
@@ -189,6 +191,8 @@ Next concrete patch or deeper modeling session should reference this plan.
 ### Next
 
 - Phase 2, re-scoped 2026-10-10: the rail's `.` path layer (`7018898c`) is now the on-page breadcrumb, and `runtime/experiential/breadcrumb-spell.js` assembles the trail and the live spell path. What remains: the path layer says little on pages without authored section ids (the Status slice), and whether the header's spell path should follow the rail's layer. Who owns breadcrumbs, this plan or spellcraft-authoring, is a question for the creator in `index.spw`.
+- Breadcrumbs, 2026-10-25: the sitting's `seams.breadcrumbs` proposes that the rail's route path stays here and the spell trail stays in spellcraft-authoring, and that both read the one anatomy reader `.spw/caches/craft-shelves-2026-10.spw` primes. The breadcrumbs wonder stays open.
+- The mobile menu toggle (state-block-projections' row 2) belongs to this plan, since it owns the header. Recheck it with `npm run visual:checks -- --ids=home-nav-open`.
 - Phase 3, dormant 2026-10-10: the operator-forces / semantic-accent two-layer doc pass in `tokens/core.css` and the operator atlas. Nothing in `public/css/tokens/` names operators as forces yet, and no live plan picks it up.
 - Re-run `npm run check:local` after landing; validate mobile on home, design hub, and one long topic route.
 

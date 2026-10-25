@@ -2,6 +2,10 @@
 
 **Status 2026-10-10.** The settings shelf landed (b2eda400) and replaced Quick Start: 53 boxes in eight aisles, each look's box worn in its own pack, and a "wearing now" window with the live readouts and the deviation register. This plan is now the settings umbrella; runtime-settings landed and was archived 2026-10-10. Next slice: a mock of guided or pivot-oriented ways to try a look, gated by the creator's pick in the browser (a random pick was ruled out as ambiguous). The shelf's words wait on the creator's copy-unit pass.
 
+**Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — settings.presets, seams.settings.
+
+The pick is made live at `/settings/#presets`. Capture mode hides the state inspector and the section handle (`public/css/modes/capture.css:7-35`), so a still cannot show the satchel; the sitting's `settings-presets` recipe gives an after-still only. On `settings/index.html`, settings-theme-wiring row 4 lands first, then the presets.
+
 **Related:** [runtime-settings](../archive/runtime-settings/PLAN.md) (absorbed 2026-10-10) · [settings-theme-wiring](../settings-theme-wiring/FIX.md) · [floating-chrome-stack](../floating-chrome-stack/FIX.md) · [chrome-navigation-wonder](../chrome-navigation-wonder/PLAN.md).
 
 ## Public Goal

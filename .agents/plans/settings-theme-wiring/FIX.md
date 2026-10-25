@@ -1,6 +1,8 @@
 # Fix: settings-theme-wiring
 
-**Status 2026-10-10.** The settings shelf landed (b2eda400); rows 2 and 3 are closed: the `viewportActivation` fieldset left `/settings/` in the 2026-10-10 pass because nothing read it, and row 3's blog files are gone. Next slice: Commit 2 for row 4, removing the remaining controls with no reader, after checking each against `public/css` and `public/js`. Row 6 waits on the creator's icon-pack question (`index.spw#wonder_settings_theme_wiring_icon_packs`); rows 1, 5 and the inherited density and metamaterial findings need a browser pass.
+**Status 2026-10-25.** The settings shelf landed (b2eda400); rows 2 and 3 are closed: the `viewportActivation` fieldset left `/settings/` in the 2026-10-10 pass because nothing read it, and row 3's blog files are gone. Next slice: Commit 2 for row 4, removing the remaining controls with no reader, after checking each against `public/css` and `public/js`. Row 4 is first in the order on `settings/index.html`, ahead of the settings presets and landing-visual-hierarchy's parcel C. Row 6 waits on the creator's icon-pack question (`index.spw#wonder_settings_theme_wiring_icon_packs`); rows 1, 5 and the inherited density and metamaterial findings need a live browser pass: the grain and density controls on `/settings/`, then the materials page hero (`/design/materials/`) and the footer.
+
+**Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — ungated.dead_settings_controls, settings.theme_rows, settings.icon_packs, seams.settings.
 
 **Related:** [runtime-settings](../archive/runtime-settings/PLAN.md) · [settings-ornament-resonance](../settings-ornament-resonance/PLAN.md) · [settings-theme-packs](../archive/settings-theme-packs/PLAN.md) (archived). **Absorbed 2026-10-06:** [design-surfaces-discoverability](../archive/design-surfaces-discoverability/PLAN.md).
 

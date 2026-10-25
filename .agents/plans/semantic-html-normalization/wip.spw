@@ -117,6 +117,7 @@ fixity = "tending"
  >>[2026-04-16 14:22] implement — `site-settings.js` now primes declarative setting triggers with button semantics, keyboard activation, and shared active-state wiring while the root apply path uses grouped dataset/style helpers instead of a long run of one-off assignments.
  >>[2026-04-16 14:25] validate — `git diff --check`, `node --check public/js/site-settings.js`, `node --check public/js/spw-page-metadata.js`, and audits for skip links plus `main[aria-labelledby]` all passed.
  >>[2026-10-10 21:06] verify — the sweep holds (207 route pages carry `main`, 202 the skip link). The commit series and rebase notes above this entry are done or never ran, and were cut. Scripts-off sensors landed in 8d1ed950, 768c5c09 and 73f200f2; the open slice is the JS-on/off landmark, heading and link diff (PLAN.md, JS-off parity).
+ >>[2026-10-25 17:42] verify — read against the tree for the UI review sitting: the catalog holds 146 module ids, not 136; the scripts-off switch is applyScriptExecution in component-snapshots.mjs:423, not the headless harness; 208 route pages carry main and 203 the skip link. The diff's browser read now names the demo routes, and PLAN.md gains an Access section from the sitting's ^"access" frame, with the code-block controls (spw-source.css:114, :142) as a small ungated slice beside the diff.
 }
 
 ^["open"]{
@@ -128,7 +129,7 @@ fixity = "tending"
  ~#next_commit: "+[sense] Diff a route's landmarks, headings and links with scripts off and on"
  ~#gate: "nothing; the diff reports per route and joins check:local only after its counts are read once in a browser"
  ~#open_count: "0"
- ~#last_stream: "2026-10-10"
+ ~#last_stream: "2026-10-25"
  ~#taste_debt: "the next cleanup can decide whether section-level labels should become more authored in HTML or stay runtime-derived; the current pass keeps the static contract strongest at the page landmark level"
 }
 

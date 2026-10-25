@@ -1,11 +1,15 @@
 # Plan: spellcraft-authoring
 
-**Status 2026-10-10.** Landed: the decompose verb and the `data-spw-cauldron-state` bundle in `semantic/cauldron/contract.js` (`bd0d7951`, 2026-07-03), and saved trails that survive clearing the current one (`7b5f0a63`). Phase 1's attribute fold did not land:
+**Status 2026-10-25.** Landed: the decompose verb and the `data-spw-cauldron-state` bundle in `semantic/cauldron/contract.js` (`bd0d7951`, 2026-07-03), and saved trails that survive clearing the current one (`7b5f0a63`). Phase 1's attribute fold did not land:
 - Source still carries 33 distinct `data-spw-cauldron-*` names against a target of about 4.
 - `data-spw-cauldron-phase` is still written (`interface/cauldron/resonance.js:102`) and listed (`runtime/orchestration/dom-sync-hub.js:71`).
 - No SPELL_CONTRACT exists.
 
-Next slice: the decompose browser demo on `/design/experiments/spellcraft/`, a creator walk through hold-prime, decompose and re-mix. It is the Phase 2 promotion gate, owed since 2026-07-03. Phases 3–4 stay sensation-gated.
+Next slice: the phase-attribute fold, retiring `data-spw-cauldron-phase` on html across `resonance.js`, `dom-sync-hub.js` and `systems/surfaces/palette-depth.css` in one patch, after cauldron-lens-composition's pocket receipt (the sitting's `seams.cauldron`). Nothing gates it if the palette-depth rules move in the same patch and `audit:root-ablation` shows the move inert. The decompose browser demo, a creator walk through hold-prime, decompose and re-mix, waits on the creator's walk at `/design/experiments/spellcraft/#bench-decompose`. It is the Phase 2 promotion gate, owed since 2026-07-03. Phases 3–4 stay sensation-gated.
+
+**Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — ungated.spell_fold, design.spell_decompose, seams.cauldron, seams.breadcrumbs.
+
+Breadcrumbs, 2026-10-25: the sitting's `seams.breadcrumbs` proposes that the spell trail stays here and the rail's route path stays in [chrome-navigation-wonder](../chrome-navigation-wonder/PLAN.md), and that both read the one anatomy reader `.spw/caches/craft-shelves-2026-10.spw` primes. The breadcrumbs wonder stays open.
 
 **Related:** [operator-semantics-refinement](../archive/operator-semantics-refinement/PLAN.md) · [spw-language-v04](../spw-language-v04/PLAN.md) · [visual-capture-ecology](../archive/visual-capture-ecology/PLAN.md). **Absorbed 2026-10-06:** [cognitive-navigation](../archive/cognitive-navigation/PLAN.md) · [discovery-powerups](../archive/discovery-powerups/PLAN.md) · [spell-cauldron-lifecycle-memory-gardening](../archive/spell-cauldron-lifecycle-memory-gardening/PLAN.md) · [spell-cognition-familiarity](../archive/spell-cognition-familiarity/PLAN.md) · [spellbook-utility](../archive/spellbook-utility/PLAN.md).
 
@@ -30,6 +34,7 @@ A visitor (or Spwashi on camera) can *write* a spell, not merely accumulate one:
 - `semantic/cauldron/` (contract.js, storage.js, helpers.js) and `interface/cauldron/` (trace.js, resonance.js, undo.js, chrome.js): real bones - `CAULDRON_CONTRACT` centralizes phases (`empty -> primed -> mixing -> spell-ready`), ingredient lifecycle (`gathering -> resonant -> mature -> decayed`), eight actions, max six ingredients, garden pruning. Composes "extension drafts," not reopenable spells.
 - `components/cauldron.css` (332 lines) + `handles/operators/spell-breadcrumbs.css` (869-line chapter).
 - Attribute families: `data-spw-cauldron-*` 26 names (19 JS-written), `data-spw-spell-*` 9, `data-spw-ingredient-*` 4.
+- Note 2026-10-25: the line counts above are the 07-03 reading. `wc -l` now gives `spells.js` 976 (was 864), `cauldron.css` 1267 (was 332) and `spell-breadcrumbs.css` 894 (was 869).
 
 ## The Model
 

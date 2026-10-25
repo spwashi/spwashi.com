@@ -17,6 +17,7 @@ fixity = "tending"
 
 ^"stream"{
  >>[2026-10-12 10:59] verify — The shelf holds (b2eda400, with its aisle index pinned in 39d66d28): eight aisles under the presets id in settings/index.html, styled by settings-shelf.css, and site-settings-ui.js:1483 loads the pack specimens so each look's box wears its pack. No mock of a guided way to try a look exists yet. The satchel bay now belongs to runtime-plane-consolidation, and its rail demo behind ?spw-satchel=rail still lives in section-handle.js.
+ >>[2026-10-25 17:44] verify — Read against the tree for the UI review sitting; no drift: the shelf still sits under id="presets" (settings/index.html:176) and no guided-look mock exists. PLAN.md now names the place, live at /settings/#presets, since capture.css:7-35 hides the state inspector and section handle and the settings-presets recipe gives only an after-still, and it puts settings-theme-wiring row 4 ahead of the presets on settings/index.html.
 }
 
 ^"open"{
@@ -30,5 +31,5 @@ fixity = "tending"
  ~#next_commit: "+[settings] Mock two guided ways to try a look, each showing where the step lands before you take it"
  ~#files_hot: "settings/index.html, public/css/routes/surfaces/settings-shelf.css, public/js/interface/site-settings-ui.js"
  ~#gate: "nothing for the mock; which way ships is the creator's pick in the browser"
- ~#last_stream: "2026-10-12"
+ ~#last_stream: "2026-10-25"
 }

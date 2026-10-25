@@ -1,6 +1,8 @@
 # Layout Seat Squeeze
 
-**Status 2026-10-10.** The seat and squeeze invariants are settled, including the CLS fixes 53717ed7 and a740b10d. This is now the single layout owner, with three queues: held CLS items (below), edges, and seat coverage (both under Absorbed 2026-10-10). Next: the edges queue's shared inset for `#home-entry-panels`. It is gated by an `npm run qa:alignment` reading before and after, plus a phone still for the creator's look. The lens hook nav wrap stays held because it is intermittent and was not reproduced on 2026-10-06.
+**Status 2026-10-25.** The seat and squeeze invariants are settled, including the CLS fixes 53717ed7 and a740b10d. This is now the single layout owner, with three queues: held CLS items (below), edges, and seat coverage (both under Absorbed 2026-10-10). Next: the edges queue's shared inset for `#home-entry-panels`, after chrome-navigation-wonder's home section ids. It is gated by a fresh `npm run qa:alignment` reading before (the 2026-09-17 one predates the Home rewrite in eff5abfd) and one after, plus a phone still for the creator's look. The lens hook nav wrap stays held because it is intermittent and was not reproduced on 2026-10-06.
+
+**Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — ungated.panel_inset, seams.home, seams.settings.
 
 **Related:** [landing-visual-hierarchy](../landing-visual-hierarchy/PLAN.md). **Absorbed 2026-10-10:** [alignment-content-fit](../archive/alignment-content-fit/PLAN.md) · [region-attenuation-coverage](../archive/region-attenuation-coverage/PLAN.md). **Absorbed 2026-10-06:** [card-grid-density-audit](../archive/card-grid-density-audit/PLAN.md) · [content-responsive-layout](../archive/content-responsive-layout/PLAN.md) · [context-sensitive-variants-and-agent-qa](../archive/context-sensitive-variants-and-agent-qa/PLAN.md) · [page-frame-sizing](../archive/page-frame-sizing/PLAN.md).
 
@@ -94,8 +96,9 @@ Readers can distinguish card titles, supporting copy, metadata, and actions at p
 The edges queue. Plan: [alignment-content-fit](../archive/alignment-content-fit/PLAN.md). Brochure fit landed in 6b93a85a, and its sensor is `npm run qa:alignment` (`scripts/alignment-audit.mjs`).
 
 - Rules kept: the main shell padding is the one public left/right datum, so route CSS adds no second gutter. Route CSS may change `align-items` and `gap` on `.frame-topline` and `.frame-heading`, never `flex-direction`. Inline highlights bleeding into frame padding are accepted and excluded from clipped-overflow triage.
-- Next: one shared inset token for `#home-entry-panels` (`index.html:768`). At pocket width on 2026-09-17, its six panels had content edges at 44/44/44/44/47/44.
-- Then, from the same 2026-09-17 reading: the promo-wonder-cycle cards (4.5px spread), the returner grid (2px), and `#choose-your-entrance` (`index.html:460`) role hooks against the depth disclosure (6px). After that, settings at pocket width (153 near-flush edges in 36 sites).
+- Next: one shared inset token for `#home-entry-panels` (`index.html:765`). At pocket width on 2026-09-17, its six panels had content edges at 44/44/44/44/47/44. 2026-10-25: that reading predates the Home rewrite (eff5abfd), so take a fresh `npm run qa:alignment` before reading first.
+- Then, from the same 2026-09-17 reading: the promo-wonder-cycle cards (4.5px spread), the returner grid (2px), and `#choose-your-entrance` (`index.html:454`) role hooks against the depth disclosure (6px). After that, settings at pocket width (153 near-flush edges in 36 sites).
+- Order on shared files (sitting `seams.home`, `seams.settings`): on Home, chrome-navigation-wonder's section ids, then this inset, then landing-visual-hierarchy's parcel D. The settings edges come after settings-theme-wiring row 4, the settings presets and landing's parcel C.
 - Validation: `qa:alignment` before and after, and a phone still.
 
 ## Absorbed 2026-10-10 — region-attenuation-coverage

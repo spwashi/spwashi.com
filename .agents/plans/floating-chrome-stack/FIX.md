@@ -1,6 +1,8 @@
 # Fix: Floating Chrome Stack
 
-**Status 2026-10-10.** Landed: the tier fix, the lane lifecycle (`848a0b46`), and Step 1's single control-size token (`a5f56bec`). Every floating control now reads `--spw-floating-control-size` from one block in `components/floating-chrome.css`. Next slice: the Step 2 browser demo, with a compact base and a coarse-pointer step keyed to pointer rather than width. It includes whether `ornament/whimsy.css`'s 48rem `:where(button, .spw-chip, label)` min-height should keep reaching floating chrome. It is gated on the creator's sensation review and on the console sizing question in `index.spw`. Corner sharing in the pocket lane moved here from cauldron-lens-composition (below).
+**Status 2026-10-25.** Landed: the tier fix, the lane lifecycle (`848a0b46`), and Step 1's single control-size token (`a5f56bec`). Every floating control now reads `--spw-floating-control-size` from one block in `components/floating-chrome.css`. Next slice: the Step 2 browser demo, with a compact base and a coarse-pointer step keyed to pointer rather than width. It includes whether `ornament/whimsy.css`'s 48rem `:where(button, .spw-chip, label)` min-height should keep reaching floating chrome. It is gated first on the console sizing question in `index.spw`, then on the creator's sensation review, live and never from a still: on `/` at pocket (390px) and on `/about/` at 320px, where the corner was measured. Stills cannot judge it: `public/css/modes/capture.css` hides floating chrome (lines 7-35) and pauses animated SVG flows (line 40). Corner sharing in the pocket lane moved here from cauldron-lens-composition (below).
+
+**Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — home.console_size, seams.pocket_corner.
 
 **Related:** [shell-model-vocabulary-consolidation](../shell-model-vocabulary-consolidation/PLAN.md) · [navigation-header-disclosure](../archive/navigation-header-disclosure/PLAN.md) · [cauldron-lens-composition](../cauldron-lens-composition/PLAN.md). **Absorbed 2026-10-06:** [chrome-copy-collision](../archive/chrome-copy-collision/FIX.md) · [mobile-chrome-alignment](../archive/mobile-chrome-alignment/PLAN.md) · [narrative-grammar-infrastructure](../archive/narrative-grammar-infrastructure/PLAN.md).
 
@@ -48,6 +50,7 @@ The site already has the right ownership model: floating chrome belongs to a sha
 - Overlap crowding holds until occupants or viewport width change, so reduced chrome does not expand back into the overlap it just resolved.
 - Probe (`/topics/software/`, headless, 40 wheel ticks): lane syncs 43 → 0-1 phone and ~40 → 1 laptop; menu open/close lane syncs 14 → 1; page-state scroll reads 214 → 6 laptop and 246 → 102 phone. Total scroll style recalcs stayed near 950, so their owner is outside these modules.
 - Open: `.spw-console-toggle` in the bottom-lane 44px rule matches nothing; the console renders `.spw-console-expand-btn` at 1.25-1.9rem. Whether console buttons take the 44px lane floor or `--touch-target-compact` is a human sizing call.
+  - Resolved 2026-10-25 for the selector: `.spw-console-toggle` no longer exists anywhere in the tree, since Step 1 removed the lane rule's console entry. The sizing call stays open in `index.spw`.
 
 ## 2026-09-13 Control Size Token (Step 1)
 
@@ -67,3 +70,5 @@ The site already has the right ownership model: floating chrome belongs to a sha
 The pocket lane packs by arithmetic, not by design. `kernel/dom-contracts.js` allocates the collection and cauldron slots, the pocket collection reduces to a 44px trigger, and `components/cauldron.css` takes its slot (`604d4a1d`). At 320px on `/about/` that measured promo 440–622, cauldron 651–695 and satchel 697–741. The promo, satchel, cauldron and travel rail still stack as separate utilities.
 
 Open, as a design pass after Step 2 settles control size: how these four share a corner, meaning what yields, what stays, spacing and hierarchy. No new attribute families. Feel is sensation-gated, so the pass ends at a browser demo. Measurements and history: [cauldron-lens-composition](../cauldron-lens-composition/PLAN.md).
+
+This plan owns control sizes and the pocket corner. The cauldron ([cauldron-lens-composition](../cauldron-lens-composition/PLAN.md)) and the travel rail ([chrome-navigation-wonder](../chrome-navigation-wonder/PLAN.md)) cite it, per the sitting's `seams.pocket_corner`.

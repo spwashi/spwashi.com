@@ -18,6 +18,7 @@ fixity = "tending"
 
 ^"stream"{
  >>[2026-10-12 10:59] verify — Rows 2 and 3 are closed in the tree: settings/index.html has no viewportActivation fieldset (08f060d6), and the blog files are gone. Row 6 is unchanged: the three iconPack radios sit under Icon pack (considering) at settings/index.html:1292, the engine writes spwIconPack, and nothing in public/css reads data-spw-icon-pack. Row 4's sweep, each remaining control checked against public/css and public/js in kebab and camelCase, has not started.
+ >>[2026-10-25 17:44] verify — Read against the tree for the UI review sitting: the Icon pack (considering) fieldset still opens at settings/index.html:1292, nothing in public/css reads icon-pack, and no settings file has changed since 2026-10-12, so row 4's sweep has still not started. FIX.md now names the browser pass for rows 1 and 5, density and metamaterial (live: the grain and density controls on /settings/, then the materials hero and the footer) and puts row 4 first on settings/index.html.
 }
 
 ^"open"{
@@ -30,5 +31,5 @@ fixity = "tending"
  ~#next_commit: "![settings] Take the controls nothing reads off the settings page, and keep their saved keys inert"
  ~#files_hot: "settings/index.html, public/js/kernel/site-settings-engine.js, public/js/kernel/site-settings-profiles.js"
  ~#gate: "nothing for row 4; row 6 waits on the icon-pack answer, rows 1 and 5 on a browser pass"
- ~#last_stream: "2026-10-12"
+ ~#last_stream: "2026-10-25"
 }

@@ -19,6 +19,7 @@ fixity = "tending"
 
 ^"stream"{
  >>[2026-10-12 10:59] verify — The timing bands and their control consumers hold (f721879d, 55ef2737); effects/material.css still has 17 lines that name a duration and none that name a band, and components/cards.css has 2 and none. The Patch 5 leftover is real: the expression badge in sigils-and-chips.css:847-850 times its hover with --duration-fast, the same 140ms that --spw-time-control aliases, so naming the band changes nothing a reader feels. Patch 6 still waits, because bundles/core.css ships no layer order statement and css-cascade-stratification Phase 1 has not landed.
+ >>[2026-10-25 17:44] verify — Read against the tree for the UI review sitting: material.css names --duration-* on 4 lines, and the 17 above counts its --material-duration-* and --material-local-duration-* aliases; the manual routes are /about/website/ and /about/plans/. Status now puts the badge leftover first (no gate, same 140ms) and Patch 6 after Phase 1 and a live look, judged live or from a recording since a still is one frame; Patch 3 records 0206fb41's dark operator colors against the first-color wonder.
 }
 
 ^"open"{
@@ -34,5 +35,5 @@ fixity = "tending"
  ~#next_commit: ".[css] Time the expression badge from the control band, the last chip still naming a raw duration"
  ~#files_hot: "public/css/handles/operators/sigils-and-chips.css, public/css/effects/material.css, public/css/ornament/whimsy.css, public/css/components/cards.css"
  ~#gate: "nothing for the badge; Patch 6 waits on css-cascade-stratification Phase 1 and the creator's feel in the browser"
- ~#last_stream: "2026-10-12"
+ ~#last_stream: "2026-10-25"
 }

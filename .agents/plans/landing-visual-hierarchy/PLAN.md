@@ -1,6 +1,8 @@
 # Landing Visual Hierarchy
 
-**Status 2026-10-10.** The single landing owner. Landed: the early visual pass on Home, Play and Design (3a95fe06) and parcel D's home masthead (b5dfea29). Next slice: parcel B, the Services offer ahead of its tuning panel (see Absorbed below). Parcel D waits while Home is still moving (8b1f44e7, 9c8a7d97, Oct 6–8), and its browser matrix has not run.
+**Status 2026-10-25.** The single landing owner. Landed: the early visual pass on Home, Play and Design (3a95fe06) and parcel D's home masthead (b5dfea29). Next slice: parcel B, the Services offer ahead of its tuning panel (see Absorbed below). B has no still to look at yet: `scripts/lib/viewport-still-recipes.mjs` has no `/services/` recipe, so screenshot-semantics adds `services-opening` first (the sitting's `ungated.still_places`). Parcel D waits while Home settles (8b1f44e7, 9c8a7d97, Oct 6–8; eff5abfd rewrote 151 lines of `index.html` on 2026-10-25), and its browser matrix has not run.
+
+**Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — ungated.services_offer_first, home.masthead, calls.projects_nav, seams.home, seams.settings.
 
 **Related:** [layout-seat-squeeze](../layout-seat-squeeze/PLAN.md) · [alignment-content-fit](../archive/alignment-content-fit/PLAN.md). **Absorbed 2026-10-10:** [landing-page-hierarchy-2026-08-21](../archive/landing-page-hierarchy-2026-08-21/PLAN.md).
 
@@ -46,13 +48,14 @@ Named in `session-2026-08-21.spw`. One packet per agent. Do not run two packets 
 ## Seams
 - Primary navigation HTML: `index.html`, `about/`, `topics/`, `play/`, `design/folios/`, `services/`, `now/`, `settings/`
 - Adjacent exemplars: `design/`, `recipes/`
+- Order on shared files (sitting `seams.home`, `seams.settings`): on `index.html` and `home.css`, chrome-navigation-wonder's section ids, then layout-seat-squeeze's panel inset, then parcel D; on `settings/index.html`, settings-theme-wiring row 4, then the settings presets, then parcel C.
 - CSS: `public/css/routes/surfaces/home.css`, `grammar/syntax.css`, `handles/operators/sigils-and-chips.css`, `components/cards.css`
 - Adjacent: `.agents/plans/archive/wrap-job-utility/`, `card-grid-density-audit/`, `page-region-discoverability/`, `.spw/conventions/typography-packing.spw`, `region-component-ecology.spw`, `component-biome.spw`, `electrostatic-affordances.spw`
 
 ## Validation
 1. Identity remains the first readable claim on each landing.
 2. Above-fold action clusters ≤ 1 rail.
-3. Desktop 1280 and mobile 360: braces hug sigils; cards stretch; chips nowrap.
+3. Desktop 1280 and the 390px pocket phone, with 320px as the narrow check: braces hug sigils; cards stretch; chips nowrap.
 4. Canonical-nav checks also cover 320, 390, 768, and 1280px at 100% and 125% text scale.
 5. `git diff --check`, `node scripts/check-site.mjs`, `node scripts/spw-anatomy-audit.mjs`, `npm run audit:copy:align`, `node scripts/normalize-breakpoints.mjs`, `npm run smoke:nav:ci` and `npm run check:local` after any HTML/CSS patch.
 6. A claimed desk (`data-spw-cluster`) lights a six-seat trope; no new `data-spw-*` families.
@@ -67,7 +70,7 @@ Validation: pocket and desktop browser views show the Home card and the Play and
 
 Source: [landing-page-hierarchy-2026-08-21](../archive/landing-page-hierarchy-2026-08-21/PLAN.md). Parcel A is done: `play/index.html` no longer jumps from H1 to H3. Still owed, in order, one parcel per agent, claimed in `session-2026-08-21.spw`:
 - **B, `services/index.html` (next):** put offer, proof and action ahead of optional tuning. `#services-tuning` (line 215) still precedes `#three-paths` (338) and `#pricing` (615). Keep the pricing and contact paths.
-- **C, `settings/index.html`:** group Quick Start into task-shaped regions with progressive disclosure. The page still has no authored `data-spw-cluster`.
+- **C, `settings/index.html`:** Quick Start is gone; the settings shelf's eight aisles replaced it (b2eda400). First ask whether those aisles already answer this parcel, or whether settings still wants task-shaped regions with progressive disclosure; the creator's call. The page still has no authored `data-spw-cluster`.
 - **D, `index.html` + `about/index.html`:** primary, secondary and tertiary region weights. The masthead (b5dfea29) is unseen at pocket, fold and broadsheet; run that matrix before continuing, and wait while Home is moving. Left for a browser: the split rail seated by `grid-row: 1 / span 99` (`shell/layout.css:492`), the header sigil and toggle re-placed in toggle mode (`shell/chrome/navigation.css`), and the home h1's ≤48rem viewport query beside its 32rem container query.
 - E (Topics, Art) and F (Now) move only on a measured defect; Now is the restraint control.
 - Gates: the outline never skips a level; route identity, opening promise and one next move sit within two viewport heights; no body overflow at 320, 390, 768 or 1280px at 100% and 125% text; every added cluster answers a reader task; the eight route fingerprints stay distinct. Run a manual pass with reduced motion and keyboard only.

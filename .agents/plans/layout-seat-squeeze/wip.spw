@@ -33,6 +33,7 @@ fixity = "tending"
 
 ^"stream"{
  >>[2026-10-12 10:59] verify — The edges queue's next step still points at real lines: the six entry panels open at index.html:768 and the entrance role hooks at :460, and qa:alignment (scripts/alignment-audit.mjs) is the sensor. Home changed today (efcd875d), so the 2026-09-17 edge reading of 44/44/44/44/47/44 needs a fresh before. The coverage queue's audit:region-coverage script still does not exist, and the lens hook nav wrap stays held.
+ >>[2026-10-25 17:44] verify — Read against the tree for the UI review sitting: eff5abfd moved the six entry panels to index.html:765 and the entrance role hooks to :454 (they were :768 and :460 above), and PLAN.md now cites the new lines. The 2026-09-17 edge reading predates that rewrite, so the gate takes a fresh qa:alignment before; the inset lands after chrome-navigation-wonder's home ids and before landing's parcel D, and the settings edges wait on theme-wiring row 4, the presets and parcel C.
 }
 
 ^"open"{
@@ -43,6 +44,6 @@ fixity = "tending"
  ~#status: "implementing"
  ~#next_commit: "~[home] Give the six entry panels one shared inset, so their text starts on one edge at phone width"
  ~#files_hot: "index.html, public/css/routes/surfaces/home.css, public/css/systems/layout-squeeze.css, scripts/alignment-audit.mjs"
- ~#gate: "a qa:alignment reading before and after, and a phone still for the creator's look"
- ~#last_stream: "2026-10-12"
+ ~#gate: "a fresh qa:alignment reading before and after, and a phone still for the creator's look"
+ ~#last_stream: "2026-10-25"
 }

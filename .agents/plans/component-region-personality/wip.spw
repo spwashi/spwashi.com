@@ -19,6 +19,7 @@ fixity = "tending"
 
 ^"stream"{
  >>[2026-10-12 10:59] verify — Waves 0–2 hold: copy-unit ids, and audit:copy:accessor (c0fa1767). Wave 3 has not started: topics/index.html carries 6 spw-visual-link-card cards, and services/index.html and recipes/index.html carry none; the Status line's 30 counts class mentions with each card's four parts, not cards. The card styles already ship in components/content.css, so the slice is HTML on two heroes once the creator picks the children.
+ >>[2026-10-25 17:42] verify — read against the tree for the UI review sitting: topics has 6 cards (topics/index.html:258-322), not 30, and the card CSS ships at content.css:1259, so the slice is HTML only. PLAN.md now notes the struck data-spw-copy-motifs (index.html:54, tools/index.html:52, :171; no reader) and data-spw-label-posture (visual-capture-plan.mjs:558) still in the tree, fixes the related plans, and records Wave 5's tension with cards on the services hero (photo :135, landmarks :161).
 }
 
 ^"open"{
@@ -30,5 +31,5 @@ fixity = "tending"
  ~#next_commit: "+[services] Open the services hero with picture cards for its main paths, the way topics opens"
  ~#files_hot: "services/index.html, recipes/index.html, topics/index.html, public/css/components/content.css"
  ~#gate: "the creator's pick of two or three children per hero, in a browser review"
- ~#last_stream: "2026-10-12"
+ ~#last_stream: "2026-10-25"
 }

@@ -1,6 +1,8 @@
 # Plan: semantic-html-normalization
 
-**Status 2026-10-10.** The landmark sweep holds: all 207 route pages carry `<main>`, and 202 carry the skip link (the gaps are four labs under `/design/experiments/` and `/topics/knowledge-bases/markdown/`). Two scripts-off sensors landed since 09-27: `audit:page-structure` names buttons only a script answers (8d1ed950, 768c5c09), and `component-snapshots.mjs` takes scripts-off stills (73f200f2). Next slice: the JS-on/off landmark, heading and link diff below. It reports only until its counts are read once in a browser.
+**Status 2026-10-25.** The landmark sweep holds: all 208 route pages carry `<main>`, and 203 carry the skip link (the gaps are four labs under `/design/experiments/` and `/topics/knowledge-bases/markdown/`). Two scripts-off sensors landed since 09-27: `audit:page-structure` names buttons only a script answers (8d1ed950, 768c5c09), and `component-snapshots.mjs` takes scripts-off stills (73f200f2). Next slice: the JS-on/off landmark, heading and link diff below. It reports only until its counts are read once in a browser on the demo routes. Beside it, ungated and small: the code-block controls take `--touch-target-min` (Access, below). The access report comes after the diff.
+
+**Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — ungated.scripts_off_diff, ungated.code_block_controls, access.
 
 **Related:** [gesture-aria-hygiene](../archive/gesture-aria-hygiene/FIX.md) (archived) · [page-region-discoverability](../archive/page-region-discoverability/PLAN.md).
 
@@ -61,6 +63,16 @@ Validation additions:
 
 Progressive enhancement is doctrine in five places and owned by none: `AGENTS.md` (JS only when HTML and CSS cannot carry the behavior), `.spw/conventions/stylesheet-ecology.spw#progressive_enhancement` (the CSS delivery side), `.spw/caches/living-terms-2026-09.spw` with `npm run audit:living-terms` (a highlighted word must keep its promise with scripts off), `dimensional-expression-navigation` (the dimensional path is ordinary links), and `spw-operator-pages` craft guard 3. This plan owns the HTML side of that rule from today, because the static skeleton is what remains when scripts are off.
 
-Facts: three routes carry a `<noscript>` block, one on home. The module catalog mounts 136 ids, eight immediate. The runtime writes 115 custom properties and many `data-spw-*` states, and no sensor compares a JS-off render against a JS-on one. `audit:living-terms` is the only parity probe, and it covers one mechanic.
+Facts: three routes carry a `<noscript>` block, one on home. The module catalog mounts 146 ids (4 core, 92 enhancement, 49 feature, 1 region; recounted 2026-10-25, 136 on 09-27), eight immediate. The runtime writes 115 custom properties and many `data-spw-*` states, and no sensor compares a JS-off render against a JS-on one. `audit:living-terms` is the only parity probe, and it covers one mechanic.
 
-Next slice, narrowed 2026-10-10. Controls already have a sensor: `audit:page-structure` names buttons a page offers with scripts off that nothing answers (8d1ed950, 768c5c09; it skips buttons inside a `<form>`), `audit:living-terms` covers living terms, and `component-snapshots.mjs` takes scripts-off stills (73f200f2). What no sensor does yet: load a route through `scripts/lib/chrome-headless-harness.mjs` with scripts disabled and again enabled, and diff landmarks, headings, and link and form counts. Report per route; do not gate `check:local` on it until the counts are read once in a browser.
+Next slice, narrowed 2026-10-10. Controls already have a sensor: `audit:page-structure` names buttons a page offers with scripts off that nothing answers (8d1ed950, 768c5c09; it skips buttons inside a `<form>`), `audit:living-terms` covers living terms, and `component-snapshots.mjs` takes scripts-off stills (73f200f2). What no sensor does yet: load a route with scripts disabled and again enabled, and diff landmarks, headings, and link and form counts. The scripts-off switch is `applyScriptExecution` in `scripts/component-snapshots.mjs:423` (`Emulation.setScriptExecutionDisabled`); `chrome-headless-harness.mjs` has none. Report per route; do not gate `check:local` on it until the counts are read once in a browser on the demo routes: `/`, `/about/website/`, `/settings/`, `/topics/math/`, `/topics/software/parsers/`, `/topics/software/spw/operators/ref/`.
+
+## Access — 2026-10-25
+
+The [review sitting](../../../.spw/caches/ui-review-sitting-2026-10.spw)'s `^"access"` frame holds gaps no plan owns. This plan takes them as proposed owner.
+
+- Contrast and targets: no sensor checks WCAG AA contrast or the 44px ground-control target. The dark operator colors in 0206fb41 were checked by hand. One report from computed styles: text contrast per route at pocket, light and dark, and coarse-pointer hit boxes under 44px outside `[data-spw-floating-chrome]`.
+- Code-block controls: Edit and Copy on Spw code blocks use `--touch-target-compact` on coarse pointers and `2rem` otherwise (`public/css/components/spw-source.css:114`, `:142`). They are content controls, so they take `--touch-target-min` (CLAUDE.md:8). Small and ungated; it lands beside the diff.
+- Script-only buttons: 223 on 24 pages (`/design/` 40, `/services/care/` 28, `/settings/` 21). Each needs a scripts-off reading that does not promise an action.
+- Math labs: the inputs answer nothing with scripts off. The lab review belongs to [modular-experience-slices](../modular-experience-slices/PLAN.md).
+- Skip links: the five gaps in the Status line, unscheduled.

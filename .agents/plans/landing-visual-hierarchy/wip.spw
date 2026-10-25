@@ -19,6 +19,7 @@ fixity = "tending"
 
 ^"stream"{
  >>[2026-10-12 10:59] verify — The early visual pass (3a95fe06) and parcel D's masthead (b5dfea29) hold, and parcel B is untouched: in services/index.html the tuning section still opens at line 215, ahead of the three paths at 338 and pricing at 615. Home moved again today (efcd875d), so D keeps waiting. Parcel C still says to group Quick Start, but Quick Start became the eight-aisle settings shelf on 2026-10-08 (b2eda400), so C needs a fresh read before anyone claims it.
+ >>[2026-10-25 17:44] verify — Read against the tree for the UI review sitting: services/index.html still opens #services-tuning at 215 ahead of #three-paths (338) and #pricing (615), but no /services/ still recipe exists, so B's look waits on screenshot-semantics adding services-opening; eff5abfd rewrote 151 lines of index.html today, so D keeps waiting. PLAN.md now asks whether the shelf's eight aisles answer C, names the 390px phone and 320px narrow check in place of "mobile 360", and gives the order on Home and settings/index.html.
 }
 
 ^"open"{
@@ -32,5 +33,5 @@ fixity = "tending"
  ~#next_commit: "~[services] Put the offer, the three paths and the pricing ahead of the tuning panel"
  ~#files_hot: "services/index.html, public/css/routes/surfaces/services.css, index.html, settings/index.html"
  ~#gate: "nothing for B beyond its own checks; D waits while Home is moving"
- ~#last_stream: "2026-10-12"
+ ~#last_stream: "2026-10-25"
 }

@@ -85,6 +85,7 @@ fixity = "tending"
  >>[2026-09-04 12:55] decide - First pocket frame: identity + lens + one extra. Figure slots on non-hero-split frames stay in document order. Climate rails live in the topline as a wrap row, not slot=meta.
  >>[2026-09-04 12:55] taste - Research keeps the ladder; town the atlas path; membership the role field; svg the motif kit; about must not clip the person. Next hubs must pick a different extra.
  >>[2026-10-12 10:59] verify — named viewport stills (de06af3c), the nightly and wander walks (9f3aae2a, 73f200f2) and the crop seed (aba9c1e4) are in the tree, and capture mode pauses SVG flows and texture crops. Commit 1 landed with the plan (64f264e0), so it leaves the commits list; 2–5 have not started. The next slice, one screenshottable state on one route with a named still id, waits on the creator's answer to the journey question.
+ >>[2026-10-25 17:44] verify — Read against the tree for the UI review sitting: viewport-still-recipes.mjs has no services, settings or play recipe, and software-frame-probe (:1010, 4771b685) is already a frame-addressed pocket still of /topics/software/. Status now makes the three ungated recipes (services-opening, settings-presets, play-opening) the next slice ahead of the frame still, which extends software-frame-probe or says how it differs; Capture loop records that every still runs in screenshot capture mode (component-snapshots.mjs:575, :979), hiding chrome at capture.css:7-35 and pausing SVG flows at :40, so motion is judged live.
 }
 
 ^["open"]{
@@ -106,13 +107,13 @@ fixity = "tending"
 }
 
 ^["cache"]{
- ~#status: "waiting"
+ ~#status: "implementing"
  ~#hygiene_split: "none"
  ~#files_hot: "scripts/lib/viewport-still-recipes.mjs, public/css/modes/capture.css, public/js/semantic/component-semantics.js, .spw/conventions/site-semantics.spw"
- ~#next_commit: "+[capture] Name one still of an addressed frame on the software page, readable with scripts off"
- ~#gate: "the creator's answer to index.spw#wonder_screenshot_semantics_journey"
+ ~#next_commit: "+[capture] Name three stills the sitting's looks wait on: services-opening, settings-presets and play-opening"
+ ~#gate: "nothing for the three recipes; the frame still waits on the creator's answer to index.spw#wonder_screenshot_semantics_journey"
  ~#open_count: "8"
- ~#last_stream: "2026-10-12"
+ ~#last_stream: "2026-10-25"
  ~#taste_debt: "Priming is the underrepresented axis — make it legible without making it loud. Journey tokens should feel earned and sparse, not tracked and comprehensive. Log the visual form decision as a taste choice at commit 2."
 }
 

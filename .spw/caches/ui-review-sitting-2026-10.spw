@@ -1,0 +1,268 @@
+# UI review sitting (2026-10) — every look the spwashi.com UI plans wait on, in one walk
+#
+# operation: prime
+# Seventeen UI and UX plans were read against the tree on 2026-10-25. Most end
+# at a creator's look in a browser, each with its own place to look or none, and
+# several claim the same file. This holds those looks as one walk grouped by
+# where the reader stands, each with its question, its options, how to look,
+# and what the answer unblocks. It also holds:
+# - what can land without a look, in the order a reader would notice it;
+# - the files two plans claim, and the order they take them in;
+# - the access gaps no plan owns.
+# Nothing here decides a sensation. It prepares the sitting where the
+# decisions are made.
+
+#>ui_review_sitting_2026_10
+#:cache #!ui #!ux #!review
+#:operation #!prime
+#:fixity #!tending
+#:layer #!pragmatics
+
+@recipes: ~"../../scripts/lib/viewport-still-recipes.mjs"
+@capture_css: ~"../../public/css/modes/capture.css"
+@craft_shelves: ~"./craft-shelves-2026-10.spw"
+@ecosystem: ~"../../.agents/plans/ecosystem-architecture/PLAN.md"
+@landing: ~"../../.agents/plans/landing-visual-hierarchy/PLAN.md"
+@seat_squeeze: ~"../../.agents/plans/layout-seat-squeeze/PLAN.md"
+@color_motion: ~"../../.agents/plans/color-motion/PLAN.md"
+@settings_shelf: ~"../../.agents/plans/settings-ornament-resonance/PLAN.md"
+@theme_wiring: ~"../../.agents/plans/settings-theme-wiring/FIX.md"
+@screenshot: ~"../../.agents/plans/screenshot-semantics/PLAN.md"
+@chrome_nav: ~"../../.agents/plans/chrome-navigation-wonder/PLAN.md"
+@floating_chrome: ~"../../.agents/plans/floating-chrome-stack/FIX.md"
+@interaction: ~"../../.agents/plans/interaction-grammar/PLAN.md"
+@state_block: ~"../../.agents/plans/state-block-projections/PLAN.md"
+@cauldron_lens: ~"../../.agents/plans/cauldron-lens-composition/PLAN.md"
+@spellcraft: ~"../../.agents/plans/spellcraft-authoring/PLAN.md"
+@cascade: ~"../../.agents/plans/css-cascade-stratification/PLAN.md"
+@html_norm: ~"../../.agents/plans/semantic-html-normalization/PLAN.md"
+@copy_depth: ~"../../.agents/plans/semantic-copy-depth/PLAN.md"
+@regions: ~"../../.agents/plans/component-region-personality/PLAN.md"
+@canvas: ~"../../.agents/plans/designer-conversation-canvas/PLAN.md"
+@slices: ~"../../.agents/plans/modular-experience-slices/PLAN.md"
+
+operation = "prime"
+fixity = "tending"
+
+expression = sitting[review]{place.question.options.unblocks}<browser>
+
+^"rules"{
+  place = `every browser gate names a place to look: a route with its anchor, or a still id in @recipes`
+  motion = `motion and timing are judged live or from a recording, since a still is one frame. npm run visual:checks also pins data-spw-capture-mode="screenshot", and @capture_css hides floating chrome, the section handle and the state inspector (lines 7-35) and pauses animated SVG flows (line 40)`
+  widths = `a phone is the 390px pocket viewport; 320px is the narrow check`
+  one_hand = `one plan edits a route's file at a time, in the order ^"seams" gives`
+}[reg=facet]
+
+# ==============================================================================
+# WITHOUT A LOOK — first what gives a look a place, then what a reader notices
+# ==============================================================================
+
+^"ungated"{
+  still_places = .{
+    plan = @screenshot
+    slice = `three recipes in @recipes: services-opening, settings-presets, play-opening`
+    why = `three looks below have no still to open: the Services parcel, the settings presets, and the /play/ cascade rows`
+  }[reg=facet]
+  services_offer_first = .{
+    plan = @landing
+    slice = `parcel B: the Services offer, the three paths and pricing ahead of #services-tuning`
+    reader = `the business page opens on what is offered and what it costs`
+  }[reg=facet]
+  dead_settings_controls = .{
+    plan = @theme_wiring
+    slice = `row 4: remove the remaining controls with no reader, each checked against public/css and public/js first; the icon-pack fieldset (settings/index.html:1292) is row 6 and waits on icon_packs`
+    reader = `every control on /settings/ changes something`
+  }[reg=facet]
+  code_block_controls = .{
+    plan = @html_norm
+    slice = `Edit and Copy on Spw code blocks are content controls: --touch-target-min on coarse pointers, not --touch-target-compact (public/css/components/spw-source.css:114, :142)`
+    reader = `34 code blocks on 30 routes get thumb-sized controls`
+  }[reg=facet]
+  home_rail_ids = .{
+    plan = @chrome_nav
+    slice = `short ids on home's five unnamed sections; the ids follow the headings eff5abfd wrote`
+    reader = `the rail says where you are on home`
+  }[reg=facet]
+  panel_inset = .{
+    plan = @seat_squeeze
+    slice = `one shared inset for #home-entry-panels; a fresh npm run qa:alignment before and after, since the 2026-09-17 reading predates the Home rewrite`
+    reader = `the six panel text edges sit on one line on a phone`
+  }[reg=facet]
+  math_note = .{
+    plan = @copy_depth
+    slice = `the /topics/math/#pure-math-routes half of the thought-trace rewrite, which has no gate`
+  }[reg=facet]
+  cauldron_receipt = .{
+    plan = @cauldron_lens
+    slice = `the pocket receipt npm run visual:checks -- --ids=home-cauldron-open, after npm run sense -- doctor`
+    order = `before spell_fold, which moves its baseline`
+  }[reg=facet]
+  spell_fold = .{
+    plan = @spellcraft
+    slice = `the phase-attribute fold (resonance.js, dom-sync-hub.js, palette-depth.css)`
+  }[reg=facet]
+  gesture_census = .{
+    plan = @interaction
+    slice = `10 gesture strings, 37 authorings on 36 lines in 21 files`
+    unblocks = `the drawer-swipe question in @chrome_nav, which waits on the verb rule`
+  }[reg=facet]
+  scripts_off_diff = .{
+    plan = @html_norm
+    slice = `landmarks, headings, links and forms with scripts off and on, per route; its first reading is the 223 script-only buttons on 24 pages`
+  }[reg=facet]
+}
+
+# ==============================================================================
+# THE SITTING — grouped by where the reader stands
+# ==============================================================================
+
+^"design"{  # /design/
+  lens_seats = .{
+    plan = @state_block
+    look = `live, on a phone and a desktop: /design/components/#lens-seats`
+    question = `which lens seat does the site wear, and are the inactive mode-switch chips too faint`
+    options = #[`A, the chassis (about 170px on a phone)`, `B, the seat row that shows its expression (about 121px)`, `C, the silent row (about 100px)`][reg=set]
+    unblocks = `the seat's move into state-semantics.css, the lens reward toast, and the cauldron's second-use offer`
+    wonder = ~"../../.agents/plans/state-block-projections/index.spw#wonder_state_block_projections_lens_seat"
+  }[reg=facet]
+  spell_decompose = .{
+    plan = @spellcraft
+    look = `live: /design/experiments/spellcraft/#bench-decompose`
+    question = `are hold-prime, decompose and re-mix ready to promote`
+    options = #[`promote`, `not yet`][reg=set]
+  }[reg=facet]
+}[reg=facet]
+
+^"home"{  # /
+  layer_order = .{
+    plan = @cascade
+    look = `live at pocket: / and /play/, each with and without ?spw-layer-order=declared`
+    question = `of the route rules that flip under the declared order (home 67, play 25), which win on purpose`
+    options = #[`a row keeps its look, and its rule moves to a later layer`, `the declared order wins`][reg=set]
+    unblocks = `the order statement in every bundle (@ecosystem S5), then color-motion's Patch 6`
+  }[reg=facet]
+  console_size = .{
+    plan = @floating_chrome
+    look = `first the question; then live, never a still: / at pocket and /about/ at 320px`
+    question = `is CLAUDE.md's "pocket chrome keeps --touch-target-compact" the decision on console button size; and should whimsy's 48rem min-height reach floating chrome`
+    options = #[`compact, as CLAUDE.md says`, `the 44px floor in the lanes`, `whimsy excludes [data-spw-floating-chrome]`][reg=set]
+    unblocks = `Step 2: every floating control on every phone page`
+    wonder = ~"../../.agents/plans/floating-chrome-stack/index.spw#wonder_floating_chrome_stack_console_size"
+  }[reg=facet]
+  masthead = .{
+    plan = @landing
+    look = `npm run visual:capture -- --stills --ids home-opening,home-folio-hero --viewports pocket,fold,broadsheet`
+    question = `does the masthead hold at all three widths`
+    order = `after home's copy settles; eff5abfd rewrote 151 lines of index.html on 2026-10-25`
+  }[reg=facet]
+  menu_toggle = .{
+    plan = @chrome_nav
+    look = `npm run visual:checks -- --ids=home-nav-open`
+    question = `does the glyph menu toggle still read as ambient chrome`
+    options = #[`leave it`, `give it more weight`][reg=set]
+  }[reg=facet]
+}[reg=facet]
+
+^"settings"{  # /settings/
+  presets = .{
+    plan = @settings_shelf
+    look = `live: /settings/#presets; capture hides the state inspector and the section handle`
+    question = `which of two guided ways to try a look ships; a random pick is already ruled out`
+  }[reg=facet]
+  theme_rows = .{
+    plan = @theme_wiring
+    look = `live: the grain and density controls on /settings/, then the materials hero and the footer`
+    question = `does each of rows 1 and 5, density and metamaterial change something a reader can see`
+    options = #[`keep and wire it`, `remove it`][reg=set]
+  }[reg=facet]
+  icon_packs = .{
+    plan = @theme_wiring
+    question = `are icon packs a reader setting at all, or do the sigils stay one authored set`
+    wonder = ~"../../.agents/plans/settings-theme-wiring/index.spw#wonder_settings_theme_wiring_icon_packs"
+  }[reg=facet]
+}[reg=facet]
+
+^"topics"{  # /topics/
+  slop_feeling = .{
+    plan = @copy_depth
+    look = `/topics/slop/#feeling`
+    question = `are the three citation paragraphs a display case, or sources standing as the sentences on purpose`
+    options = #[`rewrite as one claim that turns`, `keep the sources as the sentences`][reg=set]
+    wonder = ~"../../.agents/plans/semantic-copy-depth/index.spw#wonder_semantic_copy_depth_slop_feeling"
+  }[reg=facet]
+  math_labs = .{
+    plan = @slices
+    look = `live, then with scripts off: /topics/math/vector-calculus/#vector-field-lab and /topics/math/numerical-methods/#numerical-stepping-lab`
+    question = `does the pilot port as it is, split, or go; with scripts off its select and range inputs stay live and do nothing`
+    options = #[`port as is`, `split`, `reject`][reg=set]
+  }[reg=facet]
+  card_timing = .{
+    plan = @color_motion
+    look = `live or a recording, never a still: /, /topics/ and /settings/, with reduced motion off and on`
+    question = `which sheet owns card timing`
+    options = #[`material.css`, `whimsy.css`][reg=set]
+    order = `after layer_order`
+  }[reg=facet]
+  first_color = .{
+    plan = @color_motion
+    look = `/design/palettes/ at phone width, light and dark`
+    question = `should the first visible color change make operator hues easier to tell apart, or warm the surfaces they sit on`
+    wonder = ~"../../.agents/plans/color-motion/index.spw#wonder_color_motion_first_color_change"
+  }[reg=facet]
+}[reg=facet]
+
+^"hubs"{  # /services/ and /recipes/
+  hero_children = .{
+    plan = @regions
+    look = `live at pocket: /services/ and /recipes/ beside /topics/`
+    question = `which two or three children get a picture card`
+    options = #[`/services/care/`, `/services/creator/`, `/services/ecosystem/`, `/services/systems/`, `/recipes/fermentation/`, `/recipes/mise-en-place/`, `/recipes/reduction/`][reg=set]
+    tension = `the services hero already holds a photo and its landmarks, and Wave 5 allows one extra dense object in the first pocket frame`
+  }[reg=facet]
+}[reg=facet]
+
+^"calls"{  # questions without a page
+  journey = `@screenshot: should a still show how the visit got here, and persist across sessions? Open the software-frame-probe still first; it already addresses a frame`
+  drawer_swipe = `@chrome_nav: should an open route drawer answer a swipe at all? On a phone, /about/, after gesture_census`
+  projects_nav = `@landing: should Projects join the eight primary navigation items?`
+  reviewer = `@canvas: name the one designer who reviews #component-ecology-specimens`
+  first_portable = `@ecosystem S4: the Spw instrument travels first, as proposed, or a capability, or the design specimen`
+}[reg=facet]
+
+# ==============================================================================
+# SEAMS — files two plans claim, and the order they take them in
+# ==============================================================================
+
+^"seams"{
+  home = `index.html and home.css: home_rail_ids (HTML attributes), then panel_inset (one CSS value), then masthead after its look`
+  settings = `settings/index.html: dead_settings_controls, then presets, then landing's parcel C (Quick Start is gone since b2eda400; the shelf's eight aisles may already answer it), then the seat-squeeze edges, then semantic-html's hot files`
+  breadcrumbs = `@chrome_nav owns the rail's route path and @spellcraft the spell trail; both read the one anatomy reader @craft_shelves primes, so neither assembles a trail of its own`
+  menu_toggle = `@chrome_nav owns the header; @state_block's row 2 cites it`
+  pocket_corner = `@floating_chrome owns control sizes and the corner; the cauldron and the travel rail cite it`
+  cauldron = `cauldron_receipt, then spell_fold`
+  lens = `@state_block owns the seat; @interaction's census reads swipe:toggle-lens; @cauldron_lens receives the second-use offer`
+  entrance_copy = `@copy_depth owns the words on the /, /about/, /services/ and /topics/ entrances, and audit:copy:accessor reports to it; @regions owns their cards and chips`
+  cards_css = `landing's seams before color-motion's Patch 6, which waits on layer_order anyway`
+}[reg=facet]
+
+# ==============================================================================
+# ACCESS — gaps no plan owns; proposed owner @html_norm
+# ==============================================================================
+
+^"access"{
+  contrast_and_targets = `no sensor checks WCAG AA contrast or the 44px ground-control target; the dark operator colors in 0206fb41 were checked by hand. One report from computed styles: text contrast per route at pocket, light and dark, and coarse-pointer hit boxes under 44px outside [data-spw-floating-chrome]`
+  code_blocks = `code_block_controls above`
+  script_only_buttons = `223 on 24 pages (/design/ 40, /services/care/ 28, /settings/ 21): each needs a scripts-off reading that does not promise an action`
+  math_inputs = `math_labs above: the inputs answer nothing with scripts off, and the figure is its caption`
+  skip_links = `five routes lack the skip link; the plan names them and schedules none`
+}[reg=facet]
+
+#>wonder_ui_review_sitting_order
+?["Should the sitting be walked by place, so a reader stays on one page per stretch, or by what each answer unblocks?"]{
+  #:depth #!pragmatics ~#lens(comparison)
+  ~#taste: "A look is cheaper when the eye stays where it is; a decision is worth more when it frees the most work."
+  ~#hypothesis: "Grouping by place keeps the reviewer on one page per stretch, so a sensation is judged against its neighbors. Ordering by unblocks puts lens_seats and layer_order first, since each frees work in three plans."
+  ~#tension: "A sitting that ends early leaves the late items waiting; one walked by place may end before reaching the look that frees the most."
+  !probe{ "rg -c 'unblocks = ' .spw/caches/ui-review-sitting-2026-10.spw" }
+  $%[sitting.place, sitting.unblocks, review.length]
+}

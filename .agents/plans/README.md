@@ -112,6 +112,17 @@ Every live folder, once, by area. Open a plan's `index.spw` for its disposition 
 - `agentic-dev-contracts/` — one validation entrypoint and one manifest.
 - `history-reflow/` — commit grammar and the reflow method.
 
+## Maintenance Snapshot - 2026-10-25
+
+UI and UX pass. Seventeen plans for spwashi.com's chrome, interaction, layout, settings, capture, reading and access were read against the tree.
+
+- **One sitting for the looks.** [`ui-review-sitting-2026-10.spw`](../../.spw/caches/ui-review-sitting-2026-10.spw) collects every browser look these plans wait on. It is grouped by where the reader stands (`/design/`, home, `/settings/`, `/topics/`, the hubs), and each look carries its question, its options, how to look, and what it unblocks. What can land without a look comes first, in the order a reader would notice it.
+- **Every gate names a place to look.** Three looks had no still (Services, the settings presets, `/play/`). screenshot-semantics now adds those recipes first.
+- **Timing is judged live.** A still is one frame, and capture mode hides floating chrome, the section handle and the state inspector. So the console size, the presets and card timing are looked at live or recorded.
+- **One hand per file.** Home had three plans queued and `settings/index.html` had four; the sitting orders them. Breadcrumbs, the menu toggle, the pocket corner, the cauldron and the entrance copy each have one owner now.
+- **Access has an owner.** No sensor checked contrast or touch targets. semantic-html-normalization takes them, and the first small fix is the Edit and Copy controls on Spw code blocks.
+- **Drift corrected, with a wip entry in each plan:** paths that moved, line numbers that shifted under the 2026-10-25 Home rewrite (`eff5abfd`), stale counts, and archived dependencies. Two plans whose Status and wip named different next slices now name one (spellcraft-authoring, color-motion).
+
 ## Maintenance Snapshot - 2026-10-12
 
 Tree census: **50 live folders (48 PLAN.md, 3 FIX.md)**. Two plans opened today: `spw-quest` and `smut-today-crew`, both written to be reviewed by agents before anything is built.

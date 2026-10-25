@@ -1,5 +1,7 @@
 # Cauldron lens composition
-**Status 2026-10-10.** Landed: the lens-aware mix with pocket slots (`604d4a1d`) and the native dialog (`326eb119`). Next slice: the pocket receipt for the `home-cauldron-open` still (`scripts/lib/viewport-still-recipes.mjs:507`), via `npm run visual:checks -- --ids=home-cauldron-open`. The 326eb119 session could not take it because the browser timed out. The receipt needs a local server and a browser the sandbox allows. Corner sharing moved to floating-chrome-stack.
+**Status 2026-10-10.** Landed: the lens-aware mix with pocket slots (`604d4a1d`) and the native dialog (`326eb119`). Next slice: the pocket receipt for the `home-cauldron-open` still (`scripts/lib/viewport-still-recipes.mjs:507`), via `npm run visual:checks -- --ids=home-cauldron-open`, after `npm run sense -- doctor`. It comes before spellcraft-authoring's phase-attribute fold, which moves its baseline (the sitting's `seams.cauldron`). The 326eb119 session could not take it because the browser timed out. The receipt needs a local server and a browser the sandbox allows. Corner sharing moved to floating-chrome-stack.
+
+**Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — ungated.cauldron_receipt, seams.cauldron, seams.lens.
 
 **Related:** [floating-chrome-stack](../floating-chrome-stack/FIX.md) · [mobile-chrome-alignment](../archive/mobile-chrome-alignment/PLAN.md) (archived).
 
@@ -25,6 +27,10 @@ Validation: 394 module tests; check:local -- --allow-dirty (generated CSS includ
 Moved 2026-10-10: the packing is lane arithmetic, not a designed field. The corner-sharing
 pass (what yields, what stays, spacing and hierarchy) now lives in
 [floating-chrome-stack](../floating-chrome-stack/FIX.md) under "Corner sharing".
+
+Lens seat, 2026-10-25: [state-block-projections](../state-block-projections/PLAN.md) offers the
+lens seat to the cauldron on its second use, not its first; this plan receives that offer
+(the sitting's `seams.lens`). It waits on that plan's A/B/C seat review.
 
 Cauldron modal UX — align / tending; focus: composition palette, element: air.
 The existing vessel moves into a native dialog and returns to its footer seat on

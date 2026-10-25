@@ -1,6 +1,8 @@
 # Plan: screenshot-semantics
 
-**Status 2026-10-10.** Named viewport-still recipes landed (de06af3c; nightly and wander walks since, 9f3aae2a, 73f200f2), and the 2026-08-31 crop seed (aba9c1e4). Capture mode (`data-spw-capture-mode`) already gives clean-capture visibility and pauses SVG flows (`public/css/modes/capture.css`) and texture crops (`effects/texture-slice.css`). Commits 2–5 (priming and journey tokens) have not started. The next slice is one screenshottable state on one route with a named still id, and it waits on the creator's answer to `index.spw#wonder_screenshot_semantics_journey`: should a still show how the visit got here, and should that persist across sessions?
+**Status 2026-10-25.** Named viewport-still recipes landed (de06af3c; nightly and wander walks since, 9f3aae2a, 73f200f2), and the 2026-08-31 crop seed (aba9c1e4). Capture mode (`data-spw-capture-mode`) already gives clean-capture visibility and pauses SVG flows (`public/css/modes/capture.css`) and texture crops (`effects/texture-slice.css`). Commits 2–5 (priming and journey tokens) have not started. The next slice has no gate: three recipes in `scripts/lib/viewport-still-recipes.mjs`, `services-opening`, `settings-presets` and `play-opening`, so the Services parcel, the settings presets and the `/play/` cascade rows have a still to open (the sitting's `ungated.still_places`). After it comes one screenshottable state on one route with a named still id, which waits on the creator's answer to `index.spw#wonder_screenshot_semantics_journey`: should a still show how the visit got here, and should that persist across sessions? `software-frame-probe` (`viewport-still-recipes.mjs:1010`, added 2026-09-04 in 4771b685) is already a frame-addressed pocket still of `/topics/software/`; the frame still extends it, or says how it differs.
+
+**Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — ungated.still_places, calls.journey, rules.motion.
 
 **Related:** [visual-capture-ecology](../archive/visual-capture-ecology/PLAN.md) · [rpg-asset-capture-frames](../archive/rpg-asset-capture-frames/PLAN.md) (archived).
 
@@ -54,6 +56,7 @@ Capture loop (the `fuzz:*` scripts never existed):
 - Explore: `npm run visual:explore`
 - Recapture misses: `npm run visual:stabilize`
 - One state: `npm run visual:capture -- --stills --ids <still> --viewports pocket`
+- Every still gate in other plans runs with `data-spw-capture-mode="screenshot"` (`scripts/component-snapshots.mjs:575`, `:979`), so floating chrome, the section handle and the state inspector are hidden (`public/css/modes/capture.css:7-35`) and animated SVG flows are paused (`:40`). A still is one frame, so timing and motion are judged live or from a recording (the sitting's `rules.motion`).
 
 ## Dependencies
 

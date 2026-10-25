@@ -1,6 +1,10 @@
 # Component Region Personality
 
-**Status 2026-10-10.** Waves 0–2 have landed: copy-unit ids, and `npm run audit:copy:accessor` (c0fa1767). The one next slice is the Wave 3 cards: `spw-visual-link-card` on the services and recipes heroes, in HTML and CSS. Topics has 30 of these cards; services and recipes have none. Which two or three children get a card is the creator's call in a browser review. The three new `data-spw-*` attributes Waves 3–4 proposed are struck. The plan still holds the anatomy vocabulary from webpage-trope-vocabulary.
+**Status 2026-10-25.** Waves 0–2 have landed: copy-unit ids, and `npm run audit:copy:accessor` (c0fa1767). The one next slice is the Wave 3 cards: `spw-visual-link-card` on the services and recipes heroes, in HTML only; the card CSS already ships (`public/css/components/content.css:1259`). Topics has 6 of these cards (`topics/index.html:258-322`); services and recipes have none. Which two or three children get a card is the creator's call in a browser review, live at pocket beside `/topics/`. The three new `data-spw-*` attributes Waves 3–4 proposed are struck. The plan still holds the anatomy vocabulary from webpage-trope-vocabulary.
+
+**Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — hubs.hero_children, seams.entrance_copy.
+
+**Entrances:** this plan owns the entrance hubs' real estate, their cards and chips. The words belong to [semantic-copy-depth](../semantic-copy-depth/PLAN.md).
 
 **Related:** [webpage-trope-vocabulary](../archive/webpage-trope-vocabulary/PLAN.md) (archived).
 
@@ -21,7 +25,7 @@ Develop meaningful component real estate and region personality across spwashi.c
 | Partials | `perspective-pair`, `agent-anatomy`, `leaf-neighbor-rail`, visual-link-card promotion |
 | Settings / runtime | ~~Label posture (`named` → `familiar` → `silent`)~~ struck 2026-10-10 with its attribute (Wave 4) |
 | Build / catalog | Copy-unit manifest from `extract-site-copy.mjs`; design catalog cross-ref |
-| Plans | Bridges to `semantic-copy-depth`, `copy-localization`, `page-model` |
+| Plans | Bridges to `semantic-copy-depth`, `copy-localization` |
 
 ## Out of Scope (for now)
 
@@ -87,6 +91,8 @@ Develop meaningful component real estate and region personality across spwashi.c
 | Region motifs | Assign the existing `data-spw-vocabulary` per hub family. `data-spw-copy-motifs` is struck (2026-10-10): no new `data-spw-*` families, and tone lives in the expression, not an attribute (7a62b2b4) |
 | Component audit | Run design catalog + rg audit dimensions from `.spw` |
 
+2026-10-25: two struck names still sit in the tree. `data-spw-copy-motifs` is written at `index.html:54` and `tools/index.html:52`, `:171`, and nothing reads it. `data-spw-label-posture` is still a capture axis at `scripts/lib/visual-capture-plan.mjs:558`. Neither is removed here.
+
 ### Wave 5 — Pocket-frame density and variety (2026-09-04 stills)
 
 Niche hooks (Town, Research, Membership, SVG Storytelling) proved a labeled diagram and a pressed lens photograph. They also cloned the same extra stack: spec pills + climate rail + landmarks + diagram. A pocket crop then names the scaffold, not the route.
@@ -103,6 +109,8 @@ Niche hooks (Town, Research, Membership, SVG Storytelling) proved a labeled diag
 | home | identity + working view | another climate rail on the opening |
 
 **Next routes:** Play, Services, Recipes, Coordination — pick a different extra before adding SVG + rail + landmarks together. Audit `rg 'spw-ornament-rail' **/index.html` and `rg 'spw-page-landmarks' **/index.html` for cloned order.
+
+2026-10-25 tension with Wave 3: the services hero already holds a photo (`services/index.html:135`) and its landmarks (`:161`). This rule allows one extra dense object in the first pocket frame, so picture cards there would be a second.
 
 **Validation:** `npm run visual:capture -- --stills --ids <opening> --viewports pocket` and write one sentence naming the subject. If two reviewers name the scaffold instead of the route, drop an extra.
 
@@ -131,5 +139,5 @@ npm run catalog   # after copy-unit + component catalog updates
 - `semantic-copy-depth/` — copy-depth ladder and display rules
 - `chrome-navigation-wonder/` — navigation contour
 - `modular-experience-slices/` — durable slice ownership for partials
-- `relational-attention-media/` — capture seeds (reframe away from proof-card tone)
+- `archive/relational-attention-media/` (archived) — capture seeds (reframe away from proof-card tone)
 - `screenshot-semantics/` — pocket still recipes and the one-extra-per-frame density rule

@@ -1,6 +1,8 @@
 # Color And Microinteraction Timing Improvement Plan
 
-**Status 2026-10-10.** Patches 4 and 5 landed: the timing bands in f721879d (2026-09-08; reduced motion shrinks the base durations) and their control and settings consumers in 55ef2737. Beyond the six bands listed, they now include `--spw-time-travel` and `--spw-spring-*` (cbcf7045, 2026-09-26). Left from Patch 5: `.spw-expression-badge` in `handles/operators/sigils-and-chips.css` still uses `--duration-fast`. Patches 1–3 and 6–9 have not started. Today `effects/material.css` has 17 `--duration-*` references and no band references, and `components/cards.css` has 2 and none. Next: Patch 6, with `ornament/whimsy.css:98-103` as co-target and bundles rebuilt in the same commit. It runs after `css-cascade-stratification` Phase 1, and the feel is the creator's call in the browser. The families in `.spw/caches/timing-bands-handoff-2026-09.spw` follow. The 2026-08-31 texture slice predates the bands. Landing notes and the commit series are in [HISTORY.md](./HISTORY.md). Its review questions are unanswered except the alias one (the bands alias the primitives), and the first is a wonder in `index.spw`.
+**Status 2026-10-25.** Patches 4 and 5 landed: the timing bands in f721879d (2026-09-08; reduced motion shrinks the base durations) and their control and settings consumers in 55ef2737. Beyond the six bands listed, they now include `--spw-time-travel` and `--spw-spring-*` (cbcf7045, 2026-09-26). Left from Patch 5: `.spw-expression-badge` in `handles/operators/sigils-and-chips.css` still uses `--duration-fast`. Patches 1–3 and 6–9 have not started; 0206fb41 gave three operators a dark color outside them (see Patch 3). Today `effects/material.css` names `--duration-*` on 4 lines (the three `--material-duration-*` aliases and one transition), 17 lines once its `--material-duration-*` and `--material-local-duration-*` aliases are counted, and none names a band; `components/cards.css` has 2 and none. Next: the badge leftover, which has no gate and changes nothing visible (`--spw-time-control` is the same 140ms). Then Patch 6, with `ornament/whimsy.css:98-103` as co-target and bundles rebuilt in the same commit. It runs after `css-cascade-stratification` Phase 1 and a live look, and the feel is the creator's call in the browser. The families in `.spw/caches/timing-bands-handoff-2026-09.spw` follow. The 2026-08-31 texture slice predates the bands. Landing notes and the commit series are in [HISTORY.md](./HISTORY.md). Its review questions are unanswered except the alias one (the bands alias the primitives), and the first is a wonder in `index.spw`.
+
+**Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — topics.card_timing, topics.first_color, seams.cards_css.
 
 **Related:** [microinteraction-motion-lifecycle](../archive/microinteraction-motion-lifecycle/PLAN.md) (archived) · [css-state-legibility](../archive/css-state-legibility/PLAN.md) (archived). **Absorbed 2026-10-06:** [settings-theme-packs](../archive/settings-theme-packs/PLAN.md).
 
@@ -495,6 +497,8 @@ Goal: make operator hues distinguishable in dense UI while preserving the semant
 
 This is the first visible color-tuning priority. Operator colors are semantic handles, so they should be clarified before broader atmospheric warmth changes.
 
+2026-10-25 note: 0206fb41 (2026-10-13) gave `$`, `%` and pragma (`--op-meta-color`, `--op-normalize-color`, `--op-pragma-color`) a dark value in `tokens/core.css`, lifting them from 2.3–3.2:1 to 7.7–9.4:1 on the dark ground. It is operator-hue work that landed outside this plan, so the first-color wonder (`index.spw#wonder_color_motion_first_color_change`) reads against it.
+
 Primary file:
 
 - `public/css/tokens/core.css`
@@ -718,8 +722,9 @@ Changes:
 
 Validation:
 
-- Visual check on homepage cards, `/plans/`, `/topics/`, `/settings/`.
+- Visual check on homepage cards, `/about/plans/`, `/topics/`, `/settings/`.
 - Reduced-motion check.
+- Judged live or from a recording, never from stills: a still is one frame, so timing and motion are judged live. `npm run visual:checks` also pins `data-spw-capture-mode="screenshot"`, which hides floating chrome, the section handle and the state inspector (`public/css/modes/capture.css:7-35`) and pauses animated SVG flows (`:40`).
 
 ## Patch 7 - Wonder, Resonance, And Ornament Timing Pass
 
@@ -794,7 +799,7 @@ Changes:
 Validation:
 
 - Browser check `/settings/` first because it exposes mode controls.
-- Then check `/`, `/website/`, `/design/`, and one content-heavy route.
+- Then check `/`, `/about/website/`, `/design/`, and one content-heavy route.
 
 ## Patch 9 - Documentation And Inspectability
 
@@ -847,7 +852,7 @@ Manual routes:
 - `/`
 - `/settings/`
 - `/design/`
-- `/website/`
+- `/about/website/`
 - one content-heavy route such as `/blog/` or `/recipes/`
 
 Manual states:
