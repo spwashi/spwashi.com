@@ -18,6 +18,7 @@ fixity = "tending"
 
 ^"stream"{
  >>[2026-10-12 10:59] verify — five slice contracts sit in .spw/slices/, and the attention children load on their own (c2d5da00, 73d6f2ad). The math labs are committed and unreviewed: diagrams.js:1251 still gives every vector field the fixed marker id arrow-vector, and .spw/slices/math-practice-labs/ holds only its index.spw, no tending note. Phases 3–6 wait for that note.
+ >>[2026-10-25 17:42] verify — read against the tree for the UI review sitting: the fixed arrow-vector id sits at diagrams.js:1251, and only /topics/math/vector-calculus/ mounts a vector-field lab, so nothing collides today. PLAN.md now says the math-practice-labs contract exists rather than asking for it, adds the scripts-off reading (inputs live and inert, SVG empty but for title and desc), and names the smoke's place: live, then with scripts off, at #vector-field-lab and #numerical-stepping-lab.
 }
 
 ^"open"{
@@ -29,5 +30,5 @@ fixity = "tending"
  ~#next_commit: "![math] Give each vector field its own arrow marker, and leave the math slice its first tending note"
  ~#files_hot: "public/js/modules/math/diagrams.js, topics/math/vector-calculus/index.html, topics/math/numerical-methods/index.html, .spw/slices/math-practice-labs/index.spw"
  ~#gate: "a browser smoke on both math routes; nothing else"
- ~#last_stream: "2026-10-12"
+ ~#last_stream: "2026-10-25"
 }

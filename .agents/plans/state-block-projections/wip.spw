@@ -101,6 +101,7 @@ fixity = "tending"
  >>[2026-04-11 09:53] refine — state blocks now expose a small explicit loop state (preview, activated, resolved) so actions read as deliberate processes rather than anonymous clicks
  >>[2026-04-11 09:57] integrate — image helper, hold-to-visit, mode switches, and settings changes now resolve through shared refresh / change paths instead of isolated flashes
  >>[2026-10-12 10:59] verify — the cache's "implementing" from April no longer holds. The inspector runtime (public/js/interface/state-inspector.js) and the lens-seat bench at /design/components/#lens-seats (dc7c35a7) are built, and the next slice, moving the chosen seat out of routes/surfaces/design.css into handles/operators/state-semantics.css, waits on the creator picking A, B or C in a browser. The same review settles the faint mode-switch chips and the lens reward; runtime/memory/component-collection.js still has no spw:variant-selected listener.
+ >>[2026-10-25 17:45] verify — Read against the tree for the UI review sitting: state-semantics.css already holds the silent and quiet lens-chrome values (:135-136, :229-279), and only seat is bench-only (design.css:1686), so Status now moves only seat and names the look, live on a phone and a desktop at /design/components/#lens-seats, with Row 1 judged in the same look. Fixed the image-metaphysics path (public/js/media/), marked brace-literacy-guides archived, and gave Row 2, the menu toggle, to chrome-navigation-wonder.
 }
 
 ^["open"]{
@@ -120,7 +121,7 @@ fixity = "tending"
  ~#next_commit: "~[css] Give lens switches the chosen seat as a lens-chrome value, and opt one route in"
  ~#files_hot: "public/css/routes/surfaces/design.css, public/css/handles/operators/state-semantics.css, public/js/interface/state-inspector.js, public/js/runtime/memory/component-collection.js"
  ~#gate: "the creator's pick of seat A, B or C at /design/components/#lens-seats, on a phone and a desktop"
- ~#last_stream: "2026-10-12"
+ ~#last_stream: "2026-10-25"
  ~#taste_debt: "Keep the settings state block from becoming a full dashboard"
 }
 

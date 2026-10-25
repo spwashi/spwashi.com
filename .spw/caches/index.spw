@@ -95,6 +95,7 @@
 @spw_assembly_2026_09: ~"./spw-assembly-2026-09.spw"  # prime: Spw read as an assembly of parts, wraps and thresholds; the wrap chain is the index key
 @prompt_seeds_2026_09: ~"./prompt-seeds-2026-09.spw"  # cache: Midjourney prompts kept as seeds; pages load images from promoted seeds only
 @offer_rhythm_2026_10: ~"./offer-rhythm-2026-10.spw"  # prime: the 13-day rhythm applied to offers; the numbers are the creator's to set
+@ui_review_sitting_2026_10: ~"./ui-review-sitting-2026-10.spw"  # prime: every look the spwashi.com UI plans wait on, grouped by where the reader stands; what lands without a look; the files two plans claim; access gaps no plan owns
 
 operation = "align"
 fixity = "tending"

@@ -18,6 +18,7 @@ fixity = "tending"
 
 ^"stream"{
  >>[2026-10-12 10:59] verify — the measurement bus (1621ac6c), the settings typography preview, frame metrics and the /design/#conversation-canvas frame are in the tree, and the #component-ecology-specimens specimen sits in design/index.html and experiments.js. Nothing in these files changed after 2026-10-08, and no browser has checked them since the 2026-09-20 read. The next slice is one named reviewer reading that specimen; no bundle schema gets written before the creator names who.
+ >>[2026-10-25 17:42] verify — read against the tree for the UI review sitting: the specimen's 15 buttons (design/index.html:392-462) work only with scripts on, which PLAN.md now notes beside the success test of reproducing it without the site shell. PLAN.md also records, unresolved, that site-starter-component-kit expects this plan's export bundle while this plan holds no schema before the review and ecosystem-architecture S4 proposes the Spw instrument travel first.
 }
 
 ^"open"{
@@ -30,5 +31,5 @@ fixity = "tending"
  ~#next_commit: "+[design] Hand one reviewer the ecology specimen: its link, the tokens it cites, and its measurements beside their notes"
  ~#files_hot: "design/index.html, public/js/modules/design/experiments.js, public/js/semantic/pretext-measurement-bus.js"
  ~#gate: "the creator names the reviewer; no bundle schema before that review"
- ~#last_stream: "2026-10-12"
+ ~#last_stream: "2026-10-25"
 }

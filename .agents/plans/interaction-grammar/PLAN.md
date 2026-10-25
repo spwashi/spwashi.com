@@ -1,6 +1,8 @@
 # Plan: interaction-grammar
 
-**Status 2026-10-10.** The phase ladder and reward contract live in `.spw/conventions/interaction-microstates.spw`. Leaf controls stay out of brace gestures through `isLensModeControl` (`6ccab1bb`). Next slice: the gesture-contract census. Run `rg -o --no-filename 'data-spw-gesture-contract="[^"]*"' --glob '*.html' | sort | uniq -c` (10 distinct strings over 36 authorings today), then look up each verb's handler in `public/js` (`rg -l '<verb>' public/js`) and in inline page scripts (`settings/index.html:663` handles `cycle-variant`, `surface-current` and `open-companion`). Record silent verbs in `interaction-microstates.spw#wonder_interaction_microstates_1`. The census's readable receipt is the settings "do this / expect this" copy absorbed below. Nothing gates it. Cross-session familiarity stays unscoped.
+**Status 2026-10-10.** The phase ladder and reward contract live in `.spw/conventions/interaction-microstates.spw`. Leaf controls stay out of brace gestures through `isLensModeControl` (`6ccab1bb`). Next slice: the gesture-contract census. Run `rg -o --no-filename 'data-spw-gesture-contract="[^"]*"' --glob '*.html' | sort | uniq -c` (37 authorings on 36 lines in 21 files, over 10 gesture strings, today), then look up each verb's handler in `public/js` (`rg -l '<verb>' public/js`) and in inline page scripts (`settings/index.html:663` handles `cycle-variant`, `surface-current` and `open-companion`). Record silent verbs in `interaction-microstates.spw#wonder_interaction_microstates_1`. The census's readable receipt is the settings "do this / expect this" copy absorbed below. Nothing gates it. The census also settles the verb rule that chrome-navigation-wonder's drawer-swipe wonder waits on. Cross-session familiarity stays unscoped.
+
+**Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — ungated.gesture_census, seams.lens.
 
 **Related:** [interaction-cache](../archive/interaction-cache/PLAN.md) (archived). **Absorbed 2026-10-06:** [interaction-loop-contract](../archive/interaction-loop-contract/PLAN.md) · [microinteraction-motion-lifecycle](../archive/microinteraction-motion-lifecycle/PLAN.md). **Absorbed 2026-10-10:** [gesture-state-refinement](../archive/gesture-state-refinement/PLAN.md).
 
@@ -24,8 +26,8 @@ much larger implemented system. Reconciling that drift:
   circuit levels; the runtime reorganized into `public/js/runtime/` and
   `public/js/semantic/`. The actual circuit grammar is a phase ladder —
   `idle → approach → prime → charge → inspect → discover → settle`
-  (`data-spw-interaction-phase`, owned by `interaction-progression.js`,
-  `interaction-vocabulary.js`, `interaction-hops.js`, `interaction-story.js`) — plus
+  (`data-spw-interaction-phase`, owned by
+  `public/js/runtime/interaction/{progression,vocabulary,hops,story}.js`) — plus
   a stated **reward contract**: every interaction resolves into feedback or reveals
   reachable arcs; silent absorption is a contract violation, not a neutral outcome
   (`.spw/conventions/interaction-microstates.spw#reward_contract`). Landmark hops,
@@ -76,11 +78,11 @@ The desired end state is a site interaction system that rewards familiarity: rep
 
 ## Dependencies
 
-- `mobile-runtime-foundation` — circuit design must be mobile-first; brace physics vocabulary lives in shared runtime semantics; spatial address requires shared registers.
-- `css-progressive-ornaments` — circuit-level enhancements live in the enhancement layer.
+- [mobile-runtime-foundation](../archive/mobile-runtime-foundation/PLAN.md) (archived) — circuit design must be mobile-first; brace physics vocabulary lives in shared runtime semantics; spatial address requires shared registers.
+- [css-progressive-ornaments](../archive/css-progressive-ornaments/PLAN.md) (archived) — circuit-level enhancements live in the enhancement layer.
 - `screenshot-semantics` — practiced and fluent circuit states are exactly the kind of state worth capturing; the two plans share vocabulary for address legibility.
-- `cinematic-handles` — familiarity feedback timing (practice-settle, fluency-reveal) should use named timing tokens.
-- `pretext-whimsy-lab` — the whimsy lab is a prime venue for multi-language surfaces and wonder about physics; circuit grammar should extend there naturally.
+- [cinematic-handles](../archive/cinematic-handles/PLAN.md) (archived) — familiarity feedback timing (practice-settle, fluency-reveal) should use named timing tokens.
+- [pretext-whimsy-lab](../archive/pretext-whimsy-lab/PLAN.md) (archived) — the whimsy lab is a prime venue for multi-language surfaces and wonder about physics; circuit grammar should extend there naturally.
 
 ## Failure Modes
 
@@ -105,7 +107,7 @@ The desired end state is a site interaction system that rewards familiarity: rep
 
 Landed: calmer brace and region-menu gestures on coarse pointers, `window.__SPW_SITE__.gestures`, and texture-slice pointer crop that binds only to a fine pointer. Leaf controls stay themselves through `isLensModeControl` in `kernel/dom-contracts.js` (`6ccab1bb`), and the image prime readout names swipe and hold.
 
-Still owed: one settings-page "do this / expect this" passage for gestures. `settings/index.html` names the console helpers (:583, :2524) but teaches no gesture. Write it from the census above, one row per authored contract, and keep it concrete rather than theoretical.
+Still owed: one settings-page "do this / expect this" passage for gestures. `settings/index.html` names the console helpers (:583) and the gesture helpers (:2509-2510, :2585-2587) but teaches no gesture. Write it from the census above, one row per authored contract, and keep it concrete rather than theoretical.
 
 Rules worth keeping:
 - Gesture hosts never claim leaf controls.
