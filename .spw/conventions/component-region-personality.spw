@@ -261,7 +261,7 @@ fixity = "tending"
     taxonomy_pill: .{ class = "spec-pill href", when = "plan/topic taxonomy hop" }[reg=facet]
     query_tune: .{ attr = "data-spw-link-intent=query", when = "tunable reading surface" }[reg=facet]
     glossary_anchor: .{ href = "/design/components/#...", when = "technical term first use" }[reg=facet]
-    deep_link: .{ attr = "data-spw-deep-link + stable fragment id", when = "a region is a shareable destination; optional ?lens=<group>:<mode>#<host-id> for a tuned posture" }[reg=facet]
+    deep_link: .{ attr = "data-spw-deep-link + stable fragment id", when = "a region is a shareable destination; optional ?spw-lens=<group>:<mode>#<host-id> for a tuned posture" }[reg=facet]
   }[reg=facet]
   density_rule: "Above the fold: ≤6 operator chips + ≥1 non-chip link pattern per hero region."
   destination_effects: #[
@@ -292,7 +292,7 @@ fixity = "tending"
   existing_machinery: .{
     address = `[data-spw-deep-link] carries scroll-margin against shell header height and a :target outline routed through --component-accent (public/css/components/runtime-states.css) — no JS required for the link to land.`
     authority = `:target / :focus-within / [data-spw-region-mark] raise --spw-section-attention-authority to 1, so the addressed region outranks the viewport's automatic guess without a new attention state.`
-    lens = `?lens=<group>:<mode>#<host-id> writes data-spw-lens-* and data-spw-deep-link-state per @deep_link_plan — a tuned posture is a shareable URL, not new route copy.`
+    lens = `?spw-lens=<group>:<mode>#<host-id> writes data-spw-lens-* and data-spw-deep-link-state per @deep_link_plan — a tuned posture is a shareable URL, not new route copy.`
     landmarks = `nav.spw-page-landmarks fragment ids stay stable per liminality_projection.landmark_rule; a landmark hop is a discover pulse plus aria-current="location".`
   }[reg=facet]
   device_rule: "Recognizability is carried by identity + accent + one region-family extra (per screenshot_literacy.pocket_variety), never by hover-only cues. The :target answer must survive touch (no hover), reduced motion (outline, not animation), and pocket width (scroll-margin clears floating chrome)."

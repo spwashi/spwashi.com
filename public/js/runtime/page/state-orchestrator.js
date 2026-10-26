@@ -68,6 +68,9 @@ export const orchestrator = Object.freeze({
 export function bindGlobalInteractions() {
   ensureRelationalStateStyles();
   document.addEventListener('click', (event) => {
+    // A lens seat answers for the whole page (site-semantics.spw
+    // reader_contract): picking one does not focus its frame or dim the rest.
+    if (event.target.closest?.('[data-set-mode]')) return;
     const frame = event.target.closest(FRAME_SELECTOR);
     if (frame && !frame.matches('[data-state~="active"]')) {
       focusFrame(frame);

@@ -148,7 +148,24 @@ function humanizeLensToken(value = '') {
     .replace(/\s+/g, ' ');
 }
 
-function describeLensTopography(panel, host) {
+/**
+ * Where a seat lands on the page. A page that marks its places with
+ * data-spw-lens-pass gets a count of the ones that answer the seat; elsewhere
+ * the panel's own role and kind stand in.
+ */
+export function describeLensReach(count) {
+  const n = Number(count) || 0;
+  if (n <= 0) return '';
+  return `${n} ${n === 1 ? 'place answers' : 'places answer'} on this page`;
+}
+
+function countLensReach(doc, mode) {
+  if (!doc?.querySelectorAll || !/^[\w-]+$/.test(String(mode || ''))) return 0;
+  return doc.querySelectorAll(`[data-spw-lens-pass~="${mode}"]`).length;
+}
+
+function describeLensTopography(panel, host, reach = '') {
+  if (reach) return reach;
   const source = panel instanceof HTMLElement ? panel : host;
   if (!(source instanceof HTMLElement)) return '';
   const kind = humanizeLensToken(source.dataset.spwKind || source.dataset.spwComponentKind || '');
@@ -158,19 +175,56 @@ function describeLensTopography(panel, host) {
   return [...new Set(parts)].slice(0, 2).join(' / ');
 }
 
-function describeLensFeedback({ mode, impact, panel, host }) {
-  const topography = describeLensTopography(panel, host);
+function describeLensFeedback({ mode, impact, panel, host, doc = null }) {
+  const topography = describeLensTopography(panel, host, describeLensReach(countLensReach(doc, mode)));
   const readableImpact = humanizeLensToken(impact || mode);
   if (topography && readableImpact) return `${readableImpact} · ${topography}`;
   return readableImpact || topography || humanizeLensToken(mode);
 }
 
+// A seat travels as ?spw-lens=<group>:<mode>. Bare ?lens= is a settings key
+// (the legible channel, site-settings-engine.js), and the settings sync drops
+// any value it cannot read as one, so a seat written there never arrived.
 export function buildLensModeDeepLink(group, mode, host, locationRef = globalThis.location || FALLBACK_LOCATION) {
   const params = new URLSearchParams(locationRef.search || '');
-  params.set('lens', `${group}:${mode}`);
+  params.set('spw-lens', `${group}:${mode}`);
   const search = params.toString();
   const hash = host?.id ? `#${host.id}` : locationRef.hash;
   return `${locationRef.pathname}${search ? `?${search}` : ''}${hash || ''}`;
+}
+
+/**
+ * A seat the reader picked, by pointer or by arrow key. The seat a page opens
+ * on (initial), one a link carried (query), and one another tool asked for
+ * (request) are not the reader's hand on this switch: they show their panel,
+ * but they do not buzz, and they are not written back into the address.
+ */
+const READER_LENS_SOURCES = Object.freeze(new Set(['mode-switch', 'keyboard']));
+export function isReaderLensSource(source) {
+  return READER_LENS_SOURCES.has(String(source || ''));
+}
+
+/**
+ * The address that keeps a reader's seat across a reload or a shared link:
+ * the current path and hash with ?spw-lens=<group>:<mode>. Unlike the deep link,
+ * it keeps whatever hash the reader is on rather than jumping to the host.
+ */
+export function buildLensModeLocation(group, mode, locationRef = globalThis.location || FALLBACK_LOCATION) {
+  // `lens` and `mode` stay: the first is the reader's legible-channel setting,
+  // and a page may use the second for its own state.
+  const params = new URLSearchParams(locationRef.search || '');
+  params.set('spw-lens', `${group}:${mode}`);
+  return `${locationRef.pathname}?${params.toString()}${locationRef.hash || ''}`;
+}
+
+function rememberLensMode(group, mode, view) {
+  const history = view?.history;
+  if (typeof history?.replaceState !== 'function' || !view.location) return;
+  try {
+    history.replaceState(history.state, '', buildLensModeLocation(group, mode, view.location));
+  } catch {
+    /* an address that cannot be rewritten keeps the seat for this visit only */
+  }
 }
 
 export function parseLensModeQuery(grouped, search = getLocationRef().search) {
@@ -257,7 +311,8 @@ export function writeLensModeState({
     applyDomUpdates();
   }
 
-  if (typeof globalThis.navigator?.vibrate === 'function' && !globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches) {
+  const readerChose = isReaderLensSource(source);
+  if (readerChose && typeof globalThis.navigator?.vibrate === 'function' && !globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches) {
     try {
       globalThis.navigator.vibrate(8);
     } catch {
@@ -276,6 +331,7 @@ export function writeLensModeState({
     impact: lensImpact,
     panel: activePanel,
     host: primaryHost,
+    doc,
   });
 
   for (const switchEl of findLensModeSwitches(buttons)) {
@@ -309,6 +365,10 @@ export function writeLensModeState({
   doc.documentElement.dataset.spwActiveLensMode = resolvedMode;
   doc.documentElement.dataset.spwActiveLensImpact = lensImpact;
   doc.documentElement.dataset.spwActiveLensFeedback = lensFeedback;
+  // Route CSS reads the source to tell the seat a page opens on from one a
+  // reader or a link chose: the opening seat reweights nothing.
+  doc.documentElement.dataset.spwActiveLensSource = source;
+  if (readerChose) rememberLensMode(group, resolvedMode, view);
 
   return {
     group,

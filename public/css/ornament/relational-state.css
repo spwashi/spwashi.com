@@ -9,20 +9,24 @@
 
 @layer ornament {
 
-/* 1. Attentional Cueing (Environmental Dimming) — dim, don't mute. */
+/* 1. Attentional Cueing (Environmental Dimming) — dim, don't mute.
+   A dimmed frame still reads and still answers. It took pointer-events: none
+   as a soft lockout, and on a touch screen, where no hover comes first, that
+   left 83 of 93 links and buttons in the other frames of Home untappable
+   after one tap on a chip or a lens seat (2026-10-25). Muted prose in a
+   frame measured 6.4:1, then 2.7:1 at the old 0.62; it needs 0.86 to keep AA,
+   so opacity holds at 0.88 (4.8:1) and grayscale carries the recession. */
 :where(main:has(.spw-frame[data-spw-attention="focused"])) .spw-frame[data-spw-attention="dimmed"] {
-  opacity: 0.62;
-  filter: grayscale(0.18) contrast(0.96);
+  opacity: 0.88;
+  filter: grayscale(0.45);
   transition:
     opacity var(--duration-deliberate, 360ms) var(--ease-settle, ease),
     filter var(--duration-deliberate, 360ms) var(--ease-settle, ease);
-  pointer-events: none; /* Soft lockout to encourage focus */
 }
 
 :where(main:has(.spw-frame[data-spw-attention="focused"])) .spw-frame[data-spw-attention="dimmed"]:hover {
-  opacity: 0.84;
-  filter: grayscale(0.08) contrast(0.98);
-  pointer-events: auto;
+  opacity: 1;
+  filter: grayscale(0.1);
 }
 
 /* 2. Arrival Pulse — single soft ring, no scale bounce. */

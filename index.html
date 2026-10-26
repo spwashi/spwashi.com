@@ -186,52 +186,52 @@
                     data-spw-pack-local
                     class="hook-call"
                     role="group"
-                    aria-label="Sit a lens. The situation set filters. Then take the first move in that room"
+                    aria-label="Choose a working view, then take the first move in that room"
                 >
                     <div class="home-hook-pack" data-spw-pack-regions>
                     <div class="home-working-view" data-spw-feature="home-perspective-lens" data-spw-pack-region="context">
                         <div class="home-working-view__intro">
                             <strong>Choose a working view</strong>
-                            <span>Highlights related cards on this page. Every route stays available.</span>
+                            <span>Brightens what serves it and outlines it in its color. Every route stays available.</span>
                         </div>
-                        <div class="mode-switch" role="group" aria-label="Choose which route posture stays visually prominent" data-spw-operator="mode" data-spw-kind="lens" data-spw-lens-track="grid" data-spw-lens-chrome="silent operator" data-spw-semantic-expression="home[reading]{open.sit}">
-                            <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="reading" aria-pressed="true" data-spw-operator="ground"><span>Study</span><span class="home-working-view__token">.reading</span></button>
-                            <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="systems" aria-pressed="false" data-spw-operator="integration"><span>Build</span><span class="home-working-view__token">^systems</span></button>
-                            <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="play" aria-pressed="false" data-spw-operator="potential"><span>Play</span><span class="home-working-view__token">~play</span></button>
-                            <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="studio" aria-pressed="false" data-spw-operator="perspective"><span>Studio</span><span class="home-working-view__token">@studio</span></button>
+                        <div class="mode-switch" role="group" aria-label="Choose a working view" data-spw-operator="mode" data-spw-kind="lens" data-spw-lens-track="grid" data-spw-lens-chrome="silent operator" data-spw-semantic-expression="home[reading]{open.sit}">
+                            <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="reading" aria-controls="home-lens-reading" aria-pressed="true" data-spw-operator="ground"><span>Study</span><span class="home-working-view__token">.reading</span></button>
+                            <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="systems" aria-controls="home-lens-systems" aria-pressed="false" data-spw-operator="integration"><span>Build</span><span class="home-working-view__token">^systems</span></button>
+                            <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="play" aria-controls="home-lens-play" aria-pressed="false" data-spw-operator="potential"><span>Play</span><span class="home-working-view__token">~play</span></button>
+                            <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="studio" aria-controls="home-lens-studio" aria-pressed="false" data-spw-operator="perspective"><span>Studio</span><span class="home-working-view__token">@studio</span></button>
                         </div>
                     </div>
-                    <div class="mode-panels" data-spw-feature="home-perspective-panels" data-spw-pack-region="body">
-                        <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="reading" data-spw-role="orientation" data-spw-kind="lens">
+                    <div class="mode-panels" data-spw-feature="home-perspective-panels" data-spw-pack-region="body" aria-live="polite">
+                        <section class="mode-panel" id="home-lens-reading" data-mode-group="home-lens" data-mode-panel="reading" data-spw-role="orientation" data-spw-kind="lens">
                             <p class="hook-lede spw-playable-hook" data-spw-textual-role="lede" data-spw-copy-unit="home.perspective.reading" data-spw-semantic-expression="home[reading]{craft}&lt;entry&gt;">
-                                <span class="spw-living-term" data-spw-living-term data-spw-concept="reading">.reading</span>: Personal study routes, creator records, and craft traditions worth revisiting.
+                                <span class="spw-living-term" data-spw-living-term data-spw-concept="reading">.reading</span>: Personal study routes, creator records, and craft traditions worth revisiting. It keeps <a href="#card-entry-components">components</a> and <a href="#card-entry-recipes">the kitchen</a> bright below, and outlines six frames further down in its color.
                             </p>
                             <p class="hook-sub">
                                 <span data-spw-perspective="objective">Holds:</span> craft notes, essays, culinary theory, and design records.
                                 <span data-spw-perspective="subjective">First move:</span> <a class="spw-chip" data-spw-handle="true" href="/topics/craft/" data-spw-operator="concept">&lt;author_craft&gt;</a> or browse <a class="spw-chip" data-spw-handle="true" href="/blog/" data-spw-operator="value">*field_dispatches</a>.
                             </p>
                         </section>
-                        <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="systems" data-spw-role="schema" data-spw-kind="lens" hidden>
+                        <section class="mode-panel" id="home-lens-systems" data-mode-group="home-lens" data-mode-panel="systems" data-spw-role="schema" data-spw-kind="lens" hidden>
                             <p class="hook-lede spw-playable-hook" data-spw-textual-role="lede" data-spw-copy-unit="home.perspective.systems" data-spw-semantic-expression="home[systems]{parser}&lt;inspect&gt;">
-                                <span class="spw-living-term" data-spw-living-term data-spw-concept="systems">^systems</span>: Plain-text Spw grammar, compiler passes, and interactive workbench specimens.
+                                <span class="spw-living-term" data-spw-living-term data-spw-concept="systems">^systems</span>: Plain-text Spw grammar, compiler passes, and interactive workbench specimens. It keeps <a href="#card-entry-components">components</a> bright below, and outlines four frames further down in its color.
                             </p>
                             <p class="hook-sub">
                                 <span data-spw-perspective="objective">Holds:</span> syntax proofs, parsers, and workbench specimens.
                                 <span data-spw-perspective="subjective">First move:</span> <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/" data-spw-operator="frame">#&gt;operator_atlas</a> or test <a class="spw-chip" data-spw-handle="true" href="/topics/software/parsers/" data-spw-operator="potential">~software_parsers</a>.
                             </p>
                         </section>
-                        <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="play" data-spw-role="scenario" data-spw-kind="lens" hidden>
+                        <section class="mode-panel" id="home-lens-play" data-mode-group="home-lens" data-mode-panel="play" data-spw-role="scenario" data-spw-kind="lens" hidden>
                             <p class="hook-lede spw-playable-hook" data-spw-textual-role="lede" data-spw-copy-unit="home.perspective.play" data-spw-semantic-expression="home[play]{table}&lt;session&gt;">
-                                <span class="spw-living-term" data-spw-living-term data-spw-concept="play">~play</span>: RPG Wednesday weekly sessions, character sheets, and collaborative world lore.
+                                <span class="spw-living-term" data-spw-living-term data-spw-concept="play">~play</span>: RPG Wednesday weekly sessions, character sheets, and collaborative world lore. It keeps <a href="#card-entry-rpgw">the table</a> bright below, and outlines <a href="#town-library-gateway">the Town Library</a> and <a href="#wonder-rewards">the skill thanks</a> in its color.
                             </p>
                             <p class="hook-sub">
                                 <span data-spw-perspective="objective">Holds:</span> session logs, table rulings, cast notes, shared dice consequences, and the <a href="/about/domains/lore.land/">lore.land</a> pantry.
                                 <span data-spw-perspective="subjective">First move:</span> <a class="spw-chip" data-spw-handle="true" href="/play/rpg-wednesday/" data-spw-operator="value">*rpg_wednesday</a>, <a class="spw-chip" data-spw-handle="true" href="/play/rpg-wednesday/library/" data-spw-operator="frame">#&gt;town_library</a>, or <a class="spw-chip" data-spw-handle="true" href="/about/domains/lore.land/" data-spw-operator="concept-edge">&gt;lore.land</a>.
                             </p>
                         </section>
-                        <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="studio" data-spw-role="projection" data-spw-kind="lens" hidden>
+                        <section class="mode-panel" id="home-lens-studio" data-mode-group="home-lens" data-mode-panel="studio" data-spw-role="projection" data-spw-kind="lens" hidden>
                             <p class="hook-lede spw-playable-hook" data-spw-textual-role="lede" data-spw-copy-unit="home.perspective.studio" data-spw-semantic-expression="home[studio]{commission}&lt;offer&gt;">
-                                <span class="spw-living-term" data-spw-living-term data-spw-concept="studio">@studio</span>: Systems, commissions, and public proofs.
+                                <span class="spw-living-term" data-spw-living-term data-spw-concept="studio">@studio</span>: Commissions, services, and public proofs. It keeps <a href="#card-entry-recipes">the kitchen</a> and <a href="#card-entry-texture">a texture surface</a> bright below, and outlines <a href="#home-folios">the scans</a> and <a href="#local-record-thesis">the local record</a> in its color.
                             </p>
                             <p class="hook-sub">
                                 <span data-spw-perspective="objective">Holds:</span> service lanes, proof ledgers, and laminated folio practice.
@@ -414,7 +414,7 @@
 
     <section
         class="spw-frame" data-spw-kind="frame"
-        id="home-folios"
+        id="home-folios" data-spw-lens-pass="reading studio"
         aria-labelledby="home-folios-title"
         data-spw-region="cluster"
         data-spw-form="brace"
@@ -868,7 +868,7 @@
         <div class="frame-body" data-spw-slot="body">
             <p id="home-loops-note" data-spw-textual-role="note" data-spw-copy-depth="normal" data-spw-copy-unit="home.loops.note">
                 <span id="home-loops-note-four" data-spw-copy-unit="home.loops.note.four">Four first loops: components, the table, the kitchen, a texture surface.</span>
-                <span id="home-loops-note-view" data-spw-copy-unit="home.loops.note.view">The working view above reweights which cards stay bright.</span>
+                <span id="home-loops-note-view" data-spw-copy-unit="home.loops.note.view">Pick a working view above, and its cards stay bright while the rest recede.</span>
             </p>
 
             <div class="spw-grid frame-grid frame-grid--dense">
@@ -1058,7 +1058,7 @@
 
     <section
         class="spw-frame"
-        id="reading-layers"
+        id="reading-layers" data-spw-lens-pass="reading systems"
         data-spw-region-purpose="section-hub"
         aria-labelledby="reading-layers-title"
         data-spw-region="cluster"
@@ -1209,7 +1209,7 @@
     <div data-spw-cluster="conceptual-models">
     <section
         class="spw-frame"
-        id="living-concepts"
+        id="living-concepts" data-spw-lens-pass="reading"
         data-spw-region-purpose="section-hub"
         aria-labelledby="living-concepts-title"
         data-spw-region="cluster"
@@ -1468,7 +1468,7 @@
 
     <section
         class="spw-frame"
-        id="learning-use-pattern"
+        id="learning-use-pattern" data-spw-lens-pass="reading"
         data-spw-region-purpose="section-hub"
         aria-labelledby="learning-use-pattern-title"
         data-spw-region="read"
@@ -1551,7 +1551,7 @@
 
     <section
         class="spw-frame"
-        id="reader-builder-paths"
+        id="reader-builder-paths" data-spw-lens-pass="reading systems"
         aria-labelledby="reader-builder-paths-title"
         data-spw-region="path"
         data-spw-region-role="reader-builder"
@@ -1630,7 +1630,7 @@
     <div data-spw-cluster="structural-engines">
     <section
         class="spw-frame"
-        id="town-library-gateway"
+        id="town-library-gateway" data-spw-lens-pass="play reading"
         aria-labelledby="town-library-gateway-title"
         data-spw-region="hub"
         data-spw-region-role="library-gateway"
@@ -1722,7 +1722,7 @@
 
     <section
         class="spw-frame"
-        id="local-record-thesis"
+        id="local-record-thesis" data-spw-lens-pass="studio"
         aria-labelledby="local-record-thesis-title"
         data-spw-region="cluster"
         data-spw-region-role="conversion"
@@ -1941,7 +1941,7 @@
 
     <section
         class="spw-frame"
-        id="integration-atlas"
+        id="integration-atlas" data-spw-lens-pass="systems"
         aria-labelledby="integration-atlas-title"
         data-spw-region="wide"
         data-spw-region-role="integration-loops"
@@ -2055,7 +2055,7 @@
     <div data-spw-cluster="sensory-climate">
     <section
         class="spw-frame"
-        id="wonder-rewards"
+        id="wonder-rewards" data-spw-lens-pass="play"
         aria-labelledby="wonder-rewards-title"
         data-spw-region="cluster"
         data-spw-region-role="gratitude-reward"
@@ -2157,7 +2157,7 @@
 
     <section
         class="spw-frame"
-        id="climate-tuning"
+        id="climate-tuning" data-spw-lens-pass="systems"
         aria-labelledby="climate-tuning-title"
         data-site-settings-scope
         data-spw-region="cluster"
