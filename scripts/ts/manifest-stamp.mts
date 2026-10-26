@@ -111,21 +111,16 @@ const EXPRESSION_ROUTE_SKIP = new Set([
   'node_modules', 'dist', 'dist-vite', '.git', '.spw', '.agents', '.references', '.tmp',
   'coverage', 'tmp', 'scripts', 'src',
 ]);
-/** .spw folders the harvest never reads: the workbench, and the gitignored corpus cache. */
-const EXPRESSION_SPW_SKIP = new Set(['_workbench', 'node_modules', 'gen']);
 const EXPRESSION_EXTRA_INPUTS = Object.freeze([
   'scripts/build-expression-manifest.mjs',
   'public/js/semantic/expression-query.js',
   'scripts/ts/manifest-stamp.mts',
 ]);
 
-/** Whether a repo path feeds the expression manifest: a route, a .spw canon file, or its harvester. */
+/** Whether a repo path feeds the expression manifest: a route or its harvester. The .spw canon does not (see the harvester's header). */
 export function isExpressionStampInput(relativePath: string): boolean {
   if ((EXPRESSION_EXTRA_INPUTS as readonly string[]).includes(relativePath)) return true;
   const parts = relativePath.split('/');
-  if (parts[0] === '.spw') {
-    return relativePath.endsWith('.spw') && !parts.slice(1).some((part) => part.startsWith('.') || EXPRESSION_SPW_SKIP.has(part));
-  }
   return parts[parts.length - 1] === 'index.html' && !parts.some((part) => part.startsWith('.') || EXPRESSION_ROUTE_SKIP.has(part));
 }
 
@@ -141,8 +136,7 @@ async function walkFiles(directory: string, results: string[] = []): Promise<str
     const absolute = path.join(directory, entry.name);
     const relative = toPosixPath(path.relative(ROOT, absolute));
     if (entry.isDirectory()) {
-      if (entry.name === '.git' || entry.name === 'node_modules' || entry.name === '_workbench' || relative === '.spw/gen') continue;
-      if (entry.name.startsWith('.') && entry.name !== '.spw') continue;
+      if (entry.name.startsWith('.') || EXPRESSION_ROUTE_SKIP.has(entry.name)) continue;
       await walkFiles(absolute, results);
     } else if (entry.isFile()) {
       results.push(relative);
