@@ -42,6 +42,7 @@ The literature is the selectors: `>` a child, `+` the next sibling, `:has()` a p
 - developmental-climate weather and enrichment inspection paint load with the climate runtime; coarse-pointer press stays in gesture-anatomy (first paint)
 - electromagnetic containers mount only on authored `[data-container-type]`; CSS owns the field, JS steps charge
 - 2026-09-22 delivery form: the deploy build strips comments and indentation from `dist/public/css` (`scripts/ts/css-delivery.mts`), keeping file provenance lines. Core ships ~1273 KiB / ~191 KiB gzip against 1679 KiB committed; `npm run css:payload` prints both. The soft budget still measures the committed bundle — do not cut prose from sources to meet it.
+- 2026-10-25 ([ecosystem-architecture](../ecosystem-architecture/PLAN.md) S6): the creator, ecosystem and systems offer pages built three byte-identical route bundles (16,331 B each) from `routes/surfaces/services.css` alone. They are one, `services-surface`, with three entries in `ROUTE_SURFACE_ALIASES`; a reader moving among the three downloads the sheet once. `services-care` adds the intake and keeps its own.
 
 ## Remaining
 - Split route-local enhancement families further if the website route budget needs a hard ceiling; do not move their grid geometry into an idle sheet.

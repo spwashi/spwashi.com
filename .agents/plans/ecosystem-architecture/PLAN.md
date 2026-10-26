@@ -1,6 +1,6 @@
 # Plan: ecosystem-architecture
 
-**Status 2026-10-25.** S0 and S1 landed: the owner plans carry today's measure beside their dated figures and name the two seams, and the expression manifest no longer ships the `.spw` seeds. A ranked route through the CSS and runtime owner plans, chosen by what each move is worth beyond one page. Then the phase that spends it: spw.quest shows how Spw is developing and becomes a playground for constructs and specimens (slices G–I in [spw-quest](../spw-quest/PLAN.md)). Every slice names its owner, and this plan owns three things: the ranking, the list of what may travel, and one unowned item (S6). Next slice: S2; it is not gated, and neither is S3 now that the two parser bundles are shown to agree. The cascade (S5), what travels first (S4), and the playground's look wait on the creator.
+**Status 2026-10-25.** S0, S1 and S6 landed: the owner plans carry today's measure beside their dated figures and name the two seams, the expression manifest no longer ships the `.spw` seeds, and the three offer pages share one services bundle. A ranked route through the CSS and runtime owner plans, chosen by what each move is worth beyond one page. Then the phase that spends it: spw.quest shows how Spw is developing and becomes a playground for constructs and specimens (slices G–I in [spw-quest](../spw-quest/PLAN.md)). Every slice names its owner, and this plan owns three things: the ranking, the list of what may travel, and one unowned item (S6). Next slice: S2; it is not gated, and neither is S3 now that the two parser bundles are shown to agree. The cascade (S5), what travels first (S4), and the playground's look wait on the creator.
 
 **Related:** [core-css-spend-cut](../core-css-spend-cut/PLAN.md) · [css-cascade-stratification](../css-cascade-stratification/PLAN.md) · [css-architecture-readability](../css-architecture-readability/PLAN.md) · [runtime-plane-consolidation](../runtime-plane-consolidation/PLAN.md) · [deploy-module-graph](../deploy-module-graph/PLAN.md) · [spw-language-v04](../spw-language-v04/PLAN.md) · [operator-resonance-alignment](../operator-resonance-alignment/PLAN.md) · [site-starter-component-kit](../site-starter-component-kit/PLAN.md) · [workers-wonder-kit](../workers-wonder-kit/PLAN.md) · [spw-quest](../spw-quest/PLAN.md)
 
@@ -89,7 +89,7 @@ Validation: `npm run test:modules`, `npm run build:peer-kit -- --check`, `npm ru
 - Then emit the order in every bundle. A fork that takes `compose.css` inherits the declared order, and today the site ships another.
 - Gate: the creator's browser review.
 
-**S6. One services bundle.** Lever: asset. Cost: tiny. Owner: none yet; core-css-spend-cut takes it.
+**S6. One services bundle.** Landed 2026-10-25 as `services-surface`. Lever: asset. Cost: tiny. Owner: none yet; core-css-spend-cut takes it.
 - The three identical services bundles become one in `css-manifest.mts`, with three aliases.
 
 Validation: `npm run build:css:check`, `npm run check:built`.
