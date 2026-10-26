@@ -97,13 +97,14 @@ test('staged inputs are tracked routes plus the named scripts, never ignored tre
   ]);
 });
 
-test('the expression manifest stamps routes, tracked canon, and its harvester, never local caches', async () => {
+test('the expression manifest stamps routes and its harvester, never the .spw canon or local caches', async () => {
   const { isExpressionStampInput } = await import('../lib/manifest-stamp.mjs');
   for (const input of [
-    'index.html', 'design/folios/index.html', '.spw/site.spw', '.spw/surfaces/folio-archive/release-2026-09-27.spw',
+    'index.html', 'design/folios/index.html',
     'scripts/build-expression-manifest.mjs', 'public/js/semantic/expression-query.js',
   ]) assert.ok(isExpressionStampInput(input), input);
   for (const input of [
+    '.spw/site.spw', '.spw/surfaces/folio-archive/release-2026-09-27.spw',
     '.spw/gen/session/corpus-memo/a.spw', '.spw/_workbench/x.spw', '.agents/plans/x/index.html',
     'scripts/x/index.html', 'about/notes.html', '.spw/readme.md', 'dist/index.html',
   ]) assert.ok(!isExpressionStampInput(input), input);

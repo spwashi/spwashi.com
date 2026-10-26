@@ -203,7 +203,7 @@ expression = asks[plugins]{one.reading.then.one.plugin}<upstream>
     measured: .{
       seeds = "SPW_PROJECTION_SEEDS: 195 KB of the 338 KB module, 33 of its 64 KB gzip, emitted since d779d339 (2026-08-14)"
       reader = "getProjectionSeeds() in public/js/runtime/expression/expression-resonance.js has no caller in the repository"
-      site = "the site cuts it as slice S1 of .agents/plans/ecosystem-architecture"
+      site = "the site cut it on 2026-10-25 as slice S1 of .agents/plans/ecosystem-architecture; the ask stands, since nothing would have caught the next one"
     }[reg=facet]
     recommendation = #[
       `an emit declares its readers, as module paths or the selectors they read`,
