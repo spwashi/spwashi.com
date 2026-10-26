@@ -10,7 +10,7 @@ A settled page rests. Every module can say, in Spw, what it mounts on, what wake
 
 ## Evidence (2026-09-14)
 
-- Catalog: 114 defs × ~14 fields. The loader acts on `when`, `features`, `selector`, `rootMode`, `timingChunk`. `describes`, `evaluates`, `timingArc`, and `effectScope` are parsed for inspectors or projected onto DOM as `data-spw-module-*`/`data-spw-runtime-last-module-*`.
+- Catalog: 114 defs × ~14 fields (146 on 2026-10-25). The loader acts on `when`, `features`, `selector`, `rootMode`, `timingChunk`. `describes`, `evaluates`, `timingArc`, and `effectScope` are parsed for inspectors or projected onto DOM as `data-spw-module-*`/`data-spw-runtime-last-module-*`.
 - No field describes rest: what wakes a module after mount, whether its writes can wake itself, or whether a second pass is a no-op. The idle render loop fixed in a7ceccd2 (sync-hub tasks feeding their own observer) lived in that gap.
 - Writer census (import-graph scan of root writes vs declared `updates`): 166 undeclared root writes in module entry files; seven root attributes with two module writers (`data-spw-freshness-pulse`, `data-spw-spell-momentum`, `data-spw-collection-*`, `data-spw-component-motif`, `data-spw-metamaterial`).
 - `--spw-site-rhythm-tempo` has three owners: settings (beat tempo), module-loader (load speed), and CSS mount-batch holds. It is a registered, transitioned, inherited root property, so each write animates across the tree.

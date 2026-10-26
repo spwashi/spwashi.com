@@ -22,7 +22,7 @@ Already landed:
 
 Known constraints:
 
-- `public/css/style.css` owns cascade layer order and must not be reordered here. `css-cascade-stratification` is the standalone migration; note the built bundle strips the order statement (`css-bundle.mts:45`), so shipped order is first-appearance order.
+- `public/css/style-core.css:1` declares the cascade layer order (`style.css` imports it first) and must not be reordered here. `css-cascade-stratification` is the standalone migration; note the built bundle strips the order statement (`css-bundle.mts:45`), so shipped order is first-appearance order.
 - A portable bundle for other hosts is `.spw/caches/portable-css-2026-09.spw`. It does not reorder those layers or ship this site's chrome.
 - `public/css/effects/debug.css` is generated from `src/styles/entries/debug.css`.
 - `check-generated` treats unstaged generated outputs as stale, so generated CSS and compiled tool output must be staged with their sources before final checks.
@@ -119,7 +119,7 @@ Intern-sized examples:
 
 ## Out Of Scope
 
-- Do not change the cascade layer order in `public/css/style.css` from this plan (`css-cascade-stratification` owns that). Do not move a file to a later layer to “make it load later.”
+- Do not change the cascade layer order declared at `public/css/style-core.css:1` from this plan (`css-cascade-stratification` owns that). Do not move a file to a later layer to “make it load later.”
 - Do not convert `data-spw-composition-flow` into global layout behavior yet.
 - Do not rename or move CSS files without updating `style.css` imports in the same patch.
 - Do not introduce a framework, runtime dependency, or client-side CSS-in-JS system.

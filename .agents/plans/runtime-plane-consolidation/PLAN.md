@@ -38,11 +38,11 @@ This plan does not replace the existing runtime owners. It is the cross-plane ad
 
 **Payload**
 - Eager static import graph from `site.js`: **38 modules, 631.4 KB raw / 159.3 KB gzip**, blocking before the first mount.
-- `dist/public/js`: **210 unbundled, unminified ES modules, 3.4 MB**. `scripts/build.mjs` has no minify or bundle step; files are content-hashed source.
+- `dist/public/js`: **210 unbundled, unminified ES modules, 3.4 MB**. `scripts/build.mjs` has no minify or bundle step; files are content-hashed source. (2026-10-25: no longer so; [deploy-module-graph](../deploy-module-graph/PLAN.md) cut the deploy into semantic packs in f05b02d2.)
 - `kernel/dom-contracts.js:12` imports `detectOperator` from `kernel/shared.js` — **69 KB, the largest file in the graph**, for one function. `shared.js` exports through two grouped `export { }` blocks, so nothing tree-shakes.
 
 **Scheduling**
-- 96 module definitions. **13 declare `route:`.** 91 declare `selector:`.
+- 96 module definitions. **13 declare `route:`.** 91 declare `selector:`. (2026-10-25: 146 defs, core 4, feature 49, region 1, enhancement 92; 26 declare `route:`, 136 `selector:`.)
 - `ctx.routeFamily` is parsed at `site.js:498` and **consumed by nothing** — absent from `runtime/orchestration/` and `runtime/catalog/normalize.js` (rechecked 2026-10-10).
 - `hasSelector` → `safeQuery` → uncached `document.querySelector` per def, per filter pass. The filter runs ~8 times per boot (immediate ×3, prefetch ×2, visible, interaction, region, idle, settled): **~650+ uncached `querySelector` calls during boot**, several against 4-way selector lists.
 - `.agents/state/runtime/route-runtime-manifest.json` (832 KB, with `routes`, `surfaces`, `runtimeDefinitions`) is generated at build time and **read only by `scripts/typed/site-contracts/index.mjs`** — never at runtime.
@@ -179,6 +179,7 @@ Gate: this changes interaction latency and settle timing. Demo before landing.
 - [x] Adopt guarded dataset writes in `semantic/link-copy.js` (`writeDatasetValue`, `writeDatasetValueIfMissing`, `writeDatasetValues`).
 - [x] Add unit tests in `scripts/tests/spw-expression-geometry.test.mjs` verifying backward-compatible parser shape across chips and handles.
 - [ ] Align pinned `modules/tools/spw-literal-parser.js` artifact generation with the single reader.
+- Seam (2026-10-25, named by [ecosystem-architecture](../ecosystem-architecture/PLAN.md) S0): [spw-language-v04](../spw-language-v04/PLAN.md) extends `semantic/expression-query.js`, which imports nothing and is read by search, the cauldron, the build scripts and `spw:routes`. Proposed split: expression-query reads slots, and geometry reads layout from those slots. Neither file changes until one plan takes the split.
 
 ### Phase 5 — Ground the spatial model ✅
 
@@ -207,6 +208,7 @@ Gate: both are visible chrome. Demo before catalog/gating changes that alter whe
 
 - Attack the 1.5 MiB core from the JS side first (Phase 3 removes the redundant invalidation), then decompose the 352 root-attribute-rooted selector families.
 - Coordinate with `css-architecture-readability` — that plan owns literate CSS ownership; this phase owns only the JS↔CSS write coupling.
+- Seam (2026-10-25): per-pass recalc cost belongs to `runtime-bootstrap-performance`, which `core-css-spend-cut` hands it to; core bytes stay with `core-css-spend-cut`. This phase does not decompose core for pass speed.
 
 ## Out Of Scope
 

@@ -33,7 +33,7 @@ operation = "align"
 fixity = "tending"
 
 ^"thesis"{
-  claim: "A stylesheet earns its place by being legible alone. Opened cold, it should answer three questions without reference to any other file: what surface am I dressing, what state do I sense, and how would you prove I am doing it. The tree already believes this — 151 of 155 authored sheets open with a banner that answers at least the first — so this convention defends an existing practice rather than importing one."
+  claim: "A stylesheet earns its place by being legible alone. Opened cold, it should answer three questions without reference to any other file: what surface am I dressing, what state do I sense, and how would you prove I am doing it. The tree already believes this — 151 of 155 authored sheets open with a banner (184 of 188 on 2026-10-25) that answers at least the first — so this convention defends an existing practice rather than importing one."
   refuse: "Do not let a stylesheet become a fragment that only makes sense once bundled. If a rule cannot be explained without naming three other files, the cluster is in the wrong document."
 }
 
@@ -72,13 +72,13 @@ fixity = "tending"
 
 ^"progressive_enhancement"{
   claim: "This is where the ecology actually fails, and no amount of file hygiene fixes it."
-  measured: "2026-09-04: core.css is 1595 KiB against a 1638 KiB soft budget; observed scoped routes carry roughly 1622–1819 KiB and the all-bundle graph is 2518 KiB. Named first-paint tokens, @property interpolation, no-JS handle CSS, and :has() operator kinship belong in core when first paint depends on them. Route scoping trims the tail; the trunk remains the dominant delivery problem."
+  measured: "2026-09-04: core.css is 1595 KiB against a 1638 KiB soft budget; observed scoped routes carry roughly 1622–1819 KiB and the all-bundle graph is 2518 KiB. Named first-paint tokens, @property interpolation, no-JS handle CSS, and :has() operator kinship belong in core when first paint depends on them. Route scoping trims the tail; the trunk remains the dominant delivery problem. 2026-10-25: core.css is 1721 KiB against 1741 KiB, from 188 source sheets."
   weight: #[
-    `tokens/core.css ~91 KiB`,
-    `grammar/syntax.css ~85 KiB`,
-    `shell/chrome/navigation.css ~61 KiB`,
-    `components/runtime-states.css ~49 KiB (inspect overlays extracted)`,
-    `shell/chrome/adaptive.css ~54 KiB`
+    `tokens/core.css ~91 KiB (103 KiB on 2026-10-25)`,
+    `grammar/syntax.css ~85 KiB (89 KiB)`,
+    `shell/chrome/navigation.css ~61 KiB (63 KiB)`,
+    `components/runtime-states.css ~49 KiB (51 KiB; inspect overlays extracted)`,
+    `shell/chrome/adaptive.css ~54 KiB (53 KiB)`
   ][reg=set]
   rule: "A sheet belongs in core only if a first paint without it is wrong rather than merely plainer. Ornament, wonder, and cinematic now idle-load. Metaphysical-paper still dresses a surface that is already legible."
   audience: "Editors, agents, and returning readers who already know how assets load may treat the soft budget warning as a delivery note. Do not evict named PE substrate (tokens, @property, no-JS :has() / focus / scroll-timeline) just to go green."
@@ -143,7 +143,7 @@ fixity = "tending"
 
 ^"validation"{
   probe: `npm run css:payload && node scripts/normalize-breakpoints.mjs`
-  next: "Evict metaphysical-paper.css if first paint still holds, and measure. Combinator literature is practice when touching ornament or wonder."
+  next: "metaphysical-paper.css already idle-loads through effects/flourish-pack.css (kernel/deferred-styles.js); measure the next atmosphere sheet in core before moving it. Combinator literature is practice when touching ornament or wonder."
 }
 
 ^"dispatch"{

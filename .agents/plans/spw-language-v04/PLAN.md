@@ -1,6 +1,6 @@
 # Plan: spw-language-v04
 
-**Status 2026-10-10.** Phase 1 (the twelve pillars) and Phase 4 (the in-site parser plus the build-time expression manifest) have landed, and the workbench mount is pinned at `229aedcf` (a4572202). Phase 2 has not started; it is upstream workbench work that the creator gates. The one next slice is patch 2 of `.spw/caches/spw-as-handle-2026-09.spw`: prefix sigils in `parseExpressionQuery` (`public/js/semantic/expression-query.js`), tested in `scripts/tests/expression-query.test.mjs`. Its trailing-`?#` half waits on the creator (wonder block in `index.spw`).
+**Status 2026-10-10.** Phase 1 (the twelve pillars) and Phase 4 (the in-site parser plus the build-time expression manifest) have landed, and the workbench mount is pinned at `229aedcf` (a4572202), and since 2026-10-13 at `0eb1d1c0` (f51b316c), with both generated parsers built from it. Phase 2 has not started; it is upstream workbench work that the creator gates. The one next slice is patch 2 of `.spw/caches/spw-as-handle-2026-09.spw`: prefix sigils in `parseExpressionQuery` (`public/js/semantic/expression-query.js`), tested in `scripts/tests/expression-query.test.mjs`. Its trailing-`?#` half waits on the creator (wonder block in `index.spw`).
 
 **Related:** [spw-metaphysical-language](../spw-metaphysical-language/PLAN.md) · [operator-semantics-refinement](../archive/operator-semantics-refinement/PLAN.md) · [spw-document-room](../archive/spw-document-room/PLAN.md).
 

@@ -31,7 +31,7 @@ Targets from the pre-flight measurement:
 
 - deploy boot: 230,801 B raw / 69,418 B gzip
 - core CSS: 1,865,364 B raw / 339,420 B gzip
-- catalog: 105 modules; 8 immediate; 34 in named idle chunks
+- catalog: 105 modules; 8 immediate; 34 in named idle chunks (146 defs on 2026-10-25)
 - dev graph: 122–129 scripts on representative routes; use only as a graph-breadth signal, not a production request count
 
 ### Measured Result

@@ -1,6 +1,6 @@
 # Engagement Clusters
 
-**Status 2026-10-10.** Landed: `kernel/engagement.js` and catalog `engages` behind `?spw-arming=engage` (0a974b23; three defs carry `engages`), the arrival census and root precision slices (2026-10-06), and the shelf decision for invited instruments (2026-10-08). Next slice: read each quiet module's arrival writes to its own hosts, which the root census cannot see. Gates: making `engage` the default is a sensation call (Human Decisions); container priming waits on the facet operator mapping, asked once in `../module-contract-overhaul/wip.spw` `#>wonder_module_contract_overhaul_facet_operators`.
+**Status 2026-10-10.** Landed: `kernel/engagement.js` and catalog `engages` behind `?spw-arming=engage` (0a974b23; two defs carry `engages`, field-composition and region-menu; the third count was the field contract in `catalog/constants.js`), the arrival census and root precision slices (2026-10-06), and the shelf decision for invited instruments (2026-10-08). Next slice: read each quiet module's arrival writes to its own hosts, which the root census cannot see. Gates: making `engage` the default is a sensation call (Human Decisions); container priming waits on the facet operator mapping, asked once in `../module-contract-overhaul/wip.spw` `#>wonder_module_contract_overhaul_facet_operators`.
 
 **Related:** [deploy-module-graph](../deploy-module-graph/PLAN.md) · [navigation-header-disclosure](../archive/navigation-header-disclosure/PLAN.md) · [chrome-navigation-wonder](../chrome-navigation-wonder/PLAN.md).
 

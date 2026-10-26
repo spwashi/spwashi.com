@@ -1,6 +1,6 @@
 # css-cascade-stratification
 
-**Status 2026-10-10.** Phase 0 landed (332d98bd, play's paint as intents), and so did the Phase 1 review kit: `audit:layer-flip` with the `?spw-layer-order=declared` switch (4759a02f) and the `perf:layer-ablation` probe (01c34f01). The bundler still strips the order statement (`scripts/ts/css-bundle.mts:45`), so `bundles/core.css` ships none. Next: Phase 1 prep, which means `audit:layer-flip` rows plus declared-vs-shipped phone stills for home (71 flagged rules at landing) and play (25). No route has been recorded yet, and `bundles/routes/` now holds 23 sheets against 19 at landing. The gate is the creator's look in the browser, and the ablation's Chrome half has not yet run outside the sandbox.
+**Status 2026-10-10.** Phase 0 landed (332d98bd, play's paint as intents), and so did the Phase 1 review kit: `audit:layer-flip` with the `?spw-layer-order=declared` switch (4759a02f) and the `perf:layer-ablation` probe (01c34f01). The bundler still strips the order statement (`scripts/ts/css-bundle.mts:45`), so `bundles/core.css` ships none. Next: Phase 1 prep, which means `audit:layer-flip` rows plus declared-vs-shipped phone stills for home (71 flagged rules at landing; 70 of 366 on 2026-10-25) and play (25). No route has been recorded yet, and `bundles/routes/` now holds 23 sheets against 19 at landing. The gate is the creator's look in the browser, and the ablation's Chrome half has not yet run outside the sandbox.
 
 **Absorbed 2026-10-06:** [css-state-legibility](../archive/css-state-legibility/PLAN.md) · [vertical-rhythm-container-audit](../archive/vertical-rhythm-container-audit/PLAN.md).
 
@@ -27,7 +27,7 @@ That review is Phase 1 here. No new layer name exists before it lands.
 - Finish the `css-state-legibility` follow-up: `routes/surfaces/play.css` §6/§9 re-describe hover/focus/pressed route-locally and are dead under the declared order. The more route paint moves to `--*-intent`, the less Phase 1 can break.
 
 **Phase 1 review kit (landed 2026-09-25).** Nothing to rebuild for an A/B:
-1. `npm run audit:layer-flip` lists, per route bundle, the route rules whose subject shares a class with a handles/effects/ornament rule that sets the same property — the rules that win today and would lose. 365 across 19 bundles at landing; home 71, about 43, rpg-wednesday 42, website 37, play 25. `--bundle=<slug> --limit=N` for detail. A shared class is a reason to look, not proof.
+1. `npm run audit:layer-flip` lists, per route bundle, the route rules whose subject shares a class with a handles/effects/ornament rule that sets the same property — the rules that win today and would lose. 365 across 19 bundles at landing; home 71, about 43, rpg-wednesday 42, website 37, play 25. 2026-10-25: 366; home 70, about 45, rpg-wednesday 42, website 37, play 25. `--bundle=<slug> --limit=N` for detail. A shared class is a reason to look, not proof.
 2. Open a listed page twice: as is, and with `?spw-layer-order=declared`. `prepaint-state.js` then puts the declared order first in the document and the page cascades as `style-core.css` says. A test pins the string to `EXPECTED_LAYER_ORDER`.
 3. On /play/, the intents carry paint but not geometry: sigil `min-height`, `padding`, and flex seating are on the list and will move.
 4. `npm run perf:layer-ablation -- <route>` before and after, for the pass.
