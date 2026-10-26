@@ -44,11 +44,11 @@ Metacognitive utility: the runtime should help a reader notice how the page beca
 - `mountImmediateLayer` (and similar loops) use serial `await mountDefinition(...)` → dynamic imports and mount work are serialized even when independent.
 - High immediate surface: ~50+ `MOUNT_WHEN.IMMEDIATE` declarations. On rich pages many still qualify after selector/route checks.
 - Heavy early modules:
-  - `kernel/site-settings.js` (~102 KB / 2.9k LOC) is CORE immediate on every page. It owns palettes, developmental climate, author workflow, pin registry, cauldron storage, discovery dismissals, image visit state, etc.
+  - `kernel/site-settings.js` (~102 KB / 2.9k LOC; a 659 B barrel on 2026-10-25) is CORE immediate on every page. It owns palettes, developmental climate, author workflow, pin registry, cauldron storage, discovery dismissals, image visit state, etc.
   - Several ENHANCEMENT immediate modules (canvas-accents, image-metaphysics, svg-*, composition-box-model, semantic-crossrefs, attention-architecture, experiential, haptics, etc.) each perform queryAll + listener + observer setup.
 - Observer fragmentation: 53+ observer/listener setups across ~24 files (multiple dedicated IntersectionObservers for regions, visible features, attention sections, plus per-module observers in canvas/image/svg surfaces).
 - Per-module mount overhead: every module writes 8–12 dataset attributes, pushes lifecycle stages, emits on bus (history + legacy + charge), and participates in token/rhythm sync.
-- `site.js` entry itself is 121 KB (orchestrator + contracts + helpers) — acceptable for the richness, but the combination of entry + immediate dynamic imports creates measurable parse/execute cost before `interactive`.
+- `site.js` entry itself is 121 KB (52.6 KB on 2026-10-25) (orchestrator + contracts + helpers) — acceptable for the richness, but the combination of entry + immediate dynamic imports creates measurable parse/execute cost before `interactive`.
 
 Total runtime JS across the tree is ~1.85 MB (uncompressed); lazy loading helps, but the *width* of the immediate layer and serialization inside it are the dominant first-load costs.
 

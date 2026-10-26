@@ -22,6 +22,7 @@ fixity = "tending"
 ^"stream"{
  >>[2026-10-25 17:10] verify — Read the CSS, the runtime and spw.quest against their owner plans. The plan ranks eight site slices by what they are worth to peers, adoption, the codebase as an asset, and risk; spw.quest gains G, H and I. Two findings had no owner. 195 KB of the 338 KB expression manifest (SPW_PROJECTION_SEEDS, 33 KB gzip) loads wherever a page carries an expression, and getProjectionSeeds() has no caller. Three services route bundles are byte-identical.
  >>[2026-10-25 17:21] verify — The parser equivalence probe: spw-workbench-reader.js parse and spw-workbench-parser.js parse agree on success, completeness, AST, tokens, errors, warnings and events for 990 of 990 git-tracked .spw files outside the workbench, once duration and event timestamps are left out. S3 loses its gate.
+ >>[2026-10-25 20:40] implement — S0: each owner plan keeps its dated figure and gains today's beside it (catalog 146; site.js 52.6 KB; flips 366, home 70, about 45, play 25; core 1721 of 1741 KiB; 184 of 188 sheets with a banner; pin 0eb1d1c0; two engages defs). Layer order is named at style-core.css:1 in readability and css-instruction.spw. runtime-plane-consolidation names both seams: expression-query reads slots and geometry reads layout (proposed, unowned), and per-pass recalc stays with runtime-bootstrap-performance. spw-quest's What it is now is re-measured and slice B is marked done.
 }
 
 ^"s0_rows"{  # owner plan text the tree no longer matches, measured 2026-10-25

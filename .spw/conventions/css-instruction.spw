@@ -68,7 +68,7 @@
   devtools_path: [
     "Find the visible element.",
     "Read data-spw-surface / data-spw-feature / data-spw-slot / data-spw-module.",
-    "Open public/css/style.css to find the owning layer.",
+    "Open public/css/style-core.css (kernel) or public/css/style.css (the rest) to find the owning layer.",
     "Patch the smallest file that owns that semantic level."
   ]
 }
@@ -164,7 +164,7 @@
 }
 
 ^"import_manifest"{
-  entrypoint: "public/css/style.css is the ordered manifest."
+  entrypoint: "public/css/style.css is the ordered manifest; it imports public/css/style-core.css first, whose line 1 declares the layer order."
   layer_rule: "Do not change the @layer declaration order casually; add imports inside the existing owner layer."
   import_rule: "The import order should read like instruction: reset -> tokens -> shell -> typography -> grammar -> components -> systems -> routes -> handles -> effects -> ornament."
   executable_contract: "scripts/ts/css-contracts.mts checks that a public/css/<layer>/ file is imported with the matching cascade layer and that root-level CSS remains limited to style.css and compose.css."
@@ -173,7 +173,7 @@
 
 ^"source_direction"{
   stance: "Prefer native CSS plus PostCSS for source refactors; SCSS remains allowed when it clarifies ownership."
-  module_rule: "Future source modules must compile or copy to public/css while preserving the style.css layer contract."
+  module_rule: "Future source modules must compile or copy to public/css while preserving the layer contract declared at style-core.css:1."
   naming_rule: "Module files should be named by semantic owner: shell, chrome, grammar, component, surface, route, effect, ornament."
   postcss_rule: "PostCSS plugins are optional and should support standards-aligned CSS rather than hiding semantic selectors."
 }
