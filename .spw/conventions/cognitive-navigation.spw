@@ -11,7 +11,7 @@
 @semantic_navigation_plan: ~<plan>"../../.agents/plans/archive/semantic-navigation-geometry/PLAN.md"
 @literal_parser_tool: ~<route>"../../tools/spw-parser/index.html"
 @literal_parser_runtime: ~<runtime>"../../public/js/modules/tools/spw-literal-parser.js"
-@literal_parser_bundle: ~<runtime>"../../public/js/semantic/spw-workbench-parser.js"
+@literal_parser_bundle: ~<runtime>"../../public/js/semantic/spw-workbench-reader.js"
 @literal_parser_build: ~<build>"../../scripts/build-spw-literal-parser.mjs"
 @workbench_form_geometry: ~<theory>"../_workbench/docs/theory/spw/form-geometry.spw"
 @workbench_inline_composites: ~<theory>"../_workbench/docs/theory/spw/inline-composites.spw"

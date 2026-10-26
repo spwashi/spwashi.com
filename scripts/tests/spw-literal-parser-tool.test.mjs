@@ -1,8 +1,7 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 
-import { SPW_PARSER_BUILD } from '../../public/js/semantic/spw-workbench-parser.js';
-import { SPW_PARSER_BUILD as SPW_READER_BUILD } from '../../public/js/semantic/spw-workbench-reader.js';
+import { SPW_PARSER_BUILD } from '../../public/js/semantic/spw-workbench-reader.js';
 import {
   createParserAppUrl,
   parseLiteralSource,
@@ -12,17 +11,11 @@ import {
 } from '../../public/js/modules/tools/spw-literal-parser.js';
 
 describe('literal Spw parser proof', () => {
-  it('uses a pinned workbench parser artifact', () => {
+  it('uses a pinned workbench reader artifact', () => {
     assert.equal(SPW_PARSER_BUILD.package, 'spw-workbench');
     assert.match(SPW_PARSER_BUILD.version, /^\d+\.\d+\.\d+$/);
     assert.match(SPW_PARSER_BUILD.commit, /^[a-f0-9]{12}$/);
-    assert.equal(SPW_PARSER_BUILD.source, 'packages/spw-seed/src/parser.ts');
-  });
-
-  it('reads with a reader bundle cut from the same workbench revision as the parser', () => {
-    assert.equal(SPW_READER_BUILD.commit, SPW_PARSER_BUILD.commit);
-    assert.equal(SPW_READER_BUILD.version, SPW_PARSER_BUILD.version);
-    assert.equal(SPW_READER_BUILD.source, 'packages/spw-lsp/src/reader.ts');
+    assert.equal(SPW_PARSER_BUILD.source, 'packages/spw-lsp/src/reader.ts');
   });
 
   it('reads a source as the editor does: every character back, prefixed roles, an outline and anchors', () => {

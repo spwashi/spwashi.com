@@ -1,7 +1,7 @@
 // The reader: what Spw reads in one line, for one panel. The same kit runs in the
 // worker (scripts off, /read) and in the page (scripts on, as the reader types);
-// both pass it the parse function from the site's parser bundle.
-import { parse } from "../../../public/js/semantic/spw-workbench-parser.js";
+// both pass it the parse function from the site's reader bundle.
+import { parse } from "../../../public/js/semantic/spw-workbench-reader.js";
 import { CONTAINERS, OPERATORS, PARTICLE_AIMS } from "./guide.js";
 import { STEPS } from "./steps.js";
 

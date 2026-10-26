@@ -6,25 +6,20 @@ import { promisify } from 'node:util';
 const execFileAsync = promisify(execFile);
 const ROOT = path.resolve(import.meta.dirname, '..');
 const WORKBENCH = path.join(ROOT, '.spw', '_workbench');
-const PARSER_ENTRY = path.join(WORKBENCH, 'packages', 'spw-seed', 'src', 'parser.ts');
 const READER_ENTRY = path.join(WORKBENCH, 'packages', 'spw-lsp', 'src', 'reader.ts');
 const READER_SEED = path.join(WORKBENCH, 'packages', 'spw-seed', 'src', 'reader.ts');
 const ESBUILD_ENTRY = path.join(WORKBENCH, 'node_modules', 'esbuild', 'lib', 'main.js');
 const SEMANTIC = path.join(ROOT, 'public', 'js', 'semantic');
 
 /**
- * Two bundles from one revision. The parser is parse and parseExpression. The
- * reader is what the editor reads from a file (roles, outline, anchors,
- * highlightHtml) with parse; it points seed at its browser-safe slice, as the
- * workbench's parser release does, so a page and the editor read a file alike.
+ * One bundle for every browser reader of Spw. The reader is what the editor
+ * reads from a file (roles, outline, anchors, highlightHtml) with parse and
+ * parseExpression; it points seed at its browser-safe slice, as the workbench's
+ * parser release does, so a page and the editor read a file alike. A parser-only
+ * bundle stood beside it until 2026-10-25, when the two read all 993 tracked
+ * .spw files and 974 route expressions alike (ecosystem-architecture S3).
  */
 const BUNDLES = Object.freeze([
-  {
-    output: path.join(SEMANTIC, 'spw-workbench-parser.js'),
-    source: 'packages/spw-seed/src/parser.ts',
-    exports: `export { parse, parseExpression } from ${JSON.stringify(PARSER_ENTRY)};`,
-    sourcefile: 'spw-parser-browser-entry.ts',
-  },
   {
     output: path.join(SEMANTIC, 'spw-workbench-reader.js'),
     source: 'packages/spw-lsp/src/reader.ts',

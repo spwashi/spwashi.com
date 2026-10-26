@@ -1,7 +1,7 @@
 # Review 2026-10-25 — new: a ranked route through the CSS and runtime owner plans by what each move is worth to peers, adoption and the codebase, then spw.quest's specimens and motion; S0 and S1 first.
 # Plan Index — ecosystem-architecture
 #
-# Status 2026-10-25. S0, S1, S2 and S6 landed: the owner plans carry today's measure beside their dated figures and name the two seams, the expression manifest no longer ships the `.spw` seeds, the parallel operator tables read from the canon, and the three offer pages share one services bundle. A ranked route through the CSS and runtime owner plans, chosen by what each move is worth beyond one page. Then the phase that spends…
+# Status 2026-10-25. S0 to S3 and S6 landed: the owner plans carry today's measure beside their dated figures and name the two seams, the expression manifest no longer ships the `.spw` seeds, the parallel operator tables read from the canon, one reader bundle serves the site and the quest, and the three offer pages share one services bundle. A ranked route through the CSS and runtime owner plans, chosen by what each move is worth beyond one page. Then the phase that spends…
 
 #>plan_ecosystem_architecture_index
 #:index #!plan
@@ -12,7 +12,7 @@ operation = "prime"
 fixity = "tending"
 
 intent: .{
- goal = `Status 2026-10-25. S0, S1, S2 and S6 landed: the owner plans carry today's measure beside their dated figures and name the two seams, the expression manifest no longer ships the `.spw` seeds, the parallel operator tables read from the canon, and the three offer pages share one services bundle. A ranked route through the CSS and runtime owner plans, chosen by what each move is worth beyond one page. Then the phase that spends it: spw.quest shows how Spw is developing and becomes a playground for constructs and specimens (slices G–I in [spw-quest](../spw-quest/PLAN.md)). Every slice names its owner, and this plan owns three things: the ranking, the list of what may travel, and one unowned item (S6). Next slice: S3, ungated now that the two parser bundles are shown to agree. The cascade (S5), what travels first (S4), and the playground's look wait on the creator.`
+ goal = `Status 2026-10-25. S0 to S3 and S6 landed: the owner plans carry today's measure beside their dated figures and name the two seams, the expression manifest no longer ships the `.spw` seeds, the parallel operator tables read from the canon, one reader bundle serves the site and the quest, and the three offer pages share one services bundle. A ranked route through the CSS and runtime owner plans, chosen by what each move is worth beyond one page. Then the phase that spends it: spw.quest shows how Spw is developing and becomes a playground for constructs and specimens (slices G–I in [spw-quest](../spw-quest/PLAN.md)). Every slice names its owner, and this plan owns three things: the ranking, the list of what may travel, and one unowned item (S6). Next: S4 waits on the creator; G needs nothing from S0–S7. The cascade (S5), what travels first (S4), and the playground's look wait on the creator.`
  owner = `ecosystem-architecture`
  kind = `plan`
  bucket = `active_backlog`
@@ -28,7 +28,7 @@ intent: .{
 }[reg=facet]
 
 ^"conceptual_model"{
- thesis = `Status 2026-10-25. S0, S1, S2 and S6 landed: the owner plans carry today's measure beside their dated figures and name the two seams, the expression manifest no longer ships the `.spw` seeds, the parallel operator tables read from the canon, and the three offer pages share one services bundle. A ranked route through the CSS and runtime owner plans, chosen by what each…`
+ thesis = `Status 2026-10-25. S0 to S3 and S6 landed: the owner plans carry today's measure beside their dated figures and name the two seams, the expression manifest no longer ships the `.spw` seeds, the parallel operator tables read from the canon, one reader bundle serves the site and the quest, and the three offer pages share one services bundle. A ranked route through the CSS and runtime owner plans, chosen by what each…`
  concepts = #[
   `what`,
   `owner`,
@@ -78,7 +78,7 @@ dispatch: .{
 ^"owner_claim"{
  claim_id = "plan-ecosystem_architecture-001"
  layer = "pragmatic"
- hypothesis = `Status 2026-10-25. S0, S1, S2 and S6 landed: the owner plans carry today's measure beside their dated figures and name the two seams, the expression manifest no longer ships the `.spw` seeds, the parallel operator tables read from the canon, and the three offer pages share one services bundle. A ranked route through the CSS and runtime owner plans, chosen by what each move is worth beyond one page. Then the phase that spends it: spw.quest shows how Spw is developing and becomes a playground for constructs and specimens (slices G–I in [spw-quest](../spw-quest/PLAN.md)). Every slice names its owner, and this plan owns three things: the ranking, the list of what may travel, and one unowned item (S6). Next slice: S3, ungated now that the two parser bundles are shown to agree. The cascade (S5), what travels first (S4), and the playground's look wait on the creator.`
+ hypothesis = `Status 2026-10-25. S0 to S3 and S6 landed: the owner plans carry today's measure beside their dated figures and name the two seams, the expression manifest no longer ships the `.spw` seeds, the parallel operator tables read from the canon, one reader bundle serves the site and the quest, and the three offer pages share one services bundle. A ranked route through the CSS and runtime owner plans, chosen by what each move is worth beyond one page. Then the phase that spends it: spw.quest shows how Spw is developing and becomes a playground for constructs and specimens (slices G–I in [spw-quest](../spw-quest/PLAN.md)). Every slice names its owner, and this plan owns three things: the ranking, the list of what may travel, and one unowned item (S6). Next: S4 waits on the creator; G needs nothing from S0–S7. The cascade (S5), what travels first (S4), and the playground's look wait on the creator.`
  spec_ref = ~"./PLAN.md"
  impl_ref = ~"../../../public/css/"
  probe_ref = `npm run audit:plans after S0.`
@@ -101,7 +101,7 @@ editor_prompts: #[
 ][reg=set]
 
 invariants: #[
- `Owner intent: Status 2026-10-25. S0, S1, S2 and S6 landed: the owner plans carry today's measure beside their dated figures and name the two seams, the expression manifest no longer ships the `.spw` seeds, the parallel operator tables read from the canon, and the three offer pages share one services bundle. A ranked route through the CSS and runtime owner plans, chosen by what each move is worth…`,
+ `Owner intent: Status 2026-10-25. S0 to S3 and S6 landed: the owner plans carry today's measure beside their dated figures and name the two seams, the expression manifest no longer ships the `.spw` seeds, the parallel operator tables read from the canon, one reader bundle serves the site and the quest, and the three offer pages share one services bundle. A ranked route through the CSS and runtime owner plans, chosen by what each move is worth…`,
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]

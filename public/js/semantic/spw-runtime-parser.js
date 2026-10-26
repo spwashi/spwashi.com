@@ -19,7 +19,7 @@ import {
   parse as parseSeed,
   parseExpression,
   SPW_PARSER_BUILD,
-} from '/public/js/semantic/spw-workbench-parser.js';
+} from '/public/js/semantic/spw-workbench-reader.js';
 import {
   kernelJoinFromTokens,
   readJoinChain,

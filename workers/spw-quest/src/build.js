@@ -1,7 +1,7 @@
 // The script tool: one expression you can mutate, and the .spw you copy, format,
 // or download. Slot links keep every other slot. The script field can hold any
 // text; format only tightens spacing when the parser accepts the whole script.
-import { parse } from "../../../public/js/semantic/spw-workbench-parser.js";
+import { parse } from "../../../public/js/semantic/spw-workbench-reader.js";
 import { escapeHtml } from "../../lib/shell.js";
 import { CONTAINERS, OPERATORS, PARTICLE_AIMS } from "./guide.js";
 import { EXAMPLES } from "./examples.js";

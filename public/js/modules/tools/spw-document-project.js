@@ -3,7 +3,7 @@
  * document slots a reader can scan without a server.
  */
 
-import { parse } from '/public/js/semantic/spw-workbench-parser.js';
+import { parse } from '/public/js/semantic/spw-workbench-reader.js';
 
 export const ROOM_SLOTS = Object.freeze([
   'seed',

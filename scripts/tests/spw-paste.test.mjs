@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
-import { parse } from '../../public/js/semantic/spw-workbench-parser.js';
+import { parse } from '../../public/js/semantic/spw-workbench-reader.js';
 import { PASTE_ACTIONS, actionLabel, readPaste, spwSegments } from '../../public/js/modules/tools/spw-paste.js';
 import { SEED_TEMPLATES, buildSeedText } from '../../public/js/modules/cards/seed-card.js';
 

@@ -99,7 +99,7 @@ const ORIGIN = [
   'And it wonders about geometry: how a mind represents the thoughts it holds, what shape a circuit of thought might take on a page, and how findings from different fields could sit side by side in one form you can read.',
   'It is not built for anyone in particular. It has been designed with care, and it has turned out to be useful, most of all toward a culture where media literacy can grow across generations.',
 ];
-const SITE_BUNDLE = new URL('../../../public/js/semantic/spw-workbench-parser.js', import.meta.url);
+const SITE_BUNDLE = new URL('../../../public/js/semantic/spw-workbench-reader.js', import.meta.url);
 const SHELL_CSP = BASE_SECURITY['Content-Security-Policy'];
 const PAGE_CSP = SHELL_CSP.replace("style-src 'unsafe-inline';", "style-src 'unsafe-inline'; font-src 'self';");
 const LIVE_CSP = PAGE_CSP.replace("script-src 'unsafe-inline'", "script-src 'self' 'unsafe-inline'");

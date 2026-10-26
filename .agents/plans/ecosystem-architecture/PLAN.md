@@ -1,6 +1,6 @@
 # Plan: ecosystem-architecture
 
-**Status 2026-10-25.** S0, S1, S2 and S6 landed: the owner plans carry today's measure beside their dated figures and name the two seams, the expression manifest no longer ships the `.spw` seeds, the parallel operator tables read from the canon, and the three offer pages share one services bundle. A ranked route through the CSS and runtime owner plans, chosen by what each move is worth beyond one page. Then the phase that spends it: spw.quest shows how Spw is developing and becomes a playground for constructs and specimens (slices G–I in [spw-quest](../spw-quest/PLAN.md)). Every slice names its owner, and this plan owns three things: the ranking, the list of what may travel, and one unowned item (S6). Next slice: S3, ungated now that the two parser bundles are shown to agree. The cascade (S5), what travels first (S4), and the playground's look wait on the creator.
+**Status 2026-10-25.** S0 to S3 and S6 landed: the owner plans carry today's measure beside their dated figures and name the two seams, the expression manifest no longer ships the `.spw` seeds, the parallel operator tables read from the canon, one reader bundle serves the site and the quest, and the three offer pages share one services bundle. A ranked route through the CSS and runtime owner plans, chosen by what each move is worth beyond one page. Then the phase that spends it: spw.quest shows how Spw is developing and becomes a playground for constructs and specimens (slices G–I in [spw-quest](../spw-quest/PLAN.md)). Every slice names its owner, and this plan owns three things: the ranking, the list of what may travel, and one unowned item (S6). Next: S4 waits on the creator; G needs nothing from S0–S7. The cascade (S5), what travels first (S4), and the playground's look wait on the creator.
 
 **Related:** [core-css-spend-cut](../core-css-spend-cut/PLAN.md) · [css-cascade-stratification](../css-cascade-stratification/PLAN.md) · [css-architecture-readability](../css-architecture-readability/PLAN.md) · [runtime-plane-consolidation](../runtime-plane-consolidation/PLAN.md) · [deploy-module-graph](../deploy-module-graph/PLAN.md) · [spw-language-v04](../spw-language-v04/PLAN.md) · [operator-resonance-alignment](../operator-resonance-alignment/PLAN.md) · [site-starter-component-kit](../site-starter-component-kit/PLAN.md) · [workers-wonder-kit](../workers-wonder-kit/PLAN.md) · [spw-quest](../spw-quest/PLAN.md)
 
@@ -25,7 +25,7 @@ The public CSS and JS pay three ways beyond the page that loads them. Each slice
 | Attribute selectors | 944 distinct `data-spw-*` names in CSS, 281 used once | `public/css/` |
 | JS | 331 files, 4.69 MB; catalog 146 defs (owner plans cite 96, 105, 114) | `public/js/` |
 | Unread payload | `SPW_PROJECTION_SEEDS` is 195 KB of the 338 KB expression manifest (33 of 64 KB gzip); `getProjectionSeeds()` has no caller | `public/js/runtime/expression/expression-resonance.js:636` |
-| Parser bundles | 2 at `0eb1d1c0`: `spw-workbench-parser.js` 75.8 KB (spw-seed), `spw-workbench-reader.js` 87.5 KB (spw-lsp reader, also exports `parse`); same result on 990 of 990 `.spw` files | `build:spw-parser` |
+| Parser bundles | 2 at `0eb1d1c0` (1 after S3): `spw-workbench-parser.js` 75.8 KB (spw-seed), `spw-workbench-reader.js` 87.5 KB (spw-lsp reader, also exports `parse`); same result on 990 of 990 `.spw` files | `build:spw-parser` |
 | Operator tables | 1 canon (`public/js/kernel/operator-detection.js`, 19 definitions) and 5 parallel | geometry, operator-info, shared, profile builder, boonhonk mixer |
 | Half-wired input | `ctx.routeFamily` is set at `public/js/site.js:498` and read by nothing | the arrival lever |
 | Custom elements | 0 at runtime; the `<spw-*>` tags are build-time | `scripts/template.mjs` |
@@ -72,7 +72,7 @@ Validation: `npm run manifest:staged`, `npm run check:built`, `npm run test:modu
 
 Validation: `npm run test:modules`, `npm run build:peer-kit -- --check`, `npm run check:workers`.
 
-**S3. One reader for Spw in a browser.** Lever: adoption, peers. Cost: small. Owner: spw-language-v04. Gate: none.
+**S3. One reader for Spw in a browser.** Landed 2026-10-25: the parser bundle is gone, and spw.quest's `/parser.js` and worker readings are the reader. The quest's guide still imports `/parser.js`; pinning the dated `reader.min.js` stays note-shell PR 2. Lever: adoption, peers. Cost: small. Owner: spw-language-v04. Gate: none.
 - The parser and reader bundles come from one revision. Today the site's code blocks, the parser tool, the console and spw.quest import different ones.
 - The reader's `parse` gives the parser's AST, tokens, errors, warnings and events on all 990 authored `.spw` files (2026-10-25; only timing differs).
 - So the parser bundle's importers can move to the reader, and one bundle serves the site and the quest (note-shell PR 2 pins `reader.min.js`).
