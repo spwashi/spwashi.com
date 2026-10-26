@@ -62,6 +62,7 @@ fixity = "tending"
  >>[2026-10-25 17:13] decide — Proposed G, H and I in PLAN.md, sequenced with ecosystem-architecture. G: /specimens, a shelf read on the worker with provenance links to spwashi.com, any two compared as ground then the edge by slot, and a ?q= partial-slot filter. H: how Spw is developing, as one specimen read by two parser releases (one release today, 2026.10.13). I: the shelf and readings as Spw for agents. Slice A is marked superseded by /read. Nothing built; the note's deploy, the note-shell order and the physical-model commit stay ahead of these.
  >>[2026-10-25 22:10] implement — ecosystem-architecture S3 moves the worker's readings and /parser.js onto the site's reader bundle (87,530 B; same parse on every tracked .spw file); carry-parser carries it. The note-shell design's background still describes /parser.js as the parser bundle at 75,779 B; that file stays verbatim. The guide's import URL is unchanged, so PR 2's pin is still PR 2's. Not deployed.
  >>[2026-10-25 23:30] implement — G on the local branch quest/specimens, not merged: /specimens with the herbarium, the pages' rarer lines and the gallery, a slot search over all 1019 specimens, and two lines read as ground then edge. Read at carry time (552 KB carried, 75 KB gzip) so a request costs 1–2 ms instead of 520 ms of parsing. Nine herbarium forms are read in part by expression-query's slot reader; spw-language-v04 owns that reader. Stills at 390 px light and dark, no overflow. Quest tests 54 pass (2 need the mount); carry --check matches. Waits on the note's deploy and the creator's look.
+ >>[2026-10-26 09:00] implement — creator: merge spw.quest to test it live. quest/specimens rebased onto main and fast-forwarded (17f6a77e); the next deploy carries the note and G together. check:workers green on main, quest tests 56 of 56 with the mount.
 }
 
 ^"architecture"{
@@ -207,8 +208,8 @@ fixity = "tending"
 
 ^"cache"{
  ~#status: "committed, awaiting the creator's look and deploy"
- ~#next_commit: "+[quest] Give each sigil its physical model beside its reading (G waits on branch quest/specimens)"
+ ~#next_commit: "+[quest] Give each sigil its physical model beside its reading"
  ~#files_hot: "workers/spw-quest/src/index.js, workers/spw-quest/src/panel.js, workers/spw-quest/src/build.js, workers/spw-quest/src/reader.js, workers/spw-quest/src/steps.js, workers/spw-quest/test/routes.test.mjs"
  ~#gate: "the creator's look on a phone (panels, path, nuance rows, sigil table, Put one together), then the Wrangler deploy"
- ~#last_stream: "2026-10-25"
+ ~#last_stream: "2026-10-26"
 }
