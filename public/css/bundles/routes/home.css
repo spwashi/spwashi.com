@@ -2034,10 +2034,14 @@ body[data-spw-surface="home"] .frame-topline .spw-component-tag {
    Working view — a chosen route posture reweights rather than removes.
 
    html[data-spw-active-lens-mode] is already written by lens-modes.js.
-   Cards declare which frequencies they pass with data-spw-lens-pass.
+   Cards and frames declare which frequencies they pass with data-spw-lens-pass.
    Unmarked cards are broadband. Matching cards stay bright. The rest recede
    enough to show relation without looking disabled.
    Do not display:none — the situation set stays in the tab order.
+   The seat a page opens on (data-spw-active-lens-source="initial") reweights
+   nothing: only a seat a reader or a link chose does. A receding card keeps
+   AA contrast: its text measured 14.9:1, 6.2:1 at 0.72 and 2.5:1 at the old
+   0.42 (2026-10-25), so 0.72 is the floor and saturation carries the rest.
    -------------------------------------------------------------------------- */
 
 /* The deploy route bundle is intentionally unlayered, so it repeats the
@@ -2063,34 +2067,58 @@ body[data-spw-surface="home"] .frame-topline .spw-component-tag {
   box-shadow: var(--mode-switch-active-shadow-intent, inset 0 -0.2rem 0 color-mix(in srgb, var(--home-accent-primary) 82%, transparent));
 }
 
-:where(body[data-spw-surface="home"] [data-spw-lens-pass]) {
+:where(body[data-spw-surface="home"] .frame-card[data-spw-lens-pass]) {
   transition:
     opacity var(--home-transition-base, 180ms) ease,
     filter var(--home-transition-base, 180ms) ease,
     box-shadow var(--home-transition-base, 180ms) ease;
 }
 
-:where(html[data-spw-active-lens-mode="reading"] body[data-spw-surface="home"] [data-spw-lens-pass]:not([data-spw-lens-pass~="reading"])),
-:where(html[data-spw-active-lens-mode="systems"] body[data-spw-surface="home"] [data-spw-lens-pass]:not([data-spw-lens-pass~="systems"])),
-:where(html[data-spw-active-lens-mode="play"] body[data-spw-surface="home"] [data-spw-lens-pass]:not([data-spw-lens-pass~="play"])),
-:where(html[data-spw-active-lens-mode="studio"] body[data-spw-surface="home"] [data-spw-lens-pass]:not([data-spw-lens-pass~="studio"])) {
-  opacity: 0.42;
-  filter: saturate(0.55);
+:where(html[data-spw-active-lens-mode="reading"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] .frame-card[data-spw-lens-pass]:not([data-spw-lens-pass~="reading"])),
+:where(html[data-spw-active-lens-mode="systems"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] .frame-card[data-spw-lens-pass]:not([data-spw-lens-pass~="systems"])),
+:where(html[data-spw-active-lens-mode="play"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] .frame-card[data-spw-lens-pass]:not([data-spw-lens-pass~="play"])),
+:where(html[data-spw-active-lens-mode="studio"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] .frame-card[data-spw-lens-pass]:not([data-spw-lens-pass~="studio"])) {
+  opacity: 0.72;
+  filter: saturate(0.45);
 }
 
-:where(html[data-spw-active-lens-mode="reading"] body[data-spw-surface="home"] [data-spw-lens-pass~="reading"]),
-:where(html[data-spw-active-lens-mode="systems"] body[data-spw-surface="home"] [data-spw-lens-pass~="systems"]),
-:where(html[data-spw-active-lens-mode="play"] body[data-spw-surface="home"] [data-spw-lens-pass~="play"]),
-:where(html[data-spw-active-lens-mode="studio"] body[data-spw-surface="home"] [data-spw-lens-pass~="studio"]) {
+:where(html[data-spw-active-lens-mode="reading"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] .frame-card[data-spw-lens-pass~="reading"]),
+:where(html[data-spw-active-lens-mode="systems"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] .frame-card[data-spw-lens-pass~="systems"]),
+:where(html[data-spw-active-lens-mode="play"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] .frame-card[data-spw-lens-pass~="play"]),
+:where(html[data-spw-active-lens-mode="studio"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] .frame-card[data-spw-lens-pass~="studio"]) {
   opacity: 1;
   filter: saturate(1.06);
   box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--home-accent-primary, teal) 38%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--home-lens-contour, var(--home-accent-primary, teal)) 55%, transparent),
     var(--home-shadow-quiet, none);
 }
 
+/* A chosen seat draws a contour: the frames that serve it take a 2px outline
+   in the seat's operator color, the same color the seat and the bright cards'
+   ring wear, so one key reads across the switch, the cards and the page. The
+   rest stay as they are: a frame is too large to recede. An outline takes no
+   layout, and a targeted frame keeps its landing outline (ornament.css). */
+:where(html[data-spw-active-lens-mode="reading"]) { --home-lens-contour: var(--op-ground-color, var(--home-accent-primary)); }
+:where(html[data-spw-active-lens-mode="systems"]) { --home-lens-contour: var(--op-integration-color, var(--home-accent-primary)); }
+:where(html[data-spw-active-lens-mode="play"]) { --home-lens-contour: var(--op-potential-color, var(--home-accent-primary)); }
+:where(html[data-spw-active-lens-mode="studio"]) { --home-lens-contour: var(--op-perspective-color, var(--home-accent-primary)); }
+
+:where(html[data-spw-active-lens-mode="reading"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] section.spw-frame[data-spw-lens-pass~="reading"]:not(:target)),
+:where(html[data-spw-active-lens-mode="systems"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] section.spw-frame[data-spw-lens-pass~="systems"]:not(:target)),
+:where(html[data-spw-active-lens-mode="play"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] section.spw-frame[data-spw-lens-pass~="play"]:not(:target)),
+:where(html[data-spw-active-lens-mode="studio"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] section.spw-frame[data-spw-lens-pass~="studio"]:not(:target)) {
+  outline: 2px solid color-mix(in srgb, var(--home-lens-contour) 58%, transparent);
+  outline-offset: -2px;
+}
+
+/* With scripts off every seat's panel shows and the switch is not offered
+   (modes/hydration.css), so the lines that talk about choosing one go too. */
+:where(html:not([data-spw-runtime-stage]) body[data-spw-surface="home"] :is(.home-working-view__intro, #home-loops-note-view)) {
+  display: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  :where(body[data-spw-surface="home"] [data-spw-lens-pass]) {
+  :where(body[data-spw-surface="home"] .frame-card[data-spw-lens-pass]) {
     transition: none;
   }
 }

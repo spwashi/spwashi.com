@@ -285,14 +285,24 @@
     host_state = #[`data-spw-lens-group`, `data-spw-lens-mode`, `data-spw-lens-state`, `data-spw-lens-deep-link`, `data-spw-deep-link-state`][reg=set]
     switch_state = #[`data-spw-lens-group`, `data-spw-lens-mode`, `data-spw-lens-state`, `data-spw-lens-deep-link`, `--spw-lens-count`, `--spw-lens-index`][reg=set]
     panel_state = #[`data-spw-lens-panel-state`, `data-spw-lens-group`, `data-spw-lens-mode`][reg=set]
-    root_state = #[`html[data-spw-active-lens-group]`, `html[data-spw-active-lens-mode]`][reg=set]
+    root_state = #[`html[data-spw-active-lens-group]`, `html[data-spw-active-lens-mode]`, `html[data-spw-active-lens-source]`][reg=set]
     event = "Emit canonical frame:mode through the site bus; legacy listeners continue to receive spw:mode-change."
-    query = "A shareable lens link may use ?lens=<group>:<mode>#<host-id>. Query state is an enhancement; hash targets and IDs must still work without JavaScript."
+    query = "A shareable lens link uses ?spw-lens=<group>:<mode>#<host-id>. Bare ?lens= is the legible-channel setting, which the settings sync rewrites on load, so a seat written there is dropped (found 2026-10-25). Query state is an enhancement; hash targets and IDs must still work without JavaScript."
   }[reg=facet]
   css_contract = "Shared CSS should read data-spw-lens-mode / data-spw-lens-state and --spw-lens-cascade-color. Route CSS may consume those variables for local preview depth, but should not duplicate switch pressed-state logic."
   marketing_use = "A marketing or offer surface can link to a frame plus lens mode when the pitch needs to show a specific proof posture: prose, syntax, artifact, system, QA, or feature demonstration."
   qa_use = "A QA pass can assert root, host, switch, and panel state after changing a lens; deep-link QA should verify both URL query application and panel visibility."
   anti_pattern = "A route invents .syntax-active/.marketing-active classes, updates panel display locally, and leaves no bus event, root state, or deep-linkable handle for QA."
+  reader_contract = .{
+    opening = "The seat a page opens on says nothing the reader chose. It shows its panel and reweights nothing; html[data-spw-active-lens-source] reads initial until a reader picks a seat or a ?lens= link names one (2026-10-25)."
+    consequence = "A seat says what it changes, in its own panel beside the switch, with a link to what it keeps bright. An effect a reader cannot see from the switch reads as nothing."
+    memory = "A reader's pick, by pointer or arrow key, is written back to the address with replaceState as ?spw-lens=<group>:<mode>, keeping the reader's hash, so a reload or a shared link keeps the seat. Navigation caches ignore the query (sw.js normalizeCacheKey)."
+    reweight = "A receding card keeps AA contrast. Home's card text measured 14.9:1, 6.2:1 at opacity 0.72 and 2.5:1 at 0.42, so 0.72 is the floor and desaturation carries the rest."
+    touch = "Only a reader's pick buzzes; the opening write and a link's are silent."
+    contour = "A page marks the places that serve a seat with data-spw-lens-pass. A chosen seat outlines those frames in its operator color, the color its seat and the bright cards' ring wear; a frame is too large to recede, so the rest stay as they are. Home marks four cards and ten frames."
+    reach = "The lens feedback counts the places that answer, as in table lore · 3 places answer on this page; a page that marks none keeps the panel's role and kind."
+    attention = "A lens pick does not focus its frame or dim the others (state-orchestrator.js). A dimmed frame never blocks input, and keeps AA: muted prose measured 2.7:1 at the old 0.62 and needs 0.86, so it holds at 0.88 and grayscale carries the rest (relational-state.css)."
+  }[reg=facet]
 }
 
 ^"pressed_handle_state_contract"{

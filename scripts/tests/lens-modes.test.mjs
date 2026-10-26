@@ -3,6 +3,9 @@ import test from 'node:test';
 
 import {
   LENS_MODE_REQUEST_EVENT,
+  buildLensModeLocation,
+  describeLensReach,
+  isReaderLensSource,
   requestLensMode,
   resolveLensRovingIndex,
   resolveLensSeatSubject,
@@ -66,4 +69,34 @@ test('a lens request is one bus emit with the group, mode, and source', () => {
   assert.equal(requestLensMode(fakeBus, { group: '', mode: 'kernel' }), false);
   assert.equal(requestLensMode(null, { group: 'g', mode: 'm' }), false);
   assert.equal(emitted.length, 1);
+});
+
+test('only a reader’s own pick counts as a choice', () => {
+  assert.equal(isReaderLensSource('mode-switch'), true);
+  assert.equal(isReaderLensSource('keyboard'), true);
+  for (const source of ['initial', 'query', 'request', 'probe', '', undefined]) {
+    assert.equal(isReaderLensSource(source), false, String(source));
+  }
+});
+
+test('the remembered address keeps the path, the reader’s hash, and other params', () => {
+  assert.equal(
+    buildLensModeLocation('home-lens', 'systems', { pathname: '/', search: '', hash: '' }),
+    '/?spw-lens=home-lens%3Asystems',
+  );
+  assert.equal(
+    buildLensModeLocation('home-lens', 'play', { pathname: '/', search: '?spw-lens=home-lens:systems&q=spw', hash: '#entry-loops' }),
+    '/?spw-lens=home-lens%3Aplay&q=spw#entry-loops',
+  );
+  assert.equal(
+    buildLensModeLocation('about-lens', 'kernel', { pathname: '/about/', search: '?spw-lens=about-lens:wake&lens=contrast&mode=dark', hash: '' }),
+    '/about/?spw-lens=about-lens%3Akernel&lens=contrast&mode=dark',
+  );
+});
+
+test('a seat’s reach reads as the places on the page that answer it', () => {
+  assert.equal(describeLensReach(0), '');
+  assert.equal(describeLensReach(undefined), '');
+  assert.equal(describeLensReach(1), '1 place answers on this page');
+  assert.equal(describeLensReach(8), '8 places answer on this page');
 });
