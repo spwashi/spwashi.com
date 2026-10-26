@@ -119,6 +119,14 @@ describe('css-manifest incremental filters', () => {
     assert.ok(sheets.some((s) => s.kind === 'behavior' && s.scope === 'metrics'));
   });
 
+  it('the three services offer surfaces share one route bundle', () => {
+    for (const surface of ['services-creator', 'services-ecosystem', 'services-systems']) {
+      assert.equal(resolveCanonicalRouteSurface(surface), 'services-surface');
+      assert.equal(routeBundleHref(surface), '/public/css/bundles/routes/services-surface.css');
+    }
+    assert.equal(routeBundleHref('services-care'), '/public/css/bundles/routes/services-care.css');
+  });
+
   it('folios surface aliases to website route CSS', () => {
     assert.equal(resolveCanonicalRouteSurface('folios'), 'website');
     assert.equal(routeBundleHref('folios'), '/public/css/bundles/routes/website.css');

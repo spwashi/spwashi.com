@@ -126,9 +126,8 @@ export const ROUTE_SCOPES: Readonly<Record<string, readonly string[]>> = Object.
     '/public/css/routes/surfaces/services.css',
     '/public/css/routes/widgets/care-intake.css',
   ],
-  'services-creator': ['/public/css/routes/surfaces/services.css'],
-  'services-ecosystem': ['/public/css/routes/surfaces/services.css'],
-  'services-systems': ['/public/css/routes/surfaces/services.css'],
+  // The services surface alone, without the hub's cards and configurator; creator, ecosystem and systems alias here.
+  'services-surface': ['/public/css/routes/surfaces/services.css'],
   settings: [
     '/public/css/routes/surfaces/settings.css',
     '/public/css/routes/surfaces/settings-forms.css',
@@ -166,6 +165,9 @@ export const ROUTE_SCOPES: Readonly<Record<string, readonly string[]>> = Object.
 export const ROUTE_SURFACE_ALIASES: Readonly<Record<string, string>> = Object.freeze({
   design: 'website',
   folios: 'website',
+  'services-creator': 'services-surface',
+  'services-ecosystem': 'services-surface',
+  'services-systems': 'services-surface',
   software: 'topics',
 });
 
