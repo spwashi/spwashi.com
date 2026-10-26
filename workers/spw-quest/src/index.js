@@ -13,6 +13,7 @@ import { displayMenu, displayScript } from "./display.js";
 import { PARSER_JS } from "./parser-text.js";
 import { handleParser, isParserPath } from "./parser-releases.js";
 import { SWITCH_CSS, parserSwitch, switchBanner, switchLoader, switchModulePath } from "./parser-switch.js";
+import { SPECIMENS_CSS, specimenState, specimensBody } from "./specimens.js";
 import { BASE_SECURITY, escapeHtml, jsonResponse, layout, wantsJson } from "../../lib/shell.js";
 import { PEER_BRACES, PEER_SIGILS } from "../../lib/peer-kit.js";
 import { isPeerAssetPath, servePeerAsset } from "../../lib/peer-assets.js";
@@ -406,7 +407,7 @@ ${pathNav()}
 <ol class="quest" role="list" aria-label="Seven panels">
   ${steps}
 </ol>
-<p class="also"><a href="/">Back to the guide</a> · <a href="/build">Take one line apart</a> · <a href="/install">Install the workbench</a></p>
+<p class="also"><a href="/">Back to the guide</a> · <a href="/build">Take one line apart</a> · <a href="/specimens">Specimens</a> · <a href="/install">Install the workbench</a></p>
 </div>
 ${liveScript()}
 ${displayScript()}`,
@@ -435,9 +436,25 @@ function renderBuild(slots, script = assemble(slots), filename = `${slots.word |
 <section id="build" aria-labelledby="build-title">
   ${buildSurface(slots, script, filename)}
 </section>
-<p class="also"><a href="/">Back to the guide</a> · <a href="/learn">Learn it a mark at a time</a> · <a href="/install">Install the workbench</a></p>
+<p class="also"><a href="/">Back to the guide</a> · <a href="/learn">Learn it a mark at a time</a> · <a href="/specimens">Specimens</a> · <a href="/install">Install the workbench</a></p>
 ${liveFileScript()}
 ${displayScript()}`,
+  });
+}
+
+/** The shelf of specimens, a search by slot, and two lines side by side; all of it in the address, all of it with scripts off. */
+function renderSpecimens(state) {
+  return layout({
+    title: "spw.quest — specimens",
+    description: "Lines of Spw from spwashi.com, read with scripts off: find them by slot, and hold two side by side.",
+    canonical: "https://spw.quest/specimens",
+    head: QUEST_HEAD,
+    themeCss: `${PAPER_CSS}
+    ${PAGE_CSS}
+    ${SPECIMENS_CSS}`,
+    body: `${masthead("/specimens")}
+${specimensBody(state)}
+<p class="also"><a href="/">Back to the guide</a> · <a href="/build">Take one line apart</a> · <a href="/learn">Learn it a mark at a time</a></p>`,
   });
 }
 
@@ -564,6 +581,8 @@ async function handleQuest(request, url) {
     response = scriptFile(asked.script, asked.filename);
   } else if (url.pathname === "/read") {
     response = handleRead(url);
+  } else if (url.pathname === "/specimens") {
+    response = page(renderSpecimens(specimenState(url.searchParams)), { cache: "public, max-age=300" });
   } else if (url.pathname === "/parser.js") {
     response = new Response(PARSER_JS, { headers: { ...BASE_SECURITY,
       "Content-Type": "text/javascript; charset=UTF-8", "Cache-Control": "public, max-age=3600" } });
