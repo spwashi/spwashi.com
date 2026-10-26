@@ -200,7 +200,7 @@ File extracts are done; what is left is catalog gating. Anatomy in `modules.spw`
 **`runtime/experiential/experiential.js`** — 2,168 → 223 lines; breadcrumb-spell and sample-dock left in 0cb1dbfd. `experiential` is still the one catalog def (`runtime/catalog/enhancement.js:1705`).
 
 - [ ] Give each extracted feature its own catalog def and gate; sample dock and QA beats are idle or debug-gated work, not `IMMEDIATE`.
-- [ ] Fold `OPERATOR_INFO` (`runtime/experiential/operator-info.js`) into the single expression reader (Phase 4).
+- [ ] Fold `OPERATOR_INFO` (`runtime/experiential/operator-info.js`) into the single expression reader (Phase 4). 2026-10-25: it is no longer a third vocabulary; [ecosystem-architecture](../ecosystem-architecture/PLAN.md) S2 made it a view of `kernel/operator-detection.js` that keeps only its memo phrases and wonders (df32c50f). What is left is where those phrases live.
 
 Gate: both are visible chrome. Demo before catalog/gating changes that alter when panels appear.
 
