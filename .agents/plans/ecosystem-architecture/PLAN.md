@@ -1,6 +1,6 @@
 # Plan: ecosystem-architecture
 
-**Status 2026-10-25.** S0, S1 and S6 landed: the owner plans carry today's measure beside their dated figures and name the two seams, the expression manifest no longer ships the `.spw` seeds, and the three offer pages share one services bundle. A ranked route through the CSS and runtime owner plans, chosen by what each move is worth beyond one page. Then the phase that spends it: spw.quest shows how Spw is developing and becomes a playground for constructs and specimens (slices G–I in [spw-quest](../spw-quest/PLAN.md)). Every slice names its owner, and this plan owns three things: the ranking, the list of what may travel, and one unowned item (S6). Next slice: S2; it is not gated, and neither is S3 now that the two parser bundles are shown to agree. The cascade (S5), what travels first (S4), and the playground's look wait on the creator.
+**Status 2026-10-25.** S0, S1, S2 and S6 landed: the owner plans carry today's measure beside their dated figures and name the two seams, the expression manifest no longer ships the `.spw` seeds, the parallel operator tables read from the canon, and the three offer pages share one services bundle. A ranked route through the CSS and runtime owner plans, chosen by what each move is worth beyond one page. Then the phase that spends it: spw.quest shows how Spw is developing and becomes a playground for constructs and specimens (slices G–I in [spw-quest](../spw-quest/PLAN.md)). Every slice names its owner, and this plan owns three things: the ranking, the list of what may travel, and one unowned item (S6). Next slice: S3, ungated now that the two parser bundles are shown to agree. The cascade (S5), what travels first (S4), and the playground's look wait on the creator.
 
 **Related:** [core-css-spend-cut](../core-css-spend-cut/PLAN.md) · [css-cascade-stratification](../css-cascade-stratification/PLAN.md) · [css-architecture-readability](../css-architecture-readability/PLAN.md) · [runtime-plane-consolidation](../runtime-plane-consolidation/PLAN.md) · [deploy-module-graph](../deploy-module-graph/PLAN.md) · [spw-language-v04](../spw-language-v04/PLAN.md) · [operator-resonance-alignment](../operator-resonance-alignment/PLAN.md) · [site-starter-component-kit](../site-starter-component-kit/PLAN.md) · [workers-wonder-kit](../workers-wonder-kit/PLAN.md) · [spw-quest](../spw-quest/PLAN.md)
 
@@ -66,7 +66,7 @@ Validation: `npm run audit:plans`.
 
 Validation: `npm run manifest:staged`, `npm run check:built`, `npm run test:modules`.
 
-**S2. One operator table.** Lever: asset, peers. Cost: small to medium. Owner: operator-resonance-alignment.
+**S2. One operator table.** Landed 2026-10-25: four views and one charge table that stays (owner plan, *One table*). Lever: asset, peers. Cost: small to medium. Owner: operator-resonance-alignment.
 - The five parallel tables become views of `operator-detection.js`.
 - When the workbench table lands (creator, 2026-10-11), this file becomes its adapter, and every reader already goes through it.
 

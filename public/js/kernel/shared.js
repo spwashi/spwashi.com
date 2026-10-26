@@ -912,18 +912,19 @@ const OP_DISPATCH_BY_POSITION = Object.freeze({
   expression: 'enclose',
 });
 
+/* The sequence and its states are this table's; each sigil's operator is the canon's. */
 const SPW_OPERATOR_THRESHOLD_SEQUENCE = Object.freeze([
-  Object.freeze({ sigil: '~', operator: 'potential', state: 'latent' }),
-  Object.freeze({ sigil: '?', operator: 'wonder', state: 'probing' }),
-  Object.freeze({ sigil: '%', operator: 'normalize', state: 'measured' }),
-  Object.freeze({ sigil: '=', operator: 'binding', state: 'bounded' }),
-  Object.freeze({ sigil: '$', operator: 'substrate', state: 'supported' }),
-  Object.freeze({ sigil: '!', operator: 'action', state: 'acting' }),
-  Object.freeze({ sigil: '*', operator: 'value', state: 'resolved' }),
-  Object.freeze({ sigil: '^', operator: 'integration', state: 'integrated' }),
-  Object.freeze({ sigil: '#', operator: 'vibration', state: 'anchored' }),
-  Object.freeze({ sigil: '.', operator: 'ground', state: 'grounded' }),
-]);
+  ['~', 'latent'],
+  ['?', 'probing'],
+  ['%', 'measured'],
+  ['=', 'bounded'],
+  ['$', 'supported'],
+  ['!', 'acting'],
+  ['*', 'resolved'],
+  ['^', 'integrated'],
+  ['#', 'anchored'],
+  ['.', 'grounded'],
+].map(([sigil, state]) => Object.freeze({ sigil, operator: OPERATOR_BY_PREFIX[sigil].type, state })));
 
 const THRESHOLD_STATE_BY_OPERATOR = Object.freeze(
   Object.fromEntries(
@@ -945,17 +946,22 @@ const getOperatorThresholdState = (sigilOrOperator = '') => {
   return THRESHOLD_STATE_BY_OPERATOR[key] || null;
 };
 
-const COMPOSITE_OPERATOR_PREFIXES = Object.freeze({
-  '?$': Object.freeze({ primary: 'wonder', secondary: 'substrate', physics: 'probe substrate' }),
-  '?%': Object.freeze({ primary: 'wonder', secondary: 'normalize', physics: 'probe measurement' }),
-  '?@': Object.freeze({ primary: 'wonder', secondary: 'perspective', physics: 'probe perspective' }),
-  '!$': Object.freeze({ primary: 'action', secondary: 'substrate', physics: 'charge resource' }),
-  '!^': Object.freeze({ primary: 'action', secondary: 'integration', physics: 'publish artifact' }),
-  '!*': Object.freeze({ primary: 'action', secondary: 'value', physics: 'execute run' }),
-  '~$': Object.freeze({ primary: 'potential', secondary: 'substrate', physics: 'potential substrate' }),
-  '~@': Object.freeze({ primary: 'potential', secondary: 'perspective', physics: 'potential perspective' }),
-  '.$': Object.freeze({ primary: 'ground', secondary: 'substrate', physics: 'ground substrate' }),
-});
+/* Two marks read as one move: the physics is this table's; primary and secondary are the canon's types for each mark. */
+const COMPOSITE_OPERATOR_PREFIXES = Object.freeze(Object.fromEntries([
+  ['?$', 'probe substrate'],
+  ['?%', 'probe measurement'],
+  ['?@', 'probe perspective'],
+  ['!$', 'charge resource'],
+  ['!^', 'publish artifact'],
+  ['!*', 'execute run'],
+  ['~$', 'potential substrate'],
+  ['~@', 'potential perspective'],
+  ['.$', 'ground substrate'],
+].map(([pair, physics]) => [pair, Object.freeze({
+  primary: OPERATOR_BY_PREFIX[pair[0]].type,
+  secondary: OPERATOR_BY_PREFIX[pair[1]].type,
+  physics,
+})])));
 
 const composeOpBundle = (expression = '') => {
   const parts = splitOperatorExpression(expression);
@@ -970,7 +976,6 @@ const composeOpBundle = (expression = '') => {
   return tokens.join(' ');
 };
 
-const SIGIL_PREFIX_OPERATOR_RE = /^(#>|#:|#|\.|\^|~|\?|@|\*|&|=|\$|%|!|>|<|\(|\[|\{)/;
 const SIGIL_POSTFIX_OPERATOR_RE = /(!|\^|\.|>|\)|\]|\})$/;
 const SIGIL_INFIX_EXPRESSION_RE = /^[^\[{(<]+[\[{<(]/;
 
@@ -993,7 +998,7 @@ const parseSigilPosition = (sigil = '') => {
     };
   }
 
-  const prefixMatch = text.match(SIGIL_PREFIX_OPERATOR_RE);
+  const prefixMatch = text.match(OPERATOR_PREFIX_RE);
   if (prefixMatch) {
     return {
       position: 'prefix',
