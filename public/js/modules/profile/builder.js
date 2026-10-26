@@ -15,6 +15,8 @@
  * State contract: empty → draft → preview → exported
  */
 
+import { getOperatorDefinition } from '/public/js/kernel/operator-detection.js';
+
 export const STATUS_OPTIONS = [
   { value: 'available',   label: 'available',         hint: 'Open to new work now.' },
   { value: 'consulting',  label: 'consulting',         hint: 'Taking project-based engagements.' },
@@ -23,16 +25,19 @@ export const STATUS_OPTIONS = [
   { value: 'looking',     label: 'actively looking',   hint: 'Seeking the next collaboration or sprint.' },
 ];
 
+// The sigil's name comes from the operator canon; the hint is how a profile says it.
+const operatorOption = (value, hint) => ({ value, label: `${value} ${getOperatorDefinition(value).type}`, hint });
+
 export const OPERATOR_OPTIONS = [
-  { value: '~',  label: '~ potential',   hint: 'I keep useful possibilities visible.' },
-  { value: '#',  label: '# vibration',   hint: 'I help ideas resonate and become recognizable.' },
-  { value: '.',  label: '. ground',      hint: 'I stabilize work so people can stand on it.' },
-  { value: '?',  label: '? wonder',      hint: 'I investigate, question, and discover.' },
-  { value: '!',  label: '! action',      hint: 'I make consequential moves inspectable.' },
-  { value: '*',  label: '* value',       hint: 'I make the concrete value legible.' },
-  { value: '&',  label: '& subject',     hint: 'I name the person, system, or relation at stake.' },
-  { value: '@',  label: '@ perspective', hint: 'I shift viewpoint and make context explicit.' },
-  { value: '^',  label: '^ integration', hint: 'I combine parts into learnable systems.' },
+  operatorOption('~', 'I keep useful possibilities visible.'),
+  operatorOption('#', 'I help ideas resonate and become recognizable.'),
+  operatorOption('.', 'I stabilize work so people can stand on it.'),
+  operatorOption('?', 'I investigate, question, and discover.'),
+  operatorOption('!', 'I make consequential moves inspectable.'),
+  operatorOption('*', 'I make the concrete value legible.'),
+  operatorOption('&', 'I name the person, system, or relation at stake.'),
+  operatorOption('@', 'I shift viewpoint and make context explicit.'),
+  operatorOption('^', 'I combine parts into learnable systems.'),
 ];
 
 export const BADGE_CLUSTERS = [

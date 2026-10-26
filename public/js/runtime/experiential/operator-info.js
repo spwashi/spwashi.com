@@ -1,54 +1,45 @@
 /**
- * Canonical operator vocabulary and metadata mapping for experiential learning,
- * contextual memos, and inspection fields.
+ * Operator vocabulary for experiential learning, contextual memos, and
+ * inspection fields: a view of the canon in kernel/operator-detection.js.
+ *
+ * The canon names each operator's type and label, and the keys it resolves:
+ * every prefix, type and alias. This file adds only what a memo says the
+ * operator does and the wonder it opens, keyed by canon type.
  */
 
-export const OPERATOR_INFO = Object.freeze({
-  '#>': { type: 'frame', label: 'frame address', intent: 'name a resonance handle', wonder: 'resonance' },
-  '#:': { type: 'layer', label: 'layer vibration', intent: 'name a resonance field', wonder: 'resonance' },
-  '#':  { type: 'vibration', label: 'vibration', intent: 'make resonance recognizable', wonder: 'resonance' },
-  '.':  { type: 'ground', label: 'ground', intent: 'settle to local ground', wonder: 'memory' },
-  '^':  { type: 'integration', label: 'integration', intent: 'lift parts into relation', wonder: 'comparison' },
-  '~':  { type: 'potential', label: 'potential', intent: 'hold possibility open', wonder: 'projection' },
-  '?':  { type: 'wonder', label: 'wonder', intent: 'open curiosity', wonder: 'inquiry' },
-  '@':  { type: 'perspective', label: 'perspective', intent: 'situate a viewpoint', wonder: 'orientation' },
-  '*':  { type: 'value', label: 'value', intent: 'mark material salience', wonder: 'memory' },
-  '&':  { type: 'subject', label: 'subject', intent: 'name the relational focus', wonder: 'comparison' },
-  '=':  { type: 'binding', label: 'binding', intent: 'name or pin a local value', wonder: 'constraint' },
-  '$':  { type: 'meta', label: 'meta', intent: 'reflect on medium or trace', wonder: 'comparison' },
-  '%':  { type: 'normalize', label: 'normalize', intent: 'scale into comparability', wonder: 'constraint' },
-  '!':  { type: 'action', label: 'action', intent: 'commit a visible move', wonder: 'projection' },
-  '>':  { type: 'concept-edge', label: 'concept edge', intent: 'close a concept bracket', wonder: 'orientation' },
-  '<':  { type: 'concept', label: 'concept', intent: 'open a concept boundary', wonder: 'orientation' },
-  '(':  { type: 'scene', label: 'scene', intent: 'stage a context', wonder: 'projection' },
-  '[':  { type: 'mode', label: 'mode', intent: 'select a posture', wonder: 'constraint' },
-  '{':  { type: 'direction', label: 'direction', intent: 'hold bounded motion', wonder: 'orientation' },
+import { OPERATOR_DEFINITIONS, OPERATOR_TYPE_ALIASES } from '/public/js/kernel/operator-detection.js';
 
-  frame: { type: 'frame', label: 'frame address', intent: 'name a resonance handle', wonder: 'resonance' },
-  layer: { type: 'layer', label: 'layer vibration', intent: 'name a resonance field', wonder: 'resonance' },
-  vibration: { type: 'vibration', label: 'vibration', intent: 'make resonance recognizable', wonder: 'resonance' },
-  baseline: { type: 'ground', label: 'ground', intent: 'settle to local ground', wonder: 'memory' },
-  ground: { type: 'ground', label: 'ground', intent: 'settle to local ground', wonder: 'memory' },
-  object: { type: 'integration', label: 'integration', intent: 'lift parts into relation', wonder: 'comparison' },
-  integration: { type: 'integration', label: 'integration', intent: 'lift parts into relation', wonder: 'comparison' },
-  ref: { type: 'potential', label: 'potential', intent: 'hold possibility open', wonder: 'projection' },
-  potential: { type: 'potential', label: 'potential', intent: 'hold possibility open', wonder: 'projection' },
-  probe: { type: 'wonder', label: 'wonder', intent: 'open curiosity', wonder: 'inquiry' },
-  wonder: { type: 'wonder', label: 'wonder', intent: 'open curiosity', wonder: 'inquiry' },
-  perspective: { type: 'perspective', label: 'perspective', intent: 'situate a viewpoint', wonder: 'orientation' },
-  action: { type: 'action', label: 'action', intent: 'commit a visible move', wonder: 'projection' },
-  stream: { type: 'value', label: 'value', intent: 'mark material salience', wonder: 'memory' },
-  value: { type: 'value', label: 'value', intent: 'mark material salience', wonder: 'memory' },
-  merge: { type: 'subject', label: 'subject', intent: 'name the relational focus', wonder: 'comparison' },
-  subject: { type: 'subject', label: 'subject', intent: 'name the relational focus', wonder: 'comparison' },
-  binding: { type: 'binding', label: 'binding', intent: 'name or pin a local value', wonder: 'constraint' },
-  meta: { type: 'meta', label: 'meta', intent: 'reflect on medium or trace', wonder: 'comparison' },
-  normalize: { type: 'normalize', label: 'normalize', intent: 'scale into comparability', wonder: 'constraint' },
-  pragma: { type: 'action', label: 'action', intent: 'commit a visible move', wonder: 'projection' },
-  surface: { type: 'concept-edge', label: 'concept edge', intent: 'close a concept bracket', wonder: 'orientation' },
-  topic: { type: 'concept', label: 'concept', intent: 'open a concept boundary', wonder: 'orientation' },
-  concept: { type: 'concept', label: 'concept', intent: 'open a concept boundary', wonder: 'orientation' },
-  scene: { type: 'scene', label: 'scene', intent: 'stage a context', wonder: 'projection' },
-  mode: { type: 'mode', label: 'mode', intent: 'select a posture', wonder: 'constraint' },
-  direction: { type: 'direction', label: 'direction', intent: 'hold bounded motion', wonder: 'orientation' },
+const MEMO_BY_TYPE = Object.freeze({
+  frame: { intent: 'name a resonance handle', wonder: 'resonance' },
+  layer: { intent: 'name a resonance field', wonder: 'resonance' },
+  vibration: { intent: 'make resonance recognizable', wonder: 'resonance' },
+  ground: { intent: 'settle to local ground', wonder: 'memory' },
+  integration: { intent: 'lift parts into relation', wonder: 'comparison' },
+  potential: { intent: 'hold possibility open', wonder: 'projection' },
+  wonder: { intent: 'open curiosity', wonder: 'inquiry' },
+  perspective: { intent: 'situate a viewpoint', wonder: 'orientation' },
+  value: { intent: 'mark material salience', wonder: 'memory' },
+  subject: { intent: 'name the relational focus', wonder: 'comparison' },
+  binding: { intent: 'name or pin a local value', wonder: 'constraint' },
+  substrate: { intent: 'reveal the support layer', wonder: 'comparison' },
+  normalize: { intent: 'scale into comparability', wonder: 'constraint' },
+  action: { intent: 'commit a visible move', wonder: 'projection' },
+  'concept-edge': { intent: 'close a concept bracket', wonder: 'orientation' },
+  concept: { intent: 'open a concept boundary', wonder: 'orientation' },
+  scene: { intent: 'stage a context', wonder: 'projection' },
+  mode: { intent: 'select a posture', wonder: 'constraint' },
+  direction: { intent: 'hold bounded motion', wonder: 'orientation' },
+});
+
+const INFO_BY_TYPE = Object.fromEntries(OPERATOR_DEFINITIONS.map(({ type, label }) => [
+  type,
+  Object.freeze({ type, label, ...MEMO_BY_TYPE[type] }),
+]));
+
+export const OPERATOR_INFO = Object.freeze({
+  ...Object.fromEntries(OPERATOR_DEFINITIONS.map(({ prefix, type }) => [prefix, INFO_BY_TYPE[type]])),
+  ...INFO_BY_TYPE,
+  ...Object.fromEntries(Object.entries(OPERATOR_TYPE_ALIASES)
+    .filter(([, type]) => INFO_BY_TYPE[type])
+    .map(([alias, type]) => [alias, INFO_BY_TYPE[type]])),
 });

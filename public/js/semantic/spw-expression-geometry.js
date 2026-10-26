@@ -6,7 +6,7 @@
  * present authored syntax without claiming ONF, evaluation, or canonical form.
  */
 
-import { detectOperator } from '/public/js/kernel/operator-detection.js';
+import { OPERATOR_DEFINITIONS, detectOperator } from '/public/js/kernel/operator-detection.js';
 
 const FORM_GLYPHS = Object.freeze({
   frame: '[]',
@@ -28,7 +28,8 @@ const OPEN_BOUNDARIES = Object.freeze({
 });
 
 const CLOSE_BOUNDARIES = new Set([']', '}', ')', '))', '>', '>>']);
-const OPERATOR_SIGILS = Object.freeze(['#>', '#:', '?', '~', '@', '&', '*', '^', '.', '$', '%', '!', '=', '>', '#']);
+// The canon's prefixes, less the openers above; the canon lists #> and #: before #, so the longest mark wins.
+const OPERATOR_SIGILS = Object.freeze(OPERATOR_DEFINITIONS.map(({ prefix }) => prefix).filter((prefix) => !OPEN_BOUNDARIES[prefix]));
 const QUOTES = new Set(['"', "'", '`']);
 const ROOT_RE = /^\s*([A-Za-z_][A-Za-z0-9_.-]*)/;
 const OPERATOR_SUBJECT_RE = /[A-Za-z_"'([{<]/;
