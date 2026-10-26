@@ -145,6 +145,6 @@ Not a rewrite: one pilot of each, measured before more.
 ## Validation
 
 - `npm run audit:plans -- --slug=brace-semantics`.
-- Serializer fixtures parse back through `public/js/semantic/spw-workbench-parser.js` with no prose fallback and matched labels.
+- Serializer fixtures parse back through `public/js/semantic/spw-workbench-reader.js` with no prose fallback and matched labels.
 - `npm run check:workers` and `npm run build:peer-kit -- --check` for anything carried to spw.quest.
 - `npm run audit:root-writes` and phone stills for the instrument; `npm run check:local`.

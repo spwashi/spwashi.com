@@ -48,7 +48,7 @@
 @expression_geometry_runtime: ~"../public/js/semantic/spw-expression-geometry.js"
 @literal_parser_tool: ~"../tools/spw-parser/index.html"
 @literal_parser_runtime: ~"../public/js/modules/tools/spw-literal-parser.js"
-@literal_parser_bundle: ~"../public/js/semantic/spw-workbench-parser.js"
+@literal_parser_bundle: ~"../public/js/semantic/spw-workbench-reader.js"
 @literal_parser_build: ~"../scripts/build-spw-literal-parser.mjs"
 @ornament_contract: ~"./conventions/ornament-contract.spw"
 @wonder_vocabulary: ~"./conventions/wonder-vocabulary.spw"

@@ -27,7 +27,7 @@
 @expression_geometry: ~"../../public/js/semantic/spw-expression-geometry.js"
 @literal_parser_tool: ~"../../tools/spw-parser/index.html"
 @literal_parser_runtime: ~"../../public/js/modules/tools/spw-literal-parser.js"
-@literal_parser_bundle: ~"../../public/js/semantic/spw-workbench-parser.js"
+@literal_parser_bundle: ~"../../public/js/semantic/spw-workbench-reader.js"
 @runtime_parser: ~"../../public/js/semantic/spw-runtime-parser.js"
 @dot_join: ~"./dot-join.spw"
 @cognitive_navigation: ~"../conventions/cognitive-navigation.spw"

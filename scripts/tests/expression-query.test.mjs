@@ -115,7 +115,7 @@ test('best match returns the strongest authored expression', () => {
 });
 
 test('parse() tokens and site join agree on crawl and ident', async () => {
-  const { parse } = await import('../../public/js/semantic/spw-workbench-parser.js');
+  const { parse } = await import('../../public/js/semantic/spw-workbench-reader.js');
   const { kernelJoinFromTokens } = await import('../../public/js/semantic/expression-query.js');
   const crawlSource = '{mill}.{laminate}.{cure}';
   const crawlOut = parse(crawlSource);

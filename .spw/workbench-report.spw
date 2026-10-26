@@ -111,7 +111,7 @@ expression = consumer[report]{defect.gap.built}<upstream>
   claim: "; (sequential) and || (parallel) now rank as real sequence separators — expressionImpl stops its chain loop at them, Sequence.separators records which mark was written, and frame content accepts them beside comma. Verified live: cauldron[garden]{sow;tend;harvest} parses as Sequence with success:true, 0 errors, 0 warnings — clean, where the ~> form for the same content still degrades to Prose (see the facet above)."
   ~#reading: `this is the exact gap this report itself named in the parse_entry_points_disagree facet's era: ";" is site ordinal until the default lexer emits it as a connector" (interaction-microstates.spw, compound-expressions.spw) — written the same day it landed`
   ~#landed(2026-09-03, this site): "converted the 11 authored expressions that used ~> for a plain ordered sequence to ; — cauldron[garden]{sow;tend;harvest} and 10 more. readShape's existing fallback to body.parts (regex-captured, not token-scanned) already handled the ordinal case correctly with no further fix needed — the parts-scoping bug found for project/crawl did not apply here."
-  probe: `node -e "import('./public/js/semantic/spw-workbench-parser.js').then(m=>{const r=m.parse('cauldron[garden]{sow;tend;harvest}\\n');console.log(r.ast.expression.type,r.success,r.warnings.length)})"`
+  probe: `node -e "import('./public/js/semantic/spw-workbench-reader.js').then(m=>{const r=m.parse('cauldron[garden]{sow;tend;harvest}\\n');console.log(r.ast.expression.type,r.success,r.warnings.length)})"`
 }
 
 ^"lattice_reads_one_form"{
@@ -223,7 +223,7 @@ expression = consumer[report]{defect.gap.built}<upstream>
 }
 
 ^"browser_parser_testbed"{
-  claim: "The portable parser kernel builds directly into public/js/semantic/spw-workbench-parser.js and runs lossless AST tests in the browser at /tools/spw-parser/."
+  claim: "The portable parser kernel builds directly into public/js/semantic/spw-workbench-reader.js (a parser-only bundle until 2026-10-25) and runs lossless AST tests in the browser at /tools/spw-parser/."
   verified_specimens: #[
     "v04_claims (hypothesis, citations, falsification probes)",
     "profiles (file shape declarations with required structural blocks)",
@@ -336,7 +336,7 @@ expression = consumer[report]{defect.gap.built}<upstream>
   }[reg=facet]
   ~#reading: `boot is about 1 s a call through tsx and 3 ms through the bundle; for a one-expression question the loader is the whole bill`
   fix: "carry parser_bundle upstream: emit the CLI's parser as JS beside the tsx route, and let one-surface commands (fingerprint, lint on a file) take that path"
-  probe: `node -e "…import('./public/js/semantic/spw-workbench-parser.js') then parse every git ls-files '*.spw' outside _workbench, timing each"`
+  probe: `node -e "…import('./public/js/semantic/spw-workbench-reader.js') then parse every git ls-files '*.spw' outside _workbench, timing each"`
 }[reg=facet]
 
 ^"regex_extraction_of_expressions"{
@@ -458,7 +458,7 @@ expression = consumer[report]{defect.gap.built}<upstream>
     bare_handles = `quote nothing that parses: 31 handles join kinship, rename, query, and the outline`
   }[reg=facet]
   ~#question: "The file says the prose travels: a packet is meant to be pasted whole. Is the authored surface the fold, with packets projected, or the packets, with the fold checked against them?"
-  probe: `import parse from public/js/semantic/spw-workbench-parser.js and time the surface as authored, as a row set, and with the plate phrases removed`
+  probe: `import parse from public/js/semantic/spw-workbench-reader.js and time the surface as authored, as a row set, and with the plate phrases removed`
 }[reg=facet]
 
 ^"visit_policy"{

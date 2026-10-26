@@ -2,7 +2,7 @@
 // runs in the worker, so the guide and /build read with scripts off, and in the
 // page, where it reads again as the file changes. Both hand it the parse
 // function from the site's parser bundle.
-import { parse } from "../../../public/js/semantic/spw-workbench-parser.js";
+import { parse } from "../../../public/js/semantic/spw-workbench-reader.js";
 import { PEER_BRACES, PEER_SIGILS } from "../../lib/peer-kit.js";
 import { escapeHtml } from "../../lib/shell.js";
 import { noteKit } from "./note.js";

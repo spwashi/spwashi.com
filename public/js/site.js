@@ -1184,7 +1184,7 @@ window.__SPW_SITE__ = {
     hydrate: (el) => import('./semantic/expression-query.js').then((m) => m.readSpwHydration(el)),
     block: (el) => import('./semantic/spw-block-association.js').then((m) => m.resolveElementSpwBlock(el)),
     challenge: (source, options) => import('./semantic/spw-block-association.js').then((m) => m.challengeSpwDefinition(source, options)),
-    build: () => import('./semantic/spw-workbench-parser.js').then((m) => m.SPW_PARSER_BUILD),
+    build: () => import('./semantic/spw-workbench-reader.js').then((m) => m.SPW_PARSER_BUILD),
     contract: () => import('./semantic/spw-runtime-parser.js').then((m) => m.SPW_RUNTIME_PARSER_CONTRACT),
   },
   /**

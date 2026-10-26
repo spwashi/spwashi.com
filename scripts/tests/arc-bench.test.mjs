@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { parse } from '../../public/js/semantic/spw-workbench-parser.js';
+import { parse } from '../../public/js/semantic/spw-workbench-reader.js';
 import {
   ARC_BENCH_LIMITS,
   arcSlug,

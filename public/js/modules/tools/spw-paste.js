@@ -37,7 +37,7 @@ export const PASTE_ACTIONS = Object.freeze({
   save: 'Save as .spw.txt',
 });
 
-let loadParser = () => import('../../semantic/spw-workbench-parser.js').then((mod) => mod.parse);
+let loadParser = () => import('../../semantic/spw-workbench-reader.js').then((mod) => mod.parse);
 let parserPromise = null;
 let mounted = null;
 
