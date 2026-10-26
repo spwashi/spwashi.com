@@ -6,6 +6,13 @@ import {
 import { composeModeSeatExpression } from '/public/js/semantic/spw-compose.js';
 import { ensureViewTransitionTap } from '/public/js/kernel/view-transition-tap.js';
 import './lens-term-note-row.js';
+import {
+  clearLensReach,
+  describeLensReachSummary,
+  pageTakesLensReach,
+  readLensReach,
+  writeLensReach,
+} from './lens-reach.js';
 
 const LENS_MODE_QUERY_KEYS = Object.freeze(['spw-lens', 'lens', 'mode']);
 const DOCUMENT_NODE = 9;
@@ -148,22 +155,8 @@ function humanizeLensToken(value = '') {
     .replace(/\s+/g, ' ');
 }
 
-/**
- * Where a seat lands on the page. A page that marks its places with
- * data-spw-lens-pass gets a count of the ones that answer the seat; elsewhere
- * the panel's own role and kind stand in.
- */
-export function describeLensReach(count) {
-  const n = Number(count) || 0;
-  if (n <= 0) return '';
-  return `${n} ${n === 1 ? 'place answers' : 'places answer'} on this page`;
-}
-
-function countLensReach(doc, mode) {
-  if (!doc?.querySelectorAll || !/^[\w-]+$/.test(String(mode || ''))) return 0;
-  return doc.querySelectorAll(`[data-spw-lens-pass~="${mode}"]`).length;
-}
-
+// Where a seat lands, when the page reads its reach (lens-reach.js); otherwise
+// the panel's own role and kind stand in.
 function describeLensTopography(panel, host, reach = '') {
   if (reach) return reach;
   const source = panel instanceof HTMLElement ? panel : host;
@@ -175,8 +168,8 @@ function describeLensTopography(panel, host, reach = '') {
   return [...new Set(parts)].slice(0, 2).join(' / ');
 }
 
-function describeLensFeedback({ mode, impact, panel, host, doc = null }) {
-  const topography = describeLensTopography(panel, host, describeLensReach(countLensReach(doc, mode)));
+function describeLensFeedback({ mode, impact, panel, host, reach = '' }) {
+  const topography = describeLensTopography(panel, host, reach);
   const readableImpact = humanizeLensToken(impact || mode);
   if (topography && readableImpact) return `${readableImpact} · ${topography}`;
   return readableImpact || topography || humanizeLensToken(mode);
@@ -326,12 +319,26 @@ export function writeLensModeState({
   const deepLink = buildLensModeDeepLink(group, resolvedMode, primaryHost, getLocationRef(doc));
   const lensImpact = activeButton?.dataset?.spwLensImpact
     || LENS_MODE_IMPACTS[resolvedMode] || `${group}-emphasis`;
+  // The page's two readings of the seat, declared and parsed: written for a
+  // seat a reader or a link chose, cleared for the one the page opens on.
+  let reach = '';
+  if (pageTakesLensReach(doc)) {
+    if (source === 'initial') {
+      clearLensReach(doc);
+    } else {
+      reach = describeLensReachSummary(writeLensReach(readLensReach(doc, {
+        mode: resolvedMode,
+        operator: activeButton?.dataset?.spwOperator || '',
+        exclude: activeButton?.closest?.('section.spw-frame') || null,
+      })));
+    }
+  }
   const lensFeedback = describeLensFeedback({
     mode: resolvedMode,
     impact: lensImpact,
     panel: activePanel,
     host: primaryHost,
-    doc,
+    reach,
   });
 
   for (const switchEl of findLensModeSwitches(buttons)) {

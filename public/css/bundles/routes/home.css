@@ -2093,22 +2093,34 @@ body[data-spw-surface="home"] .frame-topline .spw-component-tag {
     var(--home-shadow-quiet, none);
 }
 
-/* A chosen seat draws a contour: the frames that serve it take a 2px outline
-   in the seat's operator color, the same color the seat and the bright cards'
-   ring wear, so one key reads across the switch, the cards and the page. The
-   rest stay as they are: a frame is too large to recede. An outline takes no
-   layout, and a targeted frame keeps its landing outline (ornament.css). */
+/* A chosen seat draws a contour in its operator color, the color its seat and
+   the bright cards' ring wear, so one key reads across the switch, the cards
+   and the page. lens-reach.js reads each frame two ways and writes
+   data-spw-lens-reach only for a seat a reader or a link chose:
+     declared  the page says the frame serves the seat      solid line
+     parsed    the frame's own Spw leans toward the seat's   dashed line
+               mark (operator lift over the page)
+     both      the two readings share ground                 double line
+   The rest stay as they are: a frame is too large to recede. An outline
+   takes no layout, and a targeted frame keeps its landing outline. */
 :where(html[data-spw-active-lens-mode="reading"]) { --home-lens-contour: var(--op-ground-color, var(--home-accent-primary)); }
 :where(html[data-spw-active-lens-mode="systems"]) { --home-lens-contour: var(--op-integration-color, var(--home-accent-primary)); }
 :where(html[data-spw-active-lens-mode="play"]) { --home-lens-contour: var(--op-potential-color, var(--home-accent-primary)); }
 :where(html[data-spw-active-lens-mode="studio"]) { --home-lens-contour: var(--op-perspective-color, var(--home-accent-primary)); }
 
-:where(html[data-spw-active-lens-mode="reading"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] section.spw-frame[data-spw-lens-pass~="reading"]:not(:target)),
-:where(html[data-spw-active-lens-mode="systems"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] section.spw-frame[data-spw-lens-pass~="systems"]:not(:target)),
-:where(html[data-spw-active-lens-mode="play"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] section.spw-frame[data-spw-lens-pass~="play"]:not(:target)),
-:where(html[data-spw-active-lens-mode="studio"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] section.spw-frame[data-spw-lens-pass~="studio"]:not(:target)) {
+:where(body[data-spw-surface="home"] section.spw-frame[data-spw-lens-reach~="declared"]:not(:target)) {
   outline: 2px solid color-mix(in srgb, var(--home-lens-contour) 58%, transparent);
   outline-offset: -2px;
+}
+
+:where(body[data-spw-surface="home"] section.spw-frame[data-spw-lens-reach~="parsed"]:not([data-spw-lens-reach~="declared"]):not(:target)) {
+  outline: 2px dashed color-mix(in srgb, var(--home-lens-contour) 58%, transparent);
+  outline-offset: -2px;
+}
+
+:where(body[data-spw-surface="home"] section.spw-frame[data-spw-lens-reach~="declared"][data-spw-lens-reach~="parsed"]:not(:target)) {
+  outline: 4px double color-mix(in srgb, var(--home-lens-contour) 66%, transparent);
+  outline-offset: -4px;
 }
 
 /* With scripts off every seat's panel shows and the switch is not offered

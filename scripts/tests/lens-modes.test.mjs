@@ -4,13 +4,13 @@ import test from 'node:test';
 import {
   LENS_MODE_REQUEST_EVENT,
   buildLensModeLocation,
-  describeLensReach,
   isReaderLensSource,
   requestLensMode,
   resolveLensRovingIndex,
   resolveLensSeatSubject,
   shouldUseLensViewTransition,
 } from '../../public/js/runtime/page/lens-modes.js';
+import { classifyLensReach, describeLensReachSummary } from '../../public/js/runtime/page/lens-reach.js';
 
 test('lens transitions stay off the initial and query hydration paths', () => {
   const supported = { supportsTransition: true, reduceMotion: false };
@@ -94,9 +94,20 @@ test('the remembered address keeps the path, the reader’s hash, and other para
   );
 });
 
-test('a seat’s reach reads as the places on the page that answer it', () => {
-  assert.equal(describeLensReach(0), '');
-  assert.equal(describeLensReach(undefined), '');
-  assert.equal(describeLensReach(1), '1 place answers on this page');
-  assert.equal(describeLensReach(8), '8 places answer on this page');
+test('a frame leans toward a seat by lift over the page, never by one handle', () => {
+  // The seat's mark is 10% of the page; a frame where it is 30% of six handles leans.
+  assert.deepEqual(classifyLensReach({ count: 2, total: 6, pageCount: 10, pageTotal: 100 }).tokens, ['parsed']);
+  // A single handle is a coincidence, however large its share.
+  assert.deepEqual(classifyLensReach({ count: 1, total: 2, pageCount: 10, pageTotal: 100 }).tokens, []);
+  // A frame that only matches the page's own share does not lean.
+  assert.deepEqual(classifyLensReach({ count: 3, total: 30, pageCount: 10, pageTotal: 100 }).tokens, []);
+  // Declared and parsed stay separate tokens.
+  assert.deepEqual(classifyLensReach({ declared: true, count: 4, total: 8, pageCount: 10, pageTotal: 100 }).tokens, ['declared', 'parsed']);
+  assert.deepEqual(classifyLensReach({ declared: true }).tokens, ['declared']);
+});
+
+test('a seat’s reach names its declared and parsed places apart', () => {
+  assert.equal(describeLensReachSummary({}), '');
+  assert.equal(describeLensReachSummary({ declared: 2, parsed: 4, both: 1 }), '2 declared, 4 lean its way in their Spw, 1 both');
+  assert.equal(describeLensReachSummary({ parsed: 1 }), '1 leans its way in its Spw');
 });
