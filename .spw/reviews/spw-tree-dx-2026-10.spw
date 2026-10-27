@@ -48,11 +48,12 @@ contents = #[
     cost = `small`
   }[reg=facet]
   file_moves = .{
-    claim = `a moved file breaks every relative citation inside it`
+    claim = `moves are already handled; the first pass missed it`
+    tools = `the editor re-aims citations on a .spw move (since 2026-10-12)`
+    cli = `npm run spw -- refactor .spw .agents --rename path:from=to --write`
+    gap = `citations in markdown and HTML are not re-aimed`
     measure = `3,802 of 10,084 citations start ../../; 4 are root-relative`
-    fix = `root-relative for cross-tree citations, and an spw:mv script`
-    gate = `the installed extension flags root-relative citations until rebuilt`
-    cost = `medium`
+    cost = `none to adopt; a line in @agents_memory would make it known`
   }[reg=facet]
   prose_paths = .{
     claim = `a path written as a string is checked by nothing`
@@ -181,8 +182,8 @@ contents = #[
     ~"./spw-tree-dx-2026-10.spw#prose_paths",
     ~"./spw-tree-dx-2026-10.spw#index_mirrors",
     ~"./spw-tree-dx-2026-10.spw#search_traps",
-    ~"./spw-tree-dx-2026-10.spw#file_moves",
     ~"./spw-tree-dx-2026-10.spw#anchor_readers",
+    ~"./spw-tree-dx-2026-10.spw#file_moves",
   ][reg=set]
   first = `rebuild and reinstall the extension; root-relative citations wait on it`
 }
@@ -208,6 +209,7 @@ contents = #[
 
 ^"stream"{
  >>[2026-10-28 09:40] audit — The mount moved to 850077a (b956329b). A census of the tree found eight places where refactoring or reading costs more than it should, and the order inside files was the largest. ecosystem-clusters was reordered as the demo, and its root-relative citations went back to relative when the installed extension flagged all 24 of them.
+ >>[2026-10-28 11:10] revise — file_moves was wrong: the editor re-aims citations when a .spw file or folder moves (rename-files, since 2026-10-12), and spw refactor --rename path:from=to plans the same from a terminal; a dry run of moving ways-2026-10.spw planned 15 rewrites in 8 files. The gap left is markdown and HTML.
 }
 
 # About this file
