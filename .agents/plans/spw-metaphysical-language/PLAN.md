@@ -1,6 +1,6 @@
 # Plan: spw-metaphysical-language
 
-**Status 2026-10-10.** Only commit 1 of 10 has landed (plan, wip and index, 009acd60); there is still no codex, matrix or protocol, and `.spw/conventions/construct-codex.spw` does not exist. The one next slice is that file as a minimal shell: header, a drift_ledger facet, and operator entry stubs that cite their owner conventions. The shell has no gate; any change to an operator's meaning needs creator sign-off.
+**Status 2026-10-27.** Revisited at the creator's word, not archived. The theory is taken up again through copy and four focused passes, each a probe, then a Spw update, then a refactor, then a test (the loop [spw-inquiry-loop](../spw-inquiry-loop/PLAN.md) owns): copy in the theory's own imagery, Spw parsed into nested HTML layout, CSS depth, and a field drawn with script or WebGL only if a probe says it shows something the layout cannot. One nested wonder in `index.spw`, `#>wonder_metaphysical_depth`, holds a question for each pass. Its first probe already answered something: of 1066 route expressions with a brace, none nests a brace inside another, so the layout pass starts from the herbarium's pressed forms, not the routes. The construct codex shell (Workstream A) waits until a pass has a drift to record. Earlier status, 2026-10-10: only commit 1 of 10 had landed (009acd60), with no codex, matrix or protocol.
 
 **Related:** [spw-inquiry-loop](../spw-inquiry-loop/PLAN.md) · [compositional-css-electrostatics](../archive/compositional-css-electrostatics/PLAN.md) · [language-reclustering](../archive/language-reclustering/PLAN.md). **Absorbed 2026-10-10:** [spw-architecture-ecology](../archive/spw-architecture-ecology/PLAN.md) (wave D).
 
@@ -9,6 +9,15 @@ construct codex, a sigil-property study that arbitrates semantic alignment, a
 production-and-manufacturing ladder that carries the language into physical and
 commercial form, and integration briefs that project the language into other
 industries without diluting its physics.
+
+## Passes (2026-10-27)
+
+Each pass ends with its wonder answered or its stream saying what the probe showed, and `npm run plans:twinkle` names the plans that cite what it moved. The workstreams below stay as the theory's reference.
+
+1. **Copy.** The atlas's language section (`/topics/software/spw/#language-evolution-v04`, still headed "Language evolution toward v0.4") and the two operator pages most read say what the language does in the theory's imagery: operators prime, braces hold, positions carry force. The id stays, since inbound links use it. Gate: the creator's words. Sensors: `audit:copy:accessor`, `audit:page-structure`. Wonder: `wonder_metaphysical_depth_copy`.
+2. **Parse to layout.** One lab under `/design/experiments/` takes an authored expression that reads whole with scripts off (`pre > code.language-spw`) and, with scripts, lays out the workbench reader's parse as nested regions: a body inside a body, roles painted by `semantic/spw-highlight.js`, brace geometry from `semantic/spw-expression-geometry.js`. Specimens come from `.spw/language/expressions/`, since route expressions do not nest. No new `data-spw-*` family; the lab keeps its state on its own element. Wonder: `wonder_metaphysical_depth_layout`.
+3. **CSS depth.** Brace depth and charge as static depth: elevation and offset from `systems/surfaces/palette-depth.css` tokens, perspective only inside the lab, nothing on the shell header (its containing-block guard), reduced motion honoured. It ends at a demo; the creator approves the look in a browser. Wonder: `wonder_metaphysical_depth_css`.
+4. **Field.** Runs only if pass 3's demo leaves charge unshown. Canvas 2D through `media/canvas-accents.js` first; WebGL after that, written by hand, since a library is a new package and needs review. The field is an addition: the layout is the reading, with or without it. Wonder: `wonder_metaphysical_depth_field`.
 
 ## Public Goal
 

@@ -141,3 +141,48 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+#>wonder_metaphysical_depth
+?["Does the theory read in the page itself, from parse to layout to light, before anyone explains it?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#with: @plan @sigil_physics_research
+  ~#taste: "Operators prime, braces hold, positions carry force: if that is true, a reader should feel it in how a line sits on the page."
+  ~#hypothesis: "Each layer carries a different part of the theory: copy names it, layout shows what holds what, depth shows charge, and a field shows what passes between marks."
+  ~#expect: "Layout and static depth carry the structure; a field is worth its cost only for charge, the theory's least visible claim."
+  ~#unblocks: "the order of the four passes in PLAN.md, and whether the fourth runs at all"
+  ~#probe(read)
+  !probe{ "answer the four questions inside, then read one expression at each layer in turn and say where the theory first became visible" }
+  $%[theory.legible, theory.needs_words, theory.needs_field]
+
+  #>wonder_metaphysical_depth_copy
+  ?["Does the atlas say what the language does in the theory's own imagery, or in schema words?"]{
+    ~#expect: "Mostly schema: the language section still reads as a version roadmap, and the operator pages name roles before they name what a mark does."
+    ~#probe(read)
+    !probe{ "read /topics/software/spw/#language-evolution-v04 and two operator pages aloud, and mark each sentence as imagery, schema or absent" }
+    $%[copy.imagery, copy.schema, copy.absent]
+  }
+
+  #>wonder_metaphysical_depth_layout
+  ?["Does a body laid inside a body read as a brace holding what it holds, without labels?"]{
+    ~#expect: "Most route expressions sit one brace deep, so routes give a nesting layout little to show; the herbarium's pressed forms nest more and are the better first specimens."
+    ~#probe(run)
+    !probe{ `rg -o 'data-spw-semantic-expression="[^"]*\{[^"{}]*\{' -g '*.html' --glob '!.spw/**' . | wc -l` }
+    $%[layout.reads, layout.needs_labels, layout.flat_corpus]
+  }
+
+  #>wonder_metaphysical_depth_css
+  ?["Can static CSS depth carry a brace's charge without motion or perspective?"]{
+    ~#expect: "Static elevation and offset by brace level carry nesting; perspective and motion add nothing a reader can name, and cost a style pass on scroll."
+    ~#probe(read)
+    !probe{ "open the pass 3 demo with reduced motion on and off, at pocket and desktop, and name what each depth cue says" }
+    $%[depth.static, depth.perspective, depth.none]
+  }
+
+  #>wonder_metaphysical_depth_field
+  ?["Does a field drawn with script or WebGL show anything about Spw that the layout cannot?"]{
+    ~#expect: "Nothing about structure; a field can show charge passing across a join, which a layout of boxes cannot draw."
+    ~#probe(read)
+    !probe{ "set the depth demo beside a canvas 2D sketch drawn from the same parse with canvas-accents.js, and ask what the sketch shows that the layout does not" }
+    $%[field.charge, field.decoration, field.not_yet]
+  }
+}
