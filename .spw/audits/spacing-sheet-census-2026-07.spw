@@ -36,12 +36,12 @@ audit_run: .{
 ^"layer_summary"{
   sheets = 143
   by_layer: .{
-    routes = .{ sheets = 31 ; token_var = 38 ; magic_rem = 520 ; container = 9 ; media = 90 ; note = highest magic-to-token ratio — route-local spacing dominates }[reg=facet]
+    routes = .{ sheets = 31 ; token_var = 38 ; magic_rem = 520 ; container = 9 ; media = 90 ; note = `highest magic-to-token ratio — route-local spacing dominates` }[reg=facet]
     shell = .{ sheets = 6 ; token_var = 419 ; magic_rem = 223 ; media = 48 ; note = chrome owns flush seating + header clearance tokens }[reg=facet]
     components = .{ sheets = 27 ; token_var = 388 ; magic_rem = 295 ; container = 6 ; media = 44 }[reg=facet]
     systems = .{ sheets = 33 ; token_var = 293 ; magic_rem = 151 ; container = 6 ; media = 34 }[reg=facet]
     handles = .{ sheets = 15 ; token_var = 57 ; magic_rem = 147 ; media = 31 }[reg=facet]
-    tokens = .{ sheets = 2 ; token_var = 123 ; magic_rem = 0 ; note = source of truth for --page-stack-gap, --page-section-gap, pack tiers via dimensions.css }[reg=facet]
+    tokens = .{ sheets = 2 ; token_var = 123 ; magic_rem = 0 ; note = `source of truth for --page-stack-gap, --page-section-gap, pack tiers via dimensions.css` }[reg=facet]
   }[reg=facet]
   thesis: `Shared layers (shell, components, tokens) spend spacing tokens; routes layer re-derives literal rem most often.`
 }
@@ -160,7 +160,7 @@ audit_run: .{
 
 ^"vocabulary_crossref"{
   claim: `Route sheets with high magic rem often pair with routes whose external copy promises inspectability — token work should not outpace voice differentiation.`
-  external_stems: #[`inspectable`, `legible`, `atlas` — overworked per @vocabulary_metaphor_growth_synthesis][reg=set]
+  external_stems: #[`inspectable`, `legible`, `atlas`][reg=set]  # overworked per @vocabulary_metaphor_growth_synthesis
   seam: `home.css + topics.css high magic rem correlate with repeated external stems on those hubs — material drift and copy saturation share a promotion wave.`
   direction: `When tokenizing route sheets, read @vocabulary_metaphor_growth_synthesis wave_c_material + wave_b_voice before renaming spacing alone.`
   synthesis = @vocabulary_metaphor_growth_synthesis

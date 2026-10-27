@@ -56,7 +56,7 @@ expression = operator[terminal]{region.channel}<hardware> ~ cluster[organelle]{c
 ^"hardware"{
   note = `Read @taxonomy primitives as parts, not as pages.`
   chip = .{ is = `electrode / pin` ; holds = `one data-spw-operator terminal` ; fail = `a chip with no operator, or a sigil whose text contradicts the terminal` }[reg=facet]
-  frame_sigil = .{ is = `named terminal on the chassis` ; holds = `#>` or another original prefix as address of this frame` }[reg=facet]
+  frame_sigil = .{ is = `named terminal on the chassis` ; holds = `#> or another original prefix as address of this frame` }[reg=facet]
   frame = .{ is = `chassis / Faraday cage of a seat` ; holds = `slots; region material; nested hardware` }[reg=facet]
   card = .{ is = `packaged cell` ; holds = `one specimen, one optional terminal, collectability` }[reg=facet]
   panel = .{ is = `local ground plane` ; holds = `matte register, no glass, low radiation` }[reg=facet]

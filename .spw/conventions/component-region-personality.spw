@@ -57,7 +57,7 @@ fixity = "tending"
   fixity = "tending"
   source = @harmony_audit
   claim = `Component passport, packing axes, and field physics are technical-tier language. Public and editorial tiers keep creator-first invitation and route reasons.`
-  where_passport_lives = #[`/design/components/`, `/design/composition/`, `/design/slots/`, software curriculum, settings, agent .spw`][reg=set]
+  where_passport_lives = #[`/design/components/`, `/design/composition/`, `/design/slots/`, `software curriculum`, `settings`, `agent .spw`][reg=set]
   where_it_does_not = `Home/about/care invitation ledes — no "shell-width axis" or "register diffusion" in public voice.`
   packing_voice = `When a production card gains pack-local, copy does not need to explain packing; optional inspect readout stays technical tier.`
   related = @component_packing
@@ -175,7 +175,7 @@ fixity = "tending"
     copy_unit = `data-spw-copy-unit on each face for translation`
   }[reg=facet]
   presence_rule: "At most one perspective-pair per landing page above the fold. Leaf routes omit unless teaching inspect literacy."
-  audit: `rg 'Objective terminal' **/*.html` should trend toward 0 in public copy; matches should live in template specimen or glossary."
+  audit: `rg 'Objective terminal' **/*.html should trend toward 0 in public copy; matches should live in template specimen or glossary."`
 }
 
 ^"agent_anatomy_component"{

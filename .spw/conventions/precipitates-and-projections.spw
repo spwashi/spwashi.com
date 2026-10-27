@@ -273,54 +273,54 @@
   example_patch_file: {
     name: ".spw/patches/2026-04-10-001-cognitive-handles.spw"
 
-    content: "#>cognitive_handles_patch
+    content: `#>cognitive_handles_patch
 #:patches #!versioning
 #:phase #!expression
 #:operator ^
 
-^\"metadata\"{
-  patch_id: \"2026-04-10-001\"
-  date: \"2026-04-10T14:30:00Z\"
-  operator: \"^\"
-  phase: \"expression\"
-  valence: \"boon\"
-  dimension: \"abstraction\"
+^"metadata"{
+  patch_id: "2026-04-10-001"
+  date: "2026-04-10T14:30:00Z"
+  operator: "^"
+  phase: "expression"
+  valence: "boon"
+  dimension: "abstraction"
 
-  summary: \"Add visual and interactive cognitive handles for navigating frame abstraction levels\"
+  summary: "Add visual and interactive cognitive handles for navigating frame abstraction levels"
 
-  commit_hashes: [\"abc1234d\", \"def5678e\"]
+  commit_hashes: ["abc1234d", "def5678e"]
 }
 
-^\"projections\"{
+^"projections"{
   idea_level: {
-    question: \"How can users visually understand frame nesting and abstraction without getting lost?\"
-    observation: \"Handles let you 'grab' a concept and navigate through it\"
+    question: "How can users visually understand frame nesting and abstraction without getting lost?"
+    observation: "Handles let you 'grab' a concept and navigate through it"
   }
 
   design_level: {
-    types: [\"primary (left-edge bar)\", \"corner (brackets)\", \"dimensional (striping)\", \"relational (connectors)\", \"anchor (bookmark)\", \"portal (dimension links)\"]
-    principle: \"Handles are structural anchors, not decorative\"
+    types: ["primary (left-edge bar)", "corner (brackets)", "dimensional (striping)", "relational (connectors)", "anchor (bookmark)", "portal (dimension links)"]
+    principle: "Handles are structural anchors, not decorative"
   }
 
   implementation_level: {
-    css: \"cognitive-handles.css\"
-    js: \"cognitive-handles.js\"
-    data_attr: \"[data-cognitive-handle], [data-handle-corner], [data-dimension], etc.\"
+    css: "cognitive-handles.css"
+    js: "cognitive-handles.js"
+    data_attr: "[data-cognitive-handle], [data-handle-corner], [data-dimension], etc."
   }
 
   instance_level: {
-    where: \"All .site-frame elements on every page\"
-    interaction: \"Hover reveals handle, click to navigate\"
-    feedback: \"Visual brightening as you approach a handle\"
+    where: "All .site-frame elements on every page"
+    interaction: "Hover reveals handle, click to navigate"
+    feedback: "Visual brightening as you approach a handle"
   }
 }
 
-^\"dependencies\"{
-  depends_on: [\"2026-04-09-000-frame-basics\"]
-  enables: [\"2026-04-11-000-dimensional-breadcrumbs\"]
-  complements: [\"2026-04-10-002-relational-visualization\"]
+^"dependencies"{
+  depends_on: ["2026-04-09-000-frame-basics"]
+  enables: ["2026-04-11-000-dimensional-breadcrumbs"]
+  complements: ["2026-04-10-002-relational-visualization"]
 }
-"
+`
   }
 }
 

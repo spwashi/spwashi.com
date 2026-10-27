@@ -53,7 +53,7 @@
   spw = 169
   agents = 246
   public = `majority of numstat churn — see theme_churn`
-  implication = `.agents/` commit count exceeds `.spw/` — plan ecology slightly ahead of convention surface in commit frequency`
+  implication = `.agents/ commit count exceeds .spw/ — plan ecology slightly ahead of convention surface in commit frequency`
 }
 
 ^"churn_totals"{

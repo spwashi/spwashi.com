@@ -61,15 +61,15 @@ chunking_ontology: .{
 
 musical_runtime_data_structures: .{
   core_portable = #[
-    OPERATOR_DEFINITIONS (shared.js) — a "scale" or "instrument bank". Each has type, prefix, family, intent, interaction, speech, reversibility, mnemonic. Already abstract and metaphorical (vibration, wonder, synthesis, grounding, thread, perspective, flow...).
-    MODULE_DEFS shape — "score form" or "performance script". The layer/when/selector/describes/updates/evaluates contract is a reusable grammar for any domain's runtime chunks.
-    RUNTIME_POLICY (timing, delay, only/skip, timingByModule) — "performance practice" or "interpretation instructions".
-    GESTURE_VOCABULARY + GESTURE_SPELL_SEEDS — "playing techniques" and "standard phrases".
-    region profile (harmony, tempo, density, genome) + site rhythm tokens — "arrangement", "orchestration", "groove".
-    attention-field model (signal emission, temporal_decay, spatial_influence, receptor affinity) — "acoustic space", "resonant chamber", "hall response".
-    cauldron/composition + boonhonk-mixer — "mixing console" + "color/timbre instrument". Boonhonk already uses 5 weighted "operators" (boon/bane/bone/bonk/honk) to produce accent color — a literal 5-voice mixer.
-    SpwBus + event enrichment + charge model — "MIDI clock / transport / modulation bus".
-    spell expressions + moduleRecordToSpellExpression — "serializable motifs" or "presets" that can be replayed across whitelabeled instances.
+    `OPERATOR_DEFINITIONS (shared.js) — a "scale" or "instrument bank". Each has type, prefix, family, intent, interaction, speech, reversibility, mnemonic. Already abstract and metaphorical (vibration, wonder, synthesis, grounding, thread, perspective, flow...).`,
+    `MODULE_DEFS shape — "score form" or "performance script". The layer/when/selector/describes/updates/evaluates contract is a reusable grammar for any domain's runtime chunks.`,
+    `RUNTIME_POLICY (timing, delay, only/skip, timingByModule) — "performance practice" or "interpretation instructions".`,
+    `GESTURE_VOCABULARY + GESTURE_SPELL_SEEDS — "playing techniques" and "standard phrases".`,
+    `region profile (harmony, tempo, density, genome) + site rhythm tokens — "arrangement", "orchestration", "groove".`,
+    `attention-field model (signal emission, temporal_decay, spatial_influence, receptor affinity) — "acoustic space", "resonant chamber", "hall response".`,
+    `cauldron/composition + boonhonk-mixer — "mixing console" + "color/timbre instrument". Boonhonk already uses 5 weighted "operators" (boon/bane/bone/bonk/honk) to produce accent color — a literal 5-voice mixer.`,
+    `SpwBus + event enrichment + charge model — "MIDI clock / transport / modulation bus".`,
+    `spell expressions + moduleRecordToSpellExpression — "serializable motifs" or "presets" that can be replayed across whitelabeled instances.`,
   ][reg=set]
 
   whitelabel_implications = `A different "musical website" could redefine the operator bank (new prefixes, new families for audio-rate concepts), swap the visual projection layer (different ornament grammar for waveform or spectrogram surfaces), keep the same chunking and field model, and inherit the entire staged loading, policy, and inspectability machinery for free. The metaphysics (wonder as structural revelation, resonance as diffusive field, precipitates as meaning crystallization) travels with the language.`
@@ -83,12 +83,12 @@ spw_language_metaphysics: .{
   workbench_role = `The spw-workbench is the meta-environment where Spw is developed as a language, not just used as notation for one site. It contains the parser, runtime phases, theory (algebra of lenses/operators/probes, operational physics, probe calculus), register banks, resonance model, and its own .spw modeling of itself.`
 
   core_metaphysical_primitives = #[
-    operators as elemental forces (vibration, wonder/inquiry, synthesis/integration, grounding, potential/thread, perspective/situation, value/flow, action).
-    resonance as first-class (aggregation, intersection, lens-indexed caching, diffusive field behavior).
-    precipitates — changes crystallize into stable, meaningful semantic units (directly relevant to patch-consolidator and runtime-bootstrap-performance work).
-    projections — any idea or change can be mapped across dimensions (abstraction, layer, relation, time, technology).
-    registers + brace registers + phasors — state machines and rotational models for layered, cyclic, or modal behavior.
-    pragmatic layer — the evaluation into runtime values, traces, and observable effects (exactly what the site's module mount + bus + ornament system does).
+    `operators as elemental forces (vibration, wonder/inquiry, synthesis/integration, grounding, potential/thread, perspective/situation, value/flow, action).`,
+    `resonance as first-class (aggregation, intersection, lens-indexed caching, diffusive field behavior).`,
+    `precipitates — changes crystallize into stable, meaningful semantic units (directly relevant to patch-consolidator and runtime-bootstrap-performance work).`,
+    `projections — any idea or change can be mapped across dimensions (abstraction, layer, relation, time, technology).`,
+    `registers + brace registers + phasors — state machines and rotational models for layered, cyclic, or modal behavior.`,
+    `pragmatic layer — the evaluation into runtime values, traces, and observable effects (exactly what the site's module mount + bus + ornament system does).`,
   ][reg=set]
 
   discoverability_contract = `Because the language models its own metaphysics explicitly (in workbench .spw + theory docs + runtime foundation), new technologies do not arrive as black boxes. A new WebGPU surface, spatial audio API, agentic co-composer loop, or biometric sensor can be described by: adding operators or families, defining new pragmatic evaluation rules, extending the resonance/attention-field model, or treating the new capability as a new "instrument" in the existing mixing/cauldron grammar. The site runtime (and any whitelabel) can then incorporate it without losing inspectability or the wonder doctrine (structural revelation over spectacle).`

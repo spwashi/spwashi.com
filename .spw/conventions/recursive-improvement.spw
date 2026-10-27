@@ -57,7 +57,7 @@ fixity = "tending"
   insights = `.spw/caches/`
   audits = `.spw/audits/`
   conventions = `.spw/conventions/` (only after contract operation)
-  plans = `.agents/plans/<slug>/` when multi-route implementation`
+  plans = `.agents/plans/<slug>/ when multi-route implementation`
 }[reg=facet]
 
 ^"starter"{

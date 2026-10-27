@@ -51,7 +51,7 @@ audit_run: .{
 }[reg=facet]
 
 ^"misses"{
-  same_anatomy = #[`/play/` 4-lens + hidden panels + brace sigil`, `/topics/craft/` 4-lens + hero swipe:toggle-lens`, `/recipes/` 4-lens opening][reg=set]
+  same_anatomy = #[`/play/ 4-lens + hidden panels + brace sigil`, `/topics/craft/ 4-lens + hero swipe:toggle-lens`, `/recipes/ 4-lens opening`][reg=set]
   quiet_chrome = `/design/folios/ three silent-quiet switchers; stills clip kinetic probes`
   image_prime = #[`/topics/craft/`, `/coordination/`, `/tools/`, `/services/`, `/topics/film/`, `/play/rpg-wednesday/` scene-bed][reg=set]
   hidden_panels = #[`/topics/software/parsers/`, `/topics/software/pretext/`, `/topics/math/category-theory/`, `/topics/math/complexity/`, `/topics/film/scene-composition/*`, `/design/composition/`, `/design/interaction-design/`][reg=set]
