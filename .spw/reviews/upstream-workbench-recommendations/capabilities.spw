@@ -106,6 +106,28 @@ expression = asks[capabilities]{inquiry.axes.ground}<upstream>
     probe: `npm run -s spw:routes -- --diff /about/domains/bane.land/ /about/domains/boon.land/ | sed -n '/"edge"/,/^}/p'`
     question: "Is the slot reading a flag on delta, a verb of its own, or a precipitate of the beat-diff plan?"
   }[reg=facet]
+
+  nested_wonder: .{
+    rank = 4
+    status = #proposed
+    home = ~"../../_workbench/.agents/plans/vscode-authoring-probe-loop/PLAN.md"
+    contract = `wonder.nesting/1`
+    claim: "A wonder may hold smaller wonders, and each reader keeps a child's marks with the child."
+    exists: "The parser holds a child wonder as a body inside the outer body, with no error. The site's harvest (scripts/wonder.mjs) names each child's parent and reads a parent's marks from its own lines. The workbench groups sibling wonders under a frame (docs/features/spw/lens-walk.spw boards) but nests none inside another."
+    gap: "The editor's parseWonderBlock reads the first !probe and every $% term anywhere in a body, so a parent's hint shows its child's probe and counts its child's terms; the body is read for at most eleven lines, so a parent with children is cut short."
+    measured: .{
+      site = "2026-10-27: one nested wonder, wonder_metaphysical_depth, with four children; the harvest reads five questions"
+      editor = "BRACE_BODY_LINES = 11 in packages/spw-lsp/src/handlers/wonder.ts; the outer block above runs to 44 lines"
+    }[reg=facet]
+    recommendation = #[
+      `parseWonderBlock skips the span of a child ?[…]{ } when it reads a parent's probe and metrics`,
+      `a parent's hint names its children's count, the way it names a metric count`,
+      `the body cap counts a parent's own lines, not its children's`,
+    ][reg=set]
+    replaces: "a parent hint that reports its child's probe as its own"
+    probe: `rg -n 'BRACE_BODY_LINES = ' .spw/_workbench/packages/spw-lsp/src/handlers/wonder.ts`
+    question: "Is a nested wonder one question with parts, or a frame of questions that happens to ask one too?"
+  }[reg=facet]
 }
 
 ^"withdrawn"{

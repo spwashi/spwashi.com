@@ -50,6 +50,36 @@ test('a wonder is open, then probed by a stream line, then answered or retired b
   assert.equal(lifecycleOf({ ...wonder, retired: 'the shelf moved' }, probed), 'retired');
 });
 
+test('a wonder inside a wonder is its own question, and its marks stay its own', () => {
+  const source = [
+    '#>wonder_outer',
+    '?["Does depth open onto smaller questions?"]{',
+    '  #>wonder_inner',
+    '  ?["Does the inner one stand alone?"]{',
+    '    ~#expect: "Yes."',
+    '    !probe{ "rg -c x y" }',
+    '    $%[inner.alone, inner.leans]',
+    '  }',
+    '  !probe{ "read both" }',
+    '  $%[depth.frames, depth.flat]',
+    '}',
+    '^"frame"{',
+    '  ?["A sibling held by a frame, not a wonder?"]{',
+    '    !probe{ "read" }',
+    '  }',
+    '}',
+  ].join('\n');
+  const [outer, inner, sibling] = parseWonders(source, 'x.spw');
+  assert.deepEqual([outer.id, inner.id], ['wonder_outer', 'wonder_inner']);
+  assert.equal(inner.parent, 'wonder_outer');
+  assert.deepEqual(outer.children, ['wonder_inner']);
+  assert.deepEqual(outer.probes, ['read both']);
+  assert.equal(outer.expect, '');
+  assert.deepEqual(outer.measures, ['$%[depth.frames, depth.flat]']);
+  assert.equal(inner.expect, 'Yes.');
+  assert.equal(sibling.parent, '');
+});
+
 test('an answer names an alternative from its set, or the contour says it does not', () => {
   const [wonder] = parseWonders(BLOCK, 'x.spw');
   assert.equal(answerInSet({ ...wonder, answer: 'part.name' }), true);
