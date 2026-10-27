@@ -117,6 +117,69 @@ expression = expression[compound]{bond.operand.kind}<declared>
   $%[bond.kind, bond.operands, bond.observedConsequence]
 }
 
+#>wonder_compound_consistency
+?["Do the names a mark takes by position read as one language, or as two vocabularies that grew apart?"]{
+  #:depth #!semantic ~#lens(comparison)
+  ~#hypothesis: "Position grammar may be the whole answer: a mark in front, between two lines and inside a body need not read alike. Where one name covers two forms, though, a reader cannot tell which is meant."
+  ~#expect: "Two of the five are naming slips worth fixing in words, project and lens; the other three are real positional readings that only need saying."
+  ~#unblocks: "the copy pass in spw-metaphysical-language, and the join cards on spw.quest/constructs"
+  ~#probe(read)
+  !probe{ "read the five questions below against operator-semantics.spw's positional grammar, and mark each slip or position" }
+  $%[names.one_language, names.two_vocabularies, names.position_explains]
+
+  #>wonder_compound_consistency_project
+  ?["Should project name both a ^ b between two lines and {a ~> b} inside a body?"]{
+    ~#expect: "No: one of them gets another word, since ^ is ascension and ~ is potential."
+    ~#probe(run)
+    !probe{ "rg -n \"'\\^': 'project'|project-join body form\" public/js/semantic/expression-query.js" }
+    $%[project.both, project.split]
+  }
+
+  #>wonder_compound_consistency_lens
+  ?["Is viewer@subject a lens in the same sense as the [ ] brace?"]{
+    ~#expect: "No: @ says who is looking, and [ ] says how; the slot reader's word for @ borrows the brace's."
+    ~#probe(run)
+    !probe{ "rg -n \"'@': 'lens'\" public/js/semantic/expression-query.js" }
+    $%[lens.same, lens.perspective]
+  }
+
+  #>wonder_compound_consistency_tilde
+  ?["Are potential, induct and the start of a movement one reading of ~ seen from three positions?"]{
+    ~#expect: "Yes: each keeps a path open, in front, between two lines, and toward the next part."
+    ~#probe(read)
+    !probe{ "read the ~ card and the join table on spw.quest/constructs, then operator-semantics.spw on ~" }
+    $%[tilde.one_reading, tilde.three]
+  }
+
+  #>wonder_compound_consistency_dot
+  ?["Is the dot in software.art.practice a separator, or part of one word, as the parser reads it?"]{
+    ~#expect: "Authors write it as a separator; the search agrees, the parser does not, and the language should say which wins."
+    ~#probe(read)
+    !probe{ "read the dot note under the_grammar_already_holds above, beside readBodyJoins' tight case in public/js/semantic/expression-query.js" }
+    $%[dot.separator, dot.one_word]
+  }
+
+  #>wonder_compound_consistency_charge
+  ?["When a line opens with a valence word and nothing else, is the valence word the line's word?"]{
+    ~#expect: "Yes on the boonhonk register, where bane[bone]{limit} is about bane; the reader should take a lone valence word as the word."
+    ~#probe(run)
+    !probe{ `rg -c 'data-spw-semantic-expression="(boon|bane|bone|bonk|honk)\[' about/index.html` }
+    $%[charge.is_word, charge.needs_word]
+  }
+}
+
+^"consistency_2026_10_27"{
+  ~#note: "Measured on spw.quest's shelf, 1003 lines carried from spwashi.com, while building /constructs; the page lays the same counts out as a table."
+  between = "~ 26 (induct), ^ 1 (project), & 1 (subject), @ 0 (lens)"
+  in_a_body = "tight dots 618, ; sequences 48, , lists 12, ~> movements 0"
+  in_front = "? 8, ^ 2, ~ 2, # 1, & 1, $ 1; six of the twelve marks never open a word"
+  wordless_charge = "17 lines open with a valence word and no other word; the slot reader leaves them with no word"
+}
+
+^"stream"{
+ >>[2026-10-27 14:56] observe — five places where a mark's names part by position, laid out at spw.quest/constructs#names and asked as #>wonder_compound_consistency. Nothing is renamed; the meanings are the creator's.
+}
+
 ^"validation"{
   probe: `npm run manifest:expressions && npm run spw:integrity`
   falsification: #[
