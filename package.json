@@ -131,6 +131,7 @@
     "manifest:tmp": "SPW_ROUTE_MANIFEST_OUTPUT=\"${TMPDIR:-/tmp}/spwashi-route-runtime-manifest.json\" node scripts/generate-route-runtime-manifest.mjs",
     "search:index": "node scripts/generate-site-search-index.mjs",
     "plans:index": "node scripts/maintain-plan-directory-indexes.mjs",
+    "plans:twinkle": "node scripts/plan-twinkle.mjs",
     "plans:index:check": "node scripts/maintain-plan-directory-indexes.mjs --check",
     "audit:plans": "node scripts/audit-plans.mjs",
     "audit:spw-tree": "node scripts/audit-spw-tree.mjs",

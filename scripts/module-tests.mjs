@@ -104,6 +104,7 @@ export const MODULE_TEST_FILES = Object.freeze([
   'scripts/tests/check-format.test.mjs',
   'scripts/tests/wonder-summary.test.mjs',
   'scripts/tests/wonder-lifecycle.test.mjs',
+  'scripts/tests/plan-twinkle.test.mjs',
   'scripts/tests/git-ignored.test.mjs',
   'scripts/tests/arc-bench.test.mjs',
   'scripts/tests/term-note-rows.test.mjs',

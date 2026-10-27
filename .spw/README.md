@@ -32,6 +32,7 @@ npm run spw:lattice                                         # ~#name(reading) ap
 npm run wonder                                              # open questions + their probes
 npm run wonder -- --contour                                 # each question open, probed, answered or retired, and what its block lacks
 npm run wonder -- --run --write                             # run the read-only probes; receipts in gen/wonder-runs.spw
+npm run plans:twinkle                                       # concepts plans share, lit where one moved after a plan last looked
 npm run wonder:measures                                     # $%[…] substrates ↔ producers
 npm run spw:routes -- --write                               # each route as a tree, beside its family (gen/routes/)
 npm run spw:routes -- --diff /a/ /b/                        # two routes: the ground they share, then the edge where they part
