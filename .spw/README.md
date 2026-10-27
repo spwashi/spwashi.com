@@ -42,9 +42,13 @@ only adds *resolution*: does the path exist, and does the `#fragment` name
 anything in the target. All 2480 citations currently resolve.
 
 **Known workbench gaps** (this consumer is a use case the workbench predates).
-Pin `0eb1d1c0e454`. Details: `.spw/workbench-report.spw`.
+Pin `850077ab48e0`. Details: `.spw/workbench-report.spw`.
 
-Landed on this pin: one content hash across seed, the runtime and the CLI, and
+Landed on this pin: `doctor` and `lint` take `--stats`, a declared handle links
+and hovers inside quoted prose, citation lenses count the files and citations
+that point at a file or an anchor, and a generated file opens its source
+(the extension installed 2026-10-13 needs a rebuild to show these).
+From `0eb1d1c0e454`: one content hash across seed, the runtime and the CLI, and
 the workbench build reads the form under a caret (formAt, formHover).
 From `c17f57a80c55`: the parser release gains a reader (outline, anchors and
 highlighted HTML, browser-safe) and a workbench build of seed, the runtime
