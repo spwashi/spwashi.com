@@ -181,6 +181,8 @@ fixity = "tending"
   #:depth #!pragmatics ~#lens(comparison)
   ~#hypothesis: "A version number promises a boundary the workbench will not draw; capability names say what a reader can rely on and when each arrived."
   ~#tension: "The atlas and the parser tool teach v0.4 by name, and a version is the one word a newcomer already knows how to read."
+  ~#unblocks: "the atlas section's heading and the parser tool's v0.4 gallery copy"
+  ~#probe(run)
   !probe{ "rg -c v04 topics/software/spw/index.html tools/spw-parser/index.html" }
   $%[name.version, name.capability, copy.atlas]
 }
@@ -190,7 +192,9 @@ fixity = "tending"
   #:depth #!computational ~#lens(projection)
   ~#hypothesis: "A wonder already carries a hypothesis, a probe and the slots its answer fills; a claim carries a hypothesis, a probe and a falsification. An answer recorded on the wonder is the claim's receipt."
   ~#tension: "198 claim units are written from a template and would close on nothing; a loop that counts them as answered would launder a template into evidence."
-  !probe{ "npm run -s wonder 2>&1 | grep 'site wonders'" }
+  ~#unblocks: "inquiry_loop in ../../reviews/upstream-workbench-recommendations/capabilities.spw, which asks the workbench for one vocabulary"
+  ~#probe(run)
+  !probe{ "npm run -s wonder -- --contour | grep -E '^(lifecycle|probes|safe to run|marks)'" }
   $%[wonder.answer, claim.status, receipt.run]
 }
 
@@ -199,8 +203,16 @@ fixity = "tending"
   #:depth #!pragmatics ~#lens(comparison)
   ~#hypothesis: "Two meanings of one word in one toolchain will be read as one; the homonym-renaming plan is where such a pair is settled."
   ~#tension: "The site's word is in 388 .spw headers and every plan index; upstream's is in its normalizer and flow protocol."
+  ~#unblocks: "axis_canon in ../../reviews/upstream-workbench-recommendations/capabilities.spw, and any rename in the homonym-renaming plan"
+  ~#probe(run)
   !probe{ "rg -l '#:fixity #!' .spw -g '*.spw' -g '!**/_workbench/**' | wc -l" }
   $%[fixity.tier, fixity.position, rename.cost]
+}
+
+^"stream"{
+ >>[2026-10-27 13:32] probe — wonder_v04_name: v04 sits on 8 lines of the atlas and 9 of the parser tool, most of them anchors and sample ids (#language-evolution-v04, #v04-specimen-suite, ?spw_sample=v04_claims) rather than copy, so a rename moves inbound links as well as words. Run before any ~#expect was on record.
+ >>[2026-10-27 13:32] probe — wonder_v04_claims_wonders: the wonder side of the loop now runs. npm run wonder -- --run ran 44 read-only probes in 13 s and kept result_ref-shaped receipts in .spw/gen/wonder-runs.spw; no wonder is answered, and no claim has a run. Run before any ~#expect was on record.
+ >>[2026-10-27 13:32] probe — wonder_v04_fixity_name: 389 site .spw files carry a #:fixity header, one more than the tension's count. Run before any ~#expect was on record.
 }
 
 validation: #[

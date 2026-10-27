@@ -114,6 +114,7 @@ invariants: #[
   ~#taste: "A fork should find what it may take without reading a build script."
   ~#hypothesis: "A list in scripts/build-peer-kit.mjs keeps each file beside the organ it belongs to and lets the kit check drift. A folder such as public/js/peer/ makes the boundary visible in the tree."
   ~#tension: "The runtime gave every file a family so a reader finds the organ before the file (80c7b305); a travel folder would cut across those families."
+  ~#probe(run)
   !probe{ "rg -n 'SCRIPTS = Object.freeze' -A4 scripts/build-peer-kit.mjs" }
   $%[peer.list, peer.folder, fork.legibility]
 }
@@ -124,6 +125,8 @@ invariants: #[
   ~#with: @plan
   ~#hypothesis: "A light-DOM element keeps a specimen's state on the specimen and travels to a peer as one tag, while the authored pre > code inside it still reads with scripts off. A catalog def keeps one mount path for the whole site."
   ~#tension: "The runtime defines no custom element today; the first one is a second mount path that every later module may take."
+  ~#unblocks: "the pilot in the modules-as-custom-elements direction, and S4's specimen on spwashi.com"
+  ~#probe(run)
   !probe{ "rg -c 'customElements.define' public/js workers" }
   $%[specimen.host, catalog.def, peer.tag]
 }

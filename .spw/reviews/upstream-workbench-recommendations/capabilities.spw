@@ -1,0 +1,133 @@
+# Capabilities — what this site's v0.4 became, in the workbench's own terms
+#
+# On 2026-10-27 the site reevaluated its v0.4 (../../language/v04/roadmap.spw,
+# ^"reevaluation_2026_10_27"): the workbench versions capabilities, not the
+# language, and none of the twelve pillars reached it. This file restates what
+# is still wanted as asks the intake table in first-plugin can take: a key, a
+# contract name in the workbench's capability/version form, and a home in a
+# plan that already owns the files. It also says which pillars are withdrawn,
+# so nothing upstream is built on the site's account.
+#
+# Every ask keeps the same slots in the same order: rank, status, home,
+# contract, claim, exists, gap, measured, recommendation, replaces, probe,
+# question. status #proposed means the intake has not taken it; home is the
+# site's suggestion. Nothing here writes to .spw/_workbench.
+
+#>workbench_asks_capabilities
+#:review #!workbench #!language #!capabilities
+#:operation #!align
+#:fixity #!tending
+#:layer #!pragmatics
+
+@hub: ~"../upstream-workbench-recommendations.spw"
+@roadmap: ~"../../language/v04/roadmap.spw"
+@asks_corpus: ~"./corpus-and-cli.spw"
+@asks_motions: ~"./motions.spw"
+@asks_plugins: ~"./plugins-and-tooling.spw"
+@theory_map: ~"../../caches/theory-map-2026-10.spw"
+@wonder_script: ~"../../../scripts/wonder.mjs"
+@claim_protocol: ~"../../_workbench/.spw/harness/claim-protocol.spw"
+@runs_index: ~"../../_workbench/.spw/harness/runs/runs-index.spw"
+@first_plugin: ~"../../_workbench/.agents/plans/first-plugin/wip.spw"
+
+operation = "align"
+fixity = "tending"
+
+expression = asks[capabilities]{inquiry.axes.ground}<upstream>
+
+^"capabilities_asks"{
+
+  inquiry_loop: .{
+    rank = 1
+    status = #proposed
+    home = #[@claim_protocol, @runs_index][reg=set]
+    contract = `inquiry.loop/1`
+    claim: "A wonder should be able to close: its probe runs, the run is kept as a receipt, and the answer names what is left of its $% set."
+    exists: "The claim protocol already shapes a result: result_ref is a dated run with the command, the observation and the verdict, beside evidence_basis, source_revision, negative_control and limitation. The theory map's lifecycle gives the wonder marks: ~#expect before the probe, a >>[date] probe line after, ~#answer, ~#retired, ~#probe(run) for a command and ~#probe(read) for a judgment. wonder_harvest in @asks_corpus asks for the harvest itself."
+    gap: "Upstream runs no probe and keeps no run, so a claim's status never moves on evidence. The site now runs its own wonder probes (scripts/wonder.mjs --run), which shows what the harness would take over and where it stops: a run proposes, and the verdict is still written by hand."
+    measured: .{
+      wonders = "2026-10-27: 208 harvested; 12 probed with a dated line; none answered or retired"
+      probes = "63 read as commands, 47 of them read-only by the site's allowlist; the first pass ran 44 in 13 s with receipts in .spw/gen/wonder-runs.spw. Held: node one-liners 8, chained commands 5, scripts that write or drive a browser 3"
+      expect = "18 wonders carry ~#expect. Three of the day's probes ran after a guess was written: two held and one half missed. The rest ran with none on record, so they measure and do not test"
+      claims = "321 claim units on the site, 198 written from a plan-index template, and no probe_ref has ever run"
+      substrates = "515 $% terms across the wonders, 92 resolving against a producer; four sensors now count, each held to the roots it measures"
+    }[reg=facet]
+    recommendation = #[
+      `the harvest reads the lifecycle marks and reports each wonder as open, probed, answered or retired`,
+      `a run of a ~#probe(run) is effect.l0 (read-only) and yields a result_ref candidate: date, command, exit, observation`,
+      `the verdict stays a reader's: a run proposes, a person or an agent writes ~#answer and the verdict`,
+      `one vocabulary for both: an answered wonder's receipt is a claim's result_ref`,
+    ][reg=set]
+    replaces: "questions that stay open because nothing records that they were checked"
+    probe: `npm run -s wonder -- --contour | grep -E '^(lifecycle|probes|safe to run|marks)'`
+    question: "Is an answered wonder a confirmed claim, or does a claim need a negative_control the wonder does not carry?"
+  }[reg=facet]
+
+  axis_canon: .{
+    rank = 2
+    status = #proposed
+    home = ~"../../_workbench/.agents/plans/naming-profile-convention-align/wip.spw"
+    contract = `header.axes/1`
+    claim: "A consumer declares the values of its header axes once, and lint holds its files to them."
+    exists: "scanMalformedAxes flags a #:axis value written without #!. This site keeps its canon for operation and fixity in scripts/audit-spw-tree.mjs and holds about nine files in ten to it."
+    gap: "Upstream lint cannot know a consumer's values, so an off-canon value or a header that disagrees with its assignment passes."
+    measured: .{
+      coverage = "#:operation in 394 of 406 .spw files and 332 of 391 plan files; #:fixity in 388"
+      drift = "31 files where #:operation and operation = disagree; one fixity value off the canon"
+      homonym = "upstream fixity is an operator's position (flow-protocol, normalize); the site's is a stability tier"
+    }[reg=facet]
+    recommendation = #[
+      `lint reads an axis canon from the workspace manifest, where a consumer declares it`,
+      `report an off-canon value, and a header that disagrees with the file's own assignment`,
+      `say which word upstream reserves before either side renames anything`,
+    ][reg=set]
+    replaces: "a consumer script that re-implements the axis check"
+    probe: `npm run -s audit:spw-tree 2>&1 | tail -1`
+    question: "Should fixity stay a consumer's word for stability, or is it the workbench's for an operator's position?"
+  }[reg=facet]
+
+  ground_edge_home: .{
+    rank = 3
+    status = #proposed
+    home = ~"../../_workbench/.agents/plans/spw-beat-diff-precipitation/PLAN.md"
+    contract = `reading.ground-edge/1`
+    claim: "Reading two forms as ground, then the edge by slot, belongs beside the multi-layer diff that plan already names."
+    exists: "ground_then_edge and template_with_a_slot are filed in @asks_motions; compare_in_the_editor in @asks_plugins is routed to vscode-authoring-probe-loop. The site reads two routes this way with npm run spw:routes -- --diff, and Home's lens keeps a declared and a parsed reading apart."
+    gap: "The motions asks have no home in the intake, which took only the fourteen plugin asks."
+    measured: .{
+      routes = "bane.land against boon.land: one edge at the name, where spw delta counts 52 lexical edits"
+      theory = "the theory map asks whether ground-then-edge is an anti-unifier or a per-slot shadow of one"
+    }[reg=facet]
+    recommendation = #[
+      `take ground_then_edge and template_with_a_slot into the intake with this home`,
+      `keep delta the revision reading`,
+    ][reg=set]
+    replaces: "two asks filed where no intake reads them"
+    probe: `npm run -s spw:routes -- --diff /about/domains/bane.land/ /about/domains/boon.land/ | sed -n '/"edge"/,/^}/p'`
+    question: "Is the slot reading a flag on delta, a verb of its own, or a precipitate of the beat-diff plan?"
+  }[reg=facet]
+}
+
+^"withdrawn"{
+  note = `These site pillars are withdrawn; nothing upstream needs to build them on this site's account. The pillar files stay as history, so a path the workbench cites into ../../language/v04/ keeps resolving (packages/spw-cli/src/resolve.test.ts uses one).`
+  profiles_and_validator = `withdrawn: the workbench infers review profiles from the path, and this site holds one header shape with audit:spw-tree`
+  grammar_unification = `withdrawn: both section shapes stay; the workbench admits a primitive only when a composition cannot express the distinction`
+  stem_projection = `withdrawn: the cross-language trace in corpus-and-cli asks for the join instead`
+  register_serialization = `withdrawn: no new registers; the normalizer's probe and proj stand`
+  runtime_goals_pipeline = `withdrawn: spw.progressive-product/1 and --through hold the stages`
+  core_experimental_namespace = `withdrawn: the =exp[id] catalog holds experimental syntax`
+  submodule_bridge = `withdrawn: no v04 branch, library or tag is asked for; the intake table is the bridge`
+}[reg=facet]
+
+#>wonder_capabilities_intake
+?["Should the intake take capability asks by contract name, so a consumer can ask for inquiry.loop/1 before anyone decides which plan builds it?"]{
+  #:depth #!pragmatics ~#lens(comparison)
+  ~#with: @first_plugin
+  ~#expect: "Yes for asks that span plans, such as the inquiry loop, which touches the harness, the CLI and the editors; no for an ask a single plan already owns."
+  ~#hypothesis: "A contract name outlives the plan that first builds it, and the workbench already names its capabilities that way."
+  ~#tension: "An intake keyed by contract needs someone to own each contract, and the workbench has no owner for the harness protocols today."
+  ~#probe(read)
+  !probe{ "sed -n '/intake/,/^}/p' .spw/_workbench/.agents/plans/first-plugin/wip.spw" }
+  $%[intake.by_ask, intake.by_contract]
+  ~<"../upstream-workbench-recommendations.spw"> ~<"../../language/v04/roadmap.spw">
+}

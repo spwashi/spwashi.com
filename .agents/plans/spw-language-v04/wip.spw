@@ -26,18 +26,22 @@ fixity = "tending"
  >>[2026-10-13 23:05] implement — the site mount moved from 76e17bd4 to c17f57a8 (12 commits: a reader and a workbench build in the parser release, seed bundling for a browser, a portable runtime root, plans). The parser is the same; the bundle changed its provenance line and two minified names.
  >>[2026-10-13 23:19] implement — the mount moved again, c17f57a8 to 0eb1d1c0, the creator's last upstream of the day (4 commits: one content hash, caret form context in the workbench build). The parser is the same. npm run build:spw-parser now also writes public/js/semantic/spw-workbench-reader.js, the editor's reading with parse, built as the release builds it, and /tools/spw-parser/ imports it alone: a reading panel (highlighted roles, outline) and an anchors metric beside tokens, AST and diagnostics.
  >>[2026-10-13 23:49] implement — highlighted Spw is easy to read and to edit. semantic/spw-highlight.js paints the reader's roles with each mark's operator type (data-op), shared by every Spw code block (<code class="language-spw">, 34 blocks on 30 routes, modules/tools/spw-code.js: painted when seen, Edit into the parser and Copy over the corner) and by /tools/spw-parser/, whose source field is now painted under a clear textarea: Tab indents, Enter keeps the indent, Esc then Tab leaves, the caret lights a brace and its partner, outline rows and diagnostics put the caret on their line. components/spw-source.css arrives deferred with the first painted block, in the canon's dark values because code sits on --surface-code in either theme.
+ >>[2026-10-27 13:42] revise — reevaluated against the site and the workbench at 850077a (77a52b58, roadmap.spw ^"reevaluation_2026_10_27"): upstream versions capabilities, not the language, so there is no v0.4 to wait for. Phase 2 is retired, and with it the open question of a feature/spw-language-v04 branch upstream; the three questions left for the creator are wonders in the roadmap.
+ >>[2026-10-27 13:42] implement — the first slice of inquiry.loop/1: npm run wonder -- --run runs the read-only wonder probes (45 of 61 commands; node one-liners, chains and scripts that write or drive a browser are held) and --write keeps result_ref-shaped receipts in .spw/gen/wonder-runs.spw; --contour reads each wonder as open, probed, answered or retired. 44 ran in 13 s on the first pass. No wonder is answered yet: a run proposes.
 }
 
 ^"open"{
  trailing_probe = ~"./index.spw#wonder_spw_language_v04_trailing_probe"
  help_json = ~"./index.spw#wonder_plan_help_json"
- phase_two = "Does feature/spw-language-v04 open upstream in spw-workbench now, or after the site-side patches? The creator's call."
+ name = ~"../../../.spw/language/v04/roadmap.spw#wonder_v04_name"
+ claims_wonders = ~"../../../.spw/language/v04/roadmap.spw#wonder_v04_claims_wonders"
+ fixity_name = ~"../../../.spw/language/v04/roadmap.spw#wonder_v04_fixity_name"
 }
 
 ^"cache"{
  ~#status: "implementing"
- ~#next_commit: "+[search] Read leading sigils in a typed query as force, and test it with the cache's worked example"
- ~#files_hot: "public/js/semantic/expression-query.js, scripts/tests/expression-query.test.mjs, .spw/caches/spw-as-handle-2026-09.spw"
- ~#gate: "nothing for the prefix half; the trailing ?# half waits on the creator's reading"
- ~#last_stream: "2026-10-13"
+ ~#next_commit: "~[wonder] Answer the wonders a run settles, each ~#answer beside its receipt"
+ ~#files_hot: "scripts/wonder.mjs, .spw/language/v04/roadmap.spw, .spw/reviews/upstream-workbench-recommendations/capabilities.spw, public/js/semantic/expression-query.js"
+ ~#gate: "nothing for the answers or the prefix half; the trailing ?# half, the name v0.4, the claim question and fixity's two meanings wait on the creator"
+ ~#last_stream: "2026-10-27"
 }

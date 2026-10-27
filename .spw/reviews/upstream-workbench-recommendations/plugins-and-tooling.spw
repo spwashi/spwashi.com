@@ -212,6 +212,8 @@ expression = asks[plugins]{one.reading.then.one.plugin}<upstream>
   ~#taste: "A protocol with nothing to run teaches the reader that plugins are a document."
   ~#hypothesis: "An expression-manifest plugin proves select and emit on the corpus this site already builds by script. A doctor reading of projection freshness is smaller, and it answers a registry that already exists."
   ~#tension: "The manifest plugin touches the publish path. The doctor reading touches a view. Shipping both is the second plugin."
+  ~#unblocks: "~[runner_fixture] in upstream first-plugin, which waits on this choice"
+  ~#probe(run)
   !probe{ "rg -n \"No concrete plugins\" .spw/_workbench/lib/spw-v0.3.0/surfaces/PLUGIN-PROTOCOL.md" }
   $%[plugin.manifest, doctor.projection, plugin.second]
   ~<"../upstream-workbench-recommendations.spw">
@@ -386,7 +388,13 @@ expression = asks[plugins]{one.reading.then.one.plugin}<upstream>
   ~#taste: "The question a reader has at a shape is which sibling to hold this one against; the editor should offer the answer where the question forms."
   ~#hypothesis: "A lens on follows teaches the shape and the reading together, because the members are already named there. A command on any two files reaches pairs no shape names, such as a route against its old revision."
   ~#tension: "A lens is one more line on a screen that already carries generated, reg and anchor lenses; a command is invisible until someone knows to look for it."
-  !probe{ "npm run -s spw:routes -- --diff /topics/software/spw/operators/action/ /topics/software/spw/operators/probe/" }
+  ~#probe(run)
+  !probe{ "npm run -s spw:routes -- --diff /topics/software/spw/operators/action/ /topics/software/spw/operators/probe/ | grep -n -E '^\\^\"|^  first'" }
   $%[compare.lens, compare.command, shape.members]
   ~<"../upstream-workbench-recommendations.spw"> ~<"./motions.spw">
+}
+
+^"stream"{
+ >>[2026-10-27 13:32] probe — wonder_workbench_first_plugin: still open, and now held in one place upstream. PLUGIN-PROTOCOL.md:33 still says no concrete plugin exists, and first-plugin keeps the same choice as ?[first_plugin] for its owner (wip.spw, 2026-10-25), with the consumer owning the plugin file if the manifest wins. Run before any ~#expect was on record.
+ >>[2026-10-27 13:32] probe — wonder_workbench_compare_where: action against probe, two members of one family, share ground for eight lines and part first at the name. Run before any ~#expect was on record.
 }
