@@ -135,12 +135,17 @@ export function matchWonderOpen(line = '') {
   return ticks % 2 === 0 ? match : null;
 }
 
-export function parseWonders(source, file) {
-  const wonders = [];
-  const lines = source.split('\n');
-
+/**
+ * A wonder may hold smaller wonders: a question that opens onto questions,
+ * each answerable alone. The parser already holds a child as a body inside the
+ * outer body. Here each one is harvested on its own with its parent named, and
+ * a parent's marks are read from its own lines only, so a child's probe or
+ * guess is never counted as the parent's.
+ */
+function wonderSpans(lines) {
+  const spans = [];
   for (let i = 0; i < lines.length; i += 1) {
-    const idMatch = lines[i].match(/^#>(\w*wonder\w*)/i);
+    const idMatch = lines[i].match(/^\s*#>(\w*wonder\w*)\s*$/i);
     const openMatch = matchWonderOpen(lines[i]);
     // A wonder is either an id line followed by the question, or a bare `?[…]{`.
     let id = null;
@@ -151,22 +156,48 @@ export function parseWonders(source, file) {
     } else if (!openMatch) {
       continue;
     }
-
     const qMatch = matchWonderOpen(lines[questionLine]);
     if (!qMatch) continue;
 
-    // Walk to the matching close brace.
+    // Walk to the matching close brace. A brace inside a quoted string is
+    // text, as the parser reads it: a probe's regex may hold `\{` unpaired.
     let depth = 0;
     let end = questionLine;
     for (let j = questionLine; j < lines.length; j += 1) {
-      for (const ch of lines[j]) {
-        if (ch === '{') depth += 1;
+      let quote = '';
+      for (let k = 0; k < lines[j].length; k += 1) {
+        const ch = lines[j][k];
+        if (quote) {
+          if (ch === '\\') k += 1;
+          else if (ch === quote) quote = '';
+        } else if (ch === '"' || ch === '`') quote = ch;
+        else if (ch === '{') depth += 1;
         else if (ch === '}') depth -= 1;
       }
       if (depth <= 0 && j > questionLine - 1) { end = j; break; }
     }
+    spans.push({ id, start: i, questionLine, end, question: qMatch[1] });
+    i = questionLine;
+  }
+  for (const span of spans) {
+    const holders = spans.filter((other) => other !== span && other.questionLine < span.start && other.end >= span.end);
+    span.parent = holders.sort((a, b) => b.questionLine - a.questionLine)[0] || null;
+  }
+  return spans;
+}
 
-    const body = lines.slice(questionLine + 1, end);
+export function parseWonders(source, file) {
+  const lines = source.split('\n');
+  const spans = wonderSpans(lines);
+  const idOf = (span) => span.id || `wonder@${span.questionLine + 1}`;
+
+  return spans.map((span) => {
+    const children = spans.filter((other) => other.parent === span);
+    const inChild = (index) => children.some((child) => index >= child.start && index <= child.end);
+    const body = [];
+    for (let index = span.questionLine + 1; index < span.end; index += 1) {
+      if (!inChild(index)) body.push(lines[index]);
+    }
     const field = (name) => {
       const line = body.find((l) => l.trim().startsWith(`~#${name}:`));
       return line ? line.replace(/^\s*~#\w+:\s*/, '').replace(/^["`]|["`]$/g, '') : '';
@@ -201,11 +232,11 @@ export function parseWonders(source, file) {
     );
     const lens = readings.lens || body.join('\n').match(/\/\/\s*lens:\s*(.+)$/m)?.[1]?.trim() || '';
 
-    wonders.push({
-      id: id || `wonder@${questionLine + 1}`,
+    return {
+      id: idOf(span),
       file: path.relative(ROOT, file),
-      line: questionLine + 1,
-      question: qMatch[1],
+      line: span.questionLine + 1,
+      question: span.question,
       depth: depthTag,
       lens,
       hypothesis: field('hypothesis'),
@@ -222,12 +253,11 @@ export function parseWonders(source, file) {
       refs,
       readings,
       roots: [...new Set(roots)],
+      parent: span.parent ? idOf(span.parent) : '',
+      children: children.map(idOf),
       canon: file.startsWith(CANON),
-    });
-
-    i = end;
-  }
-  return wonders;
+    };
+  });
 }
 
 /**
@@ -415,6 +445,8 @@ function renderWonder(wonder, neighbours) {
 
   // Referentiality and proximity, printed as the question's edges.
   const edges = [];
+  if (wonder.parent) edges.push(`inside #>${wonder.parent}`);
+  if (wonder.children?.length) edges.push(`opens #>${wonder.children.join(' #>')}`);
   if (wonder.roots.length) edges.push(`@${wonder.roots.slice(0, 6).join(' @')}`);
   if (wonder.refs.length) edges.push(`~<${wonder.refs.join('> ~<')}>`);
   if (edges.length) {
@@ -634,6 +666,13 @@ function renderContour(wonders, probed, { full = false } = {}) {
   out.push(`${'probes'.padEnd(13)}run ${runs.length} (${markedRun} marked) · read ${records.length - runs.length} (${markedRead} marked) · none ${unprobed}`);
   out.push(`${'safe to run'.padEnd(13)}${safe.length} of ${runs.length}`
     + (held.length ? paint('dim', `; held: ${held.map(([reason, n]) => `${reason} ${n}`).join(' · ')}`) : ''));
+  const nested = wonders.filter((wonder) => wonder.parent);
+  if (nested.length) {
+    const parents = new Set(nested.map((wonder) => `${wonder.file}#${wonder.parent}`));
+    const early = wonders.filter((wonder) => wonder.answer && wonders.some((child) => child.parent === wonder.id && child.file === wonder.file && !child.answer && !child.retired));
+    out.push(`${'nesting'.padEnd(13)}${nested.length} inside ${parents.size} parent${parents.size === 1 ? '' : 's'}`
+      + (early.length ? paint('question', ` · ${early.length} answered while a child is open`) : ''));
+  }
   out.push(`${'marks'.padEnd(13)}~#expect ${wonders.filter((w) => w.expect).length} · $% set ${wonders.filter((w) => w.measures.length).length} · ~#unblocks ${wonders.filter((w) => w.unblocks).length} · ~#answer ${wonders.filter((w) => w.answer).length} · ~#retired ${wonders.filter((w) => w.retired).length}`);
   out.push('');
 
