@@ -220,13 +220,13 @@ contents = #[
 }
 
 ^"stream"{
- >>[2026-10-28 12:00] prime — Written from the morning's conversation about probes, wonders, hovers and theory. Eleven questions, each with an answer set, a prediction and a probe kind; three probes were run once to check they work (the lattice probe printed true, the join probe read both orders as induct). The packet, the brief and the receipt prepare a Gemini cut.
+ >>[2026-10-27 11:25] prime — Written from the morning's conversation about probes, wonders, hovers and theory. Eleven questions, each with an answer set, a prediction and a probe kind; three probes were run once to check they work (the lattice probe printed true, the join probe read both orders as induct). The packet, the brief and the receipt prepare a Gemini cut.
 }
 
 # About this file
 operation = "prime"
 fixity = "experimental"
-source = "creator, 2026-10-28: what could make probes and wonders more ergonomic and cognitively useful; operator meaning, hover and completions that develop the geometry; the theory under the ideas; a Gemini cache cut, prepared mindfully"
+source = "creator, 2026-10-27: what could make probes and wonders more ergonomic and cognitively useful; operator meaning, hover and completions that develop the geometry; the theory under the ideas; a Gemini cache cut, prepared mindfully"
 
 # Handles, by role. Declared last; each one links wherever the text names it.
 # Neighbors

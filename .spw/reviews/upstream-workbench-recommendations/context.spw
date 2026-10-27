@@ -62,7 +62,7 @@ expression = asks[context]{sessions.instruments.calls.landed}<upstream>
     `a declared handle links and hovers inside STRING and PHRASE tokens; a path or anchor in a string stays text (cf7df67): handle_in_prose`,
     `citation lenses count files and citations on line 0 and on each #> anchor; anchors carry no register lens; generated files offer open source, rebuild and spec, and warn on the first edit; leading-slash citations resolve from the workspace root (55e79d2): lens_counts_citations, reg_names_one_thing, generated_from_the_page`,
     `plans: first-plugin holds the intake for the fourteen asks and the reader-health rule; nine join their owner plans; owner decisions binding_key_fragments, first_plugin, generated_without_lenses (e53e41d); one role stream from the lexer and Vim motions planned (850077a); theory, cognitive surfaces and creative probes (f8e2308, 174384d, bbf42a8, 3963588)`,
-    `the installed VS Code extension (2026-10-13) predates the lens and prose-handle work; it reaches the editor once the extension is rebuilt and reinstalled`,
+    `the VS Code extension was rebuilt from the workbench clone at f36ecd08 and reinstalled on 2026-10-27 (73 tests pass); Neovim runs the mounted server and attaches with the new lenses`,
   ][reg=set]
   pin_0eb1d1c = #[
     `0eb1d1c0e454 (4 commits past c17f57a, 2026-10-13, the day's last) — one content hash: hashString, geometry cards and transform preconditions take 16 hex of SHA-256 over UTF-8, the CLI uses seed's, and the runtime's three hashes call textHash (eb34e6c, 7509cbb): portability`,
