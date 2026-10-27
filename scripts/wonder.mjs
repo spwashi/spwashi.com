@@ -39,8 +39,20 @@
  *   node scripts/wonder.mjs --probes        # probe lines only, for running
  *   node scripts/wonder.mjs --surface wonder_plan
  *   node scripts/wonder.mjs --json
+ *   node scripts/wonder.mjs --contour       # each wonder's lifecycle and what its block lacks
+ *   node scripts/wonder.mjs --run [--surface x] [--limit n] [--write]
+ *                                           # run read-only probes; keep the receipts in .spw/gen/
  *   node scripts/wonder.mjs --canon         # include the workbench's 176
  *   node scripts/wonder.mjs --summary       # one count line, then one line a question
+ *
+ * The lifecycle is the one .spw/caches/theory-map-2026-10.spw ^"lifecycle"
+ * gives: ~#expect says what the probe should show before it runs; a
+ * >>[date] probe line in a stream that names the wonder says what it showed;
+ * ~#answer names the alternative left in the $% set; ~#retired says why the
+ * question stopped mattering. ~#probe(run) marks a probe that is a command and
+ * ~#probe(read) one that is a judgment. A run proposes; the answer and its
+ * verdict stay a reader's, written as ~#answer beside a result_ref in the
+ * claim protocol's terms (capabilities.spw inquiry_loop).
  *
  * --summary is what check:local runs: "[wonder] N open on S surfaces · U without
  * a probe", then "? <key> <file>:<line> <question>" per wonder. The key is a
@@ -51,10 +63,13 @@
  * The rest of .agents stays out: diaries and state are not questions.
  */
 
+import { execFileSync, spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { readFile, readdir } from 'node:fs/promises';
+import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+import { writeProjectionIndex } from './lib/spw-projections.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SPW_ROOT = path.join(ROOT, '.spw');
@@ -157,9 +172,15 @@ export function parseWonders(source, file) {
       return line ? line.replace(/^\s*~#\w+:\s*/, '').replace(/^["`]|["`]$/g, '') : '';
     };
 
+    // A probe quoted with "…" carries Spw string escapes; unescape it so the
+    // text is what a shell would be handed. A backtick probe is already raw.
     const probes = body
       .filter((l) => l.includes('!probe{'))
-      .map((l) => l.replace(/^\s*!probe\{\s*["`]?/, '').replace(/["`]?\s*\}\s*$/, ''));
+      .map((l) => {
+        const quoted = /^\s*!probe\{\s*"/.test(l);
+        const text = l.replace(/^\s*!probe\{\s*["`]?/, '').replace(/["`]?\s*\}\s*$/, '');
+        return quoted ? text.replace(/\\(["\\])/g, '$1') : text;
+      });
 
     const measures = body
       .filter((l) => l.trim().startsWith('$%['))
@@ -189,6 +210,11 @@ export function parseWonders(source, file) {
       lens,
       hypothesis: field('hypothesis'),
       tension: field('tension'),
+      expect: field('expect'),
+      answer: field('answer'),
+      retired: field('retired'),
+      unblocks: field('unblocks'),
+      probeKind: readings.probe === 'run' || readings.probe === 'read' ? readings.probe : '',
       goal: field('goal'),
       taste: field('taste'),
       probes,
@@ -202,6 +228,119 @@ export function parseWonders(source, file) {
     i = end;
   }
   return wonders;
+}
+
+/**
+ * A probe is a command when its block marks it ~#probe(run), or when it opens
+ * with a command a shell knows; otherwise it is a reading a person makes.
+ */
+const COMMAND_HEAD = /^(?:rg|grep|git|npm|node|sed|wc|ls|test|find|cat|head|tail|awk|jq|diff|du|stat|curl|python3?|bash|sh|cd)\b/;
+// Outside its quotes, a command does not end a sentence and start another, or
+// set a clause off with a dash: "grep swipe in x.js. if the count is 0, …" is
+// an instruction to a person that happens to open with a command's name.
+const PROSE = /;\s+then\b|\.\s+[a-z]|\s[—–]\s|,\s+(?:then|and|if|so)\b/;
+const outsideQuotes = (text) => String(text).replace(/'[^']*'|"(?:[^"\\]|\\.)*"/g, "''");
+export function probeKind(probe = '', marked = '') {
+  if (marked === 'run' || marked === 'read') return marked;
+  const command = String(probe).trim();
+  return COMMAND_HEAD.test(command) && !PROSE.test(outsideQuotes(command)) ? 'run' : 'read';
+}
+
+/**
+ * Whether --run may execute a probe here: read-only commands, joined by pipes
+ * only. Anything that could write, chain, substitute or redirect is refused,
+ * and so is a script this file does not know to be a reading.
+ */
+const SAFE_HEADS = new Set(['rg', 'grep', 'wc', 'head', 'tail', 'sort', 'uniq', 'cut', 'tr', 'ls', 'test', 'cat', 'find', 'git', 'npm', 'sed']);
+const SAFE_GIT = /^git\s+(?:-C\s+\S+\s+)?(?:log|show|ls-files|grep|rev-parse|diff\s+--stat|status\s+--short)\b/;
+// Scripts read before they were listed: each reads the tree and prints, with no
+// file written and no browser launched. audit:layer-flip, audit:living-terms,
+// audit:portable and audit:css-custom-properties write; audit:root-* and sense
+// drive a headless browser. They stay off this list.
+const SAFE_NPM = /^npm\s+run\s+(?:-s\s+)?(?:wonder(?::json|:measures)?|audit:(?:braces|copy(?::\w+)?|page-structure|plans|route-links|spw-tree|js-tree(?::json)?|region-seats|folio-highres)|spw:integrity(?::json)?|spw:routes|css:payload(?::json)?|css:tree|check:agents|tending:queue|plans:index:check|ecology:language(?::json)?|spw\s+--\s+(?:skim|analyze|query|lint|resolve|fingerprint|tree|roots|doctor|lattice|delta|--help))(?=\s|$)/;
+const WRITE_FLAGS = /(?:^|\s)--(?:write|fix|receipt|out|apply|reap)\b/;
+// stderr folded into stdout, or dropped, is a reading still.
+const QUIET_STDERR = /\s2>(?:&1|\/dev\/null)(?=\s|$)/g;
+/**
+ * Split a command on its unquoted pipes. Returns null when it chains,
+ * substitutes or redirects outside single quotes, since sh would act on those.
+ */
+export function pipeStages(command = '') {
+  const stages = [];
+  let current = '';
+  let quote = '';
+  for (let i = 0; i < command.length; i += 1) {
+    const ch = command[i];
+    if (quote === "'") {
+      if (ch === "'") quote = '';
+      current += ch;
+      continue;
+    }
+    if (ch === '\\') {
+      current += ch + (command[i + 1] ?? '');
+      i += 1;
+      continue;
+    }
+    if (ch === '`' || (ch === '$' && command[i + 1] === '(')) return null;
+    if (quote === '"') {
+      if (ch === '"') quote = '';
+      current += ch;
+      continue;
+    }
+    if (ch === "'" || ch === '"') {
+      quote = ch;
+      current += ch;
+      continue;
+    }
+    if (ch === ';' || ch === '&' || ch === '>' || ch === '<') return null;
+    if (ch === '|') {
+      if (command[i + 1] === '|') return null;
+      stages.push(current.trim());
+      current = '';
+      continue;
+    }
+    current += ch;
+  }
+  if (quote) return null;
+  stages.push(current.trim());
+  return stages;
+}
+
+export function safeProbeCommand(probe = '') {
+  const command = String(probe).trim();
+  if (!command) return { ok: false, reason: 'empty' };
+  const stages = pipeStages(command.replace(QUIET_STDERR, ''));
+  if (!stages) return { ok: false, reason: 'chains, substitutes or redirects' };
+  for (const part of stages) {
+    const head = part.split(/\s+/)[0];
+    if (!SAFE_HEADS.has(head)) return { ok: false, reason: `${head || 'an empty stage'} is not a reading command here` };
+    if (head === 'sed' && !/^sed\s+-n\b/.test(part)) return { ok: false, reason: 'sed without -n may edit' };
+    if (head === 'find' && /\s-(?:delete|exec|execdir|ok|fprint\w*)\b/.test(part)) return { ok: false, reason: 'find that acts' };
+    if (head === 'git' && !SAFE_GIT.test(part)) return { ok: false, reason: 'a git command that is not a reading' };
+    if (head === 'npm' && (!SAFE_NPM.test(part) || WRITE_FLAGS.test(part))) return { ok: false, reason: 'an npm script not known to only read' };
+  }
+  return { ok: true, reason: '' };
+}
+
+/** Where a wonder stands: retired, answered, probed (a stream line names it), or open. */
+export function lifecycleOf(wonder, probed = new Map()) {
+  if (wonder.retired) return 'retired';
+  if (wonder.answer) return 'answered';
+  if (probed.has(wonder.id)) return 'probed';
+  return 'open';
+}
+
+/** Stream lines that record a probe: >>[date] probe … naming wonder ids. */
+export function readProbeLines(source = '') {
+  const found = new Map();
+  for (const line of String(source).split('\n')) {
+    const hit = /^\s*>>\[(\d{4}-\d{2}-\d{2})[^\]]*\]\s+probe\b/.exec(line);
+    if (!hit) continue;
+    for (const id of line.match(/\b\w*wonder\w*/gi)?.filter((token) => token.includes('_')) || []) {
+      if (!found.has(id) || found.get(id) < hit[1]) found.set(id, hit[1]);
+    }
+  }
+  return found;
 }
 
 /**
@@ -307,19 +446,26 @@ function renderWonder(wonder, neighbours) {
  * allowlist — a new producer makes a substrate resolvable without editing this
  * file, which is the property that lets the backlog shrink on its own.
  */
+// A sensor names the roots it measures. Without them a large script lends its
+// generic keys (kept, same, status) to every question that happens to use the
+// word: a trial on 2026-10-27 resolved 71 more terms that way, about ten honestly.
 const PRODUCERS = [
   ['scripts/page-reasons.mjs', 'measure'],
   ['public/js/runtime/arrival/arrival-shells.js', 'runtime'],
   ['public/js/runtime/arrival/load-trace.js', 'runtime'],
   ['public/js/runtime/memory/familiarity-gate.js', 'runtime'],
   ['public/js/site.js', 'api'],
+  ['scripts/spw-routes.mjs', 'sensor', ['diff', 'shape', 'tree']],
+  ['scripts/audit-spw-tree.mjs', 'sensor', ['spw']],
+  ['scripts/build-expression-manifest.mjs', 'sensor', ['expression']],
+  ['scripts/tending-queue.mjs', 'sensor', ['plan']],
 ];
 
 async function resolveSubstrates(terms) {
   const sources = [];
-  for (const [file, kind] of PRODUCERS) {
+  for (const [file, kind, roots = null] of PRODUCERS) {
     try {
-      sources.push({ file, kind, text: await readFile(path.join(ROOT, file), 'utf8') });
+      sources.push({ file, kind, roots, text: await readFile(path.join(ROOT, file), 'utf8') });
     } catch {
       // A missing producer is not an error; it just cannot resolve anything.
     }
@@ -334,7 +480,8 @@ async function resolveSubstrates(terms) {
     // resolves against any file that merely says the word, which is how a
     // backlog quietly reports itself as complete.
     const probe = new RegExp(`(^|[\\s{,(])${escaped}\\s*[:=]|\\bget\\s+${escaped}\\b`, 'm');
-    const hit = sources.find((source) => probe.test(source.text));
+    const root = term.includes('.') ? term.split('.')[0] : '';
+    const hit = sources.find((source) => (!source.roots || source.roots.includes(root)) && probe.test(source.text));
     resolved.set(term, hit ? { by: hit.file, kind: hit.kind } : null);
   }
   return resolved;
@@ -429,6 +576,285 @@ export function renderCountLine(wonders) {
   return `[wonder] ${wonders.length} open on ${surfaces} surfaces · ${unprobed} without a probe`;
 }
 
+/** The terms of a $%[…] line, as written. */
+const termsOf = (measure) => measure.replace(/^\$%\[/, '').replace(/\]$/, '').split(',').map((term) => term.trim()).filter(Boolean);
+
+/** True when an ~#answer names one of the alternatives its block offered. */
+export function answerInSet(wonder) {
+  const terms = wonder.measures.flatMap(termsOf);
+  return terms.some((term) => String(wonder.answer).includes(term));
+}
+
+/** What a block still lacks for its question to move, in the order the lifecycle needs it. */
+export function gapsOf(wonder) {
+  const gaps = [];
+  const settled = Boolean(wonder.answer || wonder.retired);
+  if (!wonder.probes.length && !settled) gaps.push('probe');
+  if (!wonder.expect && !settled) gaps.push('expect');
+  if (!wonder.measures.length) gaps.push('$% set');
+  if (wonder.answer && wonder.measures.length && !answerInSet(wonder)) gaps.push('answer outside its set');
+  return gaps;
+}
+
+/** One record per probe: its kind, and whether --run may execute it, with the reason when not. */
+export function probeRecords(wonder) {
+  return wonder.probes.map((probe) => {
+    const kind = probeKind(probe, wonder.probeKind);
+    const safety = kind === 'run' ? safeProbeCommand(probe) : { ok: false, reason: 'a reading' };
+    return { probe, kind, safe: safety.ok, held: safety.reason };
+  });
+}
+
+function countBy(values) {
+  const counts = new Map();
+  for (const value of values) counts.set(value, (counts.get(value) || 0) + 1);
+  return [...counts.entries()].sort((a, b) => b[1] - a[1]);
+}
+
+/**
+ * The contour: where each question stands and what its block lacks. Headlines
+ * first, then the questions nearest to closing, then the surfaces carrying the
+ * most gaps; the line saying what to do next comes last.
+ */
+function renderContour(wonders, probed, { full = false } = {}) {
+  const out = [];
+  const stage = (wonder) => lifecycleOf(wonder, probed);
+  const records = wonders.flatMap((wonder) => probeRecords(wonder).map((record) => ({ ...record, wonder })));
+  const runs = records.filter((record) => record.kind === 'run');
+  const safe = runs.filter((record) => record.safe);
+  const markedRun = wonders.filter((wonder) => wonder.probeKind === 'run').length;
+  const markedRead = wonders.filter((wonder) => wonder.probeKind === 'read').length;
+  const unprobed = wonders.filter((wonder) => !wonder.probes.length).length;
+  const stages = Object.fromEntries(countBy(wonders.map(stage)));
+  const held = countBy(runs.filter((record) => !record.safe).map((record) => record.held));
+
+  out.push(paint('bold', 'wonder contour — where each question stands, and what its block still needs'));
+  out.push(paint('dim', '='.repeat(78)));
+  out.push(`${'lifecycle'.padEnd(13)}${wonders.length} · open ${stages.open || 0} · probed ${stages.probed || 0} · answered ${stages.answered || 0} · retired ${stages.retired || 0}`);
+  out.push(`${'probes'.padEnd(13)}run ${runs.length} (${markedRun} marked) · read ${records.length - runs.length} (${markedRead} marked) · none ${unprobed}`);
+  out.push(`${'safe to run'.padEnd(13)}${safe.length} of ${runs.length}`
+    + (held.length ? paint('dim', `; held: ${held.map(([reason, n]) => `${reason} ${n}`).join(' · ')}`) : ''));
+  out.push(`${'marks'.padEnd(13)}~#expect ${wonders.filter((w) => w.expect).length} · $% set ${wonders.filter((w) => w.measures.length).length} · ~#unblocks ${wonders.filter((w) => w.unblocks).length} · ~#answer ${wonders.filter((w) => w.answer).length} · ~#retired ${wonders.filter((w) => w.retired).length}`);
+  out.push('');
+
+  const moved = wonders.filter((wonder) => stage(wonder) !== 'open');
+  if (moved.length) {
+    out.push(paint('bold', 'moved'));
+    for (const wonder of moved) {
+      const gaps = gapsOf(wonder);
+      const when = probed.get(wonder.id);
+      out.push(`  ${stage(wonder).padEnd(9)} ${paint('ground', wonder.id)}  ${paint('dim', `${wonder.file}:${wonder.line}`)}`
+        + (when ? paint('dim', `  probed ${when}`) : '')
+        + (gaps.length ? paint('question', `  lacks ${gaps.join(', ')}`) : ''));
+    }
+    out.push('');
+  }
+
+  const ready = wonders.filter((wonder) => stage(wonder) === 'open' && wonder.expect && probeRecords(wonder).some((record) => record.safe));
+  if (ready.length) {
+    out.push(paint('bold', 'ready — a guess on record and a probe --run may execute'));
+    for (const wonder of ready) out.push(`  ${paint('ground', wonder.id)}  ${paint('dim', `${wonder.file}:${wonder.line}`)}`);
+    out.push('');
+  }
+
+  const bySurface = new Map();
+  for (const wonder of wonders.filter((w) => !['answered', 'retired'].includes(stage(w)))) {
+    if (!bySurface.has(wonder.file)) bySurface.set(wonder.file, []);
+    bySurface.get(wonder.file).push(wonder);
+  }
+  const surfaces = [...bySurface.entries()]
+    .map(([file, group]) => [file, group, group.reduce((sum, wonder) => sum + gapsOf(wonder).length, 0)])
+    .filter(([, , gaps]) => gaps > 0)
+    .sort((a, b) => b[2] - a[2]);
+  if (surfaces.length) {
+    out.push(paint('bold', full ? 'every open question and what it lacks' : 'surfaces carrying the most gaps'));
+    for (const [file, group, gaps] of full ? surfaces : surfaces.slice(0, 12)) {
+      out.push(paint('wall', '┌─ ') + file + paint('dim', `  ${group.length} open · ${gaps} gaps`));
+      if (full) {
+        for (const wonder of group) {
+          const gapsHere = gapsOf(wonder);
+          const kinds = probeRecords(wonder).map((record) => (record.kind === 'run' ? (record.safe ? 'run' : 'run held') : 'read'));
+          out.push(paint('wall', '│ ') + paint('ground', wonder.id.padEnd(40)) + paint('dim', (kinds.join(',') || '—').padEnd(12))
+            + (gapsHere.length ? paint('question', `lacks ${gapsHere.join(', ')}`) : paint('probe', 'whole')));
+        }
+      }
+    }
+    if (!full && surfaces.length > 12) out.push(paint('dim', `  … ${surfaces.length - 12} more; --surface <path> or --all lists each question`));
+    out.push('');
+  }
+
+  const noExpect = wonders.filter((wonder) => wonder.probes.length && !wonder.expect && stage(wonder) === 'open').length;
+  const have = (n) => (n === 1 ? 'has' : 'have');
+  out.push(`next: ${ready.length} can run and be judged now (npm run wonder -- --run); `
+    + `${noExpect} ${have(noExpect)} a probe but no ~#expect, so a run would not teach; ${unprobed} ${have(unprobed)} no probe.`);
+  return out.join('\n');
+}
+
+function gitRevision() {
+  try {
+    return execFileSync('git', ['rev-parse', '--short=8', 'HEAD'], { cwd: ROOT, encoding: 'utf8' }).trim();
+  } catch {
+    return '';
+  }
+}
+
+/** Run one probe through the shell, read-only by construction (safeProbeCommand), with a timeout. */
+export function runProbe(command, { timeout = 90_000 } = {}) {
+  const started = Date.now();
+  const result = spawnSync('/bin/sh', ['-c', command], {
+    cwd: ROOT,
+    encoding: 'utf8',
+    timeout,
+    maxBuffer: 16 * 1024 * 1024,
+    env: { ...process.env, NO_COLOR: '1', FORCE_COLOR: '0' },
+  });
+  const timedOut = result.error?.code === 'ETIMEDOUT' || result.signal === 'SIGTERM';
+  return {
+    exit: timedOut ? 'timeout' : (result.status ?? 1),
+    ms: Date.now() - started,
+    stdout: result.stdout || '',
+    stderr: result.stderr || '',
+  };
+}
+
+/** Commands a probe needs that this shell cannot find; the heads are allowlisted words, never input. */
+const found = new Map();
+export function missingCommands(command = '') {
+  const heads = (pipeStages(String(command).replace(QUIET_STDERR, '')) || []).map((stage) => stage.split(/\s+/)[0]);
+  return [...new Set(heads)].filter((head) => {
+    if (!found.has(head)) found.set(head, spawnSync('/bin/sh', ['-c', `command -v ${head}`]).status === 0);
+    return !found.get(head);
+  });
+}
+
+/** The last lines a probe printed, plain, short enough to sit in one quoted value. */
+export function observationOf(stdout = '', stderr = '', keep = 4) {
+  const text = (String(stdout).trim() ? stdout : stderr).replace(/\x1b\[[0-9;]*m/g, '');
+  const tail = text.split('\n').map((line) => line.trim()).filter(Boolean).slice(-keep).join(' / ');
+  const plain = tail.replace(/["`\\]/g, "'");
+  return (plain.length > 280 ? `${plain.slice(0, 279)}…` : plain) || '(no output)';
+}
+
+const quote = (text) => `"${String(text).replace(/["`\\]/g, "'")}"`;
+const RUNS_FILE = path.join(GENERATED, 'wonder-runs.spw');
+
+/**
+ * The runs as one .spw file in the claim protocol's result_ref terms and the
+ * harness runs index's verdict words, so an answered wonder's receipt is a
+ * claim's receipt. The verdict is always needs-review: a run proposes.
+ */
+export function renderRuns(runs, { stamp, revision }) {
+  const out = [
+    '# Wonder runs — each runnable probe, run read-only, with what it printed.',
+    '# Written by npm run wonder -- --run --write. .spw/gen is gitignored: this is a working',
+    '# receipt. A verdict stays needs-review until a reader writes ~#answer on the wonder',
+    '# and a >>[date] probe line in the stream of the file that holds it.',
+    '',
+    '#>wonder_runs',
+    '#:operation #!cache',
+    '#:fixity #!volatile',
+    '',
+    '@inquiry_loop: ~"../reviews/upstream-workbench-recommendations/capabilities.spw#inquiry_loop"',
+    '@lifecycle: ~"../caches/theory-map-2026-10.spw#lifecycle"',
+    '',
+    `^"runs"{`,
+  ];
+  const seen = new Map();
+  for (const run of runs) {
+    const base = run.wonder.id.replace(/\W/g, '_');
+    const n = (seen.get(base) || 0) + 1;
+    seen.set(base, n);
+    const key = n === 1 ? base : `${base}_${n}`;
+    const target = path.relative(GENERATED, path.join(ROOT, run.wonder.file)) + (run.wonder.id.startsWith('wonder@') ? '' : `#${run.wonder.id}`);
+    out.push(`  ${key}: .{`);
+    out.push(`    run_id = \`${stamp.replace(' ', 'T')}-${key}\``);
+    out.push(`    surface = ~"${target}"`);
+    out.push(`    command = \`${run.probe}\``);
+    out.push('    effect_boundary = #read');
+    out.push('    evidence_basis = #observed');
+    if (revision) out.push(`    source_revision = \`${revision}\``);
+    out.push(`    exit = ${run.exit === 'timeout' ? '#timeout' : run.exit}`);
+    out.push(`    ms = ${run.ms}`);
+    if (run.wonder.expect) out.push(`    expect: ${quote(run.wonder.expect)}`);
+    out.push(`    observation: ${quote(run.observation)}`);
+    out.push('    verdict = `needs-review`');
+    out.push('  }[reg=facet]');
+  }
+  out.push('}', '');
+  return out.join('\n');
+}
+
+/** The stream line a reader would paste after judging the run, prefilled with what the run saw. */
+export function streamLineOf(run, stamp) {
+  const status = run.exit === 'timeout' ? 'timed out' : `exit ${run.exit}`;
+  return `>>[${stamp}] probe — ${run.wonder.id}: ${status}, printed "${run.observation.slice(0, 120)}". `
+    + (run.wonder.expect ? 'Against ~#expect: <held or not>.' : 'No ~#expect was on record.');
+}
+
+function localStamp(date = new Date()) {
+  const pad = (n) => String(n).padStart(2, '0');
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
+
+const say = (line) => console.log(line);
+
+async function runWonders(wonders, probed, { limit = Infinity, write = false, json = false } = {}) {
+  const queue = wonders
+    .filter((wonder) => !['answered', 'retired'].includes(lifecycleOf(wonder, probed)))
+    .flatMap((wonder) => probeRecords(wonder).filter((record) => record.safe).map((record) => ({ ...record, wonder })))
+    .slice(0, limit);
+  const stamp = localStamp();
+  const revision = gitRevision();
+  const runs = [];
+  const skipped = [];
+  for (const record of queue) {
+    const missing = missingCommands(record.probe);
+    if (missing.length) {
+      skipped.push({ ...record, missing });
+      continue;
+    }
+    process.stderr.write(paint('dim', `[wonder] running ${record.wonder.id} …\n`));
+    const result = runProbe(record.probe);
+    runs.push({ ...record, ...result, observation: observationOf(result.stdout, result.stderr) });
+  }
+  if (json) {
+    console.log(JSON.stringify({
+      stamp,
+      revision,
+      runs: runs.map(({ wonder, stdout, stderr, ...run }) => ({ ...run, wonder: wonder.id, file: wonder.file })),
+      skipped: skipped.map(({ wonder, probe, missing }) => ({ wonder: wonder.id, file: wonder.file, probe, missing })),
+    }, null, 2));
+  } else {
+    for (const run of runs) {
+      const ok = run.exit === 0;
+      say(`${paint(ok ? 'probe' : 'question', ok ? '✓' : '·')} ${String(run.exit).padEnd(8)}${String(run.ms).padStart(7)}ms  ${paint('ground', run.wonder.id)}`);
+      say(`  ${paint('dim', run.observation)}`);
+    }
+    if (runs.length) {
+      say('');
+      say(paint('bold', 'stream lines to judge and paste, one per wonder, in the file that holds it'));
+      for (const run of runs) say(`  ${paint('dim', run.wonder.file)}\n  ${streamLineOf(run, stamp)}`);
+      say('');
+    }
+  }
+  if (write) {
+    await mkdir(GENERATED, { recursive: true });
+    await writeFile(RUNS_FILE, renderRuns(runs, { stamp, revision }), 'utf8');
+    await writeProjectionIndex();
+  }
+  const failed = runs.filter((run) => run.exit !== 0).length;
+  if (!json && skipped.length) {
+    const byCommand = countBy(skipped.flatMap((record) => record.missing));
+    say(paint('question', `skipped ${skipped.length}: ${byCommand.map(([head, n]) => `${head} is not on this PATH (${n})`).join(' · ')}`));
+  }
+  if (!json) {
+    say(`${runs.length} run${runs.length === 1 ? '' : 's'}, ${failed} without exit 0`
+      + (write ? `; receipts in ${path.relative(ROOT, RUNS_FILE)}` : '; --write keeps the receipts')
+      + '. Each verdict waits on a reader.');
+  }
+}
+
+
 async function main() {
   const args = process.argv.slice(2);
   const asJson = args.includes('--json');
@@ -439,8 +865,12 @@ async function main() {
   const files = await collectSpw(SPW_ROOT, [], { includeCanon });
   await collectSpw(PLANS_ROOT, files, { skipArchive: true });
   let wonders = [];
+  const probed = new Map();
   for (const file of files) {
     const source = await readFile(file, 'utf8');
+    for (const [id, date] of readProbeLines(source)) {
+      if (!probed.has(id) || probed.get(id) < date) probed.set(id, date);
+    }
     if (!source.includes('?[')) continue;
     wonders.push(...parseWonders(source, file));
   }
@@ -449,8 +879,18 @@ async function main() {
     wonders = wonders.filter((w) => w.file.includes(surfaceFilter) || w.id.includes(surfaceFilter));
   }
 
+  if (args.includes('--run')) {
+    const limit = args.includes('--limit') ? Number(args[args.indexOf('--limit') + 1]) || Infinity : Infinity;
+    await runWonders(wonders, probed, { limit, write: args.includes('--write'), json: asJson });
+    return;
+  }
+  if (args.includes('--contour')) {
+    console.log(renderContour(wonders, probed, { full: Boolean(surfaceFilter) || args.includes('--all') }));
+    return;
+  }
   if (asJson) {
-    console.log(JSON.stringify({ generatedAt: new Date().toISOString(), wonders }, null, 2));
+    const lifecycle = (wonder) => ({ ...wonder, lifecycle: lifecycleOf(wonder, probed), probed: probed.get(wonder.id) || '', gaps: gapsOf(wonder) });
+    console.log(JSON.stringify({ generatedAt: new Date().toISOString(), wonders: wonders.map(lifecycle) }, null, 2));
     return;
   }
   if (args.includes('--summary')) {
