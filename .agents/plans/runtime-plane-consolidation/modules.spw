@@ -146,7 +146,7 @@ fixity = "tending"
     &mutation(childList, subtree) => ?any(addedNodes matches selector)
       => ~rAF-coalesce(frame) => !onRelevant() => *release(frame)
   >>
-  cost: .{ write_guard: O(1) ; observe: O(records × addedNodes) ; hot: #yes }[reg=facet]
+  cost: .{ write_guard: O(1) ; observe: `O(records × addedNodes)` ; hot: #yes }[reg=facet]
   hazard_prevented: `two modules reacting through naive subtree observers hard-freeze the renderer — observer callbacks run as microtasks and never yield (docblock :1189)`
  }
 
@@ -210,7 +210,7 @@ fixity = "tending"
   }[reg=facet]
   .{
     id: TEMPLATE_HOLE
-    form: `{{ name }}` matched by /\{\{\s*([a-zA-Z][a-zA-Z0-9_-]*)\s*\}\}/g
+    form: `{{ name }} matched by /\{\{\s*([a-zA-Z][a-zA-Z0-9_-]*)\s*\}\}/g`
     policy: =escape-by-default ; unknown-key: !report & *preserve-literal
   }[reg=facet]
   .{
@@ -280,7 +280,7 @@ fixity = "tending"
   }[reg=facet]
   .{
     id: ATTRIBUTE_FILTER
-    form: <frozen>[43 × data-spw-* | data-site-settings-*]
+    form: <frozen>[`43 × data-spw-* | data-site-settings-*`]
     standing: `a de facto registry of every reactive attribute on the site`
     promote_when: `phase 3 lands — this belongs in a named .spw surface`
   }[reg=facet]
@@ -462,7 +462,7 @@ fixity = "tending"
  }
 
  .recent_change{
-  at: 2026-07-26 ; state: ~uncommitted
+  at: `2026-07-26` ; state: ~uncommitted
   what: `all three catalogs migrated from flat strings to scope:role: prefixed tokens`
   verified: %{ enhancement: 363 ; feature: 111 ; core: 21 ; delta_vs_HEAD: 0 }
   verdict: =sound & =complete
@@ -487,7 +487,7 @@ fixity = "tending"
 
  identity( id: $semantic.expression_geometry ; guild: #semantic ; layer: #shared ; mount: ~lazy )
 
- %mass{ lines: 244 ; adopters: 2 ; competitors: 4 ; landed: 2026-07-26 }
+ %mass{ lines: 244 ; adopters: 2 ; competitors: 4 ; landed: `2026-07-26` }
 
  expression: $spw[expression]{scan.describe}<authority>@browser-safe-subset
 
@@ -513,7 +513,7 @@ fixity = "tending"
   .{ at: `kernel/shared.js:1380` ; fn: splitOperatorExpression ; consumers: [sigil-anatomy, interaction-vocabulary, guide-badge, cauldron/storage] }[reg=facet]
   .{ at: `semantic/link-copy.js:33` ; fn: parseSpwExpression ; consumers: [link-copy internal] }[reg=facet]
   .{ at: `site.js:714` ; fn: <inline regex> ; reads: <noun then optional frame, body, scope bounds> ; consumers: [snapshotProjectionEquations] }[reg=facet]
-  .{ at: `runtime/memory/spells.js:151` ; fn: <inline regex> ; reads: <leading sigil from a 16-alternative alternation, defaulting to tilde> ; consumers: [spells internal] }[reg=facet]
+  .{ at: `runtime/memory/spells.js:151` ; fn: <inline regex> ; reads: <`leading sigil from a 16-alternative alternation, defaulting to tilde`> ; consumers: [spells internal] }[reg=facet]
   .{ at: `runtime/experiential/experiential.js` ; fn: OPERATOR_INFO + inferOperatorInfoFromText ; note: `a third operator vocabulary` }[reg=facet]
  ]
 
@@ -617,7 +617,7 @@ fixity = "tending"
  &effects{
   !writes: << element.style['--charge'] ; element.dataset.spwCharge >>
   &joins: << document.on('spw:settings:changed') @import-time >>
-  ~defers: << none — emit is synchronous >>
+  ~defers: << `none — emit is synchronous` >>
  }
 
  =authority{
@@ -756,7 +756,7 @@ fixity = "tending"
   .{
     id: MODULE_RECORD
     form: {
-      id<defId::rootKey>, baseId, layer, evaluates
+      id<`defId::rootKey`>, baseId, layer, evaluates
       requestedWhen, effectiveWhen, reason, describes
       updates[], updatesSummary, updatesDescribe
       timingArc, effectScope[]
@@ -853,7 +853,7 @@ fixity = "tending"
  &effects{
   !writes: <<
     html[data-spw-runtime-mount-batch|active-layers|site-rhythm|runtime-last-module*|runtime-mounted-modules|runtime-failed-modules|runtime-module-count|runtime-module-lifecycle*|runtime-idle-chunk*|connection-posture|prefetch-mode|prefetch-count|cached-module-count|service-worker-*]
-    ; html.style[--spw-runtime-enhancement-intensity|feature-intensity|layer-count|avg-module-ms|--spw-site-rhythm-tempo|density]
+    ; html.style[`--spw-runtime-enhancement-intensity|feature-intensity|layer-count|avg-module-ms|--spw-site-rhythm-tempo|density`]
     ; body[13 keys mirrored from html]
     ; root[data-spw-module-*|data-spw-module-trigger-*]
   >>
@@ -944,7 +944,7 @@ fixity = "tending"
     `no def declares routeFamily, because nothing would read it`
   ]
   resolves: <<
-    ^phase(1) !delete(no-op adapters) => %expect{ enhancement: -315 ; feature: -135 ; core: -25 }
+    ^phase(1) !delete(no-op adapters) => %expect{ enhancement: `-315` ; feature: `-135` ; core: `-25` }
       => ^phase(2) !declare(routeFamily) & !emit(per-surface def set from route manifest)
   >>
  }
@@ -1058,7 +1058,7 @@ fixity = "tending"
     ; spwRegionKindCount ; spwRegionKindField ; spwRegionKey ; spwRegionState
     ; spwSpaceMotion ; spwKind ; spwRole ; spwContext ; spwSurface
   >>
-  %reads: <none — no geometry is read>
+  %reads: <`none — no geometry is read`>
  }
 
  =authority{
@@ -1129,7 +1129,7 @@ fixity = "tending"
   resolves: <<
     ^phase(3) &join(shared viewport read phase)
       => ^phase(5) !expose(stable measurement read for region_profiler)
-      => ?probe(edge gravity | measure band | occupancy — which predicts the felt beat) &before !wire
+      => ?probe(`edge gravity | measure band | occupancy — which predicts the felt beat`) &before !wire
   >>
  }
 
@@ -1201,22 +1201,22 @@ fixity = "tending"
   .{ id: menu_state_machine  ; fns: (resolveMenuPressure, resolveMenuTopology, resolveMenuPhase, resolveMenuIntent, resolveMenuClarity, collectChangedAxes, buildMenuSnapshot, writeMenuDatasets, applyMenuState, emitMenuState, syncDisclosure, scheduleRestingPhase, dispatchActionForSnapshot) ; axes: <6>[MODES, PHASES, PRESSURES, TOPOLOGIES, INTENTS, CLARITIES] ; verdict: =keep<the genuine core> }[reg=facet]
   .{ id: scroll_lock         ; fns: (syncShellOffset, isInsideShellMenuScrollSurface, handleShellScrollLockTouchMove, bindShellScrollLockTouchGuard, syncShellLock) ; verdict: !extract<reusable by any overlay> }[reg=facet]
   .{ id: pointer_field       ; fns: (syncHeaderPointerField, clearHeaderPointerField) ; verdict: !extract }[reg=facet]
-  .{ id: settings_panel      ; fns: (cycleSettingValue, getCurrentFontScale, getCurrentColorMode, getCurrentBaseMaterial, getCurrentHighContrast, getNextFontScale, syncHeaderActions, syncThemeUtility, syncTuningLexiconStrip, upgradeUtilityRow, ensureUtilityRow, syncUtilityRow, describeExplorePostureFeedback) ; owns: <6 cycles>[FONT_SCALE_STEPS, COLOR_MODE_STEPS, THEME_PACK_CYCLE, COLOR_TUNER_CYCLE, EXPLORE_POSTURE_CYCLE, TUNING_LEXICON_SHELL_ORDER] ; verdict: !extract<idle sibling — not needed for first reading posture> }[reg=facet]
+  .{ id: settings_panel      ; fns: (cycleSettingValue, getCurrentFontScale, getCurrentColorMode, getCurrentBaseMaterial, getCurrentHighContrast, getNextFontScale, syncHeaderActions, syncThemeUtility, syncTuningLexiconStrip, upgradeUtilityRow, ensureUtilityRow, syncUtilityRow, describeExplorePostureFeedback) ; owns: <6 cycles>[FONT_SCALE_STEPS, COLOR_MODE_STEPS, THEME_PACK_CYCLE, COLOR_TUNER_CYCLE, EXPLORE_POSTURE_CYCLE, TUNING_LEXICON_SHELL_ORDER] ; verdict: !extract<`idle sibling — not needed for first reading posture`> }[reg=facet]
   .{ id: posture_panel       ; fns: (getAttentionRelationLabel, getCurrentAttentionPosture, ensureAttentionPosturePanel, syncAttentionPosturePanel, setAttentionPosturePanelOpen) ; verdict: !extract<idle sibling> }[reg=facet]
-  .{ id: disclosure_a11y     ; fns: (FOCUSABLE_SELECTOR, getFocusableMenuElements, focusFirstMenuTarget, focusCurrentMenuTarget, describeToggleState, describeToggleMeta, buildToggleAria, syncToggleCopy, setToolsDisclosureOpen) ; verdict: !extract<generic — reusable by region-menu and the posture panel> }[reg=facet]
+  .{ id: disclosure_a11y     ; fns: (FOCUSABLE_SELECTOR, getFocusableMenuElements, focusFirstMenuTarget, focusCurrentMenuTarget, describeToggleState, describeToggleMeta, buildToggleAria, syncToggleCopy, setToolsDisclosureOpen) ; verdict: !extract<`generic — reusable by region-menu and the posture panel`> }[reg=facet]
  ]
 
  $structures[
   .{
     id: MENU_SNAPSHOT
-    form: <6-axis>{ mode, phase, pressure, topology, intent, clarity }
+    form: <`6-axis`>{ mode, phase, pressure, topology, intent, clarity }
     derivation: << %navRatio => *resolveMode => *resolvePressure => *resolveTopology => *resolvePhase => *resolveIntent => *resolveClarity >>
     diffing: `collectChangedAxes(prev, next) => changed[]`
     projection: `MENU_DATASET_KEYS => writeMenuDatasets`
   }[reg=facet]
   .{
     id: SETTING_CYCLES
-    form: <6-cycle-set>{
+    form: <`6-cycle-set`>{
       FONT_SCALE_STEPS: ['70', '80', '90', '100', '110', '120']
       COLOR_MODE_STEPS: ['auto', 'dark', 'light']
       EXPLORE_POSTURE_CYCLE: ['reading', 'field', 'workshop']
@@ -1326,7 +1326,7 @@ fixity = "tending"
     id: sample_dock
     fns: (initSampleDock, ensureHeaderTraceHost, collectSampleItems, describePageSample, describeFeatureSample, describeRouteSample, renderSampleDock, renderSamplePreview, renderSampleChip, summarizeSampleInventory, describeLearnerConfidence, selectSampleIndex, pinSampleIndex, clearSamplePin, cycleSampleIndex, getSampleIndexFromEvent, finishSampleGesture, onSampleDockPointerOver, onSampleDockPointerOut, onSampleDockFocusIn, onSampleDockFocusOut, onSampleDockPointerDown, onSampleDockClick, onSampleDockKeydown)
     gesture_surface: <complete>[pointer, focus, keyboard]
-    verdict: !split<own def> & =reclass<~idle — not first reading posture>
+    verdict: !split<own def> & =reclass<`~idle — not first reading posture`>
   }[reg=facet]
   .{ id: contextual_memos  ; fns: (initContextualMemos, onSemanticGestureEvent, presentContextMemo, findRoomyMemoTarget, ensureLocalMemo, memoTextForEvent, memoForCharge, memoForActivate, memoForArmed, memoForCommitted) ; verdict: !split }[reg=facet]
   .{ id: operator_learning ; fns: (initOperatorLearning, onOperatorLearn, learningMemo, inferOperatorInfoFromText) ; owns: OPERATOR_INFO ; note: `a third operator vocabulary alongside shared.js and the workbench` ; verdict: !fold<into the single expression reader, phase 4> }[reg=facet]
@@ -1338,8 +1338,8 @@ fixity = "tending"
  ]
 
  &effects{
-  &joins: << bus.on × 3 ; document/window listeners × 41 ; SHELL_MENU_INTENT_EVENT ; SHELL_MENU_STATE_EVENT ; HEADER_TRACE_CHANGE_EVENT >>
-  !writes: << localStorage × 3 ; innerHTML × 6 ; breadcrumb + sample-dock dataset surfaces >>
+  &joins: << `bus.on × 3` ; `document/window listeners × 41` ; SHELL_MENU_INTENT_EVENT ; SHELL_MENU_STATE_EVENT ; HEADER_TRACE_CHANGE_EVENT >>
+  !writes: << `localStorage × 3` ; `innerHTML × 6` ; breadcrumb + sample-dock dataset surfaces >>
  }
 
  =authority{
@@ -1441,7 +1441,7 @@ fixity = "tending"
 
  ^consequence_map{
   payload:        << barrel imports & no bundling => %{ eager: 631 KB ; dist: 3.4 MB } >>
-  recalc:         << unguarded writes × 352 root-rooted CSS selectors => forced recalc against a 1.5 MiB sheet >>
+  recalc:         << `unguarded writes × 352 root-rooted CSS selectors` => `forced recalc against a 1.5 MiB sheet` >>
   freeze_risk:    << 26 independent observers => the exact microtask hazard dom-contracts documents at :1189 >>
   ungrounded:     << synonym tables & no measured input => layout beats that cannot resolve spatial relationships >>
   bloat:          << no single expression reader => 4 parsers & 3 operator vocabularies & 2107 unowned chips >>

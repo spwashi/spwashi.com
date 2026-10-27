@@ -1127,7 +1127,7 @@ frame #minimalist_material_motif
 frame #rpg_wednesday_linguistic_metaphysics_driver
   role driver
   surface rpg-wednesday/* + design + cards + chrome + badges + .spw
-  concept l'n'd'r Bjrknptpf clay golem speech-bubble metaphysical expertise
+  concept "l'n'd'r Bjrknptpf clay golem speech-bubble metaphysical expertise"
   character = "'l'n'd'r Bjrknptpf (jumble of consonants like bar-patron affirmation); clay/golem; main magic speech bubble metaphysical expertise"
   magic = "explore cognitive metaphysics of linguistics; relate to materials the same way as paint or art materials; branch to real physics; inclusive dynamics so accuracy or fantasy players can chime with descriptions they like"
   usage = "RPG Wednesday recurring quality driver + PWA/cultural curiosity engine: visitors wonder about progressive web apps and remain curious about developing relationships with cultural development, community, art, software, math, physics, writing, production, gardening, storytelling, etc. Enhances topical navigability, stub thoroughness, state traversability."
@@ -1285,7 +1285,7 @@ frame #image_provenance
   operation contract
   fixity tending
   surface public/js/runtime/expression/image-provenance.js + public/js/generated/image-provenance.js + public/css/systems/image-utilization.css + site-settings (imageProvenance) + settings/index.html
-  concept every picture says where it came from; the tone of acknowledgement is the reader's to set
+  concept "every picture says where it came from; the tone of acknowledgement is the reader's to set"
   root_attributes = #[
     `data-spw-image-provenance`
   ][reg=set]
@@ -1325,7 +1325,7 @@ frame #ephemeral_chrome_architecture
   role extension
   surface floating-chrome.css + state-inspector.js + console.js + discovery-notices + shell (for integration)
   concept improve ephemeral chrome architecture (toasts, satchel, console, handles) for consistency, material, snap/fluid, ergonomics
-  data-spw-floating-chrome + chrome-tier/role , data-spw-chrome-fluid/snap , data-spw-popup-placement/vertical/horizontal/collision , root data-spw-floating-chrome-* pressure state , shared --chrome-* vars
+  attrs = "data-spw-floating-chrome + chrome-tier/role , data-spw-chrome-fluid/snap , data-spw-popup-placement/vertical/horizontal/collision , root data-spw-floating-chrome-* pressure state , shared --chrome-* vars"
   usage = "Shared containment (z via tier, material, pad/gap/font for resonance), JS annotate + sync for satchel/console/popups. Feature code owns content, chrome.css owns layout policy + learnability (feedback level affects chrome presence)."
   note "Extends existing floating_chrome_contract. Console now uses attrs for arch; satchel/console resonate visually/ergonomically."
 
@@ -1382,7 +1382,7 @@ frame #cauldron_hook_jump_highlight
 
 frame #visual_mode_cauldron_spell_visibility
   role extension
-  surface site-settings.js (cauldronCandidateVisibility + dataset), shell-disclosure (toggle cluster + sync), chrome/foundation/cards (differential CSS using data-spw-cauldron-candidate-visibility + --cauldron-candidate-wash / --spell-candidate-wash)
+  surface "site-settings.js (cauldronCandidateVisibility + dataset), shell-disclosure (toggle cluster + sync), chrome/foundation/cards (differential CSS using data-spw-cauldron-candidate-visibility + --cauldron-candidate-wash / --spell-candidate-wash)"
   concept visual mode toggle and settings wiring to make cauldron and spell candidates differentially visible (subtle/balanced/prominent)
   data-spw-cauldron-candidate-visibility, enhancementLevel synergy, [data-spw-ingredient-primed], .cauldron-ingredient, living-term candidates
   usage = "Utility toggle or settings cycles visibility. Prominent makes candidates/ingredients pop (wash, outline, shadow) for discovery; subtle quiets for reading. Wired through save/apply/bus like other settings."
@@ -1390,7 +1390,7 @@ frame #visual_mode_cauldron_spell_visibility
 
 frame #cauldron_spell_token_cascade_card_region_enhance
   role extension
-  surface tokens/core.css (new @property --cauldron-candidate-wash etc + --region-jump-target), cards/foundation/chrome (rules + variant=cauldron-candidate, region=cauldron-target, jump highlight anim)
+  surface "tokens/core.css (new @property --cauldron-candidate-wash etc + --region-jump-target), cards/foundation/chrome (rules + variant=cauldron-candidate, region=cauldron-target, jump highlight anim)"
   concept improvements to relevant token logic and cascade; card or region layout or variant selection enhancements
   usage = "Tokens early in cascade (core). Visibility + highlight compose with material, gesture, card-state. Cards/regions gain cauldron-target variant for layout (focus ring, shadow) when hooked or prominent."
   note "Respects layer order. Enhances prior cauldron layout + gesture state work."
@@ -1412,14 +1412,14 @@ frame #component_image_diversity_semantic_emphasis
 
 frame #component_identity_vs_compositional_esteem
   role distinction
-  surface design/palettes/index.html (data-spw-component-identity + data-spw-compositional-esteem on spectral swatches, projection studies, top context/dials panels, and role maps; used to distinguish a seed's stable self from the esteem it earns only when clustered in a scene or experience), design-surface.css + tuning.css (supporting rules for stable grids without inline)
-  concept the review distinction called out for palettes and design surfaces: component identity (its own assignment, role, pure pigment or seed) vs compositional esteem (how it behaves, attends, or earns place when combined — salience in cluster, flow in timing, locality in a spatial or AR scene). Prevents premature promotion and redundancy; each seed must prove unique value and combinatori c utility before it becomes shared material.
+  surface "design/palettes/index.html (data-spw-component-identity + data-spw-compositional-esteem on spectral swatches, projection studies, top context/dials panels, and role maps; used to distinguish a seed's stable self from the esteem it earns only when clustered in a scene or experience), design-surface.css + tuning.css (supporting rules for stable grids without inline)"
+  concept "the review distinction called out for palettes and design surfaces: component identity (its own assignment, role, pure pigment or seed) vs compositional esteem (how it behaves, attends, or earns place when combined — salience in cluster, flow in timing, locality in a spatial or AR scene). Prevents premature promotion and redundancy; each seed must prove unique value and combinatori c utility before it becomes shared material."
   usage = "Apply on reference seeds, pigment demos, and projection cards so editors and learners can see at a glance what is the thing itself vs what it becomes in composition. Ties directly to 'value as inspiration and diversity to minimize redundancy', 'distinction of component identity and compositional esteem', 'page architecture as a material basis', and 'combinatoric salience/clustering... for scannability and spell behavior'."
   note "Added during palettes review pass driven by the visual reference + dense review brief (component alignment/overflow/reflow, handles/labels, semantic hierarchy, space, link/icon aesthetics, screenshot poetry, design as math for physical/AR-VR experiences, learning science, dense interactive semantics + tunable hooks). Extends prior component_grammar and semantic_brace_annotation. Makes the palettes page itself a stronger prompt cabinet and learning surface for the full philosophy."
 
 frame #ephemeral_credits_floating_chrome
   role extension
-  surface public/css/shell/chrome.css ( .spw-discovery-notice--credits + --credits-linger, fixed bottom-center "film credits" roll, safe-area + console clearance, matte variant, touch min-heights), public/js/interface/discovery-notices.js (ensureCreditsRoot, showApplicationCredit helper + routing for presentation=credits, annotate, bus/settings integration), design/index.html (preload rAF simulation that scans [data-spw-*] hooks + measures layout rect then "queues" + surfaces credit; colorful palette tunability buttons that trigger credits post-apply; copy/note surfacing tokens --active-op-color / --spw-palette-probe-* + ranges + impact)
+  surface `public/css/shell/chrome.css ( .spw-discovery-notice--credits + --credits-linger, fixed bottom-center "film credits" roll, safe-area + console clearance, matte variant, touch min-heights), public/js/interface/discovery-notices.js (ensureCreditsRoot, showApplicationCredit helper + routing for presentation=credits, annotate, bus/settings integration), design/index.html (preload rAF simulation that scans [data-spw-*] hooks + measures layout rect then "queues" + surfaces credit; colorful palette tunability buttons that trigger credits post-apply; copy/note surfacing tokens --active-op-color / --spw-palette-probe-* + ranges + impact)`
   concept module or settings application may be surfaced in a configurable ephemeral floating chrome element like how some films show credits after an opening sequence. Pages/hubs may have preloading phases that queue modules (after scanning/identifying mount hooks/handles + measuring layout) that then impact styling or layout. The credits notice is the surface: timed linger, subtle enter, clickable dismiss, carries the "applied" deltas (tokens, resonance, material) so the change is communicable and verifiable with premium timing feel. Improves colorful interactive for readability/materials, palette tunability (live accent buttons), device/touch (larger targets, safe offsets, responsive), copy impact (tokens + ranges listed).
   usage = "On design hub load: after rAF 'preload/measure' a credits appears with hook count + token ranges. Click a 'warm craft' / 'math probe' colorful button: live token apply + post-measure credits surfaces the impact. Settings changes on the hub may emit credits. The same helper + --credits class can be used from any page for 'module X applied after layout measure'. Runtime credits with documentation href are whole-surface clickable, keyboard openable, deduplicated, capped, and auto-dismiss after a pause-on-hover/focus linger."
   note "Direct response to the /design/ screenshot (bad translucent/tall modal + stacked lower-right notice + console overlap) + the request text. Fixed shared chrome (stronger modal material, max-height compact, safer stack offsets clearing console, z layers). Added credits variant as the 'film credits' surface. Later refinement: credits stay transient but useful when they link to docs; expanded console moves to the lower-left lane while collapsed console remains lower-right. Also colorful tuners + token copy on the hub for the 'improve colorful interactive... palette tunability... surface design tokens and ranges' parts. Touch/device helped by offsets + sizes."

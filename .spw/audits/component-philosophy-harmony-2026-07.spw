@@ -199,7 +199,7 @@ audit_run: .{
     direction = `named data-spw-box-model=figure-rail keyed to container width (see @component_anatomy_device_packing)`
   }[reg=facet]
   secondary_sparse_slots = #[
-    `contact`, `membership`, `now`, `cards`, many math topic leaves`
+    `contact`, `membership`, `now`, `cards`, `many math topic leaves`
   ][reg=set]
   dual_anatomy_repair = `frame-card hosts should carry data-spw-slot on existing regions; composition inspect reports missing slots in design/debug modes`
 }[reg=facet]

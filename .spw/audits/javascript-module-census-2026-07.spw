@@ -54,13 +54,13 @@ audit_run: .{
 ^"file_guild_totals"{
   claim: `198 files / ~82k lines across six guilds plus site bootstrap.`
   guilds: .{
-    runtime = .{ files = 82 ; lines ≈ 32253 ; role = `catalog defs, loader, enhancement mounts, attention subfolder` }[reg=facet]
-    interface = .{ files = 31 ; lines ≈ 12689 ; role = `satchel, cauldron, haptics, contextual UI, console` }[reg=facet]
-    kernel = .{ files = 23 ; lines ≈ 12057 ; role = `settings, dom-contracts, bus, hydration, shared resolver` }[reg=facet]
-    semantic = .{ files = 28 ; lines ≈ 8491 ; role = `component semantics, operators, pretext, image interaction` }[reg=facet]
-    modules = .{ files = 28 ; lines ≈ 14217 ; role = `route feature packs: blog, rpg, design, cards, services` }[reg=facet]
-    media = .{ files = 4 ; lines ≈ 2314 ; role = `svg-tunability, image-metaphysics, image-store, svg-filters` }[reg=facet]
-    bootstrap = .{ files = 2 ; site_js ≈ 1075 ; compose ≈ 325 ; role = `staged bootstrap + portable compose surface` }[reg=facet]
+    runtime = .{ files = 82 ; lines = `≈ 32253` ; role = `catalog defs, loader, enhancement mounts, attention subfolder` }[reg=facet]
+    interface = .{ files = 31 ; lines = `≈ 12689` ; role = `satchel, cauldron, haptics, contextual UI, console` }[reg=facet]
+    kernel = .{ files = 23 ; lines = `≈ 12057` ; role = `settings, dom-contracts, bus, hydration, shared resolver` }[reg=facet]
+    semantic = .{ files = 28 ; lines = `≈ 8491` ; role = `component semantics, operators, pretext, image interaction` }[reg=facet]
+    modules = .{ files = 28 ; lines = `≈ 14217` ; role = `route feature packs: blog, rpg, design, cards, services` }[reg=facet]
+    media = .{ files = 4 ; lines = `≈ 2314` ; role = `svg-tunability, image-metaphysics, image-store, svg-filters` }[reg=facet]
+    bootstrap = .{ files = 2 ; site_js = `≈ 1075` ; compose = `≈ 325` ; role = `staged bootstrap + portable compose surface` }[reg=facet]
   }[reg=facet]
   support_rule: `Files not listed as catalog load targets are support/infrastructure when imported by a mount, site.js, or route-local import(). Only a small set are truly ad-hoc route scripts.`
 }

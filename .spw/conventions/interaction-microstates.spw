@@ -205,7 +205,7 @@ expression = interaction[microstate]{touch.phase.resolution}<never-silent>
 
 ^"grounded_reading"{
   ~#note: "The negative pole. Everything else in the ladder is a way of saying yes."
-  attr: `data-spw-charge="grounded"` — an existing charge-cycle.spw phase, not a new family
+  attr: `data-spw-charge="grounded" — an existing charge-cycle.spw phase, not a new family`
   writer: `kernel/dom-contracts.js#groundInteraction`
   reason_channel: `data-spw-runtime-mutation-reason, so "why did nothing happen" is inspectable where every other runtime write already explains itself`
   sites: #[
@@ -270,11 +270,11 @@ expression = interaction[microstate]{touch.phase.resolution}<never-silent>
 }
 
 ^"contract_layers"{
-  gesture_contract: `data-spw-gesture-contract="tap:inspect hold:prime"` — local affordance grammar
-  interaction_contract: `data-spw-interaction-contract="tap ground navigate"` — link/menu semantics from link-copy.js
-  loop_state: `data-spw-loop-state="preview|activated|resolved"` — sequence progression on navigable handles
+  gesture_contract: `data-spw-gesture-contract="tap:inspect hold:prime" — local affordance grammar`
+  interaction_contract: `data-spw-interaction-contract="tap ground navigate" — link/menu semantics from link-copy.js`
+  loop_state: `data-spw-loop-state="preview|activated|resolved" — sequence progression on navigable handles`
   loop_to_phase: .{ preview: prime, activated: charge, resolved: settle }[reg=facet]
-  image_swipe_event: `spw:image-swipe` — lens cycle discover pulse from image-interaction.js
+  image_swipe_event: `spw:image-swipe — lens cycle discover pulse from image-interaction.js`
   rule: "Gesture contract teaches local verbs; interaction contract teaches navigation consequence; loop state teaches sequence position."
 }
 
@@ -302,15 +302,15 @@ expression = interaction[microstate]{touch.phase.resolution}<never-silent>
 ^"pulse_beat_tuner"{
   module: @pulse_beat_tuner
   catalog: "pulse-beat-tuner in module-catalog.js — mounts initPulseBeatTuner at boot."
-  beat_attr: `data-spw-beat` — 1..13 baker's-dozen cycle
-  playing_attr: `data-spw-playing` — on|off when rhythm enabled
-  freshness_attr: `data-spw-freshness-pulse` — beat-prime|phase-*|component-lifecycle|settings-tuning
+  beat_attr: `data-spw-beat — 1..13 baker's-dozen cycle`
+  playing_attr: `data-spw-playing — on|off when rhythm enabled`
+  freshness_attr: `data-spw-freshness-pulse — beat-prime|phase-*|component-lifecycle|settings-tuning`
   prime_beats: #[1, 5, 9, 13][reg=set]
-  event: `spw:freshness-pulse` — bus echo for discovery/reward surfaces
+  event: `spw:freshness-pulse — bus echo for discovery/reward surfaces`
   settings_writer: "site-settings-engine.js derives pulseDurationMs, beatIntervalMs, freshnessWeight from interactionTuner profile."
   css_spend: @css_progression#pulse-beat-tuner
   disable_when: #[`data-spw-reduce-motion=on`, `data-spw-animation-throttling=heavy`, `data-spw-freshness-weight<0.2`][reg=set]
-  palette_treats: @palette_treat_discovery — listens to freshness-pulse and discovery; spends @css_palette_treat on probe chips.
+  palette_treats: @palette_treat_discovery  # listens to freshness-pulse and discovery; spends @css_palette_treat on probe chips
 }
 
 ^"feature_field_guide"{
