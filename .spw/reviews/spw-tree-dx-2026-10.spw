@@ -1,0 +1,230 @@
+# Spw tree DX (2026-10) — review: refactoring, upkeep and reading
+#>spw_tree_dx_2026_10
+#:review #!dx #!refactoring #!environments #!cognition
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+expression = review[spw_tree]{upkeep.reading.capture}<first_screen>
+
+summary = #[
+  `The mount runs upstream 850077a; five of this repo's asks landed.`,
+  `Moving a file and reading a file cost the most today.`,
+  `Most files show their sources before their substance.`,
+  `Measure the first screen with a sensor before asking for it.`,
+][reg=set]
+
+contents = #[
+  ~"./spw-tree-dx-2026-10.spw#pin",
+  ~"./spw-tree-dx-2026-10.spw#findings",
+  ~"./spw-tree-dx-2026-10.spw#environments",
+  ~"./spw-tree-dx-2026-10.spw#first_screen",
+  ~"./spw-tree-dx-2026-10.spw#cognition",
+  ~"./spw-tree-dx-2026-10.spw#next",
+][reg=set]
+
+^"pin"{
+  ~#note: "What the move brought (@asks_context), pinned in @mount."
+  landed = #[
+    `doctor and lint take --stats and print what they walked`,
+    `a declared handle links and hovers inside quoted prose`,
+    `lenses count the files and citations that cite a file or anchor`,
+    `anchors stop rerunning the runtime trial`,
+    `a generated file opens its source, rebuild command and spec`,
+    `a leading-slash citation resolves from the workspace root`,
+  ][reg=set]
+  asks = @upstream_asks
+  unchanged = `the parser and the reader; the bundle moved only its pin line`
+  editor = `the extension installed 2026-10-13 needs a rebuild for any of it`
+}
+
+^"findings"{
+  ~#note: "Measured 2026-10-27 over 994 tracked .spw files (795 not sidecars)."
+  generated_registry = .{
+    claim = `only the route trees are a registered projection`
+    measure = `snippets, dimensions, language-census and a precipitate are not`
+    fix = `each generator upserts its own ^projection block (@routes_gen)`
+    also = `.spw/gen is gitignored, so spw:doctor writes it on a fresh clone`
+    cost = `small`
+  }[reg=facet]
+  file_moves = .{
+    claim = `a moved file breaks every relative citation inside it`
+    measure = `3,802 of 10,084 citations start ../../; 4 are root-relative`
+    fix = `root-relative for cross-tree citations, and an spw:mv script`
+    gate = `the installed extension flags root-relative citations until rebuilt`
+    cost = `medium`
+  }[reg=facet]
+  prose_paths = .{
+    claim = `a path written as a string is checked by nothing`
+    measure = `743 such paths; 86 already point at nothing`
+    fix = `declare once as a handle and name the handle in prose`
+    sensor = `extend the named-path warning in @audit_plans to .spw prose`
+    cost = `small`
+  }[reg=facet]
+  index_mirrors = .{
+    claim = `a plan index copies its PLAN.md Status five times`
+    measure = `4 of 42 have drifted, spw-quest still at 2026-10-12`
+    fix = `cite the Status, or refresh only the mirrored fields`
+    owner = @plan_index_convention
+    cost = `small to medium`
+  }[reg=facet]
+  anchor_readers = .{
+    claim = `six scripts decide what an anchor is, in their own regexes`
+    measure = `@integrity knows six forms; four other scripts know only #>`
+    fix = `one shared reader, or the anchors the @reader bundle exports`
+    cost = `medium`
+  }[reg=facet]
+  handle_names = .{
+    claim = `one target is cited under many names, which defeats grep`
+    measure = `93 targets have four or more names; the atlas page has nine`
+    fix = `name a handle after its target's own #> frame`
+    cost = `low, over time`
+  }[reg=facet]
+  hygiene = .{
+    duplicate_anchors = `five; crawl_spwashi twice in one cache`
+    fixity = `70 archived files say cold, outside the five tiers`
+    operation = `three archived indexes disagree between #: and =`
+    cost = `small, one batch`
+  }[reg=facet]
+  search_traps = .{
+    hidden = `rg skips .agents and .spw unless --hidden`
+    workbench = `'!_workbench/**' keeps the mount; '!**/_workbench/**' drops it`
+    fix = `one verified-miss line in @agents_memory`
+    cost = `tiny`
+  }[reg=facet]
+  leave_alone = `about 3,060 handles are never used again in their file; they work as link lists`
+}
+
+^"environments"{
+  vscode = .{
+    gives = `the full server: outline, folding, links, lenses, hover, rename`
+    also = `29 commands, Workspace and Concepts views, a walkthrough`
+  }[reg=facet]
+  jetbrains = .{
+    gives = `the same server through the platform's LSP support`
+    check = `whether lenses and token colors render before recording`
+  }[reg=facet]
+  neovim = .{
+    gives = `syntax files and the server`
+    loses = `sigil distinctions flatten; upstream plans the fix (850077a)`
+  }[reg=facet]
+  browser = .{
+    gives = `the parser tool and spw.quest: outline, paint, compare`
+    loses = `a served .spw downloads instead of opening`
+  }[reg=facet]
+  terminal = .{
+    gives = `spw query, lint --stats, doctor`
+    loses = `structure and color`
+  }[reg=facet]
+  github = .{
+    loses = `everything: no highlighting, citations are not links`
+  }[reg=facet]
+  agents = .{
+    loses = `every header line is spent before any content is read`
+  }[reg=facet]
+}
+
+^"first_screen"{
+  ~#note: "A laptop editor shows about 45 to 55 lines; a phone capture 30 to 40."
+  by_kind = #[
+    `caches: first content at line 28, after 9 handle lines; 27% over 100`,
+    `conventions: line 24, after 8; 22% over 100`,
+    `audits: line 22, after 7; 14% over 100`,
+    `plan wip: line 19, after 6; 20% over 100`,
+  ][reg=set]
+  order = #[
+    `frame and claims`,
+    `the file's expression`,
+    `a summary of five lines or fewer`,
+    `a contents line of self-citations to its anchors`,
+    `the substance`,
+    `the metadata and handles, grouped by role`,
+  ][reg=set]
+  demo = .{
+    file = @ecosystem_clusters
+    expression_line = `59 to 8`
+    first_block = `61 to 25`
+    handles_before = `32 to 0`
+    first_30_over_72 = `11 to 2`
+    over_100 = `12% to 2%`
+    editor = `zero diagnostics in the installed extension`
+  }[reg=facet]
+  sensor = `audit:spw-shape: first content line, header handles, long lines`
+}
+
+^"cognition"{
+  supports = #[
+    `chunking: facets and sets group what belongs together`,
+    `signaling: a leading sigil in color cues structure`,
+    `overview first: outline, folding and lenses`,
+    `recognition over recall: hover and @ completion`,
+    `generative practice: change one slot and read it again`,
+  ][reg=set]
+  strains = #[
+    `split attention: a link list far from the claim it supports`,
+    `working memory: thirty ungrouped handles are not a chunk`,
+    `information scent: nine names for one target`,
+    `expertise reversal: what helps a newcomer slows an expert`,
+  ][reg=set]
+  layering = `spw.quest for first contact, the editor for experts, raw text for agents`
+}
+
+^"design_influence"{
+  machine_read = `route trees, the expression manifest, specimens: most direct`
+  editor_read = `depends on scannability`
+  screenshot_read = `depends on the first screen; image models read the stills`
+}
+
+^"next"{
+  order = #[
+    ~"./spw-tree-dx-2026-10.spw#generated_registry",
+    ~"./spw-tree-dx-2026-10.spw#prose_paths",
+    ~"./spw-tree-dx-2026-10.spw#index_mirrors",
+    ~"./spw-tree-dx-2026-10.spw#search_traps",
+    ~"./spw-tree-dx-2026-10.spw#file_moves",
+    ~"./spw-tree-dx-2026-10.spw#anchor_readers",
+  ][reg=set]
+  first = `rebuild and reinstall the extension; root-relative citations wait on it`
+}
+
+#>wonder_spw_tree_dx_first_screen_scope
+?["Should the first-screen order hold for every hand-authored file, or only for files meant to be recorded or shared?"]{
+  #:depth #!pragmatics ~#lens(projection)
+  ~#with: @ecosystem_clusters
+  ~#taste: "The creator's call; the demo is one cache."
+  ~#tension: "A convention on 795 files is churn; one on new files is drift."
+  !probe{ "count the files whose first content line is past 30" }
+  $%[scope.all, scope.new, scope.shared]
+}
+
+#>wonder_spw_tree_dx_line_length
+?["Should line length bend to the camera (about 60 characters) or to the editor (about 100)?"]{
+  #:depth #!pragmatics ~#lens(comparison)
+  ~#with: @ecosystem_clusters
+  ~#hypothesis: "72 in the first screen, 100 after it, serves both."
+  !probe{ "capture one cache at the phone viewport and read the first still" }
+  $%[length.camera, length.editor, length.first_screen]
+}
+
+^"stream"{
+ >>[2026-10-28 09:40] audit — The mount moved to 850077a (b956329b). A census of the tree found eight places where refactoring or reading costs more than it should, and the order inside files was the largest. ecosystem-clusters was reordered as the demo, and its root-relative citations went back to relative when the installed extension flagged all 24 of them.
+}
+
+# About this file
+operation = "audit"
+fixity = "tending"
+source = "creator, 2026-10-27: update the workbench, review the .spw tree for refactoring and upkeep DX, then consider IA, structure, scannability, screenshots, editors, design influence and cognition"
+
+# Handles, by role. Declared last; each one links wherever the text names it.
+# Neighbors
+@asks_context: ~"./upstream-workbench-recommendations/context.spw#landed_since"
+@upstream_asks: ~"./upstream-workbench-recommendations/plugins-and-tooling.spw"
+@ecosystem_clusters: ~"../caches/ecosystem-clusters-2026-10.spw"
+@mount: ~"../mount.spw"
+@plan_index_convention: ~"../conventions/plan-index.spw"
+# Tools
+@integrity: ~"../../scripts/spw-integrity.mjs"
+@routes_gen: ~"../../scripts/spw-routes.mjs"
+@audit_plans: ~"../../scripts/audit-plans.mjs"
+@reader: ~"../../public/js/semantic/spw-workbench-reader.js"
+@agents_memory: ~"../../.agents/MEMORY.md"
