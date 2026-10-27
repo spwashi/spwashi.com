@@ -36,6 +36,7 @@ export const OPERATOR_COMPLEMENT = Object.freeze({
   surface: 'concept',
 });
 
+// Workbench relation: mutation, via the kernel. Each kin move names a kernel type.
 export const KIN_MOVES = Object.freeze({
   similar: Object.freeze({
     relation: 'similar',

@@ -42,7 +42,7 @@ expression = sigil[canon]{alias.copy}<one_table>
 ^"table"{
   ~note = `character · canonical type (@definitions) · workbench name (@operators_theory) · atlas slug / site alias · public gloss`
   rows: #[
-    `#>  frame         frame          frame               address a named handle`,
+    `#>  frame         —              frame               address a named handle`,
     `#:  layer         —              layer               declare the stratum a frame reads in`,
     `#   vibration     vibration      vibration           name a structure so resonance can find it`,
     `.   ground        ground         baseline            settle or return to the local default`,
@@ -57,13 +57,57 @@ expression = sigil[canon]{alias.copy}<one_table>
     `%   normalize     measure        normalize           scale so comparison stays honest`,
     `!   action        action         action · pragma     commit a move with observable consequence`,
     `>   concept-edge  —              surface · topic     project onto another surface`,
-    `<   concept       coupling (<>)  concept · topic     open a topical boundary`,
+    `<   concept       concept        concept · topic     open a topical boundary`,
     `(   scene         scene          scene               stage a midprocess`,
     `[   mode          mode           mode                select a variant, keep alternatives visible`,
     `{   direction     definition     direction           hold bounded practice or motion`
   ][reg=set]
   alias_rule = `data-spw-operator may carry either name column — @definitions, the @operator_site_projection selectors, and @sensor accept both. The printed character is not negotiable: it is column one or the sigil is lying.`
   no_type = `+ | : and _ are not operators in @definitions. + and | appear only in the blog dialect; _ is the label/escape mark; : exists only inside the #: layer compound. Copy that prints them as prefixes is untyped to every interpreter except the reader.`
+}[reg=facet]
+
+^"workbench_relation"{
+  ~#note: "The creator, 2026-10-27: sigil tables should clarify their relationship to the workbench's philosophy, in harmony with it, extending it, or as a modular mutation of it."
+  harmony = `the table speaks the workbench's names and readings (@operators_theory), or its lexer's node names, unchanged`
+  extension = `the table adds what the workbench does not name (positions, joins, valence words, site material words, aliases) and changes no workbench name`
+  mutation = `the table renames or re-reads a workbench name on purpose, inside one module that says so, so the change can be lifted out when the table moves upstream; a table that imports the kernel says via the kernel`
+  rule = `Every sigil table names its relation beside the table, in a line that starts Workbench relation:, or in a workbench_relation field in a .spw file, and is listed here. scripts/tests/sigil-table-relations.test.mjs holds each listed file to its relation.`
+  tables = #[
+    `public/js/kernel/operator-detection.js · mutation, extension`,
+    `public/js/semantic/expression-query.js · extension`,
+    `public/js/semantic/spw-expression-geometry.js · harmony, extension`,
+    `public/js/semantic/spw-highlight.js · harmony, mutation, extension`,
+    `public/js/semantic/bare-spw-markup.js · extension`,
+    `public/js/semantic/sigil-annotation.js · extension`,
+    `public/js/semantic/narrative-instrumentation.js · extension`,
+    `public/js/semantic/effect-interpretation.js · extension`,
+    `public/js/semantic/accent-palette.js · mutation`,
+    `public/js/semantic/cauldron/storage.js · extension`,
+    `public/js/semantic/cauldron/registers.js · extension`,
+    `public/js/interface/cauldron/live-expression.js · mutation`,
+    `public/js/kernel/shared.js · extension, mutation`,
+    `public/js/runtime/navigation/site-search.js · mutation`,
+    `public/js/runtime/physics/charge-field.js · mutation`,
+    `public/js/runtime/attention/resonance-probe.js · mutation`,
+    `public/js/runtime/regions/region-kin.js · mutation`,
+    `public/js/modules/services/offer-rhythm.js · mutation, harmony`,
+    `public/js/modules/services/care-handle.js · mutation`,
+    `public/css/tokens/core.css · mutation`,
+    `types/spw.d.ts · mutation`,
+    `scripts/generate-site-search-index.mjs · mutation`,
+    `scripts/build-peer-kit.mjs · mutation`,
+    `scripts/wonder.mjs · extension`,
+    `workers/spw-quest/src/guide.js · harmony`,
+    `workers/spw-quest/src/constructs.js · harmony`,
+    `workers/spw-quest/src/pivot.js · extension`,
+    `workers/site-hub-next/src/tealstripes.js · extension`,
+    `blog/index.html · harmony`,
+    `.spw/conventions/operator-semantics.spw · extension`,
+    `.spw/conventions/operator-alignment.spw · mutation`,
+    `.spw/conventions/operator-site-projection.spw · extension`,
+  ][reg=set]
+  copies = `Prefix regexes that re-derive the kernel's characters rather than map them (memory/spells.js, page/page-anatomy.js, navigation/navigation-spells.js, experiential/semantic-meta.js, regions/region-menu.js, semantic/pretext-physics.js) are copies, not tables; several have drifted, and importing OPERATOR_PREFIX_RE is their fix.`
+  census = ~"../caches/operator-consistency-2026-10.spw#tables"
 }[reg=facet]
 
 ^"copy_rule"{

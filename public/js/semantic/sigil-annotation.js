@@ -14,6 +14,7 @@ import {
   parseSigilPosition,
 } from '/public/js/kernel/shared.js';
 
+// Workbench relation: extension. The site's material words for braces, as bare-spw-markup.js names them.
 const DELIMITER_FORM_BY_CLASS = Object.freeze({
   'spw-delimiter--brace': 'brace',
   'spw-delimiter--square': 'block',

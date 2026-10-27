@@ -24,6 +24,7 @@
  */
 
 /** The canonical sequence: one operator per day of a cycle. */
+// Workbench relation: mutation and harmony, side by side: NAME_SETS keeps the creator's canon and the workbench names for the same thirteen.
 export const SEQUENCE = Object.freeze([
   { id: 'potential', sigil: '~', lanes: ['scope-note', 'taste-pass', 'lunch'] },
   { id: 'vibration', sigil: '#', lanes: ['intro-card', 'routing', 'share-images'] },

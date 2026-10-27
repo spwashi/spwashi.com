@@ -10,6 +10,7 @@ export function inferOperator(expression = '') {
   return splitOperatorExpression(expression).prefix;
 }
 
+// Workbench relation: extension. A material phase per operator; @ shares action's phase (plastic) until perspective has its own (open).
 export function inferPhaseState(operator = '', explicit = '') {
   if (explicit) {
     const norm = String(explicit).toLowerCase();

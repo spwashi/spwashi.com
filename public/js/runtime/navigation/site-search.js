@@ -53,6 +53,7 @@ const MAX_TERM_LIST = 60;
 const PIECES_HREF = '/public/data/folio-days.json';
 
 /** Longer prefixes first so `#>` wins over `#`. Matches operator-detection.js. */
+// Workbench relation: mutation, via the kernel. A hand copy of its types with search labels (tone, probe, projection); import the kernel when the table moves.
 const SIGIL_ALIASES = Object.freeze({
   '#>': { motion: 'anchor', operator: 'frame', label: 'frame' },
   '#:': { motion: 'anchor', operator: 'layer', label: 'layer' },

@@ -109,6 +109,7 @@ const VALENCE_BY_OPERATOR = Object.freeze({
  * lose. The mapping is the site's claim, not the kernel's — if these graduate
  * into the canonical sequence upstream, this table should shrink to nothing.
  */
+// Workbench relation: extension. Site-local operators folded into the canonical sequence; it shrinks as the workbench takes them.
 const SITE_LOCAL_OPERATORS = Object.freeze({
   frame: 'ground',
   address: 'ground',

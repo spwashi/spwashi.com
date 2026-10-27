@@ -3,6 +3,7 @@
 // (.spw/_workbench/docs/theory/spw/operators.spw); the route test holds them to it.
 
 /** The twelve single sigils. `does` restates the workbench runtime table in plain words. The <> couple is not shown as a sigil. */
+// Workbench relation: harmony. The workbench's reader vocabulary, held by the route test.
 export const OPERATORS = Object.freeze([
   { sigil: "~", name: "potential", reads: "Keep a path open without taking it.", does: "Defers its first argument." },
   { sigil: "?", name: "wonder", reads: "Open a question you can close again.", does: "Returns the second argument when the first is true." },

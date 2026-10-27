@@ -15,6 +15,7 @@ import {
 } from './shared.js';
 import { readPinnedProbe } from './capture-pins.js';
 
+// Workbench relation: mutation, via the kernel. Keyed by its type names.
 const CURIOSITY_OPERATORS = new Set([
   'probe',
   'potential',

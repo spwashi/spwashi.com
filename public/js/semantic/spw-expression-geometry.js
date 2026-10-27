@@ -8,6 +8,7 @@
 
 import { OPERATOR_DEFINITIONS, detectOperator } from '/public/js/kernel/operator-detection.js';
 
+// Workbench relation: harmony and extension. [ frame, { body, ( scope and < capsule are the workbench lexer's node names; scene, stream and couple extend them.
 const FORM_GLYPHS = Object.freeze({
   frame: '[]',
   body: '{}',

@@ -1,0 +1,173 @@
+# Operator consistency (2026-10) — cache: one character, several names, across the codebase
+#>operator_consistency_2026_10
+#:cache #!operators #!naming #!compounds #!consistency
+#:operation #!cache
+#:fixity #!tending
+#:layer #!semantics
+
+expression = sigil[census]{name.position.compound}<one_table>
+
+summary = #[
+  `Every layer agrees on the characters. They disagree on names, and the names come from two sources that disagree with each other.`,
+  `The workbench calls ^ = % { } ascension, configuration, measure and definition; the kernel calls them integration, binding, normalize and direction.`,
+  `About thirty code tables re-derive the sigils instead of importing the kernel, and some have drifted.`,
+  `Compounds are written one way everywhere: tight dots for bodies, spaced joins between lines. ~> and @ joins barely appear.`,
+  `Two factual slips were corrected; the naming calls are asked as one wonder, not ruled on.`,
+][reg=set]
+
+contents = #[
+  ~"./operator-consistency-2026-10.spw#two_sources",
+  ~"./operator-consistency-2026-10.spw#names",
+  ~"./operator-consistency-2026-10.spw#positions",
+  ~"./operator-consistency-2026-10.spw#compounds",
+  ~"./operator-consistency-2026-10.spw#tables",
+  ~"./operator-consistency-2026-10.spw#defects",
+  ~"./operator-consistency-2026-10.spw#corrected",
+  ~"./operator-consistency-2026-10.spw#wonder_operator_names",
+][reg=set]
+
+^"two_sources"{
+  workbench = `@operators_theory: ^ ascension, = configuration, % measure, { } definition. Followed by .spw/site.spw (the installed workbench supplies canon naming), spw.quest's guide.js (held by its route test) and @compound_expressions.`
+  kernel = `@kernel: ^ integration, = binding, % normalize, { } direction. Followed by @namespace_table (the kernel stays the working reference), semantic-braces.spw, AGENTS.md, the generated peer kit, the atlas pages and every data-spw-operator value.`
+  direction = `The creator's direction of 2026-10-11: operators belong in the workbench and the site imports them; atlas slugs are aliases. Until the table moves both sources are live, and each layer should say which one it speaks.`
+  one_worker = `spw.quest speaks both: guide.js and /constructs print the workbench names, while its paint and peer kit carry the kernel's.`
+}[reg=facet]
+
+^"names"{
+  ~#note: "By character: the names each layer gives, where they part. Layers are named in brackets; the first name is the kernel's."
+  caret = `integration (kernel, peer kit, AGENTS.md); ascension (workbench, spw.quest); object (atlas slug, CSS base hue); publish (operator-alignment); binding (blog); project (between two lines)`
+  equals = `binding (kernel, atlas); configuration (workbench, spw.quest); baseline (blog); bias (workbench reader outline)`
+  percent = `normalize (kernel, atlas); measure (workbench, spw.quest); meta (blog)`
+  curly = `direction (kernel, atlas, AGENTS.md); definition (workbench, spw.quest); behavior (operator-semantics, semantic-braces); body (lexer, geometry); queue (shared.js)`
+  at = `perspective in most layers; action on the atlas at index.html:359, :504 and :1078, while :862 says use @ for perspective; ref for .spw handles, the one open decision operator-semantics names; lens between a viewer and a subject; observer in the workbench reader outline`
+  tilde = `potential; ref (atlas slug); stream (blog); induct between two lines`
+  star = `value; stream (atlas slug); merge (blog); variant (workbench reader outline)`
+  ampersand = `subject; merge (atlas slug); confluence (operator-alignment); the atlas diagram labels &merge integrate, which collides with ^ integration`
+  hash = `vibration; frame (blog); anchor (operator-alignment); tone (site search); set (workbench reader outline)`
+  dollar = `substrate; meta (atlas slug, CSS, the type union until today); object (narrative instrumentation)`
+  square = `mode; frame to the workbench lexer, which collides with #> frame; variant (operator-semantics); the lens (spw.quest)`
+  angle = `concept; capsule (lexer, geometry); lens and conduit (semantic-braces, operator-semantics); a lone > reads concept in spw-highlight and concept-edge in the kernel`
+  blog = `@blog declares @profile:Spw.b with its own names (# frame, ^ binding, ~ stream, * merge, = baseline, % meta, + normalize, | surface), and the workbench declares the same profile name with its names.`
+}[reg=facet]
+
+^"positions"{
+  pages = `974 route expressions: a mark opens a word 3 times; joins between lines ~ 26, ^ 1, & 1. Pages carry operators on handles instead: 5083 data-spw-operator values on 202 of 208 routes, 36 distinct, 17 of them aliases (615 handles: ref 141, stream 102, address 90, probe 69, object 63)`
+  spw_files = `857 expression-shaped forms in 526 .spw files: marks open a word ! 22, $ 21, = 8, ? 6, ^ 5, ~ 5, % 2, @ 1, & 1, # 1; joins ~ 53, ^ 41 (mostly cluster flows in the ecosystem cache), & 1`
+  shelf = `spw.quest/constructs counts the 1003 lines it carries by position, mark by mark`
+}[reg=facet]
+
+^"compounds"{
+  bodies = `Tight dots are the house style: 1944 of 2690 route attributes, 491 of 857 .spw forms, 116 of 197 forms in JS strings. Sequences with ; 89, 30, 4; lists with , 25, 9, 1.`
+  joins = `Every join is written with spaces, which the slot reader needs; none is written without.`
+  movement = `~> inside a body: 5 in .spw, 3 in JS, none on pages. Most of its 55 .spw mentions are prose about the token.`
+  readers = `expression-query.js reads ~ & ^ @ between two lines; spw-precipitate.mjs counts only ~ & ^; page-copy-audit reads all four.`
+}[reg=facet]
+
+^"tables"{
+  canon = `@kernel: 19 prefixes, 39 aliases and OPERATOR_PREFIX_RE.`
+  derived = `shared.js, spw-expression-geometry.js, operator-info.js, brace-gestures.js, spw-highlight.js, build-peer-kit.mjs with its generated peer kit, and three audits import it.`
+  copied = `About thirty tables re-derive sigils: site-search's SIGIL_ALIASES and generate-site-search-index (hand copies); expression-query's join and valence tables (the valence words re-inlined in spw.quest's pivot.js); bare-spw-markup and sigil-annotation (their own brace words); narrative-instrumentation; effect-interpretation (route to <, where the kernel resolves >); cauldron storage; offer-rhythm; and nine prefix regexes that have drifted (navigation-spells 15 sigils, page-anatomy 16, semantic-meta 14, pretext-physics adds | and :).`
+  finding_note = `@namespace_table's finding says there was never a second sigil table. For the characters that holds; the copies above re-derive them, and some no longer match.`
+}[reg=facet]
+
+^"defects"{
+  ~#note: "Each is a fact. Whether to change it is beside it; none was changed here."
+  chip_color = `action, act and pragma chips paint with --op-pragma-color (hue 0) in sigils-and-chips.css, while --op-action-color is hue 176. A sensation call, for a browser look.`
+  precipitate = `spw-precipitate.mjs counts compounds with [~&^], so an @ join would be missed.`
+  stale_writers = `navigation-spells.js writes ref, probe and merge, atlas aliases, where the kernel names exist.`
+  perspective_hue = `--op-perspective-color is defined as action's color in tokens/core.css, a remnant of @ read as action. A hue of its own is a sensation call, for a browser look.`
+  cauldron_phase = `cauldron/storage.js gives @ action's material phase (plastic); perspective has no phase of its own yet.`
+  route_lens = `effect-interpretation.js maps the route lens to <, while the kernel resolves route to >.`
+}[reg=facet]
+
+^"corrected"{
+  type_union = `types/spw.d.ts listed meta, an alias, where the canon type substrate belongs. substrate is in the canon list now and meta with the legacy aliases; typecheck passes.`
+  namespace_table = `@namespace_table's workbench column gave #> the name frame and < the name coupling. The workbench names neither: its lexer calls #> a particle aim, and it names the < > braces concept, keeping coupling for the <> couple.`
+  dead_code = `the .spw-spirit-sequence styles in ornament.css (section 3, two rules and nine selector-list entries, with the --ornament-sequence variables) and the --op-commit-* tokens are removed; core.css rebuilt`
+  at_perspective = `@ reads as perspective: the atlas's action link shows !, its voice palette moves the action voice to ! and gives @ a perspective voice, the draft option reads perspective (situate); narrative @ characters are perspective and ! actions show !; the kernel's spoken hint for @ is regard; the site projection drops action from @'s aliases; expression-query calls an @ join perspective`
+  blog = `the blog's prism map and operator cards speak the workbench's twelve names and link each sigil's own atlas page; three cards had linked another sigil's page (= to ., ^ to =, % to $); + | _ are named as not operators`
+  relations = `every sigil table declares its workbench relation; see the namespace table's ^"workbench_relation"`
+}[reg=facet]
+
+#>wonder_operator_names
+?["Which names should a reader meet for ^ = % and { }: the workbench's, the kernel's, or one with the other beside it?"]{
+  #:depth #!semantic ~#lens(comparison)
+  ~#hypothesis: "The 2026-10-11 direction answers the long run: the workbench owns the names and the site imports them. What is open is the order of the move, and what printed copy says meanwhile."
+  ~#expect: "Printed copy keeps the kernel names until the table moves, with the workbench name beside them; nothing in data-spw-operator changes."
+  ~#unblocks: "the metaphysical plan's copy pass, the atlas section the v0.4 answer left open, and spw.quest's operator_voice question"
+  ~#probe(read)
+  !probe{ "read the names facet beside the namespace table and choose one column for printed copy" }
+  $%[names.workbench, names.kernel, names.both]
+
+  #>wonder_operator_names_at
+  ?["Is @ on the atlas an action, or a perspective, as the same page says further down?"]{
+    ~#expect: "Perspective: every layer but the cauldron and narrative tables says so, and the atlas's action wording predates the AGENTS.md correction."
+    ~#answer: "at.perspective: the creator, 2026-10-27, @ is an operation of perspective regarding its operand. The atlas, the narrative tokens, operator-semantics, the site projection and the kernel's spoken hint now say so."
+    ~#probe(run)
+    !probe{ "rg -n -c 'Action operator|asks for a move|for perspective' topics/software/spw/index.html" }
+    $%[at.perspective, at.action]
+  }
+
+  #>wonder_operator_names_blog
+  ?["Is the blog's Spw.b a dialect of its own, or an older reading under the workbench's profile name?"]{
+    ~#expect: "An older reading: its names match the atlas slugs (frame, stream, merge, baseline, meta) more than either source, and it predates the namespace table."
+    ~#answer: "blog.older_reading: the creator, 2026-10-27, asked for the blog to be aligned with the workbench. Its legend and cards now speak the workbench's twelve names, so @profile:Spw.b names one set again."
+    ~#probe(read)
+    !probe{ "read the blog's legend beside the atlas slugs and operators.spw's @profile:Spw.b" }
+    $%[blog.dialect, blog.older_reading, blog.rename_profile]
+  }
+
+  #>wonder_operator_names_square
+  ?["Should [ ] be called frame anywhere, when #> is the frame address?"]{
+    ~#expect: "Not in anything a reader sees; the lexer's internal name can stay internal."
+    ~#probe(read)
+    !probe{ "read where [ ] is called frame (the workbench lexer, spw-expression-geometry.js) beside #> frame in the kernel" }
+    $%[square.mode, square.frame, square.explore]
+
+    #>wonder_square_as_frame
+    ?["What does [ ] as a frame let a line say that a mode does not?"]{
+      ~#hypothesis: "A mode is a lens you choose; a frame is the edge that decides what is in view. If [ ] frames the word, #> is better named the frame's address, which is what the workbench lexer and spw.quest's constructs already call it."
+      ~#expect: "A frame reads as nearer: home[hook] says the word is seen inside a hook, where mode says it is seen through one, and nested frames read as a picture in a picture."
+      ~#unblocks: "the layout lab in spw-metaphysical-language (pass 2 can draw [ ] as a frame around the word), and whether the kernel's #> type keeps the name frame"
+      ~#probe(read)
+      !probe{ "on spw.quest/pivot, swap the lens of one line three times, then say each aloud as framed by and as read through; mark which reads true" }
+      $%[frame.edge, frame.lens, frame.both]
+    }
+  }
+
+  #>wonder_operator_names_tables
+  ?["Should the copied sigil tables import the kernel now, or wait until the workbench owns the table?"]{
+    ~#expect: "Import now: each drifted prefix regex is a bug in waiting, and importing the kernel means they move once, when the table moves upstream."
+    ~#probe(run)
+    ~#answer: "tables.declare_relation: the creator, 2026-10-27, reframed it: each sigil table says how it relates to the workbench's philosophy, in harmony, as an extension, or as a modular mutation. The registry is operator-namespace-alignment.spw ^\"workbench_relation\", held by scripts/tests/sigil-table-relations.test.mjs; importing OPERATOR_PREFIX_RE stays the fix for the drifted copies."
+    !probe{ "rg -l 'operator-detection' public/js --glob '!**/generated/**' --glob '!**/bundles/**' | wc -l" }
+    $%[tables.import_now, tables.wait, tables.declare_relation]
+  }
+}
+
+^"stream"{
+ >>[2026-10-27 15:14] observe — Census at the creator's word, to consider operator usage and compound consistency across the codebase rather than the spw.quest shelf alone. Two read-only surveys (content layers; code layers) and a count of compound forms in .spw files, route attributes and JS. Spot checks held; one count was rerun over the 208 tracked routes after a walk that took in build output gave 14174 handles instead of 5083. Two factual slips corrected (the type union, the namespace table's workbench column); nothing renamed.
+ >>[2026-10-27 15:15] probe — wonder_operator_names_at: three places on the atlas call @ an action (index.html:359 'Action operator @', :504 '@ asks for a move', :1078 '@ perspective (action)'), and :862 says use @ for perspective; :446 matched and is about !. The ~#expect said perspective; the page holds both, so the probe measures and the call stays the creator's.
+ >>[2026-10-27 15:15] probe — wonder_operator_names_tables: 15 of the site's 329 JS files outside generated and bundles import the kernel. The ~#expect leaned toward importing now; this sizes the move.
+ >>[2026-10-27 15:37] decide — the creator: clean up dead code; @ is an operation of perspective regarding its operand; the blog aligns with the workbench; [ ] as a frame is compelling and worth exploring; sigil tables should say whether they are in harmony with the workbench, extend it, or mutate it modularly. Two wonders answered (at, blog), one reframed and answered (tables), and the square question stays open as #>wonder_square_as_frame.
+ >>[2026-10-27 15:37] implement — dead CSS removed and core.css rebuilt; @ read as perspective across the atlas, narrative tokens, conventions, the kernel's hint and the slot reader; the blog speaks the workbench names; 32 sigil tables declare their relation, registered and tested.
+}
+
+# About this file
+operation = "cache"
+fixity = "tending"
+source = "creator, 2026-10-27: consider operator usage and compound consistency, across the codebase"
+
+# Handles, by role. Declared last.
+# Owners
+@operators_theory: ~"../_workbench/docs/theory/spw/operators.spw"
+@kernel: ~"../../public/js/kernel/operator-detection.js"
+@namespace_table: ~"../language/operator-namespace-alignment.spw"
+@operator_semantics: ~"../conventions/operator-semantics.spw"
+@compound_expressions: ~"../conventions/compound-expressions.spw"
+# Readers
+@atlas: ~"../../topics/software/spw/index.html"
+@blog: ~"../../blog/index.html"
+@guide: ~"../../workers/spw-quest/src/guide.js"
+@constructs: ~"../../workers/spw-quest/src/constructs.js"
+@types: ~"../../types/spw.d.ts"

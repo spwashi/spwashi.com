@@ -83,6 +83,7 @@ const GENERATED = path.join(SPW_ROOT, 'gen');
  * grouping principle: `?` must read as `?` in every space it appears, or the
  * reader learns two vocabularies for one language.
  */
+// Workbench relation: extension. Hues for the harvest's own roles; the role words say what a wonder block does, not what an operator is named.
 const ANSI = {
   reset: '[0m',
   dim: '[2m',
