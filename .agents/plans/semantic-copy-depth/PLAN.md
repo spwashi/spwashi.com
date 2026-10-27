@@ -4,7 +4,7 @@
 
 **Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — ungated.math_note, topics.slop_feeling, seams.entrance_copy.
 
-**Entrances:** this plan owns the words on the `/`, `/about/`, `/services/` and `/topics/` entrances, and `npm run audit:copy:accessor` reports to it. [component-region-personality](../component-region-personality/PLAN.md) owns their cards and chips.
+**Entrances:** this plan owns the words on the `/`, `/about/`, `/services/` and `/topics/` entrances, and `npm run audit:copy:accessor` reports to it. [component-region-personality](../component-region-personality/PLAN.md) owns their cards and chips. [topic-building-blocks](../topic-building-blocks/PLAN.md) owns the shelf, the figure homes, and the wiring test.
 
 **Related:** [audience-onboarding-copy](../archive/audience-onboarding-copy/PLAN.md) (absorbed 2026-10-10, below).
 
