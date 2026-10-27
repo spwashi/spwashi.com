@@ -5,6 +5,8 @@
 #:operation #!align
 #:fixity #!tending
 
+workbench_relation = "extension: positional grammar, voices and the original-set lineage, read beside the workbench names; @ is perspective in both layers"
+
 ^"lineage"{
   ~#note: "Spw operators are rooted in an original set with deep meanings. This document bridges original intent, workbench canon, and site-specific interpretation through the physics and symmetry of the language."
 
@@ -55,9 +57,9 @@
     ~#note: "The .spw-notation sigil layer, per workbench canon. These are structural sigils used to write .spw files, distinct from the semantic operator set above; the two layers overlap only on & and @."
     "$": "substrate — introspection; the ground a form stands on"
     "&": "subject — confluence / bound reference (consistent with the operator-set sense above)"
-    "@": "ref — reference/address in notation, as in @name: ~\"path\""
+    "@": "perspective — an operation of perspective regarding its operand (the creator, 2026-10-27); in notation, @name: ~\"path\" declares a named vantage, and @name reads its operand from it"
     "_": "label / escape — a name or literal held out of interpretation"
-    overlap_resolution: "& is stable across both layers (subject in each). @ is the one open decision: in the sigil layer @ is ref/address; in the semantic-operator set @ is 'perspective'. Keep @ layered (notation sigil vs semantic operator) or unify it — resolve this before treating @ as drift to fix. The embedded operator set in shared.js OPERATOR_GEOMETRY and the operator atlas still ships the 'perspective' reading."
+    overlap_resolution: "& is stable across both layers (subject in each). @ was the one open decision, and the creator settled it on 2026-10-27: @ is an operation of perspective regarding its operand, in both layers. A notation handle reads as the vantage its name gives. Earlier wording: @ was ref/address in the sigil layer and perspective in the semantic-operator set."
   }
 }
 
@@ -359,7 +361,8 @@
     "?": "probe voice — opens uncertainty and permits curiosity"
     "~": "reference voice — keeps memory, source, or motif nearby"
     "^": "object voice — makes a phrase holdable as card, specimen, talisman, or tool"
-    "@": "action voice — turns language toward ritual, instruction, edit, or invitation"
+    "!": "action voice — turns language toward ritual, instruction, edit, or invitation"
+    "@": "perspective voice — regards a phrase from a named position: a reader's, a maker's, a tool's"
     "[]": "variant voice — lets a phrase try a costume without losing its root"
     "{}": "behavior voice — names what the phrase does in this encounter"
     ">": "surface voice — projects the same root into another readable form"

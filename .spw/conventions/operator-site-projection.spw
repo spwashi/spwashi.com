@@ -9,6 +9,8 @@
 #:operation #!align
 #:fixity #!stable
 
+workbench_relation = "extension: site roles, selectors, events and validation for each operator"
+
 ^"thesis"{
   claim: "Operators are not merely symbolic typography or palette sources; they are executable handles for codebase work, coordinating HTML markup, CSS layout styles, JS events, and validation contracts."
   grounding: "Every operator used on this site must map to a site-local implementation, carry falsifiable claims, respond to a specific phase of the site rhythm, and be verifiable through automated or manual affordance tests."
@@ -58,10 +60,10 @@
   perspective: .{
     sigil: `@`
     canonical_type: `perspective`
-    site_aliases: #[`perspective`, `action`][reg=set]
+    site_aliases: #[`perspective`, `situate`, `observer`][reg=set]
     family: `perspective`
     site_role: `control / setting switch / mode projection`
-    html_selector: `[data-spw-operator="perspective"], [data-spw-operator="action"]`
+    html_selector: `[data-spw-operator="perspective"], [data-spw-operator="situate"], [data-spw-operator="observer"]`
     css_projection: `active op color + matte panel transitions`
     runtime_events: #[`spw:settings-change`, `spw:mode-change`][reg=set]
     validation: `switches active lens, updates ARIA states (pressed/expanded), and modifies dataset flags`

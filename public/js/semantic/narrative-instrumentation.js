@@ -265,12 +265,14 @@ function createTokenSpan(tokenText) {
   return span;
 }
 
+// Workbench relation: extension. Narrative kinds: @ character as perspective, # location as frame, $ prop as substrate, ! action, ? theme as probe.
 function parseNarrativeToken(tokenText) {
+  // A character is a point of view: @ regards what it names (operator-semantics.spw).
   if (tokenText.startsWith('@')) {
     return {
       kind: 'character',
-      operator: 'ref',
-      sigil: '~',
+      operator: 'perspective',
+      sigil: '@',
       value: tokenText.slice(1),
     };
   }
@@ -287,8 +289,8 @@ function parseNarrativeToken(tokenText) {
   if (tokenText.startsWith('$')) {
     return {
       kind: 'prop',
-      operator: 'object',
-      sigil: '^',
+      operator: 'substrate',
+      sigil: '$',
       value: tokenText.slice(1),
     };
   }
@@ -297,7 +299,7 @@ function parseNarrativeToken(tokenText) {
     return {
       kind: 'action',
       operator: 'action',
-      sigil: '@',
+      sigil: '!',
       value: tokenText.slice(1),
     };
   }

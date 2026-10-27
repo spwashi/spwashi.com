@@ -10,6 +10,8 @@
  * module does not load it. Kinship and search stay on authored slots.
  */
 
+// Workbench relation: extension. Readings for what the workbench lexer leaves to connectors: ~> project, ; ordinal, , common and . ident inside a body;
+// ~ induct, & subject, ^ project and @ perspective between two lines (COMPOUND_JOIN_OPERATORS); the five valence words as charge.
 export const JOIN_KINDS = Object.freeze({
   none: 'none',
   ident: 'ident',
@@ -89,7 +91,7 @@ const BRACED_CRAWL = /^(?:\{[^{}]+\}\s*\.\s*)+\{[^{}]+\}$/;
  * Declared compound bonds — .spw/conventions/compound-expressions.spw
  * #the_grammar_already_holds verified these against the parser: `A ~ B`
  * is induction, `A & B` names B as A's subject, `A ^ B` is a project-join,
- * `viewer@subject` is a lens. `;` is excluded on purpose — it is a body-
+ * `viewer@subject` regards the subject from the viewer's perspective. `;` is excluded on purpose — it is a body-
  * internal ordinal separator (readBodyJoins), not an infix operator
  * between two whole operand expressions.
  */
@@ -97,7 +99,7 @@ export const COMPOUND_JOIN_OPERATORS = Object.freeze({
   '~': 'induct',
   '&': 'subject',
   '^': 'project',
-  '@': 'lens',
+  '@': 'perspective',
 });
 
 /** `~` immediately followed by `>` is the project-join body form

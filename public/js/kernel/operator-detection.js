@@ -20,6 +20,8 @@ const isElement = (value) => (
    Operator registry
    ========================================================================== */
 
+// Workbench relation: mutation and extension. The site's one module of mutations: ^ integration, = binding, % normalize and { } direction,
+// where the workbench says ascension, configuration, measure and definition; it extends the workbench with #> frame, #: layer, > concept-edge and 39 aliases.
 const OPERATOR_DEFINITIONS = Object.freeze([
   {
     pattern: /^#>/,
@@ -138,8 +140,8 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     family: 'perspective',
     speech: 'viewpoint',
     reversibility: 'revisable',
-    pronunciation: 'commit',
-    mnemonic: 'Target locked.'
+    pronunciation: 'regard',
+    mnemonic: 'See it from here.'
   },
   {
     pattern: /^\*/,

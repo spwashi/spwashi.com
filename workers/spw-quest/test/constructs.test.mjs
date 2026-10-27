@@ -64,6 +64,7 @@ test('usage is the shelf\'s: joins and positions count the carried lines, and th
   const questions = namingQuestions();
   assert.equal(questions.length, 5);
   assert.match(questions[0], /<em>project<\/em> names two forms/);
+  assert.match(questions[1], /^<strong>Settled\.<\/strong>.*the slot reader calls an <code>@<\/code> join perspective/);
   assert.match(questions[4], new RegExp(`${USAGE.wordless} lines open with a valence word`));
 });
 
