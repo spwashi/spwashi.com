@@ -60,6 +60,14 @@ export const PROJECTIONS = Object.freeze([
     generator_owner: 'scripts/spw-precipitate.mjs',
     status: 'rebuilt by npm run spw:precipitate -- --write',
   },
+  {
+    name: 'wonder_runs',
+    root: '.spw/gen/wonder-runs.spw',
+    source: 'each runnable wonder probe, run read-only, with its exit and the last lines it printed',
+    spec_owner: '.spw/reviews/upstream-workbench-recommendations/capabilities.spw',
+    generator_owner: 'scripts/wonder.mjs',
+    status: 'rebuilt by npm run wonder -- --run --write',
+  },
 ]);
 
 const FIELDS = ['root', 'source', 'spec_owner', 'generator_owner', 'status'];

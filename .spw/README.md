@@ -30,6 +30,8 @@ npm run spw:census                                          # population: lines,
 npm run spw:graph                                           # hubs, cycles, familiarity strands
 npm run spw:lattice                                         # ~#name(reading) apposition cells
 npm run wonder                                              # open questions + their probes
+npm run wonder -- --contour                                 # each question open, probed, answered or retired, and what its block lacks
+npm run wonder -- --run --write                             # run the read-only probes; receipts in gen/wonder-runs.spw
 npm run wonder:measures                                     # $%[…] substrates ↔ producers
 npm run spw:routes -- --write                               # each route as a tree, beside its family (gen/routes/)
 npm run spw:routes -- --diff /a/ /b/                        # two routes: the ground they share, then the edge where they part
