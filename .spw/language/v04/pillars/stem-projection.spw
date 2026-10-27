@@ -36,7 +36,8 @@ fixity = "stable"
  hypothesis = `Stem blocks eliminate parallel vocabulary between site semantics and runtime.`
  impl_ref = ~"../../../conventions/attention-field.spw"
  probe_ref = `rg 'attention.field|attention_field' public/js public/css .spw/conventions`
- status = "active"
+ status = "superseded"
+ reevaluated = `2026-10-27: no stem block was ever written; the example stem is kept by hand in 106 files across four languages. The live forms are cross_language_trace (corpus-and-cli.spw) and the language census of stem families.`
 }[reg=facet]
 
 ^"projection_targets"{

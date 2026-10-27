@@ -37,7 +37,8 @@ fixity = "stable"
   spec_ref = ~"../../../_workbench/docs/specs/spw/reference-conventions.spw"
  probe_ref = `rg '~"' .spw/language/v04 | head`
  falsification = `Indexes dispatch to paths that fail existence checks without validator errors.`
- status = "active"
+ status = "confirmed"
+ reevaluated = `2026-10-27: its falsification never fired: spw:integrity resolves 6,334 of 6,334 nightly, and upstream spw resolve classifies kinds and exits 1 on a missing file or anchor. Typed kinds in the syntax proved unneeded; the resolver infers them (11 refs carry one).`
 }[reg=facet]
 
 @reference_conventions: ~"../../../_workbench/docs/specs/spw/reference-conventions.spw"

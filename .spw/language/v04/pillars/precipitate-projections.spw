@@ -35,6 +35,7 @@ fixity = "tending"
  hypothesis = `The repo is the database; Spw indexes are views with provenance.`
  probe_ref = `rg 'precipitate' .spw/language/v04`
  status = "active"
+ reevaluated = `2026-10-27: partial: .spw/gen/index.spw registers five projections, the expression manifest is the one output built from real parsing, and upstream's first-plugin plan fails closed on selectors and readers. The plans-index JSON emit never appeared.`
 }[reg=facet]
 
 @literacy_press: ~"../../../../.agents/plans/literacy-precipitation-press/PLAN.md"

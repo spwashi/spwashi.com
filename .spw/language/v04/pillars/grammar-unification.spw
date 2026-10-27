@@ -36,7 +36,8 @@ fixity = "tending"
  hypothesis = `A single section AST makes LSP outline, validate-spw, and agent edits predictable.`
  probe_ref = `rg '\\^\\["' .spw --glob '!_workbench/**' | wc -l`
  falsification = `New site files continue introducing a third section shape after v0.4 lands.`
- status = "active"
+ status = "superseded"
+ reevaluated = `2026-10-27: upstream writes ^["name"] about eight times as often as ^"name", has eight dialect ids, and admits a primitive only when a composition cannot express the distinction. Two section shapes stay.`
 }[reg=facet]
 
 validation: #[`rg 'canonical_section' .spw/language/v04/pillars/grammar-unification.spw`][reg=set]

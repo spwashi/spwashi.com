@@ -39,6 +39,7 @@ fixity = "stable"
   spec_ref = ~"../../../_workbench/.spw/harness/claim-protocol.spw"
  probe_ref = `rg 'owner_claim' .spw/language/v04/pillars`
  status = "active"
+ reevaluated = `2026-10-27: 321 claim units carry the fields, 198 written from a template, and nothing runs a probe_ref; live inquiry moved to the wonder contour (199 wonders, 55 runnable, none closed). Its next step is inquiry.loop/1 in the roadmap's capabilities.`
 }[reg=facet]
 
 validation: #[`rg 'probe_ref' .spw/language/v04/pillars/claim-probe-syntax.spw`][reg=set]

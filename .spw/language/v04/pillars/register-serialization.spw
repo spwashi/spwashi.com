@@ -34,5 +34,6 @@ fixity = "tending"
  claim_id = "v04-registers-001"
  hypothesis = `One source node can precipitate prose, JSON, and rg probes by register.`
  probe_ref = `rg 'reg=stream' .spw/language`
- status = "active"
+ status = "superseded"
+ reevaluated = `2026-10-27: facet and set are 11,072 of 11,157 authored stamps; probe and projection occur only in this file. Upstream already reads probe as ? and proj as a / normal form. register_sink (density-and-voice.spw) keeps stream for an order and adds no sink.`
 }[reg=facet]

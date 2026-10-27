@@ -38,6 +38,7 @@ fixity = "tending"
  hypothesis = `Lenses make dimensional declarations useful daily, not only for audits.`
   impl_ref = ~"../../../_workbench/.agents/plans/vscode-workspace-atlas/PLAN.md"
  status = "active"
+ reevaluated = `2026-10-27: partial and moving upstream through the asks: citation counts, handles in prose and generated-file lenses landed at 850077a. Operation and fixity filters, the claim gutter and go-to-owner from HTML are still absent.`
 }[reg=facet]
 
 # Local mutation: wonder altitudes are a live consumer of these lenses.

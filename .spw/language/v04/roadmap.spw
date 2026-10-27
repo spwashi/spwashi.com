@@ -36,7 +36,8 @@ fixity = "tending"
     *substance = #[`profiles`, `typed refs`, `claims+probes`, `stems`, `registers/precipitates`][reg=set]
     probe_ref = `rg 'owner_claim' .spw/language/v04/pillars`
     falsification = `Pillars exist only as prose without claim/probe or priority ordering.`
-    status = "active"
+    status = "superseded"
+    reevaluated = `2026-10-27: the syntax half of the thesis (profiles, stems, registers, goals) was never used; the loop half (claims and probes) was used without ever closing. See ^"reevaluation_2026_10_27".`
   }
 }[reg=facet]
 
@@ -49,13 +50,15 @@ fixity = "tending"
     impl_ref = ~"./index.spw"
     probe_ref = `rg 'spw_language_v04' .spw/language`
     falsification = `Pillar files exist but the operator atlas and workbench spec do not cite the same priority stack within one release cycle.`
-    status = "active"
+    status = "refuted"
+    reevaluated = `2026-10-27: met. The pillars date from 2026-07-07 and upstream cites none of them; the workbench at 850077a has no v04 spec, library, branch or tag, and declines one global v0.4.`
   }
 }[reg=facet]
 
 ^"priority_stack"{
   expression = priority[v04]{profiles ~> refs ~> claims ~> stems ~> precipitates}<sequence>  # and onward
   ~index = @index
+  superseded_by = `^"capabilities" (2026-10-27); this order is kept as the record of the July plan.`
 
   sequence = ?<
     profiles + validator,
@@ -85,9 +88,124 @@ fixity = "tending"
   expression = roadmap[v04]{pillars} ~ loop[language]{ecology.cache.patch}<bridge>
 }[reg=facet]
 
+# ==============================================================================
+# REEVALUATION — 2026-10-27
+# ==============================================================================
+# Read against the site at cfd4e2e4..d18612e8 and the workbench at 850077a.
+# Measured, not recalled; the counts exclude _workbench, gen/ and node_modules.
+
+^"reevaluation_2026_10_27"{
+  verdict = `There is no v0.4 to wait for. Upstream versions capabilities, not the language: every package is 0.3.0, the CHANGELOG says Unreleased entries promise no v0.4 boundary, and its plans reject declaring a global v0.4 in favour of contracts such as syntax.gap-affinity/1 and spw.progressive-product/1. The site's pillars never reached upstream, and the asks tree did: five of fourteen landed there.`
+  used = .{
+    headers = `#:operation in 394 of 406 .spw files and 332 of 391 plan files, #:fixity in 388; audit:spw-tree holds them to the canon`
+    citations = `about 10,000 ~"…" references, 6,334 in .spw, all resolving, checked nightly; upstream spw resolve classifies them and its editor counts them`
+    expressions = `975 route expressions parsed at build time into subject, mode, parts, projection, scope and charge; the reader bundle parses on demand; Home's lens reads its handles through the operator table`
+    inquiry = `199 harvested wonders across 100 surfaces, 55 with a probe that runs, none closed`
+  }[reg=facet]
+  described_only = .{
+    profiles = `no file declares #:profile, and the validator the pillar names drops unknown flags`
+    stems = `no stem block anywhere; attention_field, the pillar's own example, is kept by hand in 2 HTML, 13 CSS, 10 JS and 81 .spw files`
+    registers = `facet 6,451 and set 4,621 against stream 69; probe and projection appear only in the pillar's own prose`
+    claims = `321 claim units, 198 written from a template, and nothing runs a probe_ref`
+    goals = `#:goal in 0 files`
+  }[reg=facet]
+  contradicted = .{
+    grammar = `upstream writes ^["name"] about eight times as often as ^"name" and admits a primitive only when a composition cannot express the distinction`
+    fixity = `upstream fixity means an operator's position (prefix, postfix, schedule), not a stability tier`
+    registers = `upstream already reads probe as the ? operator and proj as a / normal form`
+    copy = `the atlas linked a feature/spw-language-v04 branch that never existed`
+  }[reg=facet]
+}[reg=facet]
+
+^"revised_thesis"{
+  claim #v04-revised-thesis {
+    layer = "pragmatic"
+    hypothesis = `Spw on this site is a medium for marks, citations, expressions and questions, and its next version is the loop closing: a question carries a probe, the probe runs, and its answer lands on a claim with a receipt. The marks exist; the runner and the readings that make two answers comparable do not.`
+    expression = language[v04]{mark.cite.ask.answer}<receipt>
+    probe_ref = `npm run -s wonder 2>&1 | grep 'site wonders'`
+    falsification = `The runner closes wonders and nobody reads, cites or acts on the answers it records.`
+    status = "active"
+  }
+  theory = `.spw/caches/theory-map-2026-10.spw asks whether ground-then-edge is an anti-unifier, whether a concept lattice finds better families than kinship, and whether the joins obey laws. Those are the questions a compiler for meaning would have to answer; the July pillars proposed syntax instead.`
+}[reg=facet]
+
+^"capabilities"{  # each with a contract name, a consumer here, a receipt, and where it is asked
+  inquiry_loop = .{
+    contract = `inquiry.loop/1`
+    state = "proposed"
+    consumer = `scripts/wonder.mjs, which harvests the contour today`
+    next = `run the 55 runnable probes, write ~#answer with the run's receipt, and let an answered wonder become a claim or retire`
+    upstream = `wonder_harvest in .spw/reviews/upstream-workbench-recommendations/corpus-and-cli.spw`
+  }[reg=facet]
+  citation_resolve = .{
+    contract = `citation.resolve/1`
+    state = "realized"
+    receipt = `spw:integrity 6,334 of 6,334; upstream unresolved citations on this site 1,688 to 267 (55e79d2)`
+  }[reg=facet]
+  header_axes = .{
+    contract = `header.axes/1 (operation, fixity, layer)`
+    state = "realized here"
+    open = `the site's fixity and upstream's fixity are one word for two things; see #>wonder_v04_fixity_name`
+  }[reg=facet]
+  ground_edge = .{
+    contract = `reading.ground-edge/1`
+    state = "realized for routes"
+    consumer = `npm run spw:routes -- --diff, and the lens's declared and parsed readings on Home`
+    upstream = `ground_then_edge and template_with_a_slot in motions.spw`
+  }[reg=facet]
+  projection = .{
+    contract = `projection.registry/1 and one plugin`
+    state = "partial"
+    receipt = `.spw/gen/index.spw holds five projections; upstream's first-plugin plan fails closed on selectors and readers`
+  }[reg=facet]
+  operator_table = .{
+    contract = `operator.table/1`
+    state = "partial"
+    consumer = `public/js/kernel/operator-detection.js, read by the peer kit and the lens`
+    upstream = `one_character_table in plugins-and-tooling.spw`
+  }[reg=facet]
+}[reg=facet]
+
+^"retired"{  # pillars kept as history; each says what holds its intent now
+  profiles_and_validator = `superseded by upstream's path-inferred review profiles (spw surface) and this site's audit:spw-tree`
+  grammar_unification = `superseded by upstream's admission rule; two section shapes are allowed`
+  stem_projection = `superseded by cross_language_trace (corpus-and-cli.spw) and the language census of stem families`
+  register_serialization = `superseded by register_sink (density-and-voice.spw): stream for an order, no new sinks`
+  runtime_goals_pipeline = `superseded by upstream spw.progressive-product/1 and its --through`
+  core_experimental_namespace = `superseded by upstream's =exp[id] experimental catalog`
+  submodule_bridge = `superseded by the asks tree (.spw/reviews/upstream-workbench-recommendations.spw)`
+}[reg=facet]
+
+#>wonder_v04_name
+?["Should the site keep v0.4 as the name of its next step, or name the capabilities and drop the version, as upstream has?"]{
+  #:depth #!pragmatics ~#lens(comparison)
+  ~#hypothesis: "A version number promises a boundary the workbench will not draw; capability names say what a reader can rely on and when each arrived."
+  ~#tension: "The atlas and the parser tool teach v0.4 by name, and a version is the one word a newcomer already knows how to read."
+  !probe{ "rg -c v04 topics/software/spw/index.html tools/spw-parser/index.html" }
+  $%[name.version, name.capability, copy.atlas]
+}
+
+#>wonder_v04_claims_wonders
+?["Is a wonder answered with a receipt the same unit as a claim confirmed, so one loop serves both?"]{
+  #:depth #!computational ~#lens(projection)
+  ~#hypothesis: "A wonder already carries a hypothesis, a probe and the slots its answer fills; a claim carries a hypothesis, a probe and a falsification. An answer recorded on the wonder is the claim's receipt."
+  ~#tension: "198 claim units are written from a template and would close on nothing; a loop that counts them as answered would launder a template into evidence."
+  !probe{ "npm run -s wonder 2>&1 | grep 'site wonders'" }
+  $%[wonder.answer, claim.status, receipt.run]
+}
+
+#>wonder_v04_fixity_name
+?["Should the site's fixity, a stability tier, keep its name beside upstream's fixity, an operator's position?"]{
+  #:depth #!pragmatics ~#lens(comparison)
+  ~#hypothesis: "Two meanings of one word in one toolchain will be read as one; the homonym-renaming plan is where such a pair is settled."
+  ~#tension: "The site's word is in 388 .spw headers and every plan index; upstream's is in its normalizer and flow protocol."
+  !probe{ "rg -l '#:fixity #!' .spw -g '*.spw' -g '!**/_workbench/**' | wc -l" }
+  $%[fixity.tier, fixity.position, rename.cost]
+}
+
 validation: #[
   `rg '#language-evolution-v04' topics/software/spw/index.html`,
   `test -f .spw/language/v04/index.spw`,
-  `rg 'v04_specimen_suite' tools/spw-parser/index.html`,
+  `rg 'v04-specimen-suite' tools/spw-parser/index.html`,
   `rg 'owner_claim|claim #spw-language-v04|priority_stack' .spw/language/v04`,
 ][reg=set]

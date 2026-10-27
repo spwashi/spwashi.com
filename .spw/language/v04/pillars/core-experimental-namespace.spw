@@ -31,5 +31,6 @@ fixity = "stable"
 ^"owner_claim"{
  claim_id = "v04-namespace-001"
  hypothesis = `Separating core from experimental keeps agent parse cost bounded as semantic capacity grows.`
- status = "active"
+ status = "superseded"
+ reevaluated = `2026-10-27: upstream keeps experimental syntax in an =exp[id] catalog of 34 entries with proposed, partial and implemented states.`
 }[reg=facet]

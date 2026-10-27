@@ -34,7 +34,8 @@ fixity = "stable"
  claim_id = "v04-op-fixity-001"
  hypothesis = `Typed operation/fixity lets indexes query plans by semantic job, not folder name.`
  probe_ref = `rg 'operation = "' .spw/language/v04`
- status = "active"
+ status = "confirmed"
+ reevaluated = `2026-10-27: realized here: #:operation in 394 of 406 .spw files and #:fixity in 388, held to the canon by audit:spw-tree. Upstream fixity means an operator's position, so the word is two things in one toolchain (roadmap #>wonder_v04_fixity_name).`
 }[reg=facet]
 
 @semantic_capacity: ~"../../../conventions/semantic-capacity.spw"

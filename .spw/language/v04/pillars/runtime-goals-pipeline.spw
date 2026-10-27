@@ -37,5 +37,6 @@ fixity = "tending"
 ^"owner_claim"{
  claim_id = "v04-pipeline-001"
  hypothesis = `Goal-tagged passes make Spw a compiler for meaning rather than a highlighter.`
- status = "active"
+ status = "superseded"
+ reevaluated = "2026-10-27: #:goal is in 0 files. Upstream's stages are desugar, parse, normalize, interpret, each a precipitate, under spw.progressive-product/1 with --through; its hash is of the text, not the AST."
 }[reg=facet]
