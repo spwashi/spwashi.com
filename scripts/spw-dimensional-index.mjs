@@ -22,6 +22,7 @@ import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { writeProjectionIndex } from './lib/spw-projections.mjs';
 
 const run = promisify(execFile);
 
@@ -216,6 +217,7 @@ async function main() {
   if (write) {
     await writeFile(OUT, body, 'utf8');
     console.log(`\nwrote ${path.relative(ROOT, OUT)}`);
+    await writeProjectionIndex();
   } else {
     console.log('\nre-run with --write to emit .spw/dimensions.spw');
   }

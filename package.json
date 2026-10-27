@@ -181,6 +181,7 @@
     "spw:dimensions": "node scripts/spw-dimensional-index.mjs",
     "spw:routes": "node --import ./.spw/_workbench/node_modules/tsx/dist/loader.mjs scripts/spw-routes.mjs",
     "spw:precipitate": "node scripts/spw-precipitate.mjs",
+    "spw:projections": "node scripts/lib/spw-projections.mjs",
     "spw:snippets": "node scripts/spw-snippets.mjs",
     "lens": "node scripts/build-legibility-lens.mjs --write",
     "check:observation": "node scripts/check-observation-locality.mjs"

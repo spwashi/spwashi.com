@@ -32,6 +32,7 @@ import { exec } from 'node:child_process';
 import { promisify } from 'node:util';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { writeProjectionIndex } from './lib/spw-projections.mjs';
 
 const run = promisify(exec);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -196,6 +197,7 @@ async function main() {
 
   await writeFile(OUT, lines.join('\n'), 'utf8');
   console.log(`\nwrote ${path.relative(ROOT, OUT)}`);
+  await writeProjectionIndex();
 }
 
 main().catch((error) => {

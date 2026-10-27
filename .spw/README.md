@@ -48,6 +48,9 @@ Landed on this pin: `doctor` and `lint` take `--stats`, a declared handle links
 and hovers inside quoted prose, citation lenses count the files and citations
 that point at a file or an anchor, and a generated file opens its source
 (the extension installed 2026-10-13 needs a rebuild to show these).
+Five generators register what they write in `.spw/gen/index.spw`
+(`npm run spw:projections` writes it on a fresh clone), so snippets, dimensions,
+the language census, precipitates and route trees each offer rebuild and spec.
 From `0eb1d1c0e454`: one content hash across seed, the runtime and the CLI, and
 the workbench build reads the form under a caret (formAt, formHover).
 From `c17f57a80c55`: the parser release gains a reader (outline, anchors and
