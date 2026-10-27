@@ -179,7 +179,7 @@ fixity = "tending"
   language_ecology: .{
     path = "~\"./language-ecology.spw\""
     owner_plan = "spw-metaphysical-language"
-    satellite_plans = #[`language-reclustering`, `homonym-renaming`, `spw-language-v04`, `shell-model-vocabulary-consolidation`][reg=set]
+    satellite_plans = #[`language-reclustering`, `homonym-renaming`, `spw-inquiry-loop`, `shell-model-vocabulary-consolidation`][reg=set]
     conventions = #[`data-spw-attribute-governance`, `naming-and-structured-values`, `operator-semantics`, `construct-codex (planned)`][reg=set]
     conflict_rule = "construct-codex drift ledger arbitrates glyph and operator disputes; reclustering assigns clusters; homonym-renaming executes word moves."
   }[reg=facet]

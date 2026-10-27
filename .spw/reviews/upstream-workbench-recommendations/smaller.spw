@@ -33,7 +33,7 @@ expression = asks[smaller]{query}<upstream>
       `share it between site search, LSP workspace symbols and query --where`,
     ][reg=set]
     replaces: "parseExpressionQuery in public/js/semantic/expression-query.js"
-    question: "Does a trailing ?# mean probe frames, or probe this frame? (open in spw-language-v04)"
+    question: "Does a trailing ?# mean probe frames, or probe this frame? (open in spw-inquiry-loop)"
   }[reg=facet]
 
   signed_number: .{

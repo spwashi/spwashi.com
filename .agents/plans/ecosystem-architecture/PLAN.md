@@ -2,7 +2,7 @@
 
 **Status 2026-10-25.** S0 to S3 and S6 landed: the owner plans carry today's measure beside their dated figures and name the two seams, the expression manifest no longer ships the `.spw` seeds, the parallel operator tables read from the canon, one reader bundle serves the site and the quest, and the three offer pages share one services bundle. A ranked route through the CSS and runtime owner plans, chosen by what each move is worth beyond one page. Then the phase that spends it: spw.quest shows how Spw is developing and becomes a playground for constructs and specimens (slices G–I in [spw-quest](../spw-quest/PLAN.md)). Every slice names its owner, and this plan owns three things: the ranking, the list of what may travel, and one unowned item (S6). Next: S4 waits on the creator. G is merged to main (17f6a77e) to test live; the next Wrangler deploy carries it with the note. The cascade (S5), what travels first (S4), and the playground's look wait on the creator.
 
-**Related:** [core-css-spend-cut](../core-css-spend-cut/PLAN.md) · [css-cascade-stratification](../css-cascade-stratification/PLAN.md) · [css-architecture-readability](../css-architecture-readability/PLAN.md) · [runtime-plane-consolidation](../runtime-plane-consolidation/PLAN.md) · [deploy-module-graph](../deploy-module-graph/PLAN.md) · [spw-language-v04](../spw-language-v04/PLAN.md) · [operator-resonance-alignment](../operator-resonance-alignment/PLAN.md) · [site-starter-component-kit](../site-starter-component-kit/PLAN.md) · [workers-wonder-kit](../workers-wonder-kit/PLAN.md) · [spw-quest](../spw-quest/PLAN.md)
+**Related:** [core-css-spend-cut](../core-css-spend-cut/PLAN.md) · [css-cascade-stratification](../css-cascade-stratification/PLAN.md) · [css-architecture-readability](../css-architecture-readability/PLAN.md) · [runtime-plane-consolidation](../runtime-plane-consolidation/PLAN.md) · [deploy-module-graph](../deploy-module-graph/PLAN.md) · [spw-inquiry-loop](../spw-inquiry-loop/PLAN.md) · [operator-resonance-alignment](../operator-resonance-alignment/PLAN.md) · [site-starter-component-kit](../site-starter-component-kit/PLAN.md) · [workers-wonder-kit](../workers-wonder-kit/PLAN.md) · [spw-quest](../spw-quest/PLAN.md)
 
 ## Value
 
@@ -50,16 +50,16 @@ Atmosphere, route surfaces, chrome and the catalog stay home. Anything travels o
   - the "no bundle step" note in runtime-plane-consolidation;
   - flip counts 365 → 363;
   - the stylesheet-ecology figures;
-  - the workbench pin in spw-language-v04;
+  - the workbench pin in spw-inquiry-loop;
   - interaction-grammar's "browser parser out of scope";
   - spw-quest's "What it is now", including `/read` and `/parser/`, and slice A, which `/read` superseded.
 - Two seams to name:
   - **Where the layer order is declared.** readability and `css-instruction.spw` say `style.css`; it is declared at `style-core.css:1`.
-  - **Which file is the one expression reader.** runtime-plane-consolidation Phase 4 says geometry; spw-language-v04 extends `expression-query.js`. Proposed: expression-query reads slots (no imports, read by search, the cauldron, the build scripts and `spw:routes`), and geometry reads layout from those slots.
+  - **Which file is the one expression reader.** runtime-plane-consolidation Phase 4 says geometry; spw-inquiry-loop extends `expression-query.js`. Proposed: expression-query reads slots (no imports, read by search, the cauldron, the build scripts and `spw:routes`), and geometry reads layout from those slots.
 
 Validation: `npm run audit:plans`.
 
-**S1. Stop shipping what nobody reads.** Lever: every visitor. Cost: small. Owner: spw-language-v04 (Phase 4 owns the manifest).
+**S1. Stop shipping what nobody reads.** Lever: every visitor. Cost: small. Owner: spw-inquiry-loop (Phase 4 owns the manifest).
 - Move `SPW_PROJECTION_SEEDS` out of `public/js/generated/spw-expressions.js`. Either give it its own module for the first reader that asks, or leave it out of the build until one exists.
 - Saving: 33 KB gzip on every page that carries an expression.
 - Files: `scripts/build-expression-manifest.mjs` and `expression-resonance.js`.
@@ -72,7 +72,7 @@ Validation: `npm run manifest:staged`, `npm run check:built`, `npm run test:modu
 
 Validation: `npm run test:modules`, `npm run build:peer-kit -- --check`, `npm run check:workers`.
 
-**S3. One reader for Spw in a browser.** Landed 2026-10-25: the parser bundle is gone, and spw.quest's `/parser.js` and worker readings are the reader. The quest's guide still imports `/parser.js`; pinning the dated `reader.min.js` stays note-shell PR 2. Lever: adoption, peers. Cost: small. Owner: spw-language-v04. Gate: none.
+**S3. One reader for Spw in a browser.** Landed 2026-10-25: the parser bundle is gone, and spw.quest's `/parser.js` and worker readings are the reader. The quest's guide still imports `/parser.js`; pinning the dated `reader.min.js` stays note-shell PR 2. Lever: adoption, peers. Cost: small. Owner: spw-inquiry-loop. Gate: none.
 - The parser and reader bundles come from one revision. Today the site's code blocks, the parser tool, the console and spw.quest import different ones.
 - The reader's `parse` gives the parser's AST, tokens, errors, warnings and events on all 990 authored `.spw` files (2026-10-25; only timing differs).
 - So the parser bundle's importers can move to the reader, and one bundle serves the site and the quest (note-shell PR 2 pins `reader.min.js`).

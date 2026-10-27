@@ -179,7 +179,7 @@ Gate: this changes interaction latency and settle timing. Demo before landing.
 - [x] Adopt guarded dataset writes in `semantic/link-copy.js` (`writeDatasetValue`, `writeDatasetValueIfMissing`, `writeDatasetValues`).
 - [x] Add unit tests in `scripts/tests/spw-expression-geometry.test.mjs` verifying backward-compatible parser shape across chips and handles.
 - [ ] Align pinned `modules/tools/spw-literal-parser.js` artifact generation with the single reader.
-- Seam (2026-10-25, named by [ecosystem-architecture](../ecosystem-architecture/PLAN.md) S0): [spw-language-v04](../spw-language-v04/PLAN.md) extends `semantic/expression-query.js`, which imports nothing and is read by search, the cauldron, the build scripts and `spw:routes`. Proposed split: expression-query reads slots, and geometry reads layout from those slots. Neither file changes until one plan takes the split.
+- Seam (2026-10-25, named by [ecosystem-architecture](../ecosystem-architecture/PLAN.md) S0): [spw-inquiry-loop](../spw-inquiry-loop/PLAN.md) extends `semantic/expression-query.js`, which imports nothing and is read by search, the cauldron, the build scripts and `spw:routes`. Proposed split: expression-query reads slots, and geometry reads layout from those slots. Neither file changes until one plan takes the split.
 
 ### Phase 5 — Ground the spatial model ✅
 

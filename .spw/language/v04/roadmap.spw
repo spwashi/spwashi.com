@@ -11,7 +11,7 @@
 @index: ~"./index.spw"
 @feature_utilization: ~"../feature-utilization.spw"
 @recursive: ~"../recursive-improvement.spw"
-@plan: ~"../../../.agents/plans/spw-language-v04/PLAN.md"
+@plan: ~"../../../.agents/plans/spw-inquiry-loop/PLAN.md"
 @parser_tool: ~"/tools/spw-parser/#v04-specimen-suite"
 
 operation = "prime"
@@ -46,7 +46,7 @@ fixity = "tending"
     layer = "semantic"
     hypothesis = `A v0.4 pillar set can guide workbench grammar work without blocking public site copy and inspection.`
     expression = pillar[set]{guide.without.block}<site>
-    spec_ref = ~"../../../.agents/plans/spw-language-v04/PLAN.md"
+    spec_ref = ~"../../../.agents/plans/spw-inquiry-loop/PLAN.md"
     impl_ref = ~"./index.spw"
     probe_ref = `rg 'spw_language_v04' .spw/language`
     falsification = `Pillar files exist but the operator atlas and workbench spec do not cite the same priority stack within one release cycle.`
@@ -182,6 +182,7 @@ fixity = "tending"
   ~#hypothesis: "A version number promises a boundary the workbench will not draw; capability names say what a reader can rely on and when each arrived."
   ~#tension: "The atlas and the parser tool teach v0.4 by name, and a version is the one word a newcomer already knows how to read."
   ~#unblocks: "the atlas section's heading and the parser tool's v0.4 gallery copy"
+  ~#answer: "name.capability: the creator renamed the plan spw-inquiry-loop on 2026-10-27, after the loop it owns. The pillar files and the public anchors keep v04, since the workbench and inbound links cite them; the atlas heading's words are a separate copy pass."
   ~#probe(run)
   !probe{ "rg -c v04 topics/software/spw/index.html tools/spw-parser/index.html" }
   $%[name.version, name.capability, copy.atlas]
@@ -213,11 +214,12 @@ fixity = "tending"
  >>[2026-10-27 13:32] probe — wonder_v04_name: v04 sits on 8 lines of the atlas and 9 of the parser tool, most of them anchors and sample ids (#language-evolution-v04, #v04-specimen-suite, ?spw_sample=v04_claims) rather than copy, so a rename moves inbound links as well as words. Run before any ~#expect was on record.
  >>[2026-10-27 13:32] probe — wonder_v04_claims_wonders: the wonder side of the loop now runs. npm run wonder -- --run ran 44 read-only probes in 13 s and kept result_ref-shaped receipts in .spw/gen/wonder-runs.spw; no wonder is answered, and no claim has a run. Run before any ~#expect was on record.
  >>[2026-10-27 13:32] probe — wonder_v04_fixity_name: 389 site .spw files carry a #:fixity header, one more than the tension's count. Run before any ~#expect was on record.
+ >>[2026-10-27 14:21] decide — wonder_v04_name: answered by the creator, who asked for the plan to be renamed; it is .agents/plans/spw-inquiry-loop now. The receipt is the conversation of 2026-10-27, not a run: a decision answers a question of taste, and a probe could only have measured what the rename would move.
 }
 
 validation: #[
   `rg '#language-evolution-v04' topics/software/spw/index.html`,
   `test -f .spw/language/v04/index.spw`,
   `rg 'v04-specimen-suite' tools/spw-parser/index.html`,
-  `rg 'owner_claim|claim #spw-language-v04|priority_stack' .spw/language/v04`,
+  `rg 'owner_claim|claim #spw-inquiry-loop|priority_stack' .spw/language/v04`,
 ][reg=set]

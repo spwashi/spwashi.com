@@ -1,21 +1,28 @@
-# Plan: spw-language-v04
+# Plan: spw-inquiry-loop
 
-**Status 2026-10-27.** Reevaluated against the site and the workbench at `850077a` ([roadmap](../../../.spw/language/v04/roadmap.spw), `^"reevaluation_2026_10_27"`). There is no v0.4 to wait for: upstream versions capabilities, not the language (every package is 0.3.0, and its plans decline a global v0.4), and none of the twelve pillars reached it, while the asks tree did (five of fourteen landed). Of the pillars, typed references and the operation and fixity headers are confirmed; claims, precipitates and editor lenses stay active and partial; profiles, grammar unification, stems, registers, runtime goals, the experimental namespace and the submodule bridge are superseded, each pointing at what holds its intent now. Phase 2 as written is retired. The concept is restated as the loop closing (a question carries a probe, the probe runs, the answer lands on a claim with a receipt) and as a ledger of capabilities, each with a contract name, a consumer here and a receipt. The first slice of `inquiry.loop/1` has landed: `npm run wonder -- --run` runs the read-only wonder probes and keeps receipts in the claim protocol's terms, and `--contour` reads each wonder's lifecycle. The next is answering: an `~#answer` beside a run, wherever a receipt settles its question. Phase 4 has moved on since 2026-10-10: the mount is at `850077a`, every browser reader imports the reader bundle (S3 of [ecosystem-architecture](../ecosystem-architecture/PLAN.md)), and the handle seeds left the manifest (S1). Three questions wait on the creator in the roadmap: the name v0.4, whether an answered wonder is a confirmed claim, and the two meanings of fixity. The expression-query slice below is unchanged.
+**Status 2026-10-27.** Renamed from `spw-language-v04` at the creator's word, which answers the roadmap's `wonder_v04_name`: the plan is named for the loop it owns, and the pillar files and public anchors keep `v04`, since the workbench and inbound links cite them. Nested wonders and `npm run plans:twinkle` landed the same day (Slices, below). Reevaluated against the site and the workbench at `850077a` ([roadmap](../../../.spw/language/v04/roadmap.spw), `^"reevaluation_2026_10_27"`). There is no v0.4 to wait for: upstream versions capabilities, not the language (every package is 0.3.0, and its plans decline a global v0.4), and none of the twelve pillars reached it, while the asks tree did (five of fourteen landed). Of the pillars, typed references and the operation and fixity headers are confirmed; claims, precipitates and editor lenses stay active and partial; profiles, grammar unification, stems, registers, runtime goals, the experimental namespace and the submodule bridge are superseded, each pointing at what holds its intent now. Phase 2 as written is retired. The concept is restated as the loop closing (a question carries a probe, the probe runs, the answer lands on a claim with a receipt) and as a ledger of capabilities, each with a contract name, a consumer here and a receipt. The first slice of `inquiry.loop/1` has landed: `npm run wonder -- --run` runs the read-only wonder probes and keeps receipts in the claim protocol's terms, and `--contour` reads each wonder's lifecycle. The next is answering: an `~#answer` beside a run, wherever a receipt settles its question. Phase 4 has moved on since 2026-10-10: the mount is at `850077a`, every browser reader imports the reader bundle (S3 of [ecosystem-architecture](../ecosystem-architecture/PLAN.md)), and the handle seeds left the manifest (S1). Two questions wait on the creator in the roadmap: whether an answered wonder is a confirmed claim, and the two meanings of fixity. The expression-query slice below is unchanged.
 
-**Related:** [spw-metaphysical-language](../spw-metaphysical-language/PLAN.md) · [operator-semantics-refinement](../archive/operator-semantics-refinement/PLAN.md) · [spw-document-room](../archive/spw-document-room/PLAN.md).
+**Related:** [spw-metaphysical-language](../spw-metaphysical-language/PLAN.md) (its passes run this loop) · [ecosystem-architecture](../ecosystem-architecture/PLAN.md) · [capability asks](../../../.spw/reviews/upstream-workbench-recommendations/capabilities.spw) · [operator-semantics-refinement](../archive/operator-semantics-refinement/PLAN.md) · [spw-document-room](../archive/spw-document-room/PLAN.md).
 
-Elaborate Spw as a language toward v0.4: profiles, typed references, executable claims, stem projection, register precipitates, and workbench submodule alignment — expressed as dimensionally rich `.spw` artifacts on spwashi.com before upstream grammar lands.
+Close the loop a question runs on this site: probe, then a Spw update, then a refactor, then a test. A wonder carries a guess and a probe, the probe runs, the answer lands beside its receipt, and every plan that cites what moved can see that it moved. The capabilities the loop leans on are a ledger with contract names (`capabilities.spw`). Until 2026-10-27 this plan was `spw-language-v04`; its pillars are history below.
 
 ## Public Goal
 
-Readers and agents on spwashi.com can inspect a coherent v0.4 language direction without waiting for the workbench submodule to catch up. Site copy on the Spw operator atlas should name the improvement stack in public language; local `.spw/language/v04/` should carry the inspectable contracts, claims, dimensions, and submodule bridge.
+A question asked anywhere in the site's `.spw` can be probed, answered and seen to have moved by every plan that leans on it, with a receipt a reader can open. The parser that reads Spw in the browser stays here too (Phase 4).
+
+## Slices
+
+- **Landed 2026-10-27.** `npm run wonder -- --run` runs the read-only probes and keeps receipts in `.spw/gen/wonder-runs.spw`; `--contour` reads each wonder as open, probed, answered or retired.
+- **Landed 2026-10-27.** Nested wonders: a wonder may hold smaller wonders, each harvested with its parent named and its marks kept apart. The parser already held them; the harvest now does too, and its brace walk skips quoted text, which also restored a probe the old walk had cut short. The editor still folds a child's first probe and its terms into the parent's hint and reads at most eleven lines of a body; that is recorded as an ask in `capabilities.spw`.
+- **Landed 2026-10-27.** `npm run plans:twinkle`: the concepts live plans share, lit where one moved after a citing plan last looked. Bright when a cited wonder or plan moved, dim when a cited file changed; scaffolding every plan carries is left out. The first reading: 52 plans, 146 shared concepts, 26 bright and 81 dim references.
+- **Next.** Answer the wonders a run settles, each `~#answer` beside its receipt, and tend the plans `plans:twinkle` lights brightest. Then the expression-query prefix slice below.
 
 ## Scope
 
-- In scope: `.agents/plans/spw-language-v04/`, `.spw/language/v04/` pillar artifacts, `topics/software/spw/index.html` copy, dispatch wiring in `.spw/index.spw`, `.spw/site.spw`, `.spw/conventions/index.spw`, submodule update procedure in `submodule-bridge.spw`.
+- In scope: `.agents/plans/spw-inquiry-loop/`, `scripts/wonder.mjs`, `scripts/plan-twinkle.mjs`, `capabilities.spw`, the roadmap and its reevaluation under `.spw/language/v04/`, the expression-query prefix slice, and the in-site parser (Phase 4). The pillar files are history and change only to keep their citations resolving.
 - Out of scope: landing full v0.4 parser/runtime in the workbench (upstream); breaking existing `.spw` files; npm dependency changes.
 
-## Pillar Artifacts
+## History: the v0.4 pillars (superseded 2026-10-27)
 
 All pillars live under `.spw/language/v04/pillars/` and dispatch from `.spw/language/v04/index.spw`:
 
@@ -32,7 +39,7 @@ All pillars live under `.spw/language/v04/pillars/` and dispatch from `.spw/lang
 11. `core-experimental-namespace.spw` — small core, experimental profile boundary
 12. `submodule-bridge.spw` — spw-workbench update path and pin ritual
 
-## Phases
+## History: the v0.4 phases
 
 ### Phase 1 — Site artifacts (this worktree)
 
@@ -71,7 +78,7 @@ All pillars live under `.spw/language/v04/pillars/` and dispatch from `.spw/lang
 ## Status — 2026-09-27
 
 - Phase 1 landed: the twelve pillars exist under `.spw/language/v04/pillars/`, the atlas carries `#language-evolution-v04`, and `npm run ecology:language` reports the claim and probe counts.
-- Phase 2 has not started upstream. The pinned workbench (`3eaab6377672`, 2026-09-22) has no `docs/specs/spw/v04/` and no `feature/spw-language-v04` branch in the checkout; `submodule-bridge.spw` still describes the target layout. The worktree this plan named (`../wt-spw-language-v04`) is gone; work lands on `main`.
+- Phase 2 has not started upstream. The pinned workbench (`3eaab6377672`, 2026-09-22) has no `docs/specs/spw/v04/` and no `feature/spw-language-v04` branch in the checkout; `submodule-bridge.spw` still describes the target layout. The worktree this plan named (`../wt-spw-inquiry-loop`) is gone; work lands on `main`.
 - Phase 3 is partly realized by other means: `npm run spw:integrity` parses every authored expression (912 today), the expression manifest below precipitates the parse into the runtime, and `ecology:language` is the probe. Claim probes are not yet in `npm run check:local`.
 
 ## Phase 4 — Interpreter in the site (landed under v0.3.0)

@@ -120,7 +120,7 @@ reading_order: .{
   `homonym-renaming`,
   `modular-experience-slices`,
   `semantic-copy-depth`,
-  `spw-language-v04`,
+  `spw-inquiry-loop`,
   `spw-metaphysical-language`,
  ][reg=set]
 }[reg=facet]
@@ -139,7 +139,7 @@ reading_order: .{
 @plan_relational_attention_media: ~"./archive/relational-attention-media/index.spw"
 @plan_semantic_copy_depth: ~"./semantic-copy-depth/index.spw"
 @plan_spw_architecture_ecology: ~"./archive/spw-architecture-ecology/index.spw"
-@plan_spw_language_v04: ~"./spw-language-v04/index.spw"
+@plan_spw_inquiry_loop: ~"./spw-inquiry-loop/index.spw"
 @plan_spw_metaphysical_language: ~"./spw-metaphysical-language/index.spw"
 @plan_spw_surface_normalization: ~"./archive/spw-surface-normalization/index.spw"
 ^"css_layout_interaction"{
@@ -664,7 +664,7 @@ dispatch: .{
  plan_relational_attention_media = @plan_relational_attention_media
  plan_semantic_copy_depth = @plan_semantic_copy_depth
  plan_spw_architecture_ecology = @plan_spw_architecture_ecology
- plan_spw_language_v04 = @plan_spw_language_v04
+ plan_spw_inquiry_loop = @plan_spw_inquiry_loop
  plan_spw_metaphysical_language = @plan_spw_metaphysical_language
  plan_spw_surface_normalization = @plan_spw_surface_normalization
  plan_card_grid_density_audit = @plan_card_grid_density_audit

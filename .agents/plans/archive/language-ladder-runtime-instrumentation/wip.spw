@@ -57,5 +57,5 @@ fixity = "tending"
   ~#tension: "This file was kept small until curriculum and instrumentation had separate owners. The scripts now exist. The owners live in other folders. Growing the curriculum here would put two blast radii back in one handoff."
   !probe{ `node -e 'import fs from "node:fs"; const scripts = JSON.parse(fs.readFileSync("package.json","utf8")).scripts; if (!scripts.wonder || !scripts["ecology:language"] || !scripts.typecheck || !scripts.atlas) process.exit(1)'` }
   $%[ladder.rung, script.name, folder.owner]
-  ~<"../typescript-integration/wip.spw"> ~<"../../spw-language-v04/index.spw"> ~<"../../agentic-dev-contracts/index.spw">
+  ~<"../typescript-integration/wip.spw"> ~<"../../spw-inquiry-loop/index.spw"> ~<"../../agentic-dev-contracts/index.spw">
 }

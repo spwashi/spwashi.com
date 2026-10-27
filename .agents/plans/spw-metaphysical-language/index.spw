@@ -48,7 +48,7 @@ intent: .{
  accuracy = `Codex shell tending; full industry integration briefs are aspirational.`
  direction = `Extend drift ledger with one resolved dispute from recent commits.`
  inspiration = `Language is a craft material, not a config file.`
- alignment = `spw-language-v04, appendices computer-science + manufacturing history`
+ alignment = `spw-inquiry-loop, appendices computer-science + manufacturing history`
 }[reg=facet]
 
 @plans_root: ~"../../../.agents/plans/index.spw"

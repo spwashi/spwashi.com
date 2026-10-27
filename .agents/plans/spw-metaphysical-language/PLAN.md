@@ -2,7 +2,7 @@
 
 **Status 2026-10-10.** Only commit 1 of 10 has landed (plan, wip and index, 009acd60); there is still no codex, matrix or protocol, and `.spw/conventions/construct-codex.spw` does not exist. The one next slice is that file as a minimal shell: header, a drift_ledger facet, and operator entry stubs that cite their owner conventions. The shell has no gate; any change to an operator's meaning needs creator sign-off.
 
-**Related:** [spw-language-v04](../spw-language-v04/PLAN.md) · [compositional-css-electrostatics](../archive/compositional-css-electrostatics/PLAN.md) · [language-reclustering](../archive/language-reclustering/PLAN.md). **Absorbed 2026-10-10:** [spw-architecture-ecology](../archive/spw-architecture-ecology/PLAN.md) (wave D).
+**Related:** [spw-inquiry-loop](../spw-inquiry-loop/PLAN.md) · [compositional-css-electrostatics](../archive/compositional-css-electrostatics/PLAN.md) · [language-reclustering](../archive/language-reclustering/PLAN.md). **Absorbed 2026-10-10:** [spw-architecture-ecology](../archive/spw-architecture-ecology/PLAN.md) (wave D).
 
 Mature Spw from a site grammar into a described metaphysical language: a complete
 construct codex, a sigil-property study that arbitrates semantic alignment, a
