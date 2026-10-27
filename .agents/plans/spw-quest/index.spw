@@ -128,3 +128,16 @@ invariants: #[
   !probe{ "git ls-files workers/spw-quest/assets/parser | cut -d/ -f5 | sort -u" }
   $%[motion.pair, motion.feed, release.count]
 }
+
+#>wonder_spw_quest_constructs
+?["Do construct cards and pivots make Spw's structures easier to imagine moving between, or do they add a second shelf to learn?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#with: @plan
+  ~#taste: "A structure is easier to imagine when you can see where one change lands before you make it."
+  ~#hypothesis: "The pivot page carries most of it: a line and its neighbours one slot away teach the slots without naming them first; the construct cards are the key a reader returns to."
+  ~#expect: "A first reader starts from a pivot, not the cards, and opens a card only to name a slot they already moved."
+  ~#unblocks: "whether a masthead link or a guide door is worth asking for, which is the creator's call"
+  ~#probe(read)
+  !probe{ "on a phone, open /pivot, follow three pivots, then /constructs; say which page you came back to and why" }
+  $%[pivot.first, cards.first, second_shelf]
+}

@@ -96,7 +96,7 @@ async function main() {
   execFileSync(process.execPath, ['--test', 'workers/autonomous-feedback/test/routes.test.mjs'], { cwd: ROOT, stdio: 'inherit' });
   // The specimens are carried from site modules that import by root path, so their drift check runs with the repo's loader.
   execFileSync(process.execPath, ['--import', './scripts/tests/register-public-imports.mjs', 'workers/spw-quest/carry-specimens.mjs', '--check'], { cwd: ROOT, stdio: 'inherit' });
-  execFileSync(process.execPath, ['--test', 'workers/spw-quest/test/routes.test.mjs', 'workers/spw-quest/test/note.test.mjs', 'workers/spw-quest/test/parser-releases.test.mjs', 'workers/spw-quest/test/parser-prereleases.test.mjs', 'workers/spw-quest/test/specimens.test.mjs'], { cwd: ROOT, stdio: 'inherit' });
+  execFileSync(process.execPath, ['--test', 'workers/spw-quest/test/routes.test.mjs', 'workers/spw-quest/test/note.test.mjs', 'workers/spw-quest/test/parser-releases.test.mjs', 'workers/spw-quest/test/parser-prereleases.test.mjs', 'workers/spw-quest/test/specimens.test.mjs', 'workers/spw-quest/test/constructs.test.mjs'], { cwd: ROOT, stdio: 'inherit' });
   execFileSync(process.execPath, ['--test', 'workers/site-hub-next/test/doors.test.mjs', 'workers/site-hub-next/test/tealstripes.test.mjs', 'workers/site-hub-next/test/mutex.test.mjs'], { cwd: ROOT, stdio: 'inherit' });
   execFileSync(process.execPath, ['--test', 'workers/factshift-center/test/snapshot.test.mjs'], { cwd: ROOT, stdio: 'inherit' });
   console.log(`[check:workers] ${inventory.units.length} units, ${seenHosts.size} hosts; quest and feedback routing verified`);

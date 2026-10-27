@@ -152,6 +152,7 @@ function moves(specimen, state) {
   const links = [
     `<a href="${escapeHtml(where.href)}">${escapeHtml(where.label)}</a>`,
     edit ? `<a href="${escapeHtml(edit)}">Edit</a>` : "",
+    reading.file ? "" : `<a href="/pivot?s=${escapeHtml(specimen.id)}">Pivot</a>`,
     compare,
     origin ? `<a href="${escapeHtml(address({ q: state.q, a: specimen.id, b: origin.id }, "compare"))}">Against ${escapeHtml(origin.name)}, where it departs from</a>` : "",
   ].filter(Boolean).join('<span aria-hidden="true"> · </span>');
