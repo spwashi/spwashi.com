@@ -1,9 +1,8 @@
-# Review 2026-09-22 — hand-authored on first touch. Owner of topic breadth, building-block order, field portals, and the topic-wiring test.
+# Review 2026-10-27 — keep. Owner of the topic course, the root shelf, figure homes, and the shared tuner.
 # Plan Index — topic-building-blocks
 #
-# Topics read as a course, not only a shelf: building blocks in order, a next
-# page from every leaf, and portals from the fields of the creator's peers,
-# mentors, and family into the topics where their questions already live.
+# Topics read as a course. The root lists areas, each hub keeps one ordered
+# path and one figure that is that subject, and every leaf points to a neighbor.
 
 #>plan_topic_building_blocks_index
 #:index #!plan
@@ -14,7 +13,7 @@ operation = "align"
 fixity = "tending"
 
 intent: .{
- goal = `Widen software and math with foundational and working-practice stubs, order them as building blocks on each hub, open andragogy and fields as routes of their own, and keep every topic leaf reachable from its hub and pointing to a neighbor.`
+ goal = `The topics root lists areas. Each area hub keeps an ordered path, a figure that is that subject, and a lab or a link to the lab. Every leaf stays reachable from its hub and points to a neighbor.`
  owner = `topic-building-blocks`
  kind = `plan`
  bucket = `content_learning`
@@ -29,13 +28,43 @@ intent: .{
   `field-portals`,
   `two of the site's kinds of play: outward wonder (pedagogy), introspective practice (andragogy)`,
   `stub-shape-hero-essentials-bridge`,
-  `topic-wiring-listed-and-neighbors`
+  `topic-wiring-listed-and-neighbors`,
+  `root-lists-areas-only`,
+  `one-home-per-repeated-figure`,
+  `one-tuner-on-the-topics-root`
  ][reg=set]
  refuse = #[
   `generated filler bodies`,
   `naming private people`,
-  `new data-spw families or components for stubs`
+  `new data-spw families or components for stubs`,
+  `a second topics hub under design/experiments/symphony`,
+  `splitting public/js/modules/math/diagrams.js into one file per lab`
  ][reg=set]
+}[reg=facet]
+
+^"depth_rule"{
+ root_may_link = `/topics/<area>/ and rooms outside /topics/`
+ root_may_not_link = `/topics/<area>/<leaf>/`
+ areas = `software, math, craft, film, fields, andragogy, pedagogy, biochemistry, knowledge-bases, hypermedia, architecture, site-design, materials, nutrition, mental-health, search, slop`
+ test = ~"../../../scripts/tests/topic-wiring.test.mjs"
+}[reg=facet]
+
+^"figure_homes"{
+ math_field = `public/images/routes/math-signal-field-square.webp stays on /topics/math/ and the topics visual card. It is a wash of circles and paper, so leaf alts stop claiming axes, slopes, or vector flow.`
+ paper_still = `public/images/renders/papergami/papergami-kinetic.webp stays on /topics/craft/svg/. Calculus keeps the diagram that moves.`
+ sunflower = `public/images/renders/2026-05-B-rhythms/pollination-golden-spiral-display.webp stays on /topics/nutrition/. Symmetry drops the png twin.`
+ clockwork = `public/images/assets/scheduler-clockwork.png stays on /topics/software/schedulers/. The drawing is labeled as a scheduler.`
+ crystals = `public/images/assets/compression-crystals.png stays on /topics/software/compression/. The drawing is labeled as compression.`
+ stage_facade = `The lined stage facade folio stays on /topics/film/. Site design links it when that page is open.`
+ constellation = `public/images/home/constellation-studio-1600.webp stays a home image. Pedagogy and statistical analysis link home when those pages are open.`
+ ampersand_folio = `When the topics visual-studies row goes, /topics/math/ keeps the ampersand folio until a better owner is named. The alt stays the drawing.`
+}[reg=facet]
+
+^"controls"{
+ tuner = `/topics/#topics-tuning is the in-page tuner. Software and math link it. Settings stay available at /settings/#presets.`
+ pedagogy_widgets = `The four vibe widgets on /topics/pedagogy/ are essays. They become principle cards.`
+ diagrams = `Eight lab pages load public/js/modules/math/diagrams.js. They share one query string. A catalog mount on [data-math-visual] waits for runtime-plane-consolidation.`
+ maps = `An SVG whose nodes repeat a route bridge and are not anchors goes when that hub is already open. A diagram inside data-math-visual stays.`
 }[reg=facet]
 
 ^"open"{
@@ -52,6 +81,16 @@ intent: .{
   `git diff --check`
  ][reg=set]
 }[reg=facet]
+
+#>wonder_topic_building_blocks_glyph_folio
+?["Which page keeps the pale glyph folio: the ladder, the hash knot, and the little house?"]{
+  #:depth #!pragmatics ~#lens(projection)
+  ~#with: @plan @mental_health @site_design
+  ~#tension: "The same drawing is the mental-health hero and a site-design study. The picture is glyphs and a house. Neither page is what the drawing depicts, so a new alt will not make a second home."
+  !probe{ "Open /topics/mental-health/ and /topics/site-design/ and say which page a reader should meet the drawing on. The other page links it." }
+  ~<"../../../topics/mental-health/index.html"> ~<"../../../topics/site-design/index.html">
+  $%[home.mental_health, home.site_design]
+}
 
 #>wonder_topic_building_blocks_regional_lenses
 ?["Should the regional lenses on /topics/fields/, which pair continents with kinds of infrastructure, stay public as written?"]{

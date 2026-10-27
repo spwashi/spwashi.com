@@ -86,7 +86,7 @@ Every live folder, once, by area. Open a plan's `index.spw` for its disposition 
 - `semantic-copy-depth/` — copy depth and tone; holds voice, typography, `editorial-readability` and `audience-onboarding-copy`.
 - `copy-localization/` — copy keys that land search on a sentence; locale editions later.
 - `semantic-html-normalization/` — landmarks, ids, ARIA; JS-off parity.
-- `topic-building-blocks/` — topics as a course; holds the field guides and `living-learning-surface`.
+- `topic-building-blocks/` — topics as a course: the root shelf, one home for each repeated figure, and the shared tuner; holds the field guides and `living-learning-surface`.
 - `blog-blob-spw/` — the blog unit (Starter) and its `.spw`.
 - `promo-wonder-cycle/` — daily and weekly lanes; holds the release-day receipts.
 - `ecosystem-offer-2026-10/` — the season's offer copy; holds `funding-proof-cards`' rule.

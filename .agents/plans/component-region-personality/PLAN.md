@@ -4,7 +4,7 @@
 
 **Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — hubs.hero_children, seams.entrance_copy.
 
-**Entrances:** this plan owns the entrance hubs' real estate, their cards and chips. The words belong to [semantic-copy-depth](../semantic-copy-depth/PLAN.md).
+**Entrances:** this plan owns the entrance hubs' real estate, their cards and chips. The words belong to [semantic-copy-depth](../semantic-copy-depth/PLAN.md). [topic-building-blocks](../topic-building-blocks/PLAN.md) may drop the topics visual-studies row and the repeated craft square. The six topic visual cards stay, and Wave 3 is still Services and Recipes.
 
 **Related:** [webpage-trope-vocabulary](../archive/webpage-trope-vocabulary/PLAN.md) (archived).
 
