@@ -18,6 +18,10 @@
 #:layer #!pragmatics
 
 @hub: ~"../upstream-workbench-recommendations.spw"
+@capabilities: ~"./capabilities.spw"
+@twinkle_script: ~"../../../scripts/plan-twinkle.mjs"
+@wonder_script: ~"../../../scripts/wonder.mjs"
+@plan_plugin_integration: ~"../../_workbench/.agents/plans/plan-plugin-integration/PLAN.md"
 @asks_editor: ~"./editor.spw"
 @asks_language: ~"./language-support.spw"
 @asks_corpus: ~"./corpus-and-cli.spw"
@@ -392,6 +396,70 @@ expression = asks[plugins]{one.reading.then.one.plugin}<upstream>
   !probe{ "npm run -s spw:routes -- --diff /topics/software/spw/operators/action/ /topics/software/spw/operators/probe/ | grep -n -E '^\\^\"|^  first'" }
   $%[compare.lens, compare.command, shape.members]
   ~<"../upstream-workbench-recommendations.spw"> ~<"./motions.spw">
+}
+
+^"plans_as_plugins"{
+  ~#note: "Filed 2026-10-27 from the day's plan and wonder tooling. Each leans on plan_shape in @capabilities, which lets a plugin read a consumer's plans at all."
+
+  plan_twinkle: .{
+    rank = 15
+    status = #proposed
+    home = @first_plugin
+    claim: "The second plugin selects the citations in plan folders and their stream dates, and emits which references moved after the plan that cites them last looked."
+    exists: "npm run plans:twinkle does this as a site script (@twinkle_script). spw:plan:index --touch <path> names the plans whose cards touch a path, with no sense of time."
+    gap: "A plugin that only selects and emits would test the protocol's own next step, discovery through the workspace index, and nothing has been chosen to test it."
+    measured: .{
+      reading = "2026-10-27: 52 plans cite 513 concepts, 146 shared by two or more; 26 bright and 76 dim references in 40 plans"
+      grading = "unscoped, the first run lit 230, led by the wip convention every plan carries; a plan moves by its Status and its last look, not by a sweep across its files; scaffolding cited by over two thirds of plans, archived plans and folders never light"
+    }[reg=facet]
+    recommendation = #[
+      `select pathRefs, the selector spw:integrity already uses, and the stream stamps plan_shape locates`,
+      `emit one facet per plan: its last look, then each lit reference, bright or dim`,
+      `carry the grading rules, or a reading as noisy as the first run`,
+      `upstream, the same reading as spw:plan:index --touch <path> --since-look`,
+    ][reg=set]
+    replaces: "a time-blind touch query, and a cross-plan reading only this site can run"
+    probe: `npm run -s plans:twinkle | sed -n 2,3p`
+    question: "Is a moved reference a fact the plan model holds, or a projection a plugin emits?"
+  }[reg=facet]
+
+  probe_receipts: .{
+    rank = 16
+    status = #proposed
+    home = @first_plugin
+    claim: "A plugin selects wonders marked ~#probe(run), runs each within a declared effect boundary, and emits receipts; it waits on the harness for that boundary."
+    exists: "npm run wonder -- --run does this as a site script (@wonder_script) with its own allowlist, and keeps result_ref-shaped receipts in .spw/gen/wonder-runs.spw. inquiry_loop in @capabilities asks for the loop itself."
+    gap: "The protocol has transforms and emits, and no effect boundary; a plugin that runs commands needs one before it is safe to share."
+    measured: .{
+      probes = "2026-10-27: 64 probes read as commands; 48 pass the site allowlist; held are node one-liners 8, chained commands 5, and scripts that write or drive a browser 3"
+    }[reg=facet]
+    recommendation = #[
+      `not the second plugin: first the harness's effect boundary, then this plugin at its read-only level`,
+      `the site's allowlist is the interim, and its held reasons are the test cases`,
+    ][reg=set]
+    replaces: "a run loop each consumer writes and secures alone"
+    probe: `npm run -s wonder -- --contour | grep 'safe to run'`
+    question: "Does an effect boundary belong to a plugin's declaration, or to the harness that runs it?"
+  }[reg=facet]
+
+  twinkle_lens: .{
+    rank = 17
+    status = #proposed
+    home = @plan_plugin_integration
+    claim: "In a plan file, each citation carries a lens saying whether its target moved since this plan last looked."
+    exists: "Citation lenses landed at the pin: they count the files and citations that point at a file or an anchor (lens_counts_citations, above). The plan-fact model gives a plan's last stream date."
+    gap: "A plan author cannot see, at the line, that a convention or a wonder it cites has moved under it."
+    measured: .{
+      example = "2026-10-27: spw-metaphysical-language last looked 2026-10-12; one bright reference (the plan it calls spw-inquiry-loop moved) and five dim"
+    }[reg=facet]
+    recommendation = #[
+      `the lens reads moved 10-27 · answered, beside the count the citation lens already shows`,
+      `bright and dim as plans:twinkle grades them; no lens on scaffolding`,
+    ][reg=set]
+    replaces: "a cross-plan reading that lives only in a terminal"
+    probe: `npm run -s plans:twinkle -- --plan spw-metaphysical-language | head -3`
+    question: "Should a lit lens offer the stream entry that would tend it, or only say that something moved?"
+  }[reg=facet]
 }
 
 ^"stream"{

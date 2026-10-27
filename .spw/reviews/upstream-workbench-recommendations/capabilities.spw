@@ -29,6 +29,9 @@
 @claim_protocol: ~"../../_workbench/.spw/harness/claim-protocol.spw"
 @runs_index: ~"../../_workbench/.spw/harness/runs/runs-index.spw"
 @first_plugin: ~"../../_workbench/.agents/plans/first-plugin/wip.spw"
+@plan_plugin_integration: ~"../../_workbench/.agents/plans/plan-plugin-integration/PLAN.md"
+@wip_template: ~"../../_workbench/.agents/plans/_schema/wip-template.spw"
+@asks_plugins_for_plans: ~"./plugins-and-tooling.spw#plans_as_plugins"
 
 operation = "align"
 fixity = "tending"
@@ -127,6 +130,90 @@ expression = asks[capabilities]{inquiry.axes.ground}<upstream>
     replaces: "a parent hint that reports its child's probe as its own"
     probe: `rg -n 'BRACE_BODY_LINES = ' .spw/_workbench/packages/spw-lsp/src/handlers/wonder.ts`
     question: "Is a nested wonder one question with parts, or a frame of questions that happens to ask one too?"
+  }[reg=facet]
+
+  plan_shape: .{
+    rank = 5
+    status = #proposed
+    home = @plan_plugin_integration
+    contract = `plan.shape/1`
+    claim: "A consumer declares where its plan notebooks keep their facts, once, and every plan reader reads the consumer's plans through that."
+    exists: "plan-plugin-integration is building one plan-fact model for the editors from the card, ^[\"cache\"], ^[\"stream\"], ^[\"open\"] and wonder blocks. spw:plan:index --touch <path> names the plans whose cards touch a path. consumer_plans in ./corpus-and-cli.spw asks for the plan tooling to reach this repo."
+    gap: "The site's notebooks hold the same facts in another shape, so the model, the index and --touch read none of them, and six site scripts each parse the shape with their own regexes."
+    measured: .{
+      shape = "2026-10-27: of 52 live site notebooks, 46 keep ^\"cache\" (status, next_commit, files_hot, gate, last_stream), 5 the bracketed ^[\"cache\"], and none opens with a card"
+      readers = "scripts/lib/plan-wip.mjs (for audit-plans and tending-queue), maintain-plan-directory-indexes, plan-twinkle and wonder each read the notebooks"
+      anchor = "a site notebook's anchor is #>plan_<slug>_wip; its stream types add probe to the workbench's eleven"
+    }[reg=facet]
+    recommendation = #[
+      `a workspace declaration maps the plan facts to where a consumer keeps them: status, gate, next, touches, the stream frame and its types, the open frame`,
+      `the plan-fact model, the index and --touch read a consumer's plans through it`,
+      `the site's scripts read the same declaration, so the shape lives in one file`,
+    ][reg=set]
+    replaces: "six site regexes for one notebook shape, and plan tooling that stops at the workbench's own plans"
+    probe: `rg -l 'readWip|lastLook|readProbeLines|wip.spw' scripts --glob '!tests/**'`
+    question: "Should the site adopt the workbench's card, or should the workbench read a declared shape, the way it would read a declared axis canon?"
+  }[reg=facet]
+
+  plan_rules: .{
+    rank = 6
+    status = #proposed
+    home = @plan_plugin_integration
+    contract = `plan.rules/1`
+    claim: "A consumer declares its plan health rules as .spw, and the editor shows each as a diagnostic on the notebook it reads."
+    exists: "spw:plan:check finds cache drift on the workbench's plans. The site's audit:plans holds three notebook rules: a notebook behind its plan's Status, a gate that waits on the creator while no #>wonder holds the question, and a planned status whose gate opens on nothing."
+    gap: "Rules a consumer cares about live in a consumer script; the editor cannot show them where the notebook is written, and the protocol's open question on health metrics has no example."
+    measured: .{
+      rules = "2026-10-27: the two newest rules found 4 and 5 plans; tending them took audit:plans from 11 warnings to 0 the same day"
+      shape = "each rule reads one fact from the notebook (gate, status, last stream date) and one from the folder (a wonder anchor, the Status line)"
+    }[reg=facet]
+    recommendation = #[
+      `a rule names the facts it reads, the condition, and the sentence it reports`,
+      `rules load from the workspace beside the axis canon (axis_canon above), and lint and the editor run the same ones`,
+    ][reg=set]
+    replaces: "a consumer's plan rules reachable only from a script"
+    probe: `npm run -s audit:plans | tail -1`
+    question: "Are plan rules a lint concern, or plugin health in the protocol's sense?"
+  }[reg=facet]
+
+  probe_stream_type: .{
+    rank = 7
+    status = #proposed
+    home = @wip_template
+    contract = `stream.types/1`
+    claim: "probe is a stream type: a dated line saying what a wonder's probe showed, naming the wonder."
+    exists: "The workbench's wip template lists eleven types (observe, decide, surprise, revise, blocked, taste, rebase, hygiene, implement, verify, note). The site's wip convention adds probe, from the theory map's lifecycle."
+    gap: "Upstream readers do not know the type, and a probe line names its wonder only in prose, so nothing links from the line to the question."
+    measured: .{
+      lines = "2026-10-27: 16 probe lines on the site, every one written that day; npm run wonder -- --run prints one per run to judge and paste"
+    }[reg=facet]
+    recommendation = #[
+      `add probe to the template's types`,
+      `a wonder id in a stream line links and hovers the way a declared handle in prose now does`,
+    ][reg=set]
+    replaces: "a lifecycle stage the editors cannot see"
+    probe: `rg -n 'Types:' .spw/_workbench/.agents/plans/_schema/wip-template.spw`
+    question: "Is a probe line an observe with a wonder attached, or a type of its own?"
+  }[reg=facet]
+
+  measure_or_answer: .{
+    rank = 8
+    status = #proposed
+    home = @hub
+    contract = `wonder.answer_set/1`
+    claim: "A $%[…] list either names what to measure or names the answers a question chooses among, and the form should say which."
+    exists: "The workbench reads $% as metrics; the site's harvest resolves each term against a producer. The theory map's lifecycle reads the same list as the alternatives ~#answer picks from."
+    gap: "An answer set can never resolve against a producer, so it reads as a missing measurement forever, and a metric list can be answered by naming one of its terms."
+    measured: .{
+      terms = "2026-10-27: 566 terms in $% lists; 68 sit in wonders with a guess on record, which use them as answer sets; 92 resolve against a producer"
+    }[reg=facet]
+    recommendation = #[
+      `prefer composition to a new form: ~#expect or ~#answer beside a $% list marks it as an answer set`,
+      `the harvest, the lattice and the editor's metric count read that mark`,
+    ][reg=set]
+    replaces: "one form doing two jobs that no reader can tell apart"
+    probe: `npm run -s wonder:measures | tail -2`
+    question: "The creator's call: does $% stay one form with a mark beside it, or do answers get their own reading?"
   }[reg=facet]
 }
 
