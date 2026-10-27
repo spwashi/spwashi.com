@@ -77,7 +77,7 @@ invariants: #[
 
 #>wonder_floating_chrome_stack_console_size
 ?["Is CLAUDE.md's 'Pocket chrome keeps --touch-target-compact' the decision on console button size, or only an agent rule waiting for one?"]{
-  #:depth #!pragmatic ~#lens(choice)
+  #:depth #!pragmatics ~#lens(choice)
   ~#with: @fix
   ~#hypothesis: "The FIX's 2026-09-13 pass left console buttons as a human call: the 44px lane floor or --touch-target-compact. CLAUDE.md, written 2026-09-06 in f237a8c6, already says 44px is the ground-control target outside [data-spw-floating-chrome] and that pocket chrome keeps the compact size. If that line is the decision, Step 2 only needs its pointer-keyed demo."
   ~#tension: "Written rules are suggestions until the creator says so. Compact console buttons keep the bottom lane packed and readable on camera. A 44px floor is easier for a thumb but spends lane height that the promo, satchel and cauldron already compete for."

@@ -82,8 +82,9 @@ contents = #[
     cost = `low, over time`
   }[reg=facet]
   hygiene = .{
-    duplicate_anchors = `five; crawl_spwashi twice in one cache`
+    duplicate_anchors = `four, live against archive; the fifth sits in a pasteable prompt string`
     fixity = `70 archived files say cold, outside the five tiers`
+    depth = `#!pragmatic and #!pragmatics, 10 to 749: renamed with spw refactor`
     operation = `three archived indexes disagree between #: and =`
     cost = `small, one batch`
   }[reg=facet]

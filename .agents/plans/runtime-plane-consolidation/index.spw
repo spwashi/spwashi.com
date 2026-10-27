@@ -171,7 +171,7 @@ invariants: #[
 
 #>wonder_runtime_plane_consolidation_arrival_lever
 ?["When 56 modules mount on every route, which lever owns the fix: scoping by route family, or arming on a reader's engagement?"]{
-  #:depth #!pragmatic ~#lens(arrival)
+  #:depth #!pragmatics ~#lens(arrival)
   ~#with: @plan @site @module_loader
   ~#tension: "Phase 2 here scopes modules by route family (ctx.routeFamily is parsed at site.js:498 and read by nothing). engagement-clusters arms a module per host when a reader engages it (kernel/engagement.js, 0a974b23). Both answer the same census and are two theories of how a page arrives; neither plan names the other, and building both doubles the gates a def can carry."
   !probe{ "npm run audit:root-writes" }

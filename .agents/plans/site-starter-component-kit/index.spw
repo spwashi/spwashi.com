@@ -116,7 +116,7 @@ invariants: #[
 
 #>wonder_site_starter_first_portable
 ?["Should the first piece that travels to another site be a capability (texture-slice) or the design specimen design-hub is waiting on?"]{
-  #:depth #!pragmatic ~#lens(choice)
+  #:depth #!pragmatics ~#lens(choice)
   ~#with: @plan @bundling_plan @starter_inventory
   ~#taste: "The first thing to travel teaches every later one how a host adopts Spw, so it should be the piece a second site would ask for."
   ~#hypothesis: "BUNDLING.md picks texture-slice: focused JS, opt-in markup, stylesheet-relative motifs. design-hub's one open slice is to reproduce a specimen in a second site, and designer-conversation-canvas is building the export bundle for that specimen."
