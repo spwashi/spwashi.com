@@ -39,7 +39,7 @@ npm run spw:routes -- --diff /a/ /b/                        # two routes: the gr
 rename fragility but had no automation behind it. It delegates *extraction* to
 `spw query --selector pathRefs` — the parser decides what a citation is — and
 only adds *resolution*: does the path exist, and does the `#fragment` name
-anything in the target. All 2480 citations currently resolve.
+anything in the target. On 2026-10-28 all 6332 citations across 408 surfaces resolved.
 
 **Known workbench gaps** (this consumer is a use case the workbench predates).
 Pin `850077ab48e0`. Details: `.spw/workbench-report.spw`.
