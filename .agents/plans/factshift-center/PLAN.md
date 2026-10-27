@@ -1,6 +1,6 @@
 # factshift.center
 
-**Status 2026-10-27.** factshift.center serves a snapshot of the factshift app. The snapshot was refreshed today to the app's latest local commit, recorded in `workers/factshift-center/version.json`. A line of Spw held in the address (`?spw=`) now lays out on the canvas as its anatomy. The app is its own repository at `workers/factshift-center/app`, gitignored here, and the ten commits from this sitting are local and unpushed. The last of them is a phone pass from the creator's live notes. It covers the focal contract, the menus, the panels, the Spw reading and most of the SVG semantics. Next: a gesture grammar, as a demo. Deploy is the creator's (Wrangler).
+**Status 2026-10-27.** factshift.center serves a snapshot of the factshift app. The snapshot was refreshed today to the app's latest local commit, recorded in `workers/factshift-center/version.json`. A line of Spw held in the address (`?spw=`) now lays out on the canvas as its anatomy. The app is its own repository at `workers/factshift-center/app`, gitignored here, and the eleven commits from this sitting are local and unpushed. The last two came from the creator's live notes. They cover a phone pass, the focal mark as the open tool's handle, a gesture grammar, the Spw stage, and most of the SVG semantics. Deploy is the creator's (Wrangler).
 
 **Related:** [spw-quest](../spw-quest/PLAN.md) (its pivot and construct cards can open a line here) · [spw-inquiry-loop](../spw-inquiry-loop/PLAN.md) (parser releases, the capability ledger) · [brace-semantics](../brace-semantics/PLAN.md) (`[ ]` as a frame) · [spw-metaphysical-language](../spw-metaphysical-language/PLAN.md) (depth passes) · [ecosystem-architecture](../ecosystem-architecture/PLAN.md) (peers).
 
@@ -14,7 +14,7 @@ operation: align (the app's canvas with the workbench's reading of a line)
 
 ```text
 pins (2026-10-27)
-app            main e9a390d, 77 commits past origin/main 2ba127a (fetched 2024-10-30)
+app            main e601855, 78 commits past origin/main 2ba127a (fetched 2024-10-30)
 app workbench  submodule fffab72, spw-workbench 0.2.0-alpha.1, 2026-03-12
 site reader    public/js/semantic/spw-workbench-reader.js, v0.3.0 @ 850077a (the site's mount)
 spw.quest      assets/parser/2026.10.13, v0.3.0 @ 0eb1d1c, nine commits behind the site's mount
@@ -43,28 +43,88 @@ spw.quest      assets/parser/2026.10.13, v0.3.0 @ 0eb1d1c, nine commits behind t
 f1999d6 faf14f2 a792749   ids, ?spw=, normalize fills only what is missing
 656c6e5 6b67304           regions drawn; the anatomy, title and corner box
 e9a390d                   the phone pass and the interaction contract below
+e601855                   the handle, the gesture grammar, the slot, and the Spw stage
 ```
+
+## Layout
+
+factshift.com, read in its most accessible way, is a frame of work on a ground, with its chrome held at the screen's corners: the title at the top right and [...] at the bottom left. factshift.center keeps that, and gives each corner one job:
+
+| where | what it holds |
+| --- | --- |
+| top right | what this is: the title, or the held expression |
+| top left | where you are: the mode column, solid squares with no label, the open one marked on its button |
+| bottom left | what you can do: [...] and its menu, labels left and outlined buttons right |
+| bottom right | what you hold: the held lines |
+| the frame | the work: the canvas, and the open tool, held by its handle |
+
+- **The handle joins them.** The focal mark is the open tool's handle, at its bottom-left corner, so each tool is a tablet or a palette held by its corner.
+  - Spw rests centered in the frame, as a stage for a held prompt.
+  - The other tools, and no tool, rest at home above [...].
+  - A menu puts the tool away while it is open, and the handle goes home with it.
+  - Dragging the handle carries the tool. A handle placed by hand is remembered, and every tool opens there.
+- **Chrome to the screen's corners; work to the frame's edges.** The frame is inset 5% on each side. A tool on a phone reaches the frame's right edge, and Spw's stage is the frame's width.
+- **The improvement over factshift.com** is in what each corner says, not where it is:
+  - The corners name their state (the open mode, a toggle's on or off).
+  - Every control can be reached by keyboard and is named for assistive tech.
+  - A phone shows one surface at a time.
+  - Nothing widens or reflows the page.
 
 ## Interaction contract
 
-The creator set this on 2026-10-27, and the phone pass implements it. Write each new rule here as it lands.
+The creator set this on 2026-10-27; the phone pass built it, and the demo in the app's working tree revised it. Write each new rule here as it lands.
 
-- **The focal mark.** It lives just above the [...] box, inset 0.75rem from the canvas frame, and keeps that home as the screen changes size. A mark the reader drags or nudges is remembered. A mark never placed is not.
-- **Its tap.**
-  - With no menu open, a tap opens Spw (if no mode is open) and the menu.
-  - With a menu open, a tap closes it and gives focus to the open mode's tool.
-  - [...] also opens the menu.
-- **The focal mark item** in the menu brings a moved mark home, or focuses a mark already at home.
-- **Labels.** Labels are nouns or adjectives that name the thing toggled or the state left behind ("mode menu", "link force", "fixed positions"). A toggle shows its state beside its name: on or off, a count, home or moved. Hover is a hint; focus and state carry the weight.
-- **Phones.** One surface at a time:
-  - A mode's panel docks across the screen above the mark. It steps back while a menu is open, at every size.
-  - The mode list packs three to a row.
+- **Attention arcs.** Every activation ends an arc. Either it opens something to decide with, or it meets the reader with the same state and shows what could be next (the hold card). A swipe taken back is the reader's own decision, and stays quiet.
+- **The tap toggles the tool.**
+  - It puts the open tool away, or brings back the last one.
+  - With a menu open, it closes the menu.
+  - Showing a tool does not take focus; → is the way in.
+  - [...] opens the primary menu.
+- **The focal mark item** in the menu brings a moved handle home, focuses one at home, and shows the card for one already focused there.
+- **Tools are picked up and put down.**
+  - No tool is in hand at the start. (A story or a node's own link may still choose one.)
+  - Tapping the tool in hand puts it down, and the palette's word shows above the handle only while a tool is held.
+  - A node tapped with no tool is named, not changed.
+- **The menu ([...]).** Focus is a ring for the keyboard only. A tapped toggle never fills its whole button, so its state box and the hover stay readable.
+- **Labels.**
+  - Labels are nouns or adjectives naming the thing toggled or the state left behind ("mode menu", "link force").
+  - A toggle's state is a box beside its name: lightly filled when on, outlined when off. The name keeps full contrast either way.
+  - No words appear beside the handle. Names live in the hold card.
+- **Phones.**
+  - A tool hangs from its handle.
+  - The mode column stays one column of 44px squares.
+  - Touch screens hide keyboard hints.
   - Nothing widens the page.
-  - Touch screens hide keyboard hints, and their buttons are 44px.
-- **Tools.** Each tool keeps its own personality inside that frame, and the HTML stays simple. Margins are tight, text may be smaller to fit, and visual noise comes out (no box around each menu row).
-- **The Spw panel reads its line back** as it is written: each slot by name, the bond between two expressions, the words the canvas already holds, and anything no slot read. It uses the reader the canvas lays out (`workers/factshift-center/app/src/js/modes/spw/line-reading.ts`). Its priming buttons come from a Spw without dialects or distinct representational contexts (`wonder_factshift_priming_dialects`).
+- **The Spw panel:**
+  - Its heading names the prompt's form as a mode: `spw[line]`, `spw[join]`, `spw[lines]`, or `spw[unread]`; plain `spw` while it is empty.
+  - Under the prompt is one quiet line, of reserved height. It names the bond between two expressions, and the words the canvas already holds as buttons that go to their nodes. Otherwise it says "unread", or nothing.
+  - One row of buttons: run at one end, clear (which empties the prompt) at the other.
+  - The four priming buttons are gone; priming from the keyboard remains (`wonder_factshift_priming_dialects`).
+  - The heading sits flush with the prompt, and the panel has wider side margins.
 
-Verified at 390px (scrollWidth 390 in every state) and 1440px, from the app's `dist/` in Chrome.
+Verified at 390px and 1440px from the app's `dist/` in Chrome, driven with touch input. The page held its width in every state.
+
+## Gesture grammar
+
+The creator asked on 2026-10-27 for swipe and tap semantics that localize meaning, adapt to each tool, and serve expert use and discovery through play. One rule is read the same way everywhere, and each tool decides what it means there. On the handle, a swipe points at where the thing it opens lives:
+
+| gesture | on the handle, or its empty slot | on a node |
+| --- | --- | --- |
+| tap | toggle the tool: put it away, or bring back the last one (Spw the first time); with a menu open, close the menu | the current tool, or its name with no tool in hand |
+| hold | grip: the handle rings and its tool lifts | its name; selected (the touch screen's Alt+click) |
+| hold, then drag | carry the tool, keeping the finger's offset | place it, ringed while dragged; thrown on release |
+| ← | the mode column on the left edge, at once; the same touch chooses: onto a square, or up and down from the open mode; let go on a lit mode to open it | (drag) |
+| ↓ | the primary menu ([...]) | (drag) |
+| → | into the tool: its default activation, its main control in focus | (drag) |
+| ↑ | a new node where the swipe lets go, its name typed in place (an empty name takes it back) | (drag) |
+
+- **One gesture per touch.** A swipe's direction locks once it crosses its line, so a path that drifts diagonally keeps the gesture it began. It unlocks only by coming back near where it started, which takes it back.
+- **Guided.** A swipe that would land lights the handle's edge on that side, and the column lights the mode under or beside the finger. A swipe toward nothing shows the card. The handle is above everything else on the page.
+- **The slot.** The larger square at the handle is the tool's slot. Empty, it has a faint, light, solid outline and takes the handle's gestures, a target sized for a thumb. When a tool is open, the tool fills the slot and takes its touches.
+- **Taught on asking.** A hold shows the card, and so does the menu's "gestures" row, which counts what this browser has found. With a keyboard, the context-menu key or Shift+F10 is the hold. Nothing teaches itself uninvited.
+- **Expert use.** Every gesture has a visible control. Choosing a mode takes one touch: ←, slide, let go.
+
+Built in the app (`workers/factshift-center/app/src/js/ui/gestures.ts`) and committed at the creator's ask after a sitting of live notes. The next tools and the open choices are in `wonder_factshift_gestures`.
 
 ## Refreshing the snapshot
 
@@ -112,4 +172,5 @@ Nothing scripts these steps yet. A carry script like spw.quest's is a candidate 
 - what earlier parity would have grown;
 - the rebundle;
 - which relations pull;
-- what the Spw panel's priming becomes now that Spw has dialects.
+- what the Spw panel's priming becomes now that Spw has dialects;
+- which gestures the other tools take, and the choices the demo leaves open.

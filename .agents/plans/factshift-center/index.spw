@@ -183,3 +183,16 @@ invariants: #[
   !probe{ "list the dialects and contexts the workbench names, then read one line in two of them and say what the panel would have to show differently" }
   $%[priming.context_chooser, priming.keep_operators, priming.retire]
 }
+
+#>wonder_factshift_gestures
+?["Which gestures does each tool take next, and how should the grammar settle the choices the demo leaves open?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#with: @plan @line_anatomy
+  ~#taste: "One rule taught once, meaning what each tool makes it mean: tap acts, hold learns, across chooses, along reaches, hold-then-drag places."
+  ~#hypothesis: "The tools that hold a set take across, and the tools that hold an amount take along. The tool palette steps tools across and turns a tool around along. The held-line box steps through lines across, and along opens a line in Spw or puts the box away. A row of the Spw reading pivots its slot to a line one change away, as spw.quest does. A shortcut row turns off and on, or a value down and up. A hold on the canvas starts a selection where touch has none."
+  ~#expect: "Four choices are the creator's. Should the handle's arrow keys follow the swipes (↑ modes, ↓ menu, → tool, ← back)? Today they nudge it. Does a node's across run its tool's two directions (grow and shrink), or stay a throw? Is the found count play or pressure? Is a buzz on landing welcome?"
+  ~#unblocks: "the gesture commit, and the tools after the mark and the node"
+  ~#probe(read)
+  !probe{ "on a phone, swipe and hold the mark and a node for a minute with no instructions; then open the gestures row, and name which gesture was found first, which was missed, and which surprised" }
+  $%[gestures.learnable, gestures.too_many, gestures.missing]
+}
