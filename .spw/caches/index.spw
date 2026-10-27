@@ -97,6 +97,7 @@
 @offer_rhythm_2026_10: ~"./offer-rhythm-2026-10.spw"  # prime: the 13-day rhythm applied to offers; the numbers are the creator's to set
 @ui_review_sitting_2026_10: ~"./ui-review-sitting-2026-10.spw"  # prime: every look the spwashi.com UI plans wait on, grouped by where the reader stands; what lands without a look; the files two plans claim; access gaps no plan owns
 @ecosystem_clusters_2026_10: ~"./ecosystem-clusters-2026-10.spw"  # prime: six skill clusters and the business shape each suits (studio, press, bench, kitchen garden, desk, lab), the loop they feed, what compounds at 3, 6, 9 and 12 months, information architecture for libraries, ecosystems and performance, and a four-object spine (record, release, relay, receipt); four wonders hand back the taste calls
+@theory_map_2026_10: ~"./theory-map-2026-10.spw"  # prime: eleven questions tying Spw ideas to theory (anti-unification, query lattices, concept lattices, inquisitive answer sets, value of a probe, operator tables, join laws, forced decay, salience maps, dimensional ascent, variation in hovers), each with an answer set, a prediction and a probe kind; the packet, brief and receipt for a Gemini cut
 
 operation = "align"
 fixity = "tending"
