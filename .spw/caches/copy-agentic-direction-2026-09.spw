@@ -99,7 +99,7 @@ source = "chat 2026-09-07: sitewide copy vs recent direction; TikTok on AI / dev
 
 #>crawl_spwashi
 ?[what can I reuse without forking]{
-  #:depth #!pragmatic
+  #:depth #!pragmatics
   ~#audience: "an agent or person crawling spwashi.com to build a similar inspectable site"
   ~#hypothesis: "constructs plus sensors travel; voice and grammar do not, unless consumed from the pinned workbench"
   !probe{ "after one session, name the operation, the working set, the sensor run, and what was correctly not built" }

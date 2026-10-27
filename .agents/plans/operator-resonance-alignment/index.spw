@@ -108,7 +108,7 @@ invariants: #[
 
 #>wonder_operator_resonance_family_attributes
 ?["Should data-spw-operator-family and data-spw-transformation be spent on per-family colour, or should sigil-annotation.js stop writing them?"]{
-  #:depth #!pragmatic ~#lens(material)
+  #:depth #!pragmatics ~#lens(material)
   ~#with: @plan @operator_alignment @operators
   ~#taste: "A sigil should teach its family without turning every operator into its own colour. The attribute is an inspection contract until something on the page spends it."
   ~#hypothesis: "operator-alignment.spw lists both as additive inspection attributes. No CSS or JS reads them; wonder.css reaches family kin through data-spw-resonance-family on html instead. Since no selector names them, writing them costs no style invalidation, so dropping them would be about legibility rather than speed."

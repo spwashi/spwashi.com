@@ -18,7 +18,7 @@
   data_spw = `hierarchical tokens: data-spw-<family>-… with first-token density (sample): surface, page, menu, operator, image, component, charge, shell, slot, module…`
   js = #[`init*`, `SPW_*_CONTRACT`, `MODULE_LAYERS`, `MOUNT_WHEN`, catalog `id` kebab-case`][reg=set]
   css = `layer folders + Reads-as/Genome chapter banners on split codices`
-  spw = `#>snake_id · #:tags · operation/fixity · @refs`
+  spw = `#>snake_id · #:case #!mood · operation/fixity · @refs`
   rule = @naming_structured
 }[reg=facet]
 

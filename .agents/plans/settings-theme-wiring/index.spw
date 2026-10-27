@@ -84,7 +84,7 @@ invariants: #[
 
 #>wonder_settings_theme_wiring_icon_packs
 ?["Are icon packs a reader setting at all, or do the sigils stay one authored set?"]{
-  #:depth #!pragmatic ~#lens(choice)
+  #:depth #!pragmatics ~#lens(choice)
   ~#with: @fix @index
   ~#hypothesis: "The 'Icon pack (considering)' fieldset offers text, symbol and regional. iconPack writes data-spw-icon-pack on <html> and nothing in public/css reads it, so the choice changes nothing a reader can see."
   ~#tension: "Wiring it means drawing a second and third glyph set for every operator and sigil, and those sets would compete with the one table the site teaches. Removing it closes a door the creator labelled as still being considered. Either answer closes FIX row 6."
