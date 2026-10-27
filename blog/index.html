@@ -464,6 +464,7 @@
 <span class="sk-key">cohort_field</span>    = { emit=<span class="sk-op">@</span>projection, receivers=<span class="sk-op">?</span>[others], resonance=emit&amp;receivers, formation=<span class="sk-op">*</span>[resonance..return] }
 <span class="sk-key">discipline</span>      = { full kernel with premise, medium, dielectric, channels, ac_drift, anchor_loop, output, return }</code></pre>
 
+                <!-- Workbench relation: harmony. The prism map and the operator cards use the workbench's names (operators.spw). -->
                 <details class="spw-surface-file">
                     <summary>"blog_surface.spw" — how this page describes itself</summary>
                     <pre><code class="language-spw">#&gt;blog_surface
@@ -477,18 +478,18 @@
 }
 
 ^"prism_map"{
-  #  = frame
-  ^  = binding
-  @  = ref
-  ?  = probe
+  ~  = potential
+  ?  = wonder
   !  = action
-  ~  = stream
-  *  = merge
-  =  = baseline
+  *  = value
+  .  = ground
+  ^  = ascension
+  #  = vibration
+  @  = perspective
+  &amp;  = subject
+  =  = configuration
+  %  = measure
   $  = substrate
-  %  = meta
-  +  = normalize
-  |  = surface
 }
 
 ?["What makes a .spw file different from Markdown?"]{
@@ -510,47 +511,17 @@
                     Each sigil is a gesture in <code>Spw.b</code> block geometry — the authored dialect. Cards accumulate charge from the left edge and the color of each card is its spectral slice through the operator prism.
                 </p>
                 <div class="operator-snippet-grid">
-                    <div class="operator-snippet" data-spw-operator="frame">
-                        <a class="operator-snippet-sigil" href="/topics/software/spw/operators/frame/" title="frame: scope from outside">#</a>
-                        <span class="operator-snippet-name">frame</span>
-                        <code class="operator-snippet-example">#&gt;blog_surface</code>
-                        <span class="operator-snippet-note">extrinsic scope — names a container from outside</span>
+                    <div class="operator-snippet" data-spw-operator="potential">
+                        <a class="operator-snippet-sigil" href="/topics/software/spw/operators/ref/" title="potential: keep a path open">~</a>
+                        <span class="operator-snippet-name">potential</span>
+                        <code class="operator-snippet-example">~[wave] &nbsp; ~ emit tone</code>
+                        <span class="operator-snippet-note">keeps a path open without taking it — like a promise not yet awaited</span>
                     </div>
-                    <div class="operator-snippet" data-spw-operator="intrinsic">
-                        <span class="operator-snippet-sigil" title="label: hold name flat">_</span>
-                        <span class="operator-snippet-name">label</span>
-                        <code class="operator-snippet-example">?_query &nbsp; {_A }_A</code>
-                        <span class="operator-snippet-note">escape/intrinsic — holds a name flat, enables overlapping braces</span>
-                    </div>
-                    <div class="operator-snippet" data-spw-operator="layer">
-                        <a class="operator-snippet-sigil" href="/topics/software/spw/operators/layer/" title="layer: stratum">:</a>
-                        <span class="operator-snippet-name">layer</span>
-                        <code class="operator-snippet-example">#:layer #!draft</code>
-                        <span class="operator-snippet-note">declares the stratum a frame operates in</span>
-                    </div>
-                    <div class="operator-snippet" data-spw-operator="baseline">
-                        <a class="operator-snippet-sigil" href="/topics/software/spw/operators/baseline/" title="baseline: ambient drift">=</a>
-                        <span class="operator-snippet-name">baseline</span>
-                        <code class="operator-snippet-example">=[bias] &nbsp; --hue: 192</code>
-                        <span class="operator-snippet-note">sets an ambient field value — like a CSS custom property</span>
-                    </div>
-                    <div class="operator-snippet" data-spw-operator="substrate">
-                        <span class="operator-snippet-sigil" title="substrate: what is shaped">$</span>
-                        <span class="operator-snippet-name">substrate</span>
-                        <code class="operator-snippet-example">$interpretation &nbsp; $[fiber]</code>
-                        <span class="operator-snippet-note">the material a process acts on — what is being shaped</span>
-                    </div>
-                    <div class="operator-snippet" data-spw-operator="ref">
-                        <a class="operator-snippet-sigil" href="/topics/software/spw/operators/ref/" title="ref: points elsewhere">@</a>
-                        <span class="operator-snippet-name">ref</span>
-                        <code class="operator-snippet-example">@projection &nbsp; @emit[cohort_field]</code>
-                        <span class="operator-snippet-note">points to something elsewhere — a reference, not a copy</span>
-                    </div>
-                    <div class="operator-snippet" data-spw-operator="probe">
-                        <a class="operator-snippet-sigil" href="/topics/software/spw/operators/probe/" title="probe: detect crossing">?</a>
-                        <span class="operator-snippet-name">probe</span>
+                    <div class="operator-snippet" data-spw-operator="wonder">
+                        <a class="operator-snippet-sigil" href="/topics/software/spw/operators/probe/" title="wonder: open a question">?</a>
+                        <span class="operator-snippet-name">wonder</span>
                         <code class="operator-snippet-example">?[what_is_here] &nbsp; ?[threshold]</code>
-                        <span class="operator-snippet-note">detects crossing without storing — like Intersection Observer</span>
+                        <span class="operator-snippet-note">opens a question you can close again — a probe checks it without storing the answer</span>
                     </div>
                     <div class="operator-snippet" data-spw-operator="action">
                         <a class="operator-snippet-sigil" href="/topics/software/spw/operators/action/" title="action: fires once">!</a>
@@ -558,43 +529,62 @@
                         <code class="operator-snippet-example">![act_small] &nbsp; ! clear</code>
                         <span class="operator-snippet-note">fires once — a discrete act, not a sustained process</span>
                     </div>
-                    <div class="operator-snippet" data-spw-operator="stream">
-                        <a class="operator-snippet-sigil" href="/topics/software/spw/operators/stream/" title="stream: periodic return">~</a>
-                        <span class="operator-snippet-name">stream</span>
-                        <code class="operator-snippet-example">~[wave] &nbsp; ~ emit tone</code>
-                        <span class="operator-snippet-note">periodic return through a medium — like Web Audio oscillation</span>
-                    </div>
-                    <div class="operator-snippet" data-spw-operator="merge">
-                        <a class="operator-snippet-sigil" href="/topics/software/spw/operators/merge/" title="merge: accumulate range">*</a>
-                        <span class="operator-snippet-name">merge</span>
+                    <div class="operator-snippet" data-spw-operator="value">
+                        <a class="operator-snippet-sigil" href="/topics/software/spw/operators/stream/" title="value: what carries weight">*</a>
+                        <span class="operator-snippet-name">value</span>
                         <code class="operator-snippet-example">*[micro..containment] &nbsp; *[w1..w2..w3..w5]</code>
-                        <span class="operator-snippet-note">accumulates micro-acts into structure — like Canvas cumulation</span>
+                        <span class="operator-snippet-note">marks what carries weight, collapsing many marks into one — like a Canvas frame</span>
+                    </div>
+                    <div class="operator-snippet" data-spw-operator="ground">
+                        <a class="operator-snippet-sigil" href="/topics/software/spw/operators/baseline/" title="ground: back to the default">.</a>
+                        <span class="operator-snippet-name">ground</span>
+                        <code class="operator-snippet-example">orientation.</code>
+                        <span class="operator-snippet-note">comes back to the local default — like a CSS initial value</span>
+                    </div>
+                    <div class="operator-snippet" data-spw-operator="integration">
+                        <a class="operator-snippet-sigil" href="/topics/software/spw/operators/object/" title="ascension: lift into one relation">^</a>
+                        <span class="operator-snippet-name">ascension</span>
+                        <code class="operator-snippet-example">^"summary"{ title: "..." }</code>
+                        <span class="operator-snippet-note">lifts parts into one relation you can inspect — like an SVG filter chain that keeps each step</span>
+                    </div>
+                    <div class="operator-snippet" data-spw-operator="vibration">
+                        <a class="operator-snippet-sigil" href="/topics/software/spw/operators/vibration/" title="vibration: name to find again">#</a>
+                        <span class="operator-snippet-name">vibration</span>
+                        <code class="operator-snippet-example">#&gt;blog_surface &nbsp; #:layer #!draft</code>
+                        <span class="operator-snippet-note">names a structure so it can be found again: #&gt; addresses a frame, #: names its layer, #! tags it</span>
+                    </div>
+                    <div class="operator-snippet" data-spw-operator="perspective">
+                        <span class="operator-snippet-sigil" title="perspective: regard from a position">@</span>
+                        <span class="operator-snippet-name">perspective</span>
+                        <code class="operator-snippet-example">@projection &nbsp; @emit[cohort_field]</code>
+                        <span class="operator-snippet-note">regards its operand from a named position — a vantage, not a copy</span>
+                    </div>
+                    <div class="operator-snippet" data-spw-operator="subject">
+                        <a class="operator-snippet-sigil" href="/topics/software/spw/operators/merge/" title="subject: what the relation is about">&amp;</a>
+                        <span class="operator-snippet-name">subject</span>
+                        <code class="operator-snippet-example">&amp;subject[claim]{binding}</code>
+                        <span class="operator-snippet-note">names what a relation is about</span>
                     </div>
                     <div class="operator-snippet" data-spw-operator="binding">
-                        <a class="operator-snippet-sigil" href="/topics/software/spw/operators/binding/" title="binding: join without collapse">^</a>
-                        <span class="operator-snippet-name">binding</span>
-                        <code class="operator-snippet-example">^"summary"{ title: "..." }</code>
-                        <span class="operator-snippet-note">joins things without collapsing difference — like SVG filter chains</span>
-                    </div>
-                    <div class="operator-snippet" data-spw-operator="meta">
-                        <a class="operator-snippet-sigil" href="/topics/software/spw/operators/meta/" title="meta: measure or reduce">%</a>
-                        <span class="operator-snippet-name">meta</span>
-                        <code class="operator-snippet-example">%[reduction] &nbsp; %[measurement]</code>
-                        <span class="operator-snippet-note">measurement or reduction — collapsing to a ratio</span>
+                        <a class="operator-snippet-sigil" href="/topics/software/spw/operators/binding/" title="configuration: keep under a name">=</a>
+                        <span class="operator-snippet-name">configuration</span>
+                        <code class="operator-snippet-example">=[bias] &nbsp; --hue: 192</code>
+                        <span class="operator-snippet-note">keeps a value here, under a name — like a CSS custom property</span>
                     </div>
                     <div class="operator-snippet" data-spw-operator="normalize">
-                        <a class="operator-snippet-sigil" href="/topics/software/spw/operators/normalize/" title="normalize: bring to form">+</a>
-                        <span class="operator-snippet-name">normalize</span>
-                        <code class="operator-snippet-example">+[scale] &nbsp; +[align]</code>
-                        <span class="operator-snippet-note">brings into standard form without losing identity</span>
+                        <a class="operator-snippet-sigil" href="/topics/software/spw/operators/normalize/" title="measure: compare and weigh">%</a>
+                        <span class="operator-snippet-name">measure</span>
+                        <code class="operator-snippet-example">%[reduction] &nbsp; %[measurement]</code>
+                        <span class="operator-snippet-note">compares or weighs, down to a ratio</span>
                     </div>
-                    <div class="operator-snippet" data-spw-operator="surface">
-                        <a class="operator-snippet-sigil" href="/topics/software/spw/operators/surface/" title="surface: presentation boundary">|</a>
-                        <span class="operator-snippet-name">surface</span>
-                        <code class="operator-snippet-example">|[blog] &nbsp; |[settings]</code>
-                        <span class="operator-snippet-note">a presentation boundary — the interface where content meets a viewer</span>
+                    <div class="operator-snippet" data-spw-operator="substrate">
+                        <a class="operator-snippet-sigil" href="/topics/software/spw/operators/meta/" title="substrate: what is shaped">$</a>
+                        <span class="operator-snippet-name">substrate</span>
+                        <code class="operator-snippet-example">$interpretation &nbsp; $[fiber]</code>
+                        <span class="operator-snippet-note">the material a process acts on — what is being shaped</span>
                     </div>
                 </div>
+                <p data-spw-textual-role="note">Not operators: <code>_</code> holds a name flat, as in <code>{_A }_A</code>; <code>+</code> and <code>|</code> join parts, and the workbench reads them as connectors.</p>
             </section>
 
             <p class="blog-transition">The kernel names its parts. Now: what calls for attention?</p>

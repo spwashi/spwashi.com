@@ -57,6 +57,7 @@ const plural = (n, one, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
 /* ---------- The catalog ---------- */
 
 /** A herbarium form or a page's line for each mark, where the shelf holds one. */
+// Workbench relation: harmony. Marks and braces take the guide's names; forms, patterns and the join table extend them and say where they part.
 const MARK_PRESSED = Object.freeze({ "?": "h-probe", "~": "h-induct", "^": "h-project", "&": "h-subject", "$": "h-substrate", "#": "h-ground", ".": "h-settle", "@": "h-lens_bare" });
 const BRACE_PRESSED = Object.freeze({ concept: "h-projected", scene: "r-755c824b", mode: "h-capsule", definition: "h-capsule" });
 const BRACE_SLOT = Object.freeze({ concept: "projection", scene: "scope", mode: "mode", definition: "body" });
@@ -261,7 +262,7 @@ export function namingQuestions() {
   const n = (form) => rows.find((row) => row.form === form).n;
   return [
     `<em>project</em> names two forms: <code>a ^ b</code> between two lines (${n("a ^ b")} on the shelf) and <code>{a ~&gt; b}</code> inside a body (${n("{a ~> b}")}). The mark <code>^</code> is called ascension, and <code>~</code> potential.`,
-    `<em>lens</em> names two things: <code>viewer@subject</code>, where <code>@</code> is called perspective (${count(USAGE.position.within, "@") + n("a @ b")} on the shelf), and the <code>[ ]</code> brace, which the guide reads as the lens you are using (${count(USAGE.slots, "mode")}).`,
+    `<strong>Settled.</strong> <em>lens</em> used to name two things. <code>@</code> is an operation of perspective regarding its operand, so <code>viewer@subject</code> (${count(USAGE.position.within, "@") + n("a @ b")} on the shelf) reads the subject from the viewer's position, and the slot reader calls an <code>@</code> join perspective; the <code>[ ]</code> brace keeps the lens you are using (${count(USAGE.slots, "mode")}).`,
     `<code>~</code> reads three ways by where it sits: potential in front of a word (${count(USAGE.position.front, "~")}), induct between two lines (${n("a ~ b")}), and the start of a movement inside a body (${n("{a ~> b}")}).`,
     `The dot: to the parser <code>software.art.practice</code> is one word; the search reads three parts. ${n("{a.b}")} bodies on the shelf are written this way, and <code>.</code> on its own is called ground.`,
     `A charge with nothing to ride: ${USAGE.wordless} lines open with a valence word and no other word, as <code>bane[bone]{limit}</code> does, so the reader takes the valence word as the charge and finds no word. The workbench reads the five as modifiers on a word.`,
@@ -280,7 +281,7 @@ function joinSection() {
     </tbody>
   </table></div>
   <h3 id="names">Where the names part</h3>
-  <p>Each of these is open. Position may be the whole answer: a mark in front, between, and inside a body need not read alike.</p>
+  <p>Each is open unless it says it is settled. Position may be the whole answer: a mark in front, between, and inside a body need not read alike.</p>
   <ol class="questions">
     ${namingQuestions().map((question) => `<li>${question}</li>`).join("\n    ")}
   </ol>

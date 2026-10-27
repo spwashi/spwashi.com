@@ -138,6 +138,7 @@ expression = expression[compound]{bond.operand.kind}<declared>
   #>wonder_compound_consistency_lens
   ?["Is viewer@subject a lens in the same sense as the [ ] brace?"]{
     ~#expect: "No: @ says who is looking, and [ ] says how; the slot reader's word for @ borrows the brace's."
+    ~#answer: "lens.perspective: the creator, 2026-10-27, @ is an operation of perspective regarding its operand. The slot reader now calls an @ join perspective, and the [ ] brace keeps the lens."
     ~#probe(run)
     !probe{ "rg -n \"'@': 'lens'\" public/js/semantic/expression-query.js" }
     $%[lens.same, lens.perspective]
@@ -174,10 +175,12 @@ expression = expression[compound]{bond.operand.kind}<declared>
   in_a_body = "tight dots 618, ; sequences 48, , lists 12, ~> movements 0"
   in_front = "? 8, ^ 2, ~ 2, # 1, & 1, $ 1; six of the twelve marks never open a word"
   wordless_charge = "17 lines open with a valence word and no other word; the slot reader leaves them with no word"
+  codebase = ~"../caches/operator-consistency-2026-10.spw#compounds"
 }
 
 ^"stream"{
  >>[2026-10-27 14:56] observe — five places where a mark's names part by position, laid out at spw.quest/constructs#names and asked as #>wonder_compound_consistency. Nothing is renamed; the meanings are the creator's.
+ >>[2026-10-27 15:37] decide — wonder_compound_consistency_lens answered by the creator: @ is perspective. COMPOUND_JOIN_OPERATORS['@'] is perspective now; no route or manifest entry carried the old word as a bond.
 }
 
 ^"validation"{
