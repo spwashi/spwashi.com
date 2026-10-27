@@ -163,7 +163,13 @@ expression = asks[motions]{ground.edge.residue}<upstream>
   ~#with: @routes_script
   ~#hypothesis: "Opening on the ground tells a reader how much they may skip before the difference. Opening on the edge spends the first glance where the two disagree. spw:routes --diff opens on a short ground, a shape handle and a count, and names the edge with first =, so both fit the first screen."
   ~#tension: "A long ground buries the edge, which is why shared reach became a count. An edge without its ground reads as a complaint, not a difference."
-  !probe{ "npm run -s spw:routes -- --diff /topics/slop/ /about/" }
+  ~#unblocks: "ground_edge_home in ./capabilities.spw, and the compare view on spw.quest's shelf"
+  ~#probe(run)
+  !probe{ "npm run -s spw:routes -- --diff /topics/slop/ /about/ | grep -n -E '^\\^\"|^  first'" }
   $%[diff.ground, diff.edge, diff.first]
   ~<"../upstream-workbench-recommendations.spw"> ~<"../../../scripts/spw-routes.mjs">
+}
+
+^"stream"{
+ >>[2026-10-27 13:32] probe — wonder_ground_or_edge: /topics/slop/ against /about/ is 107 lines; the ground opens at line 55 after 47 lines of handles, the edge at 59, and they part first at the expression. The ground is four lines; what a reader passes first is the handle list. Run before any ~#expect was on record, so it measures and tests nothing.
 }

@@ -122,5 +122,9 @@ invariants: #[
   ~#taste: "A change a reader can open on a line they already know teaches more than a subject line about it."
   ~#hypothesis: "Two releases reading one specimen show the language moving as ground and an edge; a feed of commit subjects says that something moved without showing what."
   ~#tension: "A pair of readings needs two releases and a specimen whose reading changed; a feed needs only the log, and its subjects need the creator's wording before they go public."
-  !probe{ "node -e \"console.log(require('./workers/spw-quest/assets/parser/index.json').releases?.length)\"" }
+  ~#expect: "One tracked release, 2026.10.13, with 2026.10.13-pre.1 beside it and ignored by git, so a pair has one public reading to stand on and H waits on a second cut."
+  ~#unblocks: "slice H, and the count of open questions the guide's strip would carry"
+  ~#probe(run)
+  !probe{ "git ls-files workers/spw-quest/assets/parser | cut -d/ -f5 | sort -u" }
+  $%[motion.pair, motion.feed, release.count]
 }

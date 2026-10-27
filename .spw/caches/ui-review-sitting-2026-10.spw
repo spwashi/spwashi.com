@@ -263,6 +263,11 @@ expression = sitting[review]{place.question.options.unblocks}<browser>
   ~#taste: "A look is cheaper when the eye stays where it is; a decision is worth more when it frees the most work."
   ~#hypothesis: "Grouping by place keeps the reviewer on one page per stretch, so a sensation is judged against its neighbors. Ordering by unblocks puts lens_seats and layer_order first, since each frees work in three plans."
   ~#tension: "A sitting that ends early leaves the late items waiting; one walked by place may end before reaching the look that frees the most."
-  !probe{ "rg -c 'unblocks = ' .spw/caches/ui-review-sitting-2026-10.spw" }
+  ~#probe(run)
+  !probe{ "rg -c '^    unblocks = ' .spw/caches/ui-review-sitting-2026-10.spw" }
   $%[sitting.place, sitting.unblocks, review.length]
+}
+
+^"stream"{
+ >>[2026-10-27 13:32] probe — wonder_ui_review_sitting_order: four items name what they unblock (the drawer-swipe verb rule, the lens seat, the bundle order statement, the floating controls). The earlier probe counted its own line as a fifth; it now counts only item slots. Run before any ~#expect was on record.
 }

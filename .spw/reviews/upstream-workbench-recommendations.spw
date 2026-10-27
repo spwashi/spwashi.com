@@ -20,6 +20,7 @@
 #:layer #!pragmatics
 
 @site: ~"../site.spw"
+@roadmap: ~"../language/v04/roadmap.spw"
 @workbench_report: ~"../workbench-report.spw"
 @workbench_alignment: ~"./workbench-alignment-audit.spw"
 @expression_formations: ~"../language/expressions/index.spw"
@@ -49,6 +50,7 @@
 @asks_density: ~"./upstream-workbench-recommendations/density-and-voice.spw"
 @asks_trees: ~"./upstream-workbench-recommendations/claims-and-trees.spw"
 @asks_motions: ~"./upstream-workbench-recommendations/motions.spw"
+@asks_capabilities: ~"./upstream-workbench-recommendations/capabilities.spw"
 @asks_smaller: ~"./upstream-workbench-recommendations/smaller.spw"
 
 operation = "align"
@@ -246,6 +248,7 @@ expression = consumer[recommendations]{performance.cli.intermediate.culture}<ups
     `density-and-voice.spw — a register that selects a sink, slopes read apart, a geometry field that stays a sitting (2026-10-25)`,
     `claims-and-trees.spw — a claim is the unit, development keeps a receipt, a citation lands on the claim (2026-10-25)`,
     `motions.spw — reduce, expand, place, extend and diff as one reading: ground, then the edge by slot, then the residue; a shape with a slot, and a reduction that says what it dropped (2026-10-25)`,
+    `capabilities.spw — what the site's v0.4 became in the workbench's terms: the inquiry loop, an axis canon, a home for ground and edge, and the pillars withdrawn (2026-10-27)`,
     `smaller.spw — items too small to rank`,
   ][reg=set]
   context = @asks_context
@@ -259,6 +262,7 @@ expression = consumer[recommendations]{performance.cli.intermediate.culture}<ups
   density = @asks_density
   trees = @asks_trees
   motions = @asks_motions
+  capabilities = @asks_capabilities
   smaller = @asks_smaller
 }[reg=facet]
 
@@ -377,6 +381,17 @@ expression = consumer[recommendations]{performance.cli.intermediate.culture}<ups
   ][reg=set]
   ~#taste: "A second plugin waits until the first one fails closed. A second slope waits until the first reading refuses to average."
   consume = `Until a plugin exists, the site keeps building the expression manifest by script. Until a slope flag exists, charge and boonhonk stay the two dispositions already contracted, and a voice stays a genre sibling. Until a ground reading exists, the site reads two routes with npm run spw:routes -- --diff, and each family shape says whether a name would pay.`
+}[reg=facet]
+
+^"week_2026_10_27"{
+  standing = `The site reevaluated its v0.4 (@roadmap is the language roadmap at ../language/v04/roadmap.spw): the workbench versions capabilities, so what the site still wants is restated in @asks_capabilities as asks the first-plugin intake can take, each with a contract name and a suggested home, and seven pillars are withdrawn so nothing is built on their account. The motions asks get a home there too.`
+  proposals = #[
+    `+[harness] A wonder closes: its run is kept as a claim protocol result_ref, and the answer names what is left of its $% set :: inquiry[loop]{expect.run.answer}<result_ref>`,
+    `+[lint] A consumer declares its axis values once, and lint holds its files to them :: axes[canon]{operation.fixity}<workspace>`,
+    `=[intake] Take ground_then_edge and template_with_a_slot into the intake, at home in beat-diff precipitation :: intake[motions]{ground.edge}<beat_diff>`,
+  ][reg=set]
+  ~#taste: "Ask for a capability by its contract, and let the plan that owns the files decide how it lands."
+  consume = `Until the harness runs probes, the site runs its own: npm run wonder -- --run executes the read-only ones and --write keeps result_ref-shaped receipts in .spw/gen/wonder-runs.spw; the verdict and the stream line stay a reader's.`
 }[reg=facet]
 
 ^"validation"{
