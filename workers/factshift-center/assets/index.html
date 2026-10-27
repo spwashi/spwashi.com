@@ -13,9 +13,9 @@
     <meta itemprop="description" content="7D force simulation with Spw command language">
     <link rel="icon" href="/v0.0.1/favicon/16.png">
     <link rel="manifest" href="/manifest.json">
-  <script type="module" crossorigin src="/assets/main-3ghnsw7_.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/index-B_0Ydspg.js">
-  <link rel="stylesheet" crossorigin href="/assets/index-VnxfuwiA.css">
+  <script type="module" crossorigin src="/assets/main-zHteQgVP.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/index-sHrmHnuj.js">
+  <link rel="stylesheet" crossorigin href="/assets/index-7GtHsApB.css">
   <link rel="stylesheet" crossorigin href="/assets/main-_qtzgt2L.css">
 </head>
 <body data-mode="nothing"
@@ -95,31 +95,19 @@
     <section id="spw-mode-container" data-mode-panel="spw">
         <div id="spw-container" data-role="spw-input">
             <label>
-                <span>Spw input</span>
+                <span data-role="spw-form">spw</span>
                 <textarea id="spw-parse-field"
                           aria-label="Spw expression input"></textarea>
             </label>
-            <div id="spw-reading" data-role="spw-reading" aria-label="Reading of the line" hidden></div>
-            <button id="parse-spw"
-                    data-action="parse-spw"
-                    title="Run Spw input (Cmd/Ctrl+Enter)">run</button>
-            <div data-role="spw-prime-controls"
-                 aria-label="Spw spell priming">
+            <p id="spw-reading" data-role="spw-reading" aria-label="What the line meets"></p>
+            <div data-role="spw-actions">
+                <button id="parse-spw"
+                        type="button"
+                        data-action="parse-spw"
+                        title="Run Spw input (Cmd/Ctrl+Enter)">run</button>
                 <button type="button"
-                        data-spw-prime="collapse"
-                        title="Prime collapse boon (*boon{})">*boon</button>
-                <button type="button"
-                        data-spw-prime="observe"
-                        title="Prime observe (@{})">@</button>
-                <button type="button"
-                        data-spw-prime="resonate"
-                        title="Prime resonate (#[...])">#</button>
-                <button type="button"
-                        data-spw-prime="couple"
-                        title="Prime couple (<>[...])">&lt;&gt;</button>
-                <button type="button"
-                        data-action="clear-spw-prime"
-                        title="Clear the current prime">clear</button>
+                        data-action="clear-spw-prompt"
+                        title="Empty the prompt">clear</button>
             </div>
             <output id="spw-prime-context"
                     aria-live="polite"
