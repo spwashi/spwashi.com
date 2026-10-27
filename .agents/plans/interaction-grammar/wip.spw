@@ -91,6 +91,7 @@ fixity = "tending"
  >>[2026-09-04 12:55] observe - The per-interaction phase ladder (idle/approach/prime/charge/inspect/discover/settle) is thorough and cross-component (landmark hops, cauldron gather/inspect/release, tap:travel, swipe:cycle all resolve into it). It is still exactly one visit's arc. Nothing in interaction-microstates.spw distinguishes a first encounter from a tenth — the "practiced → fluent → habitual" half of this plan's Goal is the one piece of the original scope that is still genuinely open, not landed-elsewhere.
  >>[2026-10-12 10:59] verify — the census is the next slice and has not run. Today the tree holds 37 gesture-contract authorings on 36 lines across 21 route pages, over the same 10 distinct strings; the Status line counts 36. Next is to look up each verb's handler in public/js and in inline page scripts (settings/index.html near line 663 answers cycle-variant, surface-current and open-companion), record the silent ones in interaction-microstates.spw, then write the settings "do this / expect this" passage from it. Nothing gates it.
  >>[2026-10-25 17:45] verify — Read against the tree for the UI review sitting: the census count holds at 37 authorings on 36 lines in 21 files over 10 strings, and Status now says so. Fixed drifted pointers: the settings gesture helpers sit at :2509-2510 and :2585-2587 (08f060d6 removed 15 lines, so :2524 reads "No extra runtime bus UI."), the phase owners live in public/js/runtime/interaction/, and four dependencies are marked archived; the census also settles the verb rule chrome-navigation-wonder's drawer swipe waits on.
+ >>[2026-10-27 13:40] hygiene — status planned to implementing: the gate is nothing, so the gesture-contract census can land (audit:plans).
 }
 
 ^["open"]{
@@ -117,7 +118,7 @@ fixity = "tending"
 }
 
 ^["cache"]{
- ~#status: "planned"
+ ~#status: "implementing"
  ~#next_commit: "+[interaction] Walk each authored gesture verb to its handler, and name the ones that answer nothing"
  ~#files_hot: ".spw/conventions/interaction-microstates.spw, settings/index.html, public/js/runtime/interaction/brace-gestures.js"
  ~#gate: "nothing"

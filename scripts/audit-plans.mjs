@@ -18,7 +18,11 @@
  *          `npm run check`, which runs npm audit before check:local; no
  *          wip.spw, a wip.spw whose last dated entry is older than the
  *          Status line, one missing a required header mark, or one whose
- *          last entry has no time (.spw/conventions/wip-notebook.spw).
+ *          last entry has no time (.spw/conventions/wip-notebook.spw);
+ *          a gate that opens on the creator while no #>wonder in the
+ *          folder holds the question, so npm run wonder cannot show it;
+ *          a planned status whose gate opens on "nothing", which says a
+ *          slice could start today.
  *
  * Live plans are the folders under .agents/plans/ outside archive/. Fenced
  * code blocks are examples and are not read for links or paths. A gitignored
@@ -101,6 +105,11 @@ const plans = fs.readdirSync(PLANS, { withFileTypes: true })
   .filter((slug) => !onlySlug || slug === onlySlug)
   .sort();
 
+/* A wonder anywhere in the plan folder's .spw files, in the form npm run wonder harvests. */
+const holdsWonder = (dir) => fs.readdirSync(dir)
+  .filter((name) => name.endsWith('.spw'))
+  .some((name) => /^#>\w*wonder\w*\s*$/m.test(fs.readFileSync(path.join(dir, name), 'utf8')));
+
 const findings = [];
 const cited = new Map();
 const add = (slug, file, line, level, message) => findings.push({ slug, file: rel(file), line, level, message });
@@ -133,6 +142,9 @@ for (const slug of plans) {
     if (!wip.last) add(slug, wip.file, 1, 'warn', 'wip.spw has no dated stream entry');
     else if (status && wip.last < status[1]) add(slug, wip.file, 1, 'warn', `wip.spw last tended ${wip.last}, before the Status line (${status[1]})`);
     if (wip.lastStamped === false) add(slug, wip.file, 1, 'warn', 'wip.spw\'s last entry has no time (npm run -s clock)');
+    const gate = (wip.gate || '').trim();
+    if (/^the creator\b/i.test(gate) && !holdsWonder(dir)) add(slug, wip.file, 1, 'warn', 'the gate waits on the creator, and no #>wonder in the folder holds the question (npm run wonder cannot show it)');
+    if (/^planned\b/i.test(wip.status || '') && /^nothing\b/i.test(gate)) add(slug, wip.file, 1, 'warn', `status is planned, and the gate opens on "nothing": the next commit can land, so the status is implementing, or the gate names what it waits on`);
   }
 
   for (const file of walk(dir)) {

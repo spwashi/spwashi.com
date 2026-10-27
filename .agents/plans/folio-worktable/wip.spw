@@ -18,10 +18,11 @@ fixity = "tending"
 
 ^"stream"{
  >>[2026-10-12 10:59] verify — the release shelf (7a95da5b), the request card at #folio-request, the primes demo (8703ed24) and the calendar demo (27b616e8) are in the tree; since 2026-10-10 only copy and .spw headers touched the folio pages. The calendar demo is linked from the experiments shelf, not from /design/folios/, and waits on the creator's browser review, which is worth most before October ends. Forms, prices, shipping, the primes demo and the first card request stay the creator's calls.
+ >>[2026-10-27 13:40] hygiene — the creator's question moves from ^"open" into the notebook as #>wonder_folio_worktable_calendar, with a guess on record, a read probe and an answer set, so npm run wonder shows it; the call stays the creator's.
 }
 
 ^"open"{
- calendar = "Should October's calendar keep scan order or take chosen days, and live as a site page or a printable sheet? The creator's call, in a browser."
+ calendar = ~"./wip.spw#wonder_folio_worktable_calendar"
  primes = "Does the primes demo's scan-order walk hold before any route shows the set? The creator's call, in a browser."
  offer = "Which forms, prices and shipping does a first folio sale carry? The creator's call; sales stay closed until then."
  first_request = "Has a request arrived through the #folio-request card yet? Only the creator can say."
@@ -33,4 +34,18 @@ fixity = "tending"
  ~#files_hot: "design/experiments/folios/calendar/index.html, design/folios/index.html"
  ~#gate: "the creator's browser review of /design/experiments/folios/calendar/"
  ~#last_stream: "2026-10-12"
+}
+
+#>wonder_folio_worktable_calendar
+?["Should October's calendar keep scan order or take chosen days, and live as a site page or a printable sheet?"]{
+  #:depth #!experiential ~#lens(comparison)
+  ~#with: @plan @calendar
+  ~#taste: "A month of folios is a walk before it is a grid; the order is part of what was made."
+  ~#hypothesis: "Scan order shows the month as it was made; chosen days show it as it should be read."
+  ~#tension: "The review is worth most before the month ends, and October ends on Saturday."
+  ~#expect: "At pocket, scan order reads as a sequence a reader follows; a printable sheet asks for chosen days."
+  ~#unblocks: "hanging October's calendar from the folio shelf"
+  ~#probe(read)
+  !probe{ "open /design/experiments/folios/calendar/ at pocket and at desktop beside /design/folios/, and say which order a reader follows without help" }
+  $%[calendar.scan_order, calendar.chosen_days, calendar.sheet]
 }

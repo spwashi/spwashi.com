@@ -19,6 +19,7 @@ fixity = "tending"
 
 ^"stream"{
  >>[2026-10-12 10:59] verify — no rename has landed. data-spw-page-tempo="settle" is still read at public/css/components/signals.css:248 and written by runtime/arrival/prepaint-state.js and runtime/regions/region-profiler.js, and .spw/conventions/word-sets.spw has no tempo entry yet. The next slice, a collision entry for snap|fast|base|deliberate|settle with two candidate speed words, needs no decision; the rename itself waits on the creator, and ground waits on spw-metaphysical-language.
+ >>[2026-10-27 13:40] hygiene — status planned to implementing: the word-set entry for the tempo ladder has no gate, so the next commit can land; the rename itself still waits on the creator (audit:plans).
 }
 
 ^"open"{
@@ -27,7 +28,7 @@ fixity = "tending"
 }
 
 ^"cache"{
- ~#status: "planned"
+ ~#status: "implementing"
  ~#next_commit: "+[words] Mark settle on the tempo ladder as a collision, and offer two speed words for it"
  ~#files_hot: ".spw/conventions/word-sets.spw, public/css/components/signals.css, public/js/runtime/arrival/prepaint-state.js, public/js/runtime/regions/region-profiler.js"
  ~#gate: "nothing for the word-set entry; the rename waits on the creator's call on whether an unseen word needs a browser review"

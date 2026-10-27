@@ -18,10 +18,12 @@ fixity = "tending"
 
 ^"stream"{
  >>[2026-10-12 10:59] verify — Items 1 and 2 hold: all eleven named bedrock tokens are declared, ten in tokens/core.css and --ornament-radius-pill in flourish-defaults.css (the Status line counts ten and nine), and the typed attr() bridges open at tokens/dimensions.css:436. Item 3 still has no sensor; css-custom-property-audit.mjs checks self-references and periodic root writes only. routes/surfaces/design.css has no block named as aliases, so the absorbed design.css alias question stays unverified.
+ >>[2026-10-27 13:40] hygiene — item 3's question moves from ^"open" into index.spw as #>wonder_token_fallback_hygiene, so npm run wonder shows it; the call stays the creator's.
+ >>[2026-10-27 13:40] probe — wonder_token_fallback_hygiene: the five files hold 1719 var() references, 886 of them (52%) with no fallback, and every one of the 886 names a token defined somewhere under public/css or src/styles. The ~#expect held: the report would be empty. Its limit: defined somewhere is not defined on every page that loads the file.
 }
 
 ^"open"{
- fallback_hygiene = "Is item 3 wanted: a report-only check for var() references with no definition and no fallback in the five files it names? The creator's call."
+ fallback_hygiene = ~"./index.spw#wonder_token_fallback_hygiene"
 }
 
 ^"cache"{

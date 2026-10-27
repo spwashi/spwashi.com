@@ -22,10 +22,12 @@ fixity = "experimental"
  >>[2026-10-13 22:10] observe — the creator asked for a plan to revise brace semantics while asking for a `< & >` hero on spw.quest (handles that answer tap, swipe and drag; ghost boxes that take `.` or `~`; `{` labeled into `{_paper`), a runtime improved "this way", a home door into spw.quest from the cauldron, clipboard or pins, and a rethink of page, region and component serialization, noting that expressions reached elements through copy units before there was granular enhancement or edge preweighting.
  >>[2026-10-13 22:20] verify — two read-only surveys. Braces: each pair has four to six meanings across WB canon, the site registry, the conventions and WB theory; `{ }` is definition in canon and direction in the registry. The parser sets no label: `{_paper a }_paper` reads `_paper` as words and reports success; the AST's openLabel and closeLabel fields are never set. Serialization: eleven serializers, eleven shapes; the cauldron writes fallback words onto data-spw-semantic-expression; pins keep no expression; nothing reads the clipboard; the kin index is built in the page on every load.
  >>[2026-10-13 22:30] decide — plan written, nothing built. Five decisions go to the creator before any slice that depends on what a pair means; slices 2 and 3 wait on nothing.
+ >>[2026-10-27 13:40] hygiene — decision 1 moves from ^"open" into index.spw as #>wonder_brace_semantics_curly_name, with an answer set and a probe; decisions 2 to 5 stay plain questions until 1 is answered.
+ >>[2026-10-27 13:40] probe — wonder_brace_semantics_curly_name: the probe counts each word in any role, so it is noisy. The registry's six definition hits are a variable (OPERATOR_DEFINITIONS.map((definition) …)); as the pair's name it says direction only, as expected. The conventions say behavior 27 times and direction 9; definition appears as a field key and as the brace's original meaning (operator-semantics.spw:317), not as a workbench quote, so that half of the ~#expect missed.
 }
 
 ^"open"{
- names = "Decision 1: one name per pair; `{ }` as definition, direction, or behavior read as one of them. The creator's call."
+ names = ~"./index.spw#wonder_brace_semantics_curly_name"
  walls = "Decision 2: objective and subjective walls for every pair or for `{ }` only. The creator's call."
  angle = "Decision 3: `< >` as one pair, or `<` and `>` as marks of their own. The creator's call."
  labels = "Decision 4: nesting only or overlap; whether a label closes only its own pair; whether a mismatch is an error. The creator's call, then an upstream ask."
