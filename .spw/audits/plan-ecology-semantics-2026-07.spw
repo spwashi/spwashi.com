@@ -38,9 +38,9 @@ audit_run: .{
 }
 
 ^"census"{
-  folders ≈ 183
-  plan_md ≈ 174
-  index_spw ≈ 187
+  folders = `≈ 183`
+  plan_md = `≈ 174`
+  index_spw = `≈ 187`
   fix_md = 13
   virtual_buckets = #[`canonical_tracks`, `semantic_rails`, `css_layout_interaction`, `runtime_js_validation`, `media_image_sensory`, `public_route_proof_genre`, `fix_queue`, `active_backlog`, `completed_reference`, `archive`, `templates_tooling`][reg=set]
   pain: #[

@@ -33,7 +33,7 @@
 }
 
 ^"creator_notes"{
-  #:verbatim-ish, 2026-09-17, in the order given
+  ~#note: "verbatim-ish, 2026-09-17, in the order given"
   soil = `Market the laminated folios as soil for a marketing ecosystem that artists can maintain and add nutrients to over years.`
   lore = `Years of TikTok posts about the folios; ready to integrate their lore into spwashi.com and make other art for lore.land.`
   clown_lore = `The folios carry a lot of WAP-themed clown lore meant to teach design and computer science. (WAP = Wonder About Pi(e); see wap below.)`
@@ -51,7 +51,7 @@
 }
 
 ^"novel_production"{
-  #:prime 2026-09-17 — three ingredients a new production keeps needing; the site already has the beats
+  ~#note(prime, 2026-09-17): "three ingredients a new production keeps needing; the site already has the beats"
   seed = `A laminated folio from a set or series. It has a picture, a material history, and a scan that travels; the series is the bed the studio adds to each season, so a seed keeps its lineage when the production outgrows it. Field: productionSeed (timing-data-localization.spw#data_contract).`
   frame = `A TikTok group chat with a streak is already a room with a clock. It is the common frame for dialogue and show beats: seed in on Monday (probe.prepare), table on Wednesday (frame.play), 13th/26th closes (close.bind), the day after (reflect.produce), streak milestone (celebrate.transform). Dialogue becomes beats when the room agrees on the calendar.`
   anchor = `A popcorn streak pet: a small customizable mascot the group names and dresses, grown by return rather than points, standing for a team or one scene. Proposed as a card in the seed-card family (fill, screenshot, send), not as a points system — cognitive-toy-2026-09.spw#refuse still holds.`

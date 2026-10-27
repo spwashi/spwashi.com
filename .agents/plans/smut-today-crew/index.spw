@@ -117,7 +117,7 @@ invariants: #[
   ~#with: @plan
   ~#taste: "What a returning reader already knows should land somewhere, not vanish."
   ~#tension: "The letter is addressed to one sitter, and that casting fell through; folding it in would re-address it."
-  !probe{ "rg -n 'slug: "' workers/smut-today/src/index.js" }
+  !probe{ `rg -n 'slug: "' workers/smut-today/src/index.js` }
 }
 
 #>wonder_smut_crew_limits

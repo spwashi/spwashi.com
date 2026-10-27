@@ -135,13 +135,15 @@
 }
 
 ^"do_not"{
-  - `Use 100vw for main frame when body already has safe-area padding`
-  - `Subtract page-gutter from max-width while also padding-inline: gutter`
-  - `Set --spw-real-estate-inline to a page-width rem (breaks typography ch math)`
-  - `Map layoutTuner newspaper → layout wide (loses page-width-newspaper)`
-  - `Invent route-local main max-width in px without going through --spw-main-width / frame-cap`
-  - `Let a region desk replace main's shell cap with max-inline-size: 100%`
-  - `Hardcode 220ms for micro pulses when --spw-microinteraction-pulse-duration exists`
+  rules = #[
+    `Use 100vw for main frame when body already has safe-area padding`,
+    `Subtract page-gutter from max-width while also padding-inline: gutter`,
+    `Set --spw-real-estate-inline to a page-width rem (breaks typography ch math)`,
+    `Map layoutTuner newspaper → layout wide (loses page-width-newspaper)`,
+    `Invent route-local main max-width in px without going through --spw-main-width / frame-cap`,
+    `Let a region desk replace main's shell cap with max-inline-size: 100%`,
+    `Hardcode 220ms for micro pulses when --spw-microinteraction-pulse-duration exists`,
+  ][reg=set]
 }
 
 next_action: .{

@@ -15,7 +15,7 @@
   e0_genesis: .{
     id = `e0_genesis`
     span = `2024-01-11 — 2024-02-18`
-    commits ≈ 30
+    commits = `≈ 30`
     character = `Static personal site bootstrap — index.html, CNAME, lore.land about, minimal pages`
     subjects = #[`created index.html`, `scaffolding`, `domains`, `relocating`, `preparing`][reg=set]
     stack = `Hand HTML, early CSS, no public/js runtime, no .spw`
@@ -34,7 +34,7 @@
   e2_spw_renaissance: .{
     id = `e2_spw_renaissance`
     span = `2026-04-06 — 2026-04-30`
-    commits ≈ 331
+    commits = `≈ 331`
     character = `Spw syntax, frame grammar, operator atlas, workbench bridge, &[ tag commits begin`
     signals = #[
       `feat(site): add spec-style Spw syntax surface`,
@@ -49,7 +49,7 @@
   e3_surface_ecology: .{
     id = `e3_surface_ecology`
     span = `2026-05-01 — 2026-05-31`
-    commits ≈ 180
+    commits = `≈ 180`
     character = `Semantic surfaces, cauldron/spell paths, material/grain, topic/recipe expansion, RPG assets`
     signals = #[
       `&[recipe-*]`, `&[page-universe]`, `&[interactivity, spine]`,
@@ -62,7 +62,7 @@
   e4_runtime_kernel: .{
     id = `e4_runtime_kernel`
     span = `2026-06-01 — 2026-06-30`
-    commits ≈ 99
+    commits = `≈ 99`
     character = `JS/CSS tree organization, module catalog, kernel rhizosphere, batching, build pipeline hardening`
     signals = #[
       `ae7f9365 .[runtime] — organize JS and CSS trees (+143k churn — largest commit)`,
@@ -76,7 +76,7 @@
   e5_language_agent_ecology: .{
     id = `e5_language_agent_ecology`
     span = `2026-07-01 — present`
-    commits ≈ 39
+    commits = `≈ 39`
     character = `Spw language v04, module-export uniformity, ecology dispatch, worktree merge cadence, audit censuses`
     signals = #[
       `&[spw-language] Merge spw-language-v04 worktree`,

@@ -54,7 +54,7 @@ fixity = "tending"
 }[reg=facet]
 
 ^"priority_stack"{
-  expression = priority[v04]{profiles→refs→claims→stems→precipitates→…}<sequence>
+  expression = priority[v04]{profiles ~> refs ~> claims ~> stems ~> precipitates}<sequence>  # and onward
   ~index = @index
 
   sequence = ?<
@@ -82,7 +82,7 @@ fixity = "tending"
 ^"utilization_bridge"{
   ~see = #[@feature_utilization, @recursive][reg=set]
   !rule = `Roadmap pillars feed language recursive improvement; they do not replace runtime feature packs.`
-  expression = roadmap[v04]{pillars} ↔ loop[language]{ecology.cache.patch}<bridge>
+  expression = roadmap[v04]{pillars} ~ loop[language]{ecology.cache.patch}<bridge>
 }[reg=facet]
 
 validation: #[

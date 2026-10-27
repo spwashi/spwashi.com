@@ -119,7 +119,7 @@ fixity = "tending"
 ^"next_probes"{
   ?<
     Which underused operators (.ground *value (scene) [mode]) land first on play/design practice beds?,
-    Should ecology:language --strict fail when data-spw-operator is outside OPERATOR_DEFINITIONS aliases?,
+    Should ecology:language `--strict` fail when data-spw-operator is outside OPERATOR_DEFINITIONS aliases?,
     When does a site language pillar promote via submodule_bridge vs stay local?
   >[reg=stream]
 }[reg=facet]

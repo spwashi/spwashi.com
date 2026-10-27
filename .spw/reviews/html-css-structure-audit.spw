@@ -109,4 +109,4 @@ status: .{
   next = `Use as input for any HTML structure passes, CSS redistribution, or performance work on attribute timing. Prioritize pages with high frame count + heavy post-mount attribute writes.`
 }
 
-This audit confirms that the hand-authored HTML + data-spw-* semantic model is one of the site's greatest strengths, but the dynamic application timing in the runtime creates the primary remaining friction between authored intent and final rendered semantics — with direct consequences for layout stability and perceived performance.
+closing = `This audit confirms that the hand-authored HTML + data-spw-* semantic model is one of the site's greatest strengths, but the dynamic application timing in the runtime creates the primary remaining friction between authored intent and final rendered semantics — with direct consequences for layout stability and perceived performance.`

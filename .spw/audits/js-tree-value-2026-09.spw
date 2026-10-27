@@ -98,7 +98,7 @@
 }
 
 ^"next"{
-  #:2026-09-19 — orphans zero, one named seam, the audit is a gate. What is left is design, not tidying.
+  ~#note(2026-09-19): "orphans zero, one named seam, the audit is a gate. What is left is design, not tidying."
   1 = `Give operator-phases and personas a first host when a page wants the phase ladder or the lens rail; both are a sensation change, so demo in a browser first.`
   2 = `A second intake (contact, or a services onboarding) proves interface/intake.js general: author its chips with its own data-<ns>-* stem and give the card the same three exits.`
   3 = `Split the expression harvest per route with kin edges; measure idle gzip before and after.`

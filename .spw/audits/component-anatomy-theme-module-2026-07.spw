@@ -32,9 +32,9 @@ audit_run: .{
 }[reg=facet]
 
 ^"html_hosts"{
-  routes_with_slots ≈ 51
-  routes_with_gesture_contract ≈ 22
-  routes_with_page_anatomy ≈ 6
+  routes_with_slots = `≈ 51`
+  routes_with_gesture_contract = `≈ 22`
+  routes_with_page_anatomy = `≈ 6`
   claim = `Slot anatomy is the wide base; gesture contracts mid; page vocabulary anchors hub-local.`
 }[reg=facet]
 

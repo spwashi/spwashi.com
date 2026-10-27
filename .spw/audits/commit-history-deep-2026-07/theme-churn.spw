@@ -21,7 +21,7 @@
   }[reg=facet]
 
   conventional_commits: .{
-    `feat:` ≈ 15
+    `feat:` = `≈ 15`
     `feat(site):` = 5
     `fix:` = 7
     `refactor(css):` = 4

@@ -55,7 +55,7 @@ local_hormonal_model: .{
  }[reg=facet]
  temporal_decay = .{
   function = `σ(Δt) = σ₀ · exp(−Δt / τ)`
-  parameter_τ = `Current wonder-memory TTL ≈ 28 seconds -> τ ≈ 40s`
+  parameter_tau = `Current wonder-memory TTL ≈ 28 seconds -> τ ≈ 40s`
   collecting_floor = `Collected signals decay to a floor σ_min > 0 rather than to zero.`
   note = `τ should be tunable per context.`
  }[reg=facet]
