@@ -64,6 +64,7 @@ fixity = "tending"
  >>[2026-10-25 21:19] implement — G on the local branch quest/specimens, not merged: /specimens with the herbarium, the pages' rarer lines and the gallery, a slot search over all 1019 specimens, and two lines read as ground then edge. Read at carry time (552 KB carried, 75 KB gzip) so a request costs 1–2 ms instead of 520 ms of parsing. Nine herbarium forms are read in part by expression-query's slot reader; spw-language-v04 owns that reader. Stills at 390 px light and dark, no overflow. Quest tests 54 pass (2 need the mount); carry --check matches. Waits on the note's deploy and the creator's look.
  >>[2026-10-26 12:19] implement — creator: merge spw.quest to test it live. quest/specimens rebased onto main and fast-forwarded (17f6a77e); the next deploy carries the note and G together. check:workers green on main, quest tests 56 of 56 with the mount.
  >>[2026-10-27 13:32] probe — wonder_spw_quest_motion: git tracks one parser release, 2026.10.13, beside index.json; 2026.10.13-pre.1 is on disk and untracked. The ~#expect was written first and held, so H has one public reading to stand on and waits on a second cut before it can show a pair.
+ >>[2026-10-27 14:56] implement — J at the creator's word, to relate spw.quest to Spw's patterns and constructs with tools and cards for moving between and changing them: /constructs (cards for 12 marks, 4 braces, 9 forms in a line, 10 in a file, 5 patterns between lines; usage by position from the shelf; How lines join and Where the names part) and /pivot (any line and the lines one change away, each shown before you go, the way back kept). New modules src/cards.js, src/constructs.js, src/pivot.js; index.js gains two routes; /specimens cards gain a Pivot link. Guide, masthead and note shell untouched. check:workers green; phone stills at 390 px light and dark show no overflow after the join table folded to four columns.
 }
 
 ^"architecture"{
@@ -199,6 +200,7 @@ fixity = "tending"
 }[reg=facet]
 
 ^"open"{
+ constructs = ~"./index.spw#wonder_spw_quest_constructs"
  origin_wording = "The origin paragraph now opens 'The difficulty was not having language…'. Keep it, or put it in the creator's own words? The creator's call."
  operator_voice = "When the physical model is shown, which names does spw.quest speak: the workbench's (ascension, configuration, measure) or the site canon's (integration, binding, normalization)? The creator's call."
  commit_shape = "Commit the panels, the path and the build surface together after the look, or as the three proposed commits? The creator's call."
