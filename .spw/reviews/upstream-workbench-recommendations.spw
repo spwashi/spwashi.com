@@ -389,6 +389,9 @@ expression = consumer[recommendations]{performance.cli.intermediate.culture}<ups
     `+[harness] A wonder closes: its run is kept as a claim protocol result_ref, and the answer names what is left of its $% set :: inquiry[loop]{expect.run.answer}<result_ref>`,
     `+[lint] A consumer declares its axis values once, and lint holds its files to them :: axes[canon]{operation.fixity}<workspace>`,
     `=[intake] Take ground_then_edge and template_with_a_slot into the intake, at home in beat-diff precipitation :: intake[motions]{ground.edge}<beat_diff>`,
+    `+[plans] A consumer declares where its plan notebooks keep their facts, and the plan-fact model reads its plans through that :: plan[shape]{status.gate.stream}<plan_facts>`,
+    `+[plugin] The second plugin lights the references that moved after the plan citing them last looked :: plugin[twinkle]{select.emit}<plans>`,
+    `+[lint] A consumer declares its plan rules as .spw, and the editor shows each where the notebook is written :: plan[rules]{fact.condition.report}<diagnostics>`,
   ][reg=set]
   ~#taste: "Ask for a capability by its contract, and let the plan that owns the files decide how it lands."
   consume = `Until the harness runs probes, the site runs its own: npm run wonder -- --run executes the read-only ones and --write keeps result_ref-shaped receipts in .spw/gen/wonder-runs.spw; the verdict and the stream line stay a reader's.`
