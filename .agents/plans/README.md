@@ -25,7 +25,7 @@ Use these when a task is broad, cross-disciplinary, or likely to create reusable
 - `semantic-copy-depth/PLAN.md` — formalize entry/normal/dense/technical copy depth alongside the existing semantic layers.
 - `component-region-personality/PLAN.md` — component real estate and region personality, so copy relates to a growing component ecology.
 - `site-starter-component-kit/PLAN.md` — portable compose.css/compose.js starter boundary, component specimen promotion, and inventory command for spawning new sites.
-- `spw-metaphysical-language/PLAN.md` — construct codex, sigil-property alignment protocol with drift ledger, production/manufacturing ladder past the screen, and industry integration briefs; use when work describes or arbitrates the Spw language itself.
+- `spw-metaphysical-language/PLAN.md` — the theory taken up through four passes (copy, parse to layout, CSS depth, a field only if earned), with the construct codex, sigil-property alignment, production ladder and industry briefs as reference; use when work describes or arbitrates the Spw language itself.
 - `homonym-renaming/PLAN.md` — the lexicon: verdicts on load-bearing homonyms (settle/prime/ground/phase) and the attribute/event clusters, anchored on `.spw/conventions/word-sets.spw`; use before adding, auditing or renaming shared vocabulary.
 - `agent-optimization/PLAN.md` — gate, not diary. Use when the work changes the agent/editor operating environment. Prove always-on spend with `npm run check:agents -- --spend`.
 - `landing-visual-hierarchy/PLAN.md` — the single landing owner: cluster rank, one promise and one next move per landing.
@@ -38,8 +38,8 @@ Every live folder, once, by area. Open a plan's `index.spw` for its disposition 
 
 **Spw language and vocabulary**
 
-- `spw-metaphysical-language/` — the language itself: codex, sigil alignment, drift ledger; holds the codex shell from `spw-architecture-ecology`.
-- `spw-language-v04/` — the parser's arrival in the site; profiles and typed references.
+- `spw-metaphysical-language/` — the language itself: four passes from copy to depth, then codex, sigil alignment, drift ledger; holds the codex shell from `spw-architecture-ecology`.
+- `spw-inquiry-loop/` — the loop a question runs (probe, Spw update, refactor, test), the capability ledger, `plans:twinkle`, and the parser's arrival in the site. Was `spw-language-v04` until 2026-10-27.
 - `spw-quest/` — spw.quest, the guide and the install: a first reward before installing, and a plan surface agents review.
 - `brace-semantics/` — what each brace pair means, labels the parser checks, one serializer for page, region and component, and the `< & >` instrument; five decisions go to the creator first.
 - `operator-resonance-alignment/` — sigils as handles across routes, chips and capture; holds craft guard 3 from `operator-semantics-refinement`.

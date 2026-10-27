@@ -2,7 +2,7 @@
 
 **Status 2026-10-10.** Slices 1–3 have landed. The chip audit (`npm run audit:operator-controls`, 4e96100b) gates `check:local`, and `public/js/semantic/sigil-annotation.js` writes the resolver attributes. Slice 4 has landed in part: wonder.css rings same-family kin through `data-spw-resonance-family` on `<html>`. Nothing reads the per-element `data-spw-operator-family` or `data-spw-transformation` yet. `operator-alignment.spw` keeps both as an additive inspection contract, and since no selector names them they cost no style invalidation. The one next slice is the creator's open decision (wonder block in `index.spw`): spend them on per-family colour in a browser review, or stop writing them.
 
-**Related:** [spw-metaphysical-language](../spw-metaphysical-language/PLAN.md) · [spw-language-v04](../spw-language-v04/PLAN.md). **Absorbed 2026-10-10:** [operator-semantics-refinement](../archive/operator-semantics-refinement/PLAN.md) (craft guard 3).
+**Related:** [spw-metaphysical-language](../spw-metaphysical-language/PLAN.md) · [spw-inquiry-loop](../spw-inquiry-loop/PLAN.md). **Absorbed 2026-10-10:** [operator-semantics-refinement](../archive/operator-semantics-refinement/PLAN.md) (craft guard 3).
 
 ## Public Goal
 

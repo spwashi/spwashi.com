@@ -17,7 +17,7 @@
 @metaphysical_plan: ~"../../.agents/plans/spw-metaphysical-language/PLAN.md"
 @reclustering_plan: ~"../../.agents/plans/archive/language-reclustering/PLAN.md"
 @homonym_plan: ~"../../.agents/plans/homonym-renaming/PLAN.md"
-@v04_plan: ~"../../.agents/plans/spw-language-v04/PLAN.md"
+@inquiry_loop_plan: ~"../../.agents/plans/spw-inquiry-loop/PLAN.md"
 @shell_vocab_plan: ~"../../.agents/plans/shell-model-vocabulary-consolidation/PLAN.md"
 @language_census: ~"../audits/language-census.spw"
 @language_features: ~"../language/feature-utilization.spw"
@@ -27,7 +27,7 @@ fixity = "tending"
 
 ^"routing"{
  owner_plan: "spw-metaphysical-language"
- grammar_substrate: "spw-language-v04"
+ grammar_substrate: "spw-inquiry-loop"
  cluster_work: "language-reclustering"
  rename_execution: "homonym-renaming"
  supreme_court: "construct-codex.spw + drift_ledger (wave D)"

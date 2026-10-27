@@ -1,9 +1,9 @@
-# Review 2026-07-12 — keep as the versioned grammar owner; public claims must stay aligned with the language ecology checks.
-# Plan Index — spw-language-v04
+# Review 2026-10-27 — renamed from spw-language-v04 at the creator's word; the v0.4 pillars stay as history under .spw/language/v04/.
+# Plan Index — spw-inquiry-loop
 #
-# Readers and agents on spwashi.com can inspect a coherent v0.4 language direction without waiting for the workbench submodule to catch up. Site copy on the Spw operator atlas…
+# A question carries a probe, the probe runs, and the answer lands beside its receipt; plans see when a concept they cite has moved.
 
-#>plan_spw_language_v04_index
+#>plan_spw_inquiry_loop_index
 #:index #!plan
 #:operation #!contract
 #:layer #!pragmatics
@@ -12,8 +12,8 @@ operation = "contract"
 fixity = "stable"
 
 intent: .{
- goal = `Readers and agents on spwashi.com can inspect a coherent v0.4 language direction without waiting for the workbench submodule to catch up. Site copy on the Spw operator atlas should name the improvement stack in public language; local .spw/language/v04/ should carry the inspectable contracts, claims, dimensions, and submodule bridge.`
- owner = `spw-language-v04`
+ goal = `A question carries a probe, the probe runs, and the answer lands beside its receipt, so the site's questions and claims move on evidence and the plans that cite a concept see when it moves. Every Spw capability the site leans on has a contract name, a consumer here and a receipt (capabilities.spw). The parser's arrival in the site, Phase 4, stays here.`
+ owner = `spw-inquiry-loop`
  kind = `plan`
  bucket = `semantic_rails`
  artifact_shape = `PLAN.md | index.spw`
@@ -28,27 +28,29 @@ intent: .{
 }[reg=facet]
 
 ^"conceptual_model"{
- thesis = `Land Spw language v04 pillars (profiles, validator, claims) as inspectable upstream-aligned grammar.`
+ thesis = `Close the loop from question to probe to answer to receipt, keep a ledger of the capabilities it runs on, and let a plan see when a concept it cites has moved.`
  concepts = #[
-  `v04-pillar`,
-  `claim-chain`,
-  `profile-validator`,
+  `inquiry-loop`,
+  `probe-receipt`,
+  `capability-contract`,
+  `cross-plan-reference`,
   `operator-grammar`,
-  `worktree-merge`,
  ][reg=set]
  surfaces = #[
-  `.spw/language/v04/`,
-  `npm run ecology:language`,
+  `scripts/wonder.mjs`,
+  `.spw/reviews/upstream-workbench-recommendations/capabilities.spw`,
+  `.spw/language/v04/roadmap.spw`,
+  `npm run wonder -- --contour`,
  ][reg=set]
  fixity_tier = `stable`
 }[reg=facet]
 
 ^"plan_refinement"{
- tone = `Grammar documentation — precise, version-aware.`
- accuracy = `v04 worktree merged; pillar coverage and validator strictness still tending.`
- direction = `Close one pillar gap with ecology:language green before new operators. The CLI manual's machine form is help --json; wonder_plan_help_json keeps that upstream of this plan.`
+ tone = `Grammar and evidence — precise, dated, receipt first.`
+ accuracy = `The pillars are history (roadmap.spw, reevaluation_2026_10_27). The first inquiry.loop/1 slice runs read-only probes and keeps receipts; one wonder is answered, by the creator's word.`
+ direction = `Answer what a run settles before adding marks; then let plans see when a concept they cite has moved. The CLI manual's machine form is help --json; wonder_plan_help_json keeps that upstream of this plan.`
  inspiration = `Language disputes resolve through codex, not ad hoc renames.`
- alignment = `language-reclustering, spw-metaphysical-language, language-census audit`
+ alignment = `spw-metaphysical-language, ecosystem-architecture, agent-optimization`
 }[reg=facet]
 
 @plans_root: ~"../../../.agents/plans/index.spw"
@@ -103,21 +105,21 @@ dispatch: .{
 ^"owner_claim"{
  claim_id = "plan-spw_language_v04-001"
  layer = "pragmatic"
- hypothesis = `Readers and agents on spwashi.com can inspect a coherent v0.4 language direction without waiting for the workbench submodule to catch up. Site copy on the Spw operator atlas should name the improvement stack in public language; local .spw/language/v04/ should carry the inspectable contracts, claims, dimensions, and submodule bridge.`
+ hypothesis = `A question carries a probe, the probe runs, and the answer lands beside its receipt, so the site's questions and claims move on evidence and the plans that cite a concept see when it moves. Every Spw capability the site leans on has a contract name, a consumer here and a receipt (capabilities.spw). The parser's arrival in the site, Phase 4, stays here.`
  spec_ref = ~"./PLAN.md"
- impl_ref = ~"../../../.spw/language/v04/"
- probe_ref = `git diff --check`
- falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/language/v04/ unchanged or untested.`
+ impl_ref = ~"../../../scripts/wonder.mjs"
+ probe_ref = `npm run -s wonder -- --contour | grep -E '^(lifecycle|marks)'`
+ falsification = `The loop does not hold if a wonder reads as answered with no run or reading beside it, or if a run writes its own verdict.`
  status = "active"
 }[reg=facet]
 
 next_action: .{
- step = `Land pillar .spw files with dimensions, owner_claim, editor_prompts, validation probes.`
+ step = `Answer the wonders a run settles, each ~#answer beside its receipt; then read which plans cite a concept that moved since they last looked.`
 }[reg=facet]
 
 scope: .{
  in = #[
-  `In scope: .agents/plans/spw-language-v04/, .spw/language/v04/ pillar artifacts, topics/software/spw/index.html copy, dispatch wiring in .spw/index.spw, .spw/site.spw, .spw/conventions/index.spw, submodule update procedure in submodule-bridge.spw.`,
+  `In scope: .agents/plans/spw-inquiry-loop/, scripts/wonder.mjs, capabilities.spw, the roadmap and its reevaluation under .spw/language/v04/, the expression-query prefix slice, and the in-site parser (Phase 4).`,
   `-`,
  ][reg=set]
 }[reg=facet]
@@ -127,18 +129,19 @@ validation: #[
  `rg language-evolution-v04 topics/software/spw/index.html`,
  `rg spw_language_v04 .spw`,
  `Manual read: .spw/language/v04/index.spw dispatch resolves all pillar paths`,
- `Future: node .spw/_workbench/.../validate-spw on pillar files after submodule pin`,
+ `node --test scripts/tests/wonder-lifecycle.test.mjs`,
+ `npm run wonder -- --contour`,
 ][reg=set]
 
 editor_prompts: #[
- .{ ask = `What does spw-language-v04 own, and what should stay out of scope?`, see = @plan }[reg=facet],
- .{ ask = `Which file should I open first to implement the next slice of spw-language-v04?`, see = @index }[reg=facet],
- .{ ask = `What is the tone, direction, and alignment for spw-language-v04?`, see = @index#plan_refinement }[reg=facet],
- .{ ask = `What command or check falsifies whether spw-language-v04 still holds?`, see = @plan }[reg=facet],
+ .{ ask = `What does spw-inquiry-loop own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of spw-inquiry-loop?`, see = @index }[reg=facet],
+ .{ ask = `What is the tone, direction, and alignment for spw-inquiry-loop?`, see = @index#plan_refinement }[reg=facet],
+ .{ ask = `What command or check falsifies whether spw-inquiry-loop still holds?`, see = @plan }[reg=facet],
 ][reg=set]
 
 invariants: #[
- `Owner intent: Readers and agents on spwashi.com can inspect a coherent v0.4 language direction without waiting for the workbench submodule to catch up.…`,
+ `Owner intent: a question carries a probe, the probe runs, and the answer lands beside its receipt.`,
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
@@ -155,7 +158,7 @@ invariants: #[
   ~<"../../../.spw/caches/spw-readable-by-tooling-2026-09.spw"> ~<"../archive/spw-architecture-ecology/index.spw">
 }
 
-#>wonder_spw_language_v04_trailing_probe
+#>wonder_spw_inquiry_loop_trailing_probe
 ?["Does a trailing ?# mean probe frames, the facet, or probe this frame, the one the reader is in?"]{
   #:depth #!semantic ~#lens(position)
   ~#with: @plan @v04 @workbench

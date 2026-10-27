@@ -78,7 +78,7 @@ intent: .{
 @check_agents: ~"../../../scripts/check-agent-contracts.mjs"
 @package_json: ~"../../../package.json"
 @plan_spw_architecture_ecology: ~"../archive/spw-architecture-ecology/index.spw"
-@plan_spw_language_v04: ~"../spw-language-v04/index.spw"
+@plan_spw_inquiry_loop: ~"../spw-inquiry-loop/index.spw"
 @plan_typescript_integration: ~"../archive/typescript-integration/wip.spw"
 @readable_by_tooling: ~"../../../.spw/caches/spw-readable-by-tooling-2026-09.spw"
 
@@ -126,7 +126,7 @@ dispatch: .{
   `typescript-integration`,
   `site-source-layout`,
   `spw-architecture-ecology`,
-  `spw-language-v04`,
+  `spw-inquiry-loop`,
   `language-ladder-runtime-instrumentation`,
  ][reg=set]
 }[reg=facet]
@@ -183,13 +183,13 @@ invariants: #[
 #>wonder_plan_two_doors
 ?["Are the package.json scripts and the Spw corpus two doors into one knowledge base?"]{
   #:depth #!computational ~#lens(comparison)
-  ~#with: @package_json @readable_by_tooling @plan_spw_architecture_ecology @plan_spw_language_v04
+  ~#with: @package_json @readable_by_tooling @plan_spw_architecture_ecology @plan_spw_inquiry_loop
   ~#taste: "An affordance stays listed only while a command prints it without a person remembering the path."
   ~#hypothesis: "check:local, wonder, atlas, and spw:integrity are the cheap falsifiers. The corpus is what those commands read. A plan that cites a sibling and a script can be entered from either door."
   ~#tension: "doctor excludes .agents, so a plan file never enters lattice or census. Until this harvest, wonder stopped at .spw/ and a question written in a plan could not be asked."
   !probe{ "npm run wonder -- --surface wonder_plan_two_doors" }
   $%[script.door, corpus.plan, walk.exclusion]
-  ~<"../archive/spw-architecture-ecology/index.spw"> ~<"../spw-language-v04/index.spw"> ~<"../../../.spw/workbench-report.spw">
+  ~<"../archive/spw-architecture-ecology/index.spw"> ~<"../spw-inquiry-loop/index.spw"> ~<"../../../.spw/workbench-report.spw">
 }
 
 # Carried 2026-10-10 from spw-architecture-ecology (archived), whose wave H this plan holds.

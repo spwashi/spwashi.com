@@ -185,7 +185,7 @@ npm run check:local
 - `agent-optimization/`
 - `agentic-dev-contracts/`
 - `modular-experience-slices/`
-- `spw-language-v04/`
+- `spw-inquiry-loop/`
 - `spw-metaphysical-language/`
 - `language-reclustering/`
 - `component-region-personality/`

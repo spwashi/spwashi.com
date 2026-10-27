@@ -116,18 +116,18 @@ export const PLAN_REFINEMENTS = {
       alignment: 'vocabulary-metaphor-growth-synthesis, component-region-personality',
     },
   },
-  'spw-language-v04': {
+  'spw-inquiry-loop': {
     conceptual: {
-      thesis: 'Land Spw language v04 pillars (profiles, validator, claims) as inspectable upstream-aligned grammar.',
-      concepts: ['v04-pillar', 'claim-chain', 'profile-validator', 'operator-grammar', 'worktree-merge'],
-      surfaces: ['.spw/language/v04/', 'npm run ecology:language'],
+      thesis: 'Close the loop from question to probe to answer to receipt, keep a ledger of the capabilities it runs on, and let a plan see when a concept it cites has moved.',
+      concepts: ['inquiry-loop', 'probe-receipt', 'capability-contract', 'cross-plan-reference', 'operator-grammar'],
+      surfaces: ['scripts/wonder.mjs', 'scripts/plan-twinkle.mjs', '.spw/reviews/upstream-workbench-recommendations/capabilities.spw', '.spw/language/v04/roadmap.spw'],
     },
     refinement: {
-      tone: 'Grammar documentation — precise, version-aware.',
-      accuracy: 'v04 worktree merged; pillar coverage and validator strictness still tending.',
-      direction: 'Close one pillar gap with ecology:language green before new operators.',
+      tone: 'Grammar and evidence — precise, dated, receipt first.',
+      accuracy: 'The pillars are history; probes run read-only with receipts; one wonder is answered, by the creator.',
+      direction: 'Answer what a run settles before adding marks; then tend the plans plans:twinkle lights.',
       inspiration: 'Language disputes resolve through codex, not ad hoc renames.',
-      alignment: 'language-reclustering, spw-metaphysical-language, language-census audit',
+      alignment: 'spw-metaphysical-language, ecosystem-architecture, agent-optimization',
     },
   },
   'component-region-personality': {
@@ -169,7 +169,7 @@ export const PLAN_REFINEMENTS = {
       accuracy: '1200+ attrs cataloged; consolidation waves are selective, not wholesale.',
       direction: 'One cluster alignment pass with homonym-renaming gate before new data-spw families.',
       inspiration: 'Vocabulary should feel nutritious, not noisy.',
-      alignment: 'homonym-renaming, spw-language-v04, javascript-module-census',
+      alignment: 'homonym-renaming, spw-inquiry-loop, javascript-module-census',
     },
   },
   'spw-metaphysical-language': {
@@ -183,7 +183,7 @@ export const PLAN_REFINEMENTS = {
       accuracy: 'Codex shell tending; full industry integration briefs are aspirational.',
       direction: 'Extend drift ledger with one resolved dispute from recent commits.',
       inspiration: 'Language is a craft material, not a config file.',
-      alignment: 'spw-language-v04, appendices computer-science + manufacturing history',
+      alignment: 'spw-inquiry-loop, appendices computer-science + manufacturing history',
     },
   },
   'chrome-navigation-wonder': {

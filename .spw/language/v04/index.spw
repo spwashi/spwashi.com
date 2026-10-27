@@ -25,7 +25,7 @@ intent: .{
 }[reg=facet]
 
 @roadmap: ~"./roadmap.spw"
-@plan: ~"../../../.agents/plans/spw-language-v04/PLAN.md"
+@plan: ~"../../../.agents/plans/spw-inquiry-loop/PLAN.md"
 @operator_atlas: ~"../../../topics/software/spw/index.html#language-evolution-v04"
 @site_grammar_audit: ~"../../audits/naming-grammar-js-types-2026-07/grammar-evolution.spw"
 @naming_grammar_js_types_audit: ~"../../audits/naming-grammar-js-types-2026-07/index.spw"

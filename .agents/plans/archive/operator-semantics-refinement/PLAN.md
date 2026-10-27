@@ -2,7 +2,7 @@
 
 **Status 2026-10-06.** Reference owner for operator semantics (`.spw/conventions/operator-semantics.spw`); no open slice. The rebase target under Commits is stale.
 
-**Related:** [operator-resonance-alignment](../../operator-resonance-alignment/PLAN.md) · [spw-language-v04](../../spw-language-v04/PLAN.md) · [spw-metaphysical-language](../../spw-metaphysical-language/PLAN.md). **Absorbed 2026-10-06:** [spw-operator-pages](../spw-operator-pages/PLAN.md).
+**Related:** [operator-resonance-alignment](../../operator-resonance-alignment/PLAN.md) · [spw-language-v04](../../spw-inquiry-loop/PLAN.md) · [spw-metaphysical-language](../../spw-metaphysical-language/PLAN.md). **Absorbed 2026-10-06:** [spw-operator-pages](../spw-operator-pages/PLAN.md).
 
 Refine Spw operators to be more true to the established lore and original set, with room for interpretation based on the physics of the language and traditions that emerge through acknowledgment of symmetry and priming.
 

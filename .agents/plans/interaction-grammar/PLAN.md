@@ -65,7 +65,7 @@ The desired end state is a site interaction system that rewards familiarity: rep
 ## Scope
 
 - **In scope**: interactive circuit design (entry-level, practiced, fluent, habitual patterns); brace physics vocabulary audit (boon/bane legibility test, candidate alternatives, bridge terms, and the case for keeping them); progressive enhancement as a skill ladder; familiarity feedback design (repetition rewards, feedback quality, learning gradient); Spw as spatial cognitive exercise; multi-language surfaces where Spw frames other notations.
-- **Out of scope**: gamification, points, badges, or explicit skill tracking; replacing the Spw vocabulary outright; making content or interactions gated by proficiency; implementing a browser-side Spw parser here (the site has carried one since Phase 4 of [spw-language-v04](../spw-language-v04/PLAN.md); this plan reads it and does not build another).
+- **Out of scope**: gamification, points, badges, or explicit skill tracking; replacing the Spw vocabulary outright; making content or interactions gated by proficiency; implementing a browser-side Spw parser here (the site has carried one since Phase 4 of [spw-inquiry-loop](../spw-inquiry-loop/PLAN.md); this plan reads it and does not build another).
 
 ## Craft guard
 
