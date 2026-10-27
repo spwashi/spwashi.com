@@ -31,6 +31,7 @@ import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { writeProjectionIndex } from './lib/spw-projections.mjs';
 
 const run = promisify(execFile);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -200,6 +201,7 @@ async function main() {
     const out = path.join(CACHES, `precipitate-${today()}.spw`);
     await writeFile(out, lines.join('\n'), 'utf8');
     console.log(`\nwrote ${path.relative(ROOT, out)}`);
+    await writeProjectionIndex();
   } else {
     console.log(`\n${prior ? `prior: ${prior.file}` : 'no prior precipitate'} — re-run with --write`);
   }

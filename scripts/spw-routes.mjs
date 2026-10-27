@@ -52,6 +52,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { extractMainHtml, stripMarkup, toRoutePath } from './lib/page-copy-audit.mjs';
 import { readExpressionSlots } from '../public/js/semantic/expression-query.js';
+import { projectionIndexText } from './lib/spw-projections.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, '.spw/gen/routes');
@@ -735,31 +736,8 @@ const outputs = () => new Map([
  * their own blocks in that file, so a run replaces only this one.
  */
 const GEN_INDEX = path.join(ROOT, '.spw/gen/index.spw');
-const PROJECTION_RE = /^\^projection\[routes\]\{[\s\S]*?^\}\n?/m;
-function genIndexText(existing = '') {
-  const block = [
-    '^projection[routes]{',
-    `  root: "${path.relative(ROOT, OUT)}"`,
-    '  source: "every route index.html that carries a <spw-page> block"',
-    `  spec_owner: "${path.relative(ROOT, REGISTRY)}"`,
-    '  generator_owner: "scripts/spw-routes.mjs"',
-    '  status: "rebuilt by npm run spw:routes -- --write"',
-    '}',
-    '',
-  ].join('\n');
-  if (!existing.trim()) {
-    return [
-      '# .spw/gen — generated projections, one ^projection block per generator.',
-      '# The language server reads these blocks for its generated-from and projects lenses.',
-      '',
-      '#>gen_index',
-      '#:index #!gen',
-      '',
-      block,
-    ].join('\n');
-  }
-  return PROJECTION_RE.test(existing) ? existing.replace(PROJECTION_RE, block) : `${existing.replace(/\s*$/, '\n\n')}${block}`;
-}
+/** Every generator's ^projection block, the routes one among them (scripts/lib/spw-projections.mjs). */
+const genIndexText = (existing = '') => projectionIndexText(existing);
 const readGenIndex = () => readFile(GEN_INDEX, 'utf8').catch(() => '');
 
 /** Anchors a generated tree declares, by the forms spw-integrity reads. */
@@ -869,6 +847,6 @@ if (args.includes('--check')) {
   console.log(`[spw:routes] ${families.length} families; ${families.reduce((sum, family) => sum + family.shapes.length, 0)} shapes followed by ${shaped} routes; ${owning} routes hold something no sibling holds; ${lacking} lack what most siblings hold`);
   console.log(`[spw:routes] ${paying.length} of ${shapeList.length} shapes would save section tokens if named${paying.length ? ` (most: /${familyLabelOf(paying[0].family.dir)}/ ${paying[0].shape.key}, ${paying[0].shape.saves})` : ''}; ${slotted} carry each member's name in a slot; follows + own rebuilds the section order of ${shaped - misplaced} of ${shaped} shaped routes, and ${misplaced} hold an own section before or inside their shape`);
   console.log(write
-    ? `[spw:routes] wrote ${path.relative(ROOT, OUT)}/ (${pages.length} trees, ${families.length} families, index.spw) and the routes projection in ${path.relative(ROOT, GEN_INDEX)}`
+    ? `[spw:routes] wrote ${path.relative(ROOT, OUT)}/ (${pages.length} trees, ${families.length} families, index.spw) and the projections in ${path.relative(ROOT, GEN_INDEX)}`
     : '[spw:routes] --write rebuilds .spw/gen/routes/; --route /path/ prints one tree; --check parses and resolves');
 }

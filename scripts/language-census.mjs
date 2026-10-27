@@ -33,6 +33,7 @@
 
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join, relative } from 'node:path';
+import { writeProjectionIndex } from './lib/spw-projections.mjs';
 import {
   ROOT,
   walkFiles,
@@ -335,6 +336,7 @@ note "css-only attributes are either authored-HTML-driven (fine) or dead selecto
 `;
 
   writeFileSync(OUT, out);
+  await writeProjectionIndex();
   console.log(`[language-census] ${attrs.size} attributes (${fullTrace.length} full-trace, ${unregistered.length} unregistered in .spw, ${contractAttrs.size} contract-enumerated), ${events.size} events (${broadcastEvents.length} broadcast / ${busLocalEvents.length} bus-local)`);
   console.log(`[language-census] ${contracts.length} SPW_*_CONTRACT objects; ${families.size} stem families`);
   console.log(`[language-census] wrote ${relative(ROOT, OUT)}`);
