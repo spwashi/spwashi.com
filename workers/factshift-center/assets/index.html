@@ -13,9 +13,9 @@
     <meta itemprop="description" content="7D force simulation with Spw command language">
     <link rel="icon" href="/v0.0.1/favicon/16.png">
     <link rel="manifest" href="/manifest.json">
-  <script type="module" crossorigin src="/assets/main-q8TJQHcv.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/index-7ql9Nu9h.js">
-  <link rel="stylesheet" crossorigin href="/assets/index-aOiLguaM.css">
+  <script type="module" crossorigin src="/assets/main-3ghnsw7_.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/index-B_0Ydspg.js">
+  <link rel="stylesheet" crossorigin href="/assets/index-VnxfuwiA.css">
   <link rel="stylesheet" crossorigin href="/assets/main-_qtzgt2L.css">
 </head>
 <body data-mode="nothing"
@@ -35,11 +35,11 @@
 <main role="main" data-region="canvas">
     <div id="content" data-role="simulation-viewport">
         <svg id="simulation"
-             role="img"
+             role="group"
              aria-label="Force simulation canvas">
             <g class="simulation-content" data-layer="scene">
-                <g class="simulation-rects" data-layer="rects"></g>
-                <g class="simulation-edges" data-layer="edges"></g>
+                <g class="simulation-rects" data-layer="rects" aria-hidden="true"></g>
+                <g class="simulation-edges" data-layer="edges" aria-hidden="true"></g>
                 <g class="simulation-nodes" data-layer="nodes"></g>
             </g>
         </svg>
@@ -62,7 +62,6 @@
          role="complementary"
          aria-label="WebSocket connection"
          data-region="websocket">
-    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
     <spwashi-websocket-container></spwashi-websocket-container>
 </section>
 
@@ -71,10 +70,13 @@
      aria-label="Focal controls"
      data-region="focal">
     <button id="focal-square"
+            type="button"
             data-focal-status="active"
             data-spw-feature="mode-navigation"
-            aria-label="Focal control"
-            title="Focal control: click to reopen the current mode, drag or arrow-key to reposition"></button>
+            aria-label="Open menu. Drag to move the mark."
+            title="Open menu. Drag moves the mark.">
+        <span id="focal-mark" aria-hidden="true">◎</span>
+    </button>
     <output id="tool-indicator"
             aria-label="Active tool"
             data-role="tool-indicator"></output>
@@ -87,7 +89,6 @@
 
 <!-- ── mode panels ────────────────────────────────────────────── -->
 <aside id="mode-container"
-       role="tabpanel"
        aria-label="Mode panels"
        data-region="modes"
        data-spw-feature="mode-navigation">
@@ -98,6 +99,7 @@
                 <textarea id="spw-parse-field"
                           aria-label="Spw expression input"></textarea>
             </label>
+            <div id="spw-reading" data-role="spw-reading" aria-label="Reading of the line" hidden></div>
             <button id="parse-spw"
                     data-action="parse-spw"
                     title="Run Spw input (Cmd/Ctrl+Enter)">run</button>
@@ -128,7 +130,7 @@
             <output id="spw-prompt-status"
                     aria-live="polite"
                     data-role="spw-prompt-status"></output>
-            <p data-role="spw-hint">Shift+2/3/8 or Shift+. primes outside the prompt. Cmd/Ctrl+Shift+2/3/8 or Cmd/Ctrl+Shift+. primes inside it. Esc jumps to the focal control. Alt+click selects nodes.</p>
+            <p data-role="spw-hint">Cmd/Ctrl+Enter: run · Esc: focal mark</p>
         </div>
     </section>
     <section id="story-mode-container" data-mode-panel="story">
@@ -155,7 +157,7 @@
     <section id="node-mode-container" data-mode-panel="node">
         <div id="node-input-container" data-role="node-input">
             <label>
-                <span>Nodes Input</span>
+                <span>node names</span>
                 <input id="nodes-input" aria-label="Node names input"/>
             </label>
             <div class="action-group" data-group="node-input">
@@ -166,7 +168,7 @@
         <div id="controls" data-role="simulation-controls">
             <section data-group="data">
                 <label>
-                    <span>Data Buttons</span>
+                    <span>node store</span>
                 </label>
                 <div class="action-group" data-group="data-actions">
                     <button class="save-nodes" data-action="save-nodes">save</button>
@@ -178,7 +180,7 @@
             </section>
             <section data-group="simulation">
                 <label>
-                    <span>Simulation Buttons</span>
+                    <span>simulation</span>
                 </label>
                 <div class="action-group" data-group="simulation-actions">
                     <button class="stop" data-action="sim-stop">stop</button>
@@ -190,7 +192,7 @@
         </div>
     </section>
     <section id="color-mode-container" data-mode-panel="color">
-        <div id="colors" role="radiogroup" aria-label="Color palette">
+        <div id="colors" role="group" aria-label="Color palette">
             <button data-dataindex="spwashi-datum-0" class="color-swatch color-swatch--0" aria-label="Color 0"></button>
             <button data-dataindex="spwashi-datum-1" class="color-swatch color-swatch--1" aria-label="Color 1"></button>
             <button data-dataindex="spwashi-datum-2" class="color-swatch color-swatch--2" aria-label="Color 2"></button>
@@ -219,13 +221,20 @@
 <!-- ── navigation: mode shortcuts + hotkeys ───────────────────── -->
 <nav id="mainmenu-shortcuts"
      role="navigation"
-     aria-label="Mode shortcuts"
+     aria-label="Mode menu"
      data-region="shortcuts"
      data-spw-feature="mode-navigation">
-    <ol role="list"></ol>
+    <button id="menu-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="mode-menu"
+            data-action="toggle-menu">Menu</button>
+    <ol id="mode-menu" role="list"></ol>
 </nav>
+<aside id="held-expressions" aria-label="Expressions on the canvas" hidden><ol></ol></aside>
 <button id="hotkey-menu-toggle"
-        aria-label="Toggle keyboard shortcuts"
+        type="button"
+        aria-label="Open shortcuts"
         aria-expanded="false"
         data-action="toggle-hotkeys"
         data-spw-feature="mode-navigation">[...]</button>

@@ -3,8 +3,8 @@
   "version": "0.0.2-alpha",
   "script": "factshift-center",
   "host": "factshift.center",
-  "snapshot": "2026-09-29",
-  "revision": "5860b39",
+  "snapshot": "2026-10-27",
+  "revision": "e9a390d",
   "checkout": "workers/factshift-center/app",
   "query": [
     "alpha",
@@ -33,6 +33,7 @@
     "r",
     "reset",
     "size",
+    "spw",
     "story",
     "superpower",
     "title",

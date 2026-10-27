@@ -1,0 +1,185 @@
+# Review 2026-10-27 — new: factshift.center as the ergonomic center of factshift.com's concepts; a held line lays out as its anatomy; the phone pass waits on the creator's look.
+# Plan Index — factshift.center
+#
+# factshift.com is the ground readers know; factshift.center develops its concepts against
+# the workbench. This file carries the questions the canvas raises about the language.
+
+#>plan_factshift_center_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Status 2026-10-27. factshift.center serves a snapshot of the factshift app, refreshed today to the app's latest local commit. A line of Spw held in the address (?spw=) lays out on the canvas as its anatomy. The app is its own repository, gitignored here, and its commits from this sitting are local and unpushed. Next slice: SVG and UI semantics. Deploy is the creator's.`
+ owner = `factshift-center`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `A line of Spw has an anatomy, and a canvas can lay it out: the word framed by its mode, the body as a region that holds its parts, scene and concept in places of their own. Where the layout has nowhere to put something, the language has a gap worth naming.`
+ concepts = #[
+  `ground-and-center`,
+  `held-line`,
+  `line-anatomy`,
+  `syntax-region`,
+  `resonance`,
+  `snapshot`,
+ ][reg=set]
+ surfaces = #[
+  `workers/factshift-center/version.json`,
+  `workers/factshift-center/assets/index.html`,
+  `workers/factshift-center/app/src/js/modes/spw/line-anatomy.ts`,
+  `workers/factshift-center/app/src/js/modes/spw/workbench-runtime.ts`,
+  `workers/factshift-center/app/src/ts/simulation/anchors.ts`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@version: ~"../../../workers/factshift-center/version.json"
+@line_anatomy: ~"../../../workers/factshift-center/app/src/js/modes/spw/line-anatomy.ts"
+@workbench_runtime: ~"../../../workers/factshift-center/app/src/js/modes/spw/workbench-runtime.ts"
+@parser_releases: ~"../../../workers/spw-quest/assets/parser/index.json"
+@brace_semantics: ~"../brace-semantics/index.spw"
+@inquiry_loop: ~"../spw-inquiry-loop/index.spw"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+ version = @version
+ line_anatomy = @line_anatomy
+ workbench_runtime = @workbench_runtime
+ parser_releases = @parser_releases
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `spw-inquiry-loop`
+ peers = `ecosystem-architecture names factshift-center among the six worker units`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-factshift_center-001"
+ layer = "pragmatic"
+ hypothesis = `A held line of Spw lays out on factshift.center as its anatomy, on factshift.com's ground, and the snapshot here is the app's latest local build.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = @line_anatomy
+ probe_ref = `npm run check:workers, which runs workers/factshift-center/test/snapshot.test.mjs.`
+ falsification = `Open the snapshot with ?spw=home[hook]{software.art.practice}(atlas)<person>: no scene, concept or definition region, or no [hook] frame, falsifies it.`
+ status = "active"
+}[reg=facet]
+
+validation: #[
+ `In the app: npx tsc --noEmit, then npx vite build.`,
+ `npm run check:workers after the snapshot is carried.`,
+ `A held line in Chrome, with and without ?spw=.`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does factshift-center own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of factshift-center?`, see = @wip }[reg=facet],
+ .{ ask = `Where does the canvas decide where a slot of a line sits?`, see = @line_anatomy }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `factshift.com is the ground: the center keeps its proportions and layout at the start, and may differ in menus and behavior.`,
+ `The app's commits land in its own repository first; the snapshot follows here; deploy is the creator's.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+][reg=set]
+
+#>wonder_factshift_spaces
+?["Can the canvas set conceptual space apart from performative or descriptive space, so a reader sees which part of a line names an idea and which part does or describes something?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#with: @plan @line_anatomy
+  ~#taste: "A concept is somewhere you can stand; a performance happens somewhere; a description is laid over something else."
+  ~#expect: "Partly. Concept < > and scene ( ) already have regions of their own. The body { } mixes describing and doing, and only the marks inside it can tell them apart."
+  ~#unblocks: "whether the definition region splits, and what an ! action draws as"
+  ~#probe(read)
+  !probe{ "hold three lines with ?spw=: a definition, a line with an ! action in its body, and a description built from . paths. Say which space each part reads as, and where the canvas put it." }
+  $%[spaces.distinct, spaces.mixed, spaces.need_marks]
+}
+
+#>wonder_factshift_frames_channels
+?["Is [mode] a frame drawn around a word, or a channel the word speaks through, and does the canvas need both?"]{
+  #:depth #!structural ~#lens(projection)
+  ~#with: @plan @brace_semantics
+  ~#hypothesis: "A frame encloses and a channel connects. The mode is drawn now as a square frame; a join (~ ^ & @) is drawn only as a link, which says that two things touch but not what passes between them."
+  ~#expect: "Both. Frames read at once, but channels need a drawing of their own before a join reads as more than a line."
+  ~#probe(read)
+  !probe{ "hold a[x]{p} ~ b[y]{q} and a[x]{p} @ b[y]{q}, and say whether the two bonds read differently or only as two lines" }
+  $%[frame.reads, channel.reads, channel.needs_drawing]
+}
+
+#>wonder_factshift_language_gaps
+?["Where does the canvas show what Spw reads well, and where does it show residue no slot reads?"]{
+  #:depth #!structural ~#lens(projection)
+  ~#with: @plan @inquiry_loop
+  ~#tension: "A layout has to put every character somewhere. Text the slot reader leaves unread has no region, so the canvas either drops it or shows it as a gap."
+  ~#expect: "Slots and nesting read well. Three things leave residue: text outside any slot, a body that mixes separators, and a join between two charged lines."
+  ~#unblocks: "an unread region on the canvas, and capability asks for the workbench"
+  ~#probe(read)
+  !probe{ "hold ten lines from spw.quest's shelf and list every character that lands in no region; each kind of residue is a candidate ask" }
+  $%[gaps.none, gaps.residue, gaps.reader_ask]
+}
+
+#>wonder_factshift_parity
+?["Which of the workbench's readings would the canvas take first, now that it is catching up, and what would they have grown if it had kept pace through 2025?"]{
+  #:depth #!computational ~#lens(projection)
+  ~#with: @plan @workbench_runtime
+  ~#taste: "Parity is not a copy of the workbench; it is the canvas drawing what the workbench already knows how to read."
+  ~#expect: "Four readings, in this order. Canon names first. Then the reader's roles as paint. Then the lexer's node kinds (frame, body, scope, capsule) as geometry. Then error spans as visible gaps. Kept since 2025, the anatomy would have arrived as a reader output and not as a second slot reader in the app."
+  ~#probe(read)
+  !probe{ "read one line with the app's workbench and with the site's reader, and list what the newer reader names that the canvas cannot yet draw" }
+  $%[parity.names, parity.roles, parity.geometry, parity.gaps]
+}
+
+#>wonder_factshift_rebundle
+?["Should the app carry a dated workbench build, bump its workbench submodule, or import the site's reader?"]{
+  #:depth #!pragmatics ~#lens(projection)
+  ~#with: @plan @parser_releases
+  ~#hypothesis: "spw.quest's 2026.10.13 workbench build already exports the five runtime names and the parse the app imports, at about the weight the app now compiles from source."
+  ~#expect: "Carry the dated build, the way spw.quest does: pinned bytes, a manifest, and no runtime dependency on another host. Bump the submodule only for the workbench's source tools (its dev server and language server). Importing spwashi.com's own JS would tie two deploys together."
+  ~#unblocks: "slice 5 in PLAN.md, and whether the workbench cuts a release past the one spw.quest carries"
+  ~#probe(run)
+  !probe{ `grep -rhoE "from '(spw-workbench/[a-z]+)'" workers/factshift-center/app/src | sort | uniq -c` }
+  $%[carry.dated_build, bump.submodule, import.site_reader]
+}
+
+#>wonder_factshift_relations
+?["Once each link reads its relation instead of one global strength, which relations should pull, and how hard?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#with: @plan @line_anatomy
+  ~#expect: "Four relations are enough. Hold (a part to its word) and bond (a join) set the layout. Resonance (the same word twice) and stage (the run's order) only lean."
+  ~#unblocks: "slice 3 in PLAN.md"
+  ~#probe(read)
+  !probe{ "a demo with per-relation strengths at three settings, held on the same line; the creator picks by feel in the browser" }
+  $%[relations.four, relations.more, relations.global_enough]
+}
+
+#>wonder_factshift_priming_dialects
+?["What should the Spw panel's priming become, now that Spw has dialects and distinct representational contexts?"]{
+  #:depth #!semantic ~#lens(projection)
+  ~#with: @plan @line_anatomy
+  ~#tension: "The prime buttons (*boon, @, #, <>) were designed for a Spw with one representation. The language now reads a line differently by dialect and context, and the panel cannot say which one it is reading in."
+  ~#expect: "A chooser for the context, not for the operator. The reading under the prompt names slots in that context's words, and priming becomes a starting line drawn from it."
+  ~#probe(read)
+  !probe{ "list the dialects and contexts the workbench names, then read one line in two of them and say what the panel would have to show differently" }
+  $%[priming.context_chooser, priming.keep_operators, priming.retire]
+}

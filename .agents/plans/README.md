@@ -41,6 +41,7 @@ Every live folder, once, by area. Open a plan's `index.spw` for its disposition 
 - `spw-metaphysical-language/` — the language itself: four passes from copy to depth, then codex, sigil alignment, drift ledger; holds the codex shell from `spw-architecture-ecology`.
 - `spw-inquiry-loop/` — the loop a question runs (probe, Spw update, refactor, test), the capability ledger, `plans:twinkle`, and the parser's arrival in the site. Was `spw-language-v04` until 2026-10-27.
 - `spw-quest/` — spw.quest, the guide and the install: a first reward before installing, and a plan surface agents review.
+- `factshift-center/` — factshift.center on factshift.com's ground: a held line of Spw laid out as its anatomy, the app's snapshot, and what the canvas shows about the language.
 - `brace-semantics/` — what each brace pair means, labels the parser checks, one serializer for page, region and component, and the `< & >` instrument; five decisions go to the creator first.
 - `operator-resonance-alignment/` — sigils as handles across routes, chips and capture; holds craft guard 3 from `operator-semantics-refinement`.
 - `homonym-renaming/` — the lexicon: true homonyms and the attribute and event clusters; holds `language-reclustering`.
