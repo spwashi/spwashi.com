@@ -2145,6 +2145,7 @@ html[data-spw-reduce-motion="on"] *::after {
   --boon-glow: var(--objective-brace-wash);
   --bane-glow: var(--subjective-brace-wash);
 
+  /* Workbench relation: mutation. The atlas aliases (probe, object, frame, action, ref, stream) carry the hues, and the kernel types alias them. */
   /* ------------------------------------------------------------------------
      6.1 Resonance Family (Address, Field & Vibration: #>, #:, #)
      ------------------------------------------------------------------------ */
@@ -2227,11 +2228,6 @@ html[data-spw-reduce-motion="on"] *::after {
   --op-perspective-border: var(--op-action-border);
   --op-perspective-bg-soft: var(--op-action-bg-soft);
   --op-perspective-glow: var(--op-action-glow);
-
-  --op-commit-color: var(--op-action-color);
-  --op-commit-border: var(--op-action-border);
-  --op-commit-bg-soft: var(--op-action-bg-soft);
-  --op-commit-glow: var(--op-action-glow);
 
   /* ------------------------------------------------------------------------
      6.5 Conceptual & Morphic Family (Boundaries, Lenses & Staging: <, >, (, [, {)

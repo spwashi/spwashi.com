@@ -41,7 +41,6 @@
   [data-spw-ornament-density],
   [data-spw-ornament-axis],
   .spw-ornament-host,
-  .spw-spirit-sequence,
   .spw-ornament-rail,
   .spw-ornament-ribbon,
   .spw-ornament-cluster,
@@ -125,108 +124,7 @@
 }
 
 /* ==========================================================================
-   3. Spirit sequence display
-   --------------------------------------------------------------------------
-   This is the source component from your snippet, now expanded into a richer
-   tokenized surface and a better JS target.
-   ========================================================================== */
-
-.spw-spirit-sequence {
-  display: inline-flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: var(--ornament-sequence-gap);
-  margin: 0.6rem 0 0;
-  padding: 0;
-  font-family: var(--ornament-font);
-  font-size: var(--ornament-sequence-font-size);
-  letter-spacing: var(--ornament-sequence-letter-spacing);
-  opacity: var(--ornament-stage-opacity, var(--ornament-opacity-rest));
-  user-select: none;
-  -webkit-user-select: none;
-  list-style: none;
-  transition:
-    opacity var(--ornament-duration-deliberate) var(--ornament-ease),
-    filter var(--ornament-duration-base) var(--ornament-settle-ease),
-    transform var(--ornament-duration-fast) var(--ornament-settle-ease);
-}
-
-.spw-spirit-sequence:hover,
-.spw-spirit-sequence:focus-within {
-  opacity: var(--ornament-opacity-hover);
-}
-
-.spw-spirit-sequence[data-spw-sequence-state="playing"] {
-  opacity: var(--ornament-opacity-active);
-  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--ornament-accent) 14%, transparent));
-}
-
-.spw-spirit-sequence[data-spw-sequence-state="paused"] {
-  opacity: 0.48;
-}
-
-.spw-spirit-sequence[data-spw-sequence-state="complete"] {
-  opacity: 0.72;
-}
-
-.spw-spirit-sequence > * {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 1ch;
-}
-
-/* Sibling seams reveal rhythm and ordering. */
-.spw-spirit-sequence > * + *::before {
-  content: "";
-  position: absolute;
-  left: calc(-1 * var(--ornament-sequence-gap) / 2);
-  top: 50%;
-  width: calc(var(--ornament-sequence-gap) * 0.55);
-  border-top: var(--ornament-line-width) dashed color-mix(in srgb, currentColor 22%, transparent);
-  transform: translate(-50%, -50%);
-  opacity: 0.52;
-}
-
-.spw-spirit-sequence[data-spw-sibling-resonance="true"] > * + *::before {
-  border-top-style: solid;
-  opacity: 0.74;
-}
-
-/* Child nodes can become active independently through JS. */
-.spw-spirit-sequence > [data-op] {
-  padding-inline: 0.08em;
-  border-radius: var(--ornament-radius-tight);
-  transition:
-    color var(--ornament-duration-fast) var(--ornament-ease),
-    text-shadow var(--ornament-duration-base) var(--ornament-settle-ease),
-    transform var(--ornament-duration-fast) var(--ornament-settle-ease),
-    opacity var(--ornament-duration-fast) var(--ornament-ease);
-}
-
-.spw-spirit-sequence > [data-op][data-spw-child-active="true"] {
-  transform: translateY(-1px);
-  text-shadow: 0 0 8px color-mix(in srgb, currentColor 20%, transparent);
-}
-
-.spw-spirit-sequence > [data-op][data-spw-ornament-state="glowing"] {
-  text-shadow: 0 0 12px color-mix(in srgb, currentColor 28%, transparent);
-}
-
-.spw-spirit-sequence > [data-op="probe"]  { color: var(--op-probe-color); }
-.spw-spirit-sequence > [data-op="ref"]    { color: var(--op-ref-color); }
-.spw-spirit-sequence > [data-op="action"] { color: var(--op-action-color); }
-.spw-spirit-sequence > [data-op="stream"] { color: var(--op-stream-color); }
-.spw-spirit-sequence > [data-op="object"] { color: var(--op-object-color); }
-.spw-spirit-sequence > [data-op="frame"]  { color: var(--op-frame-color); }
-.spw-spirit-sequence > [data-op="surface"] { color: var(--op-surface-color, var(--teal)); }
-.spw-spirit-sequence > [data-op="merge"] { color: var(--op-merge-color, var(--teal)); }
-.spw-spirit-sequence > [data-op="meta"] { color: var(--op-meta-color, var(--ink-soft)); }
-.spw-spirit-sequence > [data-op="pragma"] { color: var(--op-pragma-color, var(--ink-soft)); }
-
-/* ==========================================================================
-   4. Decorative operator rails
+   3. Decorative operator rails
    --------------------------------------------------------------------------
    Concrete implementation of token hierarchy as a visible sequence or meter.
    ========================================================================== */
@@ -292,7 +190,7 @@
 }
 
 /* ==========================================================================
-   5. Ornament ribbons and kickers
+   4. Ornament ribbons and kickers
    --------------------------------------------------------------------------
    Useful for frame toplines, captions, cards, and route descriptors.
    ========================================================================== */
@@ -352,7 +250,7 @@
 }
 
 /* ==========================================================================
-   6. Ladders, braids, and dimensional grouping
+   5. Ladders, braids, and dimensional grouping
    --------------------------------------------------------------------------
    These are ornamental implementations of hierarchy and sibling relations.
    ========================================================================== */
@@ -419,7 +317,7 @@
 }
 
 /* ==========================================================================
-   7. Ornament field and cluster containers
+   6. Ornament field and cluster containers
    --------------------------------------------------------------------------
    Dimensional hierarchy and concrete token application.
    ========================================================================== */
@@ -480,7 +378,7 @@
 }
 
 /* ==========================================================================
-   8. Decorative meters
+   7. Decorative meters
    --------------------------------------------------------------------------
    Good for progress, semantic charge, reveal, or copy-generation guidance.
    ========================================================================== */
@@ -527,13 +425,12 @@
 }
 
 /* ==========================================================================
-   9. Operator-aware ornament bias
+   8. Operator-aware ornament bias
    --------------------------------------------------------------------------
    Ornament should inherit the semantic physics of the operator palette.
    ========================================================================== */
 
 :where(
-  .spw-spirit-sequence,
   .spw-ornament-rail,
   .spw-ornament-ribbon,
   .spw-ornament-kicker,
@@ -549,7 +446,6 @@
 }
 
 :where(
-  .spw-spirit-sequence,
   .spw-ornament-rail,
   .spw-ornament-ribbon,
   .spw-ornament-kicker,
@@ -565,7 +461,7 @@
 }
 
 /* ==========================================================================
-   10. Role and stance integration
+   9. Role and stance integration
    --------------------------------------------------------------------------
    Lets ornament echo room semantics without owning layout.
    ========================================================================== */
@@ -627,7 +523,7 @@
 }
 
 /* ==========================================================================
-   11. Pseudo-element examples for semantic scaffolding
+   10. Pseudo-element examples for semantic scaffolding
    --------------------------------------------------------------------------
    These are decorative, but teach good CSS by example.
    ========================================================================== */
@@ -713,16 +609,10 @@
 }
 
 /* ==========================================================================
-   12. Integration with existing site components
+   11. Integration with existing site components
    --------------------------------------------------------------------------
    These rules let ornament softly attach to known nouns from the site.
    ========================================================================== */
-
-:where(.frame-topline, .frame-heading) > .spw-spirit-sequence {
-  margin-top: 0;
-  margin-left: auto;
-  align-self: center;
-}
 
 :where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card, .mode-panel) > .spw-ornament-kicker:first-child {
   margin-top: -0.1rem;
@@ -749,14 +639,13 @@
 }
 
 /* ==========================================================================
-   13. Interactive hints for JS
+   12. Interactive hints for JS
    --------------------------------------------------------------------------
    This is intentionally declarative: JS can toggle these attributes and the
    ornament will visibly explain the state transition.
    ========================================================================== */
 
 :where(
-  .spw-spirit-sequence,
   .spw-ornament-rail,
   .spw-ornament-ribbon,
   .spw-ornament-meter,
@@ -793,7 +682,6 @@
 }
 
 :where(
-  .spw-spirit-sequence,
   .spw-ornament-rail,
   .spw-ornament-ribbon,
   .spw-ornament-meter,
@@ -804,7 +692,6 @@
 }
 
 :where(
-  .spw-spirit-sequence,
   .spw-ornament-rail,
   .spw-ornament-ribbon,
   .spw-ornament-meter,
@@ -816,7 +703,6 @@
 }
 
 :where(
-  .spw-spirit-sequence,
   .spw-ornament-rail,
   .spw-ornament-ribbon,
   .spw-ornament-meter,
@@ -828,7 +714,6 @@
 }
 
 :where(
-  .spw-spirit-sequence,
   .spw-ornament-rail,
   .spw-ornament-ribbon,
   .spw-ornament-meter,
@@ -841,7 +726,7 @@
 }
 
 /* ==========================================================================
-   14. Responsive adjustments
+   13. Responsive adjustments
    ========================================================================== */
 
 @supports (container-type: inline-size) {
@@ -855,11 +740,6 @@
       width: 1.3rem;
     }
 
-    .spw-spirit-sequence {
-      --ornament-sequence-font-size: 0.84rem;
-      --ornament-sequence-gap: 0.22em;
-    }
-
     .spw-ornament-meter {
       grid-template-columns: auto 1fr;
     }
@@ -871,13 +751,12 @@
 }
 
 /* ==========================================================================
-   15. Reduced motion
+   14. Reduced motion
    ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
   :where(
     .spw-ornament-host,
-    .spw-spirit-sequence,
     .spw-ornament-rail,
     .spw-ornament-ribbon,
     .spw-ornament-cluster,
@@ -1478,7 +1357,7 @@ main > :where(.spw-frame):last-of-type:not(:first-of-type):not([data-spw-stage])
    (idle flourish-pack). Theatrical timing stays behind enhancement-level=rich. */
 
 /* ==========================================================================
-   17. Embedded setting / mode rails
+   16. Embedded setting / mode rails
    --------------------------------------------------------------------------
    Mode-switch stays the lens. These rails host site-setting and preset
    chips as ornament anatomy so a still can name climate without opening
@@ -1547,7 +1426,7 @@ html:is([data-spw-capture-mode="screenshot"], [data-spw-capture-mode="study"]) .
 }
 
 /* ==========================================================================
-   18. Authored marks: rule and corner
+   17. Authored marks: rule and corner
    --------------------------------------------------------------------------
    Two marks a page can author, both reading field state only:
 
@@ -1649,7 +1528,7 @@ hr[data-spw-ornament="rule"]::before {
 }
 
 /* ==========================================================================
-   19. Landing and brace
+   18. Landing and brace
    --------------------------------------------------------------------------
    A link that names a region (#fragment) should be felt on arrival, not
    only scrolled to. Landing is the fragment's reading of navigation state;
