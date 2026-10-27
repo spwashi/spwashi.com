@@ -29,7 +29,7 @@ fixity = "tending"
 expression = asks[plugins]{one.reading.then.one.plugin}<upstream>
 
 ^"owner_questions"{
-  ~#note: "Asked in @first_plugin (e53e41d); the owner decides. Facts from this side, 2026-10-28."
+  ~#note: "Asked in @first_plugin (e53e41d); the owner decides. Facts from this side, 2026-10-27."
   first_plugin = .{
     asks = `the expression manifest, or a doctor reading of projection freshness`
     manifest = `reads the routes alone since 180e4a0e: one input to select, one output to emit`

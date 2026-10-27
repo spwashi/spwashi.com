@@ -35,7 +35,7 @@ contents = #[
   ][reg=set]
   asks = @upstream_asks
   unchanged = `the parser and the reader; the bundle moved only its pin line`
-  editor = `the extension installed 2026-10-13 needs a rebuild for any of it`
+  editor = `rebuilt from the workbench clone (f36ecd08) and reinstalled 2026-10-27`
 }
 
 ^"findings"{
@@ -57,7 +57,7 @@ contents = #[
     cost = `none to adopt; a line in @agents_memory would make it known`
   }[reg=facet]
   prose_paths = .{
-    tried = `2026-10-28: 59 in-sentence paths in 38 files had a declared handle`
+    tried = `2026-10-27: 59 in-sentence paths in 38 files had a declared handle`
     kept = `paths stay; @build and @readme carry less scent than the path`
     rule = `new prose names a well-named handle; a list of files stays paths`
     claim = `a path written as a string is checked by nothing`
@@ -100,7 +100,7 @@ contents = #[
   }[reg=facet]
   parse_errors = .{
     claim = `lint and integrity were green while the parser recovered`
-    measure = `334 recoverable errors in 39 live files on 2026-10-28`
+    measure = `334 recoverable errors in 39 live files on 2026-10-27`
     cause = `inner backticks in an outer pair, bare ≈ — … and dates`
     landed = `3325c971 and 849e63f5: 0 live files with an error`
     sensor = `none yet; @integrity walks every surface and could count them`
@@ -196,7 +196,7 @@ contents = #[
     ~"./spw-tree-dx-2026-10.spw#file_moves",
   ][reg=set]
   done = `generated_registry (2773d4a0), search_traps (MEMORY.md), prose_paths decided`
-  first = `rebuild and reinstall the extension; root-relative citations wait on it`
+  first = `the extension is rebuilt; root-relative citations need only a window reload to check`
 }
 
 #>wonder_spw_tree_dx_first_screen_scope
@@ -219,9 +219,9 @@ contents = #[
 }
 
 ^"stream"{
- >>[2026-10-28 09:40] audit — The mount moved to 850077a (b956329b). A census of the tree found eight places where refactoring or reading costs more than it should, and the order inside files was the largest. ecosystem-clusters was reordered as the demo, and its root-relative citations went back to relative when the installed extension flagged all 24 of them.
- >>[2026-10-28 11:10] revise — file_moves was wrong: the editor re-aims citations when a .spw file or folder moves (rename-files, since 2026-10-12), and spw refactor --rename path:from=to plans the same from a terminal; a dry run of moving ways-2026-10.spw planned 15 rewrites in 8 files. The gap left is markdown and HTML.
- >>[2026-10-28 15:30] implement — With the workbench at 850077a: the pragmatics depth spelled one way by spw refactor, the one lint finding cleared, five generated files registered so the server offers rebuild and spec (seen headless), the fourteen asks given upstream's status, and every live file parsing clean (334 errors in 39 files to 0). Turning prose paths into handles was tried, compared and reverted.
+ >>[2026-10-27 11:06] audit — The mount moved to 850077a (b956329b). A census of the tree found eight places where refactoring or reading costs more than it should, and the order inside files was the largest. ecosystem-clusters was reordered as the demo, and its root-relative citations went back to relative when the installed extension flagged all 24 of them.
+ >>[2026-10-27 11:16] revise — file_moves was wrong: the editor re-aims citations when a .spw file or folder moves (rename-files, since 2026-10-12), and spw refactor --rename path:from=to plans the same from a terminal; a dry run of moving ways-2026-10.spw planned 15 rewrites in 8 files. The gap left is markdown and HTML.
+ >>[2026-10-27 12:37] implement — With the workbench at 850077a: the pragmatics depth spelled one way by spw refactor, the one lint finding cleared, five generated files registered so the server offers rebuild and spec (seen headless), the fourteen asks given upstream's status, and every live file parsing clean (334 errors in 39 files to 0). Turning prose paths into handles was tried, compared and reverted.
 }
 
 # About this file

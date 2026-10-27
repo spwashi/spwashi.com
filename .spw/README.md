@@ -39,7 +39,7 @@ npm run spw:routes -- --diff /a/ /b/                        # two routes: the gr
 rename fragility but had no automation behind it. It delegates *extraction* to
 `spw query --selector pathRefs` — the parser decides what a citation is — and
 only adds *resolution*: does the path exist, and does the `#fragment` name
-anything in the target. On 2026-10-28 all 6332 citations across 408 surfaces resolved.
+anything in the target. On 2026-10-27 all 6332 citations across 408 surfaces resolved.
 
 **Known workbench gaps** (this consumer is a use case the workbench predates).
 Pin `850077ab48e0`. Details: `.spw/workbench-report.spw`.
@@ -47,7 +47,8 @@ Pin `850077ab48e0`. Details: `.spw/workbench-report.spw`.
 Landed on this pin: `doctor` and `lint` take `--stats`, a declared handle links
 and hovers inside quoted prose, citation lenses count the files and citations
 that point at a file or an anchor, and a generated file opens its source
-(the extension installed 2026-10-13 needs a rebuild to show these).
+(the VS Code extension was rebuilt from the workbench clone and reinstalled on
+2026-10-27; Neovim runs the mounted server and shows them already).
 Five generators register what they write in `.spw/gen/index.spw`
 (`npm run spw:projections` writes it on a fresh clone), so snippets, dimensions,
 the language census, precipitates and route trees each offer rebuild and spec.
