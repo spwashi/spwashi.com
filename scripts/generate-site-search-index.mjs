@@ -26,6 +26,7 @@ const ROOT = path.resolve(__dirname, '..');
 const OUTPUT = path.join(ROOT, 'public/data/site-search-index.json');
 
 /** Canonical types match public/js/kernel/operator-detection.js. Slug aliases keep old /operators/:slug routes searchable. */
+// Workbench relation: mutation, via the kernel. A hand copy of its types, with geometry and motion.
 const OPERATOR_GEOMETRY_INDEX = Object.freeze({
   frame: { type: 'frame', sigil: '#>', geometry: 'anchor', motion: 'anchor', brace: 'objective' },
   layer: { type: 'layer', sigil: '#:', geometry: 'field-plane', motion: 'anchor', brace: 'objective' },

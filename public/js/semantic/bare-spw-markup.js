@@ -30,6 +30,7 @@ const SKIP_ANCESTOR_SELECTOR = [
   '[data-spw-bare-spw-enhanced="true"]',
 ].join(', ');
 
+// Workbench relation: extension. The site's material words for braces (brace, block, angle, circle) and their objective and subjective walls.
 const DELIMITER_FORMS = Object.freeze({
   '{': Object.freeze({ form: 'brace', className: 'spw-delimiter--brace', perspective: 'objective' }),
   '}': Object.freeze({ form: 'brace', className: 'spw-delimiter--brace', perspective: 'subjective' }),

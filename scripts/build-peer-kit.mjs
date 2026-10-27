@@ -171,6 +171,7 @@ function closure(wanted, light) {
 /** Sigils and their operator types, from the site's registry. */
 async function sigilTypes() {
   await import(pathToFileURL(path.join(ROOT, 'scripts/lib/register-public-imports.mjs')).href);
+  // Workbench relation: mutation, via the kernel. PEER_SIGILS and PEER_BRACES are generated from it unchanged.
   const { OPERATOR_DEFINITIONS } = await import('/public/js/kernel/operator-detection.js');
   return OPERATOR_DEFINITIONS.map((def) => ({ sigil: def.prefix, type: def.type }));
 }

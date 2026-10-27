@@ -34,6 +34,7 @@ const LENS_VIEW_LABELS = Object.freeze({
   action: 'Action',
 });
 
+// Workbench relation: extension. Image lenses read as sigils. route maps to < here, while the kernel resolves route to > (open).
 const IMAGE_LENS_SEMANTICS = Object.freeze({
   probe: {
     sigil: '?',

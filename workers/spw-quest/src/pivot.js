@@ -16,6 +16,7 @@ import { SPECIMENS, findSpecimens, nameOf, readQuery, specimenById } from "./spe
 /** The longest line the page takes; a pivot is one line, not a file. */
 export const PIVOT_LIMIT = 200;
 const PER_SLOT = 4;
+// Workbench relation: extension. The five valence words, as expression-query.js reads them.
 const VALENCE = Object.freeze(["boon", "bane", "bone", "bonk", "honk"]);
 const FRONT_MARKS = Object.freeze(["?", "~", "^", "&", "$"]);
 const MARK_NAME = new Map(OPERATORS.map((operator) => [operator.sigil, operator.name]));

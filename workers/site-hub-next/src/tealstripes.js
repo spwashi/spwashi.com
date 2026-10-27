@@ -27,6 +27,7 @@ import { escapeHtml } from "../../lib/shell.js";
 export const HOST = "tealstripesvibes.com";
 
 /** Facets in canonical order, with the URL letter and the Spw operator that names each. */
+// Workbench relation: extension. Visual facets for six sigils.
 export const FACETS = Object.freeze([
   { name: "palette", letter: "p", sigil: "*" },
   { name: "rhythm", letter: "r", sigil: "#" },

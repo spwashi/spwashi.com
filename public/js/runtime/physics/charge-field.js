@@ -3,6 +3,7 @@ import { writeDatasetValues, writeStyleProperty } from '/public/js/kernel/dom-co
 import { detectOperator, getOperatorDefinition } from '/public/js/kernel/shared.js';
 import { PHASE_INTENSITY, CHARGE_TIMING, decayCharge } from '/public/js/kernel/charge-field-contract.js';
 
+// Workbench relation: mutation, via the kernel. Keyed by its type names.
 const OPERATOR_DISCHARGE = Object.freeze({
   wonder: 'release',
   probe: 'release',

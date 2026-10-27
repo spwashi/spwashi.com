@@ -10,6 +10,8 @@
 #:operation #!align
 #:fixity #!stable
 
+workbench_relation = "mutation: site labels for each canonical type, kept beside the workbench names; it governs copy and chips without replacing workbench canon"
+
 ^"north_star"{
   claim: "Spw sigils are transformation handles, not decoration."
   public_rule: "A sigil should be present only when it clarifies the transformation."

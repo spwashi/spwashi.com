@@ -176,6 +176,7 @@ function extractOperatorToken(value = '') {
     return normalizeAccentToken(raw);
 }
 
+// Workbench relation: mutation, via the kernel. Keyed by its type names.
 const WONDER_BY_OPERATOR = Object.freeze({
     frame: 'resonance',
     vibration: 'resonance',

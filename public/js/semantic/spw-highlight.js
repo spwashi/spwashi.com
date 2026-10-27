@@ -14,6 +14,7 @@
 import { OPERATOR_DEFINITIONS } from '/public/js/kernel/operator-detection.js';
 
 /** Longest prefix first, so #> wins over #. A stream entry's >> is the stream, not a concept edge. */
+// Workbench relation: harmony with the workbench reader's roles; mutation, via the kernel, for paint types; extension: >> stream.
 const PREFIXES = [...OPERATOR_DEFINITIONS.map((definition) => [definition.prefix, definition.type]), ['>>', 'stream']]
   .sort((a, b) => b[0].length - a[0].length);
 

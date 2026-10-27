@@ -18,6 +18,7 @@
  * resting form so the line reads with scripts off.
  */
 
+// Workbench relation: mutation, via the kernel. Keyed by its type names.
 const STATES = Object.freeze({
   '.': { operator: 'ground', word: 'resting', hint: 'nothing held' },
   '~': { operator: 'potential', word: 'held', hint: 'one more makes a mix' },

@@ -58,6 +58,7 @@ declare global {
     spwFeatureTrigger?: 'view' | 'attention-settle' | 'manual';
 
     /** Type classification of a sigil or operator */
+ // Workbench relation: mutation, via the kernel. Its types, then legacy aliases.
     spwOperator?:
       | 'frame'
       | 'layer'
@@ -70,7 +71,7 @@ declare global {
       | 'value'
       | 'subject'
       | 'binding'
-      | 'meta'
+      | 'substrate'
       | 'normalize'
       | 'action'
       | 'concept-edge'
@@ -80,6 +81,7 @@ declare global {
       | 'direction'
       // Legacy type aliases defined in shared.js:
       | 'baseline'
+      | 'meta'
       | 'object'
       | 'ref'
       | 'probe'

@@ -24,6 +24,7 @@
  * scripts off; this module only keeps the three outputs in step with it.
  */
 
+// Workbench relation: mutation, via the kernel. Each practice keys a kernel type to the sentence it says.
 export const CARE_PRACTICES = Object.freeze({
   notice: { prefix: '?', operator: 'wonder', say: (state) => `I am noticing that I feel ${state}.` },
   name: { prefix: '=', operator: 'binding', say: (state) => `The closest word I have is ${state}.` },

@@ -107,11 +107,15 @@ fixity = "tending"
  >>[2026-10-27 14:29] decide — the creator: revisit the theory through copy updates and focused passes on Spw parsing and HTML layout with CSS depth, considering script or WebGL for further depth, and integrate nested wonder. The plan is not archived. Four passes now lead (PLAN.md, Passes); the codex shell waits for a pass with a drift to record. #>wonder_metaphysical_depth holds one question per pass inside one outer question, each with a guess written before its probe.
  >>[2026-10-27 14:29] probe — wonder_metaphysical_depth_layout: 0 route expressions nest a brace inside a brace, of 1066 that carry one; the herbarium under .spw/language/expressions/ has 7 nesting lines. The ~#expect held, more strongly than written: the routes are flat, so the layout pass starts from pressed forms.
  >>[2026-10-27 14:57] observe — the first drifts are measured, which is what the codex shell waits on: spw.quest/constructs counted how the shelf's 1003 lines use each mark by position and found five places where a mark's names part (project names two forms, lens two things, ~ reads three ways, the dot is one word or three parts, 17 lines carry a charge with no word). They are asked in compound-expressions.spw as #>wonder_compound_consistency, each with a guess. The codex shell can now open with a real drift ledger; the meanings stay the creator's.
+ >>[2026-10-27 15:15] observe — the census across the codebase: every layer agrees on the characters, and names come from two sources that disagree (the workbench's ascension, configuration, measure, definition; the kernel's integration, binding, normalize, direction). The copy pass has to choose which column printed copy speaks; that is #>wonder_operator_names in ../../../.spw/caches/operator-consistency-2026-10.spw.
+ >>[2026-10-27 15:37] decide — the creator finds [ ] as a frame compelling and worth exploring. Pass 2's layout lab can draw [ ] as a frame around the word, and #>wonder_square_as_frame asks what a frame says that a mode does not.
 }
 
 ^["open"]{
  depth = ~"./index.spw#wonder_metaphysical_depth"
  names_by_position = ~"../../../.spw/conventions/compound-expressions.spw#wonder_compound_consistency"
+ names_by_source = ~"../../../.spw/caches/operator-consistency-2026-10.spw#wonder_operator_names"
+ square_as_frame = ~"../../../.spw/caches/operator-consistency-2026-10.spw#wonder_square_as_frame"
  ?[codex_shape]: "One dense construct-codex.spw or a codex/ directory — at what entry count does the split rule from spw-surface-normalization trigger?"
  ?[sigil_craft_register]: "Is the charged-compressed-intent correspondence public copy or editor-layer lore? Strongest claim, easiest to misread as decoration."
  ?[cascade]: "If @ arbitrates to ref, does ~ narrow to potential/thread exclusively — and which copy surfaces cascade?"

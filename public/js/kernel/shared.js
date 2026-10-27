@@ -870,6 +870,7 @@ const getOperatorAffordances = (type = '') => {
         []  mode    — how it wants to be read
         {}  queue   — the open discussion it gathers
    (Spwashi grammar example, 2026-07-03.) */
+// Workbench relation: extension. Contour slots: ( payload, [ mode, { queue.
 const CONTOUR_SLOT_BY_DELIMITER = Object.freeze({ '(': 'payload', '[': 'mode', '{': 'queue' });
 const CONTOUR_CLOSER = Object.freeze({ '(': ')', '[': ']', '{': '}' });
 
@@ -913,6 +914,7 @@ const OP_DISPATCH_BY_POSITION = Object.freeze({
 });
 
 /* The sequence and its states are this table's; each sigil's operator is the canon's. */
+// Workbench relation: mutation, via the kernel. Its types, in threshold order.
 const SPW_OPERATOR_THRESHOLD_SEQUENCE = Object.freeze([
   ['~', 'latent'],
   ['?', 'probing'],
