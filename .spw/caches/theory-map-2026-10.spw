@@ -1,0 +1,248 @@
+# Theory map (2026-10) — prime: questions for a Gemini cut
+#>theory_map_2026_10
+#:cache #!theory #!wonder #!operators #!geometry #!gemini
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!semantics
+
+expression = theory[map]{wonder.probe.operator.geometry}<cut>
+
+summary = #[
+  `Eleven questions tie Spw's ideas to theory a field already holds.`,
+  `Each keeps its answer set, a prediction and the kind of probe.`,
+  `A packet bounds what a model reads; a brief says what to ask.`,
+  `The cut lands beside this file and passes the same checks.`,
+][reg=set]
+
+contents = #[
+  ~"./theory-map-2026-10.spw#lifecycle",
+  ~"./theory-map-2026-10.spw#wonder_theory_anti_unification",
+  ~"./theory-map-2026-10.spw#packet",
+  ~"./theory-map-2026-10.spw#brief",
+  ~"./theory-map-2026-10.spw#receipt",
+][reg=set]
+
+^"lifecycle"{
+  ~#note: "How each question here moves, in marks the harvest reads."
+  open = `~#expect says what the probe should show, before it runs`
+  probed = `a >>[date] probe line in the stream says what it showed`
+  answered = `~#answer names the one alternative left in the $% set`
+  retired = `~#retired says why the question stopped mattering`
+  kinds = `~#probe(run) is a command; ~#probe(read) is a judgment`
+  unblocks = `~#unblocks cites what the answer would move`
+  why = `a guess before the probe is what makes the result teach`
+}
+
+#>wonder_theory_anti_unification
+?["Is ground-then-edge the anti-unifier of two forms, or a per-slot shadow of it?"]{
+  #:depth #!computational ~#lens(comparison: ground and edge)
+  ~#with: @specimens
+  ~#hypothesis: "Ground is the most specific form both lines are instances of (Plotkin; Reynolds; 1970), and the edge is where it needs a variable."
+  ~#expect: "A per-slot shadow: compare holds each slot as one constant, so nested bodies part whole rather than at their first differing leaf."
+  ~#tension: "The slot reader takes nine herbarium forms only in part; an anti-unifier over a partial reading is a guess."
+  ~#unblocks: @spw_quest
+  ~#probe(read)
+  !probe{ "anti-unify h-three_deep and h-one_deep by hand, then open /specimens?a=h-three_deep&b=h-one_deep and compare where each says they part" }
+  $%[lgg.exact, lgg.per_slot, lgg.weaker]
+}
+
+#>wonder_theory_query_lattice
+?["Do slot queries form a lattice under generality, and does the search keep its order?"]{
+  #:depth #!computational ~#lens(constraint: generality)
+  ~#with: @specimens
+  ~#hypothesis: "medium[open] is an instance of medium[*], so its matches are a subset of medium[*]'s."
+  ~#expect: "It holds for named slots and breaks for bare words, since a bare word may sit in any slot."
+  ~#unblocks: @expression_query
+  ~#probe(run)
+  !probe{ `node --input-type=module -e "import { findSpecimens as f, readQuery as q } from './workers/spw-quest/src/specimens.js'; const g = f(q('medium[*]')), s = f(q('medium[open]')); console.log(s.every((x) => g.includes(x)))"` }
+  $%[lattice.holds, lattice.named_slots_only, lattice.breaks]
+}
+
+#>wonder_theory_concept_lattice
+?["Would a concept lattice of lines by slot values find better families than shared-word kinship?"]{
+  #:depth #!mathematical ~#lens(comparison: families)
+  ~#with: @resonance
+  ~#hypothesis: "Formal Concept Analysis (Wille, 1982): each concept is a set of lines and the slot values they all share."
+  ~#expect: "Clear for the herbarium's 27 forms; for the routes only a pruned lattice reads, since 336 subjects and 569 modes are mostly singletons."
+  ~#tension: "Kinship today is graded; a lattice is crisp, and crisp may lose what graded keeps."
+  ~#unblocks: @routes_gen
+  ~#probe(read)
+  !probe{ "build the lattice for the 27 herbarium forms and compare its concepts with the herbarium's own blocks" }
+  $%[fca.better, fca.same, fca.worse]
+}
+
+#>wonder_theory_answer_sets
+?["Is a wonder's $% list its answer set, so a probe removes alternatives and answered means one is left?"]{
+  #:depth #!linguistic ~#lens(inquiry: questions as alternatives)
+  ~#with: @wonder_architecture
+  ~#hypothesis: "Inquisitive semantics (Groenendijk and Roelofsen) reads a question as the set of its possible answers."
+  ~#expect: "Mixed: some lists are alternatives (scope.all, scope.new), others are things to measure (return.after_threshold)."
+  ~#unblocks: @wonder_script
+  ~#probe(read)
+  !probe{ `rg -o '\$%\[[^\]]+\]' --hidden -g '*.spw' -g '!**/_workbench/**' . | head -60` }
+  $%[answers.alternatives, answers.measures, answers.mixed]
+}
+
+#>wonder_theory_probe_value
+?["Can the harvest rank open questions by the value of their answers, using only what they unblock and how they are probed?"]{
+  #:depth #!computational ~#lens(projection: value of an answer)
+  ~#with: @wonder_script
+  ~#hypothesis: "Bayesian experimental design picks the probe with the highest expected information gain (Lindley, 1956)."
+  ~#expect: "A coarse rank is enough: runnable probes that unblock a waiting slice first; a numeric gain needs priors nobody writes."
+  ~#tension: "A rank can starve the strange questions that unblock nothing yet."
+  ~#unblocks: @wonder_script
+  ~#probe(read)
+  !probe{ "rank the wonders by ~#unblocks and probe kind, then read the top ten and the bottom ten" }
+  $%[rank.coarse, rank.numeric, rank.none]
+}
+
+#>wonder_theory_operator_tables
+?["While two operator tables disagree, which reading should a hover teach?"]{
+  #:depth #!pragmatics ~#lens(comparison: two tables)
+  ~#with: @operator_canon
+  ~#taste: "The creator's call: operators belong in the workbench, and the site imports them (2026-10-11)."
+  ~#hypothesis: "The physics agree for all twelve shared sigils; the names part at & = % $, and only the workbench has _."
+  ~#expect: "Both, for now: the workbench name with the site's beside it, until one table lands."
+  ~#unblocks: @operator_canon
+  ~#probe(run)
+  !probe{ `rg -n "role: '" .spw/_workbench/packages/spw-lsp/src/server-index.ts; rg -n "^    (type|physics): '" public/js/kernel/operator-detection.js` }
+  $%[hover.workbench, hover.site, hover.both]
+}
+
+#>wonder_theory_join_algebra
+?["Do the joins obey laws: does ~ commute, is ^ associative, does & keep its order?"]{
+  #:depth #!mathematical ~#lens(constraint: laws)
+  ~#with: @compound_expressions
+  ~#hypothesis: "A small algebra, laws with tests, makes joins safe to rewrite."
+  ~#expect: "~ commutes as a bond but not as a reading order; ^ points from parts to a whole, so it does not commute; associativity is untested."
+  ~#tension: "readCompoundJoin reads the first operator only, so a three-way join is read in part."
+  ~#unblocks: @compound_expressions
+  ~#probe(run)
+  !probe{ `node --input-type=module -e "import { readCompoundJoin as j } from './public/js/semantic/expression-query.js'; console.log(j('a[x]{p} ~ b[y]{q}'), j('b[y]{q} ~ a[x]{p}'))"` }
+  $%[laws.some, laws.none, laws.by_context]
+}
+
+#>wonder_theory_intrigue_dynamics
+?["Does the intrigue model, dE/dt = k·a·n − λE, fit any trace the site keeps?"]{
+  #:depth #!mathematical ~#lens(memory: decay)
+  ~#with: @resonance
+  ~#hypothesis: "A forced decay settles at k·a·n/λ with a half-life of ln2/λ: the shape of forgetting curves, and of half-life regression for spaced review (Settles and Meeder, 2016)."
+  ~#expect: "Not yet: salience deposits are kept without timestamps fine enough to fit λ."
+  ~#tension: "k, a and n have no units yet; a fit would choose them."
+  ~#unblocks: @resonance
+  ~#probe(read)
+  !probe{ "read how expression-resonance deposits and keeps salience, and name what a fit of λ would need" }
+  $%[fit.decay, fit.spacing, fit.none]
+}
+
+#>wonder_theory_salience_field
+?["Is the charge field a salience map in all but name?"]{
+  #:depth #!computational ~#lens(orientation: attention)
+  ~#with: @electrostatics
+  ~#hypothesis: "Itti and Koch (1998): feature maps, normalization, winner-take-all, then inhibition of return."
+  ~#expect: "An analog: charge builds and discharges, which is inhibition of return; nothing takes all."
+  ~#unblocks: @electrostatics
+  ~#probe(read)
+  !probe{ "map the electrostatics convention onto the four stages of a salience map, and name the stage it lacks" }
+  $%[salience.same, salience.analog, salience.different]
+}
+
+#>wonder_theory_dimensional_ascent
+?["Are handle, vector, form, field and path type constructors, or geometric dimensions?"]{
+  #:depth #!mathematical ~#lens(projection: ascent)
+  ~#with: @geometry
+  ~#hypothesis: "Read as types: an atom, a pair, a record, a function of context, a sequence."
+  ~#expect: "Both, and a completion could offer the next step up from wherever the caret sits."
+  ~#unblocks: @upstream_asks
+  ~#probe(read)
+  !probe{ "read SPW_DIMENSIONAL_ASCENT in spw-expression-geometry.js and write one line at each of its five levels" }
+  $%[ascent.types, ascent.geometry, ascent.both]
+}
+
+#>wonder_theory_contrast_hover
+?["Does a hover that swaps one sigil in the same line teach a meaning better than a definition does?"]{
+  #:depth #!educational ~#lens(comparison: variation)
+  ~#with: @spw_quest
+  ~#hypothesis: "Variation theory (Marton): a dimension is noticed when it varies against what holds still."
+  ~#expect: "Better at first contact, slower for an expert, which is the expertise reversal effect."
+  ~#unblocks: @upstream_asks
+  ~#probe(read)
+  !probe{ "spw.quest's nuance rows already vary one mark (~door ?door !door); ask a few readers which meanings they recall a week later" }
+  $%[contrast.better, contrast.same, contrast.worse]
+}
+
+^"packet"{
+  ~#note: "What a model may read for the cut, bounded on purpose."
+  read = #[
+    @operator_canon, @lsp_semantics, @specimens, @expression_query,
+    @geometry, @resonance, @electrostatics, @compound_expressions,
+    @wonder_script, @wonder_architecture, @ecosystem_clusters, @tree_review,
+  ][reg=set]
+  facts = .{
+    route_lines = `974; a mode in 958, a body in 965, a projection in 323, a scene in 64, a charge in 17`
+    shapes = `336 distinct subjects, 569 distinct modes; 20 joined, 7 marked in front`
+    herbarium = `27 forms; the slot reader takes 9 only in part`
+    wonders = `179 before this file; 164 with a probe, 55 runnable; none closed; 57 lens names`
+    operators = `the physics agree; the names part at & = % $; _ is the workbench's alone`
+    compare = `slots in order: subject, mode, body, projection, scope, charge, join, with`
+  }[reg=facet]
+  keeps = #[
+    `no private figures, counts of people, names, coins or diagnoses`,
+    `no new data-spw-* family and no new grammar`,
+    `cite only the handles in read; invent no file`,
+  ][reg=set]
+}
+
+^"brief"{
+  ~#note: "Paste these lines into Gemini with the packet's files attached."
+  ask = #[
+    `Read the attached .spw files; theory-map-2026-10.spw holds the questions.`,
+    `For each question, name the theory, cite one primary source, and say where the analogy breaks.`,
+    `Give each mapping a confidence from 1 to 5, and mark any citation you are not sure exists.`,
+    `Keep each $% answer set; say which alternative you expect and why.`,
+    `Turn read probes into runnable commands where you can, and leave the rest as read.`,
+    `Answer as one .spw file: frame, expression, summary, contents, then one block per question.`,
+    `Cite only the handles listed in packet.read; add no files and no attributes.`,
+  ][reg=set]
+  run_by = `the creator`
+}
+
+^"receipt"{
+  lands = `.spw/caches/theory-map-2026-10-cut-gemini.spw, citing this file as @asked_by`
+  checks = #[
+    `the reader parses it clean`,
+    `npm run spw -- lint --stats on the cut`,
+    `npm run spw:integrity`,
+    `npm run wonder`,
+    `a human reads every reference before it is cited anywhere else`,
+  ][reg=set]
+  then = `each answered question here gains ~#answer and a >>[date] probe line`
+}
+
+^"stream"{
+ >>[2026-10-28 12:00] prime — Written from the morning's conversation about probes, wonders, hovers and theory. Eleven questions, each with an answer set, a prediction and a probe kind; three probes were run once to check they work (the lattice probe printed true, the join probe read both orders as induct). The packet, the brief and the receipt prepare a Gemini cut.
+}
+
+# About this file
+operation = "prime"
+fixity = "experimental"
+source = "creator, 2026-10-28: what could make probes and wonders more ergonomic and cognitively useful; operator meaning, hover and completions that develop the geometry; the theory under the ideas; a Gemini cache cut, prepared mindfully"
+
+# Handles, by role. Declared last; each one links wherever the text names it.
+# Neighbors
+@ecosystem_clusters: ~"./ecosystem-clusters-2026-10.spw"
+@tree_review: ~"../reviews/spw-tree-dx-2026-10.spw"
+@upstream_asks: ~"../reviews/upstream-workbench-recommendations/plugins-and-tooling.spw"
+@wonder_architecture: ~"../conventions/wonder-architecture.spw"
+@electrostatics: ~"../conventions/arrival-electrostatics.spw"
+@compound_expressions: ~"../conventions/compound-expressions.spw"
+@spw_quest: ~"../../.agents/plans/spw-quest/PLAN.md"
+# Code
+@operator_canon: ~"../../public/js/kernel/operator-detection.js"
+@lsp_semantics: ~"../_workbench/packages/spw-lsp/src/server-index.ts"
+@specimens: ~"../../workers/spw-quest/src/specimens.js"
+@expression_query: ~"../../public/js/semantic/expression-query.js"
+@geometry: ~"../../public/js/semantic/spw-expression-geometry.js"
+@resonance: ~"../../public/js/runtime/expression/expression-resonance.js"
+@wonder_script: ~"../../scripts/wonder.mjs"
+@routes_gen: ~"../../scripts/spw-routes.mjs"
