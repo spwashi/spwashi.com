@@ -36,3 +36,16 @@ intent: .{
   memory_tier = "hot"
   bucket = "css_layout_interaction"
 }[reg=facet]
+
+#>wonder_token_fallback_hygiene
+?["Is item 3 wanted: a report of var() references with no definition and no fallback in the five files it names?"]{
+  #:depth #!computational ~#lens(constraint)
+  ~#with: @plan @core_tokens
+  ~#hypothesis: "A var() with neither a definition nor a fallback paints nothing and says nothing; a report-only check names each one before a page shows it."
+  ~#tension: "audit:css-custom-properties already reads self-references and root writes; a third report is one more to read, for a failure no one has seen land."
+  ~#expect: "Most references in the five files carry no fallback, and nearly all of those name a token core.css defines, so the report would be short."
+  ~#unblocks: "item 3's report-only check, or closing the plan as the bedrock rule it already is"
+  ~#probe(run)
+  !probe{ "rg -o 'var\\(--[a-z0-9-]+\\)' public/css/grammar/syntax.css public/css/components/foundation.css public/css/systems/pretext-physics.css public/css/effects/metaphysical-paper.css src/styles/entries/design-experiments.css | wc -l" }
+  $%[item3.wanted, item3.declined, item3.folded]
+}

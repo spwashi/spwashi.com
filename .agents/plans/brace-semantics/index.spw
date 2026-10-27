@@ -100,3 +100,17 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+#>wonder_brace_semantics_curly_name
+?["Does { } name a definition, a direction or a behavior, read as one word everywhere it is taught?"]{
+  #:depth #!semantic ~#lens(comparison)
+  ~#with: @plan @operator_detection
+  ~#taste: "A pair a reader learns once should mean one thing on every page that teaches it."
+  ~#hypothesis: "Definition is the word a newcomer brings, and the workbench canon and spw.quest already use it; direction and behavior read as what a definition does."
+  ~#tension: "Direction is in the registry and the CSS (--op-direction-color), so the site's paint and its words move together or not at all."
+  ~#expect: "The registry says direction and never definition; the conventions say behavior and direction, and definition only where they quote the workbench."
+  ~#unblocks: "decisions 2 to 5, which assume a name for the pair, and the < & > instrument"
+  ~#probe(run)
+  !probe{ "rg -o -w 'definition|direction|behavior' public/js/kernel/operator-detection.js .spw/conventions/semantic-braces.spw .spw/conventions/operator-semantics.spw | sort | uniq -c" }
+  $%[curly.definition, curly.direction, curly.behavior]
+}

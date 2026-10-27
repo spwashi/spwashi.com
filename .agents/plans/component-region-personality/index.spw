@@ -111,3 +111,17 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+#>wonder_component_region_hero_children
+?["Which two or three children earn a picture card on the services and recipes heroes, the way six open topics?"]{
+  #:depth #!pragmatics ~#lens(comparison)
+  ~#with: @plan @topics_index_html
+  ~#taste: "A picture card promises that a child is a place worth the trip; two or three keep the promise legible."
+  ~#hypothesis: "The children a reader reaches most from each hero are the ones its landmarks already name, so the cards restate a choice the page has made."
+  ~#tension: "The services hero already holds a photo and its landmarks, and the first pocket frame allows one extra dense object (PLAN.md, 2026-10-25), so cards there would be a second."
+  ~#expect: "At pocket, recipes takes three cards, since it has no photo; services takes two below its photo, or none."
+  ~#unblocks: "the Wave 3 commit: picture cards on the services hero, then recipes"
+  ~#probe(read)
+  !probe{ "open /services/ and /recipes/ at pocket beside /topics/, and name the two or three children each hero already points at" }
+  $%[cards.two, cards.three, cards.none]
+}

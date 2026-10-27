@@ -103,6 +103,7 @@ fixity = "tending"
  >>[2026-07-07 11:02] semantics - fable_charm section minted: ten cross-surface observations, each with saw/wisdom/toward shape, each discharging toward one plan direction. Strongest cross-site reading: the domain register is an operator atlas at biographical scale (newyear.life = threshold held annually, brainstorm.monster = ~ potential in public, clit.video = ! immediacy layered) — four longitudinal selection environments already running for the evolution fabric.
  >>[2026-07-07 11:04] taste - A charm is not doctrine: it spends charge when read and recharges only through disagreement plus evidence. The discharge_rule routes charm mismatches back into this stream so the charm stays falsifiable like everything else in the plan.
  >>[2026-10-12 10:59] verify — only commit 1 of 10 has landed (009acd60), so its line left the commits block. .spw/conventions/construct-codex.spw does not exist, and neither does a sigil property matrix or an alignment protocol. The next slice is the codex as a minimal shell: a header, a drift_ledger facet, and one stub per operator citing its owner convention; the shell has no gate, and any change to what an operator means needs the creator's sign-off. On touch, @matrix was removed (the file was never written) and @brace_physics and @operators_route now resolve from this folder.
+ >>[2026-10-27 13:40] hygiene — status planned to implementing: commit 1 of 10 has landed and the codex shell has no gate; operator meanings still need the creator (audit:plans).
 }
 
 ^["open"]{
@@ -193,7 +194,7 @@ fixity = "tending"
 }
 
 ^["cache"]{
- ~#status: "planned"
+ ~#status: "implementing"
  ~#next_commit: "+[codex] Open the construct codex as a shell: a drift ledger, and one stub per operator citing its owner"
  ~#files_hot: ".spw/conventions/operator-semantics.spw, .spw/conventions/operator-alignment.spw, .spw/conventions/sigil-identifier-contract.spw, .spw/conventions/index.spw"
  ~#gate: "nothing for the shell; any change to an operator's meaning needs the creator's sign-off"

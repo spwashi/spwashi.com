@@ -121,3 +121,17 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+#>wonder_designer_canvas_first_reviewer
+?["Who reads the ecology specimen first, and what do they ask a bundle to hold?"]{
+  #:depth #!pragmatics ~#lens(inquiry)
+  ~#with: @plan @design_index_html
+  ~#taste: "A bundle shaped before a designer asks is a guess about a person; one shaped after is a reply."
+  ~#hypothesis: "A working designer asks first for the tokens a specimen cites and the measurements beside them, not for a schema."
+  ~#tension: "The measurement bus and frame metrics landed without a browser revalidation, so a reviewer may meet numbers no one has checked since."
+  ~#expect: "The first ask is to carry a token's name and value from the specimen into their own file."
+  ~#unblocks: "the next commit: hand one reviewer the specimen, the tokens it cites and its measurements"
+  ~#probe(read)
+  !probe{ "the creator names a reviewer, who opens /design/#component-ecology-specimens and says what they would want to take away" }
+  $%[bundle.tokens, bundle.measures, bundle.specimen]
+}
