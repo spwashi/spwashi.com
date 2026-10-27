@@ -169,6 +169,7 @@ expression = consumer[report]{defect.gap.built}<upstream>
   ~#consequence: "the walk_cost finding took a two-minute timeout to notice; --stats would have shown it in one run"
   fix: "--stats on collate commands: files walked, files parsed, bytes, cache hits, elapsed"
   ~#resolved(2026-09-09, pin 14b4b47): "spw query --stats prints files_walked, files_parsed, bytes_read, cache_hits, parse_ms, total_ms. cache_hits stayed 0 on the conventions pathRefs run."
+  ~#resolved(2026-10-26, workbench 2a3dac4, pin 850077a): "doctor and lint take --stats through one helper with query. spw lint --stats over .spw and .agents on 2026-10-28: 799 files, 6.2 MB, 55 s parsing of 57 s, cache_hits 0."
 }
 
 ^"what_landed_well"{
@@ -181,6 +182,7 @@ expression = consumer[report]{defect.gap.built}<upstream>
   }[reg=facet]
   parse_in_file_context: "structures the authored noun form correctly and completely"
   refactor: "renaming marks by structure rather than by grep is what makes a vocabulary decision cheap to defer"
+  ~#repeated(2026-10-28, pin 850077a): "mood:pragmatic=pragmatics rewrote 10 marks in 9 files after a dry run; a path dry run for one cache planned 15 citation rewrites in 8 files"
 }
 
 ^"insights_unused"{

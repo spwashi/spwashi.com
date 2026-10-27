@@ -6,8 +6,10 @@
 #
 # Detail for the review hub beside this folder
 # (upstream-workbench-recommendations.spw). Every ask keeps the same slots in
-# the same order: rank, claim, exists, gap, measured, recommendation, replaces,
-# probe, question.
+# the same order: rank, status, home, claim, exists, gap, measured,
+# recommendation, replaces, probe, question. Status and home mirror upstream's
+# intake in first-plugin (e53e41d): landed, routed to the plan that owns the
+# files, or owned by first-plugin itself.
 
 #>workbench_asks_plugins
 #:review #!workbench #!developer_experience #!plugins
@@ -19,11 +21,28 @@
 @asks_editor: ~"./editor.spw"
 @asks_language: ~"./language-support.spw"
 @asks_corpus: ~"./corpus-and-cli.spw"
+@first_plugin: ~"../../_workbench/.agents/plans/first-plugin/wip.spw"
 
 operation = "cache"
 fixity = "tending"
 
 expression = asks[plugins]{one.reading.then.one.plugin}<upstream>
+
+^"owner_questions"{
+  ~#note: "Asked in @first_plugin (e53e41d); the owner decides. Facts from this side, 2026-10-28."
+  first_plugin = .{
+    asks = `the expression manifest, or a doctor reading of projection freshness`
+    manifest = `reads the routes alone since 180e4a0e: one input to select, one output to emit`
+    registry = `.spw/gen/index.spw names five projections since 2773d4a0: five roots to read for freshness`
+  }[reg=facet]
+  reader_name = .{
+    asks = `name a reader by module path, or by the selector it reads`
+    moves = `a reader written as a ~"path" citation is re-aimed when its file moves through spw refactor or the editor`
+  }[reg=facet]
+  verb_home = .{
+    asks = `spw emit beside pack and fractal, or a verb of its own`
+  }[reg=facet]
+}
 
 # ==============================================================================
 # PLUGINS AND TOOLING — read 2026-10-25
@@ -36,6 +55,8 @@ expression = asks[plugins]{one.reading.then.one.plugin}<upstream>
 
   one_character_table: .{
     rank = 1
+    status = #routed
+    home = ~"../../_workbench/.agents/plans/audit-ui-data-models/wip.spw"
     claim: "The sigils should be read from one table, and the grammars and palettes generated from it."
     exists: "spw-seed exports SPW_OPERATORS. The lexer and the lite scanner already share it. The ranked ask is tokenizer_integration in @asks_language."
     gap: "VS Code's surface decorations, the TextMate grammar, Neovim's syntax file, and the site's operator table each name the characters on their own."
@@ -56,6 +77,8 @@ expression = asks[plugins]{one.reading.then.one.plugin}<upstream>
 
   spw_in_host_files: .{
     rank = 2
+    status = #routed
+    home = #[~"../../_workbench/.agents/plans/editor-reading-hierarchy/wip.spw", ~"../../_workbench/.agents/plans/plan-plugin-integration/wip.spw"][reg=set]
     claim: "The editors should read Spw in the files where this repo writes it."
     exists: "The extension registers language spw for .spw only. The ranked ask is spw_beyond_spw_files in @asks_editor. The site parser highlights under the caret in tools/spw-parser."
     gap: "No injection grammar for an HTML attribute, a Markdown fence, or a commit message. The commit view opens a diff and does not read the episode."
@@ -76,6 +99,8 @@ expression = asks[plugins]{one.reading.then.one.plugin}<upstream>
 
   one_probe: .{
     rank = 3
+    status = #routed
+    home = ~"../../_workbench/.agents/plans/editor-inspection-instruments/wip.spw"
     claim: "Form, stack, and inspect should be one request that takes the buffer text."
     exists: "VS Code probes the live document through the LSP and bundles the server. Neovim's :SpwInspect can pass a command range as --text, and otherwise reads the saved file through the CLI. IntelliJ's Form, Surface Stack, and Cache read the saved file, and its LSP is optional."
     gap: "The same question has three transports. Neovim and IntelliJ still start the server with npm run lsp from the mount. VS Code does not offer tokens, structure, and trace as the progressive inspect Neovim does."
@@ -96,6 +121,8 @@ expression = asks[plugins]{one.reading.then.one.plugin}<upstream>
 
   alias_and_hover: .{
     rank = 4
+    status = #routed
+    home = #[~"../../_workbench/.agents/plans/citation-navigation/wip.spw", ~"../../_workbench/.agents/plans/audit-ui-data-models/wip.spw"][reg=set]
     claim: "Follow the alias, and let a hover say what the sigil means."
     exists: "Go-to-definition follows a path citation. Hover reports parse geometry. The ranked asks are symbol_resolution in @asks_language and hovers_that_answer in @asks_editor."
     gap: "A file-scoped alias cannot be followed. A hover can answer with geometry before meaning, and it has no place to say that the site and the workbench name a sigil differently."
@@ -114,6 +141,8 @@ expression = asks[plugins]{one.reading.then.one.plugin}<upstream>
 
   one_plugin: .{
     rank = 5
+    status = #owned
+    home = @first_plugin
     claim: "The first plugin should be one .spw file that emits a manifest, and a second plugin waits."
     exists: "PLUGIN-PROTOCOL.md describes discovery, validation, select, hooks, transform, and emit. spw emit is a CLI command. This site's expression manifest is a script."
     gap: "The protocol says no concrete plugin has been implemented. A changelog generator and a taxonomy builder are named as v0.4 candidates, and neither is a plugin file."
@@ -134,6 +163,9 @@ expression = asks[plugins]{one.reading.then.one.plugin}<upstream>
 
   slow_loop: .{
     rank = 6
+    status = #landed
+    home = #[~"../../_workbench/.agents/plans/cli-benchmarking-infra/wip.spw", ~"../../_workbench/.agents/plans/apposition-cache-granules/wip.spw"][reg=set]
+    landed_in = `2a3dac4: the stats half; the stale-tree squiggle stays routed`
     claim: "The slow commands should say what they walked, and a squiggle should say when its tree is stale."
     exists: "spw query accepts --stats. Walk isolation landed (week_2026_09_28 on the hub). A shared scan memo is still proposed there and in week_2026_10_11. VS Code's Inspect Cache separates the editor TTL from the LSP session."
     gap: "doctor and lint do not take --stats. Inspect Cache does not say that a diagnostic was drawn from a tree older than the buffer."
@@ -154,6 +186,8 @@ expression = asks[plugins]{one.reading.then.one.plugin}<upstream>
 
   quest_grow: .{
     rank = 7
+    status = #routed
+    home = ~"../../_workbench/.agents/plans/onboarding-quest/wip.spw"
     claim: "The quest's last step should open the first failure in the mounted repo."
     exists: "docs/learn/quest.spw feeds spw quest, the VS Code walkthrough, the IntelliJ scratch file, and spw.quest. Neovim has :SpwQuest."
     gap: "The grow step opens a terminal with spw lint and spw resolve typed in, or reopens the scratch file. It does not open a broken citation."
@@ -197,6 +231,8 @@ expression = asks[plugins]{one.reading.then.one.plugin}<upstream>
 
   emit_names_its_reader: .{
     rank = 8
+    status = #owned
+    home = @first_plugin
     claim: "An emit plugin names who reads each field it writes, and a field with no reader fails the run, the way a selector that matches nothing does."
     exists: "one_plugin above: the expression manifest as the first plugin, and the protocol's rule that every selector matches a frame. scripts/build-expression-manifest.mjs emits SPW_EXPRESSION_MANIFEST and SPW_PROJECTION_SEEDS."
     gap: "Nothing checks the other end, so a field nobody imports ships on every page that loads the module."
@@ -217,6 +253,9 @@ expression = asks[plugins]{one.reading.then.one.plugin}<upstream>
 
   lens_counts_citations: .{
     rank = 9
+    status = #landed
+    home = ~"../../_workbench/.agents/plans/editor-reading-hierarchy/wip.spw"
+    landed_in = `55e79d2`
     claim: "A file's reference lens counts the files that cite it, by path and by key, and not only the files that repeat its anchor's name."
     exists: "display.ts:992-1008 counts annotations named like the anchor in other files. spw resolve and spw:integrity resolve path citations and their fragments."
     gap: "A file that is cited by path, and never by its anchor's name, reads as cited by no one."
@@ -235,6 +274,9 @@ expression = asks[plugins]{one.reading.then.one.plugin}<upstream>
 
   reg_names_one_thing: .{
     rank = 10
+    status = #landed
+    home = ~"../../_workbench/.agents/plans/editor-reading-hierarchy/wip.spw"
+    landed_in = `55e79d2`
     claim: "The lens's reg and a file's [reg=] stamps are two counts under one word, and the lens reruns the file for every anchor."
     exists: "display.ts:1011-1027 draws ◆ n reg · phase:x from a trial run's register bank, which =, & and * write as the interpreter walks the file. A [reg=] stamp names a serialization sink (register_sink in density-and-voice.spw)."
     gap: "A reader takes the lens for the stamp census. The trial run of the whole document repeats for each #> anchor line."
@@ -253,6 +295,9 @@ expression = asks[plugins]{one.reading.then.one.plugin}<upstream>
 
   handle_in_prose: .{
     rank = 11
+    status = #landed
+    home = ~"../../_workbench/.agents/plans/citation-navigation/wip.spw"
+    landed_in = `cf7df67`
     claim: "A handle the file declares should link and hover inside a quoted or backtick string, where most of this repo's prose names it."
     exists: "Document links and definitions work on a handle in code position. hovers_that_answer in editor.spw already asks hovers to lead with meaning; this facet adds the prose case."
     gap: "Inside a string, the hover leads with form coupling and repeats the whole string as a label site; the handle is never followed."
@@ -271,6 +316,9 @@ expression = asks[plugins]{one.reading.then.one.plugin}<upstream>
 
   generated_from_the_page: .{
     rank = 12
+    status = #landed
+    home = #[~"../../_workbench/.agents/plans/editor-reading-hierarchy/wip.spw", ~"../../_workbench/.agents/plans/vscode-authoring-probe-loop/wip.spw"][reg=set]
+    landed_in = `55e79d2; this repo registered five projections in 2773d4a0`
     claim: "A generated file should open its own source, and say so before a hand edit is lost."
     exists: "The projection registry gives a generated file ⚠ generated surface and ← generated from <spec owner>. Each route tree cites its page as @page on line 10 and names it in its first comment."
     gap: "The lens names the spec owner (.spw/surfaces.spw) for all 208 trees. The page each was read from, and the generator that rebuilds it, are a citation and a comment. Nothing warns on save."
@@ -290,6 +338,8 @@ expression = asks[plugins]{one.reading.then.one.plugin}<upstream>
 
   compare_in_the_editor: .{
     rank = 13
+    status = #routed
+    home = ~"../../_workbench/.agents/plans/vscode-authoring-probe-loop/wip.spw"
     claim: "The line that names a shape should offer to compare its members, ground first, then the edge by slot."
     exists: "ground_then_edge in motions.spw asks the CLI for the reading. npm run spw:routes -- --diff /a/ /b/ gives it for routes today, and its output parses as Spw."
     gap: "In the editor, comparing two siblings is two tabs and a reader's eye."
@@ -308,6 +358,9 @@ expression = asks[plugins]{one.reading.then.one.plugin}<upstream>
 
   one_browser_build: .{
     rank = 14
+    status = #routed
+    home = ~"../../_workbench/.agents/plans/parser-releases/wip.spw"
+    here = `this repo carries one bundle since 4c454b32 (ecosystem-architecture S3)`
     claim: "One browser build of the reader per release is enough, and the parser build can be its alias."
     exists: "A parser release spw.quest serves carries full, lite, reader and workbench builds, each with a debug build and a map. The site's highlighter paints from the reader's roles(), which is what VS Code paints."
     gap: "The site and the quest import two bundles from one revision that read the same."
