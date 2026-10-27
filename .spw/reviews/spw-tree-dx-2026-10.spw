@@ -41,6 +41,7 @@ contents = #[
 ^"findings"{
   ~#note: "Measured 2026-10-27 over 994 tracked .spw files (795 not sidecars)."
   generated_registry = .{
+    landed = `2773d4a0: five projections, written by every generator`
     claim = `only the route trees are a registered projection`
     measure = `snippets, dimensions, language-census and a precipitate are not`
     fix = `each generator upserts its own ^projection block (@routes_gen)`
@@ -56,6 +57,9 @@ contents = #[
     cost = `none to adopt; a line in @agents_memory would make it known`
   }[reg=facet]
   prose_paths = .{
+    tried = `2026-10-28: 59 in-sentence paths in 38 files had a declared handle`
+    kept = `paths stay; @build and @readme carry less scent than the path`
+    rule = `new prose names a well-named handle; a list of files stays paths`
     claim = `a path written as a string is checked by nothing`
     measure = `743 such paths; 86 already point at nothing`
     fix = `declare once as a handle and name the handle in prose`
@@ -93,6 +97,13 @@ contents = #[
     workbench = `'!_workbench/**' keeps the mount; '!**/_workbench/**' drops it`
     fix = `one verified-miss line in @agents_memory`
     cost = `tiny`
+  }[reg=facet]
+  parse_errors = .{
+    claim = `lint and integrity were green while the parser recovered`
+    measure = `334 recoverable errors in 39 live files on 2026-10-28`
+    cause = `inner backticks in an outer pair, bare ≈ — … and dates`
+    landed = `3325c971 and 849e63f5: 0 live files with an error`
+    sensor = `none yet; @integrity walks every surface and could count them`
   }[reg=facet]
   leave_alone = `about 3,060 handles are never used again in their file; they work as link lists`
 }
@@ -179,13 +190,12 @@ contents = #[
 
 ^"next"{
   order = #[
-    ~"./spw-tree-dx-2026-10.spw#generated_registry",
-    ~"./spw-tree-dx-2026-10.spw#prose_paths",
+    ~"./spw-tree-dx-2026-10.spw#parse_errors",
     ~"./spw-tree-dx-2026-10.spw#index_mirrors",
-    ~"./spw-tree-dx-2026-10.spw#search_traps",
     ~"./spw-tree-dx-2026-10.spw#anchor_readers",
     ~"./spw-tree-dx-2026-10.spw#file_moves",
   ][reg=set]
+  done = `generated_registry (2773d4a0), search_traps (MEMORY.md), prose_paths decided`
   first = `rebuild and reinstall the extension; root-relative citations wait on it`
 }
 
@@ -211,6 +221,7 @@ contents = #[
 ^"stream"{
  >>[2026-10-28 09:40] audit — The mount moved to 850077a (b956329b). A census of the tree found eight places where refactoring or reading costs more than it should, and the order inside files was the largest. ecosystem-clusters was reordered as the demo, and its root-relative citations went back to relative when the installed extension flagged all 24 of them.
  >>[2026-10-28 11:10] revise — file_moves was wrong: the editor re-aims citations when a .spw file or folder moves (rename-files, since 2026-10-12), and spw refactor --rename path:from=to plans the same from a terminal; a dry run of moving ways-2026-10.spw planned 15 rewrites in 8 files. The gap left is markdown and HTML.
+ >>[2026-10-28 15:30] implement — With the workbench at 850077a: the pragmatics depth spelled one way by spw refactor, the one lint finding cleared, five generated files registered so the server offers rebuild and spec (seen headless), the fourteen asks given upstream's status, and every live file parsing clean (334 errors in 39 files to 0). Turning prose paths into handles was tried, compared and reverted.
 }
 
 # About this file
