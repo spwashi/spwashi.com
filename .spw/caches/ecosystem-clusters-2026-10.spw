@@ -1,0 +1,283 @@
+# Ecosystem clusters (2026-10)
+#
+# operation: prime
+# Skillsets that tend to travel together (social, academic, professional), the
+# business shape each cluster suits, the loop that makes them feed one another,
+# what compounds at 3, 6, 9 and 12 months, and the information architecture they
+# can share: media libraries, software ecosystems, and performance in both senses.
+# A thinking map from a conversation with the creator, not a plan and not copy.
+#
+# How to move through it: every cluster, horizon and spine object is an anchor
+# (cite it as ~"./ecosystem-clusters-2026-10.spw#press"). Expressions share
+# subjects, so a slot search finds a whole family: cluster[*], horizon[*],
+# library[*], spine[*]. Each `feeds`, `way` and `door` is a link to follow.
+
+#>ecosystem_clusters_2026_10
+#:cache #!clusters #!synergy #!information_architecture #!performance #!season
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@self: ~"./ecosystem-clusters-2026-10.spw"
+@caches_index: ~"./index.spw"
+@product_lines: ~"../surfaces/product-lines.spw#audience_register"
+@folio_archive: ~"../surfaces/folio-archive.spw#folio_archive"
+@folio_soil: ~"./folio-soil-ecosystem-2026-09.spw"
+@feedback_product: ~"./feedback-product-2026-09.spw"
+@offer_rhythm: ~"./offer-rhythm-2026-10.spw#offer_rhythm_2026_10"
+@tangibility_contours: ~"./tangibility-contours-2026-10.spw#tangibility_contours_2026_10"
+@ways: ~"./ways-2026-10.spw#ways_2026_10"
+@holidays: ~"./holiday-infrastructure-2026-09.spw"
+@season_rhythm: ~"../slices/production-season-rhythm/index.spw"
+@daily_kernel: ~"../conventions/daily-kernel.spw"
+@herbarium: ~"../language/expressions/index.spw"
+@expression_query: ~"../../public/js/semantic/expression-query.js"
+@ecosystem_architecture: ~"../../.agents/plans/ecosystem-architecture/PLAN.md"
+@spw_quest: ~"../../.agents/plans/spw-quest/PLAN.md"
+@specimens: ~"../../workers/spw-quest/src/specimens.js"
+@carry_specimens: ~"../../workers/spw-quest/carry-specimens.mjs"
+@parser_releases: ~"../../workers/spw-quest/src/parser-releases.js"
+@peer_kit: ~"../../scripts/build-peer-kit.mjs"
+@feedback_worker: ~"../../workers/autonomous-feedback/src/index.js"
+@feedback_manifest: ~"../../.well-known/autonomous-feedback.json"
+@emit_names_its_reader: ~"../reviews/upstream-workbench-recommendations/plugins-and-tooling.spw#emit_names_its_reader"
+@bootstrap_performance: ~"../../.agents/plans/runtime-bootstrap-performance/PLAN.md"
+@core_css_spend: ~"../../.agents/plans/core-css-spend-cut/PLAN.md"
+@wap_mom: ~"../../workers/wap-mom/src/index.js"
+@folio_request: ~"../../design/folios/index.html#folio-request"
+@production_seeds: ~"../../about/plans/index.html#production-seeds"
+@services: ~"../../services/index.html"
+@recipes: ~"../../recipes/index.html"
+@cards: ~"../../cards/index.html"
+@newyear: ~"../../newyear/index.html"
+
+operation = "prime"
+fixity = "experimental"
+source = "creator, 2026-10-27: consider business abstractions for socially probable clusters of social, academic and professional skillsets; the synergies that may occur over 3, 6, 9 and 12 months; and information-architectural abstractions for media libraries, software ecosystems and performance"
+keeps = "No private figures, counts or names: no income, no group sizes, no coin. Group copy assumes members come and go."
+
+expression = cluster[skillset]{social.academic.professional}<synergy>
+
+^"clusters"{
+  ~#note: "Skills that already trade in pairs in the network, and the business shape each pair suits. The site's three audiences (engineer, illustrator, librarian) are the doors; a cluster is who walks through them together."
+  studio = .{
+    expression = cluster[studio]{illustration.painting.narration.acting.music}<label>
+    who = `illustrators, painters, narrators, actors, musicians`
+    shape = `a label: a roster, development rather than employment, editions, credits`
+    brings = `A&R and a release cadence; consent and usage scope as fields before any image work`
+    door = @folio_request
+    feeds = ~"./ecosystem-clusters-2026-10.spw#press"
+  }[reg=facet]
+  press = .{
+    expression = cluster[press]{catalog.review.curriculum}<kit>
+    who = `librarians, teachers, early-childhood and school staff, counselors, homeschooling families`
+    shape = `a curriculum press with a review board`
+    brings = `the folios as source material, and reviewers who have read them since 2024`
+    door = @folio_soil
+    feeds = ~"./ecosystem-clusters-2026-10.spw#lab"
+  }[reg=facet]
+  bench = .{
+    expression = cluster[bench]{engineering.product.mentoring}<guild>
+    who = `software engineers, product managers, career changers, apprentices`
+    shape = `a guild: apprenticeship, a QA desk, consulting`
+    brings = `sixteen years of engineering and a forkable codebase to teach from`
+    door = @services
+    feeds = ~"./ecosystem-clusters-2026-10.spw#studio"
+  }[reg=facet]
+  kitchen_garden = .{
+    expression = cluster[kitchen_garden]{growing.cooking.fermenting}<season>
+    who = `gardeners, cooks, fermenters`
+    shape = `a seasonal kit, shaped like a farm-share subscription`
+    brings = `the recipe pages, and a kit whose later box needs the earlier box's leftover`
+    door = @recipes
+    feeds = ~"./ecosystem-clusters-2026-10.spw#press"
+  }[reg=facet]
+  desk = .{
+    expression = cluster[desk]{vertical.brand.periodical}<desk>
+    who = `people who own a vertical or a brand`
+    shape = `a periodical first, then a desk: feedback, product, A&R`
+    brings = `wap.mom as the slow-trust channel and the feedback card as intake`
+    door = @wap_mom
+    feeds = ~"./ecosystem-clusters-2026-10.spw#bench"
+  }[reg=facet]
+  lab = .{
+    expression = cluster[lab]{learning_science.materials.andragogy}<receipt>
+    who = `learning-science, education and materials researchers`
+    shape = `a research practice that publishes its receipts`
+    brings = `attention contours from screen to print to laminated folio, and adult education`
+    door = @tangibility_contours
+    feeds = ~"./ecosystem-clusters-2026-10.spw#bench"
+  }[reg=facet]
+  bridges = .{
+    expression = cluster[bridge]{two.clusters.one.person}<broker>
+    claim = `the most valuable members hold two clusters at once: a librarian who draws, an engineer who gardens`
+    reading = `the offer underneath every cluster is brokerage across them, which is why A&R fits better than agency`
+  }[reg=facet]
+}
+
+^"loop"{
+  ~#note: "Each cluster's byproduct is another's input. If a hand-off takes about a season, the loop can turn about four times a year: the synergy is more turns, not more members."
+  studio_to_press = `cluster[studio]{art.scans} ^ cluster[press]{kits.curricula}`
+  press_to_lab = `cluster[press]{learners} ^ cluster[lab]{studies}`
+  lab_to_bench = `cluster[lab]{findings} ^ cluster[bench]{tools.methods}`
+  bench_to_studio = `cluster[bench]{tools} ^ cluster[studio]{capture.release.feedback}`
+  turns = `the four hand-offs above, once a season`
+}
+
+^"horizons"{
+  ~#note: "Counted from 2026-10-27. Each horizon leans on one way, so a season reads as a path through them. The pairing is proposed, not settled."
+  month_3 = .{
+    expression = horizon[3mo]{cadence.offers.intake}<threshold>
+    when = `late January 2027`
+    compounds = `the production season closes at the New Year, and every cluster has shipped on the 13th and 26th closes`
+    build = `one priced offer per cluster, all taking intake through the feedback card`
+    signal = `who comes back after the New Year threshold`
+    way = ~"./ways-2026-10.spw#keep_time"
+    near = #[@season_rhythm, @offer_rhythm, @newyear][reg=set]
+  }[reg=facet]
+  month_6 = .{
+    expression = horizon[6mo]{catalog.kit.pilot}<library>
+    when = `late April 2027`
+    compounds = `enough releases to cross-reference, so the catalog starts working as a library`
+    build = `the Press's first kit made from Studio work, a small Lab trial that uses it, and Bench case studies`
+    signal = `whether institutions ask; schools budget in spring for the fall`
+    way = ~"./ways-2026-10.spw#gather"
+    near = #[@folio_archive, @tangibility_contours][reg=set]
+  }[reg=facet]
+  month_9 = .{
+    expression = horizon[9mo]{film.workshops.apprentices}<tentpole>
+    when = `late July 2027`
+    compounds = `the film can be the centerpiece every cluster contributes to, and the first apprentices can start teaching`
+    build = `backer and credit cards, summer workshops, apprentices moving up a rung`
+    signal = `whether the guild holds without the host in every room`
+    way = ~"./ways-2026-10.spw#give"
+    near = #[@cards, @services][reg=set]
+  }[reg=facet]
+  month_12 = .{
+    expression = horizon[12mo]{editions.renewals.back_catalog}<tradition>
+    when = `late October 2027`
+    compounds = `the second season starts, and the practice becomes a tradition`
+    build = `annual editions and renewals, a year of receipts to price on, reposts from the back catalog`
+    signal = `who returns year over year`
+    way = ~"./ways-2026-10.spw#remember"
+    near = #[@holidays, @production_seeds][reg=set]
+  }[reg=facet]
+  risks = #[
+    `promising reach the team would have to manufacture`,
+    `institutional sales cycles slower than the cadence`,
+    `brokering friends' work for pay without written terms`,
+    `structures that assume a fixed membership; build practices that hold as people come and go`,
+  ][reg=set]
+  $%[return.after_threshold, institution.ask, guild.without_host, return.year_over_year]
+}
+
+^"information_architecture"{
+  media_library = .{
+    expression = library[lrm]{work.expression.manifestation.item}<holding>
+    levels = `work, expression, manifestation, item (IFLA LRM): a folio design, its scan, the laminated print, the copy someone holds`
+    on_the_tree = `the folio archive keeps source, release and series records; the item and its holder are the missing level`
+    provenance = `who made it, who appears in it, consent and usage scope: fields, not footnotes`
+    facets = `Ranganathan's personality, matter, energy, space, time may line up with subject, {body}, the mark in front, (scene) and the postfix that keeps time; a probe, not a claim`
+    curation = `catalog (everything), shelves (curated), trails (one reader's path)`
+    addresses = `stable down to the section; derivation links like the herbarium's from, read as remix lineage`
+    near = #[@folio_archive, @herbarium, @specimens][reg=set]
+  }[reg=facet]
+  software_ecosystem = .{
+    expression = library[ecosystem]{kernel.adapter.extension}<peer>
+    travels = `a written list of what may leave home (the peer kit), and everything else stays`
+    manifests = `capability files a host publishes; autonomous.feedback's well-known file is the pattern`
+    releases = `dated, pinned, carrying what they were built from (the parser releases)`
+    contracts = `sensors that enforce them, and every output naming who reads it`
+    forks = `starter and fork paths, so the codebase is teaching material`
+    near = #[@peer_kit, @feedback_manifest, @parser_releases, @emit_names_its_reader, @ecosystem_architecture][reg=set]
+  }[reg=facet]
+  performance_runtime = .{
+    expression = library[runtime]{budget.critical_path.attribution}<arrival>
+    holds = `budgets, the critical path against deferred work, cost attributed to whoever adds it, precompute against request time`
+    receipt = `the specimens shelf moved its reading from request time to carry time: a cold render went from 520 ms to about 2 ms`
+    near = #[@bootstrap_performance, @core_css_spend, @carry_specimens][reg=set]
+  }[reg=facet]
+  performance_live = .{
+    expression = library[stage]{cue.set.take}<show>
+    holds = `run-of-show, cues, set lists, takes, rehearsal against show, capture`
+    near = #[@season_rhythm, @daily_kernel][reg=set]
+  }[reg=facet]
+  rehearsal_is_precompute = .{
+    expression = `library[runtime]{precompute} ~ library[stage]{rehearsal}`
+    claim = `the two performances are one abstraction: decide what is prepared before the audience arrives and what is improvised in front of them, then budget the improvised part`
+  }[reg=facet]
+}
+
+^"spine"{
+  ~#note: "Four objects every cluster needs. Build them once as shared infrastructure, not one system per cluster."
+  record = .{
+    expression = spine[record]{entry.provenance}<catalog>
+    exists = @folio_archive
+  }[reg=facet]
+  release = .{
+    expression = spine[release]{dated.versioned}<edition>
+    exists = #[@parser_releases, @season_rhythm][reg=set]
+  }[reg=facet]
+  relay = .{
+    expression = spine[relay]{card.seed.referral}<reader>
+    exists = #[@feedback_worker, @folio_request, @cards][reg=set]
+  }[reg=facet]
+  receipt = .{
+    expression = spine[receipt]{commit.still.sensor}<proof>
+    exists = `episode commits, phone stills, the automated checks`
+  }[reg=facet]
+  pattern = .{
+    expression = spine[shelf]{carry.read.shelve.search.compare}<corpus>
+    claim = `the specimens shelf is the reusable shape for any corpus: folios, recipes, film stills, the video archive`
+    exists = #[@carry_specimens, @specimens, @expression_query][reg=set]
+  }[reg=facet]
+}
+
+#>wonder_ecosystem_clusters_label
+?["Is label the word for what the Studio cluster forms, or does the practice name itself first?"]{
+  #:depth #!pragmatics ~#lens(projection)
+  ~#with: @product_lines
+  ~#taste: "The creator's call; brand comes from the work, not before it."
+  ~#tension: "A&R reads as a label; the network reads as a loose practice that sends fragments across disciplines."
+  !probe{ "rg -n -i 'label|roster' services/index.html about/index.html" }
+  $%[name.label, name.practice]
+}
+
+#>wonder_ecosystem_clusters_lead
+?["Which cluster leads the public copy, if any does?"]{
+  #:depth #!pragmatics ~#lens(comparison)
+  ~#with: @product_lines
+  ~#hypothesis: "None leads; each page keeps a door for every audience, which is the product lines' simultaneous legibility test."
+  ~#tension: "Prices and offers need a reader to address, and the copy addresses intents, not identities."
+  !probe{ "rg -n 'simultaneous_legibility' .spw/surfaces/product-lines.spw" }
+  $%[lead.cluster, lead.none]
+}
+
+#>wonder_ecosystem_clusters_facets
+?["Do Ranganathan's five facets line up with Spw's slots closely enough to read the specimen search as a faceted catalog?"]{
+  #:depth #!computational ~#lens(comparison)
+  ~#with: @specimens
+  ~#hypothesis: "Personality is the subject, matter the body, energy the mark in front, space the scene, time the postfix."
+  ~#tension: "Projection has no facet of its own; it may be the record's destination rather than a property of the thing."
+  !probe{ "count the route expressions in workers/spw-quest/src/specimens-data.js that fill each slot, and compare with what a librarian would file under each facet" }
+  $%[facet.subject, facet.body, facet.mark, facet.scene, facet.postfix]
+}
+
+#>wonder_ecosystem_clusters_public
+?["Does any of this timeline become public, and where?"]{
+  #:depth #!pragmatics ~#lens(projection)
+  ~#with: @production_seeds
+  ~#taste: "The creator's call; seasons stay out of public copy unless asked."
+  !probe{ "rg -n 'production-seeds' about/plans/index.html" }
+  $%[public.none, public.plans, public.now]
+}
+
+validation = #[
+  `npm run spw:integrity  # every citation in this file resolves`,
+  `npm run wonder  # the four wonders above are harvested`,
+][reg=set]
+do_not_promote_until = "The creator answers the label and lead wonders, and one horizon's signal is read. Until then this stays a prime."
+
+^"stream"{
+ >>[2026-10-27 10:40] cache — Written from the conversation of the same morning: six clusters with their business shapes, the four hand-offs that make a loop, what compounds at 3, 6, 9 and 12 months with one way each, the information architecture for libraries, ecosystems and performance, and a four-object spine the site already holds a version of. Four wonders hand the taste calls back.
+}
