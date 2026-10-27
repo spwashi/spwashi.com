@@ -154,7 +154,7 @@ audit_run: .{
 
 ^"vocabulary_cluster_notes"{
   claim: `Component grammar is ahead of referentiality tier adoption — see @vocabulary_metaphor_growth_synthesis.`
-  external_drift: #[`atlas`, `inspectable`, `legible`, `proof card`, `threshold` — high-frequency meta stems on frame-heavy routes][reg=set]
+  external_drift: #[`atlas`, `inspectable`, `legible`, `proof card`, `threshold`][reg=set]  # high-frequency meta stems on frame-heavy routes
   internal_boundary: `passport/spatial-metaphor terms absent from HTML — correct per @component_region_personality`
   copy_depth_on_routes: `91 normal + 11 genre — pairs with living-concept and recipe regions; referentiality attr still 0`
 }

@@ -52,7 +52,7 @@
 }[reg=facet]
 
 ^"features_gate"{
-  attr = `data-spw-features` on body — space-separated feature family tokens
+  attr = `data-spw-features on body — space-separated feature family tokens`
   runtime = `module-catalog features: [...] gates ENHANCEMENT modules (console, svg-surfaces, pretext-lab, rpg-gameplay, media-publishing, metrics…)`
   agent_use = `Predict which optional runtime modules may mount without reading all JS`
   distinction = `data-spw-features (body gate) ≠ data-spw-feature (cluster name on a host)`

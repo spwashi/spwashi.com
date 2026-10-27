@@ -106,4 +106,4 @@ status: .{
   ]`
 }
 
-This audit now scopes the relationship between the site's .spw surfaces and the spw-workbench as intentionally one-directional for the time being. The volleyball and experience-slices work is treated as repo-internal tooling to help human developers coordinate long-term, slice-based contributions to this codebase.
+closing = `This audit now scopes the relationship between the site's .spw surfaces and the spw-workbench as intentionally one-directional for the time being. The volleyball and experience-slices work is treated as repo-internal tooling to help human developers coordinate long-term, slice-based contributions to this codebase.`

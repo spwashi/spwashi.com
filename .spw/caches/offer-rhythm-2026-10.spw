@@ -18,7 +18,7 @@
 
 source = "creator, 2026-09-28: pricing fluctuation based on the service, Spw operation aligned with the progression of 13 and the day of the month; deals and variable emphasis; mindfulness for marketing configurability"
 
-expression = .month[cycle·step]{sigil operator}
+expression = .month[cycle.step]{sigil operator}
 
 ^"model"{
   cycles = `A closes the 13th, B the 26th, C the last day. Cycle C counts back from its close, so the last day of every month is integration.`

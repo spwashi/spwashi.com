@@ -68,9 +68,9 @@ fixity = "cold"
 
 ^"timing_arc_families"{
   boot = #[`boot-core`, `boot-feedback`, `boot-shell`, `boot-medium`, `boot-frame`][reg=set]
-  immediate = #[`immediate-grammar`, `immediate-gesture`, `immediate-semantics`, `immediate-orchestration`, `immediate-diagnostics`, `immediate-attention`, `feature-route`, …][reg=set]
-  visible = #[`visible-media`, `visible-lab`, `visible-semantics`, `visible-memory`, …][reg=set]
-  enhance = #[`enhance-collectible`, `enhance-navigator`, `enhance-metacognition`, `enhance-ledger`, …][reg=set]
+  immediate = #[`immediate-grammar`, `immediate-gesture`, `immediate-semantics`, `immediate-orchestration`, `immediate-diagnostics`, `immediate-attention`, `feature-route`, `…`][reg=set]
+  visible = #[`visible-media`, `visible-lab`, `visible-semantics`, `visible-memory`, `…`][reg=set]
+  enhance = #[`enhance-collectible`, `enhance-navigator`, `enhance-metacognition`, `enhance-ledger`, `…`][reg=set]
 }[reg=facet]
 
 ^"follow_up_timing_chunk_updates_2026_07"{

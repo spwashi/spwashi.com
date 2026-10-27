@@ -61,7 +61,7 @@
     `1e58c345 Customize plan .spw from PLAN/FIX (+6.5k)`,
     `be8fdccf Strengthen Spw indexing across plan .spw (+7.3k, 263 files)`
   ][reg=set]
-  inventory ≈ `174 PLAN.md · ~187 plan index.spw at skill-induction audit`
+  inventory = `≈ 174 PLAN.md · ~187 plan index.spw at skill-induction audit`
 }
 
 ^"worktree_merge_cadence"{

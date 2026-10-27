@@ -109,7 +109,7 @@ fixity = "cold"
 ^"next_questions"{
   ?<
     Which underused operators (.ground *value (scene) [mode]) should appear on play/design practice beds first?,
-    Should ecology:language --strict fail when data-spw-operator values are outside OPERATOR_DEFINITIONS aliases?,
+    Should ecology:language `--strict` fail when data-spw-operator values are outside OPERATOR_DEFINITIONS aliases?,
     When does a site language pillar promote via submodule_bridge vs stay local?
   >[reg=stream]
 }[reg=set]

@@ -26,7 +26,7 @@ fixity = "experimental"
 }[reg=facet]
 
 ^"readings"{
-  #:repo = first .. last · commits · active days · busiest month · longest streak
+  ~#shape: "repo = first .. last · commits · active days · busiest month · longest streak"
   factshift = `2016-07-10 .. 2017-01-22 · 60 · 31 · 2016-07 (27) · 4`
   smjs = `2017-01-29 .. 2019-01-27 · 236 · 89 · 2017-06 (52) · 6`
   smphp = `2017-07-31 .. 2019-01-27 · 151 · 78 · 2017-09 (31) · 7`
