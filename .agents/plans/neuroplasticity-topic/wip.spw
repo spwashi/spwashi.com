@@ -1,0 +1,24 @@
+# Review 2026-10-28 — hot notes for the neuroplasticity topic; the goal, claims, visuals and interactives stay in PLAN.md.
+# wip — neuroplasticity-topic
+#
+#>plan_neuroplasticity_topic_wip
+#:operation #!cache
+#:fixity #!proposed
+#:layer #!semantics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@factshift_domain: ~"../../../about/domains/factshift.com/index.html"
+
+operation = "cache"
+fixity = "proposed"
+
+^"stream"{
+ >>[2026-10-28 18:27] plan — the creator told factshift's origin: a better Wikipedia, until it was clear that improving on it would take knowing how people learn. Spw grew from that, to represent information with many dimensions from many perspectives (ecestudent@ece.120~?[transistors work.how]). factshift.center is new this year, extending the concept into a more experimental domain. The factshift.com domain page now tells that, uncommitted. This plan proposes a neuroplasticity topic as the same question asked of the learner: four ideas, each with one figure and one thing to try on factshift.center's canvas. Its claims are listed with sources to check, and nothing is built.
+}
+
+^"cache"{
+ ~#status: "proposed"
+ ~#next: "the creator's choices in index.spw (where it lives, the first interactive, depth), then the sources"
+ ~#last_stream: "2026-10-28"
+}
