@@ -1,6 +1,6 @@
 # factshift.center
 
-**Status 2026-10-27.** factshift.center serves a snapshot of the factshift app. The snapshot was refreshed today to the app's latest local commit, recorded in `workers/factshift-center/version.json`. A line of Spw held in the address (`?spw=`) now lays out on the canvas as its anatomy. The app is its own repository at `workers/factshift-center/app`, gitignored here, and the thirteen commits from this sitting are local and unpushed. The last four came from the creator's live notes. They cover a phone pass, the tool as a handle, a lens and a window, a gesture grammar, a verb ring on nodes, editing the held line from the canvas, and most of the SVG semantics. Next: how links look and pull, the physics and its centering, and why nodes move together. Deploy is the creator's (Wrangler).
+**Status 2026-10-27.** factshift.center serves a snapshot of the factshift app. The snapshot was refreshed today to the app's latest local commit, recorded in `workers/factshift-center/version.json`. A line of Spw held in the address (`?spw=`) now lays out on the canvas as its anatomy. The app is its own repository at `workers/factshift-center/app`, gitignored here, and the thirteen commits from this sitting are local and unpushed. The last four came from the creator's live notes. They cover a phone pass, the tool as a handle, a lens and a window, a gesture grammar, a verb ring on nodes, editing the held line from the canvas, and most of the SVG semantics. In the working tree: links by relation, one home a node, placing and throwing, and names from a word. Next: spells mapped over a set (`wonder_factshift_spells`). Deploy is the creator's (Wrangler).
 
 **Related:** [spw-quest](../spw-quest/PLAN.md) (its pivot and construct cards can open a line here) · [spw-inquiry-loop](../spw-inquiry-loop/PLAN.md) (parser releases, the capability ledger) · [brace-semantics](../brace-semantics/PLAN.md) (`[ ]` as a frame) · [spw-metaphysical-language](../spw-metaphysical-language/PLAN.md) (depth passes) · [ecosystem-architecture](../ecosystem-architecture/PLAN.md) (peers).
 
@@ -114,14 +114,15 @@ Verified at 390px and 1440px from the app's `dist/` in Chrome, driven with touch
 
 The creator asked on 2026-10-27 for swipe and tap semantics that localize meaning, adapt to each tool, and serve expert use and discovery through play. One rule is read the same way everywhere, and each tool decides what it means there. On the handle, a swipe points at where the thing it opens lives:
 
-The tool is a handle, a lens and a window. The handle (the small square) carries it; the lens (the faint, light larger square whose bottom-left corner is the handle's center) is where it is used; the window sits on top of the lens. All are placed from the top of the screen, so the corner holds on a phone whose address bar shows. The handle does not move when a tool opens or closes, and a handle carried somewhere stays there.
+The tool is a handle, a lens and a window (`workers/factshift-center/app/src/js/ui/tool-window.ts`). The handle (the small square) carries it. A window's corner is the handle's center, and it opens toward the screen's center: the handle's quadrant picks the corner. It keeps the direction and size it opened with, so a carried handle stops at the edge rather than the window squeezing. The lens is where the tool is used. With no window, it is a faint square cornered on the handle, facing the center; with one, it is a small red nub on the window's near edge beside the handle, like a ThinkPad's point, giving toward a push. It shows on every load; the [...] interface row hides it for a visit. The nub steps through the tool by where its controls sit (`workers/factshift-center/app/src/js/ui/tool-steps.ts`): ↑ ↓ between rows (a slide keeps going), ← → along a row, a tap presses; ← past a row's start steps out, and with nothing stepped → submits and ← opens the modes. All are placed from the top of the screen, so the corner holds on a phone whose address bar shows.
 
 | gesture | handle | lens | node | empty stage |
 | --- | --- | --- | --- | --- |
-| tap | step back: close an open menu, else the window, else show or hide the lens | open the tool (keyboard down); open, prime it (its field in focus) | select or deselect; tap empty stage to clear | clear the selection |
+| tap | toggle the tool: a menu closes and the tool returns; an open tool is put away; with none, the last tool | open the tool (keyboard down); open, prime it (its field in focus) | select or deselect; tap empty stage to clear | clear the selection |
+| tap a link | | | | what it is and does (a card); a drawn link can be unlinked there |
 | double-tap | | | rename in place; a node of the held line is renamed in the line | |
-| drag | carry from the first 3px (grab area 12px past the square) | (a swipe past 10px; direction locks at 36px) | move it; near another node (radius + 16px), link to it, the selection with it, and spring back; near a linked node, unlink; into a container of its expression, become its member; along an ordered body, reorder | |
-| hold | grip | grip, then drag to carry | the verb ring; the name at its center primes Spw with it; with a selection, ← links it here | the canvas ring: [ ] mode ↑, node ↗, < > concept →, { } definition ↓, ( ) scene ←; a brace adds that slot to the held line with a · to name |
+| drag | carry from the first 3px (grab area 12px past the square) | (a swipe past 10px; direction locks at 36px) | let go slowly, it stays where it was put (a light ring); thrown, it goes home, the line to its home lit while a release would throw; near another node (radius + 16px), link to it, the selection with it, and spring back; near a linked node, unlink; into a container of its expression, become its member; along an ordered body, take the slot the drop falls in | |
+| hold | grip | grip, then drag to carry | the verb ring and a faint line to its home, named; past grow or shrink, more the farther, said on the button; the name at the ring's center primes Spw with it; with a selection, ← links it here | the canvas ring: [ ] mode ↑, node ↗, < > concept →, { } definition ↓, ( ) scene ←; a brace adds that slot to the held line with a · to name |
 | pinch | | | resize it (the selection with it) | zoom the stage; two fingers pan |
 | ← | | the mode column, sliding to a mode | | |
 | ↓ | | the primary menu (named for the selection when there is one) | | |
@@ -130,14 +131,17 @@ The tool is a handle, a lens and a window. The handle (the small square) carries
 
 - **The held line is the editor's document.** A rename, a drop into a container, a reorder or a spawned slot rewrites the line (`workers/factshift-center/app/src/js/modes/spw/held-line.ts`): the title, the heading, the corner box and the address follow, and nodes that survive keep their place. `a.b.c` is ordered (a row, reordered by dragging); `a, b` is common (a ring).
 - **The [...] menu is a few rows, each a family of verbs.** A row shows one verb; a tap does it; a swipe across it, its › at the right edge, or ← → turns it to another, and the row remembers. The families are the selection (linked in a row, linked to each other, as a line, with neighbors, opposite, the run between, pinned, loose, larger, smaller, next color, on top, remove, none selected), nodes, store (save, …), transport (yoink, …), interface (whole stage, mode menu, reset handle, gestures) and forces.
-- **Names.** A node with no name of its own is a, b, c … z, aa …; a placeholder slot is ·.
+- **Names.** A node with no name of its own takes a word and the first count from 0 no node holds: node:0, node:1 (`workers/factshift-center/app/src/js/simulation/nodes/data/names.ts`). The [...] menu's names row sets the word for this browser, `?names=seed` for one visit, and `letters` gives a, b, c. A node swiped up arrives with its name selected; a placeholder slot is ·. A batch from "more nodes" arrives selected, so the selection's verbs set it up at once.
+- **One home a node** (`workers/factshift-center/app/src/ts/simulation/homes.ts`). Each node is drawn to one home, for one reason: placed (where a hand let it go), slot (its anchor in the held line), region (the innermost region with a pull it is in), or stage (the middle). Centering pulls only stage nodes, a region only its loose nodes.
+- **Heat.** Only the first layout runs at full heat. A later setup (a link, a rename, a resize, a line edit) warms the simulation to a steady low heat until the line's parts are still or home, so what changed eases in and the rest does not jump; a throw stays warmer until the node arrives.
+- **Links by relation** (`workers/factshift-center/app/src/js/simulation/edges/relations.ts`). Each relation has its own length, pull, width and dash: stages, goes, charges, bond, same word (resonance), drawn. A word is tied by one line to its { } region (defines), and the parts sit in it by their slots. Dots read as object access (a.b: b on a, accesses); ; and ~> read as order (follows, dashed). A link is never shorter than its ends' radii and a gap, so a grown node pushes out what it is linked to.
+- **The title.** A pinch resizes and moves it, and a trackpad's pinch over it resizes it, so a long title can clear the hash for a screenshot. Its left edge, dragged out or in, snaps to one line or to wrapping. Two taps on the square behind it put it back; this browser keeps the layout (`workers/factshift-center/app/src/js/ui/title-layout.ts`).
 - **Desktop.** An open window's edges are grab bands; a trackpad's pinch zooms the stage and its scroll pans.
 - **Spw.** Run has its row; clear lives in the prompt's corner while there is text; the keyboard's Enter key says "enter", because Enter makes a new line and run is the submit. The window is a fixed size that fits the stage with a margin each side.
 - **Taps reach the node meant.** A node's picture and label take no touches; only its circle does.
 
 - **One gesture per touch.** A swipe's direction locks once it crosses its line, so a path that drifts diagonally keeps the gesture it began. It unlocks only by coming back near where it started, which takes it back.
 - **Guided.** A swipe that would land lights the handle's edge on that side, and the column lights the mode under or beside the finger. A swipe toward nothing shows the card. The handle is above everything else on the page.
-- **The slot.** The larger square at the handle is the tool's slot. Empty, it has a faint, light, solid outline and takes the handle's gestures, a target sized for a thumb. When a tool is open, the tool fills the slot and takes its touches.
 - **Taught on asking.** A hold shows the card, and so does the menu's "gestures" row, which counts what this browser has found. With a keyboard, the context-menu key or Shift+F10 is the hold. Nothing teaches itself uninvited.
 - **Expert use.** Every gesture has a visible control. Choosing a mode takes one touch: ←, slide, let go.
 
@@ -174,7 +178,7 @@ Nothing scripts these steps yet. A carry script like spw.quest's is a candidate 
    | Perspective | Scene |
    | Category | Mode |
    | Confluence | Subject |
-3. **Links and forces.** The creator asked for an overhaul of the link and force physics. Each relation gets its own link distance and strength, read from the relation names the anatomy already draws, in place of one global `linkStrength`. Feel is browser-gated: this slice ends at a demo.
+3. **Links and forces.** In the working tree (see Names, One home a node, and Links by relation above). Feel is the creator's in the browser: the throw speed (8), the throw heat, and the relation table are the first knobs.
 4. **First load.** Ends at a demo for the creator's look.
 5. **Carry a dated workbench build** in place of compiling the submodule's source. `wonder_factshift_rebundle` holds the choice.
 6. **From spw.quest.** Once this is deployed, cards on `/pivot` and `/constructs` can open their line here with `?spw=`.
@@ -190,4 +194,7 @@ Nothing scripts these steps yet. A carry script like spw.quest's is a candidate 
 - the rebundle;
 - which relations pull;
 - what the Spw panel's priming becomes now that Spw has dialects;
-- which gestures the other tools take, and the choices the demo leaves open.
+- which gestures the other tools take, and the choices the demo leaves open;
+- spells mapped over a set (map mode, naming as a story, arcs across nodes);
+- containers as physics and as frames (delimiters, boundaries, layers, documents);
+- size, count and selection along arcs (pinch and radius by links and layers, swipes that add or reduce).
