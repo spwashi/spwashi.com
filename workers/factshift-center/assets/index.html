@@ -13,9 +13,9 @@
     <meta itemprop="description" content="7D force simulation with Spw command language">
     <link rel="icon" href="/v0.0.1/favicon/16.png">
     <link rel="manifest" href="/manifest.json">
-  <script type="module" crossorigin src="/assets/main-n78QowFy.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/index-qXoXvP9e.js">
-  <link rel="stylesheet" crossorigin href="/assets/index-_gCRtr7x.css">
+  <script type="module" crossorigin src="/assets/main-svxZN-tW.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/index-Jjr3Pskd.js">
+  <link rel="stylesheet" crossorigin href="/assets/index-RunXTMcj.css">
   <link rel="stylesheet" crossorigin href="/assets/main-_qtzgt2L.css">
 </head>
 <body data-mode="nothing"
@@ -109,6 +109,12 @@
                         data-action="clear-spw-prompt"
                         title="Empty the prompt"
                         hidden>clear</button>
+                <!-- A run holds the line on the canvas; with trace on, the
+                     runtime's own trace (its stages and registers) is shown. -->
+                <button type="button"
+                        data-action="spw-trace"
+                        aria-pressed="false"
+                        title="Show the runtime's trace on the canvas instead of the line">trace</button>
             </div>
             <p id="spw-reading" data-role="spw-reading" aria-label="What the line meets"></p>
             <div data-role="spw-actions">
