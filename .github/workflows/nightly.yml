@@ -15,9 +15,19 @@ name: Drift notice
 # and runs again each morning so a day with no push still gets a look.
 # The morning run also builds dist/ and loads every catalog module from it.
 # built-modules.yml does the same on a push that changes the bundle's shape.
+#
+# Between runs a ledger (drift-notice.mjs, kept in the Actions cache) holds
+# what is open. A still or a route that failed is carried into the next runs
+# until it passes, so the rotation cannot turn it green. Each open failure is
+# new or standing. Advisories and pending worker deploys (worker-drift.mjs)
+# are decisions: listed apart, never red. Sunday's run takes every still of
+# the month, so a broken check shows within a week, not on its one day. The
+# notice is also written to the run's summary, which reads without a login.
 on:
   schedule:
     - cron: '17 9 * * *'
+    # Sunday: every still of the month.
+    - cron: '47 9 * * 0'
   workflow_dispatch:
   workflow_run:
     workflows: ["Deploy to GitHub Pages"]
@@ -47,14 +57,22 @@ jobs:
       - run: npm ci
       - name: Commit under test
         run: git rev-parse HEAD && git log -1 --oneline
+      - name: Open failures from earlier runs
+        uses: actions/cache/restore@v4
+        with:
+          path: drift-ledger.json
+          key: drift-ledger-${{ github.run_id }}
+          restore-keys: drift-ledger-
       - name: Require settled browser smoke with clean console and layout
         run: |
           set -o pipefail
-          routes=$(node --input-type=module -e "
+          base=$(node --input-type=module -e "
             import { nightlyMonthReceipt } from './scripts/lib/visual-capture-plan.mjs';
             const receipt = nightlyMonthReceipt(new Date().getUTCDate());
             process.stdout.write(receipt.smoke.routes.join(','));
           ")
+          # A route that failed stays in until it passes.
+          routes=$(node scripts/drift-notice.mjs carry --ledger drift-ledger.json --job smoke --base "${base}")
           echo "routes=${routes}"
           npm run smoke:nav:ci -- --routes "${routes}" --receipt smoke-receipt.json | tee smoke.txt
       - uses: actions/upload-artifact@v4
@@ -71,7 +89,7 @@ jobs:
     name: Pocket attention
     if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: ${{ github.event.schedule == '47 9 * * 0' && 45 || 12 }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -83,16 +101,35 @@ jobs:
       - run: npm ci
       - name: Commit under test
         run: git rev-parse HEAD && git log -1 --oneline
+      - name: Open failures from earlier runs
+        uses: actions/cache/restore@v4
+        with:
+          path: drift-ledger.json
+          key: drift-ledger-${{ github.run_id }}
+          restore-keys: drift-ledger-
       - name: Record the month day
+        env:
+          WHOLE_MONTH: ${{ github.event.schedule == '47 9 * * 0' && '1' || '' }}
         run: |
           node --input-type=module -e "
-            import { mkdirSync, writeFileSync } from 'node:fs';
+            import { mkdirSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
             import { nightlyMonthReceipt } from './scripts/lib/visual-capture-plan.mjs';
+            import { carryList } from './scripts/drift-notice.mjs';
             const receipt = nightlyMonthReceipt(new Date().getUTCDate());
+            // Sunday takes every still of the month; other days take the day's,
+            // plus any still that failed and has not passed since.
+            const whole = process.env.WHOLE_MONTH === '1';
+            const base = whole
+              ? [...new Set(Array.from({ length: 31 }, (_, i) => nightlyMonthReceipt(i + 1).ids).flat())]
+              : receipt.ids;
+            const ledger = existsSync('drift-ledger.json') ? JSON.parse(readFileSync('drift-ledger.json', 'utf8')) : null;
+            const ids = carryList(ledger, 'attention', base);
+            const carried = ids.filter((id) => !base.includes(id));
+            const ran = { ...receipt, ids, carried, whole };
             mkdirSync('drift-attention', { recursive: true });
-            writeFileSync('drift-attention/month-receipt.json', JSON.stringify(receipt, null, 2) + '\n');
-            writeFileSync('drift-attention/ids.txt', receipt.ids.join(','));
-            process.stdout.write('day=' + receipt.day + ' week=' + receipt.week + ' state=' + receipt.state + ' route=' + receipt.route + ' ids=' + receipt.ids.join(',') + '\n' + receipt.reading + '\n');
+            writeFileSync('drift-attention/month-receipt.json', JSON.stringify(ran, null, 2) + '\n');
+            writeFileSync('drift-attention/ids.txt', ids.join(','));
+            process.stdout.write('day=' + receipt.day + ' week=' + receipt.week + ' state=' + receipt.state + ' route=' + receipt.route + (whole ? ' whole-month' : '') + ' ids=' + ids.join(',') + (carried.length ? ' carried=' + carried.join(',') : '') + '\n' + receipt.reading + '\n');
           "
       - name: About opening plus the day's month still
         run: |
@@ -172,12 +209,13 @@ jobs:
       - name: Commit under test
         run: git rev-parse HEAD && git log -1 --oneline
       - name: Registry audit
+        # A decision, not drift: the notice lists advisories (new ones marked)
+        # and the run stays green on them. Fixes wait on the creator's review.
         run: |
           set +e
           npm audit --json --audit-level=moderate > audit.json
-          status=$?
           node scripts/drift-notice.mjs audit < audit.json > audit-receipt.json || true
-          exit $status
+          exit 0
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -223,16 +261,31 @@ jobs:
         with:
           ref: ${{ github.event.workflow_run.head_sha || github.sha }}
           fetch-depth: 80
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
       - uses: actions/download-artifact@v4
         with:
           path: receipts
+      - name: Open failures from earlier runs
+        uses: actions/cache/restore@v4
+        with:
+          path: drift-ledger.json
+          key: drift-ledger-${{ github.run_id }}
+          restore-keys: drift-ledger-
       - name: Day's subjects
         run: git log --since='24 hours ago' --format='%h %s' > subjects.txt
+      - name: Worker deploys
+        run: node scripts/worker-drift.mjs --receipt workers-receipt.json || true
       - name: Assemble notice.json
         run: |
           node scripts/drift-notice.mjs assemble \
             --sha "${{ github.event.workflow_run.head_sha || github.sha }}" \
             --out notice.json \
+            --ledger drift-ledger.json \
+            --ledger-out drift-ledger.json \
+            --summary notice.md \
+            --workers workers-receipt.json \
             --smoke receipts/drift-smoke/smoke-receipt.json \
             --plans receipts/drift-plans/plan-receipt.json \
             --citations receipts/drift-citations/citations-receipt.json \
@@ -241,10 +294,20 @@ jobs:
             --month receipts/drift-attention/month-receipt.json \
             --built receipts/drift-built/built-receipt.json \
             --subjects subjects.txt
+          cat notice.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Keep the open failures for the next run
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: drift-ledger.json
+          key: drift-ledger-${{ github.run_id }}-${{ github.run_attempt }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: drift-notice
-          path: notice.json
+          path: |
+            notice.json
+            notice.md
+            drift-ledger.json
           if-no-files-found: ignore
           retention-days: 14
