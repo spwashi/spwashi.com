@@ -1065,6 +1065,30 @@ test('attention steps report where a prepare landed', async () => {
   assert.equal(readAttentionStep(doc, { check: ['#open'] }).landed, true);
   assert.equal(readAttentionStep(doc, { click: ['#pressed'] }).landed, false);
 
+  // A focus step is judged inside the still's host, as the prepare focused it:
+  // the header's #> sigil also matches a frame selector and comes first.
+  const headerSigil = { id: 'header-sigil' };
+  const heroFrame = { id: 'hero-frame' };
+  const hero = {
+    querySelector: (sel) => (sel === '[data-spw-operator="frame"]' ? heroFrame : null),
+    contains: (node) => node === heroFrame,
+  };
+  const page = {
+    nodeType: 9,
+    documentElement: { getAttribute: () => null },
+    body: {},
+    activeElement: heroFrame,
+    querySelector: (sel) => {
+      if (sel === '#curriculum-hero') return hero;
+      if (sel === '[data-spw-operator="frame"]') return headerSigil;
+      return null;
+    },
+  };
+  const scoped = readAttentionStep(page, { selector: '#curriculum-hero', focus: '[data-spw-operator="frame"]' });
+  assert.equal(scoped.step, 'focus');
+  assert.equal(scoped.focusWithin, true);
+  assert.equal(scoped.landed, true);
+
   const missed = assessStillAttention(
     { still: true },
     { attention: { step: 'keys', landed: false, attentionOpacity: '0.96', attentionCharge: '0.4' } },

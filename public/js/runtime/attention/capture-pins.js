@@ -87,6 +87,11 @@ export function attentionStepKind(request = {}) {
   return 'rest';
 }
 
+/**
+ * The node a step names, looked for inside the still's host first, as the
+ * prepare that focused it did. A selector the header also matches (the
+ * #> sigil is a frame) would otherwise judge the header.
+ */
 function findNode(doc, host, selector) {
   const sel = String(selector || '').trim();
   if (!sel) return null;
@@ -94,7 +99,7 @@ function findNode(doc, host, selector) {
     if (!root || typeof root.querySelector !== 'function') return null;
     try { return root.querySelector(sel); } catch { return null; }
   };
-  return from(doc) || (host && host !== doc ? from(host) : null);
+  return (host && host !== doc ? from(host) : null) || from(doc);
 }
 
 function holds(node, active) {
