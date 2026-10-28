@@ -55,8 +55,10 @@ intent: .{
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
 @version: ~"../../../workers/factshift-center/version.json"
-@line_anatomy: ~"../../../workers/factshift-center/app/src/js/modes/spw/line-anatomy.ts"
-@workbench_runtime: ~"../../../workers/factshift-center/app/src/js/modes/spw/workbench-runtime.ts"
+# The app's sources live in its own repository (workers/factshift-center/app,
+# gitignored here), so this index links its built snapshot and names the
+# sources as plain paths in conceptual_model.surfaces.
+@snapshot: ~"../../../workers/factshift-center/assets/index.html"
 @parser_releases: ~"../../../workers/spw-quest/assets/parser/index.json"
 @brace_semantics: ~"../brace-semantics/index.spw"
 @inquiry_loop: ~"../spw-inquiry-loop/index.spw"
@@ -65,8 +67,7 @@ dispatch: .{
  plan = @plan
  wip = @wip
  version = @version
- line_anatomy = @line_anatomy
- workbench_runtime = @workbench_runtime
+ snapshot = @snapshot
  parser_releases = @parser_releases
 }[reg=facet]
 
@@ -80,7 +81,7 @@ dispatch: .{
  layer = "pragmatic"
  hypothesis = `A held line of Spw lays out on factshift.center as its anatomy, on factshift.com's ground, and the snapshot here is the app's latest local build.`
  spec_ref = ~"./PLAN.md"
- impl_ref = @line_anatomy
+ impl_ref = @snapshot
  probe_ref = `npm run check:workers, which runs workers/factshift-center/test/snapshot.test.mjs.`
  falsification = `Open the snapshot with ?spw=home[hook]{software.art.practice}(atlas)<person>: no scene, concept or definition region, or no [hook] frame, falsifies it.`
  status = "active"
@@ -95,7 +96,7 @@ validation: #[
 editor_prompts: #[
  .{ ask = `What does factshift-center own, and what should stay out of scope?`, see = @plan }[reg=facet],
  .{ ask = `Which file should I open first to implement the next slice of factshift-center?`, see = @wip }[reg=facet],
- .{ ask = `Where does the canvas decide where a slot of a line sits?`, see = @line_anatomy }[reg=facet],
+ .{ ask = `Where does the canvas decide where a slot of a line sits?`, see = @plan }[reg=facet],
 ][reg=set]
 
 invariants: #[
@@ -107,7 +108,7 @@ invariants: #[
 #>wonder_factshift_spaces
 ?["Can the canvas set conceptual space apart from performative or descriptive space, so a reader sees which part of a line names an idea and which part does or describes something?"]{
   #:depth #!experiential ~#lens(projection)
-  ~#with: @plan @line_anatomy
+  ~#with: @plan @snapshot
   ~#taste: "A concept is somewhere you can stand; a performance happens somewhere; a description is laid over something else."
   ~#expect: "Partly. Concept < > and scene ( ) already have regions of their own. The body { } mixes describing and doing, and only the marks inside it can tell them apart."
   ~#unblocks: "whether the definition region splits, and what an ! action draws as"
@@ -142,7 +143,7 @@ invariants: #[
 #>wonder_factshift_parity
 ?["Which of the workbench's readings would the canvas take first, now that it is catching up, and what would they have grown if it had kept pace through 2025?"]{
   #:depth #!computational ~#lens(projection)
-  ~#with: @plan @workbench_runtime
+  ~#with: @plan @snapshot
   ~#taste: "Parity is not a copy of the workbench; it is the canvas drawing what the workbench already knows how to read."
   ~#expect: "Four readings, in this order. Canon names first. Then the reader's roles as paint. Then the lexer's node kinds (frame, body, scope, capsule) as geometry. Then error spans as visible gaps. Kept since 2025, the anatomy would have arrived as a reader output and not as a second slot reader in the app."
   ~#probe(read)
@@ -165,7 +166,7 @@ invariants: #[
 #>wonder_factshift_relations
 ?["Once each link reads its relation instead of one global strength, which relations should pull, and how hard?"]{
   #:depth #!experiential ~#lens(projection)
-  ~#with: @plan @line_anatomy
+  ~#with: @plan @snapshot
   ~#expect: "Four relations are enough. Hold (a part to its word) and bond (a join) set the layout. Resonance (the same word twice) and stage (the run's order) only lean."
   ~#unblocks: "slice 3 in PLAN.md"
   ~#probe(read)
@@ -176,7 +177,7 @@ invariants: #[
 #>wonder_factshift_priming_dialects
 ?["What should the Spw panel's priming become, now that Spw has dialects and distinct representational contexts?"]{
   #:depth #!semantic ~#lens(projection)
-  ~#with: @plan @line_anatomy
+  ~#with: @plan @snapshot
   ~#tension: "The prime buttons (*boon, @, #, <>) were designed for a Spw with one representation. The language now reads a line differently by dialect and context, and the panel cannot say which one it is reading in."
   ~#expect: "A chooser for the context, not for the operator. The reading under the prompt names slots in that context's words, and priming becomes a starting line drawn from it."
   ~#probe(read)
@@ -187,7 +188,7 @@ invariants: #[
 #>wonder_factshift_gestures
 ?["Which gestures does each tool take next, and how should the grammar settle the choices the demo leaves open?"]{
   #:depth #!experiential ~#lens(projection)
-  ~#with: @plan @line_anatomy
+  ~#with: @plan @snapshot
   ~#taste: "One rule taught once, meaning what each tool makes it mean: tap acts, hold learns, across chooses, along reaches, hold-then-drag places."
   ~#hypothesis: "The tools that hold a set take across, and the tools that hold an amount take along. The tool palette steps tools across and turns a tool around along. The held-line box steps through lines across, and along opens a line in Spw or puts the box away. A row of the Spw reading pivots its slot to a line one change away, as spw.quest does. A shortcut row turns off and on, or a value down and up. A hold on the canvas starts a selection where touch has none."
   ~#expect: "Four choices are the creator's. Should the handle's arrow keys follow the swipes (↑ modes, ↓ menu, → tool, ← back)? Today they nudge it. Does a node's across run its tool's two directions (grow and shrink), or stay a throw? Is the found count play or pressure? Is a buzz on landing welcome?"
