@@ -3,8 +3,8 @@
   "version": "0.0.2-alpha",
   "script": "factshift-center",
   "host": "factshift.center",
-  "snapshot": "2026-10-27",
-  "revision": "5eff5b1",
+  "snapshot": "2026-10-28",
+  "revision": "381c07c",
   "checkout": "workers/factshift-center/app",
   "query": [
     "alpha",
