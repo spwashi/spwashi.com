@@ -197,3 +197,39 @@ invariants: #[
   !probe{ "on a phone, swipe and hold the mark and a node for a minute with no instructions; then open the gestures row, and name which gesture was found first, which was missed, and which surprised" }
   $%[gestures.learnable, gestures.too_many, gestures.missing]
 }
+
+#>wonder_factshift_spells
+?["How does a spell map over a set: named once, cast on the selection, and read as a story across the nodes it touched?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#with: @plan @snapshot
+  ~#asked: "the creator, 2026-10-27: map mode should be more functional; mapping a spell onto a set; a naming spell easy to select as a story; swiping to fill a Spw expression from what is selected and what is possible; priming and activating, sequencing, arcs across nodes; added nodes easier to configure at once"
+  ~#tension: "Map mode is a JavaScript editor whose (node, i) => node runs over every node. The selection's verbs set many nodes at once, but one verb at a time, and nothing records what was cast."
+  ~#hypothesis: "Map mode takes a line of Spw and casts it on the selection (or every node), in the selection's order. An ordered body is a story: {dawn.road.door} names the set in order, and the run between selects a chapter. The lens's → on a selection fills the spell from what the set has in common, and each cast primes the next node, so a sequence is an arc to step through."
+  ~#probe(read)
+  !probe{ "write three spells by hand for one selection (a name story, a size, a link pattern), cast each through the selection verbs that exist, and note which a single line of Spw could have said" }
+  $%[spells.map_mode, spells.selection_verbs, spells.story_names]
+}
+
+#>wonder_factshift_containers
+?["What can a container's delimiters configure, and when is a container a node, a boundary or a frame?"]{
+  #:depth #!semantic ~#lens(projection)
+  ~#with: @plan @snapshot
+  ~#asked: "the creator, 2026-10-27: container delimiters useful for configurable physics; wrapping a node in a container, nodes that represent boundaries, tapping into a node or mounting it as a frame; saving nodes as Spw expressions parsed as documents and navigated by titles; cross-page linking or physics; layering, outlines, z-index"
+  ~#tension: "Delimiters already choose a layout (a.b.c is a row, a, b a ring) and each region has its pull, but a reader cannot set either, a container is never a thing to hold, and the canvas is one page."
+  ~#hypothesis: "Each delimiter names a physics: ( ) loose and drifting, < > gathering, { } holding by its separator. Wrapping a selection writes a container into the held line. A boundary node is the container's own handle, and tapping into a node mounts its line as the frame, with the title as the way back. A saved set is a .spw document whose titles are its table of contents."
+  ~#probe(read)
+  !probe{ "list the regions' effects in line-anatomy.ts against the delimiters' meanings in .spw/site.spw, and say which delimiter each effect would belong to" }
+  $%[containers.physics, containers.frames, containers.documents]
+}
+
+#>wonder_factshift_sizes
+?["How should size, count and selection carry along a node's arcs and layers?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#with: @plan @snapshot
+  ~#asked: "the creator, 2026-10-27: pinching and radius effects should depend on linking arcs and layering; selection as a topographical prioritization; whether ↑ on the lens adds one node or throws a batch by what more nodes is set to; ↓ as a reduction"
+  ~#tension: "A pinch or the ring resizes one node (or the selection). Links only keep their length past the ends' radii. Layers (z) decide drawing, not reach. ↑ on the lens adds one node; ↓ opens the menu."
+  ~#hypothesis: "A resize falls off along the arcs: what a node accesses or holds grows less, by its distance in links, and only within its layer. Selection becomes a height map: selected is high ground, its arcs the slopes, and a pinch or a spell reaches as far as the ground stays high. ↑ adds what more nodes is set to, one or a batch, arriving selected; ↓ reduces the selection the same way: the farthest from the center of its arcs go first."
+  ~#probe(read)
+  !probe{ "on a held line with a dotted body, pinch the word and the first part, then say for each part how much it should have grown and why" }
+  $%[sizes.along_arcs, sizes.by_layer, sizes.per_node]
+}
