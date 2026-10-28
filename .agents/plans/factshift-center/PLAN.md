@@ -123,7 +123,7 @@ The tool is a handle, a lens and a window (`workers/factshift-center/app/src/js/
 | double-tap | | | rename in place; a node of the held line is renamed in the line | |
 | drag | carry from the first 3px (grab area 12px past the square) | (a swipe past 10px; direction locks at 36px) | let go slowly, it stays where it was put (a light ring); thrown, it goes home, the line to its home lit while a release would throw; near another node (radius + 16px), link to it, the selection with it, and spring back; near a linked node, unlink; into a container of its expression, become its member; along an ordered body, take the slot the drop falls in | |
 | hold | grip | grip, then drag to carry | the verb ring and a faint line to its home, named; past grow or shrink, more the farther, said on the button; the name at the ring's center primes Spw with it; with a selection, ← links it here | the canvas ring: [ ] mode ↑, node ↗, < > concept →, { } definition ↓, ( ) scene ←; a brace adds that slot to the held line with a · to name |
-| pinch | | | resize it (the selection with it) | zoom the stage; two fingers pan |
+| pinch | | zoom the camera (the first finger on the lens; a trackpad's pinch over it too) | resize it (the selection with it) | resize every node, as on factshift.com (a trackpad's pinch too); scrolling pans |
 | ← | | the mode column, sliding to a mode | | |
 | ↓ | | the primary menu (named for the selection when there is one) | | |
 | → | | submit: Spw runs; another tool presses its submit; with none open, the last tool | | |
