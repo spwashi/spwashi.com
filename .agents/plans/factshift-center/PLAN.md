@@ -1,6 +1,6 @@
 # factshift.center
 
-**Status 2026-10-27.** factshift.center serves a snapshot of the factshift app. The snapshot was refreshed today to the app's latest local commit, recorded in `workers/factshift-center/version.json`. A line of Spw held in the address (`?spw=`) now lays out on the canvas as its anatomy. The app is its own repository at `workers/factshift-center/app`, gitignored here, and the eleven commits from this sitting are local and unpushed. The last two came from the creator's live notes. They cover a phone pass, the focal mark as the open tool's handle, a gesture grammar, the Spw stage, and most of the SVG semantics. Deploy is the creator's (Wrangler).
+**Status 2026-10-27.** factshift.center serves a snapshot of the factshift app. The snapshot was refreshed today to the app's latest local commit, recorded in `workers/factshift-center/version.json`. A line of Spw held in the address (`?spw=`) now lays out on the canvas as its anatomy. The app is its own repository at `workers/factshift-center/app`, gitignored here, and the twelve commits from this sitting are local and unpushed. The last three came from the creator's live notes. They cover a phone pass, the tool as a handle and a lens, a gesture grammar, a verb ring on nodes, the Spw stage, and most of the SVG semantics. Deploy is the creator's (Wrangler).
 
 **Related:** [spw-quest](../spw-quest/PLAN.md) (its pivot and construct cards can open a line here) · [spw-inquiry-loop](../spw-inquiry-loop/PLAN.md) (parser releases, the capability ledger) · [brace-semantics](../brace-semantics/PLAN.md) (`[ ]` as a frame) · [spw-metaphysical-language](../spw-metaphysical-language/PLAN.md) (depth passes) · [ecosystem-architecture](../ecosystem-architecture/PLAN.md) (peers).
 
@@ -14,7 +14,7 @@ operation: align (the app's canvas with the workbench's reading of a line)
 
 ```text
 pins (2026-10-27)
-app            main e601855, 78 commits past origin/main 2ba127a (fetched 2024-10-30)
+app            main 619432e, 79 commits past origin/main 2ba127a (fetched 2024-10-30)
 app workbench  submodule fffab72, spw-workbench 0.2.0-alpha.1, 2026-03-12
 site reader    public/js/semantic/spw-workbench-reader.js, v0.3.0 @ 850077a (the site's mount)
 spw.quest      assets/parser/2026.10.13, v0.3.0 @ 0eb1d1c, nine commits behind the site's mount
@@ -44,6 +44,7 @@ f1999d6 faf14f2 a792749   ids, ?spw=, normalize fills only what is missing
 656c6e5 6b67304           regions drawn; the anatomy, title and corner box
 e9a390d                   the phone pass and the interaction contract below
 e601855                   the handle, the gesture grammar, the slot, and the Spw stage
+619432e                   the handle and the lens, the verb ring, the five-row menu
 ```
 
 ## Layout
@@ -85,7 +86,11 @@ The creator set this on 2026-10-27; the phone pass built it, and the demo in the
   - No tool is in hand at the start. (A story or a node's own link may still choose one.)
   - Tapping the tool in hand puts it down, and the palette's word shows above the handle only while a tool is held.
   - A node tapped with no tool is named, not changed.
-- **The menu ([...]).** Focus is a ring for the keyboard only. A tapped toggle never fills its whole button, so its state box and the hover stay readable.
+- **The menu ([...]).** It keeps factshift.com's alignment: a category on every row along one left edge, and outlined buttons on one right edge. Level 0 is factshift.com's five rows (more nodes, saved nodes, mode menu, handle home, yoink) plus "all options", which opens level 1; every row is also on the keyboard.
+  - A row names where a press leads, such as "link force off" while it is on, or "velocity decay 0.6".
+  - A row is listed only while it has something to act on: fewer nodes, saved nodes, yoink and positions need nodes, and handle home needs a moved handle.
+  - The list is rebuilt after a press, and focus stays on its row.
+  - Focus is a ring for the keyboard only.
 - **Labels.**
   - Labels are nouns or adjectives naming the thing toggled or the state left behind ("mode menu", "link force").
   - A toggle's state is a box beside its name: lightly filled when on, outlined when off. The name keeps full contrast either way.
@@ -108,15 +113,20 @@ Verified at 390px and 1440px from the app's `dist/` in Chrome, driven with touch
 
 The creator asked on 2026-10-27 for swipe and tap semantics that localize meaning, adapt to each tool, and serve expert use and discovery through play. One rule is read the same way everywhere, and each tool decides what it means there. On the handle, a swipe points at where the thing it opens lives:
 
-| gesture | on the handle, or its empty slot | on a node |
-| --- | --- | --- |
-| tap | toggle the tool: put it away, or bring back the last one (Spw the first time); with a menu open, close the menu | the current tool, or its name with no tool in hand |
-| hold | grip: the handle rings and its tool lifts | its name; selected (the touch screen's Alt+click) |
-| hold, then drag | carry the tool, keeping the finger's offset | place it, ringed while dragged; thrown on release |
-| ← | the mode column on the left edge, at once; the same touch chooses: onto a square, or up and down from the open mode; let go on a lit mode to open it | (drag) |
-| ↓ | the primary menu ([...]) | (drag) |
-| → | into the tool: its default activation, its main control in focus | (drag) |
-| ↑ | a new node where the swipe lets go, its name typed in place (an empty name takes it back) | (drag) |
+The tool is a handle and a lens. The handle (the small square) is for carrying; the lens (the faint, light larger square whose bottom-left corner is the handle's center) is where the tool is used. Both are placed from the top of the screen, so the corner holds on a phone whose address bar shows.
+
+| gesture | on the handle | on the lens | on a node |
+| --- | --- | --- | --- |
+| tap | show or hide the lens | toggle the tool: put it away, or bring back the last one | with a tool in hand, use it; with none, open the node's verbs |
+| drag | carry the tool at once (its grab area reaches 10px past the square) | (a swipe) | move it, ringed; thrown on release |
+| hold | grip: the handle rings, its tool lifts | grip; then drag to carry | open the node's verbs in a ring around it |
+| ← | | the mode column, at once; the same touch slides to a mode | |
+| ↓ | | the primary menu ([...]) | |
+| → | | into the tool: its main control in focus | |
+| ↑ | | a new node where the swipe lets go, named in place | |
+
+- **The verb ring.** Each verb keeps its direction: ↑ grow, ↓ shrink, ← link, → color, ↗ raise, ↘ spin, ↙ remove, ↖ select. Hold and slide toward one, then let go to use it once. Let go in the middle and the ring waits for a tap. A tap anywhere else closes it. Only the node's name shows in the middle; the full description is the ring's accessible name.
+- **The lens by keyboard.** The arrows do the swipes (← focuses the open mode's square), Enter or Space toggles the tool, and Escape returns to the handle. Enter on the handle shows or hides the lens.
 
 - **One gesture per touch.** A swipe's direction locks once it crosses its line, so a path that drifts diagonally keeps the gesture it began. It unlocks only by coming back near where it started, which takes it back.
 - **Guided.** A swipe that would land lights the handle's edge on that side, and the column lights the mode under or beside the finger. A swipe toward nothing shows the card. The handle is above everything else on the page.
