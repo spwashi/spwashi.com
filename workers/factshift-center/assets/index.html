@@ -13,9 +13,9 @@
     <meta itemprop="description" content="7D force simulation with Spw command language">
     <link rel="icon" href="/v0.0.1/favicon/16.png">
     <link rel="manifest" href="/manifest.json">
-  <script type="module" crossorigin src="/assets/main-d6EwimlP.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/index-na2FTNt6.js">
-  <link rel="stylesheet" crossorigin href="/assets/index-BW64I-TZ.css">
+  <script type="module" crossorigin src="/assets/main--m0NRvau.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/index-uPss3Woc.js">
+  <link rel="stylesheet" crossorigin href="/assets/index-QrcG0txV.css">
   <link rel="stylesheet" crossorigin href="/assets/main-_qtzgt2L.css">
 </head>
 <body data-mode="nothing"
@@ -99,20 +99,23 @@
        data-spw-feature="mode-navigation">
     <section id="spw-mode-container" data-mode-panel="spw">
         <div id="spw-container" data-role="spw-input">
-            <label>
-                <span data-role="spw-form">spw</span>
-                <textarea id="spw-parse-field"
-                          aria-label="Spw expression input"></textarea>
-            </label>
+            <div class="spw-field">
+                <label>
+                    <span data-role="spw-form">spw</span>
+                    <textarea id="spw-parse-field"
+                              aria-label="Spw expression input"></textarea>
+                </label>
+                <button type="button"
+                        data-action="clear-spw-prompt"
+                        title="Empty the prompt"
+                        hidden>clear</button>
+            </div>
             <p id="spw-reading" data-role="spw-reading" aria-label="What the line meets"></p>
             <div data-role="spw-actions">
                 <button id="parse-spw"
                         type="button"
                         data-action="parse-spw"
                         title="Run Spw input (Cmd/Ctrl+Enter)">run</button>
-                <button type="button"
-                        data-action="clear-spw-prompt"
-                        title="Empty the prompt">clear</button>
             </div>
             <output id="spw-prime-context"
                     aria-live="polite"
