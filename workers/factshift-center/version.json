@@ -4,7 +4,7 @@
   "script": "factshift-center",
   "host": "factshift.center",
   "snapshot": "2026-10-28",
-  "revision": "1fd8bd1",
+  "revision": "c22cd5d",
   "checkout": "workers/factshift-center/app",
   "query": [
     "alpha",
