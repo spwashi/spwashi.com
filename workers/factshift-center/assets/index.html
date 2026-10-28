@@ -13,9 +13,9 @@
     <meta itemprop="description" content="7D force simulation with Spw command language">
     <link rel="icon" href="/v0.0.1/favicon/16.png">
     <link rel="manifest" href="/manifest.json">
-  <script type="module" crossorigin src="/assets/main-fPke2GKL.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/index-BPJQD4tE.js">
-  <link rel="stylesheet" crossorigin href="/assets/index-BLHwVmDP.css">
+  <script type="module" crossorigin src="/assets/main-jm8WbhJd.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/index-rf0dRxTH.js">
+  <link rel="stylesheet" crossorigin href="/assets/index-PhxHUIoI.css">
   <link rel="stylesheet" crossorigin href="/assets/main-_qtzgt2L.css">
 </head>
 <body data-mode="nothing"
@@ -151,40 +151,49 @@
         </div>
     </section>
     <section id="node-mode-container" data-mode-panel="node">
-        <div id="node-input-container" data-role="node-input">
-            <label>
-                <span>node names</span>
-                <input id="nodes-input" aria-label="Node names input"/>
-            </label>
-            <div class="action-group" data-group="node-input">
-                <button class="replace" data-action="replace-nodes">replace</button>
-                <button class="add" data-action="add-nodes">add</button>
+        <!-- The node tool: names to add, the canvas, what this browser keeps,
+             and the motion. It stays open; the line at the foot says what the
+             last press did (node-panel.ts). -->
+        <div id="node-panel" data-role="node-panel">
+            <section class="card" data-group="names">
+                <header class="card-header">names</header>
+                <div class="card-body" id="node-input-container" data-role="node-input">
+                    <input id="nodes-input"
+                           aria-label="Names for new nodes, or nodes as JSON"
+                           placeholder="seed sprout root"
+                           autocomplete="off" autocapitalize="off" spellcheck="false"/>
+                    <div class="action-group" data-group="node-input">
+                        <button class="add" data-action="add-nodes">add</button>
+                        <button class="replace" data-action="replace-nodes">replace</button>
+                    </div>
+                </div>
+            </section>
+            <div id="controls" data-role="simulation-controls">
+                <section class="card" data-group="canvas">
+                    <header class="card-header">canvas</header>
+                    <div class="card-body action-group">
+                        <button class="generate-nodes" data-action="generate-nodes">more</button>
+                        <button class="clear-fixed-positions" data-action="free-positions">loose</button>
+                        <button class="clear-saved-nodes" data-action="clear-nodes">empty</button>
+                    </div>
+                </section>
+                <section class="card" data-group="data">
+                    <header class="card-header">this browser</header>
+                    <div class="card-body action-group" data-group="data-actions">
+                        <button class="save-nodes" data-action="save-nodes">save</button>
+                        <button class="read-nodes" data-action="read-nodes">load</button>
+                    </div>
+                </section>
+                <section class="card" data-group="simulation">
+                    <header class="card-header">motion <span class="node-panel-state" data-role="motion-state"></span></header>
+                    <div class="card-body action-group" data-group="simulation-actions">
+                        <button class="play" data-action="sim-play" aria-pressed="true">pause</button>
+                        <button class="tick" data-action="sim-tick">step</button>
+                        <button class="reinit" data-action="sim-reinit">restart</button>
+                    </div>
+                </section>
             </div>
-        </div>
-        <div id="controls" data-role="simulation-controls">
-            <section data-group="data">
-                <label>
-                    <span>node store</span>
-                </label>
-                <div class="action-group" data-group="data-actions">
-                    <button class="save-nodes" data-action="save-nodes">save</button>
-                    <button class="generate-nodes" data-action="generate-nodes">generate</button>
-                    <button class="clear-saved-nodes" data-action="clear-nodes">clear</button>
-                    <button class="read-nodes" data-action="read-nodes">read</button>
-                    <button class="clear-fixed-positions" data-action="free-positions">free</button>
-                </div>
-            </section>
-            <section data-group="simulation">
-                <label>
-                    <span>simulation</span>
-                </label>
-                <div class="action-group" data-group="simulation-actions">
-                    <button class="stop" data-action="sim-stop">stop</button>
-                    <button class="tick" data-action="sim-tick">tick</button>
-                    <button class="start" data-action="sim-start">start</button>
-                    <button class="reinit" data-action="sim-reinit">reinit</button>
-                </div>
-            </section>
+            <output data-role="node-said" aria-live="polite"></output>
         </div>
     </section>
     <section id="color-mode-container" data-mode-panel="color">
