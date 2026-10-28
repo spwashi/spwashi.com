@@ -13,9 +13,9 @@
     <meta itemprop="description" content="7D force simulation with Spw command language">
     <link rel="icon" href="/v0.0.1/favicon/16.png">
     <link rel="manifest" href="/manifest.json">
-  <script type="module" crossorigin src="/assets/main-ayKBuvw5.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/index-lSGRBJ1a.js">
-  <link rel="stylesheet" crossorigin href="/assets/index-A1AreFXu.css">
+  <script type="module" crossorigin src="/assets/main-WobsIdag.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/index-uSS_7k5P.js">
+  <link rel="stylesheet" crossorigin href="/assets/index-VV3KTSkL.css">
   <link rel="stylesheet" crossorigin href="/assets/main-_qtzgt2L.css">
 </head>
 <body data-mode="nothing"
@@ -155,41 +155,49 @@
              and the motion. It stays open; the line at the foot says what the
              last press did (node-panel.ts). -->
         <div id="node-panel" data-role="node-panel">
-            <section class="card" data-group="names">
-                <header class="card-header">names</header>
-                <div class="card-body" id="node-input-container" data-role="node-input">
-                    <input id="nodes-input"
-                           aria-label="Names for new nodes, or nodes as JSON"
-                           placeholder="seed sprout root"
-                           autocomplete="off" autocapitalize="off" spellcheck="false"/>
-                    <div class="action-group" data-group="node-input">
-                        <button class="add" data-action="add-nodes">add</button>
-                        <button class="replace" data-action="replace-nodes">replace</button>
-                    </div>
-                </div>
-            </section>
             <div id="controls" data-role="simulation-controls">
-                <section class="card" data-group="canvas">
-                    <header class="card-header">canvas</header>
-                    <div class="card-body action-group">
-                        <button class="generate-nodes" data-action="generate-nodes">more</button>
-                        <button class="clear-fixed-positions" data-action="free-positions">loose</button>
-                        <button class="clear-saved-nodes" data-action="clear-nodes">empty</button>
+                <!-- By intent, top to bottom: make nodes, keep them, how the
+                     canvas feels, and its motion by the thumb. -->
+                <section class="card" data-group="make">
+                    <header class="card-header">make</header>
+                    <div class="card-body" id="node-input-container" data-role="node-input">
+                        <input id="nodes-input"
+                               aria-label="Names for new nodes, or nodes as JSON"
+                               placeholder="seed sprout root"
+                               autocomplete="off" autocapitalize="off" spellcheck="false"/>
+                        <div class="action-group" data-group="node-input">
+                            <button class="add" data-action="add-nodes">add</button>
+                            <button class="replace" data-action="replace-nodes">replace</button>
+                            <button class="generate-nodes" data-action="generate-nodes">more</button>
+                        </div>
                     </div>
                 </section>
                 <section class="card" data-group="data">
-                    <header class="card-header">this browser <span class="node-panel-state" data-role="save-state"></span></header>
+                    <header class="card-header">keep <span class="node-panel-state" data-role="save-state"></span></header>
                     <div class="card-body action-group" data-group="data-actions">
                         <button class="save-nodes" data-action="save-nodes">save</button>
                         <button class="read-nodes" data-action="read-nodes">load</button>
+                        <button class="clear-saved-nodes" data-action="clear-nodes">empty</button>
+                    </div>
+                </section>
+                <section class="card" data-group="feel">
+                    <header class="card-header">feel <button type="button" class="node-feel-toggle" aria-pressed="false" title="Show each feel as the parameter it sets">parameters</button></header>
+                    <!-- Each row a choice of feels; the physics behind them is
+                         in physics-params.ts. -->
+                    <div class="card-body node-feels">
+                        <div class="node-feel" data-param="repel"><span>spacing</span><div class="action-group"></div></div>
+                        <div class="node-feel" data-param="drag"><span>flow</span><div class="action-group"></div></div>
+                        <div class="node-feel" data-param="centering"><span>gather</span><div class="action-group"></div></div>
+                        <div class="node-feel" data-param="link-pull"><span>ties</span><div class="action-group"></div></div>
                     </div>
                 </section>
                 <section class="card" data-group="simulation">
-                    <header class="card-header">motion <span class="node-panel-state" data-role="motion-state"></span></header>
+                    <header class="card-header">move <span class="node-panel-state" data-role="motion-state"></span></header>
                     <div class="card-body action-group" data-group="simulation-actions">
                         <button class="play" data-action="sim-play" aria-pressed="true">pause</button>
                         <button class="tick" data-action="sim-tick">step</button>
                         <button class="reinit" data-action="sim-reinit">restart</button>
+                        <button class="clear-fixed-positions" data-action="free-positions">loose</button>
                     </div>
                 </section>
             </div>
