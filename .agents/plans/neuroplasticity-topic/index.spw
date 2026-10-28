@@ -1,0 +1,78 @@
+# Review 2026-10-28 — new: a neuroplasticity topic that follows from factshift's turn toward learning; planned, nothing built; claims wait on their sources.
+# Plan Index — neuroplasticity-topic
+#
+# factshift.com set out to improve on Wikipedia and found it first had to learn how people
+# learn. This topic is that question asked of the learner, with a canvas to push.
+
+#>plan_neuroplasticity_topic_index
+#:index #!plan
+#:operation #!prime
+#:layer #!semantics
+
+operation = "prime"
+fixity = "proposed"
+
+@plan: ~"./PLAN.md"
+@factshift_center: ~"../factshift-center/index.spw"
+@topic_building_blocks: ~"../topic-building-blocks/index.spw"
+
+intent: .{
+ goal = `Status 2026-10-28. Planned, nothing built. A topic on neuroplasticity tied to how Spw grew from factshift, with visuals and interactives on factshift.center's canvas. The page waits on where it lives; every claim waits on its source.`
+ owner = `neuroplasticity-topic`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation"
+ semantic_layer = "semantics"
+ collaboration_phase = "proposing"
+ memory_tier = "warm"
+ bucket = "active_backlog"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Understanding changes because connections change with use. A model a reader can push makes that felt, as long as it says where it stops being like a brain.`
+ concepts = #[
+  `co-activation`,
+  `pruning`,
+  `warm-window`,
+  `reconsolidation`,
+  `perspective`,
+  `model-limit`,
+ ][reg=set]
+}[reg=facet]
+
+#>wonder_neuroplasticity_home
+?["Where does the topic live: a new area on the shelf, or under andragogy, pedagogy or biochemistry?"]{
+  #:depth #!structural ~#lens(placement)
+  ~#with: @plan @topic_building_blocks
+  ~#tension: "Plasticity is biology, and its reason for being here is learning. The shelf has seventeen areas and adds one only for a subject with its own path."
+  ~#expect: "Under andragogy, since its reason here is adults learning, with a portal from biochemistry."
+  ~#probe(read)
+  !probe{ "read the andragogy and biochemistry hubs and say which one a reader arriving with a question about relearning would open" }
+  $%[home.new_area, home.andragogy, home.pedagogy, home.biochemistry]
+}
+
+#>wonder_neuroplasticity_first_interactive
+?["Which interactive comes first, and how far should each go before its limit is said?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#with: @plan @factshift_center
+  ~#tension: "Two learners, one claim needs nothing new. Fire together needs a tie that strengthens with co-activation and fades without it."
+  ~#expect: "Two learners first, as a link into the canvas; then the per-link tie in factshift-center; then Fire together."
+  ~#probe(read)
+  !probe{ "lay out two perspective lines on factshift.center and say what the canvas shows about where they stop sharing ground" }
+  $%[first.two_learners, first.fire_together, first.warm_windows]
+}
+
+#>wonder_neuroplasticity_depth
+?["How deep does the science go: a field guide with sources, or a short page that points to them?"]{
+  #:depth #!semantic ~#lens(register)
+  ~#with: @plan
+  ~#tension: "The site writes to someone in the middle of learning something; the claims need sources either way, and one of them (adult neurogenesis) is contested."
+  ~#expect: "Short, with each idea's source and limit in reach, and the contested one marked open."
+  ~#probe(read)
+  !probe{ "check the sources in the plan's table and say which claims hold as written" }
+  $%[depth.field_guide, depth.short_page]
+}
