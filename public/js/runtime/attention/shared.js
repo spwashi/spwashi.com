@@ -15,16 +15,19 @@ export const NESTED_HOOK_SECTION_SELECTOR = [
 
 /* Some long-form routes group their authored regions under one structural
    cluster so the page shell can pack them as a unit. The cluster is not the
-   navigable address; its direct section/article/aside children are. */
-export const CLUSTER_SECTION_SELECTOR = [
-  'main > [data-spw-cluster] > section[id]',
-  'main > [data-spw-cluster] > section[data-spw-kind]',
-  'main > [data-spw-cluster] > aside[id]',
-  'main > [data-spw-cluster] > aside[data-spw-kind]',
-  'main > [data-spw-cluster] > article[id]',
-  'main > [data-spw-cluster] > article[data-spw-kind]',
-  'main > [data-spw-cluster] > [data-spw-svg-host]',
-].join(', ');
+   navigable address; its direct section/article/aside children are. Hubs
+   (/design/, /now/, /play/, /services/, /cards/, /topics/software/) wrap
+   their clusters in one bare main > article, so both depths are read. */
+const CLUSTER_HOSTS = ['main > [data-spw-cluster]', 'main > article > [data-spw-cluster]'];
+export const CLUSTER_SECTION_SELECTOR = CLUSTER_HOSTS.flatMap((host) => [
+  `${host} > section[id]`,
+  `${host} > section[data-spw-kind]`,
+  `${host} > aside[id]`,
+  `${host} > aside[data-spw-kind]`,
+  `${host} > article[id]`,
+  `${host} > article[data-spw-kind]`,
+  `${host} > [data-spw-svg-host]`,
+]).join(', ');
 
 export const OPERATOR_SECTION_SELECTOR = [
   'main > section[id]',

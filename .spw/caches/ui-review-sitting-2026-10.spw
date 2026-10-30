@@ -270,4 +270,5 @@ expression = sitting[review]{place.question.options.unblocks}<browser>
 
 ^"stream"{
  >>[2026-10-27 13:32] probe — wonder_ui_review_sitting_order: four items name what they unblock (the drawer-swipe verb rule, the lens seat, the bundle order statement, the floating controls). The earlier probe counted its own line as a fifth; it now counts only item slots. Run before any ~#expect was on record.
+ >>[2026-10-30 17:55] land — three ungated rows are done: code_block_controls (spw-source.css takes --touch-target-min on coarse pointers), access.skip_links (the last five pages; 209 of 209 carry one), and home_rail_ids, which needed no ids: home's rail already indexes its 17 sections. The gap was six hubs whose clusters sit in a bare main > article, out of the rail's reach; both rail selectors now read that depth (chrome-navigation-wonder wip).
 }
