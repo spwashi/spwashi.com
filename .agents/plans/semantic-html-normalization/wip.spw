@@ -118,6 +118,7 @@ fixity = "tending"
  >>[2026-04-16 14:25] validate — `git diff --check`, `node --check public/js/site-settings.js`, `node --check public/js/spw-page-metadata.js`, and audits for skip links plus `main[aria-labelledby]` all passed.
  >>[2026-10-10 21:06] verify — the sweep holds (207 route pages carry `main`, 202 the skip link). The commit series and rebase notes above this entry are done or never ran, and were cut. Scripts-off sensors landed in 8d1ed950, 768c5c09 and 73f200f2; the open slice is the JS-on/off landmark, heading and link diff (PLAN.md, JS-off parity).
  >>[2026-10-25 17:42] verify — read against the tree for the UI review sitting: the catalog holds 146 module ids, not 136; the scripts-off switch is applyScriptExecution in component-snapshots.mjs:423, not the headless harness; 208 route pages carry main and 203 the skip link. The diff's browser read now names the demo routes, and PLAN.md gains an Access section from the sitting's ^"access" frame, with the code-block controls (spw-source.css:114, :142) as a small ungated slice beside the diff.
+ >>[2026-10-30 17:42] implement — Access, two ungated rows: Edit and Copy on Spw code blocks take --touch-target-min (both axes) on coarse pointers, still overlaying the corner so the block never moves; the four /design/experiments/ labs (balance, menu, resonance, spellcraft) and /topics/knowledge-bases/markdown/ gain the skip link, and the labs' bare main becomes main#main-content. All 209 route pages now carry both.
 }
 
 ^["open"]{

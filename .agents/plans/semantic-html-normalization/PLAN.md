@@ -1,6 +1,6 @@
 # Plan: semantic-html-normalization
 
-**Status 2026-10-25.** The landmark sweep holds: all 208 route pages carry `<main>`, and 203 carry the skip link (the gaps are four labs under `/design/experiments/` and `/topics/knowledge-bases/markdown/`). Two scripts-off sensors landed since 09-27: `audit:page-structure` names buttons only a script answers (8d1ed950, 768c5c09), and `component-snapshots.mjs` takes scripts-off stills (73f200f2). Next slice: the JS-on/off landmark, heading and link diff below. It reports only until its counts are read once in a browser on the demo routes. Beside it, ungated and small: the code-block controls take `--touch-target-min` (Access, below). The access report comes after the diff.
+**Status 2026-10-30.** The landmark sweep holds: all 209 route pages carry `<main>` and the skip link (the last five, four labs under `/design/experiments/` and `/topics/knowledge-bases/markdown/`, landed 2026-10-30). Two scripts-off sensors landed since 09-27: `audit:page-structure` names buttons only a script answers (8d1ed950, 768c5c09), and `component-snapshots.mjs` takes scripts-off stills (73f200f2). Next slice: the JS-on/off landmark, heading and link diff below. It reports only until its counts are read once in a browser on the demo routes. The code-block controls took `--touch-target-min` on 2026-10-30 (Access, below). The access report comes after the diff.
 
 **Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — ungated.scripts_off_diff, ungated.code_block_controls, access.
 
@@ -72,7 +72,7 @@ Next slice, narrowed 2026-10-10. Controls already have a sensor: `audit:page-str
 The [review sitting](../../../.spw/caches/ui-review-sitting-2026-10.spw)'s `^"access"` frame holds gaps no plan owns. This plan takes them as proposed owner.
 
 - Contrast and targets: no sensor checks WCAG AA contrast or the 44px ground-control target. The dark operator colors in 0206fb41 were checked by hand. One report from computed styles: text contrast per route at pocket, light and dark, and coarse-pointer hit boxes under 44px outside `[data-spw-floating-chrome]`.
-- Code-block controls: Edit and Copy on Spw code blocks use `--touch-target-compact` on coarse pointers and `2rem` otherwise (`public/css/components/spw-source.css:114`, `:142`). They are content controls, so they take `--touch-target-min` (CLAUDE.md:8). Small and ungated; it lands beside the diff.
+- Code-block controls: landed 2026-10-30. Edit and Copy on Spw code blocks are content controls, so on coarse pointers they take `--touch-target-min` in both axes (`public/css/components/spw-source.css`), not `--touch-target-compact`; fine pointers keep `2rem`.
 - Script-only buttons: 223 on 24 pages (`/design/` 40, `/services/care/` 28, `/settings/` 21). Each needs a scripts-off reading that does not promise an action.
 - Math labs: the inputs answer nothing with scripts off. The lab review belongs to [modular-experience-slices](../modular-experience-slices/PLAN.md).
-- Skip links: the five gaps in the Status line, unscheduled.
+- Skip links: the five gaps closed 2026-10-30.
