@@ -1,8 +1,8 @@
-# Review 2026-10-27 — new: factshift.center as the ergonomic center of factshift.com's concepts; a held line lays out as its anatomy; the phone pass waits on the creator's look.
+# Review 2026-10-30 — factshift.com is the prototype; factshift.center examines which concepts a physics can represent. Hesitance to AI is understood and, for the engineer, not minded. Agentic development adds cohesion and performance. Next canvas cut: the workbench's reading.
 # Plan Index — factshift.center
 #
-# factshift.com is the ground readers know; factshift.center develops its concepts against
-# the workbench. This file carries the questions the canvas raises about the language.
+# factshift.com is the prototype. factshift.center examines which concepts a particular
+# set of physics can represent. This file carries the questions that examination raises.
 
 #>plan_factshift_center_index
 #:index #!plan
@@ -13,7 +13,7 @@ operation = "prime"
 fixity = "tending"
 
 intent: .{
- goal = `Status 2026-10-27. factshift.center serves a snapshot of the factshift app, refreshed today to the app's latest local commit. A line of Spw held in the address (?spw=) lays out on the canvas as its anatomy. The app is its own repository, gitignored here, and its commits from this sitting are local and unpushed. Next slice: SVG and UI semantics. Deploy is the creator's.`
+ goal = `Status 2026-10-30. factshift.com is the prototype. factshift.center examines which concepts a particular set of physics can represent, in public at about/domains/factshift.center/. The creator understands hesitance to AI and, as an engineer, can't really mind it. Agentic development adds cohesion and performance. The snapshot is app 99c10e6. Next canvas cut: carry the workbench reader and draw its outline. Deploy is the creator's.`
  owner = `factshift-center`
  kind = `plan`
  bucket = `active_backlog`
@@ -29,21 +29,22 @@ intent: .{
 }[reg=facet]
 
 ^"conceptual_model"{
- thesis = `A line of Spw has an anatomy, and a canvas can lay it out: the word framed by its mode, the body as a region that holds its parts, scene and concept in places of their own. Where the layout has nowhere to put something, the language has a gap worth naming.`
+ thesis = `factshift.com is the prototype. factshift.center examines which concepts a particular set of physics can represent. A line is the specimen: the body holds its parts, a ( ) applies to the word with its body (its part of speech open), a concept refers to the whole reading, and a join is the pull between two claims. Agentic development is how that examination gains cohesion and performance.`
  concepts = #[
-  `ground-and-center`,
+  `prototype`,
+  `examination`,
   `held-line`,
-  `line-anatomy`,
-  `syntax-region`,
-  `resonance`,
+  `physics`,
+  `cohesion`,
   `snapshot`,
  ][reg=set]
  surfaces = #[
+  `about/domains/factshift.center/index.html`,
+  `about/domains/factshift.com/index.html`,
   `workers/factshift-center/version.json`,
   `workers/factshift-center/assets/index.html`,
   `workers/factshift-center/app/src/js/modes/spw/line-anatomy.ts`,
   `workers/factshift-center/app/src/js/modes/spw/workbench-runtime.ts`,
-  `workers/factshift-center/app/src/ts/simulation/anchors.ts`,
  ][reg=set]
  fixity_tier = `tending`
 }[reg=facet]
@@ -79,7 +80,7 @@ dispatch: .{
 ^"owner_claim"{
  claim_id = "plan-factshift_center-001"
  layer = "pragmatic"
- hypothesis = `A held line of Spw lays out on factshift.center as its anatomy, on factshift.com's ground, and the snapshot here is the app's latest local build.`
+ hypothesis = `factshift.com is the prototype and factshift.center is the examination of which concepts a particular set of physics can represent. A held line still lays out on the snapshot. Agentic development adds cohesion and performance. Hesitance to AI is understood and, for the engineer, not minded.`
  spec_ref = ~"./PLAN.md"
  impl_ref = @snapshot
  probe_ref = `npm run check:workers, which runs workers/factshift-center/test/snapshot.test.mjs.`
@@ -232,4 +233,15 @@ invariants: #[
   ~#probe(read)
   !probe{ "on a held line with a dotted body, pinch the word and the first part, then say for each part how much it should have grown and why" }
   $%[sizes.along_arcs, sizes.by_layer, sizes.per_node]
+}
+
+#>wonder_factshift_examination
+?["Which concepts can this physics represent, once agentic development is how the prototype gains cohesion and performance?"]{
+  #:depth #!pragmatics ~#lens(projection)
+  ~#with: @plan
+  ~#asked: "the creator, 2026-10-30: factshift.com is the prototype; factshift.center examines which concepts a particular set of physics can represent. The differential is relevant because of hesitance to AI. The creator understands that hesitance and, as an engineer, can't really mind it. Center extends the prototype by agentic development that adds depth to cohesion and performance."
+  ~#expect: "The public page says that difference in the creator's voice. The canvas keeps drawing the line. The next cut carries the workbench's reading, so the physics are what the parse already holds."
+  ~#probe(read)
+  !probe{ "read /about/domains/factshift.center/ beside the prototype page and say whether a concept the physics cannot hold is still visible as a gap in the line" }
+  $%[examination.physics, examination.cohesion, examination.performance]
 }

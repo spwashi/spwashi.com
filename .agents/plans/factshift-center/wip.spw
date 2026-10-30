@@ -48,6 +48,7 @@ fixity = "tending"
  >>[2026-10-29 20:32] implement — committed in the app as 6b85a42, toward factshift.center as a place to explore the concepts a story meets. Creator decisions: a story is an ordered sequence of canvas, runtime and simulation states (planned next: keep a state, step through states); a node's card may use the runtime's terms; entering a node navigates to a page with the node as its frame, and what is added inside is written into the parent line when saved; < > is more abstract than the word; a@b means a is the context regarding b; context flows left to right and from out to in; a line reads top to bottom to the concept it primes, and a concept written first leads the reading (<person>home, <book>home); words a line is read in (with, at, priming) do not title shared regions; empty slots show only when filled or potentiated. Built: the runtime card (parse, normalize, interpret, register), enter with ?frame= and ?in=, save write-back, the top-to-bottom layout with leading slots kept in place, and slots shown while a drag could fill them. The cards surfaced runtime gaps, recorded here rather than in the workbench: <person>'s Capsule normalizes with no arguments, so person drops out; a line with @ reads as Prose and its text values come back doubled (??, [[transistors work.how]).
  >>[2026-10-30 09:38] implement — committed in the app as 2fb7184. Creator decisions: ( ) applies to the word with its body, not the word ("(atlas) isn't modifying home, it's modifying a home with { ... }"); its part of speech is open (a scope where the word points to its body of statements, or an argument or payload), so its region is titled ( ) alone; { } is titled body; containers are smaller, so several concepts fit, and resizable. Built: a ( ) tied by an applies line to an outline of the word with its body; slots stacked in written order; containers resized from a corner and moved, kept per line's word in this browser, two taps on the corner put one back; a line laid out in a column at most 620 by 640; a line typed into the title held in place; the title's editor and hash kept through held lines (a held line had erased the editor). Wonder carried forward: the canvas as a way into the intuition behind lambda calculus (scope as binding, ( ) as application). Open: whether < > is primed by the whole reading, so tied to an outline of everything above it instead of the word; sizes kept in canvas pixels, not relative to the column.
  >>[2026-10-30 12:09] implement — committed in the app as 99c10e6. Creator decisions: the concept is not labeled, and <person> refers to the whole reading of its line. Built: a < > tied by a long-dashed refers line to an outline of the word, its body and its ( ), nested outside the outline a ( ) applies to; its region untitled, its card showing < >. Settled from the last entry: the concept's tie. Still open: sizes kept in canvas pixels.
+ >>[2026-10-30 18:10] align — the public difference. factshift.com is the prototype. factshift.center examines which concepts a particular set of physics can represent. The page is about/domains/factshift.center/. The creator understands the hesitance to AI and, as an engineer, can't really mind it. Center extends the prototype by agentic development, adding depth to cohesion and performance. Next on the canvas: carry the dated reader (site mount 850077ab; app submodule fffab72) and draw its outline. line-anatomy stays until that projection says the line back.
 }
 
 ^"open"{
@@ -57,9 +58,9 @@ fixity = "tending"
 }
 
 ^"cache"{
- ~#status: "implementing"
- ~#next_commit: "links by relation, one home a node, placing and throwing, names from a word, the title for screenshots, windows toward the center, the lens as a nub, and the { } tie"
- ~#files_hot: "workers/factshift-center/app/src/js/ui/focal-point.ts, workers/factshift-center/app/src/js/ui/hotkey-buttons.ts, workers/factshift-center/app/src/js/modes/spw/line-reading.ts, workers/factshift-center/app/src/stylesheets/modes/modes.scss"
- ~#gate: "the choices in wonder_factshift_gestures, a name for the primary menu, and the feel of a throw"
- ~#last_stream: "2026-10-27"
+ ~#status: "aligning"
+ ~#next_commit: "the public difference, then a dated workbench reader whose outline the canvas draws"
+ ~#files_hot: "about/domains/factshift.center/index.html, .agents/plans/factshift-center/PLAN.md, workers/factshift-center/app/src/js/modes/spw/line-anatomy.ts"
+ ~#gate: "the projection says the line back before line-anatomy is retired"
+ ~#last_stream: "2026-10-30"
 }
