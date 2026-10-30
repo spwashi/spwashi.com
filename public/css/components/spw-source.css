@@ -133,13 +133,18 @@
     outline-offset: 2px;
   }
 
+  /* Edit and Copy are content controls, not pocket chrome, so a thumb gets the ground-control
+     target (CLAUDE.md), not --touch-target-compact. They still overlay the corner, so the block
+     never moves. */
   @media (pointer: coarse) {
     :where(.spw-code-actions) {
       opacity: 1;
     }
 
     :where(.spw-code-actions) > :where(a, button) {
-      min-height: var(--touch-target-compact, 2.25rem);
+      justify-content: center;
+      min-block-size: var(--touch-target-min, 2.75rem);
+      min-inline-size: var(--touch-target-min, 2.75rem);
     }
   }
 
