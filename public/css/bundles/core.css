@@ -19441,7 +19441,11 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
   align-items: center;
   justify-content: flex-start;
   gap: var(--spw-list-charge-gap, 0.38rem);
-  width: max-content;
+  /* fit-content, not max-content: in a grid's auto track the 100% cap cannot
+     resolve while the track is sized, so max-content widened the whole frame
+     (/play/'s opening ran 16px into its right padding at pocket). fit-content
+     still shrink-wraps, and wraps the pills when the row does not fit. */
+  width: fit-content;
   max-inline-size: 100%;
   min-width: 0;
   margin: var(--component-gap-tight) 0 0;
