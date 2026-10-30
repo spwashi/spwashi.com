@@ -1,6 +1,6 @@
 # factshift.center
 
-**Status 2026-10-27.** factshift.center serves a snapshot of the factshift app. The snapshot was refreshed today to the app's latest local commit, recorded in `workers/factshift-center/version.json`. A line of Spw held in the address (`?spw=`) now lays out on the canvas as its anatomy. The app is its own repository at `workers/factshift-center/app`, gitignored here, and the thirteen commits from this sitting are local and unpushed. The last four came from the creator's live notes. They cover a phone pass, the tool as a handle, a lens and a window, a gesture grammar, a verb ring on nodes, editing the held line from the canvas, and most of the SVG semantics. In the working tree: links by relation, one home a node, placing and throwing, and names from a word. Next: spells mapped over a set (`wonder_factshift_spells`). Deploy is the creator's (Wrangler).
+**Status 2026-10-30.** The snapshot in `workers/factshift-center/version.json` is the app at `99c10e6`, carried on the site as `76c70f77`. factshift.com is the prototype, settled October 2024. factshift.center examines which concepts a particular set of physics can represent. That difference is public at `about/domains/factshift.center/`. The creator understands the hesitance to engage with AI and, as an engineer, can't really mind it. Agentic development is how the examination adds cohesion and performance. Next on the canvas: one reading from the workbench, in place of the app's second slot reader. Deploy remains the creator's (Wrangler).
 
 **Related:** [spw-quest](../spw-quest/PLAN.md) (its pivot and construct cards can open a line here) · [spw-inquiry-loop](../spw-inquiry-loop/PLAN.md) (parser releases, the capability ledger) · [brace-semantics](../brace-semantics/PLAN.md) (`[ ]` as a frame) · [spw-metaphysical-language](../spw-metaphysical-language/PLAN.md) (depth passes) · [ecosystem-architecture](../ecosystem-architecture/PLAN.md) (peers).
 
@@ -24,18 +24,8 @@ spw.quest      assets/parser/2026.10.13, v0.3.0 @ 0eb1d1c, nine commits behind t
 
 - **Safety.** Tab walks nodes only from the canvas. Ctrl and Cmd never fire from text fields, so copy, paste and zoom stay the browser's. Clearing the node cache and resetting the interface now ask first. The socket opens only from its own panel, and the node save sends only on an open socket. The link tool opens http(s) addresses with noopener. htmx is removed.
 - **Ground.** factshift.center now shares factshift.com's theme and layout. They measure identically at pocket width. The center's own controls sit behind the main menu. The square focal mark and `[...]` are back, and the menu's "open" subheading is gone.
-- **Spw as the canvas.** `?spw=` holds a line of up to 400 characters. The line becomes the title and the heading, waits in a corner box (`#held-expressions`) where a tap reopens it in Spw mode, and runs through the workbench. Its anatomy is laid out as:
-  - the word, framed by its mode as `[mode]`;
-  - the body's parts on a ring inside a `{ } definition` region;
-  - scene `( )` and concept `< >` in regions of their own;
-  - nested bodies as regions within regions;
-  - recurring words drawn in resonance.
-
-  An anchor force keeps each part in its place.
-- **Three runtime bugs** surfaced on the way:
-  - Ids were rewritten from identity, so the projection's stage links failed.
-  - Normalize overwrote projected fields on every reinit.
-  - Regions were never drawn.
+- **Spw as the canvas.** `?spw=` holds a line of up to 400 characters. The line becomes the title and the heading, waits in a corner box (`#held-expressions`) where a tap reopens it in Spw mode, and runs through the workbench. Its anatomy was laid out as the word framed by `[mode]`, the body's parts in a `{ }` region, `( )` and `< >` in regions of their own, nested bodies as regions within regions, and recurring words in resonance, each part anchored in its place.
+- **Three runtime bugs** surfaced on the way: ids were rewritten from identity, so the projection's stage links failed; normalize overwrote projected fields on every reinit; regions were never drawn.
 
 ```text
 24d2a48 0756029 ee0c00a   menu faces, focal mark, safety
@@ -122,7 +112,7 @@ The tool is a handle, a lens and a window (`workers/factshift-center/app/src/js/
 | tap a link | | | | what it is and does (a card); a drawn link can be unlinked there |
 | double-tap | | | rename in place; a node of the held line is renamed in the line | |
 | drag | carry from the first 3px (grab area 12px past the square) | (a swipe past 10px; direction locks at 36px) | let go slowly, it stays where it was put (a light ring); thrown, it goes home, the line to its home lit while a release would throw; near another node (radius + 16px), link to it, the selection with it, and spring back; near a linked node, unlink; into a container of its expression, become its member; along an ordered body, take the slot the drop falls in | |
-| hold | grip | grip, then drag to carry | the verb ring and a faint line to its home, named; past grow or shrink, more the farther, said on the button; the name at the ring's center primes Spw with it; with a selection, ← links it here | the canvas ring: [ ] mode ↑, node ↗, < > concept →, { } definition ↓, ( ) scene ←; a brace adds that slot to the held line with a · to name |
+| hold | grip | grip, then drag to carry | the verb ring and a faint line to its home, named; past grow or shrink, more the farther, said on the button; the name at the ring's center primes Spw with it; with a selection, ← links it here | the canvas ring: [ ] mode ↑, node ↗, { } body ↘, < > concept ↓, ( ) ↙; a brace adds that slot to the held line with a · to name |
 | pinch | | zoom the camera (the first finger on the lens; a trackpad's pinch over it too) | resize it (the selection with it) | resize every node, as on factshift.com (a trackpad's pinch too); scrolling pans |
 | ← | | the mode column, sliding to a mode | | |
 | ↓ | | the primary menu (named for the selection when there is one) | | |
@@ -134,12 +124,11 @@ The tool is a handle, a lens and a window (`workers/factshift-center/app/src/js/
 - **Names.** A node with no name of its own takes a word and the first count from 0 no node holds: node:0, node:1 (`workers/factshift-center/app/src/js/simulation/nodes/data/names.ts`). The [...] menu's names row sets the word for this browser, `?names=seed` for one visit, and `letters` gives a, b, c. A node swiped up arrives with its name selected; a placeholder slot is ·. A batch from "more nodes" arrives selected, so the selection's verbs set it up at once.
 - **One home a node** (`workers/factshift-center/app/src/ts/simulation/homes.ts`). Each node is drawn to one home, for one reason: placed (where a hand let it go), slot (its anchor in the held line), region (the innermost region with a pull it is in), or stage (the middle). Centering pulls only stage nodes, a region only its loose nodes.
 - **Heat and feel.** The node tool's feel card sets the physics in words (spacing, flow, gather, ties; a toggle shows each as its parameter), written into the address. Only the first layout runs at full heat. A later setup (a link, a rename, a resize, a line edit) warms the simulation to a steady low heat until the line's parts are still or home, so what changed eases in and the rest does not jump; a throw stays warmer until the node arrives.
-- **Links by relation** (`workers/factshift-center/app/src/js/simulation/edges/relations.ts`). Each relation has its own length, pull, width and dash: stages, goes, charges, bond, same word (resonance), drawn. A word is tied by one line to its { } region (defines), and the parts sit in it by their slots. Dots read as object access (a.b: b on a, accesses); ; and ~> read as order (follows, dashed). A link is never shorter than its ends' radii and a gap, so a grown node pushes out what it is linked to.
+- **Links by relation** (`workers/factshift-center/app/src/js/simulation/edges/relations.ts`). Each relation has its own length, pull, width and dash: charges, bond, same word (resonance), drawn. A word is tied by one line to its { } body (defines), a ( ) to an outline of the word with its body (applies), and a < > to an outline of the whole reading (refers); the parts sit in their regions by their slots. Dots read as object access (a.b: b on a, accesses); ; and ~> read as order (follows, dashed). A link is never shorter than its ends' radii and a gap, so a grown node pushes out what it is linked to.
 - **The title.** A pinch resizes and moves it, and a trackpad's pinch over it resizes it, so a long title can clear the hash for a screenshot. Its left edge, dragged out or in, snaps to one line or to wrapping. Two taps on the square behind it put it back; this browser keeps the layout (`workers/factshift-center/app/src/js/ui/title-layout.ts`).
 - **Desktop.** An open window's edges are grab bands; a trackpad's pinch zooms the stage and its scroll pans.
 - **Spw.** Run has its row; clear lives in the prompt's corner while there is text; the keyboard's Enter key says "enter", because Enter makes a new line and run is the submit. The window is a fixed size that fits the stage with a margin each side.
 - **Taps reach the node meant.** A node's picture and label take no touches; only its circle does.
-
 - **One gesture per touch.** A swipe's direction locks once it crosses its line, so a path that drifts diagonally keeps the gesture it began. It unlocks only by coming back near where it started, which takes it back.
 - **Guided.** A swipe that would land lights the handle's edge on that side, and the column lights the mode under or beside the finger. A swipe toward nothing shows the card. The handle is above everything else on the page.
 - **Taught on asking.** A hold shows the card, and so does the menu's "gestures" row, which counts what this browser has found. With a keyboard, the context-menu key or Shift+F10 is the hold. Nothing teaches itself uninvited.
@@ -155,6 +144,14 @@ Built in the app (`workers/factshift-center/app/src/js/ui/gestures.ts`) and comm
 4. `npm run check:workers`, then commit in this repository when the creator asks.
 
 Nothing scripts these steps yet. A carry script like spw.quest's is a candidate once the steps run a third time.
+
+## The difference (2026-10-30)
+
+factshift.com is the prototype. factshift.center is the examination of which concepts a particular set of physics can represent. The public page is [about/domains/factshift.center/](../../../about/domains/factshift.center/index.html).
+
+The differential is relevant because people hesitate to engage with AI. The creator understands that and, as an engineer, can't really mind it. The center extends the prototype by agentic development: more depth in how the concepts cohere, and in how the canvas performs.
+
+The canvas still lays a line out from `line-anatomy.ts`, a second reader beside the workbench. The app compiles workbench `fffab72` (2026-03-12). The site mounts `850077ab` (2026-10-26), whose reader build exposes `outline`, `roles`, and `formAt`. Slice 5, carrying a dated build, is the next cut. Draw that outline. A body holds its parts, a ( ) applies to the word with its body (its part of speech open), a concept refers to the whole reading, and a join is the edge between two forms. `line-anatomy.ts` stays until that projection can say the line back. Broader geometry stays dormant in the workbench. This canvas projects the parse.
 
 ## Next slices
 
