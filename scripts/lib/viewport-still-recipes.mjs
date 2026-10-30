@@ -1063,10 +1063,11 @@ export const VIEWPORT_STILL_CHECKS = Object.freeze([
 ]);
 
 /**
- * Wander stills: art frames and the spellcraft wander set. They answer to
- * --ids, sense ink, and the seeded wander, but stay out of the default packs
- * and the nightly month roster. `image: true` marks a frame whose subject is
- * a picture, so a wander can promise one per batch. Scans stay whole.
+ * Wander stills: art frames, the spellcraft wander set, and the places the UI
+ * review sitting looks. They answer to --ids, sense ink, and the seeded
+ * wander, but stay out of the default packs and the nightly month roster.
+ * `image: true` marks a frame whose subject is a picture, so a wander can
+ * promise one per batch. Scans stay whole.
  */
 export const VIEWPORT_STILL_WANDERS = Object.freeze([
   Object.freeze({
@@ -1143,6 +1144,48 @@ export const VIEWPORT_STILL_WANDERS = Object.freeze([
       'index.html',
       'manifest.webmanifest',
       'public/css/routes/surfaces/home.css',
+    ]),
+  }),
+  /* Places the UI review sitting looks (.spw/caches/ui-review-sitting-2026-10.spw,
+     ungated.still_places): each as it stands, so a change has a before. */
+  Object.freeze({
+    id: 'services-opening',
+    label: 'Services opening',
+    specimenRoute: '/services/',
+    selector: '#services-frame',
+    layoutScenarios: Object.freeze(['pocket', 'fold', 'broadsheet']),
+    wonder: 'A business reader should meet what is offered and what it costs before the tuning controls.',
+    captureValue: 'The Services parcel look: the hero and hook ahead of #services-tuning, the three paths and pricing.',
+    sourceFiles: Object.freeze([
+      'services/index.html',
+      'public/css/routes/surfaces/services.css',
+    ]),
+  }),
+  Object.freeze({
+    id: 'settings-presets',
+    label: 'Settings presets',
+    specimenRoute: '/settings/#presets',
+    selector: '#presets',
+    layoutScenarios: Object.freeze(['pocket', 'fold']),
+    wonder: 'Trying a look should read as a guided choice that says what it changes, never a random pick.',
+    captureValue: 'The settings shelf at #presets: its aisles and first looks. Capture hides the state inspector and section handle, so timing is judged live.',
+    sourceFiles: Object.freeze([
+      'settings/index.html',
+      'public/css/routes/surfaces/settings.css',
+      'public/css/routes/surfaces/settings-shelf.css',
+    ]),
+  }),
+  Object.freeze({
+    id: 'play-opening',
+    label: 'Play opening',
+    specimenRoute: '/play/',
+    selector: '#play-surface',
+    layoutScenarios: Object.freeze(['pocket']),
+    wonder: 'The table opening holds its look under the bundle layer order; a rule that flips under ?spw-layer-order=declared shows here first.',
+    captureValue: 'The /play/ cascade rows at pocket: the hero and hook as the routes layer paints them today.',
+    sourceFiles: Object.freeze([
+      'play/index.html',
+      'public/css/routes/surfaces/play.css',
     ]),
   }),
 ]);
