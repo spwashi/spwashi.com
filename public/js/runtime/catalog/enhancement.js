@@ -17,6 +17,7 @@ const ATTENTION_SECTION_SELECTOR = [
   'main > :is(section, aside, article, [data-spw-svg-host]):nth-child(n+4)',
   'main > article > :is(section, aside, [data-spw-svg-host]):nth-child(n+4)',
   'main > [data-spw-cluster] > :is(section, aside, article, [data-spw-svg-host])',
+  'main > article > [data-spw-cluster] > :is(section, aside, article, [data-spw-svg-host])',
   'main [data-spw-kind="hook"]',
   'main [data-spw-component-kind="hook"]',
 ].join(', ');

@@ -20,6 +20,7 @@ fixity = "tending"
 ^"stream"{
  >>[2026-10-12 10:59] verify — The rail's four layers hold (7018898c, c348c0f7): section-handle.js names the region from the section id, cut at 28 characters, the path from the route and that id, and the component from the nearest card or panel heading. The Status slice, short section ids and component headings on home, the design hub and one long topic route, has not started; the last commits to section-handle.js were runtime write fixes (face97b8, f1d0f74c). The header Cauldron action still links to /play/ from /play/ itself (scripts/template.mjs:846).
  >>[2026-10-25 17:43] verify — Read against the tree for the UI review sitting: LANDMARK_CONTRACT now lives at public/js/runtime/interaction/hops.js:23, and eff5abfd and efcd875d rewrote home's h2/h3 copy but added no ids, so five home sections (four lens panels, the reason strip) still have none. Status narrows the next slice to home first, then /design/, and the plan now records the sitting's breadcrumbs proposal and owns the menu toggle (home-nav-open).
+ >>[2026-10-30 17:50] implement — Probed in headless Chrome at pocket, 12s settle: home's rail indexes all 17 sections, so the 10-25 claim of five unnamed home sections no longer holds (cfd4e2e4 gave the lens panels ids that day; the reason strip is not a rail section). The hubs were the gap: /design/, /now/, /play/, /services/, /cards/ and /topics/software/ wrap their clusters in a bare main > article, which CLUSTER_SECTION_SELECTOR (shared.js) and the catalog's mount selector (enhancement.js) did not reach, so the rail indexed 0 to 6 of their 6 to 24 sections, or only the hook. Both selectors now read clusters at either depth; indexed after: design 18, services 18, topics/software 19, play 10, cards 7, now 4, home 17 unchanged. A 9s settle can read 0 on any route, since the handle mounts at idle; /recipes/ indexes 15 at 12s.
 }
 
 ^"open"{
@@ -30,8 +31,8 @@ fixity = "tending"
 
 ^"cache"{
  ~#status: "implementing"
- ~#next_commit: "+[rail] Name home's sections and cards briefly, so each rail layer says where the reader is"
- ~#files_hot: "index.html, design/index.html, public/js/runtime/attention/section-handle.js"
+ ~#next_commit: "~[rail] Give the components a rail names a heading, so the & layer says which card the reader is on"
+ ~#files_hot: "index.html, design/index.html, public/js/runtime/attention/section-handle.js, public/js/runtime/attention/shared.js"
  ~#gate: "nothing but the copy"
- ~#last_stream: "2026-10-25"
+ ~#last_stream: "2026-10-30"
 }
