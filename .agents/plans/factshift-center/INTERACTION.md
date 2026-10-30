@@ -1,6 +1,6 @@
 # Interaction depth
 
-Companion to [PLAN.md](./PLAN.md). What the app does with a gesture, a submenu, a primed act, a device, and an annotation. `wonder_factshift_interaction` holds the open question.
+Companion to [PLAN.md](./PLAN.md); the whole canvas model is [.spw/surfaces/factshift-center.spw](../../../.spw/surfaces/factshift-center.spw). What the app does with a gesture, a submenu, a primed act, a device, and an annotation. `wonder_factshift_interaction` holds the open question.
 
 A behavior either primes a concept or actualizes it. In the tools, the primed act is `primedAction` and actualizing it is `performPrimed` (`workers/factshift-center/app/src/js/ui/tool-primed.ts`). Actualizing writes the line, or changes the simulation in a way the line or the address can say back. A behavior that cannot say what it did is outside the examination.
 
@@ -14,7 +14,7 @@ The gesture table in PLAN.md is the grammar. This is what each family does.
 | hold a tile | the card names the tap and what a swipe → would take | |
 | swipe → on a tile, or → on a tool in the tool menu | | takes what that tool has primed, and does not open it |
 | tap the lens on an open tool | puts the tool's field in focus | |
-| → with nothing stepped, tool open | | the open tool's submit |
+| → with nothing stepped, tool open | | takes what the open tool has primed, as → on its tile does |
 | hold | the card, the compass, the count of gestures found (`gesture-found.ts`) | |
 | drag a node, let go slowly | the home line, while it is carried | the node stays where it was put |
 | throw | | the node goes home |
@@ -29,7 +29,7 @@ The [...] rows follow the same split. A row shows one verb. Turning the row (a s
 
 With a tool open, the nub steps in three levels (`tool-steps.ts`): the tool menu, a tool's cards (its submenus: lore, motion, make, keep), and a card's controls.
 
-- At the tool menu, and among cards, ↑ ↓ stay in that list. → and a tap go in. ← comes back out, to the same tool or the same card.
+- At the tool menu, and among cards, ↑ ↓ stay in that list. A tap goes in; → goes into a card (on the tool menu, → takes what the tool has primed, below). ← comes back out, to the same tool or the same card.
 - Among a card's controls, ↑ ↓ move to the row above or below and carry on into the next card. ← → crawl along the row onto the next row. ← from a card's first control steps out.
 - On the tool menu, → takes what that tool has primed and does not open it. A tap opens it at its first card.
 - A stepped thing is ringed (`data-stepped`). It is not focused, so stepping onto a field does not raise a phone's keyboard. A press does.

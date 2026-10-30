@@ -1,0 +1,184 @@
+# factshift.center — surface model: the canvas that examines which concepts a set of physics can represent
+#>factshift_center_surface
+#:surface #!canvas #!tool #!line #!examination
+#:operation #!align
+#:fixity #!tending
+#:layer #!pragmatics
+
+expression = factshift[center]{ground.tool.line.node.page}<examination>
+
+summary = #[
+  `factshift.com is the prototype; factshift.center examines which concepts a particular set of physics can represent. A held line of Spw is the specimen.`,
+  `The screen keeps factshift.com's ground: a frame of work with chrome at its corners, each corner one job.`,
+  `A tool is a handle, a lens and a window. The nub steps through it in three levels: the tool menu, a tool's cards, a card's controls.`,
+  `A behavior either primes a concept (names what would happen, the line unchanged) or actualizes it (writes the line, or a change the line or the address can say back).`,
+  `A line lays out as it reads, top to bottom, its slots stacked in the order it writes them; ties say what applies to what and what refers to the whole reading.`,
+  `A node can be read (what each runtime stage made of it) and entered (a page with the node as its frame, written back into the parent line on save).`,
+  `Every primed or actualized act has one sentence, and that sentence is its accessible name. What the creator decided is kept apart from what is only a reading.`,
+][reg=set]
+
+contents = #[
+  ~"./factshift-center.spw#ground",
+  ~"./factshift-center.spw#tool",
+  ~"./factshift-center.spw#levels",
+  ~"./factshift-center.spw#primed_actualized",
+  ~"./factshift-center.spw#line",
+  ~"./factshift-center.spw#ties",
+  ~"./factshift-center.spw#node",
+  ~"./factshift-center.spw#page",
+  ~"./factshift-center.spw#runtime_card",
+  ~"./factshift-center.spw#devices",
+  ~"./factshift-center.spw#annotation",
+  ~"./factshift-center.spw#decisions",
+  ~"./factshift-center.spw#readings",
+  ~"./factshift-center.spw#gaps",
+][reg=set]
+
+^"ground"{
+  ~#note: "factshift.com's layout, read in its most accessible way: a frame of work on a ground, chrome held at the screen's corners. The center keeps the places and gives each corner one job."
+  top_right = `what this is: the title, or the held line. A pinch resizes it, its left edge snaps it to one line or to wrapping, two taps on the square behind it put it back, and a line typed into it is held in place.`
+  top_left = `where you are: the open tool's badge, flush with the side and level with the title; with the column out, one square a tool, the open one stepped in from the side.`
+  bottom_left = `what you can do: [...] and its rows, each a family of verbs. With [...] open, the frame pulls down to refresh.`
+  bottom_right = `what you hold: the held line, and on an entered page the way back up (↑ and the parent line).`
+  frame = `the work: the canvas, and the open tool held by its handle.`
+}[reg=facet]
+
+^"tool"{
+  handle = `The small square. It carries the tool; a tap toggles it (puts the open tool away, brings back the last).`
+  window = `A tool's panel, one corner at the handle's center, opening toward the screen's center by the handle's quadrant. It keeps the size it opened with; a carried handle stops at the edge.`
+  lens = `With no window, a faint square cornered on the handle; with one, a red nub on the window's near edge, like a ThinkPad's point. Swipes on it: ← the tool menu, → the open tool's primed act; with a tool open ↑ ↓ step through its levels, and with none, ↓ is the primary menu and ↑ a new node.`
+  tile = `A tool's square in the column, or the open tool's badge. A tap opens the tool; a hold names what a swipe → would take; a swipe → takes it without opening the tool.`
+  numbers = `On a fine screen each tile carries its key, small, in the tiles' wheat at three quarters (4.6:1 on the frame).`
+}[reg=facet]
+
+^"levels"{
+  ~#note: "The nub as a pointing stick (tool-steps.ts in the app). A stepped thing is ringed, not focused, so stepping onto a field does not raise a phone's keyboard."
+  tool_menu = `↑ ↓ the tools. A tap opens the stepped tool at its first card. → takes what that tool has primed and does not open it. ← lets the menu go.`
+  card = `A tool's submenu (lore, motion, size, charge; make, keep, feel, move). ↑ ↓ the cards; → or a tap enters at its field, else its first control; ← the tool menu, at this tool. A stepped card's band lights.`
+  control = `↑ ↓ the row above or below, at the column the steps began in, on into the next card. ← → along the row, crawling onto the next. ← from a card's first control steps out to the card. A tap presses; a field takes focus.`
+  one_card = `A tool without cards (Spw, map, filter, query) is one card: ← from its first control is the tool menu.`
+  nothing_stepped = `A tap enters at the control nearest the nub; ← opens the tool menu at the open tool; → takes the open tool's primed act.`
+  marks = `The open tool steps in from the side; the tile a hand is on takes a thick inner border; the card a control sits in keeps a bar on its band.`
+}[reg=facet]
+
+^"primed_actualized"{
+  ~#note: "The creator's pair. In the tools the primed act is primedAction and actualizing it is performPrimed (tool-primed.ts)."
+  order = `Spw fills an empty prompt from the selection, else the held line, or runs the line already there; a control marked data-submit (map, filter, query) is pressed; any other tool presses again the control last pressed in it; otherwise the tool opens and the steps go in.`
+  said = `A tool that was closed says what it did beside the handle (aria-live polite). The tool that was open stays open; a run that clears the mode gives it back.`
+  reflex = `Reflex's own press closes its panel, so after a primed press it opens, to show what changed.`
+  on_the_line = `An empty slot shows only while a drag could fill it (potentiated); the drop writes it into the line (actualized).`
+  rows = `A [...] row shows one verb. Turning it primes the next verb and remembers it; a tap actualizes the verb showing. A row is listed only while it has something to act on.`
+}[reg=facet]
+
+^"line"{
+  ~#note: "line-anatomy.ts in the app. A line takes a column of the canvas, at most 620 by 640, so several concepts fit beside it."
+  order = `Slots stack top to bottom in the order the line writes them: what it writes before the word, the word, its body, then what follows the body.`
+  word = `Where the reading begins, centered in its band.`
+  body = `{ } body: what the word holds, under it. Parts in order (a.b.c, a;b, a ~> b) sit in a row; parts in common (a, b) on a ring. A part that is an expression is a smaller line in its own box. A line with no body keeps a narrow band for one.`
+  scene = `( ): applies to the word with its body as a whole, not to the word. Titled by its braces alone while its part of speech is open.`
+  concept = `< >: primed at the end of the reading, larger, a node to enter. Unlabeled. Written before the word it leads the reading instead (<person>home, <book>home: the lens the word is read through), above it.`
+  join = `Two lines joined by ~ ^ & @ sit side by side, left to right as written (a@b: a is the context regarding b).`
+  containers = `A container resizes from a corner and moves by its body; its parts settle into it. A changed container keeps its size and place for that line's word in this browser; two taps on its corner put it back.`
+  empty = `A slot the line lacks is kept in its place, hidden, and shown only while a top-level part, the scene or the concept is dragged.`
+}[reg=facet]
+
+^"ties"{
+  ~#note: "relations.ts in the app: each relation has one length, pull, width and dash, and a tap on the line says it in words."
+  drawn = `Strength 0, drawn not pulled. defines: a word to its { } body. applies: a ( ) to an outline of the word with its body. refers: a < > to an outline of the whole reading (the word, its body and its ( )).`
+  pulling = `accesses (a.b), follows (; and ~>), charges (a valence on its word), bond (a join, dashed by kind), resonance (the same word twice), drawn (a link a hand drew).`
+  unused = `holds, stages and goes stay in the table; this layout emits none of them. Parts sit by anchors.`
+  floor = `A link is never shorter than its ends' radii and a gap, so a grown node pushes out what it is linked to.`
+}[reg=facet]
+
+^"node"{
+  tap = `Select or deselect. Selected alone, a node of the held line opens its runtime card a third of a second later, so a double-tap's rename never flashes it.`
+  double_tap = `Rename in place; a node of the line is renamed in the line.`
+  hold = `The verb ring: grow, raise, color, spin, shrink, remove, link, select. Past grow or shrink, more the farther. Link links the selection in a row, or, from a node outside it, links the selection to that node.`
+  drag = `Let go slowly and it stays (placed); thrown, it goes home. Near another node it links; into a container of its expression it joins that slot; along an ordered body it takes the slot it falls in.`
+  pinch = `Resizes, in order: the node between the fingers (one a finger is on, else the one nearest the pinch's middle within 28px of its edge), alone; else the selection; else every node. What is resized is ringed and named above the fingers. A trackpad pinch follows the same order from the pointer.`
+}[reg=facet]
+
+^"page"{
+  enter = `The card's enter opens a page with the node as its frame. The page holds the node's own expression: a part as written, a word with its body, a scene's or a concept's inside.`
+  address = `?spw= the page's line; ?frame= the node's place in the parent line (part1, word, b:scene); ?in= the parent page's own address, so pages nest and lead back up one at a time.`
+  save = `Either save writes the page's line into the parent line in the node's place (home{software{code.tools}.art.practice}). Going up without saving leaves the parent as it was.`
+}[reg=facet]
+
+^"runtime_card"{
+  parse = `The construct the node's text parsed into and what holds it (Identifier "home"; inside Identifier "software.art.practice", in Body).`
+  normalize = `The frame it normalizes to: id, around { }, scope ( ), capsule < >, ref @, defer ~, text; and how many arguments a container carries.`
+  interpret = `The value the interpreter gave it.`
+  register = `A register it touched, with its role, phase, liminality and provenance (ece.120: @ · Perspective · role ref · phase pragmatic).`
+  desugar = `Shown only when the desugar rewrote something.`
+}[reg=facet]
+
+^"devices"{
+  width = `At 40rem or narrower one surface shows at a time and the column is one column of squares the title box's height.`
+  coarse = `A coarse pointer hides keyboard hints; that is the only touch-screen rule.`
+  fine = `On a fine pointer a window's edges are grab bands; two-finger scroll pans; the camera zooms only from a pinch begun on the lens or a trackpad pinch over it.`
+  keyboard = `The focus ring is the keyboard's only. The context-menu key or Shift+F10 is the hold. With the lens focused, the arrows are the nub's levels.`
+  pressure = `The canvas reads no pointer force. Its magnitudes are distance, speed and time: how far past grow or shrink, how fast a throw, how long a hold, how wide a pinch. A device that reports force would use that scale.`
+}[reg=facet]
+
+^"annotation"{
+  rule = `Every primed and every actualized act has one sentence: the card says it, or the note beside the handle does. That sentence is the accessible name; hue does not carry it.`
+  present = `the link card (relations in words), the runtime card, the note beside the handle, the note above a pinch, the frame's refresh note.`
+  unnamed = `A stepped level is a ring and a bar, with no accessible name for tool menu, card or control. The svg's region and edge layers are hidden from assistive tech; the accessibility-tree check and a keyboard walk are still open.`
+  no_second_title = `An annotation says what the runtime or a relation made of a thing. It does not become a second title on a region.`
+}[reg=facet]
+
+^"decisions"{
+  ~#note: "The creator's, dated and in their words where kept. A change to any of these is the creator's to make."
+  d_2026_10_29_story = `"a story is an ordered sequence of canvas, runtime, and simulation states"`
+  d_2026_10_29_card = `"card can use the runtime terms"`
+  d_2026_10_29_enter = `"entering a node should navigate to a page with the node assumed as the frame"; "adding inside an entered node should be rewritten as part of the parent line when saved"`
+  d_2026_10_29_concept = `"<> is more abstract than the word"; it is "the primed concept at the end of reading from top to bottom", not a return value; a concept written first leads (<person>home, <book>home)`
+  d_2026_10_29_join = `"a@b means a is the context regarding b"`
+  d_2026_10_29_flow = `"context generally flowing from left to right and out to in"`
+  d_2026_10_29_words = `the words a line is read in ("with", "at", "priming") "won't generalize across expressions", so they title no region`
+  d_2026_10_29_empty = `"empty regions should only be displayed when filled or potentiated"`
+  d_2026_10_30_body = `"I'd prefer body over definition"`
+  d_2026_10_30_containers = `"the container should be a bit smaller so multiple concepts can fit"; resizable`
+  d_2026_10_30_scene = `"(atlas) isn't modifying home, it's modifying a home with { ... }"; its part of speech open: "it could be viewed like (atlas) is a payload or argument"`
+  d_2026_10_30_concept = `"concept should not be labeled"; "person should refer to the whole reading of this line"`
+  d_2026_10_30_terms = `primed and actualized are the creator's terms for the two halves of a behavior`
+}[reg=facet]
+
+^"readings"{
+  ~#note: "Readings an agent made of the code or the conversation. Not the creator's until confirmed; kept out of the plans' language until then."
+  zero_strength = `that defines, applies and refers, drawn at strength 0, prime a relation, and that refers is the concept actualized onto the whole reading`
+  lambda = `the canvas as a way into lambda calculus: ( ) as a scope (a name bound to its body of statements) or as an argument given to an abstraction; entering a node as looking inside a function's body. Carried as wonder, not decided.`
+}[reg=facet]
+
+^"gaps"{
+  ~#note: "What the canvas, the runtime or the copy does not yet say right. Each is a place to look, not a ruling."
+  runtime_capsule = `<person>'s Capsule normalizes with no arguments, so person drops out of the normal form.`
+  runtime_prose = `A line with @ reads as Prose; its text values come back doubled (??, [[transistors work.how]).`
+  join_wording = `The link card reads a@b as "the viewer situated at the subject", and the domain pages read ecestudent@ece.120 as a student situated in a course. The creator's reading is that a is the context regarding b. Which wording the canvas and the copy take is the creator's.`
+  nested_order = `In a body that holds a nested expression, plain parts stack in a column and the nested box sits beside them, so written order breaks.`
+  sizes = `A kept container's size and place are canvas pixels, not shares of the line's column, so a much narrower window can misplace it.`
+  loose_nodes = `A node added with ↑ is loose: it does not join the line by a drop, so an entered page with nothing inside has nothing to drag into an empty slot.`
+  second_reader = `line-anatomy.ts is a second reader beside the workbench. The plan's next cut draws the workbench reader's outline and keeps line-anatomy until that projection can say the line back.`
+}[reg=facet]
+
+# About this file
+operation = "align"
+fixity = "tending"
+source = "creator, 2026-10-30: expand on the factshift ui model in the .spw tree related to these plans. Read against the app at 99c10e6 (gitignored here; its source paths are named in backticks, not cited)."
+
+# Handles, by role. Declared last.
+# Plans
+@plan: ~"../../.agents/plans/factshift-center/PLAN.md"
+@interaction: ~"../../.agents/plans/factshift-center/INTERACTION.md"
+@plan_index: ~"../../.agents/plans/factshift-center/index.spw"
+@plan_wip: ~"../../.agents/plans/factshift-center/wip.spw"
+# Surfaces
+@snapshot: ~"../../workers/factshift-center/version.json"
+@public_page: ~"../../about/domains/factshift.center/index.html"
+@prototype_page: ~"../../about/domains/factshift.com/index.html"
+@domains: ~"../domains.spw"
+# Neighbors
+@verbs_audit: ~"../audits/factshift-center-verbs-2026-10.spw"  # the nouns and the verbs each answers, and where they collide
+@menu_field: ~"./menu-field.spw"
+@interaction_microstates: ~"../conventions/interaction-microstates.spw"
+@namespace_table: ~"../language/operator-namespace-alignment.spw"

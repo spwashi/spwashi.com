@@ -85,6 +85,7 @@ active_surfaces: .{
    hosted = `about/domains/factshift.center/`
    href = `https://factshift.center`
    worker = `workers/factshift-center/`
+   model = ~"./surfaces/factshift-center.spw"
    archetype = `analytic_engine`
  }[reg=facet]
  `lore.land` = .{
