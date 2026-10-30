@@ -16,6 +16,7 @@
 @runtime_module_medium: ~"./runtime-module-medium.spw"
 @component_inventory: ~"./component-inventory.spw"
 @folio_archive: ~"./folio-archive.spw"  # the laminated folio archive as a walkable record: release sets, scans and sidecars
+@factshift_center: ~"./factshift-center.spw"  # the factshift.center canvas: ground, tool levels, primed and actualized acts, the line's layout and ties, decisions apart from readings
 
 dispatch: .{
  registry = @registry
@@ -25,6 +26,7 @@ dispatch: .{
  approach_topography = @approach_topography
  runtime_module_medium = @runtime_module_medium
  component_inventory = @component_inventory
+ factshift_center = @factshift_center
 }[reg=facet]
 
 invariants: #[

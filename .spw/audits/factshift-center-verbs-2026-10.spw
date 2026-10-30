@@ -1,0 +1,632 @@
+# factshift.center — audit (2026-10): the interface's nouns and gestures as a matrix of cells, each placed on seven axes, and the verbs about the nouns
+#>factshift_center_verbs_2026_10
+#:audit #!interface #!verbs #!nouns #!gestures #!dimensions
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+expression = interface[census]{noun.gesture.verb}<one_meaning>
+
+summary = #[
+  `Read from the app's code at 99c10e6, not from the plans. Every surface that takes input is a noun; every gesture on it is a cell; every cell is placed on seven axes (#axes) and written as a line of Spw, noun[gesture]{verb}<where it writes>, so the canvas could lay its own interface out.`,
+  `Read along meaning (#by_meaning): tap holds one meaning on every noun, pinch nearly does, swipe → nearly does. Hold carries three (grip, ring, nothing), double-tap three (name, make, put back).`,
+  `Read along writes (#by_writes): few cells reach the held line, and the ring's remove, which looks like an edit, does not.`,
+  `Read along preview and parity (#by_preview, #by_parity): what reaches the line mostly primes first; the keyboard reaches the chrome and the title but not the line's nodes, containers or ties.`,
+  `Read along answer (#by_answer): three cells answer nothing, and a landed swipe never says its name (flashCompass is written and never called).`,
+  `One collision: two taps on a container's corner put it back and make a node. Probed at 1440.`,
+][reg=set]
+
+contents = #[
+  ~"./factshift-center-verbs-2026-10.spw#axes",
+  ~"./factshift-center-verbs-2026-10.spw#cells",
+  ~"./factshift-center-verbs-2026-10.spw#verbs",
+  ~"./factshift-center-verbs-2026-10.spw#by_meaning",
+  ~"./factshift-center-verbs-2026-10.spw#by_writes",
+  ~"./factshift-center-verbs-2026-10.spw#by_preview",
+  ~"./factshift-center-verbs-2026-10.spw#by_parity",
+  ~"./factshift-center-verbs-2026-10.spw#by_answer",
+  ~"./factshift-center-verbs-2026-10.spw#collisions",
+  ~"./factshift-center-verbs-2026-10.spw#claims",
+  ~"./factshift-center-verbs-2026-10.spw#wonder_factshift_gesture_meanings",
+][reg=set]
+
+^"axes"{
+  ~#note: "The dimensions every cell in #cells is placed on. Each is a closed vocabulary, so cells can be compared, sliced and counted. A cell may take two values on an axis when the noun has two kinds (a node of the line, a loose node)."
+  meaning: .{
+    canonical = #[`act`, `grip`, `ring`, `make`, `name`, `put_back`, `move`, `size`, `shape`, `step`, `select`, `link`, `read`, `refresh`, `none`][reg=set]
+    asks = `what the gesture says on this noun, before what it does`
+  }
+  writes: .{
+    canonical = #[`line`, `canvas`, `view`, `browser`, `address`, `page`, `none`][reg=set]
+    asks = `where an actualized act lands: the held line; the simulation (nodes, links, sizes, selection); the view (tools, camera, title, containers); this browser's storage; the address; another page`
+  }
+  preview: .{
+    canonical = #[`primed`, `edge`, `field`, `immediate`, `silent`][reg=set]
+    asks = `what shows before it lands: what will happen (primed), only which way (edge), a field to fill first, nothing before it lands (immediate), nothing at all (silent)`
+  }
+  reverse: .{
+    canonical = #[`same`, `opposite`, `put_back`, `row`, `back`, `rename`, `none`][reg=set]
+    asks = `the way back: the same gesture again, an opposite verb, two taps that put back, a [...] row, the browser's Back, a rename, or none`
+  }
+  parity: .{
+    canonical = #[`touch`, `mouse`, `trackpad`, `keyboard`][reg=set]
+    asks = `the inputs that reach the cell`
+  }
+  answer: .{
+    canonical = #[`card`, `note`, `field`, `ring`, `state`, `none`][reg=set]
+    asks = `where its one sentence comes from: a card, a note (beside the handle, above the fingers, at the frame's top), a field, the ring's lit verb, the changed state alone, or nothing`
+  }
+  level: .{
+    canonical = #[`chrome`, `tool`, `line`, `canvas`, `page`][reg=set]
+    asks = `where the noun lives: the screen's corners, a tool, the held line's layout, the simulation, the page`
+  }
+}[reg=facet]
+
+^"cells"{
+  ~#note: "noun: one record a gesture. expr is the cell as a line, noun[gesture]{verb}<writes>: its < > is the cell's place on the writes axis, and writes_also, writes_by_tool and writes_loose add what else it reaches. Every other axis is a key on the record."
+  handle: .{
+    level = chrome
+    tap = .{
+      expr = handle[tap]{toggle_tool}<view>
+      meaning = act
+      preview = immediate
+      reverse = same
+      parity = `touch mouse keyboard`
+      answer = state
+    }
+    hold = .{
+      expr = handle[hold]{grip}<none>
+      meaning = grip
+      preview = primed
+      reverse = same
+      parity = `touch mouse`
+      answer = state
+    }
+    drag = .{
+      expr = handle[drag]{carry}<view>
+      meaning = move
+      writes_also = browser
+      preview = immediate
+      reverse = row
+      parity = `touch mouse trackpad`
+      answer = state
+    }
+    keys = .{
+      expr = handle[keys]{nudge}<view>
+      meaning = move
+      preview = immediate
+      reverse = opposite
+      parity = keyboard
+      answer = state
+    }
+  }[reg=facet]
+  lens: .{
+    level = tool
+    tap = .{
+      expr = lens[tap]{press}<view>
+      meaning = act
+      preview = immediate
+      reverse = same
+      parity = `touch mouse keyboard`
+      answer = state
+    }
+    hold = .{
+      expr = lens[hold]{grip}<none>
+      meaning = grip
+      preview = primed
+      reverse = same
+      parity = `touch mouse`
+      answer = state
+    }
+    swipe_left = .{
+      expr = lens[swipe_left]{tool_menu}<view>
+      meaning = step
+      preview = primed
+      reverse = same
+      parity = `touch mouse keyboard`
+      answer = state
+    }
+    swipe_right = .{
+      expr = lens[swipe_right]{primed_act}<line>
+      writes_by_tool = `line (Spw), canvas (reflex, node), view (none primed: the tool opens)`
+      meaning = act
+      preview = edge
+      reverse = none
+      parity = `touch mouse keyboard`
+      answer = note
+    }
+    swipe_vertical = .{
+      expr = lens[swipe_vertical]{step}<view>
+      with_no_tool = `↑ make a node (canvas), ↓ the primary menu (view)`
+      meaning = step
+      preview = edge
+      reverse = opposite
+      parity = `touch mouse keyboard`
+      answer = state
+    }
+    pinch = .{
+      expr = lens[pinch]{zoom}<view>
+      meaning = size
+      preview = immediate
+      reverse = opposite
+      parity = `touch trackpad`
+      answer = state
+    }
+  }[reg=facet]
+  tool_tile: .{
+    level = chrome
+    tap = .{
+      expr = tool_tile[tap]{open_tool}<view>
+      meaning = act
+      preview = immediate
+      reverse = same
+      parity = `touch mouse keyboard`
+      answer = state
+    }
+    swipe_right = .{
+      expr = tool_tile[swipe_right]{primed_act}<line>
+      writes_by_tool = `as the lens's →`
+      meaning = act
+      preview = immediate
+      reverse = none
+      parity = `touch mouse`
+      keyboard_by = `the nub, → on the tool menu`
+      answer = note
+    }
+    hold = .{
+      expr = tool_tile[hold]{}<none>
+      meaning = none
+      preview = silent
+      reverse = none
+      parity = `touch mouse`
+      answer = none
+    }
+  }[reg=facet]
+  window: .{
+    level = tool
+    edge_drag = .{
+      expr = window[drag]{carry}<view>
+      meaning = move
+      writes_also = browser
+      preview = primed
+      reverse = row
+      parity = `mouse trackpad`
+      answer = state
+    }
+  }[reg=facet]
+  menu_row: .{
+    level = chrome
+    tap = .{
+      expr = menu_row[tap]{verb}<canvas>
+      writes_by_row = `canvas (more, fewer, yoink), browser (save), view (lens, tool menu)`
+      meaning = act
+      preview = immediate
+      reverse = opposite
+      parity = `touch mouse keyboard`
+      answer = state
+    }
+    turn = .{
+      expr = menu_row[swipe]{turn}<browser>
+      meaning = step
+      preview = primed
+      reverse = opposite
+      parity = `touch mouse keyboard`
+      answer = state
+    }
+  }[reg=facet]
+  title: .{
+    level = chrome
+    tap = .{
+      expr = title[tap]{edit}<none>
+      meaning = act
+      preview = field
+      reverse = same
+      parity = `touch mouse keyboard`
+      answer = field
+    }
+    submit_line = .{
+      expr = title[keys]{hold_line}<line>
+      writes_also = address
+      meaning = act
+      preview = field
+      reverse = none
+      parity = `touch mouse keyboard`
+      answer = state
+    }
+    pinch = .{
+      expr = title[pinch]{resize}<view>
+      writes_also = browser
+      meaning = size
+      preview = immediate
+      reverse = put_back
+      parity = `touch trackpad keyboard`
+      answer = state
+    }
+    edge_drag = .{
+      expr = title[drag]{wrap}<view>
+      writes_also = browser
+      meaning = shape
+      preview = immediate
+      reverse = opposite
+      parity = `touch mouse keyboard`
+      answer = state
+    }
+  }[reg=facet]
+  title_square: .{
+    level = chrome
+    tap = .{
+      expr = title_square[tap]{edit_title}<none>
+      meaning = act
+      preview = field
+      reverse = same
+      parity = `touch mouse keyboard`
+      answer = field
+    }
+    double_tap = .{
+      expr = title_square[double_tap]{put_back}<view>
+      writes_also = browser
+      meaning = put_back
+      preview = immediate
+      reverse = none
+      parity = `touch mouse`
+      answer = state
+    }
+  }[reg=facet]
+  corner_box: .{
+    level = chrome
+    tap_line = .{
+      expr = corner_box[tap]{rework}<view>
+      meaning = act
+      preview = immediate
+      reverse = same
+      parity = `touch mouse keyboard`
+      answer = state
+    }
+    tap_up = .{
+      expr = corner_box[tap]{go_up}<page>
+      meaning = act
+      preview = immediate
+      reverse = back
+      parity = `touch mouse keyboard`
+      answer = state
+    }
+  }[reg=facet]
+  node: .{
+    level = `line canvas`
+    tap = .{
+      expr = node[tap]{select}<canvas>
+      meaning = select
+      preview = immediate
+      reverse = same
+      parity = `touch mouse keyboard`
+      answer = `card (a node of the line, alone) state (otherwise)`
+    }
+    double_tap = .{
+      expr = node[double_tap]{rename}<line>
+      writes_loose = canvas
+      meaning = name
+      preview = field
+      reverse = rename
+      parity = `touch mouse`
+      answer = field
+    }
+    hold = .{
+      expr = node[hold]{verb_ring}<canvas>
+      meaning = ring
+      preview = primed
+      reverse = opposite
+      parity = `touch mouse`
+      answer = ring
+    }
+    drag = .{
+      expr = node[drag]{place}<canvas>
+      writes_also = `line (a drop into a slot, a reorder)`
+      meaning = `move link`
+      preview = primed
+      reverse = opposite
+      parity = `touch mouse trackpad`
+      answer = state
+    }
+    pinch = .{
+      expr = node[pinch]{resize}<canvas>
+      meaning = size
+      preview = primed
+      reverse = opposite
+      parity = `touch trackpad`
+      answer = note
+    }
+    keys = .{
+      expr = node[keys]{select}<canvas>
+      pins = `x and y fix it in place`
+      meaning = select
+      preview = immediate
+      reverse = same
+      parity = keyboard
+      answer = state
+    }
+  }[reg=facet]
+  stage: .{
+    level = canvas
+    tap = .{
+      expr = stage[tap]{clear_selection}<canvas>
+      meaning = select
+      preview = immediate
+      reverse = none
+      parity = `touch mouse`
+      answer = state
+    }
+    double_tap = .{
+      expr = stage[double_tap]{make_node}<canvas>
+      meaning = make
+      preview = immediate
+      reverse = opposite
+      parity = `touch mouse`
+      answer = state
+    }
+    hold = .{
+      expr = stage[hold]{canvas_ring}<line>
+      writes_also = `canvas (the ring's node)`
+      meaning = ring
+      preview = primed
+      reverse = rename
+      parity = `touch mouse`
+      answer = ring
+    }
+    pinch = .{
+      expr = stage[pinch]{resize}<canvas>
+      meaning = size
+      preview = primed
+      reverse = opposite
+      parity = `touch trackpad`
+      answer = note
+    }
+    scroll = .{
+      expr = stage[scroll]{pan}<view>
+      meaning = move
+      preview = immediate
+      reverse = opposite
+      parity = `mouse trackpad`
+      answer = state
+    }
+  }[reg=facet]
+  container: .{
+    level = line
+    drag = .{
+      expr = container[drag]{move}<view>
+      writes_also = browser
+      meaning = move
+      preview = immediate
+      reverse = put_back
+      parity = `touch mouse trackpad`
+      answer = state
+    }
+    corner_drag = .{
+      expr = container[drag]{resize}<view>
+      writes_also = browser
+      meaning = size
+      preview = immediate
+      reverse = put_back
+      parity = `touch mouse trackpad`
+      answer = state
+    }
+    corner_double_tap = .{
+      expr = container[double_tap]{put_back}<view>
+      also = `make_node <canvas> (collision)`
+      meaning = `put_back make`
+      preview = immediate
+      reverse = none
+      parity = `touch mouse`
+      answer = state
+    }
+    double_tap = .{
+      expr = container[double_tap]{make_node}<canvas>
+      meaning = make
+      preview = immediate
+      reverse = opposite
+      parity = `touch mouse`
+      answer = state
+    }
+    hold = .{
+      expr = container[hold]{canvas_ring}<line>
+      meaning = ring
+      preview = primed
+      reverse = rename
+      parity = `touch mouse`
+      answer = ring
+    }
+    tap = .{
+      expr = container[tap]{}<none>
+      meaning = none
+      preview = silent
+      reverse = none
+      parity = `touch mouse`
+      answer = none
+    }
+  }[reg=facet]
+  outline: .{
+    level = line
+    any = .{
+      expr = outline[any]{}<none>
+      meaning = none
+      preview = silent
+      by_design = `drawn only; its tie reads it`
+      answer = none
+    }
+  }[reg=facet]
+  tie: .{
+    level = `line canvas`
+    tap = .{
+      expr = tie[tap]{read}<none>
+      unlink = `a drawn link, from its card (canvas)`
+      meaning = read
+      preview = immediate
+      reverse = same
+      parity = `touch mouse`
+      answer = card
+    }
+  }[reg=facet]
+  runtime_card: .{
+    level = line
+    enter = .{
+      expr = runtime_card[tap]{enter}<page>
+      writes_also = address
+      meaning = act
+      preview = immediate
+      reverse = back
+      parity = `touch mouse keyboard`
+      answer = state
+    }
+  }[reg=facet]
+  frame: .{
+    level = page
+    pull = .{
+      expr = frame[drag]{refresh}<page>
+      when = `[...] open`
+      meaning = refresh
+      preview = primed
+      reverse = none
+      parity = `touch mouse`
+      answer = note
+    }
+  }[reg=facet]
+}[reg=facet]
+
+^"verbs"{
+  ~#note: "The verbs about the nouns, as a second matrix: verb, then noun, then the gestures that do it there."
+  make = .{
+    node = `lens ↑, two taps on the stage or in a container, the canvas ring's node, [...] more`
+    slot = `the canvas ring's braces`
+    line = `a run in Spw, a line typed into the title, ?spw=`
+  }
+  name = .{
+    node = `two taps; named in place when made`
+    slot = `its · placeholder`
+    line = `the title`
+  }
+  select = .{
+    node = `tap, Space, Alt-click, the ring's select, an Alt marquee, [...] selection verbs`
+    none = `tap the stage`
+  }
+  link = .{
+    two_nodes = `drag one near the other`
+    selection = `the ring's link, [...] selection verbs`
+    undo = `the link card's unlink, or drag near again`
+  }
+  move = .{
+    node = drag
+    handle = `drag, arrow keys`
+    window = `its edge`
+    container = `its body`
+    title = pinch
+    view = `scroll, a pinch on the lens`
+  }
+  resize = .{
+    node = `pinch, the ring's grow and shrink, reflex size`
+    container = `its corner`
+    title = `pinch, Alt with ↑ ↓`
+    view = `a pinch on the lens`
+  }
+  put_back = .{
+    title = `two taps on its square`
+    container = `two taps on its corner`
+    handle = `[...] handle home`
+    positions = `[...] loose`
+    simulation = `restart`
+  }
+  remove = .{
+    node = `the ring's remove, [...] fewer`
+    canvas = `empty canvas`
+    slot_of_line = `rename it to nothing (dragging it out of its container is only physics)`
+  }
+  enter = .{
+    tool = `tap its tile`
+    card = `the nub`
+    node = `the card's enter`
+    up = `the corner box's ↑, or Back`
+  }
+  keep = .{
+    canvas = `save, by a [...] row or the keep card`
+    parent_line = `either save, on an entered page`
+  }
+  read = .{
+    node = `its runtime card`
+    tie = `its link card`
+    primed_act = `the note beside the handle, for a tool that was closed`
+  }
+  refresh = .{
+    page = `pull the frame with [...] open`
+  }
+}[reg=facet]
+
+^"by_meaning"{
+  ~#note: "One gesture read across the nouns. Where a gesture carries more than one meaning, a reader has to learn it per noun."
+  tap = `act on every noun (toggle, open, press, edit, rework, go up, enter), select on a node and the stage, nothing on a container. One meaning: the thing this surface is for.`
+  double_tap = `name (node), make (stage, inside a container), put back (title square, container corner). Three meanings; on a container's corner two at once.`
+  hold = `grip (handle, lens), ring (node, stage, container), none (tool tile). Three meanings; gestures.ts declares only grip.`
+  swipe_right = `act (lens, tile), step (a [...] row's turn, along a row of controls). One reading: go on.`
+  pinch = `size: nodes, the title, the view from the lens. Containers size by their corner, not a pinch.`
+  drag = `move (handle, window, node, container), size (container corner), shape (title edge), link (node near node), refresh (frame).`
+}[reg=facet]
+
+^"by_writes"{
+  ~#note: "Where actualized acts land. The line is the examination's specimen, so what reaches it matters most."
+  line = `node double_tap (a node of the line), node drag (into a slot, a reorder), stage and container hold (the canvas ring's braces), title submit_line, lens and tile swipe_right (Spw's run), a save on an entered page (the parent line).`
+  not_line = `The ring's remove takes a node of the line off the canvas only; the next layout brings it back (circle.ts, prune). It is the one cell that looks like a line edit and is not.`
+  browser = `handle drag, window edge_drag, title pinch and edge_drag, title_square double_tap, container drag and corner_drag, a [...] row's turn, save.`
+  page = `corner_box tap_up, runtime_card enter, frame pull.`
+}[reg=facet]
+
+^"by_preview"{
+  ~#note: "The creator's pair, primed then actualized, read as a dimension."
+  line_writers = `Of the cells that write the line: node drag and the canvas ring are primed; rename and the title are field-first; the lens's → shows only a direction; the tile's → shows nothing before Spw runs a line.`
+  immediate_and_irreversible = `title submit_line, title_square double_tap, container corner_double_tap, frame pull (its note warns of unsaved changes), tile swipe_right. Each lands with no preview and no way back but doing it over.`
+  silent = `tool_tile hold, container tap, outline.`
+}[reg=facet]
+
+^"by_parity"{
+  ~#note: "Which inputs reach which cells. A cell the keyboard cannot reach is a cell a keyboard reader cannot use."
+  keyboard_reaches = `the handle, the lens and the nub's levels, tool tiles (open), [...] rows, the title, the corner box, the runtime card, a node's selection.`
+  keyboard_misses = `a node's rename, ring, drag (place, link, drop into a slot) and pinch; the stage's ring; every container cell; reading a tie; the frame's refresh.`
+  fine_only = `window edge_drag, stage scroll.`
+}[reg=facet]
+
+^"by_answer"{
+  ~#note: "The one sentence each act needs (INTERACTION.md): where it comes from, or that it is missing."
+  none = `tool_tile hold, container tap, outline.`
+  unspoken_landing = `A landed swipe never says its name: flashCompass in gesture-compass.ts is written to flash it and nothing calls it. The lens and the handle light an edge while a swipe would land; a tile lights nothing.`
+  state_only = `Most chrome cells answer by the changed state alone (a tool opens, a row turns). Whether that counts as the sentence is the creator's call.`
+}[reg=facet]
+
+^"collisions"{
+  corner_double_tap = `Two taps on a container's corner put the container back and make a loose node: the stage's double-click still fires under the corner. Probed at 1440 with a mouse (3 nodes, then 4).`
+  inside_double_tap = `Two taps inside a container make a loose node that sits in the container without joining the line.`
+  hold_on_container = `A hold on a container opens the canvas ring (the stage's), not anything about the container.`
+}[reg=facet]
+
+^"claims"{
+  ~#note: "Statements in the tree the code does not bear out."
+  hold_shows_card = `PLAN.md (Taught on asking), INTERACTION.md (hold rows), .spw/surfaces/factshift-center.spw (tool, levels) and tool-tiles.ts's header say a hold shows the card or names the swipe. No hold does. The card shows from the [...] gestures row, a swipe past its line toward nothing, and the context-menu key or Shift+F10.`
+  swipe_lights_edge = `PLAN.md's Guided: a swipe that would land lights the handle's edge. True of the handle and the lens, not of a tool tile.`
+}[reg=facet]
+
+#>wonder_factshift_gesture_meanings
+?["Should one gesture keep one meaning across the canvas: a hold that always shows what can be done here, and a double-tap that always means one thing?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#with: @surface_model @interaction
+  ~#tension: "gestures.ts declares hold as grip, but the node, the stage and the container use it for a ring and the tile for nothing. Double-tap names, makes and puts back. A learnable surface teaches one key once."
+  ~#expect: "Read #by_meaning: hold shows what can be done here on every noun (the ring, or the card on a tile and the lens), and grip comes from a hold that then moves. Double-tap takes one meaning; the other two move to the ring or the card."
+  ~#probe(read)
+  !probe{ "for each noun in #cells, say what hold and double_tap should be under one meaning each, and which cells move where" }
+  $%[gestures.hold, gestures.double_tap, gestures.resize, gestures.put_back]
+}
+
+# About this file
+operation = "audit"
+fixity = "tending"
+source = "creator, 2026-10-30: analyses of the interface components and the verbs about the nouns, in more multidimensional structures. Read from the app's source at 99c10e6 (gitignored here; named in backticks, not cited) and probed at 1440 for the corner collision."
+
+# Handles, by role. Declared last.
+@surface_model: ~"../surfaces/factshift-center.spw"
+@interaction: ~"../../.agents/plans/factshift-center/INTERACTION.md"
+@plan: ~"../../.agents/plans/factshift-center/PLAN.md"
+@interaction_microstates: ~"../conventions/interaction-microstates.spw"
