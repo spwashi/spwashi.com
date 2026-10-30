@@ -245,3 +245,15 @@ invariants: #[
   !probe{ "read /about/domains/factshift.center/ beside the prototype page and say whether a concept the physics cannot hold is still visible as a gap in the line" }
   $%[examination.physics, examination.cohesion, examination.performance]
 }
+
+#>wonder_factshift_interaction
+?["When does a behavior prime a concept, when does it actualize one, and how does a device, a pressure, or an annotation say which?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#with: @plan @snapshot
+  ~#asked: "the creator, 2026-10-30: extend the examination through interaction behaviors, submenus, primed and actualized state, devices and pressure, accessibility and annotation"
+  ~#taste: "A reading for the creator to confirm, not yet theirs: one grammar. Priming names what would happen and leaves the line. Actualizing writes the line or a change the line or the address can say back. Pressure is a magnitude the canvas already has: distance, speed, hold, pinch. A device that reports force uses that scale."
+  ~#expect: "The three levels stay the tool menu, a tool's cards, and a card's controls. A stepped level, a primed act, and an actualized act each have one sentence, and that sentence is the accessible name. Hue does not carry it. The concept's region stays unlabeled."
+  ~#probe(read)
+  !probe{ "with a tool open, step tool menu, card, and control from the nub and from the keyboard; name the sentence for each level, then take a primed act and an actualized one and say which rewrote the line" }
+  $%[interaction.prime, interaction.actualize, interaction.pressure, interaction.annotate]
+}

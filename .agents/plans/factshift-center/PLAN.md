@@ -1,6 +1,6 @@
 # factshift.center
 
-**Status 2026-10-30.** The snapshot in `workers/factshift-center/version.json` is the app at `99c10e6`, carried on the site as `76c70f77`. factshift.com is the prototype, settled October 2024. factshift.center examines which concepts a particular set of physics can represent. That difference is public at `about/domains/factshift.center/`. The creator understands the hesitance to engage with AI and, as an engineer, can't really mind it. Agentic development is how the examination adds cohesion and performance. Next on the canvas: one reading from the workbench, in place of the app's second slot reader. Deploy remains the creator's (Wrangler).
+**Status 2026-10-30.** The snapshot in `workers/factshift-center/version.json` is the app at `99c10e6`, carried on the site as `76c70f77`. factshift.com is the prototype, settled October 2024. factshift.center examines which concepts a particular set of physics can represent. That difference is public at `about/domains/factshift.center/`. The creator understands the hesitance to engage with AI and, as an engineer, can't really mind it. Agentic development is how the examination adds cohesion and performance. Next on the canvas: one reading from the workbench, in place of the app's second slot reader. Interaction depth is in [INTERACTION.md](./INTERACTION.md) and is not yet a patch. Deploy remains the creator's (Wrangler).
 
 **Related:** [spw-quest](../spw-quest/PLAN.md) (its pivot and construct cards can open a line here) · [spw-inquiry-loop](../spw-inquiry-loop/PLAN.md) (parser releases, the capability ledger) · [brace-semantics](../brace-semantics/PLAN.md) (`[ ]` as a frame) · [spw-metaphysical-language](../spw-metaphysical-language/PLAN.md) (depth passes) · [ecosystem-architecture](../ecosystem-architecture/PLAN.md) (peers).
 
@@ -88,7 +88,7 @@ The creator set this on 2026-10-27; the phone pass built it, and the demo in the
   - No words appear beside the handle. Names live in the hold card.
 - **Phones.**
   - A tool hangs from its handle.
-  - The mode column stays one column of 44px squares.
+  - The mode column stays one column of squares the height of the title box.
   - Touch screens hide keyboard hints.
   - Nothing widens the page.
 - **The Spw panel:**
@@ -194,4 +194,5 @@ The canvas still lays a line out from `line-anatomy.ts`, a second reader beside 
 - which gestures the other tools take, and the choices the demo leaves open;
 - spells mapped over a set (map mode, naming as a story, arcs across nodes);
 - containers as physics and as frames (delimiters, boundaries, layers, documents);
-- size, count and selection along arcs (pinch and radius by links and layers, swipes that add or reduce).
+- size, count and selection along arcs (pinch and radius by links and layers, swipes that add or reduce);
+- interaction depth: behaviors, the three submenu levels, primed against actualized, device magnitude and pressure, annotation and the accessible name (`wonder_factshift_interaction`, [INTERACTION.md](./INTERACTION.md)).
