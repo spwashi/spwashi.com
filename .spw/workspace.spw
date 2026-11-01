@@ -31,6 +31,7 @@
  @skills: ~"./skills"
  @slices: ~"./slices"
  @scenes: ~"./scenes"
+ @production: ~"./production"
  @workbench: ~"./_workbench"
 }
 
@@ -90,7 +91,7 @@ lsp: .{
 }[reg=facet]
 
 boundary: .{
-  consumer_owns = #[@index, @mount, ~"./conventions", ~"./audits", ~"./caches", ~"./reviews", @site, @domains, @surfaces][reg=set]
+  consumer_owns = #[@index, @mount, ~"./conventions", ~"./audits", ~"./caches", ~"./reviews", @site, @domains, @surfaces, ~"./production"][reg=set]
   workbench_provides = #[`parser`, `runtime`, `LSP`, `CLI`, `spec library`, `agent tooling`, `surface-archetypes`][reg=set]
   scan_exclusion = `.spw/_workbench/**`
   after_submodule_bump = #[
