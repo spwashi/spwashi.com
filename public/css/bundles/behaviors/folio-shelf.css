@@ -234,6 +234,19 @@
   aspect-ratio: 1;
   margin-inline: auto;
   overflow: hidden;
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+}
+
+/* The picture is the plate's one grid item. Given the plate's box, it lets the
+   img's 100% caps resolve, so a tall scan lies whole instead of running past
+   the clipped edge. Flex, not grid: a <source> computes as a block here. */
+.folio-view__plate > picture {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: 0;
 }
 
 .folio-view__plate img {
