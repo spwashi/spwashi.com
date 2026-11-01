@@ -1,0 +1,36 @@
+# Movie, 2027
+#
+# A movie about the creator as a producer.
+# Post-Nut Clarity is the show that producer is making.
+# The movie is not the show.
+
+#>producer_movie_2027
+#:movie #!producer
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@show: ~"./post-nut-clarity/series.spw"
+
+operation = "prime"
+fixity = "experimental"
+
+^"movie"{
+  slug = `movie-2027`
+  title = `untitled`
+  release = `2027`
+  subject = `Spwashi, as a producer.`
+  show = `Post-Nut Clarity`
+  claim = `The movie is the picture of the producer. The show is what he is producing. Episodes of the show are not scenes of the movie unless a cut says so.`
+  genre = `A genre-bender. The plot is set up to tiptoe through as many genres as can be described, one passage at a time.`
+  tone = `Deadpan procedure, one element that does not belong, and a joke that does not get the last word. The rooms stay producible. The satire is only the substitution: making the show where recognition would be.`
+  status = `planned`
+  refuse = `Do not title the movie Post-Nut Clarity. Do not ship the show as the 2027 release. Do not add a public route for either from this file. Do not blend the genres into one that cannot be named.`
+}[reg=facet]
+
+^"tiptoe"{
+  claim = `A passage counts only while someone can say which genre it is. Then the plot steps into the next. It does not camp in one, and it does not smash two into a third that has no name.`
+  thread = `The producer is the through-line. He is making the show Post-Nut Clarity. That show is one room the movie enters. It is not the genre of the whole picture.`
+  descriptive = `As many genres as descriptively possible means the itinerary can grow for as long as each visit can be told apart. A visit that cannot be described is not on the path.`
+  open = `The order of the visits is not cut yet. The first show episode, writing the squirrels, is a room the movie may enter. It is not yet a scene.`
+}[reg=facet]

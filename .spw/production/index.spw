@@ -1,0 +1,38 @@
+# Production
+#
+# Namespaced .spw for elaborating a series and its episodes.
+# Copy _template/ into production/<series-slug>/. Replace series.slug
+# and episode.slug. A held episode is not a public route.
+
+#>production
+#:module #!production #!episode #!series
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@template_series: ~"./_template/series.spw"
+@template_episode: ~"./_template/episode.spw"
+@movie: ~"./movie-2027.spw"
+@pnc: ~"./post-nut-clarity/series.spw"
+@pnc_ground: ~"../caches/post-nut-clarity-2026-09.spw"
+
+operation = "prime"
+fixity = "experimental"
+
+^"clone"{
+  claim = `The template is abstract. A series is a copy of it under its own slug. Handles stay inside that namespace.`
+  steps = #[
+    `copy .spw/production/_template/ to .spw/production/<series-slug>/`,
+    `rename the anchors and the slug fields; leave the template files untouched`,
+    `point the series at its episodes, and each episode at the bit it returns to`,
+    `keep status = held until a return pass has marked what survived`
+  ][reg=set]
+  refuse = `Do not add a public route, a product card, or a data-spw family from a template or a held episode.`
+}[reg=facet]
+
+dispatch: .{
+  template_series = @template_series
+  template_episode = @template_episode
+  movie_2027 = @movie
+  post_nut_clarity = @pnc
+}

@@ -1,0 +1,39 @@
+# Post-Nut Clarity
+#
+# Namespace pnc. The show the 2027 producer-movie is making.
+# Ground is the 2026-09 prime. Episodes stay held here.
+# lore.land is a making-surface, not the owner. The movie is not this title.
+
+#>pnc_series
+#:series #!pnc
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@ground: ~"../../caches/post-nut-clarity-2026-09.spw"
+@movie: ~"../movie-2027.spw"
+@e01: ~"./e01-no-thank-you.spw"
+@template: ~"../_template/series.spw"
+
+operation = "prime"
+fixity = "experimental"
+
+namespace = `pnc`
+
+^"series"{
+  slug = `pnc`
+  title = `Post-Nut Clarity`
+  picture = @movie
+  ground = @ground
+  bits = #[
+    `the three-line meeting`,
+    `the two languages`,
+    `Boon, Bane, and Bone as physics, not scores`,
+    `thirteen-year inventory against a season a project can hold`
+  ][reg=set]
+  episodes = #[
+    `e01-no-thank-you`
+  ][reg=set]
+  status = `held`
+  refuse = `No public PNC route. Do not collapse another project into this title. Do not write thirteen years of unused episodes.`
+}[reg=facet]

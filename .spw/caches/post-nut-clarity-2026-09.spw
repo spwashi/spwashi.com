@@ -19,6 +19,10 @@
 @boonhonk: ~"./boonhonk-combinatoric-genre.spw"
 @lore_surface: ~"../../about/domains/lore.land/index.html"
 @series_home: ~"../../services/creator/index.html"
+@production: ~"../production/index.spw"
+@pnc_series: ~"../production/post-nut-clarity/series.spw"
+@pnc_e01: ~"../production/post-nut-clarity/e01-no-thank-you.spw"
+@producer_movie_2027: ~"../production/movie-2027.spw"
 
 operation = "prime"
 fixity = "experimental"
@@ -57,7 +61,7 @@ expression = pnc[ground]{iterate.bit}<projects>
   proof = `A bit that returned and changed; a project that still moved; an episode only if the pass named something.`
   resonance = `Familiar bits carry continuity. Iteration is the after. Other projects stay the making.`
   extension = `An episode can be cut, posted, or held. It does not rewrite the project that produced the heat.`
-  next_action = `Make the next project asset. Return to a familiar bit. Name a PNC episode only after that pass.`
+  next_action = `The 2027 movie (@producer_movie_2027) is the picture of the creator as a producer. Post-Nut Clarity is the show that producer is making, not the movie's title. The first held episode (@pnc_e01) is about writing that show: the squirrels on the page, and the writer who does not see the parallel. Public HTML still waits.`
   first_patch = `This cache plus a domains.spw production line that does not give lore.land exclusive ownership. Public HTML waits.`
   validation = `rg 'familiar bits|grounding' .spw/caches/post-nut-clarity-2026-09.spw && rg 'production =' .spw/domains.spw`
   do_not_promote_until = `At least one precipitated episode exists as a named artifact, and at least two projects have used the same bit without PNC swallowing either title.`

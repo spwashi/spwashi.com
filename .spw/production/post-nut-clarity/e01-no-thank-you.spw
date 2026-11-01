@@ -1,0 +1,69 @@
+# pnc / e01 — No thank you
+#
+# First episode of the show. It is about writing the show.
+# The storyline on the page is two squirrels at a Halloween party.
+# The writer does not see that it parallels their own life.
+# Held. Not a public page.
+
+#>pnc_e01
+#:episode #!pnc
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@series: ~"./series.spw"
+@movie: ~"../movie-2027.spw"
+@languages: ~"../../caches/post-nut-clarity-2026-09.spw#pnc-003_two_languages"
+
+operation = "prime"
+fixity = "experimental"
+
+namespace = `pnc`
+
+^"episode"{
+  slug = `e01-no-thank-you`
+  series = `pnc`
+  bit = `the two languages`
+  making = `Writing the show Post-Nut Clarity, inside the 2027 movie about the creator as a producer. The episode is of the show. It is not a scene of the movie unless a cut says so.`
+  heat = #[
+    `A writer is writing the show.`,
+    `Two squirrels in a relationship go to a Halloween party.`,
+    `One of them falls in love with a rat dressed as a squirrel.`,
+    `The costume is the whole introduction. In the city, at the party, the rat is readable as one of them.`,
+    `Producing the show looks like the way to resolve what the writer cannot name.`
+  ][reg=set]
+  after = #[
+    `No thank you: the writer does not have the self-awareness to recognize a storyline that parallels their own life.`,
+    `The squirrel had already decided to leave the trees of upstate New York. That decision is the clarity. The writer does not catch it as their own.`,
+    `Producing Post-Nut Clarity might have been how the ambiguity got resolved. What replaces it is the complexities of TV production.`
+  ][reg=set]
+  mark = `The joke is the replacement. The ambiguity the writer pursues is still there. The production schedule is what they are holding instead.`
+  lust = `A Halloween costume, a rat dressed as a squirrel, a party that explains a leaving, and a show whose title promises the writer will finally see.`
+  survived = `The decision in the trees, unseen by the person writing it. And the work of making television, which is real, and is not the recognition.`
+  grounds = `The 2027 movie can see the producer seeing this. The writer inside the show cannot. That distance is the episode.`
+  status = `held`
+  refuse = `Do not play the three-line meeting as this episode. Do not name the squirrels Ethan or Hila. Do not invent the unnamed person in the news as the rat. Do not post this.`
+}[reg=facet]
+
+^"no_thank_you"{
+  claim = `No thank you is the missed recognition. Someone writing the show does not notice when the storyline parallels their own life.`
+  joke = `Producing Post-Nut Clarity might be the way to resolve the ambiguity the writer pursues. It replaces that ambiguity with the complexities of TV production.`
+  parallel = `The writer pursues an ambiguity in a life. On the page, two squirrels in a relationship go to a Halloween party, and one falls in love with a rat dressed as a squirrel. The writer treats that as a storyline. They do not treat it as theirs.`
+}[reg=facet]
+
+^"skeleton"{
+  claim = `Ethan and Hila Klein inspired the skeleton: two seats at one table. One brings what the internet is doing. The other will not perform it back. The seats are the show's shape. They are not the squirrels, and they are not the writer.`
+  seats = #[
+    `the squirrel who falls in love at the party with a rat dressed as a squirrel, and who has already decided to leave the trees`,
+    `the squirrel who remains, and who receives the leaving as a story about a rat`
+  ][reg=set]
+  timely = `The heat on the creator's mind, the week of 23 October 2026: Hila Klein said Ethan had been in an affair for over six months, that the account widened lie by lie, and that she knew she was done when a lie caught. The show went on hiatus. The other person was not named. That shape sits under the storyline. The writer of the episode does not claim it as the parallel.`
+}[reg=facet]
+
+^"dynamic"{
+  claim = `What the episode elaborates is a writer who goes to production instead of recognition.`
+  writing = `The first episode is the squirrels, because the first episode is the writing of the show. The page is a Halloween party: two squirrels in a relationship, and one falling in love with a rat dressed as a squirrel.`
+  ambiguity = `The ambiguity is the unnamed parallel: a life that has already chosen, and a story still looking for a cause that photographs.`
+  production = `Calls, cuts, a crew, a title that says clarity. Each one is a real complexity. None of them is the moment the writer notices the page is their life.`
+  open = `Whether anyone else at the table can see the parallel the writer will not say.`
+}[reg=facet]

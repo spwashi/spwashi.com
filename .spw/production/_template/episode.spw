@@ -1,0 +1,33 @@
+# Episode template
+#
+# Copy beside series.spw as <episode-slug>.spw.
+# Replace every episode.slug and series.slug.
+# The episode is the mark: which lines were heat, and which survived.
+
+#>series_slug_episode_slug
+#:template #!episode
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "experimental"
+
+namespace = `series.slug`
+
+^"episode"{
+  slug = `episode.slug`
+  series = `series.slug`
+  bit = `the familiar routine this pass returns to`
+  making = `the project the heat came from; the episode does not become that project's owner`
+  heat = #[
+    `a line spoken before the return pass`
+  ][reg=set]
+  after = #[
+    `a line that still wants to be said with the lights on`
+  ][reg=set]
+  mark = `One sentence: what the cut kept.`
+  grounds = `the next making this pass prepares`
+  status = `held`
+  refuse = `Do not post this from the template. Do not mint a new bit to avoid returning to an old one.`
+}[reg=facet]
