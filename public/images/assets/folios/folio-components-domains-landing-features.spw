@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-components-domains-landing-features"
+  title: "Components, domains, landing page features"
+  description: "Laminated folio, scanned October 20, 2026, for the October drop."
+}
+
+^"source"{
+  id: "folio-2026-10-20-00"
+  master: "public/images/renders/_raw/folio-scans-2026-10-20/folio-2026-10-20-00-scan.png"
+  master_tracked: false
+  scan: { width: 2703, height: 3447, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 9.0 x 11.5 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "Laminated folio, white page with purple smears and tape: four kraft-backed lists name # widget Components, a # Domain arrow to SPWASHI.COM and its kin, @ overview to opportunities, and & Landing Page to Application Portal"
+  tiers: {
+    thumb: { width: 201, height: 256, avif_kib: 6, webp_kib: 6 }
+    display: { width: 402, height: 512, avif_kib: 29, webp_kib: 23 }
+    hero: { width: 803, height: 1024, avif_kib: 109, webp_kib: 72 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-10-31", "components", "widgets", "domains", "site-map", "spwashi"]
+  part_of: "folio-release-2026-10-31"
+  thread: "practice"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `site[plan]{components.domain.features}`
+  b: `*folio-components-domains-landing-features *components.list *domain.purpose.features <spwashi.com &landing.page &application.portal`
+  handles: ["*components.list", "*domain.purpose.features", "<spwashi.com", "&landing.page", "&application.portal"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?which widget would you build first?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

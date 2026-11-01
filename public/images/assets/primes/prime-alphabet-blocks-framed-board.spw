@@ -1,0 +1,66 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "prime-alphabet-blocks-framed-board"
+  title: "Alphabet blocks, framed board"
+  description: "Cutout arrangement, scanned October 22, 2026, for the October drop."
+}
+
+^"source"{
+  id: "prime-2026-10-22-00"
+  master: "public/images/renders/_raw/folio-scans-2026-10-22/prime-2026-10-22-00-scan.png"
+  master_tracked: false
+  scan: { width: 2312, height: 2946, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 7.7 x 9.8 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "primes"
+  role: "cutout-arrangement"
+  formats_available: ["avif", "webp"]
+  ground: "as scanned — the alphabet lies on the framed painted board (panel-2026-10-22-02), which is part of the arrangement"
+  alt_text: "Cutout on a painted framed board: one white sheet of ruled boxes lettered Aa to Zz along a snaking path, A to I down columns, J to R across, then U T S, V W X and Z Y, over a maroon patch and a green drip"
+  tiers: {
+    thumb: { width: 201, height: 256, avif_kib: 4, webp_kib: 4 }
+    display: { width: 402, height: 512, avif_kib: 18, webp_kib: 14 }
+    hero: { width: 804, height: 1024, avif_kib: 103, webp_kib: 64 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["prime", "release-2026-10-31", "alphabet", "letters", "frame", "drip"]
+  part_of: "folio-release-2026-10-31"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `alphabet[snaking]{a.to.z}`
+  b: `*prime-alphabet-blocks-framed-board *alphabet.blocks %26.letters ~drip.glyph`
+  handles: ["*alphabet.blocks", "%26.letters", "~drip.glyph"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?why do u, t, s and z, y run backward?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}
+
+^"imagine"{
+  status: "open — nothing generated yet; the creator runs Grok Imagine and chooses what returns"
+  motion: `the letter boxes light up one by one along the snaking path from Aa to Yy`
+  before: { id: "prime-2026-10-22-01", shares: ["*alphabet.blocks"] }
+  seed: "the master as scanned, lid and all; Imagine reads a dark ground more predictably than transparency"
+  returns: "public/images/renders/imagine/2026-10-31/prime-alphabet-blocks-framed-board-imagine-NN.<ext>, with a sidecar naming generator: Grok Imagine and source: prime-2026-10-22-00"
+  derivatives: []
+}

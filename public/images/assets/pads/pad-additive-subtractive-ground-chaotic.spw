@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "pad-additive-subtractive-ground-chaotic"
+  title: "Boon additive, bane subtractive, bone ground"
+  description: "Scratchpad page, scanned October 21, 2026, for the October drop."
+}
+
+^"source"{
+  id: "pad-2026-10-21-25"
+  master: "public/images/renders/_raw/folio-scans-2026-10-21/pad-2026-10-21-25-scan.png"
+  master_tracked: false
+  scan: { width: 2552, height: 3250, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 8.5 x 10.8 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "pads"
+  role: "pad-page"
+  formats_available: ["avif", "webp"]
+  alt_text: "Pen on a stained sheet: five words with their senses, Boon additive, BANE. subtractive, bone between ampersands ground, BONK with burst lines intrinsically chaotic, HONK in outline extrinsically chaotic, over tan water stains"
+  tiers: {
+    thumb: { width: 201, height: 256, avif_kib: 2, webp_kib: 2 }
+    display: { width: 402, height: 512, avif_kib: 8, webp_kib: 7 }
+    hero: { width: 804, height: 1024, avif_kib: 40, webp_kib: 22 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["pad", "release-2026-10-31", "valence", "boon", "bane", "bone", "bonk", "honk"]
+  part_of: "folio-release-2026-10-31"
+  thread: "valence"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `valence[define]{additive|subtractive|ground|chaotic}`
+  b: `*pad-additive-subtractive-ground-chaotic *valence.table &boon &bone &honk ~tan.stains %five.words`
+  handles: ["*valence.table", "&boon", "&bone", "&honk", "~tan.stains", "%five.words"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what makes chaos intrinsic rather than extrinsic?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

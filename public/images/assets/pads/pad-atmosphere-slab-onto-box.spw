@@ -1,0 +1,56 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "pad-atmosphere-slab-onto-box"
+  title: "Atmosphere over a hashed box"
+  description: "Scratchpad page, scanned October 21, 2026, for the October drop."
+}
+
+^"source"{
+  id: "pad-2026-10-21-24"
+  master: "public/images/renders/_raw/folio-scans-2026-10-21/pad-2026-10-21-24-scan.png"
+  master_tracked: false
+  scan: { width: 2556, height: 3282, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 8.5 x 10.9 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "pads"
+  role: "pad-page"
+  formats_available: ["avif", "webp"]
+  alt_text: "Pen on a loose sheet under an ATMOSPHERE tab: a wavy-topped slab floats above a box marked with a hash, with arrows pointing down from the slab onto the box's top face"
+  tiers: {
+    thumb: { width: 199, height: 256, avif_kib: 3, webp_kib: 3 }
+    display: { width: 399, height: 512, avif_kib: 8, webp_kib: 8 }
+    hero: { width: 798, height: 1024, avif_kib: 39, webp_kib: 26 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["pad", "release-2026-10-31", "atmosphere", "layers", "box", "hash", "diagram"]
+  part_of: "folio-release-2026-10-31"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `atmosphere[lower]{onto.box}`
+  b: `*pad-atmosphere-slab-onto-box <atmosphere *slab *hash.box ~arrows.down`
+  handles: ["<atmosphere", "*slab", "*hash.box", "~arrows.down"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what settles onto a box when the atmosphere comes down?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

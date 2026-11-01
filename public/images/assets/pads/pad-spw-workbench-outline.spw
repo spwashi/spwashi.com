@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "pad-spw-workbench-outline"
+  title: "Spwashi presents Spw Workbench"
+  description: "Scratchpad page, scanned October 17, 2026, for the October drop."
+}
+
+^"source"{
+  id: "pad-2026-10-17-01"
+  master: "public/images/renders/_raw/folio-scans-2026-10-17/pad-2026-10-17-01-scan.png"
+  master_tracked: false
+  scan: { width: 2884, height: 3766, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 9.6 x 12.6 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "pads"
+  role: "pad-page"
+  formats_available: ["avif", "webp"]
+  alt_text: "Pen on a spiral-pad page: Spwashi presents Spw Workbench, a bottle of APP, cli, components, CORE and debug, files README.md to spw-workbench.ts, folders design to viz paired with themes like LIVESTREAMS, and a boxed price"
+  tiers: {
+    thumb: { width: 196, height: 256, avif_kib: 4, webp_kib: 4 }
+    display: { width: 392, height: 512, avif_kib: 17, webp_kib: 14 }
+    hero: { width: 784, height: 1024, avif_kib: 69, webp_kib: 44 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["pad", "release-2026-10-31", "spw-workbench", "tooling", "file-tree", "livestreams", "wap"]
+  part_of: "folio-release-2026-10-31"
+  thread: "practice"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `workbench[outline]{lang.lib.runtime|design.team}`
+  b: `*pad-spw-workbench-outline *spw.workbench &spwashi ~readme.hooks.philosophy <media.spread <wonder.about.pie`
+  handles: ["*spw.workbench", "&spwashi", "~readme.hooks.philosophy", "<media.spread", "<wonder.about.pie"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what would each folder of a workbench be for?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

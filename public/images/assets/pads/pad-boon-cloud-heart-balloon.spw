@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "pad-boon-cloud-heart-balloon"
+  title: "Boon, cloud and heart balloon"
+  description: "Scratchpad page, scanned October 21, 2026, for the October drop."
+}
+
+^"source"{
+  id: "pad-2026-10-21-14"
+  master: "public/images/renders/_raw/folio-scans-2026-10-21/pad-2026-10-21-14-scan.png"
+  master_tracked: false
+  scan: { width: 1246, height: 1852, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 4.2 x 6.2 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "pads"
+  role: "pad-page"
+  formats_available: ["avif", "webp"]
+  alt_text: "Pen on a spiral-pad page: three overlapping frames hold a crosshatched cloud trailing two circles and a heart-shaped balloon on a string ringed by a loop, with Boon lettered in script across a small bar"
+  tiers: {
+    thumb: { width: 172, height: 256, avif_kib: 4, webp_kib: 4 }
+    display: { width: 344, height: 512, avif_kib: 13, webp_kib: 11 }
+    hero: { width: 689, height: 1024, avif_kib: 68, webp_kib: 36 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["pad", "release-2026-10-31", "boon", "cloud", "heart", "balloon", "frames"]
+  part_of: "folio-release-2026-10-31"
+  thread: "valence"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `boon[float]{cloud|heart.balloon}`
+  b: `*pad-boon-cloud-heart-balloon &boon *heart.balloon ~cloud ~crosshatch`
+  handles: ["&boon", "*heart.balloon", "~cloud", "~crosshatch"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what lifts the heart balloon?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-violet-pink-block-wash"
+  title: "Violet and pink block wash"
+  description: "Laminated folio, scanned October 22, 2026, for the October drop."
+}
+
+^"source"{
+  id: "folio-2026-10-22-02"
+  master: "public/images/renders/_raw/folio-scans-2026-10-22/folio-2026-10-22-02-scan.png"
+  master_tracked: false
+  scan: { width: 2702, height: 3431, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 9.0 x 11.4 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "Laminated folio, layered blue-grey, violet and lilac paint in blocky strokes around a pink square and a dark violet patch, with gold flecks at lower left; no lettering visible"
+  tiers: {
+    thumb: { width: 202, height: 256, avif_kib: 3, webp_kib: 3 }
+    display: { width: 403, height: 512, avif_kib: 17, webp_kib: 11 }
+    hero: { width: 807, height: 1024, avif_kib: 97, webp_kib: 47 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-10-31", "wash", "violet", "pink", "abstract", "blocks"]
+  part_of: "folio-release-2026-10-31"
+  thread: "washes"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `wash[layered]{violet.pink}`
+  b: `*folio-violet-pink-block-wash ~pink.square ~violet.patch ~gold.flecks`
+  handles: ["~pink.square", "~violet.patch", "~gold.flecks"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what is hiding under the violet?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

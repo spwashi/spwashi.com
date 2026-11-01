@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-what-kind-of-cake-tiles"
+  title: "What kind of cake"
+  description: "Laminated folio, scanned October 20, 2026, for the October drop."
+}
+
+^"source"{
+  id: "folio-2026-10-20-11"
+  master: "public/images/renders/_raw/folio-scans-2026-10-20/folio-2026-10-20-11-scan.png"
+  master_tracked: false
+  scan: { width: 2715, height: 3449, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 9.1 x 11.5 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  orientation: "Mixed: the cake and HTML tiles are upside down and WOW runs sideways."
+  alt_text: "Laminated folio, grey-lilac wash over a grid of drawn square tiles: faces, a towel roll, a ? in a yellow frame, a hand by WOW, and upside-down tiles asking WHAT KIND OF CAKE ? WHO MADE IT. ? beside HTML"
+  tiers: {
+    thumb: { width: 202, height: 256, avif_kib: 5, webp_kib: 6 }
+    display: { width: 403, height: 512, avif_kib: 46, webp_kib: 26 }
+    hero: { width: 806, height: 1024, avif_kib: 95, webp_kib: 109 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "under 120 KiB; stepped from quality 75 to AVIF 50, WebP 65"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-10-31", "cake", "tiles", "faces", "questions", "html"]
+  part_of: "folio-release-2026-10-31"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `cake[kind]{who.made.it}`
+  b: `*folio-what-kind-of-cake-tiles ?what.kind.of.cake ?who.made.it *tile.grid ~faces <html`
+  handles: ["?what.kind.of.cake", "?who.made.it", "*tile.grid", "~faces", "<html"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what kind of cake, and who made it?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

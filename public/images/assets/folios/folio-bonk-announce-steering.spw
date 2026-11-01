@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-bonk-announce-steering"
+  title: "Bonk announce, steering"
+  description: "Laminated folio, scanned October 22, 2026, for the October drop."
+}
+
+^"source"{
+  id: "folio-2026-10-22-03"
+  master: "public/images/renders/_raw/folio-scans-2026-10-22/folio-2026-10-22-03-scan.png"
+  master_tracked: false
+  scan: { width: 2712, height: 3435, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 9.0 x 11.4 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "Laminated folio, purple paint: a kraft card reads BONKANNOUNCE over a round face with a beak-like mouth and raised hands, above six square drawings: cubes, a star, a cloud over a hill, a cloud, a face, and STEERING"
+  tiers: {
+    thumb: { width: 202, height: 256, avif_kib: 5, webp_kib: 6 }
+    display: { width: 404, height: 512, avif_kib: 35, webp_kib: 23 }
+    hero: { width: 809, height: 1024, avif_kib: 110, webp_kib: 90 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "under 120 KiB; stepped from quality 75 to AVIF 60, WebP 75"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-10-31", "bonk", "announce", "kraft", "drawings", "steering"]
+  part_of: "folio-release-2026-10-31"
+  thread: "valence"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `bonk[announce]{steering}`
+  b: `*folio-bonk-announce-steering *bonk.announce.card %six.squares ~cloud ~steering`
+  handles: ["*bonk.announce.card", "%six.squares", "~cloud", "~steering"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what would a bonk announce?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

@@ -1,0 +1,58 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "pad-pie-pi-ladder-january-eight"
+  title: "Pie, pi, Boon? bone"
+  description: "Scratchpad page, scanned October 21, 2026, for the October drop."
+}
+
+^"source"{
+  id: "pad-2026-10-21-03"
+  master: "public/images/renders/_raw/folio-scans-2026-10-21/pad-2026-10-21-03-scan.png"
+  master_tracked: false
+  scan: { width: 2763, height: 3807, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 9.2 x 12.7 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "pads"
+  role: "pad-page"
+  formats_available: ["avif", "webp"]
+  alt_text: "Pen on a spiral-pad page with a coffee ring: SPWASHi 01 08 26 around the logo, an 08 splat, a pie over π shrinking to Pi, two boxes with braces, a barred drip label, Boon? over bone, and a boon balloon"
+  tiers: {
+    thumb: { width: 186, height: 256, avif_kib: 4, webp_kib: 4 }
+    display: { width: 372, height: 512, avif_kib: 19, webp_kib: 15 }
+    hero: { width: 743, height: 1024, avif_kib: 75, webp_kib: 47 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["pad", "release-2026-10-31", "pie", "pi", "boonhonk", "balloon", "january", "braces"]
+  part_of: "folio-release-2026-10-31"
+  thread: "wap"
+  lettered_dates: ["2026-01-08"]
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `pie[ladder]{π|pi}`
+  b: `*pad-pie-pi-ladder-january-eight ~pi.ladder ?boon *boon.balloon ~date.splat ~cup.ring @2026-01-08`
+  handles: ["~pi.ladder", "?boon", "*boon.balloon", "~date.splat", "~cup.ring", "@2026-01-08"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?is it a boon or a bone?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

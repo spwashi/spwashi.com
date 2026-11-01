@@ -1,0 +1,68 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "prime-domain-stencil-upside-down"
+  title: "Domain stencil, upside down"
+  description: "Cutout arrangement, scanned October 22, 2026, for the October drop."
+}
+
+^"source"{
+  id: "prime-2026-10-22-07"
+  master: "public/images/renders/_raw/folio-scans-2026-10-22/prime-2026-10-22-07-scan.png"
+  master_tracked: false
+  scan: { width: 3454, height: 2695, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 11.5 x 9.0 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "primes"
+  role: "cutout-arrangement"
+  formats_available: ["avif", "webp"]
+  ground: "as scanned — the stencil sheet lies over a painted board that shows through its holes; the lid at the edges stays, since the board's dark paint meets it"
+  orientation: "The stencil sheet's lettering is upside down."
+  alt_text: "Stencil sheet, upside down on a grey-washed board that shows through its cut holes: lore.land, spwashi.ink, spwashi.com, autonomous.feedback, mutex.buzz, ATTENTION .PRODUCTIONS, Boon.land, BANE.LAND, bone.land, factshift.com, Spw.Quest"
+  tiers: {
+    thumb: { width: 256, height: 200, avif_kib: 5, webp_kib: 6 }
+    display: { width: 512, height: 400, avif_kib: 24, webp_kib: 19 }
+    hero: { width: 1024, height: 799, avif_kib: 97, webp_kib: 62 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["prime", "release-2026-10-31", "domains", "lore-land", "boon-land", "factshift", "spw-quest", "valence"]
+  part_of: "folio-release-2026-10-31"
+  thread: "rooms"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `domains[stencil]{lore.land|boon.land|spw.quest}`
+  b: `*prime-domain-stencil-upside-down *domain.stencil <lore.land <boon.land <factshift.com <spw.quest <autonomous.feedback`
+  handles: ["*domain.stencil", "<lore.land", "<boon.land", "<factshift.com", "<spw.quest", "<autonomous.feedback"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?which of these domains would you visit first?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}
+
+^"imagine"{
+  status: "open — nothing generated yet; the creator runs Grok Imagine and chooses what returns"
+  motion: `the stencil sheet flips right side up and the grey board slides out from under its holes`
+  before: { id: "prime-2026-10-22-08", shares: ["*domain.stencil"] }
+  seed: "the master as scanned, lid and all; Imagine reads a dark ground more predictably than transparency"
+  returns: "public/images/renders/imagine/2026-10-31/prime-domain-stencil-upside-down-imagine-NN.<ext>, with a sidecar naming generator: Grok Imagine and source: prime-2026-10-22-07"
+  derivatives: []
+}

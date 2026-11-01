@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-boon-domain-list-flag-football"
+  title: "Boon domain list"
+  description: "Laminated folio, scanned October 22, 2026, for the October drop."
+}
+
+^"source"{
+  id: "folio-2026-10-22-04"
+  master: "public/images/renders/_raw/folio-scans-2026-10-22/folio-2026-10-22-04-scan.png"
+  master_tracked: false
+  scan: { width: 2698, height: 3437, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 9.0 x 11.5 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "Laminated folio, lavender wash over lined paper: Boon heads FACTSHIFT.COM @ SERVER EXPERIMENTS, BOON.LAND to LORE.LAND, TEALSTRIPESVIBES.COM, BOONHONK.ING and SPWASHI domains, with a b.PiE badge: BREAKDANCING to FLAG FOOTBALL"
+  tiers: {
+    thumb: { width: 201, height: 256, avif_kib: 5, webp_kib: 6 }
+    display: { width: 402, height: 512, avif_kib: 34, webp_kib: 23 }
+    hero: { width: 804, height: 1024, avif_kib: 116, webp_kib: 85 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "under 120 KiB; stepped from quality 75 to AVIF 65, WebP 75"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-10-31", "domains", "boon-land", "factshift", "teal-stripes-vibes", "checklist"]
+  part_of: "folio-release-2026-10-31"
+  thread: "rooms"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `domains[list]{boon.land..spwashi.ai}`
+  b: `*folio-boon-domain-list-flag-football <factshift.com <boon.land <lore.land *b.pie.badge ~breakdancing.to.flag.football`
+  handles: ["<factshift.com", "<boon.land", "<lore.land", "*b.pie.badge", "~breakdancing.to.flag.football"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?how does breakdancing lead to flag football?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

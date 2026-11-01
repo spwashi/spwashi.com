@@ -1,0 +1,243 @@
+# Release 2026-10-31 — the October drop: folios, panel faces, cutout arrangements, and scratchpad pages scanned on five afternoons, October 17 through 26, and hung on a page of their own.
+# Operation: cache over a contract. Scans, derivatives, and sidecars are real; form, price, availability, and every expression are the creator's to set.
+
+#>folio_release_2026_10_31
+#:record #!release #!folios #!panels #!primes #!pads
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@archive: ~"../folio-archive.spw"
+@previous: ~"./release-2026-09-28.spw"
+@route: ~"../../../design/folios/october-2026/index.html"
+@shelf: ~"../../../design/folios/index.html"
+@image_optimize: ~"../../../.agents/skills/image-optimize/SKILL.md"
+@image_naming: ~"../../../.agents/skills/image-naming-magic/SKILL.md"
+@asset_registry: ~"../../assets.spw"
+
+^"release"{
+  id = `folio-release-2026-10-31`
+  date = `2026-10-31, the last day of October`
+  name = `The creator's word for it: an October drop.`
+  sources = `35 folios, 5 panel faces, 42 cutout arrangements, and 31 scratchpad pages, scanned October 17, 18, 20, 21, 22, and 26`
+  form = `unset — the reply to an order card settles it`
+  price = `unset`
+  availability = `unset`
+  rule = `Ids keep the scan date: <kind>-2026-10-DD-NN, numbered in scan order within each kind and day, with no gaps. A folio id names a folio, a panel id one scanned face, a prime id one arrangement, a pad id one page.`
+}
+
+^"intake"{
+  scanned = `2026-10-17, -18, -20, -21, -22, and -26; 300 dpi sRGB PNG from the station`
+  order = `October 17 opens with cutouts and folios; October 18 runs an assortment, a sequence, and the day's pieces; October 20 is folios; October 21 is a long run of cutouts, the January pad pages, and loose drawn sheets; October 22 is pen drawings, a framed board, and a second run of cutouts; October 26 is panel faces`
+  numbering = `Creator rule from 2026-09-28: renumber in scan order with no gaps. Station file names stay with the masters.`
+  masters = `public/images/renders/_raw/folio-scans-2026-10-DD/<id>-scan.png — APFS clones of the station copies (the disk was nearly full, and a clone costs no space), gitignored, excluded from the dev server and build; each folder keeps an intake-map.tsv`
+  derivatives = `folios/, panels/, primes/, and a new pads/; each piece {thumb,display,hero}.{avif,webp} plus one .spw sidecar; heroes stepped from quality 75 toward a floor of 45 until under 120 KiB`
+  extent = `Folios run about 8.5 x 11 in at the laminate edge; nothing is measured yet. Pads run the pad's page; cutout scans run the scan bed.`
+  orientation = `Kept as scanned. A sidecar says where lettering runs sideways or upside down, and the page offers a turn.`
+  unreadable = `One station file from October 21 would not decode (a broken PNG block); the station may still hold a good copy.`
+}
+
+^"returns"{
+  claim = `Twenty-eight scans are twenty-five September pieces that went back through the scanner unchanged (folio-ampersand-hair-cube three times). Their masters are archived beside the October scans under the September id with a -rescan-2026-10-DD suffix; they get no new derivatives and keep their place on the September shelf.`
+  state = `One came back changed: folio-movies-are-emotions-art-carries-healing (folio-2026-09-27-12) now has a card taped on, lettered October 04 2026 and Spwashi design & development. It is folio-2026-10-18-00, with state_of pointing back.`
+  twins = `Six October pieces were scanned more than once within the month (the framed board three times); the first scan is the piece, and the later ones are archived as re-scans of it.`
+  september = `folio-ampersand-hair-cube, folio-business-courses-weekdays, folio-enter-scope-teal-blocks, folio-honk-mixing-board, folio-lore-cloud-wonder-forms, folio-mimes-against-wap-blue-wash, folio-mimes-against-wap-lightning, folio-octvember-novel-under-test, folio-operator-tiles-signed-copy, folio-pink-hash-stack, folio-wap-boy-invented-pie, panel-are-we-saying-the-same, panel-blue-sky-grey-moon-rose, panel-dark-orb-two-pink-dots, panel-ember-figure-glyph, panel-five-columns-beads-boxes, panel-hatched-green-comet, panel-ochre-drawings-teal-curve, panel-october-09-monday-cups, panel-pale-moon-maroon, panel-publishing-print-digital-2018, panel-red-field-teal-drips, panel-rose-arch-bulb-dome, panel-teal-moon-white-drip, panel-white-blot-red-halo`
+  held = `Other makers' printed matter, blank stock, the reverse sides of two drawn sheets, and one grayscale scan of two shelved folios side by side stay with the masters and are not shown.`
+}
+
+^"kinds"{
+  folios = `Thirty-five laminated folios, several mostly wash now, with lettering showing through.`
+  panels = `Five panel faces: three from October 22 (an eye with a tear, a glyph block beside a plume, and a framed board), and two from October 26, one of them two September panels laid over each other.`
+  primes = `Forty-two arrangements of hand-lettered cutouts. The lid is keyed to transparent where the cutouts lie on a clear sheet; four lie on a ledger sheet or a painted board and keep their ground.`
+  pads = `Thirty-one scratchpad pages: spiral-pad pages dated in early January 2026, loose sheets in pen and marker, sticky notes, and two dense pen drawings. The creator, 2026-10-31: "I like these scratchpads and they may be valuable on the site." The kind is named for that word.`
+}
+
+^"ground"{
+  claim = `As on 2026-09-28: the black behind cutouts on a clear sheet is the scanner lid, so it is clear.`
+  key = `Rebuilt for this set, since September's keying was not kept: a 5x5 median before thresholds (the lid's texture sits near 17% grey and speckles a plain threshold), dark under 30%, neutral under 10% chroma, a core that survives a wide opening so thick marker strokes touching a cutout's edge stay, regrown three small steps inside a finer mask so narrow gaps between cutouts still clear, reached from the scan edge; light slivers in an 8px edge band clear only where they meet the lid, and pure white reached from the edge is uncovered glass.`
+  held = `A fleck of heavy black that runs to a cutout's edge can still clear; read every keyed piece by eye on a coloured ground.`
+  pages = `The October page offers three grounds for the cutouts (dusk, paper, the lid), dusk by default. Which ground the cutouts want is a feel decision for the creator in a browser.`
+}
+
+^"sources"{
+  folios_10_17 = #[
+    `00 media-for-play-and-development`, `01 custom-instructions-augmentation-language`, `02 design-development-architecture`,
+    `03 bonk-water-cycle-mirrored`, `04 how-pomegranate-external-internal`,
+  ][reg=list]
+  folios_10_18 = #[
+    `00 spwashi-design-and-development`, `01 it-is-my-boonhat`, `02 unary-motions-of-my-brand`,
+    `03 header-rod-menu-frame`, `04 babbling-noodling-play`, `05 four-screens-dark-arrow`,
+    `06 how-water-works-agua`, `07 pick-your-boon-honk`, `08 focal-square-h1-menu`,
+  ][reg=list]
+  folios_10_20 = #[
+    `00 components-domains-landing-features`, `01 dang-literal-boon-land`, `02 we-need-better-plating`,
+    `03 hand-bound-journal-rock`, `04 hiring-floor-onboard-complexity`, `05 factshift-faint-lands-chaos`,
+    `06 headline-honk-clown-downtown`, `07 moon-green-hill-black-cutout`, `08 late-night-scene-workshop`,
+    `09 bonk-three-balls-ledge`, `10 magenta-wash-pencil-eye`, `11 what-kind-of-cake-tiles`,
+    `12 character-seed-lore-land`, `13 operator-ladder-boat-car`, `14 concept-topic-structure-quality`,
+  ][reg=list]
+  folios_10_21 = #[
+    `00 web-presence-chapters`,
+  ][reg=list]
+  folios_10_22 = #[
+    `00 teal-swirl-white-arcs`, `01 lavender-asterisks-arrows`, `02 violet-pink-block-wash`,
+    `03 bonk-announce-steering`, `04 boon-domain-list-flag-football`,
+  ][reg=list]
+  panels_10_22 = #[
+    `00 eye-teal-tear-dress-form`, `01 maroon-glyph-pale-plume`, `02 framed-maroon-drip-glyph`,
+  ][reg=list]
+  panels_10_26 = #[
+    `00 wabo-pie-zzz-face`, `01 white-blot-over-pale-moon`,
+  ][reg=list]
+  primes_10_17 = #[
+    `00 whats-the-big-deal-ai`,
+  ][reg=list]
+  primes_10_18 = #[
+    `00 mindful-prompting-sequencing-honk`, `01 trend-list-skills-gap`, `02 alfredo-sauce-rpg-wednesday`,
+    `03 operator-years-valence-lands`, `04 i-love-you-arrow-legs`, `05 daydreaming-less-stress`,
+    `06 pick-a-lens-daydreaming`, `07 over-on-to-about`, `08 boat-on-lined-paper`,
+    `09 daydreaming-boat-over-about`, `10 teal-spiral-daydreaming`, `11 autumn-lantern`,
+    `12 october-production-season-begins`,
+  ][reg=list]
+  primes_10_21 = #[
+    `00 math-to-linguistic-physics`, `01 make-things-look-easy-caveat`, `02 performance-role-to-miscellaneous`,
+    `03 olympic-cycles-biphasic`, `04 depth-contribution-network`, `05 technical-skills-gap`,
+    `06 music-dominoes-due-date`, `07 meet-hundreds-sharpen-visible`, `08 lore-writers-room-applied-math`,
+    `09 public-home-school-brain-play`, `10 receive-feedback-love-intentionally`, `11 seven-chakras-receive-feedback`,
+    `12 thirteen-page-arc-wap`, `13 why-try-plan-in-october`, `14 grants-to-product-placement`,
+    `15 ten-year-career-organized-people`, `16 once-weekly-app-ecology`, `17 daily-bap-wap-mom`,
+    `18 i-love-you-ledger`,
+  ][reg=list]
+  primes_10_22 = #[
+    `00 alphabet-blocks-framed-board`, `01 which-roots-to-water`, `02 writing-for-modern-audiences`,
+    `03 operator-tree-boon-to-honk`, `04 big-o-notation-faucet`, `05 start-a-business-cinematic-universe`,
+    `06 web-apis-html-tags-storage`, `07 domain-stencil-upside-down`, `08 domain-stencil-upright`,
+  ][reg=list]
+  pads_10_17 = #[
+    `00 seasons-boon-honk-sweater`, `01 spw-workbench-outline`,
+  ][reg=list]
+  pads_10_21 = #[
+    `00 boon-bane-bone-january-four`, `01 boon-scroll-typography-bone`, `02 jan-u-ary-boon-balloon`,
+    `03 pie-pi-ladder-january-eight`, `04 my-clients-web-ecology-coach`, `05 january-ten-wireframes`,
+    `06 modern-skills-fifteen-yoe`, `07 orange-hash-eyed-face`, `08 is-this-necessary-goodness`,
+    `09 practice-videos-code-ecosystem`, `10 html-carton-css-hat-js`, `11 curiosity-challenge-forces`,
+    `12 why-why-why-lips`, `13 about-rhythm-pricing-services`, `14 boon-cloud-heart-balloon`,
+    `15 green-mass-white-sweep`, `16 pi-spillin-guy-braces`, `17 more-boon-honk`,
+    `18 uncle-ar-why-unclear`, `19 css-transform-transition-animation`, `20 yellow-green-drip-glyph`,
+    `21 career-php-typescript`, `22 mimes-against-wap-mean-it`, `23 five-wireframes-hash-face`,
+    `24 atmosphere-slab-onto-box`, `25 additive-subtractive-ground-chaotic`,
+  ][reg=list]
+  pads_10_22 = #[
+    `00 wonder-about-pi-box`, `01 wap-casual-honk-about-pi`, `02 teams-etymology-phonics-searches`,
+  ][reg=list]
+  titles = `Working titles named from what is lettered or painted. The creator's titles replace them; slugs follow.`
+}
+
+^"cutouts"{
+  # read from the scans; working names, the creator's to rename
+  census = #[
+    `*performance.list — prime 10-21 02–07, 11`,
+    `*daydreaming.figure — prime 10-18 05–10`,
+    `*holiday.boon.list — prime 10-22 01–06`,
+    `*pick.a.lens — prime 10-18 06–10`,
+    `*alphabet.blocks — prime 10-22 00–03`,
+    `*lined.paper.boat — prime 10-18 08–10, 12`,
+    `*over.about.window — prime 10-18 07–10`,
+    `*skills.gap.card — prime 10-18 01; 10-21 05–07`,
+    `*software.applied.math — prime 10-21 08–11`,
+    `*big.o.notation — prime 10-22 04–06`,
+    `*drop.sprout — prime 10-22 01–03`,
+    `*growing.as.a.community — prime 10-22 01–03`,
+    `*holiday.bundle — prime 10-22 01–03`,
+    `*junior.engineering.journey — prime 10-21 13–15`,
+    `*meet.sharpen.produce — prime 10-21 07, 10–11`,
+    `*olympic.cycles — prime 10-21 03–05`,
+    `*receive.feedback.love — prime 10-21 10–12`,
+    `*software.engineer.card — prime 10-22 04–06`,
+    `*why.try — prime 10-21 13–15`,
+    `*autumn.lantern — prime 10-18 11–12`,
+    `*books.in.order — prime 10-21 06–07`,
+    `*core.programming.paradigms — prime 10-21 13–14`,
+    `*depth.contribution.card — prime 10-21 04–05`,
+    `*dimension.depth.description — prime 10-18 02–03`,
+    `*domain.stencil — prime 10-22 07–08`,
+    `*domino.1600 — prime 10-21 06–07`,
+    `*grants.investors.ladder — prime 10-21 14–15`,
+    `*i.love.you.balloon — prime 10-18 04; 10-21 18`,
+    `*math.links.card — prime 10-21 00–01`,
+    `*music.kraft.badge — prime 10-21 06–07`,
+    `*program.your.brain — prime 10-22 04–05`,
+    `*public.brain.play — prime 10-21 09–10`,
+    `*seven.chakras — prime 10-21 11–12`,
+    `*something.teal.wash — prime 10-18 02–03`,
+    `*stacked.box.card — prime 10-18 09–10`,
+    `*start.a.business.ladder — prime 10-22 05–06`,
+    `*teal.weekdays — prime 10-18 02–03`,
+    `*topic.list — prime 10-22 01, 03`,
+    `*web.apis.list — prime 10-22 05–06`,
+    `*which.roots.to.water — prime 10-22 01–02`,
+    `*writing.for.modern.audiences — prime 10-22 02–03`,
+    `*ai.or.si — prime 10-17 00`,
+    `*alfredo.sauce.card — prime 10-18 02`,
+    `*app.ecology — prime 10-21 16`,
+    `*big.deal.ai — prime 10-17 00`,
+    `*books.reason.card — prime 10-18 01`,
+    `*brace.rows — prime 10-18 02`,
+    `*campaign.strategies — prime 10-22 04`,
+    `*career.progression — prime 10-18 00`,
+    `*companies.organized.people — prime 10-21 15`,
+    `*daily.bap — prime 10-21 17`,
+    `*design.topics.card — prime 10-18 00`,
+    `*discord.tiktok.cloud — prime 10-21 13`,
+    `*doing.the.opposite — prime 10-18 02`,
+    `*due.date.strip — prime 10-21 06`,
+    `*faucet.card — prime 10-22 04`,
+    `*goals.sp.banner — prime 10-17 00`,
+    `*holiday.season.tokens — prime 10-18 02`,
+    `*implementing.a.design.card — prime 10-21 16`,
+    `*inv.fragment — prime 10-18 02`,
+    `*level.ladder — prime 10-22 01`,
+    `*look.easy.caveat — prime 10-21 01`,
+    `*lore.land.card — prime 10-22 01`,
+    `*lore.longneck — prime 10-21 08`,
+    `*mindful.prompting.tabs — prime 10-18 00`,
+    `*music.typewriter — prime 10-18 00`,
+    `*once.weekly.job — prime 10-21 16`,
+    `*one.year.of.ai — prime 10-17 00`,
+    `*operator.tree — prime 10-22 03`,
+    `*operator.years — prime 10-18 03`,
+    `*pay.friends.to.party — prime 10-21 15`,
+    `*people.who.enjoy — prime 10-21 13`,
+    `*pink.marbled.card — prime 10-18 01`,
+    `*plan.in.october — prime 10-21 13`,
+    `*production.season.scroll — prime 10-18 12`,
+    `*rpg.wednesday.cloud — prime 10-18 02`,
+    `*rpg.wednesday.hat — prime 10-21 13`,
+    `*rpg.wednesday.october.29 — prime 10-21 16`,
+    `*sent.a.sticker — prime 10-17 00`,
+    `*sigil.grid.card — prime 10-18 01`,
+    `*software.troupe.list — prime 10-18 00`,
+    `*spicy.ambience — prime 10-18 02`,
+    `*spw.quest — prime 10-18 03`,
+    `*teal.spiral — prime 10-18 10`,
+    `*ten.year.career — prime 10-21 15`,
+    `*thirteen.page.arc — prime 10-21 12`,
+    `*today.is.october.26 — prime 10-21 06`,
+    `*trend.search.list — prime 10-18 01`,
+    `*upscaling.tools — prime 10-18 00`,
+    `*valence.lands — prime 10-18 03`,
+    `*whale.sigil.card — prime 10-17 00`
+  ][reg=list]
+}
+
+^"imagine"{
+  seat = `Every prime sidecar carries ^"imagine" as on 2026-09-28: a motion drawn from the piece, the neighbours it shares cutouts with, and where returns land: public/images/renders/imagine/2026-10-31/<slug>-imagine-NN.<ext>.`
+  keeps = `The scan stays the reading layer; Imagine's motion settles back on the scan, and alt text describes the scan.`
+}
+
+^"held"{
+  words = `Some lettering is frank. Alt text transcribes what a shown piece letters; where a piece is placed beyond this page is the creator's call.`
+  schooling = `Lettering about schooling is transcribed in alt text; no title, handle, question, or page copy restates it.`
+  show = `A cutout naming the creator's own show title is transcribed and not featured.`
+  placement = `The October page hangs every piece. Which pieces stand in on other routes is the creator's call, made one placement at a time.`
+}

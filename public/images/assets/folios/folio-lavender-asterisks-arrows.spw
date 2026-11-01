@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-lavender-asterisks-arrows"
+  title: "Lavender asterisks and arrows"
+  description: "Laminated folio, scanned October 22, 2026, for the October drop."
+}
+
+^"source"{
+  id: "folio-2026-10-22-01"
+  master: "public/images/renders/_raw/folio-scans-2026-10-22/folio-2026-10-22-01-scan.png"
+  master_tracked: false
+  scan: { width: 3452, height: 2732, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 11.5 x 9.1 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "Laminated folio, lavender wash with grey scumble over pen drawings: three asterisks, an up arrow, a tall leaf-shaped point, a < and a ^, an infinity loop, spirals and a curling hand-like form; no words"
+  tiers: {
+    thumb: { width: 256, height: 203, avif_kib: 6, webp_kib: 7 }
+    display: { width: 512, height: 405, avif_kib: 41, webp_kib: 26 }
+    hero: { width: 1024, height: 811, avif_kib: 99, webp_kib: 100 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "under 120 KiB; stepped from quality 75 to AVIF 55, WebP 75"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-10-31", "asterisks", "arrows", "glyphs", "lavender", "wash"]
+  part_of: "folio-release-2026-10-31"
+  thread: "washes"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `glyphs[drawn]{asterisk.arrow.loop}`
+  b: `*folio-lavender-asterisks-arrows ~asterisks ~up.arrow ~infinity.loop ~leaf.point`
+  handles: ["~asterisks", "~up.arrow", "~infinity.loop", "~leaf.point"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?where is the up arrow pointing?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

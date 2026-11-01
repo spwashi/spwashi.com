@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "pad-practice-videos-code-ecosystem"
+  title: "Practice making videos, code ecosystem"
+  description: "Scratchpad page, scanned October 21, 2026, for the October drop."
+}
+
+^"source"{
+  id: "pad-2026-10-21-09"
+  master: "public/images/renders/_raw/folio-scans-2026-10-21/pad-2026-10-21-09-scan.png"
+  master_tracked: false
+  scan: { width: 2561, height: 3276, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 8.5 x 10.9 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "pads"
+  role: "pad-page"
+  formats_available: ["avif", "webp"]
+  alt_text: "Pen on a loose white sheet: two boxed type specimens of Aa Bb Cc, then a numbered pair of stepped boxes lettered 1. Practice Making Videos and 2. Build A Code Ecosystem"
+  tiers: {
+    thumb: { width: 200, height: 256, avif_kib: 3, webp_kib: 3 }
+    display: { width: 400, height: 512, avif_kib: 9, webp_kib: 8 }
+    hero: { width: 801, height: 1024, avif_kib: 39, webp_kib: 25 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["pad", "release-2026-10-31", "goals", "videos", "code-ecosystem", "lettering", "alphabet"]
+  part_of: "folio-release-2026-10-31"
+  thread: "practice"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `practice[numbered]{making.videos|code.ecosystem}`
+  b: `*pad-practice-videos-code-ecosystem !practice.making.videos !build.a.code.ecosystem ~aa.bb.cc`
+  handles: ["!practice.making.videos", "!build.a.code.ecosystem", "~aa.bb.cc"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what would you build first, the videos or the ecosystem?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

@@ -1,0 +1,61 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-spwashi-design-and-development"
+  title: "Spwashi design & development"
+  description: "Laminated folio, scanned October 18, 2026, for the October drop."
+}
+
+^"source"{
+  id: "folio-2026-10-18-00"
+  master: "public/images/renders/_raw/folio-scans-2026-10-18/folio-2026-10-18-00-scan.png"
+  master_tracked: false
+  scan: { width: 2706, height: 3433, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 9.0 x 11.4 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+  state_of: "folio-2026-09-27-12"
+  state_note: "the same folio as folio-movies-are-emotions-art-carries-healing, scanned again with a card taped on"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  orientation: "Boon HONK on the card runs sideways; the faint HONK and word column under the paint run on a diagonal"
+  alt_text: "Laminated folio, teal wash over faint lettering, MOVIES ARE EMOTIONS and ART CARRIES HEALING: a white card taped on reads OCTOBER 04 2026, Spwashi design & development and Boon HONK beside two large looped monogram letters"
+  tiers: {
+    thumb: { width: 202, height: 256, avif_kib: 4, webp_kib: 5 }
+    display: { width: 404, height: 512, avif_kib: 29, webp_kib: 20 }
+    hero: { width: 807, height: 1024, avif_kib: 103, webp_kib: 74 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "under 120 KiB; stepped from quality 75 to AVIF 65, WebP 75"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-10-31", "boonhonk", "services", "design", "development", "october", "teal"]
+  part_of: "folio-release-2026-10-31"
+  thread: "practice"
+  lettered_dates: ["2026-10-04"]
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `spwashi[design|development]{taped.card}`
+  b: `*folio-spwashi-design-and-development *taped.card &spwashi ~boon.honk @2026-10-04 ~movies.are.emotions`
+  handles: ["*taped.card", "&spwashi", "~boon.honk", "@2026-10-04", "~movies.are.emotions"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what would you letter on a card taped over older work?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

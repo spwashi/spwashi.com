@@ -1,0 +1,58 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "pad-pi-spillin-guy-braces"
+  title: "Pi Spillin' Guy and braces"
+  description: "Scratchpad page, scanned October 21, 2026, for the October drop."
+}
+
+^"source"{
+  id: "pad-2026-10-21-16"
+  master: "public/images/renders/_raw/folio-scans-2026-10-21/pad-2026-10-21-16-scan.png"
+  master_tracked: false
+  scan: { width: 2552, height: 3269, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 8.5 x 10.9 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "pads"
+  role: "pad-page"
+  formats_available: ["avif", "webp"]
+  orientation: "lettering runs sideways, bottom to top"
+  alt_text: "Pen on a loose sheet in three columns: a fanned card stack lettered Pi Spillin' Guy over a figure, a WAP boy card and a cloud; braced hatched tiles under a looped asterisk card; and [<@>], {&}, (&) => *[...]"
+  tiers: {
+    thumb: { width: 200, height: 256, avif_kib: 4, webp_kib: 4 }
+    display: { width: 400, height: 512, avif_kib: 13, webp_kib: 12 }
+    hero: { width: 800, height: 1024, avif_kib: 50, webp_kib: 36 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["pad", "release-2026-10-31", "wap", "operators", "braces", "cards", "asterisk"]
+  part_of: "folio-release-2026-10-31"
+  thread: "operators"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `value[gather]{perspective|subject}`
+  b: `*pad-pi-spillin-guy-braces *pi.spillin.guy *wap.boy ~braces ~card.stack ~cloud`
+  handles: ["*pi.spillin.guy", "*wap.boy", "~braces", "~card.stack", "~cloud"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what does pi spillin' guy spill?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

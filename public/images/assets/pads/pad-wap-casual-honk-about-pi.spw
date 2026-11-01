@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "pad-wap-casual-honk-about-pi"
+  title: "WAP casual, HONK about PI"
+  description: "Scratchpad page, scanned October 22, 2026, for the October drop."
+}
+
+^"source"{
+  id: "pad-2026-10-22-01"
+  master: "public/images/renders/_raw/folio-scans-2026-10-22/pad-2026-10-22-01-scan.png"
+  master_tracked: false
+  scan: { width: 2406, height: 2393, dpi: 300, orientation: "square" }
+  scan_extent: "about 8.0 x 8.0 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "pads"
+  role: "pad-page"
+  formats_available: ["avif", "webp"]
+  alt_text: "Dense pen drawing on square textured paper: linked boxes read wap to casual and WAP to pi in i, a lowercase i points to a 1, a hatted figure, dice showing ones, a striped sphere, WAP, and LORE.LAND over HONK ABOUT PI"
+  tiers: {
+    thumb: { width: 256, height: 255, avif_kib: 11, webp_kib: 12 }
+    display: { width: 512, height: 509, avif_kib: 61, webp_kib: 53 }
+    hero: { width: 1024, height: 1019, avif_kib: 108, webp_kib: 133 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "under 120 KiB; stepped from quality 75 to AVIF 45, WebP 45"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["pad", "release-2026-10-31", "wap", "pi", "lore-land", "dice", "honk"]
+  part_of: "folio-release-2026-10-31"
+  thread: "wap"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `wap[casual]{pi.in.i}`
+  b: `*pad-wap-casual-honk-about-pi *wap.casual *pi.in.i <lore.land *honk.about.pi ~dice ~contour.lines`
+  handles: ["*wap.casual", "*pi.in.i", "<lore.land", "*honk.about.pi", "~dice", "~contour.lines"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?where is the pi in i?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

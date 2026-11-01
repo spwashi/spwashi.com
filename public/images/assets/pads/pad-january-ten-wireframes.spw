@@ -1,0 +1,59 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "pad-january-ten-wireframes"
+  title: "January 10 wireframes"
+  description: "Scratchpad page, scanned October 21, 2026, for the October drop."
+}
+
+^"source"{
+  id: "pad-2026-10-21-05"
+  master: "public/images/renders/_raw/folio-scans-2026-10-21/pad-2026-10-21-05-scan.png"
+  master_tracked: false
+  scan: { width: 3891, height: 2757, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 13.0 x 9.2 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "pads"
+  role: "pad-page"
+  formats_available: ["avif", "webp"]
+  orientation: "sideways: the spiral is at the right of the scan and January 10 reads top to bottom"
+  alt_text: "Pen on a spiral-pad page lying sideways: January 10 and wordless wireframes of braces, boxes, rows of tiles, a spiral bracket and corner marks, traced over the January 09 page that shows through mirrored from behind"
+  tiers: {
+    thumb: { width: 256, height: 181, avif_kib: 2, webp_kib: 2 }
+    display: { width: 512, height: 363, avif_kib: 9, webp_kib: 7 }
+    hero: { width: 1024, height: 726, avif_kib: 41, webp_kib: 23 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["pad", "release-2026-10-31", "wireframes", "braces", "show-through", "tracing", "january"]
+  part_of: "folio-release-2026-10-31"
+  thread: "operators"
+  lettered_dates: ["2026-01-10"]
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `wireframe[traced]{braces|tiles}`
+  b: `*pad-january-ten-wireframes ~traced.show.through ~brace.wireframe ~tile.rows @2026-01-10`
+  handles: ["~traced.show.through", "~brace.wireframe", "~tile.rows", "@2026-01-10"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what is left of a page when you trace only its shapes?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

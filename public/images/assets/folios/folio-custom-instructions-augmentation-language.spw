@@ -1,0 +1,58 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-custom-instructions-augmentation-language"
+  title: "Custom instructions and augmentation language"
+  description: "Laminated folio, scanned October 17, 2026, for the October drop."
+}
+
+^"source"{
+  id: "folio-2026-10-17-01"
+  master: "public/images/renders/_raw/folio-scans-2026-10-17/folio-2026-10-17-01-scan.png"
+  master_tracked: false
+  scan: { width: 2711, height: 3455, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 9.0 x 11.5 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "Laminated folio, sage wash over graph paper: ink panels lettered CHATGPT # CUSTOM INSTRUCTIONS feed a hatched cube beside circles lettered A U L; below, # UNIFIED AUGMENTATION LANGUAGE holds < > ( ) { } [ ] tiles"
+  tiers: {
+    thumb: { width: 201, height: 256, avif_kib: 7, webp_kib: 7 }
+    display: { width: 402, height: 512, avif_kib: 45, webp_kib: 34 }
+    hero: { width: 804, height: 1024, avif_kib: 99, webp_kib: 119 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "under 120 KiB; stepped from quality 75 to AVIF 50, WebP 65"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-10-31", "custom-instructions", "ual", "brackets", "cube", "graph-paper"]
+  part_of: "folio-release-2026-10-31"
+  thread: "operators"
+  lettered_dates: ["2024-02-28"]
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `custom.instructions[augmentation]{unified.augmentation.language}`
+  b: `*folio-custom-instructions-augmentation-language *custom.instructions *unified.augmentation.language *ual ~bracket.pairs @2024-02-28`
+  handles: ["*custom.instructions", "*unified.augmentation.language", "*ual", "~bracket.pairs", "@2024-02-28"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what would you put in your own custom instructions?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

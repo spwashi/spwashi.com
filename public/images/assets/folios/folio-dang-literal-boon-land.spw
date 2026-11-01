@@ -1,0 +1,58 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-dang-literal-boon-land"
+  title: "Dang, literal, boon land"
+  description: "Laminated folio, scanned October 20, 2026, for the October drop."
+}
+
+^"source"{
+  id: "folio-2026-10-20-01"
+  master: "public/images/renders/_raw/folio-scans-2026-10-20/folio-2026-10-20-01-scan.png"
+  master_tracked: false
+  scan: { width: 3433, height: 2697, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 11.4 x 9.0 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  orientation: "Sideways: most words read top to bottom."
+  alt_text: "Laminated folio, dark blue and grey paint: painted cutouts read DANG over a drawing of dots, x-faced balls and a red spiral, then LITERAL, literal and Literal, boon BANE bone over an S-curve arrow sign, @in.boon.land and @to.boon.land"
+  tiers: {
+    thumb: { width: 256, height: 201, avif_kib: 5, webp_kib: 5 }
+    display: { width: 512, height: 402, avif_kib: 31, webp_kib: 19 }
+    hero: { width: 1024, height: 805, avif_kib: 112, webp_kib: 75 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "under 120 KiB; stepped from quality 75 to AVIF 65, WebP 75"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-10-31", "boon-land", "boon-bane-bone", "literal", "signs", "dark-blue"]
+  part_of: "folio-release-2026-10-31"
+  thread: "rooms"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `literal[repeat]{in.boon.land|to.boon.land}`
+  b: `*folio-dang-literal-boon-land *dang.cutout ~literal ~boon.bane.bone @in.boon.land @to.boon.land`
+  handles: ["*dang.cutout", "~literal", "~boon.bane.bone", "@in.boon.land", "@to.boon.land"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what changes between in boon land and to boon land?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

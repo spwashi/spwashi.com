@@ -1,0 +1,67 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "prime-daily-bap-wap-mom"
+  title: "Daily bap on WAP.MOM"
+  description: "Cutout arrangement, scanned October 21, 2026, for the October drop."
+}
+
+^"source"{
+  id: "prime-2026-10-21-17"
+  master: "public/images/renders/_raw/folio-scans-2026-10-21/prime-2026-10-21-17-scan.png"
+  master_tracked: false
+  scan: { width: 2277, height: 2900, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 7.6 x 9.7 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "primes"
+  role: "cutout-arrangement"
+  formats_available: ["avif", "webp"]
+  ground: "clear — the black behind the cutouts was the scanner lid seen through a clear sheet, so every tier keys it to transparent; a page gives the piece its ground"
+  alt_text: "Cutouts on a clear sheet: one cutout repeats DAILY BAP, DAILY bap, daily BAP and daily bap in shifting letters beside a scribbled dome in a box-shaped tray, then reads on WAP.MOM in tall serif capitals"
+  tiers: {
+    thumb: { width: 201, height: 256, avif_kib: 12, webp_kib: 9 }
+    display: { width: 402, height: 512, avif_kib: 34, webp_kib: 25 }
+    hero: { width: 804, height: 1024, avif_kib: 89, webp_kib: 61 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  alpha: "the lid keyed before tiers are cut: a 5x5 median, dark under 30% and neutral under 10% chroma, a core that survives a wide opening, regrown a little inside a fine mask, reached from the scan edge; light slivers in an 8px edge band clear where they meet the lid, and pure white reached from the edge is uncovered glass"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["prime", "release-2026-10-31", "wap", "wap-mom", "daily", "lettering"]
+  part_of: "folio-release-2026-10-31"
+  thread: "wap"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `bap[daily]{wap.mom}`
+  b: `*prime-daily-bap-wap-mom *daily.bap <wap.mom ~bap`
+  handles: ["*daily.bap", "<wap.mom", "~bap"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what would a daily bap be?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}
+
+^"imagine"{
+  status: "open — nothing generated yet; the creator runs Grok Imagine and chooses what returns"
+  motion: `the bap words pulse in turn and the dome in the tray rises like dough`
+  seed: "the master as scanned, lid and all; Imagine reads a dark ground more predictably than transparency"
+  returns: "public/images/renders/imagine/2026-10-31/prime-daily-bap-wap-mom-imagine-NN.<ext>, with a sidecar naming generator: Grok Imagine and source: prime-2026-10-21-17"
+  derivatives: []
+}

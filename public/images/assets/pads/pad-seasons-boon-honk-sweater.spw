@@ -1,0 +1,59 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "pad-seasons-boon-honk-sweater"
+  title: "Season's Boon HONK sweater"
+  description: "Scratchpad page, scanned October 17, 2026, for the October drop."
+}
+
+^"source"{
+  id: "pad-2026-10-17-00"
+  master: "public/images/renders/_raw/folio-scans-2026-10-17/pad-2026-10-17-00-scan.png"
+  master_tracked: false
+  scan: { width: 2746, height: 3856, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 9.2 x 12.9 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "pads"
+  role: "pad-page"
+  formats_available: ["avif", "webp"]
+  orientation: "upside down: the spiral sits at the bottom of the scan and all lettering reads upside down"
+  alt_text: "Pen on a spiral-pad page, upside down as scanned: Season's Boon HONK three times, stacked 2025 blocks and December, a square face saying boon Boon BOON, a Christmas SWEATER, Mittens in a glass case, Next JANUARY and a bicycle"
+  tiers: {
+    thumb: { width: 182, height: 256, avif_kib: 6, webp_kib: 6 }
+    display: { width: 365, height: 512, avif_kib: 27, webp_kib: 21 }
+    hero: { width: 729, height: 1024, avif_kib: 103, webp_kib: 68 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["pad", "release-2026-10-31", "boonhonk", "december", "winter", "sweater", "bicycle", "spwashi-logo"]
+  part_of: "folio-release-2026-10-31"
+  thread: "valence"
+  lettered_dates: ["2025-12"]
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `boonhonk[season]{december.2025|next.january}`
+  b: `*pad-seasons-boon-honk-sweater *seasons.boon.honk *christmas.sweater *mittens ~square.face.lips &bicycle @2025-12`
+  handles: ["*seasons.boon.honk", "*christmas.sweater", "*mittens", "~square.face.lips", "&bicycle", "@2025-12"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what makes a sweater a season's boon honk?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

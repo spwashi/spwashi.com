@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "pad-green-mass-white-sweep"
+  title: "Green mass, white sweep"
+  description: "Scratchpad page, scanned October 21, 2026, for the October drop."
+}
+
+^"source"{
+  id: "pad-2026-10-21-15"
+  master: "public/images/renders/_raw/folio-scans-2026-10-21/pad-2026-10-21-15-scan.png"
+  master_tracked: false
+  scan: { width: 2404, height: 2405, dpi: 300, orientation: "square" }
+  scan_extent: "about 8.0 x 8.0 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "pads"
+  role: "pad-page"
+  formats_available: ["avif", "webp"]
+  alt_text: "Paint on paper: a dark green mass crossed by two broad white brush sweeps, a yellow-green patch at upper left, over a mauve-brown wash with a pale teal block at lower left; no lettering"
+  tiers: {
+    thumb: { width: 256, height: 256, avif_kib: 3, webp_kib: 3 }
+    display: { width: 512, height: 512, avif_kib: 24, webp_kib: 15 }
+    hero: { width: 1024, height: 1024, avif_kib: 115, webp_kib: 80 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "under 120 KiB; stepped from quality 75 to AVIF 65, WebP 75"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["pad", "release-2026-10-31", "green", "white", "brushwork", "mauve", "teal"]
+  part_of: "folio-release-2026-10-31"
+  thread: "washes"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `wash[sweep]{green|white}`
+  b: `*pad-green-mass-white-sweep ~green.mass ~white.sweep ~teal.block`
+  handles: ["~green.mass", "~white.sweep", "~teal.block"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?where does the white sweep go?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

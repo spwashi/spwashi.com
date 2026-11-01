@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-design-development-architecture"
+  title: "Design, development, architecture"
+  description: "Laminated folio, scanned October 17, 2026, for the October drop."
+}
+
+^"source"{
+  id: "folio-2026-10-17-02"
+  master: "public/images/renders/_raw/folio-scans-2026-10-17/folio-2026-10-17-02-scan.png"
+  master_tracked: false
+  scan: { width: 2710, height: 3457, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 9.0 x 11.5 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "Laminated folio, white with lavender and rust smears: lettered columns DESIGN, DEVELOPMENT and ARCHITECTURE list services above a sphere rolling down steps toward ONBOARDING RAMP with an ACCESSIBILITY tab, signed Boon"
+  tiers: {
+    thumb: { width: 201, height: 256, avif_kib: 6, webp_kib: 6 }
+    display: { width: 401, height: 512, avif_kib: 32, webp_kib: 25 }
+    hero: { width: 803, height: 1024, avif_kib: 117, webp_kib: 83 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "under 120 KiB; stepped from quality 75 to AVIF 70, WebP 75"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-10-31", "services", "design", "development", "architecture", "onboarding", "accessibility"]
+  part_of: "folio-release-2026-10-31"
+  thread: "practice"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `services[design|development|architecture]{onboarding.ramp}`
+  b: `*folio-design-development-architecture *onboarding.ramp &accessibility <design.development.architecture ~rolling.sphere *boon.signature`
+  handles: ["*onboarding.ramp", "&accessibility", "<design.development.architecture", "~rolling.sphere", "*boon.signature"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what makes an onboarding ramp accessible?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

@@ -1,0 +1,68 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "prime-performance-role-to-miscellaneous"
+  title: "Performance role to miscellaneous"
+  description: "Cutout arrangement, scanned October 21, 2026, for the October drop."
+}
+
+^"source"{
+  id: "prime-2026-10-21-02"
+  master: "public/images/renders/_raw/folio-scans-2026-10-21/prime-2026-10-21-02-scan.png"
+  master_tracked: false
+  scan: { width: 1121, height: 2064, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 3.7 x 6.9 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "primes"
+  role: "cutout-arrangement"
+  formats_available: ["avif", "webp"]
+  ground: "clear — the black behind the cutouts was the scanner lid seen through a clear sheet, so every tier keys it to transparent; a page gives the piece its ground"
+  alt_text: "A lined notebook strip on its own: a hand-lettered list of blanks running from Performance Role, WidgetAccess and Story Arc through Troupe, Script, Rehearsal, Merch, Tickets and Treasury down to Miscellaneous"
+  tiers: {
+    thumb: { width: 139, height: 256, avif_kib: 4, webp_kib: 4 }
+    display: { width: 278, height: 512, avif_kib: 16, webp_kib: 14 }
+    hero: { width: 556, height: 1024, avif_kib: 61, webp_kib: 39 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  alpha: "the lid keyed before tiers are cut: a 5x5 median, dark under 30% and neutral under 10% chroma, a core that survives a wide opening, regrown a little inside a fine mask, reached from the scan edge; light slivers in an 8px edge band clear where they meet the lid, and pure white reached from the edge is uncovered glass"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["prime", "release-2026-10-31", "performance", "lists", "planning", "troupe", "merch"]
+  part_of: "folio-release-2026-10-31"
+  thread: "practice"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `performance[list]{role|troupe|script|tickets}`
+  b: `*prime-performance-role-to-miscellaneous *performance.list %24.blanks <troupe <story.arc`
+  handles: ["*performance.list", "%24.blanks", "<troupe", "<story.arc"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?which blank on the list would you fill first?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}
+
+^"imagine"{
+  status: "open — nothing generated yet; the creator runs Grok Imagine and chooses what returns"
+  motion: `the blank lines fill one by one from performance role down to miscellaneous`
+  before: { id: "prime-2026-10-21-03", shares: ["*performance.list"] }
+  seed: "the master as scanned, lid and all; Imagine reads a dark ground more predictably than transparency"
+  returns: "public/images/renders/imagine/2026-10-31/prime-performance-role-to-miscellaneous-imagine-NN.<ext>, with a sidecar naming generator: Grok Imagine and source: prime-2026-10-21-02"
+  derivatives: []
+}

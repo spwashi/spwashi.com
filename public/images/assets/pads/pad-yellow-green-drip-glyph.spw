@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "pad-yellow-green-drip-glyph"
+  title: "Yellow-green drip glyph"
+  description: "Scratchpad page, scanned October 21, 2026, for the October drop."
+}
+
+^"source"{
+  id: "pad-2026-10-21-20"
+  master: "public/images/renders/_raw/folio-scans-2026-10-21/pad-2026-10-21-20-scan.png"
+  master_tracked: false
+  scan: { width: 2605, height: 2368, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 8.7 x 7.9 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "pads"
+  role: "pad-page"
+  formats_available: ["avif", "webp"]
+  alt_text: "Yellow-green paint on black paper: a broad-stroke glyph of a squared loop, a long stem and an open triangle at right, with drips running down from its lower edges; no lettering"
+  tiers: {
+    thumb: { width: 256, height: 233, avif_kib: 2, webp_kib: 2 }
+    display: { width: 512, height: 466, avif_kib: 10, webp_kib: 7 }
+    hero: { width: 1024, height: 931, avif_kib: 63, webp_kib: 28 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["pad", "release-2026-10-31", "glyph", "drips", "yellow-green", "black-paper"]
+  part_of: "folio-release-2026-10-31"
+  thread: "washes"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `glyph[drip]{down}`
+  b: `*pad-yellow-green-drip-glyph *drip.glyph ~drips ~triangle`
+  handles: ["*drip.glyph", "~drips", "~triangle"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?which stroke of the glyph came first?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

@@ -40,6 +40,7 @@ const PROVENANCE_SKIP_PREFIXES = [
   'public/images/assets/worktable/',
   'public/images/assets/scraps/',
   'public/images/assets/primes/',
+  'public/images/assets/pads/',
 ];
 const SHA = /^[0-9a-f]{40}$/i;
 
