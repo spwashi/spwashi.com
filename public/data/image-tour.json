@@ -1,8 +1,17 @@
 {
  "about": "Pictures the public pages show, newest first, each with the page that keeps it. Written by scripts/generate-image-tour.mjs.",
  "recentDays": 21,
- "count": 257,
+ "count": 258,
  "pieces": [
+  {
+   "src": "/public/images/assets/folios/folio-honk-bazongas-graph-paper-thumb.webp",
+   "width": 256,
+   "height": 202,
+   "label": "Honk bazongas graph paper",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1020-15",
+   "added": "2026-11-01"
+  },
   {
    "src": "/public/images/assets/folios/folio-babbling-noodling-play-thumb.webp",
    "width": 204,

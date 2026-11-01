@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-01T04:31:13.245Z",
+  "generatedAt": "2026-11-01T16:17:53.779Z",
   "sourceRoot": "/public/images/",
-  "count": 2549,
+  "count": 2555,
   "concepts": [
     "about",
     "algorithm",
@@ -3116,6 +3116,72 @@
       "role": "thumbnail",
       "concepts": [],
       "swapHint": "Use /public/images/assets/folios/folio-honk-bane-bonk-boon-map-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-honk-bazongas-graph-paper",
+      "title": "Folio Honk Bazongas Graph Paper",
+      "path": "/public/images/assets/folios/folio-honk-bazongas-graph-paper-display.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 44366,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-honk-bazongas-graph-paper-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-honk-bazongas-graph-paper",
+      "title": "Folio Honk Bazongas Graph Paper",
+      "path": "/public/images/assets/folios/folio-honk-bazongas-graph-paper-display.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 29580,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-honk-bazongas-graph-paper-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-honk-bazongas-graph-paper",
+      "title": "Folio Honk Bazongas Graph Paper",
+      "path": "/public/images/assets/folios/folio-honk-bazongas-graph-paper-hero.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 113956,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-honk-bazongas-graph-paper-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-honk-bazongas-graph-paper",
+      "title": "Folio Honk Bazongas Graph Paper",
+      "path": "/public/images/assets/folios/folio-honk-bazongas-graph-paper-hero.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 110990,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-honk-bazongas-graph-paper-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-honk-bazongas-graph-paper",
+      "title": "Folio Honk Bazongas Graph Paper",
+      "path": "/public/images/assets/folios/folio-honk-bazongas-graph-paper-thumb.avif",
+      "directory": "public/images/assets/folios",
+      "format": "avif",
+      "bytes": 6260,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-honk-bazongas-graph-paper-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-honk-bazongas-graph-paper",
+      "title": "Folio Honk Bazongas Graph Paper",
+      "path": "/public/images/assets/folios/folio-honk-bazongas-graph-paper-thumb.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 7118,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-honk-bazongas-graph-paper-thumb.webp when a thumbnail visual needs a stable tracked asset."
     },
     {
       "id": "folio-honk-mixing-board",
@@ -24649,15 +24715,15 @@
       "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-10-20/folio-2026-10-20-14-scan.png when a render visual needs a stable tracked asset."
     },
     {
-      "id": "held-2026-10-20-00-scan",
-      "title": "Held 2026 10 20 00 Scan",
-      "path": "/public/images/renders/_raw/folio-scans-2026-10-20/held-2026-10-20-00-scan.png",
+      "id": "folio-2026-10-20-15-scan",
+      "title": "Folio 2026 10 20 15 Scan",
+      "path": "/public/images/renders/_raw/folio-scans-2026-10-20/folio-2026-10-20-15-scan.png",
       "directory": "public/images/renders/_raw/folio-scans-2026-10-20",
       "format": "png",
       "bytes": 14271054,
       "role": "render",
       "concepts": [],
-      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-10-20/held-2026-10-20-00-scan.png when a render visual needs a stable tracked asset."
+      "swapHint": "Use /public/images/renders/_raw/folio-scans-2026-10-20/folio-2026-10-20-15-scan.png when a render visual needs a stable tracked asset."
     },
     {
       "id": "panel-2026-09-27-back-10-rescan-2026-10-20-scan",

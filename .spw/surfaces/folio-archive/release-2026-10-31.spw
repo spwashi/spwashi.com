@@ -23,7 +23,7 @@
   id = `folio-release-2026-10-31`
   date = `2026-10-31, the last day of October`
   name = `The creator's word for it: an October drop.`
-  sources = `35 folios, 5 panel faces, 42 cutout arrangements, and 31 scratchpad pages, scanned October 17, 18, 20, 21, 22, and 26`
+  sources = `36 folios, 5 panel faces, 42 cutout arrangements, and 31 scratchpad pages, scanned October 17, 18, 20, 21, 22, and 26`
   form = `unset — the reply to an order card settles it`
   price = `unset`
   availability = `unset`
@@ -50,7 +50,7 @@
 }
 
 ^"kinds"{
-  folios = `Thirty-five laminated folios, several mostly wash now, with lettering showing through.`
+  folios = `Thirty-six laminated folios, several mostly wash now, with lettering showing through. folio-2026-10-20-15, Honk Bazongas, was restored on 2026-11-01 after the release, so it is numbered after the day's other folios; the name is a lore.land character.`
   panels = `Five panel faces: three from October 22 (an eye with a tear, a glyph block beside a plume, and a framed board), and two from October 26, one of them two September panels laid over each other.`
   primes = `Forty-two arrangements of hand-lettered cutouts. The lid is keyed to transparent where the cutouts lie on a clear sheet; four lie on a ledger sheet or a painted board and keep their ground.`
   pads = `Thirty-one scratchpad pages: spiral-pad pages dated in early January 2026, loose sheets in pen and marker, sticky notes, and two dense pen drawings. The creator, 2026-10-31: "I like these scratchpads and they may be valuable on the site." The kind is named for that word.`
@@ -78,7 +78,7 @@
     `03 hand-bound-journal-rock`, `04 hiring-floor-onboard-complexity`, `05 factshift-faint-lands-chaos`,
     `06 headline-honk-clown-downtown`, `07 moon-green-hill-black-cutout`, `08 late-night-scene-workshop`,
     `09 bonk-three-balls-ledge`, `10 magenta-wash-pencil-eye`, `11 what-kind-of-cake-tiles`,
-    `12 character-seed-lore-land`, `13 operator-ladder-boat-car`, `14 concept-topic-structure-quality`,
+    `12 character-seed-lore-land`, `13 operator-ladder-boat-car`, `14 concept-topic-structure-quality`, `15 honk-bazongas-graph-paper`,
   ][reg=list]
   folios_10_21 = #[
     `00 web-presence-chapters`,
