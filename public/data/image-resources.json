@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-01T04:02:01.091Z",
+  "generatedAt": "2026-11-01T04:31:13.245Z",
   "sourceRoot": "/public/images/",
-  "count": 2544,
+  "count": 2549,
   "concepts": [
     "about",
     "algorithm",
@@ -1524,6 +1524,17 @@
       "swapHint": "Use /public/images/assets/folios/folio-concept-topic-structure-quality-display.webp when a display visual needs a stable tracked asset."
     },
     {
+      "id": "folio-concept-topic-structure-quality-full",
+      "title": "Folio Concept Topic Structure Quality Full",
+      "path": "/public/images/assets/folios/folio-concept-topic-structure-quality-full.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 447296,
+      "role": "image",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-concept-topic-structure-quality-full.webp when a image visual needs a stable tracked asset."
+    },
+    {
       "id": "folio-concept-topic-structure-quality",
       "title": "Folio Concept Topic Structure Quality",
       "path": "/public/images/assets/folios/folio-concept-topic-structure-quality-hero.avif",
@@ -1738,6 +1749,17 @@
       "role": "display",
       "concepts": [],
       "swapHint": "Use /public/images/assets/folios/folio-dang-literal-boon-land-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-dang-literal-boon-land-full",
+      "title": "Folio Dang Literal Boon Land Full",
+      "path": "/public/images/assets/folios/folio-dang-literal-boon-land-full.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 472812,
+      "role": "image",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-dang-literal-boon-land-full.webp when a image visual needs a stable tracked asset."
     },
     {
       "id": "folio-dang-literal-boon-land",
@@ -2753,6 +2775,17 @@
       "swapHint": "Use /public/images/assets/folios/folio-headline-honk-clown-downtown-display.webp when a display visual needs a stable tracked asset."
     },
     {
+      "id": "folio-headline-honk-clown-downtown-full",
+      "title": "Folio Headline Honk Clown Downtown Full",
+      "path": "/public/images/assets/folios/folio-headline-honk-clown-downtown-full.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 593296,
+      "role": "image",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-headline-honk-clown-downtown-full.webp when a image visual needs a stable tracked asset."
+    },
+    {
       "id": "folio-headline-honk-clown-downtown",
       "title": "Folio Headline Honk Clown Downtown",
       "path": "/public/images/assets/folios/folio-headline-honk-clown-downtown-hero.avif",
@@ -3437,6 +3470,17 @@
       "swapHint": "Use /public/images/assets/folios/folio-late-night-scene-workshop-display.webp when a display visual needs a stable tracked asset."
     },
     {
+      "id": "folio-late-night-scene-workshop-full",
+      "title": "Folio Late Night Scene Workshop Full",
+      "path": "/public/images/assets/folios/folio-late-night-scene-workshop-full.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 349982,
+      "role": "image",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-late-night-scene-workshop-full.webp when a image visual needs a stable tracked asset."
+    },
+    {
       "id": "folio-late-night-scene-workshop",
       "title": "Folio Late Night Scene Workshop",
       "path": "/public/images/assets/folios/folio-late-night-scene-workshop-hero.avif",
@@ -4055,6 +4099,20 @@
         "surface"
       ],
       "swapHint": "Use /public/images/assets/folios/folio-magenta-wash-pencil-eye-display.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-magenta-wash-pencil-eye-full",
+      "title": "Folio Magenta Wash Pencil Eye Full",
+      "path": "/public/images/assets/folios/folio-magenta-wash-pencil-eye-full.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 443958,
+      "role": "image",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-magenta-wash-pencil-eye-full.webp when a style-reference / surface visual needs a stable tracked asset."
     },
     {
       "id": "folio-magenta-wash-pencil-eye",

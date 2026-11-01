@@ -20,11 +20,13 @@
   surface: "folios"
   role: "folio-scan"
   formats_available: ["avif", "webp"]
+  highres: "folio-magenta-wash-pencil-eye-full.webp — 2400px WebP, opened in the weekly five (public/data/folio-highres.json)"
   alt_text: "Laminated folio, magenta, violet and teal diagonal wash over dense pencil: outlined block letters and triangles, a drawn eye, an A in a box with a small s, and faint cursive lettering along the top edge"
   tiers: {
     thumb: { width: 202, height: 256, avif_kib: 4, webp_kib: 5 }
     display: { width: 404, height: 512, avif_kib: 32, webp_kib: 19 }
     hero: { width: 807, height: 1024, avif_kib: 116, webp_kib: 75 }
+    full: { width: 1892, height: 2400, webp_kib: 434, opened: "2026-W44" }
   }
 }
 

@@ -10,7 +10,7 @@ export const SPW_EXPRESSION_MANIFEST = Object.freeze({"show[table]{seed.close}":
 
 export const SPW_EXPRESSION_MANIFEST_META = Object.freeze({
   expressions: 984,
-  sourceStamp: '64345974bd67dc0ac419042956bfe158082d434b89b8852896e9f77cd8d637d9',
+  sourceStamp: '42a314e5307df64d0f622e0c0770f936a6b12917d7c1f44efc74ce672f80d88e',
   builtBy: 'scripts/build-expression-manifest.mjs',
   parser: 'spw-seed parse() — not parseExpression(), which truncates',
 });

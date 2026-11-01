@@ -20,11 +20,13 @@
   surface: "folios"
   role: "folio-scan"
   formats_available: ["avif", "webp"]
+  highres: "folio-concept-topic-structure-quality-full.webp — 2400px WebP, opened in the weekly five (public/data/folio-highres.json)"
   alt_text: "Laminated folio, teal and grey paint around a taped white card: boxed < CONCEPT, ( TOPIC, { STRUCTURE and [ QUALITY under a blue knot glyph, and a black label reading THE BEST, # #, …RECISE, THOROUGH"
   tiers: {
     thumb: { width: 200, height: 256, avif_kib: 5, webp_kib: 5 }
     display: { width: 399, height: 512, avif_kib: 30, webp_kib: 17 }
     hero: { width: 798, height: 1024, avif_kib: 118, webp_kib: 69 }
+    full: { width: 1870, height: 2400, webp_kib: 437, opened: "2026-W44" }
   }
 }
 

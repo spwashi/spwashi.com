@@ -20,12 +20,14 @@
   surface: "folios"
   role: "folio-scan"
   formats_available: ["avif", "webp"]
+  highres: "folio-dang-literal-boon-land-full.webp — 2400px WebP, opened in the weekly five (public/data/folio-highres.json)"
   orientation: "Sideways: most words read top to bottom."
   alt_text: "Laminated folio, dark blue and grey paint: painted cutouts read DANG over a drawing of dots, x-faced balls and a red spiral, then LITERAL, literal and Literal, boon BANE bone over an S-curve arrow sign, @in.boon.land and @to.boon.land"
   tiers: {
     thumb: { width: 256, height: 201, avif_kib: 5, webp_kib: 5 }
     display: { width: 512, height: 402, avif_kib: 31, webp_kib: 19 }
     hero: { width: 1024, height: 805, avif_kib: 112, webp_kib: 75 }
+    full: { width: 2400, height: 1885, webp_kib: 462, opened: "2026-W44" }
   }
 }
 
