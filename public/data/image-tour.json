@@ -1,8 +1,1025 @@
 {
  "about": "Pictures the public pages show, newest first, each with the page that keeps it. Written by scripts/generate-image-tour.mjs.",
  "recentDays": 21,
- "count": 144,
+ "count": 257,
  "pieces": [
+  {
+   "src": "/public/images/assets/folios/folio-babbling-noodling-play-thumb.webp",
+   "width": 204,
+   "height": 256,
+   "label": "Babbling noodling play",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1018-04",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-bonk-announce-steering-thumb.webp",
+   "width": 202,
+   "height": 256,
+   "label": "Bonk announce steering",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1022-03",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-bonk-three-balls-ledge-thumb.webp",
+   "width": 201,
+   "height": 256,
+   "label": "Bonk three balls ledge",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1020-09",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-bonk-water-cycle-mirrored-thumb.webp",
+   "width": 200,
+   "height": 256,
+   "label": "Bonk water cycle mirrored",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1017-03",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-boon-domain-list-flag-football-thumb.webp",
+   "width": 201,
+   "height": 256,
+   "label": "Boon domain list flag football",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1022-04",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-character-seed-lore-land-thumb.webp",
+   "width": 256,
+   "height": 201,
+   "label": "Character seed lore land",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1020-12",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-components-domains-landing-features-thumb.webp",
+   "width": 201,
+   "height": 256,
+   "label": "Components domains landing features",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1020-00",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-concept-topic-structure-quality-thumb.webp",
+   "width": 200,
+   "height": 256,
+   "label": "Concept topic structure quality",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1020-14",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-custom-instructions-augmentation-language-thumb.webp",
+   "width": 201,
+   "height": 256,
+   "label": "Custom instructions augmentation language",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1017-01",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-dang-literal-boon-land-thumb.webp",
+   "width": 256,
+   "height": 201,
+   "label": "Dang literal boon land",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1020-01",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-design-development-architecture-thumb.webp",
+   "width": 201,
+   "height": 256,
+   "label": "Design development architecture",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1017-02",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-factshift-faint-lands-chaos-thumb.webp",
+   "width": 202,
+   "height": 256,
+   "label": "Factshift faint lands chaos",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1020-05",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-focal-square-h1-menu-thumb.webp",
+   "width": 201,
+   "height": 256,
+   "label": "Focal square h1 menu",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1018-08",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-four-screens-dark-arrow-thumb.webp",
+   "width": 202,
+   "height": 256,
+   "label": "Four screens dark arrow",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1018-05",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-hand-bound-journal-rock-thumb.webp",
+   "width": 256,
+   "height": 199,
+   "label": "Hand bound journal rock",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1020-03",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-header-rod-menu-frame-thumb.webp",
+   "width": 202,
+   "height": 256,
+   "label": "Header rod menu frame",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1018-03",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-headline-honk-clown-downtown-thumb.webp",
+   "width": 203,
+   "height": 256,
+   "label": "Headline honk clown downtown",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1020-06",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-hiring-floor-onboard-complexity-thumb.webp",
+   "width": 256,
+   "height": 201,
+   "label": "Hiring floor onboard complexity",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1020-04",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-how-pomegranate-external-internal-thumb.webp",
+   "width": 201,
+   "height": 256,
+   "label": "How pomegranate external internal",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1017-04",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-how-water-works-agua-thumb.webp",
+   "width": 202,
+   "height": 256,
+   "label": "How water works agua",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1018-06",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-it-is-my-boonhat-thumb.webp",
+   "width": 204,
+   "height": 256,
+   "label": "It is my boonhat",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1018-01",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-late-night-scene-workshop-thumb.webp",
+   "width": 202,
+   "height": 256,
+   "label": "Late night scene workshop",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1020-08",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-lavender-asterisks-arrows-thumb.webp",
+   "width": 256,
+   "height": 203,
+   "label": "Lavender asterisks arrows",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1022-01",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-magenta-wash-pencil-eye-thumb.webp",
+   "width": 202,
+   "height": 256,
+   "label": "Magenta wash pencil eye",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1020-10",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-media-for-play-and-development-thumb.webp",
+   "width": 202,
+   "height": 256,
+   "label": "Media for play and development",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1017-00",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-moon-green-hill-black-cutout-thumb.webp",
+   "width": 203,
+   "height": 256,
+   "label": "Moon green hill black cutout",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1020-07",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-operator-ladder-boat-car-thumb.webp",
+   "width": 256,
+   "height": 199,
+   "label": "Operator ladder boat car",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1020-13",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-pick-your-boon-honk-thumb.webp",
+   "width": 202,
+   "height": 256,
+   "label": "Pick your boon honk",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1018-07",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-spwashi-design-and-development-thumb.webp",
+   "width": 202,
+   "height": 256,
+   "label": "Spwashi design and development",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1018-00",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-teal-swirl-white-arcs-thumb.webp",
+   "width": 202,
+   "height": 256,
+   "label": "Teal swirl white arcs",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1022-00",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-unary-motions-of-my-brand-thumb.webp",
+   "width": 202,
+   "height": 256,
+   "label": "Unary motions of my brand",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1018-02",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-violet-pink-block-wash-thumb.webp",
+   "width": 202,
+   "height": 256,
+   "label": "Violet pink block wash",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1022-02",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-we-need-better-plating-thumb.webp",
+   "width": 202,
+   "height": 256,
+   "label": "We need better plating",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1020-02",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-web-presence-chapters-thumb.webp",
+   "width": 202,
+   "height": 256,
+   "label": "Web presence chapters",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1021-00",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/folios/folio-what-kind-of-cake-tiles-thumb.webp",
+   "width": 202,
+   "height": 256,
+   "label": "What kind of cake tiles",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#folio-1020-11",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/pads/pad-about-rhythm-pricing-services-thumb.webp",
+   "width": 199,
+   "height": 256,
+   "label": "Pad about rhythm pricing services",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#pad-1021-13",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/pads/pad-additive-subtractive-ground-chaotic-thumb.webp",
+   "width": 201,
+   "height": 256,
+   "label": "Pad additive subtractive ground chaotic",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#pad-1021-25",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/pads/pad-atmosphere-slab-onto-box-thumb.webp",
+   "width": 199,
+   "height": 256,
+   "label": "Pad atmosphere slab onto box",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#pad-1021-24",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/pads/pad-boon-bane-bone-january-four-thumb.webp",
+   "width": 196,
+   "height": 256,
+   "label": "Pad boon bane bone january four",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#pad-1021-00",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/pads/pad-boon-cloud-heart-balloon-thumb.webp",
+   "width": 172,
+   "height": 256,
+   "label": "Pad boon cloud heart balloon",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#pad-1021-14",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/pads/pad-boon-scroll-typography-bone-thumb.webp",
+   "width": 190,
+   "height": 256,
+   "label": "Pad boon scroll typography bone",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#pad-1021-01",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/pads/pad-career-php-typescript-thumb.webp",
+   "width": 200,
+   "height": 256,
+   "label": "Pad career php typescript",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#pad-1021-21",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/pads/pad-css-transform-transition-animation-thumb.webp",
+   "width": 201,
+   "height": 256,
+   "label": "Pad css transform transition animation",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#pad-1021-19",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/pads/pad-curiosity-challenge-forces-thumb.webp",
+   "width": 200,
+   "height": 256,
+   "label": "Pad curiosity challenge forces",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#pad-1021-11",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/pads/pad-five-wireframes-hash-face-thumb.webp",
+   "width": 182,
+   "height": 256,
+   "label": "Pad five wireframes hash face",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#pad-1021-23",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/pads/pad-green-mass-white-sweep-thumb.webp",
+   "width": 256,
+   "height": 256,
+   "label": "Pad green mass white sweep",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#pad-1021-15",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/pads/pad-html-carton-css-hat-js-thumb.webp",
+   "width": 199,
+   "height": 256,
+   "label": "Pad html carton css hat js",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#pad-1021-10",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/pads/pad-is-this-necessary-goodness-thumb.webp",
+   "width": 200,
+   "height": 256,
+   "label": "Pad is this necessary goodness",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#pad-1021-08",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/pads/pad-jan-u-ary-boon-balloon-thumb.webp",
+   "width": 182,
+   "height": 256,
+   "label": "Pad jan u ary boon balloon",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#pad-1021-02",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/pads/pad-january-ten-wireframes-thumb.webp",
+   "width": 256,
+   "height": 181,
+   "label": "Pad january ten wireframes",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#pad-1021-05",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/pads/pad-mimes-against-wap-mean-it-thumb.webp",
+   "width": 195,
+   "height": 256,
+   "label": "Pad mimes against wap mean it",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#pad-1021-22",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/pads/pad-modern-skills-fifteen-yoe-thumb.webp",
+   "width": 180,
+   "height": 256,
+   "label": "Pad modern skills fifteen yoe",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#pad-1021-06",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/pads/pad-more-boon-honk-thumb.webp",
+   "width": 199,
+   "height": 256,
+   "label": "Pad more boon honk",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#pad-1021-17",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/pads/pad-my-clients-web-ecology-coach-thumb.webp",
+   "width": 182,
+   "height": 256,
+   "label": "Pad my clients web ecology coach",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#pad-1021-04",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/pads/pad-orange-hash-eyed-face-thumb.webp",
+   "width": 195,
+   "height": 256,
+   "label": "Pad orange hash eyed face",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#pad-1021-07",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/pads/pad-pi-spillin-guy-braces-thumb.webp",
+   "width": 200,
+   "height": 256,
+   "label": "Pad pi spillin guy braces",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#pad-1021-16",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/pads/pad-pie-pi-ladder-january-eight-thumb.webp",
+   "width": 186,
+   "height": 256,
+   "label": "Pad pie pi ladder january eight",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#pad-1021-03",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/pads/pad-practice-videos-code-ecosystem-thumb.webp",
+   "width": 200,
+   "height": 256,
+   "label": "Pad practice videos code ecosystem",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#pad-1021-09",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/pads/pad-seasons-boon-honk-sweater-thumb.webp",
+   "width": 182,
+   "height": 256,
+   "label": "Pad seasons boon honk sweater",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#pad-1017-00",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/pads/pad-spw-workbench-outline-thumb.webp",
+   "width": 196,
+   "height": 256,
+   "label": "Pad spw workbench outline",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#pad-1017-01",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/pads/pad-teams-etymology-phonics-searches-thumb.webp",
+   "width": 119,
+   "height": 256,
+   "label": "Pad teams etymology phonics searches",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#pad-1022-02",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/pads/pad-uncle-ar-why-unclear-thumb.webp",
+   "width": 256,
+   "height": 200,
+   "label": "Pad uncle ar why unclear",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#pad-1021-18",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/pads/pad-wap-casual-honk-about-pi-thumb.webp",
+   "width": 256,
+   "height": 255,
+   "label": "Pad wap casual honk about pi",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#pad-1022-01",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/pads/pad-why-why-why-lips-thumb.webp",
+   "width": 199,
+   "height": 256,
+   "label": "Pad why why why lips",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#pad-1021-12",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/pads/pad-wonder-about-pi-box-thumb.webp",
+   "width": 254,
+   "height": 256,
+   "label": "Pad wonder about pi box",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#pad-1022-00",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/pads/pad-yellow-green-drip-glyph-thumb.webp",
+   "width": 256,
+   "height": 233,
+   "label": "Pad yellow green drip glyph",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#pad-1021-20",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/panels/panel-eye-teal-tear-dress-form-thumb.webp",
+   "width": 206,
+   "height": 256,
+   "label": "Eye teal tear dress form",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#panel-1022-00",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/panels/panel-framed-maroon-drip-glyph-thumb.webp",
+   "width": 256,
+   "height": 256,
+   "label": "Framed maroon drip glyph",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#panel-1022-02",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/panels/panel-maroon-glyph-pale-plume-thumb.webp",
+   "width": 256,
+   "height": 203,
+   "label": "Maroon glyph pale plume",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#panel-1022-01",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/panels/panel-wabo-pie-zzz-face-thumb.webp",
+   "width": 205,
+   "height": 256,
+   "label": "Wabo pie zzz face",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#panel-1026-00",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/panels/panel-white-blot-over-pale-moon-thumb.webp",
+   "width": 156,
+   "height": 256,
+   "label": "White blot over pale moon",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#panel-1026-01",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-alfredo-sauce-rpg-wednesday-thumb.webp",
+   "width": 256,
+   "height": 220,
+   "label": "Prime alfredo sauce rpg wednesday",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1018-02",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-alphabet-blocks-framed-board-thumb.webp",
+   "width": 201,
+   "height": 256,
+   "label": "Prime alphabet blocks framed board",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1022-00",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-autumn-lantern-thumb.webp",
+   "width": 256,
+   "height": 135,
+   "label": "Prime autumn lantern",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1018-11",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-big-o-notation-faucet-thumb.webp",
+   "width": 194,
+   "height": 256,
+   "label": "Prime big o notation faucet",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1022-04",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-boat-on-lined-paper-thumb.webp",
+   "width": 167,
+   "height": 256,
+   "label": "Prime boat on lined paper",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1018-08",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-daily-bap-wap-mom-thumb.webp",
+   "width": 201,
+   "height": 256,
+   "label": "Prime daily bap wap mom",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1021-17",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-daydreaming-boat-over-about-thumb.webp",
+   "width": 190,
+   "height": 256,
+   "label": "Prime daydreaming boat over about",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1018-09",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-daydreaming-less-stress-thumb.webp",
+   "width": 206,
+   "height": 256,
+   "label": "Prime daydreaming less stress",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1018-05",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-depth-contribution-network-thumb.webp",
+   "width": 161,
+   "height": 256,
+   "label": "Prime depth contribution network",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1021-04",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-domain-stencil-upright-thumb.webp",
+   "width": 175,
+   "height": 256,
+   "label": "Prime domain stencil upright",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1022-08",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-domain-stencil-upside-down-thumb.webp",
+   "width": 256,
+   "height": 200,
+   "label": "Prime domain stencil upside down",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1022-07",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-grants-to-product-placement-thumb.webp",
+   "width": 188,
+   "height": 256,
+   "label": "Prime grants to product placement",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1021-14",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-i-love-you-arrow-legs-thumb.webp",
+   "width": 161,
+   "height": 256,
+   "label": "Prime i love you arrow legs",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1018-04",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-i-love-you-ledger-thumb.webp",
+   "width": 200,
+   "height": 256,
+   "label": "Prime i love you ledger",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1021-18",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-lore-writers-room-applied-math-thumb.webp",
+   "width": 184,
+   "height": 256,
+   "label": "Prime lore writers room applied math",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1021-08",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-make-things-look-easy-caveat-thumb.webp",
+   "width": 140,
+   "height": 256,
+   "label": "Prime make things look easy caveat",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1021-01",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-math-to-linguistic-physics-thumb.webp",
+   "width": 226,
+   "height": 256,
+   "label": "Prime math to linguistic physics",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1021-00",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-meet-hundreds-sharpen-visible-thumb.webp",
+   "width": 157,
+   "height": 256,
+   "label": "Prime meet hundreds sharpen visible",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1021-07",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-mindful-prompting-sequencing-honk-thumb.webp",
+   "width": 256,
+   "height": 169,
+   "label": "Prime mindful prompting sequencing honk",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1018-00",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-music-dominoes-due-date-thumb.webp",
+   "width": 173,
+   "height": 256,
+   "label": "Prime music dominoes due date",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1021-06",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-october-production-season-begins-thumb.webp",
+   "width": 130,
+   "height": 256,
+   "label": "Prime october production season begins",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1018-12",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-olympic-cycles-biphasic-thumb.webp",
+   "width": 85,
+   "height": 256,
+   "label": "Prime olympic cycles biphasic",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1021-03",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-once-weekly-app-ecology-thumb.webp",
+   "width": 256,
+   "height": 245,
+   "label": "Prime once weekly app ecology",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1021-16",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-operator-tree-boon-to-honk-thumb.webp",
+   "width": 182,
+   "height": 256,
+   "label": "Prime operator tree boon to honk",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1022-03",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-operator-years-valence-lands-thumb.webp",
+   "width": 246,
+   "height": 256,
+   "label": "Prime operator years valence lands",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1018-03",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-over-on-to-about-thumb.webp",
+   "width": 209,
+   "height": 256,
+   "label": "Prime over on to about",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1018-07",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-performance-role-to-miscellaneous-thumb.webp",
+   "width": 139,
+   "height": 256,
+   "label": "Prime performance role to miscellaneous",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1021-02",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-pick-a-lens-daydreaming-thumb.webp",
+   "width": 256,
+   "height": 239,
+   "label": "Prime pick a lens daydreaming",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1018-06",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-public-home-school-brain-play-thumb.webp",
+   "width": 190,
+   "height": 256,
+   "label": "Prime public home school brain play",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1021-09",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-receive-feedback-love-intentionally-thumb.webp",
+   "width": 173,
+   "height": 256,
+   "label": "Prime receive feedback love intentionally",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1021-10",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-seven-chakras-receive-feedback-thumb.webp",
+   "width": 169,
+   "height": 256,
+   "label": "Prime seven chakras receive feedback",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1021-11",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-start-a-business-cinematic-universe-thumb.webp",
+   "width": 158,
+   "height": 256,
+   "label": "Prime start a business cinematic universe",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1022-05",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-teal-spiral-daydreaming-thumb.webp",
+   "width": 143,
+   "height": 256,
+   "label": "Prime teal spiral daydreaming",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1018-10",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-technical-skills-gap-thumb.webp",
+   "width": 178,
+   "height": 256,
+   "label": "Prime technical skills gap",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1021-05",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-ten-year-career-organized-people-thumb.webp",
+   "width": 198,
+   "height": 256,
+   "label": "Prime ten year career organized people",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1021-15",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-thirteen-page-arc-wap-thumb.webp",
+   "width": 105,
+   "height": 256,
+   "label": "Prime thirteen page arc wap",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1021-12",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-trend-list-skills-gap-thumb.webp",
+   "width": 256,
+   "height": 136,
+   "label": "Prime trend list skills gap",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1018-01",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-web-apis-html-tags-storage-thumb.webp",
+   "width": 182,
+   "height": 256,
+   "label": "Prime web apis html tags storage",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1022-06",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-whats-the-big-deal-ai-thumb.webp",
+   "width": 256,
+   "height": 192,
+   "label": "Prime whats the big deal ai",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1017-00",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-which-roots-to-water-thumb.webp",
+   "width": 170,
+   "height": 256,
+   "label": "Prime which roots to water",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1022-01",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-why-try-plan-in-october-thumb.webp",
+   "width": 189,
+   "height": 256,
+   "label": "Prime why try plan in october",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1021-13",
+   "added": "2026-10-31"
+  },
+  {
+   "src": "/public/images/assets/primes/prime-writing-for-modern-audiences-thumb.webp",
+   "width": 165,
+   "height": 256,
+   "label": "Prime writing for modern audiences",
+   "kind": "scan",
+   "href": "/design/folios/october-2026/#prime-1022-02",
+   "added": "2026-10-31"
+  },
   {
    "src": "/public/images/assets/folios/folio-bean-green-tale-lore-thumb.webp",
    "width": 200,
@@ -774,7 +1791,7 @@
    "height": 512,
    "label": "Typographical text tile texture with teal and ochre glyph seams.",
    "kind": "render",
-   "href": "/design/materials/#staged-theme-sets",
+   "href": "/design/materials/#staged-theme-sets-title",
    "added": "2026-09-10"
   },
   {
@@ -792,7 +1809,7 @@
    "height": 512,
    "label": "Amber asterisk over a teal inscribed orb — staged algorithm climate.",
    "kind": "render",
-   "href": "/design/materials/#staged-theme-sets",
+   "href": "/design/materials/#staged-theme-sets-title",
    "added": "2026-09-04"
   },
   {
@@ -801,7 +1818,7 @@
    "height": 512,
    "label": "Abstract web design study with comic pressure, playful shapes, and teal…",
    "kind": "render",
-   "href": "/design/materials/#staged-theme-sets",
+   "href": "/design/materials/#staged-theme-sets-title",
    "added": "2026-09-04"
   },
   {
@@ -810,7 +1827,7 @@
    "height": 512,
    "label": "Cozy library background with wooden shelves and warm book-lined compart…",
    "kind": "render",
-   "href": "/design/materials/#staged-theme-sets",
+   "href": "/design/materials/#staged-theme-sets-title",
    "added": "2026-09-04"
   },
   {
@@ -819,7 +1836,7 @@
    "height": 512,
    "label": "Cream hex crease against blush paper — staged vellum climate.",
    "kind": "render",
-   "href": "/design/materials/#staged-theme-sets",
+   "href": "/design/materials/#staged-theme-sets-title",
    "added": "2026-09-04"
   },
   {
@@ -828,7 +1845,7 @@
    "height": 512,
    "label": "Folded paper architectural cube facets in teal, gold, and cream.",
    "kind": "render",
-   "href": "/design/materials/#staged-theme-sets",
+   "href": "/design/materials/#staged-theme-sets-title",
    "added": "2026-09-04"
   },
   {
@@ -945,7 +1962,7 @@
    "height": 512,
    "label": "Papyrus and biofilm material study demonstrating cellulose grain and wa…",
    "kind": "render",
-   "href": "/design/materials/#metamaterial-attributes",
+   "href": "/design/materials/#design-materials-lede-six",
    "added": "2026-08-15"
   },
   {
@@ -954,7 +1971,7 @@
    "height": 512,
    "label": "Papergami layout apparatus with translucent geometric apertures and spa…",
    "kind": "render",
-   "href": "/design/materials/#metamaterial-attributes",
+   "href": "/design/materials/#design-materials-lede-six",
    "added": "2026-08-15"
   },
   {
@@ -963,7 +1980,7 @@
    "height": 512,
    "label": "Weathered copper and moss living surface study with organic matte patin…",
    "kind": "render",
-   "href": "/design/materials/#metamaterial-attributes",
+   "href": "/design/materials/#design-materials-lede-six",
    "added": "2026-08-15"
   },
   {
@@ -981,7 +1998,7 @@
    "height": 512,
    "label": "Contour-bounded attentional fluid study showing high-contrast presence…",
    "kind": "render",
-   "href": "/design/affordance/#state-affordance",
+   "href": "/design/affordance/#design-affordance-lede-runtime",
    "added": "2026-08-13"
   },
   {
@@ -990,7 +2007,7 @@
    "height": 512,
    "label": "Papergami cognitive layout study with calibrated metric ladders and pro…",
    "kind": "render",
-   "href": "/design/density/#density-measure",
+   "href": "/design/density/#design-density-lede",
    "added": "2026-08-13"
   },
   {
@@ -1107,7 +2124,7 @@
    "height": 960,
    "label": "Warmly lit architectural study — palette as physical dimension cue for…",
    "kind": "render",
-   "href": "/design/palettes/#palette-projection",
+   "href": "/design/palettes/#palette-projection-title",
    "added": "2026-04-16"
   },
   {
@@ -1269,7 +2286,7 @@
    "height": 400,
    "label": "A kinetic papergami artwork with geometric folds and shadows.",
    "kind": "render",
-   "href": "/design/folios/#seed-studies",
+   "href": "/design/folios/#seed-studies-title",
    "added": "2026-04-11"
   },
   {
@@ -1287,7 +2304,7 @@
    "height": 900,
    "label": "A braided studio field of nodes, marks, and connective lines that reads…",
    "kind": "render",
-   "href": "/design/#design-circuits",
+   "href": "/design/#design-circuits-note-circuits",
    "added": "2026-04-10"
   },
   {
