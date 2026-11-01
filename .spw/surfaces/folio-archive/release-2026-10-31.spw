@@ -12,6 +12,9 @@
 @route: ~"../../../design/folios/october-2026/index.html"
 @shelf: ~"../../../design/folios/index.html"
 @image_optimize: ~"../../../.agents/skills/image-optimize/SKILL.md"
+@lid_key: ~"../../../.agents/skills/image-optimize/scripts/key-scan-lid.sh"
+@scan_tiers: ~"../../../.agents/skills/image-optimize/scripts/scan-tiers.sh"
+@rescan_fingerprint: ~"../../../.agents/skills/image-optimize/scripts/rescan-fingerprint.py"
 @image_naming: ~"../../../.agents/skills/image-naming-magic/SKILL.md"
 @asset_registry: ~"../../assets.spw"
 @lettering: ~"../../caches/october-lettering-2026-10.spw"
@@ -55,7 +58,7 @@
 
 ^"ground"{
   claim = `As on 2026-09-28: the black behind cutouts on a clear sheet is the scanner lid, so it is clear.`
-  key = `Rebuilt for this set, since September's keying was not kept: a 5x5 median before thresholds (the lid's texture sits near 17% grey and speckles a plain threshold), dark under 30%, neutral under 10% chroma, a core that survives a wide opening so thick marker strokes touching a cutout's edge stay, regrown three small steps inside a finer mask so narrow gaps between cutouts still clear, reached from the scan edge; light slivers in an 8px edge band clear only where they meet the lid, and pure white reached from the edge is uncovered glass.`
+  key = `Rebuilt for this set, since September's keying was not kept, and kept this time as @lid_key, with @scan_tiers for the tiers and @rescan_fingerprint for the re-scan check: a 5x5 median before thresholds (the lid's texture sits near 17% grey and speckles a plain threshold), dark under 30%, neutral under 10% chroma, a core that survives a wide opening so thick marker strokes touching a cutout's edge stay, regrown three small steps inside a finer mask so narrow gaps between cutouts still clear, reached from the scan edge; light slivers in an 8px edge band clear only where they meet the lid, and pure white reached from the edge is uncovered glass.`
   held = `A fleck of heavy black that runs to a cutout's edge can still clear; read every keyed piece by eye on a coloured ground.`
   pages = `The October page offers three grounds for the cutouts (dusk, paper, the lid), dusk by default. Which ground the cutouts want is a feel decision for the creator in a browser.`
 }

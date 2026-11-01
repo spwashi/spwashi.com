@@ -43,6 +43,7 @@ Pixel tiers and quality per asset kind live in `references/size-tiers.spw`, whic
    ```bash
    bash .agents/skills/image-optimize/scripts/generate-variants.sh <source-image>
    ```
+   Scans (folios, panels, cutouts, pads) cut their tiers with `scripts/scan-tiers.sh <master> <out-dir> <stem> [--key]`; `--key` clears the scanner lid behind cutouts on a clear sheet (`scripts/key-scan-lid.sh`). Before naming a batch, `python3 -I scripts/rescan-fingerprint.py <new> <old>` finds pieces already shelved.
 2. **Verify Asset Manifest:**
    ```bash
    npm run images:manifest
