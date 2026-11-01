@@ -14,6 +14,7 @@
 @image_optimize: ~"../../../.agents/skills/image-optimize/SKILL.md"
 @image_naming: ~"../../../.agents/skills/image-naming-magic/SKILL.md"
 @asset_registry: ~"../../assets.spw"
+@lettering: ~"../../caches/october-lettering-2026-10.spw"
 
 ^"release"{
   id = `folio-release-2026-10-31`
