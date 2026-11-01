@@ -1,0 +1,57 @@
+# lore.land, chapter 08: <> Concept
+#
+# One chapter of the November book. Its operator is its spine and its moments are
+# counted (npm run moments). Held: nothing here is a public route, and the creator
+# ports a chapter to lore.land by hand.
+
+#>lore_land_ch08_concept
+#:chapter #!lore_land #!november
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@series: ~"./series.spw"
+@lettering: ~"../../caches/october-lettering-2026-10.spw"
+
+operation = "prime"
+fixity = "experimental"
+
+namespace = `lore-land`
+
+^"chapter"{
+  slug = `ch08-concept`
+  series = `lore-land`
+  number = `8`
+  operator = `<>`
+  name = `Concept`
+  letter = `I`
+  year = `2032, as lettered beside CONCEPT on prime-operator-years-valence-lands`
+  release = `2026-11-22 · with chapters 6 through 8`
+  target = `3846`
+  opens = `?what idea holds it together?`
+  status = `held`
+  draft = `The opening question is a draft from the operator's name; the creator's own question replaces it.`
+}[reg=facet]
+
+^"seeds"{
+  note = `Pointers, not moments: the creator's lettering and scans that name this operator. A seed counts only once it is placed in the list below.`
+  lines = #[
+    `prime-operator-years-valence-lands · 2032 — CONCEPT`,
+    `folio-operator-ladder-boat-car · < Concept`,
+    `pad-is-this-necessary-goodness · what's the CONCEPT`,
+    `prime-operator-tree-boon-to-honk · .CONCEPT`
+  ][reg=list]
+  pieces = #[
+    `folio-concept-topic-structure-quality (folio-2026-10-20-14)`,
+    `folio-operator-tiles-signed-copy (folio-2026-09-27-05)`,
+    `folio-pi-day-mimes-against-wap (folio-2026-09-26-06)`,
+    `pad-is-this-necessary-goodness (pad-2026-10-21-08)`,
+    `prime-operator-table-making-stuff-fun (prime-2026-09-28-02)`
+  ][reg=list]
+}[reg=facet]
+
+^"moments"{
+  rule = `One entry is one moment, written as line · <text>, panel · <asset slug> · <caption>, or choice · <prompt> → <option> | <option>. Counted once where it is placed.`
+  list = #[
+  ][reg=list]
+}[reg=facet]

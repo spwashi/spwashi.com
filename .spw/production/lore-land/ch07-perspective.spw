@@ -1,0 +1,53 @@
+# lore.land, chapter 07: @ Perspective
+#
+# One chapter of the November book. Its operator is its spine and its moments are
+# counted (npm run moments). Held: nothing here is a public route, and the creator
+# ports a chapter to lore.land by hand.
+
+#>lore_land_ch07_perspective
+#:chapter #!lore_land #!november
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@series: ~"./series.spw"
+@lettering: ~"../../caches/october-lettering-2026-10.spw"
+
+operation = "prime"
+fixity = "experimental"
+
+namespace = `lore-land`
+
+^"chapter"{
+  slug = `ch07-perspective`
+  series = `lore-land`
+  number = `7`
+  operator = `@`
+  name = `Perspective`
+  letter = `H`
+  year = `2031, as lettered beside PERSPECTIVE on prime-operator-years-valence-lands`
+  release = `2026-11-22 · with chapters 6 through 8`
+  target = `3846`
+  opens = `?who is watching, and from where?`
+  status = `held`
+  draft = `The opening question is a draft from the operator's name; the creator's own question replaces it.`
+}[reg=facet]
+
+^"seeds"{
+  note = `Pointers, not moments: the creator's lettering and scans that name this operator. A seed counts only once it is placed in the list below.`
+  lines = #[
+    `prime-operator-years-valence-lands · 2031 — PERSPECTIVE`,
+    `folio-unary-motions-of-my-brand · PERSPECTIVE`,
+    `folio-operator-ladder-boat-car · @ Perspective`,
+    `pad-css-transform-transition-animation · TRANSLATE, SCALE, ROTATE, SKEW, PERSPECTIVE`,
+    `prime-operator-tree-boon-to-honk · .PERSPECTIVE`
+  ][reg=list]
+  pieces = #[
+  ][reg=list]
+}[reg=facet]
+
+^"moments"{
+  rule = `One entry is one moment, written as line · <text>, panel · <asset slug> · <caption>, or choice · <prompt> → <option> | <option>. Counted once where it is placed.`
+  list = #[
+  ][reg=list]
+}[reg=facet]

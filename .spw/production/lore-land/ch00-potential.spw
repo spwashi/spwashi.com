@@ -1,0 +1,60 @@
+# lore.land, chapter 00: ~ Potential
+#
+# One chapter of the November book. Its operator is its spine and its moments are
+# counted (npm run moments). Held: nothing here is a public route, and the creator
+# ports a chapter to lore.land by hand.
+
+#>lore_land_ch00_potential
+#:chapter #!lore_land #!november
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@series: ~"./series.spw"
+@lettering: ~"../../caches/october-lettering-2026-10.spw"
+
+operation = "prime"
+fixity = "experimental"
+
+namespace = `lore-land`
+
+^"chapter"{
+  slug = `ch00-potential`
+  series = `lore-land`
+  number = `0`
+  operator = `~`
+  name = `Potential`
+  letter = `A`
+  year = `2024, as lettered beside POTENTIAL on prime-operator-years-valence-lands`
+  release = `2026-11-01 · the outline, and the chapter begins`
+  target = `3847`
+  opens = `?what could this become?`
+  status = `held`
+  draft = `The opening question is a draft from the operator's name; the creator's own question replaces it.`
+}[reg=facet]
+
+^"seeds"{
+  note = `Pointers, not moments: the creator's lettering and scans that name this operator. A seed counts only once it is placed in the list below.`
+  lines = #[
+    `prime-operator-years-valence-lands · 2024 — POTENTIAL`,
+    `folio-unary-motions-of-my-brand · potential`,
+    `folio-operator-ladder-boat-car · ~ Potential`,
+    `prime-operator-tree-boon-to-honk · .POTENTIAL`
+  ][reg=list]
+  pieces = #[
+    `folio-operator-curriculum-teal (folio-2026-09-26-00)`,
+    `folio-operator-ladder-boat-car (folio-2026-10-20-13)`,
+    `folio-operator-ladder-pencil (folio-2026-09-26-22)`,
+    `folio-operator-tiles-signed-copy (folio-2026-09-27-05)`,
+    `folio-unary-motions-of-my-brand (folio-2026-10-18-02)`,
+    `prime-operator-table-making-stuff-fun (prime-2026-09-28-02)`,
+    `prime-operator-tree-boon-to-honk (prime-2026-10-22-03)`,
+    `prime-operator-years-valence-lands (prime-2026-10-18-03)`
+  ][reg=list]
+}[reg=facet]
+
+^"moments"{
+  rule = `One entry is one moment, written as line · <text>, panel · <asset slug> · <caption>, or choice · <prompt> → <option> | <option>. Counted once where it is placed.`
+  list = #[
+  ][reg=list]
+}[reg=facet]

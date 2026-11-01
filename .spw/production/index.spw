@@ -15,6 +15,7 @@
 @movie: ~"./movie-2027.spw"
 @pnc: ~"./post-nut-clarity/series.spw"
 @pnc_ground: ~"../caches/post-nut-clarity-2026-09.spw"
+@lore_land: ~"./lore-land/series.spw"
 
 operation = "prime"
 fixity = "experimental"
@@ -35,4 +36,5 @@ dispatch: .{
   template_episode = @template_episode
   movie_2027 = @movie
   post_nut_clarity = @pnc
+  lore_land = @lore_land
 }

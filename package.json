@@ -77,6 +77,7 @@
     "folio:days": "node scripts/generate-folio-days.mjs",
     "folio:highres:rotate": "node scripts/folio-highres-rotate.mjs",
     "image:tour": "node scripts/generate-image-tour.mjs",
+    "moments": "node scripts/count-moments.mjs",
     "audit:living-terms": "node scripts/audit-living-terms.mjs",
     "audit:route-links": "node scripts/audit-route-links.mjs",
     "audit:braces": "node scripts/audit-braces.mjs",

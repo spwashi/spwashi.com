@@ -1,0 +1,107 @@
+# lore.land, the November book
+#
+# A show that is also a book: thirteen chapters on the thirteen operators, written
+# through November 2026 toward 50,000 moments. Copied from ../_template/series.spw.
+# Held here as outline; the creator ports chapters to lore.land.
+
+#>lore_land_series
+#:series #!lore_land #!november #!production
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@template: ~"../_template/series.spw"
+@domain: ~"../../../about/domains/lore.land/index.html"
+@season: ~"../../slices/production-season-rhythm/index.spw"
+@operator_table: ~"../../surfaces/folio-archive/release-2026-09-28.spw"
+@operator_years: ~"../../../public/images/assets/primes/prime-operator-years-valence-lands.spw"
+@lettering: ~"../../caches/october-lettering-2026-10.spw"
+@arcs: ~"../../caches/lore-arcs-2026-09.spw"
+@genre: ~"../../caches/boonhonk-combinatoric-genre.spw"
+@counter: ~"../../../scripts/count-moments.mjs"
+
+operation = "prime"
+fixity = "experimental"
+
+namespace = `lore-land`
+
+^"series"{
+  slug = `lore-land`
+  title = `lore.land`
+  ground = `@domain: a show that is also a book, thirteen chapters paced like episodes and built to hold up like structure.`
+  creator = `2026-11-01: update lore.land through November novel writing month; use the .spw outlines and the art to make a product of at least 50,000 words or moments. Decided the same day: the unit is the moment, the spine is the thirteen operators, and the outline is held here first.`
+  bits = #[
+    `RPG Wednesday tests a figure before it hardens into canon`,
+    `boon, bane, bone, bonk, and honk`,
+    `Wonder About Pi(e)`
+  ][reg=set]
+  cast = #[
+    `WAPboy`,
+    `Honk Bazongas`,
+    `Gravy Davis`
+  ][reg=set]
+  episodes = #[
+    `ch00-potential`,
+    `ch01-vibration`,
+    `ch02-ground`,
+    `ch03-wonder`,
+    `ch04-action`,
+    `ch05-value`,
+    `ch06-subject`,
+    `ch07-perspective`,
+    `ch08-concept`,
+    `ch09-scene`,
+    `ch10-mode`,
+    `ch11-structure`,
+    `ch12-integration`
+  ][reg=set]
+  status = `held`
+  refuse = `A chapter does not become a public route by being filled in. Post-Nut Clarity is its own series beside this one.`
+}[reg=facet]
+
+^"spine"{
+  claim = `Chapter n is operator n of the lore.land operator table (@operator_table, threads.operator_table), lettered 0 to 12 and A to M. @operator_years letters the same order beside the years 2024 to 2036, and each chapter keeps its year.`
+  order = `~ Potential, # Vibration, . Ground, ? Wonder, ! Action, * Value, & Subject, @ Perspective, <> Concept, () Scene, [] Mode, {} Structure, ^ Integration`
+  canon = `As lettered. Whether the book's table is history, dialect, or canon beside the site's character table stays the creator's call.`
+}[reg=facet]
+
+^"count"{
+  unit = `moment`
+  goal = `50000`
+  kinds = `line (a written line), panel (a scan placed with its caption), choice (a prompt and its options)`
+  rule = `One entry in a chapter's ^"moments" list is one moment, counted once where it is placed. A reading path through choices is not multiplied into moments. Seeds do not count until placed.`
+  words = `tracked beside moments, not the goal`
+  tool = `npm run moments (@counter): per chapter, by kind, words, and the day's pace`
+}[reg=facet]
+
+^"calendar"{
+  pace = `1,667 moments a day, November 1 through 30; chapters are written in order and a Sunday releases what is ready`
+  sundays = #[
+    `2026-11-01 · the outline; chapter 0 begins`,
+    `2026-11-08 · through chapter 2 (13,333 by pace)`,
+    `2026-11-15 · through chapter 5 (25,000 by pace)`,
+    `2026-11-22 · through chapter 8 (36,667 by pace)`,
+    `2026-11-29 · through chapter 11 (48,333 by pace)`,
+    `2026-11-30 · chapter 12, Integration, closes at 50,000`
+  ][reg=list]
+  season = `@season november: one daily pass, Sunday episode releases on November 1, 8, 15, 22, and 29`
+}[reg=facet]
+
+^"sources"{
+  lettering = `@lettering: 854 lettered lines from the October drop, each beside its piece`
+  scans = `every scan sidecar under public/images/assets/ (folios, panels, primes, pads, scraps, worktable): its alt text and the question it opens with; a placed scan is a panel moment`
+  arcs = `@arcs: a lore arc as a short telling of one part of a career, once per audience`
+  genre = `@genre`
+  outlines = `the rest of .spw/ the creator chooses; a chapter names what it draws on in its seeds`
+}[reg=facet]
+
+^"port"{
+  destination = `lore.land, a Pages site; its repository is github.com/lore-land/lore.land`
+  how = `The creator ports a chapter by hand when it is released. This outline stays held here and keeps the count.`
+}[reg=facet]
+
+^"keeps"{
+  held = `Pieces held at intake stay out of the book as they stay off the site.`
+  schooling = `Lettering about schooling is not a moment's subject, as it is not a title or a question on the site.`
+  generated = `No counted moment is generated. A suggested line is a seed until the creator places it.`
+}[reg=facet]
