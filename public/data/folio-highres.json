@@ -56,6 +56,32 @@
           "slug": "shop-logo-vibe-menu-time"
         }
       ]
+    },
+    {
+      "week": "2026-W44",
+      "opened": "2026-10-31",
+      "folios": [
+        {
+          "id": "folio-2026-10-20-01",
+          "slug": "dang-literal-boon-land"
+        },
+        {
+          "id": "folio-2026-10-20-06",
+          "slug": "headline-honk-clown-downtown"
+        },
+        {
+          "id": "folio-2026-10-20-08",
+          "slug": "late-night-scene-workshop"
+        },
+        {
+          "id": "folio-2026-10-20-10",
+          "slug": "magenta-wash-pencil-eye"
+        },
+        {
+          "id": "folio-2026-10-20-14",
+          "slug": "concept-topic-structure-quality"
+        }
+      ]
     }
   ]
 }

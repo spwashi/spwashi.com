@@ -20,11 +20,13 @@
   surface: "folios"
   role: "folio-scan"
   formats_available: ["avif", "webp"]
+  highres: "folio-headline-honk-clown-downtown-full.webp — 2400px WebP, opened in the weekly five (public/data/folio-highres.json)"
   alt_text: "Laminated folio, olive and lavender paint: a teal sign reads HEADLINE HONK in clown down-town above a drawn skyline, beside a Boon plaque under a striped spiral O, a list of @ Boon, BANE., bone, BONK, HONK, and a ? with faces"
   tiers: {
     thumb: { width: 203, height: 256, avif_kib: 6, webp_kib: 6 }
     display: { width: 405, height: 512, avif_kib: 37, webp_kib: 24 }
     hero: { width: 810, height: 1024, avif_kib: 99, webp_kib: 103 }
+    full: { width: 1899, height: 2400, webp_kib: 579, opened: "2026-W44" }
   }
 }
 

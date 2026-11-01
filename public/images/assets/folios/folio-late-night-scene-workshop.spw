@@ -20,11 +20,13 @@
   surface: "folios"
   role: "folio-scan"
   formats_available: ["avif", "webp"]
+  highres: "folio-late-night-scene-workshop-full.webp — 2400px WebP, opened in the weekly five (public/data/folio-highres.json)"
   alt_text: "Laminated folio, moon over a green hill: black paper cutouts lettered in white read Late Night Scene workshop with SPWASHI under a Spw mark, then Spw logo studies bracketed into logo, with the HONK sign showing through"
   tiers: {
     thumb: { width: 202, height: 256, avif_kib: 4, webp_kib: 4 }
     display: { width: 405, height: 512, avif_kib: 19, webp_kib: 13 }
     hero: { width: 809, height: 1024, avif_kib: 97, webp_kib: 49 }
+    full: { width: 1896, height: 2400, webp_kib: 342, opened: "2026-W44" }
   }
 }
 
