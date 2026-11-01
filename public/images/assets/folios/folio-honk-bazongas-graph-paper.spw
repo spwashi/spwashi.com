@@ -1,0 +1,59 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-honk-bazongas-graph-paper"
+  title: "Honk Bazongas"
+  description: "Laminated folio, scanned October 20, 2026, for the October drop."
+}
+
+^"source"{
+  id: "folio-2026-10-20-15"
+  master: "public/images/renders/_raw/folio-scans-2026-10-20/folio-2026-10-20-15-scan.png"
+  master_tracked: false
+  scan: { width: 3455, height: 2720, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 11.5 x 9.1 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+  numbering: "restored 2026-11-01 after the release, so it is numbered after October 20's other folios; in scan order it falls between folio-2026-10-20-09 and -10"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  orientation: "lettering runs sideways, top to bottom; a quarter turn counterclockwise reads it upright"
+  alt_text: "Laminated folio on graph paper, smudged grey, pink, and teal: HONK BAZONGAS in tall teal letters, a purple scalloped cloud with green hash marks, and a black outlined crown shape at the edge"
+  tiers: {
+    thumb: { width: 256, height: 202, avif_kib: 7, webp_kib: 7 }
+    display: { width: 512, height: 403, avif_kib: 44, webp_kib: 29 }
+    hero: { width: 1024, height: 806, avif_kib: 112, webp_kib: 109 }
+  }
+}
+
+^"optimization"{
+  tool: ".agents/skills/image-optimize/scripts/scan-tiers.sh, from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "under 120 KiB; stepped from quality 75 to AVIF 55, WebP 75"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-10-31", "honk", "honk-bazongas", "lore-land", "graph-paper", "characters"]
+  part_of: "folio-release-2026-10-31"
+  thread: "valence"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `honk[name]{bazongas}<lore.land>`
+  b: `*folio-honk-bazongas-graph-paper &honk.bazongas ~scalloped.cloud ~hash.marks <lore.land`
+  handles: ["&honk.bazongas", "~scalloped.cloud", "~hash.marks", "<lore.land"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what does Honk Bazongas honk about?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

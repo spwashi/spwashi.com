@@ -27,7 +27,7 @@ expression = lettering[snippet]{piece.line}<fodder>
   keeps = `Every line keeps its piece: the slug before the dot leads to the sidecar, and the sidecar to the scan. A cutout that returns in later arrangements is kept once, beside the first piece it lies on; the sidecars' * handles say where it went next. Transcriptions follow the scan, the creator's spelling included.`
   leaves_out = `Lines about schooling and the show title stay out of this list, as they stay out of titles and questions.`
   next = `Candidates, one line at a time: a copy-motif pill, a ^dialog opener, a collectible expression, a seed for an Imagine clip. A line promoted to a page names the piece it came from.`
-  counts = `853 lines from 91 pieces`
+  counts = `854 lines from 92 pieces`
 }[reg=facet]
 
 ^"cutouts_10_17"{
@@ -472,6 +472,7 @@ expression = lettering[snippet]{piece.line}<fodder>
     `folio-concept-topic-structure-quality · [ QUALITY`,
     `folio-concept-topic-structure-quality · THE BEST`,
     `folio-concept-topic-structure-quality · …RECISE, THOROUGH`,
+    `folio-honk-bazongas-graph-paper · HONK BAZONGAS`,
   ][reg=list]
 }[reg=facet]
 
