@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-headline-honk-clown-downtown"
+  title: "Headline honk in clown downtown"
+  description: "Laminated folio, scanned October 20, 2026, for the October drop."
+}
+
+^"source"{
+  id: "folio-2026-10-20-06"
+  master: "public/images/renders/_raw/folio-scans-2026-10-20/folio-2026-10-20-06-scan.png"
+  master_tracked: false
+  scan: { width: 2711, height: 3427, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 9.0 x 11.4 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "Laminated folio, olive and lavender paint: a teal sign reads HEADLINE HONK in clown down-town above a drawn skyline, beside a Boon plaque under a striped spiral O, a list of @ Boon, BANE., bone, BONK, HONK, and a ? with faces"
+  tiers: {
+    thumb: { width: 203, height: 256, avif_kib: 6, webp_kib: 6 }
+    display: { width: 405, height: 512, avif_kib: 37, webp_kib: 24 }
+    hero: { width: 810, height: 1024, avif_kib: 99, webp_kib: 103 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "under 120 KiB; stepped from quality 75 to AVIF 55, WebP 75"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-10-31", "honk", "clown-downtown", "valence", "boon", "skyline"]
+  part_of: "folio-release-2026-10-31"
+  thread: "valence"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `honk[headline]{clown.downtown}`
+  b: `*folio-headline-honk-clown-downtown *headline.honk.sign <clown.downtown *boon.plaque ~boon.bane.bone.bonk.honk`
+  handles: ["*headline.honk.sign", "<clown.downtown", "*boon.plaque", "~boon.bane.bone.bonk.honk"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what makes headline news in clown downtown?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

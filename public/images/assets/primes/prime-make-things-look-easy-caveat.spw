@@ -1,0 +1,69 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "prime-make-things-look-easy-caveat"
+  title: "I make some things look easy"
+  description: "Cutout arrangement, scanned October 21, 2026, for the October drop."
+}
+
+^"source"{
+  id: "prime-2026-10-21-01"
+  master: "public/images/renders/_raw/folio-scans-2026-10-21/prime-2026-10-21-01-scan.png"
+  master_tracked: false
+  scan: { width: 2632, height: 4825, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 8.8 x 16.1 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "primes"
+  role: "cutout-arrangement"
+  formats_available: ["avif", "webp"]
+  ground: "clear — the black behind the cutouts was the scanner lid seen through a clear sheet, so every tier keys it to transparent; a page gives the piece its ground"
+  orientation: "the lower cutout runs sideways, reading bottom to top"
+  alt_text: "Cutouts on a clear sheet: the math card above a sideways cutout reading I make some things LOOK EASY, Caveat, 13 years building Skill domain, 9 years building Professional Webshit, Learn Midjourney, Learn Adobe, Learn JetBrains"
+  tiers: {
+    thumb: { width: 140, height: 256, avif_kib: 10, webp_kib: 7 }
+    display: { width: 279, height: 512, avif_kib: 30, webp_kib: 21 }
+    hero: { width: 559, height: 1024, avif_kib: 81, webp_kib: 61 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  alpha: "the lid keyed before tiers are cut: a 5x5 median, dark under 30% and neutral under 10% chroma, a core that survives a wide opening, regrown a little inside a fine mask, reached from the scan edge; light slivers in an 8px edge band clear where they meet the lid, and pure white reached from the edge is uncovered glass"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["prime", "release-2026-10-31", "caveat", "skills", "tools", "boonhonk", "language-design"]
+  part_of: "folio-release-2026-10-31"
+  thread: "practice"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `caveat[look.easy]{skill.domain|language.design}`
+  b: `*prime-make-things-look-easy-caveat *look.easy.caveat *math.links.card %13.years %9.years !learn.jetbrains ~boonhonk`
+  handles: ["*look.easy.caveat", "*math.links.card", "%13.years", "%9.years", "!learn.jetbrains", "~boonhonk"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what do you make look easy?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}
+
+^"imagine"{
+  status: "open — nothing generated yet; the creator runs Grok Imagine and chooses what returns"
+  motion: `the caveat cutout turns upright under the math card and its learn tags drift into a column`
+  after: { id: "prime-2026-10-21-00", shares: ["*math.links.card"] }
+  seed: "the master as scanned, lid and all; Imagine reads a dark ground more predictably than transparency"
+  returns: "public/images/renders/imagine/2026-10-31/prime-make-things-look-easy-caveat-imagine-NN.<ext>, with a sidecar naming generator: Grok Imagine and source: prime-2026-10-21-01"
+  derivatives: []
+}

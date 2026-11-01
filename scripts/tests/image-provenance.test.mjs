@@ -13,6 +13,7 @@ import {
 test('path rules mark renders generated and folio scans original', () => {
   assert.equal(classifyImageSource('/public/images/renders/papergami/papergami-kinetic.webp')?.kind, 'generated');
   assert.equal(classifyImageSource('/public/images/assets/folios/folio-bone-box-launch-display.webp')?.kind, 'original');
+  assert.equal(classifyImageSource('/public/images/assets/pads/pad-example-display.webp')?.kind, 'original');
 });
 
 test('a sidecar record marks a picture kept outside the path-ruled folders', () => {

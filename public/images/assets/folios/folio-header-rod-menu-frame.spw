@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-header-rod-menu-frame"
+  title: "Header, rod, menu, frame"
+  description: "Laminated folio, scanned October 18, 2026, for the October drop."
+}
+
+^"source"{
+  id: "folio-2026-10-18-03"
+  master: "public/images/renders/_raw/folio-scans-2026-10-18/folio-2026-10-18-03-scan.png"
+  master_tracked: false
+  scan: { width: 2713, height: 3442, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 9.0 x 11.5 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "Laminated folio, purple and teal paint: @ HEADER, ROD, MENU, FRAME and FOCAL SQUARE point by arrows to & . # @ * boxes, each tagged with three # words such as FONT TONE EMPHASIS, over a gridded plane and a maroon lozenge"
+  tiers: {
+    thumb: { width: 202, height: 256, avif_kib: 6, webp_kib: 6 }
+    display: { width: 404, height: 512, avif_kib: 44, webp_kib: 27 }
+    hero: { width: 807, height: 1024, avif_kib: 112, webp_kib: 106 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "under 120 KiB; stepped from quality 75 to AVIF 55, WebP 75"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-10-31", "page-anatomy", "operators", "layout", "focal-square", "header"]
+  part_of: "folio-release-2026-10-31"
+  thread: "operators"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `page[anatomy]{header.rod.menu.frame.focal.square}`
+  b: `*folio-header-rod-menu-frame *page.anatomy &focal.square <header.rod.menu.frame ~font.tone.emphasis ~moment.intent.value`
+  handles: ["*page.anatomy", "&focal.square", "<header.rod.menu.frame", "~font.tone.emphasis", "~moment.intent.value"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?which part of a page holds its moment, intent and value?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

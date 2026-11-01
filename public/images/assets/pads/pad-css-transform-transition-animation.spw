@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "pad-css-transform-transition-animation"
+  title: "Transform matrix CSS"
+  description: "Scratchpad page, scanned October 21, 2026, for the October drop."
+}
+
+^"source"{
+  id: "pad-2026-10-21-19"
+  master: "public/images/renders/_raw/folio-scans-2026-10-21/pad-2026-10-21-19-scan.png"
+  master_tracked: false
+  scan: { width: 2565, height: 3276, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 8.6 x 10.9 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "pads"
+  role: "pad-page"
+  formats_available: ["avif", "webp"]
+  alt_text: "Marker in purple, red, blue and green on a loose sheet: TRANSFORM MATRIX CSS and MICRO ANIMATIONS over the transform functions, the transition properties, ANIMATION KEYFRAMES with the animation properties, timing words from CUBIC-BEZIER to EASE-OUT, and WILL-CHANGE"
+  tiers: {
+    thumb: { width: 201, height: 256, avif_kib: 4, webp_kib: 4 }
+    display: { width: 401, height: 512, avif_kib: 18, webp_kib: 15 }
+    hero: { width: 802, height: 1024, avif_kib: 75, webp_kib: 47 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["pad", "release-2026-10-31", "css", "animation", "transforms", "transitions", "web-development"]
+  part_of: "folio-release-2026-10-31"
+  thread: "practice"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `css[animate]{transform|transition|keyframes}`
+  b: `*pad-css-transform-transition-animation <css *transform.matrix ~micro.animations ~timing.functions %eight.animation.properties`
+  handles: ["<css", "*transform.matrix", "~micro.animations", "~timing.functions", "%eight.animation.properties"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what does will-change promise the browser?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

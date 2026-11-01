@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-magenta-wash-pencil-eye"
+  title: "Magenta wash, pencil eye"
+  description: "Laminated folio, scanned October 20, 2026, for the October drop."
+}
+
+^"source"{
+  id: "folio-2026-10-20-10"
+  master: "public/images/renders/_raw/folio-scans-2026-10-20/folio-2026-10-20-10-scan.png"
+  master_tracked: false
+  scan: { width: 2715, height: 3444, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 9.1 x 11.5 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "Laminated folio, magenta, violet and teal diagonal wash over dense pencil: outlined block letters and triangles, a drawn eye, an A in a box with a small s, and faint cursive lettering along the top edge"
+  tiers: {
+    thumb: { width: 202, height: 256, avif_kib: 4, webp_kib: 5 }
+    display: { width: 404, height: 512, avif_kib: 32, webp_kib: 19 }
+    hero: { width: 807, height: 1024, avif_kib: 116, webp_kib: 75 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "under 120 KiB; stepped from quality 75 to AVIF 65, WebP 75"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-10-31", "wash", "pencil", "eye", "magenta", "layers"]
+  part_of: "folio-release-2026-10-31"
+  thread: "washes"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `wash[diagonal]{pencil.under}`
+  b: `*folio-magenta-wash-pencil-eye ~drawn.eye ~block.letters ~diagonal.wash`
+  handles: ["~drawn.eye", "~block.letters", "~diagonal.wash"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what was drawn before the wash came over it?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

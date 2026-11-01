@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-operator-ladder-boat-car"
+  title: "Operator ladder with boat and car"
+  description: "Laminated folio, scanned October 20, 2026, for the October drop."
+}
+
+^"source"{
+  id: "folio-2026-10-20-13"
+  master: "public/images/renders/_raw/folio-scans-2026-10-20/folio-2026-10-20-13-scan.png"
+  master_tracked: false
+  scan: { width: 3456, height: 2684, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 11.5 x 8.9 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "Laminated folio, blue and rose paint: cutouts letter SPWAb.PiE & beside a face, LET's Blunt (i blurt) SOME Boon HONK, an operator ladder from ~ Potential to { Structure, and two panels holding a boat and a car"
+  tiers: {
+    thumb: { width: 256, height: 199, avif_kib: 8, webp_kib: 8 }
+    display: { width: 512, height: 398, avif_kib: 44, webp_kib: 31 }
+    hero: { width: 1024, height: 796, avif_kib: 105, webp_kib: 108 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "under 120 KiB; stepped from quality 75 to AVIF 55, WebP 75"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-10-31", "operators", "operator-ladder", "boonhonk", "boat", "car"]
+  part_of: "folio-release-2026-10-31"
+  thread: "operators"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `operators[ladder]{potential..structure}`
+  b: `*folio-operator-ladder-boat-car *operator.ladder *spwab.pie.face ~boon.honk *boat.panel *car.panel`
+  handles: ["*operator.ladder", "*spwab.pie.face", "~boon.honk", "*boat.panel", "*car.panel"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?which rung of the ladder would you start on?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

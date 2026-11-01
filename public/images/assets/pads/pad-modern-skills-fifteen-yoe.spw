@@ -1,0 +1,58 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "pad-modern-skills-fifteen-yoe"
+  title: "Modern skills, January 11 2026"
+  description: "Scratchpad page, scanned October 21, 2026, for the October drop."
+}
+
+^"source"{
+  id: "pad-2026-10-21-06"
+  master: "public/images/renders/_raw/folio-scans-2026-10-21/pad-2026-10-21-06-scan.png"
+  master_tracked: false
+  scan: { width: 2704, height: 3841, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 9.0 x 12.8 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "pads"
+  role: "pad-page"
+  formats_available: ["avif", "webp"]
+  alt_text: "Pen on a spiral-pad page: MODERN SKILLS maps Developer experience to Claude Skills, Taste profile expansion to Grok + recursive seed, Research survey to Gemini deep research, by 15 YoE coding, January 11, 2026 and HUMAN JUDGEMENT"
+  tiers: {
+    thumb: { width: 180, height: 256, avif_kib: 5, webp_kib: 5 }
+    display: { width: 361, height: 512, avif_kib: 25, webp_kib: 20 }
+    hero: { width: 721, height: 1024, avif_kib: 95, webp_kib: 65 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["pad", "release-2026-10-31", "skills", "ai-tools", "taste", "research", "career"]
+  part_of: "folio-release-2026-10-31"
+  thread: "practice"
+  lettered_dates: ["2026-01-11"]
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `skills[modern]{developer.experience|taste.profile|research.survey}`
+  b: `*pad-modern-skills-fifteen-yoe *modern.skills *recursive.seed ~human.judgement %15.yoe @2026-01-11`
+  handles: ["*modern.skills", "*recursive.seed", "~human.judgement", "%15.yoe", "@2026-01-11"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?which tool would you pair with taste profile expansion?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

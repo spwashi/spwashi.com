@@ -1,0 +1,58 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "pad-boon-bane-bone-january-four"
+  title: "Boon, bane, bone, 04 January"
+  description: "Scratchpad page, scanned October 21, 2026, for the October drop."
+}
+
+^"source"{
+  id: "pad-2026-10-21-00"
+  master: "public/images/renders/_raw/folio-scans-2026-10-21/pad-2026-10-21-00-scan.png"
+  master_tracked: false
+  scan: { width: 2902, height: 3794, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 9.7 x 12.6 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "pads"
+  role: "pad-page"
+  formats_available: ["avif", "webp"]
+  alt_text: "Pen on a spiral-pad page: 04 JANUARY 2026 on a splash with a spiral tail, Boon, BANE. and bone on stacked plaques, a box of three braces holding hashes, three hash circles, and φ1 φ2 φ3 φ4 over a dish"
+  tiers: {
+    thumb: { width: 196, height: 256, avif_kib: 4, webp_kib: 4 }
+    display: { width: 392, height: 512, avif_kib: 18, webp_kib: 14 }
+    hero: { width: 783, height: 1024, avif_kib: 74, webp_kib: 46 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["pad", "release-2026-10-31", "boon-bane-bone", "braces", "hash", "january", "phases"]
+  part_of: "folio-release-2026-10-31"
+  thread: "valence"
+  lettered_dates: ["2026-01-04"]
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `valence[ladder]{boon|bane|bone}`
+  b: `*pad-boon-bane-bone-january-four *boon.bane.bone ~hash.braces ~hash.circles %phi1.phi4 @2026-01-04`
+  handles: ["*boon.bane.bone", "~hash.braces", "~hash.circles", "%phi1.phi4", "@2026-01-04"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what sits between a boon and a bone?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

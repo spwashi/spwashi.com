@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "panel-maroon-glyph-pale-plume"
+  title: "Maroon glyph, pale plume"
+  description: "Painted panel face, scanned October 22, 2026, for the October drop."
+}
+
+^"source"{
+  id: "panel-2026-10-22-01"
+  master: "public/images/renders/_raw/folio-scans-2026-10-22/panel-2026-10-22-01-scan.png"
+  master_tracked: false
+  scan: { width: 2998, height: 2379, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 10.0 x 7.9 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "panels"
+  role: "panel-face"
+  formats_available: ["avif", "webp"]
+  alt_text: "Paint on canvas: a maroon block outlined in white holds white hook glyphs and a zigzag, with a teal lobe beneath, beside a pale blue plume that curls to a hook over green on a brown ground"
+  tiers: {
+    thumb: { width: 256, height: 203, avif_kib: 4, webp_kib: 4 }
+    display: { width: 512, height: 406, avif_kib: 22, webp_kib: 15 }
+    hero: { width: 1024, height: 813, avif_kib: 107, webp_kib: 63 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "under 120 KiB; stepped from quality 75 to AVIF 70, WebP 75"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["panel", "release-2026-10-31", "glyph", "plume", "maroon", "teal", "green"]
+  part_of: "folio-release-2026-10-31"
+  thread: "washes"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `glyph[maroon]{plume.hook}`
+  b: `*panel-maroon-glyph-pale-plume ~glyph ~plume ~zigzag`
+  handles: ["~glyph", "~plume", "~zigzag"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what do the white hooks spell?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

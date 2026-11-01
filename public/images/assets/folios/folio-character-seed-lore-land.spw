@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-character-seed-lore-land"
+  title: "Character seed to Lore Land"
+  description: "Laminated folio, scanned October 20, 2026, for the October drop."
+}
+
+^"source"{
+  id: "folio-2026-10-20-12"
+  master: "public/images/renders/_raw/folio-scans-2026-10-20/folio-2026-10-20-12-scan.png"
+  master_tracked: false
+  scan: { width: 3458, height: 2710, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 11.5 x 9.0 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "Laminated folio, plum wash framing white: Boon BANE bone.com, Character seed and Episode Card feed a striped arrow into LorE LAND with a candle for the L, beside a Character seed stack of # and * rows and a drawn cloud"
+  tiers: {
+    thumb: { width: 256, height: 201, avif_kib: 7, webp_kib: 8 }
+    display: { width: 512, height: 401, avif_kib: 42, webp_kib: 30 }
+    hero: { width: 1024, height: 803, avif_kib: 107, webp_kib: 110 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "under 120 KiB; stepped from quality 75 to AVIF 55, WebP 75"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-10-31", "lore-land", "character-seed", "episode-card", "boon-bane-bone", "clouds"]
+  part_of: "folio-release-2026-10-31"
+  thread: "rooms"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `seed[character]{lore.land}`
+  b: `*folio-character-seed-lore-land *character.seed *episode.card <lore.land <boonbanebone.com ~cloud`
+  handles: ["*character.seed", "*episode.card", "<lore.land", "<boonbanebone.com", "~cloud"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what grows from a character seed in lore land?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

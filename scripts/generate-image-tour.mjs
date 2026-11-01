@@ -40,7 +40,7 @@ function attr(tag, name) {
 }
 
 function kindFor(src) {
-  if (/\/assets\/(folios|panels)\//.test(src)) return 'scan';
+  if (/\/assets\/(folios|panels|primes|pads)\//.test(src)) return 'scan';
   if (/\/assets\/rpg-wednesday\/|\/ink-\d{4}-\d{2}-\d{2}/.test(src)) return 'drawing';
   if (/\/(renders|illustrations|routes|home)\//.test(src)) return 'render';
   return 'image';

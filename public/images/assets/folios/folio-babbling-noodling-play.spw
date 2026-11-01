@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-babbling-noodling-play"
+  title: "Babbling, noodling, play"
+  description: "Laminated folio, scanned October 18, 2026, for the October drop."
+}
+
+^"source"{
+  id: "folio-2026-10-18-04"
+  master: "public/images/renders/_raw/folio-scans-2026-10-18/folio-2026-10-18-04-scan.png"
+  master_tracked: false
+  scan: { width: 2727, height: 3431, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 9.1 x 11.4 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "Laminated folio, blue-grey wash over faint lettering: WRITING and EDITING point to CODE, SOFTWARE + DESIGN to ARCHITECT, and BABBLING + NOODLING to PLAY, with a small window bar at top right and magenta at the edge"
+  tiers: {
+    thumb: { width: 204, height: 256, avif_kib: 2, webp_kib: 3 }
+    display: { width: 407, height: 512, avif_kib: 18, webp_kib: 12 }
+    hero: { width: 814, height: 1024, avif_kib: 107, webp_kib: 50 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-10-31", "writing", "code", "software", "play", "noodling", "wash"]
+  part_of: "folio-release-2026-10-31"
+  thread: "practice"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `practice[pairs]{babbling.noodling.play}`
+  b: `*folio-babbling-noodling-play *writing.editing.code *software.design.architect *babbling.noodling.play ~blue.grey.wash`
+  handles: ["*writing.editing.code", "*software.design.architect", "*babbling.noodling.play", "~blue.grey.wash"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what do babbling and noodling add up to?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

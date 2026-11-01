@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "pad-more-boon-honk"
+  title: "More Boon HONK"
+  description: "Scratchpad page, scanned October 21, 2026, for the October drop."
+}
+
+^"source"{
+  id: "pad-2026-10-21-17"
+  master: "public/images/renders/_raw/folio-scans-2026-10-21/pad-2026-10-21-17-scan.png"
+  master_tracked: false
+  scan: { width: 2548, height: 3271, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 8.5 x 10.9 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "pads"
+  role: "pad-page"
+  formats_available: ["avif", "webp"]
+  alt_text: "Pencil on graph paper: More Boon HONK in a large outlined hand, a smaller Boon HONK, Boon with an arrow to a cube and HONK with an arrow to a coil, and Boon Boon Boon, over a framed spiral with bone ends"
+  tiers: {
+    thumb: { width: 199, height: 256, avif_kib: 2, webp_kib: 3 }
+    display: { width: 399, height: 512, avif_kib: 14, webp_kib: 10 }
+    hero: { width: 798, height: 1024, avif_kib: 80, webp_kib: 42 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["pad", "release-2026-10-31", "boonhonk", "boon", "honk", "bone", "spiral"]
+  part_of: "folio-release-2026-10-31"
+  thread: "valence"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `boonhonk[more]{cube|coil}`
+  b: `*pad-more-boon-honk *boon.honk ~cube ~coil ~bone.ends ~spiral`
+  handles: ["*boon.honk", "~cube", "~coil", "~bone.ends", "~spiral"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?why does boon become a cube while honk becomes a coil?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

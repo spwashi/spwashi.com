@@ -1,0 +1,58 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "pad-teams-etymology-phonics-searches"
+  title: "Teams, etymology and phonics searches"
+  description: "Scratchpad page, scanned October 22, 2026, for the October drop."
+}
+
+^"source"{
+  id: "pad-2026-10-22-02"
+  master: "public/images/renders/_raw/folio-scans-2026-10-22/pad-2026-10-22-02-scan.png"
+  master_tracked: false
+  scan: { width: 907, height: 1953, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 3.0 x 6.5 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "pads"
+  role: "pad-page"
+  formats_available: ["avif", "webp"]
+  orientation: "sideways, lines run top to bottom"
+  alt_text: "Two yellow sticky notes in brown ink: Some ideas, have teams develop search for the etymology of some words, when were some of the words coined?, phonics-based searches for R-controlled words like starch, part, and have teams develop podcast ideas"
+  tiers: {
+    thumb: { width: 119, height: 256, avif_kib: 4, webp_kib: 4 }
+    display: { width: 238, height: 512, avif_kib: 17, webp_kib: 14 }
+    hero: { width: 476, height: 1024, avif_kib: 58, webp_kib: 39 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["pad", "release-2026-10-31", "search", "etymology", "phonics", "podcasts", "teams", "curriculum"]
+  part_of: "folio-release-2026-10-31"
+  thread: "practice"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `teams[search]{etymology|phonics}`
+  b: `*pad-teams-etymology-phonics-searches !have.teams.develop.search ?when_were_some_of_the_words_coined <etymology <r.controlled.words *podcast.ideas`
+  handles: ["!have.teams.develop.search", "?when_were_some_of_the_words_coined", "<etymology", "<r.controlled.words", "*podcast.ideas"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?when were some of the words coined?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

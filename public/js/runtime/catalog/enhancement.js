@@ -112,7 +112,7 @@ export const ENHANCEMENT_DEFS = [
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IDLE,
     costClass: COST_CLASS.DEMAND_COUPLED,
-    selector: 'img[src*="/images/renders/"], img[src*="/images/assets/folios/"]',
+    selector: 'img[src*="/images/renders/"], img[src*="/images/assets/folios/"], img[src*="/images/assets/panels/"], img[src*="/images/assets/primes/"], img[src*="/images/assets/pads/"]',
     rootMode: 'single',
     describes: 'image[provenance]{original.generated} one mark per picture from where it is kept',
     updates: [

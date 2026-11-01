@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-hiring-floor-onboard-complexity"
+  title: "Hiring floor and onboarding"
+  description: "Laminated folio, scanned October 20, 2026, for the October drop."
+}
+
+^"source"{
+  id: "folio-2026-10-20-04"
+  master: "public/images/renders/_raw/folio-scans-2026-10-20/folio-2026-10-20-04-scan.png"
+  master_tracked: false
+  scan: { width: 3469, height: 2719, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 11.6 x 9.1 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "Laminated folio, navy and lavender paint: boxed TEAM, ROLE and COMPENSATION with asterisks above a graph of Complexity over Time, a wavy line rising past three Onboard bursts to Linguistic Complexity over a dotted Hiring Floor"
+  tiers: {
+    thumb: { width: 256, height: 201, avif_kib: 5, webp_kib: 5 }
+    display: { width: 512, height: 401, avif_kib: 33, webp_kib: 22 }
+    hero: { width: 1024, height: 803, avif_kib: 118, webp_kib: 83 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "under 120 KiB; stepped from quality 75 to AVIF 65, WebP 75"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-10-31", "hiring", "onboarding", "team", "complexity", "graph"]
+  part_of: "folio-release-2026-10-31"
+  thread: "practice"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `team[onboard]{complexity.over.time}`
+  b: `*folio-hiring-floor-onboard-complexity &team &role ~hiring.floor ~onboard <linguistic.complexity`
+  handles: ["&team", "&role", "~hiring.floor", "~onboard", "<linguistic.complexity"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what lifts a team above the hiring floor?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

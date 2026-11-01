@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-pick-your-boon-honk"
+  title: "Pick your Boon HONK"
+  description: "Laminated folio, scanned October 18, 2026, for the October drop."
+}
+
+^"source"{
+  id: "folio-2026-10-18-07"
+  master: "public/images/renders/_raw/folio-scans-2026-10-18/folio-2026-10-18-07-scan.png"
+  master_tracked: false
+  scan: { width: 2718, height: 3443, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 9.1 x 11.5 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "Laminated folio, magenta wash: three plunger handles push arrows, one through a hatched shell, one into a striped cup that splashes letter tiles SPLAB, one at a plate that sets off a ring of circles, above PICK YOUR Boon HONK"
+  tiers: {
+    thumb: { width: 202, height: 256, avif_kib: 8, webp_kib: 9 }
+    display: { width: 404, height: 512, avif_kib: 44, webp_kib: 32 }
+    hero: { width: 809, height: 1024, avif_kib: 108, webp_kib: 111 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "under 120 KiB; stepped from quality 75 to AVIF 55, WebP 75"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-10-31", "boonhonk", "choices", "splab", "arrows", "magenta"]
+  part_of: "folio-release-2026-10-31"
+  thread: "valence"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `boon.honk[pick]{three.launchers}`
+  b: `*folio-pick-your-boon-honk !pick.your.boon.honk *three.launchers *splab.tiles ~hatched.shell ~asterisk.ring`
+  handles: ["!pick.your.boon.honk", "*three.launchers", "*splab.tiles", "~hatched.shell", "~asterisk.ring"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?which boon honk would you pick?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

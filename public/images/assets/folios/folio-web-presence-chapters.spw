@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-web-presence-chapters"
+  title: "Web presence, chapters seven to nine"
+  description: "Laminated folio, scanned October 21, 2026, for the October drop."
+}
+
+^"source"{
+  id: "folio-2026-10-21-00"
+  master: "public/images/renders/_raw/folio-scans-2026-10-21/folio-2026-10-21-00-scan.png"
+  master_tracked: false
+  scan: { width: 2707, height: 3433, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 9.0 x 11.4 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "Laminated folio, plum with grey hatching: a cutout maps SITE, WEBSITE, Spwashi with a WAP badge, WEB PRESENCE and @ Boon to profile sketches, beside CHAPTER 7, 8, 9, a THE BEST label, a green ladder cutout and a gold-leaf disc"
+  tiers: {
+    thumb: { width: 202, height: 256, avif_kib: 9, webp_kib: 10 }
+    display: { width: 404, height: 512, avif_kib: 56, webp_kib: 39 }
+    hero: { width: 808, height: 1024, avif_kib: 110, webp_kib: 115 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "under 120 KiB; stepped from quality 75 to AVIF 50, WebP 60"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-10-31", "web-presence", "chapters", "wap", "boon", "site-planning"]
+  part_of: "folio-release-2026-10-31"
+  thread: "practice"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `presence[web]{site.chapters}`
+  b: `*folio-web-presence-chapters *web.presence.map *chapter.cards *the.best.label &spwashi @boon`
+  handles: ["*web.presence.map", "*chapter.cards", "*the.best.label", "&spwashi", "@boon"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what turns a website into a web presence?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

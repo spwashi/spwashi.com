@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-moon-green-hill-black-cutout"
+  title: "Moon over a green hill"
+  description: "Laminated folio, scanned October 20, 2026, for the October drop."
+}
+
+^"source"{
+  id: "folio-2026-10-20-07"
+  master: "public/images/renders/_raw/folio-scans-2026-10-20/folio-2026-10-20-07-scan.png"
+  master_tracked: false
+  scan: { width: 2712, height: 3428, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 9.0 x 11.4 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "Laminated folio, lilac sky over a dark green hill: a grey full moon at upper left, a tall unlettered black paper cutout standing on the hill, and the HEADLINE HONK sign from the reverse showing through mirrored at right"
+  tiers: {
+    thumb: { width: 203, height: 256, avif_kib: 3, webp_kib: 3 }
+    display: { width: 405, height: 512, avif_kib: 14, webp_kib: 10 }
+    hero: { width: 810, height: 1024, avif_kib: 80, webp_kib: 37 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-10-31", "moon", "hill", "silhouette", "cutout", "lavender"]
+  part_of: "folio-release-2026-10-31"
+  thread: "washes"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `moon[over]{green.hill}`
+  b: `*folio-moon-green-hill-black-cutout *moon.hill.board *black.cutout ~moon ~green.hill`
+  handles: ["*moon.hill.board", "*black.cutout", "~moon", "~green.hill"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what stands on the hill under the moon?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

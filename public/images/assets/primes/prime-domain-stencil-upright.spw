@@ -1,0 +1,67 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "prime-domain-stencil-upright"
+  title: "Domain stencil, upright"
+  description: "Cutout arrangement, scanned October 22, 2026, for the October drop."
+}
+
+^"source"{
+  id: "prime-2026-10-22-08"
+  master: "public/images/renders/_raw/folio-scans-2026-10-22/prime-2026-10-22-08-scan.png"
+  master_tracked: false
+  scan: { width: 3475, height: 5099, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 11.6 x 17.0 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "primes"
+  role: "cutout-arrangement"
+  formats_available: ["avif", "webp"]
+  ground: "as scanned — the stencil sheet lies over a painted board that shows through its holes; the lid at the edges stays, since the board's dark paint meets it"
+  alt_text: "Stencil sheet, upright, above the grey-washed board it covered: lore.land, spwashi.ink, spwashi.com, autonomous.feedback, mutex.buzz, ATTENTION .PRODUCTIONS, Boon.land, BANE.LAND, bone.land, factshift.com, Spw.Quest, Spw.rest"
+  tiers: {
+    thumb: { width: 175, height: 256, avif_kib: 4, webp_kib: 4 }
+    display: { width: 349, height: 512, avif_kib: 18, webp_kib: 14 }
+    hero: { width: 698, height: 1024, avif_kib: 75, webp_kib: 47 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["prime", "release-2026-10-31", "domains", "lore-land", "boon-land", "factshift", "spw-quest", "autonomous-feedback"]
+  part_of: "folio-release-2026-10-31"
+  thread: "rooms"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `domains[upright]{spwashi.com|factshift.center|mutex.buzz}`
+  b: `*prime-domain-stencil-upright *domain.stencil <spwashi.com <mutex.buzz <attention.productions <factshift.center`
+  handles: ["*domain.stencil", "<spwashi.com", "<mutex.buzz", "<attention.productions", "<factshift.center"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what would live at attention.productions?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}
+
+^"imagine"{
+  status: "open — nothing generated yet; the creator runs Grok Imagine and chooses what returns"
+  motion: `the domain names lift off the stencil one by one and drift down toward the board`
+  after: { id: "prime-2026-10-22-07", shares: ["*domain.stencil"] }
+  seed: "the master as scanned, lid and all; Imagine reads a dark ground more predictably than transparency"
+  returns: "public/images/renders/imagine/2026-10-31/prime-domain-stencil-upright-imagine-NN.<ext>, with a sidecar naming generator: Grok Imagine and source: prime-2026-10-22-08"
+  derivatives: []
+}

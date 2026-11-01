@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "pad-wonder-about-pi-box"
+  title: "Wonder about pi, Boon HONK"
+  description: "Scratchpad page, scanned October 22, 2026, for the October drop."
+}
+
+^"source"{
+  id: "pad-2026-10-22-00"
+  master: "public/images/renders/_raw/folio-scans-2026-10-22/pad-2026-10-22-00-scan.png"
+  master_tracked: false
+  scan: { width: 2379, height: 2395, dpi: 300, orientation: "square" }
+  scan_extent: "about 7.9 x 8.0 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "pads"
+  role: "pad-page"
+  formats_available: ["avif", "webp"]
+  alt_text: "Dense pen drawing on square textured paper: contour-line rivers link boxes reading Wonder about pi in split letters, a large pi of two tents, a small hatched pi, WAP between a round droplet face and a pie, Boon : HONK, and a box lettered Box"
+  tiers: {
+    thumb: { width: 254, height: 256, avif_kib: 12, webp_kib: 14 }
+    display: { width: 509, height: 512, avif_kib: 67, webp_kib: 59 }
+    hero: { width: 1017, height: 1024, avif_kib: 115, webp_kib: 137 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "under 120 KiB; stepped from quality 75 to AVIF 45, WebP 45"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["pad", "release-2026-10-31", "wap", "pi", "boonhonk", "contour-lines", "pie"]
+  part_of: "folio-release-2026-10-31"
+  thread: "wap"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `wonder[about]{pi}`
+  b: `*pad-wonder-about-pi-box *wonder.about.pi *boon.honk *box ~contour.lines ~pie`
+  handles: ["*wonder.about.pi", "*boon.honk", "*box", "~contour.lines", "~pie"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what happens when you wonder about pi long enough?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

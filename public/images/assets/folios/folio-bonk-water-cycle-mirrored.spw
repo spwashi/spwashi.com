@@ -1,0 +1,58 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-bonk-water-cycle-mirrored"
+  title: "Bonk and the water cycle"
+  description: "Laminated folio, scanned October 17, 2026, for the October drop."
+}
+
+^"source"{
+  id: "folio-2026-10-17-03"
+  master: "public/images/renders/_raw/folio-scans-2026-10-17/folio-2026-10-17-03-scan.png"
+  master_tracked: false
+  scan: { width: 2703, height: 3453, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 9.0 x 11.5 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  orientation: "the painted lettering reads mirrored (H2O, THE WATER CYCLE, AGUA); BONK on the cutout reads upright"
+  alt_text: "Laminated folio, mint, pink and yellow transfer: a cut-out ink creature of looping shapes with spiral eyes, lettered BONK, over mirrored H2O sun, THE WATER CYCLE and AGUA lettering, white spirals and two red tulips"
+  tiers: {
+    thumb: { width: 200, height: 256, avif_kib: 6, webp_kib: 6 }
+    display: { width: 401, height: 512, avif_kib: 35, webp_kib: 21 }
+    hero: { width: 802, height: 1024, avif_kib: 101, webp_kib: 77 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "under 120 KiB; stepped from quality 75 to AVIF 60, WebP 75"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-10-31", "bonk", "water-cycle", "agua", "mirror-print", "tulips", "spirals"]
+  part_of: "folio-release-2026-10-31"
+  thread: "valence"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `bonk[mirrored]{water.cycle}`
+  b: `*folio-bonk-water-cycle-mirrored *bonk.creature <water.cycle ~agua ~h2o.sun ~red.tulips`
+  handles: ["*bonk.creature", "<water.cycle", "~agua", "~h2o.sun", "~red.tulips"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what part of the water cycle goes bonk?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

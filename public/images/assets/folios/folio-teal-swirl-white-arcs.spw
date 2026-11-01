@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "folio-teal-swirl-white-arcs"
+  title: "Teal swirl with white arcs"
+  description: "Laminated folio, scanned October 22, 2026, for the October drop."
+}
+
+^"source"{
+  id: "folio-2026-10-22-00"
+  master: "public/images/renders/_raw/folio-scans-2026-10-22/folio-2026-10-22-00-scan.png"
+  master_tracked: false
+  scan: { width: 2711, height: 3436, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 9.0 x 11.5 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "folios"
+  role: "folio-scan"
+  formats_available: ["avif", "webp"]
+  alt_text: "Laminated folio, teal and grey-green paint swirled in a wide circle, with two white arcs and a white hatched mark at lower left and touches of plum and yellow at the edges; no lettering"
+  tiers: {
+    thumb: { width: 202, height: 256, avif_kib: 2, webp_kib: 2 }
+    display: { width: 404, height: 512, avif_kib: 14, webp_kib: 9 }
+    hero: { width: 808, height: 1024, avif_kib: 96, webp_kib: 44 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["folio", "release-2026-10-31", "wash", "teal", "swirl", "arcs", "abstract"]
+  part_of: "folio-release-2026-10-31"
+  thread: "washes"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `swirl[teal]{white.arcs}`
+  b: `*folio-teal-swirl-white-arcs ~teal.swirl ~white.arcs ~hash.mark`
+  handles: ["~teal.swirl", "~white.arcs", "~hash.mark"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?where does the swirl begin?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

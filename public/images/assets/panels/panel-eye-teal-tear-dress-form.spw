@@ -1,0 +1,56 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "panel-eye-teal-tear-dress-form"
+  title: "Eye, teal tear, dress form"
+  description: "Painted panel face, scanned October 22, 2026, for the October drop."
+}
+
+^"source"{
+  id: "panel-2026-10-22-00"
+  master: "public/images/renders/_raw/folio-scans-2026-10-22/panel-2026-10-22-00-scan.png"
+  master_tracked: false
+  scan: { width: 2402, height: 2983, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 8.0 x 9.9 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "panels"
+  role: "panel-face"
+  formats_available: ["avif", "webp"]
+  alt_text: "Paint on canvas: a large eye with a brown iris that reflects a window, a teal tear falling below it on a pale pink brushed field, and a dark paper dress form drawn over in white lines at the right"
+  tiers: {
+    thumb: { width: 206, height: 256, avif_kib: 3, webp_kib: 3 }
+    display: { width: 412, height: 512, avif_kib: 18, webp_kib: 11 }
+    hero: { width: 825, height: 1024, avif_kib: 101, webp_kib: 77 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "under 120 KiB; stepped from quality 75 to AVIF 65, WebP 75"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["panel", "release-2026-10-31", "eye", "tear", "dress-form", "collage", "teal"]
+  part_of: "folio-release-2026-10-31"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `eye[tear]{window.reflection}`
+  b: `*panel-eye-teal-tear-dress-form ~eye ~teal.tear *dress.form ~window.reflection`
+  handles: ["~eye", "~teal.tear", "*dress.form", "~window.reflection"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what does the eye see in the window?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

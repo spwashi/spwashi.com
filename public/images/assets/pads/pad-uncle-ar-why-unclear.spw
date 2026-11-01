@@ -1,0 +1,56 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "pad-uncle-ar-why-unclear"
+  title: "Uncle AR: why am I unclear"
+  description: "Scratchpad page, scanned October 21, 2026, for the October drop."
+}
+
+^"source"{
+  id: "pad-2026-10-21-18"
+  master: "public/images/renders/_raw/folio-scans-2026-10-21/pad-2026-10-21-18-scan.png"
+  master_tracked: false
+  scan: { width: 3278, height: 2561, dpi: 300, orientation: "landscape" }
+  scan_extent: "about 10.9 x 8.5 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "pads"
+  role: "pad-page"
+  formats_available: ["avif", "webp"]
+  alt_text: "Pen on a loose sheet under an UNCLE AR tab: WHY AM I unCLEar? lettered large beneath a hooded face behind a wave picture, a screen of ?#!@& over a silhouette, a visored head with hash eyes, BRUH., and a striped question mark"
+  tiers: {
+    thumb: { width: 256, height: 200, avif_kib: 7, webp_kib: 7 }
+    display: { width: 512, height: 400, avif_kib: 25, webp_kib: 23 }
+    hero: { width: 1024, height: 800, avif_kib: 89, webp_kib: 66 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["pad", "release-2026-10-31", "faces", "question-mark", "hash", "screens", "lettering"]
+  part_of: "folio-release-2026-10-31"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `uncle.ar[ask]{why.am.i.unclear}`
+  b: `*pad-uncle-ar-why-unclear &uncle.ar ?why_am_i_unclear ~hash.eyes ~grawlix ~bruh`
+  handles: ["&uncle.ar", "?why_am_i_unclear", "~hash.eyes", "~grawlix", "~bruh"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what makes a message come out unclear?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

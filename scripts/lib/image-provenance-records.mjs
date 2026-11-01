@@ -27,6 +27,7 @@ const PATH_RULED = Object.freeze([
   'public/images/assets/worktable',
   'public/images/assets/scraps',
   'public/images/assets/primes',
+  'public/images/assets/pads',
 ]);
 const UUID_RE = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/;
 const TOOL_RE = /\b(?:generator|model)\s*[:=]\s*"([^"]+)"/;

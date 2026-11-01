@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "pad-my-clients-web-ecology-coach"
+  title: "My clients, web ecology coach"
+  description: "Scratchpad page, scanned October 21, 2026, for the October drop."
+}
+
+^"source"{
+  id: "pad-2026-10-21-04"
+  master: "public/images/renders/_raw/folio-scans-2026-10-21/pad-2026-10-21-04-scan.png"
+  master_tracked: false
+  scan: { width: 2726, height: 3841, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 9.1 x 12.8 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "pads"
+  role: "pad-page"
+  formats_available: ["avif", "webp"]
+  alt_text: "Pen on a spiral-pad page: My clients lists Artists, Software Engineers, Directors, Authors, Influencers and more!, with R = 9 yrs career launch, a Learning & Web Ecology Coach banner, Web? think NETWORK, Career Development & SHAREABLE MEDIA"
+  tiers: {
+    thumb: { width: 182, height: 256, avif_kib: 4, webp_kib: 4 }
+    display: { width: 363, height: 512, avif_kib: 20, webp_kib: 16 }
+    hero: { width: 727, height: 1024, avif_kib: 75, webp_kib: 50 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["pad", "release-2026-10-31", "clients", "career", "web-ecology", "shareable-media", "coaching"]
+  part_of: "folio-release-2026-10-31"
+  thread: "practice"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `coach[learning.web.ecology]{artists|engineers|authors}`
+  b: `*pad-my-clients-web-ecology-coach &my.clients *learning.web.ecology.coach ?web ~concentric.years <shareable.media`
+  handles: ["&my.clients", "*learning.web.ecology.coach", "?web", "~concentric.years", "<shareable.media"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?when you hear web, do you think network?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

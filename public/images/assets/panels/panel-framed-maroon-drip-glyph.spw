@@ -1,0 +1,57 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "panel-framed-maroon-drip-glyph"
+  title: "Framed maroon, green drip"
+  description: "Painted panel face, scanned October 22, 2026, for the October drop."
+}
+
+^"source"{
+  id: "panel-2026-10-22-02"
+  master: "public/images/renders/_raw/folio-scans-2026-10-22/panel-2026-10-22-02-scan.png"
+  master_tracked: false
+  scan: { width: 2327, height: 2323, dpi: 300, orientation: "square" }
+  scan_extent: "about 7.8 x 7.7 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "panels"
+  role: "panel-face"
+  formats_available: ["avif", "webp"]
+  alt_text: "Paint on a framed canvas board: a maroon patch inside grey-green washes holds a yellow-green drip glyph, with a flesh-tone sliver below and a stapled, painted wooden frame around it"
+  tiers: {
+    thumb: { width: 256, height: 256, avif_kib: 2, webp_kib: 2 }
+    display: { width: 512, height: 511, avif_kib: 12, webp_kib: 7 }
+    hero: { width: 1024, height: 1022, avif_kib: 97, webp_kib: 53 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["panel", "release-2026-10-31", "glyph", "drip", "maroon", "frame"]
+  part_of: "folio-release-2026-10-31"
+  thread: "washes"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `drip[yellow.green]{maroon.patch}`
+  b: `*panel-framed-maroon-drip-glyph ~drip.glyph ~frame ~maroon`
+  handles: ["~drip.glyph", "~frame", "~maroon"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what is the green drip writing?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

@@ -1,0 +1,58 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "panel-wabo-pie-zzz-face"
+  title: "WABO pie"
+  description: "Painted panel face, scanned October 26, 2026, for the October drop."
+}
+
+^"source"{
+  id: "panel-2026-10-26-00"
+  master: "public/images/renders/_raw/folio-scans-2026-10-26/panel-2026-10-26-00-scan.png"
+  master_tracked: false
+  scan: { width: 2398, height: 3001, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 8.0 x 10.0 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "panels"
+  role: "panel-face"
+  formats_available: ["avif", "webp"]
+  orientation: "Lettering runs sideways, top to bottom; a quarter turn counterclockwise reads it upright."
+  alt_text: "Paint on canvas, lettered sideways: WABO PIE in pale pink over maroon, a hash mark over three bars, and a figure in a collared shirt, its face ringed by a pale blue arc, with a question mark and Z marks around it"
+  tiers: {
+    thumb: { width: 205, height: 256, avif_kib: 4, webp_kib: 4 }
+    display: { width: 409, height: 512, avif_kib: 24, webp_kib: 15 }
+    hero: { width: 818, height: 1024, avif_kib: 116, webp_kib: 65 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "under 120 KiB; stepped from quality 75 to AVIF 70, WebP 75"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["panel", "release-2026-10-31", "wap", "pie", "wabo", "figure", "hash"]
+  part_of: "folio-release-2026-10-31"
+  thread: "wap"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `pie[wabo]{figure.zzz}`
+  b: `*panel-wabo-pie-zzz-face *wabo.pie ~z.marks ~hash.bars &figure`
+  handles: ["*wabo.pie", "~z.marks", "~hash.bars", "&figure"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?what is in a wabo pie?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}

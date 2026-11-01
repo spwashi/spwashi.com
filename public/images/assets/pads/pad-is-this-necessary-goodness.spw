@@ -1,0 +1,58 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "pad-is-this-necessary-goodness"
+  title: "Is this necessary?"
+  description: "Scratchpad page, scanned October 21, 2026, for the October drop."
+}
+
+^"source"{
+  id: "pad-2026-10-21-08"
+  master: "public/images/renders/_raw/folio-scans-2026-10-21/pad-2026-10-21-08-scan.png"
+  master_tracked: false
+  scan: { width: 2562, height: 3279, dpi: 300, orientation: "portrait" }
+  scan_extent: "about 8.5 x 10.9 in at 300 dpi; the scanned edge, not a measured size"
+  record: ~"../../../../.spw/surfaces/folio-archive/release-2026-10-31.spw"
+}
+
+^"usage"{
+  surface: "pads"
+  role: "pad-page"
+  formats_available: ["avif", "webp"]
+  orientation: "upside down: all lettering reads upside down as scanned"
+  alt_text: "Pen on a loose white sheet, upside down as scanned: bubbles say Hmmm..... is this necessary? and hmm was that necessary?, then is this A GOOD IDEA, <GOOD>#[@], ?<NECESSITY>, what's the CONCEPT and <GOODNESS> ? morality ? quality ? efficacy"
+  tiers: {
+    thumb: { width: 200, height: 256, avif_kib: 3, webp_kib: 3 }
+    display: { width: 400, height: 512, avif_kib: 11, webp_kib: 10 }
+    hero: { width: 800, height: 1024, avif_kib: 45, webp_kib: 29 }
+  }
+}
+
+^"optimization"{
+  tool: "image-optimize illustrations tiers (magick → cwebp / avifenc), from a -strip intermediate at 2048px"
+  png: "none — AVIF and WebP only, as the September sets ship"
+  hero_budget: "hero at quality 75, under 120 KiB"
+  metadata: "none embedded; the intermediate is stripped before any tier is cut"
+}
+
+^"discovery"{
+  tags: ["pad", "release-2026-10-31", "questions", "necessity", "goodness", "operators", "braces"]
+  part_of: "folio-release-2026-10-31"
+  thread: "operators"
+}
+
+^"expression"{
+  status: "draft — read from what is lettered or painted; the creator develops it"
+  key: "* made thing · & subject · < topic or place · ~ held motif · @ date or vantage · ! lettered imperative · ? lettered question · % count"
+  a: `goodness[probe]{morality|quality|efficacy}`
+  b: `*pad-is-this-necessary-goodness ?is_this_necessary ?was_that_necessary ?is_this_a_good_idea <goodness <necessity`
+  handles: ["?is_this_necessary", "?was_that_necessary", "?is_this_a_good_idea", "<goodness", "<necessity"]
+  creator: "unset — the creator's own sentence"
+}
+
+^"dialog"{
+  opens: `?how do you tell goodness from necessity?`
+  turns: []
+  answers: "unset — kept for the conversation"
+}
