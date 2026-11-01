@@ -4,7 +4,7 @@
  *
  * High-res folio scans open five at a time, one set per ISO week
  * (public/data/folio-highres.json). This reads the record, the files, and the
- * folio page together.
+ * folio pages together (scripts/lib/folio-strip.mjs FOLIO_PAGES).
  *
  *   errors    a week over perWeek, a file missing or over capBytes, a slug
  *             without its sidecar or with another folio's id, weeks out of
@@ -22,11 +22,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 
+import { FOLIO_PAGES } from './lib/folio-strip.mjs';
 import { isoWeek, parseWeek, weekStart } from './lib/iso-week.mjs';
 
 const ROOT = process.cwd();
 const RECORD = 'public/data/folio-highres.json';
-const PAGE = 'design/folios/index.html';
 const ASSETS = 'public/images/assets/folios';
 
 const check = process.argv.includes('--check');
@@ -71,7 +71,8 @@ for (const entry of weeks) {
 
 const latest = weeks.at(-1);
 const latestSlugs = new Set((latest?.folios || []).map((folio) => folio.slug));
-const page = fs.readFileSync(path.join(ROOT, PAGE), 'utf8');
+const PAGE = FOLIO_PAGES.map((entry) => entry.file).join(' + ');
+const page = FOLIO_PAGES.map((entry) => fs.readFileSync(path.join(ROOT, entry.file), 'utf8')).join('\n');
 const linked = new Set([...page.matchAll(/folio-([a-z0-9-]+)-full\.webp"[^>]*data-folio-highres/g)].map((m) => m[1]));
 const missingOnPage = [...latestSlugs].filter((slug) => !linked.has(slug));
 const extraOnPage = [...linked].filter((slug) => !latestSlugs.has(slug));

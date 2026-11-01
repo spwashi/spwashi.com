@@ -10,7 +10,8 @@
  *      quality stepped down from 82 until under capBytes;
  *   2. records the tier in the folio's sidecar (full: { … opened });
  *   3. appends the week to public/data/folio-highres.json;
- *   4. moves the "View high-res" links on /design/folios/ to the five;
+ *   4. moves the "View high-res" links to the five, on whichever folio page
+ *      hangs each one (the September shelf or a later month's page);
  *   5. runs the audit.
  *
  * Masters live in public/images/renders/_raw/folio-scans-<release>/ on the
@@ -33,11 +34,10 @@ import path from 'node:path';
 import process from 'node:process';
 
 import { formatWeek, isoWeek, parseWeek } from './lib/iso-week.mjs';
-import { rewriteFolioStrips } from './lib/folio-strip.mjs';
+import { FOLIO_PAGES, rewriteFolioStrips } from './lib/folio-strip.mjs';
 
 const ROOT = process.cwd();
 const RECORD = 'public/data/folio-highres.json';
-const PAGE = 'design/folios/index.html';
 const ASSETS = 'public/images/assets/folios';
 const QUALITIES = [82, 76, 70, 64, 58, 52];
 
@@ -133,23 +133,30 @@ function recordTier({ id, slug, file, text }, out) {
   if (!dryRun) writeFileSync(path.join(ROOT, ASSETS, file), next);
 }
 
-function rewritePage() {
-  const page = readFileSync(path.join(ROOT, PAGE), 'utf8');
-  const stripped = page.replace(/^[ \t]*<a href="[^"]*-full\.webp" data-folio-highres>View high-res<\/a>\n/gm, '');
-  let next = stripped;
+// Every folio page loses last week's links; each of the five gains one on the page that hangs it.
+function rewritePages() {
+  const pages = FOLIO_PAGES.map(({ file }) => {
+    const html = readFileSync(path.join(ROOT, file), 'utf8');
+    return { file, html, next: html.replace(/^[ \t]*<a href="[^"]*-full\.webp" data-folio-highres>View high-res<\/a>\n/gm, ''), added: 0 };
+  });
   for (const { id, slug } of five) {
     const anchor = new RegExp(`^([ \\t]*)(<a href="/public/images/assets/folios/folio-${slug}-hero\\.webp">Open the large scan</a>)`, 'm');
-    if (!anchor.test(next)) fail(`${id} ${slug}: no "Open the large scan" link on ${PAGE}`);
-    next = next.replace(anchor, `$1<a href="/public/images/assets/folios/folio-${slug}-full.webp" data-folio-highres>View high-res</a>\n$1$2`);
+    const page = pages.find((entry) => anchor.test(entry.next));
+    if (!page) fail(`${id} ${slug}: no "Open the large scan" link on ${FOLIO_PAGES.map((entry) => entry.file).join(' or ')}`);
+    page.next = page.next.replace(anchor, `$1<a href="/public/images/assets/folios/folio-${slug}-full.webp" data-folio-highres>View high-res</a>\n$1$2`);
+    page.added += 1;
   }
-  const removed = (page.match(/data-folio-highres/g) || []).length;
-  say(`${PAGE}: ${removed} high-res link(s) → ${five.length}`);
-  if (!dryRun) writeFileSync(path.join(ROOT, PAGE), next);
+  for (const page of pages) {
+    const removed = (page.html.match(/data-folio-highres/g) || []).length;
+    if (!removed && !page.added) continue;
+    say(`${page.file}: ${removed} high-res link(s) → ${page.added}`);
+    if (!dryRun && page.next !== page.html) writeFileSync(path.join(ROOT, page.file), page.next);
+  }
 }
 
 say(`opening ${week} (${opened}): ${five.map((f) => `${f.id} ${f.slug}`).join(', ')}`);
 for (const folio of five) recordTier(folio, await ensureFull(folio));
-rewritePage();
+rewritePages();
 rewriteFolioStrips({ root: ROOT, five, dryRun, say });
 record.weeks.push({ week, opened, folios: five.map(({ id, slug }) => ({ id: `folio-${RELEASE}-${id}`, slug })) });
 say(`${RECORD}: week ${record.weeks.length} appended`);
@@ -161,5 +168,5 @@ if (!dryRun) {
   writeFileSync(path.join(ROOT, 'sw.js'), worker.replace(/^const FOLIO_WEEK = '[^']*';$/m, `const FOLIO_WEEK = '${week}';`));
   say(`sw.js: FOLIO_WEEK → ${week}`);
   execFileSync(process.execPath, ['scripts/audit-folio-highres.mjs', '--check', `--today=${opened}`], { stdio: 'inherit' });
-  console.log('[folio-highres-rotate] done. Rebuild manifests (npm run manifest) and commit the five files, the sidecars, the record, the page, the Home and Now strips, and sw.js.');
+  console.log('[folio-highres-rotate] done. Rebuild manifests (npm run manifest) and commit the five files, the sidecars, the record, the folio pages, the Home and Now strips, and sw.js.');
 }
