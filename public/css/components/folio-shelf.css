@@ -73,6 +73,26 @@
   background: color-mix(in srgb, var(--ink) 5%, var(--surface-strong, #fff));
 }
 
+/* A clear release holds pieces keyed off the scanner lid, so they have no ground
+   of their own; the reader picks one from a .folio-grounds group (dusk, paper,
+   or the lid they were scanned on), and tile and plate lie on it. */
+.folio-release--clear {
+  --folio-clear-ground: #1d2629;
+}
+
+.folio-release--clear:has(.folio-grounds [value="paper"]:checked) {
+  --folio-clear-ground: #efe7d6;
+}
+
+.folio-release--clear:has(.folio-grounds [value="lid"]:checked) {
+  --folio-clear-ground: #2c2930;
+}
+
+.folio-release--clear .folio-tile__open picture,
+.folio-release--clear .folio-view__plate {
+  background: var(--folio-clear-ground);
+}
+
 .folio-tile__open img {
   inline-size: auto;
   block-size: auto;
@@ -354,13 +374,16 @@
   accent-color: var(--active-op-color, var(--teal, #008080));
 }
 
+/* A view's thread chip inks while its thread is the one chosen. Keyed by the
+   radio's value, like the filter above, so every release's own radio ids work:
+   each chip's for= ends in -<thread> (folio-thread-wap, folio-0927-thread-wap, …). */
 .folio-view__turn label:has(:checked),
-.folio-release:has(#folio-thread-wap:checked) .folio-view__thread[for="folio-thread-wap"],
-.folio-release:has(#folio-thread-operators:checked) .folio-view__thread[for="folio-thread-operators"],
-.folio-release:has(#folio-thread-valence:checked) .folio-view__thread[for="folio-thread-valence"],
-.folio-release:has(#folio-thread-rooms:checked) .folio-view__thread[for="folio-thread-rooms"],
-.folio-release:has(#folio-thread-practice:checked) .folio-view__thread[for="folio-thread-practice"],
-.folio-release:has(#folio-thread-washes:checked) .folio-view__thread[for="folio-thread-washes"] {
+.folio-release:has(.folio-threads [value="wap"]:checked) .folio-view__thread[for$="-wap"],
+.folio-release:has(.folio-threads [value="operators"]:checked) .folio-view__thread[for$="-operators"],
+.folio-release:has(.folio-threads [value="valence"]:checked) .folio-view__thread[for$="-valence"],
+.folio-release:has(.folio-threads [value="rooms"]:checked) .folio-view__thread[for$="-rooms"],
+.folio-release:has(.folio-threads [value="practice"]:checked) .folio-view__thread[for$="-practice"],
+.folio-release:has(.folio-threads [value="washes"]:checked) .folio-view__thread[for$="-washes"] {
   border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 55%, var(--line));
   background: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 14%, var(--surface-strong, #fff));
 }

@@ -11,14 +11,6 @@
 <html lang="en">
 <head>
     <spw-site-head></spw-site-head>
-    <style>
-        /* Page-local: the cutouts are keyed clear, so the reader picks what they lie on. */
-        #october-cutouts { --cutout-ground: #1d2629; }
-        #october-cutouts:has(#october-ground-paper:checked) { --cutout-ground: #efe7d6; }
-        #october-cutouts:has(#october-ground-lid:checked) { --cutout-ground: #2c2930; }
-        #october-cutouts .folio-tile__open picture,
-        #october-cutouts .folio-view__plate { background: var(--cutout-ground); }
-    </style>
 </head>
 <body
     data-spw-surface="folios"
@@ -1483,7 +1475,6 @@
                             <p class="folio-view__title"><span class="folio-tile__no">Oct 22 · 01</span> Maroon glyph, pale plume</p>
                             <p class="folio-view__desc">Paint on canvas: a maroon block outlined in white holds white hook glyphs and a zigzag, with a teal lobe beneath, beside a pale blue plume that curls to a hook over green on a brown ground</p>
                             <p class="folio-view__question">?what do the white hooks spell?</p>
-                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-1031-panels-washes">Washes</label></p>
                             <p class="folio-view__flip">
                                 <button type="button" popovertarget="panel-1022-00-view" aria-label="Previous: 22 · 00, Eye, teal tear, dress form">← 22·00</button>
                                 <button type="button" popovertarget="panel-1022-02-view" aria-label="Next: 22 · 02, Framed maroon, green drip">22·02 →</button>
@@ -1520,7 +1511,6 @@
                             <p class="folio-view__title"><span class="folio-tile__no">Oct 22 · 02</span> Framed maroon, green drip</p>
                             <p class="folio-view__desc">Paint on a framed canvas board: a maroon patch inside grey-green washes holds a yellow-green drip glyph, with a flesh-tone sliver below and a stapled, painted wooden frame around it</p>
                             <p class="folio-view__question">?what is the green drip writing?</p>
-                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-1031-panels-washes">Washes</label></p>
                             <p class="folio-view__flip">
                                 <button type="button" popovertarget="panel-1022-01-view" aria-label="Previous: 22 · 01, Maroon glyph, pale plume">← 22·01</button>
                                 <button type="button" popovertarget="panel-1026-00-view" aria-label="Next: 26 · 00, WABO pie">26·00 →</button>
@@ -1558,7 +1548,6 @@
                             <fieldset class="folio-view__turn"><legend>Turn it</legend> <label><input type="radio" name="panel-1026-00-turn" value="0" checked> 0°</label> <label><input type="radio" name="panel-1026-00-turn" value="90"> 90°</label> <label><input type="radio" name="panel-1026-00-turn" value="180"> 180°</label> <label><input type="radio" name="panel-1026-00-turn" value="270"> 270°</label></fieldset>
                             <p class="folio-view__desc">Paint on canvas, lettered sideways: WABO PIE in pale pink over maroon, a hash mark over three bars, and a figure in a collared shirt, its face ringed by a pale blue arc, with a question mark and Z marks around it</p>
                             <p class="folio-view__question">?what is in a wabo pie?</p>
-                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-1031-panels-wap">WAP</label></p>
                             <p class="folio-view__flip">
                                 <button type="button" popovertarget="panel-1022-02-view" aria-label="Previous: 22 · 02, Framed maroon, green drip">← 22·02</button>
                                 <button type="button" popovertarget="panel-1026-01-view" aria-label="Next: 26 · 01, White blot over pale moon">26·01 →</button>
@@ -1595,7 +1584,6 @@
                             <p class="folio-view__title"><span class="folio-tile__no">Oct 26 · 01</span> White blot over pale moon</p>
                             <p class="folio-view__desc">Two painted canvas panels laid overlapping, each turned a quarter turn: a white blot with a teal mark inside a red halo, its teal line now running across, lies over a pale moon on maroon with a grey crescent</p>
                             <p class="folio-view__question">?what changes when the blot and the moon overlap?</p>
-                            <p class="folio-view__threads">Follow its thread: <label class="folio-view__thread" for="folio-thread-1031-panels-washes">Washes</label></p>
                             <p class="folio-view__flip">
                                 <button type="button" popovertarget="panel-1026-00-view" aria-label="Previous: 26 · 00, WABO pie">← 26·00</button>
                                 <button type="button" popovertarget="panel-1022-00-view" aria-label="Next: 22 · 00, Eye, teal tear, dress form">22·00 →</button>
@@ -1617,7 +1605,7 @@
                 </ol>
             </section>
 
-            <section class="spw-frame folio-release" id="october-cutouts" data-spw-kind="frame" data-spw-role="register" data-spw-region="cluster" aria-labelledby="october-cutouts-title">
+            <section class="spw-frame folio-release folio-release--clear" id="october-cutouts" data-spw-kind="frame" data-spw-role="register" data-spw-region="cluster" aria-labelledby="october-cutouts-title">
                 <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#october-cutouts" data-spw-operator="value">*october_cutouts</a>
                     <h2 id="october-cutouts-title">Forty-two arrangements of cutouts</h2>
@@ -1625,7 +1613,7 @@
                 <p id="october-cutouts-lede" data-spw-textual-role="lede" data-spw-copy-unit="folios.october.cutouts.lede" data-spw-semantic-expression="cutout[arrange]{move.rescan}(clear_sheet)<ground>">
                     Hand-lettered cutouts on a clear sheet, moved between scans. Neighbours share most of their pieces, so stepping through a day shows what arrived and what left. Where they lay on a clear sheet, the black around them was the scanner's lid, so it is gone; choose what they lie on.
                 </p>
-                <div class="folio-probe" role="group" aria-label="Choose a ground for the cutouts">
+                <div class="folio-probe folio-grounds" role="group" aria-label="Choose a ground for the cutouts">
                     <fieldset>
                         <legend>Ground</legend>
                         <label><input type="radio" name="october-ground" id="october-ground-dusk" value="dusk" checked> Dusk</label>
