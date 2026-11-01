@@ -1,0 +1,56 @@
+# lore.land, chapter 09: () Scene
+#
+# One chapter of the November book. Its operator is its spine and its moments are
+# counted (npm run moments). Held: nothing here is a public route, and the creator
+# ports a chapter to lore.land by hand.
+
+#>lore_land_ch09_scene
+#:chapter #!lore_land #!november
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@series: ~"./series.spw"
+@lettering: ~"../../caches/october-lettering-2026-10.spw"
+
+operation = "prime"
+fixity = "experimental"
+
+namespace = `lore-land`
+
+^"chapter"{
+  slug = `ch09-scene`
+  series = `lore-land`
+  number = `9`
+  operator = `()`
+  name = `Scene`
+  letter = `J`
+  year = `2033, as lettered beside SCENE on prime-operator-years-valence-lands`
+  release = `2026-11-29 · with chapters 9 through 11`
+  target = `3846`
+  opens = `?where are we, and who is in the room?`
+  status = `held`
+  draft = `The opening question is a draft from the operator's name; the creator's own question replaces it.`
+}[reg=facet]
+
+^"seeds"{
+  note = `Pointers, not moments: the creator's lettering and scans that name this operator. A seed counts only once it is placed in the list below.`
+  lines = #[
+    `prime-operator-years-valence-lands · 2033 — SCENE`,
+    `folio-header-rod-menu-frame · SCENE`,
+    `folio-late-night-scene-workshop · Late Night Scene workshop`,
+    `folio-operator-ladder-boat-car · ( Scene`,
+    `prime-operator-tree-boon-to-honk · .SCENE`
+  ][reg=list]
+  pieces = #[
+    `folio-late-night-scene-workshop (folio-2026-10-20-08)`,
+    `pad-about-rhythm-pricing-services (pad-2026-10-21-13)`,
+    `prime-operator-tree-boon-to-honk (prime-2026-10-22-03)`
+  ][reg=list]
+}[reg=facet]
+
+^"moments"{
+  rule = `One entry is one moment, written as line · <text>, panel · <asset slug> · <caption>, or choice · <prompt> → <option> | <option>. Counted once where it is placed.`
+  list = #[
+  ][reg=list]
+}[reg=facet]

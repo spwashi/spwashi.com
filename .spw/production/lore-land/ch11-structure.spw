@@ -1,0 +1,56 @@
+# lore.land, chapter 11: {} Structure
+#
+# One chapter of the November book. Its operator is its spine and its moments are
+# counted (npm run moments). Held: nothing here is a public route, and the creator
+# ports a chapter to lore.land by hand.
+
+#>lore_land_ch11_structure
+#:chapter #!lore_land #!november
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@series: ~"./series.spw"
+@lettering: ~"../../caches/october-lettering-2026-10.spw"
+
+operation = "prime"
+fixity = "experimental"
+
+namespace = `lore-land`
+
+^"chapter"{
+  slug = `ch11-structure`
+  series = `lore-land`
+  number = `11`
+  operator = `{}`
+  name = `Structure`
+  letter = `L`
+  year = `2035, as lettered beside STRUCTURE on prime-operator-years-valence-lands`
+  release = `2026-11-29 · with chapters 9 through 11`
+  target = `3846`
+  opens = `?what shape does it make?`
+  status = `held`
+  draft = `The opening question is a draft from the operator's name; the creator's own question replaces it.`
+}[reg=facet]
+
+^"seeds"{
+  note = `Pointers, not moments: the creator's lettering and scans that name this operator. A seed counts only once it is placed in the list below.`
+  lines = #[
+    `prime-operator-years-valence-lands · 2035 — STRUCTURE`,
+    `folio-operator-ladder-boat-car · { Structure`,
+    `prime-operator-tree-boon-to-honk · .STRUCTURE`,
+    `prime-start-a-business-cinematic-universe · Structure your knowledge with SOFTWARE ENGINEERING`
+  ][reg=list]
+  pieces = #[
+    `folio-concept-topic-structure-quality (folio-2026-10-20-14)`,
+    `folio-operator-ladder-boat-car (folio-2026-10-20-13)`,
+    `prime-code-journey-2011-2015 (prime-2026-09-28-08)`,
+    `prime-start-a-business-cinematic-universe (prime-2026-10-22-05)`
+  ][reg=list]
+}[reg=facet]
+
+^"moments"{
+  rule = `One entry is one moment, written as line · <text>, panel · <asset slug> · <caption>, or choice · <prompt> → <option> | <option>. Counted once where it is placed.`
+  list = #[
+  ][reg=list]
+}[reg=facet]

@@ -108,6 +108,7 @@ export const MODULE_TEST_FILES = Object.freeze([
   'scripts/tests/sigil-table-relations.test.mjs',
   'scripts/tests/git-ignored.test.mjs',
   'scripts/tests/arc-bench.test.mjs',
+  'scripts/tests/count-moments.test.mjs',
   'scripts/tests/term-note-rows.test.mjs',
   'scripts/tests/seed-templates.test.mjs',
   'scripts/tests/spw-paste.test.mjs',
