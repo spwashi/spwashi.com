@@ -273,7 +273,9 @@ function groupByNest(ranked) {
   return [...groups.entries()].sort((a, b) => a[0].localeCompare(b[0]));
 }
 
-/** Folio and panel pieces as search entries: the original work carries * (value), like its provenance mark. */
+const PIECE_LABELS = Object.freeze({ folio: 'folios', panel: 'panel faces', prime: 'cutouts', pad: 'scratchpads' });
+
+/** Scanned pieces as search entries: the original work carries * (value), like its provenance mark. */
 function piecesToEntries(feed) {
   const pieces = Array.isArray(feed?.pieces) ? feed.pieces : [];
   return pieces.map((piece) => ({
@@ -281,7 +283,7 @@ function piecesToEntries(feed) {
     title: piece.title,
     route: piece.href,
     nestRoot: 'design',
-    nestLabel: piece.id.startsWith('panel-') ? 'panel faces' : 'folios',
+    nestLabel: PIECE_LABELS[piece.id.split('-')[0]] || 'folios',
     sigil: '*',
     operator: 'value',
     handles: piece.handles || [],
