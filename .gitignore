@@ -46,6 +46,10 @@ workers/factshift-center/app/
 workers/spw-quest/assets/parser/*-pre.*/
 workers/spw-quest/assets/parser/prereleases.json
 
+# Spoken takes for a production series: voice-mode transcripts, verbatim.
+# Raw and local by design; the concept is tracked at <series>/scratch.spw.
+.spw/production/*/scratch/
+
 # Midjourney session exports — the zip is not a published asset.
 midjourney_session*.zip
 

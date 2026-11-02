@@ -14,6 +14,7 @@
 @movie: ~"../movie-2027.spw"
 @e01: ~"./e01-no-thank-you.spw"
 @template: ~"../_template/series.spw"
+@lore_land: ~"../lore-land/series.spw"
 
 operation = "prime"
 fixity = "experimental"
@@ -36,4 +37,9 @@ namespace = `pnc`
   ][reg=set]
   status = `held`
   refuse = `No public PNC route. Do not collapse another project into this title. Do not write thirteen years of unused episodes.`
+}[reg=facet]
+
+^"count"{
+  counts_toward = `@lore_land count: an episode's ^"moments" count toward the November book's 50,000 (creator, 2026-11-01). The count is shared; the title is not.`
+  due = `something produced by 2026-12-01 (creator, on a live, 2026-11-01: "a deadline on December 1st for having something produced")`
 }[reg=facet]

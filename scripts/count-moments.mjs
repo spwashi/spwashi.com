@@ -12,7 +12,9 @@
  *   npm run moments -- --series=lore-land --today=2026-11-08
  *
  * The goal and the month come from the series file's ^"count" and ^"calendar":
- * 50,000 moments across November, so the pace is goal × day / 30.
+ * 50,000 moments across November, so the pace is goal × day / 30. A series named
+ * in ^"count" shares (e.g. post-nut-clarity) adds its episode files' moments
+ * (e<n>-*.spw) to the same goal; it keeps its own title and is reported apart.
  */
 import { readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
@@ -39,19 +41,41 @@ export function wordsIn({ kind, text }) {
   return body.split(/\s+/).filter((word) => /[\p{L}\p{N}]/u.test(word)).length;
 }
 
+/** How many moments, of which kinds, and how many words they carry. */
+function tally(moments) {
+  return {
+    moments: moments.length,
+    kinds: Object.fromEntries([...KINDS, 'other'].map((kind) => [kind, moments.filter((m) => m.kind === kind).length])),
+    words: moments.reduce((sum, moment) => sum + wordsIn(moment), 0),
+  };
+}
+
 export function readChapter(text) {
-  const moments = readMoments(text);
   return {
     slug: field(text, 'slug'),
     number: Number(field(text, 'number')),
     operator: field(text, 'operator'),
     name: field(text, 'name'),
     target: Number(field(text, 'target')) || 0,
-    moments: moments.length,
-    kinds: Object.fromEntries([...KINDS, 'other'].map((kind) => [kind, moments.filter((m) => m.kind === kind).length])),
-    words: moments.reduce((sum, moment) => sum + wordsIn(moment), 0),
+    ...tally(readMoments(text)),
   };
 }
+
+/** A series that shares the goal: its title, and the moments of its episode files. */
+export function readSharedSeries(dir) {
+  const episodes = readdirSync(dir).filter((name) => /^e\d+-.*\.spw$/.test(name));
+  return {
+    slug: path.basename(dir),
+    title: field(readFileSync(path.join(dir, 'series.spw'), 'utf8'), 'title'),
+    episodes: episodes.length,
+    ...tally(episodes.flatMap((name) => readMoments(readFileSync(path.join(dir, name), 'utf8')))),
+  };
+}
+
+/** The series slugs a series file's ^"count" shares its goal with. */
+export const sharesOf = (seriesText) => field(seriesText, 'shares').split(/[\s,]+/).filter(Boolean);
+
+const localDate = (d) => [d.getFullYear(), d.getMonth() + 1, d.getDate()].map((n) => String(n).padStart(2, '0')).join('-');
 
 /** Moments due by a date, if the month runs at an even pace from day 1 to day 30. */
 export function paceFor(goal, today) {
@@ -73,8 +97,10 @@ function main() {
     .map((name) => readChapter(readFileSync(path.join(dir, name), 'utf8')))
     .sort((a, b) => a.number - b.number);
 
-  const total = chapters.reduce((sum, chapter) => sum + chapter.moments, 0);
-  const words = chapters.reduce((sum, chapter) => sum + chapter.words, 0);
+  const shared = sharesOf(seriesText).map((slug) => readSharedSeries(path.join(ROOT, '.spw/production', slug)));
+
+  const total = [...chapters, ...shared].reduce((sum, part) => sum + part.moments, 0);
+  const words = [...chapters, ...shared].reduce((sum, part) => sum + part.words, 0);
   const due = paceFor(goal, today);
   const fmt = (n) => n.toLocaleString('en-US');
 
@@ -83,8 +109,12 @@ function main() {
     const mix = KINDS.filter((kind) => c.kinds[kind]).map((kind) => `${c.kinds[kind]} ${kind}`).join(', ');
     console.log(`  ${String(c.number).padStart(2, '0')} ${c.operator.padEnd(2)} ${c.name.padEnd(12)} ${fmt(c.moments).padStart(6)} / ${fmt(c.target)}${mix ? `  ${mix}` : ''}${c.kinds.other ? `  ${c.kinds.other} unkinded` : ''}`);
   }
+  for (const s of shared) {
+    const mix = KINDS.filter((kind) => s.kinds[kind]).map((kind) => `${s.kinds[kind]} ${kind}`).join(', ');
+    console.log(`  shares the goal: ${s.title} · ${fmt(s.moments)} moments in ${s.episodes} episode${s.episodes === 1 ? '' : 's'}${mix ? `  ${mix}` : ''}${s.kinds.other ? `  ${s.kinds.other} unkinded` : ''}`);
+  }
   const gap = total - due;
-  console.log(`pace      ${today.toISOString().slice(0, 10)}: ${fmt(due)} due by an even month; ${gap >= 0 ? `ahead by ${fmt(gap)}` : `behind by ${fmt(-gap)}`}`);
+  console.log(`pace      ${localDate(today)}: ${fmt(due)} due by an even month; ${gap >= 0 ? `ahead by ${fmt(gap)}` : `behind by ${fmt(-gap)}`}`);
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) main();
