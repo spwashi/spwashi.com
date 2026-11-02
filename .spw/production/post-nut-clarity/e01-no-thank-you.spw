@@ -67,3 +67,27 @@ namespace = `pnc`
   production = `Calls, cuts, a crew, a title that says clarity. Each one is a real complexity. None of them is the moment the writer notices the page is their life.`
   open = `Whether anyone else at the table can see the parallel the writer will not say.`
 }[reg=facet]
+
+^"turn"{
+  contest = `The squirrels meet the rat at a costume contest (creator, decided 2026-10-31, said on a live 2026-11-01).`
+  creator = `The creator's rat (2026-11-01): it goes to the Halloween party dressed as a squirrel, the way someone dresses as a celebrity, to perform being that squirrel. The costume convinces another squirrel, and that is how their relationship starts. It does not mean to mislead, but it is comfortable with the attention, has little reason to clarify, has poor boundaries, and changes its personality to fit whoever gives it attention instead of being itself. This keeps the lines above: a rat dressed as a squirrel.`
+  raven = `Raven's rat, as the creator remembers it and will check with Raven: dyed orange, it goes to the party and is perceived as a squirrel. Said on the live as: "it chooses to pretend that it's a costume, but it's not. It's who they actually are."`
+  three = `A possible frame from the creator: three storylines in a row around the same plot, as in some long Japanese films. Two tellings of the rat exist so far.`
+  open = `Whether the contest is held at the Halloween party or in its place stays the creator's call; which rat the episode keeps is the wonder below.`
+}[reg=facet]
+
+#>wonder_pnc_e01_two_rats
+?["Which rat does the episode keep: the costumed rat, Raven's dyed rat, or both as tellings of one night?"]{
+  #:depth #!experiential ~#lens(perspective)
+  ~#tension: "The costumed rat gives up who it is to keep attention; the dyed rat calls who it is a costume. Either alone is a story about a rat. Side by side, they are a story about what the squirrel saw."
+  ~#hypothesis: "The creator's frame, three storylines in a row around one plot, has two tellings already; the third may be the squirrel's."
+  ~#probe(read)
+  !probe{ "ask Raven how the rat got dyed orange; then tell the party once per rat, a paragraph each, and read them in a row" }
+  $%[rat.costumed, rat.dyed, telling.count]
+}
+
+^"moments"{
+  rule = `As in lore.land's chapters: one entry is one moment, written as line · <text>, panel · <asset slug> · <caption>, or choice · <prompt> → <option> | <option>. They count toward lore.land's 50,000 (@series count).`
+  list = #[
+  ][reg=list]
+}[reg=facet]

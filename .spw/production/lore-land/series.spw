@@ -19,6 +19,7 @@
 @arcs: ~"../../caches/lore-arcs-2026-09.spw"
 @genre: ~"../../caches/boonhonk-combinatoric-genre.spw"
 @counter: ~"../../../scripts/count-moments.mjs"
+@scratch: ~"./scratch.spw"
 
 operation = "prime"
 fixity = "experimental"
@@ -65,12 +66,62 @@ namespace = `lore-land`
   canon = `As lettered. Whether the book's table is history, dialect, or canon beside the site's character table stays the creator's call.`
 }[reg=facet]
 
+^"threads"{
+  note = `Concepts that run through the book, chosen by the creator on 2026-11-01 from that day's spoken takes (kept locally in @scratch). A thread is not a moment; moments are written from it.`
+  deck = `Each folio is a card in a deck, and each card came from somewhere: "some sort of a core to the reason why that Oracle card would exist." A scan's opening question can stand as its reason. The oracle deck that started the thread is Raven's. Takes 2, 4, 19.`
+  dated = `A piece shows when it was made and what was drawn over it since: "this collage came from 2 years ago, and these are the things that I was thinking about 2 years ago, and I also have moved on." A wanderer can ask the same of their own space. Each chapter already keeps a year. Take 16.`
+  piology = `Piology, the study of pie, like biology: "wonder about pie drives the universe of whatever these laminated folios contain." Takes 6 to 8.`
+  missing = `Collecting, and what is missing: a sticker book's empty places, the gifts a gallery has not yet received, a pie with a slice gone. The inner-child thread under it is Raven's. Takes 3, 6, 14.`
+}[reg=facet]
+
+#>wonder_lore_land_moving_line
+?["What makes a spoken line move as literature, and not only hold as a concept?"]{
+  #:depth #!stylistic ~#lens(voice)
+  ~#hypothesis: "A line told inside the scene, someone speaking or acting in a place, moves; a line about the book explains it."
+  ~#tension: "The strongest spoken lines of 2026-11-01 were about the book, and the creator placed none: all of these lines are more conceptually strong than literarily motiving."
+  ~#expect: "A take that tells the pie scene aloud, as if reading it from the page, gives lines the creator places."
+  ~#probe(read)
+  !probe{ "tell the pie scene as narration on a live, lift it, and have the creator mark each lift as moving or as concept beside the 2026-11-01 lifts" }
+  $%[line.told, line.about, moment.placed]
+}
+
+#>wonder_lore_land_deck
+?["Is the deck something a reader draws from, or something the creator draws from to write?"]{
+  #:depth #!experiential ~#lens(chance)
+  ~#tension: "A reader's draw makes the order chance, but chapters are written in order and a choice counts once; a writer's draw keeps the order and hides the deck."
+  ~#probe(read)
+  !probe{ "draw three cards on a live and talk a take for each; ask Raven what a draw is for in the deck Raven made" }
+  $%[deck.drawer, chapter.order, choice.counted]
+}
+
+#>wonder_lore_land_day_operator
+?["Should a day's operator in the creator's thirteen-day cycle steer which chapter its takes lean toward?"]{
+  #:depth #!experiential ~#lens(rhythm)
+  ~#hypothesis: "For takes, not for order: 2026-11-01 was Potential, and its strongest scene leaned into chapter 0."
+  ~#tension: "The cycle is back at Potential on 2026-11-14 while the calendar is writing chapter 5, so a day's operator and the chapter in hand part ways for most of the month."
+  ~#expect: "On 2026-11-02, Vibration's day, the lifts lean toward chapter 1 without being asked to."
+  ~#probe(read)
+  !probe{ "at the end of each day, count the chapters that day's lifts name, beside the day's operator and the chapter the calendar is on" }
+  $%[day.operator, lift.chapter, calendar.chapter]
+}
+
+#>wonder_lore_land_missing_slice
+?["Is the missing slice the image the book opens on?"]{
+  #:depth #!stylistic ~#lens(image)
+  ~#tension: "A missing slice asks to be found, which pulls a reader in, and it is a promise the book keeps for twelve more chapters or breaks."
+  ~#probe(read)
+  !probe{ "place folio-wap-boy-invented-pie as chapter 0's first panel, with a caption the creator writes, and read the chapter's opening aloud on a live" }
+  $%[slice.missing, opening.image, promise.kept]
+}
+
 ^"count"{
   unit = `moment`
   goal = `50000`
   kinds = `line (a written line), panel (a scan placed with its caption), choice (a prompt and its options)`
   rule = `One entry in a chapter's ^"moments" list is one moment, counted once where it is placed. A reading path through choices is not multiplied into moments. Seeds do not count until placed.`
   words = `tracked beside moments, not the goal`
+  shares = `post-nut-clarity`
+  shared = `Post-Nut Clarity's episode moments count toward the same 50,000 (creator, 2026-11-01). It stays its own series and title: the count is shared, the book is not.`
   tool = `npm run moments (@counter): per chapter, by kind, words, and the day's pace`
 }[reg=facet]
 
@@ -93,6 +144,7 @@ namespace = `lore-land`
   arcs = `@arcs: a lore arc as a short telling of one part of a career, once per audience`
   genre = `@genre`
   outlines = `the rest of .spw/ the creator chooses; a chapter names what it draws on in its seeds`
+  takes = `@scratch: spoken takes, raw and local; a line lifted from one is a seed until the creator places it`
 }[reg=facet]
 
 ^"port"{

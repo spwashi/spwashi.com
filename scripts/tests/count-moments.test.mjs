@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readdirSync, readFileSync } from 'node:fs';
 import test from 'node:test';
 
-import { paceFor, readChapter, readMoments, wordsIn } from '../count-moments.mjs';
+import { paceFor, readChapter, readMoments, readSharedSeries, sharesOf, wordsIn } from '../count-moments.mjs';
 
 const chapter = (list) => `^"chapter"{
   slug = \`ch03-wonder\`
@@ -62,4 +62,12 @@ test('the lore.land outline holds thirteen chapters whose targets make 50,000', 
   assert.equal(chapters.length, 13);
   assert.deepEqual(chapters.map((c) => c.number).sort((a, b) => a - b), [...Array(13).keys()]);
   assert.equal(chapters.reduce((sum, c) => sum + c.target, 0), 50000);
+});
+
+test('Post-Nut Clarity shares the 50,000 and keeps its own title', () => {
+  assert.deepEqual(sharesOf(readFileSync('.spw/production/lore-land/series.spw', 'utf8')), ['post-nut-clarity']);
+  const pnc = readSharedSeries('.spw/production/post-nut-clarity');
+  assert.equal(pnc.title, 'Post-Nut Clarity');
+  assert.ok(pnc.episodes >= 1);
+  assert.equal(pnc.moments, pnc.kinds.line + pnc.kinds.panel + pnc.kinds.choice + pnc.kinds.other);
 });

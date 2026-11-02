@@ -1,0 +1,76 @@
+# lore.land, scratch — where spoken takes wait
+#>lore_land_scratch
+#:scratch #!lore_land #!november #!production
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+expression = scratch[take]{talk.lift.place}<moment>
+
+summary = #[
+  `A take is one held press of voice mode, as transcribed.`,
+  `Takes stay raw and local: not counted, not ported.`,
+  `A lift quotes a take; a lifted line is a seed.`,
+  `What the creator places becomes a moment.`,
+][reg=set]
+
+contents = #[
+  ~"./scratch.spw#take",
+  ~"./scratch.spw#ladder",
+  ~"./scratch.spw#wonder_take_unit",
+  ~"./scratch.spw#wonder_take_leaves",
+][reg=set]
+
+^"take"{
+  ~#note: "What one held press of voice mode caught."
+  where = `scratch/<YYYY-MM-DD>.txt beside this file, one file a day, takes numbered in the order spoken`
+  head = `take <n> · <time, or unknown> · voice | typed · edges: <what was lost, or whole>`
+  body = `the transcript as it came: nothing fixed, nothing trimmed; asides stay, a cat greeting included`
+  edges = `Hold-to-talk drops what is said before the press and after the release. A head says when a take starts mid-sentence or skips; a missing word is never guessed in.`
+  text = `Plain text, so speech needs no escaping and no Spw tool reads structure into it before it has any.`
+  others = `A live or a room can carry other voices into a take. Their words are theirs: left out of the take, never lifted, and noted only as a gap the creator names.`
+  counted = `No. @counter reads only the ch*.spw files of a series.`
+  held = `Ignored by git (.gitignore): takes live on this machine and are never pushed. Raw speech can wander into what the site holds.`
+}[reg=facet]
+
+^"ladder"{
+  ~#note: "Talk, lift, place: how a take reaches the count."
+  steps = #[
+    `talk · a take lands in today's scratch file`,
+    `lift · a pass under the take quotes candidate lines in the creator's words, names forks the creator could phrase as choices, and marks lines that could caption a chapter's seed piece; each lift names the chapter it might join, or another series' episode when the take is about that series`,
+    `place · the creator keeps, cuts, or rewords; a kept line enters that chapter's ^"moments" list and @counter counts it`
+  ][reg=list]
+  threads = `A lift can also name a thread: the concept around a line, in a few words, for the creator to write from. The creator, live 2: "the sentences verbatim, and the concepts around them are making it into some form."`
+  keeps = `@series keeps.generated: a lifted line is a seed until the creator places it. A lift quotes; it does not write, and it does not stitch two takes into one line.`
+}[reg=facet]
+
+#>wonder_take_unit
+?["Is a take one press of the key, or one sitting of several presses?"]{
+  #:depth #!experiential ~#lens(unit)
+  ~#hypothesis: "One press. On 2026-11-01 each of the twenty takes was one press, and each could be lifted on its own."
+  ~#tension: "Take 20 carried four thoughts in one press, and take 16 ran three minutes: a press can hold a sitting's worth."
+  ~#probe(read)
+  !probe{ "after a week, count the lifts the creator kept per take; if kept lifts gather across neighboring presses, the sitting is the unit" }
+  $%[take.presses, lifts.kept, sitting.span]
+}
+
+#>wonder_take_leaves
+?["Does a take ever leave this machine, whole or in part, once its lifts are placed?"]{
+  #:depth #!semantic ~#lens(record)
+  ~#hypothesis: "No. A placed moment carries its line; the take stays ore."
+  ~#tension: "The live was public as it happened, and a held take may be the only record of how a line was found: take 5 wants the process beside the end point."
+  ~#probe(read)
+  !probe{ "after the first Sunday release, the creator reads one take beside the moment it gave and decides whether the pair belongs together" }
+  $%[take.held, moment.placed, process.shown]
+}
+
+# About this file
+operation = "prime"
+fixity = "experimental"
+namespace = `lore-land`
+source = "creator, 2026-11-01: a first dictation into a session, wondering how a loose blob of thought can be made into something creative; asked the same day for a scratch concept"
+
+# Handles, by role. Declared last; each one links wherever the text names it.
+# The book
+@series: ~"./series.spw"
+@counter: ~"../../../scripts/count-moments.mjs"

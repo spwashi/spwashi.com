@@ -28,9 +28,9 @@ namespace = `lore-land`
   year = `2024, as lettered beside POTENTIAL on prime-operator-years-valence-lands`
   release = `2026-11-01 · the outline, and the chapter begins`
   target = `3847`
-  opens = `?what could this become?`
+  opens = `?how can this loose blob of thought be made into something creative?`
   status = `held`
-  draft = `The opening question is a draft from the operator's name; the creator's own question replaces it.`
+  chosen = `The creator's question, 2026-11-01: from the day's first spoken take ("how this loose blob of thought can be made into something creative"), set as a question. It replaces the draft ?what could this become?.`
 }[reg=facet]
 
 ^"seeds"{
