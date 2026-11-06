@@ -29,8 +29,8 @@ fixity = "tending"
 
 ^"cache"{
  ~#status: "implementing"
- ~#next_commit: "+[images] Point the image README at the study registry, the staging rules and the review log"
+ ~#next_commit: "+[images] Record who made each image in the registry, hand or model, once the creator names their families"
  ~#files_hot: "public/images/README.md, .spw/assets.spw, .spw/conventions/asset-management.spw"
- ~#gate: "nothing for the README; promoting a mark waits on the creator's pick"
- ~#last_stream: "2026-10-12"
+ ~#gate: "the creator names which image families are theirs (#>wonder_midjourney_design_concepts_whose_hand); every placement after that is the creator's pick at a look"
+ ~#last_stream: "2026-11-05"
 }

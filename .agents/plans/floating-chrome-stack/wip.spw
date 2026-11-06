@@ -34,5 +34,5 @@ fixity = "tending"
  ~#next_commit: "+[chrome] Demo one floating control size: a compact base, and a step up for a coarse pointer"
  ~#files_hot: "public/css/components/floating-chrome.css, public/css/ornament/whimsy.css, public/css/components/runtime-states.css"
  ~#gate: "the creator's answer on console button size, then a sensation review of the demo in the browser"
- ~#last_stream: "2026-10-25"
+ ~#last_stream: "2026-11-05"
 }

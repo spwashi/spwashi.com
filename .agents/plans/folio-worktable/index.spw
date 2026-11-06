@@ -1,0 +1,102 @@
+# Review 2026-11-05 — keep as the folio studies and readings owner; routing generated with --only, thesis and concepts written from its Status, owner claim is the tree template
+# Plan Index — Folio worktable
+#
+# Status 2026-10-10. Landed: the release shelf (7a95da5b), the request card at #folio-request, the primes demo (8703ed24) and the calendar demo (27b616e8). Next: the creator reviews…
+
+#>plan_folio_worktable_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Status 2026-10-10. Landed: the release shelf (7a95da5b), the request card at #folio-request, the primes demo (8703ed24) and the calendar demo (27b616e8). Next: the creator reviews /design/experiments/folios/calendar/ in a browser. It lays out October in scan order, so the review is worth most before the month ends. Still the creator's calls: the primes demo, prices and shipping, and the first card request. The weekly five runs through npm run folio:highres:rotate.`
+ owner = `folio-worktable`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | minting.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Folio studies and readings: the release shelf, the request card, the primes and calendar demos, and the weekly five; the creator's own art, which the image plan now wants on more pages.`
+ concepts = #[
+  `folio`,
+  `scan`,
+  `release shelf`,
+  `request card`,
+  `weekly five`,
+ ][reg=set]
+ surfaces = #[
+  `scripts/tests/engagement-features.test.mjs`,
+  `images/renders/_raw/folio-scans-2026-09-26/`,
+  `images/assets/folios/`,
+  `.spw/surfaces/folio-archive/release-2026-09-26.spw`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@minting: ~"./minting.spw"
+@engagement_features_test: ~"../../../scripts/tests/engagement-features.test.mjs"
+@folio_scans_2026_09_26: ~"../../../public/images/renders/_raw/folio-scans-2026-09-26/"
+@folios: ~"../../../public/images/assets/folios/"
+@release_2026_09_26: ~"../../../.spw/surfaces/folio-archive/release-2026-09-26.spw"
+@release_2026_09_28: ~"../../../.spw/surfaces/folio-archive/release-2026-09-28.spw"
+@promo_wonder_cycle: ~"../../../public/data/promo-wonder-cycle.json"
+@copy_hypermedia_key_2026_09: ~"../../../.spw/caches/copy-hypermedia-key-2026-09.spw"
+@seed_card: ~"../../../public/js/modules/cards/seed-card.js"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+ minting = @minting
+ engagement_features_test = @engagement_features_test
+ folio_scans_2026_09_26 = @folio_scans_2026_09_26
+ folios = @folios
+ release_2026_09_26 = @release_2026_09_26
+ release_2026_09_28 = @release_2026_09_28
+ promo_wonder_cycle = @promo_wonder_cycle
+ copy_hypermedia_key_2026_09 = @copy_hypermedia_key_2026_09
+ seed_card = @seed_card
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-folio_worktable-001"
+ layer = "pragmatic"
+ hypothesis = `Status 2026-10-10. Landed: the release shelf (7a95da5b), the request card at #folio-request, the primes demo (8703ed24) and the calendar demo (27b616e8). Next: the creator reviews /design/experiments/folios/calendar/ in a browser. It lays out October in scan order, so the review is worth most before the month ends. Still the creator's calls: the primes demo, prices and shipping, and the first card request. The weekly five runs through npm run folio:highres:rotate.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../scripts/tests/engagement-features.test.mjs"
+ probe_ref = `rg 'folio-worktable' .agents/plans/folio-worktable`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../scripts/tests/engagement-features.test.mjs unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does folio-worktable own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of folio-worktable?`, see = @index }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Status 2026-10-10. Landed: the release shelf (7a95da5b), the request card at #folio-request, the primes demo (8703ed24) and the calendar…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]

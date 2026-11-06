@@ -1,0 +1,78 @@
+# Review 2026-11-05 — keep as the owner of what a lens does to a composition; routing generated with --only, thesis and concepts written from its Status, owner claim is the tree template
+# Plan Index — Cauldron lens composition
+#
+# Status 2026-11-05. Landed: the lens-aware mix with pocket slots (604d4a1d) and the native dialog (326eb119). The pocket receipt for the home-cauldron-open still is taken…
+
+#>plan_cauldron_lens_composition_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Status 2026-11-05. Landed: the lens-aware mix with pocket slots (604d4a1d) and the native dialog (326eb119). The pocket receipt for the home-cauldron-open still is taken (2026-11-05, after npm run sense -- doctor came back sound): the dialog opens above the dimmed page with its next step readable ("Press and hold a highlighted word to keep it here. 325 on this page can be held."), Close reachable at the top right, and the attention receipt ok with no failures. That still is the baseline spellcraft-authoring's phase-attribute fold moves next (the sitting's seams.cauldron). No slice is owed here now; the plan receives state-block-projections' second-use lens seat offer when that lands. Corner sharing moved to floating-chrome-stack.`
+ owner = `cauldron-lens-composition`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `What a lens does to a composition in the cauldron: the lens-aware mix with pocket slots and the native dialog landed; the pocket receipt was taken 2026-11-05 and is the baseline the spell fold moves.`
+ concepts = #[
+  `cauldron`,
+  `lens`,
+  `composition`,
+  `dialog`,
+  `receipt`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-cauldron_lens_composition-001"
+ layer = "pragmatic"
+ hypothesis = `Status 2026-11-05. Landed: the lens-aware mix with pocket slots (604d4a1d) and the native dialog (326eb119). The pocket receipt for the home-cauldron-open still is taken (2026-11-05, after npm run sense -- doctor came back sound): the dialog opens above the dimmed page with its next step readable ("Press and hold a highlighted word to keep it here. 325 on this page can be held."), Close reachable at the top right, and the attention receipt ok with no failures. That still is the baseline spellcraft-authoring's phase-attribute fold moves next (the sitting's seams.cauldron). No slice is owed here now; the plan receives state-block-projections' second-use lens seat offer when that lands. Corner sharing moved to floating-chrome-stack.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"./PLAN.md"
+ probe_ref = `rg 'cauldron-lens-composition' .agents/plans/cauldron-lens-composition`
+ falsification = `A patch cannot satisfy the public goal while leaving ./PLAN.md unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does cauldron-lens-composition own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of cauldron-lens-composition?`, see = @index }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Status 2026-11-05. Landed: the lens-aware mix with pocket slots (604d4a1d) and the native dialog (326eb119). The pocket receipt for the…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]

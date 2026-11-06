@@ -1,0 +1,98 @@
+# Review 2026-11-05 — keep as the settings umbrella and shelf owner; routing generated with --only, thesis and concepts written from its Status, owner claim is the tree template
+# Plan Index — Settings Ornament Resonance
+#
+# Let a reader pick up a look, reading size, fix, kit, writing mode, motion level, view or instrument from the /settings/ shelf, see the change on the box and in the "wearing now"…
+
+#>plan_settings_ornament_resonance_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Let a reader pick up a look, reading size, fix, kit, writing mode, motion level, view or instrument from the /settings/ shelf, see the change on the box and in the "wearing now" window before scrolling away, and find the box they are wearing pressed.`
+ owner = `settings-ornament-resonance`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `The settings shelf: try a look and see what changed. Fifty-three boxes in eight aisles landed; next is a guided way to try a look (spw.quest's /pivot is the model), and the satchel as a patch bay, which may or may not also hold receipts.`
+ concepts = #[
+  `settings shelf`,
+  `look`,
+  `patch bay`,
+  `satchel`,
+  `deviation`,
+ ][reg=set]
+ surfaces = #[
+  `settings/index.html`,
+  `css/routes/surfaces/settings-shelf.css`,
+  `css/themes/packs.css`,
+  `js/interface/site-settings-ui.js`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@index: ~"../../../settings/index.html"
+@settings_shelf: ~"../../../public/css/routes/surfaces/settings-shelf.css"
+@packs: ~"../../../public/css/themes/packs.css"
+@site_settings_ui: ~"../../../public/js/interface/site-settings-ui.js"
+@site_settings_engine: ~"../../../public/js/kernel/site-settings-engine.js"
+@state_inspector: ~"../../../public/js/interface/state-inspector.js"
+@frame_navigator: ~"../../../public/js/runtime/navigation/frame-navigator.js"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+ index = @index
+ settings_shelf = @settings_shelf
+ packs = @packs
+ site_settings_ui = @site_settings_ui
+ site_settings_engine = @site_settings_engine
+ state_inspector = @state_inspector
+ frame_navigator = @frame_navigator
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-settings_ornament_resonance-001"
+ layer = "pragmatic"
+ hypothesis = `Let a reader pick up a look, reading size, fix, kit, writing mode, motion level, view or instrument from the /settings/ shelf, see the change on the box and in the "wearing now" window before scrolling away, and find the box they are wearing pressed.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../settings/index.html"
+ probe_ref = `rg 'settings-ornament-resonance' .agents/plans/settings-ornament-resonance`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../settings/index.html unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does settings-ornament-resonance own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of settings-ornament-resonance?`, see = @index }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Let a reader pick up a look, reading size, fix, kit, writing mode, motion level, view or instrument from the /settings/ shelf, see the…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]

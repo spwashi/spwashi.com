@@ -19,6 +19,7 @@ fixity = "tending"
 ^"stream"{
  >>[2026-10-12 10:59] verify — nothing has landed on the copy keys since 6aa94d90 on October 8; the Status holds. A grep of lede tags finds 74 pages with a lede, 37 keyed throughout, 9 partly and 28 with no key; the five browser pages under /topics/software/browser/ are one unkeyed cluster. Phase 1 still waits for the creator to name a locale.
  >>[2026-10-27 13:42] verify — the 2026-10-25 Status holds against the tree: 898917a9, 9c8a7d97 and 6aa94d90 are in this history; index.html carries 74 copy units and design/index.html 37; scripts/template.mjs writes spw:source-locale, og:locale and hreflang; the two browser topic pages carry none, so the next commit has not landed.
+ >>[2026-11-05 23:30] verify — mirrors PLAN.md's Status of 2026-10-25: a typed copy key lands on its sentence (898917a9) and the home and design ledes are keyed by sentence (9c8a7d97, 6aa94d90); the next slice keys the next page's ledes when a pass already has that host open; phase 1 waits on a named locale; scripts/template.mjs already emits lang, spw:source-locale, og:locale and hreflang (ccafd1ac).
 }
 
 ^"open"{
@@ -30,5 +31,5 @@ fixity = "tending"
  ~#next_commit: "+[copy] Key the browser topic pages' ledes by sentence, so search can land on them"
  ~#files_hot: "topics/software/browser/event-loop/index.html, topics/software/browser/render-pipeline/index.html, .spw/audits/copy-accessor-cluster-2026-09.spw, scripts/template.mjs"
  ~#gate: "nothing for phase 0, which rides on a pass that already has the page open; phase 1 waits on a named locale"
- ~#last_stream: "2026-10-12"
+ ~#last_stream: "2026-11-05"
 }

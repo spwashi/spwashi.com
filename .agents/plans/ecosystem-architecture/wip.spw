@@ -30,6 +30,7 @@ fixity = "tending"
  >>[2026-10-25 21:20] implement — G on the local branch quest/specimens (a4d6c3ea), off main so the note deploys without it: /specimens, a slot search over 1019 specimens, and ground then edge for two lines; see that branch's spw-quest stream. Receipt for spw-language-v04: expression-query's slot reader takes nine herbarium forms only in part (nested bodies, three-way joins, ; lists, chained capsules) and every route line whole.
  >>[2026-10-27 13:32] probe — wonder_ecosystem_what_travels: the list already exists. scripts/build-peer-kit.mjs keeps SCRIPTS by worker (one entry, pinch-text-scale for spw-quest) and writes PEER_SCRIPTS with peerScriptPath; nothing under public/ marks what travels. Run before any ~#expect was on record, so it measures and tests nothing.
  >>[2026-10-27 13:32] probe — wonder_ecosystem_specimen_host: public/js defines no custom element; the two hits are workers/factshift-center's own app. A specimen host would be the runtime's first. Run before any ~#expect was on record.
+ >>[2026-11-05 23:30] verify — G, the specimens shelf, is live: the spw.quest worker deployed 2026-11-05 (version 10690dc2) with the note, constructs and pivot. S4 (what travels first), S5 (the cascade) and the playground's look wait on the creator.
 }
 
 ^"s0_rows"{  # owner plan text the tree no longer matches, measured 2026-10-25
@@ -60,4 +61,12 @@ fixity = "tending"
  first_portable = "site-starter-component-kit's wonder: a capability or the design specimen. This plan proposes a third answer, the Spw instrument, because spw.quest already consumes the peer kit. The creator's call."
  arrival_lever = "runtime-plane-consolidation's wonder: route family or engagement. ctx.routeFamily is computed and unread. The creator's call."
  quest_motion = ~"../spw-quest/index.spw#wonder_spw_quest_motion"
+}
+
+^"cache"{
+ ~#status: "waiting on the creator"
+ ~#next_commit: "S4, what may travel first through the peer kit, once the creator picks"
+ ~#files_hot: "scripts/build-peer-kit.mjs, workers/lib/peer-kit.js, .agents/plans/ecosystem-architecture/PLAN.md"
+ ~#gate: "S4, S5 and the playground's look are the creator's calls"
+ ~#last_stream: "2026-11-05"
 }

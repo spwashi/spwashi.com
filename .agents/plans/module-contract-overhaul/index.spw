@@ -1,0 +1,112 @@
+# Review 2026-11-05 — keep as the module contract owner (mounts, reads, writes, rests); routing generated with --only, thesis and concepts written from its Status, owner claim is the tree template
+# Plan Index — Module Contract Overhaul
+#
+# A settled page rests. Every module can say, in Spw, what it mounts on, what wakes it, what it reads, what it writes, and what it promises to leave unchanged. Those statements…
+
+#>plan_module_contract_overhaul_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `A settled page rests. Every module can say, in Spw, what it mounts on, what wakes it, what it reads, what it writes, and what it promises to leave unchanged. Those statements become checks and inspector queries instead of annotation that only reads well.`
+ owner = `module-contract-overhaul`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `What each module mounts, reads, writes and leaves: writers are declared and audited, and the next slice makes rests: change-only a check that fails a raw dataset or textContent write.`
+ concepts = #[
+  `module contract`,
+  `writers`,
+  `rests`,
+  `change-only`,
+  `wakes`,
+ ][reg=set]
+ surfaces = #[
+  `scripts/tests/change-only-writes.test.mjs`,
+  `js/kernel/operator-detection.js`,
+  `types/module-catalog.d.ts`,
+  `data/runtime-atlas.json`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@change_only_writes_test: ~"../../../scripts/tests/change-only-writes.test.mjs"
+@operator_detection: ~"../../../public/js/kernel/operator-detection.js"
+@module_catalog_d: ~"../../../types/module-catalog.d.ts"
+@public_data_runtime_atlas_json: ~"../../../public/data/runtime-atlas.json"
+@catalog: ~"../../../public/js/runtime/catalog/"
+@orchestration: ~"../../../public/js/runtime/orchestration/"
+@measured_frame: ~"../../../public/js/kernel/measured-frame.js"
+@public_js_modules_design_runtime_atlas_js: ~"../../../public/js/modules/design/runtime-atlas.js"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+ change_only_writes_test = @change_only_writes_test
+ operator_detection = @operator_detection
+ module_catalog_d = @module_catalog_d
+ public_data_runtime_atlas_json = @public_data_runtime_atlas_json
+ catalog = @catalog
+ orchestration = @orchestration
+ measured_frame = @measured_frame
+ public_js_modules_design_runtime_atlas_js = @public_js_modules_design_runtime_atlas_js
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-module_contract_overhaul-001"
+ layer = "pragmatic"
+ hypothesis = `A settled page rests. Every module can say, in Spw, what it mounts on, what wakes it, what it reads, what it writes, and what it promises to leave unchanged. Those statements become checks and inspector queries instead of annotation that only reads well.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../scripts/tests/change-only-writes.test.mjs"
+ probe_ref = `npm run audit:module-writers`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../scripts/tests/change-only-writes.test.mjs unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+next_action: .{
+ step = `Writers are declared (this pass). audit:module-writers scans each module's local import graph for root writes (direct, writeDatasetValue*, write maps, this.root style maps), fails on new undeclared writes or new multi-writer root tokens, and holds today's findings in a baseline to empty. Settings and loader root style writes become change-only.`
+}[reg=facet]
+
+validation: #[
+ `npm run audit:module-writers`,
+ `npm run check:runtime`,
+ `npm run test:modules:run`,
+ `git diff --check`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does module-contract-overhaul own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of module-contract-overhaul?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether module-contract-overhaul still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: A settled page rests. Every module can say, in Spw, what it mounts on, what wakes it, what it reads, what it writes, and what it promises…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]

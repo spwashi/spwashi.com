@@ -1,0 +1,96 @@
+# Review 2026-11-05 — keep as the @ wakes facet of the module contract; routing generated with --only, thesis and concepts written from its Status, owner claim is the tree template
+# Plan Index — Engagement Clusters
+#
+# A page loads what its reader engages, not everything its grammar could support. Behaviors arrive as clusters a reader approaches and chooses among, the arrival is felt as a…
+
+#>plan_engagement_clusters_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `A page loads what its reader engages, not everything its grammar could support. Behaviors arrive as clusters a reader approaches and chooses among, the arrival is felt as a response rather than a wait, and the clusters are something Spw can say.`
+ owner = `engagement-clusters`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `The @ wakes facet of the module contract: engages behind ?spw-arming=engage, the arrival census, and next a reading of what each quiet module writes to its own hosts.`
+ concepts = #[
+  `engages`,
+  `wakes`,
+  `arrival writes`,
+  `quiet modules`,
+  `arming`,
+ ][reg=set]
+ surfaces = #[
+  `.spw/audits/runtime-recalc-cost-2026-09.spw`,
+  `.spw/language/lore-alignment.spw`,
+  `.spw/caches/spw-assembly-2026-09.spw`,
+  `.spw/audits/touch-gesture-contracts-2026-09.spw`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@runtime_recalc_cost_2026_09: ~"../../../.spw/audits/runtime-recalc-cost-2026-09.spw"
+@lore_alignment: ~"../../../.spw/language/lore-alignment.spw"
+@spw_assembly_2026_09: ~"../../../.spw/caches/spw-assembly-2026-09.spw"
+@touch_gesture_contracts_2026_09: ~"../../../.spw/audits/touch-gesture-contracts-2026-09.spw"
+@engagement: ~"../../../public/js/kernel/engagement.js"
+@operator_detection: ~"../../../public/js/kernel/operator-detection.js"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+ runtime_recalc_cost_2026_09 = @runtime_recalc_cost_2026_09
+ lore_alignment = @lore_alignment
+ spw_assembly_2026_09 = @spw_assembly_2026_09
+ touch_gesture_contracts_2026_09 = @touch_gesture_contracts_2026_09
+ engagement = @engagement
+ operator_detection = @operator_detection
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-engagement_clusters-001"
+ layer = "pragmatic"
+ hypothesis = `A page loads what its reader engages, not everything its grammar could support. Behaviors arrive as clusters a reader approaches and chooses among, the arrival is felt as a response rather than a wait, and the clusters are something Spw can say.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.spw/audits/runtime-recalc-cost-2026-09.spw"
+ probe_ref = `rg 'engagement-clusters' .agents/plans/engagement-clusters`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/audits/runtime-recalc-cost-2026-09.spw unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does engagement-clusters own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of engagement-clusters?`, see = @index }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: A page loads what its reader engages, not everything its grammar could support. Behaviors arrive as clusters a reader approaches and…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
