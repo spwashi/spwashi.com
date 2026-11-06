@@ -1,12 +1,23 @@
 # Component Region Personality
 
-**Status 2026-10-25.** Waves 0–2 have landed: copy-unit ids, and `npm run audit:copy:accessor` (c0fa1767). The one next slice is the Wave 3 cards: `spw-visual-link-card` on the services and recipes heroes, in HTML only; the card CSS already ships (`public/css/components/content.css:1259`). Topics has 6 of these cards (`topics/index.html:258-322`); services and recipes have none. Which two or three children get a card is the creator's call in a browser review, live at pocket beside `/topics/`. The three new `data-spw-*` attributes Waves 3–4 proposed are struck. The plan still holds the anatomy vocabulary from webpage-trope-vocabulary.
+**Status 2026-11-05.** Waves 0–2 have landed: copy-unit ids, and `npm run audit:copy:accessor` (c0fa1767). The one next slice is the Wave 3 cards: `spw-visual-link-card` on the services and recipes heroes, in HTML only; the card CSS already ships (`public/css/components/content.css:1259`). Topics has 6 of these cards (`topics/index.html:258-322`); services and recipes have none. Which two or three children get a card is the creator's call in a browser review, live at pocket beside `/topics/`. The three new `data-spw-*` attributes Waves 3–4 proposed are struck. The plan still holds the anatomy vocabulary from webpage-trope-vocabulary.
 
 **Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — hubs.hero_children, seams.entrance_copy.
 
 **Entrances:** this plan owns the entrance hubs' real estate, their cards and chips. The words belong to [semantic-copy-depth](../semantic-copy-depth/PLAN.md). [topic-building-blocks](../topic-building-blocks/PLAN.md) may drop the topics visual-studies row and the repeated craft square. The six topic visual cards stay, and Wave 3 is still Services and Recipes.
 
 **Related:** [webpage-trope-vocabulary](../archive/webpage-trope-vocabulary/PLAN.md) (archived).
+
+## Harmony across components — 2026-11-05
+
+The creator asked for harmony across components and a visual ecology that can encourage play. The reading is in [chrome-ecology-2026-11](../../../.spw/caches/chrome-ecology-2026-11.spw#harmony):
+
+- **A class renders by its element.** `ornament/whimsy.css:123-129` gives `:where(.spw-chip, button, input[type=button], input[type=submit])` a 5px paper corner and a colour-only transition from the last layer, so `.spw-reward-dock-trigger` (a `<button>`) takes 5px and snaps where `.spw-cauldron-chip` (an `<a>`) stays a pill, and the chip's own radius and timing never render.
+- **One role, many shapes.** The floating sheet carries about eight radii (cauldron dialog 1rem, region menu .85rem, concept popover 8px, discovery notice 5px, reward dock .7rem, toast .6rem, folio view .3rem, generic `--shape-control`) while `--shape-floating` is read in 11 files; `--shape-small`, `--shape-panel` and `--shape-medium` are used and never defined; six shadow families run side by side; the discovery notice is light glass on desktop and a hard-coded dark panel on phones (`shell/chrome/adaptive.css:33-45`).
+- **Three chip dialects on one screen.** Home at pocket shows rounded pills (Next room), left-ruled bed tabs (Hook, Door, Atlas, Garden) and term chips that carry a left rule, a full border and a dotted underline at once.
+- **What holds.** `effects/material.css:184-189` lets route bridges, reason strips and the lens switch take the host's material: one mechanism across families, and the model for the rest.
+
+Proposed principle, the creator's to keep or refuse (`index.spw#wonder_component_region_role_not_element`): a component takes its shape and timing from its role class, never from its HTML element; one radius and one shadow per role, from tokens; one key, taught once (the ornament contract's own words). First ungated step: a census of the fallbacks behind the three undefined shape tokens, since defining them changes every place a fallback differs. Every shape change after it ends at a browser demo; [css-cascade-stratification](../css-cascade-stratification/PLAN.md) owns the layer that lets whimsy reach elements, and [color-motion](../color-motion/PLAN.md) owns the timing.
 
 ## Public Goal
 

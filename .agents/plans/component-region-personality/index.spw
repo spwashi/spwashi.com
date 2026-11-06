@@ -125,3 +125,16 @@ invariants: #[
   !probe{ "open /services/ and /recipes/ at pocket beside /topics/, and name the two or three children each hero already points at" }
   $%[cards.two, cards.three, cards.none]
 }
+
+#>wonder_component_region_role_not_element
+?["Should a component take its corner, shadow and timing from its role class, never from the HTML element it happens to be?"]{
+  #:depth #!stylistic ~#lens(constraint)
+  ~#with: @plan @component_region_personality
+  ~#taste: "A reader learns a component by what it does; a chip that changes shape when it becomes a button teaches nothing true."
+  ~#hypothesis: "Most disharmony read on 2026-11-05 traces to one ornament rule keyed by element (whimsy.css:123-129) and to roles that never got a token; scoping that rule by role and giving each role one radius and one shadow would make families agree without restyling them one by one."
+  ~#tension: "The paper corner is a deliberate whimsy, and the creator kept motion that snaps; a role rule must keep the paper feel while ending the element split."
+  ~#expect: "Scoped by role, .spw-reward-dock-trigger and .spw-cauldron-chip render the same corner, and no chip's own radius is overruled."
+  ~#probe(run)
+  !probe{ "rg -n ':where\\(.spw-chip, button' public/css/ornament/whimsy.css" }
+  $%[shape.role, shape.element, shape.both]
+}

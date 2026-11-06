@@ -114,6 +114,16 @@ Every live folder, once, by area. Open a plan's `index.spw` for its disposition 
 - `agentic-dev-contracts/` — one validation entrypoint and one manifest.
 - `history-reflow/` — commit grammar and the reflow method.
 
+## Maintenance Snapshot - 2026-11-05
+
+Design-philosophy pass. The creator gave directions through the day; each now sits with one owner, and every taste call is a question rather than a rule. The evidence is in [chrome-ecology-2026-11](../../.spw/caches/chrome-ecology-2026-11.spw) (a theory read against what runs, with a live probe of floating chrome) and in censuses dated in each plan.
+
+- **The floating chrome theory may need revising** → [floating-chrome-stack](./floating-chrome-stack/FIX.md): a six-line revision (a host that answers in the page's words, z that follows how long a thing stays, width places and the pointer sizes, rungs not slots, one carry corner, a ground over text). Waits on the creator's words; changes end at live demos.
+- **Harmony across components** → [component-region-personality](./component-region-personality/PLAN.md): a class that renders by its element, one role with many radii, three undefined shape tokens, three chip dialects on one Home screen. The principle "role, not element" is a question there; [color-motion](./color-motion/PLAN.md) holds the timing half (an invalid `calc()` that drops card motion, chip timing that snaps, the focus ring).
+- **Useful, informative, playful** → [interaction-grammar](./interaction-grammar/PLAN.md): receipts computed and never painted, the settings credit as the model, loops that do not close, one hold on two clocks. [settings-ornament-resonance](./settings-ornament-resonance/PLAN.md) asks whether its patch bay and those receipts share the satchel, and takes spw.quest's `/pivot` as a model for guided trying.
+- **More of the creator's own art, linking pages, more immediately, and thematically whole** → [midjourney-design-concepts](./midjourney-design-concepts/PLAN.md), with the first screen at [landing-visual-hierarchy](./landing-visual-hierarchy/PLAN.md): 23 of 214 route pages open on hand-made art, 138 carry no image, and the registry does not record who made an image, so the first slice is that field, after the creator says which families are theirs.
+- **Spw integration, editing, mutation, composability** → [spw-metaphysical-language](./spw-metaphysical-language/PLAN.md) holds the wonder; [brace-semantics](./brace-semantics/PLAN.md) holds the then-and-now question about early readings (a highlighter per container, `<of>`, `<&>`); [spw-quest](./spw-quest/PLAN.md) holds the instruments that already mutate a line and the proposed performances and typed placeholders. The public statement of what the language should let you say is on `/topics/software/spw/#expressiveness-goals`.
+
 ## Maintenance Snapshot - 2026-10-25
 
 UI and UX pass. Seventeen plans for spwashi.com's chrome, interaction, layout, settings, capture, reading and access were read against the tree.

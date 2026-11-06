@@ -1,12 +1,27 @@
 # Plan: interaction-grammar
 
-**Status 2026-11-05.** The phase ladder and reward contract live in `.spw/conventions/interaction-microstates.spw`. Leaf controls stay out of brace gestures through `isLensModeControl` (`6ccab1bb`). The gesture-contract census ran (`.spw/audits/touch-gesture-contracts-2026-09.spw#verb_census_2026_11_05`): 36 authored elements in 21 files over 10 strings, each on an element some engine claims. Two findings wait on the creator: haptics' `[data-spw-gesture-contract*="prime"]` also matches `tap:prime`, so a hold on a hook or an image-study figure inspects and gathers at once though its contract says inspect; and the two film mode panels (`topics/film/scene-composition/*/index.html:47`) have no inspect engine, so their hold only gathers and their tap answers nothing. The census also records the swipe fact chrome-navigation-wonder's drawer question waits on. Next slice: the settings "do this / expect this" passage below, one row per authored string, written from the census and saying what a hold does today. Cross-session familiarity stays unscoped.
+**Status 2026-11-05.** The phase ladder and reward contract live in `.spw/conventions/interaction-microstates.spw`. Leaf controls stay out of brace gestures through `isLensModeControl` (`6ccab1bb`). The gesture-contract census ran (`.spw/audits/touch-gesture-contracts-2026-09.spw#verb_census_2026_11_05`): 36 authored elements in 21 files over 10 strings, each on an element some engine claims. Two findings wait on the creator: haptics' `[data-spw-gesture-contract*="prime"]` also matches `tap:prime`, so a hold on a hook or an image-study figure inspects and gathers at once though its contract says inspect; and the two film mode panels (`topics/film/scene-composition/*/index.html:47`) have no inspect engine, so their hold only gathers and their tap answers nothing. The census also records the swipe fact chrome-navigation-wonder's drawer question waits on. Next slice: the settings "do this / expect this" passage below, one row per authored string, written from the census and saying what a hold does today. Cross-session familiarity stays unscoped. On 2026-11-05 the creator asked what would make the UI useful, informative and playful; the reading and four proposed slices are under "Useful, informative, playful" below.
 
 **Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — ungated.gesture_census, seams.lens.
 
 **Related:** [interaction-cache](../archive/interaction-cache/PLAN.md) (archived). **Absorbed 2026-10-06:** [interaction-loop-contract](../archive/interaction-loop-contract/PLAN.md) · [microinteraction-motion-lifecycle](../archive/microinteraction-motion-lifecycle/PLAN.md). **Absorbed 2026-10-10:** [gesture-state-refinement](../archive/gesture-state-refinement/PLAN.md).
 
 Develop practical interactive circuits that become satisfying and familiar over time, and rethink brace physics toward vocabulary that is more cognitively accessible — while using Spw to exercise spatial relationship and let other languages and notations shine through it.
+
+## Useful, informative, playful — 2026-11-05
+
+The creator asked what would make the UI feel useful and informative, and for a visual ecology that can encourage play. The reading is in [chrome-ecology-2026-11](../../../.spw/caches/chrome-ecology-2026-11.spw) (`#informative`, `#play`) and this plan's gesture census.
+
+- **Computed, never painted.** The grounding reason (`groundInteraction`, `kernel/dom-contracts.js:750`) reaches only a data attribute and the runtime audit; the settle confirmation `data-spw-page-settle-confirmation` (`runtime/page/page-state.js:142`) has no stylesheet reading it, so the reward contract's fourth form never paints; the effect ledger writes its count and last entry onto `html` and nothing lists them for a reader.
+- **The model that works.** The settings credit names the change and what became more prominent (`interface/site-settings-ui.js:390-410`). Lens, spell and grounding feedback could take the same two clauses.
+- **Loops that do not close.** `component-collection.js` emits `spw:achievement-unlocked`; the effect ledger listens for `spw:collection-achievement` and `spw:reward-unlocked` (its "optional flourish sources"), so a found thing never becomes a receipt. Math diagrams carry their listeners and emit nothing (`modules/math/diagrams.js:63`). One hold runs on two clocks: haptics 520ms with a mouse, 420ms on touch, a 340ms double tap; brace-gestures 420ms with 8px of slop; and haptics' `*="prime"` selector makes a hold on a hook inspect and gather at once.
+
+Proposed, each ending at a live demo:
+
+1. **One hold.** One measure for hold and double tap, read by both engines; it changes the feel, so it is a look before it lands.
+2. **Receipts land in the satchel.** Composed with [settings-ornament-resonance](../settings-ornament-resonance/PLAN.md)'s patch bay; whether bay and receipts share one satchel is that plan's question.
+3. **Close the loops.** The ledger hears achievements (its flourish then shows, so a look), and a diagram that changes emits one event the ledger can keep.
+4. **What play commits to.** The sincere structure play is played straight in is the creator's call (`chrome-ecology-2026-11.spw#wonder_chrome_ecology_play_structure`).
 
 ## Status — 2026-09-04
 
