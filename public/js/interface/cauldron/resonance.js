@@ -1,4 +1,5 @@
 import {
+  applyCauldronState,
   computeCauldronBrew,
   computeIngredientPhase,
   publishCauldronCapacity,
@@ -99,9 +100,9 @@ export function syncOperatorResonance(ingredients = []) {
     const counts = {};
     phases.forEach((p) => { counts[p] = (counts[p] || 0) + 1; });
     const dominant = Object.keys(counts).reduce((a, b) => (counts[a] >= counts[b] ? a : b), phases[0]);
-    root.dataset.spwCauldronPhase = dominant;
+    applyCauldronState(root, { element: dominant });
   } else {
-    delete root.dataset.spwCauldronPhase;
+    applyCauldronState(root, { element: '' });
   }
 
   /* Capacity, fill, and brew go on the document element rather than the

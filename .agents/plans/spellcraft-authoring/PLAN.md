@@ -1,11 +1,11 @@
 # Plan: spellcraft-authoring
 
-**Status 2026-10-25.** Landed: the decompose verb and the `data-spw-cauldron-state` bundle in `semantic/cauldron/contract.js` (`bd0d7951`, 2026-07-03), and saved trails that survive clearing the current one (`7b5f0a63`). Phase 1's attribute fold did not land:
-- Source still carries 33 distinct `data-spw-cauldron-*` names against a target of about 4.
-- `data-spw-cauldron-phase` is still written (`interface/cauldron/resonance.js:102`) and listed (`runtime/orchestration/dom-sync-hub.js:71`).
+**Status 2026-11-05.** Landed: the decompose verb and the `data-spw-cauldron-state` bundle in `semantic/cauldron/contract.js` (`bd0d7951`, 2026-07-03), saved trails that survive clearing the current one (`7b5f0a63`), and the phase-attribute fold: the dominant resonance now rides html's bundle as `element:<plane>` (`interface/cauldron/resonance.js`), `palette-depth.css` reads `html[data-spw-cauldron-state~="element:…"]` at the same specificity, `dom-sync-hub.js` no longer lists the old name (its observer watches `body`, so the entry never fired), and `/design/runtime/` names the bundle. What is still owed of Phase 1:
+- 27 distinct kebab `data-spw-cauldron-*` names remain in `public/js`, `public/css` and the partials (28 before the fold), against a target of about 4.
 - No SPELL_CONTRACT exists.
+- `effects/electromagnetic-container.css:316-317` match `html[data-spw-cauldron-state="primed"]` and `="mixing"` exactly; the bundle always carries several tokens, so those two arms have never matched. Reviving them as `~="phase:primed"` would turn on a content wash while something is held, which is a sensation call.
 
-Next slice: the phase-attribute fold, retiring `data-spw-cauldron-phase` on html across `resonance.js`, `dom-sync-hub.js` and `systems/surfaces/palette-depth.css` in one patch, after cauldron-lens-composition's pocket receipt (the sitting's `seams.cauldron`). Nothing gates it if the palette-depth rules move in the same patch and `audit:root-ablation` shows the move inert. The decompose browser demo, a creator walk through hold-prime, decompose and re-mix, waits on the creator's walk at `/design/experiments/spellcraft/#bench-decompose`. It is the Phase 2 promotion gate, owed since 2026-07-03. Phases 3–4 stay sensation-gated.
+Next slice: the next G1 axis into the bundle, by the same method (writer through `applyCauldronState`, CSS readers in the same patch, the bundle's token readers checked for exact matches). The decompose browser demo, a creator walk through hold-prime, decompose and re-mix, waits on the creator's walk at `/design/experiments/spellcraft/#bench-decompose`. It is the Phase 2 promotion gate, owed since 2026-07-03. Phases 3–4 stay sensation-gated.
 
 **Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — ungated.spell_fold, design.spell_decompose, seams.cauldron, seams.breadcrumbs.
 

@@ -68,7 +68,6 @@ const ATTRIBUTE_FILTER = Object.freeze([
   'data-spw-phase',
   'data-spw-tangibility',
   'data-spw-fixity',
-  'data-spw-cauldron-phase',
 ]);
 
 const tasks = new Map();

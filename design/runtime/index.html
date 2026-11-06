@@ -181,7 +181,7 @@ console.table(SPW_SVG_PALETTES);</code></pre>
 
         <section class="spw-panel" id="memory-garden-mirror" aria-labelledby="memory-garden-mirror-title" data-spw-kind="panel" data-spw-role="runtime-mirror" data-spw-feature="cauldron-garden">
             <h2 id="memory-garden-mirror-title">Memory garden mirror</h2>
-            <p>The cauldron and spell systems expose live lifecycle phases and gardening affordances. Root data attributes (<code>data-spw-cauldron-phase</code>, <code>data-spw-cauldron-count</code>, per-ingredient <code>data-spw-ingredient-phase</code>) plus bus events make the current "garden" of semantic memory observable and lightly tunable in any surface that loads the composition runtime.</p>
+            <p>The cauldron and spell systems expose live lifecycle phases and gardening affordances. The root's <code>data-spw-cauldron-state</code> bundles them (<code>phase:mixing count:4 element:fluid</code>), each ingredient carries <code>data-spw-ingredient-phase</code>, and bus events make the current "garden" of semantic memory observable and lightly tunable in any surface that loads the composition runtime.</p>
 
             <div data-spw-textual-role="note" data-spw-cauldron-mirror>
                 <strong>Live state (when active):</strong>
