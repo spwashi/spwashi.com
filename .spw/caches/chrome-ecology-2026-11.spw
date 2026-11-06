@@ -68,7 +68,7 @@ contents = #[
 ^"revision"{
   ~#note: "Proposed wording for the theory, each line with what it would retire. A revision of the theory is the creator's; nothing below has moved code."
   host_that_answers = .{
-    claim = `Floating chrome is a host, never content, and every piece answers in the page's own words: the rail names the section by its heading and its place ("Where that sentence goes next · 4 of 9"); the sigil is the key, taught once; the Spw handle sits behind a hold or a disclosure.`
+    claim = `Floating chrome is a host, never content, and each piece is one Spw expression whose slots carry the page's words and work as its controls, its state rewriting one slot in place: the rail reads #>where_that_sentence_goes_next{4 of 9}, the satchel is the $ substrate whose first offer is the page's own Spw, the cauldron chip writes .cauldron{3}. Sharpened 2026-11-05 at the creator's word (more Spw native, more intentional in developing the theory); the operator per piece is the creator's.`
     retires = `"#> section" and "rail ‹ #> home_frame ~8 1/17" as a reader's only answer to where am I`
     rule = @learnable_rule
   }[reg=facet]
@@ -168,6 +168,7 @@ contents = #[
 
 ^"stream"{
  >>[2026-11-05 21:30] prime — read the floating chrome theory against the tree (dom-contracts.js, floating-chrome.css, whimsy.css, the lane variables) and a live headless probe with capture mode off; read component harmony, informative feedback and play across public/css and public/js. Claims checked by hand before writing: the whimsy 48rem rule, zero chrome-slot readers, the tier ladder, the 720px-or-coarse pocket query, the invalid calc() in cards.css:321, the achievement event names, and the three undefined shape tokens.
+ >>[2026-11-05 23:58] revise — the creator asked for chrome that is more useful, more Spw native and more intentional about the theory of Spw; revision.host_that_answers now reads each piece as one Spw expression whose slots are its controls, mirrored in floating-chrome-stack/FIX.md.
 }
 
 # About this file

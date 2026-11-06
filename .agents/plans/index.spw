@@ -33,7 +33,7 @@ intent: .{
 }[reg=facet]
 
 ^"design_pass_2026_11_05"{
- census = `The creator's design directions of 2026-11-05, each given one owner with its evidence: the floating chrome theory (floating-chrome-stack, a six-line revision), harmony across components (component-region-personality, with color-motion for timing), useful, informative and playful (interaction-grammar, with settings-ornament-resonance for the satchel), the creator's own art first and between pages (midjourney-design-concepts, with landing-visual-hierarchy for the first screen: 23 of 214 route pages open on hand-made art, 138 carry no image), and Spw integration as editing, mutation and composability (spw-metaphysical-language).`
+ census = `The creator's design directions of 2026-11-05, each given one owner with its evidence: the floating chrome theory (floating-chrome-stack, a six-line revision whose first line makes each floating piece one Spw expression whose slots are its controls), harmony across components (component-region-personality, with color-motion for timing), useful, informative and playful (interaction-grammar, with settings-ornament-resonance for the satchel), the creator's own art first and between pages (midjourney-design-concepts, with landing-visual-hierarchy for the first screen: 23 of 214 route pages open on hand-made art, 138 carry no image), and Spw integration as editing, mutation and composability (spw-metaphysical-language).`
  evidence = ~"../../.spw/caches/chrome-ecology-2026-11.spw"
  questions = #[
   ~"./component-region-personality/index.spw#wonder_component_region_role_not_element",
