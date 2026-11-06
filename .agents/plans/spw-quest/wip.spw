@@ -65,6 +65,7 @@ fixity = "tending"
  >>[2026-10-26 12:19] implement — creator: merge spw.quest to test it live. quest/specimens rebased onto main and fast-forwarded (17f6a77e); the next deploy carries the note and G together. check:workers green on main, quest tests 56 of 56 with the mount.
  >>[2026-10-27 13:32] probe — wonder_spw_quest_motion: git tracks one parser release, 2026.10.13, beside index.json; 2026.10.13-pre.1 is on disk and untracked. The ~#expect was written first and held, so H has one public reading to stand on and waits on a second cut before it can show a pair.
  >>[2026-10-27 14:56] implement — J at the creator's word, to relate spw.quest to Spw's patterns and constructs with tools and cards for moving between and changing them: /constructs (cards for 12 marks, 4 braces, 9 forms in a line, 10 in a file, 5 patterns between lines; usage by position from the shelf; How lines join and Where the names part) and /pivot (any line and the lines one change away, each shown before you go, the way back kept). New modules src/cards.js, src/constructs.js, src/pivot.js; index.js gains two routes; /specimens cards gain a Pivot link. Guide, masthead and note shell untouched. check:workers green; phone stills at 390 px light and dark show no overflow after the join table folded to four columns.
+ >>[2026-11-05 21:38] decide — Proposed slices K to O in PLAN.md for utility and interactive value: K aligns about/domains/spw.quest/index.html (and copy-agentic-direction-2026-09.spw) with /learn, /build, /specimens, /constructs, /pivot, and the runnable inquiry loop; L bridges the < > ( ) [ ] { } guide slot order in src/build.js with the [ ] { } ( ) < > route-atlas slot order in src/pivot.js and public/js/semantic/expression-query.js; M adds interior body-separator pivots ({a.b.c} vs {a, b, c} vs {a; b; c} vs {a ~> b ~> c} vs {a}.{b}.{c}) and bounded walk trails to /pivot; N carries a learner's chosen noun across the 7 steps of /learn while preserving quest.spw parity; O links expressions in the / device note into /pivot, /specimens, and /install alongside Slice I's text/plain .spw oracle responses. Added #>wonder_spw_quest_slot_order in index.spw.
 }
 
 ^"architecture"{
@@ -210,9 +211,9 @@ fixity = "tending"
 }
 
 ^"cache"{
- ~#status: "committed, awaiting the creator's look and deploy"
+ ~#status: "committed, awaiting the creator's look and deploy; slices K to O proposed in PLAN.md"
  ~#next_commit: "+[quest] Give each sigil its physical model beside its reading"
- ~#files_hot: "workers/spw-quest/src/index.js, workers/spw-quest/src/panel.js, workers/spw-quest/src/build.js, workers/spw-quest/src/reader.js, workers/spw-quest/src/steps.js, workers/spw-quest/test/routes.test.mjs"
- ~#gate: "the creator's look on a phone (panels, path, nuance rows, sigil table, Put one together), then the Wrangler deploy"
- ~#last_stream: "2026-10-26"
+ ~#files_hot: "workers/spw-quest/src/index.js, workers/spw-quest/src/panel.js, workers/spw-quest/src/build.js, workers/spw-quest/src/pivot.js, about/domains/spw.quest/index.html"
+ ~#gate: "the creator's look on a phone (panels, path, nuance rows, sigil table, Put one together), then the Wrangler deploy; slice K is site-local and gated only by check:local"
+ ~#last_stream: "2026-11-05"
 }

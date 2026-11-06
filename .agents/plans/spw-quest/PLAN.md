@@ -1,6 +1,6 @@
 # Plan: spw-quest
 
-**Status 2026-10-27.** J, constructs and pivots, is built on main and not deployed: `/constructs` lays out the shapes a line takes as cards you walk between, with the shelf's usage by position and the five places a mark's names part; `/pivot` shows any line and the lines one change away, each before you go. Both read with scripts off; the guide, the masthead and the note shell are untouched, and `/learn`, `/build` and `/specimens` link them. Its look waits on the creator's phone review with the rest. Earlier, 2026-10-25: G is merged to main (17f6a77e) at the creator's word, to test live: `/specimens`, read with scripts off. The next Wrangler deploy carries it with the note. H (how Spw is developing, as one specimen read by two releases) and I (the same for agents) are proposed, sequenced with [ecosystem-architecture](../ecosystem-architecture/PLAN.md). Nothing below has changed since 2026-10-14. Committed, not yet deployed: the guide opens with five files from reading, writing and study (a reading log, a seminar question with its probe, a narrator's persona held in regard, reading notes, a revision note) in an editor painted in the site's operator colors, and beside it what a tool reads from the file, with checks that change as the file does. The seven panels moved to /learn, /build takes a writing line apart, and every page wears the site's tokens and faces through the peer kit (`npm run build:peer-kit`, checked by `check:workers`). The guide now keeps one note on the device (localStorage, `?note`), PR 1 of the [note and shell design](./note-shell-design.md); PRs 2 to 4 (pin the reader, the service worker, the manifest) follow it in order, and the shell must not ship before the note is deployed. It waits on the creator's look at a phone before the Wrangler deploy.
+**Status 2026-11-05.** Slices K to O (utility and interactive-value roadmap: aligning `about/domains/spw.quest/index.html`, bridging the `< > ( ) [ ] { }` vs `[ ] { } ( ) < >` slot order between `/build` and `/pivot`, adding separator-algebra pivots and walk trails, carrying a learner's own stem across `/learn`, and connecting the device `?note` to `/specimens`, `/pivot`, and `/install`) are proposed below alongside Slice I (agent `.spw` oracle responses). The next is K, site-local and gated only by `check:local`; L to O wait with J on the creator's phone review. Earlier, 2026-10-27: J, constructs and pivots, is built on main and not deployed: `/constructs` lays out the shapes a line takes as cards you walk between, with the shelf's usage by position and the five places a mark's names part; `/pivot` shows any line and the lines one change away, each before you go. Both read with scripts off; the guide, the masthead and the note shell are untouched, and `/learn`, `/build` and `/specimens` link them. Its look waits on the creator's phone review with the rest. Earlier, 2026-10-25: G is merged to main (17f6a77e) at the creator's word, to test live: `/specimens`, read with scripts off. The next Wrangler deploy carries it with the note. H (how Spw is developing, as one specimen read by two releases) and I (the same for agents) are proposed, sequenced with [ecosystem-architecture](../ecosystem-architecture/PLAN.md). Nothing below has changed since 2026-10-14. Committed, not yet deployed: the guide opens with five files from reading, writing and study (a reading log, a seminar question with its probe, a narrator's persona held in regard, reading notes, a revision note) in an editor painted in the site's operator colors, and beside it what a tool reads from the file, with checks that change as the file does. The seven panels moved to /learn, /build takes a writing line apart, and every page wears the site's tokens and faces through the peer kit (`npm run build:peer-kit`, checked by `check:workers`). The guide now keeps one note on the device (localStorage, `?note`), PR 1 of the [note and shell design](./note-shell-design.md); PRs 2 to 4 (pin the reader, the service worker, the manifest) follow it in order, and the shell must not ship before the note is deployed. It waits on the creator's look at a phone before the Wrangler deploy.
 
 **Related:** [workers-wonder-kit](../workers-wonder-kit/PLAN.md) (shared worker shell) · [spw-inquiry-loop](../spw-inquiry-loop/PLAN.md) (the parser's arrival in the site) · [upstream workbench asks](../../../.spw/reviews/upstream-workbench-recommendations.spw) (`week_2026_10_11`).
 
@@ -82,6 +82,48 @@ Proposed with [ecosystem-architecture](../ecosystem-architecture/PLAN.md), which
 - **Phone:** 390 px, light and dark, no overflow; `/constructs` is about 16 screens, a pivot page 6 to 9.
 - **Tests:** `test/constructs.test.mjs` (7), in `check:workers`.
 - **Gate:** the creator's look on a phone, with the rest of the unshipped slices.
+
+### Utility and interactive-value roadmap (2026-11-05)
+
+Proposed after inspecting the live surfaces across `workers/spw-quest/src/` and `about/domains/spw.quest/index.html`, plus the 2026-11 caches on expression projection/precipitation (`.spw/caches/expression-projection-precipitation-2026-11.spw`) and linguistic affordances (`.spw/caches/linguistic-affordances-2026-11.spw`).
+
+**K. Align `about/domains/spw.quest/index.html` with the live quest surfaces.** Proposed.
+- **Problem:** `about/domains/spw.quest/index.html` (and its source of record in `.spw/caches/copy-agentic-direction-2026-09.spw`) was authored before `/learn`, `/build`, `/specimens`, `/constructs`, and `/pivot` existed; it only presents the `/install` strip, `#crawl-prompt`, and a static 4-card `#direction` grid.
+- **Changes:**
+  - Add a *Quest surfaces & corpus instruments* strip linking `https://spw.quest/learn`, `https://spw.quest/build`, `https://spw.quest/specimens`, `https://spw.quest/constructs`, and `https://spw.quest/pivot` with preloaded queries (`?q=`, `?a=&b=`, `?s=`).
+  - Make the four join specimens in `#direction` (`{cullet,grog,fiber}`, `{mill.laminate.cure}`, `{mill}.{laminate}.{cure}`, `scrap ~> mill ~> temper`) interactive entrypoints into `/tools/spw-parser/` and `https://spw.quest/pivot`.
+  - Update `#crawl-prompt` to include the runnable inquiry loop (`npm run wonder -- --run`; `inquiry.loop/1` is proposed, per `.spw/language/v04/roadmap.spw#capabilities`), ground-then-edge route diffs (`npm run spw:routes -- --diff`, `reading.ground-edge/1`), and the `spw.quest/specimens` and `spw.quest/pivot` surfaces.
+- **Validation:** `npm run audit:copy:accessor` and `npm run check:local`.
+
+**L. Slot-order bridge between `/build` and `/pivot` + `/specimens`.** Proposed.
+- **Problem:** `workers/spw-quest/src/build.js` assembles and parses lines in the guide order `mark + word + <concept>(scene)[mode]{definition}` (`< > ( ) [ ] { }`), whereas `workers/spw-quest/src/pivot.js`, `workers/spw-quest/src/specimens.js`, and `public/js/semantic/expression-query.js` use the route-atlas order `charge + word + [mode]{body}(scene)<projection>` (`[ ] { } ( ) < >`). A multi-brace line from `/specimens` or `/pivot` cannot be decomposed by `focusSlots()` in `/build`, and a four-brace line assembled in `/build` loses its `<concept>` slot when read by `expression-query.js`.
+- **Changes:**
+  - Teach `focusSlots()` in `workers/spw-quest/src/build.js` and `readExpressionSlots()` / `shapeFromExpression()` in `public/js/semantic/expression-query.js` to accept brace containers in either order while preserving delimiter identity (`[]` mode, `{}` body/definition, `()` scene/scope, `<>` concept/projection).
+  - Add an order toggle on `/build` (*guide order `< > ( ) [ ] { }`* vs *atlas order `[ ] { } ( ) < >`*) so learners see that delimiters own the slot role while order shifts reading emphasis.
+  - Add direct *Pivot this line (`/pivot?line=…`)* and *Find kin on the shelf (`/specimens?q=…`)* actions inside `/build`.
+- **Validation:** `npm run check:workers` and `scripts/tests/` unit checks.
+
+**M. Separator-algebra pivots (`{ , ; ~> . }`) and walk trails on `/pivot`.** Proposed.
+- **Problem:** `workers/spw-quest/src/pivot.js` currently pivots whole slots (`swap`, `add`, `drop`, `mark`, `turn/split join`) and remembers only one prior step (`&from=`). It does not yet pivot the interior separator of `{body}`, which is the core distinction taught by `#direction` and `.spw/caches/expression-projection-precipitation-2026-11.spw`.
+- **Changes:**
+  - When a line's `{body}` has two or more parts, generate a *Turn how the body holds its parts* pivot group switching between `{a.b.c}` (one tight identifier), `{a, b, c}` (co-present set), `{a; b; c}` (ordered sequence), `{a ~> b ~> c}` (directional relay), and `{a}.{b}.{c}` (dot-crawl across closed braces).
+  - Keep a bounded 3-to-5 step walk trail (`?trail=`) at the top of `/pivot` showing the `ground-then-edge` diff between the origin of the walk and the current line, plus an action to copy or append the walk into the device `?note`.
+- **Gate:** `npm run check:workers` and the creator's phone review at 390 px.
+
+**N. Stateful, carry-your-own-stem `/learn` quest.** Proposed.
+- **Problem:** In `.spw/_workbench/docs/learn/quest.spw`, each of the seven steps (`write`, `act`, `hold`, `name`, `point`, `ask`, `grow`) defines a strict AST check (`parses`, `operation_before_word`, `frame_and_body`, `frame_address_and_binding`, `path_ref`, `wonder_with_probe`), but on the web at `/learn` (`workers/spw-quest/src/panel.js`) the seven panels do not carry a learner's chosen noun forward from Step 1 to Step 7.
+- **Changes:**
+  - Keep the canonical `try` lines from `.spw/_workbench/docs/learn/quest.spw` verbatim for scripts-off and route-test parity, while allowing a learner's custom word in Step 1 (`write`) to re-seed the interactive try fields in Steps 2–6 and light each panel's AST check badge green as it passes.
+  - At Step 7 (`grow`), offer a proposed one-click *Open my completed quest in the guide note (`/?note`)* or *Download as `my-quest.spw`*.
+- **Gate:** `npm run check:workers` (including `.spw/_workbench/docs/learn/quest.spw` parity).
+
+**O. Connect the device `?note` to `/specimens`, `/pivot`, and `/install` (plus Slice I `.spw` oracle).** Proposed.
+- **Problem:** The device note on `/` (`workers/spw-quest/src/file-reader.js`, `workers/spw-quest/src/note.js`) is isolated from `/specimens`, `/pivot`, and `/install`, and agents querying `/specimens` or `/pivot` only receive HTML.
+- **Changes:**
+  - In *What a tool reads* on `/`, add `pivot →` and `kin →` links beside each parsed expression and `#>wonder_*` block.
+  - On `/install` (`workers/spw-quest/src/quest.js`), allow an optional checkbox to seed `.spw/quest/` with the note authored on `/`.
+  - Complete Slice I by returning valid `.spw` text on `/read`, `/specimens`, and `/pivot` when requested with `Accept: text/plain` or a `.spw` suffix (`?line=`, `?q=`, `?a=&b=`), turning `spw.quest` into a zero-install language oracle for agents.
+- **Gate:** PRs 1–4 of [note-shell-design.md](./note-shell-design.md), `npm run check:workers`, and the creator's call on worker usage.
 
 ## Review prompts
 
