@@ -3,7 +3,7 @@
 // file reader's; the slots come from the site's one slot reader,
 // public/js/semantic/expression-query.js, and a line it takes only part of
 // says so (whole = false) instead of being guessed at.
-import { readCompoundJoin, readExpressionSlots, shapeFromExpression } from "../../../public/js/semantic/expression-query.js";
+import { readCompoundJoin, readExpressionSlots, readSlotOrder, shapeFromExpression } from "../../../public/js/semantic/expression-query.js";
 import { paintFile, readFile } from "./file-reader.js";
 
 /** How many lines of a file a card shows before it folds. */
@@ -13,10 +13,14 @@ const flat = (value) => String(value || "").replace(/\s+/g, "");
 const dropEmpty = (object) => Object.fromEntries(Object.entries(object).filter(([, value]) => (Array.isArray(value) ? value.length : value)));
 
 /** Whether the slots read back into the line: if not, the reader took only part of it. */
+const WRAP = Object.freeze({ mode: ["[", "]"], body: ["{", "}"], scope: ["(", ")"], projection: ["<", ">"] });
+
+/** Whether the slots read are the whole line: written back in the order its author used, nothing is left over. */
 function readsWhole(text, raw) {
-  const line = (leading) => `${raw.charge.join(".")}${leading ? `(${raw.scope})` : ""}${raw.subject}`
-    + `${raw.mode ? `[${raw.mode}]` : ""}${raw.body ? `{${raw.body}}` : ""}${!leading && raw.scope ? `(${raw.scope})` : ""}${raw.projection ? `<${raw.projection}>` : ""}`;
-  return [false, Boolean(raw.scope)].some((leading) => flat(line(leading)) === flat(text));
+  const { sceneFirst, order } = readSlotOrder(text);
+  const line = `${raw.charge.join(".")}${sceneFirst ? `(${raw.scope})` : ""}${raw.subject}`
+    + order.map((slot) => `${WRAP[slot][0]}${raw[slot]}${WRAP[slot][1]}`).join("");
+  return flat(line) === flat(text);
 }
 
 /** What a search reads: the slots of one side, as shapeFromExpression gives them. */

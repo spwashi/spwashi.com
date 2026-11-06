@@ -21,12 +21,22 @@ export function page(html, extra = {}, csp = PAGE_CSP) {
 }
 
 /** The top of every page: the name, and the four places to go. */
+/** The shelf's three rooms: the lines kept, the shapes they take, and a line turned one slot at a time. */
+const SHELF_ROOMS = Object.freeze([["/specimens", "Specimens"], ["/constructs", "Constructs"], ["/pivot", "Pivot"]]);
+
 export function masthead(current = "") {
-  const links = [["/learn", "Learn"], ["/build", "Build"], ["/parser/", "Parser"], ["/install", "Install"]]
-    .map(([href, label]) => `<a href="${href}"${href === current ? ' aria-current="page"' : ""}>${label}</a>`).join("");
+  const onShelf = SHELF_ROOMS.some(([href]) => href === current);
+  const links = [["/learn", "Learn"], ["/build", "Build"], ["/specimens", "Shelf"], ["/parser/", "Parser"], ["/install", "Install"]]
+    .map(([href, label]) => {
+      const here = href === current || (label === "Shelf" && onShelf);
+      return `<a href="${href}"${here ? ' aria-current="page"' : ""}>${label}</a>`;
+    }).join("");
+  const shelf = onShelf
+    ? `\n  <nav class="shelf-rooms" aria-label="The shelf">${SHELF_ROOMS.map(([href, label]) => `<a href="${href}"${href === current ? ' aria-current="page"' : ""}>${label}</a>`).join("")}</nav>`
+    : "";
   return `<header class="masthead">
   <a class="brand" href="/"${current === "/" ? ' aria-current="page"' : ""}>spw.quest</a>
-  <nav class="top" aria-label="spw.quest">${links}</nav>
+  <nav class="top" aria-label="spw.quest">${links}</nav>${shelf}
 </header>`;
 }
 
@@ -38,6 +48,9 @@ export const PAGE_CSS = `main { width: min(72rem, calc(100% - 2rem)); padding-to
     .masthead .top a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 .6rem; color: var(--muted); font-size: .95rem; text-decoration: none; }
     .masthead a:hover, .masthead a:focus-visible, .masthead a[aria-current="page"] { color: var(--accent); }
     .masthead .top a[aria-current="page"] { box-shadow: inset 0 -2px 0 var(--accent); }
+    .masthead .shelf-rooms { display: flex; flex-wrap: wrap; flex-basis: 100%; gap: .1rem; margin: 0 0 0 -.6rem; }
+    .masthead .shelf-rooms a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 .6rem; color: var(--muted); font-size: .88rem; text-decoration: none; }
+    .masthead .shelf-rooms a[aria-current="page"] { color: var(--fg); font-weight: 600; }
     .measure { max-width: 46rem; }
     .quiet-button, .file-actions button { min-height: 36px; margin: 0; padding: .2rem .75rem; border: 1px solid transparent; border-radius: var(--pill); background: transparent; color: var(--accent); font: 500 .88rem/1 var(--font); cursor: pointer; }
     .quiet-button:hover, .file-actions button:hover, .quiet-button:focus-visible, .file-actions button:focus-visible { border-color: var(--line); background: var(--accent-soft); }

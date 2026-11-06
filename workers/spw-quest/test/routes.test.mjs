@@ -109,8 +109,10 @@ test('the guide opens with a file people keep, read by the worker with scripts o
   assert.equal(response.status, 200);
   const page = await response.text();
   assert.match(page, /A small language for the shape of a thought\./);
-  // Four places to go, from every page's masthead.
-  for (const href of ['/learn', '/build', '/parser/', '/install']) assert.ok(page.includes(`<nav class="top" aria-label="spw.quest">`) && page.includes(`<a href="${href}">`), href);
+  // Five places to go, from every page's masthead; the shelf is one of them.
+  for (const href of ['/learn', '/build', '/specimens', '/parser/', '/install']) assert.ok(page.includes(`<nav class="top" aria-label="spw.quest">`) && page.includes(`<a href="${href}">`), href);
+  assert.ok(page.includes('<a href="/specimens">Shelf</a>'), 'the masthead names the shelf');
+  assert.ok(!page.includes('class="shelf-rooms"'), 'the shelf row shows only on the shelf');
   // One tab per file; the first is open, and each opens by its own address.
   const tabs = [...page.matchAll(/<a href="\/\?example=([a-z]+)#try" data-example="\1"( aria-current="page")?>/g)];
   assert.deepEqual(tabs.map((m) => m[1]), EXAMPLES.map((example) => example.id));
@@ -403,6 +405,23 @@ test('put one together: slots make a line, each pivot holds the rest, and nothin
   assert.match(page, /<section id="build" aria-labelledby="build-title">/);
   assert.doesNotMatch(page, /data-tool="download"/, "/build's Download stays a POST with scripts on");
   assert.ok((await (await get('spw.quest', '/')).text()).includes('<a href="/build">Take one line apart</a>'), 'the guide links the build page');
+  // The line it takes apart can be pivoted, or found on the shelf.
+  assert.ok(page.includes('<a href="/pivot?line=%3Fdoor(threshold)%5Bajar%5D%7Bhinge.frame.key%7D">Pivot this line</a>'), 'pivot this line');
+  assert.ok(page.includes('<a href="/specimens?q=door#found">Find door on the shelf</a>'), 'find it on the shelf');
+  // A script in the atlas order is taken apart too, and a changed slot keeps that order.
+  const atlas = await (await get('spw.quest', '/build?script=' + encodeURIComponent('door[ajar]{hinge}(threshold)<room>') + '&mode=open')).text();
+  assert.ok(atlas.includes('>door[open]{hinge}(threshold)&lt;room&gt;</textarea>'), 'the atlas order survives a changed slot');
+});
+
+test('the shelf is one place to go, and its three rooms name each other', async () => {
+  for (const [path, label] of [['/specimens', 'Specimens'], ['/constructs', 'Constructs'], ['/pivot', 'Pivot']]) {
+    const page = await (await get('spw.quest', path)).text();
+    assert.ok(page.includes('<a href="/specimens" aria-current="page">Shelf</a>'), `${path}: the masthead marks the shelf`);
+    assert.ok(page.includes('<nav class="shelf-rooms" aria-label="The shelf">'), `${path}: the shelf row`);
+    assert.ok(page.includes(`<a href="${path}" aria-current="page">${label}</a>`), `${path}: the row marks the room`);
+  }
+  const specimens = await (await get('spw.quest', '/specimens')).text();
+  assert.match(specimens, /<nav class="on-shelf" aria-label="On this shelf"><a href="#pressed">\d+ pressed forms<\/a> · <a href="#pages">\d+ lines the pages carry<\/a> · <a href="#gallery">\d+ files from the parser's gallery<\/a><\/nav>/);
 });
 
 test('a script can be formatted and downloaded', async () => {

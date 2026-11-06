@@ -114,3 +114,17 @@ invariants: #[
   !probe{ "rg -o -w 'definition|direction|behavior' public/js/kernel/operator-detection.js .spw/conventions/semantic-braces.spw .spw/conventions/operator-semantics.spw | sort | uniq -c" }
   $%[curly.definition, curly.direction, curly.behavior]
 }
+
+#>wonder_brace_semantics_highlighter_then_now
+?["Were the early readings of Spw better than what replaced them, or did the language drift from them: one highlighter color per container across every word of a paragraph, \"of\" read as a concept in {chronicles} <of> (narnia), and <&> as a placeholder for a concept with a subject?"]{
+  #:depth #!semantic ~#lens(comparison)
+  ~#with: @plan @operator_detection @build_expression_manifest
+  ~#taste: "A reading worth keeping lets two people see where their understandings part; the creator raised these ideas again on 2026-11-05 and is not sure they were worse than what usurped them."
+  ~#then: "Every word in a passage takes the color of the container it sits in; a preposition can be a concept; <&> is a typed hole, a concept that has a subject."
+  ~#now: "< is the concept boundary (operator-detection.js); & is a join between two whole lines, one the subject of the other (compound-expressions.spw#declared_bond_versus_inferred_kinship); * is the only placeholder the shelf search knows (spw.quest /specimens); expressions sit on hosts as handles, not on every word. < & > survives as this plan's instrument (section D)."
+  ~#hypothesis: "The two serve different readers. The highlighter reads a passage, a performance of one person's understanding; the handle reads a host, a component's role. The question spw.quest's guide says Spw keeps asking (where do two understandings stop sharing ground) needs the first, and the site's runtime grew around the second."
+  ~#tension: "Highlighting every word is subjective, which makes it a performance rather than a fact; searching by the topography a performance implies only works if every reading is kept, with who made it."
+  ~#unblocks: "spw-quest slices P and Q; the per-container highlighter paint held on 2026-11-05"
+  !probe{ "rg -c 'data-spw-semantic-expression' --glob '*.html' . | awk -F: '{s+=$2} END {print s}'" }
+  $%[reading.highlighter, reading.handle, reading.both]
+}

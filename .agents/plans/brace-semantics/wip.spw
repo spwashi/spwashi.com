@@ -24,6 +24,7 @@ fixity = "experimental"
  >>[2026-10-13 22:30] decide — plan written, nothing built. Five decisions go to the creator before any slice that depends on what a pair means; slices 2 and 3 wait on nothing.
  >>[2026-10-27 13:40] hygiene — decision 1 moves from ^"open" into index.spw as #>wonder_brace_semantics_curly_name, with an answer set and a probe; decisions 2 to 5 stay plain questions until 1 is answered.
  >>[2026-10-27 13:40] probe — wonder_brace_semantics_curly_name: the probe counts each word in any role, so it is noisy. The registry's six definition hits are a variable (OPERATOR_DEFINITIONS.map((definition) …)); as the pair's name it says direction only, as expected. The conventions say behavior 27 times and direction 9; definition appears as a field key and as the brace's original meaning (operator-semantics.spw:317), not as a workbench quote, so that half of the ~#expect missed.
+ >>[2026-11-05 23:45] cache — the creator recalled three early readings (a highlighter color per container across a paragraph, "of" as a concept in {chronicles} <of> (narnia), <&> as a typed placeholder) and asked whether they were better than what replaced them or whether drift needs revisiting. Held as #>wonder_brace_semantics_highlighter_then_now, then and now side by side, no verdict. The same day the creator decided that each brace pair names its slot wherever it sits, which both readings need.
 }
 
 ^"open"{

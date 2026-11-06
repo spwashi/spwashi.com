@@ -281,7 +281,10 @@ function shelf(state) {
     </ol>
   </details>`;
   }).join("\n  ");
-  return `<section id="pressed" class="band" aria-labelledby="pressed-title">
+  const herbarium = groups.reduce((sum, { members }) => sum + members.length, 0);
+  return `<nav class="on-shelf" aria-label="On this shelf"><a href="#pressed">${herbarium} pressed forms</a> · <a href="#pages">${pages} lines the pages carry</a> · <a href="#gallery">${files.length} files from the parser's gallery</a></nav>
+
+<section id="pressed" class="band" aria-labelledby="pressed-title">
   <h2 id="pressed-title">Pressed forms</h2>
   <p>From the herbarium in spwashi.com's language notes, <code>.spw/language/expressions/</code>. The notes are the herbarium's own. A form that departs from another links to it.</p>
   ${pressed}
@@ -321,6 +324,8 @@ ${shelf(state)}`;
 }
 
 export const SPECIMENS_CSS = `.opening { margin: 0 0 1.2rem; }
+    .on-shelf { margin: 1.6rem 0 0; color: var(--muted); font-size: .92rem; }
+    .on-shelf a { display: inline-flex; align-items: center; min-height: 44px; }
     .opening h1 { margin: 0 0 .5rem; font-size: clamp(1.8rem, 5vw, 2.4rem); }
     .opening .lede { max-width: 44rem; margin: 0; color: var(--ink-soft); }
     [id] { scroll-margin-top: 1.25rem; }

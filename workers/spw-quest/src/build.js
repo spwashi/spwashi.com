@@ -2,6 +2,7 @@
 // or download. Slot links keep every other slot. The script field can hold any
 // text; format only tightens spacing when the parser accepts the whole script.
 import { parse } from "../../../public/js/semantic/spw-workbench-reader.js";
+import { readContainers } from "../../../public/js/semantic/expression-query.js";
 import { escapeHtml } from "../../lib/shell.js";
 import { CONTAINERS, OPERATORS, PARTICLE_AIMS } from "./guide.js";
 import { EXAMPLES } from "./examples.js";
@@ -49,41 +50,68 @@ export function slotsFrom(params, base = BUILD_DEFAULTS) {
 
 const nameOf = (word) => word.replace(/\s+/g, "_");
 
-/** The line the slots make: mark, word, then <concept>(scene)[mode]{definition}. */
-export function assemble(slots) {
-  return `${slots.mark}${nameOf(slots.word)}${slots.concept ? `<${slots.concept}>` : ""}${slots.scene ? `(${slots.scene})` : ""}${slots.mode ? `[${slots.mode}]` : ""}${slots.definition ? `{${slots.definition}}` : ""}`;
+/* Each brace pair names its slot wherever it sits (the creator, 2026-11-05).
+   A line this tool makes from nothing takes the guide's order; a line it was
+   given keeps the order its author wrote, and a new slot joins that order. */
+const GUIDE_ORDER = Object.freeze(["concept", "scene", "mode", "definition"]);
+const ATLAS_ORDER = Object.freeze(["mode", "definition", "scene", "concept"]);
+const WRAP = Object.freeze({ concept: ["<", ">"], scene: ["(", ")"], mode: ["[", "]"], definition: ["{", "}"] });
+const SLOT_NAME = Object.freeze({ projection: "concept", scope: "scene", mode: "mode", body: "definition" });
+const isSubsequence = (part, whole) => { let at = 0; for (const item of whole) if (item === part[at]) at += 1; return at === part.length; };
+
+/** The order to write slots in: the guide's or the atlas's when the line already follows one, else the line's own, then the rest. */
+function orderFor(written = []) {
+  if (isSubsequence(written, GUIDE_ORDER)) return GUIDE_ORDER;
+  if (isSubsequence(written, ATLAS_ORDER)) return ATLAS_ORDER;
+  return [...written, ...GUIDE_ORDER.filter((slot) => !written.includes(slot))];
 }
 
-const EXPRESSION = /^([~?!@*^#&=%$]?)([A-Za-z_][\w.-]*)(?:<([^<>]*)>)?(?:\(([^()]*)\))?(?:\[([^[\]]*)\])?(?:\{([^{}]*)\})?$/;
+/** The line the slots make: mark, word, then <concept>(scene)[mode]{definition}, or the order the line was written in. */
+export function assemble(slots, written = []) {
+  const containers = orderFor(written).map((slot) => (slots[slot] ? `${WRAP[slot][0]}${slots[slot]}${WRAP[slot][1]}` : "")).join("");
+  return `${slots.mark}${nameOf(slots.word)}${containers}`;
+}
+
+const LEAD = /^([~?!@*^#&=%$]?)([A-Za-z_][\w.-]*)/;
+
+/** One expression this tool can take apart: a mark, a word, then brace pairs in any order, each once, and nothing after. */
+function readFocusLine(line) {
+  const lead = String(line || "").match(LEAD);
+  if (!lead) return null;
+  const rest = line.slice(lead[0].length);
+  const { found, order, end } = readContainers(rest);
+  if (rest.slice(end).trim()) return null;
+  const slots = { mark: MARKS.has(lead[1]) ? lead[1] : "", word: lead[2], concept: "", scene: "", mode: "", definition: "" };
+  for (const [slot, value] of Object.entries(found)) {
+    const name = SLOT_NAME[slot];
+    if (value.includes(WRAP[name][0]) || value.includes(WRAP[name][1])) return null;
+    slots[name] = value;
+  }
+  return { slots, written: order.map((slot) => SLOT_NAME[slot]) };
+}
 
 /** The first compositional line in a script, if it is one expression of this shape. */
 export function focusSlots(script) {
-  const line = String(script || "").split("\n").map((item) => item.trim()).find((item) => EXPRESSION.test(item));
-  if (!line) return null;
-  const match = line.match(EXPRESSION);
-  return {
-    mark: MARKS.has(match[1]) ? match[1] : "",
-    word: match[2],
-    concept: match[3] || "",
-    scene: match[4] || "",
-    mode: match[5] || "",
-    definition: match[6] || "",
-  };
+  for (const item of String(script || "").split("\n")) {
+    const read = readFocusLine(item.trim());
+    if (read) return read.slots;
+  }
+  return null;
 }
 
 /** The script's focus: the first line shaped like one expression, or -1. */
 export function focusIndex(script) {
-  return String(script || "").split("\n").findIndex((line) => EXPRESSION.test(line.trim()));
+  return String(script || "").split("\n").findIndex((line) => readFocusLine(line.trim()) !== null);
 }
 
 /** The script with its focus line rewritten from slots; indentation and every other line stay. */
 export function withSlots(script, slots) {
   const text = String(script ?? "");
-  const line = assemble(slots);
-  if (!text.trim()) return line;
+  if (!text.trim()) return assemble(slots);
   const lines = text.split("\n");
   const at = focusIndex(text);
-  if (at < 0) return `${line}\n\n${text}`;
+  if (at < 0) return `${assemble(slots)}\n\n${text}`;
+  const line = assemble(slots, readFocusLine(lines[at].trim()).written);
   lines[at] = `${(lines[at].match(/^[ \t]*/) || [""])[0]}${line}`;
   return lines.join("\n");
 }
@@ -404,6 +432,7 @@ export function buildSurface(slots, script = assemble(slots), filename = `${slot
     <section class="apart" aria-labelledby="apart-title">
       <h2 id="apart-title">The first line, taken apart</h2>
       <p class="built-line"><code class="built" aria-label="${escapeHtml(line)}">${segments(slots) || "&nbsp;"}</code></p>
+      ${slots.word ? `<p class="line-ways"><a href="/pivot?line=${encodeURIComponent(line)}">Pivot this line</a> · <a href="/specimens?q=${encodeURIComponent(nameOf(slots.word))}#found">Find ${escapeHtml(nameOf(slots.word))} on the shelf</a></p>` : ""}
       ${ledger(shown, slots)}
       <form class="slots" method="get" action="/build#build">
         <input type="hidden" name="script" value="${escapeHtml(held)}">
@@ -433,7 +462,9 @@ const SHELF_CSS = `.keys { margin: 0; color: var(--muted); font-size: .84rem; }
     .snippets a:hover, .snippets a:focus-visible { border-color: var(--accent); background: var(--accent-soft); }
     .snippets .label { font-size: .9rem; font-weight: 600; }
     .snippets code { overflow: hidden; color: var(--muted); font: .82rem/1.3 var(--mono); text-overflow: ellipsis; white-space: nowrap; }
-    .parser-note { margin: 1rem 0 0; }`;
+    .parser-note { margin: 1rem 0 0; }
+    .line-ways { margin: .4rem 0 0; color: var(--muted); font-size: .9rem; }
+    .line-ways a { display: inline-flex; align-items: center; min-height: 44px; }`;
 export const BUILD_CSS = `.build { display: grid; gap: 1.2rem; }
     .build .filename { flex: 1 1 10rem; margin: 0; }
     .build .file-head .filename input[name="filename"] { width: 100%; min-height: 36px; margin: 0; padding: .2rem .4rem; border-color: transparent; border-radius: 4px; background: transparent; font: 600 .86rem/1.2 var(--mono); }
