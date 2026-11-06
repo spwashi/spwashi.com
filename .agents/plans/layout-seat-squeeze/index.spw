@@ -1,0 +1,108 @@
+# Review 2026-11-05 — keep as the single layout owner (seats, squeeze, coverage, edges); routing generated with --only, thesis and concepts written from its Status, owner claim is the tree template
+# Plan Index — Layout Seat Squeeze
+#
+# Flagship pages sit in named seats (hook, hub, cluster, path, read, wide). Cards squeeze from their own box and leftover room, not from a guessed breakpoint.
+
+#>plan_layout_seat_squeeze_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Flagship pages sit in named seats (hook, hub, cluster, path, read, wide). Cards squeeze from their own box and leftover room, not from a guessed breakpoint.`
+ owner = `layout-seat-squeeze`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Seats, squeeze, frame coverage and edges: flagship pages sit in named seats and cards squeeze from their own box; the next slice is one shared inset for Home's entry panels, between two qa:alignment readings.`
+ concepts = #[
+  `seat`,
+  `squeeze`,
+  `frame coverage`,
+  `edge`,
+  `inset`,
+ ][reg=set]
+ surfaces = #[
+  `.spw/conventions/region-component-ecology.spw`,
+  `js/runtime/regions/region-kin.js`,
+  `css/components/cards.css`,
+  `css/components/semantic-resonance.css`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@region_component_ecology: ~"../../../.spw/conventions/region-component-ecology.spw"
+@region_kin: ~"../../../public/js/runtime/regions/region-kin.js"
+@cards: ~"../../../public/css/components/cards.css"
+@semantic_resonance: ~"../../../public/css/components/semantic-resonance.css"
+@topics: ~"../../../public/css/routes/surfaces/topics.css"
+@about: ~"../../../public/css/routes/surfaces/about.css"
+@component_fit_lens_journey_2026_09: ~"../../../.spw/caches/component-fit-lens-journey-2026-09.spw"
+@alignment_audit: ~"../../../scripts/alignment-audit.mjs"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+ region_component_ecology = @region_component_ecology
+ region_kin = @region_kin
+ cards = @cards
+ semantic_resonance = @semantic_resonance
+ topics = @topics
+ about = @about
+ component_fit_lens_journey_2026_09 = @component_fit_lens_journey_2026_09
+ alignment_audit = @alignment_audit
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-layout_seat_squeeze-001"
+ layer = "pragmatic"
+ hypothesis = `Flagship pages sit in named seats (hook, hub, cluster, path, read, wide). Cards squeeze from their own box and leftover room, not from a guessed breakpoint.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.spw/conventions/region-component-ecology.spw"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/conventions/region-component-ecology.spw unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `node --check on any edited JS`,
+ `rg 'data-spw-region="hero"' on touched flagship routes should be quiet`,
+ `Compact/wide smoke on /, /topics/software/, /about/`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does layout-seat-squeeze own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of layout-seat-squeeze?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether layout-seat-squeeze still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Flagship pages sit in named seats (hook, hub, cluster, path, read, wide). Cards squeeze from their own box and leftover room, not from a…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]

@@ -33,5 +33,5 @@ fixity = "tending"
  ~#next_commit: "+[services] Open the services hero with picture cards for its main paths, the way topics opens"
  ~#files_hot: "services/index.html, recipes/index.html, topics/index.html, public/css/components/content.css"
  ~#gate: "the creator's pick of two or three children per hero, in a browser review"
- ~#last_stream: "2026-10-25"
+ ~#last_stream: "2026-11-05"
 }
