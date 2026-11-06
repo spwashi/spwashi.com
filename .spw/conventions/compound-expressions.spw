@@ -19,6 +19,7 @@
 @kernel_rhizosphere: ~"./kernel-rhizosphere.spw"
 @operator_semantics: ~"./operator-semantics.spw"
 @history_strands: ~"../caches/history-conflict-strands-2026-09.spw"
+@variety_roadmap: ~"../caches/expression-projection-precipitation-2026-11.spw"
 @manifest: ~"../../public/js/generated/spw-expressions.js"
 @builder: ~"../../scripts/build-expression-manifest.mjs"
 
@@ -96,6 +97,7 @@ expression = expression[compound]{bond.operand.kind}<declared>
   first: "Index parts by subject-mode pair — @corpus_completion needs the same pass, so do them together."
   second: "Let declared bonds outrank inferred kinship in expression-resonance. A bond an author wrote should light before a token two expressions happen to share."
   third: "Expose the right operand and bond consequence in an inspection surface before authoring another family at scale."
+  fourth: "Proposed 2026-11-05, not decided: the five-slice variety roadmap in @variety_roadmap#variety_roadmap_2026_11. Slices 1 and 5 are tooling; the valence half of slice 1 and slice 2 are alternatives that wait on #>wonder_compound_consistency_charge; slices 3 and 4 change route expressions and wait on the creator. The slices: (1) preserve prefix/postfix operators, compound.join, join:project (~> inside body), bare valence subjects, and nested bodies in expression-query.js; (2) repair the 17 wordless-charge expressions; (3) promote the 9 unhosted herbarium shapes (nested braces, lens@(a ~ b), a ~ b ~> c) onto flagship routes; (4) replace route-slug subjects with cross-route Mode Rings; (5) emit a variety receipt during npm run manifest."
   refuse: "Do not backfill compounds across the corpus. A bond written to satisfy a convention is exactly the coincidence this is meant to replace."
 }
 
@@ -181,6 +183,7 @@ expression = expression[compound]{bond.operand.kind}<declared>
 ^"stream"{
  >>[2026-10-27 14:56] observe — five places where a mark's names part by position, laid out at spw.quest/constructs#names and asked as #>wonder_compound_consistency. Nothing is renamed; the meanings are the creator's.
  >>[2026-10-27 15:37] decide — wonder_compound_consistency_lens answered by the creator: @ is perspective. COMPOUND_JOIN_OPERATORS['@'] is perspective now; no route or manifest entry carried the old word as a bond.
+ >>[2026-11-05 22:28] observe — 986-expression variety census captured in @variety_roadmap#variety_roadmap_2026_11: 625 tight-dot bodies (91.1% of multi-part bodies), 49 ordinal (;), 12 common (,), 0 interior project (~>), 70 (scope), 334 <projection>, 0 nested route braces, 7 prefix-led expressions (? 6, ~ 1), 0 postfix-settled expressions, 20 binary compounds, 17 wordless charges (100% of charged expressions have subject stripped to empty string), and 339 subjects vs 574 modes. Five implementation slices queued.
 }
 
 ^"validation"{

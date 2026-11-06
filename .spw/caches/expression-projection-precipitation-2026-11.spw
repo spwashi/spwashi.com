@@ -145,6 +145,76 @@ source = "2026-11-05 census of SPW_EXPRESSION_MANIFEST (986 authored expressions
   test_4_consequence_floor = "Follow @expression_consequence#authoring_rule and @compound_expressions#what_to_write_next: rather than backfilling 900 routes with slightly fancier labels, author rich expressions where a reader, lens, kinship highlight, or cauldron mix actually reads the difference."
 }[reg=facet]
 
+^"variety_roadmap_2026_11"{
+  # Captured 2026-11-05 from SPW_EXPRESSION_MANIFEST (986 unique route expressions)
+  # and the 27 pressed herbarium forms in .spw/language/expressions/index.spw.
+  baseline_census = .{
+    total_expressions = 986
+    joins = "ident (.): 625 (91.1% of 686 multi-part bodies) | none (single-part): 300 | ordinal (;): 49 | common (,): 12 | project (~>): 0"
+    containers = "with [mode]+{body}: ~97% | with <projection>: 334 (33.9%) | with (scope): 70 (7.1%) | nested braces on routes: 0 (0%)"
+    positional_sigils = "leading prefix: ? (6), ~ (1), all other 10 sigils (0) | trailing postfix (!, ., #): 0 (0%)"
+    compounds = "20 (2.0%) binary joins (~, &, ^, @) | 0 three-way pipelines (a ~ b ~> c)"
+    charges = "17 with charge (boon/bane/bone/bonk/honk) — 17 of 17 (100%) have no word: readExpressionSlots reads a leading valence word as charge. Whether a lone valence word is the line's word is #>wonder_compound_consistency_charge in @compound_expressions, open"
+    cardinality = "339 unique subjects vs 574 unique modes (mode inflation + route-named subjects like home, folio, workbench)"
+  }[reg=facet]
+
+  dimensions = .{
+    d1_separator_and_container_variety = "Retire default tight-dot bodies where co-present sets (a, b, c -> join: common), causal sequences (a; b; c -> join: ordinal), interior relays (a ~> b -> join: project), or exterior dot-crawls across closed practices () are the true physics; add (scene) witness contexts and <projection> precipitates where consequence is observable."
+    d2_operator_and_valence_positions = "Exercise the 10 unused prefix sigils (*, ^, !, %, =, $, &, #, ., @) where epistemic stance warrants it; introduce infix observer@subject perspective bindings and postfix ! / . settlement marks; repair the 17 wordless-charge expressions so valence prefixes modify an explicit subject or bare valence nouns remain the subject."
+    d3_structural_depth_herbarium_promotion = "Promote the 9 unhosted herbarium shapes from @herbarium_index onto public HTML routes: nested bodies, grouped perspective over a compound (lens@(a ~ b)), three-way relay pipelines (a ~ b ~> c), and chained projections."
+    d4_cross_route_kinship_and_mode_rings = "Shift from route-named subjects (home, about, folio) and 574 one-off modes toward shared cross-route concept stems and a compact ~40-mode phase vocabulary (hook, frame, mechanism, practice, specimen, comparison, witness, receipt, threshold, portal, canon, variation), authoring deliberate Mode Rings across 3-5 routes for @expression_resonance and spw.quest/pivot."
+    d5_slot_reader_and_manifest_fidelity = "Upgrade @expression_query and build-expression-manifest.mjs to preserve prefix/postfix operators, bare valence subjects, interior ~> project joins, compound join kinds, and single-level nested bodies, plus an advisory variety/smell summary during npm run manifest."
+  }[reg=facet]
+
+  slices = #[
+    .{
+      id = "slice-1-parser-manifest-fidelity"
+      operation = "align"
+      title = "Slot-Reader & Manifest Fidelity"
+      targets = "public/js/semantic/expression-query.js, scripts/build-expression-manifest.mjs, scripts/tests/"
+      deliverables = "Keep bare boon/bane/bone/bonk/honk as subject when no second noun follows; preserve prefix and postfix sigils in parsed shapes; record compound.join consistently (readBodyJoins already reads ~> inside a body as project; routes author none); read single-level nested braces, where the reader now stops (2026-11-05) so all 27 herbarium forms in @herbarium_index round-trip cleanly."
+      verify = "node --import ./scripts/lib/register-public-imports.mjs --test scripts/tests/spw-literal-parser-tool.test.mjs && npm run manifest:expressions"
+      gate = "the tooling half lands on its own; keeping a lone valence word as the word waits on #>wonder_compound_consistency_charge, and slice 2 is its alternative"
+    }[reg=facet],
+    .{
+      id = "slice-2-wordless-charge-repair"
+      operation = "contract"
+      title = "Repair the 17 Wordless-Charge Route Hosts"
+      targets = "about/index.html, topics/software/spw/index.html, and remaining charged route hosts"
+      deliverables = "Audit all 17 charge expressions in SPW_EXPRESSION_MANIFEST; either add the missing subject noun after the valence prefix (e.g. boon.honk arrival[hook]) or re-express valence-specimen cards as valence[boon] so 0 expressions have subject == empty string."
+      verify = "npm run manifest && npm run audit:copy:accessor"
+      gate = "the alternative to slice 1's valence half: both wait on #>wonder_compound_consistency_charge in @compound_expressions"
+    }[reg=facet],
+    .{
+      id = "slice-3-flagship-route-variety"
+      operation = "prime"
+      title = "Flagship Route Expression Variety & Herbarium Promotion"
+      targets = "topics/software/spw/index.html, tools/spw-parser/index.html, index.html, design/index.html, play/rpg-wednesday/index.html"
+      deliverables = "Host nested braces, grouped perspective compounds (lens@(a ~ b)), three-way pipelines (a ~ b ~> c), interior ~> relays, comma-sets, semicolon-sequences, prefix stances (?, *, ^, %), and postfix settlement marks (!, .) on flagship routes where visible copy and layout reflect the structure."
+      verify = "npm run manifest && node scripts/check-site.mjs && git diff --check"
+      gate = "the creator, route by route, and only where a reader, a lens, kinship or the cauldron reads the difference (#authoring_litmus_tests test_4); a richer label on a host nothing reads is the backfill test_4 refuses"
+    }[reg=facet],
+    .{
+      id = "slice-4-cross-route-mode-rings"
+      operation = "align"
+      title = "Cross-Route Stems & Mode Rings for Resonance"
+      targets = "index.html, about/index.html, topics/software/spw/index.html, design/index.html, play/index.html"
+      deliverables = "Replace route-slug subjects (home, about) and filler {open.sit} bodies on high-traffic frames with shared domain stems (wonder, notation, craft, cadence, ecology) across complementary [mode] phases (hook, mechanism, practice, receipt) so kinOf() in @expression_resonance and spw.quest/pivot light intentional cross-site constellations."
+      verify = "npm run manifest && npm run check:local"
+      gate = "the creator: replacing route-named subjects and settling a shared mode vocabulary are taste calls, not tooling"
+    }[reg=facet],
+    .{
+      id = "slice-5-variety-sensor"
+      operation = "audit"
+      title = "Advisory Expression Variety & Smell Sensor"
+      targets = "scripts/build-expression-manifest.mjs"
+      deliverables = "Emit a compact variety receipt during manifest generation (join distribution, nested count, prefix/postfix count, wordless-charge count, repeated filler bodies >= 4 routes, and singleton-mode ratio) so regressions toward tight-dot monoculture are immediately visible."
+      verify = "npm run manifest:expressions"
+      gate = "nothing; advisory output only"
+    }[reg=facet]
+  ][reg=set]
+}[reg=facet]
+
 #>wonder_expression_projection_precipitation
 ?["Which repeated filler bodies (starting with {open.sit}) should be retired or rewritten into genuine sequence/set bodies first?"]{
   #:depth #!educational ~#lens(living_system)
@@ -170,6 +240,7 @@ source = "2026-11-05 census of SPW_EXPRESSION_MANIFEST (986 authored expressions
 # Handles, declared last.
 @expression_consequence: ~"../conventions/semantic-expression-consequence.spw"
 @compound_expressions: ~"../conventions/compound-expressions.spw"
+@herbarium_index: ~"../language/expressions/index.spw"
 @dynamic_categories: ~"../language/expressions/dynamic-categories.spw"
 @positional_sets: ~"../language/expressions/positional-sets.spw"
 @container_formations: ~"../language/expressions/container-formations.spw"
