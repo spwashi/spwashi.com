@@ -153,5 +153,6 @@ invariants: #[
   ~#unblocks: "the registry's made field, the sensor, and every placement slice after them"
   ~#probe(read)
   !probe{ "ls public/images/assets/primes public/images/assets/illustrations | head -40" }
+  ~#probed(2026-11-05): "The sidecars answer most of it: primes record a scanned master (67 of 67), illustrations record Midjourney or describe renders (19 of 19), and folios, pads, panels, scraps and worktable are scans. routes/ and home/ carry no sidecars and read as generated route heroes; they are the part still the creator's to name."
   $%[made.hand, made.model, made.both]
 }

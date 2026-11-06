@@ -92,6 +92,18 @@
   aspect-ratio: 3 / 4;
 }
 
+/* The creator's scans stand in whole (image review 2026-09; the creator, 2026-11-05).
+   A folio, pad, panel, scrap, worktable sheet or cutout arrangement is never cropped
+   to its frame's shape: the box takes the piece's own ratio from its width and height,
+   and a tall piece is bounded and letterboxed rather than cut. The folder is the
+   provenance; each piece's sidecar records it as a scan. This sits after the shape
+   rules and outranks them and the components layer's cover fit. */
+.image-study img:is([src*="/assets/folios/"], [src*="/assets/primes/"], [src*="/assets/pads/"], [src*="/assets/panels/"], [src*="/assets/scraps/"], [src*="/assets/worktable/"]) {
+  aspect-ratio: auto;
+  max-block-size: min(72svh, 38rem);
+  object-fit: contain;
+}
+
 :where([data-spw-image-lens-active="probe"]) {
   --spw-image-lens-accent: var(--op-probe-color, #6a3fb8);
 }
