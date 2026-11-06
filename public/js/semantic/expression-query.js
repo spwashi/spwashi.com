@@ -27,15 +27,41 @@ const TIGHT_IDENT = /^[A-Za-z_][\w-]*(?:\.[A-Za-z_][\w-]*)+$/;
 
 /** Valence words the workbench lexes as modifiers. A leading chain is charge, not the subject. */
 const VALENCE_WORD = 'bone|boon|bane|bonk|honk';
-const EXPRESSION_SLOTS = new RegExp(
+/* Charge, a leading scene, and the word, read as they always were; the brace
+   pairs after the word are read by the containers that own them, below. */
+const EXPRESSION_LEAD = new RegExp(
   `^(?:((?:${VALENCE_WORD})(?:\\.(?:${VALENCE_WORD}))*)(?:\\s+|(?=\\[)))?`
   + '(?:\\(([^)]*)\\))?'
-  + '([^[{<(]*)'
-  + '(?:\\[([^\\]]*)\\])?'
-  + '(?:\\{([^}]*)\\})?'
-  + '(?:\\(([^)]*)\\))?'
-  + '(?:<([^>]*)>)?',
+  + '([^[{<(]*)',
 );
+
+/* Each brace pair names its slot wherever it sits (the creator, 2026-11-05):
+   word[mode]{body}(scene)<projection> and word<concept>(scene)[mode]{body}
+   read the same slots, and {chronicles} <of> (narnia) has no word at all. */
+const CONTAINER_SLOT = Object.freeze({ '[': 'mode', '{': 'body', '(': 'scope', '<': 'projection' });
+const CONTAINER_CLOSE = Object.freeze({ '[': ']', '{': '}', '(': ')', '<': '>' });
+
+/** The brace pairs after the word, each slot once, in the order written; `end` is where reading stopped. */
+export function readContainers(rest = '') {
+  const found = {};
+  const order = [];
+  let at = 0;
+  for (;;) {
+    while (at < rest.length && /\s/.test(rest[at])) at += 1;
+    const open = rest[at];
+    const slot = CONTAINER_SLOT[open];
+    if (!slot || slot in found) break;
+    const close = rest.indexOf(CONTAINER_CLOSE[open], at + 1);
+    if (close < 0) break;
+    const held = rest.slice(at + 1, close);
+    // A pair that opens again inside is nesting, not one slot: stop, as a reader would.
+    if (held.includes(open)) break;
+    found[slot] = held;
+    order.push(slot);
+    at = close + 1;
+  }
+  return { found, order, end: at };
+}
 
 /** Tap previews, a hold sustains, a trace charges. These are existing charge states. */
 export const GESTURE_CHARGE = Object.freeze({
@@ -68,21 +94,34 @@ export function expressionLayers(shape = {}) {
  */
 export function readExpressionSlots(expression = '') {
   const raw = trim(expression);
-  const match = raw.match(EXPRESSION_SLOTS);
+  const match = raw.match(EXPRESSION_LEAD);
   if (!match) {
     return { charge: [], scope: '', subject: raw, mode: '', body: '', projection: '' };
   }
   const charge = match[1] ? match[1].split('.').filter(Boolean) : [];
   const leadingScope = trim(match[2]);
-  const trailingScope = trim(match[6]);
+  const { found } = readContainers(raw.slice(match[0].length));
   return {
     charge,
-    scope: trailingScope || leadingScope,
+    scope: trim(found.scope) || leadingScope,
     subject: trim(match[3]),
-    mode: trim(match[4]),
-    body: match[5] || '',
-    projection: trim(match[7]),
+    mode: trim(found.mode),
+    body: found.body || '',
+    projection: trim(found.projection),
   };
+}
+
+/**
+ * Where a line keeps its slots: whether its scene leads the word, and the brace
+ * pairs after the word in the order written. A line written back in this order
+ * reads as its author wrote it.
+ */
+export function readSlotOrder(expression = '') {
+  const raw = trim(expression);
+  const match = raw.match(EXPRESSION_LEAD);
+  if (!match) return { sceneFirst: false, order: [] };
+  const { order } = readContainers(raw.slice(match[0].length));
+  return { sceneFirst: Boolean(trim(match[2])) && !order.includes('scope'), order };
 }
 
 const BRACED_CRAWL = /^(?:\{[^{}]+\}\s*\.\s*)+\{[^{}]+\}$/;
