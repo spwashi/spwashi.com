@@ -1,4 +1,4 @@
-# Review 2026-07-12 — keep as the owner rail, but judge success by fewer active plan surfaces and cheaper orientation.
+# Review 2026-11-06 — keep as the owner rail; success is the shrinking census (52 live PLAN.md, 186 archived) and a cheaper always-on read, and the next cut is the creator's.
 # Plan Index — Agent Optimization for spwashi.com
 #
 # Make the full agent operating environment for this repository (.agents/, skills, planning ecology, .spw bridges, public editor surfaces, and validation contracts) itself a…
@@ -81,6 +81,7 @@ intent: .{
 @plan_spw_inquiry_loop: ~"../spw-inquiry-loop/index.spw"
 @plan_typescript_integration: ~"../archive/typescript-integration/wip.spw"
 @readable_by_tooling: ~"../../../.spw/caches/spw-readable-by-tooling-2026-09.spw"
+@workbench_report: ~"../../../.spw/workbench-report.spw"
 
 dispatch: .{
  plan = @plan
@@ -175,7 +176,10 @@ invariants: #[
   ~#taste: "A wip stays hot only while it names the other plan that owns the other half, and a probe that can fail."
   ~#hypothesis: "Hot memory is the sibling, the script, and the question still open. A restated goal is a second PLAN.md. A proposed commit is a subject this history would accept, paired with an expression."
   ~#tension: "This week updated PLAN.md across runtime, TypeScript, quest, and CSS, and left almost every wip as it was. Indexes still paste the goal into the hypothesis."
-  !probe{ "npm run wonder -- --surface wonder_plan_wip_hot" }
+  ~#expect: "781764d1 gave every live plan a wip with stream, open and cache blocks. About a third of the 54 still hold only the 2026-10-12 entry that created them."
+  ~#unblocks: "Whether the open block, which points at wonders, is the sibling and probe the taste asks for, or one more file nobody opens."
+  ~#probe(run)
+  !probe{ `rg -c '>>\[20' -g wip.spw -g '!**/archive/**' .agents/plans | grep -c ':1$'` }
   $%[plan.sibling, plan.probe, plan.wip]
   ~<"../agentic-dev-contracts/index.spw"> ~<"../archive/typescript-integration/wip.spw"> ~<"../site-source-layout/wip.spw"> ~<"../../../.spw/conventions/wip-notebook.spw">
 }
@@ -186,8 +190,10 @@ invariants: #[
   ~#with: @package_json @readable_by_tooling @plan_spw_architecture_ecology @plan_spw_inquiry_loop
   ~#taste: "An affordance stays listed only while a command prints it without a person remembering the path."
   ~#hypothesis: "check:local, wonder, atlas, and spw:integrity are the cheap falsifiers. The corpus is what those commands read. A plan that cites a sibling and a script can be entered from either door."
-  ~#tension: "doctor excludes .agents, so a plan file never enters lattice or census. Until this harvest, wonder stopped at .spw/ and a question written in a plan could not be asked."
-  !probe{ "npm run wonder -- --surface wonder_plan_two_doors" }
+  ~#tension: "Until the 2026-09-28 harvest, wonder stopped at .spw/ and a question written in a plan could not be asked. Census and lattice now read plans (workbench a4e548d3), but doctor still turns .agents away, so one door of the corpus is still shut."
+  ~#expect: "fs-walk.ts names .agents beside .spw as an authored dot dir; doctor.ts still lists .agents among its scan exclusions."
+  ~#probe(run)
+  !probe{ `rg -n "const AUTHORED_DOT_DIRS|^  '\.agents',$" .spw/_workbench/packages/spw-cli/src/fs-walk.ts .spw/_workbench/packages/spw-cli/src/doctor.ts` }
   $%[script.door, corpus.plan, walk.exclusion]
   ~<"../archive/spw-architecture-ecology/index.spw"> ~<"../spw-inquiry-loop/index.spw"> ~<"../../../.spw/workbench-report.spw">
 }
@@ -200,7 +206,9 @@ invariants: #[
   ~#taste: "A folder stays excluded only while nothing inside it is a claim a later reader must check."
   ~#hypothesis: "doctor excludes .agents because diaries and state are not corpus. Plan indexes and hot wip files are corpus-shaped: an anchor, an operation, a citation, a probe. The cut is the named root .agents/plans with archive skipped, which is the walk this site's wonder now makes."
   ~#tension: "Lifting the .agents exclusion would put MEMORY and session state into every census. Leaving it means lattice still cannot see the questions these plans ask."
-  !probe{ "npm run wonder -- --surface wonder_plan_corpus_exclusion" }
+  ~#probe(run)
+  !probe{ `rg -n "const AUTHORED_DOT_DIRS" .spw/_workbench/packages/spw-cli/src/fs-walk.ts` }
   $%[corpus.plans, corpus.agents, walk.exclusion]
+  ~#answer: "corpus.agents (2026-11-06). The creator called skipping .agents a mistake, and workbench a4e548d3 (2026-10-12, inside the pinned 850077ab) made .agents an authored dot dir beside .spw: census, lint and the geometry walk read every plan, archive/ and state/ included. format and pulse still skip it, so no tree-wide rewrite reaches an append-only stream. This site's wonder still skips archive/."
   ~<"../archive/spw-architecture-ecology/index.spw"> ~<"../../../.spw/workbench-report.spw"> ~<"../../../.spw/reviews/upstream-workbench-recommendations.spw">
 }

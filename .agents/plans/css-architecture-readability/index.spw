@@ -1,4 +1,4 @@
-# Review 2026-07-12 — keep as the canonical CSS maintenance rail; teach ownership with source headers and targeted traces.
+# Review 2026-11-06 — keep as the canonical CSS maintenance rail; PLAN.md cut from 807 to 400 lines (landed and handed-off patches collapsed, Patch 9 settled by 09713d0d); next is the compact overlay, and its two creator questions are wonders.
 # Plan Index — CSS Architecture Readability Series
 #
 # Make the site's CSS easier to read, inspect, and refactor while improving the developer experience of changing UX behavior. The next series should turn the first debug-label pass…
@@ -86,6 +86,7 @@ intent: .{
 @home: ~"../../../public/css/routes/surfaces/home.css"
 @settings: ~"../../../public/css/routes/surfaces/settings.css"
 @settings_forms: ~"../../../public/css/routes/surfaces/settings-forms.css"
+@debug_entry: ~"../../../src/styles/entries/debug.css"
 
 dispatch: .{
  plan = @plan
@@ -100,6 +101,7 @@ dispatch: .{
  home = @home
  settings = @settings
  settings_forms = @settings_forms
+ debug_entry = @debug_entry
 }[reg=facet]
 
 ^"absorbs"{
@@ -133,3 +135,32 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+#>wonder_css_architecture_readability_compact_default
+?["On a small screen, should the layer overlay open compact (outlines, labels on hover and focus), and should a label speak Spw (#:routes) or plain words (layer: routes)?"]{
+  #:depth #!pragmatics ~#lens(choice)
+  ~#with: @debug_entry @debug @plan
+  ~#taste: "An overlay is developer UX: it should show ownership at a glance without burying the page, and it may teach one sigil while it does."
+  ~#hypothesis: "On a phone the full label (layer, box, flow, story) covers the controls it describes, so compact-by-default would make the overlay usable there. #: is the layer operator in operator-detection.js, so #:routes names a layer the way the language does and costs one content string."
+  ~#tension: "Compact hides the label until hover, and a coarse pointer has no hover, so labels appear only on focus-within or a tap. A Spw label teaches a reader who knows #:, and puzzles one who does not."
+  ~#expect: "debug.css answers only on and layers today, so the probe lists no compact selector"
+  ~#unblocks: "Patch 1B (slice 1) and the README note on compact mode"
+  ~#probe(run)
+  !probe{ "rg -n 'debug-layers=' src/styles/entries/debug.css" }
+  $%[overlay.compactDefault, overlay.fullDefault, label.spwSigil]
+  ~<"./PLAN.md">
+}
+
+#>wonder_css_architecture_readability_canonical_contract
+?["Is .spw/conventions/css-instruction.spw the canonical inspectable CSS contract, with public/css/README.md as its prose, or is the README enough?"]{
+  #:depth #!pragmatics ~#lens(choice)
+  ~#with: @css_instruction @readme @plan
+  ~#hypothesis: "Each holds what the other lacks. The README carries the clustering order, owner-marker semantics and the route boundary rule; css-instruction.spw carries the layer order, the containing-block rules and the debug sheet's source. A reader looking for one rule opens both."
+  ~#tension: "A .spw contract can be parsed and probed, and prose is easier to read on GitHub. Choosing one means moving rules, and keeping both means saying which one wins a disagreement."
+  ~#expect: "README.md:2 and no line from css-instruction.spw: the README holds the owner marker and the clustering order, the .spw holds neither, and composition-flow lives in composition-box-model.spw"
+  ~#unblocks: "the last item of Patch 8"
+  ~#probe(run)
+  !probe{ "rg -c 'debug-layer-owner|cluster declarations|composition-flow' public/css/README.md .spw/conventions/css-instruction.spw" }
+  $%[contract.spw, contract.readme, contract.both]
+  ~<"./PLAN.md">
+}

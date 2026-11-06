@@ -1,8 +1,8 @@
 # Site Starter And Component Kit
 
-**Status 2026-10-10.** Landed: the host mount (6b75bc59) and `audit:portable` (480d92bc), which walks each catalog module's closure and already resolves `/public/js/` imports (`scripts/portable-audit.mjs:92`). One next door: fix the compose walk at `scripts/starter-inventory.mjs:166`, which still joins the four root-relative compose re-exports onto `public/js/`, with that same rule and a test for relative and root-relative specifiers. Folding the walk into `audit:portable` waits, because that audit starts from the module catalog, not `compose.js`, and exports no resolver. The texture-slice pilot after it is gated on `wonder_site_starter_first_portable` in `index.spw`: capability or design specimen first.
+**Status 2026-11-06.** Since 2026-10-10 only header and index hygiene touched this plan's paths; `npm run starter:inventory -- --check` still exits 1 on four present files (K1). A second road opened beside this one: the peer kit (`scripts/build-peer-kit.mjs`, b4651803) carries tokens, faces and operator colours to the workers, and ca401c44 sent the first `public/js` module to another site that way (`pinch-text-scale`, to spw.quest). [ecosystem-architecture](../ecosystem-architecture/PLAN.md) S4 proposes the Spw instrument travel next, names this plan its owner, and waits on `wonder_site_starter_first_portable`, which now offers three pieces. Next slice: K1, ungated.
 
-**Related:** [portable-css](../archive/portable-css/PLAN.md) (absorbed 2026-10-10) · [typescript-integration](../archive/typescript-integration/PLAN.md) · [component-variant-alignment](../archive/component-variant-alignment/PLAN.md) (archived).
+**Related:** [ecosystem-architecture](../ecosystem-architecture/PLAN.md) (S4) · [designer-conversation-canvas](../designer-conversation-canvas/PLAN.md) (the specimen) · [portable-css](../archive/portable-css/PLAN.md) (absorbed 2026-10-10) · [typescript-integration](../archive/typescript-integration/PLAN.md) · [component-variant-alignment](../archive/component-variant-alignment/PLAN.md) (archived).
 
 ## Public Goal
 
@@ -129,34 +129,13 @@ from becoming a maintenance burden.
 
 ## Patch Sequence
 
-### Phase 1 - Inventory And Contract
+Landed: Phase 1, inventory and contract (8626a8ed: `scripts/starter-inventory.mjs`, `npm run starter:inventory`, `.spw/conventions/site-starter-component-kit.spw`, the CSS/JS README links and the `/about/plans/` card). Phase 3, recipe snippets for frame, card, operator chip and tuning strip in `design/components/snippets/`, exposed on `/design/components/` (dc4399d8). Host mount (6b75bc59) and `audit:portable` (480d92bc), from [BUNDLING.md](./BUNDLING.md).
 
-- Add this plan.
-- Add the `.spw` convention.
-- Add the read-only starter inventory script and npm command.
-- Update CSS/JS README entrypoints.
+- **K1. Make the inventory honest.** `parseJsExports` in `scripts/starter-inventory.mjs` joins every re-export specifier onto `public/js/`, so `compose.js`'s four root-relative re-exports (lines 225, 407, 415, 420) become `public/js/public/js/…` and `--check` calls them missing. Resolve `/public/js/` from the repo root as `resolveImport` in `scripts/portable-audit.mjs` does, and add a test with one relative and one root-relative specifier to the list in `scripts/module-tests.mjs`. Folding the walk into `audit:portable` waits: that audit starts from the module catalog and exports no resolver. Ungated. Verify: `npm run starter:inventory -- --check` exits 0; `node --check scripts/starter-inventory.mjs`.
+- **K2 (proposal). One line per travelling piece.** The inventory reads `compose.js` alone, and none of the pieces that travel or are proposed to (`pinch-text-scale`, texture-slice, the Spw instrument) is a `compose.js` export. After K1 it could also read the two roads that carry code today, `SCRIPTS` in `scripts/build-peer-kit.mjs` and the verdicts `npm run audit:portable` prints, and give each piece one line: where it lives, which road carries it, who runs it. Ungated.
+- **K3. The first pilot.** texture-slice ([BUNDLING.md](./BUNDLING.md) steps 2–3), the design specimen, or the Spw instrument (ecosystem-architecture S4a). Gate: the creator answers `wonder_site_starter_first_portable`. The bundle's layer set is `wonder_site_starter_layer_set`.
 
-### Phase 2 - Starter Examples
-
-- Add a small starter README or example host only after the inventory has been used at least once.
-- Keep examples static-first and dependency-free.
-- Do not copy Spwashi identity or route copy into examples.
-
-### Phase 3 - Component Recipes
-
-- [x] Add component recipe snippets for a frame, card, and tuning strip.
-- Use the existing slot anatomy and data-spw families.
-- Prefer route docs before adding new generated artifacts.
-
-### Phase 4 - Scaffold Candidate
-
-- Consider a local `starter:scaffold` only if repeated manual setup proves the inventory alone is not enough.
-- Any scaffold must be zero-dependency unless a separate plan and human review approves package changes.
-- Generated output should land outside tracked site source by default.
-
-### Phase 5 - Source Layout Alignment
-
-- If `site-source-layout/PLAN.md` moves the authored site into `site/`, update the inventory script and `.spw` references in the same patch.
+Held until their condition: a starter README or example host once the inventory has been used (Phase 2), static-first, dependency-free, with no Spwashi identity or route copy; a zero-dependency `starter:scaffold` only if manual setup repeats, writing outside tracked source (Phase 4); inventory and `.spw` paths move in the same patch if `site-source-layout/PLAN.md` moves the site into `site/` (Phase 5).
 
 ## Risks
 
@@ -180,26 +159,11 @@ from becoming a maintenance burden.
 [portable-css](../archive/portable-css/PLAN.md) only routed to `.spw/caches/portable-css-2026-09.spw`; its entry was never built (`public/css/style-portable.css` does not exist). What is still owed:
 
 - `public/css/compose.css` is already the portable CSS entrypoint (see Portable Boundary). Reconcile toward it; do not add a second entry beside it.
-- pc-006's layer set differs. It ships reset, tokens, typography, grammar and the `.spw-frame` / `.spw-chip` components, and refuses shell/chrome, systems and routes. `compose.css:11` declares `tokens, typography, grammar, components, systems, handles, effects`: no reset, and it carries systems. Choose one set before emitting a portable bundle.
+- pc-006's layer set differs. It ships reset, tokens, typography, grammar and the `.spw-frame` / `.spw-chip` components, and refuses shell/chrome, systems and routes. `compose.css:11` declares `tokens, typography, grammar, components, systems, handles, effects`: no reset, and it carries systems. Choose one set before emitting a portable bundle (`wonder_site_starter_layer_set`).
 - pc-007 holds: the autonomous-feedback and spw-quest workers keep `workers/lib/shell.js` until that bundle exists.
 
 The claims stay in the cache; this section only names what is open.
 
-## Status
+## Capability bundling prime (2026-09-20)
 
-### Capability Bundling Prime — 2026-09-20
-
-Next extraction phase: [capability bundling plan](./BUNDLING.md), with an
-[imagined authored and distribution tree](./bundling.spw). Operation `prime`,
-fixity `experimental`; proposes a texture-slice pilot before broader extraction.
-The current census finds 37 CSS imports and 315 JS exports; inventory path
-resolution needs repair before its portability result can be trusted.
-
-- [x] Plan created
-- [x] Starter inventory script added
-- [x] npm script added
-- [x] `.spw` convention wired into dispatch
-- [x] Public `/about/plans/` register card added
-- [ ] First starter example added
-- [x] Component recipe snippets added and exposed on `/design/components/`
-- [ ] Scaffold candidate evaluated after real use
+[BUNDLING.md](./BUNDLING.md) holds the extraction sequence and [bundling.spw](./bundling.spw) the imagined authored and distribution trees (operation `prime`, fixity `experimental`). Its census, 37 CSS imports and 315 JS exports, still held on 2026-11-06.

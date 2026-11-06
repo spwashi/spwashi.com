@@ -1,4 +1,4 @@
-# Review 2026-09-04 — keep as the landing hierarchy owner; dated companion audits remain evidence, not parallel owners.
+# Review 2026-11-06 — keep as the landing hierarchy owner; dated companion audits remain evidence, not parallel owners, and the first piece of art on each landing is now this plan's call.
 # Landing Visual Hierarchy — dispatch
 #
 # 2026-08-21. Agents start here, then open the audit and one session packet.
@@ -32,6 +32,9 @@ date = "2026-08-21"
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@services_html: ~"../../../services/index.html"
+@settings_html: ~"../../../settings/index.html"
+@image_resources: ~"../../../public/data/image-resources.json"
 
 intent: .{
   goal = `Make public landing entry spines read as identity, notice, action, and proof while preserving route-specific density and visual fingerprint.`
@@ -156,6 +159,8 @@ validation: #[
   ~#taste: "A route earns the primary nav when a first visit would miss it, not when it is finished."
   ~#hypothesis: "Home, Now and about/website/ already link /projects/. The nav would make it a ninth landing that every phone menu carries."
   ~#tension: "Joining the nav also means sw.js CORE_ROUTES and a ninth route in this plan's census and gates. Staying out keeps the eight-route fingerprints as they are."
+  ~#expect: "No match: /projects/ is in neither PUBLIC_NAV_ITEMS nor PRIMARY_NAV_ITEMS in scripts/template.mjs, nor in sw.js."
+  ~#probe(run)
   !probe{ `rg -n "href: '/projects/'" scripts/template.mjs sw.js` }
   $%[nav.primary, nav.coreRoutes, landing.census]
   ~<"../archive/projects-hub/PLAN.md">
@@ -168,6 +173,8 @@ validation: #[
   ~#taste: "A first visit reads identity, one notice, one action, one proof, but each landing keeps its own silhouette."
   ~#hypothesis: "Validation 2 caps above-fold action clusters at one rail on every landing. The absorbed companion forbids a universal hero, action slot or grid and keeps eight distinct route fingerprints."
   ~#tension: "Applied literally, the rail cap becomes the shared silhouette the fingerprints rule refuses. Settings is a workbench, and Play is a threshold with more than one door."
+  ~#expect: "Both rules stand in text with no reconciling line: Validation 2 and session-2026-08-21.spw's rail cap on one side, the archived companion's 'No universal hero' and 'without sharing one silhouette' on the other."
+  ~#probe(run)
   !probe{ `rg -n "action clusters|action rails|universal hero|one silhouette" .agents/plans/landing-visual-hierarchy .agents/plans/archive/landing-page-hierarchy-2026-08-21` }
   $%[landing.railCap, landing.fingerprints]
   ~<"./session-2026-08-21.spw"> ~<"../archive/landing-page-hierarchy-2026-08-21/PLAN.md">
@@ -180,7 +187,37 @@ validation: #[
   ~#taste: "A business reader meets what is offered and what it costs first; a returning reader still finds the tuning panel where the page's own path says it is."
   ~#hypothesis: "Parcel B was written as a reorder, but #services-tuning shares a 5/7 row with #b2b-share inside orientation-overview (routes/surfaces/services.css:164-174, three bundles), and the page's Service path nav names it the threshold step (Hook, Tune, Queue, Return, services/index.html:163-168)."
   ~#tension: "A. Move tuning and the share card together after the service-offerings cluster: the row survives, and the path nav reorders. B. Move tuning alone into commercial-terms after #pricing: the share card goes full width in orientation, and one CSS seat changes. C. Leave the order and fold tuning into a closed disclosure: the offer reads first by height, the path stays, and the panel's controls wait behind a tap. Each changes what a first screen shows, so the services-opening still decides it."
+  ~#expect: "At pocket the first screen ends inside the hero, before #services-tuning (:215), so A, B and C differ below the fold; the choice shows at fold and broadsheet, where the 5/7 row with #b2b-share is visible."
+  ~#probe(run)
   !probe{ `npm run visual:checks -- --ids=services-opening` }
   $%[services.tuningSeat, services.pathNav, services.firstScreen]
   ~<"../../../services/index.html"> ~<"../../../public/css/routes/surfaces/services.css">
+}
+
+#>wonder_landing_visual_hierarchy_services_first_piece
+?["Should Services open on one of the creator's own pieces, as the other primary landings with an image now do?"]{
+  #:depth #!experiential ~#lens(choice)
+  ~#with: @plan @services_html @image_resources
+  ~#taste: "A picture on the first screen belongs to its page and is a wonder to daydream about; a business reader meeting the studio should meet the studio's hand."
+  ~#hypothesis: "In source order, Home, About, Topics, Play, Design folios and Now meet a folio scan first. Services meets public/images/services/studio-house-hero.webp, a studio render with no sidecar and no concepts, so it is the one primary landing that opens on art the creator did not make."
+  ~#tension: "The services photo is the first pocket frame's one extra dense object under Wave 5, so a scan replaces it rather than joining it; and a business reader may read a hand-made piece as less finished unless it names the service, the way 1a84b975 matched scans to pages by their own lettering."
+  ~#expect: "The first img under each of the eight PUBLIC_NAV_ITEMS routes is a public/images/assets/folios/ scan on six, studio-house-hero.webp on services, and none on settings."
+  ~#unblocks: "PLAN.md next slice 3, and component-region-personality's H4 cards on the same hero"
+  ~#probe(run)
+  !probe{ "for f in index.html about/index.html topics/index.html play/index.html design/folios/index.html services/index.html now/index.html settings/index.html; do rg -n -o '<img[^>]*src=\"[^\"]+' $f | head -1; done" }
+  $%[services.scan, services.render_kept, services.no_figure]
+}
+
+#>wonder_landing_visual_hierarchy_settings_aisles
+?["Do the settings shelf's eight aisles already answer parcel C, or does settings still want task-shaped clusters with progressive disclosure?"]{
+  #:depth #!pragmatics ~#lens(choice)
+  ~#with: @plan @settings_html
+  ~#taste: "A workbench is read by what a reader came to change; an aisle named for a task is already a cluster, whatever attribute it carries."
+  ~#hypothesis: "The shelf (b2eda400) already shapes settings by task: eight sections, each a named aisle with its own heading (looks, reading, fixes, kits, writing, motion, reader-builder modes, instruments), so parcel C may be done in substance and owe only the cluster attribute the desk model reads."
+  ~#tension: "Validation 6 lights a six-seat trope only on a claimed data-spw-cluster, and settings has none; adding one is markup only, but a workbench may not want a landing's trope at all, which is the one-rail wonder's question again."
+  ~#expect: "Eight section.settings-shelf__aisle elements, each with an id and aria-labelledby, and zero data-spw-cluster on the page."
+  ~#unblocks: "parcel C, or its retirement"
+  ~#probe(run)
+  !probe{ "rg -c 'class=\"settings-shelf__aisle\"' settings/index.html; rg -c 'data-spw-cluster=' settings/index.html" }
+  $%[parcel_c.done_by_aisles, parcel_c.cluster_attribute, parcel_c.task_regions]
 }

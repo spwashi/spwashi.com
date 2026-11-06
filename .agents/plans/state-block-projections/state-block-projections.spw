@@ -1,6 +1,6 @@
 # Review 2026-07-12 — keep as the distilled projection contract; readable notation must mirror, not reinterpret, live state.
 ^"operational_hooks"{
- selectors = #[ `public/js/site.js`, `.agents/plans/state-block-projections/state-block-projections.spw`, ][reg=set]
+ selectors = #[ `public/js/runtime/page/lens-modes.js`, `public/js/interface/state-inspector.js`, `.agents/plans/state-block-projections/state-block-projections.spw`, ][reg=set]
  probe_ref = `Hypotheses: small code-like state blocks will make component state easier to read and will deepen the interaction grammar when tokens mutate real underlying state`
  owner_claim = ~"./index.spw#owner_claim"
 }[reg=facet]#>state_block_projection

@@ -1,4 +1,4 @@
-# Review 2026-07-12 — keep as the shell naming rail; consolidate existing strata before introducing another metaphor.
+# Review 2026-11-06 — dormant, an archive candidate: the glossary gate has waited on the creator since July while pocket and floating-chrome kept spreading; consolidate existing strata before introducing another metaphor.
 # Plan Index — shell-model-vocabulary-consolidation
 #
 # A human team member should be able to hold the site's structural vocabulary in their head: a small set of names for where things sit (shell strata), how they float (chrome tiers),…
@@ -56,6 +56,7 @@ intent: .{
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@census: ~"./vocabulary-census.md"
 @plan_floating_chrome_stack: ~"../floating-chrome-stack/index.spw"
 @plan_navigation_header_disclosure: ~"../archive/navigation-header-disclosure/index.spw"
 @plan_symphonic_loading_layered_editions: ~"../archive/symphonic-loading-layered-editions/index.spw"
@@ -128,7 +129,37 @@ invariants: #[
   ~#with: @plan @dom_contracts @plan_floating_chrome_stack
   ~#taste: "Fewer, truer words. A word that spread on its own may have earned its place, or may be the sprawl the glossary exists to tighten."
   ~#hypothesis: "Both July glossary candidates retire pocket into rail. Since then pocket has spread from 1 CSS and 2 JS files to 15 and 7 (bundles and generated files excluded), and CLAUDE.md names pocket chrome as a touch-target posture. That makes it a strata word for a viewport, not a rail."
-  ~#tension: "Keeping pocket gives the shell vocabulary a viewport word next to shell, tier, overlay and rail. Retiring it touches about 22 CSS and JS files, 48 .spw files, and the agent instructions."
-  !probe{ "rg -l pocket public/css --glob '!**/bundles/**' | wc -l; rg -l pocket public/js --glob '!**/generated/**' | wc -l" }
+  ~#tension: "Keeping pocket gives the shell vocabulary a viewport word next to shell, tier, overlay and rail. Retiring it touches about 24 CSS and JS files, some 52 .spw files, and the agent instructions."
+  ~#expect: "If the hypothesis holds, the count only grows: at least 15 CSS and 7 JS files, as on 2026-10-10, with no file that uses pocket for a rail."
+  ~#unblocks: "the first line of the glossary review, and whether a third candidate needs a viewport word"
+  ~#probe(run)
+  !probe{ "rg -l pocket public/css public/js --glob '!**/bundles/**' --glob '!**/generated/**'" }
+  $%[pocket.keep_as_viewport, pocket.retire_into_rail]
   ~<"./vocabulary-census.md">
+}
+
+#>wonder_shell_model_vocabulary_glossary
+?["Which glossary should the shell speak: Stagecraft, which retires chrome, Tightened Chrome, which keeps it, or either one written as Spw lines?"]{
+  #:depth #!semantic ~#lens(choice)
+  ~#with: @plan @census @plan_floating_chrome_stack
+  ~#taste: "A glossary a reader can learn once and see used everywhere; vocabulary is codebase feeling."
+  ~#tension: "A pays a large rename (chrome in 30 CSS and 28 JS files in July, and the shell/chrome/ folder) for one theatrical voice. B costs little and keeps two registers. Written as Spw lines, either one teaches the brace grammar, but a line is one more thing to keep true."
+  ~#expect: "The floating pieces already took operators on 2026-11-05 ($satchel, .cauldron{}, #> for the rail), so the review will find part of the glossary already written as Spw, on the floating tier only."
+  ~#unblocks: "Phase 3, one word at a time, starting in the shell/chrome/ chapters and dom-contracts.js"
+  ~#probe(read)
+  !probe{ "read vocabulary-census.md's candidates A and B beside floating-chrome-stack/index.spw#wonder_floating_chrome_stack_piece_operators, and write the four strata words as one Spw line each under each candidate" }
+  $%[glossary.stagecraft, glossary.tightened_chrome, glossary.in_spw]
+}
+
+#>wonder_shell_model_vocabulary_attribute_grammar
+?["How may one data-spw-* value fold several axes: as axis:value bundles, as role enums, both, or neither?"]{
+  #:depth #!structural ~#lens(choice)
+  ~#with: @plan @census
+  ~#taste: "Richer values in fewer names, read the same way in DevTools and in view-source."
+  ~#tension: "G1 and G2 cut the top ten families from about 195 names to about 25, but an axis:value token is a small language inside an attribute, and CLAUDE.md already forbids new data-spw-* families."
+  ~#expect: "The JS-written families the census named first (accent, state-inspector, image) still carry their multi-name shape, so a migration would start where writer and reader change in one patch."
+  ~#unblocks: "any attribute migration; nothing is renamed before it"
+  ~#probe(read)
+  !probe{ "count the data-spw-accent-* and data-spw-state-inspector-* names in public/js and public/css today, and read G1 and G2 in vocabulary-census.md against them" }
+  $%[grammar.axis_bundles, grammar.role_enums, grammar.both, grammar.neither]
 }

@@ -1,4 +1,4 @@
-# Review 2026-10-13 — opened from two read-only surveys (brace meanings; serializers, cauldron, pins, clipboard, home); nothing built.
+# Review 2026-11-06 — hot notes for the five brace decisions and the slices that wait on nothing; the element pair in spw-block-association.js probed against both readers.
 # wip - brace-semantics
 #
 #>plan_brace_semantics_wip
@@ -11,7 +11,13 @@
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @operator_registry: ~"../../../public/js/kernel/operator-detection.js"
 @semantic_braces: ~"../../../.spw/conventions/semantic-braces.spw"
+@serialization_hydration: ~"../../../.spw/conventions/spw-serialization-hydration.spw"
 @brace_pivots: ~"../../../public/js/runtime/interaction/brace-pivots.js"
+@block_association: ~"../../../public/js/semantic/spw-block-association.js"
+@expression_query: ~"../../../public/js/semantic/expression-query.js"
+@workbench_reader: ~"../../../public/js/semantic/spw-workbench-reader.js"
+@composition_js: ~"../../../public/js/interface/composition.js"
+@lens_modes: ~"../../../public/js/runtime/page/lens-modes.js"
 @peer_kit_script: ~"../../../scripts/build-peer-kit.mjs"
 @upstream_asks: ~"../../../.spw/reviews/upstream-workbench-recommendations.spw"
 
@@ -25,10 +31,19 @@ fixity = "experimental"
  >>[2026-10-27 13:40] hygiene — decision 1 moves from ^"open" into index.spw as #>wonder_brace_semantics_curly_name, with an answer set and a probe; decisions 2 to 5 stay plain questions until 1 is answered.
  >>[2026-10-27 13:40] probe — wonder_brace_semantics_curly_name: the probe counts each word in any role, so it is noisy. The registry's six definition hits are a variable (OPERATOR_DEFINITIONS.map((definition) …)); as the pair's name it says direction only, as expected. The conventions say behavior 27 times and direction 9; definition appears as a field key and as the brace's original meaning (operator-semantics.spw:317), not as a workbench quote, so that half of the ~#expect missed.
  >>[2026-11-05 23:45] cache — the creator recalled three early readings (a highlighter color per container across a paragraph, "of" as a concept in {chronicles} <of> (narnia), <&> as a typed placeholder) and asked whether they were better than what replaced them or whether drift needs revisiting. Held as #>wonder_brace_semantics_highlighter_then_now, then and now side by side, no verdict. The same day the creator decided that each brace pair names its slot wherever it sits, which both readings need.
+ >>[2026-11-06 11:30] plan — a session drafted Slice 3.5 (the element pair in @block_association), a two-way contract for Spw-native hosts with four archetypes, and edits to @serialization_hydration; left uncommitted, reviewed below.
+ >>[2026-11-06 12:10] probe — the element pair, through both readers: serializeElementToSpw's #>card_one[topic[lens]{a, b}] parses in @workbench_reader with 0 errors and 0 warnings (the line reads as the handle's mode), and parseSpwDefinition reads subject "" and mode "topic[lens", so the draft's "fails to parse" was wrong and "loses the word" is right. The draft's two-line fix fails too: expressionLineFrom takes "#>card_one" as the expression. One line, #>card_one topic[lens]{a, b}(studio)<receipt>, keeps every slot through readExpressionSlots in either order, and readSlotOrder keeps the author's. Neither function has a caller; parser.hydrate(el) already names the read in site.js.
+ >>[2026-11-06 12:14] probe — the draft's host claims: the lens switch already writes its [seat] (@lens_modes writeLensModeState, line 357) and takes requests only through requestLensMode (lens:request), not spw:variant-selected; its seats are data-set-mode with aria-pressed, not data-mode with aria-controls. svg-tunability.js writes no expression and round-trips its tuning as URL params. "silent seat" lives on /design/components/#lens-seat-b.
+ >>[2026-11-06 12:16] probe — wonder_brace_semantics_highlighter_then_now: 1086 lines in *.html carry data-spw-semantic-expression (1089 attributes), against 1,075 hosts on 2026-10-13; the ~#expect held.
+ >>[2026-11-06 12:18] probe — wonder_brace_semantics_curly_name, again: @operator_registry's header now sets its word beside the workbench's (lines 23-24, f66451dc: { } direction "where the workbench says … definition"), so the registry reads direction as its mutation of definition. Counts: registry definition 7 and direction 7 (definition is that header and a variable), operator-semantics.spw behavior 14, direction 8, definition 5, semantic-braces.spw behavior 13.
+ >>[2026-11-06 12:20] probe — wonder_brace_semantics_first_way_back: writes at lens-modes.js:357, experiments.js:682 and :706, boonhonk-mixer.js:356, :524 and :526, and no readExpressionSlots in any of them. The chip writes its line as text and a title (renderLiveExpression), not as an attribute, so that clause of the ~#expect missed.
+ >>[2026-11-06 12:24] revise — draft kept: the element pair as an ungated slice (3.5), the one-line block, the hosts that write their line, the no-write-back rule. Cut: the archetype table's wrong attribute and event names, "expose readSpwHydration" (it exists), a write under the name hydrate, the proposed-commit facet. Slices 2 and 3 split into 2a/2b and 3a/3b; 3b found the boon and bane alias in layout.css, cinematic.css and four recipe routes, not only brace-pivots.js. Refs re-measured: core.css:1596, spw.d.ts:281, toSpwExpression, constructSpell, buildPinRecord, ensureElementDeepLink.
 }
 
 ^"open"{
  names = ~"./index.spw#wonder_brace_semantics_curly_name"
+ highlighter_then_now = ~"./index.spw#wonder_brace_semantics_highlighter_then_now"
+ first_way_back = ~"./index.spw#wonder_brace_semantics_first_way_back"
  walls = "Decision 2: objective and subjective walls for every pair or for `{ }` only. The creator's call."
  angle = "Decision 3: `< >` as one pair, or `<` and `>` as marks of their own. The creator's call."
  labels = "Decision 4: nesting only or overlap; whether a label closes only its own pair; whether a mismatch is an error. The creator's call, then an upstream ask."
@@ -37,9 +52,9 @@ fixity = "experimental"
 }
 
 ^"cache"{
- ~#status: "proposed, nothing built"
- ~#next_commit: "+[runtime] Let a pin keep the expression it was made with, and stop the cauldron writing words onto the page"
- ~#files_hot: "PLAN.md"
- ~#gate: "the five decisions; a browser look for the instrument and the door"
- ~#last_stream: "2026-10-13"
+ ~#status: "proposed; five slices can land now"
+ ~#next_commit: "+[runtime] Let a pin keep the expression it was made with (Slice 2a)"
+ ~#files_hot: "public/js/runtime/memory/pin-registry.js, public/js/interface/composition.js, public/css/handles/operators/bias-and-phrases.css, public/js/runtime/interaction/brace-pivots.js, public/js/semantic/spw-block-association.js"
+ ~#gate: "nothing for 2a, 2b, 3a, 3b and 3.5; the five decisions, then a browser look for the instrument and the door"
+ ~#last_stream: "2026-11-06"
 }

@@ -1,4 +1,4 @@
-# Review 2026-10-12 — hot notes for the reading that names the next cut; the landed moves, tolerance and boundaries stay in PLAN.md.
+# Review 2026-11-06 — hot notes for the per-sheet share in css:payload and the five candidate probes; the landed moves, tolerance and boundaries stay in PLAN.md.
 # wip — core-css-spend-cut
 #
 #>plan_core_css_spend_cut_wip
@@ -19,10 +19,13 @@ fixity = "tending"
 ^"stream"{
  >>[2026-10-12 10:59] verify — The committed bundles/core.css is 1720 KiB against the 1741 KiB soft line (css-manifest.mts:573), as the Status line says, and css:payload reads 1297 KiB delivered and 196 KiB over the wire. No cut is named, and css:payload cannot name one: it reports bundles and surfaces, not the 103 sheets whose provenance lines sit inside core. The website route bundle is exactly 140 KiB, its soft budget.
  >>[2026-11-05 22:09] verify — Measured all 103 provenance sheets inside public/css/bundles/core.css (1,720.9 KiB committed; 1,297.3 KiB in the dist built 2026-10-27): components 475.6 KiB, systems 377.4 KiB, shell 279.5 KiB, handles 249.5 KiB, tokens 135.7 KiB, grammar 88.5 KiB, typography 39.5 KiB, effects 26.6 KiB, ornament 18.9 KiB, modes 12.8 KiB, reset 12.3 KiB. Named five runtime-coupled candidate sheets in PLAN.md (systems/legibility-lens.css 25.2 KiB, handles/operators/spell-breadcrumbs.css 24.0 KiB, systems/surfaces/tuning.css 17.4 KiB, systems/expression-resonance.css 13.9 KiB, systems/spw-key-events.css 13.6 KiB) behind the css:payload provenance enhancement and first-paint probe gate.
+ >>[2026-11-06 12:50] verify — core.css is 1,763,359 B (1,722.0 KiB), up 1.1 KiB since 2026-11-05 through 902738b4; css:payload reads 1,298 KiB delivered and 196 KiB gzip, and still prints no per-sheet rows. The soft budget moved a line: CSS_BUNDLE_SOFT_BUDGETS opens at css-manifest.mts:574. breadcrumb-spell.js lives at public/js/runtime/experiential/, mounted from experiential.js. prepaint-state.js writes data-spw-legible before first paint, so legibility-lens.css cannot leave core whole.
+ >>[2026-11-06 12:52] probe — wonder_core_css_spend_cut_website_ceiling: the website bundle is 143,360 B (140.0 KiB) from five sheets: design.css 75,417 B, website.css 31,934, design-experiments.css 24,970, review-surfaces.css 5,671, enhancements.css 4,961. The ~#expect held.
+ >>[2026-11-06 12:54] plan — Remaining rewritten as two slice kinds (css:payload per-sheet share; one candidate probed per session) with each candidate's runtime owner and mount time from the catalog; proposal: css:payload joins a sheet to its catalog module's when, so an idle-only owner prints itself as a cut. The website question moved from ^"open" into index.spw as a wonder.
 }
 
 ^"open"{
- website_ceiling = "Does the website route bundle get a hard ceiling, now that it sits exactly at its 140 KiB soft budget? The creator's call."
+ website_ceiling = ~"./index.spw#wonder_core_css_spend_cut_website_ceiling"
 }
 
 ^"cache"{
@@ -30,5 +33,5 @@ fixity = "tending"
  ~#next_commit: "+[css] List each sheet's share of core in css:payload, so the next cut can name a file"
  ~#files_hot: "scripts/css-payload-report.mjs, public/css/bundles/core.css, scripts/ts/css-manifest.mts, public/js/kernel/deferred-styles.js"
  ~#gate: "nothing for the reading; a move after it needs a first-paint probe showing the sheet is atmosphere"
- ~#last_stream: "2026-11-05"
+ ~#last_stream: "2026-11-06"
 }

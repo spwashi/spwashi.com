@@ -1,4 +1,4 @@
-# Review 2026-10-25 — the survey behind the ranking: owner-plan rows the tree no longer matches, the probes, and the creator's open calls.
+# Review 2026-11-06 — the survey behind the ranking: owner-plan rows the tree no longer matches, the probes, and the creator's open calls.
 # wip — ecosystem-architecture
 #
 #>plan_ecosystem_architecture_wip
@@ -31,6 +31,10 @@ fixity = "tending"
  >>[2026-10-27 13:32] probe — wonder_ecosystem_what_travels: the list already exists. scripts/build-peer-kit.mjs keeps SCRIPTS by worker (one entry, pinch-text-scale for spw-quest) and writes PEER_SCRIPTS with peerScriptPath; nothing under public/ marks what travels. Run before any ~#expect was on record, so it measures and tests nothing.
  >>[2026-10-27 13:32] probe — wonder_ecosystem_specimen_host: public/js defines no custom element; the two hits are workers/factshift-center's own app. A specimen host would be the runtime's first. Run before any ~#expect was on record.
  >>[2026-11-05 23:30] verify — G, the specimens shelf, is live: the spw.quest worker deployed 2026-11-05 (version 10690dc2) with the note, constructs and pivot. S4 (what travels first), S5 (the cascade) and the playground's look wait on the creator.
+ >>[2026-11-06 12:04] probe — wonder_ecosystem_what_travels: SCRIPTS in scripts/build-peer-kit.mjs still holds one entry, pinch-text-scale for spw-quest. Nothing has travelled by plan alone since 10-27.
+ >>[2026-11-06 12:05] probe — wonder_ecosystem_specimen_host: one customElements.define hit, in factshift-center's vendored bundle; public/js still defines no element.
+ >>[2026-11-06 12:09] verify — audit:layer-flip gives 348 route rules in 17 bundles (home 70, about 45, play 25), against 363 on 10-25. ctx.routeFamily is still read by nothing, while gesture-contract.js and sample-dock.js read body.dataset.spwRouteFamily themselves. The owned paths moved once since 10-25: 9f2e3af4, expression-query reads a brace pair as its slot in either order.
+ >>[2026-11-06 12:14] plan — PLAN.md collapses S0–S3, S6 and G into Landed lines with their commits and drops the table rows they settled. S4 splits into S4a, one paint (file-reader.js calls spw-highlight's highlightSpw in place of its own paint), and S4b, the syntax.css cut line. The what-travels wonder gains peer.spw_manifest as a proposal, not a decision.
 }
 
 ^"s0_rows"{  # owner plan text the tree no longer matches, measured 2026-10-25
@@ -65,8 +69,8 @@ fixity = "tending"
 
 ^"cache"{
  ~#status: "waiting on the creator"
- ~#next_commit: "S4, what may travel first through the peer kit, once the creator picks"
- ~#files_hot: "scripts/build-peer-kit.mjs, workers/lib/peer-kit.js, .agents/plans/ecosystem-architecture/PLAN.md"
- ~#gate: "S4, S5 and the playground's look are the creator's calls"
- ~#last_stream: "2026-11-05"
+ ~#next_commit: "S4a, one paint: spw.quest's file reader calls spw-highlight through the peer kit, once the creator answers the first-portable wonder"
+ ~#files_hot: "scripts/build-peer-kit.mjs, workers/spw-quest/src/file-reader.js, public/js/semantic/spw-highlight.js"
+ ~#gate: "the creator's answer to wonder_site_starter_first_portable for S4; S5 and the playground's look are also the creator's"
+ ~#last_stream: "2026-11-06"
 }

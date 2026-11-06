@@ -1,4 +1,4 @@
-# Review 2026-10-12 — hot notes for Patch 1B, the compact layer overlay; the patches, contracts and queries stay in PLAN.md.
+# Review 2026-11-06 — hot notes for the compact overlay and the four named slices; the patches, contracts and queries stay in PLAN.md.
 # wip — css-architecture-readability
 #
 #>plan_css_architecture_readability_wip
@@ -18,11 +18,15 @@ fixity = "tending"
 
 ^"stream"{
  >>[2026-10-12 10:59] verify — Patches 2, 2A and 2B hold (7d2968fa), and the Patch 4 split is still partial: components/cards.css is 1359 lines and grammar/syntax.css 2528, both whole. Patch 1B has not started: src/styles/entries/debug.css only answers data-spw-debug-layers set to on and has no compact rule, and nothing in the tree writes that attribute, so a reader sets it by hand. The website bundle that design.css would ride is exactly 140 KiB, its soft budget.
+ >>[2026-11-06 12:35] plan — PLAN.md 807 -> 400 lines under its 810 cap. Patches 2/2A/2B, the 2026-07-03 chrome and operators split (bd0d7951) and Patch 5's landed half (d4b0ea94, findSelectorAtRuleJoins) became Landed lines; 1A/1B, 3A/3B and 2A/2B stopped restating their parents; four next slices are named with paths, gate and check. Fixed references: operators.css (split) -> handles/operators/; & merge and ! pragma -> subject and action per operator-detection.js; /website/ -> /about/website/; the cards.css split candidates now follow its five banners, not the 2026-07 names.
+ >>[2026-11-06 12:38] cite — Patch 9 is settled by landed code, so no wonder: data-spw-composition-flow already drives layout in components/content.css (Clusters A-C, 09713d0d) and typography-packing.css (1cbf5724), and composition-box-model.spw:23 keeps an authored value through the mirror. The draft's data-spw-composition-layout root gate would have been a new family. 131 authored uses in HTML.
+ >>[2026-11-06 12:40] probe — wonder_css_architecture_readability_compact_default: rg 'debug-layers=' in src/styles/entries/debug.css lists on only (:11, :286, :331, :410); no compact rule. The ~#expect held.
+ >>[2026-11-06 12:41] probe — wonder_css_architecture_readability_canonical_contract: README.md matches 2 (debug-layer-owner, cluster declarations), css-instruction.spw 0. The ~#expect held.
 }
 
 ^"open"{
- compact_default = "Should compact be the default for layer labels on small screens? The creator's call, after the browser pass."
- canonical_contract = "Is css-instruction.spw the canonical inspectable contract, or is public/css/README.md enough? The creator's call; Patch 8 is half done."
+ compact_default = ~"./index.spw#wonder_css_architecture_readability_compact_default"
+ canonical_contract = ~"./index.spw#wonder_css_architecture_readability_canonical_contract"
 }
 
 ^"cache"{
@@ -30,5 +34,5 @@ fixity = "tending"
  ~#next_commit: "+[css] Give the layer overlay a compact mode: outlines first, labels on hover and focus"
  ~#files_hot: "src/styles/entries/debug.css, public/css/effects/debug.css, public/css/README.md"
  ~#gate: "a manual browser pass on /, /settings/ and /design/ with the overlay on and compact"
- ~#last_stream: "2026-10-12"
+ ~#last_stream: "2026-11-06"
 }

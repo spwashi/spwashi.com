@@ -1,6 +1,6 @@
 # css-cascade-stratification
 
-**Status 2026-10-10.** Phase 0 landed (332d98bd, play's paint as intents), and so did the Phase 1 review kit: `audit:layer-flip` with the `?spw-layer-order=declared` switch (4759a02f) and the `perf:layer-ablation` probe (01c34f01). The bundler still strips the order statement (`scripts/ts/css-bundle.mts:45`), so `bundles/core.css` ships none. Next: Phase 1 prep, which means `audit:layer-flip` rows plus declared-vs-shipped phone stills for home (71 flagged rules at landing; 70 of 366 on 2026-10-25) and play (25). No route has been recorded yet, and `bundles/routes/` now holds 23 sheets against 19 at landing. The gate is the creator's look in the browser, and the ablation's Chrome half has not yet run outside the sandbox.
+**Status 2026-11-06.** Nothing has landed since 2026-10-10: no commit touches `scripts/ts/css-bundle.mts`, the two review scripts, `prepaint-state.js`, `reset/base.css` or `routes/surfaces/play.css`. Landed: Phase 0 (02ce21b5, 332d98bd, 01c34f01) and the Phase 1 review kit (4759a02f). The bundler still strips the order statement (`scripts/ts/css-bundle.mts:45`), so `bundles/core.css` ships none. `npm run audit:layer-flip` on 2026-11-06 lists 348 route rules in 17 of the 21 route bundles: home 70, about 45, rpg-wednesday 42, website 37, play 25. That is down from 366 on 2026-10-25. No route has a same/better/worse row yet. Next: the per-route readings below, home first. Each reading is two loads and one row, and landing Phase 1 is the creator's look in the browser. The ablation's Chrome half still needs a run outside the sandbox.
 
 **Absorbed 2026-10-06:** [css-state-legibility](../archive/css-state-legibility/PLAN.md) · [vertical-rhythm-container-audit](../archive/vertical-rhythm-container-audit/PLAN.md).
 
@@ -8,7 +8,7 @@ Operation: prime. Fixity: experimental. Owner rail: `css-architecture-readabilit
 
 ## Public Goal
 
-Make the cascade layer list a care signal. A reader who opens a rule should know from its layer how far the rule reaches, how long its effect lives, and whose hand owns it, and therefore how much reasoning the change deserves. This is the standalone, evidence-gated layer-order migration that `css-architecture-readability` (line 67) and `.spw/reviews/css-architecture-alignment.spw` already leave the door open for. It is the only plan allowed to change the `@layer` order.
+Make the cascade layer list a care signal. A reader who opens a rule should know from its layer how far the rule reaches, how long its effect lives, and whose hand owns it, and therefore how much reasoning the change deserves. This is the standalone, evidence-gated layer-order migration that `css-architecture-readability` (its File Tree Utility section) and `.spw/reviews/css-architecture-alignment.spw` already leave the door open for. It is the only plan allowed to change the `@layer` order.
 
 Model: `.spw/caches/css-cascade-stratification-2026-09.spw` — six pours, a per-layer promise of reach / cure / hand, and the ledger of `reset/base.css` rules that claim one care level and deserve another.
 
@@ -20,32 +20,44 @@ That review is Phase 1 here. No new layer name exists before it lands.
 
 ## Phases
 
-**Phase 0 — pre-patches that need no order change.** Each is one patch on the readability rail, permitted today by `css-instruction.spw#import_manifest.layer_rule`.
+**Phase 0 — landed 2026-09-25.** 02ce21b5 moved fourteen reset tokens to `tokens/core.css` and deleted two dead reset values and the roster's duplicate landmark selectors. 332d98bd set play's chip and mode-switch intents to the exact paint its rules apply. Play's direct rules stay until the flip review, because without them its hover rule would paint over a pressed button. 01c34f01 rewrote `npm run perf:layer-ablation` as `scripts/layer-ablation.mjs`, whose splitter `scripts/lib/css-layer-blocks.mjs` round-trips the committed bundle. Not moved, by design: the link block, the software `pre` block and the roster's classes (each would start beating a named rule), and the infix floor stays in reset. Selector-stats stays unwritten until a pass needs it. Record: `.spw/caches/css-cascade-stratification-2026-09.spw#reset_care_ledger`.
 
-- Re-home the misfiled `base.css` clusters into their existing owners: `:root` flow / focus / selection tokens → `tokens/`; `.spw-panel a`, the class roster `min-width: 0`, and `body[data-spw-surface="software"] pre` → `components/` and `routes/`; the infix `border-width: 0` patch → `handles/`. Hunk-level staging; `base.css` had three commits in the last fourteen days.
-- Promote the scratch `layer-ablation` and `selector-stats` probes named in `.spw/audits/runtime-recalc-cost-2026-09.spw` to `scripts/`, beside `build-performance.mjs`, so Phase 1 and 2 have a fresh-served before/after.
-- Finish the `css-state-legibility` follow-up: `routes/surfaces/play.css` §6/§9 re-describe hover/focus/pressed route-locally and are dead under the declared order. The more route paint moves to `--*-intent`, the less Phase 1 can break.
-
-**Phase 1 review kit (landed 2026-09-25).** Nothing to rebuild for an A/B:
-1. `npm run audit:layer-flip` lists, per route bundle, the route rules whose subject shares a class with a handles/effects/ornament rule that sets the same property — the rules that win today and would lose. 365 across 19 bundles at landing; home 71, about 43, rpg-wednesday 42, website 37, play 25. 2026-10-25: 366; home 70, about 45, rpg-wednesday 42, website 37, play 25. `--bundle=<slug> --limit=N` for detail. A shared class is a reason to look, not proof.
-2. Open a listed page twice: as is, and with `?spw-layer-order=declared`. `prepaint-state.js` then puts the declared order first in the document and the page cascades as `style-core.css` says. A test pins the string to `EXPECTED_LAYER_ORDER`.
+**Phase 1 review kit (landed 2026-09-26, 4759a02f).** Nothing to rebuild for an A/B:
+1. `npm run audit:layer-flip` lists, per route bundle, the route rules whose subject shares a class with a handles/effects/ornament rule that sets the same property — the rules that win today and would lose. 365 across 19 bundles at landing; 366 on 2026-10-25; 348 across 17 on 2026-11-06, with home 70, about 45, rpg-wednesday 42, website 37 and play 25. `--bundle=<slug> --limit=N` for detail. A shared class is a reason to look, not proof.
+2. Open a listed page twice: as is, and with `?spw-layer-order=declared`. `prepaint-state.js` then puts the declared order first in the document and the page cascades as `style-core.css` says. `scripts/tests/css-layer-ablation.test.mjs` pins the string to `EXPECTED_LAYER_ORDER`.
 3. On /play/, the intents carry paint but not geometry: sigil `min-height`, `padding`, and flex seating are on the list and will move.
 4. `npm run perf:layer-ablation -- <route>` before and after, for the pass.
 Record each page as same / better / worse here; worse rows become intent or ownership patches before the bundler emits the statement.
 
+**Phase 1 readings — one route per session, one row each.** Paths: none in `public/`. Each reading appends a row to this plan, and that row is its commit. Gate: none for the reading. A "worse" row becomes an intent or ownership patch before Phase 1.
+
+| route | flagged | paint / geometry / mixed | most-flagged classes |
+|---|---|---|---|
+| `/` (home) | 70 | 22 / 31 / 17 | `.frame-sigil` 11, `.spw-chip` 7, `[data-spw-textual-role]` 6 |
+| `/about/` (10 pages) | 45 | 28 / 12 / 5 | `[data-spw-textual-role]` 5, `.bhm-node-dot` 5 |
+| `/play/rpg-wednesday/` (9 pages) | 42 | 11 / 25 / 6 | `.spw-frame` 7, `.frame-sigil` 5, `.spw-chip` 5 |
+| `/about/website/` (38 pages) | 37 | 14 / 16 / 7 | `.spw-chip` 10, `.spw-frame` 6 |
+| `/play/` | 25 | 7 / 13 / 5 | `.spw-frame` 6, `.frame-sigil` 4; look at focused play-lens buttons too |
+
+Split measured 2026-11-06 from `audit:layer-flip --json`. A finding is *paint* when every flagged property is colour, background, border colour, shadow, outline, opacity, filter or cursor, and *geometry* when none is. Across all 348: 145 paint, 142 geometry, 61 mixed.
+
+Creative proposal for the sensor (no look needed): `audit:layer-flip` could print that split itself, as one plain line per route ("home: 70 would yield — 22 paint, 31 geometry, 17 both"). Paint rows can move to `--*-intent` before the flip, as play's did in 332d98bd, which would leave only geometry rows for the creator's eye. The reading becomes a short list of places where a box might move.
+
 **Phase 1 — one cascade, browser-reviewed.** Emit the order statement from the bundler. Serve the routes the operator-controls audit names (and every route with a route bundle) fresh through CDP, phone and desktop, and approve in the browser before landing. Rollback is the one-line strip. This phase changes zero layer names and is a complete patch on its own.
 
-**Phase 2 — the pours.** Only after Phase 1. New names mean new directories (`css-contracts.mts:456` binds `public/css/<dir>/` to `layer(<dir>)`), `EXPECTED_LAYER_ORDER` in `css-contracts.mts:33` and `css-manifest.mjs:9`, the fifteen restating deferred sheets, the four load-symphony experiment sheets, and the prose sites listed in the cache — all in one patch, with the ablation re-run on the page each move leaves behind. Land one pour at a time: `reader` first (governors lose their `!important`), then `substrate`, then `time`.
+**Phase 2 — the pours.** Only after Phase 1. New names mean new directories (`expectedLayerForCssPath` in `scripts/ts/css-contracts.mts` binds `public/css/<dir>/` to `layer(<dir>)`), `EXPECTED_LAYER_ORDER` in `scripts/ts/css-contracts.mts:33` and `scripts/ts/css-manifest.mts:12`, the fifteen restating deferred sheets, the four load-symphony experiment sheets, and the prose sites listed in the cache — all in one patch, with the ablation re-run on the page each move leaves behind. Land one pour at a time: `reader` first (governors lose their `!important`), then `substrate`, then `time`.
 
 ## Coordination — plans whose material a pour splits
 
+Most owners below were archived between 2026-09-27 and 2026-10-10. For those, the landed contract is what a pour keeps coherent; the live owners are `floating-chrome-stack`, `chrome-navigation-wonder`, `color-motion`, `data-attribute-css-token-refinement` and `css-architecture-readability`.
+
 | pour | file | owners to keep coherent |
 |---|---|---|
-| substrate / flow / governors | `reset/base.css`, `modes/capture.css` | `vertical-rhythm-container-audit`, `floating-chrome-stack`, `css-instruction#containing_block`, `stylesheet-ecology#capture_rule`, `color-motion` |
-| registry / scales / aliases | `tokens/core.css` | `data-attribute-css-token-refinement` (bedrock rule), `palette-semantics-improvements` and `palette-theme-composability-instrumentability` (archived 2026-09-27; their contract is `site-semantics.spw#palette_theme_composability_contract`), `chrome-navigation-wonder` Phase 3, `design-surfaces-discoverability`, `deep-link-feature-discovery`, `settings-theme-packs` (theme families, formerly `theming-icon-packs-public-versioning`) |
-| states / arcs / pulses / residue | `components/runtime-states.css`, `systems/interaction-progression.css` | `microinteraction-motion-lifecycle`, `interaction-loop-contract`, `compositional-css-electrostatics`, `hook-region-anatomy`; canon `data-spw-attribute-governance#rhythm` |
+| substrate / flow / governors | `reset/base.css`, `modes/capture.css` | `vertical-rhythm-container-audit` (archived), `floating-chrome-stack`, `css-instruction#containing_block`, `stylesheet-ecology#capture_rule`, `color-motion` |
+| registry / scales / aliases | `tokens/core.css` | `data-attribute-css-token-refinement` (bedrock rule), `palette-semantics-improvements` (archived) and `palette-theme-composability-instrumentability` (archived 2026-09-27; their contract is `site-semantics.spw#palette_theme_composability_contract`), `chrome-navigation-wonder` Phase 3 (dormant), `design-surfaces-discoverability` (archived), `deep-link-feature-discovery` (archived), `settings-theme-packs` (theme families; absorbed by `color-motion` 2026-10-06) |
+| states / arcs / pulses / residue | `components/runtime-states.css`, `systems/interaction-progression.css` | `microinteraction-motion-lifecycle` (archived), `interaction-loop-contract` (archived), `compositional-css-electrostatics` (archived), `hook-region-anatomy` (archived); canon `data-spw-attribute-governance#rhythm` |
 | handles / routes | `handles/operators/*`, `routes/surfaces/*` | the intent contract is `.spw/conventions/site-semantics.spw#pressed_handle_state_contract` (`css-state-legibility` landed and archived 2026-10-06); hottest files in the tree |
-| instruments | `src/styles/entries/debug.css` | `runtime-module-fluency`, `css-architecture-readability` (owner-marker overwrite is documented as expected) |
+| instruments | `src/styles/entries/debug.css` | `runtime-module-fluency` (archived), `css-architecture-readability` (owner-marker overwrite is documented as expected) |
 
 ## Not this
 
@@ -62,7 +74,4 @@ Record each page as same / better / worse here; worse rows become intent or owne
 
 ## Status
 
-- 2026-09-25, Phase 0 first patch: fourteen reset tokens moved to `tokens/core.css`; two dead reset values and the roster's duplicate landmark selectors deleted; core bundle diff is moves and deletions only. The link block, the software `pre` block, and the roster's classes are not equivalent moves (each would start beating a named rule in shell or typography); the infix floor stays in reset by design. Record: cache `#reset_care_ledger.phase_0_2026_09_25`. Remaining Phase 0: none. Selector-stats stays unwritten until a pass needs it.
-- 2026-09-25, Phase 0 third patch: `npm run perf:layer-ablation -- <route>` rewritten in `scripts/layer-ablation.mjs` from the audit's method (fresh no-script page per row, ablated `core.css` through CDP Fetch, median style and layout half, an `all-again` row for noise). Its splitter, `scripts/lib/css-layer-blocks.mjs`, round-trips the committed bundle and is tested offline; the Chrome half has not run here, because the sandbox blocks headless Chrome. First run belongs to whoever runs Phase 1.
-- 2026-09-25, Phase 0 second patch: `routes/surfaces/play.css` §6 now also sets the chip and mode-switch intents to the exact paint its rules apply. Additive: under the shipped order its rules still win, so nothing moves today; under the declared order idle, hover, and pressed match. Focus does not — handles reuses the hover intents for `:focus-visible` and has no outline hook — so the flip review must look at focused play-lens buttons. Removing play's direct rules waits for that review: with them gone, its hover rule would paint over a pressed button.
-- 2026-09-25: primed. Cache written. Six boundary plans and four conventions now cite this plan as the door instead of a wall. Nothing in `public/css` changed.
+Landed lines for Phase 0 and the review kit are under Phases. The dated notes those lines replace (2026-09-25: the primer, three Phase 0 patches and why play's direct rules stay until the review) are in this file's history and in `.spw/caches/css-cascade-stratification-2026-09.spw#reset_care_ledger.phase_0_2026_09_25`.

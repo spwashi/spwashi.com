@@ -1,4 +1,4 @@
-# Review 2026-10-12 — one open question for the creator, the symbol table; the grammar, method and rebase recipe stay in PLAN.md.
+# Review 2026-11-06 — two open questions for the creator, the symbol table here and the subject length in index.spw; the grammar, method and rebase recipe stay in PLAN.md.
 # wip — history-reflow
 #
 # Questions the commit grammar cannot answer from the tree alone.
@@ -14,6 +14,8 @@
 @history: ~"./HISTORY.md"
 @workbench_commit_command: ~"../../../.spw/_workbench/.claude/commands/commit.md"
 @patch_consolidator: ~"../../skills/patch-consolidator/SKILL.md"
+@operator_table: ~"../../../public/js/kernel/operator-detection.js"
+@index: ~"./index.spw"
 
 operation = "cache"
 fixity = "tending"
@@ -25,23 +27,31 @@ fixity = "tending"
   ~#taste: "A symbol a reader sees on every subject line should be learnable from one table on this repo's side."
   ~#hypothesis: "Since 2026-09-01 the subjects use & 189, . 147, + 119, ~ 108, ! 92, ^ 38, = 9, ? 3. The only table is the workbench's commit command, which names . & ! ^seed # and vocab, and reads ! as test/verify."
   ~#tension: "On this site ! marks a fix and + an addition, and + is not a Spw operator. Copying the workbench table would teach the wrong reading; writing a site table is the creator's call."
+  ~#expect: "& + ~ . ! still lead; - (a removal) and !fix appear though the question does not list them, and - is no operator either."
+  ~#unblocks: "The one table under Message discipline in PLAN.md, and the subject line every later session writes."
+  ~#probe(run)
   !probe{ `git log --since=2026-09-01 --format=%s | cut -c1-2 | sort | uniq -c | sort -rn` }
-  $%[commit.symbol, commit.grammar]
+  $%[commit.symbol, commit.grammar, commit.operator_reading]
   ~<"./PLAN.md"> ~<"../agent-optimization/index.spw">
 }
 
 ^"stream"{
  >>[2026-10-12 10:59] verify — the grammar, the reflow method and the rebase recipe stand; the last rule is still aa1c9c48, and d13a532f only moved the August brief into HISTORY.md. No sequence is pending. The symbol question is still open: no file on this repo's side says what & . + ~ ! ^ = mean, and the counts since 2026-09-01 are now & 192, . 147, + 123, ~ 110, ! 96.
+ >>[2026-11-06 12:30] verify — Status read against the tree: nothing changed the grammar since aa1c9c48 (c88ef0d1 only created index.spw with --only, and the generator cut the goal mid-sentence; the full sentence is restored). All 150 commits since 2026-10-12 hold exactly one #[episode]{ and a symbol[scope] subject, so the grammar holds without a validator; the owner claim's probe now reads the last 50 bodies.
+ >>[2026-11-06 12:32] probe — wonder_history_reflow_symbols: since 2026-09-01, &[ 198, +[ 177, ~[ 170, .[ 155, ![ 98, ^[ 46, =[ 21, -[ 5, ?[ 4, !fix[ 4. Since 2026-10-12 the lead changed: ~ 59, + 52, = 12, ^ 8, . 8, & 5, - 4. The expect held; - and !fix are new since the question was written.
+ >>[2026-11-06 12:34] plan — proposal for wonder_history_reflow_symbols, offered as commit.operator_reading, not chosen: read each symbol through its type in operator-detection.js (& subject, . ground, ~ potential, ! action, ^ integration, = binding, ? wonder) and name + and - as the two that are not operators, so every subject line teaches one operator. Some already fit (^[runtime] Align module ownership; =[manifest] Stamp the expression manifest); others would not (&[plans] Archive forty plans). Which reading the table takes is the creator's.
+ >>[2026-11-06 12:36] probe — wonder_history_reflow_subject_length: 133 of 150 subjects since 2026-10-12 pass 72 characters; mean 106, longest 189; August was 73 of 338, mean 65. The expect held. Rule left as written; the wonder sits in index.spw.
 }
 
 ^"open"{
  symbols = ~"./wip.spw#wonder_history_reflow_symbols"
+ subject_length = ~"./index.spw#wonder_history_reflow_subject_length"
 }
 
 ^"cache"{
  ~#status: "waiting"
  ~#next_commit: "+[history] Say what each subject symbol means here, in one table beside the grammar"
- ~#files_hot: ".agents/plans/history-reflow/PLAN.md, .agents/plans/history-reflow/HISTORY.md"
- ~#gate: "the creator's call on what each symbol means on this site"
- ~#last_stream: "2026-10-12"
+ ~#files_hot: ".agents/plans/history-reflow/PLAN.md, .agents/skills/patch-consolidator/SKILL.md"
+ ~#gate: "the creator's call on what each symbol means on this site, and on whether the 72-character subject stands"
+ ~#last_stream: "2026-11-06"
 }

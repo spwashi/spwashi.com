@@ -1,4 +1,4 @@
-# Review 2026-07-12 — keep as the spell composition owner; select, compose, name, cast, and decompose must form one usable loop.
+# Review 2026-11-06 — keep as the spell composition owner; select, compose, name, cast, and decompose must form one usable loop, and its moves are becoming operators on one live expression.
 # Plan Index — spellcraft-authoring
 #
 # A visitor (or Spwashi on camera) can *write* a spell, not merely accumulate one: select things on the page, drop them in the cauldron, compose them into a named spell, cast it to…
@@ -151,6 +151,8 @@ invariants: #[
   ~#hypothesis: "The state prefixes are already . ~ * ^; the moves could be the same table read as actions: ! performs the combination (a cast), ~ carries the result away (copy, share), #> keeps it as a named frame, . clears back to ground."
   ~#tension: "A prefix that is both the state and the button may blur reading and doing; the 2026-10-06 sketch kept the state in the prefix and the moves as four handles beside it."
   ~#unblocks: "the expression as component (the nine buttons folded into slots), the status lines without verbs"
+  ~#expect: "Nine data-spw-cauldron-action buttons; their glyphs already come from the operator table, but several moves share one glyph, so a glyph alone does not yet say which move it makes."
+  ~#probe(run)
   !probe{ "rg -n 'data-spw-cauldron-action=' _partials/site-footer.html" }
   $%[moves.prefix, moves.handles, moves.both]
 }

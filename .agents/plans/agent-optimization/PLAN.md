@@ -1,20 +1,18 @@
 # Agent Optimization for spwashi.com
 
-**Status 2026-10-10.** The gate holds: `AGENTS.md` is 3179 words against its 3200 budget (`scripts/check-agent-contracts.mjs:149`), and 70ac9e0e and 1893ee91 gave `.spw` open-first files their own line budget and made a green check print only what it learned. Next slice: an `AGENTS.md` cut that moves the Build pipeline section (about 540 words, a command table every session reads) behind a one-line pointer, proved with `npm run check:agents -- --spend`. It waits for the 2026-10-10 removal of lines for archived plans to land, and for creator review, since `AGENTS.md` is the gate.
+**Status 2026-11-06.** The gate holds and the census shrank. `AGENTS.md` is 3179 words against the 3200 in `ALWAYS_ON_SPECS` (`scripts/check-agent-contracts.mjs`), unchanged since 280c5a84 removed the archived-plan lines. Live plans fell from 154 `PLAN.md` (2026-09-20) to 52, with 186 archived; agentic-dev-contracts can follow. Next: A2 can land today; A1 waits only on the creator's review.
 
-**Related:** [history-reflow](../history-reflow/PLAN.md) · [spw-architecture-ecology](../archive/spw-architecture-ecology/PLAN.md) (wave H absorbed 2026-10-10).
+**Related:** [history-reflow](../history-reflow/PLAN.md) · [agentic-dev-contracts](../agentic-dev-contracts/PLAN.md) (archive candidate) · [spw-architecture-ecology](../archive/spw-architecture-ecology/PLAN.md) (wave H absorbed 2026-10-10).
 
 ## Public Goal
-
-Active implementation: [Hypermedia geometry](./HYPERMEDIA.md) — canonical module
-hosts, reversible navigation, local attention, and an operator symmetry instrument.
 
 Make the agent operating environment (`.agents/`, skills, planning ecology, `.spw`
 bridges, public editor surfaces, validation contracts) a first-class, low-friction
 surface. Success is a smaller next census, not more `index.spw`.
 
 The site stays hand-authored and human-primary. This track is editor inspectability,
-not a new runtime.
+not a new runtime. [Hypermedia geometry](./HYPERMEDIA.md) landed four of its five
+items on 2026-09-04; the fifth is A4.
 
 ## Gate (not diary)
 
@@ -34,11 +32,18 @@ Do not apply AI onto a 12k PLAN as if that were the process.
 ## Current Baseline
 
 - `AGENTS.md` is the always-on gate. Adapters emphasize; they do not exclusive-own.
-- Harness: roles explore|plan|patch|review. Explore/plan do not write (`scripts/harness-write-gate.mjs` + `.claude/settings.json`). CLI: `npm run harness`, `npm run sense -- copy|nouns|ink`. Sense first is three cheap instruments; full `visual:checks` is dear. Contract: `.spw/conventions/agent-ecology.spw#harness`.
+- Harness: roles explore|plan|patch|review; explore and plan do not write (`scripts/harness-write-gate.mjs` + `.claude/settings.json`). `npm run sense -- copy|nouns|ink` is Sense first. Contract: `.spw/conventions/agent-ecology.spw#harness`.
 - Skills are thin wrappers over the pinned workbench. Site-workflow holds layers and focuses.
 - `agentic-dev-contracts` landed the cheap "what is this route?" + "did I break it?" questions.
-- Public `/about/plans/` is still a hand-maintenance tax.
-- Archive quota is the success metric. 2026-09-20: 154 live `PLAN.md`, 64 archived; input-cauldron archived with commit/source evidence. Census and focused design/reuse review: `.spw/audits/plan-spw-tree-2026-09.spw#recensus_2026_09_20`.
+- Public `/about/plans/` is still kept by hand: 36 plan links, 22 into `archive/`.
+- Archive quota is the success metric (counts in Status). 2026-09-20 census: `.spw/audits/plan-spw-tree-2026-09.spw#recensus_2026_09_20`.
+
+## Next slices
+
+- **A1. Take the Build pipeline table out of `AGENTS.md`.** 540 words, the heaviest section, read every session. One pointer line stays; Working Guidelines' "see the **Build pipeline** section" follows it. The creator names the home (`.agents/README.md` has room); no required phrase lives there. Gate: the creator's review. Verify: `npm run check:agents` shows `AGENTS.md` near 2640/3200w.
+- **A2. Thin the plan refs in `.spw/site.spw` (wave H).** 2026-11-06: 430 lines, 23 `@` refs into `.agents/plans/`, 12 into `archive/`. Each archive ref feeds one or two facets, so a ref and its uses leave together where the coordinators or `owner-registry.spw` already route. Ungated. Verify: `rg -c 'agents/plans/archive' .spw/site.spw` reaches 0; `npm run spw:integrity`.
+- **A3 (proposal). Let the gate say where to cut.** `nearBudget()` in `scripts/check-agent-contracts.mjs` could name a near-budget file's heaviest `##` section (`heaviest: Build pipeline 540w`), so the instrument answers before anyone opens the file. Ungated. Verify: a case in `scripts/tests/check-output.test.mjs`.
+- **A4. The last retired noun.** `public/js/interface/prompt-utils.js` alone still queries `.site-frame` (five lookups). No tracked page carries that class, so they match nothing on the 147 pages that mount it. `.spw-frame` wakes prompt behaviour that has never run; deleting them keeps today's page. Gate: a browser look at one promptable route. Verify: `rg -c site-frame public/js` reaches 0.
 
 ## Failure ledger (do not relearn)
 
@@ -49,7 +54,7 @@ Do not apply AI onto a 12k PLAN as if that were the process.
 - `check:local` can be green with stale CSS bundles (d26dbbdf) and retargeted fixture hosts (918b3daa).
 - July module-census counts are not current. Quote 2026-09 kinship / selector-depth.
 - Compact vs min: `spw-craft-quality` used to say 44px on every coarse button in `components/*.css` and stole pocket chrome. Open `.spw/caches/touch-control-class-2026-09.spw`.
-- Generated plan `index.spw` that validates can still be thinner than hand-authored (Claude 9ba112ec).
+- Generated plan `index.spw` that validates can still be thinner than hand-authored (239bca44).
 - Always-on context is I/O, not thinking (Spotify Portal analogue, RT 2026-09-06). Word budgets live in `scripts/check-agent-contracts.mjs`.
 - Guides without sensors are suggestions. Open first names the file; Sense first runs the instrument.
 - Full `visual:checks` is dear. Cheap proof is `npm run visual:checks -- --ids=<fixture>`.
@@ -70,8 +75,4 @@ Do not apply AI onto a 12k PLAN as if that were the process.
 
 ## Absorbed 2026-10-10 — spw-architecture-ecology wave H
 
-`.spw/site.spw` slimness lives here, because every agent that opens the dispatch hub pays for it. Measured 2026-10-10: 426 lines and 182 `@name:` refs; 21 point into `.agents/plans/`, 4 of those into `archive/`.
-
-- Landed: the `translations.ecologies` facet (`site.spw:232`) routes through the coordinator conventions.
-- Owed: remove per-plan `@` refs that the coordinators and `conventions/owner-registry.spw` already cover. Keep `planning_tracks`, `operational_layer`, `surfaces` and `integration_contract`.
-- Rule kept: no new per-plan `@` ref in `site.spw` without an owner-registry entry.
+`.spw/site.spw` slimness lives here: every agent that opens the dispatch hub pays for it. Landed: `translations.ecologies` routes through the coordinator conventions. Owed: A2, which keeps the `operational_layer`, `surfaces` and `integration_contract` facets and `translations.planning_tracks`, moving only their archived members. Rule kept: no new per-plan `@` ref in `site.spw` without an owner-registry entry.

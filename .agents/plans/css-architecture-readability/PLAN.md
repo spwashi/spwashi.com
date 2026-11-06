@@ -1,8 +1,17 @@
 # CSS Architecture Readability Series
 
-**Status 2026-10-10.** Landed: 2/2A/2B. Eight surfaces carry route markers, the last two being home and blog (7d2968fa). `design.css` carries none because it rides the website bundle, which sits at its 140 KiB soft budget. Partial: 1A, 4, 6 and 8. For 4, `shell/chrome/` and `handles/operators/` were split in bd0d7951, while `components/cards.css` (1359 lines) and `grammar/syntax.css` (2528) are not. For 6, a7bfa3de landed and structural `:nth-` selectors remain. For 8, `css-instruction.spw` now names `public/css/effects/debug.css`. Patches 3, 5 and 7 now belong to other plans (see each patch). Not started: 1, 1B and 9. Patch 9 would add a value to `data-spw-layout-contract`, which `learnability-ledger.css` already uses. Next: 1B compact mode in `src/styles/entries/debug.css`, which has no compact rule yet. It is gated by a manual browser pass on `/`, `/settings/` and `/design/`. The `@layer` order statement lives in `style-core.css:1`; pre-split file names below stay on purpose. Commit series, roadmap and the 2026-07-03 note: [HISTORY.md](./HISTORY.md).
+**Status 2026-11-06.** No patch moved after 2026-10-10. `src/styles/entries/debug.css` is untouched, `components/cards.css` changed only in 2739db05 (the copy-motif strip), and fd554339 named the layer order at `style-core.css:1` in `css-instruction.spw#import_manifest`. Landed: Patches 2/2A/2B, route owner markers on eight surfaces (about, blog, home, play, services, settings, topics, website), the last two in 7d2968fa. `design.css` has none because it rides the website bundle at its 140 KiB soft budget. Partial: 1A, 4 and 6; 8 is landed except the canonical-contract question. Patch 9 was settled by landed code (09713d0d made `data-spw-composition-flow` an authored-first layout contract). Owned elsewhere: 3 and 5 (`color-motion`), 7 (`css-cascade-stratification`). Not started: 1B. Next is slice 1 below, the compact overlay, gated by a browser pass on `/`, `/settings/` and `/design/`. The `@layer` order statement is `style-core.css:1`, and a few pre-split file names below stay on purpose. Commit series, roadmap and the 2026-07-03 split note are in [HISTORY.md](./HISTORY.md).
 
 **Related:** [css-state-legibility](../archive/css-state-legibility/PLAN.md) (archived).
+
+## Next slices (2026-11-06)
+
+1. **Compact overlay** (Patch 1B). In `src/styles/entries/debug.css`, `html[data-spw-debug-layers="compact"]` draws outlines first and shows labels on `:hover` and `:focus-within`. Today the sheet answers only `on` and `layers` (the `Layer labels show…` block, `:284`), and nothing in the tree writes the attribute: `deferred-styles.js` only reads `dataset.spwDebugLayers`. Gate: a browser pass on `/`, `/settings/` and `/design/` with `on` and `compact`. Rebuild `public/css/effects/debug.css` in the same commit.
+2. **Named subsections** (Patch 1A remainder; ungated, no visual change). Semantic labels (`debug.css:1-283`) and layer labels (`:284` on) already sit apart. Write the section banners the first Patch 1 change names (semantic labels, layer-owner labels, runtime footer, reduced motion) without moving a rule. Verify: `npm run build:css` leaves `public/css/effects/debug.css` byte-equal apart from comments.
+3. **cards.css, one chapter out** (Patch 4; sensor-gated). `components/cards.css` is 1363 lines, and `components/cards/` already holds `payment-card.css`, `profile-card.css` and `seed-card.css`. Move one contiguous banner section per commit, keeping its import order, and prove flattened-bundle equivalence before deleting the original (Patch 4 validation posture). `grammar/syntax.css` (2528 lines) follows the same way.
+4. **Home's structural selectors** (Patch 6; a look). 43 `:nth-child`/`:nth-of-type` selectors remain in `routes/`, `components/` and `grammar/`. On `/`, `routes/surfaces/home.css` seats `.entrance-role-hooks > li:nth-child(5)`, `(-n + 2)` and `(n + 3)` (`:1292-1306`) and the masthead's `:nth-of-type(n + 2)` notes (`:454`). The role hooks sit in `index.html#choose-your-entrance`, whose edges `layout-seat-squeeze` also measures (its section "Absorbed 2026-10-10 — alignment-content-fit"), so take its `npm run qa:alignment` reading before and after. Gate: `/` at phone and desktop.
+
+Creative proposal for slice 1 (a look; it ends at the same browser pass). The overlay could label a layer in Spw. `#:` is the layer operator in `public/js/kernel/operator-detection.js`, so a compact label reading `#:routes` instead of `layer: routes` would teach one sigil each time a reader inspects the cascade. Only the `content` string in `debug.css:377-381` changes.
 
 ## Public Goal
 
@@ -40,7 +49,7 @@ Known constraints:
 - `@layer` is cascade priority, not a load or cache schedule. First-paint spend is a delivery question — see `core-css-spend-cut/PLAN.md` and `.spw/conventions/stylesheet-ecology.spw`.
 - Treat Spw sigils in HTML as learnability surfaces, not just decoration. When a chip or handle combines a sigil with plain text, the CSS and markup should keep the action auditable by label, operator, destination, and state.
 - Use reference-card attributes when a design surface needs later auditability: `data-spw-attention`, `data-spw-behavior`, `data-spw-reference-seed`, and `data-spw-assignment`.
-- Treat `data-spw-operator` (and the growing set of operator projections in `.spw/conventions/operator-site-projection.spw`) as first-class semantic hooks. Operator chips are not merely decorative; their selectors, states, and resonance behavior must remain traceable and consistent across layers. New operators (`!`, `*`, `&`, `.`) introduce additional styling contracts that should be centralized in operators.css rather than duplicated in route surfaces. See operator-site-projection.spw for the current site_role, selector, and claim expectations per operator.
+- Treat `data-spw-operator` (and the growing set of operator projections in `.spw/conventions/operator-site-projection.spw`) as first-class semantic hooks. Operator chips are not merely decorative; their selectors, states, and resonance behavior must remain traceable and consistent across layers. New operators (`!`, `*`, `&`, `.`) introduce additional styling contracts that should be centralized in `handles/operators/` rather than duplicated in route surfaces. See operator-site-projection.spw for the current site_role, selector, and claim expectations per operator.
 
 ## CSS / JS / HTML Alignment Rhythm
 
@@ -96,7 +105,7 @@ Intern-sized examples:
 - Compare one reference-card cluster and confirm its heading anchor, attention value, behavior value, assignment code, and next-step link all describe the same small task.
 - Use `/design/components/` to tune one card anatomy rule and document the slot contract in CSS selectors.
 - Inspect settings controls and name one repeated state as a shared behavior token.
-- Audit a set of operator chips (including newer ones like `!` pragma, `*` value, `&` merge, `.` ground) against the projections in operator-site-projection.spw; ensure their visual states (hover, active, resonance) are driven from centralized operator tokens and data attributes rather than ad-hoc rules.
+- Audit a set of operator chips (including newer ones like `!` action, `*` value, `&` subject, `.` ground, named as `public/js/kernel/operator-detection.js` names them) against the projections in operator-site-projection.spw; ensure their visual states (hover, active, resonance) are driven from centralized operator tokens and data attributes rather than ad-hoc rules.
 - Use debug labels on a dense route to check whether CSS owner markers document the HTML structure clearly.
 
 ## 2026-08 token dialect pass
@@ -218,21 +227,11 @@ Example:
 
 Goal: make layer debug mode useful during browser inspection without making the page unreadable.
 
-Files:
-
-- `src/styles/entries/debug.css`
-- `public/css/effects/debug.css`
-- `public/css/effects/debug.css.map` (removed 2026-09-22, 97b8a303)
-- `public/css/README.md`
+Files: `src/styles/entries/debug.css` (source), `public/css/effects/debug.css` (generated; its `.map` went in 97b8a303), `public/css/README.md`.
 
 Changes:
 
-- Add a compact mode for dense pages:
-
-```html
-<html data-spw-debug-layers="compact">
-```
-
+- Add a compact mode for dense pages: `<html data-spw-debug-layers="compact">`.
 - In compact mode, show outlines by default and reveal labels on `:hover` / `:focus-within`.
 - On small screens, prefer outline-first behavior and reveal labels only on hover, focus-within, or explicit compact inspection.
 - Avoid broad `position: relative` changes; only apply positioning to targets that need label anchoring.
@@ -242,306 +241,38 @@ Changes:
 - Keep docs clear that owner labels show diagnostic nearest-visible ownership, not real provenance.
 - Verify the overlay does not block `.operator-chip`, `.frame-sigil`, mode switches, or settings controls.
 
-Risks:
+Slices: **1A** writes the section split with current visuals preserved (slice 2 above; the two label groups are already apart). **1B** is compact mode, outline-first on small screens, the collision guardrails and the README note (slice 1 above).
 
-- Debug labels can still be noisy on the homepage.
-- `position: relative` in debug mode can affect rare elements with existing absolute descendants. Keep selectors narrow and test real routes.
+Risks: debug labels can still be noisy on the homepage, and `position: relative` in debug mode can move rare elements that have absolute descendants, so keep selectors narrow and test real routes.
 
-Validation:
-
-- `npm run build:css`
-- `npm run check:css`
-- Manual browser pass on `/`, `/settings/`, `/design/`, and one article route with `data-spw-debug-layers="on"` and `"compact"`.
-
-## Patch 1A - Debug Selector Split
-
-Goal: separate semantic labels from owner labels in the debug stylesheet before changing visuals.
-
-Files:
-
-- `src/styles/entries/debug.css`
-- `public/css/effects/debug.css`
-- `public/css/effects/debug.css.map` (removed 2026-09-22, 97b8a303)
-
-Changes:
-
-- Split the existing debug block into named subsections.
-- Keep owner labels and semantic labels in separate selector groups.
-- Preserve current visuals.
-
-Validation:
-
-- `npm run build:css`
-- `npm run check:css`
-
-## Patch 1B - Compact Mode
-
-Goal: make dense-page debugging safer and easier to scan.
-
-Files:
-
-- `src/styles/entries/debug.css`
-- `public/css/effects/debug.css`
-- `public/css/effects/debug.css.map` (removed 2026-09-22, 97b8a303)
-- `public/css/README.md`
-
-Changes:
-
-- Add `compact` mode behavior.
-- Prefer outline-first labels on small screens.
-- Add label collision guardrails for small components.
-- Update docs to explain compact mode.
-
-Validation:
-
-- `npm run build:css`
-- `npm run check:css`
-- Manual browser pass on `/`, `/settings/`, and `/design/`
+Validation: `npm run build:css`; `npm run check:css`; a browser pass on `/`, `/settings/`, `/design/` and one article route with `data-spw-debug-layers` set to `on` and to `compact`.
 
 ## Patch 2 - Route Owner Markers
 
-Goal: extend diagnostic owner labels to route surfaces without adding layout behavior or guessing nonexistent classes.
-
-Files:
-
-- `public/css/routes/surfaces/home.css`
-- `public/css/routes/surfaces/settings.css`
-- `public/css/routes/surfaces/settings-forms.css`
-- `public/css/routes/surfaces/website.css`
-- `public/css/routes/surfaces/about.css`
-- `public/css/routes/surfaces/topics.css`
-- `public/css/routes/surfaces/design.css`
-- `public/css/routes/surfaces/blog.css`
-- route files touched only if an existing page-level selector is already present
-
-Selector rule:
-
-```css
-:where(body[data-spw-surface="home"]) {
-  /* Debug / inspection */
-  --spw-debug-layer-owner: "routes";
-  --spw-debug-layer-color: #a67c00;
-}
-```
-
-Changes:
-
-- Add one owner marker at the route surface boundary per route file.
-- Do not add route markers to arbitrary inner classes.
-- Cluster the top route token block only when already editing it.
-- Add a short README note that route files should prefer `body[data-spw-surface="..."]` as the owner boundary.
-
-Risks:
-
-- Later `handles`, `effects`, or `ornament` layers will overwrite the visible owner marker on nested elements. That is expected and should remain documented.
-
-Validation:
-
-- `rg -n -- "--spw-debug-layer-owner: \"routes\"" public/css/routes`
-- `npm run check:css`
-- Browser spot check with the debug overlay on route-heavy pages.
-
-## Patch 2A - Route Boundary Markers
-
-Goal: add route-level owner labels only at the outer surface boundary.
-
-Files:
-
-- `public/css/routes/surfaces/home.css`
-- `public/css/routes/surfaces/settings.css`
-- `public/css/routes/surfaces/settings-forms.css`
-- `public/css/routes/surfaces/website.css`
-
-Changes:
-
-- Add one `body[data-spw-surface="..."]` owner marker per route file.
-- Avoid inner selector churn.
-
-Validation:
-
-- `rg -n -- "--spw-debug-layer-owner: \"routes\"" public/css/routes`
-- `npm run check:css`
-
-## Patch 2B - Route Coverage Pass
-
-Goal: extend route markers to the remaining high-traffic routes.
-
-Files:
-
-- `public/css/routes/surfaces/about.css`
-- `public/css/routes/surfaces/topics.css`
-- `public/css/routes/surfaces/design.css`
-- `public/css/routes/surfaces/blog.css`
-
-Changes:
-
-- Apply the same route-boundary marker pattern.
-- Keep values and comments consistent.
-
-Validation:
-
-- `npm run check:css`
-- Browser spot check on route-heavy pages.
+Landed (2A, 2B): eight route surfaces carry one marker in their `:where(body[data-spw-surface="…"])` token block, the last two (home, blog) in 7d2968fa; `public/css/README.md` states the rule (route surfaces set the marker once, never on inner classes). Not marked: `settings-forms.css`, and `design.css`, which rides the website bundle at its soft budget. Later `handles`, `effects` and `ornament` layers overwrite the visible marker on nested elements, as documented. Check: `rg -n -- "--spw-debug-layer-owner: \"routes\"" public/css/routes`.
 
 ## Patch 3 - Component Token Extraction
 
-**Owner 2026-10-10:** `color-motion` Patch 2 (palette role tokens). This plan keeps the literate-cluster rules below and does not run this patch on its own.
+**Owner 2026-10-10:** `color-motion` Patch 2 (its slice 2B moves consumers onto role aliases). This plan keeps the literate-cluster rules that work follows:
 
-Goal: reduce repeated visual math in component rules by introducing local component tokens that make rule bodies readable.
-
-Primary files:
-
-- `public/css/components/foundation.css`
-- `public/css/components/cards.css`
-- `public/css/components/surfaces.css`
-- `public/css/components/frames.css`
-- `public/css/effects/material.css`
-
-High-value targets:
-
-- `.frame-card`
-- `.frame-panel`
-- `.spw-frame`
-- `.mode-panel`
-- `.media-card`
-- `.operator-card`
-- `.plan-card`
-- `.ref-card`
-- `[data-spw-region-flow]`
-- `[data-spw-component-kind]`
-
-Changes:
-
-- Introduce local variables such as:
-
-```css
---card-local-surface
---card-local-surface-strong
---card-local-line
---card-local-line-active
---card-local-shadow
---card-local-shadow-active
---card-local-accent
-```
-
-- Replace repeated long `color-mix(...)`, gradient, and shadow expressions inside card rules with named local tokens.
-- Keep the raw token math near the owner selector, not repeated in every variant.
-- Cluster variants as state projection:
-
-```css
-:where(.frame-card[data-spw-role="routing"]) {
-  /* State projection */
-  --card-local-surface: ...;
-}
-```
-
-- Avoid changing visual output unless a repeated expression is clearly inconsistent.
-
-Risks:
-
-- Token extraction can accidentally change fallback order. Keep original fallback chains intact.
-- Too many new variables can make the system less readable. Add only tokens reused by multiple declarations or variants.
-
-Validation:
-
-- `npm run check:css`
-- Visual compare on home card grids, `/plans/`, `/topics/`, `/settings/`.
-
-## Patch 3A - Surface Token Extraction
-
-Goal: lift the highest-value repeated surface values into local tokens without changing behavior.
-
-Files:
-
-- `public/css/components/foundation.css`
-- `public/css/components/cards.css`
-- `public/css/effects/material.css`
-
-Changes:
-
-- Extract the repeated gradients, shadows, and borders first.
-- Keep naming aligned to the owning component or surface.
-
-Validation:
-
-- `npm run check:css`
-- `git diff --check`
-
-## Patch 3B - Variant Cleanup
-
-Goal: apply the new tokens to a small set of variants and state projections.
-
-Files:
-
-- `public/css/components/cards.css`
-- `public/css/components/surfaces.css`
-- `public/css/components/frames.css`
-
-Changes:
-
-- Update the most repeated variants only.
-- Preserve existing appearance.
-
-Validation:
-
-- Visual compare on shared card-heavy routes.
+- Local component tokens are named for their owner (`--card-local-surface`, `--card-local-line`, `--card-local-shadow`, `--card-local-accent` and their `-strong` / `-active` states), and the raw `color-mix(...)`, gradient and shadow math sits once, near the owner selector.
+- Variants are state projection: `:where(.frame-card[data-spw-role="routing"])` resets a local token, never a whole rule body.
+- Keep original fallback chains intact; add a token only when several declarations or variants reuse it.
+- Targets: `.frame-card`, `.frame-panel`, `.spw-frame`, `.mode-panel`, `.media-card`, `.operator-card`, `.plan-card`, `.ref-card`, `[data-spw-region-flow]`, `[data-spw-component-kind]`, across `components/foundation.css`, `cards.css`, `surfaces.css`, `frames.css` and `effects/material.css`.
 
 ## Patch 4 - Large File Responsibility Split
 
 Goal: make the largest CSS files navigable by separating clear ownership domains while preserving import order.
 
-Primary candidates by size:
+Landed: `shell/chrome.css` into `shell/chrome/` and `handles/operators.css` into `handles/operators/` on 2026-07-03 (bd0d7951), with literate chapter banners and flattened-bundle equivalence; see HISTORY.md for the method. Left, both in the core bundle through `style-core.css`:
 
-- `public/css/shell/chrome.css` at roughly 3000 lines (split into `public/css/shell/chrome/` on 2026-07-03).
-- `public/css/handles/operators.css` at roughly 2200 lines (split into `public/css/handles/operators/` on 2026-07-03).
-- `public/css/grammar/syntax.css` at roughly 1900 lines.
-- `public/css/components/cards.css` at roughly 1250 lines.
-
-Preferred split order:
-
-1. `chrome.css`
-2. `operators.css`
-3. `cards.css`
-4. `syntax.css`
-
-Start with `chrome.css` only if its major sections are already clean and contiguous. If section boundaries are tangled, postpone splitting and first add section comments or ownership markers without moving code.
-
-`chrome.css` split proposal:
-
-- Keep `public/css/shell/chrome.css` as the imported registry for shell chrome. (It was split into `public/css/shell/chrome/` on 2026-07-03.)
-- Add sibling files only if `style.css` imports them directly or `chrome.css` becomes a documented internal import source.
-- Candidate modules:
-  - `public/css/shell/chrome-header.css`
-  - `public/css/shell/chrome-nav.css`
-  - `public/css/shell/chrome-mobile-menu.css`
-  - `public/css/shell/chrome-footer.css`
-  - `public/css/shell/chrome-section-handle.css`
-
-`operators.css` split proposal:
-
-- Keep generic handle primitive in `operators.css`.
-- Candidate modules:
-  - `public/css/handles/operator-chips.css`
-  - `public/css/handles/frame-sigils.css`
-  - `public/css/handles/mode-switch.css`
-  - `public/css/handles/semantic-metadata.css`
-  - `public/css/handles/spells.css`
-  - `public/css/handles/memo-surfaces.css`
-
-`cards.css` split proposal:
-
-- Keep primitive card anatomy in `cards.css`.
-- Candidate modules:
-  - `public/css/components/card-links.css`
-  - `public/css/components/card-media.css`
-  - `public/css/components/card-semantic-maps.css`
-  - `public/css/components/card-route-bridges.css`
+- `components/cards.css`, 1363 lines. Its banners name five chapters: frame and link cards (`:8`), Spw dialect extensions (`:261`), the hyperphysics suite (`:296`), environmental physics and pretext variants (`:523`, about 700 lines, the largest), and inner type hygiene (`:1240`). Chapters go to `components/cards/` beside `payment-card.css`, `profile-card.css` and `seed-card.css`. The hyperphysics suite holds the invalid `calc()` that `color-motion` slice 2 repairs, so it moves in a different commit from that fix.
+- `grammar/syntax.css`, 2528 lines in nineteen numbered banners. "6. Frame primitives" (`:256`, about 740 lines) and "15. Topic lens" (`:1851`, about 420) are the large ones.
 
 Guardrails:
 
 - Split by moving contiguous sections only. Do not interleave unrelated refactors.
-- Preserve relative order of moved sections in `style.css`.
-- If a split file is added, update `public/css/README.md`.
+- Preserve relative order of moved sections in `style-core.css`, register each new core sheet there, and update `public/css/README.md`.
 - Do not split and redesign in the same commit.
 
 Validation:
@@ -549,65 +280,14 @@ Validation:
 - `npm run check:css`
 - `npm run check:local`
 - `git diff --check`
-- `rg -n "@import url\\('/public/css/(shell|handles|components)/" public/css/style.css`
+- `rg -n "@import url\\('/public/css/(shell|handles|components|grammar)/" public/css/style-core.css`
 - Validation posture for future splits: banner-opener line boundaries only (a split at a banner's middle line leaves an unterminated comment seam); assert per-chunk brace balance on comment-stripped text; prove flattened-bundle equivalence before deleting the original.
 
 ## Patch 5 - Dark Mode And Auto Mode Symmetry
 
-**Owner 2026-10-10:** `color-motion` Patch 8 (color mode and theme pack QA). d4b0ea94 and its css-contracts guard stay here as the landed half; the `home.css` and `wonder.css` branches go there.
+**Owner 2026-10-10:** `color-motion` Patch 8 (color mode and theme pack QA) takes the `home.css` and `wonder.css` branches. Landed half: d4b0ea94 kept explicit dark and automatic dark as separate blocks in `about.css` and `topics.css`, and added `findSelectorAtRuleJoins` to `scripts/ts/css-contracts.mts`, which fails a selector list that ends in a comma right before `@media`.
 
-Goal: make color-mode overrides easier to reason about by keeping dark/auto branches token-oriented and parallel.
-
-Files to inspect:
-
-- `public/css/tokens/core.css`
-- `public/css/routes/surfaces/home.css`
-- `public/css/routes/surfaces/settings.css`
-- `public/css/routes/surfaces/settings-forms.css`
-- `public/css/routes/surfaces/website.css`
-- `public/css/effects/material.css`
-- `public/css/effects/wonder.css` (idle-loads with flourish-pack; tokens in `flourish-defaults.css`)
-- `public/css/ornament/canvas-accents.css`
-
-Changes:
-
-- Prefer one base token block plus dark/auto token overrides.
-- Avoid duplicating full selector bodies inside color-mode media queries.
-- Keep `html[data-spw-color-mode="dark"]` and `@media (prefers-color-scheme: dark) { html[data-spw-color-mode="auto"] ... }` structurally parallel.
-- Move repeated dark-mode colors into local route/component tokens.
-- Add comments only where dark/auto behavior intentionally diverges.
-
-Anti-pattern to reduce:
-
-```css
-html[data-spw-color-mode="dark"] .some-card {
-  display: grid;
-  gap: ...;
-  padding: ...;
-  background: ...;
-}
-```
-
-Preferred:
-
-```css
-.some-card {
-  --some-card-surface: ...;
-  display: grid;
-  gap: ...;
-  padding: ...;
-  background: var(--some-card-surface);
-}
-
-html[data-spw-color-mode="dark"] .some-card {
-  --some-card-surface: ...;
-}
-```
-
-Validation:
-
-- `npm run check:css`
-- Manual check in light, dark, and auto on `/`, `/settings/`, `/website/`.
+The rule this plan keeps: a colour mode overrides tokens, never a whole rule body. `.some-card` declares `--some-card-surface` and reads it, and `html[data-spw-color-mode="dark"] .some-card` resets only that token. The explicit dark branch and `@media (prefers-color-scheme: dark) { html[data-spw-color-mode="auto"] … }` stay structurally parallel. A comment marks only an intentional divergence.
 
 ## Patch 6 - Structural Selector Cleanup
 
@@ -619,9 +299,7 @@ Files:
 - route HTML only when a real slot name is missing and the structure already has a stable concept
 - `.spw/conventions/composition-box-model.spw` only if a new reusable slot/box contract is introduced
 
-Known target:
-
-- Home route selectors that place `.frame-note:nth-of-type(...)` in grids.
+Landed: a7bfa3de (2026-06-02) removed the home hero's `.frame-note:nth-of-type(...)` grid placement. Remaining on 2026-11-06: 43 structural selectors in `routes/`, `components/` and `grammar/`. Home's role hooks and masthead notes come first (slice 4 above).
 
 Preferred direction:
 
@@ -649,96 +327,15 @@ Validation:
 
 ## Patch 7 - `!important` Containment Audit
 
-**Owner 2026-10-10:** `css-cascade-stratification`. Its Phase 2 reader pour is where governors lose `!important`, and that waits on the Phase 1 browser review.
-
-Goal: document or remove high-priority overrides so cascade behavior is explainable.
-
-Files:
-
-- `public/css/grammar/syntax.css`
-- `public/css/ornament/canvas-accents.css`
-- any additional hits from `rg -n "!important" public/css`
-
-Changes:
-
-- Classify each `!important` as:
-  - required debug/ornament escape hatch
-  - specificity workaround that can be removed
-  - third-party/browser reset workaround
-  - bug
-- Replace removable cases with correct layer placement, selector structure, or local tokens.
-- Add a short comment for any remaining required case.
-
-Validation:
-
-- `rg -n "!important" public/css`
-- `npm run check:css`
+**Owner 2026-10-10:** `css-cascade-stratification`. Its Phase 2 reader pour is where governors lose `!important`, and that waits on the Phase 1 browser review. The classification it inherits: debug or ornament escape hatch, removable specificity workaround, browser-reset workaround, or bug. `rg -n "!important" public/css` is the count.
 
 ## Patch 8 - `.spw` And Documentation Alignment
 
-Goal: make the CSS architecture convention inspectable for future agents and editors.
-
-Files:
-
-- `public/css/README.md`
-- `.spw/conventions/css-instruction.spw` if present or worth introducing
-- `.spw/site.spw` if the convention needs to be discoverable from the site model
-- optional `.agents/plans/css-architecture-readability/PLAN.md` if this plan becomes the main multi-patch track
-
-Changes:
-
-- Document:
-  - cascade layer order
-  - diagnostic owner marker semantics
-  - property clustering order
-  - route owner boundary rule
-  - generated debug stylesheet source-of-truth rule
-  - when composition attributes are metadata versus layout contracts
-- Avoid duplicating long README prose in `.spw`; make `.spw` concise and inspectable.
-
-Validation:
-
-- `rg -n "css-instruction|debug-layer|property cluster|composition-flow" .spw public/css/README.md`
-- `npm run check:local`
+Mostly landed. `public/css/README.md` documents the property clustering order (`:32`), owner-marker semantics and the route boundary rule (`:58-60`), and "Reading The Tree". `.spw/conventions/css-instruction.spw` names the generated debug sheet's source (`:67`) and, since fd554339, the layer order at `style-core.css:1` (`#import_manifest`). The composition note is `.spw/conventions/composition-box-model.spw:23` (Patch 9). Left: which of `css-instruction.spw` and the README is canonical (`index.spw#wonder_css_architecture_readability_canonical_contract`). Check: `rg -n "css-instruction|debug-layer|property cluster|composition-flow" .spw public/css/README.md`.
 
 ## Patch 9 - Optional Composition Layout Contract
 
-Goal: decide whether `data-spw-composition-flow` should remain metadata or become an opt-in layout contract.
-
-This is deliberately later. The existing attributes are already present across routes and runtime surfaces, so global styling could regress layout.
-
-Decision options:
-
-- Keep as metadata only and use it only in debug labels.
-- Add opt-in styling under a stricter root gate such as:
-
-```html
-<html data-spw-composition-layout="on">
-```
-
-- Add layout behavior only for new scoped containers:
-
-```css
-:where([data-spw-layout-contract="composition"]) [data-spw-composition-flow="grid"] {
-  display: grid;
-}
-```
-
-Required before implementation:
-
-- Inventory current usage:
-
-```sh
-rg -n "data-spw-composition-flow|data-spw-box-model" .
-```
-
-- Identify which attributes are written by JS and when.
-- Decide whether the contract belongs in CSS, `.spw`, or both.
-
-Validation:
-
-- Browser check on every route family that already carries composition metadata.
-- Update `.spw/conventions/composition-box-model.spw` before shipping any new contract.
+Settled by landed code, so retired here. The question was whether `data-spw-composition-flow` stays metadata or becomes an opt-in layout contract. It became an authored-first layout contract: `components/content.css` ("Composition flow", Clusters A–C, from 09713d0d) packs `grid` hosts and keeps stages as columns, and `components/typography-packing.css` (1cbf5724) tiers `grid` by `data-spw-pack`. `.spw/conventions/composition-box-model.spw:23` records that an authored value survives the runtime mirror (2026-09-19). The first draft's root gate, `data-spw-composition-layout="on"`, would have been a new `data-spw-*` family and is dropped. The attribute has 131 authored uses in HTML. Any new reader still waits on a browser check of every route family that carries it.
 
 ## Validation Loop For Each Patch
 
@@ -774,7 +371,7 @@ Manual browser checks:
 - `/`
 - `/settings/`
 - `/design/`
-- `/website/`
+- `/about/website/`
 - one content-heavy route such as `/blog/` or `/recipes/`
 
 Debug browser checks:
@@ -800,8 +397,4 @@ rg -n "data-spw-composition-flow|data-spw-box-model" .
 
 ## Review Questions Before Implementation
 
-- Which file split pays down the most review pain first: `chrome.css` or `operators.css`?
-- Should route owner markers be added to every route file or only active/high-traffic route families?
-- Should compact debug mode be the default for layer labels on small screens?
-- Which component tokens are genuinely reused enough to deserve names?
-- Should `.spw/conventions/css-instruction.spw` become the canonical inspectable contract, or is `public/css/README.md` enough for now?
+Retired 2026-11-06: which split first (both `chrome.css` and `operators.css` split in bd0d7951) and whether every route file gets a marker (eight high-traffic surfaces did; the rest are unmarked). Component token names moved to `color-motion` Patch 2. Open, as wonders in `index.spw`: whether compact is the small-screen default (`#wonder_css_architecture_readability_compact_default`) and whether `css-instruction.spw` is the canonical contract (`#wonder_css_architecture_readability_canonical_contract`). Patch 9 was settled by landed code (see there).

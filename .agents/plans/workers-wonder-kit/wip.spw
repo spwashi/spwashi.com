@@ -1,4 +1,4 @@
-# Review 2026-10-12 — hot notes for moving two workers onto the shared shell; the sense, slice and boundaries stay in PLAN.md.
+# Review 2026-11-06 — hot notes for moving two workers onto the shared shell; the sense, S1, the proposed S2 and the boundaries stay in PLAN.md.
 # wip — workers-wonder-kit
 #
 #>plan_workers_wonder_kit_wip
@@ -19,6 +19,8 @@ fixity = "tending"
 
 ^"stream"{
  >>[2026-10-12 10:59] verify — spw-quest, site-hub-next and autonomous-feedback import workers/lib/shell.js (74503ca7); smut-today and wap-mom still carry their own escapeHtml, BASE_SECURITY and FAVICON. Both took copy commits today (0e2942ae, a53d0f15) that left those copies alone, and both are clean in this tree. smut-today-crew's first slice also edits workers/smut-today/src/index.js.
+ >>[2026-11-06 12:26] verify — nothing in workers/wap-mom, workers/smut-today or workers/README.md changed since 10-12; shell.js changed once (b4651803, a head slot in layout). Every line number in PLAN.md's Sense still holds. wap.mom's feeds.js, cabinet.js and pages.js import escapeHtml from layout.js, so S1 keeps that export as a re-export. smut.today's CSP names no script-src, a third policy beside shell's and wap.mom's. workers/README.md does not name shell.js. Both workers are clean; smut-today-crew has built nothing.
+ >>[2026-11-06 12:29] plan — PLAN.md names S1 with its touches and verification, and proposes S2: one kinship line per unit in check:workers (what it takes from shell.js, what it keeps), failing on a byte-identical local copy.
 }
 
 ^"open"{ }
@@ -26,7 +28,7 @@ fixity = "tending"
 ^"cache"{
  ~#status: "implementing"
  ~#next_commit: "&[workers] Let wap.mom and smut.today take escapeHtml from the shared shell, and keep their own headers and voice"
- ~#files_hot: "workers/lib/shell.js, workers/smut-today/src/index.js, workers/wap-mom/src/layout.js, workers/README.md"
- ~#gate: "neither worker dirty in another session's tree; both are clean today"
- ~#last_stream: "2026-10-12"
+ ~#files_hot: "workers/lib/shell.js, workers/smut-today/src/index.js, workers/wap-mom/src/layout.js, workers/README.md, scripts/check-workers.mjs"
+ ~#gate: "neither worker dirty in another session's tree; both are clean on 2026-11-06"
+ ~#last_stream: "2026-11-06"
 }

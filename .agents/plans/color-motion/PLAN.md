@@ -1,6 +1,16 @@
 # Color And Microinteraction Timing Improvement Plan
 
-**Status 2026-11-05.** Patches 4 and 5 landed: the timing bands in f721879d (2026-09-08; reduced motion shrinks the base durations) and their control and settings consumers in 55ef2737. Beyond the six bands listed, they now include `--spw-time-travel` and `--spw-spring-*` (cbcf7045, 2026-09-26). Left from Patch 5: `.spw-expression-badge` in `handles/operators/sigils-and-chips.css` still uses `--duration-fast`. Patches 1–3 and 6–9 have not started; 0206fb41 gave three operators a dark color outside them (see Patch 3). Today `effects/material.css` names `--duration-*` on 4 lines (the three `--material-duration-*` aliases and one transition), 17 lines once its `--material-duration-*` and `--material-local-duration-*` aliases are counted, and none names a band; `components/cards.css` has 2 and none. Next: the badge leftover, which has no gate and changes nothing visible (`--spw-time-control` is the same 140ms). Then Patch 6, with `ornament/whimsy.css:98-103` as co-target and bundles rebuilt in the same commit. It runs after `css-cascade-stratification` Phase 1 and a live look, and the feel is the creator's call in the browser. The families in `.spw/caches/timing-bands-handoff-2026-09.spw` follow. The 2026-08-31 texture slice predates the bands. Landing notes and the commit series are in [HISTORY.md](./HISTORY.md). Its review questions are unanswered except the alias one (the bands alias the primitives), and the first is a wonder in `index.spw`. 2026-11-05 readings (`.spw/caches/chrome-ecology-2026-11.spw#harmony`): `components/cards.css:321-324` multiplies a duration-and-easing token inside `calc()`, so the whole transition drops and `.spw-card`, `.math-lens-card` and `.spw-principle-card` lift without motion (fixing it turns authored motion on, so it is a look); `ornament/whimsy.css:123-129` replaces chip and button transitions with colour-only ones by element, so chip timing snaps, the two-owner question this plan already names for cards; and 49 focus-visible blocks set `outline: none` while `var(--focus-ring)` is read in one file.
+**Status 2026-11-06.** Landed: Patch 4, the timing bands (f721879d, 2026-09-08; reduced motion shrinks the base durations), and Patch 5's control and settings consumers (55ef2737); the bands have since gained `--spw-time-travel` and `--spw-spring-*` (cbcf7045). 0206fb41 gave three operators a dark colour outside Patch 3. Patches 1–3 and 6–9 have not started. Since 2026-10-25, the files this plan owns have changed only in 2739db05 (the copy-motif strip in `components/cards.css`) and b8339b22 (unused tokens removed from `tokens/core.css`), and neither touches timing or operator colour. `effects/material.css` still names `--duration-*` on 4 lines, or 17 with its `--material-duration-*` and `--material-local-duration-*` aliases. Neither it nor `components/cards.css` (2 lines) names a band. Next: the slices below, the badge first (no gate). Every other slice ends at a browser demo. Commit series and landing notes: [HISTORY.md](./HISTORY.md).
+
+## Next slices (2026-11-06)
+
+Sources: the harmony readings in `.spw/caches/chrome-ecology-2026-11.spw#harmony` (2026-11-05), re-measured in the tree today. Radius and the three undefined shape tokens (`--shape-small`, `--shape-panel`, `--shape-medium`) belong to `component-region-personality` ("One role, many shapes"), not here.
+
+1. **Badge band** (Patch 5 leftover; ungated). In `handles/operators/sigils-and-chips.css`, `.spw-expression-badge` (`:832`) times four transitions with `var(--duration-fast, 140ms) ease` (`:847-850`). Name `--spw-time-control` and keep `ease`, so 140ms stays 140ms and nothing a reader sees moves; switching to `--spw-ease-control` (`--ease-precise`) is a feel change and joins slice 4's demo. Verify: `rg -n 'duration-fast' public/css/handles/operators/sigils-and-chips.css` no longer lists the badge; `npm run check:css`; rebuild the core bundle in the same commit.
+2. **Card motion repair** (a look). The card block in `components/cards.css` (the `:where(.spw-card, … [data-spw-card])` rule, `:321-323`) multiplies `--component-transition-base` by `--spw-physics-mass` inside `calc()`. That token resolves through `--spw-control-transition-base` (`tokens/core.css:553`) to a duration *and* an easing, so the declaration is invalid at computed-value time and the whole `transition` drops: `.spw-card`, `.math-lens-card` and `.spw-principle-card` lift and tilt without motion. Change: multiply `--spw-time-surface` alone and name `--spw-ease-surface`, keeping mass as the weight. Fixing it turns on motion that has never shipped, so it ends at a demo on `/design/cards/` and `/about/plans/`, judged live (see Patch 6 validation).
+3. **One focus ring** (a look). Measured outside `bundles/` on 2026-11-06: of 342 `:focus-visible` rules, 71 set `outline: none` (39 files) and 40 draw a 2px outline. Two rings coexist: the outline from `--focus-ring-color` (`reset/base.css:344`) and the box-shadow `--focus-ring` (`tokens/core.css:989`, dark `:2213`), which 7 files read. The cache's "read in one file" undercounts. A ring drawn only in box-shadow vanishes under `forced-colors: active`, and only `ornament/ornament.css` answers that query. Change: the creator picks the ring (`index.spw#wonder_color_motion_focus_ring`), then one family per commit, chips first. Gate: a demo plus a keyboard pass; the Motion Accessibility Contract below holds.
+4. **Role, not element** (opens Patch 6). In the ornament layer, `ornament/whimsy.css:124-130` gives `:where(.spw-chip, button, input[type=button|submit])` the 5px paper corner and a colour-only `--spw-fold-duration` transition, and `:98-103` gives `.plan-card`, `.frame-card` and `.media-focus-card` the same colour-only fold transition. Ornament outranks `effects/material.css` and `handles/`, so a `<button class="spw-chip">` renders by its element and the chip's own radius and timing never show. Change: key the corner and fold timing to role classes, after the card-timing owner is chosen (`index.spw#wonder_color_motion_card_timing_owner`). Order: after `css-cascade-stratification` Phase 1. Rebuild bundles in the same commit. The demo is judged live.
+5. **Operator pairs** (opens Patch 3; reading, then a look). For each pair in Patch 3's check matrix, record contrast against `--surface` and the dark ground in light, dark, high contrast and the six packs of Patch 8, here as rows. 0206fb41 already lifted `$`, `%` and pragma at night. Tuning waits on `index.spw#wonder_color_motion_first_color_change`. Stills serve here (`npm run visual:checks` on `/design/palettes/`), because colour holds still in one frame and motion does not.
 
 **Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — topics.card_timing, topics.first_color, seams.cards_css.
 
@@ -36,12 +46,12 @@ Existing timing scale:
 --duration-ceremonial: 720ms;
 ```
 
-Existing motion aliases:
+Existing motion aliases (`tokens/core.css:1271-1273`; each is a duration *and* an easing, so it cannot sit inside `calc()`, which is slice 2's defect):
 
 ```css
---spw-motion-quick: var(--duration-fast) var(--ease-mechanical);
---spw-motion-settle: var(--duration-base) var(--ease-settle);
---spw-motion-expressive: var(--duration-deliberate) var(--ease-paper);
+--spw-motion-quick: calc(var(--duration-fast) * var(--spw-motion-scale, 1)) var(--ease-mechanical);
+--spw-motion-settle: calc(var(--duration-base) * var(--spw-motion-scale, 1)) var(--ease-settle);
+--spw-motion-expressive: calc(var(--duration-deliberate) * var(--spw-motion-scale, 1)) var(--ease-paper);
 ```
 
 Known issue pattern:
@@ -340,7 +350,7 @@ rg -n "--op-[a-z-]+-color|--active-op-color|--wonder|--delight" public/css
 
 Deliverable:
 
-- Add a short audit section to this plan or a follow-up `.agents/plans/color-motion/PLAN.md`.
+- Add the audit as rows in this plan.
 - Identify the top 10 repeated raw color expressions.
 - Identify the top 10 direct transition duration/ease combinations outside `core.css`.
 - Identify which interactions should be tuned first.
@@ -351,46 +361,7 @@ Validation:
 
 - No code changes required for this patch unless adding documentation.
 
-## Patch 1A - Color Inventory
-
-Goal: inventory the repeated color expressions before touching timing.
-
-Files:
-
-- `public/css/tokens/core.css`
-- `public/css/effects/material.css`
-- `public/css/effects/wonder.css`
-- `public/css/handles/operators/`
-
-Changes:
-
-- Count repeated color math and operator color collisions.
-- Decide which values are primitive, role, or component-local.
-
-Validation:
-
-- `rg -n "color-mix\\(|hsl\\(|hsla\\(|rgba\\(" public/css`
-
-## Patch 1B - Timing Inventory
-
-Goal: inventory repeated timing/easing combinations before aliasing.
-
-Files:
-
-- `public/css/tokens/core.css`
-- `public/css/effects/material.css`
-- `public/css/effects/wonder.css`
-- `public/css/components/cards.css`
-- `public/css/handles/operators/`
-
-Changes:
-
-- Count direct duration/ease combinations.
-- Identify which interactions should share an alias.
-
-Validation:
-
-- `rg -n "transition:|animation:|duration|ease" public/css`
+Slices (one commit each, documentation only): **1A colour** counts repeated colour math and operator collisions and marks each value primitive, role or component-local; **1B timing** counts direct duration and easing pairs outside `core.css` and names which interactions should share a band. Slice 5 above starts 1A on the operator pairs.
 
 ## Patch 2 - Palette Role Tokens
 
@@ -456,40 +427,7 @@ Validation:
 - `npm run check:css`
 - Manual color spot check in light and dark.
 
-## Patch 2A - Role Alias Layer
-
-Goal: add role aliases without changing canonical primitives.
-
-Files:
-
-- `public/css/tokens/core.css`
-
-Changes:
-
-- Add the smallest useful alias set.
-- Keep aliases searchable and traceable.
-
-Validation:
-
-- `npm run check:css`
-
-## Patch 2B - Consumer Migration
-
-Goal: move a few shared consumers onto the new role aliases.
-
-Files:
-
-- `public/css/effects/material.css`
-- `public/css/components/cards.css`
-- `public/css/handles/operators/`
-
-Changes:
-
-- Replace repeated direct primitives where the alias improves readability.
-
-Validation:
-
-- `npm run check:css`
+Slices: **2A** adds the smallest alias set to `tokens/core.css` with no consumer; nothing renders differently, so it is ungated. **2B** moves `effects/material.css`, `components/cards.css` and `handles/operators/` onto the aliases one file per commit, wherever an alias reads better than the primitive it replaces. `css-architecture-readability` Patch 3 (component tokens) now lands here.
 
 ## Patch 3 - Operator Color Distinction Pass
 
@@ -554,125 +492,19 @@ Validation:
 - Check `html[data-spw-high-contrast="on"]`.
 - Check dark mode and auto dark mode.
 
-## Patch 3A - Operator Hues
+Slices: **3A** tunes only the colliding hues in `tokens/core.css`, after slice 5's rows, and is checked in dark and high contrast in the browser. **3B** then carries borders, soft backgrounds and emphasis into `handles/operators/`, `grammar/syntax.css`, `effects/wonder.css` and `ornament/ornament.css`. Chip paint goes through `--operator-chip-*-intent` on the surface, never a direct paint.
 
-Goal: tune the operator colors themselves before consuming them elsewhere.
-
-Files:
-
-- `public/css/tokens/core.css`
-
-Changes:
-
-- Adjust only the operator hues that collide or read too similarly.
-
-Validation:
-
-- Dark and high-contrast browser checks.
-
-## Patch 3B - Operator Consumers
-
-Goal: propagate the operator palette changes into chips, grammar, and ornament.
-
-Files:
-
-- `public/css/handles/operators/`
-- `public/css/grammar/syntax.css`
-- `public/css/effects/wonder.css`
-- `public/css/ornament/ornament.css`
-
-Changes:
-
-- Update borders, soft backgrounds, and emphasis states.
-
-Validation:
-
-- `npm run check:css`
+Creative proposal (feel; ends at a demo): let the matrix teach as it is checked. A `/design/palettes/` specimen could set each close pair side by side as two chips with their sigils. Each pair would be captioned with the `interaction` lines from `public/js/kernel/operator-detection.js` that tell the two apart. For `&` and `=`, those are "name the subject or binding focus of a relation" and "name, pin, or categorize a local value". A reader learns the distinction the hue has to carry, and the creator judges it on the same plate.
 
 ## Patch 4 - Interaction Timing Bands
 
-Goal: replace ad hoc durations with named interaction timing bands.
+Landed: f721879d (2026-09-08). Six `--spw-time-*` bands (ack, control, surface, reveal, ambient, ritual) and five `--spw-ease-*` bands alias the primitives in `tokens/core.css:1280-1291`, so reduced motion reaches every consumer through them; `--spw-time-travel` (`:1303`) and the springs came with cbcf7045. First consumers: `handles/operators/tokens.css` and `systems/svg-surfaces.css`. Operator chips set the tactile baseline; cards, mode switches, settings controls and ornament harmonize with chip timing instead of starting their own. The rules still hold for every later family: migrate one family per commit, and leave keyframe durations alone until ordinary transitions agree. The family order (cards and surfaces, then wonder and ornament) is `^"next"` in `.spw/caches/timing-bands-handoff-2026-09.spw`.
 
-Operator chips define the tactile baseline for the site. Cards, mode switches, settings controls, and ornament should harmonize with chip timing rather than establishing separate timing languages.
-
-Primary file:
-
-- `public/css/tokens/core.css`
-
-Consumers:
-
-- `public/css/effects/material.css`
-- `public/css/handles/operators/`
-- `public/css/components/cards.css`
-- `public/css/components/controls.css`
-- `public/css/effects/wonder.css`
-- `public/css/ornament/ornament.css`
-
-Proposed timing bands:
-
-```css
---spw-time-ack: var(--duration-snap);          /* immediate hover/focus acknowledgement */
---spw-time-control: var(--duration-fast);      /* button/chip/control state */
---spw-time-surface: var(--duration-base);      /* card/panel settle */
---spw-time-reveal: var(--duration-deliberate); /* disclosures, metadata, labels */
---spw-time-ambient: var(--duration-slow);      /* resonance, attention echo */
---spw-time-ritual: var(--duration-ceremonial); /* rare expressive moments */
-```
-
-Proposed easing bands:
-
-```css
---spw-ease-ack: var(--ease-mechanical);
---spw-ease-control: var(--ease-precise);
---spw-ease-surface: var(--ease-settle);
---spw-ease-reveal: var(--ease-paper);
---spw-ease-ambient: var(--ease-orbit);
-```
-
-Rules:
-
-- Add aliases first.
-- Migrate one family at a time.
-- Do not change keyframe durations until ordinary transitions are consistent.
-- Map reduced-motion mode to these aliases so all consumers inherit the reduction.
-
-Validation:
-
-- `rg -n "var\\(--duration-|var\\(--ease-" public/css/effects public/css/handles public/css/components`
-- `npm run check:css`
+Validation for any migration: `rg -n "var\\(--duration-|var\\(--ease-" public/css/effects public/css/handles public/css/components` shrinks; `npm run check:css`.
 
 ## Patch 5 - Control And Handle Microinteraction Pass
 
-Goal: make chips, sigils, mode switches, and settings controls feel consistent.
-
-Normalize `.operator-chip` first, then bring `.frame-sigil`, mode switches, and settings controls into alignment.
-
-Files:
-
-- `public/css/handles/operators/`
-- `public/css/handles/phase-controls.css`
-- `public/css/components/controls.css`
-- `public/css/routes/surfaces/settings-forms.css`
-
-Targets:
-
-- `.operator-chip`
-- `.frame-sigil`
-- `.frame-card-sigil`
-- `.mode-switch`
-- `.settings-preset-btn`
-- settings range/select/radio controls
-
-Changes:
-
-- Use `--spw-time-ack` for hover/focus color acknowledgement.
-- Use `--spw-time-control` for pressed/selected state.
-- Use `--spw-ease-control` for transform and border changes.
-- Keep hover lift small and consistent.
-- Ensure `aria-pressed="true"` styles remain visually stronger than hover.
-- Avoid animating layout-affecting dimensions where opacity, color, transform, or box-shadow can carry the change.
-
-Interaction target feel:
+Landed: 55ef2737 (2026-09-08), `handles/phase-controls.css` and `routes/surfaces/settings-forms.css` ride ack for hover and focus colour, control for pressed border and transform, surface for category settle; `components/controls.css` had no primitives to alias. Left: the expression badge (slice 1 above). The feel these bands aim at, and the words a demo is judged by:
 
 ```text
 hover/focus: immediate recognition, no drama
@@ -681,11 +513,7 @@ disabled: no movement, clear color desaturation
 metadata reveal: delayed enough to avoid flicker, fast enough to feel inspectable
 ```
 
-Validation:
-
-- Keyboard tab through nav, mode switches, cards, and settings controls.
-- Check pointer hover on dense operator lists.
-- `npm run check:local`
+`aria-pressed="true"` stays visibly stronger than hover. Layout-affecting dimensions do not animate where opacity, colour, transform or shadow can carry the change.
 
 ## Patch 6 - Card And Surface Timing Pass
 
@@ -695,7 +523,7 @@ Order: after `css-cascade-stratification` Phase 1. `material.css` sits in the ef
 
 Files:
 
-- `public/css/ornament/whimsy.css:98-103` (co-target). In the ornament layer it sets `.plan-card`, `.frame-card` and `.media-focus-card` border and background transitions with `--spw-fold-duration`, which outranks `material.css` by layer. Decide which sheet owns card timing before migrating it.
+- `public/css/ornament/whimsy.css:98-103` and `:124-130` (co-target; slice 4). In the ornament layer it sets `.plan-card`, `.frame-card` and `.media-focus-card` border and background transitions with `--spw-fold-duration`, and chip and button corners and transitions by element, which outranks `material.css` by layer. Decide which sheet owns card timing before migrating it (`index.spw#wonder_color_motion_card_timing_owner`).
 - `public/css/effects/material.css`
 - `public/css/components/cards.css`
 - `public/css/components/foundation.css`

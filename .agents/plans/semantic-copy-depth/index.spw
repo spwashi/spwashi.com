@@ -1,4 +1,4 @@
-# Review 2026-07-12 — keep as the copy-register owner; authored base prose stays complete and optional density remains progressive.
+# Review 2026-11-06 — keep as the copy-register owner: C1 (slop #feeling) waits on the creator, C2 gives Home's three flat-only units their expressions, and authored base prose stays complete.
 # Plan Index — Semantic Copy Depth
 #
 # Let readers tune how much copy is visible without splitting the site into separate versions. The base page should remain readable and crawlable; optional layers should reveal…
@@ -105,6 +105,11 @@ invariants: #[
   #:depth #!stylistic ~#lens(projection)
   ~#with: @plan @slop_feeling @ai_writing_smells
   ~#tension: "The thought-trace rule says a paragraph whose links are the point is a shelf wearing a paragraph. A page about slop may want its evidence to speak in the sources' own words, and a rewrite into claims could import the smell the page names."
+  ~#hypothesis: "Each paragraph already opens on its claim (People are tired of it; The cheerfulness is part of the complaint; The accusation has pulled away from the evidence), so the paragraphs are claims followed by dated evidence: neither a shelf wearing a paragraph nor a turn."
+  ~#expect: "Read without links, each of the three keeps its first sentence as a restatable point, and what remains to decide is whether the dated source sentences after it stay as evidence on a page about evidence."
+  ~#unblocks: "C1, and with it C3, Home's field note"
+  ~#probe(read)
   !probe{ "Read /topics/slop/#feeling aloud, then restate its point without the links. If the point survives, it is a trace already; if nothing remains, it is a case." }
+  $%[feeling.claim_with_evidence_kept, feeling.rewrite_as_turn, feeling.sources_to_a_list]
   ~<"./PLAN.md"> ~<"../../../topics/slop/index.html"> ~<"../../../.spw/caches/ai-writing-smells-2026-09.spw">
 }

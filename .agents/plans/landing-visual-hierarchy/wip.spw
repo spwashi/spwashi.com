@@ -1,4 +1,4 @@
-# Review 2026-10-12 — hot notes for parcel B and the parcels behind it; the findings, seams and gates stay in PLAN.md.
+# Review 2026-11-06 — hot notes for parcel B, the first piece of art on each landing, and the parcels behind them; the findings, seams and gates stay in PLAN.md.
 # wip — landing-visual-hierarchy
 #
 #>plan_landing_visual_hierarchy_wip
@@ -23,18 +23,24 @@ fixity = "tending"
  >>[2026-10-25 18:27] implement — At the creator's request and after a look at 1920 and 1440 px, Home's broadsheet hero (72rem and up) is two columns: the masthead holds the left, the hook the top right, and the brand plate and the occasion picture the foot right, with an empty 1fr row between so a longer lens panel moves nothing and the picture's foot meets the masthead's. .home-hero-copy is display: contents there; pocket and fold keep the DOM order. Open: at 1440 the gap under the hook is about 210px; the reasons strip could move up into it, or the picture could sit under the hook and nudge 22px on Build.
  >>[2026-11-05 21:05] probe — parcel B is not a plain reorder. #services-tuning shares a 5/7 row with #b2b-share inside orientation-overview (routes/surfaces/services.css:164-174, compiled into the services, services-surface and services-care bundles), and the page's own Service path nav reads Hook, Tune, Queue, Return. Moving tuning alone leaves the share card a 7-column seat beside nothing. Three seats are named in index.spw#wonder_landing_visual_hierarchy_services_tuning_seat; the services-opening still (a3d9164b) is where the creator chooses.
  >>[2026-11-05 23:15] cache — the creator wants more of their own art, more immediately, from more pages: 23 of 214 route pages open on hand-made art, 138 carry no image. The art is midjourney-design-concepts'; which landing opens on which piece is this plan's first-screen call at the creator's look.
+ >>[2026-11-06 12:20] verify — the Status's "no /services/ recipe" no longer held: services-opening has stood at viewport-still-recipes.mjs:1152 since a3d9164b (2026-10-30), so B's before is one command away and the Status says so. Home moved four more times since 2026-10-25 (2d24def4, 5884cc59, 3421dc34, edf0344a), all copy and folio drops. The 23-of-214 art count predates 1a84b975, which opened twelve more pages on the creator's scans.
+ >>[2026-11-06 12:24] probe — wonder_landing_visual_hierarchy_services_first_piece: first img in source order on the eight PUBLIC_NAV_ITEMS routes. Folio scans on index.html (:136, h1 :124), about (:189, h1 :110), topics (:80, h1 :87), play (:71, h1 :68), design/folios (:135, h1 :61), now (:113, h1 :74); services meets public/images/services/studio-house-hero.webp (:136, h1 :121), no sidecar, empty concepts; settings has no image.
+ >>[2026-11-06 12:26] probe — wonder_landing_visual_hierarchy_projects_nav: rg finds no href '/projects/' in scripts/template.mjs or sw.js; Home, Now and about/website/ link it in their pages. The expect held.
+ >>[2026-11-06 12:27] probe — wonder_landing_visual_hierarchy_one_rail: the cap stands at PLAN.md Validation 2 and session-2026-08-21.spw:87, the refusal at the archived companion's PLAN.md:76 ("No universal hero") and index.spw:46 ("without sharing one silhouette"). Nothing reconciles them yet.
+ >>[2026-11-06 12:28] probe — wonder_landing_visual_hierarchy_settings_aisles: eight section.settings-shelf__aisle, each with an id and aria-labelledby; zero data-spw-cluster. Parcel C's open question moved from ^"open" into this wonder.
 }
 
 ^"open"{
  projects_nav = ~"./index.spw#wonder_landing_visual_hierarchy_projects_nav"
  one_rail = ~"./index.spw#wonder_landing_visual_hierarchy_one_rail"
- parcel_c = "Do the shelf's eight aisles already answer parcel C, or does settings still want authored clusters? The creator's call."
+ services_first_piece = ~"./index.spw#wonder_landing_visual_hierarchy_services_first_piece"
+ parcel_c = ~"./index.spw#wonder_landing_visual_hierarchy_settings_aisles"
 }
 
 ^"cache"{
  ~#status: "implementing"
  ~#next_commit: "~[services] Put the offer, the three paths and the pricing ahead of the tuning panel, in the seat the creator picks"
  ~#files_hot: "services/index.html, public/css/routes/surfaces/services.css, index.html, settings/index.html"
- ~#gate: "B waits on the tuning seat (index.spw#wonder_landing_visual_hierarchy_services_tuning_seat), chosen from the services-opening still; D waits while Home is moving"
- ~#last_stream: "2026-11-05"
+ ~#gate: "B waits on the tuning seat (index.spw#wonder_landing_visual_hierarchy_services_tuning_seat), chosen from the services-opening still, which is ungated to take; Services' first piece waits on the creator's look; D waits while Home is moving"
+ ~#last_stream: "2026-11-06"
 }

@@ -1,26 +1,20 @@
 # Folio worktable
 
-**Status 2026-10-10.** Landed: the release shelf (7a95da5b), the request card at `#folio-request`, the primes demo (8703ed24) and the calendar demo (27b616e8). Next: the creator reviews `/design/experiments/folios/calendar/` in a browser. It lays out October in scan order, so the review is worth most before the month ends. Still the creator's calls: the primes demo, prices and shipping, and the first card request. The weekly five runs through `npm run folio:highres:rotate`.
+**Status 2026-11-06.** Since 2026-10-10: the October drop has its own page, `/design/folios/october-2026/` (2c95bf13, 2026-10-31), with thirty-six folios (Honk Bazongas restored in 5482751f), five panels, forty-two cutout arrangements and thirty-one scratchpad pages, a new `pads/` kind named for the creator's word. Its record is `.spw/surfaces/folio-archive/release-2026-10-31.spw`. The weekly five moved from 2026-W40 to 2026-W44 (5884cc59), and a tall scan now lies whole on the folio plate (9571af62). Earlier: the release shelf (7a95da5b), the request card at `#folio-request`, the primes demo (8703ed24) and the calendar demo (27b616e8). Next: the slices below; every one of them is the creator's call except slice 4. October has passed with the calendar demo unreviewed, so its question has changed (`wip.spw#wonder_folio_worktable_calendar`).
 
-**Related:** [ecosystem-offer-2026-10](../ecosystem-offer-2026-10/PLAN.md) · [lore-land-marketing](../archive/lore-land-marketing/PLAN.md) (archived) · [visual-capture-ecology](../archive/visual-capture-ecology/PLAN.md). **Absorbed 2026-10-06:** [professional-skill-development-worldbuilding](../archive/professional-skill-development-worldbuilding/PLAN.md) · [skill-folio-operating-system](../archive/skill-folio-operating-system/PLAN.md).
+**Related:** [ecosystem-offer-2026-10](../archive/ecosystem-offer-2026-10/PLAN.md) (archived) · [lore-land-marketing](../archive/lore-land-marketing/PLAN.md) (archived) · [visual-capture-ecology](../archive/visual-capture-ecology/PLAN.md). **Absorbed 2026-10-06:** [professional-skill-development-worldbuilding](../archive/professional-skill-development-worldbuilding/PLAN.md) · [skill-folio-operating-system](../archive/skill-folio-operating-system/PLAN.md).
 
 Public goal: see the studies, try a reading, and distinguish future folio purchases from current commissioned work.
 
-## Audit
-Operation: audit; fixity: tending.
-Evidence: design/folios/index.html puts two explanatory sections before images. services/index.html#pricing lists a $250 illustration plate and $1,500 interactive cover page. Repository search found no metabiology surface.
-Gap: seed studies are not scans or inventory. Folio format, dimensions, edition, price and fulfillment remain undecided.
-Comparison: existing folio lenses change readings; service prices pair amounts with deliverables.
+## Next slices
 
-## First public slice
-Operation: align; fixity: tending. Focus: invitation. Element: air (sequence and disclosure).
-Owner: design/folios/index.html; reuse panels and native details.
-Audience: art collectors, bridging to component designers.
-Offer/proof: explore existing seed images; scans and sales are future intentions.
-Resonance/extension: inspect a fold as a component and a branching form as an imagined organism.
-Next action: browse studies or follow existing commission prices.
-Move studies before methodology, shorten opening, add scan/sale status and existing commission comparisons.
-No invented inventory, folio prices, checkout, biological claims or runtime state.
+1. **The week's five (2026-W45).** `public/data/folio-highres.json` ends at 2026-W44. `npm run folio:highres:rotate -- --ids=… --release=<scan day> --dry-run` first (W44 drew from `folio-2026-10-20-*`), then the same command without `--dry-run`. Which five, one per thread as in W44, is the creator's call each week. Verify: the week appears in the JSON, and the Home and Now strips redraw at rest from it.
+2. **The calendar's question.** `/design/experiments/folios/calendar/` is still linked only from the experiments shelf, and it lays out September's thirty-one folios as "October, one folio a day". The October page lays its month out by kind, not by day. Gate: the creator, in the wonder.
+3. **The primes demo.** `/design/experiments/folios/primes/` steps the September 28 primes in scan order, unreviewed since 8703ed24. Since 1a84b975 several primes open topic pages, so the review can now ask whether the walk belongs on a route. Gate: the creator's look.
+4. **A folio says where it opens (proposal, ungated to mock).** The creator wants their art to link pages and to open more pages (2026-11-05). Twelve pages now open on scans (1a84b975; midjourney-design-concepts, "The creator's own art, first and between pages"). A piece's popover on `/design/folios/` or `/design/folios/october-2026/` could carry one line naming the page it opens, such as "opens /topics/", so that the shelf becomes a door and not only a display. It is static HTML in the existing `folio-view` popover, with no script and no new attribute. Verify: each such line links a page whose first figure uses that piece's stem. The wording is the creator's at a look.
+5. **The first request.** Whether a request has arrived through `#folio-request` only the creator can say. Sales stay closed until forms, prices and shipping are set ("Minting direction" below).
+
+Kept from the first audit (2026-09-05), which the release shelf answered by moving the studies ahead of the method: no invented inventory, folio prices, checkout, biological claims or runtime state; seed studies are not scans or inventory; service prices pair amounts with deliverables.
 
 ## Later bounded slices
 - First scan: retain master, publish derivative with dimensions, material, date, front/back and detail views. Confirm original versus reproduction, price, shipping and availability before purchase.

@@ -1,6 +1,6 @@
 # Plan: Operator Resonance Alignment
 
-**Status 2026-10-10.** Slices 1–3 have landed. The chip audit (`npm run audit:operator-controls`, 4e96100b) gates `check:local`, and `public/js/semantic/sigil-annotation.js` writes the resolver attributes. Slice 4 has landed in part: wonder.css rings same-family kin through `data-spw-resonance-family` on `<html>`. Nothing reads the per-element `data-spw-operator-family` or `data-spw-transformation` yet. `operator-alignment.spw` keeps both as an additive inspection contract, and since no selector names them they cost no style invalidation. The one next slice is the creator's open decision (wonder block in `index.spw`): spend them on per-family colour in a browser review, or stop writing them.
+**Status 2026-11-06.** Slices 1–3 have landed, Slice 4 in part, and the one-table move (df32c50f) since. What is left is one creator decision and two small chips. `applyOperatorMetadata` in `public/js/semantic/sigil-annotation.js` writes eight attributes on every sigil, and five have no reader anywhere in `public/js` or `public/css`: `operator-family`, `transformation`, `operator-intent`, `operator-interaction` and `operator-public-label` (probed 2026-11-06). The decision (`index.spw#wonder_operator_resonance_family_attributes`) is whether to spend family and transformation on per-family colour in a browser review, or stop writing them. Near an archive: once that is answered, the rules here already live in `.spw/conventions/operator-alignment.spw`.
 
 **Related:** [spw-metaphysical-language](../spw-metaphysical-language/PLAN.md) · [spw-inquiry-loop](../spw-inquiry-loop/PLAN.md). **Absorbed 2026-10-10:** [operator-semantics-refinement](../archive/operator-semantics-refinement/PLAN.md) (craft guard 3).
 
@@ -10,15 +10,17 @@ Make Spw sigils easier to read as semantic handles for transformations across ro
 
 A sigil should tell the visitor what kind of operation a link, card, tool, or route performs. It should not be decoration, a generic destination marker, or an accidental synonym for another operator.
 
-## Current Slice
+## Landed
 
-- Added `.spw/conventions/operator-alignment.spw` as the compact site-side registry.
-- Wired the registry through `.spw/conventions/index.spw` and `.spw/site.spw`.
-- Updated the runtime `$` definition from metacognitive reflection to substrate.
-- Made runtime operator lookup accept raw sigils such as `$` and `~` in addition to semantic names.
-- Added additive resolver attributes in `public/js/semantic/operators.js` without overwriting authored `data-spw-operator`.
+- Slice 1, registry and copy discipline: `.spw/conventions/operator-alignment.spw`, `$` as substrate, resolver attributes that never overwrite an authored `data-spw-operator` (a664caf5, 2026-06-05).
+- Slice 2, chips: `npm run audit:operator-controls`, a `check:local` gate, reads every chip, sigil and operator host; 75 controls follow their sigil, 684 frame sigils author their operator, 114 CSS rules closed by `audit-operator-css.mjs` (4e96100b, 2026-09-19).
+- Slice 3, resolver: `sigil-annotation.js` writes the additive attributes (a664caf5).
+- Slice 4 in part: pinned resonance rings same-family kin through `data-spw-resonance-family` on `<html>` (`resonance-probe.js` writes it, `effects/wonder.css` reads it), for the four families with more than one member (eeadf214, 2026-09-03).
+- One table: every operator view takes its names from `public/js/kernel/operator-detection.js`, held by `scripts/tests/operator-views.test.mjs` (df32c50f, 2026-10-25; *One table* below).
 
 ## Alignment Rules
+
+The public verbs. Workbench relation: mutation (`operator-alignment.spw:13`), so they sit beside the canon names in `operator-detection.js` (`&` subject, `^` integration, `*` value) rather than replacing them.
 
 - `?` asks or inspects.
 - `~` explores, mines, remixes, or holds possibility.
@@ -46,46 +48,16 @@ Good examples:
 - `@ choose a session`
 - `? inspect browser substrates`
 
-Weak examples to normalize over time:
+Weak examples to normalize over time (2026-11-06: `$current sprint` and `^quick starts` are gone):
 
-- `@ play`
-- `$ current sprint`
-- `^ quick starts`
-- `~ services`
+- `@play` (`tools/index.html:105`, a chip into the RPG tools)
+- `~services` (`offline/index.html:61`; `~services_overview` on `tools/budgeting/index.html:155`)
 
-## Implementation Roadmap
+## Next slices
 
-### Slice 1: Registry and Copy Discipline
-
-- Status: landed (`.spw/conventions/operator-alignment.spw`; `$` is substrate in the canonical table).
-- Files: `.spw/conventions/operator-alignment.spw`, this plan, `public/js/kernel/shared.js`, `public/js/semantic/operators.js`.
-- Outcome: canonical public gloss, runtime gloss, examples, anti-examples, and `$` as substrate.
-
-### Slice 2: Operator-Chip Normalization
-
-- Candidate files: `index.html`, `tools/index.html`, `tools/midjourney/index.html`, `tools/budgeting/index.html`, `tools/character-sheet/index.html`, `play/rpg-wednesday/index.html`.
-- Normalize `@` to perspective, `*` to play/run, `$` to substrate, `^` to proof/publish, `%` to estimate/measure, and `#` to anchors.
-- Prefer chip anatomy: visible sigil, verb, target, optional `data-spw-action`, optional `data-spw-target`.
-- 2026-09-19: landed across the routes, not only the candidates. `scripts/audit-operator-controls.mjs` (`npm run audit:operator-controls`, a `check:local` gate) reads every chip, sigil, and operator host: 75 controls whose attribute disagreed with their sigil now follow the sigil (`!clear` was potential, `@character[lens]` was action), 32 spaced labels bind tight, 684 sigil-led frame sigils author the operator the runtime used to backfill. `scripts/audit-operator-css.mjs` closed 114 stylesheet rules that keyed on one spelling of an operator (`stream` but not `value`).
-
-### Slice 3: Runtime Resolver
-
-- Candidate files: `public/js/semantic/operators.js`, `public/js/semantic/component-semantics.js`, `public/js/site.js`.
-- Add sparse, additive metadata such as `data-spw-operator-resolved`, `data-spw-operator-family`, `data-spw-operator-phase`, and `data-spw-transformation`.
-- Do not rewrite authored copy or author-owned `data-spw-operator`.
-
-### Slice 4: CSS Family Resonance
-
-- Candidate files: `public/css/effects/wonder.css` (where the family ring landed; no `operator-resonance.css` was created), `public/css/shell/chrome/`, `public/css/components/cards.css`.
-- Style families subtly: inquiry, potential/config, location/scope, action/resolution, resource/output, relation.
-- Avoid noisy one-color-per-sigil treatment except where the operator is the actual teaching surface.
-- 2026-09-03: landed the narrower "pinned resonance shares its family" version of this, in `public/css/effects/wonder.css` rather than a new file — `data-spw-operator-family` (already written by `applyOperatorMetadata`) was unread by any CSS. The resonance probe (`public/js/runtime/attention/resonance-probe.js`) now also writes `data-spw-resonance-family` on `<html>`, and wonder.css gives same-family kin a fainter `--spw-resonance` ring than an exact match gets. Covers the four multi-member families that OPERATOR_DEFINITIONS actually has (resonance, grounding, relational, conceptual) — the other ten families are singletons, so there is nothing to group yet. Broader per-family color/background treatment (the "location/scope", "action/resolution" style buckets above) stays open.
-
-### Slice 5: Prompt and Evidence Integration
-
-- Candidate files: `public/js/interface/prompt-utils.js`, `tools/midjourney/index.html`, `play/rpg-wednesday/index.html`.
-- Express operator paths like `~ prompt -> $ substrate -> ! transform -> ^ proof`.
-- Use operator metadata to help prompt mining, screenshot interpretation, and evidence briefs.
+1. **The decision.** Spend `operator-family` and `transformation` on per-family colour (`effects/wonder.css`, then a browser review), or stop writing them in `applyOperatorMetadata`. The creator's call; the stop is one commit. The three other unread attributes ride with whichever answer.
+2. **The two weak chips.** `@play` and `~services` are read against the rules above: each takes the sigil its move makes, or keeps its sigil with a one-line reason (since 3a009a35, `@` is perspective regarding its operand, which may fit a chip into the RPG tools). Copy, title and link still read with scripts off (craft guard 3). Touches `tools/index.html`, `offline/index.html`, `tools/budgeting/index.html`. Waits on nothing; the chip words are the creator's if they change beyond the sigil. Verified by `npm run audit:operator-controls`.
+3. **Operator paths in prompts (old Slice 5), dormant.** No commit since a664caf5 has touched it. If it wakes, a path is written as Spw rather than arrows: one ordinal body, `path{~prompt; $substrate; !transform; ^proof}`, which `readBodyJoins` already reads as a sequence. A proposal for where: the Midjourney tool (`tools/midjourney/`) shows the path of the prompt being built as that one line, each step lit as the reader reaches it, so the line is the instrument's state. Ends at a browser demo.
 
 ## Validation
 
@@ -93,13 +65,13 @@ Weak examples to normalize over time:
 - `node --check public/js/kernel/shared.js`
 - `node --check public/js/semantic/operators.js`
 - `npm run check:local`
-- Targeted `rg` checks for `operator-alignment`, `data-spw-operator-resolved`, and `$ inspect current substrate`.
+- `npm run audit:operator-controls`; the wonder's probe for unread attributes.
 
 ## Related Tracks
 
-- `operator-semantics-refinement`: deeper lineage, physics, symmetry, and priming.
-- `promptable-image-library-pass`: prompt mining and RPG image publishing.
-- `css-sensitive-attribute-writes`: runtime must add inspection metadata without mutating author-owned semantic routing attributes.
+- [operator-semantics-refinement](../archive/operator-semantics-refinement/PLAN.md) (archived): lineage, physics, symmetry and priming; `.spw/conventions/operator-semantics.spw` is its reference.
+- [promptable-image-library-pass](../archive/promptable-image-library-pass/PLAN.md) (archived): prompt mining and RPG image publishing.
+- [css-sensitive-attribute-writes](../archive/css-sensitive-attribute-writes/PLAN.md) (archived): runtime adds inspection metadata without mutating author-owned routing attributes.
 
 ## Absorbed 2026-10-10 — operator-semantics-refinement
 

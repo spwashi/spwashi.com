@@ -1,4 +1,4 @@
-# Review 2026-10-12 — hot notes for the Phase 1 prep readings; the phases, pours and coordination table stay in PLAN.md.
+# Review 2026-11-06 — hot notes for the Phase 1 readings, one route per session; the phases, pours and coordination table stay in PLAN.md.
 # wip — css-cascade-stratification
 #
 #>plan_css_cascade_stratification_wip
@@ -19,6 +19,8 @@ fixity = "tending"
 
 ^"stream"{
  >>[2026-10-12 10:59] verify — Phase 0 and the review kit hold (332d98bd, 4759a02f, 01c34f01), and css-bundle.mts:45 still strips the order statement, so bundles/core.css ships none. Today audit:layer-flip lists 363 route rules across 19 of the 23 route bundles: home 67 (71 at landing), about 45, rpg-wednesday 42, website 37, play 25. No route is recorded as same, better or worse yet, and the ablation's Chrome half still needs a run outside the sandbox.
+ >>[2026-11-06 12:45] probe — wonder_css_cascade_stratification_layer_names: audit:layer-flip lists 348 route rules in 17 of 21 route bundles (366 on 2026-10-25); home 70, about 45, rpg-wednesday 42, website 37, play 25. Sorted from --json by property: home 22 paint, 31 geometry, 17 both; all bundles 145 paint, 142 geometry, 61 both. The ~#expect held. Nothing under the plan's paths has a commit since 2026-10-10.
+ >>[2026-11-06 12:48] plan — Status bumped; Phase 0 and the dated Status notes collapsed into Landed lines (02ce21b5, 332d98bd, 01c34f01, 4759a02f); five per-route reading slices named in a table with the split and the most-flagged classes; references fixed: css-architecture-readability line 67 -> its File Tree Utility section, css-manifest.mjs:9 -> scripts/ts/css-manifest.mts:12, css-contracts.mts:456 -> expectedLayerForCssPath, route bundles 23 -> 21; archived owners in the coordination table marked. Proposal: audit:layer-flip prints the paint and geometry split itself, so paint rows go to intents first.
 }
 
 ^"open"{
@@ -27,8 +29,8 @@ fixity = "tending"
 
 ^"cache"{
  ~#status: "sensing"
- ~#next_commit: "+[css] Record the layer flip on home and play, the declared order beside the shipped one at phone width"
+ ~#next_commit: "+[plans] Record the layer flip on home, the declared order beside the shipped one at phone and desktop"
  ~#files_hot: "scripts/ts/css-bundle.mts, scripts/audit-layer-flip.mjs, scripts/layer-ablation.mjs, public/js/runtime/arrival/prepaint-state.js"
  ~#gate: "headless Chrome outside the sandbox for the stills and the ablation; landing Phase 1 is the creator's look in the browser"
- ~#last_stream: "2026-10-12"
+ ~#last_stream: "2026-11-06"
 }

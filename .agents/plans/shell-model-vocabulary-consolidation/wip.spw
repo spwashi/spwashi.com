@@ -1,4 +1,4 @@
-# Review 2026-10-12 — hot notes for the Phase 2 glossary review; the census, candidates and migration rules stay in PLAN.md and vocabulary-census.md.
+# Review 2026-11-06 — hot notes for the Phase 2 glossary review; the census, candidates and migration rules stay in PLAN.md and vocabulary-census.md.
 # wip — shell-model-vocabulary-consolidation
 #
 #>plan_shell_model_vocabulary_consolidation_wip
@@ -18,18 +18,21 @@ fixity = "tending"
 
 ^"stream"{
  >>[2026-10-12 10:59] verify — the census (bd0d7951) offers two glossary candidates, A "Stagecraft" and B "Tightened Chrome", plus two attribute-grammar candidates, and nothing has been renamed. pocket still sits in 15 CSS and 7 JS files, outside bundles and generated files, as the Status line says, and both candidates still retire it. The Phase 2 choice has waited on the creator since July, and whether pocket stays is the first question for that review.
+ >>[2026-11-06 12:15] probe — wonder_shell_model_vocabulary_pocket: rg -l pocket over public/css and public/js, bundles and generated files excluded, lists 24 files (17 CSS, 7 JS; 15 and 7 on 2026-10-10). The ~#expect was written in the same pass from the hypothesis, and it held: the count only grew. Some 52 .spw files outside the workbench say pocket.
+ >>[2026-11-06 12:17] probe — wonder_shell_model_vocabulary_attribute_grammar: the families the census would migrate first keep their multi-name shape: data-spw-accent-* 8 names, written from JS as dataset.spwAccent*; data-spw-state-inspector-* 9; data-spw-image-* 23. The ~#expect held.
+ >>[2026-11-06 12:19] decide — the review pass found the plan dormant. Nothing in public/css/shell has changed since 2836c463 (2026-10-08), and the Phase 2 gate has waited since July. Meanwhile floating-chrome grew from 10 CSS and 9 JS files to 22 and 22. The glossary and attribute-grammar questions moved from ^"open" into wonders. A third glossary candidate is proposed beside A and B: the glossary written as Spw lines, which floating-chrome-stack's piece operators have already begun. The PLAN.md references to archived plans were repointed. Reported as an archive candidate; nothing was moved.
 }
 
 ^"open"{
  pocket = ~"./index.spw#wonder_shell_model_vocabulary_pocket"
- glossary = "Candidate A, which retires chrome, or candidate B, which keeps it? The creator's call, against the census."
- attribute_grammar = "Which attribute-grammar candidate, if either, sets how a data-spw-* value may fold several axes? The creator's call, before any migration."
+ glossary = ~"./index.spw#wonder_shell_model_vocabulary_glossary"
+ attribute_grammar = ~"./index.spw#wonder_shell_model_vocabulary_attribute_grammar"
 }
 
 ^"cache"{
- ~#status: "waiting"
+ ~#status: "dormant; waiting on the creator since July"
  ~#next_commit: "+[shell] Name the shell's words in one glossary: what each holds, and what it replaces"
  ~#files_hot: ".agents/plans/shell-model-vocabulary-consolidation/vocabulary-census.md, public/js/kernel/dom-contracts.js, public/css/shell/chrome/section-context.css"
  ~#gate: "the creator's glossary choice, starting with whether pocket stays"
- ~#last_stream: "2026-10-12"
+ ~#last_stream: "2026-11-06"
 }

@@ -1,4 +1,4 @@
-# Review 2026-11-05 — keep as the module contract owner (mounts, reads, writes, rests); routing generated with --only, thesis and concepts written from its Status, owner claim is the tree template
+# Review 2026-11-06 — keep as the module contract owner (mounts, reads, writes, rests); next is R1, the flat rests field, then R2, change-only as a check; surfaces and next action re-read against the tree.
 # Plan Index — Module Contract Overhaul
 #
 # A settled page rests. Every module can say, in Spw, what it mounts on, what wakes it, what it reads, what it writes, and what it promises to leave unchanged. Those statements…
@@ -38,9 +38,9 @@ intent: .{
  ][reg=set]
  surfaces = #[
   `scripts/tests/change-only-writes.test.mjs`,
-  `js/kernel/operator-detection.js`,
+  `public/js/kernel/operator-detection.js`,
   `types/module-catalog.d.ts`,
-  `data/runtime-atlas.json`,
+  `public/data/runtime-atlas.json`,
  ][reg=set]
  fixity_tier = `tending`
 }[reg=facet]
@@ -89,7 +89,7 @@ dispatch: .{
 }[reg=facet]
 
 next_action: .{
- step = `Writers are declared (this pass). audit:module-writers scans each module's local import graph for root writes (direct, writeDatasetValue*, write maps, this.root style maps), fails on new undeclared writes or new multi-writer root tokens, and holds today's findings in a baseline to empty. Settings and loader root style writes become change-only.`
+ step = `R1: add rests to CATALOG_DEF_FIELDS (runtime/catalog/constants.js) and a closed union in types/module-catalog.d.ts, declared change-only on semantic-crossrefs and shell-disclosure; then R2 makes change-only a check in scripts/module-writer-audit.mjs. Writers are declared since 47bab2ea.`
 }[reg=facet]
 
 validation: #[

@@ -1,4 +1,4 @@
-# Review 2026-10-12 — hot notes while the plan is parked; the surfaces, boundaries and sequence stay in PLAN.md.
+# Review 2026-11-06 — hot notes while the plan is parked; the surfaces, boundaries and slices stay in PLAN.md.
 # wip — model-collaborator-lore-surfaces
 #
 #>plan_model_collaborator_lore_surfaces_wip
@@ -18,17 +18,20 @@ fixity = "tending"
 
 ^"stream"{
  >>[2026-10-12 10:59] verify — parked until a shoot is booked, and the tree agrees: no terms card exists and /play/rpg-wednesday/lore/ is absent. When a shoot is booked, the first slice is the terms card, exported through the folio .spw.txt path, and its copy is the creator's to write.
+ >>[2026-11-06 12:36] verify — still parked: no terms card, no /play/rpg-wednesday/lore/, and no commit since 2026-10-10 touches the plan's seams. /play/rpg-wednesday/cast/ and /world/ (7dbd4a10, April) already answer who and where, so PLAN.md's lore reader becomes a reading order over them, requested of profile-character-card-development, which owns the route. The shot book's frames live in the local gameplay kit (asset-atlas.js presets).
+ >>[2026-11-06 12:39] probe — wonder_model_collaborator_lore_surfaces_terms_form: seed-card.js has seven templates and no terms; every card downloads as .spw.txt, so slice 1 is a pinned template like costuming.
 }
 
 ^"open"{
  booking = "When is a shoot booked? That unparks the plan; the creator's call."
  terms_copy = "What does the terms card say? The creator writes or approves its copy before any plate."
+ terms_form = ~"./index.spw#wonder_model_collaborator_lore_surfaces_terms_form"
 }
 
 ^"cache"{
  ~#status: "held"
- ~#next_commit: "+[folios] Open a terms card a collaborator can read and save before any shoot"
- ~#files_hot: "design/folios/index.html, public/js/modules/cards/seed-card.js"
+ ~#next_commit: "+[cards] Add a terms card a collaborator can read and save before any shoot, offered only where a host names it"
+ ~#files_hot: "public/js/modules/cards/seed-card.js, play/rpg-wednesday/cast/index.html, play/rpg-wednesday/world/index.html"
  ~#gate: "a booked shoot, then the creator's copy for the terms card"
- ~#last_stream: "2026-10-12"
+ ~#last_stream: "2026-11-06"
 }

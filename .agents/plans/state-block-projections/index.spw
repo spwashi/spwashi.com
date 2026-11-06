@@ -1,4 +1,4 @@
-# Review 2026-07-12 — keep as the small readable-state owner; projections summarize canonical state and never become storage.
+# Review 2026-11-06 — keep as the small readable-state owner; the lens switch is the live state block, the April inline runtime is gone (682cdd1c), and projections still summarize canonical state and never become storage.
 # Plan Index — state-block-projections
 #
 # The site should expose more of its live state through its own notation instead of explaining interaction only in prose. Small code-like state blocks should summarize what a…
@@ -37,7 +37,8 @@ intent: .{
   `surfaces`,
  ][reg=set]
  surfaces = #[
-  `js/site.js`,
+  `public/js/interface/state-inspector.js`,
+  `public/js/runtime/page/lens-modes.js`,
   `.agents/plans/state-block-projections/state-block-projections.spw`,
  ][reg=set]
  fixity_tier = `tending`
@@ -50,13 +51,15 @@ intent: .{
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
 @state_block_projections: ~"./state-block-projections.spw"
-@site: ~"../../../public/js/site.js"
+@state_inspector: ~"../../../public/js/interface/state-inspector.js"
+@lens_modes: ~"../../../public/js/runtime/page/lens-modes.js"
 
 dispatch: .{
  plan = @plan
  wip = @wip
  state_block_projections = @state_block_projections
- site = @site
+ state_inspector = @state_inspector
+ lens_modes = @lens_modes
 }[reg=facet]
 
 ^"connection_points"{
@@ -68,9 +71,9 @@ dispatch: .{
  layer = "pragmatic"
  hypothesis = `The site should expose more of its live state through its own notation instead of explaining interaction only in prose. Small code-like state blocks should summarize what a component can currently do, and on selected surfaces they should let the visitor cycle operator, brace, mode, or value state directly from the block itself. The taste note is clarity + expressiveness: the blocks should feel like useful diagnostic surfaces, not novelty stickers, and they should only mutate state that the underlying component already owns.`
  spec_ref = ~"./PLAN.md"
- impl_ref = ~"../../../public/js/site.js"
+ impl_ref = ~"../../../public/js/runtime/page/lens-modes.js"
  probe_ref = `Hypotheses: small code-like state blocks will make component state easier to read and will deepen the interaction grammar when tokens mutate real underlying state`
- falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/site.js unchanged or untested.`
+ falsification = `A state block that writes a lens seat's expression itself, instead of asking lens-modes.js through requestLensMode, breaks the one-writer rule and fails this claim.`
  status = "active"
 }[reg=facet]
 
@@ -107,6 +110,24 @@ invariants: #[
   ~#with: @plan
   ~#hypothesis: "One review at /design/components/#lens-seats settles four gates. They are the seat treatment, the faint inactive mode-switch chips (from attention-shell-contrast), the lens-use reward toast that reads the seat expression (from mindful-collection-controls), and when a sat seat is offered to the cauldron (cauldron-lens-composition). On a phone the seats measure about 170px (A), 121px (B) and 100px (C)."
   ~#tension: "B teaches the notation: the seat a reader presses is the token that changes in about[kernel]{open.sit}. C is the quietest and spends the least height. A keeps the feedback line and state dot that some readers may lean on. The pick is a feel decision, so it is made in a browser and not by measurement."
+  ~#expect: "Until the look, the rg half shows the seat value only under page_design_components in design.css (:1686) and only silent and quiet in state-semantics.css; after a B or C pick, a seat rule sits in state-semantics.css Cluster C."
+  ~#unblocks: "PLAN.md slices 1 and 2: the seat promotion and the lens reward"
+  ~#probe(read)
   !probe{ "Open /design/components/#lens-seats on a phone and a desktop, press each seat in A, B and C, and pick one; then rg -n 'lens-chrome' public/css/routes/surfaces/design.css public/css/handles/operators/state-semantics.css" }
+  $%[seat.chassis, seat.row, seat.silent]
   ~<"./PLAN.md"> ~<"../../../design/components/index.html">
+}
+
+#>wonder_state_block_projections_first_token
+?["Which token should be the first one a reader can press in a state block?"]{
+  #:depth #!semantic ~#lens(choice)
+  ~#with: @plan @lens_modes
+  ~#taste: "A state block earns its notation when pressing a token changes the thing the token names, and the reader watches it change."
+  ~#hypothesis: "The lens [mode] token is the right first one: its owner, lens-modes.js, already takes requests from five callers, so a pressable token adds an asker and no writer, and row B already shows the expression it would rewrite."
+  ~#tension: "The satchel's page line reaches every page but is floating chrome at the compact pocket target; the image effect cycle (semantic, pixelize, watercolor, clarify) already has helper chips, so a token there repeats a control."
+  ~#expect: "rg finds requestLensMode( in five callers and the seat expression written only in lens-modes.js; nothing renders a pressable token yet."
+  ~#unblocks: "PLAN.md slice 4, the expression-is-the-switch bench demo, and whether slice 3 retires the disclosure event or hands it to the token"
+  ~#probe(run)
+  !probe{ "rg -n 'requestLensMode\\(' public/js" }
+  $%[token.lens_mode, token.satchel_page_line, token.image_effect]
 }

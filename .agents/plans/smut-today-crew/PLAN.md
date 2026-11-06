@@ -1,6 +1,6 @@
 # Plan: smut-today-crew
 
-**Status 2026-10-12.** The creator set a new direction for smut.today: a crew world, its staff as the leads, a story you can put together, daily variance with pins, and no attachment to the current URLs. Nothing is built yet. The 2026-10-12 copy pass (0e2942ae) is what ships at the October 13 close. Next slice: the village and the first arc, for the October 26 close. It is gated on the creator's answers to the open questions.
+**Status 2026-11-06.** The creator set a new direction for smut.today: a crew world, its staff as the leads, a story you can put together, daily variance with pins, and no attachment to the current URLs. Nothing is built yet. The 2026-10-12 copy pass (0e2942ae) is what shipped at the October 13 close, and the worker has not changed since (`workers/smut-today/src/index.js`, 874 lines). Slice 1 was aimed at the October 26 close, which passed with the five questions unanswered, so it now has no date. It is gated on the creator's answers (`index.spw`, five wonders), and every draft gets an identifiability read-back.
 
 **Related:** [workers-wonder-kit](../workers-wonder-kit/PLAN.md) (worker shell) · [model-collaborator-lore-surfaces](../model-collaborator-lore-surfaces/PLAN.md) (credit, consent, usage) · [topic-building-blocks](../topic-building-blocks/PLAN.md) (the culture field's six ways).
 
@@ -14,8 +14,8 @@
 ## What the site does now (measured)
 
 - `workers/smut-today/src/index.js`, one file. Two stories, `meeting` and `train`. Each has a pace (`slow` or `dirty`), a pairing, tags, a body, the phrases it keeps, and three linger questions with answers.
-- The day's lead is `STORIES[dayIndex % 2]`, where `dayIndex` is a UTC day, so it turns at 7pm Central.
-- One cookie, set only when the reader asks (`/settle/`), holds pace, type size and motion; one button forgets it.
+- The day's lead is `featuredStory`, `STORIES[dayIndex(now) % STORIES.length]` over two stories, where `dayIndex` counts UTC days. So it turns at 7pm Central in daylight time, and at 6pm since the clocks went back on November 1.
+- One cookie, set only when the reader asks (`/settle/`), holds pace (`day` lets the day pick, or `slow` or `dirty` first), type size and motion (`SETTLE` in the worker); one button forgets it.
 - No script runs on any page (CSP `default-src 'none'`). Routes: `/`, `/to-you/`, `/pitches/`, `/settle/`, `/meeting/`, `/train/`, `/today.json`.
 
 ## The eight ways in
@@ -65,7 +65,7 @@ The current scheme can go. A proposal, readable aloud:
 
 ## Slices
 
-1. **The village and the first arc** (target: the October 26 close). `/crew/` with the roster slots the creator fills, and the drummer and head writer's first scene in the eight facets. The day turns at the reader's own midnight.
+1. **The village and the first arc** (first aimed at the October 26 close; now undated, after the answers). `/crew/` with the roster slots the creator fills, and the drummer and head writer's first scene in the eight facets. The day turns at the reader's own midnight.
 2. **Today's draw with two pins** (who and where), stored in the one cookie and carried in the address.
 3. **Places and traditions**, each with its own page, linked from every scene that uses them.
 4. **Oscillation over time**: a tour-leg line showing who is close this leg, so returning readers see the village move.

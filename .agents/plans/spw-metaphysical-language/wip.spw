@@ -1,4 +1,4 @@
-# Review 2026-10-12 — hot notes for the construct-codex shell; the workstreams, drift seeds and show program stay in PLAN.md and the plan's named .spw files.
+# Review 2026-11-06 — hot notes for the four passes, the layout lab and the codex shell; the workstreams, drift seeds and show program stay in PLAN.md and the plan's named .spw files.
 # wip — spw-metaphysical-language
 #
 # Spw already behaves like a language on this site — operators prime attention, braces hold charge, positions carry force — but its description is distributed…
@@ -115,6 +115,11 @@ fixity = "tending"
  >>[2026-11-05 22:29] plan — Expression Usage & Variety Roadmap captured in @variety_roadmap#variety_roadmap_2026_11, @compound_expressions, and PLAN.md from the 986-expression SPW_EXPRESSION_MANIFEST census (625 ident joins, 49 ordinal, 12 common, 0 project, 0 nested route braces, 7 prefix-led, 0 postfix, 17 wordless charges, 339 subjects vs 574 modes). Five slices queued: (1) slot-reader & manifest fidelity, (2) repair 17 wordless charges, (3) flagship route variety & herbarium promotion, (4) cross-route stems & mode rings, (5) advisory variety sensor.
  >>[2026-11-05 23:15] cache — the creator: Spw integration needs improvement, and a wonder about what would make editing feel easy, how the tooling relates to mutation, and the composability of the language. Held as #>wonder_spw_metaphysical_editing_mutation_composability beside the instruments that already mutate a line and the composition the routes lack.
  >>[2026-11-05 23:58] cache — the creator: the UI should be more intentional in developing the theory of Spw as a language. Proposed in floating-chrome-stack: each floating piece is one construct's specimen (rail #> traversal, satchel $ substrate, cauldron chip .cauldron{}), so Pass 2, Spw laid out as nested layout, can take the chrome as its first specimens.
+ >>[2026-11-06 12:58] verify — since 2026-11-05: 3a009a35 settled @ as perspective regarding its operand in both layers (operator-semantics.spw workbench_canon), which answers drift-at-001 and retires ?[cascade], whose premise was @ as ref; the census numbers hold against today's manifest (986, 625 ident, 0 nested, 7 prefix-led, 17 of 17 wordless charges). The 22:29 line was a draft's "decide"; compound-expressions.spw:100 calls the roadmap proposed, not decided, so its kind is plan.
+ >>[2026-11-06 13:00] probe — wonder_metaphysical_depth_copy, a reading and not the gate: the language section's prose names capabilities by contract (citation.resolve/1, header.axes/1) and apparatus (Peircean interpretant, anti-unification); imagery survives in a few phrases ("a compiler for meaning", crawl, relay). Mostly schema, as expected, now a capability ledger rather than a version roadmap. Its six cards already wear sigil heads, which PLAN.md Pass 1 now offers as the place for one imagery sentence each.
+ >>[2026-11-06 13:02] probe — wonder_spw_metaphysical_editing_mutation_composability: pivot.js names its moves swap, add, drop, turn and mark (no split); the mark move writes a real front sigil into the line (pivot.js:137), but the moves themselves are plain verbs, so the ~#expect held.
+ >>[2026-11-06 13:04] probe — wonder_metaphysical_sigil_craft_register: the ~#expect missed. Discharge is already public: the atlas says charge "may accumulate on entry and discharge on exit" (topics/software/spw/index.html:861), and the action and surface operator pages say the brace discharges. "Compressed intent" and "sigil craft" appear nowhere, so the physics is public and the lineage is not.
+ >>[2026-11-06 13:06] revise — PLAN.md collapsed by 40-odd lines: the status, Pass 1's landing, the variety roadmap (numbers stay in the cache), the registry and @ drifts, file surfaces, phased commits and hygiene became Landed or pointer lines with commits; the labeled-brace convention question now waits on brace-semantics decision 4; the draft's proposed-commit facet was cut, since slice 1's prefix half belongs to spw-inquiry-loop Slice 2 and its commit tails were not the repo's format.
 }
 
 ^["open"]{
@@ -123,9 +128,8 @@ fixity = "tending"
  names_by_source = ~"../../../.spw/caches/operator-consistency-2026-10.spw#wonder_operator_names"
  square_as_frame = ~"../../../.spw/caches/operator-consistency-2026-10.spw#wonder_square_as_frame"
  ?[codex_shape]: "One dense construct-codex.spw or a codex/ directory — at what entry count does the split rule from spw-surface-normalization trigger?"
- ?[sigil_craft_register]: "Is the charged-compressed-intent correspondence public copy or editor-layer lore? Strongest claim, easiest to misread as decoration."
- ?[cascade]: "If @ arbitrates to ref, does ~ narrow to potential/thread exclusively — and which copy surfaces cascade?"
- ?[brace_convention]: "Does the labeled-brace coverage algebra get its own convention now or after selection-span runtime stabilizes?"
+ sigil_craft_register = ~"./index.spw#wonder_metaphysical_sigil_craft_register"
+ ?[brace_convention]: "Does the labeled-brace coverage algebra get its own convention now or after selection-span runtime stabilizes? Waits on brace-semantics decision 4 (nesting only, or overlap)."
  ?[second_artifact]: "After the operator deck, which industry earns the next physical artifact — recipe card or show cue sheet?"
  ?[deck_anatomy]: "Does the operator deck reuse the character-sheet card schema verbatim, or does a card-per-operator need a geometry panel the Lego schema lacks?"
  ?[episode_one]: "Single sigil (candidates: ~ or !) or one cross-sigil probe — the verso trial covers the whole set at once?"
@@ -213,8 +217,8 @@ fixity = "tending"
  ~#next_commit: "+[lab] Lay one pressed form's parse out as nested regions, a body inside a body, readable whole with scripts off"
  ~#files_hot: "public/js/semantic/spw-highlight.js, public/js/semantic/spw-expression-geometry.js, .spw/language/expressions/, topics/software/spw/index.html"
  ~#gate: "nothing to build the layout lab; its look, pass 3's depth, and the copy pass's words wait on the creator"
- ~#open_count: "11"
- ~#last_stream: "2026-11-05"
+ ~#open_count: "10"
+ ~#last_stream: "2026-11-06"
  ~#mantlepiece: "fable_charm — ten saw/wisdom/toward objects; recharge by disagreement plus evidence"
  ~#taste_debt: "Do not let the codex restate owner conventions; do not arbitrate operator meanings by fiat; do not let industry briefs enter conventions without a pilot artifact; do not let stage excitement write canon or let segments air without a pre-registered expectation."
 }

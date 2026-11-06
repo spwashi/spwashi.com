@@ -1,4 +1,4 @@
-# Review 2026-07-12 — keep as the shared card-family owner; lenses may vary while substrate and identity boundaries stay stable.
+# Review 2026-11-06 — keep as the shared card-family owner and the RPG Wednesday route owner; three slices wait on the creator (first cast card, the style packet's other half, after October).
 # Plan Index — profile-character-card-development
 #
 # The desired end state is a card model that can describe a person, a role, a character, or a recurring campaign figure without pretending those are the same thing. The site already…
@@ -57,6 +57,10 @@ intent: .{
 @tool: ~"../../../public/js/modules/profile/tool.js"
 @agents_plans_blog_blob_spw_plan_md: ~"../../../.agents/plans/blog-blob-spw/PLAN.md"
 @agents_plans_rpg_session_notes_plan_md: ~"../archive/rpg-session-notes/PLAN.md"
+@cast: ~"../../../play/rpg-wednesday/cast/index.html"
+@rpg_wednesday: ~"../../../play/rpg-wednesday/index.html"
+@character_sheet: ~"../../../tools/character-sheet/index.html"
+@midjourney_tool: ~"../../../tools/midjourney/index.html"
 
 dispatch: .{
  plan = @plan
@@ -121,11 +125,44 @@ invariants: #[
 #>wonder_profile_character_card_development_first_cast
 ?["Which recurring figure earns the first cast card, and which session note does it come from?"]{
   #:depth #!experiential ~#lens(memory)
-  ~#with: @cast_lens @session_notes @rpg_wednesday_route @craft_guard_recurrence
+  ~#with: @plan @cast @plan_rpg_session_notes @public_js_modules_profile_builder_js
   ~#taste: "A cast card is earned by a figure who keeps returning to the story, whoever is at the table that week."
   ~#hypothesis: "One published session note exists (sessions/2026-05-13/) and the cast page has no cards. A figure that recurs across that note and the Inktober table can be promoted without a roster."
   ~#tension: "A card that leans on who played turns a campaign figure into a membership record. Seats change from week to week, so the card should hold the figure's story, not its players."
+  ~#expect: "One session folder (2026-05-13) and no profile-card on the cast page, so rg -c exits empty."
+  ~#probe(run)
   !probe{ `ls play/rpg-wednesday/sessions/ && rg -c "profile-card" play/rpg-wednesday/cast/index.html` }
+  ~#probed(2026-11-06): "sessions/ holds 2026-05-13 and an index; the cast page has no profile-card. Since 0814de8e the table shelf on /play/rpg-wednesday/ is where scanned table art lands, so a first card's figure could be a scan rather than a description."
   $%[cast.firstCard, cast.sourceSession]
   ~<"./PLAN.md"> ~<"../archive/rpg-session-notes/PLAN.md">
+}
+
+#>wonder_profile_character_card_development_style_packet
+?["The character sheet's 'develop style in Midjourney' action is gone, and /tools/midjourney/ still waits for its packet. Restore it, retire the consumer, or let the packet carry a scan?"]{
+  #:depth #!pragmatics ~#lens(choice)
+  ~#with: @plan @character_sheet @midjourney_tool
+  ~#taste: "The creator's own art first; Midjourney only where it belongs to its page (2026-11-05)."
+  ~#hypothesis: "A card that hands its identity to a Midjourney bench made sense in June. Since November the stronger move is a packet that names one of the creator's scans as its figure, so a generated study starts from the hand."
+  ~#tension: "Restoring the action reopens a path toward generated imagery that the image plan has been narrowing. Retiring the consumer drops a working query-string flow and its drop/paste zone context. Pointing it at a scan needs a scan picker on the character sheet."
+  ~#expect: "style-packet appears only in tools/midjourney/index.html (the consumer); nothing under tools/character-sheet/ or public/js/modules/profile/ writes it since a46d9041."
+  ~#unblocks: "PLAN.md slice 2"
+  ~#probe(run)
+  !probe{ "rg -n 'style-packet' tools public/js/modules/profile" }
+  ~#probed(2026-11-06): "four hits, all in tools/midjourney/index.html's inline script (lines 623-658); none on the character sheet."
+  $%[restore_action, retire_consumer, packet_carries_a_scan]
+}
+
+#>wonder_profile_character_card_development_after_october
+?["October has closed. Does the Inktober frame stay as October's record, turn to what the table draws next, or step behind the table shelf?"]{
+  #:depth #!experiential ~#lens(time)
+  ~#with: @plan @rpg_wednesday
+  ~#taste: "The table is joined on your own time; copy never assumes a fixed group or invites to a live session."
+  ~#hypothesis: "Kept as a record, the frame's closes (*ink[13]{A}, *ink[26]{B}, *ink[31]{C}) become a finished month a reader can still walk; the table shelf, where scanned table art lands with the creator's first, becomes the route's living part."
+  ~#tension: "Copy that still says October is a good month to draw reads as stale in November; replacing it names a next practice that only the creator can choose; folding it away loses the plainest invitation the route has."
+  ~#expect: "The frame's lede still begins 'If you draw, October is a good month to draw with the table' (play/rpg-wednesday/index.html, #inktober-31)."
+  ~#unblocks: "PLAN.md slice 3, and which art opens the route (midjourney-design-concepts slice 4)"
+  ~#probe(run)
+  !probe{ "rg -n 'October is a good month' play/rpg-wednesday/index.html" }
+  ~#probed(2026-11-06): "one hit at line 566."
+  $%[inktober.record, inktober.next_practice, inktober.behind_the_shelf]
 }

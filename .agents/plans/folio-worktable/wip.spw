@@ -1,4 +1,4 @@
-# Review 2026-10-12 — hot notes while the calendar demo waits on a browser review; the minting rules, slices and landing access stay in PLAN.md.
+# Review 2026-11-06 — hot notes for the week's five, the calendar's changed question and a folio that says where it opens; the minting rules and landing access stay in PLAN.md.
 # wip — folio-worktable
 #
 #>plan_folio_worktable_wip
@@ -19,21 +19,25 @@ fixity = "tending"
 ^"stream"{
  >>[2026-10-12 10:59] verify — the release shelf (7a95da5b), the request card at #folio-request, the primes demo (8703ed24) and the calendar demo (27b616e8) are in the tree; since 2026-10-10 only copy and .spw headers touched the folio pages. The calendar demo is linked from the experiments shelf, not from /design/folios/, and waits on the creator's browser review, which is worth most before October ends. Forms, prices, shipping, the primes demo and the first card request stay the creator's calls.
  >>[2026-10-27 13:40] hygiene — the creator's question moves from ^"open" into the notebook as #>wonder_folio_worktable_calendar, with a guess on record, a read probe and an answer set, so npm run wonder shows it; the call stays the creator's.
+ >>[2026-11-06 12:20] verify — Since the 2026-10-10 Status: the October drop page (2c95bf13), Honk Bazongas restored (5482751f), W44's five (5884cc59), tall scans whole on the plate (9571af62), clear-piece ground (865bb52c). public/data/folio-highres.json ends at 2026-W44, so W45 has not opened. The calendar demo is still linked only from design/experiments/ and design/experiments/folios/; /design/folios/ does not link it.
+ >>[2026-11-06 12:24] probe — wonder_folio_worktable_calendar: the October page (design/folios/october-2026/) has no calendar and lays the month out by kind (folios, panels, cutouts, pads, ask); the calendar demo still lays out September's thirty-one as "October, one folio a day". The question moves from which order to whether a month becomes a calendar at all.
+ >>[2026-11-06 12:28] plan — PLAN.md's audit and first public slice, answered by the release shelf, folded into one kept-rules line; five named next slices, four of them the creator's. Proposal (slice 4): a folio's popover names the page it opens, so the shelf is a door as well as a display.
 }
 
 ^"open"{
  calendar = ~"./wip.spw#wonder_folio_worktable_calendar"
- primes = "Does the primes demo's scan-order walk hold before any route shows the set? The creator's call, in a browser."
+ primes = "Does the primes demo's scan-order walk hold before any route shows the set? The creator's call, in a browser (PLAN.md slice 3)."
+ week = "Which five open 2026-W45? The creator's call each week (PLAN.md slice 1)."
  offer = "Which forms, prices and shipping does a first folio sale carry? The creator's call; sales stay closed until then."
  first_request = "Has a request arrived through the #folio-request card yet? Only the creator can say."
 }
 
 ^"cache"{
  ~#status: "waiting"
- ~#next_commit: "+[folios] Hang October's calendar from the folio shelf, in the order the creator's review chose"
- ~#files_hot: "design/experiments/folios/calendar/index.html, design/folios/index.html"
- ~#gate: "the creator's browser review of /design/experiments/folios/calendar/"
- ~#last_stream: "2026-10-12"
+ ~#next_commit: "+[folios] Open 2026-W45's high-res five, once the creator names them"
+ ~#files_hot: "public/data/folio-highres.json, design/folios/index.html, design/folios/october-2026/index.html, design/experiments/folios/calendar/index.html"
+ ~#gate: "the creator names the week's five; the calendar and the primes demo wait on the creator's look (#>wonder_folio_worktable_calendar)"
+ ~#last_stream: "2026-11-06"
 }
 
 #>wonder_folio_worktable_calendar
@@ -42,10 +46,10 @@ fixity = "tending"
   ~#with: @plan @calendar
   ~#taste: "A month of folios is a walk before it is a grid; the order is part of what was made."
   ~#hypothesis: "Scan order shows the month as it was made; chosen days show it as it should be read."
-  ~#tension: "The review is worth most before the month ends, and October ends on Saturday."
+  ~#tension: "The review was worth most before October ended, and October has passed unreviewed. The October drop now has its own page (design/folios/october-2026/, 2c95bf13), which lays the month out by kind rather than by day, so the demo may have been overtaken, or it may be the form a later month takes."
   ~#expect: "At pocket, scan order reads as a sequence a reader follows; a printable sheet asks for chosen days."
   ~#unblocks: "hanging October's calendar from the folio shelf"
   ~#probe(read)
   !probe{ "open /design/experiments/folios/calendar/ at pocket and at desktop beside /design/folios/, and say which order a reader follows without help" }
-  $%[calendar.scan_order, calendar.chosen_days, calendar.sheet]
+  $%[calendar.scan_order, calendar.chosen_days, calendar.sheet, calendar.retire]
 }

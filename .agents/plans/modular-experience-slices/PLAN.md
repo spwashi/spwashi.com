@@ -1,6 +1,6 @@
 # Modular Experience Slices & Earthy Rhythms of Participation
 
-**Status 2026-10-25.** Landed: five slice contracts in `.spw/slices/` and the attention scheduling slice (c2d5da00, 73d6f2ad). Next slice: review the math labs, which are committed in this checkout, and write one tending note in `.spw/slices/math-practice-labs/`. The review opens on `public/js/modules/math/diagrams.js:1251`, where the arrow marker id `arrow-vector` is fixed rather than per lab; no page mounts two vector fields today, so nothing collides yet. The smoke runs live, then with scripts off, at `/topics/math/vector-calculus/#vector-field-lab` and `/topics/math/numerical-methods/#numerical-stepping-lab`. Phases 3–6 are speculative and wait for that note. Holds the dimensional navigation slice contract (`.spw/slices/dimensional-expression-navigation/`).
+**Status 2026-11-06.** Landed: five slice contracts in `.spw/slices/` and the attention scheduling slice (c2d5da00, 73d6f2ad). Nothing on the math surfaces or `.spw/slices/` has moved since 2026-10-25. Next slices: S1, S2 and S3 under Pilot A, which together review the committed math labs and leave the first tending note in `.spw/slices/math-practice-labs/`. S1 (one arrow marker per lab) is ungated. S2 (what a lab shows with scripts off) ends at the creator's look. S3 records the pilot's verdict. Phases 3–6 are speculative and wait for that note. Holds the dimensional navigation slice contract (`.spw/slices/dimensional-expression-navigation/`).
 
 **Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — topics.math_labs, access.math_inputs.
 
@@ -59,12 +59,13 @@ This is the first concrete pilot because it began as worktree work and is now co
 
 The slice goal is to turn math vocabulary into playable reading/observation/gesture surfaces: vector fields, divergence, curl, Euler stepping, stability, and approximation error become directly inspectable. This is a useful bridge between fundamentals practice and the site's broader operator/field/rhythm vocabulary.
 
-Review posture before landing:
-- Keep the patch focused on the two math routes and the shared math diagram module.
-- Confirm generated SVG IDs are unique per lab instance, especially marker IDs referenced with `url(#...)`. Today the vector-field marker id is the fixed `arrow-vector` (`diagrams.js:1251`). There is no live collision: only `/topics/math/vector-calculus/` mounts a vector-field lab, once.
-- Read the labs with scripts off. The vector-field lab's select and range inputs stay live and do nothing, and its SVG holds only its title and desc, so the figure is its figcaption (`topics/math/vector-calculus/index.html:138-167`). The stepping lab reads the same way (`topics/math/numerical-methods/index.html:138-150`).
-- Run `node --check public/js/modules/math/diagrams.js`, `git diff --check`, and a browser smoke on both math routes: live, then with scripts off, at `/topics/math/vector-calculus/#vector-field-lab` and `/topics/math/numerical-methods/#numerical-stepping-lab`.
-- Add a tending note after review that records what the math labs taught about practice-bed structure.
+Review posture: keep each patch to the two math routes and `public/js/modules/math/diagrams.js`. Smoke both routes live, then with scripts off, at `/topics/math/vector-calculus/#vector-field-lab` and `/topics/math/numerical-methods/#numerical-stepping-lab`. Run `node --check public/js/modules/math/diagrams.js` and `git diff --check`.
+
+Next slices (2026-11-06), one commit each:
+
+- **S1 — one marker per lab.** `diagrams.js:1251` gives the vector arrow marker the fixed id `arrow-vector`, and `marker-end` points at `url(#arrow-vector)` (`:1315`). Derive the id from the lab host's id. No page collides today, since only `/topics/math/vector-calculus/` mounts a vector field, once. This guards the second lab. Ungated.
+- **S2 — scripts-off honesty.** With scripts off, the vector lab's 5 controls and the stepping lab's 2 stay live and do nothing. Each SVG holds only its title and desc, so the figcaption carries the figure (`topics/math/vector-calculus/index.html:138-167`, `topics/math/numerical-methods/index.html:138-150`). Neither page has a `<noscript>` note, though the site has one ready in `_partials/scripts-off-tuning.html`. Which reading to give is `index.spw` `#>wonder_modular_experience_slices_scripts_off_figure`. It ends at the creator's look in a browser with scripts off.
+- **S3 — the first tending note.** After S1 and the smoke, write the first note in `.spw/slices/math-practice-labs/` from `templates/tending-note.spw`. It records the pilot's verdict (`index.spw` `#>wonder_modular_experience_slices_math_pilot`) and what the labs taught about practice-bed structure.
 
 **Pilot B — attention-resonance-field**
 
@@ -127,7 +128,7 @@ The slice should support both rhythms:
 
 **Phase 2 — Tending Notes & Practice Artifacts**
 - Use the tending-note template after a real review or implementation session.
-- Record one note for `math-practice-labs` once the vector-calculus / numerical-methods pilot is accepted, rejected, or split.
+- Record one note for `math-practice-labs` once the vector-calculus / numerical-methods pilot is accepted, rejected, or split (slice S3).
 - Prefer `.spw` notes for durable concepts and plan-local template notes for draft coordination.
 
 **Speculative, not scheduled (Phases 3–6).** These wait until the math-labs tending note exists and shows the slice model reduced friction for someone.

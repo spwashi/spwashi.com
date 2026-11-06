@@ -1,6 +1,6 @@
 # factshift.center
 
-**Status 2026-10-30.** The snapshot in `workers/factshift-center/version.json` is the app at `99c10e6`, carried on the site as `76c70f77`. factshift.com is the prototype, settled October 2024. factshift.center examines which concepts a particular set of physics can represent. That difference is public at `about/domains/factshift.center/`. The creator understands the hesitance to engage with AI and, as an engineer, can't really mind it. Agentic development is how the examination adds cohesion and performance. Next on the canvas: one reading from the workbench, in place of the app's second slot reader. Interaction depth is in [INTERACTION.md](./INTERACTION.md) and is not yet a patch. Deploy remains the creator's (Wrangler).
+**Status 2026-11-06.** Nothing has moved in either repository since 2026-10-30. The snapshot in `workers/factshift-center/version.json` is the app's last commit, the `revision` it records, carried on the site as `76c70f77`; the app's own hashes resolve only in `workers/factshift-center/app` (gitignored here), so they sit in the pins below. factshift.com is the prototype, settled October 2024; factshift.center examines which concepts a particular set of physics can represent (*The difference*, below, in the creator's words). Next on the canvas: slice 5, one reading from the workbench in place of the app's second slot reader; slice 1a and slice 2 need no gate. Interaction depth is in [INTERACTION.md](./INTERACTION.md) and is not yet a patch. Deploy remains the creator's (Wrangler).
 
 **Related:** [the UI model](../../../.spw/surfaces/factshift-center.spw) (the canvas as the site's .spw tree holds it: decisions apart from readings, and known gaps) · [spw-quest](../spw-quest/PLAN.md) (its pivot and construct cards can open a line here) · [spw-inquiry-loop](../spw-inquiry-loop/PLAN.md) (parser releases, the capability ledger) · [brace-semantics](../brace-semantics/PLAN.md) (`[ ]` as a frame) · [spw-metaphysical-language](../spw-metaphysical-language/PLAN.md) (depth passes) · [ecosystem-architecture](../ecosystem-architecture/PLAN.md) (peers).
 
@@ -13,11 +13,15 @@ operation: align (the app's canvas with the workbench's reading of a line)
 - The app is TypeScript and Vite, with a d3 v7 force simulation drawn in SVG. It compiles the workbench from source through two aliases, `spw-workbench/runtime` and `spw-workbench/parser`, both pointing into its own submodule.
 
 ```text
-pins (2026-10-27)
-app            main f5e9ffc, 80 commits past origin/main 2ba127a (fetched 2024-10-30)
-app workbench  submodule fffab72, spw-workbench 0.2.0-alpha.1, 2026-03-12
-site reader    public/js/semantic/spw-workbench-reader.js, v0.3.0 @ 850077a (the site's mount)
-spw.quest      assets/parser/2026.10.13, v0.3.0 @ 0eb1d1c, nine commits behind the site's mount
+pins (2026-11-06; app hashes resolve in workers/factshift-center/app)
+app            main 99c10e6 (2026-10-30), 94 commits past origin/main 2ba127a (fetched 2024-10-30)
+app workbench  submodule fffab72, spw-workbench 0.2.0-alpha.1, 2026-03-12: from before the
+               workbench's 2026-03-26 history rewrite, so the clone keeps it only on
+               backup/history-rewrite-pre-20260326, not on main; it defines no outline, roles or formAt
+site reader    public/js/semantic/spw-workbench-reader.js, v0.3.0 @ 850077a (the site's mount):
+               exports outline and roles
+spw.quest      assets/parser/2026.10.13, v0.3.0 @ 0eb1d1c, nine commits behind the site's mount:
+               workbench.min.js exports outline, roles, formAt and all six names the app imports
 ```
 
 ## Landed 2026-10-27 (app repository, local)
@@ -36,6 +40,25 @@ e9a390d                   the phone pass and the interaction contract below
 e601855                   the handle, the gesture grammar, the slot, and the Spw stage
 619432e                   the handle and the lens, the verb ring, the five-row menu
 f5e9ffc                   the canvas edits the held line; select, link, pinch; verb families; the lens submits
+```
+
+## Landed 2026-10-27 to 2026-10-30 (app commit, then the site commit that carried it)
+
+```text
+5eff5b1  c191e467   links by relation, one home a node, the nub, names from node:0
+381c07c  f9a4ff0a   the reflex instrument, tool bezels, pinches
+f662879  608b14bc   the node panel as cards that answer each press
+0779802  5c2b0b2b   presses and saves answered
+1fd8bd1  2cc85547   the feel card: the physics set in words
+c22cd5d  13009f61   the handle carries a tool across; → fills Spw; boon grows from the origin
+8e6b418  747f2667   a run holds its line; the runtime's trace behind a toggle
+e281183  a234438e   joins written without spaces (ecestudent@ece.120~?[transistors work.how])
+9336713  a4e6ecbf   predictable joins: what a node is brought to holds still
+ee32665  831064c3   the nub steps in three levels
+9bfe7ce  10dff034   primed tiles: → on a tile takes what its tool has ready
+6b85a42  cdc2a6db   a node says what the runtime made of it, and can be entered as a page
+2fb7184  fe75de95   ( ) applies to the word with its body; containers resize
+99c10e6  76c70f77   < > refers to the whole reading, unlabeled
 ```
 
 ## Layout
@@ -130,8 +153,8 @@ The tool is a handle, a lens and a window (`workers/factshift-center/app/src/js/
 - **Spw.** Run has its row; clear lives in the prompt's corner while there is text; the keyboard's Enter key says "enter", because Enter makes a new line and run is the submit. The window is a fixed size that fits the stage with a margin each side.
 - **Taps reach the node meant.** A node's picture and label take no touches; only its circle does.
 - **One gesture per touch.** A swipe's direction locks once it crosses its line, so a path that drifts diagonally keeps the gesture it began. It unlocks only by coming back near where it started, which takes it back.
-- **Guided.** A swipe that would land lights the handle's edge on that side, and the column lights the mode under or beside the finger. A swipe toward nothing shows the card. The handle is above everything else on the page.
-- **Taught on asking.** A hold shows the card, and so does the menu's "gestures" row, which counts what this browser has found. With a keyboard, the context-menu key or Shift+F10 is the hold. Nothing teaches itself uninvited.
+- **Guided.** A swipe that would land lights the edge on that side of the handle or the lens (a tool tile lights nothing), and the column lights the mode under or beside the finger. A swipe toward nothing shows the card. The handle is above everything else on the page.
+- **Taught on asking.** The menu's "gestures" row shows the card (`teachFocalGestures` in `focal-point.ts`) and counts what this browser has found. With a keyboard, the context-menu key or Shift+F10 shows it (`gestures.ts`). A pointer hold grips; it does not show the card, though earlier drafts of this plan said so (the verbs audit, `.spw/audits/factshift-center-verbs-2026-10.spw`, `^"claims".hold_shows_card`). Nothing teaches itself uninvited.
 - **Expert use.** Every gesture has a visible control. Choosing a mode takes one touch: ←, slide, let go.
 
 Built in the app (`workers/factshift-center/app/src/js/ui/gestures.ts`) and committed at the creator's ask after a sitting of live notes. The next tools and the open choices are in `wonder_factshift_gestures`.
@@ -151,19 +174,16 @@ factshift.com is the prototype. factshift.center is the examination of which con
 
 The differential is relevant because people hesitate to engage with AI. The creator understands that and, as an engineer, can't really mind it. The center extends the prototype by agentic development: more depth in how the concepts cohere, and in how the canvas performs.
 
-The canvas still lays a line out from `line-anatomy.ts`, a second reader beside the workbench. The app compiles workbench `fffab72` (2026-03-12). The site mounts `850077ab` (2026-10-26), whose reader build exposes `outline`, `roles`, and `formAt`. Slice 5, carrying a dated build, is the next cut. Draw that outline. A body holds its parts, a ( ) applies to the word with its body (its part of speech open), a concept refers to the whole reading, and a join is the edge between two forms. `line-anatomy.ts` stays until that projection can say the line back. Broader geometry stays dormant in the workbench. This canvas projects the parse.
+The canvas still lays a line out from `line-anatomy.ts`, a second reader beside the workbench. The app compiles its own workbench submodule from March (pins, above), which has no `outline`, `roles` or `formAt`. The site mounts `850077ab` (2026-10-26), whose reader bundle exports `outline` and `roles`; spw.quest's dated 2026.10.13 workbench build exports all three. Slice 5, carrying a dated build, is the next cut. Draw that outline. A body holds its parts, a ( ) applies to the word with its body (its part of speech open), a concept refers to the whole reading, and a join is the edge between two forms. `line-anatomy.ts` stays until that projection can say the line back. Broader geometry stays dormant in the workbench. This canvas projects the parse.
 
 ## Next slices
 
-1. **SVG and UI semantics** (asked 2026-10-27). Most of it is in the phone pass:
-   - The svg is a group, and its region and edge layers are hidden from assistive tech.
-   - Mode buttons say aria-pressed, not aria-selected.
-   - The tabpanel role and the radiogroup without radios are gone.
-   - Anatomy nodes are named by word, slot and frame.
-   - Enter and Space reach a node only while the node holds focus. Before, a node walked with Tab kept them, even from a focused button.
+Each is one session in the app (`workers/factshift-center/app`, its own repository), checked with `npx tsc --noEmit` and `npx vite build`, then carried into the snapshot here when the creator asks (*Refreshing the snapshot*, above). The numbers are the ones `index.spw` and INTERACTION.md cite.
 
-   Still open: a check in Chrome's accessibility tree, and a keyboard walk from the canvas.
-2. **Canon names for the containers.** `CONTAINER_META` in `workers/factshift-center/app/src/js/modes/spw/workbench-runtime.ts` labels the eight affinities in the app's 2025 words. These are the workbench's names for them:
+1. **SVG and UI semantics** (asked 2026-10-27). Landed in the phone pass (carried here in `b5d19bc9`): the svg is a group with its region and edge layers hidden from assistive tech; mode buttons say aria-pressed; the tabpanel role and the radiogroup without radios are gone; anatomy nodes are named by word, slot and frame; Enter and Space reach a node only while it holds focus.
+   - **1a. Accessibility tree and keyboard walk.** Read only. In Chrome, read the snapshot's accessibility tree, then walk from the canvas with Tab, the arrows, Enter and the context-menu key. Confirm or correct `^"by_parity".keyboard_misses` in `.spw/audits/factshift-center-verbs-2026-10.spw` (a node's rename, ring, drag and pinch; every container cell). Gate: none. Verify: a wip line listing what the keyboard reached.
+   - **1b. Name the stepped level.** A stepped level is a ring (`data-stepped`, `tool-steps.ts`) with no accessible name. It would say "tool menu", the card's title, or the control's label through the polite note `handle-said.ts` already keeps. Gate: the creator confirms the three sentences, since each is the accessible name (INTERACTION.md, *Accessibility and annotation*).
+2. **Canon names for the containers.** `CONTAINER_META` in `src/js/modes/spw/workbench-runtime.ts` labels thirteen affinities in the app's 2025 words. Value, Substrate and Measure already speak the workbench's word. Stream and Capsule (`<< >>`) have no mark among the workbench's twelve, so they keep theirs. Eight change:
 
    | App's 2025 word | Workbench name |
    | --- | --- |
@@ -175,24 +195,22 @@ The canvas still lays a line out from `line-anatomy.ts`, a second reader beside 
    | Perspective | Scene |
    | Category | Mode |
    | Confluence | Subject |
-3. **Links and forces.** In the working tree (see Names, One home a node, and Links by relation above). Feel is the creator's in the browser: the throw speed (8), the throw heat, and the relation table are the first knobs.
+
+   The line's joins already use these names (`BONDS` in `line-anatomy.ts`). Gate: none in the app. Verify: a held line's card shows the new label.
+3. **Links and forces.** Landed, and carried here in `c191e467` (see *Names*, *One home a node* and *Links by relation* above). The feel is the creator's, in the browser. The first knobs are `THROW_SPEED` (8) in `src/js/simulation/nodes/handling/circle.ts`, the throw heat, and the relation table in `relations.ts`. The demo is the probe in `wonder_factshift_relations`: three settings held on one line.
 4. **First load.** Ends at a demo for the creator's look.
-5. **Carry a dated workbench build** in place of compiling the submodule's source. `wonder_factshift_rebundle` holds the choice.
-6. **From spw.quest.** Once this is deployed, cards on `/pivot` and `/constructs` can open their line here with `?spw=`.
+5. **Carry a dated workbench build** in place of compiling the submodule's source. `wonder_factshift_rebundle` holds the choice; the probe of 2026-11-06 found the dated build exports every name the app imports.
+   - **5a. Carry.** Point the `spw-workbench/runtime` and `spw-workbench/parser` aliases in `vite.config.js` at a carried copy of `workers/spw-quest/assets/parser/2026.10.13/workbench.min.js` with its manifest. The release ships no type declarations, and the app imports thirteen types from the runtime, so `tsconfig.json` keeps its paths into the submodule's source for types, or the release grows a `.d.ts` (a workbench ask). Verify: tsc, vite build, and the falsification line in `index.spw` (`?spw=home[hook]{software.art.practice}(atlas)<person>` keeps its regions and frame).
+   - **5b. Draw the outline.** A body holds its parts, a ( ) applies to the word with its body, a concept refers to the whole reading, and a join is the edge between two forms. `line-anatomy.ts` stays until the outline can say the line back. Gate: the creator's look.
+   - **5c. Re-read the runtime gaps.** After 5a, hold `<person>` and a line with `@`, and check `runtime_capsule` and `runtime_prose` in `.spw/surfaces/factshift-center.spw#gaps`. Either the newer runtime closes them or each becomes a workbench ask.
+6. **From spw.quest.** Once this is deployed, cards on `/pivot` and `/constructs` can open their line here with `?spw=` (spw-quest owns those cards; its slice O1 is the nearest).
+7. **Layout gaps** the UI model names (`.spw/surfaces/factshift-center.spw#gaps`), one each, every one ending at the creator's look:
+   - **7a. Nested order.** A body holding a nested expression stacks its plain parts in a column with the nested box beside them, so written order breaks.
+   - **7b. Kept sizes.** A kept container's size and place are canvas pixels, not shares of the line's column.
+   - **7c. Loose nodes.** A node added with ↑ cannot join the line by a drop, so an entered page with nothing inside has nothing to drag into an empty slot.
+
+   The gesture collisions in the verbs audit (two taps on a container's corner also make a loose node) wait on its `#>wonder_factshift_gesture_meanings`.
 
 ## Open questions
 
-`index.spw` holds them as wonders (`npm run wonder`):
-
-- conceptual space against performative or descriptive space;
-- frames and channels;
-- what the canvas shows about Spw's strengths and gaps;
-- what earlier parity would have grown;
-- the rebundle;
-- which relations pull;
-- what the Spw panel's priming becomes now that Spw has dialects;
-- which gestures the other tools take, and the choices the demo leaves open;
-- spells mapped over a set (map mode, naming as a story, arcs across nodes);
-- containers as physics and as frames (delimiters, boundaries, layers, documents);
-- size, count and selection along arcs (pinch and radius by links and layers, swipes that add or reduce);
-- interaction depth: behaviors, the three submenu levels, primed against actualized, device magnitude and pressure, annotation and the accessible name (`wonder_factshift_interaction`, [INTERACTION.md](./INTERACTION.md)).
+Thirteen, held as wonders in `index.spw` (`npm run wonder -- --contour --surface .agents/plans/factshift-center/index.spw`). They run from the line's spaces, frames and channels, its gaps and parity with the workbench, through the rebundle, which relations pull, priming in dialects and the gestures each tool takes, to spells over a set, containers as physics and frames, sizes along arcs, the examination itself, and interaction depth (`wonder_factshift_interaction`, [INTERACTION.md](./INTERACTION.md)). Gesture meanings, one per gesture, are asked in the verbs audit as `#>wonder_factshift_gesture_meanings`.

@@ -1,4 +1,4 @@
-# Review 2026-07-12 — keep as the static semantic skeleton owner; normalize by route family and preserve authored meaning.
+# Review 2026-11-06 — keep as the static semantic skeleton owner: every route has main and the skip link, H1 (the scripts-off diff) is next behind a headless browser, and the script-only buttons' reading is a wonder.
 # Plan Index — semantic-html-normalization
 #
 # The desired end state is a site where the static HTML carries a clearer, more consistent semantic skeleton across as many routes as practical: predictable main targets, skip…
@@ -28,13 +28,13 @@ intent: .{
 }[reg=facet]
 
 ^"conceptual_model"{
- thesis = `The desired end state is a site where the static HTML carries a clearer, more consistent semantic skeleton across as…`
+ thesis = `The static skeleton is what remains when scripts are off, so it carries the landmarks, headings, links and names, and the runtime only fills in what it can infer.`
  concepts = #[
-  `semantic`,
-  `semantic-html-normalization`,
-  `desired`,
-  `end`,
-  `state`,
+  `landmark`,
+  `skip-link`,
+  `scripts-off`,
+  `accessible-name`,
+  `script-only-button`,
  ][reg=set]
  surfaces = #[
   `about/website/index.html`,
@@ -56,6 +56,7 @@ intent: .{
 @topics_math_index_html: ~"../../../topics/math/index.html"
 @topics_site_design_index_html: ~"../../../topics/site-design/index.html"
 @topics_software_index_html: ~"../../../topics/software/index.html"
+@page_structure: ~"../../../scripts/audit-page-structure.mjs"
 
 dispatch: .{
  plan = @plan
@@ -116,3 +117,17 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+#>wonder_semantic_html_normalization_script_only_buttons
+?["How should a button that only a script answers read when scripts are off: switched off with a note, stepped back, or turned into something HTML can do?"]{
+  #:depth #!pragmatics ~#lens(choice)
+  ~#with: @plan @page_structure
+  ~#taste: "A control that promises an action it cannot take is the one dishonest thing a page can show with scripts off."
+  ~#hypothesis: "Each family has a native fallback of its own: copy buttons can show the text to select, mode switches already step back under the scripts-off hook, and a set of state buttons can name its choices in plain words, so one rule per family covers most of the 223."
+  ~#tension: "Settings chips took 'switched off, with a note' (the creator's call, 837cfdde); repeating that note on /design/'s 40 and /services/care/'s 28 would fill the pages with apologies."
+  ~#expect: "audit:page-structure still counts 223 script-only buttons on 25 pages, led by /design/ 40, /services/care/ 28, /settings/ 21 and /tools/spw-parser/ 15."
+  ~#unblocks: "the Access section's script-only row, and designer-conversation-canvas D2 on /design/"
+  ~#probe(run)
+  !probe{ "npm run -s audit:page-structure -- --all" }
+  $%[family.switched_off_with_note, family.stepped_back, family.native_fallback]
+}

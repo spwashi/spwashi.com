@@ -22,6 +22,7 @@ fixity = "tending"
  >>[2026-11-05 21:40] probe — at the creator's prompt that the layout theory may need revising, the theory was read against what runs, with a live headless probe (capture mode off). What runs is one pocket ladder whose members are a selector list; slots are labels no CSS reads; the persistent pieces span four tiers and the satchel launch paints above toasts; whimsy.css:402-406 outranks the control-size token below 48rem; four different pocket conditions; the rail's arrival lifts the corner 61.5px. A proposed revision (host that answers, z follows time, width places and pointer sizes, rungs not slots, the carry corner as one composition, matte ground over text) is in .spw/caches/chrome-ecology-2026-11.spw#revision, with its ladder of what lands, what ends at a demo and what waits on an answer.
  >>[2026-11-05 23:58] cache — the creator: the floating chrome should be more useful, the UI more Spw native, and more intentional in developing the theory of Spw; visitors rarely arrive holding Spw. FIX.md now reads the rail, satchel and chip as they are (section-handle.js:494-541: Spw kin moves hidden as advanced, an id before a heading in the label) and proposes each piece as one Spw expression whose slots are its controls, the satchel offering the page's own Spw first. Operators per piece are #>wonder_floating_chrome_stack_piece_operators.
  >>[2026-11-06 00:20] land — at the creator's proceed: the satchel launch and title read $satchel (the mark aria-hidden, the name read as satchel), and its first row is the page's own Spw, the expression nearest the middle of the screen as code, then copy page Spw, pivot on spw.quest and take apart on spw.quest; the cauldron chip writes .cauldron{n} and then its verb, as its dialog does. Pocket demo on Home with three held: the chip reads .cauldron{3} CAST and the satchel hands over home[hook]{orient}<atlas> with working links. The rail is unchanged: its kin moves and toggle wait on a look, since more cells crowd a phone row.
+ >>[2026-11-06 12:40] probe — wonder_floating_chrome_stack_console_size: floating-chrome.css assigns --spw-floating-control-size in one block, compact (var(--touch-target-compact, 2.15rem), :108); whimsy.css:403-407 still sets :where(button, .spw-chip, label) to --touch-target-min below 48rem, so the token loses on every pocket control until Step 2. FIX.md's 402-406 citation moved to 403-407, and its chip lines now cite c672468e.
 }
 
 ^"open"{
@@ -36,5 +37,5 @@ fixity = "tending"
  ~#next_commit: "+[chrome] Demo one floating control size: a compact base, and a step up for a coarse pointer"
  ~#files_hot: "public/css/components/floating-chrome.css, public/css/ornament/whimsy.css, public/css/components/runtime-states.css"
  ~#gate: "the creator's answer on console button size, then a sensation review of the demo in the browser"
- ~#last_stream: "2026-11-05"
+ ~#last_stream: "2026-11-06"
 }

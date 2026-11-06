@@ -262,3 +262,9 @@ Citations retargeted: root index, `site-source-layout/wip.spw`, `css-cascade-str
 Archived [input-cauldron](./input-cauldron/PLAN.md): implementation and tests
 landed in `f1672070`. Repository text search found no path citations to retarget.
 Future composition work stays with spellcraft-authoring and cauldron-dynamics.
+
+## 2026-11-06 — Plan pass
+
+Archived [ecosystem-offer-2026-10](./ecosystem-offer-2026-10/PLAN.md) by its own rule: October closed, and its copy (9a465ef4) and composer prices (b5bf993c) landed and have not moved since 2026-10-10. Its two creator questions, the prices as shipped and what a film backer receives, moved under their names to `promo-wonder-cycle/index.spw`, which also carries its rules (proof cards point to evidence and a next action; financial wording waits on the creator; the legal name only on its own page).
+
+Citations retargeted: `promo-wonder-cycle/PLAN.md`, `folio-worktable/PLAN.md`, the root `index.spw` members list and `README.md`.

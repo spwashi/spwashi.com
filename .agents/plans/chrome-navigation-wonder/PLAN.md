@@ -1,47 +1,24 @@
 # Chrome, Navigation, and Metaphysical Wonder (2026 review)
 
-**Status 2026-10-30.** Landed: the closed-header swipe (`02c7757a`), the coarse-pointer hamburger (`b893cec3`), and the pocket rail that shows the reader's position in Spw at a layer they choose (`7018898c`), now fixed under the flourish pack (`c348c0f7`). The rail now reaches the six hubs that wrap their clusters in one bare `main > article` (`/design/`, `/now/`, `/play/`, `/services/`, `/cards/`, `/topics/software/`); before 2026-10-30 it saw none of their sections, or only the hook. Their authored ids already fit the 28-character handle, and so do home's 17 (the lens panels gained ids in `cfd4e2e4`, the same day the Status was written; the reason strip is inside `#home-frame`, not a rail section). Next slice: component headings, so the `&` layer names a card instead of its kind (home's four lens panels read `lens`). Nothing gates it but the copy. Motion between layers waits on a designed pass, the open-drawer swipe waits on the creator's answer in `index.spw`, and Phase 3 is dormant. The dated Status headers below are history.
+**Status 2026-11-06.** Landed: the closed-header swipe (`02c7757a`), the coarse-pointer hamburger (`b893cec3`), the pocket rail that shows the reader's position in Spw at a layer they choose (`7018898c`, fixed under the flourish pack in `c348c0f7`), and the rail's reach into the six hubs that wrap their clusters in one bare `main > article` (`320fc4b9`). Since 2026-10-30 only the rail's `$` key changed, now titled `$satchel` (`902738b4`). Next slice: the `&` layer names a component instead of its kind; home's four lens panels still read `lens`. It now has two routes, authored headings or the expression each panel already carries, and the rail label waits on the creator's look either way. Motion between layers waits on a designed pass, the open-drawer swipe waits on the creator's answer in `index.spw`, and Phase 3 is dormant.
 
 **Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — ungated.home_rail_ids, home.menu_toggle, calls.drawer_swipe, seams.home, seams.breadcrumbs, seams.menu_toggle.
 
 **Related:** [floating-chrome-stack](../floating-chrome-stack/FIX.md) · [spellcraft-authoring](../spellcraft-authoring/PLAN.md) (breadcrumb spell) · [mobile-chrome-alignment](../archive/mobile-chrome-alignment/PLAN.md) (archived). **Absorbed 2026-10-10:** [navigation-header-disclosure](../archive/navigation-header-disclosure/PLAN.md) · [page-region-discoverability](../archive/page-region-discoverability/PLAN.md).
 
-## Status — 2026-09-09: coarse/pocket glyph hamburger (`b893cec3`)
+## Next slices — 2026-11-06
 
-Closed-toggle swipe still cycles rooms (`02c7757a`). The disclosure itself is
-now a hamburger on a coarse pointer, not a labeled Routes chip. CSS and JS
-share `DRAWER_MENU_QUERY` so the strip and the toggle cannot dual-paint.
-Open-drawer swipe remains the unpaid fourth edge — do not add it until
-priming names the next verb (touch-gesture-contracts f14).
+1. **The `&` layer names the component.** `componentOf` in `public/js/runtime/attention/section-handle.js` reads `h2, h3, h4, figcaption, .frame-card-title` and falls back to `data-spw-kind`. Home's four lens panels (`index.html#home-lens-reading` and its siblings) have no heading, so the rail reads `lens`, though each lede already carries an expression: `home[reading]{craft}<entry>`, `home[systems]{parser}<inspect>`, `home[play]{table}<session>`, `home[studio]{commission}<offer>`. There are two routes. One is short authored headings, which is the creator's copy. The other lets `componentOf` read the nearest expression's `subject[mode]` before the kind, so the rail shows Spw the page already wrote and teaches the slot it is reading. Gate: a pocket demo for the creator's look (`index.spw#wonder_chrome_navigation_wonder_component_name`). Verify: a headless pocket probe of `/` with a 12s settle and the rail on `&` reads the chosen name on `#home-lens-reading`.
+2. **Recheck the menu toggle.** Row 2 from [state-block-projections](../state-block-projections/PLAN.md#absorbed-2026-10-10--attention-shell-contrast): the toggle read as ambient chrome before it became a glyph. Ungated sensor: `npm run visual:checks -- --ids=home-nav-open` (`scripts/lib/viewport-still-recipes.mjs:84`); fix only if the still still says so.
+3. **The header Cauldron action on `/play/`.** It links to `/play/#media-cauldron` from `/play/` itself (`scripts/template.mjs:846`). A page-aware de-emphasis, so the action reads as here rather than a trip, is still owed from navigation-header-disclosure. Gate: the creator's look at the header.
 
-## Status — 2026-09-04: mobile edge/chrome swipe, 3 of 4 rooms done
+## Landed
 
-"On a phone, a visitor can leave the current room in more than one direction
-from existing edges and chrome" landed for three of the four named edges,
-each reusing the existing tap:travel/swipe:cycle contract rather than a new
-gesture family — verify with `grep -n swipe public/js/runtime/interaction/hops.js
-public/js/runtime/attention/section-handle.js`:
-
-- **Header rooms (closed toggle-header)** — `resolveHeaderRoomHop` cycles
-  primary nav hrefs on swipe when menu-mode is toggle and the drawer is
-  closed (`02c7757a`).
-- **Section-handle rail (collapsed)** — `resolveSectionHandleSwipe` sends
-  compact swipes through prev/next section travel, matching the visible
-  ‹ › hop (`c7da1438`).
-- **Landmark rail** — already `swipe:cycle` via `LANDMARK_CONTRACT` in
-  `public/js/runtime/interaction/hops.js:23` (landed earlier, `724caa1b`).
-
-**Open**: shell disclosure (the drawer/menu once it's *open*) has zero swipe
-handling — `grep -c swipe public/js/runtime/shell/shell-disclosure.js` is 0. The
-header commit's own note: "An open drawer keeps tap-to-choose." That's the
-one remaining edge from the four named in this goal, and the natural next
-bounded slice: extend swipe-to-cycle to the open drawer's room list,
-following the same pattern as `resolveHeaderRoomHop`/
-`resolveSectionHandleSwipe` (swipe left/right cycles the primary nav links,
-suppress the trailing click, verify live via pocket CDP before/after —
-`/about/` is the route both prior commits checked against). Do not invent a
-new gesture vocabulary or a parallel drawer-only contract; the closed-header
-and section-handle commits are the reference implementations.
+- **Swipe on three of four edges.** The closed header cycles rooms (`resolveHeaderRoomHop`, `public/js/runtime/interaction/hops.js`, `02c7757a`); the collapsed rail sends swipes through prev/next (`resolveSectionHandleSwipe`, `section-handle.js`, `c7da1438`); the landmark rail cycles through `LANDMARK_CONTRACT` (`hops.js:23`, `724caa1b`). The open drawer has none (`grep -c swipe public/js/runtime/shell/shell-disclosure.js` prints 0), and whether it should is a wonder.
+- **Hamburger.** A glyph on a coarse pointer or at pocket width, with labeled `Routes` only inline (`b893cec3`); CSS and JS share `DRAWER_MENU_QUERY`.
+- **Phase 0 and 1, 2026-07.** `syncChromeLocomotionExpression` in `section-handle.js` writes `data-spw-wonder-entry="section-locomotion"` and `data-spw-approach` on the handle while the trail is active; `shell/chrome/section-context.css` ties wonder-entry styling to `--field-balance`; `shell/chrome/navigation.css` holds the toggle copy's width (FIX.md); `shell/chrome/footer.css` sets the mobile stack rhythm; `.spw/conventions/component-taxonomy.spw#locomotion_expression` and `.spw/conventions/cognitive-navigation.spw` carry the contract. Rule kept: reach, return and invitation stay on `page_locomotion_handle`'s existing datasets, with no confidence widget and no duplicate attributes on `<html>` or `<body>`.
+- **Shared polish, 2026-05-31.** Inline nav links no longer shrink into each other; viewport tier, pointer and hover mode come from the always-mounted shell disclosure; `frame-grid--2up`/`--3up` fall back to honest columns below desktop.
+- **Menu field, 2026-06-28.** The shell disclosure state machine stays the owner of menu mode, topology, pressure, phase and dismissal; arcs compose through haptics; the field is described in `.spw/surfaces/menu-field.spw` and `.spw/conventions/circuit-components.spw` (from the archived space-menu-arcs-electrical plan).
 
 ## Public Goal
 Improve the primary navigation (header via `<spw-site-header>`), section handles, breadcrumbs, and footer so they are genuinely pleasant on mobile, encourage curiosity/discovery/wonder, and feel like part of the Spw attentional field rather than administrative chrome.
@@ -50,46 +27,13 @@ Simultaneously honor the philosophical shift: operators as "elements or forces" 
 
 Support the longer-term vision of a scientifically-social component taxonomy: a model with enough depth and rhythmic discovery that it naturally invites wonder about the underlying sciences of attention, systemic resonance, and emergence — and makes art a natural extension rather than a separate domain.
 
-## Review Findings (executed via directory, grep, and file reads)
+## Review findings, 2026-05 (compressed)
 
-### Template / Common HTML Patterns
-- The effective "template" layer is a hybrid:
-  - Declarative custom elements: `<spw-site-header current="..." nav_items="..." related_routes="..." context_relevance="..." indicator="...">` and `<spw-site-footer>`.
-  - Static fallback/seed content in `_partials/site-footer.html` (rich identity block containing page architecture data attrs, Composition Cauldron, settings quick actions + local note form, plus footer nav).
-  - Hand-authored per-route `index.html` with extremely consistent, high-signal `<body data-spw-surface="..." data-spw-route-family="..." data-spw-features="..." data-spw-wonder="..." data-spw-page-role="..." data-spw-layout="...">` plus `<main id="main-content">`, multiple `<nav aria-label="...">` (frame-operators, page-index), `<header class="frame-heading" or frame-topline>`, skip links, and `spw-section-handle`.
-- JSON-LD BreadcrumbList appears on home and blog.
-- Markup quality on sampled crawlable pages (home, design hub + spokes, blog, recipes subs, settings, about) is strong: semantic landmarks, ARIA, data-spw-* as first-class modeling surface, operator chips, brace-form expressions, and explicit wonder/interaction hints (e.g. design hero explicitly teaches "tap to test, hold to inspect anatomy + Spw state, swipe for runtime").
-
-Crawlable priority (from dist/sitemap.xml + route structure): home, about + domains/*, blog, design (hub + many spokes: palettes, runtime, components, slots, interaction-design, accessibility, etc.), cards, topics/* (software, math, craft, etc.), recipes/*, services, play/rpg-wednesday, tools, settings.
-
-### Navigation + Breadcrumbs + Mobile Pain
-- Primary nav lives in the spw-site-header CE (rendered via JS in runtime modules) + chrome.css owning `.site-header / body > header`.
-- Header uses CSS grid (sigil | nav | toggle) + sticky + scroll-state data attrs + pointer tracking.
-- Mobile nav is sophisticated but complex: horizontal overflow auto scroller + data-spw-menu-mode / menu-phase / menu-pressure / menu-topology ("drawer-field", "screen-field") + clarity/project animations. This state machine is powerful for "field-like" disclosure but can feel opaque or non-discoverable on small viewports — exactly the reported pain point (not pleasant, weak encouragement of discovery/clarity/wonder).
-- Secondary locomotion: `.spw-section-handle` (attention-architecture.js) — mobile-first sticky chip driven by IntersectionObserver on sections with id or data-spw-kind. Shows current operator + label. Progressive (falls back to static top anchor). Good, but currently more "utility" than "wonder invitation".
-- Breadcrumbs: JSON-LD + "dimensional breadcrumbs" UI in settings. Not yet a first-class delightful surface across the site.
-- Frame-operators and page-index navs inside routes are repeated patterns that work well on desktop but contribute to mobile friction when combined with the global header.
-
-### Footer Layout / Alignment
-- `_partials/site-footer.html` + `.site-footer` in chrome.css.
-- `.site-footer__inner`: grid `minmax(0, 1.2fr) auto` (identity heavy column + nav) on wide; stacks to 1fr on narrower viewports.
-- Identity column is extremely dense: brand, summary, page-architecture block, Composition Cauldron (with actions + output), settings cluster (quick preset buttons + full local-note form + meta links + status).
-- Nav is flex-wrapped links.
-- Legal at bottom spanning.
-- Reported alignment issues likely stem from: dense stacking of cauldron + settings form + note input on mobile, inconsistent internal rhythm vs component tokens, nav justify behavior after stack, and possible gap/measure conflicts when the identity grid children have their own internal grids/flex.
-
-### Color Tokens + Operator Metaphor
-- Recent evolution (core.css + foundation.css + ornament + route propagation) is exactly the appreciated direction:
-  - Operator palette remains the stable primitive "forces" (frame teal, probe violet, object amber, ref blue, action teal-dark, topic sea-green, etc.). These are now cleanly the grammar / elemental layer.
-  - `--semantic-accent` (and the three aliases: secondary, subtle, emphasis) + `--component-accent*` mirrors lead surface and component theming. They fall back through `--active-op-color` → teal but are intended to be tuned by route, runtime state, or ornament field.
-- This cleanly separates "operators as elements/forces" (metaphysical play, brace interactions, attention grammar) from "lived surface accent / projection" (what the user experiences as resonance, warmth, or mood on a given route or card).
-- Aligns perfectly with the desire to keep the metaphor open. The attentional field model + ornament as "visual projection layer" already provides the systemic resonance mechanism.
-
-### Surface CSS Redundancy
-- The repeated pattern `body[data-spw-surface="xxx"] { --xxx-accent: var(--semantic-accent, local-hue); ... }` (light + dark scopes) across ~15 route files is the main duplication.
-- It is largely *intentional and correct* propagation (gives theme influence while preserving route identity).
-- Some dark-mode blocks and local component overrides repeat similar color-mix fallbacks. Opportunity for further consolidation into systems or a stronger default in foundation + fewer per-route exceptions, but not urgent breakage.
-- No major "copy-paste" of large rule blocks observed; most surface files are focused.
+- **Templates.** The header and footer are custom elements (`<spw-site-header>`, `<spw-site-footer>`) over a static seed in `_partials/site-footer.html`; each route's `index.html` is hand-authored with a consistent `<body data-spw-*>` profile, `<main id="main-content">`, labeled navs and skip links. Markup quality on the sampled routes was strong.
+- **Navigation pain.** The mobile menu's state machine (menu mode, phase, pressure, topology) was powerful but opaque on small screens; the section handle was more utility than invitation; breadcrumbs lived in JSON-LD and settings, not on the page. The hamburger, the rail's Spw layers and the `.` path layer have since answered most of this.
+- **Footer.** The identity column stacked brand, page architecture, the cauldron and the settings form densely on phones; `shell/chrome/footer.css` now owns that rhythm.
+- **Color.** Operators stay the stable palette of forces; `--semantic-accent` and `--component-accent*` carry lived surface accent by route and state. Phase 3 would name that two-layer model in `public/css/tokens/core.css`; nothing there names operators as forces yet.
+- **Surface redundancy.** The `body[data-spw-surface="…"] { --…-accent: var(--semantic-accent, …) }` pattern repeats across about fifteen route files. It is intentional propagation, and consolidating it is not urgent.
 
 ### Long-term Vision Alignment
 The request for a "scientifically-social model of component taxonomy" with depth, discovered rhythms, art as natural extension, and encouragement of wonder about the sciences of attention / "systemically enforced resonance and emergence" maps *directly* onto the existing Spw ontology:
@@ -104,97 +48,16 @@ The request for a "scientifically-social model of component taxonomy" with depth
 
 This is not a new feature request — it is naming and deepening the existing contract so it becomes more legible, extensible, and inviting to both humans and models.
 
-## Recommended Next Actions (prioritized)
-
-### 2026-06-28 menu field execution note
-- Kept the existing shell disclosure state machine as the owner of menu mode, topology, pressure, phase, and dismissal.
-- Added a small arc lifecycle as haptics composition rather than a parallel interaction bus.
-- Documented the projected route-menu field in `.spw/surfaces/menu-field.spw` and the opt-in electrical vocabulary in `.spw/conventions/circuit-components.spw`.
-- Implementation owner plan, merged and archived 2026-09-17: `.agents/plans/archive/space-menu-arcs-electrical/PLAN.md`; live arc work continues here and in `spellcraft-authoring`.
-
-### 2026-05-31 shared polish patch
-- Preserve route label integrity in the primary header by preventing inline nav links from shrinking into each other; let the shell disclosure state choose inline vs toggle based on real overflow.
-- Make viewport tier, pointer mode, hover mode, and device context reliable from the always-mounted shell disclosure layer so intermediate breakpoint CSS can participate on every route.
-- Use shared content-grid fallbacks for `frame-grid--2up` / `frame-grid--3up` below desktop widths so tablet routes get honest columns instead of squeezed fixed tracks.
-- Add subtle touch/active feedback to shared card-like surfaces and richer section-handle direction glow without adding new route markup.
-
-0. **Locomotion legibility via existing datasets (no parallel root attrs)**:
-   - Do not add a standalone confidence widget or duplicate reach/return/invitation attrs on `<html>` / `<body>`.
-   - Map chrome taste through three inspectable questions already carried by `page_locomotion_handle`:
-     - `reach`: what moves are available? → `data-spw-handle-availability`, `data-spw-page-section-count`
-     - `return`: how does the reader settle? → `top` in availability + `ornamental_reversibility` return paths
-     - `invitation`: what does chrome invite? → `data-spw-section-handle-label`, `data-spw-wonder-entry`
-   - On the handle shell only, add expressive register shorthand: `data-spw-approach` (`distant` | `approaching` | `arrival`) per `expressive-registers.spw`.
-   - Keep wonder invitation styling in `section-context.css` tied to `--field-balance`; defer full `data-spw-express` on chrome until register renderings are reviewed for shadow conflicts.
-
-1. **Immediate surgical polish (chrome + footer)**:
-   - Small CSS tweaks in public/css/shell/chrome.css for footer mobile: tighter rhythm inside identity (use more --component-pad/gap), better alignment when stacked, ensure cauldron + settings form don't fight for space.
-   - Gentle enhancement to nav toggle / section-handle copy and affordances so they read as "wonder invitations" rather than pure utility (leverage existing data-spw-wonder-entry patterns).
-   - Consider exposing more of the menu "field" metaphor in data attributes or labels for inspectability.
-
-2. **Navigation as wonder surface**:
-   - Evolve the section-handle and header nav states to participate more visibly in the attentional field (e.g., resonance, field-balance influence on their chrome).
-   - Make breadcrumbs (dimensional or otherwise) a first-class, collectible, Spw-expressible surface.
-   - Audit the spw-site-header CE rendering + its mobile disclosure for clarity and "easy path back to hub" patterns (design hub already models this well).
-
-3. **Color / Operator Metaphor Formalization**:
-   - Minor doc updates in core.css, ornament-contract.spw, and AGENTS.md to explicitly name operators as "elements/forces" whose interactions produce the field.
-   - Keep operator palette as the canonical primitive layer; semantic-accent family as the surface/metaphysical projection layer.
-   - Update design catalog and any operator reference pages to reflect the two-layer model.
-
-4. **Component Taxonomy + Scientifically-Social Model**:
-   - Create `.spw/conventions/component-taxonomy.spw` (or extend site-semantics.spw and attention-field.spw) that models:
-     - Components as stable interaction patterns between forces (operators) and fields.
-     - Taxonomic dimensions: locality, consequence, promptability, collectability, liminality, materiality, rhythmic signature.
-     - Social/scientific extensions: how repeated patterns across recipes, math, play, design, etc. demonstrate emergence and resonance that can be studied, tuned, and turned into art.
-   - Wire a short dispatch from agent-optimization/PLAN.md and the public plans register.
-   - Use the design hub + experiential gestures as the primary on-ramp for humans to discover the rhythms.
-
-5. **CSS Redundancy**:
-   - Incremental consolidation pass on the accent declaration pattern (stronger foundation defaults + route "personality" tokens only where they add real expressive value).
-   - Consider a small systems/ or tokens/ layer for "surface personality" if the per-route blocks grow.
-
-6. **Tracking**:
-   - This PLAN.md under `.agents/plans/chrome-navigation-wonder/`.
-   - Run `spw-plan-maintenance` after any landing patches to wire references.
-   - Add relevant data-spw-* or inspectable attributes only when they increase legibility of the model.
-
 ## Success Signals
 - Mobile header/footer and section navigation feel like delightful, curiosity-inviting parts of the surface rather than obstacles.
 - A new visitor to /design/ can tap/hold/swipe their way into understanding both concrete UI and the deeper "forces + resonance" model without reading docs.
 - Operators feel like playable elements/forces in both the UI grammar and the metaphysical story.
 - The component taxonomy becomes a living, cross-route artifact that makes the sciences of attention and emergence feel approachable and artistic.
 
-## Related Artifacts (as of this review)
-- AGENTS.md (layer order, token balance principles, semantic accent guidance)
-- public/css/tokens/core.css (semantic-accent family + documentation)
-- public/css/shell/chrome.css + components/foundation.css (current chrome + component token contracts)
-- public/js/runtime/attention/attention-architecture.js + experiential.js (locomotion + gesture semantics)
-- _partials/site-footer.html + spw-site-header/footer usage across routes
-- .spw/conventions/ (attention-field, ornament-contract, site-semantics — primary places for the taxonomy extension)
-- design/ hub and spokes (the living demonstration surface)
+## Open beyond the slices
 
-Next concrete patch or deeper modeling session should reference this plan.
-
-## Implementation Status (2026-07)
-
-### Landed — Phase 0 + Phase 1 (partial)
-
-- `public/js/runtime/attention/section-handle.js` — `syncChromeLocomotionExpression`: `data-spw-wonder-entry="section-locomotion"` and `data-spw-approach` on handle/shell when the trail is active; reach/return/invitation legibility stays on existing `page_locomotion_handle` root datasets.
-- `public/css/shell/chrome/section-context.css` — wonder-entry styling tied to `--field-balance`.
-- `public/css/shell/chrome/navigation.css` — stable `spw-nav-toggle-copy` inline size (FIX.md hover jitter).
-- `public/css/shell/chrome/footer.css` — mobile stack rhythm for identity, cauldron, settings, and nav.
-- `.spw/conventions/component-taxonomy.spw` — scientifically-social taxonomy + `locomotion_expression` contract.
-- `.spw/conventions/cognitive-navigation.spw` — `page_locomotion_handle` html_contract extended for wonder-entry + approach discipline.
-- `.agents/plans/chrome-navigation-wonder/index.spw` — plan dispatch and owner_claim.
-
-### Next
-
-- Phase 2, re-scoped 2026-10-10: the rail's `.` path layer (`7018898c`) is now the on-page breadcrumb, and `runtime/experiential/breadcrumb-spell.js` assembles the trail and the live spell path. What remains: the path layer says little on pages without authored section ids (the Status slice), and whether the header's spell path should follow the rail's layer. Who owns breadcrumbs, this plan or spellcraft-authoring, is a question for the creator in `index.spw`.
-- Breadcrumbs, 2026-10-25: the sitting's `seams.breadcrumbs` proposes that the rail's route path stays here and the spell trail stays in spellcraft-authoring, and that both read the one anatomy reader `.spw/caches/craft-shelves-2026-10.spw` primes. The breadcrumbs wonder stays open.
-- The mobile menu toggle (state-block-projections' row 2) belongs to this plan, since it owns the header. Recheck it with `npm run visual:checks -- --ids=home-nav-open`.
-- Phase 3, dormant 2026-10-10: the operator-forces / semantic-accent two-layer doc pass in `tokens/core.css` and the operator atlas. Nothing in `public/css/tokens/` names operators as forces yet, and no live plan picks it up.
-- Re-run `npm run check:local` after landing; validate mobile on home, design hub, and one long topic route.
+- **Breadcrumbs.** The rail's `.` path layer (`7018898c`) is the on-page breadcrumb, and `runtime/experiential/breadcrumb-spell.js` assembles the trail and the live spell path. The sitting's `seams.breadcrumbs` proposes that the route path stays here and the spell trail stays in spellcraft-authoring, both reading the one anatomy reader that `.spw/caches/craft-shelves-2026-10.spw` primes. Owner: `index.spw#wonder_chrome_navigation_wonder_breadcrumbs`.
+- **Phase 3, dormant 2026-10-10.** The operator-forces and semantic-accent doc pass in `tokens/core.css` and the operator atlas. No live plan picks it up.
 
 ## Shell offset receipt — 2026-09-17
 

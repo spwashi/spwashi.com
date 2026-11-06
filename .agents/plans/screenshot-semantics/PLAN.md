@@ -1,6 +1,6 @@
 # Plan: screenshot-semantics
 
-**Status 2026-10-30.** Named viewport-still recipes landed (de06af3c; nightly and wander walks since, 9f3aae2a, 73f200f2), and the 2026-08-31 crop seed (aba9c1e4). Capture mode (`data-spw-capture-mode`) already gives clean-capture visibility and pauses SVG flows (`public/css/modes/capture.css`) and texture crops (`effects/texture-slice.css`). Commits 2–5 (priming and journey tokens) have not started. The sitting's three looks have stills since 2026-10-30: `services-opening`, `settings-presets` and `play-opening` answer to `--ids` and `npm run sense -- ink`, kept with the wanders so the nightly month is unchanged. Next comes one screenshottable state on one route with a named still id, which waits on the creator's answer to `index.spw#wonder_screenshot_semantics_journey`: should a still show how the visit got here, and should that persist across sessions? `software-frame-probe` (`viewport-still-recipes.mjs:1010`, added 2026-09-04 in 4771b685) is already a frame-addressed pocket still of `/topics/software/`; the frame still extends it, or says how it differs.
+**Status 2026-11-06.** Landed: the named viewport-still recipes (de06af3c), with the nightly and wander walks since (9f3aae2a, 73f200f2); the 2026-08-31 crop seed (aba9c1e4); and stills for the sitting's three looks, `services-opening`, `settings-presets` and `play-opening` (a3d9164b, 2026-10-30), which answer to `--ids` and `npm run sense -- ink` and sit with the wanders, so the nightly month is unchanged. Capture mode (`data-spw-capture-mode`) gives clean-capture visibility and pauses SVG flows (`public/css/modes/capture.css`) and texture crops (`public/css/effects/texture-slice.css`). Nothing in the plan's paths has changed since. Next, ungated: slice 1 below, so that a still carries the page's own Spw line. The frame still (slice 2) waits on the creator's answer to `index.spw#wonder_screenshot_semantics_journey`: should a still show how the visit got here, and should that persist across sessions? `software-frame-probe` (`scripts/lib/viewport-still-recipes.mjs:1010`, from 4771b685) is already a frame-addressed pocket still of `/topics/software/`, and slice 2 extends it or says how it differs.
 
 **Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — ungated.still_places, calls.journey, rules.motion.
 
@@ -19,20 +19,7 @@ The desired end state is a site where a screenshot at any moment captures someth
 
 ## Files
 
-[NEW] .agents/plans/screenshot-semantics/PLAN.md
-[NEW] .agents/plans/screenshot-semantics/wip.spw
-[NEW] .agents/plans/screenshot-semantics/screenshot-semantics.spw
-[MOD?] .spw/conventions/site-semantics.spw — extend selection and priming axes with screenshottability rules
-[MOD?] .spw/conventions/style-development.spw — add journey token vocabulary as a style development record
-[MOD?] public/css/style.css — ensure selection, priming, and liminality state survive as visible CSS without hover/focus
-[MOD?] public/js/semantic/component-semantics.js — write priming and address state into data attributes at interaction time
-[MOD?] public/js/kernel/shared.js — helpers for persisting address and journey state into markup attributes
-[MOD] scripts/lib/visual-capture-plan.mjs — viewport still vs region anatomy; --stills track
-[NEW] scripts/lib/viewport-still-recipes.mjs — named device-frame subjects (tooling-only)
-[MOD] scripts/component-snapshots.mjs — prepare, blank/target retry, shared screenshotBuffer
-[MOD?] index.html — add screenshottable state hooks to primary frames
-[MOD?] topics/software/index.html — ensure operator grammar states are legibly captured
-[MOD?] topics/software/spw/index.html — operator atlas pages should be maximally screenshot-legible
+Landed tooling: `scripts/lib/visual-capture-plan.mjs` (a viewport still versus a region anatomy clip, the `--stills` track), `scripts/lib/viewport-still-recipes.mjs` (named device-frame subjects) and `scripts/component-snapshots.mjs` (prepare, the blank/target retry, a shared `screenshotBuffer`). The slices below say which of `.spw/conventions/site-semantics.spw`, `public/js/semantic/component-semantics.js` and the route pages (`/`, `/topics/software/`, `/topics/software/spw/`) each one touches.
 
 Craft guard:
 - Priming and selection state must be readable in a static screenshot without JavaScript, hover, or focus context.
@@ -44,13 +31,15 @@ Craft guard:
 - Explicit address, selection, focus, and authored attentional weight must remain more salient than automatic scroll passage.
 - A capture must remain attractive after transient motion is frozen; screenshot value cannot depend on catching an animation peak.
 
-## Commits
+## Slices
 
-1. `#[screenshot] — capture screenshot semantics plan and priming/selection vocabulary`
-2. `.[semantics] — formalize screenshottable state taxonomy, priming rules, and journey token grammar`
-3. `&[css] — ensure selection and liminality states persist visually without JavaScript`
-4. `&[runtime] — write priming and address state into data attributes at interaction time`
-5. `![screenshot] — verify screenshottable states across routes, interactions, and static load`
+Commit 1 landed with the plan itself (64f264e0). The old commits 2 to 5 (taxonomy, CSS persistence, runtime attributes, verification) become these slices:
+
+1. **A still carries its Spw line (proposal, ungated).** `scripts/component-snapshots.mjs` already records `componentExpression`, but only the target's own `data-spw-semantic-expression`, so it is null whenever the target carries none: 2 of the 8 values in the local run manifests since October (`design/components/captures/runs/`, gitignored). The satchel already has the fallback. `readPageLine()` in `public/js/interface/state-inspector.js` takes the expression nearest the middle of the screen (902738b4), and the capture would read the same line when the target has none. Every still then says where it is in the language the site teaches, without a mark on the page. Whether the line should also reach the creator's own screenshots is `index.spw#wonder_screenshot_semantics_still_line`. Tooling only: no page change and no new attribute. Verify: `npm run visual:capture -- --stills --ids software-frame-probe --viewports pocket`, after which the manifest entry holds a line such as `software[field]{orient}<register>`.
+2. **One frame still (gated).** One screenshottable state on `/topics/software/`, with a named still id, extending `software-frame-probe`. It waits on `index.spw#wonder_screenshot_semantics_journey`, because the state it captures either includes the path or does not.
+3. **Taxonomy (old commit 2).** `.spw/conventions/site-semantics.spw` gains the screenshottable states that slices 1 and 2 actually used, and no more. It follows slice 2.
+4. **Persistence without JavaScript (old commits 3 and 4).** Selection and liminality stay visible in CSS, and `component-semantics.js` writes priming and address into the attributes that already exist. No new `data-spw-*` family; this plan is a presentation criterion. It follows slice 2's answer.
+5. **Verification (old commit 5).** The demo sequence under "Validation", as named stills. It closes the plan.
 
 Capture loop (the `fuzz:*` scripts never existed):
 - Explore: `npm run visual:explore`

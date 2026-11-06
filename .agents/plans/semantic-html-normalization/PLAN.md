@@ -1,6 +1,6 @@
 # Plan: semantic-html-normalization
 
-**Status 2026-10-30.** The landmark sweep holds: all 209 route pages carry `<main>` and the skip link (the last five, four labs under `/design/experiments/` and `/topics/knowledge-bases/markdown/`, landed 2026-10-30). Two scripts-off sensors landed since 09-27: `audit:page-structure` names buttons only a script answers (8d1ed950, 768c5c09), and `component-snapshots.mjs` takes scripts-off stills (73f200f2). Next slice: the JS-on/off landmark, heading and link diff below. It reports only until its counts are read once in a browser on the demo routes. The code-block controls took `--touch-target-min` on 2026-10-30 (Access, below). The access report comes after the diff.
+**Status 2026-11-06.** The landmark sweep holds: every tracked route `index.html` (210, October's folio drop page among them) carries `<main>` and the skip link, since 51ac0714 closed the last five on 2026-10-30. Scripts-off sensors since 09-27: `audit:page-structure` names buttons only a script answers (8d1ed950, 768c5c09), and `component-snapshots.mjs` takes scripts-off stills (73f200f2). The code-block controls took `--touch-target-min` (42e4ce0a). Next slice: H1, the JS-on/off landmark, heading and link diff, which reports only until its counts are read once in a browser on the demo routes. H2, the access report, comes after it. How the 223 script-only buttons read with scripts off is a call per family (`wonder_semantic_html_normalization_script_only_buttons`).
 
 **Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — ungated.scripts_off_diff, ungated.code_block_controls, access.
 
@@ -21,58 +21,38 @@ The desired end state is a site where the static HTML carries a clearer, more co
 
 Route HTML changes stay mostly mechanical: landmarks, ids, skip targets, and accessible names. `public/js/semantic/page-metadata.js` is already concept-dense and should absorb inference/normalization logic instead of spreading another semantics helper across the runtime; `public/js/interface/semantic-chrome.js` consumes what it derives. Any CSS simplification should remove duplicated semantic-state rules, not introduce a new styling vocabulary.
 
-## Dependencies
-
-none
-
 ## Failure Modes
 
 - **Hard**: skip links or landmark ids are added inconsistently, producing broken internal targets or duplicate ids.
 - **Soft**: the runtime still depends on verbose authored metadata because the inference layer does not cover the repeated cases cleanly.
 - **Non-negotiable**: route content remains readable without JS, primary landmarks stay keyboard-accessible, and existing visual/state behaviors do not regress while semantics are normalized.
 
-## Validation
+## Landed
 
-- **Hypotheses**: most routes should converge on the same top-level semantic skeleton; repeated section frames should expose clearer accessible names; and the runtime should be able to infer more metadata with less HTML boilerplate.
-- **Negative controls**: page copy, route order, and existing interactive settings/image behaviors should remain functionally unchanged.
-- **Demo sequence**: open representative pages from `/`, `/about/website/`, `/settings/`, `/topics/math/`, `/topics/software/parsers/`, and `/topics/software/spw/operators/ref/`; verify skip-link behavior, `main` targeting, section labeling, and semantic metadata overlays still make sense.
-
-## Spw Artifact
-
-None beyond `wip.spw`; the branch memory is the retained operational surface.
-
-## Active Refinement - 2026-06-19 Conversation Audit
-
-This plan now owns the "html normalization audit" thread from the current conversation. The task is not a full content rewrite; it is a route-skeleton and alignment pass that should make HTML more predictable for CSS, runtime modules, accessibility, and `.spw` inspection.
-
-Redistributed tasks:
-
-- Verify every high-traffic route has one stable `main` target, one clear skip-link destination, and section ids that match visible headings or route purpose.
-- Align repeated card/frame HTML with the shared component anatomy: header, meta, body, figure, actions, footer.
-- Prefer existing `data-spw-*` families on meaningful clusters over new wrappers or one-off attributes.
-- Check that interactive controls using `aria-pressed`, `aria-expanded`, `aria-controls`, or `data-set-mode` have a matching HTML target and a CSS state owner.
-- Replace legacy file/path assumptions in this plan as files are touched; current code lives in layered `public/css/**` and `public/js/**` modules, not the older monolithic `spw-*` names.
-
-Validation additions:
-
-- `rg -n "href=\"#main-content\"|id=\"main-content\"|aria-controls|data-set-mode" **/index.html`
-- Targeted duplicate-id checks on edited routes.
-- Spot-check that normalized HTML still renders without JavaScript before relying on runtime inference.
+- **The April sweep** (2026-04-16, wip): skip links and `main#main-content` across the public routes, each main labeled from its visible heading; `page-metadata.js` derives region heading ids, `aria-labelledby` links and `role="group"` for anonymous panels; repeated role-family selectors moved onto `data-spw-role-cluster`.
+- **The last five** (51ac0714): four labs under `/design/experiments/` and `/topics/knowledge-bases/markdown/`.
+- **References resolve** (probe 2026-11-06): across the 210 pages, every `aria-controls`, `aria-labelledby` and `aria-describedby` names an id on its own page, and no id repeats outside an escaped code sample. The 06-19 audit's "a matching HTML target" check retires on that; its "CSS state owner" half has no sensor and no reported miss.
 
 ## JS-off parity — 2026-09-27
 
-Progressive enhancement is doctrine in five places and owned by none: `AGENTS.md` (JS only when HTML and CSS cannot carry the behavior), `.spw/conventions/stylesheet-ecology.spw#progressive_enhancement` (the CSS delivery side), `.spw/caches/living-terms-2026-09.spw` with `npm run audit:living-terms` (a highlighted word must keep its promise with scripts off), `dimensional-expression-navigation` (the dimensional path is ordinary links), and `spw-operator-pages` craft guard 3. This plan owns the HTML side of that rule from today, because the static skeleton is what remains when scripts are off.
+Progressive enhancement is doctrine in five places and owned by none: `AGENTS.md` (JS only when HTML and CSS cannot carry the behavior), `.spw/conventions/stylesheet-ecology.spw#progressive_enhancement` (the CSS delivery side), `.spw/caches/living-terms-2026-09.spw` with `npm run audit:living-terms` (a highlighted word must keep its promise with scripts off), `dimensional-expression-navigation` (archived; the dimensional path is ordinary links), and `spw-operator-pages` craft guard 3 (archived). This plan owns the HTML side of that rule, because the static skeleton is what remains when scripts are off.
 
-Facts: three routes carry a `<noscript>` block, one on home. The module catalog mounts 146 ids (4 core, 92 enhancement, 49 feature, 1 region; recounted 2026-10-25, 136 on 09-27), eight immediate. The runtime writes 115 custom properties and many `data-spw-*` states, and no sensor compares a JS-off render against a JS-on one. `audit:living-terms` is the only parity probe, and it covers one mechanic.
+Facts: three routes carry a `<noscript>` block, one on home. The module catalog mounts 146 ids (4 core, 92 enhancement, 49 feature, 1 region; recounted 2026-10-25, 136 on 09-27), eight immediate. The runtime writes 115 custom properties and many `data-spw-*` states, and no sensor compares a JS-off render against a JS-on one.
 
-Next slice, narrowed 2026-10-10. Controls already have a sensor: `audit:page-structure` names buttons a page offers with scripts off that nothing answers (8d1ed950, 768c5c09; it skips buttons inside a `<form>`), `audit:living-terms` covers living terms, and `component-snapshots.mjs` takes scripts-off stills (73f200f2). What no sensor does yet: load a route with scripts disabled and again enabled, and diff landmarks, headings, and link and form counts. The scripts-off switch is `applyScriptExecution` in `scripts/component-snapshots.mjs:423` (`Emulation.setScriptExecutionDisabled`); `chrome-headless-harness.mjs` has none. Report per route; do not gate `check:local` on it until the counts are read once in a browser on the demo routes: `/`, `/about/website/`, `/settings/`, `/topics/math/`, `/topics/software/parsers/`, `/topics/software/spw/operators/ref/`.
+**H1. The scripts-off diff.** Load each demo route with scripts disabled and again enabled, and report landmarks, headings, and link and form counts side by side. Touches `scripts/component-snapshots.mjs`, whose `applyScriptExecution` already flips `Emulation.setScriptExecutionDisabled` (the headless harness has no such switch), or a small script beside it that reuses it. Demo routes: `/`, `/about/website/`, `/settings/`, `/topics/math/`, `/topics/software/parsers/`, `/topics/software/spw/operators/ref/`. Gate: a headless browser the sandbox allows (`npm run sense -- doctor`); it joins `check:local` only after its counts are read once in a browser. Proposed output, so a row reads at a glance and teaches the difference as Spw: one line per route whose scene turns, `about.website[skeleton]{landmarks.headings.links}(off)` beside `(on)`, with a count only where the two differ.
 
 ## Access — 2026-10-25
 
 The [review sitting](../../../.spw/caches/ui-review-sitting-2026-10.spw)'s `^"access"` frame holds gaps no plan owns. This plan takes them as proposed owner.
 
-- Contrast and targets: no sensor checks WCAG AA contrast or the 44px ground-control target. The dark operator colors in 0206fb41 were checked by hand. One report from computed styles: text contrast per route at pocket, light and dark, and coarse-pointer hit boxes under 44px outside `[data-spw-floating-chrome]`.
-- Code-block controls: landed 2026-10-30. Edit and Copy on Spw code blocks are content controls, so on coarse pointers they take `--touch-target-min` in both axes (`public/css/components/spw-source.css`), not `--touch-target-compact`; fine pointers keep `2rem`.
-- Script-only buttons: 223 on 24 pages (`/design/` 40, `/services/care/` 28, `/settings/` 21). Each needs a scripts-off reading that does not promise an action.
-- Math labs: the inputs answer nothing with scripts off. The lab review belongs to [modular-experience-slices](../modular-experience-slices/PLAN.md).
-- Skip links: the five gaps closed 2026-10-30.
+- **H2. Contrast and targets.** No sensor checks WCAG AA contrast or the 44px ground-control target; the dark operator colors in 0206fb41 were checked by hand. One report from computed styles: text contrast per route at pocket, light and dark, and coarse-pointer hit boxes under 44px outside `[data-spw-floating-chrome]`. Same browser gate as H1, after it.
+- **Code-block controls:** landed (42e4ce0a). Edit and Copy on Spw code blocks take `--touch-target-min` in both axes on coarse pointers (`public/css/components/spw-source.css`); fine pointers keep `2rem`.
+- **Script-only buttons:** 223 on 25 pages on 2026-11-06 (`/design/` 40, `/services/care/` 28, `/settings/` 21, `/tools/spw-parser/` 15). Each needs a scripts-off reading that does not promise an action. Settings chips already show switched off with a note (the creator's call); the other families wait on the wonder.
+- **Math labs:** the inputs answer nothing with scripts off. The lab review belongs to [modular-experience-slices](../modular-experience-slices/PLAN.md).
+
+## Validation
+
+- **Hypotheses**: most routes converge on the same top-level semantic skeleton; repeated section frames expose clearer accessible names; and the runtime infers more metadata with less HTML boilerplate.
+- **Negative controls**: page copy, route order, and existing interactive settings/image behaviors remain functionally unchanged.
+- **Demo sequence**: the H1 routes; verify skip-link behavior, `main` targeting, section labeling, and semantic metadata overlays.
+- `npm run audit:page-structure` (0 unbalanced, 0 heading-skip, 0 section-id on 2026-11-06), targeted duplicate-id checks on edited routes, and a scripts-off read before relying on runtime inference.

@@ -1,4 +1,4 @@
-# Review 2026-10-12 — hot notes for the Patch 5 leftover and the Patch 6 gate; the patches, seeds and validation stay in PLAN.md.
+# Review 2026-11-06 — hot notes for the five slices (badge band, card motion, focus ring, role not element, operator pairs); the patches, seeds and validation stay in PLAN.md.
 # wip — color-motion
 #
 #>plan_color_motion_wip
@@ -9,10 +9,13 @@
 @plan: ~"./PLAN.md"
 @index: ~"./index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@chrome_harmony: ~"../../../.spw/caches/chrome-ecology-2026-11.spw"
+@timing_handoff: ~"../../../.spw/caches/timing-bands-handoff-2026-09.spw"
+@core: ~"../../../public/css/tokens/core.css"
 @chips: ~"../../../public/css/handles/operators/sigils-and-chips.css"
 @material: ~"../../../public/css/effects/material.css"
 @whimsy: ~"../../../public/css/ornament/whimsy.css"
-@core: ~"../../../public/css/tokens/core.css"
+@cards: ~"../../../public/css/components/cards.css"
 
 operation = "cache"
 fixity = "tending"
@@ -21,11 +24,16 @@ fixity = "tending"
  >>[2026-10-12 10:59] verify — The timing bands and their control consumers hold (f721879d, 55ef2737); effects/material.css still has 17 lines that name a duration and none that name a band, and components/cards.css has 2 and none. The Patch 5 leftover is real: the expression badge in sigils-and-chips.css:847-850 times its hover with --duration-fast, the same 140ms that --spw-time-control aliases, so naming the band changes nothing a reader feels. Patch 6 still waits, because bundles/core.css ships no layer order statement and css-cascade-stratification Phase 1 has not landed.
  >>[2026-10-25 17:44] verify — Read against the tree for the UI review sitting: material.css names --duration-* on 4 lines, and the 17 above counts its --material-duration-* and --material-local-duration-* aliases; the manual routes are /about/website/ and /about/plans/. Status now puts the badge leftover first (no gate, same 140ms) and Patch 6 after Phase 1 and a live look, judged live or from a recording since a still is one frame; Patch 3 records 0206fb41's dark operator colors against the first-color wonder.
  >>[2026-11-05 23:15] cache — harmony readings for this plan: the invalid calc() in cards.css:321-324 drops card transitions (a look, since fixing it turns motion on); whimsy.css:123-129 styles chip and button corners and timing by element; 49 focus-visible blocks set outline:none and var(--focus-ring) is read in one file. Source: .spw/caches/chrome-ecology-2026-11.spw#harmony.
+ >>[2026-11-06 12:20] hygiene — Reviewed the 11:30 draft (a five-column table, Slices A1-A4) against the tree and re-cut it as five slices in @plan. Kept: the badge leftover (@chips:847-850, same 140ms), the invalid calc() in @cards, whimsy's role-by-element rule, the operator pair matrix. Fixed: the calc() multiplies --component-transition-base, which resolves through --spw-control-transition-base (@core:553), not --spw-motion-settle; whimsy's chip rule sits at :124-130, not :123-129; focus-ring consolidation is a look, not ungated. Cut: the shape-token census (component-region-personality owns radius and the three undefined --shape-* tokens), and the architecture, next_moves and proposed_commits blocks, which restated @plan with the same errors and an invented commit suffix.
+ >>[2026-11-06 12:25] probe — wonder_color_motion_focus_ring: of 342 :focus-visible rules outside bundles/, 71 set outline:none (39 files) and 40 draw a 2px outline; var(--focus-ring) is read in 8 files (7 plus a comment in shell/chrome/adaptive.css), not one as the 11-05 cache line says; --focus-ring-color draws the outline in reset/base.css:344. Only ornament/ornament.css answers forced-colors.
+ >>[2026-11-06 12:28] probe — wonder_color_motion_card_timing_owner: whimsy.css sets transition at 10 sites and names no --spw-time-* band; material.css has 7 transition lines, cards.css 36. The ~#expect held.
+ >>[2026-11-06 12:30] plan — Collapsed landed Patches 4 and 5 into Landed lines and folded the restating sub-patches 1A/1B, 2A/2B and 3A/3B into one slice line each; PLAN.md 868 -> 696 lines. Added one creative proposal under Patch 3: a palette plate that captions each close operator pair with its interaction lines from operator-detection.js, judged in the browser.
 }
 
 ^"open"{
  first_color_change = ~"./index.spw#wonder_color_motion_first_color_change"
- card_timing_owner = "Which sheet owns card timing, effects/material.css or whimsy.css:98-103, which outranks it by layer? Settled before Patch 6 moves anything; the feel is the creator's call in the browser."
+ card_timing_owner = ~"./index.spw#wonder_color_motion_card_timing_owner"
+ focus_ring = ~"./index.spw#wonder_color_motion_focus_ring"
  defining_interaction = "Which interaction defines the site's feel: operator chips, cards or mode switches? The creator's call."
  delight_strength = "Are delight and resonance effects too frequent, too slow or too strong? The creator's call, before Patch 7."
  theme_pack_role = "Are theme packs reader-facing modes or internal tuning presets? The creator's call, before Patch 8."
@@ -34,7 +42,7 @@ fixity = "tending"
 ^"cache"{
  ~#status: "implementing"
  ~#next_commit: ".[css] Time the expression badge from the control band, the last chip still naming a raw duration"
- ~#files_hot: "public/css/handles/operators/sigils-and-chips.css, public/css/effects/material.css, public/css/ornament/whimsy.css, public/css/components/cards.css"
- ~#gate: "nothing for the badge; Patch 6 waits on css-cascade-stratification Phase 1 and the creator's feel in the browser"
- ~#last_stream: "2026-11-05"
+ ~#files_hot: "public/css/handles/operators/sigils-and-chips.css, public/css/tokens/core.css, public/css/effects/material.css, public/css/ornament/whimsy.css, public/css/components/cards.css"
+ ~#gate: "nothing for the badge; the card motion repair, the focus ring and Patch 6 end at a browser demo for the creator, and Patch 6 also waits on css-cascade-stratification Phase 1"
+ ~#last_stream: "2026-11-06"
 }

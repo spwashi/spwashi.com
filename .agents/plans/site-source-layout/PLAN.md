@@ -1,6 +1,6 @@
 # Plan: site-source-layout
 
-**Status 2026-10-10.** Nothing has moved yet. `build-topology.mts` has no `SITE_ENTRIES`, `vite.config.ts:10` keeps its own `ignoredSegments`, and `public/ts` is still in place. Next slice: M0, one positive list of what ships, imported by `vite.config.ts`. It is blocked by one decision, how `vite.config.ts` imports that list (`index.spw` `#>wonder_site_source_layout_vite_import`). M2 follows as one commit; the `site/` move stays parked. This plan now owns the TypeScript decisions (absorbed below).
+**Status 2026-11-06.** Nothing has moved since 2026-10-10. `scripts/ts/shared/build-topology.mts` still lists only exclusions (`BUILD_EXCLUDED_TOP_LEVEL` and its siblings, no `SITE_ENTRIES`), `vite.config.ts:10` keeps its own `ignoredSegments`, and `public/ts` is in place. Since then, commits touched `public/ts` once for copy (eff5abfd) and `sw.js` once for the folio week (5884cc59), and neither touched layout. Next slice: M0, one positive list of what ships, imported by `vite.config.ts`. It is blocked by one decision, how `vite.config.ts` imports that list (`index.spw` `#>wonder_site_source_layout_vite_import`). M2 follows as one commit, and the `site/` move stays parked. This plan owns the TypeScript decisions (absorbed below).
 
 **Related:** [deploy-module-graph](../deploy-module-graph/PLAN.md) · [site-starter-component-kit](../site-starter-component-kit/PLAN.md) · [pwa-experience](../archive/pwa-experience/PLAN.md). **Absorbed 2026-10-10:** [typescript-integration](../archive/typescript-integration/PLAN.md).
 
@@ -169,7 +169,7 @@ Recommended implementation seam:
 ## Risks
 
 - A broad move-first patch without path abstraction will create avoidable breakage across build, dev server, sitemap, and validation scripts.
-- The current worktree already has uncommitted edits in `scripts/build.mjs` and `scripts/generate-sitemap.mjs`; migration work should integrate with those edits rather than overwrite them.
+- Other sessions commit to `main` in this tree, so a move must start from a clean tree and never shelve their edits (the `wip.spw` guardrails).
 - Catalog and manifest scripts may accidentally mix repo-root and site-root assumptions if they are only partially migrated.
 - Service worker and manifest paths can silently regress if the site-root move is handled as an internal file move rather than a public-site source move.
 - `.spw` route references may go stale if the repo adopts `site/` but the inspection surfaces keep pointing at old paths.
@@ -205,8 +205,10 @@ Choose `docs/` only for maintainer documentation, not as a second home for publi
 
 `wip.spw` now holds the refined concept (one-hop URL invariant, four bins) and the near-term moves M0 through M3. Two of those moves change TypeScript configs; since 2026-10-10 their decisions are this plan's (see the absorbed section below):
 
-- M0, the positive ship list in `build-topology.mts` imported by `vite.config.ts`: the import method.
-- M2, `public/ts` to `src/ts`: the `rootDir` and `include` changes. Output, path alias, and URLs do not move.
+- **M0 — one list of what ships.** Touches `scripts/ts/shared/build-topology.mts` (a positive `SITE_ENTRIES` / `isServedPath` beside today's exclusions), its compiled twin in `scripts/typed/`, and `vite.config.ts` (drop `ignoredSegments`, import the list). Gate: the creator's pick of the import method. Verify: `npm run typecheck`, and the `dist/` file list from `npm run build:site:run` is identical before and after.
+- **M1 — editor excludes.** `.idea/` is untracked, so this is a local setting, not a commit. `dist`, `dist-vite` and `.tmp` are already excluded; `00.unsorted`, `design/components/captures` and the generated `public/` folders are not. Ungated.
+- **M2 — `public/ts` to `src/ts`.** One commit: `rootDir` and `include` in the three tsconfigs, the touch list in `wip.spw` `M2_ts_home`, and the `spw-typescript-affordances` matrix. Output, path alias and URLs do not move. Verify: `git diff --stat public/js/typed` shows nothing, and `npm run spw:integrity` passes.
+- **Proposal — ask the bins.** After M0, one small command could answer the one-hop rule for any path in plain words. Asked about `public/ts/bus.ts`, it would answer "compiled input; ships as /public/js/typed/bus.js". The answer is one of four: served as authored, compiled input, generated, or project control. A reader would learn the four bins by asking about files they already know, without opening a script.
 
 Order: the M0 import decision, then M0, then M2 as one commit. The four bins are promoted into this file only after M0 and M2 land.
 
@@ -222,10 +224,10 @@ Current decision:
 
 Redistributed elsewhere:
 
-- HTML route skeleton: `semantic-html-normalization/PLAN.md`
-- CSS selector/layer cleanup: `css-maintainability-refactor/PLAN.md`
-- Runtime lifecycle/inspectability: `runtime-module-fluency/PLAN.md`
-- `.spw` dispatch and file style: `spw-surface-normalization/PLAN.md`
+- HTML route skeleton: [semantic-html-normalization](../semantic-html-normalization/PLAN.md)
+- CSS selector/layer cleanup: [css-maintainability-refactor](../archive/css-maintainability-refactor/PLAN.md) (archived)
+- Runtime lifecycle/inspectability: [runtime-module-fluency](../archive/runtime-module-fluency/PLAN.md) (archived; its owed questions live in module-contract-overhaul)
+- `.spw` dispatch and file style: [spw-surface-normalization](../archive/spw-surface-normalization/PLAN.md) (archived)
 
 ## Absorbed 2026-10-10 — typescript-integration
 
@@ -234,4 +236,4 @@ Redistributed elsewhere:
 - **M0 import method.** There are three ways: cast the compiled `.mjs`, import the `.mts` source with `allowImportingTsExtensions`, or add a hand-written sibling declaration as `scripts/template.d.mts` already does (root `tsconfig.json` includes `scripts/**/*.d.mts`). This is the creator question.
 - **M2.** `rootDir` and `include` in `tsconfig.runtime.json`, `tsconfig.public-sources.json` and `tsconfig.public.json`; update the `spw-typescript-affordances` matrix in the same commit.
 - **L3.** Whether committed `public/js/typed/` and `scripts/typed/` can become gitignored output. Not decided; do not act on it.
-- **Precache as a built artifact (Workstream 2.75).** `sw.js:94` `REQUIRED_PRECACHE_URLS` is still a hand-kept list, and `?v=` bumps are editorial. Derive the list from build output, coordinated with `pwa-experience` (its built-artifact contract).
+- **Precache as a built artifact (Workstream 2.75).** `REQUIRED_PRECACHE_URLS` in `sw.js` is still a hand-kept list, and `?v=` bumps are editorial. Derive the list from build output, coordinated with `pwa-experience` (its built-artifact contract).

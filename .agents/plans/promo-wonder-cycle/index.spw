@@ -1,7 +1,7 @@
-# Review 2026-07-12 — keep as the authored cadence and offer owner; static truthful copy precedes scheduling behavior.
+# Review 2026-11-06 — keep as the authored cadence and offer owner: the rotating layer and the toast stand, closes fall on the 13th and 26th, and P1 (the counter) waits on the creator's look at the 1a61dc53 demo.
 # Plan Index — Promo / Wonder Cycle Plan
 #
-# Create site structures that can change by day and by week, with separate lanes for: - promo: conversion-facing highlights, CTA cards, services, work samples, and contact nudges -…
+# Promo and wonder lanes that change by day, week and close, served from authored HTML first and a JSON feed second.
 
 #>plan_promo_wonder_cycle_index
 #:index #!plan
@@ -28,13 +28,13 @@ intent: .{
 }[reg=facet]
 
 ^"conceptual_model"{
- thesis = `Create site structures that can change by day and by week, with separate lanes for: - promo: conversion-facing…`
+ thesis = `A date picks the same promo and wonder every time, a close on the 13th or 26th leaves receipts, and a notice speaks once, from a resting seat, after the read.`
  concepts = #[
   `promo`,
   `wonder`,
-  `structures`,
-  `cycle`,
-  `create`,
+  `cadence`,
+  `close`,
+  `resting-seat`,
  ][reg=set]
  fixity_tier = `tending`
 }[reg=facet]
@@ -45,10 +45,18 @@ intent: .{
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
+@feed: ~"../../../public/data/promo-wonder-cycle.json"
+@cycle: ~"../../../public/js/typed/promo-wonder-cycle.js"
+@notices: ~"../../../public/js/interface/discovery-notices.js"
+@services: ~"../../../services/index.html"
+@film: ~"../../../topics/film/index.html"
 
 dispatch: .{
  plan = @plan
  wip = @wip
+ feed = @feed
+ cycle = @cycle
+ notices = @notices
 }[reg=facet]
 
 ^"connection_points"{
@@ -68,9 +76,9 @@ dispatch: .{
  layer = "pragmatic"
  hypothesis = `Create site structures that can change by day and by week, with separate lanes for: - promo: conversion-facing highlights, CTA cards, services, work samples, and contact nudges - wonder: atmospheric, exploratory, lore-adjacent, or curiosity-building surfaces The site should be able to serve those structures from local HTML first, then optionally hydrate them from a JSON feed.`
  spec_ref = ~"./PLAN.md"
- impl_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/typed/promo-wonder-cycle.js"
  probe_ref = `Confirm day/week selection is deterministic for a given date.`
- falsification = `A patch cannot satisfy the public goal while leaving ./PLAN.md unchanged or untested.`
+ falsification = `Two renders of Home for the same date that show different daily or weekly entries, or a Home that reads empty with scripts off, falsify the cycle.`
  status = "active"
 }[reg=facet]
 
@@ -89,7 +97,46 @@ editor_prompts: #[
 ][reg=set]
 
 invariants: #[
- `Owner intent: Create site structures that can change by day and by week, with separate lanes for: - promo: conversion-facing highlights, CTA cards,…`,
+ `Owner intent: authored cadence and the offer; the feed stays secondary to hand-authored HTML.`,
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+#>wonder_promo_wonder_cycle_notice_demo
+?["Does the intent-picked toast from 1a61dc53 read well on a phone, spoken from a resting seat after the read?"]{
+  #:depth #!experiential ~#lens(threshold)
+  ~#with: @plan @notices
+  ~#taste: "A promotion that waits for the reader to finish is a host's manners; one that interrupts is an ad."
+  ~#hypothesis: "Speaking only after the page's end is in view, a breath after the last scroll and a few seconds into the visit, the toast reads as an offer the page earned rather than a prompt."
+  ~#tension: "Twelve seconds of dwell and the end in view may mean most phone visits never see it, which would leave P1's counter counting almost nothing."
+  ~#expect: "On a phone the toast appears only once the footer is in view, 1.4 s after the last scroll and 12 s into the visit (restingSeatDecision), and a feed entry asking for a modal arrives as a toast on a compact viewport (resolveNoticePresentation)."
+  ~#unblocks: "P1, the shown / accepted / closed counter"
+  ~#probe(read)
+  !probe{ "the creator opens Home on a phone, reads to the end, and says whether the toast that speaks there should stay as it is, wait less, or not speak at all" }
+  $%[toast.as_built, toast.shorter_dwell, toast.footer_card_only]
+}
+
+# Moved 2026-11-06 from ecosystem-offer-2026-10, archived when October closed; names kept.
+#>wonder_ecosystem_offer_prices
+?["Do the prices shipped in b5bf993c on the /services/ bundle composer stand as the creator set them, or should any figure change?"]{
+  #:depth #!sociological ~#lens(projection)
+  ~#with: @plan @services
+  ~#tension: "The creator asked for granular options on 2026-09-28, and the figures shipped the same day from the plan's draft list. Financial wording waits on the creator's confirmation by design, so the figures on the page are provisional until then."
+  ~#expect: "The composer still carries the 28 data-min figures b5bf993c shipped, unchanged since (git diff b5bf993c HEAD -- services/index.html moves none); each is the creator's to confirm or change."
+  ~#probe(read)
+  !probe{ "Open /services/ and read the small-jobs lane, the add-ons and the care plans line by line; confirm each figure or name the change." }
+  $%[prices.stand_as_shipped, prices.change_named_figures, prices.withdraw_until_set]
+  ~<"../archive/ecosystem-offer-2026-10/PLAN.md"> ~<"../../../services/index.html">
+}
+
+#>wonder_ecosystem_offer_film_backer
+?["What does a film backer receive for backing the film's production-season promotion?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#with: @plan @film @services
+  ~#tension: "The card at /cards/#back-the-film asks the backer what being part of it would mean and promises nothing, which keeps the wording honest and leaves a backer guessing. Sponsorship wording waits on the creator's confirmation before it appears."
+  ~#expect: "No route names a credit, cameo or thanks for a backer; the card's 'Nothing is promised by this card; we agree on what fits.' is the whole answer on record."
+  ~#probe(read)
+  !probe{ "Name what a backer receives, in the creator's words. The /cards/#back-the-film card, which /services/, /topics/film/ and /now/ already link, can then carry it." }
+  $%[backer.says_what_it_means, backer.credit, backer.cameo, backer.thanks]
+  ~<"../archive/ecosystem-offer-2026-10/PLAN.md"> ~<"../../../topics/film/index.html">
+}

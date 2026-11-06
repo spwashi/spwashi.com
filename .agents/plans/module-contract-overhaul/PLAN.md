@@ -1,6 +1,6 @@
 # Module Contract Overhaul
 
-**Status 2026-10-10.** Landed: writers declared (`audit:module-writers`, 47bab2ea), closed effect vocabularies and the derived Spw sentence plus atlas (6ff2aa8d), and `engages` as the first `@` wakes content (0a974b23). Flat `wakes`/`rests` fields do not exist yet. Next slice: `rests: change-only` as a check. Add the flat field, and fail a def that declares it while an observer or sync-task path does a raw `dataset.x =` or `textContent =`. `scripts/tests/change-only-writes.test.mjs` already holds the bus charge, crossref focus and utility row by hand. No gate: flat fields need no operator decision; the Spw projection of facets waits on `wip.spw` `#>wonder_module_contract_overhaul_facet_operators`. Atlas growth is parked. Owns the settings-changed consolidation that language-reclustering cites.
+**Status 2026-11-06.** Landed: writers declared (`audit:module-writers`, 47bab2ea), closed effect vocabularies (41f3311e), the derived Spw sentence plus atlas (6ff2aa8d), and `engages` as the first `@` wakes content (0a974b23). Nothing on rests has landed since 2026-10-10. The catalog commits since (b5171318, 320fc4b9, 2c95bf13, e4905bf1) add no `wakes` or `rests` field. The writer baseline has shrunk from 284 entries at 47bab2ea to 276 (e4905bf1), so it is emptying slowly. Next slice: R1, the flat `rests` field, then R2, the `change-only` check (Next slices below). No gate: flat fields need no operator decision. The Spw projection of facets waits on `wip.spw` `#>wonder_module_contract_overhaul_facet_operators`. Atlas growth is parked. Owns the settings-changed consolidation that language-reclustering cites.
 
 **Related:** [language-reclustering](../archive/language-reclustering/PLAN.md) · [js-surface-ecology](../archive/js-surface-ecology/PLAN.md) · [runtime-plane-consolidation](../runtime-plane-consolidation/PLAN.md). **Absorbed 2026-10-06:** [js-runtime-composability](../archive/js-runtime-composability/PLAN.md). **Absorbed 2026-10-10:** [runtime-module-fluency](../archive/runtime-module-fluency/PLAN.md).
 
@@ -12,7 +12,7 @@ A settled page rests. Every module can say, in Spw, what it mounts on, what wake
 
 - Catalog: 114 defs × ~14 fields (146 on 2026-10-25). The loader acts on `when`, `features`, `selector`, `rootMode`, `timingChunk`. `describes`, `evaluates`, `timingArc`, and `effectScope` are parsed for inspectors or projected onto DOM as `data-spw-module-*`/`data-spw-runtime-last-module-*`.
 - No field describes rest: what wakes a module after mount, whether its writes can wake itself, or whether a second pass is a no-op. The idle render loop fixed in a7ceccd2 (sync-hub tasks feeding their own observer) lived in that gap.
-- Writer census (import-graph scan of root writes vs declared `updates`): 166 undeclared root writes in module entry files; seven root attributes with two module writers (`data-spw-freshness-pulse`, `data-spw-spell-momentum`, `data-spw-collection-*`, `data-spw-component-motif`, `data-spw-metamaterial`).
+- Writer census (import-graph scan of root writes vs declared `updates`): 166 undeclared root writes in module entry files; seven root attributes with two module writers (`data-spw-freshness-pulse`, `data-spw-spell-momentum`, `data-spw-collection-*`, `data-spw-component-motif`, `data-spw-metamaterial`). The baseline the audit holds (`scripts/module-writer-baseline.json`, import-graph scope) is 284 undeclared entries across 42 modules and 12 multi-writer tokens at 47bab2ea, and 276 across 40 and 11 on 2026-11-05.
 - `--spw-site-rhythm-tempo` has three owners: settings (beat tempo), module-loader (load speed), and CSS mount-batch holds. It is a registered, transitioned, inherited root property, so each write animates across the tree.
 - Settings `apply()` rewrote ~85 root custom properties unconditionally; any root custom-property change costs 200–400ms of style recalc on core.css.
 
@@ -54,6 +54,13 @@ $[html]{single} ~[idle]{enhance-rhythm}
 3. **Settings as one projection table.** Dataset and style tokens carry owner, consumer, and change-only writes; one canonical settings event; UI sync writes through kernel helpers; ornament state is a declared projection, not ad hoc rail writes.
 4. **Rendering keyed by signature.** A kernel `renderIfChanged(host, signature, render)` replaces `innerHTML = ''` rebuilds reachable from sync or observer paths.
 
+### Next slices (2026-11-06)
+
+- **R1 — the `rests` field.** Add `rests` to `CATALOG_DEF_FIELDS` (`public/js/runtime/catalog/constants.js`) as a lifecycle field, with a closed union in `types/module-catalog.d.ts`: `change-only`, `idempotent`, `single-writer`, `rest`. Declare `change-only` on the two defs whose writers the test already holds by hand, `semantic-crossrefs` and `shell-disclosure` (the utility row). Ungated. Verify with `npm run check:runtime` and `npm run typecheck`.
+- **R2 — `change-only` as a check.** In `scripts/module-writer-audit.mjs`, a def that declares `rests: change-only` fails when a raw `dataset.x =` or `textContent =` sits on its observer, sync-task or measured-lane path. The fixture is a module that fails on HEAD's pattern and passes with `writeDatasetValue`. Ungated.
+- **R3 — the audit's own receipt.** Proposal: when the audit passes, its headline names the baseline's distance from empty (`276 held · 284 at birth · 11 shared tokens`). When a new undeclared write fails, it prints that write in full with its stack. The verdict comes last. Ungated; it changes output only.
+- **R4 — `renderIfChanged` (Phase 4).** Waits for R2, so the check can find which `innerHTML = ''` rebuilds sit on sync paths.
+
 ## Human Decisions (sensation gates)
 
 - Facet/operator mapping above, before any authored Spw contract strings land in the catalog.
@@ -67,7 +74,7 @@ $[html]{single} ~[idle]{enhance-rhythm}
 - CSS keys beats on `data-spw-beat-prime`; `data-spw-beat` (every tick) is named by no stylesheet. Beat and treat properties sit on their consumers. `audit:css-custom-properties` (check:css) rejects root rules keyed on periodic attributes and holds 197 self-referencing declarations (cycles, not accumulators) as a baseline.
 - Cycles removed on the beat path: phase pulses reset `--spw-interaction-phase-weight` to 0, tuning reset rhythm density, treat splashes invalidated every palette depth color, blog prime beats dropped the accent to 0%.
 - Forced recalc per change, laptop /topics/software/: non-prime tick 8ms (root) → 100ms (scoped) → 0ms (prime attribute); prime enter/exit ~200ms → 184ms; idle 13s recalc 8.2s → 7.1s (phone 10.5s → 8.0s).
-- Open (sensation): prime beats still cost ~180ms because every chip, operator, and module is a consumer. Narrow the beat's consumers to the rail, probe chips, and settle windows.
+- Open (sensation): prime beats still cost ~180ms because every chip, operator, and module is a consumer. Narrow the beat's consumers to the rail, probe chips, and settle windows. Held as one question with the pass cost in `../runtime-bootstrap-performance/index.spw` `#>wonder_runtime_bootstrap_performance_idle_pulse`.
 
 ## Non-Goals
 

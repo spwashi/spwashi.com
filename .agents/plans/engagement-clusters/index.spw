@@ -1,4 +1,4 @@
-# Review 2026-11-05 — keep as the @ wakes facet of the module contract; routing generated with --only, thesis and concepts written from its Status, owner claim is the tree template
+# Review 2026-11-06 — keep as the @ wakes facet of the module contract; E1 (the host-write census) is next behind a headless browser, and the creator's four open calls are wonders below.
 # Plan Index — Engagement Clusters
 #
 # A page loads what its reader engages, not everything its grammar could support. Behaviors arrive as clusters a reader approaches and chooses among, the arrival is felt as a…
@@ -56,6 +56,8 @@ intent: .{
 @spw_assembly_2026_09: ~"../../../.spw/caches/spw-assembly-2026-09.spw"
 @touch_gesture_contracts_2026_09: ~"../../../.spw/audits/touch-gesture-contracts-2026-09.spw"
 @engagement: ~"../../../public/js/kernel/engagement.js"
+@policy: ~"../../../public/js/runtime/orchestration/policy.js"
+@root_census: ~"../../../scripts/root-write-census.mjs"
 @operator_detection: ~"../../../public/js/kernel/operator-detection.js"
 
 dispatch: .{
@@ -78,9 +80,9 @@ dispatch: .{
  layer = "pragmatic"
  hypothesis = `A page loads what its reader engages, not everything its grammar could support. Behaviors arrive as clusters a reader approaches and chooses among, the arrival is felt as a response rather than a wait, and the clusters are something Spw can say.`
  spec_ref = ~"./PLAN.md"
- impl_ref = ~"../../../.spw/audits/runtime-recalc-cost-2026-09.spw"
- probe_ref = `rg 'engagement-clusters' .agents/plans/engagement-clusters`
- falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/audits/runtime-recalc-cost-2026-09.spw unchanged or untested.`
+ impl_ref = ~"../../../public/js/kernel/engagement.js"
+ probe_ref = `npm run audit:root-writes`
+ falsification = `Under ?spw-arming=engage, a module with engages that mounts on a route where no reader touched its host falsifies the arming.`
  status = "active"
 }[reg=facet]
 
@@ -94,3 +96,54 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+#>wonder_engagement_clusters_default_arming
+?["Does engage become the default arming, and how long may a first engagement take before it reads as a wait?"]{
+  #:depth #!experiential ~#lens(threshold)
+  ~#with: @plan @engagement @policy
+  ~#hypothesis: "Arming moves a module's cost after the reader acts: a cold first hold of about 2 s on a busy phone is felt on one host, where arrival makes every reader wait a little for every module."
+  ~#tension: "Arming also hides what a module draws on arrival (brace pins, grounded haptics), so a default flip before arrival halves exist can make a page look less alive at rest."
+  ~#expect: "policy.js still falls back to 'arrival' when neither ?spw-arming nor data-spw-arming is set, and only field-composition and region-menu carry engages, so a flip today would arm two modules."
+  ~#unblocks: "E3's demo, and whether arrival halves come before any default changes"
+  ~#probe(run)
+  !probe{ "rg -n 'spw-arming' -A4 public/js/runtime/orchestration/policy.js" }
+  $%[arming.arrival_default, arming.engage_default, arming.engage_by_route_family]
+}
+
+#>wonder_engagement_clusters_first_cluster
+?["Which modules join the first cluster, given what each draws on arrival?"]{
+  #:depth #!computational ~#lens(comparison)
+  ~#with: @plan @root_census
+  ~#hypothesis: "A module that writes nothing styled to the root or to its own hosts on arrival loses nothing a reader sees by waiting for engagement, so E1's empty rows are the honest first cluster."
+  ~#tension: "Quiet on the root is not quiet on the page: haptics and brace-actions answer holds on frames, and arming them could take a felt cue away at rest."
+  ~#expect: "E1 returns a row for each of the 27 root-quiet modules, and at least one draws styled writes on its own hosts, so the first cluster is smaller than 27."
+  ~#unblocks: "E2, cluster keys per container"
+  ~#probe(read)
+  !probe{ "after E1 lands (scripts/root-write-census.mjs --hosts), read its rows for the 27 quiet modules on the six census routes and bring the empty ones to the creator" }
+  $%[cluster.host_quiet_first, cluster.by_container, cluster.by_operator]
+}
+
+#>wonder_engagement_clusters_weights
+?["Where do a cluster's weights come from, and can a reader see them?"]{
+  #:depth #!semantic ~#lens(choice)
+  ~#with: @plan
+  ~#hypothesis: "The runtime already ranks things: contextual-ui's --spw-salience-weight, the operator charge role, familiarity demotion and describeModuleOffer. A reader could see a weight as nothing more than the order a cluster offers its behaviors."
+  ~#tension: "A weight no one can see makes mount-by-weight feel arbitrary; a weight shown as a control is one more thing to learn."
+  ~#expect: "No route authors data-spw-salience-weight; the weight exists only as the custom property contextual-ui.js writes and the catalog measures."
+  ~#unblocks: "E3's mount-by-weight"
+  ~#probe(run)
+  !probe{ "rg -l 'data-spw-salience-weight' --glob '*.html' -g '!dist/**' -g '!workers/**' ." }
+  $%[weight.salience, weight.charge_role, weight.offer_rank, weight.shown_as_order]
+}
+
+#>wonder_engagement_clusters_page_boilerplate
+?["Do operators, navigator and console stay page boilerplate, or become shell?"]{
+  #:depth #!pragmatics ~#lens(comparison)
+  ~#with: @plan
+  ~#hypothesis: "Named together on most pages that declare features, the three already behave as shell; moving them there turns the pages without them into a decision rather than an omission."
+  ~#tension: "Each page's data-spw-features says in its own source what it carries; shell would hide the three from a reader of the HTML."
+  ~#expect: "162 of the 210 pages that declare data-spw-features name 'operators navigator console'."
+  ~#probe(run)
+  !probe{ "rg -l 'operators navigator console' --glob '*.html' -g '!dist/**' -g '!workers/**' ." }
+  $%[features.page_boilerplate, features.shell, features.by_route_family]
+}

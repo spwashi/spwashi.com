@@ -1,7 +1,7 @@
-# Review 2026-10-12 — new: spw.quest as a guide people use and a plan surface agents review; slice A (try before installing) first.
+# Review 2026-11-06 — keep, active. spw.quest is live from the 2026-11-05 deploy; L and M's body turns are on main for the next one, and M2, the walk trail, is the next slice.
 # Plan Index — spw-quest
 #
-# Status 2026-10-12. spw.quest serves a guide to the language (dcf23bdb, 0d0380d2) and an install page, and nobody has used it. The creator asked for it to be more aesthetically…
+# spw.quest is the language's own room: a guide that keeps one note on the device, a shelf of lines found on spwashi.com, cards for the shapes a line takes, and pivots one change away.
 
 #>plan_spw_quest_index
 #:index #!plan
@@ -12,11 +12,11 @@ operation = "prime"
 fixity = "tending"
 
 intent: .{
- goal = `Status 2026-10-12. spw.quest serves a guide to the language (dcf23bdb, 0d0380d2) and an install page, and nobody has used it. The creator asked for it to be more aesthetically pleasing and easier to run with, and for this plan to be a surface agents can review. Next slice: A, try before installing. Its only gate is the creator's read of this plan.`
+ goal = `Status 2026-11-06. spw.quest is live from the creator's 2026-11-05 deploy: the guide and its note, /learn, /build, /specimens, /constructs and /pivot. L (either slot order) and M's body turns are on main and wait on the next deploy, the creator's call. Next: M2, a walk trail on /pivot, then N and O, each one session.`
  owner = `spw-quest`
  kind = `plan`
  bucket = `active_backlog`
- artifact_shape = `PLAN.md | index.spw`
+ artifact_shape = `PLAN.md | index.spw | wip.spw | note-shell-design.md`
 }[reg=facet]
 
 ^"dimensions"{
@@ -28,18 +28,22 @@ intent: .{
 }[reg=facet]
 
 ^"conceptual_model"{
- thesis = `Status 2026-10-12. spw.quest serves a guide to the language (dcf23bdb, 0d0380d2) and an install page, and nobody has…`
+ thesis = `A line is easier to learn when you can change one slot and see where it lands before you go; spw.quest gives every room a line to change, read on the worker with scripts off.`
  concepts = #[
-  `creator`,
-  `spw-quest`,
-  `status`,
-  `spw`,
-  `quest`,
+  `guide-and-note`,
+  `specimen-shelf`,
+  `construct-cards`,
+  `pivot-one-change-away`,
+  `slot-order-kept`,
+  `dated-parser-release`,
  ][reg=set]
  surfaces = #[
-  `scripts/lib/chrome-headless-harness.mjs`,
+  `workers/spw-quest/src/index.js`,
+  `workers/spw-quest/src/pivot.js`,
+  `workers/spw-quest/src/build.js`,
+  `workers/spw-quest/src/specimens.js`,
   `about/domains/spw.quest/index.html`,
-  `.agents/plans/spw-quest/PLAN.md`,
+  `scripts/lib/chrome-headless-harness.mjs`,
  ][reg=set]
  fixity_tier = `tending`
 }[reg=facet]
@@ -49,71 +53,95 @@ intent: .{
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@worker: ~"../../../workers/spw-quest/src/index.js"
+@pivot: ~"../../../workers/spw-quest/src/pivot.js"
 @chrome_headless_harness: ~"../../../scripts/lib/chrome-headless-harness.mjs"
 @index: ~"../../../about/domains/spw.quest/index.html"
+@compound: ~"../../../.spw/conventions/compound-expressions.spw"
 
 dispatch: .{
  plan = @plan
+ wip = @wip
+ worker = @worker
+ pivot = @pivot
  chrome_headless_harness = @chrome_headless_harness
  index = @index
 }[reg=facet]
 
 ^"connection_points"{
- owner_rail = `spw-architecture-ecology`
+ owner_rail = `ecosystem-architecture`
+ note = `spw-architecture-ecology, the rail named here until 2026-11-06, is archived; ecosystem-architecture sequences the worker's reader bundle (S3) and the query instrument (S4).`
 }[reg=facet]
 
 ^"owner_claim"{
  claim_id = "plan-spw_quest-001"
  layer = "pragmatic"
- hypothesis = `Status 2026-10-12. spw.quest serves a guide to the language (dcf23bdb, 0d0380d2) and an install page, and nobody has used it. The creator asked for it to be more aesthetically pleasing and easier to run with, and for this plan to be a surface agents can review. Next slice: A, try before installing. Its only gate is the creator's read of this plan.`
+ hypothesis = `Every spw.quest room reads a line on the worker with scripts off, and a line carried between /specimens, /pivot and /build keeps every slot it holds, in its author's order.`
  spec_ref = ~"./PLAN.md"
- impl_ref = ~"../../../scripts/lib/chrome-headless-harness.mjs"
- probe_ref = `npm run check:workers, which runs workers/spw-quest/test/routes.test.mjs.`
- falsification = `A patch cannot satisfy the public goal while leaving ../../../scripts/lib/chrome-headless-harness.mjs unchanged or untested.`
+ impl_ref = @worker
+ probe_ref = `npm run check:workers, which runs the six quest test files and carry-specimens.mjs --check.`
+ falsification = `/pivot?line=beans<food>(kitchen)[mode]{stew} offers a pivot that drops the scene or the concept, or a room answers a line with no reading when scripts are off.`
  status = "active"
 }[reg=facet]
 
 validation: #[
- `npm run check:workers, which runs workers/spw-quest/test/routes.test.mjs.`,
+ `npm run check:workers, which runs the six quest test files and carry-specimens.mjs --check.`,
  `node --check on touched files.`,
- `Phone stills through the harness for any slice D change.`,
- `For slice B, a real install on a scratch repository through spw:doctor.`,
+ `Phone stills through the harness for any change a reader sees.`,
+ `For slice C, a real install on a scratch repository through spw:doctor.`,
 ][reg=set]
 
 editor_prompts: #[
  .{ ask = `What does spw-quest own, and what should stay out of scope?`, see = @plan }[reg=facet],
- .{ ask = `Which file should I open first to implement the next slice of spw-quest?`, see = @index }[reg=facet],
+ .{ ask = `Which file should I open first for M2, the walk trail?`, see = @pivot }[reg=facet],
  .{ ask = `What command or check falsifies whether spw-quest still holds?`, see = @plan }[reg=facet],
 ][reg=set]
 
 invariants: #[
- `Owner intent: Status 2026-10-12. spw.quest serves a guide to the language (dcf23bdb, 0d0380d2) and an install page, and nobody has used it. The creator…`,
+ `Every room reads with scripts off; scripts only add reading as you type.`,
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
- `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+ `Deploy is the creator's Wrangler step; agents do not deploy.`,
 ][reg=set]
 
 #>wonder_spw_quest_published_cli
 ?["Should Spw be runnable without a git submodule, through a published CLI, or is the mounted workbench the point?"]{
+  #:depth #!pragmatics ~#lens(choice)
   ~#with: @plan
   ~#taste: "A first reward in seconds earns the minutes an install costs; a mount that keeps its revision honest earns the trust a package can lose."
   ~#tension: "Publishing spw-cli makes npx init possible and moves a release cadence into the workbench; keeping the submodule keeps one pinned, reviewed revision per consumer."
-  !probe{ "node -e \"for (const p of ['spw-cli','spw-seed']) console.log(p, require('./.spw/_workbench/packages/' + p + '/package.json').private)\"" }
+  ~#expect: "All four packages say private: true, so npx init cannot exist yet and slice C can only reorder /install."
+  ~#unblocks: "slice C, and whether /install leads with one command"
+  ~#probe(run)
+  !probe{ "rg -n '\"private\"' .spw/_workbench/packages/spw-cli/package.json .spw/_workbench/packages/spw-lsp/package.json .spw/_workbench/packages/spw-runtime/package.json .spw/_workbench/packages/spw-seed/package.json" }
+  $%[cli.published, mount.only, cli.beside_mount]
 }
 
 #>wonder_spw_quest_public_plan
 ?["Should spw.quest show what is next for Spw in public at /plan, or keep plans in the repository only?"]{
-  ~#with: @plan
+  #:depth #!pragmatics ~#lens(choice)
+  ~#with: @plan @worker
   ~#taste: "An agent can already be sent to spw.quest/init; a public plan lets the same sentence send it to review what comes next."
   ~#tension: "A public plan is a promise readers can hold the site to; a private one moves without witnesses."
-  !probe{ "rg -n 'plan' workers/spw-quest/src/index.js" }
+  ~#hypothesis: "Slice H offers a middle way: a count of open questions says the language is alive without publishing what they are."
+  ~#expect: "No /plan route in the worker; the only public record of what changes is the parser release index at /parser/index.json."
+  ~#unblocks: "slice E, and the count H's strip would carry"
+  ~#probe(run)
+  !probe{ "rg -n '\"/plan' workers/spw-quest/src/index.js" }
+  $%[plan.public, plan.repo_only, plan.count_only]
 }
 
 #>wonder_spw_quest_look
 ?["Should spw.quest keep its own dark spiral identity, or borrow spwashi.com's paper material?"]{
+  #:depth #!experiential ~#lens(choice)
   ~#with: @plan
   ~#taste: "The spiral is the creator's own figure for a thought; the material around it decides whether it reads as a sibling site or a separate room."
   ~#tension: "A shared material ties the ecosystem together; a distinct one lets the language stand apart from any one site."
-  !probe{ "rg -n 'background|--bg|color-scheme' workers/spw-quest/src/index.js" }
+  ~#expect: "No spiral in the worker's source, and color-scheme set only by the paper and panel styles the peer kit feeds."
+  ~#answer(2026-11-06): "material.paper. Landed code settled it: e6b4b937, committed at the creator's word, dressed every page in the site's paper material and took the spiral out; b4651803 carries the site's tokens and faces through the peer kit; the creator deployed it on 2026-11-05. The finer look, slice D, stays the creator's phone review."
+  ~#probe(run)
+  !probe{ "rg -n 'spiral|color-scheme' workers/spw-quest/src" }
+  $%[material.own_dark, material.paper]
 }
 
 #>wonder_spw_quest_motion
@@ -150,7 +178,7 @@ invariants: #[
   ~#hypothesis: "Container delimiters (<>, (), [], {}) already identify the four slots unambiguously, so accepting either order bridges /build with the 986 route expressions while letting the author choose which order to emit."
   ~#expect: "build.js currently enforces <concept>(scene)[mode]{definition} while pivot.js and expression-query.js emit [mode]{body}(scene)<projection>."
   ~#unblocks: "Slice L (slot-order bridge between /build and /pivot + /specimens)"
-  ~#answer(2026-11-05): "Accept both. The creator: each brace pair names its slot wherever it sits. readExpressionSlots, /build and /pivot read either order; a line is written back in the order its author used, and a new slot joins that order."
+  ~#answer(2026-11-05): "order.either. The creator: each brace pair names its slot wherever it sits. Landed in 9f2e3af4 (readSlotOrder, readContainers) and d3dcda9f (/build and /pivot): either order is read, a line is written back in the order its author used, and a new slot joins that order."
   ~#probe(run)
   !probe{ "rg -n 'assemble\\(|lineFrom\\(' workers/spw-quest/src/build.js workers/spw-quest/src/pivot.js" }
   $%[order.either, order.guide_only, order.atlas_only]

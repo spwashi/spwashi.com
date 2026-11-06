@@ -1,4 +1,4 @@
-# Review 2026-09-04 — keep as the stable token/attribute alignment owner; compositional experiments must reuse its bridges.
+# Review 2026-11-06 — keep as the stable token/attribute alignment owner; items 1-2 hold, item 3 waits on the creator with a sharper fallback-only form on the table; near archive once it is decided.
 # Data Attribute and CSS Token Refinement — dispatch
 #
 # 2026-08-22. Token anchors, attribute bridges, and fallback hygiene.
@@ -41,11 +41,12 @@ intent: .{
 ?["Is item 3 wanted: a report of var() references with no definition and no fallback in the five files it names?"]{
   #:depth #!computational ~#lens(constraint)
   ~#with: @plan @core_tokens
+  ~#taste: "A token read only through fallbacks is a quiet fork: each call site picks its own value, and a reader tracing --shape-panel finds three answers."
   ~#hypothesis: "A var() with neither a definition nor a fallback paints nothing and says nothing; a report-only check names each one before a page shows it."
   ~#tension: "audit:css-custom-properties already reads self-references and root writes; a third report is one more to read, for a failure no one has seen land."
   ~#expect: "Most references in the five files carry no fallback, and nearly all of those name a token core.css defines, so the report would be short."
   ~#unblocks: "item 3's report-only check, or closing the plan as the bedrock rule it already is"
   ~#probe(run)
   !probe{ "rg -o 'var\\(--[a-z0-9-]+\\)' public/css/grammar/syntax.css public/css/components/foundation.css public/css/systems/pretext-physics.css public/css/effects/metaphysical-paper.css src/styles/entries/design-experiments.css | wc -l" }
-  $%[item3.wanted, item3.declined, item3.folded]
+  $%[item3.wanted, item3.declined, item3.folded, item3.fallbackOnly]
 }

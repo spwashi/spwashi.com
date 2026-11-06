@@ -1,4 +1,4 @@
-# Review 2026-07-12 — keep only with a real second-site consumer; extraction must not turn spwashi.com into a framework.
+# Review 2026-11-06 — keep: a second-site consumer exists (spw.quest, through the peer kit), the inventory fix is ungated, and the first pilot waits on the creator's first-portable answer.
 # Plan Index — Site Starter And Component Kit
 #
 # Make this repository useful as a source for new static sites and new component work without turning spwashi.com into a generic framework. A future builder should be able to answer…
@@ -28,19 +28,21 @@ intent: .{
 }[reg=facet]
 
 ^"conceptual_model"{
- thesis = `Make this repository useful as a source for new static sites and new component work without turning spwashi.com into a…`
+ thesis = `A piece travels only with its slots, states, styles and assets named, and the personal shell stays home; compose is the portable door, the peer kit is the road already in use, and a real second site decides what goes next.`
  concepts = #[
-  `which`,
-  `component`,
-  `new`,
-  `spwashi`,
-  `portable`,
+  `portable-boundary`,
+  `compose-entrypoint`,
+  `component-promotion`,
+  `capability-bundle`,
+  `host-mount`,
+  `peer-kit`,
  ][reg=set]
  surfaces = #[
   `.spw/conventions/site-starter-component-kit.spw`,
-  `css/compose.css`,
-  `js/compose.js`,
-  `design/catalog/`,
+  `public/css/compose.css`,
+  `public/js/compose.js`,
+  `scripts/starter-inventory.mjs`,
+  `scripts/build-peer-kit.mjs`,
  ][reg=set]
  fixity_tier = `tending`
 }[reg=facet]
@@ -61,6 +63,10 @@ intent: .{
 @public_css_readme_md: ~"../../../public/css/README.md"
 @public_js_readme_md: ~"../../../public/js/README.md"
 @style: ~"../../../public/css/style.css"
+@portable_audit: ~"../../../scripts/portable-audit.mjs"
+@peer_kit: ~"../../../scripts/build-peer-kit.mjs"
+@portable_css_cache: ~"../../../.spw/caches/portable-css-2026-09.spw"
+@plan_ecosystem_architecture: ~"../ecosystem-architecture/index.spw"
 
 dispatch: .{
  plan = @plan
@@ -81,6 +87,9 @@ dispatch: .{
  owner_rail = `model-guided-refinement`
  related_plans = #[
   `site-source-layout`,
+  `ecosystem-architecture`,
+  `designer-conversation-canvas`,
+  `workers-wonder-kit`,
  ][reg=set]
 }[reg=facet]
 
@@ -115,13 +124,32 @@ invariants: #[
 ][reg=set]
 
 #>wonder_site_starter_first_portable
-?["Should the first piece that travels to another site be a capability (texture-slice) or the design specimen design-hub is waiting on?"]{
+?["Should the first piece this plan sends to another site be a capability (texture-slice), the design specimen design-hub left waiting, or the Spw instrument ecosystem-architecture proposes?"]{
   #:depth #!pragmatics ~#lens(choice)
-  ~#with: @plan @bundling_plan @starter_inventory
+  ~#with: @plan @bundling_plan @starter_inventory @peer_kit @plan_ecosystem_architecture
   ~#taste: "The first thing to travel teaches every later one how a host adopts Spw, so it should be the piece a second site would ask for."
-  ~#hypothesis: "BUNDLING.md picks texture-slice: focused JS, opt-in markup, stylesheet-relative motifs. design-hub's one open slice is to reproduce a specimen in a second site, and designer-conversation-canvas is building the export bundle for that specimen."
-  ~#tension: "A capability proves relocation and cleanup; a specimen proves the component kit reads well outside this site. Building both at once doubles the pilot."
-  !probe{ `rg -n "second site|starter pilot" .agents/plans/archive/design-hub/PLAN.md .agents/plans/designer-conversation-canvas/PLAN.md .agents/plans/site-starter-component-kit/BUNDLING.md` }
-  $%[starter.firstPortable, starter.consumer]
-  ~<"./BUNDLING.md"> ~<"../archive/design-hub/index.spw"> ~<"../designer-conversation-canvas/index.spw">
+  ~#hypothesis: "BUNDLING.md picks texture-slice: focused JS, opt-in markup, stylesheet-relative motifs, and audit:portable calls it portable now. design-hub's open slice, a specimen in a second site, passed to designer-conversation-canvas, which waits on the creator naming a reviewer. ecosystem-architecture S4 proposes the Spw instrument (reader bundle, spw-highlight.js, spw-source.css), because spw.quest already runs on the peer kit and would paint with it."
+  ~#tension: "A capability proves relocation and cleanup; a specimen proves the component kit reads well outside this site; the instrument has a consumer waiting but travels by the peer kit rather than this plan's bundle. Building more than one at once doubles the pilot."
+  ~#expect: "Three lines, one per option's owner: design-hub's Status, ecosystem-architecture's S4 naming this wonder as its gate, and designer-conversation-canvas's review sitting."
+  ~#unblocks: "ecosystem-architecture S4a and S4b, or BUNDLING.md steps 2 and 3, or the canvas's export bundle."
+  ~#probe(run)
+  !probe{ `rg -n "second site|wonder_site_starter_first_portable|first_portable" .agents/plans/archive/design-hub/PLAN.md .agents/plans/ecosystem-architecture/PLAN.md .agents/plans/designer-conversation-canvas/PLAN.md` }
+  $%[starter.texture_slice, starter.design_specimen, starter.spw_instrument]
+  ~<"./BUNDLING.md"> ~<"../archive/design-hub/index.spw"> ~<"../designer-conversation-canvas/index.spw"> ~<"../ecosystem-architecture/PLAN.md">
+}
+
+# Carried 2026-11-06 from wip.spw's open list and PLAN.md's absorbed portable-css section.
+#>wonder_site_starter_layer_set
+?["Which layers does a portable stylesheet ship: pc-006's set, the seven compose.css declares, or only what a peer already takes?"]{
+  #:depth #!pragmatics ~#lens(choice)
+  ~#with: @plan @public_css_compose_css @portable_css_cache @peer_kit
+  ~#taste: "A host should get the layers it can read without this site's page around them, and nothing it would have to undo."
+  ~#hypothesis: "compose.css declares tokens, typography, grammar, components, systems, handles, effects: no reset, and its systems layer imports only systems/semantic-copy-lens.css. pc-006 adds reset and refuses systems. The frame-grid--2up packing lives in systems/surfaces/base.css, which only style-core.css imports. The peer kit reads tokens/core.css and tokens/fonts.css itself and takes neither set."
+  ~#tension: "Carrying systems lets a host read the site's lenses and packing; refusing it leaves a host's layout its own. A reset helps a bare host and fights one that already has its own."
+  ~#expect: "compose.css line 11 still declares the seven layers without reset; pc-006 still names reset and refuses systems."
+  ~#unblocks: "The first emitted portable bundle, and whether the peer kit's token read becomes that bundle's first layer."
+  ~#probe(run)
+  !probe{ `rg -n "^@layer|layers =|refuse =" public/css/compose.css .spw/caches/portable-css-2026-09.spw` }
+  $%[layers.pc006, layers.compose, layers.peer_tokens]
+  ~<"./PLAN.md"> ~<"../../../.spw/caches/portable-css-2026-09.spw">
 }

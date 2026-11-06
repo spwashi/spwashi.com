@@ -1,4 +1,4 @@
-# Review 2026-10-12 — hot notes for the first slice; the world, facets and guards stay in PLAN.md.
+# Review 2026-11-06 — hot notes while the crew world waits on the creator's five answers; the world, the facets, the addresses and the guards stay in PLAN.md.
 # wip — smut-today-crew
 #
 #>plan_smut_today_crew_wip
@@ -16,6 +16,13 @@ fixity = "tending"
 
 ^"stream"{
  >>[2026-10-12 10:59] verify — the crew world is planned (6cbb5b9d) and nothing of it is built. What ships at the October 13 close is the copy pass (0e2942ae): two stories, the letter, the shelf, one cookie, no script. The first slice, the village and the drummer and head writer's first scene, targets the October 26 close and waits on the open questions.
+ >>[2026-11-06 12:30] verify — the worker has not changed since 0e2942ae (only 3325c971 touched the plan's .spw); the October 26 close passed with nothing built, so slice 1 loses its date. The day still turns at midnight UTC, now 6pm Central since the clocks went back. PLAN.md's measured section names featuredStory and SETTLE.
+ >>[2026-11-06 12:32] probe — wonder_smut_crew_prose: three authored bodies (lines 24, 67, 103), none generated.
+ >>[2026-11-06 12:32] probe — wonder_smut_crew_assembly: SETTLE (line 192) holds pace, type and move; no slot for who, where or when.
+ >>[2026-11-06 12:32] probe — wonder_smut_crew_names: two invented first names with pronouns and a role (lines 22 and 65).
+ >>[2026-11-06 12:32] probe — wonder_smut_crew_existing: six slugs, the two stories, the letter and three pitches.
+ >>[2026-11-06 12:32] probe — wonder_smut_crew_limits: PLAN.md's Guards (line 74) hold the site's rules; no list of hard limits in the creator's words.
+ >>[2026-11-06 12:33] probe — the five wonders, each run: three authored bodies, no generated text (prose); SETTLE holds pace, type and move and no story slots (assembly); two invented first names with pronouns and a role (names); six slugs, the stories, the letter and three pitches (existing); and no list of hard limits in the creator's words (limits). Each now has ~#expect and an answer set drawn from its own question.
 }
 
 ^"open"{
@@ -31,5 +38,5 @@ fixity = "tending"
  ~#next_commit: "+[smut] Open the village: the crew's roster, and the day turning at the reader's own midnight"
  ~#files_hot: "workers/smut-today/src/index.js"
  ~#gate: "the creator's answers to the five open questions; every draft gets an identifiability read-back"
- ~#last_stream: "2026-10-12"
+ ~#last_stream: "2026-11-06"
 }

@@ -1,4 +1,4 @@
-# Review 2026-10-12 — hot notes for archiving this plan as landed; the cache contract and validation boundary stay in PLAN.md.
+# Review 2026-11-06 — hot notes for archiving this plan as landed; both wonders are answered, so the move carries nothing; the cache contract and validation boundary stay in PLAN.md.
 # wip — agentic-dev-contracts
 #
 #>plan_agentic_dev_contracts_wip
@@ -18,17 +18,19 @@ fixity = "tending"
 
 ^"stream"{
  >>[2026-10-12 10:59] verify — the manifest scripts and check:local stand, and both wonder probes in index.spw pass today. The condition the Status sets for archiving has been met: d13a532f turned the last twenty audit-first check steps into check:local, and no live plan validates with the audit-first script now. That same pass also rewrote the script_door wonder's tension to name check:local as the network detour, which inverted it; the tension was restored the same day to name the bare check script.
+ >>[2026-11-06 12:22] verify — Status read against the tree: nothing moved under scripts/check-site.mjs, site-contracts.mjs or generate-route-runtime-manifest.mjs since 2026-10-10, and rg finds no live plan naming the bare check script; the only hit, .agents/plans/README.md, records that twenty became check:local. The Files list said the manifest defaults to /tmp; ROUTE_MANIFEST_OUTPUT in scripts/ts/site-contracts/index.mts has defaulted to .agents/state/runtime/ since, and manifest:tmp is the TMPDIR path. Fixed in PLAN.md.
+ >>[2026-11-06 12:24] probe — wonder_plan_script_door: the node probe exits 0. The expect held; answered script.door, citing d13a532f.
+ >>[2026-11-06 12:26] probe — wonder_plan_stamp: check-site.mts:86 forgives drift only when drift.stagedConsistent and the rest is unstaged; pre-commit:14 runs manifest-stamp.mjs --staged. The expect held; answered stamp.hook, citing 992c127e and da0b6b4c. The probe used to check only that manifest:staged exists, which could not fail on the question asked.
 }
 
 ^"open"{
- script_door = ~"./index.spw#wonder_plan_script_door"
- stamp = ~"./index.spw#wonder_plan_stamp"
+ archive = "Move the folder to archive/ as landed. Both wonders are answered, so agent-optimization's index.spw needs no new block."
 }
 
 ^"cache"{
  ~#status: "tending"
- ~#next_commit: "&[plans] Archive agentic-dev-contracts as landed, now that every plan names check:local, and carry its two questions to agent-optimization"
- ~#files_hot: "scripts/check-site.mjs, scripts/site-contracts.mjs, scripts/generate-route-runtime-manifest.mjs, package.json"
- ~#gate: "nothing; the two wonders need a new home in agent-optimization's index.spw before the folder moves"
- ~#last_stream: "2026-10-12"
+ ~#next_commit: "&[plans] Archive agentic-dev-contracts as landed, now that every plan names check:local and its two questions are answered"
+ ~#files_hot: ".agents/plans/agentic-dev-contracts/, .agents/plans/README.md, .spw/site.spw"
+ ~#gate: "nothing; the move is the whole slice"
+ ~#last_stream: "2026-11-06"
 }

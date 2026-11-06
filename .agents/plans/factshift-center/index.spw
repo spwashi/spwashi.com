@@ -1,4 +1,4 @@
-# Review 2026-10-30 — factshift.com is the prototype; factshift.center examines which concepts a physics can represent. Hesitance to AI is understood and, for the engineer, not minded. Agentic development adds cohesion and performance. Next canvas cut: the workbench's reading.
+# Review 2026-11-06 — keep, tending; nothing moved since 2026-10-30. factshift.com is the prototype; factshift.center examines which concepts a physics can represent. Hesitance to AI is understood and, for the engineer, not minded. Agentic development adds cohesion and performance. Next canvas cut: the workbench's reading.
 # Plan Index — factshift.center
 #
 # factshift.com is the prototype. factshift.center examines which concepts a particular
@@ -13,7 +13,7 @@ operation = "prime"
 fixity = "tending"
 
 intent: .{
- goal = `Status 2026-10-30. factshift.com is the prototype. factshift.center examines which concepts a particular set of physics can represent, in public at about/domains/factshift.center/. The creator understands hesitance to AI and, as an engineer, can't really mind it. Agentic development adds cohesion and performance. The snapshot is app 99c10e6. Next canvas cut: carry the workbench reader and draw its outline. Deploy is the creator's.`
+ goal = `Status 2026-11-06, unchanged since 2026-10-30. factshift.com is the prototype. factshift.center examines which concepts a particular set of physics can represent, in public at about/domains/factshift.center/. The creator understands hesitance to AI and, as an engineer, can't really mind it. Agentic development adds cohesion and performance. The snapshot is the app's 99c10e6 (its own repository), carried here in 76c70f77. Next canvas cut: carry the dated workbench build and draw its outline (slice 5); slices 1a and 2 need no gate. Deploy is the creator's.`
  owner = `factshift-center`
  kind = `plan`
  bucket = `active_backlog`
@@ -163,6 +163,7 @@ invariants: #[
   #:depth #!pragmatics ~#lens(projection)
   ~#with: @plan @parser_releases
   ~#hypothesis: "spw.quest's 2026.10.13 workbench build already exports the five runtime names and the parse the app imports, at about the weight the app now compiles from source."
+  ~#tension: "The build carries values, not types: the app also imports thirteen types from spw-workbench/runtime, and the release ships no .d.ts, so tsc would still read the submodule's source or wait on a workbench ask."
   ~#expect: "Carry the dated build, the way spw.quest does: pinned bytes, a manifest, and no runtime dependency on another host. Bump the submodule only for the workbench's source tools (its dev server and language server). Importing spwashi.com's own JS would tie two deploys together."
   ~#unblocks: "slice 5 in PLAN.md, and whether the workbench cuts a release past the one spw.quest carries"
   ~#probe(run)
@@ -212,6 +213,8 @@ invariants: #[
   ~#asked: "the creator, 2026-10-27: map mode should be more functional; mapping a spell onto a set; a naming spell easy to select as a story; swiping to fill a Spw expression from what is selected and what is possible; priming and activating, sequencing, arcs across nodes; added nodes easier to configure at once"
   ~#tension: "Map mode is a JavaScript editor whose (node, i) => node runs over every node. The selection's verbs set many nodes at once, but one verb at a time, and nothing records what was cast."
   ~#hypothesis: "Map mode takes a line of Spw and casts it on the selection (or every node), in the selection's order. An ordered body is a story: {dawn.road.door} names the set in order, and the run between selects a chapter. The lens's → on a selection fills the spell from what the set has in common, and each cast primes the next node, so a sequence is an arc to step through."
+  ~#expect: "Two of the three go through verbs that exist, one verb at a time and with nothing recorded: the size (larger, smaller) and the link pattern (linked in a row, linked to each other). The name story does not, because names come from one word and a count (names.ts), so {dawn.road.door} is the spell only a line of Spw can say."
+  ~#unblocks: "whether map mode takes Spw before it takes JavaScript"
   ~#probe(read)
   !probe{ "write three spells by hand for one selection (a name story, a size, a link pattern), cast each through the selection verbs that exist, and note which a single line of Spw could have said" }
   $%[spells.map_mode, spells.selection_verbs, spells.story_names]
@@ -224,6 +227,7 @@ invariants: #[
   ~#asked: "the creator, 2026-10-27: container delimiters useful for configurable physics; wrapping a node in a container, nodes that represent boundaries, tapping into a node or mounting it as a frame; saving nodes as Spw expressions parsed as documents and navigated by titles; cross-page linking or physics; layering, outlines, z-index"
   ~#tension: "Delimiters already choose a layout (a.b.c is a row, a, b a ring) and each region has its pull, but a reader cannot set either, a container is never a thing to hold, and the canvas is one page."
   ~#hypothesis: "Each delimiter names a physics: ( ) loose and drifting, < > gathering, { } holding by its separator. Wrapping a selection writes a container into the held line. A boundary node is the container's own handle, and tapping into a node mounts its line as the frame, with the title as the way back. A saved set is a .spw document whose titles are its table of contents."
+  ~#expect: "The delimiters differ by place more than by physics. line-anatomy.ts gives ( ), { } and < > nearly one pull (friction 0.8 or 0.92, gravity 0.04 to 0.05) and [ ] none of its own, and the separator inside { } sets the only layout difference, a row or a ring. So most effects the probe lists belong to placement, and the hypothesis's physics are still to be built."
   ~#probe(read)
   !probe{ "list the regions' effects in line-anatomy.ts against the delimiters' meanings in .spw/site.spw, and say which delimiter each effect would belong to" }
   $%[containers.physics, containers.frames, containers.documents]
@@ -236,6 +240,7 @@ invariants: #[
   ~#asked: "the creator, 2026-10-27: pinching and radius effects should depend on linking arcs and layering; selection as a topographical prioritization; whether ↑ on the lens adds one node or throws a batch by what more nodes is set to; ↓ as a reduction"
   ~#tension: "A pinch or the ring resizes one node (or the selection). Links only keep their length past the ends' radii. Layers (z) decide drawing, not reach. ↑ on the lens adds one node; ↓ opens the menu."
   ~#hypothesis: "A resize falls off along the arcs: what a node accesses or holds grows less, by its distance in links, and only within its layer. Selection becomes a height map: selected is high ground, its arcs the slopes, and a pinch or a spell reaches as far as the ground stays high. ↑ adds what more nodes is set to, one or a batch, arriving selected; ↓ reduces the selection the same way: the farthest from the center of its arcs go first."
+  ~#expect: "Today only the pinched node changes (pinch.ts resizes the node under the fingers alone); its parts keep their radius and are pushed out by link length. So for each part the probe will name a falloff the canvas does not yet have."
   ~#probe(read)
   !probe{ "on a held line with a dotted body, pinch the word and the first part, then say for each part how much it should have grown and why" }
   $%[sizes.along_arcs, sizes.by_layer, sizes.per_node]

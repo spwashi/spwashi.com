@@ -1,4 +1,4 @@
-# Review 2026-07-12 — keep as a presentation criterion, not a new runtime family; still captures must preserve meaningful state.
+# Review 2026-11-06 — keep as a presentation criterion, not a new runtime family; next a still carries its Spw line, and the frame still waits on the journey answer.
 # Plan Index — screenshot-semantics
 #
 # The desired end state is a site where a screenshot at any moment captures something worth keeping: current address, liminality phase, operator grammar engaged, and the journey…
@@ -104,6 +104,25 @@ invariants: #[
   ~#with: @plan @wip @screenshot_semantics
   ~#hypothesis: "A still already shows where you are: frame address, pressed lens, texture crop held by the visit key. A journey token would add the path, as a sparse earned mark that is readable without hover or JavaScript. That serves the creator's practice of screenshotting a page and feeding it to Midjourney or Grok."
   ~#tension: "A path mark is a second layer on a calm default, and it can read as tracking rather than a notebook. Session-local marks vanish before the next recording. Persistent marks need storage and a reset, and they change what a returning visitor's stills say about them. wip.spw's taste_debt defers this decision to commit 2; until it is made, commits 2-5 have no visual form to build."
-  !probe{ "npm run visual:capture -- --stills --ids <opening> --viewports pocket" }
+  ~#expect: "Nothing in the still recipes or capture.css names a journey; a still today shows address, pressed lens and the crop held by the visit key, and no path."
+  ~#probe(run)
+  !probe{ "rg -n -i 'journey' scripts/lib/viewport-still-recipes.mjs public/css/modes/capture.css" }
+  ~#probed(2026-11-06): "no hits."
+  $%[journey.no_path, journey.session_mark, journey.persistent_mark]
   ~<"./PLAN.md"> ~<"./wip.spw"> ~<"../../../public/css/modes/capture.css">
+}
+
+#>wonder_screenshot_semantics_still_line
+?["Where does a still's Spw line live: beside the harness still in its manifest, on the page as a caption in capture mode, or in the satchel for the creator to copy before a screenshot?"]{
+  #:depth #!pragmatics ~#lens(capture)
+  ~#with: @plan
+  ~#taste: "The creator screenshots pages by hand and has Grok Imagine and Midjourney read them, so a capture should carry its own address when it leaves the site."
+  ~#hypothesis: "The manifest serves the harness and costs the page nothing. Only something on the page reaches a hand screenshot, and capture mode is the one state where a caption would not disturb a calm default."
+  ~#tension: "A caption in capture mode puts a mark on the still that the reader never saw; a manifest line never travels with a hand screenshot; the satchel route asks the creator to do a step every time."
+  ~#expect: "The harness records only the target's own expression (componentExpression), and nothing in capture.css adds a caption."
+  ~#unblocks: "slice 1's second half, and whether capture.css grows a caption rule"
+  ~#probe(run)
+  !probe{ "rg -n 'componentExpression|readPageLine' scripts/component-snapshots.mjs public/js/interface/state-inspector.js" }
+  ~#probed(2026-11-06): "componentExpression at component-snapshots.mjs:693, read from the target only; readPageLine at state-inspector.js:930; no caption rule in capture.css."
+  $%[manifest_only, capture_mode_caption, satchel_copy]
 }

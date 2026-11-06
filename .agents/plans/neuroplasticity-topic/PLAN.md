@@ -1,6 +1,8 @@
 # neuroplasticity-topic
 
-**Status 2026-10-28.** Planned, nothing built. The creator asked for a neuroplasticity topic tied to how Spw grew out of factshift, with a plan for its visuals and interactives. The factshift.com domain page now tells that origin (a better Wikipedia that turned toward learning) and gives Spw's reason in one line: a claim written with its place in it. This plan is the topic that follows from that. The page waits on the decisions below, and every claim waits on its source.
+**Status 2026-11-06.** Still planned and unbuilt; nothing has landed since `5d7091f0`. Correction: "Two learners, one claim" needs the canvas to take two lines first. The creator asked for a neuroplasticity topic tied to how Spw grew out of factshift, with a plan for its visuals and interactives. The factshift.com domain page has told that origin since `5f758428` (a better Wikipedia that turned toward learning) and gives Spw's reason in one line: a claim written with its place in it. This plan is the topic that follows from that. The page waits on the decisions below, and every claim waits on its source.
+
+**Guard.** No clinical or diagnostic framing goes public: no conditions named, no therapy or treatment claims, no promise to rewire a reader.
 
 **Related:** [factshift-center](../factshift-center/PLAN.md) (the canvas the interactives run on) · [topic-building-blocks](../topic-building-blocks/PLAN.md) (owns the topics shelf, its hubs and figure homes) · [semantic-copy-depth](../semantic-copy-depth/PLAN.md) (owns the sentences once they are written).
 
@@ -52,21 +54,29 @@ Each runs on something the canvas already does, and says where the comparison st
 | Fire together | Tap two nodes together, again and again, and the tie between them pulls tighter (the feel card's ties, per link). Leave a tie unused and it slackens, then goes. | Links are not synapses. The strengthening rule is a cartoon of Hebb, not a model of LTP. |
 | Warm windows | Heat (the simulation's alpha) decides how much can move. Start warm and watch structure set as it cools, then warm it again with attention (a tap) and see what can still change. | Heat is one number. Real windows differ by system and never fully close. |
 | Recall reopens | A placed node, held, loosens for a moment and can be moved before it settles again. | Reconsolidation is narrower and still debated. This shows the idea, not the evidence. |
-| Two learners, one claim | Two lines side by side, `studentA@ece.120~?[transistors work.how]` and `tutor@ece.120~[transistors work.how]`. Shared words resonate, and the canvas shows where their understandings stop sharing ground. | It shows shared words, not shared understanding. |
+| Two learners, one claim | Two lines side by side, `studentA@ece.120~?[transistors work.how]` and `tutor@ece.120~[transistors work.how]`. Shared words resonate, and the canvas shows where their understandings stop sharing ground, the question Spw keeps asking (`topics/software/spw/index.html#spw-goals-lede`). | It shows shared words, not shared understanding. |
 
-New mechanics this needs: a tie's pull that changes with co-activation and fades without it (per link), and a hold that loosens a placed node. Both belong in factshift-center first. The topic page links to the canvas with each line in `?spw=` and `?linkPull=`.
+New mechanics this needs, each in factshift-center first:
+
+- **Two lines.** `?spw=` holds one line (`holdSpwLineFromAddress` in the app's `src/js/init/root.ts`), and a mark between two lines groups to the left (`compoundOf` in `line-anatomy.ts`), so the pair needs a second line in the address.
+- **A tie that learns:** a per-link pull that grows with co-activation and fades without it. Today `linkPull` sets one pull for every link.
+- **A hold that loosens** a placed node for a moment.
+
+The topic page links to the canvas with each line in `?spw=` and `?linkPull=`.
+
+Proposal: Fire together shows its state in the held line. Two parts tapped together often enough turn from `{a, b}` (held apart) to `{a.b}` (one name), the turn spw.quest's `/pivot` calls "hold it as one name". Where it stops: that is a reader's grouping, closer to chunking than to a synapse.
 
 ## Decisions for the creator
 
 1. **Where it lives.** A new area on the shelf (`/topics/neuroplasticity/`), or under `andragogy/` (it concerns adult learning), `pedagogy/` or `biochemistry/`.
 2. **Voice.** Plain, in the site's own imagery, written to someone in the middle of learning something. No degree framing.
-3. **Which interactive comes first.** "Two learners, one claim" needs nothing new. "Fire together" needs the per-link tie.
+3. **Which interactive comes first.** "Two learners, one claim" needs only the address to carry two lines. "Fire together" needs the per-link tie.
 4. **How deep the science goes.** A field guide with sources, or a short page that points to them.
 
 ## Slices
 
-1. Check the sources above and write the four ideas in plain sentences, each with its source and its limit.
-2. The page shell at the chosen route, readable without scripts, with figure homes.
-3. "Two learners, one claim" as a link into factshift.center with the lines in the address.
-4. The per-link tie in factshift-center, then "Fire together".
-5. Figures, then at most one illustration.
+1. **Read the sources** in the claims table; draft the four ideas in plain sentences, each with its source and limit, in this folder. Ungated; nothing goes public.
+2. **The page shell** at the home `wonder_neuroplasticity_home` settles, readable without scripts, in topic-building-blocks' stub shape. Gate: the creator's choice. Verify: `node --test scripts/tests/topic-wiring.test.mjs`.
+3. **Two lines** in factshift-center's app, then the "Two learners" link.
+4. **The per-link tie** in factshift-center, then "Fire together"; its feel is the creator's in the browser.
+5. **Figures**, then at most one illustration.

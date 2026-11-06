@@ -1,4 +1,4 @@
-# Review 2026-10-12 — hot notes for the AGENTS.md build-table cut; the gate, the failure ledger and the wave H rules stay in PLAN.md.
+# Review 2026-11-06 — hot notes for A2 (site.spw's archived refs) and the A1 build-table cut; the gate, the failure ledger and the slices stay in PLAN.md.
 # wip — agent-optimization
 #
 #>plan_agent_optimization_wip
@@ -12,24 +12,31 @@
 @agents_gate: ~"../../../AGENTS.md"
 @agent_contracts: ~"../../../scripts/check-agent-contracts.mjs"
 @site_spw: ~"../../../.spw/site.spw"
+@prompt_utils: ~"../../../public/js/interface/prompt-utils.js"
 
 operation = "cache"
 fixity = "tending"
 
 ^"stream"{
  >>[2026-10-12 10:59] verify — AGENTS.md is still 3179 words against 3200, and its Build pipeline section is about 540 of them. The archived-plan line removal the Status waits on already landed in 280c5a84, so the cut now waits only on the creator's review; check:agents prints spend by default, and --spend is a no-op alias. site.spw is 423 lines with 175 @ refs, 21 into .agents/plans/ and now 12 of those into archive/, not the 4 the wave H note counts.
+ >>[2026-11-06 12:05] verify — Status read against the tree. AGENTS.md is 3179/3200, untouched since 280c5a84; Build pipeline (540 words) is its heaviest section, then Validation 506 and Open first 469, and it holds none of the required phrases. 52 live PLAN.md, 186 archived. site.spw: 430 lines, 179 @name: declarations, 23 into .agents/plans/, 12 into archive/, every one of the 12 used by a facet. The failure ledger's "Claude 9ba112ec" was never a commit here or in the workbench; the revert it means is 239bca44. site.spw:232 has moved; the facet is translations.ecologies. PLAN.md now names slices A1–A4.
+ >>[2026-11-06 12:10] verify — HYPERMEDIA's last open item narrowed to one file: public/js/interface/prompt-utils.js holds the only five .site-frame lookups left in public/js, no tracked page carries the class, 147 pages carry data-spw-promptability, and audit:module-selectors lists no legacy .site-frame in the catalog. Recorded as A4; its gate is a browser look, since the swap wakes code that has matched nothing.
+ >>[2026-11-06 12:14] probe — wonder_plan_wip_hot: 19 of 54 live wip.spw held one stream line at this review's first count and 13 at its second, as today's reviewers tended theirs; five of those 13 are this review's folders, which this pass tends. The expect held: the one-line wips are the ones no session has opened since 781764d1 made them.
+ >>[2026-11-06 12:16] probe — wonder_plan_two_doors: fs-walk.ts:30 names .spw and .agents as AUTHORED_DOT_DIRS; doctor.ts:73 still lists .agents in DEFAULT_DOCTOR_SCAN_EXCLUSIONS. The expect held. Census and lattice can enter a plan; doctor cannot.
+ >>[2026-11-06 12:18] probe — wonder_plan_corpus_exclusion: the same fs-walk.ts line, from workbench a4e548d3 (2026-10-12, inside the pinned 850077ab), whose message records the creator calling the .agents skip a mistake. Answered corpus.agents in index.spw.
 }
 
 ^"open"{
  wip_hot = ~"./index.spw#wonder_plan_wip_hot"
  two_doors = ~"./index.spw#wonder_plan_two_doors"
- corpus_exclusion = ~"./index.spw#wonder_plan_corpus_exclusion"
+ build_table = "A1: where the Build pipeline table lives once it leaves AGENTS.md. The creator's review."
+ last_retired_noun = "A4: wake prompt-utils' frame lookups as .spw-frame, or delete them. A browser look at one promptable route decides."
 }
 
 ^"cache"{
- ~#status: "waiting"
- ~#next_commit: "&[agents] Move the build pipeline table out of AGENTS.md behind one pointer line, so every session reads 540 fewer words"
- ~#files_hot: "AGENTS.md, scripts/check-agent-contracts.mjs, .spw/site.spw"
- ~#gate: "the creator's review, since AGENTS.md is the gate"
- ~#last_stream: "2026-10-12"
+ ~#status: "implementing"
+ ~#next_commit: "~[spw] Let site.spw reach archived plans through their coordinators, and drop the twelve refs that point into archive/"
+ ~#files_hot: ".spw/site.spw, .spw/conventions/owner-registry.spw, AGENTS.md, public/js/interface/prompt-utils.js"
+ ~#gate: "nothing for A2; A1 waits on the creator's review, since AGENTS.md is the gate"
+ ~#last_stream: "2026-11-06"
 }

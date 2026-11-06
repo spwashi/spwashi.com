@@ -1,4 +1,4 @@
-# Review 2026-10-12 — the panel rewrite, the build surface and the creator's direction for spw.quest; the slices, prompts and guards stay in PLAN.md.
+# Review 2026-11-06 — the panel rewrite, the build surface and the creator's direction for spw.quest; the slices, prompts and guards stay in PLAN.md.
 # wip — spw-quest
 #
 #>plan_spw_quest_wip
@@ -68,6 +68,12 @@ fixity = "tending"
  >>[2026-11-05 21:38] decide — Proposed slices K to O in PLAN.md for utility and interactive value: K aligns about/domains/spw.quest/index.html (and copy-agentic-direction-2026-09.spw) with /learn, /build, /specimens, /constructs, /pivot, and the runnable inquiry loop; L bridges the < > ( ) [ ] { } guide slot order in src/build.js with the [ ] { } ( ) < > route-atlas slot order in src/pivot.js and public/js/semantic/expression-query.js; M adds interior body-separator pivots ({a.b.c} vs {a, b, c} vs {a; b; c} vs {a ~> b ~> c} vs {a}.{b}.{c}) and bounded walk trails to /pivot; N carries a learner's chosen noun across the 7 steps of /learn while preserving quest.spw parity; O links expressions in the / device note into /pivot, /specimens, and /install alongside Slice I's text/plain .spw oracle responses. Added #>wonder_spw_quest_slot_order in index.spw.
  >>[2026-11-05 22:45] land — deployed at the creator's word: check:workers 111 of 111, specimens match their sources, then wrangler deploy --config workers/spw-quest/wrangler.jsonc (version 10690dc2; no routes in the config, the domain binds outside it). Live after: / 200, /learn 200, /build 200, /specimens 200 (239 KB, today's shelf), /constructs 200, /pivot 200, and /pivot reads all four join specimens on the domain page (8 to 22 pivots each). Slice K landed on spwashi.com in the same pass.
  >>[2026-11-05 23:40] land — on main, not deployed: the slot-order answer (accept both) in expression-query.js, /build and /pivot; body turns on /pivot; Pivot this line and Find it on the shelf on /build; Shelf in the masthead with a room row on the three shelf pages; a contents line on /specimens. The site manifest came out identical apart from its stamp; six partial herbarium forms re-read without truncated bodies; check-workers passes, with the guide guard narrowed to the masthead link now that the note is deployed. Pocket screenshots taken on wrangler dev.
+ >>[2026-11-06 12:05] probe — wonder_spw_quest_published_cli: spw-cli, spw-lsp, spw-runtime and spw-seed each say "private": true, all at 0.3.0. The ~#expect held: npx init cannot exist yet, so slice C can only reorder /install.
+ >>[2026-11-06 12:07] probe — wonder_spw_quest_public_plan: no "/plan route in src/index.js. The ~#expect held; /parser/index.json is the only public record of what changes.
+ >>[2026-11-06 12:09] probe — wonder_spw_quest_look: no spiral anywhere in workers/spw-quest/src, and color-scheme only in paper.js and panel.js. Answered material.paper on landed code: e6b4b937 and b4651803, deployed 2026-11-05. Slice D's remaining notes stay the creator's phone review.
+ >>[2026-11-06 12:11] probe — wonder_spw_quest_motion: git still tracks one release, 2026.10.13, beside index.json. H still waits on a second cut.
+ >>[2026-11-06 12:20] plan — PLAN.md re-cut for the review pass. Landed history is dated lines with hashes, e6b4b937 to d3dcda9f. The state was re-measured: pin 850077ab from b956329b, 65 quest tests in six files, and the footer now links spw.quest. Next work is one-session slices (M2, M3, N1, N2, O1 to O3, R, the shell PRs), each with its paths, gate and check. Retired with reasons: A, B, F, L's order toggle (the author's order needs no toggle) and D's spiral notes. M's fifth turn, {a}.{b}.{c}, is not in BODY_TURNS, so it became M3. The 10690dc2 in the old Status was the Wrangler version id, not a commit; it stays only in the 22:45 entry above.
+ >>[2026-11-06 12:24] hygiene — index.spw: owner_rail moves from the archived spw-architecture-ecology to ecosystem-architecture; the goal, claim and falsification now name the worker and a slot-keeping pivot instead of the harness; the slot-order answer cites 9f2e3af4 and d3dcda9f and names order.either from its set.
 }
 
 ^"architecture"{
@@ -146,7 +152,7 @@ fixity = "tending"
 
   sensors = .{
     is = @routes_test
-    does = `13 tests: every route answers, the panels match @quest_source, the names match the workbench, each panel links its neighbors, and /build keeps the other slots when one changes`
+    does = `65 tests in six files as of 2026-11-06 (13 when this block was written): every route answers, the panels match @quest_source, the names match the workbench, each panel links its neighbors, and /build keeps the other slots when one changes`
     also = `npm run check:workers routes every host the workers answer`
   }[reg=facet]
 
@@ -173,7 +179,7 @@ fixity = "tending"
 }
 
 ^"built"{
-  state = "In the tree, not committed and not deployed. The panels came first (15:45 entry); the rest was layered on them the same evening."
+  state = "Committed in e6b4b937 (2026-10-12), moved to /learn in b4651803, deployed 2026-11-05. The panels came first (15:45 entry); the rest was layered on them the same evening."
   surfaces = #[
     `seven panels from @quest_source, each line read by the parser in the page and by the worker at /read with scripts off`,
     `a numbered path of the panels; the node of the panel you land on lights, and /read and /build carry the same path`,
@@ -205,17 +211,17 @@ fixity = "tending"
 ^"open"{
  constructs = ~"./index.spw#wonder_spw_quest_constructs"
  origin_wording = "The origin paragraph now opens 'The difficulty was not having language…'. Keep it, or put it in the creator's own words? The creator's call."
- operator_voice = "When the physical model is shown, which names does spw.quest speak: the workbench's (ascension, configuration, measure) or the site canon's (integration, binding, normalization)? The creator's call."
- commit_shape = "Commit the panels, the path and the build surface together after the look, or as the three proposed commits? The creator's call."
- look = ~"./index.spw#wonder_spw_quest_look"
+ operator_voice = "Names: the guide speaks the workbench's (ascension, configuration, measure), and the route test holds them (PLAN.md Guards). Still open for slice R: the twelve physics phrases come from the site's operator-detection.js, and the creator reads them before they go public."
+ commit_shape = "Settled 2026-10-12: committed together in e6b4b937 at the creator's word."
+ look = "Answered 2026-11-06, material.paper (./index.spw#wonder_spw_quest_look)."
  public_plan = ~"./index.spw#wonder_spw_quest_public_plan"
  published_cli = ~"./index.spw#wonder_spw_quest_published_cli"
 }
 
 ^"cache"{
- ~#status: "deployed 2026-11-05 (J, note); K live on spwashi.com when pushed; L and half of M on main, awaiting deploy"
+ ~#status: "live from the 2026-11-05 deploy (G, J, the note); K live on spwashi.com; L and M's body turns on main (9f2e3af4, d3dcda9f), awaiting the next deploy"
  ~#next_commit: "+[quest] Keep a short walk trail on /pivot, the way back three to five steps deep"
- ~#files_hot: "workers/spw-quest/src/index.js, workers/spw-quest/src/panel.js, workers/spw-quest/src/build.js, workers/spw-quest/src/pivot.js, about/domains/spw.quest/index.html"
+ ~#files_hot: "workers/spw-quest/src/pivot.js, workers/spw-quest/src/specimens.js, workers/spw-quest/test/constructs.test.mjs"
  ~#gate: "the creator's go-ahead to deploy what is on main (L and half of M); P and Q wait on brace-semantics#wonder_brace_semantics_highlighter_then_now"
- ~#last_stream: "2026-11-05"
+ ~#last_stream: "2026-11-06"
 }

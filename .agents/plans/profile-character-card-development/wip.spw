@@ -1,4 +1,4 @@
-# Review 2026-10-12 — hot notes for the first cast card; the card model, lenses and the RPG Wednesday route's guards stay in PLAN.md.
+# Review 2026-11-06 — hot notes for the first cast card, the style packet's missing half and the Inktober frame after October; the card model and the route's guards stay in PLAN.md.
 # wip — profile-character-card-development
 #
 #>plan_profile_character_card_development_wip
@@ -18,16 +18,23 @@ fixity = "tending"
 
 ^"stream"{
  >>[2026-10-12 10:59] verify — the card substrate and its slots are in builder.js, and the plan answers for /play/rpg-wednesday/, whose direction is the Inktober table (0814de8e). The cast page still has no profile cards, and one session note exists (sessions/2026-05-13/). The first cast card waits on the creator picking the figure and the session.
+ >>[2026-11-06 12:40] verify — Since 2026-10-10 only cross-cutting commits touched the plan's paths (b5171318 code blocks, df32c50f operator names). The cast page still has no card. The "develop style in Midjourney" producer that 53e21f01 put on the character sheet left in a46d9041's shell migration; the consumer in tools/midjourney/index.html remains. PLAN.md's interleaved June narrative is folded into "Landed passes" with that correction, and the Recommended Concept list reads 1 to 7 again.
+ >>[2026-11-06 12:42] probe — wonder_profile_character_card_development_first_cast: sessions/ holds 2026-05-13 alone, and the cast page has no profile-card.
+ >>[2026-11-06 12:44] probe — wonder_profile_character_card_development_style_packet: rg 'style-packet' finds only the consumer (tools/midjourney/index.html:623-658).
+ >>[2026-11-06 12:46] probe — wonder_profile_character_card_development_after_october: #inktober-31's lede still invites October drawing (play/rpg-wednesday/index.html:566).
+ >>[2026-11-06 12:47] hygiene — the first_cast wonder's ~#with named four refs the index never defined; it now names @plan, @cast, the session-notes plan and the builder.
 }
 
 ^"open"{
  first_cast = ~"./index.spw#wonder_profile_character_card_development_first_cast"
+ style_packet = ~"./index.spw#wonder_profile_character_card_development_style_packet"
+ after_october = ~"./index.spw#wonder_profile_character_card_development_after_october"
 }
 
 ^"cache"{
  ~#status: "waiting"
  ~#next_commit: "+[play] Give the cast page its first card, promoted from one session note"
- ~#files_hot: "play/rpg-wednesday/cast/index.html, public/js/modules/profile/builder.js, play/rpg-wednesday/sessions/2026-05-13/index.html"
- ~#gate: "the creator picks the figure and the session"
- ~#last_stream: "2026-10-12"
+ ~#files_hot: "play/rpg-wednesday/cast/index.html, play/rpg-wednesday/index.html, tools/character-sheet/index.html, tools/midjourney/index.html"
+ ~#gate: "the creator picks the figure and the session; the style packet and the Inktober frame are the creator's too"
+ ~#last_stream: "2026-11-06"
 }

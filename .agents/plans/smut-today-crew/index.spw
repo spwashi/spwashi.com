@@ -1,4 +1,4 @@
-# Review 2026-10-12 — new: smut.today as a crew world, staff as the leads, a daily draw with pins; nothing built until the creator answers.
+# Review 2026-11-06 — keep: smut.today as a crew world, staff as the leads, a daily draw with pins; nothing built until the creator answers the five wonders.
 # Plan Index — smut-today-crew
 #
 # Status 2026-10-12. The creator set a new direction for smut.today: a crew world, its staff as the leads, a story you can put together, daily variance with pins, and no attachment…
@@ -93,7 +93,11 @@ invariants: #[
   ~#with: @plan
   ~#taste: "Authored scenes keep the voice the site was built on; generated text would vary every visit and answer to no one."
   ~#tension: "Daily variance asks for more pieces than one hand writes quickly; the draw can vary which authored pieces meet, not the sentences."
+  ~#expect: "Three authored bodies (the two stories and the letter), so every sentence on the site today is written, none generated."
+  ~#probe(run)
   !probe{ "rg -n 'body: \\[' workers/smut-today/src/index.js" }
+  ~#probed(2026-11-06): "lines 24, 67 and 103: meeting, train and the letter."
+  $%[prose.creator, prose.draft_for_edit, prose.generated]
 }
 
 #>wonder_smut_crew_assembly
@@ -101,7 +105,11 @@ invariants: #[
   ~#with: @plan
   ~#taste: "The same slots can serve a reader choosing tonight and an author planning a season."
   ~#tension: "A reader tool wants few, legible choices; an authoring tool wants every facet at once."
+  ~#expect: "SETTLE is the one reader-held state: pace (day, slow, dirty), type and motion, in one cookie; nothing composes a story yet."
+  ~#probe(run)
   !probe{ "rg -n 'SETTLE' workers/smut-today/src/index.js" }
+  ~#probed(2026-11-06): "25 hits; SETTLE at line 192 holds pace, type and move, and no slot for who, where or when exists."
+  $%[assembly.reader, assembly.author, assembly.both]
 }
 
 #>wonder_smut_crew_names
@@ -109,7 +117,11 @@ invariants: #[
   ~#with: @plan
   ~#taste: "Names make a village; roles keep everyone a composite."
   ~#tension: "A name is the first thing a real person could be read into; a role alone can feel like a cast list."
+  ~#expect: "The two stories already name one partner each, with pronouns and a role, so the site already uses first names for invented people."
+  ~#probe(run)
   !probe{ "rg -n 'pairing:' workers/smut-today/src/index.js" }
+  ~#probed(2026-11-06): "two pairings (lines 22 and 65), each a single invented first name, pronouns and a role."
+  $%[crew.names, crew.roles_only, crew.roles_with_chosen_names]
 }
 
 #>wonder_smut_crew_existing
@@ -117,7 +129,11 @@ invariants: #[
   ~#with: @plan
   ~#taste: "What a returning reader already knows should land somewhere, not vanish."
   ~#tension: "The letter is addressed to one sitter, and that casting fell through; folding it in would re-address it."
+  ~#expect: "Six slugs: the two stories, the letter, and three pitches on the shelf."
+  ~#probe(run)
   !probe{ `rg -n 'slug: "' workers/smut-today/src/index.js` }
+  ~#probed(2026-11-06): "meeting, train, to-you, ministry, issue-pie and sits-for-proofs."
+  $%[existing.fold_in, existing.own_hall, existing.retire]
 }
 
 #>wonder_smut_crew_limits
@@ -125,5 +141,8 @@ invariants: #[
   ~#with: @plan
   ~#taste: "A list set once, in the creator's words, lets every draft be checked against it."
   ~#tension: "Limits written by anyone else would be a guess about someone else's heat."
+  ~#expect: "PLAN.md's Guards hold the site's rules (adults, consent on the page, composites, no script); the creator's own list of hard limits is not written anywhere yet."
+  ~#probe(read)
   !probe{ "rg -n 'Guards' .agents/plans/smut-today-crew/PLAN.md" }
+  ~#probed(2026-11-06): "one heading, line 74; no list of limits in the creator's words."
 }

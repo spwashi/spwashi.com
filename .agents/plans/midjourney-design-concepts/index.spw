@@ -1,4 +1,4 @@
-# Review 2026-07-12 — rework as a reference-assignment workflow; external concept images are inputs, not implementation authority.
+# Review 2026-11-06 — keep as the image owner. The creator's own art leads; a Midjourney render is an input placed only where it belongs to its page.
 # Plan Index — Midjourney-Inspired Focused Design Concepts Plan
 #
 # Use Midjourney as an inspiration and concept-sketching tool for focused UX directions, then translate the best ideas into repo-native CSS, HTML semantics, image treatments,…
@@ -128,8 +128,12 @@ invariants: #[
   #:depth #!semantic ~#lens(naming)
   ~#with: @plan @illustrations
   ~#hypothesis: "The Media Cauldron (_partials/media-cauldron.html, on nine routes) turns the self/local/global attention triad into copyable seeds. The footer cauldron (#memory-garden-cauldron) holds words a reader presses and keeps. This plan art-directs the footer one (PLAN.md 'Next prompts', a skillet-cauldron of paper slips). A reader who meets both learns two meanings for one word. The copy has already started to split them: media-cauldron.html:33 calls the footer one 'the garden bed' and itself 'this workbench', while the footer pill still says 'Open cauldron' (site-footer.html:21)."
-  ~#tension: "Both cook something from ingredients, so the shared word may be a deliberate echo, like prime in homonym-renaming, rather than a collision. Renaming either touches public copy, a partial name and search keys. The creator decides whether it is an echo to ledger or a homonym to split."
+  ~#tension: "Both cook something from ingredients, so the shared word may be a deliberate echo, like prime in homonym-renaming, rather than a collision. Renaming either touches public copy, a partial name and search keys. The creator decides whether it is an echo to ledger or a homonym to split. On 2026-11-06 the creator moved the footer cauldron to magic, not cooking (spellcraft-authoring PLAN.md, 'Operators, not verbs; magic, not cooking'), while the Media Cauldron still 'cooks what you name' (media-cauldron.html:33), so the two may already be parting."
+  ~#expect: "13 HTML files name one of the two; media-cauldron.html:33 still says the workbench cooks; the footer pill still reads 'Open cauldron' (site-footer.html:21)."
+  ~#probe(run)
   !probe{ "rg -l 'media-cauldron|memory-garden-cauldron' --glob '*.html' ." }
+  ~#probed(2026-11-06): "13 files; media-cauldron.html:33 and site-footer.html:21 read as the hypothesis says."
+  $%[cauldron.echo_to_ledger, cauldron.rename_media_cauldron, cauldron.rename_footer_cauldron]
   ~<"../../../_partials/media-cauldron.html"> ~<"../../../.spw/conventions/relational-attention-media.spw"> ~<"../homonym-renaming/PLAN.md">
 }
 
@@ -139,7 +143,11 @@ invariants: #[
   ~#with: @plan @raw
   ~#hypothesis: "/design/logos/ offers three spwashi.com directions (A frame and direction, which is the current install icon; B threshold opening; C frame and flow) and was design-studio's open pick. Session 7 (a9fa3ca7) produced four attention.productions renders: render 1 is a hand-drawn Edison bulb over a script 'attention.', render 2 a pendant spotlight over a clean sans, and render 3 swaps the O for the bulb on teal. Nothing is promoted."
   ~#tension: "The two picks may belong to different names: spwashi.com's mark and attention.productions' mark. If one mark serves both, the bulb carries salience into the shell. If they stay separate, the install icon (bc47ecf6) keeps direction A until the creator chooses. A render becomes an asset only with a sidecar, a registry entry and one placement."
+  ~#expect: "the session-7 folder exists only in a local checkout (renders/_raw is gitignored) and holds four PNGs; design/logos/ still offers directions A to C, with A as the install icon."
+  ~#probe(run)
   !probe{ "ls public/images/renders/_raw/2026-09-28-session-7/ design/logos/" }
+  ~#probed(2026-11-06): "four session-7 PNGs (renders 0 to 3) in this checkout; design/logos/ still names A frame and direction (the install icon), B threshold opening, C frame and flow."
+  $%[mark.direction_a, mark.direction_b, mark.direction_c, mark.session_7_bulb, mark.two_marks_two_names]
   ~<"../../../design/logos/index.html"> ~<"../../../.spw/caches/prompt-seeds-2026-09.spw"> ~<"../archive/design-studio/PLAN.md">
 }
 
@@ -152,7 +160,24 @@ invariants: #[
   ~#tension: "Some renders were made from the creator's prompts and direction, and some scans were edited; hand and model may need a third value for work that is both."
   ~#unblocks: "the registry's made field, the sensor, and every placement slice after them"
   ~#probe(read)
-  !probe{ "ls public/images/assets/primes public/images/assets/illustrations | head -40" }
   ~#probed(2026-11-05): "The sidecars answer most of it: primes record a scanned master (67 of 67), illustrations record Midjourney or describe renders (19 of 19), and folios, pads, panels, scraps and worktable are scans. routes/ and home/ carry no sidecars and read as generated route heroes; they are the part still the creator's to name."
+  ~#expect: "routes/ and home/ still have no sidecar, so no file can settle them; every sidecar in the six scan families carries a scan: entry in its source block."
+  !probe{ "find public/images/routes public/images/home -name '*.spw' | wc -l; rg -lF 'scan: {' public/images/assets -g '*.spw' | wc -l" }
+  ~#probed(2026-11-06): "0 sidecars across routes/ (72 files) and home/ (38 files). 238 sidecars carry scan:, namely all 237 in the six scan families plus one collectible whose maker: line names another maker (< ? >); 0 of the 19 in illustrations do. The open part is now only routes/ and home/. Slice 1 can read made from the sidecar for the rest, as long as it never counts a maker: sidecar as the creator's. The runtime already answers in its own words, * original and ~ generated (public/js/runtime/expression/image-provenance.js, 76a59300), so made.hand reads as original and made.model as generated."
   $%[made.hand, made.model, made.both]
+}
+
+#>wonder_midjourney_design_concepts_reading_of_a_scan
+?["When Midjourney reads one of the creator's scans into a more imaginative frame, what does the registry say made it?"]{
+  #:depth #!pragmatics ~#lens(choice)
+  ~#with: @plan
+  ~#taste: "The creator named the path on 2026-11-06: washi-tape spells, scanned; Grok Imagine animating the scans; Midjourney interpreting the materials. A reader who taps the picture should be able to find the hand underneath it."
+  ~#hypothesis: "A reading is a generated image that names its source: its sidecar records generated plus the path of the scan it read. image-provenance.js then marks it ~, and its caption can link back to the scan, so the picture opens onto the hand underneath."
+  ~#tension: "Counted as generated, a page that opens on a reading of the creator's own spell scores the same as a page opening on an unrelated render. Counted as original, 'more of the creator's art' becomes easy to satisfy with renders. A Grok Imagine clip of a scan asks the same question in motion."
+  ~#expect: "No sidecar under public/images names a source image today, so whatever is chosen is a new sidecar field, not a data-spw attribute."
+  ~#unblocks: "slice 1's made values, the sensor's count, and the sidecar of the first washi-tape spell"
+  ~#probe(run)
+  !probe{ "rg -l 'source_scan|derived_from|source_image' public/images --glob '*.spw' --glob '*.json'" }
+  ~#probed(2026-11-06): "no file matches."
+  $%[generated_with_source, original, both, a_family_folder_of_its_own]
 }

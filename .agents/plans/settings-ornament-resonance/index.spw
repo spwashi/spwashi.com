@@ -1,4 +1,4 @@
-# Review 2026-11-05 — keep as the settings umbrella and shelf owner; routing generated with --only, thesis and concepts written from its Status, owner claim is the tree template
+# Review 2026-11-06 — keep as the settings umbrella and shelf owner. Row 4 of settings-theme-wiring closed (b5d9f407); next is the try-a-look mock, with two wonders for the creator.
 # Plan Index — Settings Ornament Resonance
 #
 # Let a reader pick up a look, reading size, fix, kit, writing mode, motion level, view or instrument from the /settings/ shelf, see the change on the box and in the "wearing now"…
@@ -96,3 +96,32 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+#>wonder_settings_ornament_resonance_try_a_look
+?["Which guided way to try a look does the shelf offer: a short path through neighbouring looks, a pivot from what you wear, or the window's Spw line previewing each press?"]{
+  #:depth #!pragmatics ~#lens(choice)
+  ~#with: @plan @index @site_settings_ui
+  ~#taste: "Guided, not random: a step shows where it lands before you take it, names what it turns, and keeps the way back (spw.quest /pivot)."
+  ~#hypothesis: "The window's sample sigil, rewritten as the reader's settings in one Spw line, teaches the language while it previews, so the preview can serve either path."
+  ~#tension: "A preview that rewrites on hover can grate on repeat visits and must never reflow the shelf; a path needs an order, and an order of looks is itself a taste call."
+  ~#expect: "No guided mock exists on settings/index.html yet. The only 'guided' text on the page is an unrelated debug option, and the window's sigil is the static #>sample_frame."
+  ~#unblocks: "the mock's second commit, which keeps one variant"
+  ~#probe(run)
+  !probe{ "rg -n -i 'pivot|guided|settings-shelf__window-sigil' settings/index.html" }
+  ~#probed(2026-11-06): "One hit for 'guided emphasis' in a debug option's label, plus the static sigil line; nothing else."
+  $%[neighbour_path, pivot_from_wearing, expression_preview]
+}
+
+#>wonder_settings_ornament_resonance_satchel_holds
+?["Does one satchel hold the page's Spw, the patch bay of what the page is now, and the receipts of what just happened, or do receipts live elsewhere?"]{
+  #:depth #!pragmatics ~#lens(placement)
+  ~#with: @plan @state_inspector
+  ~#hypothesis: "Since 902738b4 the satchel opens on the page's Spw line with copy, pivot and take apart; the bay would sit under that line as the controls that rewrite it, and a receipt would be that line's last change."
+  ~#tension: "The chrome-ecology prime (.spw/caches/chrome-ecology-2026-11.spw) makes receipts part of every floating piece. If they all land in the satchel, the satchel becomes a log, and a pocket satchel has room for one row before it covers the page."
+  ~#expect: "state-inspector.js holds the page-Spw row and its two spw.quest links, and no data-site-setting-set control and no receipt yet."
+  ~#unblocks: "the bay specimen on /settings/ (the sensation gate in PLAN.md, 'The satchel as a site-nav synthesizer') and runtime-plane-consolidation's satchel rebuild"
+  ~#probe(run)
+  !probe{ "rg -n -i 'receipt|data-site-setting-set|pivotLink' public/js/interface/state-inspector.js" }
+  ~#probed(2026-11-06): "pivotLink and buildLink only (from 902738b4); no settings control and no receipt."
+  $%[one_satchel_three_rows, bay_in_satchel_receipts_on_rail, receipts_on_each_piece]
+}

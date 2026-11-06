@@ -15,7 +15,7 @@ Experimental: metamaterial as a cognitive model, not a physical claim.
 - [x] Resolve attention locally; preserve keyboard focus over transient hover.
 - [x] Publish workbench improvement evidence and a reversible square-symmetry experiment
   on `/topics/software/spw/`, with native buttons and a readable static state.
-- [ ] Remaining idle modules still query retired nouns; do not dual-list aliases back into the catalog. Next slice names those files one family at a time.
+- [ ] Remaining idle modules still query retired nouns; do not dual-list aliases back into the catalog. 2026-11-06: one file is left, `public/js/interface/prompt-utils.js` (five `.site-frame` lookups); slice A4 in [PLAN.md](./PLAN.md#next-slices).
 
 ## Theory examined
 Workbench `form-geometry.spw` distinguishes invertible surface edits from semantic

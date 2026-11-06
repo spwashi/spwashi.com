@@ -1,6 +1,6 @@
 # Plan: profile-character-card-development
 
-**Status 2026-10-10.** Substrate and slots landed (`data-spw-slot` in `public/js/modules/profile/builder.js`). Since 2026-10-10 this plan also owns the RPG Wednesday route, whose current direction is the Inktober table (0814de8e). The cast lens and author handoff have not started: `/play/rpg-wednesday/cast/` has no cards. Next slice: one cast card promoted from one session note. Gate: the creator picks the figure and the session.
+**Status 2026-11-06.** The substrate and slots landed: `renderProfileCard` in `public/js/modules/profile/builder.js` emits the `data-spw-slot` contract (53e21f01, 2026-06-01). Since 2026-10-10 this plan also owns the RPG Wednesday route, whose direction was the Inktober table (0814de8e). October has now closed, and the frame still invites October drawing (`index.spw#wonder_profile_character_card_development_after_october`). Since 2026-10-10 only cross-cutting commits touched these paths (b5171318, df32c50f). The cast lens and the author handoff have not started, and `/play/rpg-wednesday/cast/` has no cards. Next slice: one cast card promoted from one session note, gated on the creator picking the figure and the session. Found on re-read: the card's "develop style in Midjourney" action left `/tools/character-sheet/` in the shell migration (a46d9041, 2026-07-26), while `/tools/midjourney/` still reads `?style-packet=` (slice 2).
 
 **Related:** [skill-folio-operating-system](../archive/skill-folio-operating-system/PLAN.md) (archived). **Absorbed 2026-10-06:** [rpg-character-hub](../archive/rpg-character-hub/PLAN.md) · [rpg-session-notes](../archive/rpg-session-notes/PLAN.md). **Absorbed 2026-10-10:** [rpg-portal-fantasy](../archive/rpg-portal-fantasy/PLAN.md) (route ownership).
 
@@ -39,16 +39,7 @@ It should not require:
 
 ## Files
 
-[NEW] .agents/plans/profile-character-card-development/PLAN.md
-[NEW] .agents/plans/profile-character-card-development/profile-character-card-development.spw
-[MOD?] tools/profile/index.html — if the route copy should explicitly describe lensing rather than a single professional use case
-[MOD?] tools/character-sheet/index.html — if the route copy should explicitly describe shared substrate plus translation lens
-[MOD?] play/rpg-wednesday/cast/index.html — if future cast entries should be framed as character-card promotions rather than generic references
-[MOD?] public/js/modules/profile/builder.js — if the data model should expose lens, development state, or card family more explicitly
-[MOD?] public/js/modules/profile/tool.js — if presets should become named lenses instead of route-specific presets only
-[MOD?] public/css/components/cards/profile-card.css — if development-state and family semantics need clearer variable contracts
-[MOD?] .agents/plans/blog-blob-spw/PLAN.md — if blobs become a source object for some profile/character cards
-[MOD?] .agents/plans/archive/rpg-session-notes/PLAN.md — if session notes become a source object for cast-card promotion
+The seams, when a slice needs them: `tools/profile/index.html` and `tools/character-sheet/index.html` (route copy for lenses), `play/rpg-wednesday/cast/index.html` (cast cards), `public/js/modules/profile/builder.js` and `tool.js` (lens, development state, family), and `public/css/components/cards/profile-card.css` (state and family variables). The source objects are [blog-blob-spw](../blog-blob-spw/PLAN.md) and the archived [rpg-session-notes](../archive/rpg-session-notes/PLAN.md).
 
 Craft guard:
 - The card substrate must stay shared enough to feel like one family.
@@ -83,45 +74,6 @@ The concept gap is not renderer capability. The gap is doctrine: what kind of th
    - `translation lens` for moving between imaginative and professional language
    - `cast lens` for recurring campaign references
 
-## 2026 Self-Imagination + Funding/Services Tranche (Cross-Ref)
-This tranche (detailed in ../archive/expressive-layout-tropes-fidget-manuscript/PLAN.md "Funding, Services..." section and ../archive/funding-proof-cards/PLAN.md) makes the character/profile card system an explicit instrument for **self-imagination as funding and capacity development**:
-
-- Character Sheet Builder is reframed (in copy + optional flows) as the place where a creator practices the personality, theme, and developmental posture of the self/work that will later commission or be commissioned.
-- Optional process flows (playful random seeds, wonder-primed generation, lens cycling, priming pressures to cauldron) reduce friction while inviting depth. The card becomes a living record of "who I am becoming in order to do the next work."
-- Microinteractions + grounding (trope marks on preset/random/field changes, vocabulary resonance, richer cauldron ingredients with character-origin) create the literacy and trace channels powerusers expect.
-- Direct tie to budgeting tool and services register: "Map the character arc → fund the capacity → commission the work that fits the person you practiced becoming."
-- Metacognitive profiles (from prior tranche) can gently surface inside the builder as developmental climate suggestions (never required).
-- Strengthens the "lenses not collapse" doctrine: the translation map and multi-lens presets already embody this; the tranche makes the *why* (self-imagination for clearer, more personal asks) even more legible.
-
-No change to the shared renderer or core data model unless a future patch requires it. This work keeps the card substrate honest as a portable, multi-lens identity instrument while giving it a clear role in the funding/self-prep ecology.
-
-See also:
-- ../archive/expressive-layout-tropes-fidget-manuscript/PLAN.md (archived; execution log)
-- ../archive/funding-proof-cards/PLAN.md (archived; funding surface evolution)
-
-### Clarity of Semantic Layers, Option/Subitem Flow/Wrapping/Hierarchy, Component Composition (Current Pass)
-This pass directly addressed "clarity of semantic layers, option or subitem flow/wrapping/hierarchy; component composition":
-
-- **Rendered cards now emit the canonical slot contract**: Updated `modules/profile/builder.js` renderProfileCard to add `data-spw-slot="header"`, `data-spw-slot="meta"`, `data-spw-slot="body"`, `data-spw-slot="footer"` on the major regions of the live `.profile-card`. This makes every published character/profile card a first-class, inspectable specimen of the universal slots anatomy documented in `/design/slots/`.
-- **Improved clarity in live builders**: Added explicit guidance in the character-sheet builder navigation area explaining that the panels are compositional slots with clear hierarchy (primary/secondary/tertiary from the taxonomy). On narrow screens they stack cleanly; the preview is the composed result.
-- **Hierarchy + wrapping enhancements**: Strengthened visual distinction for badge clusters (primary/approach/role vs. secondary/context/domain) in `profile-card.css` with better opacity/weight and explicit flex-wrap behavior that holds up on mobile without breaking composition.
-- **Design surface wiring**: Added a direct call-out in `/design/components/` linking the live rendered cards (now with proper slots) back to the glossary and `/design/slots/`. This closes the "edit → render → inspect composition" loop for producers, designers, and powerusers.
-- **Semantic layer consistency**: The change reinforces that the same slot grammar (header → meta → body → figure → actions → footer) applies across frames, cards, and the visual canon tools (Midjourney packets, etc.).
-
-These are minimal, high-leverage patches that make the semantic model more legible without altering visual design or adding bloat. The rendered card is now both a practical output *and* a teaching specimen for component composition.
-
-All changes pass git diff --check + node --check. Plans and live surfaces are now better aligned on slots, hierarchy, and composition.
-This tranche directly improved the *value and discoverability of the rendered .profile-card / character cards* as first-class inputs to visual style work:
-- One-click "develop style in Midjourney" action from the live rendered preview that constructs a portable style/identity packet, copies it, and navigates with `?style-packet=...` query combinatorics.
-- Producer/director copy added in Midjourney bench and design/slots explicitly explaining how to use rendered cards + slots + palettes + Midjourney packets to develop and maintain a coherent visual style across a project.
-- Local image mounting/pasting UX enhanced with an explicit drop/paste zone on the Midjourney bench that participates in image-metaphysics + prompt memory (associates studies with packets for recall).
-- Slots (design/slots + builder panels) wired as the ergonomic tuning grammar between card rendering and image canon.
-- Edit/read/preview modes in the builder benefit from the stronger "rendered output as contract" emphasis and the preview panel now surfaces the style handoff affordance.
-- Runtime instrumentability: bus events (`rendered-card-to-style-packet`, `style-packet-from-card`), query param consumption, and data attrs for the flows.
-- Consolidation: packet concept (vision seed, style packet, character tropes) now flows more cleanly between cauldron → character builder → Midjourney.
-
-All changes surgical, build on existing Spw semantics (data-spw-slot, operators on cards, promptability), respect AGENTS.md, and make the "rendered card" a high-value, discoverable artifact for both personal imagination development and professional visual production.
-
 3. **Family over template clones**
    These are not separate widgets. They are one family of cards with shared anatomy and different projection rules.
 
@@ -150,6 +102,18 @@ All changes surgical, build on existing Spw semantics (data-spw-slot, operators 
    - what voice or pressure should remain legible
    - what evidence or canon boundaries matter
    - what simplifications would become distortions
+
+## Landed passes
+
+- **Self-imagination tranche (2026-06-01, 53e21f01).** The character sheet builder became the place where a creator practises the personality, theme and developmental posture of the self that will later commission, or be commissioned: "Map the character arc → fund the capacity → commission the work that fits the person you practiced becoming." It came with optional seeds and lens cycling, and no change to the renderer. The detail is in the archived [expressive-layout-tropes-fidget-manuscript](../archive/expressive-layout-tropes-fidget-manuscript/PLAN.md) and [funding-proof-cards](../archive/funding-proof-cards/PLAN.md).
+- **Slots and composition (same commit).** Rendered cards emit `data-spw-slot` (header, meta, body, footer). The character sheet says its panels are compositional slots (`tools/character-sheet/index.html`, "The panels below are compositional slots"). `/design/components/` links the live cards to `/design/slots/`, and `profile-card.css` separates primary from secondary badge clusters with a flex-wrap that holds on a phone.
+- **Card to Midjourney, half left.** The same commit added a "develop style in Midjourney" action on the character sheet's preview, which built a style packet and sent it as `?style-packet=`. The shell migration (a46d9041) dropped that producer from `tools/character-sheet/index.html`. The consumer in `tools/midjourney/index.html` (its inline script, `style-packet-from-card`) and the drop/paste zone remain.
+
+## Next slices
+
+1. **The first cast card.** One recurring figure, promoted from one session note (`play/rpg-wednesday/sessions/2026-05-13/` is the only one), authored as static markup with the slot contract in `play/rpg-wednesday/cast/index.html`, so that it reads with JavaScript off. Gate: the creator picks the figure and the session (`index.spw#wonder_profile_character_card_development_first_cast`). Verify: `rg -c "profile-card" play/rpg-wednesday/cast/index.html` reads 1, and the card holds the figure's story, not its players.
+2. **The style packet's other half.** Restore one action on the character sheet's preview, retire the consumer on `/tools/midjourney/`, or point the packet at a scan instead of a render. Since 2026-11-05 the creator has wanted their own art first and Midjourney only where it belongs, which makes this a choice, not a repair (`index.spw#wonder_profile_character_card_development_style_packet`). Verify: `rg -n "style-packet" tools/` shows either both halves or neither.
+3. **After October.** `#inktober-31` on `/play/rpg-wednesday/` still opens "October is a good month to draw with the table". What the frame becomes is the creator's call (`index.spw#wonder_profile_character_card_development_after_october`); the table shelf below it, where "new table art lands … mine first", is where the creator's own art would open the route (midjourney-design-concepts, slice 4).
 
 ## Distinctions
 

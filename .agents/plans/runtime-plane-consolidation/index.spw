@@ -1,4 +1,4 @@
-# Review 2026-08-11 — phase 0 landed; phase 6 file extracts partial; keep active until contract-adoption phases land and counts re-probed.
+# Review 2026-11-06 — keep active: phases 0, 1, 4 and 5 landed, phase 2 half done; the next slice moves positioning onto the measured lane, and the passive-listener slice is retired as a no-op.
 # Plan Index — Runtime Plane Consolidation
 #
 # Make the runtime's canonical contracts the default path rather than one option
@@ -43,7 +43,7 @@ intent: .{
  ][reg=set]
  surfaces = #[
   `public/js/kernel/dom-contracts.js`,
-  `public/js/runtime/module-loader.js`,
+  `public/js/runtime/orchestration/loader.js`,
   `public/js/runtime/regions/region-profiler.js`,
   `public/js/semantic/spw-expression-geometry.js`,
   `scripts/build.mjs`,
@@ -54,8 +54,8 @@ intent: .{
 
 ^"plan_refinement"{
  tone = `Adoption auditor. Every claim carries a count; every count carries a probe.`
- accuracy = `Measured 2026-07-26; phase 0 + phase 6 file extracts landed 2026-08-11. Re-probe payload/write counts before trusting 2026-07-26 numbers for phase 1.`
- direction = `Phase 0 landed. Phase 1 next mechanical. Phases 2-5 gated on browser demo. Phase 6 partial (import-time extracts); catalog splits wait on phases 3-4.`
+ accuracy = `Measured 2026-07-26; phases 0, 1 (2026-08-11), 4 and 5 (991f7247, 2026-08-15) landed; write, observer and listener counts re-probed 2026-11-06 in PLAN.md's Status.`
+ direction = `Phase 3 slices P1 (positioning onto the measured lane, trace-gated), P2 (one width, ungated) and P3 (modules/ guarded writes, one family a commit). Phase 2 route scoping and Phase 6 catalog splits end at a browser demo.`
  inspiration = `The tree already knows how to do this correctly — it just does it in five places out of a hundred.`
  alignment = `runtime-bootstrap-performance, module-export-uniformity, runtime-module-decomposition, css-sensitive-attribute-writes, semantic-navigation-geometry`
 }[reg=facet]
@@ -133,14 +133,14 @@ dispatch: .{
  phases = #[
   .{ n = 0 ; name = `land the in-flight work correctly` ; gate = `none` ; status = `landed` }[reg=facet],
   .{ n = 1 ; name = `payload and boilerplate` ; gate = `none — no felt pacing change` ; status = `landed` }[reg=facet],
-  .{ n = 2 ; name = `route-scoped scheduling` ; gate = `browser demo` ; status = `next` }[reg=facet],
-  .{ n = 3 ; name = `write and observe consolidation` ; gate = `browser demo` ; status = `open` }[reg=facet],
-  .{ n = 4 ; name = `one expression reader` ; gate = `browser demo` ; status = `open` }[reg=facet],
-  .{ n = 5 ; name = `ground the spatial model` ; gate = `proposal + browser demo` ; status = `open` }[reg=facet],
+  .{ n = 2 ; name = `route-scoped scheduling` ; gate = `browser demo` ; status = `half: selector asked last` }[reg=facet],
+  .{ n = 3 ; name = `write and observe consolidation` ; gate = `trace for P1; none for P2 and P3; demo for observers` ; status = `next` }[reg=facet],
+  .{ n = 4 ; name = `one expression reader` ; gate = `browser demo` ; status = `landed` }[reg=facet],
+  .{ n = 5 ; name = `ground the spatial model` ; gate = `proposal + browser demo` ; status = `landed` }[reg=facet],
   .{ n = 6 ; name = `decompose the overloaded modules` ; gate = `browser demo before catalog timing changes` ; status = `partial` }[reg=facet],
   .{ n = 7 ; name = `css core decomposition` ; gate = `coordinate with css-architecture-readability` ; status = `open` }[reg=facet],
  ][reg=set]
- rule = `Phase 0 landed. Phase 1 is next mechanical. Everything from 2 onward ends at proposal plus browser demo; the human approves sensation before implementation. Phase 6 file extracts may land as checkpoints without gating changes.`
+ rule = `Work that changes no felt pacing lands with a sensor; work that changes when chrome appears or how interaction settles ends at proposal plus browser demo. Phase 6 file extracts may land as checkpoints without gating changes.`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -150,7 +150,7 @@ dispatch: .{
  spec_ref = ~"./PLAN.md"
  impl_ref = ~"../../../public/js/runtime/orchestration/loader.js"
  probe_ref = `rg -c 'writeDatasetValue' public/js && rg -cE '\.dataset\.[A-Za-z]+\s*=' public/js`
- falsification = `A patch cannot satisfy the public goal while leaving public/js/runtime/module-loader.js and public/js/kernel/dom-contracts.js unchanged. If the canonical contracts remain optional after a phase lands, that phase did not do its job.`
+ falsification = `A patch cannot satisfy the public goal while leaving public/js/runtime/orchestration/loader.js and public/js/kernel/dom-contracts.js unchanged. If the canonical contracts remain optional after a phase lands, that phase did not do its job.`
  status = "active"
 }[reg=facet]
 
@@ -166,7 +166,7 @@ invariants: #[
  `Owner intent: make the canonical contracts the default path, not one option among several.`,
  `PLAN.md sequences work; index.spw routes inspection; wip.spw holds measurement; modules.spw holds anatomy.`,
  `Adoption before decomposition — splitting before consolidating moves complexity sideways.`,
- `Every count re-probes before it is trusted; measurements are dated 2026-07-26.`,
+ `Every count re-probes before it is trusted; each carries its date.`,
 ][reg=set]
 
 #>wonder_runtime_plane_consolidation_arrival_lever
@@ -174,6 +174,7 @@ invariants: #[
   #:depth #!pragmatics ~#lens(arrival)
   ~#with: @plan @site @module_loader
   ~#tension: "Phase 2 here scopes modules by route family (ctx.routeFamily is parsed at site.js:498 and read by nothing). engagement-clusters arms a module per host when a reader engages it (kernel/engagement.js, 0a974b23). Both answer the same census and are two theories of how a page arrives; neither plan names the other, and building both doubles the gates a def can carry."
+  ~#expect: "The census lists the modules that mount and never write to the root (27 on its last reading). If they gather in a few route families, scoping by family is the cheaper lever. If they spread across every family, arming on engagement is."
   !probe{ "npm run audit:root-writes" }
   $%[runtime.arrival, catalog.gates]
   ~<"./PLAN.md"> ~<"../engagement-clusters/PLAN.md">
@@ -184,6 +185,8 @@ invariants: #[
   #:depth #!craft ~#lens(legibility)
   ~#with: @plan @modules @plan_module_decomposition @shell_disclosure
   ~#tension: "The absorbed decomposition plan guarded 'no file over 600 lines' and also said never to split by line count alone. interface/haptics.js grew 1,168 to 1,452 lines while the rule stood; shell-disclosure.js is 1,249. If the number is real, it drives splits; if not, the two-adopter rule alone decides."
+  ~#expect: "All three stay above 1,200 lines, with none split since 2026-10-10, so the number has not driven a split. Only the two-adopter rule has."
+  ~#probe(run)
   !probe{ "wc -l public/js/interface/haptics.js public/js/runtime/shell/shell-disclosure.js public/js/kernel/shared.js" }
   $%[runtime.decomposition, craft.guard]
   ~<"./PLAN.md"> ~<"../archive/runtime-module-decomposition/PLAN.md">

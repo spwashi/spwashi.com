@@ -1,4 +1,4 @@
-# Review 2026-10-12 — hot notes for the lens-seat choice; the April facets below are history, and the seat options and absorbed gates stay in PLAN.md.
+# Review 2026-11-06 — hot notes for the lens-seat choice and the four next slices; the lens switch is the live state block, the April inline runtime is gone (682cdd1c), and the seat options and absorbed gates stay in PLAN.md.
 # wip — state-block-projections
 #
 #>plan_state_block_projections_wip
@@ -8,14 +8,24 @@
 
 @plan: ~"./PLAN.md"
 @index: ~"./index.spw"
+@artifact: ~"./state-block-projections.spw"
 @plans_root: ~"../../../.agents/plans/index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@state_inspector: ~"../../../public/js/interface/state-inspector.js"
+@block_association: ~"../../../public/js/semantic/spw-block-association.js"
+@image_metaphysics: ~"../../../public/js/media/image-metaphysics.js"
+@lens_modes: ~"../../../public/js/runtime/page/lens-modes.js"
+@brace_actions: ~"../../../public/js/runtime/interaction/brace-actions.js"
+@component_collection: ~"../../../public/js/runtime/memory/component-collection.js"
+@guide_badge: ~"../../../public/js/interface/guide-badge.js"
+@design_css: ~"../../../public/css/routes/surfaces/design.css"
+@state_semantics_css: ~"../../../public/css/handles/operators/state-semantics.css"
 
 operation = "cache"
 fixity = "tending"
 
 ^"selection_probes"{
- probes = #[ `rg 'state-block-projections' public/js/site.js`, `Hypotheses: small code-like state blocks will make component state easier to read and will deepen the interaction grammar when tokens mutate real underlying state`, `test -f public/js/site.js`, ][reg=set]
+ probes = #[ `rg 'state-inspector' public/js/`, `Hypotheses: small code-like state blocks will make component state easier to read and will deepen the interaction grammar when tokens mutate real underlying state`, `test -f public/js/interface/state-inspector.js`, ][reg=set]
  rule = "Run probes before trusting cached plan_context."
 }[reg=facet]
 
@@ -25,14 +35,14 @@ fixity = "tending"
  operation = "prime"
  bucket = "active_backlog"
  validation = #[ `Hypotheses: small code-like state blocks will make component state easier to read and will deepen the interaction grammar when tokens mutate real underlying state`, `Negative controls: existing mode-switch buttons, image helper chips, and settings form interactions must continue working normally`, `Demo sequence: open home hero and swap mode/operator/brace from the state block; open Pretext and cycle lens state from the block; open settings and cycle a small set of appearance/runtime values from the block; mark an image visited and confirm the image state block updates`, ][reg=set]
- hot_files = #[ `public/js/site.js`, `.agents/plans/state-block-projections/state-block-projections.spw`, ][reg=set]
+ hot_files = #[ `public/js/interface/state-inspector.js`, `public/js/semantic/spw-block-association.js`, `public/css/handles/operators/state-semantics.css`, `.agents/plans/state-block-projections/state-block-projections.spw`, ][reg=set]
 }[reg=facet]
 ^["roots"]{
- @plan: ~"PLAN.md"
+ @plan: ~"./PLAN.md"
  @pattern: ~"../../../.spw/_workbench/.spw/patterns/literate-ui.spw"
- @references: ~"../interaction-grammar/PLAN.md"
- @references: ~"../archive/brace-literacy-guides/PLAN.md"
- @artifact: ~"state-block-projections.spw"
+ @interaction_grammar: ~"../interaction-grammar/PLAN.md"
+ @brace_literacy: ~"../archive/brace-literacy-guides/PLAN.md"
+ @artifact: ~"./state-block-projections.spw"
 }
 
 ^["intent"]{
@@ -69,7 +79,7 @@ fixity = "tending"
 ^["parallel_work"]{
  critical_path: [#site_runtime]
  parallelizable: [#markup_opt_ins, #css_surface]
- shared_hot_files: ["public/js/site.js?v=0.0.2", "public/css/spw-components.css", "public/js/spw-image-metaphysics.js"]
+ shared_hot_files: ["public/js/interface/state-inspector.js", "public/js/semantic/spw-block-association.js", "public/js/media/image-metaphysics.js", "public/css/handles/operators/state-semantics.css"]
  merge_risks: [#runtime_wiring, #overlay_containment]
  handoff_artifacts: [@plan, @artifact]
 }
@@ -105,28 +115,30 @@ fixity = "tending"
  >>[2026-10-25 19:26] implement — At the creator's ask, the lens concept and its UX, without the seat choice: the seat a page opens on reweights nothing (html[data-spw-active-lens-source] reads initial until a reader picks or a link names a seat); Home's receding cards keep AA contrast at 0.72 (their text measured 2.5:1 at the old 0.42, 6.2:1 now); each Home seat's panel says what it keeps bright below, linked; the seats point at their panels (aria-controls) and the panels announce politely. A reader's pick buzzes and is remembered in the address as ?spw-lens=, because bare ?lens= is the legible-channel setting and the settings sync was dropping every seat written there; the opening and query writes stay silent. Seat A, B or C is still the creator's look.
  >>[2026-10-25 20:05] implement — The lens's reach and contour: ten Home frames and the four cards say which seats they serve; a chosen seat outlines its frames in its operator color and the lens feedback counts the places that answer. A pick no longer focuses its frame: it had dimmed every other frame to 0.62 and, through pointer-events: none, left 83 of 93 controls in them untappable on a phone. Dimmed frames now never block input and hold AA at 0.88 with grayscale.
  >>[2026-10-25 20:40] implement — The lens reads the page's Spw. lens-reach.js reads each frame two ways and keeps them apart: declared by the page (data-spw-lens-pass) and parsed from the frame's handles through the operator table, as a lift of the seat's operator over its page share. A frame carries declared, parsed or both on data-spw-lens-reach, outlined solid, dashed or double in the seat's color, and the feedback names the readings apart. On Home they meet on one frame for Build and one for Play; Study and Studio's marks are rare in Home's handles, so their parsed reach is two frames and one. Expression kin (the build-time parse) was measured and left out: Home's frame expressions share no words with the seats' own.
+ >>[2026-11-06 11:30] decide — Two-Way State-Block Hydration & Component Mutation Bridge (Slices S1-S4) sequenced in @plan with @serialization_hydration: S1 (wire serializeElementToSpw and hydrateElementFromSpw from @block_association into @state_inspector for lossless two-way token mutation), S2 (promote chosen seat A/B/C from @design_css:1686 into @state_semantics_css + mobile .mode-switch chip contrast), S3 (spw:variant-selected listener in @component_collection + seat-changer achievement and @guide_badge toast), and S4 (@image_metaphysics + @svg_tunability state-block sync).
+ >>[2026-11-06 12:10] verify — the 11:30 draft read against the tree. True: serializeElementToSpw (:106) and hydrateElementFromSpw (:131) exist in @block_association with no caller; IMAGE_REFRESH_EVENT is runtime/interaction/loop.js:25; @component_collection hears only spw:regions-profiled and -primed; design.css:1686 holds the seat ::after. False: @state_inspector renders no inline blocks and mutates no tokens; it is the satchel. The inline runtime, runtime/state-inspector.js, was deleted in 682cdd1c as unloaded, leaving brace-actions' spw:state-block-disclosure unheard and .spw-state-block code (typography/base.css:453) styling nothing. hydrateElementFromSpw writes data-spw-definition, not the expression, and the expression's one writer is @lens_modes. The svg probe|frame|surface set and figure[lens]{node}(env)<projection> appear nowhere in svg-tunability.js. S1 and S4 cut with reasons in @plan; S2 and S3 kept as slices 1 and 2; slice 3 retires the leftovers; slice 4 proposes the expression line as the switch, through requestLensMode.
+ >>[2026-11-06 12:14] probe — wonder_state_block_projections_lens_seat: rg -n 'lens-chrome' over design.css and state-semantics.css gives 34 lines; seat appears only under page_design_components (design.css:1686), and state-semantics.css holds silent and quiet (:135-136). Nothing has moved; the look is still owed.
+ >>[2026-11-06 12:16] probe — wonder_state_block_projections_first_token: requestLensMode( is called from operator-interactions.js, brace-actions.js, console.js, composition.js (the cauldron) and variant-selection.js; five callers already ask the one owner, so a pressable token would be a sixth asker, not a second writer.
 }
 
 ^["open"]{
- ?[settings_scope]: "Which settings fields should be mutable from the state block without making the block too noisy?"
+ ?[settings_scope]: "Which settings fields should be mutable from the state block without making the block too noisy? Dormant: no inline block runtime exists since 682cdd1c."
  lens_seat = ~"./index.spw#wonder_state_block_projections_lens_seat"
-}
-
-^["commits"]{
- ~[1]: "#[state-blocks] — capture the projection/state-block plan and semantics"
- ~[2]: "&[state-blocks] — implement interactive state blocks for real component state"
- ~[3]: "&[state-blocks] — opt in home, pretext, settings, and image surfaces"
- ~[4]: "![state-blocks] — verify runtime mounts, mutation paths, and CSS containment"
+ first_token = ~"./index.spw#wonder_state_block_projections_first_token"
 }
 
 ^["cache"]{
- ~#status: "waiting"
- ~#next_commit: "~[css] Give lens switches the chosen seat as a lens-chrome value, and opt one route in"
- ~#files_hot: "public/css/routes/surfaces/design.css, public/css/handles/operators/state-semantics.css, public/js/interface/state-inspector.js, public/js/runtime/memory/component-collection.js"
- ~#gate: "the creator's pick of seat A, B or C at /design/components/#lens-seats, on a phone and a desktop"
- ~#last_stream: "2026-10-25"
+ ~#status: "waiting on the lens-seat look for slices 1-2; slice 3 is ungated"
+ ~#next_commit: "-[runtime] Retire the state-block disclosure event and selector that nothing has read since 682cdd1c"
+ ~#files_hot: "public/js/runtime/interaction/brace-actions.js, public/css/typography/base.css, public/css/routes/surfaces/design.css, public/css/handles/operators/state-semantics.css, public/js/runtime/memory/component-collection.js, public/js/interface/guide-badge.js"
+ ~#gate: "nothing for slice 3; the creator's pick of seat A, B or C at /design/components/#lens-seats for slices 1-2; a bench demo for slice 4"
+ ~#last_stream: "2026-11-06"
  ~#taste_debt: "Keep the settings state block from becoming a full dashboard"
 }
 
 ^["done"]{
+ landed_bench = "dc7c35a7 — the /design/components/#lens-seats A/B/C bench"
+ landed_home_lens = "cfd4e2e4 — a lens answers only a reader's pick; ?spw-lens=; Home dimming at AA (0.72/0.88)"
+ landed_lens_reach = "d18612e8 — lens-reach.js reads declared and parsed reach apart"
+ landed_satchel_page_line = "902738b4 — the satchel hands over the page's own Spw first"
 }

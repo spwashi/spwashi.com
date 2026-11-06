@@ -1,4 +1,4 @@
-# Review 2026-07-12 — retain as a long-horizon prime, not active backlog, until one bulletin-to-publication proof exists.
+# Review 2026-11-06 — retain as a long-horizon prime, not active backlog, until one bulletin-to-publication proof exists; a taped spell may be the first.
 # Plan Index — literacy-precipitation-press
 #
 # North-star lore and staged architecture for spwashi.com as a place where literacy precipitates into physical form: named abilities become tangible items, learning leaves printable…
@@ -58,6 +58,10 @@ intent: .{
 @plan: ~"./PLAN.md"
 @math: ~"../../../topics/math/"
 @observation_beats: ~"../../../public/js/runtime/diagnostics/observation-beats.js"
+@effect_ledger: ~"../../../public/js/runtime/memory/effect-ledger.js"
+@folio_release_shelf: ~"../../../design/folios/index.html"
+@table_shelf: ~"../../../play/rpg-wednesday/index.html"
+@seed_card: ~"../../../public/js/modules/cards/seed-card.js"
 
 dispatch: .{
  plan = @plan
@@ -99,11 +103,14 @@ invariants: #[
 #>wonder_literacy_precipitation_press_rung_two
 ?["Is the folio release shelf, or the RPG table shelf, already rung 2's bulletin board?"]{
   #:depth #!educational ~#lens(arc)
-  ~#with: @bulletin_board @folio_release_shelf @inktober_table_shelf @seed_card
+  ~#with: @plan @folio_release_shelf @table_shelf @seed_card
   ~#taste: "A board is curation, not a feed: what pins there is residue a reader made or earned."
   ~#hypothesis: "/design/folios/#release-set lays out the scanned set with native popovers and an ask that fills a seed card. /play/rpg-wednesday/#inktober-shelf waits for readers' art by the 31st. Either could be the first public board without a new route family."
   ~#tension: "The ladder asks for seed cards, spell records and proof cards pinned together. The release shelf holds the creator's work and the table shelf holds readers' work, so naming either one the board decides whose residue the board is for."
+  ~#expect: "Both ids still resolve. Since 0814de8e the table shelf has said new table art lands there as it is scanned, the creator's first and then pieces other artists offer, so its readers' work is still to come; the October drop page (design/folios/october-2026/) is a third place that holds only the creator's work."
+  ~#probe(run)
   !probe{ `rg -n 'id="release-set"|id="inktober-shelf"' design/folios/index.html play/rpg-wednesday/index.html` }
-  $%[board.rungTwo, board.whoseResidue]
+  ~#probed(2026-11-06): "release-set at design/folios/index.html:103, inktober-shelf at play/rpg-wednesday/index.html:591. October closed without readers' sets on the shelf in the tree."
+  $%[board.release_shelf, board.table_shelf, board.new_route_for_a_taped_spell]
   ~<"./PLAN.md"> ~<"../folio-worktable/PLAN.md">
 }

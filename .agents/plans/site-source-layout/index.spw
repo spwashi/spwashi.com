@@ -1,4 +1,4 @@
-# Review 2026-09-27 — long-horizon site/ move still waits on ref-safe evidence; near-term work is wip.spw M0 (ship list) then M2 (public/ts to src/ts), decisions owned by typescript-integration.
+# Review 2026-11-06 — keep, dormant on one creator decision: M0 (one list of what ships) waits on how vite.config.ts imports it; nothing in build-topology, vite.config.ts or public/ts has moved since 2026-10-10, and the TypeScript decisions are this plan's.
 # Plan Index — site-source-layout
 #
 # The desired end state is a repo where: - the authored website lives under one obvious source root: site/ - generated deploy output continues to live in dist/ - build/dev/check…
@@ -149,6 +149,9 @@ invariants: #[
   #:depth #!computational ~#lens(topology)
   ~#with: @plan @wip @build @template
   ~#tension: "M0 moves the ship list into scripts/ts/shared/build-topology.mts and retires vite.config.ts's own ignoredSegments (vite.config.ts:10). The root tsconfig.json is strict and includes vite.config.ts and scripts/**/*.d.mts. A cast hides the type; allowImportingTsExtensions makes Vite read source the build compiles elsewhere; a hand-written .d.mts beside the compiled file (scripts/template.d.mts already is one) is a second place to keep in step. M2 and the site/ move wait on this."
+  ~#expect: "On today's tree typecheck passes and cannot tell the three apart, since nothing imports the list yet. Run it on a draft M0 once per import form: the form that passes with no cast and no new compiler flag is the cheapest to keep in step."
+  ~#unblocks: "M0, then M2, then the site/ move"
+  ~#probe(run)
   !probe{ "npm run typecheck" }
   $%[build.topology, vite.config, typed.output]
   ~<"./PLAN.md"> ~<"./wip.spw">

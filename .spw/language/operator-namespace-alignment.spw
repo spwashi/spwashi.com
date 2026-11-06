@@ -132,9 +132,11 @@ expression = sigil[canon]{alias.copy}<one_table>
     `@sensor: direction (canon type) and pragma (atlas slug, a styled chip value in sigils-and-chips.css) join KNOWN_OPERATOR_TYPES so ecology:language stops flagging canon as unknown`
   ][reg=set]
   contested: #[
-    `@blog Spw.b legend words: @ ref, ~ stream, * merge, ^ binding, = baseline, % meta, + normalize, | surface. The characters in the blog's own examples read correctly under canon (= as configuration/bias, ~ as potential/wave, * as value/repeat, ^ as integration/bind, % as measure/reduction); only the legend words diverge, and + | have no type. Owner decision: keep Spw.b as a named dialect and print the canon word beside each, or fold to canon. @operator_semantics#workbench_canon already holds @ as the one open decision — a copy pass does not settle it.`,
-    `@operator_site_projection perspective.site_aliases still lists action under @. Stale against @definitions; the selector union keeps resolving, so it waits for that file's own align pass rather than a copy pass.`,
     `atlas pragma page says "the sigil is ! — the same commit mark as other actions" and the bridge table hosts !pragma on operator="action". Coherent. The ring node keeps data-spw-operator="pragma" because the chip stylesheet names that value.`
+  ][reg=set]
+  settled: #[
+    `@blog Spw.b legend words — settled 2026-10-27 (3a009a35): the creator read @ as perspective regarding its operand, and the legend and operator cards now use the workbench's twelve names in its order, with + | _ named as not operators. The new card copy is a placeholder for the creator's later pass.`,
+    `@operator_site_projection perspective.site_aliases no longer lists action (perspective, situate, observer) — settled by the same commit.`
   ][reg=set]
   probe_ref = `npm run ecology:language && rg -n '@action|&amp;stream|\*merge|\$pragma|operator="(state|#>)"' --glob '*.html' --glob '!node_modules'`
   falsification = `Any route that prints a sigil whose atlas page shows a different character; any data-spw-operator whose type column disagrees with the visible nav token or label on the same host.`

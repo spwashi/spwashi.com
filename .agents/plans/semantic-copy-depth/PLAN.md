@@ -1,6 +1,6 @@
 # Semantic Copy Depth
 
-**Status 2026-11-05.** The Proficiency Production Note slice landed (eba561ba: `.spw-production-note` in `content.css`, `/about/`, `/play/rpg-wednesday/`), and so did the math half of the thought trace: `/topics/math/#pure-math-routes` keeps its claim, its reading grammar and its stubs sentence, carries `math[reading]{picture.then.formalism}(turn)<paragraph>`, and points at the lens grid below, which already linked all five diagram anchors; the note went from eight links to three. The grid carries no `[case]` expression: haptics gathers the nearest expression host on a hold while brace-gestures arms the card, so an expression on the grid would split one hold across two elements (see wip 2026-11-05). Next slice: the `/topics/slop/#feeling` half, which waits on the creator's answer to whether the slop citation paragraphs are a display case at all (`#>wonder_semantic_copy_depth_slop_feeling` in `index.spw`). The smell cache's October pass does not replace that slice: a higher effort setting is not the edit. Holds tone and voice, the reading groove, editorial readability, and the entrance routes.
+**Status 2026-11-06.** The Proficiency Production Note slice landed (eba561ba), and so did the math half of the thought trace (89475c6c): `/topics/math/#pure-math-routes` keeps its claim, its reading grammar and its stubs sentence, carries `math[reading]{picture.then.formalism}(turn)<paragraph>`, and leaves the five diagram anchors to the lens grid below; the note went from eight links to three. The grid carries no `[case]` expression: haptics gathers the nearest expression host on a hold while brace-gestures arms the card, so an expression on the grid would split one hold across two elements (wip 2026-11-05). Next slice: C2, the three Home units `audit:copy:accessor` flags as `flat-only`, which is the entrance debt this plan absorbed and needs no one's call. C1, the `/topics/slop/#feeling` half, waits on the creator's answer to whether those paragraphs are a display case at all (`#>wonder_semantic_copy_depth_slop_feeling` in `index.spw`). The smell cache's October pass does not replace that slice: a higher effort setting is not the edit. Holds tone and voice, the reading groove, editorial readability, and the entrance routes.
 
 **Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — ungated.math_note, topics.slop_feeling, seams.entrance_copy.
 
@@ -48,32 +48,22 @@ Let readers tune how much copy is visible without splitting the site into separa
 - Proficiency labels describe the demands of a local practice, never the worth, age, credentials, or fixed level of a person.
 - Production notes may identify an entry, developing, and deepening path, but must not gate the complete base reading.
 
-## Proficiency Production Note Slice
+## Landed
 
-**Public outcome:** readers on About and RPG Wednesday can see how one shared premise supports several depths of interpretation and practice without being sorted by age.
+- **Proficiency production note** (eba561ba): one shared premise read at entry, developing and deepening depths on `/about/` and `/play/rpg-wednesday/`, never sorted by age. `.spw-production-note` in `public/css/components/content.css`; the contract is `.spw/conventions/intergenerational-literacy.spw`; it reuses `data-spw-copy-depth` and `data-spw-proficiency`.
+- **The math half of the thought trace** (89475c6c): `/topics/math/#pure-math-routes` as one claim that turns, with the shelf left to the lens grid below.
 
-**Daily kernel:** component; writer + designer; commons + theater; threshold; studio intensity; `contract`; HTML/CSS pattern + semantic convention; validate with copy measure, CSS/site checks, and mobile/desktop smoke.
+## Next slices
 
-**Non-goals:** no age inference, learner scoring, persistent profile, gated content, universal proficiency rank, new runtime module, or separate audience-rating route tree.
+- **C1. `/topics/slop/#feeling`.** Waits on the creator's call (`wonder_semantic_copy_depth_slop_feeling`). Touches `topics/slop/index.html` only. Verify as in Thought trace below.
+- **C2. Home's flat-only units.** `npm run audit:copy:accessor` flags three Home units as `flat-only`, a keyed hook lede with no expression: `home.hook.note` (`#home-note`), `home.library.lede` (`#home-library-lede`) and `home.record.lede` (`#home-record-lede`). Each gains the `subject[mode]{direction}` its sentence already says, read from the sentence, not invented for it. Touches `index.html`; ungated, but no words change. Verify: the accessor's flat-only count falls from 18 to 15, and `npm run manifest:staged` before commit. The other 15 are `/design/` hook ledes, which belong to the design-surface cluster.
+- **C3. Home's field note.** Waits until C1 has landed (Thought trace, below).
 
-**Minimal seams:**
+## Parked
 
-- `about/index.html` — creator history, individuated education, AI, and standardization boundary.
-- `play/rpg-wednesday/index.html` — shared WAP mystery with entry/developing/deepening production handles.
-- `public/css/components/content.css` — shared `.spw-production-note` anatomy and responsive packing.
-- `.spw/conventions/intergenerational-literacy.spw` — task-local proficiency and concurrent-register contract.
-- `.spw/site.spw` + `.spw/conventions/index.spw` — make the existing literacy convention discoverable.
-
-**Component anatomy:** `header -> body -> proficiency paths -> footer`. Reuse `data-spw-kind`, `data-spw-role`, `data-spw-copy-depth`, and the existing `data-spw-proficiency` values; do not create a new attribute family.
-
-## Follow-Up
-
-- Add a settings UI note or control that previews copy-depth behavior directly.
-- Let route templates emit bridge sections with consistent `spw-route-bridge` markup.
-- Use `entry` for home/landing surfaces, `dense` for route registers, and `technical` for inspect pages rather than inventing new copy-depth names.
-- Consider a topic index for vocabulary clusters once enough culinary, programming, and genre terms have accumulated.
-- Explore exporting annotated components as compact Spw recipe cards, e.g. `card[reason]{produce.artifact}`, for future model expansion and crawler-facing route briefs.
-- Expand emphasis-tier audits across route hubs so primary, secondary, and tertiary meaning can be inspected consistently in screenshots and generated design catalogs.
+- A settings preview of copy depth. Settings already layers its own copy (`entry` and `technical` paragraphs in `#applied-state`), but no control shows a reader what changing semantic density would reveal. If it comes back, it is the density control's own receipt: one sample sentence at each depth beside the control, ending at a browser demo.
+- Template-emitted `spw-route-bridge` sections (77 pages author them by hand), a topic index for vocabulary clusters, an emphasis-tier audit (22 pages carry `data-spw-emphasis`), and Spw recipe cards for annotated components (`card[reason]{produce.artifact}`).
+- Retired 2026-11-06: "use `entry`, `dense` and `technical` by surface", which Display Rules already says.
 
 ## Thought trace (2026-09-28)
 
@@ -88,7 +78,7 @@ First slice, when someone edits copy. Two hosts, no others:
 
 Home's field note at "recursive editorial loop" is the same shape and waits. The loop sentence is the trace. "The center of gravity is this site" is a shelf of nine links. Do not open Home in the first slice. The live note `home[live]{cycle.close}(b)<now>` is already a trace.
 
-2026-10-25: the Home quotes above predate eff5abfd (2026-10-25 13:45), which rewrote both sentences: the loop sentence is now "Make, name the relation, test it, leave a receipt, and carry it to the next close.", and the nine-link shelf now opens "The work sits in" (`index.html:313-323`). The live note is now `home[live]{season.close}(production)<now>` (`index.html:165`, since c05126f8). Markup below cites the old expression only for its grammar, which the new one shares. Home still waits.
+2026-10-25: the Home quotes above predate eff5abfd (2026-10-25 13:45), which rewrote both sentences: the loop sentence is now "Make, name the relation, test it, leave a receipt, and carry it to the next close.", and the nine-link shelf now opens "The work sits in" (the `spw-narration__text` paragraph at `index.html:313-325` on 2026-11-06). The live note is now `home[live]{season.close}(production)<now>` (`#home-live-note`, since c05126f8). Markup below cites the old expression only for its grammar, which the new one shares. Home still waits.
 
 Markup, on the stems that exist:
 
@@ -117,6 +107,6 @@ The slice stays the two paragraphs. A higher effort setting is not the edit.
 
 - Settled by the creator (4d4b7262): entrance copy speaks to the visit a reader is on, not to who they are. A reader may be an academic, a business reader, both, or neither on a given visit. The old plan's freshman-and-professional ramp retires with it.
 - Landed: the first-fold miss it named, the unkeyed `#home-reason-why`, now has a key (9c8a7d97; `.spw/audits/copy-accessor-cluster-2026-09.spw`).
-- Still owed: whatever `npm run audit:copy:accessor` flags in those five routes' first folds. A first-fold sentence either names a control and its receipt, or is identity that does not pretend to be a mechanism (`.spw/caches/copy-hypermedia-key-2026-09.spw`).
+- Still owed: whatever `npm run audit:copy:accessor` flags in those five routes' first folds. On 2026-11-06 that is three units on Home and none on the other four (C2). A first-fold sentence either names a control and its receipt, or is identity that does not pretend to be a mechanism (`.spw/caches/copy-hypermedia-key-2026-09.spw`).
 - Rule kept: an entrance sentence may name a next stop. A paragraph whose job is the list of stops is a display case (Thought trace, above). Internal references add clarity; they must not become a second menu.
 - The site is the résumé: `/about/#about-years` and `/about/#career-register` hold the year and practice records.

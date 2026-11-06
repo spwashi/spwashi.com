@@ -1,4 +1,4 @@
-# Review 2026-11-05 — keep as the boot-graph and pack owner; routing generated with --only, thesis and concepts written from its Status, owner claim is the tree template
+# Review 2026-11-06 — keep as the boot-graph and pack owner; the three early pulls are re-ordered by payoff (paste's seed card first, the console's knowledge map second, the link trail's region menu parked on engage arming), and surfaces carry their public/ paths.
 # Plan Index — Deploy Module Graph
 #
 # A first visit should feel like a local introduction: a small boot graph arrives first, richer catalogs introduce themselves by address, and timings() can name those dimensions.…
@@ -28,7 +28,7 @@ intent: .{
 }[reg=facet]
 
 ^"conceptual_model"{
- thesis = `A small boot graph first, then catalogs by address: no chunk cycles since the acyclic cut, and the next slice moves the console's knowledge-map read to a leaf so idle stops pulling the lab.`
+ thesis = `A small boot graph first, then catalogs by address: no chunk cycles since the acyclic cut, and each remaining static import that pulls a pack ahead of its schedule is one commit, ordered by what it saves.`
  concepts = #[
   `boot graph`,
   `chunk`,
@@ -37,10 +37,11 @@ intent: .{
   `expression manifest`,
  ][reg=set]
  surfaces = #[
-  `js/generated/spw-expressions.js`,
-  `js/runtime/memory/cognitive-core.js`,
-  `js/runtime/physics/pulse-timing.js`,
-  `js`,
+  `public/js/generated/spw-expressions.js`,
+  `public/js/modules/tools/spw-paste.js`,
+  `public/js/runtime/memory/cognitive-core.js`,
+  `public/js/runtime/physics/pulse-timing.js`,
+  `dist/asset-manifest.json`,
  ][reg=set]
  fixity_tier = `tending`
 }[reg=facet]
@@ -59,6 +60,8 @@ intent: .{
 @css_bundle: ~"../../../scripts/ts/css-bundle.mts"
 @template: ~"../../../scripts/template.mjs"
 @site: ~"../../../public/js/site.js"
+@spw_paste: ~"../../../public/js/modules/tools/spw-paste.js"
+@expression_resonance: ~"../../../public/js/runtime/expression/expression-resonance.js"
 
 dispatch: .{
  plan = @plan
@@ -98,3 +101,17 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+#>wonder_deploy_module_graph_manifest_split
+?["Does the expression manifest still earn a per-route split, now that it is 31 KB at gzip and loads only at idle?"]{
+  #:depth #!pragmatics ~#lens(transport)
+  ~#with: @plan @spw_expressions @expression_resonance
+  ~#hypothesis: "expression-resonance loads the whole manifest at idle to build the cross-route kin index, so a route pays for every route's expressions. A per-route file plus precomputed kin edges would pay only for its own."
+  ~#tension: "The kin index is the point: a route's expressions resonate with other routes'. A split must keep those edges whole, and two smaller files on a warm return can cost more requests than one cached file."
+  ~#expect: "Between 25 and 40 KB at gzip -9, under idle-lab's 40,287 B, so a split pays only if a typical route needs a small share of the kin edges."
+  ~#unblocks: "the expression-harvest step absorbed from js-surface-ecology"
+  ~#probe(run)
+  !probe{ "gzip -9c public/js/generated/spw-expressions.js | wc -c" }
+  $%[manifest.whole_at_idle, manifest.per_route_with_kin_edges, manifest.on_engagement]
+  ~<"./PLAN.md"> ~<"../../../.spw/audits/js-tree-value-2026-09.spw">
+}

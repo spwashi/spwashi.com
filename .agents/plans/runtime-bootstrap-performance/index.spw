@@ -1,4 +1,4 @@
-# Review 2026-07-12 — keep as the measured bootstrap owner; cold-route profiles and mount timing outrank architectural taste.
+# Review 2026-11-06 — keep as the measured bootstrap owner; the next slices are the operator-geometry flip, the hash-link pair and the unread context weights, each gated by the /about/ pocket scroll receipt.
 # Plan Index — Runtime Bootstrap Performance
 #
 # Reduce main-thread blocking time, serial dynamic import penalties, and observer/listener fragmentation in the shared JS runtime bootstrap (site.js + kernel/runtime modules) while…
@@ -46,7 +46,7 @@ intent: .{
 
 ^"plan_refinement"{
  tone = `Performance engineer who keeps the console — measure before claiming.`
- accuracy = `Kernel extraction and batching wins landed; IMMEDIATE count still high per skill-induction.`
+ accuracy = `Parallel immediate mounts, the settings split, the measured lane and change-only scroll writers landed (receipts in each commit's *[verify] line). Eight catalog defs declare IMMEDIATE on 2026-11-06; the open cost is per-pass recalc on the scroll path, not boot width.`
  direction = `Default new modules VISIBLE/IDLE unless justified; profile one cold route.`
  inspiration = `Fast return visits should feel remembered, not re-downloaded.`
  alignment = `agentic-dev-contracts, javascript-module-census, commit-skill-induction`
@@ -66,6 +66,9 @@ intent: .{
 @site_semantics: ~"../../../.spw/conventions/site-semantics.spw"
 @selector_timing_chunking_musical_ontology: ~"../../../.spw/reviews/runtime-audit/selector-timing-chunking-musical-ontology.spw"
 @html_css_structure_audit: ~"../../../.spw/reviews/html-css-structure-audit.spw"
+@recalc_audit: ~"../../../.spw/audits/runtime-recalc-cost-2026-09.spw"
+@pulse_beat_tuner: ~"../../../public/js/runtime/physics/pulse-beat-tuner.js"
+@plan_module_contract_overhaul: ~"../module-contract-overhaul/PLAN.md"
 @runtime_bootstrap_performance: ~"../../../.agents/plans/runtime-bootstrap-performance/"
 @readme: ~"../../../.agents/plans/README.md"
 
@@ -80,6 +83,7 @@ dispatch: .{
  site_semantics = @site_semantics
  selector_timing_chunking_musical_ontology = @selector_timing_chunking_musical_ontology
  html_css_structure_audit = @html_css_structure_audit
+ recalc_audit = @recalc_audit
  runtime_bootstrap_performance = @runtime_bootstrap_performance
  readme = @readme
 }[reg=facet]
@@ -131,3 +135,18 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+#>wonder_runtime_bootstrap_performance_idle_pulse
+?["At rest, should a prime beat keep costing two full style passes, or can the same beat be felt through fewer elements?"]{
+  #:depth #!pragmatics ~#lens(rest)
+  ~#with: @plan @pulse_beat_tuner @recalc_audit @plan_module_contract_overhaul
+  ~#taste: "A page at rest can breathe without asking every element to restyle."
+  ~#hypothesis: "writeBeat sets data-spw-beat-prime on html and pulseFreshness sets data-spw-freshness-pulse there and clears it after the pulse duration, so each prime beat is two root changes that reach every element a root-keyed rule names. Scoping the consumers keeps the felt beat for a fraction of the pass."
+  ~#tension: "The beat is felt, so a pass count cannot choose between beats; only the creator's eye can. module-contract-overhaul lists the same choice under Human Decisions (beat root custom properties: scope to consumers or keep root inheritance)."
+  ~#expect: "Four source sheets key on the two attributes, every rule anchored on html. The consumers span every chip, operator, syntax token and module, so a smaller host means narrowing that list, not moving one rule."
+  ~#unblocks: "B4 in PLAN.md, and module-contract-overhaul's beat-consumer decision"
+  ~#probe(run)
+  !probe{ "rg -n 'data-spw-(freshness-pulse|beat-prime)' public/css -g '!**/bundles/**'" }
+  $%[beat.root_as_is, beat.fewer_consumers, beat.smaller_host, beat.non_inherited_declarations]
+  ~<"./PLAN.md"> ~<"../module-contract-overhaul/PLAN.md"> ~<"../../../.spw/audits/runtime-recalc-cost-2026-09.spw">
+}

@@ -1,7 +1,7 @@
-# Review 2026-10-25 — new: a ranked route through the CSS and runtime owner plans by what each move is worth to peers, adoption and the codebase, then spw.quest's specimens and motion; S0 and S1 first.
+# Review 2026-11-06 — keep: S0–S3, S6 and G landed; S4a, one paint for the site and the quest, is next once the creator answers the first-portable wonder; S5 and S7 wait on the creator.
 # Plan Index — ecosystem-architecture
 #
-# Status 2026-10-25. S0 to S3 and S6 landed: the owner plans carry today's measure beside their dated figures and name the two seams, the expression manifest no longer ships the `.spw` seeds, the parallel operator tables read from the canon, one reader bundle serves the site and the quest, and the three offer pages share one services bundle. A ranked route through the CSS and runtime owner plans, chosen by what each move is worth beyond one page. Then the phase that spends…
+# Status 2026-11-06. S0–S3, S6 and G landed; the instrument travels next (S4a, S4b), behind the creator's first-portable answer.
 
 #>plan_ecosystem_architecture_index
 #:index #!plan
@@ -12,7 +12,7 @@ operation = "prime"
 fixity = "tending"
 
 intent: .{
- goal = `Status 2026-10-25. S0 to S3 and S6 landed: the owner plans carry today's measure beside their dated figures and name the two seams, the expression manifest no longer ships the `.spw` seeds, the parallel operator tables read from the canon, one reader bundle serves the site and the quest, and the three offer pages share one services bundle. A ranked route through the CSS and runtime owner plans, chosen by what each move is worth beyond one page. Then the phase that spends it: spw.quest shows how Spw is developing and becomes a playground for constructs and specimens (slices G–I in [spw-quest](../spw-quest/PLAN.md)). Every slice names its owner, and this plan owns three things: the ranking, the list of what may travel, and one unowned item (S6). Next: S4 waits on the creator. G is merged to main (17f6a77e) to test live; the next Wrangler deploy carries it with the note. The cascade (S5), what travels first (S4), and the playground's look wait on the creator.`
+ goal = `Status 2026-11-06. A ranked route through the CSS and runtime owner plans, chosen by what each move is worth beyond one page, then the phase that spends it: spw.quest as a playground for constructs and specimens (slices G–I in [spw-quest](../spw-quest/PLAN.md)). S0 to S3 and S6 landed on 2026-10-25 (Landed, below). G is live since the 2026-11-05 deploy (spw-quest Status). Since then the owned paths moved once: `expression-query.js` reads a brace pair as its slot in either order (9f2e3af4, spw-quest L), which the instrument in What travels now carries. This plan owns the ranking, the list of what may travel, and S6. Next: S4a, one paint for the site and the quest, once the creator answers the first-portable wonder. S5 (the cascade) and the playground's look also wait on the creator.`
  owner = `ecosystem-architecture`
  kind = `plan`
  bucket = `active_backlog`
@@ -28,13 +28,13 @@ intent: .{
 }[reg=facet]
 
 ^"conceptual_model"{
- thesis = `Status 2026-10-25. S0 to S3 and S6 landed: the owner plans carry today's measure beside their dated figures and name the two seams, the expression manifest no longer ships the `.spw` seeds, the parallel operator tables read from the canon, one reader bundle serves the site and the quest, and the three offer pages share one services bundle. A ranked route through the CSS and runtime owner plans, chosen by what each…`
+ thesis = `Rank site work by what it is worth beyond one page (peers, adoption, the codebase as an asset, risk), then spend it on spw.quest as a playground where Spw's constructs are read, compared and watched changing.`
  concepts = #[
-  `what`,
-  `owner`,
-  `one`,
-  `then`,
-  `spw`,
+  `ranking`,
+  `peer-kit`,
+  `instrument`,
+  `specimen-shelf`,
+  `cascade`,
  ][reg=set]
  surfaces = #[
   `css/`,
@@ -78,20 +78,19 @@ dispatch: .{
 ^"owner_claim"{
  claim_id = "plan-ecosystem_architecture-001"
  layer = "pragmatic"
- hypothesis = `Status 2026-10-25. S0 to S3 and S6 landed: the owner plans carry today's measure beside their dated figures and name the two seams, the expression manifest no longer ships the `.spw` seeds, the parallel operator tables read from the canon, one reader bundle serves the site and the quest, and the three offer pages share one services bundle. A ranked route through the CSS and runtime owner plans, chosen by what each move is worth beyond one page. Then the phase that spends it: spw.quest shows how Spw is developing and becomes a playground for constructs and specimens (slices G–I in [spw-quest](../spw-quest/PLAN.md)). Every slice names its owner, and this plan owns three things: the ranking, the list of what may travel, and one unowned item (S6). Next: S4 waits on the creator. G is merged to main (17f6a77e) to test live; the next Wrangler deploy carries it with the note. The cascade (S5), what travels first (S4), and the playground's look wait on the creator.`
+ hypothesis = `A move that a peer or spw.quest consumes is worth more than one that pays a single page, so the instrument that already has a consumer travels first.`
  spec_ref = ~"./PLAN.md"
  impl_ref = ~"../../../public/css/"
- probe_ref = `npm run audit:plans after S0.`
+ probe_ref = `npm run build:peer-kit -- --check`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../public/css/ unchanged or untested.`
  status = "active"
 }[reg=facet]
 
 validation: #[
- `npm run audit:plans after S0.`,
  `npm run check:local for every slice.`,
- `npm run check:workers and npm run build:peer-kit -- --check for S2, S4 and the quest.`,
+ `npm run check:workers and npm run build:peer-kit -- --check for S4 and the quest.`,
  `npm run audit:layer-flip for S5.`,
- `npm run css:payload before and after S1 and S6.`,
+ `npm run css:payload before and after any slice that moves CSS.`,
 ][reg=set]
 
 editor_prompts: #[
@@ -101,7 +100,7 @@ editor_prompts: #[
 ][reg=set]
 
 invariants: #[
- `Owner intent: Status 2026-10-25. S0 to S3 and S6 landed: the owner plans carry today's measure beside their dated figures and name the two seams, the expression manifest no longer ships the `.spw` seeds, the parallel operator tables read from the canon, one reader bundle serves the site and the quest, and the three offer pages share one services bundle. A ranked route through the CSS and runtime owner plans, chosen by what each move is worth…`,
+ `Owner intent: the ranking, the list of what may travel, and S6; every other slice names its owner plan.`,
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
@@ -114,9 +113,12 @@ invariants: #[
   ~#taste: "A fork should find what it may take without reading a build script."
   ~#hypothesis: "A list in scripts/build-peer-kit.mjs keeps each file beside the organ it belongs to and lets the kit check drift. A folder such as public/js/peer/ makes the boundary visible in the tree."
   ~#tension: "The runtime gave every file a family so a reader finds the organ before the file (80c7b305); a travel folder would cut across those families."
+  ~#note: "A third form, proposed 2026-11-06: the list written as a .spw beside the kit, one @handle per file that travels, which build:peer-kit reads. A fork then reads what it may take in the language it is taking, and spw.quest could shelve that manifest as a specimen of its own."
+  ~#expect: "SCRIPTS still holds one entry, pinch-text-scale for spw-quest; a second appears only when S4a lands, so the list grows by use and not by plan."
+  ~#unblocks: "S4a's entry, and where a fork looks first"
   ~#probe(run)
   !probe{ "rg -n 'SCRIPTS = Object.freeze' -A4 scripts/build-peer-kit.mjs" }
-  $%[peer.list, peer.folder, fork.legibility]
+  $%[peer.list, peer.folder, peer.spw_manifest, fork.legibility]
 }
 
 #>wonder_ecosystem_specimen_host
@@ -126,6 +128,7 @@ invariants: #[
   ~#hypothesis: "A light-DOM element keeps a specimen's state on the specimen and travels to a peer as one tag, while the authored pre > code inside it still reads with scripts off. A catalog def keeps one mount path for the whole site."
   ~#tension: "The runtime defines no custom element today; the first one is a second mount path that every later module may take."
   ~#unblocks: "the pilot in the modules-as-custom-elements direction, and S4's specimen on spwashi.com"
+  ~#expect: "One hit, factshift-center's vendored bundle under workers/factshift-center/assets/; public/js defines no element until a pilot lands."
   ~#probe(run)
   !probe{ "rg -c 'customElements.define' public/js workers" }
   $%[specimen.host, catalog.def, peer.tag]

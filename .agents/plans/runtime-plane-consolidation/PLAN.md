@@ -1,6 +1,6 @@
 # Runtime Plane Consolidation
 
-**Status 2026-11-05.** Re-probed across all six JS planes (`1,328` raw `.dataset.x =` writes vs `597` `writeDatasetValue` calls; `31` `MutationObserver`, `13` `IntersectionObserver`, `10` `ResizeObserver`, `13` scroll listeners, `69` `dispatchEvent(new CustomEvent(`, `13` `getComputedStyle(document.documentElement)` files). Phases 0, 1, 4 and 5 are landed, each with one deferred item; Phase 2 is half done (selector asked last, 2026-09-28) and Phase 3's read side landed as `kernel/measured-frame.js` and `kernel/viewport.js`. Next slice: make the capture-phase scroll listener at `public/js/interface/semantic-chrome.js:722` passive (`{ capture: true, passive: true }`), and move the remaining runtime viewport-width readers (`public/js/runtime/diagnostics/layout-qa.js:96` via `globalThis.innerWidth`, `public/js/runtime/arrival/frame-size-memory.js:35`, `public/js/runtime/diagnostics/observation-beats.js:97`, `public/js/runtime/regions/positioning-orchestration.js:103`, `public/js/runtime/physics/spatial-gravity.js:255`, plus the fallbacks in `public/js/runtime/labs/interactive-expression-lab.js:139` and `public/js/runtime/shell/shell-disclosure.js:309`; `layout-qa.js` no longer reads `window.innerWidth`) onto `public/js/kernel/viewport.js`. Gate: a pocket scroll trace before and after, per this plan's Phase 3 gate. Now owns the decomposition seam (absorbed below).
+**Status 2026-11-06.** Phases 0, 1, 4 and 5 are landed; Phase 2 is half done (the loader asks the selector last, 2026-09-28); Phase 3's read side is `kernel/measured-frame.js` and `kernel/viewport.js` (110d85e5). Nothing this plan owns has landed since 2026-10-10. The named next slice, making the capture-phase scroll listener at `public/js/interface/semantic-chrome.js:722` passive, is retired: a `scroll` event cannot be cancelled, so `passive` changes nothing, and its handler returns at once when no popover is open. Next slice: P1, `runPositioningPass` in `public/js/runtime/regions/positioning-orchestration.js` onto `createMeasuredLane`. It reads `window.innerWidth` and every tracked rect inside its own rAF, the shape abd30a20 fixed in spatial gravity. Gate: a pocket scroll trace before and after, per Phase 3. Counts re-probed 2026-11-06 across the six planes: 1,332 raw `.dataset.x =` against 597 `writeDatasetValue` (interface 345 → 349 since 2026-11-05), 31 MutationObservers, 13 scroll listeners, 69 `dispatchEvent(new CustomEvent(`, 13 files reading `getComputedStyle(document.documentElement)`. Owns the decomposition seam (absorbed below).
 
 **Related:** [module-contract-overhaul](../module-contract-overhaul/PLAN.md) · [interaction-loop-contract](../archive/interaction-loop-contract/PLAN.md) (archived) · [core-css-spend-cut](../core-css-spend-cut/PLAN.md). **Absorbed 2026-10-10:** [runtime-module-decomposition](../archive/runtime-module-decomposition/PLAN.md), the leftovers of [js-surface-ecology](../archive/js-surface-ecology/PLAN.md).
 
@@ -63,86 +63,35 @@ This plan does not replace the existing runtime owners. It is the cross-plane ad
 **Observation**
 - **31 MutationObservers; 12 watch `documentElement` attributes.** `dom-sync-hub` registered tasks: **5**. `observeAddedMatches` call sites: **5**. `IntersectionObserver` sites: **13** (`2026-11-05`). `ResizeObserver` sites: **10** (`2026-11-05`).
 - 11 scroll listeners (13 on 2026-11-05), each with its own rAF/throttle and its own layout reads (69 `getBoundingClientRect`, 64 `getComputedStyle` tree-wide). No shared read phase.
-- `interface/semantic-chrome.js:722` registers `scroll` in **capture phase without `passive`** (`window.addEventListener('scroll', handleViewportChange, true)`).
+- `interface/semantic-chrome.js:722` registers `scroll` in **capture phase without `passive`** (`window.addEventListener('scroll', handleViewportChange, true)`). Not a cost: the handler returns when nothing is open, and `passive` does nothing for `scroll` (retired 2026-11-06, Phase 3).
 
 **Coupling to CSS**
 - `dist/public/css/bundles/core.css`: **1,546 KiB, 5,429 selector blocks, 2,753 containing `[data-spw-*]`, 3,198 using `:where()`, 352 descending from `html[…]`/`:root[…]`, 1,814 unique custom properties.**
 - 352 root-attribute-rooted selectors × 1,382 mostly-unguarded dataset writes = **every redundant `html` dataset write invalidates style for the document against a 1.5 MB sheet**. The JS half of this fix is the cheaper half.
 
-**Boilerplate**
-- `module-export-contract.js` resolves `SPW_MODULE_EXPORT.mount` → `spwModule.mount` → `default.mount` → any `init*` export, then calls `fn(ctx, root)`.
-- **95 of 96 defs hand-write a `mount:` adapter anyway.** `SPW_MODULE_EXPORT` declarations: **0**. `createModuleExport` call sites: **1** (`interface/state-inspector.js:1187`).
-- Adapter shapes: `38× fn()`, `31× fn(ctx)`, `11× fn(document)`, `3× fn(main||document)`, `2× fn(root)`, remainder bespoke. **69 of 93 are deletable with zero module changes**; ~19 need signature normalization because they take `document` where the contract passes `ctx`.
+**Closed by landings** (the 2026-07-26 diagnosis, one line each)
 
-**Parsing**
-- `semantic/spw-expression-geometry.js` (244 lines, landed 2026-07-26) is the canonical reader. **Adopted by 2 files** (`bare-spw-markup.js`, `attention/section-handle.js`).
-- Four legacy parsers still stand: `kernel/shared.js:1380` `splitOperatorExpression`, `semantic/link-copy.js:33` `parseSpwExpression`, `site.js:714` inline projection regex, `runtime/memory/spells.js:151` inline operator-prefix regex.
-- `modules/tools/spw-literal-parser.js` (316 lines, the pinned portable artifact) has **zero importers in `public/js`** and is not in the catalog.
-- **26 files reference `data-spw-semantic-expression`. 2,107 operator chips exist across the HTML.** The authored graph is large and consistent; no single reader owns it.
+- Boilerplate: 95 of 96 defs hand-wrote a `mount:` adapter. 2ddb633e (2026-08-11) deleted the no-op ones; `resolveModuleMount` reads `init*` or `SPW_MODULE_EXPORT`.
+- Parsing: four legacy parsers stood beside `semantic/spw-expression-geometry.js`. 991f7247 (2026-08-15) made `link-copy.js` and `spells.js` delegate to it.
+- Spatial model: `runtime/regions/region-profiler.js` read harmony, tempo, density and weight from synonym tables over authored labels. 991f7247 grounded them in `spatial-gravity`'s measured `spwEdgeGravity`, `spwExtent`, `spwMeasureBand` and `spwSalienceRank`, with authored attributes still overriding. `inferModuleDimensions` (`runtime/orchestration/loader.js`) no longer regexes module ids: since 41f3311e it reads `def.layer` and the closed `evaluates` vocabulary.
+- Duplication: `runtime/state-inspector.js` was unreachable and was deleted 2026-09-18; `interface/state-inspector.js` is the one owner.
+- Still open: 956 `addEventListener` against 411 `removeEventListener` (820/331 on 2026-07-26). `bus.on` accepts `signal`, so Phase 3's per-mount `AbortController` is still owed.
 
-**Spatial model**
-- `runtime/regions/region-profiler.js` derives its vocabulary by lookup over authored labels, reading **no geometry**:
-  - `inferRegionHarmony` — synonym table over `role`
-  - `inferRegionTempo` — synonym table over `harmony`
-  - `inferRegionDensity` — synonym table over `kind`
-  - `inferRegionAttentionalWeight` — magic-number table over `kind`/`role`/`classList`
-- The chain is `authored attribute → synonym → synonym → CSS token`. It is tautological: it cannot report anything about the layout that the author did not already type.
-- `runtime/module-loader.js:506` `inferModuleDimensions` has the same shape — regexes over `def.id + def.selector + def.layer`.
-- Meanwhile `runtime/physics/spatial-gravity.js` **does** measure geometry (`spwEdgeGravity`, `spwEdgeX/Y`, `spwExtent`, `spwMeasureBand`, `spwSalienceRank`) and `composition-box-model.js` measures boxes. **Two disconnected spatial systems, no bridge.**
+### Landed
 
-**Duplication**
-- `interface/state-inspector.js` (1,189) and `runtime/state-inspector.js` (929) are two separate inspectors, 2,118 lines, different entry points (`initStateInspector` / `initSpwStateInspector`).
-- Duplicated basenames across planes: `bus.js`, `shared.js`, `contract.js`, `feed-utils.js`, `component-fixtures.js`, `runtime-environment.js`, `module-timing-contract.js`.
-- 820 `addEventListener` vs 331 `removeEventListener`; 26 `AbortController`/`signal` uses. `bus.on` already accepts `signal`.
-
-### Landed (2026-08-11 hygiene pass)
-
-**Phase 0 — complete** (split into separate commits):
-
-1. **`updates:` role annotation** across all three catalogs (`html:structural:…`, `flourish:…`, `measure:…`, `inspect:…`, `diagnostic:…`, `residue:…`). Parses through `normalizeModuleUpdates`; entry counts unchanged.
-2. **`unmountModuleById` / `unmountAllModules`** with `ctx.registry.remove(record.id)` so unmount/remount round-trips; logger normalized to `(message, detail, relation)`; only `scheduleRuntimeTokenUpdate` after unmount (no sync+microtask duplicate). Wired into `compose.controls.modules` and `window.__SPW_SITE__`. Covered by `engagement-features.test.mjs` mount→unmount→remount test. `readRuntimePolicy` hardened for non-window test contexts.
-
-**Phase 6 — partial extract (file seams only, still one catalog mount each):**
-
-| Module | Was | Now | Extracted siblings |
-|--------|-----|-----|--------------------|
-| `shell-disclosure.js` | ~2315 | ~1461 | `shell/scroll-lock.js`, `shell/attention-posture-panel.js`, `shell/utility-row.js` |
-| `experiential.js` | ~2168 | ~1758 | `experiential/{bookmark-registry,contextual-memos,operator-info,operator-learning,qa-beat-gestures}.js` |
-
-Still in parent files: shell nav-fit + menu state machine + disclosure a11y; experiential spell breadcrumbs + sample dock. **Not yet** separate catalog defs with own `when`/`selector`/`features` gates. Private escape utils and `OPERATOR_INFO` fold into Phase 4 still open.
-
-**Adjacent (not plan phases, landable with hygiene):**
-
-- `interactive-medium.js` — cache medium CSS tokens; invalidate on settings/runtime-token events (avoids six `getComputedStyle` hits per host mutation).
-- `page-state.js` — one style+rect measure per bottom-floating chrome element on the scroll/mutation path.
-
-**Still not started:** Phase 1 payload/boilerplate, Phase 2 route-scoped scheduling (the original route-level config ask), Phases 3–5 and 7.
+- Phase 0 (2026-08-11): f719e586 unmount and remount with `ctx.registry.remove`, plus the `updates:` role pass; `engagement-features.test.mjs` holds the round trip.
+- Phase 1 (2026-08-11): 5a471087 moved operator detection to `kernel/operator-detection.js`, out of the eager graph. 8018d2d7 added per-file minify with rolldown (~3.17 → ~1.68 MiB), and 2ddb633e dropped the no-op adapters. Eager graph 38 modules / 631.4 KB → 33 / 502.6 KB.
+- Phase 4 and 5 (2026-08-15): 991f7247, above.
+- Phase 6 extracts (file seams only): `shell-disclosure.js` lost `scroll-lock.js`, `attention-posture-panel.js`, `utility-row.js` and `measurement.js` (638b2629); `experiential.js` lost breadcrumb-spell and sample-dock (0cb1dbfd) and five feature modules.
+- Adjacent: `interactive-medium.js` caches its medium tokens, and `page-state.js` measures each bottom-floating chrome element once.
 
 ## Patch Sequence
 
-Phases 0–1 are mechanical: they change no felt pacing and can land as one reviewable pass. Phases 2–6 change how the site feels and each ends at proposal + browser demo before implementation, per the sensation review gate. **Phase 0 is landed.** Phase 6 may continue as extract-only until Phase 3 (shell) / Phase 4 (experiential vocabulary) gates allow full concern-per-module catalog splits.
+Phases 0–1 were mechanical. From Phase 2 on, a slice that changes how the site feels (when chrome appears, how interaction settles) ends at proposal + browser demo, per the sensation review gate. A slice that changes nothing felt lands with a sensor. **Phase 0 is landed.** Phase 6 may continue as extract-only until Phase 3 (shell) / Phase 4 (experiential vocabulary) gates allow full concern-per-module catalog splits.
 
-### Phase 0 — Land the in-flight work correctly ✅
+### Phases 0 and 1 — landed
 
-- [x] Call `ctx.registry.remove(record.id)` in `unmountModuleRecord` so unmount/remount round-trips.
-- [x] Drop the duplicate `updateRuntimeStateTokens` call; keep `scheduleRuntimeTokenUpdate`.
-- [x] Normalize the unmount logger call to `(message, detail, relation)`.
-- [x] Add a round-trip test: mount → unmount → mount → assert `status === 'mounted'`.
-- [x] Commit the `updates:` role pass separately from the unmount API.
-
-Validation: `npm run check:runtime`, `npm run test:modules:run`.
-
-### Phase 1 — Payload and boilerplate (no felt change) ✅ (bundle deferred)
-
-- [x] Split operator registry/detection into `kernel/operator-detection.js`; `dom-contracts` imports it instead of `shared.js`. Eager graph no longer includes `shared.js`.
-- [x] Per-file minify of `dist/public/js` via rolldown in `scripts/build.mjs` (`--skip-minify` to opt out). Preserves module URLs and `import()` strings for resource hints + fingerprint of `site.js`. Measured ~3.17 MiB → ~1.68 MiB (55.7%).
-- [ ] Full eager-graph **bundle** deferred: rolldown bundling of `site.js` hits missing-export / resolve issues; path-preserving minify lands first without changing request topology.
-- [x] Delete no-op `mount:` adapters; 88 of 96 defs now rely on `resolveModuleMount` (`init*` / export contract). 8 bespoke adapters remain (site-settings, blog-interpreter, payment-settings, cauldron, pretext-physics, logo-runtime, topic-discovery, query-link-composer).
-- [x] Normalize document/root inits to `(ctx, root)` and drop those adapters.
-- [x] Runtime contracts accept mount-less catalog defs when the load target has a resolvable `init*` / `SPW_MODULE_EXPORT`.
-- [x] Re-measure eager graph: **33 modules / 502.6 KB raw** (was 38 / 631.4 KB on 2026-07-26).
-
-Validation: `npm run check:runtime`, `npm run test:engagement:run`, local `node scripts/build.mjs --local`.
+See **Landed** above. The one deferred Phase 1 item, a full eager-graph bundle, is retired here: [deploy-module-graph](../deploy-module-graph/PLAN.md) took bundling as semantic packs (2026-08-17) and the acyclic cut (f05b02d2).
 
 ### Phase 2 — Route-scoped scheduling
 
@@ -164,29 +113,21 @@ Gate: measured boot delta on a cold content-rich route before/after, demoed in b
 
 ### Phase 3 — Write and observe consolidation
 
-- Route unguarded writes through `writeDatasetValue` / `writeStyleValue`, starting with `modules/` (197 raw, 0 guarded), then `interface/` (331 raw, 28 guarded).
-- [x] Guard the bus charge path — `#applyCharge` and `setCharge` wrote `--charge` and `dataset.spwCharge` unguarded on the pointermove path. Landed 2026-09-28: `writeCharge` in `public/ts/bus.ts` writes each only when it moves; `scripts/tests/change-only-writes.test.mjs` holds it.
-- Migrate the 26 non-hub MutationObservers onto `dom-sync-hub` / `observeAddedMatches`.
-- Add a shared viewport read phase so the scroll listeners (13 `addEventListener('scroll'` sites, 2026-10-10) measure once per frame; fix the capture-phase non-passive listener at `interface/semantic-chrome.js:722`.
-- Adopt per-mount `AbortController` on `ctx` (`bus.on` already accepts `signal`) to close the 820/331 listener gap.
+Landed: the read side (110d85e5, receipts below) and the bus charge guard (`writeCharge` in `public/ts/bus.ts`, 5537acdb, held by `scripts/tests/change-only-writes.test.mjs`). Retired 2026-11-06: making `semantic-chrome.js:722` passive. A `scroll` event cannot be cancelled, so the flag changes nothing, and `handleViewportChange` only calls `dismissPopover`, which returns when nothing is open.
 
-Gate: this changes interaction latency and settle timing. Demo before landing.
+- **P1 — positioning onto the lane.** `runPositioningPass` in `public/js/runtime/regions/positioning-orchestration.js` runs in its own `requestAnimationFrame`, reads `window.innerWidth`, then every tracked rect, then writes. A write from any other module before that callback makes the first read force a full pass. Move it onto `createMeasuredLane` (`kernel/measured-frame.js`), with `measure()` for the read pass and `apply()` for the writes, as `runtime/physics/spatial-gravity.js` does. Gate: a pocket scroll trace on a route with a `[data-spw-gravity]` or `[data-spw-box-model]` host. Positioning's row in the forced-pass table must disappear; if it does not, the slice did not land (`.spw/audits/runtime-recalc-cost-2026-09.spw` `^"validation"`).
+- **P2 — one width.** `readViewport` in `spatial-gravity.js` and `storageKey` in `runtime/arrival/frame-size-memory.js` read `window.innerWidth` directly. `readViewportInlineSize()` (`kernel/viewport.js`) answers the same value from a cache. Both reads already sit in a read phase or at arrival, so this is consistency, not speed. Ungated: `node --check` and `npm run test:modules:run`. The diagnostics (`layout-qa.js`, `observation-beats.js`, debug-gated) keep the raw read they report on.
+- **P3 — modules/ guarded writes.** `modules/` has 243 raw `.dataset.x =` and 0 `writeDatasetValue`. Convert one module family per commit, starting with a family whose writes run on an observer or sync path, and prove each with a `change-only-writes.test.mjs` case. Ungated where nothing is felt.
+- Then, gated by a demo because they change interaction latency and settle timing: migrate the 26 non-hub MutationObservers onto `dom-sync-hub` or `observeAddedMatches`, and adopt a per-mount `AbortController` on `ctx`.
 
-### Phase 4 — One expression reader ✅
+### Phase 4 — One expression reader (landed)
 
-- [x] Make `semantic/spw-expression-geometry.js` the single canonical reader for the authored expression graph (`scanSpwExpression`, `describeSpwExpression`, `parseSpwExpression`).
-- [x] Retire legacy ad-hoc parsing in `semantic/link-copy.js` (re-exports and delegates to `parseSpwExpression`), `site.js` `snapshotProjectionEquations`, and `runtime/memory/spells.js` (`inferPrefix`, `inferNucleus`, `inferDestination`).
-- [x] Adopt guarded dataset writes in `semantic/link-copy.js` (`writeDatasetValue`, `writeDatasetValueIfMissing`, `writeDatasetValues`).
-- [x] Add unit tests in `scripts/tests/spw-expression-geometry.test.mjs` verifying backward-compatible parser shape across chips and handles.
-- [x] Align pinned `modules/tools/spw-literal-parser.js` artifact generation with the unified workbench reader (`public/js/semantic/spw-workbench-reader.js`, 87,530 B, landed via [ecosystem-architecture](../ecosystem-architecture/PLAN.md) S3).
+`semantic/spw-expression-geometry.js` is the canonical reader (`scanSpwExpression`, `describeSpwExpression`, `parseSpwExpression`; 991f7247, tested in `scripts/tests/spw-expression-geometry.test.mjs`). The pinned `modules/tools/spw-literal-parser.js` artifact now aligns with `public/js/semantic/spw-workbench-reader.js` ([ecosystem-architecture](../ecosystem-architecture/PLAN.md) S3).
 - Seam (2026-10-25, named by [ecosystem-architecture](../ecosystem-architecture/PLAN.md) S0): [spw-inquiry-loop](../spw-inquiry-loop/PLAN.md) extends `semantic/expression-query.js`, which imports nothing and is read by search, the cauldron, the build scripts and `spw:routes`. Proposed split: expression-query reads slots, and geometry reads layout from those slots. Neither file changes until one plan takes the split.
 
-### Phase 5 — Ground the spatial model ✅
+### Phase 5 — Ground the spatial model (landed)
 
-- [x] Feed `spatial-gravity` measured outputs (`spwEdgeGravity`, `spwExtent`, `spwMeasureBand`, `spwSalienceRank`) and box measurements into `region-profiler.js`.
-- [x] Ground `inferRegionHarmony`, `inferRegionTempo`, `inferRegionDensity`, and `inferRegionAttentionalWeight` in measured geometry and salience ranks when present, keeping authored attributes as first-class overrides.
-- [x] Pass `(el, profile)` across region inference pipeline in `buildRegionProfile`.
-- [ ] Derive module dimensions directly from the role-annotated `updates:` contract in `runtime/orchestration/loader.js`.
+991f7247 (see **Closed by landings**). Its last open item, deriving module dimensions from the `updates:` roles, is retired: since 41f3311e the dimensions come from the closed `evaluates` vocabulary, which is what the rail CSS keys on.
 
 ### Phase 6 — Decompose the overloaded modules
 
@@ -197,7 +138,7 @@ File extracts are done; what is left is catalog gating. Anatomy in `modules.spw`
 - [ ] Extract `disclosure-a11y` (focus management, toggle aria, open/close) — generic, reusable by `region-menu` and the posture panel.
 - [ ] Own catalog defs / idle gates for panels that are not first-paint shell.
 
-**`runtime/experiential/experiential.js`** — 2,168 → 223 lines; breadcrumb-spell and sample-dock left in 0cb1dbfd. `experiential` is still the one catalog def (`runtime/catalog/enhancement.js:1705`).
+**`runtime/experiential/experiential.js`** — 2,168 → 223 lines; breadcrumb-spell and sample-dock left in 0cb1dbfd. `experiential` is still one catalog def (`id: 'experiential'` in `runtime/catalog/enhancement.js`).
 
 - [ ] Give each extracted feature its own catalog def and gate; sample dock and QA beats are idle or debug-gated work, not `IMMEDIATE`.
 - [ ] Fold `OPERATOR_INFO` (`runtime/experiential/operator-info.js`) into the single expression reader (Phase 4). 2026-10-25: it is no longer a third vocabulary; [ecosystem-architecture](../ecosystem-architecture/PLAN.md) S2 made it a view of `kernel/operator-detection.js` that keeps only its memo phrases and wonders (df32c50f). What is left is where those phrases live.
@@ -230,6 +171,8 @@ Gate: both are visible chrome. Demo before catalog/gating changes that alter whe
 
 A patch cannot satisfy this plan's goal while leaving `public/js/runtime/orchestration/loader.js` and `public/js/kernel/dom-contracts.js` unchanged. If the canonical contracts remain optional after a phase lands, that phase did not do its job.
 
+Proposal (2026-11-06): let this rule run as a sensor rather than a re-count. `audit:js-tree` could print one line per plane, raw writes against guarded writes (`modules 243 · 0`). It would stay quiet while no plane's raw count grows, and print the new raw writes by file when one does. Each plane's line is a small ratchet a reader can learn in one glance.
+
 ## Phase 3 receipt — 2026-09-17
 
 The read side of write/observe consolidation landed as two kernel contracts, and the evidence for them is the trace this plan asked for in Validation.
@@ -246,14 +189,14 @@ The direct callers the first receipt listed have adopted the lane: thirteen fire
 
 [runtime-module-decomposition](../archive/runtime-module-decomposition/PLAN.md) held the "extract kernel contracts before splitting files" seam. Landed through it: `kernel/storage-utils.js` (a6cdf035), `writeProjectionTier` (`kernel/dom-contracts.js:1614`), the lens writer (`runtime/page/lens-modes.js`, 2026-09-19), the shell and experiential extracts in Phase 6. Rule kept: build a primitive before carving a feature file. It needs a second unrelated importer, a frozen `SPW_*_CONTRACT`, DOM writes through `writeDatasetValue(s)` or `writeProjectionTier`, outward events through `bus.emit`, and honest catalog `updates`/`effectScope`/`describes`. Never split by line count alone. Still owed, each one patch with two adopters:
 
-- Bus audit: 69 `dispatchEvent(new CustomEvent(` sites (2026-10-10); move to `bus.emit` where `bus.js` `LEGACY` maps the event.
+- Bus audit: 69 `dispatchEvent(new CustomEvent(` sites (2026-10-10, still 69 on 2026-11-06); move to `bus.emit` where `bus.js` `LEGACY` maps the event.
 - `media/image-metaphysics.js` (1,056 lines): visit memory and effect controls as two organs; the host keeps its loop registration.
-- `kernel/shared.js` (1,521 lines): climate tokens and feature helpers out; operators already left for `kernel/operator-detection.js`.
-- `interface/state-inspector.js` (1,281 lines) → state satchel naming, after the `shell-model-vocabulary-consolidation` gate.
+- `kernel/shared.js` (1,528 lines on 2026-11-06): climate tokens and feature helpers out; operators already left for `kernel/operator-detection.js`.
+- `interface/state-inspector.js` (1,332 lines on 2026-11-06) → state satchel naming, after the `shell-model-vocabulary-consolidation` gate.
 
 ## Absorbed 2026-10-10 — js-surface-ecology leftovers
 
-[js-surface-ecology](../archive/js-surface-ecology/PLAN.md) landed the tree (families 80c7b305; zero orphans and `audit:js-tree --check` in `check:local`). Owed here (re-probed 2026-11-05):
-1. The remaining runtime viewport-width readers (`public/js/runtime/diagnostics/layout-qa.js:96`, which reads `globalThis.innerWidth`, the same width under another name; `public/js/runtime/arrival/frame-size-memory.js:35`, `public/js/runtime/diagnostics/observation-beats.js:97`, `public/js/runtime/regions/positioning-orchestration.js:103`, `public/js/runtime/physics/spatial-gravity.js:255`, plus fallback paths in `public/js/runtime/labs/interactive-expression-lab.js:139` and `public/js/runtime/shell/shell-disclosure.js:309`).
+[js-surface-ecology](../archive/js-surface-ecology/PLAN.md) landed the tree (families 80c7b305; zero orphans and `audit:js-tree --check` in `check:local`). Owed here (re-probed 2026-11-06):
+1. The runtime viewport-width readers: now Phase 3 slices P1 (positioning) and P2 (spatial gravity, frame-size memory). `shell-disclosure.js` reads `data-spw-viewport-tier` first and `interactive-expression-lab.js` reads a passed viewport first, so their `innerWidth` fallbacks stay.
 2. The 13 files that call `getComputedStyle(document.documentElement)` on their own schedule instead of reading cached token snapshots.
 3. The two halves `public/js/interface/haptics.js` (1,452 lines / 48.2 KiB) could stand alone: the concept inspector and the sigil collection (`.spw/audits/js-tree-value-2026-09.spw` `next.6`).

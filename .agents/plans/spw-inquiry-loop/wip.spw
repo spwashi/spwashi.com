@@ -1,4 +1,4 @@
-# Review 2026-10-12 — hot notes for prefix sigils in the query parser; the pillars, phases and pin ritual stay in PLAN.md.
+# Review 2026-11-06 — hot notes for answering settled wonders and prefix sigils in the query reader; history collapsed in PLAN.md.
 # wip — spw-inquiry-loop
 #
 #>plan_spw_inquiry_loop_wip
@@ -31,6 +31,10 @@ fixity = "tending"
  >>[2026-10-27 14:30] decide — the creator asked for this plan to be renamed; it is spw-inquiry-loop, after the loop it owns. The folder moved with git mv, and every live citation and handle followed it; history keeps the old name (archived plans, dated audits, stream entries, the upstream branch name, claim ids). wonder_v04_name is the first answered wonder.
  >>[2026-10-27 14:30] implement — nested wonders harvest as their own questions, each naming its parent, with a parent's marks read from its own lines. The brace walk now skips quoted text, as the parser does; across all 213 wonders that changed only the new nested one and wonder_capabilities_intake, whose probe the old walk had cut at a quoted }.
  >>[2026-10-27 14:30] implement — npm run plans:twinkle reads which concepts the live plans share and lights a reference whose target moved after the citing plan's last look (its latest entry that is not hygiene). First reading: 52 plans, 512 concepts, 146 shared, 26 bright, 81 dim; three scaffolding surfaces left out.
+ >>[2026-11-06 12:50] verify — since 2026-10-27 the owned paths moved twice: 9f2e3af4 (readExpressionSlots reads each pair as the slot it names, in any order) and eedc6e04 (the expressiveness goals kept in roadmap.spw). No wonder run since 2026-10-27; the contour reads 267 wonders, 249 open, 13 probed, 5 answered, 0 retired. The 7 prefix-led route expressions still lose their prefix: parseExpressionQuery('?topics{kin}<learn>') reads subject "", and readExpressionSlots reads the word as "?topics".
+ >>[2026-11-06 12:52] probe — wonder_spw_inquiry_loop_trailing_probe: expression-query.test.mjs passes 13 of 13 and asserts no prefix or trailing operator. The ~#expect was written after this run, so it stands as the baseline Slice 2 changes.
+ >>[2026-11-06 12:53] probe — wonder_plan_help_json: npm run spw -- --help --json prints the text manual (Spw CLI, Usage, Workspace …), not JSON. The ~#expect was written after this run, as the baseline the upstream ask changes.
+ >>[2026-11-06 12:55] plan — PLAN.md collapses the status, the twelve pillars, the three phases, the retired submodule procedure and the 2026-09-30 pin into short Landed, Retired and pin lines with commits, and names four next slices; the third proposes contour lines written as Spw, the lifecycle in the [mode] slot. The prefix half is shared with spw-metaphysical-language's variety slice 1, which now cites this plan.
 }
 
 ^"open"{
@@ -43,8 +47,8 @@ fixity = "tending"
 
 ^"cache"{
  ~#status: "implementing"
- ~#next_commit: "~[wonder] Answer the wonders a run settles, each ~#answer beside its receipt"
+ ~#next_commit: "~[wonder] Answer the wonders a decision or a commit settled, each ~#answer citing it"
  ~#files_hot: "scripts/wonder.mjs, .spw/language/v04/roadmap.spw, .spw/reviews/upstream-workbench-recommendations/capabilities.spw, public/js/semantic/expression-query.js"
  ~#gate: "nothing for the answers or the prefix half; the trailing ?# half, the name v0.4, the claim question and fixity's two meanings wait on the creator"
- ~#last_stream: "2026-10-27"
+ ~#last_stream: "2026-11-06"
 }

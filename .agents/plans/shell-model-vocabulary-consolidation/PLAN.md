@@ -1,6 +1,6 @@
 # Plan: shell-model-vocabulary-consolidation
 
-**Status 2026-10-10.** The census landed in bd0d7951 (2026-07-03), and its `pocket` row was recounted 2026-10-10. `pocket` has grown from 1 CSS and 2 JS files to 15 and 7, but both glossary candidates still retire it. The one next slice is the Phase 2 glossary choice, which has waited on creator review since July. The first question for that review is whether `pocket` stays (wonder block in `index.spw`).
+**Status 2026-11-06.** Dormant, and the words keep spreading. Nothing has been renamed since the census (`bd0d7951`, 2026-07-03), and nothing in `public/css/shell/` has changed since `2836c463` (2026-10-08). Recounted 2026-11-06 with `rg -l`, bundles and generated files excluded: `pocket` is in 17 CSS and 7 JS files (15 and 7 on 2026-10-10; 1 and 2 in July), and `floating-chrome` in 22 and 22 (10 and 9 in July). The Phase 2 glossary choice has waited on the creator since July; its three questions are now wonders in `index.spw` (pocket, the glossary, the attribute grammar). One naming has landed in this territory since: floating-chrome-stack gave each floating piece an operator (`$satchel`, `.cauldron{}`, `#>` for the rail; `floating-chrome-stack/index.spw#wonder_floating_chrome_stack_piece_operators`, answered 2026-11-05).
 
 **Related:** [homonym-renaming](../homonym-renaming/PLAN.md) · [chrome-navigation-wonder](../chrome-navigation-wonder/PLAN.md) · [runtime-module-decomposition](../archive/runtime-module-decomposition/PLAN.md).
 
@@ -13,7 +13,7 @@ A human team member should be able to hold the site's structural vocabulary in t
 ## Why Now
 
 - The 2026-07-03 chapter split turned `shell/chrome/` into five readable chapters (header, navigation, footer, adaptive, section-context) - the reading groundwork for a remodel is done.
-- `floating-chrome-stack/FIX.md` (roles, tiers, console ownership) and `navigation-header-disclosure/PLAN.md` keep accumulating tier/role decisions without a shared model to hang them on.
+- `floating-chrome-stack/FIX.md` (roles, tiers, console ownership) keeps accumulating tier/role decisions without a shared model to hang them on, as `navigation-header-disclosure` did before it was archived.
 - Spwashi has explicitly opened shell behavior and the shell/chrome/edge/overlay model for reconsideration, including the JavaScript side (2026-07-03).
 - Vocabulary consolidation is the growth constraint: every new route, physics surface, or edition variant multiplies whatever vocabulary exists.
 
@@ -27,10 +27,10 @@ Measured 2026-07-03: **1,049 distinct `data-spw-*` attribute names** across CSS,
 
 - Cluster the 1,049 names by family prefix; rank families by member count and by how many are written by JS vs authored in HTML vs only read by CSS.
 - Classify each large family: **axis bundle candidate** (fold members into one attribute with a richer value grammar, e.g. `data-spw-accent="palette:craft strength:2 anchor:hero"` or the existing genome pattern), **state ladder** (members are really one attribute's states), or **true distinct axes** (keep).
-- The `data-spw-component-genome` / `data-spw-region-genome` precedent in `css-maintainability-refactor/` ("composable axis bundles, not another source of route-local naming") is the sanctioned consolidation shape - prefer richer values in fewer names over more names.
+- The `data-spw-component-genome` / `data-spw-region-genome` precedent from `css-maintainability-refactor/` (archived, merged into css-architecture-readability; "composable axis bundles, not another source of route-local naming") is the sanctioned consolidation shape - prefer richer values in fewer names over more names.
 - Refinement proposal ships with before/after counts per family and a migration cost estimate (writers, readers, authored instances).
 
-Gate: the attribute grammar (what a value may encode, how axes compose) is a language-design decision - Spwashi reviews the family table and the proposed grammar before any migration. `webpage-trope-vocabulary/` (`data-spw-anatomy`) and `.spw` operator conventions are consulted references, not casualties.
+Gate: the attribute grammar (what a value may encode, how axes compose) is a language-design decision - Spwashi reviews the family table and the proposed grammar before any migration (`#>wonder_shell_model_vocabulary_attribute_grammar`). `data-spw-anatomy` (from the archived `webpage-trope-vocabulary/`) and `.spw` operator conventions are consulted references, not casualties.
 
 ## Phase 2 - Model Proposal (ends at a gate)
 
@@ -41,7 +41,9 @@ Draft 2-3 candidate consolidated models, each a one-page glossary with: the kept
 - **overlay** - full-coverage modes (menu overlay, modal, capture); `data-spw-overlay` stays the single marker.
 - **rail/edge** - boundary-clinging affordances (gutter rails, region rails, the section-context pocket); one word wins between rail and edge.
 
-Gate: model choice is a naming/taste decision reviewed by Spwashi against the census and at least two candidates, per [Human Review Gates] in `symphonic-loading-layered-editions/PLAN.md` - vocabulary is codebase feeling.
+Gate: model choice is a naming/taste decision reviewed by Spwashi against the census and at least two candidates, per *Human Review Gates* in the archived [symphonic-loading-layered-editions](../archive/symphonic-loading-layered-editions/PLAN.md) - vocabulary is codebase feeling (`#>wonder_shell_model_vocabulary_glossary`).
+
+**A third candidate, proposed for that review: the glossary written in Spw.** Each kept word is one line whose braces say what it holds, such as `shell[strata]{header, nav, footer, frame}`, `overlay[cover]{menu, modal, capture}` and `rail[edge]{gutter, region}`, with the pocket's line waiting on its own question. The floating pieces already carry their operators (`$satchel`, `.cauldron{}`). A reader learns the vocabulary and the brace grammar from the same page, one rule taught once, and the census can check each word against its line: a word with no line has no home. It composes with A or B rather than replacing them.
 
 ## Phase 3 - Migration (after the gate)
 
@@ -52,8 +54,8 @@ Gate: model choice is a naming/taste decision reviewed by Spwashi against the ce
 
 ## Owners And Boundaries
 
-- This plan owns the model and the glossary; `floating-chrome-stack/` and `navigation-header-disclosure/` continue owning their behavioral fixes and adopt the chosen words.
-- `webpage-trope-vocabulary/` owns `data-spw-anatomy`; consolidation must not fork a second anatomy vocabulary - if trope words and structural words collide, this plan defers.
+- This plan owns the model and the glossary; `floating-chrome-stack/` owns its behavioral fixes and the pieces' operators, and adopts the chosen words.
+- `data-spw-anatomy` stays the trope vocabulary (its plan, `webpage-trope-vocabulary/`, is archived); consolidation must not fork a second anatomy vocabulary - if trope words and structural words collide, this plan defers.
 - Do not touch: cascade layer order, `-intent` contracts, physics vocabulary (boon/bane belongs to `interaction-grammar/`).
 
 ## Validation

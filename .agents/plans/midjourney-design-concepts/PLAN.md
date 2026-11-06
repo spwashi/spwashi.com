@@ -1,6 +1,6 @@
 # Midjourney-Inspired Focused Design Concepts Plan
 
-**Status 2026-11-05.** Landed: Patch 4 (texture slices, dfafb7ef), 5B, and 6/6A/6B. The creator's keep/replace/cut review (b87c59f5, `.spw/caches/image-review-2026-09.spw`) set the image rule, a wonder that belongs to its page, and supersedes `style-image-cohesion` (archived 2026-10-10), whose remaining image work this plan holds. Partial: 1/1A/1B (registry in `.spw/assets.spw` `renders.studies`, staging in `.spw/conventions/asset-management.spw`; `public/images/README.md` is 13 lines and names neither), 2/2A/2B (seeds in `.spw/caches/prompt-seeds-2026-09.spw`), 3/3A/3B, and 5/5A. Patches 2.5 and 7/7A/7B were not started and have no owner. Next slice: Patch 1B as a short pointer from `public/images/README.md` to the registry, the staging rules and the review log. Promoting a mark waits on the creator's pick (`index.spw#wonder_midjourney_design_concepts_mark`; session 7, a9fa3ca7). Session notes and the old commit series: [HISTORY.md](./HISTORY.md). On 2026-11-05 the creator turned the image rule toward their own art: see "The creator's own art, first and between pages" below, which now leads this plan's work.
+**Status 2026-11-06.** The creator's own art leads this plan (2026-11-05, below). Landed: twelve pages open on the creator's scans, each matched by its own lettering, and one systems rule keeps every scan family whole (1a84b975); the texture slices of Patches 4 and 5B (dfafb7ef); the tiers and sidecars of Patch 6; and the creator's keep/replace/cut review (b87c59f5, `.spw/caches/image-review-2026-09.spw`), which set the image rule (a wonder that belongs to its page) and took over the image work of `style-image-cohesion` (archived 2026-10-10). Next commit, ungated: Patch 1B, a pointer from `public/images/README.md` (13 lines, naming neither) to the `renders.studies` registry in `.spw/assets.spw` and the staging rules in `.spw/conventions/asset-management.spw`. After it come slices 1 and 2 (who made it, a sensor). Placements, and how a scan is treated once it is placed, wait on the creator's look. The mark waits on the creator's pick (`index.spw#wonder_midjourney_design_concepts_mark`). Patches 2.5 and 7 have no owner. Session notes and the old commit series: [HISTORY.md](./HISTORY.md).
 
 **Related:** [visual-capture-ecology](../archive/visual-capture-ecology/PLAN.md) · [reference-assignment-template](../reference-assignment-template/PLAN.md). **Absorbed 2026-10-06:** [promptable-image-library-pass](../archive/promptable-image-library-pass/PLAN.md).
 
@@ -12,14 +12,24 @@ Census, 2026-11-05 (route `index.html` files, images inside `<main>`):
 
 - 214 route pages: 138 carry no image, 38 show hand-made art anywhere (folios, pads, panels, scraps, worktable under `public/images/assets/`), and 23 open on it (Home, Now, Play, Care, Curriculum, Coordination and the folio pages among them). Where the first image is something else, it comes from `routes/` (16), `renders/` (12), `illustrations/` (6) and `home/` (5).
 - 1,816 images inside links between pages: `renders/` 631 (622 of them the asset catalog, whose job is to show renders), `folios/` 411, `panels/` 177, `primes/` 150, `illustrations/` 134, `routes/` 92, `home/` 52, `worktable/` 42, `scraps/` 32.
-- `public/data/image-resources.json` holds 2,555 images with a role and concepts, and nothing about who made each one, so "use the creator's own art" cannot be checked by any tool yet.
+- `public/data/image-resources.json` holds 2,555 images with a role and concepts, and nothing about who made each one. The runtime does know, though; see slice 1.
+- Re-measured 2026-11-06, after 1a84b975 and with primes counted as scans: 36 of the 210 pages with a `<main>` open on hand-made art, and 136 carry no image. The rest open on `routes/` (12), `renders/` (9) and `illustrations/` (6).
 
 Proposed slices, in order:
 
-1. **Who made it.** A `made` field in the image registry, hand or model, read from the folder and confirmed by the creator for the families a folder name does not settle (`index.spw#wonder_midjourney_design_concepts_whose_hand`). Ungated once that answer is in; no new `data-spw-*`.
-2. **A sensor.** Per route: whether its first image is hand-made, and which link images are model renders outside the asset catalog. Advisory, like `audit:copy:accessor`.
+1. **Who made it.** The site already reads provenance, in its own words: `classifyImageSource` in `public/js/runtime/expression/image-provenance.js` marks `*` original for the six scan folders and `~` generated for `renders/`. Everything else is read from the sidecars by `npm run images:provenance` into `public/js/generated/image-provenance.js`, which currently records 29 stems, all generated, in illustrations, motifs and rpg-wednesday. The creator asked for it on 2026-09-26, as a tone of acknowledgement (`.spw/conventions/site-semantics.spw`, frame `#image_provenance`). So this slice adds no new `made` field. It makes the manifest and the sensor import that classifier, so that "original" means one thing in every tool. Gaps it closes: `scripts/image-resource-manifest.mjs` stops walking the gitignored `renders/_raw/` (578 of the 2,555 tracked entries point at files that no deploy has); the `image-provenance` catalog selector (`public/js/runtime/catalog/enhancement.js`) names five of the seven folders its rules know, leaving out `worktable/` and `scraps/`, which is latent today because no page shows only those two. `routes/` (72 files) and `home/` (38) have no sidecars, so they stay unmarked ("no record, no mark") until `index.spw#wonder_midjourney_design_concepts_whose_hand` is answered. A scanned piece's sidecar carries a `scan:` entry in its `source` block; all 237 in the six scan families do, and none of the 19 in illustrations. A scan is not always the creator's hand: the one scanned collectible (`assets/collectibles/collectible-gothic-letters-dark-sun.spw`) has `scan:` and a `maker:` line for another maker, anonymized as `< ? >`. It sits outside the ruled folders and stays unmarked, and no tool may count it as the creator's. Ungated; no new `data-spw-*`. Verify: `npm run images:provenance -- --check`, plus counts by kind with no `_raw` path left.
+2. **A sensor.** Per route: whether its first image is original, and which link images are generated renders outside the asset catalog, read through `classifyImageSource`. Advisory, like `audit:copy:accessor`. Proposal for its output: one Spw line per route that changes as the art changes, for example `/topics/software/  route[opens]{original} ~ links{4 original, 1 generated}`. It prints only the headline when every opening is original, and the full list otherwise.
 3. **Links carry the creator's art, matched to the destination.** A picture that links a page shows something that belongs to that page's subject, read from the registry's `concepts` against the page's own expressions; component-region-personality's Wave 3 picture cards are the first place. Each placement is the creator's pick, after the 2026-09 review's practice (a folio scan stands in whole).
-4. **More pages open on the creator's art.** The first screen is [landing-visual-hierarchy](../landing-visual-hierarchy/PLAN.md)'s; this plan proposes which piece, page by page, starting with landings whose first image is a route hero or a render. Gate: the creator's look, since a first image is a sensation call.
+4. **More pages open on the creator's art.** The first screen is [landing-visual-hierarchy](../landing-visual-hierarchy/PLAN.md)'s; this plan proposes which piece, page by page, starting with landings whose first image is a route hero or a render. Gate: the creator's look, since a first image is a sensation call. First batch landed (1a84b975): about, about/website, recipes, topics, software, math, complexity, pedagogy, site design, architecture, craft and storyboard. Statistics was held, since Honk Bazongas ties to it only by its graph paper. Services waits on the tuning seat, RPG Wednesday on whose art it is, and Design on a look at the worktable scans (wip 2026-11-05 23:55).
+
+## What the runtime does to a scan — read 2026-11-06
+
+A session on 2026-11-06 read the image runtime and proposed four slices, I1 to I4. Checked against the code, two hold up and become slices 5 and 6. I1 folds into slices 1 and 2 and Patch 1B. I4 projected a focused `.spw-svg-rail` node and a figure lens into `data-spw-semantic-expression`, which belongs to [state-block-projections](../state-block-projections/PLAN.md) (its scope names image metaphysics surfaces); this plan keeps no copy of it.
+
+5. **A scan opens as itself.** `getSemanticContext` in `public/js/media/image-metaphysics.js` gives a raster host with no authored `data-spw-realization` the realization `hybrid`, and `resolveSemanticEffect` turns `hybrid` into `watercolor`. The scan 1a84b975 put on `/topics/software/` sits in a bare `figure.image-study` inside a frame that has no realization either, so it opens under the wash: `public/css/effects/metaphysical-paper.css` filters `[data-spw-image-effect="watercolor"][data-spw-medium="raster"] img` and lays a tinted `::after` over it. The other eleven need the same read. The smallest change: `resolveSemanticEffect` asks `classifyImageSource` (slice 1), so an original defaults to `clarify` and the helper strip still offers the other effects. The rule is taught once, and the 1a84b975 rule in `public/css/systems/image-interaction.css` already keys the same six folders on `src`. Beside it, a proposal: for a scan, the hold becomes a light table, raising the paper grain and the lettering with no recolouring. Gate: the creator's look at `/topics/software/` beside a study render, because this changes how their art looks. Verify: the figure's `data-spw-image-effect` reads `clarify`.
+6. **One hold per host.** This is true, and wider than the session said. The catalog entries `image-metaphysics` and `image-interaction` (`public/js/runtime/catalog/enhancement.js`) both mount on `.image-study`, `.topic-photo-card` and `[data-spw-image-surface]`, and each binds its own `pointerdown` hold. One fires at 480 ms (`HOLD_DURATION_MS`, ending in `markVisited`); the other fires at 420 ms (`GESTURE_MEASURE.holdMs`, ending in `inspecting`). `syncHost` also writes `data-spw-image-surface="true"` on every host it manages, so a later `collectFigures` in `image-interaction.js` can bind `.spw-svg-figure`, `.domain-visual` and `.spw-scaffold` hosts as well. Ungated: a probe that counts, per page, the hosts carrying both `data-spw-image-managed` and `data-spw-image-interaction-bound`. Merging the timers changes when inspecting and visited arrive, so it ends at a proposal and a demo for the creator's look. Splitting `image-metaphysics.js` into organs belongs to [runtime-plane-consolidation](../runtime-plane-consolidation/PLAN.md) ("Absorbed 2026-10-10 — runtime-module-decomposition").
+
+**Spells on tape, scans that move (proposal).** The creator is weighing spells handwritten on washi tape and folded into origami or pop-up work, then scanned; Grok Imagine animating those scans; and Midjourney reading the materials into a more imaginative frame (wip 2026-11-06 11:30). Each piece arrives by this plan's intake rule: one image, a sidecar, a registry entry and one placement. The cauldron side belongs to [spellcraft-authoring](../spellcraft-authoring/PLAN.md) ("Operators, not verbs; magic, not cooking"). Two things this plan can offer. First, Patch 2.5 gains a real subject: an animated scan is a clip of the creator's own hand, and the still scan is its static and reduced-motion fallback. Second, the registry has to say what a Midjourney reading of a scan is (`index.spw#wonder_midjourney_design_concepts_reading_of_a_scan`).
 
 ## Public Goal
 
@@ -186,7 +196,7 @@ Promotion decision:
 - `garden-bed-atlas`: promoted, one placement, supporting prominence, alt text names the mechanism.
 - Marks: reference, then SVG. Everything else: reference.
 
-Next prompts (for the creator, who has Midjourney):
+Next prompts (for the creator, who has Midjourney). The cauldron prompt is superseded as a next step: on 2026-11-06 the creator moved the cauldron to magic, not cooking, retired its gather, prime, compose and cast verbs (c672468e), and named washi-tape spells as its material (spellcraft-authoring, "Operators, not verbs; magic, not cooking"). It stays here as a record.
 
 ```text
 Focused visual study for spwashi.com footer cauldron panel.
@@ -552,154 +562,29 @@ Use:
 - `public/images/assets/motifs/` for small motif assets.
 - `public/images/routes/<route>/` for route-specific images.
 
-## Patch 1 - Inspiration Intake Structure
+## Patches
 
-Goal: make Midjourney studies traceable before any visual implementation.
+Landed, each with its evidence (the file lists went with them):
 
-Files:
+- **Patch 4, material translation** (dfafb7ef, 2026-08-31): four motif tiles became the opt-in `data-spw-texture-slice` overlay rather than full-bleed backgrounds (HISTORY.md, "Landed 2026-08-31"). The translations it worked by still hold. Paper fiber becomes a quiet CSS grain or shadow, and a folded vellum edge becomes a border, outline or gradient. A luminous seam becomes a local line-and-glow token, layered machinery becomes grid and card composition, and a signal field becomes low-opacity gradients or a canvas accent.
+- **Patch 5B, follow-on route:** the same slices carried to home, about, RPG Wednesday and lore.land (the Status at 335f6924).
+- **Patch 6/6A/6B, asset promotion:** tiers and sidecars, one asset path at a time, with the rejection log in `.spw/caches/image-review-2026-09.spw` (b87c59f5). Its threshold now lives in "Asset Promotion Rules", and its sidecar fields in "Curation Protocol", both above.
 
-- `public/images/README.md`
-- optional `public/images/renders/README.md`
-- optional `.spw/conventions/image-study.spw`
-- optional `.agents/plans/midjourney-design-concepts/PLAN.md` if this becomes a larger track
+Patch 5/5A, a first concept prototyped on `/design/` alone, is partial. `/design/materials/#staged-theme-sets` shows the staged sets, and no grammar-atlas prototype exists. No slice is named until a study asks for one.
 
-Changes:
+### Patch 1 — intake and the README pointer
 
-- Document raw, curated, promoted, and rejected states.
-- Define required sidecar fields for generated image studies.
-- Add a note that studies should first attempt CSS/token translation before image promotion.
-- Add a naming convention for Midjourney studies:
+Patches 1 and 1A asked for the same thing twice: the raw, curated, rejected and promoted states, a naming convention, and sidecar fields. Most of it now exists outside the README. The registry is `renders.studies` in `.spw/assets.spw`, and staging is the `staging` block of `.spw/conventions/asset-management.spw`, which also names the gitignored `00.unsorted/` and `renders/_raw/` sources. The sidecar fields are in "Curation Protocol". A Midjourney study is named `<date>-<route-or-component>-<lane>-<short-concept>-<source-id>`, as in `2026-05-25-home-material-paper-machinery-a1b2c3d4.png`.
 
-```text
-<date>-<route-or-component>-<lane>-<short-concept>-<source-id>
-```
+**Patch 1B, the next commit (ungated).** It touches `public/images/README.md` only, adding a short pointer to the registry, the staging rules, the 2026-09 review log and the CSS-first rule with its threshold ("Asset Promotion Rules"). It also adds one line naming `npm run images:provenance` as where original and generated are recorded. Verify: `rg -n "renders.studies|asset-management|image-review-2026-09" public/images/README.md` finds all three.
 
-Example:
+### Patch 2 — prompt bank (partial)
 
-```text
-2026-05-25-home-material-paper-machinery-a1b2c3d4.png
-```
+The seeds live in `.spw/caches/prompt-seeds-2026-09.spw` (a9fa3ca7); `prompt-bank.md` was never started, and the seeds cache took its place. 2A's one template is "Sensory-Literate Prompt Axes" above. Each prompt states a design question and the surface it could change, so that a reviewer understands it without the image. Families still unwritten: homepage paper machinery, the design route's grammar atlas, the website route's signal console, the settings route's tactile controls, the topics route's diagram/photo bridge, operator chip materials, ornament rails and seams, and dark-mode observatory studies. Proposal: since 2026-11-05, write a family only for a page that has no hand-made piece to carry it.
 
-Validation:
+### Patch 2.5 — animation study (no owner)
 
-- `rg -n "Midjourney|image_study|promotion_status" public/images .spw`
-
-## Patch 1A - Study Registry
-
-Goal: make each study traceable as a code-reviewable entry.
-
-Files:
-
-- `public/images/README.md`
-- optional `public/images/renders/README.md`
-
-Changes:
-
-- Document raw, curated, rejected, and promoted states.
-- Add the naming convention and sidecar fields.
-
-Validation:
-
-- `rg -n "image_study|promotion_status|Midjourney" public/images .spw`
-
-## Patch 1B - Promotion Thresholds
-
-Goal: make asset promotion stricter and easier to reason about.
-
-Files:
-
-- `public/images/README.md`
-- optional `.spw/conventions/image-study.spw`
-
-Changes:
-
-- Add the CSS-first rule.
-- Add the promotion threshold and rejection checklist.
-
-Validation:
-
-- `rg -n "promotion|reject|token reuse" public/images/README.md .spw`
-
-## Patch 2 - Prompt Bank
-
-Goal: create reusable focused prompt templates tied to actual site surfaces.
-
-Files:
-
-- `.agents/plans/midjourney-design-concepts/prompt-bank.md` (not started)
-
-Prompt families:
-
-- Homepage paper machinery.
-- Design route grammar atlas.
-- Website route signal console.
-- Settings route tactile controls.
-- Topics route diagram/photo bridge.
-- Operator chip material studies.
-- Ornament rail and seam studies.
-- Dark mode observatory studies.
-
-Validation:
-
-- Prompt bank contains design questions, not just vibes.
-- Each prompt declares what implementation surface it could affect.
-
-## Patch 2A - Prompt Template
-
-Goal: define one reusable prompt structure before writing many prompts.
-
-Files:
-
-- `.agents/plans/midjourney-design-concepts/prompt-bank.md` (not started)
-
-Changes:
-
-- Keep the template compact and consistent.
-- Tie each prompt to one design question and one likely implementation surface.
-
-Validation:
-
-- Readability check: can a reviewer understand the intent without the image?
-
-## Patch 2B - Prompt Families
-
-Goal: add a small set of prompt families tied to existing route surfaces.
-
-Files:
-
-- follow-up prompt bank file or plan note
-
-Changes:
-
-- Add route-specific prompt families only after the template is stable.
-
-Validation:
-
-- Each prompt family should map to a route or component hook.
-
-## Patch 2.5 - Animation Study Sprint
-
-**Not started (2026-10-10); no owner.**
-
-Goal: use the temporary SuperGrok animation window to explore motion principles for Spw surfaces, operators, ornament, and route identity without committing raw animated outputs to production.
-
-Outputs:
-
-- animation reference clips
-- timing notes
-- motion vocabulary
-- CSS translation candidates
-- reduced-motion risks
-- optional promoted video assets only after optimization and fallback planning
-
-Rules:
-
-- Treat animations as reference unless explicitly promoted.
-- Extract motion principles before implementation.
-- Prefer CSS translation for hover, focus, charge, reveal, resonance, and ornament timing.
-- Any promoted animation needs a static fallback, reduced-motion behavior, route role, metadata, and optimization.
-
-Prompt template:
+Not started. It was written for a temporary SuperGrok window, and the creator's 2026-11-06 material path gives it a subject: Grok Imagine animating a scan ("Spells on tape, scans that move", above). Its rules still stand. An animation is reference unless it is promoted. Motion principles come out before implementation, and CSS carries the timing of hover, focus, charge, reveal, resonance and ornament. A promoted clip needs a static fallback, reduced-motion behaviour, a page role, metadata and optimization.
 
 ```text
 Focused motion study for spwashi.com [route/component].
@@ -712,321 +597,13 @@ Avoid: generic app microinteraction, noisy looping, motion that hides state, mot
 Output goal: motion reference for CSS timing and reduced-motion planning, not final production animation.
 ```
 
-Validation:
+### Patch 3 — palette extraction (partial)
 
-- Prompt bank contains animation questions, not just still-image concepts.
-- Each animation study declares its likely implementation surface.
+Take five to seven colour roles from each selected reference: background, surface, ink, line, primary accent, warm trace and cool shadow. Map them to existing tokens in `public/css/tokens/core.css` before creating any new one, test them in light and dark, and never copy a colour that clashes with operator semantics. 3A records only palette roles and material principles in the sidecar, and 3B decides at `/design/catalog/` whether the result belongs to a route or stays reference. Verify: `npm run check:css`, plus a browser comparison on the target route. Proposal: the first extraction reads one of the creator's scans rather than a render. 1a84b975 dropped the sampled `data-spw-accent-colors` on three of the twelve pages so that the runtime samples the new piece, which puts the palette of the creator's own paper one read away.
 
-## Patch 3 - Palette Extraction
+### Patch 7 — concept library (no owner)
 
-Goal: turn selected references into measured palette candidates.
-
-Files:
-
-- `public/css/tokens/core.css`
-- `public/css/routes/surfaces/home.css`
-- `public/css/routes/surfaces/design.css`
-- `public/css/routes/surfaces/website.css`
-- sidecars for selected studies
-
-Changes:
-
-- Extract 5-7 color roles from each selected reference:
-  - background
-  - surface
-  - ink
-  - line
-  - primary accent
-  - warm trace
-  - cool shadow
-- Map them to existing site tokens before creating new ones.
-- Test in light and dark mode.
-- Avoid direct color copying from a render if it clashes with operator semantics.
-
-Validation:
-
-- `npm run check:css`
-- Manual browser comparison on target route.
-
-## Patch 3A - Extract Principles
-
-Goal: extract reusable palette and material principles from the strongest studies.
-
-Files:
-
-- selected `.spw` sidecars
-- `public/css/tokens/core.css`
-
-Changes:
-
-- Record palette roles and material principles only.
-
-Validation:
-
-- `npm run check:css`
-
-## Patch 3B - Route Fit Review
-
-Goal: decide whether the extracted ideas belong in a route or stay as reference.
-
-Files:
-
-- selected `.spw` sidecars
-- `/design/catalog/`
-
-Changes:
-
-- Add route/component fit and accessibility risk notes.
-
-Validation:
-
-- `/design/catalog/` review
-
-## Patch 4 - Material Translation
-
-Goal: translate Midjourney material ideas into CSS surfaces rather than image backgrounds.
-
-Files:
-
-- `public/css/effects/material.css`
-- `public/css/components/cards.css`
-- `public/css/components/surfaces.css`
-- `public/css/grammar/syntax.css`
-
-Translation examples:
-
-- Rendered paper fiber -> subtle CSS grain or shadow, not full bitmap.
-- Folded vellum edge -> border/outline/background gradient.
-- Luminous seam -> local token for line and glow.
-- Layered machinery -> grid/card composition, not ornamental clutter.
-- Signal field -> low-opacity radial/linear gradients or canvas accent.
-
-Validation:
-
-- Visual comparison against selected reference.
-- Reduced motion and dark mode checks.
-- `npm run check:css`
-
-## Patch 5 - Route Concept Prototype
-
-Goal: apply one focused concept to one route as a reviewable prototype.
-
-Recommended first route:
-
-- `/design/` for the first prototype because it can safely expose grammar, catalog, and visual-concept experiments without forcing the whole site identity to change too early.
-- `/` if testing site identity.
-- `/settings/` if testing control material and timing.
-
-Implementation surfaces:
-
-- Route CSS file.
-- Existing route HTML only if a semantic hook is missing.
-- Shared CSS only if the concept becomes reusable.
-- `.spw` sidecar if the concept becomes a named visual grammar.
-
-Rules:
-
-- Prototype one concept per patch.
-- Keep before/after easy to review.
-- Avoid adding new images until CSS translation is evaluated.
-
-Validation:
-
-- Browser check mobile and desktop.
-- `npm run check:local`
-- Design catalog check if images are promoted.
-
-## Patch 5A - `/design/` Prototype
-
-Goal: prototype the first concept on `/design/` only.
-
-Files:
-
-- `public/css/routes/surfaces/design.css`
-- route HTML only if needed for a semantic hook
-
-Changes:
-
-- Prototype the grammar atlas or concept catalog direction.
-
-Validation:
-
-- Browser check on `/design/`
-
-## Patch 5B - Follow-On Route
-
-Goal: apply the proven concept to another route only after the prototype is validated.
-
-Files:
-
-- a second route chosen from the concept's fit
-
-Changes:
-
-- Translate the same concept, not a new one.
-
-Validation:
-
-- Browser check on the chosen route
-
-## Patch 6 - Asset Promotion
-
-Goal: promote only the strongest generated assets with metadata and optimization.
-
-Use skills:
-
-- `image-naming-magic`
-- `image-optimize`
-
-Files:
-
-- `public/images/renders/...`
-- `public/images/assets/...`
-- `public/images/routes/...`
-- matching `.spw` sidecars
-- route HTML only after optimized asset exists
-
-Promotion threshold:
-
-- promote only when the asset adds meaning that CSS cannot express cleanly
-- reject anything that is generic, decorative-only, or redundant with existing tokens
-- prefer a route or component role over a standalone illustration when possible
-
-Required sidecar fields:
-
-- source
-- source id
-- prompt summary
-- route/component role
-- alt text or decorative status
-- visual qualities
-- extracted principles
-- related images
-- promotion status
-
-Validation:
-
-- `npm run catalog`
-- `/design/catalog/` review
-- `npm run check:local`
-- file existence checks for route references
-
-## Patch 6A - Select Candidate
-
-Goal: choose the smallest set of assets worth promoting.
-
-Files:
-
-- `public/images/renders/unsorted-curation/`
-- `public/images/assets/illustrations/`
-
-Changes:
-
-- Keep only assets that improve comprehension or atmosphere beyond CSS.
-
-Validation:
-
-- Rejection log is filled for rejected candidates.
-
-## Patch 6B - Optimize And Promote
-
-Goal: promote the chosen asset with optimized derivatives and sidecar metadata.
-
-Files:
-
-- `public/images/routes/...`
-- matching `.spw` sidecar
-
-Changes:
-
-- Promote one asset path at a time.
-
-Validation:
-
-- `npm run catalog`
-- `npm run check:local`
-
-## Patch 7 - Concept Library
-
-**Not started (2026-10-10), including 7A and 7B; no owner.**
-
-Goal: build a small library of reusable visual concepts from successful studies.
-
-Possible concept names:
-
-- paper machinery
-- signal atlas
-- folded rail
-- operator enamel
-- vellum console
-- quiet observatory
-- luminous seam
-- grammar field
-
-Document first:
-
-1. paper machinery
-2. signal atlas
-3. folded rail
-
-Keep as emerging until proven in route/component work:
-
-- operator enamel
-- luminous seam
-- quiet observatory
-- grammar field
-
-Files:
-
-- `.spw/conventions/visual-concepts.spw` (not started)
-- `public/css/README.md`
-- optional route docs or design route content
-
-Each concept should define:
-
-- where it belongs
-- where it does not belong
-- color rules
-- material rules
-- motion rules
-- semantic hooks
-- example files
-
-Validation:
-
-- `rg -n "paper machinery|signal atlas|folded rail|operator enamel|visual-concepts" .spw public/css public/images`
-
-## Patch 7A - Canonical Concepts
-
-Goal: document the concepts that are already mature enough to name.
-
-Files:
-
-- `.spw/conventions/visual-concepts.spw` (not started)
-
-Changes:
-
-- Start with paper machinery, signal atlas, and folded rail.
-
-Validation:
-
-- The concepts are describable in one sentence each.
-
-## Patch 7B - Emerging Concepts
-
-Goal: capture the ideas that are promising but not yet durable.
-
-Files:
-
-- `.spw/conventions/visual-concepts.spw` (not started)
-
-Changes:
-
-- Record operator enamel, luminous seam, quiet observatory, and grammar field as emerging only.
-
-Validation:
-
-- Do not promote them into tokens until they survive route/component use.
+Not started, and `.spw/conventions/visual-concepts.spw` does not exist. Document first: paper machinery, signal atlas and folded rail. Keep these as emerging until a route or component uses them: operator enamel, luminous seam, quiet observatory and grammar field. Vellum console was also named. Each concept says where it belongs and where it does not; gives its colour, material and motion rules, its semantic hooks and an example file; and fits in one sentence before it becomes a token. Verify: `rg -n "paper machinery|signal atlas|folded rail" .spw public/css` (empty on 2026-11-06).
 
 ## Position
 
@@ -1066,8 +643,7 @@ Manual review:
 
 ## Review Questions Before Implementation
 
-- Should Midjourney be used mainly for palette/material exploration or for promotable route imagery?
-- Which route deserves the first focused concept study?
-- Should raw Midjourney prompts live in repo docs, `.spw` sidecars, or stay outside until a candidate is promoted?
-- What is the threshold for promoting an image versus translating the idea into CSS?
-- Which visual concepts are already canonical enough to document: paper machinery, signal atlas, folded rail, or operator enamel?
+- Palette and material exploration, or promotable route imagery? Settled by the creator: their own art leads, and a Midjourney render goes only where it belongs to its page (the 2026-09 review, b87c59f5; 2026-11-05, above).
+- Where do raw prompts live? In `.spw/caches/prompt-seeds-2026-09.spw`, loadable by name (a9fa3ca7).
+- When does an image get promoted rather than translated into CSS? See "Asset Promotion Rules".
+- Still open: which route deserves the first focused concept study (Patch 5A), and which concepts are canonical enough to document (Patch 7)?

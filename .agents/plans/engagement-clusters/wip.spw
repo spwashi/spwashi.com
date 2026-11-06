@@ -1,4 +1,4 @@
-# Review 2026-10-12 — hot notes for the host-write census of quiet modules; the evidence, census tables and human decisions stay in PLAN.md.
+# Review 2026-11-06 — hot notes for E1, the host-write census of quiet modules; the evidence, the census table and the slices stay in PLAN.md, the creator's calls in index.spw.
 # wip — engagement-clusters
 #
 #>plan_engagement_clusters_wip
@@ -19,20 +19,25 @@ fixity = "tending"
 ^"stream"{
  >>[2026-10-12 10:59] verify — kernel/engagement.js and the two root sensors stand; since the Status, public/js has changed only in generated expressions and the promo cycle, and the sensors not at all. Two catalog defs carry engages, field-composition and region-menu (enhancement.js:50, feature.js:655); the third match the Status counted is the field's own entry in constants.js. The next slice, reading what the 27 quiet modules write to their own hosts on arrival, has not started.
  >>[2026-10-27 13:40] hygiene — status planned to implementing, since kernel/engagement.js and the arrival census have landed (PLAN.md Status). The gate now opens on what blocks the host census, a headless browser the sandbox allows, instead of "nothing" (audit:plans).
+ >>[2026-11-06 12:33] verify — since 10-10, kernel/engagement.js, root-write-census.mjs and root-state-ablation.mjs have not changed; the catalog commits since (b5171318, 320fc4b9, 2c95bf13) mount other plans' modules. engages sits on field-composition (enhancement.js:51) and region-menu (feature.js:671). policy.js still falls back to arming 'arrival'. runtime-module-decomposition, which PLAN.md named owner of the arrival halves, is archived; runtime-plane-consolidation Phase 6 holds that seam now.
+ >>[2026-11-06 12:35] probe — wonder_engagement_clusters_default_arming: policy.js reads ?spw-arming, then data-spw-arming on <html> or <body>, and falls back to 'arrival'; the loader arms only defs with engages (loader.js, the arming === 'engage' branch), which are field-composition and region-menu. As expected.
+ >>[2026-11-06 12:36] probe — wonder_engagement_clusters_page_boilerplate: 162 of the 210 pages that declare data-spw-features name 'operators navigator console'.
+ >>[2026-11-06 12:37] probe — wonder_engagement_clusters_weights: no route authors data-spw-salience-weight; contextual-ui.js writes --spw-salience-weight and enhancement.js measures the attribute, so a weight today is runtime state only. PLAN.md's Weights line now says so.
+ >>[2026-11-06 12:40] plan — PLAN.md collapses the census, root precision, scripts-off and invited-offer narratives into Landed lines with their commits, names E1 to E3 with touches, gates and checks, and moves the Human Decisions list into four wonders: default arming, first cluster, weights, page boilerplate. E1's rows are proposed also as Spw lines whose mode turns from [quiet] to [armed].
 }
 
 ^"open"{
- default_arming = "Does engage become the default arming, and how long may a first engagement take before it reads as a wait? The creator's sensation call."
- first_cluster = "Which modules join a cluster first, given what each draws on arrival? The creator's call."
+ default_arming = ~"./index.spw#wonder_engagement_clusters_default_arming"
+ first_cluster = ~"./index.spw#wonder_engagement_clusters_first_cluster"
  facet_operators = ~"../module-contract-overhaul/wip.spw#wonder_module_contract_overhaul_facet_operators"
- weights = "Where do cluster weights come from, and can a reader see them? The creator's call."
- boilerplate = "Do operators, navigator and console stay page boilerplate or become shell? The creator's call."
+ weights = ~"./index.spw#wonder_engagement_clusters_weights"
+ boilerplate = ~"./index.spw#wonder_engagement_clusters_page_boilerplate"
 }
 
 ^"cache"{
  ~#status: "implementing"
- ~#next_commit: "+[sense] Read what each quiet module writes to its own hosts on arrival, which the root census cannot see"
+ ~#next_commit: "+[sense] E1: read what each quiet module writes to its own hosts on arrival, which the root census cannot see"
  ~#files_hot: "scripts/root-write-census.mjs, public/js/kernel/engagement.js, public/js/runtime/catalog/feature.js, public/js/runtime/catalog/enhancement.js"
  ~#gate: "a headless browser the sandbox allows for the host census (npm run sense -- doctor first); default arming and container priming wait on the open calls"
- ~#last_stream: "2026-10-12"
+ ~#last_stream: "2026-11-06"
 }

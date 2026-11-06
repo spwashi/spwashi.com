@@ -1,4 +1,4 @@
-# Review 2026-10-12 — hot notes for the idle-lab leaf move; the packs, measurements and boundaries stay in PLAN.md.
+# Review 2026-11-06 — hot notes for D1 (paste's seed-card import) and D2 (the console's knowledge map); the packs, measurements and boundaries stay in PLAN.md.
 # wip — deploy-module-graph
 #
 #>plan_deploy_module_graph_wip
@@ -12,6 +12,8 @@
 @cognitive_core: ~"../../../public/js/runtime/memory/cognitive-core.js"
 @pulse_timing: ~"../../../public/js/runtime/physics/pulse-timing.js"
 @build: ~"../../../scripts/ts/build/index.mts"
+@spw_paste: ~"../../../public/js/modules/tools/spw-paste.js"
+@breadcrumb_spell: ~"../../../public/js/runtime/experiential/breadcrumb-spell.js"
 
 operation = "cache"
 fixity = "tending"
@@ -19,14 +21,17 @@ fixity = "tending"
 ^"stream"{
  >>[2026-10-12 10:59] verify — the deploy graph has no chunk cycles since f05b02d2, and check:built fails on a recorded one. The next slice is unchanged: interface/smart-console.js:20 still imports getKnowledgeMap from runtime/memory/cognitive-core.js, which brings idle-lab; move that read to a leaf, as pulse-timing.js was. After it come the seed-cards and region-menu imports in idle-default and idle-residue, then the expression-manifest split: public/js/generated/spw-expressions.js is 331,864 B today, and expression-resonance.js:644 still loads it whole.
  >>[2026-11-05 22:10] verify — Re-probed the deploy graph and expression manifest: interface/smart-console.js:20 still imports getKnowledgeMap from runtime/memory/cognitive-core.js; idle-default and idle-residue still pull seed-cards and region-menu. public/js/generated/spw-expressions.js is now 145,418 B (142.0 KiB across 986 expressions, down from 331,864 B after retiring SPW_PROJECTION_SEEDS), imported at public/js/runtime/expression/expression-resonance.js:638. Updated PLAN.md with the 142.0 KiB baseline.
+ >>[2026-11-06 12:44] probe — read the 2026-10-27 pack ledger (dist/asset-manifest.json modulePacks): visible-smart-console 4,066 B / 1,759 gzip imports spw-idle-lab (137,247 / 40,287); idle-default (image-provenance, spw-paste) imports visible-seed-cards (19,928 / 6,645) through spw-paste.js:24; idle-residue (attention children, experiential, expression-resonance, navigation-spells, spells, effect-ledger) imports visible-region-menu (22,804 / 7,320) through breadcrumb-spell.js:28. chunkCycles is empty.
+ >>[2026-11-06 12:47] decide — re-ordered the pulls by payoff. #spw-smart-console is hosted only by settings/index.html, and cognition (no selector, timingChunk idle-lab) loads idle-lab at idle on every page, so the console move changes /settings/ timing, not bytes. About 55 authored HTML files carry a render, folio, panel, prime or pad image (image-provenance's selector) while 4 host [data-seed-card] and 1 [data-paste-open], so the seed-card pull is the one with a byte payoff. region-menu mounts at visible on any .spw-chip page under arrival arming, so its pull is free until engage arming is the default.
+ >>[2026-11-06 12:49] probe — wonder_deploy_module_graph_manifest_split: gzip -9 of public/js/generated/spw-expressions.js is 31,211 B, under idle-lab's 40,287 B at gzip.
 }
 
 ^"open"{ }
 
 ^"cache"{
  ~#status: "implementing"
- ~#next_commit: "![runtime] Read the knowledge map from a leaf, so the console stops bringing idle-lab"
- ~#files_hot: "public/js/interface/smart-console.js, public/js/runtime/memory/cognitive-core.js, scripts/ts/build/index.mts, public/js/runtime/expression/expression-resonance.js"
+ ~#next_commit: "![runtime] Let paste load the seed card when a paste opens, so a provenance image stops bringing it"
+ ~#files_hot: "public/js/modules/tools/spw-paste.js, public/js/modules/cards/seed-card.js; then public/js/interface/smart-console.js, public/js/runtime/memory/cognitive-core.js for D2"
  ~#gate: "nothing; npm run check:built and the pack ledger in dist/asset-manifest.json prove the move"
- ~#last_stream: "2026-11-05"
+ ~#last_stream: "2026-11-06"
 }

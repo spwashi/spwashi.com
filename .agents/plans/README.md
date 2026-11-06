@@ -90,8 +90,7 @@ Every live folder, once, by area. Open a plan's `index.spw` for its disposition 
 - `semantic-html-normalization/` — landmarks, ids, ARIA; JS-off parity.
 - `topic-building-blocks/` — topics as a course: the root shelf, one home for each repeated figure, and the shared tuner; holds the field guides and `living-learning-surface`.
 - `blog-blob-spw/` — the blog unit (Starter) and its `.spw`.
-- `promo-wonder-cycle/` — daily and weekly lanes; holds the release-day receipts.
-- `ecosystem-offer-2026-10/` — the season's offer copy; holds `funding-proof-cards`' rule.
+- `promo-wonder-cycle/` — daily and weekly lanes; holds the release-day receipts, and since 2026-11-06 the season offer's two creator questions (prices as shipped, the film backer) and `funding-proof-cards`' rule.
 
 **Routes and genres**
 
@@ -113,6 +112,18 @@ Every live folder, once, by area. Open a plan's `index.spw` for its disposition 
 - `agent-optimization/` — the agent gate.
 - `agentic-dev-contracts/` — one validation entrypoint and one manifest.
 - `history-reflow/` — commit grammar and the reflow method.
+
+## Maintenance Snapshot - 2026-11-06
+
+Plan pass, asked as granularity, meaningful reference, creativity and updated wonder. Eight readers took the 54 live plans by area; one coordinator verified their boldest claims, archived one plan and ran the gates.
+
+- **Granularity.** Next work in each plan is a numbered slice one session can land: the paths it touches, its gate (none, a sensor, or the creator's look) and its check. Landed narrative became Landed lines with commits. PLAN and FIX prose went from 9,219 to 7,709 lines; css-architecture-readability 807 -> 400, midjourney-design-concepts 1,073 -> 649, color-motion 868 -> 696, chrome-navigation-wonder 221 -> 84.
+- **Meaningful reference.** Every path, line, anchor and commit kept was opened. Drifting line numbers became function names or anchors; three cited hashes that were not this repo's (factshift's app commits, a Wrangler version id) now say where they live. `npm run audit:plans`: 27 warn -> 0.
+- **Drafts verified.** A finished session left slice tables in six plans. Kept: the dual image hold, the unread seat and lens wiring, the badge's raw duration. Cut as false: two-way hydration through the satchel, a `probe | frame | surface` figure vocabulary, a hand-edited provenance registry (provenance already exists in `image-provenance.js`), and a parse failure the reader does not have.
+- **Creativity.** Each plan that had gone hygienic carries one buildable proposal, as a slice or as an alternative in a wonder: the cauldron lens as the `[mode]` slot, a walk trail written as `origin ~> step ~> now`, a terms card whose slots are the terms, washi-tape spells as the press's first paper artifact, a lab's scripts-off figure as a hand-drawn scan, sensors that print a reader count or a writer as one Spw line.
+- **Updated wonder.** Plan wonders 74 -> 112; probes without `~#expect` site-wide 195 -> 140. `scripts/wonder.mjs` now reads a dated `~#answer(…)` like a plain one, so the answered count is honest (11).
+- **Findings worth a slice:** six of the seven properties `applyModuleSemantics` writes on every module host have no reader (runtime-bootstrap-performance B3); `serializeElementToSpw` and `hydrateElementFromSpw` have no callers, and hydrate turns pasted claims into `data-spw-*` attributes (brace-semantics 3.5); `spw-paste.js` pulls the seed-card pack onto about 55 pages for 4 hosts (deploy-module-graph D1); the scan placed on `/topics/software/` on 2026-11-05 renders through the watercolor treatment by default (midjourney-design-concepts slice 5, a look).
+- **Archived:** [ecosystem-offer-2026-10](./archive/ecosystem-offer-2026-10/PLAN.md), by its own October rule; its questions moved to [promo-wonder-cycle](./promo-wonder-cycle/PLAN.md). Candidates held with evidence: agentic-dev-contracts (both wonders answered; cited from `site.spw` and two conventions), operator-resonance-alignment, shell-model-vocabulary-consolidation, data-attribute-css-token-refinement (after its item 3), model-collaborator-lore-surfaces (parked by its own gate).
 
 ## Maintenance Snapshot - 2026-11-05
 

@@ -1,4 +1,4 @@
-# Review 2026-07-12 — keep as a workflow template, not an active plan; every assignment needs a reversible public experiment.
+# Review 2026-11-06 — keep as the mentee owner; one brief is filled in (living-term-home) and waits for a mentee, and two calls are the creator's (word lists, ladder cascade).
 # Plan Index — Reference Assignment Template
 #
 # Turn site references into small UX improvements or reversible experiments.
@@ -46,7 +46,7 @@ intent: .{
 
 ^"plan_refinement"{
  tone = `Mentor brief — kind, bounded, falsifiable.`
- accuracy = `Template exists; assignments should stay small and closeable.`
+ accuracy = `Template and one filled brief (living-term-home) exist; no brief has a result note yet.`
  direction = `Publish one fresh assignment against a live route component.`
  inspiration = `New contributors ship proof, not plans.`
  alignment = `site-starter-component-kit, css-architecture-readability`
@@ -56,6 +56,11 @@ intent: .{
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@living_terms: ~"../../../.spw/caches/living-terms-2026-09.spw"
+@module_registry_ts: ~"../../../public/ts/module-registry.ts"
+@site_settings: ~"../../../public/js/kernel/site-settings.js"
+@bundling_plan: ~"../site-starter-component-kit/BUNDLING.md"
 
 dispatch: .{
  plan = @plan
@@ -89,9 +94,26 @@ invariants: #[
   #:depth #!educational ~#lens(choice)
   ~#with: @plan
   ~#taste: "Tacit knowledge taught on purpose: a list handed over teaches the creator's taste, a list derived teaches how taste forms."
-  ~#hypothesis: "PLAN.md names fixed axes: materials (paper, vellum, broth, enamel), motions, lights, math handles, and a ladder from abstraction to recipe to owner. No filled brief exists yet, so no mentee has used them."
+  ~#hypothesis: "PLAN.md names fixed axes: materials (paper, vellum, broth, enamel), motions, lights, math handles, and a ladder from abstraction to recipe to owner. The one filled brief, living-term-home, leaves its hook empty until this is answered, so no mentee has used them."
   ~#tension: "Given lists make the first brief fast and on-voice; derived lists make it slower and the mentee's own. The worked example will set the habit either way."
+  ~#expect: "Four lines in Sensory Prompt Hooks, one per axis; nothing in the living-term-home brief draws on them."
+  ~#probe(run)
   !probe{ `rg -n "Material:|Motion:|Light:|Math handle:" .agents/plans/reference-assignment-template/PLAN.md` }
   $%[mentee.wordList, brief.example]
   ~<"./PLAN.md"> ~<"../modular-experience-slices/templates/tending-note.spw">
+}
+
+# Carried 2026-11-06 from PLAN.md's absorbed language-ladder section and wip.spw's open list.
+#>wonder_reference_assignment_ladder_cascade
+?["Which cascade does the JS-to-TS ladder brief climb first: page boot, settings or composition?"]{
+  #:depth #!educational ~#lens(choice)
+  ~#with: @plan @module_registry_ts @site_settings @bundling_plan
+  ~#taste: "A mentee's first typed boundary should be one another plan is waiting for, so the climb is used the week it lands."
+  ~#hypothesis: "The module registry and module timing are already typed (public/ts/module-registry.ts from 0bc7b323, public/ts/module-timing-contract.ts), so a page-boot climb ends on a rung already built. Settings state is still plain JS in three site-settings*.js files that 22 other runtime files import, and audit:portable names this site's settings profile as the commonest reason a module cannot travel."
+  ~#tension: "Settings is the most useful climb and the widest. A narrower cascade is a kinder first climb for someone learning the ladder."
+  ~#expect: "public/ts holds module-registry.ts and module-timing-contract.ts and no settings file."
+  ~#probe(run)
+  !probe{ `ls public/ts` }
+  $%[cascade.page_boot, cascade.settings, cascade.composition]
+  ~<"./PLAN.md"> ~<"../site-starter-component-kit/BUNDLING.md">
 }

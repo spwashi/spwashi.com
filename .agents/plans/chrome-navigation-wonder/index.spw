@@ -1,4 +1,4 @@
-# Review 2026-07-12 — keep as the chrome owner, narrowed to header, section handle, breadcrumbs, and footer behavior.
+# Review 2026-11-06 — keep as the chrome owner, narrowed to header, section handle, breadcrumbs, and footer behavior; the next slice is what the rail's & layer calls a component.
 # Plan Index — Chrome, Navigation, and Metaphysical Wonder (2026 review)
 #
 # Improve the primary navigation (header via <spw-site-header>), section handles, breadcrumbs, and footer so they are genuinely pleasant on mobile, encourage…
@@ -137,7 +137,10 @@ invariants: #[
   ~#with: @plan @section_handle
   ~#hypothesis: "This plan calls breadcrumbs its Phase 2, inherited from cognitive-navigation. spellcraft-authoring says it absorbed cognitive-navigation. The live code sits on both sides: the rail's `.` path layer (7018898c) and runtime/experiential/breadcrumb-spell.js, which assembles the trail and the live spell path."
   ~#tension: "If chrome owns breadcrumbs, the trail is a place to stand. If spellcraft owns them, the trail is an ingredient to carry. With two owners, neither plan finishes the seam."
+  ~#expect: "breadcrumb-spell.js holds nearly every mention and section-handle.js one comment; spells.js none. The trail lives in experiential/, the place in the rail, and no module joins them."
+  ~#probe(run)
   !probe{ "rg -n 'breadcrumb' public/js/runtime/attention/section-handle.js public/js/runtime/experiential/breadcrumb-spell.js public/js/runtime/memory/spells.js | head -40" }
+  $%[breadcrumbs.chrome, breadcrumbs.spellcraft, breadcrumbs.shared_reader]
   ~<"./PLAN.md"> ~<"../spellcraft-authoring/PLAN.md">
 }
 
@@ -147,6 +150,23 @@ invariants: #[
   ~#with: @plan @navigation
   ~#hypothesis: "The closed header (02c7757a), the section-handle rail and the landmark rail already cycle rooms on swipe. shell-disclosure.js has no swipe handling, so the open drawer is the last of the four edges this plan named."
   ~#tension: "Finishing the set makes the gesture learnable everywhere. But an open drawer is a list a reader scrolls and taps, and gesture-state-refinement spent its passes removing accidental activations during scrolling. A swipe that travels from inside a list can land somewhere the reader did not choose. wonder_history_drawer asks how the drawer should swipe; this question asks whether it should."
+  ~#expect: "grep prints 0, and on a phone the open list scrolls only vertically, so a sideways swipe inside it has no competing meaning yet."
+  ~#probe(read)
   !probe{ "grep -c swipe public/js/runtime/shell/shell-disclosure.js; then on a phone, open the drawer on /about/ and try to scroll the list sideways" }
+  $%[drawer.swipe_cycles, drawer.tap_only]
   ~<"./PLAN.md"> ~<"../../../public/js/runtime/shell/shell-disclosure.js"> ~<"../../../.spw/caches/history-conflict-strands-2026-09.spw">
+}
+
+#>wonder_chrome_navigation_wonder_component_name
+?["When a component has no heading, what should the rail's & layer call it?"]{
+  #:depth #!semantic ~#lens(choice)
+  ~#with: @plan @section_handle
+  ~#taste: "The & layer should name the thing the reader is on in words the page already holds, and if those words are Spw, the rail teaches a slot by reading it."
+  ~#hypothesis: "Reading the nearest expression's subject[mode] gives every unheaded component a name without new copy: home's lens panels would read home[reading], home[systems], home[play] and home[studio], from ledes that already carry them."
+  ~#tension: "A heading is the creator's voice and helps every reader, rail or not; an expression slot is terse and may read as code to a visitor who does not yet hold Spw. The kind ('lens') is honest but names nothing."
+  ~#expect: "componentOf in section-handle.js reads h2, h3, h4, figcaption and .frame-card-title, then data-spw-kind; home's four .mode-panel sections hold none of those, and each lede carries data-spw-semantic-expression."
+  ~#unblocks: "PLAN.md next slice 1"
+  ~#probe(run)
+  !probe{ "rg -n 'function componentOf' -A8 public/js/runtime/attention/section-handle.js; rg -o 'home.perspective.[a-z]+\" data-spw-semantic-expression=\"[^\"]+' index.html" }
+  $%[name.heading_copy, name.expression_slot, name.kind]
 }

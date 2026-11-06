@@ -1,4 +1,4 @@
-# Review 2026-10-12 — hot notes for the rail's authored ids and headings; the review, phases and absorbed rules stay in PLAN.md.
+# Review 2026-11-06 — hot notes for what the rail's & layer calls a component; the slices, landed lines and absorbed rules stay in PLAN.md.
 # wip — chrome-navigation-wonder
 #
 #>plan_chrome_navigation_wonder_wip
@@ -22,18 +22,23 @@ fixity = "tending"
  >>[2026-10-25 17:43] verify — Read against the tree for the UI review sitting: LANDMARK_CONTRACT now lives at public/js/runtime/interaction/hops.js:23, and eff5abfd and efcd875d rewrote home's h2/h3 copy but added no ids, so five home sections (four lens panels, the reason strip) still have none. Status narrows the next slice to home first, then /design/, and the plan now records the sitting's breadcrumbs proposal and owns the menu toggle (home-nav-open).
  >>[2026-10-30 17:50] implement — Probed in headless Chrome at pocket, 12s settle: home's rail indexes all 17 sections, so the 10-25 claim of five unnamed home sections no longer holds (cfd4e2e4 gave the lens panels ids that day; the reason strip is not a rail section). The hubs were the gap: /design/, /now/, /play/, /services/, /cards/ and /topics/software/ wrap their clusters in a bare main > article, which CLUSTER_SECTION_SELECTOR (shared.js) and the catalog's mount selector (enhancement.js) did not reach, so the rail indexed 0 to 6 of their 6 to 24 sections, or only the hook. Both selectors now read clusters at either depth; indexed after: design 18, services 18, topics/software 19, play 10, cards 7, now 4, home 17 unchanged. A 9s settle can read 0 on any route, since the handle mounts at idle; /recipes/ indexes 15 at 12s.
  >>[2026-11-05 23:58] cite — floating-chrome-stack proposes the rail's current cell as the section's expression, its heading as the handle and its place as the body, with ‹ › and the kin moves shown as moves; the label today reads an id before a heading (section-handle.js:300-345). The rail is this plan's; the words wait on the creator.
+ >>[2026-11-06 12:30] plan — PLAN.md collapsed from 221 to about 85 lines: the 09-04 and 09-09 Status headers, the 07 implementation notes and the 05/06 action lists became Landed lines; the 2026-05 findings were compressed and their dead paths dropped (shell/chrome.css and runtime/experiential.js no longer exist); the Related Artifacts list went. Public Goal, the vision and Success Signals stay whole. Next slices are three: the & layer's name, the menu-toggle still, the Cauldron action on /play/.
+ >>[2026-11-06 12:33] probe — wonder_chrome_navigation_wonder_component_name: componentOf (section-handle.js) reads h2, h3, h4, figcaption, .frame-card-title, then data-spw-kind; home's four lens panels hold no heading and their ledes carry home[reading]{craft}<entry>, home[systems]{parser}<inspect>, home[play]{table}<session>, home[studio]{commission}<offer>. An expression-slot name needs no new copy.
+ >>[2026-11-06 12:35] probe — wonder_chrome_navigation_wonder_breadcrumbs: breadcrumb appears 18 times in experiential/breadcrumb-spell.js (loaded by experiential.js), once in a section-handle.js comment, and not at all in memory/spells.js. The trail and the place still share no module; the owner call stays the creator's.
+ >>[2026-11-06 12:36] probe — wonder_chrome_navigation_wonder_drawer_swipe: grep -c swipe on runtime/shell/shell-disclosure.js prints 0, as expected; the phone half of the probe, scrolling the open list sideways on /about/, is still the creator's.
 }
 
 ^"open"{
  breadcrumbs = ~"./index.spw#wonder_chrome_navigation_wonder_breadcrumbs"
  drawer_swipe = ~"./index.spw#wonder_chrome_navigation_wonder_drawer_swipe"
+ component_name = ~"./index.spw#wonder_chrome_navigation_wonder_component_name"
  rail_motion = "How does the rail move between Spw positions? The creator said later, as a designed pass."
 }
 
 ^"cache"{
- ~#status: "implementing"
- ~#next_commit: "~[rail] Give the components a rail names a heading, so the & layer says which card the reader is on"
- ~#files_hot: "index.html, design/index.html, public/js/runtime/attention/section-handle.js, public/js/runtime/attention/shared.js"
- ~#gate: "nothing but the copy"
- ~#last_stream: "2026-11-05"
+ ~#status: "waiting"
+ ~#next_commit: "~[rail] Let the & layer name a component by its heading or its expression, so it says which card the reader is on"
+ ~#files_hot: "index.html, public/js/runtime/attention/section-handle.js"
+ ~#gate: "a pocket demo of the rail's & label for the creator's look (#>wonder_chrome_navigation_wonder_component_name); the menu-toggle still is ungated"
+ ~#last_stream: "2026-11-06"
 }

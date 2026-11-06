@@ -1,4 +1,4 @@
-# Review 2026-10-25 — hot notes for the thought-trace slice on two hosts; the copy-depth contract, the trace rules and the absorbed plans stay in PLAN.md.
+# Review 2026-11-06 — hot notes for C1 and C2; the copy-depth contract, the trace rules and the absorbed plans stay in PLAN.md.
 # wip — semantic-copy-depth
 #
 #>plan_semantic_copy_depth_wip
@@ -22,6 +22,9 @@ fixity = "tending"
  >>[2026-10-25 17:42] verify — read against the tree for the UI review sitting: the Status now matches this notebook, with the math note landing now and the slop half waiting on #feeling. Home's loop and shelf were rewritten by eff5abfd (shelf at index.html:313-323) and its live note reads home[live]{season.close}(production)<now> (index.html:165); PLAN.md keeps the 09-28 quotes and adds a dated note. PLAN.md also names this plan owner of the entrance words, with component-region-personality holding their cards and chips.
  >>[2026-10-27 13:40] hygiene — status planned to implementing: PLAN.md says the math note has no gate and lands now; the slop paragraphs still wait on the creator (audit:plans).
  >>[2026-11-05 10:40] land — the math half: the five-route shelf left the note, since the lens grid directly below already linked the same five anchors, so a new list would have been a second menu. The sentence that named them now says the cards lead to a portable diagram where a route has one, without a count (six routes carry inputs or a portable diagram, not five). The note carries math[reading]{picture.then.formalism}(turn)<paragraph>, which parses in the manifest, and holds three links: the parser field guide and the two stubs. The grid stays bare. haptics.js gathers the closest [data-spw-semantic-expression] on a hold, and nothing above the lens cards matched before, while brace-gestures arms the card itself (.math-lens-card); a [case] expression on the grid would have armed the card and gathered the shelf in one hold. The rule's "a kept shelf uses mode [case]" holds only where the shelf's items are not brace targets of their own.
+ >>[2026-11-06 12:41] probe — wonder_semantic_copy_depth_slop_feeling, read as text, not aloud: each of the three #feeling paragraphs opens on a claim that survives without its links (People are tired of it, and the platforms have started to say so; The cheerfulness is part of the complaint; The accusation has pulled away from the evidence), and the cheer and accusation paragraphs carry their own expressions. They read as claim then dated evidence. Whether the evidence stays in the sources' words is still the creator's call.
+ >>[2026-11-06 12:43] probe — audit:copy:accessor flags 18 flat-only units: three on Home (home.hook.note, home.library.lede, home.record.lede) and fifteen /design/ hook ledes. No /about/, /services/, /topics/ or /tools/ first-fold unit is flagged, so the entrance debt absorbed from audience-onboarding-copy is the three on Home.
+ >>[2026-11-06 12:46] plan — PLAN.md collapses the production-note slice into Landed (eba561ba, with the math half, 89475c6c), names C1 (#feeling, gated), C2 (expressions on Home's three flat-only units, ungated, no words change) and C3 (Home's field note, after C1), parks the follow-ups and retires the one Display Rules already says. Home's shelf citation is re-measured to index.html:313-325, and the live note is cited by #home-live-note.
 }
 
 ^"open"{
@@ -30,8 +33,8 @@ fixity = "tending"
 
 ^"cache"{
  ~#status: "tending"
- ~#next_commit: "the /topics/slop/#feeling paragraphs, after the creator's call on #feeling"
- ~#files_hot: "topics/math/index.html, topics/slop/index.html, .spw/caches/ai-writing-smells-2026-09.spw"
- ~#gate: "the slop paragraphs wait on the creator's call on #feeling"
- ~#last_stream: "2026-11-05"
+ ~#next_commit: "~[copy] C2: give Home's three flat-only units the expressions their sentences already say; C1 follows the creator's call on #feeling"
+ ~#files_hot: "index.html, topics/slop/index.html, .spw/caches/ai-writing-smells-2026-09.spw"
+ ~#gate: "nothing for C2; the slop paragraphs wait on the creator's call on #feeling"
+ ~#last_stream: "2026-11-06"
 }

@@ -1,4 +1,4 @@
-# Review 2026-10-12 — hot notes for the one owed receipt, the open cauldron at pocket width; owners, measurements and the modal notes stay in PLAN.md.
+# Review 2026-11-06 — hot notes for the after receipt and the lens-slot proposal; owners, measurements and landed notes stay in PLAN.md.
 # wip — cauldron-lens-composition
 #
 #>plan_cauldron_lens_composition_wip
@@ -11,6 +11,7 @@
 @evidence: ~"../../../.spw/caches/cauldron-lens-composition-2026-09.spw"
 @still_recipes: ~"../../../scripts/lib/viewport-still-recipes.mjs"
 @cauldron_chrome: ~"../../../public/js/interface/cauldron/chrome.js"
+@live_expression: ~"../../../public/js/interface/cauldron/live-expression.js"
 
 operation = "cache"
 fixity = "tending"
@@ -19,14 +20,18 @@ fixity = "tending"
  >>[2026-10-12 10:59] verify — the lens-aware mix (604d4a1d) and the native dialog (326eb119) stand, and the home-cauldron-open recipe is still at viewport-still-recipes.mjs:507. Its fixture receipt has not been taken. The nearest evidence is fdafcd6f on October 8, whose verify opened the cauldron dialog at desktop and pocket widths for the dialog edges, which is not this receipt. Corner sharing lives in floating-chrome-stack now.
  >>[2026-10-25 17:46] verify — Read against the tree for the UI review sitting: the home-cauldron-open recipe still sits at viewport-still-recipes.mjs:507 and its receipt is still untaken. Status now orders it before spellcraft-authoring's phase-attribute fold, which moves its baseline, and the plan records that it receives state-block-projections' second-use lens seat offer.
  >>[2026-11-05 20:22] probe — the pocket receipt: npm run sense -- doctor sound (loopback, Chrome, no orphans, bundles fresh, no uncommitted CSS), then npm run visual:checks -- --ids=home-cauldron-open took one still in 15.4s with 0 errors (run 2026-11-05/checks/20-21-57--7e4d53, gitignored). The dialog opens above the dimmed page; the title, the three-sentence lede, .cauldron{} 0 held, the empty-state prompt with its count (325 holdable on Home), Living concepts and How it works, and the Vessel & Spw notation disclosure all sit in the first pocket screen. Close is at the top right and takes --touch-target-min (cauldron.css:1093). attention-receipt ok: the still asked for no attention and reads as a dense card. This is the baseline the spell fold moves.
+ >>[2026-11-06 12:50] plan — PLAN.md's 2026-09 and 2026-10 narratives collapsed into two Landed lines with their rules kept; the "sigils with readable verbs" rule is marked superseded by spellcraft-authoring's operators-not-verbs section; the owner claim now names composition.js and a real falsification. Next: the after receipt (ungated), then the lens-slot proposal (a look).
+ >>[2026-11-06 12:52] probe — wonder_cauldron_lens_composition_lens_slot: live-expression.js names no lens or mode; composition.js reads #cauldron-page-lens (:726), html's spwActiveLensMode (:1501) and calls requestLensMode with source 'cauldron' (:755). The lens shapes the mix but has no token in the line the reader watches.
 }
 
-^"open"{ }
+^"open"{
+ lens_slot = ~"./index.spw#wonder_cauldron_lens_composition_lens_slot"
+}
 
 ^"cache"{
  ~#status: "tending"
- ~#next_commit: "none owed; the second-use lens seat arrives from state-block-projections"
+ ~#next_commit: "=[cauldron] Take the after receipt of the open cauldron at pocket, now the fold and the chip's live expression have landed"
  ~#files_hot: "scripts/lib/viewport-still-recipes.mjs, .spw/caches/cauldron-lens-composition-2026-09.spw, public/js/interface/cauldron/chrome.js, public/css/components/cauldron.css"
- ~#gate: "nothing; re-take the receipt after spellcraft-authoring's phase-attribute fold"
- ~#last_stream: "2026-11-05"
+ ~#gate: "nothing for the receipt; a demo for the creator's look for the lens slot"
+ ~#last_stream: "2026-11-06"
 }

@@ -1,6 +1,6 @@
 # Plan: blog-blob-spw
 
-**Status 2026-10-10.** The lifecycle and the Starter unit are designed (1c6b3c98), but `blog/` holds only its index: there is no post and no `starter.spw` yet. The first slice is a post the creator writes, `blog/<slug>/index.html` readable with JS off, with its starter beside it; its subject is the creator's call (`#>wonder_blog_blob_spw_first_post` in `index.spw`). `scripts/blog-weave.mjs` and `npm run blog:weave` stay unbuilt until real starters exist to weave.
+**Status 2026-11-06.** Unchanged in what it owns since 2026-10-10. The lifecycle and the Starter unit are designed (1c6b3c98), and `blog/` still holds only its index, which since learned the workbench's operator names (3a009a35) and highlights its Spw blocks (b5171318). There is no post and no `starter.spw`. The first slice is a post the creator writes, `blog/<slug>/index.html` readable with JS off, with its starter beside it; its subject is the creator's call (`#>wonder_blog_blob_spw_first_post` in `index.spw`). November gives the call a candidate: the ways cache says November writing feeds starters, and Home and `/now/` say November writes a book for lore.land, with chapters on Sundays (edf0344a). `scripts/blog-weave.mjs` and `npm run blog:weave` stay unbuilt until real starters exist to weave.
 
 **Related:** [site-starter-component-kit](../site-starter-component-kit/PLAN.md) · [media-publishing](../archive/media-publishing/PLAN.md) (archived).
 
@@ -36,13 +36,10 @@ It should not require:
 
 ## Files
 
-[NEW] .agents/plans/blog-blob-spw/PLAN.md
-[NEW] .agents/plans/blog-blob-spw/blog-blob-spw.spw
-[MOD?] .agents/plans/archive/blog-input-interpreter/PLAN.md — reference blob as the next durable state after local interpretation
-[MOD?] blog/index.html — add visible blob framing only when the public blog route needs it
-[MOD?] public/js/modules/blog/interpreter.js — optional future output mode that emits a blob scaffold instead of only a seed
-[MOD?] .spw/conventions/copy-localization.spw — if blobs become translation-facing source objects for multilingual editorial work
-[MOD?] .spw/site.spw — if blob semantics become part of the durable site bridge rather than only a plan artifact
+Written: this plan and `blog-blob-spw.spw` (the model; its `^"hk_002_reading"` holds the twin rule). Touched only when a real starter asks:
+- `blog/index.html`: visible starter framing, once there is a starter to frame.
+- `public/js/modules/blog/interpreter.js`: an output mode that emits a starter scaffold instead of only a seed.
+- `.spw/conventions/copy-localization.spw`: if starters become translation-facing source objects.
 
 Craft guard:
 - A blob must be a meaningful editorial unit, not a trash pile for leftovers.

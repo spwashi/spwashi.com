@@ -1,4 +1,4 @@
-# Review 2026-07-12 — keep as a closeable dead-control audit; remove or wire flags instead of documenting no-op settings.
+# Review 2026-11-06 — keep as a closeable dead-control audit; rows 2, 3 and 4 closed, 4b is the last dead control (on /services/), and rows 1 and 5 open with a browser pass.
 # Plan Index — settings-theme-wiring
 #
 # The storage/apply pipeline is coherent, but many data-spw-* flags have no CSS or JS consumers.
@@ -88,6 +88,10 @@ invariants: #[
   ~#with: @fix @index
   ~#hypothesis: "The 'Icon pack (considering)' fieldset offers text, symbol and regional. iconPack writes data-spw-icon-pack on <html> and nothing in public/css reads it, so the choice changes nothing a reader can see."
   ~#tension: "Wiring it means drawing a second and third glyph set for every operator and sigil, and those sets would compete with the one table the site teaches. Removing it closes a door the creator labelled as still being considered. Either answer closes FIX row 6."
-  !probe{ "rg -n 'icon-pack|iconPack' public/css public/js settings/index.html" }
+  ~#expect: "Hits only in settings/index.html (the radios and the readout), site-settings-profiles.js (the stub, default and allowed set) and the engine's spwIconPack write; nothing under public/css outside the bundles."
+  ~#probe(run)
+  !probe{ "rg -n 'icon-pack|iconPack|IconPack' public/css public/js settings/index.html -g '!bundles/**'" }
+  ~#probed(2026-11-06): "As expected: the radios at settings/index.html:1275-1283 and the readout at 2594, three lines in site-settings-profiles.js, spwIconPack at site-settings-engine.js:920, and no CSS reader."
+  $%[icon_packs.wire, icon_packs.remove]
   ~<"./FIX.md"> ~<"../../../public/js/kernel/site-settings-profiles.js">
 }

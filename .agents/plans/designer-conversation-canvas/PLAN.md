@@ -1,6 +1,6 @@
 # Plan: designer-conversation-canvas
 
-**Status 2026-10-10.** Landed: the measurement bus (1621ac6c), settings typography preview, frame metrics and the `/design/#conversation-canvas` frame; browser behaviour is not revalidated. Now holds design-hub's success test (Absorbed, below). Next slice: one real designer reviews the `#component-ecology-specimens` specimen from a bundle shaped by what that review asks for. Gate: the creator names that reviewer; no bundle schema before then.
+**Status 2026-11-06.** Unchanged since 2026-10-10. Landed: the measurement bus (1621ac6c), the settings typography preview, frame metrics and the `/design/#conversation-canvas` frame; no browser has revalidated them since 2026-09-20. Since then the plan's files moved only by a header (cf793f47) and one design-hub sentence (90ad0ba1); b5d9f407 took eight unread controls off `/settings/` and left the preview and the designer-handoff card. Holds design-hub's success test (Absorbed, below). Next slice: D1, one real designer reviews the `#component-ecology-specimens` specimen, and the bundle takes the shape that review asks for. Gate: the creator names the reviewer (`wonder_designer_canvas_first_reviewer`); no bundle schema before then.
 
 **Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — calls.reviewer, calls.first_portable.
 
@@ -51,21 +51,10 @@ See `.spw/conventions/typography-packing.spw`.
 
 ## Next
 
-- State inspector panel for measurement bus snapshots
-- Export conversation bundle (specimen URL + token list + telemetry JSON) for async designer review
-- View-transition handoffs between settings preview and design specimens
-
-## Evidence And Next Experiment — 2026-09-20
-
-Operation `align`, fixity `tending`. The measurement bus, typography preview,
-frame metrics, and `design/#conversation-canvas` are present in source. This
-supports implementation presence, not a fresh claim of browser correctness.
-The three Next items remain proposals; exports and transitions were not proved.
-For one integrated handoff, pair a specimen URL and chosen token values with
-optional telemetry and separately labeled author observations. The consumer is
-a named reviewer, not the starter bundling pilot: that pilot is texture-slice
-(`site-starter-component-kit/BUNDLING.md`) and does not list this specimen.
-Test reproduction by a second author before generalizing the export schema.
+- **D1. One reviewer, one specimen.** Hand the named reviewer `/design/#component-ecology-specimens`: its link, the tokens it cites, and its measurements, with the author's observations labeled apart from the telemetry. Touches nothing until the review says what to carry. Gate: the creator names the reviewer. Verify: the reviewer restates one token change in their own file. The consumer is a person, not the starter bundling pilot, which is texture-slice (`site-starter-component-kit/BUNDLING.md`) and does not list this specimen.
+- **D2 (proposed). The specimen read with scripts off.** The readout already prints the state as Spw, `component-specimen[soft]{calm.rest.split}` (`data-design-ecology-readout="expression"`), and its four slots are the four button groups. With scripts off the 13 set buttons answer nothing. Proposed: under the scripts-off hook (`html:not([data-spw-runtime-stage])`), the buttons step back as the lens switches do and each slot names its choices in plain words beside the line (environment: calm, social or inspect), so a reviewer without the shell reads what each button would set. Touches `design/index.html` and `public/css/routes/surfaces/design.css`. Gate: the creator's look in a browser. Verify: `npm run audit:page-structure` counts 13 fewer script-only buttons on `/design/`.
+- **D3. The export bundle.** Specimen URL, token list and telemetry JSON, shaped by D1 and reproduced by a second author before any schema is generalized.
+- Retired 2026-11-06: a state-inspector panel for bus snapshots and view-transition handoffs between the settings preview and the specimens. Neither has a reader asking for it, and the transitions are a sensation call with no demo.
 
 ## Absorbed 2026-10-10 — design-hub
 

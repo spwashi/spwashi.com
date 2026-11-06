@@ -1,4 +1,4 @@
-# Review 2026-07-12 — keep as a cross-surface sigil audit; resonance must preserve stable operator meaning.
+# Review 2026-11-06 — keep, near archive: slices 1–3 and the one table landed; one creator decision on unread sigil attributes and two weak chips remain.
 # Plan Index — Operator Resonance Alignment
 #
 # Make Spw sigils easier to read as semantic handles for transformations across routes, chips, cards, settings, prompt mining, and evidence capture. A sigil should tell the visitor…
@@ -113,6 +113,10 @@ invariants: #[
   ~#taste: "A sigil should teach its family without turning every operator into its own colour. The attribute is an inspection contract until something on the page spends it."
   ~#hypothesis: "operator-alignment.spw lists both as additive inspection attributes. No CSS or JS reads them; wonder.css reaches family kin through data-spw-resonance-family on html instead. Since no selector names them, writing them costs no style invalidation, so dropping them would be about legibility rather than speed."
   ~#tension: "Per-family colour is a felt, browser-gated choice that would finally give the attribute a reader. Stopping the write shrinks the contract that DevTools and capture readers can inspect today."
+  ~#expect: "Only the two writes in sigil-annotation.js (applyOperatorMetadata), and no reader in public/js or public/css."
+  ~#unblocks: "the next slice here, and whether the plan can archive"
+  ~#probe(run)
   !probe{ "rg -n 'operator-family|spwOperatorFamily|data-spw-transformation|spwTransformation' public/js public/css --glob '!**/bundles/**'" }
+  $%[family.colour, family.stop_writing, family.keep_for_inspection]
   ~<"../../../public/js/semantic/sigil-annotation.js"> ~<"../../../public/css/effects/wonder.css">
 }

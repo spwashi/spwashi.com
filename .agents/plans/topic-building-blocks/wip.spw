@@ -1,4 +1,4 @@
-# Review 2026-10-27 — next patch is the root shelf; programs stays the content slice and does not ride along.
+# Review 2026-11-06 — next patch is still the root shelf; programs stays the content slice and does not ride along.
 # wip — topic-building-blocks
 #
 #>plan_topic_building_blocks_wip
@@ -20,6 +20,9 @@ fixity = "tending"
 ^"stream"{
  >>[2026-10-12 10:59] verify — Logic and linear algebra carry the Parallel and Competing Theories frame; programs, data structures, probability, optimization and forecasting do not. topic-wiring.test.mjs still guards the hubs.
  >>[2026-10-27 10:29] decide — The root lists grandchildren beside the area hubs, and the same rasters wear new alts on the spokes. math-signal-field-square.webp is a wash. papergami-kinetic.webp is one still. The clockwork plate is labeled as a scheduler and the crystal plate as compression. The sunflower webp belongs on nutrition; symmetry also has the png. Figure homes and the depth rule are in index.spw. The next patch is the root shelf, not the programs frame.
+ >>[2026-11-06 12:55] probe — wonder_topic_building_blocks_glyph_folio: folio-glyph-arrows-pale is on /topics/mental-health/ (its hero and og_image) and /topics/site-design/ (the Loose glyphs study), plus design/folios and the folio calendar. Since 1a84b975, site design opens on another folio. The ~#expect was written from the same read. The wonder stays the creator's.
+ >>[2026-11-06 12:57] probe — wonder_topic_building_blocks_regional_lenses: the page has named China, India and the U.S. together since 42b7617b (2026-09-22). The wonder's tension had said China and India alone, and now quotes the page. The frame sentence ("The principles above lean Western. These lenses follow parallel and competing theories from elsewhere") sits above two lenses that name Western places. The wonder stays the creator's.
+ >>[2026-11-06 12:59] verify — the root shelf has not landed. topics/index.html links 38 distinct leaves: software 13, math 10, film 6, fields 4, craft 3, knowledge-bases 1, andragogy 1. The 33 in the 2026-10-27 Status undercounted math. 1a84b975 moved three figure homes forward: math's hub, pedagogy and complexity no longer wear the field wash, the constellation and the clockwork. Still open: field theory wears the crystals and does not link compression; symmetry and fermentation-hold wear the sunflower and do not link nutrition; neither software nor math links #topics-tuning; diagrams.js is loaded at ?v=0.0.1 on five pages and ?v=0.0.2 on three. index.spw gained the handles its wonders cited but never declared (@mental_health, @site_design, @fields_hub, @regional_lenses).
 }
 
 ^"open"{
@@ -35,5 +38,5 @@ fixity = "tending"
  ~#files_hot: "topics/index.html, scripts/tests/topic-wiring.test.mjs, .agents/plans/topic-building-blocks/"
  ~#gate: "the depth rule in index.spw; the six visual cards stay"
  ~#after: "math field wash, then the labeled plates, then the paper still and the tuner. Programs is the content slice and lands alone."
- ~#last_stream: "2026-10-27"
+ ~#last_stream: "2026-11-06"
 }

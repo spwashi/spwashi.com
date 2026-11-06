@@ -1,6 +1,6 @@
 # Plan: spw-metaphysical-language
 
-**Status 2026-11-05.** Revisited at the creator's word, not archived. The theory is taken up again through copy and four focused passes, each a probe, then a Spw update, then a refactor, then a test (the loop [spw-inquiry-loop](../spw-inquiry-loop/PLAN.md) owns): copy in the theory's own imagery, Spw parsed into nested HTML layout, CSS depth, and a field drawn with script or WebGL only if a probe says it shows something the layout cannot. One nested wonder in `index.spw`, `#>wonder_metaphysical_depth`, holds a question for each pass. Its first probe already answered something: of 1066 route expressions with a brace, none nests a brace inside another, so the layout pass starts from the herbarium's pressed forms, not the routes. The construct codex shell (Workstream A) waits until a pass has a drift to record. Earlier status, 2026-10-10: only commit 1 of 10 had landed (009acd60), with no codex, matrix or protocol. On 2026-11-05: Pass 1's rewrite of the language section landed (7cdc8147) with its gate, the creator's words, still open; the expressiveness goals went up on the atlas (31d71132); a census of the 986 route expressions and a gated variety roadmap are held (below, and in the expression cache); and the creator's direction on Spw integration (editing, mutation, composability) is #>wonder_spw_metaphysical_editing_mutation_composability.
+**Status 2026-11-06.** Revisited at the creator's word (2026-10-27), not archived: the theory is taken up through four passes, each a turn of the loop [spw-inquiry-loop](../spw-inquiry-loop/PLAN.md) owns (probe, Spw update, refactor, test). Landed: the plan, wip and index (009acd60, commit 1 of the old ten); Pass 1's rewrite of the atlas language section (7cdc8147) and the expressiveness goals on the atlas (31d71132); the census of 986 route expressions and a gated variety roadmap (2dedd04d). Settled by the creator since: `@` is perspective regarding its operand, in both layers (3a009a35), which answers drift-at-001. Next: the Pass 2 layout lab, which waits on nothing to build, and the codex shell, which now has measured drifts to record (`compound-expressions.spw#wonder_compound_consistency`). With the creator: Pass 1's words, the variety slices that change routes, and `#>wonder_spw_metaphysical_editing_mutation_composability`.
 
 **Related:** [spw-inquiry-loop](../spw-inquiry-loop/PLAN.md) · [compositional-css-electrostatics](../archive/compositional-css-electrostatics/PLAN.md) · [language-reclustering](../archive/language-reclustering/PLAN.md). **Absorbed 2026-10-10:** [spw-architecture-ecology](../archive/spw-architecture-ecology/PLAN.md) (wave D).
 
@@ -14,30 +14,20 @@ industries without diluting its physics.
 
 Each pass ends with its wonder answered or its stream saying what the probe showed, and `npm run plans:twinkle` names the plans that cite what it moved. The workstreams below stay as the theory's reference.
 
-1. **Copy.** The atlas's language section (`/topics/software/spw/#language-evolution-v04`, still headed "Language evolution toward v0.4") and the two operator pages most read say what the language does in the theory's imagery: operators prime, braces hold, positions carry force. The id stays, since inbound links use it. Gate: the creator's words. Sensors: `audit:copy:accessor`, `audit:page-structure`. Wonder: `wonder_metaphysical_depth_copy`. *(2026-11-05: a rewrite of the language section and the parser's specimen notes landed in 7cdc8147, corrected against the roadmap's capability states, and the atlas's operator paragraph now names prime, traverse and precipitate; #expressiveness-goals followed in 31d71132. The section is now headed "Language evolution: capabilities, inquiry loop & open affordances (v0.4 track)". The gate, the creator's words, is still open.)*
-2. **Parse to layout.** One lab under `/design/experiments/` takes an authored expression that reads whole with scripts off (`pre > code.language-spw`) and, with scripts, lays out the workbench reader's parse as nested regions: a body inside a body, roles painted by `semantic/spw-highlight.js`, brace geometry from `semantic/spw-expression-geometry.js`. Specimens come from `.spw/language/expressions/`, since route expressions do not nest. No new `data-spw-*` family; the lab keeps its state on its own element. Wonder: `wonder_metaphysical_depth_layout`.
+1. **Copy.** The atlas's language section (`/topics/software/spw/#language-evolution-v04`) and the two operator pages most read say what the language does in the theory's imagery: operators prime, braces hold, positions carry force. The id stays, since inbound links use it. Gate: the creator's words. Sensors: `audit:copy:accessor`, `audit:page-structure`. Wonder: `wonder_metaphysical_depth_copy`. Landed 2026-11-05: the section, now "Language evolution: capabilities, inquiry loop & open affordances (v0.4 track)", and the parser's specimen notes (7cdc8147); the operator paragraph names prime, traverse and precipitate; `#expressiveness-goals` (31d71132). A reading on 2026-11-06 found the section still mostly schema, now a capability ledger rather than a version roadmap. A proposal for the creator's pass: each capability card already wears a sigil head (`#:axes`, `~"path"#id`, `?probe !run`, `>stem`, `<channel>`, `{a}.{b}.{c}`), so one sentence per card saying what that mark does, in the theory's imagery (primes, holds, carries force), would teach the theory through cards a reader already scans.
+2. **Parse to layout.** One lab under `/design/experiments/` takes an authored expression that reads whole with scripts off (`pre > code.language-spw`) and, with scripts, lays out the workbench reader's parse as nested regions: a body inside a body, roles painted by `semantic/spw-highlight.js`, brace geometry from `semantic/spw-expression-geometry.js`. Specimens come from `.spw/language/expressions/`, since route expressions do not nest. No new `data-spw-*` family; the lab keeps its state on its own element. The floating chrome offers its pieces as the first live specimens ([floating-chrome-stack](../floating-chrome-stack/FIX.md), "Useful, Spw-native chrome"), and `[ ]` may be drawn as a frame around the word (`.spw/caches/operator-consistency-2026-10.spw#wonder_square_as_frame`). Waits on nothing to build; verified by the lab reading whole with scripts off and a phone still; the look is the creator's in a browser. Wonder: `wonder_metaphysical_depth_layout`.
 3. **CSS depth.** Brace depth and charge as static depth: elevation and offset from `systems/surfaces/palette-depth.css` tokens, perspective only inside the lab, nothing on the shell header (its containing-block guard), reduced motion honoured. It ends at a demo; the creator approves the look in a browser. Wonder: `wonder_metaphysical_depth_css`.
 4. **Field.** Runs only if pass 3's demo leaves charge unshown. Canvas 2D through `media/canvas-accents.js` first; WebGL after that, written by hand, since a library is a new package and needs review. The field is an addition: the layout is the reading, with or without it. Wonder: `wonder_metaphysical_depth_field`.
 
-### Expression Usage & Variety Roadmap (2026-11-05)
+### Expression variety (2026-11-05, proposed, not decided)
 
-Captured in `.spw/caches/expression-projection-precipitation-2026-11.spw` (`^"variety_roadmap_2026_11"`) and `.spw/conventions/compound-expressions.spw` from a full census of the **986 unique route expressions** in `public/js/generated/spw-expressions.js` (`SPW_EXPRESSION_MANIFEST`):
+The census and the roadmap live in `.spw/caches/expression-projection-precipitation-2026-11.spw` (`^"variety_roadmap_2026_11"`, 2dedd04d), with the gates restated at `.spw/conventions/compound-expressions.spw:100`. Rechecked 2026-11-06 against `SPW_EXPRESSION_MANIFEST`: 986 expressions, 625 `ident` joins and no `project`, no nested brace on any route, 7 prefix-led and none postfix, and 17 of 17 charged expressions with no word.
 
-- **Baseline bottlenecks (2026-11-05):**
-  - **Separator monoculture:** `ident` (`.`) accounts for **625 / 686 (91.1%)** of multi-part `{body}` slots (`ordinal` `;`: 49, `common` `,`: 12, `project` `~>`: **0**, single-part `none`: 300).
-  - **Container flatness:** `[mode]` + `{body}` on ~97% of expressions, `<projection>` on 334 (33.9%), `(scope)` on 70 (7.1%), and **0 nested braces** (`outer[mode]{inner[deep]{leaf}}`) on public HTML routes.
-  - **Positional sigil starvation:** Only **7 / 986 (0.7%)** lead with a prefix operator (`?`: 6, `~`: 1; the other 10 operators appear **0** times as prefix), and **0 / 986** carry a trailing postfix operator (`!`, `.`, `#`).
-  - **Wordless charges:** **17 / 17 (100%)** of expressions with a valence `charge` (`boon`, `bane`, `bone`, `bonk`, `honk`) have `subject: ""` because `readExpressionSlots` in `public/js/semantic/expression-query.js` reads a leading valence word as charge even when no other word follows (`boon[crown]{pearl}<valence>`). Whether it should be the word is `#>wonder_compound_consistency_charge`, open.
-  - **Stem vs. mode inversion:** **339 unique subjects vs. 574 unique modes**, with route-slug subjects (`home`, `folio`, `workbench`) isolating kinship to a single URL instead of forming cross-route constellations in `public/js/runtime/expression/expression-resonance.js`.
-- **Ranked Implementation Slices:**
-  1. **Slice 1 — Slot-Reader & Manifest Fidelity (`align`):** Update `public/js/semantic/expression-query.js` and `scripts/build-expression-manifest.mjs` so bare `boon[...]` keeps `subject: "boon"`, prefix/postfix sigils are preserved in parsed shapes, `compound.join` is serialized consistently, and single-level nested bodies round-trip (`readBodyJoins` already reads `~>` inside `{}` as `project`; since 2026-11-05 the slot reader stops at a nested pair rather than truncating it) across all 27 herbarium forms in `.spw/language/expressions/index.spw`.
-  Gate: the tooling half lands alone; the valence half and Slice 2 are alternatives that wait on `#>wonder_compound_consistency_charge`.
-  2. **Slice 2 — Repair the 17 Wordless-Charge Hosts (`contract`):** Audit and update the 17 charged route expressions so every valence prefix modifies an explicit subject noun (or valence-specimen cards use `valence[boon]{...}`), bringing wordless-charge count to `0`.
-  3. **Slice 3 — Flagship Route Expression Variety & Herbarium Promotion (`prime`):** Promote the 9 unhosted herbarium forms (`outer[mode]{inner[deep]{leaf}}`, `lens@(a ~ b)`, `a ~ b ~> c`, interior `{a ~> b}`, `{a, b, c}` sets, `{a; b; c}` sequences, prefix `?`/`*`/`^`/`%`, and postfix `!`/`.`) onto `/topics/software/spw/index.html`, `/tools/spw-parser/index.html`, `/index.html`, `/design/index.html`, and `/play/rpg-wednesday/index.html`.
-  Gate: the creator, route by route, and only where a reader, a lens, kinship or the cauldron reads the difference (the cache's `authoring_litmus_tests.test_4`).
-  4. **Slice 4 — Cross-Route Stems & Mode Rings (`align`):** Replace route-slug subjects (`home`, `about`) and repeated `{open.sit}` filler bodies (27 manifest entries) with shared domain stems (`wonder`, `notation`, `craft`, `cadence`, `ecology`) across complementary `[mode]` phases (`hook`, `mechanism`, `practice`, `receipt`) so `kinOf()` in `public/js/runtime/expression/expression-resonance.js` and `spw.quest/pivot` illuminate cross-site constellations.
-  Gate: the creator; a shared mode vocabulary and route subjects are taste calls.
-  5. **Slice 5 — Advisory Expression Variety Sensor (`audit`):** Emit a compact variety summary during `npm run manifest:expressions` (join distribution, nested count, prefix/postfix count, wordless-charge count, repeated filler bodies, singleton-mode ratio).
+1. **Slot reader and manifest fidelity** (`expression-query.js`, `build-expression-manifest.mjs`). The prefix half is [spw-inquiry-loop](../spw-inquiry-loop/PLAN.md) Slice 2; the valence half waits on `#>wonder_compound_consistency_charge`.
+2. **The 17 wordless charges.** An alternative to slice 1's valence half; same wonder.
+3. **Herbarium forms on flagship routes.** The creator, route by route, only where a reader, lens, kinship or the cauldron reads the difference (the cache's `authoring_litmus_tests.test_4`).
+4. **Cross-route stems and mode rings** for `kinOf()` in `expression-resonance.js`. The creator; a shared mode vocabulary is a taste call.
+5. **A variety receipt** printed by `npm run manifest:expressions`. Waits on nothing.
 
 ## Public Goal
 
@@ -57,17 +47,14 @@ it is the product line maturing.
 
 The canon has grown faster than its self-description, and the seams show:
 
-- **Registry drift (resolved 2026-09, 868e9b6b).** There was never a second
-  sigil table. `public/js/kernel/operator-detection.js` is the one character
-  table, and every authority assigns the same character to the same force.
-  What coexists is two name sets, canonical types and atlas slugs, mapped
-  row by row in `.spw/language/operator-namespace-alignment.spw` (`^"table"`).
-  Drift left over: the blog Spw.b legend words and the stale `site_aliases`
-  under `@` in `operator-site-projection.spw` (both in that file's open rows).
-- **Assignment drift.** `@` is two layers on one character: perspective as a
-  semantic operator, ref/address as a `.spw` notation sigil
-  (`operator-semantics.spw#workbench_canon` holds this as the one open
-  decision); `%` is
+- **Registry drift.** Resolved (868e9b6b, 2026-09): `public/js/kernel/operator-detection.js`
+  is the one character table; canonical types and atlas slugs are mapped in
+  `.spw/language/operator-namespace-alignment.spw` (`^"table"`), and each sigil
+  table names its relation to the workbench there (`^"workbench_relation"`,
+  f66451dc). The blog legend now speaks the workbench's names, and `@`'s site aliases read perspective, situate, observer (`operator-site-projection.spw`, 3a009a35).
+- **Assignment drift.** `@` was two layers on one character; the creator
+  settled it on 2026-10-27 as perspective regarding its operand, in both
+  layers (`operator-semantics.spw`, `workbench_canon`); `%` is
   listed as "meta"/"normalize" while the author reads the glyph as
   **measurement/reduction** (ratio, partition, collapse-to-a-measure); `&`
   (subject) sits ambiguously between `.` and `^` and may reduce into `.`
@@ -204,7 +191,7 @@ drift-ledger entry (Workstream B), not a silent rewrite.
 
 | id | tension | evidence to gather |
 |---|---|---|
-| drift-at-001 | `@` layering: perspective in the operator set (operator-detection.js, atlas, AGENTS.md agree) vs ref/address in `.spw` notation (`@name: ~"path"`); keep the layers or unify them (`operator-semantics.spw#workbench_canon`) | glyph lineage (@ = address/handle), `operator-namespace-alignment.spw` table row `@`; candidate synthesis: *ref-as-entered-perspective*, a reference you can stand inside |
+| drift-at-001 | `@` layering: perspective in the operator set vs ref/address in `.spw` notation (`@name: ~"path"`). **Settled 2026-10-27** (the creator, 3a009a35): perspective regarding its operand in both layers; `@name:` declares a named vantage | glyph lineage (@ = address/handle) stays as evidence for the matrix; the candidate synthesis held, *ref-as-entered-perspective*, a reference you can stand inside |
 | drift-pct-002 | `%` = meta/normalize vs measurement/reduction | glyph geometry (two masses over a divider), `measurement-contract.spw`, `%` chip uses |
 | drift-amp-003 | `&` subject placement; possible reduction into `.` (subject-as-traversal: pointing and reaching-into as one gesture) | composition-family uses of `&`, brace-gesture data, confluence copy |
 | drift-hash-004 | `#`-repetition as dimensional channel tuning (d1 time … d5 meaning) — undocumented | `#`/`##` uses in .spw files, dimension-vocabulary.spw, cognitive-navigation dimensions |
@@ -422,34 +409,20 @@ research and arbitration never fork.
 - This plan's `wip.spw` and `index.spw` as the working/index surfaces.
 
 **Out of scope (this plan):**
-- Rewriting operator atlas pages wholesale (route through `spw-operator-pages`
-  once drifts resolve).
-- Runtime widget development (route through `interaction-grammar` /
-  `interaction-loop-contract`).
+- Rewriting operator atlas pages wholesale (the archived
+  `spw-operator-pages` handed them to copy passes like Pass 1).
+- Runtime widget development (route through [interaction-grammar](../interaction-grammar/PLAN.md);
+  instruments that read and write a line are [brace-semantics](../brace-semantics/PLAN.md) D).
 - Any actual print vendor selection, fulfillment, or storefront.
 - Renaming `data-spw-*` attributes before their drift entry is arbitrated and
   validated (stability rule from `operator-alignment.spw` holds).
 - Workbench canon changes under `.spw/_workbench/` (site bridges only).
 
-## Predicted File Surfaces
+## File surfaces
 
-- `[NEW] .agents/plans/spw-metaphysical-language/PLAN.md` (this file)
-- `[NEW] .agents/plans/spw-metaphysical-language/wip.spw`
-- `[NEW] .agents/plans/spw-metaphysical-language/index.spw`
-- `[NEW] .agents/plans/spw-metaphysical-language/sigil-property-matrix.spw`
-- `[NEW] .agents/plans/spw-metaphysical-language/sigil-physics-research.spw`
-- `[NEW] .agents/plans/spw-metaphysical-language/industry-briefs/*.spw` (8)
-- `[NEW?] .spw/philosophy/evolution-fabric.spw` — gated on sigil-evolution-005
-  evidence
-- `[NEW] .spw/conventions/construct-codex.spw`
-- `[NEW] .spw/conventions/sigil-alignment-protocol.spw` (promoted from matrix)
-- `[MOD] .spw/conventions/index.spw` — register codex + protocol
-- `[MOD] .spw/site.spw` — root refs for the new conventions
-- `[MOD] .spw/conventions/operator-alignment.spw` — arbitrated drift updates
-- `[MOD] .agents/plans/README.md` — one index line
-- `[MOD?] topics/software/spw/index.html` — codex/atlas cross-link once codex
-  lands (copy only)
-- `[MOD?] .spw/surfaces/product-lines.spw` — manufactured-artifact rung note
+- Landed: `PLAN.md`, `wip.spw`, `index.spw` (009acd60), `sigil-physics-research.spw`, `data-model-qa.spw`, `public-workshop-ecology.spw`.
+- Proposed, never written: `.spw/conventions/construct-codex.spw` (registered in `.spw/conventions/index.spw` and `.spw/site.spw`), `sigil-property-matrix.spw`, `.spw/conventions/sigil-alignment-protocol.spw` (promoted from the matrix), `industry-briefs/*.spw` (eight), and `.spw/philosophy/evolution-fabric.spw` (gated on sigil-evolution-005 evidence).
+- Changed only through an arbitrated drift: `.spw/conventions/operator-alignment.spw`, the atlas (`topics/software/spw/index.html`, copy only), `.spw/surfaces/product-lines.spw` (a manufactured-artifact rung).
 
 ## Focus Dimension & Fixity
 
@@ -505,16 +478,7 @@ research and arbitration never fork.
 
 ## Phased Commits
 
-1. `#[spw-lang] — plan, wip, and index for the metaphysical-language track`
-2. `&[codex] — construct codex convention with census, entry shape, and bridges`
-3. `%[sigils] — sigil property matrix, drift ledger, and evidence gathering`
-4. `?[show] — sigil-physics research program, axes, claims, and segment format`
-5. `=[protocol] — sigil alignment protocol promoted with arbitration order`
-6. `![drift] — first arbitrated drift lands across registry, atlas copy, and codex`
-7. `^[manufacture] — production ladder contract + deck/object-kit/overlay pilots`
-8. `*[segment] — first show segment recorded: pre-registered probe, result, edition`
-9. `~[industries] — eight integration briefs; pilots for learning/RPG/agents/show`
-10. `.[maintenance] — plan-maintenance handoff, index wiring, archive notes`
+Landed: 1, the plan, wip and index (009acd60). Commits 2 to 10 (codex, matrix, show program, protocol, first arbitrated drift, manufacture, first segment, industries, maintenance) keep their order in `wip.spw` `^["commits"]`; since 2026-10-27 the passes lead, and commit 2, the codex shell, opens when a pass records a drift.
 
 ## Open Questions
 
@@ -523,14 +487,14 @@ research and arbitration never fork.
   spw-surface-normalization applies.)
 - Is the sigil-craft correspondence (charged compressed intent) public copy or
   editor-layer lore? It is the strongest metaphysical claim and the easiest to
-  misread as decoration.
+  misread as decoration. Held as `#>wonder_metaphysical_sigil_craft_register`,
+  since Pass 1's words decide it in practice.
 - Does the labeled-brace coverage algebra deserve its own convention now, or
-  after the selection-span runtime stabilizes?
+  after the selection-span runtime stabilizes? It waits on
+  [brace-semantics](../brace-semantics/PLAN.md) decision 4 (nesting only, or overlap),
+  since the parser sets no label today.
 - Which industry brief earns the second physical artifact — recipe card
   (culinary) or cue sheet (show production)?
-- Where does the arbitrated `@` reading leave `~`? If `@` is ref, `~` may
-  narrow toward potential/thread exclusively — that cascade needs its own
-  ledger row before any copy changes.
 - Episode one: a single sigil, or one cross-sigil probe (the verso trial runs
   the whole set at once)?
 - Live-first or capture-first for the show — staged episodes, or TikTok-scale
@@ -544,19 +508,13 @@ research and arbitration never fork.
 
 [spw-architecture-ecology](../archive/spw-architecture-ecology/PLAN.md) landed its relational graph, ecology coordinators and owner registry (2248aea8). Two things are still owed, and both are here now:
 
-- **Wave D, the codex shell.** `.spw/conventions/construct-codex.spw` with a header, a `drift_ledger` facet, and operator entry stubs. It is this plan's next slice (Status above).
+- **Wave D, the codex shell.** `.spw/conventions/construct-codex.spw` (not written yet) with a header, a `drift_ledger` facet, and operator entry stubs. It opens with the drifts the passes measured (Status above).
 - **Rule kept: the minimal shell first.** The shell bridges to owner conventions with `@refs` and adds only shape and drift notes. This plan owns any expansion past it.
 
 Not carried: `scripts/validate-conventions.mjs` was never written, and `.spw` checks now go through the workbench CLI (`spw:doctor`, `spw:format:check`). Wave H, slimming `site.spw`, goes to [agent-optimization](../agent-optimization/PLAN.md).
 
 ## Agentic Hygiene
 
-- Plan follows `spw-feature-planning`; maintenance routes through
-  `spw-plan-maintenance`.
-- Related owner plans: `operator-semantics-refinement` (lineage/physics),
-  `spw-operator-pages` (atlas routes), `operator-resonance-alignment`,
-  `production-demonstration-pass` (media pipeline),
-  `spw-surface-normalization` (.spw navigability), `relational-attention-media`
-  (media seeds), `professional-skill-development-worldbuilding` (proof loop).
-- New durable concepts wire through `site.spw`, `conventions/index.spw`, and
-  the planning ecology per its invariants.
+- Live neighbours: [spw-inquiry-loop](../spw-inquiry-loop/PLAN.md) (the loop each pass runs; the prefix half of variety slice 1), [brace-semantics](../brace-semantics/PLAN.md) (labels, the instrument, the element round trip), [operator-resonance-alignment](../operator-resonance-alignment/PLAN.md) (public sigil verbs), [floating-chrome-stack](../floating-chrome-stack/FIX.md) (chrome as Pass 2 specimens), [spw-quest](../spw-quest/PLAN.md) (`/constructs`, where the drifts were measured).
+- Archived owners cited above, under `../archive/`: `operator-semantics-refinement` (lineage, physics; its reference is `.spw/conventions/operator-semantics.spw`), `spw-operator-pages`, `production-demonstration-pass`, `promptable-image-library-pass`, `spw-surface-normalization`.
+- New durable concepts wire through `site.spw`, `conventions/index.spw`, and the planning ecology per its invariants.

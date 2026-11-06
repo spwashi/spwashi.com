@@ -1,4 +1,4 @@
-# Review 2026-10-12 — hot notes for row 4, the controls nothing reads; the failure table and planned commits stay in FIX.md.
+# Review 2026-11-06 — hot notes for 4b (the dead spec-pill control on /services/) and the browser pass for rows 1 and 5; the failure table and slices stay in FIX.md.
 # wip — settings-theme-wiring
 #
 #>plan_settings_theme_wiring_wip
@@ -20,17 +20,20 @@ fixity = "tending"
  >>[2026-10-12 10:59] verify — Rows 2 and 3 are closed in the tree: settings/index.html has no viewportActivation fieldset (08f060d6), and the blog files are gone. Row 6 is unchanged: the three iconPack radios sit under Icon pack (considering) at settings/index.html:1292, the engine writes spwIconPack, and nothing in public/css reads data-spw-icon-pack. Row 4's sweep, each remaining control checked against public/css and public/js in kebab and camelCase, has not started.
  >>[2026-10-25 17:44] verify — Read against the tree for the UI review sitting: the Icon pack (considering) fieldset still opens at settings/index.html:1292, nothing in public/css reads icon-pack, and no settings file has changed since 2026-10-12, so row 4's sweep has still not started. FIX.md now names the browser pass for rows 1 and 5, density and metamaterial (live: the grain and density controls on /settings/, then the materials hero and the footer) and puts row 4 first on settings/index.html.
  >>[2026-11-05 10:20] land — Row 4: eight controls with no reader left /settings/ (depthIndicators, baseAffordance, showSpecPills, operatorHighlighting, shellMenuPresentation, fractalNesting, showFrameMetadata, verboseLogging), with the base affordance state card, the Ornament valve's operatorHighlighting query, and the note promising ?shellMenuPresentation=modal. A reader is a data-spw-* attribute, its camelCase dataset key, or the setting key itself, outside the two settings files, in public/css, public/js, any route or the deviations list. Ten more looked dead by attribute but the engine reads them into tokens. Keys stay in the engine and profiles, inert, as viewportActivation did.
+ >>[2026-11-06 12:40] probe — showSpecPills, one of row 4's eight, is still offered on /services/: the "Spec seams" card inside #services-tuning sets showSpecPills:on|off, and a "specs:" pill reads it back, while the engine's spwShowSpecPills write (site-settings-engine.js:951) has no reader in public/css or public/js. Named slice 4b in FIX.md; it waits on landing-visual-hierarchy's parcel B, which moves #services-tuning.
+ >>[2026-11-06 12:43] probe — wonder_settings_theme_wiring_icon_packs: the Icon pack (considering) legend now sits at settings/index.html:1272 (b5d9f407 moved it up from 1292); the radios, the readout at 2594, the profiles stub and the engine write are the only hits, and no CSS reads data-spw-icon-pack.
+ >>[2026-11-06 12:45] hygiene — FIX.md's Planned Fixes became named slices (4b, A to D), each with paths, gate and verify; the blog-only diagnosis went with row 3's files; a proposed reader-count sensor would print one Spw line per setting key.
 }
 
 ^"open"{
  icon_packs = ~"./index.spw#wonder_settings_theme_wiring_icon_packs"
- browser_rows = "Do rows 1 and 5, and the inherited density and metamaterial findings, still show on a page? Waits on a browser pass."
+ browser_rows = "Do rows 1 and 5, and the inherited density and metamaterial findings, still show on a page? Slice A in FIX.md, a browser reading an agent can run."
 }
 
 ^"cache"{
  ~#status: "tending"
- ~#next_commit: "the settings presets, after the sitting's seams.settings order"
- ~#files_hot: "settings/index.html, public/js/kernel/site-settings-engine.js, public/js/kernel/site-settings-profiles.js"
- ~#gate: "row 6 waits on the icon-pack answer, rows 1 and 5 on a browser pass"
- ~#last_stream: "2026-11-05"
+ ~#next_commit: "-[services] Take the spec-pill control nothing reads off the tuning panel (slice 4b), after parcel B moves it"
+ ~#files_hot: "services/index.html, settings/index.html, public/js/kernel/site-settings-engine.js, public/css/components/typography-packing.css, public/css/effects/grain-texture.css"
+ ~#gate: "4b waits on landing-visual-hierarchy parcel B; row 6 on the creator's icon-pack answer; rows 1 and 5 on slice A's browser pass"
+ ~#last_stream: "2026-11-06"
 }

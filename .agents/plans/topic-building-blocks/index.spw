@@ -1,4 +1,4 @@
-# Review 2026-10-27 — keep. Owner of the topic course, the root shelf, figure homes, and the shared tuner.
+# Review 2026-11-06 — keep. Owner of the topic course, the root shelf, figure homes, and the shared tuner; the root shelf is still next.
 # Plan Index — topic-building-blocks
 #
 # Topics read as a course. The root lists areas, each hub keeps one ordered
@@ -50,13 +50,13 @@ intent: .{
 }[reg=facet]
 
 ^"figure_homes"{
- math_field = `public/images/routes/math-signal-field-square.webp stays on /topics/math/ and the topics visual card. It is a wash of circles and paper, so leaf alts stop claiming axes, slopes, or vector flow.`
+ math_field = `public/images/routes/math-signal-field-square.webp stays on the topics visual card. /topics/math/ opens on the creator's own scan since 1a84b975 (2026-11-05). It is a wash of circles and paper, so leaf alts stop claiming axes, slopes, or vector flow.`
  paper_still = `public/images/renders/papergami/papergami-kinetic.webp stays on /topics/craft/svg/. Calculus keeps the diagram that moves.`
  sunflower = `public/images/renders/2026-05-B-rhythms/pollination-golden-spiral-display.webp stays on /topics/nutrition/. Symmetry drops the png twin.`
  clockwork = `public/images/assets/scheduler-clockwork.png stays on /topics/software/schedulers/. The drawing is labeled as a scheduler.`
  crystals = `public/images/assets/compression-crystals.png stays on /topics/software/compression/. The drawing is labeled as compression.`
  stage_facade = `The lined stage facade folio stays on /topics/film/. Site design links it when that page is open.`
- constellation = `public/images/home/constellation-studio-1600.webp stays a home image. Pedagogy and statistical analysis link home when those pages are open.`
+ constellation = `public/images/home/constellation-studio-1600.webp stays a home image. Pedagogy dropped it in 1a84b975; statistical analysis and the topics root still wear it, and link home when those pages are open.`
  ampersand_folio = `When the topics visual-studies row goes, /topics/math/ keeps the ampersand folio until a better owner is named. The alt stays the drawing.`
 }[reg=facet]
 
@@ -71,6 +71,14 @@ intent: .{
  pnsb = `A future knowledge base under /topics/biochemistry/. PNSB read as purple non-sulfur bacteria is unconfirmed; confirm before any public page names it.`
  portals = `Add portals as more peers and mentors name their fields.`
 }[reg=facet]
+
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@mental_health: ~"../../../topics/mental-health/index.html"
+@site_design: ~"../../../topics/site-design/index.html"
+@fields_hub: ~"../../../topics/fields/index.html"
+@regional_lenses: ~"../../../topics/fields/index.html#fields-regions-title"
+@topic_wiring: ~"../../../scripts/tests/topic-wiring.test.mjs"
 
 ^"validation"{
  commands = #[
@@ -87,6 +95,9 @@ intent: .{
   #:depth #!pragmatics ~#lens(projection)
   ~#with: @plan @mental_health @site_design
   ~#tension: "The same drawing is the mental-health hero and a site-design study. The picture is glyphs and a house. Neither page is what the drawing depicts, so a new alt will not make a second home."
+  ~#expect: "Mental health shows it as its hero and its share image. Site design shows it as one of two studies (Loose glyphs) under a different hero since 1a84b975. So a reader meets it first on mental health, and the choice is whether site design keeps a study or a link."
+  ~#unblocks: "the figure_homes entry for the glyph folio"
+  ~#probe(read)
   !probe{ "Open /topics/mental-health/ and /topics/site-design/ and say which page a reader should meet the drawing on. The other page links it." }
   ~<"../../../topics/mental-health/index.html"> ~<"../../../topics/site-design/index.html">
   $%[home.mental_health, home.site_design]
@@ -96,7 +107,11 @@ intent: .{
 ?["Should the regional lenses on /topics/fields/, which pair continents with kinds of infrastructure, stay public as written?"]{
   #:depth #!sociological ~#lens(projection)
   ~#with: @plan @fields_hub @regional_lenses
-  ~#tension: "The lenses read regions as parallel and competing theories, as the creator frames them. Pairing China and India with technical infrastructure; Africa, Europe and Australia with social infrastructure; and Central and South America with cultural infrastructure can also read as assigning each region one kind of strength."
+  ~#tension: "The lenses read regions as parallel and competing theories, as the creator frames them. Pairing China, India and the U.S. with universities, student flows and digital rails; Africa, Europe and Australia with social insurance, folk high schools, universal care and reconciliation; and Central and South America with murals, youth orchestras, a theatre of rehearsal and an independent zero can also read as assigning each region one kind of strength. (Until 2026-11-06 this block said China and India alone; the page has named the U.S. since 42b7617b.)"
+  ~#expect: "The lenses name institutions, not strengths, and that softens the one-strength reading. The snag is the frame sentence: it calls the lenses theories from elsewhere than principles that lean Western, while two of the three name Western places."
+  ~#unblocks: "whether /topics/fields/ keeps its regional lenses as written"
+  ~#probe(read)
   !probe{ "Open /topics/fields/#fields-regions-title and read the lenses as a visitor from each named region would. Keep, reword, or trade the pairings for questions each region's own scholars have asked." }
+  $%[lenses.keep, lenses.reword, lenses.trade_for_questions]
   ~<"./PLAN.md"> ~<"../../../topics/fields/index.html">
 }

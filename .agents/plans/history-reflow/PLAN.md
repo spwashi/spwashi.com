@@ -1,6 +1,6 @@
 # Plan: history-reflow
 
-**Status 2026-10-10.** The August 2026 reflow ran and was pushed; its sequence, squash table and retrospect moved to [HISTORY.md](./HISTORY.md). This plan now holds the commit grammar, the reflow method and the rebase recipe; the last rule landed in aa1c9c48 (no operation line in bodies). No sequence is pending. Next: name what each subject symbol means on this site, gated on the creator (`wonder_history_reflow_symbols` in `wip.spw`).
+**Status 2026-11-06.** No sequence is pending. The August 2026 reflow ran and was pushed; its sequence, squash table and retrospect live in [HISTORY.md](./HISTORY.md). This plan holds the commit grammar, the reflow method and the rebase recipe; the last rule landed in aa1c9c48 (no operation line in bodies). The grammar holds with no validator: each of the 150 commits since 2026-10-12 opens one `#[episode]{` under a `symbol[scope]` subject. Two questions wait on the creator; see Open below.
 
 ## Public Goal
 
@@ -79,6 +79,11 @@ a commit that overstates.
 - **No `Operation: … Fixity: …` line in the body** (creator, 2026-09-27: it reads as
   noise on the line). Open with the prose. If an operation must be named, it lives
   in the `.spw` surface the change touched, not in the commit.
+
+## Open (the creator's)
+
+- **What each subject symbol means here.** No file on this repo's side says. `wonder_history_reflow_symbols` in [wip.spw](./wip.spw) holds the counts and the workbench table it must not copy. Lands as one table under Message discipline.
+- **Whether the subject length rule still stands.** Message discipline says under ~72 characters, as does `.agents/skills/patch-consolidator/SKILL.md`. 133 of the 150 subjects since 2026-10-12 run longer (mean 106); in August 73 of 338 did. `wonder_history_reflow_subject_length` in [index.spw](./index.spw) asks which one moves. Until it is answered the rule above stands.
 
 ## Execution
 

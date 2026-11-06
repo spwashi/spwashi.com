@@ -1,4 +1,4 @@
-# Review 2026-07-12 — keep as a copy/semantics rail; creator voice and region role must precede runtime instrumentation.
+# Review 2026-11-06 — keep as a copy/semantics rail and the owner of component harmony; creator voice and region role still precede runtime instrumentation, and the shape-token census is read.
 # Plan Index — Component Region Personality
 #
 # Develop meaningful component real estate and region personality across spwashi.com so public copy relates to a growing component ecology — not repeated meta-documentation.…
@@ -131,9 +131,10 @@ invariants: #[
   #:depth #!stylistic ~#lens(constraint)
   ~#with: @plan @component_region_personality
   ~#taste: "A reader learns a component by what it does; a chip that changes shape when it becomes a button teaches nothing true."
-  ~#hypothesis: "Most disharmony read on 2026-11-05 traces to one ornament rule keyed by element (whimsy.css:123-129) and to roles that never got a token; scoping that rule by role and giving each role one radius and one shadow would make families agree without restyling them one by one."
+  ~#hypothesis: "Most disharmony read on 2026-11-05 traces to one ornament rule keyed by element (whimsy.css:124-130) and to roles that never got a token; scoping that rule by role and giving each role one radius and one shadow would make families agree without restyling them one by one."
   ~#tension: "The paper corner is a deliberate whimsy, and the creator kept motion that snaps; a role rule must keep the paper feel while ending the element split."
   ~#expect: "Scoped by role, .spw-reward-dock-trigger and .spw-cauldron-chip render the same corner, and no chip's own radius is overruled."
+  ~#unblocks: "PLAN.md H3, and H2's choice of one radius per floating role"
   ~#probe(run)
   !probe{ "rg -n ':where\\(.spw-chip, button' public/css/ornament/whimsy.css" }
   $%[shape.role, shape.element, shape.both]

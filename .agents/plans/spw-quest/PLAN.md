@@ -1,150 +1,97 @@
 # Plan: spw-quest
 
-**Status 2026-11-05.** Slices K to O (utility and interactive-value roadmap: aligning `about/domains/spw.quest/index.html`, bridging the `< > ( ) [ ] { }` vs `[ ] { } ( ) < >` slot order between `/build` and `/pivot`, adding separator-algebra pivots and walk trails, carrying a learner's own stem across `/learn`, and connecting the device `?note` to `/specimens`, `/pivot`, and `/install`) are proposed below alongside Slice I (agent `.spw` oracle responses). Deployed 2026-11-05 at the creator's word (version 10690dc2): J's `/constructs` and `/pivot` are live, with the device note and the re-harvested shelf. K landed the same day: the domain page on spwashi.com has a `#ways-in` section for the five rooms, a pivot link on each join specimen, and two crawl-prompt lines (the runnable probes, the shelf and pivot). L landed on main, not yet deployed, after the creator answered its question (each brace pair names its slot wherever it sits): the site's slot reader, `/build` and `/pivot` read either order and write a line back in its author's order; `/build` links its line to `/pivot` and to the shelf. The first half of M landed with it: a body with parts turns between one name, held together, in order, and a path. The masthead names the shelf, and its three rooms name each other; `/specimens` opens with a contents line. Next: the walk trail (M's second half), then N and O; P and Q below wait on the creator. Earlier, 2026-10-27: J, constructs and pivots, is built on main and not deployed: `/constructs` lays out the shapes a line takes as cards you walk between, with the shelf's usage by position and the five places a mark's names part; `/pivot` shows any line and the lines one change away, each before you go. Both read with scripts off; the guide, the masthead and the note shell are untouched, and `/learn`, `/build` and `/specimens` link them. Its look waits on the creator's phone review with the rest. Earlier, 2026-10-25: G is merged to main (17f6a77e) at the creator's word, to test live: `/specimens`, read with scripts off. The next Wrangler deploy carries it with the note. H (how Spw is developing, as one specimen read by two releases) and I (the same for agents) are proposed, sequenced with [ecosystem-architecture](../ecosystem-architecture/PLAN.md). Nothing below has changed since 2026-10-14. Committed, not yet deployed: the guide opens with five files from reading, writing and study (a reading log, a seminar question with its probe, a narrator's persona held in regard, reading notes, a revision note) in an editor painted in the site's operator colors, and beside it what a tool reads from the file, with checks that change as the file does. The seven panels moved to /learn, /build takes a writing line apart, and every page wears the site's tokens and faces through the peer kit (`npm run build:peer-kit`, checked by `check:workers`). The guide now keeps one note on the device (localStorage, `?note`), PR 1 of the [note and shell design](./note-shell-design.md); PRs 2 to 4 (pin the reader, the service worker, the manifest) follow it in order, and the shell must not ship before the note is deployed. It waits on the creator's look at a phone before the Wrangler deploy.
+**Status 2026-11-06.** Live since the creator's deploy of 2026-11-05 (the Wrangler version is in wip.spw, 22:45): the guide with its device note, `/learn`, `/build`, `/specimens`, `/constructs` and `/pivot`; K's rooms are live on spwashi.com's domain page. On main and not deployed: L, the slot-order bridge, and M's first half, the body turns (`9f2e3af4`, `d3dcda9f`). Deploying them is the creator's call. Next: M2, the walk trail, then N and O, each cut to one session below. P and Q wait on a question in brace-semantics. The note-shell design's PR 2 (pin the reader) now has its precondition, a deployed note.
 
-**Related:** [workers-wonder-kit](../workers-wonder-kit/PLAN.md) (shared worker shell) · [spw-inquiry-loop](../spw-inquiry-loop/PLAN.md) (the parser's arrival in the site) · [upstream workbench asks](../../../.spw/reviews/upstream-workbench-recommendations.spw) (`week_2026_10_11`).
+**Related:** [workers-wonder-kit](../workers-wonder-kit/PLAN.md) (shared worker shell) · [spw-inquiry-loop](../spw-inquiry-loop/PLAN.md) (the parser's arrival in the site) · [ecosystem-architecture](../ecosystem-architecture/PLAN.md) (S3 put the worker on the site's reader bundle; S4 is the query instrument travelling) · [upstream workbench asks](../../../.spw/reviews/upstream-workbench-recommendations.spw) (`week_2026_10_11`).
 
-## What it is now (measured 2026-10-25)
+## Landed
 
-- **Routes** (`workers/spw-quest/src/index.js`): `/` guide, `/learn` the seven panels, `/build` one line taken apart, `/read` one line read on the worker with scripts off, `/script.spw` the same script as a file, `/parser.js` the parser as a script, `/parser/` the dated releases (`src/parser-releases.js`), `/fonts/` and `/peer/` the site's faces and modules (`workers/lib/peer-assets.js`), `/install`, `/init` (also `/init.md`, `/llms.txt`, and `/` with a text Accept header), `/git.txt`, `/git.md`, `/quest.json`, `/prompts.json`, `/.well-known/autonomous-feedback.json`, `/robots.txt`, `/health`. Pages are rendered by the worker with no client framework.
-- **Guide**: *A small language for the shape of a thought.* Five files written in Spw, in an editor beside *What a tool reads*; then *Twelve marks, four braces*, *Ways in*, and *The shape it came from*. The note keeps one file on the device (`?note`).
-- **Install** (`src/quest.js`): five instruction sets (Shell, Claude, Codex, Grok, Another agent), one block each, then *When it worked* and *Then, if you want*.
-- **Phone** (2026-10-12): emulated at 390 px with the harness, the guide and the install page are 390 px wide. Long install commands scroll inside their block.
-- **Pin**: `/init` and the mount both run workbench `0eb1d1c0` (f51b316c, 2026-10-13). One release, 2026.10.13, is tracked; `2026.10.13-pre.1` is gitignored.
-- **Packages**: `spw-cli`, `spw-lsp`, `spw-runtime` and `spw-seed` are all private at 0.3.0. The only way to run Spw is a git submodule plus `npm ci` inside it.
-- **Inbound links**: spwashi.com links spw.quest from Home, About, Now, `/topics/software/spw/`, `/about/domains/spw.quest/`, `/projects/spw-workbench/`, `/design/composition/` and `/design/catalog/systems/`.
-- **Tests**: 52 in `check:workers` (routes 18, note 9, releases 12, prereleases 13).
+- 2026-10-12 `e6b4b937`: seven panels from the workbench's `docs/learn/quest.spw`, walked as a path; *Put one together*; the site's paper material on every page, and the spiral gone.
+- 2026-10-12 `55fb8f75`, `051a5a7d`: dated parser releases under `/parser/`, named by day; `?parser=next` for a prerelease.
+- 2026-10-13 `32016dea`, `b4651803`: the script leads the tool; the guide opens on five files people keep; the peer kit carries the site's tokens and faces (`npm run build:peer-kit`).
+- 2026-10-14 `7391e276`, `ca401c44`: PR 1 of the [note and shell design](./note-shell-design.md), one note on the device (`?note`); a Display menu and pinch to resize.
+- 2026-10-25 `4c454b32`, `17f6a77e`: readings move onto the site's reader bundle; G, `/specimens`, merged to test live: herbarium forms, gallery samples and every route line, searched by slot with `?q=` (the creator's 2026-10-12 direction: Spw as a query language) and held two at a time with `?a=&b=`.
+- 2026-10-27 `15ceca9e`: J, `/constructs` and `/pivot`.
+- 2026-11-05 `1f399471`, `a43df6d1`: the November book's line on the shelf; K, the five rooms on `about/domains/spw.quest/` (`#ways-in`) and a pivot link on each join specimen in `#direction`. Deployed the same night with G, J and the note.
+- 2026-11-05 `9f2e3af4`, `d3dcda9f`, not deployed: L, every room reads a line in either slot order and writes it back in its author's order (`readSlotOrder` and `readContainers` in `public/js/semantic/expression-query.js`; `assemble` in `src/build.js`; `lineFrom` in `src/pivot.js`); M's body turns (`BODY_TURNS` in `src/pivot.js`); *Pivot this line* and *Find it on the shelf* on `/build`; Shelf in the masthead.
+
+## What it is now (measured 2026-11-06)
+
+- **Routes** (`handleQuest` in `workers/spw-quest/src/index.js`): `/` guide, `/learn`, `/build`, `/read`, `/script.spw`, `/specimens`, `/constructs`, `/pivot`, `/parser.js`, `/parser/` (`src/parser-releases.js`), `/fonts/` and `/peer/` (`workers/lib/peer-assets.js`), `/install`, `/init` (also `/init.md`, `/llms.txt`, and `/` asked for text), `/git.txt`, `/git.md`, `/quest.json`, `/prompts.json`, `/.well-known/autonomous-feedback.json`, `/robots.txt`, `/health`. No client framework; every page reads with scripts off.
+- **Pin:** `/init` and the site's mount both run workbench `850077ab` (`b956329b`, 2026-10-27). One parser release is tracked, 2026.10.13; `2026.10.13-pre.1` is on disk and ignored by git.
+- **Packages:** `spw-cli`, `spw-lsp`, `spw-runtime` and `spw-seed` are all private at 0.3.0, so the only way to run Spw is the submodule plus `npm ci` inside it.
+- **Inbound links:** Home, About, Now, `/topics/software/spw/`, `/about/domains/spw.quest/`, `/projects/spw-workbench/`, `/design/composition/`, `/design/catalog/systems/`, and the footer on every page (`_partials/site-footer.html`).
+- **Tests:** 65 in six files under `workers/spw-quest/test/` (routes 19, note 9, releases 12, prereleases 13, constructs 8, specimens 4), plus `carry-specimens.mjs --check`; `npm run check:workers` runs them all.
+- **Phone:** every room was read at 390 px, light and dark, with no overflow (wip, 2026-10-12 to 2026-11-05).
 
 ## Why it may not have been used
 
-These are hypotheses for a reviewer to test, not findings.
+Hypotheses from 2026-10-12, not findings. Two of the four no longer hold: a reader can now write a line and see it read, and there is a first act smaller than installing, since `/read`, `/build` and `/pivot` answer a line in seconds with scripts off. Two still do:
 
-1. The first reward needs a repository, a submodule, Node 20.19+ and `npm ci`: minutes of setup before Spw says anything back.
-2. Nothing on spw.quest lets a reader write a line and see it read. The parser lives on spwashi.com.
-3. The guide explains well and asks for nothing. There is no first act smaller than installing.
-4. Nobody has been told to send an agent there, so the agent-facing routes go unread.
+1. The first reward from the language itself needs a repository, a submodule, Node 20.19+ and `npm ci`.
+2. Nobody has been told to send an agent there, so the agent-facing routes go unread (O2 would give them something to read).
 
-## Slices, ranked
+## Next slices
 
-**A. Try before installing.** Superseded: `/read` and `/build` read a line on the worker with scripts off, and the file editor reads as you type. Kept for its history. *Read one page* gets an *Open in the parser* link to `https://spwashi.com/tools/spw-parser/?spw_source=…`, with the example preloaded; the parser reads `spw_source` (`public/js/kernel/parser-link.js:10`). Then a one-line *write your own* box as a plain GET form to the same parser, so it works with scripts off. Value: high, the first reward in seconds. Cost: small; the worker test pins the link.
+Each is one session and one commit. None deploys; deploy is the creator's Wrangler step.
 
-**B. Pin what spwashi.com runs.** Done: since 2026-10-13 the install and the mount both pin `0eb1d1c0`, and the rule from d4e42c5b keeps them together. Kept for its history. Read the seven commits from `3eaab637` to `229aedcf`, bump `WORKBENCH.revision`, and rerun the install on a scratch repository to `spw:doctor`. Value: an installer that matches the reference consumer. Cost: one constant, plus a real run.
+**M2. A walk trail on `/pivot`.**
+- Touches `workers/spw-quest/src/pivot.js` (`pivotState`, `pivotHref`, `pivotBody`) and `workers/spw-quest/test/constructs.test.mjs`.
+- `?trail=` keeps the last three to five lines walked, each cut to `PIVOT_LIMIT`, drawn at the top of the page as steps to return to. Under them is the ground-then-edge between where the walk began and where it is. `compareSpecimens` in `src/specimens.js` reads two shelf specimens that way; a typed line gets its reading from `readSpecimen` in `src/specimen-reading.js`, as `pivotsOf` already does. `&from=` stays the one step back. *Open this walk in Build* sends it to `/build?script=`, which works with scripts off.
+- A proposal to make it teach: write the trail as the relay it is, `origin ~> step ~> now`. That is the same `~>` the body turn calls "make the parts a path", so a kept walk is a line the shelf can read.
+- Gate: `npm run check:workers`; the look rides with the rest at the creator's phone review.
+- Verify: four pivots in a row keep four steps, a sixth drops the oldest, and `&from=` still lands.
 
-**C. A shorter install.** The real fix is a published CLI (`npx @spwashi/spw-cli init`), which is a workbench decision. Until then, `/install` can lead with the agent sets, which are one command each. The shell set stays as the version with nothing hidden. A piped install script is a security call for the creator, and is not proposed here.
+**M3. The crawl turn, or its retirement.** M named five turns and four landed. `{a}.{b}.{c}` turns one body into three closed ones, which `/constructs` files under *How lines join*, not under a body's separators. Add it as a join turn on lines whose body has parts, or retire it with that reason. Why the turns matter at all: 625 of the site's 986 route bodies use tight dots, which the parser keeps as one name (`.spw/caches/expression-projection-precipitation-2026-11.spw`, measured 2026-11-05). Gate: the dot's question, `#>wonder_compound_consistency_dot` in `.spw/conventions/compound-expressions.spw`.
 
-**D. Aesthetics.** Browser-gated: the creator approves the look before it ships.
-- The spiral's path is faint on the dark ground.
-- The nodes show sigils without names until you follow one. A name on focus and hover, or a quiet label ring, would teach without a tap.
-- Long install commands could wrap instead of scrolling on a phone.
-- The heading type is tight at phone width.
-- Capture legibility for screenshots and recordings.
-- Whether spw.quest keeps its own dark identity or borrows the site's paper material is the creator's call.
+**N1. Carry your own word through `/learn`.**
+- Touches `stepSurface` in `workers/spw-quest/src/panel.js`, the `/learn` branch of `src/index.js`, and `test/routes.test.mjs`. `src/steps.js` stays verbatim, because the route test compares it with the workbench's `docs/learn/quest.spw`.
+- The word that threads the canonical try lines is `door` (write, act, hold, ask); name, point and grow do not carry it. Panel 1 gains a plain GET field, `?word=`. With a word, the worker writes it in place of `door` in the act, hold and ask fields, and each panel's existing check reads the learner's line.
+- Gate: `npm run check:workers`; with no `?word=`, every try line is byte-identical to `steps.js`.
+- Verify: `/learn?word=garden` shows `~garden` and `garden[closed]{hinge, frame, key}`, and their checks pass.
 
-**E. A plan surface on spw.quest.** `/plan`, and `/plan.json`, say what is next for Spw and its tools in plain words, drawn from the workbench review (`week_2026_10_11`). An agent can then be pointed at `spw.quest/plan`, the same way `/init` already works. Public or private is the creator's call; see the open questions.
+**N2. Keep the finished quest.** Panel 7 gathers the learner's lines into one file. *Download as my-quest.spw* uses the POST that `scriptFile` in `src/index.js` already answers with scripts off, and *Open it in Build* uses `/build?script=`. Touches `src/panel.js` and the route test. Gate: `check:workers`. Verify: the downloaded file parses with the site's reader.
 
-**F. Show motion.** After each close, a short *what changed* strip, so a returning reader sees the language moving. H below is this slice made concrete.
+**O1. Pivot and kin from the note.** Beside each expression and each `#>wonder_*` that *What a tool reads* lists, add `pivot →` (`/pivot?line=`) and `kin →` (`/specimens?q=` on its word). A line over 200 characters gets no pivot link. Touches `workers/spw-quest/src/file-reader.js` (the kit travels to the page by `toString`), `test/routes.test.mjs` and `test/note.test.mjs`. Gate: the guide hosts the note, so the creator's look on a phone; the guard in `test/specimens.test.mjs` that keeps the guide's only shelf link in the masthead will need a deliberate change.
 
-### Playground and motion (2026-10-25)
+**O2 (was I). Spw for agents.** With `Accept: text/plain` or a `.spw` path, `/read`, `/specimens` and `/pivot` answer in Spw, and `/specimens.json` gives the shelf. An agent sent to spw.quest can then read a line and compare two beside `/init` and `/llms.txt`. Touches the routing in `src/index.js` and a serializer in `src/specimens.js` and `src/pivot.js`. Gate: worker usage is the creator's call. Verify: each answer parses with `parse` from `public/js/semantic/spw-workbench-reader.js`, and the HTML answers are unchanged.
 
-Proposed with [ecosystem-architecture](../ecosystem-architecture/PLAN.md), which ranks the site-side work these lean on. G, H and I are new routes: they leave the note shell alone and ship after the note is deployed. The wip's next commit, each sigil's physical model beside its reading, stays first.
+**O3. Seed a repository with the note.** `/install` (`INSTRUCTION_SETS` in `src/quest.js`) would write the guide's note into the reader's own repository, under `.spw/quest/` there (proposed). The note lives in the browser, so this is a copy-out with scripts on; with scripts off the page points to the note's Download. Gate: what the install writes into someone's repository is the creator's call, and the drift rule below applies.
 
-**G. Specimens.** `/specimens` is a shelf of constructs, each read on the worker with scripts off.
-- **Sources,** carried at build time by a carry script the way `carry-parser.mjs` carries the parser:
-  - the parser tool's v0.4 gallery (claims and probes, profiles, dot-crawl joins, stem projections, combinatoric genre, path count, gradient slices);
-  - the herbarium's pressed forms (`.spw/language/expressions/`);
-  - a sample of the 974 expressions on spwashi.com's routes.
-- **Each specimen** shows its line, its reading, and where it lives (the route and section on spwashi.com, as a link). It opens in the file editor when scripts run.
-- **Compare:** any two specimens read as ground, then the edge by slot, the reading `npm run spw:routes -- --diff` gives two routes. That puts the moment two forms stop sharing ground in a reader's hands.
-- **Query box:** `?q=` filters by partial slot (`show[*]`, `[pi]`, `{seed}`) on the worker, and `expression-query.js` does the same live once the instrument travels (ecosystem-architecture S4). This is the creator's 2026-10-12 direction: Spw as a query language.
-- **Value:** a corpus to play with instead of one example, and links that send readers back into spwashi.com.
-- **Gate:** the creator's look at a phone.
-- **Built 2026-10-25**, merged 2026-10-26 to test live. `carry-specimens.mjs` carries 27 pressed forms, the 18 gallery samples and all 974 route expressions, each with the section that holds it, and reads each once (`src/specimen-reading.js`: the file reader's paint, `expression-query.js` slots), so a request assembles strings in 1–2 ms. The shelf shows the herbarium by block, the pages' rarer lines by kind (a charge in front 17, joined 20, a mark in front 7, a scene 64) and the gallery as files; `?q=` searches all of it with every named slot required, `*` asking only that a slot be there. `?a=&b=` reads two lines as ground, then the slot where they part; a herbarium form links to the form it departs from. Nine herbarium forms are read only in part by the slot reader (nested bodies, three-way joins, `;` lists, chained capsules), and say so; every route line reads whole. The guide is untouched: `/learn` and `/build` link the page, and a masthead link or a guide door is the creator's call, since both change the note shell. Phone at 390 px, light and dark: no overflow; the shelf is about 21 screens. Tests: `test/specimens.test.mjs`, and `carry-specimens.mjs --check` in `check:workers`.
+**R. Sigil physics.** Proposed on 2026-10-12, and displaced by G to M, not dropped. A fourth column in the guide's sigil table carries each mark's physical model from the `physics` field of `OPERATOR_DEFINITIONS` in `public/js/kernel/operator-detection.js`. It is carried at build time, like the peer kit, so spw.quest loads nothing from spwashi.com. Touches `OPERATORS` in `src/guide.js` and the route test. Gate: the creator reads the twelve phrases before they go public.
 
-**H. Motion.** Shows how Spw is developing: the same specimen read by the previous parser release and the current one, ground then edge, so a change in the language is something a reader can open.
-- **Built from public sources only:**
-  - the release index (`/parser/index.json`, already public);
-  - the workbench log between pins;
-  - the site's `^[workbench]` commit subjects.
-- **The guide carries a strip,** and a page holds the rest.
-- **A count of open questions** says the language is alive without publishing the plan. The `/plan` wonder stays the creator's.
-- **Needs two releases.** Today there is 2026.10.13 and a gitignored `-pre.1`; `?parser=next` already switches between them.
-- **Gate:** the creator confirms that motion is public, and the wording of every subject that goes out.
+**Shell: PRs 2 to 4 of the [note and shell design](./note-shell-design.md#pr-plan).** PR 2 pins the reader the guide imports (`/parser/2026.10.13/reader.min.js`, tracked). PR 3 serves the service worker, and PR 4 the manifest and icons. Each PR is specified there file by file, in order.
 
-**I. Agents.** `/specimens.json`, and a `/read` that answers in Spw when asked (`Accept: text/plain`, or a `.spw` path).
-- An agent sent to spw.quest can then read a line and compare two, beside `/init` and `/llms.txt`.
-- The output parses as Spw, so it can be piped.
-- **Gate:** worker usage is the creator's call.
+## Waiting on the creator
 
-**J. Constructs and pivots** (built 2026-10-27). The shelf shows lines; J shows the shapes they take and the moves between them.
-- **`/constructs`:** one card per construct, in one card shape (`src/cards.js`): the twelve marks and four braces from the guide's tables, so their names stay the workbench's; the forms a line and a file are built from; and the patterns between lines (ground then edge, a template with a slot, departs from, pivot, residue). Each card says what holds it and what it holds, every name a link to that card, so the page is a map. A home-page line taken apart opens the cards.
-- **Usage by position:** each mark says how often the shelf's 1003 lines use it in front of a word, inside one, between two lines and in front of a part; six of the twelve never open a word. *How lines join* sets every join form beside the slot reader's word and the mark's name, and *Where the names part* asks five open questions (project names two forms; lens names two things; `~` reads three ways; the dot is one word to the parser and three parts to the search; 17 lines carry a charge with no word). They are asked again in `.spw/conventions/compound-expressions.spw` as `#>wonder_compound_consistency`; nothing is renamed.
-- **`/pivot`:** any line from the shelf (`?s=`) or typed (`?line=`, one line, 200 characters), and every line one change away: swap a slot for a value a near line uses, add, drop (the residue), put a mark in front, turn or split a join, give a wordless charge a word. Each pivot shows its line before you go, says whether the shelf already holds it (and offers the comparison), and keeps the way back (`&from=`). The families a line belongs to link the shelf's search.
-- **Phone:** 390 px, light and dark, no overflow; `/constructs` is about 16 screens, a pivot page 6 to 9.
-- **Tests:** `test/constructs.test.mjs` (7), in `check:workers`.
-- **Gate:** the creator's look on a phone, with the rest of the unshipped slices.
+- **C. A shorter install.** The real fix is a published CLI (`npx @spwashi/spw-cli init`), a workbench decision held as `#>wonder_spw_quest_published_cli`. Until then `/install` can lead with the agent sets, one command each. A piped install script is a security call and is not proposed.
+- **D. Look.** The material is settled: the site's paper (`#>wonder_spw_quest_look`). Still open, each for the creator's phone review: long install commands wrap instead of scrolling; the heading type is tight at phone width; capture legibility for screenshots and recordings.
+- **E. A plan surface** at `/plan` and `/plan.json`, drawn from the workbench review. Public or not is `#>wonder_spw_quest_public_plan`.
+- **H. Motion.** The same specimen read by the previous parser release and the current one, ground then edge, so a change in the language is something a reader can open. Built from public sources only: `/parser/index.json`, the workbench log between pins, and the site's `^[workbench]` commit subjects. A strip on the guide, a page for the rest, and a count of open questions in place of the plan. It needs two releases (`#>wonder_spw_quest_motion`), and the creator confirms that motion is public and the wording of every subject that goes out.
+- **P. Performances: a reading kept as a line, searched by its topography.** *Idea (the creator, 2026-11-05):* highlight a passage word by word into containers, as `{chronicles} <of> (narnia)` reads a title; how subjective that is becomes the point, since two readers' highlightings are two performances of the same words. Keep each reading as a line with who and when, and search the shelf by the topography a performance implies (`(narnia)`, `<of>`), whatever words or order it used. `?a=&b=` already shows where two readings part. Depends on `brace-semantics/index.spw#wonder_brace_semantics_highlighter_then_now`: the creator is not sure the early highlighter reading was better than what replaced it.
+- **Q. Typed placeholders in search.** *Idea (the creator, 2026-11-05):* `<&>` as a placeholder for a concept with a subject, so a handle is a typed hole: `*` asks only that a slot be there, `<&>` asks for a slot of a kind. What each operator means inside a hole is a language question first; the same then-and-now question holds it.
 
-### Utility and interactive-value roadmap (2026-11-05)
+## Retired
 
-Proposed after inspecting the live surfaces across `workers/spw-quest/src/` and `about/domains/spw.quest/index.html`, plus the 2026-11 caches on expression projection/precipitation (`.spw/caches/expression-projection-precipitation-2026-11.spw`) and linguistic affordances (`.spw/caches/linguistic-affordances-2026-11.spw`).
-
-**K. Align `about/domains/spw.quest/index.html` with the live quest surfaces.** Proposed.
-- **Problem:** `about/domains/spw.quest/index.html` (and its source of record in `.spw/caches/copy-agentic-direction-2026-09.spw`) was authored before `/learn`, `/build`, `/specimens`, `/constructs`, and `/pivot` existed; it only presents the `/install` strip, `#crawl-prompt`, and a static 4-card `#direction` grid.
-- **Changes:**
-  - Add a *Quest surfaces & corpus instruments* strip linking `https://spw.quest/learn`, `https://spw.quest/build`, `https://spw.quest/specimens`, `https://spw.quest/constructs`, and `https://spw.quest/pivot` with preloaded queries (`?q=`, `?a=&b=`, `?s=`).
-  - Make the four join specimens in `#direction` (`{cullet,grog,fiber}`, `{mill.laminate.cure}`, `{mill}.{laminate}.{cure}`, `scrap ~> mill ~> temper`) interactive entrypoints into `/tools/spw-parser/` and `https://spw.quest/pivot`.
-  - Update `#crawl-prompt` to include the runnable inquiry loop (`npm run wonder -- --run`; `inquiry.loop/1` is proposed, per `.spw/language/v04/roadmap.spw#capabilities`), ground-then-edge route diffs (`npm run spw:routes -- --diff`, `reading.ground-edge/1`), and the `spw.quest/specimens` and `spw.quest/pivot` surfaces.
-- **Validation:** `npm run audit:copy:accessor` and `npm run check:local`.
-
-**L. Slot-order bridge between `/build` and `/pivot` + `/specimens`.** Proposed.
-- **Problem:** `workers/spw-quest/src/build.js` assembles and parses lines in the guide order `mark + word + <concept>(scene)[mode]{definition}` (`< > ( ) [ ] { }`), whereas `workers/spw-quest/src/pivot.js`, `workers/spw-quest/src/specimens.js`, and `public/js/semantic/expression-query.js` use the route-atlas order `charge + word + [mode]{body}(scene)<projection>` (`[ ] { } ( ) < >`). A multi-brace line from `/specimens` or `/pivot` cannot be decomposed by `focusSlots()` in `/build`, and a four-brace line assembled in `/build` loses its `<concept>` slot when read by `expression-query.js`.
-- **Changes:**
-  - Teach `focusSlots()` in `workers/spw-quest/src/build.js` and `readExpressionSlots()` / `shapeFromExpression()` in `public/js/semantic/expression-query.js` to accept brace containers in either order while preserving delimiter identity (`[]` mode, `{}` body/definition, `()` scene/scope, `<>` concept/projection).
-  - Add an order toggle on `/build` (*guide order `< > ( ) [ ] { }`* vs *atlas order `[ ] { } ( ) < >`*) so learners see that delimiters own the slot role while order shifts reading emphasis.
-  - Add direct *Pivot this line (`/pivot?line=…`)* and *Find kin on the shelf (`/specimens?q=…`)* actions inside `/build`.
-- **Validation:** `npm run check:workers` and `scripts/tests/` unit checks.
-
-**M. Separator-algebra pivots (`{ , ; ~> . }`) and walk trails on `/pivot`.** Proposed.
-- **Problem:** `workers/spw-quest/src/pivot.js` currently pivots whole slots (`swap`, `add`, `drop`, `mark`, `turn/split join`) and remembers only one prior step (`&from=`). It does not yet pivot the interior separator of `{body}`, which is the core distinction taught by `#direction` and `.spw/caches/expression-projection-precipitation-2026-11.spw`.
-- **Changes:**
-  - When a line's `{body}` has two or more parts, generate a *Turn how the body holds its parts* pivot group switching between `{a.b.c}` (one tight identifier), `{a, b, c}` (co-present set), `{a; b; c}` (ordered sequence), `{a ~> b ~> c}` (directional relay), and `{a}.{b}.{c}` (dot-crawl across closed braces).
-  - Keep a bounded 3-to-5 step walk trail (`?trail=`) at the top of `/pivot` showing the `ground-then-edge` diff between the origin of the walk and the current line, plus an action to copy or append the walk into the device `?note`.
-- **Gate:** `npm run check:workers` and the creator's phone review at 390 px.
-
-**N. Stateful, carry-your-own-stem `/learn` quest.** Proposed.
-- **Problem:** In `.spw/_workbench/docs/learn/quest.spw`, each of the seven steps (`write`, `act`, `hold`, `name`, `point`, `ask`, `grow`) defines a strict AST check (`parses`, `operation_before_word`, `frame_and_body`, `frame_address_and_binding`, `path_ref`, `wonder_with_probe`), but on the web at `/learn` (`workers/spw-quest/src/panel.js`) the seven panels do not carry a learner's chosen noun forward from Step 1 to Step 7.
-- **Changes:**
-  - Keep the canonical `try` lines from `.spw/_workbench/docs/learn/quest.spw` verbatim for scripts-off and route-test parity, while allowing a learner's custom word in Step 1 (`write`) to re-seed the interactive try fields in Steps 2–6 and light each panel's AST check badge green as it passes.
-  - At Step 7 (`grow`), offer a proposed one-click *Open my completed quest in the guide note (`/?note`)* or *Download as `my-quest.spw`*.
-- **Gate:** `npm run check:workers` (including `.spw/_workbench/docs/learn/quest.spw` parity).
-
-**O. Connect the device `?note` to `/specimens`, `/pivot`, and `/install` (plus Slice I `.spw` oracle).** Proposed.
-- **Problem:** The device note on `/` (`workers/spw-quest/src/file-reader.js`, `workers/spw-quest/src/note.js`) is isolated from `/specimens`, `/pivot`, and `/install`, and agents querying `/specimens` or `/pivot` only receive HTML.
-- **Changes:**
-  - In *What a tool reads* on `/`, add `pivot →` and `kin →` links beside each parsed expression and `#>wonder_*` block.
-  - On `/install` (`workers/spw-quest/src/quest.js`), allow an optional checkbox to seed `.spw/quest/` with the note authored on `/`.
-  - Complete Slice I by returning valid `.spw` text on `/read`, `/specimens`, and `/pivot` when requested with `Accept: text/plain` or a `.spw` suffix (`?line=`, `?q=`, `?a=&b=`), turning `spw.quest` into a zero-install language oracle for agents.
-- **Gate:** PRs 1–4 of [note-shell-design.md](./note-shell-design.md), `npm run check:workers`, and the creator's call on worker usage.
-
-**P. Performances: a reading kept as a line, searched by its topography.** Proposed, waits on the creator.
-- **Idea (the creator, 2026-11-05):** highlight a passage word by word into containers, as `{chronicles} <of> (narnia)` reads a title; how subjective that is becomes the point, since two readers' highlightings are two performances of the same words. Keep each reading as a line with who and when, and search the shelf by the topography a performance implies (`(narnia)`, `<of>`), whatever words or order it used. `?a=&b=` already shows where two readings part.
-- **Depends on:** the then-and-now question in `brace-semantics` (`index.spw#wonder_brace_semantics_highlighter_then_now`): the creator is not sure the early highlighter reading was better than what replaced it.
-
-**Q. Typed placeholders in search.** Proposed, waits on the creator.
-- **Idea (the creator, 2026-11-05):** `<&>` as a placeholder for a concept with a subject, so a handle is a typed hole: `*` asks only that a slot be there, `<&>` asks for a slot of a kind. What each operator means inside a hole is a language question first; the same then-and-now question holds it.
+- **A. Try before installing:** superseded by `/read`, `/build` and the editor that reads as you type.
+- **B. Pin what spwashi.com runs:** done 2026-10-13; the rule from `d4e42c5b` keeps `/init` and the mount on one revision.
+- **F. Show motion:** became H.
+- **L's order toggle on `/build`:** not built. The answer keeps the author's order, so a toggle has no state to hold.
+- **D's spiral notes** (a faint path, sigils without names): the spiral left in `e6b4b937`.
 
 ## Review prompts
 
 Copy one into an agent. Each prompt is read-only unless it says otherwise, and none of them commits.
 
-- *Install review*: "Read `workers/spw-quest/src/quest.js` and run the Shell set on a fresh scratch repository outside this one. Time each step to a passing `spw:doctor`, note where you stopped to think, and say which of slices B and C you would do first. Do not commit."
-- *First-reward review*: "Open spw.quest's guide (render it through `workers/spw-quest/src/index.js` in node). Say what a reader can do in the first minute, and how slice A would change that. Read `.agents/plans/spw-quest/PLAN.md` first."
+- *Install review*: "Read `workers/spw-quest/src/quest.js` and run the Shell set on a fresh scratch repository outside this one. Time each step to a passing `spw:doctor`, note where you stopped to think, and say whether slice C's reordering would help. Do not commit."
+- *First-reward review*: "Render `/`, `/build` and `/pivot` through `workers/spw-quest/src/index.js` in node. Say what a reader can do in the first minute on each. Read `.agents/plans/spw-quest/PLAN.md` first."
 - *Look review*: "Capture the guide and the install page at a phone width with the harness's phone viewport (`scripts/lib/chrome-headless-harness.mjs`, `VIEWPORTS.phone`), not a narrow desktop window. Name three changes from slice D that would most improve how it reads, with before-and-after stills."
 - *Voice review*: "Read the guide's copy in `src/guide.js` and `src/index.js` against the guards below. Flag anything that sells, flatters, or names an audience. The origin paragraphs are the creator's words; leave them."
 - *Plan review*: "Read this plan. Say which slice you would cut, which you would add, and what evidence would change the ranking."
 
 ## Guards
 
-- The origin paragraphs (*My thoughts were already spirals*, 2017, the adult learning lab) are the creator's words. They speak about shape, cognition, learning and geometry: no God, no diagnostic labels.
+- The origin paragraphs (*The shape it came from*, 2017, the adult learning lab) are the creator's words. They speak about shape, cognition, learning and geometry: no God, no diagnostic labels.
 - Operator names follow the workbench's reader vocabulary; the route test holds them to it. The creator's direction of 2026-10-11 moves the operator table into the workbench, and spw.quest reads from it once it exists.
 - Drift rule: the Start strip on `about/domains/spw.quest/index.html` restates each instruction set's *does* and *keeps* (comment above `INSTRUCTION_SETS`).
 - Agents do not commit, push or deploy. Deploy is the creator's Wrangler step.
@@ -152,7 +99,7 @@ Copy one into an agent. Each prompt is read-only unless it says otherwise, and n
 
 ## Validation
 
-- `npm run check:workers`, which runs `workers/spw-quest/test/routes.test.mjs`.
+- `npm run check:workers`, which runs the six quest test files and `carry-specimens.mjs --check`.
 - `node --check` on touched files.
-- Phone stills through the harness for any slice D change.
-- For slice B, a real install on a scratch repository through `spw:doctor`.
+- Phone stills through the harness for any change a reader sees.
+- For C, a real install on a scratch repository through `spw:doctor`.

@@ -1,8 +1,8 @@
 # Reference Assignment Template
 
-**Status 2026-10-10.** The single owner for mentee and intern work: a brief to do the work, an insight cache when it should wait, a tending note to hand it off. Absorbed daily-kernel-development and language-ladder-runtime-instrumentation today, and took model-guided-refinement's templates. No filled brief exists yet. Next slice: one worked brief with its result note, the example every later brief copies; whether it hands out the sensory word lists is gated on `wonder_reference_assignment_word_lists` in `index.spw`.
+**Status 2026-11-06.** The single owner for mentee and intern work: a brief to do the work, an insight cache when it should wait, a tending note to hand it off. One brief is now filled in, [living-term-home](#worked-brief-living-term-home). Next slice: hand it to a mentee, whose result note makes it the example later briefs copy. Two calls stay the creator's, both in `index.spw`: the sensory word lists (`wonder_reference_assignment_word_lists`) and the JS→TS ladder's first cascade (`wonder_reference_assignment_ladder_cascade`).
 
-**Related:** [daily-kernel-development](../archive/daily-kernel-development/PLAN.md) (absorbed 2026-10-10) · [model-guided-refinement](../archive/model-guided-refinement/PLAN.md) (archived 2026-10-10; its templates live in `templates/`) · [language-ladder-runtime-instrumentation](../archive/language-ladder-runtime-instrumentation/PLAN.md) (absorbed 2026-10-10) · [modular-experience-slices](../modular-experience-slices/PLAN.md) (owns the tending note).
+**Related:** absorbed 2026-10-10: [daily-kernel-development](../archive/daily-kernel-development/PLAN.md), [language-ladder-runtime-instrumentation](../archive/language-ladder-runtime-instrumentation/PLAN.md), and [model-guided-refinement](../archive/model-guided-refinement/PLAN.md)'s templates in `templates/` · [modular-experience-slices](../modular-experience-slices/PLAN.md) owns the tending note.
 
 ## Purpose
 
@@ -43,6 +43,21 @@ Use this shape for small component, route, palette, or behavior assignments:
 - `revise`: the direction is useful but needs another pass.
 - `discard`: the experiment should be reverted or left as reference only.
 - `promote`: the pattern should become a shared token, component rule, asset, or documented convention.
+
+## Worked brief: living-term-home
+
+Its rule: nothing the HTML advertises may depend on the runtime to be true. The prompt hook stays empty until the word-list wonder is answered; the result note is the mentee's.
+
+1. Title: `living-term-home`.
+2. Work type: `improvement`.
+3. Reference set: `npm run audit:living-terms` ("concepts with a home, still authored as inert spans": five on 2026-11-06); `.spw/caches/living-terms-2026-09.spw`; `isInspectableLivingTerm` in `public/js/interface/haptics.js`; the link term in `about/index.html` that points at `/#living-media-vessel`, to copy.
+4. UX question: with scripts off, does each word lead somewhere that means what it means in its sentence?
+5. HTML owner: the `span.spw-living-term[data-spw-concept]` the audit names; the home is the element whose `id` it proposes.
+6. CSS owner: `:where(a.spw-living-term, a[data-spw-living-term])` in `public/css/typography/base.css`; expect no change.
+7. Proposed direction: read the term's sentence, then the home's heading and first paragraph. Where they mean the same thing, make the span an `<a href>` to the home, keeping its class and data attributes. Otherwise change nothing.
+8. Guardrails: the audit finds a home by matching the concept's slug to an id, so a shared word is not yet a shared meaning. Write no `title`; definitions are the creator's words. No new `data-spw-*`. A partial reaches every route that includes it.
+9. Validation: `npm run audit:living-terms -- --check` exits 0 and the list shrinks by the number linked; `git diff --check`; with JavaScript off follow each link, with it on tap the word and see its note open.
+10. Result note: per concept, `keep` or `discard`, quoting the sentence that decided it.
 
 ## Component Session Defaults
 
@@ -109,7 +124,7 @@ Use metaphor as lighting, not structure. The structure should still name the rol
 
 Runtime projection:
 
-- `data-spw-concept`, `data-spw-grounding`, `data-spw-assignment`, `data-spw-reference-seed`, `data-spw-vocab`, and `data-spw-topic` participate in the region menu.
+- `data-spw-concept`, `data-spw-grounding`, `data-spw-assignment`, `data-spw-reference-seed`, `data-spw-vocab`, and `data-spw-topic` participate in the region menu (the target list in `public/js/runtime/regions/region-menu.js`).
 - The same attributes can be focused as nearby variants, captured as cauldron ingredients, and grounded as collected vocabulary.
 - Keep values short and searchable because they become traversal keys, spell expressions, and collection labels.
 
@@ -206,4 +221,4 @@ Tune one brand-physics variable per brief. Default intensity is `quiet` or `stud
 [language-ladder-runtime-instrumentation](../archive/language-ladder-runtime-instrumentation/PLAN.md): its instrumentation landed under other names (`public/js/runtime/arrival/load-trace.js`, `public/ts/module-timing-contract.ts`, 41f3311e). The curriculum half stays open here as a candidate brief:
 
 - **JS→TS ladder brief:** read the route as static HTML; observe runtime state; inspect one module's inputs, outputs and timing; compare two JS forms for one task; type the contract once its shape holds still. Follow the promotion rule in [site-starter-component-kit](../site-starter-component-kit/PLAN.md#component-fixture-and-typescript-promotion-2026-07).
-- Choices it left open: the first exemplar cascade (page boot, settings or composition) and the first typed boundary (settings state, runtime manifest or module registry shape).
+- Choices it left open: the first exemplar cascade (page boot, settings or composition) and the first typed boundary (settings state, runtime manifest or module registry shape). The module registry was already typed (`public/ts/module-registry.ts`, 0bc7b323). The cascade is `wonder_reference_assignment_ladder_cascade`.

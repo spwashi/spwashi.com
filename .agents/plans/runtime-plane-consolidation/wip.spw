@@ -1,4 +1,4 @@
-# Review 2026-10-12 — hot notes for the passive scroll listener and the viewport readers; the phases, gates and measurements stay in PLAN.md. The facets below are the 2026-07-26 audit, kept as history.
+# Review 2026-11-06 — hot notes for P1 (positioning onto the measured lane) and P2 (one width); the phases, gates and measurements stay in PLAN.md. The facets below are the 2026-07-26 audit, kept as history.
 # wip — runtime-plane-consolidation
 #
 # Hot tending memory for the JS architecture review.
@@ -435,8 +435,8 @@ fixity = "tending"
 
 ^"open"{
  questions = #[
-  `Does the bundler need to preserve per-module URLs for the resource-hint path, or should extractDynamicImportSpecifier be replaced by a build-emitted map?`,
-  `Should the site expression reader be generated from the workbench parser, or should the pinned artifact be generated from the site reader?`,
+  `answered by deploy-module-graph (2026-08-17): authored native modules stay addressable in dist/public/js, and asset-manifest.json carries the pack map — does the bundler need to preserve per-module URLs for the resource-hint path?`,
+  `answered by ecosystem-architecture S3: public/js/semantic/spw-workbench-reader.js is the one reader and the pinned artifact aligns to it — should the site expression reader be generated from the workbench parser?`,
   `Which geometry signals actually predict the layout beats the reader feels — edge gravity, measure band, or occupancy? Phase 5 needs one probe before it needs an implementation.`,
   `Is operator-chip semantics its own plan, or a phase-4 sub-slice?`,
  ][reg=set]
@@ -462,6 +462,9 @@ fixity = "tending"
  ][reg=set]
  >>[2026-10-12 10:59] verify — Phases 0, 1, 4 and 5 are landed, Phase 2 is half done (the loader asks the selector last), and Phase 3's read side is kernel/measured-frame.js and kernel/viewport.js. The next slice has not moved: interface/semantic-chrome.js:722 still adds a capture-phase scroll listener with no passive flag, and layout-qa.js, observation-beats.js, spatial-gravity.js and positioning-orchestration.js still read window.innerWidth themselves; none of those files has changed since 53717ed7 (2026-10-06). The counts in the evidence facets above are from 2026-07-26 and were not re-probed today.
  >>[2026-11-05 22:08] verify — Re-probed across all six JS planes: dataset writes are now 1,328 raw vs 597 guarded (runtime 477/441, interface 345/32, modules 243/0, semantic 123/91, kernel 48/12, media 92/21). layout-qa.js now reads globalThis.innerWidth (:96), the same width, so it stays on the list; the other runtime window.innerWidth readers are runtime/arrival/frame-size-memory.js:35, runtime/diagnostics/observation-beats.js:97, runtime/regions/positioning-orchestration.js:103, and runtime/physics/spatial-gravity.js:255 (plus fallbacks in interactive-expression-lab.js:139 and shell-disclosure.js:309). interface/semantic-chrome.js:722 still registers its capture-phase scroll listener without passive. Phase 4's literal parser artifact alignment landed via spw-workbench-reader.js (87,530 B).
+ >>[2026-11-06 12:24] decide — retired the passive-listener slice. semantic-chrome.js:722's capture-phase scroll listener calls handleViewportChange, which only calls dismissPopover, and that returns at once when no token or popover is active; a scroll event is not cancelable, so passive would change nothing. The width readers split by cost: positioning-orchestration.js runPositioningPass reads innerWidth and every rect inside its own rAF (forcing a pass when style is dirty), so it moves onto createMeasuredLane as P1, trace-gated; spatial-gravity.js readViewport already runs in the lane's read phase and frame-size-memory.js storageKey at arrival, so moving them to readViewportInlineSize is P2, ungated.
+ >>[2026-11-06 12:27] hygiene — inferModuleDimensions lives in runtime/orchestration/loader.js and reads def.layer plus the closed evaluates vocabulary since 41f3311e, not regexes over ids; Phase 5's last open item retired with that reason. Index paths moved off runtime/module-loader.js. Re-probed: 1,332 raw dataset writes against 597 writeDatasetValue across the six planes (interface 349/32), 956 addEventListener against 411 removeEventListener, 69 dispatchEvent(new CustomEvent(, 13 files reading getComputedStyle(document.documentElement).
+ >>[2026-11-06 12:29] probe — wonder_runtime_plane_consolidation_file_ceiling: haptics.js 1,452, shell-disclosure.js 1,249, shared.js 1,528 lines; none split since 2026-10-10.
 }[reg=facet]
 
 ^"open"{
@@ -471,15 +474,15 @@ fixity = "tending"
 
 ^"cache"{
  ~#status: "implementing"
- ~#next_commit: "~[runtime] Let the chrome's scroll listener go passive, and read the viewport width from one place"
- ~#files_hot: "public/js/interface/semantic-chrome.js, public/js/kernel/viewport.js, public/js/runtime/arrival/frame-size-memory.js, public/js/runtime/diagnostics/observation-beats.js, public/js/runtime/physics/spatial-gravity.js, public/js/runtime/regions/positioning-orchestration.js"
- ~#gate: "a pocket scroll trace before and after, per Phase 3's gate"
- ~#last_stream: "2026-11-05"
+ ~#next_commit: "^[runtime] Let positioning measure in the shared lane, after the frame's style pass"
+ ~#files_hot: "public/js/runtime/regions/positioning-orchestration.js, public/js/kernel/measured-frame.js; then for P2 public/js/kernel/viewport.js, public/js/runtime/physics/spatial-gravity.js, public/js/runtime/arrival/frame-size-memory.js"
+ ~#gate: "P1: a pocket scroll trace where positioning's forced-pass row disappears; P2: none"
+ ~#last_stream: "2026-11-06"
  ~#taste_debt: "Phase 6 catalog splits must not change felt chrome timing without a demo."
 }[reg=facet]
 
 invariants: #[
- `Every number in this file was measured against the working tree on 2026-07-26; re-probe after any landing.`,
+ `The evidence facets were measured on 2026-07-26; dated re-probes live in the stream and in PLAN.md.`,
  `This is an adoption plan. Every primitive it needs already exists and works somewhere in the tree.`,
  `Phases 2 and later end at proposal plus browser demo; the human approves sensation before implementation.`,
  `wip.spw is hot memory — promote landed meaning into PLAN.md or a named .spw artifact, not here.`,

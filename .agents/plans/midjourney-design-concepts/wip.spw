@@ -1,4 +1,4 @@
-# Review 2026-10-12 — hot notes for Patch 1B and the mark pick; the lanes, patches and protocols stay in PLAN.md.
+# Review 2026-11-06 — hot notes for Patch 1B, the made field and what the runtime does to a scan; lanes, patches and protocols stay in PLAN.md.
 # wip — midjourney-design-concepts
 #
 #>plan_midjourney_design_concepts_wip
@@ -8,11 +8,21 @@
 
 @plan: ~"./PLAN.md"
 @index: ~"./index.spw"
+@history: ~"./HISTORY.md"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @images_readme: ~"../../../public/images/README.md"
+@image_resources: ~"../../../public/data/image-resources.json"
 @assets: ~"../../../.spw/assets.spw"
 @asset_management: ~"../../../.spw/conventions/asset-management.spw"
 @image_review: ~"../../../.spw/caches/image-review-2026-09.spw"
+@image_metaphysics: ~"../../../public/js/media/image-metaphysics.js"
+@image_interaction: ~"../../../public/js/semantic/image-interaction.js"
+@image_interaction_css: ~"../../../public/css/systems/image-interaction.css"
+@metaphysical_paper_css: ~"../../../public/css/effects/metaphysical-paper.css"
+@manifest_script: ~"../../../scripts/image-resource-manifest.mjs"
+@enhancement_catalog: ~"../../../public/js/runtime/catalog/enhancement.js"
+@image_provenance: ~"../../../public/js/runtime/expression/image-provenance.js"
+@provenance_index: ~"../../../public/js/generated/image-provenance.js"
 
 operation = "cache"
 fixity = "tending"
@@ -22,17 +32,54 @@ fixity = "tending"
  >>[2026-11-05 23:05] cache — the creator: more of their own art linking pages instead of Midjourney art in random places; the images often do not feel cohesive thematically; more of their art, more immediately, from more pages. Census in PLAN.md: 23 of 214 route pages open on hand-made art and 138 carry no image; of 1,816 link images, renders outside the asset catalog are 9, and the families a folder does not settle (primes 150, illustrations 134, routes 92, home 52) are the open question #>wonder_midjourney_design_concepts_whose_hand. Four slices proposed: who made it, a sensor, links matched to their destination, more pages opening on the creator's art.
  >>[2026-11-05 23:55] land — first batch: twelve pages open on the creator's art in place of model renders, each piece matched to its page by its own lettering (topics, software, complexity, math, pedagogy, about, about/website, site design, architecture, craft, film storyboard, recipes); captions describe the piece and keep the old captions' links behind one Next:. The sidecars settled most of the provenance question: primes are scanned cutouts, illustrations are model renders (eight name Midjourney); routes/ and home/ have no sidecars and are taken as model renders until the creator says otherwise. A systems-layer rule now keeps every scan family whole: its own ratio, letterboxed when tall, never cropped to a frame's shape (systems/image-interaction.css). Statistics was held: Honk Bazongas ties to it only by its graph paper. Services, RPG Wednesday and Design wait: the first on the tuning seat, the second on whose art it is, the third on a look at the worktable scans.
  >>[2026-11-06 11:30] cite — the creator's material path for the cauldron: spells handwritten on washi tape with origami or pop-up work, scanned; Grok Imagine animating the scans; Midjourney interpreting the materials into a more imaginative frame. Each arrives through this plan's intake rule (one image, sidecar and registry, one placement); spellcraft-authoring holds the cauldron side.
+ >>[2026-11-06 12:10] verify — a session's I1-I4 draft read against the code. True: image-metaphysics and image-interaction both mount on .image-study, .topic-photo-card and [data-spw-image-surface] (catalog entries in @enhancement_catalog) and each binds its own pointerdown hold, 480 ms ending in markVisited and 420 ms (GESTURE_MEASURE.holdMs) ending in inspecting. It is wider than the draft said, because syncHost writes data-spw-image-surface="true" on every managed host. Close: the made field cannot be written into image-resources.json, which @manifest_script generates, and it is not needed: @image_provenance (classifyImageSource) already marks * original and ~ generated, with sidecar records from npm run images:provenance. Cut: I4, the rail node and figure lens projected into the expression, belongs to state-block-projections; the proposed-commit lines with invented tails went too. Kept as PLAN.md slices 5 and 6.
+ >>[2026-11-06 12:14] probe — scan treatment: getSemanticContext defaults a raster host with no data-spw-realization to hybrid, and resolveSemanticEffect maps hybrid to watercolor. The scan on /topics/software/ (from 1a84b975) has no realization on its figure or its frame, so it opens under the wash filter and ::after tint in @metaphysical_paper_css. PLAN.md slice 5; the default change is gated on the creator's look.
+ >>[2026-11-06 12:18] probe — wonder_midjourney_design_concepts_whose_hand: public/images/routes has 72 files and public/images/home 38, and neither has a single sidecar; assets/home has 13 sidecars for 26 files. All 237 sidecars in the six scan families carry a scan: entry, and so does one collectible whose maker: line names another maker (< ? >), so a scan is not by itself the creator's hand. The manifest lists 578 entries under the gitignored renders/_raw/, which no deploy has. Re-census: 36 of the 210 pages with a <main> open on hand-made art when primes count as scans, and 136 carry no image.
+ >>[2026-11-06 12:20] probe — wonder_midjourney_design_concepts_reading_of_a_scan: no sidecar under public/images names a source image (source_scan, derived_from, source_image), so a reading of a scan would need a new sidecar field.
+ >>[2026-11-06 12:21] probe — wonder_midjourney_design_concepts_mark: four session-7 PNGs in this checkout (gitignored); /design/logos/ still offers A, B and C, with A as the install icon.
+ >>[2026-11-06 12:22] probe — wonder_midjourney_design_concepts_cauldron: 13 HTML files name one of the two; media-cauldron.html:33 still says the workbench cooks, while the creator moved the footer cauldron to magic, not cooking (spellcraft-authoring, 2026-11-06).
+ >>[2026-11-06 12:24] hygiene — PLAN.md 1,084 lines with the draft (1,073 committed) → 649: landed Patches 4, 5B and 6 folded into Landed lines with their commits, Patches 1/1A merged (they asked the same thing), Patch 2.5 given the Grok Imagine subject, and the Review Questions marked where they are settled. Every rule, prompt template and concept name was kept. The 2026-09-17 cauldron prompt is marked superseded by the creator's 2026-11-06 turn (magic, not cooking; c672468e).
+ >>[2026-11-06 12:58] probe — provenance already has a reader: @image_provenance (first landed 76a59300, 2026-09-27; pads joined in 2c95bf13) marks * original for folios, panels, worktable, scraps, primes and pads and ~ generated for renders, and @provenance_index holds 29 sidecar stems, all generated. Its catalog selector names five folders and leaves out worktable and scraps, which is latent because no tracked page shows only those two. Slice 1 now builds on it in the site's own words (original and generated) instead of adding a made field; slice 5 asks classifyImageSource too.
 }
 
+^"architecture"{
+  summary = "@manifest_script generates @image_resources (2,555 entries with role and concepts). At runtime @image_metaphysics and @image_interaction both enhance image hosts, and @image_interaction_css keeps scans whole by their src folder."
+  image_resources = .{
+    is = @image_resources
+    does = "catalogs every file under public/images with a role (roleFor) and concepts (semanticConcepts)"
+    gap = "carries no provenance (the runtime's classifyImageSource does); 578 entries point into the gitignored renders/_raw/"
+  }[reg=facet]
+  image_metaphysics = .{
+    is = @image_metaphysics
+    does = "mounts on .spw-scaffold, .image-study, .topic-photo-card, .domain-visual, .spw-svg-figure and [data-spw-image-surface]; a 480 ms hold marks a surface visited; the helper strip cycles semantic, pixelize, watercolor and clarify; brush painting comes from canvas-accents"
+    gap = "a raster host with no data-spw-realization becomes hybrid, so a scan opens under watercolor; syncHost writes data-spw-image-surface on every host it manages"
+  }[reg=facet]
+  image_interaction = .{
+    is = @image_interaction
+    does = "mounts on .topic-photo-card, .image-study, [data-spw-image-reward], [data-spw-image-discovery], .frame-card-media and [data-spw-image-surface]; a 420 ms hold inspects, and a horizontal swipe or the arrow keys cycle the lens cues (probe, frame, surface by default)"
+    gap = "a second pointerdown hold on the hosts it shares with @image_metaphysics"
+  }[reg=facet]
+}[reg=facet]
+
+^"next_moves"{
+  patch_1b = "Point @images_readme at the renders.studies registry in @assets, the staging block of @asset_management and @image_review. Ungated, README only."
+  slice_1 = "@manifest_script and the sensor import classifyImageSource from @image_provenance; skip renders/_raw; add worktable and scraps to the image-provenance catalog selector. routes/ and home/ wait on whose_hand."
+  slice_2 = "An advisory route sensor whose output is one Spw line per route."
+  slice_5 = "An original defaults to clarify in resolveSemanticEffect, asked of classifyImageSource. Gated on the creator's look."
+  slice_6 = "Count the hosts bound by both modules per page (ungated); one hold per host ends at a demo. The organ split belongs to runtime-plane-consolidation."
+}[reg=facet]
+
 ^"open"{
+ whose_hand = ~"./index.spw#wonder_midjourney_design_concepts_whose_hand"
  mark = ~"./index.spw#wonder_midjourney_design_concepts_mark"
  cauldron = ~"./index.spw#wonder_midjourney_design_concepts_cauldron"
+ reading_of_a_scan = ~"./index.spw#wonder_midjourney_design_concepts_reading_of_a_scan"
 }
 
 ^"cache"{
  ~#status: "implementing"
- ~#next_commit: "+[images] Record who made each image in the registry, hand or model, once the creator names their families"
- ~#files_hot: "public/images/README.md, .spw/assets.spw, .spw/conventions/asset-management.spw"
- ~#gate: "the creator names which image families are theirs (#>wonder_midjourney_design_concepts_whose_hand); every placement after that is the creator's pick at a look"
- ~#last_stream: "2026-11-05"
+ ~#next_commit: ".[images] Point the image README at the registry, the staging rules and the review log"
+ ~#files_hot: "public/images/README.md, scripts/image-resource-manifest.mjs, public/js/runtime/expression/image-provenance.js, .spw/assets.spw, .spw/conventions/asset-management.spw, public/js/media/image-metaphysics.js"
+ ~#gate: "nothing for Patch 1B or slice 1; the creator names routes/ and home/ (#>wonder_midjourney_design_concepts_whose_hand), and judges each placement and the scan default at a look"
+ ~#last_stream: "2026-11-06"
 }

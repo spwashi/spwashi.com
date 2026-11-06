@@ -1,6 +1,6 @@
 # Plan: agentic-dev-contracts
 
-**Status 2026-10-10.** Landed: the route/runtime manifest and the one door, `npm run check:local`, which writes `.agents/state/runtime/check-local-last.json`. The `wonder_plan_script_door` probe in `index.spw` passes today: every instrument it names exists, `check` still runs `npm audit` first, and `check:local` does not. The plans-index and skills-index caches were never built and are struck. Next slice: none here; once the plans name `check:local` instead of `check`, this plan can be archived as landed.
+**Status 2026-11-06.** Landed, and ready for `archive/`. The route/runtime manifest (154c28d3) and the one door, `npm run check:local` (`scripts/check-local.mjs`), stand; the door writes `.agents/state/runtime/check-local-last.json`. The condition the 2026-10-10 Status set is met: d13a532f turned the last twenty audit-first validation steps into `check:local`, and no live plan names the audit-first script. Both wonders in `index.spw` are answered from the tree, so nothing needs carrying to [agent-optimization](../agent-optimization/PLAN.md) first. The plans-index and skills-index caches were never built and stay struck. Next slice: the move itself; this folder owns no other work.
 
 Make the site cheaper for agents to understand and verify by giving the repo one explicit validation entrypoint and one generated route/runtime manifest derived from the authored HTML and staged runtime definitions.
 
@@ -21,12 +21,7 @@ The next optimization layer is agentic development caching: derived, invalidatab
 
 ## Files
 
-[NEW] `.agents/plans/agentic-dev-contracts/PLAN.md`
-[NEW] `scripts/site-contracts.mjs`
-[NEW] `scripts/generate-route-runtime-manifest.mjs`
-[NEW] `scripts/check-site.mjs`
-[MOD] `package.json`
-[GEN] `/tmp/spwashi-route-runtime-manifest.json` by default, with `SPW_ROUTE_MANIFEST_OUTPUT` available for repo-local overrides such as `.agents/state/runtime/route-runtime-manifest.json`
+Landed: `scripts/site-contracts.mjs`, `scripts/generate-route-runtime-manifest.mjs`, `scripts/check-site.mjs` and their `package.json` scripts (154c28d3). The last two now import builds of `scripts/ts/generate-route-runtime-manifest.mts` and `scripts/ts/check-site.mts`. The manifest writes `.agents/state/runtime/route-runtime-manifest.json` by default (`ROUTE_MANIFEST_OUTPUT` in `scripts/ts/site-contracts/index.mts`); `SPW_ROUTE_MANIFEST_OUTPUT` overrides it, and `manifest:tmp` points it at `$TMPDIR`.
 
 ## Semantic And Runtime Seams
 
@@ -42,7 +37,7 @@ Cache only what is expensive to rediscover and cheap to invalidate. Every cache 
 Useful cache families:
 
 - **Route/runtime manifest:** generated from route HTML and runtime module definitions. Answers "what route is this?" and "which modules may mount here?"
-- **Plan census / owner map:** generated or manually refreshed from `.agents/plans/`. Answers "which plan owns this class of work?" without scanning 170 folders.
+- **Plan census / owner map:** generated or manually refreshed from `.agents/plans/`. Answers "which plan owns this class of work?" without scanning every plan folder (57 on 2026-11-06).
 - **Validation posture memo:** short generated or manually recorded summary of the last relevant check command, command scope, date, and source tree identity. It may guide work, but it never replaces rerunning validation before landing.
 - **Semantic dispatch cache:** `.spw/site.spw`, `.spw/conventions/index.spw`, and `planning-ecology.spw` references that route agents to owner concepts.
 - **Patch boundary cache:** plan-local or archive notes that summarize what a prior broad conversation became, so future agents do not re-expand it into parallel work.
@@ -79,4 +74,4 @@ Initial candidate artifacts:
 
 Nested Spw: `.spw/audits/agentic-development-2026-07/`.
 
-Finding: `.agents/state/runtime/route-runtime-manifest.json` can lag the tree (sample `generatedAt` 2026-04-17, `routeCount` 77, pre-refactor `./spw-*.js` import paths). Agents must run `npm run manifest` before trusting the cache. HTML required body keys and `data-spw-features` gating remain the strongest shared HTML features; TypeScript serves checks (`scripts/ts`), not route modules; Spw serves coordinates and audits.
+Finding: `.agents/state/runtime/route-runtime-manifest.json` can lag the tree (sample `generatedAt` 2026-04-17, `routeCount` 77, pre-refactor `./spw-*.js` import paths). Since then `check-site` names the cache `fresh`, `stale`, `reused`, `missing` or `invalid` on its `[check] manifest=` line, and reads the cache only when it can reuse it; otherwise it parses the routes in memory. On 2026-11-06 the cache held 208 routes from that morning. HTML required body keys and `data-spw-features` gating remain the strongest shared HTML features; TypeScript serves checks (`scripts/ts`), not route modules; Spw serves coordinates and audits.

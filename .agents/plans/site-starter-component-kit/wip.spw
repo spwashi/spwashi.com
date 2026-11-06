@@ -1,4 +1,4 @@
-# Review 2026-10-12 — hot notes for the inventory fix; the portable boundary, bundling prime and phases stay in PLAN.md and BUNDLING.md.
+# Review 2026-11-06 — hot notes for the inventory fix (K1) and the two creator calls before a pilot; the portable boundary, slices and bundling prime stay in PLAN.md and BUNDLING.md.
 # wip — site-starter-component-kit
 #
 #>plan_site_starter_component_kit_wip
@@ -12,23 +12,29 @@
 @starter_inventory: ~"../../../scripts/starter-inventory.mjs"
 @portable_audit: ~"../../../scripts/portable-audit.mjs"
 @compose_js: ~"../../../public/js/compose.js"
+@peer_kit: ~"../../../scripts/build-peer-kit.mjs"
+@module_tests: ~"../../../scripts/module-tests.mjs"
 
 operation = "cache"
 fixity = "tending"
 
 ^"stream"{
  >>[2026-10-12 10:59] verify — the host mount (6b75bc59) and audit:portable (480d92bc) are in, and portable-audit.mjs:92 resolves /public/js/ specifiers. starter-inventory.mjs:166 still joins compose.js's four root-relative re-exports (lines 225, 407, 415, 420) onto public/js/, and no test covers it; that fix needs no one's call. The texture-slice pilot after it waits on the first-portable question.
+ >>[2026-11-06 12:50] verify — Status read against the tree: since 2026-10-10 only index and wip hygiene touched this plan's paths. starter:inventory -- --check exits 1 on public/js/public/js/{kernel/palette-resonance,media/canvas-accents,runtime/memory/wonder-memory,runtime/physics/developmental-climate}.js; the line numbers still hold, and PLAN.md now names parseJsExports and resolveImport instead. Census unchanged: 37 CSS imports, 315 JS exports. audit:portable: 146 modules, 28 portable, 52 host-policy, 66 site-only; 37 closures blocked by the settings profile; texture-slice portable now at 10 KiB in one file.
+ >>[2026-11-06 12:52] verify — the second road: build-peer-kit.mjs (b4651803) carries tokens, faces and operator colours to the workers, and ca401c44 added pinch-text-scale to its SCRIPTS for spw.quest, the first public/js module to run on another site. None of pinch-text-scale, texture-slice or the Spw instrument is a compose.js export. Recorded as K2, a proposal.
+ >>[2026-11-06 12:54] probe — wonder_site_starter_first_portable: three lines, design-hub's Status, ecosystem-architecture S4 naming this wonder as its gate, and designer-conversation-canvas's review sitting (calls.first_portable). The expect held. The $% set now names the three pieces; the old terms (firstPortable, consumer) named the question, not its answers.
+ >>[2026-11-06 12:56] probe — wonder_site_starter_layer_set: compose.css:11 declares seven layers without reset; portable-css-2026-09.spw:68-69 holds pc-006's reset-first set and its refusal of systems. The expect held. Found beside it: compose.css's only systems import is semantic-copy-lens.css, and frame-grid--2up lives in systems/surfaces/base.css, which only style-core.css imports, so a compose-only host gets no two-up packing.
 }
 
 ^"open"{
  first_portable = ~"./index.spw#wonder_site_starter_first_portable"
- layer_set = "Does the portable bundle ship pc-006's layer set or the one compose.css:11 declares? Decide before any bundle is emitted; the creator's call."
+ layer_set = ~"./index.spw#wonder_site_starter_layer_set"
 }
 
 ^"cache"{
  ~#status: "implementing"
  ~#next_commit: "![starter] Resolve compose's root-relative re-exports, so the inventory stops calling four present files missing"
- ~#files_hot: "scripts/starter-inventory.mjs, scripts/portable-audit.mjs, public/js/compose.js"
- ~#gate: "nothing for the inventory fix; the texture-slice pilot waits on the first-portable question"
- ~#last_stream: "2026-10-12"
+ ~#files_hot: "scripts/starter-inventory.mjs, scripts/portable-audit.mjs, scripts/module-tests.mjs, public/js/compose.js"
+ ~#gate: "nothing for K1; the pilot waits on the creator's first-portable answer, and any emitted bundle on the layer set"
+ ~#last_stream: "2026-11-06"
 }

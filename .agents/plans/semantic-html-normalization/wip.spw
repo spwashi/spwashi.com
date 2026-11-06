@@ -1,4 +1,4 @@
-# Review 2026-10-12 — hot notes for the scripts-off landmark diff; the April facets below are history, and the parity doctrine and sensors stay in PLAN.md.
+# Review 2026-11-06 — hot notes for H1, the scripts-off landmark diff; the April facets below are history, and the parity doctrine, sensors and access rows stay in PLAN.md.
 # wip — semantic-html-normalization
 #
 #>plan_semantic_html_normalization_wip
@@ -120,18 +120,23 @@ fixity = "tending"
  >>[2026-10-25 17:42] verify — read against the tree for the UI review sitting: the catalog holds 146 module ids, not 136; the scripts-off switch is applyScriptExecution in component-snapshots.mjs:423, not the headless harness; 208 route pages carry main and 203 the skip link. The diff's browser read now names the demo routes, and PLAN.md gains an Access section from the sitting's ^"access" frame, with the code-block controls (spw-source.css:114, :142) as a small ungated slice beside the diff.
  >>[2026-10-30 17:42] implement — Access, two ungated rows: Edit and Copy on Spw code blocks take --touch-target-min (both axes) on coarse pointers, still overlaying the corner so the block never moves; the four /design/experiments/ labs (balance, menu, resonance, spellcraft) and /topics/knowledge-bases/markdown/ gain the skip link, and the labs' bare main becomes main#main-content. All 209 route pages now carry both.
  >>[2026-11-05 23:30] verify — mirrors PLAN.md's Status of 2026-10-30: all 209 route pages carry <main> and the skip link; audit:page-structure names script-only buttons and component-snapshots takes scripts-off stills; the next slice is the JS-on/off landmark, heading and link diff, reporting only until its counts are read in a browser; the access report follows it.
+ >>[2026-11-06 12:48] verify — 210 tracked route index.html files, every one with <main> and a #main skip link, October's folio drop page (2c95bf13) among them. audit:page-structure: 208 routes, 0 unbalanced, 0 raw-capsule, 0 heading-skip, 0 section-id, 0 img-size, 0 button-type, 223 script-only on 25 pages (design 40, services/care 28, settings 21, tools/spw-parser 15). The owned paths changed since 10-30 only in 42e4ce0a and 51ac0714.
+ >>[2026-11-06 12:50] probe — references: a scan of the 210 pages finds every aria-controls, aria-labelledby and aria-describedby naming an id on its own page, and one repeated id, in an escaped code sample on /design/experiments/svg/ (not a real element). The 06-19 audit's matching-target check retires on that.
+ >>[2026-11-06 12:51] probe — wonder_semantic_html_normalization_script_only_buttons: the count above, by family; the settings chips already read switched off with a note (837cfdde).
+ >>[2026-11-06 12:53] plan — PLAN.md collapses the April sweep, the last five and the reference probe into Landed, drops the empty Dependencies and Spw Artifact sections, names H1 with its touches, gate and a proposed row form (one Spw line per route whose scene turns from (off) to (on)), and H2 after it.
 }
 
 ^["open"]{
+ script_only_buttons = ~"./index.spw#wonder_semantic_html_normalization_script_only_buttons"
 }
 
 ^["cache"]{
  ~#status: "sensing"
  ~#files_hot: "scripts/lib/chrome-headless-harness.mjs, scripts/audit-page-structure.mjs, scripts/component-snapshots.mjs, public/js/semantic/page-metadata.js, public/js/interface/semantic-chrome.js"
- ~#next_commit: "+[sense] Diff a route's landmarks, headings and links with scripts off and on"
- ~#gate: "nothing; the diff reports per route and joins check:local only after its counts are read once in a browser"
- ~#open_count: "0"
- ~#last_stream: "2026-11-05"
+ ~#next_commit: "+[sense] H1: diff a route's landmarks, headings and links with scripts off and on"
+ ~#gate: "a headless browser the sandbox allows (npm run sense -- doctor); the diff reports per route and joins check:local only after its counts are read once in a browser"
+ ~#open_count: "1"
+ ~#last_stream: "2026-11-06"
  ~#taste_debt: "the next cleanup can decide whether section-level labels should become more authored in HTML or stay runtime-derived; the current pass keeps the static contract strongest at the page landmark level"
 }
 
