@@ -40,6 +40,16 @@ test('a block reads its lifecycle marks, and a quoted probe is unescaped for the
   assert.deepEqual(gapsOf(wonder), []);
 });
 
+test('a dated mark reads like a plain one, so a settled question leaves the open count', () => {
+  const dated = BLOCK.replace('  $%[', '  ~#answer(2026-11-05): "part.name, the creator said so"\n  $%[');
+  const [wonder] = parseWonders(dated, 'x.spw');
+  assert.equal(wonder.answer, 'part.name, the creator said so');
+  assert.equal(lifecycleOf(wonder), 'answered');
+  assert.equal(answerInSet(wonder), true);
+  const [retired] = parseWonders(BLOCK.replace('  $%[', '  ~#retired(2026-11-06): "the shelf went"\n  $%['), 'x.spw');
+  assert.equal(retired.retired, 'the shelf went');
+});
+
 test('a wonder is open, then probed by a stream line, then answered or retired by its own marks', () => {
   const [wonder] = parseWonders(BLOCK, 'x.spw');
   assert.equal(lifecycleOf(wonder), 'open');
