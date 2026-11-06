@@ -1,6 +1,6 @@
 # Runtime Plane Consolidation
 
-**Status 2026-10-10.** Phases 0, 1, 4 and 5 are landed, each with one deferred item; Phase 2 is half done (selector asked last, 2026-09-28) and Phase 3's read side landed as `kernel/measured-frame.js` and `kernel/viewport.js`. Next slice: make the capture-phase scroll listener at `interface/semantic-chrome.js:722` passive, and move the four runtime `window.innerWidth` readers (`diagnostics/layout-qa.js`, `diagnostics/observation-beats.js`, `physics/spatial-gravity.js`, `regions/positioning-orchestration.js`) onto `kernel/viewport.js`. Gate: a pocket scroll trace before and after, per this plan's Phase 3 gate. Now owns the decomposition seam (absorbed below).
+**Status 2026-11-05.** Re-probed across all six JS planes (`1,328` raw `.dataset.x =` writes vs `597` `writeDatasetValue` calls; `31` `MutationObserver`, `13` `IntersectionObserver`, `10` `ResizeObserver`, `13` scroll listeners, `69` `dispatchEvent(new CustomEvent(`, `13` `getComputedStyle(document.documentElement)` files). Phases 0, 1, 4 and 5 are landed, each with one deferred item; Phase 2 is half done (selector asked last, 2026-09-28) and Phase 3's read side landed as `kernel/measured-frame.js` and `kernel/viewport.js`. Next slice: make the capture-phase scroll listener at `public/js/interface/semantic-chrome.js:722` passive (`{ capture: true, passive: true }`), and move the remaining runtime viewport-width readers (`public/js/runtime/diagnostics/layout-qa.js:96` via `globalThis.innerWidth`, `public/js/runtime/arrival/frame-size-memory.js:35`, `public/js/runtime/diagnostics/observation-beats.js:97`, `public/js/runtime/regions/positioning-orchestration.js:103`, `public/js/runtime/physics/spatial-gravity.js:255`, plus the fallbacks in `public/js/runtime/labs/interactive-expression-lab.js:139` and `public/js/runtime/shell/shell-disclosure.js:309`; `layout-qa.js` no longer reads `window.innerWidth`) onto `public/js/kernel/viewport.js`. Gate: a pocket scroll trace before and after, per this plan's Phase 3 gate. Now owns the decomposition seam (absorbed below).
 
 **Related:** [module-contract-overhaul](../module-contract-overhaul/PLAN.md) · [interaction-loop-contract](../archive/interaction-loop-contract/PLAN.md) (archived) · [core-css-spend-cut](../core-css-spend-cut/PLAN.md). **Absorbed 2026-10-10:** [runtime-module-decomposition](../archive/runtime-module-decomposition/PLAN.md), the leftovers of [js-surface-ecology](../archive/js-surface-ecology/PLAN.md).
 
@@ -45,25 +45,25 @@ This plan does not replace the existing runtime owners. It is the cross-plane ad
 - 96 module definitions. **13 declare `route:`.** 91 declare `selector:`. (2026-10-25: 146 defs, core 4, feature 49, region 1, enhancement 92; 26 declare `route:`, 136 `selector:`.)
 - `ctx.routeFamily` is parsed at `site.js:498` and **consumed by nothing** — absent from `runtime/orchestration/` and `runtime/catalog/normalize.js` (rechecked 2026-10-10).
 - `hasSelector` → `safeQuery` → uncached `document.querySelector` per def, per filter pass. The filter runs ~8 times per boot (immediate ×3, prefetch ×2, visible, interaction, region, idle, settled): **~650+ uncached `querySelector` calls during boot**, several against 4-way selector lists.
-- `.agents/state/runtime/route-runtime-manifest.json` (832 KB, with `routes`, `surfaces`, `runtimeDefinitions`) is generated at build time and **read only by `scripts/typed/site-contracts/index.mjs`** — never at runtime.
+- `.agents/state/runtime/route-runtime-manifest.json` (832 KB on 2026-07-26; 2,708,737 B / ~2.65 MiB across 208 routes and 146 defs on 2026-11-05, with `routes`, `surfaces`, `runtimeDefinitions`) is generated at build time and **read only by `scripts/typed/site-contracts/index.mjs`** — never at runtime.
 
-**Property writes**
+**Property writes (2026-07-26 baseline → 2026-11-05 re-probe)**
 
-| plane | raw `.dataset.x =` | `writeDatasetValue` |
+| plane | raw `.dataset.x =` (07-26 → 11-05) | `writeDatasetValue` (07-26 → 11-05) |
 |---|---|---|
-| runtime | 529 | 405 |
-| interface | 331 | 28 |
-| modules | 197 | **0** |
-| semantic | 152 | 61 |
-| kernel | 80 | 13 |
-| media | 84 | 20 |
+| runtime | 529 → 477 | 405 → 441 |
+| interface | 331 → 345 | 28 → 32 |
+| modules | 197 → 243 | **0 → 0** |
+| semantic | 152 → 123 | 61 → 91 |
+| kernel | 80 → 48 | 13 → 12 |
+| media | 84 → 92 | 20 → 21 |
 
-**1,382 raw vs 547 guarded.** Style: 151 raw `style.setProperty` vs 71 `writeStyleValue`.
+**1,382 raw vs 547 guarded (2026-07-26) → 1,328 raw vs 597 guarded (2026-11-05).** The raw column counts `.dataset.x =` matches the way the July census did, which also catches `===` comparisons; a stricter count on 2026-11-05 (`dataset.x =` not followed by `=`) finds 1,119 raw writes against 467 `writeDatasetValue(` calls, so read the arrows as a trend, not a tally. Style: 151 raw `style.setProperty` vs 71 `writeStyleValue`.
 
 **Observation**
-- **31 MutationObservers; 12 watch `documentElement` attributes.** `dom-sync-hub` registered tasks: **5**. `observeAddedMatches` call sites: **5**.
-- 11 scroll listeners, each with its own rAF/throttle and its own layout reads (69 `getBoundingClientRect`, 64 `getComputedStyle` tree-wide). No shared read phase.
-- `interface/semantic-chrome.js:719` registers `scroll` in **capture phase without `passive`**.
+- **31 MutationObservers; 12 watch `documentElement` attributes.** `dom-sync-hub` registered tasks: **5**. `observeAddedMatches` call sites: **5**. `IntersectionObserver` sites: **13** (`2026-11-05`). `ResizeObserver` sites: **10** (`2026-11-05`).
+- 11 scroll listeners (13 on 2026-11-05), each with its own rAF/throttle and its own layout reads (69 `getBoundingClientRect`, 64 `getComputedStyle` tree-wide). No shared read phase.
+- `interface/semantic-chrome.js:722` registers `scroll` in **capture phase without `passive`** (`window.addEventListener('scroll', handleViewportChange, true)`).
 
 **Coupling to CSS**
 - `dist/public/css/bundles/core.css`: **1,546 KiB, 5,429 selector blocks, 2,753 containing `[data-spw-*]`, 3,198 using `:where()`, 352 descending from `html[…]`/`:root[…]`, 1,814 unique custom properties.**
@@ -178,7 +178,7 @@ Gate: this changes interaction latency and settle timing. Demo before landing.
 - [x] Retire legacy ad-hoc parsing in `semantic/link-copy.js` (re-exports and delegates to `parseSpwExpression`), `site.js` `snapshotProjectionEquations`, and `runtime/memory/spells.js` (`inferPrefix`, `inferNucleus`, `inferDestination`).
 - [x] Adopt guarded dataset writes in `semantic/link-copy.js` (`writeDatasetValue`, `writeDatasetValueIfMissing`, `writeDatasetValues`).
 - [x] Add unit tests in `scripts/tests/spw-expression-geometry.test.mjs` verifying backward-compatible parser shape across chips and handles.
-- [ ] Align pinned `modules/tools/spw-literal-parser.js` artifact generation with the single reader.
+- [x] Align pinned `modules/tools/spw-literal-parser.js` artifact generation with the unified workbench reader (`public/js/semantic/spw-workbench-reader.js`, 87,530 B, landed via [ecosystem-architecture](../ecosystem-architecture/PLAN.md) S3).
 - Seam (2026-10-25, named by [ecosystem-architecture](../ecosystem-architecture/PLAN.md) S0): [spw-inquiry-loop](../spw-inquiry-loop/PLAN.md) extends `semantic/expression-query.js`, which imports nothing and is read by search, the cauldron, the build scripts and `spw:routes`. Proposed split: expression-query reads slots, and geometry reads layout from those slots. Neither file changes until one plan takes the split.
 
 ### Phase 5 — Ground the spatial model ✅
@@ -253,4 +253,7 @@ The direct callers the first receipt listed have adopted the lane: thirteen fire
 
 ## Absorbed 2026-10-10 — js-surface-ecology leftovers
 
-[js-surface-ecology](../archive/js-surface-ecology/PLAN.md) landed the tree (families 80c7b305; zero orphans and `audit:js-tree --check` in `check:local`). Owed here: the four runtime `innerWidth` readers (Status next slice); then the 13 files that call `getComputedStyle(document.documentElement)` on their own schedule; then the two halves `interface/haptics.js` (1,452 lines) could stand alone, the concept inspector and the sigil collection (`.spw/audits/js-tree-value-2026-09.spw` `next.6`).
+[js-surface-ecology](../archive/js-surface-ecology/PLAN.md) landed the tree (families 80c7b305; zero orphans and `audit:js-tree --check` in `check:local`). Owed here (re-probed 2026-11-05):
+1. The remaining runtime viewport-width readers (`public/js/runtime/diagnostics/layout-qa.js:96`, which reads `globalThis.innerWidth`, the same width under another name; `public/js/runtime/arrival/frame-size-memory.js:35`, `public/js/runtime/diagnostics/observation-beats.js:97`, `public/js/runtime/regions/positioning-orchestration.js:103`, `public/js/runtime/physics/spatial-gravity.js:255`, plus fallback paths in `public/js/runtime/labs/interactive-expression-lab.js:139` and `public/js/runtime/shell/shell-disclosure.js:309`).
+2. The 13 files that call `getComputedStyle(document.documentElement)` on their own schedule instead of reading cached token snapshots.
+3. The two halves `public/js/interface/haptics.js` (1,452 lines / 48.2 KiB) could stand alone: the concept inspector and the sigil collection (`.spw/audits/js-tree-value-2026-09.spw` `next.6`).

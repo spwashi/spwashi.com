@@ -461,6 +461,7 @@ fixity = "tending"
   `[2026-08-11] prep — HTML region hygiene before phase 2: every site-frame now has id+kind+role; entry spines declare region-purpose=public-spine; scripts/check-region-hygiene.mjs reports 777 frames / 0 issues. Public routes already on spw-page (captures pack left as generated offline).`,
  ][reg=set]
  >>[2026-10-12 10:59] verify — Phases 0, 1, 4 and 5 are landed, Phase 2 is half done (the loader asks the selector last), and Phase 3's read side is kernel/measured-frame.js and kernel/viewport.js. The next slice has not moved: interface/semantic-chrome.js:722 still adds a capture-phase scroll listener with no passive flag, and layout-qa.js, observation-beats.js, spatial-gravity.js and positioning-orchestration.js still read window.innerWidth themselves; none of those files has changed since 53717ed7 (2026-10-06). The counts in the evidence facets above are from 2026-07-26 and were not re-probed today.
+ >>[2026-11-05 22:08] verify — Re-probed across all six JS planes: dataset writes are now 1,328 raw vs 597 guarded (runtime 477/441, interface 345/32, modules 243/0, semantic 123/91, kernel 48/12, media 92/21). layout-qa.js now reads globalThis.innerWidth (:96), the same width, so it stays on the list; the other runtime window.innerWidth readers are runtime/arrival/frame-size-memory.js:35, runtime/diagnostics/observation-beats.js:97, runtime/regions/positioning-orchestration.js:103, and runtime/physics/spatial-gravity.js:255 (plus fallbacks in interactive-expression-lab.js:139 and shell-disclosure.js:309). interface/semantic-chrome.js:722 still registers its capture-phase scroll listener without passive. Phase 4's literal parser artifact alignment landed via spw-workbench-reader.js (87,530 B).
 }[reg=facet]
 
 ^"open"{
@@ -471,9 +472,9 @@ fixity = "tending"
 ^"cache"{
  ~#status: "implementing"
  ~#next_commit: "~[runtime] Let the chrome's scroll listener go passive, and read the viewport width from one place"
- ~#files_hot: "public/js/interface/semantic-chrome.js, public/js/kernel/viewport.js, public/js/runtime/diagnostics/layout-qa.js, public/js/runtime/diagnostics/observation-beats.js, public/js/runtime/physics/spatial-gravity.js, public/js/runtime/regions/positioning-orchestration.js"
+ ~#files_hot: "public/js/interface/semantic-chrome.js, public/js/kernel/viewport.js, public/js/runtime/arrival/frame-size-memory.js, public/js/runtime/diagnostics/observation-beats.js, public/js/runtime/physics/spatial-gravity.js, public/js/runtime/regions/positioning-orchestration.js"
  ~#gate: "a pocket scroll trace before and after, per Phase 3's gate"
- ~#last_stream: "2026-10-12"
+ ~#last_stream: "2026-11-05"
  ~#taste_debt: "Phase 6 catalog splits must not change felt chrome timing without a demo."
 }[reg=facet]
 

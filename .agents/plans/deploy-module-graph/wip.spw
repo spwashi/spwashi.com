@@ -18,6 +18,7 @@ fixity = "tending"
 
 ^"stream"{
  >>[2026-10-12 10:59] verify — the deploy graph has no chunk cycles since f05b02d2, and check:built fails on a recorded one. The next slice is unchanged: interface/smart-console.js:20 still imports getKnowledgeMap from runtime/memory/cognitive-core.js, which brings idle-lab; move that read to a leaf, as pulse-timing.js was. After it come the seed-cards and region-menu imports in idle-default and idle-residue, then the expression-manifest split: public/js/generated/spw-expressions.js is 331,864 B today, and expression-resonance.js:644 still loads it whole.
+ >>[2026-11-05 22:10] verify — Re-probed the deploy graph and expression manifest: interface/smart-console.js:20 still imports getKnowledgeMap from runtime/memory/cognitive-core.js; idle-default and idle-residue still pull seed-cards and region-menu. public/js/generated/spw-expressions.js is now 145,418 B (142.0 KiB across 986 expressions, down from 331,864 B after retiring SPW_PROJECTION_SEEDS), imported at public/js/runtime/expression/expression-resonance.js:638. Updated PLAN.md with the 142.0 KiB baseline.
 }
 
 ^"open"{ }
@@ -27,5 +28,5 @@ fixity = "tending"
  ~#next_commit: "![runtime] Read the knowledge map from a leaf, so the console stops bringing idle-lab"
  ~#files_hot: "public/js/interface/smart-console.js, public/js/runtime/memory/cognitive-core.js, scripts/ts/build/index.mts, public/js/runtime/expression/expression-resonance.js"
  ~#gate: "nothing; npm run check:built and the pack ledger in dist/asset-manifest.json prove the move"
- ~#last_stream: "2026-10-12"
+ ~#last_stream: "2026-11-05"
 }

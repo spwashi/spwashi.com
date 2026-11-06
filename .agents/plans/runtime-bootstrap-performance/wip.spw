@@ -19,6 +19,7 @@ fixity = "tending"
 
 ^"stream"{
  >>[2026-10-12 10:59] verify — the last landing is still f1d0f74c (section handle, utility row and posture pill write only what moved); nothing has touched the scroll writers since. The next slice is the operator-geometry flip: applyOperatorGeometry (semantic/sigil-annotation.js:64) writes seven attributes on every same-origin link through link-copy.js, and on shell nav links in the reader layer navigation-spells.js:395 deletes data-spw-operator-geometry right after. Landing it needs the /about/ pocket scroll receipt, before and after.
+ >>[2026-11-05 22:07] verify — Re-probed across the 146-definition catalog (site.js 1,324 lines / 51.4 KiB; spw-workbench-reader.js 85.5 KiB). applyOperatorGeometry is at public/js/semantic/sigil-annotation.js:65 and writes seven attributes while navigation-spells.js:395 strips data-spw-operator-geometry on shell nav links. Recorded the remaining scroll-window writers (title/aria churn, context-weight --spw-context-* panel writes, and rest-state pulse beat passes) and the 2026-11-05 observer census (31 MutationObserver, 13 IntersectionObserver, 10 ResizeObserver, 13 scroll listeners) in PLAN.md.
 }
 
 ^"open"{ }
@@ -28,5 +29,5 @@ fixity = "tending"
  ~#next_commit: "~[runtime] Skip the operator geometry the reader layer would strip from shell nav, so a pass stops flipping it"
  ~#files_hot: "public/js/semantic/sigil-annotation.js, public/js/semantic/link-copy.js, public/js/runtime/navigation/navigation-spells.js, scripts/tests/change-only-writes.test.mjs"
  ~#gate: "the /about/ pocket scroll receipt before and after (two interleaved runs a side, HEAD through CDP Fetch)"
- ~#last_stream: "2026-10-12"
+ ~#last_stream: "2026-11-05"
 }

@@ -1,6 +1,6 @@
 # core-css-spend-cut
 
-**Status 2026-10-10.** The committed `bundles/core.css` is 1720 KiB, up from 1679 KiB on 2026-09-22. Its soft budget is 1.7 MiB (about 1741 KiB, `scripts/ts/css-manifest.mts:573`), raised from 1.6 MiB in 7148e43c on 2026-09-12. The deploy strips comments, and shipped core was 1293 KiB on 2026-10-06. No measured next cut is named yet. Before anything moves, a `css:payload` reading has to name a core file that holds atmosphere rather than first-paint structure. Per-pass recalc cost is not this plan's: it belongs to `runtime-bootstrap-performance` (see Research bridges).
+**Status 2026-11-05.** The committed `public/css/bundles/core.css` is 1,720.9 KiB (1,762,232 B across 103 source sheets), under its 1.7 MiB soft budget (about 1,741 KiB, `scripts/ts/css-manifest.mts:573`), and the last built `dist/public/css/bundles/core.css` (2026-10-27) is 1,297.3 KiB (1,328,446 B) after comment and indentation stripping. The 2026-11-05 provenance reading below breaks all 103 core sheets down by layer folder and names five candidate sheets in `systems/` and `handles/` that may hold atmosphere rather than first-paint structure, which only a `css:payload` reading can show (`public/css/systems/legibility-lens.css` 25.2 KiB, `public/css/handles/operators/spell-breadcrumbs.css` 24.0 KiB, `public/css/systems/surfaces/tuning.css` 17.4 KiB, `public/css/systems/expression-resonance.css` 13.9 KiB, `public/css/systems/spw-key-events.css` 13.6 KiB). Next slice: add per-sheet provenance breakdown to `scripts/css-payload-report.mjs` (`npm run css:payload`), then probe the five candidate sheets one at a time for first-paint geometry before moving any of them to runtime-coupled or idle delivery. Per-pass recalc cost belongs to `runtime-bootstrap-performance` (see Research bridges).
 
 ## Public Goal
 First paint ships structure. Wonder, grain, cinematic, and ornament arrive after interactive so core CSS can shrink. Late restyle may only add atmosphere — not hide, move, or resize what the visitor already read.
@@ -45,7 +45,14 @@ The literature is the selectors: `>` a child, `+` the next sibling, `:has()` a p
 - 2026-10-25 ([ecosystem-architecture](../ecosystem-architecture/PLAN.md) S6): the creator, ecosystem and systems offer pages built three byte-identical route bundles (16,331 B each) from `routes/surfaces/services.css` alone. They are one, `services-surface`, with three entries in `ROUTE_SURFACE_ALIASES`; a reader moving among the three downloads the sheet once. `services-care` adds the intake and keeps its own.
 
 ## Remaining
-- Split route-local enhancement families further if the website route budget needs a hard ceiling; do not move their grid geometry into an idle sheet.
+- Extend `scripts/css-payload-report.mjs` (`npm run css:payload`) to print the per-sheet and per-folder provenance share inside `public/css/bundles/core.css`, not only whole-bundle totals.
+- Audit the five runtime-coupled candidate sheets currently inside `core.css` (measured 2026-11-05 across 103 core source sheets; layer totals: `components` 475.6 KiB, `systems` 377.4 KiB, `shell` 279.5 KiB, `handles` 249.5 KiB, `tokens` 135.7 KiB, `grammar` 88.5 KiB, `typography` 39.5 KiB, `effects` 26.6 KiB, `ornament` 18.9 KiB, `modes` 12.8 KiB, `reset` 12.3 KiB):
+  1. `public/css/systems/legibility-lens.css` (25.2 KiB — diagnostic/inspect/flourish attribute lens rules; split diagnostic/inspect rules from any structural baseline).
+  2. `public/css/handles/operators/spell-breadcrumbs.css` (24.0 KiB — breadcrumb spell bar; evaluate coupling with `experiential/breadcrumb-spell.js` if first-paint shell does not reserve its box).
+  3. `public/css/systems/surfaces/tuning.css` (17.4 KiB — tuning discovery and slider chrome).
+  4. `public/css/systems/expression-resonance.css` (13.9 KiB — `expression-resonance` mounts at `idle`).
+  5. `public/css/systems/spw-key-events.css` (13.6 KiB — keyboard chord HUD).
+- Split route-local enhancement families further if the website route budget (currently 140 KiB, at its soft limit) needs a hard ceiling; do not move their grid geometry into an idle sheet.
 - Page-anatomy stays in core until a first-paint probe says it is atmosphere.
 - Combinator literature is practice when touching ornament or wonder, not a new plan.
 
