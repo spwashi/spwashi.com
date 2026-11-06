@@ -1,6 +1,6 @@
 # Plan: spellcraft-authoring
 
-**Status 2026-11-05.** Landed: the decompose verb and the `data-spw-cauldron-state` bundle in `semantic/cauldron/contract.js` (`bd0d7951`, 2026-07-03), saved trails that survive clearing the current one (`7b5f0a63`), and the phase-attribute fold: the dominant resonance now rides html's bundle as `element:<plane>` (`interface/cauldron/resonance.js`), `palette-depth.css` reads `html[data-spw-cauldron-state~="element:…"]` at the same specificity, `dom-sync-hub.js` no longer lists the old name (its observer watches `body`, so the entry never fired), and `/design/runtime/` names the bundle. What is still owed of Phase 1:
+**Status 2026-11-06.** Landed: the decompose verb and the `data-spw-cauldron-state` bundle in `semantic/cauldron/contract.js` (`bd0d7951`, 2026-07-03), saved trails that survive clearing the current one (`7b5f0a63`), and the phase-attribute fold: the dominant resonance now rides html's bundle as `element:<plane>` (`interface/cauldron/resonance.js`), `palette-depth.css` reads `html[data-spw-cauldron-state~="element:…"]` at the same specificity, `dom-sync-hub.js` no longer lists the old name (its observer watches `body`, so the entry never fired), and `/design/runtime/` names the bundle. What is still owed of Phase 1: On 2026-11-06 the creator asked for operators in place of the cauldron's verbs, a magic that feels like magic, and the expression as a component; the chip now writes the live expression, and the next slice is the expression as a component (see "Operators, not verbs; magic, not cooking").
 - 27 distinct kebab `data-spw-cauldron-*` names remain in `public/js`, `public/css` and the partials (28 before the fold), against a target of about 4.
 - No SPELL_CONTRACT exists.
 - `effects/electromagnetic-container.css:316-317` match `html[data-spw-cauldron-state="primed"]` and `="mixing"` exactly; the bundle always carries several tokens, so those two arms have never matched. Reviving them as `~="phase:primed"` would turn on a content wash while something is held, which is a sensation call.
@@ -14,6 +14,23 @@ Breadcrumbs, 2026-10-25: the sitting's `seams.breadcrumbs` proposes that the spe
 **Related:** [operator-semantics-refinement](../archive/operator-semantics-refinement/PLAN.md) · [spw-inquiry-loop](../spw-inquiry-loop/PLAN.md) · [visual-capture-ecology](../archive/visual-capture-ecology/PLAN.md). **Absorbed 2026-10-06:** [cognitive-navigation](../archive/cognitive-navigation/PLAN.md) · [discovery-powerups](../archive/discovery-powerups/PLAN.md) · [spell-cauldron-lifecycle-memory-gardening](../archive/spell-cauldron-lifecycle-memory-gardening/PLAN.md) · [spell-cognition-familiarity](../archive/spell-cognition-familiarity/PLAN.md) · [spellbook-utility](../archive/spellbook-utility/PLAN.md).
 
 Reorganize the spell and cauldron concepts around authorship: writing and editing spells, and selecting and styling elements, concepts, and artifacts. Consolidates five prior tracks into one owner model, applies the Stagecraft glossary and the G1/G2 attribute grammar (per Spwashi, 2026-07-03), and treats every authoring surface as simultaneously a live-performance and screenshot-interpretation surface.
+
+## Operators, not verbs; magic, not cooking — 2026-11-06
+
+The creator: the cauldron verbs are not clear and should rather be operators; the metaphor should move away from its earlier semantics; operating the cauldron should feel more like magic; and the Spw expression it shows should behave like a component. On material: spells written on washi tape, with origami or pop-up work for depth; Grok Imagine can animate the scans, and Midjourney can interpret the materials into a more imaginative frame.
+
+Where it stands:
+
+- The panel already writes the cauldron's state as one live expression whose prefix is the state: `.cauldron{}` nothing held, `~cauldron{a}` one held, `*cauldron{a.b.c}` ready, `^cauldron{…}` mixed (`interface/cauldron/live-expression.js`, since 2026-10-06).
+- Landed 2026-11-06: the floating chip writes that same expression and lost its four verbs (gather, prime, compose, cast), retired first in `.spw/conventions/word-sets.spw#cauldron_progress`. Its accessible name says the state in words. `chipPhase` and `chipCount` left the contract with their last writer, two fewer cauldron attribute names.
+- Still verbs: the status lines ("Hold one more to make a mix"), and the nine action buttons in `_partials/site-footer.html` (Mix, then the tend, keep and sweep groups), whose labels pair a glyph with a cooking or garden word ("! Mix fragments", "~ Nourish", "^ Save trail").
+
+Proposed next, ending at a browser demo:
+
+1. **The expression is the component.** `^cauldron[lens]{parts}<projection>`, each slot operable, after the 2026-10-06 sketch: the prefix is the next operation, and tapping it performs it; each part is a held word, and tapping it opens its tape card or returns to where it was held; the braces are the vessel, opened or cleared; `<projection>` is where a spell goes (copied, kept, shared). Captions in words appear on focus and hover (hyperanatomy), so the operators teach themselves. The nine buttons fold into the slots.
+2. **Operators only.** The 2026-10-06 handles were `!precipitate ~copy #>keep .clear`; the chemistry word goes with the cooking ones, and the handles are the operators themselves. Which operator performs which move is the creator's (`index.spw#wonder_spellcraft_operator_moves`), from the table in `public/js/kernel/operator-detection.js`.
+3. **Magic as a felt transition.** An operation shows as its prefix becoming the next one, the held parts settling into the braces, and a cast arriving as tape. Motion respects reduced motion and capture mode, and the feel is the creator's to judge live.
+4. **The creator's material.** Spells handwritten on washi tape and folded or popped up become scans with sidecars like every other hand-made piece. A Grok Imagine animation of a scan can carry a cast, and a Midjourney interpretation can frame the vessel, each through the image plan's intake rule (one image, with sidecar and registry, in one placement). Until those scans exist, nothing new is drawn in their place.
 
 ## Public Goal
 

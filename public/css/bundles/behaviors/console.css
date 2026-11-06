@@ -208,15 +208,13 @@
   color: var(--ink-soft, inherit);
 }
 
-.spw-cauldron-chip__count {
-  font-weight: 600;
-}
-
-.spw-cauldron-chip__phase {
-  color: var(--ink-muted, rgba(14, 18, 20, 0.58));
-  font-size: var(--text-size-2xs, 0.72rem);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+/* A long gathering stays one line: the parts clip, and the whole expression is the title. */
+.spw-cauldron-chip__parts {
+  display: inline-block;
+  max-inline-size: 14ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .spw-cauldron-chip[data-spw-cauldron-state~="phase:spell-ready"] {

@@ -124,8 +124,6 @@ export const CAULDRON_CONTRACT = Object.freeze({
     panelToggle: 'data-spw-cauldron-panel-toggle',
     remove: 'data-spw-cauldron-remove',
     visibility: 'data-spw-cauldron-visibility',
-    chipCount: 'data-spw-cauldron-chip-count',
-    chipPhase: 'data-spw-cauldron-chip-phase',
     fixity: 'data-spw-fixity',
     phaseState: 'data-spw-phase',
     tangibility: 'data-spw-tangibility',
