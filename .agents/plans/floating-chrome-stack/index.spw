@@ -84,3 +84,15 @@ invariants: #[
   !probe{ "rg -n 'spw-floating-control-size|touch-target-compact' public/css/components/floating-chrome.css; sed -n 403,407p public/css/ornament/whimsy.css" }
   ~<"./FIX.md"> ~<"../../../CLAUDE.md">
 }
+
+#>wonder_floating_chrome_stack_piece_operators
+?["Which operator names each floating piece, so that using the chrome teaches one construct per piece?"]{
+  #:depth #!semantic ~#lens(choice)
+  ~#with: @fix
+  ~#taste: "A piece a reader touches every day is the cheapest lesson in the language; it should teach one true thing."
+  ~#hypothesis: "The rail traverses frames, so #>; the satchel is the substrate a page rests on, and its rail key is already $; the cauldron chip writes .cauldron{} like its dialog; the kin moves keep ~ similar, & contrast and # resonate."
+  ~#tension: "A sigil on every piece can read as decoration if the piece does not do what the operator does; the operator table in public/js/kernel/operator-detection.js is the canon, and a site name is only an alias."
+  ~#unblocks: "the rail's current cell as an expression, the satchel's first offer, the chip's label"
+  !probe{ "rg -n 'aria-hidden=\"true\">(rail|\$|#&gt;)<' public/js/runtime/attention/section-handle.js" }
+  $%[piece.rail, piece.satchel, piece.cauldron, piece.kin]
+}

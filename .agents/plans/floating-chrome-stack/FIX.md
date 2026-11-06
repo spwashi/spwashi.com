@@ -1,6 +1,6 @@
 # Fix: Floating Chrome Stack
 
-**Status 2026-11-05.** Landed: the tier fix, the lane lifecycle (`848a0b46`), and Step 1's single control-size token (`a5f56bec`). Every floating control now reads `--spw-floating-control-size` from one block in `components/floating-chrome.css`. On 2026-11-05 the theory was read against what runs (`.spw/caches/chrome-ecology-2026-11.spw`), and a six-line revision is proposed below; it waits on the creator's words, and each line's change ends at a live demo. Next slice: the Step 2 browser demo, with a compact base and a coarse-pointer step keyed to pointer rather than width. It includes whether `ornament/whimsy.css`'s 48rem `:where(button, .spw-chip, label)` min-height should keep reaching floating chrome. It is gated first on the console sizing question in `index.spw`, then on the creator's sensation review, live and never from a still: on `/` at pocket (390px) and on `/about/` at 320px, where the corner was measured. Stills cannot judge it: `public/css/modes/capture.css` hides floating chrome (lines 7-35) and pauses animated SVG flows (line 40). Corner sharing in the pocket lane moved here from cauldron-lens-composition (below).
+**Status 2026-11-05.** Landed: the tier fix, the lane lifecycle (`848a0b46`), and Step 1's single control-size token (`a5f56bec`). Every floating control now reads `--spw-floating-control-size` from one block in `components/floating-chrome.css`. On 2026-11-05 the theory was read against what runs (`.spw/caches/chrome-ecology-2026-11.spw`), and a six-line revision is proposed below, its first line sharpened the same evening into Spw-native chrome; it waits on the creator's words, and each line's change ends at a live demo. Next slice: the Step 2 browser demo, with a compact base and a coarse-pointer step keyed to pointer rather than width. It includes whether `ornament/whimsy.css`'s 48rem `:where(button, .spw-chip, label)` min-height should keep reaching floating chrome. It is gated first on the console sizing question in `index.spw`, then on the creator's sensation review, live and never from a still: on `/` at pocket (390px) and on `/about/` at 320px, where the corner was measured. Stills cannot judge it: `public/css/modes/capture.css` hides floating chrome (lines 7-35) and pauses animated SVG flows (line 40). Corner sharing in the pocket lane moved here from cauldron-lens-composition (below).
 
 **Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — home.console_size, seams.pocket_corner.
 
@@ -12,7 +12,7 @@ The creator asked whether the layout theory needs revising. Read against the tre
 
 | Proposed line | Retires |
 | :--- | :--- |
-| Chrome is a host that answers in the page's words: the rail names a section by its heading and its place. | "#> section" and a five-cell rail in four vocabularies as the answer to where am I |
+| Each piece is one Spw expression whose slots carry the page's words and work as its controls (revised the same day at the creator's word: more Spw native; see "Useful, Spw-native chrome"). | "#> section", a "rail" toggle and Spw moves hidden as advanced, as the answer to where am I |
 | z follows how long a thing stays: what stays sits low and together, what passes above it, what blocks highest. | the satchel launch above toasts; four tiers for four persistent pieces |
 | Width places, the pointer sizes; the ornament layer does not size chrome. | four pocket conditions; whimsy's width-keyed reach (this plan's Step 2) |
 | The pocket ladder has rungs named for what a reader does: travel, carry, speak. | ten slot names no stylesheet reads (`#>wonder_chrome_ecology_rungs`) |
@@ -20,6 +20,24 @@ The creator asked whether the layout theory needs revising. Read against the tre
 | Chrome over reading text takes a ground the text cannot read through. | a translucent rail and satchel over paragraphs |
 
 Gate: the creator's words for the theory. Each line's change ends at a live demo, never a still, since `modes/capture.css` hides floating chrome.
+
+## Useful, Spw-native chrome — 2026-11-05
+
+The creator, the same evening: the floating chrome should be more useful; the UI elements should be more Spw native; the UI should be more intentional in developing the theory of Spw as a language; and it is pretty uncommon to arrive at the site already holding Spw.
+
+What the chrome offers today:
+
+- **The rail** (`runtime/attention/section-handle.js:494-541`): a toggle lettered "rail", then ↑ ‹, a `#>` layer key, the current cell (`#>`, a label, the ⌁ ingredient count, n / m), › and a `$` satchel key, ↓, and three moves that are already Spw, `~similar`, `&contrast` and `#resonate`, kept behind `data-spw-handle-advanced`. The label reads a section's id before its heading (`section-handle.js:300-345`), so a reader sees `home_frame`, or "section" when nothing names it.
+- **The satchel**: its rail key is `$`, its own launch reads "state satchel", and inside sit the settings toggles, the deviation register and `copy page Spw`, which the settings plan already calls its best feature.
+- **The cauldron chip** shows only while something is held, and its dialog already writes `.cauldron{} 0 held`.
+
+Proposed, revising the theory's first line: **each floating piece is one Spw expression whose slots carry the page's words and work as its controls, and whose state rewrites one slot in place.** The words below are illustrations; the operator each piece takes is the creator's (`index.spw#wonder_floating_chrome_stack_piece_operators`), from the one table in `public/js/kernel/operator-detection.js`.
+
+- **Rail:** the current cell reads as the section, `#>where_that_sentence_goes_next{4 of 9}`: the heading becomes the handle and the place becomes the body. ‹ › and the kin moves are the moves, shown with their operators rather than hidden as advanced.
+- **Satchel:** the `$` substrate a page rests on. Its first offer is this page's Spw: copy it, pivot it on spw.quest, take it apart. A visitor who arrived holding no Spw leaves holding the page's.
+- **Cauldron chip:** `.cauldron{3}`, the same expression its dialog writes.
+
+A piece is useful when it says what it is, one tap does one named thing, it says what it did, and it never covers reading text. Each piece is also a specimen of one construct, so using the chrome teaches the language: [spw-metaphysical-language](../spw-metaphysical-language/PLAN.md)'s Pass 2 (Spw laid out as nested layout) takes the rail, the satchel and the cauldron chip as its first specimens. Every change ends at a live demo.
 
 ## Failures
 
