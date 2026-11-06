@@ -16,6 +16,7 @@
  */
 
 import { existsSync, readFileSync, mkdtempSync, writeFileSync, rmSync, readdirSync } from 'node:fs';
+import { isTrackedInHead } from './lib/git-ignored.mjs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -95,7 +96,10 @@ function planProblems(files, reviewed) {
   }
   return problemsInPlanFiles(entries, {
     treeReviewed: reviewed,
-    exists: (rel) => existsSync(path.join(ROOT, rel)),
+    // check-pushed.mjs leaves most pictures out of its checkout (SPW_SPARSE_CHECKOUT); a path
+    // the commit tracks still resolves, as it does for spw-integrity's citations.
+    exists: (rel) => existsSync(path.join(ROOT, rel))
+      || (process.env.SPW_SPARSE_CHECKOUT === '1' && isTrackedInHead(rel, { cwd: ROOT })),
   });
 }
 
