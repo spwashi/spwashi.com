@@ -63,7 +63,7 @@ expression = sigil[canon]{alias.copy}<one_table>
     `{   direction     definition     direction           hold bounded practice or motion`
   ][reg=set]
   alias_rule = `data-spw-operator may carry either name column — @definitions, the @operator_site_projection selectors, and @sensor accept both. The printed character is not negotiable: it is column one or the sigil is lying.`
-  no_type = `+ | : and _ are not operators in @definitions. + and | appear only in the blog dialect; _ is the label/escape mark; : exists only inside the #: layer compound. Copy that prints them as prefixes is untyped to every interpreter except the reader.`
+  no_type = `+ | : and _ are not operators in @definitions. + and | appear only in the blog dialect; _ is the label/escape mark; : exists only inside the #: layer compound. Copy that prints them as prefixes is untyped to every interpreter except the reader. | may join the language later (the creator, 2026-11-05: not opposed to it eventually); until a convention defines its role, it stays untyped here.`
 }[reg=facet]
 
 ^"workbench_relation"{

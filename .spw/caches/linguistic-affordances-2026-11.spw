@@ -41,9 +41,9 @@ source = "2026-11-05 corpus scan of 434 authored, tracked .spw files (ecology:la
     id = "la-math-002"
     status = "open"
     reaching_in = ".spw/caches/interaction-paint-cost-2026-09.spw:821, @dot_join#forms, @expression_charge_sign#later, @comparison_differentials#model, @theory_map#wonder_theory_join_algebra"
-    construct = "Associative/precedence-explicit n-ary compound joins (A ~ B ^ C); disjunction (A | B) and bounded intervals (a..b) only as open questions, since the settled rule is that + | : _ are not operators (operator-namespace-alignment.spw:66)."
+    construct = "Associative/precedence-explicit n-ary compound joins (A ~ B ^ C); disjunction (A | B) and bounded intervals (a..b) as candidates: | is not in the grammar today (operator-namespace-alignment.spw:66), and the creator is open to it eventually (2026-11-05)."
     measured = "1) readCompoundJoin in @expression_query splits only the first operator, so the multi-line 3-way compound at interaction-paint-cost-2026-09.spw:821-823 and the h-triple and h-mixed specimens read partial. (That file's parser warning comes from its > contour lines at :847-848 and :854, not the compound.) 2) Authors write a | b inside strings across headers and rules because {a,b} (product/co-presence) and {a;b} (non-commutative monoid) have no coproduct sibling {a|b}. 3) Intervals (0..1, boon..honk) are written in prose/comments with no range token."
-    affordance_needed = "Multi-operand compound join tree in expression readers and multiline continuation for infix ~ & ^ @. Whether a disjunction or an interval needs a token at all is a question for upstream, not needed grammar."
+    affordance_needed = "Multi-operand compound join tree in expression readers and multiline continuation for infix ~ & ^ @. A disjunction | (which the creator is open to adding eventually) and an interval .. are candidates to ask upstream for, once a convention names their roles."
   }[reg=facet]
 
   m3_recursive_slot_endofunctors_and_capsule_chains = .{
@@ -61,7 +61,7 @@ source = "2026-11-05 corpus scan of 434 authored, tracked .spw files (ecology:la
     reaching_in = "@theory_map#wonder_theory_answer_sets, @asks_capabilities#measure_or_answer"
     construct = "Disjoint answer-set partition (Groenendijk & Roelofsen inquisitive semantics: ?{a | b | c} collapsing to ~#answer: a) vs observable metric vector $%[m1, m2]."
     measured = "566 terms in $%[…] lists across wonders: 92 resolve against metric producers, while 68 are mutually exclusive answer candidates that read forever as missing measurements."
-    affordance_needed = "Distinguish an inquisitive answer partition (alternatives to eliminate) from a metric vector (quantities to instrument), by composition (~#expect / ~#answer sibling); a separator species ($%[a | b] vs $%[m1, m2]) would run against the settled rule on |, so it stays a question."
+    affordance_needed = "Distinguish an inquisitive answer partition (alternatives to eliminate) from a metric vector (quantities to instrument), by composition (~#expect / ~#answer sibling); a separator species ($%[a | b] vs $%[m1, m2]) is a candidate for when | joins the language."
   }[reg=facet]
 }[reg=facet]
 
