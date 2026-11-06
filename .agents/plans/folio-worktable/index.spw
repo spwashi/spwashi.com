@@ -53,7 +53,7 @@ intent: .{
 @wip: ~"./wip.spw"
 @minting: ~"./minting.spw"
 @engagement_features_test: ~"../../../scripts/tests/engagement-features.test.mjs"
-@folio_scans_2026_09_26: ~"../../../public/images/renders/_raw/folio-scans-2026-09-26/"
+@folio_scans_2026_09_26: `public/images/renders/_raw/folio-scans-2026-09-26/ (gitignored: the scan session unpacks here locally, so no clean checkout has it)`
 @folios: ~"../../../public/images/assets/folios/"
 @release_2026_09_26: ~"../../../.spw/surfaces/folio-archive/release-2026-09-26.spw"
 @release_2026_09_28: ~"../../../.spw/surfaces/folio-archive/release-2026-09-28.spw"
