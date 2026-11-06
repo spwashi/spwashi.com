@@ -19,12 +19,14 @@ fixity = "tending"
 ^"stream"{
  >>[2026-10-12 10:59] verify — Step 1 holds (a5f56bec): --spw-floating-control-size is assigned in components/floating-chrome.css and read there, in handles/operators/tokens.css and in components/runtime-states.css. whimsy.css:403-406 still gives every button, chip and label the 44px floor below 48rem, so it still reaches floating chrome. The Step 2 demo has not been built, and floating-chrome.css has not changed since d0244132 on 2026-09-28.
  >>[2026-10-25 17:44] verify — Read against the tree for the UI review sitting: .spw-console-toggle no longer exists anywhere, so the 09-13 note is resolved for the selector while the sizing call stays open. Status now names Step 2's place, live on / at pocket and /about/ at 320px, since capture.css hides floating chrome and pauses SVG flows in stills, and records that this plan owns control sizes and the pocket corner.
+ >>[2026-11-05 21:40] probe — at the creator's prompt that the layout theory may need revising, the theory was read against what runs, with a live headless probe (capture mode off). What runs is one pocket ladder whose members are a selector list; slots are labels no CSS reads; the persistent pieces span four tiers and the satchel launch paints above toasts; whimsy.css:402-406 outranks the control-size token below 48rem; four different pocket conditions; the rail's arrival lifts the corner 61.5px. A proposed revision (host that answers, z follows time, width places and pointer sizes, rungs not slots, the carry corner as one composition, matte ground over text) is in .spw/caches/chrome-ecology-2026-11.spw#revision, with its ladder of what lands, what ends at a demo and what waits on an answer.
 }
 
 ^"open"{
  console_size = ~"./index.spw#wonder_floating_chrome_stack_console_size"
  whimsy_reach = "Should whimsy.css's 48rem min-height keep reaching floating chrome? Settled in the Step 2 demo; the feel is the creator's call."
  corner_sharing = "How do the promo, satchel, cauldron and travel rail share the pocket corner? A design pass after Step 2, ending at a browser demo for the creator."
+ theory_revision = ~"../../../.spw/caches/chrome-ecology-2026-11.spw#revision"
 }
 
 ^"cache"{

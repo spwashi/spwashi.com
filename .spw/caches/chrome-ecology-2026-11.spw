@@ -1,0 +1,199 @@
+# Chrome ecology (2026-11) — prime: the floating chrome theory read against what runs, and what would make the UI useful, harmonious and playful
+#
+# The creator asked, while the review sitting's ungated rows were landing:
+# "the floating chrome layout theory may also need to be revised", then
+# "consider what would make the UI feel useful and informative; consider
+# harmony across components; consider a visual ecology that can encourage play".
+# This holds a reading of the tree (two sweeps and a live probe, 2026-11-05),
+# a proposed revision of the floating chrome theory, and a ladder of what can
+# land without a look, what ends at a browser demo, and what waits on an answer.
+# Nothing here decides a sensation.
+
+#>chrome_ecology_2026_11
+#:cache #!ui #!chrome #!harmony #!play
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+expression = chrome[ecology]{host.harmony.receipt.play}<prime>
+
+summary = #[
+  `The theory names four mechanisms (tiers, lanes, ten slots, one control size); the code runs one: a pocket ladder whose members are a selector list. Slots are labels no CSS reads, tiers do not follow persistence, and an ornament rule outranks the size token on every pocket button.`,
+  `Harmony breaks where a role is styled by element rather than by class: one chip class renders 5px as a <button> and a pill as an <a>; one floating-sheet role carries about eight radii; six shadow families; three shape tokens are used and never defined.`,
+  `Much of what the UI would need to be informative is already computed and never painted: the grounding reason, the settle confirmation, the effect ledger.`,
+  `Play surfaces do not feed each other: achievements never reach the ledger (two event names that never meet), math diagrams emit nothing, and one hold feels different in two engines.`,
+  `The revision proposed here is small in words: chrome is a host that answers; z follows how long a thing stays; placement follows width and hit size follows the pointer; the carry corner is one composition; play pieces share one dialect and one ledger.`,
+][reg=set]
+
+contents = #[
+  ~"./chrome-ecology-2026-11.spw#live_reading",
+  ~"./chrome-ecology-2026-11.spw#theory_as_written",
+  ~"./chrome-ecology-2026-11.spw#theory_as_run",
+  ~"./chrome-ecology-2026-11.spw#revision",
+  ~"./chrome-ecology-2026-11.spw#harmony",
+  ~"./chrome-ecology-2026-11.spw#informative",
+  ~"./chrome-ecology-2026-11.spw#play",
+  ~"./chrome-ecology-2026-11.spw#ladder",
+][reg=set]
+
+^"live_reading"{
+  method = `headless Chrome on the dev server, capture mode off (stills hide floating chrome, @capture_css), Home and /about/ at pocket 390x844 touch and broadsheet 1440x900, scrolled 1.6 viewports, 9s settle; every visible fixed or annotated element dumped with box, tier and z`
+  pocket_home = `one participant: the travel rail, 376x60 at the bottom, five cells in four vocabularies ("rail", ‹ ›, #>, "home_frame ~8 1/17"), translucent over body text that reads through it`
+  pocket_about = `the same component as a 106x34 chip reading "#> section": it does not name the section the reader is in, and sits translucent over a paragraph`
+  broadsheet = `nothing floats on either route`
+  same_screen_chips = `one pocket screen on Home holds three chip dialects: rounded pills (Next room, Living concepts), left-ruled bed tabs (Hook, Door, Atlas, Garden), and term chips carrying a left rule, a full border and a dotted underline at once`
+  open = `the first route card on /about/ is dashed while its siblings are ruled; a still cannot say whether that is the attention field or a stuck armed state`
+}[reg=facet]
+
+^"theory_as_written"{
+  roles = `any viewport-pinned affordance that is not content carries data-spw-floating-chrome and data-spw-layout-owner="floating-chrome", with role, tier, slot and island (@dom_contracts:380-441, @css_instruction#flow_ownership)`
+  tiers = `floating 100 < docked 900 < header 1000 < priority 2000 < popover 2008 < toast 2018 < drawer 2020 < modal 2030 (@tokens:1074-1082)`
+  lanes = `pocket: one vertical ladder, console, travel row, utility row (satchel and collection), nav, cauldron; desktop: named corners (@dom_contracts:931-1074). Sacrifice order: collection, then status, navigation last (@floating_css:904-933)`
+  slots = `ten names, each defaulted from the role (@dom_contracts:217-228, 289-315)`
+  clearance = `the lane writes --spw-floating-slot-*, --spw-floating-bottom-rail, --spw-bottom-chrome-clearance and --spw-floating-menu-clearance on html, change-only (@dom_contracts:560-576)`
+  size = `one token, --spw-floating-control-size, assigned only in the Control size block (@floating_css:95-137)`
+}[reg=facet]
+
+^"theory_as_run"{
+  one_ladder = `lane membership is a selector list (@dom_contracts:853-921), not annotation; the participant registry @floating_fix planned was never built`
+  slots_are_labels = `no stylesheet reads data-spw-chrome-slot (0 readers outside the bundles); the cauldron chip's slot says bottom-right-satchel (@dom_contracts:295) and the cauldron-dialog role is missing from the role list`
+  tiers_against_time = `the persistent pieces span four tiers (rail floating, cauldron and collection docked, console priority, satchel drawer); the satchel launch paints at 2020, above toasts at 2018, though @floating_coherence says the satchel is not a drawer`
+  size_overridden = `@whimsy:402-406 gives :where(button, .spw-chip, label) min-height --touch-target-min below 48rem in the ornament layer, which outranks the components layer whatever the specificity; every floating button is 44px tall on a phone, the collapsed console grows from about 34px to 54px, and CLAUDE.md says pocket chrome keeps --touch-target-compact`
+  four_pockets = `JS: 720px or coarse (@dom_contracts:557); most CSS: 45rem; collection: 45rem or coarse; whimsy: 48rem by width alone`
+  dead_terms = `--spw-floating-menu-clearance is 0 on every annotated element (@floating_css:60), so its 4.25rem rule and every +var() term do nothing while JS adds 68px instead; --spw-floating-safe-inset is written and never read; the --spw-bottom-lane-* aliases lose to later rules`
+  corner_jump = `crossing 160px of scroll shows the rail and lifts satchel, collection and cauldron by 61.5px together; the hidden nav still costs one 10.4px gap; the promo scrim (2030) covers the corner the comment at @floating_css:461 says it keeps clear`
+  missed_correction = `collection and cauldron are absent from the fixed-viewport correction lists (@page_state:162-170)`
+}[reg=facet]
+
+^"revision"{
+  ~#note: "Proposed wording for the theory, each line with what it would retire. A revision of the theory is the creator's; nothing below has moved code."
+  host_that_answers = .{
+    claim = `Floating chrome is a host, never content, and every piece answers in the page's own words: the rail names the section by its heading and its place ("Where that sentence goes next · 4 of 9"); the sigil is the key, taught once; the Spw handle sits behind a hold or a disclosure.`
+    retires = `"#> section" and "rail ‹ #> home_frame ~8 1/17" as a reader's only answer to where am I`
+    rule = @learnable_rule
+  }[reg=facet]
+  z_follows_time = .{
+    claim = `z follows how long a thing stays. What stays sits low and together (rail, carry corner, console: one docked tier); what passes sits above it (toast, popover); what blocks sits highest and says how to leave (sheet, drawer, modal).`
+    retires = `the satchel launch at drawer above toasts; four tiers for four persistent pieces`
+  }[reg=facet]
+  width_places_pointer_sizes = `Placement follows width (one pocket breakpoint, 45rem, in CSS and JS alike); hit size follows the pointer (coarse takes --touch-target-min, fine keeps compact). The ornament layer does not size floating chrome. Retires the four pocket conditions and @whimsy's width-keyed reach into chrome; it is @floating_fix Step 2, already sensation-gated.`
+  rungs_not_slots = `The pocket ladder has three rungs, named for what a reader does there: travel (the rail), carry (satchel, cauldron, collection as one corner), speak (console). Retires ten slot names no stylesheet reads, or makes them real by letting CSS place by rung.`
+  carry_corner = `The carry corner is one composition with members, not three utilities stacked by arithmetic: one ground, one radius, one right edge, and the rail's arrival does not lift it (the rail reserves its rung on pages with sections, or the corner sits beside it). The promo yields the corner or says it is covering it. This is @floating_fix#corner_sharing, given a shape.`
+  ground_over_text = `Chrome over reading text takes a ground the text cannot read through: matte at every metamaterial, since @material already names matte the clear-contrast safeguard.`
+}[reg=facet]
+
+^"harmony"{
+  role_not_element = .{
+    claim = `@whimsy:123-129 gives :where(.spw-chip, button, input[type=button|submit]) a 5px corner and a colour-only transition, so a class renders by element: .spw-evidence-brief-btn and .spw-reward-dock-trigger are <button>s (5px, scale hover snaps), .spw-cauldron-chip is an <a> (stays a pill); the chip's own radius and timing (@chips:319, :376-381) never render, and whimsy's hover background outranks --operator-chip-hover-bg, so material intents cannot reach a hovered chip.`
+    proposal = `the paper corner applies by role class, never by element`
+  }[reg=facet]
+  one_radius_per_role = `the floating-sheet role carries about eight radii (cauldron dialog 1rem, region menu .85rem, concept popover 8px, discovery notice 5px, reward dock .7rem, toast .6rem, folio view .3rem, generic --shape-control) while --shape-floating sits in 11 files; --shape-small, --shape-panel and --shape-medium are used and never defined, and --component-radius-pill resolves near 10px`
+  one_shadow_family = `six families (--shadow-*, --material-shadow-*, --component-shadow*, --card-shadow, --home-shadow-*, --topics-card-shadow) plus raw rgb in floating chrome and about twenty accent literals in cards.css that material.css overrides on any element with data-spw-component-kind`
+  one_toast = `two stacks (discovery, collection) that look different; the discovery notice is light glass on desktop and a hard-coded dark panel on phones (@adaptive:33-45)`
+  one_focus = `49 focus-visible blocks set outline:none and 38 set a 2px outline; var(--focus-ring) is read in one file`
+  one_armed = `the armed gesture state is painted at 34 rule sites`
+  card_motion = `cards.css:321-324 multiplies --component-transition-base ("140ms ease") inside calc(), which is invalid, so the whole transition drops and .spw-card, .math-lens-card and .spw-principle-card lift and tilt without motion; fixing it turns authored motion on, so it is a look, not a silent fix`
+  works = `@material:184-189 already lets route bridges, reason strips and the lens switch take the host's material: one cross-family mechanism that holds, and the model for the rest`
+}[reg=facet]
+
+^"informative"{
+  computed_never_painted = #[
+    `the grounding reason ("tap-no-arc") lives in a data attribute and window.spwRuntimeAudit; no stylesheet or surface reads it (@dom_contracts:750-777, :1446)`,
+    `settle confirmation is written (@page_state:142, :689) and no CSS reads it, so the reward contract's fourth feedback form never paints`,
+    `the effect ledger's count and last entry go onto html and nothing reads them; no reader-visible list exists`
+  ][reg=set]
+  proposal = `One place where receipts land, in chrome that already exists: the satchel. A touch that grounds says why there; a ledger entry is a line there. No new floating piece.`
+  model = `the settings credit names the change and what became more prominent (interface/site-settings-ui.js:390-410); lens, spell and grounding feedback take the same two clauses`
+  one_verb_set = `the cauldron chip says gather / prime / compose / cast, the buttons say Mix fragments and Save trail, and there is no cast button; the phase is the held count alone. One verb set, from @word_sets, on chip, buttons and next-step line`
+  cues_that_read = `"compose next" is a 28% accent border against an 18% idle border; a cue a reader cannot tell from rest is silence`
+}[reg=facet]
+
+^"play"{
+  loops_that_do_not_close = #[
+    `achievements: component-collection emits spw:achievement-unlocked; effect-ledger listens for spw:collection-achievement and spw:reward-unlocked, which nothing emits, so a found thing never becomes a receipt`,
+    `math diagrams carry 17 listeners and emit nothing ("Future: emit via bus", modules/math/diagrams.js:63), so exploring a diagram counts nowhere`,
+    `design experiments emit only their own ecology state; /design/experiments/ has no living terms`
+  ][reg=set]
+  one_hold = `haptics holds 520ms on a mouse and 420ms on touch with a 340ms double tap; brace-gestures holds 420ms with 8px of slop; and haptics' [data-spw-gesture-contract*="prime"] also matches tap:prime, so one hold on a hook both inspects and gathers (@touch_census)`
+  one_dialect = `the cauldron, spell breadcrumbs and RPG sheets each invent corners and shadows (16, 10 and 13 literals); play pieces would read as one game if ingredient, chip, collection and trail shared the chip family and the carry corner's ground`
+  teach_once = `/play/ is the only page that explains both cauldrons; operator swap is discoverable only through a tooltip`
+  straight_structure = `Play that holds up is a sincere structure played straight (@whimsy_rule), not playful copy: a field notebook whose entries are dated and numbered, a ledger that keeps what was found and where, a hold that always means gather. The candidate structures are a taste call and go to the creator.`
+}[reg=facet]
+
+^"ladder"{
+  lands_without_a_look = #[
+    `the ledger also listens for spw:achievement-unlocked: wiring, nothing reader-visible renders the ledger yet`,
+    `the cauldron-dialog role joins the role list; the chip's slot stops saying bottom-right-satchel`,
+    `dead clearance terms go: --spw-floating-safe-inset, the losing --spw-bottom-lane-* aliases, after audit:root-ablation on a pocket route`,
+    `math diagrams emit one bus event on a real change, unread until the ledger reads it`
+  ][reg=set]
+  ends_at_a_demo = #[
+    `width places, pointer sizes (@floating_fix Step 2, with whimsy's reach)`,
+    `the rail in the page's words; the carry corner as one composition; matte ground over text`,
+    `z follows time (visible only where a toast meets the satchel)`,
+    `role-not-element corners and one radius per role; the card motion fix; one toast; one focus ring`,
+    `cauldron cues a reader can tell from rest`
+  ][reg=set]
+  waits_on_an_answer = #[
+    `the revision's wording itself`,
+    `rungs or slots`,
+    `the cauldron's one verb set`,
+    `whether a hold on a hook gathers (@touch_census#verb_census_2026_11_05)`,
+    `which straight structure play commits to`
+  ][reg=set]
+}[reg=facet]
+
+#>wonder_chrome_ecology_rungs
+?["Should the pocket ladder be described by what a reader does on each rung (travel, carry, speak), with slot names retired, or should the ten slots become real positions CSS reads?"]{
+  #:depth #!pragmatics ~#lens(choice)
+  ~#with: @floating_fix @dom_contracts @floating_css
+  ~#taste: "A theory a reader can say in one breath is one they can predict; ten names nobody reads predict nothing."
+  ~#hypothesis: "Rungs match what runs: the ladder already orders console, travel, utility, nav and cauldron, and placement reads --spw-floating-slot-* variables, never data-spw-chrome-slot."
+  ~#tension: "Retiring slots loses the desktop corners' names, where chrome does sit in named places; making slots real adds CSS that duplicates what the ladder computes."
+  ~#expect: "0 stylesheet readers of chrome-slot outside the bundles"
+  !probe{ "rg -c 'chrome-slot' public/css -g '!public/css/bundles/**' | wc -l" }
+  $%[chrome.rungs, chrome.slots, chrome.predictability]
+}
+
+#>wonder_chrome_ecology_play_structure
+?["Which sincere structure should the site's play commit to, so that gathering, finding and exploring all land in one place a reader can keep?"]{
+  #:depth #!experiential ~#lens(choice)
+  ~#with: @whimsy_rule @learnable_rule @wonder_architecture
+  ~#taste: "A straight structure is the whimsy; a game that winks is not."
+  ~#hypothesis: "A dated, numbered field notebook in the satchel (one line per hold, find, explored diagram or cast) would close the three open loops with chrome that already exists, and would read on camera."
+  ~#tension: "A notebook is a record; a ledger of finds must never read as a scoreboard of people. A spellbook or a herbarium are the other candidates, each with its own vocabulary to teach once."
+  !probe{ "rg -n \"bus.on\\('spw:(collection-achievement|reward-unlocked|achievement-unlocked)'\" public/js/runtime/memory" }
+  $%[play.structure, play.loops, play.receipt]
+}
+
+^"stream"{
+ >>[2026-11-05 21:30] prime — read the floating chrome theory against the tree (dom-contracts.js, floating-chrome.css, whimsy.css, the lane variables) and a live headless probe with capture mode off; read component harmony, informative feedback and play across public/css and public/js. Claims checked by hand before writing: the whimsy 48rem rule, zero chrome-slot readers, the tier ladder, the 720px-or-coarse pocket query, the invalid calc() in cards.css:321, the achievement event names, and the three undefined shape tokens.
+}
+
+# About this file
+operation = "prime"
+fixity = "experimental"
+source = "chat 2026-11-05: the floating chrome layout theory may need revising; usefulness, harmony across components, a visual ecology that encourages play"
+
+# Handles, by role. Declared last.
+# Plans and caches
+@floating_fix: ~"../../.agents/plans/floating-chrome-stack/FIX.md"
+@floating_coherence: ~"../conventions/floating-chrome-coherence.spw"
+@css_instruction: ~"../conventions/css-instruction.spw"
+@ui_sitting: ~"./ui-review-sitting-2026-10.spw"
+@touch_census: ~"../audits/touch-gesture-contracts-2026-09.spw"
+@word_sets: ~"../conventions/word-sets.spw"
+@capture_css: ~"../../public/css/modes/capture.css"
+# Rules this answers to
+@learnable_rule: ~"../conventions/ornament-contract.spw"
+@whimsy_rule: ~"../conventions/design-whimsy.spw"
+@wonder_architecture: ~"../conventions/wonder-architecture.spw"
+# Code
+@dom_contracts: ~"../../public/js/kernel/dom-contracts.js"
+@floating_css: ~"../../public/css/components/floating-chrome.css"
+@whimsy: ~"../../public/css/ornament/whimsy.css"
+@chips: ~"../../public/css/handles/operators/sigils-and-chips.css"
+@material: ~"../../public/css/effects/material.css"
+@adaptive: ~"../../public/css/shell/chrome/adaptive.css"
+@tokens: ~"../../public/css/tokens/core.css"
+@page_state: ~"../../public/js/runtime/page/page-state.js"
