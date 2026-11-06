@@ -397,6 +397,16 @@ expression = consumer[recommendations]{performance.cli.intermediate.culture}<ups
   consume = `Until the harness runs probes, the site runs its own: npm run wonder -- --run executes the read-only ones and --write keeps result_ref-shaped receipts in .spw/gen/wonder-runs.spw; the verdict and the stream line stay a reader's.`
 }[reg=facet]
 
+^"week_2026_11_05"{
+  standing = `Each ask now names the goal it serves. The site published what the language should let you say (/topics/software/spw/#expressiveness-goals), and @roadmap#expressiveness_goals is the source of record: a line stays a note, a mark says what a word is doing, a brace names its slot wherever it sits, joins keep their kinds apart, two readings can be held side by side, a question carries its probe, a citation resolves or says why, and the language grows by naming a role first.`
+  decided = `The creator, 2026-11-05: each brace pair names its slot wherever it sits. The site's slot reader, spw.quest's /build and /pivot read either order and write a line back in its author's order. The parser does not yet: word[mode]{body}(scene)<concept> parses as identifier, frame, body and scope, while word<concept>(scene)[mode]{body} opens a capsule at <concept> and leaves [mode]{body} a second expression (checked 2026-11-05 with spw-workbench-reader.js).`
+  proposals = #[
+    `+[reader] Read slots by brace, not by position, the way the site's reader does since 2026-11-05 :: reader[slots]{brace.order}<slot_goal>`,
+    `+[asks] Every ask names the expressiveness goal it serves and what it keeps :: ask[goal]{serves.keeps}<expressiveness_goals>`,
+  ][reg=set]
+  ~#taste: "A release is read against the goals, not against taste alone."
+}[reg=facet]
+
 ^"validation"{
   probe: `npm run spw:integrity && npm run test:modules`
   falsification: "A recommendation here is falsified if upstream implements a command or fix that achieves equal or better developer experience, performance, and composability without regressions."

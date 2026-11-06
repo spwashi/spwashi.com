@@ -166,6 +166,20 @@ fixity = "tending"
   }[reg=facet]
 }[reg=facet]
 
+^"expressiveness_goals"{  # what the language should let you say; mirrored on /topics/software/spw/#expressiveness-goals (31d71132)
+ ~#note: "The source of record for the atlas's goals. A workbench ask or a language change names the goal it serves and keeps what that goal says to keep."
+ question = `Where do two understandings stop sharing ground, and what would help them share more? (spw.quest's guide)`
+ note_goal = .{ says = `A line stays a note: a person reads it without the tool, and a tool can still find it, check it and follow its links.` keep = `an exact reconstruction of the source` checked_by = `the literal parser at /tools/spw-parser/` }[reg=facet]
+ mark_goal = .{ says = `A mark says what a word is doing: one table of sigils, the printed character is the meaning, a site's name for it is an alias.` keep = `one table` checked_by = `public/js/kernel/operator-detection.js and npm run ecology:language` }[reg=facet]
+ slot_goal = .{ says = `A brace says which slot a word fills, wherever it sits; a line written back keeps its author's order.` keep = `every slot, even one out of turn` checked_by = `scripts/tests/expression-query.test.mjs and an unchanged expression manifest` decided = `the creator, 2026-11-05` }[reg=facet]
+ join_goal = .{ says = `Joins keep their kinds apart: . one name, , together, ; in order, ~> a path inside a brace; {a}.{b} crawls between braces; ~ & ^ @ name a bond between lines.` keep = `each join distinct from the others` checked_by = `the dot-crawl specimen in the parser and readBodyJoins` }[reg=facet]
+ compare_goal = .{ says = `Two readings can be held side by side: the ground they share first, then the slot where they part.` keep = `readings comparable slot by slot` checked_by = `spw.quest/specimens with two lines held, and npm run spw:routes -- --diff (reading.ground-edge/1)` }[reg=facet]
+ ask_goal = .{ says = `A question carries its own probe, and its answer can land back on a claim with a receipt.` keep = `probes that read without writing` checked_by = `npm run wonder -- --run; landing the answer is inquiry.loop/1, proposed` }[reg=facet]
+ cite_goal = .{ says = `A citation resolves, or says why it does not.` keep = `a missing file told apart from a missing section` checked_by = `npm run spw:integrity (citation.resolve/1)` }[reg=facet]
+ grow_goal = .{ says = `The language grows by naming a role first; a new mark joins once a convention says what it does, and | may be one later.` keep = `one grammar, never a fork` checked_by = `.spw/language/operator-namespace-alignment.spw and the asks this site files upstream` }[reg=facet]
+ open = `Whether every word of a passage should take its container's color, so a reading becomes a performance searchable by its shape: .agents/plans/brace-semantics/index.spw#wonder_brace_semantics_highlighter_then_now`
+}[reg=facet]
+
 ^"retired"{  # pillars kept as history; each says what holds its intent now
   profiles_and_validator = `superseded by upstream's path-inferred review profiles (spw surface) and this site's audit:spw-tree`
   grammar_unification = `superseded by upstream's admission rule; two section shapes are allowed`
@@ -215,6 +229,7 @@ fixity = "tending"
  >>[2026-10-27 13:32] probe — wonder_v04_claims_wonders: the wonder side of the loop now runs. npm run wonder -- --run ran 44 read-only probes in 13 s and kept result_ref-shaped receipts in .spw/gen/wonder-runs.spw; no wonder is answered, and no claim has a run. Run before any ~#expect was on record.
  >>[2026-10-27 13:32] probe — wonder_v04_fixity_name: 389 site .spw files carry a #:fixity header, one more than the tension's count. Run before any ~#expect was on record.
  >>[2026-10-27 14:21] decide — wonder_v04_name: answered by the creator, who asked for the plan to be renamed; it is .agents/plans/spw-inquiry-loop now. The receipt is the conversation of 2026-10-27, not a run: a decision answers a question of taste, and a probe could only have measured what the rename would move.
+ >>[2026-11-05 23:40] contract — the expressiveness goals the atlas published (31d71132) are held here as their source of record, beside the capabilities they ground: eight goals, each with what a change must keep and where the site checks it, and the highlighter question left open.
 }
 
 validation: #[
