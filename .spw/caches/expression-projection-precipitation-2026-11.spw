@@ -1,0 +1,181 @@
+# Expression Projection & Precipitation (2026-11)
+#
+# operation: cache
+# Why the majority of the 986 authored data-spw-semantic-expression strings
+# read as static filing labels rather than active Spw constructs, and how each
+# grammatical element (force, subject, [mode], {body}, (scene), <projection>,
+# and compound joins) projects or precipitates lived experience.
+
+#>expression_projection_precipitation_2026_11
+#:cache #!expression #!semantics #!projection #!precipitation #!experience
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+expression = expression[projection]{force;subject;mode;body;scene;projection}<precipitate>
+
+operation = "cache"
+fixity = "tending"
+source = "2026-11-05 census of SPW_EXPRESSION_MANIFEST (986 authored expressions) against language/expressions/* and semantic-expression-consequence.spw"
+
+^"thesis"{
+  claim = "Most of the 986 authored data-spw-semantic-expression strings across spwashi.com use Spw syntax as a three-box filing label (section[where]{nouns}) rather than an experiential formula. An expression only earns its braces when its slots distinguish what is under pressure (subject), what posture or lens is switchable ([mode]), how the internal mechanism moves ({body: , vs ; vs ~>}), under what witness condition it runs ((scene)), and what outward experience or artifact it projects or precipitates (<projection>)."
+  distinction = .{
+    projecting = "Casting an internal structure onto a reading surface, lens, or neighbor host — handled by [mode] (posture selection), (scene) (witnessed stage), <projection> (outward channel), and ~> / ^ (directed transfer or register lift)."
+    precipitating = "Condensing held tension, ingredients, or sequential steps into an inspectable residue, receipt, or cauldron synthesis — handled by {body} separators (, ingredient set, ; causal sequence), postfix settling (. / !), and compound joins (~, &, ^, @)."
+  }[reg=facet]
+  falsifier = "If swapping an expression's [mode], {body} separator, and <projection> with a generic label like route[section]{part.item} changes neither the reader's mental model of the encounter nor any runtime behavior (kinship lighting, lens pivot, cauldron synthesis, or breadcrumb anatomy), the expression was decorative metadata."
+}[reg=facet]
+
+^"diagnosed_pathologies"{
+  # Measured against public/js/generated/spw-expressions.js (986 expressions).
+  p1_filing_label_syndrome = .{
+    id = "epp-001"
+    status = "open"
+    measured = "Of 986 expressions in @expression_manifest on 2026-11-05, 618 carry no projection, compound or charge, and 625 have tight-dot bodies; the shared container topology is what @expression_consequence#two_measurements_that_changed_the_design found when it measured rank and kin. Strings like folio[table]{issue}, series[home]{season}, and about[wrap]{rail} restate DOM hierarchy (route[container]{child}) instead of naming an experiential transformation."
+    defect = "When every slot holds a static location noun, the brackets lose their distinct modal forces: [table] is not a switchable posture, and {issue} is not an internal mechanism."
+  }[reg=facet]
+
+  p2_tight_dot_homogenization = .{
+    id = "epp-002"
+    status = "open"
+    measured = "63% of expression bodies (625 of 986, 2026-11-05) use tight dots ({open.sit}, {code.print.lore.artifact}, {mount.doctor.guide}), which parse() collapses into a single flat IDENTIFIER path (@compound_expressions#separator_variety). The manifest holds 49 bodies with ; (ordinal sequence) and 12 with , (co-present set), and none with ~> (project-join); @semantic_after_charge#spine lists 7 hosts."
+    defect = "Using . for everything erases the internal physics of {body}: readers and tools cannot tell whether {a.b.c} is a bag of co-equal ingredients (a,b,c), a temporal/causal pipeline (a;b;c), a spatial handoff (a~>b~>c), or a single qualified property path (a.b.c). Generic bodies like {open.sit} sat on 7 unrelated routes when @spw_assembly#probe_2026_09_28 counted them; 27 manifest entries carry it on 2026-11-05."
+  }[reg=facet]
+
+  p3_collapsed_operator_dynamics = .{
+    id = "epp-003"
+    status = "open"
+    measured = "Although @dynamic_categories#from_the_table defines seven operator flows (fixing #>, layering #:, naming #, reaching ~, settling ., surfacing ^, opening ?), 95.4% of route expressions (941 of 986) use only bare static naming. Almost none lead with a prefix operator (? opening a probe, ~ holding potential, ^ lifting a register, ! committing an action) or close with a postfix residue (commit!, ground.) (@spw_as_handle)."
+    defect = "Without prefix/postfix operator force or charge-signs (@semantic_after_charge), expressions cannot state whether a component is asking a question (?), holding an uncollapsed option (~), lifting a rule (^), or settling a receipt (.)."
+  }[reg=facet]
+
+  p4_dead_end_projections_and_singleton_isolation = .{
+    id = "epp-004"
+    status = "open"
+    measured = "334 expressions carry <projection> (2026-11-05), yet many end in vague nouns (<shape>, <part>, <item>) rather than experiential precipitates (<receipt>, <residue>, <still>, <horizon>, <canon>). 20 expressions in the manifest use a compound join, all ~ and none ^, though @compound_expressions#the_grammar_already_holds defines ~, &, ^, and @."
+    defect = "Singleton expressions with vague <projection> slots cannot form cross-card circuits or tell the cauldron what precipitates when two components meet."
+  }[reg=facet]
+}[reg=facet]
+
+^"construct_experiential_map"{
+  # What each Spw construct is meant to project (outward cast) or precipitate (condensed residue).
+  force_and_charge = .{
+    syntax = "?subject · ~subject · ^subject · !subject · boon.honk subject · subject!"
+    projects = "The epistemic or affective vector approaching the host: ? opens an unanswered question; ~ holds a branch without collapsing it; ^ lifts an inspectable principle; ! commits a state change (@positional_sets#prefix, @positional_sets#postfix)."
+    precipitates = "Postfix operators (commit!, ground.) mark that the action has already fired and only its settled trace remains in the component."
+  }[reg=facet]
+
+  subject = .{
+    syntax = "subject (or observer@subject)"
+    projects = "The medium, substance, or tension under attention — not the page slug. Adding @ binds whose viewpoint is looking (e.g., reader@folio vs maker@folio)."
+    precipitates = "Topic kinship across routes when the same medium (e.g., laminate, canon, rhythm, wonder) appears under different lenses."
+  }[reg=facet]
+
+  mode_square = .{
+    syntax = "[mode]"
+    projects = "A switchable posture, condition, or instrument through which the subject is engaged ([reading] vs [bench] vs [inspect], or [cold] vs [ferment]). Implies an unchosen sibling mode exists on the same subject."
+    precipitates = "A live or conceptual modality pivot (spw.quest/pivot): asking 'what changes if I hold this same subject in [play] instead of [study]?'"
+  }[reg=facet]
+
+  body_brace = .{
+    syntax = "{a,b,c} · {a;b;c} · {a~>b} · {a.b}"
+    projects = "The interior mechanism or chamber where work happens (@compound_expressions#separator_variety):"
+    comma_set = "{author,illustrator,musician} — co-present ingredients or peers held in one bowl; order does not matter."
+    semicolon_seq = "{sheet;collage;laminate;paint;varnish} — irreversible temporal or causal stages; step 2 depends on step 1."
+    project_join = "{draft~>press~>folio} — directional relay across thresholds or mediums."
+    dot_path = "{identity.compass} — a single refinement chain narrowing one concept."
+    precipitates = "Cauldron ingredient extraction and step-by-step procedural readability."
+  }[reg=facet]
+
+  scene_paren = .{
+    syntax = "(scene)"
+    projects = "The live witness context, constraint, or time-slice in which the body's work is staged — e.g., (atlas), (person), (brace) on the site's routes (@semantic_after_charge#spine)."
+    precipitates = "Situational grounding: separates how the mechanism works ({body}) from where/when it is witnessed ((scene))."
+  }[reg=facet]
+
+  projection_angle = .{
+    syntax = "<projection>"
+    projects = "The outward surface, channel, or perceptual shift cast by the encounter — what the reader walks away seeing differently."
+    precipitates = "The concrete artifact, receipt, or state deposited at the end of the pass (<receipt>, <residue>, <folio>, <canon>, <horizon>). Stamps data-spw-projection for cross-route kinship (@expression_resonance)."
+  }[reg=facet]
+
+  compound_joins = .{
+    syntax = "A ~ B · A & B · A ^ B · A @ B"
+    projects = "How two components couple across space (@compound_expressions#the_grammar_already_holds): ~ (coupled by induction), & (one is the subject of the other), ^ (concrete A projects into B), @ (perspective: in viewer@subject the left side is the viewer, @positional_sets#infix)."
+    precipitates = "A multi-component circuit where interacting with A predicts what shifts in B."
+  }[reg=facet]
+}[reg=facet]
+
+^"before_after_specimens"{
+  # Concrete upgrades contrasting weak filing-label expressions against expressive constructs.
+  specimen_1_folio = .{
+    before = "folio[table]{issue}"
+    problem = "Names three static nouns (page, furniture, object); no transformation, no witness condition, no precipitate."
+    after = "folio[bench]{sheet;collage;laminate;cure}(year)<artifact>"
+    why_better = "Shows the studio posture ([bench]), the irreversible physical sequence ({sheet;collage;laminate;cure}), the slow time-horizon ((year)), and what precipitates (<artifact>)."
+  }[reg=facet]
+
+  specimen_2_reading_intro = .{
+    before = "about[reading]{open.sit}"
+    problem = "{open.sit} repeats as filler (27 manifest entries on 2026-11-05); it says nothing about what reading About actually projects."
+    after = "?about[reading]{person,software,art}(threshold)<orientation>"
+    why_better = "Leads with ? (an open inquiry at the threshold), holds the three co-present facets of creator identity ({person,software,art}), stages the arrival ((threshold)), and precipitates <orientation>."
+  }[reg=facet]
+
+  specimen_3_series_card = .{
+    before = "series[home]{season}"
+    problem = "Restates route and card type; zero internal mechanism or outward cast."
+    after = "~series[cadence]{seed;issue;variation;return}(season)<canon>"
+    why_better = "Marks held potential (~), names the rhythmic lens ([cadence]), traces how a serial work accumulates ({seed;issue;variation;return}) over a (season), and precipitates <canon>."
+  }[reg=facet]
+
+  specimen_4_cross_card_circuit = .{
+    before = "quest[spw]{mount.doctor.guide}"
+    problem = "Treats three CLI steps as a single dotted identifier with no verification output or rule lift."
+    after = "!quest[spw]{mount;doctor;verify}(worktree)<receipt> ^ grammar[contract]{parse;resolve}<law>"
+    why_better = "Frames the quest as an action (!), sequences the steps ({mount;doctor;verify}) inside a (worktree) to precipitate a <receipt>, and lifts (^) that concrete run into a grammar <law>."
+  }[reg=facet]
+}[reg=facet]
+
+^"authoring_litmus_tests"{
+  test_1_mode_pivot = "Can you name at least one sibling [mode] that could sit on the same subject? If [mode] cannot pivot (e.g. [wrap], [div]), it is a layout noun, not a mode."
+  test_2_separator_honesty = "Inside {body}, ask: 'Does order matter?' If yes, use ; (or ~> for handoffs). If they are co-present peers, use ,. Reserve . for narrowing a single concept (a.b)."
+  test_3_precipitate_tangibility = "Does <projection> name something that can be witnessed, collected, or compared (<receipt>, <residue>, <canon>, <still>, <horizon>)? Avoid container synonyms (<box>, <part>, <section>)."
+  test_4_consequence_floor = "Follow @expression_consequence#authoring_rule and @compound_expressions#what_to_write_next: rather than backfilling 900 routes with slightly fancier labels, author rich expressions where a reader, lens, kinship highlight, or cauldron mix actually reads the difference."
+}[reg=facet]
+
+#>wonder_expression_projection_precipitation
+?["Which repeated filler bodies (starting with {open.sit}) should be retired or rewritten into genuine sequence/set bodies first?"]{
+  #:depth #!educational ~#lens(living_system)
+  ~#with: @spw_assembly @positional_sets @expression_consequence
+  ~#hypothesis: "Retiring repeated filler bodies like {open.sit} on generic frames and upgrading only high-consequence hosts (where lens pivots, cauldron ingredients, or cross-route kinship actually read the slots) raises expression signal without decorative churn."
+  ~#expect: "Identify body strings occurring >= 4 times across unrelated subjects in public/js/generated/spw-expressions.js; drop decorative ones and rewrite process/ingredient hosts with ; or , separators."
+  ~#probe(run)
+  !probe{ "node -e \"import('./public/js/generated/spw-expressions.js').then(m => console.log(Object.keys(m.SPW_EXPRESSION_MANIFEST).length))\"" }
+  $%[body.filler_retirement, body.separator_honesty, projection.tangibility]
+
+  #>wonder_expression_separator_rendering
+  ?["How should the cauldron and expression inspector visually distinguish comma-sets {a,b,c}, semicolon-pipelines {a;b;c}, and project-joins {a~>b} when a visitor collects an expression?"]{
+    #:depth #!stylistic ~#lens(formal_structure)
+    ~#with: @expression_query @positional_sets
+    ~#hypothesis: "If the manifest records separator species alongside parts, the cauldron and inspector can render comma-sets as co-equal chips, semicolon-pipelines as stepped stages, and project-joins as directed relays."
+    ~#expect: "Preserve separator species in shapeFromExpression and readShape so authored {a,b,c} vs {a;b;c} reaches runtime consumers."
+    ~#probe(run)
+    !probe{ "rg -n 'parts|sequence' public/js/semantic/expression-query.js scripts/build-expression-manifest.mjs" }
+    $%[separator.comma_set, separator.semicolon_seq, separator.project_join]
+  }
+}
+
+# Handles, declared last.
+@expression_consequence: ~"../conventions/semantic-expression-consequence.spw"
+@compound_expressions: ~"../conventions/compound-expressions.spw"
+@dynamic_categories: ~"../language/expressions/dynamic-categories.spw"
+@positional_sets: ~"../language/expressions/positional-sets.spw"
+@container_formations: ~"../language/expressions/container-formations.spw"
+@spw_assembly: ~"./spw-assembly-2026-09.spw"
+@semantic_after_charge: ~"./semantic-after-charge-sign-2026-09.spw"
+@spw_as_handle: ~"./spw-as-handle-2026-09.spw"
+@expression_manifest: ~"../../public/js/generated/spw-expressions.js"
+@expression_resonance: ~"../../public/js/runtime/expression/expression-resonance.js"
+@expression_query: ~"../../public/js/semantic/expression-query.js"

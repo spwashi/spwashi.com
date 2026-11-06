@@ -1,0 +1,175 @@
+# Spw design improvements (2026-11) — cache: five structural seams where the language, the reader, the loop, the file, and the page can tighten into one medium
+#>spw_design_improvements_2026_11
+#:cache #!spw #!language #!design #!grammar #!tooling
+#:operation #!cache
+#:fixity #!tending
+#:layer #!semantics
+
+expression = design[spw]{reader.table.loop.screen.surface}<improve>
+
+summary = #[
+  `One expression reader should return both slots and positional force across the parser, search, cauldron, and manifest.`,
+  `One canonical sigil and brace table should end the workbench-vs-kernel name split, thirty copied JS tables, and the fixity homonym.`,
+  `Wonders and claims should close one inquiry loop: a guess (~#expect), a runnable probe, a dated receipt, and an answer that updates the claim.`,
+  `Files and reductions should protect the first screen: substance before handle lists, and reductions that name their ground, edge, and dropped residue.`,
+  `Public pages should teach Spw through consequence — contrastive slot hovers, one expression mouth, and one anatomy trail — without schema jargon.`,
+][reg=set]
+
+contents = #[
+  ~"./spw-design-improvements-2026-11.spw#reader_unification",
+  ~"./spw-design-improvements-2026-11.spw#canonical_sigil_table",
+  ~"./spw-design-improvements-2026-11.spw#inquiry_loop_closure",
+  ~"./spw-design-improvements-2026-11.spw#first_screen_and_residue",
+  ~"./spw-design-improvements-2026-11.spw#public_surface_consequence",
+  ~"./spw-design-improvements-2026-11.spw#priority_order",
+  ~"./spw-design-improvements-2026-11.spw#wonder_spw_design_improvements",
+  ~"./spw-design-improvements-2026-11.spw#stream",
+][reg=set]
+
+^"reader_unification"{
+  id = "sdi-001"
+  operation = "cache"
+  fixity = "tending"
+  claim = `Spw currently parses expressions differently depending on who asks: file-context parse(), standalone parseExpression(), the build-time manifest, and the runtime query/cauldron readers each keep half the grammar and drop the rest.`
+  evidence = #[
+    `@upstream_asks#parse_entrypoint_alignment: 460 of 460 expressions structure under file-context parse(), while standalone parseExpression() truncates 457 of 460 at the leading identifier`,
+    `@spw_as_handle#worked_example: parseExpressionQuery in @expression_query reads slots on "<theme> ~@[cream] ?#" and drops the prefix (~@) and postfix (?#) force sigils`,
+    `@compound_expressions#consistency_2026_10_27: 17 route lines open with a lone valence word (such as bane[bone]{limit}) and the slot reader leaves them with no subject word`,
+    `@theory_map#wonder_theory_join_algebra: readCompoundJoin reads only the first operator between lines, so a three-way compound is read in part`,
+    `@operator_consistency#compounds: parse() reads tight dots (a.b.c) as one IDENTIFIER token while authors and readBodyJoins treat . as the default body separator across 1,944 of 2,690 route attributes`,
+  ][reg=set]
+  pattern_consideration = `Compare @geometry (5-tuple surface geometry), @expression_query (slot + single join + charge), and @manifest_builder (build-time AST walk). None is wrong alone; the drift comes from splitting force from slots.`
+  expansion_prime = `Converge on one small structured reading — force (prefix, postfix), slots (subject, mode, body.{join,parts}, projection, scene, charge), and an ordered join chain — where a lone valence word promotes to subject when no noun follows, and cross-slot word matches score as weak hits behind exact slot matches.`
+  validation = `node --import ./scripts/tests/setup-dom-globals.mjs --import ./scripts/tests/register-public-imports.mjs --test scripts/tests/spw-expression-geometry.test.mjs && npm run ecology:language`
+}[reg=facet]
+
+^"canonical_sigil_table"{
+  id = "sdi-002"
+  operation = "cache"
+  fixity = "tending"
+  claim = `Every layer agrees on the nineteen sigil characters, but two official naming vocabularies, thirty hand-copied JS tables, and two meanings of the word "fixity" make hovers, search, and CSS rules disagree at the seams.`
+  evidence = #[
+    `@operator_consistency#two_sources: the workbench names ^ = % {} ascension, configuration, measure, and definition, while @operator_canon names them integration, binding, normalize, and direction`,
+    `@operator_consistency#names: [ ] is called mode in the kernel, frame in the workbench lexer (colliding with #> frame), variant in @operator_semantics, and lens in spw.quest`,
+    `measured 2026-11-05: 11 of 329 non-generated public/js files import @operator_canon (15 counting scripts, tests aside); @operator_consistency#tables lists about nine importers and nine drifted prefix regexes that re-derive the sigils by hand`,
+    `@language_utilization: npm run ecology:language flags 145 HTML hosts carrying data-spw-operator="state", an untyped alias outside the nineteen canon prefixes`,
+    `@roadmap#wonder_v04_fixity_name and @formations#fixity_note: "fixity" means surface stability (fixed..volatile) in the #:fixity headers of 416 tracked .spw files (388 when @roadmap counted them on 2026-10-27) and operator position (prefix|infix|postfix) in the upstream normalizer`,
+  ][reg=set]
+  pattern_consideration = `Compare @namespace_table (which maps character, runtime type, workbench name, and atlas slug) against @operator_consistency#defects (where perspective shares action's hue and cauldron phase).`
+  expansion_prime = `Export one zero-dependency sigil-and-brace descriptor table from the workbench (or @operator_canon until the pin moves) carrying character, workbench name, kernel name, spoken verb, reversibility, and distinct hue/phase tokens; replace the nine drifted prefix regexes with OPERATOR_PREFIX_RE; and reserve "fixity" for surface stability while naming prefix/infix/postfix "position".`
+  validation = `npm run ecology:language && node --test scripts/tests/sigil-table-relations.test.mjs`
+}[reg=facet]
+
+^"inquiry_loop_closure"{
+  id = "sdi-003"
+  operation = "cache"
+  fixity = "tending"
+  claim = `Spw has two separate truthfulness constructs — claim blocks and ?["…"] wonders — that rarely close: claims sit unrun in templates while wonders accumulate probes without predictions or answers.`
+  evidence = #[
+    `npm run wonder -- --contour, 2026-11-05: 261 wonders, 243 open, 13 probed, 5 answered; 278 probes and only 61 ~#expect marks, so most runs measure without testing a guess (@capabilities_asks#inquiry_loop counted 208 harvested, 12 probed, none answered)`,
+    `@roadmap#reevaluation_2026_10_27: 321 claim units exist on the site (198 copied from a plan-index template) and no claim's probe_ref is automatically executed to move its status`,
+    `@capabilities_asks#measure_or_answer: $%[…] inside a wonder is used both for producer metrics (92 terms) and for inquisitive answer sets (68 terms), leaving answer sets flagged as missing measurements`,
+  ][reg=set]
+  pattern_consideration = `Compare @theory_map#lifecycle (open -> ~#expect -> >>[date] probe -> ~#answer -> ~#retired) with @language_utilization#claims_and_probes.`
+  expansion_prime = `Treat wonder and claim as two stages of one inquiry loop: a wonder requires ~#expect before !probe runs; $%[…] alongside ~#expect is read as the answer set rather than an unresolved metric; and recording ~#answer with a dated >>[…] probe line serves directly as the confirming or refuting receipt for the linked claim.`
+  validation = `npm run -s wonder -- --contour && npm run -s wonder:measures | tail -5`
+}[reg=facet]
+
+^"first_screen_and_residue"{
+  id = "sdi-004"
+  operation = "cache"
+  fixity = "tending"
+  claim = `A .spw file or CLI projection loses its reader when the first screen is spent on @handle path aliases, or when a reduction (skim, outline, manifest) silently drops the slot where two siblings actually part.`
+  evidence = #[
+    `@tree_dx#first_screen: across caches, conventions, and audits, the first content line starts at lines 22-28 after 7-9 handle lines (32 before the ecosystem-clusters reorder), spending the 30-40 line phone screen before the expression or summary appears`,
+    `@motions_asks#reduction_names_its_residue: spw skim on a 94-line route tree prints 24 entries (18 of them handle declarations), omits fills (the one slot where bane parts from boon), and never states what it dropped`,
+    `@motions_asks#ground_then_edge: lexical delta counts 52 edits between bane.land and boon.land where slot reading (ground-then-edge) finds one shared shape and a single edge at first = name`,
+    `npm run audit:spw-tree, 2026-11-05: eight durable conventions/root surfaces exceed the 400-line budget (site-semantics.spw is 1,484 lines), and 16 .spw files each warn that no index.spw names them, plus one folder-level warning`,
+  ][reg=set]
+  pattern_consideration = `Compare @ecosystem_clusters and @theory_map (which open with frame, expression, summary, contents, and put grouped handles last) against older conventions that open with 40 @cite lines.`
+  expansion_prime = `Hold new and tended .spw files to the first-screen order (frame + axes -> expression -> <=5-line summary -> contents -> substance -> stream -> grouped handles last); make every reduction emit ground, first parting slot (edge), and dropped residue count + citation; and split >400-line conventions along their facet boundaries.`
+  validation = `npm run -s audit:spw-tree && npm run -s spw:routes -- --diff /about/domains/bane.land/ /about/domains/boon.land/`
+}[reg=facet]
+
+^"public_surface_consequence"{
+  id = "sdi-005"
+  operation = "cache"
+  fixity = "tending"
+  claim = `On public routes, Spw is most compelling when an expression visibly does work — filtering, pivoting a slot, or tracing anatomy — and least compelling when prose explains the schema in abstract words or hides collectibility on block elements.`
+  evidence = #[
+    `@metaphysical_plan#wonder_metaphysical_depth_copy: the operator atlas still leans on schema and version words before showing what a mark does to a sentence or layout`,
+    `@metaphysical_plan#wonder_metaphysical_depth_layout: almost all of the 974 route expressions sit one brace deep (subject[mode]{parts}), giving nesting layouts little to show outside the herbarium`,
+    `@spw_as_handle#cauldron_today: every [data-spw-semantic-expression] is a cauldron candidate, but GESTURE_HINT_HOST_SELECTOR is inline-only, so sections and cards never show they can be held`,
+    `@craft_shelves#live_state_expressions: breadcrumbs, the bottom rail, cauldron provenance, and seed cards each assemble their own trail instead of reading one page-anatomy expression`,
+    `@theory_map#wonder_theory_contrast_hover: variation theory predicts that swapping one mark in place (~door / ?door / !door) teaches operator force faster at first contact than a static definition`,
+  ][reg=set]
+  pattern_consideration = `Compare spw.quest/pivot (which varies one slot against a stable line), @spw_as_handle (one expression mouth for search, cauldron, satchel, and texture), and @readable_by_tooling (cards whose row order embodies the rule they teach).`
+  expansion_prime = `Give public expressions three low-noise consequences without minting any new data-spw-* attribute: (1) contrastive 1-slot hover/pivot previews on operator chips and expression badges, (2) a shared expression input mouth in search and the cauldron that keeps both force and slots, and (3) a quiet corner sigil on block expression carriers paired with one shared page-anatomy expression reader for breadcrumbs and rails.`
+  validation = `npm run audit:operator-controls && npm run audit:copy:accessor && npm run ecology:language`
+}[reg=facet]
+
+^"priority_order"{
+  ~#note: "Sequenced by what unblocks the most downstream clarity per patch, while respecting the dual-path XOR rule (@language_utilization#dual_path)."
+  order = ?<
+    sdi-001 (unify the expression slot + force reader in expression-query.js),
+    sdi-002 (consolidate drifted sigil regexes onto operator-detection.js and settle fixity vs position),
+    sdi-003 (pair ~#expect with $% answer sets and wire wonder answers to claim receipts),
+    sdi-004 (first-screen handle-last order and residue-naming reductions),
+    sdi-005 (contrastive hover, cauldron expression mouth, and shared page-anatomy trail)
+  >[reg=stream]
+  do_not = #[
+    `do not invent a new data-spw-* attribute family or a twentieth operator sigil`,
+    `do not edit .spw/_workbench from a site patch; file upstream asks in @upstream_asks`,
+    `do not backfill compound expressions across routes where no real coupling exists`,
+    `do not mix a language convention patch and a public HTML/CSS/JS runtime patch in one commit`,
+  ][reg=set]
+}[reg=facet]
+
+#>wonder_spw_design_improvements
+?["Which of the five design seams yields the largest reduction in silent disagreement across the codebase when fixed first?"]{
+  #:depth #!computational ~#lens(comparison)
+  ~#with: @operator_consistency @spw_as_handle @capabilities_asks
+  ~#taste: "Fix the reader that silently drops what an author wrote before adding new things to write."
+  ~#hypothesis: "Unifying the expression slot-and-force reader (sdi-001) and importing one sigil table (sdi-002) eliminate silent truncation in search, cauldron, and manifest builds, whereas surface polish before reader alignment multiplies workarounds."
+  ~#expect: "sdi-001 first on the site path (one module, expression-query.js, unlocks search, cauldron, and lone-valence subjects), and sdi-002's regex consolidation second (nine files importing OPERATOR_PREFIX_RE)."
+  ~#tension: "Reader and table fixes are invisible to a casual visitor until sdi-005 exposes contrastive hovers and the cauldron mouth on public routes."
+  ~#unblocks: "the parser-force patch in @spw_as_handle#first_patches and the drifted-table cleanup in @operator_consistency#tables"
+  ~#probe(run)
+  !probe{ "rg -l 'OPERATOR_PREFIX_RE' public/js scripts --glob '!**/generated/**' --glob '!**/bundles/**' | wc -l" }
+  $%[seam.reader_first, seam.table_first, seam.loop_first, seam.surface_first]
+}
+
+^"stream"{
+ >>[2026-11-05 20:14] observe — Synthesized five structural improvements to the design of Spw across the language, parser/query readers, inquiry loop, file ergonomics, and public hypermedia surfaces. Grounded each insight (sdi-001..sdi-005) against live measurements from ecology:language (4,192 expressions on 2026-11-05, 145 untyped state operators), audit:spw-tree (434 files, 8 over-400-line durable surfaces), and wonder --contour (251 wonders, 189 lacking ~#expect, 5 answered).
+}
+
+# About this file
+operation = "cache"
+fixity = "tending"
+source = "chat 2026-11-05: how could the design of Spw be improved? create a cache .spw item"
+
+# Handles, by role. Declared last; each one links wherever the text names it.
+# Language & conventions
+@language_utilization: ~"../language/feature-utilization.spw"
+@roadmap: ~"../language/v04/roadmap.spw"
+@formations: ~"../language/expressions/index.spw"
+@namespace_table: ~"../language/operator-namespace-alignment.spw"
+@operator_semantics: ~"../conventions/operator-semantics.spw"
+@compound_expressions: ~"../conventions/compound-expressions.spw"
+# Caches & reviews
+@operator_consistency: ~"./operator-consistency-2026-10.spw"
+@spw_as_handle: ~"./spw-as-handle-2026-09.spw"
+@readable_by_tooling: ~"./spw-readable-by-tooling-2026-09.spw"
+@craft_shelves: ~"./craft-shelves-2026-10.spw"
+@theory_map: ~"./theory-map-2026-10.spw"
+@ecosystem_clusters: ~"./ecosystem-clusters-2026-10.spw"
+@tree_dx: ~"../reviews/spw-tree-dx-2026-10.spw"
+@upstream_asks: ~"../reviews/upstream-workbench-recommendations.spw"
+@capabilities_asks: ~"../reviews/upstream-workbench-recommendations/capabilities.spw"
+@motions_asks: ~"../reviews/upstream-workbench-recommendations/motions.spw"
+@metaphysical_plan: ~"../../.agents/plans/spw-metaphysical-language/index.spw"
+# Runtime & build readers
+@operator_canon: ~"../../public/js/kernel/operator-detection.js"
+@expression_query: ~"../../public/js/semantic/expression-query.js"
+@geometry: ~"../../public/js/semantic/spw-expression-geometry.js"
+@manifest_builder: ~"../../scripts/build-expression-manifest.mjs"
