@@ -85,7 +85,7 @@
                 </div>
                 <h1 id="parser-title">Literal Spw Parser</h1>
                 <p id="parser-lede" data-spw-textual-role="lede" data-spw-copy-unit="parser.hook.lede" data-spw-semantic-expression="proof[parser]{source;tokens;ast;diagnostics;reconstruction}(browser)<exact>">This is the parser, running in your browser. Change the source and watch Spw become tokens, an abstract syntax tree, diagnostics, and an exact reconstruction.</p>
-                <p>This tool ships the portable parser kernel from <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a>. The public page does not imitate a parse or infer braces with display-only rules: the same parser package used by the CLI and language tooling produces the result below. Load practices, language-sync, film, and year-mix as public specimens — plus the beans garden (<code>&lt;beans&gt;</code>, <code>beans.&lt;</code>, <code>&lt;beans&gt;#</code>) — so demand comes from work already on the site, not private theory. A teaching contour: swap <code>[mode]</code> and <code>(scene)</code> on the same stem. The destination may rhyme; the binding does not. That distinction is the design target — not a new wonder type. Consumer notes for the workbench live in <code>.spw/workbench-report.spw</code> and on the <a href="/topics/software/spw/#workbench-improvements">atlas improvement list</a>.</p>
+                <p>This tool ships the portable reader and parser kernel from <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a>. The public page does not imitate a parse or infer braces with display-only rules: the same <code>spw-workbench-reader.js</code> bundle used by the language tooling produces the outline, tokens, AST, and diagnostics below. Load practices, language-sync, film, and year-mix as public specimens — plus the beans garden (<code>&lt;beans&gt;</code>, <code>beans.&lt;</code>, <code>&lt;beans&gt;#</code>) — so demand comes from work already on the site, not private theory. A teaching contour: swap <code>[mode]</code> and <code>(scene)</code> on the same stem, or compare <code>{a,b}</code> (co-present set) against <code>{a;b}</code> (causal sequence) and <code>{a}.{b}</code> (crawl between closed practices). The destination may rhyme; the binding does not. That distinction is the design target — not a new wonder type. Consumer notes for the workbench live in <code>.spw/workbench-report.spw</code> and on the <a href="/topics/software/spw/#workbench-improvements">atlas improvement list</a>.</p>
                 <nav class="frame-operators" aria-label="Parser proof routes">
                     <a class="spw-chip" data-spw-handle="true" href="#literal-parser" data-spw-operator="perspective" data-spw-action="enter">@parse_source</a>
                     <a class="spw-chip" data-spw-handle="true" href="?spw_source=beans%5Bmode%5D%7Bstew%7D%20beans(scene)%7Bsimmer%7D#literal-parser" data-spw-operator="probe" data-spw-action="enter">?mode.scene</a>
@@ -247,25 +247,25 @@
                 <i class="spw-ornament-brace" aria-hidden="true"></i>
                 <header class="frame-heading" data-spw-slot="header">
                     <a class="frame-sigil" href="#v04-specimen-suite" data-spw-operator="frame">#&gt;v04_designer_specimens</a>
-                    <h2>Next-version language specimens (v0.4)</h2>
+                    <h2>Language capability &amp; v0.4 design specimens</h2>
                 </header>
-                <p data-spw-textual-role="note">These specimens test candidate v0.4 grammar constructs against the live browser parser kernel. Workbench designers can click any specimen to load it into the editor, check token spans, verify AST depth, and falsify proposed grammar changes.</p>
+                <p data-spw-textual-role="note">These specimens test both settled language capabilities (runnable claims/probes, dot-crawl joins, separator algebra, combinatoric genre) and historical v0.4 design probes (<code>!:profile</code>, <code>&gt;stem</code>) against the live browser parser kernel. Load any specimen to inspect token spans, AST depth, and how candidate constructs either became capability contracts or retired into simpler conventions.</p>
                 <div class="frame-grid frame-grid--dense">
                     <article class="spw-panel">
                         <h3>Claims &amp; Probes (<a href="?spw_sample=v04_claims#literal-parser">load</a>)</h3>
-                        <p><code>owner_claim</code> and <code>^"synthesis"</code> blocks declare hypotheses, specification citations, and falsification probes. Pillar: <a href="/topics/software/spw/#language-evolution-v04">claim-probe syntax</a>.</p>
+                        <p><code>owner_claim</code> and <code>#&gt;wonder_*</code> blocks pair hypotheses (<code>?["..."]{}</code>) with runnable probes (<code>!probe{ "..." }</code>); closing the loop onto a claim is the proposed <code>inquiry.loop/1</code>. See <a href="/topics/software/spw/#language-evolution-v04">inquiry loop &amp; claims</a>.</p>
                     </article>
                     <article class="spw-panel">
                         <h3>File Profiles (<a href="?spw_sample=profiles#literal-parser">load</a>)</h3>
-                        <p><code>!:profile "convention"</code> headers declare expected file anatomy and enforce required structural blocks across the corpus. Pillar: <a href="/topics/software/spw/#language-evolution-v04">profiles &amp; validator</a>.</p>
+                        <p>Historical <code>!:profile "convention"</code> specimen: tested as explicit syntax, now retired in favor of path-inferred file homes plus <code>#:layer</code> / <code>#:operation</code> / <code>#:fixity</code> headers (<code>header.axes/1</code>). See <a href="/topics/software/spw/#language-evolution-v04">header axes</a>.</p>
                     </article>
                     <article class="spw-panel">
                         <h3>Dot-Crawl Joins (<a href="?spw_sample=dot_crawl#literal-parser">load</a>)</h3>
-                        <p>Crawl traverses complete braces (<code>{a}.{b}.{c}</code>). Tight <code>a.b.c</code> is one identifier. Comma is common; semicolon is a schedule; <code>~&gt;</code> is a path. Pillar: <a href="/topics/software/spw/#join-crawl">joins</a>.</p>
+                        <p>Crawl traverses complete braces (<code>{a}.{b}.{c}</code>). Tight <code>a.b.c</code> is one identifier. Inside a brace, comma holds a co-present set; semicolon orders a sequence; <code>~&gt;</code> relays a path. Pillar: <a href="/topics/software/spw/#join-crawl">joins</a>.</p>
                     </article>
                     <article class="spw-panel">
                         <h3>Stem Projections (<a href="?spw_sample=stem_projection#literal-parser">load</a>)</h3>
-                        <p><code>&gt;stem[name]{...}</code> projects one semantic root into copy, design tokens, runtime datasets, and inspection handles without forking truth.</p>
+                        <p>Historical <code>&gt;stem[name]{...}</code> specimen: one semantic root projected across copy units, CSS tokens, runtime datasets, and <code>.spw</code> handles. The language census now traces stem families instead, and checking that each projection has a reader is proposed.</p>
                     </article>
                     <article class="spw-panel">
                         <h3>Combinatoric Genre (<a href="?spw_sample=boonhonk#literal-parser">load</a>)</h3>
