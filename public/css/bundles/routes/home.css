@@ -2067,30 +2067,64 @@ body[data-spw-surface="home"] .frame-topline .spw-component-tag {
   box-shadow: var(--mode-switch-active-shadow-intent, inset 0 -0.2rem 0 color-mix(in srgb, var(--home-accent-primary) 82%, transparent));
 }
 
-:where(body[data-spw-surface="home"] .frame-card[data-spw-lens-pass]) {
+:where(body[data-spw-surface="home"] :is(.frame-card, #wonder-kin .spw-chip)[data-spw-lens-pass]) {
   transition:
     opacity var(--home-transition-base, 180ms) ease,
     filter var(--home-transition-base, 180ms) ease,
     box-shadow var(--home-transition-base, 180ms) ease;
 }
 
-:where(html[data-spw-active-lens-mode="reading"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] .frame-card[data-spw-lens-pass]:not([data-spw-lens-pass~="reading"])),
-:where(html[data-spw-active-lens-mode="systems"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] .frame-card[data-spw-lens-pass]:not([data-spw-lens-pass~="systems"])),
-:where(html[data-spw-active-lens-mode="play"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] .frame-card[data-spw-lens-pass]:not([data-spw-lens-pass~="play"])),
-:where(html[data-spw-active-lens-mode="studio"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] .frame-card[data-spw-lens-pass]:not([data-spw-lens-pass~="studio"])) {
+:where(html[data-spw-active-lens-mode="reading"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] :is(.frame-card, #wonder-kin .spw-chip)[data-spw-lens-pass]:not([data-spw-lens-pass~="reading"])),
+:where(html[data-spw-active-lens-mode="systems"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] :is(.frame-card, #wonder-kin .spw-chip)[data-spw-lens-pass]:not([data-spw-lens-pass~="systems"])),
+:where(html[data-spw-active-lens-mode="play"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] :is(.frame-card, #wonder-kin .spw-chip)[data-spw-lens-pass]:not([data-spw-lens-pass~="play"])),
+:where(html[data-spw-active-lens-mode="studio"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] :is(.frame-card, #wonder-kin .spw-chip)[data-spw-lens-pass]:not([data-spw-lens-pass~="studio"])) {
   opacity: 0.72;
   filter: saturate(0.45);
 }
 
-:where(html[data-spw-active-lens-mode="reading"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] .frame-card[data-spw-lens-pass~="reading"]),
-:where(html[data-spw-active-lens-mode="systems"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] .frame-card[data-spw-lens-pass~="systems"]),
-:where(html[data-spw-active-lens-mode="play"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] .frame-card[data-spw-lens-pass~="play"]),
-:where(html[data-spw-active-lens-mode="studio"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] .frame-card[data-spw-lens-pass~="studio"]) {
+:where(html[data-spw-active-lens-mode="reading"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] :is(.frame-card, #wonder-kin .spw-chip)[data-spw-lens-pass~="reading"]),
+:where(html[data-spw-active-lens-mode="systems"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] :is(.frame-card, #wonder-kin .spw-chip)[data-spw-lens-pass~="systems"]),
+:where(html[data-spw-active-lens-mode="play"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] :is(.frame-card, #wonder-kin .spw-chip)[data-spw-lens-pass~="play"]),
+:where(html[data-spw-active-lens-mode="studio"]:not([data-spw-active-lens-source="initial"]) body[data-spw-surface="home"] :is(.frame-card, #wonder-kin .spw-chip)[data-spw-lens-pass~="studio"]) {
   opacity: 1;
   filter: saturate(1.06);
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--home-lens-contour, var(--home-accent-primary, teal)) 55%, transparent),
     var(--home-shadow-quiet, none);
+}
+
+/* The seat line: the chosen seat as one Spw line whose slots say what they
+   do. [mode] is the seat, {body} what it holds, and <projection> a link to
+   where it leads. home-seat-line.js adds the words a reader holds on other
+   pages to the body of the seat whose operator they share, each linking back
+   to where it was held; with scripts off the line is the authored one. */
+:where(body[data-spw-surface="home"] .home-seat-line) {
+  margin-block: 0.5rem 0;
+  font-size: var(--text-size-sm, 0.875rem);
+  overflow-wrap: anywhere;
+}
+
+:where(body[data-spw-surface="home"] .home-seat-line > code) {
+  font-family: var(--site-mono-font, ui-monospace, monospace);
+  background: none;
+  padding: 0;
+}
+
+:where(body[data-spw-surface="home"] .home-seat-line__mode) {
+  color: var(--op-perspective-color, var(--home-accent-primary));
+}
+
+:where(body[data-spw-surface="home"] .home-seat-line__body) {
+  color: var(--ink-strong, inherit);
+}
+
+:where(body[data-spw-surface="home"] .home-seat-line__carried) {
+  color: inherit;
+  text-decoration-style: dotted;
+}
+
+:where(body[data-spw-surface="home"] .home-seat-line__next) {
+  color: var(--op-concept-color, var(--home-accent-primary));
 }
 
 /* A chosen seat draws a contour in its operator color, the color its seat and
@@ -2130,7 +2164,7 @@ body[data-spw-surface="home"] .frame-topline .spw-component-tag {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :where(body[data-spw-surface="home"] .frame-card[data-spw-lens-pass]) {
+  :where(body[data-spw-surface="home"] :is(.frame-card, #wonder-kin .spw-chip)[data-spw-lens-pass]) {
     transition: none;
   }
 }
@@ -3050,6 +3084,15 @@ html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
   flex-wrap: wrap;
   gap: 0.5rem;
   margin: 0;
+}
+
+/* The exits also carry .frame-operators, whose tray (a wall, a surface and a
+   hairline inset) nested a second box inside the paste card and stepped the
+   buttons in from the field above them. The card is the tray here. */
+.spw-paste__exits {
+  padding: 0;
+  border: 0;
+  background: none;
 }
 
 .spw-paste__out {

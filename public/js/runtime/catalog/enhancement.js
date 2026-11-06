@@ -108,6 +108,22 @@ export const ENHANCEMENT_DEFS = [
     load: () => import('../page/lens-intent.js'),
   },
   {
+    id: 'home-seat-line',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    costClass: COST_CLASS.RESIDUE,
+    selector: '.home-seat-line[data-spw-operator]',
+    rootMode: 'single',
+    describes: 'seat[line]{held.carried}<return> a seat line holds the words a reader carries from other pages',
+    updates: [
+      'structural:home-seat-line__carried',
+    ],
+    evaluates: ['semantics', 'state'],
+    timingArc: 'immediate-lens',
+    effectScope: ['local-dom'],
+    load: () => import('../page/home-seat-line.js'),
+  },
+  {
     id: 'image-provenance',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IDLE,

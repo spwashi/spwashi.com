@@ -97,9 +97,14 @@
    to its frame's shape: the box takes the piece's own ratio from its width and height,
    and a tall piece is bounded and letterboxed rather than cut. The folder is the
    provenance; each piece's sidecar records it as a scan. This sits after the shape
-   rules and outranks them and the components layer's cover fit. */
+   rules and outranks them and the components layer's cover fit.
+   A bare `auto` reads the piece's ratio only once it has loaded, so before that
+   the box collapsed to its mat and the page below it moved when the scan came
+   in. The second line hands the box the ratio its width and height attributes
+   already state, where typed attr() is supported; elsewhere the first stands. */
 .image-study img:is([src*="/assets/folios/"], [src*="/assets/primes/"], [src*="/assets/pads/"], [src*="/assets/panels/"], [src*="/assets/scraps/"], [src*="/assets/worktable/"]) {
   aspect-ratio: auto;
+  aspect-ratio: auto attr(width type(<number>)) / attr(height type(<number>));
   max-block-size: min(72svh, 38rem);
   object-fit: contain;
 }
