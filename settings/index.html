@@ -719,7 +719,7 @@
             data-spw-form="brace"
             data-spw-form-options="brace,block"
             data-spw-inspect="runtime_preferences"
-            data-spw-inspect-fields="authorMode,currentDevelopmentalClimate,colorMode,themePack,paletteResonance,baseMetamaterial,baseAffordance,componentDensity,operatorSaturation,grainIntensity,animationIntensity,wonderMemory,narrativeMode,rewardDisplay,imageProvenance,busDiagnostics"
+            data-spw-inspect-fields="authorMode,currentDevelopmentalClimate,colorMode,themePack,paletteResonance,baseMetamaterial,componentDensity,operatorSaturation,grainIntensity,animationIntensity,wonderMemory,narrativeMode,rewardDisplay,imageProvenance,busDiagnostics"
             data-spw-kind="frame"
             data-spw-liminality="threshold"
             data-spw-region="preferences"
@@ -1103,26 +1103,6 @@
                         </fieldset>
 
                         <fieldset class="settings-fieldset">
-                            <legend>Depth indicators</legend>
-
-                            <label class="settings-option">
-                                <input checked name="depthIndicators" type="radio" value="off" />
-                                <span class="settings-option-copy">
-                    <strong>Off</strong>
-                    <span>Keep projection depth implicit.</span>
-                  </span>
-                            </label>
-
-                            <label class="settings-option">
-                                <input name="depthIndicators" type="radio" value="on" />
-                                <span class="settings-option-copy">
-                    <strong>On</strong>
-                    <span>Expose depth and projection hints where supported.</span>
-                  </span>
-                            </label>
-                        </fieldset>
-
-                        <fieldset class="settings-fieldset">
                             <legend>Operational visibility</legend>
                             <p class="settings-option-hint">Lightweight surface for the new contracts: operator projections, subjective/objective measures, and priming state.</p>
                             <label class="settings-option">
@@ -1483,38 +1463,6 @@
                         <p data-spw-textual-role="note">
                           Compare live in the <a href="/design/#material-contrast-bench" data-spw-interaction="tap-hold">design hub material bench</a> (global apply supported).
                         </p>
-
-                        <fieldset class="settings-fieldset">
-                            <legend>Base affordance</legend>
-                            <label class="settings-option">
-                                <input checked name="baseAffordance" type="radio" value="read" />
-                                <span class="settings-option-copy">
-                    <strong>Read</strong>
-                    <span>Stable, inactive layout.</span>
-                  </span>
-                            </label>
-                            <label class="settings-option">
-                                <input name="baseAffordance" type="radio" value="tune" />
-                                <span class="settings-option-copy">
-                    <strong>Tune</strong>
-                    <span>Interactive state ready.</span>
-                  </span>
-                            </label>
-                            <label class="settings-option">
-                                <input name="baseAffordance" type="radio" value="inspect" />
-                                <span class="settings-option-copy">
-                    <strong>Inspect</strong>
-                    <span>Hover-reactive traces.</span>
-                  </span>
-                            </label>
-                            <label class="settings-option">
-                                <input name="baseAffordance" type="radio" value="orient" />
-                                <span class="settings-option-copy">
-                    <strong>Orient</strong>
-                    <span>Guide-first layout.</span>
-                  </span>
-                            </label>
-                        </fieldset>
 
                         <fieldset class="settings-fieldset">
                             <legend>Component density</legend>
@@ -2194,18 +2142,6 @@
                         </fieldset>
 
                         <fieldset class="settings-fieldset">
-                            <legend>Show spec pills</legend>
-                            <label class="settings-option">
-                                <input name="showSpecPills" type="radio" value="on" />
-                                <span class="settings-option-copy"><strong>On</strong></span>
-                            </label>
-                            <label class="settings-option">
-                                <input checked name="showSpecPills" type="radio" value="off" />
-                                <span class="settings-option-copy"><strong>Off</strong></span>
-                            </label>
-                        </fieldset>
-
-                        <fieldset class="settings-fieldset">
                             <legend>Image lazy loading</legend>
                             <label class="settings-option">
                                 <input checked name="imageLazyLoading" type="radio" value="on" />
@@ -2298,34 +2234,6 @@
                             <label class="settings-option">
                                 <input name="operatorPresentation" type="radio" value="text" />
                                 <span class="settings-option-copy"><strong>Text</strong></span>
-                            </label>
-                        </fieldset>
-
-                        <fieldset class="settings-fieldset">
-                            <legend>Operator highlighting</legend>
-                            <label class="settings-option">
-                                <input checked name="operatorHighlighting" type="radio" value="off" />
-                                <span class="settings-option-copy"><strong>Off</strong></span>
-                            </label>
-                            <label class="settings-option">
-                                <input name="operatorHighlighting" type="radio" value="on" />
-                                <span class="settings-option-copy"><strong>On</strong></span>
-                            </label>
-                        </fieldset>
-
-                        <fieldset class="settings-fieldset">
-                            <legend>Shell menu presentation</legend>
-                            <label class="settings-option">
-                                <input checked name="shellMenuPresentation" type="radio" value="adaptive" />
-                                <span class="settings-option-copy"><strong>Adaptive</strong><span>Inline when roomy, modal when the header needs to condense.</span></span>
-                            </label>
-                            <label class="settings-option">
-                                <input name="shellMenuPresentation" type="radio" value="modal" />
-                                <span class="settings-option-copy"><strong>Modal</strong><span>Use a dimmed overlay and fixed menu shell so the header does not push content around.</span></span>
-                            </label>
-                            <label class="settings-option">
-                                <input name="shellMenuPresentation" type="radio" value="drawer" />
-                                <span class="settings-option-copy"><strong>Drawer</strong><span>Keep the menu as a pulled-out field for wider screens and inspection-heavy sessions.</span></span>
                             </label>
                         </fieldset>
 
@@ -2427,18 +2335,6 @@
                         </fieldset>
 
                         <fieldset class="settings-fieldset">
-                            <legend>Fractal nesting</legend>
-                            <label class="settings-option">
-                                <input checked name="fractalNesting" type="radio" value="off" />
-                                <span class="settings-option-copy"><strong>Off</strong></span>
-                            </label>
-                            <label class="settings-option">
-                                <input name="fractalNesting" type="radio" value="on" />
-                                <span class="settings-option-copy"><strong>On</strong></span>
-                            </label>
-                        </fieldset>
-
-                        <fieldset class="settings-fieldset">
                             <legend>Implementation mutations</legend>
                             <label class="settings-option">
                                 <input checked name="implementationMutations" type="radio" value="off" />
@@ -2469,29 +2365,6 @@
                             </label>
                         </fieldset>
 
-                        <fieldset class="settings-fieldset">
-                            <legend>Show frame metadata</legend>
-                            <label class="settings-option">
-                                <input checked name="showFrameMetadata" type="radio" value="off" />
-                                <span class="settings-option-copy"><strong>Off</strong></span>
-                            </label>
-                            <label class="settings-option">
-                                <input name="showFrameMetadata" type="radio" value="on" />
-                                <span class="settings-option-copy"><strong>On</strong></span>
-                            </label>
-                        </fieldset>
-
-                        <fieldset class="settings-fieldset">
-                            <legend>Verbose logging</legend>
-                            <label class="settings-option">
-                                <input checked name="verboseLogging" type="radio" value="off" />
-                                <span class="settings-option-copy"><strong>Off</strong></span>
-                            </label>
-                            <label class="settings-option">
-                                <input name="verboseLogging" type="radio" value="on" />
-                                <span class="settings-option-copy"><strong>On</strong></span>
-                            </label>
-                        </fieldset>
                     </div>
                 </details>
 
@@ -2694,11 +2567,6 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                 <article class="settings-state-card">
                     <span class="settings-state-label">base metamaterial</span>
                     <strong data-settings-state="baseMetamaterial">glass</strong>
-                </article>
-
-                <article class="settings-state-card">
-                    <span class="settings-state-label">base affordance</span>
-                    <strong data-settings-state="baseAffordance">read</strong>
                 </article>
 
                 <article class="settings-state-card">
@@ -3364,12 +3232,9 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                     <a class="spw-chip" data-spw-handle="true" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=verbose&amp;layout=atlas&amp;lighting=guarded" data-spw-operator="wonder" data-spw-action="inspect">? QA atlas</a>
                     <a class="spw-chip" data-spw-handle="true" href="?view=readable&amp;meaning=rich&amp;flavor=culinary&amp;palette=craft" data-spw-operator="wonder" data-spw-action="inspect">? Culinary lens</a>
                     <a class="spw-chip" data-spw-handle="true" href="?semanticDensity=rich&amp;cognitiveHandles=on&amp;showSemanticMetadata=on&amp;interaction=responsive&amp;fieldResonance=field" data-spw-operator="wonder" data-spw-action="inspect">? Region menu</a>
-                    <a class="spw-chip" data-spw-handle="true" href="?semanticDensity=rich&amp;cognitiveHandles=on&amp;showSemanticMetadata=on&amp;interaction=expressive&amp;fieldResonance=choral&amp;operatorHighlighting=on" data-spw-operator="wonder" data-spw-action="inspect">? Ornament valve</a>
+                    <a class="spw-chip" data-spw-handle="true" href="?semanticDensity=rich&amp;cognitiveHandles=on&amp;showSemanticMetadata=on&amp;interaction=expressive&amp;fieldResonance=choral" data-spw-operator="wonder" data-spw-action="inspect">? Ornament valve</a>
                 </div>
                 <button type="button" class="spw-chip" data-spw-handle="true" id="customize-shortcuts" data-spw-feature="custom-shortcuts" data-spw-operator="potential" data-spw-action="explore">~customize_shortcuts</button>
-                <span class="spw-settings-cluster__note" style="font-size:0.68rem; opacity:0.8; display:block; margin-top:0.2rem;">
-                  Menu chrome: <code>data-spw-shell-menu-presentation</code> or <code>?shellMenuPresentation=modal</code> (adaptive | modal | drawer). Modal uses layer dimmer + overlay nav (no content push). Experimental; see shell-disclosure + chrome.css.
-                </span>
                 <div class="spw-settings-cluster__readout" aria-label="Active tuner readout">
                     <span class="spec-pill">color <span data-settings-state="colorTuner">balanced</span></span>
                     <span class="spec-pill">layout <span data-settings-state="layoutTuner">reading</span></span>
@@ -3438,7 +3303,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                         {label: 'QA atlas', href: '?view=inspect&meaning=inspect&debug=css,layout&diagnostics=verbose&layout=atlas&lighting=guarded'},
                         {label: 'Culinary lens', href: '?view=readable&meaning=rich&flavor=culinary&palette=craft'},
                         {label: 'Region menu', href: '?semanticDensity=rich&cognitiveHandles=on&showSemanticMetadata=on&interaction=responsive&fieldResonance=field'},
-                        {label: 'Ornament valve', href: '?semanticDensity=rich&cognitiveHandles=on&showSemanticMetadata=on&interaction=expressive&fieldResonance=choral&operatorHighlighting=on'}
+                        {label: 'Ornament valve', href: '?semanticDensity=rich&cognitiveHandles=on&showSemanticMetadata=on&interaction=expressive&fieldResonance=choral'}
                     ];
                 }
 
