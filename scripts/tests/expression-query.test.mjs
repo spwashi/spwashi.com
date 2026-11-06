@@ -6,7 +6,9 @@ import {
   expressionLayers,
   GESTURE_CHARGE,
   parseExpressionQuery,
+  readExpressionSlots,
   readJoinChain,
+  readSlotOrder,
   readSpwHydration,
   scoreExpressionShape,
   shapeFromExpression,
@@ -56,6 +58,28 @@ test('charge, scene, and a capsule after the scene survive the shape', () => {
   assert.equal(pair.subject, '');
   assert.equal(pair.mode, 'honk');
   assert.deepEqual(pair.parts, ['invite']);
+});
+
+test('each brace pair names its slot wherever it sits', () => {
+  const slots = { charge: [], scope: 'kitchen', subject: 'beans', mode: 'mode', body: 'stew', projection: 'food' };
+  // The guide's order and the atlas order read the same slots.
+  assert.deepEqual(readExpressionSlots('beans<food>(kitchen)[mode]{stew}'), slots);
+  assert.deepEqual(readExpressionSlots('beans[mode]{stew}(kitchen)<food>'), slots);
+  // A line with no word, three containers, spaces between them.
+  assert.deepEqual(readExpressionSlots('{chronicles} <of> (narnia)'), {
+    charge: [], scope: 'narnia', subject: '', mode: '', body: 'chronicles', projection: 'of',
+  });
+  // Each slot once: a second body is not read as the first.
+  assert.equal(readExpressionSlots('a{b}{c}').body, 'b');
+  // A scene before the word still reads, and a later scene still wins.
+  assert.equal(readExpressionSlots('(look){stage}<learn>').scope, 'look');
+  assert.equal(readExpressionSlots('(a)x[m](b)').scope, 'b');
+});
+
+test('a line keeps the order its author wrote its slots in', () => {
+  assert.deepEqual(readSlotOrder('beans<food>(kitchen)[mode]{stew}'), { sceneFirst: false, order: ['projection', 'scope', 'mode', 'body'] });
+  assert.deepEqual(readSlotOrder('{chronicles} <of> (narnia)'), { sceneFirst: false, order: ['body', 'projection', 'scope'] });
+  assert.deepEqual(readSlotOrder('(look){stage}<learn>'), { sceneFirst: true, order: ['body', 'projection'] });
 });
 
 test('tap, hold, and swipe name existing charge states', () => {
