@@ -46,10 +46,10 @@ source = "creator, 2026-10-06: sets of words like live/cooling/projected should 
   coordinate = `how many fragments are held: 0, 1, 2, 3 or more`
   owner = @cauldron_contract
   code = #[`empty`, `primed`, `mixing`, `spell-ready`][reg=set]
-  chip = #[`gather`, `prime`, `compose`, `cast`][reg=set]
+  chip = `retired 2026-11-06: the floating chip writes the live expression (cauldron_state_prefix), operator first, in place of gather, prime, compose and cast; the creator: the verbs were not clear and should rather be operators`
   status = "in use"
   retired_2026_10_06 = `The phase rail is gone, and with it eight vocabularies for this one count: the footer rail words (gather, prime, compose, extend) and four words per vessel (sow, tend, mix, harvest; stock, simmer, taste, serve; wash, cut, toss, plate; pick, fit, check, return; clamp, cut, join, assemble; gather, prime, mix, cast). The creator found the four steps unclear and read them as buttons. The count is carried by the live expression and its prefix now (cauldron_state_prefix below).`
-  kept = `The code words stay as the state the runtime writes. The floating chip keeps its four words. A vessel still names its own expression, such as cauldron[garden]{sow.tend.harvest}, under Vessel and Spw notation.`
+  kept = `The code words stay as the state the runtime writes. The floating chip lost its four words on 2026-11-06 and writes the same expression as the panel. A vessel still names its own expression, such as cauldron[garden]{sow.tend.harvest}, under Vessel and Spw notation.`
 }[reg=facet]
 
 ^"cauldron_state_prefix"{

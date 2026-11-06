@@ -142,3 +142,15 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+#>wonder_spellcraft_operator_moves
+?["Which operator performs which move on the cauldron's expression, now that verbs give way to operators?"]{
+  #:depth #!semantic ~#lens(choice)
+  ~#with: @plan
+  ~#taste: "A move a reader makes should be the operator they see; touching the prefix should do what the prefix means."
+  ~#hypothesis: "The state prefixes are already . ~ * ^; the moves could be the same table read as actions: ! performs the combination (a cast), ~ carries the result away (copy, share), #> keeps it as a named frame, . clears back to ground."
+  ~#tension: "A prefix that is both the state and the button may blur reading and doing; the 2026-10-06 sketch kept the state in the prefix and the moves as four handles beside it."
+  ~#unblocks: "the expression as component (the nine buttons folded into slots), the status lines without verbs"
+  !probe{ "rg -n 'data-spw-cauldron-action=' _partials/site-footer.html" }
+  $%[moves.prefix, moves.handles, moves.both]
+}

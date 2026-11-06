@@ -2,6 +2,7 @@ import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.j
 import { appendToDocument, guardCall } from '/public/js/kernel/dom-render.js';
 import { applyCauldronState, computeCauldronPhase } from '/public/js/semantic/cauldron/contract.js';
 import { getCauldron } from '/public/js/semantic/cauldron/storage.js';
+import { composeLiveExpression } from '/public/js/interface/cauldron/live-expression.js';
 
 const CHIP_SELECTOR = '.spw-cauldron-chip';
 const PANEL_QUERY = '.site-footer__cauldron, [data-spw-cauldron]';
@@ -111,10 +112,11 @@ function createFloatingChip() {
   chip.setAttribute('aria-haspopup', 'dialog');
   chip.setAttribute('aria-controls', 'spw-cauldron-dialog');
   chip.hidden = true;
-  // The chip writes the expression its dialog writes, .cauldron{n}, and then the next verb.
+  // The chip writes the live expression the panel writes: the prefix is the state
+  // (. ~ * ^), the braces hold what is held. No verb rides beside it; the
+  // operator is the move (.spw/conventions/word-sets.spw#cauldron_progress).
   chip.innerHTML = `
-    <span class="spw-cauldron-chip__expression"><span class="spw-cauldron-chip__sigil" aria-hidden="true">.</span><span class="spw-cauldron-chip__word" aria-hidden="true">cauldron{</span><span class="spw-cauldron-chip__count" data-spw-cauldron-chip-count>0</span><span class="spw-cauldron-chip__word" aria-hidden="true">}</span></span>
-    <span class="spw-cauldron-chip__phase" data-spw-cauldron-chip-phase>gather</span>
+    <span class="spw-cauldron-chip__expression" aria-hidden="true"><span class="spw-cauldron-chip__sigil" data-spw-cauldron-chip-op data-spw-operator="ground">.</span><span class="spw-cauldron-chip__word">cauldron{</span><span class="spw-cauldron-chip__parts" data-spw-cauldron-chip-parts></span><span class="spw-cauldron-chip__word">}</span></span>
   `;
   annotateFloatingChromeElement(chip, {
     role: 'cauldron-chip',
@@ -152,12 +154,16 @@ function syncFloatingChip() {
   const ingredients = getCauldron();
   const count = ingredients.length;
   const phase = computeCauldronPhase(ingredients);
-  const countNode = chip.querySelector('[data-spw-cauldron-chip-count]');
-  const phaseNode = chip.querySelector('[data-spw-cauldron-chip-phase]');
-  if (countNode) countNode.textContent = String(count);
-  if (phaseNode) {
-    phaseNode.textContent = phase === 'spell-ready' ? 'cast' : phase === 'mixing' ? 'compose' : phase === 'primed' ? 'prime' : 'gather';
-  }
+  const expression = composeLiveExpression(ingredients);
+  const opNode = chip.querySelector('[data-spw-cauldron-chip-op]');
+  const partsNode = chip.querySelector('[data-spw-cauldron-chip-parts]');
+  if (opNode && opNode.textContent !== expression.prefix) opNode.textContent = expression.prefix;
+  if (opNode) opNode.dataset.spwOperator = expression.operator;
+  const inner = expression.text.slice(expression.text.indexOf('{') + 1, -1);
+  if (partsNode && partsNode.textContent !== inner) partsNode.textContent = inner;
+  const name = `Open the cauldron: ${expression.label}`;
+  if (chip.getAttribute('aria-label') !== name) chip.setAttribute('aria-label', name);
+  if (chip.title !== expression.text) chip.title = expression.text;
   applyCauldronState(chip, { phase, count });
 
   const hidden = cauldronDialog?.open
