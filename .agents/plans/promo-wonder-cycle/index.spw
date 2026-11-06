@@ -152,5 +152,6 @@ invariants: #[
   ~#unblocks: "the watcher's path (L4), and possibly the layers line (L2)"
   ~#probe(read)
   !probe{ "The creator says what Enigma is on TikTok and what it is worth or stands for; then place it beside the gift on /now/'s support ladder." }
-  $%[enigma.watcher_anchor, enigma.ladder_rung, enigma.both]
+  ~#answer(2026-11-06): "enigma.not_an_anchor. A note the creator pasted: Enigma is a TikTok LIVE anonymity mode, not a gift and not a price for the work; the unlock is paid to TikTok for the mask, and gifts sent while masked reach the creator as ordinary gifts. Leave it off the support ladder; if it ever appears in copy, one sentence: an Enigma is someone who paid TikTok to send gifts without the room seeing their name."
+  $%[enigma.watcher_anchor, enigma.ladder_rung, enigma.both, enigma.not_an_anchor]
 }
