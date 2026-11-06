@@ -141,3 +141,16 @@ invariants: #[
   !probe{ "on a phone, open /pivot, follow three pivots, then /constructs; say which page you came back to and why" }
   $%[pivot.first, cards.first, second_shelf]
 }
+
+#>wonder_spw_quest_slot_order
+?["Should /build and expression-query accept both the guide slot order (< > ( ) [ ] { }) and the route-atlas slot order ([ ] { } ( ) < >) without losing slots?"]{
+  #:depth #!computational ~#lens(comparison)
+  ~#with: @plan
+  ~#taste: "A line moved from /specimens or /pivot into /build should keep every brace slot it already holds."
+  ~#hypothesis: "Container delimiters (<>, (), [], {}) already identify the four slots unambiguously, so accepting either order bridges /build with the 986 route expressions while letting the author choose which order to emit."
+  ~#expect: "build.js currently enforces <concept>(scene)[mode]{definition} while pivot.js and expression-query.js emit [mode]{body}(scene)<projection>."
+  ~#unblocks: "Slice L (slot-order bridge between /build and /pivot + /specimens)"
+  ~#probe(run)
+  !probe{ "rg -n 'assemble\\(|lineFrom\\(' workers/spw-quest/src/build.js workers/spw-quest/src/pivot.js" }
+  $%[order.either, order.guide_only, order.atlas_only]
+}
