@@ -172,3 +172,15 @@ validation: #[
   $%[landing.railCap, landing.fingerprints]
   ~<"./session-2026-08-21.spw"> ~<"../archive/landing-page-hierarchy-2026-08-21/PLAN.md">
 }
+
+#>wonder_landing_visual_hierarchy_services_tuning_seat
+?["Where does Tune sit on /services/ once the offer comes first: beside the share card further down, inside the commercial terms after pricing, or where it is, folded?"]{
+  #:depth #!experiential ~#lens(choice)
+  ~#with: @route_census
+  ~#taste: "A business reader meets what is offered and what it costs first; a returning reader still finds the tuning panel where the page's own path says it is."
+  ~#hypothesis: "Parcel B was written as a reorder, but #services-tuning shares a 5/7 row with #b2b-share inside orientation-overview (routes/surfaces/services.css:164-174, three bundles), and the page's Service path nav names it the threshold step (Hook, Tune, Queue, Return, services/index.html:163-168)."
+  ~#tension: "A. Move tuning and the share card together after the service-offerings cluster: the row survives, and the path nav reorders. B. Move tuning alone into commercial-terms after #pricing: the share card goes full width in orientation, and one CSS seat changes. C. Leave the order and fold tuning into a closed disclosure: the offer reads first by height, the path stays, and the panel's controls wait behind a tap. Each changes what a first screen shows, so the services-opening still decides it."
+  !probe{ `npm run visual:checks -- --ids=services-opening` }
+  $%[services.tuningSeat, services.pathNav, services.firstScreen]
+  ~<"../../../services/index.html"> ~<"../../../public/css/routes/surfaces/services.css">
+}
