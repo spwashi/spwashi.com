@@ -94,5 +94,6 @@ invariants: #[
   ~#tension: "A sigil on every piece can read as decoration if the piece does not do what the operator does; the operator table in public/js/kernel/operator-detection.js is the canon, and a site name is only an alias."
   ~#unblocks: "the rail's current cell as an expression, the satchel's first offer, the chip's label"
   !probe{ "rg -n 'aria-hidden=\"true\">(rail|\$|#&gt;)<' public/js/runtime/attention/section-handle.js" }
+  ~#answer(2026-11-05): "The creator said proceed on the draft: $ for the satchel and .cauldron{} for the chip landed the same night; #> for the rail and ~ & # for the kin moves stand as they already were."
   $%[piece.rail, piece.satchel, piece.cauldron, piece.kin]
 }

@@ -27609,6 +27609,25 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   line-height: 1.45;
 }
 
+/* The satchel's first row: the page's own Spw, then three ways to carry it. */
+.spw-state-inspector__spw {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.32rem;
+  align-items: center;
+}
+
+.spw-state-inspector__spw-line {
+  flex: 1 1 100%;
+  font-size: 0.74rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.spw-state-inspector__spw .spw-chip {
+  flex: 1 1 auto;
+}
+
 .spw-state-inspector__actions {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

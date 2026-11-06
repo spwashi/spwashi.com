@@ -671,7 +671,7 @@ function emitFeedback(message, action = 'inspect') {
   });
   document.dispatchEvent(new CustomEvent('spw:discovery-reward', {
     detail: {
-      label: 'State satchel',
+      label: 'Satchel',
       title: 'State changed',
       summary: message,
       href: `${window.location.pathname}${window.location.hash || ''}`,
@@ -725,6 +725,10 @@ function createInspector() {
   const actions = document.createElement('div');
   const copy = document.createElement('button');
   const copySpw = document.createElement('button');
+  const spwRow = document.createElement('div');
+  const spwLine = document.createElement('code');
+  const pivotLink = document.createElement('a');
+  const buildLink = document.createElement('a');
   const positionActions = document.createElement('div');
   const status = document.createElement('p');
   const close = document.createElement('button');
@@ -751,7 +755,8 @@ function createInspector() {
   launch.className = 'spw-state-inspector__launch';
   launch.setAttribute('aria-expanded', 'false');
   launch.setAttribute('aria-controls', PANEL_ID);
-  launch.textContent = 'state satchel';
+  // The satchel is the $ substrate a page rests on; the mark is shown, the name is read.
+  launch.innerHTML = '<span aria-hidden="true">$</span>satchel';
   launch.dataset.spwDragState = 'idle'; // explicit initial state
 
   panel.id = PANEL_ID;
@@ -763,10 +768,10 @@ function createInspector() {
   panel.hidden = true;
 
   title.id = 'spw-state-inspector-title';
-  title.textContent = 'State satchel';
+  title.innerHTML = '<span aria-hidden="true">$</span>satchel';
 
   summary.className = 'spw-state-inspector__summary';
-  summary.textContent = 'Inspect and nudge temporary page state. Changes are announced and visible as data-spw-* attributes. Drag or snap the satchel to a clear rail when it competes with reading.';
+  summary.textContent = 'This page as Spw, then the temporary state it rests on. Changes are announced and visible as data-spw-* attributes. Drag or snap the satchel to a clear rail when it competes with reading.';
 
   actions.className = 'spw-state-inspector__actions';
   TOGGLES.forEach((config) => actions.append(createToggleButton(config)));
@@ -780,6 +785,23 @@ function createInspector() {
   copySpw.className = 'spw-chip';
   copySpw.dataset.spwStateInspectorCopy = 'page-spw';
   copySpw.textContent = 'copy page Spw';
+
+  // First offer: the page's own Spw. A visitor rarely arrives holding a line,
+  // so the satchel hands over the one nearest the middle of the screen, ready
+  // to copy, pivot or take apart on spw.quest (floating-chrome-stack FIX.md).
+  spwRow.className = 'spw-state-inspector__spw';
+  spwRow.setAttribute('aria-label', "This page's Spw");
+  spwLine.className = 'spw-state-inspector__spw-line';
+  spwLine.dataset.spwStateInspectorLine = '';
+  for (const [link, label, kind] of [[pivotLink, 'pivot on spw.quest', 'pivot'], [buildLink, 'take apart on spw.quest', 'build']]) {
+    link.className = 'spw-chip';
+    link.dataset.spwStateInspectorQuest = kind;
+    link.textContent = label;
+    link.target = '_blank';
+    link.rel = 'noopener';
+    link.hidden = true;
+  }
+  spwRow.append(spwLine, copySpw, pivotLink, buildLink);
 
   close.type = 'button';
   close.className = 'spw-chip';
@@ -827,7 +849,7 @@ function createInspector() {
   shareNote.textContent = 'Expand to build a link. Offer to cauldron joins spells/collectibles.';
   shareHost.append(shareKicker, shareNote);
 
-  panel.append(title, summary, actions, shareHost, positionActions, copy, copySpw, close, status);
+  panel.append(title, summary, spwRow, actions, shareHost, positionActions, copy, close, status);
   root.append(launch, panel);
   return root;
 }
@@ -853,8 +875,9 @@ function setOpen(root, open) {
   root.dataset.spwStateInspector = open ? 'open' : 'closed';
   launch.setAttribute('aria-expanded', open ? 'true' : 'false');
   panel.hidden = !open;
-  updateStatus(root, open ? 'State satchel opened.' : formatPageStateLabel());
+  updateStatus(root, open ? 'Satchel opened.' : formatPageStateLabel());
   if (open) {
+    syncPageLine(root);
     anchorSatchelToChromeRail(root, { open: true });
     syncControls(root);
     syncPageStateAwareness(root);
@@ -900,6 +923,34 @@ async function copySnapshot(root) {
     updateStatus(root, 'Snapshot ready in console.');
     console.info('[state inspector snapshot]', snapshot);
     emitFeedback('Clipboard unavailable. Snapshot logged to console instead.', 'console');
+  }
+}
+
+/** The expression nearest the middle of the screen, or the first one the page carries. */
+function readPageLine() {
+  const main = document.querySelector('main') || document.body;
+  const probe = document.elementFromPoint?.(innerWidth / 2, innerHeight / 2);
+  const near = probe instanceof Element ? probe.closest('[data-spw-semantic-expression]') : null;
+  const host = near && main.contains(near) ? near : main.querySelector('[data-spw-semantic-expression]');
+  return String(host?.getAttribute('data-spw-semantic-expression') || '').trim();
+}
+
+function syncPageLine(root) {
+  const line = readPageLine();
+  const code = root.querySelector('[data-spw-state-inspector-line]');
+  if (code instanceof HTMLElement) {
+    if (code.textContent !== line) code.textContent = line;
+    code.hidden = !line;
+  }
+  for (const link of root.querySelectorAll('[data-spw-state-inspector-quest]')) {
+    if (!(link instanceof HTMLAnchorElement)) continue;
+    const href = line
+      ? (link.dataset.spwStateInspectorQuest === 'pivot'
+        ? `https://spw.quest/pivot?line=${encodeURIComponent(line)}`
+        : `https://spw.quest/build?script=${encodeURIComponent(line)}#build`)
+      : '';
+    if (href && link.href !== href) link.href = href;
+    link.hidden = !line;
   }
 }
 
