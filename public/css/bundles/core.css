@@ -37335,28 +37335,29 @@ html[data-spw-learnability-resonance] :where(
    - Topological Membrane Plane (interfaces, semantic envelopes < >)
    ========================================================================== */
 
-/* Cauldron Phase-Condensate Perceptual Tint on <html> */
-html[data-spw-cauldron-phase="radiant"] {
+/* Cauldron Phase-Condensate Perceptual Tint on <html>: the element axis of
+   the cauldron-state bundle names the dominant plane of what is held. */
+html[data-spw-cauldron-state~="element:radiant"] {
   --spw-spell-perceptual-tint: var(--op-probe-color, hsl(268 54% 44%));
   --spw-regional-lighting-bias: 1.15;
 }
-html[data-spw-cauldron-phase="fluid"] {
+html[data-spw-cauldron-state~="element:fluid"] {
   --spw-spell-perceptual-tint: var(--op-ref-color, hsl(214 66% 40%));
   --spw-regional-lighting-bias: 1.08;
 }
-html[data-spw-cauldron-phase="plastic"] {
+html[data-spw-cauldron-state~="element:plastic"] {
   --spw-spell-perceptual-tint: var(--op-action-color, hsl(176 74% 24%));
   --spw-regional-lighting-bias: 1.12;
 }
-html[data-spw-cauldron-phase="lattice"] {
+html[data-spw-cauldron-state~="element:lattice"] {
   --spw-spell-perceptual-tint: var(--op-object-color, hsl(36 82% 38%));
   --spw-regional-lighting-bias: 1.06;
 }
-html[data-spw-cauldron-phase="ground"] {
+html[data-spw-cauldron-state~="element:ground"] {
   --spw-spell-perceptual-tint: var(--op-frame-color, hsl(180 74% 28%));
   --spw-regional-lighting-bias: 1.04;
 }
-html[data-spw-cauldron-phase="membrane"] {
+html[data-spw-cauldron-state~="element:membrane"] {
   --spw-spell-perceptual-tint: var(--op-topic-color, hsl(168 62% 30%));
   --spw-regional-lighting-bias: 1.10;
 }
