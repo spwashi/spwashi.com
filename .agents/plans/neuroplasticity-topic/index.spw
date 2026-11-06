@@ -1,4 +1,4 @@
-# Review 2026-10-28 — new: a neuroplasticity topic that follows from factshift's turn toward learning; planned, nothing built; claims wait on their sources.
+# Review 2026-11-06 — keep, proposed: a neuroplasticity topic that follows from factshift's turn toward learning; nothing built, claims wait on their sources, and no clinical framing goes public.
 # Plan Index — neuroplasticity-topic
 #
 # factshift.com set out to improve on Wikipedia and found it first had to learn how people
@@ -17,7 +17,7 @@ fixity = "proposed"
 @topic_building_blocks: ~"../topic-building-blocks/index.spw"
 
 intent: .{
- goal = `Status 2026-10-28. Planned, nothing built. A topic on neuroplasticity tied to how Spw grew from factshift, with visuals and interactives on factshift.center's canvas. The page waits on where it lives; every claim waits on its source.`
+ goal = `Status 2026-11-06. Planned, nothing built. A topic on neuroplasticity tied to how Spw grew from factshift, with visuals and interactives on factshift.center's canvas. The page waits on where it lives; every claim waits on its source; no clinical or diagnostic framing goes public.`
  owner = `neuroplasticity-topic`
  kind = `plan`
  bucket = `active_backlog`
@@ -59,7 +59,7 @@ intent: .{
 ?["Which interactive comes first, and how far should each go before its limit is said?"]{
   #:depth #!experiential ~#lens(projection)
   ~#with: @plan @factshift_center
-  ~#tension: "Two learners, one claim needs nothing new. Fire together needs a tie that strengthens with co-activation and fades without it."
+  ~#tension: "Two learners, one claim needs only a second line in the canvas's address (?spw= holds one; holdSpwLineFromAddress in the app's root.ts). Fire together needs a tie that strengthens with co-activation and fades without it."
   ~#expect: "Two learners first, as a link into the canvas; then the per-link tie in factshift-center; then Fire together."
   ~#probe(read)
   !probe{ "lay out two perspective lines on factshift.center and say what the canvas shows about where they stop sharing ground" }

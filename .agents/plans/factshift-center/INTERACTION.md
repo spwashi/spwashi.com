@@ -11,11 +11,11 @@ The gesture table in PLAN.md is the grammar. This is what each family does.
 | behavior | primes | actualizes |
 | --- | --- | --- |
 | tap a tile | | opens the tool (`tool-tiles.ts`) |
-| hold a tile | the card names the tap and what a swipe → would take | |
+| hold a tile | nothing yet: `tool-tiles.ts`'s header says the card names the tap and the swipe →, and no hold opens it | |
 | swipe → on a tile, or → on a tool in the tool menu | | takes what that tool has primed, and does not open it |
 | tap the lens on an open tool | puts the tool's field in focus | |
 | → with nothing stepped, tool open | | takes what the open tool has primed, as → on its tile does |
-| hold | the card, the compass, the count of gestures found (`gesture-found.ts`) | |
+| hold | grip, and the count of gestures found (`gesture-found.ts`); the card comes from the [...] gestures row, a swipe toward nothing, or the context-menu key (`gestures.ts`) | |
 | drag a node, let go slowly | the home line, while it is carried | the node stays where it was put |
 | throw | | the node goes home |
 | drop on a node, a container, or a slot | the ring while the drop is near | a drawn link, a membership, or a new order in the held line |
@@ -56,7 +56,7 @@ Calling those zero-strength ties a primed relation, and calling `refers` the con
 - A coarse pointer hides keyboard hints (`pointer: coarse` in `hotkey-menu.scss`). That is the touch-screen rule.
 - At 40rem or narrower, one surface shows at a time, and the mode column stays one column (`modes.scss`). The squares match the title box. They are not a 44px target. The nub's minimum is `max(44px, 2.75rem)`.
 - On the canvas, a pinch, including a trackpad pinch, resizes nodes: the one under the pointer, else the selection, else every node. A trackpad's two-finger scroll pans. The camera zooms only from a pinch begun on the lens, or a trackpad pinch over the lens (`pinch.ts`). A window's edges are grab bands on a fine pointer.
-- A keyboard uses the focus ring only. The context-menu key or Shift+F10 is the hold.
+- A keyboard uses the focus ring only. The context-menu key or Shift+F10 shows the card, the keyboard's way to learn a surface (`gestures.ts`).
 - One touch is one gesture. Direction locks once the path crosses its line. It unlocks by returning near the start.
 
 The canvas does not read pointer pressure. The magnitudes it already has are distance, speed, and time: how far past grow or shrink, how fast a throw, how long a hold, how wide a pinch. A stylus or a force-sensitive pad would use that same scale. The open choice in `wonder_factshift_gestures`, whether the count of found gestures is play or pressure, sits inside this. Until a device reports force, distance and time remain the pressure.

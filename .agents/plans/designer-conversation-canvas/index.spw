@@ -1,4 +1,4 @@
-# Review 2026-07-12 — keep as a bounded annotation experiment; objective telemetry and subjective notes must remain distinct.
+# Review 2026-11-06 — keep as a bounded annotation experiment: D1 waits on the creator naming one reviewer; D2 proposes the specimen's scripts-off reading; objective telemetry and subjective notes stay distinct.
 # Plan Index — designer-conversation-canvas
 #
 # Designers should be able to open the public site, touch specimens, cite tokens by name, read objective typography telemetry, and leave subjective annotations that stay queryable…
@@ -14,7 +14,7 @@ fixity = "tending"
 ^"progress_2026_09_20"{
  operation = "align"
  evidence = "Measurement bus, typography preview, frame metrics, and conversation-canvas host exist."
- open = "Inspector snapshots, conversation export, and transitions remain proposals."
+ open = "Conversation export remains a proposal (D3); inspector snapshots and transitions retired 2026-11-06."
  integration = ~"../site-starter-component-kit/bundling.spw#integrated_design_tree"
  next = "Connect one authored specimen, measured design review, and independent capability reproduction through existing source owners."
 }
@@ -36,13 +36,13 @@ intent: .{
 }[reg=facet]
 
 ^"conceptual_model"{
- thesis = `Designers should be able to open the public site, touch specimens, cite tokens by name, read objective typography…`
+ thesis = `A designer meets the site as a conversation: a specimen to touch, tokens to cite by name, measurements beside it, and their own notes kept apart from the numbers.`
  concepts = #[
-  `designer-conversation-canvas`,
-  `designers`,
-  `able`,
-  `open`,
-  `touch`,
+  `specimen`,
+  `token`,
+  `measurement`,
+  `annotation`,
+  `reviewer`,
  ][reg=set]
  surfaces = #[
   `js/semantic/pretext-measurement-bus.js`,

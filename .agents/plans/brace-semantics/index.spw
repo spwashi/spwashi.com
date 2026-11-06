@@ -1,7 +1,7 @@
-# Review 2026-10-13 — new: what each brace pair means, labels the parser checks, one serializer for page, region and component, the `< & >` instrument, and a home door into spw.quest; five decisions go to the creator first.
+# Review 2026-11-06 — proposed, nothing landed: five brace decisions for the creator, five slices that wait on nothing (pins, the cauldron's write-back, the paren fallback, the wall aliases, the element pair), then one serializer, the `< & >` instrument and a home door.
 # Plan Index — brace-semantics
 #
-# Status 2026-10-13. Proposed; nothing built. The braces mean different things in different files, the parser reads labels as words, and eleven serializers each invent a shape. This…
+# Status 2026-11-06. No slice landed; each brace pair now names its slot wherever it sits (creator, 2026-11-05). Five slices wait on nothing.
 
 #>plan_brace_semantics_index
 #:index #!plan
@@ -12,7 +12,7 @@ operation = "prime"
 fixity = "tending"
 
 intent: .{
- goal = `Status 2026-10-13. Proposed; nothing built. The braces mean different things in different files, the parser reads labels as words, and eleven serializers each invent a shape. This plan asks the creator five decisions (section A), then gives pages, regions and components one way into Spw, a < & > instrument as the first authored element, and a door from the home page into spw.quest.`
+ goal = `The braces mean different things in different files, the parser reads labels as words, and eleven serializers each invent a shape. This plan asks the creator five decisions (section A), then gives pages, regions and components one way into Spw and a way back, a < & > instrument as the first authored element, and a door from the home page into spw.quest.`
  owner = `brace-semantics`
  kind = `plan`
  bucket = `active_backlog`
@@ -28,7 +28,7 @@ intent: .{
 }[reg=facet]
 
 ^"conceptual_model"{
- thesis = `Status 2026-10-13. Proposed; nothing built. The braces mean different things in different files, the parser reads…`
+ thesis = `The braces mean different things in different files, the parser reads labels as words, and eleven serializers each invent a shape.`
  concepts = #[
   `different`,
   `spw`,
@@ -74,7 +74,7 @@ dispatch: .{
 ^"owner_claim"{
  claim_id = "plan-brace_semantics-001"
  layer = "pragmatic"
- hypothesis = `Status 2026-10-13. Proposed; nothing built. The braces mean different things in different files, the parser reads labels as words, and eleven serializers each invent a shape. This plan asks the creator five decisions (section A), then gives pages, regions and components one way into Spw, a < & > instrument as the first authored element, and a door from the home page into spw.quest.`
+ hypothesis = `The braces mean different things in different files, the parser reads labels as words, and eleven serializers each invent a shape. This plan asks the creator five decisions (section A), then gives pages, regions and components one way into Spw and a way back, a < & > instrument as the first authored element, and a door from the home page into spw.quest.`
  spec_ref = ~"./PLAN.md"
  impl_ref = ~"../../../.spw/_workbench"
  probe_ref = `npm run audit:plans -- --slug=brace-semantics.`
@@ -96,7 +96,7 @@ editor_prompts: #[
 ][reg=set]
 
 invariants: #[
- `Owner intent: Status 2026-10-13. Proposed; nothing built. The braces mean different things in different files, the parser reads labels as words, and…`,
+ `Owner intent: one meaning per brace pair wherever it is taught, and one way into Spw and back for a page, a region and a component.`,
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
@@ -125,6 +125,21 @@ invariants: #[
   ~#hypothesis: "The two serve different readers. The highlighter reads a passage, a performance of one person's understanding; the handle reads a host, a component's role. The question spw.quest's guide says Spw keeps asking (where do two understandings stop sharing ground) needs the first, and the site's runtime grew around the second."
   ~#tension: "Highlighting every word is subjective, which makes it a performance rather than a fact; searching by the topography a performance implies only works if every reading is kept, with who made it."
   ~#unblocks: "spw-quest slices P and Q; the per-container highlighter paint held on 2026-11-05"
+  ~#expect: "A little over the 1,075 hosts section B counted on 2026-10-13: the handle reading keeps growing one host at a time, and no route paints a passage word by word."
   !probe{ "rg -c 'data-spw-semantic-expression' --glob '*.html' . | awk -F: '{s+=$2} END {print s}'" }
   $%[reading.highlighter, reading.handle, reading.both]
+}
+
+#>wonder_brace_semantics_first_way_back
+?["Which host reads a line back into its controls first: the lens switch that already writes its seat, the < & > instrument, or the cauldron chip?"]{
+  #:depth #!pragmatics ~#lens(choice)
+  ~#with: @plan @spw_workbench_parser
+  ~#taste: "The way back is best learned on a control a reader already uses, so the first lesson is that the line is the control, not that a new widget exists."
+  ~#hypothesis: "The lens switch: writeLensModeState in lens-modes.js rewrites its [seat] on every press, and requestLensMode is its one way in, so reading [mode] with readExpressionSlots closes the loop without a second writer, and a node test can hold it before any look is approved."
+  ~#tension: "The creator named < & > the first authored element; proving the round trip on another host first could make the instrument a second implementation instead of the pilot. The cauldron chip writes the richest line (*cauldron{…}), but reading it back means setting a cauldron's contents from text."
+  ~#expect: "Each of these hosts writes its own expression and none reads one back: writes in lens-modes.js, experiments.js and boonhonk-mixer.js, the chip's line through live-expression.js, and no readExpressionSlots call in any of them."
+  ~#unblocks: "Slice 3.5's fixture, and whether Slice 7 is the first host of the contract or the second"
+  ~#probe(run)
+  !probe{ "rg -n 'spwSemanticExpression =|readExpressionSlots' public/js/runtime/page/lens-modes.js public/js/interface/cauldron/live-expression.js public/js/modules/design/experiments.js public/js/modules/widgets/boonhonk-mixer.js" }
+  $%[way_back.lens_switch, way_back.instrument, way_back.cauldron_chip]
 }

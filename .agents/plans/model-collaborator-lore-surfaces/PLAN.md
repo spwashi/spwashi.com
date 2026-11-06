@@ -1,6 +1,6 @@
 # Plan: model-collaborator-lore-surfaces
 
-**Status 2026-10-10.** Parked until a shoot is booked. Nothing has landed: no terms card exists, and `/play/rpg-wednesday/lore/` is absent. When a shoot is booked, the next slice is step 1, the terms card, and it is gated on the creator writing its copy.
+**Status 2026-11-06.** Parked until a shoot is booked. Nothing has landed since 2026-10-10: no terms card exists, and `/play/rpg-wednesday/lore/` is absent. When a shoot is booked, the next slice is slice 1, the terms card, gated on the creator writing its copy. Re-read 2026-11-06: the lore reader need not be a new route, because `/play/rpg-wednesday/cast/` and `/world/` have existed since 7dbd4a10 (2026-04-07) and answer "who" and "where".
 
 **Related:** [designer-conversation-canvas](../designer-conversation-canvas/PLAN.md). **Absorbed 2026-10-06:** [town-atlas-story-kit](../archive/town-atlas-story-kit/PLAN.md).
 
@@ -63,10 +63,12 @@ Nothing in this plan needs a new `data-spw-*` family; a lore surface is a frame 
 
 ## Sequence
 
-1. Terms card copy and seed-card export (gate for everything after).
-2. Lore reader on the atlas plate, reading order first.
-3. Shot book from the existing capture frames.
-4. Working folio; first cover brief.
+Each slice is one commit once the plan is unparked.
+
+1. **Terms card.** A `terms` template in `SEED_TEMPLATES` (`public/js/modules/cards/seed-card.js`, beside `folio` and `ask`), offered only where a host names it with `data-templates="terms"`, the way `costuming` is pinned. It copies as a Spw block and exports the same `.spw.txt` the folio request does. Gate: a booked shoot, then the creator's copy. Verify: it reads on a phone, it copies, and no other host offers it. Proposal: the card is one Spw expression whose slots are its terms, such as `terms[cover]{credit consent usage release}<v1>`. A change or a revocation bumps the version, and that version is printed beside every plate, so a reader can see which terms a picture was made under without opening a document.
+2. **Lore reader.** A reading order across the pages that exist: cast (who am I), world (where is this), then the artifacts (what am I holding). It is not a new `/lore/` route. Those pages belong to the RPG Wednesday route, which [profile-character-card-development](../profile-character-card-development/PLAN.md) has owned since 2026-10-10, so this slice is a request to that plan. After slice 1.
+3. **Shot book.** The capture frames that `rpg-asset-capture-frames` landed live in the local gameplay kit (`/play/rpg-wednesday/#local-gameplay-kit`, with presets in `public/js/modules/rpg-wednesday/asset-atlas.js`). The shot book lists them with their aspect ratios, a prompt seed and one example plate each. After slice 1.
+4. **Working folio and the first cover brief,** as one folio in the soil ecosystem (`.spw/caches/folio-soil-ecosystem-2026-09.spw`). After slices 1 to 3.
 
 ## Validation
 

@@ -8,7 +8,7 @@ Phase 1 + 1b deliverable. Measurements are file counts (`rg -l`), not occurrence
 |---|---|---|---|---|
 | shell | 51 | 28 | 92 | healthy: names the strata dimension |
 | chrome | 30 | 28 | 45 | umbrella word, contested below |
-| floating-chrome | 10 | 9 | 12 | the floating subset of chrome |
+| floating-chrome | 10 (22 on 2026-11-06) | 9 (22) | 12 | the floating subset of chrome; it doubled while the gate waited |
 | chrome-tier | 2 | 0 | 2 | young; the z-negotiation word |
 | overlay | 24 | 12 | 65 | healthy: full-coverage modes; `data-spw-overlay` landed contract |
 | edge | 38 | 30 | 171 | inflated (gradients, edge-cases); structural sense is thin |
@@ -17,7 +17,7 @@ Phase 1 + 1b deliverable. Measurements are file counts (`rg -l`), not occurrence
 | panel | 77 | 50 | 131 | topology workhorse (also inflated: generic panels) |
 | vessel | 5 | 3 | 1 | topology word, barely realized |
 | dock | 8 | 8 | 14 | a state (docked), not a place |
-| pocket | 1 (15 on 2026-10-10) | 2 (7) | 3 (48) | July: one metaphor, one component (section-context). October: the phone-frame word across the shell ("pocket chrome" in CLAUDE.md); recount excludes bundles, generated JS, `.agents` and the workbench |
+| pocket | 1 (15 on 2026-10-10, 17 on 2026-11-06) | 2 (7, 7) | 3 (48, about 52) | July: one metaphor, one component (section-context). October: the phone-frame word across the shell ("pocket chrome" in CLAUDE.md); recount excludes bundles, generated JS, `.agents` and the workbench |
 | section-context | 2 | 0 | 0 | the pocket's formal name |
 | disclosure | 9 | 7 | 67 | behavior word, owned by navigation-header-disclosure |
 | trace | 11 | 19 | 211 | inflated in .spw; header trace is the structural sense |

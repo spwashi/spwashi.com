@@ -1,6 +1,6 @@
 # Plan: interaction-grammar
 
-**Status 2026-11-05.** The phase ladder and reward contract live in `.spw/conventions/interaction-microstates.spw`. Leaf controls stay out of brace gestures through `isLensModeControl` (`6ccab1bb`). The gesture-contract census ran (`.spw/audits/touch-gesture-contracts-2026-09.spw#verb_census_2026_11_05`): 36 authored elements in 21 files over 10 strings, each on an element some engine claims. Two findings wait on the creator: haptics' `[data-spw-gesture-contract*="prime"]` also matches `tap:prime`, so a hold on a hook or an image-study figure inspects and gathers at once though its contract says inspect; and the two film mode panels (`topics/film/scene-composition/*/index.html:47`) have no inspect engine, so their hold only gathers and their tap answers nothing. The census also records the swipe fact chrome-navigation-wonder's drawer question waits on. Next slice: the settings "do this / expect this" passage below, one row per authored string, written from the census and saying what a hold does today. Cross-session familiarity stays unscoped. On 2026-11-05 the creator asked what would make the UI useful, informative and playful; the reading and four proposed slices are under "Useful, informative, playful" below.
+**Status 2026-11-06.** The phase ladder and reward contract live in `.spw/conventions/interaction-microstates.spw`. Leaf controls stay out of brace gestures through `isLensModeControl` (`6ccab1bb`). The gesture-contract census ran (`.spw/audits/touch-gesture-contracts-2026-09.spw#verb_census_2026_11_05`): 36 authored elements in 21 files over 10 strings, each on an element some engine claims. Two findings wait on the creator (`index.spw#wonder_interaction_grammar_hold_on_hook`): haptics' `[data-spw-gesture-contract*="prime"]` also matches `tap:prime`, so a hold on a hook or an image-study figure inspects and gathers at once though its contract says inspect; and the two film mode panels (`topics/film/scene-composition/*/index.html:47`) have no inspect engine, so their hold only gathers and their tap answers nothing. The census also records the swipe fact chrome-navigation-wonder's drawer question waits on. Next slice: the settings "do this / expect this" passage below, one row per authored string, written from the census and saying what a hold does today. Cross-session familiarity stays unscoped. On 2026-11-05 the creator asked what would make the UI useful, informative and playful; the reading and its slices, each naming its gate, are under "Useful, informative, playful" below.
 
 **Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — ungated.gesture_census, seams.lens.
 
@@ -16,62 +16,21 @@ The creator asked what would make the UI feel useful and informative, and for a 
 - **The model that works.** The settings credit names the change and what became more prominent (`interface/site-settings-ui.js:390-410`). Lens, spell and grounding feedback could take the same two clauses.
 - **Loops that do not close.** `component-collection.js` emits `spw:achievement-unlocked`; the effect ledger listens for `spw:collection-achievement` and `spw:reward-unlocked` (its "optional flourish sources"), so a found thing never becomes a receipt. Math diagrams carry their listeners and emit nothing (`modules/math/diagrams.js:63`). One hold runs on two clocks: haptics 520ms with a mouse, 420ms on touch, a 340ms double tap; brace-gestures 420ms with 8px of slop; and haptics' `*="prime"` selector makes a hold on a hook inspect and gather at once.
 
-Proposed, each ending at a live demo:
+Slices, smallest first:
 
-1. **One hold.** One measure for hold and double tap, read by both engines; it changes the feel, so it is a look before it lands.
-2. **Receipts land in the satchel.** Composed with [settings-ornament-resonance](../settings-ornament-resonance/PLAN.md)'s patch bay; whether bay and receipts share one satchel is that plan's question.
-3. **Close the loops.** The ledger hears achievements (its flourish then shows, so a look), and a diagram that changes emits one event the ledger can keep.
-4. **What play commits to.** The sincere structure play is played straight in is the creator's call (`chrome-ecology-2026-11.spw#wonder_chrome_ecology_play_structure`).
+1. **Do this, expect this.** The settings passage owed below, at the gesture helpers (`settings/index.html:2383`). One row per authored string from the census, quoting the string the page carries (`tap:prime hold:inspect`) beside what it does today, including "a hold also gathers" where haptics claims it. Reading the attribute is the lesson: one rule, taught once, varied by role. Ungated: it describes what runs. Verify: `npm run audit:copy:accessor`; the passage quotes contracts in `<code>` and authors none.
+2. **A diagram that changes says so.** `modules/math/diagrams.js:63` holds the comment "Future: emit via bus"; emit there and let `runtime/memory/effect-ledger.js` keep the entry, in one commit, so no event goes unheard. Not quite invisible: each entry raises `--spw-effect-charge` on `html`, which `components/runtime-states.css:921-929` reads into rhythm and pulse, so a value dragged on a diagram would be felt. Gate: a demo on one math page for the creator's look. Verify: `npm run audit:root-writes` names the ledger as the writer; `npm run test:modules`; `node --check` on both files.
+3. **Achievements reach the ledger.** `component-collection.js` emits `spw:achievement-unlocked`, while the ledger listens for `spw:collection-achievement` and `spw:reward-unlocked`. Listening for the emitted name lets its flourish show, so this is a look.
+4. **One hold.** One measure for hold, double tap and slop, read by `interface/haptics.js` (`HOLD_PRIME_DELAY_MS` 520, `HOLD_PRIME_DELAY_COARSE_MS` 420, `DOUBLE_TAP_MS` 340) and `runtime/interaction/brace-gestures.js` (`HOLD_THRESHOLD_MS` 420, `DRAG_THRESHOLD_PX` 8). It changes the feel: a proposal and a browser demo on a coarse pointer.
+5. **Receipts land in the satchel**, composed with [settings-ornament-resonance](../settings-ornament-resonance/PLAN.md)'s patch bay; whether bay and receipts share one satchel is that plan's `#>wonder_settings_ornament_resonance_satchel_holds`.
+6. **What play commits to.** The sincere structure play is played straight in is the creator's call (`chrome-ecology-2026-11.spw#wonder_chrome_ecology_play_structure`).
 
-## Status — 2026-09-04
+## Settled, 2026-09-04
 
-This plan's first commit-sequence (April 2026) was never run; the two halves of its
-scope landed through other owners instead, and this file drifted out of sync with a
-much larger implemented system. Reconciling that drift:
-
-- **Brace physics vocabulary — resolved elsewhere.** `site-semantics.spw` and
-  `operator-semantics.spw` settled the question this plan raised: the objective →
-  subjective gradient is the primary brace-physics naming, and boon/bane survives
-  only as optional valence coloring layered on top, never the left/right physics
-  itself (`site-semantics.spw#brace_physics`, `operator-semantics.spw` caution note).
-  That is a bridge, not a replacement — the taste note in this plan's Goal held.
-- **Circuit/familiarity ladder — landed as `interaction-microstates.spw`, not the
-  planned files.** The 2026-04 plan's `public/js/spw-interaction-runtime.js` was
-  never written, and `public/js/semantic/component-semantics.js` does not carry
-  circuit levels; the runtime reorganized into `public/js/runtime/` and
-  `public/js/semantic/`. The actual circuit grammar is a phase ladder —
-  `idle → approach → prime → charge → inspect → discover → settle`
-  (`data-spw-interaction-phase`, owned by
-  `public/js/runtime/interaction/{progression,vocabulary,hops,story}.js`) — plus
-  a stated **reward contract**: every interaction resolves into feedback or reveals
-  reachable arcs; silent absorption is a contract violation, not a neutral outcome
-  (`.spw/conventions/interaction-microstates.spw#reward_contract`). Landmark hops,
-  cauldron gather/inspect/release, and tap:travel / swipe:cycle verbs are cross-
-  component instances of the same ladder (`#cross_component_hops`,
-  landed 2026-09-03 in `724caa1b`).
-- **Entry-level accessibility — held, and enforced by audit rather than by design
-  review.** The 2026-09-03 reward-contract probe found the ladder's real failure
-  mode was not gamification (the risk this plan worried about) but silent gates —
-  13 of 37 gesture-contract authorings (every route's hero hook) were wired to a
-  CSS rule that had no matching selector in `brace-gestures.js`, so tapping or
-  holding a hook did nothing. Fixed by adding the missing selector clause, not by
-  redesigning the ladder. This is the shape of scrutiny this plan should keep
-  asking for: audit *whether the contract is held*, not just whether it is stated.
-- **Still open, and now the actual scope of this plan:** everything here is a
-  *per-interaction* phase arc (idle to settle within one gesture). Nothing yet
-  distinguishes a first-time visitor's arc from a returning visitor's — the
-  "practiced → fluent → habitual" cross-session ladder from the Goal below is
-  unbuilt. So is the multi-language-surface work (Spw framing other notations in
-  the Pretext lab) and the 24 of 37 gesture contracts the 2026-09-03 probe left
-  unaudited (see `interaction-microstates.spw#wonder_interaction_microstates_1`).
-  See `wip.spw` for the refreshed open-question list and probe queue.
-
-The Goal, Scope, and Craft guard below are still the right target. The 2026-04
-Files list, commit sequence and rebase notes described a path that a different,
-better-documented one superseded; they were removed 2026-10-10. Route new work through
-`interaction-microstates.spw` first, and land here only what that convention
-cannot own (cross-session familiarity, vocabulary taste calls, multi-language
-framing).
+- **Brace physics vocabulary, settled elsewhere.** The objective → subjective gradient is the primary naming, and boon/bane survives only as optional valence coloring (`.spw/conventions/site-semantics.spw#brace_perspective_axis`; the caution in `operator-semantics.spw`). A bridge, not a replacement.
+- **The circuit ladder landed as a phase ladder.** `idle → approach → prime → charge → inspect → discover → settle` on `data-spw-interaction-phase`, owned by `public/js/runtime/interaction/{progression,vocabulary,hops,story}.js`, plus the reward contract (`interaction-microstates.spw#reward_contract`). Landmark hops, cauldron gather/inspect/release and tap:travel / swipe:cycle are instances of it (`#cross_component_hops`, `724caa1b`). The 2026-04 commit sequence and files were removed 2026-10-10.
+- **Entry-level access is held by audit.** The 2026-09-03 probe found 13 of 37 authored contracts, every hero hook, wired to a CSS rule with no matching selector in `brace-gestures.js`; adding the clause fixed it. Rule kept: audit whether the contract is held, not only whether it is stated.
+- **Still open:** the cross-session ladder (practiced → fluent → habitual) is unbuilt and unscoped, and so is Spw framing other notations in the Pretext lab. Route new work through `interaction-microstates.spw` first, and land here only what it cannot own.
 
 ## Goal
 
@@ -122,7 +81,7 @@ The desired end state is a site interaction system that rewards familiarity: rep
 
 Landed: calmer brace and region-menu gestures on coarse pointers, `window.__SPW_SITE__.gestures`, and texture-slice pointer crop that binds only to a fine pointer. Leaf controls stay themselves through `isLensModeControl` in `kernel/dom-contracts.js` (`6ccab1bb`), and the image prime readout names swipe and hold.
 
-Still owed: one settings-page "do this / expect this" passage for gestures. `settings/index.html` names the console helpers (:583) and the gesture helpers (:2509-2510, :2585-2587) but teaches no gesture. Write it from the census above, one row per authored contract, and keep it concrete rather than theoretical.
+Still owed: one settings-page "do this / expect this" passage for gestures. `settings/index.html` names the gesture helpers (:2383, and the snippet at :2458-2461) but teaches no gesture. Write it from the census above, one row per authored contract, and keep it concrete rather than theoretical.
 
 Rules worth keeping:
 - Gesture hosts never claim leaf controls.

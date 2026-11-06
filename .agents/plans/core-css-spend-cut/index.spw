@@ -1,4 +1,4 @@
-# Review 2026-09-07 — hand-authored on first touch (open-first plan the 2026-07-12 root index never named). Keep as the core-CSS delivery-schedule owner under the css-architecture-readability rail; measurement is `npm run build:css` + `npm run css:payload`, not @layer reorder.
+# Review 2026-11-06 — keep as the core-CSS delivery-schedule owner under the css-architecture-readability rail; core 1,722.0 of 1,740.8 KiB; next is the per-sheet share in css:payload, then one candidate sheet per session; the website ceiling is a wonder.
 # Plan Index — core-css-spend-cut
 #
 # First paint ships structure. Wonder, grain, cinematic, and ornament arrive
@@ -95,6 +95,7 @@ intent: .{
 @css_architecture_readability: ~"../css-architecture-readability/index.spw"
 @public_entrance_runtime_payload: ~"../archive/public-entrance-runtime-payload/PLAN.md"
 @semantic_classname_layers: ~"../archive/semantic-classname-layers/PLAN.md"
+@css_manifest: ~"../../../scripts/ts/css-manifest.mts"
 
 dispatch: .{
  plan = @plan
@@ -142,3 +143,17 @@ invariants: #[
  `@layer is cascade, not delivery — do not reorder layers to chase spend.`,
  `A soft core overage that is named first-paint PE substrate is not a blocker; a late restyle that shoves read content is.`,
 ][reg=set]
+
+#>wonder_core_css_spend_cut_website_ceiling
+?["The website route bundle sits exactly at its 140 KiB soft budget: should it get a hard ceiling, stay soft, or should /design/ get a bundle of its own?"]{
+  #:depth #!pragmatics ~#lens(choice)
+  ~#with: @css_manifest @plan
+  ~#hypothesis: "Most of the bundle is design: design.css is 75.4 KiB and design-experiments.css 25.0 KiB of the 143,360 B, against 31.9 KiB of website.css. Because ROUTE_SURFACE_ALIASES sends design and folios to website, /about/website/ downloads the design atlas. A design bundle would leave website near 43 KiB, and design.css could then carry the route owner marker that css-architecture-readability left off for budget."
+  ~#tension: "A hard ceiling turns the next design specimen into a cut elsewhere. A split means a reader moving between /design/ and /about/website/ downloads two sheets where one serves today, and 38 pages ride this bundle."
+  ~#expect: "design.css is the largest of the five sheets, more than twice website.css, and the five sum to just under 143,360 B"
+  ~#unblocks: "the website line under Remaining, and design.css's route marker"
+  ~#probe(run)
+  !probe{ "wc -c public/css/routes/surfaces/website.css public/css/routes/surfaces/design.css public/css/routes/surfaces/design-experiments.css public/css/routes/surfaces/review-surfaces.css public/css/effects/enhancements.css" }
+  $%[route.hardCeiling, route.softOnly, route.designBundle]
+  ~<"./PLAN.md">
+}

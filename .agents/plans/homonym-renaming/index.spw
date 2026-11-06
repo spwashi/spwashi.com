@@ -1,4 +1,4 @@
-# Review 2026-07-12 — keep as a semantic gate: rename only after an echo-versus-homonym verdict and cross-language trace.
+# Review 2026-11-06 — keep as a semantic gate: no rename landed; the tempo homonym is one ladder at three altitudes plus a URL word, and its word-set entry waits on nothing.
 # Plan Index — homonym-renaming
 #
 # Every load-bearing word means one shape. A reader who sees settle anywhere in the codebase can trust it means "approaching/at rest at the end of an arc" — at page, region, or…
@@ -103,7 +103,11 @@ invariants: #[
   ~#with: @plan @language_census
   ~#taste: "A sensation gate protects what a reader feels. A word that never reaches a page may only need to read well to the next editor."
   ~#hypothesis: "data-spw-page-tempo=settle is written by prepaint-state.js and region-profiler.js and read by signals.css. Settings shows tempo as a multiplier (1.00x), not as the word, so the rename changes source legibility and not felt pacing."
-  ~#tension: "A tempo word could reach readers later, through settings, the satchel or captured stills. Choosing it on a diff now would mean choosing reader vocabulary without the bench."
+  ~#tension: "A tempo word could reach readers later, through settings, the satchel or captured stills, and one already reaches a copy editor: prepaint-state.js reads ?tempo=settle from the URL. Choosing it on a diff now would mean choosing reader vocabulary without the bench."
+  ~#expect: "Until the rename: settle in the selectors of all three ladders (signals.css, syntax.css, geometry-projection.css), writes to spwPageTempo in prepaint-state.js and region-profiler.js, reads in loading-ecology.js and page-state.js, and nothing in settings. After it: only the alias."
+  ~#unblocks: "the rename slice, at all three altitudes"
+  ~#probe(run)
   !probe{ "rg -n 'tempo=\"settle\"|tempo-field~=\"settle\"|spwPageTempo' public settings --glob '!**/bundles/**'" }
+  $%[gate.diff_review, gate.browser_bench, gate.bench_for_url_word_only]
   ~<"../../../public/css/components/signals.css"> ~<"../../../.spw/conventions/word-sets.spw">
 }

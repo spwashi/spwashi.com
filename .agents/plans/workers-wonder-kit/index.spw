@@ -1,8 +1,8 @@
-# Review 2026-09-20 — keep as a separate server-side reuse experiment; route refinements do not prove shared-kit extraction.
+# Review 2026-11-06 — keep as the server-side reuse experiment: S1 moves escapeHtml onto the shell for wap.mom and smut.today; S2 proposes a kinship line in check:workers.
 # Plan Index — Workers Wonder Kit
 #
 # wap.mom and smut.today share one worker skeleton by copy; make the shared third one kit,
-# keep each voice its own, and give both a return-visit loop.
+# and keep each voice its own.
 
 #>plan_workers_wonder_kit_index
 #:index #!plan
@@ -13,7 +13,7 @@ operation = "prime"
 fixity = "experimental"
 
 intent: .{
- goal = `Make the shared third of the wap.mom and smut.today workers one kit, keep each worker's voice its own, and give both a reason to be returned to.`
+ goal = `Make the shared third of the wap.mom and smut.today workers one kit, workers/lib/shell.js, and keep each worker's voice its own.`
  owner = `workers-wonder-kit`
  kind = `plan`
  bucket = `active_backlog`
@@ -29,19 +29,19 @@ intent: .{
 }[reg=facet]
 
 ^"conceptual_model"{
- thesis = `Four workers carry the same skeleton by copy. A kit is the maintainability; offices, filing, pacing, and craft notes are the wonder.`
+ thesis = `Three workers already import the shell and two still carry it by copy. The kit is the maintainability; each worker's headers, masthead and copy are its voice, and stay home.`
  concepts = #[
   `worker-kit`,
-  `ministry-office`,
-  `filing-cabinet`,
-  `daily-form`,
-  `pass-along`,
+  `shared-helper`,
+  `local-voice`,
+  `csp-per-worker`,
+  `kinship-line`,
  ][reg=set]
  surfaces = #[
-  `workers/wap-mom/src/index.js`,
+  `workers/lib/shell.js`,
+  `workers/wap-mom/src/layout.js`,
   `workers/smut-today/src/index.js`,
-  `workers/site-hub-next/src/index.js`,
-  `workers/feedback-quest/src/index.js`,
+  `scripts/check-workers.mjs`,
  ][reg=set]
  audience = `wap.mom: mothers with master's degrees and professionals who own verticals and brands — ambition and depth of wonder, never named`
  fixity_tier = `experimental`
@@ -50,13 +50,15 @@ intent: .{
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @plan: ~"./PLAN.md"
-@wap_mom: ~"../../../workers/wap-mom/src/index.js"
+@shell: ~"../../../workers/lib/shell.js"
+@wap_mom: ~"../../../workers/wap-mom/src/layout.js"
 @smut_today: ~"../../../workers/smut-today/src/index.js"
 @folio_soil: ~"../../../.spw/caches/folio-soil-ecosystem-2026-09.spw"
 @what_im_learning: ~"../../../.spw/conventions/what-im-learning.spw"
 
 dispatch: .{
  plan = @plan
+ shell = @shell
  wap_mom = @wap_mom
  smut_today = @smut_today
  folio_soil = @folio_soil
@@ -65,5 +67,5 @@ dispatch: .{
 
 ^"connection_points"{
  owner_rail = `folio-worktable`
- hold = `both workers are dirty in a sibling session's tree on 2026-09-19; nothing lands until that tree is clean`
+ hold = `neither worker may be dirty in another session's tree when S1 lands; both are clean on 2026-11-06`
 }[reg=facet]

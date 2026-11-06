@@ -1,7 +1,7 @@
-# Review 2026-11-05 — keep as the commit grammar and reflow method owner; routing generated with --only, thesis and concepts written from its Status, owner claim is the tree template
+# Review 2026-11-06 — keep as the commit grammar and reflow method owner; the grammar holds unvalidated, and two of its rules wait on the creator (symbols, subject length).
 # Plan Index — history-reflow
 #
-# Rewrite the unpushed sequence so each commit reads as though we knew then what we
+# Rewrite the unpushed sequence so each commit reads as though we knew then what we know now: theory applied with retrospect, churn squashed, and the HTML audited at each step for whether the markup backs the claim.
 
 #>plan_history_reflow_index
 #:index #!plan
@@ -12,7 +12,7 @@ operation = "prime"
 fixity = "tending"
 
 intent: .{
- goal = `Rewrite the unpushed sequence so each commit reads as though we knew then what we`
+ goal = `Rewrite the unpushed sequence so each commit reads as though we knew then what we know now: theory applied with retrospect, churn squashed, and the HTML audited at each step for whether the markup backs the claim.`
  owner = `history-reflow`
  kind = `plan`
  bucket = `active_backlog`
@@ -58,11 +58,11 @@ dispatch: .{
 ^"owner_claim"{
  claim_id = "plan-history_reflow-001"
  layer = "pragmatic"
- hypothesis = `Rewrite the unpushed sequence so each commit reads as though we knew then what we`
+ hypothesis = `Rewrite the unpushed sequence so each commit reads as though we knew then what we know now: theory applied with retrospect, churn squashed, and the HTML audited at each step for whether the markup backs the claim.`
  spec_ref = ~"./PLAN.md"
  impl_ref = ~"./PLAN.md"
- probe_ref = `rg 'history-reflow' .agents/plans/history-reflow`
- falsification = `A patch cannot satisfy the public goal while leaving ./PLAN.md unchanged or untested.`
+ probe_ref = `git log --no-merges -50 --format=%B | grep -c '^#\[episode\]{'`
+ falsification = `A commit on main whose body does not open exactly one #[episode]{ holding ~[scene]{}, ![change]{} and *[verify]{}, or whose subject is not symbol[scope]. check:local does not look, so this probe is the only reader.`
  status = "active"
 }[reg=facet]
 
@@ -72,7 +72,23 @@ editor_prompts: #[
 ][reg=set]
 
 invariants: #[
- `Owner intent: Rewrite the unpushed sequence so each commit reads as though we knew then what we`,
+ `Owner intent: Rewrite the unpushed sequence so each commit reads as though we knew then what we know now.`,
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+# Probed 2026-11-06: the subjects since 2026-10-12 outgrew the written length rule.
+#>wonder_history_reflow_subject_length
+?["Does the ~72-character subject rule still stand, or has this history chosen the sentence?"]{
+  #:depth #!linguistic ~#lens(choice)
+  ~#with: @plan @wip
+  ~#taste: "A rule stays written only while the history it governs keeps it; a rule nobody keeps teaches the next session to skip the rules beside it."
+  ~#hypothesis: "Since 2026-10-12, 133 of 150 subjects run past 72 characters, mean 106 and longest 189. In August 73 of 338 did, mean 65. Of those 133, 82 join two clauses with ', and' or ', so': the subject has become a sentence that carries its own why."
+  ~#tension: "A short subject fits git's one-line views and a terminal; a long one says why at a glance. Message discipline and the patch-consolidator skill still say 72, so each session either breaks the written rule or cuts its sentence short."
+  ~#expect: "Well over half of the 150 subjects since 2026-10-12 run past 72 characters."
+  ~#unblocks: "One line in Message discipline and one in .agents/skills/patch-consolidator/SKILL.md, changed together or left as they are."
+  ~#probe(run)
+  !probe{ `git log --no-merges --since=2026-10-12 --format=%s | grep -c '^.\{73\}'` }
+  $%[subject.short, subject.sentence, subject.claim_then_prose]
+  ~<"./PLAN.md"> ~<"../../skills/patch-consolidator/SKILL.md">
+}

@@ -1,4 +1,4 @@
-# Review 2026-07-12 — keep as the localization owner; preserve authored HTML and terminology policy before adding delivery machinery.
+# Review 2026-11-06 — keep as the localization owner: L1 keys /topics/software/'s hook, L2 writes a term table before any locale, and Phase 1 waits on the creator's first locale.
 # Plan Index — copy-localization
 #
 # The desired end state is a site that can publish multiple language variants without losing the authored quality of the current HTML routes or the inspectability of the site's…
@@ -28,13 +28,13 @@ intent: .{
 }[reg=facet]
 
 ^"conceptual_model"{
- thesis = `The desired end state is a site that can publish multiple language variants without losing the authored quality of the…`
+ thesis = `A locale edition is an authored projection of keyed copy units, with term policy and glosses kept in Spw beside it, never a string table that flattens the page.`
  concepts = #[
-  `authored`,
-  `source`,
-  `variants`,
-  `but`,
-  `locale`,
+  `copy-unit`,
+  `source-locale`,
+  `term-policy`,
+  `gloss`,
+  `locale-edition`,
  ][reg=set]
  fixity_tier = `tending`
 }[reg=facet]
@@ -46,6 +46,8 @@ intent: .{
 @plan: ~"./PLAN.md"
 @copy_accessor: ~"../../../.spw/conventions/copy-accessor.spw"
 @copy_hypermedia_key: ~"../../../.spw/caches/copy-hypermedia-key-2026-09.spw"
+@copy_localization_convention: ~"../../../.spw/conventions/copy-localization.spw"
+@template: ~"../../../scripts/template.mjs"
 
 dispatch: .{
  plan = @plan
@@ -106,3 +108,17 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+#>wonder_copy_localization_first_locale
+?["Which locale is the first non-English edition, and on which route?"]{
+  #:depth #!sociological ~#lens(choice)
+  ~#with: @plan @template @copy_localization_convention
+  ~#hypothesis: "A locale with a reader who can review it, on one small high-signal route such as /about/, proves the build seam; a locale chosen without a reviewer proves only that strings can move."
+  ~#tension: "The metadata half already exists in scripts/template.mjs, so starting is cheap, and a variant nobody reviews would ship the synthetic alternates the plan's craft guard forbids."
+  ~#expect: "No route declares alternate_locales, so no page carries an hreflang alternate; Phase 1 has nothing to emit until the creator names a locale and a route."
+  ~#unblocks: "Phase 1, the build seam"
+  ~#probe(run)
+  !probe{ "rg -l 'alternate_locales' --glob '*.html' -g '!dist/**' ." }
+  $%[locale.with_a_reviewer, locale.reader_signal, edition.glosses_only]
+  ~#note: "edition.glosses_only, proposed 2026-11-06: before a full edition, one route keeps its English and gains L2's glosses for its Spw terms in one other language, which tests term policy with no route tree."
+}

@@ -1,4 +1,4 @@
-# Review 2026-07-12 — keep as the research umbrella, while v04 owns grammar and public operator pages own teaching.
+# Review 2026-11-06 — keep as the research umbrella: four passes lead, Pass 1's copy landed with its words still the creator's, the layout lab and codex shell wait on nothing.
 # Plan Index — spw-metaphysical-language
 #
 # Spw already behaves like a language on this site — operators prime attention, braces hold charge, positions carry force — but its description is distributed across conventions,…
@@ -197,6 +197,22 @@ invariants: #[
   ~#hypothesis: "Editing feels easy when every tool names its mutation as a Spw operation on one slot (swap, add, drop, mark, turn), shows where it lands, and leaves the line written in its author's order; composability grows from typed placeholders and a reader that keeps nesting whole, more than from new marks."
   ~#tension: "A tool that mutates freely makes drift cheap; the expressiveness goals on /topics/software/spw/#expressiveness-goals ask every change to keep a line a note and the grammar unforked."
   ~#unblocks: "spw-quest slices M (walk trail), P and Q; brace-semantics section D; the variety roadmap's slice 1"
+  ~#expect: "pivot.js names its one-slot moves as plain verbs, most of swap, add, drop, mark, turn and split, and none is written as a Spw operator, so the moves are operations in name only."
+  ~#probe(run)
   !probe{ "rg -n 'kind: \"(swap|add|drop|mark|turn|split)\"|\"(swap|add|drop|mark|turn|split)\"' workers/spw-quest/src/pivot.js" }
   $%[editing.instrument, editing.operation, editing.composition]
+}
+
+#>wonder_metaphysical_sigil_craft_register
+?["Is the sigil-craft reading, that an operator is compressed intent which charges with attention and discharges in action, public copy or editor-layer lore?"]{
+  #:depth #!semantic ~#lens(register)
+  ~#with: @plan @sigil_physics_research
+  ~#taste: "The strongest claim the theory makes should be said where a reader can test it, or kept where it cannot be mistaken for decoration."
+  ~#hypothesis: "Pass 1 decides it in practice: if the atlas's capability cards say what each mark does in the theory's imagery, the charge-and-discharge reading is already public in its plainest form, and the occult lineage can stay in sigil-physics-research.spw."
+  ~#tension: "Said publicly, sigil craft reads as mysticism to a business reader and as a borrowed tradition to a practitioner; kept private, the plan's name promises a metaphysics the page never shows."
+  ~#expect: "The atlas names no sigil craft: no 'compressed intent', no 'discharge', and 'charge' only as a runtime or valence word."
+  ~#unblocks: "Pass 1's words, and what codex entries may claim in their metaphysical_role field"
+  ~#probe(run)
+  !probe{ "rg -n -i 'compressed intent|discharg|sigil craft|charged' topics/software/spw/index.html topics/software/spw/operators/" }
+  $%[register.public_copy, register.editor_lore, register.atlas_aside]
 }

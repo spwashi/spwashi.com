@@ -1,4 +1,4 @@
-# Review 2026-10-12 — hot notes for item 3, fallback hygiene; the bedrock rule and the write rule stay in PLAN.md.
+# Review 2026-11-06 — hot notes for item 3, fallback hygiene, and its sharper fallback-only form; the bedrock rule and the write rule stay in PLAN.md.
 # wip — data-attribute-css-token-refinement
 #
 #>plan_data_attribute_css_token_refinement_wip
@@ -20,6 +20,8 @@ fixity = "tending"
  >>[2026-10-12 10:59] verify — Items 1 and 2 hold: all eleven named bedrock tokens are declared, ten in tokens/core.css and --ornament-radius-pill in flourish-defaults.css (the Status line counts ten and nine), and the typed attr() bridges open at tokens/dimensions.css:436. Item 3 still has no sensor; css-custom-property-audit.mjs checks self-references and periodic root writes only. routes/surfaces/design.css has no block named as aliases, so the absorbed design.css alias question stays unverified.
  >>[2026-10-27 13:40] hygiene — item 3's question moves from ^"open" into index.spw as #>wonder_token_fallback_hygiene, so npm run wonder shows it; the call stays the creator's.
  >>[2026-10-27 13:40] probe — wonder_token_fallback_hygiene: the five files hold 1719 var() references, 886 of them (52%) with no fallback, and every one of the 886 names a token defined somewhere under public/css or src/styles. The ~#expect held: the report would be empty. Its limit: defined somewhere is not defined on every page that loads the file.
+ >>[2026-11-06 12:56] verify — Items 1 and 2 hold: eleven bedrock tokens defined (ten in tokens/core.css, --ornament-radius-pill in flourish-defaults.css); the attr() bridges are the @supports block at dimensions.css:436-449. brace-gestures.js names checked: CSS_OBSERVED_SEMANTIC_DATA_KEYS :175, isCssObservedMutationEnabled :608, syncDiscoveredMarkup skips at :645, the swap writes spwOperator at :750. design.css: --design-surface-* aliases for paper, panel, link, shell and base sit at its top (:11 on); grammar and website have none.
+ >>[2026-11-06 12:58] probe — wonder_token_fallback_hygiene, wider: across public/css and src/styles outside bundles/, 2,435 custom properties are read through var(); 150 have no CSS definition, 61 of those are written by public/js or HTML, and 89 are read only through fallbacks (none without one). Of the 80 whose fallbacks parse, 11 disagree between call sites: --shape-panel 1rem | 0.75rem | 0.82rem, --shape-small 0.55rem | 8px, --shape-micro 4px | 0.35rem, --matte-surface four surfaces. Added item3.fallbackOnly to the wonder's set; the call stays the creator's. Heuristic: a token set in a worker or a template string would count as never defined.
 }
 
 ^"open"{
@@ -28,8 +30,8 @@ fixity = "tending"
 
 ^"cache"{
  ~#status: "tending"
- ~#next_commit: "+[audit] Report var() references with no definition and no fallback in the five files item 3 names"
+ ~#next_commit: "+[audit] Name the tokens read only through fallbacks whose fallbacks disagree, report-only, if the creator wants item 3"
  ~#files_hot: "public/css/tokens/core.css, public/css/tokens/dimensions.css, public/css/tokens/flourish-defaults.css, scripts/css-custom-property-audit.mjs"
  ~#gate: "the creator wanting item 3; nothing else blocks it"
- ~#last_stream: "2026-10-12"
+ ~#last_stream: "2026-11-06"
 }

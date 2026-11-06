@@ -13,12 +13,15 @@ fixity = "stable"
 @arrival_electrostatics: ~"./arrival-electrostatics.spw"
 @attention_field: ~"./attention-field.spw"
 @site_semantics: ~"./site-semantics.spw"
+@block_association_js: ~"../../public/js/semantic/spw-block-association.js"
+@expression_query_js: ~"../../public/js/semantic/expression-query.js"
 @experiential: ~"../../public/js/runtime/experiential/experiential.js"
+@brace_semantics_plan: ~"../../.agents/plans/brace-semantics/PLAN.md"
 
 ^"thesis"{
   claim: "Spw serialization is the lossless two-way bridge between plain-text grammar, static HTML DOM structure, CSS physical fields, and interactive runtime state."
   triad: #[
-    "1. Static Seed (HTML + CSS): Zero-JS server/static baseline with embedded data-spw-definition and thermodynamic dataset attributes.",
+    "1. Static Seed (HTML + CSS): Zero-JS server/static baseline with embedded data-spw-semantic-expression, data-spw-definition, and thermodynamic dataset attributes.",
     "2. Kinetic Hydration (JS Progressive Enhancement): Client-side parsing that binds gesture physics, attentional resonance, and mode switching without virtual DOM diffing overhead.",
     "3. Spell Replay (Serialization → Outcome): Compact Spw strings that replay camera checkpoints, working sets, and thermodynamic phases."
   ][reg=set]
@@ -27,7 +30,7 @@ fixity = "stable"
 ^"serialization_grammar"{
   element_to_spw: #[
     "handle: #>name",
-    "capsule: subject[mode]{parts}<concept>",
+    "capsule: subject[mode]{parts}(scene)<concept> — each pair names its slot wherever it sits (the creator, 2026-11-05); readExpressionSlots in @expression_query_js reads every order and readSlotOrder keeps the author's",
     "claims: #:key #!value",
     "physics: #:phase #!lattice #:tangibility #!0.75 #:viscosity #!0.30"
   ][reg=set]
@@ -41,7 +44,22 @@ fixity = "stable"
     #:coherence #!0.95
     #:biome #!lab
   `
+
+  one_line: "When the host's expression has its own word, the handle and the expression share one line: #>card_one topic[lens]{a, b}(studio)<receipt>, claims below. A bare #>card_one line above the expression is read as the expression (expressionLineFrom in @block_association_js), and a whole expression inside the handle's brackets, #>card_one[topic[lens]{a, b}], loses its word on the way back. Probed 2026-11-06 in @brace_semantics_plan section C."
 }
+
+^"round_trip"{
+  status: "Proposed in @brace_semantics_plan (sections C and D, Slices 2b, 3.5 and 4); the code does not hold it on 2026-11-06."
+  claim: "A host is Spw-native when its markup reads with scripts off, its controls map to the slots of its data-spw-semantic-expression, a change of state rewrites that line in place, and a line written into it moves its controls to match."
+  levels: .{
+    component = "One host: #>handle and its expression on one line, then its #:key #!value claims."
+    region = "A section or frame: a scope labeled with its handle, holding its expression, its lens seat, and its children's scopes in order."
+    page = "A route: a scope for the page, holding its route, its lens (?spw-lens=), and its regions' scopes."
+  }[reg=facet]
+  lossless: "Written into a host, then read out, a line comes back the same, in its author's order, and parses in spw-workbench-reader.js with no error and no prose fallback. Today serializeElementToSpw breaks this, and has no caller."
+  no_unauthored_writeback: "A host with no authored expression gets none written onto it; derived readings live in the serializer's output. Today ensureElementDeepLink in interface/composition.js writes one."
+  claims_stay_claims: "A #:key #!value claim written into a host stays a claim; it never founds a data-spw-* attribute. Today hydrateElementFromSpw writes every claim as one."
+}[reg=facet]
 
 ^"hydration_lifecycle"{
   stages = #[
@@ -79,7 +97,7 @@ fixity = "stable"
 }[reg=facet]
 
 ^"invariants"{
-  no_layout_thrashing: "Hydration must never interleave getBoundingClientRect reads with dataset/style writes synchronously; batch all reads into rAF."
+  no_layout_thrashing: "Hydration must never interleave getBoundingClientRect reads with dataset/style writes synchronously; reads go through requestMeasuredFrame (kernel/measured-frame.js), after the frame's own style pass."
   pure_progressive_enhancement: "If JavaScript fails to load or is disabled, the page remains 100% readable, semantic, and styled."
   zero_dependency_parsing: "Client-side Spw parsing and serialization must remain zero-dependency, lightweight, and fast (< 1ms per page)."
 }

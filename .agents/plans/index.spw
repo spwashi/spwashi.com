@@ -32,6 +32,13 @@ intent: .{
  regeneration_rule = `Do not regenerate these decisions. Re-read the affected file and edit its disposition deliberately.`
 }[reg=facet]
 
+^"plan_pass_2026_11_06"{
+ census = `All 54 live plans read against the tree by area, for granularity, meaningful reference, creativity and wonder. Next work is cut into one-session slices with paths, a gate and a check; landed narrative collapsed into Landed lines with commits (PLAN and FIX prose 9,219 -> 7,709 lines). Every kept path, line, anchor and commit was opened; audit:plans went from 27 warn to 0. Plan wonders 74 -> 112, and probes with no ~#expect site-wide 195 -> 140. A finished session's uncommitted drafts in six plans were checked claim by claim: true claims kept, false ones cut.`
+ archived = `ecosystem-offer-2026-10, by its own October rule; its two questions moved to promo-wonder-cycle under their names. Held as candidates with evidence, not moved: agentic-dev-contracts, operator-resonance-alignment, shell-model-vocabulary-consolidation, data-attribute-css-token-refinement, model-collaborator-lore-surfaces.`
+ tooling = `scripts/wonder.mjs reads a dated mark (~#answer(YYYY-MM-DD):, ~#retired(…):) like a plain one, so settled questions leave the open count; check:agents caps css-architecture-readability at 405 lines (was 810) and history-reflow fits the default.`
+ ledger = ~"./README.md"
+}[reg=facet]
+
 ^"design_pass_2026_11_05"{
  census = `The creator's design directions of 2026-11-05, each given one owner with its evidence: the floating chrome theory (floating-chrome-stack, a six-line revision whose first line makes each floating piece one Spw expression whose slots are its controls), harmony across components (component-region-personality, with color-motion for timing), useful, informative and playful (interaction-grammar, with settings-ornament-resonance for the satchel), the creator's own art first and between pages (midjourney-design-concepts, with landing-visual-hierarchy for the first screen: 23 of 214 route pages open on hand-made art, 138 carry no image), and Spw integration as editing, mutation and composability (spw-metaphysical-language).`
  evidence = ~"../../.spw/caches/chrome-ecology-2026-11.spw"
@@ -633,7 +640,6 @@ reading_order: .{
   `cauldron-lens-composition`,
   `deploy-module-graph`,
   `ecosystem-architecture`,
-  `ecosystem-offer-2026-10`,
   `engagement-clusters`,
   `factshift-center`,
   `folio-worktable`,

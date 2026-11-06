@@ -1,4 +1,4 @@
-# Review 2026-10-12 — hot notes for the tempo-ladder collision entry; the ledger, geometry rules and mechanics stay in PLAN.md.
+# Review 2026-11-06 — hot notes for the tempo-ladder collision entry, now one ladder at three altitudes; the ledger, geometry rules and mechanics stay in PLAN.md.
 # wip — homonym-renaming
 #
 #>plan_homonym_renaming_wip
@@ -20,6 +20,9 @@ fixity = "tending"
 ^"stream"{
  >>[2026-10-12 10:59] verify — no rename has landed. data-spw-page-tempo="settle" is still read at public/css/components/signals.css:248 and written by runtime/arrival/prepaint-state.js and runtime/regions/region-profiler.js, and .spw/conventions/word-sets.spw has no tempo entry yet. The next slice, a collision entry for snap|fast|base|deliberate|settle with two candidate speed words, needs no decision; the rename itself waits on the creator, and ground waits on spw-metaphysical-language.
  >>[2026-10-27 13:40] hygiene — status planned to implementing: the word-set entry for the tempo ladder has no gate, so the next commit can land; the rename itself still waits on the creator (audit:plans).
+ >>[2026-11-06 12:30] verify — since 2026-10-10 only plan hygiene touched the owned paths; word-sets.spw has no tempo entry. The tempo ladder snap|fast|deliberate|settle exists at three altitudes: page (signals.css:248; prepaint-state.js:191 from ?tempo=, region-profiler.js:502), frame (syntax.css:1114; region-profiler.js:437) and sigil region (geometry-projection.css:214; operator-interactions.js:246). ?tempo= is a copy editor's URL rail, so the word is not wholly unseen. settings/index.html:1667 had drifted to :1615; the plan now names data-spw-site-rhythm-readout="tempo" instead. settings:changed now counts 32 in public/js (was 28).
+ >>[2026-11-06 12:34] probe — wonder_homonym_renaming_unseen_word: settle in syntax.css:1114, signals.css:248 and geometry-projection.css:214; spwPageTempo written at prepaint-state.js:191 and region-profiler.js:502, read at loading-ecology.js:131 and page-state.js:207 and :897; nothing in settings/. The ~#expect was written after the 12:30 survey, so it stands as the baseline the rename must empty, not as a guess.
+ >>[2026-11-06 12:36] plan — slices named in PLAN.md: 1 the collision entry, 2 the echo entries (settle as arc end, prime, phase), 3 the rename at three altitudes with ?tempo=settle as an alias, 4 ground via spw-metaphysical-language. A fourth candidate offered for the bench, a music tempo mark (largo or lento), as a proposal. hydrate entered the ledger as a homonym prevented: brace-semantics' draft had proposed parser.hydrate(el, spw) as a write beside the existing read.
 }
 
 ^"open"{
@@ -29,8 +32,8 @@ fixity = "tending"
 
 ^"cache"{
  ~#status: "implementing"
- ~#next_commit: "+[words] Mark settle on the tempo ladder as a collision, and offer two speed words for it"
- ~#files_hot: ".spw/conventions/word-sets.spw, public/css/components/signals.css, public/js/runtime/arrival/prepaint-state.js, public/js/runtime/regions/region-profiler.js"
- ~#gate: "nothing for the word-set entry; the rename waits on the creator's call on whether an unseen word needs a browser review"
- ~#last_stream: "2026-10-12"
+ ~#next_commit: "+[words] Mark settle on the tempo ladder as a collision at its three altitudes, and offer speed words for it"
+ ~#files_hot: ".spw/conventions/word-sets.spw, public/css/components/signals.css, public/css/grammar/syntax.css, public/css/handles/operators/geometry-projection.css, public/js/runtime/arrival/prepaint-state.js, public/js/runtime/regions/region-profiler.js, public/js/semantic/operator-interactions.js"
+ ~#gate: "nothing for the word-set entries; the rename waits on the creator's call on whether a word only a copy editor sees needs a browser review"
+ ~#last_stream: "2026-11-06"
 }

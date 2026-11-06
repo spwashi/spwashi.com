@@ -1,4 +1,4 @@
-# Review 2026-09-04 — keep as the interaction semantics owner; the per-interaction phase ladder and boon/bane bridge both landed under interaction-microstates.spw and site-semantics.spw. Remaining scope is cross-session familiarity, vocabulary taste calls, and multi-language framing — see PLAN.md Status and wip.spw.
+# Review 2026-11-06 — keep as the interaction semantics owner; the phase ladder and boon/bane bridge landed under interaction-microstates.spw and site-semantics.spw. Remaining scope: the gesture contracts as they run (hold on a hook), cross-session familiarity, vocabulary taste calls, and multi-language framing.
 # Plan Index — interaction-grammar
 #
 # The desired end state is a site interaction system that rewards familiarity: repeated use builds skill and fluency, interactions have a recognizable grammar, and the underlying…
@@ -52,6 +52,8 @@ intent: .{
 @compositional_css_electrostatics: ~"../archive/compositional-css-electrostatics/index.spw"
 @interaction_microstates: ~"../../../.spw/conventions/interaction-microstates.spw"
 @site_semantics: ~"../../../.spw/conventions/site-semantics.spw"
+@haptics: ~"../../../public/js/interface/haptics.js"
+@gesture_census: ~"../../../.spw/audits/touch-gesture-contracts-2026-09.spw"
 
 dispatch: .{
  plan = @plan
@@ -113,3 +115,17 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+#>wonder_interaction_grammar_hold_on_hook
+?["When a reader holds a hook whose contract says hold:inspect, should the hold inspect, gather, or both?"]{
+  #:depth #!pragmatics ~#lens(choice)
+  ~#with: @plan @haptics @gesture_census
+  ~#taste: "A contract a page writes in its own markup is a promise; a learnable surface does what its string says, and the string is where the lesson lives."
+  ~#hypothesis: "Most of the doubled hold is one selector: haptics' CAULDRON_CANDIDATE_SELECTORS carries [data-spw-gesture-contract*=\"prime\"], which matches tap:prime as well as hold:prime. Eleven of the twelve tap:prime hold:inspect hosts carry no expression of their own, so narrowing that clause to the hold:prime token would end their gather and leave inspect."
+  ~#tension: "Gathering on hold is how the cauldron fills, and the creator likes an expression host gathering its container; the film mode panels have no inspect engine, so narrowing would leave their hold doing nothing until one is named."
+  ~#expect: "The substring sits twice, in haptics.js and in semantic/cauldron/contract.js countPrimeableSources, so the cauldron's 'can be held' count also includes tap:prime hosts; the census lists twelve tap:prime hold:inspect elements."
+  ~#unblocks: "PLAN.md slice 1's honest row for hooks, and the film panels' hold"
+  ~#probe(run)
+  !probe{ "rg -n 'gesture-contract\\*=\"prime\"' public/js; rg -c 'tap:prime hold:inspect' --glob '*.html' ." }
+  $%[hold.inspect, hold.gather, hold.both]
+}

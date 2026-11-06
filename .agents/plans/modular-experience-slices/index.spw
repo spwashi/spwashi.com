@@ -1,4 +1,4 @@
-# Review 2026-07-12 — keep as the cross-layer ownership rail; demand a real practice bed and handoff artifact per slice.
+# Review 2026-11-06 — keep as the cross-layer ownership rail; the math pilot is sliced (marker, scripts-off reading, first tending note), and its two creator questions are wonders.
 # Plan Index — Modular Experience Slices & Earthy Rhythms of Participation
 #
 # Evolve the file tree and collaboration surfaces *of this repository* so that stable "experience slices" (operator grammar, attention/resonance field, cauldron/composition,…
@@ -72,6 +72,9 @@ intent: .{
 @topics_math_numerical_methods_index_html: ~"../../../topics/math/numerical-methods/index.html"
 @attention_architecture: ~"../../../public/js/runtime/attention/attention-architecture.js"
 @wonder: ~"../../../public/css/effects/wonder.css"
+@math_slice: ~"../../../.spw/slices/math-practice-labs/index.spw"
+@scripts_off_note: ~"../../../_partials/scripts-off-tuning.html"
+@tending_note: ~"./templates/tending-note.spw"
 
 dispatch: .{
  plan = @plan
@@ -142,3 +145,31 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
+
+#>wonder_modular_experience_slices_math_pilot
+?["Do the math labs port as they are, split, or get set aside, and what does the first tending note say they taught?"]{
+  #:depth #!pragmatics ~#lens(handoff)
+  ~#with: @plan @diagrams @math_slice @tending_note
+  ~#hypothesis: "The labs already turn vector fields, divergence, curl and Euler stepping into things a reader can move. The pilot's open questions are the shared marker id and the scripts-off reading, not the math."
+  ~#tension: "Phases 3 to 6 wait on this note. A port as is leaves inputs that do nothing with scripts off, and a split would keep the field lab without the stepping lab, or the other way round."
+  ~#expect: "Live, both labs draw and answer their inputs. With scripts off, both read through their figcaptions while 7 controls stay live and inert, so the verdict turns on S2's reading."
+  ~#unblocks: "S3 (the first tending note), then Phases 3 to 6"
+  ~#probe(read)
+  !probe{ "open /topics/math/vector-calculus/#vector-field-lab and /topics/math/numerical-methods/#numerical-stepping-lab live, then with scripts off" }
+  $%[pilot.port, pilot.split, pilot.set_aside]
+  ~<"./PLAN.md"> ~<"../../../.spw/slices/math-practice-labs/index.spw">
+}
+
+#>wonder_modular_experience_slices_scripts_off_figure
+?["With scripts off, what should a math lab show where its figure would be, and what should its inputs say?"]{
+  #:depth #!semantic ~#lens(fallback)
+  ~#with: @plan @topics_math_vector_calculus_index_html @topics_math_numerical_methods_index_html @scripts_off_note
+  ~#taste: "A figure that is only its caption is honest. A drawn field, the vortex at (1.0, 1.0) the caption already describes, would also be something to look at."
+  ~#hypothesis: "Markup has to keep every promise it makes with scripts off. Inputs that move and change nothing break that promise, and the site already has a noscript note for tuning controls."
+  ~#tension: "Disabling the inputs in markup and enabling them on mount is the smallest fix, but it costs a moment of greyed controls on every live load. A static figure adds bytes to each page, and a scanned drawing adds a picture that has to belong to the page."
+  ~#expect: "The counts equal the controls alone (5 in the field lab, 2 in the stepping lab): neither page has a noscript note or a disabled control."
+  ~#probe(run)
+  !probe{ "rg -c 'data-control=|<noscript|disabled' topics/math/vector-calculus/index.html topics/math/numerical-methods/index.html" }
+  $%[fallback.caption_and_noscript_note, controls.disabled_until_mount, figure.static_default_svg, figure.hand_drawn_scan]
+  ~<"./PLAN.md"> ~<"../../../_partials/scripts-off-tuning.html">
+}

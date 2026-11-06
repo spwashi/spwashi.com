@@ -1,4 +1,4 @@
-# Review 2026-09-25 — keep as the one owner of cascade layer order; other plans cite it instead of forbidding the change.
+# Review 2026-11-06 — keep as the one owner of cascade layer order; Phase 1 readings named per route with today's paint and geometry split, and no reading recorded yet.
 # Plan Index — css-cascade-stratification
 #
 # Make the cascade layer list a care signal: each layer promises reach, cure, and hand.
@@ -150,6 +150,9 @@ invariants: #[
   ~#taste: "Someone exploring the CSS learns how much care a change deserves from where it lives, not from a second vocabulary they have to memorize first."
   ~#hypothesis: "Phase 1 alone fixes what misleads a reader today: style-core.css:1 says handles beat routes, and the shipped bundle says the opposite. The Phase 2 pours rename layers to carry reach, cure and hand; that is a new ontology, and so far no reader-felt outcome has been named for it."
   ~#tension: "Six pours touch fifteen deferred sheets, the contracts and the hottest route files in one patch each. If the names teach care, that buys legibility; if they only restate the order, it buys churn."
+  ~#expect: "home lists 70 rules that would yield, more of them geometry than paint, so the declared order would move boxes on home and not only recolour them"
+  ~#unblocks: "the home row of Phase 1's readings, and whether Phase 2 needs to exist at all"
+  ~#probe(run)
   !probe{ "npm run audit:layer-flip -- --bundle=home --limit=20" }
   $%[cascade.declaredOrder, cascade.shippedOrder, layer.promise]
   ~<"./PLAN.md"> ~<"../../../.spw/caches/css-cascade-stratification-2026-09.spw">

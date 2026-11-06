@@ -1,4 +1,4 @@
-# Review 2026-09-20 — keep as a proposed collaborator workflow; terms-card evidence gates image and folio production.
+# Review 2026-11-06 — keep as a parked collaborator workflow; terms-card evidence gates image and folio production, and the lore reader reads the existing cast and world pages.
 # Plan Index — Model Collaborator Lore Surfaces
 #
 # Tools and lore a human model can work from for covers and supplemental materials, with
@@ -54,6 +54,7 @@ intent: .{
 @image_library: ~"../archive/promptable-image-library-pass/PLAN.md"
 @folio_soil: ~"../../../.spw/caches/folio-soil-ecosystem-2026-09.spw"
 @capture_ecology: ~"../../../.spw/conventions/capture-ecology.spw"
+@seed_card: ~"../../../public/js/modules/cards/seed-card.js"
 
 dispatch: .{
  plan = @plan
@@ -68,3 +69,18 @@ dispatch: .{
  owner_rail = `folio-worktable`
  gate = `the terms card is authored and exported before any plate`
 }[reg=facet]
+
+#>wonder_model_collaborator_lore_surfaces_terms_form
+?["Does the terms card read as plain sentences, as one Spw expression whose slots are the terms, or as sentences stamped with that expression as their version?"]{
+  #:depth #!pragmatics ~#lens(choice)
+  ~#with: @plan @seed_card
+  ~#taste: "Professional and boundaried: a collaborator who has never read Spw must understand credit, consent, usage and release on first read."
+  ~#hypothesis: "Sentences carry the terms, and the expression terms[cover]{credit consent usage release}<v1> is the stamp printed beside each plate, so that a version change is visible at a glance and the language is learned by seeing it, not by needing it."
+  ~#tension: "An expression alone can read as a game where a contract should read plainly; sentences alone lose the version stamp that ties a plate to its terms; both together is two artifacts to keep in step."
+  ~#expect: "seed-card.js has no terms template yet; its templates are newyear, session, wonder, services, folio, ask and costuming, and every card already downloads as .spw.txt."
+  ~#unblocks: "slice 1's copy brief for the creator, once a shoot is booked"
+  ~#probe(run)
+  !probe{ "rg -n -i 'terms|costuming' public/js/modules/cards/seed-card.js" }
+  ~#probed(2026-11-06): "no terms hit; costuming is the one pinned template (line 95), the pattern slice 1 would follow; seven templates in all."
+  $%[plain_sentences, expression_card, sentences_with_expression_stamp]
+}

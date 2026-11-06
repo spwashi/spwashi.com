@@ -1,4 +1,4 @@
-# Review 2026-10-12 — hot notes for the first worked brief; the three forms, the brief shape and the absorbed curricula stay in PLAN.md.
+# Review 2026-11-06 — hot notes for handing living-term-home to a mentee; the three forms, the brief shape, the brief itself and the absorbed curricula stay in PLAN.md.
 # wip — reference-assignment-template
 #
 #>plan_reference_assignment_template_wip
@@ -12,23 +12,30 @@
 @insight_cache: ~"./templates/semantic-insight-cache.spw"
 @tending_note: ~"../modular-experience-slices/templates/tending-note.spw"
 @color_motion: ~"../color-motion/PLAN.md"
+@living_terms_sensor: ~"../../../scripts/audit-living-terms.mjs"
 
 operation = "cache"
 fixity = "tending"
 
 ^"stream"{
  >>[2026-10-12 10:59] verify — the three forms are in place: the brief in PLAN.md, the insight cache and ontology-harmony in templates/, and the tending note in modular-experience-slices. No brief anywhere has a result note yet. color-motion's PLAN.md holds four intern assignment candidates in this shape, such as design-palette-woven-signal, and spellcraft-authoring has two briefs; either could become the first worked example once the word-list question is answered.
+ >>[2026-11-06 12:40] verify — Status read against the tree: nothing landed in this folder since 2026-10-10 beyond this notebook. The PLAN's region-menu attributes are real (region-menu.js lists all six), every data-spw-* it teaches appears in tracked HTML, and its color seeds live on design/palettes/. The absorbed ladder offered the module registry as a first typed boundary; public/ts/module-registry.ts has typed it since 0bc7b323.
+ >>[2026-11-06 12:42] decide — wrote living-term-home into PLAN.md as the first filled brief, chosen because a sensor already counts its work (npm run audit:living-terms) and it needs no sensory hook, so it does not pre-empt the word-list wonder. The result note is left for a mentee.
+ >>[2026-11-06 12:44] probe — living-term-home's candidates, read once so the brief is honest; kept out of the brief so the mentee finds it. Of the five inert spans with a home, attention-posture (_partials/media-cauldron.html) means what /#attention-posture means; join (topics/software/spw/) and cadence (topics/film/editing/) match homes by slug only, a Spw join against "Join a Group" and a beat-map cadence against the release cadence; catalog and your-sound already carry a title and sit on their home's own page. audit:living-terms -- --check exits 0.
+ >>[2026-11-06 12:46] probe — wonder_reference_assignment_word_lists: four lines, PLAN.md:75-79, one per axis; the worked brief draws on none. The expect held.
+ >>[2026-11-06 12:48] probe — wonder_reference_assignment_ladder_cascade: public/ts holds module-registry.ts and module-timing-contract.ts and no settings file; 22 runtime files import the three site-settings*.js files. The expect held.
 }
 
 ^"open"{
  word_lists = ~"./index.spw#wonder_reference_assignment_word_lists"
- first_exemplar = "Which cascade does the JS-to-TS ladder brief start from: page boot, settings or composition? The creator's call."
+ ladder_cascade = ~"./index.spw#wonder_reference_assignment_ladder_cascade"
+ handoff = "living-term-home waits for a mentee; their result note is the slice."
 }
 
 ^"cache"{
  ~#status: "waiting"
- ~#next_commit: "+[plans] Work one assignment brief through to its result note, so every later brief has an example to copy"
- ~#files_hot: ".agents/plans/reference-assignment-template/PLAN.md, .agents/plans/reference-assignment-template/templates/semantic-insight-cache.spw, .agents/plans/modular-experience-slices/templates/tending-note.spw"
- ~#gate: "the creator's answer on whether a mentee gets the sensory word lists as given or derives their own"
- ~#last_stream: "2026-10-12"
+ ~#next_commit: "~[plans] Record living-term-home's result note, so every later brief has a worked example to copy"
+ ~#files_hot: ".agents/plans/reference-assignment-template/PLAN.md, scripts/audit-living-terms.mjs, .spw/caches/living-terms-2026-09.spw"
+ ~#gate: "a mentee to take living-term-home; the word lists and the ladder cascade stay the creator's"
+ ~#last_stream: "2026-11-06"
 }

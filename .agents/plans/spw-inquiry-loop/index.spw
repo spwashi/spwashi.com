@@ -1,4 +1,4 @@
-# Review 2026-10-27 — renamed from spw-language-v04 at the creator's word; the v0.4 pillars stay as history under .spw/language/v04/.
+# Review 2026-11-06 — keep: the loop runs and has not run since 2026-10-27; next is answering what a decision or commit settled, then prefix sigils in the query reader.
 # Plan Index — spw-inquiry-loop
 #
 # A question carries a probe, the probe runs, and the answer lands beside its receipt; plans see when a concept they cite has moved.
@@ -47,7 +47,7 @@ intent: .{
 
 ^"plan_refinement"{
  tone = `Grammar and evidence — precise, dated, receipt first.`
- accuracy = `The pillars are history (roadmap.spw, reevaluation_2026_10_27). The first inquiry.loop/1 slice runs read-only probes and keeps receipts; one wonder is answered, by the creator's word.`
+ accuracy = `The pillars are history (roadmap.spw, reevaluation_2026_10_27). The first inquiry.loop/1 slice runs read-only probes and keeps receipts; five wonders are answered, each by the creator's word (contour, 2026-11-06).`
  direction = `Answer what a run settles before adding marks; then let plans see when a concept they cite has moved. The CLI manual's machine form is help --json; wonder_plan_help_json keeps that upstream of this plan.`
  inspiration = `Language disputes resolve through codex, not ad hoc renames.`
  alignment = `spw-metaphysical-language, ecosystem-architecture, agent-optimization`
@@ -114,7 +114,7 @@ dispatch: .{
 }[reg=facet]
 
 next_action: .{
- step = `Answer the wonders a run settles, each ~#answer beside its receipt; then read which plans cite a concept that moved since they last looked.`
+ step = `Answer the wonders a decision or a commit settled, each ~#answer citing it; then prefix sigils in parseExpressionQuery, with the seven prefix-led route expressions as fixtures.`
 }[reg=facet]
 
 scope: .{
@@ -126,11 +126,10 @@ scope: .{
 
 validation: #[
  `git diff --check`,
- `rg language-evolution-v04 topics/software/spw/index.html`,
- `rg spw_language_v04 .spw`,
- `Manual read: .spw/language/v04/index.spw dispatch resolves all pillar paths`,
  `node --test scripts/tests/wonder-lifecycle.test.mjs`,
  `npm run wonder -- --contour`,
+ `rg -n 'id="language-evolution-v04"' topics/software/spw/index.html`,
+ `.spw/language/v04/index.spw dispatch resolves every pillar path`,
 ][reg=set]
 
 editor_prompts: #[
@@ -153,6 +152,8 @@ invariants: #[
   ~#taste: "A tool's knowledge of itself stays honest only when the machine form and the page are the same document."
   ~#hypothesis: "ecology:language is the site door for the pillars. The CLI's help is already four groups and one outcome line per command. spw --help --json still prints that text, so the knowledge base cannot ingest its own tool list. The abstract of the missing commit is help[json]{group.outcome.cost}<cli>."
   ~#tension: "Parsing help text on the site invents a second grammar for a document the CLI already structured. The upstream command is the realistic commit: +[cli] Let help --json emit the same sections the manual already prints."
+  ~#expect: "The text manual, headed Spw CLI, not JSON, until the upstream ask lands."
+  ~#probe(run)
   !probe{ "npm run spw -- --help --json" }
   $%[cli.helpJson, cli.costClass, language.ecology]
   ~<"../../../.spw/caches/spw-readable-by-tooling-2026-09.spw"> ~<"../archive/spw-architecture-ecology/index.spw">
@@ -165,6 +166,10 @@ invariants: #[
   ~#taste: "Position grammar says a postfix is residue. The reading should say whose residue it is before search spends it."
   ~#hypothesis: "Patch 2 of the spw-as-handle cache can ship prefix sigils on parseExpressionQuery without this answer. The postfix half needs it, because search either widens to every frame or narrows to the one in view."
   ~#tension: "Probe frames is a facet query that search can run with no reader context. Probe this frame needs the reader's position, which a search box does not have unless a lens or region supplies it."
+  ~#expect: "Every test passes and none asserts a prefix or a trailing operator, so a green run says only that neither half is held yet; the prefix half's fixtures are the seven prefix-led route expressions."
+  ~#unblocks: "the trailing half of PLAN.md Slice 2"
+  ~#probe(run)
   !probe{ "node --test scripts/tests/expression-query.test.mjs" }
+  $%[trailing.facet, trailing.this_frame, trailing.both_by_lens]
   ~<"../../../.spw/caches/spw-as-handle-2026-09.spw"> ~<"../../../public/js/semantic/expression-query.js">
 }
