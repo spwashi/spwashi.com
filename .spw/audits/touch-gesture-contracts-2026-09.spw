@@ -294,6 +294,26 @@ audit_run: .{
   open = `Static plus one Settings browser pass. Re-touch the six image figures on a coarse pointer before calling swipe felt.`
 }[reg=facet]
 
+^"verb_census_2026_11_05"{
+  operation = "audit"
+  ~#note: "The census interaction-grammar names as its next slice, run against the tree. Static: each authored element is matched to the engines whose selectors claim it. Nothing here was touched on a device."
+  probe = `rg -o --no-filename 'data-spw-gesture-contract="[^"]*"' --glob '*.html' . | sort | uniq -c | sort -rn`
+  count = `36 elements in 21 files over 10 strings; the 37th match is the code sample at design/components/index.html:652`
+  resolving = #[
+    `tap:prime hold:inspect ×12 — nine hook-call hosts with data-spw-kind="hook" and home's playable hook (brace-gestures, by kind and by expression); haptics claims all twelve too`,
+    `tap:inspect hold:gather-search-term ×7 — topics/search panels: haptics gathers the candidate, brace-gestures keeps the same element as an expression host`,
+    `tap:prime swipe:toggle-lens hold:inspect ×5, tap:discover swipe:toggle-lens hold:inspect ×1 — .image-study figures: image-interaction.js owns all three verbs and writes the same strings on any figure that lacks one`,
+    `tap:inspect hold:prime-to-cauldron ×4 — details: the tap is the native disclosure, the hold is haptics`,
+    `tap:prime hold:cauldron-capture ×3 — living terms: haptics, with braceTarget() stepping aside`,
+    `tap:inspect hold:prime ×1 — the first math lens card: brace-gestures by .math-lens-card, haptics by the contract`,
+    `tap:cycle-variant, tap:surface-current, tap:open-companion — the settings buttons, answered by the page's data-companion-action script`
+  ][reg=set]
+  prime_substring = `haptics.js CAULDRON_CANDIDATE_SELECTORS carries [data-spw-gesture-contract*="prime"], which matches tap:prime as well as hold:prime. Every tap:prime … hold:inspect host (the twelve above, the five authored figures, and every .image-study figure image-interaction writes a contract onto) also gathers into the cauldron on a hold. One hold gets two answers on one element: brace-gestures or image-interaction inspects, haptics gathers. The contract names only inspect.`
+  no_inspect_engine = `topics/film/scene-composition/fermentation-hold/index.html:47 and mise-en-scene/index.html:47 author tap:prime hold:inspect on section.mode-panel, which no brace selector names. Their hold only gathers, by the substring, and no handler names a tap there.`
+  swipe = `Every authored swipe is toggle-lens on an image-study figure. The runtime's swipes are cycle (the closed header's rooms) and cycle-nearby (the section handle). Each moves among siblings of the thing under the finger, and none starts inside a list a reader scrolls. chrome-navigation-wonder's drawer-swipe question waits on this; it is the fact, not the answer.`
+  open = `A touch pass per string on a coarse pointer. Whether a hold on a hook should gather at all, given that its contract says inspect, is the creator's call; narrowing the selector to hold:prime would end the gather on twelve hosts and every study figure.`
+}[reg=facet]
+
 ^"control_class_not_event_floor"{
   at = `2026-09-06`
   operation = "cache"
