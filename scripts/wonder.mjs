@@ -199,9 +199,12 @@ export function parseWonders(source, file) {
     for (let index = span.questionLine + 1; index < span.end; index += 1) {
       if (!inChild(index)) body.push(lines[index]);
     }
+    // A field may carry a dated qualifier, ~#answer(2026-11-05): "…", the form
+    // plans write when the creator settles a question; read it like ~#answer:.
     const field = (name) => {
-      const line = body.find((l) => l.trim().startsWith(`~#${name}:`));
-      return line ? line.replace(/^\s*~#\w+:\s*/, '').replace(/^["`]|["`]$/g, '') : '';
+      const head = new RegExp(`^~#${name}(\\([^)]*\\))?:`);
+      const line = body.find((l) => head.test(l.trim()));
+      return line ? line.replace(/^\s*~#\w+(\([^)]*\))?:\s*/, '').replace(/^["`]|["`]$/g, '') : '';
     };
 
     // A probe quoted with "…" carries Spw string escapes; unescape it so the
