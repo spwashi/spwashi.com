@@ -131,3 +131,16 @@ invariants: #[
   !probe{ "rg -n 'requestLensMode\\(' public/js" }
   $%[token.lens_mode, token.satchel_page_line, token.image_effect]
 }
+
+#>wonder_state_block_projections_seat_projection
+?["Should a seat line's <projection> stay the seat's authored first room, or follow the reader to the next room in that seat they have not opened yet?"]{
+  #:depth #!experiential ~#lens(choice)
+  ~#with: @plan @wip
+  ~#hypothesis: "Perusing reads better when the line points where this reader has not been: the braces already hold what they carried here from other pages, so the angle brackets could hold where to go next, shown before the step is taken."
+  ~#tension: "The site keeps no record of rooms opened by path (the component collection stores surface names; visited image surfaces keep their pages), so following the reader needs a reading the site does not have yet, and no new store may be added without review; the authored first move is honest and stable."
+  ~#expect: "No store records rooms opened by path: component-collection.js keeps surface names, and kernel/visited-surfaces-storage.js keeps pages only for image surfaces a reader marked visited."
+  ~#unblocks: "a perusing mechanic on Home that carries across pages, and whether the seat line can become the switch (slice 4)"
+  ~#probe(read)
+  !probe{ "rg -n 'routes.push|visited' public/js/runtime/memory/component-collection.js public/js/kernel/visited-surfaces-storage.js" }
+  $%[projection.authored, projection.next_unopened, projection.both_named]
+}

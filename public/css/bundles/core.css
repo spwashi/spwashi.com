@@ -16866,6 +16866,16 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
   );
 }
 
+/* At pocket width a body slot's content starts on its own edge, the frame
+   heading's (effects/material.css), so a rail at inset 0 sat under the first
+   letters. There the rail steps into the gutter beside the content, a margin
+   mark that still names the module without crowding what it marks. */
+@media (max-width: 45rem) {
+  :where([data-spw-module])::after {
+    inset-inline-start: calc(-0.4rem - var(--component-module-rail-width));
+  }
+}
+
 /* Hydration/context states are visual confidence cues, not layout states. */
 :where([data-spw-module][data-spw-module-hydration="ready"]) {
   --component-module-rail-opacity: 0.44;
@@ -29948,9 +29958,14 @@ html[data-spw-theme-pack="banked-ember"]:not([data-spw-color-mode="light"]) {
    to its frame's shape: the box takes the piece's own ratio from its width and height,
    and a tall piece is bounded and letterboxed rather than cut. The folder is the
    provenance; each piece's sidecar records it as a scan. This sits after the shape
-   rules and outranks them and the components layer's cover fit. */
+   rules and outranks them and the components layer's cover fit.
+   A bare `auto` reads the piece's ratio only once it has loaded, so before that
+   the box collapsed to its mat and the page below it moved when the scan came
+   in. The second line hands the box the ratio its width and height attributes
+   already state, where typed attr() is supported; elsewhere the first stands. */
 .image-study img:is([src*="/assets/folios/"], [src*="/assets/primes/"], [src*="/assets/pads/"], [src*="/assets/panels/"], [src*="/assets/scraps/"], [src*="/assets/worktable/"]) {
   aspect-ratio: auto;
+  aspect-ratio: auto attr(width type(<number>)) / attr(height type(<number>));
   max-block-size: min(72svh, 38rem);
   object-fit: contain;
 }
@@ -46381,6 +46396,19 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
     outline-color: color-mix(in oklab, var(--material-ink) 16%, transparent);
     outline-offset: 0;
     filter: saturate(0.82);
+  }
+}
+
+/* A body slot is an anatomy seam, not a lifted card. The runtime tags every
+   [data-spw-slot] with kind "slot", which pulls it into the baseline above: a
+   wall and a surface with no inset, so at pocket width the content sat 1px
+   inside a second rule while the frame heading stood on the first. Here the
+   slot keeps no wall of its own and its content shares the heading's edge. */
+@media (max-width: 45rem) {
+  [data-spw-kind="slot"] {
+    border-width: 0;
+    background: none;
+    box-shadow: none;
   }
 }
 

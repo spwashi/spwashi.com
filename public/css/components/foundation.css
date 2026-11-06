@@ -881,6 +881,16 @@
   );
 }
 
+/* At pocket width a body slot's content starts on its own edge, the frame
+   heading's (effects/material.css), so a rail at inset 0 sat under the first
+   letters. There the rail steps into the gutter beside the content, a margin
+   mark that still names the module without crowding what it marks. */
+@media (max-width: 45rem) {
+  :where([data-spw-module])::after {
+    inset-inline-start: calc(-0.4rem - var(--component-module-rail-width));
+  }
+}
+
 /* Hydration/context states are visual confidence cues, not layout states. */
 :where([data-spw-module][data-spw-module-hydration="ready"]) {
   --component-module-rail-opacity: 0.44;

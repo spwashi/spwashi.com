@@ -59,6 +59,15 @@
   margin: 0;
 }
 
+/* The exits also carry .frame-operators, whose tray (a wall, a surface and a
+   hairline inset) nested a second box inside the paste card and stepped the
+   buttons in from the field above them. The card is the tray here. */
+.spw-paste__exits {
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
 .spw-paste__out {
   display: grid;
   gap: 0.5rem;

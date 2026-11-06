@@ -24,6 +24,7 @@ export const MODULE_TEST_FILES = Object.freeze([
   'scripts/tests/css-layer-ablation.test.mjs',
   'scripts/tests/css-delivery.test.mjs',
   'scripts/tests/cauldron-live-expression.test.mjs',
+  'scripts/tests/home-seat-line.test.mjs',
   'scripts/tests/cauldron-tape.test.mjs',
   'scripts/tests/care-handle.test.mjs',
   'scripts/tests/design-bench-live.test.mjs',
