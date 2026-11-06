@@ -57,7 +57,7 @@ intent: .{
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @plan_color_motion: ~"../color-motion/index.spw"
-@raw: ~"../../../public/images/renders/_raw/"
+@raw: `public/images/renders/_raw/ (gitignored: session zips unpack here locally, so no clean checkout has it)`
 @raw_2x2: ~"../../../public/images/renders/_raw-2x2/"
 @unsorted_curation: ~"../../../public/images/renders/unsorted-curation/"
 @2026_03_10_favicon_study: ~"../../../public/images/renders/2026-03-10-favicon-study/"
@@ -98,7 +98,7 @@ dispatch: .{
  layer = "pragmatic"
  hypothesis = `Use Midjourney as an inspiration and concept-sketching tool for focused UX directions, then translate the best ideas into repo-native CSS, HTML semantics, image treatments, behavior notes, and .spw inspection notes. The output should be design direction and interaction personality, not unfiltered generated-image decoration. The site should keep feeling authored by Spwashi. Midjourney can help discover palettes, materials, spatial metaphors, behavior metaphors, and visual motifs, but implementation should remain deliberate, accessible, and maintainable.`
  spec_ref = ~"./PLAN.md"
- impl_ref = ~"../../../public/images/renders/_raw/"
+ impl_ref = `public/images/renders/_raw/ (gitignored, local only)`
  probe_ref = `Target route at mobile and desktop widths.`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../public/images/renders/_raw/ unchanged or untested.`
  status = "active"
