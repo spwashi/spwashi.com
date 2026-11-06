@@ -1,6 +1,6 @@
 # Promo / Wonder Cycle Plan
 
-**Status 2026-11-06.** The rotating layer (603f18d8, typed in ccafd1ac) and the intent-picked toast (1a61dc53) stand. Since 2026-10-10 the feed and its typed module changed only to name closes (efcd875d, eff5abfd). Closes fall on the 13th and the 26th (`releaseCycleForDate`): October 13 has receipts (efcd875d), October 26 has none (3421dc34 says so on Home and `/now/`), and the next is November 13. One slice is open, P1, the shown / accepted / closed counter, and it waits on the creator's look at the 1a61dc53 demo (`wonder_promo_wonder_cycle_notice_demo`). [ecosystem-offer-2026-10](../archive/ecosystem-offer-2026-10/PLAN.md) archived 2026-11-06, and its two open questions (prices as shipped, the film backer) now live here (see "Absorbed 2026-11-06").
+**Status 2026-11-06.** The rotating layer (603f18d8, typed in ccafd1ac) and the intent-picked toast (1a61dc53) stand. Since 2026-10-10 the feed and its typed module changed only to name closes (efcd875d, eff5abfd). Closes fall on the 13th and the 26th (`releaseCycleForDate`): October 13 has receipts (efcd875d), October 26 has none (3421dc34 says so on Home and `/now/`), and the next is November 13. One slice is open, P1, the shown / accepted / closed counter, and it waits on the creator's look at the 1a61dc53 demo (`wonder_promo_wonder_cycle_notice_demo`). [ecosystem-offer-2026-10](../archive/ecosystem-offer-2026-10/PLAN.md) archived 2026-11-06, and its two questions came here; the creator answered both on 2026-11-06 with layers (anchors, media, conversation), and two paths, one for a reader watching and unsure and one ready to decide, are slices L1 to L5 under "Pricing in layers".
 
 **Related:** [ecosystem-offer-2026-10](../archive/ecosystem-offer-2026-10/PLAN.md) (archived 2026-11-06) · [discovery-powerups](../archive/discovery-powerups/PLAN.md) (archived). **Absorbed 2026-10-06:** [cadence-text-resonance](../archive/cadence-text-resonance/PLAN.md) · [release-day-discovery-2026-09-26](../archive/release-day-discovery-2026-09-26/PLAN.md) · [release-day-resonance-2026-09-13](../archive/release-day-resonance-2026-09-13/PLAN.md) · [rpg-playable-copy](../archive/rpg-playable-copy/PLAN.md).
 
@@ -62,11 +62,34 @@ Each release close was its own one-day plan until 2026-10-06; the receipts live 
 
 Proposed, for the creator's copy: `/now/` keeps the closes as a ledger played straight, one row for every 13th and 26th, and a close that passed without receipts says "no receipts filed" in its row rather than leaving a gap. The rule then teaches itself: a reader sees the cadence in the dates, and the missing receipt is a fact on the record, not a hole in the page.
 
+## Pricing in layers — 2026-11-06
+
+The creator, answering the open price questions: pricing is answered with layers. TikTok gifts can be a medium for exchange; more specific business development happens through conversation; transparency is valuable, and pricing anchors need to be tangible enough. The specifics matter less: the value and the flow of creation depend on how we work together, what has already been made, and where the show's momentum is. Then: exercise discernment, motivate both an apprehensive audience on TikTok and a more decisive small-business owner, with paths that leave room to wonder about dimension. The Enigma concept on TikTok may be referenced as a pricing anchor (`#>wonder_promo_wonder_cycle_enigma_anchor`: no file here or in the workbench names it yet).
+
+**The three layers, and what already stands for each.**
+
+- **Anchors**, transparent and picturable. A figure anchors when it names a thing: `$10` a sandwich on a long build day, `$20` lunch or a quick question answered, `$50` a full day, `$75` one fix shipped, `$250` a screenshot-ready proof card, `$500` a scope note, `$750` a session and memo, `$225/hr`. A range that names no thing does not anchor: Creator Work `$600–$12,000+` spans twenty times, Systems Sprint `$5,000–$12,000+`, Ecosystem Routing `free–$500+`, Render Season `$5,000+` (read 2026-11-06 from `services/index.html` Pricing and Render Queue; the composer's 28 `data-min` figures run from 20 to 12,000, median 600).
+- **Media**, the forms an exchange can take: a Heart Me or a gift during a TikTok live (already said on `/services/#support` and `/now/`'s support ladder), tips, a gifted SuperGrok or Midjourney year, Patreon as the steady version. Dregg stays a medium the creator makes work in, not a way to pay.
+- **Conversation**, for everything specific: Custom & Hybrid Quotes already promises an honest scope and a number or range, and `/cards/#back-the-film` already says "we agree on what fits". A wide range should read as where a conversation starts, not as a quote.
+
+**Two paths, written to intent rather than identity** (copy-audience principle). Each shows where a step lands before it is taken, names the dimension it opens, and keeps a way back.
+
+1. **Watching and unsure** (the creator's example: an apprehensive viewer on TikTok). The first step is what they already hold, a gift during a live, with one anchor they can picture beside it (a sandwich on a long build day; the Enigma concept once it is defined). Where it lands: the close on the 13th or the 26th says what the period's support became (a day of build, a scanned folio, a scene for the film), in aggregate and never by giver. That close ledger is P2's proposal and the October 26 close had no receipts, so this path waits on the ledger; do not promise a receipt the site does not keep. No countdowns and no scarcity: an apprehensive reader is motivated by seeing that small things land, not by pressure.
+2. **Ready to decide** (the creator's example: a small-business owner). The first step is one number and one door: the Scope Card (`$250` proof card, `$500` scope note, `$750` session and memo), then a custom quote. Where it lands: the proof artifacts (architecture memo, QA checklist, series home, a running product) show the dimensions a scope can grow into, and the composer lets a reader combine them as a sketch, not a quote. Discernment: `/services/` has seventeen sections and three priced surfaces before the conversation door; a decisive reader needs one first number near the top, not the whole ladder.
+
+**Slices.**
+
+- **L1 — Anchor read.** Done above; the census is the next check whenever a figure changes.
+- **L2 — Name the layers once.** One line in the Pricing lede on `/services/` and in the support ladder on `/now/`. Draft for the creator: "Prices here come in layers. The figures you can picture are real: $10 is a sandwich on a long build day, $250 is a screenshot-ready proof card. A gift during a live counts too. Anything more specific we set in conversation, by what is already made and where the show is." Gate: the creator's wording (financial).
+- **L3 — The decisive path.** One first number and one door near the top of `/services/`, with the proof artifacts as the dimensions it opens. Placement is [landing-visual-hierarchy](../landing-visual-hierarchy/PLAN.md)'s Services parcel; gate: the creator's look.
+- **L4 — The watcher's path.** On `/now/`'s support ladder, after the close ledger exists: the gift first, one picturable anchor, then the ledger line. Gate: the ledger, then the creator's wording.
+- **L5 — Wide ranges say where they start.** Each range that names no thing gets its starting thing (for Creator Work, the smallest deliverable it covers) or reads as set in conversation. Gate: the creator's wording.
+
 ## Absorbed 2026-11-06 — ecosystem-offer-2026-10
 
 The season's offer copy landed 2026-09-28 (9a465ef4) across `/about/`, `/services/`, `/now/` and the topic shelves, with the granular prices in the `/services/` bundle composer (b5bf993c). October closed and the plan archived by its own rule. Its two open questions now live in this plan's `index.spw` under their old names:
 
-- `#>wonder_ecosystem_offer_prices`: whether the 28 composer figures stand as the creator's. Prices are the creator's call.
-- `#>wonder_ecosystem_offer_film_backer`: what a film backer receives. The only words on record are the `/cards/#back-the-film` card (0a764fce), which promises nothing.
+- `#>wonder_ecosystem_offer_prices`: answered 2026-11-06 with layers (see "Pricing in layers").
+- `#>wonder_ecosystem_offer_film_backer`: answered 2026-11-06: what a backer receives is set in conversation, as the `/cards/#back-the-film` card (0a764fce) already says.
 
 Rules worth keeping: every proof card points to evidence and a next action (from funding-proof-cards); financial and sponsorship wording waits on the creator's confirmation; copy leads with Spwashi, and the legal name appears only on `/about/sam-washington/` in copy the creator writes or approves; the high-school play title stays out of copy until the creator supplies it. Source: [ecosystem-offer-2026-10](../archive/ecosystem-offer-2026-10/PLAN.md).

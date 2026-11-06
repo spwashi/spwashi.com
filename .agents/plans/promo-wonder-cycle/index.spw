@@ -125,7 +125,8 @@ invariants: #[
   ~#expect: "The composer still carries the 28 data-min figures b5bf993c shipped, unchanged since (git diff b5bf993c HEAD -- services/index.html moves none); each is the creator's to confirm or change."
   ~#probe(read)
   !probe{ "Open /services/ and read the small-jobs lane, the add-ons and the care plans line by line; confirm each figure or name the change." }
-  $%[prices.stand_as_shipped, prices.change_named_figures, prices.withdraw_until_set]
+  ~#answer(2026-11-06): "prices.layers. The creator: pricing questions are answered with layers; TikTok gifts can be a medium for exchange; more specific business development happens through conversation; transparency is valuable and anchors need to be tangible enough; the specifics matter less than how we work together, what is already made and where the show's momentum is. The shipped figures stand as anchors where they name a thing; PLAN.md#pricing-in-layers--2026-11-06 holds the layers and slices L1 to L5."
+  $%[prices.stand_as_shipped, prices.change_named_figures, prices.withdraw_until_set, prices.layers]
   ~<"../archive/ecosystem-offer-2026-10/PLAN.md"> ~<"../../../services/index.html">
 }
 
@@ -137,6 +138,19 @@ invariants: #[
   ~#expect: "No route names a credit, cameo or thanks for a backer; the card's 'Nothing is promised by this card; we agree on what fits.' is the whole answer on record."
   ~#probe(read)
   !probe{ "Name what a backer receives, in the creator's words. The /cards/#back-the-film card, which /services/, /topics/film/ and /now/ already link, can then carry it." }
+  ~#answer(2026-11-06): "backer.says_what_it_means. The creator: more specific business development happens through conversation, and the value depends on how we work together, what is already made and where the show's momentum is. The card's 'we agree on what fits' stands; a gift during a live is the light medium."
   $%[backer.says_what_it_means, backer.credit, backer.cameo, backer.thanks]
   ~<"../archive/ecosystem-offer-2026-10/PLAN.md"> ~<"../../../topics/film/index.html">
+}
+
+#>wonder_promo_wonder_cycle_enigma_anchor
+?["What is the Enigma concept on TikTok, and what should it anchor on the price layers?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#with: @plan @services
+  ~#tension: "The creator named it as a pricing anchor on 2026-11-06. An anchor must be tangible enough to picture, and the watcher's path needs one beside the gift; nothing on the site says what Enigma is yet, so no copy can lean on it."
+  ~#expect: "No file in this repo or the workbench names Enigma (rg -i enigma finds nothing in either), so its meaning is the creator's to give."
+  ~#unblocks: "the watcher's path (L4), and possibly the layers line (L2)"
+  ~#probe(read)
+  !probe{ "The creator says what Enigma is on TikTok and what it is worth or stands for; then place it beside the gift on /now/'s support ladder." }
+  $%[enigma.watcher_anchor, enigma.ladder_rung, enigma.both]
 }
