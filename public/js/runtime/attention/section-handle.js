@@ -521,7 +521,7 @@ function createHandleShell(origin, doc = document) {
     <button type="button" class="spw-section-handle-step" data-spw-handle-target="next" aria-label="Jump to next section">
       <span aria-hidden="true">›</span>
     </button>
-    <button type="button" class="spw-section-handle-step spw-section-handle-satchel" data-spw-handle-target="satchel" aria-label="Open the state satchel" title="State satchel (or swipe up on the rail)" hidden>
+    <button type="button" class="spw-section-handle-step spw-section-handle-satchel" data-spw-handle-target="satchel" aria-label="Open the satchel" title="$satchel: this page as Spw (or swipe up on the rail)" hidden>
       <span aria-hidden="true">$</span>
     </button>
     <button type="button" class="spw-section-handle-step" data-spw-handle-target="bottom" data-spw-handle-advanced="true" aria-label="Jump to bottom of page">

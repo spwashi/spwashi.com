@@ -111,9 +111,9 @@ function createFloatingChip() {
   chip.setAttribute('aria-haspopup', 'dialog');
   chip.setAttribute('aria-controls', 'spw-cauldron-dialog');
   chip.hidden = true;
+  // The chip writes the expression its dialog writes, .cauldron{n}, and then the next verb.
   chip.innerHTML = `
-    <span class="spw-cauldron-chip__sigil" aria-hidden="true">◎</span>
-    <span class="spw-cauldron-chip__count" data-spw-cauldron-chip-count>0</span>
+    <span class="spw-cauldron-chip__expression"><span class="spw-cauldron-chip__sigil" aria-hidden="true">.</span><span class="spw-cauldron-chip__word" aria-hidden="true">cauldron{</span><span class="spw-cauldron-chip__count" data-spw-cauldron-chip-count>0</span><span class="spw-cauldron-chip__word" aria-hidden="true">}</span></span>
     <span class="spw-cauldron-chip__phase" data-spw-cauldron-chip-phase>gather</span>
   `;
   annotateFloatingChromeElement(chip, {

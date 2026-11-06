@@ -197,6 +197,17 @@
   font-size: 0.95rem;
 }
 
+.spw-cauldron-chip__expression {
+  display: inline-flex;
+  align-items: baseline;
+  font-family: var(--site-mono-font, var(--font-mono, ui-monospace, monospace));
+  white-space: nowrap;
+}
+
+.spw-cauldron-chip__word {
+  color: var(--ink-soft, inherit);
+}
+
 .spw-cauldron-chip__count {
   font-weight: 600;
 }
