@@ -58,7 +58,7 @@ intent: .{
 @site_starter_component_kit: ~"../../../.spw/conventions/site-starter-component-kit.spw"
 @public_css_compose_css: ~"../../../public/css/compose.css"
 @public_js_compose_js: ~"../../../public/js/compose.js"
-@catalog: ~"../../../design/catalog/"
+@catalog: `design/catalog/ (gitignored: written by npm run catalog, so no clean checkout has it)`
 @starter_inventory: ~"../../../scripts/starter-inventory.mjs"
 @public_css_readme_md: ~"../../../public/css/README.md"
 @public_js_readme_md: ~"../../../public/js/README.md"

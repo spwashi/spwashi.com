@@ -87,7 +87,7 @@ intent: .{
 @experiential: ~"../../../public/js/runtime/experiential/experiential.js"
 @shared: ~"../../../public/js/kernel/shared.js"
 @build: ~"../../../scripts/build.mjs"
-@route_manifest: ~"../../../.agents/state/runtime/route-runtime-manifest.json"
+@route_manifest: `.agents/state/runtime/route-runtime-manifest.json (gitignored: written by npm run manifest, so no clean checkout has it)`
 
 dispatch: .{
  plan = @plan
