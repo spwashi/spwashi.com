@@ -1,8 +1,25 @@
 # Midjourney-Inspired Focused Design Concepts Plan
 
-**Status 2026-10-10.** Landed: Patch 4 (texture slices, dfafb7ef), 5B, and 6/6A/6B. The creator's keep/replace/cut review (b87c59f5, `.spw/caches/image-review-2026-09.spw`) set the image rule, a wonder that belongs to its page, and supersedes `style-image-cohesion` (archived 2026-10-10), whose remaining image work this plan holds. Partial: 1/1A/1B (registry in `.spw/assets.spw` `renders.studies`, staging in `.spw/conventions/asset-management.spw`; `public/images/README.md` is 13 lines and names neither), 2/2A/2B (seeds in `.spw/caches/prompt-seeds-2026-09.spw`), 3/3A/3B, and 5/5A. Patches 2.5 and 7/7A/7B were not started and have no owner. Next slice: Patch 1B as a short pointer from `public/images/README.md` to the registry, the staging rules and the review log. Promoting a mark waits on the creator's pick (`index.spw#wonder_midjourney_design_concepts_mark`; session 7, a9fa3ca7). Session notes and the old commit series: [HISTORY.md](./HISTORY.md).
+**Status 2026-11-05.** Landed: Patch 4 (texture slices, dfafb7ef), 5B, and 6/6A/6B. The creator's keep/replace/cut review (b87c59f5, `.spw/caches/image-review-2026-09.spw`) set the image rule, a wonder that belongs to its page, and supersedes `style-image-cohesion` (archived 2026-10-10), whose remaining image work this plan holds. Partial: 1/1A/1B (registry in `.spw/assets.spw` `renders.studies`, staging in `.spw/conventions/asset-management.spw`; `public/images/README.md` is 13 lines and names neither), 2/2A/2B (seeds in `.spw/caches/prompt-seeds-2026-09.spw`), 3/3A/3B, and 5/5A. Patches 2.5 and 7/7A/7B were not started and have no owner. Next slice: Patch 1B as a short pointer from `public/images/README.md` to the registry, the staging rules and the review log. Promoting a mark waits on the creator's pick (`index.spw#wonder_midjourney_design_concepts_mark`; session 7, a9fa3ca7). Session notes and the old commit series: [HISTORY.md](./HISTORY.md). On 2026-11-05 the creator turned the image rule toward their own art: see "The creator's own art, first and between pages" below, which now leads this plan's work.
 
 **Related:** [visual-capture-ecology](../archive/visual-capture-ecology/PLAN.md) · [reference-assignment-template](../reference-assignment-template/PLAN.md). **Absorbed 2026-10-06:** [promptable-image-library-pass](../archive/promptable-image-library-pass/PLAN.md).
+
+## The creator's own art, first and between pages — 2026-11-05
+
+The creator, in three lines on 2026-11-05: links between pages should use more of their own art, not Midjourney art in random places; the images often do not feel cohesive thematically; and they want to see more of their art, more immediately, from more pages. This extends the 2026-09 image rule (a wonder that belongs to its page) rather than replacing it.
+
+Census, 2026-11-05 (route `index.html` files, images inside `<main>`):
+
+- 214 route pages: 138 carry no image, 38 show hand-made art anywhere (folios, pads, panels, scraps, worktable under `public/images/assets/`), and 23 open on it (Home, Now, Play, Care, Curriculum, Coordination and the folio pages among them). Where the first image is something else, it comes from `routes/` (16), `renders/` (12), `illustrations/` (6) and `home/` (5).
+- 1,816 images inside links between pages: `renders/` 631 (622 of them the asset catalog, whose job is to show renders), `folios/` 411, `panels/` 177, `primes/` 150, `illustrations/` 134, `routes/` 92, `home/` 52, `worktable/` 42, `scraps/` 32.
+- `public/data/image-resources.json` holds 2,555 images with a role and concepts, and nothing about who made each one, so "use the creator's own art" cannot be checked by any tool yet.
+
+Proposed slices, in order:
+
+1. **Who made it.** A `made` field in the image registry, hand or model, read from the folder and confirmed by the creator for the families a folder name does not settle (`index.spw#wonder_midjourney_design_concepts_whose_hand`). Ungated once that answer is in; no new `data-spw-*`.
+2. **A sensor.** Per route: whether its first image is hand-made, and which link images are model renders outside the asset catalog. Advisory, like `audit:copy:accessor`.
+3. **Links carry the creator's art, matched to the destination.** A picture that links a page shows something that belongs to that page's subject, read from the registry's `concepts` against the page's own expressions; component-region-personality's Wave 3 picture cards are the first place. Each placement is the creator's pick, after the 2026-09 review's practice (a folio scan stands in whole).
+4. **More pages open on the creator's art.** The first screen is [landing-visual-hierarchy](../landing-visual-hierarchy/PLAN.md)'s; this plan proposes which piece, page by page, starting with landings whose first image is a route hero or a render. Gate: the creator's look, since a first image is a sensation call.
 
 ## Public Goal
 

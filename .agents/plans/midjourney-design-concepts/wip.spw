@@ -19,6 +19,7 @@ fixity = "tending"
 
 ^"stream"{
  >>[2026-10-12 10:59] verify — Patches 4 (dfafb7ef), 5B and 6/6A/6B are in, and the review log (b87c59f5) sets the image rule. public/images/README.md is still 13 lines and names neither the renders.studies registry in .spw/assets.spw nor the staging rules in asset-management.spw, so Patch 1B is open and needs no one's call. Promoting a mark waits on the creator's pick, and Patches 2.5 and 7 still have no owner.
+ >>[2026-11-05 23:05] cache — the creator: more of their own art linking pages instead of Midjourney art in random places; the images often do not feel cohesive thematically; more of their art, more immediately, from more pages. Census in PLAN.md: 23 of 214 route pages open on hand-made art and 138 carry no image; of 1,816 link images, renders outside the asset catalog are 9, and the families a folder does not settle (primes 150, illustrations 134, routes 92, home 52) are the open question #>wonder_midjourney_design_concepts_whose_hand. Four slices proposed: who made it, a sensor, links matched to their destination, more pages opening on the creator's art.
 }
 
 ^"open"{

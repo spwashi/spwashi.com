@@ -1,10 +1,25 @@
 # Fix: Floating Chrome Stack
 
-**Status 2026-10-25.** Landed: the tier fix, the lane lifecycle (`848a0b46`), and Step 1's single control-size token (`a5f56bec`). Every floating control now reads `--spw-floating-control-size` from one block in `components/floating-chrome.css`. Next slice: the Step 2 browser demo, with a compact base and a coarse-pointer step keyed to pointer rather than width. It includes whether `ornament/whimsy.css`'s 48rem `:where(button, .spw-chip, label)` min-height should keep reaching floating chrome. It is gated first on the console sizing question in `index.spw`, then on the creator's sensation review, live and never from a still: on `/` at pocket (390px) and on `/about/` at 320px, where the corner was measured. Stills cannot judge it: `public/css/modes/capture.css` hides floating chrome (lines 7-35) and pauses animated SVG flows (line 40). Corner sharing in the pocket lane moved here from cauldron-lens-composition (below).
+**Status 2026-11-05.** Landed: the tier fix, the lane lifecycle (`848a0b46`), and Step 1's single control-size token (`a5f56bec`). Every floating control now reads `--spw-floating-control-size` from one block in `components/floating-chrome.css`. On 2026-11-05 the theory was read against what runs (`.spw/caches/chrome-ecology-2026-11.spw`), and a six-line revision is proposed below; it waits on the creator's words, and each line's change ends at a live demo. Next slice: the Step 2 browser demo, with a compact base and a coarse-pointer step keyed to pointer rather than width. It includes whether `ornament/whimsy.css`'s 48rem `:where(button, .spw-chip, label)` min-height should keep reaching floating chrome. It is gated first on the console sizing question in `index.spw`, then on the creator's sensation review, live and never from a still: on `/` at pocket (390px) and on `/about/` at 320px, where the corner was measured. Stills cannot judge it: `public/css/modes/capture.css` hides floating chrome (lines 7-35) and pauses animated SVG flows (line 40). Corner sharing in the pocket lane moved here from cauldron-lens-composition (below).
 
 **Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — home.console_size, seams.pocket_corner.
 
 **Related:** [shell-model-vocabulary-consolidation](../shell-model-vocabulary-consolidation/PLAN.md) · [navigation-header-disclosure](../archive/navigation-header-disclosure/PLAN.md) · [cauldron-lens-composition](../cauldron-lens-composition/PLAN.md). **Absorbed 2026-10-06:** [chrome-copy-collision](../archive/chrome-copy-collision/FIX.md) · [mobile-chrome-alignment](../archive/mobile-chrome-alignment/PLAN.md) · [narrative-grammar-infrastructure](../archive/narrative-grammar-infrastructure/PLAN.md).
+
+## Theory revision — proposed 2026-11-05
+
+The creator asked whether the layout theory needs revising. Read against the tree and a live probe with capture mode off ([chrome-ecology-2026-11](../../../.spw/caches/chrome-ecology-2026-11.spw), `#theory_as_run`): what runs is one pocket ladder whose members are a selector list (`kernel/dom-contracts.js:853-921`); no stylesheet reads a slot name; the persistent pieces sit on four tiers, the satchel launch (drawer, 2020) above toasts (2018); `ornament/whimsy.css:402-406` sets every pocket button to 44px below 48rem, over the size token; four conditions mean pocket (720px or coarse in JS, 45rem in most CSS, 45rem or coarse for the collection, 48rem in whimsy); and the rail's arrival lifts the corner 61.5px. On 2026-11-05 pocket screenshots, the satchel launch sat over body text on `/topics/software/spw/` and `/about/domains/spw.quest/`, and the rail named `/about/`'s section only as "#> section".
+
+| Proposed line | Retires |
+| :--- | :--- |
+| Chrome is a host that answers in the page's words: the rail names a section by its heading and its place. | "#> section" and a five-cell rail in four vocabularies as the answer to where am I |
+| z follows how long a thing stays: what stays sits low and together, what passes above it, what blocks highest. | the satchel launch above toasts; four tiers for four persistent pieces |
+| Width places, the pointer sizes; the ornament layer does not size chrome. | four pocket conditions; whimsy's width-keyed reach (this plan's Step 2) |
+| The pocket ladder has rungs named for what a reader does: travel, carry, speak. | ten slot names no stylesheet reads (`#>wonder_chrome_ecology_rungs`) |
+| The carry corner is one composition: one ground, one radius, one right edge, and the rail's arrival does not lift it. | three utilities stacked by arithmetic (Corner sharing, below) |
+| Chrome over reading text takes a ground the text cannot read through. | a translucent rail and satchel over paragraphs |
+
+Gate: the creator's words for the theory. Each line's change ends at a live demo, never a still, since `modes/capture.css` hides floating chrome.
 
 ## Failures
 

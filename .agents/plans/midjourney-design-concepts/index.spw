@@ -142,3 +142,16 @@ invariants: #[
   !probe{ "ls public/images/renders/_raw/2026-09-28-session-7/ design/logos/" }
   ~<"../../../design/logos/index.html"> ~<"../../../.spw/caches/prompt-seeds-2026-09.spw"> ~<"../archive/design-studio/PLAN.md">
 }
+
+#>wonder_midjourney_design_concepts_whose_hand
+?["Which image families are the creator's own hand, and which are model renders: folios, pads, panels, scraps and worktable read as scans, but what are primes, illustrations, routes and home?"]{
+  #:depth #!pragmatics ~#lens(choice)
+  ~#with: @plan @raw
+  ~#taste: "A rule that prefers the creator's art needs to know which art is theirs; a folder name is a guess."
+  ~#hypothesis: "primes and illustrations hold model renders promoted from the Midjourney sessions, and routes and home mix both; if so, about 430 link images between pages are renders outside the asset catalog."
+  ~#tension: "Some renders were made from the creator's prompts and direction, and some scans were edited; hand and model may need a third value for work that is both."
+  ~#unblocks: "the registry's made field, the sensor, and every placement slice after them"
+  ~#probe(read)
+  !probe{ "ls public/images/assets/primes public/images/assets/illustrations | head -40" }
+  $%[made.hand, made.model, made.both]
+}
