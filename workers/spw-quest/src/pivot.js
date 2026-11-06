@@ -6,7 +6,7 @@
 import { escapeHtml, layout } from "../../lib/shell.js";
 import { scriptAddress } from "./build.js";
 import { CARD_CSS, cardFacts, cardLink, questCard } from "./cards.js";
-import { COMPOUND_JOIN_OPERATORS } from "../../../public/js/semantic/expression-query.js";
+import { COMPOUND_JOIN_OPERATORS, readBodyJoins, readSlotOrder } from "../../../public/js/semantic/expression-query.js";
 import { OPERATORS } from "./guide.js";
 import { PAGE_CSS, QUEST_HEAD, masthead } from "./page.js";
 import { PAPER_CSS } from "./paper.js";
@@ -20,6 +20,13 @@ const PER_SLOT = 4;
 const VALENCE = Object.freeze(["boon", "bane", "bone", "bonk", "honk"]);
 const FRONT_MARKS = Object.freeze(["?", "~", "^", "&", "$"]);
 const MARK_NAME = new Map(OPERATORS.map((operator) => [operator.sigil, operator.name]));
+/** A body's parts, held four ways; each says what the separator does. */
+const BODY_TURNS = Object.freeze([
+  ["ident", ".", "hold it as one name", "dots inside one brace make one name the parser keeps whole"],
+  ["common", ",", "hold the parts together", "commas keep parts apart and present at once"],
+  ["ordinal", ";", "hold the parts in order", "semicolons put the parts in a sequence"],
+  ["project", " ~> ", "make the parts a path", "~> carries each part on to the next without collapsing them"],
+]);
 const SLOT_SAYS = Object.freeze({ subject: "the word", mode: "the lens", body: "what it holds", projection: "where it goes", scope: "the scene", charge: "the charge in front", join: "the join" });
 
 const flat = (value) => String(value || "").replace(/\s+/g, "");
@@ -60,17 +67,27 @@ function kinValues(slot, own, anchors) {
 
 /* ---------- A line, and the line one slot away ---------- */
 
-/** Where a line keeps its scene: before the word, or after what it holds. */
-function layoutOf(line, slots) {
-  const after = String(line).replace(/^(?:(?:bone|boon|bane|bonk|honk)(?:\.(?:bone|boon|bane|bonk|honk))*\s*)/, "");
-  return { sceneFirst: Boolean(slots.scope) && after.trimStart().startsWith("(") };
+/** Where a line keeps its slots: its scene before the word or among the braces, and the braces in the order its author wrote. */
+function layoutOf(line) {
+  const left = String(line).split(/\s+[~&^@]\s+/)[0];
+  return readSlotOrder(left);
 }
 
+/* Each brace pair names its slot wherever it sits (the creator, 2026-11-05). A
+   pivot writes the line back in its author's order; a new slot takes its place
+   in the atlas order or the guide order the line already follows. */
+const ATLAS = Object.freeze(["mode", "body", "scope", "projection"]);
+const GUIDE = Object.freeze(["projection", "scope", "mode", "body"]);
+const WRAP = Object.freeze({ mode: ["[", "]"], body: ["{", "}"], scope: ["(", ")"], projection: ["<", ">"] });
+const isSubsequence = (part, whole) => { let at = 0; for (const item of whole) if (item === part[at]) at += 1; return at === part.length; };
+const orderFor = (written = []) => (isSubsequence(written, ATLAS) ? ATLAS : isSubsequence(written, GUIDE) ? GUIDE : [...written, ...ATLAS.filter((slot) => !written.includes(slot))]);
+
 /** A line written back from its slots, keeping where its scene sat. */
-export function lineFrom(slots, { sceneFirst = false } = {}) {
-  const scene = slots.scope ? `(${slots.scope})` : "";
-  const left = `${slots.charge ? `${slots.charge}${slots.subject ? " " : ""}` : ""}${sceneFirst ? scene : ""}${slots.subject || ""}`
-    + `${slots.mode ? `[${slots.mode}]` : ""}${slots.body ? `{${slots.body}}` : ""}${sceneFirst ? "" : scene}${slots.projection ? `<${slots.projection}>` : ""}`;
+export function lineFrom(slots, { sceneFirst = false, order = [] } = {}) {
+  const containers = orderFor(order)
+    .filter((slot) => slots[slot] && !(slot === "scope" && sceneFirst))
+    .map((slot) => `${WRAP[slot][0]}${slots[slot]}${WRAP[slot][1]}`).join("");
+  const left = `${slots.charge ? `${slots.charge}${slots.subject ? " " : ""}` : ""}${sceneFirst && slots.scope ? `(${slots.scope})` : ""}${slots.subject || ""}${containers}`;
   return slots.join && slots.with ? `${left} ${slots.join.split(" ")[0]} ${slots.with}` : left;
 }
 
@@ -108,6 +125,13 @@ export function pivotsOf(line) {
   }
   for (const slot of ["charge", "scope", "projection", "body", "mode"]) {
     if (slots[slot] && (slots.subject || slot !== "charge")) add(slot, "drop", `drop ${SLOT_SAYS[slot]}`, { [slot]: "" });
+  }
+  // How the body holds its parts: the four joins spwashi.com's direction cards teach (one name, held together, in order, a path).
+  const held = readBodyJoins(slots.body || "");
+  if (held.parts.length > 1) {
+    for (const [kind, separator, label, why] of BODY_TURNS) {
+      if (kind !== held.kind) add("body", "turn", label, { body: held.parts.join(separator) }, why);
+    }
   }
   if (slots.subject && !/^[~?!*^#@&=%$]/.test(slots.subject)) {
     for (const mark of FRONT_MARKS) add("subject", "mark", `${mark} ${MARK_NAME.get(mark)} in front`, { subject: `${mark}${slots.subject}` });

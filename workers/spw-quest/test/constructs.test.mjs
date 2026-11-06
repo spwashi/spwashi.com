@@ -91,6 +91,26 @@ test('a pivot changes one slot, names it, and lands either on the shelf or somew
   assert.ok(familiesOf('theory[practice]').some(({ query, n }) => query === 'theory[*]' && n > 1));
 });
 
+test('each brace pair names its slot wherever it sits, and a pivot keeps the order the line was written in', () => {
+  // The guide's order pivots without losing its concept or its scene.
+  const guide = pivotsOf('beans<food>(kitchen)[mode]{soak,cook,serve}');
+  for (const pivot of guide.filter((item) => item.slot === 'mode' && item.kind !== 'drop')) assert.match(pivot.line, /^beans<food>\(kitchen\)\[/, pivot.label);
+  assert.ok(guide.some((pivot) => pivot.line === 'beans<food>(kitchen){soak,cook,serve}'), 'dropping the lens keeps the concept and the scene');
+  // A line with no word: three containers, its own order.
+  const title = pivotsOf('{chronicles} <of> (narnia)');
+  assert.ok(title.length > 3);
+  assert.ok(title.every((pivot) => !pivot.line.includes('{chronicles}') || /^\{chronicles\}/.test(pivot.line)), 'the body stays first');
+  // A body with parts turns how it holds them: one name, together, in order, a path.
+  const turns = guide.filter((pivot) => pivot.slot === 'body' && pivot.kind === 'turn').map((pivot) => pivot.line);
+  assert.deepEqual(turns, [
+    'beans<food>(kitchen)[mode]{soak.cook.serve}',
+    'beans<food>(kitchen)[mode]{soak;cook;serve}',
+    'beans<food>(kitchen)[mode]{soak ~> cook ~> serve}',
+  ]);
+  // A one-part body has nothing to turn.
+  assert.ok(!pivotsOf('bane[bone]{limit}').some((pivot) => pivot.kind === 'turn' && pivot.slot === 'body'));
+});
+
 test('the pivot page reads with scripts off, keeps the way back, and reflects nothing it should not', async () => {
   const empty = await get('/pivot');
   assert.equal(empty.status, 200);

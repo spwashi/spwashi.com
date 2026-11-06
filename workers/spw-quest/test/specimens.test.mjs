@@ -46,8 +46,10 @@ test('the shelf reads with scripts off: pressed forms, the pages\' rarer lines, 
   assert.deepEqual(kinds.map((m) => m[1]), ['charged', 'joined', 'marked', 'scened']);
   assert.deepEqual(kinds.map((m) => Boolean(m[2])), [true, false, false, false]);
   assert.ok(kinds.every((m) => Number(m[3]) > 0));
-  // Nothing on the guide changed for this page: the note shell is left alone.
-  assert.doesNotMatch(await text('/'), /\/specimens/);
+  // The guide carries no shelf of its own: since the note deployed (2026-11-05) it reaches the shelf through the masthead only.
+  const guide = await text('/');
+  assert.equal(guide.match(/\/specimens/g)?.length, 1);
+  assert.ok(guide.includes('<a href="/specimens">Shelf</a>'));
   assert.match(await text('/build'), /<a href="\/specimens">Specimens<\/a>/);
   assert.match(await text('/learn'), /<a href="\/specimens">Specimens<\/a>/);
   assert.equal(await (await get('/specimens', { method: 'HEAD' })).text(), '');

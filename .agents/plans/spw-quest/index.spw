@@ -150,6 +150,7 @@ invariants: #[
   ~#hypothesis: "Container delimiters (<>, (), [], {}) already identify the four slots unambiguously, so accepting either order bridges /build with the 986 route expressions while letting the author choose which order to emit."
   ~#expect: "build.js currently enforces <concept>(scene)[mode]{definition} while pivot.js and expression-query.js emit [mode]{body}(scene)<projection>."
   ~#unblocks: "Slice L (slot-order bridge between /build and /pivot + /specimens)"
+  ~#answer(2026-11-05): "Accept both. The creator: each brace pair names its slot wherever it sits. readExpressionSlots, /build and /pivot read either order; a line is written back in the order its author used, and a new slot joins that order."
   ~#probe(run)
   !probe{ "rg -n 'assemble\\(|lineFrom\\(' workers/spw-quest/src/build.js workers/spw-quest/src/pivot.js" }
   $%[order.either, order.guide_only, order.atlas_only]
