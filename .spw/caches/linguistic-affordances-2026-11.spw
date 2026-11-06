@@ -1,0 +1,183 @@
+# Linguistic Affordances Reached For Across the .spw Corpus (2026-11)
+#
+# operation: cache
+# Mathematical, semiotic, and indexing constructs that the 434 authored .spw
+# files reach for — evidenced by live parser prose-degradations,
+# partial slot readings (part: true), custom workaround scripts, and strings
+# hiding unparsed operators.
+
+#>linguistic_affordances_2026_11
+#:cache #!language #!mathematics #!semiotics #!indexing #!affordances
+#:operation #!cache
+#:fixity #!tending
+#:layer #!semantics
+
+expression = language[affordances]{math.semiotic.index}<reach>
+
+operation = "cache"
+fixity = "tending"
+source = "2026-11-05 corpus scan of 434 authored, tracked .spw files (ecology:language walks 702, counting 264 generated files under the gitignored .spw/gen) + 27 herbarium specimens + upstream-workbench-recommendations against spw-workbench-reader.js and expression-query.js"
+
+^"thesis"{
+  claim = "Across 434 authored .spw files, authors repeatedly reach beyond current parser, slot-reader, and indexer support along three axes: mathematical structure (anti-unification templates, n-ary/coproduct joins, recursive slot endofunctors, inquisitive partitions), semiotic structure (Peircean interpretants, typed morphisms, enunciative voice/decay slopes, mention-vs-use quotation), and indexing affordances (@handle#fragment composition, sub-frame claim/facet addressing, cross-language stem joins, positional splice streams, and diachronic causal-cut citations)."
+  evidence_kinds = #[
+    "7 live prose-degradation warnings where spw-workbench-reader.js stops structured parsing on constructs authors wrote naturally",
+    "9 of 27 herbarium forms in workers/spw-quest/src/specimens-data.js flagged part: true because readExpressionSlots drops nested bodies, 3-way joins, and chained capsules",
+    "6 site scripts (spw-routes.mjs, wonder.mjs, plan-twinkle.mjs, spw-integrity.mjs, audit-plans.mjs, build-expression-manifest.mjs) compensating for missing grammar or index primitives"
+  ][reg=set]
+}[reg=facet]
+
+^"mathematical_affordances"{
+  m1_anti_unification_and_parameterized_shapes = .{
+    id = "la-math-001"
+    status = "open"
+    reaching_in = "@asks_motions#template_with_a_slot, @asks_corpus#sibling_shapes, @theory_map#wonder_theory_anti_unification"
+    construct = "Plotkin/Reynolds Least General Generalization (LGG / anti-unifier A ⊓ B) and parameterized shape functors F(X)."
+    measured = "32 shapes across 22 route families; 27 carry each member's name in a variable slot (e.g. bane-frame and boon-frame fill X in {X-frame.X-register}). 0 site files use spw expand (={ ~\"template.spw\" }) because expand only inlines literals without variable substitution, and compareSpecimens only compares flat slots rather than computing recursive anti-unifiers."
+    affordance_needed = "A formal parameter slot on shapes/templates (filled at the citation edge) paired with an inverse reduction that yields (form, substitution_binding, indexed_residue)."
+  }[reg=facet]
+
+  m2_join_algebra_coproducts_and_intervals = .{
+    id = "la-math-002"
+    status = "open"
+    reaching_in = ".spw/caches/interaction-paint-cost-2026-09.spw:821, @dot_join#forms, @expression_charge_sign#later, @comparison_differentials#model, @theory_map#wonder_theory_join_algebra"
+    construct = "Associative/precedence-explicit n-ary compound joins (A ~ B ^ C); disjunction (A | B) and bounded intervals (a..b) only as open questions, since the settled rule is that + | : _ are not operators (operator-namespace-alignment.spw:66)."
+    measured = "1) readCompoundJoin in @expression_query splits only the first operator, so the multi-line 3-way compound at interaction-paint-cost-2026-09.spw:821-823 and the h-triple and h-mixed specimens read partial. (That file's parser warning comes from its > contour lines at :847-848 and :854, not the compound.) 2) Authors write a | b inside strings across headers and rules because {a,b} (product/co-presence) and {a;b} (non-commutative monoid) have no coproduct sibling {a|b}. 3) Intervals (0..1, boon..honk) are written in prose/comments with no range token."
+    affordance_needed = "Multi-operand compound join tree in expression readers and multiline continuation for infix ~ & ^ @. Whether a disjunction or an interval needs a token at all is a question for upstream, not needed grammar."
+  }[reg=facet]
+
+  m3_recursive_slot_endofunctors_and_capsule_chains = .{
+    id = "la-math-003"
+    status = "open"
+    reaching_in = "@container_formations, @specimen_reading (h-one_deep, h-three_deep, h-nest_projected, h-chained_modifiers)"
+    construct = "Recursive free operad over expression slots (expressions nested inside {body}) and functorial projection composition (<x><y><z>)."
+    measured = "9 of 27 herbarium specimens fail readsWhole() in @specimen_reading. Five of them because EXPRESSION_SLOTS in @expression_query uses non-recursive {([^}]*)}, truncating outer[m]{inner[d]{leaf}}<publish> at the first } and dropping <publish> as well as <x><y><z> chains; the other four are two 3-way joins, one ; between lines, and the transdimensional form."
+    affordance_needed = "Balanced-delimiter recursive slot extraction so {body} can hold child expressions and <projection> can hold a composed channel chain <x><y><z>."
+  }[reg=facet]
+
+  m4_inquisitive_partitions_vs_metric_vectors = .{
+    id = "la-math-004"
+    status = "open"
+    reaching_in = "@theory_map#wonder_theory_answer_sets, @asks_capabilities#measure_or_answer"
+    construct = "Disjoint answer-set partition (Groenendijk & Roelofsen inquisitive semantics: ?{a | b | c} collapsing to ~#answer: a) vs observable metric vector $%[m1, m2]."
+    measured = "566 terms in $%[…] lists across wonders: 92 resolve against metric producers, while 68 are mutually exclusive answer candidates that read forever as missing measurements."
+    affordance_needed = "Distinguish an inquisitive answer partition (alternatives to eliminate) from a metric vector (quantities to instrument), by composition (~#expect / ~#answer sibling); a separator species ($%[a | b] vs $%[m1, m2]) would run against the settled rule on |, so it stays a question."
+  }[reg=facet]
+}[reg=facet]
+
+^"semiotic_affordances"{
+  s1_peircean_interpretant_and_reader_binding = .{
+    id = "la-sem-001"
+    status = "open"
+    reaching_in = "@asks_plugins#emit_names_its_reader, @tree_dx#prose_paths"
+    construct = "Peirce's triad: Representamen (emitted surface/sign), Object (source spec/data), and Interpretant (the consumer/reader in whom the sign produces an effect)."
+    measured = "Projections in .spw/gen/index.spw declare source and spec_owner (Object) and output (Representamen), but had no slot for the Interpretant — allowing SPW_PROJECTION_SEEDS (195 KB) to ship with 0 readers for two months (@asks_plugins#emit_names_its_reader)."
+    affordance_needed = "First-class reader/interpretant binding on projections and claims so an emitted sign with no interpretant fails closed."
+  }[reg=facet]
+
+  s2_typed_morphisms_and_diachronic_state_arrows = .{
+    id = "la-sem-002"
+    status = "open"
+    reaching_in = ".spw/skills/semantics-rigor.spw:66, @asks_trees#development_is_a_receipt, @container_formations (h-transdimensional_microinteraction)"
+    construct = "Typed morphism declarations (source -> target: law) and diachronic modality vectors (cache[experimental] ~> contract[stable] ~> archive[cold])."
+    measured = "In .spw/skills/semantics-rigor.spw:66, writing authored -> parsed: \"...\" in key position triggers a live parser prose-degradation warning. In h-transdimensional_microinteraction, <input>{gesture} (( !action ~> $result )) <destination>[reg=sink@\"state\"] degrades in the slot reader to { projection: \"input\" }."
+    affordance_needed = "Allow morphism keys (a -> b or a ~> b) in facet maps and record diachronic operation/fixity transitions on claim IDs."
+  }[reg=facet]
+
+  s3_enunciative_slope_and_isotopic_decay = .{
+    id = "la-sem-003"
+    status = "open"
+    reaching_in = "@asks_density#slopes_stay_separate, .spw/caches/copy-decay-2026-09.spw, .spw/caches/speech-bubble-voices-2026-09.spw"
+    construct = "Benveniste's enunciation split: separating the proposition (subject + {body}) from the enunciative stance (speaker persona, copy-depth slope entry..dense, and temporal half-life / receipt)."
+    measured = "Currently [mode] is overloaded to hold both functional posture ([reading]) and speaker character ([fool]), and spw form --scheme conflates semiotic slope (form/syntax/semantics/pragmatics) with token weight (default/agent/thrift)."
+    affordance_needed = "Orthogonal semiotic slope reporting (form, syntax, semantics, pragmatics) and observer@subject[mode] separation so persona sits on @observer while posture stays on [mode]."
+  }[reg=facet]
+
+  s4_use_mention_quotation_in_prose = .{
+    id = "la-sem-004"
+    status = "open"
+    reaching_in = ".spw/conventions/comparison-differentials.spw:42, .spw/language/v04/pillars/runtime-goals-pipeline.spw:32, .spw/caches/spw-language-utilization-2026-07.spw:110, .spw/language/recursive-improvement.spw:120, @tree_dx#parse_errors"
+    construct = "Frege/Tarski use-vs-mention distinction: mentioning Spw tokens or inline code snippets inside a prose statement or stream without terminating the outer delimiter."
+    measured = "4 of the 7 live parser warnings in the site's .spw corpus (plus 334 historical errors across 39 files noted in @tree_dx#parse_errors) come from inline backtick mentions (comparison-differentials:42, runtime-goals-pipeline:32) or unquoted sentences inside a stream (spw-language-utilization:110, recursive-improvement:120); the other three are colon-keyed {} maps (asset-management:77-91), -> keys (semantics-rigor) and > contours (interaction-paint-cost)."
+    affordance_needed = "Support inline code spans inside double-quoted strings or allow backtick phrases to compose with trailing prose annotations on a value line."
+  }[reg=facet]
+}[reg=facet]
+
+^"indexing_affordances"{
+  i1_composed_handle_fragment_and_deep_anchors = .{
+    id = "la-idx-001"
+    status = "open"
+    reaching_in = "@asks_language#symbol_resolution, @asks_language#file_navigation, @asks_language#valence_fragment, @asks_trees#tree_lands_on_the_claim, @tree_dx#anchor_readers"
+    construct = "Two-stage lexical binder + deep AST fragment addressing: @handle#fragment resolving through a file-scoped alias to a target's #> frame, ^\"facet\", claim #id, key, or HTML #id."
+    measured = "1) 3,977 alias declarations and 2,947 alias uses across 252 files have 0 LSP go-to-definition results. 2) @page#bane-frame fails to lex at the hyphen because bane after # is lexed as a valence modifier. 3) 6 scripts define anchors with incompatible regexes; LSP anchor-lines.ts only lands on #> and opens facet keys, claim IDs, and HTML IDs at line 1."
+    affordance_needed = "Lex hyphenated valence words after # as identifiers; bind file-scoped @handles; resolve @handle#fragment and ~\"path#fragment\" against one canonical anchor table (#> frame, ^\"facet\", claim #id, facet key, HTML id)."
+  }[reg=facet]
+
+  i2_cross_language_morphological_stem_index = .{
+    id = "la-idx-002"
+    status = "open"
+    reaching_in = "@asks_corpus#cross_language_trace, @roadmap_v04#reevaluation_2026_10_27"
+    construct = "Cross-substrate equivalence class indexing: one morphological stem k mapped across .spw (#>k_frame), HTML (data-spw-k-x), CSS (--spw-k-x / [data-spw-k-x]), and JS (dataset.spwKX)."
+    measured = "attention_field spans 2 HTML, 13 CSS, 10 JS, and 81 .spw files by hand; 5 of 8 operator attributes written in sigil-annotation.js had 0 readers because kebab-case and camelCase dataset writes were never joined in an index."
+    affordance_needed = "A stem-indexed reference graph joining .spw anchors, HTML data-spw-* attributes, CSS selectors/custom properties, and JS dataset camelCase accesses."
+  }[reg=facet]
+
+  i3_scoped_header_claim_binding = .{
+    id = "la-idx-003"
+    status = "open"
+    reaching_in = "@asks_density#slopes_stay_separate, @asks_motions#reduction_names_its_residue"
+    construct = "Lexical scope boundary for #: header annotations so claims bind to the nearest enclosing or preceding #> handle rather than smearing across the whole file."
+    measured = "scripts/build-expression-manifest.mjs copies every #: header claim onto every #> handle in the file (claim_smear), polluting per-handle facet indexes."
+    affordance_needed = "Scope #: claims to their nearest #> anchor block in both the AST outline and manifest generator."
+  }[reg=facet]
+
+  i4_positional_splice_streams_for_shape_residues = .{
+    id = "la-idx-004"
+    status = "open"
+    reaching_in = "@asks_motions#reduction_names_its_residue"
+    construct = "Indexed splice stream (preserving ordinal insertion points when reducing an instance against a shared template shape)."
+    measured = "follows + own rebuilds the section order for 97 of 122 shaped routes, but loses position on 25 routes whose own section sits before or inside the shared family shape because own is stored as an unordered set."
+    affordance_needed = "Represent shape residue as an indexed stream ([reg=stream] with relative anchor positions) so expand(reduce(x)) is a lossless isomorphism."
+  }[reg=facet]
+
+  i5_diachronic_causal_cut_citation_index = .{
+    id = "la-idx-005"
+    status = "open"
+    reaching_in = "@asks_plugins#plan_twinkle, @asks_plugins#twinkle_lens"
+    construct = "Causal-cut / Lamport-timestamped citation edges: indexing whether t_last_modified(target) > t_last_looked(citer)."
+    measured = "52 plans cite 513 concepts; 26 bright and 76 dim references across 40 plans moved after the citing plan's last stream entry (measured by custom scripts/plan-twinkle.mjs because spw resolve is time-blind)."
+    affordance_needed = "Index stream timestamps (>>[date]) alongside citation edges so the resolver and editor lenses can query stale/twinkling citations natively."
+  }[reg=facet]
+}[reg=facet]
+
+#>wonder_linguistic_affordances_priority
+?["Which unsupported affordance yields the highest leverage first: @handle#fragment deep indexing, recursive/n-ary expression slot reading, or parameterized shape anti-unification?"]{
+  #:depth #!computational ~#lens(comparison)
+  ~#with: @asks_language @asks_motions @expression_query
+  ~#hypothesis: "Fixing @handle#fragment + deep anchor resolution (la-idx-001) and recursive/n-ary slot reading in expression-query.js (la-math-002, la-math-003) unlock the rest: anti-unification needs recursive slot trees, and knowledge-tree citations need claim/facet fragment resolution."
+  ~#expect: "la-math-003 (recursive slot reader in expression-query.js) can land site-side immediately and turns at most 5 of the 9 partial herbarium specimens whole; la-idx-001 (@handle#fragment + valence-hyphen lexer fix) is the highest-leverage workbench/indexer upgrade."
+  ~#probe(run)
+  !probe{ "node -e \"import('./workers/spw-quest/src/specimens-data.js').then(m => console.log('part:', m.SPECIMENS.filter(s => s.reading.part).map(s => s.id)))\"" }
+  $%[affordance.deep_indexing, affordance.recursive_slots, affordance.anti_unification, affordance.causal_citations]
+}
+
+# Handles, declared last.
+@roadmap_v04: ~"../language/v04/roadmap.spw"
+@dot_join: ~"../language/dot-join.spw"
+@positional_sets: ~"../language/expressions/positional-sets.spw"
+@container_formations: ~"../language/expressions/container-formations.spw"
+@theory_map: ~"./theory-map-2026-10.spw"
+@expression_charge_sign: ~"./expression-charge-sign-2026-09.spw"
+@comparison_differentials: ~"../conventions/comparison-differentials.spw"
+@compound_expressions: ~"../conventions/compound-expressions.spw"
+@asks_language: ~"../reviews/upstream-workbench-recommendations/language-support.spw"
+@asks_corpus: ~"../reviews/upstream-workbench-recommendations/corpus-and-cli.spw"
+@asks_motions: ~"../reviews/upstream-workbench-recommendations/motions.spw"
+@asks_density: ~"../reviews/upstream-workbench-recommendations/density-and-voice.spw"
+@asks_trees: ~"../reviews/upstream-workbench-recommendations/claims-and-trees.spw"
+@asks_plugins: ~"../reviews/upstream-workbench-recommendations/plugins-and-tooling.spw"
+@asks_capabilities: ~"../reviews/upstream-workbench-recommendations/capabilities.spw"
+@tree_dx: ~"../reviews/spw-tree-dx-2026-10.spw"
+@expression_query: ~"../../public/js/semantic/expression-query.js"
+@specimen_reading: ~"../../workers/spw-quest/src/specimen-reading.js"
+@feature_utilization: ~"../language/feature-utilization.spw"

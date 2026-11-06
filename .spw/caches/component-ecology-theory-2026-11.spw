@@ -1,0 +1,183 @@
+# Component ecology theory extensions (2026-11) — cache: trophic return, allometric scaling, competitive exclusion, mycorrhizal bonds, and seral succession
+#>component_ecology_theory_2026_11
+#:cache #!ecology #!components #!theory #!biome #!packing #!electrostatics
+#:operation #!cache
+#:fixity #!tending
+#:layer #!semantics
+
+expression = theory[component_ecology]{return.allometry.niche.mycorrhiza.succession}<extend>
+
+summary = #[
+  `Close the biome's missing RETURN pass: every accumulating residue store needs a decomposer edge that condenses expired state into a bounded prior.`,
+  `Separate extrinsic viewport territory (gravity) from intrinsic container morphology (pack) via allometric scaling, since frame width is non-monotonic across viewport breakpoints.`,
+  `Apply Gause's competitive exclusion to the 146-module catalog and document-wide resonance: cap attentional carrying capacity per seat and attenuate kin by regional distance.`,
+  `Turn 33:1 downward CSS inheritance into costly mycorrhizal exchange by conserving salience across the four declared compound bond operators (~, &, ^, @).`,
+  `Extend synchronic visit arcs into diachronic seral succession: pioneer ruderals on first contact, canopy building on dwell, and quiet networked mantlepieces on return.`,
+][reg=set]
+
+contents = #[
+  ~"./component-ecology-theory-2026-11.spw#trophic_return_pass",
+  ~"./component-ecology-theory-2026-11.spw#allometric_scale_separation",
+  ~"./component-ecology-theory-2026-11.spw#competitive_exclusion_and_carrying_capacity",
+  ~"./component-ecology-theory-2026-11.spw#mycorrhizal_bond_conservation",
+  ~"./component-ecology-theory-2026-11.spw#diachronic_seral_succession",
+  ~"./component-ecology-theory-2026-11.spw#synthesis_matrix",
+  ~"./component-ecology-theory-2026-11.spw#wonder_component_ecology_theory",
+  ~"./component-ecology-theory-2026-11.spw#stream",
+][reg=set]
+
+^"trophic_return_pass"{
+  id = "cet-001"
+  operation = "cache"
+  fixity = "tending"
+  claim = `The component biome names MEASURE, PROJECT, and AUDIT, and records 18 accumulating stores against 1 gardening store, but lacks a formal RETURN pass where decomposers convert expired component residue into a lower-entropy substrate prior.`
+  evidence = #[
+    `@component_biome#decomposers: stores_accumulating = 18, stores_gardening = 1; cauldron prune deletes without returning nutrients ("a biome without decomposers buries itself")`,
+    `@component_biome#orchestration_join: positioning-orchestration batches MEASURE / PROJECT / AUDIT and explicitly marks missing_pass: RETURN`,
+    `@permaculture_model#pd-005_coupling_is_the_model: COST_COMMITMENT.RESIDUE is the only commitment that survives unmount, yet most modules do not name a downstream reader for their residue`,
+    `@fit_lens_journey#frame_size_memory: frame-size-memory.js stores measured heights per route and 40px width bucket for seven days, proving bounded local memory can stabilize layout without new attributes`,
+  ][reg=set]
+  pattern_consideration = `Compare cauldron ingredient phase decay (gathering -> resonant -> mature -> decayed in @component_biome#presence) with @theory_map#wonder_theory_intrigue_dynamics (forced decay dE/dt = k*a*n - lambda*E).`
+  expansion_prime = `Formalize RETURN as the fourth orchestration pass: when a cauldron ingredient is pruned, a wonder-memory entry expires, or a session closes, a decomposer reducer condenses the decayed item into a compact operator-family or subject-slot salience weight before freeing the raw record. Require every module with updates role=residue to name its decomposer or consumer in MODULE_DEFS.`
+  validation = `npm run check:runtime && rg 'missing_pass: RETURN|stores_accumulating' .spw/conventions/component-biome.spw`
+}[reg=facet]
+
+^"allometric_scale_separation"{
+  id = "cet-002"
+  operation = "cache"
+  fixity = "tending"
+  claim = `Because page posture switches from single-column pocket to multi-column fold/broadsheet desks, a component's inline container width is non-monotonic with viewport width; component ecology theory must treat outer gravity and inner packing as orthogonal allometric scales.`
+  evidence = #[
+    `@astra_design#wonder_astra_design_claude: at a 768px fold viewport, .spw-frame measures 350px and article.frame-panel 279px; on /settings/ the feature-scope row measured 263px at fold against 306px at pocket (narrower at the larger viewport)`,
+    `@spatial_gravity#bands: three distinct ladders coexist — gravity MEASURE_BANDS (<320 compact, <580 balanced, <880 wide), box-model (<320 narrow, <640 compact, <960 comfortable), and @container spw-pack PACK_LAYOUT_BANDS (26rem/416px split, 44rem/704px feature, 52rem/832px context-led; the pack bands sit in component-packing.spw:56 and composition-box-model.js:51)`,
+    `@component_packing#packing_laws_2026_08_31: records the open overlap between data-spw-measure-band and data-spw-box-measure sharing the words compact and wide on different pixel edges`,
+    `@leftover_ecology#word: components do not privately adjust width from getBoundingClientRect; a regional seat grants space and peers share --spw-desk-leftover above a 16rem floor`,
+  ][reg=set]
+  pattern_consideration = `Compare West-Brown-Enquist biological allometry (internal vascular branching scales with organism mass, while territory scales with environmental crowding) against @region_ecology#page_layout_theory (posture -> seat -> pack -> gravity -> resonance -> still).`
+  expansion_prime = `State the Non-Monotonic Viewport-to-Container Law in @component_packing and @region_ecology: no selector inside .spw-frame or .spw-card may key internal typography or slot arrangement to viewport @media or html[data-spw-layout-reason]. Disambiguate the three ladders by role: shell width governs column tracks and chrome_field; gravity (--spw-room-*, data-spw-measure-band) governs extrinsic projection into leftover viewport room; pack (@container spw-frame / spw-pack) governs intrinsic morphology.`
+  validation = `npm run audit:region-seats && rg 'data-spw-measure-band|data-spw-box-measure' .spw/conventions/component-packing.spw .spw/conventions/spatial-gravity.spw`
+}[reg=facet]
+
+^"competitive_exclusion_and_carrying_capacity"{
+  id = "cet-003"
+  operation = "cache"
+  fixity = "tending"
+  claim = `When 22 catalog modules bind to html/body/main, 49 match hosts at DOM depth >= 10 on pages of up to 2,396 elements, and expression-resonance matches document-wide without regional decay, components compete for unpriced attention in the same niche.`
+  evidence = #[
+    `@component_biome#wonder_component_biome_1: identifies reader attention as the genuinely scarce resource per visit that remains unpriced across components`,
+    `npm run audit:module-selectors (2026-11-05): 146 catalog modules across 177 routes; 22 select html|body|main; 18 selectors are orphans matching 0 public index.html hosts; 49 match at depth >= 10 (attention-reading-groove 5,439 hits, operators 5,158, haptics 3,647, guide 3,381)`,
+    `@harmony_audit#source_alignment_gaps: kinOf() in @expression_resonance visits parts before projection (inverting the declared subject [1.0] > mode [0.7] > projection [0.55] > part [0.45] priority on dual matches) and indexes document-wide without nearest-region attenuation`,
+    `@slot_anatomy#census_integrity: stamping data-spw-kind onto [data-spw-slot] previously inflated summarizeRegionDiversity with internal organelle seams and drew spurious card boxes around frame toplines`,
+  ][reg=set]
+  pattern_consideration = `Compare Gause's competitive exclusion principle and Itti-Koch salience inhibition-of-return (@theory_map#wonder_theory_salience_field) with @projection_attenuation#altitudes (page -> region -> slot -> edge -> nest).`
+  expansion_prime = `Define an explicit Attentional Carrying Capacity K(seat) per .spw-frame: (1) fix kinOf() to evaluate subject > mode > projection > part and weight kin strength by regional distance d(source, target) (same card > same .spw-frame seat > adjacent sibling via --spw-canopy-sibling > distant seat); (2) restrict html|body|main modules to substrate/climate variables with zero per-leaf observers; and (3) prune or feature-gate the 18 orphan catalog selectors.`
+  validation = `npm run audit:module-selectors && rg -n 'kinOf|kinStrength' public/js/runtime/expression/expression-resonance.js`
+}[reg=facet]
+
+^"mycorrhizal_bond_conservation"{
+  id = "cet-004"
+  operation = "cache"
+  fixity = "tending"
+  claim = `The biome's downward-inheritance-to-upward-:has() ratio (33:1 when it was measured, about 15:1 by its own probe on 2026-11-05) and a corpus where inferred kinship far outnumbers declared bonds mean most component relations are free parent-to-child cascades rather than costly mycorrhizal exchange between peers.`
+  evidence = #[
+    `@component_biome#soil and #channels: 6,430 downward declarations vs 197 :has() selectors (33:1) when the biome measured them; its own probe finds 421 :has( uses on 2026-11-05, about 15:1; existing :has() rules are parents reading descendants, not non-nested sibling exchange`,
+    `@component_biome#exchange: "bidirectional and costly, or it is inheritance in a biological word"`,
+    `@compound_expressions#declared_bond_versus_inferred_kinship: 423 of 441 expressions shared vocabulary tokens by coincidence in the 2026-08 count, and 14 of 668 declared a typed compound bond (A ~ B, A & B, A ^ B, A @ B); on 2026-11-05 the manifest holds 20 compounds in 986 expressions, all ~`,
+    `@harmony_audit#opportunities: home entrance sorter links share destinations without authoring data-spw-target, and folio study lenses share identical folio[art]{open.sit} strings that kinOf() skips because other === expression`,
+  ][reg=set]
+  pattern_consideration = `Compare @circuit_components#physics_dictionary (voltage ~ charge, current ~ resonance, inductance ~ attention, capacitance ~ field-balance) with the four compound join operators in @compound_expressions.`
+  expansion_prime = `Map the four compound join operators onto four typed ecological symbiosis contracts with conservation of salience (activating A transfers salience to bonded peer B while dimming unbonded competitors in the same seat): ~ as mutualist induction (concept card primes working specimen), & as symbiotic state-binding (control + diagram share one checked state), ^ as commensal lift (card condenses into cauldron/breadcrumb mantlepiece), and @ as perspective, the creator's word since 2026-10-27, with [ ] keeping the word lens (viewer@subject re-projects slots without mutating ground).`
+  validation = `npm run ecology:language && rg 'readCompoundJoin' public/js/semantic/expression-query.js`
+}[reg=facet]
+
+^"diachronic_seral_succession"{
+  id = "cet-005"
+  operation = "cache"
+  fixity = "tending"
+  claim = `Component ecology theory models a single visit's synchronic arc (approach -> enter -> dwell -> echo -> return) well, but under-theorizes diachronic seral succession — how a route's component biome matures across first contact, session dwell, and return visits.`
+  evidence = #[
+    `@component_biome#presence: distinguishes ruderal strategy (fast, dense cards that tolerate disturbance) from networked strategy (slow cauldron, ledger, and kinship surfaces that persist)`,
+    `@fit_lens_journey#conflict_rule and #prose: entry shell speaks the lede once and keeps the electrode chip; return visits may keep dielectric figures or dense notes without replaying arrival discharge`,
+    `@projection_attenuation#thesis: "Familiarity is capacitance: return visits leak slower"`,
+    `@craft_shelves#stabilizing_interactivity: "settle first, resettle once: geometry before first paint, paint that may arrive later, and nothing that moves the page twice"`,
+  ][reg=set]
+  pattern_consideration = `Compare Odum's ecological succession (pioneer ruderals -> intermediate canopy -> high-capacitance climax community) with @harmony_audit#lifecycle_development (nested arcs for page, region, box_settle, and liminality).`
+  expansion_prime = `Formalize three diachronic seral stages in the component ecology without changing first-paint geometry or adding new data-spw-* families: (1) Pioneer (cold visit): ruderal cards, entry copy-depth, one electrode chip per hook, zero ambient ornament; (2) Canopy Building (session dwell): region-profiler canopy shading, container pack mirrors, and salience deposits into cauldron/memory; (3) Climax / Old-Growth (return visit with stored capacitance): frame-size-memory pre-sizes offscreen seats before scroll, arrival flash is suppressed via inhibition-of-return, and networked mantlepieces (breadcrumbs, cauldron seeds, visited route bridges) open pre-charged.`
+  validation = `rg 'frame-size-memory|wonder-memory|visited-surfaces' public/js .spw/conventions`
+}[reg=facet]
+
+^"synthesis_matrix"{
+  ~#note: "How the five theoretical extensions map onto existing coordinates (@metaphor_lexicon) without minting new attribute families or a sixth component primitive."
+  rows = #[
+    `cet-001 (Trophic RETURN)       · coordinate: ecology_guild=memory/substrate · owner: positioning-orchestration.js + cauldron/storage.js`,
+    `cet-002 (Allometric Scaling)   · coordinate: pack_axis=box_width vs gravity · owner: component-packing.spw + spatial-gravity.spw`,
+    `cet-003 (Competitive Exclusion)· coordinate: cost_class=working_memory_pressure · owner: expression-resonance.js + module-catalog`,
+    `cet-004 (Mycorrhizal Bonds)    · coordinate: express_channel=resonance      · owner: compound-expressions.spw + expression-query.js`,
+    `cet-005 (Seral Succession)     · coordinate: liminality + capacitance       · owner: component-biome.spw + frame-size-memory.js`,
+  ][reg=set]
+  invariants = #[
+    `Five surface primitives remain fixed: spw-frame, spw-card, spw-panel, spw-chip, spw-prose (plus chrome_field).`,
+    `Six regional seats remain fixed: hook, hub, cluster, path, read, wide.`,
+    `Four circuit roles remain fixed: resistor, capacitor, inductor, transformer.`,
+    `Zero new data-spw-* attribute families; every extension spends existing tokens, :has() topology, and compound expressions.`,
+  ][reg=set]
+}[reg=facet]
+
+#>wonder_component_ecology_theory
+?["Which ecological law gives the strongest falsifiable prediction for the next component-runtime patch: Gause's competitive exclusion (cet-003), allometric scale separation (cet-002), or trophic return (cet-001)?"]{
+  #:depth #!computational ~#lens(comparison)
+  ~#with: @component_biome @region_ecology @harmony_audit
+  ~#taste: "An ecological metaphor earns its keep when it predicts a bug or a cost before a screenshot or profiler catches it."
+  ~#hypothesis: "Competitive exclusion (cet-003) and allometric scale separation (cet-002) make immediate falsifiable predictions on today's tree: kinOf() misranks projection behind parts and fires document-wide without regional attenuation, and any viewport media query inside a .spw-frame misfires at the 768px fold where multi-column seats narrow the frame to 350px."
+  ~#expect: "cet-003 first for runtime/resonance precision (fixing kinOf() slot order + regional distance attenuation and auditing the 18 orphan module selectors), paired with cet-002 as a lintable CSS rule."
+  ~#tension: "Trophic return (cet-001) and mycorrhizal bonds (cet-004) deepen long-session and multi-visit richness, but require scarce attentional carrying capacity (cet-003) so returned nutrients do not become visual clutter."
+  ~#unblocks: "the expression-resonance priority fix in @harmony_audit#source_alignment_gaps and the RETURN pass in @component_biome#orchestration_join"
+  ~#probe(run)
+  !probe{ "rg -n 'parts|projection' public/js/runtime/expression/expression-resonance.js" }
+  $%[law.competitive_exclusion, law.allometric_scale, law.trophic_return, law.mycorrhizal_bonds]
+
+  #>wonder_component_ecology_kin_decay
+  ?["Should expression-resonance attenuate kin highlights by regional seat distance, or cap the number of lit kin per frame?"]{
+    #:depth #!mathematical ~#lens(constraint)
+    ~#with: @expression_resonance @projection_attenuation
+    ~#hypothesis: "Both correspond to inhibition-of-return in a salience field: distance decay keeps local arcs legible within the active .spw-frame, while a per-seat cap prevents a common part token (such as open or return) from lighting twenty cards at once."
+    ~#expect: "Fix kinOf() so projection (0.55) precedes part (0.45), and attenuate kin outside the active .spw-frame unless connected by a declared compound bond (~, &, ^, @)."
+    ~#probe(run)
+    !probe{ "rg -n '0\\.55|0\\.45|kinOf' public/js/runtime/expression/expression-resonance.js" }
+    $%[kin.distance_decay, kin.seat_cap, kin.declared_bond_override]
+  }
+}
+
+^"stream"{
+ >>[2026-11-05 20:33] observe — Synthesized five extensions to the theory of the spwashi.com component ecology (cet-001..cet-005): trophic RETURN pass and decomposer stoichiometry, allometric scale separation across the three width ladders, Gause's competitive exclusion and regional carrying capacity across 146 catalog modules, mycorrhizal salience conservation across declared compound bonds, and diachronic seral succession across visits. Grounded in live probes from audit:region-seats (0 bare region violations), audit:module-selectors (146 modules, 22 html/body/main, 18 orphans, 49 depth >= 10), and component-biome / harmony-audit findings.
+}
+
+# About this file
+operation = "cache"
+fixity = "tending"
+source = "chat 2026-11-05: how could the theory of the spwashi.com component ecology be extended or enhanced? create a cache .spw item"
+
+# Handles, by role. Declared last; each one links wherever the text names it.
+# Core component ecology conventions
+@region_ecology: ~"../conventions/region-component-ecology.spw"
+@component_biome: ~"../conventions/component-biome.spw"
+@component_taxonomy: ~"../conventions/component-taxonomy.spw"
+@component_packing: ~"../conventions/component-packing.spw"
+@spatial_gravity: ~"../conventions/spatial-gravity.spw"
+@projection_attenuation: ~"../conventions/projection-attenuation.spw"
+@circuit_components: ~"../conventions/circuit-components.spw"
+@plant_ecology: ~"../conventions/plant-ecology-operations.spw"
+@kernel_rhizosphere: ~"../conventions/kernel-rhizosphere.spw"
+@compound_expressions: ~"../conventions/compound-expressions.spw"
+@metaphor_lexicon: ~"../conventions/metaphor-dimensional-lexicon.spw"
+# Related caches & audits
+@harmony_audit: ~"../audits/component-philosophy-harmony-2026-07.spw"
+@slot_anatomy: ~"./slot-anatomy-ecology-2026-09.spw"
+@leftover_ecology: ~"./leftover-peer-ecology-2026-09.spw"
+@fit_lens_journey: ~"./component-fit-lens-journey-2026-09.spw"
+@permaculture_model: ~"./permaculture-data-model-2026-09.spw"
+@astra_design: ~"./astra-design-direction-2026-09.spw"
+@craft_shelves: ~"./craft-shelves-2026-10.spw"
+@theory_map: ~"./theory-map-2026-10.spw"
+# Runtime & CSS owners
+@expression_resonance: ~"../../public/js/runtime/expression/expression-resonance.js"

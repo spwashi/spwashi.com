@@ -1,0 +1,177 @@
+# Multimodal Gemini Evaluation — Syntax Theory, Runtime, Interaction Semantics
+#
+# Working scratch surface for evaluating where a multimodal Gemini model
+# improves cohesion across spw-workbench and spwashi.com without drifting
+# from Spw philosophy.
+
+#>gemini_multimodal_evaluation
+#:scratch #!gemini #!multimodal #!workbench #!runtime #!semantics
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "experimental"
+
+expression = evaluation[gemini]{syntax.runtime.interaction}<multimodal>
+
+^"drift_diagnosis"{
+  ~#context: "Why earlier LLM sessions hallucinated or drifted from Spw philosophy, and what the corpus now enforces."
+
+  homonym_collapse: .{
+    failure = `Conflating body[data-spw-features] (runtime capability packs) with Spw language features (operators, braces, claims), or collapsing the four altitudes of "wonder" into invented attributes like data-spw-wonder-type.`
+    guard = #[@feature_utilization, @wonder_architecture][reg=set]
+    probe = `npm run ecology:language && rg 'data-spw-wonder-type' --glob '*.html'`
+  }[reg=facet]
+
+  hue_without_force: .{
+    failure = `Treating sigils (#>, ?, ~, ^, @, !, %) as decorative theme hues rather than positional argument binders with left/right roles, speech, and reversibility.`
+    guard = #[@operator_semantics, @semantic_braces][reg=set]
+    probe = `npm run audit:operator-controls`
+  }[reg=facet]
+
+  unfalsifiable_invariants: .{
+    failure = `Writing rules without measuring the tree first, or mixing workbench grammar consumption with web-semantics experimentation in one patch.`
+    guard = #[@skill_invocation, @feature_utilization][reg=set]
+    probe = `npm run check:agents`
+  }[reg=facet]
+}[reg=facet]
+
+^"axis_1_syntax_theory"{
+  ~#scope: "spw-workbench ↔ .spw/language/"
+  expression = syntax[cohesion]{sigils.lattice.axes}<workbench>
+
+  sigil_table_alignment: .{
+    claim = `32 site sigil tables declare harmony, extension, or mutation (@operator_namespace); 6 regex copies still re-derive operator prefixes by hand by that file's count (operator-consistency-2026-10 counts nine drifted prefix regexes by a wider net).`
+    surfaces = #[@operator_namespace, @operator_canon, @lite_scanner, @expression_geometry][reg=set]
+    measured = .{
+      semantic_expressions_html = 4192  # ecology:language, 2026-11-05; drifts as routes move
+      operator_chips_html = 250
+      unknown_alias_state = 145
+      regex_copies_remaining = 6
+    }[reg=facet]
+    multimodal_edge = `Cross-check AST token spans and /tools/spw-parser/ visual reconstructions against the 6 drifted regex copies (spells.js, page-anatomy.js, navigation-spells.js, semantic-meta.js, region-menu.js, pretext-physics.js) so one sigil table governs both layers.`
+    probe = `node --test scripts/tests/sigil-table-relations.test.mjs && npm run ecology:language`
+  }[reg=facet]
+
+  theory_map_cut: .{
+    claim = `Eleven questions in theory-map-2026-10.spw tie Spw constructs to formal theory (Plotkin/Reynolds anti-unification, Wille FCA concept lattices, Groenendijk inquisitive semantics, Itti/Koch salience).`
+    surfaces = #[@theory_map, @asks_capabilities][reg=set]
+    multimodal_edge = `Pair runnable node probes with visual inspection of /specimens?a=h-three_deep&b=h-one_deep to see where per-slot ground-then-edge parts whole bodies versus where an exact anti-unifier parts at the first differing leaf.`
+    probe = `npm run -s wonder -- --surface theory-map-2026-10`
+  }[reg=facet]
+
+  optimization_axes_and_sleeping_tokens: .{
+    claim = `No syntax form wins every axis (parse, visit, reader, reach, kin). In @workbench_report's probe, a backtick-quoted ink[apple]{bite.coaster.margin}<A> fingerprints as one Literal (38 nodes in the probe surface), while the same value unquoted is complete: Frame, Capsule, Parameter, 46 nodes.`
+    surfaces = #[@workbench_report, @upstream_recs][reg=set]
+    multimodal_edge = `Compare WebStorm / VS Code Structure View and hover screenshots against scripts/lsp-probe.mjs output to expose where host regex folding/outlines shadow the server's held parse.`
+    probe = `node scripts/lsp-probe.mjs . .spw/site.spw hover 283:4 284:5`
+  }[reg=facet]
+}[reg=facet]
+
+^"axis_2_runtime_physics"{
+  ~#scope: "attention-field.spw ↔ public/css/ + public/js/runtime/"
+  expression = runtime[field]{charge.ink.container}<stills>
+
+  still_and_receipt_falsification: .{
+    claim = `Text-only passes miss viewport-vs-container crushes and off-screen visitor overlays because DOM presence is not visual occupancy.`
+    surfaces = #[@attention_field, @astra_design, @still_recipes][reg=set]
+    hazards_caught_by_vision = #[
+      `Container vs viewport: broadsheet multi-column seats narrow .spw-frame (container: spw-frame / inline-size) narrower than pocket, breaking @media viewport rules`,
+      `Overlay occupancy: visitor chrome (home-region-menu, home-topic-note) open in DOM but clipped or off-screen in the device frame`,
+      `Ink and light spend: nested [data-spw-reading-beat="rest"] or reduced-motion floors double-dimming focused controls when --charge or --spw-resonance (inherits: false) are read directly instead of frame reports`
+    ][reg=set]
+    probe = `node scripts/component-snapshots.mjs --stills --checks --viewports pocket,broadsheet --ids=home-opening,about-opening`
+  }[reg=facet]
+
+  staged_primitive_judgment: .{
+    claim = `Theming has finite altitudes (theme_set climate, theme_pack palette, component_genre card family). Judging staged primitives requires inspecting the 4 crops (hero, card, panel, icon).`
+    surfaces = #[@creative_capacity, @capture_ecology][reg=set]
+    multimodal_edge = `Visually distinguish clean 64px edge-detected glyphs (papergami-cubes) from painterly noise (library-cozy, boonhonk-abstract), and classify a climate as a variant of an existing pack (e.g. oxide-ledger) rather than minting a seventh theme pack.`
+    probe = `ls public/images/renders/_staged-primitives/ && rg 'theme_set|icon_candidate' public/images/renders/_staged-primitives/*/*.spw`
+  }[reg=facet]
+}[reg=facet]
+
+^"axis_3_interaction_semantics"{
+  ~#scope: "semantic-braces.spw + operator-semantics.spw ↔ UI & editor gestures"
+  expression = interaction[gesture]{brace.prepare.operator}<consequence>
+
+  prepare_pair_deltas: .{
+    claim = `Interactive states (rest vs press, hover, keys) and brace charge (objective { opening vs subjective } synthesis) must produce a legible, non-colliding visual delta.`
+    surfaces = #[@semantic_braces, @operator_semantics, @still_recipes, @attention_field][reg=set]
+    multimodal_edge = `Compare rest, press, hover, and keys stills side-by-side to verify that (1) touch viewports use press/keys rather than dead :hover, and (2) collection floor (--spw-collection-floor, a variable @attention_field names and no CSS or JS defines yet), transient resonance (--spw-resonance), and deviation state render as three distinct ornaments.`
+    probe = `npm run sense -- ink about-opening`
+  }[reg=facet]
+
+  editor_gesture_operator_contract: .{
+    claim = `Proposed (rank 1 in @asks_gestures, not current behaviour): every editor gesture behaves as one Spw operator: ? hover (asks, never writes), @ references (who regards this), #> outline (named handles), . inlays (resolved ground), % lens (measure + unit + age), ! quick-fix (action with preview), = rename (binding), ~ preview (placement).`
+    surfaces = #[@asks_gestures, @upstream_recs][reg=set]
+    multimodal_edge = `Evaluate live LSP hovers and code lenses alongside editor captures so hover leads with meaning -> evidence -> geometry in the consumer's vocabulary rather than raw AST container names.`
+    probe = `node scripts/lsp-probe.mjs . .spw/conventions/copy-accessor.spw hover 24:20`
+  }[reg=facet]
+}[reg=facet]
+
+^"candidate_slices"{
+  ~#note: "Three bounded, single-operation slices to test this collaboration. Pick one."
+
+  slice_1_theory_cut: .{
+    operation = "cache"
+    target = `.spw/caches/theory-map-2026-10-cut-gemini.spw (proposed; the path @theory_map gives the cut it lands)`
+    source = @theory_map
+    does = `Run the probes in theory-map-2026-10.spw, answer all 11 questions against packet.read with primary citations and confidence scores, and validate with spw lint + spw:integrity + wonder.`
+    probe = `npm run spw:integrity && npm run wonder`
+  }[reg=facet]
+
+  slice_2_sigil_copies: .{
+    operation = "align"
+    target = @operator_namespace
+    does = `Replace hand-rolled operator prefix regexes in the 6 drifted runtime/semantic modules with OPERATOR_PREFIX_RE / detectOperator from operator-detection.js, or resolve the 145 data-spw-operator="state" hosts.`
+    probe = `npm run ecology:language && node --test scripts/tests/sigil-table-relations.test.mjs`
+  }[reg=facet]
+
+  slice_3_still_walk: .{
+    operation = "audit"
+    target = @still_recipes
+    does = `Run pocket/broadsheet stills for about-opening (rest, press, keys) and home-opening, inspect the JPEGs + attention receipts multimodally, and report any container-vs-viewport or ink-spend mismatch.`
+    probe = `npm run sense -- ink about-opening`
+  }[reg=facet]
+}[reg=facet]
+
+#>wonder_gemini_multimodal_slice
+?["Which of the three candidate slices best tests multimodal cohesion first: the 11-question theory cut, the 6 sigil-regex copies, or the pocket/broadsheet still walk?"]{
+  #:depth #!pragmatics ~#lens(comparison)
+  ~#with: @theory_map @operator_namespace @still_recipes
+  ~#expect: "slice_1_theory_cut tests formal/linguistic rigor under strict citation bounds; slice_3_still_walk tests multimodal vision + attention-field receipts directly."
+  ~#hypothesis: "Running one bounded slice with its probe_ref before any broad edit keeps the session falsifiable."
+  !probe{ "node -e \"import('./public/js/semantic/spw-workbench-reader.js').then(async m=>{const fs=await import('node:fs');const r=m.parse(fs.readFileSync('.spw/caches/gemini-multimodal-evaluation-2026-11.spw','utf8'));console.log({success:r.success,errors:r.errors.length,warnings:r.warnings.length})})\"" }
+  $%[slice.theory_cut, slice.sigil_copies, slice.still_walk]
+}
+
+
+^"stream"{
+ >>[2026-11-05 22:20] integrate — this file moved here from .spw/tmp.spw, and its batch (two route pages, four caches, this file) was read against the tree before landing. The drift matched this file's own classes. Proposed constructs were presented as settled: capability states, reader checks on projections, | as a separator, the gesture-to-operator mapping (hue_without_force, unfalsifiable_invariants). About twenty numbers were credited to sources that do not hold them, or were stale without a date. Six anchors were dead; a prefix sigil glued onto a subject (~operator) split an expression from its kin. What held and landed: the capability framing, the history of what retired, the before/after specimens, the ecology lenses, observer@subject.
+ >>[2026-11-05 22:20] propose — one line for GEMINI.md would catch most of it: "A count names its source and its date; a construct not in a convention says proposed." Adapters are always-on, so the line waits on the creator.
+}
+
+# Handles, declared last.
+@site: ~"../site.spw"
+@feature_utilization: ~"../language/feature-utilization.spw"
+@operator_namespace: ~"../language/operator-namespace-alignment.spw"
+@operator_semantics: ~"../conventions/operator-semantics.spw"
+@semantic_braces: ~"../conventions/semantic-braces.spw"
+@wonder_architecture: ~"../conventions/wonder-architecture.spw"
+@attention_field: ~"../conventions/attention-field.spw"
+@skill_invocation: ~"../conventions/skill-invocation.spw"
+@capture_ecology: ~"../conventions/capture-ecology.spw"
+@theory_map: ~"./theory-map-2026-10.spw"
+@creative_capacity: ~"./creative-capacity-2026-09.spw"
+@astra_design: ~"./astra-design-direction-2026-09.spw"
+@still_recipes: ~"./still-recipe-agency-2026-09.spw"
+@history_strands: ~"./history-conflict-strands-2026-09.spw"
+@workbench_report: ~"../workbench-report.spw"
+@upstream_recs: ~"../reviews/upstream-workbench-recommendations.spw"
+@asks_capabilities: ~"../reviews/upstream-workbench-recommendations/capabilities.spw"
+@asks_gestures: ~"../reviews/upstream-workbench-recommendations/gestures.spw"
+@operator_canon: ~"../../public/js/kernel/operator-detection.js"
+@expression_geometry: ~"../../public/js/semantic/spw-expression-geometry.js"
+@lite_scanner: ~"../_workbench/packages/spw-seed/src/lite.ts"

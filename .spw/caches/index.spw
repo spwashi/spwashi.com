@@ -100,6 +100,11 @@
 @ecosystem_clusters_2026_10: ~"./ecosystem-clusters-2026-10.spw"  # prime: six skill clusters and the business shape each suits (studio, press, bench, kitchen garden, desk, lab), the loop they feed, what compounds at 3, 6, 9 and 12 months, information architecture for libraries, ecosystems and performance, and a four-object spine (record, release, relay, receipt); four wonders hand back the taste calls
 @theory_map_2026_10: ~"./theory-map-2026-10.spw"  # prime: eleven questions tying Spw ideas to theory (anti-unification, query lattices, concept lattices, inquisitive answer sets, value of a probe, operator tables, join laws, forced decay, salience maps, dimensional ascent, variation in hovers), each with an answer set, a prediction and a probe kind; the packet, brief and receipt for a Gemini cut
 @chrome_ecology_2026_11: ~"./chrome-ecology-2026-11.spw"  # prime: the floating chrome theory read against what runs (one ladder, slots as labels, tiers against time, an ornament rule over the size token), and a ladder of moves for usefulness, harmony across components and play
+@spw_design_improvements_2026_11: ~"./spw-design-improvements-2026-11.spw"  # cache: five structural seams (reader unification, canonical sigil table, inquiry loop closure, first-screen and residue, public surface consequence) where Spw tightens into one medium
+@component_ecology_theory_2026_11: ~"./component-ecology-theory-2026-11.spw"  # cache: five extensions to component ecology theory (trophic RETURN pass, allometric scale separation, Gause competitive exclusion and regional carrying capacity, mycorrhizal bond salience conservation, diachronic seral succession)
+@expression_projection_precipitation_2026_11: ~"./expression-projection-precipitation-2026-11.spw"  # cache: why 986 site expressions read as static filing labels, how each construct slot projects or precipitates experience, and before/after upgrades
+@linguistic_affordances_2026_11: ~"./linguistic-affordances-2026-11.spw"  # cache: unsupported mathematical, semiotic, and indexing affordances that the 434 authored .spw files reach for
+@gemini_multimodal_evaluation_2026_11: ~"./gemini-multimodal-evaluation-2026-11.spw"  # prime: where a multimodal model could improve cohesion across syntax theory, runtime physics and interaction semantics, with three bounded slices to test it (was .spw/tmp.spw)
 
 operation = "align"
 fixity = "tending"
@@ -174,6 +179,11 @@ fixity = "tending"
   ways_2026_10 = @ways_2026_10
   tangibility_contours_2026_10 = @tangibility_contours_2026_10
   craft_shelves_2026_10 = @craft_shelves_2026_10
+  spw_design_improvements_2026_11 = @spw_design_improvements_2026_11
+  component_ecology_theory_2026_11 = @component_ecology_theory_2026_11
+  expression_projection_precipitation_2026_11 = @expression_projection_precipitation_2026_11
+  linguistic_affordances_2026_11 = @linguistic_affordances_2026_11
+  gemini_multimodal_evaluation_2026_11 = @gemini_multimodal_evaluation_2026_11
 }[reg=facet]
 
 ^"cache_rules"{
