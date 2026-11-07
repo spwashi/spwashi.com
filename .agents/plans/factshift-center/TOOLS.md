@@ -361,6 +361,19 @@ The menu's families already carry charge words: forces bonk, nodes boon and bane
 - The title reads "map · by operator" while the map stands in for the line.
 - A tap on a cluster's region frames it with the camera (app 71beaef, `zoomToBox` in `pinch.ts`): eased in a quarter second, or at once with reduced motion. A tap again comes back out, and leaving the map or going into a line brings the camera back. A held line's own regions are the next level (app b097d9e): a tap on its body, its scene or a nested body frames that region, a tap on another frames that one, and a tap on the framed one again comes back out. The file as one world (app 2d22d36): the map's step after frame is *whole*, every line drawn whole at once in its own cell, each cell titled by its `#>` frame and its head. The cells fit the stage, so the bounding force needs no change, and the camera's zoom does the rest. Past four lines, each is drawn at a nested line's scale. A tap frames a cell or a region; a tap on a line's node goes in. A region the map lays out is fixed (app bcf3d66): no corner, no drag, since moving it there changes nothing. A world larger than the stage, for long files, waits on `boundingBox`.
 
+**Operators and joins, told apart** (app 5ba8ad0; the creator: differentiate more across operator types and expression layout patterns, with more intuitive mutation or clustering physics).
+- **At rest:** each operator wears its reading on any node it marks, by stroke and fill only, so a capture reads it still. `~` a dashed edge, `?` an open fill, `!` a heavy ring, `*` a glow, `.` a ground shadow, `^` a lift, `#` a ringing edge, `@` a dotted look, `&` a long dash, `=` a kept edge, `%` a ruler, `$` a muted base.
+- **In motion:** gently, and only on a node not pinned (`operator-physics.ts`). Ground settles, ascension lifts, value is heavier, potential's tether loosens, perspective leans to the middle, and action makes room. The rest keep the field's physics.
+- **Each join has its figure:** in common a ring, in order a row, one name a tight chain held close, a path rising across the body.
+- **Open, for a browser look:** the strength of settle and lift, and whether `&`, `#`, `=`, `%`, `$` should move as well as look different.
+
+**The color tool as layers** (app f06caf5; the creator: reflect on the color tool's utility and its visual meaning). A color is a perspective that new nodes take. So:
+- each swatch says how many nodes carry it, and the chosen one is marked;
+- a tap chooses it, and the panel stays open to say what that means;
+- the chosen color can be selected whole, soloed (the rest dim, a lens that changes nothing), or painted onto the selection.
+
+Open: names for colors (a color is still a number), solo kept across redraws, and color as the map's fourth feature.
+
 **Cross-document links and `.spw` files** (the creator's wonder). A node whose word names another page or a `.spw` file could open it as a frame, the way `#>` enters one. A `.spw` file dropped on the canvas or given in `?spw=` by address could load as held lines, one frame per top-level expression, stepped through with the action →. Both would read through the workbench's reader that the app already carries.
 
 **A play mechanic on hold.** A hold plays and a release lets go; nothing commits on a hold. On a node, a hold could play its operator and a drag up or down while holding could turn the operator's own quantity (a value's weight, a measure's scale). The receipt comes when the finger lifts.
