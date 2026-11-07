@@ -213,6 +213,18 @@ The same commit keeps a placed node inside the stage. The creator: some nodes go
 
 A tap on the title opens its editor focused, with the text selected, by any hand. The keyboard rises on a phone, so that typing replaces the title.
 
+**Putting nodes into a line, and naming them** (app 3d5c465; the creator: it should be easier to add miscellaneous nodes to a word's body or mode, its scene, or as a neighbor, and to edit a node's name and composition, with a mode that goes straight into node titles):
+- A free node let go on the line's word joins its `[mode]`; the word reads *into*, not *link*.
+- Let go in a body, it joins as a part where it fell, beside the parts on either side. Let go in a scene or a concept, it joins that slot. The empty slots show while it is carried.
+- A node of the line opens its editor with its whole composition: a part, or a nested term's word, opens as the whole term (`water{rain}`). Tab and Shift+Tab settle and walk to the next or previous title in reading order.
+- Reflex's motion card has a tap switch, selects or names. In names, a tap opens the title at once, Enter walks on, and titles show a dotted underline.
+
+**Titles: layout, behavior, scale** (the creator: they might need UX work). Proposals, each for a browser look:
+- A title sits one gap below its circle, not two radii (`ui/text.ts`), so a word and its title read as one thing.
+- Size by role, clamped (word 16, part 13, scene and concept 12, charge 11) rather than the radius, so a grown node does not shout.
+- A long title ends in an ellipsis on the canvas and shows whole while selected, focused, or in names.
+- While the camera zooms, titles keep a legible size; a counter-scale holds them between 10 and 20px on screen.
+
 **Cross-document links and `.spw` files** (the creator's wonder). A node whose word names another page or a `.spw` file could open it as a frame, the way `#>` enters one. A `.spw` file dropped on the canvas or given in `?spw=` by address could load as held lines, one frame per top-level expression, stepped through with the action →. Both would read through the workbench's reader that the app already carries.
 
 **A play mechanic on hold.** A hold plays and a release lets go; nothing commits on a hold. On a node, a hold could play its operator and a drag up or down while holding could turn the operator's own quantity (a value's weight, a measure's scale). The receipt comes when the finger lifts.
