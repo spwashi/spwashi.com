@@ -13,9 +13,9 @@
     <meta itemprop="description" content="7D force simulation with Spw command language">
     <link rel="icon" href="/v0.0.1/favicon/16.png">
     <link rel="manifest" href="/manifest.json">
-  <script type="module" crossorigin src="/assets/main-kf_E6Wdo.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/index-YEEvMJeN.js">
-  <link rel="stylesheet" crossorigin href="/assets/index-PxacPtuF.css">
+  <script type="module" crossorigin src="/assets/main-OlqUIx8k.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/index-Bv0M7Hw2.js">
+  <link rel="stylesheet" crossorigin href="/assets/index-E8avSuTW.css">
   <link rel="stylesheet" crossorigin href="/assets/main-_qtzgt2L.css">
 </head>
 <body data-mode="nothing"
@@ -135,10 +135,9 @@
                 </div>
             </div>
             <p id="spw-reading" data-role="spw-reading" aria-label="What the line meets"></p>
-            <!-- The operators as keys under the line, the row itself the
-                 slider: a key primes, the primed key acts (operator-field.ts). -->
+            <!-- The joints of the held line. A joint primes; the primed joint acts. -->
             <div class="spw-operator-field" id="spw-operator-field" data-role="spw-operator-field" data-primed="false">
-                <div class="spw-keys" role="group" aria-label="Operators" data-role="spw-operator-keys"></div>
+                <div class="spw-keys" role="group" aria-label="Joints of the line" data-role="spw-operator-keys"></div>
             </div>
             <output id="spw-prime-context"
                     aria-live="polite"
@@ -162,12 +161,64 @@
         <div class="action-group"></div>
     </section>
     <section id="map-mode-container" data-mode-panel="map">
-        <div id="node-mapper" class="code-editor" data-role="node-mapper"></div>
-        <button id="submit-node-mapper" data-action="submit-mapper" data-submit>submit</button>
+        <form data-role="map-cast">
+            <output data-role="map-count" aria-live="polite"></output>
+            <input id="map-cast"
+                   data-role="map-cast-line"
+                   type="text"
+                   spellcheck="false"
+                   autocomplete="off"
+                   autocapitalize="off"
+                   placeholder="[body]{from ~> to}"
+                   aria-label="[slot]{from ~> to}">
+            <div role="group" aria-label="slot" data-role="slot-chips">
+                <button type="button" data-slot="word">word</button>
+                <button type="button" data-slot="mode">[]</button>
+                <button type="button" data-slot="body">{}</button>
+                <button type="button" data-slot="scene">()</button>
+                <button type="button" data-slot="concept">&lt;&gt;</button>
+            </div>
+            <div data-role="map-acts">
+                <button type="submit" id="submit-node-mapper" data-action="submit-mapper" data-submit>cast</button>
+                <button type="button" data-action="map-undo" disabled>undo</button>
+            </div>
+        </form>
+        <details>
+            <summary>js</summary>
+            <div id="node-mapper" class="code-editor" data-role="node-mapper"></div>
+            <button type="button" data-action="submit-mapper-js">run</button>
+        </details>
     </section>
     <section id="filter-mode-container" data-mode-panel="filter">
-        <div id="node-filter" class="code-editor" data-role="node-filter"></div>
-        <button id="submit-node-filter" data-action="submit-filter" data-submit>submit</button>
+        <form data-role="filter-query">
+            <output data-role="filter-count" aria-live="polite"></output>
+            <input id="node-filter-query"
+                   data-role="filter-line"
+                   type="text"
+                   spellcheck="false"
+                   autocomplete="off"
+                   autocapitalize="off"
+                   placeholder="· &amp; &lt;&gt; | ~{}"
+                   aria-label="· &amp; &lt;&gt; | ~{}">
+            <div role="group" aria-label="algebra" data-role="algebra-chips">
+                <button type="button" data-insert="&amp;">&amp;</button>
+                <button type="button" data-insert="|">|</button>
+                <button type="button" data-insert="\">\</button>
+                <button type="button" data-insert="~">~</button>
+                <button type="button" data-insert="·">·</button>
+                <button type="button" data-insert="*">*</button>
+                <button type="button" data-slot="concept" data-insert="&lt;&gt;" data-caret="1">&lt;&gt;</button>
+                <button type="button" data-slot="scene" data-insert="()" data-caret="1">()</button>
+                <button type="button" data-slot="mode" data-insert="[]" data-caret="1">[]</button>
+                <button type="button" data-slot="body" data-insert="{}" data-caret="1">{}</button>
+            </div>
+            <button type="submit" id="submit-node-filter" data-action="submit-filter" data-submit>keep</button>
+        </form>
+        <details>
+            <summary>js</summary>
+            <div id="node-filter" class="code-editor" data-role="node-filter"></div>
+            <button type="button" data-action="submit-filter-js">run</button>
+        </details>
     </section>
     <section id="querymod-mode-container" data-mode-panel="query">
         <div id="query-parameters" data-role="query-input">
@@ -254,9 +305,13 @@
         <div id="reflexes" role="group" aria-label="Reflex actions"></div>
     </section>
     <section id="debug-mode-container" data-mode-panel="debug">
-        <section data-role="debug-output">
-            <output id="output" aria-label="Debug output"></output>
-        </section>
+        <div id="debug-stages" data-role="debug-stages" role="group" aria-label="stages"></div>
+        <output data-role="debug-address" aria-live="polite"></output>
+        <button type="button" data-action="debug-again" data-submit disabled>again</button>
+        <details>
+            <summary>$</summary>
+            <output id="output" aria-label="Debug record"></output>
+        </details>
     </section>
 </aside>
 
