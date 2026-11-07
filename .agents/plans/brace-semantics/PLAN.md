@@ -117,6 +117,12 @@ Proposal: prove the way back on the lens switch first, since half of it is built
 
 Every change says what it did: a line under the instrument writes the expression as text, reads it in words, and shows the parser's verdict. Handles, ghosts and the label slot hold their space from first paint, so nothing reflows; reduced motion keeps every state and drops the travel. Side marks and labels are provisional until decisions 4 and 5.
 
+**A first half on spw.quest (2026-11-06, on main, not deployed).** On `/pivot` every part of a line is this form with something inside, and `<&>` is the first start.
+- A tap shows the part's walls turned to the next empty pair (the `walls` pivot), and a second tap goes there.
+- A swipe dials on through its other turns. The swipe is sideways, not up and down, so the page still scrolls through the parts; that is a taste call for the creator.
+- A pinch shows the line without the part.
+Labels, side marks and the runtime element are not built.
+
 **Where it lives.** In the site's runtime, as one light-DOM element that wraps a readable expression (the 2026-10-06 direction: modules as authored hosts, state on the host, the expression on the host read into tokens there). spw.quest takes it through the peer kit (`scripts/build-peer-kit.mjs`), which carries modules as well as tokens and faces, with the same drift check. It is spw.quest's hero first and one site route second. The feel is approved in a browser before it ships.
 
 ## E. A door from home into spw.quest

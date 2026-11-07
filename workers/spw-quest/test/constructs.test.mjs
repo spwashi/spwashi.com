@@ -168,8 +168,26 @@ test('into a line and between lines: its parts as handles, the operators primed 
   assert.match(primed, /<section class="operators" id="operators"/);
   assert.match(primed, /<a href="\/pivot\?line=garden%5Bcare%5D%7Bseed%7D#operators" aria-current="true"/, 'the active operator says so, and a second press lets it go');
   assert.match(primed, /<a href="\/pivot\?line=garden%5Bcare%5D%7Bseed%7D&amp;op=wonder#operators"/, 'another operator primes in its place');
-  assert.match(primed, /<div class="primed" role="status">/);
-  assert.match(primed, /<a class="actualize" href="\/pivot\?line=%7Egarden%5Bcare%5D%7Bseed%7D&amp;from=garden%5Bcare%5D%7Bseed%7D&amp;t=garden%5Bcare%5D%7Bseed%7D">Actualize: go to this line<\/a>/);
+  assert.match(primed, /<div class="primed" role="status" data-op-primed>/, 'primed, the panel shows');
+  assert.match(primed, /<input type="range" name="opi" min="0" max="11" step="1" value="\d+" aria-label="Operator in front" aria-valuetext="~ potential" data-op-slider>/, 'the field is a slider set on the primed operator');
+  assert.match(primed, /<ol class="op-ticks" style="--ticks: 12">/, 'every operator a tick on the field');
+  assert.match(primed, /<script type="application\/json" data-op-lines>\[\{"index":0,/, 'each tick carries its line for the live slider');
+  const scrubbed = await text(`/pivot?line=${encodeURIComponent(line)}&opi=0`);
+  assert.match(scrubbed, /aria-valuetext="~ potential"/, 'scripts off, the slider submits its position and primes that operator');
+  // The < & > move: a part keeps what it holds and turns its walls to the next empty pair; a full line has none to turn.
+  const walls = pivotsOf(line).filter(({ kind }) => kind === 'walls').map(({ line: next }) => next);
+  assert.deepEqual(walls, ['garden{seed}(care)', 'garden{seed}<care>', 'garden[care](seed)', 'garden[care]<seed>']);
+  assert.deepEqual(pivotsOf('<&>').filter(({ kind }) => kind === 'walls').map(({ line: next }) => next), ['[&]', '{&}', '(&)'], 'the base form turns through every pair');
+  assert.equal(pivotsOf('garden[care]{seed}(yard)<home>').filter(({ kind }) => kind === 'walls').length, 0);
+  assert.match(await text('/pivot'), /<li class="base-form"><a href="\/pivot\?line=%3C%26%3E">/, 'the empty pivot offers the base form first');
+  const idle = await text(`/pivot?line=${encodeURIComponent(line)}`);
+  assert.ok(idle.includes('"mode":{"says":"the lens","turns":[{"label":"turn its walls to ( )"'), 'a first tap on a part turns its walls');
+  assert.match(idle, /<div class="primed" role="status" data-op-primed hidden>/, 'nothing primed, nothing shown');
+  assert.match(idle, /aria-valuetext="none chosen"/);
+  assert.match(idle, /<div class="instrument" data-instrument>/, 'the parts are one instrument');
+  assert.match(idle, /<script type="application\/json" data-slot-alts>\{/);
+  assert.match(idle, /function instrument\(\)/, 'the gestures ride along as the page script');
+  assert.match(primed, /<a class="actualize" data-op-go href="\/pivot\?line=%7Egarden%5Bcare%5D%7Bseed%7D&amp;from=garden%5Bcare%5D%7Bseed%7D&amp;t=garden%5Bcare%5D%7Bseed%7D">Actualize: go to this line<\/a>/);
   // Into the line: each part a handle to its turns; and the trail, origin ~> now.
   const page = await text(`/pivot?line=${encodeURIComponent(line)}&add=water&join=ordinal`);
   assertBalanced(page);
