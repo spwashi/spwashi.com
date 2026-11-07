@@ -18,7 +18,7 @@ app            main 99c10e6 (2026-10-30), 94 commits past origin/main 2ba127a (f
 app workbench  submodule fffab72, spw-workbench 0.2.0-alpha.1, 2026-03-12: from before the
                workbench's 2026-03-26 history rewrite, so the clone keeps it only on
                backup/history-rewrite-pre-20260326, not on main; it defines no outline, roles or formAt
-site reader    public/js/semantic/spw-workbench-reader.js, v0.3.0 @ 850077a (the site's mount):
+site reader    public/js/semantic/spw-workbench-reader.js, v0.3.0 @ 27fa1e3 (the site's mount, 2026-11-06):
                exports outline and roles
 spw.quest      assets/parser/2026.10.13, v0.3.0 @ 0eb1d1c, nine commits behind the site's mount:
                workbench.min.js exports outline, roles, formAt and all six names the app imports
@@ -174,7 +174,7 @@ factshift.com is the prototype. factshift.center is the examination of which con
 
 The differential is relevant because people hesitate to engage with AI. The creator understands that and, as an engineer, can't really mind it. The center extends the prototype by agentic development: more depth in how the concepts cohere, and in how the canvas performs.
 
-The canvas still lays a line out from `line-anatomy.ts`, a second reader beside the workbench. The app compiles its own workbench submodule from March (pins, above), which has no `outline`, `roles` or `formAt`. The site mounts `850077ab` (2026-10-26), whose reader bundle exports `outline` and `roles`; spw.quest's dated 2026.10.13 workbench build exports all three. Slice 5, carrying a dated build, is the next cut. Draw that outline. A body holds its parts, a ( ) applies to the word with its body (its part of speech open), a concept refers to the whole reading, and a join is the edge between two forms. `line-anatomy.ts` stays until that projection can say the line back. Broader geometry stays dormant in the workbench. This canvas projects the parse.
+The canvas still lays a line out from `line-anatomy.ts`, a second reader beside the workbench. The app compiles its own workbench submodule from March (pins, above), which has no `outline`, `roles` or `formAt`. The site mounts `27fa1e3d` (2026-11-06), whose reader bundle exports `outline` and `roles`; spw.quest's dated 2026.10.13 workbench build exports all three. Slice 5, carrying a dated build, is the next cut. Draw that outline. A body holds its parts, a ( ) applies to the word with its body (its part of speech open), a concept refers to the whole reading, and a join is the edge between two forms. `line-anatomy.ts` stays until that projection can say the line back. Broader geometry stays dormant in the workbench. This canvas projects the parse.
 
 ## Next slices
 

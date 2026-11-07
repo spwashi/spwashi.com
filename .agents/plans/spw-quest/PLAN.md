@@ -18,7 +18,7 @@
 ## What it is now (measured 2026-11-06)
 
 - **Routes** (`handleQuest` in `workers/spw-quest/src/index.js`): `/` guide, `/learn`, `/build`, `/read`, `/script.spw`, `/specimens`, `/constructs`, `/pivot`, `/parser.js`, `/parser/` (`src/parser-releases.js`), `/fonts/` and `/peer/` (`workers/lib/peer-assets.js`), `/install`, `/init` (also `/init.md`, `/llms.txt`, and `/` asked for text), `/git.txt`, `/git.md`, `/quest.json`, `/prompts.json`, `/.well-known/autonomous-feedback.json`, `/robots.txt`, `/health`. No client framework; every page reads with scripts off.
-- **Pin:** `/init` and the site's mount both run workbench `850077ab` (`b956329b`, 2026-10-27). One parser release is tracked, 2026.10.13; `2026.10.13-pre.1` is on disk and ignored by git.
+- **Pin:** the site's mount is workbench `27fa1e3d` (2026-11-06), and the carried `src/parser-text.js` behind `/parser.js` follows it; the deployed worker serves `850077ab` (`b956329b`, 2026-10-27) until its next deploy. One parser release is tracked, 2026.10.13; `2026.10.13-pre.1` is on disk and ignored by git.
 - **Packages:** `spw-cli`, `spw-lsp`, `spw-runtime` and `spw-seed` are all private at 0.3.0, so the only way to run Spw is the submodule plus `npm ci` inside it.
 - **Inbound links:** Home, About, Now, `/topics/software/spw/`, `/about/domains/spw.quest/`, `/projects/spw-workbench/`, `/design/composition/`, `/design/catalog/systems/`, and the footer on every page (`_partials/site-footer.html`).
 - **Tests:** 65 in six files under `workers/spw-quest/test/` (routes 19, note 9, releases 12, prereleases 13, constructs 8, specimens 4), plus `carry-specimens.mjs --check`; `npm run check:workers` runs them all.

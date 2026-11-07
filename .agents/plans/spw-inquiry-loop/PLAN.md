@@ -54,6 +54,6 @@ Invariants: build-time parse first, runtime parse on demand, the page complete w
 
 ## Workbench consumer pin
 
-Operation `align`: the mount moves to an upstream revision, the browser parser and expression manifest are rebuilt from that same revision in the same commit, and the move claims nothing about the language version. Pins so far: `3eaab6377672` to `229aedcf` (2026-09-30), seven moves on 2026-10-12 and 2026-10-13 recorded in `wip.spw` (to `0eb1d1c0`, f51b316c), and the current `850077a` (b956329b, 2026-10-27). Pre-push extracts workbench sources and citation targets at the site commit's exact gitlink; no packages are installed.
+Operation `align`: the mount moves to an upstream revision, the browser parser and expression manifest are rebuilt from that same revision in the same commit, and the move claims nothing about the language version. Pins so far: `3eaab6377672` to `229aedcf` (2026-09-30), seven moves on 2026-10-12 and 2026-10-13 recorded in `wip.spw` (to `0eb1d1c0`, f51b316c), `850077a` (b956329b, 2026-10-27), and the current `27fa1e3d` (2026-11-06: seven upstream commits, one of code, `3f53adf2`, seed's slot reader; every route expression reads the same, so the manifest moved only its stamp, and spw.quest's carried `/parser.js` moved with the mount). Pre-push extracts workbench sources and citation targets at the site commit's exact gitlink; no packages are installed.
 
 Validation: `build:spw-parser`, `manifest:expressions`, `spw:integrity`, `ecology:language`, and `check:local`.
