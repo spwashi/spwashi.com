@@ -359,6 +359,7 @@ The menu's families already carry charge words: forces bonk, nodes boon and bane
 - The thread's map button draws the thread whole: each line a node, gathered into labelled regions by operator, then lens, then the `#>` frame it falls under. The next press steps the feature, and after the last the map goes and the line held before it comes back.
 - A tap on a line goes in and holds it whole.
 - The title reads "map · by operator" while the map stands in for the line.
+- A tap on a cluster's region frames it with the camera (app 71beaef, `zoomToBox` in `pinch.ts`): eased in a quarter second, or at once with reduced motion. A tap again comes back out, and leaving the map or going into a line brings the camera back. Still to come: the line's own regions as the next level, and the file as one world.
 
 **Cross-document links and `.spw` files** (the creator's wonder). A node whose word names another page or a `.spw` file could open it as a frame, the way `#>` enters one. A `.spw` file dropped on the canvas or given in `?spw=` by address could load as held lines, one frame per top-level expression, stepped through with the action →. Both would read through the workbench's reader that the app already carries.
 
