@@ -257,6 +257,8 @@ A tap on the title opens its editor focused, with the text selected, by any hand
 - Outward over a node, it enters that node as a frame (`#>`).
 Both are for a phone look first.
 
+**The title and its payload** (app 56c111c; the creator: a verbose title is hard to read; they wonder about a distinction between the title and the payload). The title names the line: a line short enough to read at a glance is its own title, and a longer one shows its head (`.spwashi …`) with the whole line as its tooltip. The payload, the whole line, stays in the corner box, the prompt, the address and the title's editor, and it keys the hash and the kept frames, so two lines with one head never share a page.
+
 **Cross-document links and `.spw` files** (the creator's wonder). A node whose word names another page or a `.spw` file could open it as a frame, the way `#>` enters one. A `.spw` file dropped on the canvas or given in `?spw=` by address could load as held lines, one frame per top-level expression, stepped through with the action →. Both would read through the workbench's reader that the app already carries.
 
 **A play mechanic on hold.** A hold plays and a release lets go; nothing commits on a hold. On a node, a hold could play its operator and a drag up or down while holding could turn the operator's own quantity (a value's weight, a measure's scale). The receipt comes when the finger lifts.
