@@ -119,6 +119,51 @@ The creator: dragging containers or interacting with regions should come with mo
 - **Selection reaches the joins.** Selecting two parts of a body selects the separator between them. Pressing `.` `,` `;`, or `~>` (or choosing it from a chip row under the selection) rewrites that join; `.` ident, `,` common, `;` ordinal, `~>` project, the joins `expression-query.js` already reads. The same selection over a compound (`~` `^` `&` `@`) offers its marks.
 - *Slices.* G1, quiet regions, is a feel change ending at a demo. G2 moves regions and G3 drops into containers, both under the C2 receipts. G4, joins by selection, follows G3. Each is checked in the browser by a held line rewritten byte for byte.
 
+## The canvas's ground: regions, names, hands (2026-11-06, evening)
+
+The creator, in a run of notes: mind which regions and labels show while a node is dragged, the geometry of nodes, and editing. Don't overexplain the interface; maintain ground. Regions such as "the stage" could be renamed and reanchored, per page or in local storage. Other wonders:
+- pinching in from the top edges to wrap the whole page in a container whose type can be changed;
+- easy encapsulation to reduce noise, and moving between stored pages;
+- pinching the charge between two nodes;
+- pressing and holding a dot on the frame to wake the page's heat, then dragging up to change a setting configured or pinned in the reflex panel;
+- the color panel as a grouping and layering tool;
+- the `[...]` menu clustered for cognitive ease. Learning it is fine, and moving between its items is almost easy.
+
+Editing expressions should be easy, with selections in the prompt populating the tools.
+
+**What the canvas does today** (a read of the app, 2026-11-06):
+- **During a drag**, empty slots appear (`body[data-line-drag] .region-empty`), but filled regions are not lit. A node near another rings as a link target (`handling/circle.ts`).
+- **On drop**, `dropIntoLine` picks the smallest region under the point and rewrites the line byte for byte.
+- **Region titles** come from `PLACES` on every layout (`{ } body`, `( )`). `region.title=` renames one only until the next layout. `factshift.regions` keeps geometry alone, keyed `word|regionId`, and saved frames (`factshift-frame-<md5>`) keep no regions.
+- **Node radii** are set by role in `line-anatomy.ts`: word 34 (24 nested), scene 26, concept 30/20, part 16, charge 12. Labels sit two radii below the circle. A double tap renames a node in an input.
+
+**Proposals**
+- **The ground is quiet.** At rest a region shows its outline and no label. During a drag, only the regions that would take the drop light up, filled or empty, each labeled with what the drop does in a word or two (*into the body*, *as the scene*); the rest stay quiet. Labels sit one gap below a circle, not two radii. This is G1 with its labels decided.
+- **A region's name and anchor are kept with its geometry.** A double tap on a label renames it in place, as a node is renamed. Anchor is the edge or corner a region holds when the window changes (the stage could hold the top left or the center). The page keeps a name in its saved frame, and a reader's own name lives in local storage.
+- **The hands.** Two fingers on two nodes, pinched, tighten the charge between them, and spread, loosen it; the receipt names the pair and the new pull. Pinching in from the top edges wraps the held line in a pair, `{…}`, and a tap on its walls turns the pair, the `< & >` move spw.quest's pivot now plays. A wrapped container folds to one node to quiet the canvas and opens on a spread. Saved pages form a strip the reader steps through.
+- **Held dials.** A press and hold on a dot on the frame wakes the page's heat. Dragging up turns whichever setting the reflex panel pins to that dot, so the dot is a dial the reader chose.
+- **Color as layers.** A color gathers nodes into a layer that can be dimmed, hidden or selected whole.
+- **The `[...]` menu** is clustered by what each item does (make, see, keep, tune). Arrows move within a cluster first, and the menu remembers the last item. It starts from an inventory, and nothing is renamed before the creator reads the list.
+- **Editing by selection.** Text selected in the prompt is a target: the reading names its slot, the operator field marks that word rather than only the front, and map, filter and query open with it as their query. A canvas selection already fills an empty prompt (`selectionAsLine`).
+
+**Built 2026-11-06** (app 21af4a9, 1ca9167, 42d8da6):
+- The Spw window, restyled. The line sits in one ruled container, and its front mark in a gutter opens an operator field (a slider over the twelve, the primed line dashed, *use* holds it with a `*` receipt).
+- Context rows show only when they hold something, in one voice and three tones, with fewer words.
+- The action → fills an empty prompt with `word[lens]{part}` when nothing is selected or held.
+
+**Questions for the creator**
+- Should a page's region name or a reader's win?
+- Is spreading to enter (Multi-touch, below) still right once a spread also opens a folded container?
+- The window's taste calls: the ring `◌` for "no mark yet", *use* for the act, and *two joined* for a compound.
+
+*Slices*, each a feel change ending at a demo:
+- E1, selection-aware operator field and reading;
+- G1, the quiet ground and drag-lit drops;
+- N2, names and anchors kept;
+- H1, the pinched charge;
+- W1, wrap and fold;
+- M2, the menu's clusters, after its inventory.
+
 ## Multi-touch: frame or canvas
 
 The creator asked to consider multi-touch gestures on a frame against the canvas. PLAN.md's gesture grammar already reads one rule per target (handle, lens, node, empty stage). This adds the count of fingers and the difference between where they land: on the canvas, the fingers move the view and the field; on a frame, meaning a region, a container, or an entered node's page, the same fingers act on that frame.

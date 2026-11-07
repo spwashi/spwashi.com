@@ -62,6 +62,7 @@ fixity = "tending"
  >>[2026-11-06 20:30] plan — the creator asked to improve the design and theory of each tool, plan first. TOOLS.md reads the nine tools at b1fd11a from source and a phone capture of each one open, proposes one theory (a tool is an operator applied to the canvas; its window opens on the primed act as one line and every press leaves a * receipt), and slices the work: C0 hygiene (color grid overflow, color restarting the story, query going stale, dead prime controls), C1 the operator table, C2 a demo on node, reflex and query, then one slice per tool. Four wonders: tool_operators, tool_close, filter_sense, tool_words.
  >>[2026-11-06 21:20] plan — the creator, through the evening: map and filter want Spw-native selection, projection, slots and topography; Spw should navigate between frames; the focal point (handle and square) should be designed per tool across selection, crawling, reflex, default and preview; and a tool could accommodate Apple's Liquid Glass. TOOLS.md gains the focal point table (five states for nine tools), map and filter as slot query and slot rewrite over shared code, frames entered by #> and left by ., and a glass tool behind legibility guards. Wonder added: glass_tool. The cluster framing (spw.quest as clarity, factshift.center as a hyperindex for mathematical thinking and artistic expressiveness) is in .spw/surfaces/site-cluster.spw.
  >>[2026-11-06 22:40] land — deployed as Wrangler version 678f3ab5 (snapshot 39583c83, app 8cd4113): the title selects on click and on a finger's first tap into the field, and the hash steps to the bottom corner while the title is edited; a plan's head line opened live from spw.quest's /canvas draws six nodes with no error.
+ >>[2026-11-06 23:55] land — snapshot at app 42d8da6, not deployed. The Spw window has an operator field opened from the line's front mark (a slider over the twelve; primed line dashed; use holds it with a * receipt). The window was restyled for sizing and disclosure in fewer, plainer words, and the action → fills an empty prompt with a skeleton. Headless at 390 and 1366: a tap primes ?garden[care]{seed}, a second holds it with the address following, and the window is 150 and 129px closed (was 299 and 233). No exceptions. TOOLS.md gains "The canvas's ground", the creator's evening notes as proposals and slices E1, G1, N2, H1, W1 and M2.
 }
 
 ^"open"{
@@ -73,7 +74,7 @@ fixity = "tending"
 
 ^"cache"{
  ~#status: "aligning"
- ~#next_commit: "slice 1a (read only) or slice 2 (eight container labels), neither gated; the dated reader stays the canvas cut, and whoever the creator names writes the first facts sheet"
+ ~#next_commit: "E1, a selection in the prompt as the tools' target (TOOLS.md, The canvas's ground), or G1's demo; the deploy of 42d8da6 waits on the creator"
  ~#files_hot: ".agents/plans/factshift-center/PLAN.md, .agents/plans/factshift-center/INTERACTION.md, .agents/plans/factshift-center/wip.spw"
  ~#gate: "the creator names who writes the first sheet; the projection says the line back before line-anatomy is retired"
  ~#last_stream: "2026-11-06"
