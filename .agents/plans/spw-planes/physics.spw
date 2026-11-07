@@ -1,0 +1,306 @@
+# Review 2026-11-07 — physics report; synthesis in PLAN.md.
+# Physics plane (2026-11-07) — review: factshift.center
+#>spw_planes_physics
+#:review #!planes #!physics #!factshift #!lifecycle
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+expression = plane[physics]{line.heat.look}<factshift.center>
+
+summary = #[
+  `The line is kept; the picture is recomputed as heat runs out.`,
+  `Two marks are felt at rest: ground and lift, 8 to 9 px.`,
+  `Potential shows only when disturbed; the other marks are noise.`,
+  `In the demo, heat tells the stage; the look tells the answer.`,
+  `Proposed: three laws, seven moves, three copy turns, four asks.`,
+][reg=set]
+
+contents = #[
+  ~"./physics.spw#tried",
+  ~"./physics.spw#theory",
+  ~"./physics.spw#disagreements",
+  ~"./physics.spw#proposals",
+  ~"./physics.spw#value",
+  ~"./physics.spw#wonders",
+  ~"./physics.spw#questions",
+][reg=set]
+
+^"tried"{
+  ~#note: "Receipts, one a facet: what was opened, done and seen."
+  headline = `The line is conserved; the picture is not. Every force is multiplied by heat, and heat is gone in about two seconds. So an operator's motion is a short transient that freezes into a resting offset. Of six operator forces, two are felt at rest (ground, lift), one under a disturbance (potential), and the rest are noise. In the demo, the lifecycle reads best as heat: held is warm and circling, a decision is a kink in every path, residue is a fall to the floor.`
+  live = `The deployed build of app f06caf5: its bundle has the map and color strings, and not the tie modes' "factshift.tie".`
+  working_tree = `The other session's uncommitted @operator_tap and @link_confirm.`
+  captures = `design/components/captures/spw-planes-2026-11-07/physics/ (gitignored)`
+  probes = `scratch planes-physics/: live-desk.mjs, live-phone.mjs, live-extra.mjs, proto-shots.mjs, with JSON receipts beside them; not kept`
+  desktop = .{
+    viewport = `1366×900`
+    ring = .{
+      at = `?spw=garden{.soil, ^sun, ~rain, *seed, ?weed, !hoe}, settled 6 s`
+      shot = `02-desk-ring-settled.jpg`
+      saw = `The hexagon is crooked: ".soil" low, "^sun" high. Looks: dashed "~", hollow "?", heavy ring "!", glow "*".`
+    }[reg=facet]
+    unmarked = .{
+      at = `the same line with no marks`
+      shot = `03-desk-ring-unmarked.jpg`
+      saw = `An even hexagon. Marked minus unmarked offset: "." +8 px down, "^" −9 px up, "*" −4, "?" +3, "~" +2, "!" 0.`
+    }[reg=facet]
+    heat = .{
+      at = `the ring page, read over time`
+      saw = `α 0.87 at 0.3 s, 0.05 at 1.2 s, 0.004 at 2 s, 0.001 at 3.5 s. No part moved after 2 s.`
+    }[reg=facet]
+    kick = .{
+      at = `programmatic: every part 80 px right, α 0.3`
+      shot = `04-desk-kick-250ms.jpg`
+      saw = `After 3 s none were home. "~rain" came back 10 px; the others 26–37.`
+    }[reg=facet]
+    path = .{
+      at = `?spw=trip{home ~> road ~> sea}`
+      shot = `05-desk-path.jpg`
+      saw = `A path rising left to right. It reads at once.`
+    }[reg=facet]
+    chain_and_lean = .{
+      at = `tag{red.green.blue}; garden{@view, soil, sun, rain}`
+      saw = `The chain is a row, ±17 px off its tight slots. "@view" sits 7 px nearer the center than unmarked. Data only.`
+    }[reg=facet]
+    tap_wonder = .{
+      at = `?spw=?garden[care]{seed; water{rain, sun}}(yard), tap "?garden"`
+      shot = `07-desk-tap-wonder.jpg`
+      saw = `The word is pinned, hollow, ringed. A small card titled "?garden word" opens at the top. "sun" rests below its own nested body.`
+    }[reg=facet]
+  }[reg=facet]
+  phone = .{
+    viewport = `390×844, touch`
+    ring = .{
+      at = `the ring line`
+      shot = `08-phone-ring.jpg`
+      saw = `"~rain" sits 56 px from its slot; the others 16–36.`
+    }[reg=facet]
+    taps = .{
+      at = `one tap a mark, a fresh page each`
+      saw = `"!hoe" beats, no receipt. ".soil" says ". soil back to ground", though never placed, and moves 5 px. "*seed" says "* seed heavier · r 18". "~", "?" and "^" play only.`
+    }[reg=facet]
+    drag_held = .{
+      at = `"~rain" dragged 220 px down and held`
+      shot = `10-phone-drag-held.jpg`
+      saw = `A line to "{ } body, slot 3". The empty "( )" and concept slots appear.`
+    }[reg=facet]
+    drag_let_go = .{
+      at = `then let go`
+      shot = `11-phone-drag-let-go.jpg`
+      saw = `The line became garden{.soil, ^sun, *seed, ?weed, !hoe}<~rain>. "<~rain>" is large and green, with no dash. The ring re-formed as a pentagon.`
+    }[reg=facet]
+    map = .{
+      at = `the thread's map, by operator, over an 8-line file`
+      shot = `12-phone-map-by-operator.jpg`
+      saw = `Six columns, "? wonder · 2" to "no mark · 2". Column titles run together; two names overlap.`
+    }[reg=facet]
+    color = .{
+      at = `?mode=color, color 6 chosen and soloed`
+      shot = `13-phone-color-solo.jpg`
+      saw = `"new nodes: color 6 · 6 on the canvas". The word dims, 1 of 7.`
+    }[reg=facet]
+  }[reg=facet]
+  prototype = .{
+    at = `lifecycle.html, d3 7.8.5 from cdnjs`
+    kept_at = #[
+      `scratch: planes-physics/lifecycle.html`,
+      `design/components/captures/spw-planes-2026-11-07/physics/lifecycle.html (gitignored)`,
+    ][reg=set]
+    plays = `"?garden" opened, then held, then "!garden" answered, then residue; and a "." let-go branch.`
+    shots = `wordless stills with two-second trails: p1 to p5-desk-*.jpg at 1100×720, and p4-phone-residue.jpg`
+    stages = .{
+      primed = `answers come from the word and spread on dashed tethers (p1)`
+      held = `the field stays warm; the answers circle; trails curve (p2)`
+      answered = `every path kinks: one pulled in on a taut tie, three pushed out; the word fills, with a "*" receipt (p3)`
+      residue = `the untaken fall to the floor and stay in view; a dashed halo keeps the question's outline (p4)`
+      let_go = `every tether slackens, all four fall, the word drops to ground (p5)`
+    }[reg=facet]
+    speeds = `mean speed of the untaken answers, px a tick: held 0.55, answered 0.28, residue 0.23, let go 0.17`
+    showed = #[
+      `Motion carried open vs settled: held circles, its trails curved (p2); residue is still.`,
+      `Motion carried the moment of decision: every path kinks, one pulled in, three pushed out (p3).`,
+      `Motion did not tell answered from let go (p4 vs p5): the untaken fall in both. The fill and the one taut tie tell them apart.`,
+      `Without trails, a still of primed and held look alike.`,
+      `On a phone, room had to shrink to the stage, or answers left the screen.`,
+    ][reg=set]
+  }[reg=facet]
+}[reg=facet]
+
+^"theory"{
+  ~#note: "The plane's theory as it stands, each with its file and line."
+  operator_forces = `Six operator forces, each × heat, skipped on a pinned node (@operator_physics:13–20, 29–72). The mark is the name's first character (@operator_physics:30).`
+  anchors = `Anchors pull a part to its slot × heat (@anchors:8–15). Part anchor 0.12; the held word is pinned (@line_anatomy:226, 262).`
+  charge = `Charge by role: word −260, concept −160, part −90, charge −80, scene −60 (@line_anatomy:221, 262, 292, 300, 383).`
+  regions = `Regions damp all inside and pull only loose nodes (@regions:15, 26–44); the body is 0.92 / 0.04 (@line_anatomy:93–97). One home per node, with a reason (@homes:5–15).`
+  mass = `Mass is r²/400 (@normalize:34). Only the edge bounce (@forces:166–184) and wells over mass 2 (@forces:206–255) read it.`
+  heat = `α 0.35, decay 0.05, velocity decay 0.52 (@force_config:1–8). An edit keeps it warm until parts are home (@forces:448–526).`
+  bytes = `"editLine" rewrites one place and keeps every other byte. A place read only in part is refused (@line_slots:119–148).`
+  place = `A node keeps its place across an edit by role and name (@line_anatomy:430).`
+  lifecycle = `Primed, held, actualized, residue (@operators_plan:37–44). "The look follows the stage… Motion plays the transition" (@operators_plan:62–64). Built once: prime holds a tie as "~" until "!" (@link_confirm:1–6, 87–128, working tree).`
+  semantics = `"the path should remain visible" (@operator_semantics:214); "A question should remain open even after interaction" (@operator_semantics:244).`
+}[reg=facet]
+
+^"disagreements"{
+  ~#note: "Thirteen places where the theory and the live surface part."
+  no_resting_motion = .{
+    says = `@operators_plan:64 keeps a resting motion for ground and lift. At rest α is 0.001 and nothing moves. The motion is a 1–2 s transient that leaves an offset.`
+  }[reg=facet]
+  two_felt = .{
+    says = `Ground and lift move 8–9 px, half a part's radius. The marks "~ * ? ! @" stay under 7 px. Charge pushes parts 4–18 px outward, more than any mark.`
+  }[reg=facet]
+  value_is_drag = .{
+    says = `"Heavier" (@tools_plan:368) is a damp of ×0.86 a tick. A "*" tap grows the radius; the mass it changes moves only the edge bounce.`
+  }[reg=facet]
+  action_keeps_no_room = .{
+    says = `"!" moves its neighbours 3 px or less. A "!" tap pins the node (working tree, @operator_tap:112–119), which switches its own force off.`
+  }[reg=facet]
+  potential_when_disturbed = .{
+    says = `"~" moves 2 px at rest. Under a kick it came back a third as far. On a crowded phone ring it drifted most. This is the hidden force that does carry meaning.`
+  }[reg=facet]
+  word_pinned = .{
+    says = `The held word is pinned. "?garden" to "!garden" happens on the one node with no motion.`
+  }[reg=facet]
+  step_loses_place = .{
+    says = `Place is keyed on the name with its mark, so "?weed" to "!weed" starts over at its slot. @operators_plan:85 asks for continuity.`
+  }[reg=facet]
+  mark_lost_in_room = .{
+    says = `"<~rain>" starts with "<", so its dash and force are gone (11). The bytes kept the mark; the field stopped reading it.`
+  }[reg=facet]
+  mark_breaks_kinship = .{
+    says = `"resonate" echoes bare words only (@line_anatomy:394). "?garden" and "!garden" would not echo.`
+  }[reg=facet]
+  home_while_warm = .{
+    says = `Anchors scale with heat, so a part moved after cooling stays moved (04). Edits and throws re-warm; nothing else does.`
+  }[reg=facet]
+  two_symmetry_tables = .{
+    says = `@operator_semantics pairs prefix "?" with postfix "." and "~" with "^" (lines 179–186), and elsewhere "?" with "!" and "~" with "@" (lines 407–416). @operators_plan:41 takes the second. The first reads as a lifecycle: what a prefix closes into.`
+  }[reg=facet]
+  wells_noise = .{
+    says = `At 100 px the word's pull is about a ten-thousandth of a part's anchor at 10 px.`
+  }[reg=facet]
+  runtime_no_lifecycle = .{
+    says = `"~" returns {deferred}; "!" returns its argument as is, so it never takes what "~" holds. "?" returns null when false, so an open question is nothing (@interpreter:272–296).`
+  }[reg=facet]
+}[reg=facet]
+
+^"proposals"{
+  ~#note: "Theory named plainly, moves for the hand, copy, and asks."
+  theory = .{
+    bone_boon_bane = `The line is bone: the carrier, kept. Boon is every pull: anchor, tie, center, a region's well. Bane is every push: charge, collision, room, the edge. Heat is the time either may act. The menu's lore already says "data bone" (@tools_plan:316).`
+    law_of_the_line = `An act changes one place, and every other byte stays; where it cannot, it refuses. This is a conservation law in the plain sense: a drag moved "~rain" between rooms whole (11).`
+    law_of_heat = `Every force is proportional to heat, and heat is spent. The picture is recomputed, never kept. An operator's motion becomes its resting offset, which is residue in the conventions' own sense.`
+    law_of_identity = `Proposed: a node is the same across an edit when its role and bare word match. The mark is its state, not its name.`
+    keep_cut_resay = `Keep ground and lift. Keep "~" as loose when disturbed. Re-say "*" as drag, or make it true mass. Cut the wells, and the room "!" makes, or give "!" room only while it commits.`
+  }[reg=facet]
+  interactivity = .{
+    p1_heat_as_commit = `While a tie or question is pending, hold a low warmth (α target about 0.05) and let the pending parts circle; "!" cools the field. The tie modes' pending state is the hook. A demo first.`
+    p2_place_on_bare_word = `Strip the mark in "placeOf", so a lifecycle step plays from where the node stands.`
+    p3_mark_inside_room = `Read the operator from the bare word, so "<~rain>" keeps its dash and force.`
+    p4_word_speaks_by_look = `Keep the pin. Give its look the stages (hollow, filled, halo) and give the parts the motion.`
+    p5_reference_ghost = `A toggle that draws the unmarked layout faintly under the marked one, so ground and lift read as offsets (02 against 03).`
+    p6_map_at_phone_width = `Column titles as sigil and count ("? 2"), names stacked.`
+    p7_receipts_for_events = `"." on a part never placed says "already home".`
+  }[reg=facet]
+  copy = .{
+    meta_description = .{
+      at = "workers/factshift-center/app/src/index.html:11"
+      page = `the live meta description (@app_index)`
+      now = `factshift.center lays out a line of Spw: who is looking, from where, and what is still open, as nodes to move, link, and rewrite.`
+      proposed = `factshift.center lays out a line of Spw as a small field. Move a part and every other letter stays; let go and the field cools where you left it.`
+    }[reg=facet]
+    about_page = .{
+      at = "about/domains/factshift.center/index.html:54"
+      page = `@about_factshift_center`
+      now = `What the physics can represent is whatever still reads as the line after you move it.`
+      proposed = `What the physics can represent is whatever still reads as the line after you move it. Heat is how long the field may move. A question keeps it warm; an answer lets it cool.`
+      holds = `The last sentence holds only once P1 is built.`
+    }[reg=facet]
+    receipt = .{
+      at = "workers/factshift-center/app/src/js/simulation/nodes/operator-tap.ts:59"
+      page = `the live receipt on a part never placed (@operator_tap)`
+      now = `. soil back to ground`
+      proposed = `. soil, already home`
+    }[reg=facet]
+  }[reg=facet]
+  workbench_asks = .{
+    ~#note: "Recorded here only; this repo does not edit the workbench (@interpreter:264–300)."
+    w1_action_takes_deferral = `"!" of {deferred: x} returns x and writes a "*" receipt through the collapse path.`
+    w2_open_question_is_value = `An unanswered "?" stays a value, {open: args}, not null. An answer writes its register, marked answered.`
+    w3_ground_lowers_lift = `"." with no path lowers {integrated} to its parts, so "^" and "." pair in the runtime too.`
+    w4_descriptor_closes_into = `The shared operator descriptor carries both a partner and what a mark closes into: "?" partners "!", and closes into "!" or ".". That settles the two symmetry tables.`
+  }[reg=facet]
+}[reg=facet]
+
+^"value"{
+  ~#note: "What this plane is made of, how it behaves, and why it is worth something."
+  made_of = `A line of bytes, a field of pulls and pushes, a heat that runs out, and looks drawn in stroke and fill. The bytes are kept and the picture is recomputed, so a still and its source are one object.`
+  behaves = `A part sits where its room and its neighbours leave it. Marks tilt the field a little. A drag across a wall rewrites the line and keeps every other letter. When the heat is gone, the picture holds.`
+  academic = #[
+    `Spw began in a 2017 Learning-from-Text course, built to find where two understandings stop sharing ground. Here that place is one changed slot between two lines, with every other byte the same. A disagreement becomes local and countable.`,
+    `Diagrams help when location groups what belongs together (Larkin and Simon, 1987). Regions and anchors do that grouping.`,
+    `Motion onset captures attention (Abrams and Christ, 2003). So motion should be spent on changes of state. The noise forces spend attention and buy little.`,
+    `Animation often teaches no better than stills (Tversky, Morrison and Bétrancourt, 2002), unless it is easy to take in and matches what changes. The demo's trails keep the motion in a still.`,
+  ][reg=set]
+  business = #[
+    `A client's open question can be held as a line: ?launch[spring]{site; video; event}. The options circle while it is open. One is taken; the rest settle and stay in view.`,
+    `The screenshot is the receipt: what was asked, what was taken, what was left. It is also the source.`,
+    `A shortlist in A&R works the same way: demos on a ring, one signed, the rest kept, not deleted.`,
+    `This shows a decision. It promises no outcome, and nothing here is financial.`,
+  ][reg=set]
+}[reg=facet]
+
+^"wonders"{
+  ~#note: "Five wonders in the inquiry-loop form (@design_improvements); they live in wonders.spw, so npm run wonder harvests them once."
+  lives = ~"./wonders.spw#physics"
+  ids = #[
+    `wonder_factshift_felt_forces`,
+    `wonder_factshift_place_kept`,
+    `wonder_factshift_mark_in_room`,
+    `wonder_factshift_lifecycle_wordless`,
+    `wonder_factshift_runtime_take`,
+  ][reg=set]
+}[reg=facet]
+
+^"questions"{
+  ~#note: "Taste calls handed back to the creator, most raised by the demo."
+  asks = #[
+    `Should a held question move? In the demo it circles. Circling may read as open, or as restless.`,
+    `Where do untaken answers go? To the floor (as built, findable), out of view, or back into the word?`,
+    `Should answered and let go differ in how the others move? Now both fall, and only the fill and one taut tie tell them apart.`,
+    `Is the look the carrier and motion the accent? In the stills, hollow to filled said more about the stage than motion did.`,
+    `Should the held word leave its pin for a beat when its mark changes?`,
+    `What is "*": drag, mass, or size?`,
+    `What is the residue? The demo keeps a dashed halo around an answered word. Is that the answered wonder's mark, or should the line write it ("garden?", "~#answer")?`,
+    `Heat as a word: is "the field cools" the site's own imagery, or a schema word in disguise?`,
+  ][reg=set]
+  synthesis = `The four planes meet in @plan.`
+}[reg=facet]
+
+keeps = "A read-only pass: no app file was built or edited, and no git state changed. Everything here is a proposal. The creator's words stay theirs."
+source = "creator, 2026-11-07: factshift.center informatic physics as one of three planes united by spw.quest, a reflection on the boon/bane/bone .land trichotomy; and before it, experiment with the operator-lifecycle model in OPERATORS.md"
+
+# Handles, by role. Declared last; each one links wherever the text names it.
+# Plans
+@plan: ~"./PLAN.md"
+@operators_plan: ~"../factshift-center/OPERATORS.md"
+@tools_plan: ~"../factshift-center/TOOLS.md"
+# Conventions and caches
+@operator_semantics: ~"../../../.spw/conventions/operator-semantics.spw"
+@design_improvements: ~"../../../.spw/caches/spw-design-improvements-2026-11.spw#inquiry_loop_closure"
+# Code
+@operator_physics: ~"../../../workers/factshift-center/app/src/ts/simulation/operator-physics.ts"
+@forces: ~"../../../workers/factshift-center/app/src/ts/simulation/forces.ts"
+@force_config: ~"../../../workers/factshift-center/app/src/ts/simulation/force-config.ts"
+@anchors: ~"../../../workers/factshift-center/app/src/ts/simulation/anchors.ts"
+@regions: ~"../../../workers/factshift-center/app/src/ts/simulation/regions.ts"
+@homes: ~"../../../workers/factshift-center/app/src/ts/simulation/homes.ts"
+@line_anatomy: ~"../../../workers/factshift-center/app/src/js/modes/spw/line-anatomy.ts"
+@line_slots: ~"../../../workers/factshift-center/app/src/js/modes/spw/line-slots.ts"
+@normalize: ~"../../../workers/factshift-center/app/src/js/simulation/nodes/data/normalize.ts"
+@operator_tap: ~"../../../workers/factshift-center/app/src/js/simulation/nodes/operator-tap.ts"
+@link_confirm: ~"../../../workers/factshift-center/app/src/js/simulation/nodes/link-confirm.ts"
+@app_index: ~"../../../workers/factshift-center/app/src/index.html"
+@interpreter: ~"../../../.spw/_workbench/packages/spw-runtime/src/interpreter/interpreter.ts"
+# Pages
+@about_factshift_center: ~"../../../about/domains/factshift.center/index.html"

@@ -1,0 +1,387 @@
+# Review 2026-11-07 — ground report; synthesis in PLAN.md.
+# Ground (2026-11-07) — review: three lands, pentad, worth
+#>spw_planes_ground
+#:review #!planes #!ground #!valence #!lands
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+expression = lands[rest]{boon.bone.bane}<bonk, honk>
+
+summary = #[
+  `The lands are pulls inside factshift.center, not peers.`,
+  `boon, bone and bane are rest states; bonk, honk transitions.`,
+  `Site, app and lettering give each land a different sigil.`,
+  `Canon reads the pentad three ways that disagree.`,
+  `One line is a card, a fixture, a canvas and a pivot.`,
+][reg=set]
+
+contents = #[
+  ~"./ground.spw#read",
+  ~"./ground.spw#ground",
+  ~"./ground.spw#mappings",
+  ~"./ground.spw#proposals",
+  ~"./ground.spw#value",
+  ~"./ground.spw#wonders",
+  ~"./ground.spw#questions",
+][reg=set]
+
+^"read"{
+  ~#note: "What this pass read and captured, one receipt a line."
+  pass = `Read-only, one of four. Only the report and gitignored captures were written. The workbench was read, not edited. The synthesis is in @plan.`
+  repo = #[
+    `@domains whole: lands :77–79, valence lens :44, boonhonk :131, unlinked hosts :137–148.`,
+    `@host_frame whole: lands :101–105, physics :107–111, do_not :119–127.`,
+    `@boonhonk whole: transforms :60–69, linguistic play :241–255, component jobs :257–278.`,
+    `The three land pages, 147 lines each: @boon_land, @bane_land, @bone_land.`,
+    `The Boonhonk Register (@about, about/index.html:1176–1380) and the library folio (@library, :115).`,
+    `@operator_semantics: lineage, positional grammar, voices.`,
+    `@namespace_alignment whole; @site_cluster roles and loops; @compound_expressions :160–170.`,
+    `The upstream asks, searched for valence, lifecycle and the lands (@upstream_asks and its siblings).`,
+  ][reg=set]
+  workbench = #[
+    `At 27fa1e3d, under .spw/_workbench: CLAUDE.md:182.`,
+    `docs/theory/spw/valence-architecture.spw and charge-valence-brace-bridge.spw, whole.`,
+    `packages/spw-runtime/src/interpreter/interpreter.ts:40–90 and 150–345.`,
+    `packages/spw-seed: canonical/catalog.ts:44–50, line/names.ts:63–64, grammar/expression-charge.test.ts:82–96.`,
+    `The #:valence tags under .spw/.`,
+  ][reg=set]
+  app = #[
+    `The factshift app at f06caf5 (workers/factshift-center/app, gitignored): src/ts/domains/config.ts:55–92, src/ts/simulation/force-config.ts:1–8.`,
+    `Commit 07a8442 and the config before it (5eff5b1).`,
+    `The app's older workbench copy (fffab721): .spw/surfaces/domains.spw:55–90 and 160–175.`,
+  ][reg=set]
+  plans = `@operators_note whole; @inquiry_loop and @resonance_alignment, PLAN.md whole; @metaphysical_language, PLAN.md:1–200.`
+  memory = `Read-only: the seven notes the brief names.`
+  art = `The mnemonic page (@mnemonic_folio), the land-tree page (@land_tree_folio), and the prime "Operator years, valence lands" (@valence_lands_prime).`
+  captures = .{
+    folder = `design/components/captures/spw-planes-2026-11-07/ground/ (gitignored)`
+    how = `Live spwashi.com, headless Chrome through @harness. 8 shots. No page threw an exception.`
+    shots = #[
+      `01–03: the three land pages at 390×844. 04: bone's Physics panel.`,
+      `05: the Register's head. 06: the Register at 1366×900.`,
+      `07: the library mnemonic. 08: the Register's lattice and legend at 390.`,
+    ][reg=set]
+  }[reg=facet]
+  seen = #[
+    `The three land pages differ only in words.`,
+    `Each has the same three chips (~cluster_register ~about_surface ~lore_surface) under two empty rounded bars.`,
+    `None links to factshift.center or spw.quest.`,
+    `In 06 the five legend pills are cut off at both ends ("e = reusable skele"), and the caption runs under the fifth.`,
+    `In 05 the Register's lede is absent: about/index.html:1199, "Boonhonk is five transforms on one beat".`,
+    `A probe found that lede computes display:none at default density, so a reader meets "Specificity is which voice is loud." first.`,
+  ][reg=set]
+}[reg=facet]
+
+^"ground"{
+  ~#note: "The lands, the pentad, the operators and the lifecycle, as they stand."
+  lands_site = .{
+    values = `boon +1 arrival/benefit; bane -1 departure/cost; bone 0 structure/carrier (@domains :77–79).`
+    worth = `Valence is "material worth … not decoration" (:44).`
+    others = `The same line gives the other two members operators, not numbers: (+1/−1/0/@/~).`
+    boof = `boof.land at :143 had no status when this pass read it, though it had expired (@factshift_wip :81). 0d1b10d0 has since marked it expired.`
+    composite = `The composite boonbanebone.com is dormant (:165).`
+  }[reg=facet]
+  lands_engine = .{
+    frame = `@host_frame: the lands "are the same app as factshift.center … The frame is neutral. The hostname is the pull." Bone is the unset query (:102, :109).`
+    profiles = #[
+      `boon: creation, charge −50, velocityDecay 0.3, sigil *.`,
+      `bane: entropy, charge −80, alphaDecay 0.01, sigil "."`,
+      `bone: structure, charge −20, velocityDecay 0.6, sigil #.`,
+    ][reg=set]
+    where = `The app already gives each land a force profile: config.ts:55–82.`
+    sign = `All three are negative, which in d3 means all three repel. They differ in strength and damping, not sign.`
+    lapsed = `Before 07a8442 the app also held bonk (force, −200, !), honk (signal, −40, *) and boof (absorption, −10, _).`
+    flavor = `The app's older workbench copy called each land "a physics flavor": boon the thermodynamics of advantage, bane friction and drag, bone structural mechanics, bonk collision, honk signal propagation.`
+    engine = `Its genre engine had five primitives and the composite boonbanebone.com (fffab721 domains.spw:82, 166–171).`
+    now = `The current mount has neither.`
+  }[reg=facet]
+  pentad_canon = .{
+    material = `Material, not merit: "Each valence is a plane of reality" (valence-architecture.spw:4).`
+    runtime_quality = `Runtime quality has four states (boon, bane, bone, honk); bonk is "a catalytic overlay" (:30–35). The tag glosses agree: "material quality, not merit" (.spw/caches/tree/vocabulary.spw:60).`
+    status = `Status: the catalog reads bane as "destructive hazard … error state" and boon as "completed deliverable" (catalog.ts:44–50). That is a merit reading.`
+    charge_slot = `A slot called charge: a valence word may lead a line "as its charge" (names.ts:63, read.ts:89; tests use chargeOf). The bridge's law: "valence is charge-neutral quality; do not sum valence into operational charge" (charge-valence-brace-bridge.spw:66–72).`
+    tags = `As file tags the pentad appears 460 times upstream: bone 229, bonk 70, boon 67, honk 63, bane 31. The site's own .spw tree carries none.`
+  }[reg=facet]
+  operators = .{
+    at = `Runtime meanings in the workbench's interpreter.ts.`
+    cases = #[
+      `# resonates into a register (202–214). "@" observes (216). "&" merges (225). "=" sets (236).`,
+      `% measures (247). "." reads a path (264). ? returns its second argument when the first is true (272–283).`,
+      `! returns its first argument (285). ^ wraps its arguments as integrated (289). ~ returns deferred (293).`,
+      `* collapses and writes (297).`,
+    ][reg=set]
+    valence = `A valence frame is stripped from the semantic frames and travels as metadata on register writes (:56–90). No case reads it. At runtime, valence colors a write; it does not act.`
+  }[reg=facet]
+  lifecycle = `Every operator runs primed → held → actualized → residue, and let go returns to ground (@operators_note :43). Only the tie modes are built (:35).`
+  hand = .{
+    mnemonic = `Plot → Boon, Texture → BANE., Characters → bone. BANE carries a closing period twice; bone has bone-shaped, brace-like ends (@mnemonic_folio).`
+    land_tree = `Three .LAND tags branch from a trunk lettered Boon BANE bone com (@land_tree_folio).`
+    prime = `The five lands sit on one arrow toward a speech bubble (@valence_lands_prime).`
+    ladder = `Beside them, a ladder runs from 2024 POTENTIAL to 2036 INTEGRATION, with 2026 GROUND and 2027 WONDER. Three braces group the ladder (2024–27, 2028–31, 2032–36), and a Spw.quest card sits alongside.`
+  }[reg=facet]
+}[reg=facet]
+
+^"mappings"{
+  ~#note: "Each mapping tested, with its verdict and evidence."
+  lands_surfaces = .{
+    m1 = .{
+      claim = `The lands are pulls inside the physics plane, not peers of the surfaces. They are settings of factshift.center.`
+      verdict = "holds"
+      evidence = #[
+        `@host_frame :101–109.`,
+        `The app's force profiles (config.ts:55–82).`,
+        `The old "physics flavor" line (fffab721 domains.spw:82).`,
+      ][reg=set]
+    }[reg=facet]
+    m2 = .{
+      claim = `bone is spw.quest, the carrier that unites; boon and bane are the two planes.`
+      verdict = "partly"
+      evidence = #[
+        `It matches the shape of the creator's sentence.`,
+        `@bone_land :49: "holds the space where boon and bane act".`,
+        `spw.quest sits between the others in @site_cluster loops.`,
+        `Against: nothing says which plane is +1.`,
+        `Against: @host_frame makes factshift.center the neutral frame, so bone is contested.`,
+      ][reg=set]
+    }[reg=facet]
+    m3 = .{
+      claim = `The mnemonic: plot = boon = factshift.center; characters = bone = spwashi.com; texture = bane.`
+      verdict = "partly"
+      evidence = #[
+        `factshift is "narrative under transformation" (@domains :80).`,
+        `spwashi.com is the person, the cast and the cards.`,
+        `The third seat is forced: texture belongs to spw.quest's neighbour texture.website (@domains :144), not to spw.quest.`,
+      ][reg=set]
+    }[reg=facet]
+    m4 = .{
+      claim = `Two unifiers for two triads, as a reading: spw.quest unites the surfaces, and boonbanebone.com unites the lands.`
+      verdict = "holds"
+      evidence = #[
+        `spw.quest as the unifier is the creator's framing.`,
+        `boonbanebone.com is the trunk in the land-tree folio (@land_tree_folio).`,
+        `"Partly a reflection" is then the right strength. It is not an isomorphism.`,
+      ][reg=set]
+    }[reg=facet]
+  }[reg=facet]
+  lands_lifecycle = .{
+    arrival_and_hold = .{
+      claim = `boon → arrival (primed), and bone → hold.`
+      verdict = "holds"
+      evidence = #[
+        `@domains :77 and the page kickers.`,
+        `"ground state, skeleton, idle" (valence-architecture.spw:62).`,
+        `"persistence layer" (@bone_land :71).`,
+      ][reg=set]
+    }[reg=facet]
+    departure = .{
+      claim = `bane → departure.`
+      verdict = "partly"
+      evidence = #[
+        `Let go returns to ground, and ground is bone's state.`,
+        `bane reads better as the cost a commit spends: the "commitment spent" of postfix residue (@operator_semantics, positional grammar).`,
+      ][reg=set]
+    }[reg=facet]
+    residue = `Residue has no land of its own. @bone_land :71 claims it too ("what remains after … bonk … honk"), so bone carries two stages.`
+    finding = `The three held lands are rest states. bonk ("transition shader … the moment of shift", valence-architecture.spw:68–74, 127) and honk (the "buzz" receipt on a hand-off, @host_frame :96) are the two transitions. They are the two lands that lapsed.`
+    four_stages = .{
+      claim = `The lands match the four lifecycle stages one to one.`
+      verdict = "forced"
+      evidence = #[`Three held lands for four stages; bone carries both hold and residue.`][reg=set]
+    }[reg=facet]
+  }[reg=facet]
+  pentad_operators = .{
+    one_to_one = .{
+      claim = `Each valence maps to one operator.`
+      verdict = "forced"
+      evidence = #[`Three tables disagree on every land.`, `Canon keeps valence out of the operator table, as a word slot and as write metadata.`][reg=set]
+    }[reg=facet]
+    tables = #[
+      `Site (@mixer :29–75, land pages :45): boon >, bane !, bone ^, bonk @, honk ~.`,
+      `App (config.ts): boon *, bane ".", bone #; before their removal, bonk ! and honk *.`,
+      `The creator's lettering: boon cursive, BANE. with a stop, bone brace-ended.`,
+    ][reg=set]
+    honk_resonance = .{
+      claim = `honk ↔ #.`
+      verdict = "partly"
+      evidence = #[
+        `# resonates at runtime (interpreter.ts:209).`,
+        `The Register's honk card is honk[signal]{resonance} (about/index.html:1365).`,
+        `The mixer's ~ only defers (interpreter.ts:294), against honk's "declarative" (valence-architecture.spw:80).`,
+      ][reg=set]
+    }[reg=facet]
+    bone_ground = .{
+      claim = `bone ↔ ".".`
+      verdict = "partly"
+      evidence = #[
+        `Canon calls bone "the ground state".`,
+        `The public verbs give "." "intrinsic structure, ledgers" (@resonance_alignment :35).`,
+        `The lettering's brace ends point to braces instead, which the ladder names STRUCTURE.`,
+      ][reg=set]
+    }[reg=facet]
+    field_color = .{
+      claim = `Valence colors an operator's field.`
+      verdict = "holds"
+      evidence = #[`@operator_semantics :92.`, `interpreter.ts:84.`][reg=set]
+    }[reg=facet]
+  }[reg=facet]
+  physics = .{
+    sign = `@boon_land :65 says "Attractive force" with +1, and @bane_land :65 says "Repulsive force" with −1. A sign alone does not decide attraction, and in the engine all three repel.`
+    barrier = `The barrier pair holds: nucleation (@boon_land :66) against activation energy (@bane_land :66).`
+    conducts = `@bone_land :65 says "it conducts". A conductor screens a field; what carries one without conducting is a dielectric (memory, user_background.md). The lattice paragraph (:66) is sound.`
+  }[reg=facet]
+}[reg=facet]
+
+^"proposals"{
+  ~#note: "Workbench asks, repo-side changes, and public copy changes."
+  workbench_asks = .{
+    basis = `None of these is in upstream-workbench-recommendations yet. They build on the bridge's gaps and on @operators_note S1. They are recorded here only.`
+    a1 = .{
+      ask = `One reading of the pentad. Rewrite VALENCE_PARTICLES (catalog.ts:44–50) as material quality, or name its status reading as a dialect.`
+      probe = `rg -n -A6 VALENCE_PARTICLES .spw/_workbench/packages/spw-seed/src/canonical/catalog.ts`
+    }[reg=facet]
+    a2 = .{
+      ask = `A bridge gap G9: "the leading valence slot is named charge" (names.ts:63, read.ts:89, chargeOf). Rename the slot valence, or status-tag it under the bridge's own "status-tag every public use of charge" (:182).`
+    }[reg=facet]
+    a3 = .{
+      ask = `An order parameter for bonk; phase-and-transition.spw:149 says bonk has none.`
+      candidate = `The lifecycle stage. bonk names held → actualized, honk names the residue announced, and boon, bone and bane name rest states. Canon accepts or refuses this in runtime_bridge, beside the descriptor's lifecycle fields (@operators_note :92, S1).`
+    }[reg=facet]
+    a4 = .{
+      ask = `"Plane" is a homonym. valence-architecture.spw:4 calls each valence a plane, and the creator now calls surfaces planes. Canon should say whether "plane" is a valence noun.`
+    }[reg=facet]
+    a5 = .{
+      ask = `A law for carried valence. Valence rides every register write (interpreter.ts:84), and no case reads it. Ask for the law, not a build: it stays metadata, or * keeps it on its receipt.`
+    }[reg=facet]
+    a6 = .{
+      ask = `Keep fffab721's "physics flavor" sentence as theory without hostnames, in valence-architecture or surface-archetypes. It was lost when domain identity was retired (@domains :21–22).`
+    }[reg=facet]
+  }[reg=facet]
+  repo = .{
+    b1 = .{
+      at = `@domains`
+      landed = `boof.land is marked status expired at :143 (0d1b10d0).`
+      stands = #[`Say at :44 that @ and ~ name bonk and honk, which have no land.`, `State once, near :77, what the numbers are: a ledger sign, not a force.`][reg=set]
+    }[reg=facet]
+    b2 = .{
+      at = `@mixer`
+      change = `It is an unlisted sigil table. Give it a "Workbench relation:" line and list it in @namespace_alignment workbench_relation, as :74 requires.`
+      relation = `Extension is the honest word: canon gives valence no sigil.`
+    }[reg=facet]
+    b3 = .{
+      at = `@host_frame`
+      change = `Record the three land-sigil tables side by side in lands, as a mapping, not a migration.`
+      already = `@boonhonk already says "Do not merge those tables in one patch" (:253).`
+      also = `Note at physics (:109) that the app already holds numbers for all three lands, which the creator has not confirmed (do_not :121).`
+    }[reg=facet]
+  }[reg=facet]
+  copy = .{
+    c1 = .{ at = "about/domains/boon.land/index.html:49", now = `— the +1 force.`, proposed = `Drop the clause; the kicker already carries the sign.` }[reg=facet]
+    c2 = .{ at = "about/domains/bane.land/index.html:49", now = `— the −1 force.`, proposed = `Drop the clause; the kicker already carries the sign.` }[reg=facet]
+    c3 = .{ at = "about/domains/boon.land/index.html:65", now = `Attractive force. Boon pulls inward.`, proposed = `A well, not a push. Things settle toward boon.` }[reg=facet]
+    c4 = .{ at = "about/domains/bane.land/index.html:65", now = `Repulsive force. Bane pushes outward.`, proposed = `A rise, not a push. Bane is the climb a change must make.` }[reg=facet]
+    c5 = .{ at = "about/domains/bone.land/index.html:65", now = `— it conducts.`, proposed = `It carries: forces pass through it, and it stays.` }[reg=facet]
+    c6 = .{ at = "about/domains/boon.land/index.html:71", now = `discharged by bonk, transmitted by honk`, proposed = `set off by bonk, announced by honk`, why = `Discharge has three meanings in the bridge (G6).` }[reg=facet]
+  }[reg=facet]
+}[reg=facet]
+
+^"value"{
+  ~#note: "What the material metareality is, and what it is worth to two readers."
+  what = .{
+    is = `One string, three readings, each live today.`
+    card = `bane[bone]{limit} is a card on /about/ (about/index.html:1380).`
+    fixture = `It is a parser fixture upstream: the five pair cards are test cases (expression-charge.test.ts:82–96).`
+    canvas = `It opens as a canvas on factshift.center (?mode=spw&spw=…, @factshift_wip :66).`
+    pivot = `On spw.quest it is one slot to change: "Change one slot and keep the rest" (@quest_page :71).`
+    carry = `#spw64= carries it between sites. A round trip of bone[bonk]{hit} through @quest_build :128–134 came back byte for byte.`
+  }[reg=facet]
+  academic = .{
+    reader = `applied learning science, adult education`
+    levels = `The readings line up with the levels a reader builds from text: wording on a page, propositions as slots, a situation model laid out as relations.`
+    lineage = `That is the construction-integration frame of the Learning from Text lineage Spw began in (2017). It is my reading, and wonder_ground_three_readings tests it. Notation beside diagram also lets a study ask which form a reader recalls.`
+    parting = `spw delta counts edits between lines: release[boon]{single.video}<summer> against the same line with bane gave lexOps=1 (scratch run).`
+    routes = `spw:routes --diff found bane.land and boon.land "part only at the name" (@motions_asks :100–101). Two people write one concept, and the first slot where their lines part is the founding question, counted.`
+    scaffold = `The lands are a three-word valuing scaffold (gain, cost, carrier) that needs no prior vocabulary. The library already writes with it: plot, texture, characters.`
+  }[reg=facet]
+  business = .{
+    reader = `product and A&R`
+    brief = `Each stakeholder writes the brief as one line. Pivots change one slot at a time, and the slot where the lines part is the meeting's agenda.`
+    review = `What the release brings (boon), what it costs or refuses (bane), and what carries it after launch (bone). @bane_land :85 already says it in product terms: "the constraint that makes the system trustworthy by making it finite."`
+    ar_notes = `Plot, texture and characters are a development checklist, and "which voice is loud" (about/index.html:1202) is a mix note.`
+    shared = `Lines and cards are a team's shared structure in plain files, and receipts land on the same closes, the 13th and 26th (@host_frame :80).`
+    no_promise = `Work and money settle in a reply, never a checkout (@host_frame :60). Anything about Dregg or prices is the creator's to word, and is flagged for confirmation.`
+  }[reg=facet]
+  today = `A reader can read a card, open its line on spw.quest and change a slot, hold it on factshift.center, and carry it back by #spw64=.`
+}[reg=facet]
+
+^"wonders"{
+  ~#note: "The six ground wonders live in wonders.spw; this block points there."
+  lives = ~"./wonders.spw#ground"
+  ids = #[
+    `wonder_ground_land_sign`, `wonder_ground_valence_lines`, `wonder_ground_canvas_valence`,
+    `wonder_ground_lifecycle_valence`, `wonder_ground_three_readings`, `wonder_ground_parting_slot`,
+  ][reg=set]
+  refreshes = .{
+    land_sign = `@factshift_center and @host_frame`
+    valence_lines = `@metaphysical_language (variety slice 2)`
+    canvas_valence = `@operators_note`
+    lifecycle_valence = `@resonance_alignment, and descriptor ask S1 in @operators_note`
+    three_readings = `@spw_quest_plan and @site_cluster`
+    parting_slot = `@inquiry_loop`
+  }[reg=facet]
+  twinkle = `npm run plans:twinkle should light each plan when its wonder is answered. Every command probe was run once, for exit status only.`
+}[reg=facet]
+
+^"questions"{
+  ~#note: "Taste calls handed back; the words that settle them are the creator's."
+  sentence = .{
+    ask = `The sentence is yours. Fill it, or leave it as a line. One sentence or two? "Partly a reflection" may be exactly right.`
+    planes = `planes[spwashi.com · factshift.center]{ ___ }<spw.quest>`
+    lands = `lands[boon · bane · bone]{ ___ }<___>`
+  }[reg=facet]
+  numbers = `What are the land numbers? A ledger sign (benefit, cost, carrier), the engine's push and damping, or depth (well, rise, lattice)?`
+  unifier = `Which unifier for the lands? spw.quest, bone, or boonbanebone.com, the trunk in the land-tree folio, now dormant?`
+  sigil = `Which sigil per land, if any? The mixer's > ! ^, the app's * . #, the lettering (BANE with its stop, bone with brace ends), or none, since canon keeps valence a word?`
+  transitions = `And bonk and honk without lands: do they stay as the two transitions (taken, announced)? The app keeps their actions without a domain; does that already say it?`
+  lede = `The Register's lede: should it show at default density, or should the legend pills carry first contact?`
+  ladder = `Do the ladder's three braces (2024–27, 2028–31, 2032–36) have names? Is "2026 is GROUND" a reading you want a page to say, given that this note is the ground under the planes?`
+  lettering = `Should the land pages take a voice from your lettering: boon in cursive, BANE with a stop, bone shaped like a bone? That is a feel decision, so it ends at a demo you approve in a browser.`
+}[reg=facet]
+
+keeps = "A read-only pass. Workbench asks are recorded here only; nothing was written into the workbench. The creator's words stay theirs: the sentence about the lands and the planes is left open."
+source = "the creator, 2026-11-07, through the planes coordinator: spwashi.com's component ecology and factshift.center's informatic physics as separate planes united by spw.quest, partly a reflection on boon, bane and bone; rewritten as .spw the same day at the creator's word, minding indentation"
+
+# Handles, by role. Declared last; each one links wherever the text names it.
+# Plans
+@plan: ~"./PLAN.md"
+@operators_note: ~"../factshift-center/OPERATORS.md"
+@factshift_center: ~"../factshift-center/PLAN.md"
+@factshift_wip: ~"../factshift-center/wip.spw"
+@inquiry_loop: ~"../spw-inquiry-loop/PLAN.md"
+@resonance_alignment: ~"../operator-resonance-alignment/PLAN.md"
+@metaphysical_language: ~"../spw-metaphysical-language/PLAN.md"
+@spw_quest_plan: ~"../spw-quest/PLAN.md"
+# Conventions and caches
+@domains: ~"../../../.spw/domains.spw"
+@host_frame: ~"../../../.spw/caches/host-frame-2026-09.spw"
+@boonhonk: ~"../../../.spw/caches/boonhonk-combinatoric-genre.spw"
+@operator_semantics: ~"../../../.spw/conventions/operator-semantics.spw"
+@namespace_alignment: ~"../../../.spw/language/operator-namespace-alignment.spw"
+@compound_expressions: ~"../../../.spw/conventions/compound-expressions.spw"
+@site_cluster: ~"../../../.spw/surfaces/site-cluster.spw"
+@upstream_asks: ~"../../../.spw/reviews/upstream-workbench-recommendations/language-support.spw"
+@motions_asks: ~"../../../.spw/reviews/upstream-workbench-recommendations/motions.spw"
+# Code
+@mixer: ~"../../../public/js/modules/widgets/boonhonk-mixer.js"
+@quest_build: ~"../../../workers/spw-quest/src/build.js"
+@harness: ~"../../../scripts/lib/chrome-headless-harness.mjs"
+# Pages
+@boon_land: ~"../../../about/domains/boon.land/index.html"
+@bane_land: ~"../../../about/domains/bane.land/index.html"
+@bone_land: ~"../../../about/domains/bone.land/index.html"
+@about: ~"../../../about/index.html#boonhonk-register"
+@library: ~"../../../play/rpg-wednesday/library/index.html"
+@quest_page: ~"../../../about/domains/spw.quest/index.html#ways-in"
+@mnemonic_folio: ~"../../../public/images/assets/folios/folio-boon-bane-bone-mnemonic.spw"
+@land_tree_folio: ~"../../../public/images/assets/folios/folio-boon-bane-bone-land-tree.spw"
+@valence_lands_prime: ~"../../../design/folios/october-2026/index.html#prime-1018-03"

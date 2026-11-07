@@ -1,0 +1,392 @@
+# Review 2026-11-07 — ecology report; synthesis in PLAN.md.
+# Ecology plane (2026-11-07) — review: spwashi.com components
+#>spw_planes_ecology
+#:review #!planes #!ecology #!components #!attention
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+expression = plane[ecology]{niche.succession.uptake}<spwashi.com>
+
+summary = #[
+  `Ecology explains niche, succession, uptake; each predicted a find.`,
+  `Exchange and decomposers stay metaphor: no component gives way.`,
+  `One hold on a word at pocket: three engines listen, two answer.`,
+  `The chrome sensor reads clear while carry pieces cover text.`,
+  `Arrival grows 29x the authored data-spw uses on home.`,
+][reg=set]
+
+contents = #[
+  ~"./ecology.spw#tried",
+  ~"./ecology.spw#theory",
+  ~"./ecology.spw#disagreements",
+  ~"./ecology.spw#proposals",
+  ~"./ecology.spw#value",
+  ~"./ecology.spw#wonders",
+  ~"./ecology.spw#questions",
+][reg=set]
+
+^"tried"{
+  ~#note: "Receipts, one per probe: where, what I did, what it showed."
+  ~#where: "Live https://spwashi.com, read-only, 2026-11-07."
+  planes = `one of four planes: ground, ecology, physics, quest`
+  stills = `design/components/captures/spw-planes-2026-11-07/ecology/ (gitignored)`
+  probes = `the session scratchpad, planes-ecology/ (scripts and JSON)`
+  viewports = `phone 390x844 with touch; desk 1366x900`
+  arrival = .{
+    at = `/?spw-module-audit=1, phone; sampled at 1.5, 4 and 11 s (@home)`
+    still = `01-home-phone-arrival.jpg`
+    showed = #[
+      `data-spw attributes on <html> went 77 → 216 → 260.`,
+      `Elements went 1,619 → 2,785.`,
+      `67 modules mounted: immediate 9, region 4, visible 12, idle 40, settled 2.`,
+      `CLS was 0.04 across 5 shifts.`,
+      `At 11 s the install hint (z 2018, 358×134) and $satchel covered the bottom of the first screen.`,
+    ][reg=set]
+  }[reg=facet]
+  lens = .{
+    at = `/, phone; tapped Build in "Choose a working view"`
+    still = `02-home-phone-lens-build.jpg`
+    showed = `The host's line went home[reading]{open.sit} → home[systems]{open.sit}. The ^systems panel replaced .reading. 8 of 20 lens-pass cards dropped to 0.72 opacity.`
+  }[reg=facet]
+  paste = .{
+    at = `/, phone; typed garden[care]{seed.water.sun} into "Have some Spw?"`
+    still = `03-home-phone-paste.jpg`
+    showed = `It answered "Reads as one expression." with the line painted. Then Read its structure, Open it as a room, Save as .spw.txt. A new "From cauldron" button appeared.`
+  }[reg=facet]
+  hold_term = .{
+    at = `/, phone; held the term "build software" for 800 ms`
+    still = `04-home-phone-hold-term.jpg`
+    showed = `The cauldron took it: ~cauldron{software}, 1 held. The region menu also opened over the hero: CONCEPT software, OPERATION ambient, CUE "i'm spwashi.".`
+  }[reg=facet]
+  carry_corner = .{
+    at = `/, phone; scrolled 1.6 screens, held ".reading" for 480 ms`
+    still = `05-home-phone-carry-corner.jpg`
+    showed = `Region menu, cauldron chip, satchel and rail covered 51% of the screen. The chip and the satchel sit over the "Why this home page exists" text.`
+  }[reg=facet]
+  cauldron_open = .{
+    at = `/, phone; tapped the cauldron chip`
+    still = `06-home-phone-cauldron-open.jpg`
+    showed = `A native dialog opened: ~cauldron{software} 1 held. It said "524 on this page can be held." Then Mix, Nourish, Find a prompt, Save trail, Share and Copy Spw.`
+  }[reg=facet]
+  play = .{
+    at = `/play/, phone; held "session" for 480 ms (@play)`
+    still = `07-play-phone-carry-corner.jpg`
+    showed = `The same two answers: ~cauldron{session_memory} and the region menu. The satchel covers a "closer" button. Fixed pieces cover 52% of the screen.`
+  }[reg=facet]
+  folio_thread = .{
+    at = `/design/folios/, phone; tapped the "Operators" thread`
+    still = `08-folios-phone-thread-operators.jpg`
+    showed = `Visible folio items went 58 → 36. The caption reads "The operator list, lettered in blue, laddered in pencil…".`
+  }[reg=facet]
+  order_card = .{
+    at = `/design/folios/#folio-request, phone; typed into PIECE (@folios)`
+    still = `09-folios-phone-order-card.jpg`
+    showed = `Each keystroke writes ^seed[Folio.Order ref:2026]{ piece : "Folio 13, the operator wash" … } and "saved". With scripts off the card host is an empty div.`
+  }[reg=facet]
+  topics_desk = .{
+    at = `/topics/, desk; clicked [making] in "Topic route lanes" (@topics)`
+    still = `10-topics-desk-lens-making.jpg`
+    showed = #[
+      `The line went topic[systems]{open.sit} → topic[making]{open.sit}.`,
+      `At desktop only $satchel floats.`,
+      `Home's desktop first screen has 0 fixed pieces and 45 interactive targets.`,
+    ][reg=set]
+  }[reg=facet]
+  brace_host = .{
+    at = `/, phone; a tap, then a 700 ms hold on the brace host home[why]{notice}; no still`
+    showed = `The tap changed none of the fields I read. The hold gathered "home" and opened the region menu. The host's contract reads tap:inspect hold:prime-to-cauldron.`
+  }[reg=facet]
+  scripts_off = .{
+    at = `/, phone; scripts off, then on; no still`
+    showed = `Elements 1,623 → 2,802. data-spw-* uses 1,987 → 57,577. On <html>: 0 → 255. Gesture contracts 4 → 549. Expressions 72 → 310. Buttons 50 → 151.`
+  }[reg=facet]
+  crowding = .{
+    at = `8 routes at phone (crowd.json); no still`
+    showed = #[
+      `At rest the rail and satchel take 7–9% of every route.`,
+      `Holdable sources: home 523, topics 377, about 300, services 220, play 201, folios 147, recipes 15, settings 1.`,
+      `Site-wide there are 185 authored living terms (npm run audit:living-terms).`,
+    ][reg=set]
+  }[reg=facet]
+  sensor = .{
+    at = `/ and /play/ after one hold (occl.json); no still`
+    showed = #[
+      `The runtime reported spwFloatingChromeCompetition=clear and …Occlusion=clear.`,
+      `In the same frame the satchel sat over the links "costume sheet" and "culture field".`,
+      `The rail sat over 204 sampled points of paragraph and link.`,
+    ][reg=set]
+  }[reg=facet]
+}[reg=facet]
+
+^"theory"{
+  ~#note: "The plane's theory as written, each claim with where it lives."
+  seats = .{
+    claim = `Name the seat (hook, hub, cluster, path, read, wide) before seating the widget. If a widget cannot name its region, it does not belong on the reader surface.`
+    at = `@region_ecology:33`
+    stack = `posture → seat → pack → gravity → resonance → still (@region_ecology:38-46)`
+    chrome = `chrome is chrome_field and never pack-local (@region_ecology:91-94)`
+  }[reg=facet]
+  biome = .{
+    soil = `6,430 downward declarations against 197 :has(), 33:1 (@component_biome:29-39)`
+    strategies = `ruderal cards; a networked cauldron and ledger (@component_biome:63-71)`
+    exchange = `must be "bidirectional and costly" (@component_biome:74-79)`
+    decomposers = `missing (@component_biome:81-95)`
+    scarce = `attention is the scarce thing (@component_biome:108-115)`
+    falsifiers = `"an exchange that costs the giver nothing"; "succession simulated with a timer" (@component_biome:127-134)`
+  }[reg=facet]
+  nutrient = .{
+    claim = `Attention is "conserved per visit" and "competed for".`
+    law = `"components compete for attention and never for custom properties"`
+    at = `@attention_field:89-99`
+  }[reg=facet]
+  extensions = .{
+    five = `return, allometry, competitive exclusion, mycorrhiza, seral succession (@ecology_theory:29-107)`
+    test = `a metaphor "earns its keep when it predicts a bug or a cost before a screenshot or profiler catches it" (@ecology_theory:130)`
+  }[reg=facet]
+  touch = .{
+    ladder = `idle → approach → prime → charge → inspect → discover → settle (@microstates:55-69)`
+    target = `"the finger's target and the motion's meaning are the same object" (@microstates:89-97)`
+    reward = `"never silent absorption" (@microstates:99-110)`
+  }[reg=facet]
+  chrome = .{
+    as_run = `one ladder, slots no CSS reads, four pocket conditions (@chrome_ecology:57-66)`
+    carry_corner = `the carry corner should be one composition (@chrome_ecology:81)`
+    one_hold = `one hold runs on two clocks (@chrome_ecology:117; @interaction_grammar:17, slice 4 at :24)`
+  }[reg=facet]
+  plans = #[
+    `Each pocket frame gets one extra dense object (@component_region_personality:100).`,
+    `Hosts write their line and none reads it back (@brace_semantics:93-102). Authored hosts are piloted with the instrument (:143).`,
+    `The runtime defines zero custom elements (@ecosystem_architecture:29).`,
+    `352 root selectors × unguarded writes: "every redundant html dataset write invalidates style for the document" (@runtime_plane:70).`,
+  ][reg=set]
+  creator_notes = #[
+    `Reading, then interaction, then serialization (session memory).`,
+    `Modules as authored hosts, with state on the host (2026-10-06).`,
+    `Folios as soil; "soil" stays off the route until two series exist.`,
+  ][reg=set]
+}[reg=facet]
+
+^"disagreements"{
+  ~#note: "Where the theory and the live surface part ways."
+  hold_tenants = .{
+    claim = `The hold has three tenants, not two.`
+    evidence = #[
+      `The plans count haptics (420 ms coarse, @haptics:126) and brace-gestures (420 ms, @brace_gestures:72).`,
+      `The region menu also arms a hold, at 560/460/360 ms (@region_menu:49-53).`,
+      `It arms on any [data-spw-concept] or [data-spw-semantic-expression] (@region_menu:1160-1166).`,
+      `Living terms carry data-spw-concept. The runtime writes expressions onto 238 more home elements.`,
+      `Time does not separate them: a deliberate hold outlasts both thresholds.`,
+      `Receipts hold_term, carry_corner, play and brace_host show one hold getting two answers.`,
+    ][reg=set]
+  }[reg=facet]
+  over_answer = .{
+    claim = `The reward contract forbids silence but allows over-answering.`
+    evidence = `No clause says a touch resolves once (@microstates:99-110). The host's contract string names one answer (receipt brace_host).`
+  }[reg=facet]
+  sensor_blind = .{
+    claim = `The runtime watches the wrong competitor.`
+    evidence = #[
+      `measureFloatingChromeOcclusion (@dom_contracts:1153) compares open chrome with open chrome.`,
+      `It never compares chrome with the reading ground, so it reads clear over text and links (receipt sensor).`,
+      `The seat rule (@region_ecology:33) exempts chrome and gives it no rule for where it may rest.`,
+    ][reg=set]
+  }[reg=facet]
+  pioneer = .{
+    claim = `The pioneer stage is not quiet.`
+    evidence = #[
+      `cet-005 gives a cold visit "zero ambient ornament" (@ecology_theory:105).`,
+      `A first visit at phone gets the install hint (@pwa_handler:438-444).`,
+      `Headless Chrome with touch on a Mac passes its iOS Safari check, so an iPhone's first visit sees the same.`,
+    ][reg=set]
+  }[reg=facet]
+  grown = .{
+    claim = `Grown outweighs authored.`
+    evidence = #[
+      `Theory calls authored attributes the contract, and profiler output "receipts, not a second essay" (@region_ecology:62, :65).`,
+      `Arrival grows 29× the authored data-spw uses.`,
+      `545 of 549 contracts and 238 of 310 expressions are grown.`,
+      `Grown contracts are what a finger meets.`,
+    ][reg=set]
+  }[reg=facet]
+  uptake = .{
+    claim = `Supply is reported; uptake is not.`
+    evidence = #[
+      `The cauldron is the one networked organism a reader sees.`,
+      `It reports supply, "524 on this page can be held" (@composition:720); a visit takes one or two.`,
+      `A brace hold on home gathered "home", the subject every home expression shares, so likely many hosts gather the same word.`,
+    ][reg=set]
+  }[reg=facet]
+  ladders = .{
+    claim = `Two state ladders.`
+    evidence = #[
+      `The creator's interaction-contract note: idle → preview → active → sustained → emitted → settled.`,
+      `The stable convention: the ladder under theory, touch (@microstates:55-69).`,
+      `The seed card shows a third shape: "saved" on every keystroke.`,
+    ][reg=set]
+  }[reg=facet]
+}[reg=facet]
+
+^"proposals"{
+  ~#note: "Proposals only. Each ends at the creator's answer or a browser demo."
+  theory = .{
+    model_and_metaphor = .{
+      claim = `Call ecology a model where it can be tested, and a metaphor everywhere else.`
+      laws = #[
+        `Niche: one answer per gesture per host. Count the tenants of each gesture.`,
+        `Ground: at rest, chrome may cover chrome or empty ground, never reading text or a control.`,
+        `Succession: arrival grows, and growth on <html> is paid for by every element.`,
+      ][reg=set]
+      prime = `Mark exchange and decomposers as prime until some component gives something up.`
+      owner = @component_biome
+    }[reg=facet]
+    over_answer = .{
+      claim = `Add over-answering to the reward contract. A touch resolves once, in one place. Two answers to one touch break the contract the way silence does.`
+      owner = `the reward_contract block of @microstates`
+    }[reg=facet]
+    accounting = .{
+      claim = `Use bone, boon and bane as the plane's accounting. Each slice names the layer it moves. This is the creator's call.`
+      bone = `what reads with scripts off: 1,987 attributes, 356 links`
+      boon = `what arrival grows: 55,590 attributes, 545 contracts, the cauldron, the lens`
+      bane = `what that growth costs: root recalc, 51% of the screen covered, double answers`
+    }[reg=facet]
+    stage_by_visit = `Gate the seral stages by visit, not by timer. Install hints and promos belong to a returning visit (cet-005's climax stage).`
+  }[reg=facet]
+  interactivity = .{
+    gate = `Each one ends at a browser demo on a coarse pointer.`
+    hold_yields = .{
+      claim = `The region menu yields a hold to the cauldron on .spw-living-term, [data-spw-living-term] and [data-spw-cauldron-candidate="true"], as brace-gestures yielded on 2026-09-03.`
+      keeps = `A double tap or a sigil still opens the menu.`
+      verify = `A held term at pocket gathers, and the menu stays shut.`
+    }[reg=facet]
+    third_clock = `Give @interaction_grammar slice 1 ("Do this, expect this") a row for the region menu's hold as the third clock.`
+    ground_sensor = `Read chrome-over-ground as a sensor first, with no change to paint: the probe from receipt sensor, beside measureFloatingChromeOcclusion, as a receipt only.`
+    install_waits = `The install hint waits for a second visit or for settle (@pwa_handler:405-445).`
+  }[reg=facet]
+  copy = .{
+    cauldron_held = .{
+      at = "public/js/interface/composition.js:1437"
+      now = `Primed deep-link fragment gathered from ${originLabel}: ${label}.`
+      proposed = `Held: ${label}. Hold one more and the two make a mix.`
+      echoes = `the footer's "Press and hold a highlighted word to keep it here. Two make a mix." (@site_footer:59)`
+    }[reg=facet]
+    cauldron_supply = .{
+      at = "public/js/interface/composition.js:720"
+      now = ` ${count} on this page can be held.`
+      proposed = ` ${count} more on this page will keep.`
+    }[reg=facet]
+    region_menu_role = .{
+      at = "public/js/runtime/regions/region-menu.js:688"
+      now = `semantic region`
+      proposed = `this passage`
+    }[reg=facet]
+    region_menu_operator = .{
+      at = "public/js/runtime/regions/region-menu.js:693"
+      now = `region actions`
+      proposed = `what a hold can do`
+    }[reg=facet]
+    home_kicker = .{
+      at = "index.html:123"
+      now = `home page entry`
+      proposed = `front room`
+      why = `the kicker sits above "I'm Spwashi.", and the page already speaks in rooms: "Rooms on this page", "Next room" (@home)`
+    }[reg=facet]
+  }[reg=facet]
+  workbench_asks = .{
+    where = `recorded here only`
+    contract_as_expression = `Gesture contracts are free text (tap:inspect hold:prime-to-cauldron). Could the canon read a contract as an expression, such as hold[prime]{cauldron}, so "one answer per host" can be parsed and checked?`
+    labeled_hosts = `A concrete case for @brace_semantics slice 5 (label lexing): every home brace gathers "home". A labeled pair such as {_why notice }_why would give each host its own handle in the cauldron.`
+  }[reg=facet]
+}[reg=facet]
+
+^"value"{
+  ~#note: "What the plane is made of, how it behaves, and why that is worth something."
+  made_of = .{
+    bone = `authored HTML, CSS and copy that read with scripts off, including the cauldron's own form in the footer (receipt scripts_off)`
+    boon = `what arrival grows: 67 modules, 255 attributes on <html>, contracts on 549 hosts`
+  }[reg=facet]
+  operators_as_state = #[
+    `Lens seats print their sigil: .reading ^systems ~play @studio (@home:199-202).`,
+    `The cauldron chip's prefix is its phase: . resting, ~ held, * ready, ^ mixed (@live_expression:23-26).`,
+    `The order card marks each field: > PIECE ^ FORM ~ STORY @ RANGE ~ RELAY (@folios).`,
+    `Home authors 24 operator strings, and 39 aliases fold them into one table (@operator_detection:321-368).`,
+  ][reg=set]
+  behaves = #[
+    `Succession takes about 11 s on a phone.`,
+    `Gestures are contested (receipts hold_term, carry_corner, cauldron_open, play, brace_host).`,
+    `The ground is shared and costly: every root write restyles against the 352 root selectors.`,
+  ][reg=set]
+  academic = #[
+    `A hold is a countable unit of attention: one deliberate act, a time constant (420–560 ms) and a destination.`,
+    `Home offers 523 sources and a visit takes a few. That ratio is the nutrient reading of @attention_field made countable.`,
+    `Spw began in a 2017 Learning-from-Text course, to find where two readers' understandings stop sharing ground.`,
+    `The lens makes a reader's chosen ground explicit (home[systems]). The cauldron line records what they took.`,
+    `Two readers' lines compare slot by slot, the way spw.quest compares specimens.`,
+    `The site counts events and never knows who made them (@microstates, wonder 2).`,
+  ][reg=set]
+  business = #[
+    `Audit: a short audit of a client's site that can be repeated. Which components claim the same gesture; what covers reading text at rest; what arrival grows against what was authored.`,
+    `Each finding comes with a still and a count, as in the tried block.`,
+    `A&R and services: the folio card shows a catalogue where a screenshot of a filled card is the order, written as Spw a person can keep.`,
+    `No outcome or price is implied. The order card's wording is the creator's; it is financial, so confirm.`,
+  ][reg=set]
+}[reg=facet]
+
+^"wonders"{
+  ~#note: "The five wonders live in wonders.spw, where npm run wonder harvests them. This block only points."
+  lives = ~"./wonders.spw#ecology"
+  ids = #[
+    `wonder_ecology_hold_tenants`,
+    `wonder_ecology_grown_contracts`,
+    `wonder_ecology_ground_blind`,
+    `wonder_ecology_uptake`,
+    `wonder_ecology_pioneer`,
+  ][reg=set]
+}[reg=facet]
+
+^"questions"{
+  ~#note: "Taste calls hidden in the proposals, handed back to the creator."
+  ask = #[
+    `Should a held word go only to the cauldron, or to the cauldron and the region menu together (hold_yields)?`,
+    `Does a first visit owe the reader an install hint, or does that wait for a return (stage_by_visit, install_waits)?`,
+    `May chrome rest over reading text at all if its ground is matte, or must it find empty ground (model_and_metaphor)?`,
+    `Should the cauldron show the supply number ("524") or the nearest few words (cauldron_supply)?`,
+    `Should "front room" replace "home page entry", or does the kicker go entirely (home_kicker)?`,
+    `Should bone, boon and bane become the accounting for every slice in this plane, or stay a reflection (accounting)?`,
+    `Is "ecology" a public word for the components, or a working word that stays in .spw, the way "soil" does for folios?`,
+  ][reg=set]
+}[reg=facet]
+
+keeps = "A read-only pass on the live site: proposals only; no code, copy or plan moved. The creator's words stay theirs, and financial wording waits for their confirmation. The synthesis is in @plan."
+source = "The planes-pass coordinator for the creator, 2026-11-07: spwashi.com component ecology and factshift.center informatic physics as separate planes united by spw.quest. Rewritten from its prose draft as .spw at the creator's ask."
+
+# Handles, by role. Declared last; each one links wherever the text names it.
+# Plans
+@plan: ~"./PLAN.md"
+@interaction_grammar: ~"../interaction-grammar/PLAN.md"
+@component_region_personality: ~"../component-region-personality/PLAN.md"
+@brace_semantics: ~"../brace-semantics/PLAN.md"
+@ecosystem_architecture: ~"../ecosystem-architecture/PLAN.md"
+@runtime_plane: ~"../runtime-plane-consolidation/PLAN.md"
+# Conventions and caches
+@region_ecology: ~"../../../.spw/conventions/region-component-ecology.spw"
+@component_biome: ~"../../../.spw/conventions/component-biome.spw"
+@attention_field: ~"../../../.spw/conventions/attention-field.spw"
+@microstates: ~"../../../.spw/conventions/interaction-microstates.spw"
+@ecology_theory: ~"../../../.spw/caches/component-ecology-theory-2026-11.spw"
+@chrome_ecology: ~"../../../.spw/caches/chrome-ecology-2026-11.spw"
+# Code
+@haptics: ~"../../../public/js/interface/haptics.js"
+@brace_gestures: ~"../../../public/js/runtime/interaction/brace-gestures.js"
+@region_menu: ~"../../../public/js/runtime/regions/region-menu.js"
+@dom_contracts: ~"../../../public/js/kernel/dom-contracts.js"
+@pwa_handler: ~"../../../public/js/runtime/shell/pwa-update-handler.js"
+@composition: ~"../../../public/js/interface/composition.js"
+@live_expression: ~"../../../public/js/interface/cauldron/live-expression.js"
+@operator_detection: ~"../../../public/js/kernel/operator-detection.js"
+# Pages
+@home: ~"../../../index.html"
+@site_footer: ~"../../../_partials/site-footer.html"
+@folios: ~"../../../design/folios/index.html#folio-request"
+@play: ~"../../../play/index.html"
+@topics: ~"../../../topics/index.html"

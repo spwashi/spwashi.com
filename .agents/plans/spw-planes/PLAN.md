@@ -16,15 +16,15 @@ The creator, 2026-11-07: "consider spwashi.com component ecological theory and f
 
 | agent | asked | report | stills (gitignored) |
 |---|---|---|---|
-| ecology | Which niches do components hold, what do they eat, where do they compete, and is "ecology" more than a metaphor? | [ECOLOGY.md](ECOLOGY.md) | `design/components/captures/spw-planes-2026-11-07/ecology/` (10) |
-| physics | What are the physics of a line, what is conserved, and does the lifecycle read in motion? Includes a throwaway prototype. | [PHYSICS.md](PHYSICS.md) | `…/physics/` (10 live, 6 prototype) |
-| quest | How does spw.quest join the two planes? Test the round trip and read the public copy about Spw. | [QUEST.md](QUEST.md) | `…/quest/` (10) |
-| ground | The workbench's theory, the three lands, and what the material is worth. | [GROUND.md](GROUND.md) | `…/ground/` (8) |
+| ecology | Which niches do components hold, what do they eat, where do they compete, and is "ecology" more than a metaphor? | [ecology.spw](ecology.spw) | `design/components/captures/spw-planes-2026-11-07/ecology/` (10) |
+| physics | What are the physics of a line, what is conserved, and does the lifecycle read in motion? Includes a throwaway prototype. | [physics.spw](physics.spw) | `…/physics/` (10 live, 6 prototype) |
+| quest | How does spw.quest join the two planes? Test the round trip and read the public copy about Spw. | [quest.spw](quest.spw) | `…/quest/` (10) |
+| ground | The workbench's theory, the three lands, and what the material is worth. | [ground.spw](ground.spw) | `…/ground/` (8) |
 
 **The brief each one ran under:**
 - Write only your report and gitignored stills. Read the workbench, never write it. Change no git state.
 - Run headless Chrome through `scripts/lib/chrome-headless-harness.mjs` at 390×844 touch and 1366×900. Interact, capture before and after, and open each still before describing it.
-- The report has seven sections: what I tried (receipts), the theory as it stands (file:line), where theory and surface disagree, proposals (theory, interactivity, copy, workbench asks), material and value, wonders in inquiry-loop form, and questions handed back.
+- The report is a `.spw` file in the house form (frame, expression, summary, contents, blocks, handles last; two-space indents). It has seven blocks: what I tried (receipts), the theory as it stands (file:line), where theory and surface disagree, proposals (theory, interactivity, copy, workbench asks), material and value, wonders in inquiry-loop form, and questions handed back.
 
 Probe scripts and JSON receipts sit in the session scratchpad (`planes-*/`) and are not kept. To run a plane again, give an agent the same brief and the report it replaces.
 
@@ -40,8 +40,8 @@ Probe scripts and JSON receipts sit in the session scratchpad (`planes-*/`) and 
    - **Ecology:** boon is what arrival grows (55,590 grown uses, 545 grown gesture contracts). Bane is what that growth costs: root recalc, 51% of a phone screen covered after one hold, and two answers to one touch.
    - **Physics:** boon is every pull (anchor, tie, center), bane every push (charge, collision, edge), and heat is the time either may act.
 
-   This holds as an accounting on each plane. It does not hold as a map of lands onto sites. The lands live inside factshift.center's physics, as force profiles that all repel and differ in damping (GROUND M1). "Partly a reflection" is the right strength.
-2. **The two lapsed lands were the transitions.** boon (arrival) and bone (hold) are rest states, and bane reads best as the cost a commit spends. bonk (held → taken) and honk (the receipt announced) are the lifecycle's two moves. They are the two lands that lapsed (GROUND §3).
+   This holds as an accounting on each plane. It does not hold as a map of lands onto sites. The lands live inside factshift.center's physics, as force profiles that all repel and differ in damping ([ground.spw](ground.spw), mappings m1). "Partly a reflection" is the right strength.
+2. **The two lapsed lands were the transitions.** boon (arrival) and bone (hold) are rest states, and bane reads best as the cost a commit spends. bonk (held → taken) and honk (the receipt announced) are the lifecycle's two moves. They are the two lands that lapsed ([ground.spw](ground.spw), mappings).
 3. **Readers disagree where the grammar should be shared.**
    - The dot is "one name" on /forms/ and two nodes on factshift.
    - `< >` is "what this is about" on the guide and "where it goes" on /forms/ and /pivot.
@@ -56,8 +56,8 @@ Probe scripts and JSON receipts sit in the session scratchpad (`planes-*/`) and 
    - operator motion is a two-second transient, so marks show only as offsets;
    - the Boonhonk Register's lede is hidden at default density.
 
-   The contract should add: a touch resolves once, where it is seen (ECOLOGY a2).
-5. **The look carries the stage, and motion marks the change.** In the physics prototype, motion told open from settled and showed the moment of decision. It did not tell answered from let go; the fill and one taut tie did. That fits OPERATORS.md ("the look follows the stage"), and the attention research PHYSICS.md cites. Lifecycle slices L1–L3 lean on the look and spend motion on transitions.
+   The contract should add: a touch resolves once, where it is seen ([ecology.spw](ecology.spw), proposals over_answer).
+5. **The look carries the stage, and motion marks the change.** In the physics prototype, motion told open from settled and showed the moment of decision. It did not tell answered from let go; the fill and one taut tie did. That fits OPERATORS.md ("the look follows the stage"), and the attention research [physics.spw](physics.spw) cites. Lifecycle slices L1–L3 lean on the look and spend motion on transitions.
 
 ## What the material is worth
 
@@ -66,7 +66,7 @@ One expression is read three ways today: wording on a spwashi.com card, slots on
   - Where two readings part can be counted: one changed slot, every other byte kept.
   - A hold is a countable unit of attention. Home offers 523 things to hold, and a visit takes one or two.
   - /forms/ is a set of contrasting cases.
-  - GROUND reads the three readings as levels of text comprehension (wording, propositions, situation model), the lineage Spw began in (2017). That is a reading to test (`wonder_ground_three_readings`), not a claim.
+  - The ground report reads the three readings as levels of text comprehension (wording, propositions, situation model), the lineage Spw began in (2017). That is a reading to test (`wonder_ground_three_readings`), not a claim.
 - **For a business reader:**
   - A brief is a line, and the slot where two stakeholders' lines part is the meeting's agenda.
   - A screenshot is both the receipt and the source.
@@ -76,9 +76,9 @@ One expression is read three ways today: wording on a spwashi.com card, slots on
 ## Ready without a taste call
 
 Each is a verified bug, small, in a file no other session has dirty, or recorded until it is clean.
-- **R1** factshift: read a node's mark from its bare word, so `<~rain>` keeps its dash and force (PHYSICS P3). `operator-tap.ts` is the other session's, uncommitted, so this waits for it.
-- **R2** spwashi.com: the Boonhonk Register's lede shows at default density, and its legend pills fit at desktop (GROUND §1).
-- **R3** spwashi.com: a chrome-over-ground probe beside `measureFloatingChromeOcclusion`, as a receipt only, with paint unchanged (ECOLOGY b3).
+- **R1** factshift: read a node's mark from its bare word, so `<~rain>` keeps its dash and force ([physics.spw](physics.spw), p3_mark_inside_room). `operator-tap.ts` is the other session's, uncommitted, so this waits for it.
+- **R2** spwashi.com: the Boonhonk Register's lede shows at default density, and its legend pills fit at desktop ([ground.spw](ground.spw), read).
+- **R3** spwashi.com: a chrome-over-ground probe beside `measureFloatingChromeOcclusion`, as a receipt only, with paint unchanged ([ecology.spw](ecology.spw), ground_sensor).
 - **R4** `.spw/domains.spw`: boof.land marked expired. This plan's first commit carries it.
 
 ## Questions for the creator

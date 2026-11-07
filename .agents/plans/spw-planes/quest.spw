@@ -1,0 +1,394 @@
+# Review 2026-11-07 — quest report; synthesis in PLAN.md.
+# Quest plane (2026-11-07) — review: spw.quest and Spw copy
+#>spw_planes_quest
+#:review #!planes #!quest #!routing #!copy
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+expression = spw_quest[bone]{write; turn; carry}(address)<page, canvas>
+
+summary = #[
+  `spw.quest is the bench between the site and the canvas.`,
+  `A script goes out whole; one row comes back.`,
+  `Three readers part on the dot, on < >, and on names.`,
+  `spwashi.com still calls it a guide, as before the cut.`,
+  `The note and the back leg landed in eade0c38, live.`,
+][reg=set]
+
+contents = #[
+  ~"./quest.spw#tried",
+  ~"./quest.spw#theory",
+  ~"./quest.spw#disagreements",
+  ~"./quest.spw#proposals",
+  ~"./quest.spw#value",
+  ~"./quest.spw#wonders",
+  ~"./quest.spw#questions",
+][reg=set]
+
+^"tried"{
+  ~#note: "Live, read-only probes: one receipt a line, then the fixes."
+  where = .{
+    stills = `design/components/captures/spw-planes-2026-11-07/quest/ (gitignored)`
+    probes = `the session scratchpad, under planes-quest/`
+    cites = `file:line as read at 74b42242. In build.js, lines from 137 on sit six lower since eade0c38.`
+  }[reg=facet]
+  round_trip = .{
+    when = `live, at phone size: 390 by 844, touch`
+    open = #[
+      `Opened https://spw.quest/build.`,
+      `draft.spw holds !draft<chapter>(study)[second_pass]{voice, scene, turn}.`,
+      `The foot shows Link to this file and Open on factshift.center.`,
+      `Still: 01-build-open-phone.jpg.`,
+    ][reg=set]
+    typed = #[
+      `Typed garden[care]{seed; water}, Enter, ?harvest{when}.`,
+      `What a tool reads followed: "? harvest wonder".`,
+      `The first line, taken apart still showed !draft….`,
+      `Its Open on factshift.center (?spw=) still carried !draft….`,
+      `Still: 02-build-typed-phone.jpg.`,
+    ][reg=set]
+    out = #[
+      `Tapped Open on factshift.center, 151 by 21.5 px.`,
+      `The same tab went to factshift.center and cleared the fragment.`,
+      `The address became ?spw=garden[care]{seed;+water}.`,
+      `Both lines reached the thread ("2 from a link"); the first was held.`,
+      `The Spw window stayed closed (0 px), so only the first line showed.`,
+      `Still: 03-factshift-arrive-phone.jpg.`,
+    ][reg=set]
+    thread = #[
+      `Tapped ◎, the focal square, 26 by 26 px.`,
+      `The Spw window opened on "lines · 2", both rows marked "a link".`,
+      `Still: 04-factshift-thread-phone.jpg.`,
+    ][reg=set]
+    up = #[
+      `Tapped ↗ on ?harvest{when}, 20 by 36 px.`,
+      `It called window.open with "_blank" and "noopener".`,
+      `It sent spw.quest/build#spw64=P2hhcnZlc3R7d2hlbn0: one row, in a new tab.`,
+    ][reg=set]
+    back = #[
+      `Opened that address. This receipt is from before eade0c38.`,
+      `It made two loads: /build, then location.replace to /build?script=%3Fharvest%7Bwhen%7D#reading.`,
+      `The editor held ?harvest{when}, as harvest.spw.`,
+      `The page sat at the reading (scrollY 584), the editor off screen.`,
+      `The garden line did not come back.`,
+      `Still: 05-build-back-phone.jpg.`,
+    ][reg=set]
+  }[reg=facet]
+  other = .{
+    pivot = #[
+      `/pivot?line=garden[care]{seed; water}, phone size.`,
+      `The parts are 48 px tall.`,
+      `One tap on [care] primed: "the lens: turn its walls to ( ) (1 of 6). Tap it to go there. garden{seed; water}(care)".`,
+      `The readout pushed the page below it down.`,
+      `A second tap went there. The trail read garden[care]{seed; water} ~> garden{seed; water}(care).`,
+      `Stills: 06-pivot-before-phone.jpg, 07-pivot-tap-phone.jpg.`,
+    ][reg=set]
+    guide = #[
+      `https://spw.quest/ at desktop size, 1366 by 900.`,
+      `The first screen holds the H1, the lede, "11 files, written in Spw: a bench, a study, and a board", lab-notebook.spw and Canvas.`,
+      `The console showed "ReferenceError: __name is not defined at noteKit".`,
+      `After an edit, localStorage was empty; a reload brought back the template.`,
+      `Still: 08-guide-desktop.jpg.`,
+    ][reg=set]
+    canvas = #[
+      `On the guide at desktop size, clicked Canvas. No still.`,
+      `factshift held the ^"stream" block as one line, from ">>[2026-11-06 09:10] catalog — …".`,
+      `Its nodes read "in three dialects on one screen: pill", "ring", ">>", "plain" and "the".`,
+    ][reg=set]
+    forms = #[
+      `/forms/ at desktop size: 31 rows, no factshift links.`,
+      `garden{seed.water} wraps at the dot, to "garden{seed." over "water}".`,
+      `Still: 09-forms-desktop.jpg.`,
+    ][reg=set]
+    joins = #[
+      `On factshift at desktop size, opened each of the four joins by ?spw=.`,
+      `Each drew three nodes: garden, seed, water.`,
+      `The dot drew a tight pair (line-anatomy.ts:246, @line_anatomy).`,
+    ][reg=set]
+    domain_page = #[
+      `spwashi.com/about/domains/spw.quest/ at desktop size.`,
+      `The lede reads "opens with a guide … twelve sigils, and the four brace pairs."`,
+      `Still: 10-spwashi-domain-desktop.jpg.`,
+    ][reg=set]
+  }[reg=facet]
+  landed = .{
+    commit = `eade0c38`
+    wrangler = `75b5b8a2-0dfd-47bc-9c84-bc69f0431ab1`
+    note_boots = `The __name shim moved into the shell's head (@shell). A note edit survives a reload, confirmed headless on a phone.`
+    back_leg = `readSpw64 fills the editor in place, with no reload to ?script=. /build#spw64= holds the script with no navigation, confirmed headless on a phone.`
+  }[reg=facet]
+}[reg=facet]
+
+^"theory"{
+  ~#note: "What the plans and the copy say spw.quest is, with cites."
+  site_says_guide = #[
+    `role = guide: "paced path into Spw … read the sigils, copy one setup, stop before a commit" (@domains, .spw/domains.spw:144).`,
+    `"Paced guide into Spw" (@home, index.html:1177).`,
+    `"Set up the Spw workbench in your own repository" (@footer, _partials/site-footer.html:177).`,
+    `"Quest is the path; texture is the grain" (@quest_domain, about/domains/spw.quest/index.html:56).`,
+  ][reg=set]
+  plan_says_workshop = #[
+    `"the state of a page lives in its address" (@spw_quest_wip, wip.spw:173).`,
+    `"focus and hover charge a thing, a landing settles it, and nothing on the page jumps" (wip.spw:174).`,
+    `Felt, never named (wip.spw:178).`,
+    `The creator's brief sets Notion's block handle beside factshift's focal square (@spw_quest_plan, PLAN.md:101-105).`,
+  ][reg=set]
+  passage = #[
+    `A codec that "never reaches a server" (@build, build.js:122-127; @spw_talk, spw-talk.ts:5-9).`,
+    `brace-semantics §E plans a home door on the fragment, to keep clipboard text out of worker logs (@brace_semantics, PLAN.md:128-136).`,
+    `§F lists what factshift taught: lifecycles, primed and actualized states, the codec, and the thread as the cauldron's shape (PLAN.md:145).`,
+  ][reg=set]
+  grammar = #[
+    `The grammar already flows out of spw.quest.`,
+    `factshift's table copies the guide, "in spw.quest's guide order, with the guide's words" (@fs_operators, operators.ts:1-3; @guide, guide.js:7-20).`,
+    `spwashi.com names three operators differently: integration, binding, normalization (@operator_detection, operator-detection.js:89, 179, 209).`,
+  ][reg=set]
+  readers = `Three readers: spwashi.com's; the copy spw.quest carries; factshift's own line-anatomy.ts on a March workbench (@factshift_plan, PLAN.md:180).`
+  trichotomy = #[
+    `spw.quest already holds it as the charge slot: boon, bane, bone, bonk, honk (@pivot, pivot.js:20).`,
+    `bone.land is "the structural carrier … where boon and bane act" (@bone_land; .spw/domains.spw:79).`,
+  ][reg=set]
+}[reg=facet]
+
+^"disagreements"{
+  ~#note: "Where theory and surface part. Two have landed; nine stand."
+  back_leg = .{
+    status = "landed in eade0c38"
+    says = `The comment says the script never reaches a server (build.js:124).`
+    did = `readSpw64 reloaded as ?script= (build.js:144): a second load, landing mid-page. It defeated §E's reason.`
+    also = `§E names #script= (@brace_semantics, PLAN.md:135); the code uses #spw64=.`
+    file = @build
+  }[reg=facet]
+  one_row = .{
+    says = `A file goes out; one row comes back.`
+    does = `↗ sends only row.line (spw-talk.ts:155). The thread's other lines drop.`
+    file = @spw_talk
+  }[reg=facet]
+  hidden_arrival = .{
+    does = `Lines land in a closed Spw window. The held chip gives no sign that a second line came.`
+  }[reg=facet]
+  two_doors = .{
+    does = #[
+      `/build has two links named Open on factshift.center.`,
+      `One carries the file by fragment (build.js:463).`,
+      `The other carries the first line by ?spw= (build.js:473), and goes stale while you type.`,
+    ][reg=set]
+    says = `The lede says "the reading follows". The taken-apart line does not.`
+    hint = `The hint that Read refreshes it is hidden on touch (build.js:493).`
+    file = @build
+  }[reg=facet]
+  jumps = .{
+    says = `"Nothing on the page jumps" (wip.spw:174).`
+    did = `The back leg made two loads and landed at #reading. That half went with eade0c38.`
+    does = `/pivot's readout pushes the content below it down (stills 06 to 07).`
+    file = @pivot
+  }[reg=facet]
+  note = .{
+    status = "landed in eade0c38"
+    says = `The guide promises "keep it as your note" (index.js:353).`
+    did = `The live note did not boot. The __name shim came from shell.js:411; on the live page it sat at line 1535, after noteBoot at line 708 (index.js:380 places it).`
+    file = @quest_index
+  }[reg=facet]
+  whole_file = .{
+    does = `The guide's Canvas sends a whole file to a canvas made for "one concept, not a file" (@fs_root, root.ts:33). Prose turns into nodes.`
+  }[reg=facet]
+  dot = .{
+    says = `"One name. The dot keeps seed.water whole" (forms.js:18).`
+    does = `The appendix wraps at that dot. factshift draws two nodes held close.`
+    file = @forms
+    open = `The dot's own question waits in @compound_expressions.`
+  }[reg=facet]
+  about = .{
+    says = `< > reads "What this is about" (guide.js:24).`
+    does = `Forms and pivot say it is where the line goes (forms.js:31; pivot.js:30). & also claims "about" (guide.js:16).`
+    file = @guide
+  }[reg=facet]
+  stale_copy = .{
+    does = #[
+      `spwashi.com describes the guide as it was before the cut: the domain page (about/domains/spw.quest/index.html:50), the home card, the footer.`,
+      `The domain page lists five rooms and no Forms (about/domains/spw.quest/index.html:65).`,
+      `"the prompt lives on spw.quest" (index.html:1203) links to spwashi.com's own page.`,
+    ][reg=set]
+    file = @quest_domain
+  }[reg=facet]
+  pivot_door = .{
+    does = `/pivot, the instrument closest to the canvas, has no door to it.`
+    expects = `factshift's plan expects one (@factshift_plan, PLAN.md:211).`
+  }[reg=facet]
+}[reg=facet]
+
+^"proposals"{
+  ~#note: "Theory, the passage, copy, and asks. Copy is proposed, not made."
+  theory = .{
+    claim = `spw.quest is the bench between the planes. Its grammar is bone: the carrier both planes act on.`
+    planes = #[
+      `On spwashi.com a line becomes a card among pages: ecology.`,
+      `On factshift it becomes a field with charge: physics.`,
+      `On spw.quest it stays a line on paper, held in an address. It is written there, turned one slot at a time, and carried.`,
+    ][reg=set]
+    shared = `The grammar is shared only where the readers agree. Today they part on the dot, on < >, and on three operator names.`
+    answer = `A workshop that holds the grammar, with a door on each side: spw_quest[bone]{write; turn; carry}(address)<page, canvas>.`
+    promised = `The copy promises three things: spwashi.com a guide (grammar lessons), spw.quest a workshop ("yours to change"), factshift an editor. Only two link labels promise the passage.`
+  }[reg=facet]
+  passage = .{
+    b1 = .{
+      status = "landed in eade0c38"
+      do = `Boot the note: put the __name shim in the layout's head (@shell), or ahead of noteBoot.`
+    }[reg=facet]
+    b2 = .{
+      status = "landed in eade0c38"
+      do = `Read the back leg in the page. readSpw64 fills the editor and reads it there, with no ?script=. The first screen is the editor, the line taken apart.`
+    }[reg=facet]
+    b3 = `Make ↗ carry the thread as a file, the tapped row first, so that row is the one taken apart.`
+    b4 = `On arrival by link, open the Spw window on factshift, or show "2 from a link" on the held chip.`
+    b5 = `Give each door on /build one name. The line link updates as you type, or folds into the file link.`
+    b6 = `Keep one tab both ways, so browser back still works. A new tab breaks the way back.`
+    b7 = `Point the guide's Canvas at the file's first line-shaped expression, or show it only on files that have one.`
+    b8 = `On /pivot, hold the readout's space from first paint (brace-semantics §D). Add "see it drawn" to the primed line.`
+    b9 = `§E's home door: a third exit beside "Have some Spw?" (index.html:152) that sends #spw64= to /build.`
+  }[reg=facet]
+  copy = .{
+    c1 = .{
+      at = "index.html:1177"
+      now = `Paced guide into Spw. Public contract for agents: constructs, sensors, and what not to fork.`
+      proposed = `A bench for Spw: write a line, turn it a slot at a time, and carry it to a page or a canvas.`
+    }[reg=facet]
+    c2 = .{
+      at = "about/domains/spw.quest/index.html:50"
+      now = `spw.quest opens with a guide to the Spw language: one page to read, the twelve sigils, and the four brace pairs.`
+      proposed = `spw.quest opens on files written in Spw, a bench, a study and a board, each yours to change, with what a tool reads beside it.`
+    }[reg=facet]
+    c3 = .{
+      at = "about/domains/spw.quest/index.html:65"
+      now = `Beside the guide, five rooms take a line of Spw and let you turn it.`
+      proposed = `Beside the guide, six rooms take a line of Spw and let you turn it.`
+      adds = `A Forms row in spw.quest's own words (forms.js:109): Lines that differ in one thing, and what that thing does.`
+    }[reg=facet]
+    c4 = .{
+      at = "_partials/site-footer.html:177"
+      now = `Set up the Spw workbench in your own repository.`
+      proposed = `Write a Spw script and take it apart.`
+    }[reg=facet]
+    c5 = .{
+      at = "index.html:1203"
+      now = `the prompt lives on spw.quest`
+      proposed = `the prompt lives on the spw.quest page`
+    }[reg=facet]
+    c6 = .{
+      at = "workers/spw-quest/src/build.js:463 and :473"
+      now = `Open on factshift.center (both links)`
+      proposed = `Open the file on factshift.center (463); Draw this line on factshift.center (473)`
+    }[reg=facet]
+    c7 = .{
+      at = "workers/spw-quest/src/guide.js:24"
+      now = `What this is about.`
+      proposed = `Where it goes.`
+      caution = `The route test may hold this line.`
+    }[reg=facet]
+    c8 = .{
+      at = ".spw/domains.spw:144"
+      now = `paced path into Spw. Live at spw.quest: read the sigils, copy one setup, stop before a commit.`
+      proposed = `bench for Spw scripts between this site and factshift.center: write, turn one slot, carry by link; install stops before a commit.`
+    }[reg=facet]
+  }[reg=facet]
+  workbench_asks = .{
+    record_in = @upstream_asks
+    asks = #[
+      `One operator table: names, readings, runtime, physics and brace names, read by spw.quest, factshift and spwashi.com.`,
+      `One codec: toSpw64, fromSpw64, and the #spw64= fragment grammar. Today it is written four times (build.js:128, 139-142, 378-382; spw-talk.ts:39-50).`,
+      `One splitter, expressions(text), for a file's top-level expressions. Today spw-talk.ts:53-72 counts braces by hand.`,
+      `One reader for body joins, with FORMS (forms.js:13-64) as its conformance set: every reader names the join it sees on each row.`,
+    ][reg=set]
+  }[reg=facet]
+}[reg=facet]
+
+^"value"{
+  ~#note: "What the plane is made of, how it behaves, what that is worth."
+  made_of = #[
+    `plain text on the site's paper`,
+    `a line held in an address`,
+    `a fragment that carries a file to the other site, meant never to reach a server`,
+    `a note kept in the browser`,
+  ][reg=set]
+  behaves = #[
+    `Every room reads with scripts off.`,
+    `One slot changes while the rest hold.`,
+    `A turn shows before you take it.`,
+    `The trail keeps the way back.`,
+  ][reg=set]
+  role = `Bone. It holds the shape. The site gives that shape a body; the canvas gives it force.`
+  academic = #[
+    `Spw began in a 2017 Learning-from-Text course. It was built to find where two people's understandings stop sharing ground.`,
+    `Two readings side by side show their shared ground first, then the slot where they part (@atlas, topics/software/spw/index.html:949).`,
+    `The forms appendix is a set of contrasting cases: lines that differ in one thing.`,
+    `The round trip shows one text in two representations: words, and a field.`,
+    `For notation research, three readers of one grammar part in measurable places. Each place is a finding.`,
+  ][reg=set]
+  business = #[
+    `A line is a brief. /build opens on !draft<chapter>(study)[second_pass]{voice, scene, turn}, which reads as an editorial brief.`,
+    `A product or A&R lead writes one and sends a link. A collaborator answers by turning one slot.`,
+    `The trail keeps each turn as a receipt in the address.`,
+    `No account is needed. With the back leg fixed, no server sees the brief.`,
+    `Nothing here is a financial claim.`,
+  ][reg=set]
+}[reg=facet]
+
+^"wonders"{
+  ~#note: "The five wonders live in wonders.spw, not here, so they are harvested once."
+  lives = ~"./wonders.spw#quest"
+  ids = #[
+    `wonder_spw_planes_back_leg`,
+    `wonder_spw_planes_note_boot`,
+    `wonder_spw_planes_dot`,
+    `wonder_spw_planes_thread`,
+    `wonder_spw_planes_bone`,
+  ][reg=set]
+  answered = `back_leg and note_boot are answered there, by eade0c38.`
+}[reg=facet]
+
+^"questions"{
+  ~#note: "Taste calls handed back to the creator."
+  asks = #[
+    `Which word should spw.quest answer to: bench, path, or guide? The register says role = guide.`,
+    `Is the ecology boon (arrival, growth) and the physics bane (cost, boundary, decay)? Or does the trichotomy stay inside each line, as the charge slot?`,
+    `Should the passage keep one tab, or open a new one?`,
+    `Should the canvas ever take a whole file, or only a line?`,
+    `The dot: one node with a seam, or two nodes bonded?`,
+    `< >: "what this is about", or "where it goes"?`,
+    `Should home link to spw.quest itself, or keep the domain page as the door?`,
+  ][reg=set]
+}[reg=facet]
+
+keeps = "A read-only pass: probes, receipts, and proposals only. The copy changes are proposals. The creator's words stay theirs. The synthesis is in @planes."
+source = "The planes pass coordinator, for the creator, 2026-11-07: the creator's framing of the planes, with spw.quest as what unites them; rewritten as .spw the same day at the creator's ask, minding indentation."
+
+# Handles, by role. Declared last; each one links wherever the text names it.
+# Plans
+@planes: ~"./PLAN.md"
+@spw_quest_plan: ~"../spw-quest/PLAN.md"
+@spw_quest_wip: ~"../spw-quest/wip.spw"
+@brace_semantics: ~"../brace-semantics/PLAN.md"
+@factshift_plan: ~"../factshift-center/PLAN.md"
+# Conventions and caches
+@domains: ~"../../../.spw/domains.spw"
+@upstream_asks: ~"../../../.spw/reviews/upstream-workbench-recommendations.spw"
+@compound_expressions: ~"../../../.spw/conventions/compound-expressions.spw"
+# Code
+@build: ~"../../../workers/spw-quest/src/build.js"
+@guide: ~"../../../workers/spw-quest/src/guide.js"
+@forms: ~"../../../workers/spw-quest/src/forms.js"
+@pivot: ~"../../../workers/spw-quest/src/pivot.js"
+@quest_index: ~"../../../workers/spw-quest/src/index.js"
+@shell: ~"../../../workers/lib/shell.js"
+@spw_talk: ~"../../../workers/factshift-center/app/src/js/modes/spw/spw-talk.ts"
+@fs_operators: ~"../../../workers/factshift-center/app/src/js/modes/spw/operators.ts"
+@line_anatomy: ~"../../../workers/factshift-center/app/src/js/modes/spw/line-anatomy.ts"
+@fs_root: ~"../../../workers/factshift-center/app/src/js/init/root.ts"
+@operator_detection: ~"../../../public/js/kernel/operator-detection.js"
+# Pages
+@home: ~"../../../index.html"
+@quest_domain: ~"../../../about/domains/spw.quest/index.html"
+@footer: ~"../../../_partials/site-footer.html"
+@atlas: ~"../../../topics/software/spw/index.html"
+@bone_land: ~"../../../about/domains/bone.land/index.html"
