@@ -20,6 +20,11 @@
     // Storage refused or unreadable: the page opens at the defaults.
   }
 })("spw.quest.display/1", {"size":["70","80","90","100","110","120"],"wrap":["on","off"],"colors":["marks","plain"],"spacing":["compact","regular","roomy"]}, {"size":"100","wrap":"on","colors":"marks","spacing":"regular"});</script>
+  <script>
+    // esbuild names serialized functions with __name; define it before any inline script in the body runs.
+    var __defProp = (target, prop, desc) => Object.defineProperty(target, prop, desc);
+    var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
+  </script>
   <style>
     :root { color-scheme: dark; --bg:#0a1012; --fg:#e8eef1; --muted:#8aa0a8; --line:rgba(94,234,212,.2); --accent:#5eead4; --warn:#e7c27a; --storm:#ff8a7a; --surface:#10181b; --field:#0d1416; --radius:1rem; --pill:999px; --font:ui-sans-serif, system-ui, sans-serif; }
     * { box-sizing: border-box; }
@@ -726,8 +731,6 @@
   </main>
   <p id="status" class="sr-only" role="status" aria-live="polite"></p>
   <script>
-    var __defProp = (target, prop, desc) => Object.defineProperty(target, prop, desc);
-    var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
     document.documentElement.classList.add("js");
     const announce = (message) => {
       const status = document.getElementById("status");
