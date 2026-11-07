@@ -5,7 +5,7 @@ Status 2026-11-07. A design note; nothing in it is built yet. The creator asked,
 - consider lifecycles per operator;
 - reflect on the plans and theory, and how factshift.center's recent work may inform spwashi.com's runtime or library.
 
-This note reads what the app does at app f06caf5, plus the other session's uncommitted tap and tie work in the same checkout (`operator-tap.ts`, `link-confirm.ts`), and what `.spw/conventions/operator-semantics.spw` (cited as OS) already says. It then proposes one model and its smallest slices. The other session's joints work (`src/js/modes/spw/line-joints.ts`, uncommitted) uses the words mark, room and seam for the places a line can change. This note uses them too.
+This note reads what the app does at app f06caf5, plus the other session's uncommitted tap and tie work in the same checkout (`operator-tap.ts`, `link-confirm.ts`), and what `.spw/conventions/operator-semantics.spw` (cited as OS) already says. It then proposes one model and its smallest slices. Tested 2026-11-07 by the planes pass ([PHYSICS.md](../spw-planes/PHYSICS.md)): the look carried a lifecycle's stage better than motion did, and two mismatches block L2 and L3. A node's place and its mark are keyed on the name with its mark, so a step starts over and `<~rain>` loses its mark. The other session's joints work (`src/js/modes/spw/line-joints.ts`, uncommitted) uses the words mark, room and seam for the places a line can change. This note uses them too.
 
 ## Where the app is
 

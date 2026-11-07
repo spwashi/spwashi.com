@@ -140,7 +140,7 @@ non_sensitive_unlinked: .{
  `spwashi.design` = .{ role = studio, brief = `design systems, interaction craft, visual language` }[reg=facet]
  `spwashi.ink` = .{ role = press, brief = `publishing imprint for ebooks and durable editions` }[reg=facet]
  `boonhonk.ing` = .{ role = engine, brief = `combinatoric genre: five transforms, pair mixes` }[reg=facet]
- `boof.land` = .{ role = `character-realm`, brief = `Boof the dog, protagonist and lore carrier` }[reg=facet]
+ `boof.land` = .{ status = `expired`, role = `character-realm`, brief = `Boof the dog, protagonist and lore carrier. The domain lapsed with honk.land and bonk.land (creator, 2026-11-07); Boof stays in the lore.` }[reg=facet]
  `spw.quest` = .{ role = guide, brief = `paced path into Spw. Live at spw.quest: read the sigils, copy one setup, stop before a commit. Neighbor: texture.website. Local guide: /about/domains/spw.quest/.` }[reg=facet]
  `wap.christmas` = .{ role = seasonal, brief = `Wondering About Pi with a holiday shell` }[reg=facet]
  `brainstorm.monster` = .{ role = `collective-ideation`, brief = `group concept development with hibernate behavior` }[reg=facet]
