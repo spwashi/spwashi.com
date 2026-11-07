@@ -96,7 +96,15 @@ The display menu (`src/display.js`) gains row and tile choices beside size, wrap
 
 **Lines that read.** Plan lines already hang from their frame with slots indented (`cc047be5`). The editor gains a format action, **chop down**: one slot per line, nested braces indented, and **join up** to put it back. This is an action, not a display mode, because the paint must stay under the field's characters.
 
-**Gate.** The creator chooses between `#>wonder_spw_quest_architecture`'s alternatives before any move. The landing's rows and tiles end at a phone demo.
+**Decided 2026-11-06: static first.** First slice: `carry-shelf.mjs` writes `/shelf/` (search first, the twelve operators as handles to their cards in the guide, plans by operation, browse tiles with counts) and `/shelf/plans/` (plans grouped by operation, each line hanging from its frame) into `assets/shelf/`. The worker serves them, and `check-workers` fails if they drift from a fresh render. `/specimens` stays as it is until the creator has looked.
+
+**The design brief (the creator, 2026-11-06).**
+- Precise monospace with visual hierarchy and clear alignment.
+- Containers and delimiters used as structure.
+- Each operator an interactive handle.
+- Notion for embedded navigation and interaction: a handle on every block, pages embedded in pages, toggles, a path back. Notion's block handle and embedded page overlap with factshift.center's focal square and handle (`factshift-center/TOOLS.md`, The focal point): one handle per part that grips, opens or carries it.
+
+The landing's handles are the first step. Next: each painted line's operator characters as handles of their own, and a line's braces drawn as the container they are.
 
 ## Waiting on the creator
 

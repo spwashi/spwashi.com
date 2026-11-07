@@ -615,6 +615,16 @@ async function handleQuest(request, url) {
   return response;
 }
 
+/** The static shelf pages the worker serves from assets, with the page's own headers. */
+const SHELF_PATHS = new Set(["/shelf/", "/shelf/plans/"]);
+async function serveShelf(request, url, env) {
+  const asset = await env?.ASSETS?.fetch(new Request(new URL(url.pathname, url.origin)));
+  if (!asset || !asset.ok) return new Response("Not found", { status: 404, headers: BASE_SECURITY });
+  const response = page(await asset.text(), { cache: "public, max-age=300" });
+  if (request.method === "HEAD") return new Response(null, { status: response.status, headers: response.headers });
+  return response;
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -625,6 +635,9 @@ export default {
     if (isParserPath(url.pathname)) return handleParser(request, url, env);
     // The site's faces and script modules, carried by scripts/build-peer-kit.mjs into assets/fonts/ and assets/peer/.
     if (isPeerAssetPath(url.pathname)) return servePeerAsset(request, url, env);
+    // The shelf's landing and indexes are static pages, written by carry-shelf.mjs into assets/shelf/.
+    if (url.pathname === "/shelf" || url.pathname === "/shelf/plans") return Response.redirect(`${url.origin}${url.pathname}/`, 301);
+    if (SHELF_PATHS.has(url.pathname)) return serveShelf(request, url, env);
     return handleQuest(request, url);
   },
 };
