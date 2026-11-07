@@ -181,6 +181,8 @@ The canvas still lays a line out from `line-anatomy.ts`, a second reader beside 
 
 ## Next slices
 
+The tools themselves, each read as an operator whose window opens on its act as one line, are planned in [TOOLS.md](./TOOLS.md) (2026-11-06): hygiene first, then one theory for all nine, a demo on three, and a slice per tool; four questions for the creator sit in `index.spw`.
+
 Each is one session in the app (`workers/factshift-center/app`, its own repository), checked with `npx tsc --noEmit` and `npx vite build`, then carried into the snapshot here when the creator asks (*Refreshing the snapshot*, above). The numbers are the ones `index.spw` and INTERACTION.md cite.
 
 1. **SVG and UI semantics** (asked 2026-10-27). Landed in the phone pass (carried here in `b5d19bc9`): the svg is a group with its region and edge layers hidden from assistive tech; mode buttons say aria-pressed; the tabpanel role and the radiogroup without radios are gone; anatomy nodes are named by word, slot and frame; Enter and Space reach a node only while it holds focus.
