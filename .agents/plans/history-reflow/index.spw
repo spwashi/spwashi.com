@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>history_reflow[prime]{episode.symbols}(commits)<readable_history>
+
 operation = "prime"
 fixity = "tending"
 

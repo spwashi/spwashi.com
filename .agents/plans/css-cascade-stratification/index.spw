@@ -9,6 +9,8 @@
 #:fixity #!experimental
 #:layer #!pragmatics
 
+expression = #>css_cascade_stratification[prime]{layers.readings}(bundles)<one_order>
+
 operation = "prime"
 fixity = "experimental"
 

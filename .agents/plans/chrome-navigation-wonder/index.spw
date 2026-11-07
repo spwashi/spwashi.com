@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>chrome_navigation_wonder[prime]{header.rail.breadcrumbs}(shell)<way_back>
+
 operation = "prime"
 fixity = "tending"
 

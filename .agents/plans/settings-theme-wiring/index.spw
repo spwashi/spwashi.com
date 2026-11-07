@@ -8,6 +8,8 @@
 #:operation #!audit
 #:layer #!pragmatics
 
+expression = #>settings_theme_wiring[audit]{controls.readers}(settings)<no_dead_control>
+
 operation = "audit"
 fixity = "tending"
 

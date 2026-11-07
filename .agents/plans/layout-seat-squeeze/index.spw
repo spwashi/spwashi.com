@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>layout_seat_squeeze[prime]{seats.squeeze.edges}(layout)<one_edge>
+
 operation = "prime"
 fixity = "tending"
 

@@ -8,6 +8,8 @@
 #:operation #!contract
 #:layer #!pragmatics
 
+expression = #>spw_inquiry_loop[contract]{probe.answer.refactor}(wonders)<settled_question>
+
 operation = "contract"
 fixity = "stable"
 

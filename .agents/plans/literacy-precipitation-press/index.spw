@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>literacy_precipitation_press[prime]{bulletin.spell}(press)<publication>
+
 operation = "prime"
 fixity = "tending"
 

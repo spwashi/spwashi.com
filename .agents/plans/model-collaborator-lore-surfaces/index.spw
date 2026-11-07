@@ -9,6 +9,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>model_collaborator_lore_surfaces[prime]{terms.cast.lore}(collaboration)<consent_first>
+
 operation = "prime"
 fixity = "experimental"
 

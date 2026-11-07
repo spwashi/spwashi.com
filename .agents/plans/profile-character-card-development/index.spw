@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>profile_character_card_development[prime]{cards.cast.sheet}(rpg_wednesday)<profile>
+
 operation = "prime"
 fixity = "tending"
 

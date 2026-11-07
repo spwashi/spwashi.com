@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>screenshot_semantics[prime]{still.line.capture}(stills)<carried_intent>
+
 operation = "prime"
 fixity = "tending"
 

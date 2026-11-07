@@ -8,6 +8,8 @@
 #:operation #!audit
 #:layer #!pragmatics
 
+expression = #>floating_chrome_stack[audit]{rail.satchel.cauldron}(pocket)<one_expression>
+
 operation = "audit"
 fixity = "tending"
 

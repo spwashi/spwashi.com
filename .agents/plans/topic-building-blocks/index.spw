@@ -9,6 +9,8 @@
 #:operation #!align
 #:layer #!pragmatics
 
+expression = #>topic_building_blocks[align]{course.shelf.figures}(topics)<path>
+
 operation = "align"
 fixity = "tending"
 

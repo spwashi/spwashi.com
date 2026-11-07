@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>site_starter_component_kit[prime]{compose.inventory.peer}(kit)<second_site>
+
 operation = "prime"
 fixity = "tending"
 

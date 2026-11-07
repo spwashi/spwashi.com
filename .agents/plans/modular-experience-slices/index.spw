@@ -8,6 +8,8 @@
 #:operation #!contract
 #:layer #!pragmatics
 
+expression = #>modular_experience_slices[contract]{slices.labs.scripts_off}(math)<pilot>
+
 operation = "contract"
 fixity = "stable"
 

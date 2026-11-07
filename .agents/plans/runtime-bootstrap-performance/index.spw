@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>runtime_bootstrap_performance[prime]{boot.recalc.receipts}(runtime)<quiet_frames>
+
 operation = "prime"
 fixity = "tending"
 

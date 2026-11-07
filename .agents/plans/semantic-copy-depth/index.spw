@@ -8,6 +8,8 @@
 #:operation #!contract
 #:layer #!pragmatics
 
+expression = #>semantic_copy_depth[contract]{depth.register.expressions}(copy)<readable_depth>
+
 operation = "contract"
 fixity = "stable"
 

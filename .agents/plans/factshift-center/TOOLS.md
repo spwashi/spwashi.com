@@ -48,6 +48,52 @@ The operators come from the canon table (`public/js/kernel/operator-detection.js
 
 The ten canon operators then mark nine tools and the one receipt. A reader who learns that the head is the act and the `*` line is what it came to has learned every tool. That is the learnable-surface rule: one key, taught once, varied by role.
 
+## The focal point: one square, five states, per tool
+
+The creator likes the focal point and asked for the handle and the square to be designed with each tool in mind, across selection, crawling, reflex, default and preview. The square and handle (`ui/focal-point.ts`) already carry, step (`ui/tool-steps.ts`) and fire the primed act. The proposal gives the square the same five states in every tool, with each tool supplying what each state means:
+
+- **default:** what the square shows at rest with this tool in hand;
+- **preview:** the primed line, before anything happens (the head line above);
+- **select:** what the square gathers;
+- **crawl:** what the arrows and the d-pad walk along, the tool's axis;
+- **reflex:** what a swipe → or a tap on the operator actualizes, leaving a `*` receipt.
+
+| tool | default | preview | select | crawl | reflex |
+|---|---|---|---|---|---|
+| reflex `!` | the field's charge | the kick and its outcome | the field, or the selection | across force words (the lore row) | kick |
+| color `@` | the perspective new nodes take | how many nodes it would color | the nodes in that perspective | across perspectives | give the selection that perspective |
+| map `~` | the last cast | the cast line, and how many nodes it rewrites | a slot query's answers | across a line's slots: word, mode, body, scene, concept | cast |
+| filter `?` | the question | "keeps 4 of 13", the kept nodes lit | the answers | across slot queries `{…}` `<…>` `[…]` | keep |
+| node `.` | the node under the square | what add or replace would do | that node | along links to neighbor nodes, the canvas's crawlable edges | the last card choice |
+| query `#>` | the address | the address after an edit | one parameter | across parameters | load |
+| debug `$` | the last run's last stage | the next stage's line | a node's reading at that stage | across stages: parse, normalize, interpret | run again |
+| story `^` | the current kept state | the next state | a kept state | step through states | keep a state, or play |
+| spw `&` | the held line | the line after the prompt's edit | one slot of the held line | across slots, and into and out of frames | run |
+
+Crawling is where the creator's question about crawlable edges lands on the canvas. Node crawls links, map crawls slots, spw crawls frames, and story crawls time. Each axis is drawn the same way (the square moves, and the edge it moves along lights), so a reader learns to crawl once.
+
+## Map and filter, Spw-native
+
+The creator asked that map and filter integrate selection, projection, slots and topography the Spw way. The reading:
+
+- **Selection is a slot query.** spwashi.com's `expression-query.js` and spw.quest's shelf already answer `{seed}` (holds seed), `<receipt>` (goes to a receipt), `[pi]` (a lens starting pi) and `medium[*]` (medium through any lens). Filter asks the same queries of the nodes, each node read by the slot reader (`readLine`), so one query grammar runs on three sites.
+- **Projection is a slot rewrite.** Map's cast names the slot it changes and what it becomes, `~map[body]{stew ~> stew.slow}`, and runs through `writeAt`, so a node's line is rewritten byte for byte and nothing it held is dropped.
+- **Topography is where the answers stand.** The canvas already stacks a line's slots as regions (word, scene, body, concept). Filter and map light the regions their query touches, so a reader sees which part of each line answered before keeping or casting.
+
+Slices M1 and F1 take this shape once `#>wonder_factshift_spells` and `#>wonder_factshift_filter_sense` are answered. The shared query code is an ecosystem-architecture carry (`.spw/surfaces/site-cluster.spw#carries`).
+
+## Frames: navigating with Spw
+
+The creator: ideally Spw navigates between factshift.center frames. Entering a node already opens a page with the node as its frame and the parent line in the address (6b85a42). The proposal: a `#>` line held in the spw prompt, or given in `?spw=`, enters that frame, and `.` returns to the parent, so the address reads as a path of frames. Every plan's head line begins with `#>`, so a plan opens as a frame a reader can walk into. Held as `#>wonder_site_cluster_frame_navigation`.
+
+## A glass tool (Apple's Liquid Glass)
+
+The creator asked about designing a tool that could accommodate Apple's Liquid Glass design future: controls as a translucent layer that floats above content and takes its light from what lies beneath. factshift.center is close already, since every tool window floats above the canvas, and spwashi.com has a glass metamaterial (`effects/material.css`, `data-spw-metamaterial="glass"`).
+
+- **The proposal.** A tool window becomes a glass layer: `backdrop-filter` with a small SVG displacement filter refracts the canvas through the window, and its tint follows the region under the square, so a window over a scene reads warmer than one over a body. Corners run concentric with the window's frame and the device's safe area. A window shrinks to its head line while the canvas is being dragged and returns when the drag ends.
+- **The guards.** Legibility comes first. Under `prefers-reduced-transparency` and `prefers-contrast: more` the glass turns matte. The head line and receipt keep a contrast floor measured against the busiest canvas behind them. Capture mode renders the matte form, so a screenshot reads.
+- **Ownership.** The focal point table is unchanged by this: glass is how a window is made, not what it does. Gate: a browser demo on a phone and a desktop, and `#>wonder_factshift_glass_tool` for whether it suits the canvas or only the chrome.
+
 ## Shared slices (the chrome)
 
 - **C0 — Hygiene, ungated** (app repo).
@@ -73,7 +119,7 @@ The ten canon operators then mark nine tools and the one receipt. A reader who l
   - *Theory:* a color is a perspective, which the code already treats it as and no page says.
   - *Design:* the swatches fit their window. Each swatch shows how many nodes stand in that perspective, and the head line says which perspective new nodes will take.
   - *Slice K1* after C0. Gate: the look.
-- **map (`~`).**
+- **map (`~`).** (See "Map and filter, Spw-native" above for selection, projection and topography.)
   - *Theory:* `#>wonder_factshift_spells` already holds the hypothesis that map should take a Spw line cast over the selection, and that the cast should be recorded.
   - *Design:* the prompt is a Spw line; the JavaScript editor moves behind a fold for those who want it. A cast leaves a receipt and can be undone, and a recorded cast can be cast again.
   - *Slice M1* follows the spells answer.

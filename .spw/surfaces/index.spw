@@ -17,6 +17,7 @@
 @component_inventory: ~"./component-inventory.spw"
 @folio_archive: ~"./folio-archive.spw"  # the laminated folio archive as a walkable record: release sets, scans and sidecars
 @factshift_center: ~"./factshift-center.spw"  # the factshift.center canvas: ground, tool levels, primed and actualized acts, the line's layout and ties, decisions apart from readings
+@site_cluster: ~"./site-cluster.spw"  # the site cluster: what spwashi.com, spw.quest and factshift.center are for, what travels between them, how each ships, and what each teaches the others
 
 dispatch: .{
  registry = @registry

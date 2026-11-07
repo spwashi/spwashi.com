@@ -8,6 +8,8 @@
 #:operation #!contract
 #:layer #!pragmatics
 
+expression = #>component_region_personality[contract]{role.region.shape}(components)<harmony>
+
 operation = "contract"
 fixity = "stable"
 

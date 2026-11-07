@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>interaction_grammar[prime]{loop.hold.receipt}(gestures)<reward>
+
 operation = "prime"
 fixity = "tending"
 

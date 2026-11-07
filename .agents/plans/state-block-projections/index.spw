@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>state_block_projections[prime]{lens.seat.receipt}(home)<readable_state>
+
 operation = "prime"
 fixity = "tending"
 

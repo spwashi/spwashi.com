@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>spw_metaphysical_language[prime]{passes.codex.drift}(language)<theory>
+
 operation = "prime"
 fixity = "tending"
 

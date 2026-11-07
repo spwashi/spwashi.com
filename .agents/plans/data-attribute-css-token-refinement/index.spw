@@ -9,6 +9,8 @@
 #:fixity #!stable
 #:layer #!tokens
 
+expression = #>data_attribute_css_token_refinement[align]{tokens.fallbacks}(css)<one_definition>
+
 operation = "align"
 fixity = "stable"
 date = "2026-08-22"
