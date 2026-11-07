@@ -268,7 +268,7 @@ Both are for a phone look first.
   - The events are listed in order. A tap or the arrows step them, each lighting the part of the line it came from.
   - The registers carry the names written for them, and the issues are given in words.
   - The whole run can be copied as Spw.
-- **Open:** a bare word that names a command (`home`, `link`, `group`, `frame`) still runs the command; the preview says so first. The runtime the app carries is an older build that rejects `;` in a body. Its issue now shows in words beside the held line instead of an older drawing.
+- **A command word held as a line** (app 6ae8693): a bare word that names a command (`home`, `link`, `group`, `frame`) still runs the command by default. Its preview now offers *hold it as a line*, which reads that one run as Spw. The runtime the app carries is an older build that rejects `;` in a body. Its issue now shows in words beside the held line instead of an older drawing.
 
 **The reflex panel for a node** (the creator: consider it for node configuration). Proposed: with one node selected, the reflex panel's cards speak for that node, not the whole field. Size, charge and mass (its weight in the field) would set its own values, and a pin row would offer kept or loose. Its mark row would offer the twelve operators, so the panel is where a node's operator and physics are configured. A card names the node it is acting on, and with nothing selected the cards return to the field.
 
