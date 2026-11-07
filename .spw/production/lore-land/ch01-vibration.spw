@@ -47,6 +47,10 @@ namespace = `lore-land`
 
 ^"moments"{
   rule = `One entry is one moment, written as line · <text>, panel · <asset slug> · <caption>, or choice · <prompt> → <option> | <option>. Counted once where it is placed.`
+  from = `2026-11-02, take 5, told on a live: the edge of the pool. Placed by the creator.`
   list = #[
+    `line · I remember standing at the edge of the pool, imagining jumping in and having the thought of what if I actualized the goal that I have of just diving into the pool. And for some reason, I didn't.`,
+    `line · They make all of the experience of the cold such a long experience.`,
+    `line · Warm water that comes from hot springs as a place to swim.`
   ][reg=list]
 }[reg=facet]
