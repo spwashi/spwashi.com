@@ -8,6 +8,9 @@ import { OPERATORS } from '../src/guide.js';
 import { PAGE_CSP } from '../src/page.js';
 import { SPECIMENS, planGroups } from '../src/specimens.js';
 import { shelfPages } from '../src/shelf.js';
+import { FORMS } from '../src/forms.js';
+import { EXAMPLES } from '../src/examples.js';
+import { readSpecimen } from '../src/specimen-reading.js';
 
 const ASSETS = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'assets');
 // The asset binding serves a directory's index.html at its pretty path, as Workers assets do.
@@ -74,4 +77,23 @@ test('the plans page groups every plan by its operation, each line opening on th
   }
   assert.equal(groups.reduce((sum, { plans }) => sum + plans.length, 0), SPECIMENS.filter(({ source }) => source === 'plans').length);
   assert.equal((await get('/shelf/nothing/')).status, 404);
+});
+
+test('forms side by side: each row opens in the editor and on the pivot, every sample script is listed, and every line reads', async () => {
+  assert.equal((await get('/forms')).status, 301);
+  const response = await get('/forms/');
+  assert.equal(response.status, 200);
+  const page = await response.text();
+  assertBalanced(page);
+  for (const { id, rows } of FORMS) {
+    assert.ok(page.includes(`<section class="form-set" id="${id}"`), id);
+    for (const [line] of rows) {
+      assert.ok(page.includes(`href="/build?script=${encodeURIComponent(line)}#reading"`), `edit ${line}`);
+      assert.ok(page.includes(`href="/pivot?line=${encodeURIComponent(line)}"`), `pivot ${line}`);
+      const reading = readSpecimen(line);
+      assert.ok(!reading.part && !reading.file, `${line} reads whole as one line`);
+    }
+  }
+  for (const example of EXAMPLES) assert.ok(page.includes(`href="/?example=${example.id}#try"`), example.id);
+  assert.match(page, /aria-current="page">Forms<\/a>/, 'the shelf rooms mark Forms as here');
 });

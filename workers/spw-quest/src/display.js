@@ -43,7 +43,7 @@ export function displayMenu() {
         <div class="display-row"><span class="display-label">Lines</span>${choice("wrap", "on", "Wrap")}${choice("wrap", "off", "Scroll")}</div>
         <div class="display-row"><span class="display-label">Marks</span>${choice("colors", "marks", "In color")}${choice("colors", "plain", "Plain")}</div>
         <div class="display-row"><span class="display-label">Spacing</span>${choice("spacing", "compact", "Compact")}${choice("spacing", "regular", "Regular")}${choice("spacing", "roomy", "Roomy")}</div>
-        <p class="display-hint" data-display-pinch hidden>Pinch with two fingers over the page or the code to resize text.</p>
+        <p class="display-hint" data-display-pinch hidden>Pinch to resize the text.</p>
       </div>`,
   };
 }

@@ -318,7 +318,7 @@ function slotHandles(reading, pivots, state) {
   if (!items.length) return "";
   return `<div class="instrument" data-instrument>
   <nav class="slot-handles" aria-label="Its parts"><ul>${items.join("")}</ul></nav>
-  <p class="instrument-hint note" data-instrument-hint hidden>Tap a part to see its next turn, and tap it again to go there. Swipe a part to step through its turns; pinch it to see the line without it. Arrow keys, Delete and Enter do the same.</p>
+  <p class="instrument-hint note" data-instrument-hint hidden>Tap a part for its next turn, again to go; swipe to step, pinch to drop. Keys: arrows, Delete, Enter.</p>
   <p class="instrument-out" data-instrument-out aria-live="polite" hidden></p>
   <script type="application/json" data-slot-alts>${scriptJson(alts)}</script>
 </div>`;
@@ -392,7 +392,7 @@ function form(state) {
 export function pivotBody(state) {
   const opening = `<section class="opening" aria-labelledby="pivot-title">
   <h1 id="pivot-title">Pivot a line</h1>
-  <p class="lede">Change one slot and keep the rest. Each pivot shows the line it lands on before you go, says whether that line is already on the shelf, and leaves the way back.</p>
+  <p class="lede">Change one slot, keep the rest, and see the line before you go. <a href="/forms/">Forms, side by side</a> shows what each slot does.</p>
   ${form(state)}${state.refused ? `
   <p class="note">${escapeHtml(state.refused)}.</p>` : ""}${state.cut ? `
   <p class="note">Only the first ${PIVOT_LIMIT} characters are read.</p>` : ""}
@@ -454,8 +454,8 @@ export function pivotBody(state) {
 </section>
 <section class="band" aria-labelledby="pivots-title">
   <h2 id="pivots-title">${pivots.length} lines one change away</h2>${drops.length ? `
-  <p id="drop">Dropping a slot leaves the residue: what the line still says without it.</p>` : ""}
-  <p class="note">A value marked <em>near</em> is used by a line that shares a slot with this one; <em>common</em> is common on the shelf.</p>
+  <p id="drop">Drop a slot to read what the line says without it.</p>` : ""}
+  <p class="note"><em>near</em>: a line sharing a slot uses it · <em>common</em>: common on the shelf</p>
   ${groups}
 </section>`;
 }
