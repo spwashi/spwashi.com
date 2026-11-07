@@ -163,24 +163,68 @@ export function familiesOf(line) {
 
 /* ---------- The page ---------- */
 
+const JOIN_BY_KIND = new Map(BODY_TURNS.map(([kind, separator, label]) => [kind, { separator, label }]));
+const OP_BY_NAME = new Map(OPERATORS.map((operator) => [operator.name, operator]));
+/** How many lines the trail keeps behind the one in hand. */
+const TRAIL_LIMIT = 5;
+
+/** The line with one more part in its body, every part joined by the link chosen; null when it would not read back. */
+export function withBodyPart(line, part, kind) {
+  const reading = readSpecimen(line);
+  const joining = JOIN_BY_KIND.get(kind);
+  if (reading.file || !joining || !reading.slots.subject) return null;
+  const held = readBodyJoins(reading.slots.body || "");
+  const parts = [...held.parts.filter(Boolean), part];
+  const next = lineFrom({ ...reading.slots, body: parts.join(joining.separator) }, layoutOf(line));
+  return readSpecimen(next).slots.body ? next : null;
+}
+
+/** The line with an operator in front of its word, replacing a mark already there; null when the reader would not keep it. */
+export function withFrontMark(line, operator) {
+  const reading = readSpecimen(line);
+  const subject = reading.slots.subject || "";
+  if (reading.file || !subject || subject.startsWith("#>")) return null;
+  const bare = subject.replace(/^[~?!*.^#@&=%$]+/, "");
+  if (!bare) return null;
+  const next = lineFrom({ ...reading.slots, subject: `${operator.sigil}${bare}` }, layoutOf(line));
+  return readSpecimen(next).slots.subject === `${operator.sigil}${bare}` ? next : null;
+}
+
 /** The state a request asks for: a line on the shelf by id, or a typed line; one line only. */
 export function pivotState(params) {
   const specimen = specimenById(params.get("s"));
   const typed = String(params.get("line") || "").trim();
   const from = String(params.get("from") || "").trim().slice(0, PIVOT_LIMIT);
-  if (specimen && !specimen.reading.file) return { line: specimen.line, id: specimen.id, from, cut: false, refused: "" };
-  if (!typed) return { line: "", id: "", from: "", cut: false, refused: "" };
-  if (typed.includes("\n")) return { line: "", id: "", from: "", cut: false, refused: "one line at a time; a file opens in Build" };
-  const line = typed.slice(0, PIVOT_LIMIT);
-  const known = BY_LINE.get(flat(line));
-  return { line, id: known?.id || "", from: from && flat(from) !== flat(line) ? from : "", cut: typed.length > PIVOT_LIMIT, refused: "" };
+  const trail = params.getAll("t").map((step) => String(step).trim().slice(0, PIVOT_LIMIT)).filter(Boolean).slice(-TRAIL_LIMIT);
+  const op = OP_BY_NAME.get(String(params.get("op") || "")) || null;
+  let base;
+  if (specimen && !specimen.reading.file) base = { line: specimen.line, id: specimen.id, from, cut: false, refused: "" };
+  else if (!typed) return { line: "", id: "", from: "", cut: false, refused: "", trail: [], op: null, added: null };
+  else if (typed.includes("\n")) return { line: "", id: "", from: "", cut: false, refused: "one line at a time; a file opens in Build", trail: [], op: null, added: null };
+  else {
+    const line = typed.slice(0, PIVOT_LIMIT);
+    const known = BY_LINE.get(flat(line));
+    base = { line, id: known?.id || "", from: from && flat(from) !== flat(line) ? from : "", cut: typed.length > PIVOT_LIMIT, refused: "" };
+  }
+  // Adding to the body: the new part joins the others by the link chosen, and the line it came from is kept behind it.
+  const part = String(params.get("add") || "").replace(/[\s{}[\]()<>;,]/g, "").slice(0, 40);
+  if (part) {
+    const kind = JOIN_BY_KIND.has(String(params.get("join"))) ? String(params.get("join")) : "common";
+    const next = withBodyPart(base.line, part, kind);
+    if (next && flat(next) !== flat(base.line)) {
+      return { line: next, id: BY_LINE.get(flat(next))?.id || "", from: base.line, cut: false, refused: "", trail: [...trail, base.line].slice(-TRAIL_LIMIT), op: null, added: { part, kind } };
+    }
+  }
+  return { ...base, trail, op, added: null };
 }
 
-const pivotHref = (line, from) => {
+/** An address for a line, carrying the trail that leads to it. */
+function pivotHref(line, from, trail = []) {
   const params = new URLSearchParams({ line });
   if (from) params.set("from", from);
+  for (const step of [...trail, from].filter(Boolean).slice(-TRAIL_LIMIT)) params.append("t", step);
   return `/pivot?${params}`;
-};
+}
 
 function landing(pivot, state) {
   const there = BY_LINE.get(flat(pivot.line));
@@ -205,8 +249,79 @@ function pivotCard(pivot, state) {
       ["lands", lands.says],
       ["why", pivot.why ? escapeHtml(pivot.why) : ""],
     ]),
-    links: [cardLink(pivotHref(pivot.line, state.line), "Pivot from here"), edit ? cardLink(edit, "Take it apart") : "", ...lands.links],
+    links: [cardLink(pivotHref(pivot.line, state.line, state.trail), "Pivot from here"), edit ? cardLink(edit, "Take it apart") : "", ...lands.links],
   });
+}
+
+/** This page's own address: the same line, the same way back, plus what is asked. */
+function selfHref(state, extra = {}) {
+  const params = new URLSearchParams({ line: state.line });
+  if (state.from) params.set("from", state.from);
+  for (const step of state.trail) params.append("t", step);
+  for (const [key, value] of Object.entries(extra)) params.set(key, value);
+  return `/pivot?${params}`;
+}
+
+/** The address of a step on the trail: that line, with the steps before it. */
+const stepHref = (trail, index) => pivotHref(trail[index], trail[index - 1] || "", trail.slice(0, Math.max(0, index - 1)));
+
+/** The way here, written the way Spw writes a path: origin ~> step ~> now. */
+function trailNav(state) {
+  if (!state.trail.length) return "";
+  const join = '<li class="sep" aria-hidden="true"><code>~&gt;</code></li>';
+  const steps = state.trail.map((step, index) => `<li><a href="${escapeHtml(stepHref(state.trail, index))}"><code>${readSpecimen(step).paint}</code></a></li>`);
+  return `<nav class="trail" aria-label="The way here"><ol>${steps.join(join)}${join}<li aria-current="step"><code>${readSpecimen(state.line).paint}</code></li></ol></nav>`;
+}
+
+const DELIMITED = Object.freeze({ charge: (v) => v, subject: (v) => v, mode: (v) => `[${v}]`, body: (v) => `{${v}}`, scope: (v) => `(${v})`, projection: (v) => `<${v}>`, join: (v) => v });
+
+/** Into the line: each of its parts as a handle to the turns of that slot. */
+function slotHandles(reading, pivots) {
+  const turned = new Set(pivots.map((pivot) => pivot.slot));
+  const items = GROUP_ORDER.filter((slot) => reading.slots[slot]).map((slot) => {
+    const face = `<code>${escapeHtml(DELIMITED[slot](reading.slots[slot]))}</code><span class="says">${escapeHtml(SLOT_SAYS[slot] || slot)}</span>`;
+    return turned.has(slot) ? `<li><a href="#turn-${escapeHtml(slot)}">${face}</a></li>` : `<li><span>${face}</span></li>`;
+  });
+  return items.length ? `<nav class="slot-handles" aria-label="Its parts"><ul>${items.join("")}</ul></nav>` : "";
+}
+
+/** The operators as handles: activating one primes the line it would make; actualizing goes there. */
+function operatorBand(state) {
+  const handles = OPERATORS.map((operator) => {
+    if (!withFrontMark(state.line, operator)) return "";
+    const active = state.op?.name === operator.name;
+    return `<li><a href="${escapeHtml(active ? selfHref(state) : selfHref(state, { op: operator.name }))}#operators"${active ? ' aria-current="true"' : ""} title="${escapeHtml(operator.reads)}"><span class="sigil">${escapeHtml(operator.sigil)}</span><span>${escapeHtml(operator.name)}</span></a></li>`;
+  }).filter(Boolean);
+  if (!handles.length) return "";
+  const next = state.op ? withFrontMark(state.line, state.op) : null;
+  const primed = next ? `
+  <div class="primed" role="status">
+    <p class="primed-head"><span class="sigil">${escapeHtml(state.op.sigil)}</span> ${escapeHtml(state.op.name)}: ${escapeHtml(state.op.reads)}</p>
+    <p class="primed-line"><code>${readSpecimen(next).paint}</code></p>
+    <p class="primed-acts"><a class="actualize" href="${escapeHtml(pivotHref(next, state.line, state.trail))}">Actualize: go to this line</a><span aria-hidden="true"> · </span><a href="${escapeHtml(selfHref(state))}#operators">Let it go</a></p>
+  </div>` : "";
+  return `<section class="operators" id="operators" aria-labelledby="operators-title">
+  <h3 id="operators-title">An operator in front</h3>
+  <p class="note">Activate one to see the line it makes; actualize it to go there.</p>
+  <ul>${handles.join("")}</ul>${primed}
+</section>`;
+}
+
+/** Adding to the body: a part, and the link that joins it to the rest. */
+function addForm(state, reading) {
+  if (!reading.slots.subject) return "";
+  const held = readBodyJoins(reading.slots.body || "");
+  const current = JOIN_BY_KIND.has(held.kind) ? held.kind : "common";
+  const choices = BODY_TURNS.map(([kind, separator, label]) => `<label class="join-choice"><input type="radio" name="join" value="${kind}"${kind === current ? " checked" : ""}><code>${escapeHtml(separator.trim())}</code> <span>${escapeHtml(label)}</span></label>`).join("");
+  const hidden = [["line", state.line], ["from", state.from], ...state.trail.map((step) => ["t", step])].filter(([, value]) => value)
+    .map(([name, value]) => `<input type="hidden" name="${name}" value="${escapeHtml(value)}">`).join("");
+  return `<form class="add-part" method="get" action="/pivot">
+  <fieldset>
+    <legend>Add to what it holds</legend>
+    <div class="find-row"><input name="add" type="text" maxlength="40" autocomplete="off" spellcheck="false" aria-label="A part to add" placeholder="a word"><button type="submit">Add</button></div>
+    <div class="join-choices">${choices}</div>
+  </fieldset>${hidden}
+</form>`;
 }
 
 /** Pivot groups in the order a line is read: the charge, the word, the lens, what it holds, the scene, where it goes, the join. */
@@ -253,12 +368,15 @@ export function pivotBody(state) {
   </section>`;
   }).join("\n  ");
   const drops = pivots.filter((pivot) => pivot.kind === "drop");
-  const back = state.from ? `<p class="back"><a href="${escapeHtml(pivotHref(state.from))}">Back to <code>${readSpecimen(state.from).paint}</code></a></p>` : "";
+  const backHref = state.trail.length && flat(state.trail[state.trail.length - 1]) === flat(state.from) ? stepHref(state.trail, state.trail.length - 1) : pivotHref(state.from);
+  const back = state.from ? `<p class="back"><a href="${escapeHtml(backHref)}">Back to <code>${readSpecimen(state.from).paint}</code></a></p>` : "";
+  const added = state.added ? `<p class="note added" role="status">Added <code>${escapeHtml(state.added.part)}</code>, ${escapeHtml(JOIN_BY_KIND.get(state.added.kind).label)}.</p>` : "";
   const familyList = families.map(({ slot, query, n }) => `<li><a href="/specimens?q=${escapeHtml(encodeURIComponent(query))}#found"><code>${escapeHtml(query)}</code></a> ${n} lines, with ${escapeHtml(SLOT_SAYS[slot])} open</li>`).join("\n      ");
   const kin = (reading.slots.subject ? holding("subject", reading.slots.subject) : []).filter((specimen) => specimen.id !== state.id).slice(0, 6);
   return `${opening}
 <section class="band here" aria-labelledby="here-title">
   <h2 id="here-title">The line</h2>
+  ${trailNav(state)}
   ${questCard({
     tag: "div",
     glyph: reading.paint,
@@ -267,6 +385,9 @@ export function pivotBody(state) {
     body: cardFacts(Object.entries(reading.slots).map(([slot, value]) => [slot, `<code>${escapeHtml(value)}</code>`])),
     links: [scriptAddress(state.line) ? cardLink(scriptAddress(state.line), "Take it apart") : "", cardLink("/constructs#c-expression", "What each slot is")],
   })}
+  ${added}${slotHandles(reading, pivots)}
+  ${operatorBand(state)}
+  ${addForm(state, reading)}
   ${back}${families.length ? `
   <h3>Families it belongs to</h3>
   <ul class="families-list">
@@ -307,6 +428,30 @@ export const PIVOT_CSS = `${CARD_CSS}
     .slot-group { margin: 1.4rem 0 0; }
     .slot-group h3 { display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .6rem; margin: 0; }
     .slot-group .says { color: var(--muted); font: 400 .82rem/1 var(--mono); }
+    .trail ol { display: flex; flex-wrap: wrap; align-items: center; gap: .2rem .45rem; margin: .3rem 0 .8rem; padding: 0; list-style: none; font: .85rem/1.4 var(--mono); font-variant-ligatures: none; }
+    .trail a { display: inline-flex; align-items: center; min-height: 36px; }
+    .trail .sep { color: var(--muted); }
+    .slot-handles ul, .operators ul { display: flex; flex-wrap: wrap; gap: .35rem; margin: .7rem 0 0; padding: 0; list-style: none; }
+    .slot-handles a, .slot-handles span:not(.says) { display: inline-grid; gap: .1rem; min-height: 44px; box-sizing: border-box; padding: .35rem .6rem; border: 1px solid var(--line); border-radius: var(--radius); color: inherit; text-decoration: none; }
+    .slot-handles code { font: 600 .9rem/1.3 var(--mono); font-variant-ligatures: none; }
+    .slot-handles .says { color: var(--muted); font: .74rem/1.2 var(--mono); }
+    .operators { margin: 1.1rem 0 0; }
+    .operators h3 { margin: 0; }
+    .operators ul a { display: inline-grid; grid-template-columns: 2ch auto; align-items: baseline; min-height: 44px; box-sizing: border-box; padding: .45rem .6rem; border: 1px solid var(--line); border-radius: var(--radius); color: inherit; font: .85rem/1.3 var(--mono); text-decoration: none; }
+    .operators .sigil, .primed .sigil { color: var(--accent); font-weight: 700; }
+    .operators ul a[aria-current] { border-color: var(--accent); background: var(--accent-soft); }
+    .slot-handles a:hover, .slot-handles a:focus-visible, .operators ul a:hover, .operators ul a:focus-visible { border-color: var(--accent); }
+    /* Precise monospace: ~> and the rest show as typed, never as a ligature. */
+    .here code, .add-part code, .slot-group code { font-variant-ligatures: none; }
+    .primed { margin: .7rem 0 0; padding: .7rem .85rem; border: 1px dashed var(--accent); border-radius: var(--radius); }
+    .primed p { margin: 0 0 .35rem; }
+    .primed-line code { font: 600 1rem/1.5 var(--mono); font-variant-ligatures: none; overflow-wrap: anywhere; }
+    .primed-acts a { display: inline-flex; align-items: center; min-height: 44px; }
+    .add-part fieldset { margin: 1.1rem 0 0; padding: .6rem .85rem .8rem; border: 1px solid var(--line); border-radius: var(--radius); }
+    .add-part legend { padding: 0 .3rem; font-weight: 650; }
+    .join-choices { display: grid; gap: .1rem; margin: .5rem 0 0; }
+    .join-choice { display: flex; align-items: center; gap: .55rem; min-height: 44px; }
+    .join-choice code { min-width: 2.5ch; font: 700 1rem/1 var(--mono); font-variant-ligatures: none; color: var(--accent); }
     @media (pointer: coarse) { .starts a, .families-list a { min-height: 44px; } }`;
 
 export function renderPivot(state) {

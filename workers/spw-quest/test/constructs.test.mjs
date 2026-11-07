@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 import worker from '../src/index.js';
 import { CONSTRUCT_KEYS, EDGES, USAGE, joinRows, namingQuestions } from '../src/constructs.js';
 import { OPERATORS, CONTAINERS } from '../src/guide.js';
-import { PIVOT_LIMIT, familiesOf, lineFrom, pivotState, pivotsOf } from '../src/pivot.js';
+import { PIVOT_LIMIT, familiesOf, lineFrom, pivotState, pivotsOf, withBodyPart, withFrontMark } from '../src/pivot.js';
 import { SPECIMENS } from '../src/specimens.js';
 import { BASE_SECURITY } from '../../lib/shell.js';
 
@@ -143,4 +143,40 @@ test('the new pages are reached from learn, build and the shelf, and the guide i
     assert.match(page, /<a href="\/pivot">Pivot a line<\/a>/, path);
   }
   assert.match(await text('/specimens'), /<a href="\/pivot\?s=h-capsule">Pivot<\/a>/);
+});
+
+test('into a line and between lines: its parts as handles, the operators primed then actualized, a part added by the link chosen, and the trail kept', async () => {
+  const P = (q) => new URLSearchParams(q);
+  const line = 'garden[care]{seed}';
+  // Adding to the body: the link chosen joins the parts, and the line it came from is kept behind it.
+  assert.equal(pivotState(P({ line, add: 'water', join: 'ident' })).line, 'garden[care]{seed.water}');
+  assert.equal(pivotState(P({ line, add: 'water', join: 'common' })).line, 'garden[care]{seed,water}');
+  assert.equal(pivotState(P({ line, add: 'water', join: 'ordinal' })).line, 'garden[care]{seed;water}');
+  assert.equal(pivotState(P({ line, add: 'water', join: 'project' })).line, 'garden[care]{seed ~> water}');
+  const added = pivotState(P({ line, add: 'wa}ter', join: 'ordinal' }));
+  assert.equal(added.line, 'garden[care]{seed;water}', 'a brace typed into a part is dropped');
+  assert.equal(added.from, line);
+  assert.deepEqual(added.trail, [line]);
+  assert.equal(withBodyPart('{a}', 'x', 'common'), null, 'a body with no word takes no part');
+  assert.equal(withBodyPart('a[x]{p}\nb[y]{q}', 'x', 'common'), null, 'a file takes no part; one line at a time');
+  // An operator in front: added, or replacing the mark there; a frame is left alone.
+  assert.equal(withFrontMark(line, { sigil: '~' }), '~garden[care]{seed}');
+  assert.equal(withFrontMark('?garden[care]{seed}', { sigil: '!' }), '!garden[care]{seed}');
+  assert.equal(withFrontMark('#>plan[prime]{a}', { sigil: '~' }), null);
+  const primed = await text(`/pivot?line=${encodeURIComponent(line)}&op=potential`);
+  assertBalanced(primed);
+  assert.match(primed, /<section class="operators" id="operators"/);
+  assert.match(primed, /<a href="\/pivot\?line=garden%5Bcare%5D%7Bseed%7D#operators" aria-current="true"/, 'the active operator says so, and a second press lets it go');
+  assert.match(primed, /<a href="\/pivot\?line=garden%5Bcare%5D%7Bseed%7D&amp;op=wonder#operators"/, 'another operator primes in its place');
+  assert.match(primed, /<div class="primed" role="status">/);
+  assert.match(primed, /<a class="actualize" href="\/pivot\?line=%7Egarden%5Bcare%5D%7Bseed%7D&amp;from=garden%5Bcare%5D%7Bseed%7D&amp;t=garden%5Bcare%5D%7Bseed%7D">Actualize: go to this line<\/a>/);
+  // Into the line: each part a handle to its turns; and the trail, origin ~> now.
+  const page = await text(`/pivot?line=${encodeURIComponent(line)}&add=water&join=ordinal`);
+  assertBalanced(page);
+  assert.match(page, /Added <code>water<\/code>, hold the parts in order\./);
+  for (const slot of ['subject', 'mode', 'body']) assert.ok(page.includes(`href="#turn-${slot}"`) && page.includes(`id="turn-${slot}"`), slot);
+  assert.match(page, /<nav class="trail" aria-label="The way here"><ol><li><a href="\/pivot\?line=garden%5Bcare%5D%7Bseed%7D">/);
+  assert.match(page, /<li class="sep" aria-hidden="true"><code>~&gt;<\/code><\/li><li aria-current="step">/);
+  assert.match(page, /<form class="add-part" method="get" action="\/pivot">/);
+  assert.match(page, /<input type="radio" name="join" value="ordinal" checked>/, 'the body\'s own link is the one offered first');
 });
