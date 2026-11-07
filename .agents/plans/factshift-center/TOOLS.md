@@ -201,6 +201,10 @@ Earlier and later point toward the neighboring terms, so the direction is also t
 
 The same commit keeps a placed node inside the stage. The creator: some nodes got locked off screen with no way to free them. A pin past an edge now comes back in, whether it was let go there or kept from a larger window.
 
+**Pull to refresh, and a drag that only moves** (the creator: refreshing by swiping down on the frame was too difficult on a phone, and nodes should be draggable for physics instead of linking):
+- The frame pulls to refresh at any time, not only with `[...]` open. A pull may start on the bare frame or on the title's box in the top band, so the top edge is one handle; a tap on the title still opens it. Letting go does what the note last said.
+- Reflex's motion card has a drag switch, links or moves. Moves is physics only: no node lights as a link target, and no container changes the line. The choice is kept in this browser.
+
 **Cross-document links and `.spw` files** (the creator's wonder). A node whose word names another page or a `.spw` file could open it as a frame, the way `#>` enters one. A `.spw` file dropped on the canvas or given in `?spw=` by address could load as held lines, one frame per top-level expression, stepped through with the action →. Both would read through the workbench's reader that the app already carries.
 
 **A play mechanic on hold.** A hold plays and a release lets go; nothing commits on a hold. On a node, a hold could play its operator and a drag up or down while holding could turn the operator's own quantity (a value's weight, a measure's scale). The receipt comes when the finger lifts.
