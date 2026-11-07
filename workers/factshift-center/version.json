@@ -3,9 +3,13 @@
   "version": "0.0.2-alpha",
   "script": "factshift-center",
   "host": "factshift.center",
-  "snapshot": "2026-10-30",
-  "revision": "99c10e6",
+  "snapshot": "2026-11-06",
+  "revision": "e6ed1b9",
   "checkout": "workers/factshift-center/app",
+  "reader": {
+    "release": "2026.11.07-pre.1",
+    "workbench": "3f53adf2"
+  },
   "query": [
     "alpha",
     "alphaDecay",

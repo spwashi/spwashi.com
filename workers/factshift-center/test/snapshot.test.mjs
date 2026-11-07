@@ -16,3 +16,8 @@ test('the snapshot is the 0.0.2-alpha frame', () => {
   assert.ok(version.query.includes('charge'));
   assert.ok(version.query.includes('velocityDecay'));
 });
+
+test('the snapshot names the workbench reader it reads lines with', () => {
+  assert.match(version.reader.release, /^\d{4}\.\d{2}\.\d{2}(-pre\.\d+|-patch\.\d+)?$/);
+  assert.match(version.reader.workbench, /^[0-9a-f]{7,40}$/);
+});
