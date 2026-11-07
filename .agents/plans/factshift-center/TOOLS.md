@@ -274,6 +274,22 @@ Both are for a phone look first.
 
 **Frame swipes** (the creator: still not easy enough) are being made easier by another session's uncommitted work in the app checkout: a 72px band for sideways steps with the line they would step to. This session left those files alone.
 
+**A conversation, files, and routing with spw.quest** (app 4447a90; the creator: think about what becomes easy, which verbs enhance the context; imagine the tool used conversationally and to load .spw files; improve routing between spw.quest and factshift.center, considering base64).
+- **The thread.** The Spw window keeps a thread of the lines held, newest first, folded to one row until opened. A row's verbs build on the context:
+  - a tap holds the line again;
+  - **+** adds it into the held line's body, held together, so what was said becomes part of what is said next;
+  - **↗** opens it in spw.quest's editor.
+- **Files.** A .spw file comes in by the load button or by a drop anywhere. Each top-level expression becomes a row, and the first with content is held.
+- **Routing.** A script travels between the sites as base64url in the fragment (`#spw64=`), so it never reaches a server.
+  - spw.quest's /build links its file as "Open on factshift.center", and the guide links each example as Canvas. Both carry what the editor holds when clicked.
+  - factshift.center loads that script into the thread, and spw.quest's /build reads one back into its editor.
+  - `?spw=` still carries a single line.
+
+**Fractal zoom over a file** (the creator: fractal zooming across linguistic features would make navigating file regions easier; cluster by feature, and choose a canvas configuration for lines or nested containers). Proposed, for a loaded file:
+- **Zoom levels:** a pinch or a key steps through file → frames (`#>`) → lines → slots → parts. Each level draws only what can be told apart there: a frame as one node with its count, a line as its word, a slot as its brace.
+- **Clustering:** a feature switch groups the file's lines by operator in front, by lens (`[mode]`), by frame or by what they hold, each group a region.
+- **Configuration:** a choice of *lines*, each expression a node in a row, or *containers*, nested expressions as nested regions. It is kept with the page, and the thread's rows stay the index into it.
+
 **Cross-document links and `.spw` files** (the creator's wonder). A node whose word names another page or a `.spw` file could open it as a frame, the way `#>` enters one. A `.spw` file dropped on the canvas or given in `?spw=` by address could load as held lines, one frame per top-level expression, stepped through with the action →. Both would read through the workbench's reader that the app already carries.
 
 **A play mechanic on hold.** A hold plays and a release lets go; nothing commits on a hold. On a node, a hold could play its operator and a drag up or down while holding could turn the operator's own quantity (a value's weight, a measure's scale). The receipt comes when the finger lifts.
