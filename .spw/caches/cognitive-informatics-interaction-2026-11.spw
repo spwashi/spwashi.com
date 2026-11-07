@@ -1,0 +1,340 @@
+# Cognitive Architecture, Informatics & Interaction Theory (2026-11)
+#
+# Unifies the site's cognitive-surface philosophy, hormonal/register attention
+# field math, metaphor-dimensional coordinate space, progressive elaboration
+# runtime strata, epistemic vs. pragmatic interaction ergonomics, and formal
+# informatics (anti-unification, inquisitive semantics, variation theory,
+# cognitive dimensions of notations) across spwashi.com, spw.quest, and
+# factshift.center.
+#
+# Grown in place, 2026-11-07: each insight now carries its roots (live,
+# proposed, prototype, imagined) and branches named by the axis they vary,
+# so a session picks a branch to grow rather than a verdict to defend.
+
+#>cognitive_informatics_interaction_2026_11
+#:cache #!cognition #!informatics #!interaction #!attention #!theory
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@cognitive_surface: ~"../philosophy/cognitive-surface.spw"
+@wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
+@spirit_cycle: ~"../philosophy/spirit-cycle.spw"
+@spatial_grammar: ~"../philosophy/spatial-grammar.spw"
+@attention_field: ~"../conventions/attention-field.spw"
+@metaphor_dimensional_lexicon: ~"../conventions/metaphor-dimensional-lexicon.spw"
+@js_architecture_cognition: ~"../conventions/js-architecture-cognition.spw"
+@circuit_components: ~"../conventions/circuit-components.spw"
+@component_biome: ~"../conventions/component-biome.spw"
+@theory_map: ~"./theory-map-2026-10.spw"
+@chrome_ecology: ~"./chrome-ecology-2026-11.spw"
+@interaction_grammar: ~"../../.agents/plans/interaction-grammar/interaction-grammar.spw"
+@planes_plan: ~"../../.agents/plans/spw-planes/PLAN.md"
+@planes_ecology: ~"../../.agents/plans/spw-planes/ecology.spw"
+@planes_physics: ~"../../.agents/plans/spw-planes/physics.spw"
+@planes_quest: ~"../../.agents/plans/spw-planes/quest.spw"
+@planes_ground: ~"../../.agents/plans/spw-planes/ground.spw"
+@operators_note: ~"../../.agents/plans/factshift-center/OPERATORS.md"
+@spw_quest_wip: ~"../../.agents/plans/spw-quest/wip.spw"
+@wonder_script: ~"../../scripts/wonder.mjs"
+
+operation = "cache"
+fixity = "experimental"
+expression = cognition[informatics]{epistemic.field.lattice.fluency}<traverse>
+
+summary = #[
+  `A cognitive surface models the visitor's attentional arc rather than discrete click events: legibility deepens with engagement, past attention leaves a structural trace, and mistakes are revisable without reload.`,
+  `Separating priming (~) from committing (!) implements Kirsh & Maglio's (1994) distinction between epistemic actions (rearranging external representations to offload working memory without world-mutation cost) and pragmatic actions (spending bane commitment cost to advance toward a goal).`,
+  `Spw's brace-and-operator grammar balances Green & Petre's (1996) Cognitive Dimensions of Notations: low viscosity via 1-lexOp slot/seam turns, zero premature commitment via α ≈ 0.05 pending-question warmth, explicit provisionality (~), and strict separation of secondary notation (pins, swabs, camera altitude) from primary bytes until elevated with ^.`,
+  `One operational coordinate space (cost_class, elaboration_stage, cognitive_stratum, express_channel) projects cleanly across four dictionaries: Hormonal Field Math, Electrical Circuit Roles, Ecological Nutrient Budgets, and Formal Informatics Lattices.`,
+  `Each insight branches: options named by the axis they vary, roots marked live, proposed, prototype or imagined, and three new insights (three clocks, shared ground as a generalization, wonders as inquisitive content) for the next session to grow.`,
+][reg=set]
+
+contents = #[
+  ~"./cognitive-informatics-interaction-2026-11.spw#surface_taxonomy",
+  ~"./cognitive-informatics-interaction-2026-11.spw#epistemic_vs_pragmatic_actions",
+  ~"./cognitive-informatics-interaction-2026-11.spw#cognitive_dimensions_and_formal_informatics",
+  ~"./cognitive-informatics-interaction-2026-11.spw#unified_field_circuit_nutrient_coordinates",
+  ~"./cognitive-informatics-interaction-2026-11.spw#progressive_elaboration_and_spirit_fluency",
+  ~"./cognitive-informatics-interaction-2026-11.spw#three_clocks",
+  ~"./cognitive-informatics-interaction-2026-11.spw#ground_as_generalization",
+  ~"./cognitive-informatics-interaction-2026-11.spw#wonders_as_inquisitive_content",
+  ~"./cognitive-informatics-interaction-2026-11.spw#relay",
+  ~"./cognitive-informatics-interaction-2026-11.spw#stream",
+][reg=set]
+
+^"surface_taxonomy"{
+  insight #cii-001 {
+    title = `Informational vs. Interactive vs. Cognitive Surfaces across the Three Planes`
+    status = `active`
+    rung = `sketch`
+    claim = `The three planes (spwashi.com, spw.quest, factshift.center) cross from interactive to cognitive at the exact moment an interaction models the quality and history of attention rather than treating every tap as stateless.`
+    tiers = .{
+      informational = `Delivers static content to a passive reader; reading twice produces the same state (no-JS baseline HTML,authored_prior).`
+      interactive = `Responds to discrete user events ("a tap is a tap"); state changes without modeling attentional dwell, prior path, or provisional uncertainty.`
+      cognitive = `Models the visitor's attentional arc (@cognitive_surface): legibility deepens with sustained inspection, depth is traversable and reversible, past attention leaves a semantic residue (screenshot after engagement carries more information than default load), and wrong assumptions are correctable in place.`
+    }[reg=facet]
+    plane_realization = .{
+      spwashi_com = `Models dwell salience (bands 0..4), two-beat hold collection (~ held -> * settled), and liminal span progression (entry -> threshold -> deep -> projected -> settled).`
+      spw_quest = `Models syntactic variation and Plotkin/Reynolds anti-unification: holding the ground constant while priming a 1-slot wall or seam turn so the visitor perceives what a single mark changes.`
+      factshift_center = `Models spatial equilibrium, orbital inquiry warmth (α ≈ 0.05 while ? is open), and post-decision structural residue (* filled + taut tether + dashed halo vs . hollow + slack tethers).`
+    }[reg=facet]
+    roots = .{
+      spwashi_com = `live: dwell salience and the hold that collects run today (@attention_field; wonder-memory.js).`
+      spw_quest = `live in part: /pivot shows a one-slot turn before it is taken; computing the ground two lines share is imagined (#cii-007).`
+      factshift_center = `proposed and prototyped: warmth while ? is open is the physics report's P1, and the filled, taut, haloed residue is its throwaway demo, not the site yet (@planes_physics).`
+    }[reg=facet]
+    branches = .{
+      kind_or_dial = `axis: kind or degree. Is cognitive a third kind of surface, or a dial every surface turns? As a dial, each plane reads how far it is turned: how much a second visit differs from the first.`
+      whose_memory = `axis: whose trace. A surface can remember per visitor (wonder memory, this browser), per line (an address carries its history), or per page (what many visits wear into it, which would need a shared store the site does not keep). Each plane picked one without saying so.`
+      capture_as_memory = `axis: where the trace lives. If a screenshot after engagement holds more than one at load, the capture is the surface's memory leaving the site; screenshots already travel off it to be read by people and by models.`
+    }[reg=facet]
+  }
+}
+
+^"epistemic_vs_pragmatic_actions"{
+  insight #cii-002 {
+    title = `Epistemic Actions (~) vs. Pragmatic Actions (!) as Cognitive Ergonomics`
+    status = `active`
+    rung = `probe`
+    claim = `The two-beat prime-then-commit rule across all three planes is the operational form of Kirsh & Maglio's (1994) epistemic vs. pragmatic action distinction and Sweller's (1988) extraneous cognitive load reduction.`
+    epistemic_action = .{
+      mark = `~ (potential) · ? (open probe) · camera frame · wall/seam preview · tie prime`
+      definition = `An external physical action performed not to mutate the world toward a final goal, but to uncover hidden relationships, test a counterfactual reading, or offload mental simulation onto the screen.`
+      cost = `Zero byte mutation; reversible with . (let go); preserves node identity and address.`
+    }[reg=facet]
+    pragmatic_action = .{
+      mark = `! (actualize) · ^ (lift into body) · * (settle/save) · > (enterNode route change)`
+      definition = `An action that commits a structural mutation to the expression, graph, or route history and pays commitment cost (bane).`
+      cost = `Rewrites bytes or crosses an address door; emits a durable operator-voiced receipt.`
+    }[reg=facet]
+    collapse_bugs_caught = #[
+      `factshift.center pinch-spread and pinch-closed calling enterNode/navigateUp at the scale threshold: forces a pragmatic route change when the visitor was performing an epistemic zoom.`,
+      `factshift.center single-tap select vs 320ms double-tap rename vs second-tap enterNode: three incompatible cognitive intents sharing one unbadged target.`,
+      `spwashi.com pocket hold arming both cauldron (420ms) and region-menu (460ms): an epistemic inspection gesture collides with a pragmatic collection write and occludes 51% of the reading ground.`,
+    ][reg=set]
+    roots = .{
+      two_beat = `live on spw.quest's /pivot (a tap shows the turn, a second tap takes it); in progress on factshift.center, where a dropped tie can be held as ~ until ! writes it (the other session's tie modes, uncommitted).`
+      collapses = `live: frameGesture in pinch.ts enters a node once a spread passes its threshold and goes up once a pinch closes past it; circle.ts takes a second tap within 320 ms; site nodes open on a second tap; and on spwashi.com one hold reaches the cauldron and the region menu together (@planes_ecology).`
+    }[reg=facet]
+    repairs = #[
+      `pinch: past the threshold, show the frame it would open, and take it on a second spread or on release, so a zoom stays a look until the hand says otherwise.`,
+      `second tap: let the first tap say what the second will do, as site nodes already do, and mark the node while it is armed.`,
+      `pocket hold: the region menu yields a held living term to the cauldron, the way brace-gestures yielded on 2026-09-03; one hold, one answer (@chrome_ecology names the two clocks it runs on).`,
+    ][reg=set]
+    branches = .{
+      gradient = `axis: how much the world changes. A pivot's trail writes the address, so even a look leaves a mark. Epistemic and pragmatic may be the ends of one dial, measured in bytes changed and doors crossed.`
+      lands = `axis: valence. boon (arrival) and bone (hold) are where looking happens; bonk is the step from held to taken; honk is the receipt; bane is the cost the step spends (@planes_ground). The two lands that lapsed were the two transitions: the pragmatic beat is the one that left the map.`
+      heat = `axis: time. On the canvas a look keeps the field warm and a commit lets it cool; heat runs out in about two seconds, so a look that is not renewed settles into a resting picture (@planes_physics).`
+      who_holds_alternatives = `axis: who holds them. Kirsh and Maglio's players rotate pieces to see; here alternatives can be held by the screen (a ? circling), the address (/pivot's trail) or the visitor's memory. Each holder costs something different.`
+    }[reg=facet]
+  }
+}
+
+^"cognitive_dimensions_and_formal_informatics"{
+  insight #cii-003 {
+    title = `Cognitive Dimensions of Notations (Green & Petre, 1996) and Formal Lattices`
+    status = `active`
+    rung = `sketch`
+    claim = `Spw's four wall pairs ([] () {} <>), four body seams (. , ; ~>), and twelve operators form a low-viscosity, low-premature-commitment notation whose comparative semantics are governed by anti-unification, formal concept analysis, inquisitive semantics, and variation theory.`
+    cognitive_dimensions = .{
+      viscosity = `Resistance to local change. Lowered to 1 lexOp when spw.quest/pivot and factshift.center line-joints turn a wall ([care] -> (care)) or a seam (. -> ~>) while conserving every other byte.`
+      premature_commitment = `Forced early decisions. Eliminated when ?garden holds candidate answers in orbital suspension (α ≈ 0.05) and ~ previews the target line before ! writes.`
+      hidden_dependencies = `Implicit links made visible through :has() resonance rings on spwashi.com, slot-delta diffs on spw.quest, and dashed/solid tethers on factshift.center.`
+      provisionality = `Support for tentative sketching: ~ prefix, dashed prime ties, and cursive Boon in folio lettering.`
+      secondary_notation = `Non-syntactic cues (pins, color swabs, camera zoom/pan) kept strictly in the view layer until explicitly lifted into {} via ^.`
+      progressive_evaluation = `Immediate live re-rendering of partial or turned expressions across card wording, slot propositions, and force profiles.`
+    }[reg=facet]
+    formal_foundations = .{
+      discourse_triad = `Kintsch & van Dijk (1978) / van Dijk & Kintsch (1983): surface wording (spwashi.com card), propositional textbase (spw.quest slots), and situation model (factshift.center force field).`
+      diagrammatic_indexing = `Larkin & Simon (1987): diagrams beat sentential text only when spatial adjacency groups items that share an inference step and eliminates search.`
+      anti_unification = `Plotkin (1970) & Reynolds (1970): comparing two Spw lines extracts their least general generalization (ground) and isolates the differing slot (edge).`
+      variation_theory = `Marton (2014): a learner discerns a semantic dimension when that single slot varies (the edge) against an invariant background (the ground).`
+      inquisitive_semantics = `Groenendijk & Roelofsen (2009): an open ?question denotes the set of its candidate resolutions ($%[...]); a probe or ! act narrows the set until one * settled answer remains.`
+      concept_lattices = `Wille (1982) Formal Concept Analysis: grouping expressions by shared slot values forms a concept lattice complementary to graded token kinship.`
+    }[reg=facet]
+    strains = #[
+      `viscosity is low for a wall or seam turn and still high for nesting and for joining two lines, which are typing only (@operators_note, the table of changes).`,
+      `hidden dependencies also run between readers: the dot is one name on spw.quest's /forms/ and two bonded nodes on factshift.center (@planes_quest).`,
+    ][reg=set]
+    unmapped_dimensions = .{
+      consistency = `Similar notation, different meaning: < > reads "what this is about" on the guide and "where it goes" on /forms/ and /pivot, and three operator names differ on spwashi.com. The planes pass suggests this is where Spw is weakest today.`
+      role_expressiveness = `Can a reader tell a part's job at a glance? factshift.center's resting looks (dashed ~, hollow ?, heavy !) make marks role-expressive on the canvas; as bare sigils in text they are not yet.`
+      closeness_of_mapping = `Join figures map meaning to shape: a ring for ",", a row for ";", a tight chain for ".", a rising path for "~>".`
+      visibility_juxtaposability = `/forms/ sets two lines side by side, and the map's whole step draws a file at once; two people's lines are not yet set side by side anywhere (#cii-007).`
+      diffuseness_terseness = `One line holds what a paragraph would; the terseness is both the gift and the barrier.`
+      error_proneness = `A missing close brace turns a body into a word; factshift.center's bundled runtime still rejects ";", and now says so in words.`
+      hard_mental_operations = `A scene inside a nested body, or a path whose steps nest, is where readers slow down.`
+      abstraction_gradient = `word, mark, line, file, frame (#>): fractal zoom on factshift.center steps the gradient by hand.`
+    }[reg=facet]
+  }
+}
+
+^"unified_field_circuit_nutrient_coordinates"{
+  insight #cii-004 {
+    title = `One Coordinate Space, Four Projection Dictionaries (Field, Circuit, Nutrient, Stratum)`
+    status = `active`
+    rung = `sketch`
+    claim = `Per @metaphor_dimensional_lexicon, architectural and attentional state lives in one coordinate space (express_channel, cost_class, elaboration_stage, cognitive_stratum) and projects isomorphically into hormonal field math, electrical circuits, ecological nutrient budgets, and runtime strata.`
+    hormonal_field_math = .{
+      jaccard_distance = `d(a,b) = 1 - |T(a) ∩ T(b)| / |T(a) ∪ T(b)| over normalized role, kind, operator, path, and charge tokens.`
+      emission_strength = `σ₀(reading)=0.2, σ₀(browsing)=0.4, σ₀(comparing)=0.6, σ₀(inspecting)=0.8, σ₀(collecting)=1.0 (with floor σ_min > 0).`
+      temporal_decay = `σ(Δt) = σ₀ · exp(-Δt / τ) with τ ≈ 40s; intrigue dynamics dE/dt = k·a·n - λE settling at k·a·n/λ with half-life ln(2)/λ.`
+      spatial_influence = `I(a→b, Δt) = σ(Δt) · r(b, T(a)) · exp(-α · d(a,b)); total field F(b) = Σᵢ I(aᵢ→b, Δtᵢ); normalized bias(b) = tanh(β · F(b)).`
+      salience_analog = `Itti & Koch (1998) feature maps + normalization + local resonance, with charge discharge acting as inhibition of return rather than destructive winner-take-all.`
+    }[reg=facet]
+    dictionary_isomorphism = #[
+      `depth | valence | --spw-field-intensity (Field: charge σ₀) ↔ (Circuit: voltage / substrate wash) ↔ (Nutrient: arrival deposit) ↔ (Stratum: working_set)`,
+      `resonance | --spw-resonance (Field: neighbor receptor echo I(a→b)) ↔ (Circuit: current / coupling ring) ↔ (Nutrient: mycorrhizal kin salience) ↔ (Stratum: interpretation + working_set)`,
+      `attention | --spw-attention (Field: dwell-weighted bias tanh(βF)) ↔ (Circuit: inductance / attention-architecture.js momentum) ↔ (Nutrient: canopy light uptake) ↔ (Stratum: perception)`,
+      `memory | --field-balance (Field: σ_min collecting floor) ↔ (Circuit: capacitance / wonder-memory.js storage) ↔ (Nutrient: rhizosphere reserve & decomposer return) ↔ (Stratum: memory)`,
+      `friction | damping (Field: spatial decay α & velocity decay) ↔ (Circuit: resistor / haptics.js attenuation) ↔ (Nutrient: Gause niche exclusion & canopy shade) ↔ (Stratum: orchestration gate)`,
+    ][reg=set]
+    fifth_dictionary = .{
+      note = `The planes pass offers a fifth projection beside @circuit_components and @component_biome: valence and the lifecycle. Each cell fits, strains or is open; a strain is where the theory may grow.`
+      depth = `boon, arrival · fits`
+      resonance = `honk, the receipt announced · strains: honk sends a signal outward, while resonance echoes between neighbors`
+      attention = `bonk, the step from held to taken · open`
+      memory = `bone, the carrier · fits: bone holds what remains`
+      friction = `bane, the cost a commit spends · fits`
+    }[reg=facet]
+    clocks = `A row that matches across dictionaries can still run on different clocks: the field fades over tens of seconds, the canvas cools in about two, and an address keeps a line indefinitely (#cii-006).`
+  }
+}
+
+^"progressive_elaboration_and_spirit_fluency"{
+  insight #cii-005 {
+    title = `Eight-Stage Progressive Elaboration Coupled to the Spirit Cycle and Circuit Fluency`
+    status = `active`
+    rung = `seed`
+    claim = `The runtime's eight elaboration stages (@js_architecture_cognition) and six cost classes govern machine work while the five-phase Spirit Cycle (@spirit_cycle) and four-tier Circuit Taxonomy (@interaction_grammar) govern human practitioner development.`
+    elaboration_pipeline = `prior (HTML/CSS world model) -> self_model (IMMEDIATE core) -> perceptual_gate (VISIBLE handles) -> region_model (REGION harmony) -> deep_interpretation (full semantics) -> idle_refinement (IDLE metacognition) -> engaged_work (INTERACTION demand tools) -> settle (canonical still).`
+    cost_classes = `working_memory_pressure (selector scan breadth) · premature_commitment (boot-time lab mounts) · interference (duplicate listeners / stale mirrors) · demand_coupled (IO/rAF/interaction gated) · paint_composite (:has / express invalidation) · authored_prior_safe (meaning revises without geometry shift).`
+    human_arc_alignment = #[
+      `1. Initiation (entry liminality, #:layer / ?) ↔ Entry circuit (self-explaining, zero prior vocabulary) ↔ prior + self_model + perceptual_gate.`,
+      `2. Resistance (threshold -> settled, #!pragma / %, productive bane friction vs broken UI) ↔ Practiced circuit (reveals additional address/depth) ↔ region_model + deep_interpretation.`,
+      `3. Transformation (local pivot, & / ^, structural revelation derived after the fact per @wonder_doctrine) ↔ Fluent circuit (low cognitive load, reflexive) ↔ engaged_work (epistemic -> pragmatic turn).`,
+      `4. Expression (projected -> deep, > / !, screenshot-worthy discharge) ↔ Habitual circuit / Mastered spell ↔ portable_export + #spw64= door.`,
+      `5. Return (settled / ambient, . / ~, earned rest with journey mark) ↔ Decomposer / Reserve return ↔ settle + memory stratum.`,
+    ][reg=set]
+    branches = .{
+      one_visit_or_many = `axis: timescale. The Spirit Cycle is an arc within one passage; the circuit tiers grow across many visits. Aligned row by row they read as one ladder; read as two clocks, any phase can happen at any tier, and the grid of the two is the space to design for.`
+      machine_meets_visitor = `axis: who elaborates. The runtime's eight stages run on every load; a visitor's phases run once per passage. Where the machine's settle meets the visitor's return, a returning visit might be offered less, sooner.`
+    }[reg=facet]
+  }
+}
+
+
+^"three_clocks"{
+  insight #cii-006 {
+    title = `Three Clocks: Seconds on the Canvas, Tens of Seconds on the Site, Indefinitely in the Address`
+    status = `active`
+    rung = `sketch`
+    claim = `The three planes keep warmth on three timescales, and the difference may be the plainest way to tell them apart.`
+    clocks = .{
+      factshift_center = `seconds: every force is multiplied by heat; heat starts near 0.35 and decays 0.05 a tick, and no part moves after about two seconds (@planes_physics).`
+      spwashi_com = `tens of seconds: wonder memory's signal decays as σ₀ · exp(−Δt/τ) with τ ≈ 40 s (@attention_field).`
+      spw_quest = `indefinitely: the state of a page lives in its address, and a line held there does not decay (@spw_quest_wip).`
+    }[reg=facet]
+    reading = `Bone does not decay; boon and bane are spent. The bench that carries lines between the planes is the one with no clock, which fits the planes pass's finding that the line is bone (@planes_plan).`
+    branches = .{
+      couple_the_clocks = `axis: coupling. An open ? could hold the canvas's heat at a floor, the way collecting holds σ above its floor on the site; the two warmths would then share one rule.`
+      clocks_as_copy = `axis: what a reader is told. Each plane could say its clock once, plainly: the canvas settles in a breath, the site remembers for under a minute, the address keeps what you wrote.`
+    }[reg=facet]
+  }
+}
+
+^"ground_as_generalization"{
+  insight #cii-007 {
+    title = `Shared Ground as the Least General Generalization of Two Lines`
+    status = `active`
+    rung = `seed`
+    claim = `Spw began as a way to find where two people's understandings stop sharing ground. Anti-unification computes that: the least general generalization of two lines is the ground they share, and each variable it has to introduce is a place where they part.`
+    example = `garden[care]{seed; water}(yard) and garden[harvest]{seed; sun}(yard) generalize to garden[X]{seed; Y}(yard): the ground keeps the word, the scene and the first part; X and Y are the two edges.`
+    roots = .{
+      today = `spw delta counts the edits between two lines but does not name the slot where they part (@planes_ground, its parting_slot wonder).`
+      readers = `the slot readers on spw.quest and factshift.center already split a line into word, mode, body parts, scene and concept: the tree an anti-unifier walks.`
+    }[reg=facet]
+    instrument = `On spw.quest, two people paste a line each; the page shows the ground they share in plain ink and each edge as a slot to talk about. A brief between two stakeholders becomes an agenda of edges.`
+    branches = .{
+      edges_as_wonders = `axis: what an edge becomes. Each edge could be written back as a ? wonder whose $% set holds both people's values (#cii-008).`
+      variation_found = `axis: who makes the variation. Marton asks a teacher to vary one dimension against a held ground, and /forms/ does it by hand; an anti-unifier could find the dimension two learners actually varied.`
+    }[reg=facet]
+  }
+}
+
+^"wonders_as_inquisitive_content"{
+  insight #cii-008 {
+    title = `The Repo's Wonders Already Are Inquisitive Denotations`
+    status = `active`
+    rung = `sketch`
+    claim = `In inquisitive semantics a question denotes the set of its resolutions. A wonder's $% set is that set; ~#expect is a guess over it; ~#answer picks a member; ~#retired withdraws the question without resolving it. The inquiry loop is an inquisitive-semantics machine already.`
+    roots = .{
+      live = `npm run wonder reads every wonder's set, guess and answer, and sorts them open, probed, answered or retired (@wonder_script), following the lifecycle @theory_map names.`
+    }[reg=facet]
+    branches = .{
+      weighted_sets = `axis: how much is known. A guess could weight the members instead of naming one, so a probe shifts weight rather than flipping a verdict.`
+      let_go_as_withdrawal = `axis: how a question ends. On the canvas, . lets a ? go without answering it; in the loop that is ~#retired. The two planes would then share one ending for an open question.`
+    }[reg=facet]
+  }
+}
+
+^"relay"{
+  ~#note: "How the next session grows this file. Gemini and Claude sessions have taken turns here; any session can take the next."
+  rungs = #[
+    `seed: said once, worth keeping.`,
+    `sketch: worked through, with its strains named.`,
+    `probe: a runnable check exists.`,
+    `landed: in code or copy, with a commit.`,
+  ][reg=set]
+  turn = #[
+    `Pick one branch and say the axis it varies.`,
+    `Move one claim one rung, and say where it is rooted: live, proposed, prototype or imagined.`,
+    `Leave the other branches standing; a branch closes by the creator's word or a probe's receipt.`,
+    `Add a dated line to the stream.`,
+  ][reg=set]
+}
+
+^"stream"{
+ >>[2026-11-07 16:53] seed — a Gemini session: cii-001 to cii-005, the epistemic budget wonder, and a cognition lab in a gitignored reading page (.tmp/readings/spw-planes-2026-11-07.html).
+ >>[2026-11-07 18:10] sketch — a Claude session, at the creator's ask to grow the file generatively rather than correct it: roots and named-axis branches on each insight, repairs for the three gesture collapses, Green and Petre's unmapped dimensions, a fifth dictionary from the planes pass, three new insights (three clocks, shared ground as a least general generalization, wonders as inquisitive content), the relay, and three wonders. Two slips fixed in place: twelve operators, extraneous load.
+}
+
+#>wonder_cognitive_epistemic_budget
+?["How many epistemic actions (~ previews, wall turns, seam hovers, camera frames) does a visitor take per pragmatic commit (!), and where does a surface force premature commitment?"]{
+  #:depth #!computational ~#lens(inquiry: epistemic vs pragmatic ratio)
+  ~#with: @cognitive_surface @interaction_grammar
+  ~#hypothesis: "A healthy cognitive bench supports 3–7 epistemic previews per pragmatic commit; any surface where epistemic/pragmatic < 1 is forcing navigation or mutation before understanding."
+  ~#expect: "spw.quest/pivot already supports high epistemic ratios; factshift.center's pinch-spread and second-tap entry collapse the ratio to 0 on spatial doors."
+  ~#unblocks: @planes_plan
+  ~#probe(read)
+  !probe{ "in .tmp/readings/spw-planes-2026-11-07.html#study-cognition, compare the epistemic-pragmatic trace on a collapsed gesture against the two-beat primed gesture and count the working-memory resets." }
+  $%[ratio.epistemic_high, ratio.collapsed, commitment.premature]
+}
+
+#>wonder_cognitive_three_clocks
+?["Do the three planes keep warmth on three clocks: seconds on the canvas, tens of seconds on the site, indefinitely in an address?"]{
+  ~#expect: "Yes: heat near 0.35 decaying 0.05 a tick on factshift.center, τ ≈ 40 s on spwashi.com, and no decay in spw.quest's address."
+  ~#unblocks: @planes_plan
+  ~#probe(run)
+  !probe{ "rg -n 'alphaDecay|velocityDecay' workers/factshift-center/app/src/ts/simulation/force-config.ts && rg -n 'parameter_tau' .spw/conventions/attention-field.spw" }
+  $%[clocks.three, clocks.two, clocks.one]
+}
+
+#>wonder_cognitive_ground_lgg
+?["Can the slot readers anti-unify two people's lines into a shared ground and named edges?"]{
+  ~#expect: "For flat lines yes, with the slot reader as the tree; nested bodies need a walk the readers do not do yet."
+  ~#unblocks: @planes_quest
+  ~#probe(read)
+  !probe{ "read garden[care]{seed; water}(yard) and garden[harvest]{seed; sun}(yard) through spw.quest's slot reader and write the ground by hand; then try a nested body" }
+  $%[lgg.flat, lgg.nested, lgg.neither]
+}
+
+#>wonder_cognitive_weakest_dimension
+?["On which of Green and Petre's dimensions does Spw do worst today?"]{
+  ~#expect: "Consistency: three readers disagree on the dot, on < > and on three operator names."
+  ~#unblocks: @planes_plan
+  ~#probe(read)
+  !probe{ "for each dimension in #cii-003, find one place on the three sites where it helps and one where it hurts; count the hurts" }
+  $%[dimension.consistency, dimension.error_proneness, dimension.hard_mental_operations, dimension.other]
+}
