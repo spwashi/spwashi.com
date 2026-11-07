@@ -333,3 +333,16 @@ invariants: #[
   !probe{ "rg -n 'backdrop-filter' workers/factshift-center/app/src/stylesheets" }
   $%[glass.windows, glass.all_chrome, glass.none]
 }
+
+#>wonder_factshift_multitouch
+?["On a phone, should spreading two fingers on a node enter it as a frame, and closing them inside a frame return to its parent?"]{
+  #:depth #!experiential ~#lens(choice)
+  ~#with: @tools
+  ~#taste: "The creator: consider gestures related to multi-touch on the frame against the canvas; perspective indexing, layering, fractals and embedded frames."
+  ~#hypothesis: "Spreading to enter and closing to leave makes the fractal a motion of the hands; on the canvas the same fingers keep moving the camera, so where the fingers land says which is meant."
+  ~#tension: "A pinch on a node resizes it today (9bfe7ce), and a pinch is close to a spread; entering by spread could steal a resize, so a node may need its own threshold or a hold before the spread."
+  ~#expect: "A two-finger pinch on a node resizes it, and no gesture enters a frame; entering is a choice in the node panel (6b85a42)."
+  ~#probe(read)
+  !probe{ "rg -n 'pinch' workers/factshift-center/app/src/js/ui/focal-point.ts" }
+  $%[enter.spread, enter.hold_then_spread, enter.panel_only]
+}

@@ -117,6 +117,23 @@ The creator: dragging containers or interacting with regions should come with mo
 - **Selection reaches the joins.** Selecting two parts of a body selects the separator between them. Pressing `.` `,` `;`, or `~>` (or choosing it from a chip row under the selection) rewrites that join; `.` ident, `,` common, `;` ordinal, `~>` project, the joins `expression-query.js` already reads. The same selection over a compound (`~` `^` `&` `@`) offers its marks.
 - *Slices.* G1, quiet regions, is a feel change ending at a demo. G2 moves regions and G3 drops into containers, both under the C2 receipts. G4, joins by selection, follows G3. Each is checked in the browser by a held line rewritten byte for byte.
 
+## Multi-touch: frame or canvas
+
+The creator asked to consider multi-touch gestures on a frame against the canvas. PLAN.md's gesture grammar already reads one rule per target (handle, lens, node, empty stage). This adds the count of fingers and the difference between where they land: on the canvas, the fingers move the view and the field; on a frame, meaning a region, a container, or an entered node's page, the same fingers act on that frame.
+
+| fingers | on the canvas | on a frame |
+|---|---|---|
+| two, pinch | zoom the camera | size the frame (G2's consequence) |
+| two, spread on a node | — | enter the node as a frame (`#>`) |
+| two, pinch closed inside an entered frame | — | return to the parent frame (`.`) |
+| two, drag | pan the camera | move the frame, which moves its slot in the line (G2) |
+| two, twist | turn the field | turn the selection's join through `.` `,` `;` `~>` (G4) |
+| three, swipe | step the story's kept states (`^`) | step this frame's own history |
+
+- **Why.** The fractal the creator named (embedded frames, perspective, layering) becomes something the hands do: spreading enters a frame and closing leaves it, at any depth, and the address bar shows the path of frames (frame navigation, above).
+- **The guards.** A two-finger gesture never fires a one-finger act on the way in. A gesture the target cannot take does nothing and shows no region (Regions, above). A trackpad's pinch and a two-finger scroll keep their desktop meanings.
+- **Gate:** a demo on a phone, after G1 and C2, and `#>wonder_factshift_multitouch` for whether spreading to enter is the right hand for the fractal.
+
 ## A glass tool (Apple's Liquid Glass)
 
 The creator asked about designing a tool that could accommodate Apple's Liquid Glass design future: controls as a translucent layer that floats above content and takes its light from what lies beneath. factshift.center is close already, since every tool window floats above the canvas, and spwashi.com has a glass metamaterial (`effects/material.css`, `data-spw-metamaterial="glass"`).
