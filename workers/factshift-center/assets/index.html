@@ -13,9 +13,9 @@
     <meta itemprop="description" content="7D force simulation with Spw command language">
     <link rel="icon" href="/v0.0.1/favicon/16.png">
     <link rel="manifest" href="/manifest.json">
-  <script type="module" crossorigin src="/assets/main-KdNdeLqh.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/index-dv3tNIyJ.js">
-  <link rel="stylesheet" crossorigin href="/assets/index-2-W7ZDFw.css">
+  <script type="module" crossorigin src="/assets/main-eZyXvtRr.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/index-AmCOHqhC.js">
+  <link rel="stylesheet" crossorigin href="/assets/index-bxxoJOyf.css">
   <link rel="stylesheet" crossorigin href="/assets/main-_qtzgt2L.css">
 </head>
 <body data-mode="nothing"
@@ -100,28 +100,49 @@
     <section id="spw-mode-container" data-mode-panel="spw">
         <div id="spw-container" data-role="spw-input">
             <div class="spw-field">
-                <label>
-                    <span data-role="spw-form">spw</span>
-                    <textarea id="spw-parse-field"
-                              aria-label="Spw expression input"></textarea>
+                <label class="spw-head" for="spw-parse-field">
+                    <span class="spw-name">spw</span>
+                    <span data-role="spw-form"></span>
                 </label>
-                <button type="button"
-                        data-action="clear-spw-prompt"
-                        title="Empty the prompt"
-                        hidden>clear</button>
                 <!-- A run holds the line on the canvas; with trace on, the
                      runtime's own trace (its stages and registers) is shown. -->
                 <button type="button"
                         data-action="spw-trace"
                         aria-pressed="false"
-                        title="Show the runtime's trace on the canvas instead of the line">trace</button>
+                        title="Run shows the runtime's trace instead of the line">trace</button>
+                <!-- The line in one container, its front mark in a gutter: the
+                     operator field opens from where an operator goes. -->
+                <div class="spw-line">
+                    <button type="button"
+                            class="spw-front"
+                            data-action="spw-operator-open"
+                            aria-expanded="false"
+                            aria-controls="spw-operator-field"
+                            title="Operator before the word">&#9676;</button>
+                    <textarea id="spw-parse-field"
+                              aria-label="Spw expression input"></textarea>
+                    <button type="button"
+                            data-action="clear-spw-prompt"
+                            title="Empty the prompt"
+                            hidden>clear</button>
+                </div>
             </div>
             <p id="spw-reading" data-role="spw-reading" aria-label="What the line meets"></p>
-            <div data-role="spw-actions">
-                <button id="parse-spw"
-                        type="button"
-                        data-action="parse-spw"
-                        title="Run Spw input (Cmd/Ctrl+Enter)">run</button>
+            <div class="spw-operator-field" id="spw-operator-field" data-role="spw-operator-field" data-primed="false" hidden>
+                <input id="spw-operator-slider"
+                       type="range"
+                       min="0" max="11" step="1" value="0"
+                       aria-label="Operator before the word"
+                       aria-describedby="spw-operator-primed"
+                       data-role="spw-operator-slider">
+                <ol data-role="spw-operator-ticks" aria-label="Operators"></ol>
+                <output id="spw-operator-primed"
+                        aria-live="polite"
+                        data-role="spw-operator-primed"></output>
+                <button type="button"
+                        data-action="spw-operator-actualize"
+                        title="Put the line on the canvas (Enter on the slider)"
+                        disabled>use</button>
             </div>
             <output id="spw-prime-context"
                     aria-live="polite"
@@ -132,7 +153,13 @@
             <output id="spw-prompt-status"
                     aria-live="polite"
                     data-role="spw-prompt-status"></output>
-            <p data-role="spw-hint">Cmd/Ctrl+Enter: run · Esc: focal mark</p>
+            <p data-role="spw-hint">Cmd/Ctrl+Enter run · Esc canvas</p>
+            <div data-role="spw-actions">
+                <button id="parse-spw"
+                        type="button"
+                        data-action="parse-spw"
+                        title="Run (Cmd/Ctrl+Enter)">run</button>
+            </div>
         </div>
     </section>
     <section id="story-mode-container" data-mode-panel="story">
