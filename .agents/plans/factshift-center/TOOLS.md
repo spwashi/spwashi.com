@@ -353,6 +353,8 @@ The menu's families already carry charge words: forces bonk, nodes boon and bane
 
   A ring's body has eight slots clockwise from up, `·` for an empty one, so a verb's place is its direction. An unknown word is skipped and named in the status. The first files are `keystrokes.ts` (a key and an act for every row), `hotkey-buttons.ts` (rows by act, ↑ ↓ between them) and a handler for `=(menu|ring)` lines. `line-verbs.ts` is another session's open file, so the ring waits for it.
 
+**Built: a menu kept by a line** (app 0812cca). `=menu{forces; interface; save}` keeps the `[...]` menu to those rows, in that order, and `=menu{}` shows every row again. The rows go by the names the menu already gives its families: selection, more, fewer, save, store, transport, interface, forces, menu. Nothing is renamed, and the prompt previews it as a setting. ↑ and ↓ move between rows. The four acts, and `=ring` for a node kind's verbs, wait on the creator's reading of the inventory, and on `line-verbs.ts`, which is another session's open file.
+
 **Built: a map of the thread** (the first step of fractal zoom).
 - The thread's map button draws the thread whole: each line a node, gathered into labelled regions by operator, then lens, then the `#>` frame it falls under. The next press steps the feature, and after the last the map goes and the line held before it comes back.
 - A tap on a line goes in and holds it whole.
