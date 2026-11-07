@@ -1,0 +1,196 @@
+# Review 2026-11-07 — the four agents' wonders, kept where npm run wonder harvests them.
+# wonders — spw-planes: the four agents' questions, where npm run wonder harvests them
+#
+#>plan_spw_planes_wonders
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@ecology: ~"./ECOLOGY.md"
+@physics: ~"./PHYSICS.md"
+@quest: ~"./QUEST.md"
+@ground: ~"./GROUND.md"
+
+^"ecology"{
+#>wonder_ecology_hold_tenants
+?["How many engines answer one hold on a living term at pocket?"]{
+  ~#expect: "three arm (haptics 420 ms, brace-gestures yields, region-menu 460–560 ms on [data-spw-concept]); two answer"
+  ~#refreshes: ~"../interaction-grammar/PLAN.md"
+  ~#probe(run)
+  !probe{ "rg -n -F -e '[data-spw-concept]' -e 'HOLD_OPEN_MS' -e 'HOLD_PRIME_DELAY_COARSE_MS =' -e 'HOLD_THRESHOLD_MS =' public/js/runtime/regions/region-menu.js public/js/interface/haptics.js public/js/runtime/interaction/brace-gestures.js" }
+  $%[hold.engines, hold.answers, hold.contract_named]
+}
+#>wonder_ecology_grown_contracts
+?["Which gesture contracts on home were authored, and which did arrival grow?"]{
+  ~#expect: "4 authored in index.html; two writers grow the rest (549 counted live on 2026-11-07)"
+  ~#refreshes: ~"../runtime-plane-consolidation/PLAN.md"
+  ~#probe(run)
+  !probe{ "rg -c 'data-spw-gesture-contract' index.html && rg -n 'spwGestureContract' public/js/semantic/component-interaction-semantics.js public/js/interface/haptics.js" }
+  $%[contracts.authored, contracts.grown, contracts.distinct]
+}
+#>wonder_ecology_ground_blind
+?["Does the chrome competition sensor ever count the text a carry piece covers?"]{
+  ~#expect: "no: occlusion is measured between open chrome only, so it reads clear over two links"
+  ~#refreshes: ~"../floating-chrome-stack/FIX.md"
+  ~#probe(run)
+  !probe{ "rg -n 'measureFloatingChromeOcclusion|spwFloatingChromeOcclusion|const open' public/js/kernel/dom-contracts.js" }
+  $%[ground.covered, chrome.competition, sensor.scope]
+}
+#>wonder_ecology_uptake
+?["What share of a page's holdable sources does one visit take?"]{
+  ~#expect: "under 1%: home offers 523 sources against 14 authored terms, and a probing visit took 1–2"
+  ~#refreshes: ~"../cauldron-lens-composition/PLAN.md"
+  ~#probe(run)
+  !probe{ "rg -n 'function countPrimeableSources' -A 12 public/js/interface/composition.js" }
+  $%[sources.offered, sources.taken, terms.authored]
+}
+#>wonder_ecology_pioneer
+?["What does a cold first visit on a phone see besides identity and the lens?"]{
+  ~#expect: "the install hint (358×134, z 2018) and $satchel over the paste box by 11 s"
+  ~#refreshes: ~"../component-region-personality/PLAN.md"
+  ~#probe(run)
+  !probe{ "rg -n 'maybeShowInstallPrompt|isIosSafari|toastManager.show' public/js/runtime/shell/pwa-update-handler.js" }
+  $%[pioneer.extras, pioneer.covered, visit.count]
+}
+}[reg=facet]
+
+^"physics"{
+#>wonder_factshift_felt_forces
+?["Which marks does a reader feel at rest, beside the same line unmarked?"]{
+  ~#expect: "ground and lift (8–9 px); the rest under 7 px; charge larger than any mark"
+  ~#refreshes: ~"../factshift-center/OPERATORS.md"
+  ~#probe(read)
+  !probe{ "open factshift.center/?spw=garden{.soil, ^sun, ~rain, *seed, ?weed, !hoe} beside garden{soil, sun, rain, seed, weed, hoe}; name each mark without its label" }
+  $%[felt.ground_lift, felt.all_six, felt.none]
+}
+#>wonder_factshift_place_kept
+?["Does a lifecycle step keep the node's place?"]{
+  ~#expect: "no: place is keyed on role and name with the mark, so ?weed → !weed starts at its slot"
+  ~#refreshes: ~"../factshift-center/OPERATORS.md"
+  ~#probe(run)
+  !probe{ "rg -n 'placeOf|keyOf' workers/factshift-center/app/src/js/modes/spw/line-anatomy.ts" }
+  $%[place.kept, place.lost]
+}
+#>wonder_factshift_mark_in_room
+?["Does a mark survive a change of room?"]{
+  ~#expect: "no: the field reads the name's first character, so <~rain> drops its dash and force"
+  ~#refreshes: ~"../factshift-center/TOOLS.md"
+  ~#probe(run)
+  !probe{ "rg -n 'charAt\\(0\\)' workers/factshift-center/app/src/ts/simulation/operator-physics.ts workers/factshift-center/app/src/js/simulation/nodes/operator-tap.ts" }
+  $%[mark.kept, mark.lost]
+}
+#>wonder_factshift_lifecycle_wordless
+?["Can a reader tell held from settled, and answered from let go, with no words?"]{
+  ~#expect: "held from settled yes (circling, 0.55 against 0.23 px a tick); answered from let go only by the fill and the taut tie"
+  ~#refreshes: ~"../factshift-center/OPERATORS.md"
+  ~#probe(read)
+  !probe{ "open the physics agent's lifecycle.html?wordless (scratch, planes-physics); play ! then ↺ then .; say each stage aloud" }
+  $%[stage.motion, stage.look, stage.neither]
+}
+#>wonder_factshift_runtime_take
+?["Does ! take what ~ holds in the runtime?"]{
+  ~#expect: "no: ! returns {deferred} unchanged"
+  ~#refreshes: ~"../factshift-center/OPERATORS.md"
+  ~#probe(run)
+  !probe{ "sed -n 285,296p .spw/_workbench/packages/spw-runtime/src/interpreter/interpreter.ts" }
+  $%[runtime.takes, runtime.passes]
+}
+}[reg=facet]
+
+^"quest"{
+#>wonder_spw_planes_back_leg
+?["Does a script that comes back from the canvas reach spw.quest's worker?"]{
+  ~#expect: "Yes: readSpw64 reloads as ?script= and lands on the reading."
+  ~#answer(2026-11-07): "in_page: eade0c38 fills the editor from the fragment with no reload; live 75b5b8a2 holds the two-line script at /build with no navigation to ?script= (headless, phone). Before the fix it was query, as expected."
+  ~#refreshes: ~"../brace-semantics/PLAN.md"
+  ~#probe(run)
+  !probe{ "rg -n 'location.replace' workers/spw-quest/src/build.js" }
+  $%[in_page, query]
+}
+#>wonder_spw_planes_note_boot
+?["Does the live guide keep a note?"]{
+  ~#expect: "No: the __name shim loads after noteBoot, so an edit is gone on reload."
+  ~#answer(2026-11-07): "shim_first: eade0c38 moved the shim into the shell's head; on live 75b5b8a2 an edit is in spw.quest.note/1 and survives a reload (headless, phone)."
+  ~#refreshes: ~"../spw-quest/PLAN.md"
+  ~#probe(run)
+  !probe{ "rg -n 'var __name' workers/lib/shell.js" }
+  $%[shim_first, boot_first]
+}
+#>wonder_spw_planes_dot
+?["Do spw.quest and factshift.center draw a dotted body as one name?"]{
+  ~#expect: "Both read ident; factshift draws two nodes held close, and /forms/ wraps at the dot."
+  ~#refreshes: ~"../spw-quest/PLAN.md"
+  ~#probe(read)
+  !probe{ "hold factshift.center/?spw=garden{seed.water} and count nodes; open spw.quest/forms/ at 1366 wide and see where garden{seed.water} wraps" }
+  $%[one_node, bonded_pair, two_parts]
+}
+#>wonder_spw_planes_thread
+?["Should ↗ carry the whole thread, or one row?"]{
+  ~#expect: "The thread, tapped row first: a reader who sent two lines looks for two."
+  ~#refreshes: ~"../factshift-center/PLAN.md"
+  ~#probe(read)
+  !probe{ "on a phone, send two lines from /build, take one back with ↗, and say which line you looked for first" }
+  $%[row, thread, row_first]
+}
+#>wonder_spw_planes_bone
+?["Is spw.quest bone to the two planes, the carrier where boon and bane act?"]{
+  ~#expect: "spw.quest sits on bone easily; which plane is boon and which is bane is the harder call."
+  ~#refreshes: ~"../ecosystem-architecture/PLAN.md"
+  ~#probe(read)
+  !probe{ "read .spw/domains.spw:77-79 beside each host's first screen, place all three, and name the placement that felt forced" }
+  $%[bone, path, bench]
+}
+}[reg=facet]
+
+^"ground"{
+#>wonder_ground_land_sign
+?["When a land says +1, is the number a ledger sign, a pull in the engine, or a depth in the ground?"]{
+  ~#expect: "Ledger. The pages already say benefit and cost; the engine gives all three lands a push of different size."
+  ~#refreshes: ~"../../../.spw/caches/host-frame-2026-09.spw"
+  ~#probe(run)
+  !probe{ `rg -n "charge|velocityDecay|alphaDecay" workers/factshift-center/app/src/ts/domains/config.ts` }
+  $%[sign.ledger, sign.engine, sign.depth]
+}
+#>wonder_ground_valence_lines
+?["Which routes carry a line that leads with a valence word, and does any land page write one?"]{
+  ~#expect: "Under twenty, nearly all on /about/ and RPG Wednesday; none on the land pages, which talk about valence without writing it."
+  ~#refreshes: ~"../spw-metaphysical-language/PLAN.md"
+  ~#probe(run)
+  !probe{ `rg -c 'data-spw-semantic-expression="(boon|bane|bone|bonk|honk)[\[.{]' --glob '*.html' .` }
+  $%[lines.register, lines.rpg, lines.lands]
+}
+#>wonder_ground_canvas_valence
+?["When factshift.center holds bane[bone]{limit}, does bane draw as a node, a region, or a pull?"]{
+  ~#expect: "A node with no pull; land profiles load by hostname, not from the line."
+  ~#refreshes: ~"../factshift-center/OPERATORS.md"
+  ~#probe(read)
+  !probe{ "open https://factshift.center/?spw=bane%5Bbone%5D%7Blimit%7D at 390 wide; say what bane became, then try boon[bane]{cost}" }
+  $%[valence.node, valence.region, valence.pull]
+}
+#>wonder_ground_lifecycle_valence
+?["Do boon, bone and bane name an operator's rest states, and bonk and honk its two transitions?"]{
+  ~#tension: "Let go returns to ground, and canon calls bone the ground state, so bane may not own departure."
+  ~#expect: "Partly. bonk fits held to taken; bane reads as the cost a commit spends."
+  ~#refreshes: ~"../operator-resonance-alignment/PLAN.md"
+  ~#probe(read)
+  !probe{ `rg -n "arrives as|closes into|Let go" .agents/plans/factshift-center/OPERATORS.md` }
+  $%[stage.boon, stage.bone, stage.bane, transition.bonk, transition.honk]
+}
+#>wonder_ground_three_readings
+?["Does one line read as wording on spwashi.com, slots on spw.quest and a situation on factshift.center?"]{
+  ~#expect: "Wording and slots, yes; the canvas shows relations, but a reader recalls places more than meanings until the operator's word sits by each node."
+  ~#refreshes: ~"../spw-quest/PLAN.md"
+  ~#probe(read)
+  !probe{ "take board[workshop]{mill.laminate.cure} from /about/domains/spw.quest/, open it on spw.quest/pivot and factshift.center; after a minute away, write what you recall from each" }
+  $%[recall.wording, recall.slots, recall.relations]
+}
+#>wonder_ground_parting_slot
+?["When two people's lines for one brief use different words, does the delta still name where they part?"]{
+  ~#expect: "No; with one word changed it counts one edit, and with different words it says only that much moved. A slot-level delta is an ask."
+  ~#refreshes: ~"../spw-inquiry-loop/PLAN.md"
+  ~#probe(read)
+  !probe{ "write release[boon]{single.video}<summer> and drop[boon]{clip.video}<summer> as two files and run npm run -s spw -- delta on them" }
+  $%[delta.names_slot, delta.counts_only]
+}
+}[reg=facet]
