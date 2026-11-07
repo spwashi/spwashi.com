@@ -33,7 +33,8 @@ test('the shelf reads with scripts off: pressed forms, the pages\' rarer lines, 
   assert.match(response.headers.get('cache-control'), /max-age=300/);
   const page = await response.text();
   assertBalanced(page);
-  assert.ok(page.length < 260_000, `the shelf stays under 260 KB (${page.length})`);
+  // 260 KB until 2026-11-06; the plans band then added 53 lines painted like every card (about 15 KB of paint).
+  assert.ok(page.length < 275_000, `the shelf stays under 275 KB (${page.length})`);
   assert.match(page, /<h1 id="specimens-title">Specimens<\/h1>/);
   for (const id of ['pressed', 'pages', 'gallery', 'plans']) assert.match(page, new RegExp(`<section id="${id}" class="band"`), id);
   for (const specimen of SPECIMENS.filter(({ source }) => source !== 'routes')) {
@@ -138,6 +139,10 @@ test('every plan states itself in one line on the shelf, and every card that fit
   const quest = plans.find(({ name }) => name === 'spw-quest');
   assert.ok(quest, 'spw-quest states itself');
   assert.ok(page.includes(`href="/canvas?s=${quest.id}"`), 'its line opens as a canvas');
+  assert.ok(page.includes(`href="/pivot?s=${quest.id}"`), 'its line opens on the pivot');
+  assert.ok(/<li id="s-p-spw-quest"><a href="\/pivot\?s=p-spw-quest"><code><span data-t="frame">/.test(page), 'its line is painted like every card');
+  assert.ok(page.includes(']<wbr></span><span data-t="b-direction">{guide') || page.includes(']<wbr></span><span data-t="b-direction">{</span>guide'), 'it may wrap where a slot ends, not inside a word');
+  assert.ok(!page.includes('&gt;<wbr>spw_quest'), 'an entity is never split');
   const canvas = await get(`/canvas?s=${quest.id}`);
   assert.equal(canvas.status, 302);
   assert.equal(canvas.headers.get('location'), `https://factshift.center/?spw=${encodeURIComponent(quest.line)}`);

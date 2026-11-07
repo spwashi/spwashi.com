@@ -346,9 +346,10 @@ function fileWorkspace(example) {
   const display = displayMenu();
   const link = (item) => `<a href="/?example=${escapeHtml(item.id)}#try" data-example="${escapeHtml(item.id)}"${item === example ? ' aria-current="page"' : ""}><span class="tab">${escapeHtml(item.tab)}</span><span class="file">${escapeHtml(item.file)}</span></a>`;
   // One row a group: the bench, the study, the agents. Each row is named, so a reader sees the three kinds at once.
-  const tabs = EXAMPLE_GROUPS.map((group) => `<div class="examples-row" role="group" aria-label="${escapeHtml(group)}"><span class="examples-group" aria-hidden="true">${escapeHtml(group)}</span>${EXAMPLES.filter((item) => item.group === group).map(link).join("")}</div>`).join("\n    ");
+  const tabs = EXAMPLE_GROUPS.map((group) => `<div class="examples-row" role="group" aria-label="${escapeHtml(group)}"><span class="examples-group" aria-hidden="true">${escapeHtml(group)}</span><div class="examples-files">${EXAMPLES.filter((item) => item.group === group).map(link).join("")}</div></div>`).join("\n    ");
   return `<section id="try" class="try" aria-labelledby="try-title">
-  <h2 id="try-title" class="eyebrow">${EXAMPLES.length} files, written in Spw: a bench, a study, and agents</h2>
+  <h2 id="try-title" class="eyebrow">${EXAMPLES.length} files, written in Spw: a bench, a study, and a board</h2>
+  <p class="examples-lede">Each works as it stands and is yours to change: edit it here, keep it as your note, or download it.</p>
   <nav class="examples" aria-label="Files">
     ${tabs}
   </nav>

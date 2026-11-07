@@ -403,8 +403,11 @@ ${loader.after}
  */
 export const FILE_CSS = `.try { margin: 0; }
     .examples { display: grid; gap: .5rem; margin: 0 0 .8rem; }
-    .examples-row { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem; }
-    .examples-group { min-width: 4.5rem; color: var(--muted); font: .74rem/1.2 var(--mono); text-transform: lowercase; }
+    .examples-lede { margin: 0 0 .6rem; color: var(--muted); }
+    .examples-row { display: grid; grid-template-columns: 4.5rem minmax(0, 1fr); align-items: start; gap: .35rem; }
+    .examples-group { padding-top: .75rem; color: var(--muted); font: .74rem/1.2 var(--mono); text-transform: lowercase; }
+    .examples-files { display: flex; flex-wrap: wrap; gap: .35rem; }
+    @media (max-width: 22rem) { .examples-row { grid-template-columns: minmax(0, 1fr); } .examples-group { padding-top: 0; } }
     .examples a { display: grid; gap: .05rem; min-height: 44px; padding: .4rem .8rem .45rem; border: 1px solid var(--line); border-radius: var(--radius); background: color-mix(in srgb, var(--surface) 55%, transparent); color: var(--fg); text-decoration: none; }
     .examples .tab { font-weight: 600; font-size: .95rem; line-height: 1.2; }
     .examples .file { color: var(--muted); font: .74rem/1.2 var(--mono); }
