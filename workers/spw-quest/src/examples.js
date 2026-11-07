@@ -1,16 +1,19 @@
-// Files people keep, written in Spw, in three groups. The bench is a lab
+// Files people keep, written in Spw, in three rows, each useful as it stands
+// for a kind of journaling or production management. The bench is a lab
 // notebook for developer-creators with a library and information science slant:
 // each file catalogs, describes or changes part of a component and theming
-// ecology, and some keep what happened (a dated log, a catalog record, a
-// controlled vocabulary, a change record) while others act or speak (an
-// experiment and its probe, a session's steps, a persona held in regard). The
-// study is metacognition from more than one place: a prediction checked, and a
-// chapter read from four perspectives. The agents are prompts that start a swarm
-// along one cluster of production. The guide opens one at a time in its editor,
-// and the reading beside it says what a tool can take from the file. `try`
-// names one edit whose effect shows in that reading.
+// ecology; some keep what happened (a dated log, a catalog record, a controlled
+// vocabulary, a change record) and some act or speak (an experiment and its
+// probe, a session's steps, a persona held in regard). The study is
+// metacognition from more than one place: a prediction checked, and a chapter
+// read from four perspectives. The board lays professional personas side by
+// side around one reference: their loops in parallel and their handoff in
+// series, and the gradient of positions between two stances. Lines are written
+// short enough that no word breaks in a phone's editor. The guide opens one at a
+// time in its editor, and the reading beside it says what a tool can take from
+// the file. `try` names one edit whose effect shows in that reading.
 
-export const EXAMPLE_GROUPS = Object.freeze(["Bench", "Study", "Agents"]);
+export const EXAMPLE_GROUPS = Object.freeze(["Bench","Study","Board"]);
 
 export const EXAMPLES = Object.freeze([
   {
@@ -96,7 +99,7 @@ export const EXAMPLES = Object.freeze([
 #:script #!session
 
 steps = path{~gather; *describe; ^classify; !shelve}
-gather = shelf[components]{chip.panel.card}<record>`,
+gather = shelf[ui]{chip.card}<record>`,
   },
   {
     id: "revision",
@@ -155,48 +158,64 @@ gather = shelf[components]{chip.panel.card}<record>`,
     tab: "Perspectives",
     file: "perspectives.spw",
     says: "One chapter read from four places: the student, a classmate, a future self and a teacher, each with how sure they are and where the reading leads.",
-    try: "Add a reading: parent = family@chapter_2[curious]{why_it_matters}<dinner>",
+    try: "Add a reading: kin = parent@ch2[curious]{why}<dinner>",
     script: `#>four_readings
 #:reflection #!metacognition
 
-mine = student@chapter_2[sure]{recall.spacing}<quiz>
-peer = classmate@chapter_2[unsure]{spacing}<question>
-later = future_self@chapter_2[review]{what_stayed}<exam>
-tutor = teacher@chapter_2[watching]{the_gap}<next_lesson>`,
+me = student@ch2[sure]{recall}<quiz>
+peer = peer@ch2[unsure]{spacing}<ask>
+later = later@ch2[review]{kept}<exam>
+tutor = tutor@ch2[watch]{gap}<lesson>`,
   },
   {
-    id: "swarm",
-    group: "Agents",
-    tab: "Swarm brief",
-    file: "plan-pass.spw",
-    says: "A prompt that starts a swarm of agents on one cluster of production: what the cluster is, the brief they share, the lanes they split into, the steps each takes, and the rules none may break.",
-    try: "Add a lane: `runtime: module-contract-overhaul, deploy-module-graph`",
-    script: `#>swarm_plan_pass
-#:prompt #!agents #!production
+    id: "loops",
+    group: "Board",
+    tab: "Persona loops",
+    file: "loops.spw",
+    says: "A board of personas, each running its own loop around one reference: what is planned ahead, what runs in parallel (the loops, joined by ,), and what has to follow in series (the handoff, joined by ;).",
+    try: "Add a loop inside the braces: , conservator@scan{handling}",
+    script: `#>persona_loops
+#:board #!loops #!production
 
-cluster = plans[pass]{granularity.reference.creativity.wonder}(repo)<report>
-brief = ~"./plan-brief.md"
-lanes = #[
-  \`language: brace-semantics, spw-quest, factshift-center\`,
-  \`css: color-motion, layout-seat-squeeze\`,
-  \`chrome: floating-chrome-stack, spellcraft-authoring\`
+reference = ~"./folios/release.spw"
+ahead = #[\`the holds\`, \`the scans\`][reg=set]
+loops = {
+  archivist@scan{provenance},
+  designer@scan{placement},
+  editor@scan{caption}
+}
+each = path{~read; *note; ?ask; !hand_back}
+handoff = path{^gather; ?check; !release}
+
+?["What must one loop hand another before it can start?"]{
+  ~#expect: \`only the caption waits, on provenance\`
+  !probe{ "list what each loop reads; what another loop writes goes in the handoff" }
+}`,
+  },
+  {
+    id: "gradient",
+    group: "Board",
+    tab: "Gradient space",
+    file: "gradient.spw",
+    says: "One reference laid out between two professional stances, an archivist who keeps and a designer who reshapes, as positions from 0.10 to 0.90, so a choice is a place on the gradient instead of a side.",
+    try: "Add a position: `0.55 keep the slices, ask the reader`",
+    script: `#>gradient_space
+#:board #!gradient
+
+reference = ~"./plans/index.spw"
+from = archivist@plans{keep}
+to = designer@plans{reshape}
+gradient = #[
+  \`0.10 keep every line as written\`,
+  \`0.40 keep the dates, rewrite the slices\`,
+  \`0.70 keep the wonders, redraw the order\`,
+  \`0.90 rebuild around the reader\`
 ][reg=set]
-each = path{~read; ?verify; *edit; !report}
-rules = #[\`edit only your folders\`, \`never commit\`, \`run the checks before reporting\`][reg=set]`,
-  },
-  {
-    id: "release",
-    group: "Agents",
-    tab: "Release swarm",
-    file: "folio-release.spw",
-    says: "A swarm for a folio release: each agent unpacks, describes, places and checks one scan, and hands it back; the holds are what no agent may do.",
-    try: "Add a hold: `a caption names the lettering it can read`",
-    script: `#>swarm_folio_release
-#:prompt #!agents #!production
 
-cluster = folios[release]{scan.sidecar.caption.placement}(studio)<drop>
-each = path{~unpack; *describe; ^place; ?check; !hand_back}
-holds = #[\`withheld names stay off the page\`, \`every scan stands whole\`, \`the creator places the last one\`][reg=set]`,
+?["Where on this gradient does each plan sit today?"]{
+  ~#expect: \`most sit near 0.40\`
+  !probe{ "read each plan's head line and name its place" }
+}`,
   },
 ]);
 
