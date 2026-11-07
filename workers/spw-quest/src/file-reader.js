@@ -402,7 +402,9 @@ ${loader.after}
  * parser runs), so the field never changes height when it turns live.
  */
 export const FILE_CSS = `.try { margin: 0; }
-    .examples { display: flex; flex-wrap: wrap; gap: .35rem; margin: 0 0 .8rem; }
+    .examples { display: grid; gap: .5rem; margin: 0 0 .8rem; }
+    .examples-row { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem; }
+    .examples-group { min-width: 4.5rem; color: var(--muted); font: .74rem/1.2 var(--mono); text-transform: lowercase; }
     .examples a { display: grid; gap: .05rem; min-height: 44px; padding: .4rem .8rem .45rem; border: 1px solid var(--line); border-radius: var(--radius); background: color-mix(in srgb, var(--surface) 55%, transparent); color: var(--fg); text-decoration: none; }
     .examples .tab { font-weight: 600; font-size: .95rem; line-height: 1.2; }
     .examples .file { color: var(--muted); font: .74rem/1.2 var(--mono); }

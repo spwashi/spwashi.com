@@ -120,7 +120,7 @@ test('the guide opens with a file people keep, read by the worker with scripts o
   // The file is a field in a form that works with scripts off, with the same file painted behind it.
   assert.match(page, /<form class="file" data-file method="post" action="\/build#build">/);
   assert.ok(page.includes(`>${escapeHtml(EXAMPLES[0].script)}</textarea>`), 'the first file opens whole');
-  assert.match(page, /<pre class="paint" aria-hidden="true"><code><span data-t="frame">#&gt;reading_log<\/span>/);
+  assert.match(page, /<pre class="paint" aria-hidden="true"><code><span data-t="frame">#&gt;lab_notebook<\/span>/);
   assert.match(page, /formaction="\/script\.spw"/);
   assert.match(page, /data-tool="copy"/);
   // Download: a blob with scripts on (data-tool), the same POST with scripts off (formaction).
@@ -128,7 +128,7 @@ test('the guide opens with a file people keep, read by the worker with scripts o
   // The worker already read it: the checks and the facts are in the page before any script runs.
   assert.ok(page.includes('<li data-state="pass">Spw read the whole file.</li>'));
   assert.ok(page.includes('<li data-state="pass">Every entry has a date and a kind.</li>'));
-  assert.match(page, /<dt>Entries <span class="count">3<\/span><\/dt>/);
+  assert.match(page, /<dt>Entries <span class="count">4<\/span><\/dt>/);
   // Below the file: the marks, the ways in, and the origin, in that order.
   const at = (marker) => page.indexOf(marker);
   const order = ['id="try"', 'id="operators"', 'id="ways"', 'id="origin"'].map(at);
@@ -172,10 +172,10 @@ test('each file opens by address, and its check turns when its point is taken ou
   const without = (id, pattern) => readFile(exampleById(id).script.replace(pattern, '')).checks.filter((check) => check.state === 'fail').map((check) => check.says);
   assert.deepEqual(without('revision', /\n {2}\*\[verify\][^\n]*/), ['No [verify] yet: it does not say how the change was checked.']);
   assert.deepEqual(without('question', /\n {2}!probe[^\n]*/), ['A question has no !probe yet: nothing says what would answer it.']);
-  assert.deepEqual(without('notebook', /\] notice — /), ['1 of 3 entries has no [date] and kind yet.']);
+  assert.deepEqual(without('notebook', /\] try — /), ['1 of 4 entries has no [date] and kind yet.']);
   assert.deepEqual(readFile('door[ {').checks.map((check) => check.state), ['fail']);
-  const links = readFile(exampleById('reading').script);
-  assert.deepEqual(links.links.map((link) => link.path), ['./sources/make-it-stick.spw', './syllabus/week-3.spw']);
+  const links = readFile(exampleById('record').script);
+  assert.deepEqual(links.links.map((link) => link.path), ['./control.spw', './sigil.spw']);
   // The paint gives every character back, in order.
   for (const example of EXAMPLES) {
     const painted = paintFile(readFile(example.script)).replace(/<[^>]+>/g, '').replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&quot;', '"').replaceAll('&amp;', '&');

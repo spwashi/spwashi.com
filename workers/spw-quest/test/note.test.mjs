@@ -96,7 +96,7 @@ test('the guide boots the note right after its form, before Copy and Download bi
   assert.ok(page.indexOf("[data-tool='copy']", bootAt) > bootAt, 'toolActions binds Copy after boot');
   assert.ok(noteBootScript(shelf, limit).includes(NOTE_KEY));
   // The server ignores ?note: it paints the notebook template, says nothing is sent with scripts off, and sets no cookie.
-  assert.ok(page.includes('#&gt;reading_log'));
+  assert.ok(page.includes('#&gt;lab_notebook'));
   assert.match(page, /<noscript><p class="note-state">Scripts are off, so this field is a template\./);
   assert.match(page, /<p class="note-choice" data-note-choice-line hidden>/);
 });
