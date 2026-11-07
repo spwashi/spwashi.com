@@ -156,8 +156,47 @@ Editing expressions should be easy, with selections in the prompt populating the
 - Is spreading to enter (Multi-touch, below) still right once a spread also opens a folded container?
 - The window's taste calls: the ring `◌` for "no mark yet", *use* for the act, and *two joined* for a compound.
 
+**The operators as keys** (app 6a64614, the creator: "the Spw input is still not clear; improve the operational tapping and priming of the operators"):
+- Twelve keys sit under the line, and the row itself is the slider. One rule serves every hand: a key primes, and the primed key acts.
+  - A mouse primes by hovering, so one click acts.
+  - A finger taps twice, or slides along the row to prime each key it crosses.
+  - The arrows step and Enter acts.
+  - The line's own mark primes letting it go.
+- The primed line shows inside the line's box under its text. The box grows upward, so the keys never move from under the finger.
+- Using a key keeps the window open for the next one. The prompt follows the line on the canvas.
+- A held key plays its operator on the word's node. A tapped node whose word carries an operator plays it once.
+
+**Nodes by their operator.** The creator: nodes should behave differently by operator when tapped and activated. Today each operator has only its motion. Proposed acts, one per operator, each a question for the creator:
+
+| op | motion (built) | a tap would |
+|---|---|---|
+| `~` potential | edge runs, never closes | show its paths not taken as dashed ties, without moving |
+| `?` wonder | tilts | open or close: its body shows or folds |
+| `!` action | beats | fire its superpower now, with a receipt |
+| `*` value | glows | grow by one step, its weight kept in the line's measure |
+| `.` ground | settles | return to its home |
+| `^` ascension | lifts | gather its parts into one group |
+| `#` vibration | trembles | keep it as a bookmark the [...] menu can find |
+| `@` perspective | looks outward | re-center the view on it |
+| `&` subject | double beat | select it with everything tied to it |
+| `=` configuration | held still | pin or unpin it where it is |
+| `%` measure | breathes | show its size and its ties' pulls |
+| `$` substrate | flickers | show what it is made of (its metadata) |
+
+**A play mechanic on hold.** A hold plays and a release lets go; nothing commits on a hold. On a node, a hold could play its operator and a drag up or down while holding could turn the operator's own quantity (a value's weight, a measure's scale). The receipt comes when the finger lifts.
+
+**Edges and the focal region, one rule.** The focal square primes what is under it, and the action → acts on it. That pair could reach the edges:
+- A tie is primed when both its ends are selected. Its keys are the joins (`.` `,` `;` `~>`) or the compound marks (`~` `^` `&` `@`), the same row of keys as the operators.
+- Each side of the frame holds one kind of act, and a swipe in from that side opens it. The top wraps and folds (the pinch from the top edges). The bottom keeps the tools, `[...]` and the held line. The sides keep the line's history.
+- The square docks just above `[...]` (settled 2026-10-27) and stays the one place a primed act waits.
+
+**What run draws** (the creator: "it isn't very clear what the trace feature does"). The lone *trace* toggle became a switch naming both choices, **line · steps**: run draws the line itself, or the steps the runtime took to read it (its stages and registers as nodes). The creator added that a structure shown should be convertible into other forms, or be interactive. So the steps could become a structure of their own:
+- each register a node whose value a tap shows;
+- the events stepped one by one with the action →;
+- the whole written out as a Spw line for the prompt, a list or a table, chosen from the same switch.
+
 *Slices*, each a feel change ending at a demo:
-- E1, selection-aware operator field and reading;
+- E1, selection-aware operator field and reading. It also covers a term selected in the prompt being moved left or right (repositioning terms) and its brace pair turned to the next kind (pivoting braces, the `< & >` move), on the same prime-then-act keys;
 - G1, the quiet ground and drag-lit drops;
 - N2, names and anchors kept;
 - H1, the pinched charge;
