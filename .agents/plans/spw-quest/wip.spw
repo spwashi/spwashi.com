@@ -223,8 +223,8 @@ fixity = "tending"
 }
 
 ^"cache"{
- ~#status: "live from the 2026-11-05 deploy (G, J, the note); K live on spwashi.com; L and M's body turns on main (9f2e3af4, d3dcda9f), awaiting the next deploy"
- ~#next_commit: "+[quest] Keep a short walk trail on /pivot, the way back three to five steps deep"
+ ~#status: "live from the 2026-11-05 deploy (G, J, the note); K live on spwashi.com; on main and awaiting the next deploy: L, M (trail, chosen links, primed operators), the shelf landing, and the < & > instrument on /pivot (walls turn, operator slider, tap/swipe/pinch)"
+ ~#next_commit: "+[factshift] The operator field in the Spw tool: a slider primes the line each operator makes, Actualize holds it"
  ~#files_hot: "workers/spw-quest/src/pivot.js, workers/spw-quest/src/specimens.js, workers/spw-quest/test/constructs.test.mjs"
  ~#gate: "the creator's go-ahead to deploy what is on main (L and half of M); P and Q wait on brace-semantics#wonder_brace_semantics_highlighter_then_now"
  ~#last_stream: "2026-11-06"

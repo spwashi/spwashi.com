@@ -79,6 +79,8 @@ function layoutOf(line) {
 const ATLAS = Object.freeze(["mode", "body", "scope", "projection"]);
 const GUIDE = Object.freeze(["projection", "scope", "mode", "body"]);
 const WRAP = Object.freeze({ mode: ["[", "]"], body: ["{", "}"], scope: ["(", ")"], projection: ["<", ">"] });
+/** The pair kinds in the order a tap turns them: [ ] { } ( ) < >, and round again. */
+const WALLS = Object.freeze(["mode", "body", "scope", "projection"]);
 const isSubsequence = (part, whole) => { let at = 0; for (const item of whole) if (item === part[at]) at += 1; return at === part.length; };
 const orderFor = (written = []) => (isSubsequence(written, ATLAS) ? ATLAS : isSubsequence(written, GUIDE) ? GUIDE : [...written, ...ATLAS.filter((slot) => !written.includes(slot))]);
 
@@ -125,6 +127,14 @@ export function pivotsOf(line) {
   }
   for (const slot of ["charge", "scope", "projection", "body", "mode"]) {
     if (slots[slot] && (slots.subject || slot !== "charge")) add(slot, "drop", `drop ${SLOT_SAYS[slot]}`, { [slot]: "" });
+  }
+  // The < & > move: a part keeps what it holds and turns its walls, both
+  // together, to the next pair the line leaves empty (brace-semantics §D).
+  for (const [index, slot] of WALLS.entries()) {
+    if (!slots[slot]) continue;
+    for (const next of [...WALLS.slice(index + 1), ...WALLS.slice(0, index)].filter((other) => !slots[other])) {
+      add(slot, "walls", `turn its walls to ${WRAP[next][0]} ${WRAP[next][1]}`, { [slot]: "", [next]: slots[slot] }, `${SLOT_SAYS[slot]} becomes ${SLOT_SAYS[next]}`);
+    }
   }
   // How the body holds its parts: the four joins spwashi.com's direction cards teach (one name, held together, in order, a path).
   const held = readBodyJoins(slots.body || "");
@@ -196,7 +206,8 @@ export function pivotState(params) {
   const typed = String(params.get("line") || "").trim();
   const from = String(params.get("from") || "").trim().slice(0, PIVOT_LIMIT);
   const trail = params.getAll("t").map((step) => String(step).trim().slice(0, PIVOT_LIMIT)).filter(Boolean).slice(-TRAIL_LIMIT);
-  const op = OP_BY_NAME.get(String(params.get("op") || "")) || null;
+  const opIndex = Number.parseInt(String(params.get("opi") ?? ""), 10);
+  const op = OP_BY_NAME.get(String(params.get("op") || "")) || (Number.isInteger(opIndex) ? OPERATORS[opIndex] : null) || null;
   let base;
   if (specimen && !specimen.reading.file) base = { line: specimen.line, id: specimen.id, from, cut: false, refused: "" };
   else if (!typed) return { line: "", id: "", from: "", cut: false, refused: "", trail: [], op: null, added: null };
@@ -253,6 +264,9 @@ function pivotCard(pivot, state) {
   });
 }
 
+/** Data for the page's script, safe to set inside a <script> element. */
+const scriptJson = (value) => JSON.stringify(value).replace(/</g, "\\u003c").replace(/>/g, "\\u003e").replace(/&/g, "\\u0026");
+
 /** This page's own address: the same line, the same way back, plus what is asked. */
 function selfHref(state, extra = {}) {
   const params = new URLSearchParams({ line: state.line });
@@ -275,35 +289,72 @@ function trailNav(state) {
 
 const DELIMITED = Object.freeze({ charge: (v) => v, subject: (v) => v, mode: (v) => `[${v}]`, body: (v) => `{${v}}`, scope: (v) => `(${v})`, projection: (v) => `<${v}>`, join: (v) => v });
 
-/** Into the line: each of its parts as a handle to the turns of that slot. */
-function slotHandles(reading, pivots) {
+/**
+ * Into the line: each of its parts as a handle. With scripts off a handle is a
+ * link to its slot's turns below. With scripts on it is the < & > instrument's
+ * gesture surface: a tap primes the slot's next value in place, a second tap or
+ * a swipe actualizes it (a swipe back turns the other way), a pinch drops the
+ * slot; arrow keys and Delete do the same.
+ */
+function slotHandles(reading, pivots, state) {
   const turned = new Set(pivots.map((pivot) => pivot.slot));
+  const alts = {};
+  for (const slot of GROUP_ORDER) {
+    // The walls turn first, so a first tap on a part turns its pair (the < & > move); a swipe dials on through the rest.
+    const turns = [...pivots.filter((pivot) => pivot.slot === slot && pivot.kind === "walls"), ...pivots.filter((pivot) => pivot.slot === slot && ["swap", "turn", "mark"].includes(pivot.kind))];
+    const drop = pivots.find((pivot) => pivot.slot === slot && pivot.kind === "drop");
+    if (turns.length || drop) {
+      alts[slot] = {
+        says: SLOT_SAYS[slot] || slot,
+        turns: turns.map((pivot) => ({ label: pivot.label, paint: readSpecimen(pivot.line).paint, go: pivotHref(pivot.line, state.line, state.trail) })),
+        drop: drop ? { paint: readSpecimen(drop.line).paint, go: pivotHref(drop.line, state.line, state.trail) } : null,
+      };
+    }
+  }
   const items = GROUP_ORDER.filter((slot) => reading.slots[slot]).map((slot) => {
     const face = `<code>${escapeHtml(DELIMITED[slot](reading.slots[slot]))}</code><span class="says">${escapeHtml(SLOT_SAYS[slot] || slot)}</span>`;
-    return turned.has(slot) ? `<li><a href="#turn-${escapeHtml(slot)}">${face}</a></li>` : `<li><span>${face}</span></li>`;
+    return turned.has(slot) ? `<li><a href="#turn-${escapeHtml(slot)}" data-slot="${escapeHtml(slot)}">${face}</a></li>` : `<li><span>${face}</span></li>`;
   });
-  return items.length ? `<nav class="slot-handles" aria-label="Its parts"><ul>${items.join("")}</ul></nav>` : "";
+  if (!items.length) return "";
+  return `<div class="instrument" data-instrument>
+  <nav class="slot-handles" aria-label="Its parts"><ul>${items.join("")}</ul></nav>
+  <p class="instrument-hint note" data-instrument-hint hidden>Tap a part to see its next turn, and tap it again to go there. Swipe a part to step through its turns; pinch it to see the line without it. Arrow keys, Delete and Enter do the same.</p>
+  <p class="instrument-out" data-instrument-out aria-live="polite" hidden></p>
+  <script type="application/json" data-slot-alts>${scriptJson(alts)}</script>
+</div>`;
 }
 
-/** The operators as handles: activating one primes the line it would make; actualizing goes there. */
+/**
+ * The operators as a field with a slider across it: scrubbing primes the line
+ * each operator would make, shown before anything moves, and Actualize goes
+ * there. With scripts off the slider submits as a form and each sigil under it
+ * is a link that primes its operator; a second press of the active one lets it go.
+ */
 function operatorBand(state) {
-  const handles = OPERATORS.map((operator) => {
-    if (!withFrontMark(state.line, operator)) return "";
-    const active = state.op?.name === operator.name;
-    return `<li><a href="${escapeHtml(active ? selfHref(state) : selfHref(state, { op: operator.name }))}#operators"${active ? ' aria-current="true"' : ""} title="${escapeHtml(operator.reads)}"><span class="sigil">${escapeHtml(operator.sigil)}</span><span>${escapeHtml(operator.name)}</span></a></li>`;
-  }).filter(Boolean);
-  if (!handles.length) return "";
-  const next = state.op ? withFrontMark(state.line, state.op) : null;
-  const primed = next ? `
-  <div class="primed" role="status">
-    <p class="primed-head"><span class="sigil">${escapeHtml(state.op.sigil)}</span> ${escapeHtml(state.op.name)}: ${escapeHtml(state.op.reads)}</p>
-    <p class="primed-line"><code>${readSpecimen(next).paint}</code></p>
-    <p class="primed-acts"><a class="actualize" href="${escapeHtml(pivotHref(next, state.line, state.trail))}">Actualize: go to this line</a><span aria-hidden="true"> · </span><a href="${escapeHtml(selfHref(state))}#operators">Let it go</a></p>
-  </div>` : "";
+  const field = OPERATORS.map((operator, index) => ({ operator, index, next: withFrontMark(state.line, operator) })).filter(({ next }) => next);
+  if (!field.length) return "";
+  const active = state.op ? field.find(({ operator }) => operator.name === state.op.name) : null;
+  const ticks = field.map(({ operator }) => {
+    const on = active?.operator.name === operator.name;
+    return `<li><a href="${escapeHtml(on ? selfHref(state) : selfHref(state, { op: operator.name }))}#operators"${on ? ' aria-current="true"' : ""} title="${escapeHtml(`${operator.name}: ${operator.reads}`)}">${escapeHtml(operator.sigil)}</a></li>`;
+  }).join("");
+  const hidden = [["line", state.line], ["from", state.from], ...state.trail.map((step) => ["t", step])].filter(([, value]) => value)
+    .map(([name, value]) => `<input type="hidden" name="${name}" value="${escapeHtml(value)}">`).join("");
+  const data = field.map(({ operator, index, next }) => ({ index, sigil: operator.sigil, name: operator.name, reads: operator.reads, paint: readSpecimen(next).paint, go: pivotHref(next, state.line, state.trail) }));
+  const shown = active ? data.find(({ index }) => index === active.index) : null;
   return `<section class="operators" id="operators" aria-labelledby="operators-title">
   <h3 id="operators-title">An operator in front</h3>
-  <p class="note">Activate one to see the line it makes; actualize it to go there.</p>
-  <ul>${handles.join("")}</ul>${primed}
+  <form class="op-field" method="get" action="/pivot#operators" data-op-field>${hidden}
+    <input type="range" name="opi" min="${field[0].index}" max="${field[field.length - 1].index}" step="1" value="${active ? active.index : field[0].index}" aria-label="Operator in front" aria-valuetext="${escapeHtml(active ? `${active.operator.sigil} ${active.operator.name}` : "none chosen")}" data-op-slider>
+    <ol class="op-ticks" style="--ticks: ${field.length}">${ticks}</ol>
+    <button type="submit" data-op-submit>Prime</button>
+  </form>
+  <div class="primed" role="status" data-op-primed${shown ? "" : " hidden"}>
+    <p class="primed-head"><span class="sigil" data-op-sigil>${escapeHtml(shown?.sigil || "")}</span> <span data-op-name>${escapeHtml(shown?.name || "")}</span>: <span data-op-reads>${escapeHtml(shown?.reads || "")}</span></p>
+    <p class="primed-line"><code data-op-line>${shown?.paint || ""}</code></p>
+    <p class="primed-acts"><a class="actualize" data-op-go href="${escapeHtml(shown?.go || "#operators")}">Actualize: go to this line</a><span aria-hidden="true"> · </span><a href="${escapeHtml(selfHref(state))}#operators">Let it go</a></p>
+  </div>
+  <script type="application/json" data-op-lines>${scriptJson(data)}</script>
 </section>`;
 }
 
@@ -327,6 +378,8 @@ function addForm(state, reading) {
 /** Pivot groups in the order a line is read: the charge, the word, the lens, what it holds, the scene, where it goes, the join. */
 const GROUP_ORDER = Object.freeze(["charge", "subject", "mode", "body", "scope", "projection", "join"]);
 
+/** One pair of walls around the subject operator: every part of a line is this form with something inside. */
+const BASE_FORM = "<&>";
 const STARTS = Object.freeze(["r-e6f488e3", "h-capsule", "h-induct_join", "r-e9dc9b1e", "h-probe", "r-755c824b"]);
 
 function form(state) {
@@ -345,7 +398,8 @@ export function pivotBody(state) {
   <p class="note">Only the first ${PIVOT_LIMIT} characters are read.</p>` : ""}
 </section>`;
   if (!state.line) {
-    const starts = STARTS.map(specimenById).filter(Boolean).map((specimen) => `<li><a href="/pivot?s=${escapeHtml(specimen.id)}"><code>${specimen.reading.paint}</code></a></li>`).join("\n    ");
+    const base = `<li class="base-form"><a href="${escapeHtml(pivotHref(BASE_FORM))}"><code>${readSpecimen(BASE_FORM).paint}</code></a> <span class="says">the base form: one pair of walls around &amp;, the subject. Tap the walls to turn them.</span></li>`;
+    const starts = [base, ...STARTS.map(specimenById).filter(Boolean).map((specimen) => `<li><a href="/pivot?s=${escapeHtml(specimen.id)}"><code>${specimen.reading.paint}</code></a></li>`)].join("\n    ");
     return `${opening}
 <section class="band" aria-labelledby="starts-title">
   <h2 id="starts-title">Start from one of these</h2>
@@ -385,7 +439,7 @@ export function pivotBody(state) {
     body: cardFacts(Object.entries(reading.slots).map(([slot, value]) => [slot, `<code>${escapeHtml(value)}</code>`])),
     links: [scriptAddress(state.line) ? cardLink(scriptAddress(state.line), "Take it apart") : "", cardLink("/constructs#c-expression", "What each slot is")],
   })}
-  ${added}${slotHandles(reading, pivots)}
+  ${added}${slotHandles(reading, pivots, state)}
   ${operatorBand(state)}
   ${addForm(state, reading)}
   ${back}${families.length ? `
@@ -406,6 +460,138 @@ export function pivotBody(state) {
 </section>`;
 }
 
+/**
+ * The page's one script, serialized into it (layout() carries the __name shim).
+ * The operator field primes each line as the slider is scrubbed; the part
+ * handles prime on a tap, actualize on a second tap or a swipe, and drop on a
+ * pinch; keys do the same. Everything it does is also a link or a form without it.
+ */
+function instrument() {
+  const go = (href) => { if (href) window.location.href = href; };
+  const field = document.querySelector("[data-op-field]");
+  if (field) {
+    const data = JSON.parse(document.querySelector("[data-op-lines]")?.textContent || "[]");
+    const slider = field.querySelector("[data-op-slider]");
+    const panel = document.querySelector("[data-op-primed]");
+    const submit = field.querySelector("[data-op-submit]");
+    const ticks = [...field.querySelectorAll(".op-ticks a")];
+    if (submit) submit.hidden = true;
+    const show = () => {
+      const at = data.find((item) => item.index === Number(slider.value));
+      if (!at || !panel) return;
+      panel.hidden = false;
+      panel.querySelector("[data-op-sigil]").textContent = at.sigil;
+      panel.querySelector("[data-op-name]").textContent = at.name;
+      panel.querySelector("[data-op-reads]").textContent = at.reads;
+      panel.querySelector("[data-op-line]").innerHTML = at.paint;
+      panel.querySelector("[data-op-go]").setAttribute("href", at.go);
+      slider.setAttribute("aria-valuetext", `${at.sigil} ${at.name}`);
+      ticks.forEach((tick, index) => tick.toggleAttribute("aria-current", data[index]?.index === at.index));
+    };
+    slider?.addEventListener("input", show);
+    slider?.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") { event.preventDefault(); go(panel?.querySelector("[data-op-go]")?.getAttribute("href")); }
+    });
+    ticks.forEach((tick, index) => tick.addEventListener("click", (event) => {
+      if (!slider || !data[index]) return;
+      event.preventDefault();
+      slider.value = String(data[index].index);
+      show();
+      slider.focus();
+    }));
+  }
+  const root = document.querySelector("[data-instrument]");
+  if (!root) return;
+  const alts = JSON.parse(root.querySelector("[data-slot-alts]")?.textContent || "{}");
+  const out = root.querySelector("[data-instrument-out]");
+  const hint = root.querySelector("[data-instrument-hint]");
+  if (hint) hint.hidden = false;
+  // Every gesture primes: the line it would make is shown, and nothing moves
+  // until the part is tapped again (or Enter is pressed on it).
+  let primed = null;
+  const wrap = (index, n) => ((index % n) + n) % n;
+  const show = (slot, says, paint, go) => {
+    if (!out) return;
+    primed = { slot, index: primed?.slot === slot ? primed.index : null, go };
+    const words = document.createElement("span");
+    words.className = "says";
+    words.textContent = `${alts[slot].says}: ${says}. Tap it to go there.`;
+    const line = document.createElement("code");
+    line.innerHTML = paint;
+    out.replaceChildren(words, line);
+    out.hidden = false;
+  };
+  const prime = (slot, index) => {
+    const turns = alts[slot]?.turns || [];
+    if (!turns.length) return;
+    const at = wrap(index, turns.length);
+    show(slot, `${turns[at].label} (${at + 1} of ${turns.length})`, turns[at].paint, turns[at].go);
+    primed.index = at;
+  };
+  const step = (slot, by) => {
+    const here = primed?.slot === slot ? primed.index : null;
+    prime(slot, here === null ? (by > 0 ? 0 : -1) : here + by);
+  };
+  const primeDrop = (slot) => {
+    const drop = alts[slot]?.drop;
+    if (drop) show(slot, "dropped", drop.paint, drop.go);
+  };
+  const pointers = new Map();
+  let pinchFrom = 0;
+  let pinchSlot = "";
+  root.querySelectorAll("[data-slot]").forEach((handle) => {
+    const slot = handle.dataset.slot;
+    let start = null;
+    let swiped = false;
+    handle.addEventListener("pointerdown", (event) => {
+      start = { x: event.clientX, y: event.clientY };
+      swiped = false;
+      // A swipe that leaves a small handle still ends on it.
+      if (event.isPrimary) handle.setPointerCapture?.(event.pointerId);
+    });
+    handle.addEventListener("pointerup", (event) => {
+      if (!start || pointers.size > 1) return;
+      const dx = event.clientX - start.x;
+      const dy = event.clientY - start.y;
+      start = null;
+      if (Math.abs(dx) > 36 && Math.abs(dx) > Math.abs(dy) * 1.5) { swiped = true; step(slot, dx < 0 ? 1 : -1); }
+    });
+    handle.addEventListener("click", (event) => {
+      if (!alts[slot]) return;
+      event.preventDefault();
+      if (swiped) return;
+      if (primed?.slot === slot) go(primed.go);
+      else if (alts[slot].turns.length) prime(slot, 0);
+      else primeDrop(slot);
+    });
+    handle.addEventListener("keydown", (event) => {
+      if (!alts[slot]) return;
+      if (event.key === "ArrowRight") { event.preventDefault(); step(slot, 1); }
+      else if (event.key === "ArrowLeft") { event.preventDefault(); step(slot, -1); }
+      else if (event.key === "Delete" || event.key === "Backspace") { event.preventDefault(); primeDrop(slot); }
+    });
+  });
+  const row = root.querySelector(".slot-handles");
+  row?.addEventListener("pointerdown", (event) => {
+    pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    if (pointers.size !== 2) return;
+    const [a, b] = [...pointers.values()];
+    pinchFrom = Math.hypot(a.x - b.x, a.y - b.y);
+    const middle = document.elementFromPoint((a.x + b.x) / 2, (a.y + b.y) / 2);
+    pinchSlot = middle?.closest?.("[data-slot]")?.dataset.slot || primed?.slot || "";
+  });
+  row?.addEventListener("pointermove", (event) => {
+    if (!pointers.has(event.pointerId)) return;
+    pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    if (pointers.size !== 2 || !pinchFrom || !pinchSlot) return;
+    const [a, b] = [...pointers.values()];
+    if (Math.hypot(a.x - b.x, a.y - b.y) < pinchFrom * 0.6) { pinchFrom = 0; primeDrop(pinchSlot); }
+  });
+  const lift = (event) => { pointers.delete(event.pointerId); if (pointers.size < 2) pinchFrom = 0; };
+  row?.addEventListener("pointerup", lift);
+  row?.addEventListener("pointercancel", lift);
+}
+
 export const PIVOT_CSS = `${CARD_CSS}
     .opening { margin: 0 0 1.2rem; }
     .opening h1 { margin: 0 0 .5rem; font-size: clamp(1.8rem, 5vw, 2.4rem); }
@@ -424,6 +610,8 @@ export const PIVOT_CSS = `${CARD_CSS}
     .back a { display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; }
     .starts, .families-list { display: grid; gap: .2rem; margin: .5rem 0 0; padding: 0; list-style: none; }
     .starts a, .families-list a { display: inline-flex; align-items: center; min-height: 36px; overflow-wrap: anywhere; }
+    .starts .base-form { padding-bottom: .35rem; border-bottom: 1px solid var(--line); }
+    .starts .base-form .says { color: var(--muted); font: .8rem/1.4 var(--mono); }
     .families-list li { color: var(--muted); font-size: .9rem; }
     .slot-group { margin: 1.4rem 0 0; }
     .slot-group h3 { display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .6rem; margin: 0; }
@@ -431,16 +619,30 @@ export const PIVOT_CSS = `${CARD_CSS}
     .trail ol { display: flex; flex-wrap: wrap; align-items: center; gap: .2rem .45rem; margin: .3rem 0 .8rem; padding: 0; list-style: none; font: .85rem/1.4 var(--mono); font-variant-ligatures: none; }
     .trail a { display: inline-flex; align-items: center; min-height: 36px; }
     .trail .sep { color: var(--muted); }
-    .slot-handles ul, .operators ul { display: flex; flex-wrap: wrap; gap: .35rem; margin: .7rem 0 0; padding: 0; list-style: none; }
+    .slot-handles ul { display: flex; flex-wrap: wrap; gap: .35rem; margin: .7rem 0 0; padding: 0; list-style: none; }
+    /* The page still scrolls through the parts; a sideways swipe and a pinch on them are the instrument's. */
+    .slot-handles { touch-action: pan-y; }
+    .instrument-hint { margin: .45rem 0 0; }
+    .instrument-out { display: grid; gap: .25rem; margin: .5rem 0 0; padding: .55rem .75rem; border: 1px dashed var(--accent); border-radius: var(--radius); }
+    .instrument-out .says { color: var(--muted); font: .78rem/1.35 var(--mono); }
+    .instrument-out code { font: 600 1rem/1.5 var(--mono); font-variant-ligatures: none; overflow-wrap: anywhere; }
+    .op-field { display: grid; gap: .25rem; margin: .6rem 0 0; }
+    .op-field input[type="range"] { width: 100%; min-height: 44px; margin: 0; accent-color: var(--accent); }
+    .op-ticks { display: grid; grid-template-columns: repeat(var(--ticks), minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; text-align: center; font: 700 .95rem/1 var(--mono); }
+    .op-ticks a { display: inline-flex; align-items: center; justify-content: center; min-width: 24px; min-height: 36px; color: var(--muted); text-decoration: none; }
+    .op-ticks a[aria-current] { color: var(--accent); }
+    .op-field button { justify-self: start; min-height: 44px; }
+    /* Between lines the card moves rather than blinks; reduced motion keeps every state and drops the travel. */
+    @view-transition { navigation: auto; }
+    .here .qc { view-transition-name: pivot-line; }
+    @media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
     .slot-handles a, .slot-handles span:not(.says) { display: inline-grid; gap: .1rem; min-height: 44px; box-sizing: border-box; padding: .35rem .6rem; border: 1px solid var(--line); border-radius: var(--radius); color: inherit; text-decoration: none; }
     .slot-handles code { font: 600 .9rem/1.3 var(--mono); font-variant-ligatures: none; }
     .slot-handles .says { color: var(--muted); font: .74rem/1.2 var(--mono); }
     .operators { margin: 1.1rem 0 0; }
     .operators h3 { margin: 0; }
-    .operators ul a { display: inline-grid; grid-template-columns: 2ch auto; align-items: baseline; min-height: 44px; box-sizing: border-box; padding: .45rem .6rem; border: 1px solid var(--line); border-radius: var(--radius); color: inherit; font: .85rem/1.3 var(--mono); text-decoration: none; }
-    .operators .sigil, .primed .sigil { color: var(--accent); font-weight: 700; }
-    .operators ul a[aria-current] { border-color: var(--accent); background: var(--accent-soft); }
-    .slot-handles a:hover, .slot-handles a:focus-visible, .operators ul a:hover, .operators ul a:focus-visible { border-color: var(--accent); }
+    .primed .sigil { color: var(--accent); font-weight: 700; }
+    .slot-handles a:hover, .slot-handles a:focus-visible { border-color: var(--accent); }
     /* Precise monospace: ~> and the rest show as typed, never as a ligature. */
     .here code, .add-part code, .slot-group code { font-variant-ligatures: none; }
     .primed { margin: .7rem 0 0; padding: .7rem .85rem; border: 1px dashed var(--accent); border-radius: var(--radius); }
@@ -463,6 +665,7 @@ export function renderPivot(state) {
     themeCss: `${PAPER_CSS}
     ${PAGE_CSS}
     ${PIVOT_CSS}`,
+    script: state.line ? `(${instrument.toString()})();` : "",
     body: `${masthead("/pivot")}
 ${pivotBody(state)}
 <p class="also"><a href="/constructs">Constructs</a> · <a href="/specimens">Specimens</a> · <a href="/build">Take one line apart</a> · <a href="/learn">Learn it a mark at a time</a></p>`,
