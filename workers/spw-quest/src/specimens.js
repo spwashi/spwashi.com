@@ -52,6 +52,17 @@ export function breakable(paint) {
     : part.replace(/([\]})])/g, "$1<wbr>").replace(/&lt;/g, "<wbr>&lt;").replace(/([.,]|(?<!&[a-z]{2,6});)(?=[^\s])/g, "$1<wbr>"))).join("");
 }
 
+/** The plans grouped by operation ([mode]), most first: the shelf's static plans page reads these. */
+export function planGroups() {
+  const groups = new Map();
+  for (const plan of SPECIMENS.filter((specimen) => specimen.source === "plans")) {
+    const mode = readingOf(plan).slots.mode || "plan";
+    if (!groups.has(mode)) groups.set(mode, []);
+    groups.get(mode).push(plan);
+  }
+  return [...groups].map(([mode, plans]) => ({ mode, plans })).sort((a, b) => b.plans.length - a.plans.length || a.mode.localeCompare(b.mode));
+}
+
 /** The plans counted by operation, each count a slot search for that [mode], most first. */
 function planIndex(plans) {
   const counts = new Map();

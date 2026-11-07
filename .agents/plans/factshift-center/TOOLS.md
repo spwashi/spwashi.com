@@ -91,6 +91,8 @@ The creator likes the focal point and asked for the handle and the square to be 
 | story `^` | the current kept state | the next state | a kept state | step through states | keep a state, or play |
 | spw `&` | the held line | the line after the prompt's edit | one slot of the held line | across slots, and into and out of frames | run |
 
+The same idea is landing elsewhere. spw.quest's shelf now offers each operator as a handle (`/shelf/`), and the creator pointed at Notion's block handle and embedded pages. Both are one handle per part, as the square is here. Whatever the square learns about selecting, crawling and acting should read the same on the shelf.
+
 Crawling is where the creator's question about crawlable edges lands on the canvas. Node crawls links, map crawls slots, spw crawls frames, and story crawls time. Each axis is drawn the same way (the square moves, and the edge it moves along lights), so a reader learns to crawl once.
 
 ## Map and filter, Spw-native

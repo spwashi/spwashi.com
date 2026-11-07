@@ -196,5 +196,6 @@ invariants: #[
   ~#expect: "Every shelf view renders in the worker today; assets/ holds the parser releases and static files, and no carried HTML page."
   ~#probe(read)
   !probe{ "rg -n 'renderSpecimens|specimensBody' workers/spw-quest/src/index.js workers/spw-quest/src/specimens.js" }
+  ~#answer(2026-11-06): "architecture.static_first. The creator: static landing and index seem like a good idea. First slice: carry-shelf.mjs writes /shelf/ (search, the operators as handles, plans by operation, browse tiles) and /shelf/plans/ (plans grouped by operation) into assets/shelf/, served by the worker; /specimens stays as it is until the creator's look."
   $%[architecture.static_first, architecture.paged_in_worker, architecture.as_is]
 }
