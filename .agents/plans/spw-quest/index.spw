@@ -185,3 +185,16 @@ invariants: #[
   !probe{ "rg -n 'assemble\\(|lineFrom\\(' workers/spw-quest/src/build.js workers/spw-quest/src/pivot.js" }
   $%[order.either, order.guide_only, order.atlas_only]
 }
+
+#>wonder_spw_quest_architecture
+?["Should spw.quest move to static landing and index pages written at carry time, with the worker keeping only search, compare, pivot, build, canvas and the note?"]{
+  #:depth #!computational ~#lens(choice)
+  ~#with: @plan
+  ~#taste: "The creator: willing to consider a different architecture if it is becoming more appropriate; mind cognitive overload, familiarity and customization; balance search and discovery as Suno and Spotify do."
+  ~#hypothesis: "Static pages for what does not change per request make the landing small and fast, let indexes be design components shared with spwashi.com, and end the shelf's weight squeeze; the worker stays for what must be live."
+  ~#tension: "Two places now render a shelf card (the carry script and the worker), so the card renderer must be one module both import, or the static pages and the search results drift."
+  ~#expect: "Every shelf view renders in the worker today; assets/ holds the parser releases and static files, and no carried HTML page."
+  ~#probe(read)
+  !probe{ "rg -n 'renderSpecimens|specimensBody' workers/spw-quest/src/index.js workers/spw-quest/src/specimens.js" }
+  $%[architecture.static_first, architecture.paged_in_worker, architecture.as_is]
+}
