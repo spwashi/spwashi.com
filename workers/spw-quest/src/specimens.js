@@ -52,6 +52,18 @@ export function breakable(paint) {
     : part.replace(/([\]})])/g, "$1<wbr>").replace(/&lt;/g, "<wbr>&lt;").replace(/([.,]|(?<!&[a-z]{2,6});)(?=[^\s])/g, "$1<wbr>"))).join("");
 }
 
+/** The plans counted by operation, each count a slot search for that [mode], most first. */
+function planIndex(plans) {
+  const counts = new Map();
+  for (const plan of plans) {
+    const mode = readingOf(plan).slots.mode;
+    if (mode) counts.set(mode, (counts.get(mode) || 0) + 1);
+  }
+  return [...counts].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .map(([mode, count]) => `<a href="/specimens?q=${escapeHtml(encodeURIComponent(`[${mode}]`))}#found"><code>[${escapeHtml(mode)}]</code> <span class="count">${count}</span></a>`)
+    .join('<span aria-hidden="true"> · </span>');
+}
+
 /** factshift.center holds one line of up to this many characters in ?spw= and lays it out as a canvas. */
 const FACTSHIFT_LIMIT = 400;
 export const factshiftHref = (line) => `https://factshift.center/?spw=${encodeURIComponent(String(line || ""))}`;
@@ -327,6 +339,7 @@ function shelf(state) {
 <section id="plans" class="band" aria-labelledby="plans-title">
   <h2 id="plans-title">Plans, each in one line</h2>
   <p>spwashi.com's plans each state themselves in one line: the plan as a frame, its operation as the mode, what it holds, where it acts, and what it lands as. A line opens on the pivot, one change away; a canvas opens it on factshift.center. The search above reads them with the rest.</p>
+  <p class="plan-index">By operation: ${planIndex(plans)}</p>
   <ol class="plan-lines">
     ${plans.map((specimen) => `<li id="s-${escapeHtml(specimen.id)}"><a href="/pivot?s=${escapeHtml(specimen.id)}"><code>${breakable(readingOf(specimen).paint)}</code></a> <a class="canvas" href="/canvas?s=${escapeHtml(specimen.id)}">canvas</a></li>`).join("\n    ")}
   </ol>
@@ -376,10 +389,16 @@ export const SPECIMENS_CSS = `.opening { margin: 0 0 1.2rem; }
     .specimen .name { color: var(--muted); font: .78rem/1.3 var(--mono); overflow-wrap: anywhere; }
     .specimen .also-on { opacity: .8; }
     .specimen .line { font: 600 .98rem/1.45 var(--mono); overflow-wrap: anywhere; }
-    .plan-lines { display: grid; gap: .5rem; margin: .4rem 0 0; padding: 0; list-style: none; }
-    .plan-lines li { display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .6rem; }
-    .plan-lines code { font: 600 .9rem/1.5 var(--mono); overflow-wrap: break-word; }
-    .plan-lines .canvas { color: var(--muted); font: .78rem/1.3 var(--mono); }
+    .plan-lines { display: grid; gap: .85rem; margin: .6rem 0 0; padding: 0; list-style: none; }
+    .plan-lines li { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: .1rem .75rem; }
+    .plan-lines li > a:first-child { text-decoration: none; color: inherit; }
+    .plan-lines li > a:first-child:hover code, .plan-lines li > a:first-child:focus-visible code { text-decoration: underline; text-underline-offset: .2em; }
+    /* A hanging indent: the frame (#>name) on its own line, its slots indented under it. */
+    .plan-lines code { display: block; padding-left: 2ch; font: 500 .9rem/1.55 var(--mono); overflow-wrap: break-word; }
+    .plan-lines code > [data-t="frame"]:first-child { display: block; margin-left: -2ch; font-weight: 600; }
+    .plan-index { margin: .2rem 0 0; color: var(--muted); font-size: .9rem; }
+    .plan-index a { white-space: nowrap; }
+    .plan-lines .canvas { padding-top: .1rem; color: var(--muted); font: .78rem/1.4 var(--mono); }
     .specimen pre.line { margin: 0; overflow-x: auto; font-weight: 500; font-size: .84rem; line-height: 1.5; white-space: pre; }
     .specimen .note { color: var(--ink-soft); font-size: .88rem; line-height: 1.45; }
     .specimen .part, .compare .part { color: var(--storm); font-size: .84rem; }
