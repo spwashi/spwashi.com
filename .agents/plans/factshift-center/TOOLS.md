@@ -107,6 +107,16 @@ Slices M1 and F1 take this shape once `#>wonder_factshift_spells` and `#>wonder_
 
 The creator: ideally Spw navigates between factshift.center frames. Entering a node already opens a page with the node as its frame and the parent line in the address (6b85a42). The proposal: a `#>` line held in the spw prompt, or given in `?spw=`, enters that frame, and `.` returns to the parent, so the address reads as a path of frames. Every plan's head line begins with `#>`, so a plan opens as a frame a reader can walk into. Held as `#>wonder_site_cluster_frame_navigation`.
 
+## Regions: consequence, or quiet
+
+The creator: dragging containers or interacting with regions should come with more consequence, positionally or behaviorally, or the regions should not be visible when the interactions are not meaningful. It should also be possible to add to a container, and perhaps to use selection semantics to change the connector, delimiter or separator. The slot reader the canvas now uses (readLine, writeAt, joinParts) can carry each of these:
+
+- **A region shows only where an act means something.** At rest, the slot regions (word, mode, body, scene, concept) are quiet outlines or absent. A region lights when the square is over it, when something is dragged over it, or when a tool's query touches it (map and filter's topography). The resize corners appear only on a region that can take a size.
+- **Moving a region moves its slot in the line.** Each brace pair names its slot wherever it sits, so dragging the scene's region before the word writes `(kitchen)beans<food>…` and the head line and title follow, byte for byte. A drag that would not change the line snaps back and says so in the receipt.
+- **A container takes what is dropped on it.** A node dropped on `{ }` joins the body as a part, written with the body's separator; dropped on `( )` it becomes the scene; on `< >`, the concept. The receipt is the new line.
+- **Selection reaches the joins.** Selecting two parts of a body selects the separator between them. Pressing `.` `,` `;`, or `~>` (or choosing it from a chip row under the selection) rewrites that join; `.` ident, `,` common, `;` ordinal, `~>` project, the joins `expression-query.js` already reads. The same selection over a compound (`~` `^` `&` `@`) offers its marks.
+- *Slices.* G1, quiet regions, is a feel change ending at a demo. G2 moves regions and G3 drops into containers, both under the C2 receipts. G4, joins by selection, follows G3. Each is checked in the browser by a held line rewritten byte for byte.
+
 ## A glass tool (Apple's Liquid Glass)
 
 The creator asked about designing a tool that could accommodate Apple's Liquid Glass design future: controls as a translucent layer that floats above content and takes its light from what lies beneath. factshift.center is close already, since every tool window floats above the canvas, and spwashi.com has a glass metamaterial (`effects/material.css`, `data-spw-metamaterial="glass"`).
@@ -165,6 +175,13 @@ The creator asked about designing a tool that could accommodate Apple's Liquid G
   - *Theory:* the held line is what every tool acts on, so spw's head line is the held line itself.
   - *Design:* the prompt keeps run and trace (trace opens debug, D1). What priming becomes stays with `#>wonder_factshift_priming_dialects`, and the bare-word `*boon` gap with its own entry in `wip.spw`.
   - *Slice P1* follows that wonder.
+  - *Slice P2, editing with the parser.* The creator: editing a Spw expression should benefit from the parser's affordances and from predictions based on the local Spw tree. In the title's editor and the spw prompt, as a line is typed:
+    - a closing pair is offered for an open brace;
+    - the slot the caret stands in is named (word, mode, body, scene, concept);
+    - the parse's errors mark the place they start. Since b1fd11a the parse is the workbench's own.
+    - Words are predicted from the local tree: the held line's slots, the nodes on the canvas, and the frames entered on the way here.
+    - Nothing is completed without a key, so typing stays the reader's.
+    - Gate: a demo for the creator's look.
 
 ## Order
 
