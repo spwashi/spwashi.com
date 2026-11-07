@@ -631,6 +631,7 @@ export const PIVOT_CSS = `${CARD_CSS}
     .op-ticks { display: grid; grid-template-columns: repeat(var(--ticks), minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; text-align: center; font: 700 .95rem/1 var(--mono); }
     .op-ticks a { display: inline-flex; align-items: center; justify-content: center; min-width: 24px; min-height: 36px; color: var(--muted); text-decoration: none; }
     .op-ticks a[aria-current] { color: var(--accent); }
+    @media (pointer: coarse) { .op-ticks a { min-height: 44px; } }
     .op-field button { justify-self: start; min-height: 44px; }
     /* Between lines the card moves rather than blinks; reduced motion keeps every state and drops the travel. */
     @view-transition { navigation: auto; }
