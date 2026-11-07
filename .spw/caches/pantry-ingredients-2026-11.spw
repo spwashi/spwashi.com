@@ -1,0 +1,284 @@
+# Pantry ingredients (2026-11) — for tools people design with
+#>pantry_ingredients_2026_11
+#:cache #!pantry #!ingredients #!story #!rpg
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+expression = pantry[lore.land]{character.mood.world.recipe}<riff>
+
+summary = #[
+  `Ingredients for tools people design with on their own.`,
+  `A character builder, a mood tuner, a world generator.`,
+  `Recipes are tropes: ingredients plus a pressure.`,
+  `A riff plays someone's own design, under their name.`,
+][reg=set]
+
+contents = #[
+  ~"./pantry-ingredients-2026-11.spw#character",
+  ~"./pantry-ingredients-2026-11.spw#mood",
+  ~"./pantry-ingredients-2026-11.spw#world",
+  ~"./pantry-ingredients-2026-11.spw#riffs",
+  ~"./pantry-ingredients-2026-11.spw#instruments",
+  ~"./pantry-ingredients-2026-11.spw#recipes",
+  ~"./pantry-ingredients-2026-11.spw#approaches",
+  ~"./pantry-ingredients-2026-11.spw#pool",
+][reg=set]
+
+^"character"{
+  ~#note: "Slots for a character builder. Each slot is a plain word with a few choices, and a player may bring their own."
+  body = #[`a cardinal's perch`, `a squirrel's run`, `an opossum's den`, `a raccoon's reach`, `a rat's alley`, `a person's height`][reg=set]
+  height = #[`canopy`, `fence`, `ground`, `under`][reg=list]
+  want = #[`to be given what the group is given`, `to be seen as they are`, `to leave`, `to stay`, `to find the reason a thing exists`][reg=set]
+  doubt = `what they would take, if it promised to make them who they already are`
+  pass = #[`none`, `a costume`, `a dye`, `being read as one`][reg=list]
+  talk = #[`cuts in to show interest`, `waits to show respect`][reg=set]
+  carries = #[`a card with a reason`, `a receipt from years ago`, `a scrap that might become someone`, `a prize they never use`][reg=set]
+  sheet = `@character develops one character across human, technical, spiritual, and wonder-bearing dimensions; these slots can feed it`
+}[reg=facet]
+
+^"mood"{
+  ~#note: "Axes for a mood tuner. Each runs from 0.20 to 0.80, so a tuner can show where a step lands before it is taken."
+  pace = #[`0.20 upstate slow`, `0.50 a bus between`, `0.80 city fast`][reg=list]
+  temperature = #[`0.20 a cold pool, entered slowly`, `0.50 the air at the edge`, `0.80 a hot spring`][reg=list]
+  height = #[`0.20 under the porch`, `0.50 the fence line`, `0.80 the wire`][reg=list]
+  hour = #[`0.20 dawn at the feeder`, `0.50 noon on the lawn`, `0.80 night at the bins`][reg=list]
+  certainty = #[`0.20 easing in`, `0.50 standing at the edge`, `0.80 the dive`][reg=list]
+  charge = `boon, bane, bone, bonk, honk, and boof, the town's district tones (@town): each a mood a tuner can lean toward`
+}[reg=facet]
+
+^"world"{
+  ~#note: "Pieces for a procedural world generator. A generator draws, says what it drew, and keeps a way back."
+  rule = #[`built from what is thrown away`, `built from what is set out on purpose`, `both, and status is which`][reg=list]
+  places = #[`the Feeder`, `Bin Row`, `the Fence Line`, `the Storm Drain`, `Under the Porch`, `the Wire`, `a dead mall`, `fruit trees`, `woods at a junkyard's edge`, `a junkyard`][reg=set]
+  institutions = #[`a fraternity`, `a sorority`, `an exchange program`, `a headmaster`, `a posh school`][reg=set]
+  occasions = #[`a yearly meeting halfway`, `a costume contest`, `a draw from a deck`, `a release on a Sunday`][reg=set]
+  objects = #[`a card with a reason to exist`, `a scrap that becomes a figure, after Ariel's bioprinter story`, `a prize nut`, `a receipt`][reg=set]
+  absences = #[`a missing slice`, `an empty place in a sticker book`, `a gift not yet received`][reg=set]
+  stays = `@world keeps places, factions, rules, and lore that matter beyond one session; a drawn piece that stays goes there`
+}[reg=facet]
+
+^"riffs"{
+  ~#note: "The creator, 2026-11-06: more interested in exploring ingredients and riffing with what people design on their own."
+  bring = `A player brings a design of their own: a character, a mood, a place. The pantry offers ingredients beside it, never instead of it.`
+  riff = `A riff plays someone's design with these ingredients and names them; casting it into a book waits for their yes.`
+  return = `A design that keeps returning across sessions may become an ingredient, with its maker's name and their yes.`
+  pantry = `@rpg: lore.land is the pantry for this homebrew table. Bring one small, otherwise inconsequential wonder.`
+}[reg=facet]
+
+^"instruments"{
+  ~#note: "Tools the creator named. Notes for design, not a build; how each one feels is approved in a browser first."
+  character_builder = `fills the character slots one plain word at a time, and hands the result to @character`
+  mood_tuner = `moves along the mood axes, shows the station before it is taken, and keeps a way back on screen`
+  world_generator = `draws a place, an institution, an occasion, an object, and an absence; names what it drew and lets each be swapped`
+  shared = `framework-free and readable without scripts; no surprise picks: a draw shows where it lands and on which axis`
+}[reg=facet]
+
+^"recipes"{
+  ~#note: "A recipe is a trope: ingredients plus a pressure, a shape without its characters. Each gradient runs from 0.20, the gentlest telling, to 0.80, the farthest."
+  offered_self = .{
+    expression = trope[offer]{gift.refusal}<self>
+    shape = `Someone is offered a thing that would make them who they already are, and turning it down is the proof.`
+    pressure = `taking the gift would mean admitting a doubt`
+    gradient = #[
+      `0.20 a gentle offer, declined with a smile`,
+      `0.50 an offer with a price, declined at a cost`,
+      `0.80 the gift is taken, and nothing changes`
+    ][reg=list]
+    seen = `@lore_land chapter 0, a pie that would convince someone they are WAP Boy; @pnc_e01, a costume that is who the rat is`
+  }[reg=facet]
+  passing_up = .{
+    expression = trope[pass]{costume|dye}<given>
+    shape = `Someone crosses into a group that is given more, by performing it or by being read as it.`
+    pressure = `what is given to the group was never meant for them`
+    gradient = #[
+      `0.20 a costume for one night`,
+      `0.50 a dye that does not wash out`,
+      `0.80 nobody can tell anymore, including them`
+    ][reg=list]
+    seen = `@pnc_e01: one rat in a squirrel costume, one dyed orange. The dye is Raven's.`
+  }[reg=facet]
+  self_as_costume = .{
+    expression = trope[mistake]{self.performance}<praise>
+    shape = `Who someone is gets mistaken for a performance, and praised for it.`
+    pressure = `correcting the praise would cost the place it earned`
+    gradient = #[
+      `0.20 a compliment they let stand`,
+      `0.50 a prize they keep`,
+      `0.80 a life built on the mistake`
+    ][reg=list]
+    seen = `@pnc_e01's cloud: the dyed rat wins best costume in no costume at all`
+  }[reg=facet]
+  missing_piece = .{
+    expression = trope[absence]{gap.promise}<fill>
+    shape = `A visible absence asks to be filled; the gap draws a reader in and is a promise.`
+    pressure = `the promise must be kept or broken on purpose`
+    gradient = #[
+      `0.20 filled by the end`,
+      `0.50 filled by someone else`,
+      `0.80 never filled, and that is the point`
+    ][reg=list]
+    seen = `@lore_land threads.missing: the missing slice, a sticker book's empty places, a gift gallery's gaps; the inner-child thread under it is Raven's`
+  }[reg=facet]
+  reason_to_exist = .{
+    expression = trope[object]{made.reason}<found>
+    shape = `An object or a being has some core reason it exists, and finding the reason is the plot.`
+    pressure = `the reason may not be the one anyone wants`
+    gradient = #[
+      `0.20 the maker explains it`,
+      `0.50 it explains itself`,
+      `0.80 the reason is lost and must be invented`
+    ][reg=list]
+    seen = `@lore_land threads.deck: a card from Raven's oracle deck, and the reasons a conscious structure would exist`
+  }[reg=facet]
+  built_from_leftovers = .{
+    expression = trope[world]{discarded|offered}<status>
+    shape = `A world is built from what others throw away or set out, and status is which.`
+    pressure = `the leftovers belong to someone`
+    gradient = #[
+      `0.20 scavenged charm`,
+      `0.50 class by kind of leftover`,
+      `0.80 the owners want it back`
+    ][reg=list]
+    seen = `@pnc_series: schools built from what humans discard or make available; @small_quarter`
+  }[reg=facet]
+  class_by_height = .{
+    expression = trope[status]{canopy.ground.under}<height>
+    shape = `Status is altitude: the higher someone lives, the more is given to them.`
+    pressure = `stepping down looks like falling to everyone but the one who steps`
+    gradient = #[
+      `0.20 a better view`,
+      `0.50 a ladder with rungs missing`,
+      `0.80 the ground rises`
+    ][reg=list]
+    seen = `@pnc_series: fruit trees, the woods at the junkyard's edge, the junkyard; @small_quarter layers`
+  }[reg=facet]
+  meet_in_the_middle = .{
+    expression = trope[meeting]{fast.slow}<halfway>
+    shape = `Two paces of life meet once a year at a halfway place, and the meeting is the occasion.`
+    pressure = `someone meets a different personality and cannot unmeet it`
+    gradient = #[
+      `0.20 a festival`,
+      `0.50 an exchange`,
+      `0.80 someone does not go home`
+    ][reg=list]
+    seen = `@pnc_e01: the exchange where the city and upstate campuses meet`
+  }[reg=facet]
+  edge_of_the_water = .{
+    expression = trope[threshold]{dive|ease}<sure>
+    shape = `A threshold is met in the body, and how someone enters shows how sure they are.`
+    pressure = `the cold is real either way; only its length changes`
+    gradient = #[
+      `0.20 easing in, arms up`,
+      `0.50 standing at the edge, imagining it`,
+      `0.80 the dive`
+    ][reg=list]
+    seen = `@lore_land chapter 1, its first three moments`
+  }[reg=facet]
+  clarity_after = .{
+    expression = trope[decision]{made.faced}<after>
+    shape = `A decision already made gets its face from an event that seems to cause it.`
+    pressure = `everyone else reads the event as the reason`
+    gradient = #[
+      `0.20 the character knows`,
+      `0.50 the reader knows first`,
+      `0.80 nobody says it`
+    ][reg=list]
+    seen = `@pnc_e01: the squirrel had already decided to leave the trees`
+  }[reg=facet]
+  scraps_become_figures = .{
+    expression = trope[maker]{scrap.figure}<voice>
+    shape = `A machine or a maker turns scraps into figures who can act.`
+    pressure = `a figure remembers the page it was cut from`
+    gradient = #[
+      `0.20 they stay paper`,
+      `0.50 they remember where they came from`,
+      `0.80 they want to be scraps again`
+    ][reg=list]
+    seen = `the converter printer, the creator's riff on Ariel's bioprinter story; ask Ariel before another project casts it`
+  }[reg=facet]
+  unseen_parallel = .{
+    expression = trope[maker]{story.life}<unseen>
+    shape = `Someone writing a story cannot see it is their own life, and someone else can.`
+    pressure = `saying so would end the story or the friendship`
+    gradient = #[
+      `0.20 a friend points it out`,
+      `0.50 the audience sees it, the maker never does`,
+      `0.80 the maker sees it and keeps writing`
+    ][reg=list]
+    seen = `@pnc_e01: "No thank you"`
+  }[reg=facet]
+  cut_in_as_interest = .{
+    expression = trope[talk]{overlap|wait}<interest>
+    shape = `In talk, one person's interruption is another's interest, and the two styles misread each other.`
+    pressure = `each thinks the other does not care`
+    gradient = #[
+      `0.20 a misread first date`,
+      `0.50 a table where half wait and half overlap`,
+      `0.80 the misreading is the relationship`
+    ][reg=list]
+    seen = `talk on the 2026-11-02 live; prior art in Deborah Tannen's conversational styles; a choice in the 2026-11-06 telling: cut in again, or wait`
+  }[reg=facet]
+}[reg=facet]
+
+^"approaches"{
+  ~#note: "The creator, 2026-11-06: a homebrew session has been hard to start, partly because everyone can take a different approach to shared fiction."
+  ways = #[
+    `win · plays to overcome what the fiction puts in front of them`,
+    `tell · plays so the story lands`,
+    `explore · plays to find out what the world holds`,
+    `be · plays to live inside one figure`,
+    `gather · plays to be with the people at the table`
+  ][reg=list]
+  same_page = `Before a session, the table picks one recipe and agrees on a station. Each player names the approach they bring. The gradient gives everyone the same few words for how far.`
+}[reg=facet]
+
+^"pool"{
+  public = `Tracked and public, so other sites and projects can draw from it.`
+  draw = `A project draws an ingredient or a recipe by name, casts it fresh, and cites this cache.`
+  credit = `An ingredient or recipe that came from someone's idea names them, and another project asks them before using it: Raven, Ariel.`
+  grow = `A shape seen in one work is a seed; seen in two, it is a recipe. New shapes join with their seen line.`
+  held = `Nothing personal enters the pool: no family, no money, no feelings a take kept for the creator alone.`
+}[reg=facet]
+
+#>wonder_trope_same_page
+?["Does a shared recipe with stations get a homebrew table onto the same page faster than an open conversation before play?"]{
+  #:depth #!experiential ~#lens(table)
+  ~#hypothesis: "Yes: a station gives everyone the same words for how far, and an approach names what each player came for."
+  ~#tension: "A station can feel like a rule, and players who come to explore or to be resist deciding in advance."
+  ~#probe(read)
+  !probe{ "at the next RPG Wednesday, pick one recipe; each player names a station and an approach before play, and says afterward what stayed" }
+  $%[table.station, player.approach, session.started]
+}
+
+#>wonder_pantry_riff
+?["Do people riff more with a builder that offers ingredients, or with one that offers whole recipes?"]{
+  #:depth #!experiential ~#lens(making)
+  ~#hypothesis: "Ingredients: a slot leaves room for what someone already designed, and a recipe arrives already cast."
+  ~#tension: "An open pantry can stall the same table a homebrew session stalls; a recipe gives everyone a first move."
+  ~#probe(read)
+  !probe{ "offer one table the character slots and another one recipe, and count the designs players bring back the week after" }
+  $%[pantry.ingredients, pantry.recipes, designs.returned]
+}
+
+# About this file
+operation = "prime"
+fixity = "experimental"
+keeps = "Public. No private figures, family, money, or feelings from the takes; credit travels with every borrowed idea."
+source = "creator, 2026-11-06: public caches of trope abstractions, to start a pool for other site or project development; then, the same day: more interested in exploring ingredients and riffing with what people design on their own, for character builders, mood tuners, and procedural world generators; and how hard a homebrew session is to start when everyone takes a different approach to shared fiction"
+
+# Handles, by role. Declared last; each one links wherever the text names it.
+# The table and its pages
+@rpg: ~"../../play/rpg-wednesday/index.html"
+@character: ~"../../play/rpg-wednesday/character/index.html"
+@world: ~"../../play/rpg-wednesday/world/index.html"
+@town: ~"../../town/index.html#town-districts"
+# Books and scenes
+@lore_land: ~"../production/lore-land/series.spw"
+@pnc_series: ~"../production/post-nut-clarity/series.spw"
+@pnc_e01: ~"../production/post-nut-clarity/e01-no-thank-you.spw"
+@small_quarter: ~"../scenes/brainstorms/small-quarter.spw"
+# Neighbors
+@literary_motifs: ~"../conventions/literary-operational-motifs.spw"
+@boonhonk_genre: ~"./boonhonk-combinatoric-genre.spw"
+@caches_index: ~"./index.spw"

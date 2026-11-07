@@ -1,0 +1,107 @@
+# Scenes · brainstorms · the small quarter of the town
+#>scenes_small_quarter
+#:place #!scenes #!town #!wildlife
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+expression = quarter[town]{wire.fence.feeder.bins.drain.porch}<wildlife>
+
+summary = #[
+  `A part of the town built at the size of the animals.`,
+  `Raccoons, squirrels, cardinals, opossums, and more.`,
+  `It stacks by height, the way animals divide a yard.`,
+  `Its name, district, and rule are still the creator's.`,
+][reg=set]
+
+contents = #[
+  ~"./small-quarter.spw#scale",
+  ~"./small-quarter.spw#layers",
+  ~"./small-quarter.spw#places",
+  ~"./small-quarter.spw#cloud",
+  ~"./small-quarter.spw#wonder_small_quarter_rule",
+  ~"./small-quarter.spw#wonder_small_quarter_crosser",
+][reg=set]
+
+^"scale"{
+  ~#note: "Every measure here is a body, not a person."
+  cardinal = `a perch: a fence post's cap, a feeder's lip, a wire at roof height`
+  squirrel = `a run: fence tops and utility wires, trunk to roof in one leap`
+  opossum = `a den: the dark under a porch, a hollow log, the warm air of a dryer vent`
+  raccoon = `a reach: a bin's lid, a storm drain's mouth, a latch worked open by hand`
+  others = `rabbits at the hedge line, chipmunks in the stone wall, crows on the streetlight, deer at the edge at dusk: each brings its own measure`
+}[reg=facet]
+
+^"layers"{
+  ~#note: "The quarter stacks by height. Who lives at a height is who the scene is about."
+  canopy = `wires, gutters, and tree crowns: cardinals and squirrels`
+  fence = `the fence line, the oldest road at this scale`
+  ground = `lawns, hedges, the feeder's spill, the compost heap`
+  under = `porches, drains, and culverts: opossums and raccoons`
+}[reg=facet]
+
+^"places"{
+  ~#note: "Proposed, each the creator's to keep, rename, or cut."
+  feeder = `the Feeder: a plaza made of what someone sets out on purpose; (feeder_morning) starts here`
+  bins = `Bin Row: what someone threw away, sorted at night`
+  fence = `the Fence Line: a road one board wide`
+  drain = `the Storm Drain: a commute under the street, loud after rain`
+  porch = `Under the Porch: dens, and a dryer vent's warmth in winter`
+  wire = `the Wire: where cardinals keep watch and squirrels cross`
+}[reg=facet]
+
+^"cloud"{
+  ~#note: "Open calls as gradients, for @table to play before any hardens."
+  rule = `0.10 the plainest choice; 0.90 the farthest from it.`
+  name = #[
+    `0.20 the Small Quarter`,
+    `0.40 the Hedge Ward`,
+    `0.60 the Underfoot`,
+    `0.80 Eavesdrop, for the gutters and for listening`
+  ][reg=list]
+  district = #[
+    `0.20 a corner of Boon, where things go well`,
+    `0.40 a strip along Bone, under the old structures`,
+    `0.60 spread through every district at ankle height`,
+    `0.90 a seventh district of its own`
+  ][reg=list]
+  humans = #[
+    `0.10 never seen, only what they leave`,
+    `0.50 seen from below: shoes, porch lights, a hand at the feeder`,
+    `0.90 a human who notices, and changes what is left out`
+  ][reg=list]
+}[reg=facet]
+
+#>wonder_small_quarter_rule
+?["Does the small quarter run on Post-Nut Clarity's rule, built from what humans discard or make available, or does the town keep a rule of its own?"]{
+  #:depth #!semantic ~#lens(world)
+  ~#hypothesis: "The rule fits: a feeder is what someone makes available, and Bin Row is what someone discards."
+  ~#tension: "Carrying the rule over joins the town to Post-Nut Clarity, and that series refuses to collapse another project into its title."
+  ~#probe(read)
+  !probe{ "the creator decides; then the table plays (feeder_morning) once and notes whether the rule was felt or only stated" }
+  $%[quarter.rule, pnc.rule, title.kept]
+}
+
+#>wonder_small_quarter_crosser
+?["Who is the right size to cross between the small quarter and the human streets?"]{
+  #:depth #!experiential ~#lens(scale)
+  ~#hypothesis: "The raccoon, who already works human latches with human-shaped hands."
+  ~#tension: "A crosser makes the quarter a backdrop for human plots; with none, it stays the animals' own."
+  ~#probe(read)
+  !probe{ "play (feeder_morning) once with a crosser at the table and once without, and compare what each table remembers" }
+  $%[crosser.size, quarter.kept, table.recall]
+}
+
+# About this file
+operation = "prime"
+fixity = "experimental"
+source = "creator, 2026-11-06: start fleshing out a part of the town sized for wildlife, like raccoons, squirrels, cardinals, and opossums"
+
+# Handles, by role. Declared last; each one links wherever the text names it.
+# Scenes
+@brainstorms: ~"./index.spw"
+# The town and the table
+@town: ~"../../../town/index.html#town-districts"
+@table: ~"../../../play/rpg-wednesday/index.html"
+# Neighbors
+@pnc_series: ~"../../production/post-nut-clarity/series.spw"
