@@ -62,6 +62,42 @@ Each is one session and one commit. None deploys; deploy is the creator's Wrangl
 
 **Shell: PRs 2 to 4 of the [note and shell design](./note-shell-design.md#pr-plan).** PR 2 pins the reader the guide imports (`/parser/2026.10.13/reader.min.js`, tracked). PR 3 serves the service worker, and PR 4 the manifest and icons. Each PR is specified there file by file, in order.
 
+## Shelf, library and architecture (proposed 2026-11-06)
+
+The creator, through the evening:
+- mind readability, wrapping and cognitive overload;
+- balance search and discovery as Suno and Spotify do;
+- mind familiarity and customization;
+- improve compact discovery, with landing pages and indexes as site design components;
+- consider chopping down lines, nesting and indents;
+- register custom scripts and use Spw indexing to select or sort them;
+- the creator is open to a different architecture for this worker if one is now more appropriate.
+
+**What is heavy today.** Every page renders per request from one worker that bundles the shelf data (`src/specimens-data.js`, about 600 KB). The shelf is one scrolling page of nearly a thousand lines, which is why it carries a weight test (now 275 KB).
+
+**Proposal: static first, live where it must be.**
+- **Static.** At carry time, `carry-specimens.mjs` writes the landing and index pages into `assets/`. Each page is small, cacheable and readable with scripts off.
+- **Live.** The worker keeps only what changes per request: search (`?q=`), compare, pivot, build, canvas and the note.
+
+**The shelf's landing, after Spotify and Suno.**
+- **One place to start:** the search box, which already reads slot queries.
+- **Two or three short rows,** each a handful of lines: pressed forms that depart from another, plans by operation, and recent page lines.
+- **A grid of browse tiles,** each opening its own index page: pressed forms, the pages' lines by kind, gallery files, plans, plans by operation, and lines with a mark.
+- **Grouped results:** a search answers by source, with a top result first. Depth is one tap away, never on the first screen.
+- **Storefront filters, novice and expert,** read from each line's shape rather than tagged by hand. A newcomer sees lines with a word, a lens and a body first. An expert asks for compounds, marks and nested frames. The shelf's kinds (`ROUTE_KINDS` in `src/specimens.js`) already sort lines this way.
+- **Tunable axes,** each a plain-word control, composable: *source* (where a line lives), *level* (novice to expert, read from shape), *noise* (common lines folded away, duplicates merged into one card with its places), and *expansion* (a line's neighbors one change away, shown on demand from the pivot). The current tuning is itself a Spw line in the address, such as `shelf[novice]{plans}<quiet>`, so a filtered shelf can be shared and read back.
+
+**Familiar and customizable.** Search sits on top; rows and tiles behave the way they do elsewhere; and the reader gets a library of their own:
+- scripts registered on the device beside the one note, sorted or picked by slot query;
+- recently opened lines;
+- pinned rows.
+
+The display menu (`src/display.js`) gains row and tile choices beside size, wrap, marks and spacing.
+
+**Lines that read.** Plan lines already hang from their frame with slots indented (`cc047be5`). The editor gains a format action, **chop down**: one slot per line, nested braces indented, and **join up** to put it back. This is an action, not a display mode, because the paint must stay under the field's characters.
+
+**Gate.** The creator chooses between `#>wonder_spw_quest_architecture`'s alternatives before any move. The landing's rows and tiles end at a phone demo.
+
 ## Waiting on the creator
 
 - **C. A shorter install.** The real fix is a published CLI (`npx @spwashi/spw-cli init`), a workbench decision held as `#>wonder_spw_quest_published_cli`. Until then `/install` can lead with the agent sets, one command each. A piped install script is a security call and is not proposed.
