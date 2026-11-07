@@ -2,6 +2,27 @@
 
 Status 2026-11-06. A plan, nothing built. The creator asked to improve the design and theory of each tool, plan first. This file reads the nine tools as they run at app `b1fd11a` (deployed as Wrangler version `ecdf9aa0`). It proposes one theory they share, then names a slice per tool. Code paths are in the app checkout, `workers/factshift-center/app`. The census behind it was read on 2026-11-06 from the source and from a phone-width capture of every tool open on `?spw=beans<food>(kitchen)[mode]{stew}`.
 
+## The feel to design toward
+
+The creator, 2026-11-06: the feeling of entering and navigating onto a surface to immediately actualize a fluent action, with learnable surroundings, should be a key design of factshift.center. It should feel a bit like playing the piano or dancing across a keyboard, playing with a synthesizer, casting rain, playing the bagpipes, modeling clay, playing cat's cradle, knitting a sweater, arranging cables, laying a circuit, tracing a blob, painting with stars.
+
+- **On arrival, one act is ready.** Entering a frame (by `#>`, a tile, or a node) lands on a surface whose head line is already primed, so the first touch plays something. The focal point's five states are the surroundings, and they never move: a reader learns where default, preview, select, crawl and reflex live once, and plays every tool from there.
+- **Each image is a proposal for the tool it fits.** These are for the demo to test, not decisions.
+
+| image | tool | what the image asks of it |
+|---|---|---|
+| piano, a dance across a keyboard | the column and the focal point | keys 1–9 and the arrows played in runs; a tool opens, crawls and acts in one motion |
+| a synthesizer | reflex, node's feel card | knobs named in words that change the field while held, the sound heard as it is turned |
+| casting rain | map | a cast falls across the selection and lands on every node it touches, visibly |
+| bagpipes | story | a held drone, play, under stepped notes, the kept states |
+| modeling clay | node | make, pinch and press a node to its size, as the pinch already does |
+| cat's cradle | the hand's link | strung between two fingers, a link made by drawing from node to node |
+| knitting a sweater | spw, story | lines added row by row, each held line building on the last |
+| arranging cables | node's ties, query | ties pulled from slack to tight; the address's chips laid in order |
+| laying a circuit | frames, `#>` | a path of frames closed by entering and returning; a circuit that lights when it closes |
+| tracing a blob | filter | a question traced around a region of the canvas, its answers lit inside the trace |
+| painting with stars | color | a perspective brushed across nodes, each node a star taking the color |
+
 ## What the nine tools are today
 
 The column runs reflex, color, map, filter, node, query, debug, story, spw (`src/js/spwashi/interface.ts`, `DEFAULT_MODE_ORDER`). Keys 1–9 open them; so do `?mode=`, a Spw line `mode X`, and a ← slide of the lens. Folder names differ from the keys:

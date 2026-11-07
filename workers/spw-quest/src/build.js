@@ -432,7 +432,7 @@ export function buildSurface(slots, script = assemble(slots), filename = `${slot
     <section class="apart" aria-labelledby="apart-title">
       <h2 id="apart-title">The first line, taken apart</h2>
       <p class="built-line"><code class="built" aria-label="${escapeHtml(line)}">${segments(slots) || "&nbsp;"}</code></p>
-      ${slots.word ? `<p class="line-ways"><a href="/pivot?line=${encodeURIComponent(line)}">Pivot this line</a> · <a href="/specimens?q=${encodeURIComponent(nameOf(slots.word))}#found">Find ${escapeHtml(nameOf(slots.word))} on the shelf</a></p>` : ""}
+      ${slots.word ? `<p class="line-ways"><a href="/pivot?line=${encodeURIComponent(line)}">Pivot this line</a> · <a href="/specimens?q=${encodeURIComponent(nameOf(slots.word))}#found">Find ${escapeHtml(nameOf(slots.word))} on the shelf</a>${line.length <= 400 ? ` · <a href="https://factshift.center/?spw=${encodeURIComponent(line)}">Open on factshift.center</a>` : ""}</p>` : ""}
       ${ledger(shown, slots)}
       <form class="slots" method="get" action="/build#build">
         <input type="hidden" name="script" value="${escapeHtml(held)}">

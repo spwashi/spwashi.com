@@ -23,6 +23,7 @@ contents = #[^"roles", ^"carries", ^"releases", ^"loops", wonders][reg=set]
     expression = #>factshift_center[hyperindex]{math.art.frames}(canvas)<expressiveness>
     is = `the creator's framing: a hyperindexing tool for mathematical thinking and artistic expressiveness. Today it holds one Spw line as a force-directed canvas: the line's slots become regions and nodes, nine tools act on them, and a node can be entered as a frame of its own with the parent line waiting in the address.`
     hyperindex = `an index whose entries are frames that open into further frames; a held line is an entry, its slots are the axes it is filed along, and entering a node files the reader one level down.`
+    feel = `the creator: entering a surface immediately actualizes a fluent action with learnable surroundings, like a piano, a synthesizer, casting rain, cat's cradle, laying a circuit or painting with stars (factshift-center TOOLS.md, The feel to design toward).`
   }[reg=facet]
   others = `wap.mom, smut.today, autonomous.feedback and the site hub share the server shell (workers/lib/shell.js) and the peer kit; their roles live in their own plans (workers-wonder-kit, smut-today-crew, ecosystem-architecture).`
 }[reg=facet]
