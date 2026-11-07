@@ -259,6 +259,21 @@ Both are for a phone look first.
 
 **The title and its payload** (app 56c111c; the creator: a verbose title is hard to read; they wonder about a distinction between the title and the payload). The title names the line: a line short enough to read at a glance is its own title, and a longer one shows its head (`.spwashi …`) with the whole line as its tooltip. The payload, the whole line, stays in the corner box, the prompt, the address and the title's editor, and it keys the hash and the kept frames, so two lines with one head never share a page.
 
+**Reading the prompt, and a run's steps** (app daa4ddd and a82a9e6; the creator: the parse behavior is confusing, the steps do not make sense interactively, and it is worth asking what is desirable to show and to touch).
+- **What Run will do is said while the prompt changes:** a setting (`charge=-100`), a command (`home`), a superpower (`!prune`), or the line it holds. A run's receipt replaces the preview.
+- **`!` takes up a superpower only by name.** `!garden[care]{seed}`, the line the `!` key writes, is held as a line.
+- **A run always holds its line on the canvas.** The runtime's stages, registers and anchors are no longer drawn as nodes in its place.
+- **With steps chosen, the window stays open and shows what the run did beside the line.**
+  - The stages are chips, each opening what it changed.
+  - The events are listed in order. A tap or the arrows step them, each lighting the part of the line it came from.
+  - The registers carry the names written for them, and the issues are given in words.
+  - The whole run can be copied as Spw.
+- **Open:** a bare word that names a command (`home`, `link`, `group`, `frame`) still runs the command; the preview says so first. The runtime the app carries is an older build that rejects `;` in a body. Its issue now shows in words beside the held line instead of an older drawing.
+
+**The reflex panel for a node** (the creator: consider it for node configuration). Proposed: with one node selected, the reflex panel's cards speak for that node, not the whole field. Size, charge and mass (its weight in the field) would set its own values, and a pin row would offer kept or loose. Its mark row would offer the twelve operators, so the panel is where a node's operator and physics are configured. A card names the node it is acting on, and with nothing selected the cards return to the field.
+
+**Frame swipes** (the creator: still not easy enough) are being made easier by another session's uncommitted work in the app checkout: a 72px band for sideways steps with the line they would step to. This session left those files alone.
+
 **Cross-document links and `.spw` files** (the creator's wonder). A node whose word names another page or a `.spw` file could open it as a frame, the way `#>` enters one. A `.spw` file dropped on the canvas or given in `?spw=` by address could load as held lines, one frame per top-level expression, stepped through with the action →. Both would read through the workbench's reader that the app already carries.
 
 **A play mechanic on hold.** A hold plays and a release lets go; nothing commits on a hold. On a node, a hold could play its operator and a drag up or down while holding could turn the operator's own quantity (a value's weight, a measure's scale). The receipt comes when the finger lifts.
