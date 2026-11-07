@@ -14,8 +14,11 @@ operation: align (the app's canvas with the workbench's reading of a line)
 
 ```text
 pins (2026-11-06; app hashes resolve in workers/factshift-center/app)
-app            main 99c10e6 (2026-10-30), 94 commits past origin/main 2ba127a (fetched 2024-10-30)
-app workbench  submodule fffab72, spw-workbench 0.2.0-alpha.1, 2026-03-12: from before the
+app            main b1fd11a (2026-11-06), past 99c10e6 by e6ed1b9 (the slot reader) and b1fd11a (the parser);
+               deployed 2026-11-06 as Wrangler version ecdf9aa0, snapshot 5734c357
+app reader     src/js/vendor/spw-reader, prerelease 2026.11.07-pre.1 from spw-workbench 3f53adf2: the slot
+               reader (readLine, writeLine, slotHash) and, since b1fd11a, spw-workbench/parser
+app workbench  submodule fffab72 for the runtime only, spw-workbench 0.2.0-alpha.1, 2026-03-12: from before the
                workbench's 2026-03-26 history rewrite, so the clone keeps it only on
                backup/history-rewrite-pre-20260326, not on main; it defines no outline, roles or formAt
 site reader    public/js/semantic/spw-workbench-reader.js, v0.3.0 @ 27fa1e3 (the site's mount, 2026-11-06):
