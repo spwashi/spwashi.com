@@ -142,6 +142,7 @@ Not a rewrite: one pilot of each, measured before more.
 - **Kits that run in two places.** Like spw.quest's file reader, the serializer and the reader run at build time (manifest, edges, static seeds) and in the page (live), from one source.
 - **Authored hosts.** The instrument is the pilot element. `npm run audit:root-writes` and a frame trace decide whether a second module follows.
 - **Peers by generation.** Modules reach spw.quest the way tokens and faces now do: generated, carried, checked.
+- **What factshift.center has taught.** One operator descriptor with lifecycles, primed and actualized chrome with receipts, a preview of what a typed line will do, the `#spw64=` codec for this plan's door (§E), and the thread as the cauldron's shape: `.agents/plans/factshift-center/OPERATORS.md` (2026-11-07).
 
 ## Slices, ranked
 
