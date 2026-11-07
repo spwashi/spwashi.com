@@ -421,7 +421,7 @@ test('the shelf is one place to go, and its three rooms name each other', async 
     assert.ok(page.includes(`<a href="${path}" aria-current="page">${label}</a>`), `${path}: the row marks the room`);
   }
   const specimens = await (await get('spw.quest', '/specimens')).text();
-  assert.match(specimens, /<nav class="on-shelf" aria-label="On this shelf"><a href="#pressed">\d+ pressed forms<\/a> · <a href="#pages">\d+ lines the pages carry<\/a> · <a href="#gallery">\d+ files from the parser's gallery<\/a><\/nav>/);
+  assert.match(specimens, /<nav class="on-shelf" aria-label="On this shelf"><a href="#pressed">\d+ pressed forms<\/a> · <a href="#pages">\d+ lines the pages carry<\/a> · <a href="#gallery">\d+ files from the parser's gallery<\/a> · <a href="#plans">\d+ plans, each in one line<\/a><\/nav>/);
 });
 
 test('a script can be formatted and downloaded', async () => {

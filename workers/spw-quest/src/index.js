@@ -13,7 +13,7 @@ import { displayMenu, displayScript } from "./display.js";
 import { PARSER_JS } from "./parser-text.js";
 import { handleParser, isParserPath } from "./parser-releases.js";
 import { SWITCH_CSS, parserSwitch, switchBanner, switchLoader, switchModulePath } from "./parser-switch.js";
-import { SPECIMENS_CSS, specimenState, specimensBody } from "./specimens.js";
+import { SPECIMENS_CSS, factshiftHref, specimenById, specimenState, specimensBody } from "./specimens.js";
 import { renderConstructs } from "./constructs.js";
 import { pivotState, renderPivot } from "./pivot.js";
 import { BASE_SECURITY, escapeHtml, jsonResponse, layout, wantsJson } from "../../lib/shell.js";
@@ -589,6 +589,12 @@ async function handleQuest(request, url) {
     response = page(renderConstructs(), { cache: "public, max-age=300" });
   } else if (url.pathname === "/pivot") {
     response = page(renderPivot(pivotState(url.searchParams)), { cache: "public, max-age=300" });
+  } else if (url.pathname === "/canvas") {
+    // One short address for a line's canvas: a shelf specimen by id, or any line, opened on factshift.center.
+    const line = specimenById(url.searchParams.get("s"))?.line || url.searchParams.get("line") || "";
+    response = line && line.length <= 400
+      ? new Response(null, { status: 302, headers: { ...BASE_SECURITY, Location: factshiftHref(line), "Cache-Control": "public, max-age=300" } })
+      : new Response("No line to open", { status: 404, headers: BASE_SECURITY });
   } else if (url.pathname === "/parser.js") {
     response = new Response(PARSER_JS, { headers: { ...BASE_SECURITY,
       "Content-Type": "text/javascript; charset=UTF-8", "Cache-Control": "public, max-age=3600" } });

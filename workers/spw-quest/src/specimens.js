@@ -40,6 +40,10 @@ export function nameOf(specimen) {
   return specimen.name;
 }
 
+/** factshift.center holds one line of up to this many characters in ?spw= and lays it out as a canvas. */
+const FACTSHIFT_LIMIT = 400;
+export const factshiftHref = (line) => `https://factshift.center/?spw=${encodeURIComponent(String(line || ""))}`;
+
 /** Where a specimen lives on spwashi.com: the section that carries it, or the parser with it open. */
 export function whereOf(specimen) {
   if (specimen.source === "routes") {
@@ -153,6 +157,9 @@ function moves(specimen, state) {
     `<a href="${escapeHtml(where.href)}">${escapeHtml(where.label)}</a>`,
     edit ? `<a href="${escapeHtml(edit)}">Edit</a>` : "",
     reading.file ? "" : `<a href="/pivot?s=${escapeHtml(specimen.id)}">Pivot</a>`,
+    // On the shelf only a plan's line opens on factshift.center: a link on every card would carry
+    // every line twice and the shelf past its weight. /build offers it for any single line.
+    specimen.source !== "plans" || String(specimen.line || "").length > FACTSHIFT_LIMIT ? "" : `<a href="/canvas?s=${escapeHtml(specimen.id)}">Open on factshift.center</a>`,
     compare,
     origin ? `<a href="${escapeHtml(address({ q: state.q, a: specimen.id, b: origin.id }, "compare"))}">Against ${escapeHtml(origin.name)}, where it departs from</a>` : "",
   ].filter(Boolean).join('<span aria-hidden="true"> · </span>');
@@ -260,11 +267,12 @@ const SHELF = (() => {
     pages: pages.length,
     kinds: ROUTE_KINDS.map((kind) => ({ ...kind, members: pages.filter((specimen) => kind.test(readingOf(specimen))) })),
     files: SPECIMENS.filter((specimen) => specimen.source === "gallery"),
+    plans: SPECIMENS.filter((specimen) => specimen.source === "plans"),
   };
 })();
 
 function shelf(state) {
-  const { groups, pages, kinds: sorted, files } = SHELF;
+  const { groups, pages, kinds: sorted, files, plans } = SHELF;
   const pressed = groups.map(({ group, members }) => {
     return `<section class="group" aria-labelledby="group-${escapeHtml(group)}">
     <h3 id="group-${escapeHtml(group)}">${escapeHtml(group)} <span class="from-file">${escapeHtml(members[0].file.split("/").pop())}</span></h3>
@@ -282,7 +290,7 @@ function shelf(state) {
   </details>`;
   }).join("\n  ");
   const herbarium = groups.reduce((sum, { members }) => sum + members.length, 0);
-  return `<nav class="on-shelf" aria-label="On this shelf"><a href="#pressed">${herbarium} pressed forms</a> · <a href="#pages">${pages} lines the pages carry</a> · <a href="#gallery">${files.length} files from the parser's gallery</a></nav>
+  return `<nav class="on-shelf" aria-label="On this shelf"><a href="#pressed">${herbarium} pressed forms</a> · <a href="#pages">${pages} lines the pages carry</a> · <a href="#gallery">${files.length} files from the parser's gallery</a> · <a href="#plans">${plans.length} plans, each in one line</a></nav>
 
 <section id="pressed" class="band" aria-labelledby="pressed-title">
   <h2 id="pressed-title">Pressed forms</h2>
@@ -301,6 +309,14 @@ function shelf(state) {
   <p>The samples spwashi.com's parser opens with. Each is a small file: open it here in the editor, or in the parser where it came from.</p>
   <ol class="shelf files">
     ${files.map((specimen) => card(specimen, state)).join("\n    ")}
+  </ol>
+</section>
+
+<section id="plans" class="band" aria-labelledby="plans-title">
+  <h2 id="plans-title">Plans, each in one line</h2>
+  <p>spwashi.com's plans each state themselves in one line: the plan as a frame, its operation as the mode, what it holds, where it acts, and what it lands as. A line opens taken apart; a canvas opens it on factshift.center. The search above reads them with the rest.</p>
+  <ol class="plan-lines">
+    ${plans.map((specimen) => `<li id="s-${escapeHtml(specimen.id)}"><a href="/build?line=${escapeHtml(encodeURIComponent(specimen.line))}"><code>${escapeHtml(specimen.line)}</code></a> <a href="/canvas?s=${escapeHtml(specimen.id)}">canvas</a></li>`).join("\n    ")}
   </ol>
 </section>`;
 }

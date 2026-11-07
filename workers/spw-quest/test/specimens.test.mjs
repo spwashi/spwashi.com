@@ -35,7 +35,7 @@ test('the shelf reads with scripts off: pressed forms, the pages\' rarer lines, 
   assertBalanced(page);
   assert.ok(page.length < 260_000, `the shelf stays under 260 KB (${page.length})`);
   assert.match(page, /<h1 id="specimens-title">Specimens<\/h1>/);
-  for (const id of ['pressed', 'pages', 'gallery']) assert.match(page, new RegExp(`<section id="${id}" class="band"`), id);
+  for (const id of ['pressed', 'pages', 'gallery', 'plans']) assert.match(page, new RegExp(`<section id="${id}" class="band"`), id);
   for (const specimen of SPECIMENS.filter(({ source }) => source !== 'routes')) {
     assert.ok(page.includes(`id="s-${specimen.id}"`), specimen.id);
   }
@@ -125,4 +125,21 @@ test('two lines read side by side: the ground they share, then the slot where th
     const other = SPECIMENS.find((specimen) => specimen !== twice && specimen.line === twice.line);
     assert.ok(compareSpecimens(twice, other).same);
   }
+});
+
+test('every plan states itself in one line on the shelf, and every card that fits opens on factshift.center', async () => {
+  const plans = SPECIMENS.filter(({ source }) => source === 'plans');
+  assert.ok(plans.length >= 40, `the live plans carry head lines (${plans.length})`);
+  for (const plan of plans) {
+    assert.match(plan.line, /^#>[a-z0-9_]+\[[a-z_]+\]\{[^}]+\}\([^)]+\)<[^>]+>$/, plan.id);
+    assert.equal(plan.reading.slots.mode !== undefined || plan.reading.slots.body !== undefined, true, `${plan.id} reads its slots`);
+  }
+  const page = await (await get('/specimens')).text();
+  const quest = plans.find(({ name }) => name === 'spw-quest');
+  assert.ok(quest, 'spw-quest states itself');
+  assert.ok(page.includes(`href="/canvas?s=${quest.id}"`), 'its line opens as a canvas');
+  const canvas = await get(`/canvas?s=${quest.id}`);
+  assert.equal(canvas.status, 302);
+  assert.equal(canvas.headers.get('location'), `https://factshift.center/?spw=${encodeURIComponent(quest.line)}`);
+  assert.equal((await get('/canvas?s=nothing')).status, 404);
 });
