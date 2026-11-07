@@ -225,6 +225,38 @@ A tap on the title opens its editor focused, with the text selected, by any hand
 - A long title ends in an ellipsis on the canvas and shows whole while selected, focused, or in names.
 - While the camera zooms, titles keep a legible size; a counter-scale holds them between 10 and 20px on screen.
 
+**Built at 489eaad** (the creator: implement the other proposals, and continue refining):
+- Titles are sized and placed by role, one gap below their circles. A long one ends in an ellipsis unless selected or named. Zoom's counter-scale is not built.
+- A marked node does its operator's act when a tap selects it, with a receipt: `.` home, `=` kept or let loose, `@` to the center, `*` heavier, `#` kept as a frame, `&` with its ties, `%` and `$` said. `?` `!` `~` and `^` only play.
+- The frame's swipes cross the page's states: left and right through the lines it held, up through the frames it kept, down still refreshes. A pull from the title's box goes without capture, so the title's edge drag and pinch stay its own.
+- `spwashi` grounds the canvas instead of leaving for `/_spwashi@`. At app 6804471 it holds `.spwashi{spwashi.com, spw.quest, factshift.center}`: the creator named the live sites, and honk, bonk and boof .land have expired. A node whose word names a site is a link: a tap selects it and says so, and a second tap opens the site. The site themes in `src/ts/domains/config.ts` still list the expired lands.
+
+**Nodes and the focal square: what each promises** (the creator: consider their semantics and expectations more deeply; refreshing should be easy; pivoting may be accessible; pinching from the frame could cluster or enter).
+
+*A node says what it is before it is touched.* A word of the line, a part, a scene, a concept and a charge each have one size, one title size and one place. A free node reads as loose (no region). A marked node shows its mark in its title, and that mark is the promise of its act. A region shows only when something could land in it. Three promises follow:
+1. **Nothing changes the line without a receipt.** Drops, verbs, names and operator acts each say what they did.
+2. **Every change can be walked back the same way.** The line's history is the undo: ← on the hash or the frame is the line before. A promise to keep, not yet a guarantee for every act: a kept frame or a pin is not in that history.
+3. **One gesture means one thing on every node of a kind:**
+
+| on a node | does |
+|---|---|
+| tap | select (in names: name); a marked node also acts |
+| double tap | name |
+| hold | the ring, its verbs by kind |
+| drag | move, link, or join the line (reflex's drag) |
+| pinch | size |
+| two nodes, pinched (proposed) | their charge |
+
+*The focal square is where a primed act waits.* It is the one place the hand returns to, docked above `[...]`. It always says what → would do, and its five states (default, preview, select, crawl, reflex) are where every tool keeps them. Proposals that tie it to the nodes:
+- Over a node, the square primes that node's act (its operator's, or its kind's first verb), and → actualizes it. A marked node is then played one-handed or by key.
+- ← on the square walks back the line, as the hash and the frame do, so walking back is one gesture everywhere.
+- A pivot (one slot changed, the rest kept, as spw.quest's /pivot does) could be the square's ↑ over a part, primed and then taken. Pivots stay reachable without crowding a tap.
+
+*The frame's hands.* Down refreshes from anywhere along the top band, the side bands or the bare frame, and stays the easiest gesture. Left and right cross the line's states, and up the kept frames. Two proposals for a pinch that begins on the frame:
+- Inward, it clusters: free nodes fold into one group node, and the line folds to its word.
+- Outward over a node, it enters that node as a frame (`#>`).
+Both are for a phone look first.
+
 **Cross-document links and `.spw` files** (the creator's wonder). A node whose word names another page or a `.spw` file could open it as a frame, the way `#>` enters one. A `.spw` file dropped on the canvas or given in `?spw=` by address could load as held lines, one frame per top-level expression, stepped through with the action →. Both would read through the workbench's reader that the app already carries.
 
 **A play mechanic on hold.** A hold plays and a release lets go; nothing commits on a hold. On a node, a hold could play its operator and a drag up or down while holding could turn the operator's own quantity (a value's weight, a measure's scale). The receipt comes when the finger lifts.
