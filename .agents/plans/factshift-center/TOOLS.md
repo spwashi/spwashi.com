@@ -2,6 +2,8 @@
 
 Status 2026-11-06. A plan, nothing built. The creator asked to improve the design and theory of each tool, plan first. This file reads the nine tools as they run at app `b1fd11a` (deployed as Wrangler version `ecdf9aa0`). It proposes one theory they share, then names a slice per tool. Code paths are in the app checkout, `workers/factshift-center/app`. The census behind it was read on 2026-11-06 from the source and from a phone-width capture of every tool open on `?spw=beans<food>(kitchen)[mode]{stew}`.
 
+Operators as lifecycles, the line as something to change, and what this app suggests for spwashi.com's runtime: [OPERATORS.md](OPERATORS.md) (2026-11-07).
+
 ## The feel to design toward
 
 The creator, 2026-11-06: the feeling of entering and navigating onto a surface to immediately actualize a fluent action, with learnable surroundings, should be a key design of factshift.center. It should feel a bit like playing the piano or dancing across a keyboard, playing with a synthesizer, casting rain, playing the bagpipes, modeling clay, playing cat's cradle, knitting a sweater, arranging cables, laying a circuit, tracing a blob, painting with stars.
