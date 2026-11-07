@@ -1,5 +1,5 @@
 import { CONTAINERS, OPERATORS } from "./guide.js";
-import { EXAMPLES, exampleById } from "./examples.js";
+import { EXAMPLES, EXAMPLE_GROUPS, exampleById } from "./examples.js";
 import { EXPECTED_FILES, GIT_GUIDE, GIT_MARKDOWN, INSTRUCTION_SETS, QUEST_PROMPTS, QUEST_TEXT, WORKBENCH } from "./quest.js";
 import { STEPS } from "./steps.js";
 import { LINE_LIMIT, liveScript, readLine } from "./reader.js";
@@ -344,9 +344,11 @@ ${displayScript()}`,
 function fileWorkspace(example) {
   const reading = readFile(example.script);
   const display = displayMenu();
-  const tabs = EXAMPLES.map((item) => `<a href="/?example=${escapeHtml(item.id)}#try" data-example="${escapeHtml(item.id)}"${item === example ? ' aria-current="page"' : ""}><span class="tab">${escapeHtml(item.tab)}</span><span class="file">${escapeHtml(item.file)}</span></a>`).join("\n    ");
+  const link = (item) => `<a href="/?example=${escapeHtml(item.id)}#try" data-example="${escapeHtml(item.id)}"${item === example ? ' aria-current="page"' : ""}><span class="tab">${escapeHtml(item.tab)}</span><span class="file">${escapeHtml(item.file)}</span></a>`;
+  // One row a group: the bench, the study, the agents. Each row is named, so a reader sees the three kinds at once.
+  const tabs = EXAMPLE_GROUPS.map((group) => `<div class="examples-row" role="group" aria-label="${escapeHtml(group)}"><span class="examples-group" aria-hidden="true">${escapeHtml(group)}</span>${EXAMPLES.filter((item) => item.group === group).map(link).join("")}</div>`).join("\n    ");
   return `<section id="try" class="try" aria-labelledby="try-title">
-  <h2 id="try-title" class="eyebrow">Five files, written in Spw</h2>
+  <h2 id="try-title" class="eyebrow">${EXAMPLES.length} files, written in Spw: a bench, a study, and agents</h2>
   <nav class="examples" aria-label="Files">
     ${tabs}
   </nav>
