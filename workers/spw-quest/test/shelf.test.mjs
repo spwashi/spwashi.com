@@ -11,6 +11,7 @@ import { shelfPages } from '../src/shelf.js';
 import { FORMS } from '../src/forms.js';
 import { EXAMPLES } from '../src/examples.js';
 import { readSpecimen } from '../src/specimen-reading.js';
+import { factshiftScriptHref, spw64 } from '../src/build.js';
 
 const ASSETS = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'assets');
 // The asset binding serves a directory's index.html at its pretty path, as Workers assets do.
@@ -96,4 +97,17 @@ test('forms side by side: each row opens in the editor and on the pivot, every s
   }
   for (const example of EXAMPLES) assert.ok(page.includes(`href="/?example=${example.id}#try"`), example.id);
   assert.match(page, /aria-current="page">Forms<\/a>/, 'the shelf rooms mark Forms as here');
+});
+
+test('a script travels to factshift.center in the fragment as base64url, from /build and from the guide, and /build reads one back', async () => {
+  for (const text of ['garden[care]{seed}', '#>notes\ngarden{seed; water}\n?harvest{when} 🌱']) {
+    assert.equal(spw64(text), Buffer.from(text, 'utf8').toString('base64url'), 'url-safe, unpadded');
+    assert.equal(Buffer.from(spw64(text), 'base64url').toString('utf8'), text, 'reads back whole');
+  }
+  const script = 'garden[care]{seed; water}';
+  const build = await (await get(`/build?script=${encodeURIComponent(script)}`)).text();
+  assert.ok(build.includes(`href="${factshiftScriptHref(script)}" data-tool="factshift">Open on factshift.center</a>`), 'build links its file');
+  assert.match(build, /function readSpw64\(\)/, 'build reads #spw64= into the editor');
+  const guide = await (await get('/')).text();
+  assert.ok(guide.includes(`href="${factshiftScriptHref(EXAMPLES[0].script)}" data-tool="factshift"`), 'the guide links the open example');
 });

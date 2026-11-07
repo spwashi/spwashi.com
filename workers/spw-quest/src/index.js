@@ -6,7 +6,7 @@ import { LINE_LIMIT, liveScript, readLine } from "./reader.js";
 import { FILE_CSS, FILE_LIMIT, editorField, liveFileScript, outlineFile, readFile } from "./file-reader.js";
 import { noteBootScript } from "./note.js";
 import { PANEL_CSS, stepSurface } from "./panel.js";
-import { BUILD_CSS, BUILD_DEFAULTS, MAX_SCRIPT, assemble, buildFrom, buildSurface, focusSlots, formatScript, safeName, toolActions } from "./build.js";
+import { BUILD_CSS, BUILD_DEFAULTS, MAX_SCRIPT, assemble, buildFrom, buildSurface, factshiftScriptHref, focusSlots, formatScript, readSpw64, safeName, toolActions } from "./build.js";
 import { PAPER_CSS, PAPER_THEME } from "./paper.js";
 import { LIVE_CSP, PAGE_CSS, QUEST_HEAD, masthead, page } from "./page.js";
 import { displayMenu, displayScript } from "./display.js";
@@ -362,6 +362,7 @@ function fileWorkspace(example) {
           ${display.toggle}
           <button type="button" data-tool="copy">Copy</button>
           <button type="submit" name="tool" value="download" formaction="/script.spw" data-tool="download">Download</button>
+          <a class="file-canvas" href="${escapeHtml(factshiftScriptHref(example.script))}" data-tool="factshift" title="Open this file on factshift.center">Canvas</a>
         </div>
       </div>
       ${display.panel}
@@ -426,7 +427,7 @@ function renderBuild(slots, script = assemble(slots), filename = `${slots.word |
     description: "A whole file you can edit, what a tool reads from it, and its first line taken apart: change one part and the rest holds.",
     canonical: "https://spw.quest/build",
     head: QUEST_HEAD,
-    script: `(${toolActions.toString()})();`,
+    script: `(${readSpw64.toString()})();\n(${toolActions.toString()})();`,
     themeCss: `${PAPER_CSS}
     ${PAGE_CSS}
     ${FILE_CSS}
