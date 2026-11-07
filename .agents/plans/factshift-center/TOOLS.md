@@ -290,6 +290,74 @@ Both are for a phone look first.
 - **Clustering:** a feature switch groups the file's lines by operator in front, by lens (`[mode]`), by frame or by what they hold, each group a region.
 - **Configuration:** a choice of *lines*, each expression a node in a row, or *containers*, nested expressions as nested regions. It is kept with the page, and the thread's rows stay the index into it.
 
+**What d3 offers here** (a read of the app, 2026-11-07; d3 7.8.5). The forces in use are `forceLink`, `forceCollide` and `forceManyBody`, plus custom ticks:
+- `center`, which pulls only the nodes homed to the stage;
+- `boundingBox` (`ts/simulation/forces.ts:150`), which treats the screen as the whole world;
+- `anchor`, `regions`, `dimensional`, `gravity` and `spin`.
+
+There is no d3 camera. `js/simulation/pinch.ts` keeps its own view, `{k,x,y}` clamped from 0.35 to 3, and writes it onto `g.simulation-content`. A `d3.zoom` on the svg only changes charge on Shift+wheel. Transitions, hierarchy, brush, quadtree and `forceX`/`forceY`/`forceRadial` are unused. The verb lists (`NODE_VERBS`, `CANVAS_VERBS`, `lineVerbsFor`) are already plain data. Fits, each kept under `pinch.ts`'s ownership of gestures:
+- **Fractal zoom.**
+  - `zoomToBox(region)` tweens the view with `d3.interpolateZoom`.
+  - `d3.stratify().path()` builds the file → line → slot → part tree from ids like `anatomy:part2`: `ancestors()` zooms out, and `depth` sets level of detail.
+  - A `--zoom-k` variable lets deep titles fade at low zoom.
+  - The file level needs `boundingBox` widened to a world, not the screen.
+- **Clustering by feature.** `d3.group` by operator (the first character of the word), lens (`node.frame`) or role (the kind's suffix), placed on a `scaleBand` or radially for the twelve. The simplest move is to set each node's anchor to its cluster's center, so homes, tethers and anchors keep working. Each cluster is drawn as a region with a `cluster:` id, which region-rects renders as it is.
+- **Lines or containers.** `d3.partition` gives rows by depth, `d3.treemap` with slice or dice gives a row or nested boxes, and `d3.pack` gives nested circles. These are added as layouts beside `lineAnatomy`, not in its place, since kept regions and drops depend on its geometry.
+- **Menus.** A Spw line such as `ring{grow, shrink, link}`, read by the slot reader, could produce a ring's verbs. `d3.pie` and `d3.arc` could draw the ring as wedges matching its angle hit test.
+- **Slices, smallest first:** zoom to a container (`pinch.ts`); cluster by feature (a new `clusters.ts` plus `forces.ts`, toggled by a Spw setting); the file as one world (`spw-talk.ts`, `line-anatomy.ts`, `forces.ts`).
+
+**Spw-native menus: the theory to build on** (a read of the repo's Spw docs, 2026-11-07). Already pointing this way:
+- The creator retired verbs for operators: "the verbs were not clear and should rather be operators" (`.spw/conventions/word-sets.spw:49`).
+- A menu row already behaves like a `[mode]`: it shows one verb, turning it primes the next, and a tap actualizes it (`.spw/surfaces/factshift-center.spw:70`).
+- The verb audit writes gestures as `noun[gesture]{verb}<writes>` (`.spw/audits/factshift-center-verbs-2026-10.spw:200`).
+
+The menu's families already carry charge words: forces bonk, nodes boon and bane, interface honk, data bone. A proposed idiom for one menu line:
+- the mark names the cluster's force: `?` open (a disclosure you can close), `!` act, `=` keep in place, `#` keep as a findable frame, `%` tune an amount, `@` see from a place, `$` see what it is made of;
+- `[ ]` holds the verb shown (the primed one);
+- `{ }` holds the verbs the row turns through, with `;` when the order matters and `,` when it does not, never tight dots;
+- `< >` says where the act writes. This last one is contested.
+
+`*` stays the receipt's mark, so no cluster takes it. Open in the docs, and not settled here:
+- what `{ }` is called (definition, direction, behavior or body), and whether `< >` is one pair or two marks;
+- the part of speech of `( )`;
+- "frame" meaning both `[ ]` and `#>`;
+- how `@` reads between lines;
+- whether the dot is a separator or a word;
+- `;`, which the app's bundled runtime rejects;
+- which tool takes which operator, which is the creator's call.
+
+**The `[...]` menu and the tool panels, as they are** (an inventory, 2026-11-07).
+- **The menu's rows are one array** (`init/hotkeys/keystrokes.ts:184`), shown by family: selection (fourteen verbs, shown only with a selection), more, fewer, save, store, transport, interface, forces, menu.
+  - A row remembers its last verb, a tap acts, and a swipe or `›` turns it.
+  - No arrow moves between rows, so going down a row takes two Tabs.
+  - Escape never closes the menu.
+  - Ctrl+- (empty node cache) is swallowed by the zoom guard, and titles name the state a press leaves.
+  - The reveal order is read by nothing.
+- **Panels:**
+  - **spw:** Enter adds a line and Cmd+Enter runs; `initSpwPrimeControls` is dead.
+  - **story:** context and color delete the other chips.
+  - **map:** cast is disabled until something matches; the js run replaces every node.
+  - **filter:** keep is enabled even with nothing matched, and keeping zero deletes every node, with no undo.
+  - **query:** filled once and stale.
+  - **node:** nothing is primed on first open; more, save, loose and empty repeat menu rows, and empty also erases what was saved.
+  - **color:** thirteen unlabeled swatches, and its primed act reads " again".
+  - **reflex:** arithmetic labels; link and speed decay share one counter; every press closes the panel.
+  - **debug:** nothing before a run.
+- **Proposed:** the menu as four acts (make, see, keep, tune), each a row that turns through its items. ↑ and ↓ move between acts, and the menu remembers the item in each act. It is configured by `=` lines ("keep this here, under this name"), kept word for word in local storage:
+
+  ```
+  =menu{make; see; keep; tune}
+  =menu[make]{more; link; line; grow; remove}
+  =ring[part]{grow; turn; later; rename; shrink; drop; earlier; select}
+  ```
+
+  A ring's body has eight slots clockwise from up, `·` for an empty one, so a verb's place is its direction. An unknown word is skipped and named in the status. The first files are `keystrokes.ts` (a key and an act for every row), `hotkey-buttons.ts` (rows by act, ↑ ↓ between them) and a handler for `=(menu|ring)` lines. `line-verbs.ts` is another session's open file, so the ring waits for it.
+
+**Built: a map of the thread** (the first step of fractal zoom).
+- The thread's map button draws the thread whole: each line a node, gathered into labelled regions by operator, then lens, then the `#>` frame it falls under. The next press steps the feature, and after the last the map goes and the line held before it comes back.
+- A tap on a line goes in and holds it whole.
+- The title reads "map · by operator" while the map stands in for the line.
+
 **Cross-document links and `.spw` files** (the creator's wonder). A node whose word names another page or a `.spw` file could open it as a frame, the way `#>` enters one. A `.spw` file dropped on the canvas or given in `?spw=` by address could load as held lines, one frame per top-level expression, stepped through with the action →. Both would read through the workbench's reader that the app already carries.
 
 **A play mechanic on hold.** A hold plays and a release lets go; nothing commits on a hold. On a node, a hold could play its operator and a drag up or down while holding could turn the operator's own quantity (a value's weight, a measure's scale). The receipt comes when the finger lifts.
