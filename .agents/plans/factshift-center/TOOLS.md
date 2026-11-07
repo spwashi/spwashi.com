@@ -205,6 +205,14 @@ The same commit keeps a placed node inside the stage. The creator: some nodes go
 - The frame pulls to refresh at any time, not only with `[...]` open. A pull may start on the bare frame or on the title's box in the top band, so the top edge is one handle; a tap on the title still opens it. Letting go does what the note last said.
 - Reflex's motion card has a drag switch, links or moves. Moves is physics only: no node lights as a link target, and no container changes the line. The choice is kept in this browser.
 
+**The hash and the title** (the creator: the hash should have swipe and toast semantics, and tapping the title should select its text). The hash is the page's identity, the title's md5, which also keys the page's kept frames. Its swipes, each answered by a toast beside it:
+- left and right step to the later or the earlier line this browser held (kept sixteen deep);
+- up copies a link to the page;
+- down keeps the page as a frame;
+- a tap still opens its page, and a hold shows its compass.
+
+A tap on the title opens its editor focused, with the text selected, by any hand. The keyboard rises on a phone, so that typing replaces the title.
+
 **Cross-document links and `.spw` files** (the creator's wonder). A node whose word names another page or a `.spw` file could open it as a frame, the way `#>` enters one. A `.spw` file dropped on the canvas or given in `?spw=` by address could load as held lines, one frame per top-level expression, stepped through with the action →. Both would read through the workbench's reader that the app already carries.
 
 **A play mechanic on hold.** A hold plays and a release lets go; nothing commits on a hold. On a node, a hold could play its operator and a drag up or down while holding could turn the operator's own quantity (a value's weight, a measure's scale). The receipt comes when the finger lifts.
