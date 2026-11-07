@@ -133,15 +133,21 @@ export function spw64(text) {
 }
 export const factshiftScriptHref = (text) => `https://factshift.center/#spw64=${spw64(text)}`;
 
-/** On /build, a script carried in by #spw64= (from factshift.center) opens in the editor. */
+/**
+ * On /build, a script carried in by #spw64= (from factshift.center) opens in
+ * the editor in place, with no reload, so it stays in this browser; the
+ * reading follows as for an edit, and Read takes its first line apart.
+ */
 export function readSpw64() {
   const match = /^#spw64=([A-Za-z0-9_-]+)$/.exec(location.hash);
-  if (!match) return;
+  const field = document.querySelector("form[data-file] textarea");
+  if (!match || !field) return;
   try {
     const base = match[1].replace(/-/g, "+").replace(/_/g, "/");
     const binary = atob(base + "=".repeat((4 - (base.length % 4)) % 4));
-    const text = new TextDecoder().decode(Uint8Array.from(binary, (char) => char.charCodeAt(0)));
-    location.replace(`/build?script=${encodeURIComponent(text)}#reading`);
+    field.value = new TextDecoder().decode(Uint8Array.from(binary, (char) => char.charCodeAt(0)));
+    history.replaceState(history.state, "", location.pathname + location.search);
+    field.dispatchEvent(new Event("input", { bubbles: true }));
   } catch {
     // An unreadable script leaves the page as it is.
   }

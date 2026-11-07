@@ -396,6 +396,11 @@ export function layout({ title, description, canonical, climate, body, quiet = f
   <meta name="description" content="${escapeHtml(description)}">
   <meta name="robots" content="noindex, nofollow">
   <link rel="canonical" href="${escapeHtml(canonical)}">${head ? `\n  ${head}` : ""}
+  <script>
+    // esbuild names serialized functions with __name; define it before any inline script in the body runs.
+    var __defProp = (target, prop, desc) => Object.defineProperty(target, prop, desc);
+    var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
+  </script>
   <style>${SHELL}</style>${themeCss ? `\n  <style>${themeCss}</style>` : ""}
 </head>
 <body class="${[embed ? "embed" : "", quiet ? "quiet" : ""].filter(Boolean).join(" ")}" data-spw-climate="${escapeHtml(spwClimate)}" data-weather="${escapeHtml(weather)}">
@@ -407,8 +412,6 @@ export function layout({ title, description, canonical, climate, body, quiet = f
   </main>
   <p id="status" class="sr-only" role="status" aria-live="polite"></p>
   <script>
-    var __defProp = (target, prop, desc) => Object.defineProperty(target, prop, desc);
-    var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
     document.documentElement.classList.add("js");
     const announce = (message) => {
       const status = document.getElementById("status");
