@@ -105,6 +105,7 @@
 @expression_projection_precipitation_2026_11: ~"./expression-projection-precipitation-2026-11.spw"  # cache: why 986 site expressions read as static filing labels, how each construct slot projects or precipitates experience, and before/after upgrades
 @linguistic_affordances_2026_11: ~"./linguistic-affordances-2026-11.spw"  # cache: unsupported mathematical, semiotic, and indexing affordances that the 434 authored .spw files reach for
 @gemini_multimodal_evaluation_2026_11: ~"./gemini-multimodal-evaluation-2026-11.spw"  # prime: where a multimodal model could improve cohesion across syntax theory, runtime physics and interaction semantics, with three bounded slices to test it (was .spw/tmp.spw)
+@pantry_ingredients_2026_11: ~"./pantry-ingredients-2026-11.spw"  # prime: ingredients for character builders, mood tuners, and world generators, with thirteen recipes (tropes) from November's work; riffs on what people design keep their makers' names
 
 operation = "align"
 fixity = "tending"
@@ -184,6 +185,7 @@ fixity = "tending"
   expression_projection_precipitation_2026_11 = @expression_projection_precipitation_2026_11
   linguistic_affordances_2026_11 = @linguistic_affordances_2026_11
   gemini_multimodal_evaluation_2026_11 = @gemini_multimodal_evaluation_2026_11
+  pantry_ingredients_2026_11 = @pantry_ingredients_2026_11
 }[reg=facet]
 
 ^"cache_rules"{

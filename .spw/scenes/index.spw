@@ -27,6 +27,7 @@
 @projections: ~"./projections/index.spw"
 @library_build: ~"./specimens/library-build.spw"
 @output_substrate: ~"./intermediates/output-substrate.spw"
+@brainstorms: ~"./brainstorms/index.spw"
 
 operation = "prime"
 fixity = "experimental"
@@ -56,4 +57,5 @@ dispatch: .{
   projections = @projections
   library_build = @library_build
   output_substrate = @output_substrate
+  brainstorms = @brainstorms
 }

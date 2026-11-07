@@ -1,0 +1,78 @@
+# Scenes · brainstorms — where a live's talk becomes a scene
+#>scenes_brainstorms
+#:room #!scenes #!brainstorm #!rpg
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+expression = room[brainstorm]{take.stem.specimen.table}<scene>
+
+summary = #[
+  `Brainstorms happen out loud, on lives and at the table.`,
+  `A stem names a scene: a place, a pressure, a mind.`,
+  `A stem grows into a specimen; a table plays it.`,
+  `What hardens is placed by the creator, never here.`,
+][reg=set]
+
+contents = #[
+  ~"./index.spw#ladder",
+  ~"./index.spw#stems",
+  ~"./index.spw#keeps",
+  ~"./index.spw#wonder_brainstorm_stem",
+  ~"./small-quarter.spw",
+][reg=set]
+
+^"ladder"{
+  ~#note: "From a take to a scene a table can play."
+  steps = #[
+    `take · the creator talks, often live; each press is kept as spoken in a production series' local scratch`,
+    `stem · a scene gets a name in parentheses, a place, and a visible pressure, in the list below`,
+    `specimen · a stem that keeps returning gets its own file: minds, beats, projections, do_not, in the form of @library_build`,
+    `table · @table plays a specimen; what stayed is logged before any prose`,
+    `place · a line that hardens is placed by the creator as a moment in a chapter or an episode`
+  ][reg=list]
+  form = `@scenes: a scene is a midprocess object; minds read it, scripts track it, and a projection carries it into a chapter, a film beat, or a sticker.`
+}[reg=facet]
+
+^"stems"{
+  ~#note: "Scenes the brainstorms have already named. Sources are dated takes in local scratch."
+  pie_offer = `(pie_offer) · an inventor offers someone a pie that will convince them they are WAP Boy · pressure: being offered what you already are · @lore_land chapter 0 · 2026-11-01, take 6`
+  pool_edge = `(pool_edge) · a kid at the edge of a pool, imagining the dive · pressure: the cold, and a goal not yet acted on · @lore_land chapter 1, three moments placed · 2026-11-02, take 5`
+  costume_contest = `(costume_contest) · Midway, the exchange's last night · pressure: two rats passing as squirrels, one in costume and one dyed · @pnc_e01, with its cloud for the table · 2026-11-02, takes 8 to 13, worked out with Raven`
+  card_draw = `(card_draw) · a card from Raven's oracle deck turns up · pressure: some sort of a core to the reason it exists · 2026-11-01, takes 2 and 4; the deck is Raven's`
+  converter_printer = `(converter_printer) · a machine takes scraps of artwork and turns them into 2D characters · pressure: what a scrap becomes once it can talk · 2026-11-02, take 7, a riff on Ariel's bioprinter story`
+  feeder_morning = `(feeder_morning) · dawn at the feeder in @small_quarter · pressure: who eats first from what someone set out on purpose · 2026-11-06, the creator's ask for a part of the town sized for wildlife`
+}[reg=facet]
+
+^"keeps"{
+  credit = `A stem that came from someone else's idea names them, and travels with the name: Raven, Ariel, and whoever comes next.`
+  held = `A line held because it may be another voice does not seed a stem until the creator names it.`
+  canon = `@scenes refuse: a table reading, however vivid, is a pole and not canon.`
+  moments = `No stem or specimen counts toward a book. The creator places moments.`
+}[reg=facet]
+
+#>wonder_brainstorm_stem
+?["When does a brainstorm become a scene: once it has a place, a pressure, or a mind that wants something?"]{
+  #:depth #!experiential ~#lens(threshold)
+  ~#hypothesis: "Pressure. Every stem above has a place, but the ones the creator returns to carry a pressure someone feels."
+  ~#tension: "A place alone can still hold a table for an evening, and the small quarter starts as a place."
+  ~#probe(read)
+  !probe{ "after the next RPG Wednesday, mark for each stem played which of the three it had, and which one the table talked about after" }
+  $%[stem.place, stem.pressure, stem.mind]
+}
+
+# About this file
+operation = "prime"
+fixity = "experimental"
+source = "creator, 2026-11-06: open up some room for designing scenes based on the brainstorming sessions"
+
+# Handles, by role. Declared last; each one links wherever the text names it.
+# Scenes
+@scenes: ~"../index.spw"
+@library_build: ~"../specimens/library-build.spw"
+@small_quarter: ~"./small-quarter.spw"
+# Books
+@lore_land: ~"../../production/lore-land/series.spw"
+@pnc_e01: ~"../../production/post-nut-clarity/e01-no-thank-you.spw"
+# The table
+@table: ~"../../../play/rpg-wednesday/index.html"
