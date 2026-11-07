@@ -56,6 +56,7 @@ intent: .{
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
 @interaction: ~"./INTERACTION.md"
+@tools: ~"./TOOLS.md"
 # The canvas's UI model in the site's .spw tree: ground, tool levels, primed
 # and actualized acts, the line's layout and ties, decisions apart from readings.
 @ui_model: ~"../../../.spw/surfaces/factshift-center.spw"
@@ -267,4 +268,53 @@ invariants: #[
   ~#probe(read)
   !probe{ "with a tool open, step tool menu, card, and control from the nub and from the keyboard; name the sentence for each level, then take a primed act and an actualized one and say which rewrote the line" }
   $%[interaction.prime, interaction.actualize, interaction.pressure, interaction.annotate]
+}
+
+#>wonder_factshift_tool_operators
+?["Which operator does each of the nine tools take, so that its window can open on its act written as one line?"]{
+  #:depth #!semantic ~#lens(choice)
+  ~#with: @tools @interaction
+  ~#hypothesis: "Read by each tool's job: reflex ! action, color @ perspective, map ~ potential, filter ? wonder, node . ground, query #> frame, debug $ substrate, story ^ integration, spw & subject; every receipt is a * value line, so the ten canon operators mark nine tools and the one receipt."
+  ~#tension: "A tool's operator would be read before its word; one that misnames a tool (color as perspective is the code's reading, never stated) teaches the wrong force."
+  ~#expect: "No tool names an operator today: the mode buttons carry only words (src/js/modes/index.ts, createModeSelectionItem), and only the spw prompt shows a sigil."
+  ~#unblocks: "TOOLS.md C2 (head line and receipt), and every per-tool slice after it"
+  ~#probe(read)
+  !probe{ "rg -n 'innerText = mode' workers/factshift-center/app/src/js/modes/index.ts" }
+  $%[table.as_proposed, table.revised, tools.words_only]
+}
+
+#>wonder_factshift_tool_close
+?["Does a press close its tool's window, or does the window stay open with the receipt showing?"]{
+  #:depth #!experiential ~#lens(choice)
+  ~#with: @tools
+  ~#hypothesis: "A window that stays open with its receipt rewards the press and invites the next one; the handle or the lens closes it."
+  ~#tension: "Color, map, filter and reflex close on a press and node and spw stay open, so a reader learns two rules; a tool used once per visit may read cleaner if it gets out of the way."
+  ~#expect: "Four tools close on a press and two stay open; story and query differ by control."
+  ~#probe(read)
+  !probe{ "rg -n 'setDocumentMode\\(null' workers/factshift-center/app/src/js/modes" }
+  $%[close.stay_open, close.act_and_close, close.by_tool]
+}
+
+#>wonder_factshift_filter_sense
+?["Should filter keep the nodes that answer its question, or remove them as it does today?"]{
+  #:depth #!semantic ~#lens(choice)
+  ~#with: @tools
+  ~#hypothesis: "Keep: a filter in every language a reader knows keeps what matches, and a ? question keeps its answers."
+  ~#tension: "Saved filters in a reader's browser were written for the removing sense; flipping it would flip them."
+  ~#expect: "selectOppositeNodes returns nodes.filter((node, i, nodes) => !fn(node, i, nodes))."
+  ~#probe(run)
+  !probe{ "rg -n '!fn\\(node' workers/factshift-center/app/src/js/simulation/nodes/data/selectors/multiple.ts" }
+  $%[filter.keeps, filter.removes_renamed, filter.removes]
+}
+
+#>wonder_factshift_tool_words
+?["The nine modes are tools; what is the word for what a reader holds in hand (link, grow, shrink, remove, color, raise, spin)?"]{
+  #:depth #!semantic ~#lens(choice)
+  ~#with: @tools @plan
+  ~#hypothesis: "One word per thing: tools are the column, and what is held is a hand; the palette becomes the hand's tray."
+  ~#tension: "The code calls them superpowers (superpower=hyperlink in stories), the plan calls them the tool in hand, and the palette file is tool-palette.ts."
+  ~#expect: "Both senses use the word tool in PLAN.md's interaction contract and in ui/tool-palette.ts."
+  ~#probe(read)
+  !probe{ "rg -n 'superpower|tool in hand' .agents/plans/factshift-center/PLAN.md workers/factshift-center/app/src/js/ui/tool-palette.ts" }
+  $%[held.hand, held.superpower, held.tool_in_hand]
 }
