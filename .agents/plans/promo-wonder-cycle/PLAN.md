@@ -80,10 +80,10 @@ The creator, answering the open price questions: pricing is answered with layers
 **Slices.**
 
 - **L1 — Anchor read.** Done above; the census is the next check whenever a figure changes.
-- **L2 — landed 2026-11-06 (ee07e7c4).** "A price you can picture names a thing: $10 is a sandwich on a long build day. A gift during a live counts the same way. A specific scope we set in conversation, from what is already made and where the show is." It closes the Pricing note on `/services/`, where the Scope Card keeps its own heading, and on `/now/` it replaced the support note's sandwich and live-gift clauses. A pasted note had revised the first draft: "layers" and "real" made the wide ranges sound fake, and `$250` is not on `/now/`.
-- **L3 — The decisive path.** One first number and one door near the top of `/services/`, with the proof artifacts as the dimensions it opens. Placement is [landing-visual-hierarchy](../landing-visual-hierarchy/PLAN.md)'s Services parcel; gate: the creator's look.
-- **L4 — The watcher's path.** On `/now/`'s support ladder, after the close ledger exists: the gift first, one picturable anchor, then the ledger line. Gate: the ledger, then the creator's wording.
-- **L5 — retired 2026-11-06.** The wide ranges stay as they are: they are where a conversation starts, and the L2 line says so.
+- **L2 — scenes, 2026-11-06.** The one-line version (ee07e7c4) named the layers. The creator then asked for paths a person can imagine, so each surface now says what you leave holding. `/services/#conversion-paths` is "What You Leave With": a gift shows on the live and the public work comes back on Now; a Scope Card is a card, a note, or a call and memo; a card is something you screenshot and send; membership is a role you can name; an introduction is the ecosystem door. The same scenes are on `/now/`'s ladder and How To Help, and on `/services/#pricing` and `#support`. `$250` stays off the Now ladder. Enigma stays off both.
+- **L3 — The decisive path.** One first number and one door near the top of `/services/`, with the proof artifacts as the dimensions it opens. Placement is [landing-visual-hierarchy](../landing-visual-hierarchy/PLAN.md)'s Services parcel; gate: the creator's look. The Scope Card sentence now sits in the pricing lede and in What You Leave With; the top of the page is still the seventeen-section walk.
+- **L4 — The watcher's scene, without the ledger.** The gift, the sandwich, and the day are on the Now ladder. What comes back is named as the public work on that page. The close ledger is still unwritten, so the copy does not promise a receipt on the 13th or the 26th. Gate for the ledger line: the ledger.
+- **L5 — retired 2026-11-06.** The wide ranges stay as they are. The pricing lede says anything larger is set in conversation.
 
 ## Absorbed 2026-11-06 — ecosystem-offer-2026-10
 
