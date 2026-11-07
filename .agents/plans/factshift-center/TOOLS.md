@@ -183,6 +183,26 @@ Editing expressions should be easy, with selections in the prompt populating the
 | `%` measure | breathes | show its size and its ties' pulls |
 | `$` substrate | flickers | show what it is made of (its metadata) |
 
+**The ring by node kind** (app bf7cc06; the creator: "some of the special nodes should probably have a different set of verbs as their action menu"). A node of the held line takes the line's verbs. Each sits where a free node's verb of the same role sits, so one ring is learned:
+
+| direction | free node | node of the line |
+|---|---|---|
+| up, down | grow, shrink | grow, shrink |
+| up-left | select | select |
+| down-left | remove | drop it from the line (not the word) |
+| left, right | link, color | earlier, later in the body (a part); the word keeps link and color |
+| up-right | raise | turn its braces to the next empty pair; on the word, mark it (opens the keys) |
+| down-right | spin | rename in place |
+
+Earlier and later point toward the neighboring terms, so the direction is also the place. Still to give their own rings:
+- the steps' registers and events (show the value, step, write out);
+- an entered frame (leave, open the parent);
+- a hyperlinked node (open, copy the address).
+
+The same commit keeps a placed node inside the stage. The creator: some nodes got locked off screen with no way to free them. A pin past an edge now comes back in, whether it was let go there or kept from a larger window.
+
+**Cross-document links and `.spw` files** (the creator's wonder). A node whose word names another page or a `.spw` file could open it as a frame, the way `#>` enters one. A `.spw` file dropped on the canvas or given in `?spw=` by address could load as held lines, one frame per top-level expression, stepped through with the action →. Both would read through the workbench's reader that the app already carries.
+
 **A play mechanic on hold.** A hold plays and a release lets go; nothing commits on a hold. On a node, a hold could play its operator and a drag up or down while holding could turn the operator's own quantity (a value's weight, a measure's scale). The receipt comes when the finger lifts.
 
 **Edges and the focal region, one rule.** The focal square primes what is under it, and the action → acts on it. That pair could reach the edges:
