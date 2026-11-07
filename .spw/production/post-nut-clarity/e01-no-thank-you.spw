@@ -14,6 +14,8 @@
 @series: ~"./series.spw"
 @movie: ~"../movie-2027.spw"
 @languages: ~"../../caches/post-nut-clarity-2026-09.spw#pnc-003_two_languages"
+@rpg_cloud: ~"../../../public/images/assets/primes/prime-alfredo-sauce-rpg-wednesday.spw"
+@table: ~"../../../play/rpg-wednesday/index.html"
 
 operation = "prime"
 fixity = "experimental"
@@ -85,6 +87,56 @@ namespace = `pnc`
   !probe{ "ask Raven how the rat got dyed orange; then tell the party once per rat, a paragraph each, and read them in a row" }
   $%[rat.costumed, rat.dyed, telling.count]
 }
+
+^"cloud"{
+  ~#note: "The open calls of the 2026-11-06 telling, laid out as gradients for RPG Wednesday to play before any of them hardens into canon."
+  expression = cloud[table]{meet.rat.win.see.leave.names}<canon>
+  handle = `*rpg.wednesday.cloud, lettered on @rpg_cloud (a prime dated 2025-10-29)`
+  rule = `0.10 holds the outline as written; 0.90 reaches as far as the takes go. @table plays a station, says what stayed, and the creator places what hardens.`
+  source = `Claude's improvised telling (local scratch, 2026-11-06.draft.txt) on the creator's world from the takes of 2026-11-02; the campus was worked out with Raven, and the dyed rat is Raven's.`
+  next = `2026-11-11, the next Wednesday`
+  meet = #[
+    `0.10 the Halloween party, the costume contest its main event`,
+    `0.40 a fall exchange season that ends at the contest, as in the telling`,
+    `0.70 a summer exchange, as first spoken, with the party in October`,
+    `0.90 the contest in place of the party`
+  ][reg=list]
+  rat = #[
+    `0.10 Tully, the costumed rat: the outline's rat dressed as a squirrel`,
+    `0.50 Clementine, the dyed rat (Raven's), who is taken for a squirrel`,
+    `0.90 both, one telling each, as two summers of the exchange`
+  ][reg=list]
+  win = #[
+    `0.20 Clementine, in no costume at all`,
+    `0.40 Tully, for a costume made of discards`,
+    `0.60 Juniper's pinecone, which nobody recognized`,
+    `0.90 nobody: the Upper Crust keeps the golden pecan`
+  ][reg=list]
+  see = #[
+    `0.10 Bram sees nothing and says "No thank you"`,
+    `0.50 Bram sees, and says nothing`,
+    `0.90 Bram sees, and says so at the table`
+  ][reg=list]
+  leave = #[
+    `0.20 the train south with Tully`,
+    `0.50 Juniper stays at Midway`,
+    `0.80 the bus north, a season late`
+  ][reg=list]
+  school = #[
+    `0.20 the Lower Crust`,
+    `0.40 the Bottom Crust, which holds the pie up`,
+    `0.60 the Crumb`,
+    `0.80 the Heel`
+  ][reg=list]
+  names = `Juniper, Bram, Tully, Clementine, Persimmon, Headmaster Lid, and Rho Alpha Tau: the telling's names, each the table's to keep or rename`
+  moves = #[
+    `the letter over the fire barrel → keep it | let Bram decide`,
+    `mid-question → cut in again | wait for him to finish`,
+    `at the station → the train south with Tully | the bus north, a season late`
+  ][reg=list]
+  raven = `How Clementine turned orange is not a station: it is Raven's to answer.`
+  wonder = `The rat gradient plays wonder_pnc_e01_two_rats at the table.`
+}[reg=facet]
 
 ^"moments"{
   rule = `As in lore.land's chapters: one entry is one moment, written as line · <text>, panel · <asset slug> · <caption>, or choice · <prompt> → <option> | <option>. They count toward lore.land's 50,000 (@series count).`
