@@ -224,7 +224,7 @@ fixity = "tending"
 
 ^"cache"{
  ~#status: "live from the 2026-11-07 deploy (Wrangler 148baaf2 at 44f6bb44): copy cut toward scripts and editing, and /forms/ (Forms, side by side) with every line opening in the editor and on the pivot; live /forms/ 200 with seven sets, /forms 301, the guide's one-sentence lede and folded origin, and /pivot linking to Forms"
- ~#next_commit: "the forms appendix grows by the creator's reading (marks on braces: #[…] a set, .{…} a property sheet; a chopped file with nested parts); the guide's remaining copy waits on the creator"
+ ~#next_commit: "the forms appendix grows by the creator's reading; /build and the guide now carry scripts to factshift.center by #spw64= and /build reads one back"
  ~#files_hot: "workers/spw-quest/src/pivot.js, workers/spw-quest/src/specimens.js, workers/spw-quest/test/constructs.test.mjs"
  ~#gate: "the creator's look at the < & > instrument in a browser: the sideways swipe against brace-semantics §D's up and down; P and Q wait on brace-semantics#wonder_brace_semantics_highlighter_then_now"
  ~#last_stream: "2026-11-06"

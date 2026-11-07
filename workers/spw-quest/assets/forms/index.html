@@ -495,9 +495,10 @@
     .masthead .shelf-rooms a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 .6rem; color: var(--muted); font-size: .88rem; text-decoration: none; }
     .masthead .shelf-rooms a[aria-current="page"] { color: var(--fg); font-weight: 600; }
     .measure { max-width: 46rem; }
-    .quiet-button, .file-actions button { min-height: 36px; margin: 0; padding: .2rem .75rem; border: 1px solid transparent; border-radius: var(--pill); background: transparent; color: var(--accent); font: 500 .88rem/1 var(--font); cursor: pointer; }
-    .quiet-button:hover, .file-actions button:hover, .quiet-button:focus-visible, .file-actions button:focus-visible { border-color: var(--line); background: var(--accent-soft); }
-    @media (pointer: coarse) { .quiet-button, .file-actions button { min-height: 44px; } }
+    .file-actions a { display: inline-flex; align-items: center; text-decoration: none; }
+    .quiet-button, .file-actions button, .file-actions a { min-height: 36px; margin: 0; padding: .2rem .75rem; border: 1px solid transparent; border-radius: var(--pill); background: transparent; color: var(--accent); font: 500 .88rem/1 var(--font); cursor: pointer; }
+    .quiet-button:hover, .file-actions button:hover, .file-actions a:hover, .quiet-button:focus-visible, .file-actions button:focus-visible, .file-actions a:focus-visible { border-color: var(--line); background: var(--accent-soft); }
+    @media (pointer: coarse) { .quiet-button, .file-actions button, .file-actions a { min-height: 44px; } }
     html:not(.js) [data-tool="copy"] { display: none; }
     .also { margin: 2.5rem 0 0; color: var(--muted); font-size: .9rem; }
     footer { margin-top: 2rem; }

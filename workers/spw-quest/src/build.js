@@ -120,6 +120,34 @@ export function withSlots(script, slots) {
 export const SHARE_MAX = 1800;
 
 /**
+ * Text as base64url: the form a link's fragment carries a script in between
+ * spw.quest and factshift.center (#spw64=…), so the script never reaches a
+ * server. factshift.center loads it into its thread of lines; spw.quest's
+ * /build reads it back into the editor (readSpw64).
+ */
+export function spw64(text) {
+  const bytes = new TextEncoder().encode(String(text ?? ""));
+  let binary = "";
+  for (const byte of bytes) binary += String.fromCharCode(byte);
+  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+export const factshiftScriptHref = (text) => `https://factshift.center/#spw64=${spw64(text)}`;
+
+/** On /build, a script carried in by #spw64= (from factshift.center) opens in the editor. */
+export function readSpw64() {
+  const match = /^#spw64=([A-Za-z0-9_-]+)$/.exec(location.hash);
+  if (!match) return;
+  try {
+    const base = match[1].replace(/-/g, "+").replace(/_/g, "/");
+    const binary = atob(base + "=".repeat((4 - (base.length % 4)) % 4));
+    const text = new TextDecoder().decode(Uint8Array.from(binary, (char) => char.charCodeAt(0)));
+    location.replace(`/build?script=${encodeURIComponent(text)}#reading`);
+  } catch {
+    // An unreadable script leaves the page as it is.
+  }
+}
+
+/**
  * What /build was asked for: ?script= is the source when present; slot
  * parameters then rewrite only its focus line. Without a script, the slots
  * make the line on their own.
@@ -343,6 +371,16 @@ export function toolActions() {
     event.preventDefault();
     box.requestSubmit(box.querySelector("[data-tool='read']"));
   });
+  // factshift.center opens what the editor holds now, carried in the fragment.
+  const factshift = box.querySelector("[data-tool='factshift']");
+  factshift?.addEventListener("click", () => {
+    const field = box.querySelector("textarea[name='script']");
+    if (!field) return;
+    const bytes = new TextEncoder().encode(field.value);
+    let binary = "";
+    for (const byte of bytes) binary += String.fromCharCode(byte);
+    factshift.setAttribute("href", `https://factshift.center/#spw64=${btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "")}`);
+  });
   const share = box.querySelector("[data-tool='share']");
   share?.addEventListener("click", async (event) => {
     if (!navigator.clipboard) return;
@@ -422,7 +460,7 @@ export function buildSurface(slots, script = assemble(slots), filename = `${slot
         </div>
         ${display.panel}
         ${editorField({ id: "script", value: shown, label: "Script", limit: MAX_SCRIPT, describedBy: "script-keys" })}
-        <p class="keys file-foot" id="script-keys"><span class="hint">Read takes the first line apart again; <kbd>⌘</kbd>/<kbd>Ctrl</kbd> + <kbd>Enter</kbd> does too.</span>${address ? ` <a class="share" href="${escapeHtml(address)}" data-tool="share">Link to this file</a>` : ""}</p>
+        <p class="keys file-foot" id="script-keys"><span class="hint">Read takes the first line apart again; <kbd>⌘</kbd>/<kbd>Ctrl</kbd> + <kbd>Enter</kbd> does too.</span>${address ? ` <a class="share" href="${escapeHtml(address)}" data-tool="share">Link to this file</a>` : ""}${shown.trim() ? ` <a class="share" href="${escapeHtml(factshiftScriptHref(shown))}" data-tool="factshift">Open on factshift.center</a>` : ""}</p>
       </form>
       <aside class="reading-card" aria-labelledby="reading-title">
         <h2 id="reading-title">What a tool reads</h2>
