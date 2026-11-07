@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>folio_worktable[prime]{week.calendar.primes}(folios)<soil>
+
 operation = "prime"
 fixity = "tending"
 

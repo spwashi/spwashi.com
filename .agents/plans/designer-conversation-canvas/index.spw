@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>designer_conversation_canvas[prime]{annotation.specimen}(design)<named_review>
+
 operation = "prime"
 fixity = "tending"
 

@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>spellcraft_authoring[prime]{select.compose.cast}(cauldron)<operators>
+
 operation = "prime"
 fixity = "tending"
 

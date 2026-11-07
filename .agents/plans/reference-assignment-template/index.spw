@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>reference_assignment_template[prime]{brief.mentee}(practice)<first_brief>
+
 operation = "prime"
 fixity = "tending"
 

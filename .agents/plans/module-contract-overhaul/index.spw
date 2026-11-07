@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>module_contract_overhaul[prime]{mounts.reads.writes.rests}(runtime)<declared_rest>
+
 operation = "prime"
 fixity = "tending"
 

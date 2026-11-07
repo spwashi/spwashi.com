@@ -9,6 +9,8 @@
 #:operation #!prime
 #:layer #!semantics
 
+expression = #>neuroplasticity_topic[prime]{ideas.figures.sources}(topics)<learner>
+
 operation = "prime"
 fixity = "proposed"
 

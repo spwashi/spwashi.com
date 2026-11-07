@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>settings_ornament_resonance[prime]{shelf.try_a_look}(settings)<seen_change>
+
 operation = "prime"
 fixity = "tending"
 

@@ -9,6 +9,8 @@
 #:fixity #!tending
 #:layer #!pragmatics
 
+expression = #>landing_visual_hierarchy[audit]{rank.promise.art}(landings)<one_next_move>
+
 operation = "audit"
 fixity = "tending"
 date = "2026-08-21"

@@ -1,0 +1,116 @@
+#>site_cluster
+#:surface #!cluster #!carries #!releases
+#:layer #!pragmatics
+
+expression = cluster[sites]{spwashi.quest.factshift}(carries)<one_language>
+
+summary = `What each site is for, what code and lines travel between them, how each ships, and what each teaches the others. The host map is workers/cluster.json; this surface says why the hosts are related. Begun 2026-11-06 from the creator's framing: spw.quest as a different form of clarity into the Spw language or runtime, factshift.center as a hyperindexing tool for mathematical thinking and artistic expressiveness, and Spw-native interaction semantics from factshift.center informing design tuning on spwashi.com.`
+
+contents = #[^"roles", ^"carries", ^"releases", ^"loops", wonders][reg=set]
+
+^"roles"{
+  spwashi = .{
+    expression = #>spwashi_com[home]{software.art.practice}(pages)<atlas>
+    is = `the person's working atlas and the source: routes, the runtime, the .spw tree, the plans`
+    gives = `lines (every route's semantic expressions and every plan's head line), the reader, the peer kit`
+  }[reg=facet]
+  quest = .{
+    expression = #>spw_quest[clarity]{guide.pivot.build}(worker)<language>
+    is = `the creator's framing: a different form of clarity into the Spw language or runtime. Today it is the language's room: a guide with one note, a shelf of lines found on spwashi.com, cards for the shapes a line takes, pivots one change away, and a line taken apart slot by slot.`
+    clarity = `where spwashi.com shows a line in use on a page, spw.quest shows the same line as language: its slots, where it parts from a neighbor, what one change does.`
+  }[reg=facet]
+  factshift = .{
+    expression = #>factshift_center[hyperindex]{math.art.frames}(canvas)<expressiveness>
+    is = `the creator's framing: a hyperindexing tool for mathematical thinking and artistic expressiveness. Today it holds one Spw line as a force-directed canvas: the line's slots become regions and nodes, nine tools act on them, and a node can be entered as a frame of its own with the parent line waiting in the address.`
+    hyperindex = `an index whose entries are frames that open into further frames; a held line is an entry, its slots are the axes it is filed along, and entering a node files the reader one level down.`
+  }[reg=facet]
+  others = `wap.mom, smut.today, autonomous.feedback and the site hub share the server shell (workers/lib/shell.js) and the peer kit; their roles live in their own plans (workers-wonder-kit, smut-today-crew, ecosystem-architecture).`
+}[reg=facet]
+
+^"carries"{
+  ~#note: "Every carry is a script that reads spwashi.com and writes a file the other site serves; a check fails when the two drift. That check is the cluster's contract."
+  peer_kit = `scripts/build-peer-kit.mjs writes workers/lib/peer-kit.js: fonts and scripts a peer site may take (ecosystem-architecture S4).`
+  reader = `the workbench pin (.spw/_workbench) builds public/js/semantic/spw-workbench-reader.js; workers/spw-quest/carry-parser.mjs carries it to src/parser-text.js, served as spw.quest's /parser.js.`
+  specimens = `workers/spw-quest/carry-specimens.mjs harvests the parser gallery, the herbarium (.spw/language/expressions) and every route's semantic expression into src/specimens-data.js; plan head lines are proposed as a fourth source (.spw/conventions/plan-index.spw#head_line).`
+  app_reader = `factshift.center's app carries the workbench's reader build in its own tree (src/js/vendor/spw-reader, release.json): the slot reader and, since b1fd11a, spw-workbench/parser.`
+  slot_query = `spwashi.com's expression-query.js reads slots and answers slot queries ({seed}, <receipt>, [pi]); spw.quest's shelf asks the same queries. Proposed: factshift's filter asks them of nodes, so one query grammar runs on three sites (factshift-center TOOLS.md, map and filter).`
+}[reg=facet]
+
+^"releases"{
+  pages = `spwashi.com ships when main is pushed, from the commit the push sends; scripts/check-pushed.mjs runs the local gate on that commit first.`
+  workers = `each worker ships by hand from an authenticated Wrangler: dry run, then wrangler deploy --config workers/<unit>/wrangler.jsonc (workers/README.md); the deployed version id is recorded in the owning plan's wip.spw.`
+  parser = `dated releases with prereleases beside them (workers/spw-quest/assets/parser/index.json); a consumer names the release and the workbench revision it carries, as factshift.center's version.json does.`
+  snapshot = `factshift.center ships a build of its own repository (workers/factshift-center/app, gitignored here) copied into workers/factshift-center/assets with version.json naming the app revision; the app's history stays in its repository.`
+  pin = `the site moves its workbench pin, its reader and its expression manifest together, in one commit (spw-inquiry-loop, Workbench consumer pin).`
+  rhythm = `spwashi.com closes on the 13th and the 26th; a worker ships when its plan says a slice landed; the two do not wait on each other.`
+}[reg=facet]
+
+^"loops"{
+  factshift_to_spwashi = `factshift.center reads each tool as an operator whose window opens on its primed act as one line and leaves a * receipt (TOOLS.md). The same reading can tune spwashi.com: the cauldron chip already writes its live expression, the satchel offers the page's line, and the cauldron's moves are an open operator question (spellcraft-authoring #>wonder_spellcraft_operator_moves). Proposal: whichever operator table factshift settles is offered to the cauldron first.`
+  spwashi_to_factshift = `spwashi.com's lines become factshift.center canvases: every route expression and plan head line opens with ?spw=; a plan's head line starts with #>, a frame a reader can enter.`
+  quest_between = `spw.quest is where a line is understood before it is held: a shelf card can open its line on factshift.center, and factshift.center's held line can be pivoted or taken apart on spw.quest.`
+}[reg=facet]
+
+#>wonder_site_cluster_frame_navigation
+?["How does Spw move a reader between factshift.center frames?"]{
+  #:depth #!semantic ~#lens(choice)
+  ~#taste: "The creator: ideally Spw navigates between factshift.center frames."
+  ~#hypothesis: "#> already means a frame and its address; holding #>name in the spw prompt, or a #> line in ?spw=, enters that frame, and . returns to the parent, so the address bar reads as a path of frames."
+  ~#tension: "Entering a node today writes the child page with the parent line waiting in the address; a #> line names a frame that may not exist yet, so the canvas needs a rule for a frame it has to make."
+  ~#expect: "The app has an entered-page path for a selected node (6b85a42) and no handler that reads #> in the prompt as a destination."
+  ~#probe(read)
+  !probe{ "rg -n 'saveIntoFrame|enterNode|parent' workers/factshift-center/app/src/js/modes/direct/mode-direct.ts" }
+  $%[frames.hash_enters, frames.path_in_address, frames.both]
+}
+
+#>wonder_site_cluster_shelves
+?["Which properties belong on a crawlable edge, objective and the same for every reader, and which on a subjective gradient only a reader's state can draw?"]{
+  #:depth #!semantic ~#lens(projection)
+  ~#taste: "The creator asked about the differences between objective and subjective gradients or shelves, and which properties are associated with which crawlable edges."
+  ~#hypothesis: "Objective: what HTML can say to any reader and a crawler can follow, a link with its operator and its wonder types (the kin chips' data-spw-wonder), Home's Holds: lines. Subjective: what a reader's own state draws, held words in a seat line, a lens's reach, a visit's handoff; a gradient (0.10 to 0.90, as the RPG cloud lays out) belongs here."
+  ~#tension: "A shelf that only appears with a reader's state is invisible to a crawler and to a reader with scripts off; a shelf printed for everyone cannot reflect what this reader carried."
+  ~#expect: "Home prints objective Holds: and subjective First move: spans in markup (data-spw-perspective), and the seat lines' carried words exist only at runtime."
+  ~#probe(read)
+  !probe{ "rg -c 'data-spw-perspective=\"(objective|subjective)\"' index.html" }
+  $%[edges.objective_links, edges.subjective_gradients, edges.both_named]
+}
+
+#>wonder_site_cluster_hyperindex
+?["What does factshift.center index first, as perspectives, layers, clusters and frames within frames?"]{
+  #:depth #!experiential ~#lens(choice)
+  ~#taste: "The creator: perspective indexing, layering, clustering, fractals, embedded frames."
+  ~#hypothesis: "Perspective is the color tool's @; layering is the slot regions stacked as a line writes them; clustering is what filter and map make of a selection; a fractal is a frame entered from a node that holds a line of its own. A first index could be the site's math topic lines, the creator's folio lines, or the plans' head lines."
+  ~#tension: "Each corpus asks a different physics: math lines want structure to hold, folio lines want resonance, plan lines want dependency."
+  ~#expect: "No corpus is loaded into factshift.center today; it holds one line from ?spw= at a time."
+  ~#probe(read)
+  !probe{ "rg -n 'spw=' workers/factshift-center/app/src/js/modes/spw/held-line.ts" }
+  $%[index.math_topics, index.folios, index.plans]
+}
+
+#>wonder_site_cluster_cursor
+?["Could factshift.center's motifs travel to spwashi.com as a cursor?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#taste: "The creator: motifs from factshift.center as a cursor on spwashi.com."
+  ~#hypothesis: "A small lens that follows the pointer and takes the operator color of what it is over, the way factshift's lens and handle read a node, would teach the operator table by hand; it rests on coarse pointers and with reduced motion."
+  ~#tension: "A cursor that changes is felt on every move; the site keeps its pointer still unless a feel is approved in a browser, and capture mode must not show it."
+  ~#expect: "spwashi.com sets no custom cursor beyond the platform's; factshift's lens lives in its app (ui/focal-point.ts)."
+  ~#probe(read)
+  !probe{ "rg -n 'cursor:' public/css --glob '!**/bundles/**' -c" }
+  $%[cursor.lens, cursor.ring, cursor.none]
+}
+
+@cluster_manifest: ~"../../workers/cluster.json"
+@workers_readme: ~"../../workers/README.md"
+@clusters_cache: ~"../caches/ecosystem-clusters-2026-10.spw"
+@plan_index_convention: ~"../conventions/plan-index.spw"
+@tools: ~"../../.agents/plans/factshift-center/TOOLS.md"
+@factshift_surface: ~"./factshift-center.spw"
+@factshift_version: ~"../../workers/factshift-center/version.json"
+@ecosystem_plan: ~"../../.agents/plans/ecosystem-architecture/index.spw"
+@quest_plan: ~"../../.agents/plans/spw-quest/index.spw"
+@factshift_plan: ~"../../.agents/plans/factshift-center/index.spw"
+@expression_query: ~"../../public/js/semantic/expression-query.js"
+@carry_specimens: ~"../../workers/spw-quest/carry-specimens.mjs"
+@carry_parser: ~"../../workers/spw-quest/carry-parser.mjs"
+@peer_kit_script: ~"../../scripts/build-peer-kit.mjs"
+@parser_releases: ~"../../workers/spw-quest/assets/parser/index.json"

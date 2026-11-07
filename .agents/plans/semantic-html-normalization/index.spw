@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>semantic_html_normalization[prime]{landmarks.scripts_off.access}(html)<honest_page>
+
 operation = "prime"
 fixity = "tending"
 

@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>promo_wonder_cycle[prime]{closes.offers.paths}(now)<what_you_leave_with>
+
 operation = "prime"
 fixity = "tending"
 

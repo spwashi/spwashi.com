@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>ecosystem_architecture[prime]{peer_kit.carries.releases}(cluster)<one_paint>
+
 operation = "prime"
 fixity = "tending"
 

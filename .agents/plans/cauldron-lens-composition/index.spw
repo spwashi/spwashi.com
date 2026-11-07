@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>cauldron_lens_composition[prime]{lens.mix.receipt}(cauldron)<mode_slot>
+
 operation = "prime"
 fixity = "tending"
 

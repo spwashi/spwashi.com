@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>blog_blob_spw[prime]{post.starter}(blog)<first_post>
+
 operation = "prime"
 fixity = "tending"
 

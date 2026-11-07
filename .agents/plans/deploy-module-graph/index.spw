@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>deploy_module_graph[prime]{packs.pulls.schedule}(boot)<fewer_bytes>
+
 operation = "prime"
 fixity = "tending"
 

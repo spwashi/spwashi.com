@@ -8,6 +8,8 @@
 #:operation #!contract
 #:layer #!pragmatics
 
+expression = #>agent_optimization[contract]{census.budget.gate}(agents)<smaller_read>
+
 operation = "contract"
 fixity = "stable"
 

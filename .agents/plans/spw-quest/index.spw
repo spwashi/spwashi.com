@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>spw_quest[prime]{guide.pivot.build}(worker)<clarity>
+
 operation = "prime"
 fixity = "tending"
 

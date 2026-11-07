@@ -8,6 +8,8 @@
 #:operation #!contract
 #:layer #!pragmatics
 
+expression = #>agentic_dev_contracts[contract]{check_local.manifest}(scripts)<one_door>
+
 operation = "contract"
 fixity = "stable"
 

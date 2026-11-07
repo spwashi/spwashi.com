@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>smut_today_crew[prime]{crew.draw.pins}(smut.today)<daily_world>
+
 operation = "prime"
 fixity = "tending"
 

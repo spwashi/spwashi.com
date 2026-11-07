@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>copy_localization[prime]{keys.terms.locale}(copy)<first_edition>
+
 operation = "prime"
 fixity = "tending"
 

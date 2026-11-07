@@ -9,6 +9,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>factshift_center[prime]{canvas.reader.tools}(app)<hyperindex>
+
 operation = "prime"
 fixity = "tending"
 
@@ -317,4 +319,17 @@ invariants: #[
   ~#probe(read)
   !probe{ "rg -n 'superpower|tool in hand' .agents/plans/factshift-center/PLAN.md workers/factshift-center/app/src/js/ui/tool-palette.ts" }
   $%[held.hand, held.superpower, held.tool_in_hand]
+}
+
+#>wonder_factshift_glass_tool
+?["Should factshift.center's tool windows become a glass layer in the manner of Apple's Liquid Glass, and if so, the windows alone or the whole chrome?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#with: @tools
+  ~#taste: "The creator: curious about designing a tool that could accommodate Apple's Liquid Glass design future."
+  ~#hypothesis: "Glass suits windows that float above a canvas: the canvas shows through, refracted, and the window's tint tells what lies beneath; the handle and lens stay solid so the focal point is never lost."
+  ~#tension: "Refraction over a busy force-directed canvas can cost legibility and frame time; reduced transparency, higher contrast and capture mode each need the matte form."
+  ~#expect: "No window in the app sets backdrop-filter today."
+  ~#probe(run)
+  !probe{ "rg -n 'backdrop-filter' workers/factshift-center/app/src/stylesheets" }
+  $%[glass.windows, glass.all_chrome, glass.none]
 }

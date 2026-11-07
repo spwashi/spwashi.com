@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>site_source_layout[prime]{bins.ships}(repo)<one_list>
+
 operation = "prime"
 fixity = "tending"
 

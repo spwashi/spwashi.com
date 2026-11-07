@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>color_motion[prime]{palette.timing.focus}(css)<one_key>
+
 operation = "prime"
 fixity = "tending"
 

@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>brace_semantics[prime]{pairs.labels.serializer}(language)<one_reading>
+
 operation = "prime"
 fixity = "tending"
 

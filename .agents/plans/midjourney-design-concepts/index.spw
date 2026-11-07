@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>midjourney_design_concepts[prime]{own_art.renders.intake}(images)<belongs_to_page>
+
 operation = "prime"
 fixity = "tending"
 

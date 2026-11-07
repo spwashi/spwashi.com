@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>homonym_renaming[prime]{settle.tempo.lexicon}(words)<one_meaning>
+
 operation = "prime"
 fixity = "tending"
 

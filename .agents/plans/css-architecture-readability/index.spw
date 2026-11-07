@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>css_architecture_readability[prime]{ownership.banners.overlay}(css)<findable_dimension>
+
 operation = "prime"
 fixity = "tending"
 

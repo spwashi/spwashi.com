@@ -11,6 +11,8 @@
 #:fixity #!tending
 #:layer #!pragmatics
 
+expression = #>runtime_plane_consolidation[prime]{write.observe.schedule}(runtime)<one_lane>
+
 operation = "prime"
 fixity = "tending"
 

@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>operator_resonance_alignment[prime]{sigils.chips.capture}(routes)<one_table>
+
 operation = "prime"
 fixity = "tending"
 

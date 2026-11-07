@@ -9,6 +9,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>workers_wonder_kit[prime]{shell.kinship}(workers)<shared_server>
+
 operation = "prime"
 fixity = "experimental"
 

@@ -24,6 +24,16 @@ fixity = "stable"
   standalone_rule = "A plan index must be readable without opening PLAN.md first: one-sentence thesis, concept nouns, falsification, and at least one research or convention bridge."
 }
 
+^"head_line"{
+  ~#added: "2026-11-06"
+  rule = `A plan states itself as one Spw line, set as expression = right after the #>plan_<slug>_index frame and its claims, before operation =, so the file opens frame, expression, summary (the first-screen order the creator confirmed 2026-10-27).`
+  shape = #>slug[operation]{concepts}(scene)<projection>
+  slots = `#> the plan as a frame; [mode] its operation (align, prime, contract, audit); {body} two to four concept words joined by .; (scene) where it acts, a layer, route or site; <projection> what it lands as, in a word or two.`
+  limits = `Under 120 characters, lowercase words, joined with _ inside a word; no new data-spw family. factshift.center holds a line of up to 400 characters, so any head line opens there.`
+  reads = `spwashi.com's expression-query readExpressionSlots and seed's slot reader (readLine) both read every slot; checked 2026-11-06 on #>spw_quest[prime]{guide.pivot.build}(worker)<spw.quest>.`
+  travels = `spw.quest harvests head lines as plan specimens, so a plan can be searched by slot, pivoted, and taken apart, and each opens on factshift.center as a canvas (.spw/surfaces/site-cluster.spw).`
+}[reg=facet]
+
 ^"required_spw_features"{
   anchors = #[
     `#>plan_<slug>_index`,

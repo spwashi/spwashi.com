@@ -8,6 +8,8 @@
 #:operation #!prime
 #:layer #!pragmatics
 
+expression = #>shell_model_vocabulary_consolidation[prime]{glossary.pocket.chrome}(shell)<one_word>
+
 operation = "prime"
 fixity = "tending"
 
