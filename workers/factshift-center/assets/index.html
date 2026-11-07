@@ -13,9 +13,9 @@
     <meta itemprop="description" content="7D force simulation with Spw command language">
     <link rel="icon" href="/v0.0.1/favicon/16.png">
     <link rel="manifest" href="/manifest.json">
-  <script type="module" crossorigin src="/assets/main-eZyXvtRr.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/index-AmCOHqhC.js">
-  <link rel="stylesheet" crossorigin href="/assets/index-bxxoJOyf.css">
+  <script type="module" crossorigin src="/assets/main-TlweF3sh.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/index-evRmx4ex.js">
+  <link rel="stylesheet" crossorigin href="/assets/index-tAJDjJa5.css">
   <link rel="stylesheet" crossorigin href="/assets/main-_qtzgt2L.css">
 </head>
 <body data-mode="nothing"
@@ -104,23 +104,30 @@
                     <span class="spw-name">spw</span>
                     <span data-role="spw-form"></span>
                 </label>
-                <!-- A run holds the line on the canvas; with trace on, the
-                     runtime's own trace (its stages and registers) is shown. -->
-                <button type="button"
-                        data-action="spw-trace"
-                        aria-pressed="false"
-                        title="Run shows the runtime's trace instead of the line">trace</button>
+                <!-- What run draws: the line itself, or the steps the runtime
+                     took to read it (its stages and registers). -->
+                <div class="spw-draws" role="group" aria-label="Run draws">
+                    <button type="button" data-action="spw-trace" data-trace="off" aria-pressed="true" title="Run draws the line">line</button>
+                    <button type="button" data-action="spw-trace" data-trace="on" aria-pressed="false" title="Run draws the steps the runtime took to read the line">steps</button>
+                </div>
                 <!-- The line in one container, its front mark in a gutter: the
                      operator field opens from where an operator goes. -->
                 <div class="spw-line">
                     <button type="button"
                             class="spw-front"
                             data-action="spw-operator-open"
-                            aria-expanded="false"
                             aria-controls="spw-operator-field"
-                            title="Operator before the word">&#9676;</button>
+                            title="The mark before the word">&#9676;</button>
                     <textarea id="spw-parse-field"
                               aria-label="Spw expression input"></textarea>
+                    <!-- The primed line, under the text it would replace: tapping it uses it. -->
+                    <button type="button"
+                            class="spw-primed"
+                            data-action="spw-operator-actualize"
+                            disabled>
+                        <code data-role="spw-operator-line"></code>
+                        <span data-role="spw-operator-said" aria-live="polite"></span>
+                    </button>
                     <button type="button"
                             data-action="clear-spw-prompt"
                             title="Empty the prompt"
@@ -128,21 +135,10 @@
                 </div>
             </div>
             <p id="spw-reading" data-role="spw-reading" aria-label="What the line meets"></p>
-            <div class="spw-operator-field" id="spw-operator-field" data-role="spw-operator-field" data-primed="false" hidden>
-                <input id="spw-operator-slider"
-                       type="range"
-                       min="0" max="11" step="1" value="0"
-                       aria-label="Operator before the word"
-                       aria-describedby="spw-operator-primed"
-                       data-role="spw-operator-slider">
-                <ol data-role="spw-operator-ticks" aria-label="Operators"></ol>
-                <output id="spw-operator-primed"
-                        aria-live="polite"
-                        data-role="spw-operator-primed"></output>
-                <button type="button"
-                        data-action="spw-operator-actualize"
-                        title="Put the line on the canvas (Enter on the slider)"
-                        disabled>use</button>
+            <!-- The operators as keys under the line, the row itself the
+                 slider: a key primes, the primed key acts (operator-field.ts). -->
+            <div class="spw-operator-field" id="spw-operator-field" data-role="spw-operator-field" data-primed="false">
+                <div class="spw-keys" role="group" aria-label="Operators" data-role="spw-operator-keys"></div>
             </div>
             <output id="spw-prime-context"
                     aria-live="polite"
