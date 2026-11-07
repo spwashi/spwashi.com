@@ -301,39 +301,40 @@ function renderGuide(parser = null, example = EXAMPLES[0]) {
     body: `${masthead("/")}
 ${parser ? `${switchBanner(parser.value, parser.from)}\n` : ""}<section class="opening" aria-labelledby="title">
   <h1 id="title">A small language for the shape of a thought.</h1>
-  <p class="lede">Spw is plain text with a few marks. A mark in front of a word says what the word is doing, and braces say what belongs together. A note stays readable as a note, and a tool can still find it, check it and follow its links.</p>
+  <p class="lede">Plain text with a few marks: a mark says what a word is doing, braces say what belongs together.</p>
 </section>
 ${fileWorkspace(example)}
 
 <section id="operators" class="band" aria-labelledby="operators-title">
   <h2 id="operators-title">Twelve marks, four braces${selfLink("operators", "operators-title")}</h2>
-  <p>Each mark has a reader's name, which is how you think with it, and a runtime behavior, which is what the interpreter does today. They are kept separate on purpose: a name is not a promise about evaluation. The numbers under a mark are the panels in <a href="/learn">Learn</a> that use it.</p>
+  <p>Each mark has a reader's name and, kept apart from it, what the runtime does today. The numbers are the <a href="/learn">Learn</a> panels that use it.</p>
   <ul class="sigils">
     ${sigils}
   </ul>
   <ul class="braces" id="braces" aria-label="Four ways to hold things">
     ${braces}
   </ul>
-  <p class="note">Read together, the braces make a sentence: <code>&lt;concept&gt;(scene)[mode]{definition}</code>, what it is about, where, through which lens, and what belongs inside. Marks and braces compose: <code>#[…]</code> is a set, <code>.{…}</code> is a property sheet.</p>
+  <p class="note"><a href="/forms/">Forms, side by side</a>: each brace, join and mark against its neighbors. Marks and braces compose: <code>#[…]</code> is a set, <code>.{…}</code> a property sheet.</p>
 </section>
 
 <section id="ways" class="band" aria-labelledby="ways-title">
   <h2 id="ways-title">Ways in${selfLink("ways", "ways-title")}</h2>
   <div class="doors">
-    <article class="door"><h3><a href="/learn">Learn it a mark at a time</a></h3><p>Seven panels, one line each, from plain words to a question that carries its own probe. Each line is read again as you change it.</p></article>
-    <article class="door"><h3><a href="/build">Take one line apart</a></h3><p>Change the mark, the scene, or what the braces hold, and the rest of the line holds still.</p><p><code>${escapeHtml(assemble(BUILD_DEFAULTS))}</code></p></article>
-    <article class="door"><h3><a href="/install">Keep it in a repository</a></h3><p>The workbench mounts at <code>.spw/_workbench</code> with a parser, a CLI and an editor language server. Setup stops before any commit.</p></article>
-    <article class="door"><h3><a href="/parser/">Read it on your own page</a></h3><p>Dated builds of the parser this page runs, one ES module each, with an integrity hash to pin.</p></article>
+    <article class="door"><h3><a href="/forms/">Forms, side by side</a></h3><p>Lines that differ in one thing, and what it does.</p></article>
+    <article class="door"><h3><a href="/build">Take one line apart</a></h3><p>Change one slot; the rest holds.</p><p><code>${escapeHtml(assemble(BUILD_DEFAULTS))}</code></p></article>
+    <article class="door"><h3><a href="/learn">Learn it a mark at a time</a></h3><p>Seven panels, one line each.</p></article>
+    <article class="door"><h3><a href="/install">Keep it in a repository</a></h3><p>Parser, CLI and editor tooling at <code>.spw/_workbench</code>.</p></article>
+    <article class="door"><h3><a href="/parser/">Read it on your own page</a></h3><p>Dated parser builds, each with its integrity hash.</p></article>
   </div>
 </section>
 
-<section id="origin" class="band" aria-labelledby="origin-title">
-  <h2 id="origin-title">The shape it came from${selfLink("origin", "origin-title")}</h2>
+<details id="origin" class="band origin" aria-labelledby="origin-title">
+  <summary><h2 id="origin-title">The shape it came from</h2></summary>
   <p>The difficulty was not having language for what I was thinking about, so I could not tell when a thought was ready to set down. Spw gives a thought somewhere to land: one character says what a word is doing, braces say what belongs together, and a thought can be set down whole instead of chased.</p>
   <p>It started in 2017, alongside reading about how people learn from text and helping with research in an adult learning lab. Part of it was wanting language to share what I was learning, in a place where I could keep learning what I wanted to. The question it keeps asking is about cognition: where do two understandings stop sharing ground, and what would help them share more?</p>
   <p>And it wonders about geometry: how a mind represents the thoughts it holds, what shape a circuit of thought might take on a page, and how findings from different fields could sit side by side in one form you can read.</p>
   <p>It is not built for anyone in particular. It has been designed with care, and it has turned out to be useful, most of all toward a culture where media literacy can grow across generations.</p>
-</section>
+</details>
 <p class="also"><a href="/init">Recipe for agents</a> · <a href="/quest.json">quest.json</a> · <a href="${QUEST.repository}">Source</a> · <a href="https://autonomous.feedback/spw.quest?at=/">What was hard to follow</a></p>
 ${liveFileScript(EXAMPLES, parser ? switchLoader(parser.from) : undefined, { note: true })}
 ${displayScript()}`,
@@ -436,7 +437,7 @@ function renderBuild(slots, script = assemble(slots), filename = `${slots.word |
     body: `${masthead("/build")}
 <section class="opening" aria-labelledby="build-title">
   <h1 id="build-title">Take one line apart</h1>
-  <p class="lede">The whole file is yours to edit, and the reading follows it. Below it, the file's first line is taken apart: change one part, and the rest of the line holds still.</p>
+  <p class="lede">Edit the file and the reading follows; its first line is taken apart below. <a href="/forms/">Forms, side by side</a> shows what each change does.</p>
 </section>
 <section id="build" aria-labelledby="build-title">
   ${buildSurface(slots, script, filename)}
@@ -616,7 +617,7 @@ async function handleQuest(request, url) {
 }
 
 /** The static shelf pages the worker serves from assets, with the page's own headers. */
-const SHELF_PATHS = new Set(["/shelf/", "/shelf/plans/"]);
+const SHELF_PATHS = new Set(["/shelf/", "/shelf/plans/", "/forms/"]);
 async function serveShelf(request, url, env) {
   const asset = await env?.ASSETS?.fetch(new Request(new URL(url.pathname, url.origin)));
   if (!asset || !asset.ok) return new Response("Not found", { status: 404, headers: BASE_SECURITY });
@@ -636,7 +637,7 @@ export default {
     // The site's faces and script modules, carried by scripts/build-peer-kit.mjs into assets/fonts/ and assets/peer/.
     if (isPeerAssetPath(url.pathname)) return servePeerAsset(request, url, env);
     // The shelf's landing and indexes are static pages, written by carry-shelf.mjs into assets/shelf/.
-    if (url.pathname === "/shelf" || url.pathname === "/shelf/plans") return Response.redirect(`${url.origin}${url.pathname}/`, 301);
+    if (url.pathname === "/shelf" || url.pathname === "/shelf/plans" || url.pathname === "/forms") return Response.redirect(`${url.origin}${url.pathname}/`, 301);
     if (SHELF_PATHS.has(url.pathname)) return serveShelf(request, url, env);
     return handleQuest(request, url);
   },

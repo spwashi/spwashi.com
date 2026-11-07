@@ -9,6 +9,7 @@ import { OPERATORS } from "./guide.js";
 import { PAPER_CSS } from "./paper.js";
 import { PAGE_CSS, QUEST_HEAD, masthead } from "./page.js";
 import { SPECIMENS, SPECIMENS_CSS, breakable, planGroups } from "./specimens.js";
+import { FORMS_CSS, formsBody } from "./forms.js";
 import { escapeHtml, layout } from "../../lib/shell.js";
 
 const count = (source) => SPECIMENS.filter((specimen) => specimen.source === source).length;
@@ -38,7 +39,7 @@ export const SHELF_CSS = `.shelf-page { display: grid; gap: 1.8rem; }
     .op-group > h2 { margin: 0 0 .5rem; font: 600 1rem/1.3 var(--mono); }
     .op-group > h2 .count { color: var(--muted); font-weight: 500; }`;
 
-function shelfPage({ title, description, canonical, body }) {
+function shelfPage({ title, description, canonical, body, here = "/shelf/", main = "shelf-page", css = "" }) {
   return layout({
     title,
     description,
@@ -47,9 +48,10 @@ function shelfPage({ title, description, canonical, body }) {
     themeCss: `${PAPER_CSS}
     ${PAGE_CSS}
     ${SPECIMENS_CSS}
-    ${SHELF_CSS}`,
-    body: `${masthead("/shelf/")}
-<main class="shelf-page">${body}
+    ${SHELF_CSS}${css ? `
+    ${css}` : ""}`,
+    body: `${masthead(here)}
+<main class="${main}">${body}
 </main>
 <p class="also"><a href="/specimens">The whole shelf on one page</a> · <a href="/">Back to the guide</a></p>`,
   });
@@ -124,10 +126,24 @@ ${groups.map(({ mode, plans: members }) => `<section class="op-group" id="op-${e
   });
 }
 
+/** The appendix of forms side by side (forms.js). */
+export function renderForms() {
+  return shelfPage({
+    title: "spw.quest — forms, side by side",
+    description: "Lines of Spw that differ in one thing, and what that thing does: joins, walls, marks, and a line beside its file.",
+    canonical: "https://spw.quest/forms/",
+    here: "/forms/",
+    main: "forms-page",
+    css: FORMS_CSS,
+    body: formsBody(),
+  });
+}
+
 /** Every static shelf page: its path under assets/ and its html. */
 export function shelfPages() {
   return [
     ["shelf/index.html", renderShelfLanding()],
     ["shelf/plans/index.html", renderShelfPlans()],
+    ["forms/index.html", renderForms()],
   ];
 }

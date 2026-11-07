@@ -444,7 +444,7 @@ export function buildSurface(slots, script = assemble(slots), filename = `${slot
       </form>
     </section>
     ${shelf()}
-    <p class="note parser-note">This page reads with the site's parser. To read Spw on your own page, take a dated build from <a href="/parser/">spw.quest/parser</a>; to lint and resolve <code>.spw</code> files in a repository, <a href="/install">install the workbench</a>.</p>
+    <p class="note parser-note">Read with the site's parser: <a href="/parser/">take a dated build</a> for your page, or <a href="/install">install the workbench</a> for a repository.</p>
   </div>`;
 }
 
