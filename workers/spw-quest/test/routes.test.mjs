@@ -176,6 +176,25 @@ test('each file opens by address, and its check turns when its point is taken ou
   assert.deepEqual(readFile('door[ {').checks.map((check) => check.state), ['fail']);
   const links = readFile(exampleById('record').script);
   assert.deepEqual(links.links.map((link) => link.path), ['./control.spw', './sigil.spw']);
+  const headings = readFile(exampleById('headings').script);
+  assert.equal(headings.fields.find((field) => field.key === 'headings').value, 'student, classmate, later @ indexing');
+  const moved = readFile(exampleById('headings').script.replace('@indexing', '@aboutness'));
+  assert.equal(moved.fields.find((field) => field.key === 'headings').value, 'student, classmate, later @ aboutness');
+  const perform = readFile(exampleById('perform').script);
+  assert.equal(perform.theme, 'glass');
+  assert.ok(perform.checks.some((check) => check.says.includes('theme consequence is glass')));
+  const matte = readFile(exampleById('perform').script.replace('theme = glass', 'theme = matte'));
+  assert.equal(matte.theme, 'matte');
+  assert.ok(matte.checks.some((check) => check.says.includes('The pivot pattern performs one.slot. The theme consequence is matte.')));
+  const unknown = readFile(exampleById('perform').script.replace('theme = glass', 'theme = velvet'));
+  assert.equal(unknown.theme, '');
+  assert.ok(unknown.checks.some((check) => check.state === 'info' && check.says.includes('paper, glass, or matte')));
+  assert.equal(unknown.checks.filter((check) => check.state === 'fail').length, 0);
+  const stage = await (await get('spw.quest', '/?example=perform')).text();
+  assert.match(stage, /<form class="file" data-file data-theme="glass" method="post" action="\/build#build">/);
+  assert.ok(stage.includes('The pivot pattern performs one.slot. The theme consequence is glass.'));
+  assert.match(stage, /form\.file\[data-theme="matte"\][\s\S]*box-shadow: none/);
+  assert.match(stage, /if \(reading\.theme\) form\.dataset\.theme = reading\.theme/);
   // The paint gives every character back, in order.
   for (const example of EXAMPLES) {
     const painted = paintFile(readFile(example.script)).replace(/<[^>]+>/g, '').replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&quot;', '"').replaceAll('&amp;', '&');
