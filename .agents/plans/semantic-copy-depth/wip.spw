@@ -25,6 +25,8 @@ fixity = "tending"
  >>[2026-11-06 12:41] probe — wonder_semantic_copy_depth_slop_feeling, read as text, not aloud: each of the three #feeling paragraphs opens on a claim that survives without its links (People are tired of it, and the platforms have started to say so; The cheerfulness is part of the complaint; The accusation has pulled away from the evidence), and the cheer and accusation paragraphs carry their own expressions. They read as claim then dated evidence. Whether the evidence stays in the sources' words is still the creator's call.
  >>[2026-11-06 12:43] probe — audit:copy:accessor flags 18 flat-only units: three on Home (home.hook.note, home.library.lede, home.record.lede) and fifteen /design/ hook ledes. No /about/, /services/, /topics/ or /tools/ first-fold unit is flagged, so the entrance debt absorbed from audience-onboarding-copy is the three on Home.
  >>[2026-11-06 12:46] plan — PLAN.md collapses the production-note slice into Landed (eba561ba, with the math half, 89475c6c), names C1 (#feeling, gated), C2 (expressions on Home's three flat-only units, ungated, no words change) and C3 (Home's field note, after C1), parks the follow-ups and retires the one Display Rules already says. Home's shelf citation is re-measured to index.html:313-325, and the live note is cited by #home-live-note.
+ >>[2026-11-08 15:10] plan — five-axis entrance reading sequenced as copy-review-2026-11.spw. R1 is Now's fold (Octvember headline, October 26 close). R2 matches Home's live note to it. Gesture, map-once, working-view, services meta, and the topics lede follow, one route each. C1 and C3 stay gated. C2's three units stay out of the word passes.
+ >>[2026-11-08 16:40] plan — those passes group as clusters A–E in update-clusters-2026-11.spw. B waits on a watched chip and then interaction-grammar only if the verb moved. C's instrument commit waits behind component-region H1. F is inquiry-loop's contour slice, still third in that queue. The mode slot is the metacognitive mark: a new posture writes a mode, a fresher word keeps the expression.
 }
 
 ^"open"{
@@ -33,8 +35,8 @@ fixity = "tending"
 
 ^"cache"{
  ~#status: "tending"
- ~#next_commit: "~[copy] C2: give Home's three flat-only units the expressions their sentences already say; C1 follows the creator's call on #feeling"
- ~#files_hot: "index.html, topics/slop/index.html, .spw/caches/ai-writing-smells-2026-09.spw"
- ~#gate: "nothing for C2; the slop paragraphs wait on the creator's call on #feeling"
- ~#last_stream: "2026-11-06"
+ ~#next_commit: "~[copy] C2: expressions on Home's three flat-only units, no words change. First word pass is R1, Now's fold, in copy-review-2026-11.spw"
+ ~#files_hot: "now/index.html, index.html, .agents/plans/semantic-copy-depth/copy-review-2026-11.spw"
+ ~#gate: "nothing for C2 or R1; C1 still waits on the creator's call on #feeling"
+ ~#last_stream: "2026-11-08"
 }

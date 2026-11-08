@@ -1,0 +1,73 @@
+# Review 2026-11-08 — the entrance commits grouped as clusters A–F across their owner plans.
+# Update clusters — 2026-11-08
+#
+# Granular commits across the plans that already own the entrance, grouped
+# so a copy change and its instrument change stay kin. One commit, one plan.
+# operation: prime
+
+#>update_clusters_2026_11
+#:cache #!plan #!copy #!component #!wonder
+#:operation #!prime
+#:fixity #!tending
+#:layer #!pragmatics
+
+@copy_review: ~"./copy-review-2026-11.spw"
+@components: ~"../../../.spw/caches/spw-native-components-2026-11.spw"
+@affordances: ~"../../../.spw/caches/linguistic-affordances-2026-11.spw"
+@theory: ~"../../../.spw/caches/theory-map-2026-10.spw"
+@joins: ~"../../../.spw/language/dot-join.spw"
+@copy_plan: ~"./PLAN.md"
+@region_plan: ~"../component-region-personality/PLAN.md"
+@gesture_plan: ~"../interaction-grammar/PLAN.md"
+@inquiry_plan: ~"../spw-inquiry-loop/PLAN.md"
+
+operation = "prime"
+fixity = "tending"
+
+^"thesis"{
+  claim = `A cluster is two or three commits that share one subject. The copy commit lands in semantic-copy-depth. The instrument commit lands in the plan that already owns that instrument. Spw on the host changes when the posture changed, and the mode slot names the question the reader is in.`
+  metacognition = `The expression is the reader's note to themselves: which question this sentence is answering. [clock], [gesture], [routing], [read]. Fresher words keep the expression. A new posture writes a new mode and keeps the subject.`
+  taste = `Cohesion is the sentence, the expression, and the control naming one physics. Dissonance is a split a reader can learn to hear. The skill is saying which of the two they are looking at.`
+}[reg=facet]
+
+^"clusters"{
+  A = `Clock. R1 on /now/, then R2 on Home's live note. semantic-copy-depth only. Expression aim: now[clock]{open.close}(receipt)<season>. A passed date stays a receipt.`
+  B = `Gesture. R3 on /topics/, then R4 on /design/. Watch the control first. Two ladders stay two lines: term[gesture]{tap.inspect;hold.prime} and the chip's own verbs. interaction-grammar's settings passage quotes the string that remains, in a following commit, only if the public verb changed.`
+  C = `Home map. R5, then R6. After R6, one instrument commit: the seat line stays mono, the lede stays editorial, and the working-view sentence stops teaching outline styles. The { } ease, objective open and subjective close, is its own commit on one frame and waits on a browser look. component-region H1–H4 do not ride this cluster.`
+  D = `Offer. R7 on /services/. Words only.`
+  E = `Topics shelf. R8 after B. topics[atlas]{question;neighbor;issue}(return)<shelf> keeps the semicolon while the lede is an order. A lede that becomes a set changes the join to a comma. Do not treat the semicolon as proved until parse() keeps it (@joins).`
+  F = `Contour. spw-inquiry-loop slice 3, in its own queue. When that commit lands, one cohesion wonder prints as a contour line, so reading the sensor teaches the slot. It does not jump the answer slice or the prefix slice.`
+}[reg=facet]
+
+^"queues"{
+  copy = `C2 may land any time before its three units change. C1 and C3 stay gated. Cluster A is the first word cluster.`
+  region = `H1 stays the next component commit. The instrument specimen in @components waits behind H1 and behind cluster C.`
+  gesture = `The settings "do this, expect this" passage stays the next interaction commit. Cluster B adds a second commit only when a public verb moved.`
+  inquiry = `Answers, then the prefix half, then the contour. Cluster F is that third slice, cited from here.`
+}[reg=facet]
+
+^"math"{
+  claim = `The join is the rigor. A comma is a set, a semicolon is a schedule, tight dots are one identifier, crawl is three practices. A patch that depends on a join names which law it uses.`
+  bench = `Two benches, already open. /topics/math/ says count, rate, invariant, receipt. The parser page is where {passed;open} meets parse(). linguistic-affordances and the theory map hold the longer questions. This cluster opens no third lab.`
+  discipline = `One cluster, one route, one commit, one probe that can fail. The receipt is the commit's verify line until the contour can show the wonder's mode.`
+}[reg=facet]
+
+^"research"{
+  claim = `The research datum is a triple: the sentence, the expression, and the control. Agreement is cohesion. A split is dissonance. Both are findings. A split that teaches is a wonder. A split that gives two instructions is a bug.`
+  value = `The linguistic development is checkable at entrance scale. The gesture census, the copy clock, and the expression variety audit are the instruments. A new grammar would erase the datum by renaming it.`
+  hold = `Record the triple in the cluster's commit. Promote a repeated pattern to a convention only after two clusters have used it.`
+}[reg=facet]
+
+#>wonder_update_clusters_gesture_cohesion
+?["When a first-move sentence and the control name different hands, is the split a dissonance to close, or a difference the reader can learn?"]{
+  #:depth #!stylistic ~#lens(projection)
+  ~#with: @copy_review @components @gesture_plan
+  ~#tension: "Two ladders are real: a living term inspects on tap and primes on hold, and a chip may sit on tap. One sentence that teaches both is two instructions. Two sentences can be cohesion."
+  ~#hypothesis: "Close a sentence that names both ladders. Keep two lines when the page holds two objects. A remaining difference, stated as its own line, is the lesson."
+  ~#expect: "After R3, the topics first move matches the chip that was watched, and the living-term line is unchanged."
+  ~#unblocks: "cluster B"
+  ~#probe(read)
+  !probe{ "Read the topics first move, tap and hold one chip, then read the living-term line on Home. Say cohesion or dissonance before editing." }
+  $%[cohesion.close_the_mixed_sentence, dissonance.keep_two_lines, sentence.names_the_split]
+  ~<"./copy-review-2026-11.spw"> ~<"../../../.spw/caches/spw-native-components-2026-11.spw"> ~<"../interaction-grammar/PLAN.md">
+}

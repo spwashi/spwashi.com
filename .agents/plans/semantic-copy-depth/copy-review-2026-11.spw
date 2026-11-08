@@ -1,0 +1,147 @@
+# Review 2026-11-08 — five-axis reading of the entrance folds, one route per commit.
+# Copy review passes — 2026-11-08
+#
+# Five-axis reading of the entrance folds: tone, routing, interaction,
+# readability, uniqueness. Owner is semantic-copy-depth. One route, one
+# align, then stop. Cards and chips stay with component-region-personality.
+# operation: prime
+
+#>copy_review_2026_11
+#:cache #!copy #!review
+#:operation #!prime
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@clusters: ~"./update-clusters-2026-11.spw"
+@copy_accessor: ~"../../../.spw/conventions/copy-accessor.spw"
+@copy_decay: ~"../../../.spw/caches/copy-decay-2026-09.spw"
+@home: ~"../../../index.html"
+@now: ~"../../../now/index.html"
+@topics: ~"../../../topics/index.html"
+@design: ~"../../../design/index.html"
+@services: ~"../../../services/index.html"
+
+operation = "prime"
+fixity = "tending"
+
+^"thesis"{
+  claim = `The entrance copy is a person talking through a repeated room skeleton. Update the sentence that is wrong today, then the sentence that teaches the wrong gesture, then the sentence that says a room twice. Leave the sentences that already name one thing a reader can hold.`
+  keep = `I'm Spwashi. I build software and make art. A session is where a joke becomes evidence. A service is a lane we walk together. This is not a clinic. Math's count, rate, invariant, and receipt.`
+  refuse = `Do not rewrite 140 routes. Do not open C1 or C3. Do not edit the three flat-only Home units C2 still owes. Do not add a data-spw family. Do not flatten cookbook voice. Do not retitle the folio Octvember, Novel Under Test, or the holidays season pages.`
+}[reg=facet]
+
+^"already_queued"{
+  c2 = `Home expressions on #home-note, #home-library-lede, #home-record-lede. No words change. Land it before any pass that would rewrite those sentences. This schedule does not touch them.`
+  c1 = `/topics/slop/#feeling stays on the creator's call.`
+  c3 = `Home's field note, including the words Action layer at #home-field-note, waits until C1 has landed.`
+}[reg=facet]
+
+^"rules"{
+  clock = `A date that has passed is a receipt. The title and the kicker name work that is still open. npm run audit:copy:clock misses some of these: runs through a past <time> is not in its relative-cue list, so read the tense.`
+  gesture = `Living terms: tap inspects, hold primes (#home-concepts-lede, the runtime title in public/js/interface/haptics.js). Image studies: tap focuses, swipe changes the view, hold inspects. A chip or a part gets the verb that control actually performs. Do not copy one ladder onto the other.`
+  map_once = `A room's job is named in one sentence. A later sentence may give a reason to come back. It does not rename the room.`
+  skeleton = `A hidden lens panel stays when it names a different first move than the open panel. About and Play pass. Wrap-job labels already swap with semantic density. Leave that markup.`
+  shop_talk = `A sentence that explains an outline style, or that talks about copy, loses to a sentence that names what the reader gets.`
+}[reg=facet]
+
+^"r1_now_clock"{
+  operation = `align`
+  route = `/now/`
+  file = @now
+  hosts = `the kicker Octvember · close on October 26; #now-title; #now-description (now.hook.lede); the status line that says the notebook runs through October 25`
+  do = `The fold names the production season and the work still open: the November book through November 30, and the next close that has not passed. October's costume sheet, Inktober shelf, and culture field stay linked as practices of that season.`
+  leave = `The October 13 receipts, the September and October notebooks, and any sentence that is already a record of a day. Folio titles. /holidays/ and /holidays/costuming/.`
+  verify = `npm run audit:copy:clock -- --check --route=/now/ ; read the fold aloud; npm run manifest:staged if a copy-unit or expression moved; git diff --check`
+  stop = `The headline no longer points at a close that has happened.`
+}[reg=facet]
+
+^"r2_home_clock"{
+  operation = `align`
+  after = `r1_now_clock`
+  route = `/`
+  file = @home
+  hosts = `#home-live-octvember (home.hook.live.octvember); #home-live-now (home.hook.live.now); #home-promo-wonder-cycle-intro where it aims at October 26. #home-live-close stays while November 13 is still ahead.`
+  do = `The live note agrees with Now. A passed date is a receipt. The next close is a date that has not passed.`
+  leave = `#home-field-note. The rooms lede. Folio alts that name the artwork. The paste box.`
+  verify = `npm run audit:copy:clock -- --check --route=/ ; read #home-live-note beside /now/`
+  stop = `Home and Now name the same open close.`
+}[reg=facet]
+
+^"r3_topics_gesture"{
+  operation = `align`
+  route = `/topics/`
+  file = @topics
+  hosts = `the First move span under #topics-lede: Tap primes a chip. Hold inspects it. This shelf remembers the visit.`
+  do = `Name the chip's real tap and the real hold, after watching one chip. Keep the memory clause only if a second visit shows the shelf remembered.`
+  leave = `The living-term ladder. The image-study ladder. The route-board chips' sigils.`
+  verify = `In the browser, tap and hold one topics chip, leave, and come back. The sentence matches what happened.`
+  stop = `The first-move line and the control agree.`
+}[reg=facet]
+
+^"r4_design_gesture"{
+  operation = `align`
+  route = `/design/`
+  file = @design
+  hosts = `the First move span under #design-lede: tap primes a part, hold inspects it. This worktable remembers the spoke for the session.`
+  do = `Same test as r3, on a design part. The spoke-memory clause stays only if the session shows it.`
+  leave = `The lede that says name a part, turn one dial. The spoke list.`
+  verify = `In the browser, tap and hold one part on /design/.`
+  stop = `The first-move line and the control agree.`
+}[reg=facet]
+
+^"r5_home_map"{
+  operation = `align`
+  route = `/`
+  file = @home
+  hosts = `#home-reason-why, #home-reason-readers, #home-reason-takeaway`
+  do = `Keep #home-lede-rooms as the map: About is the person, Now is this close, Topics hold math, Spw, and craft, Play is the table, Services is where a project starts. A reason card that repeats one of those jobs gets a reason to return instead: the close, a recipe, a card, a folio, a session.`
+  leave = `Copy-unit ids. The creator-first opener. The five entrance doors and their chips. #home-field-note. The paste box.`
+  verify = `Read from #home-title through the reason strip. Each of the five rooms is named once. npm run audit:copy:accessor ; npm run manifest:staged`
+  stop = `The reason strip adds a reason the rooms sentence did not already give.`
+}[reg=facet]
+
+^"r6_home_view"{
+  operation = `align`
+  route = `/`
+  file = @home
+  hosts = `the intro in #home-hook: Brightens what serves it, outlined in its color, solid, dashed, and double.`
+  do = `Say what choosing Study, Build, Play, or Studio does for the reader: the cards that serve that visit stay bright, and every route stays available. The outline styles stay in the CSS.`
+  leave = `The four lens paragraphs and their first-move chips, unless a paragraph only restates the outline.`
+  verify = `In the browser, sit each of the four views. The sentence matches which cards stay bright, at a laptop width and at a phone width.`
+  stop = `The working-view sentence names the bright cards and not the outline.`
+}[reg=facet]
+
+^"r7_services_meta"{
+  operation = `align`
+  route = `/services/`
+  file = @services
+  hosts = `the note that offers a UX walk and then says Good service copy should read like a good map`
+  do = `Keep the offer: walk a path from first click to handoff. Drop the sentence about service copy.`
+  leave = `I'm Spwashi. I build software and make art. The lane lede. The business short version. The five lanes. Wave 3 visual cards, which wait on the creator in component-region-personality.`
+  verify = `Read from #services-lede through that note. The next door is a lane, a product, or a smaller first step.`
+  stop = `The page no longer reviews its own copy.`
+}[reg=facet]
+
+^"r8_topics_lede"{
+  operation = `align`
+  after = `r3_topics_gesture`
+  route = `/topics/`
+  file = @topics
+  hosts = `#topics-lede ; the Hub / Leaf / Bridge reason strip ; the Holds line that lists hubs, leaves, timelines, and operator pages`
+  do = `The title stays: Choose the surface that matches the kind of attention you have. The lede stays one claim: start from the question, cross to a neighbor, come back when that neighbor has a new issue. The route board is the shelf. A strip that only restates the lede goes. A house word in the Holds line gets its meaning in that line, or it goes because the board already shows it.`
+  leave = `The six visual cards. The route-board destinations. Chip chrome.`
+  verify = `Read #topics-title through the route board aloud. One claim, then routes. npm run audit:copy:accessor`
+  stop = `The fold has one claim and one shelf.`
+}[reg=facet]
+
+^"later"{
+  claim = `About, Play, and Recipes open on the same skeleton. A pass opens only when that hub's visible panel fails the skeleton rule: the first move is not a real route, or Holds names furniture instead of things on the page. About and Play passed on 2026-11-08. Do not schedule a template rewrite.`
+  order = `r1, r2, r3, r4, r5, r6, r7, r8. C2 may land any time before those three Home units change. C1 and C3 stay put. The same passes group as clusters A–E in @clusters, with the instrument commits left in their own plans.`
+}[reg=facet]
+
+^"each_pass"{
+  sense = `npm run audit:copy:accessor and npm run audit:copy:clock -- --route=<route> before editing. Read the host aloud.`
+  commit = `One pass. Subject &[copy]. Close with #[episode]{ ~[scene]{} ![change]{} *[verify]{} }.`
+  after = `git diff --check. If a copy-unit or a semantic expression moved, npm run manifest:staged and commit the generated index with the page.`
+}[reg=facet]
