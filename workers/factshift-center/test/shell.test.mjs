@@ -4,7 +4,8 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import worker from '../src/index.js';
-import { REGISTER_TAG, SHELL_SCRIPT, factshiftShell, withShell } from '../src/shell.js';
+import { REGISTER_TAG, SHELL_SCRIPT, SHELL_VERSION, factshiftShell, withShell, withSiteHead } from '../src/shell.js';
+import { DESCRIPTION, SITE_MANIFEST } from '../src/manifest.js';
 import { SNAPSHOT, SNAPSHOT_FILES } from '../src/snapshot-files.js';
 import { snapshotFiles } from '../carry-shell.mjs';
 
@@ -53,7 +54,8 @@ test('the canvas carries one registration line; files pass untouched; /sw.js is 
   assert.equal(shell.headers.get('content-type'), 'text/javascript; charset=UTF-8');
   assert.equal(shell.headers.get('cache-control'), 'public, max-age=60');
   assert.equal(await shell.text(), SHELL_SCRIPT);
-  assert.ok(SHELL_SCRIPT.includes(`"version":"${SNAPSHOT.revision}-${SNAPSHOT.snapshot}"`));
+  assert.ok(SHELL_SCRIPT.includes(`"version":"${SHELL_VERSION}"`));
+  assert.match(SHELL_VERSION, new RegExp(`^${SNAPSHOT.revision}-${SNAPSHOT.snapshot}-site\\d+$`));
   assert.equal((await get('/', { headers: { host: 'www.factshift.center' } })).status, 200);
 });
 
@@ -164,4 +166,35 @@ test('what the shell does not keep goes to the network untouched', () => {
     ['/assets/main-pq1jI85J.js?x=1', {}],
     ['/', { origin: 'https://spw.quest' }],
   ]) assert.equal(shell.fetch(path, options).responded, null, path);
+});
+
+test('the installed face: the app\'s name, colors and icons, with the site\'s description, turn, launch and shortcuts', async () => {
+  const snapshot = JSON.parse(readFileSync(new URL('assets/manifest.json', root), 'utf8'));
+  const response = await get('/manifest.json');
+  assert.equal(response.headers.get('content-type'), 'application/manifest+json; charset=UTF-8');
+  const manifest = await response.json();
+  for (const key of ['name', 'short_name', 'theme_color', 'background_color', 'icons', 'start_url', 'scope', 'display']) assert.deepEqual(manifest[key], snapshot[key], key);
+  assert.equal(manifest.orientation, 'any');
+  assert.deepEqual(manifest.launch_handler, { client_mode: ['navigate-existing', 'auto'] });
+  assert.equal(manifest.description, DESCRIPTION);
+  // The description is the app's own sentence, not new copy.
+  assert.ok(readFileSync(new URL('assets/index.html', root), 'utf8').includes(`<meta name="description" content="${DESCRIPTION}">`));
+  assert.deepEqual(manifest.shortcuts.map((shortcut) => shortcut.short_name), SITE_MANIFEST.shortcuts.map((shortcut) => shortcut.short_name));
+  for (const shortcut of manifest.shortcuts) {
+    assert.ok(shortcut.url.startsWith('/'), shortcut.url);
+    const page = await get(shortcut.url);
+    assert.equal(page.status, 200, shortcut.url);
+    assert.match(await page.text(), /data-app="factshift"/, shortcut.url);
+  }
+  assert.ok(!manifest.shortcuts.some((shortcut) => /reset|demo/.test(shortcut.url)), '?reset clears storage and /demo throws; neither is a shortcut');
+});
+
+test('the canvas head gains a bar color, an iOS icon and a preview, once', async () => {
+  const html = await (await get('/')).text();
+  const head = html.slice(0, html.indexOf('</head>'));
+  assert.equal(head.split('data-factshift-site-head').length - 1, 1);
+  assert.match(head, /<meta name="theme-color" content="#4c1d1d">/);
+  assert.match(head, /<link rel="apple-touch-icon" href="\/v0\.0\.1\/favicon\/192\.png">/);
+  assert.match(head, /<meta property="og:description" content="factshift\.center lays out a line of Spw/);
+  assert.equal(withSiteHead(withSiteHead('<head></head>', 'x'), 'x').split('data-factshift-site-head').length - 1, 1);
 });

@@ -88,9 +88,18 @@ export function factshiftShell({ version, files, waitMs }) {
 /** How long a navigation waits for the network before a kept canvas opens. */
 export const NAVIGATION_WAIT_MS = 3500;
 
+/**
+ * The site's own revision of what it serves around the snapshot (the shell, the
+ * manifest's site fields, the head lines). A change there increments it, so an
+ * installed app fetches a fresh shell and keeps the new manifest.
+ * 2: the site-served manifest and head lines (src/manifest.js), 2026-11-08.
+ */
+export const SITE_REVISION = 2;
+export const SHELL_VERSION = `${SNAPSHOT.revision}-${SNAPSHOT.snapshot}-site${SITE_REVISION}`;
+
 /** The script served at /sw.js. */
 export const SHELL_SCRIPT = `// factshift.center shell, snapshot ${SNAPSHOT.revision} (${SNAPSHOT.snapshot}); source: workers/factshift-center/src/shell.js
-(${factshiftShell.toString()})(${JSON.stringify({ version: `${SNAPSHOT.revision}-${SNAPSHOT.snapshot}`, files: SNAPSHOT_FILES, waitMs: NAVIGATION_WAIT_MS })});
+(${factshiftShell.toString()})(${JSON.stringify({ version: SHELL_VERSION, files: SNAPSHOT_FILES, waitMs: NAVIGATION_WAIT_MS })});
 `;
 
 /** Runs on the canvas after load: register the shell at the root, so it controls /. */
@@ -108,4 +117,11 @@ export function withShell(html) {
   if (html.includes("data-factshift-shell") || !html.includes("</body>")) return html;
   const at = html.lastIndexOf("</body>");
   return `${html.slice(0, at)}${REGISTER_TAG}\n${html.slice(at)}`;
+}
+
+/** The canvas's HTML with the site's head lines before </head>, once. */
+export function withSiteHead(html, lines) {
+  if (!lines || html.includes("data-factshift-site-head") || !html.includes("</head>")) return html;
+  const at = html.indexOf("</head>");
+  return `${html.slice(0, at)}    <meta name="factshift-site-head" content="${SITE_REVISION}" data-factshift-site-head>\n    ${lines}\n${html.slice(at)}`;
 }
