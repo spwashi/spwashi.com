@@ -119,7 +119,7 @@ The creator, 2026-11-08: developing the granularity and alignment of the plans i
 
 - **Alignment across owners.** [update-clusters-2026-11.spw](./semantic-copy-depth/update-clusters-2026-11.spw) groups granular commits across the plans that share the entrance (clusters A to F). Each owner plan keeps its slice and points back: component-region-personality, interaction-grammar, spw-inquiry-loop.
 - **Planes.** [spw-planes](./spw-planes/PLAN.md) holds four agent reports as `.spw`, with 21 wonders in one harvested file. Its next moves without a taste call are R2 and R3.
-- **Ecosystem.** Two wonders in [ecosystem-architecture](./ecosystem-architecture/index.spw): what each site keeps or plays (interactive and archival purposes, slanted toward utility), and what spwashi.com should carry to lore.land, whose own plans grow that domain's theory and creative use.
+- **Ecosystem.** Three wonders in [ecosystem-architecture](./ecosystem-architecture/index.spw): what each site keeps or plays (interactive and archival purposes, slanted toward utility), what spwashi.com should carry to lore.land, whose own plans grow that domain's theory and creative use, and which of those plan-theories this site can spend. The return reading is [lore-land-plans.spw](./ecosystem-architecture/lore-land-plans.spw). Support writes this site. lore.land stays in its own repo.
 - **Theory caches grown in place.** cognitive-informatics-interaction now has roots, branches by axis, and cii-006 to cii-009. Three neighbour caches were added the same days: plugin ecology, syntax and runtime, and factshift's cognitive substrate.
 
 ## Maintenance Snapshot - 2026-11-06

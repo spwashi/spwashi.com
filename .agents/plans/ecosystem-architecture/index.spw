@@ -65,6 +65,7 @@ intent: .{
 @planes_plan: ~"../spw-planes/PLAN.md"
 @domains: ~"../../../.spw/domains.spw"
 @lore_land_support: ~"./lore-land-support.spw"
+@lore_land_plans: ~"./lore-land-plans.spw"
 
 dispatch: .{
  plan = @plan
@@ -166,4 +167,16 @@ invariants: #[
   ~#probe(read)
   !probe{ "in a lore.land checkout, search package.json, vite.config.js and .spw/tools for peer-kit, spwashi.com, and an operator or sigil table" }
   $%[carry.peer_kit, carry.codec, carry.descriptor, carry.none]
+}
+
+#>wonder_ecosystem_lore_land_plans
+?["Which of lore.land's plan-theories can this site spend without writing lore.land?"]{
+  #:depth #!pragmatics ~#lens(projection)
+  ~#with: @lore_land_plans @lore_land_support @plan
+  ~#hypothesis: "Each theory already has a local file. Spending one means reading that file's grain on the next pass. lore.land stays in its own repo."
+  ~#expect: "The five wonders in lore-land-plans.spw each name a local file, and no path in this folder points into lore.land."
+  ~#probe(read)
+  !probe{ "Read lore-land-plans.spw. For each theory, name the local file it spends, and confirm the path stays inside this repo." }
+  $%[spend.variant_zero, spend.one_row, spend.weather, spend.witness, spend.precipitate, spend.none]
+  ~<"./lore-land-plans.spw"> ~<"./lore-land-support.spw"> ~<"./PLAN.md">
 }

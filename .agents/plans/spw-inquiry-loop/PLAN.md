@@ -6,6 +6,8 @@
 
 Close the loop a question runs on this site: probe, then a Spw update, then a refactor, then a test. A wonder carries a guess and a probe, the probe runs, the answer lands beside its receipt, and every plan that cites what moved can see that it moved. The capabilities the loop leans on are a ledger with contract names (`capabilities.spw`). Until 2026-10-27 this plan was `spw-language-v04`; its pillars are history below.
 
+A claim's machine, read from lore.land's PLAN.B on 2026-11-08 ([lore-land-plans.spw](../ecosystem-architecture/lore-land-plans.spw)): untested, then active, then confirmed or refuted. The first signal makes it active. It confirms when the evidence clears its threshold and the error count is zero, and it refutes when the errors clear theirs. Confirmed and refuted stay until a separate re-evaluation. Evidence is what moves the status. A diagnostic watches, and the behavior it watches stays as it was. This site's wonder contour is a different clock: open, probed, answered, retired (`.spw/caches/theory-map-2026-10.spw`, `^"lifecycle"`). The bend, one witnessed act or a quorum, is `wonder_lore_plans_witness`. The clock-tense wonder's answer on 2026-11-08 is one witnessed commit. Whether an answered wonder is a confirmed claim stays the creator's question. The queue stays answers, then the prefix, then the contour.
+
 ## Public Goal
 
 A question asked anywhere in the site's `.spw` can be probed, answered and seen to have moved by every plan that leans on it, with a receipt a reader can open. The parser that reads Spw in the browser stays here too (Phase 4).

@@ -1,0 +1,125 @@
+# Review 2026-11-08 — expert rooms: each page earns one action, examples keep aboutness open.
+# spw.quest expert rooms (2026-11-08) — prime
+#
+# The creator, 2026-11-08: the UX needs a radical redesign; examples should
+# invite experimental semantics; a component is worth the mutation and the
+# instruction it gives; install and context should flow into the default
+# action; each PWA page has to be worth opening; expert use is implicit,
+# because a visitor arrives from spwashi.com or from an LLM summary.
+# The same evening: "I wondered about indexing" is a stronger hook where a
+# person is already speaking; library and information science, especially
+# subjective representation; a subject seen from several students' vantages,
+# written {a,b,c}@d.
+
+#>expert_rooms
+#:review #!quest #!pwa #!examples #!aboutness
+#:operation #!prime
+#:fixity #!tending
+#:layer #!pragmatics
+
+expression = quest[expert]{page.mutation.aboutness}<one_action>
+
+summary = #[
+  `A visitor arrives already oriented. The first paint is the line they can change.`,
+  `Each installed page keeps one default action. A second job becomes a link.`,
+  `An example is experimental when the edit moves aboutness and the reading shows it.`,
+  `{a,b,c}@d keeps three subjective representations in company at one subject.`,
+  `I wondered about indexing belongs on a page that has already said who is speaking.`,
+][reg=set]
+
+@plan: ~"./PLAN.md"
+@asks: ~"./expression-first.md"
+@examples: ~"../../../workers/spw-quest/src/examples.js"
+@worker: ~"../../../workers/spw-quest/src/index.js"
+@manifest: ~"../../../workers/spw-quest/src/quest-manifest.js"
+@pivot: ~"../../../workers/spw-quest/src/pivot.js"
+@build: ~"../../../workers/spw-quest/src/build.js"
+@home: ~"../../../index.html"
+@search: ~"../../../topics/search/index.html"
+
+^"arrival"{
+  ~#note: "A premise for the next slices. It does not replace W's empty walk."
+  expert = `The person has already been onboarded, on spwashi.com or in an LLM summary. The guide can speak as a tool.`
+  bare = `A visit with no line, no example, and scripts off still gets the walk's first paint from expression-first W: Spw handed over, none assumed.`
+  carried = `A line in the address, an example id, or a summary the visitor pastes is the file the editor opens on. Context chooses that action.`
+}[reg=facet]
+
+^"pages"{
+  ~#note: "What each route is for, read from handleQuest on 2026-11-08. A page that shares its action with another page is the one to merge or to demote to a link. This list opens no patch."
+  guide = `/ opens on the files and the walk. Its earned action is: change the line you arrived with.`
+  learn = `/learn is the place one word is tried through the panels. For an expert it is a reference, linked from the mark they are changing.`
+  build = `/build assembles a line by slot. It earns the mutation that has no gesture yet.`
+  pivot = `/pivot already steps a slot by tap, swipe, and key. It earns the gesture hand.`
+  read = `/read answers a line with scripts off. It earns the check the mutation just made.`
+  specimens = `/specimens searches the shelf. It earns a query, not a second copy of the guide.`
+  constructs = `/constructs shows how lines join. It earns one join, changed and reread.`
+  canvas = `/canvas is a specimen drawn. It earns the picture of a line the other rooms already hold as text.`
+  install = `/install says how to add the app, then how an agent clones the workbench. It earns a return to the line the visitor was holding.`
+  parser = `/parser/ names a build. It earns a switch, then the same line read by that build.`
+  agents = `/init, /llms.txt, and /quest.json are for a tool that already has the summary. They stay off the installed home screen.`
+}[reg=facet]
+
+^"install"{
+  claim = `Install instructions are context, and context ends in the default action. A phone step ends in Add, then the editor. An agent tab ends in the one command, then the line that command is for. A visitor who arrived with a file should still be holding it when the instructions are done.`
+  today = `start_url is / and the manifest describes a guide that writes the walk. The phone section leads /install. The agent sets are tabs beside it. Nothing in that page writes the visitor's line back into the editor.`
+}[reg=facet]
+
+^"components"{
+  claim = `A component is worth the mutation it performs and the instruction that updates when the mutation lands. A tab that loads a file, with a try sentence beside it, teaches by caption. The pivot instrument already steps a value. The redesign is that caption becoming the reading of the step.`
+  today = `The guide paints eleven files from EXAMPLES. Each has a says and a try. /pivot's instrument mutates a slot and is not those files.`
+}[reg=facet]
+
+^"aboutness"{
+  ~#note: "Library and information science, as a reading for the examples. A subject heading is one cataloger's representation of what a work is about. Several students indexing the same subject produce several headings. Collapsing them into one preferred term is a catalog's choice. Keeping them in company is the experimental move."
+  shape = `{a,b,c}@d`
+  reading = `The brace holds three vantage points as one practice. The comma keeps them in company, so none becomes the authorized heading. @d is the subject they are representing. The existing perspectives file writes the other order: student@ch2[sure]{recall}<quiz>, a person looking at a chapter. {a,b,c}@d looks from the representations toward the subject.`
+  hook = `I wondered about indexing is a strong first line only where a person is already on the page. Home opens on I'm Spwashi, so a later wonder has someone to belong to. /topics/search/ and the guide's catalog record speak as a manual and a library. The calibration file is the quest example that already says I, inside a prediction. An indexing example earns the hook when the wonderer is in the file, and the three headings sit in the brace so the wonder is a representation.`
+  try = `The experimental edit is to add a fourth vantage, or to move @d, and have the reading say whose heading moved and whose stayed. Adding a see-also is the catalog's ordinary edit. Changing who the subject is, is the one that teaches subjective representation.`
+}[reg=facet]
+
+^"queues"{
+  stays = `S1 and E1 remain the next expression-first slices. M2 remains the walk trail. This file is the lens on them: E1's line is the line the visitor brought; the try on an example is a mutation with a reading; /install returns to that line.`
+  opens = `No new route. No new sigil. No fourth copy accessor.`
+}[reg=facet]
+
+#>wonder_quest_expert_arrival
+?["When someone arrives already knowing the notation, what should the installed home screen open on?"]{
+  #:depth #!pragmatics ~#lens(projection)
+  ~#with: @manifest @asks @worker
+  ~#tension: "start_url is /, and W paints a walk that assumes no Spw of the visitor's own. The creator's premise is that the visitor was onboarded before they arrived."
+  ~#hypothesis: "A carried line opens in the editor. A bare visit still gets the empty walk. The lesson and the shelf stay one tap away."
+  ~#expect: "The manifest still starts at /. The guide still leads with the files. No query on / selects an example from the address except the example param the worker already reads."
+  ~#unblocks: "E1, the one expression, aimed at the line the visitor brought"
+  ~#probe(read)
+  !probe{ "Read the manifest's start_url comment, then the guide's first screen. Say what a visitor who already holds a line is invited to do." }
+  $%[arrive.with_a_line, arrive.at_the_shelf, arrive.at_the_lesson]
+  ~<"../../../workers/spw-quest/src/quest-manifest.js"> ~<"./expression-first.md"> ~<"../../../workers/spw-quest/src/index.js">
+}
+
+#>wonder_quest_page_earns
+?["Which installed pages still earn a place once each one is allowed only one default action?"]{
+  #:depth #!structural ~#lens(comparison)
+  ~#with: @worker @plan
+  ~#tension: "The worker serves a guide, a lesson, a builder, a pivot, a reader, a shelf, a canvas, an install, and a parser index. An installed app pays for every icon the visitor might open."
+  ~#hypothesis: "The editor, the pivot, the shelf query, and the install return are the pages. Learn, constructs, and the parser index are reaches from the line, not homes."
+  ~#expect: "handleQuest still branches to each of those paths. This prime adds no redirect."
+  ~#unblocks: "the page list in this file"
+  ~#probe(read)
+  !probe{ "List the pathname branches in handleQuest. Mark the ones a returning visitor would open on purpose, and the ones they would reach from a line." }
+  $%[page.one_action, page.merge, page.keep_the_map]
+  ~<"../../../workers/spw-quest/src/index.js"> ~<"./PLAN.md">
+}
+
+#>wonder_quest_aboutness
+?["Does {a,b,c}@d keep three students' headings in company at one subject, or does the subject belong in front, as the perspectives file already writes it?"]{
+  #:depth #!stylistic ~#lens(comparison)
+  ~#with: @examples @home @search
+  ~#tension: "perspectives.spw writes student@ch2[sure]{recall}<quiz>. The creator wrote {a,b,c}@d for several students' vantage points on one subject. A subject heading in a library is one representation. Keeping three is the point."
+  ~#hypothesis: "The brace-then-perspective form is the experimental example. The person-then-chapter form stays the study file. I wondered about indexing opens that example only because the wonderer is already a line in it."
+  ~#expect: "EXAMPLES still has the four-readings file in the person-at-chapter order. Home still opens on I'm Spwashi. The search lede still does not say I."
+  ~#unblocks: "the next example pass, one file, the indexing representation"
+  ~#probe(read)
+  !probe{ "Read the perspectives example, then say which order puts the subject in @ and which order puts the students in the brace." }
+  $%[about.company_at_subject, about.person_at_chapter, about.one_heading]
+  ~<"../../../workers/spw-quest/src/examples.js"> ~<"../../../index.html"> ~<"../../../topics/search/index.html">
+}

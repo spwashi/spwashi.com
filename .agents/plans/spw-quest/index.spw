@@ -55,6 +55,7 @@ intent: .{
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@expert_rooms: ~"./expert-rooms.spw"
 @wip: ~"./wip.spw"
 @worker: ~"../../../workers/spw-quest/src/index.js"
 @pivot: ~"../../../workers/spw-quest/src/pivot.js"
@@ -198,4 +199,16 @@ invariants: #[
   !probe{ "rg -n 'renderSpecimens|specimensBody' workers/spw-quest/src/index.js workers/spw-quest/src/specimens.js" }
   ~#answer(2026-11-06): "architecture.static_first. The creator: static landing and index seem like a good idea. First slice: carry-shelf.mjs writes /shelf/ (search, the operators as handles, plans by operation, browse tiles) and /shelf/plans/ (plans grouped by operation) into assets/shelf/, served by the worker; /specimens stays as it is until the creator's look."
   $%[architecture.static_first, architecture.paged_in_worker, architecture.as_is]
+}
+
+#>wonder_spw_quest_expert_rooms
+?["Which of the expert-room claims can the next quest slice spend without a new route?"]{
+  #:depth #!pragmatics ~#lens(projection)
+  ~#with: @expert_rooms @plan @worker
+  ~#hypothesis: "E1 can open on the line the visitor brought. An example's try can be a mutation whose reading shows the aboutness move. Install can return to that line. The route list stays the list handleQuest already serves."
+  ~#expect: "expert-rooms.spw names a local file for each claim, and S1, E1, and M2 stay the slices already queued."
+  ~#probe(read)
+  !probe{ "Read expert-rooms.spw queues, then expression-first's order. Name the one slice that can spend the arrival claim." }
+  $%[spend.arrival, spend.aboutness, spend.install_return, spend.none]
+  ~<"./expert-rooms.spw"> ~<"./expression-first.md"> ~<"./PLAN.md">
 }

@@ -54,6 +54,7 @@ fixity = "tending"
   leave = `The October 13 receipts, the September and October notebooks, and any sentence that is already a record of a day. Folio titles. /holidays/ and /holidays/costuming/.`
   verify = `npm run audit:copy:clock -- --check --route=/now/ ; read the fold aloud; npm run manifest:staged if a copy-unit or expression moved; git diff --check`
   stop = `The headline no longer points at a close that has happened.`
+  landed = `2026-11-08. The fold names November writing through the 30th. October's costume sheet, Inktober shelf, and culture field stay receipts. The book paragraph still says November is the writing in Octvember.`
 }[reg=facet]
 
 ^"r2_home_clock"{
@@ -66,6 +67,7 @@ fixity = "tending"
   leave = `#home-field-note. The rooms lede. Folio alts that name the artwork. The paste box.`
   verify = `npm run audit:copy:clock -- --check --route=/ ; read #home-live-note beside /now/`
   stop = `Home and Now name the same open close.`
+  landed = `2026-11-08. The live note and the promo's first paint name November 13. October 26 is a receipt in the static timeline. The field note is unchanged.`
 }[reg=facet]
 
 ^"r3_topics_gesture"{

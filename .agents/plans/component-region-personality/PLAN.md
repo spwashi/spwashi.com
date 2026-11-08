@@ -19,6 +19,8 @@ The creator asked for harmony across components and a visual ecology that can en
 - **Three chip dialects on one screen.** Home at pocket shows rounded pills (Next room), left-ruled bed tabs (Hook, Door, Atlas, Garden) and term chips that carry a left rule, a full border and a dotted underline at once.
 - **What holds.** `effects/material.css:186-191` lets route bridges, reason strips and the lens switch take the host's material: one mechanism across families, and the model for the rest.
 
+Weather and furniture, read from lore.land's plans on 2026-11-08 ([lore-land-plans.spw](../ecosystem-architecture/lore-land-plans.spw)): a token that crosses a host is weather, and that material rule is the local case. A literal that stops at the edge is furniture, the undefined `--shape-*` fallbacks and the phone discovery notice's hard-coded panel. A kind stays tellable with motion off. H3 is that read, and it waits on the role wonder. H1 stays next. This plan does its restyling in its own slices.
+
 Proposed principle, the creator's to keep or refuse (`index.spw#wonder_component_region_role_not_element`): a component takes its shape and timing from its role class, never from its HTML element; one radius and one shadow per role, from tokens; one key, taught once (the ornament contract's own words). The first ungated step, a census of the fallbacks behind the three undefined shape tokens, is read below as H1, since defining them changes every place a fallback differs. Every shape change after it ends at a browser demo; [css-cascade-stratification](../css-cascade-stratification/PLAN.md) owns the layer that lets whimsy reach elements, and [color-motion](../color-motion/PLAN.md) owns the timing.
 
 ### Harmony slices — 2026-11-06

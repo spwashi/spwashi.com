@@ -1,0 +1,210 @@
+# Review 2026-11-08 — what lore.land's plans can teach this site.
+# lore.land plans (2026-11-08) — prime: five theories, one grain each
+#
+# A reading of lore.land's PLAN.A through PLAN.E, taken on 2026-11-08.
+# PLAN.C's synthesis and PLAN.D's Firefox track were left unread.
+# A line is this site's behavior only when it cites a file in this repo.
+# Support writes this site. lore.land stays in its own repo.
+
+#>lore_land_plans
+#:review #!lore_land #!theory #!wonder
+#:operation #!prime
+#:fixity #!tending
+#:layer #!pragmatics
+
+expression = plans[lore_land]{theory.grain.wonder}<reading>
+
+summary = #[
+  `Five theories came back: one row, a public bet, words in the light, a glide that narrates, six seats over three clocks.`,
+  `Each owner keeps its next slice. The grain is the next checkable read.`,
+  `live, prototype, proposed, and imagined are lore.land's wiring words, read that day.`,
+  `Variant zero is the sentence a reader gets with scripts off.`,
+  `Weather crosses. Furniture stops. A precipitate is what the next lesson can stand on.`,
+][reg=set]
+
+contents = #[
+  ~"./lore-land-plans.spw#words",
+  ~"./lore-land-plans.spw#theories",
+  ~"./lore-land-plans.spw#roots",
+  ~"./lore-land-plans.spw#owners",
+  ~"./lore-land-plans.spw#grains",
+  ~"./lore-land-plans.spw#relay",
+][reg=set]
+
+@support: ~"./lore-land-support.spw"
+@plan: ~"./PLAN.md"
+@operators: ~"../../../public/js/kernel/operator-detection.js"
+@operator_views: ~"../../../scripts/tests/operator-views.test.mjs"
+@core: ~"../../../public/css/tokens/core.css"
+@material: ~"../../../public/css/effects/material.css"
+@clock: ~"../../../scripts/audit-copy-clock.mjs"
+@ledger: ~"../../../public/js/runtime/memory/effect-ledger.js"
+@promo_ts: ~"../../../public/ts/promo-wonder-cycle.ts"
+@home: ~"../../../index.html"
+@now: ~"../../../now/index.html"
+@capture: ~"../../../public/css/modes/capture.css"
+@cauldron: ~"../../../public/js/modules/media/cauldron.js"
+@theory: ~"../../../.spw/caches/theory-map-2026-10.spw"
+@template: ~"../../../scripts/template.mjs"
+@slots: ~"../../../public/js/semantic/expression-query.js"
+@copy_plan: ~"../semantic-copy-depth/PLAN.md"
+@clusters: ~"../semantic-copy-depth/update-clusters-2026-11.spw"
+@region_plan: ~"../component-region-personality/PLAN.md"
+@literacy_plan: ~"../literacy-precipitation-press/PLAN.md"
+@inquiry_plan: ~"../spw-inquiry-loop/PLAN.md"
+@operator_plan: ~"../operator-resonance-alignment/PLAN.md"
+@promo_plan: ~"../promo-wonder-cycle/PLAN.md"
+@folio_plan: ~"../folio-worktable/PLAN.md"
+@gesture_plan: ~"../interaction-grammar/PLAN.md"
+@motion_plan: ~"../color-motion/PLAN.md"
+@still_plan: ~"../screenshot-semantics/PLAN.md"
+@brace_plan: ~"../brace-semantics/PLAN.md"
+
+^"words"{
+  ~#note: "House words for this reading. The four wiring words are lore.land's, from PLAN.B, read 2026-11-08."
+  live = `It runs for a reader.`
+  prototype = `It runs in part. A counter, a face, or a listener is still missing.`
+  proposed = `The plan names it. No file holds it yet.`
+  imagined = `It is wished. No probe names a file.`
+  variant_zero = `The sentence or the markup a reader gets with scripts off and with no trial switched on.`
+  weather = `A token that crosses a boundary. A custom property is weather.`
+  furniture = `A literal that stops at the boundary.`
+  precipitate = `What the next lesson can stand on.`
+  lean = `A weight on how a sentence is offered. The sentence stays.`
+}[reg=facet]
+
+^"theories"{
+  ~#note: "Each theory is a reading of one plan. The local half cites a file here."
+
+  one_table = `PLAN.A wants one row to hold a sigil's role, its story reading, and its parse. Its adapter metric counts twelve sigils, lore.land's table. @ is positional there, so a sequence can leave it out, and that plan's own expect is eleven of twelve. Here the views already read one table, @operators, held by @operator_views. @support records the remaining split: twelve characters agree, and the names part on five against the workbench and on five against this site's types, for ? # & = %. A left brace accumulates and a right brace discharges, in that plan. Here the brace gradient runs from objective to subjective. The signed pair, tension against discharge, is a branch in PLAN.A.`
+
+  public_bet = `PLAN.B gives a claim a life: untested, then active, then confirmed or refuted. The first signal makes it active. It confirms when the evidence clears a threshold and the error count is zero. It refutes when the errors clear theirs. Confirmed and refuted stay for the session. A return from either one would be a separate re-evaluation. A diagnostic watches, and the behavior it watches stays as it was. Wiring state, live or prototype or proposed or imagined, is a different mark from a claim's status. A claim there is a probe with counters. Here the contour in @theory is open, probed, answered, retired. An answer names the one alternative left in the $% set. That clock and the claim machine are two clocks.`
+
+  words_light = `PLAN.C, read through its shadow phases and its milestone list, and left before the synthesis. Words are common ground and stay in the light tree. A slot promises to pass words through. The boundary is where a workshop veil can begin, and an open veil can be lifted. Weather crosses. Furniture stays sealed. A specimen is handled whole. A mark is touched part by part. The boldest line that travels: the story stays in the light. Here @plan measured zero custom elements at runtime in public/js. The spw tags are build-time, in @template. A face worth capturing keeps its name in that light tree.`
+
+  typing_narrates = `PLAN.D, read through the typing and paint phases, and left before the Firefox track. A texture is a sign: the grain, the material the binding claims, and what the hand expects next. Typing a value is a claim about its kind. A glide between typed numbers narrates. A discrete event, a door or a turned page, stays a step. An engine difference is a register. That plan's paint budget is its own number, and paint worklets stay imagined here. Information stays in the DOM. Here @core already registers --charge and --spw-valence as numbers, and each inherits false. Registering a property changes what an invalid computed value does. The card transition in color-motion's slice 2 is that case. PLAN.D also says the cauldron lives on this site: @cauldron.`
+
+  six_seats = `PLAN.E gives a lesson six seats: data, build, runtime, a reader surface, canon, and a probe. The lesson is done when the six are present or one is waived. One lesson to a stone. Canonical prose is variant zero. Three clocks share one ground: the calendar stones on the 13th and the 26th, the page's own day and hour, and the reader's unlocks, over the sentence that is already there. A lens, called lean in that plan, weights a presentation and leaves the text. A living slot carries no plot fact. A link can set a visit. Keeping it is a separate act. A chapter someone only watches still keeps every word. Anything that changes a return visit ships as a trial and leaves a plain-words note. The plan becomes a saying a reader can keep. Here the copy clock, the static promo, and the effect ledger are the local seats.`
+}[reg=facet]
+
+^"roots"{
+  ~#note: "Where each idea sits on 2026-11-08. Lore.land's wiring is a hypothesis about that repo. A local line cites a file."
+  ~#hypothesis: "On lore.land that day, the pourable book, the reel, and a paint worklet were wished. A single witness against a quorum was still a branch. The claim machine's confirmed and refuted states were unreachable from the diagnostics that had shipped."
+
+  imagined_here = `A reel, a paint worklet as the next stone, a reader's marks glassed into a folio object, and pouring another book through a book config. Those stay imagined on this site.`
+  proposed_here = `A written rule that one witnessed act settles a claim. A six-seat done-when on the literacy ladder. A plain-words return note on every behavior that changes a later visit.`
+  prototype_here = `The wonder contour is a clock of its own, beside the claim machine. Kind-at-a-glance is still three chip dialects on one screen, which component-region already measured.`
+  live_here = `One operator table for the views. Variant zero as visible HTML, in the copy plan's constraints. --charge and --spw-valence as registered numbers. The effect ledger mounted. Capture mode pausing motion. The static Home timeline naming November 13, with October 26 kept as a receipt.`
+}[reg=facet]
+
+^"owners"{
+  ~#note: "One claim each. The owner's queue stays the owner's."
+  ecosystem = `This file is the bridge. @support remains the survey of copies. S4a stays the next slice.`
+  copy = `Variant zero. A lens weights a sentence and leaves it in the HTML. Cluster A landed. The open read is the book paragraph on /now/ that calls November the writing in Octvember. R3 waits on a watched chip.`
+  region = `Weather and furniture. @material lets a host's material cross. The undefined shape fallbacks and the phone discovery notice are furniture. A kind stays tellable with motion off. H1 stays next.`
+  literacy = `Six seats. A rung is done when the next rung can stand on its precipitate. Rung 1 is the ledger. Rungs 2 to 5 stay the creator's calls. One stone at a time.`
+  inquiry = `The claim machine sits beside the open question of whether an answered wonder is a confirmed claim. The contour stays its own clock. The bend is one witness or a quorum. Answers, then the prefix, then the contour.`
+  operators = `One table has landed for the views. The remaining split is names, across this site, the workbench, and lore.land's four tables in @support. The family-attribute wonder stays the creator's decision.`
+  promo = `Three clocks, one ground. The static HTML is variant zero. Hydration is a telling. On 2026-11-08 both name November 13. The static timeline also keeps October 26. The scripted forecast's next two future closes are November 13 and November 26.`
+  folio = `Glass over the work. A kept reading is a recipe, a link or a spell, before it is an object. Slice 4, a folio saying where it opens, is the local form of a path with a way on. A reader's marks stay out of inventory.`
+  gesture = `A behavior that changes a return visit ships as a trial and leaves a plain-words note. The settings passage stays the next slice, one row per authored string. The two gesture ladders stay two lines.`
+  motion = `A typed glide narrates. A role change stays a step. Slice 2 is the invalid computed transition. The badge band stays next. Shape tokens stay with component-region.`
+  still = `A face worth capturing keeps its name in the light tree. Capture mode already pauses motion. Slice 1 stays next. The journey question stays gated.`
+  brace = `Left accumulates, right discharges, as a reading of PLAN.A. Here the gradient is objective to subjective. Both brace orders already read. Section A's five decisions stay.`
+}[reg=facet]
+
+^"grains"{
+  ~#note: "The next checkable read. A grain opens no patch and jumps no queue."
+  copy = `Read #now-november-book in now/index.html. The title names November writing through the 30th. The book paragraph still carries the season name inside the live sentence.`
+  promo = `Read #promo-wonder-cycle-forecast-static in index.html beside upcomingReleaseForecasts in public/ts/promo-wonder-cycle.ts. The static list is October 26, then November 13 selected. The function keeps future closes, two of them.`
+  operators = `Read OPERATOR_DEFINITIONS beside lore-land-support.spw copies. The views share the table. Five names still part.`
+  region = `Read the host-material rule in public/css/effects/material.css, then the phone discovery notice. H1 remains the shape census.`
+  literacy = `Read public/js/runtime/memory/effect-ledger.js. It mounts. The interaction plan says the count and the last entry land on html, and the list has no page.`
+  inquiry = `Read theory-map lifecycle beside the clock-tense answer in update-clusters-2026-11.spw. That answer names one alternative. The claim question stays open.`
+  folio = `Read slice 4. The line that says where a folio opens is static HTML in the popover that already exists.`
+  gesture = `Read the settings passage. One row per authored string describes what runs. A return-visit change wants a sentence beside it.`
+  motion = `Read the card rule that multiplies a duration-and-easing token. The badge band stays the first ungated slice.`
+  still = `Read public/css/modes/capture.css. Slice 1, a still carrying the page's own Spw line, stays next.`
+  brace = `Read readExpressionSlots. Both orders already parse. The charge reading stays beside the objective-to-subjective gradient.`
+}[reg=facet]
+
+^"unread"{
+  plan_c = `PLAN.C's synthesis and governance tail was left. Claims in this file stop before that tail.`
+  plan_d = `PLAN.D's Firefox track and its final adoption matrix were left. Claims in this file stop before that track.`
+}[reg=facet]
+
+^"relay"{
+  rule = `Name one axis. Pick one claim. Read the cited file. Move one step: seed, sketch, probe, or landed. An earlier log line stays as it was written.`
+  this_site = `A step here changes a plan in this repo. A step in lore.land stays in lore.land.`
+  log = `2026-11-08. The axis is the reading. No patch was opened. S4a, R3, H1, the settings passage, the badge band, screenshot slice 1, and folio slice 4 stay where their owners left them.`
+}[reg=facet]
+
+#>wonder_lore_plans_variant_zero
+?["When the static forecast and the scripted forecast name different next dates, which sentence is the one a reader can trust with scripts off?"]{
+  #:depth #!stylistic ~#lens(projection)
+  ~#with: @home @promo_ts @now @copy_plan
+  ~#tension: "On 2026-11-08 the fold on Home and on Now names November 13. The static timeline also keeps October 26 as a receipt beside that selected close. upcomingReleaseForecasts lists the next two future closes, so the scripted list names November 13 and November 26."
+  ~#hypothesis: "Variant zero is the static sentence. The script may tell the next future close beside it. A close is true in the markup before any script runs. October 26 stays a receipt in that markup."
+  ~#expect: "Both surfaces name November 13. The static timeline keeps October 26. The scripted pair is November 13 and November 26. The shared date is the ground."
+  ~#unblocks: "promo-wonder-cycle's grain on the two forecasts"
+  ~#probe(read)
+  !probe{ "Read the static timeline, then upcomingReleaseForecasts. Name the date both lists share, and the date only one of them keeps." }
+  $%[zero.both_name_it, zero.script_only, zero.static_only]
+  ~<"../../../index.html"> ~<"../../../public/ts/promo-wonder-cycle.ts"> ~<"../../../now/index.html">
+}
+
+#>wonder_lore_plans_one_row
+?["Can one row hold a sigil's role, its public verb, and its parse, while the views keep reading the operator table they already share?"]{
+  #:depth #!structural ~#lens(comparison)
+  ~#with: @operators @support @operator_plan
+  ~#tension: "The views read operator-detection.js. lore.land's PLAN.A wants one row for role, story, and parse, and its metric counts twelve sigils. This site's table has nineteen prefixes. The names part on five."
+  ~#hypothesis: "The shared table is the row for the views. The public verb can sit beside the canon name. A fifth table would hide the split the survey already printed."
+  ~#expect: "operator-views.test.mjs still reads one table. lore-land-support.spw still records five names parting. No new sigil table appears in this repo from this prime."
+  ~#unblocks: "operator-resonance-alignment's name split"
+  ~#probe(read)
+  !probe{ "Read OPERATOR_DEFINITIONS and the copies facet. Say whether role, public verb, and parse already share a row, or only the views do." }
+  $%[row.one_table, row.public_verb_differs, row.keep_the_copies]
+  ~<"../../../public/js/kernel/operator-detection.js"> ~<"./lore-land-support.spw"> ~<"../../../scripts/tests/operator-views.test.mjs">
+}
+
+#>wonder_lore_plans_witness
+?["Does one witnessed act settle a claim, or does a claim wait for a quorum, and is that the same clock as an answered wonder?"]{
+  #:depth #!pragmatics ~#lens(projection)
+  ~#with: @clock @theory @inquiry_plan @clusters
+  ~#tension: "The copy clock confirms a decay from one past date plus one cue. A wonder answer waits on a creator decision, which is one witness. PLAN.B confirms on a count of evidence and zero errors. The contour's answered state names one alternative left in the set."
+  ~#hypothesis: "One witnessed commit can answer a wonder. A confirmed claim wants its own counters. The two clocks stay apart until the creator says they are one."
+  ~#expect: "The clock-tense wonder names clock.receipt_keeps_the_date. The inquiry plan's question, whether an answered wonder is a confirmed claim, stays open."
+  ~#unblocks: "the inquiry question, which stays open beside this one"
+  ~#probe(read)
+  !probe{ "Read the clock-tense answer, then the inquiry plan's question. Say whether the answer moved the question." }
+  $%[witness.one_act, witness.quorum, witness.leave_the_clocks_apart]
+  ~<"../../../scripts/audit-copy-clock.mjs"> ~<"../../../.spw/caches/theory-map-2026-10.spw"> ~<"../semantic-copy-depth/update-clusters-2026-11.spw">
+}
+
+#>wonder_lore_plans_weather
+?["When a token crosses a host and a literal stops at the edge, can a chip's role still be told with motion off?"]{
+  #:depth #!stylistic ~#lens(projection)
+  ~#with: @material @core @region_plan
+  ~#tension: "material.css lets a route bridge take the host's material. The phone discovery notice is a hard-coded panel. Three chip dialects share one screen. H3 would give a chip one grammar, and it waits on the role wonder. H1 is the shape census."
+  ~#hypothesis: "Weather is the token that already crosses. Furniture is the literal fallback and the hard-coded panel. A kind is tellable with motion off when the role is in the markup, which is H3's aim. The next shape commit stays H1."
+  ~#expect: "The material rule is still the mechanism the component plan calls the model for the rest. H1 is still the next slice. No shape token is defined by this prime."
+  ~#unblocks: "component-region H3, still behind the role wonder and behind H1"
+  ~#probe(read)
+  !probe{ "Read the host-material rule, then one chip with motion reduced. Say whether the role survives in the markup." }
+  $%[weather.tokens_cross, weather.literal_holds, weather.kind_needs_motion]
+  ~<"../../../public/css/effects/material.css"> ~<"../../../public/css/tokens/core.css"> ~<"../component-region-personality/PLAN.md">
+}
+
+#>wonder_lore_plans_precipitate
+?["Until a reader can see the effect ledger's list, what can the next rung of the ladder stand on?"]{
+  #:depth #!pragmatics ~#lens(projection)
+  ~#with: @ledger @literacy_plan @gesture_plan
+  ~#tension: "The ledger is mounted. It writes a count and a last entry onto html. Nothing lists them. PLAN.E says a lesson is done when the next lesson can stand on it. Rung 2 is a board, and it is the creator's call."
+  ~#hypothesis: "Rung 1's precipitate is a list a reader can find. Until that list exists, rung 2 has no pin. The board stays the creator's call. A saying the plan already keeps is a residue of a different kind."
+  ~#expect: "effect-ledger.js is still mounted. The interaction plan still says nothing lists the entries. Rungs 2 to 5 are still the creator's calls."
+  ~#unblocks: "literacy rung 2, still the creator's call"
+  ~#probe(read)
+  !probe{ "Find where the ledger writes its count. Then look for a page that lists the entries. Say what the next rung could stand on today." }
+  $%[precipitate.ledger_listed, precipitate.ledger_silent, precipitate.board_first]
+  ~<"../../../public/js/runtime/memory/effect-ledger.js"> ~<"../literacy-precipitation-press/PLAN.md"> ~<"../interaction-grammar/PLAN.md">
+}

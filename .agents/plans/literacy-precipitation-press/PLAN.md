@@ -12,7 +12,9 @@ Learning about the web is play with tangible things. Navigational constructs are
 
 ## The Precipitation Ladder
 
-Each rung is a real deliverable; each inherits the one below:
+Each rung is a real deliverable; each inherits the one below.
+
+A lesson's six seats, read from lore.land's PLAN.E on 2026-11-08 ([lore-land-plans.spw](../ecosystem-architecture/lore-land-plans.spw)): data, build, runtime, a reader surface, canon, and a probe. A rung is done when the next rung can stand on what it left. Rung 1 is the effect ledger, and it is live. Rungs 2 to 5 stay the creator's calls. A saying the plan already keeps is the local form of the plan becoming philosophy. One stone at a time.
 
 1. **Named effects (digital, near-term):** casting, decomposing, completing arcs, and demonstrating abilities surface as named, described effects - the discovery-reward credit system already emits these on spell cast; extend to a legible effect ledger. Owner: `spellcraft-authoring/` + the achievement/collection substrate (`article-incentives` memory).
 2. **Bulletin boards (digital surface):** a route family where precipitated artifacts pin publicly - seed cards, spell records, proof cards, reading residue. The board is the first "publishing surface": curation, not feed. Aligns with the archived `webpage-trope-vocabulary` (bulletin board is a literal website trope), whose anatomy vocabulary component-region-personality now holds and the RPG proof-card architecture.
