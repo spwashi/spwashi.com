@@ -1,0 +1,86 @@
+# Spw-native components (2026-11-08)
+#
+# A component is Spw-native when one expression is readable with scripts off,
+# the monospace face is the instrument, and each sigil moves like the physics
+# already named in the kernel. Judgment, not a patch.
+# operation: cache
+
+#>spw_native_components_2026_11
+#:cache #!component #!typography #!operator #!delimiter
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@operators: ~"../../public/js/kernel/operator-detection.js"
+@syntax: ~"../../public/css/grammar/syntax.css"
+@tokens: ~"../../public/css/tokens/core.css"
+@seat: ~"../../public/css/routes/surfaces/home.css"
+@braces: ~"../conventions/semantic-braces.spw"
+@copy_review: ~"../../.agents/plans/semantic-copy-depth/copy-review-2026-11.spw"
+
+operation = "cache"
+fixity = "tending"
+source = "chat 2026-11-08: components more Spw-native, monospace affordances, operators and delimiters as implements"
+
+^"thesis"{
+  claim = `A Spw-native component is one expression a reader can say back with scripts off. The editorial face carries the sentence. The monospace face carries the instrument: sigil, slots, and the delimiter pair that houses them. The motion matches the physics field already written on that sigil in @operators.`
+  specimen = `The home seat line. [mode] is the seat, {body} what it holds, <projection> where it leads. .home-seat-line > code uses --site-mono-font and drops the code-chip background, so the line reads as an instrument beside the prose.`
+}[reg=facet]
+
+^"mono"{
+  claim = `Monospace earns its place when the marks must line up. Equal width keeps #> , [reading], and <rooms> in one measure. ch is the unit, as the sigil hover caption already spends 18ch. Prose stays in --site-editorial-font.`
+  keep = `Sigils, seat lines, delimiter pairs, measures (%), pins (=), and any row of instruments that should scan as a column.`
+  leave = `Ledes, reasons, and diary sentences. A paragraph set in mono has become a terminal, and the voice has left.`
+  affordance = `The sigil and its operand share a line. Kerning must not swallow #> or <>. A dim unselected [mode] stays the same width as the one you sat, so the alternatives are still in the instrument.`
+}[reg=facet]
+
+^"implement"{
+  claim = `An operator feels useful when the hand can feel the physics word, the reversibility is visible, and the English sentence beside the mono line names the same job.`
+  test = `Returnable things come back. Switchable things leave the other postures on the line. Committing things leave a receipt. A pin that forgets on the next paint has failed. A held path that becomes the current seat has collapsed.`
+  housing = `The delimiter pair is the housing. The sigil is the tool. The operand is what the tool holds. A lone { that never meets } is decoration.`
+}[reg=facet]
+
+^"sigils"{
+  frame = `#> named resonance, returnable. The name stays put. Press it and come back to that point.`
+  layer = `#: a field you inspect. Climate, not a route.`
+  vibration = `# a frequency tag. It finds its kin. It is not a heading.`
+  ground = `. settle. The control returns the local center, and the motion damps.`
+  integration = `^ upward emission. Parts lift into one relation you can look at.`
+  potential = `~ superposition. The path stays available and does not snap into the seat.`
+  wonder = `? measurement onset, reversible. The aperture opens and closes on the same place.`
+  perspective = `@ a viewpoint you can revise. The home working view is this implement.`
+  value = `* materialization, replayable. Something you can take: a card, a folio, a number.`
+  subject = `& entanglement. Two things share one focus, and the bind stays revisable.`
+  binding = `= a sticky pin. The value stays where you put it.`
+  substrate = `$ the support layer: memory, storage, time, money. A drawer you can close.`
+  normalize = `% a scalar. Digits in mono, a level you can revise.`
+  action = `! kinetic injection, committing. One move, one visible consequence, one receipt.`
+  edge = `> a cast onto another surface. The link names the far side.`
+  concept = `< a topical boundary opening. Pair it with > when the edge closes.`
+}[reg=facet]
+
+^"delimiters"{
+  claim = `A pair is one component. Open and close are the two ends of the housing, and they do not share a mood.`
+  direction = `{} holds a practice. Opening leans objective (--grammar-objective-brace-color). Closing leans subjective (--grammar-subjective-brace-color). The frame's { … } is this housing.`
+  mode = `[] keeps the other postures discoverable. Unselected modes stay on the line, dimmer, same width.`
+  scene = `() is enterable. You step into the parenthetical and you can leave it. .spw-delimiter--paren already has its own color.`
+  concept = `<> is the conduit. < opens the topic, > casts it. The angle pair is the reading, not a second title.`
+  paint = `Delimiter color already follows the pair: brace, paren, square, angle in @syntax. The next usefulness is the ease: open settles toward the shared setup, close settles toward the residue.`
+}[reg=facet]
+
+^"refuse"{
+  grammar = `Do not add a sigil, a data-spw family, or a second operator table. @operators is the physics. CSS spends it.`
+  voice = `Do not set a lede in mono to make a component look technical.`
+  collapse = `Do not use ~ as a generic link. Do not let ! feel as easy to undo as ?.`
+  caption = `The hover caption that prints the type in uppercase is a label. The implement is the sigil. Letter-spacing on FRAME does not teach #> .`
+}[reg=facet]
+
+^"next"{
+  specimen = `One frame whose { and } ease apart, objective open and subjective close, with the seat line in mono and the lede in the editorial face. Check it with scripts off, then with a keyboard on the sigil.`
+  owner = `Words stay with semantic-copy-depth. Cards and chips stay with component-region-personality. This cache names the instrument. It does not open those patches.`
+}[reg=facet]
+
+validation: #[
+  `rg 'physics:' public/js/kernel/operator-detection.js`
+  `rg 'home-seat-line|spw-delimiter--brace|grammar-mono-font' public/css/routes/surfaces/home.css public/css/grammar/syntax.css`
+][reg=set]

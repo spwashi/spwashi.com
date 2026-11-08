@@ -1,0 +1,304 @@
+# Plugin Ecology & Protocol Improvements (2026-11)
+#
+# Synthesizes improvements across all three plugin layers in the Spw ecosystem:
+# 1. Surface & CLI Plugin Protocol (plugin-protocol.spw, spw emit, first-plugin)
+# 2. Editor & LSP Plugins (vscode-spw, neovim-spw, intellij-spw, spw-lsp)
+# 3. Consumer Site & Build/Dev Plugins (vite.config.ts, .spw/gen/index.spw,
+#    consumer-owned .spw/surfaces/plugins/*.spw)
+#
+# Nothing here writes to .spw/_workbench. Every insight names its roots
+# (live, proposed, prototype, imagined) and branches by the axis they vary.
+
+#>plugin_ecology_improvements_2026_11
+#:cache #!plugins #!protocol #!lsp #!editor #!vite #!developer_experience
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@upstream_hub: ~"../reviews/upstream-workbench-recommendations.spw"
+@asks_plugins: ~"../reviews/upstream-workbench-recommendations/plugins-and-tooling.spw"
+@asks_architecture: ~"../reviews/upstream-workbench-recommendations/architecture.spw"
+@asks_editor: ~"../reviews/upstream-workbench-recommendations/editor.spw"
+@asks_capabilities: ~"../reviews/upstream-workbench-recommendations/capabilities.spw"
+@asks_gestures: ~"../reviews/upstream-workbench-recommendations/gestures.spw"
+@asks_motions: ~"../reviews/upstream-workbench-recommendations/motions.spw"
+@asks_language: ~"../reviews/upstream-workbench-recommendations/language-support.spw"
+@tree_dx: ~"../reviews/spw-tree-dx-2026-10.spw"
+@lsp_lenses: ~"../language/v04/pillars/lsp-editor-lenses.spw"
+@workbench_protocol: ~"../_workbench/.spw/surfaces/plugin-protocol.spw"
+@first_plugin_plan: ~"../_workbench/.agents/plans/first-plugin/PLAN.md"
+@first_plugin_wip: ~"../_workbench/.agents/plans/first-plugin/wip.spw"
+@plan_plugin_integration: ~"../_workbench/.agents/plans/plan-plugin-integration/PLAN.md"
+@gen_index: ~"../gen/index.spw"
+@workspace_contract: ~"../workspace.spw"
+@chrome_ecology: ~"./chrome-ecology-2026-11.spw"
+@expression_precipitation: ~"./expression-projection-precipitation-2026-11.spw"
+@cognitive_informatics: ~"./cognitive-informatics-interaction-2026-11.spw"
+@syntax_runtime_theory: ~"./syntax-runtime-theory-enhancements-2026-11.spw"
+@vite_config: ~"../../vite.config.ts"
+@expression_manifest_script: ~"../../scripts/build-expression-manifest.mjs"
+@twinkle_script: ~"../../scripts/plan-twinkle.mjs"
+@wonder_script: ~"../../scripts/wonder.mjs"
+
+operation = "cache"
+fixity = "experimental"
+expression = plugins[ecology]{protocol.lsp.vite.readers}<precipitate>
+
+summary = #[
+  `The plugin protocol (@workbench_protocol) needs three structural registration slots before spw emit lands: readers (fail-closed consumer verification), effect (effect.l0.measure | effect.l1.emit | effect.l2.run), and residue (what variety a reduction dropped and where it still lives in source).`,
+  `Inter-plugin composition must pipe valid Spw frames rather than defaulting to lossy JSON (@workbench_protocol line 62), preserving @source provenance and dual-read round-trip guarantees (@upstream_hub#dual_read_roundtrip).`,
+  `Multi-root plugin discovery should unify workbench-run .spw/surfaces/plugins/*.spw with consumer-declared ^projection[...] blocks in @gen_index across the roots in @workspace_contract.`,
+  `Editor and LSP plugins (vscode-spw, neovim-spw, intellij-spw, spw-lsp) need cross-host injection for the 998+ HTML data-spw-semantic-expression attributes, Markdown spw fences, and git #[episode]{} commits, backed by one content-addressed sha256 FileFacts store and one generated SPW_OPERATORS character/palette table.`,
+  `Consumer build and Vite dev plugins (@vite_config) can close the browser and HMR feedback loop today by serving .spw files as navigable HTML when requested by a browser (Accept: text/html) and running live brace/operator and reader-health checks on served route HTML.`,
+][reg=set]
+
+contents = #[
+  ~"./plugin-ecology-improvements-2026-11.spw#protocol_registration_upgrade",
+  ~"./plugin-ecology-improvements-2026-11.spw#spw_pipe_composition",
+  ~"./plugin-ecology-improvements-2026-11.spw#multi_root_consumer_discovery",
+  ~"./plugin-ecology-improvements-2026-11.spw#cross_host_editor_injection",
+  ~"./plugin-ecology-improvements-2026-11.spw#unified_fact_store_and_character_table",
+  ~"./plugin-ecology-improvements-2026-11.spw#operator_gestures_and_plan_lenses",
+  ~"./plugin-ecology-improvements-2026-11.spw#vite_and_consumer_plugins",
+  ~"./plugin-ecology-improvements-2026-11.spw#relay",
+  ~"./plugin-ecology-improvements-2026-11.spw#stream",
+][reg=set]
+
+^"protocol_registration_upgrade"{
+  insight #pei-001 {
+    title = `Upgrade ^"registration" in plugin-protocol.spw with readers, effect, and residue`
+    status = `active`
+    rung = `sketch`
+    claim = `A surface plugin registration that declares selectors and output without naming its downstream readers, its effect tier, and its projection residue cannot enforce reader health, keystroke-vs-save scheduling, or variety conservation.`
+    current_protocol_shape = .{
+      defined_slots = `name, version, author, selectors, output (format, extension, schema), transform, config, hooks (pre_emit, post_emit, validate), dependencies (@workbench_protocol:12-35).`
+      missing_slots = `readers (consumer modules/selectors), effect (l0.measure | l1.emit | l2.run), residue (dropped construct slots and source anchor map).`
+    }[reg=facet]
+    proposed_registration_delta = .{
+      readers = `Mandatory map of emitted keys/selectors to consumer files or DOM/CSS selectors. spw emit --check fails closed when any emitted field has zero live readers (@asks_plugins#emit_names_its_reader; @first_plugin_wip:99-110).`
+      effect = `Explicit effect tier: effect.l0.measure (pure read/audit, safe on keystroke), effect.l1.emit (deterministic file precipitate in .spw/gen/ or public/js/generated/, safe on save/build), effect.l2.run (external process or side effect, explicit CLI invocation only).`
+      residue = `Mandatory #>[residue]{} receipt on every reduction plugin naming which Spw constructs were dropped (prose, operator chains, nesting depth) and linking back to the source frame (@asks_motions#reduction_names_its_residue; @expression_precipitation).`
+    }[reg=facet]
+    live_orphans_caught = #[
+      `Cut 195 KB SPW_PROJECTION_SEEDS map in public/js/generated/spw-expressions.js that had zero runtime callers.`,
+      `data-spw-chrome-slot authored on route HTML with zero JS or CSS readers (@chrome_ecology; @first_plugin_wip:103).`,
+      `tap-no-arc, settle confirmation, and effect ledger tokens written by JS with no CSS rule painting them (@first_plugin_wip:104-105).`,
+      `spw:achievement-unlocked custom event dispatched with zero listeners (@first_plugin_wip:106).`,
+    ][reg=set]
+    roots = .{
+      selector_and_reader_health = `proposed in @first_plugin_wip (2026-11-06 stream): workbench owns the generic health runner; consumer owns the plugin spec.`
+      effect_levels = `proposed in @asks_capabilities#probe_receipts and @cognitive_informatics#epistemic_vs_pragmatic_actions.`
+      residue_receipts = `proposed in @asks_motions#reduction_names_its_residue and @expression_precipitation.`
+    }[reg=facet]
+    branches = .{
+      fail_closed_vs_warn = `axis: enforcement gate. Should reader_health fail closed on commit/build for all plugins, or allow a ~#stage: "primed" grace window with an expiration date for newly minted attributes?`
+      static_vs_ast_reader_proof = `axis: how a reader is proved. A fast literal/regex scan catches CSS [data-spw-*] and dataset.spw* writers, whereas TS/JS module import graph resolution proves the reader is actually mounted on a live route.`
+    }[reg=facet]
+  }
+}
+
+^"spw_pipe_composition"{
+  insight #pei-002 {
+    title = `Replace JSON-Only Inter-Plugin Composition with Dual-Read Spw Frame Streams`
+    status = `active`
+    rung = `sketch`
+    claim = `Defaulting plugin composition to intermediate JSON (@workbench_protocol:62) strips operator sigils, brace polarity ([] vs {}), and @source line provenance mid-pipeline; inter-plugin pipes should stream valid Spw frames and project to JSON/HTML/CSS only at the terminal sink.`
+    protocol_contradiction = .{
+      plugin_protocol_line_62 = `States: "composed plugins must agree on intermediate format (usually JSON)".`
+      workbench_roundtrip_contract = `States: "Every --spw precipitate emitted by the CLI must be re-parseable as valid Spw input" (@upstream_hub#dual_read_roundtrip).`
+    }[reg=facet]
+    proposed_stream_contract = .{
+      intermediate_pipe = `Canonical Spw frame stream (#>[result]{ @source: <path:line>, ... }) piped between spw select --spw and spw emit <plugin>.`
+      terminal_sink = `Output format (json, html, css, md, ts, spw) is applied only by the final plugin in the chain, accompanied by its #>[residue]{} receipt.`
+      provenance_preservation = `Every transformed frame retains its @source file-and-line handle so LSP diagnostics and generated banners can jump straight from the emitted artifact back to the authoring frame.`
+    }[reg=facet]
+    roots = .{
+      dual_read_roundtrip = `landed in part for spw ls / select --spw in upstream workbench; not yet wired into plugin-protocol.spw composition.`
+      emit_cli = `stubbed in .spw/_workbench/packages/spw-cli/src/emit.ts.`
+    }[reg=facet]
+    branches = .{
+      framing_delimiter = `axis: stream framing. Streaming one #>frame per record vs. a single root #[...][reg=set] envelope when piping between CLI processes.`
+      bidirectional_hydration = `axis: direction of flow. Whether a terminal sink plugin can also declare an inverse parse/hydrate hook so edits to a projected surface round-trip back to the .spw frame.`
+    }[reg=facet]
+  }
+}
+
+^"multi_root_consumer_discovery"{
+  insight #pei-003 {
+    title = `Unify Multi-Root Plugin Discovery Across .spw/surfaces/plugins/ and .spw/gen/index.spw`
+    status = `active`
+    rung = `sketch`
+    claim = `A mounted consumer repository (@workspace_contract) already declares deterministic build precipitates in @gen_index via ^projection[name]{ source, output, script }; the plugin runner should discover both .spw/surfaces/plugins/*.spw and ^projection[...] entries across all mounted workspace roots.`
+    discovery_layers = .{
+      workbench_core = `Provides the protocol validator, selector_health and reader_health engines, and built-in formatters.`
+      consumer_plugins_dir = `Consumer-owned .spw/surfaces/plugins/*.spw specs for site-specific audits and precipitates (e.g. chrome-ecology-audit.spw, expression-manifest.spw).`
+      consumer_gen_index = `Existing ^projection[spw_expressions], ^projection[search_index], and ^projection[design_catalog] blocks in @gen_index upgraded with selectors and readers slots so spw emit --check can verify them without duplicating configuration.`
+    }[reg=facet]
+    roots = .{
+      gen_index = `live: @gen_index already tracks spw-expressions.js, site-search-index.json, and design/catalog/index.html.`
+      split_ownership = `agreed in @first_plugin_wip (2026-11-06): workbench owns runner/protocol, consumer owns plugin files.`
+    }[reg=facet]
+    branches = .{
+      one_registry_or_two = `axis: where consumer plugins live. Keep ^projection[...] in .spw/gen/index.spw as the single registry by adding selectors/readers slots there, or promote each ^projection into its own .spw/surfaces/plugins/<name>.spw file referenced by .spw/gen/index.spw.`
+    }[reg=facet]
+  }
+}
+
+^"cross_host_editor_injection"{
+  insight #pei-004 {
+    title = `Cross-Host Spw Injection and Cross-Language Attribute Trace in Editor Plugins`
+    status = `active`
+    rung = `sketch`
+    claim = `Because Spw is a polyglot medium embedded in HTML attributes (998+ data-spw-semantic-expression hosts), Markdown code fences, and git commit episodes, editor plugins must project syntax highlighting, hover, and diagnostics into host files and trace data-spw-* attributes across HTML, CSS, JS, and .spw.`
+    host_surfaces = .{
+      html_expressions = `data-spw-semantic-expression="..." across 136 route index.html files (998+ instances): needs TextMate/Tree-sitter injection and virtual-document LSP diagnostics so unbalanced braces or unknown operators squiggle on keystroke (@asks_plugins#spw_in_host_files).`
+      markdown_and_commits = `Fenced spw blocks in PLAN.md / README.md and closing #[episode]{ ~[scene]{} ![change]{} *[verify]{} } blocks in COMMIT_EDITMSG (@asks_language#commit_and_markdown_injection).`
+      cross_language_trace = `Hovering or running Go-to-Definition on data-spw-wonder, [data-spw-wonder], or dataset.spwWonder resolves: (1) defining .spw convention, (2) CSS selector readers, and (3) JS dataset writers (@asks_capabilities#trace_hover; @lsp_lenses#cross_language_trace).`
+    }[reg=facet]
+    roots = .{
+      html_expression_build_check = `live at build time via @expression_manifest_script; absent in vscode-spw, neovim-spw, and intellij-spw during editing.`
+      prose_handle_links = `landed for .spw prose strings in commit 850077a; not yet active inside HTML attribute strings.`
+    }[reg=facet]
+    branches = .{
+      virtual_doc_vs_embedded_scanner = `axis: architecture. Forward virtual .spw documents from HTML attributes to spw-lsp vs. run the zero-dep lite expression scanner directly inside the editor extension for sub-millisecond feedback.`
+      trace_direction = `axis: entry surface. Starting trace from HTML/CSS/JS back to .spw conventions vs. starting from a .spw convention lens that lists live HTML/CSS/JS hosts.`
+    }[reg=facet]
+  }
+}
+
+^"unified_fact_store_and_character_table"{
+  insight #pei-005 {
+    title = `One Content-Addressed Fact Store and One Generated Character Table Across CLI and Editors`
+    status = `active`
+    rung = `sketch`
+    claim = `Four separate AST fact extractors and six separate operator/color tables cause 150-second cold LSP startups and sigil naming drift; consolidating onto one sha256-keyed FileFacts store and one generated SPW_OPERATORS table aligns spw-cli, spw-lsp, vscode-spw, neovim-spw, intellij-spw, and site CSS.`
+    fact_architecture = .{
+      single_extractor = `Unify server-index.ts, select.ts, display.ts, and annotation-index.ts onto extractFileFacts(ast): FileFacts and WorkspaceFacts (@asks_architecture#one_fact_model).`
+      persistent_sha256_cache = `Persist FileFacts under .spw/gen/session/fact-cache.json keyed by (sha256(content), extractorVersion) and surface an explicit Indexing N/M -> Ready status in the editor (@asks_architecture#honest_cache_and_readiness).`
+      corpus_tier_tags = `Tag every indexed file as authored | generated | mounted | archived | scratch from @workspace_contract so workspace queries and reference counts default to authored (@asks_architecture#corpus_tiers).`
+    }[reg=facet]
+    character_and_palette_table = .{
+      drift_caught = `surface-decorations.ts still labels ! as phaseAction (fire/inject) and ~ as phasePotential (defer/wavefunction) while the site uses action and potential; neovim-spw collapses sigil hues (@asks_plugins#one_character_table; @asks_language#single_character_table).`
+      generator_targets = `Emit TextMate grammar, VS Code surface-decorations.ts, Neovim syntax/highlights, IntelliJ lexer/color bundle, and site CSS tokens from one SPW_OPERATORS table.`
+    }[reg=facet]
+    roots = .{
+      leading_slash_and_prose_refs = `landed in 850077a across server-index.ts and display.ts, proving the seam exists.`
+      persistent_cache_and_palette_gen = `proposed in @asks_architecture (ranks 1-3) and @asks_plugins (rank 1).`
+    }[reg=facet]
+    branches = .{
+      cache_granularity = `axis: storage unit. One workspace-level .spw/gen/session/fact-cache.json file vs. per-file content-addressed blobs under .spw/gen/session/facts/<sha256>.json.`
+      theme_polarity = `axis: color adaptation. Emit static light/dark hex pairs from SPW_OPERATORS vs. semantic token types mapped to host editor theme variables.`
+    }[reg=facet]
+  }
+}
+
+^"operator_gestures_and_plan_lenses"{
+  insight #pei-006 {
+    title = `Operator-Bound Editor Gestures, Three-Layer Hovers, and Consumer Plan/Twinkle Lenses`
+    status = `active`
+    rung = `sketch`
+    claim = `Editor plugins become cognitive instruments when every editor gesture is bound to one Spw operator, hovers answer in three layers (meaning -> evidence -> sibling geometry), and consumer wip.spw plans surface live drift and git-twinkle lenses.`
+    gesture_to_operator_map = .{
+      wonder_hover = `? (Hover): 1-line meaning -> evidence (citation count, last touch MM-DD, reader count) -> sibling geometry (ground_then_edge diff against neighboring frames) (@asks_editor#hovers_that_answer; @asks_gestures).`
+      perspective_refs = `@ (References / Peek): grouped by root (@site, @conventions, @plans, @workbench) with authored vs generated tier filtering.`
+      frame_outline = `#> (Document & Workspace Symbols): hierarchical frame -> claim -> probe tree rather than flat regex matches.`
+      measure_lenses = `% (CodeLens): citation counts (landed 850077a), semantic operation | fixity tier, wonder altitude (doctrine|types|vocabulary|field|ornament|loop), and git twinkle (moved MM-DD via @twinkle_script) (@lsp_lenses; @asks_capabilities#twinkle_lens).`
+      action_code_action = `! (CodeAction / Quick Fix): previewed structural transform (e.g. updating drifted ~#open_count or ~#last_stream in wip.spw, or scaffolding a missing readers slot).`
+      potential_preview = `~ (Inlay / Placement Preview): ghost preview of where a new cache, audit, or convention belongs via .spw/Scoped leaf.spw rules.`
+    }[reg=facet]
+    three_client_parity = .{
+      bundled_lsp = `Bundle spw-lsp.cjs for neovim-spw and intellij-spw just as vscode-spw does, and expose one buffer-text spw/inspect LSP request (form, stack, tokens, structure, trace) so editors never spawn external CLI processes per command (@asks_plugins#one_probe).`
+      consumer_plan_schema = `Read wip.spw schema (^"cache", ~#status, ~#open_count, probe streams) from @workspace_contract so @plan_plugin_integration works on consumer repos without hardcoding workbench-only plan headers (@asks_capabilities#plan_shape).`
+    }[reg=facet]
+    roots = .{
+      citation_and_banner_lenses = `landed in 850077a (ranks 9, 10, 12).`
+      plan_twinkle_cli = `live in @twinkle_script; editor CodeLens integration is proposed.`
+      three_layer_hover_and_inspect = `proposed in @asks_editor, @asks_gestures, and @asks_plugins#one_probe.`
+    }[reg=facet]
+    branches = .{
+      lens_density = `axis: visual quietness. Show all % lenses inline vs. collapse operation/fixity/twinkle into one composite status lens per #>frame header with drill-down on hover.`
+    }[reg=facet]
+  }
+}
+
+^"vite_and_consumer_plugins"{
+  insight #pei-007 {
+    title = `Vite Dev-Server Plugins for Browser-Readable .spw Surfaces and Live HTML Expression Audits`
+    status = `active`
+    rung = `probe`
+    claim = `The consumer repository's Vite pipeline (@vite_config) can immediately close two developer-experience gaps—browsers downloading .spw files instead of opening them (@tree_dx:126) and HTML expression/selector drift waiting for manual CLI runs—without touching .spw/_workbench.`
+    vite_plugin_upgrades = .{
+      spw_browser_viewer = `In @vite_config configureServer, intercept /*.spw requests: when Accept includes text/html (direct browser navigation), serve a lightweight HTML reader shell with operator/brace highlighting, clickable ~ path-ref and @root/... links, and an "Open in /tools/spw-parser/" action; when fetched programmatically (Accept: text/plain or */*), serve raw text/plain; charset=utf-8.`
+      live_html_expression_audit = `In spwHtmlTemplates() transformIndexHtml (serve mode), run the fast brace/operator scanner from @expression_manifest_script on every data-spw-semantic-expression attribute in the rendered route and emit a structured Vite dev warning when an expression is unbalanced or an unread attribute (e.g. data-spw-chrome-slot) is present.`
+    }[reg=facet]
+    consumer_plugin_specs = .{
+      expression_manifest_plugin = `.spw/surfaces/plugins/expression-manifest.spw: formalizes @expression_manifest_script with selectors, output (~"../../public/js/generated/spw-expressions.js"), readers, effect.l1.emit, and a variety residue receipt.`
+      chrome_ecology_plugin = `.spw/surfaces/plugins/chrome-ecology-audit.spw: formalizes the consumer side of @first_plugin_wip with selector_health and reader_health probes across HTML, CSS, and JS.`
+    }[reg=facet]
+    roots = .{
+      spw_html_templates = `live in @vite_config:25-62 (renders HTML partials and triggers full-reload).`
+      browser_download_gap = `measured in @tree_dx:126 ("browser loses: a served .spw downloads instead of opening").`
+      consumer_plugin_ownership = `agreed in @first_plugin_wip (2026-11-06).`
+    }[reg=facet]
+    branches = .{
+      dev_only_vs_static_spw_html = `axis: where .spw HTML rendering lives. Render .spw to HTML only in the Vite dev middleware vs. also emitting navigable .spw.html companion pages in design/catalog/ during npm run catalog.`
+      console_badge_vs_terminal_warn = `axis: where dev audit receipts appear. Log expression/reader warnings only in the Vite terminal vs. surfacing a quiet dev-only badge in the page's pocket chrome.`
+    }[reg=facet]
+  }
+}
+
+^"relay"{
+  ~#note: "How the next session grows this cache. Workbench changes belong in upstream PRs/commits; consumer Vite plugins and .spw/surfaces/plugins/*.spw specs can land directly in this repo."
+  rungs = #[
+    `seed: said once, worth keeping.`,
+    `sketch: worked through, with its strains named.`,
+    `probe: a runnable check exists.`,
+    `landed: in code or copy, with a commit.`,
+  ][reg=set]
+  turn = #[
+    `Pick one insight (#pei-001..#pei-007) and one branch axis.`,
+    `For consumer-owned slices (#pei-003, #pei-007), implement the Vite plugin or .spw/surfaces/plugins/*.spw spec and advance the rung to landed.`,
+    `For upstream workbench slices (#pei-001, #pei-002, #pei-004, #pei-005, #pei-006), pair the consumer contract with an upstream workbench patch and record the pin bump in mount.spw.`,
+    `Add a dated line to the stream.`,
+  ][reg=set]
+}
+
+^"stream"{
+ >>[2026-11-07 18:11] sketch — a Gemini session: synthesized plugin improvements across the surface/CLI protocol (#pei-001..#pei-003), editor/LSP plugins (#pei-004..#pei-006), and consumer Vite/build plugins (#pei-007), with roots, branch axes, and three executable wonders.
+}
+
+#>wonder_plugin_reader_health_gate
+?["How many emitted fields and data-spw-* attributes across the site currently lack a live CSS or JS reader when audited under #pei-001?"]{
+  #:depth #!computational ~#lens(ecology: emission vs reception)
+  ~#with: @asks_plugins @chrome_ecology @first_plugin_wip
+  ~#hypothesis: "Every generated artifact in .spw/gen/index.spw and every public data-spw-* attribute should have >= 1 verified reader; orphans indicate open trophic loops."
+  ~#expect: "Three known chrome-ecology orphans (data-spw-chrome-slot, unpainted tap-no-arc/settle/ledger states, unlistened spw:achievement-unlocked) plus zero unread keys in spw-expressions.js after the SPW_PROJECTION_SEEDS cut."
+  ~#unblocks: @first_plugin_plan
+  ~#probe(run)
+  !probe{ "rg -n 'data-spw-chrome-slot|achievement-unlocked|tap-no-arc' public/ index.html topics/ tools/ about/ play/" }
+  $%[orphans.zero, orphans.chrome_three, orphans.more]
+}
+
+#>wonder_plugin_vite_spw_reader
+?["If vite.config.ts serves /*.spw as navigable HTML on Accept: text/html while keeping text/plain for fetch(), does every @path link in .spw/site.spw become clickable in the browser during npm run dev?"]{
+  #:depth #!educational ~#lens(medium: browser parity with editor)
+  ~#with: @tree_dx @vite_config
+  ~#hypothesis: "Serving .spw with an HTML reader wrapper when Accept includes text/html turns the browser into a first-class .spw inspection client without breaking raw fetch() consumers."
+  ~#expect: "Direct browser navigation to /.spw/site.spw renders linked frames and pathRefs instead of downloading a file, while fetch('/.spw/site.spw') still returns raw Spw source."
+  ~#unblocks: @tree_dx
+  ~#probe(read)
+  !probe{ "inspect vite.config.ts spwHtmlTemplates() and verify how configureServer can branch on req.headers.accept for .spw URLs" }
+  $%[browser.opens_html, fetch.keeps_plain, links.navigable]
+}
+
+#>wonder_plugin_cross_host_expressions
+?["What fraction of the 998+ HTML data-spw-semantic-expression attributes use constructs that would trigger hover or diagnostic lenses once cross-host injection (#pei-004) lands in vscode-spw?"]{
+  #:depth #!structural ~#lens(syntax: host projection)
+  ~#with: @expression_precipitation @expression_manifest_script
+  ~#hypothesis: "100% of data-spw-semantic-expression attributes contain operator/brace structures that benefit from token coloring and brace-balance diagnostics, and newly upgraded expressions with ~ path literals or > projections gain direct Go-to-Definition targets."
+  ~#expect: "All 998+ expressions parse cleanly under build-expression-manifest.mjs and expose at least 2 brace/operator slots per host element."
+  ~#unblocks: @asks_plugins
+  ~#probe(run)
+  !probe{ "node scripts/build-expression-manifest.mjs --check" }
+  $%[expressions.valid, slots.highlighted, links.resolvable]
+}

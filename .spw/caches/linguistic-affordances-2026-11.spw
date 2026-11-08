@@ -178,6 +178,8 @@ source = "2026-11-05 corpus scan of 434 authored, tracked .spw files (ecology:la
 @asks_plugins: ~"../reviews/upstream-workbench-recommendations/plugins-and-tooling.spw"
 @asks_capabilities: ~"../reviews/upstream-workbench-recommendations/capabilities.spw"
 @tree_dx: ~"../reviews/spw-tree-dx-2026-10.spw"
+@plugin_ecology: ~"./plugin-ecology-improvements-2026-11.spw"
+@syntax_runtime_theory: ~"./syntax-runtime-theory-enhancements-2026-11.spw"
 @expression_query: ~"../../public/js/semantic/expression-query.js"
 @specimen_reading: ~"../../workers/spw-quest/src/specimen-reading.js"
 @feature_utilization: ~"../language/feature-utilization.spw"
