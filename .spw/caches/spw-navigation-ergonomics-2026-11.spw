@@ -1,0 +1,76 @@
+# Spw navigation ergonomics (2026-11) — prime: navigation as turning the slots of one mutable expression, and <spw-expression>, its first component
+#
+# The creator, 2026-11-08: "improve ergonomics of Spw navigation across the
+# site; imagine a component representing a mutable expression". This holds
+# where Spw already steers navigation, the component imagined as a slot-level
+# instrument, its first pilot inside the breadcrumb rail (behind
+# ?spw-rail=crumb), and the places it could go next. Every visible change is
+# still the creator's to approve live.
+
+#>spw_navigation_ergonomics_2026_11
+#:cache #!navigation #!components #!custom_elements #!gesture
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+expression = navigation[mutable]{subject.mode.body}<spw_expression>
+
+summary = #[
+  `Where a reader stands can be written as one expression, page[lens]{section}, and moving is turning one of its slots: a page, a working view, a section.`,
+  `<spw-expression> is that expression as a component: each slot a handle; tap opens its choices, a swipe or an arrow key steps, a hold peeks at where a step lands; a turn asks the host what it means.`,
+  `It is the site's first authored custom element (light DOM, state on the element), piloted inside the opened breadcrumb rail, where it travels sections, presses the page's own lens buttons and follows page links.`,
+  `The same instrument already exists for lines on spw.quest (/pivot's slot handles); the component is where the two meet.`,
+][reg=set]
+
+contents = #[
+  ~"./spw-navigation-ergonomics-2026-11.spw#where_spw_steers",
+  ~"./spw-navigation-ergonomics-2026-11.spw#component",
+  ~"./spw-navigation-ergonomics-2026-11.spw#pilot",
+  ~"./spw-navigation-ergonomics-2026-11.spw#ladder",
+][reg=set]
+
+^"where_spw_steers"{
+  route_tokens = `every top route has a Spw name (@spells TOP_ROUTE_TOKENS: #>home, .about, @now, <topics>, ~play, @services); links wear them, but a reader cannot turn one`
+  rail = `the travel rail steps sections (‹ ›), kin (~ similar, # resonate) and a summary layer; in its crumb form it names the place as sigil{heading} (@crumb, 05d20ffe)`
+  breadcrumbs = `@breadcrumb_spell assembles a link trail across home, surface, route parts, frames and modes, with a recent path memory`
+  lens = `Home's working view is four lens buttons (data-set-mode: reading, systems, play, studio) that brighten what serves a view`
+  editing = `@lab edits an expression as free text (autocomplete, route discovery); spw.quest's /pivot turns a line slot by slot (tap primes, a second tap or a swipe actualizes, a pinch drops)`
+  friction = `four vocabularies for one act of moving (route tokens, ‹ › arrows, lens buttons, a trail of links); none says where a step lands before it is taken; none is the same object in a screenshot and under the thumb`
+}[reg=facet]
+
+^"component"{
+  anatomy = `an operator, then slots in their walls: subject (no walls), [mode], (scene), {body}, <projection>; the open wall takes the objective color, the close wall the subjective; each slot is a button whose underline says it turns`
+  domains = `each slot carries its choices ({value, label, href}); the host fills them from what the page already knows (header links, lens buttons, the rail's sections); the element knows no site data`
+  gestures = `tap: the slot's choices open beneath, the current one marked; swipe left or right past 48 px: step to the neighbour; hold 420 ms: peek at both neighbours; Tab between slots, arrow keys step, Enter or Space opens, Escape closes (@gestures thresholds)`
+  turn = `a turn dispatches spw:expression-change { slot, value, from, choice, source }, cancelable; the host takes it (travel, press a lens) or lets the element follow the choice's href; an edge does not wrap and says so`
+  speech = `each slot says its name, value, the value's label and place: "Section: home_folios (The October drop, and the studio), 2 of 17"`
+  caption = `the element writes its whole expression to data-spw-expression-text, so a still or a copy carries #>home[reading]{home_folios}`
+  open = `a scripts-off form: authored <spw-expression> holding plain links per slot, so the expression is readable and each slot still goes somewhere without the module`
+}[reg=facet]
+
+^"pilot"{
+  where = `?spw-rail=crumb at phone width: open the crumb and the place reads #>home[reading]{home_frame} beneath it, three dials`
+  verified = `2026-11-08, headless at 390 px through the dev server: page 1 of 8, lens 1 of 4, section 1 of 17; choosing a section from the list travels there; ArrowRight on the section steps to the next and the crumb's heading follows; a lens turn presses Home's own lens button (reading to systems); long headings wrap in the list; no exceptions`
+  loads = `the element loads only under the flag, and is defined before its model is set`
+  files = `@element, @crumb, @handle; tests in scripts/tests/spw-expression.test.mjs`
+}[reg=facet]
+
+^"ladder"{
+  next = #[
+    `the crumb and @breadcrumb_spell meet: the page slot's choices come from the trail and the recent path memory, not only the header`,
+    `the header sigil (#>home) becomes the same element, its page slot turned from anywhere, not only from the rail`,
+    `spw.quest's /pivot adopts the element for its slot handles, so a line and a page turn the same way`,
+    `the scripts-off form, authored, on one route`,
+  ][reg=set]
+  gate = `the creator's live look at 390 px; the operator before a page slot (#> today) and whether a lens turn should travel are the creator's calls`
+}[reg=facet]
+
+@element: ~"../../public/js/interface/spw-expression.js"
+@crumb: ~"../../public/js/runtime/attention/rail-crumb.js"
+@handle: ~"../../public/js/runtime/attention/section-handle.js"
+@spells: ~"../../public/js/runtime/navigation/navigation-spells.js"
+@breadcrumb_spell: ~"../../public/js/runtime/experiential/breadcrumb-spell.js"
+@lab: ~"../../public/js/runtime/labs/interactive-expression-lab.js"
+@gestures: ~"../../public/js/kernel/gesture-measure.js"
+@renovation: ~"./home-renovation-2026-11.spw"
+@wonders: ~"./language-surface-wonders-2026-11.spw"
