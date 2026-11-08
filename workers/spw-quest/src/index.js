@@ -16,6 +16,7 @@ import { SWITCH_CSS, parserSwitch, switchBanner, switchLoader, switchModulePath 
 import { SPECIMENS_CSS, factshiftHref, specimenById, specimenState, specimensBody } from "./specimens.js";
 import { renderConstructs } from "./constructs.js";
 import { pivotState, renderPivot } from "./pivot.js";
+import { APP_INSTALL_CSS, MANIFEST_PATH, appInstallSection, isAppIconPath, questAppInstall, serveAppIcon, serveManifest } from "./quest-manifest.js";
 import { BASE_SECURITY, escapeHtml, jsonResponse, layout, wantsJson } from "../../lib/shell.js";
 import { PEER_BRACES, PEER_SIGILS } from "../../lib/peer-kit.js";
 import { isPeerAssetPath, servePeerAsset } from "../../lib/peer-assets.js";
@@ -119,20 +120,24 @@ function renderInstall() {
   </section>`).join("\n  ");
   const firstPatch = QUEST_PROMPTS.find((prompt) => prompt.id === "first-patch");
   return layout({
-    title: "spw.quest — initialize Spw Workbench",
-    description: "Choose who runs the setup, copy one block, and run it from the repository root. It stops before any commit.",
+    title: "spw.quest — on your phone, or in a repository",
+    description: "Add spw.quest to your home screen, or initialize Spw Workbench in a repository: copy one block and run it from the root. It stops before any commit.",
     canonical: "https://spw.quest/install",
     head: QUEST_HEAD,
-    script: `(${questTabs.toString()})();`,
+    script: `(${questTabs.toString()})();\n(${questAppInstall.toString()})();`,
     themeCss: `${PAPER_CSS}
     ${PAGE_CSS}
+    ${APP_INSTALL_CSS}
     main > :not(.masthead) { max-width: 46rem; }
     html:not(.js) label.check, html:not(.js) .git-added { display: none; }
     html.js .tabpanel .git-added { display: none; margin: .2rem 0 .7rem; }
     html.js .tabpanel:has([data-include-git]:checked) .git-added { display: block; }`,
     body: `${masthead("/install")}
-<h1>Initialize the workbench in this repository.</h1>
-<p class="lede">Choose who runs the setup. Copy one block. Run it from the repository root. It stops before any commit.</p>
+<h1>Keep Spw on your phone, or in a repository.</h1>
+<p class="lede">On a phone, spw.quest opens from your home screen. In a repository, Spw Workbench adds the language's tools beside your own files.</p>
+${appInstallSection()}
+<h2 id="repository">In a repository</h2>
+<p>Choose who runs the setup. Copy one block. Run it from the repository root. It stops before any commit.</p>
 <p>Spw Workbench adds the Spw language, parser, CLI, and editor tooling. It mounts at <code>.spw/_workbench</code>; your repository keeps its own <code>.spw/</code>. It needs Git and Node ${escapeHtml(readableNode(WORKBENCH.node))}.</p>
 <div class="tabs">
   <div class="tablist" role="tablist" aria-label="Who runs the setup">
@@ -323,7 +328,8 @@ ${fileWorkspace(example)}
     <article class="door"><h3><a href="/forms/">Forms, side by side</a></h3><p>Lines that differ in one thing, and what it does.</p></article>
     <article class="door"><h3><a href="/build">Take one line apart</a></h3><p>Change one slot; the rest holds.</p><p><code>${escapeHtml(assemble(BUILD_DEFAULTS))}</code></p></article>
     <article class="door"><h3><a href="/learn">Learn it a mark at a time</a></h3><p>Seven panels, one line each.</p></article>
-    <article class="door"><h3><a href="/install">Keep it in a repository</a></h3><p>Parser, CLI and editor tooling at <code>.spw/_workbench</code>.</p></article>
+    <article class="door"><h3><a href="/install#phone">Keep it on your phone</a></h3><p>Add spw.quest to your home screen, in its own window.</p></article>
+    <article class="door"><h3><a href="/install#repository">Keep it in a repository</a></h3><p>Parser, CLI and editor tooling at <code>.spw/_workbench</code>.</p></article>
     <article class="door"><h3><a href="/parser/">Read it on your own page</a></h3><p>Dated parser builds, each with its integrity hash.</p></article>
   </div>
 </section>
@@ -603,6 +609,8 @@ async function handleQuest(request, url) {
   } else if (url.pathname === "/parser.js") {
     response = new Response(PARSER_JS, { headers: { ...BASE_SECURITY,
       "Content-Type": "text/javascript; charset=UTF-8", "Cache-Control": "public, max-age=3600" } });
+  } else if (url.pathname === MANIFEST_PATH) {
+    return serveManifest(request);
   } else if (url.pathname === "/.well-known/autonomous-feedback.json") {
     response = jsonResponse(FEEDBACK_CONFIG, "public, max-age=300");
   } else if (url.pathname === "/robots.txt") {
@@ -637,6 +645,8 @@ export default {
     if (isParserPath(url.pathname)) return handleParser(request, url, env);
     // The site's faces and script modules, carried by scripts/build-peer-kit.mjs into assets/fonts/ and assets/peer/.
     if (isPeerAssetPath(url.pathname)) return servePeerAsset(request, url, env);
+    // The app icons, committed under assets/icons/ (src/quest-manifest.js).
+    if (isAppIconPath(url.pathname)) return serveAppIcon(request, url, env);
     // The shelf's landing and indexes are static pages, written by carry-shelf.mjs into assets/shelf/.
     if (url.pathname === "/shelf" || url.pathname === "/shelf/plans" || url.pathname === "/forms") return Response.redirect(`${url.origin}${url.pathname}/`, 301);
     if (SHELF_PATHS.has(url.pathname)) return serveShelf(request, url, env);

@@ -7,7 +7,7 @@ import { BASE_SECURITY, escapeHtml } from '../../lib/shell.js';
 import { CarryError, DEFAULT_ASSETS, carryRelease, checkAssets } from '../carry-parser-release.mjs';
 import { FILES, IMMUTABLE, REV_A, REV_B, REV_C, SHORT, assetsFrom, editManifest, get, rewriteListed, run, scratch, writeRelease } from './parser-fixtures.mjs';
 
-const PAGE_CSP = BASE_SECURITY['Content-Security-Policy'].replace("style-src 'unsafe-inline';", "style-src 'unsafe-inline'; font-src 'self';");
+const PAGE_CSP = BASE_SECURITY['Content-Security-Policy'].replace("style-src 'unsafe-inline';", "style-src 'unsafe-inline'; font-src 'self'; manifest-src 'self';");
 const freshDir = scratch('spw-quest-parser-');
 const readJson = (file) => JSON.parse(readFileSync(file, 'utf8'));
 

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <!-- spw.quest app icon: #> in paper (#eee9dd) on the quest teal (#1b5c5d), PAPER_THEME in src/paper.js.
+       Full bleed; the mark sits inside the maskable safe circle (radius 205 around the center).
+       Render: for s in 180 192 512; do rsvg-convert -w $s -h $s quest.svg -o quest-$s.png; done; cp quest-512.png quest-mask-512.png -->
+  <title id="title">spw.quest</title>
+  <rect width="512" height="512" fill="#1b5c5d"/>
+  <g fill="none" stroke="#eee9dd" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke-width="25" d="M177 151v210M243 151v210M137 220h139M137 292h139"/>
+    <path stroke-width="29" d="m304 194 69 62-69 62"/>
+  </g>
+</svg>
