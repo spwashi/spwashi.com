@@ -8,7 +8,7 @@
 
 The public CSS and JS pay three ways beyond the page that loads them. Each slice below moves at least one of them.
 
-- **Peers.** Six worker units in `workers/` (autonomous-feedback, factshift-center, site-hub-next, smut-today, spw-quest, wap-mom). They take the site's material through `npm run build:peer-kit`: tokens, faces, sigil colors, and one script. The next peer site costs what the peer kit cannot carry.
+- **Peers.** Six worker units in `workers/` (autonomous-feedback, factshift-center, site-hub-next, smut-today, spw-quest, wap-mom). `npm run build:peer-kit` carries the site's tokens, faces, sigil colors and one script, and today only spw-quest takes them: autonomous-feedback and site-hub-next share `workers/lib/shell.js` but not the kit (checked 2026-11-08). The next peer site costs what the peer kit cannot carry. lore.land, its own repo, takes nothing from it yet ([lore-land-support.spw](lore-land-support.spw)).
 - **Adoption.** spw.quest is Spw's front door. Its first reward is a line read on the worker. The specimens, joins, query and comparison stay on spwashi.com, and agents reach the quest through `/init` and `/llms.txt`.
 - **Asset.** A forkable, measured codebase is teaching material and the strongest proof of the practice the site offers. It loses that value when an owner plan disagrees with the tree, and when one concept has five tables.
 - **Risk.** The cascade the site ships is not the one its source declares, and two budgets sit at their edge.
