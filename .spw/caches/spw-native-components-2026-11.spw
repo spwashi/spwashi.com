@@ -12,11 +12,20 @@
 #:layer #!pragmatics
 
 @operators: ~"../../public/js/kernel/operator-detection.js"
+@shared: ~"../../public/js/kernel/shared.js"
+@slots: ~"../../public/js/semantic/expression-query.js"
+@phases: ~"../../public/js/runtime/interaction/arc-taxonomy.js"
+@seat_js: ~"../../public/js/runtime/page/home-seat-line.js"
+@seat_mount: ~"../../public/js/runtime/catalog/enhancement.js"
+@haptics: ~"../../public/js/interface/haptics.js"
 @syntax: ~"../../public/css/grammar/syntax.css"
 @tokens: ~"../../public/css/tokens/core.css"
 @seat: ~"../../public/css/routes/surfaces/home.css"
 @braces: ~"../conventions/semantic-braces.spw"
+@measure: ~"../conventions/measurement-contract.spw"
 @copy_review: ~"../../.agents/plans/semantic-copy-depth/copy-review-2026-11.spw"
+@clusters: ~"../../.agents/plans/semantic-copy-depth/update-clusters-2026-11.spw"
+@fluency: ~"./language-material-fluency-2026-11.spw"
 
 operation = "cache"
 fixity = "tending"
@@ -73,12 +82,64 @@ source = "chat 2026-11-08: components more Spw-native, monospace affordances, op
   voice = `Do not set a lede in mono to make a component look technical.`
   collapse = `Do not use ~ as a generic link. Do not let ! feel as easy to undo as ?.`
   caption = `The hover caption that prints the type in uppercase is a label. The implement is the sigil. Letter-spacing on FRAME does not teach #> .`
+  valence = `Boon, bane, bone, bonk and honk are a charge chain, not five more sigils and not the brace housing. The ask is valence_charge in the upstream language recommendations. A glued boonhonk stays a name. The wider reading, clocks and cost and material and fluency, is @fluency. The order stays a parser fact.`
 }[reg=facet]
 
 ^"next"{
   specimen = `One frame whose { and } ease apart, objective open and subjective close, with the seat line in mono and the lede in the editorial face. Check it with scripts off, then with a keyboard on the sigil.`
   owner = `Words stay with semantic-copy-depth. Cards and chips stay with component-region-personality. This cache names the instrument. It does not open those patches.`
 }[reg=facet]
+
+^"patterns"{
+  claim = `The instrument spends patterns that already parse. An enhancement that needs a new table has left the architecture.`
+  slots = `@slots CONTAINER_SLOT maps [ to mode, { to body, ( to scope, < to projection. readContainers stops when a pair opens again inside, so nesting is a stop, not a deeper component.`
+  physics = `@operators OPERATOR_DEFINITIONS is the physics, re-exported from @shared. A public sigil spends that row's physics and reversibility.`
+  phases = `@phases INTERACTION_PHASES is idle, approach, prime, charge, inspect, discover, settle. A gesture's feel is a position on that arc.`
+  charge = `@slots GESTURE_CHARGE says tap previews, hold sustains, swipe charges. @haptics writes the living-term title as tap to inspect, hold to gather. Those are two vocabularies for two objects.`
+  housing = `@syntax already splits the housing: --grammar-objective-brace-color and --grammar-form-open for the open end, --grammar-subjective-brace-color and --grammar-form-close for the close. .spw-delimiter paints one mixed color and sets the mono face.`
+  seat = `@seat_js keeps the authored line when scripts are off and adds carried words without writing a new expression. @seat_mount registers that module as IMMEDIATE residue. @seat paints the line in --site-mono-font.`
+  measure = `@measure names three kinds. Objective is an instrument. Subjective is a judgment. Hybrid names both. A cluster that reports one number and one feeling is a hybrid, and it says so.`
+}[reg=facet]
+
+^"enhancements"{
+  claim = `Three enhancements, each a spend of a pattern above. Each names an objective measure, a subjective measure, and the wonder that bends it.`
+  brace = `Spend --grammar-form-open on the opening delimiter and --grammar-form-close on the closing one, on one frame. Objective: the two computed colors differ. Subjective: a reader can say which end is the setup. Bend at #>wonder_spw_native_brace_ease.`
+  slots_agree = `The visible seat line's slots equal readExpressionSlots of its authored expression. Objective: subject, mode, body, and projection match. Subjective: a reader can point at the brackets and name the seat. Carried words stay residue. Bend at #>wonder_spw_native_seat_residue.`
+  one_vocabulary = `A public gesture sentence quotes one source. A living term quotes the haptics title or GESTURE_CHARGE, and says which. A chip quotes the control that was watched. Objective: each verb occurs in that source. Subjective: #>wonder_update_clusters_gesture_cohesion in @clusters.`
+}[reg=facet]
+
+^"elasticity"{
+  claim = `The direction stretches when a measure fails. The wonder's $% set is the bend. Do not add a pattern to make a measure pass.`
+  fail = `A failed objective measure takes the next alternative in the wonder. A subjective split that a reader can name is a finding, and the enhancement waits.`
+}[reg=facet]
+
+#>wonder_spw_native_brace_ease
+?["On one frame, do the open and close braces already feel like setup and residue, or do they need the two grammar tokens spent on them?"]{
+  #:depth #!stylistic ~#lens(projection)
+  ~#with: @syntax @measure
+  ~#tension: "syntax.css defines --grammar-form-open and --grammar-form-close, and .spw-delimiter--brace paints one mixed color. The tokens may already be enough as a gradient the eye never gets."
+  ~#hypothesis: "Spend the two tokens on one frame's two ends. If a reader cannot say which end is which, the single color was the clearer housing."
+  ~#expect: "At a laptop width and a phone width, with scripts off, the open delimiter's computed color mixes the objective brace and the close mixes the subjective brace, or the wonder bends."
+  ~#unblocks: "the brace enhancement, after component-region H1 and cluster C"
+  ~#probe(read)
+  !probe{ "Look at one frame's { and } before any change. Say whether the two ends already differ. Then the measure is allowed to ask for the tokens." }
+  $%[brace.spend_open_close_tokens, brace.keep_one_color, brace.use_the_existing_gradient]
+  ~<"../../public/css/grammar/syntax.css"> ~<"../conventions/measurement-contract.spw">
+}
+
+#>wonder_spw_native_seat_residue
+?["Are the words a seat line carries from other pages part of the first paint, or residue that can wait until the seat is visible?"]{
+  #:depth #!structural ~#lens(projection)
+  ~#with: @seat_js @seat_mount @slots
+  ~#tension: "The module's own comment says the authored line already reads with scripts off, and it writes no expression. The catalog mounts it IMMEDIATE, in the residue cost class."
+  ~#hypothesis: "The authored slots stay the instrument. Carried words are residue. Moving the mount to VISIBLE is allowed only if a payload read shows the module on the first paint path."
+  ~#expect: "readExpressionSlots of the authored expression still matches the visible slots after any mount change. The page writes no second expression."
+  ~#unblocks: "the slots enhancement"
+  ~#probe(read)
+  !probe{ "Read home-seat-line.js with scripts off in mind, then the enhancement catalog row. The authored line is the architecture. The carried words are the question." }
+  $%[seat.keep_immediate, seat.move_to_visible, seat.authored_line_only]
+  ~<"../../public/js/runtime/page/home-seat-line.js"> ~<"../../public/js/runtime/catalog/enhancement.js"> ~<"../../public/js/semantic/expression-query.js">
+}
 
 validation: #[
   `rg 'physics:' public/js/kernel/operator-detection.js`
