@@ -99,7 +99,8 @@ async function main() {
   execFileSync(process.execPath, ['--import', './scripts/tests/register-public-imports.mjs', 'workers/spw-quest/carry-shelf.mjs', '--check'], { cwd: ROOT, stdio: 'inherit' });
   execFileSync(process.execPath, ['--test', 'workers/spw-quest/test/routes.test.mjs', 'workers/spw-quest/test/note.test.mjs', 'workers/spw-quest/test/shelf.test.mjs', 'workers/spw-quest/test/parser-releases.test.mjs', 'workers/spw-quest/test/parser-prereleases.test.mjs', 'workers/spw-quest/test/specimens.test.mjs', 'workers/spw-quest/test/constructs.test.mjs', 'workers/spw-quest/test/app.test.mjs', 'workers/spw-quest/test/walk.test.mjs', 'workers/spw-quest/test/shell-pin.test.mjs', 'workers/spw-quest/test/shell.test.mjs'], { cwd: ROOT, stdio: 'inherit' });
   execFileSync(process.execPath, ['--test', 'workers/site-hub-next/test/doors.test.mjs', 'workers/site-hub-next/test/tealstripes.test.mjs', 'workers/site-hub-next/test/mutex.test.mjs'], { cwd: ROOT, stdio: 'inherit' });
-  execFileSync(process.execPath, ['--test', 'workers/factshift-center/test/snapshot.test.mjs'], { cwd: ROOT, stdio: 'inherit' });
+  execFileSync(process.execPath, ['workers/factshift-center/carry-shell.mjs', '--check'], { cwd: ROOT, stdio: 'inherit' });
+  execFileSync(process.execPath, ['--test', 'workers/factshift-center/test/snapshot.test.mjs', 'workers/factshift-center/test/shell.test.mjs'], { cwd: ROOT, stdio: 'inherit' });
   console.log(`[check:workers] ${inventory.units.length} units, ${seenHosts.size} hosts; quest and feedback routing verified`);
 }
 
