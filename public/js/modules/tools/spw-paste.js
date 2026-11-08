@@ -245,7 +245,9 @@ export async function initSpwPaste() {
     host.dataset.pasteOpenState = reading.kind;
   };
   show(current);
-  if (field.value.trim()) parser().then((parse) => show(readPaste(field.value, parse)));
+  // The page's own Spw, as authored, waits for an edit; a value the browser restored, or one dropped in, is read now.
+  // Reading the authored lines on load would push the rest of the hero down on every visit.
+  if (field.value.trim() && field.value !== field.defaultValue) parser().then((parse) => show(readPaste(field.value, parse)));
 
   on(field, 'input', () => {
     clearTimeout(timer);
