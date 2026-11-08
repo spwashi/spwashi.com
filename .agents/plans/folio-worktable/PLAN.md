@@ -14,6 +14,8 @@ Public goal: see the studies, try a reading, and distinguish future folio purcha
 4. **A folio says where it opens (proposal, ungated to mock).** The creator wants their art to link pages and to open more pages (2026-11-05). Twelve pages now open on scans (1a84b975; midjourney-design-concepts, "The creator's own art, first and between pages"). A piece's popover on `/design/folios/` or `/design/folios/october-2026/` could carry one line naming the page it opens, such as "opens /topics/", so that the shelf becomes a door and not only a display. It is static HTML in the existing `folio-view` popover, with no script and no new attribute. Verify: each such line links a page whose first figure uses that piece's stem. The wording is the creator's at a look.
 5. **The first request.** Whether a request has arrived through `#folio-request` only the creator can say. Sales stay closed until forms, prices and shipping are set ("Minting direction" below).
 
+Glass over the work, read from lore.land's plans on 2026-11-08 ([lore-land-plans.spw](../ecosystem-architecture/lore-land-plans.spw)): a kept reading is a recipe, a link or a spell, before it is an object. Slice 4, a folio saying where it opens, is the local form of a path that has a way on. A reader's marks stay out of inventory. The week's five and the calendar question stay the creator's calls.
+
 Kept from the first audit (2026-09-05), which the release shelf answered by moving the studies ahead of the method: no invented inventory, folio prices, checkout, biological claims or runtime state; seed studies are not scans or inventory; service prices pair amounts with deliverables.
 
 ## Later bounded slices

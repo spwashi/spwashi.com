@@ -13,6 +13,10 @@ The public CSS and JS pay three ways beyond the page that loads them. Each slice
 - **Asset.** A forkable, measured codebase is teaching material and the strongest proof of the practice the site offers. It loses that value when an owner plan disagrees with the tree, and when one concept has five tables.
 - **Risk.** The cascade the site ships is not the one its source declares, and two budgets sit at their edge.
 
+## From lore.land's plans (2026-11-08)
+
+[lore-land-support.spw](lore-land-support.spw) is the survey of copies. What came back is [lore-land-plans.spw](lore-land-plans.spw): five theories read from lore.land's PLAN.A through PLAN.E on 2026-11-08, each with one local grain and one wonder. Support writes this site. lore.land stays in its own repo. The next slice here stays S4a. A line in that reading is this site's behavior when it cites a file here. PLAN.C's synthesis and PLAN.D's Firefox track sit outside the reading.
+
 ## Measured 2026-10-25
 
 Rows the landed slices settled are under Landed. The flip count was re-read on 2026-11-06.

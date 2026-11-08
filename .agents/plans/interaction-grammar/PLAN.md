@@ -27,6 +27,8 @@ Slices, smallest first:
 
 **Clusters:** [update-clusters-2026-11.spw](../semantic-copy-depth/update-clusters-2026-11.spw). The settings passage stays next. Cluster B follows it only when a public first-move verb changed: the passage then quotes the string that remains. The two vocabularies already in the code are `GESTURE_CHARGE` in `public/js/semantic/expression-query.js` (tap previews, hold sustains) and the living-term title in `public/js/interface/haptics.js` (tap to inspect, hold to gather). A sentence quotes one of them. The phase names stay `INTERACTION_PHASES` in `public/js/runtime/interaction/arc-taxonomy.js`. The taste question is `#>wonder_update_clusters_gesture_cohesion`.
 
+A return visit, read from lore.land's PLAN.E on 2026-11-08 ([lore-land-plans.spw](../ecosystem-architecture/lore-land-plans.spw)): a behavior that changes what a returning reader sees ships as a trial and leaves a plain-words note. The settings "do this, expect this" passage remains the next slice, one row per authored string. The two gesture ladders stay two lines.
+
 ## Settled, 2026-09-04
 
 - **Brace physics vocabulary, settled elsewhere.** The objective → subjective gradient is the primary naming, and boon/bane survives only as optional valence coloring (`.spw/conventions/site-semantics.spw#brace_perspective_axis`; the caution in `operator-semantics.spw`). A bridge, not a replacement.

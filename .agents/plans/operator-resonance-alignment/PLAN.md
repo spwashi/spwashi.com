@@ -17,6 +17,7 @@ A sigil should tell the visitor what kind of operation a link, card, tool, or ro
 - Slice 3, resolver: `sigil-annotation.js` writes the additive attributes (a664caf5).
 - Slice 4 in part: pinned resonance rings same-family kin through `data-spw-resonance-family` on `<html>` (`resonance-probe.js` writes it, `effects/wonder.css` reads it), for the four families with more than one member (eeadf214, 2026-09-03).
 - One table: every operator view takes its names from `public/js/kernel/operator-detection.js`, held by `scripts/tests/operator-views.test.mjs` (df32c50f, 2026-10-25; *One table* below).
+- Names still part. lore.land's PLAN.A, read 2026-11-08, asks whether one row can also hold the story reading and the parse ([lore-land-plans.spw](../ecosystem-architecture/lore-land-plans.spw), `wonder_lore_plans_one_row`). This site, the workbench, and lore.land's four tables still part on five names (`? # & = %` against this site's types; the survey is [lore-land-support.spw](../ecosystem-architecture/lore-land-support.spw)). The views keep the one table. The five unread attributes stay the creator's decision at `wonder_operator_resonance_family_attributes`.
 
 ## Alignment Rules
 

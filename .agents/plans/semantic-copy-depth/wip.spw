@@ -36,8 +36,8 @@ fixity = "tending"
 
 ^"cache"{
  ~#status: "tending"
- ~#next_commit: "~[copy] C2: expressions on Home's three flat-only units, no words change. First word pass is R1, Now's fold, in copy-review-2026-11.spw"
- ~#files_hot: "now/index.html, index.html, .agents/plans/semantic-copy-depth/copy-review-2026-11.spw"
- ~#gate: "nothing for C2 or R1; C1 still waits on the creator's call on #feeling"
+ ~#next_commit: "~[copy] R1 and R2 landed 2026-11-08. Next word pass is R3, the topics gesture, after one chip is watched. C2 stays available: expressions on Home's three flat-only units, and the words stay."
+ ~#files_hot: "topics/index.html, index.html, .agents/plans/semantic-copy-depth/copy-review-2026-11.spw"
+ ~#gate: "R3 waits on a watched chip; C1 still waits on the creator's call on #feeling; C2 stays ungated"
  ~#last_stream: "2026-11-08"
 }
