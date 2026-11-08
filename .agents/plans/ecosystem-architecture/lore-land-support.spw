@@ -1,0 +1,240 @@
+# Review 2026-11-08 — what spwashi.com could carry to lore.land.
+# lore.land support (2026-11-08) — audit: copies, carries, keeps
+#>lore_land_support
+#:review #!lore_land #!copies #!carry #!peer_kit
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+expression = support[lore_land]{copies.carry.keep_local}<answer>
+
+summary = #[
+  `lore.land keeps four operator tables and six line readers.`,
+  `Nothing from build:peer-kit reaches it, as the wonder expected.`,
+  `Best carry: the reader slice, about 134 KB gzip down to 27.`,
+  `Codec and descriptor belong upstream, in the seed it bundles.`,
+  `Its canon, palette, faces and story register stay its own.`,
+][reg=set]
+
+contents = #[
+  ~"./lore-land-support.spw#copies",
+  ~"./lore-land-support.spw#carry",
+  ~"./lore-land-support.spw#keep_local",
+  ~"./lore-land-support.spw#answer",
+  ~"./lore-land-support.spw#questions",
+][reg=set]
+
+^"copies"{
+  ~#note: "What lore.land keeps its own copy of, read 2026-11-08."
+  ~#drift: "hand: a person keeps it in step. generated: a tool."
+  ~#read: "lore.land at HEAD 0e426bc, plus a working tree in use."
+
+  operator_tables = .{
+    lore_land = `lore.land: book/scripts/modules/spw-interactions.mjs:12-44 (OPERATOR_SEQUENCE, OPERATOR_ROLES, CONTAINER_ROLES); spw-ethos.mjs:8-21 (OPERATOR_ETHOS, the same twelve rows again); spw-selector-parser.mjs:30 and spw-expression-index.mjs:3 (two more SIGILS sets)`
+    here = `public/js/kernel/operator-detection.js:25, OPERATOR_DEFINITIONS with 19 prefixes; the names are mapped in @namespace_table`
+    drift = `hand. Four copies of one table. lore.land's book/scripts/modules/CLAUDE.md asks a person to diff them against the workbench's v0.2.0-alpha OPERATORS.md after any bump`
+    evidence = `All twelve characters agree on every side. The names part on five against the workbench reader names (? probe or wonder, & confluence or subject, ^ integration or ascension, # annotation or vibration, = config or configuration) and on five against this site's types (? # & = %)`
+  }[reg=facet]
+
+  sigil_colors = .{
+    lore_land = `lore.land: book/styles/components/interactive.css:780-792, twelve --spw-color-* on :root, painted by data-spw-role at :805-816 and in components/cards.css:702-746`
+    here = `--op-*-color in public/css/tokens/core.css, light and dark; build:peer-kit carries them to spw-quest as PEER_SIGILS`
+    drift = `hand. One set of pastels with no light or dark restatement; this site's set is tuned on paper and restated for dark`
+  }[reg=facet]
+
+  parser_bundle = .{
+    lore_land = `lore.land: book/scripts/vendor/spw-seed.mjs, esbuild of the whole seed index by book/scripts/tools/bundle-spw-seed.mjs:20-21, with a node:crypto shim at :43-46; read lazily by modules/bracework.mjs:28 and by tools/book-check.mjs:47, both for parse alone, with the prose profile`
+    here = `public/js/semantic/spw-workbench-reader.js, the lsp reader over seed's browser slice (@reader_build), carried to spw.quest as text by @carry_parser`
+    drift = `generated on both sides, each from its own workbench pin, each with a check: spw:seed-bundle:verify in lore.land's CI, carry-parser --check here`
+    evidence = `lore.land's HEAD pins workbench 75d8f9d2, 130 commits behind main; its working tree is moving to edbc5500 in another session. This site pins 27fa1e3d, 3 behind. At HEAD lore.land's bundle is 601,504 B, 133,782 B gzip; this site's reader is 97,704 B, 27,436 B gzip`
+  }[reg=facet]
+
+  readers = .{
+    lore_land = `lore.land: six readers that share no tree. spw-selector-parser.mjs (a hand port of the workbench selector query, its header at :1-8), spw-expression-index.mjs, spw-ethos.mjs:201 parseClaimChain, scriptorium-desk.mjs:108 parseSpell, projection.mjs:158 parseSpell, lore-fold.mjs:157 evaluate; and a character tokenizer at spw-interactions.mjs:665`
+    here = `@expression_query reads slots, joins and a query over the reader's parse`
+    drift = `hand. Two functions named parseSpell read two grammars. The workbench's line-kit intake (at edbc5500) counts these six as one ask: one reader with expression, record and prose profiles`
+  }[reg=facet]
+
+  line_carriers = .{
+    lore_land = `lore.land: ?spell= (projection.mjs:252, percent-encoded, replaced on arrival at :211), ?fold= (lore-fold.mjs:399), ?tell= (story-directions.mjs:205), #spw=id:handle (spw-interactions.mjs:182), and text fragments (line-share.mjs)`
+    here = `#spw64= in workers/spw-quest/src/build.js:128 and :141, inline again at :388, and in factshift's spw-talk.ts:39 and :46, a separate checkout under workers/factshift-center/app/`
+    drift = `hand on both sides. lore.land has no #spw64= reader, so a line from spw.quest or factshift.center cannot open there, and a spell cannot leave for them`
+  }[reg=facet]
+
+  faces = .{
+    lore_land = `lore.land: book/styles/core/fonts.css:1-8 loads JetBrainsMono-Regular from cdn.jsdelivr.net/gh with no version and no font-display; :10-15 serves its own LoreLand-Display.otf, built by lore.land's own font script (its package.json, font)`
+    here = `public/fonts/jetbrains-mono-latin.woff2, 31,340 B, weights 400 to 700, swap display and a latin unicode-range (public/css/tokens/fonts.css:9-16), with a latin-ext twin; the peer kit names it by content hash`
+    drift = `third party and unpinned: the file is whatever release the CDN resolves, in one weight`
+  }[reg=facet]
+
+  folio_shelf = .{
+    lore_land = `lore.land: book/content/world/worktable.json, eleven folios hand-chosen from this site's public/data/folio-days.json, read by book/scripts/home/worktable.mjs; the thumbnails load from spwashi.com`
+    here = `@folio_days and @folio_archive, the archive's origin`
+    drift = `hand. Today all eleven ids resolve, every thumbnail exists here, and titles, alt text and sizes match. Nothing checks that they stay so`
+  }[reg=facet]
+
+  unused_vendor = .{
+    lore_land = `lore.land: js/vendor/md5.js, 26,185 B from 2026-02-28; no file imports it`
+    drift = `a dead copy, lore.land's to keep or drop`
+  }[reg=facet]
+
+  inverse = .{
+    note = `Copies run the other way too.`
+    here = `about/domains/lore.land/index.html:49 and .spw/domains.spw:94 say Thirteen chapters`
+    lore_land = `lore.land: book/scripts/modules/book-extent.mjs:2-5, generated from book/content/serial.json, counts 15 chapters in two books: Book One a ring of thirteen, Book Two from chapter 14`
+    drift = `hand, on this side. True of Book One, silent on Book Two`
+    kit = `Inside this repo, build:peer-kit reaches one of the six worker units: only spw-quest imports workers/lib/peer-kit.js. autonomous-feedback and site-hub-next take workers/lib/shell.js, whose :root (line 64) is its own literal palette. @plan's Value line says six take the kit`
+  }[reg=facet]
+}
+
+^"carry"{
+  ~#note: "Ranked by worth over cost. Each names its route and its gate."
+  ~#rule: "lore.land's own sessions write lore.land. This site supplies files, recipes, evidence and upstream asks."
+
+  reader = .{
+    rank = 1
+    worth = `high. One bundle gives parse, parseExpression, readLine, roles, highlightHtml, anchors and outline, with the prose profile lore.land needs, at about a fifth of the gzip its bracework chunk costs`
+    cost = `low. In lore.land, bundle-spw-seed.mjs points at packages/spw-lsp/src/reader.ts, aliases @spwashi/spw-seed to seed's reader.ts, minifies, and drops the crypto shim. Seed's reader.ts exports parse from the same parser module as its index`
+    from_here = `the recipe (@reader_build) and its evidence: before S3 the two bundles read 993 tracked .spw files and 974 route expressions alike (@plan, Landed)`
+    verify = `lore.land: book:check and spw:seed-bundle:verify on its own pin; the six bracework plates draw as before`
+    gate = `lore.land's session. It builds from its own submodule, so no pin of this site's rides along`
+  }[reg=facet]
+
+  faces = .{
+    rank = 2
+    worth = `medium. A pinned, self-hosted mono face for lore.land's headings and code: no third-party request, swap display, a latin subset with a latin-ext twin, weights 400 to 700`
+    cost = `low. Copy the two woff2 files by content hash; their sha256 sits in PEER_FONTS in @peer_kit_module. Or publish the kit at a URL a lore.land tool pulls and verifies, as it verifies its seed bundle`
+    from_here = `the files and their hashes. build:peer-kit writes only into this repo's workers/ (@peer_kit, OUT and UNITS), so it cannot carry them itself`
+    verify = `lore.land: headings and code keep their face with the CDN blocked`
+    gate = `lore.land's look; its font stacks would name JetBrains Mono for JetBrainsMono`
+  }[reg=facet]
+
+  descriptor = .{
+    rank = 3
+    worth = `high and the widest: one row per sigil retires four tables in lore.land and four more across the ecosystem, and lets each site keep its names as aliases`
+    cost = `high, and upstream. The planes pass asks the workbench for it (@planes_plan, OPERATORS.md S1 grown); this repo does not edit the workbench`
+    already = `seed exports OPERATOR_READER_NAMES and CONTAINER_READER_NAMES (packages/spw-seed/src/learn/readers.ts:21). lore.land's working-tree bundle carries them (spw-seed.mjs:19319, exported at :20179); its HEAD bundle does not`
+    from_here = `the fields a row needs beyond sigil, name and reading: lifecycle, partner, resting look (@factshift_operators, item 1); and @namespace_table, where lore.land's names fit as aliases: confluence beside subject, config beside configuration`
+    offer = `lore.land's story register (spw-resonance.mjs, importable by its contract c021) could be a reading column the descriptor points to, owned and written by lore.land`
+    gate = `the creator's answer on whether a descriptor carries lifecycles (@factshift_operators, Questions); then a workbench release; lore.land takes it through its own bundle`
+  }[reg=facet]
+
+  codec = .{
+    rank = 4
+    worth = `medium. A spell, a fold query or a chapter's projection could open in spw.quest's /build or on factshift.center, and their lines in lore.land. A fragment also keeps the line off the server, which ?spell= reaches once before replace`
+    cost = `low in bytes, about fifteen lines; but a copy from here would be the fifth to retire`
+    route = `the workbench's line-kit plans line_codec: toSpw64, fromSpw64 and the #spw64= grammar in seed, with a byte-for-byte round trip, so the hosts drop their copies (wip.spw at workbench edbc5500). lore.land would have it through its own bundle`
+    from_here = `the wire contract now: base64url of the UTF-8 text, no padding, read once from the fragment and taken off the address; and two working copies to test against`
+    gate = `line_codec landing upstream, and whether lore.land wants spells in the fragment at all (@questions)`
+  }[reg=facet]
+
+  highlighter = .{
+    rank = 5
+    worth = `low as it stands. @highlight paints this site's types (wonder, subject, binding, normalize) as data-op from @operator_detection, so it would carry this site's names and colors into lore.land`
+    route = `the reader's own roles and highlightHtml arrive with carry.reader; lore.land maps roles onto its data-spw-role names and its own palette`
+    cost = `nothing beyond the reader`
+  }[reg=facet]
+
+  sigil_colors = .{
+    rank = 6
+    worth = `a taste call. Carried colors would make a sigil look alike across sites; lore.land's pastels are part of its look`
+    cost = `medium: the kit has no route out of this repo, and lore.land paints by role names, not by this site's types`
+    gate = `the creator (@questions)`
+  }[reg=facet]
+
+  query = .{
+    rank = 7
+    worth = `low now. lore-fold reads a sigil as a story family over lore.land's own index; @expression_query reads slots over this site's expressions`
+    route = `the workbench's planned slot_query, a query read as a line, would serve both from seed`
+  }[reg=facet]
+
+  folio_check = .{
+    rank = 8
+    worth = `small but real: the eleven folios on lore.land stay true to the archive`
+    cost = `low. A lore.land check reads spwashi.com/public/data/folio-days.json and fails on a missing id or thumbnail`
+    from_here = `a promise: folio ids and thumbnail paths in @folio_days stay stable, or move with a redirect`
+  }[reg=facet]
+
+  tokens = .{
+    rank = 9
+    worth = `none found. lore.land's palettes are its identity, and the kit's names (--fg, --accent) are the workers' vocabulary, not lore.land's`
+  }[reg=facet]
+}
+
+^"keep_local"{
+  ~#note: "lore.land's canon and voice are its own. Support serves its plans and never writes them."
+  canon = `lore.land: .spw/ (index, chapters, claims, ledger, workspace contracts) and PLAN.A.spw to PLAN.E.spw. Its theory and creative utility grow there`
+  story_register = `lore.land: spw-resonance.mjs, what each sigil means in a story and in a library. A descriptor may point to it and never rewrites it`
+  palette = `lore.land: book/styles/core/tokens.css from :85, parchment, ember and cosmos, and the bindings (rag, glass, salt, ember, slate, starfield). Its own theme_parity review is open`
+  display_face = `lore.land: LoreLand-Display.otf and its drawn sigils (book/scripts/tools/font/sigils.mjs)`
+  story_grammar = `lore.land: data-spw-grammar voices, the story-voice custom elements (book/scripts/custom/register.mjs), almanac KIND_SIGIL, x-ray SIGIL_FOR and lore-fold SIGIL_FAMILIES. These map sigils to story families no other site has`
+  spell_words = `lore.land: the desk's spellbook and the projection spell. Their words are the book's; only the reading under them could be shared`
+  interaction = `lore.land: the click-to-swap cycle (spw-interactions.mjs:12) and brace tracing`
+  claims_parser = `lore.land: parseClaimChain reads lore.land's own record lines; it moves to the reader only if lore.land wants it to`
+  offline = `lore.land: sw.js, network-first with kept chapters. A service worker belongs to its origin`
+  line_share = `lore.land: text fragments for a line of prose (line-share.mjs), with no Spw in them`
+  tooling = `lore.land: spw:lint, spw:export, spw:project, its seed verify and its submodule cadence`
+}
+
+^"answer"{
+  ~#wonder: ~"./index.spw#wonder_ecosystem_lore_land_support"
+  ~#receipt: "A read-only probe of both repos on 2026-11-08: evidence for the creator's call, not a decision."
+  expect = `lore.land bundles spw-seed itself and keeps its own tables; nothing from build:peer-kit reaches it yet`
+  probe = `package.json, vite.config.js and .spw/tools in lore.land name neither peer-kit nor spwashi.com. The tables live in book/scripts/modules and book/styles/components`
+  found = `As expected, and more: four operator tables, a color table and six readers. Inside this repo, the kit reaches only spw-quest`
+  peer_kit = `partly. The faces are worth carrying; the tokens are not; the sigil colors are a taste call. The kit has no route to another repo today`
+  codec = `yes in kind, but from the workbench (line_codec), not from here, so no fifth copy is made`
+  descriptor = `yes, most strongly by the count of tables. Its home is the workbench, and lore.land's names fit as aliases`
+  none = `partly true of bytes: the two widest carries land through the seed lore.land already bundles. Not true of the work: this site holds the recipe, the alias table and the fields`
+  beyond_the_set = `carry.reader, the measured win: the reader slice in place of the whole seed, about 134 KB to 27 KB gzip, with roles and highlightHtml included`
+  $%[carry.peer_kit, carry.codec, carry.descriptor, carry.none]
+}
+
+^"questions"{
+  ~#note: "Taste calls for the creator. Each names what it would settle."
+  reader = `May lore.land's own session swap its seed bundle for the reader slice? That settles carry.reader, and nothing here changes`
+  spells = `Should a lore.land spell travel as #spw64= in the fragment, off the server and readable by spw.quest and factshift.center, or stay ?spell=, a link a person can read?`
+  sigil_look = `Should a sigil look the same on every site, or do lore.land's pastels belong to its story the way its palette does?`
+  names = `In one descriptor, are lore.land's names (confluence, config, probe, annotation) aliases of the workbench's, or a register of their own beside the story one?`
+  register_column = `Should the descriptor point to lore.land's story readings, so this site and spw.quest can set the engineering and story readings side by side?`
+  face = `Is a pinned JetBrains Mono right for lore.land's headings, or should its heading face be its own?`
+  thirteen = `The pages here say Thirteen chapters. Keep it for Book One, or name the serial as it now runs?`
+  custom_elements = `lore.land already hosts its story voices as custom elements. Is that the pilot this site's lean toward modules as custom elements was waiting for?`
+  cauldron = `lore.land has an empty cauldron folder. Is a cauldron planned there, and should it share the thread shape factshift keeps (@factshift_operators, item 6)?`
+}
+
+keeps = "Read-only on both repos. lore.land is cited by path and never linked as a ref; its plans and canon are its own."
+source = "the creator, 2026-11-08: lore.land has developed significantly recently, and I'd like to prepare for enhanced architectural support from spwashi.com to the other sites. A survey session read both repos the same day."
+
+# Handles, by role. Declared last; each one links wherever the text names it.
+# This plan
+@wonder: ~"./index.spw#wonder_ecosystem_lore_land_support"
+@plan: ~"./PLAN.md"
+@questions: ~"./lore-land-support.spw#questions"
+# Neighbor plans
+@planes_plan: ~"../spw-planes/PLAN.md"
+@factshift_operators: ~"../factshift-center/OPERATORS.md"
+@brace_semantics: ~"../brace-semantics/PLAN.md"
+@starter_kit: ~"../site-starter-component-kit/index.spw"
+@spw_quest_plan: ~"../spw-quest/PLAN.md"
+# Language and surfaces
+@namespace_table: ~"../../../.spw/language/operator-namespace-alignment.spw"
+@domains: ~"../../../.spw/domains.spw"
+@folio_archive: ~"../../../.spw/surfaces/folio-archive.spw"
+@upstream_asks: ~"../../../.spw/reviews/upstream-workbench-recommendations.spw"
+# Code and workers
+@peer_kit: ~"../../../scripts/build-peer-kit.mjs"
+@peer_kit_module: ~"../../../workers/lib/peer-kit.js"
+@shell: ~"../../../workers/lib/shell.js"
+@operator_detection: ~"../../../public/js/kernel/operator-detection.js"
+@highlight: ~"../../../public/js/semantic/spw-highlight.js"
+@expression_query: ~"../../../public/js/semantic/expression-query.js"
+@reader_bundle: ~"../../../public/js/semantic/spw-workbench-reader.js"
+@reader_build: ~"../../../scripts/build-spw-literal-parser.mjs"
+@carry_parser: ~"../../../workers/spw-quest/carry-parser.mjs"
+@quest_build: ~"../../../workers/spw-quest/src/build.js"
+@site_fonts: ~"../../../public/css/tokens/fonts.css"
+@site_tokens: ~"../../../public/css/tokens/core.css"
+@folio_days: ~"../../../public/data/folio-days.json"
+# Pages
+@lore_land_page: ~"../../../about/domains/lore.land/index.html"

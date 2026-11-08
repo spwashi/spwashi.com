@@ -64,6 +64,7 @@ intent: .{
 @cognition: ~"../../../.spw/caches/cognitive-informatics-interaction-2026-11.spw"
 @planes_plan: ~"../spw-planes/PLAN.md"
 @domains: ~"../../../.spw/domains.spw"
+@lore_land_support: ~"./lore-land-support.spw"
 
 dispatch: .{
  plan = @plan
@@ -161,6 +162,7 @@ invariants: #[
   ~#aim: "The creator, 2026-11-08: lore.land's own plans (PLAN.A.spw to PLAN.E.spw in its repo) would ideally be able to aspirationally develop the theory and creative utility of that domain. Support from here serves those plans; it does not write them."
   ~#hypothesis: "lore.land is its own repo with its own Spw tools (spw:export, spw:project, spw:lint, and a spw-seed bundle) and twenty commits since 2026-10-15. build:peer-kit already carries tokens, faces, sigil colors and one script to six workers; lore.land could take the same kit, the #spw64 codec, and the one operator descriptor the planes pass asked for, instead of keeping copies."
   ~#expect: "lore.land bundles spw-seed itself and keeps its own tables; nothing from build:peer-kit reaches it yet."
+  ~#note: "Probed 2026-11-08 from both repos (@lore_land_support): the guess held, with more copies than guessed (four operator tables, a sigil-color table, six line readers). The evidence favours the reader and fonts first; the descriptor and the codec belong in the workbench lore.land already bundles. The creator decides."
   ~#probe(read)
   !probe{ "in a lore.land checkout, search package.json, vite.config.js and .spw/tools for peer-kit, spwashi.com, and an operator or sigil table" }
   $%[carry.peer_kit, carry.codec, carry.descriptor, carry.none]
