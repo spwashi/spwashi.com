@@ -55,7 +55,7 @@ import {
 } from './shared.js';
 import { applyAttentionCapturePins } from './capture-pins.js';
 import { PHASE_EVENT, readInteractionStory } from '/public/js/runtime/interaction/story.js';
-import { applyRailCrumb, crumbLabel, crumbPlace, isRailCrumb, readRailCrumb, syncRailCrumbExpanded } from './rail-crumb.js';
+import { applyRailCrumb, crumbLabel, crumbPlace, isRailCrumb, mountCrumbExpression, readLensChoices, readRailCrumb, readRouteChoices, syncCrumbExpression, syncRailCrumbExpanded } from './rail-crumb.js';
 
 let lastSectionLogKey = '';
 let lastSectionIndex = 0;
@@ -71,6 +71,7 @@ const EXPLICIT_SECTION_TRAVEL_SOURCES = new Set([
   'similar',
   'contrast',
   'resonate',
+  'expression',
 ]);
 
 export const SECTION_HANDLE_CONTRACTS = Object.freeze({
@@ -229,6 +230,7 @@ function syncHandleContent(parts, info, activeIndex, sectionCount, storyOverlay 
     writeTextContent(currentLabel, place.label);
     writeTextContent(currentLink.querySelector('.spw-rail-crumb-route'), `${place.route} ›`);
     writeAttributes(currentLink, { 'aria-label': crumbLabel(place, activeIndex, sectionCount, compact), title: `${place.token}{ ${place.label} }` });
+    syncCrumbExpression(currentLink.closest(`[${HANDLE_SHELL_STATE_ATTR}]`), { section: railHandle(info.id || '') });
   }
 
   // ARIA hygiene: dynamic prev/next labels using the section that will be targeted
@@ -1383,6 +1385,23 @@ function createSectionHandleController({
 
   let swipeStartX = 0;
   let swipeStartY = 0;
+  if (railCrumb) {
+    // The element loads only under the flag, and is defined before its model is set.
+    void import('/public/js/interface/spw-expression.js').then(() => {
+      mountCrumbExpression(shell, {
+        route: routeHandle(),
+        routes: readRouteChoices(document, railHandle),
+        lenses: readLensChoices(document),
+        sections: sections.map((section, index) => ({
+          value: railHandle(ensureSectionId(section, index)),
+          label: (section.querySelector('h1, h2, h3')?.textContent || getSectionLabel(section, index)).trim().replace(/\s+/g, ' '),
+        })),
+        current: state.activeIndex,
+        onTravel: (nextIndex) => travelSectionHandleToIndex({ sections, state, shell, handle, updateActiveState, nextIndex, source: 'expression' }),
+      });
+      syncCrumbExpression(shell, { section: railHandle(ensureSectionId(sections[state.activeIndex], state.activeIndex)) });
+    }).catch(() => {});
+  }
   const satchelSummon = readSatchelSummon();
   if (satchelSummon) {
     if (refs.satchelButton instanceof HTMLButtonElement) refs.satchelButton.hidden = false;

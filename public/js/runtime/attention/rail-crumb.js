@@ -24,6 +24,9 @@
  * and 1440 px. With the flag absent, section-handle.js renders as before.
  */
 
+// spw-expression.js's change event; that module loads only under this flag, so the name is restated here.
+const EXPRESSION_CHANGE_EVENT = 'spw:expression-change';
+
 const STYLE_ID = 'spw-rail-crumb-style';
 const FORM_ATTR = 'data-spw-handle-form';
 const FORM = 'crumb';
@@ -78,6 +81,19 @@ const CSS = `
 }
 .spw-section-handle-shell[${FORM_ATTR}="${FORM}"] .spw-section-handle-current {
   background: transparent;
+}
+/* Opened, the place is also a mutable expression: page[lens]{section}, each slot a dial. */
+.spw-section-handle-shell[${FORM_ATTR}="${FORM}"] > spw-expression {
+  order: -1;
+  flex: 1 0 100%;
+  padding-inline: 0.35rem;
+}
+.spw-section-handle-shell[${FORM_ATTR}="${FORM}"][data-spw-handle-shell-state="collapsed"] > spw-expression {
+  display: none;
+}
+/* The expression carries the route, so the crumb row does not repeat it. */
+.spw-section-handle-shell[${FORM_ATTR}="${FORM}"]:has(> spw-expression) .spw-rail-crumb-route {
+  display: none;
 }
 /* One reading per cell: the geometry hint and cadence belong to the inspector, not the crumb. */
 .spw-section-handle-shell[${FORM_ATTR}="${FORM}"] :is(.spw-section-handle-current-form, .spw-section-handle-current-cadence) {
@@ -225,4 +241,71 @@ export function syncRailCrumbExpanded(shell, compact) {
   if (!isRailCrumb(shell)) return;
   const current = shell.querySelector('.spw-section-handle-current');
   if (current instanceof HTMLElement) current.setAttribute('aria-expanded', compact ? 'false' : 'true');
+}
+
+/** The site's own pages, from the header's navigation, as the page slot's choices. */
+export function readRouteChoices(doc = document, handleOf = (value) => value) {
+  const seen = new Set();
+  const choices = [];
+  for (const link of doc.querySelectorAll('body > header nav a[href], .site-header nav a[href]')) {
+    let url;
+    try {
+      url = new URL(link.getAttribute('href'), doc.baseURI);
+    } catch {
+      continue;
+    }
+    if (url.origin !== globalThis.location?.origin || seen.has(url.pathname)) continue;
+    seen.add(url.pathname);
+    const segments = url.pathname.split('/').filter(Boolean);
+    const value = handleOf(segments[segments.length - 1] || 'home') || 'home';
+    choices.push({ value, label: (link.textContent || '').trim().replace(/\s+/g, ' '), href: url.pathname });
+  }
+  return choices;
+}
+
+/** The page's working views (Home's lens buttons), as the lens slot's choices. */
+export function readLensChoices(doc = document) {
+  return [...doc.querySelectorAll('main .mode-switch [data-set-mode]')].map((button) => ({
+    value: button.getAttribute('data-set-mode'),
+    label: (button.querySelector('span')?.textContent || button.textContent || '').trim(),
+    pressed: button.getAttribute('aria-pressed') === 'true',
+  }));
+}
+
+/**
+ * Mount the mutable expression in an opened crumb: page[lens]{section}. A page
+ * turn follows its link; a lens turn presses that lens's own button; a section
+ * turn travels the rail. The rail keeps it in step through syncCrumbExpression.
+ */
+export function mountCrumbExpression(shell, { route, routes = [], lenses = [], sections = [], current = 0, onTravel } = {}) {
+  if (!isRailCrumb(shell) || shell.querySelector(':scope > spw-expression')) return null;
+  const doc = shell.ownerDocument || document;
+  const element = doc.createElement('spw-expression');
+  element.setAttribute('aria-label', 'Where you are, as Spw. Turn a slot to move: page, lens, section');
+  const slots = [{ name: 'subject', value: route, choices: routes.some((choice) => choice.value === route) ? routes : [{ value: route, label: route }, ...routes] }];
+  if (lenses.length) slots.push({ name: 'mode', value: (lenses.find((lens) => lens.pressed) || lenses[0]).value, choices: lenses });
+  slots.push({ name: 'body', value: sections[current]?.value || '', choices: sections });
+  element.model = { operator: '#>', slots };
+  element.addEventListener(EXPRESSION_CHANGE_EVENT, (event) => {
+    const { slot, value } = event.detail || {};
+    if (slot === 'body') {
+      event.preventDefault();
+      const index = sections.findIndex((section) => section.value === value);
+      if (index >= 0) onTravel?.(index);
+    } else if (slot === 'mode') {
+      event.preventDefault();
+      [...doc.querySelectorAll('main .mode-switch [data-set-mode]')].find((button) => button.getAttribute('data-set-mode') === value)?.click();
+    }
+  });
+  shell.querySelector('.spw-section-handle-current')?.after(element);
+  return element;
+}
+
+/** Keep the expression's section and lens in step with the page. */
+export function syncCrumbExpression(shell, { section } = {}) {
+  const element = shell?.querySelector?.(':scope > spw-expression');
+  if (!element) return;
+  if (section) element.setValue('body', section);
+  const pressed = (shell.ownerDocument || document).querySelector('main .mode-switch [data-set-mode][aria-pressed="true"]');
+  if (pressed) element.setValue('mode', pressed.getAttribute('data-set-mode'));
 }
