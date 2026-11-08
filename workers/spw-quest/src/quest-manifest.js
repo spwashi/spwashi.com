@@ -28,10 +28,13 @@ export const MANIFEST = Object.freeze({
   id: "/",
   name: "spw.quest",
   short_name: "spw.quest",
-  description: "A guide to Spw that writes your walk through it in Spw, on this device.",
+  description: "Spw as a tool in your pocket: write a line and see what it reads as, keep a note, and get your walk through the guide back as Spw. Lines go to factshift.center to be laid out.",
   start_url: "/",
   scope: "/",
   display: "standalone",
+  // A link from factshift.center's ↗ or spwashi.com lands in the open window instead of stacking another.
+  launch_handler: { client_mode: ["navigate-existing", "auto"] },
+  categories: ["education", "productivity", "utilities"],
   background_color: PAPER_THEME.background,
   theme_color: PAPER_THEME.accent,
   lang: "en",
@@ -39,6 +42,13 @@ export const MANIFEST = Object.freeze({
     { src: "/icons/quest-192.png", sizes: "192x192", type: "image/png", purpose: "any" },
     { src: "/icons/quest-512.png", sizes: "512x512", type: "image/png", purpose: "any" },
     { src: "/icons/quest-mask-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
+  ],
+  // What only this app does, one press from the home screen (long-press on Android, right-click on a desktop).
+  shortcuts: [
+    { name: "Your walk, in Spw", short_name: "Walk", url: "/#walk", description: "The guide's rooms you have opened, written as Spw." },
+    { name: "Build a line", short_name: "Build", url: "/build", description: "Write one line and take it apart, slot by slot." },
+    { name: "Learn a mark at a time", short_name: "Learn", url: "/learn", description: "Seven panels, one line each." },
+    { name: "The shelf of lines", short_name: "Shelf", url: "/specimens", description: "Lines from spwashi.com, found by slot." },
   ],
 });
 

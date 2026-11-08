@@ -15,9 +15,11 @@
 // lives in localStorage, which a service worker cannot read.
 //
 // The pin is repeated from src/shell-pin.js; a test fails if they drift.
-// Changing it increments SHELL_VERSION in both files.
+// Changing it increments SHELL_VERSION in both files. So does a change to the
+// manifest or an icon: the shell serves those from its cache, so new bytes
+// reach an installed app only through a new shell (2: shortcuts, 2026-11-08).
 
-const SHELL_VERSION = "1";
+const SHELL_VERSION = "2";
 const PINNED_RELEASE = "2026.10.13";
 const PINNED_READER = "/parser/2026.10.13/reader.min.js";
 const PINNED_READER_SHA256 = "9928ec7f51a0416ee39857dc3a3b236d071051f484e4da5a3460a8f62c5d4de7";

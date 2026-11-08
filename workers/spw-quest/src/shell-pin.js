@@ -9,7 +9,7 @@
 // On 2026-11-08 the pinned reader and the site's /parser.js gave the same
 // token streams for all fourteen guide files and the walk.
 
-export const SHELL_VERSION = "1";
+export const SHELL_VERSION = "2";
 export const PINNED_RELEASE = "2026.10.13";
 export const PINNED_READER = "/parser/2026.10.13/reader.min.js";
 export const PINNED_READER_SHA256 = "9928ec7f51a0416ee39857dc3a3b236d071051f484e4da5a3460a8f62c5d4de7";

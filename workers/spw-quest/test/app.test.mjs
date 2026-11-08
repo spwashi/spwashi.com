@@ -33,6 +33,14 @@ test('the manifest names an installable app in scope, in the paper colors', asyn
   for (const field of ['share_target', 'file_handlers', 'prefer_related_applications']) assert.ok(!(field in manifest), field);
   const sizes = manifest.icons.map((icon) => `${icon.sizes} ${icon.purpose}`);
   assert.deepEqual(sizes, ['192x192 any', '512x512 any', '512x512 maskable']);
+  // Each shortcut is one of this app's own jobs, in scope, and opens a page.
+  assert.deepEqual(manifest.shortcuts.map((shortcut) => shortcut.short_name), ['Walk', 'Build', 'Learn', 'Shelf']);
+  for (const shortcut of manifest.shortcuts) {
+    assert.ok(shortcut.url.startsWith(manifest.scope), shortcut.url);
+    assert.equal((await get(shortcut.url.split('#')[0])).status, 200, shortcut.url);
+  }
+  assert.ok((await (await get('/')).text()).includes('<section id="walk"'), 'the Walk shortcut lands on the card');
+  assert.deepEqual(manifest.launch_handler, { client_mode: ['navigate-existing', 'auto'] });
   assert.equal(await (await get('/manifest.webmanifest', { method: 'HEAD' })).text(), '');
   assert.equal((await get('/manifest.webmanifest', { method: 'POST' })).status, 405);
 });
