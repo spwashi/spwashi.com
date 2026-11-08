@@ -1,0 +1,112 @@
+# Language and surface wonders (2026-11) — prime: six of the creator's wonders of 2026-11-08, each with its ground, an owner, and a probe that could prove it wrong
+#
+# The creator, the afternoon of 2026-11-08, after the breadcrumb rail and the
+# walk's you@guide landed: "I'm wondering about dense combinatorics and
+# expansions for component designs"; "I also wonder about developing a
+# localization library with Spw based on expressions and macros that can
+# select text variants depending on the context and available space"; "I'm
+# curious what kinds of accordion semantics might be facilitated more
+# meaningfully with adjustments to the workbench architecture"; "updates
+# across spwashi.com that make the relevant topics over the past few weeks or
+# months easier to surface, as well as updates to the SVGs to make them more
+# valuable for communicating runtime state and integrate Spw sigils as handles
+# for thematic resonance"; and "plan depth and accuracy, opportunities to
+# notice new things about the web or one's relationship with the spaces".
+# Each wonder below names files that exist in this repo (checked 2026-11-08)
+# and one probe whose answer could prove the proposal wrong. Nothing here is a
+# rule; nothing here writes .spw/_workbench.
+
+#>language_surface_wonders_2026_11
+#:cache #!components #!localization #!accordion #!topics #!svg #!noticing
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+expression = wonder[expansion]{combinatorics.locale.fold.recency.diagram.notice}<receipt>
+
+summary = #[
+  `A component is already an expression with slots, so dense combinatorics is a pivot over components: expand the slots, prune by the renovation's principles, and show a specimen sheet, as spw.quest's /constructs and /pivot do for lines.`,
+  `Localization can ride the copy accessor without a fourth family: a variant is a mode on a unit's expression, chosen by context (the condense tiers already exist) and by the space its host measures.`,
+  `A brace is already a fold: its open half can be the summary and its close half the end. Accordion semantics wants the reader to expose container ranges, which is a workbench ask, recorded on this repo's side.`,
+  `Recency is already remembered (recent path memory, the copy clock, git dates); surfacing it is a shelf of what was tended lately and a reader's own walk on spwashi.com.`,
+  `SVGs can paint what the runtime computes and never shows, with sigils as handles that travel to pages sharing an operator.`,
+  `Depth and accuracy: every claim carries the receipt that would prove it wrong, and noticing is a page telling a reader something true about their own path.`,
+][reg=set]
+
+contents = #[
+  ~"./language-surface-wonders-2026-11.spw#combinatorics",
+  ~"./language-surface-wonders-2026-11.spw#localization",
+  ~"./language-surface-wonders-2026-11.spw#accordion",
+  ~"./language-surface-wonders-2026-11.spw#recency",
+  ~"./language-surface-wonders-2026-11.spw#diagrams",
+  ~"./language-surface-wonders-2026-11.spw#noticing",
+  ~"./language-surface-wonders-2026-11.spw#breadcrumb_kin",
+][reg=set]
+
+^"combinatorics"{
+  ask = `dense combinatorics and expansions for component designs`
+  ground = `the renovation names five primitives (frame, card, panel, chip, prose) against about 14 card families on Home (@renovation#top_down); spw.quest already expands a line by its slots (@pivot) and files its shapes (@constructs); @boonhonk warns that mix-counting is a porch, and public development is dimensional travel`
+  proposal = `Write each component as kind[lens]{parts}<projection> and expand its slots: 5 primitives x 12 operators x 4 braces is 240 forms before pruning. Prune by the renovation's principles: what opens closes, color only from an acting operator, material only where earned. Show what survives as a dense specimen sheet, one row per slot turned, each cell a live component, so a design is chosen by walking neighbours rather than by inventing.`
+  owner = `component-region-personality (shape from role), with @renovation`
+  probe = `count the card and panel expressions Home already authors and list which slots vary; if fewer than three slots vary in practice, the expansion is noise and the sheet should turn the slots that do`
+}[reg=facet]
+
+^"localization"{
+  ask = `a localization library with Spw, expressions and macros that select text variants by context and available space`
+  ground = `@copy_accessor: the dotted data-spw-copy-unit is the flat localization projection and data-spw-semantic-expression the multidimensional handle; do not invent a fourth accessor family. @copy_localization: a typed copy key already lands on its sentence. The condense query (?c=brief|card|print|full) already sets a tier on the page (@instrumentation).`
+  proposal = `A variant is a mode on the unit's own expression, so home.hook.lede[brief] and home.hook.lede[full] are the same unit under two lenses. Context picks the lens (the condense tier, the reader's lens, the language); space picks among the lenses that fit, measured by the host's inline size with a container query, so no script measures text. A macro is an expression that names its variants in order of length, ~lede{full|card|brief}: the potential (~) holds them all, and the host's space collapses it to one. The visible sentence stays in the HTML (the scripts-off reading), and the others ride as data.`
+  owner = `copy-localization, under @copy_accessor's no-fourth-family rule`
+  probe = `list the copy units that already have a shorter sibling in the HTML; if none do, the first slice is authoring two lengths for three units, not a library`
+}[reg=facet]
+
+^"accordion"{
+  ask = `what accordion semantics adjustments to the workbench architecture could facilitate more meaningfully`
+  ground = `the site reader exports parse, outline, anchors, roles, highlightHtml, readLine and writeLine among others (@reader); Home folds with native <details> (narration, living concepts, the entrance lab); the renovation reads a brace as symmetric, open half the place and close half the edge it is seen from (@renovation#principles)`
+  proposal = `A brace is a fold. The open half is the summary that stays; the body is what collapses; the close half marks where the fold ends. Nesting is accordion depth, and the operator before a brace says its default: ~ held closed (potential, deferred), ! open (action), ? open on a question. If the reader returned each container's open and close offsets and its depth, an editor could fold by brace, a page could render a .spw file as nested <details> with no hand markup, and the walk or the crumb could open exactly the level a reader is in.`
+  owner = `spw-metaphysical-language (Pass 2, Spw laid out as nested layout); the ask itself goes to @upstream, never into .spw/_workbench`
+  probe = `parse a nested line with the site reader and check whether its tokens already carry container open and close positions; if they do, the fold renderer needs no workbench change`
+  probed = `2026-11-08: yes. parse('a{b[c]{d}}') gives CONTAINER_OPEN and CONTAINER_CLOSE tokens, each with a span (offset, line, column). Pairing opens with closes is a stack walk, so a fold renderer can be built on this repo's side now. The workbench ask narrows to returning that pairing and depth as data (a fold tree beside outline), so every host folds the same way.`
+}[reg=facet]
+
+^"recency"{
+  ask = `make the relevant topics of the past few weeks or months easier to surface across spwashi.com`
+  ground = `@breadcrumb_spell reads a recent path memory (getActiveRecentPathMemory in public/js/semantic/accent-palette.js); @topics_plan says the root shelf links 38 leaves directly; the copy clock audits dated units; git dates every route change`
+  proposal = `Two kinds of recency, kept apart: what the creator tended lately, and where a reader has been lately. The first is a build-time shelf from git dates per route, grouped by topic and written as Spw (*tended{route, route}(week)). The second is spwashi.com's own walk: the recent path memory precipitated as the spw.quest walk is, local and flushable, offered on Home in place of assuming the reader has Spw.`
+  owner = `topic-building-blocks (the shelf) and landing-visual-hierarchy (where it sits on Home)`
+  probe = `count routes changed since 2026-10-01 by topic; if one topic holds most of them, the shelf should be a single row, not a grid`
+}[reg=facet]
+
+^"diagrams"{
+  ask = `SVGs more valuable for communicating runtime state, with Spw sigils as handles for thematic resonance`
+  ground = `13 route pages host SVGs through data-spw-svg-host; the svg-surfaces behavior bundle sits near its budget (46.8 of 48 KiB, css-build 2026-11-08); @chrome_ecology: much of what the UI would need to be informative is already computed and never painted (the grounding reason, the settle confirmation, the effect ledger)`
+  proposal = `An SVG becomes a small instrument panel for state the page already holds: the section the reader is in, what is held, what settled. Its nodes carry sigils as handles, and a handle travels to the pages that share its operator, so a diagram is also a door to kin. Color comes from the operator acting, as the renovation asks, and the diagram names its state in text for a still.`
+  owner = `open: the creator's call; candidates are chrome-ecology's informative ladder and spw-metaphysical-language`
+  probe = `list which of the 13 hosts already read any runtime attribute; if none do, the first slice is one host painting one computed value`
+}[reg=facet]
+
+^"noticing"{
+  ask = `plan depth and accuracy, and opportunities to notice new things about the web or one's relationship with the spaces`
+  ground = `@lore_land_plans: a claim names what would prove it wrong; Home already has a returner-drift frame for a reader who comes back; the spw.quest walk tells a reader their own path in Spw (you@guide)`
+  proposal = `Depth is a probe per claim and accuracy is a probe run; each facet here carries one. Noticing is a page telling a reader something true about their own relation to it: where they have been, what changed since, what is still open. The walk and the crumb are the first two; a return note that names what changed since the last visit is the third.`
+  owner = `wonder-architecture, with interaction-grammar's return-visit rule (a behavior that changes what a returning reader sees ships as a trial and leaves a plain-words note)`
+  probe = `pick one route the reader returns to and list what a return note could truthfully say from data the site already keeps; if it could say nothing, noticing needs a store first`
+}[reg=facet]
+
+^"breadcrumb_kin"{
+  found = `@breadcrumb_spell already owns adaptive breadcrumbs and a live spell path: link trails across home, surface, route parts, frames and modes, and a recent path memory`
+  consequence = `the rail's crumb form (?spw-rail=crumb, 05d20ffe) and this organ should meet before the crumb is the default: one breadcrumb, written as nested braces, fed by the organ's trail; chrome-navigation-wonder's open wonder on who owns breadcrumbs is where they meet`
+}[reg=facet]
+
+@renovation: ~"./home-renovation-2026-11.spw"
+@boonhonk: ~"./boonhonk-combinatoric-genre.spw"
+@chrome_ecology: ~"./chrome-ecology-2026-11.spw"
+@copy_accessor: ~"../conventions/copy-accessor.spw"
+@instrumentation: ~"../../public/js/kernel/instrumentation.js"
+@reader: ~"../../public/js/semantic/spw-workbench-reader.js"
+@breadcrumb_spell: ~"../../public/js/runtime/experiential/breadcrumb-spell.js"
+@upstream: ~"../reviews/upstream-workbench-recommendations.spw"
+@pivot: ~"../../workers/spw-quest/src/pivot.js"
+@constructs: ~"../../workers/spw-quest/src/constructs.js"
+@copy_localization: ~"../../.agents/plans/copy-localization/PLAN.md"
+@topics_plan: ~"../../.agents/plans/topic-building-blocks/PLAN.md"
+@lore_land_plans: ~"../../.agents/plans/ecosystem-architecture/lore-land-plans.spw"
