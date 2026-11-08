@@ -25,6 +25,8 @@ Slices, smallest first:
 5. **Receipts land in the satchel**, composed with [settings-ornament-resonance](../settings-ornament-resonance/PLAN.md)'s patch bay; whether bay and receipts share one satchel is that plan's `#>wonder_settings_ornament_resonance_satchel_holds`.
 6. **What play commits to.** The sincere structure play is played straight in is the creator's call (`chrome-ecology-2026-11.spw#wonder_chrome_ecology_play_structure`).
 
+**Clusters:** [update-clusters-2026-11.spw](../semantic-copy-depth/update-clusters-2026-11.spw). The settings passage stays next. Cluster B follows it only when a public first-move verb changed: the passage then quotes the string that remains. The taste question is `#>wonder_update_clusters_gesture_cohesion`: cohesion when the sentence, the expression, and the control name one physics, dissonance when a reader can hear the split. Two ladders stay two lines.
+
 ## Settled, 2026-09-04
 
 - **Brace physics vocabulary, settled elsewhere.** The objective → subjective gradient is the primary naming, and boon/bane survives only as optional valence coloring (`.spw/conventions/site-semantics.spw#brace_perspective_axis`; the caution in `operator-semantics.spw`). A bridge, not a replacement.

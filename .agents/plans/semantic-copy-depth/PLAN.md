@@ -57,7 +57,9 @@ Let readers tune how much copy is visible without splitting the site into separa
 
 - **C1. `/topics/slop/#feeling`.** Waits on the creator's call (`wonder_semantic_copy_depth_slop_feeling`). Touches `topics/slop/index.html` only. Verify as in Thought trace below.
 - **C2. Home's flat-only units.** `npm run audit:copy:accessor` flags three Home units as `flat-only`, a keyed hook lede with no expression: `home.hook.note` (`#home-note`), `home.library.lede` (`#home-library-lede`) and `home.record.lede` (`#home-record-lede`). Each gains the `subject[mode]{direction}` its sentence already says, read from the sentence, not invented for it. Touches `index.html`; ungated, but no words change. Verify: the accessor's flat-only count falls from 18 to 15, and `npm run manifest:staged` before commit. The other 15 are `/design/` hook ledes, which belong to the design-surface cluster.
-- **C3. Home's field note.** Waits until C1 has landed (Thought trace, below).
+- **C3. Home's field note.** Waits until C1 has landed (Thought trace, below). Includes the words "Action layer" at `#home-field-note`.
+- **Review passes.** The 2026-11-08 reading of tone, routing, interaction, readability, and uniqueness is sequenced in [copy-review-2026-11.spw](./copy-review-2026-11.spw). One route per commit, starting with Now's fold. It does not open C1, C3, or the three flat-only units C2 still owes. Cards and chips stay with [component-region-personality](../component-region-personality/PLAN.md).
+- **Clusters.** Those passes group with the instrument commits in [update-clusters-2026-11.spw](./update-clusters-2026-11.spw). A is the clock. B is the gesture, with interaction-grammar. C is the home map, then the seat line. D and E stay in this plan. The mode slot names the question the sentence is answering. A fresher word keeps its expression.
 
 ## Parked
 

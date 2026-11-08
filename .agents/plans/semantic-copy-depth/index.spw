@@ -70,6 +70,8 @@ dispatch: .{
   .{ label = `commit_skill_induction` ; path = `.spw/audits/commit-skill-induction-2026-07/index.spw` }[reg=facet],
   .{ label = `spw_architecture_ecology` ; path = `.spw/conventions/spw-architecture-ecology.spw` }[reg=facet],
   .{ label = `ai_writing_smells` ; path = `.spw/caches/ai-writing-smells-2026-09.spw` }[reg=facet],
+  .{ label = `copy_review_2026_11` ; path = `.agents/plans/semantic-copy-depth/copy-review-2026-11.spw` }[reg=facet],
+  .{ label = `update_clusters_2026_11` ; path = `.agents/plans/semantic-copy-depth/update-clusters-2026-11.spw` }[reg=facet],
  ][reg=set]
  rule = `Repo-local audits/appendices/conventions — not external web.`
 }[reg=facet]

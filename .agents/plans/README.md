@@ -113,6 +113,15 @@ Every live folder, once, by area. Open a plan's `index.spw` for its disposition 
 - `agentic-dev-contracts/` — one validation entrypoint and one manifest.
 - `history-reflow/` — commit grammar and the reflow method.
 
+## Maintenance Snapshot - 2026-11-08
+
+The creator, 2026-11-08: developing the granularity and alignment of the plans is valuable for foresight and for establishing a communicable backlog.
+
+- **Alignment across owners.** [update-clusters-2026-11.spw](./semantic-copy-depth/update-clusters-2026-11.spw) groups granular commits across the plans that share the entrance (clusters A to F). Each owner plan keeps its slice and points back: component-region-personality, interaction-grammar, spw-inquiry-loop.
+- **Planes.** [spw-planes](./spw-planes/PLAN.md) holds four agent reports as `.spw`, with 21 wonders in one harvested file. Its next moves without a taste call are R2 and R3.
+- **Ecosystem.** Two wonders in [ecosystem-architecture](./ecosystem-architecture/index.spw): what each site keeps or plays (interactive and archival purposes, slanted toward utility), and what spwashi.com should carry to lore.land, whose own plans grow that domain's theory and creative use.
+- **Theory caches grown in place.** cognitive-informatics-interaction now has roots, branches by axis, and cii-006 to cii-009. Three neighbour caches were added the same days: plugin ecology, syntax and runtime, and factshift's cognitive substrate.
+
 ## Maintenance Snapshot - 2026-11-06
 
 Plan pass, asked as granularity, meaningful reference, creativity and updated wonder. Eight readers took the 54 live plans by area; one coordinator verified their boldest claims, archived one plan and ran the gates.

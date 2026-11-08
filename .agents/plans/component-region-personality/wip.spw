@@ -52,10 +52,14 @@ fixity = "tending"
  role_not_element = ~"./index.spw#wonder_component_region_role_not_element"
 }
 
+^"stream"{
+ >>[2026-11-08 16:46] plan — cluster C's instrument specimen waits behind H1. Mono seat line, editorial lede, one frame whose braces ease apart. Cited from semantic-copy-depth/update-clusters-2026-11.spw. No chip restyle inside a copy commit.
+}
+
 ^"cache"{
  ~#status: "waiting"
  ~#next_commit: "~[tokens] Define --shape-small and --shape-medium at the values their fallbacks already agree on"
  ~#files_hot: "public/css/tokens/core.css, public/css/ornament/whimsy.css, public/css/shell/chrome/adaptive.css, services/index.html, recipes/index.html"
  ~#gate: "a pocket still of /play/rpg-wednesday/ for H1; the creator's look for H2 and H3 (#>wonder_component_region_role_not_element); the creator's pick of children per hero for H4 (#>wonder_component_region_hero_children)"
- ~#last_stream: "2026-11-06"
+ ~#last_stream: "2026-11-08"
 }
