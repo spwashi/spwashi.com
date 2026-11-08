@@ -20,15 +20,15 @@ export const APP_ICONS = Object.freeze({
 });
 
 /**
- * start_url is the guide, which assumes no Spw of the visitor's own. The shell
- * design had /?note; the creator changed that on 2026-11-08, before any
- * install existed.
+ * start_url is the guide, which assumes no Spw of the visitor's own: it opens
+ * on their walk here, written in Spw (src/walk.js). The shell design had
+ * /?note; the creator changed that on 2026-11-08, before any install existed.
  */
 export const MANIFEST = Object.freeze({
   id: "/",
   name: "spw.quest",
   short_name: "spw.quest",
-  description: "A guide to the Spw language, on this device.",
+  description: "A guide to Spw that writes your walk through it in Spw, on this device.",
   start_url: "/",
   scope: "/",
   display: "standalone",

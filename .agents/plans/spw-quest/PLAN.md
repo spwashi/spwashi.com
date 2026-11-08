@@ -14,6 +14,7 @@
 - 2026-10-27 `15ceca9e`: J, `/constructs` and `/pivot`.
 - 2026-11-05 `1f399471`, `a43df6d1`: the November book's line on the shelf; K, the five rooms on `about/domains/spw.quest/` (`#ways-in`) and a pivot link on each join specimen in `#direction`. Deployed the same night with G, J and the note.
 - 2026-11-05 `9f2e3af4`, `d3dcda9f`, not deployed: L, every room reads a line in either slot order and writes it back in its author's order (`readSlotOrder` and `readContainers` in `public/js/semantic/expression-query.js`; `assemble` in `src/build.js`; `lineFrom` in `src/pivot.js`); M's body turns (`BODY_TURNS` in `src/pivot.js`); *Pivot this line* and *Find it on the shelf* on `/build`; Shelf in the masthead.
+- 2026-11-08 `cd280779`: S0 of [expression-first.md](./expression-first.md): installable from a phone's menu (manifest, icons, `manifest-src 'self'`); `/install` leads with the phone. The commit after it is W, the guide opening on the visitor's walk written in Spw. Neither is deployed.
 
 ## What it is now (measured 2026-11-06)
 
@@ -60,7 +61,7 @@ Each is one session and one commit. None deploys; deploy is the creator's Wrangl
 
 **R. Sigil physics.** Proposed on 2026-10-12, and displaced by G to M, not dropped. A fourth column in the guide's sigil table carries each mark's physical model from the `physics` field of `OPERATOR_DEFINITIONS` in `public/js/kernel/operator-detection.js`. It is carried at build time, like the peer kit, so spw.quest loads nothing from spwashi.com. Touches `OPERATORS` in `src/guide.js` and the route test. Gate: the creator reads the twelve phrases before they go public.
 
-**Shell: PRs 2 to 4 of the [note and shell design](./note-shell-design.md#pr-plan).** PR 2 pins the reader the guide imports (`/parser/2026.10.13/reader.min.js`, tracked). PR 3 serves the service worker, and PR 4 the manifest and icons. Each PR is specified there file by file, in order.
+**Shell: PRs 2 to 4 of the [note and shell design](./note-shell-design.md#pr-plan).** PR 2 pins the reader the guide imports (`/parser/2026.10.13/reader.min.js`, tracked). PR 3 serves the service worker, and PR 4 the manifest and icons. Each PR is specified there file by file, in order. **2026-11-08:** PR 4 went first, with an install section on `/install` (menu installs need no service worker), as S0 of [expression-first.md](./expression-first.md). That file also holds the creator's asks of that day: one expression first, a gesture hand at page edges, a local registry, operators as components, and the language relay.
 
 ## Shelf, library and architecture (proposed 2026-11-06)
 

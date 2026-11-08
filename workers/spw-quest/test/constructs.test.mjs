@@ -136,7 +136,8 @@ test('the pivot page reads with scripts off, keeps the way back, and reflects no
 
 test('the new pages are reached from learn, build and the shelf, and the guide is left alone', async () => {
   const guide = await text('/');
-  assert.doesNotMatch(guide, /\/constructs|\/pivot/);
+  // Links only: the walk's recorder in <head> names these paths to read an address, and links none of them.
+  assert.doesNotMatch(guide, /href="\/(constructs|pivot)/);
   for (const path of ['/learn', '/build', '/specimens']) {
     const page = await text(path);
     assert.match(page, /<a href="\/constructs">Constructs<\/a>/, path);

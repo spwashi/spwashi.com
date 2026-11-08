@@ -48,8 +48,9 @@ test('the shelf reads with scripts off: pressed forms, the pages\' rarer lines, 
   assert.deepEqual(kinds.map((m) => Boolean(m[2])), [true, false, false, false]);
   assert.ok(kinds.every((m) => Number(m[3]) > 0));
   // The guide carries no shelf of its own: since the note deployed (2026-11-05) it reaches the shelf through the masthead only.
+  // Links only: the walk's recorder in <head> names /specimens to read an address, and links nothing.
   const guide = await text('/');
-  assert.equal(guide.match(/\/specimens/g)?.length, 1);
+  assert.equal(guide.match(/href="\/specimens/g)?.length, 1);
   assert.ok(guide.includes('<a href="/specimens">Shelf</a>'));
   assert.match(await text('/build'), /<a href="\/specimens">Specimens<\/a>/);
   assert.match(await text('/learn'), /<a href="\/specimens">Specimens<\/a>/);

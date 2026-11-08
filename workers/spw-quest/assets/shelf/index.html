@@ -23,6 +23,43 @@
     // Storage refused or unreadable: the page opens at the defaults.
   }
 })("spw.quest.display/1", {"size":["70","80","90","100","110","120"],"wrap":["on","off"],"colors":["marks","plain"],"spacing":["compact","regular","roomy"]}, {"size":"100","wrap":"on","colors":"marks","spacing":"regular"});</script>
+  <script>(function recordWalk(key, limit, stepOf) {
+  try {
+    const step = stepOf(location.href);
+    if (!step) return;
+    const kept = JSON.parse(localStorage.getItem(key) || "[]");
+    const steps = Array.isArray(kept) ? kept : [];
+    const last = steps[steps.length - 1];
+    if (last && last.room === step.room && (last.detail || "") === (step.detail || "")) return;
+    steps.push({ ...step, day: new Date().toISOString().slice(0, 10) });
+    localStorage.setItem(key, JSON.stringify(steps.slice(-limit)));
+  } catch {
+    // Storage refused: the walk is simply not kept.
+  }
+})("spw.quest.walk/1", 40, function walkStep(href) {
+  const url = new URL(href, "https://spw.quest");
+  const path = url.pathname;
+  // [room, the parameter that names its word, what kind of word it is]
+  const rooms = {
+    "/": ["guide", "example", "about"],
+    "/learn": ["learn"],
+    "/read": ["learn", "step", "scene"],
+    "/build": ["build", "word", "made"],
+    "/specimens": ["shelf", "q", "asked"],
+    "/pivot": ["pivot", "line", "made"],
+    "/constructs": ["constructs"],
+    "/forms/": ["forms"],
+    "/install": ["install"],
+  };
+  let room = rooms[path];
+  if (!room && path.startsWith("/shelf/")) room = ["shelf"];
+  if (!room && path.startsWith("/parser/")) room = ["parser"];
+  if (!room) return null;
+  let raw = room[1] ? url.searchParams.get(room[1]) : "";
+  if (!raw && path === "/build") raw = url.searchParams.get("script");
+  const detail = (String(raw || "").toLowerCase().match(/[a-z][a-z0-9_]*/) || [""])[0].slice(0, 24);
+  return detail ? { room: room[0], detail, kind: room[2] } : { room: room[0] };
+});</script>
   <script>
     // esbuild names serialized functions with __name; define it before any inline script in the body runs.
     var __defProp = (target, prop, desc) => Object.defineProperty(target, prop, desc);

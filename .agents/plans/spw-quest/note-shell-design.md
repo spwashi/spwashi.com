@@ -573,7 +573,7 @@ Colors are `PAPER_THEME` in `paper.js` (`#eee9dd`, `#1b5c5d`). `start_url` opens
 
 Icons are committed binaries under `workers/spw-quest/assets/icons/`. The fetch handler serves them the way `servePeerFont` serves faces: `image/png`, `nosniff`, `Cache-Control: public, max-age=86400`. Not `immutable`, so a replacement does not pretend to be a new URL. A visible icon change still needs a new `sw.js` byte so install precache updates. Art direction: a flat tile, background `#1b5c5d`, the characters `#>` in `#eee9dd`. Maskable art stays inside the safe center. No remote fetch. No new package. Do not point the manifest at `/public/images/icon-192.png` on spwashi.com. `paper.js` already refuses to load faces from that origin.
 
-Do not call `preventDefault` on `beforeinstallprompt`. Do not add an install button. The browser's own affordance is the whole UI. In `display-mode: standalone` the page does nothing special in this slice. Do not call `navigator.storage.persist()`.
+Do not call `preventDefault` on `beforeinstallprompt`. Do not add an install button. The browser's own affordance is the whole UI. *Changed by the creator 2026-11-08 ("the install page should make that easy"): `/install` alone defers the prompt behind its own button and lists the menu steps per device; every other page leaves the browser's prompt alone. See [expression-first.md](./expression-first.md) S0.* In `display-mode: standalone` the page does nothing special in this slice. Do not call `navigator.storage.persist()`.
 
 `check:pwa` stays pointed at the repo-root `sw.js` and `manifest.webmanifest`. Quest files must not be required by those contracts. If a quest path is added to the site precache, that is a bug.
 
