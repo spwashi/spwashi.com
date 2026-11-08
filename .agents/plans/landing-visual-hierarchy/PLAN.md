@@ -4,6 +4,8 @@
 
 **Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — ungated.services_offer_first, home.masthead, calls.projects_nav, seams.home, seams.settings.
 
+**Home renovation (the creator, 2026-11-08):** [home-renovation-2026-11](../../../.spw/caches/home-renovation-2026-11.spw) reads Home top down (17 frames, about 14 card families, three page indexes that disagree) and bottom up. It proposes five principles toward one grammar. Which frames stay on Home is this plan's call.
+
 **Related:** [layout-seat-squeeze](../layout-seat-squeeze/PLAN.md) · [alignment-content-fit](../archive/alignment-content-fit/PLAN.md). **Absorbed 2026-10-10:** [landing-page-hierarchy-2026-08-21](../archive/landing-page-hierarchy-2026-08-21/PLAN.md).
 
 ## Next slices — 2026-11-06

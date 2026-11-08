@@ -1,0 +1,177 @@
+# Home renovation (2026-11) — prime: the home page's chrome, cards and components read top down and bottom up, toward one grammar
+#
+# The creator, through the evening of 2026-11-08:
+# "the rail UX could be improved; the rail button isn't immediately clear and
+# doesn't feel very useful in screenshots; I also think this could be more
+# breadcrumb-like with typographical mindfulness and Spw anatomy utilizing
+# symmetry and operational physics", then "perhaps the home page cards and
+# components may be considered from the top down and bottom up according to
+# the recent plans and caches to refine their theory for potentially radical
+# design improvements", "the cauldron components don't make much sense and the
+# tape concept represents an inauthentic skeuomorphism that can be renovated
+# into a more digital-first reflection on symmetry, visual hierarchy, jazz,
+# dissonance, color, thematic resonance, CSS token integration", "consider the
+# font size and padding of the spw spells/precipitates", "consider integrating
+# more of the thematic physics implied by the folios", and "I wonder about
+# replacing shot with cap".
+# This holds two read-only sweeps and a live probe of the same evening, five
+# proposed principles, and a ladder of slices, each with its owner plan.
+# Nothing here decides a sensation: every visible change ends at a live demo.
+
+#>home_renovation_2026_11
+#:cache #!home #!chrome #!components #!material #!typography
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+expression = home[renovation]{rail.cauldron.cards.type.material}<one_grammar>
+
+summary = #[
+  `The home page runs 17 frames, about 14 card families, 154 chips and 130 distinct data-spw-* attribute names, against a theory of five primitives (frame, card, panel, chip, prose).`,
+  `The travel rail reads as a widget, not a place: a toggle lettered "rail", an id where a heading belongs, a glyph (⌁) that is not an operator, and a ground the body text reads through. Capture mode hides it, so the site's own stills never judge it.`,
+  `The cauldron is two things under one name, and its "tape" is a cassette drawn with reels: a skeuomorph of a medium the creator's art never uses. Across 197 folio descriptions, tape appears about five times; cutouts, cards and boxes, lamination, spirals, washes and arrows carry the work.`,
+  `Typography and color both drift from the stated theory: prose is set in mono where the serif should carry the sentence, and ten operator colors crowd one teal band while cards borrow operator colors for things that are not operators.`,
+  `Proposed: one grammar where every piece is a Spw expression whose shape comes from its role, whose marks close what they open, whose color comes from an operator that is acting, and whose material is earned from the folios. The rail is the first live demo.`,
+][reg=set]
+
+contents = #[
+  ~"./home-renovation-2026-11.spw#asks",
+  ~"./home-renovation-2026-11.spw#top_down",
+  ~"./home-renovation-2026-11.spw#bottom_up",
+  ~"./home-renovation-2026-11.spw#folio_physics",
+  ~"./home-renovation-2026-11.spw#principles",
+  ~"./home-renovation-2026-11.spw#rail",
+  ~"./home-renovation-2026-11.spw#cauldron_and_tape",
+  ~"./home-renovation-2026-11.spw#spell_scale",
+  ~"./home-renovation-2026-11.spw#cap",
+  ~"./home-renovation-2026-11.spw#answers",
+  ~"./home-renovation-2026-11.spw#ladder",
+][reg=set]
+
+^"asks"{
+  rail = `clearer at first glance, useful in a screenshot, breadcrumb-like, typographically mindful, Spw anatomy with symmetry and operational physics`
+  chrome = `floating chrome aligned with typographical affordances and Spw operational physics`
+  components = `home cards and components considered top down and bottom up against the recent plans and caches, open to radical design improvements`
+  cauldron = `the cauldron components do not make much sense`
+  tape = `renovate an inauthentic skeuomorphism into a digital-first reflection on symmetry, visual hierarchy, jazz, dissonance, color, thematic resonance and CSS token integration`
+  spells = `the font size and padding of Spw spells and precipitates`
+  folios = `more of the thematic physics the folios imply`
+  cap = `replace the shot query key with cap`
+}[reg=facet]
+
+^"top_down"{
+  frames = `17 .spw-frame regions in main, from #home-frame (hero: folio preview, paste box, working view, four chip rows, reason strip, narration, quick start, logo plate) to #wonder-kin (6 room chips, no braces) (@home:93-2322)`
+  cards = `about 14 card families: only the four entry loops use .spw-card; vibe-widget, returner and gratitude carry data-spw-kind=card and the entry loops do not`
+  hero = `the hero holds four chip rows; operator-field holds 13 chips against component-region-personality's cap of 8 (@crp)`
+  primer = `the page's own primer teaches ~ as "reaches without binding", @ as "commits" and * as "connects themes" (@home:1117-1159), against the kernel's superposition defer, perspective push and materialization (@ops); ~ also dresses plain links (@home:386, 2152-2154) and ! dresses ordinary navigation (@home:490, 1440)`
+  unclosed = `theme buttons open a bare [ (@home:2245-2293) and ^"reading_layers"{ opens a brace (@home:1099) that nothing closes; operator-field says form=angle inside braces (@home:1817, 1827)`
+  indexes = `three page indexes disagree: hero landmarks name 4 rooms, the page index 7 under old names (@home:1462), the rail 17`
+  usage = `operators on the page, aliases folded: # 44, ~ 39, ? 39, * 25, ^ 24, ! 16, @ 14, . 10, $ 5, = 1, & 0, % 0`
+}[reg=facet]
+
+^"bottom_up"{
+  card_base = `components/cards.css reads --component-route-accent, --component-surface-strong, --spw-tangibility, --component-shadow, --card-rhythm, --spw-viscosity; its hyperphysics block tilts every card and follows the pointer with --active-op-color (@cards_css:295-379)`
+  spread = `.frame-card is styled in about 50 source sheets and .spw-panel in about 50; home dark-mode overrides are written twice (@home_css:73-112, home-panels.css:771-800)`
+  type = `body is JetBrains Mono (reset/base.css:55), headings Inter (typography/base.css:60), Newsreader only on ledes, the tagline and the folio preview title; @native_components says the serif carries the sentence and mono carries the tool`
+  color = `ten of 19 operator types sit between hue 160 and 188 (@tokens:1493-1648); @ reuses !'s color and [ reuses ?'s; discovery cards borrow operator colors by image palette (home-panels.css:603-616); @ornament_contract: operator color is semantic, not decorative`
+  braces = `open braces lean objective (hue 188), close braces subjective (hue 342) (@syntax_css:79-84); --brace-corner-* and --brace-open-color / --brace-close-color (@syntax_css:1443-1518); .spw-delimiter shapes each half (@syntax_css:347-398)`
+  material = `laminate (rim, glare, tilt, lift, mat) is applied by image path, not by whether the object is laminated, and the laminated scan strip gets none (systems/image-utilization.css:110-170); a paper corner on every button (ornament/whimsy.css:16, 124-130); glass and matte finishes (effects/material.css:186-300)`
+}[reg=facet]
+
+^"folio_physics"{
+  method = `word counts over the title and alt text of the 197 pieces in @folio_days, 2026-11-08`
+  counts = `cards and boxes 118, cutouts 53, arrows, ladders and feedback 49, operators, hashes and braces 80, laminated 36, spirals 34, washes 31, moons 19, drips 7; tape about 5 (taped 3, tape 1, stapled 1, sticker 1)`
+  palette = `teal 65, white 39, grey 35, green 34, pink 30, violet 24, blue 21, yellow 20, red 17, magenta 10`
+  reading = `The folios' physics is cut, boxed, laminated, washed and wound: a cutout gives an edge and a figure against its ground; a box holds; lamination seals a layer; a wash diffuses a field of color; a spiral winds toward a center; a ladder or an arrow carries a step on. Tape is not in the work.`
+  mapping = `cutout -> a closing edge (the subjective half of a brace); box -> a brace that holds; lamination -> only on real scans; wash -> a field token per folio palette; spiral -> ~ potential winding inward; ladder and arrow -> the ~> relay and the breadcrumb; moon -> a phase (the production season's closes)`
+}[reg=facet]
+
+^"principles"{
+  one_grammar = `Every piece is one Spw expression drawn from five primitives (frame, card, panel, chip, prose), its shape from its role, not its element (@crp principle; @component_ecology).`
+  symmetry = `What opens closes on screen. A brace's open half is the place, its close half the edge it is seen from; a breadcrumb is a nest of braces closed in reverse.`
+  type = `The serif carries the sentence, mono carries the mark (@native_components). Spw on screen takes one scale: size relative to the line it sits in, padding in em, so a spell reads as words in a sentence and not as a button.`
+  color = `Color comes from an operator that is acting, and nowhere else. The open/close pair (188 against 342) is the consonance/dissonance axis: an unclosed form holds a dissonant interval until it resolves, which is the jazz in it. Spread the teal band before adding hues.`
+  material = `Material is earned from the creator's folios: lamination only where a scan was laminated; washes, cutouts and spirals before any borrowed medium. Tape and glass go.`
+}[reg=facet]
+
+^"rail"{
+  today = `collapsed: rail · ‹ · #> · home_frame ⌁8 1/17 · ›; open: trim ↑ ‹ › ↓ ~ & #, with $satchel above; translucent over body text; probed at 390 px, 2026-11-08`
+  why_wrong_place = `#home-folios is a sibling of #home-frame, not its child; resolveActiveIndex ranks focus, then a sticky data-spw-active (written by site-core-minimal.js on a click or hash link), then :target, above scroll (@handle:1659-1710); the reading line is clamp(28vh, 120, 320) and #home-frame is tall`
+  sigil_dropped = `getSectionToken reads the authored *folio_stack (@handle:255-265), and summarizePosition replaces it with #> and the id (@handle:890-903)`
+  glyph = `⌁ counts gatherable words in the section, not what is held, has no handler of its own, and also means the Explore posture, the header and footer slots and the hook region`
+  kin = `~similar is potential and #resonate vibration, but &contrast puts entanglement on a contrast; % (normalize: compare, weigh, level) reads as contrast`
+  proposal = `The rail is a breadcrumb written as nested braces, symmetric about the reader's place: route frame, then the section in its own authored sigil, then its heading in the serif, closed in reverse, with the place as the body. Pocket, collapsed: ‹ *folio_stack{ The October drop, and the studio } 2/17 ›. Open: #>home › *folio_stack{ … } over a row of moves, each its operator: ^ to the frame, ‹ › siblings, ~ similar, % contrast, # resonate, $ satchel. No word "rail": the crumb is the toggle. Gatherable words read ~n beside the cauldron's held *n. An opaque ground. Under capture the crumb stays, as the still's caption.`
+  demo = `behind ?spw-rail=crumb on any page, the idiom ?spw-satchel=rail already uses (@handle:524, 929-936); the default rail is untouched until the creator approves it live at 390 px and 1440 px`
+  owner = `chrome-navigation-wonder (the rail) with floating-chrome-stack (corner and control size); its open wonder "who owns breadcrumbs" is answered by this proposal if the creator agrees`
+}[reg=facet]
+
+^"cauldron_and_tape"{
+  today = `footer garden (#memory-garden-cauldron) with a live expression, five vessels, nine verb chips in tend, keep and sweep; a floating chip; a dialog; ingredient cards with a cassette; registers no reader sees; the /play/ media cauldron under the same name`
+  tape_is_a_cassette = `interface/cauldron/tape.js winds a reel by spaced returns over four (FULL_TAPE = 4); two reel circles, a run line, a cassette label band (components/cauldron.css:413-521, duplicated in bundles/behaviors/console.css); it collides with the creator's real washi-tape spells`
+  proposal_tape = `Returns become a measure, not a medium: the fragment's closing brace fills as spaced returns accumulate, in that fragment's operator color, read as %returns{n of 4}. Same ledger, same token (--tape-wound renamed to a ratio), no reels.`
+  proposal_cauldron = `One component, one expression: ^cauldron[lens]{parts}<projection> (@spellcraft step 1). The nine verbs and five vessel colors fold into operator moves on that expression; the registers' composed point fills <projection>, so the theory finally shows. The /play/ generator takes its own name.`
+  owner = `cauldron-lens-composition and spellcraft-authoring`
+}[reg=facet]
+
+^"spell_scale"{
+  ask = `the font size and padding of Spw spells and precipitates`
+  today = `sigil chips such as *folio_stack and #>home_frame render as padded pills larger than the words around them; the precipitation modes (?p=screenshot|card|condensed|print) restyle the page for capture`
+  proposal = `one scale for Spw in place: font-size in em of its host line (about 0.92em in prose, 1em in a heading's sigil slot), inline padding 0.35em, block padding 0.1em, no pill radius in prose; chrome uses the same tokens at the control size. Two tokens on tokens/core.css, read by chips, the rail and precipitates alike.`
+  owner = `component-region-personality (shape from role), with spw-metaphysical-language (sigil properties)`
+}[reg=facet]
+
+^"cap"{
+  today = `?shot=1 sets precipitation mode screenshot and print-ready (@instrumentation:870-877); the composer's short key is shot (@query_composer:16); capture mode clean is set separately (kernel/hydration.js:43-46, 124) and modes/capture.css hides floating chrome`
+  proposal = `cap as the short key, in the composer's three-letter family (pal, lyt, pos, den, spc, sem, enh); shot stays accepted so old links hold.`
+  open = `whether cap is the one capture switch, setting both the screenshot precipitation and capture mode, with the rail kept as the still's caption`
+}[reg=facet]
+
+^"answers"{
+  date = `2026-11-08, the creator, to four questions`
+  demo = `yes: build the breadcrumb rail demo now`
+  contrast = `probably: % for contrast in place of &, held as tentative in the demo`
+  caption = `the rail stays visible in a still; what that role is called can be renamed, so cap's unifying switch waits on the name`
+  commit = `commit this cache`
+}[reg=facet]
+
+^"ladder"{
+  no_look = #[
+    `close the delimiters the home page leaves open (@home:1099, 2245-2293), and say form=brace where operator-field draws braces`,
+    `stop summarizePosition from replacing the authored sigil`,
+    `cap as an accepted alias beside shot`,
+  ][reg=set]
+  live_demo = #[
+    `R. the breadcrumb rail behind ?spw-rail=crumb (first)`,
+    `S. the spell scale on the home hero and one precipitate`,
+    `T. returns as a filling brace in place of the cassette`,
+    `M. folio washes as field tokens, lamination only on scans, card tilt retired on paper`,
+  ][reg=set]
+  creator_words = #[
+    `the five principles, in the creator's words, before any is called a rule`,
+    `the home primer's readings of ~, @ and * against the kernel's (copy, and language)`,
+    `the cauldron's single name and its expression`,
+    `which of the 17 frames stay on Home (landing-visual-hierarchy: identity, one notice, one action cluster, one proof)`,
+    `whether cap unifies capture`,
+  ][reg=set]
+}[reg=facet]
+
+@home: ~"../../index.html"
+@handle: ~"../../public/js/runtime/attention/section-handle.js"
+@ops: ~"../../public/js/kernel/operator-detection.js"
+@instrumentation: ~"../../public/js/kernel/instrumentation.js"
+@query_composer: ~"../../public/js/kernel/query-composer.js"
+@cards_css: ~"../../public/css/components/cards.css"
+@home_css: ~"../../public/css/routes/surfaces/home.css"
+@syntax_css: ~"../../public/css/grammar/syntax.css"
+@tokens: ~"../../public/css/tokens/core.css"
+@folio_days: ~"../../public/data/folio-days.json"
+@native_components: ~"./spw-native-components-2026-11.spw"
+@component_ecology: ~"./component-ecology-theory-2026-11.spw"
+@chrome_ecology: ~"./chrome-ecology-2026-11.spw"
+@ornament_contract: ~"../conventions/ornament-contract.spw"
+@crp: ~"../../.agents/plans/component-region-personality/PLAN.md"
+@spellcraft: ~"../../.agents/plans/spellcraft-authoring/PLAN.md"
+@rail_owner: ~"../../.agents/plans/chrome-navigation-wonder/PLAN.md"
+@chrome_owner: ~"../../.agents/plans/floating-chrome-stack/FIX.md"
+@cauldron_owner: ~"../../.agents/plans/cauldron-lens-composition/PLAN.md"
+@landing_owner: ~"../../.agents/plans/landing-visual-hierarchy/PLAN.md"
