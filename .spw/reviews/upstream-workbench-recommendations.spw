@@ -243,7 +243,7 @@ expression = consumer[recommendations]{performance.cli.intermediate.culture}<ups
     `gestures.spw — one operator per editor gesture`,
     `placement.spw — a file at a tree's root that previews what a construct means there`,
     `architecture.spw — one model under the CLI and the editor`,
-    `language-support.spw — tokens, symbols, highlighting, navigation; a valence word leading a fragment (2026-10-25)`,
+    `language-support.spw — tokens, symbols, highlighting, navigation; a valence word leading a fragment (2026-10-25); the pentad as one ordered charge, a reading as a projection (2026-11-08)`,
     `plugins-and-tooling.spw — one character table, Spw in host files, one probe, one plugin, the slow loop, and the quest's grow step; then, from the editor in use, an emit that names its readers, lenses that count citations and say what reg counts, handles in prose, a generated file that opens its page, compare in the editor, and one browser build (2026-10-25)`,
     `density-and-voice.spw — a register that selects a sink, slopes read apart, a geometry field that stays a sitting (2026-10-25)`,
     `claims-and-trees.spw — a claim is the unit, development keeps a receipt, a citation lands on the claim (2026-10-25)`,
@@ -405,6 +405,16 @@ expression = consumer[recommendations]{performance.cli.intermediate.culture}<ups
     `+[asks] Every ask names the expressiveness goal it serves and what it keeps :: ask[goal]{serves.keeps}<expressiveness_goals>`,
   ][reg=set]
   ~#taste: "A release is read against the goals, not against taste alone."
+}[reg=facet]
+
+^"week_2026_11_08"{
+  standing = `The parent gitlink is origin/main at edbc5500, three commits past 27fa1e3d. Those commits are plans and theory: a line kit, host receipts, and an exhibit floor. They do not change the charge tests. The pin commit does not rebuild the parser.`
+  lore = `lore.land reads the five words three ways, and the site does not mount that repo. The story's three_lands asks what this could become, what it will cost, and what will remain, and the_lift is the turn into bone. domains.spw names five realms on one selector. The pipeline maps the words onto select, transform, validate, emit, and fallback.`
+  proposals = #[
+    `+[charge] The five words stay one ordered charge. A land is a projection of it. A glued boonhonk stays a name :: charge[pentad]{chain.reading}<valence>`,
+  ][reg=set]
+  ~#taste: "A charge you can ask along is useful. A sixth sigil for a mood is not."
+  consume = `Until the selector can ask for the turn, the site keeps reading charge plus mode in expression-tone.js and keeps brace color on the objective to subjective tokens.`
 }[reg=facet]
 
 ^"validation"{
