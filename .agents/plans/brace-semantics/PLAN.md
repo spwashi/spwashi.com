@@ -73,7 +73,7 @@ Once made: the table is written once in WB canon as an upstream ask, with the le
 
 **Memory.** Pins (`spw-pins`, `buildPinRecord` in `runtime/memory/pin-registry.js`, called from `brace-gestures.js:798`) keep page, id, title, wonder, operator and context, and no expression, though the gesture that makes them has one. "Pin region" in the region menu marks the region and saves nothing. Nothing reads the clipboard; copies are not remembered. No "recent" list exists.
 
-**Home.** "Have some Spw?" (`index.html:151-160`) sends text to the site's parser. spw.quest is reached through related routes and the domain page only; nothing on home reads pins or the cauldron.
+**Home.** The paste box (`#home-paste` in `index.html`, "Have some Spw?" until 2026-11-08, now "This page, in Spw." and holding the page's own lines) sends text to the site's parser. spw.quest is reached through related routes and the domain page only; nothing on home reads pins or the cauldron.
 
 ## C. One way into Spw: labeled scopes, and a way back
 
@@ -127,7 +127,7 @@ Labels, side marks and the runtime element are not built.
 
 ## E. A door from home into spw.quest
 
-- One door beside "Have some Spw?": **take this to spw.quest**, with three sources, each chosen, none automatic.
+- One door beside the home paste box: **take this to spw.quest**, with three sources, each chosen, none automatic.
   - *Cauldron*: the items whose expressions are authored Spw. The fallback words are left out until C stops writing them.
   - *Clipboard*: read only on a tap of its own, or pasted into the field that is already there.
   - *Pinned*: needs pins to keep the expression they were made with: one field added to the record in `pin-registry.js`, under the existing key.

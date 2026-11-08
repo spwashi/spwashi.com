@@ -149,8 +149,12 @@
                     <span id="home-lede-rooms" data-spw-copy-unit="home.hook.lede.rooms"><a href="/about/">About</a> is the person. <a href="/now/">Now</a> is this close. <a href="/topics/">Topics</a> hold <a href="/topics/math/">math</a>, <a href="/topics/software/spw/">Spw</a>, and <a href="/topics/craft/">craft</a>. <a href="/play/">Play</a> is the table. <a href="/services/">Services</a> is where a project starts.</span>
                 </p>
                 <form class="spw-paste" id="home-paste" action="/tools/spw-parser/" method="get" data-paste-open="page" aria-labelledby="home-paste-label">
-                    <label class="spw-paste__title" id="home-paste-label" for="home-paste-source"><strong>Have some Spw?</strong> Paste it here to read its structure, or open a whole <code>.spw</code> file as a room.</label>
-                    <textarea class="spw-paste__field" id="home-paste-source" name="spw_source" rows="3" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="^&quot;note&quot;{ stayed = ?[&quot;what stayed&quot;] }"></textarea>
+                    <label class="spw-paste__title" id="home-paste-label" for="home-paste-source"><strong>This page, in Spw.</strong> Change a line or paste your own to read its structure, or open a whole <code>.spw</code> file as a room.</label>
+                    <textarea class="spw-paste__field" id="home-paste-source" name="spw_source" rows="5" spellcheck="false" autocomplete="off" autocapitalize="off">#&gt;home_frame
+home[hook]{software.art.practice}(atlas)&lt;person&gt;
+home[live]{season.close}(production)&lt;now&gt;
+.about @now &lt;topics&gt; ~play @services
+^"note"{ stayed = ?["what stayed"] }</textarea>
                     <input type="hidden" name="spw_source_name" value="pasted.spw">
                     <div class="spw-paste__exits frame-operators">
                         <button type="submit" class="spw-chip">Read in the parser</button>
