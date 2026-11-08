@@ -1,0 +1,260 @@
+# Language, material, fluency (2026-11-08)
+#
+# operation: cache
+# The runtime is already a small computer. This file records that reading
+# and the learning, combinatoric, historical, and material questions beside it.
+# Hypotheses. Not a patch, not a grammar, not a seventh wonder type.
+
+#>language_material_fluency_2026_11
+#:cache #!language #!runtime #!material #!literacy #!wonder
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@physics: ~"../../public/js/runtime/physics/physical-model.js"
+@charge: ~"../../public/js/runtime/physics/charge-field.js"
+@charge_contract: ~"../../public/js/typed/charge-field-contract.js"
+@climate: ~"../../public/js/runtime/physics/developmental-climate.js"
+@beat: ~"../../public/js/runtime/physics/pulse-beat-tuner.js"
+@attention: ~"../../public/js/runtime/attention/attention-architecture.js"
+@attention_shared: ~"../../public/js/runtime/attention/shared.js"
+@attention_field: ~"../conventions/attention-field.spw"
+@catalog: ~"../../public/js/runtime/catalog/constants.js"
+@contract_spw: ~"../../public/js/runtime/catalog/contract-spw.js"
+@storage: ~"../../public/js/kernel/storage-utils.js"
+@medium: ~"../../public/js/runtime/shell/interactive-medium.js"
+@material: ~"../conventions/material-physics.spw"
+@tangibility: ~"./tangibility-contours-2026-10.spw"
+@origin: ~"./spw-origin-modality-pivots.spw"
+@literacy: ~"../conventions/intergenerational-literacy.spw"
+@wonder: ~"../conventions/wonder-architecture.spw"
+@components: ~"./spw-native-components-2026-11.spw"
+@affordances: ~"./linguistic-affordances-2026-11.spw"
+@theory_runtime: ~"./syntax-runtime-theory-enhancements-2026-11.spw"
+@boonhonk: ~"./boonhonk-combinatoric-genre.spw"
+@cognitive: ~"./cognitive-informatics-interaction-2026-11.spw"
+@llm: ~"./component-llm-intelligence-2026-08.spw"
+@valence: ~"../reviews/upstream-workbench-recommendations/language-support.spw"
+@motions: ~"../reviews/upstream-workbench-recommendations/motions.spw"
+@cli: ~"../_workbench/packages/spw-cli/src/commands.ts"
+@format: ~"../_workbench/packages/spw-cli/src/format.ts"
+@mutate: ~"../_workbench/packages/spw-seed/src/canonical/mutation-automata.ts"
+@form: ~"../_workbench/packages/spw-cli/src/geometry.ts"
+@beat_cli: ~"../_workbench/packages/spw-cli/src/beat.ts"
+
+operation = "cache"
+fixity = "experimental"
+source = "chat 2026-11-08: the runtime as a small computer, then tooling surfaces, mutation as performance, Python / APL / Prolog, fuzz, crypto and the PhD as identity bets, ECE phasors, symmetry and mechanical sympathy"
+
+expression = language[material]{mark.field.residue}<fluency>
+
+^"contents"{
+  thesis = `the machine, and the assumption to drop`
+  machine = `four sockets already in the runtime`
+  learn = `what makes a language interesting to learn`
+  anticipate = `features worth looking forward to`
+  combinatorics = `which products are allowed to meet`
+  fluencies = `shapes that teach more than one literacy`
+  histories = `other languages, models, and lenses`
+  modalities = `speech, sign, touch, and the page`
+  materials = `fiber, optic, ink, dye, finish, polymer`
+  tooling = `which features the CLI actually shows`
+  performance = `typing and mutation as a musical exercise`
+  motions = `transitions among expression, template, slot, pattern`
+  lineages = `Python, APL, Prolog, and a fuzzer that deserves the name`
+  stratum = `crypto and the PhD as identity bets on a communicable costume`
+  phasor = `ECE relationships and alternating current in more than two dimensions`
+  sympathy = `symmetry, consistency, resonance, overload, mechanical sympathy`
+  refuse = `what this file will not become`
+}[reg=facet]
+
+^"thesis"{
+  status = "hypothesis"
+  claim = `The runtime is a small computer: a scheduler, a memory hierarchy, several clocks, an effect system, and a lowering from catalog fields into a Spw sentence. The language work has been extending the mnemonics. The interesting language names the machine parts a learner can watch move.`
+  assumption = `A unified physics is not the snapshot in @physics. That module joins spatial gravity, charge, the 13-beat, wonder memory, and climate, then reads arrival and presence off the document, and writes nothing back. The couplings already stored beside @storage are the relation the snapshot does not compute.`
+  specimen = `An authored expression readable with scripts off is the floor for a page (@components). @contract_spw already lowers a module into a derived sentence: identity, where it mounts, when it wakes, what it writes, what it costs. The catalog fields stay the source. The hand-written line is a frontend.`
+}[reg=facet]
+
+^"machine"{
+  status = "hypothesis"
+  lowering = `One distinction should survive the trip from catalog token to sigil, haptic, and prose. Today "commit" is three distinctions: the ! sigil, COST_COMMITMENT in @catalog (authored, listen, project, residue), and the discharge law release in @charge, which wonder and normalize also use. Condensation is picking the catalog commitment as the source and letting the other media be views that may lag only by saying so.`
+  scheduler = `MOUNT_WHEN is already immediate, visible, idle, interaction, invited, region, settled. COST_CLASS names premature commitment, working-memory pressure, interference, paint, residue, demand-coupled. EFFECT_SCOPE names local DOM, CSS variables, geometry, listeners, timers, root state, navigation. A gesture collision is often two handlers at one interrupt level. A mode that cites a when-token or a cost class is a schedule a loader could refuse.`
+  clocks = `Charge decays on a 2800 ms clock and discharges in 1400 (@charge_contract). Section-handle travel settles in 340 ms (@attention_shared). The beat is a 13-cycle with primes at 1, 5, 9, 13 (@beat). Climate auto-cycles at 24 s (@climate). Wonder-memory collecting decays near τ ≈ 40 s, to a floor (@attention_field). @theory_runtime already asks after a three-clock hysteresis. This file asks which clock a learner can feel. A seat with no clock is a mark used after the timer that minted it.`
+  memory = `STORAGE_TOPOLOGY in @storage already splits substrate, memory, discovery, inspection, and expression. $ as one drawer flattens that. The mode can name the tier: $[substrate] against $[memory]. Wonder memory, a visit, and a checkpoint are different physics.`
+  loop = `A wonder's $% set is a menu of alternatives. The snapshot cannot change the next alternative, because nothing writes it back into the effect ledger. A closed loop would store a receipt whose scene is the clock that measured it.`
+  pentad = `boon.honk stored as an ordered valence is a parser fact (@valence). The runtime charge is an intensity, a carrier, and a discharge law: release, transfer, ground, project. lore.land reads the same five words as questions, as realm names, and as pipeline stages. Those readings do not share a total order. The shared object is an effect row plus the name of the engine that receives it. A projection word<bone> names one lowering. Entering bone changes what is expensive, which is closer to EFFECT_SCOPE than to a lens.`
+}[reg=facet]
+
+^"learn"{
+  status = "hypothesis"
+  claim = `A language is interesting to learn when the next legal mark is visible and the field answers in the same gesture. More glyphs delay the answer. @origin already says the first saturation rung must not require operator literacy.`
+  hangul = `Hangul is the best precedent in the room. A featural letter depicts the mouth, so a reader can derive a syllable they have not memorized. A Spw sigil is interesting when it depicts the force: return, open, settle, commit. A sigil that must be memorized is a character list. The physics word in the kernel is the depiction. The uppercase hover caption is the memorized name.`
+  logo = `Logo's turtle made learning interesting because the floor moved. Smalltalk's browser made the system the curriculum. The equivalent here is a field that answers: charge, material, beat, a seat line. A lesson that only parses has not started.`
+  apl = `Iverson's notation-as-a-tool-of-thought pays off when a short phrase does a whole array operation you can watch. Spw's short phrase should move one engine, not introduce one concept. APL's trains (small pieces becoming a phrase) are the coupling the snapshot lacks. The failure mode of APL is a beautiful language almost nobody can enter. The failure mode of BASIC and COBOL, designed to be friendly, was a verbose cage. The middle path is a short phrase, a visible effect, and a refusal when the phrase is illegal.`
+  sql = `SQL stays learnable because EXPLAIN shows the plan the engine chose. @contract_spw is already that plan. A learner who can set the authored line beside the derived sentence can see what the machine kept.`
+  forth = `Forth is interesting because you define the next word from the words you have, and the dictionary holds them. Residue in $[memory] is that dictionary. A visit that defines nothing has no next word to look forward to.`
+  tex = `TeX and PostScript are languages of marks on a surface: boxes, glue, the page as a material. The mono ch measure and @material are this lineage. You learn them by seeing the mark change the sheet.`
+}[reg=facet]
+
+^"anticipate"{
+  status = "hypothesis"
+  claim = `A feature is worth anticipating when a learner can imagine the reply before it ships. The reply is a movement in an engine that already runs.`
+  explain = `See the lowering. The same expression beside the contract sentence, the way EXPLAIN sits beside a query. The anticipation is "what did the machine keep?"`
+  aging = `A seat that names its clock and goes quiet when that clock expires. Dye fades. Charge bleeds to a floor. A pin that is still loud after τ has forgotten which clock it belonged to.`
+  material_swap = `The same sigil on paper, then on glass, the chip unchanged. The bench already lives at /design/materials/. The anticipation is the force arriving in a different stuff.`
+  coupling = `Two frames discharge and a third acknowledges. & lighting the coupling store that already exists. The anticipation is a relation you can point at.`
+  open_slot = `A line that leaves one slot for the hand, the beat, or the climate. The anticipation is getting to finish it. A complete hot sign leaves nothing to look forward to.`
+  focal = `One slot sharp, the others present and soft. That is a focal plane. It is also how a second literacy enters without a second instruction.`
+}[reg=facet]
+
+^"combinatorics"{
+  status = "hypothesis"
+  claim = `The full product is sigil × delimiter × slot × when × cost × effect × material × medium register × storage tier × clock. Almost all of that product is uninhabited. Wonder lives in a few legal neighbors. @boonhonk already refuses to mint the 25 pair-names.`
+  mordant = `A dye stays in a fiber because a mordant binds them. Sigil × material takes only when the material sets the intents and the chip consumes them. @material already states that seam. A combinatoric that skips the mordant is a stain that washes out.`
+  metamerism = `Two spectra can match under one lamp and split under another. Two arrangements may agree for a reader and split for a hand, or agree on the page and split in a model. The split is a wonder when one slot was left open on purpose. The split is a bug when both media issue an instruction.`
+  grain = `The expression has a grain: subject, mode, body, scene, projection. Reading along the grain is the sentence. Reading across it, same subject and a new mode, is the review. Turning the cloth is the wonder. Forcing a total order onto qualities that do not commute, the pentad among them, reads across the grain and calls it the weave.`
+  crosslink = `A polymer becomes a solid with memory when chains cross-link. Residue is that cross-link. Too many and the page is brittle: a visit cannot be reread. Too few and the visit does not hold. COST_COMMITMENT.residue is the count that matters, not the number of sigils on the line.`
+  neighbors = `A legal neighbor is one shared token across two engines: the same cost class in the catalog and in the sentence, the same discharge law in the sigil and in the haptic, the same tier in $ and in STORAGE_TOPOLOGY. Two clusters that bend the same way are the evidence that promotes a neighbor into a convention. One pretty cell is a swatch.`
+}[reg=facet]
+
+^"fluencies"{
+  status = "hypothesis"
+  claim = `@literacy says two people lose each other when they point through different structures, and the work is to make the pointer visible on both sides. @wonder keeps six altitudes apart so copy, CSS, and runtime can spend the same questions. A shape that serves several fluencies declares which slot is the pointer.`
+  prose = `The English sentence. Fluency of reading. The floor. It survives scripts off.`
+  notation = `The mono expression. Fluency of the instrument. It depicts slots. It is not the lede.`
+  hand = `Reversibility: what returns, what switches, what leaves a receipt. Fluency of gesture.`
+  stuff = `What the surface does with the force. Fluency of material. The chip stays; the host changes.`
+  machine = `The derived contract sentence. Fluency of a model and of a future reader. Stable tokens, so a gloss cannot be invented in the gap.`
+  looking = `A focal plane and a band. Fluency of a lens. One slot sharp.`
+  rule = `The first rung needs only prose. Notation, hand, stuff, machine, and looking are later rungs on the same pointer. Hiding three to show one is the refusal already written in @origin.`
+}[reg=facet]
+
+^"histories"{
+  status = "hypothesis"
+  claim = `The languages worth borrowing from are the ones whose next move is visible. The ones that grew a large corpus became easy for a model to imitate. Spw will not grow that corpus. It can grow a checker. Parse, slot reader, and closed catalog tokens are the checker. A model that cites them is reading the plate. A model that paraphrases the physics word is remixing the ink.`
+  models = `@llm already keeps a capable model on the editor side. Visitors do not wait on one. The new use is a reader with a strong symbol channel and a weak index channel: it will invent a gloss for a valence word, as a land, a spike, or a horn. Hand it the discharge law, the cost class, and the storage tier. Ask whether the field moved. That question is the index.`
+  lucida = `A camera lucida superimposes a trace on the scene so the hand can draw, and the hand can refuse the trace. A language model used as a lucida proposes a lowering. The person, or a later optical check, accepts it only when some engine moved for the same reason. A model used as an author replaces the scene.`
+  lenses = `A microscope, a telescope, a spectroscope, and a stereoscope each pick a band and a focal plane. A stereoscope makes depth out of two views. A spectroscope refuses to average wavelengths. Modern waveguide lenses, eye tracking, and varifocal optics are the same two choices: which plane is sharp, which band is admitted. <projection> is almost the band. The medium register in @medium (scene, play, workshop, lab, reading) is almost the room the lens is in. The missing declaration is the focal plane: which slot stays sharp when the register changes. No device has to be built for that declaration to be useful.`
+  music = `A score can be complete while a part is simple. Orchestral literacy and a singer's literacy share the piece and not the staff. Leaving a slot open is writing a part.`
+}[reg=facet]
+
+^"modalities"{
+  status = "hypothesis"
+  claim = `Spoken languages bias us toward one word after another. That bias produced the ordered pentad. Other modalities already run in this machine, and they compose in parallel.`
+  sign = `A sign can hold handshape and location at once, plus a non-manual signal on the face. That is an effect row: qualities that do not have to be sorted, placed in space. The section handle, the resonance probe, and the reading groove are three channels on one page. A sentence that flattens them into one verb has translated a sign into speech and lost the location.`
+  touch = `Braille and a laminated folio are literacies of relief. @tangibility asks how attention moves as one graphic becomes more tangible. Texture is not a caption for the expression. It is another staff.`
+  page = `Writing is already visual and sequential. The mono line makes sequence spatial, so a dim mode can stay on the line at the same width. That is the spoken word learning a sign-language trick: the alternatives remain in the space.`
+  ear = `The beat and the climate are ears, not eyes. A learner who only reads will miss the clock. A feature that anticipates well gives the ear a mark when the prime beat lands, and lets reduced motion keep the order without the pulse.`
+}[reg=facet]
+
+^"materials"{
+  status = "hypothesis"
+  claim = `@material already pairs a force with a stuff. Paper absorbs into the fiber. Glass returns a specular edge. Matte holds. Field charges. Bioplastic transmits. Ledger rules. The bench is the demo. This facet names the materials principles that rhyme with that contract, and does not add a second model.`
+  fiber = `A fiber has a grain. Paper, cloth, and a polymer chain all do. Reading with the grain is the authored order. Reading across it is the review mode. A finish that ignores grain looks like a coating on the wrong side of the sheet.`
+  optic = `Transmission, specular, absorption, and blur are already numbers in @material. Scattering without those numbers is fog, which the contract already refuses. Thin-film interference is the laminate's glare band: color that exists only at a thickness. Birefringence splits one ray into two polarizations under crossed polars. That is the metamerism of fluencies, stated as optics. Two literacies, one mark, a split that appears only under the second light.`
+  ink = `Pigment sits on the fiber. Dye enters it. Toner is fused on. Copy is the ink. The expression is the plate. The field is the paper. Rewriting the sentence remixes the ink. Citing the catalog token reads the plate.`
+  dye = `A mordant is the coupling that lets the dye stay. Without it the color is a rinse. Sigil color that does not go through the material intents will not survive a host change. An optical brightener fakes whiteness under one lamp. A gloss that only the model finds, and the field does not show, is a brightener.`
+  finish = `Varnish, size, and a glaze change specular and hand-feel without changing the fiber. That is the ornament altitude in @wonder. Flourish stays a finish. Putting the finish into the fiber is how a seasonal trope ends up in core CSS.`
+  polymer = `Chains, cross-links, glass transition. Below the transition the material is glassy and brittle. Above it, it gives. Residue cross-links a visit into memory. A page below its glass transition cannot be reread; every interaction shatters into a new component. A page above it takes a fold and keeps the crease. Brace hysteresis, already cached, is a crease. The crease should outlast the gesture and not outlast the clock.`
+}[reg=facet]
+
+^"refuse"{
+  grammar = `Do not add a sigil, a data-spw family, or a wonder type. @wonder stays six altitudes.`
+  product = `Do not enumerate the combinatoric. Legal neighbors only, and only after two clusters have used the same one.`
+  device = `Do not build lens hardware, a model runtime, or a public wait on a model. @llm holds that line.`
+  material = `Do not start a second materials contract. Extend @material, or point at @tangibility for the screen-to-folio gradient.`
+  settle = `Do not promote a hypothesis in this file because it sounds like a science. Promotion waits on a repeated neighbor and a field that moved.`
+}[reg=facet]
+
+^"open"{
+  coupling = `Whether & should cite the coupling store.`
+  tiers = `Whether $[substrate] and $[memory] should use STORAGE_TOPOLOGY's names.`
+  ir = `Whether the catalog contract is the source and a public expression is a frontend.`
+  clock = `Whether a seat should name its clock.`
+  envelope = `Whether brace color should follow the discharge envelope (armed, preview, charged, discharging, settled) rather than an objective-to-subjective gradient.`
+  pentad = `Whether the next parser ask is a selector along an order, or an effect row that refuses to sort.`
+  focal = `Whether <projection> should declare the slot that stays sharp when the medium register changes.`
+  performance = `Whether a live mutation should stay at effect.l1.memory until a beat, and whether an equivalence rewrite must preserve the geometry hash.`
+  fuzz = `Whether a generator of expressions, shrunk to the smallest geometry break, should replace the workbench scripts that wear the name fuzz.`
+}[reg=facet]
+
+^"tooling"{
+  status = "hypothesis"
+  claim = `The CLI already groups the language into rooms. Workspace, collate, select, shape, and effect (@cli). A feature is surfaced when one of those rooms can show it without writing the tree. Most of the language a performer would play is already in shape and effect, and it is bundled into named profiles rather than left as axes.`
+  surfaced = `spw form (alias geometry) measures braces, operators, resonance, and a field (@form). lattice measures ~# apposition. format reads one surface under canonical, pretty, layout, wide, prose, culture, or equiv, and --pulse prints the steps, --profiles prints several at once (@format). expand projects a template as a stream and does not fill a slot (@motions). mutate applies layout_canonical, layout_full, equiv_scripts, or measure_only (@mutate). equiv rewrites are seq to ls, wildcard expansion, and dot-postfix. pulse plans. beat emits ticks and writes nothing (@beat_cli). query, select, cite, follow, fingerprint, and outline are the reading rooms.`
+  flat = `A profile is a bundle. Indent, prose wrap, frame blanks, and comment alignment want to be axes, and the flags exist, but the names hide the coordinates. Beat has an interval and a count and no harmony with the site's 13-beat. The workbench npm scripts called fuzz run the typecheck, the runtime tests, or a marker audit. There is no generator.`
+  dimensional = `A feature becomes dimensional when one axis moves and a named invariant holds. The invariant already available is the geometry bytecode hash from spw form --resonance. An equivalence rewrite should keep it. A real edit should change it and say which axis moved.`
+}[reg=facet]
+
+^"performance"{
+  status = "hypothesis"
+  claim = `A person playing mutations and typing, as a musical exercise or a take for a music video, already has a click track, a score, an instrument, and a spectrum analyzer. They are separate commands.`
+  parts = `beat is the click. pulse is the score, a plan that does not write until asked. mutate --stdin is the instrument: the buffer moves, the corpus waits. form --resonance is the analyzer: brace depth and operator weight as a picture that can cut to the beat. Discharge laws (release, transfer, ground, project) are timbres. Charge phases (armed, preview, charged, discharging) are an envelope.`
+  voicing = `An equivalence rewrite is a voicing of the same piece. A mutation that changes the geometry hash is a modulation. A placeholder is a rest. A slot filling in is an entrance. The video is the geometry card, the hand, and the line, cut on a declared clock. The site's 13-beat and the CLI's 500 ms tick are different clocks. The performance names which one the cut uses.`
+  sympathy = `Play at effect.l1.memory. Write the tree on a downbeat, at l2, once. A keystroke that rewrites the corpus fights every other session and the index.`
+}[reg=facet]
+
+^"motions"{
+  status = "hypothesis"
+  claim = `Expression, template, placeholder, slot, pattern, reduction, expansion, and comprehension are one family of motions. @motions already asks for reduce and expand to be inverses that report what did not come back. A transition is that pair plus a duration on a named clock.`
+  path = `Expression to template is anti-unification, still open in @affordances. Template to expression is expand, which today inlines and does not take a slot value. Placeholder to slot is a rest becoming a note. Pattern to reduction is stating the shape once. Comprehension, in the Python sense, is a filter a person can read as a surface. The nearest Spw tool is query, which listens, while mutate answers. Kowalski's split, logic and control, is already the CLI split between select and effect. A performer wants them on one motif.`
+  configurable = `The configuration is which axes are allowed to move (prose, indent, equivalence rule, slot value) and which hash must hold (geometry). format --pulse is the only transition that already shows its steps.`
+}[reg=facet]
+
+^"lineages"{
+  status = "hypothesis"
+  claim = `Python, APL, and Prolog each made one bet about what a reader can hold. Spw currently collects the costs of all three and the payoff of none.`
+  python = `Indentation came from a teaching language (ABC) and made shape mean structure. Comprehensions, generators, and gradual types each arrived as an optional reading of text that already ran. The fights about density (the walrus, match) were fights about a dimension with no checker. The useful theft is gradualness: a new reading of the same text, the way a format profile is, not a new required glyph.`
+  apl = `Iverson's bet was that a glyph you can derive beats a word you memorize, and that an operator applies at a chosen rank. Whitney, Hui, and Dyalog kept the bet alive in rooms small enough to talk. spw form measuring depth is a baby rank. The payoff arrives when a short phrase moves one axis. The cost, a room that cannot say the line aloud, is already visible in the sigil table.`
+  prolog = `Colmerauer and Kowalski made the relation the program, and split algorithm into logic plus control. Query and assertion want the same syntax. Failure is a result, which is why a fuzzer belongs to this lineage: generate, fail, shrink.`
+  fuzz = `A useful fuzzer generates expressions from the sigil and delimiter inventory, parses them, and shrinks to the smallest case that breaks a geometry invariant or an idempotent equivalence. It runs at measure_only, on stdin, and never writes a corpus. It can sit in the performance as the partner who proposes the next legal neighbor on the beat. The scripts that currently wear the name fuzz do not do this.`
+}[reg=facet]
+
+^"stratum"{
+  status = "hypothesis"
+  claim = `Cryptocurrency and a PhD are both long bets whose communicable prize is a costume: a token, a protocol, a degree. The work and the costume come apart, and the identity often stays with the costume.`
+  crypto = `The early feeling was exit, a text that did not need a face. Exchanges turned identity into an account that could be robbed. The token-sale years offered a white paper in the shape of a dissertation, judged by a market instead of a committee, on a clock of about one cycle rather than a decade. Profile pictures made the costume literal: a face the group would recognize. The collapses taught custody. What a person could still say in public was "I was early" or "I understood the mechanism." Both sentences survived after the position did not.`
+  phd = `A dissertation is a narrow claim judged by a few people, worn afterward as a degree that does not require the claim to have moved the field. The rational byproduct is literacy and a cohort. The irrational reading is that the costume is the result.`
+  lesson = `A sigil, a genre, a mix, or a commit prefix can become that costume. The index is still whether a field moved. Spw does not need a token to borrow the danger. A receipt a person can reverse is a kinder physics than a burned key, and some of the hunger in that history was specifically for the irreversible feeling. Offer the receipt. Leave the casino.`
+}[reg=facet]
+
+^"phasor"{
+  status = "hypothesis"
+  claim = `An ECE curriculum already has the mathematics for the relationships this language keeps naming by metaphor. A sinusoid is a phasor: amplitude and phase, a point in a plane. Three-phase power is three phasors a third of a turn apart, making a rotating field. The Park transform holds that rotation still so the axes can be worked on. Higher dimension is more axes, not a louder metaphor.`
+  bases = `Linear algebra supplies the relationship: a matrix, an inner product, an orthogonal pair. Resonance is a large inner product. Interference, already a COST_CLASS, is the inner product you failed to keep at zero. In-phase and quadrature are how two signals share a wire. Impedance mismatch is a reflection: the sign that arrives is not the sign that was sent. That is semiotic inconsistency, measured.`
+  spw = `Each clock is an axis. Intensity is amplitude. Position in the beat is phase. Coupling is mutual inductance. A passive channel has a symmetric impedance: the relationship reads the same in both directions. An overloaded sigil is two frequencies on one name. The form card is the filter that says which frequency is present.`
+}[reg=facet]
+
+^"sympathy"{
+  status = "hypothesis"
+  claim = `Mechanical sympathy is playing inside the machine's actual limits. The CLI already published the limits as effect grades: measure, memory, workspace.`
+  symmetry = `An equivalence rewrite is a symmetry when the geometry hash holds and a second pass changes nothing. The profiles already ask for idempotence. A performance can treat that as consonance.`
+  consistency = `One distinction, several lowerings, from the earlier facet. The lowering that lags says so.`
+  resonance = `The runtime spends resonance as charge and kinship. spw form measures a different resonance, a weight scheme over source geometry. They share a word and not a number. Agreeing on one number is the neighbor worth promoting, after two uses.`
+  overloading = `# is a vibration, a comment, and an anchor. . is ground, a property dot, and the end of a sentence. equiv_dot_postfix exists because the dot was asked to do two jobs. An overload is dimensional when the form card names the axis. It is a costume when the reader has to guess.`
+  internals = `During play, stay in memory. Cross into the workspace on a beat the other session can hear. Do not reflow prose on the keystroke path. Do not fuzz the corpus onto disk. The formatter's idempotence, the charge field's single timer per frame, and the storage tiers are the internals worth being kind to.`
+}[reg=facet]
+
+#>wonder_language_material_clock
+?["Which clock is this seat on?"]{
+  #:depth #!structural ~#lens(time)
+  ~#tension: "Charge, handle travel, the 13-beat, climate, and wonder-memory are five clocks. A seat that stays bright after all of them would have forgotten which one minted it."
+  ~#hypothesis: "A seat that names one of those clocks goes quiet on that clock's term, and the prose sentence can still be read."
+  $%[seat.names_a_clock, seat.stays_bright, seat.follows_the_beat]
+}
+
+#>wonder_language_material_metamer
+?["Under which light do these two literacies match?"]{
+  #:depth #!stylistic ~#lens(fluency)
+  ~#tension: "A sentence, a mono line, a hand, and a material can agree in reading light and split in play, or agree for a person and split for a model."
+  ~#hypothesis: "Declare the sharp slot. If the other media move for that same distinction, the match is real. If a second medium issues a second instruction, the mark was a brightener."
+  $%[fluency.one_sharp_slot, fluency.two_instructions, fluency.model_gloss_only]
+}
+
+#>wonder_language_material_voicing
+?["Is this take a voicing or a modulation?"]{
+  #:depth #!structural ~#lens(performance)
+  ~#tension: "An equivalence rewrite and a real edit can look like the same keystrokes. One should keep the geometry hash. The other should change it and name the axis."
+  ~#hypothesis: "On a beat, a voicing holds the hash and a modulation reports the axis. The corpus is written only on the downbeat."
+  $%[take.holds_the_hash, take.names_the_axis, take.writes_every_keystroke]
+}

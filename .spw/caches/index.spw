@@ -110,7 +110,8 @@
 @plugin_ecology_improvements_2026_11: ~"./plugin-ecology-improvements-2026-11.spw"  # cache: plugin improvements across the three layers — surface/CLI protocol (readers, effect, residue, Spw frame pipes, multi-root discovery), editor/LSP plugins (cross-host injection, sha256 fact store, one character table, operator gestures), and Vite/consumer build plugins
 @syntax_runtime_theory_enhancements_2026_11: ~"./syntax-runtime-theory-enhancements-2026-11.spw"  # cache: intermediate forms (lossless ONF, span-preserving desugar, FileFactsIR/ResidueIR), CLI envelopes (--spw on select/query, zero-alloc event gating), syntax enhancements (| coproduct seam, parameterized shapes, @handle#fragment), runtime affordances (lazy ~ thunks, focus-piped ->/~>, beat-clock resonance, antiUnifyONF), and formal theory laws
 @factshift_cognitive_substrate_2026_11: ~"./factshift-cognitive-substrate-2026-11.spw"  # cache: factshift.center continuous 5-simplex combinatorics, multi-tier indexing, thermal/trope/dwell gradient manifolds, spatial narrative engine, gesture repairs, mutex attention loop, and cultural integrity of orthogonal domains
-@spw_native_components_2026_11: ~"./spw-native-components-2026-11.spw"  # cache: a component is one expression; mono is the instrument and the editorial face is the voice; each sigil moves like its kernel physics, and a delimiter pair is the housing
+@spw_native_components_2026_11: ~"./spw-native-components-2026-11.spw"  # cache: a component spends the slot reader, the operator table, and the brace tokens that already exist; mono is the instrument; each enhancement has an objective measure, a subjective measure, and a wonder that bends it
+@language_material_fluency_2026_11: ~"./language-material-fluency-2026-11.spw"  # cache: the runtime read as a small computer; what would make the language interesting to learn; legal combinatoric neighbors; wonder across fluencies; language histories with models and lenses; fiber, optic, ink, dye, finish, polymer as hypotheses beside material-physics
 
 operation = "align"
 fixity = "tending"
@@ -196,6 +197,7 @@ fixity = "tending"
   syntax_runtime_theory_enhancements_2026_11 = @syntax_runtime_theory_enhancements_2026_11
   factshift_cognitive_substrate_2026_11 = @factshift_cognitive_substrate_2026_11
   spw_native_components_2026_11 = @spw_native_components_2026_11
+  language_material_fluency_2026_11 = @language_material_fluency_2026_11
 }[reg=facet]
 
 ^"cache_rules"{
