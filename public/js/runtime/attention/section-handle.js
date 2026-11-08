@@ -55,6 +55,7 @@ import {
 } from './shared.js';
 import { applyAttentionCapturePins } from './capture-pins.js';
 import { PHASE_EVENT, readInteractionStory } from '/public/js/runtime/interaction/story.js';
+import { applyRailCrumb, crumbLabel, crumbPlace, isRailCrumb, readRailCrumb, syncRailCrumbExpanded } from './rail-crumb.js';
 
 let lastSectionLogKey = '';
 let lastSectionIndex = 0;
@@ -218,6 +219,16 @@ function syncHandleContent(parts, info, activeIndex, sectionCount, storyOverlay 
       'aria-label': `Jump to ${info.label}`,
       title: info.label,
     });
+  }
+  // Breadcrumb form (?spw-rail=crumb, rail-crumb.js): the section's own sigil holds its heading.
+  if (isRailCrumb(currentLink)) {
+    const heading = document.getElementById(info.id)?.querySelector('h1, h2, h3')?.textContent || '';
+    const place = crumbPlace(info, routeHandle(), railHandle, heading);
+    const compact = currentLink.closest(`[${HANDLE_SHELL_STATE_ATTR}]`)?.getAttribute(HANDLE_SHELL_STATE_ATTR) !== 'expanded';
+    writeTextContent(currentToken, place.token);
+    writeTextContent(currentLabel, place.label);
+    writeTextContent(currentLink.querySelector('.spw-rail-crumb-route'), `${place.route} ›`);
+    writeAttributes(currentLink, { 'aria-label': crumbLabel(place, activeIndex, sectionCount, compact), title: `${place.token}{ ${place.label} }` });
   }
 
   // ARIA hygiene: dynamic prev/next labels using the section that will be targeted
@@ -612,6 +623,7 @@ function syncSectionHandleShellState(shell, toggleButton, compact) {
     title: compact ? 'Open page travel rail' : 'Compact page travel rail',
   });
   writeTextContent(toggleButton, compact ? 'rail' : 'trim');
+  syncRailCrumbExpanded(shell, compact);
 }
 
 function syncSectionHandlePhase(shell, handle, phase) {
@@ -1177,6 +1189,8 @@ function createSectionHandleController({
 }) {
   const refs = getSectionHandleRefs(handle, shell);
   const state = createSectionHandleState();
+  const railCrumb = readRailCrumb();
+  if (railCrumb) applyRailCrumb(shell);
 
   const updateActiveState = (source = 'sync', reading = undefined) => {
     updateSectionHandleState({
@@ -1442,6 +1456,12 @@ function createSectionHandleController({
   const handleCurrentClick = (event) => {
     if (suppressClick) {
       event.preventDefault();
+      return;
+    }
+    // In the breadcrumb form the crumb opens and closes the moves; ‹ › still travel.
+    if (railCrumb) {
+      event.preventDefault();
+      refs.toggleButton?.click();
       return;
     }
     state.phase = 'traveling';
