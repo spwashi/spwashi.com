@@ -91,8 +91,8 @@ active_surfaces: .{
  `lore.land` = .{
    status = linked
    role = `show-and-book`
-   note = `Thirteen chapters. Meant to feel like a show that is also a book — episodic pacing over durable structure, so neither reading nor watching is the lesser mode.`
-   production = `Make assets and story elements for the thirteen-chapter show-and-book. Post-Nut Clarity may precipitate from this making as from other projects — introspection as grounding, familiar bits iterated, not a lore.land sidecar. Prime: @pnc_precipitate.`
+   note = `A living serial. Book One, The Unspent Wish, is thirteen chapters; Book Two, Wonder About Pi(e), opened 2026-11-05 at chapter 14, and new chapters are set on the 13th and 26th of each month (lore.land: book/content/serial.json). Meant to feel like a show that is also a book — episodic pacing over durable structure, so neither reading nor watching is the lesser mode.`
+   production = `Make assets and story elements for the serial's books. Post-Nut Clarity may precipitate from this making as from other projects — introspection as grounding, familiar bits iterated, not a lore.land sidecar. Prime: @pnc_precipitate.`
    channel = `@lore.land on TikTok`
    repo = `https://github.com/lore-land/lore.land`
    archetype = `installable_book`

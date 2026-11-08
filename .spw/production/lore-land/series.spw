@@ -29,7 +29,7 @@ namespace = `lore-land`
 ^"series"{
   slug = `lore-land`
   title = `lore.land`
-  ground = `@domain: a show that is also a book, thirteen chapters paced like episodes and built to hold up like structure.`
+  ground = `@domain: a show that is also a book and a living serial; Book One is thirteen chapters paced like episodes and built to hold up like structure.`
   creator = `2026-11-01: update lore.land through November novel writing month; use the .spw outlines and the art to make a product of at least 50,000 words or moments. Decided the same day: the unit is the moment, the spine is the thirteen operators, and the outline is held here first.`
   bits = #[
     `RPG Wednesday tests a figure before it hardens into canon`,
@@ -136,6 +136,7 @@ namespace = `lore-land`
     `2026-11-30 · chapter 12, Integration, closes at 50,000`
   ][reg=list]
   season = `@season november: one daily pass, Sunday episode releases on November 1, 8, 15, 22, and 29`
+  lore_land_cadence = `lore.land's own serial (book/content/serial.json, read 2026-11-08) sets new chapters on the 13th and 26th of each month; Book Two, Wonder About Pi(e), opened there on 2026-11-05 at chapter 14. Sunday is this outline's writing release; the site sets chapters on its own stones.`
 }[reg=facet]
 
 ^"sources"{
