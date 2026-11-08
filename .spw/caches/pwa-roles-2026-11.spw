@@ -1,0 +1,52 @@
+# PWA roles (2026-11) — prime: three installable apps, each worth its own place on a home screen
+#
+# The creator, 2026-11-08: "improve relative value of the various PWAs:
+# factshift.center, spw.quest, spwashi.com". This holds what each manifest says
+# (read 2026-11-08), the role each could own so the three complement rather than
+# repeat each other, what landed the same day, and the identity calls that are
+# the creator's: marks, names, and which app keeps which job.
+
+#>pwa_roles_2026_11
+#:cache #!pwa #!ecosystem #!identity
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+expression = apps[roles]{person.notation.canvas}<home_screen>
+
+summary = #[
+  `spwashi.com is the person and the season, spw.quest is the notation as a tool, factshift.center is a line made physical; each app's shortcuts, files and offline shell should serve its own job and hand a line to the next.`,
+  `Today two of the three wear the same mark: spwashi.com and spw.quest are both #> on dark teal-green, and factshift.center's icon is a plain maroon square.`,
+  `Landed 2026-11-08: both workers keep their app offline; spw.quest gained shortcuts to its four jobs and a launch handler, so a line from factshift.center lands in the open window.`,
+][reg=set]
+
+^"today"{
+  spwashi = `name Spwashi, short_name "Spw" (the language's name on the person's app); #> in cream with a gold chevron on #203b36; twelve shortcuts, the first four Art, Software, Author Craft, Spw Operators; .spw files open at /open/ and a share target at /share/spw; launch_handler focus-existing; its own /sw.js (@site_manifest)`
+  quest = `name and short_name spw.quest; #> in paper on #1b5c5d, the same geometry as spwashi.com's mark; start_url /, the walk; an offline shell since 9d293dc8 (@quest_manifest)`
+  factshift = `name and short_name factshift; theme #4c1d1d on #f5deb3; icons are plain maroon squares at every size; no description; orientation portrait-primary on a canvas; its manifest lives in the app snapshot (@factshift_manifest); offline through the site's shell since 2026-11-08 (@factshift_shell)`
+}[reg=facet]
+
+^"roles"{
+  spwashi = `the person and the season: art and folios, Now, Play, Services, and a .spw file opened as a room to read`
+  quest = `the notation as a tool: write a line and see it read, keep a note, learn the marks, get your walk back as Spw`
+  factshift = `a line made physical: lay it out, move it, link it, keep a canvas`
+  handoff = `a line travels between them in the address's fragment (#spw64=), which no server reads: spw.quest's Canvas to factshift.center, factshift.center's ↗ to spw.quest/build, and the planned door from spwashi.com's paste box (brace-semantics)`
+}[reg=facet]
+
+^"landed"{
+  offline = `spw.quest keeps its guide and pinned reader (9d293dc8); factshift.center keeps its whole snapshot through a shell the site serves, and a ?spw= line lands offline`
+  quest_shortcuts = `Walk (/#walk), Build, Learn, Shelf: what only spw.quest does, one press from the home screen; launch_handler navigate-existing so arriving lines reuse the open window; shell version 2 so installed apps fetch the new manifest`
+}[reg=facet]
+
+^"creator_calls"{
+  marks = `three marks, one per role: spwashi.com keeps #> with the gold chevron (the person's frame); spw.quest takes a mark of the notation as a tool (candidates: a brace pair, you@ as a perspective, ~> as a relay); factshift.center takes a mark of a line laid out (candidates: three linked nodes in wheat on maroon)`
+  name = `spwashi.com's short_name from "Spw" to "Spwashi", so the language's name stays with the language's app`
+  spwashi_shortcuts = `the first four, the ones a launcher shows, as only spwashi.com's jobs (Now, the folios, Play, Open a .spw document); Spw Operators and the Literal Parser live on as pages, and spw.quest is where the notation's shortcuts point`
+  factshift_manifest = `a description, orientation any (a canvas turns), shortcuts (a fresh canvas, the last line), launch_handler navigate-existing, and a real icon; in the app repository, which has work in progress, or as a site-served manifest beside the shell`
+}[reg=facet]
+
+@site_manifest: ~"../../manifest.webmanifest"
+@quest_manifest: ~"../../workers/spw-quest/src/quest-manifest.js"
+@factshift_manifest: ~"../../workers/factshift-center/assets/manifest.json"
+@factshift_shell: ~"../../workers/factshift-center/src/shell.js"
+@ecosystem: ~"../../.agents/plans/ecosystem-architecture/PLAN.md"
