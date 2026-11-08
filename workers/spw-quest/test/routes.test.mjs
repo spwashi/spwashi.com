@@ -101,7 +101,7 @@ const ORIGIN = [
 ];
 const SITE_BUNDLE = new URL('../../../public/js/semantic/spw-workbench-reader.js', import.meta.url);
 const SHELL_CSP = BASE_SECURITY['Content-Security-Policy'];
-const PAGE_CSP = SHELL_CSP.replace("style-src 'unsafe-inline';", "style-src 'unsafe-inline'; font-src 'self';");
+const PAGE_CSP = SHELL_CSP.replace("style-src 'unsafe-inline';", "style-src 'unsafe-inline'; font-src 'self'; manifest-src 'self';");
 const LIVE_CSP = PAGE_CSP.replace("script-src 'unsafe-inline'", "script-src 'self' 'unsafe-inline'");
 
 test('the guide opens with a file people keep, read by the worker with scripts off', async () => {

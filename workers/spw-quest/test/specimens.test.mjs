@@ -9,7 +9,7 @@ import { SPW_EXPRESSION_MANIFEST } from '../../../public/js/generated/spw-expres
 import { BASE_SECURITY } from '../../lib/shell.js';
 
 const get = (path, options) => worker.fetch(new Request(`https://spw.quest${path}`, options));
-const PAGE_CSP = BASE_SECURITY['Content-Security-Policy'].replace("style-src 'unsafe-inline';", "style-src 'unsafe-inline'; font-src 'self';");
+const PAGE_CSP = BASE_SECURITY['Content-Security-Policy'].replace("style-src 'unsafe-inline';", "style-src 'unsafe-inline'; font-src 'self'; manifest-src 'self';");
 const text = async (path) => (await get(path)).text();
 const unpaint = (html) => html.replace(/<span data-t="[^"]*">|<\/span>/g, '');
 

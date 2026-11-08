@@ -12,7 +12,7 @@ import { BASE_SECURITY } from '../../lib/shell.js';
 
 const get = (path, options) => worker.fetch(new Request(`https://spw.quest${path}`, options));
 const text = async (path) => (await get(path)).text();
-const PAGE_CSP = BASE_SECURITY['Content-Security-Policy'].replace("style-src 'unsafe-inline';", "style-src 'unsafe-inline'; font-src 'self';");
+const PAGE_CSP = BASE_SECURITY['Content-Security-Policy'].replace("style-src 'unsafe-inline';", "style-src 'unsafe-inline'; font-src 'self'; manifest-src 'self';");
 
 /** Every element this page opens is closed, in order (void elements aside). */
 function assertBalanced(html) {

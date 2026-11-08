@@ -256,7 +256,7 @@ test('unknown prerelease paths 404 with what exists; short forms redirect; HEAD 
 });
 
 const GUIDE_CSP = BASE_SECURITY['Content-Security-Policy']
-  .replace("style-src 'unsafe-inline';", "style-src 'unsafe-inline'; font-src 'self';")
+  .replace("style-src 'unsafe-inline';", "style-src 'unsafe-inline'; font-src 'self'; manifest-src 'self';")
   .replace("script-src 'unsafe-inline'", "script-src 'self' 'unsafe-inline'");
 const STATIC_IMPORT = '<script type="module">\nimport { parse } from "/parser.js";';
 
