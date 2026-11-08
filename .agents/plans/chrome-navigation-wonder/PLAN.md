@@ -4,6 +4,8 @@
 
 **Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — ungated.home_rail_ids, home.menu_toggle, calls.drawer_swipe, seams.home, seams.breadcrumbs, seams.menu_toggle.
 
+**Home renovation (the creator, 2026-11-08):** [home-renovation-2026-11](../../../.spw/caches/home-renovation-2026-11.spw#rail) proposes the rail as a breadcrumb of nested braces, symmetric about the reader's place, with the moves as operators. Its first live demo goes behind `?spw-rail=crumb`, which would answer this plan's breadcrumb-owner wonder if the creator agrees.
+
 **Related:** [floating-chrome-stack](../floating-chrome-stack/FIX.md) · [spellcraft-authoring](../spellcraft-authoring/PLAN.md) (breadcrumb spell) · [mobile-chrome-alignment](../archive/mobile-chrome-alignment/PLAN.md) (archived). **Absorbed 2026-10-10:** [navigation-header-disclosure](../archive/navigation-header-disclosure/PLAN.md) · [page-region-discoverability](../archive/page-region-discoverability/PLAN.md).
 
 ## Next slices — 2026-11-06

@@ -4,6 +4,8 @@
 
 **Review sitting:** [ui-review-sitting-2026-10](../../../.spw/caches/ui-review-sitting-2026-10.spw) — ungated.cauldron_receipt, seams.cauldron, seams.lens.
 
+**Home renovation (the creator, 2026-11-08):** "the cauldron components don't make much sense", and the tape is a skeuomorph to renovate. [home-renovation-2026-11](../../../.spw/caches/home-renovation-2026-11.spw#cauldron_and_tape) proposes one component and one expression, and returns as a filling closing brace in place of the cassette.
+
 **Related:** [floating-chrome-stack](../floating-chrome-stack/FIX.md) · [mobile-chrome-alignment](../archive/mobile-chrome-alignment/PLAN.md) (archived).
 
 Operation: align. Fixity: tending. Focus: composition consequence. Element: water.
