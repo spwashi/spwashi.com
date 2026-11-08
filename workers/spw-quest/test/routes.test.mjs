@@ -101,8 +101,8 @@ const ORIGIN = [
 ];
 const SITE_BUNDLE = new URL('../../../public/js/semantic/spw-workbench-reader.js', import.meta.url);
 const SHELL_CSP = BASE_SECURITY['Content-Security-Policy'];
-const PAGE_CSP = SHELL_CSP.replace("style-src 'unsafe-inline';", "style-src 'unsafe-inline'; font-src 'self'; manifest-src 'self';");
-const LIVE_CSP = PAGE_CSP.replace("script-src 'unsafe-inline'", "script-src 'self' 'unsafe-inline'");
+const PAGE_CSP = SHELL_CSP.replace("style-src 'unsafe-inline';", "style-src 'unsafe-inline'; font-src 'self'; img-src 'self'; manifest-src 'self'; worker-src 'self';");
+const LIVE_CSP = `${PAGE_CSP.replace("script-src 'unsafe-inline'", "script-src 'self' 'unsafe-inline'")}; connect-src 'self'`;
 
 test('the guide opens with a file people keep, read by the worker with scripts off', async () => {
   const response = await get('spw.quest', '/');
@@ -144,8 +144,8 @@ test('the guide opens with a file people keep, read by the worker with scripts o
   // The shape, not labels: no God and no diagnosis on the guide.
   const text = page.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, '');
   assert.doesNotMatch(text, /\bGod\b|\bOCD\b|\bADHD\b|\bautis(m|tic)\b|\bbipolar\b|\bdiagnos/i);
-  // Scripts on, the page reads with the parser it serves itself, and the site's faces come from this origin.
-  assert.match(page, /<script type="module">\nimport \{ parse \} from "\/parser\.js";/);
+  // Scripts on, the guide reads with the reader it pins (shell-pin.js), from this origin, and the site's faces come from this origin too.
+  assert.match(page, /<script type="module">\nimport \{ parse \} from "\/parser\/2026\.10\.13\/reader\.min\.js";/);
   assert.doesNotMatch(page, /src="https?:|url\("https?:/);
   for (const face of PEER_FONTS) {
     assert.ok(page.includes(`<link rel="preload" href="/fonts/${face.file}" as="font" type="font/woff2" crossorigin>`), face.file);

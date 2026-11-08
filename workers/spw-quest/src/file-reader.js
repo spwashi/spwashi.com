@@ -417,13 +417,13 @@ function liveFile(kit, parseFile, examples, noteApi) {
 }
 
 /** The module script that starts liveFile with /parser.js (or a switched build). */
-export function liveFileScript(examples = [], loader, { note = false } = {}) {
+export function liveFileScript(examples = [], loader, { note = false, modulePath = "/parser.js" } = {}) {
   const data = JSON.stringify(FILE_DATA).replace(/</g, "\\u003c");
   const shelf = JSON.stringify(examples.map(({ id, file, says, try: attempt, script }) => ({ id, file, says, try: attempt, script }))).replace(/</g, "\\u003c");
   const noteApi = note ? `(${noteKit.toString()})()` : "null";
   const start = `(${liveFile.toString()})((${fileKit.toString()})(${data}), parse, ${shelf}, ${noteApi});`;
   if (!loader) return `<script type="module">
-import { parse } from "/parser.js";
+import { parse } from ${JSON.stringify(modulePath)};
 ${start}
 </script>`;
   return `<script type="module">

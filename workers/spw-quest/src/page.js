@@ -10,14 +10,87 @@ import { WALK_HEAD } from "./walk.js";
 /** Every quest page's head: the site's faces, the app manifest, the reader's display choices applied before the body paints, and this address added to the walk. */
 export const QUEST_HEAD = `${PAPER_HEAD}\n  ${APP_HEAD}\n  ${DISPLAY_HEAD}\n  ${WALK_HEAD}`;
 
-/** spw.quest's pages set the site's faces and read the app manifest from their own origin; text and JSON keep the shell's policy. */
-export const PAGE_CSP = BASE_SECURITY["Content-Security-Policy"].replace("style-src 'unsafe-inline';", "style-src 'unsafe-inline'; font-src 'self'; manifest-src 'self';");
-/** Pages that read as you type load the parser by URL (/parser.js, same origin). */
-export const LIVE_CSP = PAGE_CSP.replace("script-src 'unsafe-inline'", "script-src 'self' 'unsafe-inline'");
+/**
+ * spw.quest's pages set the site's faces, read the app manifest, let the browser
+ * load its icons, and register the shell (/sw.js), all from their own origin;
+ * text and JSON keep the shell's policy. img-src 'self' is there because Chrome
+ * fetches manifest icons under the page's policy: without it, a headless check on
+ * 2026-11-08 reported no-acceptable-icon and the app was not installable.
+ */
+export const PAGE_CSP = BASE_SECURITY["Content-Security-Policy"].replace("style-src 'unsafe-inline';", "style-src 'unsafe-inline'; font-src 'self'; img-src 'self'; manifest-src 'self'; worker-src 'self';");
+/** Pages that read as you type load the parser by URL (/parser.js, or the guide's pinned reader, same origin), and the guide asks /parser/index.json whether a newer release is out. */
+export const LIVE_CSP = `${PAGE_CSP.replace("script-src 'unsafe-inline'", "script-src 'self' 'unsafe-inline'")}; connect-src 'self'`;
 
-/** An HTML page under spw.quest's policy: the shell's, plus the faces from this origin. */
+/**
+ * Runs on the guide, /learn, /build and /install (it travels by toString): registers
+ * the shell, and is the whole update protocol (note-shell-design.md, "How the
+ * worker updates and rolls back"). A new shell waits until the reader asks for it;
+ * the first install claims the page without reloading it.
+ */
+export function registerShell() {
+  if (!("serviceWorker" in navigator)) return;
+  let reloadOnControllerChange = false;
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if (reloadOnControllerChange) location.reload();
+  });
+  const line = (text, action) => {
+    let node = document.getElementById("shell-line");
+    if (!node) {
+      node = document.createElement("p");
+      node.id = "shell-line";
+      node.className = "shell-line";
+      node.setAttribute("role", "status");
+      document.body.append(node);
+    }
+    node.textContent = text;
+    if (action) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "quiet-button";
+      button.textContent = action.label;
+      button.addEventListener("click", action.run);
+      node.append(" ", button);
+    }
+  };
+  navigator.serviceWorker.addEventListener("message", (event) => {
+    if (event.data && event.data.type === "pin-mismatch") line("The file at this address does not match the shell's pin.");
+  });
+  const start = () => navigator.serviceWorker.register("/sw.js", { updateViaCache: "none" }).then((registration) => {
+    registration.update().catch(() => {});
+    const tell = () => {
+      if (!registration.waiting || !navigator.serviceWorker.controller) return;
+      line("A new shell is saved.", {
+        label: "Reload to use it",
+        run: () => {
+          reloadOnControllerChange = true;
+          registration.waiting?.postMessage({ type: "skip-waiting" });
+        },
+      });
+    };
+    registration.addEventListener("updatefound", () => {
+      const worker = registration.installing;
+      if (!worker) return;
+      worker.addEventListener("statechange", () => {
+        if (worker.state === "installed") tell();
+      });
+    });
+    tell();
+  }).catch(() => {});
+  if (document.readyState === "complete") start();
+  else addEventListener("load", start, { once: true });
+}
+
+const REGISTER_SCRIPT = `<script>(${registerShell.toString()})();</script>`;
+
+/**
+ * An HTML page under spw.quest's policy: the shell's, plus the faces from this
+ * origin. Pages that read as you type (LIVE_CSP), and any page asked with
+ * { shell: true }, register the shell before </body>.
+ */
 export function page(html, extra = {}, csp = PAGE_CSP) {
-  const response = htmlResponse(html, extra);
+  const withShell = csp === LIVE_CSP || extra.shell === true;
+  const body = withShell && html.includes("</body>") ? html.replace(/<\/body>(?![\s\S]*<\/body>)/, `  ${REGISTER_SCRIPT}\n</body>`) : html;
+  const response = htmlResponse(body, extra);
   response.headers.set("Content-Security-Policy", csp);
   return response;
 }
@@ -58,6 +131,7 @@ export const PAGE_CSS = `main { width: min(72rem, calc(100% - 2rem)); padding-to
     .quiet-button, .file-actions button, .file-actions a { min-height: 36px; margin: 0; padding: .2rem .75rem; border: 1px solid transparent; border-radius: var(--pill); background: transparent; color: var(--accent); font: 500 .88rem/1 var(--font); cursor: pointer; }
     .quiet-button:hover, .file-actions button:hover, .file-actions a:hover, .quiet-button:focus-visible, .file-actions button:focus-visible, .file-actions a:focus-visible { border-color: var(--line); background: var(--accent-soft); }
     @media (pointer: coarse) { .quiet-button, .file-actions button, .file-actions a { min-height: 44px; } }
+    .shell-line { position: fixed; inset-inline: 1rem; bottom: calc(1rem + env(safe-area-inset-bottom)); z-index: 5; margin: 0; padding: .55rem .9rem; border: 1px solid var(--edge, var(--line)); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); color: var(--fg); font-size: .92rem; }
     html:not(.js) [data-tool="copy"] { display: none; }
     .also { margin: 2.5rem 0 0; color: var(--muted); font-size: .9rem; }
     footer { margin-top: 2rem; }

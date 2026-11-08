@@ -58,7 +58,8 @@ test('quest pages link the manifest and may read it; text answers keep the shell
     assert.ok(page.includes('<link rel="manifest" href="/manifest.webmanifest">'), path);
     assert.ok(page.includes('<link rel="apple-touch-icon" href="/icons/quest-180.png">'), path);
     assert.match(response.headers.get('content-security-policy'), /manifest-src 'self'/, path);
-    assert.doesNotMatch(response.headers.get('content-security-policy'), /img-src/, path);
+    // Chrome fetches the manifest's icons under the page's policy.
+    assert.match(response.headers.get('content-security-policy'), /img-src 'self'/, path);
   }
   assert.doesNotMatch((await get('/init')).headers.get('content-security-policy'), /manifest-src/);
 });
@@ -77,7 +78,7 @@ test('/install leads with the phone, marks each way, and keeps the repository st
   assert.match(page, /data-copy="app-address"/);
   assert.match(page, /<code id="app-address">https:\/\/spw\.quest\/install#phone<\/code>/);
   // It says what an install does not carry.
-  assert.match(page, /It needs a connection to open for now\./);
+  assert.match(page, /Pages you have opened with a connection open again without one/);
   assert.match(page, /a note kept in Safari does not follow it/);
   assert.ok(page.includes(`(${questAppInstall.toString()})();`), 'the script travels whole');
   const guide = await (await get('/')).text();
