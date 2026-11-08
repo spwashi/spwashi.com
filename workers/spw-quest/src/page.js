@@ -5,9 +5,10 @@ import { BASE_SECURITY, htmlResponse } from "../../lib/shell.js";
 import { DISPLAY_CSS, DISPLAY_HEAD } from "./display.js";
 import { PAPER_HEAD } from "./paper.js";
 import { APP_HEAD } from "./quest-manifest.js";
+import { WALK_HEAD } from "./walk.js";
 
-/** Every quest page's head: the site's faces, the app manifest, then the reader's display choices, applied before the body paints. */
-export const QUEST_HEAD = `${PAPER_HEAD}\n  ${APP_HEAD}\n  ${DISPLAY_HEAD}`;
+/** Every quest page's head: the site's faces, the app manifest, the reader's display choices applied before the body paints, and this address added to the walk. */
+export const QUEST_HEAD = `${PAPER_HEAD}\n  ${APP_HEAD}\n  ${DISPLAY_HEAD}\n  ${WALK_HEAD}`;
 
 /** spw.quest's pages set the site's faces and read the app manifest from their own origin; text and JSON keep the shell's policy. */
 export const PAGE_CSP = BASE_SECURITY["Content-Security-Policy"].replace("style-src 'unsafe-inline';", "style-src 'unsafe-inline'; font-src 'self'; manifest-src 'self';");

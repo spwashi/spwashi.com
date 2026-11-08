@@ -16,6 +16,7 @@ import { SWITCH_CSS, parserSwitch, switchBanner, switchLoader, switchModulePath 
 import { SPECIMENS_CSS, factshiftHref, specimenById, specimenState, specimensBody } from "./specimens.js";
 import { renderConstructs } from "./constructs.js";
 import { pivotState, renderPivot } from "./pivot.js";
+import { WALK_CSS, walkSection } from "./walk.js";
 import { APP_INSTALL_CSS, MANIFEST_PATH, appInstallSection, isAppIconPath, questAppInstall, serveAppIcon, serveManifest } from "./quest-manifest.js";
 import { BASE_SECURITY, escapeHtml, jsonResponse, layout, wantsJson } from "../../lib/shell.js";
 import { PEER_BRACES, PEER_SIGILS } from "../../lib/peer-kit.js";
@@ -302,12 +303,14 @@ function renderGuide(parser = null, example = EXAMPLES[0]) {
     themeCss: `${PAPER_CSS}
     ${PAGE_CSS}
     ${FILE_CSS}
-    ${GUIDE_CSS}${parser ? `\n    ${SWITCH_CSS}` : ""}`,
+    ${GUIDE_CSS}
+    ${WALK_CSS}${parser ? `\n    ${SWITCH_CSS}` : ""}`,
     body: `${masthead("/")}
 ${parser ? `${switchBanner(parser.value, parser.from)}\n` : ""}<section class="opening" aria-labelledby="title">
   <h1 id="title">A small language for the shape of a thought.</h1>
   <p class="lede">Plain text with a few marks: a mark says what a word is doing, braces say what belongs together.</p>
 </section>
+${walkSection()}
 ${fileWorkspace(example)}
 
 <section id="operators" class="band" aria-labelledby="operators-title">
