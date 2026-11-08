@@ -160,4 +160,35 @@ expression = asks[language]{tokens.symbols.highlighting.navigation}<upstream>
     probe: `node --import ./.spw/_workbench/node_modules/tsx/dist/loader.mjs -e "import('./.spw/_workbench/packages/spw-seed/src/index.ts').then((s) => console.log(s.parse('x = @page#bane-frame\\n').errors?.[0]?.data))"`
     question: "Should @handle#fragment be a citation the server resolves, so a tree can cite a page anchor through its @page handle instead of a path?"
   }[reg=facet]
+
+  valence_charge: .{
+    rank = 6
+    claim: "Boon, bane, bone, bonk and honk are one ordered charge. A reading is a projection on that charge. They are not five operators, and a glued name is not the chain."
+    exists: "parseExpression keeps boon.honk as frames.valence on the noun, reads a valence word in the subject seat as charge, and normalizes a bare boon.honk as a charge frame with sigil _. boonhonk stays an identifier. boon..honk degrades to prose. Query can match a modifier. The site reads charge plus mode as tone and writes no tone attribute (public/js/semantic/expression-tone.js). Brace physics stays the objective to subjective gradient (site-semantics.spw)."
+    gap: "The chain is stored and barely asked. BOON_OPS matches boon on ! only. lore.land already holds three readings of the same words, and nothing in the language names which reading a file is using."
+    measured: .{
+      pin = "edbc5500, expression-charge.test.ts unchanged by the three commits since 27fa1e3d; probe below run 2026-11-08"
+      chain = "boon.honk home[hook]{orient} → valence [boon, honk], subject home"
+      glued = "boonhonk → subject boonhonk, valence []"
+      interval = "boon..honk → prose-degradation"
+      bare = "boon.honk → sigil _, reg charge, valence [boon, honk], no invented noun"
+      lore = "lore.land keeps three readings. story-boonhonk.spw#three_lands asks three questions: boon what this could become, bane what it will cost, bone what will remain. #the_lift carries boon from bane toward boon and the meaning turns into bone. domains.spw#literal_valence_realms names five realms, bonk.land and honk.land included, on one selector. surfaces/index.spw maps boon to select, bone to transform, bonk to validate, honk to emit, bane to fallback."
+      site = "The genre cache reads bonk as collision and honk as signal. Charge colors mood. It does not own the braces. Mixer polarity stays off OPERATOR_DEFINITIONS."
+    }[reg=facet]
+    recommendation = #[
+      `keep the five words as an ordered charge frame; a selector can ask for the first, the last, and the words between`,
+      `document each consumer's reading beside the tests, and do not collapse them into one gloss: the story's three questions, the five realm names, and the pipeline stages are three projections of one chain`,
+      `a land is a projection on that charge, word<bone>, not a new sigil and not a new node`,
+      `query fixtures for all five modifiers, not only boon on !`,
+      `leave boonhonk as one identifier, the story's name`,
+      `leave boon..honk out until a second consumer needs a range`,
+      `the hyphenated-anchor fix in valence_fragment stays separate, so #bane-frame is a name`,
+    ][reg=set]
+    replaces: "five colors, or five operators, standing in for one chain"
+    unlocks = #[ `valence_fragment` ][reg=set]
+    probe: `node --import ./.spw/_workbench/node_modules/tsx/dist/loader.mjs -e "import('./.spw/_workbench/packages/spw-seed/src/index.ts').then((s) => { const charge = (n) => n?.modifiers?.modifiers?.map((m) => m.value) ?? []; const subj = (e) => (e?.terms?.[0]?.type === 'Identifier' ? e.terms[0].token.value : null); const codes = (r) => (r.warnings ?? []).map((w) => w.data?.code).filter(Boolean); const chain = s.parseExpression('boon.honk home[hook]{orient}'); const glued = s.parseExpression('boonhonk'); const interval = s.parseExpression('boon..honk'); const bare = s.normalizeToONF(s.parseExpression('boon.honk').ast); console.log(JSON.stringify({ chain: charge(chain.ast), subject: subj(chain.ast), glued: subj(glued.ast), gluedValence: charge(glued.ast), interval: codes(interval), bare: { sigil: bare.sigil, reg: bare.frames.reg, valence: bare.frames.valence } })); })"`
+    question: "Is a land the projection on the charge, word<bone>, or a second frame the charge opens?"
+    serves = "a mark says what a word is doing"
+    keeps = "the chain stays ordered; the glued name stays a name; brace physics stays objective to subjective"
+  }[reg=facet]
 }
