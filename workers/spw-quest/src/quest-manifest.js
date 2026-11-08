@@ -4,7 +4,7 @@
 //
 // Installing from the browser's menu needs only these (Chrome 108+ on Android,
 // Safari's Add to Home Screen). The browser's own install prompt also wants a
-// service worker with a fetch handler; that is PR 3, the shell, still to come.
+// service worker with a fetch handler: the shell, assets/sw.js (PR 3).
 // Colors are PAPER_THEME in paper.js. Icons are committed PNGs under
 // assets/icons/, drawn from assets/icons/quest.svg (its comment has the render line).
 import { PAPER_THEME } from "./paper.js";
@@ -42,8 +42,9 @@ export const MANIFEST = Object.freeze({
   ],
 });
 
-/** Every quest page's head: the manifest, and the icon and name iOS uses for Add to Home Screen. */
+/** Every quest page's head: the manifest, the tab's icon, and the icon and name iOS uses for Add to Home Screen. */
 export const APP_HEAD = `<link rel="manifest" href="${MANIFEST_PATH}">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/quest-192.png">
   <link rel="apple-touch-icon" href="/icons/quest-180.png">
   <meta name="apple-mobile-web-app-title" content="spw.quest">`;
 
@@ -139,7 +140,7 @@ export function appInstallSection() {
     <li data-way="computer"><strong>On a computer</strong> <span class="here-tag" hidden>this device</span><span>Open this page on your phone: <code id="app-address">https://spw.quest/install#phone</code></span><span class="app-send"><button type="button" class="quiet-button" data-copy="app-address">Copy the link</button><button type="button" class="quiet-button" data-app-share hidden>Send it</button></span></li>
   </ul>
   <p class="note" data-app-said role="status" hidden></p>
-  <p class="note">It needs a connection to open for now. On iPhone and iPad the home-screen app keeps its own storage, so a note kept in Safari does not follow it there: copy or download the note first.</p>
+  <p class="note">Pages you have opened with a connection open again without one; a page never opened shows a short offline note instead. On iPhone and iPad the home-screen app keeps its own storage, so a note kept in Safari does not follow it there: copy or download the note first.</p>
 </section>`;
 }
 

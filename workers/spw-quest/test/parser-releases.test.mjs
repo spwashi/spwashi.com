@@ -7,7 +7,7 @@ import { BASE_SECURITY, escapeHtml } from '../../lib/shell.js';
 import { CarryError, DEFAULT_ASSETS, carryRelease, checkAssets } from '../carry-parser-release.mjs';
 import { FILES, IMMUTABLE, REV_A, REV_B, REV_C, SHORT, assetsFrom, editManifest, get, rewriteListed, run, scratch, writeRelease } from './parser-fixtures.mjs';
 
-const PAGE_CSP = BASE_SECURITY['Content-Security-Policy'].replace("style-src 'unsafe-inline';", "style-src 'unsafe-inline'; font-src 'self'; manifest-src 'self';");
+const PAGE_CSP = BASE_SECURITY['Content-Security-Policy'].replace("style-src 'unsafe-inline';", "style-src 'unsafe-inline'; font-src 'self'; img-src 'self'; manifest-src 'self'; worker-src 'self';");
 const freshDir = scratch('spw-quest-parser-');
 const readJson = (file) => JSON.parse(readFileSync(file, 'utf8'));
 
@@ -296,7 +296,7 @@ test('with no releases carried, /parser/ says so; /parser.js and the other route
   assert.equal(await bundle.text(), PARSER_JS);
   assert.equal(bundle.headers.get('cache-control'), 'public, max-age=3600');
   assert.equal(bundle.headers.get('access-control-allow-origin'), null);
-  assert.equal((await get('/', { env })).headers.get('content-security-policy'), PAGE_CSP.replace("script-src 'unsafe-inline'", "script-src 'self' 'unsafe-inline'"));
+  assert.equal((await get('/', { env })).headers.get('content-security-policy'), `${PAGE_CSP.replace("script-src 'unsafe-inline'", "script-src 'self' 'unsafe-inline'")}; connect-src 'self'`);
   assert.equal((await get('/install', { env })).headers.get('content-security-policy'), PAGE_CSP);
   assert.equal(await (await get('/missing', { env })).text(), 'Not found');
 });

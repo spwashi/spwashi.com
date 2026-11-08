@@ -17,6 +17,7 @@ import { SPECIMENS_CSS, factshiftHref, specimenById, specimenState, specimensBod
 import { renderConstructs } from "./constructs.js";
 import { pivotState, renderPivot } from "./pivot.js";
 import { WALK_CSS, walkSection } from "./walk.js";
+import { PINNED_READER, PINNED_RELEASE, SHELL_VERSION, newestPublished, releaseNotice } from "./shell-pin.js";
 import { APP_INSTALL_CSS, MANIFEST_PATH, appInstallSection, isAppIconPath, questAppInstall, serveAppIcon, serveManifest } from "./quest-manifest.js";
 import { BASE_SECURITY, escapeHtml, jsonResponse, layout, wantsJson } from "../../lib/shell.js";
 import { PEER_BRACES, PEER_SIGILS } from "../../lib/peer-kit.js";
@@ -299,7 +300,7 @@ function renderGuide(parser = null, example = EXAMPLES[0]) {
     description: "Spw is plain text with a few marks. Open a file people keep, change it, and see what a tool can read from it.",
     canonical: "https://spw.quest/",
     head: QUEST_HEAD,
-    script: `document.documentElement.dataset.setupSets = ${JSON.stringify(setIds)};\ndocument.documentElement.dataset.panels = ${JSON.stringify(STEPS.map((step) => step.id).join(" "))};\n(${forwardOldHash.toString()})();\n(${toolActions.toString()})();`,
+    script: `document.documentElement.dataset.setupSets = ${JSON.stringify(setIds)};\ndocument.documentElement.dataset.panels = ${JSON.stringify(STEPS.map((step) => step.id).join(" "))};\n(${forwardOldHash.toString()})();\n(${toolActions.toString()})();\n(${releaseNotice.toString()})(${JSON.stringify(PINNED_RELEASE)}, ${newestPublished.toString()});`,
     themeCss: `${PAPER_CSS}
     ${PAGE_CSS}
     ${FILE_CSS}
@@ -344,8 +345,9 @@ ${fileWorkspace(example)}
   <p>And it wonders about geometry: how a mind represents the thoughts it holds, what shape a circuit of thought might take on a page, and how findings from different fields could sit side by side in one form you can read.</p>
   <p>It is not built for anyone in particular. It has been designed with care, and it has turned out to be useful, most of all toward a culture where media literacy can grow across generations.</p>
 </details>
+<p class="note" data-release-notice hidden>Release <code data-release-name></code> is published. This page keeps <code>reader.min.js</code> of ${PINNED_RELEASE}. <a href="/">Read the guide with the published release</a>; that loads the release's full build and does not change what this page keeps.</p>
 <p class="also"><a href="/init">Recipe for agents</a> · <a href="/quest.json">quest.json</a> · <a href="${QUEST.repository}">Source</a> · <a href="https://autonomous.feedback/spw.quest?at=/">What was hard to follow</a></p>
-${liveFileScript(EXAMPLES, parser ? switchLoader(parser.from) : undefined, { note: true })}
+${liveFileScript(EXAMPLES, parser ? switchLoader(parser.from) : undefined, { note: true, modulePath: PINNED_READER })}
 ${displayScript()}`,
   });
 }
@@ -581,7 +583,10 @@ async function handleQuest(request, url) {
   } else if (url.pathname === "/prompts.json") {
     response = jsonResponse({ version: VERSION, schema: "prompts.v1", prompts: QUEST_PROMPTS }, "public, max-age=300");
   } else if (url.pathname === "/install") {
-    response = page(renderInstall());
+    // A phone link lands here first, so /install registers the shell too (worker-src 'self' only).
+    response = page(renderInstall(), { shell: true });
+  } else if (url.pathname === "/offline") {
+    response = page(renderOffline());
   } else if (url.pathname === "/") {
     // ?parser= tries another build in the page; an invalid value is ignored, and the page is the default.
     // ?example= opens one of the files; an unknown one opens the first.
@@ -629,6 +634,38 @@ async function handleQuest(request, url) {
   return response;
 }
 
+/** What the shell shows when a page was not saved and the network is gone. It does not register the shell itself. */
+function renderOffline() {
+  return layout({
+    title: "spw.quest — offline",
+    description: "This page was not saved for reading without a connection.",
+    canonical: "https://spw.quest/",
+    head: QUEST_HEAD,
+    themeCss: `${PAPER_CSS}
+    ${PAGE_CSS}
+    main > :not(.masthead) { max-width: 40rem; }`,
+    body: `${masthead("")}
+<h1>Offline, and this page was not saved.</h1>
+<p class="lede">Pages you have opened here with a connection open again without one. Anything this browser kept, a note or your walk, is still on this device.</p>
+<p><a class="chip" href="/">Open the guide</a></p>`,
+  });
+}
+
+/** GET /sw.js: the shell script from assets, with no Content-Security-Policy (a policy on a worker script would become the worker's own). */
+async function serveShellScript(request, url, env) {
+  if (!["GET", "HEAD"].includes(request.method)) return new Response("Method not allowed", { status: 405, headers: { "X-Content-Type-Options": "nosniff", Allow: "GET, HEAD" } });
+  const asset = await env?.ASSETS?.fetch(new Request(new URL("/sw.js", url.origin), { method: "GET" }));
+  if (!asset || !asset.ok) return new Response("Not found", { status: 404, headers: { "X-Content-Type-Options": "nosniff" } });
+  return new Response(request.method === "HEAD" ? null : asset.body, {
+    headers: {
+      "Content-Type": "text/javascript; charset=UTF-8",
+      "Cache-Control": "public, max-age=60",
+      "X-Content-Type-Options": "nosniff",
+      "X-Spw-Shell": SHELL_VERSION,
+    },
+  });
+}
+
 /** The static shelf pages the worker serves from assets, with the page's own headers. */
 const SHELF_PATHS = new Set(["/shelf/", "/shelf/plans/", "/forms/"]);
 async function serveShelf(request, url, env) {
@@ -651,6 +688,8 @@ export default {
     if (isPeerAssetPath(url.pathname)) return servePeerAsset(request, url, env);
     // The app icons, committed under assets/icons/ (src/quest-manifest.js).
     if (isAppIconPath(url.pathname)) return serveAppIcon(request, url, env);
+    // The shell (assets/sw.js), which keeps the guide for reading offline.
+    if (url.pathname === "/sw.js") return serveShellScript(request, url, env);
     // The shelf's landing and indexes are static pages, written by carry-shelf.mjs into assets/shelf/.
     if (url.pathname === "/shelf" || url.pathname === "/shelf/plans" || url.pathname === "/forms") return Response.redirect(`${url.origin}${url.pathname}/`, 301);
     if (SHELF_PATHS.has(url.pathname)) return serveShelf(request, url, env);

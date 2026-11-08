@@ -256,9 +256,12 @@ test('unknown prerelease paths 404 with what exists; short forms redirect; HEAD 
 });
 
 const GUIDE_CSP = BASE_SECURITY['Content-Security-Policy']
-  .replace("style-src 'unsafe-inline';", "style-src 'unsafe-inline'; font-src 'self'; manifest-src 'self';")
-  .replace("script-src 'unsafe-inline'", "script-src 'self' 'unsafe-inline'");
+  .replace("style-src 'unsafe-inline';", "style-src 'unsafe-inline'; font-src 'self'; img-src 'self'; manifest-src 'self'; worker-src 'self';")
+  .replace("script-src 'unsafe-inline'", "script-src 'self' 'unsafe-inline'") + "; connect-src 'self'";
+// Two jobs, two strings: a ?parser= page must never statically import /parser.js,
+// and the plain guide statically imports the reader it pins (shell-pin.js).
 const STATIC_IMPORT = '<script type="module">\nimport { parse } from "/parser.js";';
+const PINNED_IMPORT = '<script type="module">\nimport { parse } from "/parser/2026.10.13/reader.min.js";';
 
 test('?parser= switches the guide to a /parser/ build, with a banner that says so', async () => {
   const cases = [
@@ -287,7 +290,7 @@ test('?parser= switches the guide to a /parser/ build, with a banner that says s
 
 test('any other ?parser= is ignored: the guide is the default page, and the value is not written into it', async () => {
   const plain = await (await get('/')).text();
-  assert.ok(plain.includes(STATIC_IMPORT) && !plain.includes('parser-switch'));
+  assert.ok(plain.includes(PINNED_IMPORT) && !plain.includes(STATIC_IMPORT) && !plain.includes('parser-switch'));
   const ignored = ['', 'nope', 'NEXT', 'next.js', ' next', 'latest ', '2026.10.13.1', '2026.10.13-pre.0', '2026.10.13-pre.01', '2026.10.13-patch',
     '2026.10.13-rc.1', '2026.13.01-pre.1', '2026.02.30', '2026.1.1', 'pre/a1b2c3d4e5f6', '2026.10.13/parser.js', '../parser.js',
     '//evil.example/x.js', 'https://evil.example/x.js', '<script>alert(1)</script>', '"><img src=x>'];
