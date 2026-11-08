@@ -34,7 +34,7 @@ Hypotheses from 2026-10-12, not findings. Two of the four no longer hold: a read
 
 ## Expert rooms (2026-11-08)
 
-The visitor is treated as already onboarded, from spwashi.com or from an LLM summary. [expert-rooms.spw](./expert-rooms.spw) is the reading. Each installed page keeps one default action. Examples move toward experimental semantics: subjective representation, several students' headings kept in company as `{a,b,c}@d`. A component earns its place by the mutation it performs and the instruction that updates when the mutation lands. Install steps return to the line the visitor was holding. "I wondered about indexing" is a hook for a file that already has a speaker. S1, E1, and M2 stay the next slices. This section opens no route.
+The visitor is treated as already onboarded, from spwashi.com or from an LLM summary. [expert-rooms.spw](./expert-rooms.spw) is the reading. Each installed page keeps one default action. The guide's stage row is the showcase: syntax joins, three headings kept in company as `{student, classmate, later}@indexing`, and a pivot whose performance sets the field to glass, matte, or paper. "I wondered about indexing" opens that headings file, where the speaker is already a line. Install steps still return to the line the visitor was holding. S1, E1, and M2 stay the next slices. This section opens no route.
 
 ## Next slices
 

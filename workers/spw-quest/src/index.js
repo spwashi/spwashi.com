@@ -355,16 +355,17 @@ function fileWorkspace(example) {
   const reading = readFile(example.script);
   const display = displayMenu();
   const link = (item) => `<a href="/?example=${escapeHtml(item.id)}#try" data-example="${escapeHtml(item.id)}"${item === example ? ' aria-current="page"' : ""}><span class="tab">${escapeHtml(item.tab)}</span><span class="file">${escapeHtml(item.file)}</span></a>`;
-  // One row a group: the bench, the study, the agents. Each row is named, so a reader sees the three kinds at once.
+  // One row a group: the bench, the study, the board, and the stage.
   const tabs = EXAMPLE_GROUPS.map((group) => `<div class="examples-row" role="group" aria-label="${escapeHtml(group)}"><span class="examples-group" aria-hidden="true">${escapeHtml(group)}</span><div class="examples-files">${EXAMPLES.filter((item) => item.group === group).map(link).join("")}</div></div>`).join("\n    ");
+  const themeAttr = reading.theme ? ` data-theme="${escapeHtml(reading.theme)}"` : "";
   return `<section id="try" class="try" aria-labelledby="try-title">
-  <h2 id="try-title" class="eyebrow">${EXAMPLES.length} files, written in Spw: a bench, a study, and a board</h2>
-  <p class="examples-lede">Each works as it stands and is yours to change: edit it here, keep it as your note, or download it.</p>
+  <h2 id="try-title" class="eyebrow">${EXAMPLES.length} files, written in Spw: a bench, a study, a board, and a stage</h2>
+  <p class="examples-lede">Each works as it stands and is yours to change: edit it here, keep it as your note, or download it. On the stage, a pattern that performs sets this field's theme.</p>
   <nav class="examples" aria-label="Files">
     ${tabs}
   </nav>
   <div class="workspace">
-    <form class="file" data-file method="post" action="/build#build">
+    <form class="file" data-file${themeAttr} method="post" action="/build#build">
       <div class="file-head">
         <p class="file-name"><code data-file-name>${escapeHtml(example.file)}</code></p>
         <div class="file-actions">

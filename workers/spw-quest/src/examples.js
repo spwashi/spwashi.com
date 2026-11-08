@@ -1,4 +1,4 @@
-// Files people keep, written in Spw, in three rows, each useful as it stands
+// Files people keep, written in Spw, in four rows, each useful as it stands
 // for a kind of journaling or production management. The bench is a lab
 // notebook for developer-creators with a library and information science slant:
 // each file catalogs, describes or changes part of a component and theming
@@ -8,12 +8,14 @@
 // metacognition from more than one place: a prediction checked, and a chapter
 // read from four perspectives. The board lays professional personas side by
 // side around one reference: their loops in parallel and their handoff in
-// series, and the gradient of positions between two stances. Lines are written
+// series, and the gradient of positions between two stances. The stage shows
+// the syntax itself: joins, three headings kept in company at one subject, and
+// a pattern whose performance sets the theme of the field. Lines are written
 // short enough that no word breaks in a phone's editor. The guide opens one at a
 // time in its editor, and the reading beside it says what a tool can take from
 // the file. `try` names one edit whose effect shows in that reading.
 
-export const EXAMPLE_GROUPS = Object.freeze(["Bench","Study","Board"]);
+export const EXAMPLE_GROUPS = Object.freeze(["Bench","Study","Board","Stage"]);
 
 export const EXAMPLES = Object.freeze([
   {
@@ -215,6 +217,61 @@ gradient = #[
 ?["Where on this gradient does each plan sit today?"]{
   ~#expect: \`most sit near 0.40\`
   !probe{ "read each plan's head line and name its place" }
+}`,
+  },
+  {
+    id: "syntax",
+    group: "Stage",
+    tab: "Syntax",
+    file: "syntax.spw",
+    says: "Joins on one page: a company in braces, an order along a path, a reach with ~>, a regard, and one line with its seats filled.",
+    try: "Change regard to tutor@indexing. The field beside it names tutor.",
+    script: `#>syntax_stage
+#:showcase #!syntax
+
+company = {student, classmate, later}
+order = path{~read; *note; ?ask}
+reach = home ~> topics
+regard = student@indexing
+line = home[hook]{software.art}(atlas)<record>`,
+  },
+  {
+    id: "headings",
+    group: "Stage",
+    tab: "Headings",
+    file: "headings.spw",
+    says: "I wondered about indexing. Three students' headings stay in company at that subject, ready for a catalog to choose among later.",
+    try: "Add kin inside the brace, or change @indexing to @aboutness. The field lists the company and the subject.",
+    script: `#>subject_headings
+#:showcase #!indexing #!library
+
+speaker = I
+wondered = indexing
+headings = {student, classmate, later}@indexing
+
+?["Which heading would a catalog keep, and which stay in company?"]{
+  ~#expect: \`the three stay; the catalog's one term is a later choice\`
+  !probe{ "read the three names in the brace and say which one a shelf would authorize" }
+}`,
+  },
+  {
+    id: "perform",
+    group: "Stage",
+    tab: "Performs",
+    file: "perform.spw",
+    says: "When a named pattern performs, this field takes the theme written beside it.",
+    try: "Change theme from glass to matte and watch the field lose its shadow.",
+    script: `#>pattern_performance
+#:showcase #!pattern #!theme
+
+pattern = pivot
+performs = one.slot
+theme = glass
+line = home[hook]{software.art}<atlas>
+
+?["When the pivot performs, which theme should the page take?"]{
+  ~#expect: \`glass, while one slot moves and the rest stays\`
+  !probe{ "change theme to matte and watch the field lose its shadow" }
 }`,
   },
 ]);
