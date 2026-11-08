@@ -42,14 +42,14 @@
 
 **W. Your walk, in Spw. Landed 2026-11-08, the commit after S0.** `src/walk.js`, `test/walk.test.mjs`. A recorder in every quest page's `<head>` adds the address to `spw.quest.walk/1`, but only in this browser. It keeps at most 40 steps, each with a day stamp and no time, and skips a reload. A step is a room plus a word when the address names one. The guide opens on the walk, precipitated into the marks it teaches:
 - `#>walk` names it.
-- `@you(guide)` says where the visitor is looking from.
+- `you@guide` says where the visitor is looking from.
 - `^[walked]{… ~> …}` is the path, with the word in the brace for its slot: `<file>`, `(panel)`, `[question]`, `<line>`.
 - `*room` is the room they came back to most.
 - `?word(shelf)` is what they asked the shelf.
 - `!word(build)` is a line they made.
 - `~room` lists rooms not opened yet. These are only rooms the guide already links, so the guards on `/pivot`, `/constructs`, and the one shelf link hold.
 
-A first visit gets `#>walk / @you(guide) / ~learn ~build ~forms`: Spw handed over, none assumed. Flushing works three ways. Clear empties the walk. Open in Build and Canvas carry it out by `#spw64=`, which no server reads. Copy takes the text. With scripts off, the worker paints where a walk begins, and Build opens it by `?script=`. Headless at 390 px: a seven-room walk reads whole, Open in Build fills the editor, Clear resets and keeps focus on the card, and no exceptions were thrown. Gate still open: the creator's look on a phone, and these questions:
+A first visit gets `#>walk / you@guide / ~learn ~build ~forms`: Spw handed over, none assumed. Flushing works three ways. Clear empties the walk. Open in Build and Canvas carry it out by `#spw64=`, which no server reads. Copy takes the text. With scripts off, the worker paints where a walk begins, and Build opens it by `?script=`. Headless at 390 px: a seven-room walk reads whole, Open in Build fills the editor, Clear resets and keeps focus on the card, and no exceptions were thrown. Gate still open: the creator's look on a phone, and these questions:
 - Is `walked` the right lens word?
 - Should a step carry its day into the file (`$` substrate: time)?
 - Should Clear also pause recording?

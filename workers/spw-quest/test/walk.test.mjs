@@ -47,7 +47,7 @@ test('the walk is kept in this browser, without repeats, and never past its limi
 
 test('a first visit assumes no Spw: it names the walk, says where you are, and offers rooms', () => {
   const first = precipitate([{ room: 'guide' }]);
-  assert.equal(first.text, '#>walk\n@you(guide)\n~learn ~build ~forms');
+  assert.equal(first.text, '#>walk\nyou@guide\n~learn ~build ~forms');
   assert.deepEqual(first.open.map(([room]) => room), ['learn', 'build', 'forms']);
   assert.equal(readFile(first.text).ok, true);
 });
@@ -61,7 +61,7 @@ test('a walk precipitates into the marks the guide teaches, and reads as Spw', (
   const { text, lines } = precipitate(steps);
   assert.equal(text, [
     '#>walk',
-    '@you(guide)',
+    'you@guide',
     '^[walked]{guide ~> learn ~> learn(act) ~> shelf[door] ~> build<garden> ~> guide<notebook> ~> guide}',
     '*guide',
     '?door(shelf)',
@@ -77,7 +77,7 @@ test('a walk precipitates into the marks the guide teaches, and reads as Spw', (
   assert.ok(!all.lines.some(([, kind]) => kind === 'open'));
   assert.deepEqual(all.open, []);
   // A stored step with a bad word or room is dropped, not written.
-  assert.equal(precipitate([{ room: 'guide' }, { room: 'x}y' }, { room: 'shelf', detail: '}{', kind: 'asked' }]).text, '#>walk\n@you(guide)\n^[walked]{guide ~> shelf}\n~learn ~build ~forms');
+  assert.equal(precipitate([{ room: 'guide' }, { room: 'x}y' }, { room: 'shelf', detail: '}{', kind: 'asked' }]).text, '#>walk\nyou@guide\n^[walked]{guide ~> shelf}\n~learn ~build ~forms');
 });
 
 test('the paint gives each mark and brace its type and escapes the rest', () => {
@@ -86,6 +86,8 @@ test('the paint gives each mark and brace its type and escapes the rest', () => 
   assert.match(painted, /<span data-t="stream">~&gt;<\/span>/);
   assert.match(painted, /<span data-t="b-concept">&lt;<\/span>c<span data-t="b-concept">&gt;<\/span>/);
   assert.match(painted, /<span data-t="potential">~<\/span>learn/);
+  // @ between a context and its subject is a mark too: you@guide.
+  assert.equal(paintWalk('you@guide', WALK_TYPES), 'you<span data-t="perspective">@</span>guide');
 });
 
 test('the guide opens on the walk, ahead of the files, and every page adds itself to it', async () => {
@@ -96,7 +98,7 @@ test('the guide opens on the walk, ahead of the files, and every page adds itsel
   assert.match(page, /It stays in this browser; nothing is sent\./);
   // With scripts off: where a walk begins, painted, with a way into Build that needs no script.
   assert.ok(page.includes('<span data-t="frame">#&gt;</span>walk'));
-  assert.ok(page.includes(`href="/build?script=${encodeURIComponent('#>walk\n@you(guide)\n~learn ~build ~forms')}"`));
+  assert.ok(page.includes(`href="/build?script=${encodeURIComponent('#>walk\nyou@guide\n~learn ~build ~forms')}"`));
   assert.match(page, /<a href="\/learn">learn<\/a>/);
   for (const path of ['/', '/learn', '/install', '/specimens']) {
     assert.ok((await (await get(path)).text()).includes(`<script>(${recordWalk.toString()})("${WALK_KEY}", ${WALK_LIMIT}, ${walkStep.toString()});</script>`), path);

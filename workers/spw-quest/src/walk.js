@@ -83,7 +83,7 @@ export const WALK_HEAD = `<script>(${recordWalk.toString()})(${JSON.stringify(WA
  */
 export function precipitate(steps, here = "guide", rooms = OPEN_ROOMS) {
   const walk = (Array.isArray(steps) ? steps : []).filter((step) => step && typeof step.room === "string" && /^[a-z]+$/.test(step.room));
-  const lines = [["#>walk", "frame"], [`@you(${here})`, "perspective"]];
+  const lines = [["#>walk", "frame"], [`you@${here}`, "perspective"]];
   const tokens = [];
   for (const step of walk) {
     const word = /^[a-z][a-z0-9_]*$/.test(step.detail || "") ? step.detail : "";
@@ -123,7 +123,7 @@ export function paintWalk(text, types) {
   for (let i = 0; i < text.length; i += 1) {
     const two = text.slice(i, i + 2);
     const before = i === 0 ? "\n" : text[i - 1];
-    const starts = /[\s{(\[<]/.test(before);
+    const starts = /[\s{(\[<]/.test(before) || text[i] === "@"; // @ also sits between a context and its subject
     if (two === "~>") { html += span("stream", two); i += 1; continue; }
     if (starts && types.marks[two]) { html += span(types.marks[two], two); i += 1; continue; }
     if (starts && types.marks[text[i]]) { html += span(types.marks[text[i]], text[i]); continue; }
@@ -136,7 +136,7 @@ export function paintWalk(text, types) {
 /** What each kind of line says, in the guide's own reading of its mark. */
 export const WALK_SAYS = Object.freeze({
   frame: "<code>#&gt;</code> names it, so it can be found again.",
-  perspective: "<code>@</code> says who is looking, and from where.",
+  perspective: "<code>@</code> sets a perspective: the context before it, the subject after it. Here, you, at the guide.",
   path: "<code>^</code> lifts the rooms you passed through into one path; <code>~&gt;</code> carries each on to the next.",
   weight: "<code>*</code> marks what carries weight: the room you came back to most.",
   asked: "<code>?</code> opens a question you can close again: what you asked the shelf.",
