@@ -6,7 +6,7 @@
 
 **Entrances:** this plan owns the entrance hubs' real estate, their cards and chips. The words belong to [semantic-copy-depth](../semantic-copy-depth/PLAN.md). [topic-building-blocks](../topic-building-blocks/PLAN.md) may drop the topics visual-studies row and the repeated craft square. The six topic visual cards stay, and Wave 3 is still Services and Recipes.
 
-**Clusters:** [update-clusters-2026-11.spw](../semantic-copy-depth/update-clusters-2026-11.spw). H1 stays next. The instrument in [spw-native-components-2026-11.spw](../../../.spw/caches/spw-native-components-2026-11.spw) — mono for the sigil line, editorial for the lede, `{` and `}` easing apart on one frame — waits behind H1 and behind that file's cluster C. This plan does not restyle a chip inside a copy commit.
+**Clusters:** [update-clusters-2026-11.spw](../semantic-copy-depth/update-clusters-2026-11.spw). H1 stays next. The instrument in [spw-native-components-2026-11.spw](../../../.spw/caches/spw-native-components-2026-11.spw) spends tokens that already exist: `--grammar-form-open` and `--grammar-form-close` in `public/css/grammar/syntax.css`, and the seat line in `public/js/runtime/page/home-seat-line.js`. Whether the two brace ends get those tokens is `#>wonder_spw_native_brace_ease`. Whether carried words stay on the immediate mount is `#>wonder_spw_native_seat_residue`. Both wait behind H1 and behind cluster C. This plan does not restyle a chip inside a copy commit.
 
 **Related:** [webpage-trope-vocabulary](../archive/webpage-trope-vocabulary/PLAN.md) (archived).
 

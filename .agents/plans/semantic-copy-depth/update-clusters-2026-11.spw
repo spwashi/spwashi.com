@@ -13,6 +13,12 @@
 
 @copy_review: ~"./copy-review-2026-11.spw"
 @components: ~"../../../.spw/caches/spw-native-components-2026-11.spw"
+@slots: ~"../../../public/js/semantic/expression-query.js"
+@phases: ~"../../../public/js/runtime/interaction/arc-taxonomy.js"
+@operators: ~"../../../public/js/kernel/operator-detection.js"
+@measure: ~"../../../.spw/conventions/measurement-contract.spw"
+@clock: ~"../../../scripts/audit-copy-clock.mjs"
+@accessor: ~"../../../scripts/page-copy-audit.mjs"
 @affordances: ~"../../../.spw/caches/linguistic-affordances-2026-11.spw"
 @theory: ~"../../../.spw/caches/theory-map-2026-10.spw"
 @joins: ~"../../../.spw/language/dot-join.spw"
@@ -52,6 +58,20 @@ fixity = "tending"
   discipline = `One cluster, one route, one commit, one probe that can fail. The receipt is the commit's verify line until the contour can show the wonder's mode.`
 }[reg=facet]
 
+^"patterns"{
+  claim = `Each cluster spends a pattern that already runs, and names one objective measure and one subjective measure. The pair is a hybrid in @measure. The wonder is the bend.`
+  A = `Pattern: a <time> inside a copy unit (@clock). Objective: audit:copy:clock --check on the route reports no decayed unit in the fold. Subjective: the title names work that is still open. Bend: #>wonder_update_clusters_clock_tense.`
+  B = `Pattern: GESTURE_CHARGE in @slots, the phase arc in @phases, and the physics row in @operators. Objective: each verb in the new sentence occurs in the source that object uses. Subjective: #>wonder_update_clusters_gesture_cohesion.`
+  C = `Pattern: the seat line's authored slots, read by @slots readExpressionSlots. Objective: the visible slots match the authored expression. Subjective: the working-view sentence names bright cards. Bend: #>wonder_spw_native_seat_residue in @components.`
+  D = `Pattern: one claim, then a door. Objective: the note no longer contains the words service copy. Subjective: read the fold and name the next door in one sentence.`
+  E = `Pattern: the join laws in @joins, read by @slots until a nested open stops the container. Objective: the topics expression's body join matches the lede's order or its set. Subjective: one claim, then the route board. Bend: #>wonder_update_clusters_join_law.`
+  F = `Pattern: a wonder contour line whose mode is the lifecycle. Objective: the cohesion wonder prints as one line that parses. Subjective: reading that line teaches which slot changed. Bend: keep the prose contour if the line does not parse.`
+}[reg=facet]
+
+^"elasticity"{
+  claim = `A failed objective measure takes the wonder's next alternative. The cluster does not grow a new pattern to save the old one. Two clusters that bend the same way are the evidence that promotes a pattern into a convention.`
+}[reg=facet]
+
 ^"research"{
   claim = `The research datum is a triple: the sentence, the expression, and the control. Agreement is cohesion. A split is dissonance. Both are findings. A split that teaches is a wonder. A split that gives two instructions is a bug.`
   value = `The linguistic development is checkable at entrance scale. The gesture census, the copy clock, and the expression variety audit are the instruments. A new grammar would erase the datum by renaming it.`
@@ -70,4 +90,32 @@ fixity = "tending"
   !probe{ "Read the topics first move, tap and hold one chip, then read the living-term line on Home. Say cohesion or dissonance before editing." }
   $%[cohesion.close_the_mixed_sentence, dissonance.keep_two_lines, sentence.names_the_split]
   ~<"./copy-review-2026-11.spw"> ~<"../../../.spw/caches/spw-native-components-2026-11.spw"> ~<"../interaction-grammar/PLAN.md">
+}
+
+#>wonder_update_clusters_clock_tense
+?["When a fold still wears a close that has passed, is the fix a new season name or a receipt left in place?"]{
+  #:depth #!stylistic ~#lens(projection)
+  ~#with: @clock @copy_review
+  ~#tension: "The clock flags a relative cue standing on a past time. A season name can stay on the holidays page and the folio while the Now title points at work that is still open."
+  ~#hypothesis: "Move the passed close into a receipt. Let the title name the open work. Do not mint a season name to satisfy the clock."
+  ~#expect: "After cluster A, audit:copy:clock --check on /now/ and / is clear for the fold, and Octvember still names the costume page and the folio."
+  ~#unblocks: "cluster A"
+  ~#probe(read)
+  !probe{ "Read the Now title, then the October receipts under it. Say which sentences are still making an offer." }
+  $%[clock.receipt_keeps_the_date, clock.new_season_name, clock.leave_the_title]
+  ~<"../../../now/index.html"> ~<"../../../scripts/audit-copy-clock.mjs">
+}
+
+#>wonder_update_clusters_join_law
+?["Is the topics lede an order, a set, or one identifier, and does the expression's join say the same thing?"]{
+  #:depth #!structural ~#lens(projection)
+  ~#with: @joins @slots @affordances
+  ~#tension: "topics[atlas]{question;neighbor;issue} writes a schedule. The site lexer drops the semicolon. readContainers keeps a pair and stops if the pair opens again inside. A schedule the parser drops is a message, not a proof."
+  ~#hypothesis: "Keep the semicolon while the lede is an order and the specimen on the parser page shows parse() retaining it. A lede that is a set writes a comma. Tight dots would make the three words one identifier, which this fold is not."
+  ~#expect: "The expression body and the lede use the same join law, and a public page does not depend on a semicolon parse() drops."
+  ~#unblocks: "cluster E"
+  ~#probe(read)
+  !probe{ "Read the topics lede aloud and name the join: order, set, or one thing. Then read the expression." }
+  $%[join.keep_semicolon_as_order, join.comma_as_set, join.wait_for_the_parser_specimen]
+  ~<"../../../topics/index.html"> ~<"../../../.spw/language/dot-join.spw"> ~<"../../../public/js/semantic/expression-query.js">
 }

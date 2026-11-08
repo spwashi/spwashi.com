@@ -25,7 +25,7 @@ Slices, smallest first:
 5. **Receipts land in the satchel**, composed with [settings-ornament-resonance](../settings-ornament-resonance/PLAN.md)'s patch bay; whether bay and receipts share one satchel is that plan's `#>wonder_settings_ornament_resonance_satchel_holds`.
 6. **What play commits to.** The sincere structure play is played straight in is the creator's call (`chrome-ecology-2026-11.spw#wonder_chrome_ecology_play_structure`).
 
-**Clusters:** [update-clusters-2026-11.spw](../semantic-copy-depth/update-clusters-2026-11.spw). The settings passage stays next. Cluster B follows it only when a public first-move verb changed: the passage then quotes the string that remains. The taste question is `#>wonder_update_clusters_gesture_cohesion`: cohesion when the sentence, the expression, and the control name one physics, dissonance when a reader can hear the split. Two ladders stay two lines.
+**Clusters:** [update-clusters-2026-11.spw](../semantic-copy-depth/update-clusters-2026-11.spw). The settings passage stays next. Cluster B follows it only when a public first-move verb changed: the passage then quotes the string that remains. The two vocabularies already in the code are `GESTURE_CHARGE` in `public/js/semantic/expression-query.js` (tap previews, hold sustains) and the living-term title in `public/js/interface/haptics.js` (tap to inspect, hold to gather). A sentence quotes one of them. The phase names stay `INTERACTION_PHASES` in `public/js/runtime/interaction/arc-taxonomy.js`. The taste question is `#>wonder_update_clusters_gesture_cohesion`.
 
 ## Settled, 2026-09-04
 
