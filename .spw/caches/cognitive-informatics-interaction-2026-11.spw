@@ -28,6 +28,12 @@
 @component_biome: ~"../conventions/component-biome.spw"
 @theory_map: ~"./theory-map-2026-10.spw"
 @chrome_ecology: ~"./chrome-ecology-2026-11.spw"
+@plugin_ecology: ~"./plugin-ecology-improvements-2026-11.spw"
+@syntax_runtime_theory: ~"./syntax-runtime-theory-enhancements-2026-11.spw"
+@factshift_substrate: ~"./factshift-cognitive-substrate-2026-11.spw"
+@spw_native_components: ~"./spw-native-components-2026-11.spw"
+@update_clusters: ~"../../.agents/plans/semantic-copy-depth/update-clusters-2026-11.spw"
+@ecosystem_plan: ~"../../.agents/plans/ecosystem-architecture/index.spw"
 @interaction_grammar: ~"../../.agents/plans/interaction-grammar/interaction-grammar.spw"
 @planes_plan: ~"../../.agents/plans/spw-planes/PLAN.md"
 @planes_ecology: ~"../../.agents/plans/spw-planes/ecology.spw"
@@ -59,6 +65,7 @@ contents = #[
   ~"./cognitive-informatics-interaction-2026-11.spw#three_clocks",
   ~"./cognitive-informatics-interaction-2026-11.spw#ground_as_generalization",
   ~"./cognitive-informatics-interaction-2026-11.spw#wonders_as_inquisitive_content",
+  ~"./cognitive-informatics-interaction-2026-11.spw#mutation_and_resonance",
   ~"./cognitive-informatics-interaction-2026-11.spw#relay",
   ~"./cognitive-informatics-interaction-2026-11.spw#stream",
 ][reg=set]
@@ -279,8 +286,33 @@ contents = #[
   }
 }
 
+^"mutation_and_resonance"{
+  insight #cii-009 {
+    title = `Mutation at Two Grains, Resonance Across Pages`
+    status = `active`
+    rung = `seed`
+    claim = `The creator's broader wonder, 2026-11-08: line- and word-level mutation semantics, thematic supports, and resonance across pages. The pieces already exist apart; this insight sets them side by side.`
+    line_grain = `A line changes at its joints: a mark, a room's walls, a seam, an order, a nesting, a join between lines, a mark's position. One change per act, every other byte kept (@operators_note).`
+    word_grain = `A word changes by rename, by a fresher word, or by a new mode. The copy clusters already hold the rule: the mode names the question a sentence answers, a fresher word keeps the expression, and a new posture writes a new mode (@update_clusters).`
+    thematic_supports = `A theme holds when a word wears the same look and motion wherever it appears: a sigil moves like its kernel physics, and a delimiter pair is the housing (@spw_native_components).`
+    resonance = `Across pages, resonance is token kinship: I(a→b) falls off with the Jaccard distance between two expressions' tokens (#cii-004). On the canvas, resonate echoes bare words only, so ?garden and !garden would not echo (@planes_physics).`
+    branches = .{
+      mark_is_state = `axis: identity. If a mark is a word's state and not its name, a lifecycle step keeps the word's kin across pages, and resonance survives a mutation.`
+      mutation_as_signal = `axis: what a change emits. A mutation could deposit into the field the way a hold does, so a word turned on /pivot warms its kin on spwashi.com for a while (#cii-006 sets the clock).`
+      theme_as_ground = `axis: what stays. A theme may be the ground pages share under anti-unification (#cii-007): the slots that never vary across a route family are its supports.`
+    }[reg=facet]
+  }
+}
+
 ^"relay"{
   ~#note: "How the next session grows this file. Gemini and Claude sessions have taken turns here; any session can take the next."
+  neighbors = .{
+    plugin_ecology = `@plugin_ecology: readers, residue and one character table across the plugin layers, where a cognitive dimension becomes a tool.`
+    syntax_runtime = `@syntax_runtime_theory: intermediate forms and lazy ~ thunks, the runtime half of the epistemic beat.`
+    factshift_substrate = `@factshift_substrate: gradient fields and gesture repairs on the canvas, grown beside #cii-002's repairs.`
+    spatial_grammar = `@spatial_grammar: the exercises #cii-005 pairs with fluency.`
+    ecosystem = `@ecosystem_plan: where the interactive and archival purposes of the sites are weighed.`
+  }[reg=facet]
   rungs = #[
     `seed: said once, worth keeping.`,
     `sketch: worked through, with its strains named.`,
@@ -298,6 +330,7 @@ contents = #[
 ^"stream"{
  >>[2026-11-07 16:53] seed — a Gemini session: cii-001 to cii-005, the epistemic budget wonder, and a cognition lab in a gitignored reading page (.tmp/readings/spw-planes-2026-11-07.html).
  >>[2026-11-07 18:10] sketch — a Claude session, at the creator's ask to grow the file generatively rather than correct it: roots and named-axis branches on each insight, repairs for the three gesture collapses, Green and Petre's unmapped dimensions, a fifth dictionary from the planes pass, three new insights (three clocks, shared ground as a least general generalization, wonders as inquisitive content), the relay, and three wonders. Two slips fixed in place: twelve operators, extraneous load.
+ >>[2026-11-08 10:57] seed — the creator's broader wonder (line- and word-level mutation semantics, thematic supports, resonance across pages) gathered as cii-009 and a wonder; the caches grown beside this one on the same days are linked from the relay.
 }
 
 #>wonder_cognitive_epistemic_budget
@@ -337,4 +370,13 @@ contents = #[
   ~#probe(read)
   !probe{ "for each dimension in #cii-003, find one place on the three sites where it helps and one where it hurts; count the hurts" }
   $%[dimension.consistency, dimension.error_proneness, dimension.hard_mental_operations, dimension.other]
+}
+
+#>wonder_cognitive_mutation_resonance
+?["When a word mutates on one page (a mark, a fresher word, a new mode), should its kin on other pages still resonate with it?"]{
+  ~#expect: "On the canvas, no: resonate echoes bare words, and a mark changes the name. On spwashi.com kinship is token overlap, so a fresher word drops kin while a new mark mostly keeps it."
+  ~#unblocks: @planes_plan
+  ~#probe(run)
+  !probe{ "rg -n 'export function resonate' workers/factshift-center/app/src/js/modes/spw/line-anatomy.ts && rg -n -i 'jaccard' .spw/conventions/attention-field.spw" }
+  $%[kin.kept, kin.lost, kin.by_mode]
 }

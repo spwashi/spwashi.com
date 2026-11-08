@@ -21,6 +21,7 @@
 @holidays: ~"./holiday-infrastructure-2026-09.spw"
 @feedback_product: ~"./feedback-product-2026-09.spw"
 @residency_demo: ~"../../design/experiments/residency/index.html"
+@factshift_substrate: ~"./factshift-cognitive-substrate-2026-11.spw"
 
 operation = "cache"
 fixity = "experimental"
@@ -101,7 +102,7 @@ expression = host[job]{one.verb}<frame>
 ^"lands"{
   codebase = `boon.land, bane.land, and bone.land are the same app as factshift.center. The frame is neutral. The hostname is the pull: boon toward arrival, bane toward departure, bone held still.`
   images = `A concept stays words. On some viewports, some concepts link to an image. That image is the sponsored slot. The cache of that image has to be minded, or a sponsor's picture outlives the agreement.`
-  today = `factshift.center serves the built app (script factshift-center). The three land names still open their specimens. Mounting the same app on them is the next route change, after the frame has been public.`
+  today = `factshift.center serves the built app (script factshift-center). The three land names still open their specimens. Mounting the same app on them is the next route change, after the frame has been public. Elaboration of factshift.center's continuous 5-simplex combinatorics, gradient manifolds, cognitive substrate, and narrative mechanics lives in @factshift_substrate.`
 }[reg=facet]
 
 ^"physics"{

@@ -1,0 +1,273 @@
+# Syntax, Runtime, Intermediate Forms & Theory Enhancements (2026-11)
+#
+# Synthesizes concrete enhancements across four interlocked strata of the Spw
+# workbench and consumer ecosystem:
+# 1. Intermediate Forms, CLI Output Envelopes & Workbench Tooling
+# 2. Syntax Enhancements (Lexer, Grammar & ONF Lowering)
+# 3. Runtime Affordances (Interpreter, RegisterBank, Substrate & Resonance)
+# 4. Formal Theory Enhancements (Container-Seam Algebra, Graded Effect
+#    Semiring, and Unified Three-Clock Hysteresis Dynamics)
+#
+# Nothing here writes to .spw/_workbench. Every insight names its roots
+# (live, proposed, prototype, imagined) and branches by the axis they vary.
+
+#>syntax_runtime_theory_enhancements_2026_11
+#:cache #!syntax #!runtime #!ir #!onf #!theory #!algebra #!semantics
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!semantics
+
+@plugin_ecology: ~"./plugin-ecology-improvements-2026-11.spw"
+@linguistic_affordances: ~"./linguistic-affordances-2026-11.spw"
+@cognitive_informatics: ~"./cognitive-informatics-interaction-2026-11.spw"
+@theory_map: ~"./theory-map-2026-10.spw"
+@spw_design_improvements: ~"./spw-design-improvements-2026-11.spw"
+@component_ecology: ~"./component-ecology-theory-2026-11.spw"
+@expression_precipitation: ~"./expression-projection-precipitation-2026-11.spw"
+@brace_hysteresis: ~"./brace-hysteresis-crease-2026-09.spw"
+@upstream_hub: ~"../reviews/upstream-workbench-recommendations.spw"
+@asks_architecture: ~"../reviews/upstream-workbench-recommendations/architecture.spw"
+@asks_language: ~"../reviews/upstream-workbench-recommendations/language-support.spw"
+@asks_motions: ~"../reviews/upstream-workbench-recommendations/motions.spw"
+@asks_plugins: ~"../reviews/upstream-workbench-recommendations/plugins-and-tooling.spw"
+@asks_capabilities: ~"../reviews/upstream-workbench-recommendations/capabilities.spw"
+@attention_field: ~"../conventions/attention-field.spw"
+@compound_expressions: ~"../conventions/compound-expressions.spw"
+@wb_seed_index: ~"../_workbench/packages/spw-seed/src/index.ts"
+@wb_normalize: ~"../_workbench/packages/spw-seed/src/normalize.ts"
+@wb_onf: ~"../_workbench/packages/spw-seed/src/types/ast/onf.ts"
+@wb_ir_slices: ~"../_workbench/packages/spw-seed/src/ir/slices.ts"
+@wb_syntax_catalog: ~"../_workbench/packages/spw-seed/src/experimental/syntax-catalog.ts"
+@wb_runtime_index: ~"../_workbench/packages/spw-runtime/src/index.ts"
+@wb_stages: ~"../_workbench/packages/spw-runtime/src/pipeline/stages.ts"
+@wb_interpreter: ~"../_workbench/packages/spw-runtime/src/interpreter/interpreter.ts"
+@wb_register_bank: ~"../_workbench/packages/spw-runtime/src/state/register-bank.ts"
+@wb_resonance: ~"../_workbench/packages/spw-runtime/src/pipeline/resonance.ts"
+@wb_cli_commands: ~"../_workbench/packages/spw-cli/src/commands.ts"
+@wb_cli_envelope: ~"../_workbench/packages/spw-cli/src/envelope.ts"
+@wb_cli_select: ~"../_workbench/packages/spw-cli/src/select.ts"
+@wb_cli_query: ~"../_workbench/packages/spw-cli/src/query.ts"
+@wb_cli_inspect: ~"../_workbench/packages/spw-cli/src/inspect.ts"
+@wb_cli_inspect_source: ~"../_workbench/packages/spw-cli/src/inspect-source.ts"
+
+operation = "cache"
+fixity = "experimental"
+expression = medium[enhancements]{ir.syntax.runtime.theory}<unify>
+
+summary = #[
+  `Intermediate forms (ONFNode, Precipitate, SlotReading, IrKind slices) need lossless round-tripping: precipitateToSpw() and onfToSpw() in @wb_stages must emit # comments and preserve valence, coupling, bound, and construction frames; desugar() in @wb_normalize must move from pre-lex string regexes to token/AST normalization so source Spans never shift; and Stage 4 (interpret) should evaluate ONFNode directly while bridging SlotReading <-> ONFNode.`,
+  `Workbench CLI outputs and tooling (@wb_cli_select, @wb_cli_query, @wb_cli_inspect) should converge on the versioned SpwCliEnvelope<T> (@wb_cli_envelope) without string truncation in JSON mode, add --spw dual-read output with #>[residue]{} footers to select and query, gate ParseEvent allocation on eventPolicy, and share the sha256 FileFactsIR disk memo across query, doctor, lint, and spw-lsp.`,
+  `Syntax enhancements promote the five constructs the corpus reaches for most (@linguistic_affordances): coproduct | in braces and $%[a | b] answer partitions, parameterized shape templates ^shape[name](X, Y){} with residue splice streams, composed @handle#fragment addressing with hyphenated valence-after-# lexing, and morphism/interval keys (a -> b:, a ~> b:, a..b) in facet maps.`,
+  `Runtime affordances turn no-op evaluator branches in @wb_interpreter into real operational semantics: lazy epistemic ~ thunks that only discharge to pragmatic Substrate writes under !, focus-piped -> and station-provenance ~> connectors, a deterministic logical beat clock in @wb_resonance, and Plotkin/Reynolds structural anti-unification antiUnifyONF(a, b) for # resonance and ground_then_edge.`,
+  `Formal theory enhancements unify the medium under three mathematical laws: a bimonoidal/Kleene container-seam algebra for (, ; | -> ~>), a graded epistemic/pragmatic effect semiring E = ({L0, L1, L2}, join, seq) with ~{...} shielding, and a single forced-damped relaxation equation with structural hysteresis (theta_settled > 0) across all three planes.`,
+][reg=set]
+
+contents = #[
+  ~"./syntax-runtime-theory-enhancements-2026-11.spw#intermediate_forms_and_precipitates",
+  ~"./syntax-runtime-theory-enhancements-2026-11.spw#workbench_outputs_and_cli_ergonomics",
+  ~"./syntax-runtime-theory-enhancements-2026-11.spw#syntax_grammar_and_lexer_enhancements",
+  ~"./syntax-runtime-theory-enhancements-2026-11.spw#runtime_evaluator_and_substrate_affordances",
+  ~"./syntax-runtime-theory-enhancements-2026-11.spw#formal_theory_and_algebraic_laws",
+  ~"./syntax-runtime-theory-enhancements-2026-11.spw#relay",
+  ~"./syntax-runtime-theory-enhancements-2026-11.spw#stream",
+][reg=set]
+
+^"intermediate_forms_and_precipitates"{
+  insight #srt-001 {
+    title = `Lossless ONF Serialization, Span-Preserving Desugaring, and Unified IR Slices`
+    status = `active`
+    rung = `sketch`
+    claim = `Operator Normal Form (ONFNode) and stage Precipitates only fulfill the dual-read round-trip contract (@upstream_hub#dual_read_roundtrip) when desugaring preserves source byte offsets, Stage 4 evaluates ONF directly, and onfToSpw() serializes every semantic frame.`
+    measured_gaps = .{
+      unparseable_precipitate_comments = `astToSpw() (@wb_stages:399) and registersToSpw() (@wb_stages:471-483) emit // slash comments ("_ // empty AST", "// no registers", "$[key] val // meta") even though Spw comments use # (migrateSlashCommentsToHash in @wb_seed_index:238).`
+      dropped_onf_frames = `renderONFNode() (@wb_stages:444-467) serializes only frames.reg and frames.value, silently dropping frames.valence (charge-signs stamped at @wb_normalize:114-118), frames.coupling (boundary/operator coupling kind and occupancy), frames.bound (non-<> frame bindings at @wb_normalize:169-177), and frames.construction (source span provenance at @wb_onf:20-26).`
+      regex_desugar_span_shift = `desugar() (@wb_normalize:17-26) runs raw string regexes over the whole file before lexing—rewriting inside # comments and string literals, and expanding A{} (3 bytes) to {_A }_A (7 bytes), which shifts every downstream AST Span and ONFConstructionFrame.source offset.`
+      bypassed_onf_in_interpret = `runSpwStepped() (@wb_stages:276-304) computes onf = normalizeToONF(parseOutput.ast) in Stage 3, then passes raw parseOutput.ast into interpretSeed() in Stage 4 (which calls normalizeToONF a second time at @wb_interpreter:377) while claiming input: onf.`
+      unbridged_slot_reading = `The 10-slot line reader (readLine -> SlotReading in @wb_seed_index:989-1015) has no conversion to or from ONFNode.`
+    }[reg=facet]
+    repairs = #[
+      `Replace // with # or ~#meta facets in @wb_stages and serialize valence, coupling, bound, and construction in renderONFNode() so normalizeToONF(parse(onfToSpw(onf)).ast) == onf up to momentum.`,
+      `Move desugar() from pre-lex string regexes to token-stream or AST->ONF lowering so comments/strings are untouched and original token Spans stay exact.`,
+      `Pass ONFNode directly into interpretONF(onf, options, registers) in Stage 4 so ONF-level stencil/mobility rewrites take effect without double normalization.`,
+      `Add onfToSlotReading(onf) and slotReadingToONF(reading) in @wb_seed_index, plus FileFactsIR and ResidueIR in @wb_ir_slices.`,
+    ][reg=set]
+    roots = .{
+      onf_and_stages = `live in @wb_normalize, @wb_onf, and @wb_stages.`
+      ir_slices = `live in @wb_ir_slices (SelectionIR, StackIR, FormIR, GraphIR, MeasureIR, SurfaceCardIR).`
+      lossless_roundtrip = `proposed in @upstream_hub#dual_read_roundtrip and @plugin_ecology#pei-002.`
+    }[reg=facet]
+    branches = .{
+      desugar_stage_locus = `axis: where sugar lowers. Lower guillemets, A{}, and ?_op in the lexer token stream vs. during normalizeToONF() with frames.rewrite recording the surface sugar.`
+      onf_surface_syntax = `axis: how ONF prints as Spw. Render ONF as canonical surface Spw (reconstructing x[a]{b} from frames.construction) vs. explicit prefix call notation sigma[frames]{args}.`
+    }[reg=facet]
+  }
+}
+
+^"workbench_outputs_and_cli_ergonomics"{
+  insight #srt-002 {
+    title = `Unified SpwCliEnvelope<T>, Dual-Read --spw Queries, and Zero-Allocation Event Gating`
+    status = `active`
+    rung = `sketch`
+    claim = `Unifying the CLI's three incompatible JSON formats onto SpwCliEnvelope<T>, adding --spw output to select and query, and gating ParseEvent allocation on eventPolicy makes workbench tooling both machine-composable and fast across 700-file corpora.`
+    measured_gaps = .{
+      three_json_envelopes = `@wb_cli_envelope defines versioned SpwCliEnvelope<T> (used by @wb_cli_inspect_source), but @wb_cli_select:146-168 and @wb_cli_query:159-177 emit unversioned custom JSON objects, and spw pulse --json (@wb_cli_commands:113-119) emits a third shape.`
+      json_truncation_bug = `spw select --json truncates snippet to 120 chars (@wb_cli_select:152), contradicting @wb_cli_inspect:111 ("JSON and NDJSON preserve exact data; bounded human and Spw views name omissions").`
+      missing_spw_format_on_select_query = `Neither spw select (@wb_cli_select:91) nor spw query (@wb_cli_query:253) supports --spw / --format spw, preventing CLI queries from piping valid Spw cards into spw emit (@plugin_ecology#pei-002).`
+      unskipped_parse_event_allocation = `@wb_cli_inspect:110 notes "Event retention currently does not skip event construction"—every parse() allocates thousands of enter/exit/token ParseEvent objects even under --events none or diagnostics.`
+      split_select_and_query_targets = `spw select only accepts one positional file (no --where, --select, --stats, or --stdin), whereas spw query only accepts --from roots (ignoring positional files and piped SelectionIR) and does not read corpus-memo.ts.`
+    }[reg=facet]
+    repairs = #[
+      `Wrap all --json outputs in formatJsonEnvelope() (@wb_cli_envelope) with EnvelopeMeta (cache, completeness, elapsedMs) and remove snippet truncation from JSON/NDJSON outputs.`,
+      `Add --spw (--format spw) to spw select and spw query via formatSpwCard('selection', ...) with an explicit #>[residue]{ omitted_rows } footer when capped by --limit.`,
+      `Gate ParseEvent object allocation in the parser combinators on eventPolicy so 'none' allocates zero events and 'diagnostics' allocates only error events.`,
+      `Unify target resolution across spw select and spw query (positional file/dir, --from roots, or --stdin SelectionIR) backed by the sha256 FileFactsIR disk memo.`,
+    ][reg=set]
+    roots = .{
+      envelope_v1 = `live in @wb_cli_envelope and @wb_cli_inspect_source.`
+      spw_cards = `live in formatSpwCard (@wb_seed_index:317) and spw ls --spw.`
+      walk_stats = `landed in 850077a for query, doctor, and lint.`
+    }[reg=facet]
+    branches = .{
+      ndjson_granularity = `axis: streaming unit. In spw query --ndjson, stream one JSON envelope per matched row vs. one envelope per completed file with its FileFactsIR and matches.`
+    }[reg=facet]
+  }
+}
+
+^"syntax_grammar_and_lexer_enhancements"{
+  insight #srt-003 {
+    title = `Coproduct Seams (|), Parameterized Shapes, @handle#fragment Binders, and Morphism Keys`
+    status = `active`
+    rung = `sketch`
+    claim = `Four targeted grammar and lexer additions resolve the corpus's live prose-degradation warnings, partial herbarium readings, and unindexed @handle#fragment citations (@linguistic_affordances) without adding a 13th operator.`
+    enhancements = .{
+      coproduct_pipe_seam = `Promote | (already handled in @wb_interpreter:324) as the fifth structural seam alongside . (attribute), , (product/co-presence), ; (sequence/monoid), and ~> (relay). In bodies { a | b | c } it denotes coproduct/choice; in wonder partitions $%[ a | b | c ] it denotes an inquisitive answer set (@linguistic_affordances#m2_join_algebra_coproducts_and_intervals; @linguistic_affordances#m4_inquisitive_partitions_vs_metric_vectors).`
+      parameterized_shape_templates = `Allow () parameter lists on shape definitions (^shape[card]($land, $reg){ ... }) and citation-edge instantiation (={ @card(boon, arrival) + #>[residue]{ ... } }), lowering to ONF frames.bound and an indexed splice stream (@linguistic_affordances#m1_anti_unification_and_parameterized_shapes; @linguistic_affordances#i4_positional_splice_streams_for_shape_residues).`
+      composed_handle_fragment_and_valence_lex = `In the lexer, lex boon|bane|bone|bonk|honk followed by - or _ + identifier chars as a single Identifier after # (fixing @page#bane-frame). In the grammar, parse @handle#fragment and path-ref fragments into one FragmentTarget AST node (@linguistic_affordances#i1_composed_handle_fragment_and_deep_anchors).`
+      morphism_and_range_facet_keys = `Allow connector morphisms (a -> b, a ~> b, a <> b) and NRangeNode intervals (0..4, boon..honk) on the left-hand side of : or = inside .{} and {} facets, eliminating the live prose-degradation in .spw/skills/semantics-rigor.spw:66 (@linguistic_affordances#s2_typed_morphisms_and_diachronic_state_arrows).`
+    }[reg=facet]
+    roots = .{
+      pipe_in_interpreter = `live in @wb_interpreter:324 ("case '|' as any"), unexposed as a general body/partition seam in the parser and slot reader.`
+      nrange_node = `live in @wb_seed_index:79 (NRangeNode), not yet allowed as a facet key or general expression interval.`
+      corpus_evidence = `measured across 434 authored .spw files and 27 herbarium specimens in @linguistic_affordances.`
+    }[reg=facet]
+    branches = .{
+      pipe_precedence = `axis: binding tightness. In { a, b | c; d }, does ; bind loosest (sequence of steps) with | inside a step, or does | bind loosest (choice between whole sequences)? Standard algebraic convention: . > , > ; > | > ~>.`
+      template_invocation_sigil = `axis: instantiation mark. Invoke parameterized shapes via ={ @shape(args) } (extending existing spw expand syntax) vs. ^@shape(args){ residue } (lifting the template with local body overrides).`
+    }[reg=facet]
+  }
+}
+
+^"runtime_evaluator_and_substrate_affordances"{
+  insight #srt-004 {
+    title = `Lazy Epistemic Thunks (~ / !), Focus-Piped Connectors (-> / ~>), Beat-Clock Resonance, and ONF Anti-Unification`
+    status = `active`
+    rung = `sketch`
+    claim = `Upgrading @wb_interpreter and @wb_resonance so ~ suspends evaluation without register mutation, ! forces and discharges to the Substrate, -> and ~> pipe through the focus register, resonance measures logical beats, and # computes structural anti-unification turns the runtime into a faithful execution engine for Spw's cognitive and ecological theory.`
+    evaluator_upgrades = .{
+      lazy_potential_and_discharge = `In @wb_interpreter:160, stop eagerly evaluating node.args when node.sigil == '~'. Instead, store a suspended RuntimePacket ({ kind: 'potential', onf: node.args[0] }) at phase: 'lex' | 'sem' with zero pragmatic writes. In case '!' (@wb_interpreter:285), force a potential packet, advance register phase to 'pragmatic', and emit a discharge event on Substrate (@cognitive_informatics#epistemic_vs_pragmatic_actions).`
+      focus_piped_transform_and_relay = `In case '->' (@wb_interpreter:343) and case '~>' (@wb_interpreter:348), evaluate args[0], write the result to the focus register ($"), and evaluate args[1] against that focus instead of discarding args[0]. For ~>, also record an upstream station provenance edge in RegisterBank.`
+      logical_beat_clock_resonance = `In @wb_resonance:75-112, detectPhaseSyncs() currently compares wall-clock new Date(at).getTime() (< 100ms), which trivially fires on every synchronous interpretSeed() run. Stamp RegisterEvent with a monotonic logical (beat, step) counter and compute phase-sync and frequency-lock over Δbeat / Δstep by default.`
+      structural_anti_unification = `In @wb_interpreter:140-153, reduceResonance() (#) only intersects flat arrays or flat records, falling back to args[last] on nested trees. Implement Plotkin/Reynolds antiUnifyONF(a, b) -> { ground: ONFNode, holes } so #(a, b) computes the exact structural common ground with _[reg=hole, left, right] at diverging subtrees (@theory_map#wonder_theory_anti_unification; @cognitive_informatics#ground_as_generalization).`
+    }[reg=facet]
+    roots = .{
+      register_bank_and_substrate = `live in @wb_register_bank and @wb_resonance.`
+      epistemic_pragmatic_split = `established in @cognitive_informatics#cii-002.`
+      anti_unification_question = `framed in @theory_map#wonder_theory_anti_unification and @cognitive_informatics#cii-007.`
+    }[reg=facet]
+    branches = .{
+      thunk_memoization = `axis: call-by-name vs call-by-need. When !(~expr) discharges a potential packet, should it overwrite the register cell in place with the collapsed * value (call-by-need / hysteresis crease) or leave the ~ template reusable for multiple ! discharges with different focus bindings (call-by-name)?`
+      n_ary_anti_unification = `axis: arity of #(a, b, ...). Since Plotkin/Reynolds LGG is associative and commutative up to variable renaming, #(a, b, c) can fold antiUnifyONF left-to-right across any number of specimens.`
+    }[reg=facet]
+  }
+}
+
+^"formal_theory_and_algebraic_laws"{
+  insight #srt-005 {
+    title = `The Container-Seam Bimonoidal Algebra, Graded Effect Semiring (L0..L2), and Three-Clock Hysteresis Law`
+    status = `active`
+    rung = `sketch`
+    claim = `Three formal mathematical structures close the open questions in @theory_map and @cognitive_informatics: (1) a bimonoidal/Kleene seam algebra governing safe AST rewrites, (2) a graded effect semiring with epistemic shielding (~{...}), and (3) a forced-damped relaxation differential equation with a post-commit hysteresis crease (theta_settled > 0).`
+    container_seam_algebra = .{
+      co_presence_comma = `, (product / &): associative, commutative, and idempotent on sets (#[a, b] == #[b, a]; .{k: u, j: v} == .{j: v, k: u} for k != j).`
+      sequence_semicolon = `; (monoid / ..): associative, non-commutative ({a; b} != {b; a}), with identity _ (hole).`
+      choice_pipe = `| (coproduct): commutative in inquisitive partitions ($%[a | b] == $%[b | a]), left-biased in evaluation, and distributive over ; ({a; (b | c)} == {(a; b) | (a; c)}).`
+      transform_vs_relay = `-> is internal functorial application within one station; ~> is Kleisli/profunctorial transport across stations that appends a station hop to ChargeProvenance (@wb_runtime_index:131).`
+    }[reg=facet]
+    graded_effect_semiring = .{
+      grades = `L0 (epistemic / pure observation: ~, ?, @, %, ., <>) < L1 (scoped register or worktree precipitate: ^, #, &, $) < L2 (pragmatic commit / world mutation: !, *, =).`
+      join_law = `Sequential or compound composition takes the supremum grade: effect(A ; B) = max(effect(A), effect(B)).`
+      epistemic_shielding = `Wrapping any L2 expression inside a potential membrane ~{ E } or observation scope ({ E }) demotes its immediate execution grade to L0 (producing a suspended Potential<L2> packet), which returns to L2 only when unsealed by ! (@wb_syntax_catalog:187-192 brace.capture_vs_shield).`
+      decidable_editor_safety = `Any sub-expression with static grade L0 is provably safe for spw-lsp, spw inspect, and browser hover previews to evaluate speculatively on keystroke or pointer dwell.`
+    }[reg=facet]
+    three_clock_hysteresis_law = .{
+      differential_equation = `dE_i/dt = k * a_i(t) * n_i - lambda_plane * (E_i - theta_i) + sum_{j in N(i)} c_ij * (E_j - E_i).`
+      plane_decay_constants = `lambda_canvas ~= 0.35 s^-1 (half-life ~2s on factshift.center); lambda_site ~= 0.017 s^-1 (tau ~40s on spwashi.com, @attention_field); lambda_address = 0 (infinite half-life in spw.quest URLs and git commits, @cognitive_informatics#three_clocks).`
+      hysteresis_crease = `Before pragmatic commitment, the resting attractor is theta_i = 0 (an unrenewed ~ or ? cools back to baseline). Crossing a pragmatic ! or * threshold shifts the resting attractor to theta_i = theta_settled > 0 (@brace_hysteresis), explaining mathematically why a settled node retains its filled core, taut tether, and wonder-memory residue after the field cools.`
+    }[reg=facet]
+    roots = .{
+      join_algebra_wonder = `asked in @theory_map#wonder_theory_join_algebra.`
+      intrigue_decay_wonder = `asked in @theory_map#wonder_theory_intrigue_dynamics and @cognitive_informatics#cii-006.`
+      brace_hysteresis_cache = `seeded in @brace_hysteresis and @component_ecology.`
+    }[reg=facet]
+    branches = .{
+      static_vs_dynamic_effect_check = `axis: where effect grading is enforced. Check effect(E) <= channel.effectCeiling statically in spw lint / spw-lsp vs. enforce it dynamically in RegisterBank writes (@wb_runtime_index:128 EffectCeiling).`
+      reversible_crease = `axis: how theta_settled resets. Only an explicit . (release / unpin) or a counter-commit resets theta_settled back to 0, preserving bistable memory across sessions.`
+    }[reg=facet]
+  }
+}
+
+^"relay"{
+  ~#note: "How the next session grows this cache. Cross-linked with plugin-ecology-improvements-2026-11.spw, linguistic-affordances-2026-11.spw, cognitive-informatics-interaction-2026-11.spw, and theory-map-2026-10.spw."
+  rungs = #[
+    `seed: said once, worth keeping.`,
+    `sketch: worked through, with its strains named.`,
+    `probe: a runnable check exists.`,
+    `landed: in code or copy, with a commit.`,
+  ][reg=set]
+  turn = #[
+    `Pick one insight (#srt-001..#srt-005) and one branch axis.`,
+    `For site-local readers (public/js/semantic/expression-query.js or workers/spw-quest/), prototype antiUnifyONF or | seam reading and test against the 27 herbarium specimens.`,
+    `For upstream workbench packages (@wb_seed_index, @wb_runtime_index, @wb_cli_commands), land the corresponding fix in an upstream workbench commit and bump mount.spw.`,
+    `Add a dated line to the stream.`,
+  ][reg=set]
+}
+
+^"stream"{
+ >>[2026-11-07 18:27] sketch — a Gemini session: synthesized intermediate-form and precipitate fixes (#srt-001), CLI envelope and --spw query unification (#srt-002), four syntax/lexer enhancements (#srt-003), four runtime evaluator and resonance affordances (#srt-004), and three formal theory laws (#srt-005), with cross-links across the November 2026 cache cluster.
+}
+
+#>wonder_srt_onf_roundtrip
+?["If renderONFNode() in stages.ts serializes valence, coupling, bound, and construction frames with # comments, what percentage of the 434 authored .spw files round-trip losslessly through normalizeToONF(parse(onfToSpw(normalizeToONF(ast))))?"]{
+  #:depth #!computational ~#lens(invariance: dual-read ONF)
+  ~#with: @wb_stages @wb_normalize @wb_onf
+  ~#hypothesis: "Once valence, coupling, bound, and construction frames are emitted and // comments are replaced with #, every valid SeedNode AST normalizes to an ONF tree whose Spw rendering re-parses to an isomorphic ONF tree."
+  ~#expect: "Currently fails on files with valence modifiers, non-<> frames, or empty registers due to dropped frames and // comments in stages.ts:399-483."
+  ~#unblocks: @plugin_ecology
+  ~#probe(run)
+  !probe{ "rg -n '// ' .spw/_workbench/packages/spw-runtime/src/pipeline/stages.ts" }
+  $%[roundtrip.exact | roundtrip.modulo_momentum | roundtrip.lossy]
+}
+
+#>wonder_srt_lazy_potential_semantics
+?["When ~ is changed from eager args evaluation to a suspended RuntimePacket in interpreter.ts, does evaluating ~(x = 1) leave RegisterBank.writes unchanged until !(~(x = 1)) is called?"]{
+  #:depth #!computational ~#lens(semantics: epistemic shielding)
+  ~#with: @wb_interpreter @wb_register_bank @cognitive_informatics
+  ~#hypothesis: "Under lazy epistemic shielding (#srt-004, #srt-005), ~(E) has effect grade L0 and performs zero pragmatic register writes; only !(~(E)) crosses into L2 and increments register write counts."
+  ~#expect: "Today interpreter.ts:160 evaluates node.args eagerly before switching on node.sigil, so ~(x = 1) mutates register x immediately; deferring args evaluation for sigil '~' fixes this in 10 lines."
+  ~#unblocks: @cognitive_informatics
+  ~#probe(read)
+  !probe{ "inspect .spw/_workbench/packages/spw-runtime/src/interpreter/interpreter.ts lines 159-165 and 285-296" }
+  $%[epistemic.zero_writes | epistemic.eager_leak]
+}
+
+#>wonder_srt_anti_unify_specimens
+?["Does first-order Plotkin/Reynolds anti-unification over ONFNode (antiUnifyONF) recover both the per-slot ground of flat specimens and the exact inner divergence point of nested specimens like h-one_deep and h-three_deep?"]{
+  #:depth #!mathematical ~#lens(comparison: least general generalization)
+  ~#with: @theory_map @linguistic_affordances @wb_interpreter
+  ~#hypothesis: "Because ONFNode represents every expression and nested brace attachment uniformly as sigma(args)[frames], recursive anti-unification over ONFNode subsumes flat 10-slot diffing and pinpoints leaf differences at arbitrary nesting depth."
+  ~#expect: "Yes: flat specimens anti-unify at top-level attachment args, while h-one_deep and h-three_deep share outer ground and diverge at a single nested _[reg=hole] subtree."
+  ~#unblocks: @theory_map
+  ~#probe(read)
+  !probe{ "compare normalizeToONF on outer[m]{inner} and outer[m]{inner[d]{leaf}} and trace where antiUnifyONF places the hole" }
+  $%[lgg.tree_exact | lgg.flat_only]
+}

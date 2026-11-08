@@ -1,0 +1,283 @@
+# Factshift Cognitive Substrate, Combinatorics, Gradient Fields & Domain Integrity (2026-11)
+#
+# Synthesizes factshift.center's architectural strengths and systemic role
+# across the three planes (spwashi.com, spw.quest, factshift.center):
+# 1. Combinatoric & Indexing Strengths (5-simplex algebra, two-level addressing)
+# 2. Gradient Fields & Cognitive Substrate (thermal, trope, & attentional manifolds)
+# 3. Narrative Elaboration Engine (spatial physics as dramatized trope pressure)
+# 4. Interactive Development Opportunities (gesture repair, operator lifecycles, #spw64=)
+# 5. Product Value Testing & Refinement Fields (mutex attention loop, 13-day cycle)
+# 6. Cultural Integrity of Orthogonal Domains (one-host-one-verb, musical practices)
+#
+# Follows the standing rule: nothing writes to .spw/_workbench. Every insight
+# names its roots (live, proposed, prototype, imagined) and branches by axis.
+
+#>factshift_cognitive_substrate_2026_11
+#:cache #!factshift #!combinatorics #!indexing #!gradients #!substrate #!narrative #!integrity #!domains
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@host_frame: ~"./host-frame-2026-09.spw"
+@boonhonk_genre: ~"./boonhonk-combinatoric-genre.spw"
+@pantry_ingredients: ~"./pantry-ingredients-2026-11.spw"
+@cognitive_informatics: ~"./cognitive-informatics-interaction-2026-11.spw"
+@syntax_runtime_theory: ~"./syntax-runtime-theory-enhancements-2026-11.spw"
+@plugin_ecology: ~"./plugin-ecology-improvements-2026-11.spw"
+@linguistic_affordances: ~"./linguistic-affordances-2026-11.spw"
+@brace_hysteresis: ~"./brace-hysteresis-crease-2026-09.spw"
+@domains_contract: ~"../domains.spw"
+@factshift_ui_model: ~"../surfaces/factshift-center.spw"
+@factshift_plan: ~"../../.agents/plans/factshift-center/PLAN.md"
+@factshift_operators: ~"../../.agents/plans/factshift-center/OPERATORS.md"
+@factshift_interaction: ~"../../.agents/plans/factshift-center/INTERACTION.md"
+@planes_ground: ~"../../.agents/plans/spw-planes/ground.spw"
+@planes_physics: ~"../../.agents/plans/spw-planes/physics.spw"
+@planes_ecology: ~"../../.agents/plans/spw-planes/ecology.spw"
+@planes_quest: ~"../../.agents/plans/spw-planes/quest.spw"
+@offer_rhythm: ~"./offer-rhythm-2026-10.spw"
+@wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
+
+operation = "cache"
+fixity = "experimental"
+expression = factshift[substrate]{combinatoric.gradient.narrative.integrity}<elaborate>
+
+summary = #[
+  `factshift.center operates as the dynamic spatial laboratory of the ecosystem: where spwashi.com anchors creator identity and editorial dwell, and spw.quest teaches formal 1-slot linguistic variation, factshift.center examines which human, narrative, and systemic concepts a continuous set of physics forces can faithfully represent.`,
+  `Combinatoric and indexing strengths stem from the 5-simplex transform space (boon, bane, bone, bonk, honk) mapped directly into d3 force-directed vectors, paired with two-level coordinate addressing (?spw=, #spw64=, and node identity + mark + room) that preserves mark history without clobbering node identity.`,
+  `Three continuous gradient manifolds—thermal relaxation (alpha: 0.87 -> 0.05 -> 0.001), narrative trope pressure (0.20 gentle offer -> 0.80 life built on mistake), and attentional dwell (bands 0..4)—converge to make factshift.center a genuine cognitive substrate where epistemic previews cost zero mutation and pragmatic commits leave a permanent structural crease (theta_settled > 0).`,
+  `Interactive development opportunities resolve the three critical gesture collapses caught in the 2026-11 planes pass: decoupling pinch-zoom from route entry, staging tap-to-prime before tap-to-commit on marked nodes, and unifying the cross-plane #spw64= script codec.`,
+  `Product value testing couples the mutex attention lock (mutex.buzz -> attention.productions -> factshift.center) to the 13-day rhythm (13th, 26th, month-end), creating an honest commercial model where sponsored slots expire on a hard clock and user attention is never auctioned through infinite carousels.`,
+  `Cultural integrity is safeguarded by strict one-host-one-verb boundaries, treating musical traditions (jazz, hip-hop, funk, disco) as living formal practices rather than decorative slang coats, maintaining substrate ethical neutrality (valence is physical force, not moral dogma), and honoring reader sovereignty through plain expansions (WAP = Wonder About Pi(e)).`,
+][reg=set]
+
+contents = #[
+  ~"./factshift-cognitive-substrate-2026-11.spw#combinatoric_and_indexing_strengths",
+  ~"./factshift-cognitive-substrate-2026-11.spw#gradient_fields_and_cognitive_substrate",
+  ~"./factshift-cognitive-substrate-2026-11.spw#narrative_elaboration_engine",
+  ~"./factshift-cognitive-substrate-2026-11.spw#interactive_development_opportunities",
+  ~"./factshift-cognitive-substrate-2026-11.spw#product_value_testing_and_refinement",
+  ~"./factshift-cognitive-substrate-2026-11.spw#cultural_integrity_of_orthogonal_domains",
+  ~"./factshift-cognitive-substrate-2026-11.spw#relay",
+  ~"./factshift-cognitive-substrate-2026-11.spw#stream",
+][reg=set]
+
+^"combinatoric_and_indexing_strengths"{
+  insight #fcs-001 {
+    title = `Continuous 5-Simplex Transform Space and Multi-Tier Addressing`
+    status = `active`
+    rung = `sketch`
+    claim = `factshift.center's core technical advantage is the bridge between discrete Spw grammar and continuous geometric manifolds: it treats the five transforms not as static labels, but as a continuous 5-simplex barycentric coordinate field that animates d3 forces while preserving exact URL and node addressing.`
+    combinatoric_space = .{
+      discrete_porch = `5 unary transforms + 20 ordered pairs = 25 basic postures (@boonhonk_genre#count), serving as an accessible mental porch for newcomers.`
+      continuous_simplex = `Continuous 5-simplex weight vector (w_boon, w_bane, w_bone, w_bonk, w_honk where sum = 1.0) governing force coefficients (alpha, charge, velocityDecay, centerStrength) in force-config.ts (@planes_ground; @planes_physics).`
+      non_ceiling = `Ensembles (>2 transforms) and temporal trajectories (bone -> boon -> honk) are legal continuous paths across the simplex manifold, not syntax errors.`
+    }[reg=facet]
+    indexing_architecture = .{
+      query_state = `?spw=<line> (plain text up to 400 chars) and #spw64=<base64url> (arbitrary length serialized AST) allow every graph configuration to be shared, bookmarked, and cited losslessly.`
+      node_identity_fix = `Keys must not be keyed naively on name + mark. Renaming <~rain> to <!rain> should update the operator lifecycle state rather than resetting node position and destroying simulation momentum (@factshift_operators:8; @planes_physics:31).`
+      spatial_anchor_indexing = `Nodes are addressed by (identity, mark, room, seam): a change to one slot (e.g. turning [mode] or flipping a seam from , to ;) leaves the rest of the spatial graph untouched.`
+    }[reg=facet]
+    roots = .{
+      d3_simulation = `live in workers/factshift-center/app (revision b1fd11a; @factshift_plan:16-28).`
+      simplex_weights = `live in public/js/modules/widgets/boonhonk-mixer.js and force-config.ts.`
+      spw64_codec = `live between spw.quest and factshift.center; proposed for spwashi.com home door (@factshift_operators:95).`
+    }[reg=facet]
+    branches = .{
+      barycentric_vs_radial = `axis: geometry of transform mixer. Map 5 transforms as vertices of an equilateral 4-simplex in 5D projected to 2D vs. a 5-spoke polar radar chart.`
+      fragment_vs_query_history = `axis: browser history navigation. Pushing #spw64= states on every pragmatic commit (!) to preserve the undo/redo stack without triggering full page reloads.`
+    }[reg=facet]
+  }
+}
+
+^"gradient_fields_and_cognitive_substrate"{
+  insight #fcs-002 {
+    title = `Three Convergent Gradient Manifolds and the Epistemic Substrate`
+    status = `active`
+    rung = `sketch`
+    claim = `factshift.center bridges computational physics with cognitive ergonomics by harmonizing three independent gradient manifolds—thermal simulation decay, narrative trope pressure, and attentional dwell—into one coherent substrate where epistemic exploration costs zero mutation.`
+    gradient_manifolds = .{
+      thermal_decay = `Simulation heat alpha starts at ~0.87, drops to 0.05 within 1.2s, and freezes at 0.001 within 2.0s (@planes_physics:48-51). Force dynamics represent short-lived transient thoughts that settle into an equilibrium reading.`
+      trope_pressure = `Narrative recipes (@pantry_ingredients#recipes) vary along continuous pressure gradients from 0.20 (gentlest telling / ease in) to 0.80 (extreme boundary / total commitment), modulating node attraction and link elasticity.`
+      attentional_dwell = `Visitor dwell scales across salience bands 0..4 (tau ~= 40s on spwashi.com), tuning opacity and tether visibility without creating visual noise.`
+    }[reg=facet]
+    epistemic_ergonomics = .{
+      zero_mutation_preview = `Holding a tie in prime mode (~), panning the camera, or hovering a seam are pure epistemic actions (@cognitive_informatics#cii-002) that cost zero byte mutation and do not reset the graph.`
+      hysteresis_crease = `Before commit, resting energy theta = 0 (unrenewed queries return to ground). Crossing a pragmatic ! or * threshold permanently shifts resting energy to theta_settled > 0, producing a taut tether and filled core that persists across cooling (@syntax_runtime_theory#srt-005; @brace_hysteresis).`
+    }[reg=facet]
+    roots = .{
+      thermal_probes = `measured in @planes_physics:37-71.`
+      trope_gradients = `authored in @pantry_ingredients:77-180.`
+      attention_tau = `implemented in attention-architecture.js and @attention_field.`
+    }[reg=facet]
+    branches = .{
+      cooling_interruption = `axis: heat management. Does an epistemic drag re-heat the entire canvas (alpha = 0.3) or only a localized neighborhood subgraph N(i) around the active node?`
+    }[reg=facet]
+  }
+}
+
+^"narrative_elaboration_engine"{
+  insight #fcs-003 {
+    title = `Spatial Physics as Dramatized Narrative Elaboration`
+    status = `active`
+    rung = `sketch`
+    claim = `Rather than treating physics as mere UI animation, factshift.center employs force simulation as an expressive narrative engine: spatial attraction, repulsion, and tether tension directly dramatize character desires, social barriers, and institutional pressures.`
+    narrative_mappings = .{
+      character_slots = `A character's want, doubt, pass, and carries slots (@pantry_ingredients#character) project as directed forces: a want pulls toward an attractor node, a doubt creates repulsion, and a pass mask determines which regional boundary the character can traverse.`
+      trope_pressures = `In passing_up (@pantry_ingredients#passing_up), the pressure of performing an unearned status is visualized as high link tension between the character and the host group. In class_by_height (@pantry_ingredients#class_by_height), vertical Y-force stratification directly renders status.`
+      syntactic_membranes = `In a held Spw expression, [mode] forms a focal chassis, {body} groups internal parts within a bounding hull, (scene) stages midprocess context, and <concept> spans the entire reading as an overarching boundary (@factshift_plan:34-36; @factshift_operators:63-65).`
+    }[reg=facet]
+    roots = .{
+      line_anatomy_layout = `live in workers/factshift-center/app/src/js/modes/spw/line-anatomy.ts.`
+      pantry_tropes = `cataloged with 13 recipes in @pantry_ingredients.`
+      lore_land_show_and_book = `defined in @domains_contract:91-99.`
+    }[reg=facet]
+    branches = .{
+      narrative_playback = `axis: temporal pacing. Stepping through a story episode as a recorded sequence of Spw lines that mutate the canvas incrementally vs. treating the canvas as a single static state diagram.`
+    }[reg=facet]
+  }
+}
+
+^"interactive_development_opportunities"{
+  insight #fcs-004 {
+    title = `Gesture Collapse Repair, Operator Lifecycles, and Cross-Plane Codecs`
+    status = `active`
+    rung = `probe`
+    claim = `Three high-leverage interactive development slices will transform factshift.center from an experimental prototype into a fluent, robust cognitive instrument: repairing the three gesture collapses, completing the four-stage operator lifecycle, and standardizing #spw64=.`
+    gesture_collapses_and_repairs = .{
+      pinch_threshold_collapse = `Bug: pinch-spread past scale threshold triggers enterNode, forcing an accidental route change when the user intended an epistemic zoom (@cognitive_informatics#cii-002; @planes_ecology). Repair: past threshold, show the preview frame; require a second spread or explicit tap to enter.`
+      tap_intent_ambiguity = `Bug: 320ms double-tap rename collides with second-tap enterNode. Repair: let the first tap prime the lifecycle transition (showing the next step in the operator's lifecycle), and move view-only verbs (home, pin, center) to the peripheral verb ring (@factshift_operators:63-65).`
+      pocket_hold_collision = `Bug: 420ms cauldron hold collides with 460ms region menu. Repair: region menu yields held terms to the cauldron cleanly (@cognitive_informatics#repairs).`
+    }[reg=facet]
+    operator_lifecycle_engine = .{
+      four_stages = `Every operator follows: primed (~) -> held (?) -> actualized (!) -> residue (*), with let go (.) available at all times (@factshift_operators:37-60).`
+      look_reflects_stage = `Held ? is hollow ring; answered ! is filled; settled * is taut haloed glow. Tapping a node offers its lifecycle partner first (? offers !, ~ offers @).`
+      palette_reordering = `Operator tool keys automatically reorder to put the active mark's natural lifecycle successor first, eliminating hunt-and-peck latency.`
+    }[reg=facet]
+    cross_plane_codec = .{
+      spw64_standard = `Standardize #spw64=<base64url> across spwashi.com (home door, search, cauldron), spw.quest (/pivot, construct cards), and factshift.center, enabling instant, lossless teleportation of live expressions across all three planes.`
+    }[reg=facet]
+    roots = .{
+      operator_proposals = `drafted in @factshift_operators.`
+      gesture_measurements = `captured in @planes_physics and @planes_ground.`
+      spw64_implementation = `live in workers/spw-quest and workers/factshift-center.`
+    }[reg=facet]
+    branches = .{
+      operator_partner_source = `axis: symmetry source. Derive lifecycle partners from universal operator duality (?/!, ~/@, #/., */~, &/., ^/.) vs. configurable per-mode transition tables.`
+    }[reg=facet]
+  }
+}
+
+^"product_value_testing_and_refinement"{
+  insight #fcs-005 {
+    title = `The Mutex Attention Engine, 13-Day Rhythm, and Ergonomic Product Verification`
+    status = `active`
+    rung = `sketch`
+    claim = `factshift.center grounds a humane, sustainable commercial product model: attention is treated as a finite, precious physical resource managed by mutex locks and hard clocks, verified through measurable cognitive ergonomics rather than vanity engagement loops.`
+    mutex_attention_architecture = .{
+      mutex_lock = `mutex.buzz holds one concept in the frame at a time. attention.productions spends that frame on a seasonal picture. factshift.center provides the physical simulation frame (@host_frame#mutex).`
+      anti_carousel = `No infinite feeds, auto-playing carousels, or attention-stealing notification badges. Resting state is always a real, scanned, laminated folio from the physical stack (@host_frame:93).`
+      sponsor_timebox = `Sponsored picture agreements expire strictly on the 13-day cycle (13th, 26th, month-end). When the cycle closes, the cache expires and the frame clears automatically, preventing commercial zombie clutter.`
+    }[reg=facet]
+    ergonomic_verification_metrics = .{
+      epistemic_pragmatic_ratio = `Target: 3-7 epistemic previews (~, ?, camera frames) per pragmatic commit (!). A ratio < 1 proves the interface is forcing premature commitment and must be refined.`
+      working_memory_resets = `Count involuntary route or zoom resets. Zero unprimed door crossings on touch devices.`
+      variation_learning_gain = `Measure recall of Spw construct roles when learned through single-mark contrast on the canvas vs. reading static text documentation (@theory_map#wonder_theory_contrast_hover).`
+    }[reg=facet]
+    roots = .{
+      mutex_implementation = `live in workers/site-hub-next/src/mutex.js and @host_frame.`
+      cycle_clock = `governed by @offer_rhythm.`
+      epistemic_ratio = `defined in @cognitive_informatics#wonder_cognitive_epistemic_budget.`
+    }[reg=facet]
+    branches = .{
+      public_waitlist_transparency = `axis: queue visibility. Displaying the pending mutex queue openly at mutex.buzz/now/ with queue positions and cycle dates vs. maintaining an editorial private intake.`
+    }[reg=facet]
+  }
+}
+
+^"cultural_integrity_of_orthogonal_domains"{
+  insight #fcs-006 {
+    title = `One-Host-One-Verb Sovereignty, Living Practices, and Substrate Neutrality`
+    status = `active`
+    rung = `sketch`
+    claim = `A distributed multi-domain ecosystem only survives without collapsing into brand mush when each domain's cultural integrity is rigorously protected: through strict one-host-one-verb boundaries, treating traditions as living technical disciplines, and maintaining strict ethical neutrality in the physical substrate.`
+    domain_sovereignty = .{
+      one_verb_rule = `Each host owns exactly one verb (@host_frame#jobs): attention.productions (picture), texture.website (grain), spw.quest (learn), autonomous.feedback (note), factshift.center (frame), lore.land (keep), spwashi.com (meet), tealstripesvibes.com (vibe), mutex.buzz (hold). A host needing two verbs is two jobs.`
+      orthogonal_handoffs = `A handoff between domains must give the visitor something durable to keep (a card, a grain, a note, a reference), never an intrusive cross-promotional banner (@host_frame#ecosystem).`
+    }[reg=facet]
+    traditions_as_practices = .{
+      no_costumes = `Musical traditions (jazz, hip-hop, funk, disco) are formal operational practices, not decorative adjectives or aesthetic costumes (@boonhonk_genre#occasions).`
+      hip_hop_pillars = `DJing = select/cut/loop/mix (the boonhonk mixer); MCing = voice/bar/naming; Writing = visual marks and chips; Breaking = body in a cipher and dimensional locomotion. Never reduced to slang coats or fonts.`
+      jazz_flow = `Jazz = formal continuation past a held spill (Gravy Davis), not background elevator saxophone.`
+    }[reg=facet]
+    substrate_neutrality_and_reader_sovereignty = .{
+      physical_not_moral = `Valence is material force, not moral judgment: boon (+1) is arrival/invitation; bane (-1) is constraint/cost; bone (0) is chassis/structure (@domains_contract:42-44; @planes_ground:79-80). Bane is not "evil", and boon is not "virtue".`
+      reader_sovereignty = `WAP = Wonder About Pi(e) is stated plainly as the house expansion (@boonhonk_genre#wap_interpretive_space). Alternate readings belong to the audience and their own performances, never enforced by moralizing editorial cues.`
+      attribution_integrity = `When community members bring designs, characters, or tropes, they are credited by name; recipes remain open ingredients, and riffs play with consent (@pantry_ingredients#riffs).`
+    }[reg=facet]
+    roots = .{
+      domain_registry = `defined in @domains_contract.`
+      genre_traditions = `codified in @boonhonk_genre.`
+      pantry_attribution = `established in @pantry_ingredients.`
+    }[reg=facet]
+    branches = .{
+      domain_cross_mounting = `axis: deployment federation. Keep factshift.center, boon.land, bane.land, and bone.land as one shared Worker script dispatching by hostname (@host_frame:101-105) vs. separate repository deployments.`
+    }[reg=facet]
+  }
+}
+
+^"relay"{
+  ~#note: "How future sessions grow this cache. Directly bridges .agents/plans/factshift-center, .agents/plans/spw-planes, and the Spw ecosystem conventions."
+  rungs = #[
+    `seed: said once, worth keeping.`,
+    `sketch: worked through, with its strains named.`,
+    `probe: a runnable check exists.`,
+    `landed: in code or copy, with a commit.`,
+  ][reg=set]
+  turn = #[
+    `Pick one insight (#fcs-001..#fcs-006) and one branch axis.`,
+    `Advance an interactive development slice (L1..L4 in OPERATORS.md or gesture repair in INTERACTION.md) to probe or landed.`,
+    `Verify domain boundaries against @domains_contract and @host_frame before deploying new cross-host links.`,
+    `Add a dated line to the stream.`,
+  ][reg=set]
+}
+
+^"stream"{
+ >>[2026-11-08 09:00] sketch — a Gemini session: synthesized factshift.center's combinatoric simplex (#fcs-001), gradient manifolds and epistemic substrate (#fcs-002), narrative elaboration engine (#fcs-003), interactive development and gesture repair (#fcs-004), mutex product testing and ergonomic metrics (#fcs-005), and cultural integrity of orthogonal domains (#fcs-006).
+}
+
+#>wonder_fcs_gesture_epistemic_ratio
+?["When pinch-zoom is decoupled from route entry and tap-to-prime replaces direct mutation, does factshift.center's measured epistemic-to-pragmatic ratio exceed 4.0 during free graph exploration?"]{
+  #:depth #!computational ~#lens(ergonomics: epistemic freedom)
+  ~#with: @cognitive_informatics @factshift_interaction @planes_physics
+  ~#hypothesis: "Decoupling gesture thresholds from irreversible route changes will allow visitors to inspect 4-8 nodes and preview ties before committing an entry or link, eliminating involuntary route drops."
+  ~#expect: "The current build collapses ratio to 0 on deep zoom spreads; staging zoom-preview recovers an epistemic ratio of 4.5+."
+  ~#unblocks: @factshift_plan
+  ~#probe(run)
+  !probe{ "rg -n 'enterNode|navigateUp|frameGesture' workers/factshift-center/app/src/ts/gestures/pinch.ts" }
+  $%[ratio.exceeds_four | ratio.still_collapsed | ratio.intermediate]
+}
+
+#>wonder_fcs_thermal_hysteresis_crease
+?["Does introducing a non-zero resting attractor (theta_settled > 0) after a * commit keep settled graph nodes visually organized at resting temperature (alpha < 0.005) without perpetual simulation heating?"]{
+  #:depth #!mathematical ~#lens(physics: bistable hysteresis)
+  ~#with: @syntax_runtime_theory @brace_hysteresis @planes_physics
+  ~#hypothesis: "A non-zero resting crease locks settled nodes in place geometrically, so the simulation can freeze completely (alpha = 0) without losing the structural distinction between explored and unexplored nodes."
+  ~#expect: "Currently all nodes relax to neutral uncreased equilibrium when alpha runs out; theta_settled preserves visual hierarchy at zero CPU cost."
+  ~#unblocks: @planes_physics
+  ~#probe(read)
+  !probe{ "inspect force-config.ts in workers/factshift-center/app and compare alphaDecay against node resting offsets" }
+  $%[crease.stable_frozen | crease.requires_heat | crease.unstable]
+}
+
+#>wonder_fcs_domain_verb_purity
+?["Across all 9 public host domains in the ecosystem, does any route or component currently violate the one-host-one-verb contract?"]{
+  #:depth #!structural ~#lens(integrity: domain boundaries)
+  ~#with: @host_frame @domains_contract
+  ~#hypothesis: "Strict adherence to one-verb-per-host prevents feature creep and brand dilution across the multi-domain constellation."
+  ~#expect: "All active domains map to exactly one primary verb; held names (mutex.buzz) act as single-purpose locks."
+  ~#unblocks: @host_frame
+  ~#probe(read)
+  !probe{ "compare active_surfaces in .spw/domains.spw against jobs.rows in .spw/caches/host-frame-2026-09.spw" }
+  $%[verbs.pure_one_to_one | verbs.ambiguous | verbs.overloaded]
+}

@@ -107,6 +107,10 @@
 @gemini_multimodal_evaluation_2026_11: ~"./gemini-multimodal-evaluation-2026-11.spw"  # prime: where a multimodal model could improve cohesion across syntax theory, runtime physics and interaction semantics, with three bounded slices to test it (was .spw/tmp.spw)
 @pantry_ingredients_2026_11: ~"./pantry-ingredients-2026-11.spw"  # prime: ingredients for character builders, mood tuners, and world generators, with thirteen recipes (tropes) from November's work; riffs on what people design keep their makers' names
 @cognitive_informatics_interaction_2026_11: ~"./cognitive-informatics-interaction-2026-11.spw"  # cache: cognitive surface taxonomy, epistemic vs pragmatic actions (Kirsh & Maglio), Cognitive Dimensions of Notations, hormonal/circuit/nutrient isomorphism, and spirit-cycle fluency across the three planes
+@plugin_ecology_improvements_2026_11: ~"./plugin-ecology-improvements-2026-11.spw"  # cache: plugin improvements across the three layers — surface/CLI protocol (readers, effect, residue, Spw frame pipes, multi-root discovery), editor/LSP plugins (cross-host injection, sha256 fact store, one character table, operator gestures), and Vite/consumer build plugins
+@syntax_runtime_theory_enhancements_2026_11: ~"./syntax-runtime-theory-enhancements-2026-11.spw"  # cache: intermediate forms (lossless ONF, span-preserving desugar, FileFactsIR/ResidueIR), CLI envelopes (--spw on select/query, zero-alloc event gating), syntax enhancements (| coproduct seam, parameterized shapes, @handle#fragment), runtime affordances (lazy ~ thunks, focus-piped ->/~>, beat-clock resonance, antiUnifyONF), and formal theory laws
+@factshift_cognitive_substrate_2026_11: ~"./factshift-cognitive-substrate-2026-11.spw"  # cache: factshift.center continuous 5-simplex combinatorics, multi-tier indexing, thermal/trope/dwell gradient manifolds, spatial narrative engine, gesture repairs, mutex attention loop, and cultural integrity of orthogonal domains
+@spw_native_components_2026_11: ~"./spw-native-components-2026-11.spw"  # cache: a component is one expression; mono is the instrument and the editorial face is the voice; each sigil moves like its kernel physics, and a delimiter pair is the housing
 
 operation = "align"
 fixity = "tending"
@@ -188,6 +192,10 @@ fixity = "tending"
   gemini_multimodal_evaluation_2026_11 = @gemini_multimodal_evaluation_2026_11
   pantry_ingredients_2026_11 = @pantry_ingredients_2026_11
   cognitive_informatics_interaction_2026_11 = @cognitive_informatics_interaction_2026_11
+  plugin_ecology_improvements_2026_11 = @plugin_ecology_improvements_2026_11
+  syntax_runtime_theory_enhancements_2026_11 = @syntax_runtime_theory_enhancements_2026_11
+  factshift_cognitive_substrate_2026_11 = @factshift_cognitive_substrate_2026_11
+  spw_native_components_2026_11 = @spw_native_components_2026_11
 }[reg=facet]
 
 ^"cache_rules"{
