@@ -237,7 +237,7 @@ A tap on the title opens its editor focused, with the text selected, by any hand
 
 *A node says what it is before it is touched.* A word of the line, a part, a scene, a concept and a charge each have one size, one title size and one place. A free node reads as loose (no region). A marked node shows its mark in its title, and that mark is the promise of its act. A region shows only when something could land in it. Three promises follow:
 1. **Nothing changes the line without a receipt.** Drops, verbs, names and operator acts each say what they did.
-2. **Every change can be walked back the same way.** The line's history is the undo: ← on the hash or the frame is the line before. A promise to keep, not yet a guarantee for every act: a kept frame or a pin is not in that history.
+2. **Every change can be walked back the same way.** The line's history is the undo: ← on the hash or the frame is the line before. (Direction, 2026-11-08: an arrow names where you go, so ← is the line before; a swipe moves the content with the finger, so a finger moving right brings the line before, as `hash-gestures.ts` does. [factshift-control-alignment](../../../.spw/caches/factshift-control-alignment-2026-11.spw#grammar).) A promise to keep, not yet a guarantee for every act: a kept frame or a pin is not in that history.
 3. **One gesture means one thing on every node of a kind:**
 
 | on a node | does |

@@ -189,6 +189,14 @@ The canvas still lays a line out from `line-anatomy.ts`, a second reader beside 
 
 ## Next slices
 
+**Control alignment (2026-11-08).** [factshift-control-alignment](../../../.spw/caches/factshift-control-alignment-2026-11.spw) reads the canvas's 26 controls against the fractal ladder. Its proposal: one grammar every grain answers, with the context choosing the object and never the verb. Its breaks:
+- The Spw window's spread and pinch mean walls and drop, where the stage's mean enter and leave.
+- Hold has five meanings.
+- Enter has five vocabularies.
+- `~` loosens a node in the uncommitted taps, which is `.`'s act.
+
+Its slices A1 to A5 queue behind the uncommitted app work, and each is judged on a phone.
+
 The tools themselves, each read as an operator whose window opens on its act as one line, are planned in [TOOLS.md](./TOOLS.md) (2026-11-06): hygiene first, then one theory for all nine, a demo on three, and a slice per tool; four questions for the creator sit in `index.spw`.
 
 Each is one session in the app (`workers/factshift-center/app`, its own repository), checked with `npx tsc --noEmit` and `npx vite build`, then carried into the snapshot here when the creator asks (*Refreshing the snapshot*, above). The numbers are the ones `index.spw` and INTERACTION.md cite.
