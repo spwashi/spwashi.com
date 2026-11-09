@@ -243,6 +243,19 @@ export function syncRailCrumbExpanded(shell, compact) {
   if (current instanceof HTMLElement) current.setAttribute('aria-expanded', compact ? 'false' : 'true');
 }
 
+/**
+ * The crumb travels with the reader: while the query asks for it, a page
+ * turned from the page slot opens as a crumb too, instead of dropping back
+ * to the rail on arrival.
+ */
+const crumbQuery = () => {
+  try {
+    return new URLSearchParams(globalThis.location?.search || '').get('spw-rail') === FORM ? `?spw-rail=${FORM}` : '';
+  } catch {
+    return '';
+  }
+};
+
 /** The site's own pages, from the header's navigation, as the page slot's choices. */
 export function readRouteChoices(doc = document, handleOf = (value) => value) {
   const seen = new Set();
@@ -258,7 +271,7 @@ export function readRouteChoices(doc = document, handleOf = (value) => value) {
     seen.add(url.pathname);
     const segments = url.pathname.split('/').filter(Boolean);
     const value = handleOf(segments[segments.length - 1] || 'home') || 'home';
-    choices.push({ value, label: (link.textContent || '').trim().replace(/\s+/g, ' '), href: url.pathname });
+    choices.push({ value, label: (link.textContent || '').trim().replace(/\s+/g, ' '), href: `${url.pathname}${crumbQuery()}` });
   }
   return choices;
 }
