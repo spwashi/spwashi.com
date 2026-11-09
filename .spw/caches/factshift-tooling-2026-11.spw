@@ -1,0 +1,128 @@
+# How a tool is chosen and what it does (2026-11-09) — cache
+#
+# The creator asked for significant improvements to factshift.center's
+# tooling selection and behavior set, cached and committed. TOOLS.md already
+# holds the theory that each tool is an operator whose window is its primed
+# act as one line, with a * receipt for what the act came to. This cache
+# reads the code against that theory and against this week's findings (the
+# hand's three axes, quick and slow, the reading family, the corpus read),
+# and proposes what would change the tool set most. It opens nothing.
+
+#>factshift_tooling_2026_11
+#:cache #!factshift #!tools #!verbs #!selection
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@tools: ~"../../.agents/plans/factshift-center/TOOLS.md"
+@plan: ~"../../.agents/plans/factshift-center/PLAN.md"
+@mind: ~"./factshift-theory-of-mind-2026-11.spw"
+@corpus: ~"./canvas-corpus-design-2026-11.spw"
+@controls: ~"./factshift-control-alignment-2026-11.spw"
+@hotkeys: ~"../../workers/factshift-center/app/src/js/init/hotkeys/_.ts"
+@circle: ~"../../workers/factshift-center/app/src/js/simulation/nodes/handling/circle.ts"
+@image: ~"../../workers/factshift-center/app/src/js/simulation/nodes/handling/image.ts"
+@ring: ~"../../workers/factshift-center/app/src/js/simulation/nodes/verb-ring.ts"
+@line_verbs: ~"../../workers/factshift-center/app/src/js/simulation/nodes/line-verbs.ts"
+@keystrokes: ~"../../workers/factshift-center/app/src/js/init/hotkeys/keystrokes.ts"
+@primed: ~"../../workers/factshift-center/app/src/js/ui/tool-primed.ts"
+@body: ~"../../workers/factshift-center/app/src/js/modes/spw/body-gestures.ts"
+
+operation = "cache"
+fixity = "experimental"
+expression = !tool[chosen]{object, verb, receipt}<hand>
+
+summary = #[
+  `One verb, one definition. Today the same verb lives on six surfaces with six laws; a registry that names each verb once (its operator, the objects it takes, amount or state, its key, its ring place, its row) would let every surface draw from one source, and every press write one receipt.`,
+  `One kind of tool. The nine windows and the tap verbs that t cycles are two tool systems under one word; a tool in hand should be a window's primed act, so what a tap does is always what the open window says.`,
+  `The object first, the verb from the tool. A tap names what is under the hand and offers its verbs; a tool in hand applies its one verb to each tap. Both read the same registry, and the context chooses the object, never the verb.`,
+  `Every act a receipt, one undo. Casts and arrangements can be undone today and most acts cannot; each act writing one entry to the visit's document makes undo one step back through that document.`,
+][reg=set]
+
+^"found"{
+  two_systems = `The mode column picks among nine windows (reflex, color, map, filter, node, query, debug, story, spw). The t key, commented "tool cycle", cycles a different list, the tap verbs ['hyperlink', 'grow', 'shrink', 'prune', 'colorindex', 'z', 'spin', ''] (@hotkeys:38, :135), which change what a tap on a node does. One word, two sets.`
+  six_laws = `grow lives on six surfaces: a tap verb multiplies a circle's radius by 1 + 0.1 × intent (@circle:232) but adds intent pixels to an image (@image:42); the ring grows by 1 + 0.1 for each step past its button (@circle:448); the menu's "larger" calls the ring's verb; reflex multiplies every node by 3.2, divides by 2.3, or sets 10; a pinch scales within 6 to 160. A reader who learns one cannot predict the next.`
+  dialog = `The hyperlink tap verb copies a node's hash and then calls alert() (@circle:228-230), a dialog that blocks the page and every tool behind it until it is dismissed.`
+  nodes_only = `Most tools act on nodes one at a time. A body takes the hand's acts since bd2e7ad (@body), and the selection takes the [...] menu's selection family; no tool reads "the body under the hand" or "the line" as its object.`
+  unlabeled = `The mode column is solid squares with no label (PLAN.md, Layout); TOOLS.md gives each tool an operator (! @ ~ ? . #> $ ^ &) and no square shows it.`
+  primed = `→ on a tile takes what its tool has ready (@primed): fill or run Spw, press a marked submit, press again the last control. The primed act exists, but it is not written as a line before it runs, which TOOLS.md's theory asks for.`
+  receipts = `Reflex reports before and after beside the handle; casts and arrangements leave a receipt and an undo; body acts say what they did; a tap verb, a ring press and a menu row leave nothing to undo.`
+}[reg=facet]
+
+^"selection"{
+  one_kind = `A tool is a window and the verb its window primes. While a tool is in hand, a tap on a thing applies that verb to it; the t cycle steps through the tools in hand, not a second list. The tap verbs become the node window's primed verbs (grow, shrink, raise, spin, color, prune), and hyperlink becomes a copy with a receipt and no dialog.`
+  object_first = `With no tool in hand, a tap names the thing and its verbs (the ring on a hold, the card on a tap), as the canvas already does for a node; with a tool in hand, the tool's verb applies. Noun first is how a person finds a verb; verb first is how they repeat it. The head line always says which is in force: ".node{grow}<garden>" while a tool is held, the thing's name when none is.`
+  legend = `Each square in the mode column wears its operator, so the column is the canon table a reader learns: ! reflex, @ color, ~ map, ? filter, . node, #> query, $ debug, ^ story, & spw. A key after t chooses by operator (t then ? opens filter), and Shift with a sigil keeps priming the prompt as it does today.`
+  families = `Three bands in the column, by what a tool changes: amounts (reflex, color, node's feel), selections (map, filter, query), readings (spw, debug, story, and the reading family the [...] menu already has). A band is an axis of @mind: amounts move continuously, selections choose objects, readings choose strata.`
+  profiles = `A set of tools is a profile, kept by a line as the [...] menu already is (=menu{forces; interface; save}): =tools{node, map, spw} shows those tools in that order, and a spw.quest example or a profile card can carry the profile it opens the canvas with. A tuning line (@corpus#physics) and a tool profile together are a person's canvas.`
+}[reg=facet]
+
+^"behavior"{
+  registry = `Each verb named once: { verb, operator, objects: node | part | body | line | selection | stage, kind: amount | state, law, key, ring place, menu family, receipt }. The ring, the line ring, the [...] rows, the tool in hand, the keys and the body's hand become views of it. grow takes one law (×1.1 a step, as the ring and the tap already agree on circles) for circles and images alike, and a reflex amount is that law taken many steps at once, said as "much larger", not ×3.2.`
+  context = `A verb takes the innermost object under the hand that it accepts: a node, else the body (its members), else the line, else the selection, else the stage. grow on a body grows its members; a filter asked on a body asks only its members; color on a body paints them. The pinch already chose its object this way since bd2e7ad.`
+  axes = `Every tool maps the shared hand the same way (@mind#hands): a tap primes and a second acts; slow changes an amount, quick changes a state; hold opens the object's ring; ← → steps siblings; ↑ ↓ steps strata; a pinch changes depth. What each tool means by a sibling, a stratum and a depth is its own (^"per_tool").`
+  receipts = `Every act writes one entry to the visit's document (@corpus#memory), the * receipt TOOLS.md asks for, and undo is one step back through those entries, whatever tool made them. A receipt names the object, the verb and the amount in words, with the numbers behind a disclosure.`
+  chains = `Tools compose as a path: ?filter[kind]{nominal} ~> ~map[selection]{word ~> word.kitchen} ~> ^story{keep}. A chain written once is a script the canvas can run again, the precipitate @corpus#efficiency names; story steps through it.`
+}[reg=facet]
+
+^"per_tool"{
+  reflex = `!: a tap is one impulse on the object (scatter, lift, settle, loosen, weigh, pin, level, look), a hold grows it; ↑ ↓ choose the impulse; the lore row deterministic, seeded by the line (@corpus#reflex).`
+  color = `@: ← → step perspectives; ↑ solos the chosen one, ↓ shows all; a tap paints the object; the head line says how many stand in each.`
+  map = `~: ← → step groups; ↑ ↓ step the shape's depth (the kind, the shape at depth 1, the shape as written; @corpus#adversarial says the middle is where kin are found); a pinch moves map, cluster, line.`
+  filter = `?: the head line says "keeps n of N" before it runs; ↑ keeps, ↓ removes, inverses of one question; the receipt names what left.`
+  node = `.: the tap verbs live here (grow, shrink, raise, spin, color, prune, copy); the feel card's words set the field; a tap with node in hand applies the chosen verb.`
+  query = `#>: each address parameter a slot chip; the tuning line and the tool profile are two of its chips.`
+  debug = `$: the last run as one line per stage, and for each unread box its cause in words (a comment carried by the join, statements side by side, a stream), the causes @corpus#adversarial ranked, so a reader knows whether the line or the reader is short.`
+  story = `^: ← → step kept states; play replays the document's entries; a chain is a story.`
+  spw = `&: the held line; ↑ ↓ at the prompt's edges walk the thread as today; the summary is the line at the prompt's width when it is not in focus.`
+}[reg=facet]
+
+^"order"{
+  t0 = `Hygiene, no gate: hyperlink copies with a receipt and no alert(); grow takes one law for circles and images; t steps the tools in hand. Each one file, each checked headless.`
+  t1 = `The verb registry, drawn by the ring and the [...] selection rows first; the other surfaces follow one at a time. No new behavior, one source.`
+  t2 = `The legend: operators on the mode column's squares, t then a sigil, the three bands. Gate: the creator's look.`
+  t3 = `Context: verbs take the innermost object they accept, body and line included. Gate: the creator's hand.`
+  t4 = `Receipts into the visit's document and one undo, after the document memory (@corpus#memory) has its first reader.`
+  t5 = `Profiles and chains: =tools{…} beside =menu{…}, and a chain run as a story. Gate: the creator's call on what a profile carries.`
+}[reg=facet]
+
+^"holds"{
+  owners = `TOOLS.md keeps the nine tools and their slices (C0 to C5, R1, K1, M1, F1, N1, Q1, D1, S1, P1, P2); this cache adds T0 to T5 beside them and does not re-answer their wonders. Which operator marks which tool stays #>wonder_factshift_tool_operators.`
+  opens = `No sigil, no data-spw-* family, no package, no workbench edit.`
+}[reg=facet]
+
+#>wonder_one_verb_registry
+?["Should every surface that offers a verb draw it from one registry?"]{
+  #:depth #!pragmatics ~#lens(choice)
+  ~#with: @ring @line_verbs @keystrokes @circle
+  ~#hypothesis: "One definition per verb ends six laws for grow, gives every press a receipt, and lets a new surface (the body's hand, a tool in hand) offer verbs without inventing them."
+  ~#expect: "The ring's NODE_VERBS, the line ring's verbs, the [...] selection rows, the t cycle, reflex's size row and the body's hand each define their own verbs; grow multiplies a circle and adds to an image."
+  ~#probe(read)
+  !probe{ "rg -n \\"'grow'\\" across verb-ring.ts, circle.ts, image.ts and keystrokes.ts, and count the laws." }
+  $%[verbs.registry, verbs.per_surface, verbs.registry_for_nodes_first]
+  ~<"../../workers/factshift-center/app/src/js/simulation/nodes/verb-ring.ts">
+}
+
+#>wonder_tool_or_tap_verb
+?["Is a tool a window, a tap verb, or the window's primed verb?"]{
+  #:depth #!semantic ~#lens(comparison)
+  ~#with: @hotkeys @primed @tools
+  ~#hypothesis: "A tool is a window and the verb it primes; t steps the tools in hand, and a tap applies the open window's verb, so what a tap does is always written in the open window."
+  ~#expect: "The mode column picks windows; t cycles tap verbs called superpowers; → on a tile takes what a tool has ready."
+  ~#probe(read)
+  !probe{ "Read SUPERPOWER_CYCLE and the t case in hotkeys/_.ts, and the primed act in tool-primed.ts. Say where a tap's verb is shown to the reader." }
+  $%[tool.window, tool.tap_verb, tool.window_primes_verb]
+  ~<"../../workers/factshift-center/app/src/js/init/hotkeys/_.ts">
+}
+
+#>wonder_tool_profiles
+?["Should a set of tools, with its tuning, be a profile a line can keep and a template can carry?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#with: @keystrokes @corpus
+  ~#hypothesis: "=tools{node, map, spw} beside =menu{…} and =tune{…} makes a person's canvas a line; a spw.quest example opens the canvas with the tools it teaches."
+  ~#expect: "=menu{…} keeps the [...] menu's rows by family; no line keeps the mode column or the tuning."
+  ~#probe(read)
+  !probe{ "Read the =menu handler (modes/spw/handlers/menuHandler.ts) and say what a =tools handler would need beside it." }
+  $%[profile.line, profile.address, profile.none]
+  ~<"../../workers/factshift-center/app/src/js/init/hotkeys/keystrokes.ts">
+}

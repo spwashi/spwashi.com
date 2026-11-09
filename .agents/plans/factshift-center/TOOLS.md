@@ -485,4 +485,6 @@ The creator asked about designing a tool that could accommodate Apple's Liquid G
 
 ## Order
 
+*Tooling selection and behavior (2026-11-09):* [factshift-tooling](../../../.spw/caches/factshift-tooling-2026-11.spw) reads the code against this plan. It finds two tool systems under one word (the nine windows, and the tap verbs `t` cycles), `grow` with six laws on six surfaces, and a tap verb that raises `alert()`. It proposes T0 to T5 beside the slices below: hygiene, one verb registry, operators on the mode column's squares, verbs that take the innermost object they accept, receipts into the visit's document with one undo, and profiles and chains.
+
 C0 needs no gate. C1 is a question. C2 is a demo on three tools. Then C3, R1, N1 and Q1 ride on C2's look; K1 and D1 can follow C0; M1, F1 and S1 wait on their answers; C4, C5 and P1 wait on theirs. Each app slice is an app commit, a snapshot (`workers/factshift-center/assets`, `version.json`), and a deploy recorded in `wip.spw`.
