@@ -53,6 +53,16 @@ Let readers tune how much copy is visible without splitting the site into separa
 - **Proficiency production note** (eba561ba): one shared premise read at entry, developing and deepening depths on `/about/` and `/play/rpg-wednesday/`, never sorted by age. `.spw-production-note` in `public/css/components/content.css`; the contract is `.spw/conventions/intergenerational-literacy.spw`; it reuses `data-spw-copy-depth` and `data-spw-proficiency`.
 - **The math half of the thought trace** (89475c6c): `/topics/math/#pure-math-routes` as one claim that turns, with the shelf left to the lens grid below.
 
+## Read aloud (2026-11-09)
+
+The creator: update and extend the plans for typographic development and readability; consider word- and sentence-local pronunciation and emphasis; imagine someone reading the copy out loud. The theory is [read-aloud-typography](../../../.spw/caches/read-aloud-typography-2026-11.spw). A reader aloud hears what the page says and none of what it only shows: a screen reader at its default punctuation says `~garden[care]{seed, water}` as "garden care seed water", and `·`, `×` and `→` come out as "middle dot", "times" or nothing.
+- **R0, a read-aloud sensor**, reporting like `audit:copy:accessor` and changing nothing: sentences past about 28 words, two parentheticals, three nouns stacked before a verb, a mark that carries a meaning the words do not, a Spw run with no spoken twin, a coined word with no pronunciation.
+- **R1, spoken twins.** Each Spw run a reader may hear (`code.language-spw` on 30 routes, chips, the crumb, the cauldron's lines) takes an accessible name built only from operator and slot names: "potential garden, mode care, body: seed, water". No connective words, after the creator's ruling that the words a line is read in do not generalize. One spoken name per pair is still the creator's to choose (body or direction for `{ }`, scene or scope for `( )`).
+- **R2, mono that reads as typed.** Spw set in JetBrains Mono keeps contextual alternates off, so `~>` stays two marks, and keeps the slashed zero and tabular figures; marks sit in a fixed column and widths count in `ch`.
+- **R3, a pronunciation register** the creator writes once (Spw, Spwashi, boonhonk, boon, bane, bone, bonk, honk, dregg, lede, folio), carried by `<abbr title>` on first use and `lang` where a word is borrowed. Never guessed by an agent.
+- **R4, stress where the ear needs it.** On the three dense ledes the audit names, `<em>` for the word a reader leans on, the new information last, one stress a clause; a sentence that needs two emphases becomes two.
+- **Listening:** agents cannot hear. The creator can run macOS `say` over a page's lede before it ships; the receipt names the sentences re-read.
+
 ## Next slices
 
 - **C1. `/topics/slop/#feeling`.** Waits on the creator's call (`wonder_semantic_copy_depth_slop_feeling`). Touches `topics/slop/index.html` only. Verify as in Thought trace below.

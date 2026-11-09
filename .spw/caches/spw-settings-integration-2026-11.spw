@@ -1,0 +1,93 @@
+# Settings written in Spw (2026-11-09) — cache
+#
+# The creator asked to surface and extend the plans for Spw's integration
+# with settings, beside embedded settings tuning on components, tunable .spw
+# cards that link to factshift.center and spw.quest, and a cauldron resonant
+# with both. This gathers what already exists across the three apps and
+# names a ladder from spelling to one tuning grammar.
+
+#>spw_settings_integration_2026_11
+#:cache #!settings #!spw #!tuning #!ecosystem
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@profiles: ~"../../public/js/kernel/site-settings-profiles.js"
+@engine: ~"../../public/js/kernel/site-settings-engine.js"
+@parity: ~"../../public/js/kernel/settings-query-parity.js"
+@composer: ~"../../public/js/kernel/query-composer.js"
+@expression: ~"../../public/js/interface/spw-expression.js"
+@shelf_plan: ~"../../.agents/plans/settings-ornament-resonance/PLAN.md"
+@alignment: ~"./site-alignment-2026-11.spw"
+@corpus: ~"./canvas-corpus-design-2026-11.spw"
+@tooling: ~"./factshift-tooling-2026-11.spw"
+@productization: ~"./ecosystem-productization-2026-11.spw"
+@aloud: ~"./read-aloud-typography-2026-11.spw"
+
+operation = "cache"
+fixity = "experimental"
+expression = =site[tuned]{line, slots, travel}<reader>
+
+summary = #[
+  `Settings already have words: about 84 settings, 76 with word labels (@profiles), written to <html> by the engine (@engine), and in the address as readable keys through query parity (@parity). The "Spw query" vocabulary is readable URL keys, not a Spw line; no setting is ever shown, typed or shared as Spw.`,
+  `The ladder: one word set and one operator per setting; the look a reader is wearing written as a Spw line that mutates in place; that line accepted as input; Home's tuning turned as one expression; components tuning themselves; and one tuning grammar across spwashi.com, factshift.center, spw.quest and texture.website.`,
+][reg=set]
+
+^"live"{
+  site = `The settings shelf holds 53 boxes in eight aisles with a "wearing now" window of live readouts (@shelf_plan). Chips on about 25 routes set site-wide settings (data-site-setting-set="colorMode:auto"), each an operator chip whose sigil precedes its word ([ Adaptive). One setting can read six ways under two operators across pages (wonder memory: ~focused, [nearby], ~immersive, …; @alignment#next). <spw-expression> turns a place's slots like dials, but only in the crumb (@expression), and brace-pivots, a brace wall that cycles a setting, has no markup.`
+  apps = `factshift.center keeps its reading choices in the [...] menu's reading family and proposes a tuning line (=tune{spacing[0.4], nested[softer], law[plane]}), =menu{…} and =tools{…} (@corpus#physics, @tooling#selection); spw.quest proposes shelf tuning as a line (shelf[novice]{plans}<quiet>); lore.land reads a texture.website address with a =tuning segment (@productization#lore_land).`
+}[reg=facet]
+
+^"ladder"{
+  s0 = `Spelling: one operator and one word set per setting, from the engine's own value labels, in one shared partial for the chips; the sigil-before-word chip form stays.`
+  s1 = `State as a line: the "wearing now" window, and a quiet line under Home's tuning, write the look as Spw, =site[comfortable]{color[auto], wonder[nearby], motion[calm]}, and rewrite one slot in place when a setting changes, so the state teaches the operators while it shows (legible instruments: state as a mutating expression).`
+  s2 = `The line as input: a settings line pasted into the paste box or the settings page is read and applied through the engine (only known settings and known words; the rest said back as unread), and the address may carry it beside the readable keys, so a look is shareable as one line.`
+  s3 = `Home's tuning as one <spw-expression> whose slots are a few settings, each slot's choices the settings' word labels, each turn saved through the engine; which settings become slots is the creator's call.`
+  s4 = `Components that tune themselves: a card or a figure carries a small expression in its corner whose slots are its own (its density, its motion), scoped to that component through the attributes the component already has, never a new data-spw-* family.`
+  s5 = `One tuning grammar: =site{…} here, =tune{…} on the canvas, shelf[…]{…} on the quest, =tuning in texture.website's address. A line pasted from one app applies the slots the other shares (motion, density, color mode) and says the rest back unread, so a reader's look travels with them.`
+}[reg=facet]
+
+^"voice"{
+  spoken = `Read aloud, a settings line is said by its names: "site, mode comfortable; color auto, wonder nearby, motion calm" (@aloud#word). A chip's sigil is seen; its word is heard, so the word must carry the choice.`
+}[reg=facet]
+
+^"holds"{
+  owners = `The settings engine and the shelf are @shelf_plan's; which settings become slots, the operator for each, and the words are the creator's; the cross-app grammar is shared with @productization and @corpus.`
+  opens = `No sigil, no data-spw-* family, no package, no workbench edit.`
+}[reg=facet]
+
+#>wonder_settings_line
+?["Should the look a reader is wearing be written as a Spw line that rewrites one slot when a setting changes?"]{
+  #:depth #!experiential ~#lens(choice)
+  ~#with: @engine @shelf_plan
+  ~#hypothesis: "A line that mutates in place shows state and teaches the operators at once, where a pill shows a key and a value."
+  ~#expect: "The wearing-now window shows readouts as words and numbers; Home's pills say mode: auto; no setting is written as Spw."
+  ~#probe(read)
+  !probe{ "Read the wearing-now window in settings/index.html and setDatasetEntries in site-settings-engine.js. Say which five settings a line would hold first." }
+  $%[settings.line, settings.readouts]
+  ~<"../../public/js/kernel/site-settings-engine.js">
+}
+
+#>wonder_settings_input
+?["Should a pasted settings line apply a look, saying back what it could not read?"]{
+  #:depth #!pragmatics ~#lens(projection)
+  ~#with: @parity @composer
+  ~#hypothesis: "A look shared as one line is a gift a reader can read before they wear it; applying only known settings and known words keeps it safe."
+  ~#expect: "Query parity maps settings to readable URL keys and back; the paste box reads Spw and does not apply settings."
+  ~#probe(read)
+  !probe{ "Read SETTINGS_TO_QUERY in settings-query-parity.js. Say which keys a =site{…} line would map to." }
+  $%[input.paste_and_address, input.address_only, input.none]
+  ~<"../../public/js/kernel/settings-query-parity.js">
+}
+
+#>wonder_tuning_travels
+?["Should one tuning grammar let a reader's look travel between spwashi.com, factshift.center and spw.quest?"]{
+  #:depth #!experiential ~#lens(comparison)
+  ~#with: @productization @tooling
+  ~#hypothesis: "Each app keeps its own slots and shares a few (motion, density, color mode); a line pasted across applies what is shared and says the rest back."
+  ~#expect: "Each app keeps tuning its own way: settings and query keys here, the reading family and proposed =tune on the canvas, a proposed shelf line on the quest."
+  ~#probe(read)
+  !probe{ "List the settings each app keeps under a shared meaning (motion, density, color). Say which three slots a shared line would carry." }
+  $%[tuning.shared_slots, tuning.per_app]
+  ~<"./ecosystem-productization-2026-11.spw">
+}

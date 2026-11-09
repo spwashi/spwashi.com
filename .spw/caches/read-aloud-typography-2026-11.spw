@@ -1,0 +1,100 @@
+# Copy read out loud, and type that knows it (2026-11-09) — cache
+#
+# The creator asked to update and extend the plans for typographic
+# development and readability, considering word- and sentence-local
+# pronunciation and emphasis, and imagining someone reading the copy out
+# loud. A reader aloud is a person at a podcast mic, a screen reader at its
+# default punctuation, a text-to-speech pass, the creator recording a video.
+# Each hears what the page says and none of what it only shows.
+
+#>read_aloud_typography_2026_11
+#:cache #!typography #!copy #!voice #!a11y
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@copy_flow: ~"../conventions/copy-flow.spw"
+@packing: ~"../conventions/typography-packing.spw"
+@operator_typography: ~"../language/operator-typography.spw"
+@copy_accessor: ~"../conventions/copy-accessor.spw"
+@operators: ~"../../public/js/kernel/operator-detection.js"
+@tokens: ~"../../public/css/tokens/core.css"
+@spw_code: ~"../../public/js/modules/tools/spw-code.js"
+@base_type: ~"../../public/css/typography/base.css"
+@depth_plan: ~"../../.agents/plans/semantic-copy-depth/PLAN.md"
+
+operation = "cache"
+fixity = "experimental"
+expression = ~copy[aloud]{word, sentence, glyph}<ear>
+
+summary = #[
+  `Read aloud, Spw in prose loses its marks: a screen reader at default punctuation says ~garden[care]{seed, water} as "garden care seed water". Every Spw run a reader may hear wants a spoken twin built from the canon's own names (potential garden, mode care, body seed, water), never from connective words the creator ruled out as titles.`,
+  `Stress is typography's to carry: <em> where a sentence read aloud needs its stress moved, <strong> where a thing matters, the new information at a sentence's end, one stress a clause. A sentence that needs two emphases to be read right is two sentences.`,
+  `Monospace is literal: what is set in mono is read as written, character by character or by its spoken twin. So Spw in mono should not ligate (~> stays two glyphs, as typed), its marks sit in a fixed column, its counts use tabular figures, and its widths are counted in ch.`,
+  `Coined words need a pronunciation the creator gives once (Spw, Spwashi, boonhonk, dregg, lede), kept in one register and carried by plain HTML (abbr, title, lang), never by a new data-spw-* family and never guessed.`,
+][reg=set]
+
+^"ear"{
+  readers = `A person reading to someone, who needs the stress placed and the coinages sayable; a screen reader at its default punctuation level, which skips most of ~ ^ { } [ ] and says what remains; a text-to-speech pass (macOS say, a phone's read-aloud) that reads digits, × and → and · in its own words; and the creator recording, whose voice is the page's first reading.`
+  marks = `What a reader aloud does with marks: · is "middle dot" or silence, × "times", → "right arrow", … a pause or "dot dot dot", ~ "tilde" or nothing, a bracket nothing. A sentence that leans on a mark to mean (a·b, x → y) means less when heard. In prose, the word for the relation (then, becomes, with) reads where the mark only shows.`
+}[reg=facet]
+
+^"word"{
+  spoken_twin = `A Spw run in prose (code.language-spw on 30 routes through @spw_code, chips, the crumb, the cauldron's lines) carries a spoken twin as its accessible name, built from @operators' names and the slot names: ~garden[care]{seed, water} → "potential garden, mode care, body: seed, water". The canvas already names its nodes this way for assistive tech. The twin uses only the operator and slot names: the creator ruled that the words a line is read in ("with", "at", "priming") do not generalize across expressions (.spw/surfaces/factshift-center.spw, d_2026_10_29_words).`
+  slot_names = `One spoken name per pair is still open: the canvas says body for { } (the creator's word over definition), the reader's SLOT_NAMES say scope for ( ) where the canvas and the operator chips say scene, and AGENTS.md's table says direction for { }. A spoken twin needs one; choosing it is the creator's.`
+  coinages = `A pronunciation register: each coined or borrowed word the site uses (Spw, Spwashi, boonhonk, boon, bane, bone, bonk, honk, dregg, lede, folio) with how it is said, written once by the creator and carried by <abbr title> on first use in a page and by lang where a word is borrowed. The audit already flags unglossed terms (unglossed:lattice); a coinage without a pronunciation is the same kind of seam.`
+  emphasis = `<em> is stress, the word a reader leans on; <strong> is importance, which a voice says by pace more than pitch; italics for a title or a term read in its own register. Bold sigils and colored operators are seen, not heard: what they mean must also be in the words.`
+}[reg=facet]
+
+^"sentence"{
+  shape = `Read aloud, a sentence carries one new thing and puts it last (end focus). It keeps its subject near its verb; it nests one parenthesis at most; it lists in threes when it can, since a voice drops the fourth; its colons and dashes are breaths, so two in a sentence is a run-on to the ear.`
+  sensor = `A read-aloud pass over a page's copy units (@copy_accessor already collects them) can flag what an ear stumbles on: sentences past about 28 words, two parentheticals, three nouns stacked before a verb, a mark that carries the meaning, a Spw run with no spoken twin, a coinage with no pronunciation. It reports, like audit:copy:accessor, and changes nothing.`
+  listening = `Agents cannot hear. A listening probe the creator can run: macOS say reading a page's lede at its default voice, so a reading is heard before it ships, and the receipt names the sentences re-read.`
+}[reg=facet]
+
+^"glyph"{
+  mono = `--font-family-mono is JetBrains Mono (@tokens), which ligates ~>, ->, <=, != and more through contextual alternates. The base type turns those on for sigils, tags and pills ("calt" 1 with a slashed zero and tabular figures) and for Spw blocks ("calt" 1), and off in one place, a charged binding (@base_type). In Spw a ligature joins two marks a reader typed and would say apart, so Spw set in mono keeps "calt" off and the slashed zero and tabular figures on, while code in other languages may keep its ligatures.`
+  grid = `Monospace's affordance is the character cell: a column of marks lines up when each mark takes the same cell; a list of lines can align its braces; a width counted in ch holds its words without reflow; tabular figures keep counts from jumping. The cauldron, chips and crumbs set Spw in mono and do not yet use the grid: their marks float with the word after them.`
+  measure = `Measure and packing stay @packing's and @copy_flow's: 45 to 75 characters for prose, and the Pretext measurement bus picks the tier. Read aloud, a measure is also a breath: a line that fits one breath is read as one thought.`
+}[reg=facet]
+
+^"holds"{
+  owners = `Copy voice and the pronunciations are the creator's; the read-aloud slices are @depth_plan's; measure is @copy_flow's and @packing's; the glyph's look is @operator_typography's.`
+  opens = `No sigil, no data-spw-* family (a spoken twin is an accessible name and a pronunciation is HTML's own abbr and lang), no package, no workbench edit.`
+}[reg=facet]
+
+#>wonder_spoken_twin
+?["Should every Spw run a reader may hear carry a spoken twin made only of operator and slot names?"]{
+  #:depth #!semantic ~#lens(choice)
+  ~#with: @spw_code @operators
+  ~#hypothesis: "A screen reader drops most marks, so a twin built from the canon's names keeps the meaning audible without adding the connective words the creator kept out of titles."
+  ~#expect: "spw-code.js paints roles on code.language-spw blocks and sets no accessible name; chips and the crumb carry aria-labels in prose; the canvas names nodes by word, slot and frame."
+  ~#probe(read)
+  !probe{ "Read how spw-code.js paints a block and what aria attributes it sets. Say where a twin would be written." }
+  $%[twin.canon_names, twin.prose, twin.none]
+  ~<"../../public/js/modules/tools/spw-code.js">
+}
+
+#>wonder_mono_ligatures
+?["Should Spw set in mono turn ligatures off, so ~> reads as the two marks a reader typed?"]{
+  #:depth #!stylistic ~#lens(comparison)
+  ~#with: @tokens @operator_typography
+  ~#hypothesis: "A ligature is a reading the font makes; in Spw the marks are the reading, and a reader aloud says them apart."
+  ~#expect: "JetBrains Mono is the site's mono; base.css turns its contextual alternates on for sigils, pills and Spw blocks and off only for a charged binding."
+  ~#probe(read)
+  !probe{ "rg -n 'font-variant-ligatures|font-feature-settings' public/css/typography/base.css. Say which Spw surfaces ligate today." }
+  $%[ligatures.off_for_spw, ligatures.on, ligatures.by_surface]
+  ~<"../../public/css/tokens/core.css">
+}
+
+#>wonder_pronunciation_register
+?["Should the site keep one register of how its coined words are said, written once by the creator?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#with: @copy_accessor
+  ~#hypothesis: "A reader aloud stumbles on a coinage once and then guesses; one register, carried by abbr and lang, says each word the way the creator does."
+  ~#expect: "The audit flags unglossed terms; no page says how Spw, Spwashi or boonhonk is pronounced."
+  ~#probe(read)
+  !probe{ "npm run audit:copy:accessor and read the unglossed seams. Say which coinages appear most." }
+  $%[register.creator_written, register.none]
+  ~<"../conventions/copy-accessor.spw">
+}
