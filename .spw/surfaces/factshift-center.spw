@@ -80,6 +80,8 @@ contents = #[
   join = `Two lines joined by ~ ^ & @ sit side by side, left to right as written (a@b: a is the context regarding b).`
   containers = `A container resizes from a corner and moves by its body; its parts settle into it. A changed container keeps its size and place for that line's word in this browser; two taps on its corner put it back.`
   empty = `A slot the line lacks is kept in its place, hidden, and shown only while a top-level part, the scene or the concept is dragged.`
+  law = `A body moves by its word's mark, and only its own members feel it: its parts and the words of the expressions it holds (local-forces.ts, app dbb44f8, 2026-11-09). . settles, ^ lifts, * holds, ~ drifts, = keeps, @ gathers to the body's middle, ? opens from it, ! makes room, % levels; # & $ keep the field's. The [...] forces row turns it off.`
+  fold = `A tap on a body's title, or { on its focused word, draws the body as written, one node in place of its parts; the same again draws the parts. The line does not change. A question's body stays open. Renaming the literal rewrites the body inside its braces (brace-folds.ts).`
 }[reg=facet]
 
 ^"ties"{
@@ -149,6 +151,7 @@ contents = #[
 ^"readings"{
   ~#note: "Readings an agent made of the code or the conversation. Not the creator's until confirmed; kept out of the plans' language until then."
   zero_strength = `that defines, applies and refers, drawn at strength 0, prime a relation, and that refers is the concept actualized onto the whole reading`
+  question_open = `that a question's body refuses the fold because "a question should remain open even after interaction" (operator semantics), while the guide reads ? as "Open a question you can close again": the line answering closes it, the canvas hiding it does not. An agent's reading, 2026-11-09.`
   lambda = `the canvas as a way into lambda calculus: ( ) as a scope (a name bound to its body of statements) or as an argument given to an abstraction; entering a node as looking inside a function's body. Carried as wonder, not decided.`
 }[reg=facet]
 

@@ -109,7 +109,7 @@ The display menu (`src/display.js`) gains row and tile choices beside size, wrap
 - Each operator an interactive handle.
 - Notion for embedded navigation and interaction: a handle on every block, pages embedded in pages, toggles, a path back. Notion's block handle and embedded page overlap with factshift.center's focal square and handle (`factshift-center/TOOLS.md`, The focal point): one handle per part that grips, opens or carries it.
 
-The landing's handles are the first step. Next: each painted line's operator characters as handles of their own, and a line's braces drawn as the container they are.
+The landing's handles are the first step. Next: each painted line's operator characters as handles of their own, and a line's braces drawn as the container they are. factshift.center now goes the other way, a body folded back to its braces as written ([brace-literal-local-law](../../../.spw/caches/brace-literal-local-law-2026-11.spw)), so the two can meet at one line read as text, as shape and as motion.
 
 ## Waiting on the creator
 
