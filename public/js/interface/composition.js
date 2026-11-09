@@ -1130,7 +1130,8 @@ function renderIngredientChip(ing, idx) {
   // the whole point of storage.js reporting naive vs integrated.
   const nativeExpression = ing.spwExpression || ing.expression;
   const parseDepth = ing.spwParse || 'naive';
-  const expr = `<span class="cauldron-ingredient-expr" data-spw-expression data-spw-expression-parse="${parseDepth}" title="${escapeHtml(ing.expression)}">${escapeHtml(nativeExpression)}</span>`;
+  // Shown as its fractal summary, so a long one folds inside its braces and still closes; the title keeps it whole.
+  const expr = `<span class="cauldron-ingredient-expr" data-spw-expression data-spw-expression-parse="${parseDepth}" title="${escapeHtml(ing.expression)}">${escapeHtml(summarizeSpw(nativeExpression, 32))}</span>`;
 
   const phase = computeIngredientPhase(ing);
 

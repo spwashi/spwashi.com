@@ -19,6 +19,8 @@
  */
 
 // Workbench relation: mutation, via the kernel. Keyed by its type names.
+import { canvasHref, questPivotHref } from '/public/js/kernel/ecosystem-links.js';
+
 const STATES = Object.freeze({
   '.': { operator: 'ground', word: 'resting', hint: 'nothing held' },
   '~': { operator: 'potential', word: 'held', hint: 'one more makes a mix' },
@@ -78,6 +80,12 @@ export function renderLiveExpression(ingredients = [], options = {}, doc = docum
     const inner = expression.text.slice(expression.text.indexOf('{') + 1, -1);
     if (parts.textContent !== inner) parts.textContent = inner;
     host.title = expression.label;
+  });
+  // The line travels: to factshift.center's canvas, and to spw.quest's pivot,
+  // where one slot turns at a time; both from the site's one address book.
+  doc.querySelectorAll('[data-cauldron-carry]').forEach((link) => {
+    const href = link.getAttribute('data-cauldron-carry') === 'quest' ? questPivotHref(expression.text) : canvasHref(expression.text);
+    if (href && link.getAttribute('href') !== href) link.setAttribute('href', href);
   });
   return expression;
 }
