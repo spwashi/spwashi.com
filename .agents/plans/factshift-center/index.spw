@@ -391,3 +391,16 @@ invariants: #[
   !probe{ "rg -n \"particles: read|isBody\" workers/factshift-center/app/src/js/modes/spw/reading.ts workers/factshift-center/app/src/js/simulation/rects/region-rects.ts" }
   $%[molecule.default, molecule.chosen, scene.sleeve, scene.box]
 }
+
+#>wonder_factshift_body_hand
+?["Are the body's quick acts the ones a hand predicts, at the speeds a hand moves?"]{
+  #:depth #!experiential ~#lens(choice)
+  ~#with: @plan
+  ~#taste: "The creator, 2026-11-09: edge and diagonal swipe and pinch gestures on the body; quick vs slow differentiation; swipes across for breadth and vertically between strata."
+  ~#hypothesis: "Slow changes an amount and quick a state, as a node's throw already does. Edges step siblings as the screen's edges step history, pinches change depth, ↑ ↓ change strata, and the corners are the verb ring's."
+  ~#tension: "On a phone the outermost body's left edge lies inside the screen's 72px history band; ↑ ↓ mean strata on a body but a new node and the menu on the lens; 280 ms and 36 px were chosen, not measured on a person."
+  ~#expect: "body-gestures.ts holds QUICK_MS 280, FLICK_PX 36, EDGE_PX 24, quick pinch 0.8 and 1.25; frame-refresh.ts takes touches that start in the outer 72px."
+  ~#probe(read)
+  !probe{ "rg -n \"QUICK_MS|FLICK_PX|EDGE_PX|QUICK_CLOSE|QUICK_SPREAD\" workers/factshift-center/app/src/js/modes/spw/body-gestures.ts" }
+  $%[hand.as_built, hand.tuned_on_a_phone, hand.strata_everywhere]
+}
