@@ -235,6 +235,7 @@ invariants: #[
   ~#expect: "The delimiters differ by place more than by physics. line-anatomy.ts gives ( ), { } and < > nearly one pull (friction 0.8 or 0.92, gravity 0.04 to 0.05) and [ ] none of its own, and the separator inside { } sets the only layout difference, a row or a ring. So most effects the probe lists belong to placement, and the hypothesis's physics are still to be built."
   ~#probe(read)
   !probe{ "list the regions' effects in line-anatomy.ts against the delimiters' meanings in .spw/site.spw, and say which delimiter each effect would belong to" }
+  ~#probed: "2026-11-09: the delimiters still differ by place, not physics. What a body now carries is its word's mark: a { } body moves its own members by the operator its word leads with (local-forces.ts, app dbb44f8). So the physics a container configures comes from the operator before the brace, not from the brace. And { } folds: a body can be drawn as its literal, one node in place of its parts (brace-folds.ts). PLAN.md, Body laws and brace folds."
   $%[containers.physics, containers.frames, containers.documents]
 }
 
@@ -363,4 +364,17 @@ invariants: #[
   ~#probe(read)
   !probe{ "rg -n 'pinch' workers/factshift-center/app/src/js/ui/focal-point.ts" }
   $%[enter.spread, enter.hold_then_spread, enter.panel_only]
+}
+
+#>wonder_factshift_body_laws
+?["Where should a body's law reach, and which bodies arrive folded?"]{
+  #:depth #!experiential ~#lens(choice)
+  ~#with: @plan
+  ~#taste: "The creator, 2026-11-09: open wonder; replacing nodes with literal braces and their contents; unique forces that are expression-local."
+  ~#hypothesis: "The operator before a brace is that body's law, felt only by its own members. A part's own mark could be scoped the same way: ! makes room among its siblings, not across the stage, and @ leans toward its body's middle. A ~ body could arrive folded, a potential held as written until it is opened, while ? never folds."
+  ~#tension: "A part's own mark moves it across the whole stage today (operator-physics.ts), so scoping it changes every line's feel at once. Arriving folded hides parts the reader has not chosen to hide. Both are felt decisions, and the creator makes them in a browser."
+  ~#expect: "Body laws are built for { } only, on by default and switched off from the [...] forces row. Folds start open for every mark. operator-physics.ts still measures @ from the stage's middle and lets ! push every loose node within its room."
+  ~#probe(read)
+  !probe{ "rg -n \"case '[@!]'\" workers/factshift-center/app/src/ts/simulation/operator-physics.ts workers/factshift-center/app/src/ts/simulation/local-forces.ts" }
+  $%[law.body_only, law.parts_scoped_too, fold.tilde_arrives_folded, fold.all_open]
 }

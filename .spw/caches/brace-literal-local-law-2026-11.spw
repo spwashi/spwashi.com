@@ -1,0 +1,125 @@
+# Braces as written, laws kept local, questions left open (2026-11-09) — cache
+#
+# The creator asked for a shared meditation on theory and syntax, held while
+# factshift.center changed: open wonder; replacing nodes with literal braces
+# and their contents; unique forces that are expression-local; a pass that
+# touches the plans and caches; and spw.quest, factshift.center and lore.land
+# read together. The canvas side was built in the app as dbb44f8
+# (factshift-center PLAN.md, Body laws and brace folds). This file keeps what
+# the building taught and what the three surfaces say to each other.
+# It opens no route, no sigil, no token, and no data-spw-* family.
+
+#>brace_literal_local_law_2026_11
+#:cache #!factshift #!quest #!lore #!syntax #!theory
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!semantics
+
+@plan: ~"../../.agents/plans/factshift-center/PLAN.md"
+@wonders: ~"../../.agents/plans/factshift-center/index.spw"
+@surface: ~"../surfaces/factshift-center.spw"
+@quest_plan: ~"../../.agents/plans/spw-quest/PLAN.md"
+@quest_first: ~"../../.agents/plans/spw-quest/expression-first.md"
+@route_physics: ~"./concept-route-physics-2026-11.spw"
+@surface_wonders: ~"./language-surface-wonders-2026-11.spw"
+@syntax_theory: ~"./syntax-runtime-theory-enhancements-2026-11.spw"
+@physics: ~"../../.agents/plans/spw-planes/physics.spw"
+@local_forces: ~"../../workers/factshift-center/app/src/ts/simulation/local-forces.ts"
+@folds: ~"../../workers/factshift-center/app/src/js/modes/spw/brace-folds.ts"
+@operator_physics: ~"../../workers/factshift-center/app/src/ts/simulation/operator-physics.ts"
+@guide: ~"../../workers/spw-quest/src/guide.js"
+@file_reader: ~"../../workers/spw-quest/src/file-reader.js"
+
+operation = "cache"
+fixity = "experimental"
+# Held on the canvas, this line shows its subject: its body opens from the
+# middle, and a tap on its title answers that a question stays open.
+expression = ?brace[as_written]{fold, law, room}<syntax>
+
+summary = #[
+  `A brace can be drawn as its bytes or as its parts. Folded, a body is one node that reads as written; open, it is the parts the reader made of it. The line does not change either way, so the literal is the conserved thing shown in place of the picture.`,
+  `The operator before a brace is that body's law, and only its own members feel it. The packet is the operator table's; what makes a law unique is where it is read, not a list the line writes for itself.`,
+  `A question's body does not fold. It closes when the line answers it. Hiding it is not answering it.`,
+  `spw.quest turns text toward shape, factshift.center turns shape toward motion and now back toward text, and lore.land turns text toward place. They are three readings of one line: as written, as parts, as a place with a law.`,
+][reg=set]
+
+^"three_directions"{
+  quest = `spw.quest keeps a line as text and paints it. Its guide opens on "A notation for readings you can compare." and says "A mark says what a word is doing. A brace says which slot it fills." (workers/spw-quest/src/index.js). Its next step is "a line's braces drawn as the container they are" (@quest_plan). Text is going toward shape.`
+  canvas = `factshift.center keeps a line as nodes, regions and ties that settle under heat (@physics: "The line is conserved; the picture is not"). The fold now lets it go the other way: a body drawn as written is the shape giving its text back.`
+  lore = `lore.land keeps a line as a place. A room is "op + container(name) + @keeper, as in ~{warm_furrow}@boof", where "[ ] you may only look in" and "< > you may go through it, never stay" (lore.land .spw/surfaces/rooms.spw). Its rules file gives each room's sigil a law the game reads while it runs (lore.land .spw/runtime/pie-rules.spw, !rooms{ potential{ .sigil["~"] … } }). Text is going toward place.`
+  layers = `lore.land's disk says it outright: "its spell is always there, its meaning once it has been stood on, its use once a loop has been walked round it" (lore.land .spw/surfaces/spw-architecture.spw). On the canvas that is the literal (the spell, always recoverable), the parts (the meaning, once a body is opened), and the law (the use, felt once the heat moves it). One held line can now show all three.`
+}[reg=facet]
+
+^"literal"{
+  built = `A tap on a body's title, or { on its focused word, draws it as written (@folds). The fold is kept for the visit by the body's place and word, as a node keeps its place by role and name. An inner fold stays when its parent opens. An edit that moves the body opens it, so nothing stays folded where its reader cannot find it.`
+  conserved = `The literal node's name is the body's own text between its braces, read by the same slot reader that wrote the parts. Folding draws the one quantity the canvas never changes. Renaming the literal writes back inside the braces, so editing the bytes and editing the parts are the same edit at two altitudes.`
+  display_or_action = `spw.quest decided that chop down and join up are "an action, not a display mode, because the paint must stay under the field's characters" (@quest_plan). The canvas has no field under its nodes. So there the fold can be a display that restores the text, and the action is the rename. Where the text is on screen, a change of structure must be an action. Where it is not, the literal is a view of it.`
+  accordion = `The accordion prime asked whether the reader already pairs a container's open and close (@surface_wonders#accordion), and it does. The canvas needed less than that. Its anatomy path (anatomy:part1:definition) is already the brace's address, so a fold is a set of addresses with no fold tree. A page that renders a .spw file as nested <details> still wants the pairing as data, and that ask stays upstream.`
+}[reg=facet]
+
+^"law"{
+  built = `Each { } body takes the mark its word leads with, and only its parts and the words of the expressions it holds feel it (@local_forces). Each inner body has its own word, so a law stops at the next brace. Measured headless against an unmarked body: . rests 8px lower, ^ 8px higher; = keeps its parts 6.0px from their seats and ~ lets them drift to 10.0, where an unmarked body rests at 8.5; @ gathers toward the middle and ? opens from it; % levels a ring's height from 82px to 62px; ! adds room between neighbours.`
+  before_the_brace = `lore.land writes the operator before the container (~{warm_furrow}), and the canvas now reads a body the same way. Held here, ~{warm_furrow}@boof drifts its furrow, and ?{baneberry, snail}@boof keeps its body open (probed 2026-11-09). A room carries its law to the canvas as written, with nothing translated.`
+  hull = `spw.quest's expression-first plan asked for "brace regions as hulls that carry a consequence (its own rule)" (@quest_first, F). The creator's rule for the map was that a region comes with a consequence or is not offered (app bcf3d66). A body's law is that consequence for the line's own regions.`
+  unique = `@route_physics asked whether a concept carries one operator's packet or a force list of its own, and held that a private list would be a second physics. At the scale of one expression the answer is both and neither. The packet is the table's, and the uniqueness is locality. Two sibling bodies read the same table from different places and disagree, as two colors already pull or push. Scope comes from the brace, so a force that keeps to its brace is local by construction.`
+  still_crosses = `A part's own mark still acts across the stage (@operator_physics): ! pushes every loose node within its room, and @ leans toward the stage's middle. Scoping those to their body would make every law local. It would also change the feel of every line at once, so it waits as a wonder.`
+}[reg=facet]
+
+^"open_wonder"{
+  rule = `? is the one mark whose body refuses the fold. A tap on its title says "stays open: a question closes when the line answers it". The fold is a way to put something away; a question is not put away.`
+  sources = #[
+    `the operator semantics: "A question should remain open even after interaction" (@physics)`,
+    `the guide's ?: "Open a question you can close again." (@guide), where closing is an answer`,
+    `the quest's file check: a question with "no !probe yet: nothing says what would answer it" fails (@file_reader)`,
+    `lore.land's probe room: .sigil["?"] with !verb[answered] (lore.land .spw/runtime/pie-rules.spw)`,
+  ][reg=set]
+  almanac = `lore.land's almanac rule is "A wonder has a habit, a cost, and someone who misreads it." (lore.land .spw/surfaces/almanac.spw). Read straight on the canvas: the habit is that a ? body opens away from its middle. The cost is the stage room it takes and a tap that only speaks. The one who misreads it is whoever taps its title to put it away.`
+  pie = `Book Two of lore.land is "Wonder About Pi(e)", "A discipline of attending to what refuses to come out even." (lore.land .spw/story-boonhonk.spw). A question's body is the canvas's version: the brace that will not close into its literal.`
+}[reg=facet]
+
+^"syntax_theory"{
+  keyed = `Everything felt here is keyed by something written: one character sets a body's law, one pair of braces sets what can fold, and the fold's key is the brace's address and its word. Nothing persists that the line cannot say back. A fold lasts the visit; the line lasts.`
+  braces = `lore.land's README calls braces "primordial semantic constructs, not punctuation. Left brace = accumulate charge; right brace = discharge." The fold reads the pair the same way. Open, the charge is spent into parts that move. Folded, it is held in the bytes between the braces.`
+  comparison = `spw.quest compares two readings by the slot where they part, and the canvas's Spw window shows a held line against a kept one as operations ([draft] → [low]). A law is a third comparison. Two siblings with one slot changed, the mark before the brace, move differently, so the difference can be watched.`
+}[reg=facet]
+
+^"holds"{
+  owners = `The canvas build is the factshift plan's (PLAN.md, Body laws and brace folds) and is committed in the app as dbb44f8; the snapshot is not carried. The taste calls are wonder_factshift_body_laws. The upstream fold-tree ask stays @surface_wonders'. spw.quest's braces-as-containers stays its plan's. lore.land is read only; its rooms, rules and disk are its own.`
+  opens = `No sigil, no @property, no data-spw-* family, no workbench edit, no lore.land edit.`
+}[reg=facet]
+
+#>wonder_literal_until_stood_on
+?["Should a body arrive as written until a reader stands on it, as lore.land's disk shows meaning only once a thing has been stood on?"]{
+  #:depth #!experiential ~#lens(choice)
+  ~#with: @folds @surface_wonders
+  ~#hypothesis: "A ~ body arriving folded keeps a potential as written until it is opened, and the disk's order (spell, then meaning, then use) becomes the canvas's order for that mark."
+  ~#expect: "Every body arrives open on the canvas today; folds are made by hand and last the visit. The disk always shows a node's syntax and adds its semantics once stood on."
+  ~#probe(read)
+  !probe{ "Read isFolded in brace-folds.ts and the reveal line in lore.land's .spw/surfaces/spw-architecture.spw. Say which mark, if any, should arrive folded." }
+  $%[arrive.open, arrive.tilde_folded, arrive.folded_until_stood_on]
+  ~<"../../workers/factshift-center/app/src/js/modes/spw/brace-folds.ts">
+}
+
+#>wonder_question_refuses_fold
+?["Should a question's body refuse the fold, or fold and stay marked as open?"]{
+  #:depth #!semantic ~#lens(comparison)
+  ~#with: @folds @guide @physics
+  ~#hypothesis: "A question closes by an answer, so the canvas refuses to hide it and says why; a folded question would read as answered when it is not."
+  ~#expect: "toggleFold returns question for a word that leads with ?, the body stays drawn by its parts, and the note near the handle names the rule."
+  ~#probe(read)
+  !probe{ "Read foldsAway and toggleFold in brace-folds.ts and the ? row of the guide in guide.js. Say whether closing is answering in both." }
+  $%[question.refuses, question.folds_marked, question.folds_like_any]
+  ~<"../../workers/factshift-center/app/src/js/modes/spw/brace-folds.ts"> ~<"../../workers/spw-quest/src/guide.js">
+}
+
+#>wonder_every_law_local
+?["Should a part's own mark keep to its body, as a body's law does?"]{
+  #:depth #!experiential ~#lens(choice)
+  ~#with: @operator_physics @local_forces
+  ~#hypothesis: "Scope is the brace, so every mark's motion could stop at its brace: ! makes room among its siblings, and @ leans toward its body's middle."
+  ~#expect: "operator-physics.ts lets ! push every loose node within its room and leans @ toward the stage's middle; local-forces.ts scopes only a body's law."
+  ~#probe(read)
+  !probe{ "rg -n \"case '[@!]'\" in operator-physics.ts and local-forces.ts. Say which motions cross a brace." }
+  $%[law.body_only, law.every_mark_local]
+  ~<"../../workers/factshift-center/app/src/ts/simulation/operator-physics.ts"> ~<"../../workers/factshift-center/app/src/ts/simulation/local-forces.ts">
+}

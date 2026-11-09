@@ -66,6 +66,7 @@ contents = #[
   owner = `spw-metaphysical-language (Pass 2, Spw laid out as nested layout); the ask itself goes to @upstream, never into .spw/_workbench`
   probe = `parse a nested line with the site reader and check whether its tokens already carry container open and close positions; if they do, the fold renderer needs no workbench change`
   probed = `2026-11-08: yes. parse('a{b[c]{d}}') gives CONTAINER_OPEN and CONTAINER_CLOSE tokens, each with a span (offset, line, column). Pairing opens with closes is a stack walk, so a fold renderer can be built on this repo's side now. The workbench ask narrows to returning that pairing and depth as data (a fold tree beside outline), so every host folds the same way.`
+  canvas = `2026-11-09: factshift.center folds by brace without the pairing: its anatomy path already addresses each body, and a folded body is drawn as its literal (brace-folds.ts, app dbb44f8). A ? body stays open. The <details> renderer still wants the pairing as data. ./brace-literal-local-law-2026-11.spw#literal`
 }[reg=facet]
 
 ^"recency"{

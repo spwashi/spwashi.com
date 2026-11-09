@@ -120,6 +120,7 @@ summary = #[
   ~#expect: "TOOLS.md assigns each of the nine tools one operator. operator-detection.js names a physics per sigil. No concept route writes its own forces."
   ~#probe(read)
   !probe{ "Read the tool-operator table in TOOLS.md and one physics field in operator-detection.js. Say whether a concept has a packet yet, or only a tool does." }
+  ~#probed: "2026-11-09, at the scale of one expression: a { } body takes its word's leading mark as its law, from the operator table, felt only by its own members (local-forces.ts, app dbb44f8). No private force list; uniqueness comes from where the law is read. A route-level packet is still unbuilt. ./brace-literal-local-law-2026-11.spw#law"
   $%[route.operator_packet, route.private_forces, route.packet_unless_named]
   ~<"../../.agents/plans/factshift-center/TOOLS.md"> ~<"../../public/js/kernel/operator-detection.js">
 }
