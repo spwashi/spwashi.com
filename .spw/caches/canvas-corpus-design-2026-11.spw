@@ -1,0 +1,173 @@
+# The canvas against the corpus, and what it could become (2026-11-09) — cache
+#
+# The creator asked for an adversarial design test against the .spw corpus
+# of spw-workbench and spwashi.com, and to consider: document memory; line,
+# feature and region editing; the map and filter tools; layers of relevance,
+# cache tiers, tooling effects on profiles and templates; the reflex menu's
+# buttons and mutations; screenshots for comparison; physics that invites
+# expression and a natural relationship to mathematical modeling; toggles and
+# gradients; reference renaming, script precipitation, bytecode in loops;
+# compression and indexing under another layer of physics; tunable features;
+# and texture.website under a revised theory of texture.
+# The test read every statement of both corpora with the canvas's own
+# readers (^"adversarial"). The rest are proposals, each tied to code that
+# already exists, with an owner and a wonder. It opens nothing.
+
+#>canvas_corpus_design_2026_11
+#:cache #!factshift #!corpus #!physics #!texture #!memory
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@plan: ~"../../.agents/plans/factshift-center/PLAN.md"
+@tools: ~"../../.agents/plans/factshift-center/TOOLS.md"
+@mind: ~"./factshift-theory-of-mind-2026-11.spw"
+@braces: ~"./brace-literal-local-law-2026-11.spw"
+@substrate: ~"./factshift-cognitive-substrate-2026-11.spw"
+@handle: ~"./spw-as-handle-2026-09.spw"
+@host_frame: ~"./host-frame-2026-09.spw"
+@precipitates: ~"../conventions/precipitates-and-projections.spw"
+@word_sets: ~"../conventions/word-sets.spw"
+@comparison: ~"../conventions/comparison-differentials.spw"
+@reflex: ~"../../workers/factshift-center/app/src/js/modes/reflex/mode-reflex.ts"
+@algebra: ~"../../workers/factshift-center/app/src/js/modes/mapfilter/selection-algebra.ts"
+@shape: ~"../../workers/factshift-center/app/src/js/modes/mapfilter/shape.ts"
+@feel: ~"../../workers/factshift-center/app/src/js/ui/physics-params.ts"
+@kept: ~"../../workers/factshift-center/app/src/js/modes/spw/spw-kept.ts"
+@talk: ~"../../workers/factshift-center/app/src/js/modes/spw/spw-talk.ts"
+@summary: ~"../../workers/factshift-center/app/src/js/modes/spw/line-summary.ts"
+@integrity: ~"../../scripts/spw-integrity.mjs"
+@hub: ~"../../workers/site-hub-next/src/index.js"
+
+operation = "cache"
+fixity = "experimental"
+expression = ?canvas[adversarial]{memory, tools, physics, texture}<corpus>
+
+summary = #[
+  `Physics should be written in Spw. lore.land already reads its game's tuning from a rules file at runtime (=tune{ =hop_lift[26] … }, overridable for a visit); the canvas's thresholds, laws and shares could live the same way, in a line a person can read aloud, keep, compare and screenshot.`,
+  `Memory should be a document. The canvas keeps five memories in five places (a thread of 40, 8 kept lines, 16 hash lines, unbounded kept frames, a visit's history) and records nothing as a story. One dated stream of entries, the lab notebook's own form, would be the visit's precipitate: replayable as a story, exportable as a .spw file.`,
+  `Reflex should kick, in words. Its buttons are arithmetic (r /= 2.3, ×10) and its lore row mutates at random; read as operator impulses on the thing under the hand, each press would be a verb a person can predict and a receipt that is a mutating expression.`,
+  `Texture is what a surface remembers of contact. texture.website's verb is grain ("Grain = Surface memory"); a body touched, folded and stepped could wear that memory as grain, so the material that tells open from folded also tells used from untouched.`,
+][reg=set]
+
+^"adversarial"{
+  method = `2026-11-09: every statement of spw-workbench's .spw files (A: 1,409 files, 19,296 statements) and spwashi.com's (B: 1,140 files, 29,111) through the canvas's own readers: formOf, readLine, slotHash, depthOf and summarize, shapeOf, and the loader's own statement split. Results and scripts kept in the session's scratchpad, not in the repo.`
+  forms = `A is mostly lines (61%), tags (23%) and headers (14.5%); B is mostly bindings (56%; their values 12,392 references, 1,742 prose, 1,310 lines, 857 sets) and lines (25%).`
+  crash = `The fractal summary recursed until the stack overflowed on 2,258 statements (A 1,522, B 736): it re-read a tail the slot reader could not advance. Because the anatomy summarized every body whether folded or not, holding such a line threw, and a file's whole-world map broke in 517 of A's files and 145 of B's. Fixed in app c4b0ca1 before any deploy shipped it: all 48,407 now summarize within budget, none throws.`
+  unread = `Read whole at the top level: A 93.4%, B 91.0%; at every depth 16.7% and 4.9%, mostly a field's value, which the form layer reads as a binding. The canvas still draws at least one unread box for 21% of A's lines and 14% of B's.`
+  causes = #[
+    `a comment at a line's end, carried into the body by the loader's "; " join, takes the closer with it (A 683, B 461): the canvas's to fix, by dropping comments outside quotes before the join`,
+    `statements side by side in a body (A 850, B 243): the summary reads them as siblings; the slot reader's sibling reading is a workbench ask`,
+    `<< … >> streams (A 547, B 35): the workbench parser has them and the slot reader does not, an ask`,
+    `a field written key[x]: v, digit keys 1: "…", and a comment after a binding's value (A 339, B 82 and 56): the form layer's pattern, the canvas's to widen`,
+    `quotes with escapes, single quotes, =>, and lines the join splits (each under 60): the reader's and the loader's, case by case`,
+  ][reg=set]
+  shapes = `The map's shape kinds are too coarse (A 73, one of them 54% of A's lines) and shapes as written too fine (A 2,539 with 1,925 singletons; B 679 with 444): "like" finds itself. A shape read at depth 1, nested bodies {…}, is the middle. map-like reads a binding's raw text, so B's bindings collapse into @· and ·; it should unwrap them as the form layer does.`
+  density = `Statements per file: A median 13, at most 62; B median 23, 45 files over 50, at most 656 (.spw/conventions/site-semantics.spw). The thread keeps 40 rows, so loading B drops 2,526 statements (8.7%) in 89 files while its status still counts them all.`
+  titles = `A title that is not a line, or past 400 characters, was shown as written: A 6,700 and B 10,349 statements over 64 characters, one manifest at 54,233. Since c4b0ca1 a title past 400 is summarized; a binding's title under 400 still shows whole.`
+}[reg=facet]
+
+^"memory"{
+  live = `The thread keeps 40 lines (factshift.talk), the kept lines 8 with a perspective color each (factshift.kept, @kept), the hash 16 (factshift.lines), kept frames without a bound (factshift-frame-<md5 of the title>), concept history one visit in the browser's history, and containers by word and place (factshift.regions). Story mode plays hard-coded timed events from ?story=; nothing is recorded.`
+  proposal = `One document: every act that changes the reading (hold, edit, fold, a stratum, a cast, a compare) writes one dated entry in the lab notebook's form, >>[2026-11-09 15:02] fold — garden{…}. Hot is this visit, warm is this browser, cold is a .spw file exported or sent as #spw64. Story mode replays the entries. The five stores stay readers of the one stream, and kept frames take a bound by recency.`
+  tiers = `Relevance by fixity, the site's own ladder (seed, experimental, provisional, tending, stable, settled, cold; @word_sets): a line held once is seed, held again tending, kept settled, exported cold. A list ranks by tier, then by recency, so what a person keeps rises above what they passed through.`
+}[reg=facet]
+
+^"editing"{
+  line = `The prompt already edits by reading spans (grow, earlier, later, drop, wrap, close) through the browser's undo, and the body's hand now folds, steps strata and opens ↘ to edit as written.`
+  feature = `Casts already rewrite places byte for byte (~map[slot]{from ~> to}, undoable). A feature edit is a cast aimed at a feature of a file's world: every [warm] → [low] across the file, with the receipt written as line-compare's operations for each line touched.`
+  region = `A region's verbs live on its tab and under the hand; the next is a resonant rename: a word that recurs (the resonance relation already finds it) renamed once and rewritten at every place, each place by editLine.`
+}[reg=facet]
+
+^"map_filter"{
+  live = `Selection algebra (& | \\ ~ · *) over slot queries (@algebra); shapes, a line with its words taken out (@shape), compared by slotHash but "never scored"; the file map groups by operator, lens, frame, shape or whole. The legacy editor still compiles raw JavaScript with new Function (mode-mapfilter.ts:63). Filter removes what answers, which reads backwards.`
+  proposal = `Filter says "keeps n of N" and lights the slots it read before it runs. Shapes coarsen fractally: a shape at depth 1 (the summary's shape, nested bodies {…}) merges lines that differ only inside, so "like" finds kin where an exact shape finds itself. The new Function path retires in favor of the algebra, which already says everything the canvas's queries need.`
+}[reg=facet]
+
+^"reflex"{
+  live = `Reflex sets or nudges charge (−10k to 100, ×10), size (r /= 2.3, = 10, × 3.2), and motion (link mode, decay, the box), closes on each press and reports by the handle; its lore row mutates: boon grows, bane shrinks at random, bone rings links by color, bonk and honk step colors, boof pins to a 100px grid, lore adds a story node (@reflex). TOOLS.md reads reflex as a ! kick and asks for words over arithmetic.`
+  proposal = `Each button an operator's impulse on the thing under the hand (the selection, else the body, else the stage), named by what it does: ! scatter, ^ lift, . settle now, ~ loosen anchors for a breath, * weigh, = pin, % level, @ look from here. A tap is one step; a hold grows the amount while held (quick and slow again). The receipt is the expression mutated in place: .garden{…} settled, ~garden{…} loosened for 2 s. The lore row stops being random: each word keeps its dimension and becomes deterministic, seeded by the line, so the same press on the same line does the same thing.`
+}[reg=facet]
+
+^"stills"{
+  live = `line-compare reads two lines slot by slot; a kept frame stores parameters, nodes and links; frame export serializes the SVG; the app has no capture mode (the site's is capture.css). screenshot-semantics' first slice is a still that carries its line.`
+  proposal = `A comparable still is a pose, a line and an address together. Pose: the rest after heat, the layout seeded by the line so the same line rests the same way. Strip: the still's foot carries both lines and their slot diff ([draft] → [low]) when it is one of a pair. Capture: motion frozen, chrome off but the title, labels per the reading family. Two stills of one line under two laws then differ only where the law did (@comparison).`
+}[reg=facet]
+
+^"physics"{
+  live = `Defaults in force-config.ts (charge −30, velocity decay 0.52, center 0.05); the feel card's four words (spacing, flow, gather, ties) with a toggle to the parameter, written into the address (@feel); operator physics by a node's mark; body laws by a word's mark; brace pairs by charge as k·q·q/d; dimensional forces set by a line (force <dim> <n>).`
+  modeling = `Today's pass found its own lesson: the pair's pull as 1/d² lost to the canvas's 1/d charge, and switching to the plane's law made braces close. A law is a choice a reader can learn from. Offer it: %law{plane} (1/d), %law{space} (1/d²), %law{spring} (linear), on a pair or a body, with the equation behind the feel card's disclosure and the receipt naming the law.`
+  expression = `Energy as a picture: heat is gone in about two seconds; an inline sparkline of the field's energy as it settles, beside the feel card, shows what a parameter does to the settling, not only to the rest.`
+  tunable = `The tunables found today, each a number a person could set and keep: QUICK_MS 280, FLICK_PX 36, EDGE_PX 24, quick pinch 0.8 and 1.25, SPREAD 1.35 and CLOSED 0.65, the nine local laws' constants, the pair's K 600 and its law, the nested share 1, 0.6, 0.3, SEAT_HOLD 0.2, α 0.35 and its decay.`
+  in_spw = `Written in Spw: =tune{spacing[0.4], flow[0.52], nested[softer], law[plane], quick[280ms]} held in the address, kept in a rules .spw the canvas reads at start, as lore.land's pie-rules.spw is read with ?rules= for one visit. Toggles are a pair of words (on, off); gradients are a word ladder over a number (alike, softer, faint), the legible-instruments rule.`
+}[reg=facet]
+
+^"efficiency"{
+  rename = `spw:integrity follows every path reference (7101 of 7101 resolved on 2026-11-09) and never rewrites one (@integrity). The workbench's renamePaths re-aims citations in their own form and spw refactor --rename path:from=to offers the move; the site could wrap it with a dry run that also lists Markdown and HTML references. Renaming stays the workbench's tool; the site consumes it.`
+  precipitation = `A precipitate is condensed residue (@precipitates). The visit's document memory is the canvas's precipitate: the stream of entries reduced to the casts that take the first line to the last is a script, and the script is what a person shares.`
+  bytecode = `The canvas reads one line many times per projection (planOf, lineAnatomy, editLine, the summary, the shape), and the region force checks every node against every region on every tick. Read once: a reading per line string memoized, and region membership computed at reinit, as local forces and pairs already precompute theirs. The workbench's ONF (σ(args…)[frames…]) and GeometryBytecodeIR (contentHash, maxDepth, unitCount) are the compiled forms to meet, not to fork.`
+}[reg=facet]
+
+^"compression"{
+  live = `The search index cuts a frame's haystack at 280 characters; the expression manifest keeps subject, mode, parts, projection, scope and charge in about 146 KB; a slot hash is five units with 0.5 for an absent slot, never used as a distance.`
+  proposal = `Another layer of physics: place each line at its slot-hash vector projected to the plane, so lines with kin content attract and a corpus lays itself out by similarity, an index a person can see and walk. Compression by shape: a file is its dictionary of shapes and a table of words per line, the way the map's likeness already groups it. The 280-character haystack becomes the summary at 280, so a cut never ends mid-word.`
+}[reg=facet]
+
+^"texture"{
+  live = `texture.website's verb is grain (@host_frame); its lab serves swatches (paper, linen, harlequin, wash) and materials (paper, glass, matte, field), with the theory "Grain = Surface memory: texture should feel carried by the surface, not placed on top of it" and "Response = State through contact" (@hub). @handle proposes one message across the cauldron, the satchel and texture: {type: "spw:expression", expression: "<texture> [linen] ~@[whisper]"}. lore.land plays it as an address read part by part by operator (?/texture.website/@spwashi/!words/=tuning/~motif).`
+  revised = `Texture is what a surface remembers of contact. The canvas now tells state by material (a well open, a card folded); grain would tell history: a body held, folded and stepped often wears a finer grain, so the document memory shows on the surface it was made on, carried by the surface and not placed on top of it.`
+  integration = `Three seams. The tuning line and texture's =tuning segment are one grammar: an address segment that sets the field. A still exports its texture message with its line, so texture.website can render the same reading as a swatch. And the cognitive-texture thresholds (0, .25, .65, .9) map to the material's states: resting, stirring, close, precipitated.`
+}[reg=facet]
+
+^"holds"{
+  owners = `Each proposal stays its owner's: the canvas's plan (@plan, @tools) for memory, editing, reflex, stills and physics; the workbench for renaming, ONF and bytecode (asks, never edits here); texture.website's host for its grain; @substrate for the simplex weights. This cache measures and proposes.`
+  opens = `No sigil, no data-spw-* family, no package, no workbench edit, no deploy.`
+}[reg=facet]
+
+#>wonder_physics_written_in_spw
+?["Should the canvas read its tunables from a line of Spw, as lore.land reads its game's rules?"]{
+  #:depth #!pragmatics ~#lens(choice)
+  ~#with: @feel @plan
+  ~#hypothesis: "A tuning line (=tune{spacing[0.4], nested[softer], law[plane], quick[280ms]}) held in the address and kept in a rules file can be read aloud, compared, screenshotted and shared, where constants in code cannot."
+  ~#expect: "The feel card writes four parameters into the address; the thresholds and laws built this week are constants in body-gestures.ts, particles.ts and local-forces.ts; lore.land reads .spw/runtime/pie-rules.spw at runtime with a ?rules= override."
+  ~#probe(read)
+  !probe{ "Read the feel card's address writes in physics-params.ts and the =tune block in lore.land's .spw/runtime/pie-rules.spw. Say which tunables a tuning line would carry first." }
+  $%[tune.address_line, tune.rules_file, tune.both]
+  ~<"../../workers/factshift-center/app/src/js/ui/physics-params.ts">
+}
+
+#>wonder_memory_as_document
+?["Should the canvas's five memories become one dated stream of entries a visit writes?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#with: @talk @kept
+  ~#hypothesis: "One stream in the lab notebook's form (>>[time] verb — line) is the visit's precipitate: story mode replays it, export makes it a .spw file, and the thread, kept lines and frames read from it."
+  ~#expect: "The thread keeps 40, kept lines 8, the hash 16, kept frames without a bound; story mode plays hard-coded events and records nothing."
+  ~#probe(read)
+  !probe{ "Read the LIMIT in spw-talk.ts, the keys in spw-kept.ts and the events in mode-story.ts. Say which store could be the first reader of a stream." }
+  $%[memory.stream, memory.five_stores, memory.stream_with_tiers]
+  ~<"../../workers/factshift-center/app/src/js/modes/spw/spw-talk.ts">
+}
+
+#>wonder_reflex_as_impulse
+?["Should each reflex button be an operator's impulse on the thing under the hand, named in words?"]{
+  #:depth #!experiential ~#lens(choice)
+  ~#with: @reflex @tools
+  ~#hypothesis: "! scatter, ^ lift, . settle now, ~ loosen, * weigh, = pin, % level, @ look from here; a tap one step, a hold growing; the receipt the expression mutated in place; the lore row deterministic, seeded by the line."
+  ~#expect: "Reflex sets charge, size and motion by arithmetic labels and closes on each press; bane shrinks at random; TOOLS.md asks for words over arithmetic."
+  ~#probe(read)
+  !probe{ "Read the cards built in mode-reflex.ts around :641 and the lore row around :490. Say which buttons already have an operator and which are arithmetic only." }
+  $%[reflex.impulses, reflex.arithmetic, reflex.both_by_disclosure]
+  ~<"../../workers/factshift-center/app/src/js/modes/reflex/mode-reflex.ts">
+}
+
+#>wonder_texture_as_grain
+?["Is texture what a surface remembers of contact, so a body handled often wears a grain?"]{
+  #:depth #!stylistic ~#lens(comparison)
+  ~#with: @hub @handle
+  ~#hypothesis: "texture.website's theory (Grain = Surface memory) and the canvas's material (well, card) meet if the material also shows history; a still could then export its texture message with its line."
+  ~#expect: "The canvas tells open from folded by material and keeps no history on the surface; texture.website's lab serves swatches and materials by data-spw-texture-slice; spw-as-handle proposes one message across hosts."
+  ~#probe(read)
+  !probe{ "Read the grain and response theory lines in workers/site-hub-next/src/index.js and the message format in spw-as-handle-2026-09.spw. Say what a canvas still would send." }
+  $%[texture.grain_from_history, texture.swatch_from_physics, texture.message_only]
+  ~<"../../workers/site-hub-next/src/index.js">
+}
