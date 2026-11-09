@@ -18,7 +18,7 @@ import { renderConstructs } from "./constructs.js";
 import { pivotState, renderPivot } from "./pivot.js";
 import { WALK_CSS, walkSection } from "./walk.js";
 import { PINNED_READER, PINNED_RELEASE, SHELL_VERSION, newestPublished, releaseNotice } from "./shell-pin.js";
-import { ROBOTS, sitemap } from "./crawl.js";
+import { ROBOTS, sitemap, withRobots } from "./crawl.js";
 import { APP_INSTALL_CSS, MANIFEST_PATH, appInstallSection, isAppIconPath, questAppInstall, serveAppIcon, serveManifest } from "./quest-manifest.js";
 import { BASE_SECURITY, escapeHtml, jsonResponse, layout, wantsJson } from "../../lib/shell.js";
 import { PEER_BRACES, PEER_SIGILS } from "../../lib/peer-kit.js";
@@ -434,10 +434,10 @@ ${displayScript()}`,
   });
 }
 
-function renderBuild(slots, script = assemble(slots), filename = `${slots.word || "line"}.spw`) {
+function renderBuild(slots, script = assemble(slots), filename = `${slots.word || "line"}.spw`, focus = {}) {
   return layout({
     title: "spw.quest — take one line apart",
-    description: "A whole file you can edit, what a tool reads from it, and its first line taken apart: change one part and the rest holds.",
+    description: "Start from a song, a picture brief or a scene: edit the file, see what a tool reads from it, and take any line apart, each slot offering the words the rest of the file already uses.",
     canonical: "https://spw.quest/build",
     head: QUEST_HEAD,
     script: `(${readSpw64.toString()})();\n(${toolActions.toString()})();`,
@@ -451,10 +451,10 @@ function renderBuild(slots, script = assemble(slots), filename = `${slots.word |
     body: `${masthead("/build")}
 <section class="opening" aria-labelledby="build-title">
   <h1 id="build-title">Take one line apart</h1>
-  <p class="lede">Edit the file and the reading follows; its first line is taken apart below. <a href="/forms/">Forms, side by side</a> shows what each change does.</p>
+  <p class="lede">Start from a song, a picture or a scene. Edit the file and the reading follows; any line can be taken apart, and each slot offers the words the rest of the file already uses. <a href="/forms/">Forms, side by side</a> shows what each change does.</p>
 </section>
 <section id="build" aria-labelledby="build-title">
-  ${buildSurface(slots, script, filename)}
+  ${buildSurface(slots, script, filename, focus)}
 </section>
 <p class="also"><a href="/">Back to the guide</a> · <a href="/learn">Learn it a mark at a time</a> · <a href="/specimens">Specimens</a> · <a href="/constructs">Constructs</a> · <a href="/pivot">Pivot a line</a> · <a href="/install">Install the workbench</a></p>
 ${liveFileScript()}
@@ -560,7 +560,7 @@ async function handleTool(request, url) {
   if (url.pathname === "/script.spw" || form.get("tool") === "download") return scriptFile(script, filename);
   const formatted = form.get("tool") === "format" ? formatScript(script) : script;
   const slots = focusSlots(formatted) || { ...BUILD_DEFAULTS };
-  return page(renderBuild(slots, formatted, filename), { cache: "no-store" }, LIVE_CSP);
+  return page(renderBuild(slots, formatted, filename, { base: slots }), { cache: "no-store" }, LIVE_CSP);
 }
 
 async function handleQuest(request, url) {
@@ -598,7 +598,7 @@ async function handleQuest(request, url) {
     response = page(renderLearn(), {}, LIVE_CSP);
   } else if (url.pathname === "/build") {
     const asked = buildFrom(url.searchParams);
-    response = page(renderBuild(asked.slots, asked.script, asked.filename), { cache: "public, max-age=300" }, LIVE_CSP);
+    response = page(renderBuild(asked.slots, asked.script, asked.filename, asked), { cache: "public, max-age=300" }, LIVE_CSP);
   } else if (url.pathname === "/script.spw") {
     const asked = buildFrom(url.searchParams);
     response = scriptFile(asked.script, asked.filename);
@@ -670,7 +670,7 @@ async function serveShellScript(request, url, env) {
 }
 
 /** The static shelf pages the worker serves from assets, with the page's own headers. */
-const SHELF_PATHS = new Set(["/shelf/", "/shelf/plans/", "/forms/"]);
+const SHELF_PATHS = new Set(["/shelf/", "/shelf/plans/", "/forms/", "/arcs/", "/bench/"]);
 async function serveShelf(request, url, env) {
   const asset = await env?.ASSETS?.fetch(new Request(new URL(url.pathname, url.origin)));
   if (!asset || !asset.ok) return new Response("Not found", { status: 404, headers: BASE_SECURITY });
@@ -681,21 +681,27 @@ async function serveShelf(request, url, env) {
 
 export default {
   async fetch(request, env) {
-    const url = new URL(request.url);
-    if (url.hostname === "www.spw.quest") {
-      return Response.redirect(`https://spw.quest${url.pathname}${url.search}`, 302);
-    }
-    // Dated parser releases come from static assets (src/parser-releases.js); /parser.js is not one of them.
-    if (isParserPath(url.pathname)) return handleParser(request, url, env);
-    // The site's faces and script modules, carried by scripts/build-peer-kit.mjs into assets/fonts/ and assets/peer/.
-    if (isPeerAssetPath(url.pathname)) return servePeerAsset(request, url, env);
-    // The app icons, committed under assets/icons/ (src/quest-manifest.js).
-    if (isAppIconPath(url.pathname)) return serveAppIcon(request, url, env);
-    // The shell (assets/sw.js), which keeps the guide for reading offline.
-    if (url.pathname === "/sw.js") return serveShellScript(request, url, env);
-    // The shelf's landing and indexes are static pages, written by carry-shelf.mjs into assets/shelf/.
-    if (url.pathname === "/shelf" || url.pathname === "/shelf/plans" || url.pathname === "/forms") return Response.redirect(`${url.origin}${url.pathname}/`, 301);
-    if (SHELF_PATHS.has(url.pathname)) return serveShelf(request, url, env);
-    return handleQuest(request, url);
+    return withRobots(await route(request, env), new URL(request.url));
   },
 };
+
+/** Every address the worker answers; the default export adds each page's robots value (src/crawl.js). */
+async function route(request, env) {
+  const url = new URL(request.url);
+  if (url.hostname === "www.spw.quest") {
+    return Response.redirect(`https://spw.quest${url.pathname}${url.search}`, 302);
+  }
+  // Dated parser releases come from static assets (src/parser-releases.js); /parser.js is not one of them.
+  if (isParserPath(url.pathname)) return handleParser(request, url, env);
+  // The site's faces and script modules, carried by scripts/build-peer-kit.mjs into assets/fonts/ and assets/peer/.
+  if (isPeerAssetPath(url.pathname)) return servePeerAsset(request, url, env);
+  // The app icons, committed under assets/icons/ (src/quest-manifest.js).
+  if (isAppIconPath(url.pathname)) return serveAppIcon(request, url, env);
+  // The shell (assets/sw.js), which keeps the guide for reading offline.
+  if (url.pathname === "/sw.js") return serveShellScript(request, url, env);
+  // The shelf's landing and indexes are static pages, written by carry-shelf.mjs into assets/shelf/.
+  // So are /bench/ (src/bench.js) and /arcs/, written by carry-arcs.mjs from the site's history.
+  if (["/shelf", "/shelf/plans", "/forms", "/arcs", "/bench"].includes(url.pathname)) return Response.redirect(`${url.origin}${url.pathname}/`, 301);
+  if (SHELF_PATHS.has(url.pathname)) return serveShelf(request, url, env);
+  return handleQuest(request, url);
+}

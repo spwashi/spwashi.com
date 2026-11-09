@@ -10,6 +10,7 @@ import { PAPER_CSS } from "./paper.js";
 import { PAGE_CSS, QUEST_HEAD, masthead } from "./page.js";
 import { SPECIMENS, SPECIMENS_CSS, breakable, planGroups } from "./specimens.js";
 import { FORMS_CSS, formsBody } from "./forms.js";
+import { BENCH_CSS, benchBody } from "./bench.js";
 import { escapeHtml, layout } from "../../lib/shell.js";
 
 const count = (source) => SPECIMENS.filter((specimen) => specimen.source === source).length;
@@ -39,7 +40,7 @@ export const SHELF_CSS = `.shelf-page { display: grid; gap: 1.8rem; }
     .op-group > h2 { margin: 0 0 .5rem; font: 600 1rem/1.3 var(--mono); }
     .op-group > h2 .count { color: var(--muted); font-weight: 500; }`;
 
-function shelfPage({ title, description, canonical, body, here = "/shelf/", main = "shelf-page", css = "" }) {
+export function shelfPage({ title, description, canonical, body, here = "/shelf/", main = "shelf-page", css = "" }) {
   return layout({
     title,
     description,
@@ -140,8 +141,22 @@ export function renderForms() {
 }
 
 /** Every static shelf page: its path under assets/ and its html. */
+/** The bench: lines that press each feature of Spw against the canvas (src/bench.js). */
+export function renderBench() {
+  return shelfPage({
+    title: "spw.quest — the bench",
+    description: "Lines that press each feature of Spw against the canvas at factshift.center: rooms, joins, nesting, marks, regard and the edges a reader must hold.",
+    canonical: "https://spw.quest/bench/",
+    here: "/bench/",
+    main: "bench-page",
+    css: BENCH_CSS,
+    body: benchBody(),
+  });
+}
+
 export function shelfPages() {
   return [
+    ["bench/index.html", renderBench()],
     ["shelf/index.html", renderShelfLanding()],
     ["shelf/plans/index.html", renderShelfPlans()],
     ["forms/index.html", renderForms()],

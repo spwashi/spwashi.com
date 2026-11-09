@@ -15,6 +15,6 @@
   "assets": {
     "directory": "./assets",
     "binding": "ASSETS",
-    "run_worker_first": ["/*", "!/fonts/*", "!/peer/*", "!/icons/*", "!/sw.js", "!/robots.txt", "!/sitemap.xml", "!/parser/index.json", "!/parser/*/*.js", "!/parser/*/*.map", "!/parser/*/manifest.json"]
+    "run_worker_first": ["/*", "!/fonts/*", "!/peer/*", "!/icons/*", "!/sw.js", "!/robots.txt", "!/sitemap.xml", "!/parser/index.json", "!/parser/*/*.js", "!/parser/*/*.map", "!/parser/*/manifest.json", "!/arcs/index.json"]
   }
 }

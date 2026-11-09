@@ -5,7 +5,7 @@ import { readFileSync, readdirSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import worker from '../src/index.js';
-import { ROBOTS, STABLE_ROOMS, STATIC_PATTERNS, sitemap } from '../src/crawl.js';
+import { ROBOTS, STABLE_ROOMS, STATIC_PATTERNS, robotsFor, sitemap } from '../src/crawl.js';
 import { SHELL_VERSION } from '../src/shell-pin.js';
 import { PEER_FONTS, PEER_SCRIPTS } from '../../lib/peer-kit.js';
 
@@ -85,4 +85,38 @@ test('robots welcomes crawlers to every page and names the sitemap; the sitemap 
   assert.match(ROBOTS, /^Allow: \/$/m);
   assert.deepEqual(ROBOTS.match(/^Disallow: .+$/gm), ['Disallow: /script.spw', 'Disallow: /canvas']);
   for (const room of STABLE_ROOMS) assert.equal((await get(room)).status, 200, room);
+});
+
+test('stable rooms and dated releases ask to be indexed; query variants are followed, not indexed; a missing page is neither', async () => {
+  const robots = async (p) => {
+    const response = await get(p);
+    const html = await response.text();
+    const meta = html.match(/<meta name="robots" content="([^"]*)">/)?.[1];
+    return { status: response.status, type: response.headers.get('Content-Type'), header: response.headers.get('X-Robots-Tag'), meta, metas: html.match(/<meta name="robots"/g)?.length ?? 0 };
+  };
+  for (const room of STABLE_ROOMS) {
+    const seen = await robots(room);
+    // /init and /llms.txt are text, which a crawler indexes without being asked.
+    if (!seen.type.startsWith('text/html')) {
+      assert.equal(seen.header, null, room);
+      continue;
+    }
+    assert.equal(seen.header, 'index, follow', room);
+    assert.equal(seen.meta, 'index, follow', room);
+    assert.equal(seen.metas, 1, `${room} has one robots line`);
+  }
+  for (const variant of ['/?s=hearth', '/build?subject=garden', '/specimens?q=%5Bearned%5D', '/pivot?a=subject']) {
+    const seen = await robots(variant);
+    assert.equal(seen.status, 200, variant);
+    assert.equal(seen.header, 'noindex, follow', variant);
+    assert.equal(seen.meta, 'noindex, follow', variant);
+  }
+  const missing = await robots('/no-such-room');
+  assert.equal(missing.status, 404);
+  assert.equal(robotsFor(new URL('https://spw.quest/no-such-room'), 404), 'noindex');
+  assert.equal(robotsFor(new URL('https://spw.quest/parser/2026.10.13/')), 'index, follow');
+  assert.equal(robotsFor(new URL('https://spw.quest/parser/2026.10.13/reader.min.js')), 'noindex, follow');
+  // Files that are not pages keep their own headers.
+  assert.equal((await get('/robots.txt')).headers.get('X-Robots-Tag'), null);
+  assert.equal((await get('/manifest.webmanifest')).headers.get('X-Robots-Tag'), null);
 });

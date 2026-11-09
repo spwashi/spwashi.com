@@ -54,3 +54,9 @@
   Access-Control-Allow-Origin: *
   Cross-Origin-Resource-Policy: cross-origin
   X-Content-Type-Options: nosniff
+
+/arcs/index.json
+  Content-Type: application/json; charset=UTF-8
+  Cache-Control: public, max-age=3600
+  X-Content-Type-Options: nosniff
+  Access-Control-Allow-Origin: *
