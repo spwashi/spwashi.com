@@ -72,16 +72,16 @@ The joints work names where a meaning can change: the mark, the word, each room 
 |---|---|---|---|
 | mark | a lifecycle step, or another operator | operator keys; the word's ring (mark) | a tap on the node offers its lifecycle's next step |
 | walls | a room's content to another pair | a node's ring (turn) | the room's own brace, tapped (spw.quest's pivot does this) |
-| seam | `.` `,` `;` `~>` in a body | typing only | a tap between two parts turns the seam through the four |
+| seam | `.` `,` `;` `~>` in a body | typing only on the canvas; the Spw window's joint row reaches it (stale "typing only", 2026-11-08) | a tap between two parts turns the seam through the four |
 | order | a part earlier or later | ring; drag along the row | as is |
 | nest | a part made a nested line, or unmade | typing only | `^` lifts parts into a nested line; `.` lowers it |
-| between | two lines joined by `~` `&` `^` `@`, or split | typing only | a line from the thread dropped on the word, with the four marks offered |
+| between | two lines joined by `~` `&` `^` `@`, or split | typing only on the canvas; the Spw window's joint row reaches it (stale "typing only", 2026-11-08) | a line from the thread dropped on the word, with the four marks offered |
 | position | a mark moved front ↔ inside | typing only | an operator key dropped on a part marks that part (`garden{?seed}`); on the word, the front |
 
 **Rules that keep change legible:**
 1. **One change per act,** with every other byte kept (`editLine`), as spw.quest's pivot does.
 2. **Primed, then actualized.** The changed line shows before it is taken. A second press takes it, with a `*` receipt.
-3. **The way back is the line's history.** ← on the hash or the frame is the line before, and every change goes through it. View changes (pins, colors, framing) are not in it, and say so.
+3. **The way back is the line's history.** ← on the hash or the frame is the line before, and every change goes through it. (Direction, 2026-11-08: an arrow names where you go, so ← is the line before; a swipe moves the content with the finger, so a finger moving right brings the line before, as `hash-gestures.ts` does. [factshift-control-alignment](../../../.spw/caches/factshift-control-alignment-2026-11.spw#grammar).) View changes (pins, colors, framing) are not in it, and say so.
 4. **Continuity.** A changed node moves from where it was to where it goes, and a new one comes from where the act began: the dropped point, the key, the parent. Layout already keeps a node's place by role and name (`projectLineAnatomy`). New parts need a starting point.
 5. **A change says what it did,** in the operator's own word ("answered", "taken", "lifted", "let go").
 

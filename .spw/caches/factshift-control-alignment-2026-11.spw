@@ -1,0 +1,146 @@
+# factshift.center control alignment (2026-11) — prime: one grammar for every grain, read against the canvas's 26 controls
+#
+# The creator, 2026-11-08: "continue exploring the fractal design theory and
+# considering the alignment / context-sensitivity of Spw controls and tools on
+# factshift.center". This continues @fractal (the altitude ladder, continuous
+# camera against discrete crossings) with an inventory of the canvas's controls
+# taken the same day from the committed app (f06caf5), three of its claims
+# checked by hand, and the uncommitted app work (tie modes, camera zoom, line
+# stepping; 22 files) read through the same lens. App paths are cited as text:
+# the checkout is ignored by this repository. Nothing here decides a sensation
+# or opens a patch; every slice waits on the uncommitted work and the creator.
+
+#>factshift_control_alignment_2026_11
+#:cache #!factshift #!controls #!gesture #!fractal #!alignment
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+expression = controls[fractal]{grain.verb.place}<one_grammar>
+
+summary = #[
+  `The canvas already has good context-sensitivity: a pinch resizes what is under the fingers else the selection else everything, a spread only enters what can be entered, rows show only while they can act. What it lacks is alignment: the same hand means different things at different grains.`,
+  `Proposed: a grain ladder (file, frame, line, slot, part, mark), and one gesture grammar every grain answers the same way. The context chooses the object, never the verb.`,
+  `Operators supply the verbs' physics: #> enters, ^ lifts, . grounds, ~ defers, ! commits, ? probes. The live spread and close are already #> and ^; the Spw window's spread and pinch are the main break.`,
+  `One "where" for three apps: the place written as nested braces, each level a handle, the same form as spwashi.com's crumb rail and <spw-expression>.`,
+  `Most fixes touch files the uncommitted app work holds, so they queue behind it; the plan's wording fixes do not.`,
+][reg=set]
+
+contents = #[
+  ~"./factshift-control-alignment-2026-11.spw#inventory",
+  ~"./factshift-control-alignment-2026-11.spw#grammar",
+  ~"./factshift-control-alignment-2026-11.spw#operators",
+  ~"./factshift-control-alignment-2026-11.spw#place",
+  ~"./factshift-control-alignment-2026-11.spw#breaks",
+  ~"./factshift-control-alignment-2026-11.spw#works",
+  ~"./factshift-control-alignment-2026-11.spw#wip",
+  ~"./factshift-control-alignment-2026-11.spw#slices",
+][reg=set]
+
+^"inventory"{
+  count = `26 controls: 22 live at f06caf5, 4 proposed in TOOLS.md and OPERATORS.md. Surfaces: stage, node, handle and lens, hash, page margin, Spw window, held-expressions box, panels.`
+  grains_reached = `camera: lens pinch (k 0.35 to 3, simulation/pinch.ts:29-30); frame: spread 1.35 enters, close 0.65 leaves (pinch.ts:39-47); line: hash swipes and the held box (ui/hash-gestures.ts:103-126, ui/held-expressions.ts); node: tap, double-tap, the verb ring, drag; slot: the canvas ring adds one, region corners resize one; part and mark: only in the Spw window's joint row (modes/spw/line-joints.ts, operator-field.ts); file: only the thread map button`
+  checked = `by hand on 2026-11-08: the hash's swipe right names the earlier line (hash-gestures.ts:107); the Spw window's mark cycle offers ? ~ ! * (line-joints.ts:17) while operator-tap.ts:13 says ? ! ~ ^ only play their motion; the joint row's spread primes "walls" and its pinch "drop" (operator-field.ts:190-197)`
+}[reg=facet]
+
+^"grammar"{
+  grains = `file, frame, line, slot, part, mark: @fractal's ladder with the mark added as the finest grain, since a mark has a position (front of a word, inside a part) and a lifecycle of its own (@operators)`
+  one_grammar = `Every grain answers the same hand. Tap primes the thing under the hand and a second tap acts. A swipe sideways steps to a sibling at the same grain. A swipe up or down reaches more or less, the grammar gestures.ts:7 already states. Hold opens that grain's one ring. Spread goes in one grain and close comes out one. Drag carries a thing to a sibling or into a slot.`
+  context = `The context chooses the object, never the verb: the object is the innermost thing under the hand at the current grain, found by walking out from the touch to that grain, the rule the site's hold-gather already follows. What changes with context is which choices a ring or row offers, and whether an act can land; a verb that cannot act stays hidden, as [...] rows already do.`
+  direction = `A swipe moves the content with the finger, so a finger moving right brings the earlier sibling, as the hash does; an arrow key names where you go, so ← is earlier. The plan's "← is the line before" (TOOLS.md:240, OPERATORS.md:84) and the hash's code then agree; the fix is one sentence in the plan, not a change of hand.`
+  continuous = `Inside a grain an amount moves continuously: camera k, charge, size, stepping by a factor. Between grains a place moves by one, with hysteresis (1.35 to enter, 0.65 to leave) and one receipt where the place changed, which leaves when the next act starts (@fractal#differentials, wonder_receipt_duration).`
+}[reg=facet]
+
+^"operators"{
+  physics = `The verbs already have operators, read from their physics (public/js/kernel/operator-detection.js): #> named resonance handle, enter or address; ^ upward emission, lift one grain or into the line; . bound handle, return to ground; ~ superposition defer, hold a thing pending; ! kinetic injection, commit; ? measurement onset, probe or peek; * materialization, weight or size; = bias field, pin; @ perspective push, the camera or a color as a perspective; & entanglement, gather a subject's ties; % scalar observation, measure or compare; $ addressing potential, keep what it is made of.`
+  live_alignment = `The stage's spread and close are #> and ^ already (pinch.ts:45-47), and the gather tie in the uncommitted work writes into the line with ^. The ring's direction roles hold across node kinds (line-verbs.ts:1-10).`
+  collision = `In the uncommitted operator taps, ~ lets a node loose, which is . ground's act; read by physics, ~ holds a thing pending (the tie's prime), and loosening a pin returns it to ground. This is the one place the uncommitted work and the physics disagree.`
+}[reg=facet]
+
+^"place"{
+  proposal = `One "where", written as nested braces closed in reverse: file{frame{line{slot}}}, each level a handle; a tap on a level goes to that grain, and the innermost brace is the current one. On factshift.center it lives where the held-expressions box and the focal square already say the place.`
+  kin = `The same form as spwashi.com's crumb rail (#>home › *folio_stack{ … }) and <spw-expression>'s slots (page[lens]{section}), so a person who learns where they are in one app reads it in the others (@navigation, @renovation#rail).`
+  words = `One verb, enter, for going in a grain, whatever the hand (a spread, or a second tap on a lone node); frame for an entered page only; keep for a kept snapshot (#); focus for the camera framing a region; margin for the page's edge band.`
+}[reg=facet]
+
+^"breaks"{
+  spread_twice = `the joint row's spread and pinch mean walls and drop (operator-field.ts:190-197), while the stage's mean enter and leave; under one grammar a spread on a room goes into that room and a close comes out, and walls and drop move to the room's ring`
+  hold_five = `hold is the verb ring on a node, the canvas ring on the stage and on a region, a grip on the handle and lens, a prime on a joint key, and nothing on the hash or a tile; under one grammar each grain has its one ring, and a region gets its own (today a hold on a region gives the stage's ring, events.ts:122-129)`
+  holds_promised = `hash-gestures.ts:3 and tool-tiles.ts:3 say a hold shows the card; gestures.ts:194-196 only grips: say what a hold does, or give it the card`
+  reach = `↑ and ↓ copy a link and keep a frame on the hash (hash-gestures.ts:109-124), step kept frames and refresh on the margin (frame-refresh.ts:132-133); neither is "more or less"`
+  enter_five = `enter has five vocabularies (a second tap, a spread, a joint hold then press, the card's enter, a map line tap that holds rather than opens); frame has four senses`
+  region_tap = `a region tap frames the camera (file-map.ts:191) and regions cover most of the stage, so "tap empty stage clears selection" (PLAN.md:137) rarely has empty stage to land on`
+  marks = `the joint row offers ? ~ ! * while at HEAD those are the marks whose tap only plays (line-joints.ts:17, operator-tap.ts:13); the uncommitted taps give them acts, which closes most of this`
+  deselect = `a marked node acts on the tap that deselects it too (circle.ts:317-319; TOOLS.md:232 says on the tap that selects)`
+  link_twice = `the palette's link opens a hyperlink, the ring's link ties the selection`
+  repeats = `size has five controls (pinch, ring, * tap, [...] rows, palette); rename three; pin two; keep a frame two; Shift+wheel turns charge, not the camera`
+  gaps = `no pinch reaches a part; a seam is reachable only in the Spw window; a mark's position and nesting are typing only (OPERATORS.md:77,79); the ring's mark is on the word only (line-verbs.ts:72-75); the file grain has only the map button; OPERATORS.md:75,78 are stale, since the joint row reaches seam and between`
+}[reg=facet]
+
+^"works"{
+  kept = #[
+    `a pinch names what it resized: under the fingers, else the selection, else everything (pinch.ts:164-168)`,
+    `a spread only enters what can be entered; a close only works inside a frame (pinch.ts:45-47)`,
+    `the ring keeps each direction's role across node kinds (line-verbs.ts:1-10) and relabels link as "link N here" (circle.ts:157-159)`,
+    `the lens's → is named by the open tool's primed act, ↓ by the selection (focal-point.ts:397-414)`,
+    `a drag lights the empty slots it could fill (circle.ts:450-454); [...] rows show only while they can act (keystrokes.ts:187-200)`,
+    `a swipe toward nothing shows the compass (gestures.ts:190-193)`,
+  ][reg=set]
+  lesson = `Each of these keeps the verb and lets the context pick the object or hide the verb. That is the rule to extend, not a new one.`
+}[reg=facet]
+
+^"wip"{
+  tie_modes = `now, prime and gather: prime holds a tie as ~ until ! writes it; gather collects on a host until ! links or ^ writes into the line (nodes/link-confirm.ts). Aligned with the physics: ~ defers, ! commits, ^ lifts.`
+  color_physics = `a drawn tie pulls when both ends share a color and pushes when they do not (relations.ts): color as @ perspective with a consequence, which TOOLS.md's rule for regions asks of every offer`
+  zoom = `a pinch within 48 px of the focal square or the lens zooms the camera, with a ×k readout (pinch.ts): continuous inside a grain, as the grammar asks; the readout is the receipt`
+  stepping = `a 72 px side band steps lines with a preview, and the held box steps on ← → (frame-refresh.ts, held-expressions.ts): siblings at the line grain, with the preview naming where a step lands before it is taken`
+  window = `the Spw window's face is a formatted print, and the textarea opens only when a line is chosen (mode-spw.ts): reading before editing`
+  question = `only ~ loosening a node (operator-tap.ts) reads against the physics; the rest of the uncommitted work moves toward this grammar`
+}[reg=facet]
+
+^"slices"{
+  now = #[
+    `plan wording, no app change: the direction sentence in TOOLS.md and OPERATORS.md; OPERATORS.md:75,78 marked stale; the five senses of frame named once`,
+  ][reg=set]
+  after_wip = #[
+    `A1 the joint row's spread and close enter and leave a room; walls and drop move to the room's ring (operator-field.ts, line-joints.ts; neither is in the uncommitted list)`,
+    `A2 a region's own ring, and a tap on a region that is not the selection's frames it only on a second tap (events.ts, file-map.ts)`,
+    `A3 the holds the comments promise, given or unsaid (tool-tiles.ts now; hash-gestures.ts after the uncommitted work)`,
+    `A4 the place as nested braces in the held-expressions box (held-expressions.ts, uncommitted)`,
+    `A5 ~ defers and . grounds, once the creator says which act loosening belongs to (operator-tap.ts, uncommitted)`,
+  ][reg=set]
+  gate = `the uncommitted app work lands first; each slice is built in a clean worktree, carried as a snapshot, and judged on a phone`
+}[reg=facet]
+
+#>wonder_factshift_grain_grammar
+?["Should every grain answer the same hand, so the context chooses only the object?"]{
+  #:depth #!experiential ~#lens(alignment)
+  ~#with: @fractal @tools @operators
+  ~#hypothesis: "A spread enters and a close leaves at every grain, including a room in the Spw window; each grain has one ring; a sideways swipe is always a sibling."
+  ~#expect: "Today the stage's spread enters a frame and the joint row's spread primes walls; holding a region gives the stage's ring."
+  ~#probe(read)
+  !probe{ "Read operator-field.ts:190-197 and pinch.ts:39-47 at the committed app, then events.ts:122-129. Say whether one hand means one thing across the stage and the Spw window." }
+  $%[grammar.one_hand, grammar.by_surface, grammar.by_grain]
+  ~<"./factshift-control-alignment-2026-11.spw"> ~<"./stage-fractal-differentials-2026-11.spw"> ~<"../../.agents/plans/factshift-center/TOOLS.md">
+}
+
+#>wonder_factshift_loosen
+?["Which operator loosens a pinned node: ~ (defer) or . (ground)?"]{
+  #:depth #!semantic ~#lens(choice)
+  ~#with: @operators
+  ~#hypothesis: "~ holds a thing pending, as the tie's prime does; loosening a pin returns the node to ground, which is ."
+  ~#expect: "The uncommitted operator taps make ~ loosen; . already returns to the local default in the guide's reading."
+  ~#probe(read)
+  !probe{ "Read the uncommitted operator-tap.ts and link-confirm.ts. Say whether ~ is used both to defer a tie and to loosen a pin." }
+  $%[loosen.ground, loosen.defer, loosen.both]
+  ~<"./factshift-control-alignment-2026-11.spw"> ~<"../../.agents/plans/factshift-center/OPERATORS.md">
+}
+
+@fractal: ~"./stage-fractal-differentials-2026-11.spw"
+@tools: ~"../../.agents/plans/factshift-center/TOOLS.md"
+@operators: ~"../../.agents/plans/factshift-center/OPERATORS.md"
+@plan: ~"../../.agents/plans/factshift-center/PLAN.md"
+@surface: ~"../surfaces/factshift-center.spw"
+@physics: ~"../../public/js/kernel/operator-detection.js"
+@navigation: ~"./spw-navigation-ergonomics-2026-11.spw"
+@renovation: ~"./home-renovation-2026-11.spw"
