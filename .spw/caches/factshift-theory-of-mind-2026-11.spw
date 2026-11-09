@@ -1,0 +1,126 @@
+# What each reader expects the canvas to do (2026-11-09) — cache
+#
+# The creator asked for a theory-of-mind refinement of the caches, plans and
+# theory: context-sensitive verbs, gestures and menus; Spw stress-tested
+# across modalities; swipes across constructs for breadth and vertically
+# between strata; pinches on nodes, containers, titles and the focal square;
+# fractal summaries of nested structure; screenshot value and prompt
+# density; outlines, mutations and summaries; and behavior that differs on
+# opposite edges. A hand is legible when what it does matches what its
+# reader predicted from the thing's form, so each claim here names a reader,
+# the prediction, what the canvas does, and the gap.
+# Built in the same pass: the fractal summary (line-summary.ts), wired into
+# the title and the folded literal, and the hand on a body, quick and slow
+# (body-gestures.ts). The rest is proposal, held for the creator's hand.
+
+#>factshift_theory_of_mind_2026_11
+#:cache #!factshift #!quest #!gesture #!theory
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@plan: ~"../../.agents/plans/factshift-center/PLAN.md"
+@wonders: ~"../../.agents/plans/factshift-center/index.spw"
+@controls: ~"./factshift-control-alignment-2026-11.spw"
+@stage: ~"./stage-fractal-differentials-2026-11.spw"
+@braces: ~"./brace-literal-local-law-2026-11.spw"
+@syntax_theory: ~"./syntax-runtime-theory-enhancements-2026-11.spw"
+@summary: ~"../../workers/factshift-center/app/src/js/modes/spw/line-summary.ts"
+@reading: ~"../../workers/factshift-center/app/src/js/modes/spw/reading.ts"
+@manifest: ~"../../public/js/generated/spw-expressions.js"
+@examples: ~"../../workers/spw-quest/src/examples.js"
+@body: ~"../../workers/factshift-center/app/src/js/modes/spw/body-gestures.ts"
+@pinch: ~"../../workers/factshift-center/app/src/js/simulation/pinch.ts"
+@edges: ~"../../workers/factshift-center/app/src/js/ui/frame-refresh.ts"
+
+operation = "cache"
+fixity = "experimental"
+expression = ?hand[predicted]{breadth, depth, strata}<reader>
+
+summary = #[
+  `A gesture is read before it is made. Each reader predicts from a thing's form, from platform habit, from Spw's own grammar, and from what this canvas taught them. Where the canvas and the prediction part, the reader loses the thread.`,
+  `Three axes for one hand: across moves between siblings (breadth), a pinch moves between depths (enter, leave, fold, open), and a vertical swipe moves between strata of reading the same thing (as written, by its parts, as a molecule, at work).`,
+  `Opposite edges should be inverses: back and forward, open and close, accumulate and discharge, enter and leave. A reader who learns one edge has learned the other.`,
+  `Slow changes an amount; quick changes a state. A slow drag or pinch moves or resizes, and is kept; a quick flick or pinch is an act, its transient taken back, as a thrown node goes home where a placed one stays.`,
+  `A summary is an outline chosen by width. Authored Spw is almost all one level deep, so on the site a summary folds by breadth; play nests, and there a summary folds by depth.`,
+][reg=set]
+
+^"readers"{
+  phone = `The person on a phone: one thumb, the title box showing about a dozen characters, gestures learned by trying. Predicts from physical metaphor (a closing hand closes) and platform habit (from the left edge is back).`
+  desk = `The person at a desk: a trackpad, a keyboard, Shift+F10 for the card. Predicts from editors (Alt+Shift+→ grows a selection, Tab completes) and from menus that name their next state.`
+  image_model = `An image model reading a screenshot (Midjourney, Grok Imagine): sees glyphs and material, not behavior. Misreads an empty pair of braces as a malformed permutation (the creator, 2026-11-09). Values a still where shape and words survive the crop.`
+  agent = `The next agent reading this file: predicts from file:line claims and probes, not from narrative. Needs to know what is live, what is proposed, and whose call each open choice is.`
+  performer = `The creator recording the canvas as a performance: a gesture should read on video as cause, then effect, with a receipt near where it happened.`
+  learner = `A spw.quest or lore.land reader learning operators by play: predicts from the guide's sentences ("Open a question you can close again.") and from one change at a time.`
+}[reg=facet]
+
+^"stress"{
+  measured = `2026-11-09, every real line through the canvas's slot reader and the fractal summary (@summary). Site route expressions (@manifest): 992 lines, all read whole, median 34 characters, 5 words, 7.9 characters a word; 99% one level deep. The .spw files' expression lines: 294, median 49 characters, all one level deep. spw.quest's example statements (@examples): 58, of which 25 read whole as lines; of those 52% have no body, 44% one level, 4% two.`
+  title_box = `At a 24-character box, 86% of route expressions do not fit. Summarized, 71% keep their word, mode, scene and concept with the body folded (folio[release]{…}(stack)<card>), and 10% still need a cut. The canvas's title had shown its head and " …" past 32 characters (h1.ts headOf), which keeps the word but not which slots follow; it now shows the summary at 32 (garden[care]{…}(atlas)<person>). The held-lines box still cuts by CSS ellipsis, mid-word, and node titles at 18 characters a line.`
+  flat_authoring = `Authors write flat labels; nesting happens in play (the canvas, quest scripts, commit episodes). So depth-first folding helps where people play, and breadth-first folding (keep the first parts and an ellipsis) helps where people author.`
+  juxtaposition = `Statements written side by side in a body with only spaces between, as a commit's #[episode]{ ~[scene]{…} ![change]{…} *[verify]{…} } writes them, are one part and an unread tail to the slot reader; with commas they are three parts. The commit grammar is the deepest Spw anyone writes daily, and the canvas's reader does not yet join it. The summary reads the tail as siblings; joining by juxtaposition is a workbench ask, never an edit here.`
+  dot = `A lone leading dot in a body is read as the body's join, not a mark (kitchen{.bread{…}}), recorded in @braces#dot.`
+}[reg=facet]
+
+^"summaries"{
+  built = `line-summary.ts: depthOf(line), summaryAt(line, depth) folds every body at that depth and deeper to {…}, and summarize(line, budget) says as much as fits: the deepest bodies fold first, then the outermost body keeps its first parts in its own separator, then it folds whole, then the text is cut. Every other byte stays as written.`
+  fractal = `Each depth's summary has the shape of the whole, one level shorter: kitchen{…}, kitchen{bread{…}, soup{…}}, kitchen{bread{flour, water{…}}, soup{beans, salt}}. Folding a body on the canvas is the same move for one body; "every body as written" is the deepest summary at once.`
+  outline = `A summary at depth 1 is an outline: #[episode]{ ~[scene]{ … } ![change]{ … } *[verify]{ … } } is a commit's episode with its contents put away and every head kept. An outline is a summary chosen by depth; a summary is an outline chosen by width.`
+  mutation = `A mutation changes one slot and keeps the rest: spw.quest's pivot, the canvas's compare ([draft] → [low]). Outline, summary and mutation are three readings over one line: which depth, how much width, which slot. All three keep every byte they do not touch, so each can be pasted back as a line.`
+}[reg=facet]
+
+^"hands"{
+  inventory = `2026-11-09, read from the code, by target: a pinch meant four things (a node's size or entering it; the selection or every node, or going up a page, from a region or the stage; the title's scale; the camera from the handle or the lens), so a pinch on a body resized every node; there is no touch pan; tap frames a region, clears the stage, selects a node; hold opens the verb ring on a node and the canvas ring on a region or the stage.`
+  axes = `Three axes for one hand, so a reader who learns one gesture can predict the next: across (← →) moves between siblings, breadth; a pinch moves between depths, enter, leave, fold, open; up and down move between strata of reading the same thing, as written, by its parts, as particles, and later at work. @controls proposed ↑ ↓ as "more or less"; strata is that, read as how much of the reading is shown.`
+  quick_slow = `Speed tells an amount from a state, the rule nodes already follow (a slow release stays, a throw goes home). On a body: a slow drag moves it and a slow drag from a side edge moves that side; a slow pinch resizes it; each is kept like any container a hand changed. A quick flick (under 280 ms, at least 36 screen pixels) or a quick pinch (past 0.8 or 1.25) is an act, and the transient move or resize is taken back first. Distances are screen pixels at any camera zoom, since the reach is the hand's.`
+  body = `Built (@body): a quick close folds a body to its literal and a quick spread draws its parts; ↑ ↓ step its strata; a flick in from the left edge, the opener's side, frames the sibling body before it, and from the right edge, the closer's side, the one after; ← → inside step its parts, the content moving with the finger; ↖ selects its parts and ↘ opens it as written to edit, the verb ring's corners; ↗ frames its parent or the whole stage, ↙ its first nested body. A pinch on a body is the body's only when no node is under or near the fingers. Each act says what it did beside the handle.`
+  edges = `The screen's side bands step concept history, and the direction decides, not the edge it began at (@edges). A body's edges step its siblings, and the edge decides: in from the opener's side is back, in from the closer's side is forward. The same pair of edges means back and forward at two scales. On a phone the outermost body's left edge lies inside the screen's 72px band, so there the screen takes the touch; nested bodies and the desktop are clear.`
+  opposites = `Inverses already: the screen's ← →, title edge drags, camera zoom, the ring's grow and shrink, earlier and later. Not yet: the lens's ← (tool menu) and → (primed act); ↑ (new node) and ↓ (menu); the margin's ↓ refresh and ↑ kept frames; the thread's ‹, which steps to a newer row while the edge cue's ‹ means older. Each pair a reader meets should undo itself or name why it does not.`
+  context = `The context chooses the object, never the verb (@controls#grammar): on a body the flick's sector names the verb and the body under it is the object. Menus follow the same rule from the other side: the reading family names how the line is drawn, the forces family what moves it, and a row is listed only while it can act.`
+}[reg=facet]
+
+^"screens"{
+  value = `A still is worth what survives the crop. The title box is the first thing a screenshot reader sees; a summary keeps the line's shape where a character cut ends it mid-word. Material (a well, a card) survives where glyphs are misread; a label can come off (@reading, container labels).`
+  density = `Prompt density: authored lines carry about five words in 34 characters. Each fold trades characters for structure: {…} costs three characters and keeps the place of everything it holds. A prompt for an image model can take the summary at the width it allows and keep the line's shape.`
+}[reg=facet]
+
+^"holds"{
+  owners = `Gestures stay @controls' grammar and the creator's hand; the reading family and particles are @braces'; spw.quest's examples are its plan's. This cache names predictions and gaps, and builds only the summary.`
+  opens = `No sigil, no data-spw-* family, no package, no workbench edit.`
+}[reg=facet]
+
+#>wonder_strata_on_vertical
+?["Should up and down step a thing's strata everywhere, or only on a body?"]{
+  #:depth #!experiential ~#lens(choice)
+  ~#with: @body @controls
+  ~#hypothesis: "Up and down mean more or less of the reading: on a body as written, by its parts, as particles; on a node its card, its runtime; on the stage the file map. One rule would teach itself."
+  ~#expect: "Only a body takes ↑ ↓ as strata; the lens's ↑ makes a node and its ↓ opens the menu, and the margin's ↓ refreshes."
+  ~#probe(read)
+  !probe{ "Read the sectors in body-gestures.ts and the lens swipes in focal-point.ts. Say which vertical acts would move to strata and which would have to stay." }
+  $%[strata.everywhere, strata.body_only, strata.by_grain]
+  ~<"../../workers/factshift-center/app/src/js/modes/spw/body-gestures.ts">
+}
+
+#>wonder_quick_threshold
+?["Are 280 ms and 36 pixels where a person's flick ends and their drag begins?"]{
+  #:depth #!experiential ~#lens(comparison)
+  ~#with: @body
+  ~#hypothesis: "A flick is short and fast; a placement is slower. The node throw already draws that line by release speed, so the two thresholds should agree with it or say why not."
+  ~#expect: "body-gestures.ts sets QUICK_MS 280 and FLICK_PX 36; the node throw is THROW_SPEED 8 in circle.ts, a speed rather than a time."
+  ~#probe(read)
+  !probe{ "Read QUICK_MS and FLICK_PX in body-gestures.ts and THROW_SPEED in circle.ts. Say whether one speed could decide both." }
+  $%[threshold.time, threshold.speed, threshold.both]
+  ~<"../../workers/factshift-center/app/src/js/modes/spw/body-gestures.ts">
+}
+
+#>wonder_edges_undo
+?["Should every pair of opposite edges and directions a reader meets undo each other?"]{
+  #:depth #!semantic ~#lens(projection)
+  ~#with: @edges @controls
+  ~#hypothesis: "A reader who learns one edge predicts the other is its inverse; where a pair is not, the reader loses the thread."
+  ~#expect: "Screen ← →, a body's edges, the ring's grow and shrink, and camera zoom are inverses; the lens's ← and →, ↑ and ↓, and the margin's ↓ and ↑ are not."
+  ~#probe(read)
+  !probe{ "Read the lens swipes in focal-point.ts and the margin in frame-refresh.ts. Name each pair that does not undo itself." }
+  $%[edges.all_inverse, edges.named_exceptions]
+  ~<"../../workers/factshift-center/app/src/js/ui/frame-refresh.ts">
+}
