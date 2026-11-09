@@ -10,6 +10,7 @@
  */
 import { ensureSpwSourceStyles } from '../../kernel/deferred-styles.js';
 import { parserHref } from '../../kernel/parser-link.js';
+import { canvasHref, questBuildHref, questPivotHref } from '../../kernel/ecosystem-links.js';
 import { highlightSpw } from '../../semantic/spw-highlight.js';
 
 let readerLoad = null;
@@ -32,6 +33,21 @@ function actionsFor(code, source) {
     edit.textContent = 'Edit';
     edit.title = 'Open this Spw in the parser, highlighted as you edit it';
     bar.append(edit);
+  }
+  // The same block carries to the canvas, and to spw.quest: a line to its
+  // pivot, where one slot turns at a time; a script to its build page.
+  const name = nameOf(source).replace(/\.spw$/, '');
+  const carries = [
+    ['Canvas', canvasHref(source, { name }), "Open this Spw on factshift.center's canvas"],
+    ['Quest', questPivotHref(source) || questBuildHref(source, { name }), 'Turn this Spw one slot at a time on spw.quest'],
+  ];
+  for (const [label, carryHref, title] of carries) {
+    if (!carryHref) continue;
+    const link = document.createElement('a');
+    link.href = carryHref;
+    link.textContent = label;
+    link.title = title;
+    bar.append(link);
   }
   const copy = document.createElement('button');
   copy.type = 'button';

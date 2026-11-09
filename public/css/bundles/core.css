@@ -40789,6 +40789,14 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
     filter var(--handle-duration-base) var(--handle-settle-ease);
 }
 
+/* A gathered line in the footer's cauldron is a row on a character grid, not a
+   chip: its span carries data-spw-operator, so the gateway above would make it
+   an inline-flex and center it (components/cauldron.css lays the row out). */
+.site-footer__cauldron .cauldron-ingredient {
+  display: grid;
+  justify-content: stretch;
+}
+
 :where(
   .spw-chip,
   .syntax-token,

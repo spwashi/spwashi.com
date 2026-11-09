@@ -16,6 +16,17 @@ No new storage, ingredient filtering, or attribute families.
 Evidence and probe: .spw/caches/cauldron-lens-composition-2026-09.spw.
 Validate: lens tests, syntax, check:local, pocket home-opening visual receipt.
 
+## Typography and resonance (2026-11-09)
+
+The creator: the cauldron should be more resonant with factshift.center's interface and with spw.quest, and its fonts and typography should make better use of monospace. Built in `components/cauldron.css`, `_partials/site-footer.html`, `cauldron/live-expression.js` and `composition.js`:
+- **Mono is literal.** Lines, counts and labels stay in JetBrains Mono with contextual alternates off (`~>` stays two marks), a slashed zero and tabular figures; the sentences (status, carry line, the lens fieldset) take the site's sans ([read-aloud-typography](../../../.spw/caches/read-aloud-typography-2026-11.spw)).
+- **Braces by role.** The live line's `{` and `}` are spans in the grammar's objective and subjective brace colors, as spw.quest paints a line and the crumb does.
+- **A character grid.** Each gathered line is a row: its index in 4ch, its mark in 2ch, its expression from one column on every row, its tape and remove at the end, its provenance beneath; under 40rem the tape drops a row so the expression keeps the width. The expression shows its fractal summary at 32 characters. Its span carries `data-spw-operator`, so the handle gateway (`handles/operators/primitive.css`) made it a centered inline chip; a scoped exception there keeps it a row.
+- **Rows like the canvas's menu.** Each group of verbs is a row with its `[category]` on the left edge (`[tend]`, `[keep]`, `[sweep]`), as factshift.center's `[...]` menu sets its rows.
+- **The line travels.** "Carry this line to factshift.center · spw.quest" under the live line follows it through the site's address book (`?spw=` on the canvas, `/pivot?line=` on the quest). Spw code blocks across the site (`modules/tools/spw-code.js`) carry Canvas and Quest beside Edit and Copy.
+- **Verified** in stills at 390 and 1366px before and after, and headless on `/topics/software/spw/` (the carry links follow the live line, the block's links resolve, no exceptions); `check:built` loads 146 of 146. The `console` behaviors bundle sits at 47.8 of 48 KiB, so the next addition there trims first.
+- **The creator's eye:** the sans and mono split, the row style, and the carry line's words.
+
 ## Next slices — 2026-11-06
 
 1. **The after receipt.** Ungated sensor: `npm run sense -- doctor`, then `npm run visual:checks -- --ids=home-cauldron-open` (`scripts/lib/viewport-still-recipes.mjs:507`), compared with the 2026-11-05 still in `wip.spw`. Verify: the dialog's next step and Close still read at pocket, with 0 errors.
