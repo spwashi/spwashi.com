@@ -18,6 +18,7 @@ import { renderConstructs } from "./constructs.js";
 import { pivotState, renderPivot } from "./pivot.js";
 import { WALK_CSS, walkSection } from "./walk.js";
 import { PINNED_READER, PINNED_RELEASE, SHELL_VERSION, newestPublished, releaseNotice } from "./shell-pin.js";
+import { ROBOTS, sitemap } from "./crawl.js";
 import { APP_INSTALL_CSS, MANIFEST_PATH, appInstallSection, isAppIconPath, questAppInstall, serveAppIcon, serveManifest } from "./quest-manifest.js";
 import { BASE_SECURITY, escapeHtml, jsonResponse, layout, wantsJson } from "../../lib/shell.js";
 import { PEER_BRACES, PEER_SIGILS } from "../../lib/peer-kit.js";
@@ -623,7 +624,9 @@ async function handleQuest(request, url) {
   } else if (url.pathname === "/.well-known/autonomous-feedback.json") {
     response = jsonResponse(FEEDBACK_CONFIG, "public, max-age=300");
   } else if (url.pathname === "/robots.txt") {
-    response = new Response("User-agent: *\nAllow: /\n", { headers: { ...BASE_SECURITY, "Content-Type": "text/plain" } });
+    response = new Response(ROBOTS, { headers: { ...BASE_SECURITY, "Content-Type": "text/plain; charset=UTF-8" } });
+  } else if (url.pathname === "/sitemap.xml") {
+    response = new Response(sitemap(), { headers: { ...BASE_SECURITY, "Content-Type": "application/xml; charset=UTF-8", "Cache-Control": "public, max-age=3600" } });
   } else if (url.pathname === "/health" || url.pathname === "/ready") {
     response = jsonResponse({ ok: true, worker: "spw-quest", surface: "quest", version: VERSION }, "no-store");
   } else {

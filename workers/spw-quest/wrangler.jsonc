@@ -9,10 +9,12 @@
     "enabled": true
   },
   // Dated parser releases under assets/parser/, carried by carry-parser-release.mjs.
-  // The worker runs first on every path and serves them with its own headers.
+  // The worker runs first on every path except the static files below, which the
+  // assets layer serves with assets/_headers and which do not count as worker
+  // requests (src/crawl.js STATIC_PATTERNS; test/static.test.mjs keeps them equal).
   "assets": {
     "directory": "./assets",
     "binding": "ASSETS",
-    "run_worker_first": true
+    "run_worker_first": ["/*", "!/fonts/*", "!/peer/*", "!/icons/*", "!/sw.js", "!/robots.txt", "!/sitemap.xml", "!/parser/index.json", "!/parser/*/*.js", "!/parser/*/*.map", "!/parser/*/manifest.json"]
   }
 }
