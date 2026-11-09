@@ -1,0 +1,97 @@
+# Components and illustrations against the runtime (2026-11-09) — cache
+#
+# The creator asked to update components and illustrations across
+# spwashi.com to be better aligned with recent runtime affordances, Spw
+# native description, thematic resonance, relevance, tone, readability,
+# motion into other interactions, and embedded settings tuning. A survey
+# read the site against its runtime, with audit:copy:accessor and
+# audit:module-selectors (both green). One mechanical slice was built; the
+# rest is ranked here, with what needs the creator's eye marked.
+
+#>site_alignment_2026_11
+#:cache #!components #!illustrations #!settings #!motion #!chrome
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@summary: ~"../../public/js/kernel/spw-summary.js"
+@summary_test: ~"../../scripts/tests/spw-summary.test.mjs"
+@crumb: ~"../../public/js/runtime/attention/rail-crumb.js"
+@crumb_test: ~"../../scripts/tests/rail-crumb-travel.test.mjs"
+@expression: ~"../../public/js/interface/spw-expression.js"
+@composition: ~"../../public/js/interface/composition.js"
+@reader: ~"../../public/js/semantic/spw-workbench-reader.js"
+@settings_profiles: ~"../../public/js/kernel/site-settings-profiles.js"
+@settings_engine: ~"../../public/js/kernel/site-settings-engine.js"
+@spine: ~"../../public/js/runtime/expression/reactive-spine.js"
+@tokens: ~"../../public/css/tokens/core.css"
+@navigation: ~"./spw-navigation-ergonomics-2026-11.spw"
+@wonders: ~"./language-surface-wonders-2026-11.spw"
+@mind: ~"./factshift-theory-of-mind-2026-11.spw"
+@chrome_plan: ~"../../.agents/plans/chrome-navigation-wonder/PLAN.md"
+
+operation = "cache"
+fixity = "experimental"
+expression = ^site[aligned]{components, illustrations, settings, motion}<runtime>
+
+summary = #[
+  `The runtime has grown affordances the components do not use yet: <spw-expression> turns a place's slots like dials but runs only behind ?spw-rail=crumb at a phone's width; the site reader exports readLine and writeLine and nothing on the site imports them; wonder memory and hold-to-gather reach a few dozen routes.`,
+  `Built: a fractal summary with no reader (@summary), used where the cauldron's chips cut a Spw line by characters and could drop its closer, and the crumb now travels with the reader instead of falling back to the rail on the next page.`,
+  `Next, by the survey's rank: settings shown as one expression to turn, where they are pills today; one spelling and one operator per setting; travel by rail or crumb landing with the same arrival as a link; <spw-expression> built on the reader; illustrations that say the state they show; chrome motion on the motion tokens.`,
+][reg=set]
+
+^"built"{
+  summary = `public/js/kernel/spw-summary.js: summarizeSpw(line, budget) folds the deepest { } bodies first, then keeps the outer body's first parts in its own separator, then folds it, and only then cuts, at a word where one is near, closing every pair and quote it left open after the ellipsis; spwDepth(line). One linear scan of the pairs, quoted text skipped, no reader and no recursion, so it costs a crumb what it costs a chip. Its tests sweep every width from 4 to 80 over nested bodies, an episode, a quoted brace, an unclosed line and plain prose, and find nothing left open (@summary_test).`
+  used = `The cauldron's planted trail, last gesture, trace and carried value (@composition) cut a line at 49, 39, 45 and 33 characters with a bare ellipsis, which could end garden{…} before its closer; each is now the line's summary at the same width. The crumb's heading stays clipped by CSS, since its braces sit outside the clipped label and already close.`
+  crumb = `A page turned from the crumb's page slot followed an href built from the path alone, so the next page opened as the rail; while the query asks for the crumb, each page choice now carries ?spw-rail=crumb (@crumb, @crumb_test).`
+}[reg=facet]
+
+^"next"{
+  settings = `Settings are shown as key and value pills ("mode: auto") and runtime cards, never as Spw; about 84 settings, 76 with word labels (@settings_profiles), written to <html> by setDatasetEntries (@settings_engine). Home's #climate-tuning carries about nineteen data-spw-* attributes and no expression. Proposal: one <spw-expression> there whose slots are a few settings, each slot's choices the settings' word labels, each turn saved through the settings engine and shown as the line mutating in place; the orphaned brace-pivots module had the same idea and no markup. Which settings become slots, and under which operator, is the creator's call.`
+  spellings = `One setting, many spellings: wonder memory reads ~focused, ~quiet, [ Focused, [nearby], [carry] and ~immersive across 13 routes, under two operators. The chips' leading [ is the mode sigil the operator-chip convention prints before a word (data-spw-operator="mode"), not an unclosed bracket; what wants fixing is one operator and one word set per setting, from the engine's own value labels, in one shared partial.`
+  arrival = `Rail travel scrolls a section into view without setting :target, and the arrival animation runs only on :target (ornament.css), so travel by rail or crumb lands without the arrival a link gets; a turn of <spw-expression> stays a DOM event the bus never hears, so the reactive spine and the learnability ledger miss it. Proposal: land rail travel the way a link lands, with the arrival already approved, and emit a turn on the bus. The landing mark must use an existing attribute family, not a new one.`
+  reader = `<spw-expression> writes its own line and calls ( ) a scene where the reader calls it the scope (@expression, @reader); built on readLine and writeLine, it would read an authored line from the HTML, the scripts-off form @navigation's ladder asks for.`
+  illustrations = `Of 67 inline SVGs on 50 routes, only the reactive spine is driven by state, and it never writes that state as words (@spine). The open probe in @wonders asks for one host that paints one computed value. Proposals: the spine captions its last pulse in Spw (~probe ← brace:charged); the slot anatomy on /design/slots/ labels its slots in brace form instead of selectors; the lab's numeric sliders become word ladders, as legible instruments ask. The look is the creator's.`
+  motion = `The motion tokens (@tokens) are bypassed by the chrome: header, floating chrome and the cauldron set their own milliseconds, and the handle's pop-up and resettle its own curve. cards.css multiplies a "140ms ease" string inside calc(), which is invalid, so those cards have never moved; fixing it turns on motion nobody has seen, so it waits for the creator's eye, as the scroll chrome's resettle did.`
+}[reg=facet]
+
+^"holds"{
+  owners = `The crumb and its travel are @chrome_plan's; settings stay the settings engine's; illustrations and motion are the creator's look; this cache ranks and builds only the summary and the crumb's flag.`
+  opens = `No sigil, no data-spw-* family, no package, no workbench edit.`
+}[reg=facet]
+
+#>wonder_settings_as_expression
+?["Should Home's tuning be one expression whose slots are settings, turned in place?"]{
+  #:depth #!experiential ~#lens(choice)
+  ~#with: @expression @settings_engine
+  ~#hypothesis: "A setting turned as a slot shows its state as the line mutating, which teaches the operators while it tunes, where a pill shows a key and a value."
+  ~#expect: "Home's #climate-tuning carries data-spw-* attributes and chips; <spw-expression> runs only in the crumb; brace-pivots has no markup on any page."
+  ~#probe(read)
+  !probe{ "Read #climate-tuning in index.html and the slot model in spw-expression.js. Say which three settings would read best as slots." }
+  $%[settings.expression, settings.pills, settings.both]
+  ~<"../../public/js/interface/spw-expression.js">
+}
+
+#>wonder_travel_arrives
+?["Should travel by rail or crumb land with the arrival a link gets?"]{
+  #:depth #!experiential ~#lens(comparison)
+  ~#with: @crumb @mind
+  ~#hypothesis: "A reader predicts that arriving is arriving, however they travelled; the same arrival on every way in is the motion carried into another interaction."
+  ~#expect: "The arrival runs on :target; rail travel scrolls without setting it; expression turns do not reach the bus."
+  ~#probe(read)
+  !probe{ "Read the arrival rules in ornament.css and the rail's travel in section-handle.js. Say which existing attribute could mark a landing." }
+  $%[arrival.everywhere, arrival.links_only]
+  ~<"../../public/js/runtime/attention/rail-crumb.js">
+}
+
+#>wonder_illustration_says_state
+?["Should an illustration that moves with the runtime also say, in Spw, what it is showing?"]{
+  #:depth #!stylistic ~#lens(projection)
+  ~#with: @spine @wonders
+  ~#hypothesis: "A pulse a reader cannot name is ornament; a caption that writes the pulse as a line (~probe ← brace:charged) makes the picture an instrument."
+  ~#expect: "The reactive spine pulses operator nodes for 700 ms and writes nothing; the slot anatomy labels slots with selectors."
+  ~#probe(read)
+  !probe{ "Read the pulse handler in reactive-spine.js. Say what one caption would carry." }
+  $%[illustration.captioned, illustration.silent]
+  ~<"../../public/js/runtime/expression/reactive-spine.js">
+}

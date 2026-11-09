@@ -8,6 +8,10 @@
 
 **Related:** [floating-chrome-stack](../floating-chrome-stack/FIX.md) · [spellcraft-authoring](../spellcraft-authoring/PLAN.md) (breadcrumb spell) · [mobile-chrome-alignment](../archive/mobile-chrome-alignment/PLAN.md) (archived). **Absorbed 2026-10-10:** [navigation-header-disclosure](../archive/navigation-header-disclosure/PLAN.md) · [page-region-discoverability](../archive/page-region-discoverability/PLAN.md).
 
+## The crumb travels, and long Spw folds (2026-11-09)
+
+[site-alignment](../../../.spw/caches/site-alignment-2026-11.spw). A page turned from the crumb's page slot now carries `?spw-rail=crumb`, so the next page opens as a crumb, not the rail (`rail-crumb.js`, `scripts/tests/rail-crumb-travel.test.mjs`). `public/js/kernel/spw-summary.js` says a long Spw line at a width without dropping a closer, folding the deepest bodies first; the cauldron's trail, gesture, trace and carried value use it. Next, ranked there: travel by rail or crumb landing with a link's arrival, expression turns heard on the bus, `<spw-expression>` on the reader, settings as one expression to turn, and chrome motion on the tokens.
+
 ## Next slices — 2026-11-06
 
 1. **The `&` layer names the component.** `componentOf` in `public/js/runtime/attention/section-handle.js` reads `h2, h3, h4, figcaption, .frame-card-title` and falls back to `data-spw-kind`. Home's four lens panels (`index.html#home-lens-reading` and its siblings) have no heading, so the rail reads `lens`, though each lede already carries an expression: `home[reading]{craft}<entry>`, `home[systems]{parser}<inspect>`, `home[play]{table}<session>`, `home[studio]{commission}<offer>`. There are two routes. One is short authored headings, which is the creator's copy. The other lets `componentOf` read the nearest expression's `subject[mode]` before the kind, so the rail shows Spw the page already wrote and teaches the slot it is reading. Gate: a pocket demo for the creator's look (`index.spw#wonder_chrome_navigation_wonder_component_name`). Verify: a headless pocket probe of `/` with a 12s settle and the rail on `&` reads the chosen name on `#home-lens-reading`.

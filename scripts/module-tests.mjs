@@ -9,6 +9,8 @@ export const MODULE_TEST_IMPORTS = Object.freeze([
 
 export const MODULE_TEST_FILES = Object.freeze([
   'scripts/tests/field-composition.test.mjs',
+  'scripts/tests/spw-summary.test.mjs',
+  'scripts/tests/rail-crumb-travel.test.mjs',
   'scripts/tests/care-journal.test.mjs',
   'scripts/tests/annotation-refresh.test.mjs',
   'scripts/tests/change-only-writes.test.mjs',

@@ -30,6 +30,7 @@
 import { requestLensMode } from '/public/js/runtime/page/lens-modes.js';
 import { composeLensPrompt } from '/public/js/semantic/cauldron/lens.js';
 import { bus } from '/public/js/kernel/bus.js';
+import { summarizeSpw } from '/public/js/kernel/spw-summary.js';
 import { ensureThemeResonanceStyles } from '/public/js/kernel/deferred-styles.js';
 import {
   composeOpBundle,
@@ -221,7 +222,8 @@ function handleCauldronUIActions(e) {
         .filter(Boolean)
         .join('·');
       const trailSig = gestureSummary ? `garden{${expr}}·${gestureSummary}` : `garden{${expr}}`;
-      recordPlantedTrail(trailSig.length > 52 ? trailSig.slice(0, 49) + '…' : trailSig);
+      // Said as its fractal summary, so a long mix folds inside garden{…} and never drops the closer.
+      recordPlantedTrail(summarizeSpw(trailSig, 52));
 
       bus.emit('spell:capture', {
         expression: `cast[garden]{${expr}}`,
@@ -1073,11 +1075,11 @@ function renderCauldronMirrors(ingredients, phase) {
     const traceEl = mirror.querySelector('[data-spw-mirror-label="trace"]');
     const trailEl = mirror.querySelector('[data-spw-mirror-label="trail"]');
     if (lastGestureEl) {
-      lastGestureEl.textContent = lastGesture.length > 42 ? lastGesture.slice(0, 39) + '…' : lastGesture;
+      lastGestureEl.textContent = summarizeSpw(lastGesture, 42);
       lastGestureEl.dataset.spwGestureProvenance = lastGesture;
     }
     if (traceEl) {
-      traceEl.textContent = compactTrace ? `trace: ${compactTrace.length > 48 ? compactTrace.slice(0, 45) + '…' : compactTrace}` : '';
+      traceEl.textContent = compactTrace ? `trace: ${summarizeSpw(compactTrace, 48)}` : '';
       if (compactTrace) traceEl.dataset.spwGestureTrace = compactTrace;
     }
     if (trailEl) {
@@ -1101,7 +1103,7 @@ function updateGardenCarriedDisplay(lastGesture, trace) {
   if (surface !== 'home') return;
 
   const display = lastGesture && lastGesture !== '—' ? lastGesture : (trace || '—');
-  carriedValue.textContent = display.length > 36 ? display.slice(0, 33) + '…' : display;
+  carriedValue.textContent = summarizeSpw(display, 36);
   carriedValue.dataset.spwLastCarried = display;
 }
 
