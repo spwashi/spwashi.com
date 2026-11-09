@@ -378,3 +378,16 @@ invariants: #[
   !probe{ "rg -n \"case '[@!]'\" workers/factshift-center/app/src/ts/simulation/operator-physics.ts workers/factshift-center/app/src/ts/simulation/local-forces.ts" }
   $%[law.body_only, law.parts_scoped_too, fold.tilde_arrives_folded, fold.all_open]
 }
+
+#>wonder_factshift_molecule
+?["Should the canvas read a line as a molecule by default, and which other slots earn a material?"]{
+  #:depth #!experiential ~#lens(choice)
+  ~#with: @plan
+  ~#taste: "The creator, 2026-11-09: { and } as separate particles in a charge relationship; garden[care] as some sort of molecule; { } body replaced with stronger visual or material cues and no braces; label positioning and typography."
+  ~#hypothesis: "The well and its tab serve every reading, so the body's material stays on. Particles teach what braces are and suit a study of one line; regions and frames suit a file. A scene might wrap the word and body as a sleeve without naming its part of speech."
+  ~#tension: "A default decides what a first visit learns, and the particle reading adds nodes a phone must fit. The scene's part of speech is the creator's to leave open."
+  ~#expect: "The particle reading is off until chosen, kept in this browser; only the body has a material; ( ) is a dashed box titled ( )."
+  ~#probe(read)
+  !probe{ "rg -n \"particles: read|isBody\" workers/factshift-center/app/src/js/modes/spw/reading.ts workers/factshift-center/app/src/js/simulation/rects/region-rects.ts" }
+  $%[molecule.default, molecule.chosen, scene.sleeve, scene.box]
+}
