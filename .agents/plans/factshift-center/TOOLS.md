@@ -331,7 +331,7 @@ The menu's families already carry charge words: forces bonk, nodes boon and bane
 - which tool takes which operator, which is the creator's call.
 
 **The `[...]` menu and the tool panels, as they are** (an inventory, 2026-11-07).
-- **The menu's rows are one array** (`init/hotkeys/keystrokes.ts:184`), shown by family: selection (fourteen verbs, shown only with a selection), more, fewer, save, store, transport, interface, forces, menu.
+- **The menu's rows are one array** (`init/hotkeys/keystrokes.ts:184`), shown by family: selection (fourteen verbs, shown only with a selection), more, fewer, save, store, transport, interface, reading (how the canvas draws the line, 2026-11-09: container labels, braces as particles, every body as written), forces, menu.
   - A row remembers its last verb, a tap acts, and a swipe or `›` turns it.
   - No arrow moves between rows, so going down a row takes two Tabs.
   - Escape never closes the menu.

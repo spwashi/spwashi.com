@@ -7,6 +7,9 @@
 # read together. The canvas side was built in the app as dbb44f8
 # (factshift-center PLAN.md, Body laws and brace folds). This file keeps what
 # the building taught and what the three surfaces say to each other.
+# Grown the same day: braces as charged particles, a mode as an atom bonded
+# to its word, the body as a well that needs no braces in its name, fractal
+# tuning, and a reading family in the menu.
 # It opens no route, no sigil, no token, and no data-spw-* family.
 
 #>brace_literal_local_law_2026_11
@@ -28,6 +31,12 @@
 @folds: ~"../../workers/factshift-center/app/src/js/modes/spw/brace-folds.ts"
 @operator_physics: ~"../../workers/factshift-center/app/src/ts/simulation/operator-physics.ts"
 @guide: ~"../../workers/spw-quest/src/guide.js"
+@particles: ~"../../workers/factshift-center/app/src/ts/simulation/particles.ts"
+@reading: ~"../../workers/factshift-center/app/src/js/modes/spw/reading.ts"
+@regions: ~"../../workers/factshift-center/app/src/js/simulation/rects/region-rects.ts"
+@stage: ~"./stage-fractal-differentials-2026-11.spw"
+@controls: ~"./factshift-control-alignment-2026-11.spw"
+@joins: ~"../language/dot-join.spw"
 @file_reader: ~"../../workers/spw-quest/src/file-reader.js"
 
 operation = "cache"
@@ -41,6 +50,8 @@ summary = #[
   `The operator before a brace is that body's law, and only its own members feel it. The packet is the operator table's; what makes a law unique is where it is read, not a list the line writes for itself.`,
   `A question's body does not fold. It closes when the line answers it. Hiding it is not answering it.`,
   `spw.quest turns text toward shape, factshift.center turns shape toward motion and now back toward text, and lore.land turns text toward place. They are three readings of one line: as written, as parts, as a place with a law.`,
+  `Read as particles, an opener carries the charge of what it holds and its closer gives it back, so a pair closes on its contents and a balanced line is neutral. A word is an atom, its slots are bonds, and a line's shape with its words taken out is its structural formula.`,
+  `Meaning carried by material survives a reader who misreads glyphs. A body is a well, and a folded one a card, whether or not its label is shown.`,
 ][reg=set]
 
 ^"three_directions"{
@@ -83,6 +94,42 @@ summary = #[
   comparison = `spw.quest compares two readings by the slot where they part, and the canvas's Spw window shows a held line against a kept one as operations ([draft] → [low]). A law is a third comparison. Two siblings with one slot changed, the mark before the brace, move differently, so the difference can be watched.`
 }[reg=facet]
 
+^"particles"{
+  charge = `An opener accumulates and its closer discharges (lore.land's README), so { carries +q and } carries −q, q being how many things sit between them (@particles). A closed pair is neutral, and a line is neutral exactly when every opener has its closer.`
+  plane = `The canvas is a plane. In a plane a point charge's field falls off as 1/d (Gauss's law in two dimensions), and the canvas's own charge, d3's many-body force, already acts that way. Pulled as 1/d², a pair lost to its contents' push past about 31px, an unstable balance, and stayed at its body's edges. Pulled as 1/d, it closes.`
+  heat = `Heat is gone in about two seconds (@physics), and a brace pulled from its body's edge covered about 15px before it cooled. So the layout seats each pair just outside its contents, level with their dots, and the charge keeps it closed as parts move. Where a pair starts is the layout's job; staying closed is the physics'.`
+  local = `Only a pair's own two particles feel each other. From outside, a neutral pair is a dipole, whose field falls off faster than a charge's. So treating it as felt only inside is close to the physics, not a convenience.`
+  ion = `A line still owing closers carries net charge. The prompt already paints a ghost of the closers an open line owes, and Tab writes them (app 8de4f19). On the canvas that line would be an ion; the reader keeps it as unread text, so none is drawn yet.`
+}[reg=facet]
+
+^"molecule"{
+  atoms = `A word is an atom, and each slot bonds to it its own way. [ ] is the tightest: a mode bonded right to the word, garden—[care], drawn as an atom as wide as its word inside its own pair. { } holds parts around the word between a charged pair, like a shell. ( ) applies to the word with its body as a whole; the creator left its part of speech open, so it stays an association with the whole and is not named. < > refers to the whole reading, like a field around the molecule.`
+  bonds = `Inside a body the join is the bond (@joins): a dot is one name, a tight chain; a comma is company, a ring; a semicolon is an order; ~> is a path. The canvas already draws them as chain, ring, row and rising path (app 5ba8ad0).`
+  formula = `The map already counts molecules. A line's shape is the line with its words taken out, so ~soup[warm]{beans, salt}<food> reads ~·[]{,}<> (app d83863b), which is a structural formula. "like ~soup" selects the lines with one formula. The same words in two shapes are isomers. Molecular combinatorics is counting shapes, and the map's likeness already does it.`
+  between = `Joined expressions (a@b~c) are molecules bonded by a mark, already drawn with the bond relation. A molecule's net charge is its unclosed pairs.`
+}[reg=facet]
+
+^"material"{
+  asked = `The creator: an image model "often interprets the empty braces as a malformed permutation", so the body label should be toggleable; and "{ } body should be replaced with something that doesn't use braces and uses stronger visual or material cues"; "label positioning and typography should be considered".`
+  built = `A body is a well: sunk below the ground, with a solid rim and a darker lip inside, and its name (body, the creator's word over definition) on a tab across the rim in the corner boxes' material (@regions). Folded, the well closes into a raised card, and the tab says "as written". Open and closed are told by material, so the words can come off for a still and the container still reads.`
+  typography = `No line strikes a word. A pair's dotted line passes behind its members' dots; where it would close on words set on the line (a mode's word, a folded literal), it is drawn without one. A mode's word sits inside its atom so its bond meets the atom's edge, and a folded literal sits on a faint bubble level with its braces, so the pair reads across as { seed, water }.`
+  why = `Meaning carried by material survives a reader who misreads glyphs: an image model, a phone at arm's length, a cropped screenshot. Braces stay where they are text (the prompt, the literal, the particles). The container says it holds by being a well.`
+}[reg=facet]
+
+^"fractal_tuning"{
+  built = `"nested forces" (alike, softer, faint) gives a body inside a body 1, 0.6 or 0.3 of its parent's strength, for its law and its pair (@reading, depthShare). Measured: a nested ^ body lifts 7.6px alike and 2.3px faint, three tenths of it.`
+  ladder = `@stage's ladder runs file, frame, line, slot, part, mark. Tuning is the share each step down keeps. Alike, every grain feels the same law at its own scale; softer, the outer grains lead and the inner follow; faint, the inner grains are nearly still. The pinch that steps the ladder is still a proposal.`
+}[reg=facet]
+
+^"menus"{
+  family = `The [...] menu has a reading family: how the canvas draws the line, never what it says. Its rows are container labels, braces as particles, and every body as written. Forces keeps what moves: body forces, nested forces. A row names where a press leads, as every row does.`
+  grammar = `The menu now divides by what a press changes: the line (the Spw window, the ring), the reading (this family), or the physics (forces). @controls asks for one grammar that every grain answers; the families are that grammar's objects.`
+}[reg=facet]
+
+^"dot"{
+  found = `kitchen{.bread{flour, water}} reads its leading . as the body's join, so its only part is bread{…}, with no mark. kitchen{.bread{…}, ~soup{…}} keeps .bread's mark, because there the join is the comma. The dot is both ground and the tight join, and the reader tells them apart by position. Body laws do reach nested bodies (^bread lifts); this one case has no mark to read.`
+}[reg=facet]
+
 ^"holds"{
   owners = `The canvas build is the factshift plan's (PLAN.md, Body laws and brace folds) and is committed in the app as dbb44f8; the snapshot is not carried. The taste calls are wonder_factshift_body_laws. The upstream fold-tree ask stays @surface_wonders'. spw.quest's braces-as-containers stays its plan's. lore.land is read only; its rooms, rules and disk are its own.`
   opens = `No sigil, no @property, no data-spw-* family, no workbench edit, no lore.land edit.`
@@ -122,4 +169,40 @@ summary = #[
   !probe{ "rg -n \"case '[@!]'\" in operator-physics.ts and local-forces.ts. Say which motions cross a brace." }
   $%[law.body_only, law.every_mark_local]
   ~<"../../workers/factshift-center/app/src/ts/simulation/operator-physics.ts"> ~<"../../workers/factshift-center/app/src/ts/simulation/local-forces.ts">
+}
+
+#>wonder_line_as_ion
+?["Should a line that still owes closers be drawn on the canvas as an ion, a lone charged brace?"]{
+  #:depth #!semantic ~#lens(projection)
+  ~#with: @particles @plan
+  ~#hypothesis: "A pair is neutral and an unclosed opener is not; drawing the owed closer as a ghost particle would let the canvas show what the prompt already shows while a line is typed."
+  ~#expect: "The prompt paints the closers an open line owes and Tab writes them; the canvas draws an unread tail as text and no unpaired particle."
+  ~#probe(read)
+  !probe{ "Read the owed-closer paint in line-paint.ts and bracePair in line-anatomy.ts. Say where an unpaired brace would come from." }
+  $%[ion.drawn, ion.prompt_only]
+  ~<"../../workers/factshift-center/app/src/ts/simulation/particles.ts">
+}
+
+#>wonder_molecule_by_default
+?["Should the canvas read a line as a molecule by default, or keep regions and frames until the reader asks?"]{
+  #:depth #!experiential ~#lens(choice)
+  ~#with: @reading @regions
+  ~#hypothesis: "Particles say what braces are; regions say what a body holds. A default is a felt choice, made by the creator in a browser."
+  ~#expect: "The particle reading is off until chosen and kept in this browser; the body draws as a well either way."
+  ~#probe(read)
+  !probe{ "Read the choices in reading.ts. Say which reading a first visit gets." }
+  $%[default.molecule, default.regions, default.by_device]
+  ~<"../../workers/factshift-center/app/src/js/modes/spw/reading.ts">
+}
+
+#>wonder_scene_material
+?["What material says that ( ) applies to the word with its body, without naming its part of speech?"]{
+  #:depth #!stylistic ~#lens(comparison)
+  ~#with: @regions @surface
+  ~#hypothesis: "A body is a well because it holds. A scene applies to a whole, so its material might wrap the word and body together, like a sleeve, rather than sit apart as a box titled ( )."
+  ~#expect: "The scene is still a dashed box titled ( ), tied to an outline of the word with its body; only the body has a material."
+  ~#probe(read)
+  !probe{ "Read the scene region in line-anatomy.ts and the region styles in region-rects.scss. Say what the scene's box claims that the line does not." }
+  $%[scene.sleeve, scene.box, scene.unlabelled]
+  ~<"../../workers/factshift-center/app/src/js/simulation/rects/region-rects.ts">
 }

@@ -74,14 +74,15 @@ contents = #[
   ~#note: "line-anatomy.ts in the app. A line takes a column of the canvas, at most 620 by 640, so several concepts fit beside it."
   order = `Slots stack top to bottom in the order the line writes them: what it writes before the word, the word, its body, then what follows the body.`
   word = `Where the reading begins, centered in its band.`
-  body = `{ } body: what the word holds, under it. Parts in order (a.b.c, a;b, a ~> b) sit in a row; parts in common (a, b) on a ring. A part that is an expression is a smaller line in its own box. A line with no body keeps a narrow band for one.`
+  body = `body: what the word holds, under it, drawn as a well with its name on a tab across the rim and no braces in the name (2026-11-09); folded, a raised card titled as written. Parts in order (a.b.c, a;b, a ~> b) sit in a row; parts in common (a, b) on a ring. A part that is an expression is a smaller line in its own box. A line with no body keeps a narrow band for one.`
   scene = `( ): applies to the word with its body as a whole, not to the word. Titled by its braces alone while its part of speech is open.`
   concept = `< >: primed at the end of the reading, larger, a node to enter. Unlabeled. Written before the word it leads the reading instead (<person>home, <book>home: the lens the word is read through), above it.`
   join = `Two lines joined by ~ ^ & @ sit side by side, left to right as written (a@b: a is the context regarding b).`
   containers = `A container resizes from a corner and moves by its body; its parts settle into it. A changed container keeps its size and place for that line's word in this browser; two taps on its corner put it back.`
   empty = `A slot the line lacks is kept in its place, hidden, and shown only while a top-level part, the scene or the concept is dragged.`
   law = `A body moves by its word's mark, and only its own members feel it: its parts and the words of the expressions it holds (local-forces.ts, app dbb44f8, 2026-11-09). . settles, ^ lifts, * holds, ~ drifts, = keeps, @ gathers to the body's middle, ? opens from it, ! makes room, % levels; # & $ keep the field's. The [...] forces row turns it off.`
-  fold = `A tap on a body's title, or { on its focused word, draws the body as written, one node in place of its parts; the same again draws the parts. The line does not change. A question's body stays open. Renaming the literal rewrites the body inside its braces (brace-folds.ts).`
+  reading = `The [...] menu's reading family changes how the line is drawn, never what it says: container labels hidden for a still, braces as particles (each pair + and − by what it holds, a mode as an atom bonded to its word), every body as written. nested forces in the forces row sets how much a body inside a body keeps of its parent's strength (reading.ts, particles.ts).`
+  fold = `A tap on a body's tab, or { on its focused word, draws the body as written, one node in place of its parts; the same again draws the parts. The line does not change. A question's body stays open. Renaming the literal rewrites the body inside its braces (brace-folds.ts).`
 }[reg=facet]
 
 ^"ties"{
@@ -146,6 +147,8 @@ contents = #[
   d_2026_10_30_scene = `"(atlas) isn't modifying home, it's modifying a home with { ... }"; its part of speech open: "it could be viewed like (atlas) is a payload or argument"`
   d_2026_10_30_concept = `"concept should not be labeled"; "person should refer to the whole reading of this line"`
   d_2026_10_30_terms = `primed and actualized are the creator's terms for the two halves of a behavior`
+  d_2026_11_09_labels = `"midjourney often interprets the empty braces as a malformed permutation, so the body label should be toggleable"`
+  d_2026_11_09_body = `"{ } body should be replaced with something that doesn't use braces and uses stronger visual or material cues"; "label positioning and typography should be considered"`
 }[reg=facet]
 
 ^"readings"{
