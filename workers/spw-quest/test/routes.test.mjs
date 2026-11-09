@@ -92,12 +92,12 @@ test('the page and the recipe name the same expected files', () => {
   for (const file of EXPECTED_FILES) assert.ok(INIT_PROMPT.includes(file), `${file} is missing from the recipe`);
 });
 
-// The creator's words on the guide; they stay verbatim.
+// The guide's statement of what the notation is for. It stays verbatim.
 const ORIGIN = [
-  'The difficulty was not having language for what I was thinking about, so I could not tell when a thought was ready to set down. Spw gives a thought somewhere to land: one character says what a word is doing, braces say what belongs together, and a thought can be set down whole instead of chased.',
-  'It started in 2017, alongside reading about how people learn from text and helping with research in an adult learning lab. Part of it was wanting language to share what I was learning, in a place where I could keep learning what I wanted to. The question it keeps asking is about cognition: where do two understandings stop sharing ground, and what would help them share more?',
-  'And it wonders about geometry: how a mind represents the thoughts it holds, what shape a circuit of thought might take on a page, and how findings from different fields could sit side by side in one form you can read.',
-  'It is not built for anyone in particular. It has been designed with care, and it has turned out to be useful, most of all toward a culture where media literacy can grow across generations.',
+  'This is for work that keeps a reading inspectable. A line stays a note a person can read, and a tool can still find it, check it, and follow its links. A mark says what a word is doing. A brace says which slot that word fills.',
+  'When two readings of one subject are in hand, name the slots they share and the slot where they part. Hold them on the <a href="/specimens">shelf</a>. Edit one slot in the <a href="/build">editor</a>. A question on a line carries the probe that would answer it.',
+  'Joins stay distinct, so a comparison can say which relation moved.',
+  'The fuller statement is <a href="https://spwashi.com/topics/software/spw/#expressiveness-goals">what Spw should let you say</a>.',
 ];
 const SITE_BUNDLE = new URL('../../../public/js/semantic/spw-workbench-reader.js', import.meta.url);
 const SHELL_CSP = BASE_SECURITY['Content-Security-Policy'];
@@ -108,7 +108,12 @@ test('the guide opens with a file people keep, read by the worker with scripts o
   const response = await get('spw.quest', '/');
   assert.equal(response.status, 200);
   const page = await response.text();
-  assert.match(page, /A small language for the shape of a thought\./);
+  assert.match(page, /A notation for readings you can compare\./);
+  assert.match(page, /<pre class="title-spw"/);
+  assert.match(page, /resize: vertical/);
+  assert.match(page, /<ul class="join-list" aria-label="Joins">/);
+  assert.match(page, /data-t="ground">\.<\/code>/);
+  assert.match(page, /data-t="stream">~&gt;<\/code>/);
   // Five places to go, from every page's masthead; the shelf is one of them.
   for (const href of ['/learn', '/build', '/specimens', '/parser/', '/install']) assert.ok(page.includes(`<nav class="top" aria-label="spw.quest">`) && page.includes(`<a href="${href}">`), href);
   assert.ok(page.includes('<a href="/specimens">Shelf</a>'), 'the masthead names the shelf');
