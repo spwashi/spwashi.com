@@ -9,7 +9,8 @@ import { CHECKS, STEPS, STORYBOARD } from '../src/steps.js';
 import { BALLOON_BY_OPERATOR, BALLOON_WORDS, LAYERS, LINE_LIMIT, panelBalloon } from '../src/reader.js';
 import { PARSER_JS } from '../src/parser-text.js';
 import { EXAMPLES, exampleById } from '../src/examples.js';
-import { paintFile, readFile } from '../src/file-reader.js';
+import { FILE_DATA, fileKit, outlineFile, paintFile, readFile } from '../src/file-reader.js';
+import { parse as parsePinned } from '../assets/parser/2026.10.13/reader.min.js';
 import { PEER_FONTS, PEER_SCRIPTS } from '../../lib/peer-kit.js';
 import { BASE_SECURITY, escapeHtml } from '../../lib/shell.js';
 import { readConfig } from '../../autonomous-feedback/src/config.js';
@@ -205,6 +206,34 @@ test('each file opens by address, and its check turns when its point is taken ou
   for (const example of EXAMPLES) {
     const painted = paintFile(readFile(example.script)).replace(/<[^>]+>/g, '').replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&quot;', '"').replaceAll('&amp;', '&');
     assert.equal(painted, example.script, example.id);
+  }
+});
+
+test('a field shows its value to the end of its statement, each body inside a body folded', () => {
+  const field = (reading, key) => reading.fields.find((f) => f.key === key);
+  const loops = readFile(exampleById('loops').script);
+  assert.equal(field(loops, 'loops').shape, '{ archivist@scan{…}, designer@scan{…}, editor@scan{…} }');
+  assert.equal(field(loops, 'loops').value, '…', 'value stays as the checks read it');
+  const outline = outlineFile(loops);
+  assert.ok(outline.includes('<span class="key">loops</span><span>{ archivist@scan{…}, designer@scan{…}, editor@scan{…} }</span>'), 'the outline shows the shape');
+  // A single word, number or phrase is shown as its value, unquoted.
+  assert.ok(outlineFile(readFile(exampleById('record').script)).includes('<span class="key">title</span><span>chip</span>'));
+  const tried = readFile(exampleById('syntax').script.replace('regard = student@indexing', 'regard = tutor@indexing'));
+  assert.equal(field(tried, 'regard').shape, 'tutor@indexing');
+  assert.equal(field(tried, 'nest').shape, 'shelf{chip{…}, card{…}}', 'a nest two bodies deep keeps its heads');
+  // A mode on a field's value (x = word[mode]) stays in the field; no frame reads it as =[mode].
+  for (const example of EXAMPLES) {
+    assert.deepEqual(readFile(example.script).frames.filter((frame) => frame.sigil === '='), [], example.id);
+  }
+});
+
+test('the pinned reader gives every example the same field shapes, with the kit as the page carries it', () => {
+  const travelled = new Function(`return (${fileKit.toString()});`)()(FILE_DATA);
+  const shapes = (reading) => reading.fields.map((f) => [f.key, f.shape]);
+  for (const example of EXAMPLES) {
+    const pinned = travelled.read(parsePinned, example.script);
+    assert.ok(pinned.ok && !pinned.prose, `${example.id} parses whole with the pinned reader`);
+    assert.deepEqual(shapes(pinned), shapes(readFile(example.script)), example.id);
   }
 });
 

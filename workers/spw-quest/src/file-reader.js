@@ -87,6 +87,68 @@ export function fileKit(data) {
     reading.prose = Boolean(result.completeness && result.completeness.proseFallback);
     const nodes = nodesIn(result.ast);
 
+    // key = value, read from tokens: the AST keeps the three apart. [reg=facet] is a mode, not a field.
+    // A field's shape is its value to the end of its statement, the first line break outside every
+    // brace, with its spaces squashed and each body inside a body folded to {…}, as a line's summary
+    // at depth 1 folds it. A single word, number or phrase is its own shape.
+    const all = reading.tokens;
+    const index = new Map(all.map((t, k) => [t, k]));
+    const at = (t, side) => (t && t.span && t.span[side] ? t.span[side].offset : -1);
+    const SHAPE = 96;
+    const held = [];
+    const words = all.filter((t) => t.type !== "WHITESPACE" && t.type !== "NEWLINE" && t.type !== "COMMENT");
+    let square = 0;
+    words.forEach((t, i) => {
+      if (t.type === "CONTAINER_OPEN" && t.value === "[") square += 1;
+      if (t.type === "CONTAINER_CLOSE" && t.value === "]") square = Math.max(0, square - 1);
+      const eq = words[i + 1];
+      const value = words[i + 2];
+      if (!square && t.type === "IDENTIFIER" && eq && eq.type === "OPERATOR" && eq.value === "=" && value) {
+        const literal = ["PHRASE", "STRING", "IDENTIFIER", "NUMBER"].includes(value.type);
+        const company = literal ? "" : companyAt(words, i + 2);
+        const first = index.get(value);
+        let depth = 0;
+        let end = first;
+        for (; end < all.length; end += 1) {
+          const u = all[end];
+          if (u.type === "CONTAINER_OPEN" || u.type === "CAPSULE_OPEN") depth += 1;
+          else if (u.type === "CONTAINER_CLOSE" || u.type === "CAPSULE_CLOSE") {
+            if (!depth) break;
+            depth -= 1;
+          } else if (!depth && (u.type === "WHITESPACE" || u.type === "NEWLINE") && /[\r\n]/.test(text.slice(at(u, "start"), at(u, "end")))) break;
+        }
+        const from = at(value, "start");
+        const to = end < all.length ? at(all[end], "start") : at(all[end - 1], "end");
+        held.push([at(eq, "start"), to]);
+        // Fold each body inside a body, and leave comments out; every other byte stays.
+        const cuts = [];
+        let curly = 0;
+        let inner = 0;
+        let said = 0;
+        for (let j = first; j < end; j += 1) {
+          const u = all[j];
+          if (u.type === "CONTAINER_OPEN" && u.value === "{") {
+            curly += 1;
+            if (curly === 2) inner = at(u, "end");
+          } else if (u.type === "CONTAINER_CLOSE" && u.value === "}") {
+            if (curly === 2 && text.slice(inner, at(u, "start")).trim()) cuts.push([inner, at(u, "start"), "…"]);
+            curly -= 1;
+          } else if (u.type === "COMMENT" && curly < 2) cuts.push([at(u, "start"), at(u, "end"), ""]);
+          if (u.type !== "WHITESPACE" && u.type !== "NEWLINE" && u.type !== "COMMENT") said += 1;
+        }
+        let shape = "";
+        let kept = from;
+        for (const [a, b, put] of cuts) {
+          shape += text.slice(kept, a) + put;
+          kept = b;
+        }
+        shape = squash(shape + text.slice(kept, to));
+        if (shape.length > SHAPE) shape = `${shape.slice(0, SHAPE - 1).trimEnd()}…`;
+        const shown = literal ? unquote(value.value) : (company || "…");
+        reading.fields.push({ key: t.value, value: shown, shape: literal && said === 1 ? shown : shape });
+      }
+    });
+
     for (const n of nodes) {
       if (n.type === "Particle" && n.name) {
         if (n.aim === ">") reading.names.push(n.name.value);
@@ -115,6 +177,9 @@ export function fileKit(data) {
           const probe = n.body ? nodesIn(n.body).find((m) => m.type === "Operation" && m.operator && m.operator.value === "!" && m.operatorLabel && m.operatorLabel.value === "probe") : null;
           reading.questions.push({ text: unquote(param.value.token.value), probe: probe ? unquote(inner(spanText(text, probe.body))) : "" });
         } else {
+          // x = word[mode]: the mode belongs to the field's value, not to a frame of its own.
+          const start = at(n, "start");
+          if (held.some(([from, to]) => start >= from && start < to)) continue;
           const id = nodesIn(param.value).find((m) => m.type === "Identifier");
           // A frame that holds frames (#[episode]) lists them; its own text would repeat theirs.
           const holds = n.body && nodesIn(n.body).some((m) => m.type === "Operation" && m.frame);
@@ -122,21 +187,6 @@ export function fileKit(data) {
         }
       }
     }
-
-    // key = value, read from tokens: the AST keeps the three apart. [reg=facet] is a mode, not a field.
-    const words = reading.tokens.filter((t) => t.type !== "WHITESPACE" && t.type !== "NEWLINE" && t.type !== "COMMENT");
-    let square = 0;
-    words.forEach((t, i) => {
-      if (t.type === "CONTAINER_OPEN" && t.value === "[") square += 1;
-      if (t.type === "CONTAINER_CLOSE" && t.value === "]") square = Math.max(0, square - 1);
-      const eq = words[i + 1];
-      const value = words[i + 2];
-      if (!square && t.type === "IDENTIFIER" && eq && eq.type === "OPERATOR" && eq.value === "=" && value) {
-        const literal = ["PHRASE", "STRING", "IDENTIFIER", "NUMBER"].includes(value.type);
-        const company = literal ? "" : companyAt(words, i + 2);
-        reading.fields.push({ key: t.value, value: literal ? unquote(value.value) : (company || "…") });
-      }
-    });
 
     const counts = new Map();
     for (const t of reading.tokens) {
@@ -253,7 +303,7 @@ export function fileKit(data) {
       facts.push(row("Frames", `<ul class="frames">${reading.frames.map((f) => `<li>${mark(f.sigil, data.types[f.sigil] || "")}<span class="key">[${esc(f.word)}]</span><span>${esc(f.text)}</span></li>`).join("")}</ul>`));
     }
     if (reading.fields.length) {
-      facts.push(row("Fields", `<ul class="pairs">${reading.fields.map((f) => `<li><span class="key">${esc(f.key)}</span><span>${esc(f.value)}</span></li>`).join("")}</ul>`));
+      facts.push(row("Fields", `<ul class="pairs">${reading.fields.map((f) => `<li><span class="key">${esc(f.key)}</span><span>${esc(f.shape || f.value)}</span></li>`).join("")}</ul>`));
     }
     if (reading.links.length) {
       facts.push(row("Points to", `<ul class="links">${reading.links.map((l) => `<li><span class="key">@${esc(l.name)}</span><code>${esc(l.path)}</code></li>`).join("")}</ul>`));
