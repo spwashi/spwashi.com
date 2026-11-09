@@ -53,11 +53,14 @@ Calling those zero-strength ties a primed relation, and calling `refers` the con
 
 ## Devices and pressure
 
-- A coarse pointer hides keyboard hints (`pointer: coarse` in `hotkey-menu.scss`). That is the touch-screen rule.
+- A coarse pointer hides keyboard hints (`pointer: coarse` in `hotkey-menu.scss`), rests the Spw prompt as its print until a tap opens the painted editor (`spw-mode.scss`), and starts sideways steps in a 72px band (below). A fine pointer keeps the editor open, so typing needs no tap.
 - At 40rem or narrower, one surface shows at a time, and the mode column stays one column (`modes.scss`). The squares match the title box. They are not a 44px target. The nub's minimum is `max(44px, 2.75rem)`.
 - On the canvas, a pinch, including a trackpad pinch, resizes nodes: the one under the pointer, else the selection, else every node. A trackpad's two-finger scroll pans. The camera zooms only from a pinch begun on the lens, or a trackpad pinch over the lens (`pinch.ts`). A window's edges are grab bands on a fine pointer.
 - A keyboard uses the focus ring only. The context-menu key or Shift+F10 shows the card, the keyboard's way to learn a surface (`gestures.ts`).
 - One touch is one gesture. Direction locks once the path crosses its line. It unlocks by returning near the start.
+- Back and forward walk this visit's concepts, which are the browser's history (`concept-history.ts`). On touch, a 72px band inside each side of the canvas steps back (rightward) or forward (leftward), since the system or the browser takes the bare edge; it may start on a region, and a tab at that edge names where it lands. The frame's ← → do the same. A phone tab's own edge swipe, Android's back, a trackpad's two-finger swipe and Alt+← → walk the same entries. A mouse never starts the band. The lines this browser keeps across visits stay on the hash's ← →.
+- Editing the prompt by its reading is a keyboard's Alt+Shift+→ (grow) and ← (back in), Alt+↑ ↓ (move a part) and Tab (only while a line owes closers); the bar under the line holds the same acts for a thumb (`line-edit.ts`).
+- What each device should add and hold back is open in `wonder_factshift_devices`.
 
 The canvas does not read pointer pressure. The magnitudes it already has are distance, speed, and time: how far past grow or shrink, how fast a throw, how long a hold, how wide a pinch. A stylus or a force-sensitive pad would use that same scale. The open choice in `wonder_factshift_gestures`, whether the count of found gestures is play or pressure, sits inside this. Until a device reports force, distance and time remain the pressure.
 

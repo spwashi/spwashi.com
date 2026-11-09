@@ -269,7 +269,23 @@ invariants: #[
   ~#expect: "The three levels stay the tool menu, a tool's cards, and a card's controls. A stepped level, a primed act, and an actualized act each have one sentence, and that sentence is the accessible name. Hue does not carry it. The concept's region stays unlabeled."
   ~#probe(read)
   !probe{ "with a tool open, step tool menu, card, and control from the nub and from the keyboard; name the sentence for each level, then take a primed act and an actualized one and say which rewrote the line" }
+  ~#extended: "devices carry on in #>wonder_factshift_devices (2026-11-08)"
   $%[interaction.prime, interaction.actualize, interaction.pressure, interaction.annotate]
+}
+
+#>wonder_factshift_devices
+?["What should each device add to the canvas's one grammar, and what should it hold back, so that a phone in a tab, an installed phone, a tablet with a pen, a laptop's trackpad, a keyboard alone and a screen reader each find the canvas theirs?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#with: @plan @snapshot
+  ~#asked: "the creator, 2026-11-08: extend the wonder about factshift device specific affordances; consider this while integrating change in the working tree further"
+  ~#known: "At app 8de4f19 and the working tree's integration of 2026-11-08. Concepts are the browser's history, so a phone tab's own edge swipe (iOS), Android's system back from either edge, a trackpad's two-finger swipe and Alt+← → all walk the path the canvas's edges walk. On touch a 72px band inside each side carries the step (the system takes the bare edge), it may start on a region (the band keeps that touch from the region's move), a tab names where it lands, and a mouse never starts one. On a coarse pointer the prompt rests as its print and a tap opens the painted editor, so a keyboard rises only when asked; a fine pointer keeps the editor open. Alt+Shift+→ grows the selection, Alt+↑ ↓ moves a part, Tab closes only what a line owes; the bar under the line is the same acts for a thumb. A pinch resizes nodes and, begun on the lens, zooms the camera; so does a trackpad pinch over the lens."
+  ~#taste: "A reading for the creator to confirm: a device is a configuration the canvas reads once and can say back as one line, =device[phone]{coarse, no_hover, installed, keyboard_down}, the way =menu{} keeps the menu. Each surface consults that line instead of sniffing on its own; ?device= emulates it; the debug tool shows it; and a gesture a device lacks is still a visible control on it."
+  ~#tension: "Android's back takes both edges, so forward from the right works only from inside the band. In an iOS tab the browser's edge swipe and the band can both answer one motion. Installed, there is no browser back, and the edges are the only way. A phone's keyboard covers the lower window unless the window follows the visual viewport. A hold is the canvas's grip and also the system's text selection and callout. A pen reports pressure and tilt the canvas does not read, and a pencil's hover is a hover the coarse rule ignores. navigator.vibrate is absent on iOS, so the buzz is silent there. A screen reader has no swipe at all, only the controls and the polite notes."
+  ~#expect: "Each device class has one sentence of what it adds and what it holds back, shown where the device is named (the =device line, the debug tool, the gestures card). Edges move and never edit, on every device. The edit bar sits above a phone's keyboard. A pen's force, once read, rides the magnitudes the canvas already has (distance, speed, hold, pinch), never a channel of its own."
+  ~#unblocks: "the Spw window placed by the visual viewport; the =device line and ?device= emulation; a pen's force on grow and shrink; the gestures card per device"
+  ~#probe(read)
+  !probe{ "on a phone in a tab, the same phone installed, and a laptop: after one concept move, swipe in from each bare edge and from 50px in, swipe two fingers on the trackpad, press Alt+←; open the prompt and note whether a keyboard rose and where the bar sits; then name what each device could not do" }
+  $%[devices.phone_tab, devices.phone_installed, devices.tablet_pen, devices.trackpad, devices.keyboard, devices.reader, devices.line]
 }
 
 #>wonder_factshift_tool_operators
