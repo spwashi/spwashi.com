@@ -83,7 +83,8 @@ export const EXAMPLES = Object.freeze([
     file: "experiment.spw",
     says: "A question that says what it expects and how to find out, so it can be run instead of argued.",
     try: "Delete the !probe line, and the check beside it changes.",
-    script: `?["Does the ring chip read on the glass theme at a phone's width?"]{
+    script: `#>wonder_ring_on_glass
+?["Does the ring chip read on the glass theme at a phone's width?"]{
   ~#hypothesis: \`a ring keeps its edge where a pill's fill washes out\`
   ~#expect: \`the ring holds 3:1 against the busiest panel; the pill does not\`
   !probe{ "screenshot the chip row on glass at 390px and measure each edge's contrast" }
@@ -138,7 +139,7 @@ gather = shelf[ui]{chip.card}<record>`,
     group: "Study",
     tab: "Calibration",
     file: "calibration.spw",
-    says: "A prediction before studying and a check after it, each with a confidence, so a student can see whether they knew what they thought they knew.",
+    says: "A prediction before studying and a check after it, each with a confidence, so a student can see whether they knew what they thought they knew. The % line names the measure that carries one to the other.",
     try: "Change the confidence after to 0.8, and the change between the two facets shows beside it.",
     script: `#>calibration
 #:study #!metacognition
@@ -152,14 +153,16 @@ gather = shelf[ui]{chip.card}<record>`,
   recalled = \`two of the three reasons\`
   confidence = 0.5
   next = \`reread chapter 2 with a question written first\`
-}[reg=facet]`,
+}[reg=facet]
+
+%confidence{before ~> after}`,
   },
   {
     id: "perspectives",
     group: "Study",
     tab: "Perspectives",
     file: "perspectives.spw",
-    says: "One chapter read from four places: the student, a classmate, a future self and a teacher, each with how sure they are and where the reading leads.",
+    says: "One chapter read from four places: the student, a classmate, a future self and a teacher, each with how sure they are and where the reading leads. Then what the four hold, gathered at the chapter they share.",
     try: "Add a reading: kin = parent@ch2[curious]{why}<dinner>",
     script: `#>four_readings
 #:reflection #!metacognition
@@ -167,14 +170,16 @@ gather = shelf[ui]{chip.card}<record>`,
 me = student@ch2[sure]{recall}<quiz>
 peer = peer@ch2[unsure]{spacing}<ask>
 later = later@ch2[review]{kept}<exam>
-tutor = tutor@ch2[watch]{gap}<lesson>`,
+tutor = tutor@ch2[watch]{gap}<lesson>
+
+&ch2{recall, spacing, kept, gap}`,
   },
   {
     id: "loops",
     group: "Board",
     tab: "Persona loops",
     file: "loops.spw",
-    says: "A board of personas, each running its own loop around one reference: what is planned ahead, what runs in parallel (the loops, joined by ,), and what has to follow in series (the handoff, joined by ;).",
+    says: "A board of personas, each running its own loop around one reference: what is planned ahead, what runs in parallel (the loops, joined by ,), what has to follow in series (the handoff, joined by ;), and what one loop carries to another (the relay, joined by ~>).",
     try: "Add a loop inside the braces: , conservator@scan{handling}",
     script: `#>persona_loops
 #:board #!loops #!production
@@ -188,6 +193,7 @@ loops = {
 }
 each = path{~read; *note; ?ask; !hand_back}
 handoff = path{^gather; ?check; !release}
+relay = {archivist.provenance ~> editor.caption}
 
 ?["What must one loop hand another before it can start?"]{
   ~#expect: \`only the caption waits, on provenance\`
@@ -224,7 +230,7 @@ gradient = #[
     group: "Stage",
     tab: "Syntax",
     file: "syntax.spw",
-    says: "Joins on one page: a company in braces, an order along a path, a reach with ~>, a regard, and one line with its seats filled.",
+    says: "Joins on one page: a company in braces, an order along a path, a reach with ~>, a regard, a nest two bodies deep, and one line with its seats filled.",
     try: "Change regard to tutor@indexing. The field beside it names tutor.",
     script: `#>syntax_stage
 #:showcase #!syntax
@@ -233,6 +239,7 @@ company = {student, classmate, later}
 order = path{~read; *note; ?ask}
 reach = home ~> topics
 regard = student@indexing
+nest = shelf{chip{ring, pill}, card{lifted}}
 line = home[hook]{software.art}(atlas)<record>`,
   },
   {
