@@ -98,6 +98,100 @@ beat[pair]{pieces}<compose>
 beat[season]{portfolio}<dwell>`,
 });
 
+/** Where a sample sits, and what its script is doing. `href` is a page on this site, a section of this tool, or the workbench. */
+export const SPW_LITERAL_PARSER_PLACES = Object.freeze({
+  proof: {
+    says: 'One line: a parser, its literal reading, an AST, and a check that the tokens rebuild the source.',
+    href: '#what-this-proves',
+    label: 'What this proves',
+  },
+  contract: {
+    says: 'The source stays a note. The proof is the tokens, the tree, and the diagnostics. The authority named here is the workbench.',
+    href: 'https://github.com/spwashi/spw-workbench',
+    label: 'spw-workbench',
+  },
+  navigation: {
+    says: 'A section address. @reads is the expression handed in. @emits is the set of labels that section is willing to wake.',
+    href: '/topics/software/spw/#spw-operator-atlas',
+    label: 'Operator atlas',
+  },
+  diagnostic: {
+    says: 'The section sign is not a token this lexer accepts, so the diagnostic list has an error and the reconstruction is not exact.',
+    href: '#proof-output',
+    label: 'Diagnostics',
+  },
+  beans: {
+    says: 'The same stem in six seats: a concept, a mode, a definition, a scene, a ground then an edge, and a concept closed then marked.',
+    href: '/topics/software/spw/#concept-form-lab',
+    label: 'Concept form lab',
+  },
+  practices: {
+    says: 'Six doors. Each is a practice, a mode, and what that practice holds. The resume uses the same shape.',
+    href: '/about/#resume-practices',
+    label: 'Resume practices',
+  },
+  sync: {
+    says: 'Language held as sync: two concepts, god and ideas, kept in reach without being opened.',
+    href: '/about/#career-register',
+    label: 'Career register',
+  },
+  film: {
+    says: 'Film as a practice of release, with shot and voice kept in reach.',
+    href: '/topics/film/#film-capacities',
+    label: 'Film paths',
+  },
+  year: {
+    says: 'A year as income, skill, and expectation, beside a career of what was heard and what is still unknown.',
+    href: '/tools/budgeting/#year-mix',
+    label: 'Year mix',
+  },
+  v04_claims: {
+    says: 'A claim that names how it would fail, and a probe that would run the check.',
+    href: '/topics/software/spw/#language-evolution-v04',
+    label: 'Language evolution',
+  },
+  profiles: {
+    says: 'An old file-profile header. The live convention is a path plus #:layer, #:operation, and #:fixity.',
+    href: '/topics/software/spw/#language-evolution-v04',
+    label: 'Header axes',
+  },
+  dot_crawl: {
+    says: 'A dot between closed braces crawls from one to the next. A tight dot is one name. ~> carries that crawl on as a path.',
+    href: '/topics/software/spw/#join-crawl',
+    label: 'Joins',
+  },
+  stem_projection: {
+    says: 'An old projection: one stem written out into copy, tokens, a runtime attribute, and a handle. Stem families are traced instead.',
+    href: '/topics/software/spw/#language-evolution-v04',
+    label: 'Language evolution',
+  },
+  boonhonk: {
+    says: 'Five voices crossed as pairs: invite, limit, hit, cost, and signal. A genre, not a catalog of products.',
+    href: '/play/rpg-wednesday/#rpgw-boonhonk',
+    label: 'Boonhonk',
+  },
+  paths: {
+    says: 'East and north as one grid, and the count of those paths as a binomial.',
+    href: '/topics/math/combinatorics/#combinatorics-lab',
+    label: 'Counting lab',
+  },
+  gradient: {
+    says: 'One field named as uphill, then two slices that each hold the other axis.',
+    href: '#sample-gradient',
+    label: 'Gradient slices',
+  },
+  holdings: {
+    says: 'A hold of seed, season, and table, projected onto policy. Identity renders twice. A season does not mint in silence.',
+    href: '/topics/knowledge-bases/#versioned-holdings',
+    label: 'Versioned holdings',
+  },
+  beat: {
+    says: 'Three beats of one offer: close, compose, and dwell.',
+    href: '/services/creator/#first-beat',
+    label: 'First beat',
+  },
+});
+
 function countAstNodes(value, depth = 0, census = { total: 0, maxDepth: 0, types: new Map() }) {
   if (!value || typeof value !== 'object') return census;
   if (typeof value.type === 'string' && /[a-z]/.test(value.type)) {
@@ -283,6 +377,33 @@ function setMetric(root, name, value, tone = '') {
   else delete output.dataset.tone;
 }
 
+function sampleKey(name = '') {
+  const key = String(name || '').trim().replace(/\.spw$/i, '');
+  return Object.hasOwn(SPW_LITERAL_PARSER_SAMPLES, key) ? key : '';
+}
+
+/** Show the sample's meaning and its page, and mark the button that loaded it. */
+function showPlace(root, key) {
+  const place = root.querySelector('[data-parser-place]');
+  const note = SPW_LITERAL_PARSER_PLACES[key];
+  if (place instanceof HTMLElement) {
+    const says = place.querySelector('[data-parser-place-says]');
+    const link = place.querySelector('[data-parser-place-link]');
+    if (note && says instanceof HTMLElement && link instanceof HTMLAnchorElement) {
+      says.textContent = note.says;
+      link.href = note.href;
+      link.textContent = note.label;
+      place.hidden = false;
+    } else {
+      place.hidden = true;
+    }
+  }
+  root.querySelectorAll('[data-parser-sample]').forEach((button) => {
+    if (button.dataset.parserSample === key) button.setAttribute('aria-pressed', 'true');
+    else button.removeAttribute('aria-pressed');
+  });
+}
+
 function resolveNamedSample(name = '') {
   const key = String(name || '')
     .trim()
@@ -442,6 +563,8 @@ function initLiteralParser(root) {
       if (outlineList instanceof HTMLElement) renderOutline(outlineList, outline(source), jump);
       setMetric(root, 'anchors', anchors(source).length);
       setAppLink(appLink, source, activeName);
+      const key = sampleKey(activeName);
+      showPlace(root, key && source === SPW_LITERAL_PARSER_SAMPLES[key] ? key : '');
       if (status instanceof HTMLElement) {
         status.textContent = output.success && !output.errors.length
           ? `Parsed ${output.tokens.length} tokens into ${astCensus.total} AST nodes.`
@@ -566,7 +689,9 @@ function initLiteralParser(root) {
   }
 
   const launched = readLaunchSource();
-  loadSource(launched.source || input.value || SPW_LITERAL_PARSER_SAMPLES.contract, launched.name);
+  const initial = launched.source || input.value || SPW_LITERAL_PARSER_SAMPLES.contract;
+  const initialName = launched.name || (initial === SPW_LITERAL_PARSER_SAMPLES.contract ? 'contract.spw' : '');
+  loadSource(initial, initialName);
 
   initAppInstallAction(root.querySelector('[data-parser-install]'));
 
