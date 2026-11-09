@@ -32,7 +32,37 @@ export const SLOTS = Object.freeze([
   { name: "definition", alts: ["", "voice, scene, turn", "voice.scene.turn", "turn"] },
 ]);
 
-/** A writing line: act (!) on draft, about the chapter, in the study, on a second pass, with three things inside. */
+/**
+ * Three files to start from, each a piece someone makes, so the line taken
+ * apart has a world around it (the creator, 2026-11-08: a more realistic and
+ * dimensional song, image or scene script). Every line is one expression the
+ * page can take apart, and the lines lend each other their words: a slot's
+ * choices are the ones the rest of the file already uses.
+ */
+export const BUILD_KINDS = Object.freeze([
+  { kind: "song", label: "Song", file: "porch_light.spw", say: "a song being arranged: its sections, tempo, and who hears it", script: `~porch_light<song>(november)[draft]{verse; chorus; verse; bridge; chorus}
+.verse<memory>(kitchen)[low]{her coat on the chair, the kettle, two in the morning}
+^chorus<hook>(car)[lift]{say it plain, say it twice}
+?bridge<turn>(highway)[minor]{the long drive ~> the porch light}
+%tempo<pulse>(room)[steady]{84 bpm, D minor, brushes on the snare}
+@listener<home>(headphones)[close]{one voice, one guitar, the room left in}
+!ending<release>(porch)[open]{stop on the one}` },
+  { kind: "image", label: "Image", file: "gardener.spw", say: "a picture brief: figure, ground, light and frame", script: `*gardener<cover>(dawn)[papergami]{figure; ground; light; frame}
+.ground<landscape>(field)[folded]{kraft hills, a tea stain, a seam of rust}
+figure<care>(rows)[quiet]{sleeves rolled, a trowel, back to the sun}
+^light<warmth>(east)[low]{long shadows from the left}
+%frame<print>(shelf)[portrait]{four by five, the figure off center, room for a title}
+@viewer<invitation>(reach)[near]{eye level, the trowel within reach}
+?title<cover>(top)[open]{a title, or none}` },
+  { kind: "scene", label: "Scene", file: "morning_after.spw", say: "two people, one kitchen, the morning after", script: `!morning_after<repair>(kitchen)[scene]{arrive; argue; stay}
+@sam<worry>(doorway)[guarded]{coffee, the unanswered text}
+@rae<fatigue>(sink)[dry]{dishes, a joke that lands wrong}
+.arrive<threshold>(hall)[quiet]{the door, keys, the kettle}
+~argue<rupture>(table)[rising]{the text ~> the joke ~> silence}
+?stay<repair>(window)[open]{one of them sits down}` },
+]);
+
+/** A writing line: act (!) on draft, about the chapter, in the study, on a second pass, with three things inside. Slot addresses without a script start here. */
 export const BUILD_DEFAULTS = Object.freeze({ mark: "!", word: "draft", concept: "chapter", scene: "study", mode: "second_pass", definition: "voice, scene, turn" });
 
 /** Slots from a query string; anything missing keeps its default, and no slot can break another's braces. */
@@ -72,7 +102,8 @@ export function assemble(slots, written = []) {
   return `${slots.mark}${nameOf(slots.word)}${containers}`;
 }
 
-const LEAD = /^([~?!@*^#&=%$]?)([A-Za-z_][\w.-]*)/;
+// Every mark the guide teaches, . (ground) among them.
+const LEAD = /^([~?!@*^#&=%$.]?)([A-Za-z_][\w.-]*)/;
 
 /** One expression this tool can take apart: a mark, a word, then brace pairs in any order, each once, and nothing after. */
 function readFocusLine(line) {
@@ -90,26 +121,28 @@ function readFocusLine(line) {
   return { slots, written: order.map((slot) => SLOT_NAME[slot]) };
 }
 
-/** The first compositional line in a script, if it is one expression of this shape. */
-export function focusSlots(script) {
-  for (const item of String(script || "").split("\n")) {
-    const read = readFocusLine(item.trim());
-    if (read) return read.slots;
-  }
-  return null;
+/** The lines a script holds that this page can take apart, as indexes into its lines. */
+export function focusLines(script) {
+  return String(script || "").split("\n").flatMap((line, index) => (readFocusLine(line.trim()) ? [index] : []));
 }
 
-/** The script's focus: the first line shaped like one expression, or -1. */
-export function focusIndex(script) {
-  return String(script || "").split("\n").findIndex((line) => readFocusLine(line.trim()) !== null);
+/** The nth line this page can take apart (the first by default), as slots, if there is one. */
+export function focusSlots(script, nth = 0) {
+  const index = focusLines(script)[nth];
+  return index === undefined ? null : readFocusLine(String(script).split("\n")[index].trim()).slots;
 }
 
-/** The script with its focus line rewritten from slots; indentation and every other line stay. */
-export function withSlots(script, slots) {
+/** The script's focus: the nth line shaped like one expression (the first by default), or -1. */
+export function focusIndex(script, nth = 0) {
+  return focusLines(script)[nth] ?? -1;
+}
+
+/** The script with its focus line (the nth, the first by default) rewritten from slots; indentation and every other line stay. */
+export function withSlots(script, slots, nth = 0) {
   const text = String(script ?? "");
   if (!text.trim()) return assemble(slots);
   const lines = text.split("\n");
-  const at = focusIndex(text);
+  const at = focusIndex(text, nth);
   if (at < 0) return `${assemble(slots)}\n\n${text}`;
   const line = assemble(slots, readFocusLine(lines[at].trim()).written);
   lines[at] = `${(lines[at].match(/^[ \t]*/) || [""])[0]}${line}`;
@@ -159,19 +192,25 @@ export function readSpw64() {
  * make the line on their own.
  */
 export function buildFrom(params) {
-  const given = params.has("script") ? String(params.get("script") || "").slice(0, MAX_SCRIPT) : null;
-  const base = (given != null && focusSlots(given)) || { ...BUILD_DEFAULTS };
   const touched = SLOTS.some(({ name }) => params.has(name));
+  const given = params.has("script") ? String(params.get("script") || "").slice(0, MAX_SCRIPT) : null;
+  // ?kind= starts from that file; a bare /build starts from the first. Slot addresses without a script keep making one line.
+  const kind = BUILD_KINDS.find((entry) => entry.kind === params.get("kind")) || (given == null && !touched ? BUILD_KINDS[0] : null);
+  const source = given ?? kind?.script ?? null;
+  const count = source == null ? 0 : focusLines(source).length;
+  const asked = Number.parseInt(params.get("line") || "1", 10);
+  const nth = count && asked >= 1 && asked <= count ? asked - 1 : 0;
+  const base = (source != null && focusSlots(source, nth)) || { ...BUILD_DEFAULTS };
   const slots = touched ? slotsFrom(params, base) : base;
-  const script = given == null ? assemble(slots) : touched ? withSlots(given, slots) : given;
-  const filename = safeName(params.get("filename") || `${nameOf(slots.word) || "line"}.spw`);
-  return { slots, script, filename };
+  const script = source == null ? assemble(slots) : touched ? withSlots(source, slots, nth) : source;
+  const filename = safeName(params.get("filename") || (given == null && kind?.file) || `${nameOf(slots.word) || "line"}.spw`);
+  return { slots, script, filename, base, kind: given == null ? kind?.kind ?? null : null, nth };
 }
 
-/** The address of a script, when it fits; otherwise null. */
-export const scriptAddress = (script, hash = "build") => {
+/** The address of a script, when it fits; otherwise null. `nth` names the line taken apart, when it is not the first. */
+export const scriptAddress = (script, hash = "build", nth = 0) => {
   const text = String(script ?? "");
-  return text.length <= SHARE_MAX ? `/build?script=${encodeURIComponent(text)}#${hash}` : null;
+  return text.length <= SHARE_MAX ? `/build?script=${encodeURIComponent(text)}${nth ? `&line=${nth + 1}` : ""}#${hash}` : null;
 };
 
 /** Files to open, change and keep: each is whole, and each opens by its address. */
@@ -300,10 +339,10 @@ function semantics(source) {
   return rows;
 }
 
-function segments(slots) {
+function segments(slots, base = BUILD_DEFAULTS) {
   const seg = (slot, text) => {
     if (!text) return "";
-    const changed = slots[slot] !== BUILD_DEFAULTS[slot] ? " data-changed" : "";
+    const changed = slots[slot] !== base[slot] ? " data-changed" : "";
     return `<span data-slot="${slot}"${changed}>${text}</span>`;
   };
   const wrap = (slot, value) => (value ? `${BRACES[slot].open}${value}${BRACES[slot].close}` : "");
@@ -331,13 +370,34 @@ function altLabel(slot, value, slots) {
   return escapeHtml(`${BRACES[slot].open}${value}${BRACES[slot].close}`);
 }
 
-function pivots(slots, script) {
+/** The values the script's other lines hold in a slot, in the order they come. */
+function lent(script, slot) {
+  const values = [];
+  for (const line of String(script || "").split("\n")) {
+    const value = readFocusLine(line.trim())?.slots[slot];
+    if (value && !values.includes(value)) values.push(value);
+  }
+  return values;
+}
+
+/**
+ * Each slot's choices: the ones the rest of the file already uses (a lens the
+ * verse is read through, a scene the chorus happens in), and none for a room;
+ * a file with nothing to lend falls back to the page's own few.
+ */
+function choicesFor(slot, alts, slots, script) {
+  const own = lent(script, slot).filter((value) => value !== slots[slot]);
+  if (!own.length) return alts.includes(slots[slot]) ? alts : [slots[slot], ...alts];
+  return [slots[slot], ...own.slice(0, 5), ...(slot === "word" ? [] : [""])];
+}
+
+function pivots(slots, script, nth = 0) {
   return SLOTS.map(({ name: slot, alts }) => {
-    const options = alts.includes(slots[slot]) ? alts : [slots[slot], ...alts];
+    const options = choicesFor(slot, alts, slots, script);
     const links = options.map((value) => {
       const next = { ...slots, [slot]: value };
       const current = value === slots[slot] ? ' aria-current="true"' : "";
-      const href = scriptAddress(withSlots(script, next), `pivot-${slot}`) || `/build?${query(next)}#pivot-${slot}`;
+      const href = scriptAddress(withSlots(script, next, nth), `pivot-${slot}`, nth) || `/build?${query(next)}#pivot-${slot}`;
       return `<a href="${escapeHtml(href)}"${current}>${altLabel(slot, value, slots)}</a>`;
     }).join("");
     const own = slot === "mark"
@@ -347,11 +407,11 @@ function pivots(slots, script) {
   }).join("\n      ");
 }
 
-function ledger(source, slots) {
+function ledger(source, slots, base = BUILD_DEFAULTS) {
   const rows = semantics(source).map((row) => {
     const changed = row.slot !== "mark"
-      ? slots[row.slot] !== BUILD_DEFAULTS[row.slot]
-      : slots.mark !== BUILD_DEFAULTS.mark && row.mark === slots.mark;
+      ? slots[row.slot] !== base[row.slot]
+      : slots.mark !== base.mark && row.mark === slots.mark;
     return `<li data-slot="${escapeHtml(row.slot)}"${changed ? " data-changed" : ""}><code class="mark">${escapeHtml(row.mark)}</code><span class="name">${escapeHtml(row.name)}</span><span>${escapeHtml(row.reads)}</span></li>`;
   });
   if (!rows.length) return "";
@@ -444,14 +504,40 @@ function shelf() {
     </ul>`;
 }
 
-/** The surface: the file and its reading, its first line taken apart one slot per row, and files to open. */
-export function buildSurface(slots, script = assemble(slots), filename = `${slots.word || "line"}.spw`) {
+/** Where to start: a song, an image or a scene, each a whole file. */
+function kinds(current) {
+  const chosen = BUILD_KINDS.find((entry) => entry.kind === current);
+  return `<nav class="kinds" aria-label="Start from">
+      ${BUILD_KINDS.map((entry) => `<a href="/build?kind=${entry.kind}#build"${entry.kind === current ? ' aria-current="true"' : ""}><span class="label">${escapeHtml(entry.label)}</span><span class="say">${escapeHtml(entry.say)}</span></a>`).join("\n      ")}
+    </nav>${chosen ? `
+    <p class="kinds-say">${escapeHtml(chosen.say)}</p>` : ""}`;
+}
+
+/** The file's lines this page can take apart, each a link that takes it apart instead. */
+function lineStrip(script, nth) {
+  const indexes = focusLines(script);
+  if (indexes.length < 2 || String(script).length > SHARE_MAX) return "";
+  const lines = String(script).split("\n");
+  const links = indexes.map((index, at) => {
+    const read = readFocusLine(lines[index].trim());
+    const label = `${read.slots.mark}${nameOf(read.slots.word)}`;
+    return `<a href="${escapeHtml(scriptAddress(script, "apart", at))}"${at === nth ? ' aria-current="true"' : ""}><span class="n">${index + 1}</span>${escapeHtml(label)}</a>`;
+  });
+  return `<nav class="apart-lines" aria-label="Take another line apart">${links.join("")}</nav>`;
+}
+
+/** The surface: where to start, the file and its reading, one of its lines taken apart a slot per row, and files to open. */
+export function buildSurface(slots, script = assemble(slots), filename = `${slots.word || "line"}.spw`, { base = BUILD_DEFAULTS, kind = null, nth = 0 } = {}) {
   const line = assemble(slots);
   const shown = String(script ?? "");
   const address = scriptAddress(shown);
   const held = shown.length <= SHARE_MAX ? shown : line;
+  const at = held === shown ? nth : 0;
+  const focusText = focusIndex(held, at) >= 0 ? held.split("\n")[focusIndex(held, at)].trim() : line;
+  const word = nameOf(slots.word);
   const display = displayMenu();
   return `<div class="build">
+    ${kinds(kind)}
     <div class="workspace">
       <form class="script" data-file method="post" action="/build#build">
         <div class="file-head">
@@ -473,16 +559,18 @@ export function buildSurface(slots, script = assemble(slots), filename = `${slot
         <div id="reading">${outlineFile(readFile(shown))}</div>
       </aside>
     </div>
-    <section class="apart" aria-labelledby="apart-title">
-      <h2 id="apart-title">The first line, taken apart</h2>
-      <p class="built-line"><code class="built" aria-label="${escapeHtml(line)}">${segments(slots) || "&nbsp;"}</code></p>
+    <section class="apart" id="apart" aria-labelledby="apart-title">
+      <h2 id="apart-title">${at ? `The ${escapeHtml(word)} line, taken apart` : "The first line, taken apart"}</h2>
+      ${lineStrip(held, at)}
+      <p class="built-line"><code class="built" aria-label="${escapeHtml(line)}">${segments(slots, base) || "&nbsp;"}</code></p>
       ${slots.word ? `<p class="line-ways"><a href="/pivot?line=${encodeURIComponent(line)}">Pivot this line</a> · <a href="/specimens?q=${encodeURIComponent(nameOf(slots.word))}#found">Find ${escapeHtml(nameOf(slots.word))} on the shelf</a>${line.length <= 400 ? ` · <a href="https://factshift.center/?spw=${encodeURIComponent(line)}">Open on factshift.center</a>` : ""}</p>` : ""}
-      ${ledger(shown, slots)}
+      ${ledger(focusText, slots, base)}
       <form class="slots" method="get" action="/build#build">
         <input type="hidden" name="script" value="${escapeHtml(held)}">
-        <input type="hidden" name="filename" value="${escapeHtml(safeName(filename))}">
+        <input type="hidden" name="filename" value="${escapeHtml(safeName(filename))}">${at ? `
+        <input type="hidden" name="line" value="${at + 1}">` : ""}
         <div class="pivots" aria-label="Change one slot, keep the rest">
-          ${pivots(slots, held)}
+          ${pivots(slots, held, at)}
         </div>
         <button type="submit">Put together</button>
       </form>
@@ -507,6 +595,24 @@ const SHELF_CSS = `.keys { margin: 0; color: var(--muted); font-size: .84rem; }
     .snippets .label { font-size: .9rem; font-weight: 600; }
     .snippets code { overflow: hidden; color: var(--muted); font: .82rem/1.3 var(--mono); text-overflow: ellipsis; white-space: nowrap; }
     .parser-note { margin: 1rem 0 0; }
+    .kinds { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: .5rem; }
+    .kinds a { display: grid; gap: .2rem; min-height: 44px; padding: .65rem .8rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--field); color: var(--fg); text-decoration: none; }
+    .kinds a:hover, .kinds a:focus-visible { border-color: var(--accent); }
+    .kinds a[aria-current] { border-color: var(--accent); box-shadow: inset 0 -2px 0 var(--accent); }
+    .kinds .label { font-weight: 600; }
+    .kinds .say { color: var(--muted); font-size: .86rem; line-height: 1.35; }
+    .kinds-say { display: none; margin: -.6rem 0 0; color: var(--muted); font-size: .9rem; }
+    /* On a phone the three are one row of names, and the chosen one is said beneath. */
+    @media (max-width: 40rem) {
+      .kinds { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .35rem; }
+      .kinds a { justify-items: center; padding: .55rem .4rem; }
+      .kinds .say { display: none; }
+      .kinds-say { display: block; }
+    }
+    .apart-lines { display: flex; flex-wrap: wrap; gap: .35rem; margin: 0 0 .8rem; }
+    .apart-lines a { display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; padding: 0 .7rem; border: 1px solid var(--line); border-radius: var(--pill, 999px); color: var(--fg); font: .86rem/1 var(--mono); text-decoration: none; }
+    .apart-lines a[aria-current] { border-color: var(--accent); color: var(--accent); }
+    .apart-lines .n { color: var(--muted); font-size: .76rem; }
     .line-ways { margin: .4rem 0 0; color: var(--muted); font-size: .9rem; }
     .line-ways a { display: inline-flex; align-items: center; min-height: 44px; }`;
 export const BUILD_CSS = `.build { display: grid; gap: 1.2rem; }

@@ -289,16 +289,18 @@ test('?parser= switches the guide to a /parser/ build, with a banner that says s
 });
 
 test('any other ?parser= is ignored: the guide is the default page, and the value is not written into it', async () => {
+  // A page asked with a query is followed but not indexed (src/crawl.js); the rest is the default page.
+  const unindexed = (html) => html.replace('<meta name="robots" content="noindex, follow">', '<meta name="robots" content="index, follow">');
   const plain = await (await get('/')).text();
   assert.ok(plain.includes(PINNED_IMPORT) && !plain.includes(STATIC_IMPORT) && !plain.includes('parser-switch'));
   const ignored = ['', 'nope', 'NEXT', 'next.js', ' next', 'latest ', '2026.10.13.1', '2026.10.13-pre.0', '2026.10.13-pre.01', '2026.10.13-patch',
     '2026.10.13-rc.1', '2026.13.01-pre.1', '2026.02.30', '2026.1.1', 'pre/a1b2c3d4e5f6', '2026.10.13/parser.js', '../parser.js',
     '//evil.example/x.js', 'https://evil.example/x.js', '<script>alert(1)</script>', '"><img src=x>'];
   for (const value of ignored) {
-    assert.equal(await (await get(`/?parser=${encodeURIComponent(value)}`)).text(), plain, JSON.stringify(value));
+    assert.equal(unindexed(await (await get(`/?parser=${encodeURIComponent(value)}`)).text()), plain, JSON.stringify(value));
   }
   for (const query of ['parser=next&parser=latest', 'parser=next&parser=next', 'Parser=next']) {
-    assert.equal(await (await get(`/?${query}`)).text(), plain, query);
+    assert.equal(unindexed(await (await get(`/?${query}`)).text()), plain, query);
   }
   assert.doesNotMatch(await (await get('/read?step=act&parser=next')).text(), /parser-switch/, 'only the guide switches');
 });

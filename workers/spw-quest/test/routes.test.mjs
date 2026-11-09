@@ -162,7 +162,8 @@ test('each file opens by address, and its check turns when its point is taken ou
   assert.ok(revision.includes(`>${escapeHtml(exampleById('revision').script)}</textarea>`));
   assert.ok(revision.includes('<a href="/?example=revision#try" data-example="revision" aria-current="page">'));
   assert.ok(revision.includes('<li data-state="pass">Says what happened, what changed, and how it was checked.</li>'));
-  assert.equal(await (await get('spw.quest', '/?example=nope')).text(), await (await get('spw.quest', '/')).text(), 'an unknown file opens the first');
+  // Only the robots line differs: a page asked with a query is followed but not indexed (src/crawl.js).
+  assert.equal((await (await get('spw.quest', '/?example=nope')).text()).replace('content="noindex, follow"', 'content="index, follow"'), await (await get('spw.quest', '/')).text(), 'an unknown file opens the first');
   for (const example of EXAMPLES) {
     const reading = readFile(example.script);
     assert.ok(reading.ok && !reading.prose, `${example.id} parses whole`);
