@@ -1,0 +1,123 @@
+# Lite interpreters, textures, residencies and sponsored themes (2026-11-09) — cache
+#
+# The creator asked what workbench improvements would let lite Spw
+# interpreters be productized for niche purposes and extended into other
+# encodings and runtime affordances; where lore.land is heading and which
+# parser or runtime affordances would help its trope ecologies and the
+# textures of texture.website; how texture.website could let profiles and
+# residencies show their perspective and relative texture through Spw
+# indexing; partial compilation for shader fragments and physics tensors;
+# sponsored themes through an ephemeral registry; and events with physics
+# campaigns that update menus and hand out saveable Spw snippets.
+# Facts were read from spw-workbench (HEAD edbc5500), lore.land and this
+# repo on 2026-11-09. Workbench items are asks, never edits from here.
+
+#>ecosystem_productization_2026_11
+#:cache #!workbench #!lore #!texture #!sponsorship #!compilation
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@asks: ~"../reviews/upstream-workbench-recommendations.spw"
+@host_frame: ~"./host-frame-2026-09.spw"
+@handle: ~"./spw-as-handle-2026-09.spw"
+@holiday: ~"./holiday-infrastructure-2026-09.spw"
+@morph: ~"./morph-shader-handles.spw"
+@corpus: ~"./canvas-corpus-design-2026-11.spw"
+@tooling: ~"./factshift-tooling-2026-11.spw"
+@promo: ~"../../.agents/plans/promo-wonder-cycle/PLAN.md"
+@quest_first: ~"../../.agents/plans/spw-quest/expression-first.md"
+@hub: ~"../../workers/site-hub-next/src/index.js"
+@factshift_release: ~"../../workers/factshift-center/app/src/js/vendor/spw-reader/release.json"
+
+operation = "cache"
+fixity = "experimental"
+expression = ^interpreter[lite]{profile, codec, socket}<niche>
+
+summary = #[
+  `A lite interpreter is a profile, not a fork: the zero-dependency lite scanner (2,921 bytes), one dialect profile, and one codec, cut together as a dated release with its own size budget. The workbench already has each piece; what it lacks is the kit that composes them and a release every consumer can take.`,
+  `lore.land is building a trope ecology (a track of 17 tropes with reach, strength and crossings) and a texture grammar whose materials carry factshift's physics; both want a vocabulary socket, ranges with units, and holes, which are already on its list of nine asks.`,
+  `A residency's texture is its index: the lines a resident keeps, read for their operators, shapes and slot-hash neighbors, rendered in texture.website's materials, and compared with another's as two placements and a differential.`,
+  `A sponsored theme is a texture and a tuning line, credited by @, closing on the 13th, the 26th or the month's end like every other agreement here; an event is the same object with a season, a menu row and a snippet to keep.`,
+][reg=set]
+
+^"workbench"{
+  live = `Four private packages at 0.3.0 export TypeScript source; a publishable dist bundle exports ./lite (dist/lite.js, 2,921 bytes), ./seed and ./parser. Dated parser releases (YYYY.MM.DD, -pre.N) carry parser, full, lite, reader and workbench builds with a sha256 and SRI manifest; the lite build must fit 5 KiB. Extension points: eight dialects (Spw.b, l, m, x, q, f, p, t) with review, format, mutation and reading profiles; registerLexProfile; codecs (ONF σ(args…)[frames…], GeometryBytecodeIR spw.geometry.bc/1, ResonanceIR, slotHash, and emit codecs for json, mj, web copy, notes, briefs, audio, social, plain); no binary encoding. The workbench's own journal proposes four sockets (line, vocabulary, register, plugin) and the rule "Build a socket before anything that plugs into it".`
+  consumers = `Four consumers take a build four ways: this site esbuilds the workbench's reader source at 27fa1e3d; factshift.center carries reader.min.js with a hand-written release.json naming 2026.11.07-pre.1 (@factshift_release), a cut that exists in no release folder; spw.quest carries the dated 2026.10.13 cut, which has no readLine; lore.land bundles the full seed (650 KB, "a cold 300 ms").`
+  asks = #[
+    `one release every consumer takes: cut the revision factshift carries as a dated release with the reader build in it, and give spw.quest a cut that exports readLine, so the canvas's and the quest's folds stop being two implementations (@tooling, @corpus)`,
+    `a lite profile kit: scan + one dialect profile + one codec composed into a named interpreter with its own size budget, the way lite already fits 5 KiB, so a niche reader (a texture swatch's, a trope card's, a menu line's) ships at the size of its job`,
+    `the sockets first, in the journal's order: the register socket for the one operator table (this repo's rank-1 ask), the vocabulary socket for trope, material and sigil-voice registries (lore.land's sound_and_texture), the line socket for a library of lines, the plugin socket for readers`,
+    `ranges with units (=aim_step[0.13 of 0.04..0.4], lore.land's ask), so a tuning line can say its gradient and its bounds in the line itself`,
+    `holes, pattern variables, so a shape with named gaps is a template a trope, a cast or a theme can be written against`,
+    `a compact address codec for ONF, beside #spw64's base64 of text, so a line in a URL is short and still says its structure`,
+    `siblings by juxtaposition and << … >> streams in the slot reader (@corpus#adversarial)`,
+  ][reg=set]
+}[reg=facet]
+
+^"lore_land"{
+  direction = `The last twelve commits run through hand fonts and a texture.website surface, artifact studies, a kinds registry, a tropes track, panel layout, the pie game's sound, rooms by gradient and cast, and story in the lanes. tropes.json holds 17 tropes, each with sigil, bends, statement, prop, faces, presence, crossings and rhymes, "portable for trope.wiki"; tropes.spw measures reach as √(story² + lanes²) / √2 and strength as reach × wired crossings ÷ 2, with states winding, one-way, parallel, stranded. Its texture surface reads an address aloud by operator, names materials (paper, wash, drip, hatch, honey, glass, storm) that carry factshift's physics parameters, and offers middleware verbs (edit, enhance, clarify, align, mutate, ground, resonate) "for spw.quest to take up". Its proposals P1 to P10 are unbuilt; P6 writes materials in Spw ($honey{…%physics{…}}), P7 makes verbs pipeline hooks.`
+  affordances = `For a trope ecology: each trope a record the vocabulary socket serves; its crossings ties and its strength a charge, so factshift can draw the ecology as a field where a stranded trope drifts and a winding one is held; rhymes found by the workbench's resonance detection (value echoes, phase syncs) instead of by hand; holes so a trope is a shape with gaps a scene fills. For textures: materials written in Spw (P6) read by a lite profile on the page, with ranges and units for their physics.`
+}[reg=facet]
+
+^"texture"{
+  live = `texture.website's lab (@hub) serves slices (paper, linen, harlequin, wash), signals (stripes, grain, glow, response) and materials (paper, glass, matte, field), chosen through CSS :has(), with /textures.json and /registry.json and a "Commission a grain" section. Its verb is grain (@host_frame). A residency appears once, as a draft: "Spwashi as lore.land's resident artist… A draft, not an announcement."`
+  residency = `A profile or a residency is a perspective (@) with an index: the lines its resident keeps. Its texture is read from that index: which operators lead (a ~-heavy index washes and drips, a !-heavy one hatches and storms, a .-heavy one is paper and matte, in lore.land's materials), which shapes recur, and where its lines sit among the corpus's slot-hash neighbors (@corpus#compression). A residency page is that reading, @resident{lines}<texture>, rendered as a swatch the lab already knows how to draw.`
+  relative = `Two residencies compared are two placements and a differential, the site's comparison convention: the operators each leads with, the shapes they share, the distance between their indexes. Relative texture is that differential drawn as grain: shared shapes as the same weave, a lone operator as a single thread of another color.`
+}[reg=facet]
+
+^"sponsored"{
+  precedent = `No theme registry exists. The precedents: a sponsored image's agreement ends at a close (the 13th, the 26th, the month's end; @host_frame), the substrate cache's sponsor_timebox, promo-wonder-cycle's lanes closing on the 13th and 26th with "Avoid a generic CMS model" (@promo), and the quest's "sponsored physics": a season's or a chance-drawn physics preset written as a spell line on factshift.center, with credit in its @ perspective (@quest_first).`
+  proposal = `An ephemeral registry is texture.website's /registry.json given entries with a close: $theme[sponsored]{material, tuning}@sponsor<until 2026-11-26>, a texture and a tuning line credited by @. factshift.center and lore.land read the registry at load and offer an open theme as a reading in the [...] menu's reading family, never as the default and never with tracking. At its close an entry leaves the registry and stays in the sponsor's own archive as a saved snippet. Wording, price and who may sponsor are the creator's.`
+}[reg=facet]
+
+^"events"{
+  proposal = `An event is a sponsored theme's shape with a season: the holiday cache's turns (mask, table, gift, threshold; @holiday) as its kinds; a dated tuning line that the canvas offers as a reading; a menu row kept by =menu{…} for its run; and a snippet to keep: the event's algorithm as a .spw file (its =tune line, a cast, a story chain) saved by #spw64 or downloaded, so what a person played with during the event stays theirs after it closes.`
+  physics_campaign = `A physics campaign is a run of events whose tuning lines step one law at a time (plane, space, spring; nested alike, softer, faint), each closing with a still of the same line under that week's law, so the season's stills compare (@corpus#stills).`
+}[reg=facet]
+
+^"compilation"{
+  live = `morph-shader-handles holds that Spw names a morph's poles, mix, register and commit, "not when it owns the GPU", with WebGL as an enhancement behind a gate; the only live WebGL is texture.website's teal stripes. The workbench sketches a register tensor of 13 × 4 × 4 × 4 × 4 = 3,328 cells and Tensor@ and Sheaf@ domains; nothing compiles Spw to CSS, a shader or a tensor yet.`
+  proposal = `Partial compilation: the numeric and structural slots of a line compile, its words stay read. A tuning line compiles to CSS custom properties the site already registers; a material line (P6) to a uniform block for a swatch's fragment shader; the body laws' table (nine marks by their effects) and a pair's law to a small force tensor the canvas multiplies per tick, the efficiency step @corpus#efficiency names. GeometryBytecodeIR is the intermediate form to meet; the register tensor is the long shape it grows toward.`
+}[reg=facet]
+
+^"holds"{
+  owners = `Workbench asks go to its intake (@asks, and its own ask-exchange plan), never edited from here. lore.land's tropes, rooms and texture surface are its own. texture.website's lab is site-hub-next's. Sponsorship terms are the creator's.`
+  opens = `No sigil, no data-spw-* family, no package, no workbench edit.`
+}[reg=facet]
+
+#>wonder_lite_profile_kit
+?["Should a niche Spw interpreter be the lite scanner plus one dialect profile and one codec, cut as its own dated release?"]{
+  #:depth #!pragmatics ~#lens(choice)
+  ~#with: @asks
+  ~#hypothesis: "Each niche (a swatch, a trope card, a menu line) needs a reader the size of its job; composing lite + profile + codec keeps one grammar and many sizes."
+  ~#expect: "The workbench ships lite at 2,921 bytes, eight dialects and a profile registry, and cuts dated releases with a 5 KiB lite budget; no kit composes them, and consumers take four different builds."
+  ~#probe(read)
+  !probe{ "Read docs/runtime/md/parser-release.md and packages/spw-seed/src/dialect/types.ts in spw-workbench. Say what a kit would add to the release script." }
+  $%[lite.kit, lite.one_build, lite.per_consumer]
+  ~<"../reviews/upstream-workbench-recommendations.spw">
+}
+
+#>wonder_residency_texture
+?["Is a residency's texture its index, read for operators, shapes and neighbors and drawn in texture.website's materials?"]{
+  #:depth #!stylistic ~#lens(projection)
+  ~#with: @hub @corpus
+  ~#hypothesis: "A resident's kept lines say how they work; an operator histogram, recurring shapes and slot-hash neighbors render as a swatch, and two swatches compare as placements and a differential."
+  ~#expect: "The lab draws slices and materials from fixed choices; a residency is a draft line; no index of a person's lines exists."
+  ~#probe(read)
+  !probe{ "Read the SLICES and MATERIALS in site-hub-next/src/index.js. Say which material each leading operator would choose." }
+  $%[texture.from_index, texture.chosen, texture.both]
+  ~<"../../workers/site-hub-next/src/index.js">
+}
+
+#>wonder_ephemeral_registry
+?["Should sponsored themes and events live in texture.website's registry with a close, offered as readings and never as defaults?"]{
+  #:depth #!pragmatics ~#lens(choice)
+  ~#with: @promo @host_frame
+  ~#hypothesis: "A theme is a texture and a tuning line credited by @; closing on the site's own dates keeps it ephemeral, and offering it as a reading keeps the reader's canvas their own."
+  ~#expect: "No theme registry exists; sponsored images close on the 13th, 26th or month's end; promo-wonder-cycle closes its lanes on the same dates."
+  ~#probe(read)
+  !probe{ "Read the /registry.json handler in site-hub-next and the lanes in promo-wonder-cycle's PLAN.md. Say where a close date would live." }
+  $%[registry.texture_host, registry.promo_lanes, registry.none]
+  ~<"../../.agents/plans/promo-wonder-cycle/PLAN.md">
+}

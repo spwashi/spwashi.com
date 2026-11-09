@@ -1,0 +1,133 @@
+# spw.quest as a library router, diffs by stratum, and describability (2026-11-09) — cache
+#
+# The creator asked to refine spw.quest's routing model and theory toward
+# textual-symbolic manipulation of Spw snippets and expressions, collected
+# into clusters and documents; spw.quest as a library router that catalogs
+# and lets taste develop; an interactive model of block- and pattern-level
+# diffs and resonances in place of superficial changes; design experiments
+# that show the semantic physics Spw's algorithms afford; and factshift.center
+# for linguistic mutation along sheaves of interactive describability.
+# Routes were read from workers/spw-quest/src/index.js on 2026-11-09; the
+# workbench's diff, differential and sheaf terms from spw-workbench.
+
+#>quest_library_router_2026_11
+#:cache #!quest #!factshift #!diff #!taste #!sheaf
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@quest_plan: ~"../../.agents/plans/spw-quest/PLAN.md"
+@quest_first: ~"../../.agents/plans/spw-quest/expression-first.md"
+@quest_index: ~"../../workers/spw-quest/src/index.js"
+@pivot: ~"../../workers/spw-quest/src/pivot.js"
+@taste: ~"./taste-research-2026-09.spw"
+@comparison: ~"../conventions/comparison-differentials.spw"
+@compare: ~"../../workers/factshift-center/app/src/js/modes/spw/line-compare.ts"
+@summary: ~"../../workers/factshift-center/app/src/js/modes/spw/line-summary.ts"
+@corpus: ~"./canvas-corpus-design-2026-11.spw"
+@mind: ~"./factshift-theory-of-mind-2026-11.spw"
+@productization: ~"./ecosystem-productization-2026-11.spw"
+
+operation = "cache"
+fixity = "experimental"
+expression = ~library[router]{cluster, document, diff, taste}<reader>
+
+summary = #[
+  `spw.quest's routes are verbs over a library of lines: read one, pivot one slot, compare two, list the shapes, keep a shelf, build a script. The library is missing the two words the creator named: a cluster (lines gathered by shape or resonance) and a document (a cluster written out as one .spw file with its summary as its title).`,
+  `A change should be shown at the highest stratum it reaches. The workbench already names the strata (source, structure, layout, reference, operation, script); a join that turns from , to ; is a structural change and says so, and a respelled word stays quiet.`,
+  `Describability is a sheaf over the line's containers: each scope has its descriptions (as written, outline, summary, parts, particles), folding is restriction, and the fractal summary is the map that makes a body's own summary and its parent's view of it agree. A mutation at one scope shows how every enclosing description changes.`,
+  `Taste develops by comparing and keeping, not by scoring. A reader's own record of what they kept over what, and at which stratum they judged, shows them their taste; the library orders by it, and nothing is published.`,
+][reg=set]
+
+^"routes"{
+  live = `handleQuest serves the guide (/, ?example=, ?parser=), /learn, /build (?script=, POST), /read (?line=), /specimens (?q=, ?a=&b= #compare), /constructs, /pivot (?s=, ?line=, ?from=, ?t= trail, ?op=, ?add=&join=; at most 200 characters), /canvas (a redirect to factshift.center), /parser.js, and text routes (/git.txt, /init, /llms.txt, /quest.json, /prompts.json); /shelf/, /forms/, /arcs/ and /bench/ are static (@quest_index). The walk and the note are this browser's (spw.quest.walk/1, spw.quest.note/1); #spw64= carries a script's text.`
+  proposed = `R1, the registry entry {line, from, first, places, kind} meeting factshift and lore.land halfway, and shelf tuning as a line (shelf[novice]{plans}<quiet>) are proposed (@quest_first, @quest_plan). Clusters and documents are not yet words in the plan.`
+}[reg=facet]
+
+^"router"{
+  verbs = `A route is a verb over the library, its address read aloud as lore.land's texture surface asks ("an address is state you can read aloud"): /read one line, /pivot one change, /specimens two placements, /constructs the shapes, /shelf what is kept, /build a script. Two verbs join them: /cluster, the lines that share a shape at depth 1 or resonate (/cluster?shape=~·[]{,}<>), and /document, a cluster written out as one .spw file, titled by its fractal summary, with a receipt of where each line came from (R1's from and places).`
+  algebra = `One selection grammar across the apps: factshift's selection algebra (& | \\ ~ over slot queries like garden[*]{seed}) as spw.quest's ?q=, so a query copied from one app works in the other. The middleware verbs lore.land offers spw.quest to take up (edit, enhance, clarify, align, mutate, ground, resonate) are the verbs a cluster takes as a whole.`
+  manipulation = `Textual-symbolic manipulation of many snippets at once: paste or load snippets, each read; cluster them by shape; act on a cluster with one cast ([warm] → [low] at every place); outline it at a depth; summarize it at a width; and write the result as a document. Every act keeps every byte it does not touch (the summary's and the cast's rule), so a document pastes back as lines.`
+}[reg=facet]
+
+^"diffs"{
+  live = `factshift compares two lines slot by slot (same, changed, added, removed; @compare). The workbench's spw delta builds a change report from token LCS, brace projection and a nest-path skeleton, with a full tree diff deferred, and its differential names strata source, structure, layout, reference, operation, script. spw.quest's pivot is "one line, and the lines one change away" (@pivot).`
+  model = `Show a change at the highest stratum it reaches. Structure: a join turned from , to ; (company to order), a body gained a part, a slot moved before the word; the shape, the line with its words taken out, changed. Reference: a ~"./file" now points elsewhere. Operation: a mark changed (~ to !). Source: only spelling or spaces, said quietly or not at all. A diff that leads with the shape's change and lists the slot changes under it is a block-level diff; two lines with the same shape and different words are a pattern-level resonance.`
+  resonance = `Resonance is the pattern's echo across documents: the same shape with other words (a rhyme, the field lore.land's tropes already keep), the same word in two places (factshift's resonance relation), or near slot-hash vectors. The workbench detects value echoes and phase syncs; the library lists a line's resonances beside it, so reading one line shows where its pattern recurs.`
+}[reg=facet]
+
+^"experiments"{
+  list = #[
+    `one line, four joins: the same words as {a, b, c}, {a; b; c}, {a.b.c} and {a ~> b ~> c}, settled side by side, so company reads as a ring, order as a row, one name as a chain and a path as a rise`,
+    `the nine body laws on one word in a grid, each settled and still, measured as the probe of 2026-11-09 measured them (@mind)`,
+    `one pair under three laws: a brace pair pulled as 1/d, 1/d² and a spring, where only the plane's law closes it, the finding of this week shown as a lesson`,
+    `shape gravity: a corpus laid out so lines of one shape at depth 1 attract and resonant words tie, an index a reader walks (@corpus#compression)`,
+    `a trope field: lore.land's tropes as nodes, crossings as ties, strength as charge, a stranded trope drifting (@productization#lore_land)`,
+    `a mutation's wake: one cast at a nested body, and every enclosing summary updating with it, the sheaf below made visible`,
+  ][reg=set]
+  rule = `Each experiment is a comparable still per variant (one line, one pose, its law named at its foot), so an experiment is a contact sheet, the page lore.land's P10 proposes.`
+}[reg=facet]
+
+^"sheaves"{
+  theory = `The workbench's theory gives the word: a sheaf is a cache of subset parses keyed by container stack, and @ pushes a sheaf section. Read for the canvas: the open sets are the line's containers (the line, each body, each nested body); a section over a container is a description of it at a stratum (as written, outline, summary at a width, parts, particles); restriction is folding to a sub-scope; gluing holds when what a parent says of a body is what the body says of itself. The fractal summary (@summary) is that restriction map, which is why a summary at depth k is the outline at k.`
+  affordances = `Linguistic mutation along the sheaf: at any scope, "describe this" at any stratum (a region's tab already folds and steps strata); the mutations a scope offers are its slot's (a mode's words pivot, a body's join turns, a word renames everywhere it resonates); and every mutation previews its wake, the parent's summary after the change, before it lands. Interactive describability is that preview: the reader sees how the change reads one scope up, and one scope up again.`
+}[reg=facet]
+
+^"taste"{
+  ground = `"Taste here is a practiced reading of whether the room holds — not a like, not a score" (@taste); the quest's index keeps taste lines such as balancing search and discovery.`
+  ledger = `A taste ledger in this browser: each comparison a reader settles (specimens a over b, a pivot kept or undone, a cluster kept) written as an entry, >>[2026-11-09 16:10] keep — a over b · structure, naming the stratum at which they judged. Over time the ledger shows the reader which strata they attend to and which shapes they keep. The library orders by it; it is never scored, never shared without the reader's word.`
+  catalog = `The library router catalogs by the reader's own kept strata and the site's fixity ladder (seed to cold): what a reader keeps rises above what they passed through, and a document's lines carry where they came from.`
+}[reg=facet]
+
+^"holds"{
+  owners = `Routes and the shelf are spw.quest's plan (@quest_plan); the canvas's mutations and descriptions are factshift.center's; the delta, differential and sheaf terms are the workbench's, asked for and never edited here.`
+  opens = `No sigil, no data-spw-* family, no package, no workbench edit.`
+}[reg=facet]
+
+#>wonder_cluster_and_document
+?["Should spw.quest add a cluster route and a document route to its library?"]{
+  #:depth #!pragmatics ~#lens(choice)
+  ~#with: @quest_index @quest_first
+  ~#hypothesis: "Lines gathered by shape at depth 1 or by resonance, written out as one .spw file titled by its summary, make the library a place to collect and not only to read."
+  ~#expect: "handleQuest serves read, pivot, specimens, constructs, build and static shelves; R1's registry entry is proposed; clusters and documents are not words in the plan."
+  ~#probe(read)
+  !probe{ "Read handleQuest's route table in workers/spw-quest/src/index.js and R1 in expression-first.md. Say which existing route a cluster would extend." }
+  $%[router.cluster_document, router.shelf_only, router.cluster_only]
+  ~<"../../workers/spw-quest/src/index.js">
+}
+
+#>wonder_diff_by_stratum
+?["Should a change be shown at the highest stratum it reaches, with spelling changes kept quiet?"]{
+  #:depth #!semantic ~#lens(comparison)
+  ~#with: @compare @comparison
+  ~#hypothesis: "A reader cares that a join turned from company to order before they care which characters moved; leading with the shape's change makes a diff a sentence about meaning."
+  ~#expect: "line-compare.ts reports slot changes; the workbench's differential names six strata; no surface leads with the stratum."
+  ~#probe(read)
+  !probe{ "Read compareLines in line-compare.ts. Say which of its operations are structural and which are source." }
+  $%[diff.by_stratum, diff.by_slot, diff.both]
+  ~<"../../workers/factshift-center/app/src/js/modes/spw/line-compare.ts">
+}
+
+#>wonder_mutation_wake
+?["Should every mutation preview how each enclosing scope will read after it lands?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#with: @summary @mind
+  ~#hypothesis: "Showing the parent's summary after a change, one scope up and again, is interactive describability: the reader sees a mutation's wake before committing it."
+  ~#expect: "Casts rewrite places with a receipt and an undo; the body's hand folds and steps strata; no surface previews an enclosing scope's summary before a change lands."
+  ~#probe(read)
+  !probe{ "Read summaryAt in line-summary.ts and the cast's receipt in mapfilter. Say where a preview of the parent's summary would be drawn." }
+  $%[wake.preview, wake.receipt_only]
+  ~<"../../workers/factshift-center/app/src/js/modes/spw/line-summary.ts">
+}
+
+#>wonder_taste_ledger
+?["Should a reader's comparisons and keeps be recorded in their browser as a ledger that shows them their taste?"]{
+  #:depth #!experiential ~#lens(choice)
+  ~#with: @taste @quest_plan
+  ~#hypothesis: "Taste is a practiced reading; recording what was kept over what, and at which stratum, lets a reader see their practice without a score."
+  ~#expect: "The walk and the note are kept in this browser; specimens compare two; nothing records which was kept."
+  ~#probe(read)
+  !probe{ "Read the walk's storage in walk.js and the compare view in specimens.js. Say where a keep would be written." }
+  $%[taste.ledger, taste.walk_only, taste.none]
+  ~<"../../.agents/plans/spw-quest/PLAN.md">
+}

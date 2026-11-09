@@ -17,6 +17,10 @@ The public CSS and JS pay three ways beyond the page that loads them. Each slice
 
 [lore-land-support.spw](lore-land-support.spw) is the survey of copies. What came back is [lore-land-plans.spw](lore-land-plans.spw): five theories read from lore.land's PLAN.A through PLAN.E on 2026-11-08, each with one local grain and one wonder. Support writes this site. lore.land stays in its own repo. The next slice here stays S4a. A line in that reading is this site's behavior when it cites a file here. PLAN.C's synthesis and PLAN.D's Firefox track sit outside the reading.
 
+## Lite interpreters, textures and sponsored themes (2026-11-09)
+
+[ecosystem-productization](../../../.spw/caches/ecosystem-productization-2026-11.spw) reads the workbench, lore.land and texture.website together. The workbench has each piece of a lite interpreter (lite at 2,921 bytes, eight dialects, a profile registry, dated releases with a 5 KiB lite budget) but no kit that composes one, and its four consumers take four builds; factshift's reader names a cut that exists in no release folder. The asks, for the workbench's intake: one release every consumer takes, a lite profile kit, the sockets in the journal's order, ranges with units, holes, a compact address codec, siblings by juxtaposition and streams in the slot reader. Also there: lore.land's trope ecology drawn as a field, a residency's texture read from its index, an ephemeral registry of sponsored themes that close on the site's own dates, events as dated tuning lines with saveable snippets, and partial compilation of a line's numbers to CSS, a shader's uniforms or a small force tensor.
+
 ## Measured 2026-10-25
 
 Rows the landed slices settled are under Landed. The flip count was re-read on 2026-11-06.
