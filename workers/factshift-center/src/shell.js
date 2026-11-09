@@ -97,10 +97,15 @@ export const NAVIGATION_WAIT_MS = 3500;
 export const SITE_REVISION = 2;
 export const SHELL_VERSION = `${SNAPSHOT.revision}-${SNAPSHOT.snapshot}-site${SITE_REVISION}`;
 
-/** The script served at /sw.js. */
-export const SHELL_SCRIPT = `// factshift.center shell, snapshot ${SNAPSHOT.revision} (${SNAPSHOT.snapshot}); source: workers/factshift-center/src/shell.js
-(${factshiftShell.toString()})(${JSON.stringify({ version: SHELL_VERSION, files: SNAPSHOT_FILES, waitMs: NAVIGATION_WAIT_MS })});
+/** The script at /sw.js, for a snapshot and the files it keeps; carry-shell.mjs writes it into assets/. */
+export function shellScript(snapshot = SNAPSHOT, files = SNAPSHOT_FILES) {
+  const version = `${snapshot.revision}-${snapshot.snapshot}-site${SITE_REVISION}`;
+  return `// factshift.center shell, snapshot ${snapshot.revision} (${snapshot.snapshot}); source: workers/factshift-center/src/shell.js
+(${factshiftShell.toString()})(${JSON.stringify({ version, files, waitMs: NAVIGATION_WAIT_MS })});
 `;
+}
+
+export const SHELL_SCRIPT = shellScript();
 
 /** Runs on the canvas after load: register the shell at the root, so it controls /. */
 export function registerFactshiftShell() {

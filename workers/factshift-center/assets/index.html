@@ -17,6 +17,16 @@
   <link rel="modulepreload" crossorigin href="/assets/index-nrhXdvWG.js">
   <link rel="stylesheet" crossorigin href="/assets/index-uNOzoo7a.css">
   <link rel="stylesheet" crossorigin href="/assets/main-_qtzgt2L.css">
+    <meta name="factshift-site-head" content="2" data-factshift-site-head>
+    <meta name="theme-color" content="#4c1d1d">
+    <link rel="apple-touch-icon" href="/v0.0.1/favicon/192.png">
+    <meta name="apple-mobile-web-app-title" content="factshift">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="factshift.center">
+    <meta property="og:title" content="factshift.center">
+    <meta property="og:description" content="factshift.center lays out a line of Spw: who is looking, from where, and what is still open, as nodes to move, link, and rewrite.">
+    <meta property="og:url" content="https://factshift.center/">
+    <meta name="twitter:card" content="summary">
 </head>
 <body data-mode="nothing"
       data-interface-depth="standard"
@@ -343,5 +353,11 @@
      data-spw-feature="mode-navigation">
     <ul id="keystroke-options" role="list" aria-label="Available shortcuts"></ul>
 </nav>
+<script data-factshift-shell>(function registerFactshiftShell() {
+  if (!("serviceWorker" in navigator)) return;
+  const start = () => navigator.serviceWorker.register("/sw.js", { scope: "/", updateViaCache: "none" }).catch(() => {});
+  if (document.readyState === "complete") start();
+  else addEventListener("load", start, { once: true });
+})();</script>
 </body>
 </html>

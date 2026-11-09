@@ -167,7 +167,7 @@ Built in the app (`workers/factshift-center/app/src/js/ui/gestures.ts`) and comm
 1. In the app, run `npx tsc --noEmit`, then `npx vite build`.
 2. `rsync -a --delete --exclude='*.map' --exclude='.assetsignore' workers/factshift-center/app/dist/ workers/factshift-center/assets/`
 3. In `workers/factshift-center/version.json`, update `revision` and `snapshot`, and add any new query key.
-4. `node workers/factshift-center/carry-shell.mjs` rewrites the shell's kept list (`src/snapshot-files.js`). `check:workers` runs it with `--check`, so a snapshot carried without this step fails.
+4. `node workers/factshift-center/carry-shell.mjs` carries the site's layer onto the snapshot. It writes the shell's kept list (`src/snapshot-files.js`); the head lines and the shell's registration in both `index.html` files; the merged `manifest.json`; `sw.js`; and `_headers`. Since 2026-11-08 the canvas is static and the worker runs for `/` only (the www redirect), so a snapshot carried without this step has no shell and no installed face. `check:workers` runs it with `--check`.
 5. `npm run check:workers`, then commit in this repository when the creator asks.
 
 **The shell (2026-11-08).** The canvas opens offline. The snapshot's own service worker registers at `/v0.0.2-alpha/` with no scope, so it never controlled `/`. The site's worker now serves `/sw.js` (`src/shell.js`) and adds one registration line to the canvas's HTML as it serves it. The app repository is untouched.
