@@ -730,7 +730,7 @@ function renderSiteHead(vars) {
     '    <meta content="#1a9999" name="theme-color" />',
     '    <meta content="yes" name="apple-mobile-web-app-capable" />',
     '    <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" />',
-    '    <meta content="Spwashi" name="apple-mobile-web-app-title" />',
+    '    <meta content="_spwashi" name="apple-mobile-web-app-title" />',
     `    <meta name="description" content="${attrEscape(description)}" />`,
     robots ? `    <meta name="robots" content="${attrEscape(robots)}" />` : '',
     `    <meta name="spw:locale" content="${attrEscape(locale)}" />`,

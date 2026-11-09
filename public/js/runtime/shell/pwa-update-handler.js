@@ -413,7 +413,7 @@ const maybeShowInstallPrompt = () => {
     if (deferredInstallPrompt && !promptIsDismissed(DISMISS_INSTALL_KEY)) {
         toastManager.show({
             kind: 'install',
-            message: 'Add Spwashi to your home screen. Works offline, loads instantly.',
+            message: 'Add _spwashi to your home screen. Works offline, loads instantly.',
             actionLabel: 'Install',
             action: async () => {
                 const prompt = deferredInstallPrompt;
@@ -438,7 +438,7 @@ const maybeShowInstallPrompt = () => {
     if (isIosSafari() && !promptIsDismissed(DISMISS_IOS_HINT_KEY)) {
         toastManager.show({
             kind: 'install',
-            message: 'Tap Share, then "Add to Home Screen" to install Spwashi.',
+            message: 'Tap Share, then "Add to Home Screen" to install _spwashi.',
             dismissLabel: 'Got it',
             dismiss: () => rememberPromptDismissal(DISMISS_IOS_HINT_KEY)
         });
