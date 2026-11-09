@@ -1,0 +1,137 @@
+# Stage, fractal, and the differentials (2026-11-08) — cache
+#
+# A reading of the spw.quest stage row beside factshift.center's fractal,
+# registers, and menus. Improvements are proposed. None of them opens a patch.
+# S1, E1, and M2 stay quest's next slices. The fractal's next demo stays
+# factshift's. Nothing here writes .spw/_workbench.
+
+#>stage_fractal_differentials_2026_11
+#:cache #!stage #!fractal #!registers #!menus
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@examples: ~"../../workers/spw-quest/src/examples.js"
+@reader: ~"../../workers/spw-quest/src/file-reader.js"
+@quest_manifest: ~"../../workers/spw-quest/src/quest-manifest.js"
+@quest_plan: ~"../../.agents/plans/spw-quest/PLAN.md"
+@expert_rooms: ~"../../.agents/plans/spw-quest/expert-rooms.spw"
+@tools: ~"../../.agents/plans/factshift-center/TOOLS.md"
+@operators: ~"../../.agents/plans/factshift-center/OPERATORS.md"
+@factshift_plan: ~"../../.agents/plans/factshift-center/PLAN.md"
+@pinch: ~"../../workers/factshift-center/app/src/js/simulation/pinch.ts"
+@file_map: ~"../../workers/factshift-center/app/src/js/modes/spw/file-map.ts"
+@braces: ~"../../.agents/plans/brace-semantics/PLAN.md"
+@joins: ~"../language/dot-join.spw"
+@pwa_roles: ~"./pwa-roles-2026-11.spw"
+@navigation: ~"./spw-navigation-ergonomics-2026-11.spw"
+@expression: ~"../../public/js/interface/spw-expression.js"
+@native: ~"./spw-native-components-2026-11.spw"
+@syntax_runtime: ~"./syntax-runtime-theory-enhancements-2026-11.spw"
+@cluster: ~"../surfaces/site-cluster.spw"
+
+operation = "cache"
+fixity = "experimental"
+expression = stage[differentials]{pattern.frame.receipt}<one_next>
+
+summary = #[
+  `The stage row is the philosophy in miniature: a file names a pattern and a theme, and the field takes that theme because the pattern performs. Glass, matte, and paper stay inside the form. The page outside stays as it was.`,
+  `factshift.center already enters and leaves a frame by the hands (spread 1.35, close 0.65) and maps a thread by operator, lens, and frame. The altitude ladder, file then frame then line then slot then part, is still a proposal for the pinch.`,
+  `The one improvement worth a later patch is that a pattern may suggest its theme, and an authored theme still wins. Registers, routes, toasts, and a new sigil stay unopened.`,
+][reg=set]
+
+^"stage"{
+  live = `Three files in group Stage, after Bench, Study, and Board (@examples). syntax.spw holds the joins. headings.spw holds {student, classmate, later}@indexing, and the reader lists that company and its subject. perform.spw sets pattern = pivot, performs = one.slot, theme = glass.`
+  consequence = `When pattern is pivot, residue, template, departs, or ground-edge, and theme is paper, glass, or matte, the form takes data-theme and a pass check names the consequence (@reader). An unknown theme clears the attribute and leaves an info check. Headless Chrome on 2026-11-08: glass opened translucent with an inset edge; matte lost the shadow; velvet cleared the theme.`
+  philosophy = `A component earns the mutation it performs and the instruction that updates when the mutation lands. The check is that instruction. The theme is the surface agreeing with the pattern, for this one form.`
+  rhyme = `Quest glass is a field: color-mix and a shadow. factshift's glass tool is a window that would refract the canvas (@tools, "A glass tool"). They share a word and stay two proposals.`
+}[reg=facet]
+
+^"fractal"{
+  live = `pinch.ts clamps the camera from 0.35 to 3. A spread of 1.35 on an enterable node opens it as a page. A pinch closed to 0.65 inside an entered frame steps up to the parent (@pinch). The thread map gathers lines by operator, then lens, then #> frame, and zoomToBox frames a region (@file_map, @tools "Built: a map of the thread").`
+  proposed = `TOOLS.md still proposes pinch steps of file, frames, lines, slots, parts, and a world larger than the stage. @cluster#wonder_site_cluster_hyperindex still asks what the canvas indexes first. Perspective, layering, clustering, and a frame entered from a node are the four names already in use.`
+  reading = `Continuous k is the camera, outside a frame. Crossing the spread or the close is the fractal, the hands changing altitude. The map's feature switch is a third motion: it changes which likeness is drawn, and the camera follows.`
+}[reg=facet]
+
+^"routing"{
+  today = `A pathname is a room. Quest's rooms are /learn, /build, /read, /pivot, /specimens, and the guide. An operator is a cognitive frame inside a line: #> addresses, ? probes, ~ holds, @ regards (@navigation, TOP_ROUTE_TOKENS). <spw-expression> turns the slots of one expression. It does not add a route per sigil.`
+  handoff = `A line moves between quest and factshift in #spw64=, which no server reads (@pwa_roles, @tools "Routing"). The stage stays a row on the guide, the app's start_url.`
+  proposal = `The address keeps the room. The expression's operator is the frame the room is read through. A new path per operator would make thirteen homes for one notation.`
+}[reg=facet]
+
+^"pwa"{
+  roles = `@pwa_roles already splits the three apps: spwashi.com the person, spw.quest the notation, factshift.center the line made physical. Quest's shortcuts are Walk, Build, Learn, and Shelf (@quest_manifest).`
+  value = `The stage is quest's new difference: experimental syntax, and a surface that changes because a pattern performs. It lives on the guide the installed app opens. It does not need a fifth shortcut.`
+  develop = `The installed quest is worth opening when the line in hand can be mutated and the reading updates. factshift is worth opening when that line should be laid out. spwashi.com is worth opening for the person and the season. The handoff stays the fragment.`
+}[reg=facet]
+
+^"registers"{
+  live = `Facet and set are the stamps the corpus actually uses, and they restate a brace. Stream is the stamp that changes a node's role: order (@joins: comma is common, semicolon is ordinal, ~> is a path). A left brace accumulates and a right brace discharges (@braces). Wonder stays the ? form.`
+  associativity = `A facet and a set commute: the names can trade places and the record is the same company. A stream does not: earlier binds first, a left fold, the way a path is walked from the left. The right brace's discharge is the other direction, and it stays a brace reading rather than a second register.`
+  proposal = `Say the fold in the register's own comment when a stamp is taught. Do not add a register to carry left or right. Density is the fold a reader can see, not a longer stamp.`
+}[reg=facet]
+
+^"differentials"{
+  inside_outside = `Outside is the canvas, the camera, and the page around a form. Inside is an entered frame, a slot, and the field a pattern paints. Context was recorded as flowing left to right and from out to in (factshift wip, 2026-10-29). A mark moves from the front of a word to inside a part (@operators, position). Quest paints data-theme on the form and leaves the page outside alone.`
+  log_exp = `The camera multiplies k between 0.35 and 3, an exponential look. Charge on the reflex has been labelled as a tenfold step. Altitude is the short ladder: file, frame, line, slot, part. An amount, a charge or a mass, can step by a factor. A place, which altitude or which slot, steps by one grain.`
+  objective_subjective = `An objective differential is a measure any reader can check: the pass check, data-theme, k's number. A subjective differential is a place a reader chooses: the gradient file's 0.10 to 0.90, a color as a perspective. On <spw-expression> the open wall takes the objective brace color and the close wall the subjective (@expression). The stage's theme is objective once named. Which theme belongs to which pattern is still a taste.`
+}[reg=facet]
+
+^"menus"{
+  live = `A factshift menu row shows one verb, a turn primes the next, and a tap actualizes. =menu{…} keeps rows by the family names they already have (@tools). The hash answers a swipe with a toast beside it. On the site, a learning toast is opt-in and must not cover the lede. Quest has no toast: the check beside the file is the instruction.`
+  proposal = `A context menu is the primed mode of the thing under the hand, one verb showing, and it closes when the act lands. A toast is one sentence, the receipt, beside the thing that changed, and it leaves when the next act starts. A check that the file itself can show stays on the file. A receipt with nowhere to sit may be a toast. The two do not stack.`
+}[reg=facet]
+
+^"craft"{
+  alignment = `Names share one edge and acts share the other. Quest's four rows share the 4.5rem group column. A new row joins that column.`
+  embeddedness = `A consequence lives in the thing that performed. The theme lives in the form. A frame lives in the node that holds a line. The page and the canvas stay the outside.`
+  resonance = `Today pattern and theme are both authored, and any known pattern accepts any of the three themes. A closer resonance: pivot suggests glass (one slot moves, the field stays see-through), residue suggests matte (what remains sits flat), template suggests paper. departs and ground-edge stay unassigned until a browser look. An authored theme still wins.`
+  abstraction = `The stage files are the explanation. The public site does not gain a lecture, a sigil, or a fourth copy accessor. @syntax_runtime keeps the larger syntax and runtime list. This cache does not promote it.`
+}[reg=facet]
+
+^"priority"{
+  next = `When a quest slice is free for a feel change, and not before S1, E1, or M2: let the pattern suggest the theme, and let theme = still override. One file, perform.spw, and the same check sentence.`
+  hold = #[
+    `pinch steps of linguistic altitude, after the spread and the close, owned by factshift`,
+    `a sentence on facet, set, and stream that names the fold, with no new register`,
+    `the operator as the frame inside a room, owned by the navigation prime`,
+    `a receipt that leaves, tried first on the hash toast, not on the quest check`,
+  ][reg=set]
+  opens = `No route, no sigil, no shortcut, no data-spw-* family, no workbench edit.`
+}[reg=facet]
+
+#>wonder_stage_pattern_theme
+?["Should a pattern suggest the theme, or does the author name both?"]{
+  #:depth #!stylistic ~#lens(choice)
+  ~#with: @examples @reader
+  ~#hypothesis: "pivot suggests glass, residue suggests matte, template suggests paper, and an authored theme = still wins."
+  ~#expect: "perform.spw names both pattern = pivot and theme = glass, and the check says the theme consequence is glass."
+  ~#probe(read)
+  !probe{ "Read perform.spw in examples.js and the theme check in file-reader.js. Say whether the theme is chosen by the pattern or written beside it." }
+  $%[theme.pattern_suggests, theme.author_names, theme.suggests_unless_named]
+  ~<"./stage-fractal-differentials-2026-11.spw"> ~<"../../workers/spw-quest/src/examples.js"> ~<"../../workers/spw-quest/src/file-reader.js">
+}
+
+#>wonder_fractal_altitude
+?["On a frame, should a pinch step file, frame, line, slot, part, or keep multiplying the camera?"]{
+  #:depth #!experiential ~#lens(comparison)
+  ~#with: @pinch @tools @file_map
+  ~#hypothesis: "Outside, k stays continuous between 0.35 and 3. Crossing 1.35 or 0.65 already enters or leaves. Further pinches on a frame could step the altitude ladder. The thread map already steps likeness by a button."
+  ~#expect: "pinch.ts clamps MIN_ZOOM 0.35 and MAX_ZOOM 3, and SPREAD 1.35 enters a page. TOOLS.md still lists the altitude ladder as proposed."
+  ~#probe(read)
+  !probe{ "Read MIN_ZOOM, SPREAD, and CLOSED in pinch.ts, then the fractal-zoom paragraph in TOOLS.md. Name which motion is live and which is still a proposal." }
+  $%[zoom.altitude, zoom.continuous, zoom.both_by_place]
+  ~<"../../workers/factshift-center/app/src/js/simulation/pinch.ts"> ~<"../../.agents/plans/factshift-center/TOOLS.md">
+}
+
+#>wonder_receipt_duration
+?["Does a receipt stay beside the file, or leave when the next act starts?"]{
+  #:depth #!pragmatics ~#lens(comparison)
+  ~#with: @reader @tools
+  ~#hypothesis: "A check the file can show stays on the file. A toast beside the hash leaves when the next swipe lands. The two do not stack."
+  ~#expect: "Quest's perform check remains in the reading. TOOLS.md records the hash toast as a swipe's answer, beside the hash."
+  ~#probe(read)
+  !probe{ "Read the theme check in file-reader.js and the hash-toast paragraph in TOOLS.md. Say which receipt has a file to sit on." }
+  $%[receipt.beside_the_file, receipt.leaves, receipt.both_by_place]
+  ~<"../../workers/spw-quest/src/file-reader.js"> ~<"../../.agents/plans/factshift-center/TOOLS.md">
+}
