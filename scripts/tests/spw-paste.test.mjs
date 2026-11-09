@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
 import { parse } from '../../public/js/semantic/spw-workbench-reader.js';
-import { PASTE_ACTIONS, actionLabel, readPaste, spwSegments } from '../../public/js/modules/tools/spw-paste.js';
+import { PASTE_ACTIONS, actionLabel, doorLabel, readPaste, spwSegments } from '../../public/js/modules/tools/spw-paste.js';
 import { SEED_TEMPLATES, buildSeedText } from '../../public/js/modules/cards/seed-card.js';
 
 const join = (segments) => segments.map((segment) => segment.text).join('');
@@ -64,6 +64,24 @@ test('every action has a plain label, and home hosts the box with a working form
   const home = readFileSync(new URL('../../index.html', import.meta.url), 'utf8');
   assert.ok(/<form[^>]+action="\/tools\/spw-parser\/"[^>]+method="get"[^>]+data-paste-open="page"/.test(home), 'home hosts a GET form to the parser');
   assert.ok(/<textarea[^>]+name="spw_source"/.test(home), 'the form posts its text as spw_source');
+});
+
+test('Spw that reads as Spw offers the canvas and spw.quest; prose and seeds do not', () => {
+  const home = readFileSync(new URL('../../index.html', import.meta.url), 'utf8');
+  const authored = home.match(/<textarea[^>]+name="spw_source"[^>]*>([^<]*)<\/textarea>/)[1]
+    .replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&quot;/g, '"').replace(/&amp;/g, '&');
+  const doc = readPaste(authored, parse);
+  assert.equal(doc.kind, 'document');
+  assert.deepEqual(doc.doors.map(doorLabel), ['Lay out on the canvas', 'Take apart on spw.quest']);
+  const [canvas, build] = doc.doors.map((door) => new URL(door.href));
+  assert.equal(Buffer.from(canvas.hash.replace('#spw64=', ''), 'base64url').toString('utf8'), authored.trim());
+  assert.equal(build.searchParams.get('filename'), 'home_frame.spw');
+  assert.equal(build.searchParams.get('script'), authored.trim());
+
+  const line = readPaste('ink[apple]{bite.coaster}<A>', parse);
+  assert.equal(new URL(line.doors[0].href).searchParams.get('spw'), 'ink[apple]{bite.coaster}<A>');
+  assert.deepEqual(readPaste('just some words', parse).doors, []);
+  assert.deepEqual(readPaste(buildSeedText(SEED_TEMPLATES.folio, 'A-12', { piece: 'No. 07' }), parse).doors, []);
 });
 
 test('a copied seed reads as its card and can go home to fill it', () => {

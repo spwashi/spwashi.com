@@ -1,4 +1,5 @@
 import { parserHref } from '../../kernel/parser-link.js';
+import { ECOSYSTEM_JOBS, ecosystemLinks } from '../../kernel/ecosystem-links.js';
 import {
   annotateFloatingChromeElement,
   isLensModeControl,
@@ -612,10 +613,11 @@ function buildMenuContent(target, semantic, frame) {
     fragment.appendChild(list);
   }
 
-  const parseHref = parserHref(
-    target.dataset.spwSemanticExpression || buildSeed(target, semantic, frame),
-    `${normalizeToken(location.pathname || 'site') || 'site'}.spw`,
-  );
+  const source = target.dataset.spwSemanticExpression || buildSeed(target, semantic, frame);
+  const parseHref = parserHref(source, `${normalizeToken(location.pathname || 'site') || 'site'}.spw`);
+  // The same source, carried to the peers; the region's id names it where a door has room.
+  const doors = new Map(ecosystemLinks(source, { name: target.id || frame?.id || '' }).map((door) => [door.job, door.href]));
+  const doorLabel = (job) => ECOSYSTEM_JOBS[job].label.replace(/^./, (first) => first.toUpperCase());
   const actionGroups = [
     [
       'inspect',
@@ -634,6 +636,8 @@ function buildMenuContent(target, semantic, frame) {
         ['copy', 'Copy source', () => copySeed(target, semantic, frame)],
         // A link, not a handler: it opens the parser with this region's Spw, and can be copied or opened elsewhere.
         ['parse', 'Read in the parser', parseHref],
+        ['canvas', doorLabel('canvas'), doors.get('canvas')],
+        ['build', doorLabel('build'), doors.get('build')],
       ],
     ],
     [
@@ -667,6 +671,11 @@ function buildMenuContent(target, semantic, frame) {
       const item = document.createElement(typeof handler === 'string' ? 'a' : 'button');
       if (typeof handler === 'string') {
         item.href = handler;
+        // A peer (factshift.center, spw.quest) opens beside the page, as it does from the satchel.
+        if (/^https:\/\//.test(handler)) {
+          item.target = '_blank';
+          item.rel = 'noopener';
+        }
       } else {
         item.type = 'button';
         item.addEventListener('click', handler);

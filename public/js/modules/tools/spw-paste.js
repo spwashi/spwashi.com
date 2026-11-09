@@ -19,6 +19,7 @@
 
 import { OPERATOR_INFO } from '../../runtime/experiential/operator-info.js';
 import { PARSER_LINK_MAX_SOURCE, parserHref } from '../../kernel/parser-link.js';
+import { ecosystemLinks } from '../../kernel/ecosystem-links.js';
 import { MAX_DOCUMENT_BYTES, deliverDocumentLaunch, isSpwDocument } from '../../runtime/shell/spw-document-launch.js';
 import { downloadSpwText } from '../../interface/seed-exits.js';
 import { SEED_HOMES, SeedCard, deliverSeedHome, ensureSeedCardStyles, readSeedText } from '../cards/seed-card.js';
@@ -131,8 +132,11 @@ export function readPaste(source, parse) {
     prose: 'This does not read as Spw yet: no operators or brackets. The parser can still show what it sees.',
   }[kind];
 
+  // Spw that reads as Spw can also go to the peers: laid out on factshift.center, taken apart on spw.quest.
+  const doors = kind === 'expression' || kind === 'document' ? ecosystemLinks(text) : [];
+
   return {
-    kind, source: text, segments: spwSegments(text, tokens), actions, seed,
+    kind, source: text, segments: spwSegments(text, tokens), actions, doors, seed,
     reading: [reading, ...notes].join(' '), frames, anchors, lines, errors, bytes,
   };
 }
@@ -160,6 +164,9 @@ export function actionLabel(action, reading) {
   return PASTE_ACTIONS[action];
 }
 
+/** A door to a peer, in the words every component uses for it (ecosystem-links.js). */
+export const doorLabel = (door) => String(door?.label || '').replace(/^./, (first) => first.toUpperCase());
+
 function renderReading(out, reading, hint = '') {
   if (reading.kind === 'empty') {
     out.replaceChildren(...(hint ? [h('p', { class: 'spw-paste__reading' }, hint)] : []));
@@ -178,7 +185,15 @@ function renderReading(out, reading, hint = '') {
           class: 'spw-chip',
           'data-paste-action': action,
           'data-paste-primary': index === 0 ? 'true' : null,
-        }, actionLabel(action, reading))))
+        }, actionLabel(action, reading))),
+        // Doors to the peers are links, so they can be copied or opened elsewhere; they open beside the box.
+        (reading.doors || []).map((door) => h('a', {
+          class: 'spw-chip',
+          href: door.href,
+          title: door.title,
+          target: '_blank',
+          rel: 'noopener',
+        }, doorLabel(door))))
       : null,
   );
 }
