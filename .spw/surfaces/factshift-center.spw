@@ -114,9 +114,11 @@ contents = #[
 
 ^"devices"{
   width = `At 40rem or narrower one surface shows at a time and the column is one column of squares the title box's height.`
-  coarse = `A coarse pointer hides keyboard hints; that is the only touch-screen rule.`
+  coarse = `A coarse pointer hides keyboard hints, rests the Spw prompt as its print until a tap opens the painted editor, and starts sideways steps in a 72px band inside each side.`
   fine = `On a fine pointer a window's edges are grab bands; two-finger scroll pans; the camera zooms only from a pinch begun on the lens or a trackpad pinch over it.`
   keyboard = `The focus ring is the keyboard's only. The context-menu key or Shift+F10 is the hold. With the lens focused, the arrows are the nub's levels.`
+  history = `Back and forward walk this visit's concepts as the browser's history: the band and the frame on touch, a tab's own edge swipe, Android's back, a trackpad's swipe and Alt+← → all reach the same entries; a mouse never starts the band.`
+  editing = `Alt+Shift+→ grows the selection along the reading and ← steps back in; Alt+↑ ↓ moves a part; Tab closes only what a line owes; the bar under the line is the same acts for a thumb.`
   pressure = `The canvas reads no pointer force. Its magnitudes are distance, speed and time: how far past grow or shrink, how fast a throw, how long a hold, how wide a pinch. A device that reports force would use that scale.`
 }[reg=facet]
 
