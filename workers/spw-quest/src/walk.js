@@ -24,9 +24,9 @@ export const WALK_LIMIT = 40;
 /**
  * The rooms a walk can still offer, in order, and where each is: only rooms the
  * guide already links (its doors and masthead), so the card adds no new way
- * out of the guide. The shelf keeps its one link in the masthead, and the
- * guide still never links /pivot or /constructs (test/specimens.test.mjs,
- * test/constructs.test.mjs).
+ * out of the guide. The origin section also names the shelf. The card does
+ * not offer it. The guide still never links /pivot or /constructs
+ * (test/specimens.test.mjs, test/constructs.test.mjs).
  */
 export const OPEN_ROOMS = Object.freeze([
   ["learn", "/learn"], ["build", "/build"], ["forms", "/forms/"], ["parser", "/parser/"], ["install", "/install"],

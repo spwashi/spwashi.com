@@ -249,11 +249,18 @@ function pathNav(current = -1) {
 
 /** The guide's own sections below the file. */
 const GUIDE_CSS = `.opening { margin: 0 0 1.4rem; }
-    .opening h1 { max-width: 17ch; margin: 0 0 .7rem; }
-    .opening .lede { max-width: 40rem; margin: 0; color: var(--ink-soft); font-size: clamp(1.05rem, 2.4vw, 1.2rem); line-height: 1.5; }
+    .opening h1 { max-width: 36rem; margin: 0 0 .7rem; }
+    .opening .lede { max-width: 40rem; margin: .85rem 0 0; color: var(--ink-soft); font-size: clamp(1.05rem, 2.4vw, 1.2rem); line-height: 1.5; }
+    .title-spw { box-sizing: border-box; width: min(100%, 40rem); height: auto; min-height: calc(1lh + 1.15rem + 2px); max-height: 70vh; margin: 0; padding: .45rem .75rem .7rem; overflow: auto; resize: vertical; border: 1px solid var(--line); border-radius: var(--radius); background: var(--field); color: var(--fg); font: 600 .98rem/1.6 var(--mono); font-variant-ligatures: none; font-feature-settings: "calt" 0, "liga" 0; white-space: pre; }
+    .title-spw code { font: inherit; }
     .eyebrow { margin: 0 0 .5rem; color: var(--muted); font: 600 .78rem/1.2 var(--font); letter-spacing: .08em; text-transform: uppercase; }
-    section.band { margin: 3.2rem 0 0; padding: 2rem 0 0; border-top: 1px solid var(--line); }
-    section.band > p { max-width: 46rem; }
+    .band { margin: 3.2rem 0 0; padding: 2rem 0 0; border-top: 1px solid var(--line); }
+    .band > p { max-width: 46rem; }
+    details.band > summary { display: block; cursor: pointer; list-style: none; }
+    details.band > summary::-webkit-details-marker { display: none; }
+    details.band > summary h2 { display: flex; align-items: baseline; gap: .45rem; }
+    details.band > summary h2::after { content: ""; width: .42rem; height: .42rem; margin-left: .15rem; border-right: 1.5px solid var(--muted); border-bottom: 1.5px solid var(--muted); transform: translateY(-.12em) rotate(-45deg); flex: none; }
+    details.band[open] > summary h2::after { transform: translateY(.05em) rotate(45deg); }
     [id] { scroll-margin-top: 1.25rem; }
     h2 .self { margin-left: .45rem; color: var(--muted); font: 400 .7em var(--mono); text-decoration: none; opacity: .5; }
     h2 .self:hover, h2 .self:focus-visible, section:target h2 .self { color: var(--accent); opacity: 1; }
@@ -271,10 +278,14 @@ const GUIDE_CSS = `.opening { margin: 0 0 1.4rem; }
     .edges-in a { display: inline-flex; align-items: center; gap: .25rem; min-height: 32px; text-decoration: none; }
     .edges-in .n { color: var(--muted); font-variant-numeric: tabular-nums; }
     .braces { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr)); gap: 0 1.4rem; margin: 1.2rem 0 0; padding: 0; list-style: none; }
-    .braces li { display: grid; grid-template-columns: 3.4rem minmax(0, 1fr); gap: .1rem .6rem; align-items: baseline; margin: 0; padding: .55rem 0; border-top: 1px solid var(--line); }
+    .braces li { display: grid; grid-template-columns: 3.6rem minmax(0, 1fr); gap: .1rem .6rem; align-items: baseline; margin: 0; padding: .55rem 0; border-top: 1px solid var(--line); }
     .braces li:target { background: var(--accent-soft); }
-    .braces .pair { font: 600 1.15rem/1.2 var(--mono); }
+    .braces .pair { display: inline-grid; grid-template-columns: 1.15ch 1.15ch; justify-content: space-between; width: 3.2rem; font: 600 1.15rem/1.2 var(--mono); font-variant-ligatures: none; font-feature-settings: "calt" 0, "liga" 0; }
+    .braces .pair span { text-align: center; }
     .braces .edges-in { grid-column: 2; padding-top: 0; }
+    .join-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: .15rem 1.4rem; max-width: 46rem; margin: .8rem 0 1rem; padding: 0; list-style: none; }
+    .join-list li { display: grid; grid-template-columns: 2.6rem minmax(0, 1fr); gap: .15rem .6rem; align-items: baseline; margin: 0; padding: .4rem 0; border-top: 1px solid var(--line); }
+    .join-list code { font: 600 1.05rem/1.2 var(--mono); font-variant-ligatures: none; font-feature-settings: "calt" 0, "liga" 0; }
     .doors { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); gap: .7rem; margin: 1.2rem 0 0; }
     .door { display: grid; align-content: start; gap: .35rem; margin: 0; padding: 1rem 1rem 1.05rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); box-shadow: none; }
     .door:has(a:hover, a:focus-visible) { border-color: var(--accent); }
@@ -282,8 +293,8 @@ const GUIDE_CSS = `.opening { margin: 0 0 1.4rem; }
     .door h3 a { color: var(--fg); text-decoration: none; }
     .door h3 a::after { content: " →"; color: var(--accent); }
     .door p { margin: 0; color: var(--ink-soft); font-size: .95rem; line-height: 1.45; }
-    .door code { overflow-wrap: anywhere; font-size: .82rem; }
-    #origin p { max-width: 40rem; font-family: var(--manuscript); font-size: 1.12rem; line-height: 1.55; }`;
+    .door p:has(code) { margin-top: .15rem; padding-top: .4rem; border-top: 1px solid var(--line); }
+    .door code { display: block; overflow-wrap: anywhere; font-size: .82rem; }`;
 
 /** The guide. With `parser` ({ value, from }, from a valid ?parser=), a banner leads and the page reads with that build. */
 function renderGuide(parser = null, example = EXAMPLES[0]) {
@@ -294,11 +305,15 @@ function renderGuide(parser = null, example = EXAMPLES[0]) {
       <p class="note">Runtime: ${escapeHtml(op.does)}</p>${EDGES_IN.ops.has(op.name) ? `
       <p class="edges-in">${panelLinks(EDGES_IN.ops.get(op.name))}</p>` : ""}
     </li>`).join("\n    ");
-  const braces = CONTAINERS.map((c) => `<li id="brace-${escapeHtml(c.name)}"><code class="pair" data-t="b-${escapeHtml(BRACE_TYPES.get(c.open) || "")}">${escapeHtml(c.open)} ${escapeHtml(c.close)}</code><span><strong>${escapeHtml(c.name)}</strong> ${escapeHtml(c.reads)}</span>${EDGES_IN.braces.has(c.name) ? `<span class="edges-in">${panelLinks(EDGES_IN.braces.get(c.name))}</span>` : ""}</li>`).join("\n    ");
+  const braces = CONTAINERS.map((c) => `<li id="brace-${escapeHtml(c.name)}">
+      <code class="pair" data-t="b-${escapeHtml(BRACE_TYPES.get(c.open) || "")}"><span>${escapeHtml(c.open)}</span><span>${escapeHtml(c.close)}</span></code>
+      <span class="brace-reads"><strong>${escapeHtml(c.name)}</strong> ${escapeHtml(c.reads)}</span>${EDGES_IN.braces.has(c.name) ? `
+      <span class="edges-in">${panelLinks(EDGES_IN.braces.get(c.name))}</span>` : ""}
+    </li>`).join("\n    ");
   const setIds = INSTRUCTION_SETS.map((set) => set.id).join(" ");
   return layout({
     title: "spw.quest — a guide to the Spw language",
-    description: "Spw is plain text with a few marks. Open a file people keep, change it, and see what a tool can read from it.",
+    description: "Spw is a notation for a reading you can check. A mark names a role, a brace names a slot, and a tool reads the line back.",
     canonical: "https://spw.quest/",
     head: QUEST_HEAD,
     script: `document.documentElement.dataset.setupSets = ${JSON.stringify(setIds)};\ndocument.documentElement.dataset.panels = ${JSON.stringify(STEPS.map((step) => step.id).join(" "))};\n(${forwardOldHash.toString()})();\n(${toolActions.toString()})();\n(${releaseNotice.toString()})(${JSON.stringify(PINNED_RELEASE)}, ${newestPublished.toString()});`,
@@ -309,42 +324,50 @@ function renderGuide(parser = null, example = EXAMPLES[0]) {
     ${WALK_CSS}${parser ? `\n    ${SWITCH_CSS}` : ""}`,
     body: `${masthead("/")}
 ${parser ? `${switchBanner(parser.value, parser.from)}\n` : ""}<section class="opening" aria-labelledby="title">
-  <h1 id="title">A small language for the shape of a thought.</h1>
-  <p class="lede">Plain text with a few marks: a mark says what a word is doing, braces say what belongs together.</p>
+  <h1 id="title">A notation for readings you can compare.</h1>
+  <pre class="title-spw" aria-label="The same reading, with one slot changed"><code><span data-t="frame">#&gt;</span>reading<span data-t="b-mode">[</span>compare<span data-t="b-mode">]</span><span data-t="b-direction">{</span>shared<span data-t="b-direction">}</span><span data-t="b-scene">(</span>shelf<span data-t="b-scene">)</span><span data-t="b-concept">&lt;</span>notation<span data-t="b-concept">&gt;</span>
+<span data-t="frame">#&gt;</span>reading<span data-t="b-mode">[</span>compare<span data-t="b-mode">]</span><span data-t="b-direction">{</span>parted<span data-t="b-direction">}</span><span data-t="b-scene">(</span>shelf<span data-t="b-scene">)</span><span data-t="b-concept">&lt;</span>notation<span data-t="b-concept">&gt;</span></code></pre>
+  <p class="lede">A mark says what a word is doing. A brace says which slot it fills. Change one slot and the reading updates.</p>
 </section>
 ${walkSection()}
 ${fileWorkspace(example)}
 
 <section id="operators" class="band" aria-labelledby="operators-title">
-  <h2 id="operators-title">Twelve marks, four braces${selfLink("operators", "operators-title")}</h2>
-  <p>Each mark has a reader's name and, kept apart from it, what the runtime does today. The numbers are the <a href="/learn">Learn</a> panels that use it.</p>
+  <h2 id="operators-title">Marks and braces${selfLink("operators", "operators-title")}</h2>
+  <p>A mark says what a word is doing. The name is the workbench's name for that mark. The runtime line is what the reader does with it today. The numbers open the <a href="/learn">Learn</a> panel that uses it.</p>
   <ul class="sigils">
     ${sigils}
   </ul>
-  <ul class="braces" id="braces" aria-label="Four ways to hold things">
+  <ul class="braces" id="braces" aria-label="Brace pairs">
     ${braces}
   </ul>
-  <p class="note"><a href="/forms/">Forms, side by side</a>: each brace, join and mark against its neighbors. Marks and braces compose: <code>#[…]</code> is a set, <code>.{…}</code> a property sheet.</p>
+  <p class="note"><a href="/forms/">Forms, side by side</a>: each brace, join and mark against its neighbors. Marks and braces compose: <code><span data-t="vibration">#</span><span data-t="b-mode">[</span>…<span data-t="b-mode">]</span></code> is a set, <code><span data-t="ground">.</span><span data-t="b-direction">{</span>…<span data-t="b-direction">}</span></code> a property sheet.</p>
 </section>
 
 <section id="ways" class="band" aria-labelledby="ways-title">
-  <h2 id="ways-title">Ways in${selfLink("ways", "ways-title")}</h2>
+  <h2 id="ways-title">Tools${selfLink("ways", "ways-title")}</h2>
   <div class="doors">
-    <article class="door"><h3><a href="/forms/">Forms, side by side</a></h3><p>Lines that differ in one thing, and what it does.</p></article>
-    <article class="door"><h3><a href="/build">Take one line apart</a></h3><p>Change one slot; the rest holds.</p><p><code>${escapeHtml(assemble(BUILD_DEFAULTS))}</code></p></article>
-    <article class="door"><h3><a href="/learn">Learn it a mark at a time</a></h3><p>Seven panels, one line each.</p></article>
-    <article class="door"><h3><a href="/install#phone">Keep it on your phone</a></h3><p>Add spw.quest to your home screen, in its own window.</p></article>
-    <article class="door"><h3><a href="/install#repository">Keep it in a repository</a></h3><p>Parser, CLI and editor tooling at <code>.spw/_workbench</code>.</p></article>
-    <article class="door"><h3><a href="/parser/">Read it on your own page</a></h3><p>Dated parser builds, each with its integrity hash.</p></article>
+    <article class="door"><h3><a href="/forms/">Forms, side by side</a></h3><p>Compare lines that differ in one slot.</p></article>
+    <article class="door"><h3><a href="/build">Take one line apart</a></h3><p>Edit one slot. The reading updates.</p><p><code>${escapeHtml(assemble(BUILD_DEFAULTS))}</code></p></article>
+    <article class="door"><h3><a href="/learn">Learn it a mark at a time</a></h3><p>Seven panels. Each panel is one line.</p></article>
+    <article class="door"><h3><a href="/install#phone">Keep it on your phone</a></h3><p>Install the guide. It opens in its own window.</p></article>
+    <article class="door"><h3><a href="/install#repository">Keep it in a repository</a></h3><p>Parser, CLI, and editor tooling at <code>.spw/_workbench</code>.</p></article>
+    <article class="door"><h3><a href="/parser/">Read it on your own page</a></h3><p>Dated parser builds. Each build has an integrity hash.</p></article>
   </div>
 </section>
 
-<details id="origin" class="band origin" aria-labelledby="origin-title">
-  <summary><h2 id="origin-title">The shape it came from</h2></summary>
-  <p>The difficulty was not having language for what I was thinking about, so I could not tell when a thought was ready to set down. Spw gives a thought somewhere to land: one character says what a word is doing, braces say what belongs together, and a thought can be set down whole instead of chased.</p>
-  <p>It started in 2017, alongside reading about how people learn from text and helping with research in an adult learning lab. Part of it was wanting language to share what I was learning, in a place where I could keep learning what I wanted to. The question it keeps asking is about cognition: where do two understandings stop sharing ground, and what would help them share more?</p>
-  <p>And it wonders about geometry: how a mind represents the thoughts it holds, what shape a circuit of thought might take on a page, and how findings from different fields could sit side by side in one form you can read.</p>
-  <p>It is not built for anyone in particular. It has been designed with care, and it has turned out to be useful, most of all toward a culture where media literacy can grow across generations.</p>
+<details id="origin" class="band origin" open aria-labelledby="origin-title">
+  <summary><h2 id="origin-title">What this is for${selfLink("origin", "origin-title")}</h2></summary>
+  <p>This is for work that keeps a reading inspectable. A line stays a note a person can read, and a tool can still find it, check it, and follow its links. A mark says what a word is doing. A brace says which slot that word fills.</p>
+  <p>When two readings of one subject are in hand, name the slots they share and the slot where they part. Hold them on the <a href="/specimens">shelf</a>. Edit one slot in the <a href="/build">editor</a>. A question on a line carries the probe that would answer it.</p>
+  <p>Joins stay distinct, so a comparison can say which relation moved.</p>
+  <ul class="join-list" aria-label="Joins">
+    <li><code data-t="ground">.</code> <span>A dot makes one name.</span></li>
+    <li><code>,</code> <span>A comma holds a company.</span></li>
+    <li><code>;</code> <span>A semicolon keeps an order.</span></li>
+    <li><code data-t="stream">~&gt;</code> <span>A path.</span></li>
+  </ul>
+  <p>The fuller statement is <a href="https://spwashi.com/topics/software/spw/#expressiveness-goals">what Spw should let you say</a>.</p>
 </details>
 <p class="note" data-release-notice hidden>Release <code data-release-name></code> is published. This page keeps <code>reader.min.js</code> of ${PINNED_RELEASE}. <a href="/">Read the guide with the published release</a>; that loads the release's full build and does not change what this page keeps.</p>
 <p class="also"><a href="/init">Recipe for agents</a> · <a href="/quest.json">quest.json</a> · <a href="${QUEST.repository}">Source</a> · <a href="https://autonomous.feedback/spw.quest?at=/">What was hard to follow</a></p>

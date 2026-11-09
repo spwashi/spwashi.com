@@ -47,11 +47,12 @@ test('the shelf reads with scripts off: pressed forms, the pages\' rarer lines, 
   assert.deepEqual(kinds.map((m) => m[1]), ['charged', 'joined', 'marked', 'scened']);
   assert.deepEqual(kinds.map((m) => Boolean(m[2])), [true, false, false, false]);
   assert.ok(kinds.every((m) => Number(m[3]) > 0));
-  // The guide carries no shelf of its own: since the note deployed (2026-11-05) it reaches the shelf through the masthead only.
+  // The masthead is Shelf. The origin section also names the shelf, as where two readings are held.
   // Links only: the walk's recorder in <head> names /specimens to read an address, and links nothing.
   const guide = await text('/');
-  assert.equal(guide.match(/href="\/specimens/g)?.length, 1);
+  assert.equal(guide.match(/href="\/specimens/g)?.length, 2);
   assert.ok(guide.includes('<a href="/specimens">Shelf</a>'));
+  assert.ok(guide.includes('<a href="/specimens">shelf</a>'));
   assert.match(await text('/build'), /<a href="\/specimens">Specimens<\/a>/);
   assert.match(await text('/learn'), /<a href="\/specimens">Specimens<\/a>/);
   assert.equal(await (await get('/specimens', { method: 'HEAD' })).text(), '');
