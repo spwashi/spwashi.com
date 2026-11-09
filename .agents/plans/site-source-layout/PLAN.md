@@ -4,6 +4,8 @@
 
 **Related:** [deploy-module-graph](../deploy-module-graph/PLAN.md) · [site-starter-component-kit](../site-starter-component-kit/PLAN.md) · [pwa-experience](../archive/pwa-experience/PLAN.md). **Absorbed 2026-10-10:** [typescript-integration](../archive/typescript-integration/PLAN.md).
 
+**Readable by folder (the creator, 2026-11-08):** [runtime-library-architecture](../../../.spw/caches/runtime-library-architecture-2026-11.spw) proposes that every folder answer one question and say it in an `index.spw` beside the code: the question, the layers it may import, and its owner. That slice is L0, ungated, and this plan owns it. The same cache proposes one home per concept and an operator for each folder as a reading. The kernel's eight facades over `typed/` collapse with M2.
+
 Reframe the repository around an explicit authored-site boundary so the root stops doubling as both source tree and project-control surface. The target shape is `site/` for publishable source, `dist/` for generated output, `scripts/` for the pipeline, and optional `docs/` only for maintainer-facing documentation.
 
 ## Public Goal

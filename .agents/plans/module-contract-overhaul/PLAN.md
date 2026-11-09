@@ -4,6 +4,8 @@
 
 **Related:** [language-reclustering](../archive/language-reclustering/PLAN.md) · [js-surface-ecology](../archive/js-surface-ecology/PLAN.md) · [runtime-plane-consolidation](../runtime-plane-consolidation/PLAN.md). **Absorbed 2026-10-06:** [js-runtime-composability](../archive/js-runtime-composability/PLAN.md). **Absorbed 2026-10-10:** [runtime-module-fluency](../archive/runtime-module-fluency/PLAN.md).
 
+**A capability as a folder (the creator, 2026-11-08):** [runtime-library-architecture](../../../.spw/caches/runtime-library-architecture-2026-11.spw) proposes keeping a module's catalog row as a `contract.js` beside its code, style, test and sentence, with the catalog carried from those folders under `--check`. `attention-pinch-scale` touched about sixteen places. The pilot is `elements/spw-expression` (L3), then a carried catalog for it and two modules (L4). Both come after R1 and R2.
+
 ## Public Goal
 
 A settled page rests. Every module can say, in Spw, what it mounts on, what wakes it, what it reads, what it writes, and what it promises to leave unchanged. Those statements become checks and inspector queries instead of annotation that only reads well.

@@ -4,6 +4,8 @@
 
 **Related:** [ecosystem-architecture](../ecosystem-architecture/PLAN.md) (S4) · [designer-conversation-canvas](../designer-conversation-canvas/PLAN.md) (the specimen) · [portable-css](../archive/portable-css/PLAN.md) (absorbed 2026-10-10) · [typescript-integration](../archive/typescript-integration/PLAN.md) · [component-variant-alignment](../archive/component-variant-alignment/PLAN.md) (archived).
 
+**A library tier (the creator, 2026-11-08):** [runtime-library-architecture](../../../.spw/caches/runtime-library-architecture-2026-11.spw) measures `compose.js` at 102 files and 36,014 lines, more than `site.js`. It proposes L1, a read-only `audit:library` over the six pieces that already travel clean (gesture-measure, pinch-text-scale, spw-expression, the reader, texture-slice, the peer kit), alongside K2. It also proposes L5, a `library/` tier with `compose.js` as its barrel, held for K3 and `wonder_site_starter_first_portable`.
+
 ## Public Goal
 
 Make this repository useful as a source for new static sites and new component work without turning `spwashi.com` into a generic framework. A future builder should be able to answer three questions quickly:
