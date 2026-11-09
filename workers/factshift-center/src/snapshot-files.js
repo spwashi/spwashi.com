@@ -1,25 +1,25 @@
 // Written by workers/factshift-center/carry-shell.mjs from assets/ and version.json; do not edit by hand.
 // check-workers runs it with --check, so a refreshed snapshot without a fresh carry fails.
-export const SNAPSHOT = Object.freeze({"revision":"961a57c","snapshot":"2026-11-08"});
+export const SNAPSHOT = Object.freeze({"revision":"76ad8b4","snapshot":"2026-11-09"});
 
 export const SNAPSHOT_FILES = Object.freeze([
   "/",
   "/_spwashi@/",
-  "/assets/edges-g8Nkh7Q_.js",
-  "/assets/index-aF1V-09Q.css",
-  "/assets/index-g37a_AZS.js",
-  "/assets/keystrokes-rcoCbgtV.js",
+  "/assets/edges-nVFrsKRI.js",
+  "/assets/index-eUrdRn1J.css",
+  "/assets/index-kTUXpOUl.js",
+  "/assets/keystrokes-OiR6MZQm.js",
   "/assets/main-_qtzgt2L.css",
-  "/assets/main-AZ8tzJd7.js",
-  "/assets/mode-mapfilter-KI5stvZC.js",
-  "/assets/nodes-IPiAUGaK.js",
-  "/assets/pipeline-XyBEHD5-.js",
+  "/assets/main-lq3UegPO.js",
+  "/assets/mode-mapfilter-FMzeFZzf.js",
+  "/assets/nodes-QdU9HUrr.js",
+  "/assets/pipeline-wX78Ngy0.js",
   "/assets/rects-jqUOT9M5.js",
-  "/assets/reinit-T8eJltVL.js",
+  "/assets/reinit-IcXcpSEZ.js",
   "/assets/sounds/bonk.mp3",
-  "/assets/spwashi@-Bxsb0dz2.js",
+  "/assets/spwashi@-9ok3AltV.js",
   "/assets/spwashi@-g0YoMZaz.css",
-  "/assets/workbench-adapter-NzDglDCc.js",
+  "/assets/workbench-adapter-CgjfQdNS.js",
   "/manifest.json",
   "/v0.0.1/favicon/16.png",
   "/v0.0.1/favicon/192.png",
