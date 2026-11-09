@@ -5,7 +5,7 @@ import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import worker from '../src/index.js';
 import { REGISTER_TAG, SHELL_SCRIPT, SHELL_VERSION, factshiftShell, withShell, withSiteHead } from '../src/shell.js';
-import { DESCRIPTION, SITE_MANIFEST, siteManifest } from '../src/manifest.js';
+import { DESCRIPTION, ROBOTS, SITE_MANIFEST, siteManifest, sitemap } from '../src/manifest.js';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { SNAPSHOT, SNAPSHOT_FILES } from '../src/snapshot-files.js';
@@ -209,4 +209,22 @@ test('the canvas head gains a bar color, an iOS icon and a preview, once', async
   assert.match(head, /<link rel="apple-touch-icon" href="\/v0\.0\.1\/favicon\/192\.png">/);
   assert.match(head, /<meta property="og:description" content="factshift\.center lays out a line of Spw/);
   assert.equal(withSiteHead(withSiteHead('<head></head>', 'x'), 'x').split('data-factshift-site-head').length - 1, 1);
+  // A block carried before is replaced, so new lines reach a carried snapshot.
+  assert.equal(withSiteHead(withSiteHead('<head>\n</head>', 'old'), 'new'), withSiteHead('<head>\n</head>', 'new'));
+});
+
+test('crawlers are welcome: the canvas is indexed under one canonical, the secondary entry is followed only', async () => {
+  const root_ = readFileSync(new URL('assets/index.html', root), 'utf8');
+  const second = readFileSync(new URL('assets/_spwashi@/index.html', root), 'utf8');
+  assert.match(root_, /<link rel="canonical" href="https:\/\/factshift\.center\/">/);
+  assert.match(root_, /<meta name="robots" content="index, follow">/);
+  assert.match(second, /<link rel="canonical" href="https:\/\/factshift\.center\/_spwashi@\/">/);
+  assert.match(second, /<meta name="robots" content="noindex, follow">/);
+  for (const html of [root_, second]) assert.equal(html.split('<meta name="robots"').length - 1, 1, 'one robots line');
+  assert.equal(readFileSync(new URL('assets/robots.txt', root), 'utf8'), ROBOTS);
+  assert.equal(readFileSync(new URL('assets/sitemap.xml', root), 'utf8'), sitemap());
+  assert.match(ROBOTS, /^Allow: \/$/m);
+  assert.match(ROBOTS, /^Sitemap: https:\/\/factshift\.center\/sitemap\.xml$/m);
+  assert.deepEqual(sitemap().match(/<loc>[^<]+<\/loc>/g), ['<loc>https://factshift.center/</loc>']);
+  assert.ok(!SNAPSHOT_FILES.includes('/robots.txt') && !SNAPSHOT_FILES.includes('/sitemap.xml'), 'the shell does not keep them');
 });

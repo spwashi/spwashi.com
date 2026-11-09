@@ -13,11 +13,11 @@
     <meta itemprop="description" content="7D force simulation with Spw command language">
     <link rel="icon" href="/v0.0.1/favicon/16.png">
     <link rel="manifest" href="/manifest.json">
-  <script type="module" crossorigin src="/assets/main-pq1jI85J.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/index-nrhXdvWG.js">
-  <link rel="stylesheet" crossorigin href="/assets/index-uNOzoo7a.css">
+  <script type="module" crossorigin src="/assets/main-5SijL0hR.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/index-h_LbktUE.js">
+  <link rel="stylesheet" crossorigin href="/assets/index-4C7t1Zbx.css">
   <link rel="stylesheet" crossorigin href="/assets/main-_qtzgt2L.css">
-    <meta name="factshift-site-head" content="2" data-factshift-site-head>
+    <meta name="factshift-site-head" content="3" data-factshift-site-head>
     <meta name="theme-color" content="#4c1d1d">
     <link rel="apple-touch-icon" href="/v0.0.1/favicon/192.png">
     <meta name="apple-mobile-web-app-title" content="factshift">
@@ -27,6 +27,8 @@
     <meta property="og:description" content="factshift.center lays out a line of Spw: who is looking, from where, and what is still open, as nodes to move, link, and rewrite.">
     <meta property="og:url" content="https://factshift.center/">
     <meta name="twitter:card" content="summary">
+    <link rel="canonical" href="https://factshift.center/">
+    <meta name="robots" content="index, follow">
 </head>
 <body data-mode="nothing"
       data-interface-depth="standard"
@@ -113,6 +115,8 @@
                 <label class="spw-head" for="spw-parse-field">
                     <span class="spw-name">spw</span>
                     <span data-role="spw-form"></span>
+                    <!-- Where the caret stands, by its slot (line-paint.ts). -->
+                    <span data-role="spw-at"></span>
                 </label>
                 <!-- What run draws: the line itself, or the steps the runtime
                      took to read it (its stages and registers). -->
@@ -138,10 +142,6 @@
                         <code data-role="spw-operator-line"></code>
                         <span data-role="spw-operator-said" aria-live="polite"></span>
                     </button>
-                    <button type="button"
-                            data-action="clear-spw-prompt"
-                            title="Empty the prompt"
-                            hidden>clear</button>
                 </div>
             </div>
             <p id="spw-reading" data-role="spw-reading" aria-label="What the line meets"></p>
@@ -159,7 +159,12 @@
                     aria-live="polite"
                     data-role="spw-prompt-status"></output>
             <p data-role="spw-hint">Cmd/Ctrl+Enter run · Esc canvas</p>
+            <!-- Clear stands beside run, only while there is something to clear, so the line keeps its whole width. -->
             <div data-role="spw-actions">
+                <button type="button"
+                        data-action="clear-spw-prompt"
+                        title="Empty the prompt"
+                        hidden>clear</button>
                 <button id="parse-spw"
                         type="button"
                         data-action="parse-spw"
@@ -171,6 +176,14 @@
         <div class="action-group"></div>
     </section>
     <section id="map-mode-container" data-mode-panel="map">
+        <!-- Lines built alike: a line's shape is what it writes with its words
+             taken out (~·[]{,}<>). "like" selects every line shaped like the one
+             in hand, so the cast below reaches them; the chips are the shapes
+             two or more lines share (map-like.ts, shape.ts). -->
+        <div role="group" aria-label="lines shaped alike" data-role="map-like">
+            <button type="button" data-action="map-like" disabled>like this</button>
+        </div>
+        <output data-role="map-like-said" aria-live="polite"></output>
         <form data-role="map-cast">
             <output data-role="map-count" aria-live="polite"></output>
             <input id="map-cast"
@@ -241,13 +254,16 @@
         </div>
     </section>
     <section id="node-mode-container" data-mode-panel="node">
-        <!-- The node tool: names to add, the canvas, what this browser keeps,
-             and the motion. It stays open; the line at the foot says what the
-             last press did (node-panel.ts). -->
+        <!-- The node tool: names to add, what is selected and how it is
+             arranged, what this browser keeps, and the motion. It stays open;
+             the line at the foot says what the last press did, and undo puts
+             back the last selection or arrangement (node-panel.ts,
+             node-select-arrange.ts). -->
         <div id="node-panel" data-role="node-panel">
             <div id="controls" data-role="simulation-controls">
-                <!-- By intent, top to bottom: make nodes, keep them, how the
-                     canvas feels, and its motion by the thumb. -->
+                <!-- By intent, top to bottom: make nodes, choose them, arrange
+                     them, keep them, how the canvas feels, and its motion by
+                     the thumb. -->
                 <section class="card" data-group="make">
                     <header class="card-header">make</header>
                     <div class="card-body" id="node-input-container" data-role="node-input">
@@ -259,6 +275,38 @@
                             <button class="add" data-action="add-nodes">add</button>
                             <button class="replace" data-action="replace-nodes">replace</button>
                             <button class="generate-nodes" data-action="generate-nodes">more</button>
+                        </div>
+                    </div>
+                </section>
+                <!-- What is selected, in words, and ways to grow it: region
+                     goes one region wider each press. -->
+                <section class="card" data-group="select">
+                    <header class="card-header">select <span class="node-panel-state" data-role="select-state"></span></header>
+                    <div class="card-body">
+                        <p class="node-selection" data-role="node-selection">none yet: tap a node, or all</p>
+                        <div class="action-group" role="group" aria-label="select">
+                            <button type="button" data-action="select-all" title="Select every node">all</button>
+                            <button type="button" data-action="select-none" title="Select nothing">none</button>
+                            <button type="button" data-action="select-opposite" title="Select what is not selected, and only that">opposite</button>
+                            <button type="button" data-action="select-neighbors" title="Add every node one tie away">neighbors</button>
+                            <button type="button" data-action="select-region" title="Add the region around the selection, one region wider each press">region</button>
+                        </div>
+                    </div>
+                </section>
+                <!-- On the selection, else every node: where they stand, then a
+                     figure in the order the held line names them, pinned. -->
+                <section class="card" data-group="arrange">
+                    <header class="card-header">arrange <span class="node-panel-state" data-role="arrange-state"></span></header>
+                    <div class="card-body">
+                        <div class="action-group" role="group" aria-label="where they stand">
+                            <button type="button" data-action="arrange-stay" title="Pin them where they stand">stay</button>
+                            <button type="button" data-action="arrange-let-go" title="Let them go: each drifts back to its home">let go</button>
+                        </div>
+                        <div class="action-group" role="group" aria-label="a figure">
+                            <button type="button" data-action="arrange-together" title="Draw them in close, at their middle">together</button>
+                            <button type="button" data-action="arrange-row" title="A row, in the order the line names them">row</button>
+                            <button type="button" data-action="arrange-column" title="A column, in the order the line names them">column</button>
+                            <button type="button" data-action="arrange-ring" title="A ring from the top, clockwise in the order the line names them">ring</button>
                         </div>
                     </div>
                 </section>
@@ -291,7 +339,10 @@
                     </div>
                 </section>
             </div>
-            <output data-role="node-said" aria-live="polite"></output>
+            <div class="node-foot">
+                <output data-role="node-said" aria-live="polite"></output>
+                <button type="button" data-action="node-undo" disabled title="nothing to undo">undo</button>
+            </div>
         </div>
     </section>
     <section id="color-mode-container" data-mode-panel="color">
