@@ -238,6 +238,7 @@ Each is one session in the app (`workers/factshift-center/app`, its own reposito
    - **7a. Nested order.** A body holding a nested expression stacks its plain parts in a column with the nested box beside them, so written order breaks.
    - **7b. Kept sizes.** A kept container's size and place are canvas pixels, not shares of the line's column.
    - **7c. Loose nodes.** A node added with ↑ cannot join the line by a drop, so an entered page with nothing inside has nothing to drag into an empty slot.
+   - **7d. Statements.** A .spw file writes statements around its lines: `name = value`, `~#key: value`, sentences, sets, dated entries, references. Built in the app (2026-11-08): `line-forms.ts` reads the form and `line-anatomy.ts` draws it. A binding is its value under an outline titled by its name. A set is one region of items. A sentence or an entry is a dot under its words. A body that is half text reads down as a page. A block's lines arrive as parts in order. Edits reach a binding's value and a set's items. Checked headless on spw.quest's examples and builds.
 
    The gesture collisions in the verbs audit (two taps on a container's corner also make a loose node) wait on its `#>wonder_factshift_gesture_meanings`.
 
