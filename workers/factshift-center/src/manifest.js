@@ -29,8 +29,18 @@ export function siteManifest(snapshot = {}) {
   return { ...snapshot, ...SITE_MANIFEST };
 }
 
-/** Head lines the snapshot lacks: the bar color, the iOS icon, and a link preview's words. */
-export function headLines(manifest = {}) {
+export const ORIGIN = "https://factshift.center";
+
+/** The documents a search may index: the canvas. The secondary entry (/_spwashi@/) is followed, not indexed. */
+export const INDEXED = Object.freeze(["/"]);
+
+/**
+ * Head lines the snapshot lacks: the bar color, the iOS icon, a link
+ * preview's words, and the document's canonical address and robots value.
+ * A line in the address (?spw=) is the same canvas, so every variant names
+ * the bare document as canonical.
+ */
+export function headLines(manifest = {}, document = "/") {
   const icon = (manifest.icons || []).find((entry) => entry.sizes === "192x192")?.src || "/v0.0.1/favicon/192.png";
   return [
     `<meta name="theme-color" content="${manifest.theme_color || "#4c1d1d"}">`,
@@ -40,7 +50,23 @@ export function headLines(manifest = {}) {
     `<meta property="og:site_name" content="factshift.center">`,
     `<meta property="og:title" content="factshift.center">`,
     `<meta property="og:description" content="${DESCRIPTION}">`,
-    `<meta property="og:url" content="https://factshift.center/">`,
+    `<meta property="og:url" content="${ORIGIN}${document}">`,
     `<meta name="twitter:card" content="summary">`,
+    `<link rel="canonical" href="${ORIGIN}${document}">`,
+    `<meta name="robots" content="${INDEXED.includes(document) ? "index, follow" : "noindex, follow"}">`,
   ].join("\n    ");
+}
+
+/** robots.txt: every address is open; the sitemap names what is indexed. */
+export const ROBOTS = `User-agent: *
+Allow: /
+Sitemap: ${ORIGIN}/sitemap.xml
+`;
+
+export function sitemap(documents = INDEXED) {
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${documents.map((document) => `  <url><loc>${ORIGIN}${document}</loc></url>`).join("\n")}
+</urlset>
+`;
 }

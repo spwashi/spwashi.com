@@ -94,7 +94,7 @@ export const NAVIGATION_WAIT_MS = 3500;
  * installed app fetches a fresh shell and keeps the new manifest.
  * 2: the site-served manifest and head lines (src/manifest.js), 2026-11-08.
  */
-export const SITE_REVISION = 2;
+export const SITE_REVISION = 3;
 export const SHELL_VERSION = `${SNAPSHOT.revision}-${SNAPSHOT.snapshot}-site${SITE_REVISION}`;
 
 /** The script at /sw.js, for a snapshot and the files it keeps; carry-shell.mjs writes it into assets/. */
@@ -124,9 +124,15 @@ export function withShell(html) {
   return `${html.slice(0, at)}${REGISTER_TAG}\n${html.slice(at)}`;
 }
 
-/** The canvas's HTML with the site's head lines before </head>, once. */
+/**
+ * The canvas's HTML with the site's head lines before </head>, once. A block
+ * carried before is replaced whole, so changed lines reach a carried snapshot
+ * and carrying the same lines again changes nothing.
+ */
 export function withSiteHead(html, lines) {
-  if (!lines || html.includes("data-factshift-site-head") || !html.includes("</head>")) return html;
+  if (!lines || !html.includes("</head>")) return html;
+  const carried = html.indexOf('    <meta name="factshift-site-head"');
+  if (carried !== -1 && carried < html.indexOf("</head>")) html = `${html.slice(0, carried)}${html.slice(html.indexOf("</head>"))}`;
   const at = html.indexOf("</head>");
   return `${html.slice(0, at)}    <meta name="factshift-site-head" content="${SITE_REVISION}" data-factshift-site-head>\n    ${lines}\n${html.slice(at)}`;
 }

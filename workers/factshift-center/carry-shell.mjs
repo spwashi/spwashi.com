@@ -10,12 +10,14 @@
 //   and the shell's registration line, added once;
 // - assets/manifest.json: the snapshot's manifest with the site's fields on top;
 // - assets/sw.js: the shell, for this snapshot and its kept files;
-// - assets/_headers: the headers the worker used to send for /sw.js and the manifest.
+// - assets/_headers: the headers the worker used to send for /sw.js and the manifest;
+// - assets/robots.txt and assets/sitemap.xml (src/manifest.js): crawlers are
+//   welcome, the canvas is indexed, and each document names its canonical.
 // Every step is idempotent, so carrying a carried snapshot changes nothing.
 import { readdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { headLines, siteManifest } from "./src/manifest.js";
+import { ROBOTS, headLines, siteManifest, sitemap } from "./src/manifest.js";
 import { shellScript, withShell, withSiteHead } from "./src/shell.js";
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
@@ -23,7 +25,7 @@ const ASSETS = path.join(ROOT, "assets");
 const LIST = path.join(ROOT, "src", "snapshot-files.js");
 
 /** Files the site writes into assets/; the shell does not keep them. */
-const SITE_FILES = new Set(["/sw.js", "/_headers", "/.assetsignore"]);
+const SITE_FILES = new Set(["/sw.js", "/_headers", "/.assetsignore", "/robots.txt", "/sitemap.xml"]);
 
 export const HEADERS = `# Written by workers/factshift-center/carry-shell.mjs; the worker no longer serves these files.
 /sw.js
@@ -34,6 +36,12 @@ export const HEADERS = `# Written by workers/factshift-center/carry-shell.mjs; t
   Content-Type: application/manifest+json; charset=UTF-8
   Cache-Control: public, max-age=300
   X-Content-Type-Options: nosniff
+
+/robots.txt
+  Cache-Control: public, max-age=3600
+
+/sitemap.xml
+  Cache-Control: public, max-age=3600
 `;
 
 async function walk(dir, prefix = "") {
@@ -60,7 +68,6 @@ export async function carry() {
   const snapshot = { revision: version.revision, snapshot: version.snapshot };
   const files = await snapshotFiles();
   const manifest = siteManifest(JSON.parse(await readFile(path.join(ASSETS, "manifest.json"), "utf8")));
-  const lines = headLines(manifest);
   const outputs = {
     [LIST]: `// Written by workers/factshift-center/carry-shell.mjs from assets/ and version.json; do not edit by hand.
 // check-workers runs it with --check, so a refreshed snapshot without a fresh carry fails.
@@ -71,10 +78,12 @@ export const SNAPSHOT_FILES = Object.freeze(${JSON.stringify(files, null, 2)});
     [path.join(ASSETS, "manifest.json")]: `${JSON.stringify(manifest, null, 2)}\n`,
     [path.join(ASSETS, "sw.js")]: shellScript(snapshot, files),
     [path.join(ASSETS, "_headers")]: HEADERS,
+    [path.join(ASSETS, "robots.txt")]: ROBOTS,
+    [path.join(ASSETS, "sitemap.xml")]: sitemap(),
   };
   for (const document of files.filter((file) => file.endsWith("/"))) {
     const at = path.join(ASSETS, document, "index.html");
-    outputs[at] = withShell(withSiteHead(await readFile(at, "utf8"), lines));
+    outputs[at] = withShell(withSiteHead(await readFile(at, "utf8"), headLines(manifest, document)));
   }
   return outputs;
 }
