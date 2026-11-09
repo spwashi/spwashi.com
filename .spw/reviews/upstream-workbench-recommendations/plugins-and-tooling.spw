@@ -462,6 +462,79 @@ expression = asks[plugins]{one.reading.then.one.plugin}<upstream>
   }[reg=facet]
 }
 
+^"wonder_in_editors"{
+  ~#note: "Filed 2026-11-08 at the creator's word: extend wonder into IntelliJ, Neovim and VS Code; deprioritize Obsidian; dereference CodeMirror. Read from the workbench clone, not written to it: spw-lsp already has a wonder hover and inlay digest (packages/spw-lsp/src/handlers/wonder.ts); vscode-spw counts wonders in a command result; neovim-spw colors the ? sigil (syntax/spw.vim:111-114); intellij-spw has the grammar and a wonder_with_probe quest check (resources/quest/quest.json:73)."
+
+  wonder_list: .{
+    rank = 18
+    status = #proposed
+    home = @asks_editor
+    claim: "spw-lsp answers one request for the open wonders it indexes, each with its question, file and line, depth, lens, probe, answers and last touch, and offers every #>wonder_* as a workspace symbol, so the three editors list the same questions."
+    exists: "npm run wonder and wonder:json harvest them on this site (@wonder_script); the hover and inlay digest read one block at a time; nothing lists them across a workspace inside an editor."
+    gap: "A reader in an editor can see a wonder only once the cursor is on it; the questions a repository is holding stay in a terminal."
+    measured: .{
+      site = "2026-11-08: wonder:json lists 383 wonders on this site"
+    }[reg=facet]
+    recommendation = #[
+      `one request, the same shape wonder:json emits, so a site script and an editor read one list`,
+      `#>wonder_* as workspace symbols, so Go to Symbol finds a question by its words`,
+      `a code lens on each block: answered or open, last touched, and the probe as a command`,
+      `an answer command that writes ~#answer(date): "" under the block, the form the site already uses`,
+    ][reg=set]
+    replaces: "open questions that live in a terminal listing and in chat"
+    probe: `npm run -s wonder:json | head -c 400`
+    question: "Is an answered wonder still listed, dimmed, or does it leave the list?"
+  }[reg=facet]
+
+  wonder_editors: .{
+    rank = 19
+    status = #proposed
+    home = @asks_editor
+    claim: "Each editor shows the same wonders in its own idiom: VS Code a Wonders view beside the concepts tree, Neovim a quickfix or picker list and inlay digests, IntelliJ a tool window and inlay hints, all from the bundled spw-lsp."
+    exists: "vscode-spw runs spw-lsp; neovim-spw and intellij-spw ship syntax, and the plugin ecology cache already asks that they bundle spw-lsp as vscode-spw does (plugin-ecology-improvements-2026-11.spw, bundled_lsp)."
+    gap: "Two of the three editors cannot hover a wonder today, so the contour wonder.mjs keeps in the terminal (proximity, aligned slots, one hue per operator, the brace as a wall) does not travel to them."
+    recommendation = #[
+      `bundle spw-lsp in neovim-spw and intellij-spw first; every wonder surface follows from it`,
+      `a wonder block is a folding range, its braces the fold, so a file of questions closes to their headers`,
+      `hues from one operator table for all three, the generator the plugin ecology cache names`,
+    ][reg=set]
+    replaces: "a wonder that reads in one editor and is plain text in the other two"
+    probe: `rg -n -i wonder extensions/neovim-spw extensions/intellij-spw (in the workbench clone)`
+    question: "Which editor gets the Wonders view first: the one the creator records from, or the one with the fewest surfaces today?"
+  }[reg=facet]
+
+  obsidian_later: .{
+    rank = 20
+    status = #proposed
+    home = @asks_editor
+    claim: "Obsidian moves from a planned host to later: the three IDE extensions are where Spw is edited, and this site already de-emphasized the Obsidian opportunity for a broader local-first one."
+    exists: "lib/spw-v0.2.0-alpha/ARCHITECTURE.md:50 lists Obsidian for block-level markdown rendering; .spw/conventions/site-semantics.spw:1358 records the de-emphasis on this side."
+    gap: "A listed host reads as planned work; nothing on either side is building it."
+    recommendation = #[
+      `mark the Obsidian line later, not planned, with this ask as its reason`,
+    ][reg=set]
+    replaces: "a host listed beside the ones being built"
+    probe: `rg -n -i obsidian lib docs (in the workbench clone)`
+    question: "Does Markdown Spw (fences in notes) stay a goal through the IDEs' Markdown support instead?"
+  }[reg=facet]
+
+  codemirror_dereferenced: .{
+    rank = 21
+    status = #proposed
+    home = @asks_editor
+    claim: "The design goals stop naming CodeMirror as the editor component: Spw is edited in the three IDE extensions, and on the web in fields the sites own (spw.quest's file field painted under its text, spwashi.com's paste box, <spw-expression>), with no embedded editor dependency."
+    exists: "docs/design/md/goals.md:370 says Editor: CodeMirror 6 or Monaco, and :381 and :422 draw a CodeMirror editor component and its extensions; nothing in this repository's plans, caches or scripts references CodeMirror."
+    gap: "A named dependency in the goals invites an integration nobody is building, and a second editing model beside the fields the sites already paint."
+    recommendation = #[
+      `remove the CodeMirror lines from goals.md, or mark them superseded by the IDE extensions and the sites' own fields`,
+      `if a web editor is ever needed, start from the painted field spw.quest already runs`,
+    ][reg=set]
+    replaces: "an editor component named in the goals and built nowhere"
+    probe: `rg -n -i codemirror docs (in the workbench clone)`
+    question: "Is Monaco dropped with it, or kept as the only named web editor?"
+  }[reg=facet]
+}
+
 ^"stream"{
  >>[2026-10-27 13:32] probe — wonder_workbench_first_plugin: still open, and now held in one place upstream. PLUGIN-PROTOCOL.md:33 still says no concrete plugin exists, and first-plugin keeps the same choice as ?[first_plugin] for its owner (wip.spw, 2026-10-25), with the consumer owning the plugin file if the manifest wins. Run before any ~#expect was on record.
  >>[2026-10-27 13:32] probe — wonder_workbench_compare_where: action against probe, two members of one family, share ground for eight lines and part first at the name. Run before any ~#expect was on record.
