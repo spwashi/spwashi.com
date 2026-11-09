@@ -68,10 +68,26 @@
       color: #122420;
     }
 
-    & .literal-parser-samples button:is(:hover, :focus-visible),
+    & .literal-parser-samples button:is(:hover, :focus-visible, [aria-pressed="true"]),
     & .literal-parser-file-action:is(:hover, :focus-within) {
       border-color: var(--op-frame-color, #1a9999);
       box-shadow: 0 0 0 3px color-mix(in srgb, var(--op-frame-color, #1a9999) 12%, transparent);
+    }
+
+    & .literal-parser-samples button[aria-pressed="true"] {
+      box-shadow: inset 0 -2px 0 var(--op-frame-color, #1a9999);
+    }
+
+    & .literal-parser-place {
+      max-width: 46rem;
+      margin: -0.35rem 0 0;
+      color: var(--literal-parser-ink);
+      font-size: 0.95rem;
+      line-height: 1.45;
+    }
+
+    & .literal-parser-place a {
+      margin-inline-start: 0.35rem;
     }
 
     & .literal-parser-workspace {

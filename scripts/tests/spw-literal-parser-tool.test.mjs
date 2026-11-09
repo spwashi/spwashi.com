@@ -7,6 +7,7 @@ import {
   parseLiteralSource,
   readAsEditor,
   READER_CLASS_PREFIX,
+  SPW_LITERAL_PARSER_PLACES,
   SPW_LITERAL_PARSER_SAMPLES,
 } from '../../public/js/modules/tools/spw-literal-parser.js';
 
@@ -47,6 +48,16 @@ describe('literal Spw parser proof', () => {
     assert.ok(result.output.errors.length > 0);
     assert.equal(result.reconstructsExactly, false);
     assert.equal(result.source, 'proof § unsupported_character');
+  });
+
+  it('names where every sample sits', () => {
+    for (const key of Object.keys(SPW_LITERAL_PARSER_SAMPLES)) {
+      const place = SPW_LITERAL_PARSER_PLACES[key];
+      assert.ok(place, key);
+      assert.ok(place.says.trim().length > 24, key);
+      assert.match(place.label, /\S/, key);
+      assert.match(place.href, /^(#|\/|https:\/\/)/, key);
+    }
   });
 
   it('parses practice, language-sync, film, and year-mix specimens losslessly', () => {
