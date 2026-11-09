@@ -17,6 +17,16 @@ spw.quest's `/pivot` is the working model (wip 2026-11-05 23:15). Each step show
 - Proposal (state shown as a mutating expression): the window's sample sigil, `#>sample_frame {` in `settings-shelf__window-sigil`, becomes the reader's settings as one Spw line read from the `data-settings-state` cells beside it. A box under focus or the pointer shows the line it would write, and the way back is the line before.
 - Gate: none to build; the creator picks a variant in the browser (`index.spw#wonder_settings_ornament_resonance_try_a_look`). Verify: with JavaScript off the boxes still read and the shelf still links; `node --check public/js/interface/site-settings-ui.js` if it was touched; `git diff --check`.
 
+## Spw in settings (2026-11-09)
+
+The creator: surface and extend the plans for Spw's integration with settings. Gathered in [spw-settings-integration](../../../.spw/caches/spw-settings-integration-2026-11.spw): about 84 settings, 76 with word labels, written to `<html>` by the engine and to the address as readable keys through query parity; the "Spw query" vocabulary is readable keys, not a Spw line, and no setting is shown, typed or shared as Spw. The ladder:
+- **S0** one operator and one word set per setting, from the engine's value labels, in one shared partial (wonder memory reads six ways today).
+- **S1** the wearing-now window and a quiet line under Home's tuning write the look as Spw, `=site[comfortable]{color[auto], wonder[nearby], motion[calm]}`, rewriting one slot in place when a setting changes.
+- **S2** that line accepted as input (pasted, or in the address beside the readable keys), applying only known settings and words and saying the rest back.
+- **S3** Home's tuning as one `<spw-expression>` whose slots are settings. Which settings, and under which operator, is the creator's call.
+- **S4** components that tune themselves through a small expression in their corner, scoped by attributes they already have.
+- **S5** one tuning grammar across the apps: `=site{…}` here, `=tune{…}` on factshift.center, `shelf[…]{…}` on spw.quest, `=tuning` in texture.website's address, a pasted line applying the slots they share.
+
 ## Public Goal
 
 Let a reader pick up a look, reading size, fix, kit, writing mode, motion level, view or instrument from the `/settings/` shelf, see the change on the box and in the "wearing now" window before scrolling away, and find the box they are wearing pressed.
