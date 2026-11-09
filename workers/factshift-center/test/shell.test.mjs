@@ -5,9 +5,11 @@ import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import worker from '../src/index.js';
 import { REGISTER_TAG, SHELL_SCRIPT, SHELL_VERSION, factshiftShell, withShell, withSiteHead } from '../src/shell.js';
-import { DESCRIPTION, SITE_MANIFEST } from '../src/manifest.js';
+import { DESCRIPTION, SITE_MANIFEST, siteManifest } from '../src/manifest.js';
+import { spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 import { SNAPSHOT, SNAPSHOT_FILES } from '../src/snapshot-files.js';
-import { snapshotFiles } from '../carry-shell.mjs';
+import { HEADERS, snapshotFiles } from '../carry-shell.mjs';
 
 const ORIGIN = 'https://factshift.center';
 const root = new URL('../', import.meta.url);
@@ -37,26 +39,34 @@ test('the kept list is every file the snapshot ships, and names this snapshot', 
   assert.ok(!SNAPSHOT_FILES.some((file) => file.endsWith('service-worker.js') || file.endsWith('index.html')));
 });
 
-test('the canvas carries one registration line; files pass untouched; /sw.js is the shell', async () => {
-  for (const path of ['/', '/?spw=frame%5Bcare%5D%7Bseed%7D', '/anything']) {
-    const response = await get(path);
-    const html = await response.text();
-    assert.equal(html.split('data-factshift-shell').length - 1, 1, path);
-    assert.ok(html.indexOf(REGISTER_TAG) < html.lastIndexOf('</body>'), path);
-    assert.equal(response.headers.get('cache-control'), 'public, max-age=60', path);
-    assert.equal(response.headers.get('etag'), null, path);
+test('the canvas is static: carried once with its lines, its shell and their headers; the worker runs for / only', async () => {
+  const config = JSON.parse(readFileSync(new URL('wrangler.jsonc', root), 'utf8').replace(/^\s*\/\/.*$/gm, ''));
+  assert.deepEqual(config.assets.run_worker_first, ['/']);
+  const check = spawnSync(process.execPath, [fileURLToPath(new URL('carry-shell.mjs', root)), '--check'], { encoding: 'utf8' });
+  assert.equal(check.status, 0, check.stderr);
+  for (const file of ['assets/index.html', 'assets/_spwashi@/index.html']) {
+    const html = readFileSync(new URL(file, root), 'utf8');
+    assert.equal(html.split('data-factshift-shell').length - 1, 1, file);
+    assert.equal(html.split('data-factshift-site-head').length - 1, 1, file);
+    assert.ok(html.indexOf(REGISTER_TAG) < html.lastIndexOf('</body>'), file);
   }
+  for (const path of ['/', '/?spw=frame%5Bcare%5D%7Bseed%7D']) {
+    const response = await get(path);
+    assert.equal(response.headers.get('cache-control'), 'public, max-age=60', path);
+    assert.equal((await response.text()).split('data-factshift-shell').length - 1, 1, path);
+  }
+  const www = await worker.fetch(new Request('https://www.factshift.center/?spw=a'), { ASSETS });
+  assert.equal(www.status, 301);
+  assert.equal(www.headers.get('location'), 'https://factshift.center/?spw=a');
   assert.match(REGISTER_TAG, /register\("\/sw\.js", \{ scope: "\/", updateViaCache: "none" \}\)/);
   assert.equal(withShell(withShell('<body></body>')), `<body>${REGISTER_TAG}\n</body>`);
-  const script = await get('/assets/main-pq1jI85J.js');
-  assert.doesNotMatch(await script.text(), /data-factshift-shell/);
-  const shell = await get('/sw.js');
-  assert.equal(shell.headers.get('content-type'), 'text/javascript; charset=UTF-8');
-  assert.equal(shell.headers.get('cache-control'), 'public, max-age=60');
-  assert.equal(await shell.text(), SHELL_SCRIPT);
+  assert.equal(readFileSync(new URL('assets/sw.js', root), 'utf8'), SHELL_SCRIPT);
   assert.ok(SHELL_SCRIPT.includes(`"version":"${SHELL_VERSION}"`));
   assert.match(SHELL_VERSION, new RegExp(`^${SNAPSHOT.revision}-${SNAPSHOT.snapshot}-site\\d+$`));
-  assert.equal((await get('/', { headers: { host: 'www.factshift.center' } })).status, 200);
+  const headers = readFileSync(new URL('assets/_headers', root), 'utf8');
+  assert.equal(headers, HEADERS);
+  assert.match(headers, /^\/sw\.js\n  Cache-Control: public, max-age=60$/m);
+  assert.match(headers, /^\/manifest\.json\n  Content-Type: application\/manifest\+json; charset=UTF-8$/m);
 });
 
 /** One shell in a vm, with a network the test controls. */
@@ -169,11 +179,13 @@ test('what the shell does not keep goes to the network untouched', () => {
 });
 
 test('the installed face: the app\'s name, colors and icons, with the site\'s description, turn, launch and shortcuts', async () => {
-  const snapshot = JSON.parse(readFileSync(new URL('assets/manifest.json', root), 'utf8'));
-  const response = await get('/manifest.json');
-  assert.equal(response.headers.get('content-type'), 'application/manifest+json; charset=UTF-8');
-  const manifest = await response.json();
-  for (const key of ['name', 'short_name', 'theme_color', 'background_color', 'icons', 'start_url', 'scope', 'display']) assert.deepEqual(manifest[key], snapshot[key], key);
+  const manifest = await (await get('/manifest.json')).json();
+  assert.deepEqual(manifest, JSON.parse(readFileSync(new URL('assets/manifest.json', root), 'utf8')));
+  // A carried manifest carries again unchanged; the app's own fields pass through.
+  assert.deepEqual(siteManifest(manifest), manifest);
+  assert.equal(manifest.name, 'factshift');
+  assert.equal(manifest.theme_color, '#4c1d1d');
+  assert.equal(manifest.icons.length, 5);
   assert.equal(manifest.orientation, 'any');
   assert.deepEqual(manifest.launch_handler, { client_mode: ['navigate-existing', 'auto'] });
   assert.equal(manifest.description, DESCRIPTION);
