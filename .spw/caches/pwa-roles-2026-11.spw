@@ -30,13 +30,14 @@ summary = #[
   spwashi = `the person and the season: art and folios, Now, Play, Services, and a .spw file opened as a room to read`
   quest = `the notation as a tool: write a line and see it read, keep a note, learn the marks, get your walk back as Spw`
   factshift = `a line made physical: lay it out, move it, link it, keep a canvas`
-  handoff = `a line travels between them in the address's fragment (#spw64=), which no server reads: spw.quest's Canvas to factshift.center, factshift.center's ↗ to spw.quest/build, and the planned door from spwashi.com's paste box (brace-semantics)`
+  handoff = `a line travels between them in the address's fragment (#spw64=), which no server reads: spw.quest's Canvas to factshift.center, factshift.center's ↗ to spw.quest/build, and spwashi.com's doors to both (landed.doors)`
 }[reg=facet]
 
 ^"landed"{
   offline = `spw.quest keeps its guide and pinned reader (9d293dc8); factshift.center keeps its whole snapshot through a shell the site serves, and a ?spw= line lands offline`
   quest_shortcuts = `Walk (/#walk), Build, Learn, Shelf: what only spw.quest does, one press from the home screen; launch_handler navigate-existing so arriving lines reuse the open window; shell version 2 so installed apps fetch the new manifest`
   factshift_face = `the site serves /manifest.json as the snapshot's manifest plus its own fields: the app's meta sentence as description, orientation any, launch_handler navigate-existing, categories, and shortcuts A line (/?spw=garden[care]{seed, water}) and Help (/help); the head gains theme-color, apple-touch-icon and og lines; the name, colors and icons stay the app's (workers/factshift-center/src/manifest.js)`
+  doors = `spwashi.com's Spw components open both peers from one address book (@ecosystem_links): a line of 400 characters or fewer goes to the canvas by ?spw=, anything else whole by #spw64= with its #>name as its first line; spw.quest's editor takes ?script= up to 1800 characters and #spw64= past that, with filename=<name>.spw; factshift.center gets only configuration its version.json lists, each value checked. The satchel, the region menu's Carry lane and the home paste box offer them, opening beside the page (2026-11-08)`
 }[reg=facet]
 
 ^"creator_calls"{
@@ -50,4 +51,5 @@ summary = #[
 @quest_manifest: ~"../../workers/spw-quest/src/quest-manifest.js"
 @factshift_manifest: ~"../../workers/factshift-center/assets/manifest.json"
 @factshift_shell: ~"../../workers/factshift-center/src/shell.js"
+@ecosystem_links: ~"../../public/js/kernel/ecosystem-links.js"
 @ecosystem: ~"../../.agents/plans/ecosystem-architecture/PLAN.md"

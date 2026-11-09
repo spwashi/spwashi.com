@@ -15,6 +15,7 @@ import {
 import { readRoom } from '/public/js/semantic/room-signal.js';
 import { saveSiteSettings } from '/public/js/kernel/site-settings.js';
 import { ensureDebugStyles } from '/public/js/kernel/deferred-styles.js';
+import { ECOSYSTEM_JOBS, ecosystemLinks } from '/public/js/kernel/ecosystem-links.js';
 
 const ROOT_ATTR = 'data-spw-state-inspector-root';
 const PANEL_ID = 'spw-state-inspector-panel';
@@ -729,6 +730,7 @@ function createInspector() {
   const spwLine = document.createElement('code');
   const pivotLink = document.createElement('a');
   const buildLink = document.createElement('a');
+  const canvasLink = document.createElement('a');
   const positionActions = document.createElement('div');
   const status = document.createElement('p');
   const close = document.createElement('button');
@@ -788,20 +790,22 @@ function createInspector() {
 
   // First offer: the page's own Spw. A visitor rarely arrives holding a line,
   // so the satchel hands over the one nearest the middle of the screen, ready
-  // to copy, pivot or take apart on spw.quest (floating-chrome-stack FIX.md).
+  // to copy, pivot or take apart on spw.quest (floating-chrome-stack FIX.md),
+  // or lay out on factshift.center's canvas; the addresses are ecosystem-links.js's.
   spwRow.className = 'spw-state-inspector__spw';
   spwRow.setAttribute('aria-label', "This page's Spw");
   spwLine.className = 'spw-state-inspector__spw-line';
   spwLine.dataset.spwStateInspectorLine = '';
-  for (const [link, label, kind] of [[pivotLink, 'pivot on spw.quest', 'pivot'], [buildLink, 'take apart on spw.quest', 'build']]) {
+  for (const [link, kind] of [[pivotLink, 'pivot'], [buildLink, 'build'], [canvasLink, 'canvas']]) {
     link.className = 'spw-chip';
     link.dataset.spwStateInspectorQuest = kind;
-    link.textContent = label;
+    link.textContent = ECOSYSTEM_JOBS[kind].label;
+    link.title = ECOSYSTEM_JOBS[kind].title;
     link.target = '_blank';
     link.rel = 'noopener';
     link.hidden = true;
   }
-  spwRow.append(spwLine, copySpw, pivotLink, buildLink);
+  spwRow.append(spwLine, copySpw, pivotLink, buildLink, canvasLink);
 
   close.type = 'button';
   close.className = 'spw-chip';
@@ -932,25 +936,23 @@ function readPageLine() {
   const probe = document.elementFromPoint?.(innerWidth / 2, innerHeight / 2);
   const near = probe instanceof Element ? probe.closest('[data-spw-semantic-expression]') : null;
   const host = near && main.contains(near) ? near : main.querySelector('[data-spw-semantic-expression]');
-  return String(host?.getAttribute('data-spw-semantic-expression') || '').trim();
+  // The host's id names the line where a door has room for a name (ecosystem-links.js).
+  return { line: String(host?.getAttribute('data-spw-semantic-expression') || '').trim(), name: host?.id || '' };
 }
 
 function syncPageLine(root) {
-  const line = readPageLine();
+  const { line, name } = readPageLine();
   const code = root.querySelector('[data-spw-state-inspector-line]');
   if (code instanceof HTMLElement) {
     if (code.textContent !== line) code.textContent = line;
     code.hidden = !line;
   }
+  const doors = new Map(ecosystemLinks(line, { jobs: ['pivot', 'build', 'canvas'], name }).map((door) => [door.job, door.href]));
   for (const link of root.querySelectorAll('[data-spw-state-inspector-quest]')) {
     if (!(link instanceof HTMLAnchorElement)) continue;
-    const href = line
-      ? (link.dataset.spwStateInspectorQuest === 'pivot'
-        ? `https://spw.quest/pivot?line=${encodeURIComponent(line)}`
-        : `https://spw.quest/build?script=${encodeURIComponent(line)}#build`)
-      : '';
+    const href = doors.get(link.dataset.spwStateInspectorQuest) || '';
     if (href && link.href !== href) link.href = href;
-    link.hidden = !line;
+    link.hidden = !href;
   }
 }
 
