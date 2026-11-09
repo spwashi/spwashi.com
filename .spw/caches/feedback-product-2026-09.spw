@@ -7,6 +7,7 @@
 # then climb: claim the site for free with one file, and pay for a desk that
 # keeps every card. Nothing here sets a price, and no page may promise one from
 # this file.
+# The longer teaching plan is feedback-mutex-curriculum-2026-11.spw. This file stays the ladder.
 
 #>feedback_product_2026_09
 #:cache #!product #!feedback #!marketing
@@ -20,6 +21,7 @@
 @pricing: ~"./pricing-lattice-2026-09.spw"
 @plan: ~"../../.agents/plans/archive/quest-workbench-feedback/PLAN.md"
 @desk_flow: ~"../slices/feedback-desk-flow/index.spw"
+@curriculum: ~"./feedback-mutex-curriculum-2026-11.spw"
 
 operation = "prime"
 fixity = "experimental"

@@ -1,0 +1,106 @@
+# Creative utility and a curriculum for autonomous.feedback and mutex.buzz (2026-11-09) — cache
+#
+# The creator asked for more creative utility, and for engineering
+# curricularization, as longer-term planning for these two hosts.
+# Read 2026-11-09 from the product prime, the host frame, the desk contract,
+# model.js, desk.js, and workers/site-hub-next/src/mutex.js.
+# This file does not implement, deploy, or set a price.
+
+#>feedback_mutex_curriculum_2026_11
+#:cache #!feedback #!mutex #!curriculum #!utility
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@feedback: ~"./feedback-product-2026-09.spw"
+@hosts: ~"./host-frame-2026-09.spw"
+@desk: ~"../slices/feedback-desk-flow/index.spw"
+@offer: ~"../surfaces/product-lines.spw"
+@systems: ~"../../services/systems/index.html"
+@thesis: ~"../../topics/software/index.html"
+@model: ~"../../workers/autonomous-feedback/src/model.js"
+@desk_js: ~"../../workers/autonomous-feedback/src/desk.js"
+@mutex: ~"../../workers/site-hub-next/src/mutex.js"
+@hub: ~"../../workers/site-hub-next/src/index.js"
+
+operation = "cache"
+fixity = "experimental"
+source = "chat 2026-11-09; feedback-product-2026-09.spw; host-frame-2026-09.spw; /services/systems/#curricularize; workers named above"
+expression = curriculum[utility]{note, lock}<engineer>
+do_not = `Do not implement from this file. Do not deploy either worker. Do not fill HOLDS or QUEUE. Do not add a verb to either host. Do not set a price or a tier. Do not open a plan folder. The product ladder stays in @feedback. The one-job table stays in @hosts.`
+
+summary = #[
+  `autonomous.feedback is creatively useful when a person can name what happened in one kind and leave with a card that says that. mutex.buzz is creatively useful when the frame shows one holder and says when it lets go.`,
+  `Curricularize, as /services/systems/#curricularize and /topics/software/#curricular-codebase already say it: the next year of engineering is a sequence through the files that teach those promises. A new seam waits until the file before it can explain the public page.`,
+][reg=set]
+
+^"utility"{
+  id = "cu-utility"
+  claim = `Each host is useful when one creative choice answers once, the same way next time, and can be undone.`
+  note = `The choice is a kind. model.js CONTEXTS opens with Broken, Confusing, Missing, and Wrong, each with a prompt and an example, and the card asks that kind's question. The reader sends the card. An unsent draft stays in the browser. A stored slip can be removed by id from the inbox. Thanks and a count with no written detail are complete submissions, and the page says so (@desk).`
+  lock = `The choice is what holds this cycle, or the folio that rests when nothing else does. mutex.js answers /, /now/, and /now.json with one holder: a picture, a title, a link, a since, and a releases-at. The cache header lives only until that release. The hand-off is the loud moment. The folio returns.`
+  creative = `The note's palette is the six kinds, learned by writing one. The lock's palette is one picture for a cycle, learned by watching it leave. A carousel, a score, and a second verb spend the utility.`
+  validation = `Read a kind's prompt in @model beside the card, and read holderFor in @mutex beside /now/. The page and the record name the same choice.`
+  do_not_promote_until = `A person who has not read the worker can say what a Broken card keeps, and what mutex.buzz shows on the 14th.`
+}[reg=facet]
+
+^"note_course"{
+  id = "cu-note"
+  claim = `autonomous.feedback is learned in file order. Each file is a lesson, and the next file assumes it.`
+  lessons = #[
+    `model.js — what a note is. Kinds, bounds, a public host. The file's own header: no rendering, no network.`,
+    `config.js — the claim. One host's .well-known/autonomous-feedback.json configures only that host.`,
+    `pages.js and client.js — the card. The kind changes the question. The reader can see what will be kept.`,
+    `intake.js — the public budget. Eight posts and twenty meter checks per hashed address per ten minutes.`,
+    `desk.js — what survives. queue.want asks; DESK_HOSTS opens. An unsaved card compacts after three days to a tally with no words. A saved card, up to the save limit, keeps its words until released.`,
+    `index.js — the routes that join the lessons, and the inbox token that reads them.`
+  ][reg=set]
+  exam = `node --test workers/autonomous-feedback/test/routes.test.mjs`
+  later = `Digest, webhook, reply cards, and the appreciation wall stay proposed on the desk rung of @feedback. They become a lesson after a reader of desk.js can point at a saved card and a counted card on the page. Owner identity beyond the token is that later lesson, not a new product.`
+  validation = `The six paths exist under workers/autonomous-feedback/src/. @desk names the same compaction.`
+  do_not_promote_until = `A new contributor opens model.js first and can say why desk.js is fifth.`
+}[reg=facet]
+
+^"lock_course"{
+  id = "cu-lock"
+  claim = `mutex.buzz is one file, then the page that frames it. The curriculum is the order inside that file.`
+  lessons = #[
+    `The header — three paths: / explains the lock, /now/ is the holder attention.productions frames, /now.json is mutex.now.v1.`,
+    `FOLIOS — the resting art, one laminated folio per cycle, linked to /design/folios/.`,
+    `HOLDS and QUEUE — empty. An agreed hold is a row with a cycleStart. Waiting holders stay in order. Nobody pays to jump a cycle.`,
+    `cycleFor — A through the 13th, B through the 26th, C through month's end, UTC.`,
+    `holderFor — the agreed hold for that cycle, or the folio.`,
+    `@hub — attention.productions embeds https://mutex.buzz/now/. That join is already the second host. It is not a new module.`
+  ][reg=set]
+  later = `Filling HOLDS or QUEUE is a content decision in this file. A shop, a vote, or a comment on the holder is a second verb, which @hosts already refuses. The buzz, a receipt on Now when the lock changes hands, stays the proposed loud moment until a hold exists to hand off.`
+  validation = `rg -n "export const HOLDS|export const QUEUE|function cycleFor" workers/site-hub-next/src/mutex.js`
+  do_not_promote_until = `Someone can add a hold as a row with a cycleStart and say which folio returns when that row's cycle ends.`
+}[reg=facet]
+
+^"longer"{
+  id = "cu-longer"
+  claim = `The long plan is the two courses in order. A year of work is the next untaught seam, not a second surface.`
+  order = #[
+    `The six kinds can be read aloud from model.js, and the card asks the kind's prompt.`,
+    `The card and desk.js agree on saved words versus a count.`,
+    `The cycle can be read aloud: A, B, C, and the three closes.`,
+    `A public queue stays the empty list until a holder exists.`,
+    `Digest and reply cards wait on the saved-versus-counted lesson.`,
+    `Prices, tiers, and which opportunity is first stay the creator's. @offer already refuses a support SKU invented from a prime.`
+  ][reg=set]
+  grain = `One lesson, one file, one probe. A plan folder opens when a new lesson must change two hosts in one patch. The embed of /now/ already landed, so it does not open one.`
+  deliverable = `The deliverable /services/systems/#curricularize names, applied here, is an onboarding trail through these files. The trail is this cache. The next engagement memo would name one seam: the card's account of a counted note, or the first real row in HOLDS.`
+  validation = `A later session picks the first item in order that a new reader still cannot learn from the file alone, and edits that file's comment or its page. One file.`
+  do_not_promote_until = `That one-file edit has a test or a still, and the course order above is unchanged.`
+}[reg=facet]
+
+#>wonder_curriculum_first_file
+?["Does the first file of each course already say the public promise, so a new engineer can stop there and still be right?"]{
+  #:depth #!educational ~#lens(curriculum: first file)
+  ~#with: @model @mutex @feedback @hosts
+  ~#hypothesis: "model.js says a note has no rendering and no network, and names the kinds. mutex.js says one concept holds the frame, names /, /now/, and /now.json, and leaves HOLDS and QUEUE empty."
+  ~#expect: "model.js header and CONTEXTS. mutex.js header, FOLIOS, and the two empty lists."
+  ~#probe(run)
+  !probe{ "rg -n 'No rendering|export const CONTEXTS|One concept holds|export const HOLDS|export const QUEUE' workers/autonomous-feedback/src/model.js workers/site-hub-next/src/mutex.js" }
+  $%[note.kinds, lock.empty, promise.in_the_first_file]
+}
