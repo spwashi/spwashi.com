@@ -1,0 +1,147 @@
+# Runtime and library architecture (2026-11) — prime: a tree that reads by folder and grows by adding one
+#
+# The creator, 2026-11-08: "update spwashi.com plans to improve the
+# architecture of the runtime and library affordances; consider an
+# architecture that may be more readable by folder and imaginatively
+# extensible". This holds a read-only survey of public/js taken that day
+# (node scripts/js-tree-value.mjs, import scans, catalog and test lists), five
+# principles, and a ladder of slices handed to the plans that already own the
+# ground. Nothing here moves a file: renames are proposed and staged one at a
+# time (the creator's CSS library tree), and css-architecture-readability's rule
+# holds: no directory merely to mirror an ontology if it hides import order.
+
+#>runtime_library_architecture_2026_11
+#:cache #!architecture #!runtime #!library #!folders
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+expression = tree[readable]{folder.contract.library}<grows_by_one>
+
+summary = #[
+  `A new capability touches seven places at the least (code, catalog row, CSS file, CSS registry, test, test list, atlas) and the pinch scale touched about sixteen; a folder that holds a capability whole would make adding one a single act.`,
+  `The layer order already exists and is audited (kernel < semantic < runtime = media < interface < modules; 1 upward static import, 9 lazy), but the folders do not say it, "runtime" does not mean mounted, and one concept lives in up to four folders.`,
+  `The library is real but buried: the pieces that travel are small and clean (gesture-measure, pinch-text-scale, spw-expression, the reader), while compose.js, the "portable" entry, reaches 102 files and 36,014 lines.`,
+  `Proposed: one question per folder, said in the folder; one concept, one home; a capability as a folder with its contract beside its code; a library tier whose purity is checked; and each folder named also by the operator of what it does, so the tree teaches the notation it serves.`,
+][reg=set]
+
+contents = #[
+  ~"./runtime-library-architecture-2026-11.spw#survey",
+  ~"./runtime-library-architecture-2026-11.spw#principles",
+  ~"./runtime-library-architecture-2026-11.spw#operator_map",
+  ~"./runtime-library-architecture-2026-11.spw#library",
+  ~"./runtime-library-architecture-2026-11.spw#capability_folder",
+  ~"./runtime-library-architecture-2026-11.spw#one_home",
+  ~"./runtime-library-architecture-2026-11.spw#ladder",
+][reg=set]
+
+^"survey"{
+  sizes = `public/js 2026-11-08: runtime 139 files and 47,782 lines in 18 families, modules 50 (18,998), interface 34 (14,841), semantic 48 (14,467), kernel 40 (11,723), media 6 (3,482), typed 13, generated 2; compose.js 466 lines, site.js 1,324 (@readme, @tree_value)`
+  layers = `kernel < semantic < runtime = media < interface < modules (@tree_value:59); audit "upward imports=1 static, 9 lazy": the static one is semantic/component-interaction-semantics.js to runtime/interaction/vocabulary.js (the one NAMED_SEAM); the lazy ones include kernel/instrumentation.js to runtime/diagnostics and kernel/site-settings-engine.js to runtime/memory/pin-registry.js and interface/site-settings-ui.js; inside runtime, 55 cross-family static edges against 91 within, with four mutual pairs (memory and orchestration, memory and physics, orchestration and regions, page and regions)`
+  mounted = `the catalog loads modules from modules 33, interface 20, semantic 16, media 5, kernel 1, and runtime's families; its four families (core, feature, region, enhancement) are timing classes, not folders; 147 definitions in four files, enhancement.js 1,992 lines`
+  adding = `attention-pinch-scale: code in runtime/attention, a 13-field row at catalog/enhancement.js:1133-1162, its attributes read in six CSS files registered in style-core.css (103 imports) or style.css (52) and flattened into bundles, BEHAVIOR_SCOPES for lazy CSS, three tests listed in MODULE_TEST_FILES (112 entries), a contract in .spw/conventions/attention-field.spw, the runtime atlas, and the peer kit to spw.quest: about sixteen places`
+  scatter = `cauldron in four places (interface/cauldron, semantic/cauldron, runtime/memory/cauldron-fluency.js, modules/media/cauldron.js, the last an unrelated prompt cauldron); discovery seven files in three folders; labs in four; expression in five; twelve basenames repeat; kernel, typed and public/ts are one module in three folders, and typed imports kernel back; generated code has three homes (generated/, typed/, semantic/spw-workbench-reader.js); 583 absolute and 252 relative imports, 36 files with both`
+  portable = `importable as-is by another origin: kernel/gesture-measure.js (12 lines, no imports), kernel/pinch-text-scale.js (242, no site imports), interface/spw-expression.js (2 files, 339 lines, the tree's one customElements.define), semantic/spw-workbench-reader.js (generated, no imports), workers/lib/peer-kit.js (generated tokens, faces and sigil colors); compose.js reaches 102 files and the full catalog through developmental-climate, dom-render to bus, and catalog/index`
+}[reg=facet]
+
+^"principles"{
+  one_question = `Every folder answers one question, and says it where a reader lands: an index.spw beside the code with one expression, the question in plain words, the layers it may import, and its owner plan. The layer audit already knows the allowed edges; the folder says them.`
+  one_home = `One concept, one home. A concept spread over folders gets a folder of its own, with its layers as subfolders if it truly spans them (cauldron/{contract, storage, ui}), rather than a slice in each layer.`
+  capability_folder = `A capability is a folder: its code, its catalog row, its style, its test and its sentence side by side, and the catalog, the CSS registry and the test list are carried from those folders with --check, as carry-shelf and carry-shell already do. Adding a capability is adding a folder.`
+  library = `What travels is a tier of its own whose purity is checked: no bus, no storage key, no root dataset write, no site path. A piece passes the check or it does not travel; compose.js becomes the barrel of that tier, not of the site.`
+  names = `A folder's name says what a reader does with it in plain words, and its index.spw also gives it the operator of what it does. Plain words carry the reading; the operator teaches the notation and gives a new folder a place to stand.`
+}[reg=facet]
+
+^"operator_map"{
+  proposal = `A first reading of the layers by operator physics (public/js/kernel/operator-detection.js), offered for the creator's words, not adopted:`
+  map = #[
+    `kernel . ground: bound handles, the defaults everything returns to`,
+    `semantic # vibration and #> frame: names, grammar, the parse that gives words their frames`,
+    `runtime ! action: what happens when a page runs`,
+    `media * value: what materializes, images and SVG`,
+    `interface @ perspective: what a person sees and handles`,
+    `modules & subject: a route's own subject, entangled with its pages`,
+    `library $ substrate: what other sites stand on`,
+    `generated = binding: written by a script and held to its source`,
+    `labs ? wonder: instruments that measure before they settle`,
+  ][reg=set]
+  use = `the operator appears in each folder's index.spw expression and on design/runtime/, a map a reader can walk; a new folder chooses its operator by what it does, which is the imaginative extension: the tree grows in the notation's own terms`
+  guard = `no new data-spw-* family, no folder renamed to a sigil; the operator is a reading, the plain name stays the path`
+}[reg=facet]
+
+^"library"{
+  tier = `public/js/library/ (proposed name) holding the pieces that pass the purity check, each a folder with an index.js, an index.spw, a test, and, where it has one, its own CSS: gesture-measure, pinch-text-scale, spw-expression, the reader, texture-slice once its documentElement write is a host option`
+  check = `audit:library: every file in the tier imports only the tier, writes no root dataset and no storage, and runs under node with the DOM stubs; the peer kit carries from the tier instead of from scattered paths`
+  compose = `compose.js re-exports the tier and nothing else, so its closure falls from 102 files to the tier's; the site boots from site.js as it does now; site-starter-component-kit's K1 to K3 and audit:portable read the same list`
+  kin = `spw.quest and factshift.center already consume this kind of piece through the peer kit; lore.land could take the same tier rather than copies`
+}[reg=facet]
+
+^"capability_folder"{
+  shape = `public/js/elements/spw-expression/ (pilot): index.js (the element), style.css (the CSS it injects today), contract.js (what the catalog would say: when, selector, describes, updates, writes), spw-expression.test.mjs, index.spw (its expression and question)`
+  carried = `a carry script reads every contract.js and writes the catalog rows, the CSS registry lines and the test list entries, with --check in check:local; enhancement.js shrinks by one row for each capability that moves`
+  custom_elements = `elements/ is where authored custom elements live (the creator's lean, project_modules_as_custom_elements): light DOM, state on the element, scheduled by the catalog; spw-expression is already the pilot`
+}[reg=facet]
+
+^"one_home"{
+  cauldron = `interface/cauldron, semantic/cauldron and runtime/memory/cauldron-fluency.js into one cauldron/ family; modules/media/cauldron.js takes another name, since it is a prompt generator`
+  labs = `runtime/labs, discovery/feature-lab.js, semantic/pretext-lab.js and the route labs into labs/, each lab a folder`
+  generated = `semantic/spw-workbench-reader.js written by its build into generated/, with a one-release re-export at the old path`
+  kernel = `the eight facades over typed/ collapse when public/ts moves to src/ts (site-source-layout M2), so kernel holds primitives and behaviours leave for runtime families`
+  families = `page/ holds route features and shell/ the installed-app opener: rename by the question each answers; physics/palette-treat-discovery.js and expression/gate.js move to where their question lives`
+  imports = `one import style per folder, checked, moving folder by folder`
+}[reg=facet]
+
+^"ladder"{
+  ungated = #[
+    `L0 an index.spw in each top-level folder and runtime family: question, layers, owner, and the proposed operator; the README map points at them (site-source-layout)`,
+    `L1 audit:library over the six travelling pieces, read-only, reporting what keeps each from the tier (site-starter-component-kit, K2)`,
+    `L2 the kernel back-edges inverted to registration hooks, one per patch, the audit's lazy count falling from 9 (runtime-plane-consolidation)`,
+  ][reg=set]
+  creator_gated = #[
+    `L3 the capability-folder pilot: elements/spw-expression with its CSS out of the injected string, the old path a re-export for one release (module-contract-overhaul, after R1 and R2)`,
+    `L4 the carried catalog for the pilot and two modules (module-contract-overhaul)`,
+    `L5 library/ and compose.js as its barrel (site-starter-component-kit, K3 and wonder_site_starter_first_portable)`,
+    `L6 one home for cauldron, labs and generated code, one move per patch (runtime-plane-consolidation, deploy-module-graph for chunk cycles)`,
+    `L7 the operator map, in the creator's words, on design/runtime/`,
+  ][reg=set]
+  checks = `each move keeps check:local, check:built (0 chunk cycles), the layer audit and the module suite green, and is its own commit`
+}[reg=facet]
+
+#>wonder_runtime_library_operator_map
+?["Should each folder of the tree carry an operator in its index, as a reading of what it does?"]{
+  #:depth #!semantic ~#lens(choice)
+  ~#with: @tree_value @readme
+  ~#hypothesis: "kernel ground, semantic vibration, runtime action, media value, interface perspective, modules subject, library substrate, generated binding, labs wonder; plain names stay the paths."
+  ~#expect: "No folder is renamed to a sigil, and design/runtime/ can draw the tree by operator."
+  ~#probe(read)
+  !probe{ "Read the layer order in scripts/js-tree-value.mjs and the README map. Say whether each layer's question matches the proposed operator's physics." }
+  $%[map.adopt, map.revise, map.plain_only]
+  ~<"./runtime-library-architecture-2026-11.spw"> ~<"../../public/js/README.md">
+}
+
+#>wonder_runtime_library_capability_folder
+?["Is a capability a folder, with its catalog row, style, test and sentence beside its code?"]{
+  #:depth #!pragmatics ~#lens(choice)
+  ~#with: @catalog @module_tests
+  ~#hypothesis: "elements/spw-expression proves the shape; a carried catalog keeps enhancement.js as an output; adding a capability becomes one folder and one carry."
+  ~#expect: "Today attention-pinch-scale touches about sixteen places; the pilot touches one folder and the carry."
+  ~#probe(read)
+  !probe{ "Count the places a new catalog module touches today, then the places the pilot would." }
+  $%[capability.folder, capability.as_is, capability.folder_for_elements_only]
+  ~<"./runtime-library-architecture-2026-11.spw"> ~<"../../public/js/runtime/catalog/enhancement.js">
+}
+
+@readme: ~"../../public/js/README.md"
+@tree_value: ~"../../scripts/js-tree-value.mjs"
+@catalog: ~"../../public/js/runtime/catalog/enhancement.js"
+@module_tests: ~"../../scripts/module-tests.mjs"
+@compose: ~"../../public/js/compose.js"
+@peer_kit: ~"../../workers/lib/peer-kit.js"
+@element: ~"../../public/js/interface/spw-expression.js"
+@layout_plan: ~"../../.agents/plans/site-source-layout/PLAN.md"
+@planes_plan: ~"../../.agents/plans/runtime-plane-consolidation/PLAN.md"
+@contract_plan: ~"../../.agents/plans/module-contract-overhaul/PLAN.md"
+@starter_plan: ~"../../.agents/plans/site-starter-component-kit/PLAN.md"
+@graph_plan: ~"../../.agents/plans/deploy-module-graph/PLAN.md"
+@css_plan: ~"../../.agents/plans/css-architecture-readability/PLAN.md"
+@navigation: ~"./spw-navigation-ergonomics-2026-11.spw"

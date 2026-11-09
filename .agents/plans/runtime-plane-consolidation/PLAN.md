@@ -4,6 +4,8 @@
 
 **Related:** [module-contract-overhaul](../module-contract-overhaul/PLAN.md) · [interaction-loop-contract](../archive/interaction-loop-contract/PLAN.md) (archived) · [core-css-spend-cut](../core-css-spend-cut/PLAN.md). **Absorbed 2026-10-10:** [runtime-module-decomposition](../archive/runtime-module-decomposition/PLAN.md), the leftovers of [js-surface-ecology](../archive/js-surface-ecology/PLAN.md).
 
+**Architecture (the creator, 2026-11-08):** [runtime-library-architecture](../../../.spw/caches/runtime-library-architecture-2026-11.spw) hands this plan two slices. L2 inverts the kernel's lazy reach upward (9 imports, such as `instrumentation.js` reaching `runtime/diagnostics`) to registration hooks, one per patch. L6 gives cauldron (four folders today), labs and generated code one home each, and renames families by the question they answer (`page/` against `shell/`).
+
 ## Public Goal
 
 Make the runtime's canonical contracts the *default path* rather than one option among several, so that the JS planes (`kernel/`, `runtime/`, `semantic/`, `interface/`, `modules/`) stop re-growing local copies of decisions that already have an owner.
