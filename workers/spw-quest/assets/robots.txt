@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /script.spw
+Disallow: /canvas
+Sitemap: https://spw.quest/sitemap.xml
