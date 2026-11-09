@@ -1,0 +1,108 @@
+# factshift.center on an iPad (2026-11) — cache
+#
+# The creator, 2026-11-09: how could factshift.center be improved for use on
+# the iPad, then "cache". Read from the app checkout
+# (workers/factshift-center/app) and the shipped viewport in assets/index.html.
+# Not opened on an iPad. Nothing here is a patch.
+
+#>factshift_ipad_2026_11
+#:cache #!factshift #!ipad #!touch #!viewport
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@semantic_capacity: ~"../conventions/semantic-capacity.spw"
+@insight_template: ~"../../.agents/plans/reference-assignment-template/templates/semantic-insight-cache.spw"
+@touch_control_class: ~"./touch-control-class-2026-09.spw"
+@factshift_controls: ~"./factshift-control-alignment-2026-11.spw"
+@pwa_roles: ~"./pwa-roles-2026-11.spw"
+
+operation = "cache"
+fixity = "experimental"
+source = "chat 2026-11-09, read against the app checkout; no iPad session"
+do_not = `Do not implement from this cache. Do not rebuild the snapshot. Do not lock the main page with user-scalable=no. Do not force portrait. Do not fold the tablet into the 40rem phone column. Do not raise the mode tiles; they are already 4rem.`
+
+expression = canvas[ipad]{hand.keyboard.pencil}<stage>
+
+summary = #[
+  `A full-screen iPad is wider than the phone band and reports a fine pointer, so the one-surface rules and the coarse-pointer Spw layout never apply. The stage is already a touch stage. The miss is the chrome around it.`,
+  `Four holds: a tablet band that keeps one surface and the safe area; the open tool and the held line above the software keyboard; a window that remeasures when Split View or the keyboard changes the visual viewport; a pencil that places, while a finger still pinches.`,
+][reg=set]
+
+^"ipad-001_full_screen_is_a_desktop"{
+  id = "ipad-001"
+  operation = "cache"
+  fixity = "experimental"
+  claim = `The pocket rules are a phone. An iPad in full screen is laid out as a desktop, with the mode column, its key numbers, and an open tool all on the stage at once.`
+  evidence = #[
+    `modes.scss: the one-surface rules, the hidden key numbers, and the fixed tool width sit inside @media (max-width: 40rem), which is 640px`,
+    `an iPad portrait is 768 CSS px and up, so that query is false in full screen; a narrow Split View can fall under 640px and suddenly become the phone`,
+    `root.scss --title-box is 4rem (64px); the mode squares already clear a thumb`,
+    `hotkey-menu.scss and spw-mode.scss hide kbd labels and raise Spw buttons only under (pointer: coarse)`,
+    `iPadOS Safari reports pointer: fine and hover: hover while a finger is the hand, so those rules miss`
+  ][reg=set]
+  pattern_consideration = #[
+    `@touch_control_class: hit size follows the control class, and the mode tiles are already the large class`,
+    `@factshift_controls: the context chooses the object; on a tablet the object is still the stage, and the chrome should step back the way the phone already does`
+  ][reg=set]
+  expansion_prime = `A middle band, about 40rem to 64rem with any-pointer: coarse, reuses the phone's one-surface rule and insets the flush column by the safe area. Leave the phone query as it is.`
+  validation = `On an iPad Safari portrait, matchMedia('(max-width: 40rem)') and matchMedia('(pointer: coarse)') are both false, and matchMedia('(any-pointer: coarse)') is true.`
+  do_not_promote_until = `That matchMedia reading is taken on a real iPad, in full screen and in a half Split View.`
+}[reg=facet]
+
+^"ipad-002_the_line_stays_above_the_keys"{
+  id = "ipad-002"
+  operation = "cache"
+  fixity = "experimental"
+  claim = `The software keyboard covers the held line. The tool window measures the layout viewport, and an iPad keyboard does not shrink that box.`
+  evidence = #[
+    `tool-window.ts screenHeight reads documentElement.clientHeight`,
+    `assets/index.html viewport is width=device-width, initial-scale=1, with no viewport-fit=cover and no interactive-widget`,
+    `initListeners.ts opens the Spw field, and a phone keyboard, when the line is chosen; h1.ts focuses the title field on a tap`,
+    `no env(safe-area-inset-*) in the app stylesheets; standalone on an iPad puts the home indicator over a column that is flush to the side (modes.scss #mainmenu-shortcuts)`
+  ][reg=set]
+  pattern_consideration = #[
+    `tool-window.ts already refused innerWidth because a phone grows the layout viewport past the edge`,
+    `@pwa_roles factshift display is standalone and orientation is any, so the installed app has no browser chrome and does have the home indicator`
+  ][reg=set]
+  expansion_prime = `Pad the bottom by the visualViewport offset while the keyboard is up, and inset the flush column by the safe area. Recompute the open window's room on visualViewport resize.`
+  validation = `With the Spw field focused on an iPad, the field's bottom sits above the keyboard, and a window opened toward the bottom stays inside the visual viewport.`
+  do_not_promote_until = `A keyboard-up still is compared with the keyboard down, on the installed app and in Safari.`
+}[reg=facet]
+
+^"ipad-003_pencil_places_finger_pinches"{
+  id = "ipad-003"
+  operation = "cache"
+  fixity = "experimental"
+  claim = `A finger pinch already resizes, enters, and leaves. A pencil is a different pointer, and the stage ignores it for that gesture. A pencil should place; a finger should keep the pinch.`
+  evidence = #[
+    `pinch.ts initStagePinch returns unless pointerType is touch, then two touches scale the node under them, the selection, or every node; spread 1.35 enters, close 0.65 leaves`,
+    `a trackpad pinch is a wheel with ctrl, already the same order`,
+    `gestures.ts HOLD_MS is 420 for every pointer; svg.scss already sets touch-callout and user-select to none on the stage`,
+    `Apple Pencil reports pointerType pen; one pencil cannot pinch`
+  ][reg=set]
+  pattern_consideration = #[
+    `@factshift_controls: spread and close on the stage are already enter and leave; the Spw window's spread and pinch mean walls and drop, and that break is unchanged here`,
+    `hover on a pencil or a trackpad can light :hover rules (hotkey-menu.scss .keystroke-turn) that a finger never sees`
+  ][reg=set]
+  expansion_prime = `Let pointerType pen begin a place without the 420ms hold. Leave the two-finger pinch on touch. A control that appears only on :hover also appears for a pen hover, or it does not use hover as its only affordance.`
+  validation = `A pencil drag on a node moves it without a loupe. Two fingers still spread a node into a page. A trackpad pinch still resizes.`
+  do_not_promote_until = `The pen path is tried on an iPad with a pencil, and a finger-only session still pinches.`
+}[reg=facet]
+
+^"ipad-004_a_window_remeasures"{
+  id = "ipad-004"
+  operation = "cache"
+  fixity = "experimental"
+  claim = `A tool window keeps the size it had when it opened. Split View, Stage Manager, and rotation change the screen after that, and the window can hang off the new edge.`
+  evidence = #[
+    `tool-window.ts: the window takes its size from the room it has when it opens, and keeps it; the handle stops before the window would cross the edge`,
+    `those limits are computed from clientWidth and clientHeight at use time, against a width and height captured at open`
+  ][reg=set]
+  pattern_consideration = #[
+    `the phone band already gives the window a fixed width of calc(90vw - 3.5rem); a tablet that rotates wants the same willingness to be remeasured`
+  ][reg=set]
+  expansion_prime = `On visualViewport resize, recompute the open window's max against the new room. If the room falls under the floor (16rem by 8rem), step the tool back the way the phone hides it behind the menu.`
+  validation = `Open a tool, then enter Split View. The window stays on screen, or the tool steps back.`
+  do_not_promote_until = `ipad-001's band is chosen, so the resize rule and the one-surface rule do not fight.`
+}[reg=facet]

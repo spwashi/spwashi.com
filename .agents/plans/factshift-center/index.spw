@@ -70,6 +70,8 @@ intent: .{
 @parser_releases: ~"../../../workers/spw-quest/assets/parser/index.json"
 @brace_semantics: ~"../brace-semantics/index.spw"
 @inquiry_loop: ~"../spw-inquiry-loop/index.spw"
+# Studio jobs as readings of one line, and a concept route's physics as its operator's packet.
+@concept_routes: ~"../../../.spw/caches/concept-route-physics-2026-11.spw"
 
 dispatch: .{
  plan = @plan
