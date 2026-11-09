@@ -4,6 +4,8 @@ Status 2026-11-06. A plan, nothing built. The creator asked to improve the desig
 
 Operators as lifecycles, the line as something to change, and what this app suggests for spwashi.com's runtime: [OPERATORS.md](OPERATORS.md) (2026-11-07).
 
+Storyboarding, images, a pose, a mind map, and a file's one-line summary are readings of the held line. A file is a world of lines, a babble is a ~ line offered across frames, and a named concept carries its operator's packet. That reading is [concept-route-physics-2026-11.spw](../../../.spw/caches/concept-route-physics-2026-11.spw). The nine tools below stay the instruments.
+
 ## The feel to design toward
 
 The creator, 2026-11-06: the feeling of entering and navigating onto a surface to immediately actualize a fluent action, with learnable surroundings, should be a key design of factshift.center. It should feel a bit like playing the piano or dancing across a keyboard, playing with a synthesizer, casting rain, playing the bagpipes, modeling clay, playing cat's cradle, knitting a sweater, arranging cables, laying a circuit, tracing a blob, painting with stars.

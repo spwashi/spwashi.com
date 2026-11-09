@@ -1,0 +1,173 @@
+# Concept routes, studio readings, and token physics (2026-11-08) — cache
+#
+# The creator asked to improve factshift.center's theory toward storyboarding,
+# image management, aesthetic screenshot posing, mindmapping, and file
+# representation, and toward named concept routes whose ideas carry unique
+# physics, and toward CSS tokens that follow the language runtime.
+# This names the readings and the one packet a route may carry.
+# Grown 2026-11-09: a file is a world of lines, the runtime is that line
+# read three ways, syntax is how a complex concept is edited by hand,
+# and a babble is a ~ line offered across frames before it is written.
+# It opens no tool, no route, and no token.
+
+#>concept_route_physics_2026_11
+#:cache #!factshift #!concept #!studio #!tokens
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@tools: ~"../../.agents/plans/factshift-center/TOOLS.md"
+@surface: ~"../surfaces/factshift-center.spw"
+@controls: ~"./factshift-control-alignment-2026-11.spw"
+@substrate: ~"./factshift-cognitive-substrate-2026-11.spw"
+@stage: ~"./stage-fractal-differentials-2026-11.spw"
+@physics: ~"../../.agents/plans/spw-planes/physics.spw"
+@stills: ~"../../.agents/plans/screenshot-semantics/PLAN.md"
+@tokens: ~"../../.agents/plans/data-attribute-css-token-refinement/PLAN.md"
+@capture: ~"../../public/css/modes/capture.css"
+@core: ~"../../public/css/tokens/core.css"
+@dimensions: ~"../../public/css/tokens/dimensions.css"
+@syntax: ~"../../public/css/grammar/syntax.css"
+@operators: ~"../../public/js/kernel/operator-detection.js"
+@modes: ~"../../workers/factshift-center/app/src/js/spwashi/interface.ts"
+@file_map: ~"../../workers/factshift-center/app/src/js/modes/spw/file-map.ts"
+@drag: ~"../../workers/factshift-center/app/src/js/simulation/nodes/drag-mode.ts"
+@tie: ~"../../workers/factshift-center/app/src/js/simulation/nodes/link-confirm.ts"
+@examples: ~"../../workers/spw-quest/src/examples.js"
+@constructs: ~"../../workers/spw-quest/src/constructs.js"
+@joins: ~"../language/dot-join.spw"
+@readme: ~"../../public/js/README.md"
+@physical: ~"../../public/js/runtime/physics/physical-model.js"
+@biome: ~"../conventions/component-biome.spw"
+@informatics: ~"./cognitive-informatics-interaction-2026-11.spw"
+@runtime_library: ~"./runtime-library-architecture-2026-11.spw"
+
+operation = "cache"
+fixity = "experimental"
+expression = concept[route]{story.image.pose.map.file}<physics>
+
+summary = #[
+  `Five studio jobs are five readings of one held line. Story is the order of frames. An image is a node whose concept is a picture. A pose is the picture after the heat has gone. A mind map is the nodes and the ties. A file's summary is the one line its parent shows.`,
+  `A named concept route is a frame you enter. Its physics is the operator that concept already carries, written into the tokens that operator already paints. A private force list per route would be a second physics.`,
+  `The nine tools stay the instruments. Screenshot stills, the token bedrock, and the uncommitted canvas work stay their owners' queues.`,
+  `A file is a world of lines. The same line is the site's runtime, the quest's example, and the canvas's nodes. A babble is a ~ line offered to another frame before ! writes it.`,
+][reg=set]
+
+^"studio"{
+  storyboard = `The story tool is already ^, states gathered into an order (TOOLS.md). Today it is one context chip. A board is that order made visible: each kept state a frame, the join between them the ordinal one the language already has. The drone is the held line. The notes are the kept states.`
+  images = `Color is @, the perspective new nodes take. Filter is ?, the question that keeps a set. An image is a node you can enter, and a set of images is the nodes that answer one question under one perspective. Folio laminate on spwashi.com stays that site's image treatment.`
+  pose = `spw-planes measured the deployed picture: heat is gone in about two seconds, and at rest the felt marks are ground and lift. A pose worth keeping is that resting picture, with the focal square in one of its five states (default, preview, select, crawl, reflex). Capture mode on the site already freezes motion for a still (capture.css). The pose is arranged before the shutter, and the shutter finds it still.`
+  mindmap = `The canvas is the map. Node is ., where a thing is made and settled. A tie pulls when the two ends share a color and pushes when they do not. A mind map does not need a tenth tool.`
+  file = `A long file is a frame. The parent shows one line, the * receipt of what that file came to. Debug, $, reads the stages under that line. Entering the frame is the summary opening. The altitude from file to frame to line is the control prime's ladder, still proposed for the pinch.`
+}[reg=facet]
+
+^"routes"{
+  live = `Entering a node already opens a page with that node as the frame and the parent line in the address (factshift-center.spw). The nine modes are reflex, color, map, filter, node, query, debug, story, spw (interface.ts). TOOLS.md already proposes each mode as one operator applied to the canvas.`
+  proposal = `A concept route is the same move one level out. The name is the concept. The physics is that concept's leading operator, taken from operator-detection.js: ! injects, ^ lifts, . settles, ~ holds, ? measures, @ situates. Sibling concepts on one canvas may disagree, the way two colors already pull or push. The address keeps the frame. Thirteen new site paths would be thirteen homes.`
+  packet = `The packet a route may set is small: --active-op-color, and one number the sigil already means. ! may write --charge. ^ may write --spw-depth. ? may write --spw-attention. @ may write the color and leave the numbers. A route that needs a force the table does not name is asking for a sigil, and this cache does not add one.`
+}[reg=facet]
+
+^"tokens"{
+  live = `core.css registers the quantities as @property: --charge, --spw-valence, --spw-resonance, --spw-depth, --spw-attention, and a longer climate list (taste, reward, entropy, drift). dimensions.css types four authored numbers into tokens with attr(): tangibility, viscosity, coherence, accent-strength. syntax.css paints a brace from the operator name through --op-frame-color, --op-probe-color, --op-action-color, and the rest. Palette resonance on html sets --active-op-color by motif (curriculum, lab, inquiry), which is a climate, not a sigil.`
+  proposal = `A token is language when an operator writes it, and climate when only a motif does. The intricate relation is that a concept route sets the operator, and the operator's existing color and one existing number follow. Motif stays the room's weather. New studio jobs do not earn new properties. The bedrock plan still owns which names exist. This cache adds none.`
+}[reg=facet]
+
+^"file"{
+  live = `file-map.ts draws a file as one world. MAP_FEATURES groups every line by its front operator, its lens, the #> frame it falls under, or the whole line in its own cell. A tap on a line holds that line's anatomy. The map button steps the feature, then leaves, and the canvas is the line's again.`
+  three = `Quest keeps a file as one script with a try beside it (examples.js). The site keeps a file as a route or a .spw surface whose expression is the line a still can read. The canvas keeps a file as nodes. The three are one architecture: world, region, line, slot.`
+  summary = `The parent shows one line. That line is the file's summary. Entering the frame opens the world. Debug, $, reads the stages under the line. A directory tree is the library's other picture, and the runtime-library prime already asks for one concept in one folder.`
+}[reg=facet]
+
+^"runtime"{
+  live = `public/js/README.md seats the site's runtime in families. physics/physical-model.js is the inspectable field: gravity, charge, pulse, wonder memory, climate, presence. expression/ is authored Spw doing work. attention/ is the field a visit leaves. Attributes hold the categories. Custom properties hold the continuous forces.`
+  concept = `The conceptual runtime is the line's slots plus the quantities those slots write. It is not a second object model beside the line. The site paints the quantities. Quest mutates one slot and says what changed. The canvas lets the quantities move the nodes until the heat is gone.`
+  library = `The pieces that already travel are small: gesture-measure, pinch-text-scale, spw-expression, the reader (runtime-library prime). compose.js still reaches the whole catalog. A concept route uses the traveling pieces. It does not grow a fourth runtime.`
+}[reg=facet]
+
+^"syntax"{
+  live = `constructs.js already names the shapes a complex concept is built from: a tight body, a sequence, a list, a movement (~>), a nesting, a compound, a frame address, a wonder. dot-join.spw keeps the joins: a tight dot is one name, a comma is company, a semicolon is an order, ~> is a path. headings.spw on the stage puts a company at a subject, {student, classmate, later}@indexing. A concept in < > refers to the whole reading of its line.`
+  editing = `Physics-based editing writes those same bytes with the hand. A drag in links mode rewrites the line when a node is let go in a container, and places or throws the node in moves mode (drag-mode.ts). A pinch scales an amount. A swipe steps to a sibling and does not rewrite the line under the hand. The Spw window remains the place a mark is typed.`
+}[reg=facet]
+
+^"hands"{
+  grammar = `The control prime already states one hand: tap primes and a second tap acts, a sideways swipe steps to a sibling, spread enters one grain and close leaves, drag carries a thing into a slot. The stage's spread and close already do enter and leave. The Spw window's spread and pinch still mean walls and drop. That break stays the control prime's.`
+  editing = `For editing, the three hands split by what they change. Pinch changes an amount and leaves the spelling. Swipe changes which line or which sibling is in hand. Drag changes where a part sits in the line, and so changes the spelling. Charge, color, and the tie are amounts and relations on top of that spelling.`
+}[reg=facet]
+
+^"modes"{
+  node = `Node is ., where a thing is made and settled. Its drag is links or moves, remembered in this browser. The verb ring is the node's one ring. Kinds of node do not yet each have a ring of their own; the control prime records that the ring's mark sits on the word.`
+  reflex = `Reflex is the kick, the tool TOOLS.md reads as !. The checkout's reflex imports a tie cycle from link-confirm.ts: now writes the link on release, prime holds ~ until !, gather collects until ! links them on the host's color. That file is still uncommitted, so the deployed snapshot does not run it.`
+  models = `The cognitive-informatics cache projects one coordinate space into a hormonal field, a circuit, a nutrient budget, and a stratum, and it keeps the dictionaries from settling into one proof. The canvas cools in about two seconds. The field sketch decays over tens of seconds. A reflex is the short spike. The biome convention is the site's longer land: light, exchange, succession. On the canvas, a shared color pulls and a different color pushes, which is the niche the nodes already have. This cache does not merge the dictionaries.`
+}[reg=facet]
+
+^"babble"{
+  proposal = `A babble is a ~ line made inside one frame and offered to another before ! writes it into the parent. Generative play stays in ~ and ?. The receipt is the moment a babble becomes a line the parent keeps. Map's cast across a selection is that offer at canvas scale: every node hears a potential, and nothing is spelled until the cast lands.`
+  quest = `The quest example set is the kept babbles. EXAMPLE_GROUPS are Bench, Study, Board, and Stage, fourteen files. Each file has a try that changes one thing and a field that says what the change did. The stage row is the experimental end: joins, three headings at one subject, and a pattern whose theme is the consequence. Pivot, on /pivot, mutates one slot of a line the visitor brought. The examples teach by that mutation. They are not a second textbook.`
+  frames = `Communication across frames uses the address that already holds the parent. Entering a frame leaves the parent line in the address. A message home is a ~ line on the way back, the way prime holds a tie until !. A frame that only receives ! has no room to babble.`
+}[reg=facet]
+
+^"holds"{
+  owners = `TOOLS.md owns the nine tools and the story chip. screenshot-semantics owns a still that carries the page's line. data-attribute-css-token-refinement owns the bedrock and the attr() bridges. factshift-control-alignment owns the gesture grammar. factshift-cognitive-substrate owns the manifolds. cognitive-informatics owns the four dictionaries. runtime-library owns the folder tree. component-biome owns the site's land. This cache cites them and does not re-answer their wonders.`
+  next = `When a factshift slice is free, and not before the uncommitted canvas work is the creator's to ship: entering a concept frame sets that frame's operator from the concept's leading sigil, so the brace color and one number change with the idea. A babble stays a ~ line until that slice exists. Story, images, the pose, the map, and the file stay readings of that frame.`
+  opens = `No route, no tool, no sigil, no @property, no data-spw-* family, no workbench edit.`
+}[reg=facet]
+
+#>wonder_concept_route_packet
+?["Should a named concept carry one operator's packet, or a force list of its own?"]{
+  #:depth #!experiential ~#lens(choice)
+  ~#with: @tools @operators @core
+  ~#hypothesis: "The concept's leading sigil selects a packet already in the operator table, and a private force list would be a second physics."
+  ~#expect: "TOOLS.md assigns each of the nine tools one operator. operator-detection.js names a physics per sigil. No concept route writes its own forces."
+  ~#probe(read)
+  !probe{ "Read the tool-operator table in TOOLS.md and one physics field in operator-detection.js. Say whether a concept has a packet yet, or only a tool does." }
+  $%[route.operator_packet, route.private_forces, route.packet_unless_named]
+  ~<"../../.agents/plans/factshift-center/TOOLS.md"> ~<"../../public/js/kernel/operator-detection.js">
+}
+
+#>wonder_pose_is_rest
+?["Is a pose the picture after the heat has gone, or an arrangement that includes the motion?"]{
+  #:depth #!stylistic ~#lens(comparison)
+  ~#with: @physics @stills @capture
+  ~#hypothesis: "Heat leaves in about two seconds, so a pose worth keeping is the resting offset, and capture mode already pauses what still moves."
+  ~#expect: "physics.spw records heat gone by about two seconds, with ground and lift felt at rest. capture.css pauses motion under data-spw-capture-mode."
+  ~#probe(read)
+  !probe{ "Read the heat note in physics.spw and the capture-mode rules in capture.css. Say which picture a still can keep." }
+  $%[pose.rest, pose.transient, pose.rest_then_still]
+  ~<"../../.agents/plans/spw-planes/physics.spw"> ~<"../../public/css/modes/capture.css">
+}
+
+#>wonder_token_follows_sigil
+?["Should a new token exist only when a sigil writes it?"]{
+  #:depth #!pragmatics ~#lens(choice)
+  ~#with: @core @dimensions @syntax @tokens
+  ~#hypothesis: "Quantities an operator can write stay registered. Climate tokens stay ornament. A studio job does not add a property."
+  ~#expect: "core.css registers --charge and --spw-depth. syntax.css paints braces from --op-* colors by data-spw-operator. dimensions.css bridges four authored numbers and no studio job."
+  ~#probe(read)
+  !probe{ "Read the @property block in core.css and the operator brace rules in syntax.css. Name one quantity a sigil could write, and one token that is only climate." }
+  $%[token.sigil_writes, token.climate_stays, token.both_by_kind]
+  ~<"../../public/css/tokens/core.css"> ~<"../../public/css/grammar/syntax.css">
+}
+
+#>wonder_file_is_world
+?["Is a file a world of lines grouped by operator, lens, and frame, or a tree of folders?"]{
+  #:depth #!experiential ~#lens(comparison)
+  ~#with: @file_map @runtime_library @examples
+  ~#hypothesis: "The canvas groups lines by a feature of the line. The site groups code by folder. A file's summary is still one line either way."
+  ~#expect: "file-map.ts lists MAP_FEATURES as operator, lens, frame, and whole. The runtime-library prime still proposes one concept in one folder, and has not moved a file."
+  ~#probe(read)
+  !probe{ "Read MAP_FEATURES in file-map.ts and the one-home principle in the runtime-library prime. Say which picture is live on the canvas and which is still a proposal for public/js." }
+  $%[file.world, file.tree, file.both_by_place]
+  ~<"../../workers/factshift-center/app/src/js/modes/spw/file-map.ts"> ~<"./runtime-library-architecture-2026-11.spw">
+}
+
+#>wonder_babble_arrives
+?["Does a line offered to another frame arrive as ~, or only when ! writes it?"]{
+  #:depth #!pragmatics ~#lens(choice)
+  ~#with: @tie @examples @constructs
+  ~#hypothesis: "A babble travels as ~ and waits. ! writes it into the parent. The quest examples are babbles someone already kept."
+  ~#expect: "link-confirm.ts, still uncommitted, holds a tie as ~ until !. examples.js keeps fourteen files in four groups, each with a try. No frame-to-frame ~ message is live."
+  ~#probe(read)
+  !probe{ "Read the tie modes in link-confirm.ts and one stage file in examples.js. Say which offer is held and which has already been kept." }
+  $%[babble.held, babble.written, babble.held_until_written]
+  ~<"../../workers/factshift-center/app/src/js/simulation/nodes/link-confirm.ts"> ~<"../../workers/spw-quest/src/examples.js">
+}
