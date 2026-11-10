@@ -1,0 +1,148 @@
+# Briefing for a Claude Fable 5.2 session (2026-11-09) — cache
+#
+# The creator asked for caches that prepare a Fable 5.2 session: ephemeral
+# design, the productization precipitation pipeline, collectible value,
+# particle composability, cognitive utility, and the channels of wonder,
+# syntax, runtime, and digital and material media. Also the work since the
+# Opus 5.5 cache cut, the attentional shape of each model, research on
+# interaction design and algorithmic art, social research on languages, the
+# workbench cache commits, and longer-term improvements.
+# Read 2026-11-09. This file does not implement, deploy, or edit the workbench.
+
+#>fable_session_2026_11
+#:cache #!session #!fable #!theory #!product
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@semantic_capacity: ~"../conventions/semantic-capacity.spw"
+@skill_invocation: ~"../conventions/skill-invocation.spw"
+@insight_template: ~"../../.agents/plans/reference-assignment-template/templates/semantic-insight-cache.spw"
+@collectible: ~"./collectible-expressions-2026-09.spw"
+@writing: ~"./ai-writing-smells-2026-09.spw"
+@cognition: ~"./cognitive-informatics-interaction-2026-11.spw"
+@product: ~"./ecosystem-productization-2026-11.spw"
+@particles: ~"./brace-literal-local-law-2026-11.spw"
+@hand: ~"./factshift-theory-of-mind-2026-11.spw"
+@router: ~"./quest-library-router-2026-11.spw"
+@corpus: ~"./canvas-corpus-design-2026-11.spw"
+@controls: ~"./factshift-control-alignment-2026-11.spw"
+@ipad: ~"./factshift-ipad-2026-11.spw"
+@runtime: ~"./runtime-library-architecture-2026-11.spw"
+@routes: ~"./concept-route-physics-2026-11.spw"
+@wonder_channels: ~"./language-surface-wonders-2026-11.spw"
+@materials: ~"./language-material-fluency-2026-11.spw"
+@floor: ~"../_workbench/docs/theory/spw/exhibit-floor.spw"
+@sockets: ~"../_workbench/.spw/caches/journal/2026-11-08-extension-sockets.spw"
+@caches_root: ~"../_workbench/.spw/caches/index.spw"
+@precipitates: ~"../conventions/precipitates-and-projections.spw"
+@plugin_surface: ~"./plugin-surface-prime-2026-11.spw"
+
+operation = "cache"
+fixity = "experimental"
+source = "chat 2026-11-09; site commits since 2026-10-03; workbench pin edbc5500; Anthropic's Fable 5.2 note the same day"
+do_not = `Do not implement from this file. Do not edit .spw/_workbench. Do not deploy. Do not answer a wonder that already has an owner. Do not reopen the 48,407-statement census. Do not treat Anthropic's announcement claims as measurements this repo made. Do not print "collectible" on a route. Do not add a data-spw-* family or a sigil.`
+
+expression = session[fable]{one_channel, one_owner, one_precipitate}<friend>
+
+summary = #[
+  `The November caches already hold the theory. A Fable 5.2 session opens this file, picks one channel, and carries that channel's owner to one precipitate a friend could use. Another survey would repeat Opus 5.5's job.`,
+  `An ephemeral design returns the floor to rest and lets the visitor leave with a line. A product precipitates only when the next stage can read it again as Spw, and a library with a doorway outranks a new feature.`,
+  `A particle composes when the line that writes it still reads. Cognitive utility is a change that answers once, the same way, and can be undone.`,
+][reg=set]
+
+^"open_first"{
+  rule = `One channel. The owner cache is the file. This briefing is the map.`
+  wonder = `language-surface-wonders-2026-11.spw, and the wonders already filed on factshift and quest. Harvest with npm run wonder. Do not answer one in passing.`
+  syntax = `brace-literal-local-law-2026-11.spw, then the workbench trials. Experimental grammar goes upstream as =exp. Walk one path: the workbench, or a public expression host.`
+  runtime = `runtime-library-architecture-2026-11.spw for public/js, factshift-tooling-2026-11.spw for the canvas tools, canvas-corpus-design-2026-11.spw for what the readers already did to the corpus.`
+  media = `language-material-fluency-2026-11.spw, ecosystem-productization-2026-11.spw for texture and sponsorship, exhibit-floor.spw for the hand on a physical exhibit. Digital and material meet when a line can be printed, worn, or reset on a floor and still read.`
+  product = `the journal 2026-11-08-extension-sockets.spw, then ecosystem-productization-2026-11.spw. Build a socket before anything that plugs into it.`
+  address = `plugin-surface-prime-2026-11.spw. One host, one URL seat, one probe. The plugin ecology cache stays the survey.`
+}[reg=facet]
+
+^"since_opus"{
+  cut = `Opus 5.5 generated the workbench cache tree on 2026-10-01 and, through 2026-10-13, shelved it: a journal for a day, a tree for what should stay true, one root, and a cut gate. Commits 651b535b through c796d4a8. The pin this site holds is edbc5500 (2026-11-08), plans and theory only, so the parser was not rebuilt.`
+  floor = `edbc5500 reads a children's museum floor as an interactive model: learned by touch before it is named, returned to rest for the next visitor, intermediate forms as the parts a hand can move. A reset changes no meaning. The same commit names four sockets (line, vocabulary, register, plugin) and a friend test: one afternoon, one page, three examples, a starter that fails loudly.`
+  site = `From 2026-11-07 the site carried the canvas through a file as one world, a map, a static shell, an installed face, wells, charged particles, a body's quick and slow hand, and a summary that no longer overflows. spw.quest became a guide you can compare, a walk, a shell, a shelf, arcs, and a bench. The parser page says where each sample sits. Home, Now, and About took the November book. Caches from those days are indexed under 2026-11 and should be cited, not rewritten.`
+  stale = `factshift-control-alignment-2026-11.spw was read before the wells, the particles, and body-gestures. Re-read its breaks against those before treating them as current.`
+}[reg=facet]
+
+^"models"{
+  house = `skill-invocation.spw: the operation is the lens. Adapters emphasize one focus and do not own a discipline. Grok: anti-bloat, one slice, stop. Claude: constitutional bounds, no new data-spw-* family. GPT: contract exactness and verify-first. Gemini: instruments, wonder, lattice, visual checks.`
+  opus_55 = `Observed here as a shelver. The October cut is a wide corpus, an adversarial fact check, then one root. Anthropic, 2026-11-09, calls Opus 5.5 the daily driver and Fable the escalation. ToneBench's 23 Oct 2026 board, already in ai-writing-smells-2026-09.spw, ranks Opus 5.5 at xhigh first for writing a creator's voice. That is one board, one task.`
+  fable_52 = `Released 2026-11-09, model id claude-fable-5-2, default effort high, knowledge cutoff June 2026 (platform.claude.com). Anthropic describes it as clearer than Fable 5.1, up to 30 percent faster, and priced at $8 / $40 per million tokens, for long-horizon and ambiguous technical work. Testers in that note describe it finishing past a plausible checkpoint, saying when it does not know, and coordinating smaller models. The same note's physics, proof, and hardware claims are Anthropic's. This repo has not measured them. Huryn's 7 Sep 2026 count, where Fable 5.1 was least often picked as machine-written, is about 5.1 and one person's three tasks.`
+  fable_shape = `The creative task that matches the description, and that this repo still needs, is one open thread carried to a finished artifact: a doorway, a dated release note, or a contract a friend can try in an afternoon. The creative task it should refuse is another survey. Opus already shelved the corpus.`
+  grok = `Observed here as one slice: a cache, a copy align, a deploy, then stop. On the same ToneBench card, Grok 4.7 peaks at medium and the climb is mostly length. A writing pass from a higher setting is not a better voice.`
+  gemini = `The 2026-09-30 generation was moved whole into the workbench journal and marked as a raw shelf (f11e432f). Instrument work belongs with Gemini. A generated shelf belongs in the journal until a person keeps it.`
+}[reg=facet]
+
+^"ephemeral"{
+  id = "fs-ephemeral"
+  claim = `An ephemeral design returns the shared floor to rest and lets the visitor leave with a line. The floor does not keep a trace the visitor did not ask to keep.`
+  evidence = #[
+    `exhibit-floor.spw: a reset changes no meaning; a touch answers once, where it is seen; a part that cannot be reset cannot be shared`,
+    `range-transform.spw L3_ephemeral_selection: an editor selection is interactive and is not replayed; literate docs use a durable span`,
+    `spw.quest keeps the walk and the note in this browser; #spw64= is how a script leaves`,
+    `ecosystem-productization-2026-11.spw: a sponsored theme closes on the 13th, the 26th, or the month's end, and the snippet stays with the person`
+  ][reg=set]
+  law = `rest, touch, keep. Rest is the exhibit, the cleared walk, the closed sponsorship. Touch is one answer at the place of the hand, including a quick flick whose transient is taken back. Keep is the precipitate: a line, a snippet, a still of that week's law.`
+  expansion_prime = `The first ephemeral object to design is the sponsored theme's close, already proposed, with the snippet as the only thing that survives it.`
+  validation = `A sponsored theme's close returns the floor to the unsponsored look, and the visitor still holds the snippet.`
+  do_not_promote_until = `The creator sets the sponsorship wording and price, and one close is tried on a dated theme.`
+}[reg=facet]
+
+^"pipeline"{
+  id = "fs-pipeline"
+  claim = `A product precipitates in stages, and a stage counts only when the next one can read it again as Spw. The precipitate of productization is a library with a doorway, not a richer grammar.`
+  stages = `wonder with a probe, cache with a source, prime with a first patch, socket (line, vocabulary, register, plugin), dated release, friend test. The workbench journal states the socket order and the friend test. The site's precipitates convention is the same crystallization read as a patch.`
+  research = `Meyerovich and Rabkin, OOPSLA 2013, "Empirical analysis of programming language adoption": over 200,000 SourceForge projects, 590,000 Ohloh projects, and surveys of 1,000 to 13,000 programmers. Open source libraries, existing code, and experience outweigh performance, reliability, and simple semantics. Adoption follows a power law, and niches still live. When intrinsic features are weighed, expressivity ranks above correctness. Their socio-PLT note (Onward! 2012) adds that a benefit a programmer cannot see does not get chosen.`
+  consequence = `A new mark fails that test. A line kit a friend imports, with three examples and a loud failure, passes it. Names, prices, and which opportunity is first stay the creator's (the journal's held list).`
+  validation = `The next stage's input is a Spw line the previous stage wrote, and the lite scanner or the workbench reader accepts it.`
+  do_not_promote_until = `One socket, the line library or the share codec, has a doorway, three examples, and a starter that fails loudly, and a friend tries it in an afternoon.`
+}[reg=facet]
+
+^"collectible"{
+  id = "fs-collectible"
+  claim = `The value of a collectible expression is that it is still worth wondering about a year later, and that someone else can be shown it in one glance. That is an observable benefit, which is what adoption research says a feature needs.`
+  owner = `collectible-expressions-2026-09.spw already primes the atom: an operator, a noun, and at most one bracket. A card, a chip, or a cauldron ingredient carries one. A mix is two. Do not add a fourth copy accessor, points, or the word collectible on a route.`
+  social = `Small languages spread when a person can teach one in an afternoon and then make something in it. That is the friend test read as a community. A niche survives beside the power-law head when it has a library and a practice: the paper's first finding is the power law with living niches, and its second is that libraries, existing code, and experience are what get chosen.`
+  quest = `quest-library-router-2026-11.spw: taste develops by comparing and keeping, never by a score. A kept atom is a line in the visitor's own record.`
+  validation = `One expression shows in one glance: an operator, a noun, and at most one bracket. A year later it is still worth a probe.`
+  do_not_promote_until = `A kept atom lives in a visitor's own record without a score, and public routes stay free of the word collectible.`
+}[reg=facet]
+
+^"particles"{
+  id = "fs-particles"
+  claim = `Two particles compose when the line that writes both of them still reads, and the picture is a second interpretation of that line.`
+  house = `brace-literal-local-law-2026-11.spw: an opener carries the charge of what it holds and its closer gives it back; a word is an atom; a line's shape with its words removed is its structural formula; a body is a well. The workbench still has an open question, particle_accounting, about charging each particle. Leave it open.`
+  art = `Casey Reas, Process Compendium (text updated 20 August 2010): the text is the Process, and the software interpretation is secondary. Each Process is a short text that leaves room for more than one implementation. KinemaFX, UIST 2025 (10.1145/3746059.3747734), decomposes kinematic behavior into duration, emission shape, and emission trail, and asks the composition to stay visually coherent. Duration is a beat, shape is a brace, trail is a join.`
+  refuse = `A particle effect that cannot be written back as a line has left the language. Partial compilation, already proposed, compiles the numeric slots and leaves the words to be read.`
+  validation = `Write two particles as one line, remove the words, and the structural formula still names the picture. The numeric slots compile, and the words stay readable.`
+  do_not_promote_until = `One canvas particle effect writes back as a line the quest reader and the workbench reader both accept. particle_accounting stays open.`
+}[reg=facet]
+
+^"utility"{
+  id = "fs-utility"
+  claim = `A notation is cognitively useful when one change answers once, answers the same way the next time, and can be undone. That is the exhibit's physics and the cognitive-dimensions test in one sentence.`
+  evidence = #[
+    `exhibit-floor.spw exhibit_physics: immediate, consistent, and undoable, each already tied to a slot edit`,
+    `cognitive-informatics-interaction-2026-11.spw holds Kirsh and Maglio (epistemic action arranges the world in order to think; pragmatic action arranges the result) and Green's cognitive dimensions`,
+    `factshift-theory-of-mind-2026-11.spw: slow changes an amount and is kept; quick changes a state and its transient is taken back`
+  ][reg=set]
+  reading = `The canvas is epistemic while a move shows the reading, and pragmatic when it writes the line. A control that does both on one touch is the viscosity the dimensions warn about. The quick and slow hands are the split.`
+  measure = `Change one slot. One thing moves. Put it back. The learner can say which thing moved.`
+  validation = `One slot edit moves one thing, the same thing on the next try, and the undo returns the slot.`
+  do_not_promote_until = `A quick touch and a slow touch on the same control stay distinct, and the undo returns the line.`
+}[reg=facet]
+
+^"longer"{
+  order = `Dependency order from the journal, not a priority: the line library and the share codec before plugins; one dated release every consumer takes; then the attention instruments (a browser hold, a contrast curriculum). Registers, authority, and prime-then-actualize wait.`
+  beside = #[
+    `a tablet band and a line that stays above the iPad keyboard, after a real iPad reading (factshift-ipad-2026-11.spw)`,
+    `quest /cluster and /document, once the selection grammar is the same string on the canvas and the quest`,
+    `the ephemeral registry, once the creator sets wording and price`,
+    `a gesture grammar re-read against the wells and the particles, then one break at a time`
+  ][reg=set]
+  session_end = `The session names which focus it actually used, which one the task needed, and what it correctly did not build (skill-invocation.spw#introspection). One entry.`
+}[reg=facet]
