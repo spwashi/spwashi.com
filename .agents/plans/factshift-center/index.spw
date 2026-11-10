@@ -19,7 +19,7 @@ intent: .{
  owner = `factshift-center`
  kind = `plan`
  bucket = `active_backlog`
- artifact_shape = `PLAN.md | wip.spw | index.spw`
+ artifact_shape = `PLAN.md | HOSTS.md | wip.spw | index.spw`
 }[reg=facet]
 
 ^"dimensions"{
@@ -72,6 +72,8 @@ intent: .{
 @inquiry_loop: ~"../spw-inquiry-loop/index.spw"
 # Studio jobs as readings of one line, and a concept route's physics as its operator's packet.
 @concept_routes: ~"../../../.spw/caches/concept-route-physics-2026-11.spw"
+# One align: a lean that expires, the document cursor, a hand that writes on a keep, and the hosts that own the grammar.
+@hosts: ~"./HOSTS.md"
 
 dispatch: .{
  plan = @plan
@@ -80,6 +82,7 @@ dispatch: .{
  snapshot = @snapshot
  parser_releases = @parser_releases
  interaction = @interaction
+ hosts = @hosts
  ui_model = @ui_model
 }[reg=facet]
 
@@ -109,6 +112,7 @@ editor_prompts: #[
  .{ ask = `What does factshift-center own, and what should stay out of scope?`, see = @plan }[reg=facet],
  .{ ask = `Which file should I open first to implement the next slice of factshift-center?`, see = @wip }[reg=facet],
  .{ ask = `Where does the canvas decide where a slot of a line sits?`, see = @plan }[reg=facet],
+ .{ ask = `Where do the workbench and lore.land sit relative to this canvas?`, see = @hosts }[reg=facet],
 ][reg=set]
 
 invariants: #[
