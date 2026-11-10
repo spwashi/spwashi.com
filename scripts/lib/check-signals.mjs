@@ -76,12 +76,41 @@ export function stageHeadline(output = '', { tests = false, tag = null } = {}) {
  * failure; they stay in the log. Output without that section (a crash before
  * the summary) is returned whole.
  */
+const PASSING_TEST = /^✔ /;
+const RUNNER_FRAME = /^\s+at (?:async )?.*\(?node:internal\//;
+const RUNNER_TALLY = /^ℹ (?:tests|suites|pass|fail|cancelled|skipped|todo|duration)/;
+
+/**
+ * One line a person can paste into spw.quest or factshift.center. The log is
+ * not that line. The tag names what drifted; the projection is the next act.
+ */
+function pasteLine(lines) {
+  const tagged = lines.find((line) => TAGGED.test(line));
+  const name = tagged?.match(/^\[([\w:./-]+)\]/)?.[1];
+  if (!name) return null;
+  return `check[drift]{${name}}<paste>`;
+}
+
+/**
+ * A crash after a run of passing tests: the tagged instruction, the error,
+ * and one pasteable line. Not each ✔ line, and not the runner's frames. A
+ * short crash with neither is returned whole.
+ */
+function crashExcerpt(lines) {
+  const noisy = lines.some((line) => PASSING_TEST.test(line) || RUNNER_FRAME.test(line));
+  if (!noisy) return lines;
+  const counts = stageHeadline(lines.join('\n'), { tests: true }).filter((line) => line.startsWith('ℹ tests'));
+  const kept = lines.filter((line) => !PASSING_TEST.test(line) && !/^\s+at /.test(line) && !RUNNER_TALLY.test(line) && !line.startsWith('Node.js v'));
+  const line = pasteLine(lines);
+  return [...counts, ...kept, ...(line ? [line] : [])];
+}
+
 export function testFailureExcerpt(output = '') {
   const lines = String(output).trimEnd().split('\n');
   const start = lines.findIndex((line) => line.startsWith('✖ failing tests:'));
-  if (start < 0) return lines;
+  if (start < 0) return crashExcerpt(lines);
   const counts = stageHeadline(output, { tests: true }).filter((line) => line.startsWith('ℹ tests'));
-  const section = lines.slice(start).filter((line) => !/^\s+at (?:async )?.*\(?node:internal\//.test(line));
+  const section = lines.slice(start).filter((line) => !RUNNER_FRAME.test(line));
   return [...counts, ...section];
 }
 
