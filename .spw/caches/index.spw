@@ -138,7 +138,7 @@
 @character_constraint_onboarding_2026_11: ~"./character-constraint-onboarding-2026-11.spw"  # cache: one constrained character, a goal and a limit. The table reading is homebrew. The professional reading is the same sheet. Intake, as a form that receives a need, dissolves later. lore.land may consult this and the production assets it names.
 @tree_reading_2026_11: ~"./tree-reading-2026-11.spw"  # cache: after the working tree was committed. The menu is notes only, the workbench pin is be2df2ff, and the Fable briefing and plugin prime stay unbuilt.
 @feedback_contour_2026_11: ~"./feedback-contour-2026-11.spw"  # cache: a note is a kind, a claim, and a limit. The URL is the choice. Quest and the canvas elaborate the line. A reply is not promised. M2 stays next on spw.quest.
-@feedback_well_known_2026_11: ~"./feedback-well-known-2026-11.spw"  # cache: the well-known file keeps schema v0 because only the creator's hosts publish it. An optional dated day waits until a field is dropped. The reader does not branch on it yet.
+@feedback_well_known_2026_11: ~"./feedback-well-known-2026-11.spw"  # cache: the well-known file keeps schema v0 because only the creator's hosts publish it. An optional edition is YYYY-MM.L, as in 2026-11.A. The reader does not branch on it yet.
 
 operation = "align"
 fixity = "tending"

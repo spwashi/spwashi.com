@@ -1,8 +1,8 @@
-# The well-known file is a date, not a version (2026-11-10) — cache
+# The well-known file is a month and a letter (2026-11-10) — cache
 #
 # The creator: no site beyond theirs uses the file, and the version number
-# does not matter yet. A date-based scheme is worth holding. This file does
-# not change the reader.
+# does not matter yet. The mark, when written, is a year, a month, a dot,
+# and a letter, as in 2026-11.A. This file does not change the reader.
 
 #>feedback_well_known_2026_11
 #:cache #!feedback #!schema #!date
@@ -17,37 +17,38 @@
 operation = "cache"
 fixity = "experimental"
 source = "chat 2026-11-10; CONFIG_SCHEMA autonomous-feedback.client.v0; spw.quest FEEDBACK_CONFIG"
-expression = file[well-known]{schema, dated}<host>
-do_not = `Do not change the reader from this file. Do not require a date. Do not invent a semver. Do not write the file for a host this repo does not serve. Do not deploy.`
+expression = file[well-known]{schema, edition}<host>
+do_not = `Do not change the reader from this file. Do not require an edition. Do not invent a semver. Do not use a day. Do not write the file for a host this repo does not serve. Do not deploy.`
 
 summary = #[
   `The schema string is a family name. v0 is not a contract with anyone else, because only the creator's hosts publish the file.`,
-  `A date, when it is worth writing, is the day the owner last meant the file. The reader ignores it until a field is actually dropped.`,
+  `An edition, when it is worth writing, is YYYY-MM.L, as in 2026-11.A. The reader ignores it until a field is actually dropped.`,
 ][reg=set]
 
 ^"insight"{
   id = "feedback-well-known-2026-11"
   operation = "cache"
   fixity = "experimental"
-  claim = `Keep schema as autonomous-feedback.client.v0. Add an optional dated field, YYYY-MM-DD, and do not read it until a field goes away.`
+  claim = `Keep schema as autonomous-feedback.client.v0. An optional edition is YYYY-MM.L, as in 2026-11.A, and the reader does not look at it until a field goes away.`
   evidence = #[
     `config.js rejects a schema other than autonomous-feedback.client.v0 and applies the rest of a matching file`,
     `spw.quest is the only host this repo serves the file for, at /.well-known/autonomous-feedback.json`,
     `starterConfig thanks says "I read every one of these," which promises a reply the contour refuses`,
   ][reg=set]
   pattern_consideration = #[
-    `dated is the owner's edit day, not a compatibility promise. A missing date is not an error while the number does not matter`,
-    `When a field is removed, a file dated before that day is still applied, and the setup page names the field it no longer reads`,
-    `The quest file can gain dated on the day its kinds or its thanks line actually change. Not before`,
+    `edition is the owner's mark for that month, not a compatibility promise. A missing edition is not an error while the number does not matter`,
+    `A is the first edition of the month. The next change that month takes the next letter. A new month starts again at A. The shape is 2026-11.A. Z is the last letter of a month`,
+    `When a field is removed, a file whose edition is earlier is still applied, and the setup page names the field it no longer reads`,
+    `The quest file can gain an edition in the month its kinds or its thanks line actually change. Not before`,
   ][reg=set]
   expansion_prime = `One line in starterConfig: the thanks example stops promising that every note is read. The schema string stays.`
-  validation = `rg -n "CONFIG_SCHEMA|dated" workers/autonomous-feedback/src/config.js workers/spw-quest/src/index.js`
-  do_not_promote_until = `A field has been removed, or the thanks example has been rewritten, and a test shows a missing dated is still accepted.`
+  validation = `rg -n "CONFIG_SCHEMA|edition" workers/autonomous-feedback/src/config.js workers/spw-quest/src/index.js`
+  do_not_promote_until = `A field has been removed, or the thanks example has been rewritten, and a test shows a missing edition is still accepted.`
 }[reg=facet]
 
 ^"file"{
   keep = `schema stays autonomous-feedback.client.v0. host stays the host that served the file.`
-  later = `dated: "2026-11-10" beside schema, optional. The reader does not branch on it yet.`
-  not_this = `No autonomous-feedback.client.v1. No second filename. No date in the path.`
-  quest = `The live object in index.js has no dated. Its kinds omit appreciation on purpose until someone adds it. queue.want is already true.`
+  later = `edition: "2026-11.A" beside schema, optional. The reader does not branch on it yet.`
+  not_this = `No autonomous-feedback.client.v1. No second filename. No day. No date in the path. No letter written against the month without the dot.`
+  quest = `The live object in index.js has no edition. Its kinds omit appreciation on purpose until someone adds it. queue.want is already true.`
 }[reg=facet]

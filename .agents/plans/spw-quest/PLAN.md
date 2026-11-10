@@ -6,7 +6,7 @@
 
 ## Contour, not next (2026-11-10)
 
-M2 stays the next slice. A feedback line is not a room in the guide. `/.well-known/autonomous-feedback.json` is the seat this worker already has. After M2, one specimen on the shelf may hold a genre and a line, so a visitor can form a taste without the form moving here. Elaboration of a sent note is `/pivot` for one change, and factshift.center for the layout. The record is [feedback-contour-2026-11](../../../.spw/caches/feedback-contour-2026-11.spw). The file this worker already serves keeps `schema` `autonomous-feedback.client.v0`. An optional `dated` day is held in [feedback-well-known-2026-11](../../../.spw/caches/feedback-well-known-2026-11.spw) and is not read yet.
+M2 stays the next slice. A feedback line is not a room in the guide. `/.well-known/autonomous-feedback.json` is the seat this worker already has. After M2, one specimen on the shelf may hold a genre and a line, so a visitor can form a taste without the form moving here. Elaboration of a sent note is `/pivot` for one change, and factshift.center for the layout. The record is [feedback-contour-2026-11](../../../.spw/caches/feedback-contour-2026-11.spw). The file this worker already serves keeps `schema` `autonomous-feedback.client.v0`. An optional edition, `2026-11.A` for the first change of a month, is held in [feedback-well-known-2026-11](../../../.spw/caches/feedback-well-known-2026-11.spw) and is not read yet.
 
 ## Landed
 
