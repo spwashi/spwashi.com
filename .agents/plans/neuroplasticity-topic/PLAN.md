@@ -2,7 +2,7 @@
 
 **Status 2026-11-06.** Still planned and unbuilt; nothing has landed since `5d7091f0`. Correction: "Two learners, one claim" needs the canvas to take two lines first. The creator asked for a neuroplasticity topic tied to how Spw grew out of factshift, with a plan for its visuals and interactives. The factshift.com domain page has told that origin since `5f758428` (a better Wikipedia that turned toward learning) and gives Spw's reason in one line: a claim written with its place in it. This plan is the topic that follows from that. The page waits on the decisions below, and every claim waits on its source.
 
-**Guard.** No clinical or diagnostic framing goes public: no conditions named, no therapy or treatment claims, no promise to rewire a reader.
+**Guard.** No clinical or diagnostic framing goes public: no conditions named, no therapy or treatment claims, no promise to rewire a reader. The constrained-character onboarding (2026-11-10) is play and a professional brief. It is not a clinical intake, and this topic does not own it.
 
 **Related:** [factshift-center](../factshift-center/PLAN.md) (the canvas the interactives run on) · [topic-building-blocks](../topic-building-blocks/PLAN.md) (owns the topics shelf, its hubs and figure homes) · [semantic-copy-depth](../semantic-copy-depth/PLAN.md) (owns the sentences once they are written).
 

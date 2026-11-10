@@ -141,3 +141,17 @@ invariants: #[
   !probe{ "rg -n ':where\\(.spw-chip, button' public/css/ornament/whimsy.css" }
   $%[shape.role, shape.element, shape.both]
 }
+
+#>wonder_component_region_character_door
+?["Which face of the constrained character is the door: the homebrew sheet, or the professional reading of the same fields?"]{
+  #:depth #!pragmatics ~#lens(constraint)
+  ~#with: @plan
+  ~#taste: "A person should be able to set a goal before anyone implies the goal will be met."
+  ~#hypothesis: "The table face is the door, because RPG Wednesday already invites a character, and the professional reading is what appears once a goal and a limit are set."
+  ~#tension: "Someone who came for work may leave a character sheet unread. Someone who came to play may read a brief as another form that takes a need."
+  ~#expect: "The ask card still says card[ask]{need,deadline,budget}. Contact still has #contact-intake. The character sheet is a separate tool. Neither face has been chosen."
+  ~#unblocks: "any copy that would dissolve intake, and the first reading of the sheet beside the ask card"
+  ~#probe(read)
+  !probe{ "rg -n 'card\\[ask\\]|id=\"contact-intake\"' cards/index.html contact/index.html" }
+  $%[door.table, door.brief, door.one_sheet_two_labels]
+}

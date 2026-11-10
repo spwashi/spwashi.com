@@ -1,0 +1,150 @@
+# A constrained character, two readings (2026-11-10) — cache
+#
+# The creator, 2026-11-10: the ask card is not a viable professional form.
+# Goal setting is the actionable primitive. A community response can disappoint.
+# Intake should dissolve into something closer to RPG Wednesday, with a
+# professional B-side of the same sheet. The door is constraints.
+# lore.land's plans teach the progress. lore.land will later consult this
+# site for plans and production assets. This file does not implement.
+
+#>character_constraint_onboarding_2026_11
+#:cache #!character #!onboarding #!constraint #!curriculum
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@cards: ~"../../cards/index.html"
+@contact: ~"../../contact/index.html"
+@wednesday: ~"../../play/rpg-wednesday/index.html"
+@sheet: ~"../../tools/character-sheet/index.html"
+@intake: ~"../../public/js/interface/intake.js"
+@care: ~"../../care/index.html"
+@region: ~"../../.agents/plans/component-region-personality/PLAN.md"
+@engagement: ~"../../.agents/plans/engagement-clusters/PLAN.md"
+@copy: ~"../../.agents/plans/semantic-copy-depth/PLAN.md"
+@literacy: ~"../../.agents/plans/literacy-precipitation-press/PLAN.md"
+@grammar: ~"../../.agents/plans/interaction-grammar/PLAN.md"
+@lore_plans: ~"../../.agents/plans/ecosystem-architecture/lore-land-plans.spw"
+@resonance: ~"../../.spw/audits/timeline-copy-resonance-2026-09.spw"
+
+operation = "cache"
+fixity = "experimental"
+source = "chat 2026-11-10; cards, contact, the character sheet, interface/intake.js; lore.land PLAN.E and PLAN.F read that day; headings from the Anthropic, Spotify, and X engineering blogs"
+expression = character[constraint]{goal, limit}(table)<brief>
+do_not = `Do not implement from this file. Do not rename Local Proof Cards. Do not edit lore.land. Do not delete interface/intake.js or the care check-in. Do not treat worker rate limits, nutrition copy, folio scan folders, or the image sidecar rule as this intake. Do not add a data-spw family. Do not promise that a community, a table, or a client will meet the need. Do not frame the sheet as clinical or therapeutic.`
+
+summary = #[
+  `The ask card's fields, need deadline and budget, and the contact inquiry's intake, receive a person. A goal the person can take the next step on is the primitive that can be acted. The same constrained character serves a homebrew table and, as a second reading, a professional brief.`,
+  `A reply from other people is a later event. The sheet says what the table will try and what a reply will not promise, before anyone asks. Further regions of the site show when that goal is engaged, not before.`,
+  `lore.land already sends readers here for folios. Later it may read these plans and use the production assets named below. It does not copy them into its repo from this note.`,
+][reg=set]
+
+^"insight"{
+  id = "character-constraint-onboarding-2026-11"
+  operation = "cache"
+  fixity = "experimental"
+  source = "chat"
+  claim = `Onboarding is one constrained character with two readings: a homebrew sheet, and a professional brief of the same fields. The actionable slot is a goal. The other slot is the limit on what a response will not promise.`
+  evidence = #[
+    `cards/index.html#ask-card still carries card[ask]{need,deadline,budget}`,
+    `contact/index.html#contact-intake is titled Helpful inquiry shape and carries contact[inquiry]{name.context.need.constraint}`,
+    `public/js/interface/intake.js describes a general onboarding: chips, a note, a rising charge, a generated card. Care is the first consumer`,
+    `play/rpg-wednesday/index.html invites a character and says the table tries a mark before anyone hires anyone`,
+    `tools/character-sheet/index.html already builds a card from identity, pressure, and a bond. The notebook calls that pressure the why`,
+    `.spw/audits/timeline-copy-resonance-2026-09.spw records that proof cards catalyze more than they prove, and that the name Local Proof Card stays until the creator renames it`,
+  ][reg=set]
+  pattern_consideration = #[
+    `lore.land PLAN.E: a feature reuses a pattern, ships one increment, and leaves a precipitate the next lesson can stand on. Six seats: data, build, runtime, reader surface, canon, probe. The pie is a way in: a newcomer meets people as cards`,
+    `lore.land PLAN.F ^premium: a mechanic is one sentence and a page that says what it does, how it unlocks, and what nobody loses. Weight comes from what the reader already did. A link can try it for one visit. What was free stays free`,
+    `Spotify Engineering, Multiple Layers of Abstraction in Design Systems: one card, three touch points (config, slots, custom), so two customers do not fork the component`,
+    `Anthropic Engineering, Effective harnesses for long-running agents: a session begins with no memory, so the first session leaves an artifact the next session can read, and a later session must not declare the job done because something exists`,
+  ][reg=set]
+  expansion_prime = `The first public slice is a reading, not a rename: put the character sheet's existing pressure beside the ask card and say which words are the goal and which words are the limit. Scripts off, the sheet still reads. No second form.`
+  validation = `rg -n 'card\\[ask\\]|contact-intake|interface/intake' cards/index.html contact/index.html public/js/interface/intake.js`
+  do_not_promote_until = `The creator names which face is the door, and which of the sheet's existing fields are the goal and the limit. Until then the ask card and the contact inquiry stay as written.`
+}[reg=facet]
+
+^"faces"{
+  table = `The A-side. A character a homebrew table can use: who they are, what they are trying to do, and what this session will not do. RPG Wednesday is the public table. The character sheet is the instrument. The table tries a mark. It does not hire.`
+  brief = `The B-side. The same fields, read as a professional brief: a goal someone can act on, a limit that says what a reply will not promise, and the next step that is already theirs. It appears when that reading is engaged. It is not a second product and not an intake queue.`
+  disappointment = `Silence, a mismatched reply, and a need too large for the session are ordinary. The limit is said first so the probability of an unmet expectation is part of the design, not a failure discovered after the ask.`
+  reveal = `Regions of the site open as the goal is engaged. A region that implies a community will meet the need stays dark until the limit has been read. engagement-clusters still owns arming. This cache does not jump E1.`
+}[reg=facet]
+
+^"intake_to_dissolve"{
+  means = `The onboarding metaphor: a form that receives what brought you here and generates a card as if the institution will process it.`
+  hosts = #[
+    `public/js/interface/intake.js`,
+    `contact/index.html#contact-intake`,
+    `care/index.html pointing at /services/care/#intake`,
+    `cards/index.html#ask-card`,
+  ][reg=set]
+  not_this_word = `Worker intake rate limits, nutrition intake, folio scan folders named intake, and the image sidecar rule in midjourney-design-concepts. Those keep their names.`
+  stays_until = `A slice can show the sheet with scripts off and the care check-in still makes its local note. Dissolving the concept is not deleting the file in the same pass.`
+}[reg=facet]
+
+^"progress_from_lore_land"{
+  read = `2026-11-10, PLAN.E.spw and PLAN.F.spw ^premium and the increments note for f13. PLAN.C and PLAN.D were not read. lore.land was not edited.`
+  lesson = `Progress is a room at a time, or one mechanic a person can say in a sentence. The next lesson stands on a precipitate. A try for one visit is not a promise. Say what nobody loses.`
+  for_this_site = `The precipitate of the first slice is a sentence on the sheet: the goal, and the limit. Variant zero is that sentence in the HTML. A later slice may reveal the professional reading. It does not replace the table.`
+  consultation = `lore.land already keeps its folio archive here and links rather than copies (PLAN.F provenance). Later it may read this cache, @region, @wednesday, and @sheet when it enhances its own plans. Production assets it can use are the ones those paths already publish. A plan there changes lore.land. A plan here does not.`
+}[reg=facet]
+
+^"blog_headings"{
+  ~#note: "Headings only, cached 2026-11-10. The articles stay on their sites. A line says why the heading is relevant. It does not restate the article."
+  anthropic = #[
+    `Effective harnesses for long-running agents — https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents — 2025-11-26. A session starts blank. Leave an artifact. Do not call the job done because progress is visible.`,
+    `Demystifying evals for AI agents — https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents — 2026-01-09. Grade the failure before a person feels it. An unmet expectation wants a check, not a surprise.`,
+    `Writing tools for agents — https://www.anthropic.com/engineering/writing-tools-for-agents — fewer tools, each with one purpose, described as to a new hire. A sheet of constraints, not a wider intake.`,
+    `Harness design for long-running application development — https://www.anthropic.com/engineering — listed 2026-03-24. The index ties harness design to frontend work that has to continue across sessions.`,
+  ][reg=set]
+  spotify = #[
+    `Multiple Layers of Abstraction in Design Systems — https://engineering.atspotify.com/2023/05/multiple-layers-of-abstraction-in-design-systems — one card at three depths: data, slots, and a custom base. Two readings of one component.`,
+    `Customization vs. Configuration in Evolving Design Systems — https://engineering.atspotify.com/2021/4/customization-vs-configuration-in-evolving-design-systems — a young feature stays configurable. A fork waits until the shape is real.`,
+    `When Should I Write an Architecture Decision Record — https://engineering.atspotify.com/2020/4/when-should-i-write-an-architecture-decision-record — onboarding is reading why a decision was made. This cache is that record for the sheet.`,
+    `Achieving Team Purpose and Pride with Scrum — https://engineering.atspotify.com/achieving-team-purpose-and-pride-with-scrum — name the goal the group believes it can deliver. A sprint that cannot say that recreates the ask card.`,
+    `Empower the team through clear goals and step aside — https://engineering.atspotify.com/2020/09/spotify-unwrapped-2019-how-we-built-an-in-app-experience-just-for-you — a heading inside that piece. The goal lets the next choice be made without a new intake.`,
+    `Why You Should Pair with Non-Engineers — https://engineering.atspotify.com/2021/3/why-you-should-pair-with-non-engineers — stress-test the onboarding on someone who has never done it.`,
+  ][reg=set]
+  x = #[
+    `The testing renaissance — https://blog.x.com/engineering/en_us/topics/insights/2017/the-testing-renaissance — 2017-10-30. Spend time on a test of the public behavior so a later change does not take away what people had.`,
+    `Improving communication across distributed teams — https://blog.x.com/engineering/en_us/a/2015/improving-communication-across-distributed-teams — 2015-09-04. A clear direction, details left open, and a measure when a try fails.`,
+  ][reg=set]
+  thin = `The X engineering index that came back was mostly systems writing. The two headings above are the ones that speak to a goal, a try, and not losing what was free. No design-system heading turned up there on this pass.`
+}[reg=facet]
+
+^"curriculum_grain"{
+  one_lesson = `One sitting: make a character by setting a goal and a limit. The table reading comes first. The professional reading is the next lesson, and only after the sentence exists in the HTML.`
+  not_neuroplasticity = `No clinical framing. The neuroplasticity topic does not own this onboarding.`
+  not_the_feedback_curriculum = `The note and the lock stay their own course. A later use of the same goal and limit on those hosts is named in feedback-mutex-curriculum-2026-11.spw ^"potential", and it does not add a lesson or a deploy.`
+}[reg=facet]
+
+^"lenses"{
+  ~#note: "Each lens names the owner that already has the work. None of these is a new slice, and none jumps the owner's queue."
+  linguistics = `The goal and the limit are sentences a person can say aloud. semantic-copy-depth owns the words. A coined label waits for the pronunciation register. The sheet does not invent a fourth copy accessor.`
+  culture = `The table reading is the homebrew culture already on RPG Wednesday: bring a mark, the table tries it, nobody is hired. The professional reading is the same sheet in another register, not a second culture pasted on top.`
+  runtime = `The professional face arrives when the goal is engaged. engagement-clusters E1 still reads what quiet modules write. This sheet adds no mount and no root write.`
+  css = `Walls and doors spend the grammar brace tokens. A region that opens uses the shape tokens component-region H1 is already censusing. No new breakpoint system, and no literal palette for the sheet.`
+  accessibility = `Variant zero is the sentence in the HTML, with scripts off. The goal and the limit are named in the text, not only by color. A control that stands alone keeps the ground-control target. The sheet is not a clinical instrument.`
+  agents = `An agent reads this cache and stops. agent-optimization stays a smaller census. AGENTS.md does not gain a paragraph for the character. The door wonder stays unanswered until the creator picks a face.`
+  business = `The brief is the business reading: a goal someone can act on, and a limit that keeps a client from expecting a met need. No price, tier, or offer is set here. product-lines stays the offer surface.`
+  svg = `A valuable SVG says the state it is in, the way site-alignment already asks illustrations to. A character mark drawn as SVG earns its place when the goal or the limit is readable in the drawing with scripts off. Decoration does not.`
+  regions = `Regional responsiveness is which region is present, not a new width query. A pocket still shows the goal and the limit without a second layout. Further regions stay dark until the limit has been read.`
+}[reg=facet]
+
+^"midjourney_prompting"{
+  ~#note: "Headings from the Midjourney docs and the V8 alpha note, read 2026-11-10. The articles stay there. Wisdom for this site's prompts, not a new image pipeline."
+  headings = #[
+    `Prompt Basics — https://docs.midjourney.com/hc/en-us/articles/32023408776205-Prompt-Basics — short phrases that say what you want to see. Specific synonyms. A number instead of a vague plural. Describe what you want. A negation still draws the thing.`,
+    `Art of Prompting — https://docs.midjourney.com/hc/en-us/articles/32835253061645-Art-of-Prompting — one slot for medium, one for period, one for feeling, one for color. The examples are a single blank plus a subject, not a list of instructions.`,
+    `Multi-Prompts and Weights — https://docs.midjourney.com/hc/en-us/articles/32658968492557 — a double colon splits ideas. A weight says which idea leads. Negatives are allowed only while the total stays positive.`,
+    `Style Reference — https://docs.midjourney.com/docs/style-reference — keep the text prompt simple. Say the subject. Do not tell the tool to copy the reference.`,
+    `Seeds — https://docs.midjourney.com/hc/en-us/articles/32604356340877 — lock a seed to test one change. A seed is not a saved style, character, or promise of the same result later.`,
+    `Moodboards — https://docs.midjourney.com/hc/en-us/articles/39193335040013-Moodboards — when words are not enough, a set of images carries the range. A single style reference is the narrower tool.`,
+    `Describe — https://docs.midjourney.com/hc/en-us/articles/32497889043981-Describe — an image can offer words. The words will not reproduce the image, and a second pass offers different words.`,
+    `Text Generation — https://docs.midjourney.com/hc/en-us/articles/32502277092109-Text-Generation — words that must appear go in double quotes, and they stay short.`,
+    `Draft and Conversational Modes — https://docs.midjourney.com/hc/en-us/articles/35577175650957-Draft-Conversational-Modes — a cheap draft is for trying. Conversation can write the prompt. The kept image is still a later choice.`,
+    `V8 alpha — https://www.midjourney.com/updates/v8-alpha — 2026-03-17. Longer, more specific prompts. Text in quotes. --raw when the look should stay plain. Personalization carries style further than a fresh adjective list.`,
+  ][reg=set]
+  for_the_sheet = `A prompt for a character mark uses the same constraint as the sheet: subject, medium, and one feeling. It does not ask for a style to be copied, and it does not promise the seed will return the person.`
+}[reg=facet]

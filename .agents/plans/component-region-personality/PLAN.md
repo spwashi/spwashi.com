@@ -30,6 +30,14 @@ Proposed principle, the creator's to keep or refuse (`index.spw#wonder_component
 - **H3 · One chip grammar.** Scope the paper corner in `ornament/whimsy.css` §4 (:124-130) by role rather than by `button`, so a chip keeps its shape on `<a>` and on `<button>`, and give `.spw-living-term` one affordance cue instead of three. Chips live in `handles/operators/sigils-and-chips.css`; the term is styled from 13 sheets, its dotted underline in `components/foundation.css` (the candidate-term rule at :1204). §4's snapping motion stays: the creator kept it. Gate: `index.spw#wonder_component_region_role_not_element`, then a demo on `/` at pocket and desktop.
 - **H4 · Wave 3 cards on the creator's art.** Proposal: each card opens on one of the creator's scans whose own lettering names the child, the way `1a84b975` matched twelve pages to their scans; `public/data/image-resources.json` `concepts` only shortlists candidates. Wave 5's one-extra rule still binds the services hero (photo :135, landmarks :161). Gate: `index.spw#wonder_component_region_hero_children`.
 
+## A constrained character — 2026-11-10
+
+The creator: the ask card is not a viable professional abstraction. Goal setting is the primitive a person can act on. A community response can disappoint. Intake, the form that receives a need, should dissolve toward RPG Wednesday, with a professional B-side of the same sheet. The interface is the constraint. The record is [character-constraint-onboarding-2026-11](../../../.spw/caches/character-constraint-onboarding-2026-11.spw).
+
+This plan owns the card as real estate. It does not own the words (semantic-copy-depth) and it does not jump H1. The ask card at `cards/index.html#ask-card` still says `card[ask]{need,deadline,budget}`. The character sheet at `tools/character-sheet/` already has identity, pressure, and a bond. The first slice, when the door is chosen, is a reading of those fields beside the ask card: which words are the goal, which words are the limit. No new attribute. No second form. A drawing of the character earns a place when the goal or the limit is readable in it with scripts off. Regional responsiveness is which region is on the page, not a new breakpoint. The open call is `index.spw#wonder_component_region_character_door`.
+
+The paint of the current ask line, in `cards/index.html` and `public/css/components/cards.css`, shows the expression the page already has and opens the canvas and the pivot. It is not the new abstraction.
+
 ## Public Goal
 
 Develop meaningful component real estate and region personality across spwashi.com so public copy relates to a growing component ecology — not repeated meta-documentation. Editing-team surfaces should stay inspiration-ready for a media launch; screenshots should remain interpretable by humans and models; copy should be named for later translation.
