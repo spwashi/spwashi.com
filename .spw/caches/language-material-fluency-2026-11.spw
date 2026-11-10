@@ -38,6 +38,7 @@
 @motions: ~"../reviews/upstream-workbench-recommendations/motions.spw"
 @cli: ~"../_workbench/packages/spw-cli/src/commands.ts"
 @format: ~"../_workbench/packages/spw-cli/src/format.ts"
+@tooling: ~"./tooling-output-2026-11.spw"
 @mutate: ~"../_workbench/packages/spw-seed/src/canonical/mutation-automata.ts"
 @form: ~"../_workbench/packages/spw-cli/src/geometry.ts"
 @beat_cli: ~"../_workbench/packages/spw-cli/src/beat.ts"
@@ -208,6 +209,7 @@ expression = language[material]{mark.field.residue}<fluency>
   apl = `Iverson's bet was that a glyph you can derive beats a word you memorize, and that an operator applies at a chosen rank. Whitney, Hui, and Dyalog kept the bet alive in rooms small enough to talk. spw form measuring depth is a baby rank. The payoff arrives when a short phrase moves one axis. The cost, a room that cannot say the line aloud, is already visible in the sigil table.`
   prolog = `Colmerauer and Kowalski made the relation the program, and split algorithm into logic plus control. Query and assertion want the same syntax. Failure is a result, which is why a fuzzer belongs to this lineage: generate, fail, shrink.`
   fuzz = `A useful fuzzer generates expressions from the sigil and delimiter inventory, parses them, and shrinks to the smallest case that breaks a geometry invariant or an idempotent equivalence. It runs at measure_only, on stdin, and never writes a corpus. It can sit in the performance as the partner who proposes the next legal neighbor on the beat. The scripts that currently wear the name fuzz do not do this.`
+  hosts = `Lean, Bend, Go, and Rust stay potential in @tooling. A host earns a lineage paragraph when one invariant moves and the Spw line can still say it. None has.`
 }[reg=facet]
 
 ^"stratum"{
@@ -215,7 +217,7 @@ expression = language[material]{mark.field.residue}<fluency>
   claim = `Cryptocurrency and a PhD are both long bets whose communicable prize is a costume: a token, a protocol, a degree. The work and the costume come apart, and the identity often stays with the costume.`
   crypto = `The early feeling was exit, a text that did not need a face. Exchanges turned identity into an account that could be robbed. The token-sale years offered a white paper in the shape of a dissertation, judged by a market instead of a committee, on a clock of about one cycle rather than a decade. Profile pictures made the costume literal: a face the group would recognize. The collapses taught custody. What a person could still say in public was "I was early" or "I understood the mechanism." Both sentences survived after the position did not.`
   phd = `A dissertation is a narrow claim judged by a few people, worn afterward as a degree that does not require the claim to have moved the field. The rational byproduct is literacy and a cohort. The irrational reading is that the costume is the result.`
-  lesson = `A sigil, a genre, a mix, or a commit prefix can become that costume. The index is still whether a field moved. Spw does not need a token to borrow the danger. A receipt a person can reverse is a kinder physics than a burned key, and some of the hunger in that history was specifically for the irreversible feeling. Offer the receipt. Leave the casino.`
+  lesson = `A sigil, a genre, a mix, or a commit prefix can become that costume. The index is still whether a field moved. Spw does not need a token to borrow the danger. A receipt a person can reverse is a kinder physics than a burned key, and some of the hunger in that history was specifically for the irreversible feeling. Offer the receipt. Leave the casino. A paste line can become that costume too. @tooling keeps the receipt as what a later run reads.`
 }[reg=facet]
 
 ^"phasor"{

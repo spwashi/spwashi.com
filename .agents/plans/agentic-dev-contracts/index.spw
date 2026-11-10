@@ -49,7 +49,7 @@ intent: .{
 ^"plan_refinement"{
  tone = `Engineering checklist — commands over opinions.`
  accuracy = `check:local, the route manifest and the staged stamp landed; the plans-index and skills-index caches were never built and are struck.`
- direction = `check:local is the door after the September stamps; manifest:staged names the pages that moved the index; wonder_plan_script_door asks which other scripts that door must leave visible.`
+ direction = `check:local is the door after the September stamps; manifest:staged names the pages that moved the index; wonder_plan_script_door is answered. The paste line is a crash token in tooling-output-2026-11, not a new slice here.`
  inspiration = `Did I break it? should be one command away.`
  alignment = `agent-optimization, runtime-bootstrap-performance`
 }[reg=facet]
@@ -89,6 +89,7 @@ dispatch: .{
   .{ label = `plan_ecology_semantics` ; path = `.spw/audits/plan-ecology-semantics-2026-07.spw` }[reg=facet],
   .{ label = `commit_skill_induction` ; path = `.spw/audits/commit-skill-induction-2026-07/index.spw` }[reg=facet],
   .{ label = `spw_architecture_ecology` ; path = `.spw/conventions/spw-architecture-ecology.spw` }[reg=facet],
+  .{ label = `tooling_output_2026_11` ; path = `.spw/caches/tooling-output-2026-11.spw` }[reg=facet],
  ][reg=set]
  rule = `Repo-local audits/appendices/conventions — not external web.`
 }[reg=facet]
