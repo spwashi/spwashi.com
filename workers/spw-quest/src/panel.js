@@ -49,6 +49,13 @@ export const PANEL_CSS = `:root { --ink-line: rgba(14, 18, 20, .72); --caption: 
     form.line .balloon[data-bubble="nameplate"] textarea[name="line"] { text-align: center; }
     .line-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .2rem 1rem; margin: .75rem 0 0; }
     .line-actions button { min-width: 5.5rem; margin: 0; }
+    .line-actions .quiet-button { display: inline-flex; align-items: center; min-width: 0; min-height: 44px; text-decoration: none; }
+    .carry { display: grid; gap: .35rem; max-width: 30rem; margin: .9rem 0 0; }
+    .carry label { margin: 0; color: var(--fg); font-weight: 650; }
+    .carry-row { display: flex; gap: .5rem; }
+    .carry input { flex: 1; min-width: 0; min-height: 44px; margin: 0; font: 1rem/1.3 var(--mono); }
+    .carry button { min-height: 44px; margin: 0; }
+    .carry .note { min-height: 2.6em; margin: 0; }
     .then { margin: 0; color: var(--muted); font-size: .92rem; }
     .then a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 .15rem; font-family: var(--mono); }
     .nuance { display: grid; grid-template-columns: max-content minmax(0, 1fr); margin: .8rem 0 0; padding: 0; border-top: 1px solid var(--line); list-style: none; }
@@ -117,7 +124,21 @@ function nuances(step, current) {
 /** Rows a line needs at phone width, so a balloon wraps its whole line before any script runs. */
 const rowsFor = (line) => Math.min(5, Math.max(1, Math.ceil(String(line).length / 26)));
 
-/** One panel: the line in a balloon inside a GET form to /read, and the worker's reading of that line. */
+/** The panels whose line is one expression a pivot can turn. */
+const TURNS = new Set(["act", "hold"]);
+
+/** The word the workbench's panels thread through their lines. */
+export const QUEST_WORD = "door";
+/** A word a reader carries through the panels in its place: one lowercase name, or "". */
+export const carriedWord = (raw) => (/^[a-z][a-z0-9_]{0,23}$/.test(String(raw || "").trim().toLowerCase()) ? String(raw).trim().toLowerCase() : "");
+/** A panel with the reader's word where the quest's stood. steps.js itself stays verbatim. */
+export function withWord(step, word) {
+  if (!word || word === QUEST_WORD) return step;
+  const swap = (line) => line.replace(/\bdoor\b/g, word);
+  return { ...step, try: swap(step.try), ...(step.then ? { then: step.then.map(swap) } : {}) };
+}
+
+/** One panel: the line in a balloon inside a GET form to /read (Pivot it sends the same field to /pivot), a link that opens it on the canvas, and the worker's reading of that line. */
 export function stepSurface(step, { index, line = step.try, heading = "h2" }) {
   const home = heading === "h1" ? "/learn" : "";
   const id = escapeHtml(step.id);
@@ -137,7 +158,9 @@ export function stepSurface(step, { index, line = step.try, heading = "h2" }) {
         <textarea id="line-${id}" name="line" rows="${rowsFor(line)}" maxlength="${LINE_LIMIT}" spellcheck="false" autocomplete="off" autocapitalize="none" autocorrect="off" enterkeyhint="go" aria-describedby="check-${id}">${escapeHtml(line)}</textarea>
       </div>
       <div class="line-actions">
-        <button type="submit">Read</button>
+        <button type="submit">Read</button>${terminal ? "" : `${TURNS.has(step.id) ? `
+        <button type="submit" class="quiet-button" formaction="/pivot">Pivot it</button>` : ""}
+        <a class="quiet-button" data-canvas href="/canvas?line=${encodeURIComponent(line)}" target="_blank" rel="noopener" title="Open this line on factshift.center's canvas">Canvas ↗</a>`}
         ${then.length ? `<p class="then">Then try ${then.join(" and ")}.</p>` : ""}
       </div>
     </form>

@@ -217,6 +217,8 @@ export function pivotState(params) {
     const known = BY_LINE.get(flat(line));
     base = { line, id: known?.id || "", from: from && flat(from) !== flat(line) ? from : "", cut: typed.length > PIVOT_LIMIT, refused: "" };
   }
+  // A line sent again unchanged is not a step: the trail never ends on the line in hand.
+  while (trail.length && flat(trail[trail.length - 1]) === flat(base.line)) trail.pop();
   // Adding to the body: the new part joins the others by the link chosen, and the line it came from is kept behind it.
   const part = String(params.get("add") || "").replace(/[\s{}[\]()<>;,]/g, "").slice(0, 40);
   if (part) {
@@ -383,9 +385,14 @@ const BASE_FORM = "<&>";
 const STARTS = Object.freeze(["r-e6f488e3", "h-capsule", "h-induct_join", "r-e9dc9b1e", "h-probe", "r-755c824b"]);
 
 function form(state) {
+  // A line changed in the box is a step like any other: the line it was is the way back, and the trail keeps it.
+  const kept = state.line
+    ? [["from", state.line], ...[...state.trail, state.line].slice(-TRAIL_LIMIT).map((step) => ["t", step])].map(([name, value]) => `<input type="hidden" name="${name}" value="${escapeHtml(value)}">`).join("")
+    : "";
   return `<form class="find" method="get" action="/pivot">
     <label for="line">A line to pivot</label>
-    <div class="find-row"><input id="line" name="line" type="text" value="${escapeHtml(state.line)}" maxlength="${PIVOT_LIMIT}" autocomplete="off" spellcheck="false" placeholder="home[hook]{software.art.practice}&lt;person&gt;"><button type="submit">Pivot</button></div>
+    <div class="find-row"><input id="line" name="line" type="text" value="${escapeHtml(state.line)}" maxlength="${PIVOT_LIMIT}" autocomplete="off" spellcheck="false" placeholder="home[hook]{software.art.practice}&lt;person&gt;"${state.line ? ' aria-describedby="line-kept"' : ""}><button type="submit">Pivot</button></div>${kept}${state.line ? `
+    <p class="note" id="line-kept">Change it here too: the line it was stays behind as the way back.</p>` : ""}
   </form>`;
 }
 
@@ -437,7 +444,7 @@ export function pivotBody(state) {
     name: here ? nameOf(here) : "a line you wrote",
     badges: [here ? "on the shelf" : "new", reading.part ? "read in part" : ""],
     body: cardFacts(Object.entries(reading.slots).map(([slot, value]) => [slot, `<code>${escapeHtml(value)}</code>`])),
-    links: [scriptAddress(state.line) ? cardLink(scriptAddress(state.line), "Take it apart") : "", cardLink(`/physics?line=${encodeURIComponent(state.line)}`, "Feel it at rest"), cardLink("/constructs#c-expression", "What each slot is")],
+    links: [scriptAddress(state.line) ? cardLink(scriptAddress(state.line), "Take it apart") : "", cardLink(`/physics?line=${encodeURIComponent(state.line)}`, "Feel it at rest"), cardLink(`/canvas?line=${encodeURIComponent(state.line)}`, "Open it on the canvas"), cardLink("/constructs#c-expression", "What each slot is")],
   })}
   ${added}${slotHandles(reading, pivots, state)}
   ${operatorBand(state)}

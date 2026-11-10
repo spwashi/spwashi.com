@@ -182,7 +182,8 @@ test('each file opens by address, and its check turns when its point is taken ou
   assert.deepEqual(without('notebook', /\] try — /), ['1 of 4 entries has no [date] and kind yet.']);
   assert.deepEqual(readFile('door[ {').checks.map((check) => check.state), ['fail']);
   const links = readFile(exampleById('record').script);
-  assert.deepEqual(links.links.map((link) => link.path), ['./control.spw', './sigil.spw']);
+  // Two paths lead outside the fourteen files and stay as written; the third is the experiment that tried the chip.
+  assert.deepEqual(links.links.map((link) => link.path), ['./control.spw', './sigil.spw', './experiment.spw']);
   const headings = readFile(exampleById('headings').script);
   assert.equal(headings.fields.find((field) => field.key === 'headings').value, 'student, classmate, later @ indexing');
   const moved = readFile(exampleById('headings').script.replace('@indexing', '@aboutness'));

@@ -6,7 +6,7 @@ import { readContainers } from "../../../public/js/semantic/expression-query.js"
 import { escapeHtml } from "../../lib/shell.js";
 import { CONTAINERS, OPERATORS, PARTICLE_AIMS } from "./guide.js";
 import { EXAMPLES } from "./examples.js";
-import { editorField, outlineFile, readFile } from "./file-reader.js";
+import { editorField, handBar, outlineFile, readFile } from "./file-reader.js";
 import { displayMenu } from "./display.js";
 
 const MAX = 60;
@@ -552,7 +552,8 @@ export function buildSurface(slots, script = assemble(slots), filename = `${slot
         </div>
         ${display.panel}
         ${editorField({ id: "script", value: shown, label: "Script", limit: MAX_SCRIPT, describedBy: "script-keys" })}
-        <p class="keys file-foot" id="script-keys"><span class="hint">Read takes the first line apart again; <kbd>⌘</kbd>/<kbd>Ctrl</kbd> + <kbd>Enter</kbd> does too.</span>${address ? ` <a class="share" href="${escapeHtml(address)}" data-tool="share">Link to this file</a>` : ""}${shown.trim() ? ` <a class="share" href="${escapeHtml(factshiftScriptHref(shown))}" data-tool="factshift">Open on factshift.center</a>` : ""}</p>
+        ${handBar(shown, { line: focusIndex(shown, nth), anchors: true, ways: [["/pivot?line=", "Pivot this line"], ["/physics?line=", "Feel it at rest"]] })}
+        <p class="keys file-foot" id="script-keys"><span class="hint">Read takes the line in hand apart; <kbd>⌘</kbd>/<kbd>Ctrl</kbd> + <kbd>Enter</kbd> does too. Select words and type a brace to wrap them.</span>${address ? ` <a class="share" href="${escapeHtml(address)}" data-tool="share">Link to this file</a>` : ""}${shown.trim() ? ` <a class="share" href="${escapeHtml(factshiftScriptHref(shown))}" data-tool="factshift">Open on factshift.center</a>` : ""}</p>
       </form>
       <aside class="reading-card" aria-labelledby="reading-title">
         <h2 id="reading-title">What a tool reads</h2>
