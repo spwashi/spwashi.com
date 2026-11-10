@@ -39,6 +39,7 @@ Held, not built: physics and node patterns that make comparison easier, and phys
 - 2026-11-05 `1f399471`, `a43df6d1`: the November book's line on the shelf; K, the five rooms on `about/domains/spw.quest/` (`#ways-in`) and a pivot link on each join specimen in `#direction`. Deployed the same night with G, J and the note.
 - 2026-11-05 `9f2e3af4`, `d3dcda9f`, not deployed: L, every room reads a line in either slot order and writes it back in its author's order (`readSlotOrder` and `readContainers` in `public/js/semantic/expression-query.js`; `assemble` in `src/build.js`; `lineFrom` in `src/pivot.js`); M's body turns (`BODY_TURNS` in `src/pivot.js`); *Pivot this line* and *Find it on the shelf* on `/build`; Shelf in the masthead.
 - 2026-11-08 `cd280779`: S0 of [expression-first.md](./expression-first.md): installable from a phone's menu (manifest, icons, `manifest-src 'self'`); `/install` leads with the phone. The commit after it is W, the guide opening on the visitor's walk written in Spw. Neither is deployed.
+- 2026-11-10: PWA design elevation: standalone display mode styling (`@media (display-mode: standalone)`), sticky glassmorphic masthead with `#>` brand badge, safe-area insets (`env(safe-area-inset-*)`), responsive install cards on `/install` with elevated checkmark badge for installed state, offline saved surfaces card and reconnect action on `/offline`, and real-time connectivity event handling in shell runtime.
 
 ## What it is now (measured 2026-11-06)
 

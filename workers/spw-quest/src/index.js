@@ -312,7 +312,17 @@ const GUIDE_CSS = `.opening { margin: 0 0 1.6rem; padding-bottom: .2rem; }
     .door:hover h3 a::after { transform: translateX(3px); }
     .door p { margin: 0; color: var(--ink-soft); font-size: .92rem; line-height: 1.48; }
     .door p:has(code) { margin-top: .2rem; padding-top: .45rem; border-top: 1px dashed color-mix(in srgb, var(--line) 75%, transparent); }
-    .door code { display: block; overflow-wrap: anywhere; font-size: .82rem; }`;
+    .door code { display: block; overflow-wrap: anywhere; font-size: .82rem; }
+    .shell-line { max-width: 34rem; margin-inline: auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .6rem .8rem; padding: .65rem 1rem; border-color: color-mix(in srgb, var(--accent) 35%, var(--edge, var(--line))); background: color-mix(in srgb, var(--surface) 94%, transparent); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: 0 4px 20px -2px rgba(0, 0, 0, .14), 0 2px 6px -1px rgba(0, 0, 0, .06); }
+    .shell-line .quiet-button { border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--line)); background: color-mix(in srgb, var(--accent) 14%, var(--surface)); font-weight: 600; color: var(--accent); }
+    .shell-line .quiet-button:hover { background: color-mix(in srgb, var(--accent) 24%, var(--surface)); }
+    @media (display-mode: standalone) {
+      body { -webkit-tap-highlight-color: transparent; }
+      main { padding-top: max(1rem, env(safe-area-inset-top)); padding-bottom: max(2rem, env(safe-area-inset-bottom)); padding-left: max(0rem, env(safe-area-inset-left)); padding-right: max(0rem, env(safe-area-inset-right)); }
+      .masthead { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding-top: max(.4rem, env(safe-area-inset-top)); border-bottom: 1px solid color-mix(in srgb, var(--line) 75%, transparent); }
+      .masthead .brand { display: inline-flex; align-items: center; gap: .45rem; }
+      .masthead .brand::before { content: "#>"; display: inline-flex; align-items: center; justify-content: center; width: 1.45rem; height: 1.45rem; border-radius: 4px; background: color-mix(in srgb, var(--accent) 15%, var(--surface)); border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line)); color: var(--accent); font: 700 .75rem/1 var(--mono); }
+    }`;
 
 /** The guide. With `parser` ({ value, from }, from a valid ?parser=), a banner leads and the page reads with that build. */
 function renderGuide(parser = null, example = EXAMPLES[0], at = "") {
@@ -733,11 +743,26 @@ function renderOffline() {
     head: QUEST_HEAD,
     themeCss: `${PAPER_CSS}
     ${PAGE_CSS}
-    main > :not(.masthead) { max-width: 40rem; }`,
+    main > :not(.masthead) { max-width: 40rem; }
+    .offline-card { margin: 1.5rem 0 1.8rem; padding: 1.15rem 1.25rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+    .offline-card h2 { font-size: 1.15rem; margin-bottom: .4rem; }
+    .offline-links { display: flex; flex-wrap: wrap; gap: .5rem; margin: .8rem 0 0; }
+    .offline-links a { display: inline-flex; align-items: center; min-height: 40px; padding: .3rem .9rem; border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line)); border-radius: var(--pill); background: color-mix(in srgb, var(--accent) 10%, var(--surface)); color: var(--accent); font-weight: 600; text-decoration: none; }
+    .offline-links a:hover { background: color-mix(in srgb, var(--accent) 18%, var(--surface)); border-color: var(--accent); }
+    .offline-retry { margin-top: 1.2rem; }`,
     body: `${masthead("")}
 <h1>Offline, and this page was not saved.</h1>
 <p class="lede">Pages you have opened here with a connection open again without one. Anything this browser kept, a note or your walk, is still on this device.</p>
-<p><a class="chip" href="/">Open the guide</a></p>`,
+<p><a class="chip" href="/">Open the guide</a></p>
+<section class="offline-card" aria-labelledby="offline-saved-title">
+  <h2 id="offline-saved-title">Saved offline surfaces</h2>
+  <p>The service worker keeps your guide and your walk ready for instant pocket access even without a signal.</p>
+  <div class="offline-links">
+    <a href="/#walk">Your Walk</a>
+    <a href="/parser/2026.10.13/">Pinned Parser</a>
+  </div>
+  <p class="offline-retry"><button type="button" class="quiet-button" onclick="location.reload()">Check connection again</button></p>
+</section>`,
   });
 }
 
