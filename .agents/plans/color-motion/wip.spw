@@ -28,6 +28,7 @@ fixity = "tending"
  >>[2026-11-06 12:25] probe — wonder_color_motion_focus_ring: of 342 :focus-visible rules outside bundles/, 71 set outline:none (39 files) and 40 draw a 2px outline; var(--focus-ring) is read in 8 files (7 plus a comment in shell/chrome/adaptive.css), not one as the 11-05 cache line says; --focus-ring-color draws the outline in reset/base.css:344. Only ornament/ornament.css answers forced-colors.
  >>[2026-11-06 12:28] probe — wonder_color_motion_card_timing_owner: whimsy.css sets transition at 10 sites and names no --spw-time-* band; material.css has 7 transition lines, cards.css 36. The ~#expect held.
  >>[2026-11-06 12:30] plan — Collapsed landed Patches 4 and 5 into Landed lines and folded the restating sub-patches 1A/1B, 2A/2B and 3A/3B into one slice line each; PLAN.md 868 -> 696 lines. Added one creative proposal under Patch 3: a palette plate that captions each close operator pair with its interaction lines from operator-detection.js, judged in the browser.
+ >>[2026-11-10 11:14] note — lore-land-plans.spw#value: a typed glide narrates, and a role change stays a step. Beside PLAN.D's glide, unread past the Firefox track. The badge band stays next.
 }
 
 ^"open"{
@@ -44,5 +45,5 @@ fixity = "tending"
  ~#next_commit: ".[css] Time the expression badge from the control band, the last chip still naming a raw duration"
  ~#files_hot: "public/css/handles/operators/sigils-and-chips.css, public/css/tokens/core.css, public/css/effects/material.css, public/css/ornament/whimsy.css, public/css/components/cards.css"
  ~#gate: "nothing for the badge; the card motion repair, the focus ring and Patch 6 end at a browser demo for the creator, and Patch 6 also waits on css-cascade-stratification Phase 1"
- ~#last_stream: "2026-11-06"
+ ~#last_stream: "2026-11-10"
 }

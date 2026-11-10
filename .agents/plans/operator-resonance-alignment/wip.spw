@@ -21,6 +21,7 @@ fixity = "tending"
  >>[2026-11-06 12:40] probe — wonder_operator_resonance_family_attributes: the writes moved to sigil-annotation.js:142 and :147; still no reader. Widened: of the eight attributes applyOperatorMetadata writes, operator-intent, operator-interaction and operator-public-label are unread too, while operator-resolved, operator-speech and operator-reversibility have readers. data-spw-operator-phase is listed in operator-alignment.spw's additive_attributes and written by nothing. The ~#expect was added after this morning's run, as the baseline either answer changes.
  >>[2026-11-06 12:44] verify — since the 2026-10-10 Status: df32c50f (one table, 2026-10-25), 3a009a35 (@ reads as perspective) and f66451dc (each sigil table names its workbench relation; operator-alignment.spw says mutation). Of the four weak chips, $current sprint and ^quick starts are gone; @play (tools/index.html:105) and ~services (offline/index.html:61) remain. Slice 5 has no commit since a664caf5.
  >>[2026-11-06 12:46] plan — PLAN.md collapses Current Slice and Slices 1–4 into Landed lines with commits, names three next slices (the decision, the two chips, dormant prompt paths written as path{~prompt; $substrate; !transform; ^proof}), and marks the plan near archive.
+ >>[2026-11-10 11:14] note — lore-land-plans.spw#value: one shared table, five names still parting, a sigil whose move a reader can say. Beside PLAN.A's one row and f5. The @play and ~services read stays next.
 }
 
 ^"open"{
@@ -32,5 +33,5 @@ fixity = "tending"
  ~#next_commit: "~[operators] Read @play and ~services against the alignment rules, and give each the sigil its move makes or a reason to keep its own"
  ~#files_hot: "public/js/semantic/sigil-annotation.js, public/css/effects/wonder.css, tools/index.html, offline/index.html, tools/budgeting/index.html"
  ~#gate: "nothing for the two chips; the creator's call on the family attributes: per-family colour, then a browser review, or stop writing them"
- ~#last_stream: "2026-11-06"
+ ~#last_stream: "2026-11-10"
 }

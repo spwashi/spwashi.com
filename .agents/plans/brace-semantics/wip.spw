@@ -38,6 +38,7 @@ fixity = "experimental"
  >>[2026-11-06 12:18] probe — wonder_brace_semantics_curly_name, again: @operator_registry's header now sets its word beside the workbench's (lines 23-24, f66451dc: { } direction "where the workbench says … definition"), so the registry reads direction as its mutation of definition. Counts: registry definition 7 and direction 7 (definition is that header and a variable), operator-semantics.spw behavior 14, direction 8, definition 5, semantic-braces.spw behavior 13.
  >>[2026-11-06 12:20] probe — wonder_brace_semantics_first_way_back: writes at lens-modes.js:357, experiments.js:682 and :706, boonhonk-mixer.js:356, :524 and :526, and no readExpressionSlots in any of them. The chip writes its line as text and a title (renderLiveExpression), not as an attribute, so that clause of the ~#expect missed.
  >>[2026-11-06 12:24] revise — draft kept: the element pair as an ungated slice (3.5), the one-line block, the hosts that write their line, the no-write-back rule. Cut: the archetype table's wrong attribute and event names, "expose readSpwHydration" (it exists), a write under the name hydrate, the proposed-commit facet. Slices 2 and 3 split into 2a/2b and 3a/3b; 3b found the boon and bane alias in layout.css, cinematic.css and four recipe routes, not only brace-pivots.js. Refs re-measured: core.css:1596, spw.d.ts:281, toSpwExpression, constructSpell, buildPinRecord, ensureElementDeepLink.
+ >>[2026-11-10 11:14] note — lore-land-plans.spw#value: both brace orders parse. Accumulate and discharge stays PLAN.A's reading. A pin that keeps its expression is the market sentence. Slice 2a stays next.
 }
 
 ^"open"{
@@ -56,5 +57,5 @@ fixity = "experimental"
  ~#next_commit: "+[runtime] Let a pin keep the expression it was made with (Slice 2a)"
  ~#files_hot: "public/js/runtime/memory/pin-registry.js, public/js/interface/composition.js, public/css/handles/operators/bias-and-phrases.css, public/js/runtime/interaction/brace-pivots.js, public/js/semantic/spw-block-association.js"
  ~#gate: "nothing for 2a, 2b, 3a, 3b and 3.5; the five decisions, then a browser look for the instrument and the door"
- ~#last_stream: "2026-11-06"
+ ~#last_stream: "2026-11-10"
 }

@@ -22,6 +22,7 @@ fixity = "tending"
  >>[2026-11-06 12:24] probe — wonder_plan_script_door: the node probe exits 0. The expect held; answered script.door, citing d13a532f.
  >>[2026-11-06 12:26] probe — wonder_plan_stamp: check-site.mts:86 forgives drift only when drift.stagedConsistent and the rest is unstaged; pre-commit:14 runs manifest-stamp.mjs --staged. The expect held; answered stamp.hook, citing 992c127e and da0b6b4c. The probe used to check only that manifest:staged exists, which could not fail on the question asked.
  >>[2026-11-10 11:07] revise — tooling-output-2026-11 no longer treats the paste line as the output goal. The line stays the noisy-crash token. The door, the audit laws, and the receipt stay the gestalt. This folder still owns no other work. Next commit remains the archive move.
+ >>[2026-11-10 11:14] note — lore-land-plans.spw#value: the receipt is the citable run, and the paste line is what someone can carry. Beside lore.land's f4 and f7. The archive stays next.
 }
 
 ^"open"{

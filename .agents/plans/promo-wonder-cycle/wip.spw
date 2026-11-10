@@ -57,6 +57,7 @@ promo_wonder_cycle:
  >>[2026-11-06 14:40] decide — a note the creator pasted: Enigma is a TikTok LIVE anonymity mode, not a gift and not a price; leave it off the support ladder (wonder_promo_wonder_cycle_enigma_anchor answered enigma.not_an_anchor). The draft line is not shipped as written: "layers" and "real" made the wide ranges sound fake, and $250 is not on /now/. Its line for both pages is held in PLAN.md L2; L5 retired.
  >>[2026-11-06 14:42] probe — /now/ support ladder: $5, $10–$15, $40–$75 (about $1,000 for the season), $50, $150, $500, $1,500; no $250, as the note says (it also has the four lower rungs the note leaves out). /services/ Pricing note: "Start with the smallest honest shape…" is where the line would join.
  >>[2026-11-06 15:05] land — L2: the creator chose ship both on the shown diff; the line is on /services/ (Pricing note) and /now/ (support note) in ee07e7c4. L3 waits on the Services first screen, L4 on the close ledger.
+ >>[2026-11-10 11:14] note — lore-land-plans.spw#value: three clocks on the static forecast, and a close a reader can keep. Beside the stones on the 13th and the 26th. P1 stays next. Unlock weights stay in lore.land.
 }
 
 ^"open"{
@@ -68,5 +69,5 @@ promo_wonder_cycle:
  ~#next_commit: "+[promo] P1: count each notice shown, accepted or closed, per cadence"
  ~#files_hot: "public/js/interface/discovery-notices.js, public/js/kernel/visit-intent.js, public/data/promo-wonder-cycle.json"
  ~#gate: "the creator's browser approval of the 1a61dc53 demo"
- ~#last_stream: "2026-11-06"
+ ~#last_stream: "2026-11-10"
 }

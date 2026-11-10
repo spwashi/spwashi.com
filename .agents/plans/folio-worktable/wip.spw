@@ -22,6 +22,7 @@ fixity = "tending"
  >>[2026-11-06 12:20] verify — Since the 2026-10-10 Status: the October drop page (2c95bf13), Honk Bazongas restored (5482751f), W44's five (5884cc59), tall scans whole on the plate (9571af62), clear-piece ground (865bb52c). public/data/folio-highres.json ends at 2026-W44, so W45 has not opened. The calendar demo is still linked only from design/experiments/ and design/experiments/folios/; /design/folios/ does not link it.
  >>[2026-11-06 12:24] probe — wonder_folio_worktable_calendar: the October page (design/folios/october-2026/) has no calendar and lays the month out by kind (folios, panels, cutouts, pads, ask); the calendar demo still lays out September's thirty-one as "October, one folio a day". The question moves from which order to whether a month becomes a calendar at all.
  >>[2026-11-06 12:28] plan — PLAN.md's audit and first public slice, answered by the release shelf, folded into one kept-rules line; five named next slices, four of them the creator's. Proposal (slice 4): a folio's popover names the page it opens, so the shelf is a door as well as a display.
+ >>[2026-11-10 11:14] note — lore-land-plans.spw#value: a folio says where it opens. The price spell stays lore.land's f8. Marks stay out of inventory. 2026-W45's five stay next.
 }
 
 ^"open"{
@@ -37,7 +38,7 @@ fixity = "tending"
  ~#next_commit: "+[folios] Open 2026-W45's high-res five, once the creator names them"
  ~#files_hot: "public/data/folio-highres.json, design/folios/index.html, design/folios/october-2026/index.html, design/experiments/folios/calendar/index.html"
  ~#gate: "the creator names the week's five; the calendar and the primes demo wait on the creator's look (#>wonder_folio_worktable_calendar)"
- ~#last_stream: "2026-11-06"
+ ~#last_stream: "2026-11-10"
 }
 
 #>wonder_folio_worktable_calendar

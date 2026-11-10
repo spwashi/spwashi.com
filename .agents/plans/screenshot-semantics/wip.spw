@@ -90,6 +90,7 @@ fixity = "tending"
  >>[2026-11-06 12:50] verify — Nothing in scripts/lib/viewport-still-recipes.mjs, scripts/component-snapshots.mjs, capture.css or visual-capture-plan.mjs has changed since a3d9164b (2026-10-30). PLAN.md's commits 2-5 became slices 1-5 with gates; the Files list of [NEW]/[MOD?] paths became one paragraph naming the landed tooling.
  >>[2026-11-06 12:53] probe — wonder_screenshot_semantics_still_line: component-snapshots.mjs:693 records componentExpression from the target alone; 2 of 8 values in the local run manifests since October are null. state-inspector.js readPageLine (:930) already picks the expression nearest the middle of the screen, the fallback slice 1 would borrow.
  >>[2026-11-06 12:55] probe — wonder_screenshot_semantics_journey: rg -i journey across the recipes and capture.css finds nothing, so no still names a path yet.
+ >>[2026-11-10 11:14] note — lore-land-plans.spw#value: a still carries the page's own line, a face someone can share and still say. Beside lore.land's L11. Slice 1 stays next. The journey question stays gated.
 }
 
 ^["open"]{
@@ -116,7 +117,7 @@ fixity = "tending"
  ~#next_commit: "+[capture] Let each still carry the page's Spw line, falling back to the expression nearest the middle of the screen"
  ~#gate: "nothing for slice 1; the frame still waits on the creator's answer to index.spw#wonder_screenshot_semantics_journey"
  ~#open_count: "9"
- ~#last_stream: "2026-11-06"
+ ~#last_stream: "2026-11-10"
  ~#taste_debt: "Priming is the underrepresented axis — make it legible without making it loud. Journey tokens should feel earned and sparse, not tracked and comprehensive. Log the visual form decision as a taste choice at slice 3 (the old commit 2)."
 }
 

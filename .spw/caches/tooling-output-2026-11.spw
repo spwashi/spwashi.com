@@ -114,6 +114,7 @@ contents = #[
   claim = `The wonders below are placed. Claude Opus 5.5 is assumed to implement several creative extensions of them: a receipt dialect, a history a person can walk, a host sketch that still reads as Spw.`
   rigor = `Each wonder names an owner, a probe, and a $% set. An extension bends inside that set. A new pattern waits until two extensions bend the same way.`
   owners = `The door stays @plan, whose next move is still the archive. Wonder altitudes stay @wonder_arch. Component law stays @native. Language hypotheses stay @fluency.`
+  value = `Academic value is the receipt: sha, verdict, and the file that wrote them. Market value is the paste line, a token someone can carry onto the canvas. lore.land's f4 wants meaning before files, and f7 wants a marks card a reader pastes. Both stay in that repo. The grain is lore-land-plans.spw#value.`
 }[reg=facet]
 
 #>wonder_tooling_paste_is_token
