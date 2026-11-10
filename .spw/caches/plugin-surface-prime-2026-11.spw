@@ -1,0 +1,101 @@
+# Plugin surface, plan grain, and the address (2026-11-09) — prime
+#
+# The creator asked to prime plugin-surface research, to set how fine a plan
+# is for development and for incremental wonder, and to extend the wonder
+# about URL and HTTP design across the ecosystem.
+# Read 2026-11-09 from the plugin ecology cache, query-disposition, the quest
+# handler, and ecosystem-links.js. This file does not implement.
+
+#>plugin_surface_prime_2026_11
+#:prime #!plugin #!http #!address #!wonder
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@semantic_capacity: ~"../conventions/semantic-capacity.spw"
+@wip_notebook: ~"../conventions/wip-notebook.spw"
+@query_disposition: ~"../conventions/query-disposition.spw"
+@plugins: ~"./plugin-ecology-improvements-2026-11.spw"
+@roles: ~"./pwa-roles-2026-11.spw"
+@router: ~"./quest-library-router-2026-11.spw"
+@product: ~"./ecosystem-productization-2026-11.spw"
+@doors: ~"../../public/js/kernel/ecosystem-links.js"
+@quest: ~"../../workers/spw-quest/src/index.js"
+@feedback: ~"./feedback-product-2026-09.spw"
+@fable: ~"./fable-session-2026-11.spw"
+
+operation = "prime"
+fixity = "experimental"
+source = "chat 2026-11-09; plugin-ecology-improvements-2026-11.spw; query-disposition.spw; workers/spw-quest/src/index.js; public/js/kernel/ecosystem-links.js"
+audience = "a person or a model about to add one plugin behavior"
+element = "one seat in an address: path, query, fragment, Accept, or method"
+route = "the URL a host already answers, starting from GET / on spw.quest"
+expression = plugin[surface]{path, query, fragment, accept, method}<host>
+
+summary = #[
+  `The plugin surface a friend meets is the address. query-disposition.spw already makes a query string a plugin contract on spwashi.com. Path, fragment, Accept, and method are the same kind of contract on the other hosts, and they are not in that convention yet.`,
+  `A plan for this work is one wonder wide. One host, one seat, one probe. A plan folder opens when the probe shows two hosts must change that seat together.`,
+][reg=set]
+
+do_not = `Do not implement from this file. Do not open a plan folder yet. Do not restate #pei-001 through #pei-007. Do not answer wonder_plugin_reader_health_gate, wonder_plugin_vite_spw_reader, or wonder_plugin_cross_host_expressions. Do not add a route, a codec, or a data-spw-* family. Do not edit .spw/_workbench.`
+
+^"grain"{
+  id = "ps-grain"
+  claim = `One wonder is the plan until a probe shows two hosts must change the same seat in one patch.`
+  development = `A development increment probes one wonder, then edits one file on one host. The plugin ecology cache stays the survey of seven insights. Its relay says to pick one insight. An insight there still bundles a protocol, an editor, and a census, which is coarser than a seat.`
+  wonder = `An incremental wonder names one seat, one probe someone can run without a deploy, and three outcomes. A wonder that counts every expression, or every unread attribute, waits outside this prime.`
+  plan_folder = `Open .agents/plans/<slug>/ when the probed wonder names two files on two hosts. Until then this file is the plan. A single insight does not get a folder (@wip_notebook).`
+  validation = `npm run wonder -- --surface wonder_http lists the three wonders in this file, each with a probe and an expect, and no ~#answer.`
+  do_not_promote_until = `One of the three wonders has been probed, and the next edit is one file on one host.`
+}[reg=facet]
+
+^"seats"{
+  id = "ps-seats"
+  claim = `An address has five seats a plugin can occupy, and each seat already has a law on at least one host.`
+  path = `A path is a verb or a file. spw.quest's handleQuest answers /read, /pivot, /build, /specimens, /constructs, /learn, /script.spw, and the text files. spwashi.com is a directory of index.html. factshift.center is one page. /canvas on the quest is a 302 to the canvas when the line is within 400 characters.`
+  query = `A query is a studio setup or a short line. @query_disposition names the studio keys (spw-physics, spw-meaning, and the rest of its default vocabulary) and says a plugin may extend them if it leaves an inspectable trace. The line keys are separate: ?spw= up to 400 characters on the canvas, ?script= up to 1800 on /build, ?line= up to 200 on /pivot (@doors).`
+  fragment = `#spw64= carries a script the server does not read. @doors, workers/spw-quest/src/walk.js, and workers/spw-quest/src/build.js encode it as base64url of UTF-8 text, and @doors writes that fragment from this site. @roles says the same. factshift-cognitive-substrate-2026-11.spw calls the fragment a serialized AST and still calls the site door proposed. The wonder below asks which reading the readers share.`
+  accept = `Accept chooses the representation. On spw.quest, GET / returns the guide as HTML, returns QUEST_TEXT as text/plain when Accept contains text/plain or text/markdown, and returns quest.v2 JSON when wantsJson sees application/json and the Accept lacks text/html. The text response sets Vary: Accept (@quest, workers/lib/shell.js). GET /git.txt, /git.md, /llms.txt, and /init are files with their own types. wonder_plugin_vite_spw_reader asks the dev server to do this for .spw files. The public homes are the wider question.`
+  method = `POST /build and POST /script.spw are the tool. Every other quest method answers 405 with Allow: GET, HEAD. GET /script.spw is the same script as a text/plain attachment.`
+  well_known = `/.well-known/autonomous-feedback.json is the plugin that is already an HTTP resource: one path, one JSON document, one host it configures (@feedback, and the same path on spw.quest). The next wonder after the three below asks which other plugin deserves that shape.`
+  aloud = `A seat is fit to share when its URL can be read aloud. quest-library-router-2026-11.spw already borrows that test from lore.land. A key named spw-physics can. A fragment of base64 cannot, which is why the fragment carries a script and the path carries the verb.`
+  pattern_consideration = `Compare @query_disposition (query as a plugin contract, stable) with @quest's Accept branch (representation, live) and with @doors (fragment and length caps, live). The address codec proposed in @product waits until these seats have one sentence each.`
+  expansion_prime = `After one wonder is probed, write the seat that probe confirmed into the host that already implements it. The studio keys stay in @query_disposition. The line, the fragment, and Accept stay in @doors and @quest until a second host must spell them the same way.`
+  validation = `Read @doors's header, @quest handleQuest, and @query_disposition's default vocabulary. The five seats above are those readings.`
+  do_not_promote_until = `The fragment wonder is probed, including the canvas app's reader, and one sentence says what #spw64= contains.`
+}[reg=facet]
+
+#>wonder_http_accept_homes
+?["When GET / arrives with Accept: text/plain, which of spw.quest, spwashi.com, and factshift.center answer with a text body?"]{
+  #:depth #!computational ~#lens(http: representation)
+  ~#with: @quest @plugins
+  ~#hypothesis: "spw.quest returns QUEST_TEXT as text/plain and sets Vary: Accept. factshift.center's worker does not branch on Accept for /. spwashi.com is a static Pages site and serves index.html."
+  ~#expect: "The quest handler names text/plain and wantsJson. factshift.center's src/index.js names neither."
+  ~#extends: wonder_plugin_vite_spw_reader
+  ~#probe(run)
+  !probe{ "rg -n 'Accept|wantsJson|text/plain' workers/spw-quest/src/index.js workers/factshift-center/src/index.js workers/lib/shell.js" }
+  $%[quest.text, site.html, canvas.html]
+}
+
+#>wonder_http_fragment_codec
+?["Do spwashi.com, spw.quest, and factshift.center agree that #spw64= is base64url of UTF-8 text?"]{
+  #:depth #!structural ~#lens(address: fragment)
+  ~#with: @doors @roles
+  ~#hypothesis: "The site and the quest encode UTF-8 text. The canvas comment in ecosystem-links.js says the app reads that text in the browser. One cache calls the same fragment a serialized AST."
+  ~#expect: "ecosystem-links.js, walk.js, and build.js say base64url of text. factshift-cognitive-substrate-2026-11.spw says serialized AST. The app's reader is the unread file."
+  ~#tension: "A codec sentence that the writers do not implement will be copied into the next plugin."
+  ~#probe(run)
+  !probe{ "rg -n 'spw64|base64url|serialized AST' public/js/kernel/ecosystem-links.js workers/spw-quest/src/walk.js workers/spw-quest/src/build.js .spw/caches/factshift-cognitive-substrate-2026-11.spw" }
+  $%[text.three_writers, ast.one_cache, app.unread]
+}
+
+#>wonder_http_query_seat
+?["Which query keys are a studio setup, and which are a line?"]{
+  #:depth #!educational ~#lens(address: query)
+  ~#with: @query_disposition @doors
+  ~#hypothesis: "spw-physics and its siblings configure a page. ?spw=, ?script=, and ?line= carry a line, at three different caps: 400, 1800, and 200. A plugin that adds a key has no seat to declare, so a studio key and a line key can be given the same name."
+  ~#expect: "query-disposition.spw names spw-physics. ecosystem-links.js names ?spw= at 400, ?script= at 1800, and ?line= at 200."
+  ~#probe(run)
+  !probe{ "rg -n 'spw-physics|spw=|script=|line=' .spw/conventions/query-disposition.spw public/js/kernel/ecosystem-links.js" }
+  $%[keys.studio, keys.line, keys.one_name]
+}
