@@ -67,7 +67,7 @@ contents = #[
   said = `A tool that was closed says what it did beside the handle (aria-live polite). The tool that was open stays open; a run that clears the mode gives it back.`
   reflex = `Reflex's own press closes its panel, so after a primed press it opens, to show what changed.`
   on_the_line = `An empty slot shows only while a drag could fill it (potentiated); the drop writes it into the line (actualized).`
-  rows = `A [...] row shows one verb. Turning it primes the next verb and remembers it; a tap actualizes the verb showing. A row is listed only while it has something to act on.`
+  rows = `A [...] row shows one verb. Turning it (a swipe, ← →) primes the next verb and remembers it; a tap actualizes the verb showing. A row is listed only while it has something to act on. In the app's working tree since 2026-11-10: the row's › counts its verbs and opens them under it, a press there actualizes that verb and primes it for the row, rows sharing a category sit as one cluster, and the menu's foot says what the last press did.`
 }[reg=facet]
 
 ^"line"{
