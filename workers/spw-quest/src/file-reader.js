@@ -225,8 +225,8 @@ export function fileKit(data) {
     const status = reading.fields.find((f) => f.key === "status");
     if (status) checks.push({ state: "info", says: `Status: ${status.value}.` });
     // Theme is the consequence of a pattern the constructs page already names.
-    const themeNames = new Set(["paper", "glass", "matte"]);
-    const patternNames = new Set(["pivot", "residue", "template", "departs", "ground-edge"]);
+    const themeNames = new Set(["paper", "glass", "matte", "vellum", "humus", "ink", "wort"]);
+    const patternNames = new Set(["pivot", "residue", "template", "departs", "ground-edge", "strata", "ferment", "intaglio"]);
     const pattern = reading.fields.find((f) => f.key === "pattern");
     const theme = reading.fields.find((f) => f.key === "theme");
     if (pattern && patternNames.has(pattern.value) && theme && themeNames.has(theme.value)) {
@@ -234,7 +234,7 @@ export function fileKit(data) {
       const performed = reading.fields.find((f) => f.key === "performs");
       checks.push({ state: "pass", says: `The ${pattern.value} pattern performs${performed ? ` ${performed.value}` : ""}. The theme consequence is ${theme.value}.` });
     } else if (pattern || theme) {
-      checks.push({ state: "info", says: "Name a pattern and a theme of paper, glass, or matte to change this field." });
+      checks.push({ state: "info", says: "Name a pattern and a theme of paper, glass, or matte (or vellum, humus, ink, wort) to change this field." });
     }
     return reading;
   }
@@ -508,6 +508,10 @@ export const FILE_CSS = `.try { margin: 0; }
     form.file[data-theme="glass"], .build form.script[data-theme="glass"] { background: color-mix(in srgb, var(--field) 78%, transparent); border-color: color-mix(in srgb, var(--accent) 50%, var(--edge)); box-shadow: var(--shadow), inset 0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent); }
     form.file[data-theme="matte"], .build form.script[data-theme="matte"] { background: var(--bg); box-shadow: none; }
     form.file[data-theme="paper"], .build form.script[data-theme="paper"] { background: var(--surface); }
+    form.file[data-theme="vellum"], .build form.script[data-theme="vellum"] { background: color-mix(in srgb, #fdfbf7 94%, var(--surface)); border-color: color-mix(in srgb, #c4a468 45%, var(--line)); box-shadow: 0 1px 4px rgba(45, 30, 10, .08), inset 0 0 0 1px rgba(196, 164, 104, .18); }
+    form.file[data-theme="humus"], .build form.script[data-theme="humus"] { background: color-mix(in srgb, #1a1714 94%, var(--field)); border-color: color-mix(in srgb, #5c4733 65%, var(--edge)); box-shadow: 0 4px 16px rgba(18, 14, 10, .35); color: #ede4d8; }
+    form.file[data-theme="ink"], .build form.script[data-theme="ink"] { background: color-mix(in srgb, #0a111c 95%, var(--field)); border-color: color-mix(in srgb, #2d4566 70%, var(--edge)); box-shadow: 0 6px 20px rgba(5, 10, 20, .45); color: #e2ecf8; }
+    form.file[data-theme="wort"], .build form.script[data-theme="wort"] { background: color-mix(in srgb, #241407 92%, var(--field)); border-color: color-mix(in srgb, #b86e28 60%, var(--edge)); box-shadow: 0 4px 16px rgba(36, 20, 7, .35); color: #faebd7; }
     .file-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .3rem .8rem; padding: .35rem .5rem .35rem .95rem; border-bottom: 1px solid var(--line); background: var(--surface); }
     .file-name { margin: 0; }
     .file-name code { font-size: .86rem; font-weight: 600; }

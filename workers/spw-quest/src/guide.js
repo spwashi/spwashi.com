@@ -5,31 +5,31 @@
 /** The twelve single sigils. `does` restates the workbench runtime table in plain words. The <> couple is not shown as a sigil. */
 // Workbench relation: harmony. The workbench's reader vocabulary, held by the route test.
 export const OPERATORS = Object.freeze([
-  { sigil: "~", name: "potential", reads: "Keep a path open without taking it.", does: "Defers its first argument." },
-  { sigil: "?", name: "wonder", reads: "Open a question you can close again.", does: "Returns the second argument when the first is true." },
-  { sigil: "!", name: "action", reads: "Commit a move so its consequence can be seen.", does: "Returns its first argument." },
-  { sigil: "*", name: "value", reads: "Mark what carries weight here.", does: "Writes and returns a collapsed first argument." },
-  { sigil: ".", name: "ground", reads: "Come back to the local default.", does: "Reads a property path, or the base value." },
-  { sigil: "^", name: "ascension", reads: "Lift parts into one relation you can inspect.", does: "Wraps its arguments as one integrated value." },
-  { sigil: "#", name: "vibration", reads: "Name a structure so it can be found again.", does: "Reduces its arguments into a register." },
-  { sigil: "@", name: "perspective", reads: "Say who is looking, and from where.", does: "Observes its first argument through a named observer." },
-  { sigil: "&", name: "subject", reads: "Name what the relation is about.", does: "Merges its arguments into one register." },
-  { sigil: "=", name: "configuration", reads: "Keep this here, under this name.", does: "Writes its first argument to a register." },
-  { sigil: "%", name: "measure", reads: "Compare, weigh, or level the field.", does: "Measures a named or focused register." },
-  { sigil: "$", name: "substrate", reads: "Name what carries the charge: time, money, memory, attention.", does: "Materializes a register's metadata." },
+  { sigil: "~", name: "potential", reads: "Preserve an exploratory trajectory without epistemic closure; suspend commitment to keep alternative hypotheses viable.", does: "Defers operand evaluation as a thunk, retaining the unreduced search space until demanded by an observer." },
+  { sigil: "?", name: "wonder", reads: "Frame an interrogative inquiry; open a metacognitive probe that tests invariant assumptions against empirical evidence.", does: "Dispatches a conditional predicate, evaluating the contingent branch once the interrogative precondition holds." },
+  { sigil: "!", name: "action", reads: "Commit an active intervention; apply performative force to transition system state and reveal observable consequences.", does: "Forces eager evaluation of its operand, committing the state transformation and returning the actualized value." },
+  { sigil: "*", name: "value", reads: "Anchor attentional focus; mark what carries durable communicative weight, canonical necessity, and epistemic salience.", does: "Evaluates the operand to canonical normal form, recording the stabilized invariant into an addressable register." },
+  { sigil: ".", name: "ground", reads: "Anchor in shared common ground; resolve referents against local baseline schemas and presupposed contextual defaults.", does: "Traverses a qualified property path or dereferences the scoped baseline context from the active lexical environment." },
+  { sigil: "^", name: "ascension", reads: "Synthesize structural relations; lift disparate constituent parts into an inspectable higher-order conceptual gestalt.", does: "Encapsulates operands into an integrated compound record bounded by unified relational type constraints." },
+  { sigil: "#", name: "vibration", reads: "Establish a rigid referential index; label structural patterns with persistent symbolic handles for retrieval and transfer.", does: "Reduces the structural payload into an addressable register entry registered within the global symbol table." },
+  { sigil: "@", name: "perspective", reads: "Situate deictic vantage and epistemic stance; specify the observer coordinate and perceptual lens examining the field.", does: "Projects the operand through a situated observer lens, evaluating expressions relative to that vantage frame." },
+  { sigil: "&", name: "subject", reads: "Center topical subjecthood; align disparate predicates around a shared thematic core to maintain discourse coherence.", does: "Performs associative unification across arguments, merging congruent predicates into the primary subject register." },
+  { sigil: "=", name: "configuration", reads: "Fix parametric constraints; bind invariants and explicit configuration states to regulate system boundaries.", does: "Binds an identifier to an evaluated value within the active register bank, governing downstream parameterization." },
+  { sigil: "%", name: "measure", reads: "Calibrate across scalar dimensions; quantify variance, error gradients, and metric thresholds to guide learning.", does: "Applies a metric evaluation function across focused registers, computing scalar distance, ratio, or cardinality." },
+  { sigil: "$", name: "substrate", reads: "Audit the carrying substrate; account for the metabolic, temporal, and computational resources sustaining the system.", does: "Materializes underlying runtime metadata, exposing memory layout, latency bounds, and platform resource footprints." },
 ]);
 
 /** The four interpretive brace profiles, in the order the compositional form reads them. */
 export const CONTAINERS = Object.freeze([
-  { open: "<", close: ">", name: "concept", reads: "What this is about." },
-  { open: "(", close: ")", name: "scene", reads: "Where it happens." },
-  { open: "[", close: "]", name: "mode", reads: "Which lens you are using." },
-  { open: "{", close: "}", name: "definition", reads: "What belongs together inside it." },
+  { open: "<", close: ">", name: "concept", reads: "Ontological boundary: encapsulates the semantic universe of discourse and categorical domain." },
+  { open: "(", close: ")", name: "scene", reads: "Situational context: situates the spatiotemporal setting, environmental locus, and pragmatic frame." },
+  { open: "[", close: "]", name: "mode", reads: "Modal aspect: specifies the grammatical register, epistemic modality, and operational variant." },
+  { open: "{", close: "}", name: "definition", reads: "Constituent enclosure: encapsulates compositional definitions, internal clauses, and structural relations." },
 ]);
 
 /** What a # particle's aim adds when the reader meets one in a line. */
 export const PARTICLE_AIMS = Object.freeze({
-  ">": "A frame address: the name this page answers to, so other pages can point here.",
-  ":": "A layer: what kind of writing this is.",
-  "!": "A tag for this one.",
+  ">": "A frame locator: declares an addressable routing destination and canonical page identity.",
+  ":": "A stratum layer: classifies the epistemological genre and architectural tier of the expression.",
+  "!": "A definitive tag: assigns categorical indexing metadata to support multi-faceted taxonomy.",
 });
