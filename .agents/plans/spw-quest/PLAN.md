@@ -74,6 +74,15 @@ Each is one session and one commit. None deploys; deploy is the creator's Wrangl
 
 **R. Sigil physics.** Proposed on 2026-10-12, and displaced by G to M, not dropped. A fourth column in the guide's sigil table carries each mark's physical model from the `physics` field of `OPERATOR_DEFINITIONS` in `public/js/kernel/operator-detection.js`. It is carried at build time, like the peer kit, so spw.quest loads nothing from spwashi.com. Touches `OPERATORS` in `src/guide.js` and the route test. Gate: the creator reads the twelve phrases before they go public.
 
+**S. Agent swarm coordination & rule-breaking script frontier (2026-11, proposed).**
+The theory is in [swarm-distributed-memory-manifold-2026-11](../../../.spw/caches/swarm-distributed-memory-manifold-2026-11.spw). Investigates how Spw's defensive human rules (the 80-column phone monospace limit, the single-patch gate, nominal hermeticism against compound operators) become bottlenecks for autonomous agent swarms and distributed memory. Proposes six intentional rule-breaking specimens for experimental sandboxes:
+- **Compound operators:** `?!hypothetical(staging)[shadow]{dry_run}` executes an active mutation in an isolated shadow frame, rolling back on failure; `~*latent_salience` marks prioritized deferred values.
+- **Causal vector clocks:** `node_a.probe ~>>[agent_1:4, agent_2:2] node_b.consensus` establishes strict Lamport causal dependency across distributed swarms.
+- **Ephemeral leased mutexes:** `#>cluster[lease=30s, holder=agent_beta]@node_7{exclusive.claim}` provides non-blocking swarm coordination without manual commit deadlocks.
+- **Continuous Bayesian distributions:** `%belief{h1: 0.72, h2: 0.18, null: 0.10}` replaces scalar confidence with probability distributions over wonder hypotheses.
+- **CRDT join lattices:** `&[crdt=semilattice_union]{replica_west.state, replica_east.state}` specifies formal conflict-free merge semantics.
+- **Continuous manifold parameterization:** `field[alpha=0.87, decay=0.05]{(boon: 0.40, bane: 0.10, bone: 0.20, bonk: 0.15, honk: 0.15)}` passes 5-simplex coordinates directly to factshift.center.
+
 **Shell: PRs 2 to 4 of the [note and shell design](./note-shell-design.md#pr-plan).** *All three landed 2026-11-08; see [expression-first.md](./expression-first.md) S0 and S1 for the departures.* PR 2 pins the reader the guide imports (`/parser/2026.10.13/reader.min.js`, tracked). PR 3 serves the service worker, and PR 4 the manifest and icons. Each PR is specified there file by file, in order. **2026-11-08:** PR 4 went first, with an install section on `/install` (menu installs need no service worker), as S0 of [expression-first.md](./expression-first.md). That file also holds the creator's asks of that day: one expression first, a gesture hand at page edges, a local registry, operators as components, and the language relay.
 
 ## Shelf, library and architecture (proposed 2026-11-06)
