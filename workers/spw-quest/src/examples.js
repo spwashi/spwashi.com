@@ -23,7 +23,7 @@ export const EXAMPLES = Object.freeze([
     group: "Bench",
     tab: "Lab notebook",
     file: "lab-notebook.spw",
-    says: "Dated entries, each with a kind, so a tool can sort the bench's days and count what was cataloged, tried, measured and landed.",
+    says: "Chronological empirical log: dated entries categorized by epistemological kind, allowing automated synthesis of bench progression across cataloging, experimental trials, metric measurements, and landed invariants.",
     try: "Add a line inside the braces: >>[2026-11-07 10:00] catalog — the card, in two dialects: lifted and flat",
     script: `#>lab_notebook
 #:log #!components #!themes
@@ -40,7 +40,7 @@ export const EXAMPLES = Object.freeze([
     group: "Bench",
     tab: "Catalog record",
     file: "chip.spw",
-    says: "A component cataloged as a library would: its title, the names it also goes by, what it sits under and beside, and where the record came from.",
+    says: "Bibliographic catalog record grounded in information science: title, cross-reference variants, categorical subjects, and evidentiary provenance.",
     try: "Add a see-also inside the braces: related_card = ~\"./card.spw\"",
     script: `#>component_chip
 #:record #!component
@@ -59,8 +59,8 @@ export const EXAMPLES = Object.freeze([
     group: "Bench",
     tab: "Theme vocabulary",
     file: "themes.spw",
-    says: "A controlled vocabulary: one preferred word per theme, the words it is used for, and a scope note, so two people file a look under the same name.",
-    try: "Add a term: ^\"paper\"{ broader = `metamaterial` }[reg=facet]",
+    says: "Controlled vocabulary and ontological schema: canonical preferred terms, non-preferred synonyms, and scoping notes ensuring conceptual alignment.",
+    try: "Add a metamaterial term: ^\"vellum\"{ broader = `metamaterial` }[reg=facet]",
     script: `#>theme_vocabulary
 #:vocabulary #!themes
 
@@ -81,8 +81,8 @@ export const EXAMPLES = Object.freeze([
     group: "Bench",
     tab: "Experiment",
     file: "experiment.spw",
-    says: "A question that says what it expects and how to find out, so it can be run instead of argued.",
-    try: "Delete the !probe line, and the check beside it changes.",
+    says: "Metacognitive hypothesis testing: an epistemic inquiry pairing an interrogative wonder with an explicit hypothesis, expected outcome, and empirical verification probe.",
+    try: "Delete the !probe line to observe the cognitive check report an ungrounded inquiry.",
     script: `#>wonder_ring_on_glass
 ?["Does the ring chip read on the glass theme at a phone's width?"]{
   ~#hypothesis: \`a ring keeps its edge where a pill's fill washes out\`
@@ -96,7 +96,7 @@ export const EXAMPLES = Object.freeze([
     group: "Bench",
     tab: "Session script",
     file: "session.spw",
-    says: "A session written as steps in order, so a tool can walk them one at a time and say which step it is on.",
+    says: "Procedural session script: sequential operational transitions modeled as ordered path steps, enabling step-by-step execution tracking and state verification.",
     try: "Add a step: after !shelve, write ;?review",
     script: `#>catalog_session
 #:script #!session
@@ -109,7 +109,7 @@ gather = shelf[ui]{chip.card}<record>`,
     group: "Bench",
     tab: "Change record",
     file: "change.spw",
-    says: "A change, why it happened, and how it was checked: the form this site's own commits close with.",
+    says: "Tripartite change episode: context scene, state transformation, and empirical verification criteria—the syntactic contract of every repository mutation.",
     try: "Delete the *[verify] line, and the check beside it changes.",
     script: `#[episode]{
   ~[scene]{ a panel body drew a second wall on a phone, and its text sat on the line }
@@ -122,7 +122,7 @@ gather = shelf[ui]{chip.card}<record>`,
     group: "Bench",
     tab: "Persona",
     file: "archivist.spw",
-    says: "A persona held in regard: its voice, where it looks from, what it affirms, and what stayed.",
+    says: "Situated epistemic persona: communicative voice, observational locus, epistemic axioms, and persistent heuristic habits held in regard.",
     try: "Add a line inside the braces: still_learning = `when a record should stay open`",
     script: `#>archivist_persona
 #:persona #!library
@@ -139,7 +139,7 @@ gather = shelf[ui]{chip.card}<record>`,
     group: "Study",
     tab: "Calibration",
     file: "calibration.spw",
-    says: "A prediction before studying and a check after it, each with a confidence, so a student can see whether they knew what they thought they knew. The % line names the measure that carries one to the other.",
+    says: "Metacognitive calibration model: pre-task prediction vs. post-task recall with scalar confidence assessments, quantified by a dimensional gradient %.",
     try: "Change the confidence after to 0.8, and the change between the two facets shows beside it.",
     script: `#>calibration
 #:study #!metacognition
@@ -162,7 +162,7 @@ gather = shelf[ui]{chip.card}<record>`,
     group: "Study",
     tab: "Perspectives",
     file: "perspectives.spw",
-    says: "One chapter read from four places: the student, a classmate, a future self and a teacher, each with how sure they are and where the reading leads. Then what the four hold, gathered at the chapter they share.",
+    says: "Multi-agent deictic perspectivism: examining one focal chapter across four situated epistemic vantage points, aggregated into a unified thematic subject.",
     try: "Add a reading: kin = parent@ch2[curious]{why}<dinner>",
     script: `#>four_readings
 #:reflection #!metacognition
@@ -179,7 +179,7 @@ tutor = tutor@ch2[watch]{gap}<lesson>
     group: "Board",
     tab: "Persona loops",
     file: "loops.spw",
-    says: "A board of personas, each running its own loop around one reference: what is planned ahead, what runs in parallel (the loops, joined by ,), what has to follow in series (the handoff, joined by ;), and what one loop carries to another (the relay, joined by ~>).",
+    says: "Collaborative workflow orchestration: concurrent persona execution loops coordinated through serial handoff gates and inter-loop communicative relays.",
     try: "Add a loop inside the braces: , conservator@scan{handling}",
     script: `#>persona_loops
 #:board #!loops #!production
@@ -205,7 +205,7 @@ relay = {archivist.provenance ~> editor.caption}
     group: "Board",
     tab: "Gradient space",
     file: "gradient.spw",
-    says: "One reference laid out between two professional stances, an archivist who keeps and a designer who reshapes, as positions from 0.10 to 0.90, so a choice is a place on the gradient instead of a side.",
+    says: "Continuous epistemic gradient: parameterizing decisions along a scalar spectrum between polarized stances, replacing binary dichotomy with nuanced spatial positioning.",
     try: "Add a position: `0.55 keep the slices, ask the reader`",
     script: `#>gradient_space
 #:board #!gradient
@@ -230,7 +230,7 @@ gradient = #[
     group: "Stage",
     tab: "Syntax",
     file: "syntax.spw",
-    says: "Joins on one page: a company in braces, an order along a path, a reach with ~>, a regard, a nest two bodies deep, and one line with its seats filled.",
+    says: "Syntactic and relational joins: associative company, sequential path order, communicative reach with ~>, perspectival regard, and nested constituent hierarchies.",
     try: "Change regard to tutor@indexing. The field beside it names tutor.",
     script: `#>syntax_stage
 #:showcase #!syntax
@@ -247,7 +247,7 @@ line = home[hook]{software.art}(atlas)<record>`,
     group: "Stage",
     tab: "Headings",
     file: "headings.spw",
-    says: "I wondered about indexing. Three students' headings stay in company at that subject, ready for a catalog to choose among later.",
+    says: "Information organization and subject indexing: multiple competing indexing terms held in associative company, preserving ambiguity prior to catalog authorization.",
     try: "Add kin inside the brace, or change @indexing to @aboutness. The field lists the company and the subject.",
     script: `#>subject_headings
 #:showcase #!indexing #!library
@@ -266,7 +266,7 @@ headings = {student, classmate, later}@indexing
     group: "Stage",
     tab: "Performs",
     file: "perform.spw",
-    says: "When a named pattern performs, this field takes the theme written beside it.",
+    says: "Dynamic architectural configuration: when a structural pattern performs against an operational slot, the runtime materializes its declared theme consequence.",
     try: "Change theme from glass to matte and watch the field lose its shadow.",
     script: `#>pattern_performance
 #:showcase #!pattern #!theme
