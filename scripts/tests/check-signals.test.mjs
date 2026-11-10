@@ -171,6 +171,27 @@ test('a failed test stage shows its count and the failing section, not the runne
   assert.deepEqual(testFailureExcerpt('Error: cannot find module'), ['Error: cannot find module']);
 });
 
+test('a crash after passing tests keeps the instruction and the error', () => {
+  const output = [
+    '✔ a pasted link becomes a domain (2ms)',
+    'ℹ tests 1',
+    'ℹ suites 0',
+    'ℹ pass 1',
+    'ℹ fail 0',
+    '[carry-shelf] assets/bench/index.html differs from a fresh render; run node carry-shelf.mjs',
+    'Error: Command failed: node carry-shelf.mjs --check',
+    '    at checkExecSyncError (node:child_process:882:11)',
+    '    at execFileSync (node:child_process:918:15)',
+    'Node.js v23.1.0',
+  ].join('\n');
+  assert.deepEqual(testFailureExcerpt(output), [
+    'ℹ tests 1 · fail 0',
+    '[carry-shelf] assets/bench/index.html differs from a fresh render; run node carry-shelf.mjs',
+    'Error: Command failed: node carry-shelf.mjs --check',
+    'check[drift]{carry-shelf}<paste>',
+  ]);
+});
+
 test('the failing section names the files to rerun, once each', () => {
   const output = 'test at scripts/tests/a.test.mjs:4:1\n✖ one\ntest at scripts/tests/a.test.mjs:9:1\n✖ two\ntest at scripts/tests/b.test.mjs:2:1';
   assert.deepEqual(failingTestFiles(output), ['scripts/tests/a.test.mjs', 'scripts/tests/b.test.mjs']);
