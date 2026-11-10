@@ -62,6 +62,7 @@ Limits: stacks name files only from source, so this is the dev graph; times are 
 - **Weights.** Candidate sources the runtime already has: the salience weight `contextual-ui.js` writes as `--spw-salience-weight` (no route authors `data-spw-salience-weight`), the operator charge role, familiarity demotion, the module offer ranking (`describeModuleOffer`). No new `data-spw-*` family.
 - **Arrival halves.** Split modules into a small arrival projection (often CSS, or a shared residue restorer) and an engagement half, so arming does not hide what a module draws on arrival (brace pins, grounded haptics, brace actions). Owner of the split: `runtime-plane-consolidation` (*Phase 6 — Decompose the overloaded modules*), since runtime-module-decomposition archived.
 - Parked 2026-10-10, with no slice or sensor here: assembly reading (`.spw/caches/spw-assembly-2026-09.spw`), engagement heuristics named as a dialect, dialects across dimensions, and attention that varies with theme material.
+- **Regions open with a goal, not with a promise** (2026-11-10, [character-constraint-onboarding-2026-11](../../../.spw/caches/character-constraint-onboarding-2026-11.spw)). A further region of the site may show once a reader has set a goal on the constrained character. A region that implies a community will meet the need stays quiet until the limit has been read. This does not change E1, and it adds no `engages` def.
 
 ## Menu, badge, and lenses — 2026-09-28
 

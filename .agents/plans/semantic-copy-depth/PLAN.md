@@ -77,6 +77,7 @@ A lens weights a sentence and leaves the sentence in the HTML. Depth, genre, and
 
 ## Parked
 
+- **The ask, the inquiry, and the word intake** (2026-11-10). `card[ask]{need,deadline,budget}` and `#contact-intake` (`contact[inquiry]{name.context.need.constraint}`, titled "Helpful inquiry shape") still receive a need. The creator wants a goal and a limit instead, on one character, with the professional words as a second reading. The record is [character-constraint-onboarding-2026-11](../../../.spw/caches/character-constraint-onboarding-2026-11.spw). Words wait on `wonder_component_region_character_door` and stay behind C1. This plan does not rename Local Proof Cards. The linguistics of that reading is one sentence a person can say: the goal, and the limit. No new copy-accessor family.
 - A settings preview of copy depth. Settings already layers its own copy (`entry` and `technical` paragraphs in `#applied-state`), but no control shows a reader what changing semantic density would reveal. If it comes back, it is the density control's own receipt: one sample sentence at each depth beside the control, ending at a browser demo.
 - Template-emitted `spw-route-bridge` sections (77 pages author them by hand), a topic index for vocabulary clusters, an emphasis-tier audit (22 pages carry `data-spw-emphasis`), and Spw recipe cards for annotated components (`card[reason]{produce.artifact}`).
 - Retired 2026-11-06: "use `entry`, `dense` and `technical` by surface", which Display Rules already says.

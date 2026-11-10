@@ -33,6 +33,7 @@ The creator is weighing spells handwritten on washi tape, folded into origami or
 - **Measurement arcs** - `runtime/diagnostics/observation-beats.js` beats extended into named arcs whose completion can itself precipitate an artifact ("you watched this settle; here is its trace").
 - **Gentle state management** - opportunities to touch state that invite rather than demand; cauldron panel affordances are the pattern.
 - **Tangible navigation** - spells as carryable items (the RPG item model); a route you have mastered is a thing in your bag.
+- **One character, one precipitate** (2026-11-10). The next curriculum grain is a sitting that sets a goal and a limit on the character sheet, scripts off. The professional reading is the following lesson, after that sentence exists. lore.land PLAN.E is the shape: one increment, then a precipitate the next lesson can stand on. The cache is [character-constraint-onboarding-2026-11](../../../.spw/caches/character-constraint-onboarding-2026-11.spw). It does not add a rung, and it does not move the taped spell.
 
 ## Physical Model Rule
 

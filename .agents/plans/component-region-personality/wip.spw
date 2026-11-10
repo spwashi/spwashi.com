@@ -50,11 +50,13 @@ fixity = "tending"
 ^"open"{
  hero_children = ~"./index.spw#wonder_component_region_hero_children"
  role_not_element = ~"./index.spw#wonder_component_region_role_not_element"
+ character_door = ~"./index.spw#wonder_component_region_character_door"
 }
 
 ^"stream"{
  >>[2026-11-08 16:46] plan — cluster C's instrument specimen waits behind H1. Mono seat line, editorial lede, one frame whose braces ease apart. Cited from semantic-copy-depth/update-clusters-2026-11.spw. No chip restyle inside a copy commit.
  >>[2026-11-08 17:22] plan — the brace enhancement spends --grammar-form-open and --grammar-form-close, already in grammar/syntax.css. Bend is wonder_spw_native_brace_ease. The seat mount question is wonder_spw_native_seat_residue against enhancement.js's IMMEDIATE row. Neither jumps H1.
+ >>[2026-11-10 09:18] plan — the ask card is not the professional form. A constrained character, goal and limit, is cached at character-constraint-onboarding-2026-11.spw. H1 stays next. The door is wonder_component_region_character_door. An uncommitted paint of the current ask line is not that abstraction.
 }
 
 ^"cache"{
