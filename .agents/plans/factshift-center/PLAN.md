@@ -247,6 +247,12 @@ The theoretical foundation is in [swarm-distributed-memory-manifold-2026-11](../
 - **Interactive rewind trails:** Visualizing linear WAM-style undo trails along the 5-simplex, allowing a reader or agent to scrub backward through speculative memory mutations in real time.
 - **CRDT lattice visualization:** Demonstrating conflict-free join resolution on conjoined subject nodes (`&[crdt=semilattice_union]`).
 
+**Line and document navigation mechanics, tactile corner elevation (2026-11-10, app 253b949).**
+- **Document pasting & multi-line runs:** Pasted text outside form inputs directly executes `loadSpwText(clipboardText, "pasted")` as a structured Spw document, setting mode to Spw and populating the thread. Multi-line runs load all lines sequentially into the thread instead of dropping subsequent statements.
+- **Thread stepping & document edge jumps:** `PageUp`/`PageDown` and unhandled `ArrowUp`/`ArrowDown` walk the document thread line by line; `Home`/`End` jump immediately to start and end edges.
+- **Tactile jewel chrome:** Chamfered corners, subtle backdrop-filter blurs, jewel border glows, and tactile depression on active states elevated across `#main-wonder-button`, `#focal-square`, `#hotkey-menu-toggle`, `h1`, `#held-expressions`, `#tool-indicator`, and `#spw-talk`.
+- **Continuous combinatorics & productization cache:** Modeled in [factshift-continuous-combinatorics-2026-11](../../../.spw/caches/factshift-continuous-combinatorics-2026-11.spw): radial node sliders (charge/mass/tension scrubbers), 16 primitive tokens mapped to force topologies, Spw scripts as physics/color tuners, nested reference navigation, modal comparison (`⇆` ghost layers), and embeddable `<factshift-canvas>` web components.
+
 The tools themselves, each read as an operator whose window opens on its act as one line, are planned in [TOOLS.md](./TOOLS.md) (2026-11-06): hygiene first, then one theory for all nine, a demo on three, and a slice per tool; four questions for the creator sit in `index.spw`.
 
 Each is one session in the app (`workers/factshift-center/app`, its own repository), checked with `npx tsc --noEmit` and `npx vite build`, then carried into the snapshot here when the creator asks (*Refreshing the snapshot*, above). The numbers are the ones `index.spw` and INTERACTION.md cite.

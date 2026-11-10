@@ -496,10 +496,11 @@ export const FILE_CSS = `.try { margin: 0; }
     .examples-group { padding-top: .75rem; color: var(--muted); font: .74rem/1.2 var(--mono); text-transform: lowercase; }
     .examples-files { display: flex; flex-wrap: wrap; gap: .35rem; }
     @media (max-width: 22rem) { .examples-row { grid-template-columns: minmax(0, 1fr); } .examples-group { padding-top: 0; } }
-    .examples a { display: grid; gap: .05rem; min-height: 44px; padding: .4rem .8rem .45rem; border: 1px solid var(--line); border-radius: var(--radius); background: color-mix(in srgb, var(--surface) 55%, transparent); color: var(--fg); text-decoration: none; }
+    .examples a { display: grid; gap: .05rem; min-height: 44px; padding: .4rem .8rem .45rem; border: 1px solid var(--line); border-radius: var(--radius); background: color-mix(in srgb, var(--surface) 55%, transparent); color: var(--fg); text-decoration: none; transition: transform .16s ease, border-color .16s ease, background-color .16s ease, box-shadow .16s ease; }
     .examples .tab { font-weight: 600; font-size: .95rem; line-height: 1.2; }
     .examples .file { color: var(--muted); font: .74rem/1.2 var(--mono); }
-    .examples a:hover, .examples a:focus-visible { border-color: var(--accent); }
+    .examples a:hover, .examples a:focus-visible { border-color: var(--accent); background: color-mix(in srgb, var(--surface) 90%, transparent); transform: translateY(-1px); box-shadow: 0 4px 12px -2px rgba(0, 0, 0, .05); }
+    .examples a:active { transform: translateY(1px) scale(.995); box-shadow: none; }
     .examples a[aria-current] { border-color: var(--accent); background: var(--field); box-shadow: inset 0 -2px 0 var(--accent); }
     .examples a[aria-current] .file { color: var(--accent); }
     .workspace { display: grid; gap: 1rem; align-items: start; }
@@ -514,8 +515,11 @@ export const FILE_CSS = `.try { margin: 0; }
     form.file[data-theme="wort"], .build form.script[data-theme="wort"] { background: color-mix(in srgb, #241407 92%, var(--field)); border-color: color-mix(in srgb, #b86e28 60%, var(--edge)); box-shadow: 0 4px 16px rgba(36, 20, 7, .35); color: #faebd7; }
     .file-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .3rem .8rem; padding: .35rem .5rem .35rem .95rem; border-bottom: 1px solid var(--line); background: var(--surface); }
     .file-name { margin: 0; }
-    .file-name code { font-size: .86rem; font-weight: 600; }
+    .file-name code { font-size: .86rem; font-weight: 600; padding: .15rem .45rem; border-radius: 4px; background: color-mix(in srgb, var(--line) 35%, transparent); border: 1px solid color-mix(in srgb, var(--line) 70%, transparent); font-variant-ligatures: none; }
     .file-actions { display: flex; flex-wrap: wrap; gap: .15rem; }
+    .file-actions a.file-canvas { border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line)); background: color-mix(in srgb, var(--accent) 10%, var(--surface)); color: var(--accent); font-weight: 600; box-shadow: 0 1px 2px rgba(0, 0, 0, .04); transition: transform .14s ease, background-color .14s ease, border-color .14s ease, box-shadow .14s ease; }
+    .file-actions a.file-canvas:hover, .file-actions a.file-canvas:focus-visible { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 18%, var(--surface)); box-shadow: 0 2px 8px -2px color-mix(in srgb, var(--accent) 25%, transparent); transform: translateY(-1px); }
+    .file-actions a.file-canvas:active { transform: translateY(1px); box-shadow: none; }
     .says { margin: 0; padding: .7rem 1rem 0; color: var(--ink-soft); font-size: .92rem; line-height: 1.45; }
     .note-choice, .note-state { margin: 0; padding: .6rem 1rem 0; font-size: .9rem; line-height: 1.4; }
     .note-choice { display: grid; gap: .15rem; padding-bottom: .45rem; border-bottom: 1px solid var(--line); background: var(--accent-soft); color: var(--fg); }

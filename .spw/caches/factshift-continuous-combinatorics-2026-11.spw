@@ -1,0 +1,150 @@
+# factshift-continuous-combinatorics-2026-11.spw
+#
+# Continuous Combinatorics, Node Sliders, and Spatial Grammar
+# Operation: cache
+# Layer: pragmatics / interaction
+# Fixity: tending
+
+#>factshift_continuous_combinatorics_2026_11
+#:cache #!interaction
+#:layer #!pragmatics
+#:operation #!cache
+
+@factshift_cognitive_substrate_2026_11: ~"./factshift-cognitive-substrate-2026-11.spw"
+@swarm_distributed_memory_manifold_2026_11: ~"./swarm-distributed-memory-manifold-2026-11.spw"
+@concept_route_physics_2026_11: ~"./concept-route-physics-2026-11.spw"
+@factshift_tooling_2026_11: ~"./factshift-tooling-2026-11.spw"
+
+^"ground"{
+  doctrine = `factshift.center is not a passive node graph: it is an operational instrument where linguistic syntax and topological force physics are identical representations of one thought. Every syntactic change carries physical consequence; every physical gesture rewrites a line byte for byte.`
+  paradigm = `Continuous spatial typography, multi-touch gesture grammar, chordal node sliders, and learnable combinatorics as an embeddable social product surface.`
+}[reg=facet]
+
+^"pillar_1_frame_swipes_and_node_sliders"{
+  # Node Slider Activation:
+  node_slider = #[
+    `Holding a node or performing a chordal circular drag along its perimeter engages the radial node slider gauge.`,
+    `A tangential drag sweeps a continuous scalar dial around the node circumference, tuning localized properties without opening a modal panel:`,
+    `  - Mass well: adjusts the node's gravitational well and topological packing density;`,
+    `  - Charge radius: tunes the Coulomb repulsion distance, pushing or drawing neighbors into alignment;`,
+    `  - Link tension: adjusts spring stiffness and damping with linked peers;`,
+    `  - Hue perspective: rotates the color spectrum through the 13 canonical perspectives.`,
+    `Haptic/visual detents snap softly at harmonic ratios (1:1, 1:2, 2:3, phi), emitting a live receipt: *seed[charge=-80, mass=1.4].`
+  ][reg=set]
+
+  # Multi-Touch & Gesture Grammar:
+  multi_touch = #[
+    `Pinch on two linked nodes: directly modulates edge tension, tightening or relaxing the spring constant.`,
+    `Pinch on canvas frame: inward pinch clusters nodes into container envelopes; outward pinch enters the nearest node as an isolated micro-world frame (#>).`,
+    `Edge swipe bands: 72px side bands on the screen perimeter walk concept history (Alt+Arrow equivalents), providing physical inertia and immediate preview cards before release.`
+  ][reg=set]
+
+  # Reflex Menu Refinements:
+  reflex_instrument = #[
+    `Displace raw arithmetic labels (/=2.3, *-1 -> 30) with dimensional lore physics words paired with interactive slider scrubbers.`,
+    `Dual temporal modes:`,
+    `  - Tap = Instantaneous shockwave impulse (a kick vector through the force graph);`,
+    `  - Drag/Hold = Continuous field potential tuning (decaying back or settling into persistent equilibrium).`,
+    `Reflex behaves like an analog synthesizer patchbay, where each button routes energy into specific axes of the 5-simplex manifold.`
+  ][reg=set]
+}[reg=facet]
+
+^"pillar_2_learnable_combinatorics_product_surface"{
+  combinatorics = #[
+    `The 12 canonical operators + 4 brace containers define a strictly finite, learnable basis (16 primitive tokens).`,
+    `Because each token maps deterministically to a specific force topology, learning Spw syntax is isomorphic to acquiring physical intuition in a sandbox game.`,
+    `Compositions form predictable physical equations:`,
+    `  - #[frame]{body} = rigid bounding box containing loose internal particles;`,
+    `  - ~[path]{a ~> b} = directional force stream with directed link tension and kinetic particles;`,
+    `  - ?[probe]{question} = open harmonic well with fluttering damping;`,
+    `  - @[perspective]{view} = coordinate center transform with radial attraction;`,
+    `  - ![action]{kick} = kinetic impulse vector radiating through linked clusters;`,
+    `  - *[value]{weight} = scalar mass sink pulling the center of gravity.`,
+    `This learnability turns Spw from an esoteric notation into a social product surface: visitors master syntax through tactile spatial consequence, building instinctive fluency before authoring formal code.`
+  ][reg=set]
+}[reg=facet]
+
+^"pillar_3_spw_scripts_as_physics_and_color_tuners"{
+  declarative_physics = #[
+    `Spw scripts act as their own environment configuration and styling engine:`,
+    `  physics[viscosity=0.82, decay=0.04]{`,
+    `    charge: -120;`,
+    `    link_distance: 64;`,
+    `    centering: 0.15;`,
+    `  }`,
+    `  palette[chroma=0.18, luminance=0.65]{`,
+    `    @agent: #4c1d1d;`,
+    `    @memory: #1b5c5d;`,
+    `    @runtime: #c4a468;`,
+    `  }`,
+    `Linking behavior, edge spring constants, and reference resolution rules written natively as Spw expressions:`,
+    `  link[relation=resonance]{stiffness=0.9, dash="2 4"}`,
+    `  node[role=concept]{gradient="radial(#f5deb3, #4c1d1d)"}`,
+    `Evaluation of Spw scripts directly sets CSS custom properties, WebGL shader uniforms, and d3 simulation force parameters in real time.`
+  ][reg=set]
+}[reg=facet]
+
+^"pillar_4_nested_references_modal_comparison_page_memory"{
+  nested_navigation = #[
+    `Entering a reference node (#>concept) descends seamlessly into its sub-canvas / micro-world.`,
+    `Breadcrumb trails are maintained in history: #>root > #>world > #>actor.`,
+    `Popping (.) springs the camera back to the parent frame with an elastic zoom transition.`
+  ][reg=set]
+
+  modal_comparison = #[
+    `The ⇆ comparison operator pins a baseline reference expression while stepping through candidates in the document thread.`,
+    `Split simulation / ghost projection layer:`,
+    `  - The reference expression renders as a faint intaglio wheat ghost layer (opacity: 0.35);`,
+    `  - The active line renders at full saturation;`,
+    `  - Difference vectors (displacement between shared identity nodes) render as dashed tension lines, immediately exposing topological distortions caused by slot mutations.`
+  ][reg=set]
+
+  page_state_memory = #[
+    `Local storage persists node coordinate anchors, zoom scale k, camera offset (x, y), and active tool state per document hash (md5).`,
+    `Returning to any document restores its exact spatial arrangement, honoring spatial memory and creative continuity across visits.`
+  ][reg=set]
+}[reg=facet]
+
+^"pillar_5_title_spw_tree_and_formula_component"{
+  title_spw_tree = #[
+    `Four display options for Spw trees in the top-right #title bar:`,
+    `  1. Monospace stamp: Raw syntactic string with syntax jewel token colors;`,
+    `  2. Fractal folded tree: Nested containers collapse to {…}, expanding smoothly on hover or tap;`,
+    `  3. Slot badge matrix: A horizontal row of pill badges representing [mode], {body}, (scene), <concept>;`,
+    `  4. Topological wireframe: A miniature SVG node-graph icon representing the 2D cluster topology of the line.`
+  ][reg=set]
+
+  bottom_right_formula = #[
+    `The bottom-right #held-expressions component:`,
+    `  - Horizontal swipe scrubs earlier/later held expressions with physical friction;`,
+    `  - Vertical scroll smoothly navigates document lines;`,
+    `  - Long press opens a radial mini-palette: fork line, copy base64url, diff against active canvas.`
+  ][reg=set]
+
+  ephemeral_ui = #[
+    `Toast feedback duration calibrated to reading rate: max(1.8s, word_count * 0.25s).`,
+    `Gesture hints appear as ghost radial paths only when a gesture pauses mid-stroke (teachable on asking, never uninvited).`
+  ][reg=set]
+}[reg=facet]
+
+^"pillar_6_debug_transparency_and_route_caching"{
+  debug_enhancements = #[
+    `Transform $debug from a passive JSON dump into an interactive pipeline inspector:`,
+    `  - Stage stepping: AST parse tree -> normalized slots -> d3 force node assignment -> layout convergence delta;`,
+    `  - Displays route cache status, service worker cache age, and peer node synchronization;`,
+    `  - Route caching records visited #spw64= paths in local memory, allowing instantaneous zero-latency replay of previous simulation states.`
+  ][reg=set]
+}[reg=facet]
+
+^"pillar_7_bundling_licensing_social_product_surface"{
+  productization = #[
+    `Decouple the 7D force simulation engine into a standalone zero-dependency Web Component:`,
+    `  <factshift-canvas line="garden[care]{seed, water}"></factshift-canvas>`,
+    `Interactive contexts:`,
+    `  - Knowledge tools: Embeddable spatial graph cards in Notion, Obsidian, and Roam;`,
+    `  - Technical docs: Interactive typed AST visualization for programming language design;`,
+    `  - Learning science: Interactive linguistics sandboxes for universities and research labs;`,
+    `  - Agent swarms: Real-time distributed shared memory visualizer for autonomous agent networks.`,
+    `Licensing: Open-core static viewer vs. enterprise multi-agent continuous collaborative canvas.`
+  ][reg=set]
+}[reg=facet]

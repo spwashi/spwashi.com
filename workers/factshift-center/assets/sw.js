@@ -1,4 +1,4 @@
-// factshift.center shell, snapshot 54ac54f (2026-11-10); source: workers/factshift-center/src/shell.js
+// factshift.center shell, snapshot 253b949 (2026-11-10); source: workers/factshift-center/src/shell.js
 (function factshiftShell({ version, files, waitMs }) {
   const CACHE = `factshift-center-${version}`;
   const kept = new Set(files);
@@ -60,4 +60,4 @@
     }
     if (kept.has(url.pathname) && !url.search) event.respondWith(keptFile(request, url.pathname));
   });
-})({"version":"54ac54f-2026-11-10-site3","files":["/","/_spwashi@/","/assets/edges-3IppmOOR.js","/assets/index---8N_53o.css","/assets/index-ApoC6irA.js","/assets/keystrokes-2p8UZRWd.js","/assets/main-_qtzgt2L.css","/assets/main-aQ6zX9QN.js","/assets/mode-mapfilter-Nz9XRe2W.js","/assets/nodes-XXUXSeyM.js","/assets/pipeline-5w42Wvso.js","/assets/rects-jqUOT9M5.js","/assets/reinit-Kal8GxEg.js","/assets/sounds/bonk.mp3","/assets/spwashi@-g0YoMZaz.css","/assets/spwashi@-qkTB9UKD.js","/assets/workbench-adapter-r_-AeTft.js","/manifest.json","/v0.0.1/favicon/16.png","/v0.0.1/favicon/192.png","/v0.0.1/favicon/32.png","/v0.0.1/favicon/512.png","/v0.0.1/favicon/96.png","/v0.0.2-alpha/favicon/16.png","/v0.0.2-alpha/favicon/192.png","/v0.0.2-alpha/favicon/32.png","/v0.0.2-alpha/favicon/512.png","/v0.0.2-alpha/favicon/96.png"],"waitMs":3500});
+})({"version":"253b949-2026-11-10-site3","files":["/","/_spwashi@/","/assets/edges-GYoOyvn3.js","/assets/index-qyiNLrxy.js","/assets/index-rFqe6wtS.css","/assets/keystrokes-T_uJPi5W.js","/assets/main-_qtzgt2L.css","/assets/main-HeAs9uUV.js","/assets/mode-mapfilter--CtiITNe.js","/assets/nodes-UVjd2je_.js","/assets/pipeline-yukFBvla.js","/assets/rects-jqUOT9M5.js","/assets/reinit-85kYXUMe.js","/assets/sounds/bonk.mp3","/assets/spwashi@-g0YoMZaz.css","/assets/spwashi@-n5lYqDBf.js","/assets/workbench-adapter-xU7aCZI7.js","/manifest.json","/v0.0.1/favicon/16.png","/v0.0.1/favicon/192.png","/v0.0.1/favicon/32.png","/v0.0.1/favicon/512.png","/v0.0.1/favicon/96.png","/v0.0.2-alpha/favicon/16.png","/v0.0.2-alpha/favicon/192.png","/v0.0.2-alpha/favicon/32.png","/v0.0.2-alpha/favicon/512.png","/v0.0.2-alpha/favicon/96.png"],"waitMs":3500});
