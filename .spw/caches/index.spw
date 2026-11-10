@@ -142,6 +142,7 @@
 @feedback_well_known_2026_11: ~"./feedback-well-known-2026-11.spw"  # cache: the well-known file keeps schema v0 because only the creator's hosts publish it. An optional edition is YYYY-MM.L, as in 2026-11.A. The reader does not branch on it yet.
 @tooling_output_2026_11: ~"./tooling-output-2026-11.spw"  # cache: the paste line is the noisy-crash token. The door, the audit laws, and the receipt are the gestalt. Lean, Bend, Go, and Rust stay potential. Four wonders are placed for a later creative pass.
 @spatial_development_pacing_2026_11: ~"./spatial-development-pacing-2026-11.spw"  # cache: spatial mathematical typographical modeling, development theory of mind across emerging language models and advanced browser capabilities, socially natural pacing modeled on soil pedogenesis, brewing fermentation, and iron-gall ink production, with wonder as the fundamental reason for depth
+@bidirectional_parsing_runtime_evolution_2026_11: ~"./bidirectional-parsing-runtime-evolution-2026-11.spw"  # cache: bidirectional script interpretation (forward declarative specification vs. backward operational reduction with trail rewinds), topological inversion of operators, an ecosystem of opinionated parsers (strict, progressive, reverse, metacognitive, substrate), and advanced runtimes as the primary product evolution surface
 
 operation = "align"
 fixity = "tending"
@@ -228,6 +229,8 @@ fixity = "tending"
   factshift_cognitive_substrate_2026_11 = @factshift_cognitive_substrate_2026_11
   spw_native_components_2026_11 = @spw_native_components_2026_11
   language_material_fluency_2026_11 = @language_material_fluency_2026_11
+  spatial_development_pacing_2026_11 = @spatial_development_pacing_2026_11
+  bidirectional_parsing_runtime_evolution_2026_11 = @bidirectional_parsing_runtime_evolution_2026_11
 }[reg=facet]
 
 ^"cache_rules"{

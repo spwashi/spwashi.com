@@ -1,0 +1,67 @@
+# Bidirectional parsing and runtime evolution (2026-11) — cache: bidirectional interpretation, opinionated parsers, and runtime product surfaces
+#
+# A conceptual contract linking bidirectional script interpretation
+# (forward declarative specification vs. backward operational reduction with trail rewinds)
+# to an ecosystem of opinionated parsers (strict, progressive, reverse, metacognitive, substrate)
+# and treating advanced runtimes—rather than UI framework churn—as the primary product evolution surface.
+
+#>bidirectional_parsing_runtime_evolution_2026_11
+#:cache #!bidirectional #!parsing #!runtime #!product #!rewind #!memory #!theory
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+operation = "cache"
+fixity = "experimental"
+source = "chat 2026-11-10; reverse-scan eager-mutation analysis; .spw/caches/spatial-development-pacing-2026-11.spw; .spw/caches/syntax-runtime-theory-enhancements-2026-11.spw"
+do_not = `Do not fork the Spw grammar across parser implementations. Do not force reverse execution into static documentation routes that require linear reading. Do not replace semantic HTML with runtime framework virtual DOMs. Preserve zero-dependency static delivery on spwashi.com.`
+
+expression = runtime[evolution]{bidirectional.rewind.parsers}(substrate)<product.engine>
+
+summary = #[
+  `Bidirectional interpretation: forward (L->R) interpretation is declarative, denotational, and intent-first; backward (R->L) interpretation is operational, bottom-up, and mutation-driven with trail rewinds on alphabet sequences.`,
+  `Topological inversion of operators: in backward scanning, textual postfix is encountered first (antecedent checkpoint/mode setup) while textual prefix is encountered last (consequent commit/assertion/rewind gate).`,
+  `An ecosystem of opinionated parsers: parsers are not monolithic truth engines, but specialized lenses (strict verification, progressive editor, reverse tape-head, metacognitive inquiry, substrate profiler) that extract distinct projections from the exact same invariant Spw lines.`,
+  `Runtime as the primary product evolution surface: products evolve through the depth, responsiveness, and reversibility of their execution substrates (attention architecture, brace pivots, WAM-style linear trails, service worker fabrics) rather than superficial UI churn.`,
+][reg=set]
+
+contents = #[
+  ~"./bidirectional-parsing-runtime-evolution-2026-11.spw#bidirectional_interpretation",
+  ~"./bidirectional-parsing-runtime-evolution-2026-11.spw#topological_inversion",
+  ~"./bidirectional-parsing-runtime-evolution-2026-11.spw#opinionated_parsers",
+  ~"./bidirectional-parsing-runtime-evolution-2026-11.spw#runtime_product_surface",
+][reg=set]
+
+^"bidirectional_interpretation"{
+  id = "bpre-bidirectional-interpretation"
+  claim = `A line of Spw holds dual computational paths: forward denotation and backward reduction.`
+  forward_path = `Forward interpretation (L->R) matches human cognition and generative specification: leading prefix operators (!, ?, ~) establish speech acts, epistemic modalities, and scoping contexts before operands are named. It defines what a system intends to be.`
+  backward_path = `Backward interpretation (R->L) matches physical tape heads, string rewrite systems, and inductive proof search: reading from right to left consumes concrete alphabet symbols first, eagerly mutating an accumulator or memory space M, while logging undo deltas to a rewind journal T.`
+  bidirectional_isomorphism = `A script achieves harmonic stability when its forward denotational meaning and its backward operational reduction arrive at isomorphic state representations: I_forward(S) == I_backward(S).`
+}[reg=facet]
+
+^"topological_inversion"{
+  id = "bpre-topological-inversion"
+  claim = `Backward scanning inverts prefix and postfix operator roles relative to memory mutation.`
+  postfix_as_antecedent = `In R->L scan, a textual postfix operator is met first. It configures the write head before alphabet sequences enter: ~ sets up a speculative checkpoint; ! enables direct unjournaled writes; ? forks a shadow test overlay; % establishes an operational gas ceiling.`
+  prefix_as_consequent = `In R->L scan, a textual prefix operator is met last, after the sequence has eagerly mutated memory. It acts as an arbiter gate: ! commits mutations and discards undo trails; ~ unwinds the trail back to the checkpoint to yield a pure thunk; ? evaluates post-condition invariants and triggers rewinds on failure; * canonicalizes the memory state into an immutable register value.`
+  linear_rewind_trail = `Zero-copy backtracking: by maintaining a simple pushdown stack of <cell, old_val> deltas (analogous to the Warren Abstract Machine trail), eager mutation over alphabet sequences can be rolled back in O(k) steps without cloning full memory snapshots.`
+}[reg=facet]
+
+^"opinionated_parsers"{
+  id = "bpre-opinionated-parsers"
+  claim = `An ecosystem flourishes when multiple specialized parsers read one unified syntax without dialect fragmentation.`
+  strict_verifier = `The Strict Verification Parser (CLI, pre-commit, CI): enforces rigorous completeness, verifies that every block closes, fails on ungrounded prose fallbacks, and guarantees mathematical invariant compliance.`
+  progressive_editor = `The Progressive Editor Parser (browser keystroke, mobile touch): fault-tolerant and asynchronous; constructs partial ASTs during mid-keystroke editing, preserving visual feedback without syntax error modal traps.`
+  reverse_tape_head = `The Reverse Tape-Head Parser (abstract machine, pattern matcher): scans sequences in R->L, executing eager register mutations and handling backtrack rewinds for inductive pattern discovery.`
+  metacognitive_lens = `The Metacognitive Parser (learning science): extracts epistemic stances (@who), confidence calibration curves (%confidence), and empirical questions paired with verification probes (?wonder + !probe).`
+  substrate_profiler = `The Substrate Profiler (runtime auditor): measures token spend, AST depth, DOM paint costs, memory byte layout, and operational cache efficiency.`
+}[reg=facet]
+
+^"runtime_product_surface"{
+  id = "bpre-runtime-product-surface"
+  claim = `True product evolution deepens the execution substrate rather than churning UI frameworks.`
+  substrate_depth = `Static HTML and handwritten Spw lines remain durable invariants over years. The product evolves by upgrading the runtime layers operating over them: activating spatial brace pivots, calculating attention fields, enabling offline service workers, and projecting metamaterial theme consequences.`
+  reversibility_as_feature = `Advanced runtimes make user and model exploration fear-free: when memory spaces support instantaneous WAM-style rewinds, visitors and agents can pivot slots, test radical variations, and restore baseline state with zero friction.`
+  extensible_abstraction = `By separating the invariant textual expression from the opinionated runtime lenses, spwashi.com remains an extensible laboratory that supplies tokens, concepts, and material physics downstream to spw.quest, factshift.center, and autonomous agents without payload bloating.`
+}[reg=facet]
