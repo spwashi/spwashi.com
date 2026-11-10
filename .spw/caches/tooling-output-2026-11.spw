@@ -1,0 +1,61 @@
+# A script ends as one next act (2026-11-10) — cache
+#
+# A pass over the npm scripts and the audits they wrap. The list in
+# package.json stays. This file names the goal and the files that already
+# do pieces of it. It does not add a script.
+
+#>tooling_output_2026_11
+#:cache #!tooling #!audit #!output
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@pkg: ~"../../package.json"
+@gate: ~"../../scripts/check-local.mjs"
+@signals: ~"../../scripts/lib/check-signals.mjs"
+@format: ~"../../scripts/lib/check-format.mjs"
+@workers: ~"../../scripts/check-workers.mjs"
+@build_types: ~"../../scripts/typed/build/types.mjs"
+@site_types: ~"../../scripts/typed/site-contracts/types.mjs"
+@plan: ~"../../.agents/plans/agentic-dev-contracts/PLAN.md"
+
+operation = "cache"
+fixity = "experimental"
+source = "chat 2026-11-10; package.json scripts; check-local VALIDATORS; commits 8db205bf and f55d6697"
+expression = script[act]{name, next}<paste>
+do_not = `Do not add an npm script from this file. Do not collapse package.json. Do not change the check:local stage list. Do not archive agentic-dev-contracts. Do not type the paste line. The door stays npm run check:local.`
+
+summary = #[
+  `A script a person runs says one next act. A script a machine runs is the same command with :json.`,
+  `A failing gate ends with one line, check[drift]{name}<paste>, short enough for spw.quest and factshift.center. The log keeps the rest.`,
+  `A copy that drifted fails before a suite. A file named *.test.mjs is in the worker gate without being listed.`,
+][reg=set]
+
+^"insight"{
+  id = "tooling-output-2026-11"
+  operation = "cache"
+  fixity = "experimental"
+  claim = `The npm scripts are one door and many readers. The door is check:local. Each reader prints a next act, or a warning that does not fail.`
+  evidence = #[
+    `package.json check is audit then check:local; check:local is scripts/check-local.mjs`,
+    `scripts/lib/check-signals.mjs testFailureExcerpt ends a noisy crash with check[drift]{name}<paste>`,
+    `scripts/check-workers.mjs runs the carry checks, then every *.test.mjs under each worker test directory`,
+    `scripts/check-local.mjs keeps wonder and audit-folio-highres as report or warning, not a hard fail for a stale week`,
+  ][reg=set]
+  pattern_consideration = #[
+    `build:* writes files. check:* and audit:* read them. A :json twin is for a machine. The default is the sentence`,
+    `spw:* and lsp:* belong to the workbench. They are not this gate`,
+    `scripts/typed/site-contracts/types.mjs names the body keys and mount timings the site contract already checks. scripts/typed/build/types.mjs names copy concurrency. The paste line is not a type yet`,
+  ][reg=set]
+  expansion_prime = `The next script that fails in a wall of passing lines should end the way check-workers now can: one tagged instruction, one error, one paste line.`
+  validation = `rg -n "check\\[drift\\]" scripts/lib/check-signals.mjs && rg -n "testFiles" scripts/check-workers.mjs`
+  do_not_promote_until = `A second script, besides the worker gate, ends a noisy failure with a paste line, and a test shows the line.`
+}[reg=facet]
+
+^"scripts"{
+  door = `npm run check:local → scripts/check-local.mjs. npm run check adds npm run audit first.`
+  output = `scripts/lib/check-format.mjs formatPhase and formatVerdict. scripts/lib/check-signals.mjs stageHeadline, testFailureExcerpt, rerunCommand.`
+  workers = `npm run check:workers → scripts/check-workers.mjs. Drift, then workers/autonomous-feedback/test, workers/spw-quest/test, workers/site-hub-next/test, workers/factshift-center/test.`
+  audits_in_the_gate = `audit-js-tree, audit-operator-controls, audit-folio-highres, wonder. The others in package.json stay on demand: audit:copy, audit:module-selectors, visual:checks, ecology, ecology:language.`
+  types = `scripts/typed/build/types.mjs. scripts/typed/site-contracts/types.mjs REQUIRED_BODY_DATA_KEYS, VALID_MOUNT_WHEN, TIMING_ARC_STEMS.`
+}[reg=facet]
