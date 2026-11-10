@@ -563,7 +563,7 @@ export function buildSurface(slots, script = assemble(slots), filename = `${slot
       <h2 id="apart-title">${at ? `The ${escapeHtml(word)} line, taken apart` : "The first line, taken apart"}</h2>
       ${lineStrip(held, at)}
       <p class="built-line"><code class="built" aria-label="${escapeHtml(line)}">${segments(slots, base) || "&nbsp;"}</code></p>
-      ${slots.word ? `<p class="line-ways"><a href="/pivot?line=${encodeURIComponent(line)}">Pivot this line</a> · <a href="/specimens?q=${encodeURIComponent(nameOf(slots.word))}#found">Find ${escapeHtml(nameOf(slots.word))} on the shelf</a>${line.length <= 400 ? ` · <a href="https://factshift.center/?spw=${encodeURIComponent(line)}">Open on factshift.center</a>` : ""}</p>` : ""}
+      ${slots.word ? `<p class="line-ways"><a href="/pivot?line=${encodeURIComponent(line)}">Pivot this line</a> · <a href="/physics?line=${encodeURIComponent(line)}">Feel it at rest</a> · <a href="/specimens?q=${encodeURIComponent(nameOf(slots.word))}#found">Find ${escapeHtml(nameOf(slots.word))} on the shelf</a>${line.length <= 400 ? ` · <a href="https://factshift.center/?spw=${encodeURIComponent(line)}">Open on factshift.center</a>` : ""}</p>` : ""}
       ${ledger(focusText, slots, base)}
       <form class="slots" method="get" action="/build#build">
         <input type="hidden" name="script" value="${escapeHtml(held)}">

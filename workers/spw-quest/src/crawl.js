@@ -24,7 +24,7 @@ export const ORIGIN = "https://spw.quest";
 
 /** The rooms that stand without a query, in reading order. */
 export const STABLE_ROOMS = Object.freeze([
-  "/", "/learn", "/build", "/specimens", "/constructs", "/pivot", "/forms/", "/shelf/", "/shelf/plans/",
+  "/", "/learn", "/build", "/specimens", "/constructs", "/pivot", "/physics", "/forms/", "/shelf/", "/shelf/plans/",
   "/parser/", "/bench/", "/arcs/", "/install", "/init", "/llms.txt",
 ]);
 

@@ -13,6 +13,7 @@ import { paintFile, readFile } from "./file-reader.js";
 import { CONTAINERS, OPERATORS } from "./guide.js";
 import { PAGE_CSS, QUEST_HEAD, masthead } from "./page.js";
 import { PAPER_CSS } from "./paper.js";
+import { physicsHref } from "./physics.js";
 import { SPECIMENS, findSpecimens, readQuery, specimenById } from "./specimens.js";
 
 const paint = (text) => paintFile(readFile(text));
@@ -144,6 +145,8 @@ function pressedLine(id) {
 }
 
 const pivotLink = (id) => (specimenById(id) ? cardLink(`/pivot?s=${id}`, "Pivot it") : "");
+/** The same pressed line on the floor, when it has a body to stand in. */
+const restLink = (id) => (specimenById(id) && physicsHref(specimenById(id).line) ? cardLink(physicsHref(specimenById(id).line), "Feel it at rest") : "");
 const findLink = (query) => (query && findSpecimens(readQuery(query)).length ? cardLink(`/specimens?q=${encodeURIComponent(query)}#found`, `Find ${query}`) : "");
 
 /* ---------- Cards ---------- */
@@ -173,7 +176,7 @@ function markCard(operator) {
       ["pressed", pressedLine(MARK_PRESSED[sigil])],
       ...edgeFacts(name),
     ]),
-    links: [pivotLink(MARK_PRESSED[sigil])],
+    links: [pivotLink(MARK_PRESSED[sigil]), restLink(MARK_PRESSED[sigil])],
   });
 }
 
@@ -191,7 +194,7 @@ function braceCard(brace) {
       ["pressed", pressedLine(BRACE_PRESSED[brace.name])],
       ...edgeFacts(brace.name),
     ]),
-    links: [pivotLink(BRACE_PRESSED[brace.name])],
+    links: [pivotLink(BRACE_PRESSED[brace.name]), restLink(BRACE_PRESSED[brace.name])],
   });
 }
 
@@ -208,7 +211,7 @@ function lineFormCard(form) {
       ["pressed", form.pressed ? pressedLine(form.pressed) : ""],
       ...edgeFacts(form.key),
     ]),
-    links: [form.pressed ? pivotLink(form.pressed) : "", findLink(form.query)],
+    links: [form.pressed ? pivotLink(form.pressed) : "", form.pressed ? restLink(form.pressed) : "", findLink(form.query)],
   });
 }
 

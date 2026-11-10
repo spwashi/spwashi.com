@@ -18,7 +18,7 @@ intent: .{
  owner = `spw-quest`
  kind = `plan`
  bucket = `active_backlog`
- artifact_shape = `PLAN.md | index.spw | wip.spw | note-shell-design.md`
+ artifact_shape = `PLAN.md | index.spw | wip.spw | note-shell-design.md | physics-floor.md`
 }[reg=facet]
 
 ^"dimensions"{

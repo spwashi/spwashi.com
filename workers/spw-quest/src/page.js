@@ -96,8 +96,8 @@ export function page(html, extra = {}, csp = PAGE_CSP) {
 }
 
 /** The top of every page: the name, and the four places to go. */
-/** The shelf's three rooms: the lines kept, the shapes they take, and a line turned one slot at a time. */
-const SHELF_ROOMS = Object.freeze([["/specimens", "Specimens"], ["/constructs", "Constructs"], ["/pivot", "Pivot"], ["/forms/", "Forms"], ["/arcs/", "Arcs"], ["/bench/", "Bench"]]);
+/** The shelf's rooms: the lines kept, the shapes they take, a line turned one slot at a time, and a line at rest under the hand. */
+const SHELF_ROOMS = Object.freeze([["/specimens", "Specimens"], ["/constructs", "Constructs"], ["/pivot", "Pivot"], ["/physics", "Physics"], ["/forms/", "Forms"], ["/arcs/", "Arcs"], ["/bench/", "Bench"]]);
 
 export function masthead(current = "") {
   const onShelf = SHELF_ROOMS.some(([href]) => href === current);
