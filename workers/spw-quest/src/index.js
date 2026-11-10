@@ -3,10 +3,10 @@ import { EXAMPLES, EXAMPLE_GROUPS, exampleById } from "./examples.js";
 import { EXPECTED_FILES, GIT_GUIDE, GIT_MARKDOWN, INSTRUCTION_SETS, QUEST_PROMPTS, QUEST_TEXT, WORKBENCH } from "./quest.js";
 import { STEPS } from "./steps.js";
 import { LINE_LIMIT, liveScript, readLine } from "./reader.js";
-import { FILE_CSS, FILE_LIMIT, editorField, liveFileScript, outlineFile, readFile } from "./file-reader.js";
+import { FILE_CSS, FILE_LIMIT, docShelf, editorField, handBar, landingLine, liveFileScript, outlineFile, readFile } from "./file-reader.js";
 import { noteBootScript } from "./note.js";
-import { PANEL_CSS, stepSurface } from "./panel.js";
-import { BUILD_CSS, BUILD_DEFAULTS, MAX_SCRIPT, assemble, buildFrom, buildSurface, factshiftScriptHref, focusSlots, formatScript, readSpw64, safeName, toolActions } from "./build.js";
+import { PANEL_CSS, QUEST_WORD, carriedWord, stepSurface, withWord } from "./panel.js";
+import { BUILD_CSS, BUILD_DEFAULTS, MAX_SCRIPT, assemble, buildFrom, buildSurface, factshiftScriptHref, focusLines, focusSlots, formatScript, readSpw64, safeName, toolActions } from "./build.js";
 import { PAPER_CSS, PAPER_THEME } from "./paper.js";
 import { LIVE_CSP, PAGE_CSS, QUEST_HEAD, masthead, page } from "./page.js";
 import { displayMenu, displayScript } from "./display.js";
@@ -280,6 +280,10 @@ const GUIDE_CSS = `.opening { margin: 0 0 1.6rem; padding-bottom: .2rem; }
     .sigils .reads { margin-top: .1rem; font-size: .88rem; line-height: 1.48; color: var(--fg); }
     .sigils .note { margin-top: .35rem; padding-top: .35rem; border-top: 1px dashed color-mix(in srgb, var(--line) 75%, transparent); font-size: .8rem; line-height: 1.42; color: var(--ink-soft); }
     @media (max-width: 40rem) { .sigils { gap: 0; } .sigils li { padding: .75rem 0 .8rem; border: 0; border-top: 1px solid var(--line); border-radius: 0; background: none; box-shadow: none; } .sigils li:hover, .sigils li:focus-within { transform: none; box-shadow: none; } .sigils li:target { box-shadow: inset 3px 0 0 var(--accent); padding-left: .65rem; } }
+    .sigils .in-file { grid-column: 2; font: .78rem/1.2 var(--mono); }
+    .sigils .in-file a { display: inline-flex; align-items: center; gap: .3rem; min-height: 32px; text-decoration: none; }
+    .sigils .in-file .count { color: var(--muted); font-variant-numeric: tabular-nums; }
+    @media (pointer: coarse) { .sigils .in-file a { min-height: 44px; } }
     .edges-in { display: flex; flex-wrap: wrap; gap: 0 .6rem; padding-top: .35rem; font: .78rem/1.2 var(--mono); }
     .edges-in a { display: inline-flex; align-items: center; gap: .25rem; min-height: 32px; text-decoration: none; }
     .edges-in .n { color: var(--muted); font-variant-numeric: tabular-nums; }
@@ -311,13 +315,17 @@ const GUIDE_CSS = `.opening { margin: 0 0 1.6rem; padding-bottom: .2rem; }
     .door code { display: block; overflow-wrap: anywhere; font-size: .82rem; }`;
 
 /** The guide. With `parser` ({ value, from }, from a valid ?parser=), a banner leads and the page reads with that build. */
-function renderGuide(parser = null, example = EXAMPLES[0]) {
+function renderGuide(parser = null, example = EXAMPLES[0], at = "") {
+  // The edge back from a mark's card to the file open above: how many times that file uses it. The page keeps it in step as the file changes.
+  const used = new Map(readFile(example.script).marks.map((mark) => [mark.name, mark.count]));
+  const inFile = (name) => `
+      <p class="in-file" data-in-file="${escapeHtml(name)}"${used.has(name) ? "" : " hidden"}><a href="#try">in <span data-in-file-name>${escapeHtml(example.file)}</span> <span class="count">×<span data-in-file-count>${used.get(name) || 0}</span></span></a></p>`;
   const sigils = OPERATORS.map((op) => `<li id="op-${escapeHtml(op.name)}">
       <span class="sigil" data-t="${escapeHtml(SIGIL_TYPES.get(op.sigil) || "")}" aria-hidden="true">${escapeHtml(op.sigil)}</span>
       <p class="name">${escapeHtml(op.name)} <code>${escapeHtml(op.sigil)}</code></p>
       <p class="reads">${escapeHtml(op.reads)}</p>
       <p class="note">Runtime: ${escapeHtml(op.does)}</p>${EDGES_IN.ops.has(op.name) ? `
-      <p class="edges-in">${panelLinks(EDGES_IN.ops.get(op.name))}</p>` : ""}
+      <p class="edges-in">${panelLinks(EDGES_IN.ops.get(op.name))}</p>` : ""}${inFile(op.name)}
     </li>`).join("\n    ");
   const braces = CONTAINERS.map((c) => `<li id="brace-${escapeHtml(c.name)}">
       <code class="pair" data-t="b-${escapeHtml(BRACE_TYPES.get(c.open) || "")}"><span>${escapeHtml(c.open)}</span><span>${escapeHtml(c.close)}</span></code>
@@ -345,7 +353,7 @@ ${parser ? `${switchBanner(parser.value, parser.from)}\n` : ""}<section class="o
   <p class="lede">A mark says what a word is doing. A brace says which slot it fills. Change one slot and the reading updates. Explore lines as discrete monospace stamps here, or project their continuous topological forces on <a href="https://factshift.center" target="_blank" rel="noopener">factshift.center</a>.</p>
 </section>
 ${walkSection()}
-${fileWorkspace(example)}
+${fileWorkspace(example, at)}
 
 <section id="operators" class="band" aria-labelledby="operators-title">
   <h2 id="operators-title">Marks and braces${selfLink("operators", "operators-title")}</h2>
@@ -392,9 +400,11 @@ ${displayScript()}`,
   });
 }
 
-/** The file area: a tab per example, the file as an editor, and what a tool reads from it. */
-function fileWorkspace(example) {
+/** The file area: a tab per example, the file as an editor with the line in hand under it, and what a tool reads from it. `at` names the line to land on. */
+function fileWorkspace(example, at = "") {
   const reading = readFile(example.script);
+  // The files open together: a path from one to another is a way between them.
+  const shelf = { self: example.file, docs: docShelf(EXAMPLES) };
   const display = displayMenu();
   const link = (item) => `<a href="/?example=${escapeHtml(item.id)}#try" data-example="${escapeHtml(item.id)}"${item === example ? ' aria-current="page"' : ""}><span class="tab">${escapeHtml(item.tab)}</span><span class="file">${escapeHtml(item.file)}</span></a>`;
   // One row a group: the bench, the study, the board, and the stage.
@@ -402,7 +412,7 @@ function fileWorkspace(example) {
   const themeAttr = reading.theme ? ` data-theme="${escapeHtml(reading.theme)}"` : "";
   return `<section id="try" class="try" aria-labelledby="try-title">
   <h2 id="try-title" class="eyebrow">${EXAMPLES.length} files, written in Spw: a bench, a study, a board, and a stage</h2>
-  <p class="examples-lede">Each works as it stands and is yours to change: edit it here, keep it as your note, or download it. On the stage, a pattern that performs sets this field's theme.</p>
+  <p class="examples-lede">Each works as it stands and is yours to change: edit it here, keep it as your note, or download it. On the stage, a pattern that performs sets this field's theme. Where one file points to another, its reading opens that file at the line it names.</p>
   <nav class="examples" aria-label="Files">
     ${tabs}
   </nav>
@@ -424,6 +434,7 @@ function fileWorkspace(example) {
       <p class="says" data-file-says>${escapeHtml(example.says)}</p>
       <input type="hidden" name="filename" value="${escapeHtml(example.file)}">
       ${editorField({ id: "script", value: example.script, label: "The file", describedBy: "file-try" })}
+      ${handBar(example.script, { line: landingLine(example.script, at) })}
       <div class="file-foot">
         <p class="try-this" id="file-try"><span class="label">Try</span> <span data-file-try>${escapeHtml(example.try)}</span></p>
         <button type="submit" name="tool" value="read" data-tool="read" class="quiet-button">Open in the editor →</button>
@@ -432,15 +443,37 @@ function fileWorkspace(example) {
     ${noteBootScript(EXAMPLES, FILE_LIMIT)}
     <aside class="reading-card" aria-labelledby="reading-title">
       <h2 id="reading-title">What a tool reads</h2>
-      <div id="reading">${outlineFile(reading)}</div>
+      <div id="reading">${outlineFile(reading, shelf)}</div>
     </aside>
   </div>
 </section>`;
 }
 
-/** The seven panels from the workbench's quest, walked as a path; each line is read as it changes. */
-function renderLearn() {
-  const steps = STEPS.map((step, index) => `<li>${stepSurface(step, { index })}</li>`).join("\n  ");
+/**
+ * On /learn with scripts on: the word of the line last held in an editor here
+ * (the hand keeps it in this browser) is offered in the field, and named with
+ * the file it came from. The field works without it; nothing is carried until
+ * the reader sends it.
+ */
+function offerHeldWord(carried) {
+  const field = document.querySelector("[data-carry-word]");
+  const said = document.querySelector("[data-carry-said]");
+  if (!field || !said) return;
+  let held = null;
+  try {
+    held = JSON.parse(localStorage.getItem("spw.quest.hand/1") || "null");
+  } catch {
+    // Nothing kept, nothing to offer.
+  }
+  const word = held && /^[a-z][a-z0-9_]{0,23}$/.test(held.word || "") ? held.word : "";
+  if (!word || word === carried) return;
+  if (!field.value) field.value = word;
+  said.textContent = `${word} is the word of the line you last held${held.file ? `, in ${held.file}` : ""}. Carry it to read these panels with it.`;
+}
+
+/** The seven panels from the workbench's quest, walked as a path; each line is read as it changes. `word` is a word of the reader's, carried through the panels where the quest says door. */
+function renderLearn(word = "") {
+  const steps = STEPS.map((step, index) => `<li>${stepSurface(withWord(step, word), { index })}</li>`).join("\n  ");
   return layout({
     title: "spw.quest — learn Spw a mark at a time",
     description: "Seven panels, one line each, from plain words to a question that carries its own probe.",
@@ -461,6 +494,11 @@ function renderLearn() {
 <section class="opening" aria-labelledby="learn-title">
   <h1 id="learn-title">Learn it a mark at a time</h1>
   <p class="lede">Seven panels, one line each. Change a line and it is read again; with scripts off, Read sends it to the worker, which reads it the same way.</p>
+  <form class="carry" method="get" action="/learn">
+    <label for="carry-word">A word of yours, through every panel</label>
+    <div class="carry-row"><input id="carry-word" name="word" type="text" value="${escapeHtml(word)}" maxlength="24" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="${QUEST_WORD}" aria-describedby="carry-said" data-carry-word><button type="submit">Carry it</button></div>
+    <p class="note" id="carry-said" data-carry-said>${word ? `The panels read with <code>${escapeHtml(word)}</code> where the quest says <code>${QUEST_WORD}</code>. <a href="/learn">Back to ${QUEST_WORD}</a>` : `The panels follow one word, <code>${QUEST_WORD}</code>. Give them one of yours and each line is written with it.`}</p>
+  </form>
 </section>
 ${pathNav()}
 <ol class="quest" role="list" aria-label="Seven panels">
@@ -469,6 +507,7 @@ ${pathNav()}
 <p class="also"><a href="/">Back to the guide</a> · <a href="/build">Take one line apart</a> · <a href="/specimens">Specimens</a> · <a href="/constructs">Constructs</a> · <a href="/pivot">Pivot a line</a> · <a href="/install">Install the workbench</a></p>
 </div>
 ${liveScript()}
+<script>(${offerHeldWord.toString()})(${JSON.stringify(word)});</script>
 ${displayScript()}`,
   });
 }
@@ -598,8 +637,12 @@ async function handleTool(request, url) {
   const filename = safeName(form.get("filename") || "line.spw");
   if (url.pathname === "/script.spw" || form.get("tool") === "download") return scriptFile(script, filename);
   const formatted = form.get("tool") === "format" ? formatScript(script) : script;
-  const slots = focusSlots(formatted) || { ...BUILD_DEFAULTS };
-  return page(renderBuild(slots, formatted, filename, { base: slots }), { cache: "no-store" }, LIVE_CSP);
+  // `at` is the line in hand (1-based, the hand's field): Read takes that line apart when the page can, the first otherwise.
+  const at = Number.parseInt(String(form.get("at") ?? ""), 10);
+  const asked = Number.isInteger(at) ? focusLines(script).indexOf(at - 1) : -1;
+  const nth = asked >= 0 && focusSlots(formatted, asked) ? asked : 0;
+  const slots = focusSlots(formatted, nth) || { ...BUILD_DEFAULTS };
+  return page(renderBuild(slots, formatted, filename, { base: slots, nth }), { cache: "no-store" }, LIVE_CSP);
 }
 
 async function handleQuest(request, url) {
@@ -632,9 +675,11 @@ async function handleQuest(request, url) {
     // ?example= opens one of the files; an unknown one opens the first.
     const value = parserSwitch(url.searchParams);
     const example = exampleById(url.searchParams.get("example")) || EXAMPLES[0];
-    response = page(renderGuide(value && { value, from: switchModulePath(value) }, example), {}, LIVE_CSP);
+    // ?at= names a line of that file (a #>frame, a ^"block", a field): the hand lands on it.
+    response = page(renderGuide(value && { value, from: switchModulePath(value) }, example, String(url.searchParams.get("at") || "").slice(0, 80)), {}, LIVE_CSP);
   } else if (url.pathname === "/learn") {
-    response = page(renderLearn(), {}, LIVE_CSP);
+    // ?word= carries one word of the reader's through the panels; anything but a plain name is ignored.
+    response = page(renderLearn(carriedWord(url.searchParams.get("word"))), {}, LIVE_CSP);
   } else if (url.pathname === "/build") {
     const asked = buildFrom(url.searchParams);
     response = page(renderBuild(asked.slots, asked.script, asked.filename, asked), { cache: "public, max-age=300" }, LIVE_CSP);

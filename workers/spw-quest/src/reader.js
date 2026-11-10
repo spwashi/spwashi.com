@@ -204,6 +204,9 @@ function liveReader(kit, parseLine) {
       const reading = kit.read(parseLine, id, input.value);
       out.innerHTML = kit.render(reading);
       if (balloon) balloon.dataset.bubble = reading.balloon;
+      // The canvas link opens the line as it stands now.
+      const canvas = form.querySelector("[data-canvas]");
+      if (canvas) canvas.setAttribute("href", `/canvas?line=${encodeURIComponent(input.value)}`);
       if (kind) kind.textContent = kit.balloonWord(reading.balloon);
       if (speak || reading.state !== last) say(`${id}: ${out.querySelector(".check").textContent}`);
       last = reading.state;
@@ -227,6 +230,8 @@ function liveReader(kit, parseLine) {
       form.requestSubmit();
     });
     form.addEventListener("submit", (event) => {
+      // A button that names another room (Pivot it) carries the line there; Read reads it here.
+      if (event.submitter && event.submitter.hasAttribute("formaction")) return;
       event.preventDefault();
       update(true);
     });

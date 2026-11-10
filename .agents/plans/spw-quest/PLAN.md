@@ -8,6 +8,25 @@
 
 M2 stays the next slice. A feedback line is not a room in the guide. `/.well-known/autonomous-feedback.json` is the seat this worker already has. After M2, one specimen on the shelf may hold a genre and a line, so a visitor can form a taste without the form moving here. Elaboration of a sent note is `/pivot` for one change, and factshift.center for the layout. The record is [feedback-contour-2026-11](../../../.spw/caches/feedback-contour-2026-11.spw). The file this worker already serves keeps `schema` `autonomous-feedback.client.v0`. An optional edition, `2026-11.A` for the first change of a month, is held in [feedback-well-known-2026-11](../../../.spw/caches/feedback-well-known-2026-11.spw) and is not read yet.
 
+## The line in hand (2026-11-10, in the working tree, not committed or deployed)
+
+The creator, through one sitting: improve Spw navigation and mutation ease across spw.quest; the build tooling "feels inauthentic with respect to the actual usage or mental model of editing Spw", so consider "a more inline or live mutation concept"; activate a feature and scroll between lines, across modes, or through nested trees; frame navigation of lines between loaded documents; joins that clarify the featured scripts; more expressions linking to factshift.center; memory across page components on Learn.
+
+operation: align (the editor with how a line is actually changed: in place, one slot, seen before it is written)
+
+- **The hand** (`fileKit` in `src/file-reader.js`: `partsIn`, `lent`, `means`, `hand`; `handBar` draws it under the editor on the guide and `/build`). The caret's line is the line in hand. Its parts are handles: a mark by its workbench name, a word, each brace by the slot it names. A tap holds a part without focusing the field; a second tap gives it to the field to type over. A held slot at the line's own level offers the values the same slot holds on the file's other lines; a tap primes one (the line it would make, and what that changes: a check, a field, the theme, a marked word, which lines it now joins and which it leaves), a second tap or *Write it* writes it, and *Put it back* undoes it. ↑ ↓ step lines and keep hold of the same kind of part, so a column of modes is walked down. *Open it* enters a part that holds parts; ← leaves. Read on `/build` takes the line in hand apart (`at`, read by `handleTool`). Selecting words and typing a brace wraps them. The grammar is the control prime's: tap primes, a second tap acts ([concept-route-physics](../../../.spw/caches/concept-route-physics-2026-11.spw), `hands`).
+- **Scripts off:** on `/build` the bar's parts are links to the slot rows below; on the guide the bar is hidden. The slot rows stay, as the scripts-off form.
+- **Files that join.** Nine paths between the guide's fourteen files (`src/examples.js`), some naming a line (`./themes.spw#matte`). A reading's *Points to* opens that file in place and lands the hand on the line; *Pointed to by* is the edge back. `/?example=…&at=…` is the address. Each mark's card on the guide says how often the open file uses it.
+- **Elsewhere.** `/pivot`'s own box keeps the walk when a line is changed in it. `/learn?word=` carries one word through the panels where the quest says `door` (N1's first half; `steps.js` stays verbatim), offered from the line last held (`spw.quest.hand/1`, this browser only). A panel's line goes on to `/pivot` and the canvas; the pivot's line and the constructs' pressed lines open on the canvas too.
+- **Tests:** `test/hand.test.mjs` (7). Not seen in a browser: headless is blocked in the agent's sandbox, so the page script was parsed and its kit run from its own text, and the feel is unreviewed.
+
+Calls that are the creator's:
+- whether the slot rows on `/build` fold away or retire once the hand has been felt at 390 px;
+- the hand on the guide's first screen at all (it adds two rows under the file);
+- the wording of each consequence sentence (`means`), and of the nine joins.
+
+Held, not built: physics and node patterns that make comparison easier, and physics as a convenience or a premium (the app repository, and a pricing call); the factshift.center address as a surface for a script's geometry; a cached local document tree with a denser tour; a redesign of `/learn`'s layout; the shelf's cards opening on the canvas (the page is at its 275 KB budget).
+
 ## Landed
 
 - 2026-10-12 `e6b4b937`: seven panels from the workbench's `docs/learn/quest.spw`, walked as a path; *Put one together*; the site's paper material on every page, and the spiral gone.

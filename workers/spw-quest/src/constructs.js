@@ -147,6 +147,8 @@ function pressedLine(id) {
 const pivotLink = (id) => (specimenById(id) ? cardLink(`/pivot?s=${id}`, "Pivot it") : "");
 /** The same pressed line on the floor, when it has a body to stand in. */
 const restLink = (id) => (specimenById(id) && physicsHref(specimenById(id).line) ? cardLink(physicsHref(specimenById(id).line), "Feel it at rest") : "");
+/** The same pressed line on factshift.center, through /canvas. */
+const canvasLink = (id) => (specimenById(id) && !specimenById(id).reading.file ? cardLink(`/canvas?s=${id}`, "Open it on the canvas") : "");
 const findLink = (query) => (query && findSpecimens(readQuery(query)).length ? cardLink(`/specimens?q=${encodeURIComponent(query)}#found`, `Find ${query}`) : "");
 
 /* ---------- Cards ---------- */
@@ -176,7 +178,7 @@ function markCard(operator) {
       ["pressed", pressedLine(MARK_PRESSED[sigil])],
       ...edgeFacts(name),
     ]),
-    links: [pivotLink(MARK_PRESSED[sigil]), restLink(MARK_PRESSED[sigil])],
+    links: [pivotLink(MARK_PRESSED[sigil]), restLink(MARK_PRESSED[sigil]), canvasLink(MARK_PRESSED[sigil])],
   });
 }
 
@@ -194,7 +196,7 @@ function braceCard(brace) {
       ["pressed", pressedLine(BRACE_PRESSED[brace.name])],
       ...edgeFacts(brace.name),
     ]),
-    links: [pivotLink(BRACE_PRESSED[brace.name]), restLink(BRACE_PRESSED[brace.name])],
+    links: [pivotLink(BRACE_PRESSED[brace.name]), restLink(BRACE_PRESSED[brace.name]), canvasLink(BRACE_PRESSED[brace.name])],
   });
 }
 
@@ -211,7 +213,7 @@ function lineFormCard(form) {
       ["pressed", form.pressed ? pressedLine(form.pressed) : ""],
       ...edgeFacts(form.key),
     ]),
-    links: [form.pressed ? pivotLink(form.pressed) : "", form.pressed ? restLink(form.pressed) : "", findLink(form.query)],
+    links: [form.pressed ? pivotLink(form.pressed) : "", form.pressed ? restLink(form.pressed) : "", form.pressed ? canvasLink(form.pressed) : "", findLink(form.query)],
   });
 }
 

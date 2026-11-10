@@ -14,6 +14,12 @@
 // short enough that no word breaks in a phone's editor. The guide opens one at a
 // time in its editor, and the reading beside it says what a tool can take from
 // the file. `try` names one edit whose effect shows in that reading.
+//
+// The files join each other (2026-11-10): where one speaks of another's
+// subject it says so with a path, @chip: ~"./chip.spw", and a path may name the
+// line it means, ~"./themes.spw#matte". The guide's reading turns each such
+// path into a way to that file, landing on that line, and the file it reaches
+// lists who points to it. Paths outside the fourteen stay as written.
 
 export const EXAMPLE_GROUPS = Object.freeze(["Bench","Study","Board","Stage"]);
 
@@ -27,6 +33,8 @@ export const EXAMPLES = Object.freeze([
     try: "Add a line inside the braces: >>[2026-11-07 10:00] catalog — the card, in two dialects: lifted and flat",
     script: `#>lab_notebook
 #:log #!components #!themes
+@chip: ~"./chip.spw"
+@matte: ~"./themes.spw#matte"
 
 ^"stream"{
  >>[2026-11-06 09:10] catalog — the chip, in three dialects on one screen: pill, ring, plain
@@ -46,6 +54,7 @@ export const EXAMPLES = Object.freeze([
 #:record #!component
 @broader: ~"./control.spw"
 @related: ~"./sigil.spw"
+@tried: ~"./experiment.spw"
 
 ^"record"{
   title = \`chip\`
@@ -84,6 +93,8 @@ export const EXAMPLES = Object.freeze([
     says: "Metacognitive hypothesis testing: an epistemic inquiry pairing an interrogative wonder with an explicit hypothesis, expected outcome, and empirical verification probe.",
     try: "Delete the !probe line to observe the cognitive check report an ungrounded inquiry.",
     script: `#>wonder_ring_on_glass
+@chip: ~"./chip.spw"
+@glass: ~"./themes.spw#glass"
 ?["Does the ring chip read on the glass theme at a phone's width?"]{
   ~#hypothesis: \`a ring keeps its edge where a pill's fill washes out\`
   ~#expect: \`the ring holds 3:1 against the busiest panel; the pill does not\`
@@ -100,6 +111,7 @@ export const EXAMPLES = Object.freeze([
     try: "Add a step: after !shelve, write ;?review",
     script: `#>catalog_session
 #:script #!session
+@record: ~"./chip.spw#record"
 
 steps = path{~gather; *describe; ^classify; !shelve}
 gather = shelf[ui]{chip.card}<record>`,
@@ -166,6 +178,7 @@ gather = shelf[ui]{chip.card}<record>`,
     try: "Add a reading: kin = parent@ch2[curious]{why}<dinner>",
     script: `#>four_readings
 #:reflection #!metacognition
+@measured: ~"./calibration.spw"
 
 me = student@ch2[sure]{recall}<quiz>
 peer = peer@ch2[unsure]{spacing}<ask>
@@ -183,6 +196,7 @@ tutor = tutor@ch2[watch]{gap}<lesson>
     try: "Add a loop inside the braces: , conservator@scan{handling}",
     script: `#>persona_loops
 #:board #!loops #!production
+@archivist: ~"./archivist.spw"
 
 reference = ~"./folios/release.spw"
 ahead = #[\`the holds\`, \`the scans\`][reg=set]
@@ -234,6 +248,7 @@ gradient = #[
     try: "Change regard to tutor@indexing. The field beside it names tutor.",
     script: `#>syntax_stage
 #:showcase #!syntax
+@company: ~"./headings.spw#headings"
 
 company = {student, classmate, later}
 order = path{~read; *note; ?ask}
@@ -270,6 +285,7 @@ headings = {student, classmate, later}@indexing
     try: "Change theme from glass to matte and watch the field lose its shadow.",
     script: `#>pattern_performance
 #:showcase #!pattern #!theme
+@line: ~"./syntax.spw#line"
 
 pattern = pivot
 performs = one.slot
