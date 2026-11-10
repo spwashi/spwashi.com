@@ -1,0 +1,76 @@
+# Text, nodes, and the frames between them (2026-11-10) — prime
+#
+# The Spw tool on factshift.center lays a reading out as a string on a coarse
+# pointer, and colors the source character by character on a fine one.
+# A hand cannot tell whether it holds the text or a node.
+# This file does not implement, deploy, or carry a snapshot.
+
+#>factshift_substrate_frames_2026_11
+#:prime #!factshift #!substrate #!line
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@paint: ~"../../workers/factshift-center/app/src/js/modes/spw/line-paint.ts"
+@format: ~"../../workers/factshift-center/app/src/js/modes/spw/line-format.ts"
+@edit: ~"../../workers/factshift-center/app/src/js/modes/spw/line-edit.ts"
+@anatomy: ~"../../workers/factshift-center/app/src/js/modes/spw/line-anatomy.ts"
+@talk: ~"../../workers/factshift-center/app/src/js/modes/spw/spw-talk.ts"
+@face: ~"../../workers/factshift-center/app/src/stylesheets/modes/spw-mode.scss"
+@plan: ~"../../.agents/plans/factshift-center/INTERACTION.md"
+
+^"claim"{
+  is = `The monospace line and the canvas are different instruments. A document, a reading, and a snippet are different times. The tool becomes self-describing when each face names the coordinate system the hand is in.`
+}
+
+^"instruments"{
+  text = `A column is a character seat in the source. The caret is a column. Color may name what the reader sees in that seat. Color does not move the seat. The bytes stay.`
+  document = `A .spw file is a topography of many lines. Loading it is archival. The file is not yet the held line.`
+  reading = `The tree of one expression, with spans back into the text. It is a precipitate of a reading. It is not the document, and it is not the canvas.`
+  snippet = `A region the hand takes as one node: a word, a room, a part, a join. Taking it is a gesture with a start and an end. It is not typing.`
+  canvas = `Bodies, frames, and physics. A node dragged there is not a column moved in the source. The line's picture is a column of the stage (line-anatomy), beside the text, and it does not replace the text.`
+}
+
+^"times"{
+  load = `Load a .spw file, or drop one. The thread may say where a line came from. The held line changes only when a line is held.`
+  enter = `Type into the textarea. The face is the source. The painted copy under it uses the source's own metrics (spw-mode.scss).`
+  manipulate = `Take a slot. The selection is a region (line-edit.ts). A quick swipe along an edge cycles or leaves. A drag along an edge traces the region as it grows.`
+  cascade = `A toast, a precipitation, or an enchantment is an ephemeral cascade. It may pass across a face. It does not become the document, the held line, or the canvas.`
+}
+
+^"faces"{
+  as_written = `#spw-parse-field with .spw-paint. Tones name mark, word, room, part, seam, join, rest, and a ghost closer. The caret and the selection stay the browser's. This is the textual instrument.`
+  by_slots = `#spw-print, shown on a coarse pointer until the line is chosen. formatSpw rewrites each reading into a new string (newlines, seams, a pad of spaces) and showSpwPrint assigns that string as text. One color. The slots look like a tree and behave as text.`
+  the_split = `The color lives on the face that keeps the columns. The alignment lives on the face that throws the columns away. iPad reports a fine pointer, so it receives the colored source and misses the slot layout.`
+}
+
+^"editing"{
+  menu = `A primed act shows the line it would make. The actualized act writes it and leaves one sentence.`
+  noise = `What is not yet a node: the unread tail, the ghost closer, a banner that is not the specimen. Noise stays marked as noise.`
+  embeddedness = `A body inside a body. In the text, depth is a column. On the canvas, depth is containment. The same nesting, two coordinate systems.`
+  gestalt = `The eye groups a slot when its tone and its column agree. A string of pad-spaces is not a column.`
+  transition = `Changing mode, entering a frame, and moving from the text face to the slot face are frames of their own. Each one says what the hand will be holding next.`
+  preference = `Which face is at rest is a preference of the instrument, said on the face. A pointer class is a guess, not the preference.`
+}
+
+^"domains"{
+  descriptive = `The textual instrument: the line as written, columns, the caret.`
+  mathematical = `The reading: spans, slots, the tree of one expression.`
+  archival = `The document: a file, a library, a topography not yet held.`
+  temporal = `The thread of lines, and the steps a runtime took. The steps are a room entered and left.`
+  exploratory = `Compare, a kept line, a wonder. A pattern recognized across two lines.`
+  illustrative = `The canvas: bodies, color as material, a frame.`
+  playful = `Physics, a swipe, a pinch. The hand learns by moving one body.`
+  cognitive = `Wondering at the internals. The wonder motivates another structure when the instrument that holds it stays nameable.`
+}
+
+^"first_patch"{
+  where = `The app's Spw face: line-format.ts, the print in spw-mode.scss, and the paint it should agree with. Not the canvas. Not the snapshot.`
+  does = `The slot face aligns a reading on shared columns (mark, brace, word, part) and wears the paint's tones. The source bytes stay in the textarea. Choosing the text opens the source at its own columns. Each face names itself: the line as written, or the line by its slots.`
+  aha = `A person who arrives with a pattern sees the slot as a column and a color, then later meets the same slot as a body on the canvas. A blank canvas, a typed line, and a loaded file remain three arrivals.`
+  pin = `Later, a frame may hold queries, and the document unwraps only the nodes those queries expose. That waits until the two faces of one line are distinct.`
+}
+
+^"holds"{
+  do_not = `Do not implement this file in the same pass. Do not collapse load, typing, and a snippet into one gesture. Do not add a data-spw family. Do not deploy factshift.center. Do not carry the snapshot for this prime. Do not answer an open wonder.`
+}
