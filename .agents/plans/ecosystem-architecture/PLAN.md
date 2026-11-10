@@ -15,7 +15,7 @@ The public CSS and JS pay three ways beyond the page that loads them. Each slice
 
 ## From lore.land's plans (2026-11-08)
 
-[lore-land-support.spw](lore-land-support.spw) is the survey of copies. What came back is [lore-land-plans.spw](lore-land-plans.spw): five theories read from lore.land's PLAN.A through PLAN.E on 2026-11-08, each with one local grain and one wonder. On 2026-11-10 that file's `#value` adds, per owner, an academic sentence, a market sentence, and the lore.land stone still marked next (PLAN.F f3, f4, f5, f6, f7, f8, f11; PLAN.E L09 through L18). Support writes this site. lore.land stays in its own repo. The next slice here stays S4a. A line in that reading is this site's behavior when it cites a file here. PLAN.C's synthesis and PLAN.D's Firefox track sit outside the reading.
+[lore-land-support.spw](lore-land-support.spw) is the survey of copies. What came back is [lore-land-plans.spw](lore-land-plans.spw): five theories read from lore.land's PLAN.A through PLAN.E on 2026-11-08, each with one local grain and one wonder. On 2026-11-10 that file's `#value` gives each owner a competency someone can carry and practice with other people, a market sentence, and the lore.land stone still marked next (PLAN.F f3, f4, f5, f6, f7, f8, f11; PLAN.E L09 through L18). Citation in that grain belongs to library and information sciences. Support writes this site. lore.land stays in its own repo. The next slice here stays S4a. A line in that reading is this site's behavior when it cites a file here. PLAN.C's synthesis and PLAN.D's Firefox track sit outside the reading.
 
 ## Lite interpreters, textures and sponsored themes (2026-11-09)
 
