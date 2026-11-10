@@ -1,16 +1,16 @@
 // Written by workers/spw-quest/carry-arcs.mjs from the site's history; do not edit by hand.
 // Refresh it by running the carry; the page in assets/arcs/ is rendered from it (src/arcs.js).
 export const ARCS = Object.freeze({
-  "asOf": "2026-11-08",
+  "asOf": "2026-11-10",
   "windows": [
     7,
     30,
     90
   ],
   "total": [
-    9,
+    8,
     21,
-    866
+    861
   ],
   "lenses": [
     {
@@ -376,7 +376,7 @@ export const ARCS = Object.freeze({
     {
       "key": "word[lens]{body}<point>(scene)",
       "counts": [
-        3,
+        2,
         7,
         78
       ],
@@ -389,7 +389,7 @@ export const ARCS = Object.freeze({
       "counts": [
         1,
         2,
-        435
+        430
       ],
       "example": "practice[play]{museum}",
       "route": "/about/",
