@@ -227,7 +227,7 @@
                         <pre class="literal-parser-ast" data-parser-ast aria-label="Abstract syntax tree">null</pre>
                     </details>
                     <details open>
-                        <summary><span>Diagnostics</span><small>errors and warnings are not hidden</small></summary>
+                        <summary><span>Diagnostics</span><small>errors and warnings are not hidden; then what this kind of file is asked, and why</small></summary>
                         <ul class="literal-parser-diagnostics" data-parser-diagnostics aria-live="polite"></ul>
                     </details>
                 </div>
@@ -286,6 +286,10 @@
                     <article class="spw-panel">
                         <h3>Holdings (<a href="?spw_sample=holdings#literal-parser">load</a>)</h3>
                         <p>Seed, season, table — a small book of holds. Capsule <code>&lt;policy&gt;</code> is the channel, not a ticker. The book is <a href="/topics/knowledge-bases/#versioned-holdings">versioned holdings</a>.</p>
+                    </article>
+                    <article class="spw-panel">
+                        <h3 id="sample-genres">Files with a rule (<a href="?spw_source=%23%3Elab_notebook%0A%23%3Alog%20%23%21components%0A%0A%5E%22stream%22%7B%0A%20%3E%3E%5B2026-11-06%2009%3A10%5D%20catalog%20%E2%80%94%20the%20chip%2C%20in%20three%20dialects%3A%20pill%2C%20ring%2C%20plain%0A%20%3E%3E%5B2026-11-06%2011%3A40%5D%20try%20%E2%80%94%20the%20matte%20theme%20on%20the%20chip%3A%20the%20ring%20holds%20its%20edge%0A%20%3E%3E%5B2026-11-06%2017%3A30%5D%20land%20%E2%80%94%20one%20inset%20for%20every%20panel%20on%20a%20phone%0A%7D&amp;spw_source_name=lab-notebook.spw#literal-parser" data-genre-specimen="log">a log</a>, <a href="?spw_source=%23%3Ewonder_ring_on_glass%0A%3F%5B%22Does%20the%20ring%20chip%20read%20on%20the%20glass%20theme%20at%20a%20phone%27s%20width%3F%22%5D%7B%0A%20%20~%23expect%3A%20%60the%20ring%20holds%203%3A1%20against%20the%20busiest%20panel%60%0A%20%20%21probe%7B%20%22screenshot%20the%20chip%20row%20on%20glass%20at%20390px%20and%20measure%20each%20edge%22%20%7D%0A%7D&amp;spw_source_name=experiment.spw#literal-parser" data-genre-specimen="wonder">a question</a>, <a href="?spw_source=%23%5Bepisode%5D%7B%0A%20%20~%5Bscene%5D%7B%20a%20panel%20body%20drew%20a%20second%20wall%20on%20a%20phone%20%7D%0A%20%20%21%5Bchange%5D%7B%20a%20body%20slot%20keeps%20no%20wall%20of%20its%20own%20below%2045rem%20%7D%0A%20%20%2A%5Bverify%5D%7B%20heading%2C%20body%20and%20first%20line%20share%20one%20edge%20on%20fourteen%20frames%20%7D%0A%7D&amp;spw_source_name=change.spw#literal-parser" data-genre-specimen="episode">a change record</a>)</h3>
+                        <p>Parsing says a source is Spw. A kind of file asks more: a log's entries are dated and named, a question carries its <code>!probe</code>, a change record says how it was checked. Load one, break its rule, and the diagnostics give the rule and the reason for it. <a href="https://spw.quest/">spw.quest</a> reads fourteen such files by the same rules.</p>
                     </article>
                     <article class="spw-panel">
                         <h3>First beat (<a href="?spw_sample=beat#literal-parser">load</a>)</h3>

@@ -428,6 +428,14 @@
       background: color-mix(in srgb, var(--literal-parser-line) 22%, transparent);
     }
 
+    /* The reason a genre's rule exists, under the rule: prose, quieter than the finding. */
+    & .literal-parser-diagnostic__why {
+      max-width: 44rem;
+      margin: 0.2rem 0 0 0.35rem;
+      color: var(--literal-parser-soft);
+      font: 0.82rem/1.5 var(--font-sans, system-ui, sans-serif);
+    }
+
     & .literal-parser-outline__detail,
     & .literal-parser-outline__line {
       margin-left: 0.6rem;
