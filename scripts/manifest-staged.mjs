@@ -62,7 +62,13 @@ const removeScratch = () => {
   if (removed) return;
   removed = true;
   if (keep) say(`scratch kept at ${path.relative(ROOT, scratch)}`);
-  else rmSync(scratch, { recursive: true, force: true });
+  else {
+    try {
+      rmSync(scratch, { recursive: true, force: true, maxRetries: 3, retryDelay: 50 });
+    } catch {
+      // Best-effort cleanup (e.g. macOS .DS_Store race)
+    }
+  }
 };
 // Without a listener a signal ends the process before finally runs. With one,
 // the run always reaches finally. A Ctrl-C also stops the generator child, so

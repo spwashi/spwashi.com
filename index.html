@@ -17,7 +17,7 @@
     wonder="orientation resonance comparison"
     route_family="kernel atlas semantic-lattice portable-publishing"
     layout="newspaper"
-    features="small-kernel semantic-lattice modular-projections portable-seeds operators navigator console route-discovery media-publishing svg-surfaces topic-discovery prompt-utils"
+    features="small-kernel semantic-lattice modular-projections portable-seeds operators navigator console route-discovery media-publishing svg-surfaces topic-discovery prompt-utils feature-discovery metrics"
     related_routes="/about/|/now/|/cards/|/membership/|/research/|/coordination/|/services/|/about/website/|/topics/search/|/topics/site-design/|/topics/software/|/topics/software/spw/|/topics/craft/|/topics/film/|/recipes/|/play/|/play/rpg-wednesday/|/play/rpg-wednesday/library/|/design/folios/|/about/domains/lore.land/|/curriculum/|/tools/|/tools/budgeting/|/tools/character-sheet/|/tools/midjourney/|/design/experiments/svg/|/design/experiments/css/|/settings/|https://texture.website|https://spw.quest|/topics/|/blog/|/town/"
     stylesheet_mode="scoped"
     horizon="ambient"
@@ -37,7 +37,7 @@
     data-spw-capture-mode="default"
     data-spw-stylesheet-mode="scoped"
     data-spw-route-family="kernel atlas semantic-lattice portable-publishing"
-    data-spw-features="small-kernel semantic-lattice modular-projections portable-seeds operators navigator console route-discovery media-publishing svg-surfaces topic-discovery prompt-utils"
+    data-spw-features="small-kernel semantic-lattice modular-projections portable-seeds operators navigator console route-discovery media-publishing svg-surfaces topic-discovery prompt-utils feature-discovery metrics"
     data-spw-context="orientation"
     data-spw-wonder="orientation resonance comparison"
     data-spw-page-family="kernel-atlas"
@@ -112,7 +112,7 @@
         data-spw-related-routes="/now/|/cards/|/membership/|/research/|/coordination/|/services/|/about/website/|/topics/search/|/topics/software/spw/|/topics/craft/|/play/rpg-wednesday/library/|https://texture.website|https://spw.quest"
     >
         <header class="frame-topline" data-spw-slot="header">
-            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
+            <span class="spw-delimiter spw-delimiter--brace" data-spw-pivot="semanticDensity" role="button" tabindex="0" title="Click to cycle semantic density: { sparse · balanced · dense" aria-label="Cycle semantic density">{</span>
             <a class="frame-sigil" href="#home-frame" data-spw-operator="frame" data-spw-swappable="#>,?,^" aria-description="Hold, or press an arrow key, to swap this frame's operator: address it, probe it, or lift its register.">#&gt;home_frame</a>
         </header>
 
@@ -144,12 +144,13 @@
                 </a>
 
                 <p id="home-frame-note" data-spw-textual-role="lede" data-spw-copy-unit="home.hook.lede" data-spw-semantic-expression="home[hook]{software.art.practice}(atlas)<person>">
-                    <span id="home-lede-atlas" data-spw-copy-unit="home.hook.lede.atlas">A working atlas of my software, my art, and the practice between them.</span>
+                    <span id="home-lede-atlas" data-spw-copy-unit="home.hook.lede.atlas">A working atlas of my software, my art, and the practice between them: living design prompts and internal seeds for expressive development.</span>
+                    <span class="spw-interactive-expression" data-spw-interactive-expression="true" data-spw-expression-key="home-seed-expression" title="Click to inspect boundary geometry or edit">home[hook]{software.art.practice}(atlas)&lt;person&gt;</span>
                     <span id="home-lede-traditions" data-spw-copy-unit="home.hook.lede.traditions">What repeats can become a <a href="/topics/fields/culture/">tradition</a>.</span>
                     <span id="home-lede-rooms" data-spw-copy-unit="home.hook.lede.rooms"><a href="/about/">About</a> is the person. <a href="/now/">Now</a> is this close. <a href="/topics/">Topics</a> hold <a href="/topics/math/">math</a>, <a href="/topics/software/spw/">Spw</a>, and <a href="/topics/craft/">craft</a>. <a href="/play/">Play</a> is the table. <a href="/services/">Services</a> is where a project starts.</span>
                 </p>
-                <form class="spw-paste" id="home-paste" action="/tools/spw-parser/" method="get" data-paste-open="page" aria-labelledby="home-paste-label">
-                    <label class="spw-paste__title" id="home-paste-label" for="home-paste-source"><strong>This page, in Spw.</strong> Change a line or paste your own to read its structure, or open a whole <code>.spw</code> file as a room.</label>
+                <form class="spw-paste" id="home-paste" action="/tools/spw-parser/" method="get" data-paste-open="page" aria-labelledby="home-paste-label" data-spw-bare-spw="enhance">
+                    <label class="spw-paste__title" id="home-paste-label" for="home-paste-source"><strong>Design prompt and internal seed:</strong> This page, in Spw. Recombine any line as a seed for your own expressive systems, inspect its boundary geometry, or lay it out on the canvas.</label>
                     <textarea class="spw-paste__field" id="home-paste-source" name="spw_source" rows="5" spellcheck="false" autocomplete="off" autocapitalize="off">#&gt;home_frame
 home[hook]{software.art.practice}(atlas)&lt;person&gt;
 home[live]{season.close}(production)&lt;now&gt;
@@ -166,7 +167,7 @@ home[live]{season.close}(production)&lt;now&gt;
                     </div>
                     <div class="spw-paste__out" data-paste-out aria-live="polite"></div>
                 </form>
-                <p class="home-hero-note" id="home-note" data-spw-textual-role="note" data-spw-copy-unit="home.hook.note">
+                <p class="home-hero-note" id="home-note" data-spw-textual-role="note" data-spw-copy-unit="home.hook.note" data-spw-semantic-expression="prompt[seed]{inspect.prime.rehearse}<workbench>">
                     <span id="home-note-terms" data-spw-copy-unit="home.hook.note.terms">Highlighted words are <a href="#living-concepts" class="spw-living-term" data-spw-living-term data-spw-concept="living-concepts" data-spw-cauldron-candidate="true">living concepts</a> — tap to inspect, hold to prime.</span>
                     <span id="home-note-atlas" data-spw-copy-unit="home.hook.note.atlas"><a href="#living-concepts">Open the atlas</a>.</span>
                 </p>
@@ -421,7 +422,7 @@ home[live]{season.close}(production)&lt;now&gt;
             </aside>
         </div>
         <footer class="frame-actions" data-spw-slot="actions">
-            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>
+            <span class="spw-delimiter spw-delimiter--brace" data-spw-pivot="operatorSaturation" role="button" tabindex="0" title="Click to cycle operator saturation: muted · vibrant · saturated }" aria-label="Cycle operator saturation">}</span>
         </footer>
     </section>
 
