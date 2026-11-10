@@ -21,6 +21,7 @@ fixity = "tending"
  >>[2026-11-06 12:22] verify — Status read against the tree: nothing moved under scripts/check-site.mjs, site-contracts.mjs or generate-route-runtime-manifest.mjs since 2026-10-10, and rg finds no live plan naming the bare check script; the only hit, .agents/plans/README.md, records that twenty became check:local. The Files list said the manifest defaults to /tmp; ROUTE_MANIFEST_OUTPUT in scripts/ts/site-contracts/index.mts has defaulted to .agents/state/runtime/ since, and manifest:tmp is the TMPDIR path. Fixed in PLAN.md.
  >>[2026-11-06 12:24] probe — wonder_plan_script_door: the node probe exits 0. The expect held; answered script.door, citing d13a532f.
  >>[2026-11-06 12:26] probe — wonder_plan_stamp: check-site.mts:86 forgives drift only when drift.stagedConsistent and the rest is unstaged; pre-commit:14 runs manifest-stamp.mjs --staged. The expect held; answered stamp.hook, citing 992c127e and da0b6b4c. The probe used to check only that manifest:staged exists, which could not fail on the question asked.
+ >>[2026-11-10 11:07] revise — tooling-output-2026-11 no longer treats the paste line as the output goal. The line stays the noisy-crash token. The door, the audit laws, and the receipt stay the gestalt. This folder still owns no other work. Next commit remains the archive move.
 }
 
 ^"open"{
@@ -32,5 +33,5 @@ fixity = "tending"
  ~#next_commit: "&[plans] Archive agentic-dev-contracts as landed, now that every plan names check:local and its two questions are answered"
  ~#files_hot: ".agents/plans/agentic-dev-contracts/, .agents/plans/README.md, .spw/site.spw"
  ~#gate: "nothing; the move is the whole slice"
- ~#last_stream: "2026-11-06"
+ ~#last_stream: "2026-11-10"
 }

@@ -1,61 +1,188 @@
-# A script ends as one next act (2026-11-10) — cache
+# Tooling output (2026-11) — cache: a script's end is a token; the door, the audits, and the receipt are the gestalt
 #
-# A pass over the npm scripts and the audits they wrap. The list in
-# package.json stays. This file names the goal and the files that already
-# do pieces of it. It does not add a script.
+# Refreshes 24d47451, which held every script's end as one paste act.
+# Read from the commits of 2026-11-10, check-local's validators, and the
+# receipt the next run actually reads. This file adds no script.
 
 #>tooling_output_2026_11
-#:cache #!tooling #!audit #!output
+#:cache #!tooling #!audit #!output #!memory #!wonder
 #:operation #!cache
 #:fixity #!experimental
 #:layer #!pragmatics
+
+operation = "cache"
+fixity = "experimental"
+source = "chat 2026-11-10; commits ed5970b2..24d47451; scripts/check-local.mjs VALIDATORS; scripts/lib/check-signals.mjs; scripts/check-workers.mjs"
+do_not = `Do not add an npm script. Do not change the check:local stage list. Do not archive agentic-dev-contracts. Do not start a rewrite in Lean, Bend, Go, or Rust. Do not implement the wonders. Do not add a wonder type or a data-spw family. Do not edit .spw/_workbench. Do not type the paste line. Do not treat the factshift lean as the Lean language.`
+
+expression = tooling[rigor]{token.gestalt}(receipt)<substrate>
+
+summary = #[
+  `check[drift]{name}<paste> landed, on a noisy crash. It is a token a person can carry. It is the crash's token.`,
+  `npm run check:local stays the door. Audits inside it fail, warn, or report. The others wait until someone asks. The workbench measures outside that door.`,
+  `The next run reads the receipt and the history. It does not read the paste line. That difference is the memory.`,
+  `Lean, Bend, Go, and Rust can each keep one invariant. They are potentials. The factshift lean is a different mark.`,
+  `Four wonders are placed. Claude Opus 5.5 may extend them. This file does not pick the creative shape.`,
+][reg=set]
+
+contents = #[
+  ~"./tooling-output-2026-11.spw#scene",
+  ~"./tooling-output-2026-11.spw#audits",
+  ~"./tooling-output-2026-11.spw#output",
+  ~"./tooling-output-2026-11.spw#memory",
+  ~"./tooling-output-2026-11.spw#substrates",
+  ~"./tooling-output-2026-11.spw#placed",
+  ~"./tooling-output-2026-11.spw#wonder_tooling_paste_is_token",
+  ~"./tooling-output-2026-11.spw#wonder_tooling_receipt_as_spw",
+  ~"./tooling-output-2026-11.spw#wonder_tooling_audit_laws",
+  ~"./tooling-output-2026-11.spw#wonder_tooling_host_keeps",
+  ~"./tooling-output-2026-11.spw#stream",
+][reg=set]
+
+^"scene"{
+  id = "to-scene"
+  claim = `The commits of 2026-11-10 keep a token and a gestalt apart, until the tooling cache folded them.`
+  tokens = #[
+    `f55d6697 writes check[drift]{name}<paste> from pasteLine, and only inside a noisy crash. A clean failing-tests section stays the failing-tests section.`,
+    `8db205bf fails a carried page before any suite, and runs every *.test.mjs under each worker test directory without a hand list.`,
+    `b289e4a3 marks an edition as YYYY-MM.L, as in 2026-11.A. The reader does not branch on it.`,
+    `d03895f5 writes a kind on the card, and says a reply is not promised.`,
+    `022ff29d, 4a0b372c, and 55790db0 carry an expression rule and a season count onto quest pages. The rendered data had to move with the page.`,
+  ][reg=set]
+  gestalts = #[
+    `ed5970b2 keeps the monospace line and the canvas as two instruments, and a document, a reading, and a snippet as three times.`,
+    `6911edb5 names a lean that expires unless a keep writes it, plus the cursor and the hosts beside the canvas. That lean is a short-lived mark on factshift.center.`,
+    `6480d166, 85b50ed7, and ce80dce8 hold the menu, the pin be2df2ff, and two briefings as one ground. The briefings stay unbuilt.`,
+    `b386532c gives the home line a door. 88a90a66 draws the workbench line as syntax and as runtime.`,
+  ][reg=set]
+  earlier = `24d47451 took the crash token and the worker behavior and wrote them as the output goal of the door. The audits outside VALIDATORS, the receipt, and the commits that kept two shapes stayed outside that sentence.`
+}[reg=facet]
+
+^"audits"{
+  id = "to-audits"
+  claim = `An audit has a law: it fails the door, it warns, it reports, or it waits until someone asks.`
+  gate = `[gate] scripts/check-local.mjs runs a compile wave, then VALIDATORS. Hard readers there include check-site, check-runtime-bindings, pwa-contracts, check-generated, component-contracts, check-observation-locality, audit-js-tree --check, audit-operator-controls --check, check-agents, check-workers, and test:modules. audit-folio-highres warns on a stale week and does not fail it. wonder --summary reports.`
+  demand = `[demand] package.json keeps a wider family off that list: audit:copy and its modes, audit:module-selectors, audit:operator-css, audit:page-structure, audit:braces, audit:plans, visual:checks, ecology, ecology:language. Open first names which one a patch owes.`
+  bench = `[bench] spw:doctor, spw:roots, spw:lattice, spw:census, spw:measure, spw:analyze, and spw:integrity belong to the workbench. spw:integrity is long, and nightly. They are not this door.`
+  pattern_consideration = `Compare @plan's answered wonder_plan_script_door (the door, and the scripts that stay visible beside it) with this split of laws. The door can stay one command while the laws stay several.`
+  validation = `rg -n "label:" scripts/check-local.mjs`
+}[reg=facet]
+
+^"output"{
+  id = "to-output"
+  claim = `A tooling output is Spw-native when a reader can say it back as an expression. One shape has landed. The others are held.`
+  landed = `check[drift]{name}<paste> from pasteLine in @signals, when a tagged line exists in a noisy crash. The log keeps the rest. spw.quest and factshift.center are the surfaces that line was sized for.`
+  held = #[
+    `check[run]{stages}(receipt) — the JSON receipt, schema check-local.v1, not yet a Spw document`,
+    `wonder[open]{key}<probe> — npm run wonder --summary, a report inside the door`,
+    `audit[ask]{name}<reader> — an on-demand audit's own lines`,
+    `bench[measure]{form}<hash> — a workbench measure, outside the door`,
+  ][reg=set]
+  twins = `Some readers already have a :json twin: wonder:json, ecology:json, ecology:language:json, audit:js-tree:json, spw:integrity:json. A :spw twin is not a script. The default for a person stays the sentence those scripts already print.`
+  entirely = `An entirely Spw-native output would be the whole reading, stage by stage, in expressions a later tool can parse. The paste line is the tail of one crash. Promoting "entirely" waits on a second shape that a test can show.`
+  do_not_promote_until = `A second script, besides the noisy-crash path in @signals, emits Spw by default, and a test shows a reader can tell a hard fail from a warning from a report.`
+}[reg=facet]
+
+^"memory"{
+  id = "to-memory"
+  claim = `A tooling output becomes material when a later run reads it. The receipt is material. The paste line is not.`
+  receipt = `@gate writes .agents/state/runtime/check-local-last.json beside the log, and one line to check-history.jsonl. historyEntry keeps at, sha, dirty, verdict, ms, warnings, bundles, tests, and wonder counts and keys. compareRuns reads the previous line: warnings new or cleared, bundles that moved, questions asked or settled.`
+  absent = `pasteLine's text is not a field on that history line. A later run cannot return to the token. It can return to the verdict and the wonder keys.`
+  other_memories = `public/js/runtime/memory/wonder-memory.js writes field residue (data-spw-wonder-memory). The workbench effect grades keep play in memory until a beat. Those are other memories. This receipt is the tooling one.`
+  expansion_prime = `A memory worth building would let a person walk the history as Spw, one run as one expression, with the sha and the verdict still on it. The JSON can stay the store.`
+}[reg=facet]
+
+^"substrates"{
+  id = "to-substrates"
+  claim = `The communicable value of a token is that it travels alone. The value of a gestalt is that a reader can still see what the token was cut from.`
+  token = `<token> A sigil, an edition mark, a kind on a card, a paste line, a season count. Each can move to another room and still be said.`
+  gestalt = `<gestalt> The door plus its laws, the receipt, the two instruments, the pin and the briefings. Engineering rigor is naming which of the two a commit shipped.`
+  linguistic = `Spw is the substrate. A host language is a lowering. The line stays sayable when the host changes, or the host took the costume and left the invariant.`
+  hosts = .{
+    status = "potential"
+    lean = `~lean{proof}<invariant> One named invariant as a proof. The pages stay in this repo.`
+    bend = `~bend{net}<reduction> Parallel reduction of one expression. The cascade stays here.`
+    go = `~go{gate}<concurrent> The door's two waves as one small program. The philosophy stays here.`
+    rust = `~rust{measure}<geometry> A geometry measure as a native check. The copy stays here.`
+    stay = `The hand-authored site is the gestalt. A plan folder opens when a probe shows one invariant this door cannot name.`
+  }[reg=facet]
+  pattern_consideration = `@fluency#lineages and @fluency#stratum already treat a glyph, a degree, and a commit prefix as costumes. A paste line can be one. @native spends the same law on a component: the mark that travels, and the housing it sits in.`
+}[reg=facet]
+
+^"placed"{
+  id = "to-placed"
+  claim = `The wonders below are placed. Claude Opus 5.5 is assumed to implement several creative extensions of them: a receipt dialect, a history a person can walk, a host sketch that still reads as Spw.`
+  rigor = `Each wonder names an owner, a probe, and a $% set. An extension bends inside that set. A new pattern waits until two extensions bend the same way.`
+  owners = `The door stays @plan, whose next move is still the archive. Wonder altitudes stay @wonder_arch. Component law stays @native. Language hypotheses stay @fluency.`
+}[reg=facet]
+
+#>wonder_tooling_paste_is_token
+?["When a check crashes in a wall of passing lines, does the last line name the family that failed, or only a tag a person can paste?"]{
+  #:depth #!computational ~#lens(output)
+  ~#with: @signals @format
+  ~#hypothesis: "pasteLine returns check[drift]{name}<paste> from the first tagged line. The projection is always paste. The family lives in the log and in the stage label."
+  ~#expect: "pasteLine is called from crashExcerpt, and the failing-tests branch of testFailureExcerpt does not append it."
+  ~#tension: "A line sized for the canvas is a gift. Asked to be the whole verdict, it forgets the law of the stage."
+  ~#probe(run)
+  !probe{ "rg -n \"pasteLine|failing tests\" scripts/lib/check-signals.mjs" }
+  $%[token.tag, token.family, token.log_only]
+}
+
+#>wonder_tooling_receipt_as_spw
+?["Which keys of the check-local receipt can be said as Spw while the sha and the stage list stay?"]{
+  #:depth #!structural ~#lens(memory)
+  ~#with: @signals @gate
+  ~#hypothesis: "historyEntry already chooses a small set: at, sha, dirty, verdict, ms, warnings, bundles, tests, wonder counts and keys. That set is the candidate expression. The full log is not."
+  ~#expect: "RECEIPT_SCHEMA is check-local.v1 and historyEntry returns those keys. No script writes a .spw receipt."
+  ~#tension: "A creative dialect can be beautiful and drop the sha. Then the next run cannot find its parent."
+  ~#probe(run)
+  !probe{ "rg -n \"RECEIPT_SCHEMA|historyEntry\" scripts/lib/check-signals.mjs scripts/check-local.mjs" }
+  $%[receipt.json, receipt.spw, receipt.both]
+}
+
+#>wonder_tooling_audit_laws
+?["Which audits fail the door, which warn, and which stay quiet until someone asks?"]{
+  #:depth #!computational ~#lens(audit)
+  ~#with: @gate @pkg
+  ~#hypothesis: "VALIDATORS is the fail-or-warn list. wonder is a report. audit:copy, visual:checks, and ecology are real audits with a law of ask. A map that calls them all one next act has mixed the laws."
+  ~#expect: "check-local.mjs names wonder and audit-folio-highres. package.json names audit:copy and visual:checks, and check-local.mjs does not."
+  ~#probe(run)
+  !probe{ "rg -n \"wonder|audit-folio-highres|audit:copy|visual:checks\" scripts/check-local.mjs package.json" }
+  $%[law.fail, law.warn, law.ask]
+}
+
+#>wonder_tooling_host_keeps
+?["If one invariant moved to Lean, Bend, Go, or Rust, which token must the Spw line still be able to say?"]{
+  #:depth #!experiential ~#lens(substrate)
+  ~#with: @fluency @native @plan
+  ~#hypothesis: "A host earns the move when the line can still say the invariant after the lowering. The hand-authored pages, the cascade, the philosophy, and the copy are the gestalt that stays."
+  ~#expect: "No plan folder and no package script names Lean, Bend, Go, or Rust as a rewrite of this repo. The factshift lean in 6911edb5 is a mark that expires."
+  ~#tension: "A lofty host feels like rigor. Rigor here is the invariant that survives the costume."
+  ~#probe(read)
+  !probe{ "Name one invariant the door already checks. Say which host could keep it, and which sentence the Spw line would still carry. If the invariant is the site as the creator wrote it, the host stays potential." }
+  $%[host.lean, host.bend, host.go, host.rust, host.stay]
+}
+
+^"stream"{
+  >>[2026-11-10 11:07] revise — 24d47451 held a script's end as one next act. This reading keeps the paste line as the noisy-crash token and names the audit laws, the receipt, and the host languages that line does not cover. The archive of agentic-dev-contracts stays that plan's next move. The wonders are placed for Claude Opus 5.5 to extend.
+}[reg=facet]
+
+validation: #[
+  `rg -n "pasteLine" scripts/lib/check-signals.mjs`,
+  `rg -n "label:" scripts/check-local.mjs`,
+  `rg -n "testFiles" scripts/check-workers.mjs`,
+  `npm run wonder -- --surface wonder_tooling`,
+][reg=set]
 
 @pkg: ~"../../package.json"
 @gate: ~"../../scripts/check-local.mjs"
 @signals: ~"../../scripts/lib/check-signals.mjs"
 @format: ~"../../scripts/lib/check-format.mjs"
 @workers: ~"../../scripts/check-workers.mjs"
-@build_types: ~"../../scripts/typed/build/types.mjs"
-@site_types: ~"../../scripts/typed/site-contracts/types.mjs"
 @plan: ~"../../.agents/plans/agentic-dev-contracts/PLAN.md"
-
-operation = "cache"
-fixity = "experimental"
-source = "chat 2026-11-10; package.json scripts; check-local VALIDATORS; commits 8db205bf and f55d6697"
-expression = script[act]{name, next}<paste>
-do_not = `Do not add an npm script from this file. Do not collapse package.json. Do not change the check:local stage list. Do not archive agentic-dev-contracts. Do not type the paste line. The door stays npm run check:local.`
-
-summary = #[
-  `A script a person runs says one next act. A script a machine runs is the same command with :json.`,
-  `A failing gate ends with one line, check[drift]{name}<paste>, short enough for spw.quest and factshift.center. The log keeps the rest.`,
-  `A copy that drifted fails before a suite. A file named *.test.mjs is in the worker gate without being listed.`,
-][reg=set]
-
-^"insight"{
-  id = "tooling-output-2026-11"
-  operation = "cache"
-  fixity = "experimental"
-  claim = `The npm scripts are one door and many readers. The door is check:local. Each reader prints a next act, or a warning that does not fail.`
-  evidence = #[
-    `package.json check is audit then check:local; check:local is scripts/check-local.mjs`,
-    `scripts/lib/check-signals.mjs testFailureExcerpt ends a noisy crash with check[drift]{name}<paste>`,
-    `scripts/check-workers.mjs runs the carry checks, then every *.test.mjs under each worker test directory`,
-    `scripts/check-local.mjs keeps wonder and audit-folio-highres as report or warning, not a hard fail for a stale week`,
-  ][reg=set]
-  pattern_consideration = #[
-    `build:* writes files. check:* and audit:* read them. A :json twin is for a machine. The default is the sentence`,
-    `spw:* and lsp:* belong to the workbench. They are not this gate`,
-    `scripts/typed/site-contracts/types.mjs names the body keys and mount timings the site contract already checks. scripts/typed/build/types.mjs names copy concurrency. The paste line is not a type yet`,
-  ][reg=set]
-  expansion_prime = `The next script that fails in a wall of passing lines should end the way check-workers now can: one tagged instruction, one error, one paste line.`
-  validation = `rg -n "check\\[drift\\]" scripts/lib/check-signals.mjs && rg -n "testFiles" scripts/check-workers.mjs`
-  do_not_promote_until = `A second script, besides the worker gate, ends a noisy failure with a paste line, and a test shows the line.`
-}[reg=facet]
-
-^"scripts"{
-  door = `npm run check:local → scripts/check-local.mjs. npm run check adds npm run audit first.`
-  output = `scripts/lib/check-format.mjs formatPhase and formatVerdict. scripts/lib/check-signals.mjs stageHeadline, testFailureExcerpt, rerunCommand.`
-  workers = `npm run check:workers → scripts/check-workers.mjs. Drift, then workers/autonomous-feedback/test, workers/spw-quest/test, workers/site-hub-next/test, workers/factshift-center/test.`
-  audits_in_the_gate = `audit-js-tree, audit-operator-controls, audit-folio-highres, wonder. The others in package.json stay on demand: audit:copy, audit:module-selectors, visual:checks, ecology, ecology:language.`
-  types = `scripts/typed/build/types.mjs. scripts/typed/site-contracts/types.mjs REQUIRED_BODY_DATA_KEYS, VALID_MOUNT_WHEN, TIMING_ARC_STEMS.`
-}[reg=facet]
+@wonder_arch: ~"../conventions/wonder-architecture.spw"
+@wonder_script: ~"../../scripts/wonder.mjs"
+@wonder_memory: ~"../../public/js/runtime/memory/wonder-memory.js"
+@native: ~"./spw-native-components-2026-11.spw"
+@fluency: ~"./language-material-fluency-2026-11.spw"
+@design: ~"./spw-design-improvements-2026-11.spw"

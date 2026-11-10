@@ -26,6 +26,7 @@
 @copy_review: ~"../../.agents/plans/semantic-copy-depth/copy-review-2026-11.spw"
 @clusters: ~"../../.agents/plans/semantic-copy-depth/update-clusters-2026-11.spw"
 @fluency: ~"./language-material-fluency-2026-11.spw"
+@tooling: ~"./tooling-output-2026-11.spw"
 
 operation = "cache"
 fixity = "tending"
@@ -92,6 +93,7 @@ source = "chat 2026-11-08: components more Spw-native, monospace affordances, op
 
 ^"patterns"{
   claim = `The instrument spends patterns that already parse. An enhancement that needs a new table has left the architecture.`
+  tooling = `A script line spends the same law. The paste line is a token that travels. The door, the audits, and the receipt are the gestalt. @tooling holds that reading. The brace specimen stays the next patch.`
   slots = `@slots CONTAINER_SLOT maps [ to mode, { to body, ( to scope, < to projection. readContainers stops when a pair opens again inside, so nesting is a stop, not a deeper component.`
   physics = `@operators OPERATOR_DEFINITIONS is the physics, re-exported from @shared. A public sigil spends that row's physics and reversibility.`
   phases = `@phases INTERACTION_PHASES is idle, approach, prime, charge, inspect, discover, settle. A gesture's feel is a position on that arc.`
