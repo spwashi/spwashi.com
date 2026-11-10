@@ -1,0 +1,80 @@
+# Factshift composition (2026-11) — cache: the canvas is a conversational frame
+#
+# A few abstractions from the value grain and the tooling cache,
+# set on the two instruments. This file does not implement, deploy,
+# or move the canvas's next commit.
+
+#>factshift_composition_2026_11
+#:cache #!factshift #!composition #!frame
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+operation = "cache"
+fixity = "experimental"
+source = "chat 2026-11-10; lore-land-plans.spw#value; tooling-output-2026-11.spw; factshift-substrate-frames-2026-11.spw"
+do_not = `Do not implement the link. Do not edit the app. Do not deploy factshift.center. Do not move E1 or G1. Do not touch the uncommitted menu files. Do not edit lore.land. Do not add a data-spw family or a wonder type. Do not copy a story onto the canvas.`
+
+expression = frame[conversation]{token.gestalt.competency}(canvas)<story>
+
+summary = #[
+  `The canvas is a conversational frame. It links to a blog or a story about the subject. The frame is the conversation. The story is the other room.`,
+  `A token can travel with that link. The gestalt stays: the two instruments, and the subject they were cut from.`,
+  `The competency is sitting with a subject and saying which instrument the hand is in, with other people.`,
+  `Citation belongs to library and information sciences. The frame cites the story, and the story can cite the line back.`,
+  `Market value stays something a person can finish, say, or keep. The ground of the frame stays open. A reply is not promised.`,
+][reg=set]
+
+contents = #[
+  ~"./factshift-composition-2026-11.spw#compose",
+  ~"./factshift-composition-2026-11.spw#frame",
+  ~"./factshift-composition-2026-11.spw#citation",
+  ~"./factshift-composition-2026-11.spw#holds",
+  ~"./factshift-composition-2026-11.spw#stream",
+][reg=set]
+
+^"compose"{
+  id = "fc-compose"
+  claim = `A few abstractions sit on the two instruments. The other owner grains stay in lore-land-plans.spw#value.`
+  taken = #[
+    `token and gestalt, from tooling-output-2026-11.spw`,
+    `a competency someone can carry, practiced with other people`,
+    `citation, for the academics of library and information sciences`,
+    `something a person can finish, say, or keep, on a ground that stays free`,
+  ][reg=set]
+  left = `The other owner sentences stay with their plans. This cache does not restage all thirteen.`
+  instruments = `The monospace line and the canvas stay different instruments, as factshift-substrate-frames-2026-11.spw already says. Load, enter, manipulate, and cascade stay different times. A link out is another time: leave toward the story, and come back.`
+}[reg=facet]
+
+^"frame"{
+  id = "fc-frame"
+  claim = `factshift.center can be the room where a conversation about a subject starts. A blog or a story is where that subject is told.`
+  subject = `A subject on the canvas is bodies, frames, and a held line. The story about that subject lives somewhere the frame can point.`
+  link = `The frame links. lore.land already links and keeps its own prose. The same law: the canvas points at the story and leaves the story where it is.`
+  talk = `A person can keep a line, compare it, or prime an act, and still be in the conversation. The story is the other seat.`
+  social = `Other people meet the subject in the story or the blog. Sitting together on the canvas is the practice. A reply is not promised.`
+  competency = `The competency that travels: say which instrument the hand is in, carry a line toward the story, and come back able to say what the story added.`
+}[reg=facet]
+
+^"citation"{
+  id = "fc-citation"
+  claim = `For library and information sciences, the link is a citation. The story is a file that can extend the subject or refuse the frame's reading.`
+  record = `The frame names where the story opens. The story can name the line it was read from. Each keeps its own seat.`
+  academic = `The academic value of the frame is the competency, practiced with other people. Citation is how a library keeps the path between the frame and the story.`
+}[reg=facet]
+
+^"holds"{
+  id = "fc-holds"
+  do_not = `Do not build the link in this pass. Do not choose the blog or the story. The next commit stays E1, a selection in the prompt as the tools' target, or G1's demo. line-anatomy stays until the projection can say the line back.`
+  market = `Someone can finish a sitting, say the subject, and keep a line. The ground of the frame stays open. Unlock weights stay in lore.land.`
+}[reg=facet]
+
+^"stream"{
+  >>[2026-11-10 11:25] note — The canvas is held as a conversational frame that links to a blog or a story about the subject. The competency, the citation, and the token stay composed here. The app stays where it was.
+}[reg=facet]
+
+@substrate: ~"./factshift-substrate-frames-2026-11.spw"
+@value: ~"../../.agents/plans/ecosystem-architecture/lore-land-plans.spw"
+@tooling: ~"./tooling-output-2026-11.spw"
+@plan: ~"../../.agents/plans/factshift-center/PLAN.md"
+@character: ~"./character-constraint-onboarding-2026-11.spw"
