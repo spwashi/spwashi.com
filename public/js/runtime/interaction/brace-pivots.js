@@ -66,8 +66,8 @@ function setSetting(key, value) {
     // density/saturation "faces" of the same content).
     try {
         const wall = key === 'semanticDensity'
-            ? document.querySelector('.spw-objective-wall, .spw-boon-wall')
-            : document.querySelector('.spw-subjective-wall, .spw-bane-wall');
+            ? document.querySelector('.spw-objective-wall, .spw-boon-wall, [data-spw-pivot="semanticDensity"], [data-spw-pivot="objective"]')
+            : document.querySelector('.spw-subjective-wall, .spw-bane-wall, [data-spw-pivot="operatorSaturation"], [data-spw-pivot="subjective"]');
         if (wall) {
             markLayoutTrope(wall, 'brace-pivot', {
                 reason: 'LAYOUT',
@@ -154,8 +154,8 @@ let activeUnbinds = [];
 
 export function initBracePivots() {
     unmountBracePivots();
-    const objectiveWall  = document.querySelector('.spw-objective-wall, .spw-boon-wall');
-    const subjectiveWall = document.querySelector('.spw-subjective-wall, .spw-bane-wall');
+    const objectiveWall  = document.querySelector('.spw-objective-wall, .spw-boon-wall, [data-spw-pivot="semanticDensity"], [data-spw-pivot="objective"]');
+    const subjectiveWall = document.querySelector('.spw-subjective-wall, .spw-bane-wall, [data-spw-pivot="operatorSaturation"], [data-spw-pivot="subjective"]');
 
     const u1 = installPivotAffordance(objectiveWall,  'semanticDensity',    PIVOT_LABELS.semanticDensity);
     const u2 = installPivotAffordance(subjectiveWall, 'operatorSaturation', PIVOT_LABELS.operatorSaturation);

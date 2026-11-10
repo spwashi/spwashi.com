@@ -3091,6 +3091,12 @@ html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
 .spw-paste__title {
   margin: 0;
   color: var(--ink);
+  line-height: 1.45;
+}
+
+.spw-paste[data-spw-bare-spw="enhance"] .spw-paste__title strong {
+  color: var(--op-frame-color, var(--teal, #008080));
+  letter-spacing: 0.01em;
 }
 
 .spw-paste__field {

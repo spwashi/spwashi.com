@@ -15797,6 +15797,29 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
   box-shadow: 0 0 6px color-mix(in srgb, var(--delight-color, var(--spw-operator-color, var(--teal, #008080))) 32%, transparent);
 }
 
+:where(.spw-delimiter[data-spw-pivot]) {
+  cursor: pointer;
+  border-radius: var(--shape-control, 3px);
+  padding-inline: 0.2em;
+  transition:
+    transform var(--grammar-duration-fast, 120ms) var(--grammar-ease-settle, ease),
+    color var(--grammar-duration-fast, 120ms) ease,
+    background-color var(--grammar-duration-fast, 120ms) ease,
+    text-shadow var(--grammar-duration-fast, 120ms) ease;
+}
+
+:where(.spw-delimiter[data-spw-pivot]:is(:hover, :focus-visible)) {
+  transform: scale(1.2);
+  text-shadow: 0 0 8px currentColor;
+  background-color: color-mix(in srgb, var(--spw-operator-color, var(--teal, #008080)) 15%, transparent);
+}
+
+:where(.spw-delimiter[data-spw-pivot][data-spw-pivot-active="true"]) {
+  transform: scale(1.35);
+  text-shadow: 0 0 14px currentColor;
+  background-color: color-mix(in srgb, var(--spw-operator-color, var(--teal, #008080)) 28%, transparent);
+}
+
 /* ==========================================================================
    17. Persona-aware salience
    ========================================================================== */
