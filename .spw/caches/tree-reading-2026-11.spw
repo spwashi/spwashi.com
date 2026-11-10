@@ -1,0 +1,75 @@
+# What the remaining tree was (2026-11-10) — cache
+#
+# Written after the working tree was committed, and not before.
+# The three commits are the evidence. This file does not implement.
+
+#>tree_reading_2026_11
+#:cache #!menu #!pin #!briefing
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@menu_plan: ~"../../.agents/plans/factshift-center/TOOLS.md"
+@menu_surface: ~"../surfaces/factshift-center.spw"
+@fable: ~"./fable-session-2026-11.spw"
+@plugin: ~"./plugin-surface-prime-2026-11.spw"
+@character: ~"./character-constraint-onboarding-2026-11.spw"
+@hosts: ~"../../.agents/plans/factshift-center/HOSTS.md"
+
+operation = "cache"
+fixity = "experimental"
+source = "commits b607a07a, ce80dce8, 6480d166 on 2026-11-10"
+expression = tree[reading]{menu, pin, briefing}<ground>
+do_not = `Do not implement from this file. Do not commit the factshift app. Do not edit .spw/_workbench. Do not answer the plugin prime's three wonders, or the menu's three taste calls. Do not rewrite the Fable briefing's source line. Do not deploy.`
+
+summary = #[
+  `The menu notes describe a category said once, a row that opens, and a receipt. The five app files that do it are still dirty, and the snapshot does not carry them.`,
+  `The workbench mount is be2df2ff, already on origin/main. The Fable briefing was written against edbc5500 and stays that way.`,
+  `The plugin prime and the Fable briefing are filed. Their wonders stay open.`,
+][reg=set]
+
+^"insight"{
+  id = "tree-reading-2026-11"
+  operation = "cache"
+  fixity = "experimental"
+  claim = `The committed tree is a record of three grounds: a menu that says what a press did, a workbench pin that measures distance and depiction, and two briefings that do not implement.`
+  evidence = #[
+    `b607a07a records the menu in TOOLS.md, PLAN.md, the factshift wip, and factshift-center.spw#rows`,
+    `workers/factshift-center/app still has keystrokes.ts, hotkey-buttons.ts, hotkey-menu.scss, tool-palette.scss, and global.d.ts modified, and is 138 commits ahead of its origin`,
+    `ce80dce8 moves .spw/_workbench from edbc5500 to be2df2ff, an ancestor of the workbench origin/main`,
+    `6480d166 adds fable-session-2026-11.spw and plugin-surface-prime-2026-11.spw to the caches index`,
+  ][reg=set]
+  pattern_consideration = #[
+    `The menu receipt is the same kind of sentence as the character cache's limit: say what did happen, and do not imply the next thing is promised`,
+    `The proof-card doors already use a query seat, ?spw= and ?line=, which is one seat the plugin prime names. The other four seats stay unbuilt`,
+    `HOSTS.md already cites depiction-frames for the lean that expires. The new pin's own message also names threshold-distance, depiction-frames, and exhibit-floor's rest, touch, and keep`,
+  ][reg=set]
+  expansion_prime = `The next factshift slice is the creator's reading of the open row, the cluster rules, and the receipt wording, in the app repo, then a carry. Not a site patch.`
+  validation = `git log -3 --oneline and git -C workers/factshift-center/app status -sb`
+  do_not_promote_until = `The app commit exists, the snapshot names it, and the three taste calls have a recorded answer.`
+}[reg=facet]
+
+^"pin"{
+  from = `edbc5500`
+  to = `be2df2ff`
+  span = #[
+    `891e93b9 tests sit beside the source they exercise`,
+    `1a1b95bb eighty-seven re-export shims go, and one file a mounted build still reads stays`,
+    `56d6245d trial cards are read by the parser and by the line reader`,
+    `4ec18f3a where seed's two readers part, three syntax moves, trials ordered by the lines they move`,
+    `f143ba31 a valence word is a key before a colon and part of a hyphenated name`,
+    `988bd940 a register stamp is read against its bracket`,
+    `be2df2ff distance three ways, two consumers' caches as ground, wonder, depiction, frames, and a reader's centre`,
+  ][reg=set]
+  fable = `fable-session-2026-11.spw source still says the pin was edbc5500. That was true when it was written. This file is the later reading.`
+}[reg=facet]
+
+^"menu"{
+  landed_as_notes = `b607a07a`
+  still_open = #[
+    `whether › should open, where it used to turn the row`,
+    `how heavy the cluster rules should read`,
+    `the receipt's wording`,
+  ][reg=set]
+  not_carried = `The snapshot and the deploy stay at app 54ac54f. These notes do not move them.`
+}[reg=facet]
