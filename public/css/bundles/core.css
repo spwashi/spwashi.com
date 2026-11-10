@@ -18584,6 +18584,108 @@ html[data-spw-color-mode="dark"] :where(
   border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal)) 24%, var(--line, rgba(0, 0, 0, 0.1)));
 }
 
+/* A card's line is the expression, on the code plate. Open walls lean objective,
+   close walls subjective, both light enough to read on that plate. The mode is
+   the salient token. The canvas door keeps the objective hue; the pivot door
+   keeps the subjective hue. */
+.spw-embedded-expression {
+  display: flex;
+  flex: 1 0 100%;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0;
+  min-inline-size: 0;
+  margin: 0.35rem 0 0;
+  padding: 0.28rem 0.5rem;
+  border: 0;
+  border-radius: 4px;
+  background: var(--surface-code, #12171b);
+  /* The code plate's ink is the literal reset and ornament already use for code. */
+  --spw-line-ink: #f9e8bf;
+  color: var(--spw-line-ink);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.92rem;
+  font-variant-ligatures: none;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: var(--line-height-mono, 1.42);
+}
+
+.spw-line__subject {
+  color: var(--spw-line-ink);
+  font-weight: 500;
+}
+
+.spw-line__mode,
+.spw-line__projection {
+  color: var(--spw-line-ink);
+  font-weight: 650;
+}
+
+.spw-line__body {
+  color: color-mix(in srgb, var(--spw-line-ink) 68%, transparent);
+  font-weight: 450;
+  overflow-wrap: anywhere;
+}
+
+.spw-line__wall {
+  font-weight: 700;
+  transition: color 160ms linear;
+}
+
+/* The plate is dark, so the brace token is mixed toward the line ink until it reads. */
+.spw-line__wall[data-half="open"] {
+  color: color-mix(in srgb, var(--grammar-objective-brace-color) 48%, var(--spw-line-ink));
+}
+
+.spw-line__wall[data-half="close"] {
+  color: color-mix(in srgb, var(--grammar-subjective-brace-color) 42%, var(--spw-line-ink));
+}
+
+:is(.frame-card, .spw-frame):is(:hover, :focus-within) .spw-line__wall[data-half="open"] {
+  color: color-mix(in srgb, var(--grammar-objective-brace-color) 22%, var(--spw-line-ink));
+}
+
+:is(.frame-card, .spw-frame):is(:hover, :focus-within) .spw-line__wall[data-half="close"] {
+  color: color-mix(in srgb, var(--grammar-subjective-brace-color) 18%, var(--spw-line-ink));
+}
+
+.spw-card-doors {
+  display: flex;
+  flex: 1 0 100%;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.15rem 0.9rem;
+  margin: 0.28rem 0 0.1rem;
+  padding: 0;
+}
+
+.spw-card-doors a {
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.78rem;
+  font-weight: 550;
+  line-height: 1.35;
+  white-space: normal;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  transition: color 160ms linear;
+}
+
+.spw-card-doors a.spw-card-door-canvas {
+  color: var(--grammar-objective-brace-color);
+}
+
+.spw-card-doors a.spw-card-door-pivot {
+  color: var(--grammar-subjective-brace-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spw-line__wall,
+  .spw-card-doors a {
+    transition: none;
+  }
+}
+
 /* Explicit defaults for consistent layout/wrapping/alignment across cards and panels */
 :where(.spw-card, .spw-panel, .frame-card, :is(.spw-panel, .frame-panel), .math-lens-card, .topic-reference-card, .spw-principle-card) {
   --card-internal-gap: 0.42rem;

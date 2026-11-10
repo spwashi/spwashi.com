@@ -116,6 +116,7 @@ export const MODULE_TEST_FILES = Object.freeze([
   'scripts/tests/seed-templates.test.mjs',
   'scripts/tests/spw-paste.test.mjs',
   'scripts/tests/ecosystem-links.test.mjs',
+  'scripts/tests/card-line.test.mjs',
   'scripts/tests/spw-expression.test.mjs',
   'scripts/tests/image-tour.test.mjs',
   'scripts/tests/seed-rehydration.test.mjs',
