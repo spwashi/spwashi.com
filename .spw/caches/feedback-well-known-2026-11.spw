@@ -1,0 +1,53 @@
+# The well-known file is a date, not a version (2026-11-10) — cache
+#
+# The creator: no site beyond theirs uses the file, and the version number
+# does not matter yet. A date-based scheme is worth holding. This file does
+# not change the reader.
+
+#>feedback_well_known_2026_11
+#:cache #!feedback #!schema #!date
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@config: ~"../../workers/autonomous-feedback/src/config.js"
+@quest: ~"../../workers/spw-quest/src/index.js"
+@contour: ~"./feedback-contour-2026-11.spw"
+
+operation = "cache"
+fixity = "experimental"
+source = "chat 2026-11-10; CONFIG_SCHEMA autonomous-feedback.client.v0; spw.quest FEEDBACK_CONFIG"
+expression = file[well-known]{schema, dated}<host>
+do_not = `Do not change the reader from this file. Do not require a date. Do not invent a semver. Do not write the file for a host this repo does not serve. Do not deploy.`
+
+summary = #[
+  `The schema string is a family name. v0 is not a contract with anyone else, because only the creator's hosts publish the file.`,
+  `A date, when it is worth writing, is the day the owner last meant the file. The reader ignores it until a field is actually dropped.`,
+][reg=set]
+
+^"insight"{
+  id = "feedback-well-known-2026-11"
+  operation = "cache"
+  fixity = "experimental"
+  claim = `Keep schema as autonomous-feedback.client.v0. Add an optional dated field, YYYY-MM-DD, and do not read it until a field goes away.`
+  evidence = #[
+    `config.js rejects a schema other than autonomous-feedback.client.v0 and applies the rest of a matching file`,
+    `spw.quest is the only host this repo serves the file for, at /.well-known/autonomous-feedback.json`,
+    `starterConfig thanks says "I read every one of these," which promises a reply the contour refuses`,
+  ][reg=set]
+  pattern_consideration = #[
+    `dated is the owner's edit day, not a compatibility promise. A missing date is not an error while the number does not matter`,
+    `When a field is removed, a file dated before that day is still applied, and the setup page names the field it no longer reads`,
+    `The quest file can gain dated on the day its kinds or its thanks line actually change. Not before`,
+  ][reg=set]
+  expansion_prime = `One line in starterConfig: the thanks example stops promising that every note is read. The schema string stays.`
+  validation = `rg -n "CONFIG_SCHEMA|dated" workers/autonomous-feedback/src/config.js workers/spw-quest/src/index.js`
+  do_not_promote_until = `A field has been removed, or the thanks example has been rewritten, and a test shows a missing dated is still accepted.`
+}[reg=facet]
+
+^"file"{
+  keep = `schema stays autonomous-feedback.client.v0. host stays the host that served the file.`
+  later = `dated: "2026-11-10" beside schema, optional. The reader does not branch on it yet.`
+  not_this = `No autonomous-feedback.client.v1. No second filename. No date in the path.`
+  quest = `The live object in index.js has no dated. Its kinds omit appreciation on purpose until someone adds it. queue.want is already true.`
+}[reg=facet]

@@ -1,0 +1,63 @@
+# A note is a line an unclear audience can send (2026-11-10) — cache
+#
+# The creator asked for terser copy, Spw as the design language, frames and
+# breadcrumbs, URL and links, cultural config, progressive disclosure, an
+# abstract audience, onboarding contours, and quest and factshift as the
+# places a line gets elaborated. This file does not implement.
+
+#>feedback_contour_2026_11
+#:cache #!feedback #!quest #!contour
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@feedback: ~"./feedback-mutex-curriculum-2026-11.spw"
+@character: ~"./character-constraint-onboarding-2026-11.spw"
+@plugin: ~"./plugin-surface-prime-2026-11.spw"
+@quest: ~"../../.agents/plans/spw-quest/PLAN.md"
+@pages: ~"../../workers/autonomous-feedback/src/pages.js"
+@model: ~"../../workers/autonomous-feedback/src/model.js"
+@quest_index: ~"../../workers/spw-quest/src/index.js"
+
+operation = "cache"
+fixity = "experimental"
+source = "chat 2026-11-10; the uncommitted courtesy and expression on the feedback card; spw.quest already serves /.well-known/autonomous-feedback.json"
+expression = feedback[contour]{claim, limit}<audience>
+do_not = `Do not implement from this file. Do not add a kind, a sigil, a dialect, or a route. Do not put the form inside the quest guide. Do not promise a reply. Do not infer a motive. Do not deploy. Do not open a plan folder. M2 on spw.quest stays next.`
+
+summary = #[
+  `The useful sentence is a kind, a claim, and a limit. The frame and the breadcrumb are the context. The URL is the choice.`,
+  `The audience is abstract and its motives are unclear. The tool receives a note. It does not explain the person.`,
+  `spw.quest and factshift.center elaborate the line. They do not become the form.`,
+][reg=set]
+
+^"insight"{
+  id = "feedback-contour-2026-11"
+  operation = "cache"
+  fixity = "experimental"
+  claim = `A feedback surface is direct when one line carries the claim and the limit, and every longer reading is another expression the reader opens.`
+  evidence = #[
+    `pages.js home lede, uncommitted, says the reader keeps a card and a reply is not promised`,
+    `a chosen kind writes its expression on the card, from model.js CONTEXTS`,
+    `workers/spw-quest/src/index.js answers /.well-known/autonomous-feedback.json`,
+    `spw.quest PLAN.md next slice is still M2, the walk trail`,
+  ][reg=set]
+  pattern_consideration = #[
+    `Progressive disclosure is a chain of expressions: a tap, then words, then a card, then a reply that may never come`,
+    `Public is the card the sender keeps. Private is the inbox, already gated by a key. Playing with the line is /pivot and the canvas`,
+    `Perspective is the kind's operator. A new bias sigil is not required to say the stance`,
+    `Particle copy gets more useful when it names a material and its pair, open with close, claim with limit. A larger sigil set is a wonder, not a patch`,
+  ][reg=set]
+  expansion_prime = `The next feedback sentence, still one file, is a goal on the card: what the writer will do next. The limit is already beside the button.`
+  validation = `rg -n "A reply is not promised" workers/autonomous-feedback/src/pages.js`
+  do_not_promote_until = `The goal is a sentence in the kind's question, the quest walk trail has landed or been explicitly skipped, and no new sigil has been added.`
+}[reg=facet]
+
+^"seats"{
+  url = `/host is the site. /host/kind is the choice. A query may name the page. A new path waits until two hosts must share it.`
+  config = `The site's JSON is the cultural seat: order of kinds, renamed labels, routes, subjects, thanks, colours, type. A dialect is a label change, not a new grammar.`
+  onboarding = `A contour is a goal and a limit. Scheduling is a later line, when, not a calendar.`
+  quest = `The well-known file is the seat quest already has. A specimen of taste, one genre and one line, can sit on the shelf after M2. The guide does not host the form.`
+  canvas = `factshift.center lays the same line out. It is the visualizer. It is not a second inbox.`
+  organization = `An organization reads the count: kind, subject, week. Interpreting the line is that count, not a new analyst product.`
+}[reg=facet]

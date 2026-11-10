@@ -4,6 +4,10 @@
 
 **Related:** [workers-wonder-kit](../workers-wonder-kit/PLAN.md) (shared worker shell) · [spw-inquiry-loop](../spw-inquiry-loop/PLAN.md) (the parser's arrival in the site) · [ecosystem-architecture](../ecosystem-architecture/PLAN.md) (S3 put the worker on the site's reader bundle; S4 is the query instrument travelling) · [upstream workbench asks](../../../.spw/reviews/upstream-workbench-recommendations.spw) (`week_2026_10_11`).
 
+## Contour, not next (2026-11-10)
+
+M2 stays the next slice. A feedback line is not a room in the guide. `/.well-known/autonomous-feedback.json` is the seat this worker already has. After M2, one specimen on the shelf may hold a genre and a line, so a visitor can form a taste without the form moving here. Elaboration of a sent note is `/pivot` for one change, and factshift.center for the layout. The record is [feedback-contour-2026-11](../../../.spw/caches/feedback-contour-2026-11.spw). The file this worker already serves keeps `schema` `autonomous-feedback.client.v0`. An optional `dated` day is held in [feedback-well-known-2026-11](../../../.spw/caches/feedback-well-known-2026-11.spw) and is not read yet.
+
 ## Landed
 
 - 2026-10-12 `e6b4b937`: seven panels from the workbench's `docs/learn/quest.spw`, walked as a path; *Put one together*; the site's paper material on every page, and the spiral gone.
