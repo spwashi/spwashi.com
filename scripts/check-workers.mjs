@@ -1,7 +1,10 @@
 /**
  * Cluster gate for workers/: inventory, syntax, gitignore, no secrets in source.
+ * Drift in a carried page fails before any suite. Every *.test.mjs under a
+ * worker's test/ is run, so a new file is in the gate without being listed.
  */
 import { execFileSync } from 'node:child_process';
+import { readdirSync } from 'node:fs';
 import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -17,6 +20,18 @@ const BANNED = [
 function fail(message) {
   console.error(`[check:workers] ${message}`);
   process.exit(1);
+}
+
+function run(args) {
+  execFileSync(process.execPath, args, { cwd: ROOT, stdio: 'inherit' });
+}
+
+/** Test files relative to the repo, sorted, so the gate's command is stable. */
+function testFiles(relDir) {
+  return readdirSync(path.join(ROOT, relDir))
+    .filter((name) => name.endsWith('.test.mjs'))
+    .sort()
+    .map((name) => path.join(relDir, name));
 }
 
 function parseJsonc(text) {
@@ -91,18 +106,21 @@ async function main() {
     }
   }
 
-  // The peer kit carries the site's tokens and faces to the workers; a drift here is a stale copy of the site.
-  execFileSync(process.execPath, ['scripts/build-peer-kit.mjs', '--check'], { cwd: ROOT, stdio: 'inherit' });
-  execFileSync(process.execPath, ['--test', 'workers/autonomous-feedback/test/routes.test.mjs'], { cwd: ROOT, stdio: 'inherit' });
-  // The specimens are carried from site modules that import by root path, so their drift check runs with the repo's loader.
-  execFileSync(process.execPath, ['--import', './scripts/tests/register-public-imports.mjs', 'workers/spw-quest/carry-specimens.mjs', '--check'], { cwd: ROOT, stdio: 'inherit' });
-  execFileSync(process.execPath, ['--import', './scripts/tests/register-public-imports.mjs', 'workers/spw-quest/carry-shelf.mjs', '--check'], { cwd: ROOT, stdio: 'inherit' });
-  // /arcs/ against its carried season (the season itself moves with history; carry-arcs.mjs refreshes it).
-  execFileSync(process.execPath, ['--import', './scripts/tests/register-public-imports.mjs', 'workers/spw-quest/carry-arcs.mjs', '--check'], { cwd: ROOT, stdio: 'inherit' });
-  execFileSync(process.execPath, ['--test', 'workers/spw-quest/test/routes.test.mjs', 'workers/spw-quest/test/note.test.mjs', 'workers/spw-quest/test/shelf.test.mjs', 'workers/spw-quest/test/parser-releases.test.mjs', 'workers/spw-quest/test/parser-prereleases.test.mjs', 'workers/spw-quest/test/specimens.test.mjs', 'workers/spw-quest/test/constructs.test.mjs', 'workers/spw-quest/test/app.test.mjs', 'workers/spw-quest/test/walk.test.mjs', 'workers/spw-quest/test/shell-pin.test.mjs', 'workers/spw-quest/test/shell.test.mjs', 'workers/spw-quest/test/static.test.mjs', 'workers/spw-quest/test/bench.test.mjs', 'workers/spw-quest/test/build.test.mjs'], { cwd: ROOT, stdio: 'inherit' });
-  execFileSync(process.execPath, ['--test', 'workers/site-hub-next/test/doors.test.mjs', 'workers/site-hub-next/test/tealstripes.test.mjs', 'workers/site-hub-next/test/mutex.test.mjs'], { cwd: ROOT, stdio: 'inherit' });
-  execFileSync(process.execPath, ['workers/factshift-center/carry-shell.mjs', '--check'], { cwd: ROOT, stdio: 'inherit' });
-  execFileSync(process.execPath, ['--test', 'workers/factshift-center/test/snapshot.test.mjs', 'workers/factshift-center/test/shell.test.mjs'], { cwd: ROOT, stdio: 'inherit' });
+  // Carried pages and the peer kit are copies. They fail in a second, before a suite.
+  run(['scripts/build-peer-kit.mjs', '--check']);
+  // Specimens are carried from site modules that import by root path, so the check uses the repo's loader.
+  const carried = [
+    ['--import', './scripts/tests/register-public-imports.mjs', 'workers/spw-quest/carry-specimens.mjs', '--check'],
+    ['--import', './scripts/tests/register-public-imports.mjs', 'workers/spw-quest/carry-shelf.mjs', '--check'],
+    // /arcs/ against its carried season. The season moves with history; carry-arcs.mjs refreshes it.
+    ['--import', './scripts/tests/register-public-imports.mjs', 'workers/spw-quest/carry-arcs.mjs', '--check'],
+    ['workers/factshift-center/carry-shell.mjs', '--check'],
+  ];
+  for (const args of carried) run(args);
+
+  for (const dir of ['workers/autonomous-feedback/test', 'workers/spw-quest/test', 'workers/site-hub-next/test', 'workers/factshift-center/test']) {
+    run(['--test', ...testFiles(dir)]);
+  }
   console.log(`[check:workers] ${inventory.units.length} units, ${seenHosts.size} hosts; quest and feedback routing verified`);
 }
 
