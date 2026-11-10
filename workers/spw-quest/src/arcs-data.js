@@ -8,9 +8,9 @@ export const ARCS = Object.freeze({
     90
   ],
   "total": [
-    8,
-    21,
-    861
+    9,
+    22,
+    862
   ],
   "lenses": [
     {
@@ -80,6 +80,17 @@ export const ARCS = Object.freeze({
       "rising": false
     },
     {
+      "key": "seed",
+      "counts": [
+        1,
+        1,
+        2
+      ],
+      "example": "prompt[seed]{inspect.prime.rehearse}<workbench>",
+      "route": "/",
+      "rising": false
+    },
+    {
       "key": "wednesday",
       "counts": [
         1,
@@ -110,17 +121,6 @@ export const ARCS = Object.freeze({
       ],
       "example": "topics[mode]{open.sit}<display>",
       "route": "/topics/",
-      "rising": false
-    },
-    {
-      "key": "depth",
-      "counts": [
-        0,
-        0,
-        19
-      ],
-      "example": "learning[depth]{transfer} ~ service[ritual]{repair.timing}",
-      "route": "/topics/fields/teaching/",
       "rising": false
     }
   ],
@@ -339,6 +339,17 @@ export const ARCS = Object.freeze({
       "rising": false
     },
     {
+      "key": "prompt",
+      "counts": [
+        1,
+        1,
+        2
+      ],
+      "example": "prompt[seed]{inspect.prime.rehearse}<workbench>",
+      "route": "/",
+      "rising": false
+    },
+    {
       "key": "home",
       "counts": [
         0,
@@ -348,29 +359,18 @@ export const ARCS = Object.freeze({
       "example": "home[live]{season.close}(production)<now>",
       "route": "/",
       "rising": false
-    },
-    {
-      "key": "theory",
-      "counts": [
-        0,
-        0,
-        27
-      ],
-      "example": "theory[mohist_logic]{names.distinctions.analogy}<china>",
-      "route": "/topics/math/logic/",
-      "rising": false
     }
   ],
   "shapes": [
     {
       "key": "word[lens]{body}<point>",
       "counts": [
-        5,
-        12,
-        292
+        6,
+        13,
+        293
       ],
-      "example": "materials[earned]{folio.press.ground}<work>",
-      "route": "/design/materials/",
+      "example": "prompt[seed]{inspect.prime.rehearse}<workbench>",
+      "route": "/",
       "rising": false
     },
     {

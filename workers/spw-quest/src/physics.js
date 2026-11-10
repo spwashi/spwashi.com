@@ -40,6 +40,10 @@ export const PHYSICS_LINES = Object.freeze([
   { line: "^garden{seed: water, sky{sun, rain}, bed{soil}}", says: "a marked body around two plain ones: the share shows" },
   { line: "pantry{rice, oats, ~jar{salt, honey}, *tin{tea}}", says: "a body that drifts beside a body that holds" },
   { line: "trip{home; road; ?fork{left, right}}", says: "an order, with a question that opens" },
+  { line: "soil[strata]{.humus{mycelium, crumb}, loam: clay, ^canopy{litter, rain}}", says: "a soil horizon: leaf litter lifted above, fungal crumb settling into loam" },
+  { line: "vat[brew]{wort: yeast, ~bubble{ester, aroma}, *lees{trub, barrel}}", says: "a fermentation vat: bubbling esters drifting while the heavy lees settle" },
+  { line: "ink[recipe]{gall: vitriol, soot: gum, ~wash{flow, drying}, *strike{rag, plate}}", says: "an ink recipe: tannin and iron strike the paper plate" },
+  { line: "folio[specimen]{stamp[mount]{value: 12, seal: dated}, glassine: pocket, *intaglio{burin, press}}", says: "a mounted stamp: perforated edge, intaglio line, archival mount" },
 ]);
 
 /** What a body inside a marked body feels of that mark's law. The words are the canvas's (alike, softer, faint). */
@@ -913,22 +917,33 @@ export const PHYSICS_CSS = `.physics-page > header, .physics-page > section > h2
     .scale .label { flex-basis: 100%; text-align: center; color: var(--muted); font-size: .85rem; }
     .scale button { margin: 0; min-height: 44px; padding: .3rem .85rem; font: .85rem/1.2 var(--mono); }
     .scale button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--fg); font-weight: 600; }
-    .stage { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--field); touch-action: pan-y; user-select: none; -webkit-user-select: none; }
-    .stage .well { fill: color-mix(in srgb, currentColor 6%, transparent); stroke: currentColor; stroke-width: 1.2; }
+    .stage {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--field) linear-gradient(180deg, color-mix(in srgb, var(--accent) 3%, var(--field)) 0%, var(--field) 60%, color-mix(in srgb, var(--bg-deep) 12%, var(--field)) 100%);
+      box-shadow: var(--shadow), var(--shadow-intaglio);
+      touch-action: pan-y;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .stage .well { fill: color-mix(in srgb, currentColor 6%, transparent); stroke: currentColor; stroke-width: 1.3; rx: 6px; ry: 6px; }
     .stage .well:not([data-t]) { color: var(--edge); }
-    .stage .well[data-warm] { stroke-width: 2.4; stroke-dasharray: 7 3; }
-    .stage .tab rect { fill: var(--field); stroke: var(--line); }
+    .stage .well[data-warm] { stroke-width: 2.4; stroke-dasharray: 6 3; stroke: var(--accent); filter: drop-shadow(0 0 5px color-mix(in srgb, var(--accent) 30%, transparent)); }
+    .stage .tab rect { fill: var(--field); stroke: var(--line); rx: 4px; }
     .stage .tab text, .stage .part text { font: 12px/1 var(--mono); fill: var(--fg); text-anchor: middle; dominant-baseline: central; pointer-events: none; }
     .stage .tab text { font-weight: 600; }
     .stage .tab { cursor: pointer; }
     .stage tspan[data-t] { fill: currentColor; }
-    .stage .sight { stroke: var(--op-ref-color); stroke-width: 1.3; stroke-dasharray: 4 4; }
-    .stage .joint { stroke: var(--fg); stroke-width: 3; stroke-linecap: round; }
-    .stage .part rect { fill: var(--field); stroke: var(--edge); stroke-width: 1; }
+    .stage .sight { stroke: var(--op-ref-color, #2b6cb0); stroke-width: 1.4; stroke-dasharray: 4 4; }
+    .stage .joint { stroke: color-mix(in srgb, var(--fg) 85%, var(--accent) 15%); stroke-width: 3.5; stroke-linecap: round; }
+    .stage .part rect { fill: var(--surface, var(--field)); stroke: var(--edge); stroke-width: 1.1; rx: 4px; }
     .stage .part[data-id] { cursor: grab; touch-action: none; }
     .stage .part[data-kind="ref"] rect { stroke: var(--op-ref-color); stroke-dasharray: 4 3; }
     .stage .part[data-kind="key"] rect, .stage .part[data-kind="value"] rect { stroke: var(--fg); }
-    .stage .part[data-kind="visitor"] rect { stroke: var(--fg); stroke-width: 1.6; stroke-dasharray: 2 3; }
+    .stage .part[data-kind="visitor"] rect { stroke: var(--amber-wort, #b86214); stroke-width: 1.6; stroke-dasharray: 3 3; fill: color-mix(in srgb, var(--amber-wort, #b86214) 8%, var(--field)); }
     .stage .part.ghost { pointer-events: none; }
     .stage .part.ghost rect { fill: none; stroke: var(--muted); stroke-dasharray: 2 4; }
     .stage .part.ghost text { fill: var(--muted); }
@@ -936,13 +951,13 @@ export const PHYSICS_CSS = `.physics-page > header, .physics-page > section > h2
     .stage .part:focus-visible rect, .stage .tab:focus-visible rect { stroke: var(--accent); stroke-width: 2.6; stroke-dasharray: none; }
     .rule-line { display: flex; justify-content: center; align-items: center; gap: .5rem; margin: .4rem 0 .8rem; color: var(--muted); font: .78rem/1.2 var(--mono); }
     .rule-line .rule { display: inline-block; width: 20px; height: 7px; border: 1px solid var(--muted); border-top: 0; }
-    .measures { width: 100%; border-collapse: collapse; font-size: .9rem; }
+    .measures { width: 100%; border-collapse: collapse; font-size: .9rem; border: 1px solid var(--line); border-radius: var(--radius); }
     .measures caption { caption-side: top; padding: 0 0 .3rem; color: var(--muted); font-size: .85rem; text-align: center; }
     .measures th, .measures td { padding: .4rem .5rem; border-top: 1px solid var(--line); text-align: left; vertical-align: top; }
-    .measures th { width: 38%; font-weight: 600; }
+    .measures th { width: 38%; font-weight: 600; color: var(--ink-soft); }
     .measures td { font-variant-numeric: tabular-nums; }
     .hand-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14.5rem), 1fr)); gap: .8rem; }
-    .hand-cards fieldset { margin: 0; background: var(--field); }
+    .hand-cards fieldset { margin: 0; background: var(--field); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
     .hand-cards legend { color: var(--fg); font: 600 1rem/1.2 var(--manuscript); }
     .hand-cards p { margin: 0 0 .5rem; font-size: .9rem; }
     .hand-cards .says { color: var(--muted); overflow-wrap: anywhere; }
