@@ -178,6 +178,16 @@ export function refererPath(referer, host) {
   return path === "/" ? "" : path;
 }
 
+/**
+ * Monday of the week a timestamp falls in, as YYYY-MM-DD (UTC). A note that is
+ * counted is counted under this week, so the card and the desk name the same one.
+ */
+export function weekOf(issued) {
+  const day = new Date(`${String(issued).slice(0, 10)}T00:00:00Z`);
+  const back = (day.getUTCDay() + 6) % 7;
+  return new Date(day.getTime() - back * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+}
+
 /** The current slug for a slug or a legacy alias, or "" if it names no kind. */
 export function resolveSlug(slug) {
   const value = String(slug || "").toLowerCase();

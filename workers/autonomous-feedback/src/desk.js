@@ -12,6 +12,8 @@
  * and its words are deleted. The tally is all that survives.
  */
 
+import { weekOf } from "./model.js";
+
 export const COMPACT_AFTER_DAYS = 3;
 export const DEFAULT_SAVE_LIMIT = 10;
 export const UNSAVED_CAP = 200;
@@ -44,12 +46,8 @@ function compactBefore(now) {
   return new Date(now - COMPACT_AFTER_DAYS * 24 * 60 * 60 * 1000).toISOString();
 }
 
-/** Monday of the week a timestamp falls in, as YYYY-MM-DD (UTC). */
-export function weekOf(issued) {
-  const day = new Date(`${String(issued).slice(0, 10)}T00:00:00Z`);
-  const back = (day.getUTCDay() + 6) % 7;
-  return new Date(day.getTime() - back * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
-}
+// The week a note is counted under is a fact about the note (model.js); the card page reads it there too.
+export { weekOf };
 
 // SQL for the same Monday, so compaction and the digest agree.
 const WEEK_SQL = "date(substr(issued, 1, 10), '-6 days', 'weekday 1')";

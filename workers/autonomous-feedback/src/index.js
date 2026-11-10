@@ -113,11 +113,12 @@ function cleanFrom(value) {
 }
 
 /**
- * Read a submission. Returns { filing } or { errors, values, status, code }.
+ * The fields of a submission as the writer left them, before anything is judged.
+ * Returns { body, values } or { code, status, errors, values } when the body cannot be read.
  * The host and kind can come from the path (fallbacks) or the body; the body wins,
  * so one form can switch kinds without changing its action.
  */
-async function readFiling(request, { host: fallbackHost = "", slug: fallbackSlug = NOTE.slug, org = null } = {}) {
+async function readValues(request, { host: fallbackHost = "", slug: fallbackSlug = NOTE.slug } = {}) {
   const length = Number(request.headers.get("content-length") || 0);
   if (length > 16_000) return { code: "too_large", status: 413, errors: { note: "That is too long to send." }, values: {} };
   const type = request.headers.get("content-type") || "";
@@ -150,6 +151,16 @@ async function readFiling(request, { host: fallbackHost = "", slug: fallbackSlug
     asks: [0, 1, 2].map((i) => String(body[`ask-${i}`] || "").trim().slice(0, 2000)),
   };
   if (!values.path) values.path = refererPath(request.headers.get("referer"), values.host);
+  return { body, values };
+}
+
+/**
+ * Read a submission. Returns { filing } or { errors, values, status, code }.
+ */
+async function readFiling(request, { host: fallbackHost = "", slug: fallbackSlug = NOTE.slug, org = null } = {}) {
+  const read = await readValues(request, { host: fallbackHost, slug: fallbackSlug });
+  if (!read.body) return read;
+  const { body, values } = read;
   if (String(body.company || "").trim()) return { code: "rejected", status: 400, errors: { note: "The form could not be sent." }, values };
   if (!validSubject(values.host)) {
     return { code: "invalid_site_reference", status: 400, errors: { host: values.host ? `"${values.host}" is not a domain. Enter one like example.com.` : "Enter the site the note is about." }, values };
@@ -228,6 +239,24 @@ async function readFiling(request, { host: fallbackHost = "", slug: fallbackSlug
   return { filing, config };
 }
 
+/**
+ * Too many notes from one network: nothing is filed, and nothing the writer
+ * made is dropped. A form gets its own fields back (words, choice, name, page),
+ * on the site's own form, to send again in a few minutes.
+ */
+async function slowedFiling(request, env, { host = "", slug = NOTE.slug } = {}) {
+  const result = { code: "slow_down", status: 429, errors: { note: SLOW_NOTE }, values: { host, kind: slug, note: "", from: "" } };
+  if (wantsJson(request)) return result;
+  const read = await readValues(request, { host, slug });
+  if (!read.body || String(read.body.company || "").trim()) return result;
+  result.values = read.values;
+  if (validSubject(read.values.host)) {
+    result.config = await loadConfig(read.values.host);
+    result.desk = deskState(env, read.values.host, result.config);
+  }
+  return result;
+}
+
 async function maybeKeep(env, result) {
   // A rejected note is shown the form again, which says whether notes are kept.
   const host = result.filing?.host || result.values?.host || "";
@@ -292,9 +321,7 @@ async function answerFiling(request, result, { lockHost = true, embed = false } 
 /** The page a note is about: ?at= when the link names it, else the Referer when it is this site. */
 function pageFrom(request, url, subject) {
   const at = cleanPath(url.searchParams.get("at") || "");
-  if (at) return { path: at, pathFrom: "link" };
-  const referred = refererPath(request.headers.get("referer"), subject);
-  return referred ? { path: referred, pathFrom: "referer" } : { path: "" };
+  return { path: at || refererPath(request.headers.get("referer"), subject) };
 }
 
 /*
@@ -476,12 +503,7 @@ async function handleSite(request, url, host, rest, org = null, embed = false, e
       return jsonResponse({ error: "rate_limit_on_ingest", hint: "rate-limit=tok/s is a drain budget on GET /inbox, not POST." }, "no-store", 400);
     }
     if (!(await intakeOpen(request, `post:${subject}`))) {
-      return answerFiling(request, {
-        code: "slow_down",
-        status: 429,
-        errors: { note: SLOW_NOTE },
-        values: { host: subject, kind: context ? context.slug : NOTE.slug, note: "", from: "" },
-      }, { lockHost: true, embed });
+      return answerFiling(request, await slowedFiling(request, env, { host: subject, slug: context ? context.slug : NOTE.slug }), { lockHost: true, embed });
     }
     const result = await maybeKeep(env, await readFiling(request, { host: subject, slug: context ? context.slug : NOTE.slug, org }));
     return answerFiling(request, result, { lockHost: true, embed });
@@ -658,9 +680,14 @@ export default {
       if (raw && !isPublicSite(queryHost)) {
         return headOr(request, htmlResponse(renderStart({ host: raw.trim(), how, kind, error: `"${raw.trim()}" is not a public domain. Enter one like example.com.` }), { status: 400, cache: "no-store" }));
       }
-      const config = queryHost ? await loadConfig(queryHost) : null;
+      // "Check again now" reads the site's file once more, so an owner sees a change without the cache's wait.
+      // It asks the client site for one file, like a meter check, and shares that budget.
+      const recheck = Boolean(queryHost) && url.searchParams.get("check") === "now";
+      const fresh = recheck && await intakeOpen(request, "meter", METER_LIMIT);
+      const config = queryHost ? await loadConfig(queryHost, { fresh }) : null;
       const desk = config ? deskState(env, queryHost, config) : "none";
-      return headOr(request, htmlResponse(renderStart({ host: queryHost, how, kind, config, desk }), { cache: "no-store" }));
+      const checked = fresh ? "now" : recheck ? "slow" : "";
+      return headOr(request, htmlResponse(renderStart({ host: queryHost, how, kind, config, desk, checked }), { cache: "no-store" }));
     }
 
     if (url.pathname === "/favicon.ico") return new Response(null, { status: 404, headers: TEXT_HEADERS });
@@ -742,12 +769,7 @@ export default {
           }
         }
         if (!(await intakeOpen(request, `post:${queryHost || "open"}`))) {
-          return answerFiling(request, {
-            code: "slow_down",
-            status: 429,
-            errors: { note: SLOW_NOTE },
-            values: { host: queryHost, kind: context.slug, note: "", from: "" },
-          }, { lockHost: false });
+          return answerFiling(request, await slowedFiling(request, env, { host: queryHost, slug: context.slug }), { lockHost: false });
         }
         const result = await maybeKeep(env, await readFiling(request, { host: queryHost, slug: context.slug, org }));
         return answerFiling(request, result, { lockHost: false });

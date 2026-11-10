@@ -95,5 +95,5 @@ export async function intakeOpen(request, bucket, limit = POST_LIMIT) {
   }
 }
 
-export const SLOW_NOTE = "Too many notes from this network. Wait a few minutes and send again.";
+export const SLOW_NOTE = "Too many notes from this network. Your note is still here: wait a few minutes and send again.";
 export { METER_LIMIT, POST_LIMIT };

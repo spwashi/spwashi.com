@@ -1,5 +1,5 @@
 import { escapeHtml, layout } from "../../lib/shell.js";
-import { CONTEXTS, DEFAULT_KIND, NOTE, NOTE_MAX, cleanPath, contextBySlug, isPublicSite } from "./model.js";
+import { CONTEXTS, DEFAULT_KIND, NOTE, NOTE_MAX, cleanPath, contextBySlug, isPublicSite, weekOf } from "./model.js";
 import { CLIENT_SCRIPT } from "./client.js";
 import { CONFIG_PATH, configToFile, defaultConfig, siteKinds, starterConfig, subjectFor, themeCss } from "./config.js";
 
@@ -112,7 +112,7 @@ function cardMarkup({ context, host, note, issued, id = "", sample = false, name
 </article>`;
 }
 
-function routeField(routes, path, pathFrom = "") {
+function routeField(routes, path) {
   const clean = cleanPath(path);
   const named = routes.some((route) => route.path === clean);
   const options = routes.map((route) => `<label class="choice"><input type="radio" name="route" value="${escapeHtml(route.path)}"${route.path === clean ? " checked" : ""}> <span><strong>${escapeHtml(route.name)}</strong><span>${escapeHtml(route.path)}</span></span></label>`).join("\n      ");
@@ -127,8 +127,9 @@ function routeField(routes, path, pathFrom = "") {
   <label for="path">Path</label>
   <p class="hint" id="path-hint">Where on the site this happened, like /checkout. Optional.</p>
   <input id="path" name="path" type="text" value="${escapeHtml(clean)}" placeholder="/checkout" maxlength="200" spellcheck="false" autocapitalize="none" aria-describedby="path-hint">`;
-  // A page the link named or the reader came from is shown, not asked; the picker stays one click away.
-  if (clean && pathFrom) {
+  // A page the form carries is shown, not asked: one the link named, the reader came from, or a form that came
+  // back with its errors still holds. What will be sent is never folded away. The picker stays one click away.
+  if (clean) {
     const route = routes.find((r) => r.path === clean);
     return `<div id="page" class="page">
   <p class="page-known">On <strong>${escapeHtml(route ? `${route.name} · ${clean}` : clean)}</strong></p>
@@ -239,7 +240,7 @@ export function renderPrivacy() {
   });
 }
 
-export function renderStart({ host = "", how = "link", kind = NOTE.slug, error = "", config = null, desk = "none" } = {}) {
+export function renderStart({ host = "", how = "link", kind = NOTE.slug, error = "", config = null, desk = "none", checked = "" } = {}) {
   // "None" comes first: a preselected kind files every untouched note under it.
   const none = { ...NOTE, title: "None (recommended)", prompt: "Readers pick for themselves, or just write." };
   const offered = [none, ...(config?.found ? siteKinds(config) : CONTEXTS)];
@@ -302,7 +303,7 @@ export function renderStart({ host = "", how = "link", kind = NOTE.slug, error =
 <section aria-labelledby="config-title">
   <h2 id="config-title">Customize (optional)</h2>
   <p>Publish a JSON file at <code data-fill="config-url">https://${escapeHtml(named)}${CONFIG_PATH}</code> to fit the form to your site: the parts of your site and the notes you hear most, which kinds of note appear, where you take cards by message, a thanks line, and your colours. The file only affects your own domain.</p>
-  ${configStatus(host, config, desk)}
+  ${configStatus(host, config, desk, { how: SNIPPETS[how] ? how : "link", kind: context.slug, checked })}
   <figure class="codeblock">
     <figcaption><span>${ownFile ? "Your file, as applied" : "Starter file"} · autonomous-feedback.json</span><button type="button" data-copy="config-snippet">Copy</button></figcaption>
     <pre id="config-snippet">${escapeHtml(fillTemplate(configTemplate, named, context))}</pre>
@@ -353,7 +354,13 @@ printf %s "$KEY" | shasum -a 256 | sed 's/ .*//; s/^/hash: sha256:/'</pre>
   });
 }
 
-function configStatus(host, config, desk = "none") {
+/**
+ * Whether setup worked, in the owner's terms: was a file found, was all of it
+ * applied, is an inbox open. The result is cached five minutes for readers;
+ * "Check again now" fetches it once more so a change can be seen at once.
+ * `checked` is "now" after such a fetch, "slow" when the budget refused one.
+ */
+function configStatus(host, config, desk = "none", { how = "link", kind = NOTE.slug, checked = "" } = {}) {
   if (!host || !config) return "";
   const url = `https://${escapeHtml(host)}${CONFIG_PATH}`;
   const problems = config.problems.length
@@ -361,13 +368,29 @@ function configStatus(host, config, desk = "none") {
     : "";
   const lead = config.found
     ? `<p><strong>Found a configuration file for ${escapeHtml(host)}.</strong> Showing ${siteKinds(config).map((k) => escapeHtml(k.title)).join(", ")}${config.theme ? `, ${escapeHtml(config.theme.mode)} theme` : ""}.${config.problems.length ? " Some of it was not applied:" : " Everything in it was applied."}</p>`
-    : `<p><strong>No configuration applied for ${escapeHtml(host)}.</strong> The defaults are in use.</p>`;
+    : config.status === "missing"
+      ? `<p><strong>No file found for ${escapeHtml(host)} yet.</strong> The defaults are in use. The link, frame, and form work without one.</p>`
+      : config.status
+        ? `<p><strong>The file for ${escapeHtml(host)} could not be read.</strong> The defaults are in use.</p>`
+        : `<p><strong>A file was found for ${escapeHtml(host)}, but it was not applied.</strong> The defaults are in use.</p>`;
   const inbox = desk === "open"
     ? `<p><strong>Inbox: open.</strong> Cards for ${escapeHtml(host)} are kept for three days, longer if saved. ${config.inbox?.key ? `<a href="/${escapeHtml(host)}/inbox">Open the inbox</a>.` : "Add <code>inbox.key</code> to your file to read it."}</p>`
     : desk === "requested"
       ? `<p><strong>Inbox: requested.</strong> Your file asks for one. It is not open yet, so readers still send cards by hand and nothing is kept.</p>`
       : "";
-  return `<div class="panel" aria-live="polite">${lead}${problems}${inbox}<p class="note">Checked <a href="${url}">${url}</a>. Changes can take up to 5 minutes to show. <a href="/${escapeHtml(host)}/config.json">See the result as JSON</a>.</p></div>`;
+  const when = checked === "now"
+    ? "just now"
+    : checked === "slow"
+      ? "within the last 5 minutes. Too many checks from this network. This is the last result; wait a few minutes to check again"
+      : "within the last 5 minutes";
+  return `<div class="panel" aria-live="polite">${lead}${problems}${inbox}<p class="note">Checked <a href="${url}">${url}</a> ${when}. <a href="/${escapeHtml(host)}/config.json">See the result as JSON</a>.</p>
+  <form method="get" action="/start" class="recheck">
+    <input type="hidden" name="host" value="${escapeHtml(host)}">
+    <input type="hidden" name="how" value="${escapeHtml(how)}" data-carry="how">
+    <input type="hidden" name="kind" value="${escapeHtml(kind)}" data-carry="kind">
+    <button type="submit" name="check" value="now" class="secondary">Check again now</button>
+    <p class="hint">Published or changed the file? This reads it again without the 5-minute wait.</p>
+  </form></div>`;
 }
 
 export function previewMarkup(how, host, context) {
@@ -566,7 +589,7 @@ ${summary}
   <p class="sr-only" id="note-hint">${exampleText ? `For example: ${escapeHtml(exampleText)}. ` : ""}Optional once you pick something above. Control or Command and Enter sends.</p>
   <p class="hint" data-count-line hidden><span data-count>${note.length}</span> of ${site.note.max.toLocaleString("en-US")}</p>
   ${askBlocks}
-  ${routeField(site.routes || [], values.path ?? "", values.pathFrom || "")}
+  ${routeField(site.routes || [], values.path ?? "")}
   ${lockHost ? `<input type="hidden" name="host" value="${escapeHtml(host)}">` : hostField({ host: values.host ?? host, error: errors.host, label: "Which site is this about?", hint: "A domain like example.com." })}
   <div class="hp" aria-hidden="true">
     <label for="company">Leave this empty</label>
@@ -581,6 +604,26 @@ ${embed ? "" : `<p class="note">Run a site? <a href="/start">Put this form on it
 function excerpt(text, limit = 200) {
   const flat = text.replace(/\s+/g, " ").trim();
   return flat.length > limit ? `${flat.slice(0, limit - 1).trimEnd()}…` : flat;
+}
+
+/**
+ * The one count a kept card becomes, named as the owner's digest names it:
+ * the kind, what it was about, the common note, and the week (desk.js compact).
+ */
+function countLine(filing) {
+  const kind = filing.thanked ? "Thanks" : filing.context.slug === NOTE.slug ? "" : filing.context.title;
+  const about = filing.subject?.name || filing.route || filing.path || "";
+  const parts = [kind, about, filing.thread?.name || ""].filter(Boolean);
+  return `${parts.length ? parts.join(" · ") : NOTE.title} · week of ${weekOf(filing.issued)}`;
+}
+
+/** What an inbox keeps of this card: words for three days, then the count; a tap was only ever the count. */
+function keptAccount(filing, display) {
+  const count = `<strong>${escapeHtml(countLine(filing))}</strong>`;
+  if (filing.worded === false) {
+    return `You sent a tap, so there are no words of yours to keep.${filing.from ? " Your name stays on the card for three days, longer if saved." : ""} It counts once: ${count}.`;
+  }
+  return `Your words${filing.from ? " and name" : ""} are kept for three days, longer if ${escapeHtml(display)} saves the card. After that they are deleted and one count remains: ${count}.`;
 }
 
 /**
@@ -645,13 +688,19 @@ ${filing.thread?.stance ? `<section class="stance-reply" aria-labelledby="stance
   <button type="button" class="door" data-share="native" hidden><strong>Share</strong><span>from this device</span></button>
   <a class="door" data-share="post" target="_blank" rel="noopener" href="https://bsky.app/intent/compose?text=${encodeURIComponent(bskyPost)}"><strong>Post</strong><span>on Bluesky${contact.bluesky ? `, mentioning @${escapeHtml(contact.bluesky)}` : ""}</span></a>
   <a class="door" data-share="post" target="_blank" rel="noopener" href="https://x.com/intent/post?text=${encodeURIComponent(xPost)}"><strong>Post</strong><span>on X${contact.x ? `, mentioning @${escapeHtml(contact.x)}` : ""}</span></a>
-  <button type="button" class="door" data-copy="slip"><strong>Copy text</strong><span>as Markdown</span></button>
+  <button type="button" class="door" data-copy="slip" hidden><strong>Copy text</strong><span>as Markdown</span></button>
 </div>
 ${sendTo}
 <p class="note">${filing.stored
-    ? "Kept for three days, longer if they save it. After that it becomes a count, and the words are deleted."
+    ? keptAccount(filing, display)
     : `Nothing was stored. The card lives on this page and in whatever you save or send. Whoever sees it can write their own at ${escapeHtml(address)}.`}</p>
-<pre id="slip" hidden>${escapeHtml(filing.markdown)}</pre>
+<details class="slip">
+  <summary>The card as text</summary>
+  <figure class="codeblock snippet-line">
+    <figcaption><span>Markdown</span></figcaption>
+    <pre id="slip">${escapeHtml(filing.markdown)}</pre>
+  </figure>
+</details>
 <p class="actions"><a class="door" href="${escapeHtml(back)}"><strong>Write another</strong><span>for ${escapeHtml(filing.host)}</span></a></p>`,
   });
 }
@@ -778,7 +827,7 @@ export function renderInbox({ host, config = null, notes = [], summary = { due: 
     ? `<ul class="inbox">${saved.map((n) => inboxCard(host, config, n, `<button type="submit" name="action" value="release">Release</button>`)).join("\n")}</ul>`
     : `<p class="note">Nothing saved yet. Saving keeps a card's words past three days.</p>`;
   const freshList = fresh.length
-    ? `<ul class="inbox">${fresh.map((n) => inboxCard(host, config, n, `<button type="submit" name="action" value="save"${full ? " disabled" : ""}>Save</button>`, { hint: `Counted on ${escapeHtml(compactsOn(n.issued))} unless you save it.`, fresh: isNew(n) })).join("\n")}</ul>`
+    ? `<ul class="inbox">${fresh.map((n) => inboxCard(host, config, n, `<button type="submit" name="action" value="save"${full ? " disabled" : ""}>Save</button>`, { hint: n.worded === false ? `One tap, no written detail. Counted on ${escapeHtml(compactsOn(n.issued))}.` : `Counted on ${escapeHtml(compactsOn(n.issued))} unless you save it.`, fresh: isNew(n) })).join("\n")}</ul>`
     : `<p class="note">No new cards.</p>`;
   const newCount = fresh.filter(isNew).length;
   return layout({

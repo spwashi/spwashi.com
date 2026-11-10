@@ -94,7 +94,7 @@ test('setup fills every codeblock with the domain, kind, and method', async () =
     assert.match(setup, /name=&quot;kind&quot; value=&quot;question&quot;/);
     assert.match(setup, /Question for shop\.example/);
     assert.match(setup, /curl -X POST https:\/\/autonomous\.feedback\/shop\.example/);
-    assert.match(setup, /No configuration applied for shop\.example/);
+    assert.match(setup, /No file found for shop\.example yet/);
     assert.match(setup, /&quot;host&quot;: &quot;shop\.example&quot;/);
     assert.match(setup, /\.nojekyll/);
     assert.match(setup, /value="form" checked/);
@@ -790,5 +790,148 @@ test('the homepage card can send at once, or open the site form with its words, 
     assert.match(await sent.text(), /class="card" id="card"/);
   } finally {
     restore();
+  }
+});
+
+/** A Workers-style default cache, so intake limits and the five-minute config cache run as deployed. */
+function stubCache() {
+  const had = Object.prototype.hasOwnProperty.call(globalThis, 'caches');
+  const real = globalThis.caches;
+  const store = new Map();
+  globalThis.caches = {
+    default: {
+      async match(request) { return store.get(request.url)?.clone(); },
+      async put(request, response) { store.set(request.url, response); },
+    },
+  };
+  return () => { if (had) globalThis.caches = real; else delete globalThis.caches; };
+}
+
+test('a slowed note comes back with its words, choice, name, and page still in the form', async () => {
+  const restoreFetch = stubFetch({ 'maker.example': { ...MAPPED, from: 'optional' } });
+  const restoreCache = stubCache();
+  const words = 'The folio page loads slowly on my phone.';
+  const send = () => get('autonomous.feedback', '/maker.example', form({ subject: 'folios', what: 'kind:broken', note: words, from: 'Maya', path: '/folios/red' }));
+  try {
+    for (let i = 0; i < 8; i += 1) assert.equal((await send()).status, 200);
+    const slowed = await send();
+    assert.equal(slowed.status, 429);
+    const html = await slowed.text();
+    assert.match(html, /Too many notes from this network\. Your note is still here/);
+    assert.match(html, />The folio page loads slowly on my phone\.<\/textarea>/);
+    assert.match(html, /id="from"[^>]*value="Maya"/);
+    assert.match(html, /name="what" value="kind:broken" checked/);
+    assert.match(html, /name="subject" value="folios" checked/);
+    assert.match(html, /On <strong>\/folios\/red<\/strong>/);
+    // The open write page keeps them too, and a JSON caller still gets JSON.
+    for (let i = 0; i < 8; i += 1) await get('autonomous.feedback', '/note', form({ host: 'other.example', note: words }));
+    const open = await get('autonomous.feedback', '/note', form({ host: 'other.example', note: words }));
+    assert.equal(open.status, 429);
+    assert.match(await open.text(), />The folio page loads slowly on my phone\.<\/textarea>/);
+    const api = await get('autonomous.feedback', '/maker.example', json({ note: words }));
+    assert.equal(api.status, 429);
+    assert.equal((await api.json()).error, 'slow_down');
+  } finally {
+    restoreCache();
+    restoreFetch();
+  }
+});
+
+test('a rejected note still shows the page it will send', async () => {
+  const restore = stubFetch({
+    'kept.example': { schema: 'autonomous-feedback.client.v0', host: 'kept.example', routes: [{ name: 'Checkout', path: '/checkout' }] },
+  });
+  try {
+    // A plain form on the site's own page: the Referer names the page, and the note is too short to send.
+    const rejected = await worker.fetch(new Request('https://autonomous.feedback/kept.example', { ...form({ note: 'short' }), headers: { ...form({}).headers, referer: 'https://kept.example/checkout?order=8812' } }));
+    assert.equal(rejected.status, 400);
+    const html = await rejected.text();
+    assert.match(html, /On <strong>Checkout · \/checkout<\/strong>/);
+    assert.match(html, /<summary>Change or clear the page<\/summary>/);
+    assert.match(html, /id="path" name="path" type="text" value="\/checkout"/);
+    assert.doesNotMatch(html, /8812/);
+    // With no page, the question stays one optional line.
+    assert.match(await page('/kept.example', form({ note: 'short' })), /<summary>Which page\? Optional\.<\/summary>/);
+  } finally {
+    restore();
+  }
+});
+
+test('the card says what an inbox keeps: words for three days, then one count; a tap is only ever a count', async () => {
+  const restore = stubFetch({ 'maker.example': { ...MAPPED, queue: { want: true } }, 'ask.example': { schema: 'autonomous-feedback.client.v0', host: 'ask.example', queue: { want: true } } });
+  const env = { DB: memoryDb(), DESK_HOSTS: 'maker.example', INBOX_READ_TOKEN: 'operator-token' };
+  const call = (path, options) => worker.fetch(new Request(`https://autonomous.feedback${path}`, options), env);
+  const monday = weekOf(new Date().toISOString());
+  try {
+    // Beside Send the form stays one courtesy line; the mechanics are on the card and on /privacy.
+    const write = await (await call('/maker.example')).text();
+    assert.match(write, /Goes straight to Maker\. <a href="\/privacy">How notes are kept<\/a>/);
+    const worded = await (await call('/maker.example', form({ subject: 'folios', what: 'kind:broken', note: NOTE }))).text();
+    assert.match(worded, /<h1>Sent to Maker<\/h1>/);
+    assert.match(worded, new RegExp(`Your words are kept for three days, longer if Maker saves the card\\. After that they are deleted and one count remains: <strong>Broken · Folios · week of ${monday}</strong>\\.`));
+    const tap = await (await call('/maker.example', form({ subject: 'folios', what: 'thread:folios:order-by-card' }))).text();
+    assert.match(tap, new RegExp(`You sent a tap, so there are no words of yours to keep\\. It counts once: <strong>Folios · Ordering is by card · week of ${monday}</strong>\\.`));
+    assert.doesNotMatch(tap, /the words are deleted/);
+    const thanks = await (await call('/maker.example', form({ what: 'thanks' }))).text();
+    assert.match(thanks, new RegExp(`It counts once: <strong>Thanks · week of ${monday}</strong>`));
+    // The same count the owner's digest shows.
+    const inbox = await (await call('/maker.example/inbox', { headers: { cookie: 'af_inbox=operator-token' } })).text();
+    assert.match(inbox, /One tap, no written detail\. Counted on \d{4}-\d{2}-\d{2}\./);
+    assert.match(inbox, /Counted on \d{4}-\d{2}-\d{2} unless you save it\./);
+    // Where nothing is kept, the card does not speak of counts.
+    const unkept = await (await call('/ask.example', form({ what: 'kind:broken' }))).text();
+    assert.match(unkept, /Nothing was stored/);
+    assert.doesNotMatch(unkept, /counts once|one count remains/);
+  } finally {
+    restore();
+  }
+});
+
+test('the card can be read and copied as text with script off', async () => {
+  const restore = stubFetch();
+  try {
+    const card = await page('/example.org', form({ kind: 'broken', note: 'The pay button spun, then the page went blank.' }));
+    assert.match(card, /<details class="slip">\s*<summary>The card as text<\/summary>/);
+    assert.match(card, /<pre id="slip"># Broken for example\.org/);
+    assert.doesNotMatch(card, /id="slip" hidden/);
+    // A button that needs script waits for it, like Save image and Share.
+    assert.match(card, /<button type="button" class="door" data-copy="slip" hidden>/);
+    assert.match(CLIENT_SCRIPT, /\[data-copy\]/);
+  } finally {
+    restore();
+  }
+});
+
+test('setup says when no file was found, and checks again at once when asked', async () => {
+  const files = {};
+  const restoreFetch = stubFetch(files);
+  const restoreCache = stubCache();
+  try {
+    const before = await page('/start?host=late.example&how=frame&kind=question');
+    assert.match(before, /<strong>No file found for late\.example yet\.<\/strong> The defaults are in use\./);
+    assert.match(before, /<form method="get" action="\/start" class="recheck">/);
+    assert.match(before, /<input type="hidden" name="how" value="frame"[^>]*>\s*<input type="hidden" name="kind" value="question"[^>]*>/);
+    assert.match(before, /<button type="submit" name="check" value="now" class="secondary">Check again now<\/button>/);
+    // The owner publishes the file. The five-minute cache still answers with the old result.
+    files['late.example'] = { schema: 'autonomous-feedback.client.v0', host: 'late.example', name: 'Late' };
+    assert.match(await page('/start?host=late.example'), /No file found for late\.example yet/);
+    const checked = await page('/start?host=late.example&check=now');
+    assert.match(checked, /<strong>Found a configuration file for late\.example\.<\/strong>/);
+    assert.match(checked, /Checked <a href="https:\/\/late\.example\/\.well-known\/autonomous-feedback\.json">[^<]+<\/a> just now\./);
+    // The fresh result is what every other page now uses.
+    assert.match(await page('/late.example'), /A note for Late/);
+    assert.match(await page('/start?host=late.example'), /Found a configuration file for late\.example/);
+    // A file that could not be read says why, not "not found".
+    files['broken.example'] = { schema: 'autonomous-feedback.client.v0', host: 'elsewhere.example' };
+    const wrong = await page('/start?host=broken.example');
+    assert.match(wrong, /<strong>A file was found for broken\.example, but it was not applied\.<\/strong>/);
+    // Checking again is budgeted like the meter: past the limit, the last result shows with a reason.
+    for (let i = 0; i < 20; i += 1) await get('autonomous.feedback', '/start?host=late.example&check=now');
+    const slowed = await get('autonomous.feedback', '/start?host=late.example&check=now');
+    assert.equal(slowed.status, 200);
+    assert.match(await slowed.text(), /Too many checks from this network\. This is the last result/);
+  } finally {
+    restoreCache();
+    restoreFetch();
   }
 });

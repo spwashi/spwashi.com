@@ -95,7 +95,7 @@ access: .{
 copy_contract: .{
  rule = `Every storage sentence follows deskState. Never tell a writer a card was kept for an owner who cannot read it.`
  write_page = `2026-09-23, creator: storage wording read as hedging; expectations travel by courtesy, and the mechanics live on one page. The form is the card (a live card whose header follows the choices and whose body is the textarea); beside Send, one line: open desk "Goes straight to {site}."; otherwise "You get the card to send {site}." Both link /privacy ("How notes are kept"), which holds the three days, the counts, the name, the readers, and what is never kept.`
- card_page = `stored: "Sent to {site}", the same card stamped Sent; earlier wording: "Kept for {site} for three days, longer if they save it" + "If it is not saved within three days, it becomes a count by page and kind, and its words are deleted"; requested: "has asked for an inbox, but it is not open yet, so this card was not kept"; full: "The inbox … is full"`
+ card_page = `stored: "Sent to {site}", the same card stamped Sent; earlier wording: "Kept for {site} for three days, longer if they save it" + "If it is not saved within three days, it becomes a count by page and kind, and its words are deleted"; requested: "has asked for an inbox, but it is not open yet, so this card was not kept"; full: "The inbox … is full". 2026-11-10: a stored card names the count it becomes, as the digest names it (pages.js countLine; the week from model.js weekOf): worded "Your words are kept for three days, longer if {site} saves the card. After that they are deleted and one count remains: {kind · about · common note · week of Monday}"; a tap "You sent a tap, so there are no words of yours to keep. It counts once: …". The card's text sits under "The card as text" with script off`
  home = `What it costs: any site, free; your site, free; an inbox, on request — "keeps new cards for three days. You save the ones worth keeping; the rest become counts by page and kind."`
  decided_by = `pages.js renderWrite, renderCard, renderHome, configStatus, renderInbox`
 }[reg=facet]
@@ -118,7 +118,7 @@ invariants: #[
  .{ id = `fd-07` ; claim = `An owner key opens only its own host; the file holds only its hash.` ; code = `intake.js deskAccess; config.js inbox.key` ; test = `an owner opens their inbox …; a client file carries only the hash of an inbox key` }[reg=facet],
  .{ id = `fd-08` ; claim = `No key travels in a query string or a public file.` ; code = `index.js bearer_in_query; intake.js rejectPublicSecrets; config.js inbox.key` ; test = `a public file cannot carry an inbox token; the inbox stays locked and old doors stay closed` }[reg=facet],
  .{ id = `fd-09` ; claim = `Only /desk can compact on demand, and only for the operator.` ; code = `index.js handleDesk` ; test = `the operator desk lists every open inbox, previews compaction, and compacts one site` }[reg=facet],
- .{ id = `fd-10` ; claim = `A detected page is shown to the writer before sending, and never carries a query or fragment.` ; code = `model.js refererPath; pages.js routeField` ; test = `the write page names the page the reader came from, when the Referer is the site` }[reg=facet]
+ .{ id = `fd-10` ; claim = `A detected page is shown to the writer before sending, and never carries a query or fragment.` ; code = `model.js refererPath; pages.js routeField` ; test = `the write page names the page the reader came from, when the Referer is the site; a rejected note still shows the page it will send` }[reg=facet]
 ][reg=set]
 
 audit: .{
