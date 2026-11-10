@@ -44,6 +44,7 @@ export function walkStep(href) {
     "/build": ["build", "word", "made"],
     "/specimens": ["shelf", "q", "asked"],
     "/pivot": ["pivot", "line", "made"],
+    "/physics": ["physics", "line", "made"],
     "/constructs": ["constructs"],
     "/forms/": ["forms"],
     "/install": ["install"],

@@ -16,6 +16,7 @@ import { SWITCH_CSS, parserSwitch, switchBanner, switchLoader, switchModulePath 
 import { SPECIMENS_CSS, factshiftHref, specimenById, specimenState, specimensBody } from "./specimens.js";
 import { renderConstructs } from "./constructs.js";
 import { pivotState, renderPivot } from "./pivot.js";
+import { physicsState, renderPhysics } from "./physics.js";
 import { WALK_CSS, walkSection } from "./walk.js";
 import { PINNED_READER, PINNED_RELEASE, SHELL_VERSION, newestPublished, releaseNotice } from "./shell-pin.js";
 import { ROBOTS, sitemap, withRobots } from "./crawl.js";
@@ -633,6 +634,9 @@ async function handleQuest(request, url) {
     response = page(renderConstructs(), { cache: "public, max-age=300" });
   } else if (url.pathname === "/pivot") {
     response = page(renderPivot(pivotState(url.searchParams)), { cache: "public, max-age=300" });
+  } else if (url.pathname === "/physics") {
+    // A line at rest: the worker reads it and draws it still; the page's hand reads with /parser.js.
+    response = page(renderPhysics(physicsState(url.searchParams)), { cache: "public, max-age=300" }, LIVE_CSP);
   } else if (url.pathname === "/canvas") {
     // One short address for a line's canvas: a shelf specimen by id, or any line, opened on factshift.center.
     const line = specimenById(url.searchParams.get("s"))?.line || url.searchParams.get("line") || "";

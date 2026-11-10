@@ -437,7 +437,7 @@ export function pivotBody(state) {
     name: here ? nameOf(here) : "a line you wrote",
     badges: [here ? "on the shelf" : "new", reading.part ? "read in part" : ""],
     body: cardFacts(Object.entries(reading.slots).map(([slot, value]) => [slot, `<code>${escapeHtml(value)}</code>`])),
-    links: [scriptAddress(state.line) ? cardLink(scriptAddress(state.line), "Take it apart") : "", cardLink("/constructs#c-expression", "What each slot is")],
+    links: [scriptAddress(state.line) ? cardLink(scriptAddress(state.line), "Take it apart") : "", cardLink(`/physics?line=${encodeURIComponent(state.line)}`, "Feel it at rest"), cardLink("/constructs#c-expression", "What each slot is")],
   })}
   ${added}${slotHandles(reading, pivots, state)}
   ${operatorBand(state)}

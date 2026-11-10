@@ -4,6 +4,7 @@
 // well-written appendices and samples that show the nuance between forms).
 // Every line opens in the editor and on the pivot; the samples are the
 // example scripts the guide opens. Written static by carry-shelf.mjs.
+import { physicsHref } from "./physics.js";
 import { readSpecimen } from "./specimen-reading.js";
 import { breakable } from "./specimens.js";
 import { EXAMPLES } from "./examples.js";
@@ -68,9 +69,11 @@ const CHOPPED = "garden[care]{\n  seed;\n  water;\n  harvest\n}";
 
 const editHref = (text) => `/build?script=${encodeURIComponent(text)}#reading`;
 const pivotHref = (line) => `/pivot?line=${encodeURIComponent(line)}`;
+/** A form with a body can be felt at rest; a join or a bare word cannot, and gets no link. */
+const restLink = (line) => (physicsHref(line) ? ` <a href="${escapeHtml(physicsHref(line))}">rest</a>` : "");
 
 function row([line, says]) {
-  return `<li><code class="form-line">${breakable(readSpecimen(line).paint)}</code><span class="form-says">${escapeHtml(says)}</span><span class="form-go"><a href="${escapeHtml(editHref(line))}">edit</a> <a href="${escapeHtml(pivotHref(line))}">pivot</a></span></li>`;
+  return `<li><code class="form-line">${breakable(readSpecimen(line).paint)}</code><span class="form-says">${escapeHtml(says)}</span><span class="form-go"><a href="${escapeHtml(editHref(line))}">edit</a> <a href="${escapeHtml(pivotHref(line))}">pivot</a>${restLink(line)}</span></li>`;
 }
 
 export const FORMS_CSS = `.forms-page { display: grid; gap: 1.6rem; }

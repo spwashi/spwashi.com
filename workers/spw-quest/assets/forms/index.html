@@ -48,6 +48,7 @@
     "/build": ["build", "word", "made"],
     "/specimens": ["shelf", "q", "asked"],
     "/pivot": ["pivot", "line", "made"],
+    "/physics": ["physics", "line", "made"],
     "/constructs": ["constructs"],
     "/forms/": ["forms"],
     "/install": ["install"],
@@ -684,7 +685,7 @@
   <main id="main" tabindex="-1"><header class="masthead">
   <a class="brand" href="/">spw.quest</a>
   <nav class="top" aria-label="spw.quest"><a href="/learn">Learn</a><a href="/build">Build</a><a href="/specimens" aria-current="page">Shelf</a><a href="/parser/">Parser</a><a href="/install">Install</a></nav>
-  <nav class="shelf-rooms" aria-label="The shelf"><a href="/specimens">Specimens</a><a href="/constructs">Constructs</a><a href="/pivot">Pivot</a><a href="/forms/" aria-current="page">Forms</a><a href="/arcs/">Arcs</a><a href="/bench/">Bench</a></nav>
+  <nav class="shelf-rooms" aria-label="The shelf"><a href="/specimens">Specimens</a><a href="/constructs">Constructs</a><a href="/pivot">Pivot</a><a href="/physics">Physics</a><a href="/forms/" aria-current="page">Forms</a><a href="/arcs/">Arcs</a><a href="/bench/">Bench</a></nav>
 </header>
 <main class="forms-page">
 <header>
@@ -695,20 +696,20 @@
 <section class="form-set" id="joins" aria-labelledby="joins-title">
   <h2 id="joins-title">How a body holds its parts</h2>
   <ol>
-    <li><code class="form-line">garden<span data-t="b-direction">{</span>seed.<wbr>water<span data-t="b-direction">}<wbr></span></code><span class="form-says">One name. The dot keeps seed.water whole, as a path names one thing.</span><span class="form-go"><a href="/build?script=garden%7Bseed.water%7D#reading">edit</a> <a href="/pivot?line=garden%7Bseed.water%7D">pivot</a></span></li>
-    <li><code class="form-line">garden<span data-t="b-direction">{</span>seed, water<span data-t="b-direction">}<wbr></span></code><span class="form-says">Held together. Both are there at once, and their order says nothing.</span><span class="form-go"><a href="/build?script=garden%7Bseed%2C%20water%7D#reading">edit</a> <a href="/pivot?line=garden%7Bseed%2C%20water%7D">pivot</a></span></li>
-    <li><code class="form-line">garden<span data-t="b-direction">{</span>seed; water<span data-t="b-direction">}<wbr></span></code><span class="form-says">In order. Seed comes first, and the order is part of what it says.</span><span class="form-go"><a href="/build?script=garden%7Bseed%3B%20water%7D#reading">edit</a> <a href="/pivot?line=garden%7Bseed%3B%20water%7D">pivot</a></span></li>
-    <li><code class="form-line">garden<span data-t="b-direction">{</span>seed ~&gt; water<span data-t="b-direction">}<wbr></span></code><span class="form-says">A path. Seed is carried on to water, and the two stay two.</span><span class="form-go"><a href="/build?script=garden%7Bseed%20~%3E%20water%7D#reading">edit</a> <a href="/pivot?line=garden%7Bseed%20~%3E%20water%7D">pivot</a></span></li>
+    <li><code class="form-line">garden<span data-t="b-direction">{</span>seed.<wbr>water<span data-t="b-direction">}<wbr></span></code><span class="form-says">One name. The dot keeps seed.water whole, as a path names one thing.</span><span class="form-go"><a href="/build?script=garden%7Bseed.water%7D#reading">edit</a> <a href="/pivot?line=garden%7Bseed.water%7D">pivot</a> <a href="/physics?line=garden%7Bseed.water%7D">rest</a></span></li>
+    <li><code class="form-line">garden<span data-t="b-direction">{</span>seed, water<span data-t="b-direction">}<wbr></span></code><span class="form-says">Held together. Both are there at once, and their order says nothing.</span><span class="form-go"><a href="/build?script=garden%7Bseed%2C%20water%7D#reading">edit</a> <a href="/pivot?line=garden%7Bseed%2C%20water%7D">pivot</a> <a href="/physics?line=garden%7Bseed%2C%20water%7D">rest</a></span></li>
+    <li><code class="form-line">garden<span data-t="b-direction">{</span>seed; water<span data-t="b-direction">}<wbr></span></code><span class="form-says">In order. Seed comes first, and the order is part of what it says.</span><span class="form-go"><a href="/build?script=garden%7Bseed%3B%20water%7D#reading">edit</a> <a href="/pivot?line=garden%7Bseed%3B%20water%7D">pivot</a> <a href="/physics?line=garden%7Bseed%3B%20water%7D">rest</a></span></li>
+    <li><code class="form-line">garden<span data-t="b-direction">{</span>seed ~&gt; water<span data-t="b-direction">}<wbr></span></code><span class="form-says">A path. Seed is carried on to water, and the two stay two.</span><span class="form-go"><a href="/build?script=garden%7Bseed%20~%3E%20water%7D#reading">edit</a> <a href="/pivot?line=garden%7Bseed%20~%3E%20water%7D">pivot</a> <a href="/physics?line=garden%7Bseed%20~%3E%20water%7D">rest</a></span></li>
   </ol>
 </section>
 <section class="form-set" id="walls" aria-labelledby="walls-title">
   <h2 id="walls-title">Which wall a word sits in</h2>
   <ol>
     <li><code class="form-line">garden<span data-t="b-mode">[</span>care<span data-t="b-mode">]<wbr></span></code><span class="form-says">The lens: the garden, read through care.</span><span class="form-go"><a href="/build?script=garden%5Bcare%5D#reading">edit</a> <a href="/pivot?line=garden%5Bcare%5D">pivot</a></span></li>
-    <li><code class="form-line">garden<span data-t="b-direction">{</span>care<span data-t="b-direction">}<wbr></span></code><span class="form-says">What it holds: care is inside the garden.</span><span class="form-go"><a href="/build?script=garden%7Bcare%7D#reading">edit</a> <a href="/pivot?line=garden%7Bcare%7D">pivot</a></span></li>
+    <li><code class="form-line">garden<span data-t="b-direction">{</span>care<span data-t="b-direction">}<wbr></span></code><span class="form-says">What it holds: care is inside the garden.</span><span class="form-go"><a href="/build?script=garden%7Bcare%7D#reading">edit</a> <a href="/pivot?line=garden%7Bcare%7D">pivot</a> <a href="/physics?line=garden%7Bcare%7D">rest</a></span></li>
     <li><code class="form-line">garden<span data-t="b-scene">(</span>care<span data-t="b-scene">)<wbr></span></code><span class="form-says">The scene: the garden where care is.</span><span class="form-go"><a href="/build?script=garden(care)#reading">edit</a> <a href="/pivot?line=garden(care)">pivot</a></span></li>
     <li><code class="form-line">garden<span data-t="b-concept"><wbr>&lt;</span>care<span data-t="b-concept">&gt;</span></code><span class="form-says">Where it goes: the garden, toward care.</span><span class="form-go"><a href="/build?script=garden%3Ccare%3E#reading">edit</a> <a href="/pivot?line=garden%3Ccare%3E">pivot</a></span></li>
-    <li><code class="form-line">garden<span data-t="b-mode">[</span>care<span data-t="b-mode">]<wbr></span><span data-t="b-direction">{</span>seed<span data-t="b-direction">}<wbr></span><span data-t="b-scene">(</span>spring<span data-t="b-scene">)<wbr></span><span data-t="b-concept"><wbr>&lt;</span>harvest<span data-t="b-concept">&gt;</span></code><span class="form-says">All four read as one sentence: the garden, through care, holding seed, in spring, toward harvest.</span><span class="form-go"><a href="/build?script=garden%5Bcare%5D%7Bseed%7D(spring)%3Charvest%3E#reading">edit</a> <a href="/pivot?line=garden%5Bcare%5D%7Bseed%7D(spring)%3Charvest%3E">pivot</a></span></li>
+    <li><code class="form-line">garden<span data-t="b-mode">[</span>care<span data-t="b-mode">]<wbr></span><span data-t="b-direction">{</span>seed<span data-t="b-direction">}<wbr></span><span data-t="b-scene">(</span>spring<span data-t="b-scene">)<wbr></span><span data-t="b-concept"><wbr>&lt;</span>harvest<span data-t="b-concept">&gt;</span></code><span class="form-says">All four read as one sentence: the garden, through care, holding seed, in spring, toward harvest.</span><span class="form-go"><a href="/build?script=garden%5Bcare%5D%7Bseed%7D(spring)%3Charvest%3E#reading">edit</a> <a href="/pivot?line=garden%5Bcare%5D%7Bseed%7D(spring)%3Charvest%3E">pivot</a> <a href="/physics?line=garden%5Bcare%5D%7Bseed%7D(spring)%3Charvest%3E">rest</a></span></li>
   </ol>
 </section>
 <section class="form-set" id="marks" aria-labelledby="marks-title">
@@ -724,8 +725,8 @@
 <section class="form-set" id="position" aria-labelledby="position-title">
   <h2 id="position-title">Where a mark sits</h2>
   <ol>
-    <li><code class="form-line"><span data-t="wonder">?</span>garden<span data-t="b-direction">{</span>seed<span data-t="b-direction">}<wbr></span></code><span class="form-says">In front of the word, the question takes in the whole line.</span><span class="form-go"><a href="/build?script=%3Fgarden%7Bseed%7D#reading">edit</a> <a href="/pivot?line=%3Fgarden%7Bseed%7D">pivot</a></span></li>
-    <li><code class="form-line">garden<span data-t="b-direction">{</span><span data-t="wonder">?</span>seed<span data-t="b-direction">}<wbr></span></code><span class="form-says">Inside the braces, it asks about the seed alone.</span><span class="form-go"><a href="/build?script=garden%7B%3Fseed%7D#reading">edit</a> <a href="/pivot?line=garden%7B%3Fseed%7D">pivot</a></span></li>
+    <li><code class="form-line"><span data-t="wonder">?</span>garden<span data-t="b-direction">{</span>seed<span data-t="b-direction">}<wbr></span></code><span class="form-says">In front of the word, the question takes in the whole line.</span><span class="form-go"><a href="/build?script=%3Fgarden%7Bseed%7D#reading">edit</a> <a href="/pivot?line=%3Fgarden%7Bseed%7D">pivot</a> <a href="/physics?line=%3Fgarden%7Bseed%7D">rest</a></span></li>
+    <li><code class="form-line">garden<span data-t="b-direction">{</span><span data-t="wonder">?</span>seed<span data-t="b-direction">}<wbr></span></code><span class="form-says">Inside the braces, it asks about the seed alone.</span><span class="form-go"><a href="/build?script=garden%7B%3Fseed%7D#reading">edit</a> <a href="/pivot?line=garden%7B%3Fseed%7D">pivot</a> <a href="/physics?line=garden%7B%3Fseed%7D">rest</a></span></li>
   </ol>
 </section>
 <section class="form-set" id="between" aria-labelledby="between-title">
