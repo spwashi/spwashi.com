@@ -209,6 +209,8 @@ const SHELL = `
     .card-note { margin: 1rem 0 1.1rem; padding: 0 0 0 1rem; border-left: 2px solid var(--accent); font-size: 1.12rem; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }
     .card footer { padding-top: .8rem; border-top: 1px solid var(--line); color: var(--muted); font: .82rem/1.3 ui-monospace, SFMono-Regular, monospace; }
     .card-address { color: var(--fg); }
+    .card-expression { color: var(--muted); font: .78rem/1.3 ui-monospace, SFMono-Regular, monospace; overflow-wrap: anywhere; }
+    .card-expression:empty, .card-expression[hidden] { display: none; }
     .card-stamp:empty { display: none; }
     /* The write form: the type first. Choosing it reveals what will be kept. */
     fieldset.chips { border: 0; margin: 1rem 0 0; padding: 0; }

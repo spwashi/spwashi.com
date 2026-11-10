@@ -106,6 +106,7 @@ function cardMarkup({ context, host, note, issued, id = "", sample = false, name
   ${from ? `<p class="card-from">— ${escapeHtml(from)}</p>` : ""}
   <footer>
     <time datetime="${escapeHtml(issued)}">${escapeHtml(day)}</time>
+    <span class="card-expression">${escapeHtml(context.expression || "")}</span>
     <span class="card-address">${escapeHtml(address)}</span>
   </footer>
   ${sample ? "" : `<p class="card-stamp" data-stamp>${kept ? "Sent" : ""}</p>`}
@@ -163,7 +164,7 @@ export function renderHome(host = "") {
     script: CLIENT_SCRIPT,
     body: `<p class="kicker">autonomous.feedback</p>
 <h1>Tell a website what happened</h1>
-<p class="lede">Name a site and say what was hard or what worked. You get a card to send to whoever runs it, in a message or in a post that names the site.</p>
+<p class="lede">Name a site and say what happened. You keep a card. A reply is not promised.</p>
 <form method="post" action="/note" class="write begin" id="begin">
   <article class="card live" data-live-card aria-label="Your card">
     <header>
@@ -182,13 +183,13 @@ export function renderHome(host = "") {
   <p class="send">
     <button type="submit" name="step" value="send">Send</button>
     <button type="submit" name="step" value="details" class="secondary">Add details first</button>
-    <span class="courtesy">To its owner if they keep an inbox; either way you keep the card.</span>
+    <span class="courtesy">You keep the card. A reply is not promised.</span>
   </p>
 </form>
 <p class="try">Or try one that is set up: <a href="/lore.land">lore.land</a> · <a href="/spw.quest">spw.quest</a></p>
 <section class="owners" aria-labelledby="owners-title">
   <h2 id="owners-title">Run a site?</h2>
-  <p>Put a link, a frame, or a form on it. Readers who write there get a card to send you, by message or in a post that names your site. An optional file fits the form to your site: its parts, the notes you hear most, your answers to them.</p>
+  <p>Put a link on your site. Readers keep a card. A file can name your pages, the notes you hear, and your colours. A reply is still not promised.</p>
   <form method="get" action="/start" class="panel">
     ${hostField({ host, label: "Your site" })}
     <figure class="codeblock snippet-line">
@@ -509,7 +510,7 @@ export function renderWrite({ context, host = "", lockHost = false, embed = fals
 
   const kindCaption = aboutSite ? "What happened on the site" : (subjects.some((sub) => sub.threads.length) ? "Or pick one" : "Pick one, or just write");
   const kinds = kindsShown.map((c) => `<label class="chip" data-kind="${c.slug}">
-      <input type="radio" name="what" value="kind:${c.slug}"${selected?.slug === c.slug && !chosenThread && !thanked ? " checked" : ""} data-kind-title="${escapeHtml(c.title)}" data-prompt="${escapeHtml(c.prompt)}" data-body="${escapeHtml(c.tap)}">
+      <input type="radio" name="what" value="kind:${c.slug}"${selected?.slug === c.slug && !chosenThread && !thanked ? " checked" : ""} data-kind-title="${escapeHtml(c.title)}" data-expression="${escapeHtml(c.expression)}" data-prompt="${escapeHtml(c.prompt)}" data-body="${escapeHtml(c.tap)}">
       <span>${escapeHtml(c.title)}</span>
     </label>`).join("\n      ");
   const askBlocks = subjects.filter((sub) => sub.asks.length).map((sub) => `<details class="asks" data-subject="${escapeHtml(sub.id)}"${sub.asks.some((_, i) => values.asks?.[i]) ? " open" : ""}>
@@ -538,10 +539,10 @@ export function renderWrite({ context, host = "", lockHost = false, embed = fals
   const fromLine = site.from === "off" ? "" : `<p class="card-from-line"><label for="from" class="sr-only">Your name or handle</label>— <input id="from" name="from" type="text" value="${escapeHtml(values.from ?? "")}" maxlength="80" autocomplete="nickname" placeholder="${site.from === "required" ? "your name" : "your name, if you like"}"${site.from === "required" ? " required" : ""}${errors.from ? ` aria-invalid="true"` : ""}></p>`;
   const button = site.button || (desk === "open" ? `Send to ${display}` : "Make my card");
   const courtesy = desk === "open"
-    ? `Goes straight to ${escapeHtml(display)}.`
+    ? `Goes straight to ${escapeHtml(display)}. A reply is not promised.`
     : lockHost
-      ? `You get the card to send ${escapeHtml(display)}.`
-      : "You get the card to send.";
+      ? `You keep the card for ${escapeHtml(display)}. A reply is not promised.`
+      : "You keep the card. A reply is not promised.";
   return layout({
     title: `${heading} — autonomous.feedback`,
     description: lockHost ? `Say what happened on ${host}, in a tap or a few words.` : "Say what happened on a site, in a tap or a few words.",
@@ -564,7 +565,7 @@ ${summary}
       <p class="row-caption" id="what-kinds">${kindCaption}</p>
       <div class="row">
       ${kinds}
-      ${kindsShown.some((c) => c.slug === "appreciation") ? `<label class="chip"><input type="radio" name="what" value="thanks" data-kind-title="${escapeHtml(kindsShown.find((c) => c.slug === "appreciation")?.title || "Appreciation")}" data-body="Thanks."${thanked ? " checked" : ""}> <span>Just saying thanks</span></label>` : ""}
+      ${kindsShown.some((c) => c.slug === "appreciation") ? `<label class="chip"><input type="radio" name="what" value="thanks" data-kind-title="${escapeHtml(kindsShown.find((c) => c.slug === "appreciation")?.title || "Appreciation")}" data-expression="${escapeHtml(kindsShown.find((c) => c.slug === "appreciation")?.expression || "")}" data-body="Thanks."${thanked ? " checked" : ""}> <span>Just saying thanks</span></label>` : ""}
       </div>
     </div>
     ${aboutSite ? threadRows : ""}
@@ -576,6 +577,7 @@ ${summary}
   <article class="card live" data-live-card aria-label="Your card">
     <header>
       <span class="card-kind" data-live="kind">${escapeHtml(cardKind)}</span>
+      <span class="card-expression" data-live="expression"${selected ? "" : " hidden"}>${escapeHtml(selected ? context.expression : "")}</span>
       <span class="card-site">${escapeHtml(display || "your site")}</span>
       <span class="card-subject" data-live="about"${cardAbout ? "" : " hidden"}>${escapeHtml(cardAbout)}</span>
     </header>
