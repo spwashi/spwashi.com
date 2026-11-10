@@ -39,6 +39,7 @@ fixity = "tending"
  >>[2026-11-08 10:58] creator — two more notes. Developing the granularity and alignment of the plans is valuable for foresight and a communicable backlog (plans README, snapshot 2026-11-08). lore.land's own plans, PLAN.A to PLAN.E in its repo, would ideally develop that domain's theory and creative utility aspirationally; recorded as the lore.land wonder's aim.
  >>[2026-11-08 11:17] probe — wonder_ecosystem_lore_land_support: lore-land-support.spw surveys both repos. The expectation holds: lore.land bundles spw-seed and keeps four operator tables, a sigil-color table and six line readers of its own, and build:peer-kit reaches only spw-quest here. Ranked carries: seed's reader instead of the whole seed (27,436 B against 133,782 B gzip, highlighter included), self-hosted fonts in place of an unversioned CDN font, and one operator descriptor upstream; the #spw64 codec belongs upstream too. lore.land keeps its canon, plans, palettes, display font, story grammar and tooling. Two stale lines handed back: spwashi.com says lore.land has thirteen chapters, and lore.land has fifteen chapter folders.
  >>[2026-11-08 13:36] plan — lore-land-plans.spw reads lore.land's PLAN.A through PLAN.E as five theories: one row for a sigil, a claim that names what would prove it wrong, words staying in the light tree, a typed glide as narration, and a lesson of six seats over three clocks. Each owner plan keeps its next slice and holds one grain. Support writes this site, and lore.land stays in its own repo. Plan C's synthesis and Plan D's Firefox track sit outside this reading.
+ >>[2026-11-10 11:14] note — lore-land-plans.spw#value gives this plan its grain: a citeable line, the folio archive as provenance, beside lore.land's L18. S4a stays next.
 }
 
 ^"s0_rows"{  # owner plan text the tree no longer matches, measured 2026-10-25
@@ -76,5 +77,5 @@ fixity = "tending"
  ~#next_commit: "S4a, one paint: spw.quest's file reader calls spw-highlight through the peer kit, once the creator answers the first-portable wonder"
  ~#files_hot: "scripts/build-peer-kit.mjs, workers/spw-quest/src/file-reader.js, public/js/semantic/spw-highlight.js"
  ~#gate: "the creator's answer to wonder_site_starter_first_portable for S4; S5 and the playground's look are also the creator's"
- ~#last_stream: "2026-11-08"
+ ~#last_stream: "2026-11-10"
 }

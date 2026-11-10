@@ -28,6 +28,7 @@ contents = #[
   ~"./lore-land-plans.spw#roots",
   ~"./lore-land-plans.spw#owners",
   ~"./lore-land-plans.spw#grains",
+  ~"./lore-land-plans.spw#value",
   ~"./lore-land-plans.spw#relay",
 ][reg=set]
 
@@ -129,6 +130,24 @@ contents = #[
   character = `Read .spw/caches/character-constraint-onboarding-2026-11.spw. The ask card and #contact-intake stay as written. The check is which of the character sheet's existing fields are the goal and the limit. lore.land may consult that cache and the assets it names. It does not receive a copy of them from this note.`
 }[reg=facet]
 
+^"value"{
+  read = `2026-11-10. Academic value is a sentence someone can cite, with a file that can refute it. Market value is something someone can finish, say, or keep, on a ground that stays free. lore.land's PLAN.F still marks f3, f4, f5, f6, f7, f8, and f11 as next. f13, the three mechanics, landed 2026-11-09. PLAN.E still holds L09 through L18 as next. Those stones stay in that repo. Each line here names this site's owner and leaves its next commit where it was.`
+  ecosystem = `Academic: a line is this site's when it cites a file here. Market: the folio archive is the provenance link, and the peer kit still reaches only spw.quest. Beside lore.land's L18 and PLAN.F provenance. Next commit stays S4a.`
+  copy = `Academic: variant zero is the sentence a lens can weight and must leave in the HTML. Market: the sentence a reader can say back. Beside PLAN.E's canonical prose and PLAN.F's room as the prose unit. Next word pass stays R3.`
+  literacy = `Academic: a lesson has six seats, and a rung is done when the next rung can stand on it. Market: one board a reader can pin a card to. Beside L10 and L22. Next commit stays the Inktober shelf.`
+  inquiry = `Academic: an answer names the one alternative left in the set. Market: a claim someone can repeat. Beside f6, a proposal the parser reads before a person does. Next commit stays the settled-wonder answers.`
+  operators = `Academic: the views share one table, and five names still part. Market: a sigil whose move a reader can say. Beside PLAN.A's one row, and f5, findings that travel upstream. Next commit stays the @play and ~services read.`
+  promo = `Academic: three clocks share the static forecast. Market: a close a reader can keep. A notice count is a measure, and it is not a streak to buy. Beside the stones on the 13th and the 26th. Next commit stays P1. Unlock weights stay in lore.land.`
+  folio = `Academic: a folio says where it opens. Market: the sustenance is the folio. lore.land's price spell is f8, and it is not copied here. A reader's marks stay out of inventory. Beside PLAN.F provenance. Next commit stays 2026-W45's five.`
+  gesture = `Academic: a change to a later visit ships with a plain-words note. Market: nobody loses the gesture they had. Beside PLAN.E's continuity and the premium test. Next commit stays the settings passage.`
+  still = `Academic: a still carries the page's own line. Market: a face someone can share and still say. Beside L11. Next commit stays slice 1. The journey question stays gated.`
+  brace = `Academic: both brace orders parse. Accumulate and discharge is PLAN.A's reading of the pair. Market: a pin that keeps the expression it was made with. Beside that brace branch. Next commit stays slice 2a.`
+  region = `Academic: weather crosses a host, and furniture stops at the edge. Market: a shape someone can point at with motion off. Beside PLAN.C's weather and furniture, unread past the synthesis. Next commit stays the shape tokens.`
+  motion = `Academic: a typed glide narrates, and a role change stays a step. Market: with motion off, the kind is still tellable. Beside PLAN.D's glide, unread past the Firefox track. Next commit stays the badge band.`
+  tooling = `Academic: the receipt is the run someone can cite, sha and verdict included. Market: the paste line is the token someone can carry. Beside f4, meaning before files, and f7, a marks card a reader pastes. The archive of agentic-dev-contracts stays next.`
+  character = `Academic: one sheet holds a goal and a limit. Market: a reply is not promised. lore.land may consult the character cache. The ask card stays as written.`
+}[reg=facet]
+
 ^"unread"{
   plan_c = `PLAN.C's synthesis and governance tail was left. Claims in this file stop before that tail.`
   plan_d = `PLAN.D's Firefox track and its final adoption matrix were left. Claims in this file stop before that track.`
@@ -137,7 +156,7 @@ contents = #[
 ^"relay"{
   rule = `Name one axis. Pick one claim. Read the cited file. Move one step: seed, sketch, probe, or landed. An earlier log line stays as it was written.`
   this_site = `A step here changes a plan in this repo. A step in lore.land stays in lore.land.`
-  log = `2026-11-08. The axis is the reading. No patch was opened. S4a, R3, H1, the settings passage, the badge band, screenshot slice 1, and folio slice 4 stay where their owners left them. 2026-11-10. PLAN.E and PLAN.F's premium were read for progress: one precipitate, one sentence, a try that says what nobody loses. PLAN.C and PLAN.D stay unread. lore.land will consult this site for plans and production assets. The character cache names which. lore.land was not edited.`
+  log = `2026-11-08. The axis is the reading. No patch was opened. S4a, R3, H1, the settings passage, the badge band, screenshot slice 1, and folio slice 4 stay where their owners left them. 2026-11-10. PLAN.E and PLAN.F's premium were read for progress: one precipitate, one sentence, a try that says what nobody loses. PLAN.C and PLAN.D stay unread. lore.land will consult this site for plans and production assets. The character cache names which. lore.land was not edited. 2026-11-10 11:14. #value gives each owner an academic sentence, a market sentence, and the still-open lore.land stone beside it. f3, f4, f5, f6, f7, f8, and f11 stay next in that repo. No next commit moved.`
 }[reg=facet]
 
 #>wonder_lore_plans_variant_zero
