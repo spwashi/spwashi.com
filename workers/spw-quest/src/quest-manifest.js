@@ -104,6 +104,8 @@ export function questAppInstall() {
   if (matchMedia("(display-mode: standalone)").matches || navigator.standalone === true) {
     section.querySelector("[data-app-here]").hidden = false;
     section.querySelector(".app-ways").hidden = true;
+    const offer = section.querySelector("[data-app-offer]");
+    if (offer) offer.hidden = true;
     return;
   }
   const offer = section.querySelector("[data-app-offer]");
@@ -155,13 +157,23 @@ export function appInstallSection() {
 }
 
 export const APP_INSTALL_CSS = `.phone { margin: 0 0 2.4rem; padding: 0 0 1.6rem; border-bottom: 1px solid var(--line); }
-    .phone .app-offer button { margin: .2rem 0 .4rem; }
-    .app-ways { display: grid; gap: .5rem; margin: .9rem 0; padding: 0; list-style: none; }
-    .app-ways li { margin: 0; padding: .7rem .9rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
-    .app-ways li > span:not(.here-tag) { display: block; margin-top: .2rem; }
-    .app-ways li.here { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); }
-    .app-ways .here-tag { margin-left: .4rem; color: var(--accent); font: 600 .72rem/1 var(--font); letter-spacing: .06em; text-transform: uppercase; }
+    .phone [data-app-here] { display: flex; align-items: baseline; gap: .6rem; margin: .8rem 0 1.2rem; padding: .85rem 1.15rem; border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line)); border-radius: var(--radius); background: color-mix(in srgb, var(--accent) 8%, var(--surface)); color: var(--fg); font-size: .95rem; font-weight: 500; box-shadow: 0 2px 10px -2px color-mix(in srgb, var(--accent) 15%, transparent); }
+    .phone [data-app-here]::before { content: "✓"; display: inline-flex; align-items: center; justify-content: center; width: 1.35rem; height: 1.35rem; border-radius: var(--pill); background: var(--accent); color: var(--field); font: 700 .75rem/1 var(--mono); flex: none; }
+    .phone .app-offer { margin: .6rem 0 .9rem; }
+    .phone .app-offer button { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; margin: .2rem 0 .4rem; padding: .4rem 1.2rem; border: 1px solid color-mix(in srgb, var(--accent) 60%, var(--edge)); border-radius: var(--pill); background: color-mix(in srgb, var(--accent) 14%, var(--surface)); color: var(--accent); font: 600 .95rem/1 var(--font); cursor: pointer; box-shadow: 0 2px 8px -2px color-mix(in srgb, var(--accent) 25%, transparent); transition: transform .14s ease, background-color .14s ease, border-color .14s ease, box-shadow .14s ease; }
+    .phone .app-offer button::before { content: "+"; display: inline-flex; align-items: center; justify-content: center; width: 1.2rem; height: 1.2rem; border-radius: var(--pill); background: var(--accent); color: var(--field); font: 700 .85rem/1 var(--mono); }
+    .phone .app-offer button:hover, .phone .app-offer button:focus-visible { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 22%, var(--surface)); transform: translateY(-1px); box-shadow: 0 4px 14px -2px color-mix(in srgb, var(--accent) 35%, transparent); }
+    .phone .app-offer button:active { transform: translateY(1px); box-shadow: none; }
+    .app-ways { display: grid; gap: .65rem; margin: .9rem 0; padding: 0; list-style: none; }
+    .app-ways li { margin: 0; padding: .85rem 1.1rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); box-shadow: 0 1px 3px rgba(0, 0, 0, .03); transition: border-color .16s ease, transform .16s ease, box-shadow .16s ease; }
+    .app-ways li:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); transform: translateY(-1px); box-shadow: 0 4px 12px -2px rgba(0, 0, 0, .05); }
+    .app-ways li > span:not(.here-tag) { display: block; margin-top: .25rem; }
+    .app-ways li.here { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent), 0 2px 12px -2px color-mix(in srgb, var(--accent) 18%, transparent); background: color-mix(in srgb, var(--accent) 5%, var(--surface)); }
+    .app-ways .here-tag { display: inline-flex; align-items: center; margin-left: .5rem; padding: .15rem .5rem; border-radius: var(--pill); background: color-mix(in srgb, var(--accent) 14%, var(--surface)); border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); color: var(--accent); font: 600 .7rem/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; }
     .app-ways code { overflow-wrap: anywhere; }
-    .app-ways li > .app-send { display: flex; flex-wrap: wrap; gap: .3rem; margin: .3rem 0 0 -.75rem; }
+    .app-ways li > .app-send { display: flex; flex-wrap: wrap; gap: .35rem; margin: .55rem 0 0; }
+    .app-ways li > .app-send .quiet-button { border: 1px solid color-mix(in srgb, var(--line) 80%, transparent); background: color-mix(in srgb, var(--surface) 80%, transparent); border-radius: var(--pill); }
+    .app-ways li > .app-send .quiet-button:hover { border-color: var(--accent); background: var(--accent-soft); }
+    .phone [data-app-said] { margin: .8rem 0; padding: .75rem 1rem; border-radius: var(--radius); background: color-mix(in srgb, var(--accent) 10%, var(--surface)); border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--line)); color: var(--fg); font-weight: 500; font-size: .92rem; }
     @media (pointer: coarse) { .app-send .quiet-button { min-height: 44px; } }
     html:not(.js) .app-send { display: none; }`;

@@ -55,6 +55,13 @@ export function registerShell() {
   navigator.serviceWorker.addEventListener("message", (event) => {
     if (event.data && event.data.type === "pin-mismatch") line("The file at this address does not match the shell's pin.");
   });
+  window.addEventListener("offline", () => {
+    line("You are reading offline. Pages you have opened and your walk are still here.");
+  });
+  window.addEventListener("online", () => {
+    const node = document.getElementById("shell-line");
+    if (node && node.textContent.includes("offline")) node.remove();
+  });
   const start = () => navigator.serviceWorker.register("/sw.js", { updateViaCache: "none" }).then((registration) => {
     registration.update().catch(() => {});
     const tell = () => {
