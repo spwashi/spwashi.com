@@ -1,14 +1,14 @@
 # Plan: spw-quest
 
-**Status 2026-11-06.** Live since the creator's deploy of 2026-11-05 (the Wrangler version is in wip.spw, 22:45): the guide with its device note, `/learn`, `/build`, `/specimens`, `/constructs` and `/pivot`; K's rooms are live on spwashi.com's domain page. On main and not deployed: L, the slot-order bridge, and M's first half, the body turns (`9f2e3af4`, `d3dcda9f`). Deploying them is the creator's call. Next: M2, the walk trail, then N and O, each cut to one session below. P and Q wait on a question in brace-semantics. The note-shell design's PR 2 (pin the reader) now has its precondition, a deployed note.
+**Status 2026-11-10.** Live from the creator's deploy of 2026-11-07 (the Wrangler version is in wip.spw): the guide, `/learn`, `/build`, `/specimens`, `/constructs`, `/pivot` and Forms. Nothing on main after that deploy is deployed; since 2026-11-10 that includes the line in hand (`cd0c0012`, below) and the genre rules the site's parser tool now shares with this worker's reading (`3dc3dd24`). M2, the walk trail, landed in `584ac7eb` on 2026-11-06. Deploying is the creator's call. Next: the creator's look at the hand at 390 px, then N2 and O1, each cut to one session below. P and Q wait on a question in brace-semantics.
 
 **Related:** [workers-wonder-kit](../workers-wonder-kit/PLAN.md) (shared worker shell) · [spw-inquiry-loop](../spw-inquiry-loop/PLAN.md) (the parser's arrival in the site) · [ecosystem-architecture](../ecosystem-architecture/PLAN.md) (S3 put the worker on the site's reader bundle; S4 is the query instrument travelling) · [upstream workbench asks](../../../.spw/reviews/upstream-workbench-recommendations.spw) (`week_2026_10_11`).
 
 ## Contour, not next (2026-11-10)
 
-M2 stays the next slice. A feedback line is not a room in the guide. `/.well-known/autonomous-feedback.json` is the seat this worker already has. After M2, one specimen on the shelf may hold a genre and a line, so a visitor can form a taste without the form moving here. Elaboration of a sent note is `/pivot` for one change, and factshift.center for the layout. The record is [feedback-contour-2026-11](../../../.spw/caches/feedback-contour-2026-11.spw). The file this worker already serves keeps `schema` `autonomous-feedback.client.v0`. An optional edition, `2026-11.A` for the first change of a month, is held in [feedback-well-known-2026-11](../../../.spw/caches/feedback-well-known-2026-11.spw) and is not read yet.
+M2 landed in `584ac7eb`, so the specimen below is no longer waiting on it. A feedback line is not a room in the guide. `/.well-known/autonomous-feedback.json` is the seat this worker already has. After M2, one specimen on the shelf may hold a genre and a line, so a visitor can form a taste without the form moving here. Elaboration of a sent note is `/pivot` for one change, and factshift.center for the layout. The record is [feedback-contour-2026-11](../../../.spw/caches/feedback-contour-2026-11.spw). The file this worker already serves keeps `schema` `autonomous-feedback.client.v0`. An optional edition, `2026-11.A` for the first change of a month, is held in [feedback-well-known-2026-11](../../../.spw/caches/feedback-well-known-2026-11.spw) and is not read yet.
 
-## The line in hand (2026-11-10, in the working tree, not committed or deployed)
+## The line in hand (2026-11-10, `cd0c0012`, not deployed)
 
 The creator, through one sitting: improve Spw navigation and mutation ease across spw.quest; the build tooling "feels inauthentic with respect to the actual usage or mental model of editing Spw", so consider "a more inline or live mutation concept"; activate a feature and scroll between lines, across modes, or through nested trees; frame navigation of lines between loaded documents; joins that clarify the featured scripts; more expressions linking to factshift.center; memory across page components on Learn.
 
@@ -18,7 +18,8 @@ operation: align (the editor with how a line is actually changed: in place, one 
 - **Scripts off:** on `/build` the bar's parts are links to the slot rows below; on the guide the bar is hidden. The slot rows stay, as the scripts-off form.
 - **Files that join.** Nine paths between the guide's fourteen files (`src/examples.js`), some naming a line (`./themes.spw#matte`). A reading's *Points to* opens that file in place and lands the hand on the line; *Pointed to by* is the edge back. `/?example=…&at=…` is the address. Each mark's card on the guide says how often the open file uses it.
 - **Elsewhere.** `/pivot`'s own box keeps the walk when a line is changed in it. `/learn?word=` carries one word through the panels where the quest says `door` (N1's first half; `steps.js` stays verbatim), offered from the line last held (`spw.quest.hand/1`, this browser only). A panel's line goes on to `/pivot` and the canvas; the pivot's line and the constructs' pressed lines open on the canvas too.
-- **Tests:** `test/hand.test.mjs` (7). Not seen in a browser: headless is blocked in the agent's sandbox, so the page script was parsed and its kit run from its own text, and the feel is unreviewed.
+- **Genre rules, said once.** The three questions this reading asks a file of a known kind (a log's entries, a question's probe, a change record's check) are also `public/js/semantic/spw-genre-checks.js`, which `/tools/spw-parser/` shows with the reason for each rule (`3dc3dd24`). `fileKit` keeps its own copy because it travels into the page by `toString`; `test/genre.test.mjs` holds the sentences equal over the fourteen files. When `fileKit` takes readers as arguments (the plugin seam, below), the module can be the one copy.
+- **Tests:** `test/hand.test.mjs` (7) and `test/genre.test.mjs` (2); 128 in seventeen files on 2026-11-10. Not seen in a browser: headless is blocked in the agent's sandbox, so the page script was parsed and its kit run from its own text, and the feel is unreviewed.
 
 Calls that are the creator's:
 - whether the slot rows on `/build` fold away or retire once the hand has been felt at 390 px;
@@ -68,7 +69,7 @@ The visitor is treated as already onboarded, from spwashi.com or from an LLM sum
 
 Each is one session and one commit. None deploys; deploy is the creator's Wrangler step.
 
-**M2. A walk trail on `/pivot`.**
+**M2. A walk trail on `/pivot`.** *Landed 2026-11-06, `584ac7eb`: `?t=` keeps five steps, drawn as `origin ~> step ~> now`. Since `cd0c0012` the page's own box keeps the trail too. The lines below are the slice as it was cut.*
 - Touches `workers/spw-quest/src/pivot.js` (`pivotState`, `pivotHref`, `pivotBody`) and `workers/spw-quest/test/constructs.test.mjs`.
 - `?trail=` keeps the last three to five lines walked, each cut to `PIVOT_LIMIT`, drawn at the top of the page as steps to return to. Under them is the ground-then-edge between where the walk began and where it is. `compareSpecimens` in `src/specimens.js` reads two shelf specimens that way; a typed line gets its reading from `readSpecimen` in `src/specimen-reading.js`, as `pivotsOf` already does. `&from=` stays the one step back. *Open this walk in Build* sends it to `/build?script=`, which works with scripts off.
 - A proposal to make it teach: write the trail as the relay it is, `origin ~> step ~> now`. That is the same `~>` the body turn calls "make the parts a path", so a kept walk is a line the shelf can read.

@@ -76,7 +76,7 @@ fixity = "tending"
 ^"cache"{
  ~#status: "waiting on the creator"
  ~#next_commit: "S4a, one paint: spw.quest's file reader calls spw-highlight through the peer kit, once the creator answers the first-portable wonder"
- ~#files_hot: "scripts/build-peer-kit.mjs, workers/spw-quest/src/file-reader.js, public/js/semantic/spw-highlight.js"
+ ~#files_hot: "scripts/build-peer-kit.mjs, workers/spw-quest/src/file-reader.js (paint, and since cd0c0012 the hand over it), public/js/semantic/spw-highlight.js, public/js/semantic/spw-genre-checks.js"
  ~#gate: "the creator's answer to wonder_site_starter_first_portable for S4; S5 and the playground's look are also the creator's"
  ~#last_stream: "2026-11-10"
 }

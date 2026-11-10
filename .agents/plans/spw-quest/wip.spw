@@ -231,8 +231,8 @@ fixity = "tending"
 
 ^"cache"{
  ~#status: "live from the 2026-11-07 deploy (Wrangler 28e829de at d24254f0): Forms, side by side, and the copy cut toward scripts and editing; /build and the guide carry scripts to factshift.center as #spw64= base64url, and /build reads one back"
- ~#next_commit: "the forms appendix grows by the creator's reading; /build and the guide now carry scripts to factshift.center by #spw64= and /build reads one back"
- ~#files_hot: "workers/spw-quest/src/pivot.js, workers/spw-quest/src/specimens.js, workers/spw-quest/test/constructs.test.mjs"
- ~#gate: "the creator's look at the < & > instrument in a browser: the sideways swipe against brace-semantics §D's up and down; P and Q wait on brace-semantics#wonder_brace_semantics_highlighter_then_now"
- ~#last_stream: "2026-11-06"
+ ~#next_commit: "the creator's look at the line in hand at 390 px (cd0c0012, on main, not deployed); then N2, keep the finished quest"
+ ~#files_hot: "workers/spw-quest/src/file-reader.js, workers/spw-quest/src/index.js, workers/spw-quest/test/hand.test.mjs, public/js/semantic/spw-genre-checks.js"
+ ~#gate: "the creator's calls on the hand: whether the slot rows on /build fold or retire, whether the hand sits on the guide's first screen, and the wording of each consequence; the < & > swipe against brace-semantics §D and P and Q still wait on brace-semantics#wonder_brace_semantics_highlighter_then_now"
+ ~#last_stream: "2026-11-10"
 }
