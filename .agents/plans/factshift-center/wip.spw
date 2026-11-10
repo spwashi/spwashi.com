@@ -109,6 +109,7 @@ fixity = "tending"
  >>[2026-11-09 11:25] land — deployed once Cloudflare's Workers incident reached monitoring: factshift.center as Wrangler version 2fbb2287 (snapshot 23585bf3, app c4b0ca1, carrying bd2e7ad's hand on a body and summaries with the overflow fixed), spw.quest as 86d81903 (1334c790's fields one body deep and five examples). Live: the canvas serves main-pfv9emez.js as carried; garden[care]{seed, water[deep]{roots, rain}, sun}(atlas)<person> draws two wells titled body under the title garden[care]{…}(atlas)<person>; word { more holds with no exception; spw.quest's syntax shows nest and its shape shelf{chip{…}, card{…}}, loops its relay.
  >>[2026-11-10 03:55] implement — the creator asked to improve the design of the menus; the [...] menu, in the app's working tree on c4b0ca1, uncommitted (five files: ui/hotkey-buttons.ts, init/hotkeys/keystrokes.ts, widgets/hotkey-menu.scss, interaction/tool-palette.scss, ts/types/global.d.ts). A category is said once per run of rows that share it, so the left edge reads as clusters; a row's › counts its verbs and opens them under the row, each with its shortcut, and a press there is done and becomes the row's verb; a line at the foot says what the last press did; the list is one grid, so the buttons keep one right edge on a desktop; category, count and shortcut text read at 5.5:1. No row or verb is renamed and =menu lines read as before. Headless against a build of the working tree at 390 with touch and 1366 with keys: one right edge, no page widening, forces opens to eight, two taps turn charge off and on with the receipt following, a swipe still turns a row, the selection's thirteen verbs scroll by finger, Escape closes the open row and then the menu, no exceptions; tsc and vite build pass. Not carried into the snapshot and not deployed. Also interaction/tool-palette.scss: on a desktop the tap verbs' palette opened under the mark at home with link, grow and part of shrink behind [...]; its left hold now steps past [...] while the mark is in the lower half (three verbs behind before, none after; the phone unchanged). The creator's: whether › opens where it used to turn, the rules' weight, the receipt's wording. TOOLS.md, Built: clusters, an open row, and a receipt.
  >>[2026-11-10 11:25] note — factshift-composition-2026-11.spw holds the canvas as a conversational frame that links to a blog or a story about the subject. E1, or G1's demo, stays next. The menu files stay uncommitted.
+ >>[2026-11-10 11:51] plan — The menu commit stands. Next sitting is TOOLS.md: line navigation clarity, document pasting and navigation, font sizes, then frame and button tuning, in the app. Spw-native payload and expansion stay later. E1 and G1 follow this sitting. The snapshot stays uncarried.
 }
 
 ^"open"{
@@ -120,8 +121,8 @@ fixity = "tending"
 
 ^"cache"{
  ~#status: "aligning"
- ~#next_commit: "E1, a selection in the prompt as the tools' target (TOOLS.md, The canvas's ground), or G1's demo"
- ~#files_hot: ".agents/plans/factshift-center/PLAN.md, .agents/plans/factshift-center/INTERACTION.md, .agents/plans/factshift-center/wip.spw"
+ ~#next_commit: "TOOLS.md Next sitting, in the app: line navigation clarity, then document paste, then font sizes, then frame and button tuning. E1 and G1 follow. Leave the snapshot."
+ ~#files_hot: ".agents/plans/factshift-center/TOOLS.md, .agents/plans/factshift-center/PLAN.md, .agents/plans/factshift-center/wip.spw"
  ~#gate: "the creator names who writes the first sheet; the projection says the line back before line-anatomy is retired"
  ~#last_stream: "2026-11-10"
 }

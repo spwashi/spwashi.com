@@ -359,7 +359,7 @@ The menu's families already carry charge words: forces bonk, nodes boon and bane
 
 **Built: a menu kept by a line** (app 0812cca). `=menu{forces; interface; save}` keeps the `[...]` menu to those rows, in that order, and `=menu{}` shows every row again. The rows go by the names the menu already gives its families: selection, more, fewer, save, store, transport, interface, forces, menu. Nothing is renamed, and the prompt previews it as a setting. ↑ and ↓ move between rows. The four acts, and `=ring` for a node kind's verbs, wait on the creator's reading of the inventory, and on `line-verbs.ts`, which is another session's open file.
 
-**Built: clusters, an open row, and a receipt** (2026-11-10, app working tree on c4b0ca1, uncommitted; the creator: improve the design of the menus). M2 without a new word:
+**Built: clusters, an open row, and a receipt** (2026-11-10, app commit `Let a menu row open its verbs, and say what the last press did`; the creator: improve the design of the menus). M2 without a new word:
 - **Clusters from the categories already there.** The left edge said `[nodes]` four times and `[this]` three. A category is now said once, on the first row of the run that shares it, with a rule and a breath between runs: nodes (more, fewer, save, store), this (transport, interface), line (reading), forces, this (menu). The four acts (make, see, keep, tune) are still the creator's to name; this only stops repeating what was there.
 - **A row opens.** The › counts the row's verbs (`8 ›`) and opens them under the row in their order, on the same right edge, each with its own shortcut, the verb the row shows marked. A press there is done and becomes the row's verb; the row stays open, so several forces can be set without turning eight times. One row is open at a time, and closing the menu closes it. A swipe and ← → still turn the row. The first verb under an open row is labelled with the row's name, the word a `=menu{…}` line takes, which the menu had never shown.
 - **A receipt.** A line at the menu's foot says what the last press did (`* collision off`), in an `output` read politely. It keeps its line whether or not anything is said, so the rows never move for it. A question answered no (empty node cache, fresh interface) reports nothing.
@@ -367,7 +367,7 @@ The menu's families already carry charge words: forces bonk, nodes boon and bane
 - **Keys.** ↑ ↓ walk the rows and an open row's verbs in reading order; → on › opens onto the verb showing; ← closes; Escape closes an open row before it closes the menu.
 - **Checked** headless against a build of the working tree, at 390 with touch and at 1366 with keys: one right edge (326 and 346), no page widening, a tap on › opens forces to eight, charge off then charge on by two taps with the receipt following, a swipe still turns reading, a label tap still presses its row, the selection's thirteen verbs scroll by finger, `=menu{forces; save}` keeps two rows, no exceptions. `tsc --noEmit` and `vite build` pass.
 - **The tap verbs' palette clears `[...]`.** On a desktop, with the mark at home, the palette opened under the mark and *link*, *grow* and part of *shrink* sat behind `[...]`. Its left hold now steps past `[...]` while the mark is in the lower half (`--lens-sy`, `tool-palette.scss`). Headless at 1366: three verbs behind before, none after; the phone's placement is unchanged.
-- **The creator's:** whether › should open (it turned the row before), the cluster rules' weight, and the receipt's wording. Not carried into the snapshot.
+- **Standing for now.** The creator called this an alright decision for now. Whether › opens, the weight of the cluster rule, and the receipt's wording can be revisited later. Spw-native payload and expansion semantics are the later thought under *Next sitting*. The snapshot is still the earlier app revision.
 
 **Built: a map of the thread** (the first step of fractal zoom).
 - The thread's map button draws the thread whole: each line a node, gathered into labelled regions by operator, then lens, then the `#>` frame it falls under. The next press steps the feature, and after the last the map goes and the line held before it comes back.
@@ -401,6 +401,40 @@ Open: names for colors (a color is still a number), solo kept across redraws, an
 - each register a node whose value a tap shows;
 - the events stepped one by one with the action →;
 - the whole written out as a Spw line for the prompt, a list or a table, chosen from the same switch.
+
+## Next sitting (2026-11-10)
+
+The creator, after the menu commit: that decision can stand. This sitting is the app, in `workers/factshift-center/app`. Four checks, in this order. Commit in the app repo. Leave the snapshot and the deploy for the creator. E1 and G1 stay on the board after this sitting. Slice 5 stays the canvas's next cut for the reader. `line-anatomy.ts` stays until the projection can say the line back. `wip.spw` `~#next_commit` points here.
+
+### 1. Line navigation clarity
+
+The thread walker is `‹ n/N ›` beside the window name (`renderStepper` in `src/js/modes/spw/spw-talk.ts`, `.75rem` in `src/stylesheets/modes/spw/thread.scss`). The buttons read sideways. The titles and the keys say above and below: ↑ ↓ in `process-spw-input.ts` call `stepThread` when the caret is at the edge, no modifier is held, and the prompt still equals the held line. A wrapped line steps from its very start or its very end. The hint says `↑ ↓ lines`. The count shows `–/N` when the held line is outside the thread. The stepper hides when the thread has one line. Typed lines show newest first. A loaded file shows in file order, because `loadSpwText` adds expressions in reverse and `shownRows` reverses again. The thread keeps 40 (`LIMIT`).
+
+A person should be able to tell which line is held, which way the next step goes, and whether the next ↑ or ↓ will change the line or move the caret. The mark and the keys agree, and the place is readable beside the line. The thread, the map, and the prompt stay three places. The 40-line limit stays, and the place says when the thread is full.
+
+### 2. Document pasting and navigation
+
+A `.spw` file already becomes thread rows through `loadSpwText`: the load button, a drop anywhere, and a `#spw64` link. The first expression with a structure of its own is held, the thread opens, and the status says how many and from where. Pasting into the prompt (`process-spw-input.ts`) takes an image and sets the page image. Pasting into the title (`src/js/ui/h1.ts`) goes through `processPastedText`, which expects JSON nodes and links.
+
+Pasting a document into the prompt lands the way a dropped file does, and the navigation from check 1 walks it. A paste of one line stays in the prompt. An image stays an image. A title paste of JSON nodes stays a node paste. A `.spw` document stays out of `processPastedText`. After the paste, the place from check 1 says which expression this is.
+
+### 3. Font sizes
+
+The line is `--spw-line-font: 1.15rem` (`src/stylesheets/modes/spw/window.scss`). The words around it are smaller: the thread and the stepper at `.75rem`, the head at `.8rem`, the line/steps switch at `.7rem` (`field.scss`), the menu's category, count, and shortcut at `.7rem` to `.75rem` (`hotkey-menu.scss`), reflex labels down to `.6rem`. Give the words a person reads in order to navigate and to tune one floor, and let the line stay the larger voice. Check at 390 and at 1366. One custom property in the app can carry that floor. The canvas node's own type stays unless it fails the same reading.
+
+### 4. Frame and button tuning
+
+The Spw window is `min(40rem, calc(90vw - 3.5rem))` because the frame is inset 5% and the handle's home is 1.75rem more (`window.scss`). The menu is one four-column grid. The tap palette steps past `[...]` when the mark is in the lower half. Nothing on the page changes the frame's inset or the button's size while a person is looking.
+
+A person can change the frame's inset and the button's size, see the layout follow, put both back, and keep the choice in this browser. The Spw window, the menu, and the focal mark follow the same sizes. The corner jobs stay: title top right, modes top left, `[...]` bottom left, held lines bottom right.
+
+### Later: Spw-native payload and expansion
+
+The menu's open row and its receipt can stand. A later pass can ask whether an expansion (the verbs a row opens) and a payload (what a press carries, and the title's head against the whole line, already split under *The title and its payload*) are said as Spw the line can hold. This sitting leaves that unbuilt.
+
+### Check
+
+In the app: `npm run typecheck`, then a browser pass at 390 and 1366. Paste a short document of several expressions, step through it, read the place, change the frame and the button size, and put them back. `git diff --check`. Commit in the app. A site note can follow once it lands.
 
 *Slices*, each a feel change ending at a demo:
 - E1, selection-aware operator field and reading. It also covers a term selected in the prompt being moved left or right (repositioning terms) and its brace pair turned to the next kind (pivoting braces, the `< & >` move), on the same prime-then-act keys;
