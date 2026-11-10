@@ -1392,6 +1392,40 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
   grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--spw-grid-min-base, 17rem)), 1fr));
 }
 
+/* The four loops carry scans of different shapes. On a wide page each scan
+   sits on the same mat, so the titles start on one line. */
+@media (min-width: 42rem) {
+  :where(#entry-loops .frame-grid--dense) {
+    align-items: stretch;
+  }
+
+  :where(#entry-loops .frame-card--illustrated > a:first-child) {
+    display: flex;
+    flex-direction: column;
+    block-size: 100%;
+  }
+
+  :where(#entry-loops .frame-card--illustrated .frame-card-media) {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 5 / 4;
+    margin: 0;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--component-surface-strong, var(--surface-strong, #fff)) 90%, var(--ink, #0e1214) 10%);
+  }
+
+  :where(#entry-loops .frame-card--illustrated .frame-card-media img) {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: contain;
+    object-position: center;
+  }
+}
+
+:where(#entry-loops .spw-card-doors) {
+  margin-block-start: 0.85rem;
+}
+
 :where([data-spw-feature="home-entrance-sorter"] :is(.spw-panel, .frame-panel)) {
   min-height: auto;
   align-content: start;
