@@ -23398,6 +23398,36 @@ main :where(.frame-card-media, .image-study, .topic-photo-card, figure) figcapti
     transition: none;
   }
 }
+
+/* One line as syntax, then the packages that run it. Ink and brace color
+   follow the reader's settings. The viewBox is the phone width, so a wide
+   page only grows the same drawing. */
+:where(.workbench-dimensions) {
+  display: block;
+  inline-size: 100%;
+  max-inline-size: 22rem;
+  block-size: auto;
+  color: var(--ink, currentColor);
+}
+
+:where(.workbench-dimensions text) {
+  fill: currentColor;
+  font-family: var(--site-mono-font, ui-monospace, monospace);
+}
+
+:where(.workbench-dimensions .dim-open) {
+  fill: var(--grammar-objective-brace-color);
+}
+
+:where(.workbench-dimensions .dim-close) {
+  fill: var(--grammar-subjective-brace-color);
+}
+
+:where(.workbench-dimensions .dim-box) {
+  fill: color-mix(in srgb, var(--surface-strong, #fff) 92%, transparent);
+  stroke: currentColor;
+  stroke-width: 1;
+}
 }
 
 /* /public/css/components/readout-ledger.css */
