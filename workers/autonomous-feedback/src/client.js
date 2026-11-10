@@ -206,6 +206,7 @@ function clientMain() {
     const note = write.querySelector("#note");
     const card = write.querySelector("[data-live-card]");
     const kindLabel = write.querySelector('[data-live="kind"]');
+    const expressionLine = write.querySelector('[data-live="expression"]');
     const aboutLine = write.querySelector('[data-live="about"]');
     const question = write.querySelector('[data-fill="prompt"]');
     const subjectName = write.querySelector('[data-fill="subject-name"]');
@@ -232,6 +233,7 @@ function clientMain() {
       const about = subject();
       const words = note.value.trim();
       setLine(kindLabel, what?.dataset.kindTitle || "Note");
+      setLine(expressionLine, what?.dataset.expression || "");
       setLine(aboutLine, what?.dataset.about || about?.dataset.name || "");
       if (question) {
         const threadOrThanks = what && (what.value.startsWith("thread:") || what.value === "thanks");

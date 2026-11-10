@@ -125,10 +125,10 @@ test('the write page is a labelled form with the kind as a choice', async () => 
     assert.match(write, /<label for="note" class="question" data-fill="prompt"[^>]*>What you need the person who runs the site to answer\.<\/label>/);
     assert.match(write, /<article class="card live" data-live-card[\s\S]*<span class="card-kind" data-live="kind">Question<\/span>[\s\S]*<textarea class="card-write" id="note" name="note"/);
     assert.match(write, /aria-describedby="note-hint"/);
-    assert.match(write, /You get the card to send example\.org\. <a href="\/privacy">How notes are kept<\/a>/);
+    assert.match(write, /You keep the card for example\.org\. A reply is not promised\. <a href="\/privacy">How notes are kept<\/a>/);
     assert.match(write, /class="hp" aria-hidden="true"/);
     assert.match(write, />Make my card</);
-    assert.match(write, /name="what" value="thanks" data-kind-title="Appreciation" data-body="Thanks\."/);
+    assert.match(write, /name="what" value="thanks" data-kind-title="Appreciation" data-expression="feedback\[appreciation\]\{gift\}" data-body="Thanks\."/);
     // The card shows what a tap on this kind sends.
     assert.match(write, /placeholder="I have a question about this\."/);
     // Without a kind in the link, nothing is chosen for the writer.
@@ -367,7 +367,7 @@ test('asking for a queue does not keep notes until the desk opens for the host',
     assert.equal(contract.ingest.stores, false);
     assert.equal(contract.queue.requested, true);
     assert.match(await (await call('/start?host=asks.example')).text(), /Inbox: requested/);
-    assert.match(await (await call('/asks.example/broken')).text(), /You get the card to send asks\.example\./);
+    assert.match(await (await call('/asks.example/broken')).text(), /You keep the card for asks\.example\. A reply is not promised\./);
   } finally {
     restore();
   }
@@ -865,7 +865,7 @@ test('the card says what an inbox keeps: words for three days, then one count; a
   try {
     // Beside Send the form stays one courtesy line; the mechanics are on the card and on /privacy.
     const write = await (await call('/maker.example')).text();
-    assert.match(write, /Goes straight to Maker\. <a href="\/privacy">How notes are kept<\/a>/);
+    assert.match(write, /Goes straight to Maker\. A reply is not promised\. <a href="\/privacy">How notes are kept<\/a>/);
     const worded = await (await call('/maker.example', form({ subject: 'folios', what: 'kind:broken', note: NOTE }))).text();
     assert.match(worded, /<h1>Sent to Maker<\/h1>/);
     assert.match(worded, new RegExp(`Your words are kept for three days, longer if Maker saves the card\\. After that they are deleted and one count remains: <strong>Broken · Folios · week of ${monday}</strong>\\.`));
