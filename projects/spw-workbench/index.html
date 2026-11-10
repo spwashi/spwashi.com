@@ -18,7 +18,7 @@
     wonder="memory consequence locality"
     route_family="editorial records systems"
     features="operators navigator console"
-    related_routes="/|/projects/|/tools/spw-parser/|/topics/software/spw/|/about/website/"
+    related_routes="/|/projects/|/tools/spw-parser/|/topics/software/spw/|/design/runtime/|/about/website/|https://spw.quest|https://factshift.center"
     stylesheet_mode="scoped"
 ></spw-page>
 <!DOCTYPE html>
@@ -27,7 +27,7 @@
     <spw-site-head></spw-site-head>
 </head>
 <body data-spw-surface="projects"
-    data-spw-stylesheet-mode="scoped" data-spw-features="operators navigator console" data-spw-route-family="editorial records systems" data-spw-context="reading" data-spw-wonder="memory consequence locality" data-spw-page-family="chronicle" data-spw-page-modes="read inspect compare" data-spw-page-role="project-leaf" data-spw-page-seed="page_projects_spw_workbench" data-spw-related-routes="/|/projects/|/tools/spw-parser/|/topics/software/spw/|/about/website/">
+    data-spw-stylesheet-mode="scoped" data-spw-features="operators navigator console" data-spw-route-family="editorial records systems" data-spw-context="reading" data-spw-wonder="memory consequence locality" data-spw-page-family="chronicle" data-spw-page-modes="read inspect compare" data-spw-page-role="project-leaf" data-spw-page-seed="page_projects_spw_workbench" data-spw-related-routes="/|/projects/|/tools/spw-parser/|/topics/software/spw/|/design/runtime/|/about/website/|https://spw.quest|https://factshift.center">
 <a class="skip-link" href="#main-content">Skip to content</a>
 <spw-site-header current="Spw Workbench" current_href="/projects/spw-workbench/" indicator="projects" nav_items="Home:/|Projects:/projects/|Spw Workbench:/projects/spw-workbench/"></spw-site-header>
 <main id="main-content" tabindex="-1" aria-labelledby="workbench-title">
@@ -53,7 +53,38 @@
                 <p>Type Spw into the <a href="/tools/spw-parser/#literal-parser">literal parser</a> and watch it come back as tokens and structure, or load the <a href="/tools/spw-parser/#v04-specimen-suite">next-version specimens</a>. The source is public on <a href="https://github.com/spwashi/spw-workbench">GitHub</a>.</p>
             </div>
         </div>
-        <p data-spw-textual-role="note">The workbench is an organelle, not a center: this site owns <code>.spw/</code>, the workbench owns <code>.spw/_workbench</code>, and either can be upgraded or removed without making the other illegible. The site pins it at <code>229aedc</code>, dated 2026-09-30.</p>
+        <p data-spw-textual-role="note">The workbench is an organelle, not a center: this site owns <code>.spw/</code>, the workbench owns <code>.spw/_workbench</code>, and either can be upgraded or removed without making the other illegible. The site mounts it at <code>be2df2ff</code>.</p>
+        <figure class="spw-svg-figure">
+            <svg class="spw-svg-surface workbench-dimensions" viewBox="0 0 320 248" role="img" aria-labelledby="workbench-dimensions-title workbench-dimensions-desc">
+                <title id="workbench-dimensions-title">Syntax and runtime of one line</title>
+                <desc id="workbench-dimensions-desc">The line workbench[tool]{parse.report} as syntax, then the four packages that run a line: seed, runtime, language server, and command line.</desc>
+                <text x="8" y="22" font-size="12">syntax</text>
+                <text x="8" y="52" font-size="15">workbench<tspan class="dim-open">[</tspan>tool<tspan class="dim-close">]</tspan><tspan class="dim-open">{</tspan>parse.report<tspan class="dim-close">}</tspan></text>
+                <text x="8" y="78" font-size="11">what is written</text>
+                <text x="8" y="112" font-size="12">runtime</text>
+                <g>
+                    <rect class="dim-box" x="8" y="124" width="146" height="44" rx="6"/>
+                    <text x="16" y="151" font-size="13">spw-seed</text>
+                </g>
+                <g>
+                    <rect class="dim-box" x="166" y="124" width="146" height="44" rx="6"/>
+                    <text x="174" y="151" font-size="13">spw-runtime</text>
+                </g>
+                <g>
+                    <rect class="dim-box" x="8" y="180" width="146" height="44" rx="6"/>
+                    <text x="16" y="207" font-size="13">spw-lsp</text>
+                </g>
+                <g>
+                    <rect class="dim-box" x="166" y="180" width="146" height="44" rx="6"/>
+                    <text x="174" y="207" font-size="13">spw-cli</text>
+                </g>
+            </svg>
+            <figcaption>Syntax is the line. Runtime is the four packages that read it. The ink and the brace color follow the settings on this site.</figcaption>
+        </figure>
+        <nav class="spw-card-doors" aria-label="factshift.center and spw.quest">
+            <a class="spw-card-door-canvas" href="https://factshift.center/?spw=workbench%5Btool%5D%7Bparse.report%7D" title="Opens factshift.center with this Spw laid out as a canvas">lay out on the canvas</a>
+            <a class="spw-card-door-pivot" href="https://spw.quest/pivot?line=workbench%5Btool%5D%7Bparse.report%7D" title="Opens spw.quest one change away from this line">pivot on spw.quest</a>
+        </nav>
     </section>
 
     <section class="spw-frame" id="workbench-time" aria-labelledby="workbench-time-title" data-spw-kind="frame" data-spw-role="reference" data-spw-semantic-expression="workbench[time]{commit.day}">
@@ -99,6 +130,21 @@
             <a class="spw-chip" data-spw-handle="true" href="/tools/spw-parser/#literal-parser" data-spw-operator="probe" data-spw-action="enter">?parse</a>
             <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/" data-spw-operator="frame" data-spw-action="address">#&gt;operators</a>
             <a class="spw-chip" data-spw-handle="true" href="/about/website/#spw-arc" data-spw-operator="ref">~spw_arc</a>
+        </nav>
+    </section>
+
+    <section class="spw-frame" id="wonder-kin" data-spw-kind="frame" data-spw-role="routing" data-spw-wonder="memory consequence locality" aria-labelledby="wonder-kin-title">
+        <header class="frame-heading" data-spw-slot="header">
+            <a class="frame-sigil" href="#wonder-kin" data-spw-operator="wonder">?[same_questions]</a>
+            <h2 id="wonder-kin-title">Same questions, other rooms</h2>
+        </header>
+        <p data-spw-textual-role="note">This page asks what is remembered, what follows, and where it sits. Each chip names a room that asks at least one of those, and the drawing or the tool that room keeps.</p>
+        <nav class="frame-operators" aria-labelledby="wonder-kin-title">
+            <a class="spw-chip" data-spw-handle="true" href="/projects/" data-spw-operator="concept-edge" data-spw-wonder="memory consequence" title="what is remembered · what follows. The bench, with the time each piece left in git.">&gt;projects[memory.consequence]</a>
+            <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/#operator-ring" data-spw-operator="wonder" data-spw-wonder="locality" title="where it sits. The operator ring draws the syntax as one spine.">?operators[locality]</a>
+            <a class="spw-chip" data-spw-handle="true" href="/design/runtime/" data-spw-operator="integration" data-spw-wonder="consequence" title="what follows. The runtime page says what a page loads and when.">^runtime[consequence]</a>
+            <a class="spw-chip" data-spw-handle="true" href="/tools/spw-parser/" data-spw-operator="action" data-spw-wonder="consequence locality" title="what follows · where it sits. A line in, a structure out, in the browser.">!parser[consequence.locality]</a>
+            <a class="spw-chip" data-spw-handle="true" href="/projects/folios/" data-spw-operator="concept-edge" data-spw-wonder="memory consequence locality" title="what is remembered · what follows · where it sits. The scans, which share this page's three questions.">&gt;folios[memory.consequence.locality]</a>
         </nav>
     </section>
 </main>
