@@ -453,12 +453,14 @@ const FETCH_PROBLEMS = Object.freeze({
 /**
  * Configuration for `host`, cached for a few minutes so a card page never
  * waits on a slow client site. Never throws; failures become defaults plus a
- * problem line.
+ * problem line. `status` says why no file was read ("missing" is not a problem:
+ * most sites have none).
  */
-export async function loadConfig(host) {
+export async function loadConfig(host, { fresh = false } = {}) {
   const cache = typeof caches !== "undefined" ? caches.default : null;
   const key = cache ? new Request(`https://autonomous.feedback/_config/${host}`) : null;
-  if (cache) {
+  // fresh: the owner asked to check again (setup). Fetch once more and replace what every page reads.
+  if (cache && !fresh) {
     const hit = await cache.match(key);
     if (hit) return hit.json();
   }

@@ -101,6 +101,9 @@ function clientMain() {
         node.textContent = `autonomous.feedback/${domain}${tail}`;
       });
       document.querySelectorAll("[data-when-empty]").forEach((node) => { node.hidden = usable; });
+      // "Check again now" keeps the choices made here.
+      document.querySelectorAll('[data-carry="how"]').forEach((node) => { node.value = how; });
+      document.querySelectorAll('[data-carry="kind"]').forEach((node) => { node.value = slug; });
 
       // The preview renders the generated code, which only ever holds a validated domain.
       if (how === "frame") {
@@ -340,7 +343,8 @@ function clientMain() {
       submit.setAttribute("aria-busy", "true");
       submit.dataset.idle = submit.textContent;
       submit.textContent = submit.dataset.pending || "Sending…";
-      if (storage) storage.removeItem(draftKey);
+      // The draft stays until a card arrives (below): a send that fails, or is asked to wait, loses nothing.
+      saveDraft();
     });
     // Coming back with the back button restores the page from cache; make the button usable again.
     window.addEventListener("pageshow", () => {
@@ -375,6 +379,13 @@ function clientMain() {
   const share = document.querySelector(".share");
   const card = document.getElementById("card");
   if (share && card) {
+    // The card arrived, so the unsent draft for this site is done.
+    if (storage) {
+      storage.removeItem(`af:draft:${(card.dataset.address || "").split("/")[1] || ""}`);
+      storage.removeItem("af:draft:any");
+    }
+    // Copy needs script; without it the text sits under "The card as text".
+    if (navigator.clipboard) share.querySelectorAll("[data-copy]").forEach((node) => { node.hidden = false; });
     const stamp = card.querySelector("[data-stamp]");
     const markShared = (how) => {
       card.dataset.sent = "true";

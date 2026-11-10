@@ -54,7 +54,12 @@ that says how notes are kept; the forms link to it instead of explaining.
 Pasted links are normalized to a domain everywhere (`https://www.Example.com/x`
 → `example.com`), and `/WWW.Example.com/...` redirects to one address per site.
 A rejected note comes back in the form with its errors, not as JSON, unless the
-request asks for JSON.
+request asks for JSON. So does a note sent past the intake limit (429): its
+words, choice, name, and page are still in the form, and the browser keeps the
+draft until a card arrives. A page the form carries is always shown, never
+folded away. A stored card names the count it becomes after three days; a tap
+with no words says it is only that count. With script off the card's text sits
+under "The card as text".
 
 A site configures its own form and theme by publishing
 `https://{host}/.well-known/autonomous-feedback.json`
@@ -66,7 +71,8 @@ leads with the common notes), the button text, DM contacts
 in the Post links), an optional or required name field,
 note length bounds, extra frame ancestors, and theme tokens (mode, background,
 text, accent, corners, font). The file only configures the host that served it,
-is cached for five minutes, and falls back to defaults field by field; colours
+is cached for five minutes (setup's "Check again now" reads it once more,
+within the meter's budget), and falls back to defaults field by field; colours
 below WCAG contrast are replaced. No stylesheet URLs or HTML are accepted.
 `/{host}/config.json` shows what was applied and why anything was not. On
 GitHub Pages built by Jekyll, a `.nojekyll` file is needed for `.well-known`.
