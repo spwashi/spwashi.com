@@ -1,0 +1,76 @@
+# Spatial development pacing (2026-11) — cache: spatial mathematics, development theory of mind, and natural pacing
+#
+# A conceptual contract linking spatial mathematical typographical modeling
+# (Notion, Kurzgesagt, David Attenborough, philately, soil, fermentation, and ink)
+# to development theory of mind, emerging language models, advancing browser primitives,
+# and socially natural pacing where wonder is the reason for depth.
+
+#>spatial_development_pacing_2026_11
+#:cache #!spatial #!typography #!pacing #!theory_of_mind #!fermentation #!soil #!ink #!wonder
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+operation = "cache"
+fixity = "experimental"
+source = "chat 2026-11-10; spw.quest physics and paper materials; .spw/conventions/wonder-architecture.spw; .spw/conventions/model-guided-refinement.spw"
+do_not = `Do not force frantic pacing onto the runtime. Do not introduce client-side frameworks or heavyweight external physics engines. Do not turn wonder into casino-like reward loops or confetti. Do not break spw.quest's 275 KB budget on /specimens. Do not fork grammar. Preserve the creator-first copy on spwashi.com.`
+
+expression = ecosystem[pacing]{fermentation.soil.ink}(browser)<human.model>
+
+summary = #[
+  `Typographical modeling is spatial and topological: letters and tokens are not flat strings, but cells in a membrane, strata in a soil horizon, and ink strikes on mold-made paper.`,
+  `Development theory of mind: as frontier language models get faster and browser capabilities (Container queries, :has(), CSS Anchor Positioning, View Transitions, WebAssembly) become ubiquitous, the risk is hyper-accelerated superficiality. True theory of mind provides surgical contracts, bounded word budgets, and cognitive rest so human and model can think together without token exhaustion.`,
+  `Socially natural pacing is epigenetic and biological, not algorithmic: topsoil pedogenesis takes seasons of leaf-fall and mycelial weathering; fermentation requires the lag phase, anaerobic active ester production, and slow settling of the lees; oak-gall ink requires aeration and viscous capillary draw. Software craft matures through the same unhurried chemistry.`,
+  `Wonder across domains (mathematics, natural history, brewing, philately, software) is the organic governor of depth: when a person or agent experiences genuine wonder, they slow down, inspect the margin, turn the brace-pivot, and dwell in the room.`,
+  `spwashi.com is the generative humus and extensible laboratory; spw.quest is its curated, lightweight specimen field. Tokens and material physics originate in spwashi.com and project downstream into peer-kit.js without overloading standalone worker payloads.`,
+][reg=set]
+
+contents = #[
+  ~"./spatial-development-pacing-2026-11.spw#theory_of_mind",
+  ~"./spatial-development-pacing-2026-11.spw#biological_pacing",
+  ~"./spatial-development-pacing-2026-11.spw#spatial_typography",
+  ~"./spatial-development-pacing-2026-11.spw#wonder_depth",
+  ~"./spatial-development-pacing-2026-11.spw#spwashi_refinements",
+][reg=set]
+
+^"theory_of_mind"{
+  id = "sdp-theory-of-mind"
+  claim = `Collaborative intelligence requires architectural theory of mind: designing for what the human mind and the model mind actually experience during development.`
+  model_mind = `Emerging language models (Claude, Gemini, GPT, Grok) possess vast pattern recognition but fragile attention context. They do not need infinite token dumps; they need unambiguous semantic anchors, strict boundary geometry (#> frame, ? wonder, ~ potential), typed outputs, surgical commit scopes, and enforceably small word budgets (check:agents). When the repository respects the model's cognitive boundary, the model does not hallucinate parallel ontologies.`
+  human_mind = `The human mind develops fluency through tactile familiarity, rhythmic predictability, and spatial intuition. When software bombards the human with modal popups, noisy notifications, and artificial urgency, it destroys reflective craft. Software that respects human development provides quiet paper backgrounds, clear typographic hierarchy, legible diffs, and reversible experiments.`
+  browser_substrates = `Modern browser capabilities (:has(), CSS subgrid, scroll-driven animations, View Transitions, CSS containment, Web Locks, Web Workers) mean the platform itself carries what once required multi-megabyte JavaScript libraries. We lean into the web platform's native primitives rather than layering ephemeral abstractions.`
+}[reg=facet]
+
+^"biological_pacing"{
+  id = "sdp-biological-pacing"
+  claim = `Craft and fluency cannot be forced into algorithmic speedruns. Pacing is modeled on pedogenesis, fermentation, and ink alchemy.`
+  soil_pedogenesis = `Soil is not dirt; it is a living cross-section. The O-horizon (canopy litter), A-horizon (humus and fungal mycelium), B-horizon (mineral clay), and C-horizon (parent rock) form over ecological time through patient decay, fungal hyphae network exchange, and bacterial digestion. In codebases, durable architectural layers form similarly: quick patches settle into the humus; proven patterns crystallize into rock; healthy systems maintain crumb structure and pore space for new roots.`
+  fermentation_wort = `Fermentation transforms dormant wort into living ale. The yeast (Saccharomyces, Brettanomyces, Lactobacillus) moves through strict biological stages: lag phase (cellular respiration), exponential fermentation (vigorous ester and carbon dioxide emission), attenuation, and settling of the trub and lees in wooden barrels. Rushing fermentation yields hot, harsh alcohols and off-flavors (diacetyl, sulfur); patience yields clarity, phenolic nuance, and head retention. Software features need equivalent conditioning before public promotion.`
+  ink_alchemy = `Oak gall ink is an alchemical marriage of vegetable tannin, ferrous vitriol (iron sulfate), and gum arabic binder. When first struck by reed or steel quill upon rag paper, the mark is pale purple-gray; only as atmospheric oxygen binds to the iron does it oxidize into insoluble, indelible dark charcoal. Capillary tension pulls the pigment into the paper fiber. Pacing allows the ink to settle, pool, and breathe.`
+}[reg=facet]
+
+^"spatial_typography"{
+  id = "sdp-spatial-typography"
+  claim = `Typography is spatial mathematics: coordinates, cellular chambers, harmonic ratios, and tactile specimen framing.`
+  notion_cellularity = `Notion's quiet triumph was treating text as modular blocks with tactile margins, left-edge indent rails, collapsible toggles, and clean blockquotes. We adopt this spatial modularity in Spw frames: brackets are not punctuation marks, they are cellular membranes ({ } direction, [ ] mode, ( ) scene, < > concept).`
+  kurzgesagt_vibrance = `Kurzgesagt brings cosmic and biological scale into lucid human view through crisp geometric vectors and high-chroma jewel tokens set against earthen paper or deep cosmos. In Spw, operators wear jewel pigments (frame teal, wonder amethyst, potential amber, action cinnabar) with soft luminous focus states that make complex relations visually inviting rather than dry syntax.`
+  attenborough_naturalism = `David Attenborough's narrative lens observes nature with patient wonder and ecological taxonomy. In Spw, copy is structured as observational field notes: ledes describe the living landscape; living terms highlight active concepts; the reader is treated as a naturalist examining flora and fauna in situ.`
+  philately_framing = `Philately (stamp collecting) models discrete specimen curation: deckled perforations, cancellation wavemarks, denomination plate numbers, and archival glassine protection. In spw.quest and spwashi.com, specimen cards and seed cards wear philatelic precision: discrete, collectible, mounted with tabular coordinates, carrying historical provenance.`
+}[reg=facet]
+
+^"wonder_depth"{
+  id = "sdp-wonder-depth"
+  claim = `Wonder about domains and human development is the true engine of depth, curiosity, and sustainable pacing.`
+  curiosity_vs_compulsion = `Gamified engagement relies on dopamine compulsion loops (streaks, badges, notifications, artificial scarcity). Wonder-based design relies on aesthetic resonance and epistemic delight: the pleasure of understanding how a math algorithm works, why a brace holds a joint, or how a color mix shifts across light. Wonder creates its own natural self-rewarding pacing: the visitor pauses because there is genuinely something marvelous to behold.`
+  domain_depth = `Domains (mathematics, typography, natural history, film, music, software) are not commodified skill silos to conquer. They are living cultural traditions. The site acts as an atlas where someone can wander between the table of RPG Wednesday, the geometry of Spw delimiters, the budgeting bench, and the living concepts, discovering that each domain shares structural kinship.`
+}[reg=facet]
+
+^"spwashi_refinements"{
+  id = "sdp-spwashi-refinements"
+  claim = `spwashi.com serves as the extensible generative root, while spw.quest acts as its lightweight distilled projection.`
+  token_strata = `Introduce spatial mathematical and pigment tokens into public/css/tokens/core.css: --space-pore (.25rem), --space-grain (.5rem), --space-stratum (1.25rem), --space-horizon (2.5rem), --ink-gall (#191e20), --amber-wort (hsl(38 82% 44%)), and intaglio shadows. These tokens express the soil and fermentation rhythm sitewide.`
+  cellular_cards = `Refine public/css/components/cards/ and seed-card.css with philatelic stamp precision: tabular alignment for metrics, subtle perforated or double-line hairline frames, archival glassine hover elevations, and Notion-like tactile guide gutters.`
+  peer_pipeline = `Build scripts (scripts/build-peer-kit.mjs) harvest these foundational tokens into workers/lib/peer-kit.js. spw.quest consumes them without growing its standalone HTML footprint or exceeding the 275 KB /specimens test ceiling.`
+  interactive_pacing = `Brace-pivots, interactive-expression labs, and living concept links invite the reader to inspect and prime without forcing modal distraction. The reader sets their own tempo.`
+}[reg=facet]
