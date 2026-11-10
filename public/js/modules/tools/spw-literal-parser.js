@@ -2,6 +2,7 @@
 // so the tool proves a source the way the editor reads it without loading the parser twice.
 import { anchors, outline, parse, roles, SPW_PARSER_BUILD } from '/public/js/semantic/spw-workbench-reader.js';
 import { bracePairAt, highlightSpw, lineStarts } from '/public/js/semantic/spw-highlight.js';
+import { GENRE_REASONS, readGenre } from '/public/js/semantic/spw-genre-checks.js';
 
 import {
   createParserAppUrl,
@@ -333,7 +334,34 @@ function renderOutline(host, symbols, jump) {
   }
 }
 
-function renderDiagnostics(host, output, jump) {
+/** What a file of this kind is asked: each check as a line to go to, with the reason its rule exists beneath. */
+function renderGenre(host, output, source, jump) {
+  const genre = readGenre(output, source);
+  const row = (tone, says, why, line) => {
+    const item = document.createElement('li');
+    item.dataset.tone = tone;
+    if (line && jump) {
+      const go = document.createElement('button');
+      go.type = 'button';
+      go.className = 'literal-parser-diagnostic__go';
+      go.textContent = `L${line} — ${says}`;
+      go.addEventListener('click', () => jump(line - 1, 0));
+      item.append(go);
+    } else {
+      item.append(says);
+    }
+    const reason = document.createElement('p');
+    reason.className = 'literal-parser-diagnostic__why';
+    reason.textContent = why;
+    item.append(reason);
+    host.append(item);
+  };
+  const identity = [...genre.layers.map((layer) => `#:${layer}`), ...genre.names.map((name) => `#>${name}`)];
+  if (identity.length) row('ok', `Says what it is: ${identity.join(' ')}`, GENRE_REASONS.identity, 0);
+  for (const check of genre.checks) row(check.state === 'fail' ? 'warning' : 'ok', check.says, check.why, check.line);
+}
+
+function renderDiagnostics(host, output, jump, source = '') {
   host.replaceChildren();
   const diagnostics = [
     ...output.errors.map((event) => ({ tone: 'error', event })),
@@ -345,7 +373,6 @@ function renderDiagnostics(host, output, jump) {
     item.dataset.tone = 'ok';
     item.textContent = 'No parser diagnostics.';
     host.append(item);
-    return;
   }
 
   diagnostics.forEach(({ tone, event }) => {
@@ -367,6 +394,7 @@ function renderDiagnostics(host, output, jump) {
     }
     host.append(item);
   });
+  renderGenre(host, output, source, jump);
 }
 
 function setMetric(root, name, value, tone = '') {
@@ -544,7 +572,7 @@ function initLiteralParser(root) {
       const result = parseLiteralSource(source);
       const { output, astCensus } = result;
       renderTokens(tokenList, output.tokens);
-      renderDiagnostics(diagnostics, output, jump);
+      renderDiagnostics(diagnostics, output, jump, source);
       ast.textContent = JSON.stringify(output.ast ?? null, null, 2);
       const parseState = !output.success
         ? 'partial'

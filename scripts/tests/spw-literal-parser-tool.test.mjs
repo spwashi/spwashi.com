@@ -1,7 +1,9 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
+import { readFile } from 'node:fs/promises';
 
 import { SPW_PARSER_BUILD } from '../../public/js/semantic/spw-workbench-reader.js';
+import { GENRE_REASONS, GENRE_SPECIMENS, readGenre } from '../../public/js/semantic/spw-genre-checks.js';
 import {
   createParserAppUrl,
   parseLiteralSource,
@@ -58,6 +60,33 @@ describe('literal Spw parser proof', () => {
       assert.match(place.label, /\S/, key);
       assert.match(place.href, /^(#|\/|https:\/\/)/, key);
     }
+  });
+
+  it('asks each kind of file its one question, and says why when the answer is taken out', async () => {
+    const cases = [
+      ['log', (source) => source.replace('[2026-11-06 11:40] ', '')],
+      ['wonder', (source) => source.replace(/\n {2}!probe[^\n]*/, '')],
+      ['episode', (source) => source.replace(/\n {2}\*\[verify\][^\n]*/, '')],
+    ];
+    const page = await readFile(new URL('../../tools/spw-parser/index.html', import.meta.url), 'utf8');
+    for (const [genre, broken] of cases) {
+      const { name, source } = GENRE_SPECIMENS[genre];
+      const result = parseLiteralSource(source);
+      assert.equal(result.output.errors.length, 0, genre);
+      assert.equal(result.reconstructsExactly, true, genre);
+      assert.deepEqual(readGenre(result.output, source).checks.map((check) => [check.genre, check.state]), [[genre, 'pass']], genre);
+      const without = broken(source);
+      assert.notEqual(without, source, `${genre}: the edit lands`);
+      const [check] = readGenre(parseLiteralSource(without).output, without).checks;
+      assert.deepEqual([check.genre, check.state, check.why], [genre, 'fail', GENRE_REASONS[genre]], genre);
+      assert.ok(check.line >= 1, genre);
+      // The page opens the same file by address, so it needs no script to arrive and no seat in the gallery.
+      const href = page.match(new RegExp(`<a href="([^"]+)" data-genre-specimen="${genre}">`))?.[1].replaceAll('&amp;', '&');
+      const params = new URL(href, 'https://spwashi.com/tools/spw-parser/').searchParams;
+      assert.deepEqual([params.get('spw_source'), params.get('spw_source_name')], [source, name], genre);
+      assert.ok(!Object.values(SPW_LITERAL_PARSER_SAMPLES).includes(source), `${genre} stays out of the gallery`);
+    }
+    assert.deepEqual(readGenre(parseLiteralSource(GENRE_SPECIMENS.log.source).output, GENRE_SPECIMENS.log.source).layers, ['log']);
   });
 
   it('parses practice, language-sync, film, and year-mix specimens losslessly', () => {
