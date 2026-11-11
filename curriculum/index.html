@@ -104,6 +104,7 @@
     <nav class="page-index" aria-label="Curriculum modules">
         <ul>
             <li><a href="#tiny-show">Make a tiny show: a short path through five topics</a></li>
+            <li><a href="#dream-on-it">Leave a codebase something to dream on</a></li>
             <li><a href="#memory-buffers">1. Memory Management &amp; Economic Buffers (Cask)</a></li>
             <li class="page-index-muted"><a href="#modules-stub">2–6. Systems, Networking, Algorithms, Data Structures, Security (stubs)</a></li>
             <li><a href="#cross-cutting">Cross-cutting thread: Stabilizing institutions vs. novel disruptions</a></li>
@@ -136,6 +137,26 @@
     </section>
 
     <!-- MODULE 1: MEMORY & ECONOMIC BUFFERS -->
+    <section class="spw-frame" id="dream-on-it" aria-labelledby="dream-on-it-title" data-spw-kind="frame" data-spw-role="practice">
+        <header class="frame-heading" data-spw-slot="header">
+            <h2 id="dream-on-it-title">Leave a codebase something to dream on.</h2>
+        </header>
+        <p id="dream-on-it-lede" data-spw-textual-role="lede" data-spw-copy-unit="curriculum.dream.lede">A codebase can keep working on a question after you close it, if the question says what you expect and how to check. Write those two things down and a machine can check again overnight, then leave you a short note in the morning about what changed.</p>
+        <pre><code class="language-spw">#&gt;wonder_ring_on_glass
+?["Does the ring chip read on the glass theme at a phone's width?"]{
+  ~#expect: `the ring holds 3:1 against the busiest panel`
+  !probe{ "screenshot the chip row on glass at 390px and measure each edge" }
+}</code></pre>
+        <p data-spw-copy-unit="curriculum.dream.marks"><code>?</code> asks it. <code>~#expect</code> commits to a guess before you look. <code>!probe</code> says what would answer it. A question without a guess can only be read; a question with one can be wrong, and being wrong is how it teaches.</p>
+        <h3 id="dream-on-it-noise">Run the check twice</h3>
+        <p data-spw-copy-unit="curriculum.dream.noise">This site keeps more than four hundred questions like that one. In November we ran the hundred or so that a command can check, twice, with nothing changed in between. Seventeen came back different. The search tool prints results in whatever order its threads finish, and we were keeping only the last four lines. Once the comparison sorted each output and took out the line numbers, all of them held. Before you trust a change, run the check twice.</p>
+        <h3 id="dream-on-it-try">Try it on your own code</h3>
+        <p data-spw-copy-unit="curriculum.dream.prompt.lede">Give this to whatever coding assistant you use. It only reads.</p>
+        <blockquote data-spw-copy-unit="curriculum.dream.prompt"><p>Find three questions this codebase cannot currently answer about itself. For each one, write what you expect the answer to be, and one read-only command that would check it. Change nothing. Run each command twice and tell me which outputs differ when nothing changed, and why.</p></blockquote>
+        <p class="spw-card-doors"><a class="spw-card-door-pivot" href="https://spw.quest/?example=question#try" title="Opens this question in spw.quest's editor">open it on spw.quest, delete the !probe line, and watch the check change ↗</a></p>
+        <p data-spw-textual-role="note" data-spw-copy-unit="curriculum.dream.teams">If your team's codebase keeps forgetting why it is the way it is, this makes a good half-day together. <a href="/services/">Ask about running one.</a></p>
+    </section>
+
     <section class="spw-frame" id="memory-buffers" data-spw-kind="module" data-spw-role="curriculum" data-spw-context="learning" data-spw-wonder="analogy boundary equity" data-spw-affordance="simulate reflect" data-spw-liminality="threshold" data-spw-region="hub" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="artifact" data-spw-promptability="visible" data-spw-collectability="high" data-spw-seed="page_curriculum_living_learning_surface__memory_buffers" data-spw-curriculum-module="memory-buffers" data-spw-related-routes="/play/rpg-wednesday/library/#guide-cards|/play/rpg-wednesday/library/#starter-quests|/topics/software/memory/|/topics/software/parsers/">
         <header class="frame-heading">
             <a class="frame-sigil" href="#memory-buffers" data-spw-operator="frame" data-spw-sigil="#>memory_buffers">#&gt;memory_buffers</a>
