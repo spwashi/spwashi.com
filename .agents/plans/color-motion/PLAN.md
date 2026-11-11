@@ -4,6 +4,8 @@
 
 ## Next slices (2026-11-06)
 
+**2026-11-10:** slices 1 and 2 landed. The badge band reads `--spw-time-control` with its easing kept. The card block and the card lift now multiply durations alone: `.math-lens-card` computed `transition: all 0s` on the live site and now has its six transitions, read in a browser at desktop width. Slice 2 changes how cards feel, so it wants the creator's look at phone width.
+
 Sources: the harmony readings in `.spw/caches/chrome-ecology-2026-11.spw#harmony` (2026-11-05), re-measured in the tree today. Radius and the three undefined shape tokens (`--shape-small`, `--shape-panel`, `--shape-medium`) belong to `component-region-personality` ("One role, many shapes"), not here.
 
 Interpolation is narration, read from lore.land's PLAN.D on 2026-11-08 ([lore-land-plans.spw](../ecosystem-architecture/lore-land-plans.spw)). A typed number that glides tells the change. A discrete beat stays a step. `--charge` and `--spw-valence` are already registered numbers in `public/css/tokens/core.css`, and each inherits false. Slice 2 is the local case: a card `transition` multiplies a duration-and-easing token, and the whole transition drops. Paint worklets stay imagined. Information stays in the DOM. The badge band stays the next ungated slice. Shape tokens stay with component-region-personality.
