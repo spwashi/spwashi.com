@@ -5,6 +5,7 @@
 
 import { parserHref } from '../../kernel/parser-link.js';
 import { projectSpwRoom } from './spw-document-project.js';
+import { renderSpwDoors } from './spw-doors.js';
 import {
   MAX_DOCUMENT_BYTES,
   SHARE_CACHE,
@@ -131,6 +132,7 @@ export function initSpwDocumentRoom(ctx, root) {
   const editor = host.querySelector('[data-document-editor]');
   const fileInput = host.querySelector('[data-document-file]');
   const parserLink = host.querySelector('[data-document-parser]');
+  const doors = host.querySelector('[data-document-doors]');
   const buttons = [...host.querySelectorAll('[data-document-view]')];
 
   let documentName = '';
@@ -174,6 +176,7 @@ export function initSpwDocumentRoom(ctx, root) {
         parserLink.removeAttribute('href');
       }
     }
+    renderSpwDoors(doors, source, documentName);
     if (mode !== 'room') show(mode);
     const problem = room.message || (room.errorCount
       ? `Parser reported ${room.errorCount} error${room.errorCount === 1 ? '' : 's'}. The source is still here.`
