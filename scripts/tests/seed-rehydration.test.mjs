@@ -57,3 +57,15 @@ test('every template has a home whose card exists and offers it', () => {
     assert.ok(html.includes(`id="${home.href.split('#')[1]}"`), `${home.href} lands on an anchor`);
   }
 });
+
+test('a seed written without its mark, as a model writes one, still opens as a card', async () => {
+  const { ANSWER_EXAMPLES } = await import('../../workers/spw-quest/src/answer.js');
+  const seed = readSeedText(ANSWER_EXAMPLES.card);
+  assert.equal(seed.templateKey, 'session');
+  assert.equal(seed.mark, '');
+  assert.deepEqual(Object.keys(seed.values), ['scene', 'carry', 'revisit']);
+  assert.equal(readSeedText(ANSWER_EXAMPLES.unknown).templateKey, 'wonder');
+  assert.equal(readSeedText('^seed[Session year:2026]{\n  scene: "a table"\n}').mark, 'year:2026'.slice(5));
+  const earliest = readSeedText('^seed[Wonder.Prompt]{\n  question: "why"\n}\n^seed[Session year:2026]{\n  scene: "a table"\n}');
+  assert.equal(earliest.templateKey, 'wonder');
+});
