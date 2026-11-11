@@ -32,6 +32,8 @@ export const CANVAS_LINE_MAX = 400;
 export const QUEST_SHARE_MAX = 1800;
 /** spw.quest's /pivot turns one line of up to this many characters. */
 export const PIVOT_LINE_MAX = 200;
+/** The slots /pivot groups its turns by (GROUP_ORDER, src/pivot.js), each an anchor on the page. */
+export const PIVOT_SLOTS = Object.freeze(new Set(['charge', 'subject', 'mode', 'body', 'scope', 'projection', 'join']));
 /** The longest script either peer takes (spw.quest's MAX_SCRIPT); past it nothing carries. */
 export const SCRIPT_MAX = 65536;
 
@@ -157,11 +159,11 @@ export function questBuildHref(text, { name = '' } = {}) {
   return `${QUEST_ORIGIN}/build${pairs.length ? `?${query(pairs)}` : ''}#spw64=${toSpw64(script)}`;
 }
 
-/** spw.quest's pivot, one change away from a line; null for a script or a line too long to turn. */
-export function questPivotHref(text) {
+/** spw.quest's pivot, one change away from a line; `slot` opens on that slot's turns. Null for a script or a line too long to turn. */
+export function questPivotHref(text, { slot = '' } = {}) {
   const line = String(text ?? '').trim();
   if (!line || line.includes('\n') || line.length > PIVOT_LINE_MAX) return null;
-  return `${QUEST_ORIGIN}/pivot?${query([['line', line]])}`;
+  return `${QUEST_ORIGIN}/pivot?${query([['line', line]])}${PIVOT_SLOTS.has(slot) ? `#turn-${slot}` : ''}`;
 }
 
 const HREF = Object.freeze({
