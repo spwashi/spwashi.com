@@ -61,6 +61,7 @@ fixity = "tending"
   always_on_sense = #[`npm run audit:copy:accessor`, `npm run audit:module-selectors`, `npm run sense -- ink <still-id>`][reg=set]
   cheap_visual = `npm run sense -- ink <still-id> — recipe id (home-opening), not fixture family (home-hook). Same instrument as visual:checks -- --ids=. One pocket still, not the pack.`
   dx = `npm run harness. npm run sense -- copy|nouns|ink. Ink without an id lists fixtures instead of starting the full pack.`
+  sleep = `npm run sense -- sleep re-runs the read-only probes, compares with last night, and writes one note under .spw/gen. npm run sense -- wake prints it, and nothing runs. It settles and forgets; it never asks, and a verdict stays a reader's. Measured by answered rising or open falling.`
   grok_sensors = #[`npm run wonder`, `npm run spw:lattice`, `npm run audit:copy:accessor`][reg=set]
   claude_sensors = #[`npm run spw:integrity`, `npm run audit:copy:accessor`][reg=set]
   gpt_sensors = #[`npm run audit:module-selectors`, `npm run visual:checks -- --ids=<fixture>`][reg=set]

@@ -57,6 +57,8 @@
     "reasons": "node --import ./scripts/lib/register-public-imports.mjs scripts/page-reasons.mjs",
     "reasons:json": "node --import ./scripts/lib/register-public-imports.mjs scripts/page-reasons.mjs --json",
     "wonder": "node scripts/wonder.mjs",
+    "sleep": "node --import ./scripts/lib/register-public-imports.mjs scripts/sleep.mjs",
+    "wake": "node scripts/sleep.mjs --wake",
     "wonder:measures": "node scripts/wonder.mjs --measures",
     "wonder:json": "node scripts/wonder.mjs --json",
     "measure:pretext": "node scripts/measure-page-pretext.mjs",

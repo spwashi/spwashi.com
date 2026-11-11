@@ -143,9 +143,11 @@ expression = asks[corpus]{move.plans.cache.trace.wonder.scope}<upstream>
       surfaces = 84
       added_2026_10_10 = 31
       without_probe = 0
+      measured_2026_11_10 = "433 harvested on 165 surfaces, up from 181 seventeen days earlier; 18 answered, 0 retired; spw query names no wonder selector at be2df2ff"
     }[reg=facet]
     recommendation = #[
       `an upstream wonder harvest`,
+      `the harvest as a query selector, with lifecycle, gaps and probe kind as fields, so spw query --selector wonders answers from the parse`,
       `an LSP code lens that shows each open question and runs its probe in place`,
     ][reg=set]
     replaces: "scripts/wonder.mjs"
@@ -211,5 +213,39 @@ expression = asks[corpus]{move.plans.cache.trace.wonder.scope}<upstream>
     replaces: "a projection-specific family pass in each consumer"
     probe: `npm run -s spw:routes -- --write && sed -n '/^\\^"shapes"/,/^}/p' .spw/gen/routes/about/domains/_family.spw`
     question: "Should a named shape become a language form with a variable slot, so an instance states only its value (bane, bone, boon) and what it adds?"
+  }[reg=facet]
+
+  turns_that_land: .{
+    rank = 9
+    claim: "Babble is cheap and almost all of it says nothing; what makes one worth keeping is landing on something already written."
+    exists: "At be2df2ff, readLine, writeLine and slotHash are exported from the reader, so a line can be read and rewritten one slot at a time."
+    gap: "Nothing generates a line's one-slot turns or checks them against a corpus. spw.quest's pivotsOf does it for one shelf, in worker code."
+    measured: .{
+      edges = "2026-11-10: 993 route lines hold 75 distinct pairs on different pages one slot apart, 66 with no door; hand-reading them found one reduction across three pages and two readings of Freire"
+    }[reg=facet]
+    recommendation = #[
+      `a turns verb over readLine and writeLine: one slot changed, values drawn from the corpus by how many other slots a neighbour shares`,
+      `a --lands filter that keeps a turn only when the corpus already holds it, and says where`,
+    ][reg=set]
+    replaces: "pivotsOf and kinValues in workers/spw-quest/src/pivot.js"
+    probe: `npm run -s sense -- sleep --dry | sed -n '/babble/,/^}/p'`
+    question: "Is a turn that lands within one file as telling as one that lands across two?"
+  }[reg=facet]
+
+  seeded_mosey: .{
+    rank = 10
+    claim: "Graph reports the shape of a corpus and offers no way to stroll it."
+    exists: "At be2df2ff, spw graph gives hubs, strands and breaks; the site's sense wander takes seeded stills of odd states, but only for pages."
+    gap: "No seeded walk over .spw citations. A reader who wants to be surprised by their own codebase has to choose where to start, which is the choice that stops the surprise."
+    measured: .{
+      replay = "2026-11-10: pairing the day's commit words with cold questions surfaced old wonders on surfaces untouched that day, including which names a reader should meet for ^ = %; nothing yet says how often such a pairing pays"
+    }[reg=facet]
+    recommendation = #[
+      `spw mosey --seed <s>: a deterministic walk along citations, weighted toward surfaces long untouched`,
+      `stops at a question with a ready probe, or at a broken citation, so a walk ends somewhere that can be acted on`,
+    ][reg=set]
+    replaces: "the replay stage in scripts/lib/sleep-cycle.mjs, for .spw surfaces"
+    probe: `npm --prefix .spw/_workbench run -s spw -- graph --help | grep -i seed`
+    question: "Should a walk remember where it has been across sessions, or stay stateless so a seed always means the same path?"
   }[reg=facet]
 }

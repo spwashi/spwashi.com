@@ -70,6 +70,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { writeProjectionIndex } from './lib/spw-projections.mjs';
+import { probeDigest } from './lib/sleep-cycle.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SPW_ROOT = path.join(ROOT, '.spw');
@@ -864,7 +865,7 @@ async function runWonders(wonders, probed, { limit = Infinity, write = false, js
     console.log(JSON.stringify({
       stamp,
       revision,
-      runs: runs.map(({ wonder, stdout, stderr, ...run }) => ({ ...run, wonder: wonder.id, file: wonder.file })),
+      runs: runs.map(({ wonder, stdout, stderr, ...run }) => ({ ...run, digest: probeDigest(`${stdout}\n${stderr}`), wonder: wonder.id, file: wonder.file })),
       skipped: skipped.map(({ wonder, probe, missing }) => ({ wonder: wonder.id, file: wonder.file, probe, missing })),
     }, null, 2));
   } else {

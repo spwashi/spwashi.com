@@ -13,6 +13,8 @@
  *   npm run sense -- signals [--last 20]   # what the gate has said lately: new, moved, awaiting a decision
  *   npm run sense -- wonder [--summary]   # the site's open questions and the probes that settle them
  *   npm run sense -- wander [seed] [--count N] [--run]   # seeded odd stills; dry unless --run
+ *   npm run sense -- sleep [--dry]   # re-run the read-only probes, compare with last night, leave a note in .spw/gen
+ *   npm run sense -- wake   # print the last note; nothing runs
  */
 
 import { spawnSync } from 'node:child_process';
@@ -44,6 +46,8 @@ export const SENSE_KINDS = Object.freeze({
   roots: { script: 'audit:root-writes', label: 'root writes on arrival', passArgs: true },
   signals: { script: 'check:signals', label: 'gate history', passArgs: true },
   wonder: { script: 'wonder', label: 'open questions', passArgs: true },
+  sleep: { script: 'sleep', label: 'between sessions', passArgs: true },
+  wake: { script: 'wake', label: 'the last note' },
 });
 
 export function parseSenseArgs(argv) {
@@ -114,6 +118,8 @@ export function formatSenseMenu(recipes = listSenseFixtures()) {
     '[sense] ink     npm run sense -- ink <fixture>',
     `[sense] ids     ${recipes.length} fixtures — npm run sense -- ids`,
     '[sense] wander  npm run sense -- wander [seed]   (seeded odd stills; dry until --run)',
+    '[sense] sleep   npm run sense -- sleep [--dry]   (re-run the read-only probes, compare with last night, leave a note)',
+    '[sense] wake    npm run sense -- wake   (the last note; nothing runs)',
     '[sense] ink without an id lists fixtures instead of starting the full pack.',
   ].join('\n');
 }
@@ -150,7 +156,7 @@ function main(argv = process.argv.slice(2)) {
   }
   const spec = SENSE_KINDS[kind];
   if (!spec) {
-    process.stderr.write(`[sense] unknown kind "${kind}". Use doctor, copy, nouns, stills, roots, signals, wonder, ink, ids, or wander.\n`);
+    process.stderr.write(`[sense] unknown kind "${kind}". Use doctor, copy, nouns, stills, roots, signals, wonder, ink, ids, wander, sleep, or wake.\n`);
     process.stderr.write(`${formatSenseMenu()}\n`);
     process.exit(2);
   }
