@@ -46,6 +46,13 @@
     "education",
     "productivity"
   ],
+  "share_target": {
+    "action": "/",
+    "method": "GET",
+    "params": {
+      "text": "spw"
+    }
+  },
   "shortcuts": [
     {
       "name": "Lay out a line",
@@ -59,12 +66,5 @@
       "url": "/help",
       "description": "The help topics, open in the Spw window."
     }
-  ],
-  "share_target": {
-    "action": "/",
-    "method": "GET",
-    "params": {
-      "text": "spw"
-    }
-  }
+  ]
 }
