@@ -279,7 +279,8 @@ function colophon() {
 }
 
 export function html(body, status = 200) {
-  return new Response(body, {
+  // An empty slot in a template leaves an indented blank line; pages are carried as files, so they leave clean.
+  return new Response(String(body).replace(/[ \t]+$/gm, ""), {
     status,
     headers: {
       ...BASE_SECURITY,

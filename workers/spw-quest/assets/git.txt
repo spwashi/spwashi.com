@@ -1,0 +1,5 @@
+test -d .git || git init
+git submodule add https://github.com/spwashi/spw-workbench .spw/_workbench
+git -C .spw/_workbench checkout 850077ab48e02c58c2b55787075a7b97c9e4bf4f
+git submodule update --init -- .spw/_workbench
+git diff --check

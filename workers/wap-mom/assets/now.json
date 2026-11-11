@@ -1,0 +1,282 @@
+{
+  "version": "0.2.1",
+  "name": "Wondering About Pi",
+  "numbering": "Issue n of a series is its constant to n decimal places.",
+  "series": {
+    "pi": {
+      "name": "Wondering About Pi",
+      "label": "No.",
+      "about": "Circles, approximations, and pie."
+    },
+    "e": {
+      "name": "The e Supplement",
+      "label": "Supplement",
+      "about": "Growth, rising, and things that compound."
+    }
+  },
+  "departments": {
+    "constants": "Constants",
+    "approximations": "Approximations",
+    "kitchen": "Kitchen",
+    "chance": "Chance",
+    "proofs": "Proofs",
+    "series": "Series",
+    "growth": "Growth"
+  },
+  "issues": [
+    {
+      "series": "pi",
+      "no": "3.1",
+      "slug": "pi",
+      "title": "π",
+      "dek": "It does not close.",
+      "status": "draft",
+      "department": "constants",
+      "date": "2026-09-24",
+      "clip": "Every digit is exact, and there is always another: an infinite courtesy.",
+      "uses": {
+        "hand": "Measure across a round pan and multiply by a little over three to know how much ribbon goes around it. A 10-inch pan takes about 31½ inches.",
+        "table": "Every round thing on the table, plate or glass rim, carries the same ratio. Anyone with a string can check.",
+        "work": "Some ratios do not depend on size. When something works the same at every scale, find out what it is keeping constant.",
+        "mind": "There is a digit of π no one has ever looked at, and it is already decided."
+      },
+      "figure": "unroll",
+      "url": "https://wap.mom/pi/"
+    },
+    {
+      "series": "pi",
+      "no": "3.14",
+      "slug": "22-7",
+      "title": "22/7",
+      "dek": "Close enough to share.",
+      "status": "draft",
+      "department": "approximations",
+      "date": "2026-09-24",
+      "clip": "Close is not cheap. Close is hospitality.",
+      "uses": {
+        "hand": "A 7-inch plate is 22 inches around, near enough. Multiply a width by 22, divide by 7, and you are within a hair.",
+        "table": "An answer someone can use now is often kinder than an exact one that arrives late.",
+        "work": "Before chasing precision, say how close is close enough. One part in 2,500 has served for two thousand years.",
+        "mind": "Archimedes knew his answer was wrong, and exactly how wrong. That is its own kind of knowing."
+      },
+      "figure": "polygons",
+      "url": "https://wap.mom/22-7/"
+    },
+    {
+      "series": "pi",
+      "no": "3.141",
+      "slug": "pie",
+      "title": "Pie",
+      "dek": "The crust is a proof.",
+      "status": "draft",
+      "department": "kitchen",
+      "date": "2026-09-24",
+      "clip": "A pie that waits for the knife is a theorem with a crust.",
+      "uses": {
+        "hand": "Moving a 9-inch recipe into a 10-inch tin? The bigger tin holds about a quarter more, so scale the filling up by a quarter.",
+        "table": "The first slice always comes out untidy. Serve it to the baker.",
+        "work": "A recipe is a claim anyone with an oven can test. Write methods down so someone else could bake them.",
+        "mind": "π cannot be finished. A pie has to be. Most good things are one or the other."
+      },
+      "figure": "tins",
+      "url": "https://wap.mom/pie/"
+    },
+    {
+      "series": "pi",
+      "no": "3.1415",
+      "slug": "355-113",
+      "title": "355/113",
+      "dek": "Six digits, six places.",
+      "status": "draft",
+      "department": "approximations",
+      "date": "2026-09-24",
+      "clip": "No fraction with a smaller denominator comes closer.",
+      "uses": {
+        "hand": "Write 113355, split it down the middle, and put the second half over the first. That is π to six places, with no calculator.",
+        "table": "For roughly nine hundred years after Zu Chongzhi, no one on record had a closer value.",
+        "work": "A big jump in effort for a small gain means the good version has already been found. After 355/113, the next better fraction needs five-digit numbers.",
+        "mind": "He reached it by hand, working with polygons of more than twelve thousand sides."
+      },
+      "figure": "fractions",
+      "url": "https://wap.mom/355-113/"
+    },
+    {
+      "series": "pi",
+      "no": "3.14159",
+      "slug": "crust",
+      "title": "Crust",
+      "dek": "The edge grows more slowly than the middle.",
+      "status": "draft",
+      "department": "kitchen",
+      "date": "2026-09-24",
+      "clip": "The ratio is not a matter of taste. It is a matter of radius.",
+      "uses": {
+        "hand": "One 18-inch pizza holds more than two 12-inch pizzas. Square the widths and compare: 324 against 288.",
+        "table": "Whoever loves the crust should ask for the small pie.",
+        "work": "In anything that grows outward, the part touching the outside grows more slowly than the whole. Plan for the middle.",
+        "mind": "A pie the size of a town would be nearly all filling. A pie the size of a coin would be nearly all crust."
+      },
+      "figure": "edge",
+      "url": "https://wap.mom/crust/"
+    },
+    {
+      "series": "pi",
+      "no": "3.141592",
+      "slug": "needles",
+      "title": "Needles",
+      "dek": "π, found by dropping things.",
+      "status": "draft",
+      "department": "chance",
+      "date": "2026-09-24",
+      "clip": "Floors have been answering it ever since.",
+      "uses": {
+        "hand": "Any stick and any parallel lines will do, as long as the lines are one stick-length apart. A hundred drops often lands within a quarter of π.",
+        "table": "Two people dropping toothpicks can race to the better π. Whoever loses has still found π.",
+        "work": "A steady number can hide inside a pile of random events. Count enough small things and it shows itself.",
+        "mind": "π is in the kitchen floor, waiting for someone to drop something."
+      },
+      "figure": "buffon",
+      "url": "https://wap.mom/needles/"
+    },
+    {
+      "series": "pi",
+      "no": "3.1415926",
+      "slug": "slice",
+      "title": "Slice",
+      "dek": "Half the radius, times the crust.",
+      "status": "draft",
+      "department": "kitchen",
+      "date": "2026-09-24",
+      "clip": "The rule holds for any slice, of any pie, cut by anyone.",
+      "uses": {
+        "hand": "For six slices, cut straight through the middle along the hands of a clock at 12, at 2, and at 4.",
+        "table": "One person cuts and the other chooses first. It is the oldest known way to make a division fair.",
+        "work": "A rule that holds however the cut is made is a rule you can hand to someone else.",
+        "mind": "Cut a pie into more and more slices and lay them point to crust, alternating. They become a rectangle: half the edge long and one radius tall. That is where πr² comes from."
+      },
+      "figure": "sectors",
+      "url": "https://wap.mom/slice/"
+    },
+    {
+      "series": "pi",
+      "no": "3.14159265",
+      "slug": "square",
+      "title": "The Square",
+      "dek": "The one shape it will not become.",
+      "status": "draft",
+      "department": "proofs",
+      "date": "2026-09-24",
+      "clip": "The circle keeps its area. It only declines to be squared.",
+      "uses": {
+        "hand": "A 9-inch round pan and an 8-inch square pan hold almost the same, within about half a percent. The kitchen squares the circle close enough.",
+        "table": "Some questions are answered by proving they cannot be. That is still an answer, and it lets everyone stop.",
+        "work": "When a goal keeps failing, check whether the tools allow it at all. Change the tools before blaming the effort.",
+        "mind": "The attempts turned up other discoveries along the way. A problem can be worth having even when it cannot be solved."
+      },
+      "figure": "squarecircle",
+      "url": "https://wap.mom/square/"
+    },
+    {
+      "series": "pi",
+      "no": "3.141592653",
+      "slug": "patience",
+      "title": "Patience",
+      "dek": "One, minus a third, plus a fifth, and so on.",
+      "status": "draft",
+      "department": "series",
+      "date": "2026-09-24",
+      "clip": "Exact is not the same as quick.",
+      "uses": {
+        "hand": "Count along if you like. Ten steps leaves you off by about a tenth; a hundred, by about a hundredth.",
+        "table": "Everyone at the table can add the next fraction. No one finishes. Everyone gets closer.",
+        "work": "Here each new correct digit costs ten times the steps of the last. Some improvements are priced like that; know the price before starting.",
+        "mind": "The series is exact and never arrives. It is possible to be completely right and still on the way."
+      },
+      "figure": "leibniz",
+      "url": "https://wap.mom/patience/"
+    },
+    {
+      "series": "e",
+      "no": "2.7",
+      "slug": "interest",
+      "title": "Interest",
+      "dek": "Growth that never stops to count.",
+      "status": "draft",
+      "department": "growth",
+      "date": "2026-09-24",
+      "clip": "e is what growth comes to when it never stops to count.",
+      "uses": {
+        "hand": "Divide 72 by a yearly rate to find how many years it takes to double. At 6 percent, about 12.",
+        "table": "Paying more often always helps, and past monthly it barely does: 2.613 monthly against 2.718 forever.",
+        "work": "Small gains taken often add up to a ceiling, not to infinity. Know where the ceiling is.",
+        "mind": "Somewhere between once a year and every instant, the answer stops being a banker’s and becomes a constant."
+      },
+      "figure": "compound",
+      "url": "https://wap.mom/interest/"
+    },
+    {
+      "series": "e",
+      "no": "2.71",
+      "slug": "rise",
+      "title": "Rise",
+      "dek": "Half full, one doubling before the top.",
+      "status": "draft",
+      "department": "growth",
+      "date": "2026-09-24",
+      "clip": "The jar is half full one doubling before it overflows.",
+      "uses": {
+        "hand": "Put a rubber band around the jar at the level of a freshly fed starter. The band shows when it has doubled.",
+        "table": "Anything that doubles on a schedule gets away in its last few doublings. Check early.",
+        "work": "Compounding looks slow for most of its life and sudden at the end. Measure it by the doubling time, not the size.",
+        "mind": "Doubling every four hours for a week is forty-two doublings: more than four trillion times the start."
+      },
+      "figure": "rise",
+      "url": "https://wap.mom/rise/"
+    }
+  ],
+  "forthcoming": [
+    {
+      "series": "pi",
+      "no": "3.1415926535",
+      "slug": "steam",
+      "title": "Steam",
+      "question": "How long should a pie rest, and can the resting be written down?"
+    },
+    {
+      "series": "pi",
+      "no": "3.14159265358",
+      "slug": "lattice",
+      "title": "Lattice",
+      "question": "What does a lattice top count?"
+    },
+    {
+      "series": "e",
+      "no": "2.718",
+      "slug": "starter",
+      "title": "Starter",
+      "question": "What does a sourdough starter know about e?"
+    }
+  ],
+  "room": {
+    "houseStyle": [
+      "Every sentence is meant. The periodical does not wink.",
+      "The mathematics is right. When a figure is approximate, say by how much.",
+      "Pie is treated with the same care as π.",
+      "No reader is described. Write for someone who will pass it on without a synopsis.",
+      "Write like a host, not a lecturer. Every issue leaves uses: something for the hand, the table, the work, and the mind.",
+      "A figure is an instrument, not an illustration. It should be worth moving."
+    ],
+    "openQuestions": [
+      "What is the smallest true thing about π that still surprises?",
+      "Which approximation deserves an issue of its own?",
+      "What does a recipe prove?",
+      "Where do π and e meet outside of an equation?"
+    ],
+    "uses": {
+      "hand": "In the hand",
+      "table": "At the table",
+      "work": "At work",
+      "mind": "In the mind"
+    }
+  }
+}

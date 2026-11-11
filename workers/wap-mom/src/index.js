@@ -30,6 +30,11 @@ const PAGES = {
   "/corrections": renderCorrections,
 };
 
+// Since 2026-11-11 every page here is a file (carry-pages.mjs writes them into
+// assets/), so a reader costs none of the account's daily script allowance and
+// the periodical stays up when it runs out. wrangler.jsonc runs this worker for
+// /cabinet and an issue's /draw only; the rest of fetch answers carry-pages.mjs
+// and the tests. www to the apex belongs to a Cloudflare Redirect Rule.
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -54,11 +59,17 @@ export default {
       if (response) return response;
     }
 
-    const match = path.match(/^\/([a-z0-9-]+)(?:\/(?:(offprint|clip)\/?)?)?$/);
+    const match = path.match(/^\/([a-z0-9-]+)(?:\/(?:(offprint|clip|draw)\/?)?)?$/);
     const issue = match ? bySlug(match[1]) : null;
     if (issue) {
       if (match[2] === "offprint") return html(renderOffprint(issue));
       if (match[2] === "clip" && issue.clip) return html(renderClip(issue));
+      // A figure drawn from its controls without the page's script: the one page here that reads the address.
+      if (match[2] === "draw") {
+        const drawn = html(renderIssue(issue, url.searchParams));
+        drawn.headers.set("X-Robots-Tag", "noindex, follow");
+        return drawn;
+      }
       if (!match[2]) return html(renderIssue(issue, url.searchParams));
     }
     return new Response("Not found", {

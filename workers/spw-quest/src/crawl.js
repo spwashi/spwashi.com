@@ -44,10 +44,22 @@ ${urls}
 `;
 }
 
+/**
+ * Answers that never read the request: the same text for every reader, model
+ * and crawler. carry-answers.mjs writes each one out of the worker into assets/,
+ * so the addresses models fetch most (2026-11-11, when the account's daily
+ * script allowance ran out and every page answered Error 1027) cost nothing and
+ * stay up. "/" stays with the worker: it answers text, JSON or a page by Accept.
+ */
+export const CONSTANT_ANSWERS = Object.freeze([
+  "/llms.txt", "/llms-full.txt", "/init", "/init.md", "/git.txt", "/git.md", "/quest.json", "/prompts.json", "/parser.js",
+]);
+
 /** The paths wrangler.jsonc sends to the assets layer instead of the worker. */
 export const STATIC_PATTERNS = Object.freeze([
   "/fonts/*", "/peer/*", "/icons/*", "/sw.js", "/robots.txt", "/sitemap.xml",
   "/parser/index.json", "/parser/*/*.js", "/parser/*/*.map", "/parser/*/manifest.json", "/arcs/index.json",
+  ...CONSTANT_ANSWERS,
 ]);
 
 /** A dated parser release page, /parser/2026.10.13/ and the like. */

@@ -1,0 +1,354 @@
+# spw.quest
+
+> Spw is a notation for a reading you can compare: a mark says what a word is doing, and a brace says which slot it fills. An answer written in Spw can be parsed, compared, and opened as a card or a canvas.
+
+An address and a line together, as in "spw.quest rpgwednesday<card>", ask for an answer written in Spw. The line names the subject and its <concept> names the kind of answer. An answer is plain Spw text, with no code fence and no sentence before it. A person setting up a repository wants [the recipe](https://spw.quest/init) instead.
+
+A line is word[mode]{body}(scene)<concept>, and only the word is required.
+
+- word: what the line is about, one name with no spaces.
+- [mode]: how it is being seen.
+- {body}: what belongs to it. A dot makes one name, a comma holds a company, a semicolon keeps an order, ~> is a path.
+- (scene): where or when it stands.
+- <concept>: what kind of thing it is.
+
+A mark goes right before a word, with no space after it:
+
+- ~ potential: Keep a path open without taking it.
+- ? wonder: Open a question you can close again.
+- ! action: Commit a move so its consequence can be seen.
+- * value: Mark what carries weight here.
+- . ground: Come back to the local default.
+- ^ ascension: Lift parts into one relation you can inspect.
+- # vibration: Name a structure so it can be found again.
+- @ perspective: Say who is looking, and from where.
+- & subject: Name what the relation is about.
+- = configuration: Keep this here, under this name.
+- % measure: Compare, weigh, or level the field.
+- $ substrate: Name what carries the charge: time, money, memory, attention.
+
+Quoted text takes double quotes. #>name names a file or a line, and #:kind says what kind of file it is.
+
+A word<card> is the line with its [mode], {body} and (scene) filled in from what is known, then a seed card, and a seed card always names its template. For a thing you know about, ^seed[Session] has the fields date, scene, turn, carry and revisit, and a field with nothing known is left out. Asked garden<card>, this is an answer, and pasted on spwashi.com it opens as a card:
+
+    garden[weekly]{beds, compost, seedlings}(saturday)<card>
+    ^seed[Session]{
+      scene: "a shared plot, tended on Saturdays"
+      carry: "the beds planted last week"
+      revisit: "what survived the frost?"
+    }
+
+For a word you know nothing about, not knowing is the card. ^seed[Wonder.Prompt] has the fields question, tension, material, relay and revisit, and each says what would have to be found out:
+
+    nightmarket<card>
+    ^seed[Wonder.Prompt]{
+      question: "what is nightmarket, and who keeps it?"
+      tension: "the name is all that was given"
+      relay: "whoever named it"
+      revisit: "once a page says what it is"
+    }
+
+A word<question> is the question, what is expected, and the probe that would answer it:
+
+    ?["Will the seedlings survive a frost?"]{
+      ~#expect: "the covered bed holds and the open bed does not"
+      !probe{ "read both beds the morning after the first frost" }
+    }
+
+A word<change> says what happened, what changed, and how it was checked:
+
+    #[episode]{
+      ~[scene]{ the open bed lost its seedlings to a frost }
+      ![change]{ every bed is covered before dusk in November }
+      *[verify]{ all four beds came through the next frost }
+    }
+
+Any other <concept> is the line with its slots filled and one plain sentence:
+
+    garden[weekly]{beds, compost}(saturday)<plot>
+    *says = "a shared plot, tended on Saturdays"
+
+Facts about a word come from the Card address below, which lists what the site holds for it. On X an answer fits 280 characters and has no @ directly before a name, since that notifies the account; a # before a letter shows as a tag. A link to https://spw.quest/card?line= with the line percent-encoded unfurls as a link card.
+
+## Addresses
+
+Every address below answers with a page that reads with no script, except Canvas.
+
+- [Card](https://spw.quest/card.txt?line=rpgwednesday%3Ccard%3E): You hold a line and want what the site holds for its word before answering it, as text. line: one line, 200 characters. /card with the same line is a small page that unfurls as a link card, and spw.quest/ followed by the line itself answers the same. Example: line = rpgwednesday<card>.
+- [Pivot](https://spw.quest/pivot?line=home%5Bhook%5D%7Bsoftware.art%7D): You hold one line and want the lines one change away from it, grouped by the slot each turns. A turn that lands on a line a page already holds says which page, with a link to it. line: one line, 200 characters; past that it is cut and the page says so. In a browser, #turn-mode, #turn-body, #turn-subject, #turn-scope or #turn-projection scrolls to one slot; a fetch gets the whole page. Example: line = home[hook]{software.art}.
+- [Find](https://spw.quest/specimens?q=recipe%5B*%5D): You want every line on spwashi.com with some shape: the same word through other lenses, the same lens on other words. q: slots to match, with * for any value. The page is about 280 KB whatever is asked: the answer comes first, and the whole shelf follows it. Example: q = recipe[*].
+- [Compare](https://spw.quest/specimens?a=h-capsule&b=h-induct_join): You hold two shelf lines and want the slots they share and the slot where they part. a, b: shelf ids, as Find prints them. The page is about 280 KB whatever is asked: the answer comes first, and the whole shelf follows it. Example: a = h-capsule, b = h-induct_join.
+- [Take apart](https://spw.quest/build?script=~door%5Bajar%5D%7Bhinge%7D): You hold a file, or a line among others, and want what a tool reads from it and each slot's alternatives from the file's own lines. script: up to 1800 characters in an address. line: which of its lines to take apart, counted from 1. Example: script = ~door[ajar]{hinge}.
+- [Read a file](https://spw.quest/?example=record): You want a whole example of a kind of file (a log, a catalog record, a question with its probe) and what a tool reads from it. example: notebook, record, vocabulary, question, script, revision, persona, calibration, perspectives, loops, gradient, syntax, headings, perform, outline, recurrence, laws or pantry. at: a name in the file, to land on its line. Example: example = record.
+- [Check a line](https://spw.quest/read?step=act&line=~door): You are learning one mark and want a single line checked against that panel's rule. step: write, act, hold, name, point, ask or grow. line: up to 400 characters. Example: step = act, line = ~door.
+- [At rest](https://spw.quest/physics?line=home%5Bhook%5D%7Bsoftware.art%7D): You want a line drawn as bodies at rest, with the laws that placed them. line: one line. Example: line = home[hook]{software.art}.
+- [Canvas](https://spw.quest/canvas?line=home%5Bhook%5D%7Bsoftware.art%7D): You want a person to see a line laid out as a force-directed canvas on factshift.center. It draws with scripts, so a reader without them gets only its chrome: use Pivot to read the line. line: up to 400 characters, or s: a shelf id. Answers with a redirect to factshift.center. Example: line = home[hook]{software.art}.
+
+## Reference
+
+- [Marks and braces](https://spw.quest/#operators): each mark and brace pair, what it reads as, and what the runtime does with it.
+- [Constructs](https://spw.quest/constructs): the shapes a line takes, each with a pressed example.
+- [Dated parser builds](https://spw.quest/parser/): the parser as a file to load on your own page.
+
+## Optional
+
+- [Initialize a repository](https://spw.quest/init): the recipe for mounting Spw Workbench, for an agent asked to set one up.
+- [quest.json](https://spw.quest/quest.json): that recipe's facts as data.
+- [Every example file](https://spw.quest/llms-full.txt): this index, then each file whole.
+
+## Example files
+
+lab-notebook.spw: Chronological empirical log: dated entries categorized by epistemological kind, allowing automated synthesis of bench progression across cataloging, experimental trials, metric measurements, and landed invariants.
+
+    #>lab_notebook
+    #:log #!components #!themes
+    @chip: ~"./chip.spw"
+    @matte: ~"./themes.spw#matte"
+
+    ^"stream"{
+     >>[2026-11-06 09:10] catalog — the chip, in three dialects on one screen: pill, ring, plain
+     >>[2026-11-06 11:40] try — the matte theme on the chip: the ring holds its edge, the pill loses it
+     >>[2026-11-06 14:05] measure — --shape-panel read 22 times in 11 files, with three fallbacks
+     >>[2026-11-06 17:30] land — one inset for every panel on a phone
+    }
+
+chip.spw: Bibliographic catalog record grounded in information science: title, cross-reference variants, categorical subjects, and evidentiary provenance.
+
+    #>component_chip
+    #:record #!component
+    @broader: ~"./control.spw"
+    @related: ~"./sigil.spw"
+    @tried: ~"./experiment.spw"
+
+    ^"record"{
+      title = `chip`
+      also_called = #[`pill`, `ring`, `plain`][reg=set]
+      subjects = #[`handle`, `operator`, `touch target`][reg=set]
+      provenance = `cataloged 2026-11-06 from three screens`
+    }[reg=facet]
+
+themes.spw: Controlled vocabulary and ontological schema: canonical preferred terms, non-preferred synonyms, and scoping notes ensuring conceptual alignment.
+
+    #>theme_vocabulary
+    #:vocabulary #!themes
+
+    ^"matte"{
+      use_for = #[`flat`, `chalk`][reg=set]
+      scope = `a surface that takes no light; text sits on it at full contrast`
+      broader = `metamaterial`
+    }[reg=facet]
+
+    ^"glass"{
+      use_for = #[`frosted`, `liquid`][reg=set]
+      scope = `a surface that lets what lies beneath show through, refracted`
+      broader = `metamaterial`
+    }[reg=facet]
+
+experiment.spw: Metacognitive hypothesis testing: an epistemic inquiry pairing an interrogative wonder with an explicit hypothesis, expected outcome, and empirical verification probe.
+
+    #>wonder_ring_on_glass
+    @chip: ~"./chip.spw"
+    @glass: ~"./themes.spw#glass"
+    ?["Does the ring chip read on the glass theme at a phone's width?"]{
+      ~#hypothesis: `a ring keeps its edge where a pill's fill washes out`
+      ~#expect: `the ring holds 3:1 against the busiest panel; the pill does not`
+      !probe{ "screenshot the chip row on glass at 390px and measure each edge's contrast" }
+      $%[ring.reads, pill.reads, neither]
+    }
+
+session.spw: Procedural session script: sequential operational transitions modeled as ordered path steps, enabling step-by-step execution tracking and state verification.
+
+    #>catalog_session
+    #:script #!session
+    @record: ~"./chip.spw#record"
+
+    steps = path{~gather; *describe; ^classify; !shelve}
+    gather = shelf[ui]{chip.card}<record>
+
+change.spw: Tripartite change episode: context scene, state transformation, and empirical verification criteria—the syntactic contract of every repository mutation.
+
+    #[episode]{
+      ~[scene]{ a panel body drew a second wall on a phone, and its text sat on the line }
+      ![change]{ a body slot keeps no wall of its own below 45rem }
+      *[verify]{ heading, body and first line share one edge on fourteen frames }
+    }
+
+archivist.spw: Situated epistemic persona: communicative voice, observational locus, epistemic axioms, and persistent heuristic habits held in regard.
+
+    #>archivist_persona
+    #:persona #!library
+
+    ^"persona"{
+      voice = `plain, exact, fond of see-also`
+      regards = `the component shelf from the reading room`
+      affirms = `a record is a promise that a thing can be found again`
+      stayed = `the habit of naming where each thing came from`
+    }[reg=facet]
+
+calibration.spw: Metacognitive calibration model: pre-task prediction vs. post-task recall with scalar confidence assessments, quantified by a dimensional gradient %.
+
+    #>calibration
+    #:study #!metacognition
+
+    ^"before"{
+      predict = `I can say why recalling beats rereading`
+      confidence = 0.7
+    }[reg=facet]
+
+    ^"after"{
+      recalled = `two of the three reasons`
+      confidence = 0.5
+      next = `reread chapter 2 with a question written first`
+    }[reg=facet]
+
+    %confidence{before ~> after}
+
+perspectives.spw: Multi-agent deictic perspectivism: examining one focal chapter across four situated epistemic vantage points, aggregated into a unified thematic subject.
+
+    #>four_readings
+    #:reflection #!metacognition
+    @measured: ~"./calibration.spw"
+
+    me = student@ch2[sure]{recall}<quiz>
+    peer = peer@ch2[unsure]{spacing}<ask>
+    later = later@ch2[review]{kept}<exam>
+    tutor = tutor@ch2[watch]{gap}<lesson>
+
+    &ch2{recall, spacing, kept, gap}
+
+loops.spw: Collaborative workflow orchestration: concurrent persona execution loops coordinated through serial handoff gates and inter-loop communicative relays.
+
+    #>persona_loops
+    #:board #!loops #!production
+    @archivist: ~"./archivist.spw"
+
+    reference = ~"./folios/release.spw"
+    ahead = #[`the holds`, `the scans`][reg=set]
+    loops = {
+      archivist@scan{provenance},
+      designer@scan{placement},
+      editor@scan{caption}
+    }
+    each = path{~read; *note; ?ask; !hand_back}
+    handoff = path{^gather; ?check; !release}
+    relay = {archivist.provenance ~> editor.caption}
+
+    ?["What must one loop hand another before it can start?"]{
+      ~#expect: `only the caption waits, on provenance`
+      !probe{ "list what each loop reads; what another loop writes goes in the handoff" }
+    }
+
+gradient.spw: Continuous epistemic gradient: parameterizing decisions along a scalar spectrum between polarized stances, replacing binary dichotomy with nuanced spatial positioning.
+
+    #>gradient_space
+    #:board #!gradient
+
+    reference = ~"./plans/index.spw"
+    from = archivist@plans{keep}
+    to = designer@plans{reshape}
+    gradient = #[
+      `0.10 keep every line as written`,
+      `0.40 keep the dates, rewrite the slices`,
+      `0.70 keep the wonders, redraw the order`,
+      `0.90 rebuild around the reader`
+    ][reg=set]
+
+    ?["Where on this gradient does each plan sit today?"]{
+      ~#expect: `most sit near 0.40`
+      !probe{ "read each plan's head line and name its place" }
+    }
+
+syntax.spw: Syntactic and relational joins: associative company, sequential path order, communicative reach with ~>, perspectival regard, and nested constituent hierarchies.
+
+    #>syntax_stage
+    #:showcase #!syntax
+    @company: ~"./headings.spw#headings"
+
+    company = {student, classmate, later}
+    order = path{~read; *note; ?ask}
+    reach = home ~> topics
+    regard = student@indexing
+    nest = shelf{chip{ring, pill}, card{lifted}}
+    line = home[hook]{software.art}(atlas)<record>
+
+headings.spw: Information organization and subject indexing: multiple competing indexing terms held in associative company, preserving ambiguity prior to catalog authorization.
+
+    #>subject_headings
+    #:showcase #!indexing #!library
+
+    speaker = I
+    wondered = indexing
+    headings = {student, classmate, later}@indexing
+
+    ?["Which heading would a catalog keep, and which stay in company?"]{
+      ~#expect: `the three stay; the catalog's one term is a later choice`
+      !probe{ "read the three names in the brace and say which one a shelf would authorize" }
+    }
+
+perform.spw: Dynamic architectural configuration: when a structural pattern performs against an operational slot, the runtime materializes its declared theme consequence.
+
+    #>pattern_performance
+    #:showcase #!pattern #!theme
+    @line: ~"./syntax.spw#line"
+
+    pattern = pivot
+    performs = one.slot
+    theme = glass
+    line = home[hook]{software.art}<atlas>
+
+    ?["When the pivot performs, which theme should the page take?"]{
+      ~#expect: `glass, while one slot moves and the rest stays`
+      !probe{ "change theme to matte and watch the field lose its shadow" }
+    }
+
+outline.spw: A course four levels deep: terms hold units, units hold weeks, weeks hold what is read and done.
+
+    #>course_outline
+    #:outline #!curriculum
+    @session: ~"./session.spw"
+
+    course = term{
+      unit{
+        week{read{chapter, margin}, do{drill, recall}},
+        week{read{essay}, do{studio}}
+      },
+      unit{
+        week{read{review}, do{retry}}
+      }
+    }
+
+rain.spw: One word in four slots: rain as the subject, a part, a scene, and where a line goes.
+
+    #>rain_ledger
+    #:study #!identity
+    @headings: ~"./headings.spw"
+
+    morning = rain[light]{gutter, path}
+    field = soil[wet]{rain, roots}
+    song = chorus{verse, bridge}(rain)
+    barrel = !water{roof ~> barrel}<rain>
+
+kitchen.spw: Four neighbors under four laws: what lifts, what drifts, what stays, and what will not close.
+
+    #>kitchen_laws
+    #:showcase #!physics
+    @perform: ~"./perform.spw"
+
+    kitchen = {
+      ^bread{flour, water},
+      ~soup{beans, salt},
+      =spice{cumin, clove},
+      ?stock{bones, time}
+    }
+
+pantry.spw: A census of one shelf: sixteen things in company, read as a list and as a set of places.
+
+    #>pantry_census
+    #:record #!inventory
+
+    pantry = shelf[full]{
+      oats, rice, lentils, barley,
+      salt, sugar, yeast, honey,
+      vinegar, oil, cumin, clove,
+      bay, thyme, sage, dill
+    }

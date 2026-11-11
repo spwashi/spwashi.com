@@ -413,7 +413,7 @@ export function figureHtml(issue, searchParams, { still = false } = {}) {
   const draw = def.params.some((p) => p.kind !== "hidden") ? `<button type="submit" class="fig-draw">Draw</button>` : "";
   const controls = still
     ? ""
-    : `<form class="fig-controls" method="get" action="#${id}">
+    : `<form class="fig-controls" method="get" action="/${issue.slug}/draw#${id}">
     ${inputs}
     <div class="fig-buttons">${buttons}${draw}</div>
   </form>`;
