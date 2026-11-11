@@ -39,9 +39,9 @@ test('the kept list is every file the snapshot ships, and names this snapshot', 
   assert.ok(!SNAPSHOT_FILES.some((file) => file.endsWith('service-worker.js') || file.endsWith('index.html')));
 });
 
-test('the canvas is static: carried once with its lines, its shell and their headers; the worker runs for / only', async () => {
+test('the canvas is static: carried once with its lines, its shell and their headers; a file answers "/" before the worker', async () => {
   const config = JSON.parse(readFileSync(new URL('wrangler.jsonc', root), 'utf8').replace(/^\s*\/\/.*$/gm, ''));
-  assert.deepEqual(config.assets.run_worker_first, ['/']);
+  assert.equal(config.assets.run_worker_first, undefined, 'no address spends the daily script allowance');
   const check = spawnSync(process.execPath, [fileURLToPath(new URL('carry-shell.mjs', root)), '--check'], { encoding: 'utf8' });
   assert.equal(check.status, 0, check.stderr);
   for (const file of ['assets/index.html', 'assets/_spwashi@/index.html']) {
@@ -65,6 +65,7 @@ test('the canvas is static: carried once with its lines, its shell and their hea
   assert.match(SHELL_VERSION, new RegExp(`^${SNAPSHOT.revision}-${SNAPSHOT.snapshot}-site\\d+$`));
   const headers = readFileSync(new URL('assets/_headers', root), 'utf8');
   assert.equal(headers, HEADERS);
+  assert.match(headers, /^\/\n  Cache-Control: public, max-age=60$/m, 'the canvas keeps its one-minute cache without the worker');
   assert.match(headers, /^\/sw\.js\n  Cache-Control: public, max-age=60$/m);
   assert.match(headers, /^\/manifest\.json\n  Content-Type: application\/manifest\+json; charset=UTF-8$/m);
 });
