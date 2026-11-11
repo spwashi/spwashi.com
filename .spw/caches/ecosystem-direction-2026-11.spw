@@ -1,0 +1,190 @@
+# One address, many readings: the ecosystem's direction and its static model (2026-11-11) — cache
+#
+# The creator, 2026-11-11: make factshift.center static now; consider
+# the design intent of the site ecosystem and what would make its direction
+# sustainable; URL drops as promotional events; each path as a tool; Spw as a
+# marketing medium of coherent, succinct, collectible language across the
+# routes; growing culture, design and linguistics; surfaces extended every day;
+# interaction design shared or differentiated across sites, with mechanics that
+# swap for novelty; the architecture across workers; the static asset model
+# across the ecosystem and spwashi.com's public assets; and file extensions as a
+# creative surface. Built pieces say so; the rest is proposal for the creator.
+
+#>ecosystem_direction_2026_11
+#:cache #!ecosystem #!architecture #!product #!workers
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@cluster: ~"../../workers/cluster.json"
+@workers_readme: ~"../../workers/README.md"
+@site_cluster: ~"../surfaces/site-cluster.spw"
+@host_frame: ~"./host-frame-2026-09.spw"
+@domains: ~"../domains.spw"
+@product: ~"./ecosystem-productization-2026-11.spw"
+@reasoned: ~"./reasoned-physics-2026-11.spw"
+@pwa_roles: ~"./pwa-roles-2026-11.spw"
+@collectible: ~"./collectible-expressions-2026-09.spw"
+@product_lines: ~"../surfaces/product-lines.spw"
+@promo: ~"../../.agents/plans/promo-wonder-cycle/PLAN.md"
+@architecture: ~"../../.agents/plans/ecosystem-architecture/PLAN.md"
+@grow: ~"./workbench-interaction-theory-2026-11.spw"
+@quest_crawl: ~"../../workers/spw-quest/src/crawl.js"
+@quest_answers: ~"../../workers/spw-quest/carry-answers.mjs"
+@wap_pages: ~"../../workers/wap-mom/carry-pages.mjs"
+@factshift_carry: ~"../../workers/factshift-center/carry-shell.mjs"
+@check_workers: ~"../../scripts/check-workers.mjs"
+
+operation = "cache"
+fixity = "experimental"
+expression = ?address[reading]{file.drop.tool.atom.cadence.mechanic}<ecosystem>
+
+summary = #[
+  `A file answers; a script computes. Every address that reads nothing from the request is a file served at the edge: faster, cleanly cached, portable to any static host, and still answering when a script cannot. Compute is kept for what computes.`,
+  `One address, many readings. The extension says which: .html where a person stands, .spw the line to keep, .txt for a model, .json for a tool, .svg the card to share, .ics the date a drop closes. All of them are files written at build time from one source.`,
+  `A drop is a dated folder of readings with a close: a page, its line, its card, its calendar entry. It needs no script, it can be announced by one link, and it leaves one collectible atom behind.`,
+  `Daily surfaces need no daily deploy: write a schedule ahead, and let each reader's date pick the entry, as the promo cycle already does. A deploy a week carries a week of days.`,
+  `Mechanics are readings with a switch, like the canvas's hand: plain or lively. A drop may switch a site's mechanic for its window, so novelty is scheduled and every mechanic stays reachable from the menu.`,
+][reg=set]
+
+^"built_2026_11_11"{
+  factshift = `factshift.center is files only: the canvas's one-minute cache moved into _headers (@factshift_carry), and its front door answered from a file at 22:48 UTC while the scripted addresses could not. Committed b6da3462, deployed. www for "/" now needs a Cloudflare Redirect Rule.`
+  quest = `spw.quest's nine constant answers (llms.txt, llms-full.txt, init, init.md, git.txt, git.md, quest.json, prompts.json, parser.js) are files carried out of the worker by @quest_answers, with their headers restated in _headers and held by test/static.test.mjs. "/" stays scripted: it answers text, JSON or a page by Accept. Not committed or deployed.`
+  wap = `wap.mom's 44 printed pages, its feed, sitemap, now.json, figures.js, robots, favicon and a 404 page are files carried by @wap_pages; the worker runs for /cabinet and an issue's /draw only, where a figure is drawn from its controls without the page's script (the form's action moved there). Its first tests (3) and check:workers hold it; a wrangler dry run passes. Not committed or deployed; www needs a Redirect Rule.`
+  measured_before = `a survey of the six workers: wap.mom about 95% fixed content, spw.quest about 30 of 40 named paths, site-hub-next mostly fixed but per host, smut.today fixed but for a cookie and the UTC day, autonomous.feedback mostly per request`
+}[reg=facet]
+
+^"static_model"{
+  # Rules for the whole ecosystem, each already true somewhere above.
+  rules = #[
+    `an address that reads nothing from the request is a file`,
+    `a reading that varies is an extension, not a header: /quest.json and /llms.txt beside a page, rather than one address answering by Accept`,
+    `a form that computes says so in its address: /{slug}/draw, so its page can stay a file`,
+    `a carry script writes each file out of the worker that would have answered it, and --check holds them equal in check:workers; the worker's branch stays, so the tests read one source`,
+    `_headers is written by the carry: the security set once for every file, then each file's own type and cache`,
+    `content that varies by host is a folder per host, or its own assets-only worker; a file cannot see the host`,
+    `www to the apex is one Redirect Rule per zone in the dashboard, not a script`,
+  ][reg=set]
+  sensor = `check:workers could hold a scripted-address budget per worker: the run_worker_first list it declares, so a change that sends a page back to the script is a visible diff.`
+  next = #[
+    `spw.quest: robots.txt closing the card and query space to crawlers (the five shelf pages are files since 2026-11-11, carried as served)`,
+    `site-hub-next: its thirteen door hosts as assets-only workers or Pages projects, a folder each`,
+    `smut.today: its day picked in the reader's page from a schedule file, with the cookie's choices kept in the page`,
+    `autonomous.feedback: its five-minute cron and the fetches peers make to each other; measure them before changing them`,
+    `response helpers, HEAD and the favicon into workers/lib/http.js, which since 2026-11-11 holds the security headers and escapeHtml for six workers`,
+  ][reg=set]
+}[reg=facet]
+
+^"extensions"{
+  # File extensions as a creative surface: the extension is the reading, the way a mark is the law.
+  exists = `313 .spw sidecars already sit beside spwashi.com's images, each describing its picture; spw.quest serves llms.txt and quest.json beside its pages; wap.mom has feed.xml and now.json; the canvas reads a line from #spw64.`
+  readings = .{
+    html = "where a person stands: the page"
+    spw = "the line to keep: the collectible, pasteable into the canvas, the guide or an editor"
+    txt = "the reading for a model: the llms.txt convention, one per page"
+    json = "the reading for a tool: the same facts, typed"
+    svg = "the card to share: the page's line drawn, with its address on it; labels can drop for an image model"
+    ics = "the date: a drop's close, or a show, in a reader's own calendar"
+    atom = "the cadence: what changed, for a reader who follows"
+  }[reg=facet]
+  proposal = #[
+    `every route answers at its address plus .spw, .txt and .svg, written at build time from one source; the page links its readings, so a reader learns they exist`,
+    `the canvas reads any .spw address it is handed, so a card's line opens as motion`,
+    `twitter:card summary_large_image from each route's .svg, so a post shows the line and not a bare title`,
+    `spwashi.com gains llms.txt, as spw.quest has, naming each route's .txt`,
+  ][reg=set]
+  why = `An extension is the cheapest way to say which reading a reader wants. It costs no script, it works in every tool, and a person who sees /spring.spw beside /spring already knows there is a line to take.`
+}[reg=facet]
+
+^"drops"{
+  # URL drops as promotional events.
+  exists = `the October drop as a dated folio release; closes on the 13th and 26th, though some surfaces also count the month's end; the production season, October 1 to New Year; #spw64 lines between apps; physics keys in a link (@reasoned payload).`
+  proposal = #[
+    `a drop is a dated folder: /drops/2026-11-26/ with its page, drop.spw (the line), card.svg, close.ics; announced by one link, which can carry the line to the canvas`,
+    `each drop names one collectible atom, an operator, a noun and one bracket (@collectible), and adds it to a public lexicon file that only grows`,
+    `a law set with a close date is a drop for the canvas: a season the canvas offers in its menu until the close`,
+    `the ledger on /now/ (@promo) gains a row per close, saying "no receipts filed" when none were`,
+    `settle the count of closes first: the 13th and 26th, or those and the month's end`,
+  ][reg=set]
+}[reg=facet]
+
+^"paths_as_tools"{
+  exists = `the route index sorts 209 routes into seven kinds (place 109, lab 35, route 22, operator 19, instrument 12, play 9, atlas 3); about fifteen are registered by hand in surfaces.spw; @host_frame gives each host one verb.`
+  proposal = #[
+    `each path states its verb and its receipt: what a reader leaves with (a card, a line, a still)`,
+    `a path is a tool when another tool can read it: its .spw and .json readings make it one`,
+    `the route registry generated from the index, not kept by hand, so fifteen does not drift from 209`,
+  ][reg=set]
+}[reg=facet]
+
+^"medium"{
+  # Spw as a marketing medium: coherent, succinct, collectible language across routes.
+  exists = `/cards/ holds Local Proof Cards; autonomous.feedback cards save as images and post to X; @product_lines turns features into collectibles; @collectible advises not printing "collectible" on a route yet.`
+  proposal = #[
+    `one line per route, at most one bracket deep, the same line in its .spw, its card and its llms.txt row: coherent because there is one source, succinct because a card fits one line`,
+    `a reader collects by keeping the .spw; the canvas and the guide open what is kept, so a collection is something to play, not a list`,
+    `the operator words held in one table (@grow), so every site says a mark the same way`,
+  ][reg=set]
+}[reg=facet]
+
+^"culture"{
+  # Growing culture, design and linguistics.
+  proposal = #[
+    `linguistics: each close's word, read by six seats with the prompt in @grow, the disagreements posted as open questions`,
+    `design: the weekly five folios, each with its .spw sidecar, become the week's drop when chosen`,
+    `culture: the ask and offer cards as the way in, so a reader's own line can join a drop's lexicon with credit`,
+    `RPG Wednesday as the live reading of a drop's line, with the card as its program`,
+  ][reg=set]
+}[reg=facet]
+
+^"cadence"{
+  # Surfaces extended every day, or populated meaningfully.
+  exists = `promo-wonder-cycle.json holds 8 daily and 5 weekly entries picked by the reader's date; the weekly folio set stops at W44, and check:local already nudges that it is two weeks stale; wap.mom has 11 drafts and none set; smut.today is daily in name and unchanged since 2026-10-12; worker content lives in code, so a new day means a deploy.`
+  proposal = #[
+    `write ahead, pick at read time: every daily surface reads a schedule file, and a week's deploy carries a week of days`,
+    `content as data files beside the code that renders it, so filling a schedule never touches a worker's logic`,
+    `a staleness nudge per surface, as the folio one already does, in check:local`,
+  ][reg=set]
+}[reg=facet]
+
+^"mechanics"{
+  # Interaction design shared or differentiated across sites.
+  exists = `"the hand" means three things (spw.quest's caret, the canvas's switch, wap.mom's figures); per-site settings live in a cookie, a well-known file and a menu; one tuning grammar is proposed and unbuilt.`
+  proposal = #[
+    `name each mechanic as a reading with a plain and a lively setting, as the canvas's hand is; the switch is always in the menu`,
+    `share the grammar of switching, differ in what is switched: each host keeps one signature mechanic, its verb`,
+    `a drop may set a site's mechanic for its window, through a law set file the page reads; novelty is scheduled and nothing is lost`,
+    `give "hand" one meaning, or three names`,
+  ][reg=set]
+}[reg=facet]
+
+^"sustainable"{
+  # What keeps the direction sustainable at $0.
+  facts = #[
+    `files are portable: the same folder serves from an edge assets layer or a static host such as GitHub Pages, so no address depends on one provider`,
+    `GitHub Pages publishes spwashi.com's built dist; git tracks about 159 MB of public/ in 2,890 files, while 4.8 GB sits on disk untracked`,
+    `@domains lists fewer hosts than @cluster routes, and files live spw.quest as unlinked`,
+  ][reg=set]
+  proposal = #[
+    `files first everywhere, scripts by declared exception, held by check:workers`,
+    `reconcile @domains with @cluster, and let check:workers fail when they part`,
+    `one parser release every consumer takes, instead of four builds`,
+    `an archive cadence for caches and plans, since caches grew from 37 to about 138 since September`,
+  ][reg=set]
+}[reg=facet]
+
+#>wonder_extension_readings
+?["Does a reader who sees a page's .spw, .txt and .svg readings beside it take the line more often than one shown a copy button?"]{
+  #:depth #!experiential ~#lens(comparison)
+  ~#hypothesis: "Yes: an address is something people already share, and an extension tells them what they will get before they open it."
+  !probe{ "one route with its three readings linked, one with a copy button; count lines kept and cards posted over two closes" }
+  $%[readings.kept_more, readings.same, readings.ignored]
+}
+
+#>wonder_static_budget
+?["How much compute does the ecosystem spend once every fixed address is a file?"]{
+  #:depth #!computational ~#lens(measure)
+  ~#hypothesis: "Few: what remains is the card space, the cabinet, the feedback desk and crawlers walking query pages."
+  !probe{ "the dashboard's requests per worker for a week before and after the deploys, beside each worker's run_worker_first list" }
+  $%[budget.ample, budget.tight, budget.crawlers]
+}

@@ -62,7 +62,7 @@ summary = #[
   now = `A link already carries physics: charge, velocityDecay, linkStrength and the rest are in version.json's query list, and kernel/ecosystem-links.js checks each value.`
   proposal = `One name in place of many numbers: a law set is a tuning line and a body-law table under a name, read from a static registry with a close, $law[autumn]{settle, drift}@sponsor<until 2026-11-26> (@product#sponsored). The canvas offers an open one as a reading in the [...] menu.`
   season = `A season is a law set with a close date, and a still of one line under each week's law makes the season comparable.`
-  popularity = `Popularity should count acts a person chose (a keep, a share), never page views, and only in aggregate. @product already says never with tracking, and both workers have hit the free tier's daily limit, so a registry stays a static file.`
+  popularity = `Popularity should count acts a person chose (a keep, a share), never page views, and only in aggregate. @product already says never with tracking, and a registry is a static file, served at the edge like any fixed answer.`
 }[reg=facet]
 
 ^"display"{
