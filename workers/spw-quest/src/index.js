@@ -13,11 +13,12 @@ import { displayMenu, displayScript } from "./display.js";
 import { PARSER_JS } from "./parser-text.js";
 import { handleParser, isParserPath } from "./parser-releases.js";
 import { SWITCH_CSS, parserSwitch, switchBanner, switchLoader, switchModulePath } from "./parser-switch.js";
-import { SPECIMENS_CSS, factshiftHref, specimenById, specimenState, specimensBody } from "./specimens.js";
+import { FACTSHIFT_LIMIT, SPECIMENS_CSS, factshiftHref, specimenById, specimenState, specimensBody } from "./specimens.js";
 import { renderConstructs } from "./constructs.js";
 import { pivotState, renderPivot } from "./pivot.js";
 import { physicsState, renderPhysics } from "./physics.js";
 import { WALK_CSS, walkSection } from "./walk.js";
+import { ADDRESS_INDEX, canvasRefusal, notFoundText } from "./addresses.js";
 import { PINNED_READER, PINNED_RELEASE, SHELL_VERSION, newestPublished, releaseNotice } from "./shell-pin.js";
 import { ROBOTS, sitemap, withRobots } from "./crawl.js";
 import { APP_INSTALL_CSS, MANIFEST_PATH, appInstallSection, isAppIconPath, questAppInstall, serveAppIcon, serveManifest } from "./quest-manifest.js";
@@ -667,7 +668,10 @@ async function handleQuest(request, url) {
   } else if (url.pathname === "/git.md") {
     response = new Response(GIT_MARKDOWN, { headers: { ...BASE_SECURITY,
       "Content-Type": "text/markdown; charset=UTF-8", "Cache-Control": "public, max-age=300" } });
-  } else if (["/init", "/init.md", "/llms.txt"].includes(url.pathname) ||
+  } else if (url.pathname === "/llms.txt") {
+    response = new Response(ADDRESS_INDEX, { headers: { ...BASE_SECURITY,
+      "Content-Type": "text/plain; charset=UTF-8", "Cache-Control": "public, max-age=300" } });
+  } else if (["/init", "/init.md"].includes(url.pathname) ||
       (url.pathname === "/" && /text\/(plain|markdown)/.test(request.headers.get("accept") || ""))) {
     response = new Response(QUEST_TEXT, { headers: { ...BASE_SECURITY,
       "Content-Type": "text/plain; charset=UTF-8", "Cache-Control": "public, max-age=300", Vary: "Accept" } });
@@ -710,9 +714,9 @@ async function handleQuest(request, url) {
   } else if (url.pathname === "/canvas") {
     // One short address for a line's canvas: a shelf specimen by id, or any line, opened on factshift.center.
     const line = specimenById(url.searchParams.get("s"))?.line || url.searchParams.get("line") || "";
-    response = line && line.length <= 400
+    response = line && line.length <= FACTSHIFT_LIMIT
       ? new Response(null, { status: 302, headers: { ...BASE_SECURITY, Location: factshiftHref(line), "Cache-Control": "public, max-age=300" } })
-      : new Response("No line to open", { status: 404, headers: BASE_SECURITY });
+      : new Response(canvasRefusal(line), { status: line ? 400 : 404, headers: { ...BASE_SECURITY, "Content-Type": "text/plain; charset=UTF-8" } });
   } else if (url.pathname === "/parser.js") {
     response = new Response(PARSER_JS, { headers: { ...BASE_SECURITY,
       "Content-Type": "text/javascript; charset=UTF-8", "Cache-Control": "public, max-age=3600" } });
@@ -727,7 +731,7 @@ async function handleQuest(request, url) {
   } else if (url.pathname === "/health" || url.pathname === "/ready") {
     response = jsonResponse({ ok: true, worker: "spw-quest", surface: "quest", version: VERSION }, "no-store");
   } else {
-    response = new Response("Not found", { status: 404, headers: BASE_SECURITY });
+    response = new Response(notFoundText(url.pathname), { status: 404, headers: { ...BASE_SECURITY, "Content-Type": "text/plain; charset=UTF-8" } });
   }
   if (url.pathname === "/") response.headers.set("Vary", "Accept");
   if (request.method === "HEAD") return new Response(null, { status: response.status, headers: response.headers });

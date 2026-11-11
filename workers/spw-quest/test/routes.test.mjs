@@ -18,7 +18,7 @@ import { readConfig } from '../../autonomous-feedback/src/config.js';
 const get = (host, path, options) => worker.fetch(new Request(`https://${host}${path}`, options));
 
 test('quest discovery is independent of cache and network APIs', async () => {
-  for (const path of ['/install', '/init', '/init.md', '/llms.txt', '/git.txt', '/git.md', '/quest.json', '/prompts.json', '/ready']) {
+  for (const path of ['/install', '/init', '/init.md', '/git.txt', '/git.md', '/quest.json', '/prompts.json', '/ready']) {
     const response = await get('spw.quest', path);
     assert.equal(response.status, 200, path);
     if (!['/ready'].includes(path)) assert.match(await response.text(), /\.spw\/_workbench/);

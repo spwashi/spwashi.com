@@ -298,5 +298,5 @@ test('with no releases carried, /parser/ says so; /parser.js and the other route
   assert.equal(bundle.headers.get('access-control-allow-origin'), null);
   assert.equal((await get('/', { env })).headers.get('content-security-policy'), `${PAGE_CSP.replace("script-src 'unsafe-inline'", "script-src 'self' 'unsafe-inline'")}; connect-src 'self'`);
   assert.equal((await get('/install', { env })).headers.get('content-security-policy'), PAGE_CSP);
-  assert.equal(await (await get('/missing', { env })).text(), 'Not found');
+  assert.match(await (await get('/missing', { env })).text(), /^Not found: \/missing\n/);
 });

@@ -351,11 +351,6 @@ export function fileKit(data) {
     const open = String(key).startsWith("brace:") ? key.slice(6) : "";
     return open && PAIRS[open] ? `${open}${value}${PAIRS[open].close}` : value;
   };
-  const spw64 = (value) => {
-    let binary = "";
-    for (const byte of new TextEncoder().encode(value)) binary += String.fromCharCode(byte);
-    return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
-  };
 
   /** The file's lines, each with the tokens that sit wholly on it; kept on the reading. */
   function rowsOf(reading) {
@@ -588,7 +583,7 @@ export function fileKit(data) {
       const ways = [];
       // The rooms a line can go to are the host page's to name ([address, label] pairs): the guide names none.
       if (line && line.length <= 200) for (const [base, label] of o.ways || []) ways.push(`<a href="${esc(`${base}${encodeURIComponent(line)}`)}">${esc(label)}</a>`);
-      if (line && line.length <= 400) ways.push(`<a href="https://factshift.center/#spw64=${spw64(line)}" target="_blank" rel="noopener">Open it on the canvas ↗</a>`);
+      if (line && line.length <= 400) ways.push(`<a href="/canvas?line=${encodeURIComponent(line)}" target="_blank" rel="noopener">Open it on the canvas ↗</a>`);
       if (ways.length) html.push(`<p class="hand-ways">${ways.join('<span aria-hidden="true"> · </span>')}</p>`);
     }
     return { html: html.join("\n          "), n, from: rows[n].from, to: rows[n].to, up, down, parts, held, heldPart, choices, depth: trail.length, primed: Boolean(primed) };
