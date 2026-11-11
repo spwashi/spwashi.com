@@ -175,12 +175,17 @@ export function readSeedText(source) {
   const text = String(source ?? '');
   let found = null;
   for (const [key, template] of Object.entries(SEED_TEMPLATES)) {
-    const at = text.indexOf(template.sigil);
-    if (at >= 0 && (!found || at < found.at)) found = { at, key, template };
+    // A seed may leave its mark out, ^seed[Session], as one written by hand or
+    // by a model does: it does not know the year the card will be filed under.
+    const bare = `${template.sigil.replace(/\s+\w+:$/, '')}]`;
+    const marked = text.indexOf(template.sigil);
+    const plain = text.indexOf(bare);
+    const at = marked >= 0 && (plain < 0 || marked < plain) ? marked : plain;
+    if (at >= 0 && (!found || at < found.at)) found = { at, key, template, head: at === marked ? template.sigil.length : bare.length - 1 };
   }
   if (!found) return null;
-  const { at, key, template } = found;
-  const close = text.indexOf(']', at + template.sigil.length);
+  const { at, key, template, head } = found;
+  const close = text.indexOf(']', at + head);
   const open = close < 0 ? -1 : text.indexOf('{', close);
   if (open < 0) return null;
   const known = new Set(template.fields.map((field) => field.key));
@@ -197,7 +202,7 @@ export function readSeedText(source) {
   return {
     templateKey: key,
     template,
-    mark: text.slice(at + template.sigil.length, close).trim(),
+    mark: text.slice(at + head, close).trim(),
     values,
     filled: Object.values(values).filter((value) => value.trim()).length,
   };
