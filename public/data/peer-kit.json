@@ -1,0 +1,232 @@
+{
+  "schema": "spwashi.peer-kit/1",
+  "source": "https://spwashi.com/public/data/peer-kit.json",
+  "says": "spwashi.com's paper material for a peer site: tokens light and dark, the names a peer's CSS speaks, and the color of each mark and brace.",
+  "light": {
+    "--font-family-sans": "Inter, \"Segoe UI\", system-ui, sans-serif",
+    "--font-family-mono": "\"JetBrains Mono\", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
+    "--font-family-manuscript": "Charter, \"Iowan Old Style\", \"Palatino Linotype\", Palatino, Georgia, serif",
+    "--site-editorial-font": "\"Newsreader\", var(--font-family-manuscript), Georgia, serif",
+    "--charcoal-rgb": "14, 18, 20",
+    "--bg": "hsl(42 32% 90%)",
+    "--bg-deep": "hsl(42 26% 82%)",
+    "--bg-field": "hsl(44 34% 95%)",
+    "--surface-matte": "rgba(250, 248, 243, 0.96)",
+    "--surface-matte-strong": "rgba(255, 253, 248, 0.99)",
+    "--ink-strong": "rgba(var(--charcoal-rgb), 0.96)",
+    "--ink": "rgba(var(--charcoal-rgb), 0.92)",
+    "--ink-soft": "rgba(var(--charcoal-rgb), 0.8)",
+    "--ink-mid": "rgba(var(--charcoal-rgb), 0.68)",
+    "--ink-muted": "rgba(var(--charcoal-rgb), 0.58)",
+    "--ink-faint": "rgba(var(--charcoal-rgb), 0.42)",
+    "--line": "rgba(var(--charcoal-rgb), 0.14)",
+    "--line-strong": "rgba(0, 128, 128, 0.34)",
+    "--line-matte": "rgba(var(--charcoal-rgb), 0.09)",
+    "--teal": "hsl(180 72% 30%)",
+    "--teal-deep": "hsl(180 70% 18%)",
+    "--op-frame-color": "hsl(180 74% 28%)",
+    "--op-layer-color": "var(--ink-soft)",
+    "--op-vibration-color": "var(--op-frame-color)",
+    "--op-probe-color": "hsl(268 54% 44%)",
+    "--op-wonder-color": "var(--op-probe-color)",
+    "--op-ref-color": "hsl(214 66% 40%)",
+    "--op-potential-color": "var(--op-ref-color)",
+    "--op-object-color": "hsl(36 82% 38%)",
+    "--op-integration-color": "var(--op-object-color)",
+    "--op-merge-color": "hsl(188 42% 34%)",
+    "--op-subject-color": "var(--op-merge-color)",
+    "--op-binding-color": "hsl(24 48% 34%)",
+    "--op-action-color": "hsl(176 74% 24%)",
+    "--op-perspective-color": "var(--op-action-color)",
+    "--op-topic-color": "hsl(168 62% 30%)",
+    "--op-concept-color": "var(--op-topic-color)",
+    "--op-surface-color": "hsl(180 52% 30%)",
+    "--op-concept-edge-color": "var(--op-surface-color)",
+    "--op-scene-color": "var(--op-surface-color)",
+    "--op-mode-color": "var(--op-probe-color)",
+    "--op-direction-color": "var(--op-frame-color)",
+    "--op-meta-color": "hsl(220 34% 36%)",
+    "--op-substrate-color": "var(--op-meta-color)",
+    "--op-stream-color": "hsl(160 44% 32%)",
+    "--op-value-color": "var(--op-stream-color)",
+    "--op-baseline-color": "hsl(42 18% 30%)",
+    "--op-ground-color": "var(--op-baseline-color)",
+    "--op-normalize-color": "hsl(95 28% 34%)"
+  },
+  "dark": {
+    "--bg": "hsl(218 20% 8.5%)",
+    "--bg-deep": "hsl(220 24% 6%)",
+    "--bg-field": "hsl(216 16% 12%)",
+    "--surface-matte": "rgba(26, 33, 39, 0.97)",
+    "--surface-matte-strong": "rgba(33, 41, 48, 0.99)",
+    "--ink-strong": "rgba(236, 241, 238, 0.96)",
+    "--ink": "rgba(228, 235, 232, 0.92)",
+    "--ink-soft": "rgba(214, 224, 220, 0.90)",
+    "--ink-mid": "rgba(214, 224, 220, 0.80)",
+    "--ink-muted": "rgba(202, 214, 210, 0.72)",
+    "--ink-faint": "rgba(202, 214, 210, 0.62)",
+    "--line": "rgba(228, 235, 232, 0.14)",
+    "--line-strong": "rgba(96, 210, 210, 0.34)",
+    "--line-matte": "rgba(228, 235, 232, 0.09)",
+    "--teal": "hsl(180 58% 58%)",
+    "--teal-deep": "hsl(180 52% 42%)",
+    "--op-frame-color": "hsl(180 62% 62%)",
+    "--op-layer-color": "var(--ink-soft)",
+    "--op-probe-color": "hsl(268 48% 72%)",
+    "--op-ref-color": "hsl(214 58% 68%)",
+    "--op-object-color": "hsl(36 70% 64%)",
+    "--op-merge-color": "hsl(188 42% 64%)",
+    "--op-binding-color": "hsl(24 48% 66%)",
+    "--op-action-color": "hsl(176 58% 58%)",
+    "--op-topic-color": "hsl(168 52% 62%)",
+    "--op-surface-color": "hsl(180 48% 62%)",
+    "--op-meta-color": "hsl(220 38% 72%)",
+    "--op-stream-color": "hsl(160 42% 62%)",
+    "--op-baseline-color": "hsl(42 24% 68%)",
+    "--op-normalize-color": "hsl(95 30% 66%)"
+  },
+  "aliases": {
+    "--fg": "var(--ink)",
+    "--muted": "var(--ink-mid)",
+    "--edge": "var(--ink-faint)",
+    "--surface": "var(--surface-matte)",
+    "--field": "var(--surface-matte-strong)",
+    "--accent": "color-mix(in oklab, var(--teal) 68%, var(--ink) 32%)",
+    "--accent-soft": "color-mix(in srgb, var(--accent) 9%, transparent)",
+    "--warn": "var(--op-binding-color)",
+    "--font": "var(--font-family-sans)",
+    "--mono": "var(--font-family-mono)",
+    "--manuscript": "var(--site-editorial-font)"
+  },
+  "sigils": [
+    {
+      "sigil": "#>",
+      "type": "frame",
+      "color": "--op-frame-color"
+    },
+    {
+      "sigil": "#:",
+      "type": "layer",
+      "color": "--op-layer-color"
+    },
+    {
+      "sigil": "#",
+      "type": "vibration",
+      "color": "--op-vibration-color"
+    },
+    {
+      "sigil": ".",
+      "type": "ground",
+      "color": "--op-ground-color"
+    },
+    {
+      "sigil": "^",
+      "type": "integration",
+      "color": "--op-integration-color"
+    },
+    {
+      "sigil": "~",
+      "type": "potential",
+      "color": "--op-potential-color"
+    },
+    {
+      "sigil": "?",
+      "type": "wonder",
+      "color": "--op-wonder-color"
+    },
+    {
+      "sigil": "@",
+      "type": "perspective",
+      "color": "--op-perspective-color"
+    },
+    {
+      "sigil": "*",
+      "type": "value",
+      "color": "--op-value-color"
+    },
+    {
+      "sigil": "&",
+      "type": "subject",
+      "color": "--op-subject-color"
+    },
+    {
+      "sigil": "=",
+      "type": "binding",
+      "color": "--op-binding-color"
+    },
+    {
+      "sigil": "$",
+      "type": "substrate",
+      "color": "--op-substrate-color"
+    },
+    {
+      "sigil": "%",
+      "type": "normalize",
+      "color": "--op-normalize-color"
+    },
+    {
+      "sigil": "!",
+      "type": "action",
+      "color": "--op-action-color"
+    },
+    {
+      "sigil": ">",
+      "type": "concept-edge",
+      "color": "--op-concept-edge-color"
+    },
+    {
+      "sigil": "<",
+      "type": "concept",
+      "color": "--op-concept-color"
+    },
+    {
+      "sigil": "(",
+      "type": "scene",
+      "color": "--op-scene-color"
+    },
+    {
+      "sigil": "[",
+      "type": "mode",
+      "color": "--op-mode-color"
+    },
+    {
+      "sigil": "{",
+      "type": "direction",
+      "color": "--op-direction-color"
+    }
+  ],
+  "braces": [
+    {
+      "open": "<",
+      "type": "concept",
+      "color": "--op-concept-color"
+    },
+    {
+      "open": "(",
+      "type": "scene",
+      "color": "--op-scene-color"
+    },
+    {
+      "open": "[",
+      "type": "mode",
+      "color": "--op-mode-color"
+    },
+    {
+      "open": "{",
+      "type": "direction",
+      "color": "--op-direction-color"
+    }
+  ],
+  "faces": [
+    {
+      "family": "Newsreader",
+      "style": "normal",
+      "weight": "200 800"
+    },
+    {
+      "family": "JetBrains Mono",
+      "style": "normal",
+      "weight": "400 700"
+    }
+  ]
+}

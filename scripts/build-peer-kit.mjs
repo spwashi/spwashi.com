@@ -35,6 +35,8 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CORE = path.join(ROOT, 'public/css/tokens/core.css');
 const FONTS_CSS = path.join(ROOT, 'public/css/tokens/fonts.css');
 const OUT = path.join(ROOT, 'workers/lib/peer-kit.js');
+// The same kit as data, for a peer in another repository: fetch it, or copy it and compare later.
+const JSON_OUT = path.join(ROOT, 'public/data/peer-kit.json');
 const DARK_SELECTOR = 'html[data-spw-color-mode="dark"]';
 
 /** The site tokens a peer takes. Their references come along. */
@@ -309,16 +311,28 @@ export function peerFontPreloads(base = "/fonts/") {
   return PEER_FONTS.map((face) => \`<link rel="preload" href="\${base}\${face.file}" as="font" type="font/woff2" crossorigin>\`).join("\\n  ");
 }
 `;
-    return { module, fontFiles, scriptFiles, undarkened };
+    const json = `${JSON.stringify({
+      schema: 'spwashi.peer-kit/1',
+      source: 'https://spwashi.com/public/data/peer-kit.json',
+      says: "spwashi.com's paper material for a peer site: tokens light and dark, the names a peer's CSS speaks, and the color of each mark and brace.",
+      light: Object.fromEntries(names.map((name) => [name, light.get(name)])),
+      dark: Object.fromEntries(darkNames.map((name) => [name, dark.get(name)])),
+      aliases: Object.fromEntries(ALIASES),
+      sigils,
+      braces,
+      faces: fonts.map(({ family, style, weight }) => ({ family, style, weight })),
+    }, null, 2)}\n`;
+    return { module, json, fontFiles, scriptFiles, undarkened };
   })();
 }
 
 const check = process.argv.includes('--check');
-const { module, fontFiles, scriptFiles, undarkened } = await build();
+const { module, json, fontFiles, scriptFiles, undarkened } = await build();
 if (undarkened.length) console.log(`[build:peer-kit] note: the site gives no dark value for ${undarkened.join(', ')}`);
 const drift = [];
 
 if (!fs.existsSync(OUT) || fs.readFileSync(OUT, 'utf8') !== module) drift.push(rel(OUT));
+if (!fs.existsSync(JSON_OUT) || fs.readFileSync(JSON_OUT, 'utf8') !== json) drift.push(rel(JSON_OUT));
 for (const unit of Object.keys(UNITS)) {
   const dir = path.join(ROOT, 'workers', unit, 'assets', 'fonts');
   const want = [...fontFiles.values()].filter((f) => f.unit === unit);
@@ -345,6 +359,7 @@ if (check) {
   console.log(`[build:peer-kit] current: ${rel(OUT)}, ${fontFiles.size} font file(s) and ${scriptFiles.size} script(s)`);
 } else {
   fs.writeFileSync(OUT, module);
+  fs.writeFileSync(JSON_OUT, json);
   for (const unit of Object.keys(UNITS)) {
     const dir = path.join(ROOT, 'workers', unit, 'assets', 'fonts');
     fs.mkdirSync(dir, { recursive: true });
