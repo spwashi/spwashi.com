@@ -117,6 +117,8 @@ test('the pivot turns one line that fits', () => {
   assert.equal(questPivotHref('board[workshop]{mill.laminate.cure}'), 'https://spw.quest/pivot?line=board%5Bworkshop%5D%7Bmill.laminate.cure%7D');
   assert.equal(questPivotHref('a\nb'), null);
   assert.equal(questPivotHref('x'.repeat(PIVOT_LINE_MAX + 1)), null);
+  assert.equal(questPivotHref('a[b]', { slot: 'mode' }), 'https://spw.quest/pivot?line=a%5Bb%5D#turn-mode');
+  assert.equal(questPivotHref('a[b]', { slot: 'nowhere' }), 'https://spw.quest/pivot?line=a%5Bb%5D', 'a slot the page has no group for is left off');
 });
 
 test('a name is a Spw word, and a text that opens with #>name already carries one', () => {
