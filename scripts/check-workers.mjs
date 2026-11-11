@@ -114,11 +114,15 @@ async function main() {
     ['--import', './scripts/tests/register-public-imports.mjs', 'workers/spw-quest/carry-shelf.mjs', '--check'],
     // /arcs/ against its carried season. The season moves with history; carry-arcs.mjs refreshes it.
     ['--import', './scripts/tests/register-public-imports.mjs', 'workers/spw-quest/carry-arcs.mjs', '--check'],
+    // llms.txt, init, quest.json and the other constant answers, against what the worker answers.
+    ['--import', './scripts/tests/register-public-imports.mjs', 'workers/spw-quest/carry-answers.mjs', '--check'],
     ['workers/factshift-center/carry-shell.mjs', '--check'],
+    // wap.mom's printed pages, against what its worker prints.
+    ['workers/wap-mom/carry-pages.mjs', '--check'],
   ];
   for (const args of carried) run(args);
 
-  for (const dir of ['workers/autonomous-feedback/test', 'workers/spw-quest/test', 'workers/site-hub-next/test', 'workers/factshift-center/test']) {
+  for (const dir of ['workers/autonomous-feedback/test', 'workers/spw-quest/test', 'workers/site-hub-next/test', 'workers/factshift-center/test', 'workers/wap-mom/test']) {
     run(['--test', ...testFiles(dir)]);
   }
   console.log(`[check:workers] ${inventory.units.length} units, ${seenHosts.size} hosts; quest and feedback routing verified`);

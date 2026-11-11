@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Wondering About Pi</title>
+  <subtitle>A periodical of record about π and pie, with a supplement on e.</subtitle>
+  <link href="https://wap.mom/feed.xml" rel="self"/>
+  <link href="https://wap.mom/"/>
+  <id>https://wap.mom/</id>
+  <updated>2026-09-24T00:00:00Z</updated>
+  <author><name>Wondering About Pi</name></author>
+  <entry>
+    <title>No. 3.141592653 — Patience</title>
+    <link href="https://wap.mom/patience/"/>
+    <id>https://wap.mom/patience/</id>
+    <updated>2026-09-24T00:00:00Z</updated>
+    <summary>One, minus a third, plus a fifth, and so on.</summary>
+    <content type="html">&lt;p&gt;Start with one. Take away a third. Add a fifth. Take away a seventh. Keep going forever, multiply what you have by four, and you have π exactly.&lt;/p&gt;&lt;p&gt;Madhava found this in fourteenth-century India; Leibniz found it again in 1674. It is exact, and it is slow. A thousand steps in, you are still off by about a thousandth.&lt;/p&gt;&lt;p&gt;Exact is not the same as quick.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>No. 3.14159265 — The Square</title>
+    <link href="https://wap.mom/square/"/>
+    <id>https://wap.mom/square/</id>
+    <updated>2026-09-24T00:00:00Z</updated>
+    <summary>The one shape it will not become.</summary>
+    <content type="html">&lt;p&gt;For more than two thousand years, people tried to draw a square with exactly the area of a circle, using only a compass and a straightedge. No measuring. No guessing.&lt;/p&gt;&lt;p&gt;In 1882, Ferdinand von Lindemann proved it cannot be done. The reason is π itself: it is not only endless, it is a kind of number those two tools can never build.&lt;/p&gt;&lt;p&gt;The circle keeps its area. It only declines to be squared.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>No. 3.1415926 — Slice</title>
+    <link href="https://wap.mom/slice/"/>
+    <id>https://wap.mom/slice/</id>
+    <updated>2026-09-24T00:00:00Z</updated>
+    <summary>Half the radius, times the crust.</summary>
+    <content type="html">&lt;p&gt;Cut a pie into eight equal slices. Each one is an eighth of a full turn: forty-five degrees at the point.&lt;/p&gt;&lt;p&gt;Here is a rule for any slice. Measure from the point to the crust, then along the crust. Multiply the two and take half. That is how much pie is in the slice.&lt;/p&gt;&lt;p&gt;Do the same for the whole pie and you get the area of a circle, πr². The rule holds for any slice, of any pie, cut by anyone.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>No. 3.141592 — Needles</title>
+    <link href="https://wap.mom/needles/"/>
+    <id>https://wap.mom/needles/</id>
+    <updated>2026-09-24T00:00:00Z</updated>
+    <summary>π, found by dropping things.</summary>
+    <content type="html">&lt;p&gt;Draw straight lines across a sheet of paper, each one a toothpick’s length from the next. Drop a toothpick on it, again and again, and count how often it lands across a line.&lt;/p&gt;&lt;p&gt;It crosses about 64 times in every 100. The exact share is two divided by π. The Comte de Buffon asked this question in the 1700s. Floors have been answering it ever since.&lt;/p&gt;&lt;p&gt;Drop enough toothpicks and you can work π backwards from your count. It takes a while: ten thousand drops usually gets you within a few hundredths.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>No. 3.14159 — Crust</title>
+    <link href="https://wap.mom/crust/"/>
+    <id>https://wap.mom/crust/</id>
+    <updated>2026-09-24T00:00:00Z</updated>
+    <summary>The edge grows more slowly than the middle.</summary>
+    <content type="html">&lt;p&gt;A nine-inch pie has about twenty-eight inches of edge. That is nine times π.&lt;/p&gt;&lt;p&gt;Bake one twice as wide and it gets twice the edge, but four times the filling. The edge grows with the width. The middle grows with the width times itself.&lt;/p&gt;&lt;p&gt;So a small pie has more edge for its size than a large one. The ratio is not a matter of taste. It is a matter of radius.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>No. 3.1415 — 355/113</title>
+    <link href="https://wap.mom/355-113/"/>
+    <id>https://wap.mom/355-113/</id>
+    <updated>2026-09-24T00:00:00Z</updated>
+    <summary>Six digits, six places.</summary>
+    <content type="html">&lt;p&gt;About fifteen hundred years ago, the astronomer Zu Chongzhi gave two fractions for π. He called 22/7 the approximate ratio. He called 355/113 the close one.&lt;/p&gt;&lt;p&gt;Divide it out and it matches π to six decimal places, off by less than three ten-millionths.&lt;/p&gt;&lt;p&gt;No fraction with a smaller denominator comes closer. The next one that does is 52163/16604, which no one keeps anywhere.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>No. 3.141 — Pie</title>
+    <link href="https://wap.mom/pie/"/>
+    <id>https://wap.mom/pie/</id>
+    <updated>2026-09-24T00:00:00Z</updated>
+    <summary>The crust is a proof.</summary>
+    <content type="html">&lt;p&gt;A pie is a circle you are allowed to cut.&lt;/p&gt;&lt;p&gt;Everything about it is measured before it is baked: the flour, the fat, the heat, the time. The oven is the only argument that convinces a room.&lt;/p&gt;&lt;p&gt;A pie that waits for the knife is a theorem with a crust. π never ends. Pie ends when it is shared.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>No. 3.14 — 22/7</title>
+    <link href="https://wap.mom/22-7/"/>
+    <id>https://wap.mom/22-7/</id>
+    <updated>2026-09-24T00:00:00Z</updated>
+    <summary>Close enough to share.</summary>
+    <content type="html">&lt;p&gt;Twenty-two divided by seven is 3.142857, repeating. It is a little too big, off by about one part in 2,500.&lt;/p&gt;&lt;p&gt;Over two thousand years ago, Archimedes trapped π between two shapes with ninety-six sides each, one just inside a circle and one just outside. 22/7 was the outside edge of the trap, and it is the one people kept.&lt;/p&gt;&lt;p&gt;Close is not cheap. Close is hospitality.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Supplement 2.71 — Rise</title>
+    <link href="https://wap.mom/rise/"/>
+    <id>https://wap.mom/rise/</id>
+    <updated>2026-09-24T00:00:00Z</updated>
+    <summary>Half full, one doubling before the top.</summary>
+    <content type="html">&lt;p&gt;A starter that doubles every four hours grows by the same small fraction every minute of those four hours. Growth that feeds on itself is written with e.&lt;/p&gt;&lt;p&gt;Left a day, it would double six times and be sixty-four times its size, if the jar allowed.&lt;/p&gt;&lt;p&gt;The jar is half full one doubling before it overflows. Most of the rising happens at the end.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>No. 3.1 — π</title>
+    <link href="https://wap.mom/pi/"/>
+    <id>https://wap.mom/pi/</id>
+    <updated>2026-09-24T00:00:00Z</updated>
+    <summary>It does not close.</summary>
+    <content type="html">&lt;p&gt;Wrap a string around a pie tin, then lay the same string across the middle. The string around is a little more than three times as long as the string across.&lt;/p&gt;&lt;p&gt;It is the same amount more for every tin, every plate, every round thing in the house. That amount is π. Its digits never end and never settle into a repeating pattern. Every digit is exact, and there is always another: an infinite courtesy.&lt;/p&gt;&lt;p&gt;This periodical is numbered by it. Each issue adds a digit. We will not run out.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Supplement 2.7 — Interest</title>
+    <link href="https://wap.mom/interest/"/>
+    <id>https://wap.mom/interest/</id>
+    <updated>2026-09-24T00:00:00Z</updated>
+    <summary>Growth that never stops to count.</summary>
+    <content type="html">&lt;p&gt;In 1683, Jacob Bernoulli asked a banker’s question. Lend one coin for a year at one hundred percent. Paid once, it becomes two. Paid half at midyear and the rest at the end, with the half already earning, it becomes 2.25.&lt;/p&gt;&lt;p&gt;Pay more often and it grows more, but not without limit. Monthly gives about 2.613. Daily gives about 2.715. Paid every instant, it gives 2.71828…, and that number is e.&lt;/p&gt;&lt;p&gt;e is what growth comes to when it never stops to count.&lt;/p&gt;</content>
+  </entry>
+</feed>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>355/113 — Wondering About Pi, no. 3.1415</title>
+  <meta name="description" content="Six digits, six places. Wondering About Pi, no. 3.1415.">
+  <link rel="canonical" href="https://wap.mom/355-113/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="alternate" type="application/atom+xml" title="Wondering About Pi" href="/feed.xml">
+  <meta property="og:site_name" content="Wondering About Pi">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="355/113 — Wondering About Pi, no. 3.1415">
+  <meta property="og:description" content="Six digits, six places. Wondering About Pi, no. 3.1415.">
+  <meta property="og:url" content="https://wap.mom/355-113/">
+  <meta name="twitter:card" content="summary">
+  <meta name="theme-color" content="#f4efe4" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#15120e" media="(prefers-color-scheme: dark)">
+  <style>
+  :root {
+    color-scheme: light dark;
+    --paper: #f4efe4; --ink: #1c1916; --muted: #625a4f; --rule: #1c1916;
+    --faint: rgba(28, 25, 22, .16); --card: #fbf8f1;
+    --crust: #8a4f17; --rise: #1f6a66; --accent: var(--crust);
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #15120e; --ink: #ede5d6; --muted: #b0a591; --rule: #ede5d6;
+      --faint: rgba(237, 229, 214, .16); --card: #1d1914;
+      --crust: #e0a262; --rise: #6cc5bd;
+    }
+  }
+  body.series-e { --accent: var(--rise); }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font: 1.1rem/1.62 var(--serif); font-variant-numeric: oldstyle-nums proportional-nums;
+  }
+  main { width: min(36rem, calc(100% - 2rem)); margin: 0 auto; padding: 1.6rem 0 3rem; }
+  a { color: inherit; text-decoration-color: var(--accent); text-underline-offset: .18em; }
+  a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .caps { font-variant-caps: all-small-caps; letter-spacing: .07em; }
+  .muted { color: var(--muted); }
+  .skip { position: absolute; left: -9999px; top: 0; padding: .5rem .8rem; background: var(--ink); color: var(--paper); }
+  .skip:focus { left: 0; z-index: 2; }
+  .vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+  /* Masthead: ears, title, the expansion so far. */
+  .masthead { text-align: center; border-bottom: 3px double var(--rule); padding-bottom: .7rem; margin-bottom: 1.6rem; }
+  .ears { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 1rem; margin: 0 0 .3rem; color: var(--muted); font-size: .95rem; }
+  .ears span, .clip .source span { white-space: nowrap; }
+  .title { margin: 0; font-size: clamp(2.1rem, 9vw, 3.4rem); line-height: 1.05; letter-spacing: -.02em; font-weight: 400; }
+  .title a { text-decoration: none; }
+  .masthead.compact .title { font-size: clamp(1.5rem, 6vw, 2rem); }
+  .subtitle { margin: .1rem 0 0; color: var(--accent); font-style: italic; }
+  .expansion { margin: .45rem 0 0; font-size: 1.05rem; letter-spacing: .12em; font-variant-numeric: lining-nums tabular-nums; }
+  .expansion .here { color: var(--accent); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .25em; }
+  .expansion .ahead { color: var(--muted); opacity: .55; }
+
+  h1, h2 { font-weight: 400; line-height: 1.12; letter-spacing: -.01em; }
+  h1 { font-size: clamp(2rem, 7vw, 2.8rem); margin: .1rem 0 .2rem; }
+  h2 { font-size: 1.45rem; margin: .1rem 0 .3rem; }
+  .kicker { margin: 0; color: var(--muted); font-size: .98rem; }
+  .dek { margin: 0 0 1.2rem; font-style: italic; color: var(--muted); font-size: 1.2rem; }
+  .galley { color: var(--accent); }
+  .dateline { margin: .1rem 0 0; color: var(--muted); font-size: .92rem; }
+
+  .body p { margin: 0 0 1rem; hyphens: auto; }
+  .body:not(.rest) p:first-child::first-letter { float: left; font-size: 3.3em; line-height: .82; padding: .06em .09em 0 0; color: var(--accent); }
+  .pull { margin: 1.6rem 0; padding: .9rem 0; border-block: 1px solid var(--rule); text-align: center; }
+  .pull blockquote { margin: 0; font-size: 1.35rem; line-height: 1.35; font-style: italic; }
+
+  /* A printer's ornament: the series' constant between rules. */
+  .fleuron { display: flex; align-items: center; gap: .8rem; margin: 1.8rem 0 0; color: var(--accent); font-style: italic; }
+  .fleuron::before, .fleuron::after { content: ""; flex: 1; border-top: 1px solid var(--faint); }
+
+  /* Figures: instruments. They work without script; with it, they follow the hand. */
+  .fig { margin: 1.8rem 0 0; padding: 1rem 0 .4rem; border-top: 1px solid var(--rule); }
+  .fig-stage svg { display: block; width: 100%; height: auto; }
+  .fig-svg { font: 11px var(--serif); }
+  .fig-svg text { fill: var(--muted); }
+  .fig-svg .ink { stroke: var(--ink); fill: none; stroke-width: 1.2; }
+  .fig-svg .accent { stroke: var(--accent); fill: none; stroke-width: 1.6; }
+  .fig-svg .thick { stroke-width: 3; }
+  .fig-svg .dashed { stroke-dasharray: 4 3; }
+  .fig-svg .faint { stroke: var(--faint); fill: none; stroke-width: 1; }
+  .fig-svg .guide { stroke: var(--muted); stroke-dasharray: 3 3; fill: none; opacity: .6; }
+  .fig-svg .soft.accent { fill: var(--accent); fill-opacity: .14; }
+  .fig-svg .soft.ink { fill: var(--ink); fill-opacity: .06; }
+  .fig-svg .fill-accent { fill: var(--accent); fill-opacity: .3; stroke: none; }
+  .fig-svg .fill-accent.solid { fill-opacity: .55; }
+  .fig-svg .needle { stroke: var(--muted); stroke-width: 1; opacity: .7; }
+  .fig-svg .dot { fill: var(--muted); }
+  .fig-svg .dot-accent { fill: var(--accent); }
+  .fig-svg .slice-a { fill: var(--accent); fill-opacity: .38; stroke: var(--ink); stroke-width: .6; }
+  .fig-svg .slice-b { fill: var(--accent); fill-opacity: .14; stroke: var(--ink); stroke-width: .6; }
+  .fig-readout { margin: .5rem 0; font-size: 1rem; }
+  .fig-controls { margin: .6rem 0; }
+  .fig-control { display: grid; grid-template-columns: 1fr auto; gap: 0 .8rem; align-items: center; margin: .2rem 0; }
+  .fig-control label { color: var(--muted); font-size: .95rem; }
+  .fig-control output { grid-row: 1; grid-column: 2; font-variant-numeric: lining-nums tabular-nums; }
+  .fig-control input[type="range"] { grid-column: 1 / -1; width: 100%; min-block-size: 44px; accent-color: var(--accent); margin: 0; }
+  .fig-buttons { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .fig.is-live .fig-draw { display: none; }
+  .fig figcaption { color: var(--muted); font-size: .95rem; font-style: italic; }
+  .fig figcaption .caps { font-style: normal; color: var(--accent); }
+
+  /* Uses: one line per dimension, the same four in every issue. */
+  .uses { margin: 1rem 0 0; padding: .9rem 1rem .4rem; background: var(--card); border: 1px solid var(--faint); border-top: 3px double var(--rule); }
+  .uses .head { margin: 0 0 .5rem; color: var(--muted); }
+  .uses dl { margin: 0; }
+  .uses dt { color: var(--accent); font-size: .92rem; font-variant-caps: all-small-caps; letter-spacing: .07em; }
+  .uses dd { margin: 0 0 .7rem; }
+
+  .cite { font-size: .95rem; color: var(--muted); border-top: 1px solid var(--faint); padding-top: .8rem; margin: 1.4rem 0 .4rem; }
+  .links { display: flex; flex-wrap: wrap; gap: 0 1.2rem; margin: 0; padding: 0; list-style: none; }
+  .links a { display: inline-flex; align-items: center; min-block-size: 44px; }
+  .pager { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; border-top: 1px solid var(--rule); margin-top: 1.4rem; }
+  .pager a { display: inline-flex; align-items: center; min-block-size: 44px; }
+  .correction { margin: 1rem 0 0; padding: .6rem .8rem; border-left: 3px solid var(--accent); background: var(--card); font-size: .98rem; }
+
+  button { font: inherit; min-block-size: 44px; padding: .35rem 1rem; border: 1px solid var(--rule); border-radius: 999px; background: transparent; color: var(--ink); cursor: pointer; }
+  button:hover { border-color: var(--accent); color: var(--accent); }
+  label { color: var(--muted); }
+  input[type="password"], input[type="text"], input:not([type]) { font: inherit; padding: .5rem .6rem; border: 1px solid var(--rule); background: var(--card); color: var(--ink); width: 100%; }
+
+  section { margin: 2rem 0 0; }
+  section > .caps.head { margin: 0 0 .6rem; padding-bottom: .3rem; border-bottom: 1px solid var(--rule); color: var(--muted); }
+  .lead h2 { font-size: clamp(1.8rem, 6vw, 2.3rem); }
+  .back { list-style: none; padding: 0; margin: 0; }
+  .back li { padding: .55rem 0; border-bottom: 1px solid var(--faint); }
+  .back .no { display: block; color: var(--muted); font-size: .92rem; font-variant-caps: all-small-caps; letter-spacing: .07em; }
+  .supplement { margin: 2rem 0 0; padding: .9rem 1rem; border: 1px solid var(--faint); border-top: 3px double var(--rule); background: var(--card); --accent: var(--rise); }
+  .supplement .expansion { text-align: left; font-size: .95rem; }
+
+  /* An open slot is an unwritten column: ruled, not greeked. */
+  .slot { padding: .7rem 0 .2rem; border-bottom: 1px solid var(--faint); }
+  .slot .question { margin: .25rem 0 .6rem; font-style: italic; }
+  .slot .lines { block-size: 3.9rem; margin-bottom: .6rem; background: repeating-linear-gradient(to bottom, transparent 0 1.25rem, var(--faint) 1.25rem 1.3rem); }
+
+  ol.style, ul.questions { padding-left: 1.3rem; }
+  ol.style li, ul.questions li { margin: .35rem 0; }
+
+  .mark { text-align: center; margin: 1.6rem 0; }
+  .mark .equation { font-size: 1.9rem; font-style: italic; letter-spacing: .02em; }
+  .mark .equation sup { font-size: .6em; }
+
+  .colophon { margin-top: 3rem; padding-top: .8rem; border-top: 3px double var(--rule); position: relative; font-size: .95rem; color: var(--muted); }
+  .colophon p { margin: 0 0 .3rem; max-width: 30rem; }
+  .colophon .printers-mark { font-style: italic; }
+  .door { position: absolute; right: 0; bottom: 0; min-inline-size: 44px; min-block-size: 44px; display: inline-flex; align-items: center; justify-content: center; opacity: .12; text-decoration: none; }
+  .door:hover, .door:focus-visible { opacity: 1; color: var(--accent); }
+
+  /* Offprint and clipping: chrome-free, meant to be sent. */
+  .offprint-line { text-align: center; margin: 0 0 1.4rem; padding-bottom: .5rem; border-bottom: 1px solid var(--rule); color: var(--muted); }
+  body.clipping { min-block-size: 100svh; display: grid; place-items: center; }
+  .clip { width: min(28rem, calc(100% - 3rem)); margin: 2rem auto; padding: 1.5rem 1.4rem 1.2rem; background: var(--card); outline: 1px dashed var(--muted); outline-offset: .7rem; }
+  .clip .source { margin: 0 0 1rem; padding-bottom: .45rem; border-bottom: 3px double var(--rule); color: var(--muted); font-size: .92rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 .6rem; }
+  .clip blockquote { margin: 0; font-size: clamp(1.45rem, 6vw, 1.85rem); line-height: 1.3; font-style: italic; }
+  .clip .from { margin: 1rem 0 0; color: var(--muted); font-size: .95rem; }
+
+  @media print {
+    :root { --paper: #fff; --ink: #000; --card: #fff; }
+    .skip, .door, .links, .pager, .fig-controls, .colophon ul { display: none; }
+    main { width: auto; padding: 0; }
+    .fig, .uses, .pull { break-inside: avoid; }
+    a { text-decoration: none; }
+  }
+</style>
+  <script src="/figures.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<main id="main">
+<header class="masthead compact">
+  <p class="ears caps"><span>Vol. 3</span><span>wap.mom</span><span>No. 3.1415</span></p>
+  <p class="title"><a href="/">Wondering About Pi</a></p>
+  <p class="expansion"><span aria-hidden="true">3.141<span class="here">5</span>92653<span class="ahead">5</span><span class="ahead">8</span>…</span><span class="vh">This is number 3.1415.</span></p>
+</header>
+<article aria-labelledby="issue-title">
+  <p class="kicker caps">No. 3.1415 · Approximations · <span class="galley">galley proof</span></p>
+  <h1 id="issue-title">355/113</h1>
+  <p class="dek">Six digits, six places.</p>
+  <div class="body">
+    <p>About fifteen hundred years ago, the astronomer Zu Chongzhi gave two fractions for π. He called 22/7 the approximate ratio. He called 355/113 the close one.</p>
+  </div>
+  <figure class="pull"><blockquote>No fraction with a smaller denominator comes closer.</blockquote></figure>
+  <div class="body rest">
+    <p>Divide it out and it matches π to six decimal places, off by less than three ten-millionths.</p>
+    <p>No fraction with a smaller denominator comes closer. The next one that does is 52163/16604, which no one keeps anywhere.</p>
+  </div>
+  <figure class="fig" id="fig-355-113" data-fig="fractions">
+  <div class="fig-stage"><svg class="fig-svg" viewBox="0 0 320 186" role="img" aria-label="Best fraction with a denominator up to 120: 355/113, off by 0.00000027. It stays the best until 16,604."><line x1="28" y1="172" x2="308" y2="172" class="faint"/><text x="24" y="20" text-anchor="end">closer</text><circle cx="28" cy="154.3" r="2.4" class="dot-accent"/><text x="28" y="147.3" text-anchor="middle">3/1</text><circle cx="30.4" cy="154.3" r="1.2" class="dot"/><circle cx="32.7" cy="154.3" r="1.2" class="dot"/><circle cx="35.1" cy="151.9" r="2.4" class="dot-accent"/><circle cx="37.4" cy="146.3" r="2.4" class="dot-accent"/><circle cx="39.8" cy="138.7" r="2.4" class="dot-accent"/><circle cx="42.1" cy="111.7" r="2.4" class="dot-accent"/><text x="42.1" y="104.7" text-anchor="middle">22/7</text><circle cx="44.5" cy="135" r="1.2" class="dot"/><circle cx="46.8" cy="140.5" r="1.2" class="dot"/><circle cx="49.2" cy="143.3" r="1.2" class="dot"/><circle cx="51.5" cy="143" r="1.2" class="dot"/><circle cx="53.9" cy="138.7" r="1.2" class="dot"/><circle cx="56.2" cy="132.2" r="1.2" class="dot"/><circle cx="58.6" cy="111.7" r="1.2" class="dot"/><circle cx="60.9" cy="128.7" r="1.2" class="dot"/><circle cx="63.3" cy="135" r="1.2" class="dot"/><circle cx="65.6" cy="138.3" r="1.2" class="dot"/><circle cx="68" cy="138.7" r="1.2" class="dot"/><circle cx="70.4" cy="134.8" r="1.2" class="dot"/><circle cx="72.7" cy="128.8" r="1.2" class="dot"/><circle cx="75.1" cy="111.7" r="1.2" class="dot"/><circle cx="77.4" cy="124.5" r="1.2" class="dot"/><circle cx="79.8" cy="131.4" r="1.2" class="dot"/><circle cx="82.1" cy="135" r="1.2" class="dot"/><circle cx="84.5" cy="135.9" r="1.2" class="dot"/><circle cx="86.8" cy="132.2" r="1.2" class="dot"/><circle cx="89.2" cy="126.6" r="1.2" class="dot"/><circle cx="91.5" cy="111.7" r="1.2" class="dot"/><circle cx="93.9" cy="121.3" r="1.2" class="dot"/><circle cx="96.2" cy="128.7" r="1.2" class="dot"/><circle cx="98.6" cy="132.5" r="1.2" class="dot"/><circle cx="100.9" cy="133.9" r="1.2" class="dot"/><circle cx="103.3" cy="130.3" r="1.2" class="dot"/><circle cx="105.6" cy="124.9" r="1.2" class="dot"/><circle cx="108" cy="111.7" r="1.2" class="dot"/><circle cx="110.4" cy="118.6" r="1.2" class="dot"/><circle cx="112.7" cy="126.4" r="1.2" class="dot"/><circle cx="115.1" cy="130.4" r="1.2" class="dot"/><circle cx="117.4" cy="132.2" r="1.2" class="dot"/><circle cx="119.8" cy="128.8" r="1.2" class="dot"/><circle cx="122.1" cy="123.7" r="1.2" class="dot"/><circle cx="124.5" cy="111.7" r="1.2" class="dot"/><circle cx="126.8" cy="116.1" r="1.2" class="dot"/><circle cx="129.2" cy="124.5" r="1.2" class="dot"/><circle cx="131.5" cy="128.7" r="1.2" class="dot"/><circle cx="133.9" cy="130.9" r="1.2" class="dot"/><circle cx="136.2" cy="127.6" r="1.2" class="dot"/><circle cx="138.6" cy="122.7" r="1.2" class="dot"/><circle cx="140.9" cy="111.7" r="1.2" class="dot"/><circle cx="143.3" cy="113.8" r="1.2" class="dot"/><circle cx="145.6" cy="122.9" r="1.2" class="dot"/><circle cx="148" cy="127.1" r="1.2" class="dot"/><circle cx="150.4" cy="129.8" r="1.2" class="dot"/><circle cx="152.7" cy="126.6" r="1.2" class="dot"/><circle cx="155.1" cy="121.8" r="1.2" class="dot"/><circle cx="157.4" cy="111.7" r="1.2" class="dot"/><circle cx="159.8" cy="111.6" r="2.4" class="dot-accent"/><circle cx="162.1" cy="121.3" r="1.2" class="dot"/><circle cx="164.5" cy="125.8" r="1.2" class="dot"/><circle cx="166.8" cy="128.7" r="1.2" class="dot"/><circle cx="169.2" cy="125.7" r="1.2" class="dot"/><circle cx="171.5" cy="121.1" r="1.2" class="dot"/><circle cx="173.9" cy="111.7" r="1.2" class="dot"/><circle cx="176.2" cy="109.3" r="2.4" class="dot-accent"/><circle cx="178.6" cy="119.9" r="1.2" class="dot"/><circle cx="180.9" cy="124.5" r="1.2" class="dot"/><circle cx="183.3" cy="127.5" r="1.2" class="dot"/><circle cx="185.6" cy="124.9" r="1.2" class="dot"/><circle cx="188" cy="120.5" r="1.2" class="dot"/><circle cx="190.4" cy="111.7" r="1.2" class="dot"/><circle cx="192.7" cy="107" r="2.4" class="dot-accent"/><circle cx="195.1" cy="118.6" r="1.2" class="dot"/><circle cx="197.4" cy="123.4" r="1.2" class="dot"/><circle cx="199.8" cy="126.4" r="1.2" class="dot"/><circle cx="202.1" cy="124.3" r="1.2" class="dot"/><circle cx="204.5" cy="119.9" r="1.2" class="dot"/><circle cx="206.8" cy="111.7" r="1.2" class="dot"/><circle cx="209.2" cy="104.5" r="2.4" class="dot-accent"/><circle cx="211.5" cy="117.3" r="1.2" class="dot"/><circle cx="213.9" cy="122.3" r="1.2" class="dot"/><circle cx="216.2" cy="125.5" r="1.2" class="dot"/><circle cx="218.6" cy="123.7" r="1.2" class="dot"/><circle cx="220.9" cy="119.5" r="1.2" class="dot"/><circle cx="223.3" cy="111.7" r="1.2" class="dot"/><circle cx="225.6" cy="101.7" r="2.4" class="dot-accent"/><circle cx="228" cy="116.1" r="1.2" class="dot"/><circle cx="230.4" cy="121.3" r="1.2" class="dot"/><circle cx="232.7" cy="124.5" r="1.2" class="dot"/><circle cx="235.1" cy="123.1" r="1.2" class="dot"/><circle cx="237.4" cy="119.1" r="1.2" class="dot"/><circle cx="239.8" cy="111.7" r="1.2" class="dot"/><circle cx="242.1" cy="98.4" r="2.4" class="dot-accent"/><circle cx="244.5" cy="114.9" r="1.2" class="dot"/><circle cx="246.8" cy="120.4" r="1.2" class="dot"/><circle cx="249.2" cy="123.7" r="1.2" class="dot"/><circle cx="251.5" cy="122.7" r="1.2" class="dot"/><circle cx="253.9" cy="118.7" r="1.2" class="dot"/><circle cx="256.2" cy="111.7" r="1.2" class="dot"/><circle cx="258.6" cy="94" r="2.4" class="dot-accent"/><circle cx="260.9" cy="113.8" r="1.2" class="dot"/><circle cx="263.3" cy="119.5" r="1.2" class="dot"/><circle cx="265.6" cy="122.9" r="1.2" class="dot"/><circle cx="268" cy="122.2" r="1.2" class="dot"/><circle cx="270.4" cy="118.4" r="1.2" class="dot"/><circle cx="272.7" cy="111.7" r="1.2" class="dot"/><circle cx="275.1" cy="87.1" r="2.4" class="dot-accent"/><text x="275.1" y="80.1" text-anchor="end">333/106</text><circle cx="277.4" cy="112.7" r="1.2" class="dot"/><circle cx="279.8" cy="118.6" r="1.2" class="dot"/><circle cx="282.1" cy="122.1" r="1.2" class="dot"/><circle cx="284.5" cy="121.8" r="1.2" class="dot"/><circle cx="286.8" cy="118.1" r="1.2" class="dot"/><circle cx="289.2" cy="111.7" r="1.2" class="dot"/><circle cx="291.5" cy="35.3" r="2.4" class="dot-accent"/><text x="291.5" y="28.3" text-anchor="end">355/113</text><circle cx="293.9" cy="111.6" r="1.2" class="dot"/><circle cx="296.2" cy="117.7" r="1.2" class="dot"/><circle cx="298.6" cy="121.3" r="1.2" class="dot"/><circle cx="300.9" cy="121.4" r="1.2" class="dot"/><circle cx="303.3" cy="117.8" r="1.2" class="dot"/><circle cx="305.6" cy="111.7" r="1.2" class="dot"/><circle cx="308" cy="86.1" r="1.2" class="dot"/></svg></div>
+  <p class="fig-readout" aria-live="polite">Best fraction with a denominator up to 120: 355/113, off by 0.00000027. It stays the best until 16,604.</p>
+  <form class="fig-controls" method="get" action="/355-113/draw#fig-355-113">
+    <div class="fig-control">
+      <label for="fig-355-113-n">Largest denominator</label>
+      <input type="range" id="fig-355-113-n" name="n" min="10" max="400" step="1" value="120">
+      <output for="fig-355-113-n">120</output>
+    </div>
+    <div class="fig-buttons"><button type="submit" class="fig-draw">Draw</button></div>
+  </form>
+  <figcaption><span class="caps">Figure</span> Every denominator, and how close its best fraction gets. Higher is closer. A few stand far above their neighbors.</figcaption>
+</figure>
+  <p class="fleuron" aria-hidden="true">π</p>
+  <aside class="uses" aria-labelledby="uses-355-113">
+  <p class="caps head" id="uses-355-113">Uses</p>
+  <dl>
+    <dt>In the hand</dt><dd>Write 113355, split it down the middle, and put the second half over the first. That is π to six places, with no calculator.</dd>
+    <dt>At the table</dt><dd>For roughly nine hundred years after Zu Chongzhi, no one on record had a closer value.</dd>
+    <dt>At work</dt><dd>A big jump in effort for a small gain means the good version has already been found. After 355/113, the next better fraction needs five-digit numbers.</dd>
+    <dt>In the mind</dt><dd>He reached it by hand, working with polygons of more than twelve thousand sides.</dd>
+  </dl>
+</aside>
+
+  <p class="cite"><span class="caps">Cite</span> “355/113.” <i>Wondering About Pi</i>, no. 3.1415 (24 September 2026). wap.mom/355-113/</p>
+  <ul class="links" aria-label="Pass it on">
+    <li><a href="/355-113/offprint/">Offprint</a></li>
+    <li><a href="/355-113/clip/">Clipping</a></li>
+  </ul>
+</article>
+<nav class="pager" aria-label="Issues">
+  <a href="/pie/" rel="prev">← No. 3.141</a>
+  <a href="/crust/" rel="next">No. 3.14159 →</a>
+</nav>
+<footer class="colophon">
+  <p>Wondering About Pi is numbered by the decimal expansion of π; its supplement, by e. Each issue adds a place.</p>
+  <p>It is written in <a href="/room">a room</a>, in conversation. <span class="printers-mark">e<sup>iπ</sup> + 1 = 0</span>. Printing 0.2.1.</p>
+  <ul class="links" aria-label="Wondering About Pi">
+    <li><a href="/">Front page</a></li>
+    <li><a href="/contents/">Contents</a></li>
+    <li><a href="/room">The room</a></li>
+    <li><a href="/colophon/">Colophon</a></li>
+    <li><a href="/corrections/">Corrections</a></li>
+    <li><a href="/feed.xml">Feed</a></li>
+  </ul>
+  <a class="door" href="https://smut.today/" rel="nofollow" aria-label="smut.today">π</a>
+</footer>
+</main>
+</body>
+</html>

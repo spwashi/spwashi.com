@@ -63,7 +63,8 @@ ${ADDRESSES.map((address) => `- [${address.name}](${ORIGIN}${addressHref(address
 `;
 
 /** /llms-full.txt. */
-export const FULL_INDEX = fullIndex(ADDRESS_INDEX);
+// The examples' indented blank lines carry no meaning; the index is carried as a file, so it leaves clean.
+export const FULL_INDEX = fullIndex(ADDRESS_INDEX).replace(/[ \t]+$/gm, "");
 
 /** A 404 that says where to go. */
 export const notFoundText = (path) => `Not found: ${path}\nEvery address this site answers is at ${ORIGIN}/llms.txt\n`;

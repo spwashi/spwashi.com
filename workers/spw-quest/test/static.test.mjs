@@ -5,7 +5,7 @@ import { readFileSync, readdirSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import worker from '../src/index.js';
-import { ROBOTS, STABLE_ROOMS, STATIC_PATTERNS, robotsFor, sitemap } from '../src/crawl.js';
+import { CONSTANT_ANSWERS, ROBOTS, STABLE_ROOMS, STATIC_PATTERNS, robotsFor, sitemap } from '../src/crawl.js';
 import { SHELL_VERSION } from '../src/shell-pin.js';
 import { PEER_FONTS, PEER_SCRIPTS } from '../../lib/peer-kit.js';
 
@@ -66,6 +66,7 @@ test('assets/_headers restates what the worker sends for each static file', asyn
     '/parser/2026.10.13/reader.min.js',
     '/parser/2026.10.13/manifest.json',
     '/parser/2026.10.13/reader.debug.js.map',
+    ...CONSTANT_ANSWERS,
   ];
   for (const sample of samples) {
     const rule = rules.find((candidate) => glob(candidate.pattern).test(sample));
@@ -76,6 +77,16 @@ test('assets/_headers restates what the worker sends for each static file', asyn
     for (const [name, value] of Object.entries(rule.headers)) assert.equal(response.headers.get(name), value, `${sample} ${name}`);
   }
   assert.equal(rules.find((rule) => rule.pattern === '/sw.js').headers['x-spw-shell'], SHELL_VERSION);
+});
+
+test('each constant answer is a file that says exactly what the worker says, so llms.txt never needs the worker', async () => {
+  for (const address of CONSTANT_ANSWERS) {
+    const response = await get(address);
+    assert.equal(response.status, 200, address);
+    assert.equal(readFileSync(path.join(assetsDir, address), 'utf8'), await response.text(), `${address}: run carry-answers.mjs`);
+    assert.equal(response.headers.get('Vary'), null, `${address} does not vary by reader, so one file serves everyone`);
+  }
+  assert.ok(!CONSTANT_ANSWERS.includes('/'), '/ answers text, JSON or a page by Accept, so it stays with the worker');
 });
 
 test('robots welcomes crawlers to every page and names the sitemap; the sitemap names rooms that open', async () => {

@@ -1,0 +1,146 @@
+# Written by workers/wap-mom/carry-pages.mjs: the headers src/index.js sends.
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: no-referrer
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Cross-Origin-Resource-Policy: same-origin
+  Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; script-src 'self'; img-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+
+/
+  Cache-Control: public, max-age=120
+
+/room
+  Cache-Control: public, max-age=120
+
+/contents/
+  Cache-Control: public, max-age=120
+
+/colophon/
+  Cache-Control: public, max-age=120
+
+/corrections/
+  Cache-Control: public, max-age=120
+
+/feed.xml
+  Cache-Control: public, max-age=300
+  Content-Type: application/atom+xml; charset=UTF-8
+
+/sitemap.xml
+  Cache-Control: public, max-age=300
+  Content-Type: application/xml; charset=UTF-8
+
+/now.json
+  Cache-Control: public, max-age=300
+  Content-Type: application/json; charset=UTF-8
+
+/figures.js
+  Cache-Control: public, max-age=3600
+  Content-Type: text/javascript; charset=UTF-8
+
+/robots.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+
+/favicon.svg
+  Cache-Control: public, max-age=86400
+  Content-Type: image/svg+xml; charset=UTF-8
+
+/pi/
+  Cache-Control: public, max-age=120
+
+/pi/offprint/
+  Cache-Control: public, max-age=120
+
+/pi/clip/
+  Cache-Control: public, max-age=120
+
+/22-7/
+  Cache-Control: public, max-age=120
+
+/22-7/offprint/
+  Cache-Control: public, max-age=120
+
+/22-7/clip/
+  Cache-Control: public, max-age=120
+
+/pie/
+  Cache-Control: public, max-age=120
+
+/pie/offprint/
+  Cache-Control: public, max-age=120
+
+/pie/clip/
+  Cache-Control: public, max-age=120
+
+/355-113/
+  Cache-Control: public, max-age=120
+
+/355-113/offprint/
+  Cache-Control: public, max-age=120
+
+/355-113/clip/
+  Cache-Control: public, max-age=120
+
+/crust/
+  Cache-Control: public, max-age=120
+
+/crust/offprint/
+  Cache-Control: public, max-age=120
+
+/crust/clip/
+  Cache-Control: public, max-age=120
+
+/needles/
+  Cache-Control: public, max-age=120
+
+/needles/offprint/
+  Cache-Control: public, max-age=120
+
+/needles/clip/
+  Cache-Control: public, max-age=120
+
+/slice/
+  Cache-Control: public, max-age=120
+
+/slice/offprint/
+  Cache-Control: public, max-age=120
+
+/slice/clip/
+  Cache-Control: public, max-age=120
+
+/square/
+  Cache-Control: public, max-age=120
+
+/square/offprint/
+  Cache-Control: public, max-age=120
+
+/square/clip/
+  Cache-Control: public, max-age=120
+
+/patience/
+  Cache-Control: public, max-age=120
+
+/patience/offprint/
+  Cache-Control: public, max-age=120
+
+/patience/clip/
+  Cache-Control: public, max-age=120
+
+/interest/
+  Cache-Control: public, max-age=120
+
+/interest/offprint/
+  Cache-Control: public, max-age=120
+
+/interest/clip/
+  Cache-Control: public, max-age=120
+
+/rise/
+  Cache-Control: public, max-age=120
+
+/rise/offprint/
+  Cache-Control: public, max-age=120
+
+/rise/clip/
+  Cache-Control: public, max-age=120

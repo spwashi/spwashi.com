@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contents — Wondering About Pi</title>
+  <meta name="description" content="Every issue of Wondering About Pi and The e Supplement, by department.">
+  <link rel="canonical" href="https://wap.mom/contents/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="alternate" type="application/atom+xml" title="Wondering About Pi" href="/feed.xml">
+  <meta property="og:site_name" content="Wondering About Pi">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Contents — Wondering About Pi">
+  <meta property="og:description" content="Every issue of Wondering About Pi and The e Supplement, by department.">
+  <meta property="og:url" content="https://wap.mom/contents/">
+  <meta name="twitter:card" content="summary">
+  <meta name="theme-color" content="#f4efe4" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#15120e" media="(prefers-color-scheme: dark)">
+  <style>
+  :root {
+    color-scheme: light dark;
+    --paper: #f4efe4; --ink: #1c1916; --muted: #625a4f; --rule: #1c1916;
+    --faint: rgba(28, 25, 22, .16); --card: #fbf8f1;
+    --crust: #8a4f17; --rise: #1f6a66; --accent: var(--crust);
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #15120e; --ink: #ede5d6; --muted: #b0a591; --rule: #ede5d6;
+      --faint: rgba(237, 229, 214, .16); --card: #1d1914;
+      --crust: #e0a262; --rise: #6cc5bd;
+    }
+  }
+  body.series-e { --accent: var(--rise); }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font: 1.1rem/1.62 var(--serif); font-variant-numeric: oldstyle-nums proportional-nums;
+  }
+  main { width: min(36rem, calc(100% - 2rem)); margin: 0 auto; padding: 1.6rem 0 3rem; }
+  a { color: inherit; text-decoration-color: var(--accent); text-underline-offset: .18em; }
+  a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .caps { font-variant-caps: all-small-caps; letter-spacing: .07em; }
+  .muted { color: var(--muted); }
+  .skip { position: absolute; left: -9999px; top: 0; padding: .5rem .8rem; background: var(--ink); color: var(--paper); }
+  .skip:focus { left: 0; z-index: 2; }
+  .vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+  /* Masthead: ears, title, the expansion so far. */
+  .masthead { text-align: center; border-bottom: 3px double var(--rule); padding-bottom: .7rem; margin-bottom: 1.6rem; }
+  .ears { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 1rem; margin: 0 0 .3rem; color: var(--muted); font-size: .95rem; }
+  .ears span, .clip .source span { white-space: nowrap; }
+  .title { margin: 0; font-size: clamp(2.1rem, 9vw, 3.4rem); line-height: 1.05; letter-spacing: -.02em; font-weight: 400; }
+  .title a { text-decoration: none; }
+  .masthead.compact .title { font-size: clamp(1.5rem, 6vw, 2rem); }
+  .subtitle { margin: .1rem 0 0; color: var(--accent); font-style: italic; }
+  .expansion { margin: .45rem 0 0; font-size: 1.05rem; letter-spacing: .12em; font-variant-numeric: lining-nums tabular-nums; }
+  .expansion .here { color: var(--accent); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .25em; }
+  .expansion .ahead { color: var(--muted); opacity: .55; }
+
+  h1, h2 { font-weight: 400; line-height: 1.12; letter-spacing: -.01em; }
+  h1 { font-size: clamp(2rem, 7vw, 2.8rem); margin: .1rem 0 .2rem; }
+  h2 { font-size: 1.45rem; margin: .1rem 0 .3rem; }
+  .kicker { margin: 0; color: var(--muted); font-size: .98rem; }
+  .dek { margin: 0 0 1.2rem; font-style: italic; color: var(--muted); font-size: 1.2rem; }
+  .galley { color: var(--accent); }
+  .dateline { margin: .1rem 0 0; color: var(--muted); font-size: .92rem; }
+
+  .body p { margin: 0 0 1rem; hyphens: auto; }
+  .body:not(.rest) p:first-child::first-letter { float: left; font-size: 3.3em; line-height: .82; padding: .06em .09em 0 0; color: var(--accent); }
+  .pull { margin: 1.6rem 0; padding: .9rem 0; border-block: 1px solid var(--rule); text-align: center; }
+  .pull blockquote { margin: 0; font-size: 1.35rem; line-height: 1.35; font-style: italic; }
+
+  /* A printer's ornament: the series' constant between rules. */
+  .fleuron { display: flex; align-items: center; gap: .8rem; margin: 1.8rem 0 0; color: var(--accent); font-style: italic; }
+  .fleuron::before, .fleuron::after { content: ""; flex: 1; border-top: 1px solid var(--faint); }
+
+  /* Figures: instruments. They work without script; with it, they follow the hand. */
+  .fig { margin: 1.8rem 0 0; padding: 1rem 0 .4rem; border-top: 1px solid var(--rule); }
+  .fig-stage svg { display: block; width: 100%; height: auto; }
+  .fig-svg { font: 11px var(--serif); }
+  .fig-svg text { fill: var(--muted); }
+  .fig-svg .ink { stroke: var(--ink); fill: none; stroke-width: 1.2; }
+  .fig-svg .accent { stroke: var(--accent); fill: none; stroke-width: 1.6; }
+  .fig-svg .thick { stroke-width: 3; }
+  .fig-svg .dashed { stroke-dasharray: 4 3; }
+  .fig-svg .faint { stroke: var(--faint); fill: none; stroke-width: 1; }
+  .fig-svg .guide { stroke: var(--muted); stroke-dasharray: 3 3; fill: none; opacity: .6; }
+  .fig-svg .soft.accent { fill: var(--accent); fill-opacity: .14; }
+  .fig-svg .soft.ink { fill: var(--ink); fill-opacity: .06; }
+  .fig-svg .fill-accent { fill: var(--accent); fill-opacity: .3; stroke: none; }
+  .fig-svg .fill-accent.solid { fill-opacity: .55; }
+  .fig-svg .needle { stroke: var(--muted); stroke-width: 1; opacity: .7; }
+  .fig-svg .dot { fill: var(--muted); }
+  .fig-svg .dot-accent { fill: var(--accent); }
+  .fig-svg .slice-a { fill: var(--accent); fill-opacity: .38; stroke: var(--ink); stroke-width: .6; }
+  .fig-svg .slice-b { fill: var(--accent); fill-opacity: .14; stroke: var(--ink); stroke-width: .6; }
+  .fig-readout { margin: .5rem 0; font-size: 1rem; }
+  .fig-controls { margin: .6rem 0; }
+  .fig-control { display: grid; grid-template-columns: 1fr auto; gap: 0 .8rem; align-items: center; margin: .2rem 0; }
+  .fig-control label { color: var(--muted); font-size: .95rem; }
+  .fig-control output { grid-row: 1; grid-column: 2; font-variant-numeric: lining-nums tabular-nums; }
+  .fig-control input[type="range"] { grid-column: 1 / -1; width: 100%; min-block-size: 44px; accent-color: var(--accent); margin: 0; }
+  .fig-buttons { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .fig.is-live .fig-draw { display: none; }
+  .fig figcaption { color: var(--muted); font-size: .95rem; font-style: italic; }
+  .fig figcaption .caps { font-style: normal; color: var(--accent); }
+
+  /* Uses: one line per dimension, the same four in every issue. */
+  .uses { margin: 1rem 0 0; padding: .9rem 1rem .4rem; background: var(--card); border: 1px solid var(--faint); border-top: 3px double var(--rule); }
+  .uses .head { margin: 0 0 .5rem; color: var(--muted); }
+  .uses dl { margin: 0; }
+  .uses dt { color: var(--accent); font-size: .92rem; font-variant-caps: all-small-caps; letter-spacing: .07em; }
+  .uses dd { margin: 0 0 .7rem; }
+
+  .cite { font-size: .95rem; color: var(--muted); border-top: 1px solid var(--faint); padding-top: .8rem; margin: 1.4rem 0 .4rem; }
+  .links { display: flex; flex-wrap: wrap; gap: 0 1.2rem; margin: 0; padding: 0; list-style: none; }
+  .links a { display: inline-flex; align-items: center; min-block-size: 44px; }
+  .pager { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; border-top: 1px solid var(--rule); margin-top: 1.4rem; }
+  .pager a { display: inline-flex; align-items: center; min-block-size: 44px; }
+  .correction { margin: 1rem 0 0; padding: .6rem .8rem; border-left: 3px solid var(--accent); background: var(--card); font-size: .98rem; }
+
+  button { font: inherit; min-block-size: 44px; padding: .35rem 1rem; border: 1px solid var(--rule); border-radius: 999px; background: transparent; color: var(--ink); cursor: pointer; }
+  button:hover { border-color: var(--accent); color: var(--accent); }
+  label { color: var(--muted); }
+  input[type="password"], input[type="text"], input:not([type]) { font: inherit; padding: .5rem .6rem; border: 1px solid var(--rule); background: var(--card); color: var(--ink); width: 100%; }
+
+  section { margin: 2rem 0 0; }
+  section > .caps.head { margin: 0 0 .6rem; padding-bottom: .3rem; border-bottom: 1px solid var(--rule); color: var(--muted); }
+  .lead h2 { font-size: clamp(1.8rem, 6vw, 2.3rem); }
+  .back { list-style: none; padding: 0; margin: 0; }
+  .back li { padding: .55rem 0; border-bottom: 1px solid var(--faint); }
+  .back .no { display: block; color: var(--muted); font-size: .92rem; font-variant-caps: all-small-caps; letter-spacing: .07em; }
+  .supplement { margin: 2rem 0 0; padding: .9rem 1rem; border: 1px solid var(--faint); border-top: 3px double var(--rule); background: var(--card); --accent: var(--rise); }
+  .supplement .expansion { text-align: left; font-size: .95rem; }
+
+  /* An open slot is an unwritten column: ruled, not greeked. */
+  .slot { padding: .7rem 0 .2rem; border-bottom: 1px solid var(--faint); }
+  .slot .question { margin: .25rem 0 .6rem; font-style: italic; }
+  .slot .lines { block-size: 3.9rem; margin-bottom: .6rem; background: repeating-linear-gradient(to bottom, transparent 0 1.25rem, var(--faint) 1.25rem 1.3rem); }
+
+  ol.style, ul.questions { padding-left: 1.3rem; }
+  ol.style li, ul.questions li { margin: .35rem 0; }
+
+  .mark { text-align: center; margin: 1.6rem 0; }
+  .mark .equation { font-size: 1.9rem; font-style: italic; letter-spacing: .02em; }
+  .mark .equation sup { font-size: .6em; }
+
+  .colophon { margin-top: 3rem; padding-top: .8rem; border-top: 3px double var(--rule); position: relative; font-size: .95rem; color: var(--muted); }
+  .colophon p { margin: 0 0 .3rem; max-width: 30rem; }
+  .colophon .printers-mark { font-style: italic; }
+  .door { position: absolute; right: 0; bottom: 0; min-inline-size: 44px; min-block-size: 44px; display: inline-flex; align-items: center; justify-content: center; opacity: .12; text-decoration: none; }
+  .door:hover, .door:focus-visible { opacity: 1; color: var(--accent); }
+
+  /* Offprint and clipping: chrome-free, meant to be sent. */
+  .offprint-line { text-align: center; margin: 0 0 1.4rem; padding-bottom: .5rem; border-bottom: 1px solid var(--rule); color: var(--muted); }
+  body.clipping { min-block-size: 100svh; display: grid; place-items: center; }
+  .clip { width: min(28rem, calc(100% - 3rem)); margin: 2rem auto; padding: 1.5rem 1.4rem 1.2rem; background: var(--card); outline: 1px dashed var(--muted); outline-offset: .7rem; }
+  .clip .source { margin: 0 0 1rem; padding-bottom: .45rem; border-bottom: 3px double var(--rule); color: var(--muted); font-size: .92rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 .6rem; }
+  .clip blockquote { margin: 0; font-size: clamp(1.45rem, 6vw, 1.85rem); line-height: 1.3; font-style: italic; }
+  .clip .from { margin: 1rem 0 0; color: var(--muted); font-size: .95rem; }
+
+  @media print {
+    :root { --paper: #fff; --ink: #000; --card: #fff; }
+    .skip, .door, .links, .pager, .fig-controls, .colophon ul { display: none; }
+    main { width: auto; padding: 0; }
+    .fig, .uses, .pull { break-inside: avoid; }
+    a { text-decoration: none; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<main id="main">
+<header class="masthead compact">
+  <p class="ears caps"><span>Vol. 3</span><span>wap.mom</span><span>9 issues</span></p>
+  <p class="title"><a href="/">Wondering About Pi</a></p>
+  <p class="expansion"><span aria-hidden="true">3.141592653<span class="ahead">5</span><span class="ahead">8</span>…</span><span class="vh">Printed to 3.141592653.</span></p>
+</header>
+<h1>Contents.</h1>
+<p>Every issue in print, by department: 9 of Wondering About Pi and 2 of The e Supplement.</p>
+<section aria-labelledby="dept-constants">
+  <p class="caps head" id="dept-constants">Constants</p>
+  <p class="muted">The numbers themselves.</p>
+  <ol class="back"><li><span class="no">No. 3.1</span><a href="/pi/">π</a> — <i>It does not close.</i></li></ol>
+</section>
+<section aria-labelledby="dept-approximations">
+  <p class="caps head" id="dept-approximations">Approximations</p>
+  <p class="muted">Close, and by how much.</p>
+  <ol class="back"><li><span class="no">No. 3.14</span><a href="/22-7/">22/7</a> — <i>Close enough to share.</i></li><li><span class="no">No. 3.1415</span><a href="/355-113/">355/113</a> — <i>Six digits, six places.</i></li></ol>
+</section>
+<section aria-labelledby="dept-kitchen">
+  <p class="caps head" id="dept-kitchen">Kitchen</p>
+  <p class="muted">Pie, treated with the same care as π.</p>
+  <ol class="back"><li><span class="no">No. 3.141</span><a href="/pie/">Pie</a> — <i>The crust is a proof.</i></li><li><span class="no">No. 3.14159</span><a href="/crust/">Crust</a> — <i>The edge grows more slowly than the middle.</i></li><li><span class="no">No. 3.1415926</span><a href="/slice/">Slice</a> — <i>Half the radius, times the crust.</i></li></ol>
+</section>
+<section aria-labelledby="dept-chance">
+  <p class="caps head" id="dept-chance">Chance</p>
+  <p class="muted">Constants that turn up in random things.</p>
+  <ol class="back"><li><span class="no">No. 3.141592</span><a href="/needles/">Needles</a> — <i>π, found by dropping things.</i></li></ol>
+</section>
+<section aria-labelledby="dept-proofs">
+  <p class="caps head" id="dept-proofs">Proofs</p>
+  <p class="muted">What can be shown, and what cannot.</p>
+  <ol class="back"><li><span class="no">No. 3.14159265</span><a href="/square/">The Square</a> — <i>The one shape it will not become.</i></li></ol>
+</section>
+<section aria-labelledby="dept-series">
+  <p class="caps head" id="dept-series">Series</p>
+  <p class="muted">Sums that go on forever and still arrive.</p>
+  <ol class="back"><li><span class="no">No. 3.141592653</span><a href="/patience/">Patience</a> — <i>One, minus a third, plus a fifth, and so on.</i></li></ol>
+</section>
+<section aria-labelledby="dept-growth">
+  <p class="caps head" id="dept-growth">Growth</p>
+  <p class="muted">Things that feed on themselves.</p>
+  <ol class="back"><li><span class="no">Supplement 2.7</span><a href="/interest/">Interest</a> — <i>Growth that never stops to count.</i></li><li><span class="no">Supplement 2.71</span><a href="/rise/">Rise</a> — <i>Half full, one doubling before the top.</i></li></ol>
+</section>
+<section aria-labelledby="open-head">
+  <p class="caps head" id="open-head">Forthcoming</p>
+  <ol class="back"><li><span class="no">No. 3.1415926535</span>Steam — <i>How long should a pie rest, and can the resting be written down?</i></li><li><span class="no">No. 3.14159265358</span>Lattice — <i>What does a lattice top count?</i></li><li><span class="no">Supplement 2.718</span>Starter — <i>What does a sourdough starter know about e?</i></li></ol>
+</section>
+<footer class="colophon">
+  <p>Wondering About Pi is numbered by the decimal expansion of π; its supplement, by e. Each issue adds a place.</p>
+  <p>It is written in <a href="/room">a room</a>, in conversation. <span class="printers-mark">e<sup>iπ</sup> + 1 = 0</span>. Printing 0.2.1.</p>
+  <ul class="links" aria-label="Wondering About Pi">
+    <li><a href="/">Front page</a></li>
+    <li><a href="/contents/">Contents</a></li>
+    <li><a href="/room">The room</a></li>
+    <li><a href="/colophon/">Colophon</a></li>
+    <li><a href="/corrections/">Corrections</a></li>
+    <li><a href="/feed.xml">Feed</a></li>
+  </ul>
+  <a class="door" href="https://smut.today/" rel="nofollow" aria-label="smut.today">π</a>
+</footer>
+</main>
+</body>
+</html>

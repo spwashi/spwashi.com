@@ -1,0 +1,44 @@
+{
+  "version": "0.1.0",
+  "schema": "quest.v2",
+  "designer": "Spwashi",
+  "repository": "https://github.com/spwashi/spw-workbench",
+  "revision": "850077ab48e02c58c2b55787075a7b97c9e4bf4f",
+  "mount": ".spw/_workbench",
+  "node": "^20.19.0 || >=22.12.0",
+  "entrypoint": "https://spw.quest/init",
+  "source": "https://github.com/spwashi/spw-workbench/blob/850077ab48e02c58c2b55787075a7b97c9e4bf4f/docs/runtime/md/quick-start.md",
+  "ownership": "https://github.com/spwashi/spw-workbench/blob/850077ab48e02c58c2b55787075a7b97c9e4bf4f/docs/runtime/md/mounted-workbench.md",
+  "prompts": [
+    {
+      "id": "init-repo",
+      "title": "Initialize the workbench",
+      "hint": "The shared job, for any model.",
+      "body": "Initialize the current repository with Spw Workbench at .spw/_workbench.\nRead this entire recipe before editing. Follow the target repository's existing instructions.\nThe section \"Git, in this order\" is the only git procedure. Use the one command that matches the folder you have.\n\nSpw supplies language, parser, CLI, and editor tooling. The consumer owns .spw/;\nthe mounted workbench owns .spw/_workbench. Keep this repository's own instructions,\nframework, and identity.\n\nExpected core files: .spw/README.md, .spw/index.spw, .spw/mount.spw,\n.spw/workspace.spw, .spw/quest/index.spw, plus .agents/workflows/commit-review.md. The pinned initializer\nmay seed additional authored surfaces; inspect its output and report those names.\n\n1. Inspect the working directory, git status, existing instructions, .gitmodules,\n   .spw/, and git config core.hooksPath. Preserve unrelated changes and existing files.\n   Require Git and Node ^20.19.0 || >=22.12.0. Confirm this directory is the intended\n   consumer root.\n2. Follow \"Git, in this order\" for the repository, the submodule link, the reviewed\n   revision, and the download. Verify the workbench origin and read its own quick start.\n3. Review the mounted package.json and lockfile, then install its locked tooling\n   dependencies when the consumer's dependency policy allows:\n   npm --prefix .spw/_workbench ci --ignore-scripts\n   Leave the consumer's own dependency graph alone.\n4. From the consumer root, run:\n   npm --prefix .spw/_workbench run spw:init -- ../.. --preset quest\n   The ../.. target is relative to npm's mounted package working directory.\n   --preset quest adds .spw/quest/: forks, experiments, shelves, wonders and asks.\n   Init seeds consumer files and leaves existing scaffold files in place. It may\n   install a commit-review workflow and .git/hooks/pre-commit. Read the existing\n   hook first. Report when core.hooksPath means that hook will not run.\n5. Read .spw/README.md, .spw/index.spw, .spw/workspace.spw, and .spw/mount.spw.\n   Run:\n   npm --prefix .spw/_workbench run spw:doctor -- ../..\n   npm --prefix .spw/_workbench run spw -- roots\n   npm --prefix .spw/_workbench run spw -- tree @spw --depth 3\n   git diff --check\n   Default consumer scans exclude _workbench. Leave the workbench grammar in place.\n6. Report the mount revision, created and skipped files, hook changes, doctor result,\n   and any blocked step. Run the checks before you call the setup done.\n7. Play once. Read .spw/quest/index.spw and make one of its moves inside .spw/ only:\n   fork a form, run a probe, move a claim along the shelves, or write an ask for the\n   workbench in .spw/quest/asks.spw. If that folder is missing, take one move from the\n   Grow section of .spw/README.md instead. Then verify from the consumer root:\n   npm --prefix .spw/_workbench run spw -- lint .spw\n   npm --prefix .spw/_workbench run spw -- resolve --from .spw\n   git diff --check\n   Report the file you added or changed and what both commands said.\n   Stop before any commit, push, or deploy.\n"
+    },
+    {
+      "id": "shell",
+      "title": "Shell",
+      "hint": "The same setup without a model.",
+      "body": "test -d .git || git init\ngit submodule add https://github.com/spwashi/spw-workbench .spw/_workbench\ngit -C .spw/_workbench checkout 850077ab48e02c58c2b55787075a7b97c9e4bf4f\nnpm --prefix .spw/_workbench ci --ignore-scripts\nnpm --prefix .spw/_workbench run spw:init -- ../.. --preset quest\nnpm --prefix .spw/_workbench run spw:doctor -- ../..\ngit diff --check\n"
+    },
+    {
+      "id": "git",
+      "title": "Git, in this order",
+      "hint": "What each git command is for.",
+      "body": "test -d .git || git init\ngit submodule add https://github.com/spwashi/spw-workbench .spw/_workbench\ngit -C .spw/_workbench checkout 850077ab48e02c58c2b55787075a7b97c9e4bf4f\ngit submodule update --init -- .spw/_workbench\ngit diff --check\n"
+    },
+    {
+      "id": "first-patch",
+      "title": "Use the mounted workbench",
+      "hint": "After doctor verifies the mount.",
+      "body": "Read .spw/README.md, .spw/index.spw, .spw/workspace.spw, and .spw/mount.spw.\nTreat .spw/_workbench as mounted infrastructure. The consumer owns the surrounding .spw tree.\nChoose one bounded question about this repository. Navigate before reviewing:\nnpm --prefix .spw/_workbench run spw -- roots\nnpm --prefix .spw/_workbench run spw -- tree @spw --depth 3\nUse the mounted-consumer review skill only as an instrument, following this repo's rules.\nRecord evidence under consumer-owned .spw/audits/ with consumer and workbench revisions.\nKeep this repository's own CSS nouns, copy, and framework."
+    },
+    {
+      "id": "grow",
+      "title": "Play once",
+      "hint": "The last step, after doctor: one move in .spw/quest.",
+      "body": "Read .spw/quest/index.spw and make one of its moves, inside .spw/ only: fork a form,\nrun a probe, move a claim along the shelves, or write an ask in .spw/quest/asks.spw.\nIf .spw/quest is missing, follow the Grow section of .spw/README.md once instead.\nThen verify from the consumer root:\nnpm --prefix .spw/_workbench run spw -- lint .spw\nnpm --prefix .spw/_workbench run spw -- resolve --from .spw\ngit diff --check\nReport the file you added or changed and what both commands said.\nStop before any commit, push, or deploy."
+    }
+  ]
+}
