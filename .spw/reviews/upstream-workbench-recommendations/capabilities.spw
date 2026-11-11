@@ -53,6 +53,7 @@ expression = asks[capabilities]{inquiry.axes.ground}<upstream>
       probes = "63 read as commands, 47 of them read-only by the site's allowlist; the first pass ran 44 in 13 s with receipts in .spw/gen/wonder-runs.spw. Held: node one-liners 8, chained commands 5, scripts that write or drive a browser 3"
       expect = "18 wonders carry ~#expect. Three of the day's probes ran after a guess was written: two held and one half missed. The rest ran with none on record, so they measure and do not test"
       claims = "321 claim units on the site, 198 written from a plan-index template, and no probe_ref has ever run"
+      noise = "2026-11-10: two runs back to back with no edits between: 17 of 105 receipts differed, because rg prints in thread order and a receipt keeps the last four lines; a digest of each output's sorted, position-free lines held all 105 (probeDigest in scripts/lib/sleep-cycle.mjs). 276 wonders hold a ~#expect, all prose, so a night can report what moved and never what disagreed"
       substrates = "515 $% terms across the wonders, 92 resolving against a producer; four sensors now count, each held to the roots it measures"
     }[reg=facet]
     recommendation = #[
@@ -60,6 +61,8 @@ expression = asks[capabilities]{inquiry.axes.ground}<upstream>
       `a run of a ~#probe(run) is effect.l0 (read-only) and yields a result_ref candidate: date, command, exit, observation`,
       `the verdict stays a reader's: a run proposes, a person or an agent writes ~#answer and the verdict`,
       `one vocabulary for both: an answered wonder's receipt is a claim's result_ref`,
+      `a stable digest on each receipt, over the whole output, order-insensitive, with positions and clock readings taken out, so a difference means something`,
+      `an optional comparable slot beside ~#expect's prose, a count bound or a required match, so a run can say it disagreed and not only that it moved`,
     ][reg=set]
     replaces: "questions that stay open because nothing records that they were checked"
     probe: `npm run -s wonder -- --contour | grep -E '^(lifecycle|probes|safe to run|marks)'`
