@@ -18,6 +18,8 @@ export const SITE_MANIFEST = Object.freeze({
   // spw.quest's Canvas link and a shared ?spw= line reuse the open window.
   launch_handler: { client_mode: ["navigate-existing", "auto"] },
   categories: ["education", "productivity"],
+  // Text shared from another app lands as a line, by the address the canvas already reads.
+  share_target: { action: "/", method: "GET", params: { text: "spw" } },
   shortcuts: [
     { name: "Lay out a line", short_name: "A line", url: "/?spw=garden%5Bcare%5D%7Bseed%2C%20water%7D", description: "garden[care]{seed, water}, as nodes to move and link." },
     { name: "Help", short_name: "Help", url: "/help", description: "The help topics, open in the Spw window." },

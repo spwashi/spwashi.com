@@ -6,6 +6,10 @@
 
 operation: align (the app's canvas with the workbench's reading of a line)
 
+## PWA (2026-11-10, site revision 4, deployed as Wrangler `629c2efb`)
+
+A waiting shell is now offered (`A new canvas is saved`, `Reload to use it`) rather than left until every page closes; an arrival with no kept canvas gets a page that shows its line; text shared from another app lands by `?spw=`; and `withShell` replaces a carried registration line, so a change to it reaches a snapshot. The offer, the swap, the line surviving the reload, and the old cache going were read in a browser on a local origin. Theory of document navigation is in TOOLS.md, and of the line as a social object in [dreamable-codebases](../../../.spw/caches/dreamable-codebases-2026-11.spw).
+
 ## Ground and center
 
 - factshift.com is the ground, the one readers should find familiar: oxblood and wheat, the `<concept>` title, the `[...]` shortcuts face, the square focal mark. factshift.center develops the same concepts so they are easier to work with. At the start, its proportions and layout match factshift.com. Its menus and behaviors may differ (creator, 2026-10-27).

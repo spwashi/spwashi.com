@@ -189,6 +189,8 @@ test('the installed face: the app\'s name, colors and icons, with the site\'s de
   assert.equal(manifest.orientation, 'any');
   assert.deepEqual(manifest.launch_handler, { client_mode: ['navigate-existing', 'auto'] });
   assert.equal(manifest.description, DESCRIPTION);
+  // Text shared from another app lands by the address the canvas already reads.
+  assert.deepEqual(manifest.share_target, { action: '/', method: 'GET', params: { text: 'spw' } });
   // The description is the app's own sentence, not new copy.
   assert.ok(readFileSync(new URL('assets/index.html', root), 'utf8').includes(`<meta name="description" content="${DESCRIPTION}">`));
   assert.deepEqual(manifest.shortcuts.map((shortcut) => shortcut.short_name), SITE_MANIFEST.shortcuts.map((shortcut) => shortcut.short_name));
@@ -227,4 +229,14 @@ test('crawlers are welcome: the canvas is indexed under one canonical, the secon
   assert.match(ROBOTS, /^Sitemap: https:\/\/factshift\.center\/sitemap\.xml$/m);
   assert.deepEqual(sitemap().match(/<loc>[^<]+<\/loc>/g), ['<loc>https://factshift.center/</loc>']);
   assert.ok(!SNAPSHOT_FILES.includes('/robots.txt') && !SNAPSHOT_FILES.includes('/sitemap.xml'), 'the shell does not keep them');
+});
+
+test('a new shell is offered, never forced, and an offline arrival keeps its line in view', () => {
+  const page = readFileSync(new URL('assets/index.html', root), 'utf8');
+  assert.match(page, /A new canvas is saved\./);
+  assert.match(page, /postMessage\(\{ type: "skip-waiting" \}\)/);
+  assert.match(page, /watch\(registration\.installing\)/, 'an install already under way is watched too');
+  const script = readFileSync(new URL('assets/sw.js', root), 'utf8');
+  assert.match(script, /Your line is still in this address/);
+  assert.match(script, /network\.catch\(\(\) => offline\(url\)\)/);
 });
