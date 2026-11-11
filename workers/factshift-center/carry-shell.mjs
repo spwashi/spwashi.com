@@ -28,6 +28,9 @@ const LIST = path.join(ROOT, "src", "snapshot-files.js");
 const SITE_FILES = new Set(["/sw.js", "/_headers", "/.assetsignore", "/robots.txt", "/sitemap.xml"]);
 
 export const HEADERS = `# Written by workers/factshift-center/carry-shell.mjs; the worker no longer serves these files.
+/
+  Cache-Control: public, max-age=60
+
 /sw.js
   Cache-Control: public, max-age=60
   X-Content-Type-Options: nosniff

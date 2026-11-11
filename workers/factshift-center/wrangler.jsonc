@@ -9,9 +9,11 @@
   "assets": {
     "directory": "./assets",
     "binding": "ASSETS",
-    "not_found_handling": "single-page-application",
-    // Only "/" runs the worker, for the www redirect; the canvas's files and its
-    // other addresses are static (carry-shell.mjs writes the site's layer in).
-    "run_worker_first": ["/"]
+    // Every address is static, "/" included: a file answers before the worker,
+    // so the canvas never spends the account's daily script allowance and stays
+    // up when it runs out (2026-11-11). carry-shell.mjs writes the site's layer
+    // and its headers in; the worker runs only when no file answers. The www
+    // redirect for "/" belongs to a Cloudflare Redirect Rule.
+    "not_found_handling": "single-page-application"
   }
 }
