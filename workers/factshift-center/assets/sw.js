@@ -3,10 +3,15 @@
   const CACHE = `factshift-center-${version}`;
   const kept = new Set(files);
   const homeOf = (path) => (path.startsWith("/_spwashi@") ? "/_spwashi@/" : "/");
-  const offline = () => new Response("factshift.center is offline, and the canvas has not been kept on this device yet.", {
-    status: 503,
-    headers: { "Content-Type": "text/plain; charset=UTF-8" },
-  });
+  // A line that arrived by link is still in the address, so the page says so and shows it.
+  const offline = (url) => {
+    const esc = (text) => String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    const line = url.searchParams.get("spw");
+    return new Response(`<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>factshift.center, offline</title><body style="margin:0;min-height:100vh;display:grid;place-content:center;gap:.75rem;padding:1.5rem;box-sizing:border-box;background:#4c1d1d;color:#f5deb3;font:1rem/1.5 system-ui,sans-serif"><h1 style="margin:0;font-size:1.25rem">factshift.center is offline, and the canvas has not been kept on this device yet.</h1>${line ? `<p style="margin:0">Your line is still in this address. It opens here once you are connected:</p><p style="margin:0;font-family:ui-monospace,monospace;overflow-wrap:anywhere">${esc(line)}</p>` : `<p style="margin:0">Open it once with a connection, and it stays on this device.</p>`}</body></html>`, {
+      status: 503,
+      headers: { "Content-Type": "text/html; charset=UTF-8" },
+    });
+  };
 
   self.addEventListener("install", (event) => {
     event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(files)));
@@ -31,7 +36,7 @@
     // A navigate-mode request cannot take options, so the page is fetched by its address.
     const network = fetch(url.href, { cache: "no-cache", credentials: "same-origin" });
     network.catch(() => {}); // a late failure after the kept canvas opened is not an error
-    if (!home) return network.catch(offline);
+    if (!home) return network.catch(() => offline(url));
     const slow = new Promise((resolve) => setTimeout(() => resolve(null), waitMs));
     try {
       return (await Promise.race([network, slow])) || home;
@@ -60,4 +65,4 @@
     }
     if (kept.has(url.pathname) && !url.search) event.respondWith(keptFile(request, url.pathname));
   });
-})({"version":"253b949-2026-11-10-site3","files":["/","/_spwashi@/","/assets/edges-GYoOyvn3.js","/assets/index-qyiNLrxy.js","/assets/index-rFqe6wtS.css","/assets/keystrokes-T_uJPi5W.js","/assets/main-_qtzgt2L.css","/assets/main-HeAs9uUV.js","/assets/mode-mapfilter--CtiITNe.js","/assets/nodes-UVjd2je_.js","/assets/pipeline-yukFBvla.js","/assets/rects-jqUOT9M5.js","/assets/reinit-85kYXUMe.js","/assets/sounds/bonk.mp3","/assets/spwashi@-g0YoMZaz.css","/assets/spwashi@-n5lYqDBf.js","/assets/workbench-adapter-xU7aCZI7.js","/manifest.json","/v0.0.1/favicon/16.png","/v0.0.1/favicon/192.png","/v0.0.1/favicon/32.png","/v0.0.1/favicon/512.png","/v0.0.1/favicon/96.png","/v0.0.2-alpha/favicon/16.png","/v0.0.2-alpha/favicon/192.png","/v0.0.2-alpha/favicon/32.png","/v0.0.2-alpha/favicon/512.png","/v0.0.2-alpha/favicon/96.png"],"waitMs":3500});
+})({"version":"253b949-2026-11-10-site4","files":["/","/_spwashi@/","/assets/edges-GYoOyvn3.js","/assets/index-qyiNLrxy.js","/assets/index-rFqe6wtS.css","/assets/keystrokes-T_uJPi5W.js","/assets/main-_qtzgt2L.css","/assets/main-HeAs9uUV.js","/assets/mode-mapfilter--CtiITNe.js","/assets/nodes-UVjd2je_.js","/assets/pipeline-yukFBvla.js","/assets/rects-jqUOT9M5.js","/assets/reinit-85kYXUMe.js","/assets/sounds/bonk.mp3","/assets/spwashi@-g0YoMZaz.css","/assets/spwashi@-n5lYqDBf.js","/assets/workbench-adapter-xU7aCZI7.js","/manifest.json","/v0.0.1/favicon/16.png","/v0.0.1/favicon/192.png","/v0.0.1/favicon/32.png","/v0.0.1/favicon/512.png","/v0.0.1/favicon/96.png","/v0.0.2-alpha/favicon/16.png","/v0.0.2-alpha/favicon/192.png","/v0.0.2-alpha/favicon/32.png","/v0.0.2-alpha/favicon/512.png","/v0.0.2-alpha/favicon/96.png"],"waitMs":3500});

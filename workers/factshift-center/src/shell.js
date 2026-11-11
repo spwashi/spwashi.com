@@ -26,10 +26,15 @@ export function factshiftShell({ version, files, waitMs }) {
   const CACHE = `factshift-center-${version}`;
   const kept = new Set(files);
   const homeOf = (path) => (path.startsWith("/_spwashi@") ? "/_spwashi@/" : "/");
-  const offline = () => new Response("factshift.center is offline, and the canvas has not been kept on this device yet.", {
-    status: 503,
-    headers: { "Content-Type": "text/plain; charset=UTF-8" },
-  });
+  // A line that arrived by link is still in the address, so the page says so and shows it.
+  const offline = (url) => {
+    const esc = (text) => String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    const line = url.searchParams.get("spw");
+    return new Response(`<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>factshift.center, offline</title><body style="margin:0;min-height:100vh;display:grid;place-content:center;gap:.75rem;padding:1.5rem;box-sizing:border-box;background:#4c1d1d;color:#f5deb3;font:1rem/1.5 system-ui,sans-serif"><h1 style="margin:0;font-size:1.25rem">factshift.center is offline, and the canvas has not been kept on this device yet.</h1>${line ? `<p style="margin:0">Your line is still in this address. It opens here once you are connected:</p><p style="margin:0;font-family:ui-monospace,monospace;overflow-wrap:anywhere">${esc(line)}</p>` : `<p style="margin:0">Open it once with a connection, and it stays on this device.</p>`}</body></html>`, {
+      status: 503,
+      headers: { "Content-Type": "text/html; charset=UTF-8" },
+    });
+  };
 
   self.addEventListener("install", (event) => {
     event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(files)));
@@ -54,7 +59,7 @@ export function factshiftShell({ version, files, waitMs }) {
     // A navigate-mode request cannot take options, so the page is fetched by its address.
     const network = fetch(url.href, { cache: "no-cache", credentials: "same-origin" });
     network.catch(() => {}); // a late failure after the kept canvas opened is not an error
-    if (!home) return network.catch(offline);
+    if (!home) return network.catch(() => offline(url));
     const slow = new Promise((resolve) => setTimeout(() => resolve(null), waitMs));
     try {
       return (await Promise.race([network, slow])) || home;
@@ -93,8 +98,9 @@ export const NAVIGATION_WAIT_MS = 3500;
  * manifest's site fields, the head lines). A change there increments it, so an
  * installed app fetches a fresh shell and keeps the new manifest.
  * 2: the site-served manifest and head lines (src/manifest.js), 2026-11-08.
+ * 4: the offer of a new shell, the offline page, and the share target, 2026-11-10.
  */
-export const SITE_REVISION = 3;
+export const SITE_REVISION = 4;
 export const SHELL_VERSION = `${SNAPSHOT.revision}-${SNAPSHOT.snapshot}-site${SITE_REVISION}`;
 
 /** The script at /sw.js, for a snapshot and the files it keeps; carry-shell.mjs writes it into assets/. */
@@ -107,21 +113,62 @@ export function shellScript(snapshot = SNAPSHOT, files = SNAPSHOT_FILES) {
 
 export const SHELL_SCRIPT = shellScript();
 
-/** Runs on the canvas after load: register the shell at the root, so it controls /. */
+/**
+ * Runs on the canvas after load: register the shell at the root, so it controls
+ * /, and offer a new shell once it is saved. A new shell waits until the reader
+ * asks for it, so a canvas in hand is never reloaded from under them; the first
+ * install claims the page without an offer.
+ */
 export function registerFactshiftShell() {
   if (!("serviceWorker" in navigator)) return;
-  const start = () => navigator.serviceWorker.register("/sw.js", { scope: "/", updateViaCache: "none" }).catch(() => {});
+  let reloading = false;
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if (reloading) location.reload();
+  });
+  const offer = (registration) => {
+    if (!registration.waiting || !navigator.serviceWorker.controller || document.getElementById("factshift-shell-line")) return;
+    const line = document.createElement("p");
+    line.id = "factshift-shell-line";
+    line.setAttribute("role", "status");
+    line.style.cssText = "position:fixed;left:50%;bottom:calc(.75rem + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:2147483000;display:flex;align-items:center;gap:.5rem;margin:0;padding:.15rem .25rem .15rem .85rem;border-radius:.4rem;background:#f5deb3;color:#4c1d1d;font:500 .85rem/1.2 system-ui,sans-serif;white-space:nowrap;box-shadow:0 2px 10px rgba(0,0,0,.35)";
+    line.append("A new canvas is saved.");
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = "Reload to use it";
+    button.style.cssText = "min-height:44px;padding:0 .75rem;border:0;border-radius:.3rem;background:#4c1d1d;color:#f5deb3;font:inherit;cursor:pointer";
+    button.addEventListener("click", () => {
+      reloading = true;
+      registration.waiting?.postMessage({ type: "skip-waiting" });
+    });
+    line.append(button);
+    document.body.append(line);
+  };
+  const start = () => navigator.serviceWorker.register("/sw.js", { scope: "/", updateViaCache: "none" }).then((registration) => {
+    registration.update().catch(() => {});
+    offer(registration);
+    const watch = (worker) => worker?.addEventListener("statechange", () => {
+      if (worker.state === "installed") offer(registration);
+    });
+    // An install can already be under way by the time this runs, and then updatefound has passed.
+    watch(registration.installing);
+    registration.addEventListener("updatefound", () => watch(registration.installing));
+  }).catch(() => {});
   if (document.readyState === "complete") start();
   else addEventListener("load", start, { once: true });
 }
 
 export const REGISTER_TAG = `<script data-factshift-shell>(${registerFactshiftShell.toString()})();</script>`;
 
-/** The canvas's HTML with the registration line before </body>, once. */
+/**
+ * The canvas's HTML with the registration line before </body>, once. A line
+ * carried before is replaced whole, so a change to it reaches a carried
+ * snapshot, and carrying the same line again changes nothing.
+ */
 export function withShell(html) {
-  if (html.includes("data-factshift-shell") || !html.includes("</body>")) return html;
-  const at = html.lastIndexOf("</body>");
-  return `${html.slice(0, at)}${REGISTER_TAG}\n${html.slice(at)}`;
+  if (!html.includes("</body>")) return html;
+  const bare = html.replace(/<script data-factshift-shell>[\s\S]*?<\/script>\n?/, "");
+  const at = bare.lastIndexOf("</body>");
+  return `${bare.slice(0, at)}${REGISTER_TAG}\n${bare.slice(at)}`;
 }
 
 /**
