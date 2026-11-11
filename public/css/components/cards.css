@@ -108,9 +108,10 @@
   /* Transitions */
   transition:
     opacity 220ms var(--ease-settle, ease),
-    background calc(var(--component-transition-deliberate) * (0.8 + (0.4 * var(--spw-viscosity, 0.3)))),
-    border-color calc(var(--component-transition-base) * (0.8 + (0.4 * var(--spw-viscosity, 0.3)))),
-    box-shadow calc(var(--component-transition-deliberate) * (0.8 + (0.4 * var(--spw-viscosity, 0.3)))),
+    /* A transition token is a duration and an easing; calc() takes only the duration, or the whole declaration drops. */
+    background calc(var(--duration-deliberate, 360ms) * var(--spw-motion-scale, 1) * (0.8 + (0.4 * var(--spw-viscosity, 0.3)))) var(--ease-paper, ease),
+    border-color calc(var(--duration-fast, 140ms) * (0.8 + (0.4 * var(--spw-viscosity, 0.3)))) var(--ease-mechanical, ease),
+    box-shadow calc(var(--duration-deliberate, 360ms) * var(--spw-motion-scale, 1) * (0.8 + (0.4 * var(--spw-viscosity, 0.3)))) var(--ease-paper, ease),
     transform var(--component-transition-fast);
 }
 
@@ -319,6 +320,14 @@
   color: var(--grammar-subjective-brace-color);
 }
 
+@media (pointer: coarse) {
+  .spw-card-doors a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch-target-min, 44px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .spw-line__wall,
   .spw-card-doors a {
@@ -421,8 +430,8 @@
   transform: perspective(1000px) rotateX(var(--card-tilt-y, 0deg)) rotateY(var(--card-tilt-x, 0deg)) translateY(var(--card-lift, 0px)) scale(var(--card-scale, 1));
   transform-style: preserve-3d;
   transition:
-    transform calc(var(--component-transition-base, 200ms) * var(--spw-physics-mass, 1)) cubic-bezier(0.2, 0.8, 0.25, 1),
-    box-shadow calc(var(--component-transition-base, 200ms) * var(--spw-physics-mass, 1)) ease,
+    transform calc(var(--duration-fast, 140ms) * var(--spw-physics-mass, 1)) cubic-bezier(0.2, 0.8, 0.25, 1),
+    box-shadow calc(var(--duration-fast, 140ms) * var(--spw-physics-mass, 1)) ease,
     border-color var(--component-transition-fast, 140ms ease),
     background var(--component-transition-fast, 140ms ease),
     opacity var(--component-transition-fast, 140ms ease),
