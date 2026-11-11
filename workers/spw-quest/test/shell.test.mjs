@@ -205,7 +205,7 @@ test('the guide is network first, kept under its own key, and served from there 
   // Online: /?note is stored under "/" (the response varies on Accept).
   const fresh = await nav('/?note');
   assert.equal(fresh.status, 200);
-  assert.equal(fresh.headers.get('vary'), 'Accept');
+  assert.equal(fresh.headers.get('vary'), 'Accept, User-Agent');
   await new Promise((resolve) => setTimeout(resolve, 10));
   const pages = shell.stores.get(`spw-quest-pages-v${SHELL_VERSION}`);
   assert.deepEqual(pages.entries.map((entry) => [new URL(entry.url).pathname + new URL(entry.url).search, entry.accept]), [['/', 'text/html']]);

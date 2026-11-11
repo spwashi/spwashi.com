@@ -27,7 +27,8 @@ test('every address the index names answers, and the index is the llms.txt form'
   assert.equal(await llms.text(), ADDRESS_INDEX);
   assert.match(llms.headers.get('content-type'), /^text\/plain/);
   assert.match(ADDRESS_INDEX, /^# spw\.quest\n\n> /);
-  assert.ok(new TextEncoder().encode(ADDRESS_INDEX).length < 5000, 'the index stays small enough to read whole');
+  // A model handed one address may open one page, so the whole form of an answer lives here.
+  assert.ok(new TextEncoder().encode(ADDRESS_INDEX).length < 10000, 'the index stays small enough to read whole');
   assert.ok(ADDRESS_INDEX.includes('[Initialize a repository](https://spw.quest/init)'), 'the index still leads to the recipe');
   // The recipe keeps its own address.
   assert.match(await (await get('/init')).text(), /^# spw\.quest — initialize a mounted Spw workbench/);

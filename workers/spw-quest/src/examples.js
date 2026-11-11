@@ -19,9 +19,15 @@
 // subject it says so with a path, @chip: ~"./chip.spw", and a path may name the
 // line it means, ~"./themes.spw#matte". The guide's reading turns each such
 // path into a way to that file, landing on that line, and the file it reaches
-// lists who points to it. Paths outside the fourteen stay as written.
+// lists who points to it. Paths outside the guide's files stay as written.
+//
+// The trial row is written against the canvas (2026-11-10). Each file is one a
+// person could keep, and each asks factshift.center something the other rows
+// do not: how far down a reader can walk, whether a word holds still while its
+// slot changes, whether neighbors under different laws can say why they differ,
+// and what a wide body does on a phone. `asks` says which.
 
-export const EXAMPLE_GROUPS = Object.freeze(["Bench","Study","Board","Stage"]);
+export const EXAMPLE_GROUPS = Object.freeze(["Bench","Study","Board","Stage","Trial"]);
 
 export const EXAMPLES = Object.freeze([
   {
@@ -295,6 +301,82 @@ line = home[hook]{software.art}<atlas>
 ?["When the pivot performs, which theme should the page take?"]{
   ~#expect: \`glass, while one slot moves and the rest stays\`
   !probe{ "change theme to matte and watch the field lose its shadow" }
+}`,
+  },
+  {
+    id: "outline",
+    group: "Trial",
+    tab: "Outline",
+    file: "outline.spw",
+    says: "A course four levels deep: terms hold units, units hold weeks, weeks hold what is read and done.",
+    try: "Add a part inside the deepest braces: margin, recall, retell",
+    asks: "On the canvas, walk down to one reading and back up without losing your place.",
+    script: `#>course_outline
+#:outline #!curriculum
+@session: ~"./session.spw"
+
+course = term{
+  unit{
+    week{read{chapter, margin}, do{drill, recall}},
+    week{read{essay}, do{studio}}
+  },
+  unit{
+    week{read{review}, do{retry}}
+  }
+}`,
+  },
+  {
+    id: "recurrence",
+    group: "Trial",
+    tab: "Recurrence",
+    file: "rain.spw",
+    says: "One word in four slots: rain as the subject, a part, a scene, and where a line goes.",
+    try: "Change the scene on song from rain to dusk, and the word appears once less.",
+    asks: "On the canvas, pin rain and step the lines. It should hold still while its slot changes.",
+    script: `#>rain_ledger
+#:study #!identity
+@headings: ~"./headings.spw"
+
+morning = rain[light]{gutter, path}
+field = soil[wet]{rain, roots}
+song = chorus{verse, bridge}(rain)
+barrel = !water{roof ~> barrel}<rain>`,
+  },
+  {
+    id: "laws",
+    group: "Trial",
+    tab: "Local laws",
+    file: "kitchen.spw",
+    says: "Four neighbors under four laws: what lifts, what drifts, what stays, and what will not close.",
+    try: "Change ~soup to =soup, and on the canvas its parts stop drifting.",
+    asks: "On the canvas, frame each body and read why its parts move as they do. ?stock will not fold.",
+    script: `#>kitchen_laws
+#:showcase #!physics
+@perform: ~"./perform.spw"
+
+kitchen = {
+  ^bread{flour, water},
+  ~soup{beans, salt},
+  =spice{cumin, clove},
+  ?stock{bones, time}
+}`,
+  },
+  {
+    id: "pantry",
+    group: "Trial",
+    tab: "Wide body",
+    file: "pantry.spw",
+    says: "A census of one shelf: sixteen things in company, read as a list and as a set of places.",
+    try: "Add a seventeenth part after dill.",
+    asks: "On a phone's canvas, can all sixteen be read, or does it have to fold?",
+    script: `#>pantry_census
+#:record #!inventory
+
+pantry = shelf[full]{
+  oats, rice, lentils, barley,
+  salt, sugar, yeast, honey,
+  vinegar, oil, cumin, clove,
+  bay, thyme, sage, dill
 }`,
   },
 ]);
