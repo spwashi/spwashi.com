@@ -1,5 +1,6 @@
 // The reader bundle carries parse with the editor's reading (roles, outline, anchors),
 // so the tool proves a source the way the editor reads it without loading the parser twice.
+import { renderSpwDoors } from './spw-doors.js';
 import { anchors, outline, parse, roles, SPW_PARSER_BUILD } from '/public/js/semantic/spw-workbench-reader.js';
 import { bracePairAt, highlightSpw, lineStarts } from '/public/js/semantic/spw-highlight.js';
 import { GENRE_REASONS, readGenre } from '/public/js/semantic/spw-genre-checks.js';
@@ -500,6 +501,7 @@ function initLiteralParser(root) {
   const ast = root.querySelector('[data-parser-ast]');
   const diagnostics = root.querySelector('[data-parser-diagnostics]');
   const appLink = root.querySelector('[data-parser-app-link]');
+  const doors = root.querySelector('[data-parser-doors]');
   const fileInput = root.querySelector('[data-parser-file]');
   const sourceName = root.querySelector('[data-parser-source-name]');
   const status = root.querySelector('[data-parser-status]');
@@ -591,6 +593,7 @@ function initLiteralParser(root) {
       if (outlineList instanceof HTMLElement) renderOutline(outlineList, outline(source), jump);
       setMetric(root, 'anchors', anchors(source).length);
       setAppLink(appLink, source, activeName);
+      renderSpwDoors(doors, source, activeName);
       const key = sampleKey(activeName);
       showPlace(root, key && source === SPW_LITERAL_PARSER_SAMPLES[key] ? key : '');
       if (status instanceof HTMLElement) {
