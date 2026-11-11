@@ -1,0 +1,90 @@
+# Dreamable codebases (2026-11-10) — cache
+#
+# The creator, the same evening: improve codebases for improved dreams; consider
+# enhancements to Spw linguistics or precipitates; CLI intermediate forms for
+# inspectability and readability across .spw surfaces; linking across surfaces;
+# the value of distinct contexts for representing Spw; psychological and
+# cultural supports; factshift.center as a social tool.
+#
+# Written after sense sleep ran, from what it measured. This file adds no
+# wonder: a sleep that adds questions has failed, and so would its theory.
+
+#>dreamable_codebases_2026_11
+#:cache #!sleep #!wonder #!precipitate #!social
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@sleep: ~"../../scripts/lib/sleep-cycle.mjs"
+@wonder: ~"../../scripts/wonder.mjs"
+@asks: ~"../reviews/upstream-workbench-recommendations/corpus-and-cli.spw"
+@capabilities: ~"../reviews/upstream-workbench-recommendations/capabilities.spw"
+@roles: ~"./pwa-roles-2026-11.spw"
+
+operation = "cache"
+fixity = "experimental"
+source = "chat 2026-11-10; sense sleep's first nights; live pages read in a browser"
+expression = codebase[dreamable]{expect.probe.forget}<morning>
+
+summary = #[
+  `A codebase is good to sleep on when a machine can tell, unattended, that something it believed stopped being true.`,
+  `That takes four things in the text: a guess on record, a check that runs, output stable enough to compare, and a way to let a question go.`,
+  `Each context a line appears in is good at one thing, and a link between contexts should say which.`,
+  `The social value of a line is that it can be handed over and read back without an account or a server.`,
+][reg=set]
+
+^"dreamable"{
+  claim = `Sleep only finds what the waking text made findable. The measure of a codebase here is how much of it can disagree with itself overnight.`
+  guess = `A probe with no ~#expect measures and does not test. 145 of the open wonders had a probe and no guess, so a run could say what moved and never what was wrong.`
+  stable = `Two runs on one tree differed on 17 of 105 receipts, from rg's thread order and a kept tail. A check that cannot repeat cannot be compared with itself, so output stability is a property to design for, the way testability is.`
+  forget = `Zero of 433 wonders were retired. Forgetting needs a form as much as asking does: ~#retired with a reason is how a question is let go without being lost.`
+  adjacency = `Replay pairs the day's words with cold questions on surfaces the day did not touch. Most of what it returns is near-miss, and that is the point of it: the reader rejects in a second what would have taken an hour to go and find.`
+  what_to_improve = #[
+    `write the guess before the check, and put it beside the question`,
+    `prefer probes whose output is sorted and free of positions`,
+    `name the file a question is about, so a change to it can wake the question`,
+    `give every generated note one place, one length, and a way to see whether it paid`,
+  ][reg=set]
+}[reg=facet]
+
+^"linguistics"{
+  expect = `~#expect holds a sentence. A comparable mode beside it (~#expect[count<=3]) would keep the sentence and add a check, and the mode slot already means which lens. Filed under inquiry_loop in @capabilities.`
+  retire = `~#retired has no operator of its own, and maybe should not: a mark for letting go would be read as one more thing to do. The precipitate is the plainer place for it.`
+  precipitate = `A precipitate is what a process leaves that is worth keeping. A night's note is one; so is a landed turn, a line one slot from another page's line. The test of a precipitate is whether a later reader can act on it without the process that made it.`
+}[reg=facet]
+
+^"intermediate_forms"{
+  claim = `An intermediate form earns its place when a person can read it and a tool can compare it. The receipt, the digest and the note are three grains of one run.`
+  receipt = `what one probe printed, for a reader`
+  digest = `the same output sorted and position-free, for a comparison`
+  note = `what a night found, under a hundred lines, parseable as Spw so it can be cited, walked and diffed`
+  across_surfaces = `spw cycle reports before and after for one inspection; the night's note does it for a corpus. A shared card shape for both would let any .spw surface be read as what changed in it. Filed as turns_that_land and seeded_mosey in @asks.`
+}[reg=facet]
+
+^"contexts"{
+  claim = `A line reads differently by where it stands, and each place is good at one thing. A link between them should say which thing the reader is going for.`
+  page = `spwashi.com: the line beside the sentence it annotates; why it was written`
+  shelf = `spw.quest /specimens: the line among its kin; what else has this shape`
+  pivot = `spw.quest /pivot: the line one change away; what it could have been`
+  editor = `the line in hand: what changing it would change, before it changes`
+  canvas = `factshift.center: the line as bodies; what it weighs and what pulls on what`
+  terminal = `the note and the receipt: what happened while no one looked`
+  links = `Nine doors now open on the slot that reaches another page. The next gain is the landing quoting the sentence its line annotates, so the reader keeps the first context while using the second.`
+}[reg=facet]
+
+^"supports"{
+  claim = `Writing down a guess is a small act of exposure. A practice that asks for it should make being wrong cheap and visible as the point.`
+  guess_is_safe = `The note says what moved and never says you were wrong; a verdict stays the reader's to write.`
+  no_score = `last_note counts what a night offered and what was settled. It scores the night, never the person, and the count stays on the device.`
+  letting_go = `Retiring a question should read as finishing with it. The retire list says keep each, or say why not, so keeping is a real answer.`
+  regard = `Many readers arrive unsure whether a notation is for them. Doors say what will be found in plain words, and no page assumes the visitor already has Spw.`
+  culture = `A team that writes guesses down has somewhere to disagree that is not a person. The half-day exercise on /curriculum/ is that practice at its smallest.`
+}[reg=facet]
+
+^"social"{
+  claim = `factshift.center's social value is that a line is a small object two people can hand back and forth, and each sees it laid out.`
+  today = `?spw= and #spw64= carry a line with no account and no server reading it. Since revision 4, text shared from another app lands as a line.`
+  whose_canvas = `Seen 2026-11-10: a returning visitor who follows a door meets the arriving line beside thirteen nodes left from an earlier visit; a newcomer's canvas is clean. An invitation should open on what was sent. Either the arrival gets its own frame or the old nodes step aside. App repository, and the creator's call.`
+  reply = `The missing half is an answer. A reader who turns one slot and sends it back has said something precise about what they were sent; the address already holds that, and a two-line view (ground, then edge) would show it.`
+  keep_small = `Nothing here needs a feed or a follower. The unit of sociality is one line sent to one person.`
+}[reg=facet]

@@ -87,6 +87,7 @@ do_not = `Do not implement from this file. Do not open a plan folder yet. Do not
   ~#probe(run)
   !probe{ "rg -n 'spw64|base64url|serialized AST' public/js/kernel/ecosystem-links.js workers/spw-quest/src/walk.js workers/spw-quest/src/build.js .spw/caches/factshift-cognitive-substrate-2026-11.spw" }
   $%[text.three_writers, ast.one_cache, app.unread]
+  ~#answer: "text.three_writers (2026-11-10). The app's fromSpw64 in spw-talk.ts decodes base64url into UTF-8 text with TextDecoder, as the site and the quest encode it. The cache that said serialized AST was wrong and now says text."
 }
 
 #>wonder_http_query_seat

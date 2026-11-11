@@ -131,3 +131,12 @@ summary = #[
   $%[taste.ledger, taste.walk_only, taste.none]
   ~<"../../.agents/plans/spw-quest/PLAN.md">
 }
+
+^"archive_and_experiment"{
+  added = `2026-11-10, from the first night of sense sleep.`
+  archive = `The site's history already says when each shape first appeared (/arcs/), and the shelf says where it stands now. An archive reader wants the third thing: how a line changed. git log -S per line gives each line a past, and a line's past is a walk, which the trail already draws as origin ~> step ~> now.`
+  edges = `75 pairs of lines on different pages are one slot apart, and 66 have no door. That list is an archive nobody wrote: the site repeating itself across years without meaning to. Reading it is archival exploration with a query the notation made possible.`
+  experiment = `A design experiment is a turn with a guess on record. Hold a line, write what you expect the turn to change, take it, and compare. The hand already shows the consequence before the write; adding the guess turns exploring into testing without a new room.`
+  seeded = `sense wander takes seeded odd stills, and a seed is what makes wandering shareable: send a date and someone else walks the same path. The shelf could take ?seed= the same way, for a stroll that can be retold.`
+  order = `First the archive: a line's past on /pivot, since the data is already carried by carry-arcs. Then the guess on a turn. Seeded strolls last; they need the other two to have somewhere interesting to go.`
+}[reg=facet]
