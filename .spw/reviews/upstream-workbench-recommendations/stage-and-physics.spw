@@ -1,0 +1,146 @@
+# Stage and physics: a canvas host's receipts for the depiction theory
+#
+# 2026-11-11. The creator: spw-workbench will grow to serve lore.land's and
+# spwashi.com's ergonomics; consider the canvas's frame, stage and physics by
+# epicentre, force model, ephemerality, labeling, Spw describability, lore
+# association and computational whimsy. The workbench's own theory, mounted
+# here at be2df2ff, names the canvas and predicts where it fails, so this leaf
+# opens with what the canvas did when its probes were run, then asks.
+#
+# Detail for the review hub beside this folder
+# (upstream-workbench-recommendations.spw). Every ask keeps the same slots in
+# the same order: rank, claim, exists, gap, measured, recommendation, replaces,
+# probe, question. Theory is cited at the mount (be2df2ff), newer than the pin
+# the other leaves cite (229aedcf); the play-and-reach journal (5b421b8f) is
+# newer than the mount and is named, not linked. Nothing here writes to
+# .spw/_workbench or to lore.land.
+
+#>workbench_asks_stage
+#:review #!workbench #!developer_experience
+#:operation #!audit
+#:fixity #!tending
+#:layer #!semantics
+
+@hub: ~"../upstream-workbench-recommendations.spw"
+@grow: ~"../../caches/workbench-interaction-theory-2026-11.spw"
+@frames: ~"../../_workbench/docs/theory/spw/depiction-frames.spw"
+@distance: ~"../../_workbench/docs/theory/spw/threshold-distance.spw"
+
+operation = "audit"
+fixity = "tending"
+
+expression = stage[physics]{centre.rest.wave.kept.labels.line.rooms}<canvas>
+
+^"receipts"{
+  how = `factshift.center app working tree on 2026-11-11, round one (the stage mark and the lively hand, uncommitted) beside round two (this pass). Ticks driven by hand on a virtual clock, so the app's own warmth listeners ran; the browser's frame rate was not used.`
+  binding = `@frames wonder 1 holds garden[care]{seed: water, sun} and asks whether each bound pair returns to rest. The canvas draws seed: water as one figure, its name over its value, so there is no joint to measure: rest.no_joint_to_measure, and wonder 2 (a binding against a reference under a drag) cannot be run, since a reference is one node too.`
+  rest = `The seats can be measured. A node from the canvas's own more, set onto sun with nothing else selected, pushed it 14.8 to 18.6px. Rest is read as balance: how far a long, steady warmth would still move a part. Round one: taken away by a hand, sun stopped 8.97px short of balance; removed with the remove tool, 9.89px from where it began, since the re-warm counted 17.5px as home. That is rest.drifts, as @frames expected. Round two keeps a low warmth until the pushed parts stop: within about 1.2px of balance after a hand took the visitor away, after a removal, and after a tap during the warm, which no longer cools it. On garden{bed{seed, water}, sun}, seed was pushed 12.2px and stopped 1.22px short, the rest within 0.2px; the warm lasted 38 to 160 ticks.`
+  drift_law = `A ~ body's parts are not watched by the warm, since its law halves their pull and they would hold every warm to its 3s cap. Measured: left alone, salt in ~soup{beans, salt} stays 9.6px short of balance; warmed for 3s it comes to 2.1px. On kitchen{^bread, ~soup, =spice, ?stock}, a warm for a pushed bread part ran 61 ticks and moved the soup's parts about 6px toward their balance; everything else ended within 1.2px. Whether to watch a ~ body, and whether it owes a point of rest at all, is open.`
+  cost = `A release that disturbed nothing in the line warms nothing; a tap leaves the heat at 0; three batches of more still take 39 distinct seats with none on the line. A throw keeps its own heat and the rest follows its trip home; a hand put down again cancels the warm and keeps its own, and a tap leaves it running. A release that draws a link returns early and never asks for rest, a known gap.`
+  midpoint = `A visitor set between the two parts, 124px from each, moved neither and stayed inside the body: the body's pull holds a loose node that is in it.`
+  neutral_outside = `Read from the code: the ring a set-down leaves skips anything seated or fixed, a selection's lean ranks below a slot, and only what the hand carries follows it. Measured on three lines: every member had a seat or a fixed place, so none is open to the ring. One heat is still felt by every frame, against @frames' rule that a touch heats only its own frame; the rest warm keeps to it by warming only when a part is still on its way.`
+  wave = `With the lively hand a set-down's ring is now a front: it travels out at one speed and each loose neighbour gives way as the ring reaches it. Four neighbours 33, 61, 74 and 84px away answered at 100, 167, 251 and 418ms with gives of 1.75, 1.38, 0.97 and 0.08, in order; in round one all four moved in the same tick. Measured on a virtual clock; the ring has not been looked at rendered. This is @distance's distance in motion, how slowly a far thing answers.`
+}[reg=facet]
+
+^"stage"{
+
+  centre_name: .{
+    rank = 1
+    claim: "A tool that measures near and far needs to say which origin it measures from. The canvas has four, and @distance's centre is a fifth reading of the word."
+    exists: "On the canvas: the stage's middle, which operators lean toward; the stage mark, where loose nodes rest (or ?center= in a link); the node chosen last, which a lively selection leans toward; and the held line, which the trail and the camera follow. @distance: the centre is the line a reader holds, a moving origin beside the fixed root."
+    gap: "The canvas calls its mark and its middle a centre in code and in ?center=, so the theory's centre and the host's mean different things under one name. No tool reports which origin a reading came from."
+    measured: .{
+      origins = "four on the canvas: middle, mark, last chosen, held line; the trial card wonder_trial_centre already records that held means three things across hosts"
+    }[reg=facet]
+    recommendation = #[
+      `keep centre for the held line, as @distance has it, and say so in the trial card's readers_today row for the canvas`,
+      `let the host keep its own words for the others (the mark, the middle) and have a reach or still report name its origin by role`,
+    ][reg=set]
+    replaces: "one word for three places"
+    probe: `npm run -s analyze:trials -- --card centre  # matches wonder_trial_centre by the bench's prefix; read, not run`
+    question: "Should the canvas rename ?center= and its stage middle, or should the workbench's centre take another word? Renaming is the creator's call; nothing was renamed on this pass."
+  }[reg=facet]
+
+  rest_contract: .{
+    rank = 2
+    claim: "Every picture has a rest state is now a host behaviour with a measure, and could be a check a host runs."
+    exists: "@frames states the law and the probe; the canvas now keeps a low warmth after a hand lets go or a node is removed, until the line's parts stop."
+    gap: "The probe's outcomes do not separate a joint that cannot stretch (a binding drawn as one figure) from a joint that is missing."
+    measured: .{
+      before = "8.97px short of balance after a hand took the visitor away; 9.89px off after a removal"
+      after = "within about 1.2px on every line measured; a ~ body is not watched and stays 9.6px short, or 2.1px if warmed for 3s"
+    }[reg=facet]
+    recommendation = #[
+      `split rest.no_joint_to_measure into a joint drawn rigid and a joint not drawn`,
+      `hold the receipt above as the canvas's dated row on wonder 1, and the host-receipts plan as its home`,
+    ][reg=set]
+    replaces: "a law with a prediction and no host answer"
+    probe: `headless: hold garden[care]{seed: water, sun}; set a more node onto sun; settle; take it away by a hand; settle; compare each part with where it rested`
+    question: "Is a binding drawn as one figure a joint that holds perfectly, or a picture that skips the joint? And does a ~ body owe a rest at all, or is its rest a walk, as @frames' eddy is?"
+  }[reg=facet]
+
+  stage_as_a_line: .{
+    rank = 3
+    claim: "@distance says a still or a share link is a centre written down. On the canvas the stage cannot be written down yet."
+    exists: "A link carries physics through the query list in version.json, and ?center= takes a point in pixels. The moved mark and the lively hand are kept in this browser only."
+    gap: "Nothing writes the stage to a line or a link, a point in pixels does not survive another screen, and a physics line needs numbers the reader splits or refuses (a sign, a unit, a range: @frames numbers_and_math)."
+    measured: .{
+      round_trip = "state to line to state fails for the mark and the hand; a link can set a point and cannot name one of the nine areas"
+    }[reg=facet]
+    recommendation = #[
+      `the number forms @frames already proposes, so a law set can be a line and not constants in code`,
+      `a reading for a file's own staging, a tag a playwright would write, with the open question below answered first`,
+    ][reg=set]
+    replaces: "a stage that only this browser remembers"
+    probe: `npm run -s analyze:trials -- --card number_forms`
+    question: "May a file steer where a reader's stage stands, or is the stage always the reader's? A tag form is new vocabulary and is not built."
+  }[reg=facet]
+
+  rooms_as_laws: .{
+    rank = 4
+    claim: "lore.land reads each bracket as a room with a rule for staying, and the canvas reads each mark as a law a body's parts feel. Each host has half of one table."
+    exists: "lore.land .spw/surfaces/rooms.spw: [ ] a window you may only look in, { } a room you may stand in for a minute, ( ) a gathering that arrives together, < > a passage you go through and never stay. The canvas: [ ] is drawn as a frame around the word and takes no drop; { } seats parts that rest; ( ) flows in beside the body; < > is primed at the end of the reading. @distance synesthesia holds the stay row."
+    gap: "By the canvas's drop code, a free node let go in a body, a scene or a concept joins the line there: a late arrival in a gathering, and a stay in a passage, which the rooms forbid. The room wording differs between rooms.spw, the almanac and lore.land's README."
+    measured: .{
+      read = "read from circle.ts and line-anatomy.ts, not dropped by hand on this pass"
+      agree = "two of four: a window takes no drop, and a room keeps what stands in it"
+      differ = "two: a gathering takes a late arrival, and a passage can be stood in"
+    }[reg=facet]
+    recommendation = #[
+      `one canon table from bracket to stay rule that both hosts cite, in the workbench's synesthesia section`,
+      `leave each host's wording its own; the table holds the rule, not the copy`,
+    ][reg=set]
+    replaces: "two hosts each holding half a reading"
+    probe: `read rooms.spw kinds beside line-anatomy.ts slot titles; drop a free node in a scene and in a concept and see whether each stays`
+    question: "Should a free node dropped in a concept pass through it, and one dropped in a scene be refused, on the canvas? Those are feel decisions for the creator."
+  }[reg=facet]
+
+  kept_and_let_go: .{
+    rank = 5
+    claim: "@frames names an ephemeral bias, a lean that expires. The canvas has several, and of the stage's own state it keeps two things with no close."
+    exists: "Leans that end on their own: a throw's flight until home, a set-down's wave in 420ms, a selection's breath, a batch's pop, the rest warmth within 3s. Of the stage, kept in this browser with no close: the moved mark and the hand. The same browser also keeps the lines, the talk, the gestures found and the cached nodes. lore.land's clock is weeks: a brace-box goes cold in a week unless held."
+    gap: "No shared word for how long a kept thing lasts, so a host cannot say why the stage looks as it does today."
+    measured: .{
+      leans = "five that end, measured or read from code"
+      kept = "two of the stage's with no close, beside four more the browser keeps for the canvas"
+    }[reg=facet]
+    recommendation = #[
+      `a close on a kept thing as a field the workbench reads: kept until, or cold after`,
+      `the eviction score @distance already has as the one function a host would ask`,
+    ][reg=set]
+    replaces: "a stage remembered forever or not at all"
+    probe: `read factshift.stage-mark and factshift.hand in a browser that moved them a week ago`
+    question: "Should a moved mark go cold after a week unless touched, as lore.land's boxes do? That changes how long stored state lasts, so it is a proposal only."
+  }[reg=facet]
+}
+
+#>wonder_stage_wave
+?["Does a set-down that reaches the near first read as distance, or as noise?"]{
+  #:depth #!experiential ~#lens(comparison)
+  ~#with: @hub
+  ~#hypothesis: "Neighbours that answer in order, the near sooner and stronger, let a reader feel how far each one stands without a number."
+  ~#tension: "At 420ms the wave is short. On a crowded stage it may read as a shiver and not a ring. It is behind the lively hand until the creator has felt it."
+  !probe{ "factshift.center with the lively hand: set a node down slowly among others, beside round one's instant give, and ask which one says how far each neighbour is" }
+  $%[wave.distance, wave.noise, wave.unnoticed]
+  ~<"../../_workbench/docs/theory/spw/threshold-distance.spw">
+}

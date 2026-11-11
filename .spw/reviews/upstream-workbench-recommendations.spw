@@ -52,6 +52,7 @@
 @asks_motions: ~"./upstream-workbench-recommendations/motions.spw"
 @asks_capabilities: ~"./upstream-workbench-recommendations/capabilities.spw"
 @asks_smaller: ~"./upstream-workbench-recommendations/smaller.spw"
+@asks_stage: ~"./upstream-workbench-recommendations/stage-and-physics.spw"
 
 operation = "align"
 fixity = "tending"
@@ -250,6 +251,7 @@ expression = consumer[recommendations]{performance.cli.intermediate.culture}<ups
     `motions.spw — reduce, expand, place, extend and diff as one reading: ground, then the edge by slot, then the residue; a shape with a slot, and a reduction that says what it dropped (2026-10-25)`,
     `capabilities.spw — what the site's v0.4 became in the workbench's terms: the inquiry loop, an axis canon, a home for ground and edge, and the pillars withdrawn (2026-10-27)`,
     `smaller.spw — items too small to rank`,
+    `stage-and-physics.spw — a canvas host's receipts for the depiction theory: no joint to measure, rest that drifted and now returns, a set-down's ring as a front; then which origin is the centre, the stage as a line, rooms as laws, what is kept (2026-11-11); the wider asks it feeds are in the cache workbench-interaction-theory-2026-11`,
   ][reg=set]
   context = @asks_context
   corpus = @asks_corpus
@@ -264,6 +266,7 @@ expression = consumer[recommendations]{performance.cli.intermediate.culture}<ups
   motions = @asks_motions
   capabilities = @asks_capabilities
   smaller = @asks_smaller
+  stage = @asks_stage
 }[reg=facet]
 
 ^"week_2026_09_28"{
