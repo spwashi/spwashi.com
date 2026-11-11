@@ -49,6 +49,7 @@ contents = #[
     ~#probe(run)
     !probe{ "rg -n 'measureFloatingChromeOcclusion|spwFloatingChromeOcclusion|const open' public/js/kernel/dom-contracts.js" }
     $%[ground.covered, chrome.competition, sensor.scope]
+    ~#answer: "chrome.competition (2026-11-10). measureFloatingChromeOcclusion in dom-contracts.js compares open chrome boxes only, so it never counts the text a piece covers."
   }
 
   #>wonder_ecology_uptake
@@ -116,6 +117,7 @@ contents = #[
     ~#probe(run)
     !probe{ "sed -n 285,296p .spw/_workbench/packages/spw-runtime/src/interpreter/interpreter.ts" }
     $%[runtime.takes, runtime.passes]
+    ~#answer: "runtime.passes (2026-11-10). In the interpreter at the mount, ! returns its argument and ~ returns { deferred }, so !~x comes back still wrapped: ! does not take what ~ holds."
   }
 }[reg=facet]
 

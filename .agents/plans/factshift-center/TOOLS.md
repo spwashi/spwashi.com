@@ -113,6 +113,15 @@ Slices M1 and F1 take this shape once `#>wonder_factshift_spells` and `#>wonder_
 
 The creator: ideally Spw navigates between factshift.center frames. Entering a node already opens a page with the node as its frame and the parent line in the address (6b85a42). The proposal: a `#>` line held in the spw prompt, or given in `?spw=`, enters that frame, and `.` returns to the parent, so the address reads as a path of frames. Every plan's head line begins with `#>`, so a plan opens as a frame a reader can walk into. Held as `#>wonder_site_cluster_frame_navigation`.
 
+## Document navigation: four grains, one hand (2026-11-10)
+
+253b949 gave the Spw thread PageUp and PageDown between lines and Home and End to a document's edges, and paste loads a document. spw.quest's line in hand steps lines and holds a kind of part while it does, so a column of modes is walked down. Both are the same act at different grains, and a reader should not have to learn it twice.
+
+- **Part, line, document, frame.** A sideways move steps siblings at the current grain; up and down change line; spread enters a grain and close leaves it. The control prime states the hands already. What is missing is a grain indicator: the reader cannot see which grain a swipe will move.
+- **Hold across a step.** Stepping lines with a part held keeps that kind of part, so a reader compares one slot across a file. The canvas's thread has no held part yet, and it is the cheapest way to make a document feel like a table.
+- **Arrivals.** A line that arrives by link should open on what was sent. Seen 2026-11-10: a returning visitor meets it beside thirteen nodes from an earlier visit, while a newcomer's canvas is clean. Either the arrival gets its own frame or the old nodes step aside.
+- **Where a document ends.** Home and End reach the edges and say nothing there. An edge that names the next file (the `@` links a document holds) makes a document one room in a set, as the guide's files now are.
+
 ## Regions: consequence, or quiet
 
 The creator: dragging containers or interacting with regions should come with more consequence, positionally or behaviorally, or the regions should not be visible when the interactions are not meaningful. It should also be possible to add to a container, and perhaps to use selection semantics to change the connector, delimiter or separator. The slot reader the canvas now uses (readLine, writeAt, joinParts) can carry each of these:

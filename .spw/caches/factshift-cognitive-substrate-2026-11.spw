@@ -74,7 +74,7 @@ contents = #[
       non_ceiling = `Ensembles (>2 transforms) and temporal trajectories (bone -> boon -> honk) are legal continuous paths across the simplex manifold, not syntax errors.`
     }[reg=facet]
     indexing_architecture = .{
-      query_state = `?spw=<line> (plain text up to 400 chars) and #spw64=<base64url> (arbitrary length serialized AST) allow every graph configuration to be shared, bookmarked, and cited losslessly.`
+      query_state = `?spw=<line> (plain text up to 400 chars) and #spw64=<base64url> (a whole script, as UTF-8 text) allow every graph configuration to be shared, bookmarked, and cited losslessly.`
       node_identity_fix = `Keys must not be keyed naively on name + mark. Renaming <~rain> to <!rain> should update the operator lifecycle state rather than resetting node position and destroying simulation momentum (@factshift_operators:8; @planes_physics:31).`
       spatial_anchor_indexing = `Nodes are addressed by (identity, mark, room, seam): a change to one slot (e.g. turning [mode] or flipping a seam from , to ;) leaves the rest of the spatial graph untouched.`
     }[reg=facet]
