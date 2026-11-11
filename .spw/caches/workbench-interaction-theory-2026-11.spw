@@ -1,0 +1,245 @@
+# What the canvas has learned, for the workbench to grow from (2026-11-11) — cache
+#
+# The creator asked for a cache another agent can inspect to improve
+# spw-workbench from the interaction theory developing on factshift.center:
+# what would make conceptual navigation more imaginative and the alchemy of
+# concepts more constructive; which memory structures could be surfaced,
+# literally, across the tools; the canvas's design pressure points and what
+# would let spw.quest develop over the long term; what would make the ocean
+# and the site mount more useful; what would make Spw in unusual contexts and
+# across editors more meaningful; what would make refactoring scripts more
+# engaging as models improve; a prompt for multi-agent and multi-modal work
+# across the ecosystem; and what would let each tool grow its own
+# constructive model of thinking for professional and academic work.
+#
+# Ground first, then one facet a question. Every facet keeps the same slots:
+# exists, pressure, proposal, probe, owner. Measured lines say so; the rest is
+# reading. Nothing here writes to .spw/_workbench or to lore.land, and the
+# workbench is cited at its mount (be2df2ff).
+
+#>workbench_interaction_theory_2026_11
+#:cache #!workbench #!factshift #!quest #!memory #!editor
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@leaf: ~"../reviews/upstream-workbench-recommendations/stage-and-physics.spw"
+@motions: ~"../reviews/upstream-workbench-recommendations/motions.spw"
+@frames: ~"../_workbench/docs/theory/spw/depiction-frames.spw"
+@distance: ~"../_workbench/docs/theory/spw/threshold-distance.spw"
+@wonder: ~"../_workbench/docs/theory/spw/wonder-field.spw"
+@ocean: ~"../_workbench/.spw/biome/ocean/index.spw"
+@ocean_ux: ~"../_workbench/.spw/biome/ocean/ux.spw"
+@ocean_cache: ~"../_workbench/.spw/biome/ocean/algos/cache.spw"
+@quest_steps: ~"../_workbench/docs/learn/quest.spw"
+@mount: ~"../mount.spw"
+@plan: ~"../../.agents/plans/factshift-center/PLAN.md"
+@quest_plan: ~"../../.agents/plans/spw-quest/PLAN.md"
+@reasoned: ~"./reasoned-physics-2026-11.spw"
+@minds: ~"./factshift-theory-of-mind-2026-11.spw"
+@cognitive: ~"./cognitive-informatics-interaction-2026-11.spw"
+@product: ~"./ecosystem-productization-2026-11.spw"
+@swarm: ~"./swarm-distributed-memory-manifold-2026-11.spw"
+@multimodal: ~"./gemini-multimodal-evaluation-2026-11.spw"
+@homes: ~"../../workers/factshift-center/app/src/ts/simulation/homes.ts"
+@stage: ~"../../workers/factshift-center/app/src/ts/simulation/stage-mark.ts"
+@laws: ~"../../workers/factshift-center/app/src/js/modes/spw/body-gestures.ts"
+@canvas_words: ~"../../workers/factshift-center/app/src/js/modes/spw/operators.ts"
+@guide: ~"../../workers/spw-quest/src/guide.js"
+@answer: ~"../../workers/spw-quest/src/answer.js"
+
+operation = "cache"
+fixity = "experimental"
+expression = ?workbench[grow]{ground.navigation.memory.pressure.ocean.editors.refactor.prompt.minds}<canvas>
+
+summary = #[
+  `The canvas has become the place where Spw's claims meet a hand. Its homes model, its stage, its two walks and its laws per mark are a working theory of interaction, and the workbench's own notebooks already predict where it fails.`,
+  `Its strongest lesson is the conservation law said a fourth way: every picture has a rest, and a rest is a balance, not a snapshot. The canvas measured its parts stopping 9px short of balance, and now returns them to within about 1.2px.`,
+  `Navigation is linear today (back, forward, up a line, down a line). The theory already names a field: pivots one edit away, reach in rings, wonders as places to stand again. A field needs one distance function the tools share.`,
+  `Each host keeps memory and none shows it as a line. Showing what is kept, where, and until when, in the same small form in every tool, is the cheapest change with the widest reach.`,
+  `The operator words are written four times. Measured: the answer worker and the canvas agree on all twelve sentences, the guide says all twelve in other words, and the canvas's body laws are a fourth table. One table the quest's tests hold would stop the drift and give each new host its words for free.`,
+  `The ocean is the workbench's quietest biome: 35 surfaces, last touched 2026-08-06. This site links one of them, names one in prose, and ships two inside spw.quest's parser bundles without saying so. It is the natural home for the shared distance function and for a field vocabulary hosts can draw.`,
+  `A refactor is a motion. It engages when it says what it kept, what it dropped and how to come back, and when a model's plan can be checked by the same probes a host runs.`,
+  `Each tool can own one question about thinking and hand a receipt to the next: what moves when I touch it, can I say it in one line, what have I kept, where does it live, how settled is it, who is it for.`,
+][reg=set]
+
+^"for_the_next_agent"{
+  read_first = #[@distance, @frames, @leaf, @plan][reg=set]
+  then = `Read the play-and-reach journal in the workbench (2026-11-10, newer than the mount): seven assumptions no surface states and a routes table that waits for a host to read it.`
+  hold = `The workbench is edited in its own checkout, never through .spw/_workbench. lore.land belongs to another agent. Feel decisions on the canvas end at a proposal and a demo for the creator.`
+  start_small = #[
+    `the operator-word table (facet pressure, quest): smallest, and three hosts gain from it`,
+    `a kept line per host (facet memory): one form, read-only first`,
+    `the distance function in the ocean (facet ocean): one function, three weightings`,
+  ][reg=set]
+}[reg=facet]
+
+^"ground"{
+  # The canvas's interaction theory as built, each with where it lives.
+  homes = `One reason a node: placed, flight, slot, gather, region, stage. Each force pulls only its own reasons, so what moves a node can be said (@homes).`
+  laws = `A body's word leads with a mark, and only that body's parts feel it: . settles, ^ lifts, * is heavy, ~ drifts, = holds, @ leans in, ? opens, ! makes room, % levels (@laws, LAW_SAYS).`
+  stage = `Loose nodes rest at a taped mark in the wings beside the held line; nine areas named from the actor's side; a new batch is sown on a sunflower and lands on no seat of the line (@stage).`
+  walks = `Up and down are the lines; left and right are back and forward; Shift with an arrow walks every member of every body. A container acts within this line; the frame moves between lines.`
+  rest = `Measured 2026-11-11: a visitor pushed a part 14.8 to 18.6px; round one left it 8.97px short of balance, round two within about 1.2px, after a hand, a removal or a tap. A ~ body's parts are not watched, since their half pull would hold every warm to its 3s cap: left alone 9.6px short, warmed 3s 2.1px (@leaf).`
+  ring = `A set-down sends a ring out at one speed; neighbours answer as it reaches them, near first: distance felt as delay.`
+  why = `A framed body says why its parts move; a loaded file says why it held the line it held (@reasoned).`
+  gaps = `A binding is one figure, so a joint and a sight line cannot be told apart; one heat is felt by every frame (a sibling ~ body moved 6px during another body's warm); the physics are constants in code; reach is not drawn; the stage is kept only in a browser; a release that draws a link returns early and never asks for rest.`
+}[reg=facet]
+
+^"navigation"{
+  # More imaginative conceptual navigation, and alchemy that builds.
+  exists = `@distance names five distances (reach, address, depth, vocabulary, time), a centre that moves with the reader, pivots as the first ring of lines one edit away, and wonders whose seat a reader can stand at again. @motions names reduce, expand, place, extend and diff, each saying the ground it keeps.`
+  pressure = `The canvas walks a list: a thread of lines and a history. A reader cannot see what is one edit away, how far a cited thing is, or which question was asked from here.`
+  proposal = #[
+    `a pivot ring: the lines one edit from the held line drawn at the stage's rim, stepped into like a door; the first ring is cheap, since a pivot is one slot changed`,
+    `reach as rim and fog once a distance function exists (facet ocean): one hop at the rim, three hops faint, leaving drawn as leaving`,
+    `visitors as questions with the hands (@frames random_nodes): sow a marked visitor and watch which body makes room for it; a frame that answers the same way each time teaches its law without words`,
+    `alchemy as motions with receipts: a fold is a reduction that keeps the word and its braces, a pin by word is a placement across lines, a join is an extension; each says what it kept and how to come back, and only a motion that writes back to the line counts as made`,
+  ][reg=set]
+  probe = `Time a reader finding a named line from a held one: by the thread, and by a pivot ring (@frames wonder 4 asks the same of depth).`
+  owner = `workbench: pivots and the distance function; canvas: the ring and the visitors, behind the lively hand; creator: whether a ring is a door or a view`
+}[reg=facet]
+
+^"memory"{
+  # Which memory structures could be surfaced, literally, across the tools.
+  exists = .{
+    workbench = "a liminality rank on every register cell, three retention tiers with beat clocks, five retention planes, an eviction score (@distance runtime)"
+    canvas = "in this browser: the kept lines, the talk, gestures found, cached nodes, the focal point, the stage mark, the hand, the names word, pinned words; for a visit: folds and the held line"
+    quest = "a note kept across its four rooms"
+    story = "a kept wonder, a brace-box that goes cold in a week unless held, a chapter's found count"
+    site = "caches, plans and agent memory under .spw and .agents"
+    editor = "hovers that name a commit, lenses that count citations, a capture mode"
+  }[reg=facet]
+  pressure = `Every host keeps something and none says so in Spw. A reader cannot ask a tool what it remembers about them, for how long, or how to make it forget, and an agent cannot read one host's memory from another.`
+  proposal = #[
+    `one kept line per host, written in marks Spw already has: what is kept, where (visit, browser, file, repository), and until when; read-only first, shown in each host's menu or hover, copyable as text`,
+    `the canvas first: its stage as a line (@leaf stage_as_a_line), so a still or a share carries where the reader stood`,
+    `a close on every kept thing, borrowed from the story's week: kept until, or cold after; the eviction score decides what goes cold first, in every host`,
+    `forget as a verb with a receipt: what was let go, and that nothing else was`,
+    `a reader's own highlights kept as labelled, overlapping braces, to remember or to screenshot: an idea in the creator's notes, not yet in any repository`,
+  ][reg=set]
+  probe = `List every key a host writes to storage beside the line it would show; a key with no line is memory a reader cannot see.`
+  owner = `workbench: the form and the close; each host: its own line; creator: what is kept by default and for how long`
+}[reg=facet]
+
+^"pressure"{
+  # The canvas's design pressure points, then spw.quest's long term.
+  canvas = #[
+    `one heat for every frame: a touch warms siblings it never reached, against @frames' frame clocks; per-frame heat is the largest change and the most honest`,
+    `constants in code: a law set cannot be a line until numbers carry a sign, a unit and a range (@frames numbers_and_math)`,
+    `ties drawn alike: an edge with a kind (joint, sight line, lean) would let a drag carry, show or lean, and would make @frames wonder 2 testable`,
+    `four origins under one word (@leaf centre_name)`,
+    `feel cannot be checked by a script at a real frame rate: a shared harness would let every feel claim carry a number. This pass wrote one and did not keep it in a repository; its method is four lines: replace performance.now with a virtual clock, call sim.tick by hand and then each named tick listener (homing, resting, ring), drive d3-drag with synthetic mouse events and ticks between moves, and read rest as how far a further steady warmth still moves a part`,
+    `the app clone is outside the repository's history, so two rounds of work share files and a claim describes a working tree`,
+    `a phone: a held line can fill the stage, and a new batch crowds the corner controls`,
+  ][reg=set]
+  quest = .{
+    exists = "first steps copied from @quest_steps and held by a test; @answer and @canvas_words agree on all twelve operator sentences, measured; @guide says all twelve in other words; @laws is a fourth table; a routes table from each reader name to its door waits in the workbench journal"
+    pressure = "four tables of one set of marks, one of them drifting, and by the journal only one theory notebook has a route in"
+    proposal = #[
+      `one operator-word table in the workbench, read by the guide, the answer worker and the canvas, and held by the quest's tests`,
+      `adopt the routes table: each reader name opens its door, its theory and its open trial, so a learner can walk from a card to the reason behind it`,
+      `each quest example carries the canvas receipt it earned (rest, reach, which law it shows), so the examples stay a test of the canvas as both grow`,
+    ][reg=set]
+    probe = "diff the operator words across the three files; count words that differ"
+  }[reg=facet]
+  owner = `canvas: heat, harness, phone; workbench: numbers, edge kinds, the word table; creator: anything a hand would feel`
+}[reg=facet]
+
+^"ocean_and_mount"{
+  exists = `The ocean (@ocean) is an experimental biome: layout, libraries, algorithms (cache, cluster, geometry, material), expressions, a UX contract (@ocean_ux) whose expert reward is stable placement and consistent register meanings. The mount (@mount) bridges this site into the workbench at a pin; its pin note is one paragraph that lists every prior pin.`
+  pressure = `This site links one ocean surface (the UX contract, in two lists), names one in a cache's prose (algos/material), and ships two inside spw.quest's dated parser bundles (experiments/syntax and algos/cache, in source maps), none of which a reader can see. The mount says which commit it holds and not what of the workbench the site actually reaches; @distance logged that a consumer's reach was not measured.`
+  proposal = #[
+    `make the ocean the home of the one distance function @distance proposes (far, cold and uncoupled goes first), with three weightings: memory, index, stage; a host asks it, and the canvas can draw rim and fog`,
+    `put the field vocabulary (@frames: atom, component, edge, gradient, ephemeral bias, eddy) in the ocean as things a host can draw, each with its measure`,
+    `let the mount say its reach: which workbench surfaces this site cites, in how many hops, and which it has never touched; a pin becomes a still of where the site stands`,
+    `turn the pin note into dated rows, one a pin, so a reader can find what changed without reading every pin`,
+  ][reg=set]
+  probe = `npm run -s spw:integrity; count resolved citations into .spw/_workbench by folder`
+  owner = `workbench: the function and the vocabulary; site: the mount's reach report`
+}[reg=facet]
+
+^"editors"{
+  # Spw in unusual contexts and across editors.
+  exists = `VS Code: Concepts tree, hovers that name a commit, lenses that count citations, peek, capture mode; Neovim: syntax, navigation, completion. The language server is the shared layer. Outside editors, Spw already lives in commit messages (the episode close), in link fragments (#spw64 carries a line to the canvas), in a post that asks a model to answer as a card (@grok spw.quest rpgwednesday<card>), and in spw.quest's llms.txt, which describes the format to a model that fetches it.`
+  pressure = `An editor shows a line as text and a canvas shows it as motion, and neither shows the other's reading. A law, a centre and a reach are known to the canvas and invisible in the editor. A line in a commit, a link or a post is read by no tool after it is written.`
+  proposal = #[
+    `hover a body's word and read its law as the canvas says it ("its parts drift: potential"), from one table both read`,
+    `an inlay or lens with reach from the held file: hops to the canon root, and to the reader's centre`,
+    `open the canvas on the line under the caret, and bring a still back as a comment the file can keep`,
+    `the same three features in every editor through the language server, so a reader who moves editors keeps them`,
+    `the lines that live outside files become readable again: the episode closes in history as a corpus the workbench can census, a #spw64 link that opens in the editor as well as on the canvas, a model's card answer checked by the parser before it is trusted`,
+  ][reg=set]
+  probe = `Count which canvas readings (law, centre, reach, rest) any editor shows today, and how many episode closes in this repository's history the parser reads; neither has been counted.`
+  owner = `workbench: the server features; canvas: the open-on-line door`
+}[reg=facet]
+
+^"refactoring"{
+  exists = `spw refactor plans citation rewrites when a file moves, and the server answers a rename with that plan; the site's fixers edit by offsets; @motions asks each motion to say what it kept, dropped and how to return.`
+  pressure = `A refactor script is trusted or not as a whole. As models write more of the plan, a reader needs to see each judgement, and a model needs a probe it can run to learn whether it was right.`
+  proposal = #[
+    `every refactor prints a receipt as a Spw line: kept, dropped, back; a dry run is a still of before and after`,
+    `each script states its invariants as probes (every citation resolves, every part returns to rest, every word keeps its pins), so a model's plan is checked by the same law a host keeps`,
+    `the judgement calls a script cannot make become wonders with outcome slots, filed where the creator will see them, not guessed`,
+    `a refactor that names what changes in each reader: the canvas, the guide, the story`,
+  ][reg=set]
+  probe = `Run one citation move with and without a receipt; ask which a reviewer could approve without opening the diff.`
+  owner = `workbench: the receipt form and spw refactor; site: its fixers`
+}[reg=facet]
+
+^"minds"{
+  # Each tool's own constructive model of thinking. Readers per @minds.
+  canvas = .{ asks: "what moves when I touch it?", rewards: "trying a consequence before committing to it", keeps: "a still and why it moved", for: "a team finds which assumption carries a plan by moving it" }
+  guide = .{ asks: "can I say it in one line?", rewards: "articulation", keeps: "a card", for: "a claim card, a decision card, a reading note" }
+  story = .{ asks: "what have I earned and kept?", rewards: "returning", keeps: "a kept wonder and its week", for: "a course, a lab notebook, a long project" }
+  editor = .{ asks: "where does this live and what points at it?", rewards: "structure", keeps: "references and their commits", for: "a literature map, a codebase" }
+  cli = .{ asks: "how settled is this, and how far from the root?", rewards: "honest inventory", keeps: "a census", for: "an audit of a body of work" }
+  site = .{ asks: "who is this for, and what will they do next?", rewards: "address", keeps: "page structure and its sensors", for: "a portfolio, a public argument" }
+  model = .{ asks: "what would another reader make of this?", rewards: "perspective, the @ seat", keeps: "a reading with what it could not show", for: "review, translation, teaching" }
+  constructive = `Each tool owns one question and hands a receipt the next can read. Thinking compounds when a still from the canvas becomes a card in the guide, a kept wonder in the story and a reference in the editor, and each says where it came from.`
+  note = `@cognitive holds the cognitive-science reading (epistemic and pragmatic actions, cognitive dimensions); this table is the product reading.`
+}[reg=facet]
+
+^"prompt"{
+  # For multi-agent or multi-modal work on one concept across the ecosystem. Copy the text; fill the line.
+  text = `You are one of several readers of the same Spw line. The line is conserved; your picture of it is not. Read it as your seat reads:
+
+  - canvas: as motion. Which parts move together, which law each body follows, where it rests, what a touch would do.
+  - guide: as text. The one line a learner would write, and the card it becomes.
+  - story: as a place. Which room each container is (look in, stand a minute, arrive together, go through) and what a reader keeps.
+  - sound: as voices. Which mark sounds, which container times it, which question stays open.
+  - image: as a still with labels hidden. What the shapes alone say.
+  - editor: as structure. What it cites, how far each citation reaches, what would break if it moved.
+
+  Answer in four parts: your reading; what your seat cannot show; one probe that would test your reading; and the line again, unchanged, so the reading can be checked against it.
+
+  A synthesizing reader then keeps only what survives every seat, names each disagreement as a wonder with outcome slots, and never edits the line to make the readings agree.
+
+  The line: ________`
+  why = `@distance: meaning is what survives a canvas, a guide and a story. The prompt makes that claim a procedure, and the disagreements are the useful output.`
+  limits = `The prompt has not been run. A model asked to read as motion has not seen motion: pair the canvas seat with a still or a receipt from the canvas itself; @multimodal holds three bounded trials for image models.`
+}[reg=facet]
+
+#>wonder_kept_line
+?["Would a reader trust a tool more if it said, in one line, what it keeps about them and until when?"]{
+  #:depth #!experiential ~#lens(comparison)
+  ~#hypothesis: "Yes, and a reader who can read the line will also ask to keep more."
+  !probe{ "show five readers the canvas with and without its kept line; ask what it remembers and whether they would change it" }
+  $%[trust.more, trust.same, trust.less]
+}
+
+#>wonder_pivot_ring
+?["Does a ring of lines one edit away make a reader travel farther through ideas than a thread does?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#hypothesis: "It does when each pivot names its one change; a ring of unlabelled lines is noise."
+  !probe{ "one held line, its pivots on a ring and in a list; count lines visited and lines kept in five minutes" }
+  $%[ring.farther, ring.same, ring.lost]
+}
+
+#>wonder_seats_disagree
+?["When several readers each read one line from a different seat, are their disagreements more useful than their agreement?"]{
+  #:depth #!computational ~#lens(comparison)
+  ~#hypothesis: "Disagreements name the trial cards the workbench has not written yet."
+  !probe{ "run the prompt above on the four spw.quest files written to challenge the canvas; match each disagreement against interpretation-trials" }
+  $%[disagree.new_cards, disagree.known_cards, disagree.noise]
+}

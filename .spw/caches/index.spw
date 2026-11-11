@@ -147,6 +147,7 @@
 @swarm_distributed_memory_manifold_2026_11: ~"./swarm-distributed-memory-manifold-2026-11.spw"  # cache: critique of creatively limiting rules (monospace line length tyranny, single-patch bottleneck, compound operator ban), agent swarm coordination demands (vector clocks, ephemeral leased mutexes, Bayesian belief vectors), distributed memory CRDT join semantics, and the factshift continuous 5-simplex counterfactual genesis with intentional rule-breaking specimens
 @factshift_continuous_combinatorics_2026_11: ~"./factshift-continuous-combinatorics-2026-11.spw"  # cache: continuous 5-simplex combinatorics, radial node value scrubbers, learnable combinatoric physics, nested reference navigation, modal comparison ghost layers, formula swipe scrubbers, and embeddable canvas web component productization
 @dreamable_codebases_2026_11: ~"./dreamable-codebases-2026-11.spw"  # cache: what makes a codebase good to sleep on; precipitates, intermediate forms, contexts, supports, the line as a social object
+@workbench_interaction_theory_2026_11: ~"./workbench-interaction-theory-2026-11.spw"  # cache: what the canvas has learned for the workbench to grow from: rest as balance, a pivot ring and reach as rim and fog, one kept line per host, one operator-word table for the quest, the ocean as home of one distance function, editors that show a law, refactors with receipts, a prompt for readers in six seats, and one question each tool owns
 
 operation = "align"
 fixity = "tending"
@@ -238,6 +239,7 @@ fixity = "tending"
   swarm_distributed_memory_manifold_2026_11 = @swarm_distributed_memory_manifold_2026_11
   factshift_continuous_combinatorics_2026_11 = @factshift_continuous_combinatorics_2026_11
   dreamable_codebases_2026_11 = @dreamable_codebases_2026_11
+  workbench_interaction_theory_2026_11 = @workbench_interaction_theory_2026_11
 }[reg=facet]
 
 ^"cache_rules"{
