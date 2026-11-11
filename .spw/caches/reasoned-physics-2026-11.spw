@@ -1,0 +1,109 @@
+# Why a line moves, why a page is shown (2026-11-10) — cache
+#
+# The creator asked for local physics differences explained by Spw
+# precipitates, the chemistry of expressions contextualized by reasons to
+# develop factshift.center as a product surface, the reason a page is displayed
+# as a possible premium with a condensed version shown ephemerally, and unique
+# rendering physics carried by a Spw payload or a link, with seasonal or
+# popularity trends. The same sitting compared spw.quest's examples with their
+# display on the canvas. Two small pieces are built; the rest is proposal.
+
+#>reasoned_physics_2026_11
+#:cache #!factshift #!quest #!physics #!product
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@plan: ~"../../.agents/plans/factshift-center/PLAN.md"
+@quest_plan: ~"../../.agents/plans/spw-quest/PLAN.md"
+@law: ~"./brace-literal-local-law-2026-11.spw"
+@theory: ~"./factshift-theory-of-mind-2026-11.spw"
+@product: ~"./ecosystem-productization-2026-11.spw"
+@precipitates: ~"../conventions/precipitates-and-projections.spw"
+@examples: ~"../../workers/spw-quest/src/examples.js"
+@subject: ~"../../workers/factshift-center/app/src/js/modes/spw/file-subject.ts"
+@pins: ~"../../workers/factshift-center/app/src/js/modes/spw/identity-pins.ts"
+@hand: ~"../../workers/factshift-center/app/src/js/ui/hand-on.ts"
+
+operation = "cache"
+fixity = "experimental"
+expression = ?law[said]{why, whose, until}<reader>
+
+summary = #[
+  `A local law is only legible if it can say itself. A precipitate is the small settled line that says it: what this body does to its parts and which mark asked for that.`,
+  `A file's rows are not equal. Arriving on the first row with structure held a bystander in four of fourteen files; arriving on what the file is about needs a reason, and the reason can be said.`,
+  `A reason has two sizes. The condensed one is a few words that leave on their own. The full one is what else could have been shown and why it was not, and that is the size worth keeping.`,
+  `A law set is a line, so a link can carry one and a season can close one. It is offered as a reading and never as the default.`,
+][reg=set]
+
+^"measured"{
+  how = `2026-11-10, each of spw.quest's fourteen files through the canvas's own statement reader and through #spw64 on a local build, at 1366px.`
+  bystanders = `calibration held ^"before" and never its %confidence{before ~> after}; perspectives held me = ... and not &ch2{...}; loops held ahead = #[...], two nodes and no body; gradient held from = ..., never the gradient. Each now arrives on the statement named above, and says why (@subject).`
+  fine = `question, revision, script, record, persona and headings already arrived on their point. revision is the richest, nine nodes in four bodies.`
+  depth = `No file went past two levels, so the tree had never been walked. outline.spw goes four down: Shift with an arrow walks it and back, and at rest its word circles overlap the bodies below them and cover their labels. The layout has not been asked this before.`
+  width = `pantry.spw's sixteen parts ring a body at 390px and all stay on screen, but the corner box, taller now with the trail, covers the bottom of the ring.`
+  identity = `A node's own pin is matched by role and name from the line drawn just before (placeOf in line-anatomy.ts), so by reading the code it cannot follow a word into another slot or across a line without it. rain.spw says one word in four slots; a word pin held it at one screen point through all four (331, 276 on the probe).`
+}[reg=facet]
+
+^"precipitate"{
+  built = `Framing a body says what its law does: ~soup{…} · the body after · its parts drift: potential. The sentences sit beside the table they describe (body-gestures.ts, local-forces.ts). kitchen.spw puts four laws side by side.`
+  next = `Said as a line it can be kept: *law[~]{parts.drift}<soup>. A kept precipitate compares across lines the way a kept line does, and two bodies that disagree can be asked why.`
+  chemistry = `Marks are reagents and a line's composition decides what settles out. Reasons to develop this are what select the laws in force: teaching wakes one law at a time, comparing holds words still, performing favors a still that survives a crop, archiving keeps the literal. A reason is a preset with an explanation attached.`
+}[reg=facet]
+
+^"reason"{
+  built = `On loading a file the canvas says why it held what it held, beside the handle, for the ephemeral hold: held · the file is named for it.`
+  proposal_free = `The condensed reason stays free and leaves on its own, so nothing is ever hidden behind a price that a reader needs in order to read.`
+  proposal_paid = `The full reason is the premium: the statements considered, why each was passed over, which law set is in force and who sent the link, kept as a line beside the thread. For a sender it is also an authored reason: this is why I am showing you this.`
+  carried = `An authored reason rides the payload as ~#why: "..." in the form ~#expect already has. A link form would add why to the query list in version.json.`
+}[reg=facet]
+
+^"payload"{
+  now = `A link already carries physics: charge, velocityDecay, linkStrength and the rest are in version.json's query list, and kernel/ecosystem-links.js checks each value.`
+  proposal = `One name in place of many numbers: a law set is a tuning line and a body-law table under a name, read from a static registry with a close, $law[autumn]{settle, drift}@sponsor<until 2026-11-26> (@product#sponsored). The canvas offers an open one as a reading in the [...] menu.`
+  season = `A season is a law set with a close date, and a still of one line under each week's law makes the season comparable.`
+  popularity = `Popularity should count acts a person chose (a keep, a share), never page views, and only in aggregate. @product already says never with tracking, and both workers have hit the free tier's daily limit, so a registry stays a static file.`
+}[reg=facet]
+
+^"display"{
+  gradient = `A set whose items lead with a number between 0 and 1 is a scale: seat them along an axis by that number.`
+  log = `Dated entries read as a timeline, not a ring.`
+  calibration = `Two facets and a %measure between them read as a before and an after, with the change as the edge.`
+  loops = `Parallel persona loops read as lanes, and a ~> relay as the one line crossing them.`
+  episode = `A scene, a change and a verify read as three stations in order.`
+  rule = `The file's #:kind chooses the figure; a figure never changes the line.`
+}[reg=facet]
+
+^"gestures"{
+  built = `A container acts within this line: its size, its reading, the camera on it. The frame moves between lines. Which one heard a touch is now lit as it begins, named for the first three touches, and the menu's gestures row sets them side by side (@hand). The grammar itself did not change.`
+  collision = `On a phone the frame's 72px band lies over the outermost body, so there the frame takes the touch (@theory#edges). The cue makes that visible; whether to move the band is a wonder.`
+}[reg=facet]
+
+^"holds"{
+  owners = `Prices, what is premium, and sponsorship are the creator's. Gesture meanings stay @theory's. No sigil, no data-spw-* family, no package, no workbench edit.`
+}[reg=facet]
+
+#>wonder_reason_premium
+?["Is the full reason worth paying for to a sender, a reader, or neither?"]{
+  #:depth #!experiential ~#lens(choice)
+  ~#hypothesis: "A sender pays to say why; a reader should never pay to know why they are looking."
+  ~#expect: "The authored reason sells and the computed reason stays free."
+  !probe{ "Show five people a canvas link with and without an authored reason, and ask which they would have sent." }
+  $%[sender, reader, neither]
+}
+
+#>wonder_band_over_body
+?["Should the frame's side band give way to a body under it on a phone?"]{
+  #:depth #!experiential ~#lens(comparison)
+  ~#expect: "Readers aiming at an outer body's edge land on the frame and step a line by accident."
+  !probe{ "With the cue on, count on a phone how often a touch meant for an outer body lights the frame." }
+  $%[band.stays, band.yields, band.narrows]
+}
+
+#>wonder_figure_by_kind
+?["Should a file's #:kind choose its figure on arrival, or only when asked?"]{
+  #:depth #!semantic ~#lens(choice)
+  ~#expect: "A scale read as a ring loses its point, so at least gradient wants its axis by default."
+  !probe{ "Draw gradient.spw as an axis and as a ring, and ask which one says where a plan sits." }
+  $%[figure.on_arrival, figure.on_ask]
+}
