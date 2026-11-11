@@ -1,0 +1,57 @@
+# Provider Relationships
+#
+# How the ecosystem works with the companies it builds on: hosting and the edge,
+# code hosting and CI, social platforms, and model providers. Written 2026-11-11,
+# when the creator asked for resource-mindful, pragmatic relationships with
+# providers, framed as engineering culture: not secrecy, but mindfulness about
+# scale and business practicality. The rules hold for any provider; the names
+# below are examples of each role.
+
+#>provider_relationships
+#:convention #!providers #!engineering #!culture
+#:operation #!contract
+#:fixity #!tending
+#:layer #!pragmatics
+
+@direction: ~"../caches/ecosystem-direction-2026-11.spw"
+@cluster: ~"../../workers/cluster.json"
+
+^"stance"{
+  engineering_first: "Every architectural choice is justified by engineering: speed, caching, portability, resilience, privacy, compute kept for what computes. A design is never described as fitting inside a provider's allowance."
+  pay_for_value: "When a paid plan buys something the work needs, it is a budget line with a reason, chosen on purpose. Until then the architecture stays lean because lean is better engineering, not to avoid a bill."
+  good_citizen: "Respect each provider's terms, rate limits and fair use. Send crawlers a robots file and models an llms.txt; never disguise traffic or split work to stay under a limit."
+  portable_by_default: "Content lives in files the repository owns, in open formats. A provider serves them; it does not hold them."
+}[reg=facet]
+
+^"contract"{
+  # Each provider is a dependency with a contract, kept beside its config.
+  fields: [
+    "role: what the provider does for the ecosystem (edge, code hosting, CI, social, models)",
+    "use: what is used, and what it would cost at ten times today's traffic",
+    "data: what personal data, if any, reaches the provider, and why that is needed",
+    "exit: how to leave, what moves where, and how long it would take",
+  ]
+  where: "workers/cluster.json carries the hosting half (serving tiers); a provider without a config file gets a row in this convention's examples"
+}[reg=facet]
+
+^"examples"{
+  edge: "Cloudflare serves the workers. Fixed answers are files at the edge; scripts run for what computes; serving tiers are declared in @cluster and held by check:workers. Exit: the assets folders serve from any static host."
+  code_and_ci: "GitHub holds the repositories and builds spwashi.com's Pages artifact. Exit: git moves anywhere; the build is a script the repository owns."
+  social: "X carries posts and cards. A card is a file the ecosystem owns, posted, never authored only inside the platform."
+  models: "OpenAI, Anthropic, Google and others read and write with the ecosystem. Prompts are files; formats are model-neutral (llms.txt describes, it does not order); no personal data in a request without the creator's yes; costs are measured per task, with caching and batching before a bigger model."
+}[reg=facet]
+
+^"culture"{
+  receipts: "a change says what it cost and what it saved, measured, in its commit"
+  scale_question: "review asks what a change does at ten times the traffic, the corpus or the team"
+  plain_words: "comments, configs, plans and commits name the engineering reason, without hedging"
+  teach: "the repository is a place others can learn from: legible instruments, checks as guards, one rule taught once"
+}[reg=facet]
+
+#>wonder_provider_exit
+?["Could each provider be left within a week without losing an address?"]{
+  #:depth #!computational ~#lens(measure)
+  ~#hypothesis: "Yes for the edge and code hosting, since files and git are portable; social and model providers are left by owning the cards and prompts as files."
+  !probe{ "for each provider, list its exit field and dry-run the move of one unit or one prompt" }
+  $%[exit.week, exit.longer, exit.blocked]
+}

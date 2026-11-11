@@ -1,0 +1,145 @@
+# The pie loop, a line as a key, and memory a reader can see (2026-11-11) — cache
+#
+# The creator: wap.mom should encourage more impressive wonder about pi(e); its
+# audience is a variety of moms who would read lore.land, implicit and embraced
+# by theme; copy direct and useful as well as entertaining, each component clearly
+# worth something to a live studio audience; wap.mom development assumes a reader
+# falls into lore.land (some lore, some experiences, perhaps a game) and comes
+# back; unlocking story elements on smut.today a bonus; Spw as a router for
+# unlocking; the ecosystem's HTTP model; routes across domains, renamed or reduced
+# where they blur; smut.today as a direct introduction to a variety of experiences,
+# with a per-story, per-browser, clearable memory for reading bit by bit or
+# noticing how far one gets, and as developmentally nutritious media with daily
+# alternation and a random weekly cadence that grows shared vocabulary for
+# intimacy; Spw's syntax and memory theory, intermediate forms and where to
+# inspect them; the canvas's interaction model at lore.land's events; minding
+# attachment, swarm direction and impressionability; toward linguistic
+# development and cultural technological support.
+#
+# Proposals only. Public wording is the creator's; lore.land belongs to another
+# agent and was read, not changed. Built pieces of the same evening are in
+# @direction.
+
+#>pie_loop_memory_2026_11
+#:cache #!wap #!smut #!lore #!memory #!routing
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@direction: ~"./ecosystem-direction-2026-11.spw"
+@grow: ~"./workbench-interaction-theory-2026-11.spw"
+@wap_room: ~"../../workers/wap-mom/src/room.js"
+@wap_figures: ~"../../workers/wap-mom/src/figures.js"
+@smut: ~"../../workers/smut-today/src/index.js"
+@cluster: ~"../../workers/cluster.json"
+@quest_routes: ~"../../workers/spw-quest/src/index.js"
+
+operation = "cache"
+fixity = "experimental"
+expression = ^pie[loop]{wap.lore.smut}<return>
+
+summary = #[
+  `The pieces exist: wap.mom is a periodical of π (π, 22/7, Pie, 355/113, Crust, Needles, Slice, The Square, Patience, Interest, Rise); lore.land has Exactly One Pie, with unlocks earned by weight; smut.today's shelf already pitches The Ministry of Circumference and Issue pie; wap.mom's footer already opens a door to smut.today. What is missing is the route between them and a memory a reader can see.`,
+  `A line is a key. An experience earned on one site leaves a short Spw line in the reader's browser; another site reads the line and opens what it unlocks. The map from line to door is a static file, so routing costs no script and the key can be read, copied and cleared.`,
+  `Memory is shown, not kept quietly: each site says in one line what it remembers about this reader, where, and until when, and clears it per piece or all at once.`,
+  `Each wap.mom component earns its place by what it does in front of a room: one gesture, one number that moves, one reveal, one thing to take home.`,
+][reg=set]
+
+^"wap"{
+  # Impressive wonder about pi(e), for a variety of moms who would read lore.land, never named on the page.
+  theme = `The audience is embraced through the pie itself: measuring, sharing out, the family recipe, the school worksheet, the long wait while it rises. Nobody is addressed as a mother; everybody who has cut a pie into fair slices is already inside the joke.`
+  components = .{
+    figure: "the live bit: one control, one number moving toward π, one reveal; a studio audience watches the needles fall and the estimate settle"
+    readout: "the number said plainly, with how many places are earned and what earned them"
+    offprint: "the take-home: one page that works on a fridge"
+    clip: "the share: one line and one picture, sized for a post"
+    dateline_and_series: "where this sits in the run, so a returning reader knows what is new"
+  }[reg=facet]
+  copy = `Direct and useful first, entertaining second, in one breath: "Drop needles. Count the crossings. Watch π show up." Each component says what it does before it says anything clever. The voice stays the periodical's own, played straight.`
+  wonder = #[
+    `a running count of places the room has earned across the run, one issue at a time`,
+    `each issue ends on the question the next one answers, so wonder carries forward`,
+    `a recipe and a proof side by side when the issue has both (Pie, Crust, Slice)`,
+  ][reg=set]
+  loop = `Each issue has one door into lore.land (the pie game, a place, some lore), and each lore.land unlock that touches π has one door back to the issue that explains its math. A reader who leaves to play comes back with a line in hand, and the issue greets it.`
+  owners = `the issue copy and the doors are the creator's; lore.land's side belongs to its agent`
+}[reg=facet]
+
+^"router"{
+  # Spw as a router for unlocking experiences.
+  form = `A key is one collectible line: an operator, a noun, one bracket (^pie[crust]{proof}). It is stored where the reader can see it (the kept line in @grow) and travels in a link as #spw64.`
+  map = `A static file per site maps lines to doors: this line opens that issue's extra figure, that lore.land place, that story's hidden scene. A page reads the map and the reader's lines; nothing is computed on a server.`
+  honest = `A client-side unlock is a game, not a lock: the content ships, the line reveals it, as lore.land's spells are veiled until met. Nothing that must stay private is ever gated this way.`
+  smut_bonus = `smut.today may honour lines too, for a story's extra scene or a pitch's opening page, but only lines a reader carries in on purpose: never from lore.land's game flow directly, always behind smut.today's own adult door, and never shown on the other sites. Its wink stays off-page, as its own header says.`
+}[reg=facet]
+
+^"smut"{
+  # A direct introduction to a variety of experiences, and a memory the reader owns.
+  after = `When a piece ends, the page offers what else there is, by kind and by time: a short piece, a letter, a pitch, each with its length and what is in it, as the site already does before a first line.`
+  memory = .{
+    per_story: "where the reader stopped, by paragraph, and how many sittings it took"
+    per_sitting: "how far each sitting got, shown as marks along the piece, so a reader who wonders how far they get each time can see it without anyone else seeing it"
+    clear: "one control per story and one for everything; nothing leaves the browser"
+    without_script: "every paragraph has an anchor, so a bookmark is a place; the remembering is the progressive layer"
+  }[reg=facet]
+  tension = `The site's header says no script and no accounts. Memory in the browser needs a small optional script; no accounts stays true. That trade is the creator's.`
+  cadence = `Daily alternation by the UTC day, as now, and one weekly piece on a day picked by a seed for that week, the same for every reader, so readers share a week's surprise.`
+  vocabulary = `Developmentally nutritious: each piece adds one word to a shared glossary of intimacy (asking, consent, pace, aftercare, a want named plainly), so the site grows a language people can use with each other.`
+}[reg=facet]
+
+^"http"{
+  # The ecosystem's HTTP model, beyond @direction's static rules.
+  model = #[
+    `three cache classes: fingerprinted files immutable for a year; pages and readings for a minute to five; anything private no-store`,
+    `no Vary: a reading that differs gets its own extension, so one URL means one body`,
+    `HEAD and 404 as files; every host's robots.txt, sitemap and llms.txt as files`,
+    `one workers/lib/http.js for headers and responses, so six workers stop restating the same security set`,
+    `www to the apex by a Redirect Rule per zone; no host pays a script to correct its own name`,
+  ][reg=set]
+}[reg=facet]
+
+^"routes"{
+  # Renaming or reduction where product surfaces blur. Read from @cluster and @quest_routes.
+  noisy = #[
+    `site-hub-next answers fifteen hosts, thirteen of them door pages; held names could share one doors page on spwashi.com and redirect there`,
+    `spw.quest has fourteen rooms whose names overlap (learn and read; shelf, specimens, forms and arcs; build, pivot and constructs)`,
+    `"room" means a filing desk on wap.mom, a kind of container on lore.land and a page on spw.quest; "hand" means three things too`,
+    `smut.today puts two stories (/meeting, /train) beside its sections (/to-you, /pitches)`,
+  ][reg=set]
+  proposal = #[
+    `spw.quest by verb: learn (learn, read, physics), make (build, pivot, constructs), keep (shelf, specimens, forms, arcs, bench); old addresses redirect`,
+    `smut.today: stories under /stories/, sections at the top; old addresses redirect`,
+    `one meaning per word across hosts, or a host-prefixed name where two must stay`,
+  ][reg=set]
+  owner = `renames are the creator's; each needs redirects as files or rules, so no address breaks`
+}[reg=facet]
+
+^"memory_theory"{
+  # Spw's syntax and memory architecture, intermediate forms, and where to inspect them.
+  planes = `Memory has planes a reader can name: this visit, this browser, a file, a repository. The workbench already keeps tiers with clocks; hosts should say which plane holds what.`
+  intermediate = `Between the text and the picture sits the parsed line: words, marks, slots. Each host can show it as an extension: /x.spw as written, /x.json as read, the page as drawn, so a reader can inspect the step where meaning was decided.`
+  attachment = #[
+    `no streaks, no counts that shame a gap, no nudge to return; a door back is offered, never pushed`,
+    `what is kept is visible and clearable, everywhere`,
+    `impressionability: a reading is regarded, not tried on; a model's or a crowd's reading is labelled as theirs`,
+    `swarm direction: when many readers or agents read one line, keep the disagreements, never average them into one voice`,
+  ][reg=set]
+  canvas_at_events = `At a lore.land event (a chapter close, a live game), the canvas can hold the room's line on the stage: lines brought in by readers land in the wings, the line being read sits at the centre, and the night's collected atoms remain as a still. Occasional by design: a show, then the stage clears.`
+  linguistics = `Each site grows one glossary from its drops, read by the multi-seat prompt in @grow; the ecosystem's cultural technology is a shared vocabulary people take home: π's words in one place, intimacy's in another, Spw's in all of them.`
+}[reg=facet]
+
+#>wonder_line_as_key
+?["Does a reader who carries a line from lore.land back to wap.mom read the issue it unlocks more closely than one who arrives by a plain link?"]{
+  #:depth #!experiential ~#lens(comparison)
+  ~#hypothesis: "Yes: an earned line turns arrival into a reveal."
+  !probe{ "two doors from the pie game to one issue, one carrying a line and one plain; compare time on the figure and offprints taken" }
+  $%[key.closer, key.same, key.confusing]
+}
+
+#>wonder_visible_memory
+?["Do readers trust a site more when it shows, in one line, where they stopped in a story and offers to forget it?"]{
+  #:depth #!experiential ~#lens(comparison)
+  ~#hypothesis: "Yes, and they return more freely when nothing counts their absence."
+  !probe{ "smut.today with the memory line and its clear control, beside without; ask five readers whether they would use it and why" }
+  $%[trust.more, trust.same, trust.less]
+}
