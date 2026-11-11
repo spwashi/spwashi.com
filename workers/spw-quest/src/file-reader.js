@@ -1031,7 +1031,7 @@ export const FILE_CSS = `.try { margin: 0; }
     .editor > textarea::selection { background: var(--accent-soft); -webkit-text-fill-color: transparent; }
     .editor:focus-within { box-shadow: inset 3px 0 0 var(--accent); }
     @media (pointer: coarse) { .editor > .paint, .editor > textarea { font-size: 1rem; } }
-    .hand { display: grid; gap: .35rem; padding: .45rem .5rem .55rem 1rem; border-top: 1px dashed var(--line); background: var(--surface); color: var(--fg); }
+    .hand { display: grid; grid-template-columns: minmax(0, 1fr); gap: .35rem; padding: .45rem .5rem .55rem 1rem; border-top: 1px dashed var(--line); background: var(--surface); color: var(--fg); }
     html:not(.js) .hand:not([data-anchors]) { display: none; }
     .hand p { margin: 0; }
     .hand .says, .hand .n { color: var(--muted); font: .74rem/1.3 var(--mono); }

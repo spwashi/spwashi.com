@@ -74,13 +74,12 @@ export function registerShell() {
         },
       });
     };
-    registration.addEventListener("updatefound", () => {
-      const worker = registration.installing;
-      if (!worker) return;
-      worker.addEventListener("statechange", () => {
-        if (worker.state === "installed") tell();
-      });
+    const watch = (worker) => worker?.addEventListener("statechange", () => {
+      if (worker.state === "installed") tell();
     });
+    // An install can already be under way by the time this runs, and then updatefound has passed.
+    watch(registration.installing);
+    registration.addEventListener("updatefound", () => watch(registration.installing));
     tell();
   }).catch(() => {});
   if (document.readyState === "complete") start();
