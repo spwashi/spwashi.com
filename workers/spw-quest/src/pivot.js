@@ -11,7 +11,7 @@ import { OPERATORS } from "./guide.js";
 import { PAGE_CSS, QUEST_HEAD, masthead } from "./page.js";
 import { PAPER_CSS } from "./paper.js";
 import { readSpecimen } from "./specimen-reading.js";
-import { SPECIMENS, findSpecimens, nameOf, readQuery, specimenById } from "./specimens.js";
+import { SPECIMENS, findSpecimens, nameOf, readQuery, specimenById, whereOf } from "./specimens.js";
 
 /** The longest line the page takes; a pivot is one line, not a file. */
 export const PIVOT_LIMIT = 200;
@@ -49,18 +49,26 @@ const SHELF = (() => {
 
 const holding = (slot, value) => SHELF.index[slot]?.get(value) || [];
 
-/** Values a slot takes on lines that share another slot with this one, commonest first; then the shelf's commonest. */
+/**
+ * Values a slot takes on lines that share another slot with this one: nearest
+ * first, a value being as near as the closest line that holds it (how many of
+ * this line's other slots that line also holds), then commonest; then the
+ * shelf's commonest. A body on a line with the same word, lens and concept
+ * outranks a body that only shares the word, however many of those there are.
+ */
 function kinValues(slot, own, anchors) {
   const seen = new Map();
   for (const [anchorSlot, anchorValue] of anchors) {
     if (!anchorValue) continue;
     for (const specimen of holding(anchorSlot, anchorValue)) {
       const value = specimen.reading.slots?.[slot];
-      if (value && value !== own) seen.set(value, (seen.get(value) || 0) + 1);
+      if (!value || value === own) continue;
+      const shared = anchors.filter(([key, held]) => held && specimen.reading.slots?.[key] === held).length;
+      const at = seen.get(value) || { shared: 0, count: 0 };
+      seen.set(value, { shared: Math.max(at.shared, shared), count: at.count + 1 });
     }
-    if (seen.size >= PER_SLOT) break;
   }
-  const kin = [...seen.entries()].sort((a, b) => b[1] - a[1]).map(([value]) => value);
+  const kin = [...seen.entries()].sort((a, b) => b[1].shared - a[1].shared || b[1].count - a[1].count).map(([value]) => value);
   const common = (SHELF.ranked[slot] || []).filter((value) => value !== own && !kin.includes(value));
   return { kin: kin.slice(0, PER_SLOT), common: common.slice(0, Math.max(0, PER_SLOT - kin.length)) };
 }
@@ -239,13 +247,19 @@ function pivotHref(line, from, trail = []) {
   return `/pivot?${params}`;
 }
 
+/** The way to where a shelf line stands: the page and section that carry it, or the parser holding it. */
+function standsLink(specimen) {
+  const where = whereOf(specimen);
+  return cardLink(where.href, specimen.source === "routes" ? "Read it where it stands" : where.label);
+}
+
 function landing(pivot, state) {
   const there = BY_LINE.get(flat(pivot.line));
   if (!there) return { says: "Not on the shelf yet.", links: [] };
   const where = there.source === "routes" ? `spwashi.com${there.route}#${there.section}` : nameOf(there);
   return {
     says: `On the shelf: <code>${escapeHtml(where)}</code>.`,
-    links: [state.id && state.id !== there.id ? cardLink(`/specimens?a=${state.id}&b=${there.id}#compare`, "Compare with this line") : ""],
+    links: [standsLink(there), state.id && state.id !== there.id ? cardLink(`/specimens?a=${state.id}&b=${there.id}#compare`, "Compare with this line") : ""],
   };
 }
 
@@ -444,7 +458,7 @@ export function pivotBody(state) {
     name: here ? nameOf(here) : "a line you wrote",
     badges: [here ? "on the shelf" : "new", reading.part ? "read in part" : ""],
     body: cardFacts(Object.entries(reading.slots).map(([slot, value]) => [slot, `<code>${escapeHtml(value)}</code>`])),
-    links: [scriptAddress(state.line) ? cardLink(scriptAddress(state.line), "Take it apart") : "", cardLink(`/physics?line=${encodeURIComponent(state.line)}`, "Feel it at rest"), cardLink(`/canvas?line=${encodeURIComponent(state.line)}`, "Open it on the canvas"), cardLink("/constructs#c-expression", "What each slot is")],
+    links: [here ? standsLink(here) : "", scriptAddress(state.line) ? cardLink(scriptAddress(state.line), "Take it apart") : "", cardLink(`/physics?line=${encodeURIComponent(state.line)}`, "Feel it at rest"), cardLink(`/canvas?line=${encodeURIComponent(state.line)}`, "Open it on the canvas"), cardLink("/constructs#c-expression", "What each slot is")],
   })}
   ${added}${slotHandles(reading, pivots, state)}
   ${operatorBand(state)}

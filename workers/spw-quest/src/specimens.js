@@ -76,7 +76,7 @@ function planIndex(plans) {
 }
 
 /** factshift.center holds one line of up to this many characters in ?spw= and lays it out as a canvas. */
-const FACTSHIFT_LIMIT = 400;
+export const FACTSHIFT_LIMIT = 400;
 export const factshiftHref = (line) => `https://factshift.center/?spw=${encodeURIComponent(String(line || ""))}`;
 
 /** Where a specimen lives on spwashi.com: the section that carries it, or the parser with it open. */
