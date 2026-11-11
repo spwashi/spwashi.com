@@ -790,6 +790,23 @@ function liveFile(kit, parseFile, examples, noteApi) {
   run();
   editor.dataset.live = "";
   field.addEventListener("input", soon);
+  // The ways out carry the file as it stands, so a door never opens the file this page started on.
+  const canvasDoor = form.querySelector("a.file-canvas");
+  const siteDoor = form.querySelector("a.file-site");
+  const carryDoors = () => {
+    const text = field.value;
+    if (canvasDoor) {
+      let binary = "";
+      new TextEncoder().encode(text).forEach((byte) => { binary += String.fromCharCode(byte); });
+      canvasDoor.href = `https://factshift.center/#spw64=${btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "")}`;
+    }
+    if (siteDoor) {
+      siteDoor.hidden = text.length > 6000;
+      if (!siteDoor.hidden) siteDoor.href = `https://spwashi.com/tools/spw-parser/?spw_source=${encodeURIComponent(text)}#literal-parser`;
+    }
+  };
+  field.addEventListener("input", carryDoors);
+  carryDoors();
   // Typing an opening brace over a selection wraps it in the pair, and keeps it selected.
   field.addEventListener("beforeinput", (event) => {
     const close = { "[": "]", "{": "}", "(": ")", "<": ">" }[event.data];
@@ -865,7 +882,7 @@ function liveFile(kit, parseFile, examples, noteApi) {
     });
   }
   // A choice resolved, or boot painted the note: repaint, never write.
-  form.addEventListener("spw:note-painted", () => requestAnimationFrame(run));
+  form.addEventListener("spw:note-painted", () => requestAnimationFrame(() => { run(); carryDoors(); }));
 
   const tabs = [...document.querySelectorAll("[data-example]")];
   const byId = new Map(examples.map((example) => [example.id, example]));
@@ -879,6 +896,10 @@ function liveFile(kit, parseFile, examples, noteApi) {
     set("[data-file-name]", example.file);
     set("[data-file-says]", example.says);
     set("[data-file-try]", example.try);
+    set("[data-file-asks]", example.asks || "");
+    const asks = document.querySelector("[data-file-asks]");
+    if (asks) asks.hidden = !example.asks;
+    carryDoors();
     if (nameInput) nameInput.value = example.file;
     Object.assign(hand, { line: -1, path: [], held: -1, primed: null, receipt: null });
     touched = false;
@@ -963,7 +984,7 @@ function liveFile(kit, parseFile, examples, noteApi) {
 export function liveFileScript(examples = [], loader, { note = false, modulePath = "/parser.js" } = {}) {
   const data = JSON.stringify(FILE_DATA).replace(/</g, "\\u003c");
   const docs = docShelf(examples);
-  const shelf = JSON.stringify(examples.map(({ id, file, says, try: attempt, script }, index) => ({ id, file, says, try: attempt, script, links: docs[index].links }))).replace(/</g, "\\u003c");
+  const shelf = JSON.stringify(examples.map(({ id, file, says, try: attempt, asks, script }, index) => ({ id, file, says, try: attempt, asks, script, links: docs[index].links }))).replace(/</g, "\\u003c");
   const noteApi = note ? `(${noteKit.toString()})()` : "null";
   const start = `(${liveFile.toString()})((${fileKit.toString()})(${data}), parse, ${shelf}, ${noteApi});`;
   if (!loader) return `<script type="module">
@@ -1011,9 +1032,9 @@ export const FILE_CSS = `.try { margin: 0; }
     .file-name { margin: 0; }
     .file-name code { font-size: .86rem; font-weight: 600; padding: .15rem .45rem; border-radius: 4px; background: color-mix(in srgb, var(--line) 35%, transparent); border: 1px solid color-mix(in srgb, var(--line) 70%, transparent); font-variant-ligatures: none; }
     .file-actions { display: flex; flex-wrap: wrap; gap: .15rem; }
-    .file-actions a.file-canvas { border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line)); background: color-mix(in srgb, var(--accent) 10%, var(--surface)); color: var(--accent); font-weight: 600; box-shadow: 0 1px 2px rgba(0, 0, 0, .04); transition: transform .14s ease, background-color .14s ease, border-color .14s ease, box-shadow .14s ease; }
-    .file-actions a.file-canvas:hover, .file-actions a.file-canvas:focus-visible { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 18%, var(--surface)); box-shadow: 0 2px 8px -2px color-mix(in srgb, var(--accent) 25%, transparent); transform: translateY(-1px); }
-    .file-actions a.file-canvas:active { transform: translateY(1px); box-shadow: none; }
+    .file-actions a.file-canvas, .file-actions a.file-site { border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line)); background: color-mix(in srgb, var(--accent) 10%, var(--surface)); color: var(--accent); font-weight: 600; box-shadow: 0 1px 2px rgba(0, 0, 0, .04); transition: transform .14s ease, background-color .14s ease, border-color .14s ease, box-shadow .14s ease; }
+    .file-actions a.file-canvas:hover, .file-actions a.file-canvas:focus-visible, .file-actions a.file-site:hover, .file-actions a.file-site:focus-visible { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 18%, var(--surface)); box-shadow: 0 2px 8px -2px color-mix(in srgb, var(--accent) 25%, transparent); transform: translateY(-1px); }
+    .file-actions a.file-canvas:active, .file-actions a.file-site:active { transform: translateY(1px); box-shadow: none; }
     .says { margin: 0; padding: .7rem 1rem 0; color: var(--ink-soft); font-size: .92rem; line-height: 1.45; }
     .note-choice, .note-state { margin: 0; padding: .6rem 1rem 0; font-size: .9rem; line-height: 1.4; }
     .note-choice { display: grid; gap: .15rem; padding-bottom: .45rem; border-bottom: 1px solid var(--line); background: var(--accent-soft); color: var(--fg); }

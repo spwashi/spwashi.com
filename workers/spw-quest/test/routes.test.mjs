@@ -33,7 +33,7 @@ test('quest discovery is independent of cache and network APIs', async () => {
 test('quest negotiation, HEAD, methods, and redirects', async () => {
   const plain = await get('spw.quest', '/', { headers: { accept: 'text/plain' } });
   assert.match(plain.headers.get('content-type'), /text\/plain/);
-  assert.equal(plain.headers.get('vary'), 'Accept');
+  assert.equal(plain.headers.get('vary'), 'Accept, User-Agent');
   const json = await get('spw.quest', '/', { headers: { accept: 'application/json' } });
   assert.equal((await json.json()).schema, 'quest.v2');
   for (const path of ['/', '/install', '/init', '/quest.json', '/missing']) {

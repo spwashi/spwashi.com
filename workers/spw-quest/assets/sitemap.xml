@@ -16,4 +16,5 @@
   <url><loc>https://spw.quest/install</loc></url>
   <url><loc>https://spw.quest/init</loc></url>
   <url><loc>https://spw.quest/llms.txt</loc></url>
+  <url><loc>https://spw.quest/llms-full.txt</loc></url>
 </urlset>

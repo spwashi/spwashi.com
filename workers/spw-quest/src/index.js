@@ -18,9 +18,10 @@ import { renderConstructs } from "./constructs.js";
 import { pivotState, renderPivot } from "./pivot.js";
 import { physicsState, renderPhysics } from "./physics.js";
 import { WALK_CSS, walkSection } from "./walk.js";
-import { ADDRESS_INDEX, canvasRefusal, notFoundText } from "./addresses.js";
+import { ADDRESS_INDEX, FULL_INDEX, canvasRefusal, notFoundText } from "./addresses.js";
+import { cardReading, cardText, lineFromPath, renderCard } from "./answer.js";
 import { PINNED_READER, PINNED_RELEASE, SHELL_VERSION, newestPublished, releaseNotice } from "./shell-pin.js";
-import { ROBOTS, sitemap, withRobots } from "./crawl.js";
+import { ROBOTS, sitemap, wantsText, withRobots } from "./crawl.js";
 import { APP_INSTALL_CSS, MANIFEST_PATH, appInstallSection, isAppIconPath, questAppInstall, serveAppIcon, serveManifest } from "./quest-manifest.js";
 import { BASE_SECURITY, escapeHtml, jsonResponse, layout, wantsJson } from "../../lib/shell.js";
 import { PEER_BRACES, PEER_SIGILS } from "../../lib/peer-kit.js";
@@ -346,9 +347,9 @@ function renderGuide(parser = null, example = EXAMPLES[0], at = "") {
   const setIds = INSTRUCTION_SETS.map((set) => set.id).join(" ");
   return layout({
     title: "spw.quest — a guide to the Spw language",
-    description: "Spw is a notation for a reading you can check. A mark names a role, a brace names a slot, and a tool reads the line back.",
+    description: "Spw is a notation for a reading you can check. A mark names a role, a brace names a slot, and a tool reads the line back. How to answer in Spw: spw.quest/llms.txt",
     canonical: "https://spw.quest/",
-    head: QUEST_HEAD,
+    head: `${QUEST_HEAD}\n  <link rel="alternate" type="text/plain" href="/llms.txt" title="What can be done here by address, and how to answer in Spw">`,
     script: `document.documentElement.dataset.setupSets = ${JSON.stringify(setIds)};\ndocument.documentElement.dataset.panels = ${JSON.stringify(STEPS.map((step) => step.id).join(" "))};\n(${forwardOldHash.toString()})();\n(${toolActions.toString()})();\n(${releaseNotice.toString()})(${JSON.stringify(PINNED_RELEASE)}, ${newestPublished.toString()});`,
     themeCss: `${PAPER_CSS}
     ${PAGE_CSS}
@@ -362,6 +363,7 @@ ${parser ? `${switchBanner(parser.value, parser.from)}\n` : ""}<section class="o
   <pre class="title-spw" aria-label="The same reading, with one slot changed"><code><span data-t="frame">#&gt;</span>reading<span data-t="b-mode">[</span>compare<span data-t="b-mode">]</span><span data-t="b-direction">{</span>shared<span data-t="b-direction">}</span><span data-t="b-scene">(</span>shelf<span data-t="b-scene">)</span><span data-t="b-concept">&lt;</span>notation<span data-t="b-concept">&gt;</span>
 <span data-t="frame">#&gt;</span>reading<span data-t="b-mode">[</span>compare<span data-t="b-mode">]</span><span data-t="b-direction">{</span>parted<span data-t="b-direction">}</span><span data-t="b-scene">(</span>shelf<span data-t="b-scene">)</span><span data-t="b-concept">&lt;</span>notation<span data-t="b-concept">&gt;</span></code></pre>
   <p class="lede">A mark says what a word is doing. A brace says which slot it fills. Change one slot and the reading updates. Explore lines as discrete monospace stamps here, or project their continuous topological forces on <a href="https://factshift.center" target="_blank" rel="noopener">factshift.center</a>.</p>
+  <p class="note">Handed this address and a line? <a href="/llms.txt">How to answer in Spw</a>.</p>
 </section>
 ${walkSection()}
 ${fileWorkspace(example, at)}
@@ -422,7 +424,7 @@ function fileWorkspace(example, at = "") {
   const tabs = EXAMPLE_GROUPS.map((group) => `<div class="examples-row" role="group" aria-label="${escapeHtml(group)}"><span class="examples-group" aria-hidden="true">${escapeHtml(group)}</span><div class="examples-files">${EXAMPLES.filter((item) => item.group === group).map(link).join("")}</div></div>`).join("\n    ");
   const themeAttr = reading.theme ? ` data-theme="${escapeHtml(reading.theme)}"` : "";
   return `<section id="try" class="try" aria-labelledby="try-title">
-  <h2 id="try-title" class="eyebrow">${EXAMPLES.length} files, written in Spw: a bench, a study, a board, and a stage</h2>
+  <h2 id="try-title" class="eyebrow">${EXAMPLES.length} files, written in Spw: a bench, a study, a board, a stage, and a trial for the canvas</h2>
   <p class="examples-lede">Each works as it stands and is yours to change: edit it here, keep it as your note, or download it. On the stage, a pattern that performs sets this field's theme. Where one file points to another, its reading opens that file at the line it names.</p>
   <nav class="examples" aria-label="Files">
     ${tabs}
@@ -436,6 +438,7 @@ function fileWorkspace(example, at = "") {
           <button type="button" data-tool="copy">Copy</button>
           <button type="submit" name="tool" value="download" formaction="/script.spw" data-tool="download">Download</button>
           <a class="file-canvas" href="${escapeHtml(factshiftScriptHref(example.script))}" data-tool="factshift" title="Open this file on factshift.center's continuous 5-simplex canvas" target="_blank" rel="noopener">Canvas ↗</a>
+          <a class="file-site" href="https://spwashi.com/tools/spw-parser/?spw_source=${encodeURIComponent(example.script)}#literal-parser" data-tool="site" title="Read this file in spwashi.com's parser" target="_blank" rel="noopener">Parser ↗</a>
         </div>
       </div>
       ${display.panel}
@@ -443,6 +446,7 @@ function fileWorkspace(example, at = "") {
       <p class="note-state" data-note-state role="status" hidden></p>
       <noscript><p class="note-state">Scripts are off, so this field is a template. A note kept in this browser is not shown. Nothing is sent unless you use Download or Open in the editor.</p></noscript>
       <p class="says" data-file-says>${escapeHtml(example.says)}</p>
+      <p class="says" data-file-asks${example.asks ? "" : " hidden"}>${escapeHtml(example.asks || "")}</p>
       <input type="hidden" name="filename" value="${escapeHtml(example.file)}">
       ${editorField({ id: "script", value: example.script, label: "The file", describedBy: "file-try" })}
       ${handBar(example.script, { line: landingLine(example.script, at) })}
@@ -671,10 +675,16 @@ async function handleQuest(request, url) {
   } else if (url.pathname === "/llms.txt") {
     response = new Response(ADDRESS_INDEX, { headers: { ...BASE_SECURITY,
       "Content-Type": "text/plain; charset=UTF-8", "Cache-Control": "public, max-age=300" } });
-  } else if (["/init", "/init.md"].includes(url.pathname) ||
-      (url.pathname === "/" && /text\/(plain|markdown)/.test(request.headers.get("accept") || ""))) {
+  } else if (url.pathname === "/llms-full.txt") {
+    response = new Response(FULL_INDEX, { headers: { ...BASE_SECURITY,
+      "Content-Type": "text/plain; charset=UTF-8", "Cache-Control": "public, max-age=300" } });
+  } else if (url.pathname === "/" && wantsText(request)) {
+    // A reader handed this address is most likely asked to answer in Spw; the index leads to the recipe.
+    response = new Response(ADDRESS_INDEX, { headers: { ...BASE_SECURITY,
+      "Content-Type": "text/plain; charset=UTF-8", "Cache-Control": "public, max-age=300" } });
+  } else if (["/init", "/init.md"].includes(url.pathname)) {
     response = new Response(QUEST_TEXT, { headers: { ...BASE_SECURITY,
-      "Content-Type": "text/plain; charset=UTF-8", "Cache-Control": "public, max-age=300", Vary: "Accept" } });
+      "Content-Type": "text/plain; charset=UTF-8", "Cache-Control": "public, max-age=300" } });
   } else if (url.pathname === "/quest.json" || (url.pathname === "/" && wantsJson(request))) {
     response = jsonResponse({ version: VERSION, schema: "quest.v2", ...QUEST, prompts: QUEST_PROMPTS }, "public, max-age=300");
   } else if (url.pathname === "/prompts.json") {
@@ -711,6 +721,12 @@ async function handleQuest(request, url) {
   } else if (url.pathname === "/physics") {
     // A line at rest: the worker reads it and draws it still; the page's hand reads with /parser.js.
     response = page(renderPhysics(physicsState(url.searchParams)), { cache: "public, max-age=300" }, LIVE_CSP);
+  } else if (url.pathname === "/card.txt" || url.pathname === "/card" || lineFromPath(url.pathname)) {
+    // A line as a card. A path may be the line itself: spw.quest/rpgwednesday<card>.
+    const reading = cardReading(lineFromPath(url.pathname) || url.searchParams.get("line"));
+    response = url.pathname === "/card.txt" || wantsText(request)
+      ? new Response(cardText(reading), { headers: { ...BASE_SECURITY, "Content-Type": "text/plain; charset=UTF-8", "Cache-Control": "public, max-age=300" } })
+      : page(renderCard(reading), { cache: "public, max-age=300" });
   } else if (url.pathname === "/canvas") {
     // One short address for a line's canvas: a shelf specimen by id, or any line, opened on factshift.center.
     const line = specimenById(url.searchParams.get("s"))?.line || url.searchParams.get("line") || "";
@@ -733,7 +749,7 @@ async function handleQuest(request, url) {
   } else {
     response = new Response(notFoundText(url.pathname), { status: 404, headers: { ...BASE_SECURITY, "Content-Type": "text/plain; charset=UTF-8" } });
   }
-  if (url.pathname === "/") response.headers.set("Vary", "Accept");
+  if (url.pathname === "/" || url.pathname === "/card" || lineFromPath(url.pathname)) response.headers.set("Vary", "Accept, User-Agent");
   if (request.method === "HEAD") return new Response(null, { status: response.status, headers: response.headers });
   return response;
 }

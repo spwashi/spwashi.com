@@ -25,7 +25,7 @@ export const ORIGIN = "https://spw.quest";
 /** The rooms that stand without a query, in reading order. */
 export const STABLE_ROOMS = Object.freeze([
   "/", "/learn", "/build", "/specimens", "/constructs", "/pivot", "/physics", "/forms/", "/shelf/", "/shelf/plans/",
-  "/parser/", "/bench/", "/arcs/", "/install", "/init", "/llms.txt",
+  "/parser/", "/bench/", "/arcs/", "/install", "/init", "/llms.txt", "/llms-full.txt",
 ]);
 
 export const ROBOTS = `User-agent: *
@@ -62,6 +62,15 @@ export function robotsFor(url, status = 200) {
   if (url.search) return "noindex, follow";
   return INDEXED.has(url.pathname) || RELEASE_PAGE.test(url.pathname) ? "index, follow" : "noindex, follow";
 }
+
+// The agents that fetch for a model. Each is told apart from a person's browser
+// and from a search index, which keep the page; a model reading / gets the same
+// facts as text, ahead of 200 KB of markup. Grok's fetcher does not publish one
+// name, so the pattern is a guess at it.
+const MODEL_AGENTS = /GPTBot|ChatGPT-User|ClaudeBot|Claude-User|anthropic-ai|Perplexity-User|\bGrok|\bxAI\b|meta-externalagent|cohere-ai|MistralAI-User/i;
+
+/** Whether this request is better answered as text: it asks for text, or a model is fetching. */
+export const wantsText = (request) => /text\/(plain|markdown)/.test(request.headers.get("accept") || "") || MODEL_AGENTS.test(request.headers.get("user-agent") || "");
 
 const ROBOTS_META = /<meta name="robots" content="[^"]*">/;
 
