@@ -10,6 +10,7 @@ import { BENCH, benchCases, differences, readHere } from '../src/bench.js';
 import { ARCS } from '../src/arcs-data.js';
 import { arcsJson, renderArcs } from '../src/arcs.js';
 import { season } from '../carry-arcs.mjs';
+import { ORIGIN, asServed } from '../src/crawl.js';
 
 const root = path.dirname(fileURLToPath(new URL('../wrangler.jsonc', import.meta.url)));
 const assetsDir = path.join(root, 'assets');
@@ -75,7 +76,8 @@ test('arcs: a season counts new lines by week, month and season, and the page an
   assert.deepEqual(arcs.marks, [], 'one ~ line is not an arc yet');
   for (const kind of ['lenses', 'projections', 'marks', 'subjects', 'shapes']) assert.ok(Array.isArray(ARCS[kind]), kind);
   assert.equal(ARCS.windows.length, ARCS.total.length);
-  assert.equal(readFileSync(path.join(assetsDir, 'arcs/index.html'), 'utf8'), renderArcs(ARCS));
+  // Carried as the worker serves it, so the assets layer answers /arcs/ (src/crawl.js STATIC_PATTERNS).
+  assert.equal(readFileSync(path.join(assetsDir, 'arcs/index.html'), 'utf8'), asServed(renderArcs(ARCS), new URL('/arcs/', ORIGIN)));
   assert.equal(readFileSync(path.join(assetsDir, 'arcs/index.json'), 'utf8'), arcsJson(ARCS));
   const response = await get('/arcs/');
   assert.equal(response.status, 200);

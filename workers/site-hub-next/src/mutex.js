@@ -10,7 +10,7 @@
  *   /now/       the current holder, embeddable by attention.productions
  *   /now.json   the same, for machines
  */
-import { escapeHtml } from "../../lib/shell.js";
+import { escapeHtml, securityHeaders } from "../../lib/http.js";
 
 export const HOST = "mutex.buzz";
 
@@ -83,11 +83,7 @@ export function holderFor(date) {
 
 const monthDay = (iso) => new Date(iso).toLocaleDateString("en-US", { month: "long", day: "numeric", timeZone: "UTC" });
 
-const SECURITY = {
-  "X-Content-Type-Options": "nosniff",
-  "Referrer-Policy": "strict-origin-when-cross-origin",
-  "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
-};
+const SECURITY = securityHeaders({ frame: null, referrer: "strict-origin-when-cross-origin" });
 
 const FRAME_ANCESTORS = "frame-ancestors 'self' https://attention.productions";
 

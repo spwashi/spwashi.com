@@ -9,6 +9,7 @@
 
 import { handleTealstripes } from "./tealstripes.js";
 import { handleMutex } from "./mutex.js";
+import { escapeHtml, securityHeaders } from "../../lib/http.js";
 
 const PRODUCTS = [
   {
@@ -280,12 +281,6 @@ const MATERIALS = [
   },
 ];
 
-const escapeHtml = (value) =>
-  String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
 
 const ecosystemJson = {
   schema: "ecosystem.v1",
@@ -736,13 +731,7 @@ function renderTexture(requestUrl, nonce) {
 </html>`;
 }
 
-const BASE_SECURITY = {
-  "X-Content-Type-Options": "nosniff",
-  "X-Frame-Options": "DENY",
-  "Referrer-Policy": "strict-origin-when-cross-origin",
-  "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
-  "Cross-Origin-Resource-Policy": "same-origin",
-};
+const BASE_SECURITY = securityHeaders({ referrer: "strict-origin-when-cross-origin", corp: "same-origin" });
 
 const HTML_CSP =
   "default-src 'none'; img-src https://spwashi.com; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests";

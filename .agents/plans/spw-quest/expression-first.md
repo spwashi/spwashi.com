@@ -91,9 +91,9 @@ Pinch as fractal navigation: character → slot → expression → file → regi
 
 The options the creator was offered on 2026-11-08 cover named spells (`/spell/frost-hearth`), perspective paths (`/@lore.land/night-school`), a plain-text fragment (`#spw=garden[care]{seed}`, with `#spw64=` kept for files), and booklets as ordered spells (`/booklet/boon-2/3`). Choosing one is the creator's call. **Names ride in the payload** (ask 18): a spell's name is its own `#>name` line, as the walk's is `#>walk`. Any address that carries the text therefore carries its name. A readable path such as `/spell/frost_hearth` is derived from that line and never looked up in a registry, so a link works on any site that reads Spw. Each choice keeps the old forms answering. Integration rides on the choice: a walk, a registry entry, or a booklet page opens on factshift.center by the same readable address.
 
-**Q. Quota and crawlers (2026-11-08).** Both workers hit the free tier's daily request limit, and the sites answered 429 until 00:00 UTC. Static files now skip the workers:
+**Q. Files first, and crawlers (2026-11-08).** Fixed answers move out of the workers into files served at the edge, which are faster, cache cleanly and keep answering when a script cannot:
 - spw.quest serves its faces, peer scripts, icons, `/sw.js`, robots, sitemap and dated parser files from assets, with `assets/_headers` restating the worker's headers (`src/crawl.js`, `test/static.test.mjs`).
-- factshift.center carries the site's layer into its snapshot and runs the worker for `/` only.
+- factshift.center carries the site's layer into its snapshot and since 2026-11-11 answers `/` from a file too.
 
 Measured headless, worker runs per visit went from 15 to 3 on a first spw.quest visit and from 4 to 1 on a repeat. On factshift.center they went from 31 to 1 on a first visit and from 2 to 1 on a repeat. The creator is not opposed to crawlers given that, so `robots.txt` allows every page, closes only `/script.spw` and `/canvas`, and names a sitemap of the stable rooms. Two things are open:
 - Every quest page still sends `noindex, nofollow` (the shared shell), so search engines index none of it.

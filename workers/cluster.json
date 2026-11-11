@@ -8,6 +8,17 @@
     "path": "/{host}",
     "schema": "inbox.v0"
   },
+  "serving": {
+    "note": "How each host answers (2026-11-11). A fixed answer is a file, served at the edge without running code; the worker runs for what computes. files: the assets layer answers everything and the worker runs only for its declared exceptions (or never). mixed: the worker runs first, with declared file exceptions. script: the worker answers everything. check:workers holds each unit's wrangler config to its tier. A held name never redirects to spwashi.com, since public HTML must not show ownership; its next step is a file-only worker of its own. www to each apex belongs to a Redirect Rule in the dashboard.",
+    "tiers": {
+      "factshift-center": { "now": "files", "next": "a www Redirect Rule" },
+      "wap-mom": { "now": "files", "script": ["/cabinet", "/cabinet/*", "/*/draw"], "next": "a www Redirect Rule" },
+      "spw-quest": { "now": "mixed", "next": "the guide rooms that answer one page without a query; the card and query space and the Accept-negotiated / stay scripted" },
+      "smut-today": { "now": "script", "next": "files, with the day picked in the reader's page from a schedule file and the cookie's choices kept in the page" },
+      "autonomous-feedback": { "now": "script", "next": "privacy, robots and the kind files as files; measure the five-minute cron and peer fetches before cutting them" },
+      "site-hub-next": { "now": "script", "next": "per host: texture.website and attention.productions as files (a hash CSP for texture), mutex.buzz from a schedule file, tealstripesvibes.com stays scripted, and each held name a file-only worker of its own carried with workers/lib/carry.js" }
+    }
+  },
   "units": [
     {
       "id": "site-hub-next",

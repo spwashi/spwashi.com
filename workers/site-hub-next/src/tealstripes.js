@@ -22,7 +22,7 @@
  * Signing uses env.TSV_SIGNING_KEY (a Worker secret). Without it, signed
  * routes answer 503 and cards say "unsigned".
  */
-import { escapeHtml } from "../../lib/shell.js";
+import { escapeHtml, securityHeaders } from "../../lib/http.js";
 
 export const HOST = "tealstripesvibes.com";
 
@@ -236,11 +236,7 @@ const sha256 = (text) => crypto.subtle.digest("SHA-256", enc.encode(text));
 
 /* ── responses ───────────────────────────────────────────── */
 
-const SECURITY = {
-  "X-Content-Type-Options": "nosniff",
-  "Referrer-Policy": "strict-origin-when-cross-origin",
-  "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
-};
+const SECURITY = securityHeaders({ frame: null, referrer: "strict-origin-when-cross-origin" });
 
 function page(body, { status = 200, nonce, headers = {} } = {}) {
   return new Response(body, {

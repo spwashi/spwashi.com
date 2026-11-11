@@ -1,7 +1,7 @@
 // Writes spw.quest's constant answers (src/crawl.js CONSTANT_ANSWERS) out of the
 // worker into assets/, so llms.txt, init, quest.json and the rest are files the
-// assets layer serves without running the worker, and stay up when the account's
-// daily script allowance runs out. Each file is exactly what the worker answers;
+// assets layer serves at the edge without running the worker. Each file is
+// exactly what the worker answers;
 // assets/_headers restates its headers, and test/static.test.mjs holds both.
 // --check fails when a file on disk differs from what the worker would send.
 import { mkdir, readFile, writeFile } from "node:fs/promises";

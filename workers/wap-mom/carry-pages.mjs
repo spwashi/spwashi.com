@@ -1,15 +1,16 @@
 // Writes every page wap.mom prints into assets/, out of the worker itself, so the
-// periodical is files the assets layer serves without running a script (and stays
-// up when the account's daily script allowance runs out). The worker keeps
+// periodical is files the assets layer serves at the edge without running a
+// script. The worker keeps
 // /cabinet and an issue's /draw. assets/_headers restates the worker's headers:
-// the security set once for every file, and each file's own type and cache.
-// --check fails when a file on disk differs from what the worker would send.
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+// the security set once for every file, and each file's own type and cache
+// (workers/lib/carry.js). --check fails when a file on disk differs from what
+// the worker would send.
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import worker from "./src/index.js";
 import { printed } from "./src/catalog.js";
 import { BASE_SECURITY } from "./src/layout.js";
+import { headersFile, render, writeOrCheck } from "../lib/carry.js";
 
 const ASSETS = path.join(path.dirname(fileURLToPath(import.meta.url)), "assets");
 const ORIGIN = "https://wap.mom";
@@ -29,39 +30,20 @@ export function addresses() {
   return out;
 }
 
-const SECURITY = new Set(Object.keys(BASE_SECURITY).map((name) => name.toLowerCase()));
-
 /** Every file with its body, plus 404.html and _headers. */
 export async function carried() {
-  const files = [];
-  let rules = `# Written by workers/wap-mom/carry-pages.mjs: the headers src/index.js sends.\n/*\n${Object.entries(BASE_SECURITY).map(([name, value]) => `  ${name}: ${value}`).join("\n")}\n`;
-  for (const [address, file] of addresses()) {
-    const response = await worker.fetch(new Request(`${ORIGIN}${address}`), {});
-    if (response.status !== 200) throw new Error(`[carry-pages] ${address} answered ${response.status}`);
-    files.push([file, await response.text()]);
-    const own = [...response.headers].filter(([name]) => !SECURITY.has(name) && !(name === "content-type" && file.endsWith(".html")));
-    rules += `\n${address}\n${own.map(([name, value]) => `  ${name.replace(/(^|-)([a-z])/g, (_, dash, letter) => dash + letter.toUpperCase())}: ${value}`).join("\n")}\n`;
-  }
+  const rendered = await render(worker, ORIGIN, addresses());
   const missing = await worker.fetch(new Request(`${ORIGIN}/no-such-page`), {});
-  files.push(["404.html", await missing.text()], ["_headers", rules]);
-  return files;
+  return [
+    ...rendered.map(({ file, body }) => [file, body]),
+    ["404.html", await missing.text()],
+    ["_headers", headersFile(BASE_SECURITY, rendered, { note: "workers/wap-mom/carry-pages.mjs: the headers src/index.js sends" })],
+  ];
 }
 
 if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
   const check = process.argv.includes("--check");
-  let drift = 0;
-  for (const [file, body] of await carried()) {
-    const target = path.join(ASSETS, file);
-    if (check) {
-      if ((await readFile(target, "utf8").catch(() => "")) !== body) {
-        drift += 1;
-        console.error(`[carry-pages] assets/${file} differs from what the worker prints; run node workers/wap-mom/carry-pages.mjs`);
-      }
-      continue;
-    }
-    await mkdir(path.dirname(target), { recursive: true });
-    await writeFile(target, body);
-  }
+  const drift = await writeOrCheck(ASSETS, await carried(), { check, label: "carry-pages", hint: "run node workers/wap-mom/carry-pages.mjs" });
   if (check && drift) process.exit(1);
   if (!check) console.log(`[carry-pages] wrote ${addresses().length} pages, 404.html and _headers into workers/wap-mom/assets`);
 }

@@ -9,8 +9,8 @@
   "kv_namespaces": [
     { "binding": "FILINGS", "id": "5a3f67bf4b5b40e788787483619ba8d0" }
   ],
-  // Every printed page is a file (carry-pages.mjs), so readers spend none of the
-  // account's daily script allowance (2026-11-11). The worker runs for the
+  // Every printed page is a file (carry-pages.mjs, 2026-11-11), served at the
+  // edge without running code. The worker runs for the
   // cabinet, which reads its filings, and for an issue's /draw, a figure drawn
   // from its controls without the page's script. test/static.test.mjs holds this.
   "assets": {

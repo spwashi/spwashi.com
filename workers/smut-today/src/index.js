@@ -146,22 +146,12 @@ function murmur(now) {
   return MURMURS[dayIndex(now) % MURMURS.length];
 }
 
-const escapeHtml = (value) =>
-  String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
+import { escapeHtml, securityHeaders } from "../../lib/http.js";
 
-const BASE_SECURITY = {
-  "X-Content-Type-Options": "nosniff",
-  "X-Frame-Options": "DENY",
-  "Referrer-Policy": "no-referrer",
-  "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
-  "Cross-Origin-Resource-Policy": "same-origin",
-  "Content-Security-Policy":
-    "default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
-};
+const BASE_SECURITY = securityHeaders({
+  corp: "same-origin",
+  csp: "default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+});
 
 const FAVICON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <rect width="32" height="32" rx="6" fill="#14040a"/>

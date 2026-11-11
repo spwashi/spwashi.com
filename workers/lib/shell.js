@@ -1,14 +1,11 @@
 /**
  * Shared page shell for the quest and feedback Workers.
  */
-export const BASE_SECURITY = {
-  "X-Content-Type-Options": "nosniff",
-  "X-Frame-Options": "DENY",
-  "Referrer-Policy": "no-referrer",
-  "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
-  "Content-Security-Policy":
-    "default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
-};
+import { escapeHtml, securityHeaders } from "./http.js";
+
+export const BASE_SECURITY = securityHeaders({
+  csp: "default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+});
 
 export const JSON_CORS = {
   "Access-Control-Allow-Origin": "*",
@@ -25,12 +22,7 @@ export function wantsJson(request) {
   return accept.includes("application/json");
 }
 
-export const escapeHtml = (value) =>
-  String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
+export { escapeHtml };
 
 export function jsonResponse(body, cache, status = 200) {
   return new Response(JSON.stringify(body, null, 2), {

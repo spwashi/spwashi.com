@@ -4,8 +4,8 @@
  * site's layer (head lines, the shell's registration, /sw.js, the manifest's
  * site fields, their headers, the canvas's one-minute cache) is written into
  * the snapshot by carry-shell.mjs. Since 2026-11-11 a file answers every
- * address first, "/" included, so the canvas spends none of the account's
- * daily script allowance. This worker runs only when no file answers: there it
+ * address first, "/" included, served at the edge without running code.
+ * This worker runs only when no file answers: there it
  * still sends www to the apex. www.factshift.center/ itself is a file now, so
  * its redirect belongs to a Cloudflare Redirect Rule.
  */

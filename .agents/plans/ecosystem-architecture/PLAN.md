@@ -91,6 +91,10 @@ Detail lives in [spw-quest](../spw-quest/PLAN.md), slices G–I.
 
 G's query box waits on S4. All three are new routes that leave the note shell alone, in the order the note-shell design sets.
 
+## Files answer, scripts compute (2026-11-11)
+
+A fixed answer is a file: served at the edge without running code, faster, cleanly cached, portable to any static host, and still answering when a script cannot. Each worker now declares a serving tier in `workers/cluster.json` (`serving.tiers`: files, mixed or script, with its next step), and `check:workers` fails when a wrangler config parts from it. factshift.center and wap.mom are files with declared exceptions; spw.quest is mixed. `workers/lib/carry.js` renders a worker's fixed answers into its assets with their `_headers` and a `--check`; wap.mom's carry runs on it. A unit may now be files only, with no `main`: that is the shape for each held name, which never redirects to spwashi.com because public HTML must not show ownership. Next, by tier: smut.today's day from a schedule file, site-hub-next's held names as file-only units, autonomous.feedback's fixed pages. www Redirect Rules are the creator's, in the dashboard. Direction: `.spw/caches/ecosystem-direction-2026-11.spw`.
+
 ## Order
 
 S4a → S4b → H → I. S5 lands when the creator has reviewed it; S7 follows the creator's answer.
