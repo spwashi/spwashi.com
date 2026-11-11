@@ -41,7 +41,7 @@ test('the kept list is every file the snapshot ships, and names this snapshot', 
 
 test('the canvas is static: carried once with its lines, its shell and their headers; a file answers "/" before the worker', async () => {
   const config = JSON.parse(readFileSync(new URL('wrangler.jsonc', root), 'utf8').replace(/^\s*\/\/.*$/gm, ''));
-  assert.equal(config.assets.run_worker_first, undefined, 'no address spends the daily script allowance');
+  assert.equal(config.assets.run_worker_first, undefined, 'every address is a file answered at the edge');
   const check = spawnSync(process.execPath, [fileURLToPath(new URL('carry-shell.mjs', root)), '--check'], { encoding: 'utf8' });
   assert.equal(check.status, 0, check.stderr);
   for (const file of ['assets/index.html', 'assets/_spwashi@/index.html']) {

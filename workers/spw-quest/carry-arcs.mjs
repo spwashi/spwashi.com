@@ -152,7 +152,9 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   // Render from the data on disk, in a fresh import, so --check holds the page to the carried season.
   const { renderArcs, arcsJson } = await import(`./src/arcs.js?at=${Date.now()}`);
   const { ARCS } = await import(`./src/arcs-data.js?at=${Date.now()}`);
-  const outputs = { [PAGE]: renderArcs(ARCS), [JSON_FILE]: arcsJson(ARCS) };
+  const { ORIGIN, asServed } = await import("./src/crawl.js");
+  // The page as the worker serves it, so the assets layer can answer /arcs/ (src/crawl.js STATIC_PATTERNS).
+  const outputs = { [PAGE]: asServed(renderArcs(ARCS), new URL("/arcs/", ORIGIN)), [JSON_FILE]: arcsJson(ARCS) };
   if (check) {
     const stale = [];
     for (const [file, text] of Object.entries(outputs)) if ((await readFile(file, "utf8").catch(() => "")) !== text) stale.push(path.relative(HERE, file));

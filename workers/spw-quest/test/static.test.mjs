@@ -48,7 +48,8 @@ function readHeaders() {
 test('wrangler sends the static patterns to the assets layer, and each names files that exist', () => {
   const config = JSON.parse(readFileSync(path.join(root, 'wrangler.jsonc'), 'utf8').replace(/^\s*\/\/.*$/gm, ''));
   assert.deepEqual(config.assets.run_worker_first, ['/*', ...STATIC_PATTERNS.map((pattern) => `!${pattern}`)]);
-  for (const pattern of STATIC_PATTERNS) assert.ok(FILES.some((file) => glob(pattern).test(file)), pattern);
+  // A folder address is answered by its index.html.
+  for (const pattern of STATIC_PATTERNS) assert.ok(FILES.some((file) => glob(pattern.endsWith('/') ? `${pattern}index.html` : pattern).test(file)), pattern);
   // The worker keeps everything that is a page, and the parser's pages and redirects.
   for (const page of ['/', '/learn', '/install', '/parser/', '/parser/2026.10.13/', '/parser/latest.js', '/manifest.webmanifest', '/offline']) {
     assert.ok(!STATIC_PATTERNS.some((pattern) => glob(pattern).test(page)), page);
@@ -67,6 +68,7 @@ test('assets/_headers restates what the worker sends for each static file', asyn
     '/parser/2026.10.13/manifest.json',
     '/parser/2026.10.13/reader.debug.js.map',
     ...CONSTANT_ANSWERS,
+    '/shelf/', '/shelf/plans/', '/forms/', '/arcs/', '/bench/',
   ];
   for (const sample of samples) {
     const rule = rules.find((candidate) => glob(candidate.pattern).test(sample));

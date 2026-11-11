@@ -10,6 +10,7 @@ import { PAPER_CSS } from "./paper.js";
 import { PAGE_CSS, QUEST_HEAD, masthead } from "./page.js";
 import { SPECIMENS, SPECIMENS_CSS, breakable, planGroups } from "./specimens.js";
 import { FORMS_CSS, formsBody } from "./forms.js";
+import { ORIGIN, asServed } from "./crawl.js";
 import { BENCH_CSS, benchBody } from "./bench.js";
 import { escapeHtml, layout } from "../../lib/shell.js";
 
@@ -154,11 +155,12 @@ export function renderBench() {
   });
 }
 
+/** The shelf's pages as files, each as the worker serves it, so the assets layer can answer them (src/crawl.js STATIC_PATTERNS). */
 export function shelfPages() {
   return [
     ["bench/index.html", renderBench()],
     ["shelf/index.html", renderShelfLanding()],
     ["shelf/plans/index.html", renderShelfPlans()],
     ["forms/index.html", renderForms()],
-  ];
+  ].map(([file, html]) => [file, asServed(html, new URL(`/${file.replace(/index\.html$/, "")}`, ORIGIN))]);
 }

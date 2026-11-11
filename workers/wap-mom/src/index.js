@@ -31,8 +31,7 @@ const PAGES = {
 };
 
 // Since 2026-11-11 every page here is a file (carry-pages.mjs writes them into
-// assets/), so a reader costs none of the account's daily script allowance and
-// the periodical stays up when it runs out. wrangler.jsonc runs this worker for
+// assets/), served at the edge without running code. wrangler.jsonc runs this worker for
 // /cabinet and an issue's /draw only; the rest of fetch answers carry-pages.mjs
 // and the tests. www to the apex belongs to a Cloudflare Redirect Rule.
 export default {

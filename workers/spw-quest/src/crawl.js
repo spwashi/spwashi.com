@@ -1,8 +1,9 @@
 // What spw.quest tells crawlers, and which of its files skip the worker.
 //
-// The creator, 2026-11-08: the free tier's daily request limit was reached by
-// both workers, and "I'm not very opposed to crawlers if there's a significant
-// payload benefit" from serving static files without the worker. So:
+// A file answers what never changes per request: it is served at the edge
+// without running code, so it is faster, caches cleanly, and keeps answering
+// when a script cannot. The creator, 2026-11-08: "I'm not very opposed to
+// crawlers if there's a significant payload benefit". So:
 // - Static files (faces, peer scripts, icons, the shell script, the parser's
 //   dated files and its index) are served by the assets layer, which does not
 //   run the worker; wrangler.jsonc routes them there with negative patterns,
@@ -46,10 +47,9 @@ ${urls}
 
 /**
  * Answers that never read the request: the same text for every reader, model
- * and crawler. carry-answers.mjs writes each one out of the worker into assets/,
- * so the addresses models fetch most (2026-11-11, when the account's daily
- * script allowance ran out and every page answered Error 1027) cost nothing and
- * stay up. "/" stays with the worker: it answers text, JSON or a page by Accept.
+ * and crawler. carry-answers.mjs writes each one out of the worker into assets/
+ * (2026-11-11), so the addresses models fetch most are files served at the edge.
+ * "/" stays with the worker: it answers text, JSON or a page by Accept.
  */
 export const CONSTANT_ANSWERS = Object.freeze([
   "/llms.txt", "/llms-full.txt", "/init", "/init.md", "/git.txt", "/git.md", "/quest.json", "/prompts.json", "/parser.js",
@@ -60,6 +60,8 @@ export const STATIC_PATTERNS = Object.freeze([
   "/fonts/*", "/peer/*", "/icons/*", "/sw.js", "/robots.txt", "/sitemap.xml",
   "/parser/index.json", "/parser/*/*.js", "/parser/*/*.map", "/parser/*/manifest.json", "/arcs/index.json",
   ...CONSTANT_ANSWERS,
+  // The shelf's pages, carried as the worker serves them (shelf.js shelfPages, carry-arcs.mjs).
+  "/shelf/", "/shelf/plans/", "/forms/", "/arcs/", "/bench/",
 ]);
 
 /** A dated parser release page, /parser/2026.10.13/ and the like. */
@@ -87,6 +89,9 @@ export const wantsText = (request) => /text\/(plain|markdown)/.test(request.head
 const ROBOTS_META = /<meta name="robots" content="[^"]*">/;
 
 /** The response with its page's robots value in X-Robots-Tag and in the head's robots line; anything that is not HTML passes. */
+/** A page's HTML as the worker would serve it at this address: its head's robots line set (for pages carried as files). */
+export const asServed = (html, url) => html.replace(ROBOTS_META, `<meta name="robots" content="${robotsFor(url)}">`);
+
 export async function withRobots(response, url) {
   if (!(response.headers.get("Content-Type") || "").startsWith("text/html")) return response;
   const value = robotsFor(url, response.status);

@@ -77,6 +77,7 @@ async function main() {
   }
 
   const seenHosts = new Set();
+  const servingCount = {};
   for (const unit of inventory.units) {
     const dir = path.join(ROOT, unit.dir);
     const wranglerPath = path.join(dir, 'wrangler.jsonc');
@@ -90,8 +91,23 @@ async function main() {
     if (wrangler.name !== unit.script) {
       fail(`${unit.id}: wrangler name ${wrangler.name} !== script ${unit.script}`);
     }
-    const source = await readFile(srcPath, 'utf8');
-    execFileSync(process.execPath, ['--check', srcPath], { stdio: 'pipe' });
+    // A unit may be files only (no main): a held name carried into its own assets, never running a script.
+    const source = wrangler.main ? await readFile(srcPath, 'utf8') : '';
+    if (wrangler.main) execFileSync(process.execPath, ['--check', srcPath], { stdio: 'pipe' });
+    else if (!wrangler.assets?.directory) fail(`${unit.id}: no main and no assets directory`);
+    // Its serving tier (cluster.json serving), held to its wrangler config.
+    const tier = inventory.serving?.tiers?.[unit.id];
+    const first = wrangler.assets?.run_worker_first;
+    if (!tier) fail(`${unit.id}: no serving tier in cluster.json`);
+    else if (tier.now === 'files') {
+      if (!wrangler.assets) fail(`${unit.id}: tier files without assets`);
+      if (JSON.stringify(first ?? null) !== JSON.stringify(tier.script ?? null)) fail(`${unit.id}: run_worker_first ${JSON.stringify(first)} is not its declared script exceptions ${JSON.stringify(tier.script ?? null)}`);
+    } else if (tier.now === 'mixed') {
+      if (!wrangler.assets || first?.[0] !== '/*') fail(`${unit.id}: tier mixed wants assets with run_worker_first led by "/*"`);
+    } else if (tier.now === 'script') {
+      if (wrangler.assets) fail(`${unit.id}: tier script but it has assets; declare files or mixed`);
+    } else fail(`${unit.id}: unknown tier ${tier.now}`);
+    servingCount[tier?.now] = (servingCount[tier?.now] ?? 0) + 1;
     if (/CABINET_KEY\s*=\s*['"][^'"]+['"]/.test(source)) {
       fail(`${unit.id}: secret assignment in source`);
     }
@@ -125,7 +141,8 @@ async function main() {
   for (const dir of ['workers/autonomous-feedback/test', 'workers/spw-quest/test', 'workers/site-hub-next/test', 'workers/factshift-center/test', 'workers/wap-mom/test']) {
     run(['--test', ...testFiles(dir)]);
   }
-  console.log(`[check:workers] ${inventory.units.length} units, ${seenHosts.size} hosts; quest and feedback routing verified`);
+  const serving = ['files', 'mixed', 'script'].map((tier) => `${servingCount[tier] ?? 0} ${tier}`).join(', ');
+  console.log(`[check:workers] ${inventory.units.length} units, ${seenHosts.size} hosts (${serving}); quest and feedback routing verified`);
 }
 
 await main();

@@ -4,28 +4,19 @@
  * π in crust, e in rise.
  */
 import { SERIES } from "./room.js";
+import { escapeHtml, securityHeaders } from "../../lib/http.js";
 import { inSeries, printedIn } from "./catalog.js";
 
 export const NAME = SERIES.pi.name;
 export const VERSION = "0.2.1";
 export const ORIGIN = "https://wap.mom";
 
-export const escapeHtml = (value) =>
-  String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
+export { escapeHtml };
 
-export const BASE_SECURITY = {
-  "X-Content-Type-Options": "nosniff",
-  "X-Frame-Options": "DENY",
-  "Referrer-Policy": "no-referrer",
-  "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
-  "Cross-Origin-Resource-Policy": "same-origin",
-  "Content-Security-Policy":
-    "default-src 'none'; style-src 'unsafe-inline'; script-src 'self'; img-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
-};
+export const BASE_SECURITY = securityHeaders({
+  corp: "same-origin",
+  csp: "default-src 'none'; style-src 'unsafe-inline'; script-src 'self'; img-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+});
 
 export const FAVICON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <rect width="32" height="32" rx="6" fill="#f4efe4"/>
