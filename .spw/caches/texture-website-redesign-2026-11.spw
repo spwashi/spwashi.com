@@ -1,0 +1,103 @@
+# texture.website as materials composed by the address, and mutex.buzz as a twinkling card (2026-11-11) — cache
+#
+# The creator: redesign texture.website to be more socially and creatively
+# valuable, especially for seeds and sources for Midjourney; useful by default,
+# its value from awareness of configuration and from generative overlays and
+# combinatorics; materials along categories changing by the day from whichever
+# exist; mindful of materials science, so its git history and raw images serve
+# students as a catalog; wonder in the URL and its parameters, for materials
+# gathered for a novel or a study along a path; words as paths and speech
+# bubbles tuned with particular text; paths and parameters as a surface for
+# sharing, releases and prediction; factshift.center's public theory made useful
+# here; mutex.buzz as a beautiful card twinkling along an algorithm of Spw
+# structure and reference, challenging lore.land's game interpreter.
+#
+# Built: workers/texture-website, a files-only unit, previewed locally and not
+# deployed; texture.website still answers from site-hub-next until its domain
+# moves. Proposed: the rest, including mutex.buzz. The science notes are drafts.
+
+#>texture_website_redesign_2026_11
+#:cache #!texture #!midjourney #!sources #!mutex #!product
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@unit: ~"../../workers/texture-website/carry.mjs"
+@materials: ~"../../workers/texture-website/src/materials.js"
+@page: ~"../../workers/texture-website/assets/texture.js"
+@hub: ~"../../workers/site-hub-next/src/index.js"
+@mutex: ~"../../workers/site-hub-next/src/mutex.js"
+@session: ~"../../public/images/assets/motifs/texture-session-5.spw"
+@direction: ~"./ecosystem-direction-2026-11.spw"
+@providers: ~"../conventions/provider-relationships.spw"
+
+operation = "cache"
+fixity = "experimental"
+expression = ~material[address]{layer.law.bubble.day}<maker>
+
+summary = #[
+  `The address is the recipe. Each word in the path is a layer, bottom first; a mark before a word is its law, read as factshift.center reads a body's mark and drawn as a blend (~ drifts, * is heavy, ^ lifts, ? opens out); a word that names no material is said in a speech bubble.`,
+  `Useful by default: / composes the day from whichever materials exist, a ground and a figure with a law, so the same date always gives the same picture, /tomorrow and ?day= let anyone predict one, and a material added changes the days ahead.`,
+  `Every material answers in readings by extension: /paper (composed), /paper.webp and .avif (a stable image to hand Midjourney or any image model as a style reference or image prompt), /paper.txt (its recipe, with the prompt words and job recovered from its source filename), /paper.spw (its line).`,
+  `/catalog is a study: each material's science note, its generator, its job or raw render, and its history in this repository, commit by commit.`,
+  `Nothing runs on a server: every unknown path falls back to one page, whose own script reads the address in the reader's browser.`,
+][reg=set]
+
+^"built"{
+  unit = `workers/texture-website: seven materials (four Midjourney textures, three Grok Imagine paper plates) in five categories, two roles; carry.mjs writes the readings, catalog.json, the fallback page, llms.txt and _headers (images cross-origin, so other sites and models can fetch them), and copies the images and tracked raw renders; three tests and check:workers hold it; cluster.json lists it as files with no host yet.`
+  seen = `2026-11-12 in a local preview: / gave paper fiber under the bone plate, which lifts; /tomorrow and ?day=2026-11-13 agreed on linen under a drifting lattice; /paper/~lattice/rain-on-the-window?as=~&for=a+winter+novel drew a thought bubble and "Gathered for a winter novel"; /catalog showed each provenance and first commit.`
+  not_yet = #[
+    `the domain: texture.website moves from site-hub-next when its custom domain is moved in the dashboard; then site-hub-next drops its branch`,
+    `share cards per address (a file cannot draw one per URL; a weekly set of cards for the day's composition can be carried)`,
+    `the science notes, the reuse line and the copy, which are the creator's`,
+  ][reg=set]
+}[reg=facet]
+
+^"url_grammar"{
+  # Wonder in the address, for sharing, releases and prediction.
+  layers: "/paper/~linen/*harlequin: three layers, linen drifting, harlequin heavy"
+  words: "/linen/rain-on-the-window: a word that names no material is said aloud"
+  query: .{ say: "the bubble's text", as: "its shape: ~ thought, ? question, ! burst, . statement", day: "any date's composition", for: "whom or what the materials are gathered for: a novel, a course, a character", scale: "tile size", angle: "turn" }
+  release: "a material added on a close changes every day after it; the release is the day the rotation first shows it"
+  prediction: "/tomorrow, or ?day= weeks ahead: people can post what a date will bring, and be right or surprised when a release lands first"
+  study: "a path is a sequence: /paper/linen/wash read as a walk through a material's neighbours, for a lesson or a chapter"
+}[reg=facet]
+
+^"factshift_theory"{
+  # What the canvas's public theory gives texture.website, and what it could give more.
+  now = `the nine laws (LAW_SAYS) decide each layer's blend and motion, so a reader who learns that ~ drifts on the canvas sees it drift here`
+  next = #[
+    `the canvas could publish its law table as a file (laws.json) both sites read, so the words never part`,
+    `a texture composition could open on the canvas as a line (paper{~lattice}), its layers as bodies, each moving by its mark`,
+    `the canvas's stage marks could place a bubble on one of nine named areas, ?at=up-left`,
+  ][reg=set]
+}[reg=facet]
+
+^"mutex"{
+  # mutex.buzz as a card: one holder a cycle today (@mutex); proposed as a twinkling card read from a line.
+  card = `One card a cycle: a line of Spw drawn as a field of lights, each token a point, each bracket a ring, each reference a thread between points. The lights twinkle in the order the line is read: marks first by their law (a ? glints and holds, a ~ shimmers slowly, a ! flashes once), then brackets close outward, then references light both their ends together. The card is the line's reading made visible; two lines that share structure twinkle alike.`
+  algorithm = `Deterministic from the line: the parse gives tokens, depths and references; a cycle's seed gives the palette and phase. A still of the card is its address, so the same card can be shared and seen again.`
+  challenge = `Each cycle's line is chosen to stretch a reader: an unclosed pair, a reference across frames, a valence word, a nested scene. lore.land's game interpreter is invited to read the same line; where its reading and the card's part is a finding for both, offered to lore.land's agent and never changed from here.`
+  owners = `the line each cycle, the palette and the copy are the creator's; lore.land's interpreter belongs to its agent`
+}[reg=facet]
+
+^"decisions"{
+  # Answered by the creator's direction, 2026-11-11, or still open.
+  answered = #[
+    `useful by default: the full recipe, prompt words and job links are public`,
+    `the library is whichever materials exist, rotating by day`,
+  ][reg=set]
+  open = #[
+    `the reuse line (a draft in @hub)`,
+    `makers' pictures and their credit`,
+    `the science notes`,
+  ][reg=set]
+}[reg=facet]
+
+#>wonder_texture_prediction
+?["Will people post what a date's composition will be before it arrives?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#hypothesis: "Yes, once a release can change it: a prediction is a game when it can be wrong."
+  !probe{ "announce the next release's day without its material; count posts of ?day= links for that day before and after" }
+  $%[predict.posts, predict.quiet, predict.confused]
+}

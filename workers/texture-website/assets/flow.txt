@@ -1,0 +1,15 @@
+Flow plate (texture.website/flow)
+Paper clockwork. Motion drawn as parts that touch.
+
+Material: Gears pass motion by meshing teeth; the ratio of their tooth counts is the ratio of their turns.
+Made with: Grok Imagine
+
+As a style reference in Midjourney:
+  your subject --sref https://texture.website/flow.webp --sw 250
+As an image prompt:
+  https://texture.website/flow.webp your subject, made of flow plate
+Paired with another material:
+  your subject --sref https://texture.website/flow.webp https://texture.website/paper.webp
+
+Composed on the page:
+  https://texture.website/flow/~paper

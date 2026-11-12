@@ -1,0 +1,274 @@
+{
+  "site": "texture.website",
+  "note": "science notes are drafts",
+  "categories": {
+    "grain": {
+      "role": "ground",
+      "says": "fibre and tooth"
+    },
+    "cloth": {
+      "role": "ground",
+      "says": "woven structure"
+    },
+    "wash": {
+      "role": "ground",
+      "says": "pigment in water"
+    },
+    "pattern": {
+      "role": "figure",
+      "says": "a tiling"
+    },
+    "plate": {
+      "role": "figure",
+      "says": "a paper maquette"
+    }
+  },
+  "laws": {
+    "": {
+      "blend": "normal",
+      "opacity": 1,
+      "says": "as it is"
+    },
+    ".": {
+      "blend": "multiply",
+      "opacity": 0.6,
+      "says": "settles: ground"
+    },
+    "^": {
+      "blend": "screen",
+      "opacity": 0.85,
+      "says": "lifts: ascension"
+    },
+    "*": {
+      "blend": "multiply",
+      "opacity": 1,
+      "says": "is heavy: value"
+    },
+    "~": {
+      "blend": "soft-light",
+      "opacity": 1,
+      "says": "drifts: potential",
+      "drift": true
+    },
+    "=": {
+      "blend": "normal",
+      "opacity": 0.5,
+      "says": "holds still: configuration"
+    },
+    "@": {
+      "blend": "overlay",
+      "opacity": 0.9,
+      "says": "leans in: perspective",
+      "scale": 1.6
+    },
+    "?": {
+      "blend": "difference",
+      "opacity": 0.8,
+      "says": "opens out: wonder"
+    },
+    "!": {
+      "blend": "hard-light",
+      "opacity": 0.8,
+      "says": "makes room: action",
+      "scale": 0.6
+    },
+    "%": {
+      "blend": "luminosity",
+      "opacity": 0.9,
+      "says": "levels: measure"
+    }
+  },
+  "bubbles": {
+    "~": "thought",
+    "?": "question",
+    "!": "burst",
+    ".": "statement"
+  },
+  "materials": [
+    {
+      "id": "paper",
+      "name": "Paper fiber",
+      "category": "grain",
+      "meaning": "Warm cellulose grain. Reading surfaces that want to stay put.",
+      "science": "Cellulose fibres felted into a sheet as water drains through a screen; a deckled edge is where the pulp thinned against the mould's frame.",
+      "draft": true,
+      "readings": {
+        "image": "/paper.webp",
+        "avif": "/paper.avif",
+        "recipe": "/paper.txt",
+        "line": "/paper.spw"
+      },
+      "provenance": {
+        "generator": "Midjourney",
+        "promptWords": "macro paper texture torn deckled edges subtle fiber grain sof…",
+        "job": "https://www.midjourney.com/jobs/7fd90dbc-6838-46bd-8d9b-7b5d7bfa6bb2"
+      },
+      "history": [
+        {
+          "commit": "ba9d35eb",
+          "date": "2026-08-31",
+          "subject": "&[assets] promote morning stills and material tiles"
+        }
+      ]
+    },
+    {
+      "id": "linen",
+      "name": "Linen weave",
+      "category": "cloth",
+      "meaning": "Crossed threads. Cloth memory under illustration.",
+      "science": "Flax bast fibre in plain weave: each weft thread passes over one warp and under the next, the simplest interlacing that holds.",
+      "draft": true,
+      "readings": {
+        "image": "/linen.webp",
+        "avif": "/linen.avif",
+        "recipe": "/linen.txt",
+        "line": "/linen.spw"
+      },
+      "provenance": {
+        "generator": "Midjourney",
+        "promptWords": "woven fabric linen texture close-up macro weave pattern soft …",
+        "job": "https://www.midjourney.com/jobs/6a147e5f-f967-42af-befa-3ca69cb560f2"
+      },
+      "history": [
+        {
+          "commit": "ba9d35eb",
+          "date": "2026-08-31",
+          "subject": "&[assets] promote morning stills and material tiles"
+        }
+      ]
+    },
+    {
+      "id": "harlequin",
+      "name": "Harlequin diamonds",
+      "category": "pattern",
+      "meaning": "Play lattice. Pattern that can carry a scene without becoming a costume.",
+      "science": "A rhombic tiling: one diamond, translated along two directions, covers the plane with no gaps and no overlaps.",
+      "draft": true,
+      "readings": {
+        "image": "/harlequin.webp",
+        "avif": "/harlequin.avif",
+        "recipe": "/harlequin.txt",
+        "line": "/harlequin.spw"
+      },
+      "provenance": {
+        "generator": "Midjourney",
+        "promptWords": "abstract geometric pattern inspired by harlequin diamonds mut…",
+        "job": "https://www.midjourney.com/jobs/bf1265de-dfb2-461c-b1b9-8aa075f845dc"
+      },
+      "history": [
+        {
+          "commit": "ba9d35eb",
+          "date": "2026-08-31",
+          "subject": "&[assets] promote morning stills and material tiles"
+        }
+      ]
+    },
+    {
+      "id": "wash",
+      "name": "Cream ochre wash",
+      "category": "wash",
+      "meaning": "Thin pigment on paper. A field, not a fill.",
+      "science": "Iron-oxide pigment suspended in water; as a wash dries, particles carried to its edges leave them darker, the coffee-ring effect.",
+      "draft": true,
+      "readings": {
+        "image": "/wash.webp",
+        "avif": "/wash.avif",
+        "recipe": "/wash.txt",
+        "line": "/wash.spw"
+      },
+      "provenance": {
+        "generator": "Midjourney",
+        "promptWords": "abstract gradient in warm cream and soft ochre tones gentle p…",
+        "job": "https://www.midjourney.com/jobs/3f544c1b-5266-4d9c-a6c9-b6bc26248dff"
+      },
+      "history": [
+        {
+          "commit": "ba9d35eb",
+          "date": "2026-08-31",
+          "subject": "&[assets] promote morning stills and material tiles"
+        }
+      ]
+    },
+    {
+      "id": "lattice",
+      "name": "Lattice plate",
+      "category": "plate",
+      "meaning": "A paper truss pinned to linen. Structure you can see through.",
+      "science": "A truss carries load through triangles, the one polygon whose shape is fixed by the lengths of its sides.",
+      "draft": true,
+      "readings": {
+        "image": "/lattice.webp",
+        "avif": "/lattice.avif",
+        "recipe": "/lattice.txt",
+        "line": "/lattice.spw"
+      },
+      "provenance": {
+        "generator": "Grok Imagine",
+        "raw": {
+          "name": "ornament-scaffold-lattice.jpg"
+        }
+      },
+      "history": [
+        {
+          "commit": "831a6162",
+          "date": "2026-09-07",
+          "subject": "&[images] Give empty scaffolds paper plates instead of a debug label"
+        }
+      ]
+    },
+    {
+      "id": "bone",
+      "name": "Bone plate",
+      "category": "plate",
+      "meaning": "A paper chassis. The frame a figure hangs on.",
+      "science": "Bone is a composite: stiff mineral crystals in a tough collagen matrix, strong where either alone would crack or bend.",
+      "draft": true,
+      "readings": {
+        "image": "/bone.webp",
+        "avif": "/bone.avif",
+        "recipe": "/bone.txt",
+        "line": "/bone.spw"
+      },
+      "provenance": {
+        "generator": "Grok Imagine",
+        "raw": {
+          "name": "ornament-scaffold-bone.jpg"
+        }
+      },
+      "history": [
+        {
+          "commit": "831a6162",
+          "date": "2026-09-07",
+          "subject": "&[images] Give empty scaffolds paper plates instead of a debug label"
+        }
+      ]
+    },
+    {
+      "id": "flow",
+      "name": "Flow plate",
+      "category": "plate",
+      "meaning": "Paper clockwork. Motion drawn as parts that touch.",
+      "science": "Gears pass motion by meshing teeth; the ratio of their tooth counts is the ratio of their turns.",
+      "draft": true,
+      "readings": {
+        "image": "/flow.webp",
+        "avif": "/flow.avif",
+        "recipe": "/flow.txt",
+        "line": "/flow.spw"
+      },
+      "provenance": {
+        "generator": "Grok Imagine",
+        "raw": {
+          "name": "ornament-scaffold-flow.jpg"
+        }
+      },
+      "history": [
+        {
+          "commit": "831a6162",
+          "date": "2026-09-07",
+          "subject": "&[images] Give empty scaffolds paper plates instead of a debug label"
+        }
+      ]
+    }
+  ]
+}

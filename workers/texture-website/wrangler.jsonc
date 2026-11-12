@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/wrangler.json",
+  "name": "texture-website",
+  "compatibility_date": "2026-11-11",
+  "workers_dev": false,
+  "preview_urls": false,
+  // Files only, no script: every material and reading is a file (carry.mjs), and
+  // every other path falls back to index.html, whose own script reads the address
+  // as a recipe in the reader's browser. texture.website moves here from
+  // site-hub-next when its custom domain is moved in the dashboard.
+  "assets": {
+    "directory": "./assets",
+    "not_found_handling": "single-page-application"
+  }
+}

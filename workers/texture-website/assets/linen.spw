@@ -1,0 +1,10 @@
+#>texture_linen
+#:material #!cloth
+
+~linen[cloth]{linen, weave}
+
+meaning: "Crossed threads. Cloth memory under illustration."
+science: "Flax bast fibre in plain weave: each weft thread passes over one warp and under the next, the simplest interlacing that holds."
+generator: "Midjourney"
+job: "https://www.midjourney.com/jobs/6a147e5f-f967-42af-befa-3ca69cb560f2"
+image: "https://texture.website/linen.webp"

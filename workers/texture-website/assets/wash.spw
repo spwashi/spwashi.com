@@ -1,0 +1,10 @@
+#>texture_wash
+#:material #!wash
+
+~wash[wash]{cream, ochre, wash}
+
+meaning: "Thin pigment on paper. A field, not a fill."
+science: "Iron-oxide pigment suspended in water; as a wash dries, particles carried to its edges leave them darker, the coffee-ring effect."
+generator: "Midjourney"
+job: "https://www.midjourney.com/jobs/3f544c1b-5266-4d9c-a6c9-b6bc26248dff"
+image: "https://texture.website/wash.webp"

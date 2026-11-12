@@ -1,0 +1,48 @@
+/* texture.website: a stage of layered materials, a reading of the recipe, and the catalog. */
+:root {
+  --paper: #f4ecdd;
+  --ink: #2b2620;
+  --muted: #6b5f50;
+  --accent: #1f6f6a;
+  --rule: #d8cbb4;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --paper: #1c1916; --ink: #efe6d6; --muted: #b3a690; --accent: #6fc3bb; --rule: #3a332b; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 17px/1.5 Georgia, "Iowan Old Style", serif; }
+main { max-width: 64rem; margin: 0 auto; padding: 0 16px 4rem; }
+a { color: var(--accent); }
+code { font: 0.86em ui-monospace, Menlo, monospace; overflow-wrap: anywhere; }
+button { font: 0.8em ui-monospace, Menlo, monospace; border: 1px solid var(--rule); background: transparent; color: var(--ink); border-radius: 4px; padding: 0.1em 0.5em; cursor: pointer; min-height: 32px; }
+
+/* Without the script the stage has nothing to show; the catalog carries the page. */
+.stage { display: none; }
+body.composed .stage { display: block; position: relative; height: min(62vh, 34rem); margin: 0 -16px; overflow: hidden; background: #c4a574; }
+.layers, .layer { position: absolute; inset: 0; }
+.layer { background-repeat: repeat; transform-origin: center; }
+.layer.drift { animation: drift 48s linear infinite; }
+@keyframes drift { from { background-position: 0 0; } to { background-position: 384px 216px; } }
+@media (prefers-reduced-motion: reduce) { .layer.drift { animation: none; } }
+
+/* A speech bubble, shaped by the mark it is asked as. */
+.bubble { position: absolute; left: 8%; top: 12%; max-width: min(28rem, 80%); margin: 0; padding: 0.8em 1.1em; background: #fffdf7; color: #2b2620; font-size: clamp(1.1rem, 3vw, 1.6rem); line-height: 1.3; border: 2px solid #2b2620; border-radius: 1.2em; box-shadow: 4px 5px 0 rgba(43, 38, 32, 0.35); }
+.bubble::after { content: ""; position: absolute; left: 2.2em; bottom: -14px; border: 12px solid transparent; border-top-color: #2b2620; border-bottom: 0; }
+.bubble[data-shape="thought"] { border-radius: 2em; border-style: dotted; }
+.bubble[data-shape="thought"]::after { width: 14px; height: 14px; border: 2px solid #2b2620; border-radius: 50%; background: #fffdf7; bottom: -22px; }
+.bubble[data-shape="question"] { border-radius: 1.6em 1.6em 1.6em 0.2em; font-style: italic; }
+.bubble[data-shape="burst"] { border-radius: 0.2em; transform: rotate(-2deg); font-weight: bold; letter-spacing: 0.02em; border-width: 3px; }
+
+.reading { padding: 1.5rem 0 0.5rem; }
+.reading h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); line-height: 1.15; margin: 0 0 0.4rem; }
+.reading h2 { font-size: 1rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 1.4rem 0 0.4rem; }
+.day, .for, .hint, .provenance { color: var(--muted); }
+.layers-list { padding-left: 1.4em; }
+
+.catalog ul { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(18rem, 100%), 1fr)); gap: 1.5rem; }
+.catalog li { border-top: 1px solid var(--rule); padding-top: 0.8rem; }
+.catalog img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 4px; }
+.catalog .name { display: block; font-size: 1.15rem; margin-top: 0.4rem; }
+.catalog .category { font: 0.75rem ui-monospace, Menlo, monospace; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+.history { font-size: 0.85rem; color: var(--muted); padding-left: 1.2em; }

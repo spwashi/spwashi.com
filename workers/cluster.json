@@ -16,6 +16,7 @@
       "spw-quest": { "now": "mixed", "next": "the guide rooms that answer one page without a query; the card and query space and the Accept-negotiated / stay scripted" },
       "smut-today": { "now": "script", "next": "files, with the day picked in the reader's page from a schedule file and the cookie's choices kept in the page" },
       "autonomous-feedback": { "now": "script", "next": "privacy, robots and the kind files as files; measure the five-minute cron and peer fetches before cutting them" },
+      "texture-website": { "now": "files", "next": "take texture.website from site-hub-next: move its custom domain in the dashboard, then remove its branch from site-hub-next" },
       "site-hub-next": { "now": "script", "next": "per host: texture.website and attention.productions as files (a hash CSP for texture), mutex.buzz from a schedule file, tealstripesvibes.com stays scripted, and each held name a file-only worker of its own carried with workers/lib/carry.js" }
     }
   },
@@ -69,6 +70,13 @@
       "script": "factshift-center",
       "dir": "workers/factshift-center",
       "hosts": ["factshift.center"],
+      "origin": "worker"
+    },
+    {
+      "id": "texture-website",
+      "script": "texture-website",
+      "dir": "workers/texture-website",
+      "hosts": [],
       "origin": "worker"
     },
     {
