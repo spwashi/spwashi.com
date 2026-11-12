@@ -30,6 +30,10 @@
  *     --list            print every finding, known and new
  *     --json            machine-readable report
  *     --write-baseline  replace the baseline with current findings (review the diff)
+ *
+ * Output: a pass is one line that says how far the baseline is from empty. A
+ * failure prints each new write in full, where it sits and how the module
+ * reaches it, then the resolved entries, and the verdict last.
  */
 
 import { readFile, writeFile } from 'node:fs/promises';
@@ -72,6 +76,11 @@ const WRITE_MAP_CALL = new RegExp(
   `(writeDatasetValues|writeProjectionTier|writeRuntimeDatasetValues|setDatasetEntries|setStyleProperties)\\(\\s*${ROOT_REF}\\s*,\\s*(?:[A-Za-z_.]+\\s*,\\s*)?\\{`,
   'g',
 );
+
+/* The baseline as first committed (47bab2ea, 2026-09-14), so a pass can say how
+   far the list has emptied. Reproduce with:
+   git show 47bab2ea:scripts/module-writer-baseline.json, counting each section. */
+export const BASELINE_BIRTH = Object.freeze({ commit: '47bab2ea', date: '2026-09-14', undeclared: 284, shared: 41, multi: 12 });
 
 const camelToData = (key) => `data-${key.replace(/[A-Z]/g, (char) => `-${char.toLowerCase()}`)}`;
 const rel = (file) => path.relative(ROOT, file).replace(/\\/g, '/');
@@ -124,6 +133,31 @@ export function scanRootWrites(source = '') {
   return found;
 }
 
+const lineAt = (source, index) => source.slice(0, index).split('\n').length;
+
+/** The first line where a file writes a root token, as scanRootWrites sees it; 0 when it does not. */
+export function locateRootWrite(source = '', token = '') {
+  for (const { kind, re, camel } of DIRECT_WRITES) {
+    for (const match of source.matchAll(re)) {
+      if (`${kind}:${camel ? camelToData(match[1]) : match[1]}` === token) return lineAt(source, match.index);
+    }
+  }
+  for (const match of source.matchAll(WRITE_MAP_CALL)) {
+    const literal = objectLiteralAt(source, match.index + match[0].length - 1);
+    const styleMap = match[1] === 'setStyleProperties';
+    for (const key of topLevelKeys(literal)) {
+      const found = key.startsWith('--') ? `css-var:${key}` : (!styleMap && /^[a-z]+[A-Z]/.test(key) ? `attr:${camelToData(key)}` : '');
+      if (found === token) return lineAt(source, match.index);
+    }
+  }
+  return 0;
+}
+
+/** One line for a passing audit: what the baseline still holds, against what it held at birth. */
+export function formatReceipt(counts, moduleCount, birth = BASELINE_BIRTH) {
+  return `[audit:module-writers] ok — ${counts.undeclared} held · ${birth.undeclared} at birth · ${counts.shared} in shared files · ${counts.multi} shared tokens · ${moduleCount} modules`;
+}
+
 const sourceCache = new Map();
 
 async function readSource(file) {
@@ -145,6 +179,56 @@ async function collectLocalGraph(entry, seen = new Set()) {
     await collectLocalGraph(next, seen);
   }
   return seen;
+}
+
+const localImports = (entry, source) => [...source.matchAll(/(?:^|\n)\s*(?:import|export)\s[^;]*?from\s*['"]([^'"]+)['"]/g)]
+  .map((match) => match[1])
+  .filter((specifier) => specifier.startsWith('.') || specifier.startsWith('/public/'))
+  .map((specifier) => (specifier.startsWith('/') ? path.join(ROOT, specifier) : path.resolve(path.dirname(entry), specifier)));
+
+/** The shortest import path from a module's entry file to the file that holds a write. */
+async function importChain(entry, target) {
+  const parents = new Map([[entry, null]]);
+  const queue = [entry];
+  while (queue.length) {
+    const file = queue.shift();
+    if (file === target) break;
+    const source = await readSource(file);
+    if (source == null) continue;
+    for (const next of localImports(file, source)) {
+      if (parents.has(next) || !next.startsWith(PUBLIC_JS)) continue;
+      parents.set(next, file);
+      queue.push(next);
+    }
+  }
+  if (!parents.has(target)) return [];
+  const chain = [];
+  for (let file = target; file; file = parents.get(file)) chain.unshift(rel(file));
+  return chain;
+}
+
+/** A new finding in full: the token, the file and line that write it, and how the module gets there. */
+async function describeFinding(report, line) {
+  const [label, key, token] = line.split(' ');
+  const out = [`  ${label} ${key} ${token}`];
+  if (label === 'multi-writer') {
+    out.push(`      written by ${(report.multiWriter[key] || []).join(', ')}`);
+    return out;
+  }
+  const row = label === 'undeclared' ? report.modules.find((module) => module.id === key) : null;
+  const file = row ? row.writes[token] : key.replace(/^\(file:|\)$/g, '');
+  if (!file) return out;
+  const source = await readSource(path.join(ROOT, file)) || '';
+  const lineNumber = locateRootWrite(source, token);
+  const text = lineNumber ? source.split('\n')[lineNumber - 1].trim() : '';
+  out.push(`      at ${file}${lineNumber ? `:${lineNumber}` : ''}${text ? `   ${text}` : ''}`);
+  if (row) {
+    const chain = await importChain(path.join(ROOT, row.file), path.join(ROOT, file));
+    if (chain.length > 1) out.push(`      reached through ${chain.join(' → ')}`);
+  } else {
+    out.push(`      reached by ${(report.sharedWriters[key]?.reachedBy || []).join(', ')}`);
+  }
+  return out;
 }
 
 function entryFileFor(def) {
@@ -296,19 +380,24 @@ async function main() {
   const { fresh, cleared } = diffAgainstBaseline(report, baseline);
 
   if (fresh.length) {
-    console.log('[audit:module-writers] new root-write findings — declare them in the owning module\'s catalog `updates`, move a shared helper\'s write behind its owner, or give the token one owner:');
-    fresh.forEach((line) => console.log(`  ${line}`));
+    console.log('[audit:module-writers] new root writes:');
+    for (const line of fresh) (await describeFinding(report, line)).forEach((detail) => console.log(detail));
   }
   if (cleared.length) {
-    console.log('[audit:module-writers] these baseline entries are resolved — remove them from scripts/module-writer-baseline.json:');
+    console.log('[audit:module-writers] baseline entries that no longer occur:');
     cleared.forEach((line) => console.log(`  ${line}`));
   }
   if (fresh.length || cleared.length) {
+    const fixes = [
+      fresh.length ? 'declare a new write in its module\'s catalog `updates`, move a shared helper\'s write behind its owner, or give the token one owner' : '',
+      cleared.length ? 'remove resolved entries from scripts/module-writer-baseline.json' : '',
+    ].filter(Boolean).join('; ');
+    console.log(`[audit:module-writers] failed — ${fresh.length} new, ${cleared.length} resolved and still listed. To pass: ${fixes}.`);
     process.exitCode = 1;
     return;
   }
 
-  console.log(`[audit:module-writers] ok — ${report.modules.length} modules; baseline holds ${counts.undeclared} undeclared module root writes, ${counts.shared} shared-file root writes, ${counts.multi} multi-owner root tokens`);
+  console.log(formatReceipt(counts, report.modules.length));
 }
 
 if (import.meta.url === pathToFileURL(process.argv[1] || '').href) {
