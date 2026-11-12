@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import worker from '../src/index.js';
+import { DOOR_HOSTS, renderDoor } from '../src/hosts/doors.js';
 
 const cluster = JSON.parse(readFileSync(new URL('../../cluster.json', import.meta.url), 'utf8'));
 const hosts = cluster.units.find((unit) => unit.id === 'site-hub-next').hosts;
@@ -51,6 +52,14 @@ test('a held name stays a door', async () => {
   const eco = await (await get('mutex.buzz', '/ecosystem.json')).json();
   const mutex = eco.doors.find((door) => door.host === 'mutex.buzz');
   assert.equal(mutex.href, 'https://mutex.buzz/now/');
+});
+
+test('a door page is its host alone, so a carry script can write it as a file', async () => {
+  const own = ['texture.website', 'attention.productions', 'mutex.buzz', 'tealstripesvibes.com'];
+  assert.deepEqual([...DOOR_HOSTS].sort(), hosts.filter((host) => !own.includes(host)).sort());
+  for (const host of DOOR_HOSTS) {
+    assert.equal(await (await get(host, '/')).text(), renderDoor(host), host);
+  }
 });
 
 test('texture keeps its lab and names the set', async () => {
