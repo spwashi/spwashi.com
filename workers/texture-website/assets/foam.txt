@@ -1,6 +1,10 @@
 foam (texture.website/foam), polymer
 Long chain molecules, moulded or cast; the mould's surface is copied exactly, so studs, grain and gloss are all made on purpose.
 Qualities to try: moulded studs, satin gloss, embossed grain, seams, scuffs
+Image, to hand Midjourney as a style reference or an image prompt: https://texture.website/foam.png
+
+As a style reference:
+  your subject --sref https://texture.website/foam.png --sw 250
 
 As a tile:
   seamless repeating texture of foam, close view, soft overcast light, moulded studs, satin gloss --tile --ar 1:1 --no text, letters, logo, watermark

@@ -1,0 +1,7 @@
+#>texture_pumice
+#:material #!stone
+
+~pumice[stone]{polished face, honed matte, veining}
+
+word: "pumice"
+science: "Minerals bound by heat, pressure or cement; the grain size and what fills the gaps between grains decide its pattern and polish."

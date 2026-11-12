@@ -1,0 +1,17 @@
+salt bloom (texture.website/salt-bloom), phenomenon
+Patterns no one made: water, salt, frost and oxidation arranging themselves as they move, dry or grow, each by a rule a student can name.
+Qualities to try: branching, concentric rings, iridescence, crystalline edges, ripple marks
+Image, to hand Midjourney as a style reference or an image prompt: https://texture.website/salt-bloom.png
+
+As a style reference:
+  your subject --sref https://texture.website/salt-bloom.png --sw 250
+
+As a tile:
+  seamless repeating texture of salt bloom, close view, soft overcast light, branching, concentric rings --tile --ar 1:1 --no text, letters, logo, watermark
+As a backdrop:
+  wide backdrop of salt bloom, across a room, raking dawn light, weathered --ar 16:9 --no text, letters, logo, watermark
+With another material:
+  seamless repeating texture of salt bloom drifting through ledger paper, close view, warm lamplight --tile --ar 1:1 --no text, letters, logo, watermark
+
+Composed and tuned on the page:
+  https://texture.website/salt-bloom/~ledger-paper?light=lamplight&wear=worn&process=riso

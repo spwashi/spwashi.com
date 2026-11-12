@@ -1,0 +1,7 @@
+#>texture_dichroic_glass
+#:material #!glass
+
+~dichroic-glass[glass]{frosted, bubbled, rain beads}
+
+word: "dichroic glass"
+science: "A cooled liquid with no crystal order; it bends light at every surface, so texture in glass is mostly what it does to what lies behind it."

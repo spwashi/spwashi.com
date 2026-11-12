@@ -43,19 +43,50 @@ body.composed .ladders:not([hidden]) { display: grid; }
 .caption { margin: 0.7rem 0 0; max-width: 46rem; font-size: 0.95rem; color: var(--muted); }
 .caption::before { content: "Caption — "; font: 0.72rem var(--mono); text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink); }
 
-/* The ladders: each dimension a row of words; the chosen word inverted, a roll at the end. */
-.ladders { margin: 1rem 0 0; gap: 0; border-top: 1px solid var(--rule); }
-.ladder { display: grid; grid-template-columns: 6.5rem 1fr auto; align-items: center; gap: 0.6rem; border-bottom: 1px solid var(--faint); padding: 0.35rem 0; }
-.rungs { display: flex; flex-wrap: wrap; gap: 0.25rem; }
-.rungs button, .rungs a { font: 0.82rem var(--sans); text-transform: none; letter-spacing: 0; border: 1px solid transparent; padding: 0.3em 0.6em; min-height: 32px; display: inline-flex; align-items: center; text-decoration: none; color: var(--ink); }
+/* The ladders, in three bands: look, make, use. Each ladder a row of words, the
+   chosen word inverted, the phrase it adds beside it, a lock and a roll at the end. */
+.ladders { margin: 1.2rem 0 0; gap: 0.2rem; }
+.band { border-top: 1px solid var(--rule); padding-top: 0.2rem; }
+.band-name { margin: 0.4rem 0 0.1rem; font: 0.7rem var(--mono); text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); }
+.ladder { display: grid; grid-template-columns: 5.5rem 1fr auto; align-items: start; gap: 0.6rem; border-bottom: 1px solid var(--faint); padding: 0.3rem 0; }
+.ladder .key { padding-top: 0.55rem; }
+.rung-column { display: grid; gap: 0.1rem; }
+.rungs { display: flex; flex-wrap: wrap; gap: 0.2rem; }
+.rungs button, .rungs a { font: 0.84rem var(--sans); text-transform: none; letter-spacing: 0; border: 1px solid transparent; padding: 0.3em 0.6em; min-height: 32px; display: inline-flex; align-items: center; text-decoration: none; color: var(--ink); background: transparent; }
 .rungs button:hover, .rungs a:hover { border-color: var(--rule); }
 .rungs button[aria-checked="true"] { background: var(--ink); color: var(--ground); }
-.roll { border-color: var(--faint); }
+.rungs button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.phrase { font: italic 0.8rem Georgia, serif; color: var(--muted); padding-left: 0.6em; }
+.tools { display: flex; gap: 0.25rem; padding-top: 0.15rem; }
+.tools button { min-width: 32px; border-color: var(--faint); }
+.tools .lock[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
+.tools button:disabled { opacity: 0.35; cursor: default; }
+.ladder.locked .rungs button[aria-checked="true"] { background: var(--accent); }
 .neighbours .rungs a { color: var(--muted); }
 
-.prompts { margin-top: 1.4rem; border-top: 2px solid var(--rule); padding-top: 0.6rem; }
-.prompts p { margin: 0.5rem 0; display: grid; grid-template-columns: 6.5rem 1fr auto; gap: 0.6rem; align-items: start; }
-.prompts code { font-size: 0.86rem; line-height: 1.45; }
+/* The card: one composition in its modes, set like a plate in a design journal. */
+.card:empty { display: none; }
+.card { margin-top: 1.8rem; border: 1px solid var(--rule); background: color-mix(in srgb, var(--ground) 92%, #fff); }
+.card-head { display: flex; gap: 0.8rem; align-items: baseline; padding: 0.6rem 0.9rem; border-bottom: 1px solid var(--rule); }
+.card-title { font: 600 1.05rem var(--sans); letter-spacing: -0.01em; }
+.card-body { display: grid; grid-template-columns: minmax(8rem, 30%) 1fr; gap: 1.1rem; padding: 0.9rem; }
+@media (max-width: 40rem) { .card-body { grid-template-columns: 1fr; } }
+.thumb { position: relative; overflow: hidden; outline: 1px solid var(--rule); background: var(--faint); max-height: 18rem; }
+.card-words { display: grid; align-content: start; gap: 0.6rem; }
+.card-prompt { margin: 0; font: 1.2rem/1.4 Georgia, "Iowan Old Style", serif; }
+.card-prompt::first-letter { font-size: 1.6em; line-height: 0.9; }
+.card-facets { margin: 0; font: 0.72rem var(--mono); text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); }
+.card-line { margin: 0; }
+.card-actions { display: flex; flex-wrap: wrap; gap: 0; border-top: 1px solid var(--rule); }
+.card-actions .action { flex: 1 1 8rem; min-height: 44px; border: 0; border-right: 1px solid var(--faint); }
+.card-actions .action:last-child { border-right: 0; }
+.card-actions .action:hover { background: var(--ink); color: var(--ground); }
+.card-foot { border-top: 1px solid var(--rule); padding: 0.6rem 0.9rem 0.8rem; display: grid; gap: 0.5rem; }
+.take, .readings { display: flex; flex-wrap: wrap; gap: 0.4rem 0.8rem; align-items: center; }
+.ext { min-height: 32px; font: 0.82rem var(--mono); text-transform: none; letter-spacing: 0; }
+.reading { font-size: 0.9rem; }
+.reading a { font: 0.8rem var(--mono); }
+.card-address { margin: 0; font: 0.78rem var(--mono); color: var(--muted); overflow-wrap: anywhere; }
 
 .class { border-top: 1px solid var(--faint); padding: 0.6rem 0; }
 .class h3 { font: 0.78rem var(--mono); text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin: 0; }
@@ -71,3 +102,60 @@ body.composed .ladders:not([hidden]) { display: grid; }
 
 .catalog { margin-top: 2.4rem; }
 .catalog h2 { font: 0.78rem var(--mono); text-transform: uppercase; letter-spacing: 0.1em; border-top: 2px solid var(--rule); padding-top: 0.6rem; }
+
+/* The views: whose eyes the page is seen through. */
+.views { display: flex; flex-wrap: wrap; gap: 0 1.2rem; padding: 0.3rem 0 0.6rem; font: 0.74rem var(--mono); text-transform: uppercase; letter-spacing: 0.1em; }
+.views a { text-decoration: none; color: var(--muted); padding: 0.4rem 0; min-height: 32px; display: inline-flex; align-items: center; }
+.views a[aria-current="page"] { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); }
+
+/* Pivots: one move each, the technique it teaches beside it. */
+.pivots:not([hidden]) { display: grid; margin-top: 0.4rem; border-top: 1px solid var(--rule); }
+.pivot-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(15rem, 100%), 1fr)); gap: 0.2rem 1rem; }
+.pivot { display: grid; grid-template-columns: auto 1fr; gap: 0 0.6rem; align-items: baseline; padding: 0.25rem 0; border-bottom: 1px solid var(--faint); }
+.pivot button { text-transform: none; letter-spacing: 0; font: 0.84rem var(--sans); }
+.pivot.set button { background: var(--ink); color: var(--ground); }
+.pivot .value { font: 0.78rem var(--mono); }
+.pivot .says { font: italic 0.8rem Georgia, serif; color: var(--muted); }
+.pivot .technique { grid-column: 1 / -1; font-size: 0.8rem; color: var(--muted); display: none; }
+.learned { display: none; flex-wrap: wrap; gap: 0.3rem; align-items: center; padding: 0.6rem 0; }
+.chip { font: 0.74rem var(--mono); border: 1px solid var(--faint); padding: 0.2em 0.5em; color: var(--muted); }
+.chip.tried { border-color: var(--accent); color: var(--ink); }
+.learned .count { font-size: 0.8rem; color: var(--muted); margin-left: 0.4rem; }
+
+/* The anatomy of a prompt, part by part, in PromptEngineer@. */
+.anatomy { display: none; list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--faint); }
+.anatomy li { display: grid; grid-template-columns: 6.5rem 1fr; gap: 0.6rem; padding: 0.2rem 0; border-bottom: 1px solid var(--faint); font-size: 0.86rem; }
+
+.band-story { display: none; }
+
+body.composed[data-view="prompt-engineer"] .technique,
+body.composed[data-view="prompt-engineer"] .anatomy { display: block; }
+body.composed[data-view="prompt-engineer"] .learned { display: flex; }
+body.composed[data-view="story-designer"] .band-story { display: block; }
+body.composed[data-view="story-designer"] .band-make .ladder:nth-child(3) { order: -1; }
+body.composed[data-view="minimalist"] .ladders,
+body.composed[data-view="minimalist"] .pivots,
+body.composed[data-view="minimalist"] .catalog,
+body.composed[data-view="minimalist"] .card-facets,
+body.composed[data-view="minimalist"] .card-line,
+body.composed[data-view="minimalist"] .card-foot,
+body.composed[data-view="minimalist"] .caption,
+body.composed[data-view="minimalist"] .thumb { display: none; }
+body.composed[data-view="minimalist"] .card-body { grid-template-columns: 1fr; }
+
+/* The square style card: the sketch, the day marked in its corners, a band of words. */
+.style-card { position: relative; aspect-ratio: 1 / 1; width: min(100% - 1.8rem, 30rem); margin: 0 auto 0.9rem; overflow: hidden; outline: 1px solid var(--rule); background: var(--faint); }
+.style-card .layers { position: absolute; inset: 0; }
+.style-mark { position: absolute; inset: 0 0 auto; display: flex; justify-content: space-between; padding: 0.55rem 0.8rem; background: var(--band); color: var(--band-ink); font: 0.78rem var(--mono); letter-spacing: 0.12em; text-transform: uppercase; }
+.style-mark span:first-child { color: var(--band-mark); }
+.style-band { position: absolute; inset: auto 0 0; margin: 0; padding: 0.8rem; background: var(--band); color: var(--band-ink); font: 0.95rem/1.35 Georgia, serif; }
+.style-card.face-title .style-band { font: 600 1.5rem/1.15 Georgia, serif; }
+.style-card.face-spw .style-band, .style-card.face-facets .style-band { font: 0.82rem/1.4 var(--mono); }
+body.composed[data-view="minimalist"] .style-card { display: none; }
+
+/* Images to hand an image model: each material's file, its link, one click to copy it. */
+.images { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; align-items: center; padding: 0.6rem 0.9rem; border-top: 1px solid var(--faint); }
+.image-link { display: inline-flex; gap: 0.5rem; align-items: center; }
+.image-link img { width: 40px; height: 40px; outline: 1px solid var(--rule); }
+.image-link .action { min-height: 32px; font-size: 0.72rem; }
+.catalog a.png { font: 0.7rem var(--mono); color: var(--accent); text-decoration: none; margin-left: 0.15em; }

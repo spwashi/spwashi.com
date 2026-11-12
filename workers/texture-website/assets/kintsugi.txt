@@ -1,0 +1,17 @@
+kintsugi (texture.website/kintsugi), ceramic
+Clay fired until its grains fuse; a glaze is glass melted on top, and the crackle is the glaze and body shrinking by different amounts.
+Qualities to try: crackle glaze, grout lines, speckled body, unglazed foot, drip
+Image, to hand Midjourney as a style reference or an image prompt: https://texture.website/kintsugi.png
+
+As a style reference:
+  your subject --sref https://texture.website/kintsugi.png --sw 250
+
+As a tile:
+  seamless repeating texture of kintsugi, close view, soft overcast light, crackle glaze, grout lines --tile --ar 1:1 --no text, letters, logo, watermark
+As a backdrop:
+  wide backdrop of kintsugi, across a room, raking dawn light, weathered --ar 16:9 --no text, letters, logo, watermark
+With another material:
+  seamless repeating texture of kintsugi drifting through watercolour wash, close view, warm lamplight --tile --ar 1:1 --no text, letters, logo, watermark
+
+Composed and tuned on the page:
+  https://texture.website/kintsugi/~watercolour-wash?light=lamplight&wear=worn&process=riso

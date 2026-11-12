@@ -1,0 +1,17 @@
+oil sheen on water (texture.website/oil-sheen-on-water), phenomenon
+Patterns no one made: water, salt, frost and oxidation arranging themselves as they move, dry or grow, each by a rule a student can name.
+Qualities to try: branching, concentric rings, iridescence, crystalline edges, ripple marks
+Image, to hand Midjourney as a style reference or an image prompt: https://texture.website/oil-sheen-on-water.png
+
+As a style reference:
+  your subject --sref https://texture.website/oil-sheen-on-water.png --sw 250
+
+As a tile:
+  seamless repeating texture of oil sheen on water, close view, soft overcast light, branching, concentric rings --tile --ar 1:1 --no text, letters, logo, watermark
+As a backdrop:
+  wide backdrop of oil sheen on water, across a room, raking dawn light, weathered --ar 16:9 --no text, letters, logo, watermark
+With another material:
+  seamless repeating texture of oil sheen on water drifting through ledger paper, close view, warm lamplight --tile --ar 1:1 --no text, letters, logo, watermark
+
+Composed and tuned on the page:
+  https://texture.website/oil-sheen-on-water/~ledger-paper?light=lamplight&wear=worn&process=riso

@@ -1,0 +1,17 @@
+pumice (texture.website/pumice), stone
+Minerals bound by heat, pressure or cement; the grain size and what fills the gaps between grains decide its pattern and polish.
+Qualities to try: polished face, honed matte, veining, fine aggregate, chipped arris
+Image, to hand Midjourney as a style reference or an image prompt: https://texture.website/pumice.png
+
+As a style reference:
+  your subject --sref https://texture.website/pumice.png --sw 250
+
+As a tile:
+  seamless repeating texture of pumice, close view, soft overcast light, polished face, honed matte --tile --ar 1:1 --no text, letters, logo, watermark
+As a backdrop:
+  wide backdrop of pumice, across a room, raking dawn light, weathered --ar 16:9 --no text, letters, logo, watermark
+With another material:
+  seamless repeating texture of pumice drifting through oak, close view, warm lamplight --tile --ar 1:1 --no text, letters, logo, watermark
+
+Composed and tuned on the page:
+  https://texture.website/pumice/~oak?light=lamplight&wear=worn&process=riso

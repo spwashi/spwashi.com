@@ -1,0 +1,17 @@
+mother of pearl (texture.website/mother-of-pearl), organic
+Material a living thing made: cells and fibres arranged for a job, which is why bark, crust and honeycomb pattern themselves.
+Qualities to try: growth rings, cells, crumb, lichen, fuzz
+Image, to hand Midjourney as a style reference or an image prompt: https://texture.website/mother-of-pearl.png
+
+As a style reference:
+  your subject --sref https://texture.website/mother-of-pearl.png --sw 250
+
+As a tile:
+  seamless repeating texture of mother of pearl, close view, soft overcast light, growth rings, cells --tile --ar 1:1 --no text, letters, logo, watermark
+As a backdrop:
+  wide backdrop of mother of pearl, across a room, raking dawn light, weathered --ar 16:9 --no text, letters, logo, watermark
+With another material:
+  seamless repeating texture of mother of pearl drifting through frost ferns, close view, warm lamplight --tile --ar 1:1 --no text, letters, logo, watermark
+
+Composed and tuned on the page:
+  https://texture.website/mother-of-pearl/~frost-ferns?light=lamplight&wear=worn&process=riso

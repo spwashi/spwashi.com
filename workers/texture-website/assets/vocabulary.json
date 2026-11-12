@@ -1,6 +1,6 @@
 {
   "site": "texture.website",
-  "note": "the science notes are drafts",
+  "note": "the science notes are drafts; parameters change between Midjourney versions, so each technique says where to check",
   "classes": {
     "paper": {
       "science": "Plant fibres felted into a sheet; how long the fibres are and how the sheet is pressed decide its tooth, its translucency and how it takes ink.",
@@ -19,7 +19,10 @@
         "parchment",
         "newsprint",
         "card stock",
-        "tracing paper"
+        "tracing paper",
+        "blueprint",
+        "carbon copy",
+        "marbled endpaper"
       ]
     },
     "textile": {
@@ -41,7 +44,9 @@
         "gingham",
         "velvet",
         "ripstop",
-        "tweed"
+        "tweed",
+        "darned wool",
+        "tapestry back"
       ]
     },
     "stone": {
@@ -61,7 +66,9 @@
         "granite",
         "rammed earth",
         "lime plaster",
-        "board-formed concrete"
+        "board-formed concrete",
+        "fossil limestone",
+        "pumice"
       ]
     },
     "wood": {
@@ -97,7 +104,9 @@
         "enamelware",
         "pewter",
         "galvanized sheet",
-        "chrome"
+        "chrome",
+        "pressed tin ceiling",
+        "gold leaf"
       ]
     },
     "glass": {
@@ -114,7 +123,9 @@
         "frosted glass",
         "stained glass",
         "bottle glass",
-        "pressed glass"
+        "pressed glass",
+        "sea glass",
+        "dichroic glass"
       ]
     },
     "ceramic": {
@@ -131,7 +142,8 @@
         "terracotta",
         "porcelain",
         "zellige",
-        "raku"
+        "raku",
+        "kintsugi"
       ]
     },
     "pigment": {
@@ -149,7 +161,9 @@
         "ink bloom",
         "risograph ink",
         "chalk pastel",
-        "lacquer"
+        "lacquer",
+        "suminagashi marbling",
+        "verdigris paint"
       ]
     },
     "polymer": {
@@ -166,7 +180,9 @@
         "vinyl",
         "foam",
         "cast resin",
-        "linoleum"
+        "linoleum",
+        "bakelite",
+        "holographic foil"
       ]
     },
     "organic": {
@@ -184,7 +200,29 @@
         "moss",
         "bark",
         "honeycomb",
-        "orange peel"
+        "orange peel",
+        "mother of pearl",
+        "moth wing scales"
+      ]
+    },
+    "phenomenon": {
+      "science": "Patterns no one made: water, salt, frost and oxidation arranging themselves as they move, dry or grow, each by a rule a student can name.",
+      "qualities": [
+        "branching",
+        "concentric rings",
+        "iridescence",
+        "crystalline edges",
+        "ripple marks"
+      ],
+      "materials": [
+        "frost ferns",
+        "salt bloom",
+        "oil sheen on water",
+        "rust bloom",
+        "tide ripples in sand",
+        "crazed mud",
+        "soap film",
+        "lichen map"
       ]
     }
   },
@@ -192,329 +230,551 @@
     {
       "word": "ledger paper",
       "slug": "ledger-paper",
-      "cls": "paper"
+      "cls": "paper",
+      "image": "/ledger-paper.png"
     },
     {
       "word": "kraft paper",
       "slug": "kraft-paper",
-      "cls": "paper"
+      "cls": "paper",
+      "image": "/kraft-paper.png"
     },
     {
       "word": "vellum",
       "slug": "vellum",
-      "cls": "paper"
+      "cls": "paper",
+      "image": "/vellum.png"
     },
     {
       "word": "mulberry paper",
       "slug": "mulberry-paper",
-      "cls": "paper"
+      "cls": "paper",
+      "image": "/mulberry-paper.png"
     },
     {
       "word": "parchment",
       "slug": "parchment",
-      "cls": "paper"
+      "cls": "paper",
+      "image": "/parchment.png"
     },
     {
       "word": "newsprint",
       "slug": "newsprint",
-      "cls": "paper"
+      "cls": "paper",
+      "image": "/newsprint.png"
     },
     {
       "word": "card stock",
       "slug": "card-stock",
-      "cls": "paper"
+      "cls": "paper",
+      "image": "/card-stock.png"
     },
     {
       "word": "tracing paper",
       "slug": "tracing-paper",
-      "cls": "paper"
+      "cls": "paper",
+      "image": "/tracing-paper.png"
+    },
+    {
+      "word": "blueprint",
+      "slug": "blueprint",
+      "cls": "paper",
+      "image": "/blueprint.png"
+    },
+    {
+      "word": "carbon copy",
+      "slug": "carbon-copy",
+      "cls": "paper",
+      "image": "/carbon-copy.png"
+    },
+    {
+      "word": "marbled endpaper",
+      "slug": "marbled-endpaper",
+      "cls": "paper",
+      "image": "/marbled-endpaper.png"
     },
     {
       "word": "linen",
       "slug": "linen",
-      "cls": "textile"
+      "cls": "textile",
+      "image": "/linen.png"
     },
     {
       "word": "moquette",
       "slug": "moquette",
-      "cls": "textile"
+      "cls": "textile",
+      "image": "/moquette.png"
     },
     {
       "word": "bouclé",
       "slug": "boucl",
-      "cls": "textile"
+      "cls": "textile",
+      "image": "/boucl.png"
     },
     {
       "word": "brocade",
       "slug": "brocade",
-      "cls": "textile"
+      "cls": "textile",
+      "image": "/brocade.png"
     },
     {
       "word": "felt",
       "slug": "felt",
-      "cls": "textile"
+      "cls": "textile",
+      "image": "/felt.png"
     },
     {
       "word": "quilted satin",
       "slug": "quilted-satin",
-      "cls": "textile"
+      "cls": "textile",
+      "image": "/quilted-satin.png"
     },
     {
       "word": "gingham",
       "slug": "gingham",
-      "cls": "textile"
+      "cls": "textile",
+      "image": "/gingham.png"
     },
     {
       "word": "velvet",
       "slug": "velvet",
-      "cls": "textile"
+      "cls": "textile",
+      "image": "/velvet.png"
     },
     {
       "word": "ripstop",
       "slug": "ripstop",
-      "cls": "textile"
+      "cls": "textile",
+      "image": "/ripstop.png"
     },
     {
       "word": "tweed",
       "slug": "tweed",
-      "cls": "textile"
+      "cls": "textile",
+      "image": "/tweed.png"
+    },
+    {
+      "word": "darned wool",
+      "slug": "darned-wool",
+      "cls": "textile",
+      "image": "/darned-wool.png"
+    },
+    {
+      "word": "tapestry back",
+      "slug": "tapestry-back",
+      "cls": "textile",
+      "image": "/tapestry-back.png"
     },
     {
       "word": "marble",
       "slug": "marble",
-      "cls": "stone"
+      "cls": "stone",
+      "image": "/marble.png"
     },
     {
       "word": "terrazzo",
       "slug": "terrazzo",
-      "cls": "stone"
+      "cls": "stone",
+      "image": "/terrazzo.png"
     },
     {
       "word": "slate",
       "slug": "slate",
-      "cls": "stone"
+      "cls": "stone",
+      "image": "/slate.png"
     },
     {
       "word": "travertine",
       "slug": "travertine",
-      "cls": "stone"
+      "cls": "stone",
+      "image": "/travertine.png"
     },
     {
       "word": "granite",
       "slug": "granite",
-      "cls": "stone"
+      "cls": "stone",
+      "image": "/granite.png"
     },
     {
       "word": "rammed earth",
       "slug": "rammed-earth",
-      "cls": "stone"
+      "cls": "stone",
+      "image": "/rammed-earth.png"
     },
     {
       "word": "lime plaster",
       "slug": "lime-plaster",
-      "cls": "stone"
+      "cls": "stone",
+      "image": "/lime-plaster.png"
     },
     {
       "word": "board-formed concrete",
       "slug": "board-formed-concrete",
-      "cls": "stone"
+      "cls": "stone",
+      "image": "/board-formed-concrete.png"
+    },
+    {
+      "word": "fossil limestone",
+      "slug": "fossil-limestone",
+      "cls": "stone",
+      "image": "/fossil-limestone.png"
+    },
+    {
+      "word": "pumice",
+      "slug": "pumice",
+      "cls": "stone",
+      "image": "/pumice.png"
     },
     {
       "word": "oak",
       "slug": "oak",
-      "cls": "wood"
+      "cls": "wood",
+      "image": "/oak.png"
     },
     {
       "word": "cork",
       "slug": "cork",
-      "cls": "wood"
+      "cls": "wood",
+      "image": "/cork.png"
     },
     {
       "word": "plywood edge",
       "slug": "plywood-edge",
-      "cls": "wood"
+      "cls": "wood",
+      "image": "/plywood-edge.png"
     },
     {
       "word": "walnut burl",
       "slug": "walnut-burl",
-      "cls": "wood"
+      "cls": "wood",
+      "image": "/walnut-burl.png"
     },
     {
       "word": "bamboo",
       "slug": "bamboo",
-      "cls": "wood"
+      "cls": "wood",
+      "image": "/bamboo.png"
     },
     {
       "word": "driftwood",
       "slug": "driftwood",
-      "cls": "wood"
+      "cls": "wood",
+      "image": "/driftwood.png"
     },
     {
       "word": "brushed steel",
       "slug": "brushed-steel",
-      "cls": "metal"
+      "cls": "metal",
+      "image": "/brushed-steel.png"
     },
     {
       "word": "patinated copper",
       "slug": "patinated-copper",
-      "cls": "metal"
+      "cls": "metal",
+      "image": "/patinated-copper.png"
     },
     {
       "word": "enamelware",
       "slug": "enamelware",
-      "cls": "metal"
+      "cls": "metal",
+      "image": "/enamelware.png"
     },
     {
       "word": "pewter",
       "slug": "pewter",
-      "cls": "metal"
+      "cls": "metal",
+      "image": "/pewter.png"
     },
     {
       "word": "galvanized sheet",
       "slug": "galvanized-sheet",
-      "cls": "metal"
+      "cls": "metal",
+      "image": "/galvanized-sheet.png"
     },
     {
       "word": "chrome",
       "slug": "chrome",
-      "cls": "metal"
+      "cls": "metal",
+      "image": "/chrome.png"
+    },
+    {
+      "word": "pressed tin ceiling",
+      "slug": "pressed-tin-ceiling",
+      "cls": "metal",
+      "image": "/pressed-tin-ceiling.png"
+    },
+    {
+      "word": "gold leaf",
+      "slug": "gold-leaf",
+      "cls": "metal",
+      "image": "/gold-leaf.png"
     },
     {
       "word": "rain on glass",
       "slug": "rain-on-glass",
-      "cls": "glass"
+      "cls": "glass",
+      "image": "/rain-on-glass.png"
     },
     {
       "word": "frosted glass",
       "slug": "frosted-glass",
-      "cls": "glass"
+      "cls": "glass",
+      "image": "/frosted-glass.png"
     },
     {
       "word": "stained glass",
       "slug": "stained-glass",
-      "cls": "glass"
+      "cls": "glass",
+      "image": "/stained-glass.png"
     },
     {
       "word": "bottle glass",
       "slug": "bottle-glass",
-      "cls": "glass"
+      "cls": "glass",
+      "image": "/bottle-glass.png"
     },
     {
       "word": "pressed glass",
       "slug": "pressed-glass",
-      "cls": "glass"
+      "cls": "glass",
+      "image": "/pressed-glass.png"
+    },
+    {
+      "word": "sea glass",
+      "slug": "sea-glass",
+      "cls": "glass",
+      "image": "/sea-glass.png"
+    },
+    {
+      "word": "dichroic glass",
+      "slug": "dichroic-glass",
+      "cls": "glass",
+      "image": "/dichroic-glass.png"
     },
     {
       "word": "glazed tile",
       "slug": "glazed-tile",
-      "cls": "ceramic"
+      "cls": "ceramic",
+      "image": "/glazed-tile.png"
     },
     {
       "word": "terracotta",
       "slug": "terracotta",
-      "cls": "ceramic"
+      "cls": "ceramic",
+      "image": "/terracotta.png"
     },
     {
       "word": "porcelain",
       "slug": "porcelain",
-      "cls": "ceramic"
+      "cls": "ceramic",
+      "image": "/porcelain.png"
     },
     {
       "word": "zellige",
       "slug": "zellige",
-      "cls": "ceramic"
+      "cls": "ceramic",
+      "image": "/zellige.png"
     },
     {
       "word": "raku",
       "slug": "raku",
-      "cls": "ceramic"
+      "cls": "ceramic",
+      "image": "/raku.png"
+    },
+    {
+      "word": "kintsugi",
+      "slug": "kintsugi",
+      "cls": "ceramic",
+      "image": "/kintsugi.png"
     },
     {
       "word": "watercolour wash",
       "slug": "watercolour-wash",
-      "cls": "pigment"
+      "cls": "pigment",
+      "image": "/watercolour-wash.png"
     },
     {
       "word": "gouache",
       "slug": "gouache",
-      "cls": "pigment"
+      "cls": "pigment",
+      "image": "/gouache.png"
     },
     {
       "word": "ink bloom",
       "slug": "ink-bloom",
-      "cls": "pigment"
+      "cls": "pigment",
+      "image": "/ink-bloom.png"
     },
     {
       "word": "risograph ink",
       "slug": "risograph-ink",
-      "cls": "pigment"
+      "cls": "pigment",
+      "image": "/risograph-ink.png"
     },
     {
       "word": "chalk pastel",
       "slug": "chalk-pastel",
-      "cls": "pigment"
+      "cls": "pigment",
+      "image": "/chalk-pastel.png"
     },
     {
       "word": "lacquer",
       "slug": "lacquer",
-      "cls": "pigment"
+      "cls": "pigment",
+      "image": "/lacquer.png"
+    },
+    {
+      "word": "suminagashi marbling",
+      "slug": "suminagashi-marbling",
+      "cls": "pigment",
+      "image": "/suminagashi-marbling.png"
+    },
+    {
+      "word": "verdigris paint",
+      "slug": "verdigris-paint",
+      "cls": "pigment",
+      "image": "/verdigris-paint.png"
     },
     {
       "word": "rubber stud flooring",
       "slug": "rubber-stud-flooring",
-      "cls": "polymer"
+      "cls": "polymer",
+      "image": "/rubber-stud-flooring.png"
     },
     {
       "word": "vinyl",
       "slug": "vinyl",
-      "cls": "polymer"
+      "cls": "polymer",
+      "image": "/vinyl.png"
     },
     {
       "word": "foam",
       "slug": "foam",
-      "cls": "polymer"
+      "cls": "polymer",
+      "image": "/foam.png"
     },
     {
       "word": "cast resin",
       "slug": "cast-resin",
-      "cls": "polymer"
+      "cls": "polymer",
+      "image": "/cast-resin.png"
     },
     {
       "word": "linoleum",
       "slug": "linoleum",
-      "cls": "polymer"
+      "cls": "polymer",
+      "image": "/linoleum.png"
+    },
+    {
+      "word": "bakelite",
+      "slug": "bakelite",
+      "cls": "polymer",
+      "image": "/bakelite.png"
+    },
+    {
+      "word": "holographic foil",
+      "slug": "holographic-foil",
+      "cls": "polymer",
+      "image": "/holographic-foil.png"
     },
     {
       "word": "pie crust",
       "slug": "pie-crust",
-      "cls": "organic"
+      "cls": "organic",
+      "image": "/pie-crust.png"
     },
     {
       "word": "flour on marble",
       "slug": "flour-on-marble",
-      "cls": "organic"
+      "cls": "organic",
+      "image": "/flour-on-marble.png"
     },
     {
       "word": "moss",
       "slug": "moss",
-      "cls": "organic"
+      "cls": "organic",
+      "image": "/moss.png"
     },
     {
       "word": "bark",
       "slug": "bark",
-      "cls": "organic"
+      "cls": "organic",
+      "image": "/bark.png"
     },
     {
       "word": "honeycomb",
       "slug": "honeycomb",
-      "cls": "organic"
+      "cls": "organic",
+      "image": "/honeycomb.png"
     },
     {
       "word": "orange peel",
       "slug": "orange-peel",
-      "cls": "organic"
+      "cls": "organic",
+      "image": "/orange-peel.png"
+    },
+    {
+      "word": "mother of pearl",
+      "slug": "mother-of-pearl",
+      "cls": "organic",
+      "image": "/mother-of-pearl.png"
+    },
+    {
+      "word": "moth wing scales",
+      "slug": "moth-wing-scales",
+      "cls": "organic",
+      "image": "/moth-wing-scales.png"
+    },
+    {
+      "word": "frost ferns",
+      "slug": "frost-ferns",
+      "cls": "phenomenon",
+      "image": "/frost-ferns.png"
+    },
+    {
+      "word": "salt bloom",
+      "slug": "salt-bloom",
+      "cls": "phenomenon",
+      "image": "/salt-bloom.png"
+    },
+    {
+      "word": "oil sheen on water",
+      "slug": "oil-sheen-on-water",
+      "cls": "phenomenon",
+      "image": "/oil-sheen-on-water.png"
+    },
+    {
+      "word": "rust bloom",
+      "slug": "rust-bloom",
+      "cls": "phenomenon",
+      "image": "/rust-bloom.png"
+    },
+    {
+      "word": "tide ripples in sand",
+      "slug": "tide-ripples-in-sand",
+      "cls": "phenomenon",
+      "image": "/tide-ripples-in-sand.png"
+    },
+    {
+      "word": "crazed mud",
+      "slug": "crazed-mud",
+      "cls": "phenomenon",
+      "image": "/crazed-mud.png"
+    },
+    {
+      "word": "soap film",
+      "slug": "soap-film",
+      "cls": "phenomenon",
+      "image": "/soap-film.png"
+    },
+    {
+      "word": "lichen map",
+      "slug": "lichen-map",
+      "cls": "phenomenon",
+      "image": "/lichen-map.png"
     }
   ],
+  "tile": 384,
   "ladders": {
     "scale": [
       "macro",
@@ -557,6 +817,43 @@
       "tile",
       "plate",
       "sheet"
+    ],
+    "lens": [
+      "none",
+      "risograph botanica",
+      "civic brutalism",
+      "lunar laundromat",
+      "folk-tech embroidery",
+      "deep-sea archive",
+      "tidepool baroque",
+      "midnight municipal"
+    ],
+    "beat": [
+      "none",
+      "arrival",
+      "discovery",
+      "waiting",
+      "aftermath",
+      "return"
+    ],
+    "trace": [
+      "none",
+      "footprints",
+      "a dropped glove",
+      "candle wax",
+      "chalk marks",
+      "pooled rain"
+    ],
+    "face": [
+      "title",
+      "prompt",
+      "spw",
+      "facets"
+    ],
+    "tone": [
+      "paper",
+      "ink",
+      "signal"
     ]
   },
   "phrases": {
@@ -596,6 +893,32 @@
       "costume": "as a costume fabric",
       "sky": "as a sky backdrop",
       "page": "as a printed page"
+    },
+    "lens": {
+      "none": "",
+      "risograph botanica": "risograph botanica aesthetic",
+      "civic brutalism": "civic brutalism aesthetic",
+      "lunar laundromat": "lunar laundromat aesthetic",
+      "folk-tech embroidery": "folk-tech embroidery aesthetic",
+      "deep-sea archive": "deep-sea archive aesthetic",
+      "tidepool baroque": "tidepool baroque aesthetic",
+      "midnight municipal": "midnight municipal aesthetic"
+    },
+    "beat": {
+      "none": "",
+      "arrival": "the moment someone arrives",
+      "discovery": "just before something is found",
+      "waiting": "while someone waits",
+      "aftermath": "after everyone has left",
+      "return": "as someone returns"
+    },
+    "trace": {
+      "none": "",
+      "footprints": "with footprints across it",
+      "a dropped glove": "with a dropped glove",
+      "candle wax": "with drips of candle wax",
+      "chalk marks": "with a child's chalk marks",
+      "pooled rain": "with rain pooling on it"
     }
   },
   "formats": {
@@ -663,6 +986,167 @@
       "says": "measured against",
       "blend": "luminosity",
       "opacity": 0.9
+    }
+  },
+  "techniques": {
+    "describe": {
+      "name": "Say what you want",
+      "syntax": "subject, medium, setting, light, colour, mood, composition",
+      "note": "Name what should be there rather than what should not; a few specific words beat many vague ones.",
+      "source": "https://docs.midjourney.com/hc/en-us/articles/32023408776205-Prompt-Basics"
+    },
+    "tile": {
+      "name": "Seamless tile",
+      "syntax": "--tile",
+      "note": "An image whose edges meet, for surfaces that repeat; not with draft speed.",
+      "source": "https://docs.midjourney.com/hc/en-us/articles/32859204029709-Parameter-List"
+    },
+    "permute": {
+      "name": "Permutations",
+      "syntax": "{a, b, c}",
+      "note": "Braces make one job per option; plans cap the count (4 on Basic) and they run in Fast or Turbo.",
+      "source": "https://docs.midjourney.com/hc/en-us/articles/32761322355597-Permutations"
+    },
+    "weigh": {
+      "name": "Multi-prompts and weights",
+      "syntax": "a::2 b::1",
+      "note": "A double colon weighs ideas apart; a negative weight excludes, and --no is a weight of -0.5.",
+      "source": "https://docs.midjourney.com/hc/en-us/articles/32658968492557-Multi-Prompts-Weights"
+    },
+    "exclude": {
+      "name": "Exclude",
+      "syntax": "--no text, logo",
+      "note": "Removes what keeps appearing, rather than describing around it.",
+      "source": "https://docs.midjourney.com/hc/en-us/articles/32173351982093-No"
+    },
+    "chaos": {
+      "name": "Chaos",
+      "syntax": "--chaos 0 to 100",
+      "note": "How far apart the results of one job are from each other.",
+      "source": "https://docs.midjourney.com/hc/en-us/articles/32859204029709-Parameter-List"
+    },
+    "weird": {
+      "name": "Weird",
+      "syntax": "--weird 0 to 3000",
+      "note": "Pushes toward the unusual; small values first.",
+      "source": "https://docs.midjourney.com/hc/en-us/articles/32859204029709-Parameter-List"
+    },
+    "stylize": {
+      "name": "Stylize",
+      "syntax": "--stylize 0 to 1000",
+      "note": "How strongly Midjourney's own taste is applied; 100 by default.",
+      "source": "https://docs.midjourney.com/hc/en-us/articles/32859204029709-Parameter-List"
+    },
+    "raw": {
+      "name": "Raw",
+      "syntax": "--raw (V8), --style raw (V7)",
+      "note": "Less default polish, closer to the words; the V8 flag is from a third-party guide.",
+      "source": "https://blakecrosley.com/guides/midjourney"
+    },
+    "sref": {
+      "name": "Style reference",
+      "syntax": "--sref URL or code, --sw 0 to 1000",
+      "note": "Borrows a look; --sref random draws a new code per image, worth keeping when it works.",
+      "source": "https://docs.midjourney.com/hc/en-us/articles/32180011136653-Style-Reference"
+    },
+    "seed": {
+      "name": "Seed",
+      "syntax": "--seed n",
+      "note": "The same seed and prompt start from the same noise, so one change can be compared.",
+      "source": "https://docs.midjourney.com/hc/en-us/articles/32859204029709-Parameter-List"
+    }
+  },
+  "pivots": [
+    {
+      "id": "invert",
+      "label": "invert",
+      "technique": "describe",
+      "says": "the figure becomes the ground"
+    },
+    {
+      "id": "permute",
+      "label": "permute",
+      "technique": "permute",
+      "says": "one ladder becomes four jobs"
+    },
+    {
+      "id": "weigh",
+      "label": "weigh",
+      "technique": "weigh",
+      "says": "the first material counts twice"
+    },
+    {
+      "id": "chaos",
+      "label": "chaos",
+      "technique": "chaos",
+      "says": "results spread apart",
+      "steps": [
+        0,
+        25,
+        50,
+        100
+      ]
+    },
+    {
+      "id": "weird",
+      "label": "weird",
+      "technique": "weird",
+      "says": "results turn strange",
+      "steps": [
+        0,
+        250,
+        1000
+      ]
+    },
+    {
+      "id": "stylize",
+      "label": "stylize",
+      "technique": "stylize",
+      "says": "Midjourney's own taste, more or less",
+      "steps": [
+        100,
+        250,
+        750,
+        0
+      ]
+    },
+    {
+      "id": "raw",
+      "label": "raw",
+      "technique": "raw",
+      "says": "closer to the words"
+    },
+    {
+      "id": "sref",
+      "label": "sref random",
+      "technique": "sref",
+      "says": "a new style code to keep"
+    },
+    {
+      "id": "seed",
+      "label": "seed",
+      "technique": "seed",
+      "says": "a fixed start, to compare one change"
+    },
+    {
+      "id": "lens",
+      "label": "lens",
+      "technique": "describe",
+      "says": "a genre in the making"
+    }
+  ],
+  "views": {
+    "minimalist": {
+      "name": "Minimalist@",
+      "says": "the stage and one short prompt"
+    },
+    "prompt-engineer": {
+      "name": "PromptEngineer@",
+      "says": "every part of the prompt named, every pivot and technique"
+    },
+    "story-designer": {
+      "name": "StoryDesigner@",
+      "says": "a scene with a moment and a trace"
     }
   }
 }

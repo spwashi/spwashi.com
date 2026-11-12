@@ -33,6 +33,21 @@
 - **A test bench**: each pack and shader renders a fixed set of components (a card, a button, a quote, a table) so a design is tried on real parts.
 - **A tour of HTML**: each slide can be one HTML feature or web trope (details and summary, the dialog, popover, the marquee's memory, the guestbook, the hit counter) drawn in the pack's material; each links to its trope.wiki entry, so trope.wiki documents what texture.website shows.
 
+## factshift.center as the design table (planned 2026-11-12)
+
+texture.website says what a surface is made of; factshift.center arranges things in space. Together they are a design tool:
+- **One line, two readings.** A composition's Spw line (`sea-glass{~frost-ferns}[lamplight, worn, as-found]`) opens on the canvas by `?spw=`, as every texture card already writes it; a canvas body led by a material word takes that material's sketch as its fill, read from `/vocabulary.json`.
+- **One table of marks.** The canvas's laws and texture's relations are the same nine marks; publish one `laws.json` both read, so `~` drifts on the canvas and drifts through in a prompt.
+- **Arrange, then prompt.** Bodies placed on the stage become a scene prompt (what is beside, above, inside what), and a canvas still becomes a square style card marked with its day.
+- **Steps:** a "canvas" action on the card; the canvas reading `vocabulary.json` for fills; the shared mark table; a scene prompt from a canvas line. Each lands in its own repository (the canvas app is its own); feel stays the creator's to judge.
+
+## brainstorm.monster as a character workshop for lore.land (planned 2026-11-12)
+
+- **What it is.** brainstorm.monster, a held name today, becomes a workshop where a character is drafted as materials and traits: a costume from texture's textile and metal classes, a palette from a style card, a scene from StoryDesigner@, a sheet in the RPG character-sheet form the site already uses as a profile.
+- **What it is not.** It drafts tools and prompts, not lore.land's characters: lore.land's cast and its character designs are the creator's and its agent's (Lndr's design is the creator's to redo). Characters drafted here are composites, never identifiable people.
+- **The handoff.** A character leaves as a Spw card (a line and its square card) carried to lore.land by `#spw64`; lore.land decides what to accept. Asks for lore.land go to its agent, never as edits from here.
+- **Steps:** brainstorm.monster as a file-only unit (the runbook's held-name step, carried with `workers/lib/carry.js`); a costume ladder set in texture's vocabulary; a character card; the handoff format agreed with lore.land's agent.
+
 ## A pattern other domains repeat
 
 A domain in focus gets: a files-only unit (`cluster.json` tier files), a material or content list in `src/`, a carry that writes every reading by extension, a page that reads its address in the browser, a fingerprint before and after (`npm run workers:fingerprint`), and a plan here. texture.website is the first; attention.productions and the held names follow it in `.agents/plans/ecosystem-architecture/PLAN.md`.
@@ -40,6 +55,7 @@ A domain in focus gets: a files-only unit (`cluster.json` tier files), a materia
 ## Slices
 
 1. **The slide and its dimensions** (landed 2026-11-12, 28daa252). **Then a prompt studio** (2026-11-12): the seven image textures retired; `src/vocabulary.js` holds 65 material words in ten classes with qualities and science notes; any path word is a material; marks are relations in the sentence; plain sliders gave way to word ladders (scale, light, wear, process, scene, format), each word written into the prompt, with rolls and class neighbours to swap; the sketch is a class's drawn base in the word's hue, lit, worn and printed by an SVG filter built from the ladders; the page writes a Midjourney prompt, a plain prompt, a Spw line and the address. Basic tuning sliders wait for spwashi.com's profile framing and card pipeline.
+1b. **Pivots, views, techniques** (2026-11-12): the card with readings by extension and ladders in bands with locks; 91 materials in eleven classes (phenomena added: frost ferns, salt bloom, oil sheen); a lens ladder of genres in the making; ten pivots (invert, permute, weigh, chaos, weird, stylize, raw, sref random, seed, lens), each teaching a technique tied to Midjourney's docs, with a record of techniques tried kept in the browser and forgettable; three views as a first path word, `minimalist@`, `prompt-engineer@` (the prompt's anatomy) and `story-designer@` (a setting, a moment and a trace); no model version written, so the account's default (V8.2 by third-party guides) applies.
 1a. **Formerly**: `?d=` replaces /tomorrow; the slide frame; the geometric panel; grain and warp as an SVG filter; the broad and simple procedural set.
 2. **The spwashi realm**: `/@spwashi/` and the folios pack, once the creator chooses the folios and their scene uses.
 3. **Shaders and frames as files**, with one drop.

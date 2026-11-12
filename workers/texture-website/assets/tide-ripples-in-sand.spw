@@ -1,0 +1,7 @@
+#>texture_tide_ripples_in_sand
+#:material #!phenomenon
+
+~tide-ripples-in-sand[phenomenon]{branching, concentric rings, iridescence}
+
+word: "tide ripples in sand"
+science: "Patterns no one made: water, salt, frost and oxidation arranging themselves as they move, dry or grow, each by a rule a student can name."

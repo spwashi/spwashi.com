@@ -1,0 +1,7 @@
+#>texture_frost_ferns
+#:material #!phenomenon
+
+~frost-ferns[phenomenon]{branching, concentric rings, iridescence}
+
+word: "frost ferns"
+science: "Patterns no one made: water, salt, frost and oxidation arranging themselves as they move, dry or grow, each by a rule a student can name."

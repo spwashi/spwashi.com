@@ -1,0 +1,17 @@
+dichroic glass (texture.website/dichroic-glass), glass
+A cooled liquid with no crystal order; it bends light at every surface, so texture in glass is mostly what it does to what lies behind it.
+Qualities to try: frosted, bubbled, rain beads, lead cames, bevelled edge
+Image, to hand Midjourney as a style reference or an image prompt: https://texture.website/dichroic-glass.png
+
+As a style reference:
+  your subject --sref https://texture.website/dichroic-glass.png --sw 250
+
+As a tile:
+  seamless repeating texture of dichroic glass, close view, soft overcast light, frosted, bubbled --tile --ar 1:1 --no text, letters, logo, watermark
+As a backdrop:
+  wide backdrop of dichroic glass, across a room, raking dawn light, weathered --ar 16:9 --no text, letters, logo, watermark
+With another material:
+  seamless repeating texture of dichroic glass drifting through glazed tile, close view, warm lamplight --tile --ar 1:1 --no text, letters, logo, watermark
+
+Composed and tuned on the page:
+  https://texture.website/dichroic-glass/~glazed-tile?light=lamplight&wear=worn&process=riso

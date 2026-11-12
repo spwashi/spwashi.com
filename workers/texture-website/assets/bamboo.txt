@@ -1,6 +1,10 @@
 bamboo (texture.website/bamboo), wood
 Cellulose fibres laid down in yearly rings; cutting across, along or around the rings shows end grain, straight grain or figure.
 Qualities to try: open grain, end grain, oiled sheen, saw marks, knots
+Image, to hand Midjourney as a style reference or an image prompt: https://texture.website/bamboo.png
+
+As a style reference:
+  your subject --sref https://texture.website/bamboo.png --sw 250
 
 As a tile:
   seamless repeating texture of bamboo, close view, soft overcast light, open grain, end grain --tile --ar 1:1 --no text, letters, logo, watermark

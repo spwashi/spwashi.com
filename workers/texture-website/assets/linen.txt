@@ -1,6 +1,10 @@
 linen (texture.website/linen), textile
 Yarns interlaced or looped; the weave or knit, not only the fibre, sets how a cloth drapes, catches light and wears.
 Qualities to try: tight weave, raised pile, slubbed yarn, worn nap, visible stitching
+Image, to hand Midjourney as a style reference or an image prompt: https://texture.website/linen.png
+
+As a style reference:
+  your subject --sref https://texture.website/linen.png --sw 250
 
 As a tile:
   seamless repeating texture of linen, close view, soft overcast light, tight weave, raised pile --tile --ar 1:1 --no text, letters, logo, watermark

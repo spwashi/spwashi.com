@@ -1,0 +1,17 @@
+bakelite (texture.website/bakelite), polymer
+Long chain molecules, moulded or cast; the mould's surface is copied exactly, so studs, grain and gloss are all made on purpose.
+Qualities to try: moulded studs, satin gloss, embossed grain, seams, scuffs
+Image, to hand Midjourney as a style reference or an image prompt: https://texture.website/bakelite.png
+
+As a style reference:
+  your subject --sref https://texture.website/bakelite.png --sw 250
+
+As a tile:
+  seamless repeating texture of bakelite, close view, soft overcast light, moulded studs, satin gloss --tile --ar 1:1 --no text, letters, logo, watermark
+As a backdrop:
+  wide backdrop of bakelite, across a room, raking dawn light, weathered --ar 16:9 --no text, letters, logo, watermark
+With another material:
+  seamless repeating texture of bakelite drifting through pie crust, close view, warm lamplight --tile --ar 1:1 --no text, letters, logo, watermark
+
+Composed and tuned on the page:
+  https://texture.website/bakelite/~pie-crust?light=lamplight&wear=worn&process=riso
