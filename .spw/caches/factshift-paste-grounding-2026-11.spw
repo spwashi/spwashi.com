@@ -1,0 +1,138 @@
+# What a paste means on the canvas: a grounding pass, and the interaction it asks for (2026-11-11) — cache
+#
+# The creator: theory of interaction; nesting representation; modality
+# representation; lore.land alignment; more effective interpretive contexts for
+# Spw pasted into factshift.center; the examples from spw.quest and
+# texture.website; how someone navigates between forms; how nested information
+# or modalities are represented; copying and pasting nodes or structures; an
+# image as a node; routing from the ecosystem into the canvas; interaction
+# clarity, intentional or accidental engagement, overload; rewarding fluency and
+# practice; discovery through peer sites. Measured first: 29 inputs pasted into
+# the live canvas build (app e932160) through its own paste listener, each into
+# a fresh page. Nothing in the canvas app changed on this pass.
+# Grown the same night, after texture.website's studio deployed (97690ef1) and
+# the workbench journal answered the interaction cache: a theory of readings
+# (^"reading"), lore.land's rooms as what a reader may do in each container
+# (^"rooms"), and nesting read from a focus. Still nothing changed in the app.
+
+#>factshift_paste_grounding_2026_11
+#:cache #!factshift #!interaction #!paste #!routing
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@paste: ~"../../workers/factshift-center/app/src/js/init/hotkeys/handlers/pasted-text.ts"
+@image_node: ~"../../workers/factshift-center/app/src/js/simulation/nodes/ui/image.ts"
+@texture: ~"../../workers/texture-website/assets/texture.js"
+@quest_examples: ~"../../workers/spw-quest/src/examples.js"
+@journal_address: ~"../_workbench/.spw/caches/journal/2026-11-11-address-grain-edit.spw"
+@journal_columns: ~"../_workbench/.spw/caches/journal/2026-11-11-columns-likeness-rhymes.spw"
+@route_audit: ~"../../.agents/plans/route-audit/PLAN.md"
+@pie_loop: ~"./pie-loop-memory-2026-11.spw"
+@journal_scales: ~"../_workbench/.spw/caches/journal/2026-11-11-one-table-many-scales.spw"
+@texture_cache: ~"./texture-website-redesign-2026-11.spw"
+@brace_law: ~"./brace-literal-local-law-2026-11.spw"
+@theory_of_mind: ~"./factshift-theory-of-mind-2026-11.spw"
+
+operation = "cache"
+fixity = "experimental"
+expression = ?paste[read]{as.replaced.back}<canvas>
+
+^"measured"{
+  how = `scratchpad paste corpus: each input dispatched as a paste event into a fresh canvas page (localStorage cleared), the held line read from the page title and the nodes from the simulation, 2026-11-11`
+  quest = `17 of 18 spw.quest examples held a line and drew nodes (3 to 20). record held nothing: a header and one ^"record"{…}[reg=facet] block. Cause unknown; not the stamp after the body, since vocabulary, persona and calibration end their blocks with }[reg=facet] and read. record alone has three @ refs before a single block; bisect it (drop the refs, then the header, then the sets) before guessing again.`
+  texture = .{
+    line: "the composition line, written mode after body (sea-glass{~frost-ferns}[lamplight, …]), held nothing, cause not established (blocks ending }[reg=facet] read); written in Spw's slot order, sea-glass[lamplight, worn, as-found]{~frost-ferns}, it holds and draws two nodes. texture.website now writes it that way (97690ef1, deployed)"
+    card_spw_md: "the card's .spw and .md read: the line inside them was found"
+    json: "the card's .json, which has no nodes, was ignored without an error"
+    prompt: "a Midjourney prompt read as Spw: one node named seamless"
+    addresses: "a texture page address and an image address each read as one node named after the URL"
+  }[reg=facet]
+  lore = `the cast form ~map[mode]{ care ~> rest } read as three nodes; a fragment of rooms.spw's kinds block, copied without its ^"kinds"{ opener, read as one .note node, which says nothing yet about the whole block`
+  copy = `the canvas's own copy JSON pasted back as its two nodes`
+  replace = `a paste replaces the held line, says only "1/2" (the thread's place), and back (←) restores the line before: undoable, but not explained`
+}[reg=facet]
+
+^"interpretive_contexts"{
+  # A paste says what it was read as, and the reading follows the kind of thing pasted.
+  rule = `Before reading text as Spw, recognise what else it is. Each kind gets its own reading, and a one-line receipt near the handle says which: "read as a line · replaced garden[care]{…} · ← to go back".`
+  kinds = .{
+    line_or_file: "Spw: hold it, as now, with the receipt"
+    canvas_json: "nodes: add them, as now"
+    image_address: "an image node: the picture drawn at its address, the line keeps ~\\"…png\\" so it writes back"
+    peer_address: "an address on a cluster host (texture.website/sea-glass/~frost-ferns, spw.quest/…): follow its route, take its line (texture's slot-order line, spw.quest's ?line=), and say where it came from"
+    prompt: "an image-model prompt (::, {a, b}, --flags): keep it as one prose node, not parsed as Spw, with an offer to build its materials on texture.website"
+    unknown_json: "say it was not read, instead of nothing"
+  }[reg=facet]
+}[reg=facet]
+
+^"nesting_and_modality"{
+  # How nested information and modalities are represented, and how a reader moves between forms.
+  nesting = `The workbench proposes one grain ladder (token, part, row, line, construct, block, surface) with grainsAt and stepFrom shared by spw.quest and the canvas (@journal_address), and parse columns that carry each node's depth, parent and subtree size (@journal_columns). The canvas already walks bodies with Shift and arrows; a grain indicator ("you are at: part · in bed{…} · line 2 of 4") is the missing half. Take both from a reader release, not a second reader.`
+  modality = `A line has readings by modality: as written (text), as nodes (the canvas), as a card (texture, spw.quest), as an image (texture's tiles), as sound (lore.land). Each host shows which reading is in front and links the others by extension or route, the way texture's card links .txt, .spw, .json and .png.`
+  navigate_forms = `Between forms, one gesture each: open the same line in its other reading (canvas ↔ card ↔ text), and a back that always returns. Addresses (label paths) make "the same place in another form" exact.`
+  from_a_focus = `Overload is answered by distance, not by hiding: the construct a reader holds is whole, its siblings show as their one-line summary, theirs as a count, the rest fold toward a rim, and moving the focus refolds without dropping anything (@journal_scales hyperbolic_nesting; Furnas's degree of interest, importance less distance from the focus). The grain indicator names the focus; the fold shows its neighbourhood. Measured authors nest two levels at most and write flat labels, so the rim matters most for long files and peer pastes, not for one line.`
+  one_brace_many_relations = `A body does not mean one relation across hosts. The canvas reads a{b} as a containing b; texture.website reads a{~b} as b lying over a; lore.land reads { } as a room a reader stands in. Each host says which relation its bodies mean, beside what its marks mean, so a line carried between hosts is read as written and its relation named in the receipt.`
+}[reg=facet]
+
+^"reading"{
+  # One theory for what leaves a host by extension and what arrives by paste (2026-11-11).
+  coordinates = `A reading is an address taken some way: in a form (the extension), from a perspective (an @ view) and at a focus (a grain, and an address inside it). texture.website writes form and perspective into its addresses; the canvas holds focus; spw.quest offers form by /card and changes by pivot keys (@texture_cache ^"theory").`
+  symmetry = `Going out, a host names the form in the address (.png, .spw, .txt), so the receiver need not guess. Coming in, a paste carries no extension, so the canvas recognises the form before it reads. interpretive_contexts is that recognition, and the receipt is the extension said back: "read as a line" is .spw, "drawn as an image" is .png, "kept as a prompt" is .txt.`
+  write_strict = `Write to the strictest reader in the ecosystem; read every kind and say what it was read as. texture's line moved to slot order after it held nothing written the other way; why it held nothing is a probe, not a finding. The workbench's attachment law (@journal_address attachment_law) would read mode after body as the same tree and warn with the order that does; until it lands, writers keep word[mode]{body}.`
+  perspective_proposed = `texture's views show less by perspective. On the canvas a view would choose which readings of a node show, not which nodes exist; a proposal only, since a route on factshift.center is the creator's and the other session's.`
+}[reg=facet]
+
+^"rooms"{
+  # lore.land alignment: its four containers as kinds of room (lore.land .spw/surfaces/rooms.spw ^"kinds", read only at 138cc3f), read as what a reader may do in each. @brace_law reads the same file for laws.
+  kinds = `[ ] a window you may only look in; { } a room you may stand in for a minute; ( ) a gathering where everything arrives together; < > a passage you go through and never stay.`
+  permission = `Moving between forms, each kind is a permission. Going into a { } body moves the focus inside. Going into a [ ] mode shows it while the focus stays put. Going into a ( ) takes all of it at once, so a selection or a copy is the whole gathering. Going into a < > follows it out to the host or reading it names, with a back that returns.`
+  rule_kept = `The canvas's rule stays: the context chooses the object, never the verb (@theory_of_mind ^"hands"). The reader's gesture is one verb, go in; the room's kind says how far in they may go, and the hint shows that before the act lands. Enter, which has five vocabularies today (@journal_address two_lines), gets one meaning: go in, as the room allows.`
+  texture = `texture's line already reads this way: [lamplight, worn, as-found] is a window, how the material is seen; {~frost-ferns} is a room, what stands on it; a card's <canvas> or <midjourney> would be the passage out.`
+  modality = `A passage is how a reader changes modality: from the canvas through <card> to the card, through <png> to the image. The extension on an address and the < > in a line are one act written two ways.`
+}[reg=facet]
+
+^"copy_and_images"{
+  copy = `Copy a selection as Spw text first (the line that would rebuild it), with the JSON as a second flavour on the clipboard, so a structure pasted into an editor or spw.quest reads as a line and pasted back into the canvas keeps its positions.`
+  image = `Set an image as a node by its address only: a ~"…png" reference already parses, so the picture writes back as a line; no pixel data in the node cache; check the canvas's img-src before drawing peer images.`
+}[reg=facet]
+
+^"clarity"{
+  accidental = `Every engagement that changes the line says so and is undoable by back; a paste outside the canvas's focus does nothing.`
+  overload = `Show the grain and the reading in front, not every option; texture's views (Minimalist@, PromptEngineer@, StoryDesigner@) are the precedent for showing less on purpose.`
+  ephemeral = `Ephemeral UI design: tools picked up and put down, the handle resting in the corner, quick gestures rolling back displacement, zero visual accumulation on contemplating thought.`
+  fluency = `Learnability and fluency as an axis for intrinsic reward: practice rewarded by naming what a reader has done (texture's "learned here" chips are the precedent), tactile keyboard turns, never streaks or coercive counts of absence (@pie_loop).`
+  peers = `Discovery through peer sites: when a line came from a peer, the receipt names it and links back; the peer kit and cluster.json's ownership rule apply.`
+}[reg=facet]
+
+^"routing"{
+  inbound = #[
+    `?spw= (a line), #spw64= (a line, base64url), ?mode=spw, share_target text → ?spw=, file_handlers for .spw and .txt (landed in site revision 5: launchQueue feeds the canvas drop handler directly)`,
+    `from texture.website: the slot-order line by ?spw=; a "canvas" action on its card is planned`,
+    `from spw.quest: /canvas?line= and ?s= (a 302 to factshift.center)`,
+  ][reg=set]
+  where = `the inbound table belongs in @route_audit`
+}[reg=facet]
+
+^"next"{
+  default_on = #[
+    `a paste receipt: what it was read as, what it replaced, ← to go back`,
+    `URLs, prompts and JSON without nodes are not read as Spw`,
+  ][reg=set]
+  then = #[
+    `an image node from an image address, written back as ~"…png"`,
+    `copy a selection as Spw text with JSON beside it`,
+    `peer addresses followed to their line, with the peer named`,
+  ][reg=set]
+  probes = #[
+    `bisect spw.quest's record example to the part the canvas refuses`,
+    `paste rooms.spw's whole ^"kinds" block, opener included`,
+    `paste a{b}[x, y] beside a{b}[reg=facet] and a[x, y]{b}, to learn whether a mode after a body or a list in it is what the canvas skips`,
+  ][reg=set]
+  proposed = #[
+    `the grain indicator and stepFrom, from a workbench reader release (proposals in the journal on 2026-11-11, not yet in the workbench's packages)`,
+    `go in as the room allows: { } moves the focus, [ ] shows, ( ) takes the whole, < > follows out with a back`,
+    `the receipt names the relation a body was read as when a line came from another host`,
+    `practice named, peers linked; anything new to feel stays behind hand lively for the creator`,
+  ][reg=set]
+}[reg=facet]

@@ -2,7 +2,7 @@
  * site-hub-next — one public job per hostname.
  *
  * attention.productions is the pictures. texture.website left for its own
- * files-only unit, workers/texture-website, on 2026-11-12.
+ * files-only unit, workers/texture-website, on 2026-11-11.
  * Every other host this script serves is a door: one sentence, one place
  * the work already lives, and two neighbors. Does not serve spwashi.com.
  * Do not attach this script to spwashi.com/*.

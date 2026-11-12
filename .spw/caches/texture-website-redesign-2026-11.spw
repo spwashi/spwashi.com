@@ -1,96 +1,123 @@
-# texture.website as materials composed by the address, and mutex.buzz as a twinkling card (2026-11-11) — cache
+# texture.website as a studio for material prompts, and mutex.buzz as a twinkling card (2026-11-11) — cache
 #
-# The creator: redesign texture.website to be more socially and creatively
-# valuable, especially for seeds and sources for Midjourney; useful by default,
-# its value from awareness of configuration and from generative overlays and
-# combinatorics; materials along categories changing by the day from whichever
-# exist; mindful of materials science, so its git history and raw images serve
-# students as a catalog; wonder in the URL and its parameters, for materials
-# gathered for a novel or a study along a path; words as paths and speech
-# bubbles tuned with particular text; paths and parameters as a surface for
-# sharing, releases and prediction; factshift.center's public theory made useful
-# here; mutex.buzz as a beautiful card twinkling along an algorithm of Spw
-# structure and reference, challenging lore.land's game interpreter.
+# The creator, over one day: redesign texture.website to be more socially and
+# creatively valuable, especially for seeds and sources for Midjourney; useful by
+# default, its value from awareness of configuration and from combinatorics; a
+# materials catalog for students; wonder in the URL, words as paths, speech
+# bubbles; then forget the existing textures; then a prompt-construction studio
+# where ladders of words replace basic sliders; then linking by extension,
+# configuration UX and card aesthetics; then more creative prompts and pivots,
+# Midjourney practice learnable over time, and views for Minimalist@,
+# PromptEngineer@ and StoryDesigner@; then square style cards that mark the day;
+# then easier image links for Midjourney.
 #
-# Built: workers/texture-website, a files-only unit, previewed locally and not
-# deployed; texture.website still answers from site-hub-next until its domain
-# moves. Proposed: the rest, including mutex.buzz. The science notes are drafts.
+# Built and deployed: workers/texture-website at 97690ef1, version 54d08f7a,
+# answering texture.website. An earlier reading of this cache (layered image
+# textures, /tomorrow, /catalog) is in git at 81c9166c; the creator retired those
+# textures and routes the same day. mutex.buzz is still a proposal. The science
+# notes and the page copy are drafts for the creator.
 
 #>texture_website_redesign_2026_11
-#:cache #!texture #!midjourney #!sources #!mutex #!product
+#:cache #!texture #!midjourney #!prompts #!mutex #!product
 #:operation #!cache
 #:fixity #!experimental
 #:layer #!pragmatics
 
 @unit: ~"../../workers/texture-website/carry.mjs"
-@materials: ~"../../workers/texture-website/src/vocabulary.js"
+@vocabulary: ~"../../workers/texture-website/src/vocabulary.js"
+@raster: ~"../../workers/texture-website/src/raster.js"
 @page: ~"../../workers/texture-website/assets/texture.js"
-@hub: ~"../../workers/site-hub-next/src/index.js"
-@mutex: ~"../../workers/site-hub-next/src/mutex.js"
-@session: ~"../../public/images/assets/motifs/texture-session-5.spw"
+@llms: ~"../../workers/texture-website/assets/llms.txt"
+@plan: ~"../../.agents/plans/texture-website/PLAN.md"
+@grounding: ~"./factshift-paste-grounding-2026-11.spw"
 @direction: ~"./ecosystem-direction-2026-11.spw"
-@providers: ~"../conventions/provider-relationships.spw"
+@law_says: ~"../../workers/factshift-center/app/src/js/modes/spw/body-gestures.ts"
+@journal_scales: ~"../_workbench/.spw/caches/journal/2026-11-11-one-table-many-scales.spw"
 
 operation = "cache"
 fixity = "experimental"
-expression = ~material[address]{layer.law.bubble.day}<maker>
+expression = ~prompt[address]{material.relation.ladder.pivot.view}<midjourney>
 
 summary = #[
-  `The address is the recipe. Each word in the path is a layer, bottom first; a mark before a word is its law, read as factshift.center reads a body's mark and drawn as a blend (~ drifts, * is heavy, ^ lifts, ? opens out); a word that names no material is said in a speech bubble.`,
-  `Useful by default: / composes the day from whichever materials exist, a ground and a figure with a law, so the same date always gives the same picture, /tomorrow and ?day= let anyone predict one, and a material added changes the days ahead.`,
-  `Every material answers in readings by extension: /paper (composed), /paper.webp and .avif (a stable image to hand Midjourney or any image model as a style reference or image prompt), /paper.txt (its recipe, with the prompt words and job recovered from its source filename), /paper.spw (its line).`,
-  `/catalog is a study: each material's science note, its generator, its job or raw render, and its history in this repository, commit by commit.`,
-  `Nothing runs on a server: every unknown path falls back to one page, whose own script reads the address in the reader's browser.`,
+  `The address is the prompt. Each path word is a material, bottom first, written into the sentence as it stands; a mark before a word is how it meets the one before it (~ drifting through, ^ lifted over, ? broken by); a word that names nothing listed still works and is said as written.`,
+  `Ladders of words, not sliders: scale, light, wear, process, scene, format, lens, beat, trace, face and tone, each a query key whose value is a word. A reader learns the configuration by reading the address it writes.`,
+  `Pivots each change one thing and name the Midjourney technique they teach, with a source: a ladder as a permutation, materials as weighted multi-prompts, chaos, weird, stylize, raw, a random --sref, a seed, the layers reversed. "Learned here" chips name what a reader has tried, kept only in their browser.`,
+  `Views are whose eyes the page is seen through, a first path word ending in @: Minimalist@ (the stage and one short prompt), PromptEngineer@ (every part named, every pivot), StoryDesigner@ (a scene with a moment and a trace).`,
+  `Every listed material has an image Midjourney can fetch by address (/sea-glass.png), and the card copies the prompt with those image links in front. A square card (1080) marks the day.`,
 ][reg=set]
 
 ^"built"{
-  unit = `workers/texture-website: seven materials (four Midjourney textures, three Grok Imagine paper plates) in five categories, two roles; carry.mjs writes the readings, catalog.json, the fallback page, llms.txt and _headers (images cross-origin, so other sites and models can fetch them), and copies the images and tracked raw renders; three tests and check:workers hold it; cluster.json lists it as files with no host yet.`
-  seen = `2026-11-12 in a local preview: / gave paper fiber under the bone plate, which lifts; /tomorrow and ?day=2026-11-13 agreed on linen under a drifting lattice; /paper/~lattice/rain-on-the-window?as=~&for=a+winter+novel drew a thought bubble and "Gathered for a winter novel"; /catalog showed each provenance and first commit.`
-  not_yet = #[
-    `done 2026-11-12: texture.website's route moved to this unit in the dashboard, www redirects to the apex by a Redirect Rule, and site-hub-next dropped its texture branch`,
-    `share cards per address (a file cannot draw one per URL; a weekly set of cards for the day's composition can be carried)`,
-    `the science notes, the reuse line and the copy, which are the creator's`,
+  unit = `Files only, no script: carry.mjs writes per material a .txt (prompt starters with its image link) and a .spw (the material as a line), vocabulary.json (classes, materials, ladders, phrases, techniques, pivots, views, images), the page, llms.txt, robots.txt and _headers (wildcards per extension, inside the 100-rule limit; images cross-origin with ACAO *). Unknown paths fall back to the page, whose script reads the address.`
+  vocabulary = `91 materials in 11 classes (paper to phenomenon), each with tactile qualities and a science note; 11 ladders; 10 pivots over 11 techniques, each technique with a source URL; 3 views.`
+  images = `raster.js draws each material at build time with nothing but Node: a 384px seamless tile, its pattern from the class, its hue from a hash of the word, sixteen tones at four bits a pixel, about 1 MB for all 91. Same word, same bytes; images.json holds each file's hash and the renderer's, so the check compares hashes and skips the 45s render.`
+  tests = `five: files only; carried equals written; every material, ladder word and format complete; every pivot's technique sourced and every view named as a path word; every material's PNG present, small and in the manifest.`
+  live = `2026-11-11, after the deploy: /sea-glass.png answered image/png, 4909 B, PNG signature, ACAO *, CORP cross-origin; terrazzo.png, images.json and sea-glass.txt answered. The www host redirects to the apex by a dashboard Redirect Rule.`
+  line = `The Spw line is written in slot order, mode before body: sea-glass[lamplight, worn, as-found]{~frost-ferns}. This line, written mode after body, held nothing when pasted into factshift.center, and in slot order it holds and draws (@grounding measured). Why is not established: blocks ending }[reg=facet] paste fine, so the canvas does not refuse every bracket after a body.`
+}[reg=facet]
+
+^"open"{
+  untested = #[
+    `whether Midjourney takes a 384px, sixteen-tone indexed PNG as an image prompt or --sref; one session on the Midjourney site settles it`,
+    `whether a hue hashed from the word biases a style reference toward a colour the material never had (sea glass drawn violet); if so, hue by class or by a named colour in the vocabulary`,
+  ][reg=set]
+  gaps = #[
+    `llms.txt lists .json, .txt and .spw readings and not the .png images or the square card, so a model reading it misses the one reading made for image models; it names d and not day=, the key that fixes a date`,
+    `share cards per address: a file cannot draw one per URL; the square card is drawn in the reader's browser and saved by them`,
+    `the science notes, the reuse line and the page copy are the creator's`,
   ][reg=set]
 }[reg=facet]
 
 ^"url_grammar"{
-  # Wonder in the address, for sharing, releases and prediction.
-  layers: "/paper/~linen/*harlequin: three layers, linen drifting, harlequin heavy"
-  words: "/linen/rain-on-the-window: a word that names no material is said aloud"
-  query: .{ say: "the bubble's text", as: "its shape: ~ thought, ? question, ! burst, . statement", day: "any date's composition", for: "whom or what the materials are gathered for: a novel, a course, a character", scale: "tile size", angle: "turn" }
-  release: "a material added on a close changes every day after it; the release is the day the rotation first shows it"
-  prediction: "/tomorrow, or ?day= weeks ahead: people can post what a date will bring, and be right or surprised when a release lands first"
-  study: "a path is a sequence: /paper/linen/wash read as a walk through a material's neighbours, for a lesson or a chapter"
+  # Wonder in the address, as built at 97690ef1 (@llms).
+  materials: "/sea-glass/~frost-ferns: sea glass, with frost ferns drifting through it; a hyphen is a space"
+  marks: ". settled into, ^ lifted over, * heavy with, ~ drifting through, = held against, @ seen through, ? broken by (written %3F in a path), ! cut with, % measured against"
+  ladders: "?light=lamplight&wear=worn: words as values; r rolls every ladder from a seed"
+  day: "with no material in the path the day composes a pair; ?day=2026-12-01 fixes a date, ?d=2 moves from today by days, so only day= names the same picture tomorrow"
+  bubble: "say and as put words in a speech bubble"
+  views: "/minimalist@/sea-glass: the view is the first path word ending @"
+  pivots: "?perm=light&weigh=1&chaos=25: each a key; invert reverses the path itself"
+  retired: "/tomorrow and /yesterday, retired at the creator's word"
+}[reg=facet]
+
+^"theory"{
+  # What the studio shows the rest of the ecosystem, 2026-11-11.
+  reading_coordinates = `A reading has coordinates beyond its address: its form (the extension: .png, .txt, .spw, .json, .md, .svg), its perspective (the @ view) and its focus (where in it a reader stands). texture.website lights form and perspective; factshift.center lights focus; spw.quest lights form (/card) and pivots. @grounding ^"reading" sets out how a host can light all three.`
+  pivot_is_one_slot = `A pivot changes one coordinate and names what it teaches. That is the workbench's pivot ring (one slot changed, by readAt and writeAt, @journal_scales answers_to_the_interaction_cache) met first in prompts. Practice is named by what was tried, never counted as a streak.`
+  ladders_as_gradients = `A ladder is a gradient written in words: five rungs of wear from pristine to ruined. Midjourney's :: weights and {a, b} permutations are graded and alternative values, the same reading the workbench journal records as gradient algebra (side by side sums, ^ the strongest).`
+  window_and_room = `In the line, [lamplight, worn, as-found] is how the material is seen and {~frost-ferns} is what stands on it: lore.land's window and room (@grounding ^"rooms").`
+  layering_is_not_containment = `texture.website reads a{~b} as b lying over a. The canvas reads a body as what a thing contains. One brace carries several relations across hosts (contains, lies on, is part of, happens during); each host states which its bodies mean, as each states what its marks mean.`
+  mark_words_differ = `texture's RELATIONS and the canvas's LAW_SAYS give the same marks different words: ? is "broken by" here and "open out: wonder" there; ! is "cut with" and "make room: action"; = is "held against" and "hold still". Both are readings of one law in two materials. They are evidence for the workbench's one operator table with host aliases (@journal_scales operator_table), which should carry texture's column as an alias.`
 }[reg=facet]
 
 ^"factshift_theory"{
-  # What the canvas's public theory gives texture.website, and what it could give more.
-  now = `the nine laws (LAW_SAYS) decide each layer's blend and motion, so a reader who learns that ~ drifts on the canvas sees it drift here`
+  # What the canvas gives texture.website, and texture the canvas (@plan, factshift.center as design table).
+  given = `The canvas's LAW_SAYS words drove each layer's blend from 11ddb602 until 81c9166c, when texture took its own RELATIONS. Its slot-order line pastes into the canvas and draws two nodes.`
   next = #[
-    `the canvas could publish its law table as a file (laws.json) both sites read, so the words never part`,
-    `a texture composition could open on the canvas as a line (paper{~lattice}), its layers as bodies, each moving by its mark`,
-    `the canvas's stage marks could place a bubble on one of nine named areas, ?at=up-left`,
+    `a "canvas" action on texture's card: the line by ?spw=, so the composition opens as bodies, each moving by its mark`,
+    `an image node on the canvas from a texture image address, written back as ~"…png" (@grounding next)`,
+    `one law table both sites read, once the workbench's operator table lands; until then each keeps its words and says whose they are`,
   ][reg=set]
 }[reg=facet]
 
 ^"mutex"{
-  # mutex.buzz as a card: one holder a cycle today (@mutex); proposed as a twinkling card read from a line.
-  card = `One card a cycle: a line of Spw drawn as a field of lights, each token a point, each bracket a ring, each reference a thread between points. The lights twinkle in the order the line is read: marks first by their law (a ? glints and holds, a ~ shimmers slowly, a ! flashes once), then brackets close outward, then references light both their ends together. The card is the line's reading made visible; two lines that share structure twinkle alike.`
-  algorithm = `Deterministic from the line: the parse gives tokens, depths and references; a cycle's seed gives the palette and phase. A still of the card is its address, so the same card can be shared and seen again.`
-  challenge = `Each cycle's line is chosen to stretch a reader: an unclosed pair, a reference across frames, a valence word, a nested scene. lore.land's game interpreter is invited to read the same line; where its reading and the card's part is a finding for both, offered to lore.land's agent and never changed from here.`
+  # mutex.buzz as a card: one holder a cycle today; proposed as a twinkling card read from a line. Unchanged since the first reading.
+  card = `One card a cycle: a line of Spw drawn as a field of lights, each token a point, each bracket a ring, each reference a thread between points. The lights twinkle in the order the line is read: marks first by their law (a ? glints and holds, a ~ shimmers slowly, a ! flashes once), then brackets close outward, then references light both their ends together. Two lines that share structure twinkle alike.`
+  algorithm = `Deterministic from the line: the parse gives tokens, depths and references; a cycle's seed gives the palette and phase. A still of the card is its address.`
+  challenge = `Each cycle's line is chosen to stretch a reader: an unclosed pair, a reference across frames, a valence word, a nested scene. lore.land's game interpreter is invited to read the same line; where the readings part is a finding offered to lore.land's agent and never changed from here.`
   owners = `the line each cycle, the palette and the copy are the creator's; lore.land's interpreter belongs to its agent`
 }[reg=facet]
 
 ^"decisions"{
-  # Answered by the creator's direction, 2026-11-11, or still open.
   answered = #[
-    `useful by default: the full recipe, prompt words and job links are public`,
-    `the library is whichever materials exist, rotating by day`,
+    `useful by default: the full recipe and prompt words are public`,
+    `the old textures forgotten; materials as words, drawn at build time (2026-11-11)`,
+    `ladders of words in place of basic sliders, until a profile and card pipeline is established on spwashi.com`,
+    `no /tomorrow or /yesterday routes`,
   ][reg=set]
   open = #[
     `the reuse line (a draft on the old texture page, in git at 24148290)`,
-    `makers' pictures and their credit`,
     `the science notes`,
+    `hue by word, by class or by a named colour, after the Midjourney session`,
   ][reg=set]
 }[reg=facet]
 
@@ -98,6 +125,14 @@ summary = #[
 ?["Will people post what a date's composition will be before it arrives?"]{
   #:depth #!experiential ~#lens(projection)
   ~#hypothesis: "Yes, once a release can change it: a prediction is a game when it can be wrong."
-  !probe{ "announce the next release's day without its material; count posts of ?day= links for that day before and after" }
+  !probe{ "announce the next release's day without its material; count shared ?day= links for that date before and after" }
   $%[predict.posts, predict.quiet, predict.confused]
+}
+
+#>wonder_texture_hue_bias
+?["Does a hue hashed from a word pull a Midjourney style reference toward a colour the material never had?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#expect: "yes for --sref, less for an image prompt beside words that name the colour"
+  !probe{ "one prompt, three runs: no image, the hashed-hue PNG as --sref, a grey PNG of the same pattern as --sref; compare the dominant hue of each grid" }
+  $%[hue.pulls, hue.neutral, words.win]
 }

@@ -15,7 +15,9 @@
 # Ground first, then one facet a question. Every facet keeps the same slots:
 # exists, pressure, proposal, probe, owner. Measured lines say so; the rest is
 # reading. Nothing here writes to .spw/_workbench or to lore.land, and the
-# workbench is cited at its mount (be2df2ff).
+# workbench is cited at its mount (be2df2ff). The workbench answered this
+# cache row by row the same day (its journal, one-table-many-scales); the
+# mount moved to 9ef3d223, and ^"answered" maps each row to its answer.
 
 #>workbench_interaction_theory_2026_11
 #:cache #!workbench #!factshift #!quest #!memory #!editor
@@ -47,6 +49,10 @@
 @canvas_words: ~"../../workers/factshift-center/app/src/js/modes/spw/operators.ts"
 @guide: ~"../../workers/spw-quest/src/guide.js"
 @answer: ~"../../workers/spw-quest/src/answer.js"
+@journal_scales: ~"../_workbench/.spw/caches/journal/2026-11-11-one-table-many-scales.spw"
+@journal_address: ~"../_workbench/.spw/caches/journal/2026-11-11-address-grain-edit.spw"
+@texture_cache: ~"./texture-website-redesign-2026-11.spw"
+@grounding: ~"./factshift-paste-grounding-2026-11.spw"
 
 operation = "cache"
 fixity = "experimental"
@@ -218,6 +224,23 @@ summary = #[
   The line: ________`
   why = `@distance: meaning is what survives a canvas, a guide and a story. The prompt makes that claim a procedure, and the disagreements are the useful output.`
   limits = `The prompt has not been run. A model asked to read as motion has not seen motion: pair the canvas seat with a still or a receipt from the canvas itself; @multimodal holds three bounded trials for image models.`
+}[reg=facet]
+
+^"answered"{
+  # 2026-11-11, mount 9ef3d223: what the workbench's journal says to each facet here, and what this site still owes. The journal's entries are proposals; at this mount the packages hold parse columns, likeness and rhymes, and frame separators, and no grainsAt, stepFrom or addressOf.
+  sources = #[@journal_scales, @journal_address][reg=set]
+  word_table = `start_small's first row, one operator-word table, is the journal's operator_table: one table in seed with a column per host and aliases where a host keeps its own word, generating grammars, hovers and quest words. Evidence to carry to it: texture.website's RELATIONS is one more copy, and its words differ from the canvas's LAW_SAYS (? "broken by" there, "open out: wonder" here; @texture_cache ^"theory").`
+  navigation = `The pivot ring is one slot changed (readAt, writeAt), stepped and undone by the grain ladder and edit verbs (@journal_address grain, edit_verbs), placed on a rim by hyperbolic_nesting. texture.website's pivots are the ring met first in prompts: each changes one coordinate and names its technique.`
+  distance = `The ocean's distance is the journal's one_distance: hops, shared label path, depth, vocabulary and time, weighted for memory, index and stage, with every index row carrying its reach.`
+  memory = `The kept line is cache_registry's kept_line: what a cache keys on, its clock, its tiers, what invalidates it, where it lives and until when. The journal names three kinds with three freshness rules (computed under .spw/gen, kept records under .spw/caches, canon on a fixity ladder) and finds this site's cache index missing rows.`
+  editors = `paint_by_meaning: one lexer behind every painter, roles from the operator table, lightness by distance from the focus; the canvas keeps its open-on-line door.`
+  refactoring = `edit_verbs return their edits, inverse and delta; updates_that_teach parses the episode, adds a guess before and a surprise after, and makes a correction a new row.`
+  mount = `reader_stamp: every reader bundle carries the workbench commit and a hash, and a claim names the build it read with. The journal counts four reader builds in service here with no record of which stands behind a claim.`
+  minds = `Each tool owning one question is the host's to keep; the workbench's part is that every receipt is a Spw line another tool can read.`
+  owed_here = #[
+    `review findings the journal sent to this site, received and not re-checked: spw.quest answers / with text when Accept names text/plain anywhere; four pages link /physics?line= without physicsHref; the offline page promises what the shell does not keep; physics refuses @pantry{rice, oats}; the night keys probes by line number; the paste line takes the first tagged line; the genre check looks for scene, change and verify anywhere in the file`,
+    `the grain ladder and focus folding, carried to the canvas's paste and nesting theory (@grounding ^"nesting_and_modality", ^"rooms")`,
+  ][reg=set]
 }[reg=facet]
 
 #>wonder_kept_line

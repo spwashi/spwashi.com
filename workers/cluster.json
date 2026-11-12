@@ -16,8 +16,8 @@
       "spw-quest": { "now": "mixed", "next": "the guide rooms that answer one page without a query; the card and query space and the Accept-negotiated / stay scripted" },
       "smut-today": { "now": "script", "next": "files, with the day picked in the reader's page from a schedule file and the cookie's choices kept in the page" },
       "autonomous-feedback": { "now": "script", "next": "privacy, robots and the kind files as files; measure the five-minute cron and peer fetches before cutting them" },
-      "texture-website": { "now": "files", "next": "texture.website answers here since 2026-11-12 (its route moved in the dashboard); www.texture.website/* can leave site-hub-next, since a Redirect Rule answers it first" },
-      "site-hub-next": { "now": "script", "next": "split by host since 2026-11-12 (src/hosts/), texture.website gone to its own unit; each held name and attention.productions become file-only units carried from renderDoor and their pages; mutex.buzz from a schedule; tealstripesvibes.com stays scripted" }
+      "texture-website": { "now": "files", "next": "texture.website answers here since 2026-11-11 (its route moved in the dashboard); www.texture.website/* can leave site-hub-next, since a Redirect Rule answers it first" },
+      "site-hub-next": { "now": "script", "next": "split by host since 2026-11-11 (src/hosts/), texture.website gone to its own unit; each held name and attention.productions become file-only units carried from renderDoor and their pages; mutex.buzz from a schedule; tealstripesvibes.com stays scripted" }
     }
   },
   "units": [
