@@ -79,6 +79,26 @@ export const COMPONENT_FIXTURES = Object.freeze([
         liminality: 'threshold',
         wonder: 'Wrapping is the physics. A landscape still should show the strip turning, not a single button.',
     },
+    {
+        id: 'home-seat-line',
+        label: 'Home seat line',
+        selector: '#home-lens-reading .home-seat-line',
+        regionSelector: '#home-lens-reading',
+        specimenRoute: '/',
+        cssOwner: 'public/css/routes/surfaces/home.css',
+        snippet: 'design/components/snippets/home-seat-line.html',
+        requiredSlots: [],
+        states: ['reading', 'systems', 'play', 'studio'],
+        layoutScenarios: ['pocket', 'fold', 'broadsheet'],
+        captureFlows: ['region', 'component'],
+        publishTargets: ['design-review', 'agent-brief'],
+        captureValue: 'The chosen seat as one line of Spw — the seat, what it holds, where it leads — authored, so it reads with scripts off.',
+        socialAspects: ['fit', 'landscape'],
+        sizeToken: 'measure-compact',
+        chapter: 'linguistics',
+        liminality: 'entry',
+        wonder: 'Whether a reader can point at the brackets and name the seat before any script runs.',
+    },
 ]);
 export function getComponentFixture(id) {
     return COMPONENT_FIXTURES.find((fixture) => fixture.id === id);
