@@ -1,13 +1,17 @@
 flour on marble (texture.website/flour-on-marble), organic
 Material a living thing made: cells and fibres arranged for a job, which is why bark, crust and honeycomb pattern themselves.
 Qualities to try: growth rings, cells, crumb, lichen, fuzz
+Image, to hand Midjourney as a style reference or an image prompt: https://texture.website/flour-on-marble.png
+
+As a style reference:
+  your subject --sref https://texture.website/flour-on-marble.png --sw 250
 
 As a tile:
   seamless repeating texture of flour on marble, close view, soft overcast light, growth rings, cells --tile --ar 1:1 --no text, letters, logo, watermark
 As a backdrop:
   wide backdrop of flour on marble, across a room, raking dawn light, weathered --ar 16:9 --no text, letters, logo, watermark
 With another material:
-  seamless repeating texture of flour on marble drifting through ledger paper, close view, warm lamplight --tile --ar 1:1 --no text, letters, logo, watermark
+  seamless repeating texture of flour on marble drifting through frost ferns, close view, warm lamplight --tile --ar 1:1 --no text, letters, logo, watermark
 
 Composed and tuned on the page:
-  https://texture.website/flour-on-marble/~ledger-paper?light=lamplight&wear=worn&process=riso
+  https://texture.website/flour-on-marble/~frost-ferns?light=lamplight&wear=worn&process=riso

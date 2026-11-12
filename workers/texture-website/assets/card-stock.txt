@@ -1,6 +1,10 @@
 card stock (texture.website/card-stock), paper
 Plant fibres felted into a sheet; how long the fibres are and how the sheet is pressed decide its tooth, its translucency and how it takes ink.
 Qualities to try: deckled edges, visible fibre, soft tooth, faint ruling, foxing
+Image, to hand Midjourney as a style reference or an image prompt: https://texture.website/card-stock.png
+
+As a style reference:
+  your subject --sref https://texture.website/card-stock.png --sw 250
 
 As a tile:
   seamless repeating texture of card stock, close view, soft overcast light, deckled edges, visible fibre --tile --ar 1:1 --no text, letters, logo, watermark

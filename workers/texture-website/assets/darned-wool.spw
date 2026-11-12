@@ -1,0 +1,7 @@
+#>texture_darned_wool
+#:material #!textile
+
+~darned-wool[textile]{tight weave, raised pile, slubbed yarn}
+
+word: "darned wool"
+science: "Yarns interlaced or looped; the weave or knit, not only the fibre, sets how a cloth drapes, catches light and wears."

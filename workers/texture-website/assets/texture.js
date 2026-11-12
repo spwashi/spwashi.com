@@ -8,7 +8,8 @@
 
 const MARKS = ".^*~=@?!%";
 const NO = "--no text, letters, logo, watermark";
-const DEFAULTS = { scale: "close", light: "overcast", wear: "handled", process: "as found", scene: "wall", format: "tile" };
+const DEFAULTS = { scale: "close", light: "overcast", wear: "handled", process: "as found", scene: "wall", format: "tile", lens: "none", beat: "none", trace: "none", face: "title", tone: "paper" };
+const LEARNED = "texture.learned";
 const $ = (selector) => document.querySelector(selector);
 const slug = (word) => word.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
@@ -26,9 +27,16 @@ const hash = (text) => [...text].reduce((h, c) => (Math.imul(h, 31) + c.charCode
 
 /* ── reading the address ─────────────────────────────────────── */
 
+/** The view a first path word names (minimalist@), or none. */
+function viewOf(vocab, pathname, q) {
+  const first = decodeURIComponent(pathname.split("/").filter(Boolean)[0] ?? "");
+  const named = first.endsWith("@") ? slug(first.slice(0, -1)) : slug(q.get("view") ?? "");
+  return named in vocab.views ? named : "";
+}
+
 function readPath(vocab, pathname) {
   const bySlug = new Map(vocab.materials.map((m) => [m.slug, m]));
-  return pathname.split("/").filter(Boolean).map((raw) => {
+  return pathname.split("/").filter(Boolean).filter((raw) => !decodeURIComponent(raw).endsWith("@")).map((raw) => {
     const part = decodeURIComponent(raw);
     const mark = MARKS.includes(part[0]) ? part[0] : "";
     const key = slug(mark ? part.slice(1) : part);
@@ -54,9 +62,15 @@ function stateOf(url, vocab) {
     const asked = words.find((word) => slug(word) === slug(q.get(key) ?? ""));
     ladders[key] = asked ?? (Number.isFinite(roll) ? words[mix(roll + i * 97) % words.length] : DEFAULTS[key]);
   });
+  const view = viewOf(vocab, url.pathname, q);
+  if (view === "story-designer" && !q.get("format")) ladders.format = "plate";
+  const num = (key, lo, hi) => { const n = Number.parseInt(q.get(key) ?? "", 10); return Number.isFinite(n) ? Math.min(hi, Math.max(lo, n)) : null; };
   const read = readPath(vocab, url.pathname);
   return {
-    day, ladders,
+    day, ladders, view,
+    params: { chaos: num("chaos", 0, 100), weird: num("weird", 0, 3000), stylize: num("stylize", 0, 1000), seed: num("seed", 0, 4294967295), raw: q.has("raw"), sref: q.get("sref") === "random" },
+    perm: q.get("perm") in vocab.ladders ? q.get("perm") : null,
+    weigh: q.has("weigh"),
     layers: read.length ? read : daily(vocab, dayNumber(day)),
     byDay: read.length === 0,
     say: (q.get("say") ?? "").slice(0, 140), as: q.get("as") ?? ".",
@@ -80,44 +94,76 @@ function sentence(vocab, layers) {
   return layers.map(({ material, mark }, i) => (i ? `${vocab.relations[mark]?.says ?? "with"} ${material.word}` : material.word)).join(" ");
 }
 
-function prompts(vocab, state) {
-  const { scale, light, wear, process, scene, format } = state.ladders;
+/** The prompt's parts in order, each named, so PromptEngineer@ can show its anatomy. */
+function anatomy(vocab, state) {
+  const { scale, light, wear, process, scene, format, lens, beat, trace } = state.ladders;
   const p = vocab.phrases;
-  const parts = [
-    `${vocab.formats[format].lead} ${sentence(vocab, state.layers)}`,
-    p.scale[scale], p.light[light],
-    [p.wear[wear], ...qualities(vocab, state.layers)].join(", "),
-    p.process[process], p.scene[scene],
-  ].filter(Boolean);
-  return { midjourney: `${parts.join(", ")} ${vocab.formats[format].params} ${NO} --v 7`, plain: `${parts.join(", ")}.` };
+  const phrase = (key, word) => {
+    if (state.perm !== key) return p[key][word];
+    const words = vocab.ladders[key].filter((w) => p[key][w]);
+    const start = Math.max(0, words.indexOf(word));
+    return `{${[0, 1, 2, 3].map((i) => p[key][words[(start + i) % words.length]]).join(", ")}}`;
+  };
+  const subject = state.weigh && state.layers.length > 1
+    ? state.layers.map(({ material }, i) => `${material.word}::${i ? 1 : 2}`).join(" ")
+    : sentence(vocab, state.layers);
+  if (state.view === "minimalist") return [["subject", `${vocab.formats[format].lead} ${subject}`], ["light", phrase("light", light)]];
+  if (state.view === "story-designer") {
+    // A story opens on its setting, then what it is made of: "a floor of rain on glass heavy with moquette".
+    const SETTING = { wall: "a wall", floor: "a floor", table: "a tabletop", costume: "a costume", sky: "a sky", page: "a page" };
+    return [["setting", `${SETTING[scene]} of ${subject}`], ["light", phrase("light", light)],
+      ["wear", p.wear[wear]], ["trace", p.trace[trace]], ["moment", p.beat[beat]], ["lens", p.lens[lens]]];
+  }
+  return [["subject", `${vocab.formats[format].lead} ${subject}`], ["scale", phrase("scale", scale)], ["light", phrase("light", light)],
+    ["wear", [p.wear[wear], ...qualities(vocab, state.layers)].join(", ")], ["process", phrase("process", process)],
+    ["scene", phrase("scene", scene)], ["lens", phrase("lens", lens)]];
 }
 
-const spwLine = (state) => `${state.layers.reduceRight((inner, { material, mark }) => `${mark}${material.slug}${inner ? `{${inner}}` : ""}`, "")}[${[state.ladders.light, state.ladders.wear, state.ladders.process].map(slug).join(", ")}]`;
+/** The parameters a prompt ends with: the format's, then each pivot that is set. */
+function parameters(vocab, state) {
+  const { chaos, weird, stylize, seed, raw, sref } = state.params;
+  return [vocab.formats[state.ladders.format].params, NO,
+    chaos ? `--chaos ${chaos}` : "", weird ? `--weird ${weird}` : "", stylize !== null && stylize !== 100 ? `--stylize ${stylize}` : "",
+    raw ? "--raw" : "", sref ? "--sref random" : "", seed !== null ? `--seed ${seed}` : ""].filter(Boolean).join(" ");
+}
+
+function prompts(vocab, state) {
+  const parts = anatomy(vocab, state).map(([, text]) => text).filter(Boolean);
+  return { midjourney: `${parts.join(", ")} ${parameters(vocab, state)}`, plain: `${parts.join(", ").replace(/::\d/g, "").replace(/[{}]/g, "")}.` };
+}
+
+/**
+ * The composition as one line in Spw's slot order, word[mode]{body}: the ladders
+ * sit in the first material's mode and the rest nest in its body, so the line
+ * pastes onto factshift.center (2026-11-12: written mode-after-body, it held nothing).
+ */
+const spwLine = (state) => {
+  const [first, ...rest] = state.layers;
+  const inner = rest.reduceRight((acc, { material, mark }) => `${mark}${material.slug}${acc ? `{${acc}}` : ""}`, "");
+  const mode = [state.ladders.light, state.ladders.wear, state.ladders.process].map(slug).join(", ");
+  return `${first.mark}${first.material.slug}[${mode}]${inner ? `{${inner}}` : ""}`;
+};
 
 /* ── the sketch ──────────────────────────────────────────────── */
 
 const PERIOD = { macro: 96, close: 48, "arm's length": 28, room: 16, far: 9 };
 const ASPECT = { tile: "1 / 1", plate: "16 / 9", sheet: "4 / 5" };
-const SAT = { paper: 22, textile: 48, stone: 10, wood: 42, metal: 6, glass: 30, ceramic: 52, pigment: 72, polymer: 18, organic: 46 };
 
-/** A class's drawn base at period p, in the word's own hue. */
+const ORIGIN = "https://texture.website";
+
+/** A material's image: the file texture.website draws for it (src/raster.js), the one a reader copies for Midjourney. */
+const imageOf = (material) => `${ORIGIN}/${material.slug}.png`;
+
+/**
+ * A layer's base at period p: a listed material draws from its image, tiled at
+ * the scale's size; a word of no listed class is a quiet check in its own hue,
+ * so the prompt leads and the sketch only hints.
+ */
 function base(material, p) {
-  const h = hash(material.slug) % 360, s = SAT[material.cls] ?? 30;
-  const c = (l, a = 1) => `hsl(${h} ${s}% ${l}% / ${a})`;
-  const pairs = {
-    paper: [[`repeating-linear-gradient(0deg, ${c(30, 0.12)} 0 1px, transparent 1px ${p}px)`, "auto"], [`linear-gradient(170deg, ${c(92)}, ${c(80)})`, "auto"]],
-    textile: [[`repeating-linear-gradient(0deg, ${c(40, 0.55)} 0 ${p / 6}px, transparent ${p / 6}px ${p / 3}px)`, "auto"], [`repeating-linear-gradient(90deg, ${c(65, 0.7)} 0 ${p / 6}px, ${c(50)} ${p / 6}px ${p / 3}px)`, "auto"]],
-    stone: [[`radial-gradient(circle, ${c(25, 0.5)} 0 1.5px, transparent 2px)`, `${p / 3}px ${p / 3}px`], [`radial-gradient(circle, ${c(90, 0.6)} 0 3px, transparent 4px)`, `${p * 0.9}px ${p * 0.7}px`], [`linear-gradient(${c(70)}, ${c(62)})`, "auto"]],
-    wood: [[`repeating-linear-gradient(90deg, ${c(55)} 0 ${p * 0.3}px, ${c(35)} ${p * 0.34}px, ${c(62)} ${p * 0.8}px, ${c(50)} ${p}px)`, "auto"]],
-    metal: [[`repeating-linear-gradient(0deg, ${c(82)} 0 1px, ${c(66)} 1px 2px, ${c(76)} 2px 3px)`, "auto"], [`linear-gradient(100deg, ${c(60)}, ${c(88)} 45%, ${c(58)})`, "auto"]],
-    glass: [[`radial-gradient(circle, ${c(96, 0.8)} 0 2px, transparent 3px)`, `${p * 0.7}px ${p * 1.1}px`], [`linear-gradient(135deg, ${c(75)}, ${c(45)})`, "auto"]],
-    ceramic: [[`linear-gradient(${c(30)} 2px, transparent 2px), linear-gradient(90deg, ${c(30)} 2px, transparent 2px)`, `${p * 2}px ${p * 2}px`], [`linear-gradient(${c(72)}, ${c(64)})`, "auto"]],
-    pigment: [[`radial-gradient(circle at 30% 40%, ${c(45, 0.7)}, transparent 55%)`, `${p * 4}px ${p * 3}px`], [`radial-gradient(circle at 70% 60%, ${c(60, 0.6)}, transparent 50%)`, `${p * 5}px ${p * 4}px`], [`linear-gradient(${c(90)}, ${c(84)})`, "auto"]],
-    polymer: [[`radial-gradient(circle, ${c(55)} 0 24%, ${c(30)} 27% 31%, transparent 34%)`, `${p}px ${p}px`], [`linear-gradient(${c(28)}, ${c(22)})`, "auto"]],
-    organic: [[`radial-gradient(circle, transparent 0 38%, ${c(30, 0.7)} 41% 45%, transparent 48%)`, `${p}px ${p * 0.86}px`], [`linear-gradient(${c(62)}, ${c(52)})`, "auto"]],
-  };
-  // A word of no listed class: a quiet check in its own hue, so the prompt leads and the sketch only hints.
-  return pairs[material.cls] ?? [[`conic-gradient(${c(86)} 25%, ${c(78)} 0 50%, ${c(86)} 0 75%, ${c(78)} 0)`, `${p}px ${p}px`]];
+  if (material.cls) return [[`url("/${material.slug}.png")`, `${p * 8}px ${p * 8}px`]];
+  const h = hash(material.slug) % 360;
+  const c = (l) => `hsl(${h} 30% ${l}%)`;
+  return [[`conic-gradient(${c(86)} 25%, ${c(78)} 0 50%, ${c(86)} 0 75%, ${c(78)} 0)`, `${p}px ${p}px`]];
 }
 
 const LIGHT = {
@@ -198,54 +244,290 @@ function neighbours(vocab, material) {
 
 function swapHref(state, index, other) {
   const path = state.layers.map(({ material, mark }, i) => `${mark === "?" ? "%3F" : mark}${i === index ? other.slug : material.slug}`).join("/");
-  return `/${path}${location.search}`;
+  const view = decodeURIComponent(location.pathname.split("/").filter(Boolean)[0] ?? "").endsWith("@") ? `/${location.pathname.split("/").filter(Boolean)[0]}` : "";
+  return `${view}/${path}${location.search}`;
 }
 
-/** Each ladder is a row of words; a word chosen is written into the address and the sentence. */
-function drawLadders(vocab, state, set) {
+/* ── configuration: ladders in three bands ────────────────────── */
+
+const BANDS = [["look", ["scale", "light", "wear"]], ["make", ["process", "format", "lens"]], ["use", ["scene"]], ["story", ["beat", "trace"]], ["card", ["face", "tone"]]];
+
+/** What a ladder's current word adds to the sentence, said beside it. */
+function phraseOf(vocab, key, word) {
+  if (key === "format") return `${vocab.formats[word].lead} … ${vocab.formats[word].params}`;
+  if (key === "face") return `the square card's band says the ${word}`;
+  if (key === "tone") return `the band is ${word}`;
+  return vocab.phrases[key]?.[word] || "adds nothing";
+}
+
+/**
+ * Each ladder is a row of words, a radio group the arrow keys walk. The phrase it
+ * adds stands beside it; a lock keeps it through "roll all". Every choice is
+ * written into the address, so a configuration is a link.
+ */
+function drawLadders(vocab, state, locks, set) {
   const section = $(".ladders");
   section.hidden = false;
-  section.replaceChildren(
-    ...Object.entries(vocab.ladders).map(([key, words]) => node("div", { class: "ladder", role: "radiogroup", "aria-label": key }, [
+  const ladder = (key) => {
+    const words = vocab.ladders[key];
+    const rungs = words.map((word) => node("button", {
+      type: "button", role: "radio", tabIndex: word === state.ladders[key] ? 0 : -1,
+      "aria-checked": String(word === state.ladders[key]), onclick: () => set({ [key]: slug(word) }),
+    }, [word]));
+    const group = node("div", { class: "rungs", role: "radiogroup", "aria-label": key }, rungs);
+    group.addEventListener("keydown", (event) => {
+      const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
+      if (!step) return;
+      event.preventDefault();
+      const next = words[(words.indexOf(state.ladders[key]) + step + words.length) % words.length];
+      set({ [key]: slug(next) }, key);
+    });
+    const locked = locks.has(key);
+    return node("div", { class: `ladder${locked ? " locked" : ""}` }, [
       node("span", { class: "key" }, [key]),
-      node("div", { class: "rungs" }, words.map((word) => node("button", { type: "button", role: "radio", "aria-checked": String(word === state.ladders[key]), onclick: () => set({ [key]: slug(word) }) }, [word]))),
-      node("button", { type: "button", class: "roll", "aria-label": `roll ${key}`, onclick: () => { const others = words.filter((w) => w !== state.ladders[key]); set({ [key]: slug(others[Math.floor(Math.random() * others.length)]) }); } }, ["↻"]),
-    ])),
-    node("div", { class: "ladder neighbours" }, [
-      node("span", { class: "key" }, ["swap"]),
-      node("div", { class: "rungs" }, state.layers.flatMap(({ material }, i) => neighbours(vocab, material).map((other) => node("a", { href: swapHref(state, i, other) }, [`${material.word} → ${other.word}`])))),
-      node("button", { type: "button", class: "roll", "aria-label": "roll every ladder", onclick: () => set(null) }, ["↻ all"]),
+      node("div", { class: "rung-column" }, [group, node("span", { class: "phrase" }, [`→ ${phraseOf(vocab, key, state.ladders[key])}`])]),
+      node("span", { class: "tools" }, [
+        node("button", { type: "button", class: "lock", "aria-pressed": String(locked), "aria-label": `${locked ? "unlock" : "lock"} ${key}`, onclick: () => set({ lock: key }) }, [locked ? "■" : "□"]),
+        node("button", { type: "button", class: "roll", "aria-label": `roll ${key}`, disabled: locked, onclick: () => { const others = words.filter((w) => w !== state.ladders[key]); set({ [key]: slug(others[Math.floor(Math.random() * others.length)]) }); } }, ["↻"]),
+      ]),
+    ]);
+  };
+  section.replaceChildren(
+    ...BANDS.map(([band, keys]) => node("div", { class: `band band-${band}` }, [node("h2", { class: "band-name" }, [band]), ...keys.map(ladder)])),
+    node("div", { class: "band" }, [
+      node("h2", { class: "band-name" }, ["swap"]),
+      node("div", { class: "ladder neighbours" }, [
+        node("span", { class: "key" }, ["kin"]),
+        node("div", { class: "rungs" }, state.layers.flatMap(({ material }, i) => neighbours(vocab, material).map((other) => node("a", { href: swapHref(state, i, other) }, [`${material.word} → ${other.word}`])))),
+        node("span", { class: "tools" }, [node("button", { type: "button", class: "roll all", "aria-label": "roll every unlocked ladder", onclick: () => set(null) }, ["↻ all"])]),
+      ]),
     ]),
   );
 }
 
-function drawPrompts(vocab, state, address) {
+/* ── pivots: moves that teach a technique ────────────────────── */
+
+/** Techniques tried, kept in this browser only, shown and forgettable. */
+function learned() { try { return new Set(JSON.parse(localStorage.getItem(LEARNED) ?? "[]")); } catch { return new Set(); } }
+function learn(id) { try { const tried = learned(); tried.add(id); localStorage.setItem(LEARNED, JSON.stringify([...tried])); } catch { /* a private window keeps nothing */ } }
+function forget() { try { localStorage.removeItem(LEARNED); } catch { /* nothing kept */ } }
+
+function pivotValue(state, id) {
+  return { chaos: state.params.chaos, weird: state.params.weird, stylize: state.params.stylize, seed: state.params.seed,
+    raw: state.params.raw ? "on" : null, sref: state.params.sref ? "on" : null, permute: state.perm, weigh: state.weigh ? "on" : null,
+    lens: state.ladders.lens !== "none" ? state.ladders.lens : null }[id] ?? null;
+}
+
+function drawPivots(vocab, state, pivot) {
+  const section = $(".pivots");
+  section.hidden = false;
+  const tried = learned();
+  section.replaceChildren(
+    node("h2", { class: "band-name" }, ["pivot"]),
+    node("div", { class: "pivot-row" }, vocab.pivots.map((p) => {
+      const t = vocab.techniques[p.technique];
+      const value = pivotValue(state, p.id);
+      return node("div", { class: `pivot${value !== null ? " set" : ""}` }, [
+        node("button", { type: "button", onclick: () => { learn(p.technique); pivot(p); } }, [p.label, value !== null ? node("span", { class: "value" }, [` ${value}`]) : ""]),
+        node("span", { class: "says" }, [p.says]),
+        node("span", { class: "technique" }, [node("code", {}, [t.syntax]), ` ${t.note} `, node("a", { href: t.source, rel: "noopener", target: "_blank" }, ["source"])]),
+      ]);
+    })),
+    node("div", { class: "learned" }, [
+      node("span", { class: "key" }, ["learned here"]),
+      ...Object.entries(vocab.techniques).map(([id, t]) => node("span", { class: `chip${tried.has(id) ? " tried" : ""}`, title: `${t.syntax}: ${t.note}` }, [t.name])),
+      node("span", { class: "count" }, [`${[...tried].filter((id) => id in vocab.techniques).length} of ${Object.keys(vocab.techniques).length} tried, kept in this browser`]),
+      node("button", { type: "button", onclick: () => { forget(); pivot(null); } }, ["forget"]),
+    ]),
+  );
+}
+
+/** Apply one pivot to the address. */
+function applyPivot(vocab, state, url, p) {
+  const q = url.searchParams;
+  const cycle = (key, steps, fallback) => {
+    const current = state.params[key] ?? fallback;
+    const next = steps[(steps.indexOf(current) + 1) % steps.length] ?? steps[0];
+    if (next === fallback) q.delete(key); else q.set(key, String(next));
+  };
+  if (p.id === "invert") {
+    const marks = state.layers.map(({ mark }) => (mark === "?" ? "%3F" : mark));
+    const view = state.view ? `/${state.view}@` : "";
+    url.pathname = `${view}/${state.layers.map(({ material }) => material.slug).reverse().map((word, i) => `${marks[i]}${word}`).join("/")}`;
+  } else if (p.id === "permute") {
+    const keys = ["light", "scale", "process", "scene", "lens"];
+    const next = keys[(keys.indexOf(state.perm) + 1)];
+    if (next) q.set("perm", next); else q.delete("perm");
+  } else if (p.id === "weigh" || p.id === "raw") {
+    if (q.has(p.id)) q.delete(p.id); else q.set(p.id, "1");
+  } else if (p.id === "sref") {
+    if (q.has("sref")) q.delete("sref"); else q.set("sref", "random");
+  } else if (p.id === "seed") {
+    q.set("seed", String(Math.floor(Math.random() * 4294967295)));
+  } else if (p.id === "lens") {
+    const others = vocab.ladders.lens.filter((w) => w !== state.ladders.lens && w !== "none");
+    q.set("lens", slug(others[Math.floor(Math.random() * others.length)]));
+  } else if (p.steps) {
+    cycle(p.id, p.steps, p.id === "stylize" ? 100 : 0);
+  }
+}
+
+/* ── the card: one composition across its modes ──────────────── */
+
+/** A button that copies, and says so for a moment. */
+function copyButton(label, text) {
+  const button = node("button", { type: "button", class: "action" }, [label]);
+  button.addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(text); button.textContent = "copied"; } catch { button.textContent = "select it"; }
+    setTimeout(() => { button.textContent = label; }, 1400);
+  });
+  return button;
+}
+
+/** A reading made here, in the browser, and handed over as a file. */
+function takeAs(ext, filename, text, type) {
+  return node("button", { type: "button", class: "ext", onclick: () => {
+    const link = node("a", { href: URL.createObjectURL(new Blob([text], { type })), download: `${filename}.${ext}` });
+    document.body.append(link);
+    link.click();
+    link.remove();
+  } }, [`.${ext}`]);
+}
+
+/* ── the square style card: one composition, marked with its day ── */
+
+const TONES = { paper: { band: "#f2f0eb", ink: "#1d1d1b", mark: "#c8402a" }, ink: { band: "#1d1d1b", ink: "#f2f0eb", mark: "#ef6a52" }, signal: { band: "#c8402a", ink: "#fdfcf8", mark: "#1d1d1b" } };
+
+/** What the band says, by the face ladder. */
+function faceText(vocab, state) {
+  const { plain } = prompts(vocab, state);
+  return { title: state.layers.map(({ material }) => material.word).join(" · "), prompt: plain, spw: spwLine(state),
+    facets: Object.keys(vocab.ladders).filter((k) => !["face", "tone"].includes(k)).map((k) => state.ladders[k]).filter((w) => w !== "none").join(" · ") }[state.ladders.face];
+}
+
+/** Words broken into lines of about n characters, for SVG text. */
+const lines = (text, n) => text.split(" ").reduce((out, word) => { const last = out[out.length - 1]; if (last && (last + " " + word).length <= n) out[out.length - 1] = `${last} ${word}`; else out.push(word); return out; }, []);
+const esc = (text) => String(text).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+
+/** The card as one SVG file: the sketch in a foreignObject under its filter, the band and the day's mark as type. */
+function styleCardSvg(vocab, state, address) {
+  const tone = TONES[state.ladders.tone];
+  // Images by their full address, so the card still draws once it is saved elsewhere.
+  const layers = [...$(".layers").children].map((layer) => `<div xmlns="http://www.w3.org/1999/xhtml" style="${esc(`position:absolute;inset:0;background-repeat:repeat;${layer.style.cssText.replaceAll('url("/', `url("${ORIGIN}/`)}`)}"></div>`).join("");
+  const text = faceText(vocab, state);
+  const big = state.ladders.face === "title";
+  const body = lines(text, big ? 26 : 46).slice(0, big ? 3 : 6);
+  const size = big ? 64 : 34, lead = big ? 72 : 44;
+  const bandTop = 1080 - 120 - body.length * lead;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
+<defs><filter id="material" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">${filterMarkup(state)}</filter></defs>
+<foreignObject x="0" y="0" width="1080" height="1080"><div xmlns="http://www.w3.org/1999/xhtml" style="position:relative;width:1080px;height:1080px;filter:url(#material)">${layers}</div></foreignObject>
+<rect x="0" y="0" width="1080" height="96" fill="${tone.band}"/>
+<text x="48" y="62" font-family="ui-monospace, Menlo, monospace" font-size="30" letter-spacing="3" fill="${tone.mark}">FIG. ${figureOf(state.day)}</text>
+<text x="1032" y="62" text-anchor="end" font-family="ui-monospace, Menlo, monospace" font-size="30" letter-spacing="3" fill="${tone.ink}">${state.day}</text>
+<rect x="0" y="${bandTop}" width="1080" height="${1080 - bandTop}" fill="${tone.band}"/>
+${body.map((line, i) => `<text x="48" y="${bandTop + 64 + i * lead}" font-family="Georgia, serif" font-size="${size}" fill="${tone.ink}">${esc(line)}</text>`).join("\n")}
+<text x="48" y="1048" font-family="ui-monospace, Menlo, monospace" font-size="22" fill="${tone.mark}">${esc(address.replace(/^https?:\/\//, "").slice(0, 84))}</text>
+</svg>
+`;
+}
+
+/** The card on the page, square, as it will be saved. */
+function drawStyleCard(vocab, state) {
+  const tone = TONES[state.ladders.tone];
+  const sketch = $(".layers").cloneNode(true);
+  const square = node("figure", { class: `style-card face-${state.ladders.face}`, "aria-label": "Square style card" }, [
+    sketch,
+    node("figcaption", { class: "style-mark" }, [node("span", {}, [`Fig. ${figureOf(state.day)}`]), node("span", {}, [state.day])]),
+    node("p", { class: "style-band" }, [faceText(vocab, state)]),
+  ]);
+  square.style.setProperty("--band", tone.band);
+  square.style.setProperty("--band-ink", tone.ink);
+  square.style.setProperty("--band-mark", tone.mark);
+  return square;
+}
+
+function drawCard(vocab, state, address) {
   const { midjourney, plain } = prompts(vocab, state);
-  const copy = (text) => node("button", { type: "button", onclick: () => navigator.clipboard?.writeText(text) }, ["copy"]);
-  const row = (key, text) => node("p", {}, [node("span", { class: "key" }, [key]), " ", node("code", {}, [text]), " ", copy(text)]);
-  $(".prompts").replaceChildren(row("midjourney", midjourney), row("any model", plain), row("spw", spwLine(state)), row("url", address));
+  const line = spwLine(state);
+  const name = state.layers.map(({ material, mark }) => `${mark === "?" ? "q" : mark === "." ? "" : mark}${material.slug}`).join("").replace(/[^a-z0-9~*^=@!%-]/g, "") || "texture";
+  // The facets that shape the prompt, leaving out the card's own and any left at none.
+  const images = state.layers.filter(({ material }) => material.cls).map(({ material }) => imageOf(material));
+  const facets = Object.keys(vocab.ladders).filter((key) => !["face", "tone"].includes(key)).map((key) => state.ladders[key]).filter((word) => word !== "none");
+  const json = JSON.stringify({ address, layers: state.layers.map(({ material, mark }) => ({ word: material.word, class: material.cls, mark })), ladders: state.ladders, prompts: { midjourney, plain }, spw: line }, null, 2);
+  const md = `## ${state.layers.map(({ material }) => material.word).join(" · ")}\n\n${plain}\n\n\`\`\`\n${midjourney}\n\`\`\`\n\n\`${line}\`\n\n${address}\n`;
+  const spwFile = `#>texture_card\n#:texture #!${state.ladders.format}\n\n${line}\n\nprompt: "${plain.replaceAll('"', "'")}"\naddress: "${address}"\n`;
+  const thumb = node("div", { class: "thumb", "aria-hidden": "true" }, [$(".layers").cloneNode(true)]);
+  thumb.style.aspectRatio = $(".stage").style.aspectRatio;
+  $(".card").replaceChildren(
+    node("header", { class: "card-head" }, [node("span", { class: "key" }, [$(".slide .fig").textContent]), node("span", { class: "card-title" }, [state.layers.map(({ material }) => material.word).join(" · ")])]),
+    node("div", { class: "card-body" }, [
+      thumb,
+      node("div", { class: "card-words" }, [
+        node("p", { class: "card-prompt" }, [plain]),
+        node("ol", { class: "anatomy" }, [...anatomy(vocab, state).filter(([, text]) => text).map(([part, text]) => node("li", {}, [node("span", { class: "key" }, [part]), " ", text])), node("li", {}, [node("span", { class: "key" }, ["parameters"]), " ", parameters(vocab, state)])]),
+        node("p", { class: "card-facets" }, [facets.join(" · ")]),
+        node("p", { class: "card-line" }, [node("code", {}, [line])]),
+      ]),
+    ]),
+    drawStyleCard(vocab, state),
+    node("div", { class: "card-actions" }, [
+      copyButton("midjourney", midjourney),
+      ...(images.length ? [copyButton("midjourney + images", `${midjourney} --sref ${images.join(" ")} --sw 250`)] : []),
+      copyButton("prompt", plain), copyButton("spw", line), copyButton("link", address),
+    ]),
+    images.length ? node("div", { class: "images" }, [node("span", { class: "key" }, ["images"]), ...state.layers.filter(({ material }) => material.cls).map(({ material }) =>
+      node("span", { class: "image-link" }, [node("img", { src: `/${material.slug}.png`, alt: "", width: 40, height: 40 }), node("a", { href: `/${material.slug}.png` }, [material.word]), copyButton("copy image link", imageOf(material))]))]) : "",
+    node("footer", { class: "card-foot" }, [
+      node("div", { class: "take" }, [node("span", { class: "key" }, ["take it as"]), takeAs("txt", name, `${plain}\n\n${midjourney}\n`, "text/plain"), takeAs("spw", name, spwFile, "text/plain"), takeAs("json", name, json, "application/json"), takeAs("md", name, md, "text/markdown"), takeAs("svg", `${name}-${state.day}`, styleCardSvg(vocab, state, address), "image/svg+xml")]),
+      node("div", { class: "readings" }, [node("span", { class: "key" }, ["each material"]), ...state.layers.filter(({ material }) => material.cls).map(({ material }) => node("span", { class: "reading" }, [material.word, " ", node("a", { href: `/${material.slug}.png` }, [".png"]), " ", node("a", { href: `/${material.slug}.txt` }, [".txt"]), " ", node("a", { href: `/${material.slug}.spw` }, [".spw"])]))]),
+      node("p", { class: "card-address" }, [address.replace(/^https?:\/\//, "")]),
+    ]),
+  );
 }
 
 async function main() {
   const vocab = await (await fetch("/vocabulary.json")).json();
   document.body.classList.add("composed");
   const url = new URL(location.href);
-  if (url.pathname === "/catalog" || url.pathname === "/catalog/") { $(".slide").hidden = true; return; }
-  const render = () => {
+  if (url.pathname === "/catalog" || url.pathname === "/catalog/") { $(".slide").hidden = true; $(".card").hidden = true; return; }
+  const render = (focusKey) => {
     const state = stateOf(url, vocab);
+    const locks = new Set((url.searchParams.get("lock") ?? "").split(",").filter((key) => key in vocab.ladders));
+    document.body.dataset.view = state.view || "studio";
+    const words = state.byDay ? "" : state.layers.map(({ material, mark }) => `${mark === "?" ? "%3F" : mark}${material.slug}`).join("/");
+    for (const link of document.querySelectorAll(".views a")) {
+      const key = (link.getAttribute("href").match(/^\/([a-z-]+)@/) ?? [])[1] ?? "";
+      link.href = `${key ? `/${key}@` : ""}/${words}${url.search}`;
+      if (key === state.view) link.setAttribute("aria-current", "page"); else link.removeAttribute("aria-current");
+    }
     drawStage(vocab, state);
     drawSlide(vocab, state);
-    drawPrompts(vocab, state, url.href);
-    drawLadders(vocab, state, (change) => {
-      if (change === null) {
-        for (const key of Object.keys(vocab.ladders)) url.searchParams.delete(key);
-        url.searchParams.set("r", String(Math.floor(Math.random() * 1e6)));
-      } else {
-        for (const [key, value] of Object.entries(change)) url.searchParams.set(key, value);
-      }
+    drawPivots(vocab, state, (p) => {
+      if (p) applyPivot(vocab, state, url, p);
       history.replaceState(null, "", url);
       render();
     });
+    drawLadders(vocab, state, locks, (change, key) => {
+      if (change === null) {
+        // Roll every unlocked ladder; a locked one keeps its word in the address.
+        const seed = Math.floor(Math.random() * 1e6);
+        Object.entries(vocab.ladders).forEach(([k, words], i) => {
+          if (locks.has(k)) url.searchParams.set(k, slug(state.ladders[k]));
+          else url.searchParams.set(k, slug(words[mix(seed + i * 97) % words.length]));
+        });
+        url.searchParams.delete("r");
+      } else if (change.lock) {
+        if (locks.has(change.lock)) locks.delete(change.lock); else { locks.add(change.lock); url.searchParams.set(change.lock, slug(state.ladders[change.lock])); }
+        if (locks.size) url.searchParams.set("lock", [...locks].join(",")); else url.searchParams.delete("lock");
+      } else {
+        for (const [k, value] of Object.entries(change)) url.searchParams.set(k, value);
+      }
+      history.replaceState(null, "", url);
+      render(key);
+    });
+    drawCard(vocab, state, url.href);
+    if (focusKey) document.querySelector(`.rungs[aria-label="${focusKey}"] [aria-checked="true"]`)?.focus();
   };
   render();
 }

@@ -1,6 +1,10 @@
 chalk pastel (texture.website/chalk-pastel), pigment
 Coloured particles carried in a binder or water; how the particles settle as the carrier leaves makes washes, blooms and granulation.
 Qualities to try: granulation, bloom edges, misregistration, flat ink, brush drag
+Image, to hand Midjourney as a style reference or an image prompt: https://texture.website/chalk-pastel.png
+
+As a style reference:
+  your subject --sref https://texture.website/chalk-pastel.png --sw 250
 
 As a tile:
   seamless repeating texture of chalk pastel, close view, soft overcast light, granulation, bloom edges --tile --ar 1:1 --no text, letters, logo, watermark

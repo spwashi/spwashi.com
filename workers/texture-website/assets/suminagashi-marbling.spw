@@ -1,0 +1,7 @@
+#>texture_suminagashi_marbling
+#:material #!pigment
+
+~suminagashi-marbling[pigment]{granulation, bloom edges, misregistration}
+
+word: "suminagashi marbling"
+science: "Coloured particles carried in a binder or water; how the particles settle as the carrier leaves makes washes, blooms and granulation."

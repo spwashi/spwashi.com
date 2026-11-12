@@ -1,6 +1,10 @@
 granite (texture.website/granite), stone
 Minerals bound by heat, pressure or cement; the grain size and what fills the gaps between grains decide its pattern and polish.
 Qualities to try: polished face, honed matte, veining, fine aggregate, chipped arris
+Image, to hand Midjourney as a style reference or an image prompt: https://texture.website/granite.png
+
+As a style reference:
+  your subject --sref https://texture.website/granite.png --sw 250
 
 As a tile:
   seamless repeating texture of granite, close view, soft overcast light, polished face, honed matte --tile --ar 1:1 --no text, letters, logo, watermark

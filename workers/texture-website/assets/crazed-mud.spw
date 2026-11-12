@@ -1,0 +1,7 @@
+#>texture_crazed_mud
+#:material #!phenomenon
+
+~crazed-mud[phenomenon]{branching, concentric rings, iridescence}
+
+word: "crazed mud"
+science: "Patterns no one made: water, salt, frost and oxidation arranging themselves as they move, dry or grow, each by a rule a student can name."

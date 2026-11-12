@@ -1,0 +1,7 @@
+#>texture_verdigris_paint
+#:material #!pigment
+
+~verdigris-paint[pigment]{granulation, bloom edges, misregistration}
+
+word: "verdigris paint"
+science: "Coloured particles carried in a binder or water; how the particles settle as the carrier leaves makes washes, blooms and granulation."
