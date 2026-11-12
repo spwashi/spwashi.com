@@ -1,0 +1,326 @@
+# Two cross products read for the rules that generate them (2026-11-12) — cache
+#
+# The creator wrote two products, lore.land in thirteen modes against
+# factshift.center staged as a tool with windows, submenus and edges, and
+# spw.quest in five modes against factshift.center in four, and asked for
+# several agents "to evaluate the cross products and design loops; aim to
+# improve the theory towards re-derivation". In the same sitting they added:
+# what spwashi.com can share (attention, arcs, linguistic affordances,
+# scripts); contradictions, ergonomics, symmetry and gestalt; momentum, labels
+# and label clusters; the canvas against the workbench's caches and memory;
+# spw.quest's regions, names, particles and editors; and a developmental
+# reading (mastery-first rigor, a reader raised on touch, mathematics for
+# music, physics for tropes, the canvas as an evolving surface, spw.quest as a
+# self-optimizing library, autonomous.feedback).
+# Fifteen read-only passes: eight evaluators, five developmental forks, two
+# blind re-derivations. Rows marked checked were re-read or re-run at the line
+# by the session that wrote this file; survey rows are one pass's reading. One
+# pass ran the canvas's reading path over the workbench's caches from a scratch
+# directory. Nothing in the app, the mount or lore.land changed. App and
+# lore.land paths are cited as text: neither checkout belongs to this tree.
+# The next-session prime says to open no new cache; that rule is for a session
+# implementing from plans. A broad idea goes to a cache first (AGENTS.md).
+# This file decides nothing, renames nothing and opens no patch.
+
+#>cross_product_rederivation_2026_11
+#:cache #!theory #!rederivation #!factshift #!quest #!lore
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@sigil_lore: ~"../language/sigil-geometry-lore.spw"
+@namespace: ~"../language/operator-namespace-alignment.spw"
+@surface: ~"../surfaces/factshift-center.spw"
+@interaction: ~"../../.agents/plans/factshift-center/INTERACTION.md"
+@tools: ~"../../.agents/plans/factshift-center/TOOLS.md"
+@grounding: ~"./factshift-paste-grounding-2026-11.spw"
+@theory_of_mind: ~"./factshift-theory-of-mind-2026-11.spw"
+@substrate: ~"./factshift-cognitive-substrate-2026-11.spw"
+@interaction_theory: ~"./workbench-interaction-theory-2026-11.spw"
+@quest_router: ~"./quest-library-router-2026-11.spw"
+@pie_loop: ~"./pie-loop-memory-2026-11.spw"
+@boonhonk: ~"./boonhonk-combinatoric-genre.spw"
+@theory_map: ~"./theory-map-2026-10.spw"
+@feedback_product: ~"./feedback-product-2026-09.spw"
+@feedback_contour: ~"./feedback-contour-2026-11.spw"
+@consequence: ~"../conventions/semantic-expression-consequence.spw"
+@braces: ~"../conventions/semantic-braces.spw"
+@compound: ~"../conventions/compound-expressions.spw"
+@differentials: ~"../conventions/comparison-differentials.spw"
+@measurement: ~"../conventions/measurement-contract.spw"
+@mount: ~"../mount.spw"
+@report: ~"../workbench-report.spw"
+@route_audit: ~"../../.agents/plans/route-audit/PLAN.md"
+@curriculum_plan: ~"../../.agents/plans/topic-building-blocks/PLAN.md"
+@component_plan: ~"../../.agents/plans/component-region-personality/PLAN.md"
+@operator_plan: ~"../../.agents/plans/operator-resonance-alignment/PLAN.md"
+@journal_scales: ~"../_workbench/.spw/caches/journal/2026-11-11-one-table-many-scales.spw"
+@journal_address: ~"../_workbench/.spw/caches/journal/2026-11-11-address-grain-edit.spw"
+
+operation = "cache"
+fixity = "experimental"
+expression = ?theory[rederive]{rule.table.residue.loop}<cross>
+
+summary = #[
+  `As written, neither expression is a product. A cell exists only where both factors reach the line's text or the address.`,
+  `The rules that generate what does derive mostly read one table each. A blind reader given the rules alone derived 8 of 59 cells; given the tables and a sentence for each grounded factor, 19, and 5 more conditionally.`,
+  `Eight factor names have no source, and the second product turns on three sentences. Each waits on the creator.`,
+  `Loops close only as text. The canvas keeps records the way a cache is kept. Most surfaces show and few check.`,
+][reg=set]
+
+contents = #[
+  ~"./cross-product-rederivation-2026-11.spw#sense",
+  ~"./cross-product-rederivation-2026-11.spw#product",
+  ~"./cross-product-rederivation-2026-11.spw#tables",
+  ~"./cross-product-rederivation-2026-11.spw#rules",
+  ~"./cross-product-rederivation-2026-11.spw#blind",
+  ~"./cross-product-rederivation-2026-11.spw#residue",
+  ~"./cross-product-rederivation-2026-11.spw#loops",
+  ~"./cross-product-rederivation-2026-11.spw#memory",
+  ~"./cross-product-rederivation-2026-11.spw#labels",
+  ~"./cross-product-rederivation-2026-11.spw#sharing",
+  ~"./cross-product-rederivation-2026-11.spw#development",
+  ~"./cross-product-rederivation-2026-11.spw#decisions",
+][reg=set]
+
+^"sense"{
+  # What re-derivation means here, and what was re-read at the line.
+  rederive = `@sigil_lore invariants text_first and derived_not_authored: no attribute survives a paste, but the prefix does, and any interpreter with the table re-derives the same geometry from bare text. Lifted from a mark to a theory: a cell is theory when a reader holding the factor names, a rule and the one table that rule reads can produce it again. What cannot be produced that way is residue, an authored fact or a name nobody has defined.`
+  checked = #[
+    `@interaction line 5: "Actualizing writes the line, or changes the simulation in a way the line or the address can say back. A behavior that cannot say what it did is outside the examination."`,
+    `the return leg exists: app js/modes/spw/spw-talk.ts:35 and :319 open https://spw.quest/build#spw64= with the row's line and nothing else`,
+    `three caps: workers/spw-quest/src/pivot.js:17 is 200, reader.js:9 is 400, specimens.js:79 is 400`,
+    `the canvas loader joins a new line inside a { } body with "; " unless a comma, semicolon or ~> is already there (spw-talk.ts:92)`,
+    `a concept node is named by its text and nothing branches on which kind it is (app js/modes/spw/line-anatomy.ts:1038-1043)`,
+    `storage: 18 factshift key constants are passed to storage calls in app source, two of them prefixes; survey adds saved-at, the feel parameters, a prime, a frame prefix and the node cache. @interaction_theory names nine.`,
+    `"Register manifold" has a source upstream: the workbench's docs/audits/md/ontological-geometry-audit.md:45, "registers/buffers as addressable state for operators and undo/redo stacks"`,
+    `editors: vscode-spw names https://spw.quest/install twice (src/quest/quest-step.ts:41, walkthrough/grow.md:19); survey found IntelliJ and Neovim naming the same route; none names /read, /pivot or /build`,
+    `@mount line 46 says workbench_pin 850077ab48e0; the submodule head is 9ef3d223b13f, which the pin_note beside it already names`,
+    `zero hits in app source for simplex, barycentric, hysteres or trope, vendor aside, against @substrate's trope pressure, hysteresis and 5-simplex`,
+    `@boonhonk count.mixer says "5-simplex weights"; five weights that sum to one lie on a 4-simplex`,
+    `computed: log2(3/2) is [0; 1, 1, 2, 2, 3, 1, 5] with convergents 1/2, 3/5, 7/12, 24/41, 31/53, and 2^(7/12) is 1.49831; 22/7 and 355/113 are convergents of pi in the same sense`,
+  ][reg=set]
+}[reg=facet]
+
+^"product"{
+  # Readings. The counts are one reader's coverage each, not measurements; ^"blind" is the measurement.
+  types = `The factors are not one type. The left sides mix fields of study, forms, stances and coinages; the right sides mix parts of a tool with roles. A product needs a pairing for every pair, and nothing gives one.`
+  join = `What the evidence supports is a join on a shared key. A cell is filled when both factors have an image in the line's text or in the address, and empty otherwise.`
+  quotient = `A small total product is left after two collapses. The eight kinds become one row because the canvas does not read a kind's name. The bare modes become one row, a reading that changes how the line is drawn and never what it says (@surface). What remains is roughly slots against practices.`
+  coverage = `survey: 10 of 15 bare-mode cells and 14 of 20 spw.quest cells. The 24 kind cells collapse: one built rule gives the eight edge cells, a slot query gives a window cell for map and filter only, and nothing generates a submenu cell.`
+  gathering = `Under lore.land's reading of ( ) as a gathering, (tool{windows, submenus, edges}) arrives whole and the first product has 13 cells, not 39. @component_plan N5 holds that choice.`
+  kinds = `lore.land writes instances in < > and kinds in [ ] (.type[character]). The creator's line and spw.quest write kinds in < >.`
+  commas = `The joins are defined inside a body. A comma list inside [ ] has no stated meaning, and the eight kinds sit in the mode slot by position while wearing concept brackets.`
+}[reg=facet]
+
+^"tables"{
+  # The canon a re-deriver must hold. Nine tables; ^"blind" says what the rules give without them and with them.
+  character = `The first-character table. The workbench owns the names (@namespace); this site's kernel adds rows for physics and reversibility (public/js/kernel/operator-detection.js). Shared by every host: survey found each table in four repos keyed on the same first character.`
+  slots = `The slot order word[mode]{body}(scope)<concept> and the body joins (public/js/semantic/expression-query.js:41 and :244-253). Unexported, so spw.quest keeps a hand copy.`
+  relations = `The canvas's ties: defines, applies, refers, accesses, follows, charges (@surface ^"ties"; app js/simulation/edges/relations.ts). A hand table; the workbench has no form that yields them.`
+  doors = `Inbound keys, caps and what comes back. Half written: workers/factshift-center/version.json lists 37 query keys and public/js/kernel/ecosystem-links.js passes only those. No one table holds every host's doors.`
+  stores = `Storage keys with their plane, cap and clear. Not written anywhere.`
+  inventory = `The tools, their cards and their controls (@tools). Authored, and meant to be.`
+  play = `lore.land's own tables: rooms, the parse read as a game, the trope registry (its .spw/surfaces). Read only from here.`
+  c_gloss = `This site's reading of marks as C-style programming (@sigil_lore): $ as the register, #> as address-of, a.b as member access. & has no gloss.`
+  routes = `spw.quest's regions and what each holds: a line read, a line built, a line and its one-slot neighbours, two lines compared, a shelf (workers/spw-quest/src/index.js; @quest_router ^"routes").`
+}[reg=facet]
+
+^"rules"{
+  # Each: the rule; its kind; the table it reads, where it reads one; where a settled version belongs. Promotion is the creator's.
+  key = `The character is the key; a name is a declared column. Definition, with measured agreement on the character. Reads character. Home: @namespace workbench_relation.`
+  slot = `A pair names its slot by position. Definition. Reads slots. Home: @braces and @compound. "A word names a slot or a mark, never both" is a repair target, not a rule: frame, lens, project and handle each name more than one thing today.`
+  crossing = `Only text crosses hosts. A property meets across two hosts only if it is a function of the line's text; anything else needs a carried field. Measured for every leg built today. Home: @sigil_lore ^"invariants".`
+  sayable = `A state belongs to the examination only if the line or the address can say it back. Definition, already written (@interaction line 5). Reads doors. It predicts gaps as well as features: a window's size and place, a stepped card or control, and the labels state have no address.`
+  planes = `Memory lives on four planes: visit, browser, file, repository (@pie_loop). Browser storage is per origin, so only an address or a file is shared. What text re-derives is a computed cache; what it cannot give is a kept record. Derived from crossing. Reads stores.`
+  one_change = `One change, a fixed remainder. Definition of a pivot. As teaching it is a conjecture @theory_map already probes.`
+  kind_unread = `On the canvas any <x> is one concept node, tied refers to the whole reading, and the kind is not read. Measured. Reads relations. Home: @surface ^"line", which lacks that sentence.`
+  role = `A label's cluster is its role: the name of a mark or slot, the name of an act, where a step lands, what just happened, which line is speaking. A proposal, one pass's taxonomy. Home: @surface ^"annotation".`
+  newline = `A newline is its own separator: a key and value body is a record with no follows tie. From the corpus run. Home: @surface ^"ties" and the loader.`
+  citation = `A citation under a key is a tie named by that key. From the corpus run; the canvas has no tie that crosses a line.`
+  upstream = `Two more are the workbench's own proposals and are cited, not refiled: an address is a frame and a label path (@journal_address), and detail falls with distance from the held construct (@journal_scales).`
+  mode = `A proposal on a proposal, one pass's: a mode of a host is a table keyed by mark, and its cell with a tool practice is that table read at the practice's slot. A window reads it at the tool's own mark, a submenu at the [ ] of the tool's head line, an edge at the joins. A mode with no such table has no cell. Reads play or c_gloss. It is the only rule here that says what a mode does; the operator table it leans on is the creator's call (@tools). ^"blind" over says how it must tighten.`
+  registry = `A proposal, unplayed: a registry's records become nodes, its wired relations become ties, its own measure becomes charge (@quest_router ^"experiments"). It gives trope against edges.`
+  coordinates = `A reading is address, form, perspective and focus (@grounding ^"reading"). spw.quest supplies form and the pivot; the canvas supplies focus. Written twice already; the route half belongs in @route_audit.`
+  order = `Behaviour, then cause, then name, then rule, then comparison; and every act shows where it lands before a receipt records it. A reading. Home: @surface ^"primed_actualized".`
+  conduct = #[
+    `An analogy states its invariant, its breaking point, and whether it is felt in code or on paper. Home: @measurement.`,
+    `A release may add a way to say a state; it may not change what an existing address says.`,
+    `A library improves itself only on what its own text and its pinned readers can prove; a person's keep orders that person's view.`,
+    `Closeness scales with what was sent, never with what was observed (@feedback_product).`,
+  ][reg=set]
+  dropped = `Set aside, with the reason. "A mode is look-only" gives every cell the same value, so it is a property of [ ] and not of the product. "An opener accumulates and a closer discharges" covered two cells on one reading. "< > is a passage" has one example and conflicts with the built enter, add and save; "< > says what the reading is taken as" is kept as a wonder below. "A submenu is the kind's own verbs" contradicts the canvas's rule that context chooses the object and never the verb (@theory_of_mind ^"hands"). "An edge is what two kinds may tie" fails because < > emits only refers.`
+}[reg=facet]
+
+^"blind"{
+  # The measurement, run twice. A fresh reader with no file access each time, told that a plausible guess counts as nothing.
+  first = `Rules alone: eleven rules, the factor names, three sentences about the hosts, and no definition for any factor, grounded or not. Strictly 8 of 59 cells: kind against edges, one statement eight times. That is a floor the prompt set. It shows the rules without tables or definitions give one column of one product.`
+  second = `Rules, the tables of ^"tables" as text, a sentence for each grounded factor, neighbours marked as neighbours, and the three proposals (mode, registry, coordinates). First product: 19 derived, 2 conditional on a neighbour table, 18 none. Second product: 0 derived, 3 conditional, 17 none.`
+  agrees = `On the kinds the blind reader matched the evaluator cell for cell: eight edge cells from kind_unread, eight window cells from the slot query, and no submenu cell, for want of a rule. On the computer-science reading it matched too: window and edge conditional on c_gloss, submenu nothing.`
+  parts = `Where they part, an evaluator had read a neighbour as a definition. Memory address: the evaluator read it as the address and derived three cells from sayable; the blind reader, given only "an item under $", derived none. Trope culture: the evaluator read it as the trope registry; the blind reader left it empty and applied registry to <trope> against edges. The second product: the evaluator's 14 of 20 rest on reading grounding as the paste receipt and navigation as the address keys; the blind reader, told those two and register manifold were undefined, lost all fifteen cells in their columns.`
+  late = `The workbench's sentence for register manifold (^"sense") was found after the second run and was not given to it.`
+  over = `The proposals over-generate, and the blind reader said where. mode: lore.land's play table has one general sentence about marks, not a row for each, and still passed as a table. A table should have a cell only where it holds a distinct row for the mark read, keyed on the character and its position, since a leading mark is not a join; and the rule should name relations as the table an edge reads. registry: it should apply only where the registry declares its relation keys and its measure, names the canvas quantity its charge is, and names the door that carries it; ?spw= at 400 characters cannot hold a registry. coordinates: it produced nothing, and will not until each coordinate is bound to a door.`
+  collisions = `Refused by the blind reader as likeness of words only: <card> and a tool's cards; reflex's lore card and lore.land; <game> and gameplay; <physics> and /physics; token store and the token diff.`
+  predicted = `Derived blind and not checked in code: across a one-slot change the canvas's pins, keyed by word, persist while saved frames, keyed by a hash of the whole line, are orphaned, so each pivot neighbour that arrives starts a new frame. And a source crosses with no carried field if it is written in the line under a key, where citation makes it a tie.`
+  missing = `The same thing is missing both times: for each named factor, a table keyed by mark, or a sentence. All 35 empty cells of the second run trace to a factor without one.`
+  idle = `role, order and coordinates did no work in either run, and key served only as a caution. They act on lines and on hands, and the expressions name hosts.`
+}[reg=facet]
+
+^"residue"{
+  # What no rule produces. Neighbours are neighbours, not definitions.
+  coined = #[
+    `design bed: no source. Near it: practice beds that stage midprocess work without claiming canon (.spw/surfaces.spw:136).`,
+    `trope culture: no source. Near it: lore.land's trope registry.`,
+    `computer science metaphor: no source. Near it: "Spw is the lore of C-style programming" (@sigil_lore).`,
+    `nuance router: no source. Near it: /pivot, one line and the lines one change away, and nuances() in spw.quest's panel.js.`,
+    `grounding abstraction: no source. Near it: recognise what a paste is, then one line of receipt (@grounding).`,
+    `navigational convenience: no source. Near it: the address keys.`,
+    `production snippets: no source. Snippet has three senses: a whole file to keep on spw.quest, a region the hand takes as one node on the canvas, the corpus's executable half in .spw/snippets.spw. Near it: spw.quest's specimens, lines carried from this site.`,
+    `token store, on the canvas: no source. @consequence line 45 is this site's salience store. Near it: the canvas's pins, a word's place across lines and visits.`,
+  ][reg=set]
+  upstream = `register manifold is not coined: the workbench defines it (checked, ^"sense"). It has no partner on the canvas yet. Near it: the runtime card's register row, and the workbench's edit lists, which have no face anywhere and could be undo by line history. Register still carries six senses across the two trees.`
+  misplaced = `material sciences sits under spw.quest in the expression; the row belongs to texture.website against the canvas. about/domains/spw.quest/index.html:189 says texture handles materials "so quest can stay a path".`
+  elsewhere = `gameplay is grounded for RPG Wednesday (.spw/site.spw:210) and memory address as an item in three $ substrate lists; neither is grounded on lore.land.`
+  kinds = `survey: card, scene, character, physics, trope and game are real things on lore.land. snippet exists only here, as an unbuilt prime. poem is one folio tag.`
+  prose = `@substrate's trope pressure, want and doubt forces, hysteresis and 5-simplex have no code (checked). That file is another session's; the repair is theirs or the creator's.`
+  homonyms = `Words carrying several senses inside one argument: register six, edge four, frame four, address four, particle four, momentum four, lens three, project three, cache three, handle two, window two, card two, way two. < > has six names, { } four, and ( ) three readings.`
+  names = `survey: six marks agree on every host (? ~ @ ! * .). The workbench is itself two columns: its seed reader and its LSP hover disagree on ^ (ascension, integration), & (subject, confluence), #> (deixis, anchor), = and $. > as a mark of its own is this site's only. spw.quest never says "particle" and prints #> under #'s name on /build and /read.`
+}[reg=facet]
+
+^"loops"{
+  # Each: the legs, the state, the smallest closure. Deploys and caps are the creator's.
+  quest_line = `spw.quest /canvas?line= or ?s= to the canvas ?spw=, and back by a thread row to /build#spw64=. Lossy: the specimen id, the row's source and the room it left are dropped. Closure: a from= beside ?spw=; /pivot already reads from.`
+  quest_script = `A script goes out by #spw64=; one line comes back. Closure: send back the held script.`
+  lore_canvas = `lore.land's texture page builds a canvas address with ?spw=. One way: the only path back is a node named lore.land that opens its home page in a new tab. Closure: carry the lore address as from=.`
+  canvas_parser = `The canvas opens this site's parser with ?spw_source=. One way. Closure: the parser offers the canvas.`
+  editor_quest = `Every editor reaches spw.quest only at /install. Closure: a link out with the line in hand, and a GET address for an example file; download is a POST today. An ask for @report.`
+  feedback = `One pass's reading: a feedback card is the return leg the one-way loops lack. It returns a provenance and a reason, not a line, and the writer carries it by hand (@feedback_product). @feedback_contour keeps the canvas out of it: "It is the visualizer. It is not a second inbox."`
+  doors = `survey: eight inbound names and three caps across the hosts. Of 1,091 carried lines one exceeds 200 characters and none exceeds 400. lore.land's ?frame= proposal collides with the canvas's built ?frame=.`
+  symmetry = `Real: one first character everywhere; four pairs as four slots; a form named going out and a receipt coming in. Only apparent: one key in and one back. Worth breaking: lore.land deletes ?way= after reading it, because a line about what a reader would rather not meet should not round-trip; ?reset never crosses hosts; lore.land sends this site a provenance, not a line.`
+  where = `The inbound table and its return legs belong in @route_audit, as @grounding ^"routing" already says.`
+}[reg=facet]
+
+^"memory"{
+  # The canvas against the workbench's memory. The organising claim is one pass's inference; the census is checked.
+  claim = `The canvas's stores hold kept records (a placement, a provenance, a choice) on a cache's lifecycle: capped, undated, evicted silently, unstamped by reader. They follow neither the workbench's built journal rule (dated, append-only, a later entry corrects) nor its proposed computed rule (invalid when the producer changes) from @journal_scales.`
+  stores = `survey: talk keeps 40 rows whose source is a word, not an address; lines overlaps talk and has no clear of its own; kept assigns colour by order; pins hold a word across lines, a kind the workbench does not have; regions key on a word and pixels; saved frames key on a hash of the whole line, which any edit breaks, the failure @journal_address names. ?reset clears the whole origin unasked.`
+  revisions = `Three workbench revisions serve one canvas: the mount at 9ef3d22, the vendored reader at 3f53adf, the app's own submodule at fffab72. version.json records the reader only.`
+  harmonies = #[
+    `record all three revisions in the canvas's version files`,
+    `one kept line listing every storage key with its plane, cap and clear, checked so that storage writes less table rows is zero`,
+    `date talk rows and give a row's source an address, so an eviction can say what went`,
+    `one key discipline from slotHash for frames and regions; needs a migration`,
+    `the browser plane exported as one journal-shaped .spw file`,
+  ][reg=set]
+  upstream = `What the canvas needs and the workbench has no form for, as asks for @report, which carries no canvas item today: a slot-free key for a word's identity; named relations derived from one line; a byte-preserving summary, which the canvas has and can offer; a form for a tree that is not text, so a submenu level gets a name; a paste verdict that can say "not Spw".`
+  faces = `The workbench's journal says nothing in its LSP, CLI or editors calls its slot reader; the canvas's line anatomy, map and filter are that form's only face. Its edit lists have no face anywhere.`
+  corpus = `measured, one pass: the canvas's reading path over 664 workbench cache files, 10,340 statements. No throw, no summary over budget, no file past the thread's 40 rows. But 2,001 written semicolons became 50,964 and at least 4,710 follows ties joined record fields; every file arrived on its first block with parts, usually metadata; 664 arrivals gave 43 distinct titles; a bare list drew one nameless node on 3,999 lines; 20% of blocks held a box the reader left unread; the head comment was dropped everywhere; one table drew as 881 nodes. The corpus holds 10,575 references and typed edges in 358 files, none of which the canvas draws.`
+}[reg=facet]
+
+^"labels"{
+  # Labels, their clusters, and momentum. Pacing and feel end at a demo; nothing here decides them.
+  toggle = `The labels state exists: one state, two values, kept in localStorage and deliberately outside the line and the address, so it does not re-derive. It leaks across roles: a stage mark's name hides with container labels while its sibling area names do not; an empty drop slot takes the container-label class and loses its only name; the mode frame label, ring glyphs and crumbs escape it.`
+  proposal = `Keep one state and let it govern every name of a mark or slot on the stage and nothing else. Accessible names, where a step lands, and what just happened never hide.`
+  material = `Labels-off is not yet learnable. Only a body has material; a scene and a set are the same dashed rectangle. This is the gap the creator's direction of 2026-11-09 points at: material before glyph labels.`
+  names_of_marks = `spw.quest's /pivot operator band is where the same cluster teaches: the glyph stays while each host's word for it changes. Which word leads is @operator_plan slice 4.`
+  momentum = `The tree uses the word four ways: kin of one terminal moving together, a decorative settings pulse, ! committing what ? opens, and the boundary that a preview banks nothing (@consequence). One pass's working sense, not the tree's: what the next act inherits without being chosen again.`
+  breaks = `survey: stepping out of a tool keeps place and stepping in resets to the first card, while the right arrow still recalls the last control; the right arrow takes the primed act at the tool menu and enters at a card; no memory of a last register was found.`
+  demos = `One line as three stills (labels shown, hidden, hidden with particles) handed to an image model. A phone walk: node, feel, a control, out, back in.`
+}[reg=facet]
+
+^"sharing"{
+  # What spwashi.com can give its siblings. The test is the same: a peer holding a small table and bare text re-derives it, without this site's runtime, core.css or data-spw attributes.
+  canon = `This site's kernel declares itself a mutation of the workbench's table. What it can share is extension rows (slots, joins, valence, physics, measures) and a few rules, not a canon.`
+  passes = #[
+    `summarizeSpw(line, budget): no imports, no DOM, no table (public/js/kernel/spw-summary.js); for a canvas window or a card`,
+    `the slot order and the body joins, once exported; spw.quest's /pivot mirrors them by hand today`,
+    `place as one line, where a move turns one slot (/pivot is already this instrument)`,
+    `authored kinship as a source of edges: two lines are kin when they share a subject, a mode or a part (@consequence)`,
+    `the dwell rule behind the salience store; the store itself stays on its origin`,
+    `a script's name is its first #> line; write to the strictest reader, read every kind, give a receipt (@grounding)`,
+  ][reg=set]
+  not_yet = `Portable CSS has no file. <spw-expression> imports by absolute path and its scripts-off form is unbuilt. Resonance and ink need root state. The kernel module reads the dataset. navigation-spells.js holds this site's routes.`
+  travels = `survey: only spw.quest takes the peer kit (workers/lib/peer-kit.js); the canvas imports nothing from workers/lib; the reader is live at four revisions across the sites. Hand copies of the mark table live in the canvas, lore.land and texture.website, and none is in @namespace's registry.`
+  ergonomics = `The peer kit carries neither touch-target token, so a shared slot handle lands at 36px on a peer: right inside the canvas's floating chrome, short on a standalone handle. Gesture thresholds differ between this site (420ms, 48px) and the canvas (420 and 36, 320 and 36, 30). What must travel with any shared chrome: a late sheet may dress chrome and never move it, and a header is never a containing block.`
+  edges = `Edges here have two rival sources: likeness inferred by overlap in the attention field, and kinship that is authored and "not from similarity scoring" (@consequence). One has to be chosen before edges are offered to the canvas.`
+}[reg=facet]
+
+^"development"{
+  # The developmental reading. Each line is one pass's; the ladders are candidates for @curriculum_plan C3, whose order is the creator's.
+  mastery = `Under mastery-first teaching the scarce thing is a demonstration that can be checked. Most surfaces show; the only verdicts are spw.quest's bench, which checks readers in a test and not a learner, and Neovim's quest check. Two rules are practised nowhere: planes of memory and label roles. A guess before the probe is what makes a result teach (@theory_map), so /pivot and a tool's primed line can ask first.`
+  reader = `For a reader whose first literacy is touch, gesture is given and the news is that marks cause things. The built canvas carries seven steps well: a node stays, a throw goes home, a hold spends nothing, a tie is felt before it is named, the line arranges itself, the first character changes the motion, a pinch folds a body. It breaks at labels off and at stepping into a tool and back.`
+  premise = `Taking screens as ordinary removes gesture tutorials and apology copy. It adds duties: clarity over capture, memory shown as memory with a way to clear it, nothing learned locked to one origin, a still that reads without behaviour.`
+  music = `Mathematics for the sake of hearing. Real practice today is on lore.land, not the canvas: meter as counting, a tuplet as a fraction of a beat, pitch as root times 2^(n/12). Unbuilt: two loops side by side for three against two, and a two-voice ratio dial. The logarithm is in the code and hidden from the reader; 7/12 beside 22/7 is an issue wap.mom could set. The five transforms in @boonhonk are five named jobs, not a group.`
+  tropes = `Physics breadth for the sake of recognising a bend. The mapping is structural analogy with a stated limit; a trope is not a force. Three things are felt on the canvas: damping, repulsion and homing. The rest is analogy on paper and should say so. lore.land's own rule covers it: physics is shown, never lectured.`
+  appreciation = `What shows the goal was served: a listener taps the two while hearing the three; a reader names what is being bent before the beat lands and enjoys the breach. No instrument checks that. It is a person saying why to another person, and the ecosystem holds that in a writers' room, at RPG Wednesday and on a feedback card.`
+  surface = `The canvas as an evolving surface: the address is what a release must keep. A release says a new canvas is saved and does not say what changed. The admission rule is written (@interaction: a level, a primed act and an actualized act each need one sentence) and the built set does not fully meet it.`
+  library = `spw.quest improving itself without watching anyone: the fraction of shelf lines every pinned reader holds whole and that fit every door they are offered through. Unbuilt: a carry date, hold rate past 36 of 1,091 lines, round-trip survival. Which of two holding lines is kept stays a person's (@quest_router ^"taste").`
+  feedback = `autonomous.feedback as built: a tap is a whole note, words are optional, no rating, nothing posted for anyone, words kept three days and then counts. Three properties are unmet or unstated: a writer cannot withdraw a note; a draft has no visible clear; no source says the product is a practice and not therapy or the creator's private self. What it can see without tracking a person is whether a room's notes grow more specific. "The benefit of life and humanity" is checkable here as refusals kept; past that it is an orientation the creator holds.`
+}[reg=facet]
+
+^"decisions"{
+  # The creator's. A session builds around them and leaves each proposed.
+  theirs = #[
+    `one sentence for each coined factor in ^"residue", or the name stays a prompt and not a factor; first the three the second product turns on`,
+    `what a mode of a host does (^"rules" mode is a proposal, and ^"blind" over says it over-generates)`,
+    `( ) as a scene or a gathering (@component_plan N5); kinds in < > or in [ ]`,
+    `which name leads for each mark (@operator_plan slice 4), and the aim word for #>`,
+    `edges authored or inferred`,
+    `where the labels state lives: an address key, or a kept line`,
+    `/pivot's cap, from= on the canvas, a doors field in workers/cluster.json, the ?frame= collision, any deploy`,
+    `a writer's withdraw key, reply cards, and what autonomous.feedback says it is and is not offering`,
+    `the order of the ladders in @curriculum_plan C3`,
+  ][reg=set]
+  ungated = #[
+    `a test that every shelf line fits every door it is offered through`,
+    `a date and revision stamp on spw.quest's carry`,
+    `the bench reading extended to the whole shelf as a carry-time report`,
+    `the stale pin field at @mount line 46`,
+    `the inbound table with its return legs, in @route_audit`,
+    `the canvas's asks and the editors' /install-only link, in @report`,
+  ][reg=set]
+  holds = `None of the ungated slices was taken here. This file is the only thing this session wrote besides its row in the caches index.`
+}[reg=facet]
+
+#>wonder_rederive_definitions
+?["Do three sentences turn the second product into a derivation?"]{
+  #:depth #!computational ~#lens(comparison)
+  ~#expect: "with grounding abstraction, navigational convenience and register manifold each given one sentence, the fifteen cells they void derive or are refused for a named reason; a cell still empty after that is an authored fact"
+  !probe{ "the creator writes or accepts a sentence for each of the three; rerun the second blind reader of ^blind with them; diff its cells against the evaluator's fourteen" }
+  $%[sentences.suffice, table.missing, product.empty]
+}
+
+#>wonder_rederive_mode
+?["What does a mode of a host do: select from the line's text, or carry a field?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#with: @grounding
+  ~#expect: "the bare modes are carried fields with no key today, which is why none of them reaches the canvas"
+  !probe{ "for each bare mode in the creator's line, ask what a pasted line would have to contain for the canvas to know it was read in that mode" }
+  $%[mode.selects, mode.carried, mode.neither]
+}
+
+#>wonder_rederive_taken_as
+?["Does < > say what the whole reading is taken as, so that a host with a form for it shows the form?"]{
+  #:depth #!experiential ~#lens(comparison)
+  ~#with: @surface
+  ~#expect: "spw.quest shows a form for card and a sentence for poem; the canvas shows one node for both; no host with a form for a kind ignores it"
+  !probe{ "paste the same line ending in <card> and in <poem> on the canvas and on spw.quest; record what each shows" }
+  $%[taken_as.holds, passage.holds, node.only]
+}
+
+#>wonder_rederive_newline
+?["Does treating a newline as its own separator lose anything an author meant?"]{
+  #:depth #!computational ~#lens(measure)
+  ~#expect: "follows ties fall from thousands to the few bodies that write a semicolon, and no author-meant order is lost"
+  !probe{ "rerun the corpus harness with the loader's join removed; count follows ties and list the bodies that still carry one" }
+  $%[newline.separates, order.lost, loader.right]
+}
+
+#>wonder_rederive_checks
+?["If a surface returns a verdict where it only showed, do a room's notes grow more specific?"]{
+  #:depth #!experiential ~#lens(memory)
+  ~#with: @feedback_product
+  ~#expect: "the worded share of cards rises in the weeks after a surface gains a check; it shows the room changed, not that one person's taste grew"
+  !probe{ "compare the worded share of cards by week before and after one surface gains a learner-facing verdict" }
+  $%[notes.sharper, notes.same, cannot.tell]
+}
