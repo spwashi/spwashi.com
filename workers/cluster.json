@@ -17,7 +17,7 @@
       "smut-today": { "now": "script", "next": "files, with the day picked in the reader's page from a schedule file and the cookie's choices kept in the page" },
       "autonomous-feedback": { "now": "script", "next": "privacy, robots and the kind files as files; measure the five-minute cron and peer fetches before cutting them" },
       "texture-website": { "now": "files", "next": "take texture.website from site-hub-next: move its custom domain in the dashboard, then remove its branch from site-hub-next" },
-      "site-hub-next": { "now": "script", "next": "per host: texture.website and attention.productions as files (a hash CSP for texture), mutex.buzz from a schedule file, tealstripesvibes.com stays scripted, and each held name a file-only worker of its own carried with workers/lib/carry.js" }
+      "site-hub-next": { "now": "script", "next": "split by host since 2026-11-12 (src/hosts/): texture.website leaves with its domain; each held name and attention.productions become file-only units carried from renderDoor and their pages; mutex.buzz from a schedule; tealstripesvibes.com stays scripted" }
     }
   },
   "units": [

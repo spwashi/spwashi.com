@@ -105,9 +105,9 @@ summary = #[
   ~#hypothesis: "A resident's kept lines say how they work; an operator histogram, recurring shapes and slot-hash neighbors render as a swatch, and two swatches compare as placements and a differential."
   ~#expect: "The lab draws slices and materials from fixed choices; a residency is a draft line; no index of a person's lines exists."
   ~#probe(read)
-  !probe{ "Read the SLICES and MATERIALS in site-hub-next/src/index.js. Say which material each leading operator would choose." }
+  !probe{ "Read the SLICES and MATERIALS in site-hub-next/src/hosts/texture.js. Say which material each leading operator would choose." }
   $%[texture.from_index, texture.chosen, texture.both]
-  ~<"../../workers/site-hub-next/src/index.js">
+  ~<"../../workers/site-hub-next/src/hosts/texture.js">
 }
 
 #>wonder_ephemeral_registry
