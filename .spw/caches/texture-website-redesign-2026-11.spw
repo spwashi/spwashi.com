@@ -23,7 +23,7 @@
 #:layer #!pragmatics
 
 @unit: ~"../../workers/texture-website/carry.mjs"
-@materials: ~"../../workers/texture-website/src/materials.js"
+@materials: ~"../../workers/texture-website/src/vocabulary.js"
 @page: ~"../../workers/texture-website/assets/texture.js"
 @hub: ~"../../workers/site-hub-next/src/index.js"
 @mutex: ~"../../workers/site-hub-next/src/mutex.js"

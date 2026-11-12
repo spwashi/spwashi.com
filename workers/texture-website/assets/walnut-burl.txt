@@ -1,0 +1,13 @@
+walnut burl (texture.website/walnut-burl), wood
+Cellulose fibres laid down in yearly rings; cutting across, along or around the rings shows end grain, straight grain or figure.
+Qualities to try: open grain, end grain, oiled sheen, saw marks, knots
+
+As a tile:
+  seamless repeating texture of walnut burl, close view, soft overcast light, open grain, end grain --tile --ar 1:1 --no text, letters, logo, watermark
+As a backdrop:
+  wide backdrop of walnut burl, across a room, raking dawn light, weathered --ar 16:9 --no text, letters, logo, watermark
+With another material:
+  seamless repeating texture of walnut burl drifting through brushed steel, close view, warm lamplight --tile --ar 1:1 --no text, letters, logo, watermark
+
+Composed and tuned on the page:
+  https://texture.website/walnut-burl/~brushed-steel?light=lamplight&wear=worn&process=riso

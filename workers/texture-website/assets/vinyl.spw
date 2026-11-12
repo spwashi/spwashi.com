@@ -1,0 +1,7 @@
+#>texture_vinyl
+#:material #!polymer
+
+~vinyl[polymer]{moulded studs, satin gloss, embossed grain}
+
+word: "vinyl"
+science: "Long chain molecules, moulded or cast; the mould's surface is copied exactly, so studs, grain and gloss are all made on purpose."

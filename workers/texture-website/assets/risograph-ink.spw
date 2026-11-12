@@ -1,0 +1,7 @@
+#>texture_risograph_ink
+#:material #!pigment
+
+~risograph-ink[pigment]{granulation, bloom edges, misregistration}
+
+word: "risograph ink"
+science: "Coloured particles carried in a binder or water; how the particles settle as the carrier leaves makes washes, blooms and granulation."

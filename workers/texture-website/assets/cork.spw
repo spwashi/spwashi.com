@@ -1,0 +1,7 @@
+#>texture_cork
+#:material #!wood
+
+~cork[wood]{open grain, end grain, oiled sheen}
+
+word: "cork"
+science: "Cellulose fibres laid down in yearly rings; cutting across, along or around the rings shows end grain, straight grain or figure."

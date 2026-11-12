@@ -1,0 +1,13 @@
+honeycomb (texture.website/honeycomb), organic
+Material a living thing made: cells and fibres arranged for a job, which is why bark, crust and honeycomb pattern themselves.
+Qualities to try: growth rings, cells, crumb, lichen, fuzz
+
+As a tile:
+  seamless repeating texture of honeycomb, close view, soft overcast light, growth rings, cells --tile --ar 1:1 --no text, letters, logo, watermark
+As a backdrop:
+  wide backdrop of honeycomb, across a room, raking dawn light, weathered --ar 16:9 --no text, letters, logo, watermark
+With another material:
+  seamless repeating texture of honeycomb drifting through ledger paper, close view, warm lamplight --tile --ar 1:1 --no text, letters, logo, watermark
+
+Composed and tuned on the page:
+  https://texture.website/honeycomb/~ledger-paper?light=lamplight&wear=worn&process=riso

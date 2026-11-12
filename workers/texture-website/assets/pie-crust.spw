@@ -1,0 +1,7 @@
+#>texture_pie_crust
+#:material #!organic
+
+~pie-crust[organic]{growth rings, cells, crumb}
+
+word: "pie crust"
+science: "Material a living thing made: cells and fibres arranged for a job, which is why bark, crust and honeycomb pattern themselves."

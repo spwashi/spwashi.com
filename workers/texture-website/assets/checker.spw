@@ -1,9 +1,0 @@
-#>texture_checker
-#:material #!simple
-
-~checker[simple]{checker}
-
-meaning: "Alternating squares. The plainest figure and ground."
-science: "Two colourings of a square grid where no cell shares an edge with its own colour: the board's two-colour rule."
-generator: "texture.website, drawn in CSS and SVG"
-image: "https://texture.website/checker.svg"

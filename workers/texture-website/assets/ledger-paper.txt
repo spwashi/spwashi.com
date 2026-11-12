@@ -1,0 +1,13 @@
+ledger paper (texture.website/ledger-paper), paper
+Plant fibres felted into a sheet; how long the fibres are and how the sheet is pressed decide its tooth, its translucency and how it takes ink.
+Qualities to try: deckled edges, visible fibre, soft tooth, faint ruling, foxing
+
+As a tile:
+  seamless repeating texture of ledger paper, close view, soft overcast light, deckled edges, visible fibre --tile --ar 1:1 --no text, letters, logo, watermark
+As a backdrop:
+  wide backdrop of ledger paper, across a room, raking dawn light, weathered --ar 16:9 --no text, letters, logo, watermark
+With another material:
+  seamless repeating texture of ledger paper drifting through linen, close view, warm lamplight --tile --ar 1:1 --no text, letters, logo, watermark
+
+Composed and tuned on the page:
+  https://texture.website/ledger-paper/~linen?light=lamplight&wear=worn&process=riso

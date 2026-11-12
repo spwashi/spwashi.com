@@ -1,0 +1,7 @@
+#>texture_card_stock
+#:material #!paper
+
+~card-stock[paper]{deckled edges, visible fibre, soft tooth}
+
+word: "card stock"
+science: "Plant fibres felted into a sheet; how long the fibres are and how the sheet is pressed decide its tooth, its translucency and how it takes ink."

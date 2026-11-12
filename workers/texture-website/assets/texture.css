@@ -24,38 +24,42 @@ button { font: 0.72rem var(--mono); text-transform: uppercase; letter-spacing: 0
 .key { font: 0.72rem var(--mono); text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); }
 
 /* Without the script there is no composition; the catalog carries the page. */
-.slide, .panel { display: none; }
+.slide, .ladders { display: none; }
 body.composed .slide { display: block; margin: 0; border-top: 2px solid var(--rule); }
-body.composed .panel:not([hidden]) { display: grid; }
+body.composed .ladders:not([hidden]) { display: grid; }
 
 .slide-head { display: flex; gap: 1rem; align-items: baseline; padding: 0.6rem 0; font: 0.78rem var(--mono); text-transform: uppercase; letter-spacing: 0.1em; }
 .slide-head .title { flex: 1; font: 600 clamp(1.1rem, 2.6vw, 1.6rem) var(--sans); text-transform: none; letter-spacing: -0.01em; }
 .slide-head .fig { color: var(--accent); }
 .slide-head .when { color: var(--muted); }
 
-.stage { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: var(--faint); outline: 1px solid var(--rule); }
-.layers, .layer, .grain { position: absolute; inset: 0; }
+.stage { position: relative; aspect-ratio: 1 / 1; max-height: 70vh; margin: 0 auto; overflow: hidden; background: var(--faint); outline: 1px solid var(--rule); }
+.layers, .layer { position: absolute; inset: 0; }
 .layer { background-repeat: repeat; transform-origin: center; }
 .layer.drift { animation: drift 48s linear infinite; }
 @keyframes drift { from { background-position: 0 0; } to { background-position: 384px 216px; } }
 @media (prefers-reduced-motion: reduce) { .layer.drift { animation: none; } }
-.grain { filter: url(#grain); mix-blend-mode: multiply; pointer-events: none; }
 
 .caption { margin: 0.7rem 0 0; max-width: 46rem; font-size: 0.95rem; color: var(--muted); }
 .caption::before { content: "Caption — "; font: 0.72rem var(--mono); text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink); }
 
-.rulers { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr)); border-top: 1px solid var(--rule); }
-.rulers li { display: grid; padding: 0.5rem 0.6rem 0.5rem 0; border-right: 1px solid var(--faint); }
-.rulers .value { font: 1.25rem var(--mono); }
-.rulers .label { font-size: 0.75rem; color: var(--muted); }
+/* The ladders: each dimension a row of words; the chosen word inverted, a roll at the end. */
+.ladders { margin: 1rem 0 0; gap: 0; border-top: 1px solid var(--rule); }
+.ladder { display: grid; grid-template-columns: 6.5rem 1fr auto; align-items: center; gap: 0.6rem; border-bottom: 1px solid var(--faint); padding: 0.35rem 0; }
+.rungs { display: flex; flex-wrap: wrap; gap: 0.25rem; }
+.rungs button, .rungs a { font: 0.82rem var(--sans); text-transform: none; letter-spacing: 0; border: 1px solid transparent; padding: 0.3em 0.6em; min-height: 32px; display: inline-flex; align-items: center; text-decoration: none; color: var(--ink); }
+.rungs button:hover, .rungs a:hover { border-color: var(--rule); }
+.rungs button[aria-checked="true"] { background: var(--ink); color: var(--ground); }
+.roll { border-color: var(--faint); }
+.neighbours .rungs a { color: var(--muted); }
 
-/* The panel: a hairline, a square thumb, the key beside it. */
-.panel { margin: 0.4rem 0 0; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 0 1.2rem; }
-.dim { display: grid; grid-template-columns: 1.4rem 1fr; align-items: center; min-height: 44px; }
-.dim input { -webkit-appearance: none; appearance: none; width: 100%; height: 24px; background: linear-gradient(var(--rule), var(--rule)) center / 100% 1px no-repeat; }
-.dim input::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; background: var(--ground); border: 1px solid var(--rule); border-radius: 0; }
-.dim input::-moz-range-thumb { width: 14px; height: 14px; background: var(--ground); border: 1px solid var(--rule); border-radius: 0; }
-.dim input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.prompts { margin-top: 1.4rem; border-top: 2px solid var(--rule); padding-top: 0.6rem; }
+.prompts p { margin: 0.5rem 0; display: grid; grid-template-columns: 6.5rem 1fr auto; gap: 0.6rem; align-items: start; }
+.prompts code { font-size: 0.86rem; line-height: 1.45; }
+
+.class { border-top: 1px solid var(--faint); padding: 0.6rem 0; }
+.class h3 { font: 0.78rem var(--mono); text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin: 0; }
+.class .words { font-size: 0.95rem; }
 
 /* A speech bubble, shaped by the mark it is asked as. */
 .bubble { position: absolute; left: 7%; top: 10%; max-width: min(26rem, 78%); margin: 0; padding: 0.7em 1em; background: #fdfcf8; color: #1d1d1b; font: 500 clamp(1rem, 2.4vw, 1.4rem)/1.25 var(--sans); border: 1.5px solid #1d1d1b; border-radius: 1.1em; }
@@ -65,18 +69,5 @@ body.composed .panel:not([hidden]) { display: grid; }
 .bubble[data-shape="question"] { border-radius: 1.4em 1.4em 1.4em 0.15em; font-style: italic; }
 .bubble[data-shape="burst"] { border-radius: 0; border-width: 2.5px; font-weight: 700; transform: rotate(-1.5deg); }
 
-.reading { margin-top: 1.6rem; border-top: 1px solid var(--rule); padding-top: 0.6rem; }
-.reading p { margin: 0.45rem 0; }
-.reading .key { display: inline-block; min-width: 2.8rem; }
-.hint { color: var(--muted); font-size: 0.9rem; }
-
 .catalog { margin-top: 2.4rem; }
 .catalog h2 { font: 0.78rem var(--mono); text-transform: uppercase; letter-spacing: 0.1em; border-top: 2px solid var(--rule); padding-top: 0.6rem; }
-.catalog ul { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(15rem, 100%), 1fr)); gap: 1.4rem; }
-.catalog li { border-top: 1px solid var(--faint); padding-top: 0.6rem; }
-.catalog img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; background: var(--faint); image-rendering: auto; }
-.catalog .name { display: block; font-weight: 600; margin-top: 0.4rem; }
-.catalog .category { font: 0.7rem var(--mono); text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); }
-.catalog p { font-size: 0.9rem; }
-.provenance, .history { color: var(--muted); }
-.history { font-size: 0.8rem; padding-left: 1.2em; }

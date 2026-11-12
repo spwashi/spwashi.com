@@ -1,0 +1,7 @@
+#>texture_pewter
+#:material #!metal
+
+~pewter[metal]{brushed direction, hammered dimples, patina}
+
+word: "pewter"
+science: "Crystals of metal, worked by hammer, roller or brush; the surface keeps every tool's direction, and air adds its own colour as patina."

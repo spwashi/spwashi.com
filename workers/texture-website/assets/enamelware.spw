@@ -1,0 +1,7 @@
+#>texture_enamelware
+#:material #!metal
+
+~enamelware[metal]{brushed direction, hammered dimples, patina}
+
+word: "enamelware"
+science: "Crystals of metal, worked by hammer, roller or brush; the surface keeps every tool's direction, and air adds its own colour as patina."

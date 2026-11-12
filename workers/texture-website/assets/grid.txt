@@ -1,9 +1,0 @@
-Grid (texture.website/grid)
-Ruled squares. A measure laid over anything.
-
-Pattern: A square lattice: two families of parallel lines at right angles, the plane cut into equal cells.
-Made with: texture.website, drawn in CSS and SVG
-
-As a tile: https://texture.website/grid.svg
-Composed over a material, with its dimensions:
-  https://texture.website/paper/*grid?s=1.5&a=30&g=0.2

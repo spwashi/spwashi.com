@@ -1,0 +1,7 @@
+#>texture_watercolour_wash
+#:material #!pigment
+
+~watercolour-wash[pigment]{granulation, bloom edges, misregistration}
+
+word: "watercolour wash"
+science: "Coloured particles carried in a binder or water; how the particles settle as the carrier leaves makes washes, blooms and granulation."

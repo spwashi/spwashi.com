@@ -1,117 +1,64 @@
-// Carries texture.website's materials (src/materials.js) into assets/: each
-// material's images under its own name (/paper.webp), its recipe (/paper.txt)
-// and line (/paper.spw); catalog.json with provenance read from the sidecars
-// (generator, Midjourney prompt words and job, tracked raw renders) and each
-// image's git history, for students; the page every path falls back to; llms.txt;
-// and _headers. The composing happens in the reader's page (assets/texture.js).
+// Carries texture.website's vocabulary (src/vocabulary.js) into assets/: the
+// vocabulary as vocabulary.json, each listed material's prompt starter (/terrazzo.txt)
+// and line (/terrazzo.spw), the page every path falls back to, llms.txt and
+// _headers. The page (assets/texture.js) builds prompts from the address and
+// sketches them in the reader's browser; nothing runs on a server.
 // --check fails when a carried file differs from what this would write.
-import { execFileSync } from "node:child_process";
-import { copyFile, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { securityHeaders, escapeHtml } from "../lib/http.js";
 import { writeOrCheck } from "../lib/carry.js";
-import { ALL, BUBBLES, CATEGORIES, LAWS, MATERIALS } from "./src/materials.js";
+import { CLASSES, FORMATS, LADDERS, MATERIALS, PHRASES, RELATIONS } from "./src/vocabulary.js";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
-const ROOT = path.resolve(HERE, "../..");
 const ASSETS = path.join(HERE, "assets");
 const ORIGIN = "https://texture.website";
+const NO = "--no text, letters, logo, watermark";
 
-const git = (...args) => execFileSync("git", args, { cwd: ROOT, encoding: "utf8" }).trim();
-const tracked = (file) => { try { git("ls-files", "--error-unmatch", file); return true; } catch { return false; } };
+/** Another material from a different class, to suggest a pairing. */
+const partner = (m) => { const i = MATERIALS.indexOf(m); return [...MATERIALS.slice(i + 1), ...MATERIALS.slice(0, i)].find((other) => other.cls !== m.cls); };
 
-/** Generator and the source for one family, read from the sidecar. */
-async function provenance(material) {
-  if (material.procedural) return { generator: "texture.website, drawn in CSS and SVG" };
-  const text = await readFile(path.join(ROOT, material.sidecar), "utf8");
-  const generator = /generator:\s*"([^"]+)"/.exec(text)?.[1] ?? "";
-  const sources = [...(/source_masters:\s*#\[([\s\S]*?)\]/.exec(text)?.[1] ?? "").matchAll(/"([^"]+)"/g)].map((m) => m[1]);
-  const source = sources[material.family] ?? "";
-  const job = /_([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})_\d+\.\w+$/.exec(source);
-  const out = { generator };
-  if (job) {
-    out.promptWords = source.slice(0, job.index).replaceAll("_", " ") + "…";
-    out.job = `https://www.midjourney.com/jobs/${job[1]}`;
-  }
-  if (source.startsWith("public/") && tracked(source)) out.raw = { file: source, name: path.basename(source) };
-  return out;
-}
+const starter = (m) => {
+  const q = CLASSES[m.cls].qualities.slice(0, 2).join(", ");
+  const p = partner(m);
+  return `${m.word} (texture.website/${m.slug}), ${m.cls}
+${CLASSES[m.cls].science}
+Qualities to try: ${CLASSES[m.cls].qualities.join(", ")}
 
-/** The image's history in this repository, oldest first: a catalog a student can walk. */
-const history = (file) => git("log", "--follow", "--format=%h\t%cs\t%s", "--", file)
-  .split("\n").filter(Boolean).reverse()
-  .map((line) => { const [commit, date, subject] = line.split("\t"); return { commit, date, subject: subject.slice(0, 140) }; });
+As a tile:
+  ${FORMATS.tile.lead} ${m.word}, close view, soft overcast light, ${q} ${FORMATS.tile.params} ${NO}
+As a backdrop:
+  ${FORMATS.plate.lead} ${m.word}, across a room, raking dawn light, weathered ${FORMATS.plate.params} ${NO}
+With another material:
+  ${FORMATS.tile.lead} ${m.word} drifting through ${p.word}, close view, warm lamplight ${FORMATS.tile.params} ${NO}
 
-/** Another material to pair with: the next one in a different category. */
-const partner = (m) => { const i = ALL.indexOf(m); return [...ALL.slice(i + 1), ...ALL.slice(0, i)].find((other) => other.category !== m.category && !other.procedural) ?? m; };
-/** A material's image reading: a photograph as .webp, a drawn pattern as an .svg tile. */
-const imageOf = (m) => (m.procedural ? `${m.id}.svg` : `${m.id}.webp`);
-
-/** Each drawn pattern as a 32px tile, ink on nothing. */
-const INK = "#1d1d1b";
-const TILES = {
-  grid: `<path d="M0 .5H32M.5 0V32" stroke="${INK}" fill="none"/>`,
-  dots: `<circle cx="16" cy="16" r="5" fill="${INK}"/>`,
-  hatch: `<path d="M-8 8L8-8M0 32L32 0M24 40L40 24" stroke="${INK}" stroke-width="1.5"/>`,
-  stripes: `<rect width="16" height="32" fill="${INK}"/>`,
-  checker: `<rect width="16" height="16" fill="${INK}"/><rect x="16" y="16" width="16" height="16" fill="${INK}"/>`,
-  ramp: `<defs><linearGradient id="r"><stop offset="0" stop-color="${INK}" stop-opacity="0"/><stop offset="1" stop-color="${INK}"/></linearGradient></defs><rect width="32" height="32" fill="url(#r)"/>`,
-};
-const tile = (m) => `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">${TILES[m.procedural]}</svg>\n`;
-
-const recipe = (m, p) => m.procedural ? `${m.name} (texture.website/${m.id})
-${m.meaning}
-
-Pattern: ${m.science}
-Made with: ${p.generator}
-
-As a tile: ${ORIGIN}/${m.id}.svg
-Composed over a material, with its dimensions:
-  ${ORIGIN}/${partner(m).id}/*${m.id}?s=1.5&a=30&g=0.2
-` : `${m.name} (texture.website/${m.id})
-${m.meaning}
-
-Material: ${m.science}
-Made with: ${p.generator}${p.promptWords ? `, from a prompt that began "${p.promptWords}"` : ""}${p.job ? `\nJob: ${p.job}` : ""}
-
-As a style reference in Midjourney:
-  your subject --sref ${ORIGIN}/${m.id}.webp --sw 250
-As an image prompt:
-  ${ORIGIN}/${m.id}.webp your subject, made of ${m.name.toLowerCase()}
-Paired with another material:
-  your subject --sref ${ORIGIN}/${m.id}.webp ${ORIGIN}/${partner(m).id}.webp
-
-Composed on the page:
-  ${ORIGIN}/${m.id}/~${partner(m).id}
+Composed and tuned on the page:
+  ${ORIGIN}/${m.slug}/~${p.slug}?light=lamplight&wear=worn&process=riso
 `;
+};
 
-const line = (m, p) => `#>texture_${m.id}
-#:material #!${m.category}
+const line = (m) => `#>texture_${m.slug.replaceAll("-", "_")}
+#:material #!${m.cls}
 
-~${m.id}[${m.category}]{${m.name.toLowerCase().split(" ").join(", ")}}
+~${m.slug}[${m.cls}]{${CLASSES[m.cls].qualities.slice(0, 3).join(", ")}}
 
-meaning: "${m.meaning}"
-science: "${m.science}"
-generator: "${p.generator}"${p.job ? `\njob: "${p.job}"` : ""}
-image: "${ORIGIN}/${imageOf(m)}"
+word: "${m.word}"
+science: "${CLASSES[m.cls].science}"
 `;
 
 const LLMS = `# texture.website
 
-Materials to make images and interfaces with, and a slide that composes them. Every material answers at its own name in several readings:
-- /{material}.webp and .avif (a photographed material) or /{material}.svg (a drawn pattern): a stable address to use as a style reference, an image prompt or a tile
-- /{material}.txt: what it is, how it was made, and lines to try
-- /{material}.spw: the material as a line of Spw
-- /catalog.json: every material, its category, its provenance and its history
+A studio for building material prompts. The address is the prompt: each word in the path is a material, bottom first, written into the sentence as it stands; a hyphen is a space. A mark before a word is how it meets the material before it: ${Object.entries(RELATIONS).filter(([mark]) => mark).map(([mark, r]) => `${mark} ${r.says}`).join(", ")}. In a path the ? mark is written %3F. Any word works; listed words carry a class with tactile qualities and a science note.
 
-The slide reads its address as a recipe. Each word in the path is a layer, bottom first; a mark before a word is that layer's law: . settles, ^ lifts, * is heavy, ~ drifts, = holds still, @ leans in, ? opens out, ! makes room, % levels. A word that names no material is spoken in a speech bubble. In a path, the ? mark is written %3F, since a bare ? begins the query.
+Ladders, as query keys whose values are words (hyphens for spaces):
+${Object.entries(LADDERS).map(([key, words]) => `- ${key}: ${words.join(", ")}`).join("\n")}
+r rolls every ladder from a seed; d moves the day's composition by days; say and as put words in a speech bubble.
 
-Dimensions, as query keys: d (days from today, signed: d=+3, d=-1), day (a date, YYYY-MM-DD), s (scale), a (angle in degrees), g (grain, 0 to 1), w (warp, 0 to 1), say (bubble text), as (bubble shape: ~ thought, ? question, ! burst, . statement), for (whom or what the materials are gathered for).
+The page writes a Midjourney prompt (with --tile or an aspect ratio by format), a plain prompt for any model, a Spw line and the address, and sketches the words with drawn bases lit, worn and printed by an SVG filter.
 
-/ is the day's composition, drawn from whichever materials exist; /catalog lists every material for study.
+Readings: /vocabulary.json (classes, materials, ladders, phrases), /{material}.txt (prompt starters), /{material}.spw (the material as a line).
 
-Materials: ${ALL.map((m) => m.id).join(", ")}
+Classes: ${Object.keys(CLASSES).join(", ")}
 `;
 
 const PAGE = `<!doctype html>
@@ -120,29 +67,23 @@ const PAGE = `<!doctype html>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>texture.website</title>
-  <meta name="description" content="Materials to make images and interfaces with, composed on a slide by the words in the address and tuned by its dimensions.">
+  <meta name="description" content="A studio for building material prompts: words in the address become materials, ladders of words tune scale, light, wear, process, scene and format.">
   <link rel="stylesheet" href="/texture.css">
   <script type="module" src="/texture.js"></script>
 </head>
 <body>
-  <svg class="defs" aria-hidden="true" focusable="false">
-    <filter id="warp"><feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" seed="7" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="G"/></filter>
-    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
-  </svg>
+  <svg class="defs" aria-hidden="true" focusable="false"><filter id="material" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"></filter></svg>
   <main id="texture">
     <figure class="slide">
       <header class="slide-head"><span class="fig">Fig.</span> <span class="title">texture.website</span> <span class="when"></span></header>
-      <div class="stage" aria-label="Composition"><div class="layers"></div><div class="grain" hidden></div><p class="bubble" hidden></p></div>
-      <figcaption class="caption">Materials to make images and interfaces with. Each word in the address is a layer; each dimension is a key.</figcaption>
-      <ol class="rulers" aria-label="Dimensions"></ol>
+      <div class="stage" aria-label="A sketch of the prompt"><div class="layers"></div><p class="bubble" hidden></p></div>
+      <figcaption class="caption">A studio for building material prompts. Each word in the address is a material; each ladder is a word in the sentence.</figcaption>
     </figure>
-    <form class="panel" aria-label="Dimensions" hidden></form>
-    <section class="reading" aria-live="polite"></section>
+    <section class="ladders" aria-label="Ladders" hidden></section>
+    <section class="prompts" aria-live="polite"></section>
     <section class="catalog" aria-labelledby="catalog-head">
-      <h2 id="catalog-head">Materials</h2>
-      <ul>
-${ALL.map((m) => `        <li><a href="/${m.id}"><img src="/${imageOf(m)}" alt="" width="192" height="108" loading="lazy"><span class="name">${escapeHtml(m.name)}</span></a> <span class="category">${escapeHtml(m.category)}</span><p>${escapeHtml(m.science)}</p><p class="readings"><a href="/${imageOf(m)}">image</a> · <a href="/${m.id}.txt">recipe</a> · <a href="/${m.id}.spw">line</a></p></li>`).join("\n")}
-      </ul>
+      <h2 id="catalog-head">Materials by class</h2>
+${Object.entries(CLASSES).map(([cls, c]) => `      <article class="class"><h3>${escapeHtml(cls)}</h3><p>${escapeHtml(c.science)}</p><p class="words">${c.materials.map((word) => { const m = MATERIALS.find((each) => each.word === word); return `<a href="/${m.slug}">${escapeHtml(word)}</a>`; }).join(" · ")}</p></article>`).join("\n")}
     </section>
   </main>
 </body>
@@ -154,36 +95,18 @@ const CSP = "default-src 'none'; img-src 'self'; style-src 'self'; script-src 's
 function headersFile() {
   const rules = [`# Written by workers/texture-website/carry.mjs.`, `/*`, ...Object.entries(securityHeaders({ csp: CSP })).map(([n, v]) => `  ${n}: ${v}`), ""];
   const cache = (pattern, value, extra = []) => rules.push(pattern, `  Cache-Control: ${value}`, ...extra, "");
-  const shared = ["  Cross-Origin-Resource-Policy: cross-origin", "  Access-Control-Allow-Origin: *"];
-  for (const m of ALL) {
-    if (m.procedural) cache(`/${m.id}.svg`, "public, max-age=86400", shared);
-    else for (const ext of ["webp", "avif"]) cache(`/${m.id}.${ext}`, "public, max-age=86400", shared);
-    cache(`/${m.id}.txt`, "public, max-age=300", ["  Content-Type: text/plain; charset=UTF-8", "  Access-Control-Allow-Origin: *"]);
-    cache(`/${m.id}.spw`, "public, max-age=300", ["  Content-Type: text/plain; charset=UTF-8", "  Access-Control-Allow-Origin: *"]);
-  }
-  cache("/catalog.json", "public, max-age=300", ["  Access-Control-Allow-Origin: *"]);
+  const text = ["  Content-Type: text/plain; charset=UTF-8", "  Access-Control-Allow-Origin: *"];
+  for (const m of MATERIALS) { cache(`/${m.slug}.txt`, "public, max-age=300", text); cache(`/${m.slug}.spw`, "public, max-age=300", text); }
+  cache("/vocabulary.json", "public, max-age=300", ["  Access-Control-Allow-Origin: *"]);
   cache("/llms.txt", "public, max-age=300");
   return rules.join("\n");
 }
 
 export async function carried() {
-  const materials = [];
-  const text = [];
-  for (const m of ALL) {
-    const p = await provenance(m);
-    const readings = m.procedural
-      ? { image: `/${m.id}.svg`, recipe: `/${m.id}.txt`, line: `/${m.id}.spw` }
-      : { image: `/${m.id}.webp`, avif: `/${m.id}.avif`, recipe: `/${m.id}.txt`, line: `/${m.id}.spw` };
-    materials.push({ id: m.id, name: m.name, category: m.category, meaning: m.meaning, science: m.science, draft: true, procedural: m.procedural ?? null,
-      readings, provenance: p.raw ? { ...p, raw: { name: p.raw.name } } : p,
-      history: history(m.procedural ? "workers/texture-website/src/materials.js" : `${m.image}.webp`) });
-    text.push([`${m.id}.txt`, recipe(m, p)], [`${m.id}.spw`, line(m, p)]);
-    if (m.procedural) text.push([`${m.id}.svg`, tile(m)]);
-  }
-  const catalog = { site: "texture.website", note: "science notes are drafts", categories: CATEGORIES, laws: LAWS, bubbles: BUBBLES, materials };
+  const vocabulary = { site: "texture.website", note: "the science notes are drafts", classes: CLASSES, materials: MATERIALS, ladders: LADDERS, phrases: PHRASES, formats: FORMATS, relations: RELATIONS };
   return [
-    ...text,
-    ["catalog.json", `${JSON.stringify(catalog, null, 2)}\n`],
+    ...MATERIALS.flatMap((m) => [[`${m.slug}.txt`, starter(m)], [`${m.slug}.spw`, line(m)]]),
+    ["vocabulary.json", `${JSON.stringify(vocabulary, null, 2)}\n`],
     ["index.html", PAGE],
     ["llms.txt", LLMS],
     ["robots.txt", "User-agent: *\nAllow: /\n"],
@@ -191,29 +114,9 @@ export async function carried() {
   ];
 }
 
-/** The images and tracked raw renders, copied byte for byte. */
-async function copyImages(check) {
-  let drift = 0;
-  for (const m of MATERIALS) {
-    const p = await provenance(m);
-    const pairs = ["webp", "avif"].map((ext) => [path.join(ROOT, `${m.image}.${ext}`), path.join(ASSETS, `${m.id}.${ext}`)]);
-    if (p.raw) pairs.push([path.join(ROOT, p.raw.file), path.join(ASSETS, "raw", p.raw.name)]);
-    for (const [from, to] of pairs) {
-      if (check) {
-        const [a, b] = await Promise.all([readFile(from), readFile(to).catch(() => Buffer.alloc(0))]);
-        if (!a.equals(b)) { drift += 1; console.error(`[texture-carry] ${path.relative(ROOT, to)} differs from ${path.relative(ROOT, from)}`); }
-      } else {
-        await import("node:fs/promises").then(({ mkdir }) => mkdir(path.dirname(to), { recursive: true }));
-        await copyFile(from, to);
-      }
-    }
-  }
-  return drift;
-}
-
 if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
   const check = process.argv.includes("--check");
-  const drift = (await writeOrCheck(ASSETS, await carried(), { check, label: "texture-carry", hint: "run node workers/texture-website/carry.mjs" })) + (await copyImages(check));
+  const drift = await writeOrCheck(ASSETS, await carried(), { check, label: "texture-carry", hint: "run node workers/texture-website/carry.mjs" });
   if (check && drift) process.exit(1);
-  if (!check) console.log(`[texture-carry] wrote ${ALL.length} materials into workers/texture-website/assets`);
+  if (!check) console.log(`[texture-carry] wrote ${MATERIALS.length} materials in ${Object.keys(CLASSES).length} classes into workers/texture-website/assets`);
 }

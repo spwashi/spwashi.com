@@ -1,0 +1,13 @@
+lime plaster (texture.website/lime-plaster), stone
+Minerals bound by heat, pressure or cement; the grain size and what fills the gaps between grains decide its pattern and polish.
+Qualities to try: polished face, honed matte, veining, fine aggregate, chipped arris
+
+As a tile:
+  seamless repeating texture of lime plaster, close view, soft overcast light, polished face, honed matte --tile --ar 1:1 --no text, letters, logo, watermark
+As a backdrop:
+  wide backdrop of lime plaster, across a room, raking dawn light, weathered --ar 16:9 --no text, letters, logo, watermark
+With another material:
+  seamless repeating texture of lime plaster drifting through oak, close view, warm lamplight --tile --ar 1:1 --no text, letters, logo, watermark
+
+Composed and tuned on the page:
+  https://texture.website/lime-plaster/~oak?light=lamplight&wear=worn&process=riso

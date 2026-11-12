@@ -1,9 +1,0 @@
-Ramp (texture.website/ramp)
-A gradient. One value sliding to another.
-
-Pattern: A linear ramp interpolates between two values; the eye reads equal steps of lightness as equal, not equal steps of light.
-Made with: texture.website, drawn in CSS and SVG
-
-As a tile: https://texture.website/ramp.svg
-Composed over a material, with its dimensions:
-  https://texture.website/paper/*ramp?s=1.5&a=30&g=0.2

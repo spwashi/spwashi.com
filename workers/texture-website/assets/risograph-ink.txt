@@ -1,0 +1,13 @@
+risograph ink (texture.website/risograph-ink), pigment
+Coloured particles carried in a binder or water; how the particles settle as the carrier leaves makes washes, blooms and granulation.
+Qualities to try: granulation, bloom edges, misregistration, flat ink, brush drag
+
+As a tile:
+  seamless repeating texture of risograph ink, close view, soft overcast light, granulation, bloom edges --tile --ar 1:1 --no text, letters, logo, watermark
+As a backdrop:
+  wide backdrop of risograph ink, across a room, raking dawn light, weathered --ar 16:9 --no text, letters, logo, watermark
+With another material:
+  seamless repeating texture of risograph ink drifting through rubber stud flooring, close view, warm lamplight --tile --ar 1:1 --no text, letters, logo, watermark
+
+Composed and tuned on the page:
+  https://texture.website/risograph-ink/~rubber-stud-flooring?light=lamplight&wear=worn&process=riso

@@ -1,9 +1,0 @@
-Checker (texture.website/checker)
-Alternating squares. The plainest figure and ground.
-
-Pattern: Two colourings of a square grid where no cell shares an edge with its own colour: the board's two-colour rule.
-Made with: texture.website, drawn in CSS and SVG
-
-As a tile: https://texture.website/checker.svg
-Composed over a material, with its dimensions:
-  https://texture.website/paper/*checker?s=1.5&a=30&g=0.2
