@@ -95,10 +95,11 @@ const CSP = "default-src 'none'; img-src 'self'; style-src 'self'; script-src 's
 function headersFile() {
   const rules = [`# Written by workers/texture-website/carry.mjs.`, `/*`, ...Object.entries(securityHeaders({ csp: CSP })).map(([n, v]) => `  ${n}: ${v}`), ""];
   const cache = (pattern, value, extra = []) => rules.push(pattern, `  Cache-Control: ${value}`, ...extra, "");
+  // One rule per extension: Cloudflare allows 100 rules, and every reading of a kind shares its headers (llms.txt among the .txt).
   const text = ["  Content-Type: text/plain; charset=UTF-8", "  Access-Control-Allow-Origin: *"];
-  for (const m of MATERIALS) { cache(`/${m.slug}.txt`, "public, max-age=300", text); cache(`/${m.slug}.spw`, "public, max-age=300", text); }
+  cache("/*.txt", "public, max-age=300", text);
+  cache("/*.spw", "public, max-age=300", text);
   cache("/vocabulary.json", "public, max-age=300", ["  Access-Control-Allow-Origin: *"]);
-  cache("/llms.txt", "public, max-age=300");
   return rules.join("\n");
 }
 
