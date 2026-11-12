@@ -1,7 +1,8 @@
 /**
  * site-hub-next — one public job per hostname.
  *
- * texture.website is the grain lab. attention.productions is the pictures.
+ * attention.productions is the pictures. texture.website left for its own
+ * files-only unit, workers/texture-website, on 2026-11-12.
  * Every other host this script serves is a door: one sentence, one place
  * the work already lives, and two neighbors. Does not serve spwashi.com.
  * Do not attach this script to spwashi.com/*.
@@ -12,7 +13,6 @@
 
 import { HOST as TEALSTRIPES_HOST, handleTealstripes } from "./tealstripes.js";
 import { HOST as MUTEX_HOST, handleMutex } from "./mutex.js";
-import { site as texture } from "./hosts/texture.js";
 import { site as attention } from "./hosts/attention.js";
 import { DOORS, renderDoor } from "./hosts/doors.js";
 import { FAVICON, ROBOTS, ecosystemJson, renderSet } from "./hosts/ecosystem.js";
@@ -31,7 +31,6 @@ const SET_PATHS = ["/ecosystem.json", "/registry.json", "/favicon.svg"];
  * is a door, or the set.
  */
 const SITES = [
-  texture,
   attention,
 ];
 const SITE_BY_HOST = new Map(SITES.map((site) => [site.host, site]));

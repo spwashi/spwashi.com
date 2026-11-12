@@ -25,7 +25,7 @@
 @unit: ~"../../workers/texture-website/carry.mjs"
 @materials: ~"../../workers/texture-website/src/materials.js"
 @page: ~"../../workers/texture-website/assets/texture.js"
-@hub: ~"../../workers/site-hub-next/src/hosts/texture.js"
+@hub: ~"../../workers/site-hub-next/src/index.js"
 @mutex: ~"../../workers/site-hub-next/src/mutex.js"
 @session: ~"../../public/images/assets/motifs/texture-session-5.spw"
 @direction: ~"./ecosystem-direction-2026-11.spw"
@@ -47,7 +47,7 @@ summary = #[
   unit = `workers/texture-website: seven materials (four Midjourney textures, three Grok Imagine paper plates) in five categories, two roles; carry.mjs writes the readings, catalog.json, the fallback page, llms.txt and _headers (images cross-origin, so other sites and models can fetch them), and copies the images and tracked raw renders; three tests and check:workers hold it; cluster.json lists it as files with no host yet.`
   seen = `2026-11-12 in a local preview: / gave paper fiber under the bone plate, which lifts; /tomorrow and ?day=2026-11-13 agreed on linen under a drifting lattice; /paper/~lattice/rain-on-the-window?as=~&for=a+winter+novel drew a thought bubble and "Gathered for a winter novel"; /catalog showed each provenance and first commit.`
   not_yet = #[
-    `the domain: texture.website moves from site-hub-next when its custom domain is moved in the dashboard; then site-hub-next drops its branch`,
+    `done 2026-11-12: texture.website's route moved to this unit in the dashboard, www redirects to the apex by a Redirect Rule, and site-hub-next dropped its texture branch`,
     `share cards per address (a file cannot draw one per URL; a weekly set of cards for the day's composition can be carried)`,
     `the science notes, the reuse line and the copy, which are the creator's`,
   ][reg=set]
@@ -88,7 +88,7 @@ summary = #[
     `the library is whichever materials exist, rotating by day`,
   ][reg=set]
   open = #[
-    `the reuse line (a draft in @hub)`,
+    `the reuse line (a draft on the old texture page, in git at 24148290)`,
     `makers' pictures and their credit`,
     `the science notes`,
   ][reg=set]

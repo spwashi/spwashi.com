@@ -55,20 +55,14 @@ test('a held name stays a door', async () => {
 });
 
 test('a door page is its host alone, so a carry script can write it as a file', async () => {
-  const own = ['texture.website', 'attention.productions', 'mutex.buzz', 'tealstripesvibes.com'];
+  const own = ['attention.productions', 'mutex.buzz', 'tealstripesvibes.com'];
   assert.deepEqual([...DOOR_HOSTS].sort(), hosts.filter((host) => !own.includes(host)).sort());
   for (const host of DOOR_HOSTS) {
     assert.equal(await (await get(host, '/')).text(), renderDoor(host), host);
   }
 });
 
-test('texture keeps its lab and names the set', async () => {
-  const page = await get('texture.website', '/');
-  const html = await page.text();
-  assert.match(html, /Take one with you/);
-  assert.match(html, /attention\.productions/);
-  const registry = await (await get('texture.website', '/registry.json')).json();
-  assert.equal(registry.concept, 'grain');
+test('a door names the set in its registry', async () => {
   const other = await (await get('boon.land', '/registry.json')).json();
   assert.equal(other.schema, 'ecosystem.v1');
 });
