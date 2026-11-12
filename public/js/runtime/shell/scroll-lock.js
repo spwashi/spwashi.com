@@ -81,7 +81,7 @@ export function syncShellLock(snapshot) {
   if (shouldLock) {
     if (body.dataset.spwShellScrollLock !== 'true') {
       const scrollY = window.scrollY;
-      body.dataset.spwShellScrollY = String(scrollY);
+      writeDatasetValue(body, 'spwShellScrollY', String(scrollY));
       body.style.top = `-${scrollY}px`;
       writeDatasetValue(html, 'spwShellScrollLock', 'true');
       writeDatasetValue(body, 'spwShellScrollLock', 'true');

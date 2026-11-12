@@ -37,6 +37,7 @@ fixity = "tending"
  >>[2026-11-06 12:36] verify — still no wakes or rests field: rg -n '\b(wakes|rests)\s*[:?]' public/js/runtime/catalog types/module-catalog.d.ts finds nothing, and the catalog commits since 2026-10-10 (b5171318, 320fc4b9, 2c95bf13, e4905bf1) mount other plans' modules. contract-spw.js derives eight facets (#> #: $ ~ ? ! % and the scene paren) and emits nothing for engages. scripts/module-writer-baseline.json across its ten commits: 284 entries, 42 modules, 12 shared tokens at 47bab2ea; 276, 40, 11 at e4905bf1. The two defs whose writers change-only-writes.test.mjs holds are semantic-crossrefs and shell-disclosure (utility-row.js); the bus charge is not a catalog def.
  >>[2026-11-12 15:21] land — R1: rests is a registered effect field with a closed union (change-only, idempotent, single-writer, rest); semantic-crossrefs and shell-disclosure declare change-only; a planted unknown token failed check:runtime's bindings step (TS2322) and catalog-vocabulary.test.mjs; R2 is next
  >>[2026-11-12 15:24] land — R3: the writer audit passes in one line (276 held, 284 at birth, 42 in shared files, 11 shared tokens) and fails with each new write located at file, line and import path, verdict last; a planted root write in shell/utility-row.js printed that way and was removed
+ >>[2026-11-12 15:27] land — R2: change-only is a check with no baseline; the walk found two raw writes on the shell's measured lane (shell-disclosure.js:220 through syncDisclosure, applyMenuState, syncShellChromeLayout; scroll-lock.js:84 through syncShellLock) and both now compare first; the audit holds 2 change-only modules
 }
 
 ^"open"{
@@ -46,7 +47,7 @@ fixity = "tending"
 
 ^"cache"{
  ~#status: "implementing"
- ~#next_commit: "+[runtime] Let a module declare rests: change-only, and fail it when an observer writes raw"
+ ~#next_commit: "declare change-only on a third def and let the audit say what it finds; then R4, renderIfChanged"
  ~#files_hot: "public/js/runtime/catalog/constants.js, types/module-catalog.d.ts, public/js/runtime/catalog/enhancement.js (semantic-crossrefs), public/js/runtime/catalog/core.js (shell-disclosure); then scripts/module-writer-audit.mjs for R2"
  ~#gate: "nothing for the flat field; the Spw projection of facets waits on the operator question"
  ~#last_stream: "2026-11-12"

@@ -217,7 +217,7 @@ function syncShellChromeLayout(header, snapshot) {
   }
 
   if (disclosure instanceof HTMLDetailsElement) {
-    disclosure.dataset.spwShellTuneSurface = tuneSurface;
+    writeDatasetValue(disclosure, 'spwShellTuneSurface', tuneSurface);
   }
 }
 
