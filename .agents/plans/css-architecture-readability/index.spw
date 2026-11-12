@@ -1,4 +1,4 @@
-# Review 2026-11-06 — keep as the canonical CSS maintenance rail; PLAN.md cut from 807 to 400 lines (landed and handed-off patches collapsed, Patch 9 settled by 09713d0d); next is the compact overlay, and its two creator questions are wonders.
+# Review 2026-11-06 — keep as the canonical CSS maintenance rail; PLAN.md cut from 807 to 400 lines (landed and handed-off patches collapsed, Patch 9 settled by 09713d0d); the debug sheet's section banners landed 2026-11-12 (slice 2, comments only); next is the compact overlay, and its two creator questions are wonders.
 # Plan Index — CSS Architecture Readability Series
 #
 # Make the site's CSS easier to read, inspect, and refactor while improving the developer experience of changing UX behavior. The next series should turn the first debug-label pass…

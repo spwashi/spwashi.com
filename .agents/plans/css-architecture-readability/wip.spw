@@ -22,6 +22,7 @@ fixity = "tending"
  >>[2026-11-06 12:38] cite — Patch 9 is settled by landed code, so no wonder: data-spw-composition-flow already drives layout in components/content.css (Clusters A-C, 09713d0d) and typography-packing.css (1cbf5724), and composition-box-model.spw:23 keeps an authored value through the mirror. The draft's data-spw-composition-layout root gate would have been a new family. 131 authored uses in HTML.
  >>[2026-11-06 12:40] probe — wonder_css_architecture_readability_compact_default: rg 'debug-layers=' in src/styles/entries/debug.css lists on only (:11, :286, :331, :410); no compact rule. The ~#expect held.
  >>[2026-11-06 12:41] probe — wonder_css_architecture_readability_canonical_contract: README.md matches 2 (debug-layer-owner, cluster declarations), css-instruction.spw 0. The ~#expect held.
+ >>[2026-11-12 15:56] land — slice 2: src/styles/entries/debug.css carries four section banners and one marked as section 1 continued, comments only; the built public/css/effects/debug.css is byte-equal to source and its rules equal the previous build's with comments removed; slice 1, the compact overlay, still waits on a browser pass
 }
 
 ^"open"{
@@ -34,5 +35,5 @@ fixity = "tending"
  ~#next_commit: "+[css] Give the layer overlay a compact mode: outlines first, labels on hover and focus"
  ~#files_hot: "src/styles/entries/debug.css, public/css/effects/debug.css, public/css/README.md"
  ~#gate: "a manual browser pass on /, /settings/ and /design/ with the overlay on and compact"
- ~#last_stream: "2026-11-06"
+ ~#last_stream: "2026-11-12"
 }

@@ -1,4 +1,4 @@
-# Review 2026-11-06 — keep as the core-CSS delivery-schedule owner under the css-architecture-readability rail; core 1,722.0 of 1,740.8 KiB; next is the per-sheet share in css:payload, then one candidate sheet per session; the website ceiling is a wonder.
+# Review 2026-11-12 — keep as the core-CSS delivery-schedule owner under the css-architecture-readability rail; core 1,728.4 of 1,740.8 KiB (npm run css:payload); the per-sheet share landed, and css:payload names eleven sheets whose module mounts after first paint; next is one candidate sheet probed per session; the website ceiling is a wonder.
 # Plan Index — core-css-spend-cut
 #
 # First paint ships structure. Wonder, grain, cinematic, and ornament arrive

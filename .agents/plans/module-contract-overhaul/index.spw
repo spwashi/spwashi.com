@@ -1,4 +1,4 @@
-# Review 2026-11-06 — keep as the module contract owner (mounts, reads, writes, rests); next is R1, the flat rests field, then R2, change-only as a check; surfaces and next action re-read against the tree.
+# Review 2026-11-12 — keep as the module contract owner (mounts, reads, writes, rests); R1 to R3 landed (the rests field, change-only as a check, the audit's receipt); next is a third change-only declaration, then R4; the writer audit runs under check:runtime and in no gate.
 # Plan Index — Module Contract Overhaul
 #
 # A settled page rests. Every module can say, in Spw, what it mounts on, what wakes it, what it reads, what it writes, and what it promises to leave unchanged. Those statements…
@@ -30,7 +30,7 @@ intent: .{
 }[reg=facet]
 
 ^"conceptual_model"{
- thesis = `What each module mounts, reads, writes and leaves: writers are declared and audited, and the next slice makes rests: change-only a check that fails a raw dataset or textContent write.`
+ thesis = `What each module mounts, reads, writes and leaves: writers are declared and audited, and a module that declares rests: change-only fails the writer audit on a raw dataset or textContent write along a repeat path.`
  concepts = #[
   `module contract`,
   `writers`,
@@ -91,7 +91,7 @@ dispatch: .{
 }[reg=facet]
 
 next_action: .{
- step = `R1: add rests to CATALOG_DEF_FIELDS (runtime/catalog/constants.js) and a closed union in types/module-catalog.d.ts, declared change-only on semantic-crossrefs and shell-disclosure; then R2 makes change-only a check in scripts/module-writer-audit.mjs. Writers are declared since 47bab2ea.`
+ step = `Declare change-only on a third def and read what the audit finds (scripts/lib/change-only-paths.mjs); then R4, renderIfChanged. R1 to R3 landed 2026-11-12. The audit runs under npm run check:runtime and in no gate; whether check:local gains that stage is the creator's.`
 }[reg=facet]
 
 validation: #[
