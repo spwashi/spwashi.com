@@ -1,0 +1,9 @@
+#>texture_bone
+#:material #!plate
+
+~bone[plate]{bone, plate}
+
+meaning: "A paper chassis. The frame a figure hangs on."
+science: "Bone is a composite: stiff mineral crystals in a tough collagen matrix, strong where either alone would crack or bend."
+generator: "Grok Imagine"
+image: "https://texture.website/bone.webp"

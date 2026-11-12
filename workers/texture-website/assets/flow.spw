@@ -1,0 +1,9 @@
+#>texture_flow
+#:material #!plate
+
+~flow[plate]{flow, plate}
+
+meaning: "Paper clockwork. Motion drawn as parts that touch."
+science: "Gears pass motion by meshing teeth; the ratio of their tooth counts is the ratio of their turns."
+generator: "Grok Imagine"
+image: "https://texture.website/flow.webp"

@@ -1,0 +1,15 @@
+Bone plate (texture.website/bone)
+A paper chassis. The frame a figure hangs on.
+
+Material: Bone is a composite: stiff mineral crystals in a tough collagen matrix, strong where either alone would crack or bend.
+Made with: Grok Imagine
+
+As a style reference in Midjourney:
+  your subject --sref https://texture.website/bone.webp --sw 250
+As an image prompt:
+  https://texture.website/bone.webp your subject, made of bone plate
+Paired with another material:
+  your subject --sref https://texture.website/bone.webp https://texture.website/paper.webp
+
+Composed on the page:
+  https://texture.website/bone/~paper

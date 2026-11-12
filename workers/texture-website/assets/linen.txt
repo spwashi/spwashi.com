@@ -1,0 +1,16 @@
+Linen weave (texture.website/linen)
+Crossed threads. Cloth memory under illustration.
+
+Material: Flax bast fibre in plain weave: each weft thread passes over one warp and under the next, the simplest interlacing that holds.
+Made with: Midjourney, from a prompt that began "woven fabric linen texture close-up macro weave pattern soft …"
+Job: https://www.midjourney.com/jobs/6a147e5f-f967-42af-befa-3ca69cb560f2
+
+As a style reference in Midjourney:
+  your subject --sref https://texture.website/linen.webp --sw 250
+As an image prompt:
+  https://texture.website/linen.webp your subject, made of linen weave
+Paired with another material:
+  your subject --sref https://texture.website/linen.webp https://texture.website/harlequin.webp
+
+Composed on the page:
+  https://texture.website/linen/~harlequin

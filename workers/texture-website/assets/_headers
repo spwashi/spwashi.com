@@ -1,0 +1,154 @@
+# Written by workers/texture-website/carry.mjs.
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: no-referrer
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Content-Security-Policy: default-src 'none'; img-src 'self'; style-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests
+
+/paper.webp
+  Cache-Control: public, max-age=86400
+  Cross-Origin-Resource-Policy: cross-origin
+  Access-Control-Allow-Origin: *
+
+/paper.avif
+  Cache-Control: public, max-age=86400
+  Cross-Origin-Resource-Policy: cross-origin
+  Access-Control-Allow-Origin: *
+
+/paper.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/paper.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/linen.webp
+  Cache-Control: public, max-age=86400
+  Cross-Origin-Resource-Policy: cross-origin
+  Access-Control-Allow-Origin: *
+
+/linen.avif
+  Cache-Control: public, max-age=86400
+  Cross-Origin-Resource-Policy: cross-origin
+  Access-Control-Allow-Origin: *
+
+/linen.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/linen.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/harlequin.webp
+  Cache-Control: public, max-age=86400
+  Cross-Origin-Resource-Policy: cross-origin
+  Access-Control-Allow-Origin: *
+
+/harlequin.avif
+  Cache-Control: public, max-age=86400
+  Cross-Origin-Resource-Policy: cross-origin
+  Access-Control-Allow-Origin: *
+
+/harlequin.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/harlequin.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/wash.webp
+  Cache-Control: public, max-age=86400
+  Cross-Origin-Resource-Policy: cross-origin
+  Access-Control-Allow-Origin: *
+
+/wash.avif
+  Cache-Control: public, max-age=86400
+  Cross-Origin-Resource-Policy: cross-origin
+  Access-Control-Allow-Origin: *
+
+/wash.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/wash.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/lattice.webp
+  Cache-Control: public, max-age=86400
+  Cross-Origin-Resource-Policy: cross-origin
+  Access-Control-Allow-Origin: *
+
+/lattice.avif
+  Cache-Control: public, max-age=86400
+  Cross-Origin-Resource-Policy: cross-origin
+  Access-Control-Allow-Origin: *
+
+/lattice.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/lattice.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/bone.webp
+  Cache-Control: public, max-age=86400
+  Cross-Origin-Resource-Policy: cross-origin
+  Access-Control-Allow-Origin: *
+
+/bone.avif
+  Cache-Control: public, max-age=86400
+  Cross-Origin-Resource-Policy: cross-origin
+  Access-Control-Allow-Origin: *
+
+/bone.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/bone.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/flow.webp
+  Cache-Control: public, max-age=86400
+  Cross-Origin-Resource-Policy: cross-origin
+  Access-Control-Allow-Origin: *
+
+/flow.avif
+  Cache-Control: public, max-age=86400
+  Cross-Origin-Resource-Policy: cross-origin
+  Access-Control-Allow-Origin: *
+
+/flow.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/flow.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/catalog.json
+  Cache-Control: public, max-age=300
+  Access-Control-Allow-Origin: *
+
+/llms.txt
+  Cache-Control: public, max-age=300

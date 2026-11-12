@@ -1,0 +1,13 @@
+# texture.website
+
+Materials to make images with, and a page that composes them. Every material answers at its own name in several readings:
+- /{material}.webp and .avif: the image, a stable address to use as a style reference or image prompt
+- /{material}.txt: what it is, how it was made, and lines to try
+- /{material}.spw: the material as a line of Spw
+- /catalog.json: every material, its category, its provenance and its history
+
+The page reads its address as a recipe. Each word in the path is a layer, bottom first; a mark before a word is that layer's law: . settles, ^ lifts, * is heavy, ~ drifts, = holds still, @ leans in, ? opens out, ! makes room, % levels. A word that names no material is spoken in a speech bubble. Query keys: say (bubble text), as (bubble shape: ~ thought, ? question, ! burst, . statement), day (a date's rotation, YYYY-MM-DD), for (whom or what the materials are gathered for), scale, angle.
+
+/ is today's composition, drawn from whichever materials exist; /tomorrow is tomorrow's; /catalog lists every material for study.
+
+Materials: paper, linen, harlequin, wash, lattice, bone, flow
