@@ -1,0 +1,85 @@
+# What shape the .spw tree has grown into, and what it makes us wonder (2026-11-11) — cache
+#
+# The creator, after an offer to promote the readings and rooms theory into
+# .spw/language or .spw/philosophy: "I'd like to also record wonder about the
+# .spw tree structure". Measured first, from this checkout at f132375b, outside
+# .spw/_workbench. This file asks; it moves, renames and promotes nothing.
+
+#>spw_tree_shape_2026_11
+#:cache #!tree #!wonder #!canon
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@readme: ~"../README.md"
+@cache_rules: ~"./index.spw#cache_rules"
+@sediment: ~"../conventions/wonder-architecture.spw#wonder_architecture_sediment"
+@grounding: ~"./factshift-paste-grounding-2026-11.spw"
+@journal_scales: ~"../_workbench/.spw/caches/journal/2026-11-11-one-table-many-scales.spw"
+
+operation = "cache"
+fixity = "experimental"
+expression = ?tree[shape]{kind.subject.depth.sediment}<reader>
+
+^"measured"{
+  # 2026-11-11. Folder counts by find over *.spw; months from cache file names; canon growth from each file's adding commit; wonders from npm run wonder -- --contour.
+  folders = `gen 266 files and 32,946 lines (generated); caches 142 and 22,009; conventions 121 and 19,329; audits 88 and 15,117; reviews 33 and 5,593; language 28 and 2,446; production 21; surfaces 14; scenes 13; philosophy 8 and 1,189; slices 7; skills 4; eleven files at the root`
+  depth = `of the 490 hand-written surfaces, 11 sit at the root, 348 one folder down, 119 two down and 12 three down`
+  cache_months = `July 3, August 8, September 58, October 10, November 52 by the 11th, and 11 undated`
+  canon_growth = `files added to conventions: April 12, May 7, June 17, July 14, August 26, September 4, October 1, November 1; to language: July 6, August 3, September 1; to philosophy: April 2, August 1`
+  promotion = `95 of 142 caches cite a convention; 30 are cited from conventions, language, philosophy or surfaces. Caches lean on canon far more than canon draws from caches.`
+  fixity = `among caches that state one: experimental 82, tending 36, cold 3`
+  wonders = `447 questions across .spw and .agents: 334 open, 92 probed, 21 answered, 0 retired; 155 have a probe and no ~#expect. Inside .spw, caches hold 133 wonder anchors, conventions 43, philosophy 15, reviews 13, language 7.`
+  tools = `npm run spw:tree, which @readme lists, is refused ("Path is outside the consumer root: ../..") by a workbench guard older than this session's pin move; spw tree .spw --depth 2 through the mounted CLI reads 361 files in 13 folders. Every cache file is in the caches index.`
+}[reg=facet]
+
+^"reading"{
+  # What the shape seems to say. Readings, not findings; each wonder below is how one could be wrong.
+  by_kind = `The tree is filed by kind of writing (cache, convention, audit, review), not by subject. A subject such as texture.website or factshift.center lives across caches, plans, reviews and workers, and only file names, #: tags and index rows hold it together.`
+  sediment_stopped = `Since September, theory has accrued in caches (62 in October and November) while canon gained two conventions and no language or philosophy file. @cache_rules r3, promoting settled insight to conventions, is the step that stopped; @sediment asked whether tooling could tell a cache that should promote from one that should stay.`
+  drawers = `The tree is broad and shallow: seven in ten surfaces sit one folder down, so a folder is a drawer, not a path. Depth carries little; citations carry the structure.`
+  three_kinds = `The workbench journal names three kinds of cache with three freshness rules: computed, kept records and canon (@journal_scales cache_registry). The tree already separates gen, the computed kind and its largest folder by lines, but kept records and canon sit side by side as caches and conventions with no rule for crossing.`
+}[reg=facet]
+
+#>wonder_tree_sediment
+?["Has theory stopped moving from caches into canon, and is that a loss or a new shape?"]{
+  #:depth #!computational ~#lens(memory)
+  ~#with: @sediment
+  ~#expect: "most theory written since October is read from caches by plans and workers and never reaches a convention; the most-cited caches already act as canon"
+  !probe{ "for each cache dated 2026-10 or 2026-11, count inbound citations from plans, workers and other caches against those from conventions, language and philosophy; list the ten most cited" }
+  $%[sediment.stalled, caches.are.canon, canon.elsewhere]
+}
+
+#>wonder_tree_cache_life
+?["What should a cache become once its month is over: canon, cold, or let go with a receipt?"]{
+  #:depth #!experiential ~#lens(memory)
+  ~#expect: "most should go cold and a few promote; none is let go today because nothing asks, as no wonder has ever been retired"
+  !probe{ "list caches with no edit and no new inbound citation in thirty days, with their fixity; show the creator ten and ask which each should become" }
+  $%[cache.cold, cache.promote, cache.let_go, cache.alive]
+}
+
+#>wonder_tree_by_subject
+?["Would a reader find a subject faster if the tree could also be read by subject, without moving a file?"]{
+  #:depth #!experiential ~#lens(comparison)
+  ~#expect: "a generated subject view under gen, read from cache names, #: tags and citations, beats any folder move, and a move would break the citations that are the tree's real structure"
+  !probe{ "time finding everything about texture.website from the README with rg, then from a hand-made list of the same files grouped by subject; count files each way misses" }
+  $%[by.kind, by.subject, by.both]
+}
+
+#>wonder_tree_focus
+?["Can the tree be read from a focus as a line can: one surface whole, its citers and citations as summaries, the rest as counts?"]{
+  #:depth #!computational ~#lens(projection)
+  ~#with: @grounding
+  ~#expect: "a surface two citation hops out stays under forty files, so a fold from one surface fits on one screen"
+  !probe{ "from factshift-paste-grounding-2026-11.spw, list the surfaces one and two citation hops away in either direction and count them" }
+  $%[focus.fits, focus.floods, citations.sparse]
+}
+
+#>wonder_tree_theory_home
+?["Where does theory about readings and rooms belong: language, philosophy, conventions, or a cache kept alive?"]{
+  #:depth #!experiential ~#lens(comparison)
+  ~#with: @grounding
+  ~#expect: "the rooms belong in language, since they read the containers; one brace, many relations is a convention each host keeps; the reading coordinates stay in a cache until a second host builds them"
+  !probe{ "show the creator the three placements beside the cache; ask which file a host author would open first" }
+  $%[home.language, home.convention, home.philosophy, home.cache]
+}
