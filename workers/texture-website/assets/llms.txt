@@ -1,13 +1,15 @@
 # texture.website
 
-Materials to make images with, and a page that composes them. Every material answers at its own name in several readings:
-- /{material}.webp and .avif: the image, a stable address to use as a style reference or image prompt
+Materials to make images and interfaces with, and a slide that composes them. Every material answers at its own name in several readings:
+- /{material}.webp and .avif (a photographed material) or /{material}.svg (a drawn pattern): a stable address to use as a style reference, an image prompt or a tile
 - /{material}.txt: what it is, how it was made, and lines to try
 - /{material}.spw: the material as a line of Spw
 - /catalog.json: every material, its category, its provenance and its history
 
-The page reads its address as a recipe. Each word in the path is a layer, bottom first; a mark before a word is that layer's law: . settles, ^ lifts, * is heavy, ~ drifts, = holds still, @ leans in, ? opens out, ! makes room, % levels. A word that names no material is spoken in a speech bubble. Query keys: say (bubble text), as (bubble shape: ~ thought, ? question, ! burst, . statement), day (a date's rotation, YYYY-MM-DD), for (whom or what the materials are gathered for), scale, angle.
+The slide reads its address as a recipe. Each word in the path is a layer, bottom first; a mark before a word is that layer's law: . settles, ^ lifts, * is heavy, ~ drifts, = holds still, @ leans in, ? opens out, ! makes room, % levels. A word that names no material is spoken in a speech bubble. In a path, the ? mark is written %3F, since a bare ? begins the query.
 
-/ is today's composition, drawn from whichever materials exist; /tomorrow is tomorrow's; /catalog lists every material for study.
+Dimensions, as query keys: d (days from today, signed: d=+3, d=-1), day (a date, YYYY-MM-DD), s (scale), a (angle in degrees), g (grain, 0 to 1), w (warp, 0 to 1), say (bubble text), as (bubble shape: ~ thought, ? question, ! burst, . statement), for (whom or what the materials are gathered for).
 
-Materials: paper, linen, harlequin, wash, lattice, bone, flow
+/ is the day's composition, drawn from whichever materials exist; /catalog lists every material for study.
+
+Materials: paper, linen, harlequin, wash, lattice, bone, flow, grid, dots, hatch, stripes, checker, ramp

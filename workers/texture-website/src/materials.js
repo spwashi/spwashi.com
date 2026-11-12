@@ -11,7 +11,22 @@ export const CATEGORIES = Object.freeze({
   wash: { role: "ground", says: "pigment in water" },
   pattern: { role: "figure", says: "a tiling" },
   plate: { role: "figure", says: "a paper maquette" },
+  simple: { role: "figure", says: "a drawn pattern, every dimension tunable" },
 });
+
+/**
+ * The broad and simple set: patterns drawn, not photographed, so scale, angle,
+ * grain and warp change them exactly. The page draws each with CSS; carry.mjs
+ * writes each as an SVG tile (/grid.svg) for other tools.
+ */
+const SIMPLE = [
+  ["grid", "Grid", "Ruled squares. A measure laid over anything.", "A square lattice: two families of parallel lines at right angles, the plane cut into equal cells."],
+  ["dots", "Dot screen", "A halftone's dots. Tone from coverage, not ink.", "A halftone prints a grey as dots of one ink; the share of the cell a dot covers is the tone the eye sees."],
+  ["hatch", "Hatch", "Diagonal strokes. Shade with direction.", "Hatching shades with parallel lines: closer lines read darker, and crossing a second set deepens it again."],
+  ["stripes", "Stripes", "Even bands. Rhythm before image.", "A periodic pattern of one interval: shift it by its period and it lands on itself."],
+  ["checker", "Checker", "Alternating squares. The plainest figure and ground.", "Two colourings of a square grid where no cell shares an edge with its own colour: the board's two-colour rule."],
+  ["ramp", "Ramp", "A gradient. One value sliding to another.", "A linear ramp interpolates between two values; the eye reads equal steps of lightness as equal, not equal steps of light."],
+];
 
 const MOTIFS = "public/images/assets/motifs";
 
@@ -59,6 +74,11 @@ export const MATERIALS = Object.freeze([
     science: "Gears pass motion by meshing teeth; the ratio of their tooth counts is the ratio of their turns.",
   },
 ]);
+
+export const PROCEDURAL = Object.freeze(SIMPLE.map(([id, name, meaning, science]) => ({ id, name, category: "simple", procedural: id, meaning, science })));
+
+/** Every material, photographed and drawn. */
+export const ALL = Object.freeze([...MATERIALS, ...PROCEDURAL]);
 
 /**
  * A layer's law is the mark before its word, read as factshift.center reads a

@@ -5,7 +5,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { carried } from '../carry.mjs';
-import { CATEGORIES, LAWS, MATERIALS } from '../src/materials.js';
+import { ALL, CATEGORIES, LAWS } from '../src/materials.js';
 
 const root = path.dirname(fileURLToPath(new URL('../wrangler.jsonc', import.meta.url)));
 const assets = path.join(root, 'assets');
@@ -22,13 +22,14 @@ test('each carried file is what carry.mjs writes', async () => {
 
 test('every material answers in each reading, sits in a known category, and has a history', () => {
   const catalog = JSON.parse(readFileSync(path.join(assets, 'catalog.json'), 'utf8'));
-  assert.equal(catalog.materials.length, MATERIALS.length);
+  assert.equal(catalog.materials.length, ALL.length);
   for (const m of catalog.materials) {
     assert.ok(CATEGORIES[m.category], m.id);
     for (const reading of Object.values(m.readings)) assert.ok(existsSync(path.join(assets, reading)), `${m.id} ${reading}`);
-    assert.ok(m.history.length > 0, `${m.id} has a commit a student can open`);
+    // A photographed material has a commit a student can open; a drawn one is born in src/materials.js.
+    if (!m.procedural) assert.ok(m.history.length > 0, `${m.id} has a commit a student can open`);
     assert.ok(m.provenance.generator, m.id);
   }
-  for (const role of ['ground', 'figure']) assert.ok(MATERIALS.some((m) => CATEGORIES[m.category].role === role), `a day has a ${role}`);
+  for (const role of ['ground', 'figure']) assert.ok(ALL.some((m) => CATEGORIES[m.category].role === role), `a day has a ${role}`);
   assert.deepEqual(Object.keys(LAWS).filter(Boolean).join(''), '.^*~=@?!%');
 });

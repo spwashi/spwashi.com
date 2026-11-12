@@ -1,0 +1,9 @@
+#>texture_stripes
+#:material #!simple
+
+~stripes[simple]{stripes}
+
+meaning: "Even bands. Rhythm before image."
+science: "A periodic pattern of one interval: shift it by its period and it lands on itself."
+generator: "texture.website, drawn in CSS and SVG"
+image: "https://texture.website/stripes.svg"

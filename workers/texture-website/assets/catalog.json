@@ -21,6 +21,10 @@
     "plate": {
       "role": "figure",
       "says": "a paper maquette"
+    },
+    "simple": {
+      "role": "figure",
+      "says": "a drawn pattern, every dimension tunable"
     }
   },
   "laws": {
@@ -92,6 +96,7 @@
       "meaning": "Warm cellulose grain. Reading surfaces that want to stay put.",
       "science": "Cellulose fibres felted into a sheet as water drains through a screen; a deckled edge is where the pulp thinned against the mould's frame.",
       "draft": true,
+      "procedural": null,
       "readings": {
         "image": "/paper.webp",
         "avif": "/paper.avif",
@@ -118,6 +123,7 @@
       "meaning": "Crossed threads. Cloth memory under illustration.",
       "science": "Flax bast fibre in plain weave: each weft thread passes over one warp and under the next, the simplest interlacing that holds.",
       "draft": true,
+      "procedural": null,
       "readings": {
         "image": "/linen.webp",
         "avif": "/linen.avif",
@@ -144,6 +150,7 @@
       "meaning": "Play lattice. Pattern that can carry a scene without becoming a costume.",
       "science": "A rhombic tiling: one diamond, translated along two directions, covers the plane with no gaps and no overlaps.",
       "draft": true,
+      "procedural": null,
       "readings": {
         "image": "/harlequin.webp",
         "avif": "/harlequin.avif",
@@ -170,6 +177,7 @@
       "meaning": "Thin pigment on paper. A field, not a fill.",
       "science": "Iron-oxide pigment suspended in water; as a wash dries, particles carried to its edges leave them darker, the coffee-ring effect.",
       "draft": true,
+      "procedural": null,
       "readings": {
         "image": "/wash.webp",
         "avif": "/wash.avif",
@@ -196,6 +204,7 @@
       "meaning": "A paper truss pinned to linen. Structure you can see through.",
       "science": "A truss carries load through triangles, the one polygon whose shape is fixed by the lengths of its sides.",
       "draft": true,
+      "procedural": null,
       "readings": {
         "image": "/lattice.webp",
         "avif": "/lattice.avif",
@@ -223,6 +232,7 @@
       "meaning": "A paper chassis. The frame a figure hangs on.",
       "science": "Bone is a composite: stiff mineral crystals in a tough collagen matrix, strong where either alone would crack or bend.",
       "draft": true,
+      "procedural": null,
       "readings": {
         "image": "/bone.webp",
         "avif": "/bone.avif",
@@ -250,6 +260,7 @@
       "meaning": "Paper clockwork. Motion drawn as parts that touch.",
       "science": "Gears pass motion by meshing teeth; the ratio of their tooth counts is the ratio of their turns.",
       "draft": true,
+      "procedural": null,
       "readings": {
         "image": "/flow.webp",
         "avif": "/flow.avif",
@@ -267,6 +278,150 @@
           "commit": "831a6162",
           "date": "2026-09-07",
           "subject": "&[images] Give empty scaffolds paper plates instead of a debug label"
+        }
+      ]
+    },
+    {
+      "id": "grid",
+      "name": "Grid",
+      "category": "simple",
+      "meaning": "Ruled squares. A measure laid over anything.",
+      "science": "A square lattice: two families of parallel lines at right angles, the plane cut into equal cells.",
+      "draft": true,
+      "procedural": "grid",
+      "readings": {
+        "image": "/grid.svg",
+        "recipe": "/grid.txt",
+        "line": "/grid.spw"
+      },
+      "provenance": {
+        "generator": "texture.website, drawn in CSS and SVG"
+      },
+      "history": [
+        {
+          "commit": "11ddb602",
+          "date": "2026-11-11",
+          "subject": "+[texture] Compose materials from the address, a day at a time, as files with no script"
+        }
+      ]
+    },
+    {
+      "id": "dots",
+      "name": "Dot screen",
+      "category": "simple",
+      "meaning": "A halftone's dots. Tone from coverage, not ink.",
+      "science": "A halftone prints a grey as dots of one ink; the share of the cell a dot covers is the tone the eye sees.",
+      "draft": true,
+      "procedural": "dots",
+      "readings": {
+        "image": "/dots.svg",
+        "recipe": "/dots.txt",
+        "line": "/dots.spw"
+      },
+      "provenance": {
+        "generator": "texture.website, drawn in CSS and SVG"
+      },
+      "history": [
+        {
+          "commit": "11ddb602",
+          "date": "2026-11-11",
+          "subject": "+[texture] Compose materials from the address, a day at a time, as files with no script"
+        }
+      ]
+    },
+    {
+      "id": "hatch",
+      "name": "Hatch",
+      "category": "simple",
+      "meaning": "Diagonal strokes. Shade with direction.",
+      "science": "Hatching shades with parallel lines: closer lines read darker, and crossing a second set deepens it again.",
+      "draft": true,
+      "procedural": "hatch",
+      "readings": {
+        "image": "/hatch.svg",
+        "recipe": "/hatch.txt",
+        "line": "/hatch.spw"
+      },
+      "provenance": {
+        "generator": "texture.website, drawn in CSS and SVG"
+      },
+      "history": [
+        {
+          "commit": "11ddb602",
+          "date": "2026-11-11",
+          "subject": "+[texture] Compose materials from the address, a day at a time, as files with no script"
+        }
+      ]
+    },
+    {
+      "id": "stripes",
+      "name": "Stripes",
+      "category": "simple",
+      "meaning": "Even bands. Rhythm before image.",
+      "science": "A periodic pattern of one interval: shift it by its period and it lands on itself.",
+      "draft": true,
+      "procedural": "stripes",
+      "readings": {
+        "image": "/stripes.svg",
+        "recipe": "/stripes.txt",
+        "line": "/stripes.spw"
+      },
+      "provenance": {
+        "generator": "texture.website, drawn in CSS and SVG"
+      },
+      "history": [
+        {
+          "commit": "11ddb602",
+          "date": "2026-11-11",
+          "subject": "+[texture] Compose materials from the address, a day at a time, as files with no script"
+        }
+      ]
+    },
+    {
+      "id": "checker",
+      "name": "Checker",
+      "category": "simple",
+      "meaning": "Alternating squares. The plainest figure and ground.",
+      "science": "Two colourings of a square grid where no cell shares an edge with its own colour: the board's two-colour rule.",
+      "draft": true,
+      "procedural": "checker",
+      "readings": {
+        "image": "/checker.svg",
+        "recipe": "/checker.txt",
+        "line": "/checker.spw"
+      },
+      "provenance": {
+        "generator": "texture.website, drawn in CSS and SVG"
+      },
+      "history": [
+        {
+          "commit": "11ddb602",
+          "date": "2026-11-11",
+          "subject": "+[texture] Compose materials from the address, a day at a time, as files with no script"
+        }
+      ]
+    },
+    {
+      "id": "ramp",
+      "name": "Ramp",
+      "category": "simple",
+      "meaning": "A gradient. One value sliding to another.",
+      "science": "A linear ramp interpolates between two values; the eye reads equal steps of lightness as equal, not equal steps of light.",
+      "draft": true,
+      "procedural": "ramp",
+      "readings": {
+        "image": "/ramp.svg",
+        "recipe": "/ramp.txt",
+        "line": "/ramp.spw"
+      },
+      "provenance": {
+        "generator": "texture.website, drawn in CSS and SVG"
+      },
+      "history": [
+        {
+          "commit": "11ddb602",
+          "date": "2026-11-11",
+          "subject": "+[texture] Compose materials from the address, a day at a time, as files with no script"
         }
       ]
     }

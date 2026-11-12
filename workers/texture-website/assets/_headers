@@ -146,6 +146,96 @@
   Content-Type: text/plain; charset=UTF-8
   Access-Control-Allow-Origin: *
 
+/grid.svg
+  Cache-Control: public, max-age=86400
+  Cross-Origin-Resource-Policy: cross-origin
+  Access-Control-Allow-Origin: *
+
+/grid.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/grid.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/dots.svg
+  Cache-Control: public, max-age=86400
+  Cross-Origin-Resource-Policy: cross-origin
+  Access-Control-Allow-Origin: *
+
+/dots.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/dots.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/hatch.svg
+  Cache-Control: public, max-age=86400
+  Cross-Origin-Resource-Policy: cross-origin
+  Access-Control-Allow-Origin: *
+
+/hatch.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/hatch.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/stripes.svg
+  Cache-Control: public, max-age=86400
+  Cross-Origin-Resource-Policy: cross-origin
+  Access-Control-Allow-Origin: *
+
+/stripes.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/stripes.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/checker.svg
+  Cache-Control: public, max-age=86400
+  Cross-Origin-Resource-Policy: cross-origin
+  Access-Control-Allow-Origin: *
+
+/checker.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/checker.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/ramp.svg
+  Cache-Control: public, max-age=86400
+  Cross-Origin-Resource-Policy: cross-origin
+  Access-Control-Allow-Origin: *
+
+/ramp.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/ramp.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
 /catalog.json
   Cache-Control: public, max-age=300
   Access-Control-Allow-Origin: *
