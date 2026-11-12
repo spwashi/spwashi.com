@@ -1,0 +1,13 @@
+patinated copper (texture.website/patinated-copper), metal
+Crystals of metal, worked by hammer, roller or brush; the surface keeps every tool's direction, and air adds its own colour as patina.
+Qualities to try: brushed direction, hammered dimples, patina, enamel chips, rivets
+
+As a tile:
+  seamless repeating texture of patinated copper, close view, soft overcast light, brushed direction, hammered dimples --tile --ar 1:1 --no text, letters, logo, watermark
+As a backdrop:
+  wide backdrop of patinated copper, across a room, raking dawn light, weathered --ar 16:9 --no text, letters, logo, watermark
+With another material:
+  seamless repeating texture of patinated copper drifting through rain on glass, close view, warm lamplight --tile --ar 1:1 --no text, letters, logo, watermark
+
+Composed and tuned on the page:
+  https://texture.website/patinated-copper/~rain-on-glass?light=lamplight&wear=worn&process=riso

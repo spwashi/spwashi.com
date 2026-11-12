@@ -39,7 +39,8 @@ A domain in focus gets: a files-only unit (`cluster.json` tier files), a materia
 
 ## Slices
 
-1. **The slide and its dimensions** (landed 2026-11-12, uncommitted): `?d=` replaces /tomorrow; the slide frame; the geometric panel; grain and warp as an SVG filter; the broad and simple procedural set.
+1. **The slide and its dimensions** (landed 2026-11-12, 28daa252). **Then a prompt studio** (2026-11-12): the seven image textures retired; `src/vocabulary.js` holds 65 material words in ten classes with qualities and science notes; any path word is a material; marks are relations in the sentence; plain sliders gave way to word ladders (scale, light, wear, process, scene, format), each word written into the prompt, with rolls and class neighbours to swap; the sketch is a class's drawn base in the word's hue, lit, worn and printed by an SVG filter built from the ladders; the page writes a Midjourney prompt, a plain prompt, a Spw line and the address. Basic tuning sliders wait for spwashi.com's profile framing and card pipeline.
+1a. **Formerly**: `?d=` replaces /tomorrow; the slide frame; the geometric panel; grain and warp as an SVG filter; the broad and simple procedural set.
 2. **The spwashi realm**: `/@spwashi/` and the folios pack, once the creator chooses the folios and their scene uses.
 3. **Shaders and frames as files**, with one drop.
 4. **The component bench and the first HTML tour slides**, each linked to trope.wiki.

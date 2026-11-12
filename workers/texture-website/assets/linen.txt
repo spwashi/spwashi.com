@@ -1,16 +1,13 @@
-Linen weave (texture.website/linen)
-Crossed threads. Cloth memory under illustration.
+linen (texture.website/linen), textile
+Yarns interlaced or looped; the weave or knit, not only the fibre, sets how a cloth drapes, catches light and wears.
+Qualities to try: tight weave, raised pile, slubbed yarn, worn nap, visible stitching
 
-Material: Flax bast fibre in plain weave: each weft thread passes over one warp and under the next, the simplest interlacing that holds.
-Made with: Midjourney, from a prompt that began "woven fabric linen texture close-up macro weave pattern soft …"
-Job: https://www.midjourney.com/jobs/6a147e5f-f967-42af-befa-3ca69cb560f2
+As a tile:
+  seamless repeating texture of linen, close view, soft overcast light, tight weave, raised pile --tile --ar 1:1 --no text, letters, logo, watermark
+As a backdrop:
+  wide backdrop of linen, across a room, raking dawn light, weathered --ar 16:9 --no text, letters, logo, watermark
+With another material:
+  seamless repeating texture of linen drifting through marble, close view, warm lamplight --tile --ar 1:1 --no text, letters, logo, watermark
 
-As a style reference in Midjourney:
-  your subject --sref https://texture.website/linen.webp --sw 250
-As an image prompt:
-  https://texture.website/linen.webp your subject, made of linen weave
-Paired with another material:
-  your subject --sref https://texture.website/linen.webp https://texture.website/harlequin.webp
-
-Composed on the page:
-  https://texture.website/linen/~harlequin
+Composed and tuned on the page:
+  https://texture.website/linen/~marble?light=lamplight&wear=worn&process=riso

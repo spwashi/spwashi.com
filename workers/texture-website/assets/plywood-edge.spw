@@ -1,0 +1,7 @@
+#>texture_plywood_edge
+#:material #!wood
+
+~plywood-edge[wood]{open grain, end grain, oiled sheen}
+
+word: "plywood edge"
+science: "Cellulose fibres laid down in yearly rings; cutting across, along or around the rings shows end grain, straight grain or figure."

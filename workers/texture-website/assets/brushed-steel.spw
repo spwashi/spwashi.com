@@ -1,0 +1,7 @@
+#>texture_brushed_steel
+#:material #!metal
+
+~brushed-steel[metal]{brushed direction, hammered dimples, patina}
+
+word: "brushed steel"
+science: "Crystals of metal, worked by hammer, roller or brush; the surface keeps every tool's direction, and air adds its own colour as patina."

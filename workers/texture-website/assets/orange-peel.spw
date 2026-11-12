@@ -1,0 +1,7 @@
+#>texture_orange_peel
+#:material #!organic
+
+~orange-peel[organic]{growth rings, cells, crumb}
+
+word: "orange peel"
+science: "Material a living thing made: cells and fibres arranged for a job, which is why bark, crust and honeycomb pattern themselves."

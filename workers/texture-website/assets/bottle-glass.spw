@@ -1,0 +1,7 @@
+#>texture_bottle_glass
+#:material #!glass
+
+~bottle-glass[glass]{frosted, bubbled, rain beads}
+
+word: "bottle glass"
+science: "A cooled liquid with no crystal order; it bends light at every surface, so texture in glass is mostly what it does to what lies behind it."

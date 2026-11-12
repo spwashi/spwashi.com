@@ -1,0 +1,7 @@
+#>texture_pressed_glass
+#:material #!glass
+
+~pressed-glass[glass]{frosted, bubbled, rain beads}
+
+word: "pressed glass"
+science: "A cooled liquid with no crystal order; it bends light at every surface, so texture in glass is mostly what it does to what lies behind it."

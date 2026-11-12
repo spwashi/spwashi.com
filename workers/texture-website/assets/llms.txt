@@ -1,15 +1,18 @@
 # texture.website
 
-Materials to make images and interfaces with, and a slide that composes them. Every material answers at its own name in several readings:
-- /{material}.webp and .avif (a photographed material) or /{material}.svg (a drawn pattern): a stable address to use as a style reference, an image prompt or a tile
-- /{material}.txt: what it is, how it was made, and lines to try
-- /{material}.spw: the material as a line of Spw
-- /catalog.json: every material, its category, its provenance and its history
+A studio for building material prompts. The address is the prompt: each word in the path is a material, bottom first, written into the sentence as it stands; a hyphen is a space. A mark before a word is how it meets the material before it: . settled into, ^ lifted over, * heavy with, ~ drifting through, = held against, @ seen through, ? broken by, ! cut with, % measured against. In a path the ? mark is written %3F. Any word works; listed words carry a class with tactile qualities and a science note.
 
-The slide reads its address as a recipe. Each word in the path is a layer, bottom first; a mark before a word is that layer's law: . settles, ^ lifts, * is heavy, ~ drifts, = holds still, @ leans in, ? opens out, ! makes room, % levels. A word that names no material is spoken in a speech bubble. In a path, the ? mark is written %3F, since a bare ? begins the query.
+Ladders, as query keys whose values are words (hyphens for spaces):
+- scale: macro, close, arm's length, room, far
+- light: raking dawn, overcast, noon, lamplight, sodium night
+- wear: pristine, handled, worn, weathered, ruined
+- process: as found, riso, engraving, relief, posterized, cyanotype
+- scene: wall, floor, table, costume, sky, page
+- format: tile, plate, sheet
+r rolls every ladder from a seed; d moves the day's composition by days; say and as put words in a speech bubble.
 
-Dimensions, as query keys: d (days from today, signed: d=+3, d=-1), day (a date, YYYY-MM-DD), s (scale), a (angle in degrees), g (grain, 0 to 1), w (warp, 0 to 1), say (bubble text), as (bubble shape: ~ thought, ? question, ! burst, . statement), for (whom or what the materials are gathered for).
+The page writes a Midjourney prompt (with --tile or an aspect ratio by format), a plain prompt for any model, a Spw line and the address, and sketches the words with drawn bases lit, worn and printed by an SVG filter.
 
-/ is the day's composition, drawn from whichever materials exist; /catalog lists every material for study.
+Readings: /vocabulary.json (classes, materials, ladders, phrases), /{material}.txt (prompt starters), /{material}.spw (the material as a line).
 
-Materials: paper, linen, harlequin, wash, lattice, bone, flow, grid, dots, hatch, stripes, checker, ramp
+Classes: paper, textile, stone, wood, metal, glass, ceramic, pigment, polymer, organic

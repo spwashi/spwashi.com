@@ -6,34 +6,84 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
   Content-Security-Policy: default-src 'none'; img-src 'self'; style-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests
 
-/paper.webp
-  Cache-Control: public, max-age=86400
-  Cross-Origin-Resource-Policy: cross-origin
-  Access-Control-Allow-Origin: *
-
-/paper.avif
-  Cache-Control: public, max-age=86400
-  Cross-Origin-Resource-Policy: cross-origin
-  Access-Control-Allow-Origin: *
-
-/paper.txt
+/ledger-paper.txt
   Cache-Control: public, max-age=300
   Content-Type: text/plain; charset=UTF-8
   Access-Control-Allow-Origin: *
 
-/paper.spw
+/ledger-paper.spw
   Cache-Control: public, max-age=300
   Content-Type: text/plain; charset=UTF-8
   Access-Control-Allow-Origin: *
 
-/linen.webp
-  Cache-Control: public, max-age=86400
-  Cross-Origin-Resource-Policy: cross-origin
+/kraft-paper.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
   Access-Control-Allow-Origin: *
 
-/linen.avif
-  Cache-Control: public, max-age=86400
-  Cross-Origin-Resource-Policy: cross-origin
+/kraft-paper.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/vellum.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/vellum.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/mulberry-paper.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/mulberry-paper.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/parchment.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/parchment.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/newsprint.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/newsprint.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/card-stock.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/card-stock.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/tracing-paper.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/tracing-paper.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
   Access-Control-Allow-Origin: *
 
 /linen.txt
@@ -46,197 +96,567 @@
   Content-Type: text/plain; charset=UTF-8
   Access-Control-Allow-Origin: *
 
-/harlequin.webp
-  Cache-Control: public, max-age=86400
-  Cross-Origin-Resource-Policy: cross-origin
-  Access-Control-Allow-Origin: *
-
-/harlequin.avif
-  Cache-Control: public, max-age=86400
-  Cross-Origin-Resource-Policy: cross-origin
-  Access-Control-Allow-Origin: *
-
-/harlequin.txt
+/moquette.txt
   Cache-Control: public, max-age=300
   Content-Type: text/plain; charset=UTF-8
   Access-Control-Allow-Origin: *
 
-/harlequin.spw
+/moquette.spw
   Cache-Control: public, max-age=300
   Content-Type: text/plain; charset=UTF-8
   Access-Control-Allow-Origin: *
 
-/wash.webp
-  Cache-Control: public, max-age=86400
-  Cross-Origin-Resource-Policy: cross-origin
-  Access-Control-Allow-Origin: *
-
-/wash.avif
-  Cache-Control: public, max-age=86400
-  Cross-Origin-Resource-Policy: cross-origin
-  Access-Control-Allow-Origin: *
-
-/wash.txt
+/boucl.txt
   Cache-Control: public, max-age=300
   Content-Type: text/plain; charset=UTF-8
   Access-Control-Allow-Origin: *
 
-/wash.spw
+/boucl.spw
   Cache-Control: public, max-age=300
   Content-Type: text/plain; charset=UTF-8
   Access-Control-Allow-Origin: *
 
-/lattice.webp
-  Cache-Control: public, max-age=86400
-  Cross-Origin-Resource-Policy: cross-origin
-  Access-Control-Allow-Origin: *
-
-/lattice.avif
-  Cache-Control: public, max-age=86400
-  Cross-Origin-Resource-Policy: cross-origin
-  Access-Control-Allow-Origin: *
-
-/lattice.txt
+/brocade.txt
   Cache-Control: public, max-age=300
   Content-Type: text/plain; charset=UTF-8
   Access-Control-Allow-Origin: *
 
-/lattice.spw
+/brocade.spw
   Cache-Control: public, max-age=300
   Content-Type: text/plain; charset=UTF-8
   Access-Control-Allow-Origin: *
 
-/bone.webp
-  Cache-Control: public, max-age=86400
-  Cross-Origin-Resource-Policy: cross-origin
-  Access-Control-Allow-Origin: *
-
-/bone.avif
-  Cache-Control: public, max-age=86400
-  Cross-Origin-Resource-Policy: cross-origin
-  Access-Control-Allow-Origin: *
-
-/bone.txt
+/felt.txt
   Cache-Control: public, max-age=300
   Content-Type: text/plain; charset=UTF-8
   Access-Control-Allow-Origin: *
 
-/bone.spw
+/felt.spw
   Cache-Control: public, max-age=300
   Content-Type: text/plain; charset=UTF-8
   Access-Control-Allow-Origin: *
 
-/flow.webp
-  Cache-Control: public, max-age=86400
-  Cross-Origin-Resource-Policy: cross-origin
-  Access-Control-Allow-Origin: *
-
-/flow.avif
-  Cache-Control: public, max-age=86400
-  Cross-Origin-Resource-Policy: cross-origin
-  Access-Control-Allow-Origin: *
-
-/flow.txt
+/quilted-satin.txt
   Cache-Control: public, max-age=300
   Content-Type: text/plain; charset=UTF-8
   Access-Control-Allow-Origin: *
 
-/flow.spw
+/quilted-satin.spw
   Cache-Control: public, max-age=300
   Content-Type: text/plain; charset=UTF-8
   Access-Control-Allow-Origin: *
 
-/grid.svg
-  Cache-Control: public, max-age=86400
-  Cross-Origin-Resource-Policy: cross-origin
-  Access-Control-Allow-Origin: *
-
-/grid.txt
+/gingham.txt
   Cache-Control: public, max-age=300
   Content-Type: text/plain; charset=UTF-8
   Access-Control-Allow-Origin: *
 
-/grid.spw
+/gingham.spw
   Cache-Control: public, max-age=300
   Content-Type: text/plain; charset=UTF-8
   Access-Control-Allow-Origin: *
 
-/dots.svg
-  Cache-Control: public, max-age=86400
-  Cross-Origin-Resource-Policy: cross-origin
-  Access-Control-Allow-Origin: *
-
-/dots.txt
+/velvet.txt
   Cache-Control: public, max-age=300
   Content-Type: text/plain; charset=UTF-8
   Access-Control-Allow-Origin: *
 
-/dots.spw
+/velvet.spw
   Cache-Control: public, max-age=300
   Content-Type: text/plain; charset=UTF-8
   Access-Control-Allow-Origin: *
 
-/hatch.svg
-  Cache-Control: public, max-age=86400
-  Cross-Origin-Resource-Policy: cross-origin
-  Access-Control-Allow-Origin: *
-
-/hatch.txt
+/ripstop.txt
   Cache-Control: public, max-age=300
   Content-Type: text/plain; charset=UTF-8
   Access-Control-Allow-Origin: *
 
-/hatch.spw
+/ripstop.spw
   Cache-Control: public, max-age=300
   Content-Type: text/plain; charset=UTF-8
   Access-Control-Allow-Origin: *
 
-/stripes.svg
-  Cache-Control: public, max-age=86400
-  Cross-Origin-Resource-Policy: cross-origin
-  Access-Control-Allow-Origin: *
-
-/stripes.txt
+/tweed.txt
   Cache-Control: public, max-age=300
   Content-Type: text/plain; charset=UTF-8
   Access-Control-Allow-Origin: *
 
-/stripes.spw
+/tweed.spw
   Cache-Control: public, max-age=300
   Content-Type: text/plain; charset=UTF-8
   Access-Control-Allow-Origin: *
 
-/checker.svg
-  Cache-Control: public, max-age=86400
-  Cross-Origin-Resource-Policy: cross-origin
-  Access-Control-Allow-Origin: *
-
-/checker.txt
+/marble.txt
   Cache-Control: public, max-age=300
   Content-Type: text/plain; charset=UTF-8
   Access-Control-Allow-Origin: *
 
-/checker.spw
+/marble.spw
   Cache-Control: public, max-age=300
   Content-Type: text/plain; charset=UTF-8
   Access-Control-Allow-Origin: *
 
-/ramp.svg
-  Cache-Control: public, max-age=86400
-  Cross-Origin-Resource-Policy: cross-origin
-  Access-Control-Allow-Origin: *
-
-/ramp.txt
+/terrazzo.txt
   Cache-Control: public, max-age=300
   Content-Type: text/plain; charset=UTF-8
   Access-Control-Allow-Origin: *
 
-/ramp.spw
+/terrazzo.spw
   Cache-Control: public, max-age=300
   Content-Type: text/plain; charset=UTF-8
   Access-Control-Allow-Origin: *
 
-/catalog.json
+/slate.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/slate.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/travertine.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/travertine.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/granite.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/granite.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/rammed-earth.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/rammed-earth.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/lime-plaster.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/lime-plaster.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/board-formed-concrete.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/board-formed-concrete.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/oak.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/oak.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/cork.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/cork.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/plywood-edge.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/plywood-edge.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/walnut-burl.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/walnut-burl.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/bamboo.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/bamboo.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/driftwood.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/driftwood.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/brushed-steel.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/brushed-steel.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/patinated-copper.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/patinated-copper.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/enamelware.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/enamelware.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/pewter.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/pewter.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/galvanized-sheet.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/galvanized-sheet.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/chrome.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/chrome.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/rain-on-glass.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/rain-on-glass.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/frosted-glass.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/frosted-glass.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/stained-glass.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/stained-glass.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/bottle-glass.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/bottle-glass.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/pressed-glass.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/pressed-glass.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/glazed-tile.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/glazed-tile.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/terracotta.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/terracotta.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/porcelain.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/porcelain.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/zellige.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/zellige.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/raku.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/raku.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/watercolour-wash.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/watercolour-wash.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/gouache.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/gouache.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/ink-bloom.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/ink-bloom.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/risograph-ink.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/risograph-ink.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/chalk-pastel.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/chalk-pastel.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/lacquer.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/lacquer.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/rubber-stud-flooring.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/rubber-stud-flooring.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/vinyl.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/vinyl.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/foam.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/foam.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/cast-resin.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/cast-resin.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/linoleum.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/linoleum.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/pie-crust.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/pie-crust.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/flour-on-marble.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/flour-on-marble.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/moss.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/moss.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/bark.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/bark.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/honeycomb.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/honeycomb.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/orange-peel.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/orange-peel.spw
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/vocabulary.json
   Cache-Control: public, max-age=300
   Access-Control-Allow-Origin: *
 

@@ -1,9 +1,0 @@
-#>texture_ramp
-#:material #!simple
-
-~ramp[simple]{ramp}
-
-meaning: "A gradient. One value sliding to another."
-science: "A linear ramp interpolates between two values; the eye reads equal steps of lightness as equal, not equal steps of light."
-generator: "texture.website, drawn in CSS and SVG"
-image: "https://texture.website/ramp.svg"

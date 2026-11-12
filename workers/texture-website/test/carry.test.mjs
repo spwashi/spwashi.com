@@ -1,11 +1,11 @@
-// texture.website as files: materials, readings and the page every path falls back to.
+// texture.website as files: a vocabulary for material prompts, its readings, and the page every path falls back to.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { carried } from '../carry.mjs';
-import { ALL, CATEGORIES, LAWS } from '../src/materials.js';
+import { CLASSES, FORMATS, LADDERS, MATERIALS, PHRASES, RELATIONS, slug } from '../src/vocabulary.js';
 
 const root = path.dirname(fileURLToPath(new URL('../wrangler.jsonc', import.meta.url)));
 const assets = path.join(root, 'assets');
@@ -20,16 +20,14 @@ test('each carried file is what carry.mjs writes', async () => {
   for (const [file, body] of await carried()) assert.equal(readFileSync(path.join(assets, file), 'utf8'), body, `assets/${file}: run node workers/texture-website/carry.mjs`);
 });
 
-test('every material answers in each reading, sits in a known category, and has a history', () => {
-  const catalog = JSON.parse(readFileSync(path.join(assets, 'catalog.json'), 'utf8'));
-  assert.equal(catalog.materials.length, ALL.length);
-  for (const m of catalog.materials) {
-    assert.ok(CATEGORIES[m.category], m.id);
-    for (const reading of Object.values(m.readings)) assert.ok(existsSync(path.join(assets, reading)), `${m.id} ${reading}`);
-    // A photographed material has a commit a student can open; a drawn one is born in src/materials.js.
-    if (!m.procedural) assert.ok(m.history.length > 0, `${m.id} has a commit a student can open`);
-    assert.ok(m.provenance.generator, m.id);
+test('every material has a class, a unique slug and its readings; every ladder word has its phrase', () => {
+  assert.equal(new Set(MATERIALS.map((m) => m.slug)).size, MATERIALS.length, 'no two materials share a path word');
+  for (const m of MATERIALS) {
+    assert.ok(CLASSES[m.cls].qualities.length >= 2, m.slug);
+    for (const ext of ['txt', 'spw']) assert.ok(existsSync(path.join(assets, `${m.slug}.${ext}`)), `${m.slug}.${ext}`);
   }
-  for (const role of ['ground', 'figure']) assert.ok(ALL.some((m) => CATEGORIES[m.category].role === role), `a day has a ${role}`);
-  assert.deepEqual(Object.keys(LAWS).filter(Boolean).join(''), '.^*~=@?!%');
+  for (const key of ['scale', 'light', 'wear', 'process', 'scene']) for (const word of LADDERS[key]) assert.ok(word in PHRASES[key], `${key} ${word}`);
+  for (const word of LADDERS.format) assert.ok(FORMATS[word]?.params, word);
+  for (const words of Object.values(LADDERS)) assert.equal(new Set(words.map(slug)).size, words.length, 'ladder words read apart in the address');
+  assert.equal(Object.keys(RELATIONS).filter(Boolean).join(''), '.^*~=@?!%');
 });

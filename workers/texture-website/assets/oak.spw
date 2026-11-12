@@ -1,0 +1,7 @@
+#>texture_oak
+#:material #!wood
+
+~oak[wood]{open grain, end grain, oiled sheen}
+
+word: "oak"
+science: "Cellulose fibres laid down in yearly rings; cutting across, along or around the rings shows end grain, straight grain or figure."

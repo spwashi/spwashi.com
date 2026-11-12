@@ -1,9 +1,0 @@
-#>texture_lattice
-#:material #!plate
-
-~lattice[plate]{lattice, plate}
-
-meaning: "A paper truss pinned to linen. Structure you can see through."
-science: "A truss carries load through triangles, the one polygon whose shape is fixed by the lengths of its sides."
-generator: "Grok Imagine"
-image: "https://texture.website/lattice.webp"

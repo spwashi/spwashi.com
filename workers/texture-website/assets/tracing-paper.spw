@@ -1,0 +1,7 @@
+#>texture_tracing_paper
+#:material #!paper
+
+~tracing-paper[paper]{deckled edges, visible fibre, soft tooth}
+
+word: "tracing paper"
+science: "Plant fibres felted into a sheet; how long the fibres are and how the sheet is pressed decide its tooth, its translucency and how it takes ink."

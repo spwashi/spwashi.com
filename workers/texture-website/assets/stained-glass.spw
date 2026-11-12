@@ -1,0 +1,7 @@
+#>texture_stained_glass
+#:material #!glass
+
+~stained-glass[glass]{frosted, bubbled, rain beads}
+
+word: "stained glass"
+science: "A cooled liquid with no crystal order; it bends light at every surface, so texture in glass is mostly what it does to what lies behind it."

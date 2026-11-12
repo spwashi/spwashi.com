@@ -1,10 +1,7 @@
 #>texture_linen
-#:material #!cloth
+#:material #!textile
 
-~linen[cloth]{linen, weave}
+~linen[textile]{tight weave, raised pile, slubbed yarn}
 
-meaning: "Crossed threads. Cloth memory under illustration."
-science: "Flax bast fibre in plain weave: each weft thread passes over one warp and under the next, the simplest interlacing that holds."
-generator: "Midjourney"
-job: "https://www.midjourney.com/jobs/6a147e5f-f967-42af-befa-3ca69cb560f2"
-image: "https://texture.website/linen.webp"
+word: "linen"
+science: "Yarns interlaced or looped; the weave or knit, not only the fibre, sets how a cloth drapes, catches light and wears."

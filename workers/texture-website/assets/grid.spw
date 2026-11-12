@@ -1,9 +1,0 @@
-#>texture_grid
-#:material #!simple
-
-~grid[simple]{grid}
-
-meaning: "Ruled squares. A measure laid over anything."
-science: "A square lattice: two families of parallel lines at right angles, the plane cut into equal cells."
-generator: "texture.website, drawn in CSS and SVG"
-image: "https://texture.website/grid.svg"

@@ -1,0 +1,7 @@
+#>texture_glazed_tile
+#:material #!ceramic
+
+~glazed-tile[ceramic]{crackle glaze, grout lines, speckled body}
+
+word: "glazed tile"
+science: "Clay fired until its grains fuse; a glaze is glass melted on top, and the crackle is the glaze and body shrinking by different amounts."

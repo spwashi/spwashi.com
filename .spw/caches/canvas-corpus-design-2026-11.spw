@@ -167,7 +167,7 @@ summary = #[
   ~#hypothesis: "texture.website's theory (Grain = Surface memory) and the canvas's material (well, card) meet if the material also shows history; a still could then export its texture message with its line."
   ~#expect: "The canvas tells open from folded by material and keeps no history on the surface; texture.website's lab serves swatches and materials by data-spw-texture-slice; spw-as-handle proposes one message across hosts."
   ~#probe(read)
-  !probe{ "Read the grain lines in workers/texture-website/src/materials.js (the old page's theory lines are in git at 24148290) and the message format in spw-as-handle-2026-09.spw. Say what a canvas still would send." }
+  !probe{ "Read the material classes in workers/texture-website/src/vocabulary.js (the old page's theory lines are in git at 24148290) and the message format in spw-as-handle-2026-09.spw. Say what a canvas still would send." }
   $%[texture.grain_from_history, texture.swatch_from_physics, texture.message_only]
-  ~<"../../workers/texture-website/src/materials.js">
+  ~<"../../workers/texture-website/src/vocabulary.js">
 }

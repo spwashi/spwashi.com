@@ -1,9 +1,0 @@
-Hatch (texture.website/hatch)
-Diagonal strokes. Shade with direction.
-
-Pattern: Hatching shades with parallel lines: closer lines read darker, and crossing a second set deepens it again.
-Made with: texture.website, drawn in CSS and SVG
-
-As a tile: https://texture.website/hatch.svg
-Composed over a material, with its dimensions:
-  https://texture.website/paper/*hatch?s=1.5&a=30&g=0.2

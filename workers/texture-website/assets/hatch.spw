@@ -1,9 +1,0 @@
-#>texture_hatch
-#:material #!simple
-
-~hatch[simple]{hatch}
-
-meaning: "Diagonal strokes. Shade with direction."
-science: "Hatching shades with parallel lines: closer lines read darker, and crossing a second set deepens it again."
-generator: "texture.website, drawn in CSS and SVG"
-image: "https://texture.website/hatch.svg"

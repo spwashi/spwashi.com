@@ -1,0 +1,7 @@
+#>texture_flour_on_marble
+#:material #!organic
+
+~flour-on-marble[organic]{growth rings, cells, crumb}
+
+word: "flour on marble"
+science: "Material a living thing made: cells and fibres arranged for a job, which is why bark, crust and honeycomb pattern themselves."

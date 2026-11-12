@@ -1,0 +1,7 @@
+#>texture_lacquer
+#:material #!pigment
+
+~lacquer[pigment]{granulation, bloom edges, misregistration}
+
+word: "lacquer"
+science: "Coloured particles carried in a binder or water; how the particles settle as the carrier leaves makes washes, blooms and granulation."
