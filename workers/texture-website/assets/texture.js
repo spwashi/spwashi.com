@@ -135,7 +135,7 @@ function prompts(vocab, state) {
 /**
  * The composition as one line in Spw's slot order, word[mode]{body}: the ladders
  * sit in the first material's mode and the rest nest in its body, so the line
- * pastes onto factshift.center (2026-11-12: written mode-after-body, it held nothing).
+ * pastes onto factshift.center (2026-11-11: written mode-after-body, it held nothing).
  */
 const spwLine = (state) => {
   const [first, ...rest] = state.layers;

@@ -128,7 +128,7 @@ export const RELATIONS = Object.freeze({
  * Prompting techniques, each said in a line and tied to where it is documented,
  * so a reader learns one with each pivot that uses it. Midjourney's docs (and the
  * third-party guide named for the V8 raw flag) were read through search on
- * 2026-11-12; parameters change between versions, so each says where to check.
+ * 2026-11-11; parameters change between versions, so each says where to check.
  */
 const DOCS = "https://docs.midjourney.com/hc/en-us/articles";
 export const TECHNIQUES = Object.freeze({

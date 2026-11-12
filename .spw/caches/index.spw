@@ -150,7 +150,8 @@
 @workbench_interaction_theory_2026_11: ~"./workbench-interaction-theory-2026-11.spw"  # cache: what the canvas has learned for the workbench to grow from: rest as balance, a pivot ring and reach as rim and fog, one kept line per host, one operator-word table for the quest, the ocean as home of one distance function, editors that show a law, refactors with receipts, a prompt for readers in six seats, and one question each tool owns
 @ecosystem_direction_2026_11: ~"./ecosystem-direction-2026-11.spw"  # cache: a file answers and a script computes (the 2026-11-11 outage, factshift static, spw.quest answers and wap.mom pages as files); one address many readings by extension (.html .spw .txt .json .svg .ics); drops as dated folders with a close and an atom; paths as tools; Spw as one line per route; schedules written ahead; mechanics as switchable readings; what keeps it at $0
 @pie_loop_memory_2026_11: ~"./pie-loop-memory-2026-11.spw"  # cache: wap.mom as live wonder about pi(e) for readers lore.land would keep, with a door into lore.land and back; a Spw line as a key routed by a static map; smut.today with a reader-owned, clearable memory per story, a seeded weekly piece and a glossary of intimacy; an HTTP model with three cache classes and no Vary; routes renamed by verb; memory planes, intermediate forms as extensions, and attachment minded
-@texture_website_redesign_2026_11: ~"./texture-website-redesign-2026-11.spw"  # cache: texture.website built as a files-only unit where the address is the recipe (path words as layers, marks as laws, other words in a speech bubble), the day composed from whichever materials exist and predictable by ?day=, readings by extension for Midjourney and other models, a study catalog with provenance and git history; mutex.buzz proposed as a card twinkling along a line's reading, challenging lore.land's interpreter
+@texture_website_redesign_2026_11: ~"./texture-website-redesign-2026-11.spw"  # cache: texture.website as a files-only studio for material prompts: the address is the prompt (path words as materials, marks as relations), ladders of words in place of sliders, pivots that each teach a sourced Midjourney technique, Minimalist@/PromptEngineer@/StoryDesigner@ views, a seamless PNG per material Midjourney can fetch, a square day card; theory of reading coordinates and layering; mutex.buzz still proposed
+@factshift_paste_grounding_2026_11: ~"./factshift-paste-grounding-2026-11.spw"  # cache: 29 inputs pasted into the canvas (17 of 18 spw.quest examples read; texture's line needed slot order; prompts and addresses misread as Spw; a paste replaces the held line undoably but unexplained); interpretive contexts by kind with a receipt; readings as form, perspective and focus; nesting from a focus; lore.land's rooms as what a reader may do in each container
 
 operation = "align"
 fixity = "tending"
@@ -246,6 +247,7 @@ fixity = "tending"
   ecosystem_direction_2026_11 = @ecosystem_direction_2026_11
   pie_loop_memory_2026_11 = @pie_loop_memory_2026_11
   texture_website_redesign_2026_11 = @texture_website_redesign_2026_11
+  factshift_paste_grounding_2026_11 = @factshift_paste_grounding_2026_11
 }[reg=facet]
 
 ^"cache_rules"{
