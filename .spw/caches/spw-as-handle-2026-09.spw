@@ -16,7 +16,7 @@
 @settings: ~"../../public/js/kernel/site-settings-engine.js"
 @lanes: ~"../../public/css/components/floating-chrome.css"
 @toast: ~"../../public/js/runtime/shell/pwa-update-handler.js"
-@texture_worker: ~"../../workers/site-hub-next/src/index.js"
+@texture_worker: ~"../../workers/site-hub-next/src/hosts/texture.js"
 @operators: ~"../conventions/operator-semantics.spw#positional_grammar"
 @braces: ~"../conventions/semantic-braces.spw"
 @living_terms: ~"./living-terms-2026-09.spw"
