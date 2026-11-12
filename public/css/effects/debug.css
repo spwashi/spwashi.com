@@ -19,6 +19,9 @@
 
 @layer effects {
 
+/* ── 1. Semantic labels ───────────────────────────────────────────────────
+   An outline on each surface that names itself, a ::before that says what it
+   is called, and a colour per kind of name. */
 :where(
   html[data-spw-debug-mode="on"],
   [data-spw-debug~="css"],
@@ -242,6 +245,8 @@
   --spw-css-debug-color: var(--op-action-color, #005959);
 }
 
+/* ── 2. Runtime footer ────────────────────────────────────────────────────
+   One fixed readout at the foot of the page. */
 :where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) body::after {
   position: fixed;
   z-index: 200;
@@ -265,6 +270,8 @@
   pointer-events: none;
 }
 
+/* ── 1, continued. Semantic label colours for kinds and owners ───────────
+   These sit after the footer because no rule moves for a banner. */
 :where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-kind] {
   --spw-css-debug-color: var(--op-object-color, #a67c00);
 }
@@ -281,7 +288,8 @@
   --spw-css-debug-color: color-mix(in srgb, var(--op-action-color, #005959) 70%, var(--teal, #008080));
 }
 
-/* Layer labels show cascade-resolved diagnostic markers, not full CSS provenance. */
+/* ── 3. Layer-owner labels ────────────────────────────────────────────────
+   Layer labels show cascade-resolved diagnostic markers, not full CSS provenance. */
 :where(
   html[data-spw-debug-layers="on"],
   html[data-spw-debug~="layers"],
@@ -404,6 +412,8 @@
   inset: calc(100% + 0.22rem) auto auto 0;
 }
 
+/* ── 4. Reduced motion ────────────────────────────────────────────────────
+   Every overlay holds still when the reader asks for less motion. */
 @media (prefers-reduced-motion: reduce) {
   :where(
     html[data-spw-debug-mode="on"],
