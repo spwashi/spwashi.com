@@ -1,0 +1,177 @@
+# Seven passes asked and unreported (2026-11-12) — cache
+#
+# After f37da3ba the creator named seven read-only passes. A session launched
+# them and stopped on its usage limit before any report came back. This file
+# keeps the ask and the stop. It holds no findings. The parent reading is
+# cross-product-rederivation-2026-11.spw. A later sitting takes one pass.
+
+#>seven_passes_unreported_2026_11
+#:cache #!handoff #!ecology #!unreported
+#:operation #!cache
+#:fixity #!volatile
+#:layer #!pragmatics
+
+@parent: ~"./cross-product-rederivation-2026-11.spw"
+@insight_template: ~"../../.agents/plans/reference-assignment-template/templates/semantic-insight-cache.spw"
+@ecosystem_direction: ~"./ecosystem-direction-2026-11.spw"
+@ecosystem_clusters: ~"./ecosystem-clusters-2026-10.spw"
+@ecosystem_productization: ~"./ecosystem-productization-2026-11.spw"
+@language: ~"../language/feature-utilization.spw"
+@linguistic_affordances: ~"./linguistic-affordances-2026-11.spw"
+@product_lines: ~"../surfaces/product-lines.spw"
+
+operation = "cache"
+fixity = "volatile"
+source = "chat 2026-11-12; foreign session suffix only; HEAD confirmed as f37da3ba"
+do_not = `Do not treat a launched pass as a finding. Do not invent prices, market sizes, or public copy. Do not open a patch from this file. Do not re-count the survey numbers until a sitting checks them. Do not run all seven in one sitting.`
+
+expression = ?passes[seven]{ask.stop}<unreported>
+
+summary = #[
+  `The parent reading is the cross-product cache, committed as f37da3ba. These seven passes were the next ask.`,
+  `Each was launched read-only. None reported. The limit message is the stop.`,
+  `A later sitting reads one pass, writes checked rows, and leaves the other six.`,
+][reg=set]
+
+^"stop"{
+  id = "seven-000"
+  operation = "cache"
+  fixity = "volatile"
+  claim = `The recoverable stop is the usage limit, not a synthesis.`
+  evidence = #[
+    `git log -1 on this tree is f37da3ba, subject .[cache] Read two cross products for the rules that generate them, and test the reading on a reader who was told nothing`,
+    `the foreign reader omitted 116 earlier turns and skipped 315 unknown records; this cache uses the newest suffix only`,
+    `the last assistant text in that suffix is the session hitting its limit`,
+    `survey, not re-counted here: plans 60 entries, PLAN.md 55, archived 214, scripts 121 mjs, scripts/ts 19, typed 19, tests 119, npm scripts 187 of which audit 29, check 17, spw 23`
+  ][reg=set]
+  pattern_consideration = #[
+    `@parent already holds the cross-product reading, the blind re-derivations, and the developmental pass`,
+    `a neighbouring prime, still uncommitted when this file was written, says a session that implements from plans opens no new cache; this file is the ask those passes did not answer`
+  ][reg=set]
+  expansion_prime = `One pass per sitting. Append checked rows under that pass, or open that pass's own cache and point back here.`
+  validation = `This file exists, the index alias names it, and no pass below claims a report.`
+  do_not_promote_until = `One pass has checked rows that a second sitting can re-read at the line.`
+}[reg=facet]
+
+^"ecology"{
+  id = "seven-001"
+  operation = "cache"
+  fixity = "volatile"
+  claim = `Pass 1, ecosystem ecology reflection, was asked and did not report.`
+  evidence = #[
+    `read first: @ecosystem_direction, @ecosystem_clusters, @ecosystem_productization, and @parent sharing`,
+    `status = unreported`
+  ][reg=set]
+  pattern_consideration = #[
+    `those three caches already hold ecology judgments; a reflection pass compares them, it does not replace them`
+  ][reg=set]
+  expansion_prime = `Name where the three ecology caches agree, and one place they do not, with the line.`
+  validation = `Each agreement cites a handle in one of those files.`
+  do_not_promote_until = `The comparison is re-read against the current files.`
+}[reg=facet]
+
+^"plans"{
+  id = "seven-002"
+  operation = "cache"
+  fixity = "volatile"
+  claim = `Pass 2, plan accuracy and connection, was asked and did not report.`
+  evidence = #[
+    `read first: .agents/plans/ and .agents/plans/index.spw`,
+    `status = unreported`
+  ][reg=set]
+  pattern_consideration = #[
+    `if the next-session prime is on disk, it already orders ungated slices; this pass asks whether that order still matches the plans`
+  ][reg=set]
+  expansion_prime = `One plan whose target no longer matches the tree, and one link between two live plans that is only a name.`
+  validation = `The mismatched target is a path named in that PLAN.md and absent, or present and doing something else.`
+  do_not_promote_until = `The path is checked on disk in that sitting.`
+}[reg=facet]
+
+^"language"{
+  id = "seven-003"
+  operation = "cache"
+  fixity = "volatile"
+  claim = `Pass 3, Spw linguistic utilization, was asked and did not report.`
+  evidence = #[
+    `read first: @language and @linguistic_affordances`,
+    `the brief said to feed the creator's cross-product line to the mounted parser and report where it stops; that parse was not recovered`,
+    `status = unreported`
+  ][reg=set]
+  pattern_consideration = #[
+    `language ecology and the runtime feature packs stay separate inventories`
+  ][reg=set]
+  expansion_prime = `One parse of the cross-product line: what it reads, where it stops, and the smallest rewrite that parses whole.`
+  validation = `npm run ecology:language, or the mounted parser's own reading, quoted with the command.`
+  do_not_promote_until = `The parse output is in the sitting that writes the row.`
+}[reg=facet]
+
+^"types"{
+  id = "seven-004"
+  operation = "cache"
+  fixity = "volatile"
+  claim = `Pass 4, audit-script value and which checks could become types, was asked and did not report.`
+  evidence = #[
+    `read first: scripts/*.mjs, scripts/ts/, scripts/typed/, scripts/tests/`,
+    `the survey counts in seven-000 are from the foreign session and were not re-counted here`,
+    `status = unreported`
+  ][reg=set]
+  pattern_consideration = #[
+    `typed build-control modules already exist beside the mjs scripts; a type earns its place when a check already fails in script form`
+  ][reg=set]
+  expansion_prime = `Name one audit whose failure is a shape a type could refuse, and one audit that should stay a script.`
+  validation = `The named script is opened, and the failure it already reports is quoted.`
+  do_not_promote_until = `That script is run, or its last committed check is cited.`
+}[reg=facet]
+
+^"products"{
+  id = "seven-005"
+  operation = "cache"
+  fixity = "volatile"
+  claim = `Pass 5, codebase value for spawning sellable and discrete products, was asked and did not report.`
+  evidence = #[
+    `read first: @ecosystem_productization and @product_lines`,
+    `the brief forbade invented prices, market sizes, and non-public domains; any offer sentence stays labelled a draft`,
+    `status = unreported`
+  ][reg=set]
+  pattern_consideration = #[
+    `@parent says most surfaces show and few check; a product pass inherits that limit`
+  ][reg=set]
+  expansion_prime = `One discrete thing the tree already is, named as a draft offer with audience and proof, and no price.`
+  validation = `The proof is a path on this site or a named sibling surface.`
+  do_not_promote_until = `The creator keeps or cuts the draft.`
+}[reg=facet]
+
+^"routing"{
+  id = "seven-006"
+  operation = "cache"
+  fixity = "volatile"
+  claim = `Pass 6, value routing between pages, toward learning file types, and toward computer science, was asked and did not report.`
+  evidence = #[
+    `read first: @ecosystem_direction, which already says one address has many readings by extension`,
+    `status = unreported`
+  ][reg=set]
+  pattern_consideration = #[
+    `a route index.html is the page; a sibling extension is the other reading; this pass asks which of those the reader can actually reach`
+  ][reg=set]
+  expansion_prime = `One page whose next reading is a file type, and one page whose next reading is a computer-science idea, each with the link that already exists or the missing one.`
+  validation = `The link is an href in that route, or recorded as absent.`
+  do_not_promote_until = `The href is read in the route file.`
+}[reg=facet]
+
+^"copy"{
+  id = "seven-007"
+  operation = "cache"
+  fixity = "volatile"
+  claim = `Pass 7, public copy as a way to spawn well-designed sites and as a learning environment for junior through senior engineers and designers, was asked and did not report.`
+  evidence = #[
+    `read first: .spw/conventions/copy-accessor.spw and .spw/caches/copy-hypermedia-key-2026-09.spw`,
+    `the brief allowed at most three draft sentences and said not to flatten magic copy`,
+    `status = unreported`
+  ][reg=set]
+  pattern_consideration = #[
+    `copy stays the creator's; a learning claim needs a route a reader can follow without an agent`
+  ][reg=set]
+  expansion_prime = `One route that already teaches a craft, named with its heading, and one route that only introduces.`
+  validation = `The heading is in that route's index.html.`
+  do_not_promote_until = `The heading is read in the file, and any new sentence is still labelled a draft.`
+}[reg=facet]
