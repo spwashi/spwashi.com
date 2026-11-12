@@ -152,6 +152,7 @@
 @pie_loop_memory_2026_11: ~"./pie-loop-memory-2026-11.spw"  # cache: wap.mom as live wonder about pi(e) for readers lore.land would keep, with a door into lore.land and back; a Spw line as a key routed by a static map; smut.today with a reader-owned, clearable memory per story, a seeded weekly piece and a glossary of intimacy; an HTTP model with three cache classes and no Vary; routes renamed by verb; memory planes, intermediate forms as extensions, and attachment minded
 @texture_website_redesign_2026_11: ~"./texture-website-redesign-2026-11.spw"  # cache: texture.website as a files-only studio for material prompts: the address is the prompt (path words as materials, marks as relations), ladders of words in place of sliders, pivots that each teach a sourced Midjourney technique, Minimalist@/PromptEngineer@/StoryDesigner@ views, a seamless PNG per material Midjourney can fetch, a square day card; theory of reading coordinates and layering; mutex.buzz still proposed
 @factshift_paste_grounding_2026_11: ~"./factshift-paste-grounding-2026-11.spw"  # cache: 29 inputs pasted into the canvas (17 of 18 spw.quest examples read; texture's line needed slot order; prompts and addresses misread as Spw; a paste replaces the held line undoably but unexplained); interpretive contexts by kind with a receipt; readings as form, perspective and focus; nesting from a focus; lore.land's rooms as what a reader may do in each container
+@spw_tree_shape_2026_11: ~"./spw-tree-shape-2026-11.spw"  # cache: the .spw tree measured (folders, depth, cache months, canon growth, promotion, fixity, wonders) and five wonders: theory stopped moving from caches into canon since September, what a cache becomes after its month, reading by subject without moving a file, the tree read from a focus, where the readings and rooms theory belongs
 
 operation = "align"
 fixity = "tending"
@@ -248,6 +249,7 @@ fixity = "tending"
   pie_loop_memory_2026_11 = @pie_loop_memory_2026_11
   texture_website_redesign_2026_11 = @texture_website_redesign_2026_11
   factshift_paste_grounding_2026_11 = @factshift_paste_grounding_2026_11
+  spw_tree_shape_2026_11 = @spw_tree_shape_2026_11
 }[reg=facet]
 
 ^"cache_rules"{
