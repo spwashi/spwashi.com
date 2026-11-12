@@ -35,6 +35,7 @@ fixity = "tending"
 ^"stream"{
  >>[2026-10-12 10:59] verify — writers are declared (47bab2ea), contracts derive one Spw sentence each (6ff2aa8d), and engages is the first content of the wakes facet (0a974b23). No def carries a flat wakes or rests field yet, and the last change to runtime/catalog is 5bea15a1 (2026-10-07), which did not add one. The next slice needs no decision: add rests, and fail a def that declares change-only while an observer or sync-task path writes dataset or textContent raw; scripts/tests/change-only-writes.test.mjs already holds three writers by hand.
  >>[2026-11-06 12:36] verify — still no wakes or rests field: rg -n '\b(wakes|rests)\s*[:?]' public/js/runtime/catalog types/module-catalog.d.ts finds nothing, and the catalog commits since 2026-10-10 (b5171318, 320fc4b9, 2c95bf13, e4905bf1) mount other plans' modules. contract-spw.js derives eight facets (#> #: $ ~ ? ! % and the scene paren) and emits nothing for engages. scripts/module-writer-baseline.json across its ten commits: 284 entries, 42 modules, 12 shared tokens at 47bab2ea; 276, 40, 11 at e4905bf1. The two defs whose writers change-only-writes.test.mjs holds are semantic-crossrefs and shell-disclosure (utility-row.js); the bus charge is not a catalog def.
+ >>[2026-11-12 15:21] land — R1: rests is a registered effect field with a closed union (change-only, idempotent, single-writer, rest); semantic-crossrefs and shell-disclosure declare change-only; a planted unknown token failed check:runtime's bindings step (TS2322) and catalog-vocabulary.test.mjs; R2 is next
 }
 
 ^"open"{
@@ -47,5 +48,5 @@ fixity = "tending"
  ~#next_commit: "+[runtime] Let a module declare rests: change-only, and fail it when an observer writes raw"
  ~#files_hot: "public/js/runtime/catalog/constants.js, types/module-catalog.d.ts, public/js/runtime/catalog/enhancement.js (semantic-crossrefs), public/js/runtime/catalog/core.js (shell-disclosure); then scripts/module-writer-audit.mjs for R2"
  ~#gate: "nothing for the flat field; the Spw projection of facets waits on the operator question"
- ~#last_stream: "2026-11-06"
+ ~#last_stream: "2026-11-12"
 }

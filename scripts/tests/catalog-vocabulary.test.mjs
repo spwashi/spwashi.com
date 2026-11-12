@@ -10,6 +10,7 @@ import {
   ENGAGE_KIND_VALUES,
   MODULE_DEFS,
   MODULE_DIMENSION_VALUES,
+  REST_KIND_VALUES,
 } from '../../public/js/runtime/catalog/index.js';
 import { MODULE_UPDATE_ROLES, MODULE_UPDATE_SCOPES } from '../../public/js/runtime/catalog/updates-contract.js';
 import { ENGAGE_KINDS } from '../../public/js/kernel/engagement.js';
@@ -42,6 +43,20 @@ test('engages names only intents the kernel resolves', () => {
     if (def.engages == null) continue;
     assert.ok(Array.isArray(def.engages) && def.engages.length, `${def.id} engages is a non-empty array`);
     for (const kind of def.engages) assert.ok(ENGAGE_KIND_VALUES.includes(kind), `${def.id} engages ${kind}`);
+  }
+});
+
+test('rests names only the closed constraints, and the two hand-held writers declare change-only', () => {
+  assert.deepEqual([...REST_KIND_VALUES].sort(), ['change-only', 'idempotent', 'rest', 'single-writer']);
+  for (const def of MODULE_DEFS) {
+    if (def.rests == null) continue;
+    assert.ok(Array.isArray(def.rests) && def.rests.length, `${def.id} rests is a non-empty array`);
+    for (const kind of def.rests) assert.ok(REST_KIND_VALUES.includes(kind), `${def.id} rests ${kind}`);
+  }
+  // change-only-writes.test.mjs holds these two writers by hand; the field says so.
+  for (const id of ['semantic-crossrefs', 'shell-disclosure']) {
+    const def = MODULE_DEFS.find((entry) => entry.id === id);
+    assert.deepEqual(def?.rests, ['change-only'], `${id} declares change-only`);
   }
 });
 

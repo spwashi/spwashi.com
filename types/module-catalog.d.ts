@@ -30,6 +30,9 @@ export type SpwModuleRootMode = 'single' | 'each';
 /** Reader intents a def can be armed on (ENGAGE_KIND, kernel/engagement.js). */
 export type SpwEngageKind = 'press' | 'hover' | 'focus' | 'key' | 'menu';
 
+/** What a def promises to leave unchanged once the page has settled (REST_KIND). */
+export type SpwRestKind = 'change-only' | 'idempotent' | 'single-writer' | 'rest';
+
 export type SpwTimingArcStem =
   | 'boot'
   | 'immediate'
@@ -207,6 +210,8 @@ export type SpwModuleDef = {
   timingChunk?: SpwIdleChunkId;
   /** schedule: the reader intents that may wake this def when arming=engage. */
   engages?: readonly SpwEngageKind[];
+  /** effect: what the def leaves unchanged at rest; an audit holds each token. */
+  rests?: readonly SpwRestKind[];
   /** effect: where writes and holds land; tiers say what a host must provide. */
   effectScope?: readonly SpwModuleEffectScope[];
   visual?: SpwModuleVisualEffect;

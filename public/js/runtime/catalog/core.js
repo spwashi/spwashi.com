@@ -5,7 +5,7 @@
  * @typedef {import('../../../../types/module-catalog').SpwModuleDef} SpwModuleDef
  */
 
-import { COST_CLASS, MODULE_LAYERS, MOUNT_WHEN } from './constants.js';
+import { COST_CLASS, MODULE_LAYERS, MOUNT_WHEN, REST_KIND } from './constants.js';
 
 /** @type {SpwModuleDef[]} */
 export const CORE_DEFS = [
@@ -45,6 +45,7 @@ export const CORE_DEFS = [
     ],
     evaluates: [],
     timingArc: 'boot-shell',
+    rests: [REST_KIND.CHANGE_ONLY],
     effectScope: ['listeners', 'root-state', 'chrome'],
     visual: 'layout',
     load: () => import('../shell/shell-disclosure.js'),

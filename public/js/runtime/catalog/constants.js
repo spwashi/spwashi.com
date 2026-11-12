@@ -5,13 +5,13 @@
  * Preferred definition field order (normalize / review scan):
  *   id, layer, when, cost?, costClass?, features?, route?, selector?, rootMode?,
  *   debugOnly?, describes, updates, evaluates, timingArc, timingChunk?, engages?,
- *   effectScope, visual?, load, mount
+ *   rests?, effectScope, visual?, load, mount
  *
  * Typing convention (CATALOG_DEF_FIELDS below): every field is a gate,
  * schedule, effect, capability, voice, or lifecycle field. Effect fields are
  * closed token arrays — effectScope from EFFECT_SCOPE, evaluates from
- * MODULE_DIMENSION, updates as [scope:]role:name — so the runtime and build
- * can act on them. describes is the one voice: prose lives there or nowhere.
+ * MODULE_DIMENSION, rests from REST_KIND, updates as [scope:]role:name — so
+ * the runtime and build can act on them. describes is the one voice: prose lives there or nowhere.
  *
  * A module is one reversible process:
  *   enter (when) → act (spend) → leave (cleanup) → remain (commitment)
@@ -206,6 +206,23 @@ export const ENGAGE_KIND = Object.freeze({
 export const ENGAGE_KIND_VALUES = Object.freeze(Object.values(ENGAGE_KIND));
 
 /**
+ * What a module promises to leave unchanged once the page has settled.
+ * A def that names one is held to it by an audit, not by this comment:
+ *   change-only   — a repeat pass writes only what moved
+ *   idempotent    — a second run of a sync task mutates nothing
+ *   single-writer — no other module writes its root tokens
+ *   rest          — no mutation and no long frame once the page has settled
+ */
+export const REST_KIND = Object.freeze({
+  CHANGE_ONLY: 'change-only',
+  IDEMPOTENT: 'idempotent',
+  SINGLE_WRITER: 'single-writer',
+  REST: 'rest',
+});
+
+export const REST_KIND_VALUES = Object.freeze(Object.values(REST_KIND));
+
+/**
  * Single-token projection of { commitment, spend, copy? }.
  * Spend tokens win so authored+paint still reads as paint. None-spend remainder
  * keeps commitment (listen / residue / authored / project) instead of one dump
@@ -349,6 +366,7 @@ export const CATALOG_DEF_FIELD_ORDER = Object.freeze([
   'timingArc',
   'timingChunk',
   'engages',
+  'rests',
   'effectScope',
   'visual',
   'load',
@@ -388,6 +406,7 @@ export const CATALOG_DEF_FIELDS = Object.freeze({
   pageSurface: { kind: 'gate', readers: 'page/page-category match' },
   updates: { kind: 'effect', readers: 'offer rank for invited mounts, host annotation, audit:module-writers, build manifest' },
   effectScope: { kind: 'effect', readers: 'cost inference, host tiers, module-effects, inspectors' },
+  rests: { kind: 'effect', readers: 'catalog-vocabulary test (closed tokens); audit:module-writers once change-only is a check' },
   evaluates: { kind: 'effect', readers: 'data-spw-module-evaluates rail tint (components/foundation.css)' },
   visual: { kind: 'effect', readers: 'load reasons, still coverage' },
   cost: { kind: 'effect', readers: 'budget rollups, reclass hints' },

@@ -11,6 +11,7 @@ import {
   MODULE_LAYERS,
   MOUNT_WHEN,
   REGION_SELECTOR,
+  REST_KIND,
 } from './constants.js';
 
 const ATTENTION_SECTION_SELECTOR = [
@@ -703,6 +704,7 @@ export const ENHANCEMENT_DEFS = [
     evaluates: ['semantics', 'semantic-density', 'interaction'],
     timingArc: 'idle-semantic',
     timingChunk: 'idle-collectible',
+    rests: [REST_KIND.CHANGE_ONLY],
     effectScope: ['element-state', 'bus'],
     load: () => import('../../semantic/semantic-crossrefs.js'),
   },
