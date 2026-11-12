@@ -1,0 +1,9 @@
+#>texture_dots
+#:material #!simple
+
+~dots[simple]{dot, screen}
+
+meaning: "A halftone's dots. Tone from coverage, not ink."
+science: "A halftone prints a grey as dots of one ink; the share of the cell a dot covers is the tone the eye sees."
+generator: "texture.website, drawn in CSS and SVG"
+image: "https://texture.website/dots.svg"

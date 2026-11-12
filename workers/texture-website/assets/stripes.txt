@@ -1,0 +1,9 @@
+Stripes (texture.website/stripes)
+Even bands. Rhythm before image.
+
+Pattern: A periodic pattern of one interval: shift it by its period and it lands on itself.
+Made with: texture.website, drawn in CSS and SVG
+
+As a tile: https://texture.website/stripes.svg
+Composed over a material, with its dimensions:
+  https://texture.website/paper/*stripes?s=1.5&a=30&g=0.2
