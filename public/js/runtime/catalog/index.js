@@ -37,6 +37,8 @@ export {
   MODULE_DIMENSION_VALUES,
   MODULE_LAYERS,
   MOUNT_WHEN,
+  REST_KIND,
+  REST_KIND_VALUES,
   costClassFromModel,
   costModelFromClass,
   describeModuleCost,
