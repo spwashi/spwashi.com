@@ -26,6 +26,11 @@
  * root write, or a new second owner fails, and a baseline entry that no longer
  * occurs fails until removed.
  *
+ * A module that declares `rests: ['change-only']` is also held to it: a raw
+ * `dataset.x =` or `textContent =` on one of its repeat paths (a measured lane,
+ * a sync task, an observer) fails, with no baseline to sit in. The path walk is
+ * scripts/lib/change-only-paths.mjs.
+ *
  *   node --import ./scripts/lib/register-public-imports.mjs scripts/module-writer-audit.mjs
  *     --list            print every finding, known and new
  *     --json            machine-readable report
@@ -43,6 +48,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 import { MODULE_DEFS } from '../public/js/runtime/catalog/index.js';
 import { normalizeModuleUpdates } from '../public/js/runtime/catalog/updates-contract.js';
+import { scanChangeOnlyPaths } from './lib/change-only-paths.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PUBLIC_JS = path.join(ROOT, 'public/js');
@@ -155,7 +161,8 @@ export function locateRootWrite(source = '', token = '') {
 
 /** One line for a passing audit: what the baseline still holds, against what it held at birth. */
 export function formatReceipt(counts, moduleCount, birth = BASELINE_BIRTH) {
-  return `[audit:module-writers] ok — ${counts.undeclared} held · ${birth.undeclared} at birth · ${counts.shared} in shared files · ${counts.multi} shared tokens · ${moduleCount} modules`;
+  const held = counts.changeOnly ? ` · ${counts.changeOnly} change-only held` : '';
+  return `[audit:module-writers] ok — ${counts.undeclared} held · ${birth.undeclared} at birth · ${counts.shared} in shared files · ${counts.multi} shared tokens${held} · ${moduleCount} modules`;
 }
 
 const sourceCache = new Map();
@@ -245,7 +252,7 @@ const sortedEntries = (object) => Object.fromEntries(Object.entries(object).sort
 
 export async function auditModuleWriters({ defs = MODULE_DEFS } = {}) {
   const modules = [
-    ...defs.map((def) => ({ id: def.id, file: entryFileFor(def), updates: def.updates })),
+    ...defs.map((def) => ({ id: def.id, file: entryFileFor(def), updates: def.updates, rests: def.rests || [] })),
     ...PSEUDO_MODULES,
   ].filter((module) => module.file);
 
@@ -304,7 +311,15 @@ export async function auditModuleWriters({ defs = MODULE_DEFS } = {}) {
     rows.filter((row) => row.undeclared.length).map((row) => [row.id, row.undeclared]),
   ));
 
-  return { modules: rows, undeclared, sharedWriters: sortedEntries(sharedWriters), multiWriter };
+  const changeOnly = {};
+  for (const module of modules.filter((entry) => entry.rests?.includes('change-only'))) {
+    const sources = new Map();
+    for (const file of graphs.get(module.id)) sources.set(file, await readSource(file) || '');
+    const resolve = (fromFile, specifier) => (specifier.startsWith('/') ? path.join(ROOT, specifier) : path.resolve(path.dirname(fromFile), specifier));
+    changeOnly[module.id] = scanChangeOnlyPaths(sources, { resolve }).map((finding) => ({ ...finding, file: rel(finding.file) }));
+  }
+
+  return { modules: rows, undeclared, sharedWriters: sortedEntries(sharedWriters), multiWriter, changeOnly };
 }
 
 function toBaseline(report) {
@@ -350,6 +365,7 @@ async function main() {
     undeclared: Object.values(report.undeclared).flat().length,
     shared: Object.values(report.sharedWriters).reduce((total, entry) => total + entry.tokens.length, 0),
     multi: Object.keys(report.multiWriter).length,
+    changeOnly: Object.keys(report.changeOnly).length,
   };
 
   if (args.has('--json')) {
@@ -387,12 +403,22 @@ async function main() {
     console.log('[audit:module-writers] baseline entries that no longer occur:');
     cleared.forEach((line) => console.log(`  ${line}`));
   }
-  if (fresh.length || cleared.length) {
+  const rawWrites = Object.entries(report.changeOnly).flatMap(([id, findings]) => findings.map((finding) => ({ id, ...finding })));
+  if (rawWrites.length) {
+    console.log('[audit:module-writers] raw writes on a repeat path of a module that declares change-only:');
+    for (const finding of rawWrites) {
+      console.log(`  change-only ${finding.id} ${finding.kind}`);
+      console.log(`      at ${finding.file}:${finding.line}   ${finding.text}`);
+      console.log(`      on its ${finding.root}${finding.trail.length ? `, through ${finding.trail.join(' → ')}` : ''}`);
+    }
+  }
+  if (fresh.length || cleared.length || rawWrites.length) {
     const fixes = [
       fresh.length ? 'declare a new write in its module\'s catalog `updates`, move a shared helper\'s write behind its owner, or give the token one owner' : '',
       cleared.length ? 'remove resolved entries from scripts/module-writer-baseline.json' : '',
+      rawWrites.length ? 'write through a kernel helper that compares first (writeDatasetValue), or guard the write with its own comparison' : '',
     ].filter(Boolean).join('; ');
-    console.log(`[audit:module-writers] failed — ${fresh.length} new, ${cleared.length} resolved and still listed. To pass: ${fixes}.`);
+    console.log(`[audit:module-writers] failed — ${fresh.length} new, ${cleared.length} resolved and still listed, ${rawWrites.length} raw on a change-only path. To pass: ${fixes}.`);
     process.exitCode = 1;
     return;
   }
