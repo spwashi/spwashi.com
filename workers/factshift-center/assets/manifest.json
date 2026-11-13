@@ -36,6 +36,12 @@
   "orientation": "any",
   "id": "/",
   "description": "factshift.center lays out a line of Spw: who is looking, from where, and what is still open, as nodes to move, link, and rewrite.",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui",
+    "browser"
+  ],
   "launch_handler": {
     "client_mode": [
       "navigate-existing",
@@ -54,6 +60,21 @@
       "text": "spw"
     }
   },
+  "file_handlers": [
+    {
+      "action": "/",
+      "accept": {
+        "text/plain": [
+          ".spw",
+          ".txt"
+        ],
+        "application/x-spw": [
+          ".spw"
+        ]
+      },
+      "launch_type": "single-client"
+    }
+  ],
   "shortcuts": [
     {
       "name": "Lay out a line",
@@ -93,27 +114,6 @@
           "type": "image/png"
         }
       ]
-    }
-  ],
-  "display_override": [
-    "window-controls-overlay",
-    "standalone",
-    "minimal-ui",
-    "browser"
-  ],
-  "file_handlers": [
-    {
-      "action": "/",
-      "accept": {
-        "text/plain": [
-          ".spw",
-          ".txt"
-        ],
-        "application/x-spw": [
-          ".spw"
-        ]
-      },
-      "launch_type": "single-client"
     }
   ]
 }
