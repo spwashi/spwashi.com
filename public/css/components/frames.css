@@ -301,6 +301,11 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   margin-block-start: var(--space-3xs, 0.125rem);
 }
 
+/* Prose before a figure, board, or grid lets flex gap own the seam. */
+:where(.spw-frame > p:has(+ :is(figure, .frame-grid, .spw-visual-link-board, .frame-actions))) {
+  margin-block-end: 0;
+}
+
 /* `}`-only footers are the closing brace, not a row. Sit them on the
    frame corner so they do not leave an empty strip under a card grid. */
 .spw-frame:has(> .frame-actions:has(> .spw-delimiter:only-child)) {
