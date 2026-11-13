@@ -90,6 +90,7 @@ expression = ?paste[read]{as.replaced.back}<canvas>
   rule_kept = `The canvas's rule stays: the context chooses the object, never the verb (@theory_of_mind ^"hands"). The reader's gesture is one verb, go in; the room's kind says how far in they may go, and the hint shows that before the act lands. Enter, which has five vocabularies today (@journal_address two_lines), gets one meaning: go in, as the room allows.`
   texture = `texture's line already reads this way: [lamplight, worn, as-found] is a window, how the material is seen; {~frost-ferns} is a room, what stands on it; a card's <canvas> or <midjourney> would be the passage out.`
   modality = `A passage is how a reader changes modality: from the canvas through <card> to the card, through <png> to the image. The extension on an address and the < > in a line are one act written two ways.`
+  tension = `2026-11-12: this site's own reading parts from lore.land's on one pair. spw-native-components-2026-11 reads ( ) as a scene you step into and leave and { } as a held practice; lore.land reads ( ) as a gathering and { } as the room. [ ] and < > agree. Which reading this site keeps for ( ) is the creator's, recorded in component-region-personality N5.`
 }[reg=facet]
 
 ^"copy_and_images"{

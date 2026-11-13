@@ -31,6 +31,18 @@ One patch each. Homes for the repeated figures are in [index.spw](./index.spw).
 
 A decorative SVG map that repeats a route bridge goes when that hub is already open. It is not its own slice.
 
+## The curriculum keeps its promises — 2026-11-12
+
+Read 2026-11-12 from `curriculum/index.html` and the hosts that teach beside it. The page offers a practice and then forgets it: `!mark[module_complete]` is only a link to `#progress-stub` (:254), the progress box stays `☐` (:291), the export says `complete: true` with `artifacts: [ /* collected in real version */ ]` (:515–517), `clearBoundary` clears the form and leaves storage (:453–458), and with scripts off the boundary buttons are `type="button"` and do nothing (:209–210). A course that rewards practice has to remember it and say so (feedback memory: every interaction rewards with feedback or clarity).
+
+1. **C1 · The script keeps what it promises.** Persist and restore the memo and the boundary test under the existing `spwashi:curriculum:memory-buffers:*` keys; `!clear` clears storage and says so; `!mark` marks the module and the progress box reads it; the export counts the artifacts it holds and says `complete` only when they exist. With scripts off, the boundary test is a `<details>` checklist that reads without the buttons. Gate: whether a completion mark is a reward or a count (no streaks, no counts of absence). Check: `npm run audit:copy:accessor`, then the page at pocket width with scripts on and off.
+2. **C2 · One lesson, one place.** On this page the modules 2–6 list appears three times (:266–270, :291–297, :338–377) and the boundary test is explained five times (:72, :79–80, :191, :217, :388). Keep one of each and link the rest to it. The question form (`?` with `~#expect` and `!probe`) is taught here (:145–150) and in spw.quest's question example; one keeps the lesson and the other links. Gate: which host keeps the question form. Check: `npm run audit:copy:accessor`, `npm run check:workers`.
+3. **C3 · A path across hosts.** One ordered line a learner can follow: spw.quest's first steps (read a mark), this page's tiny show (one mechanism, one test, one artifact), texture.website's pivots (one change, one technique named), factshift.center (a line as nodes to move). Written as one Spw path with `;`, beside the root-shelf proposal above, and linked from each host's own page. Gate: the order, and whether texture.website belongs on a computer-science path. Check: `npm run spw:integrity`.
+4. **C4 · The opener names who teaches.** The h1 (:68) says "I teach computer science the way I learn math" and drops "I build software and make art". Proposal only, from lines the creator already wrote: keep the h1 and let the lede open on the adult learner, whom the page names only at the andragogy link (:136). Gate: the creator's words. Check: `npm run audit:copy:accessor`.
+5. **C5 · The module stem.** `data-spw-curriculum-module` has 13 uses on this page, no reader in `public/js` or `public/css`, and no row in `.spw/site.spw`. Map it onto an existing stem or drop it; no new family. Gate: the no-new-family review. Check: `npm run spw:integrity`.
+
+texture.website's technique curriculum has its own slices in [texture-website](../texture-website/PLAN.md).
+
 ## Still open
 
 - More field portals as more peers and mentors name their fields. Both pedagogy and andragogy keep their names and state the pairing.

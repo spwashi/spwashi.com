@@ -1,0 +1,94 @@
+# Before a session implements from plans (2026-11-12) — prime
+#
+# The creator: update public copy; improve curricularization; improve design and
+# relevance to me; consider which rules and patterns got started early and then
+# stuck; improve Spw-native component design; ambitious implementation of plan
+# updates; prime before a new session implements from plans.
+# This session fixed copy that was wrong and wrote slices into existing plans.
+# A next session builds from them. This file orders the work, names each gate
+# and check, and says what not to do. Numbers marked survey come from read-only
+# surveys of 2026-11-12 and were not re-run here; the rest were re-read at the line.
+
+#>next_session_prime_2026_11
+#:prime #!plans #!curriculum #!component #!copy #!handoff
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@agents: ~"../../AGENTS.md"
+@claude: ~"../../CLAUDE.md"
+@curriculum_plan: ~"../../.agents/plans/topic-building-blocks/PLAN.md"
+@texture_plan: ~"../../.agents/plans/texture-website/PLAN.md"
+@component_plan: ~"../../.agents/plans/component-region-personality/PLAN.md"
+@operator_plan: ~"../../.agents/plans/operator-resonance-alignment/PLAN.md"
+@module_plan: ~"../../.agents/plans/module-contract-overhaul/PLAN.md"
+@native: ~"./spw-native-components-2026-11.spw"
+@tree: ~"./spw-tree-shape-2026-11.spw"
+@grounding: ~"./factshift-paste-grounding-2026-11.spw"
+@texture_cache: ~"./texture-website-redesign-2026-11.spw"
+@copy_accessor: ~"../conventions/copy-accessor.spw"
+@domains: ~"../domains.spw"
+
+operation = "prime"
+fixity = "experimental"
+audience = "a person or a model about to build from the plans named here"
+expression = ?session[implement]{gate.slice.check}<plans>
+
+do_not = `Do not open a new plan folder or a new cache; add rows to the ones named. Do not touch AGENTS.md (3,179 of 3,200 words). Do not edit another session's uncommitted factshift files (workers/factshift-center/*, .agents/plans/factshift-center/PLAN.md, and the factshift-cognitive-substrate, factshift-theory-of-mind and pwa-roles caches). Never git stash. Never write to .spw/_workbench. Do not deploy or push; both are the creator's. Do not add a data-spw-* family. Do not answer a gate on the creator's behalf: build the ungated half and leave the gated half proposed.`
+
+^"open_first"{
+  gate = `AGENTS.md is the gate and CLAUDE.md its adapter. AGENTS.md tells computer-use and Codex sessions not to implement from plans: one named patch, then stop. A Claude Code session the creator asks to build may take the slices below in order, one commit each.`
+  sense = `copy: npm run audit:copy:accessor (contract @copy_accessor); a whole copy cluster is edited in one pass (person-magazine is / /about/ /now/ /membership/; quest-agentic is the spw.quest domain page with /topics/software/spw/). Spw: npm run spw:integrity. Workers: npm run check:workers.`
+  commit = `symbol[scope] subject, prose, one #[episode]{ ~[scene]{} ![change]{} *[verify]{} }; no trailers. Run npm run manifest:staged before a commit that touches HTML, then npm run check:local.`
+  shared_tree = `Other sessions commit here. Stage files by name; read git status before assuming a change is yours.`
+}[reg=facet]
+
+^"landed_here"{
+  # 2026-11-12, this session. Uncommitted when written: if git log does not show them, they are in the working tree, and they are these files, not another session's.
+  files = `index.html, about/index.html, about/domains/index.html, about/domains/texture.website/index.html (new), about/domains/spw.quest/index.html, about/domains/lore.land/index.html, tools/midjourney/index.html, _partials/site-footer.html, .spw/domains.spw, workers/texture-website/carry.mjs and assets/llms.txt; plans topic-building-blocks, texture-website, component-region-personality, operator-resonance-alignment, .agents/plans/index.spw and README.md; caches next-session-prime-2026-11 (new), spw-tree-shape-2026-11, factshift-paste-grounding-2026-11, texture-website-redesign-2026-11 and caches/index.spw. A commit of the HTML runs npm run manifest:staged first; no sitemap file is tracked.`
+  copy = `texture.website described as it is now (a studio for material prompts) on home (index.html, the texture card), about (two places), the spw.quest domain page (three quest.* units) and the lore.land domain page; factshift.center and wap.mom added to the about page's two project lists; lore.land described as a living serial on the domain register and in the footer.`
+  domain = `about/domains/texture.website/ (new, modeled on wap.mom's page, copy unit texture.hook.lede); a texture.website panel on about/domains/ ("ten addresses"); texture.website and spw.quest as linked surfaces in @domains, spw.quest moved out of the unlinked set; the Midjourney bench's style-refs card links the domain page.`
+  footer = `_partials/site-footer.html "Sites I build" adds factshift.center, texture.website and wap.mom beside lore.land and spw.quest, each a site the creator builds with a domain page here; the notes for lore.land and spw.quest now say what they are.`
+  texture = `assets/llms.txt names the images, the square card and day= (carry.mjs); in the repo, not deployed.`
+  plans = `slices C1–C5 in @curriculum_plan, T1–T5 in @texture_plan, N1–N5 in @component_plan, slice 4 in @operator_plan.`
+  not_done = `/now is the creator's diary and has no entry for texture.website; the projects page's counts are stamped as of 2026-09-29 and were left as dated.`
+}[reg=facet]
+
+^"order"{
+  # Ungated first. Each row: the plan slice, what to open first, the creator's gate, the check.
+  one = `texture T2 · scripts-off pivots as links · open workers/texture-website/carry.mjs (the hidden sections) · gate none · node --test workers/texture-website/test, carry --check`
+  two = `curriculum C1, the ungated half · persist and restore the memo and boundary test, !clear clears storage, the export counts real artifacts · open curriculum/index.html (the script near its end) · gate: whether !mark is a reward or a count, so leave the mark proposed · npm run audit:copy:accessor, the page with scripts off`
+  three = `curriculum C2, in-page duplicates · one list of modules 2–6, one statement of the boundary test · gate none for in-page; which host keeps the question form is the creator's · npm run audit:copy:accessor`
+  four = `components N1 · the seat line and <spw-expression> as fixtures · open public/ts/component-fixtures.ts and @native · gate none · npm run component:check`
+  five = `module-contract R1 · the rests field · open @module_plan Next slices, which marks it ungated · gate none · npm run check:runtime, npm run typecheck`
+  six = `texture T1 · tile and exclude pivots · draft the two lines and show them · gate the wording · node --test workers/texture-website/test`
+  seven = `the census generator's contradiction (@tree rules_that_stuck) · open scripts/language-census.mjs :288 and :300 · gate none for the fix · node --check, then regenerate alone`
+  gated = `operator names (slice 4), curriculum C3–C5, components N2, N3 and N5, texture T3–T5: build only what the creator has answered`
+}[reg=facet]
+
+^"relevance"{
+  # What the creator's work is now, so a slice is chosen for them and not for the tree. Public facts only.
+  now = `Production season runs October 1 to the New Year; November is writing for lore.land through the 30th; closes land on the 13th and 26th, and the next is November 13 (now/index.html).`
+  who = `"I'm Spwashi. I build software and make art." Adult education is the teaching focus (/topics/andragogy/); the work sits in A&R and product; art is made for tips (services/index.html); RPG Wednesday meets weekly. The about page's resume rows stand as the creator wrote them.`
+  proposals = #[
+    `home lede: keep the identity line and let the lede name what a visitor can do this week (read the November book, try a line, tip a piece), from sentences already on /now and /services/`,
+    `curriculum: the lede opens on the adult learner the page already serves (C4)`,
+    `the about page's first screen: one line of what the creator does for others (A&R, product, adult education) before the lens panels`,
+  ][reg=set]
+  rule = `These are proposals. The creator writes their own self-description; a session drafts beside it and does not replace it.`
+}[reg=facet]
+
+^"tensions"{
+  rooms = `lore.land reads ( ) as a gathering and { } as the room; this site's native-components cache reads ( ) as a scene you enter and leave. Recorded in @component_plan N5; nothing spends ( ) until the creator chooses (@grounding rooms).`
+  names = `Four sets of names for the same marks (guide, kernel, leaf titles, texture's verbs): @operator_plan slice 4.`
+  sediment = `Caches grow while canon has nearly stopped (@tree); a session that learns something settled says where it belongs, not only that it was learned.`
+}[reg=facet]
+
+^"rules_that_stuck"{
+  # The full reading is @tree ^"rules_that_stuck"; here only what changes a session's work.
+  shape = `Rules that stuck without a reader were written once into a template or generator and copied by every file after; rules that earned their place have a script in a gate. Before adding a rule, name the script that will read it.`
+  write_less = `Proposal, the creator's to adopt: new .spw files keep the header (#:operation, #:fixity) and drop the restating body lines operation = and fixity =, which nothing reads where a header exists. Until the creator says so, follow the house form. Register stamps stay either way: regex readers in spw-routes.mjs and maintain-plan-directory-indexes.mjs anchor on them.`
+  in_html = `Proposal, the creator's to adopt: stop authoring data-spw-locality on new sections. Only :root's value is read (foundation.css:1086–1087), one selector reads a "nook" value no page uses (card-ecology.css:126), and page-metadata.js infers it where missing. Until the creator says so, new pages follow the house form, as the texture.website domain page does.`
+  bug = `scripts/language-census.mjs writes #:fixity #!volatile and fixity = "tending" into the same file (:288, :300). A fix is ungated; regenerating the census rewrites its files, so run it alone and say so in the commit.`
+  gated = `Retiring locality on existing sections, the ^"registry" block in caches/index.spw, restated body lines across 301 files, or restating stamps: the creator's call, one family per commit, each with the check that proves nothing read it (rg over scripts, public/js and public/css before and after).`
+}[reg=facet]

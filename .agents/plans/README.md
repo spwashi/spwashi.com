@@ -113,6 +113,10 @@ Every live folder, once, by area. Open a plan's `index.spw` for its disposition 
 - `agentic-dev-contracts/` — one validation entrypoint and one manifest.
 - `history-reflow/` — commit grammar and the reflow method.
 
+## Maintenance Snapshot - 2026-11-12
+
+The creator, 2026-11-12: update public copy; improve curricularization, design and relevance; consider which rules started early and stuck; improve Spw-native component design; ambitious plan updates; prime a session that implements from plans. Three read-only surveys, then slices into existing owners and no new folder: topic-building-blocks C1–C5 (the curriculum keeps its promises), texture-website T1–T5 (the technique curriculum), component-region-personality N1–N5 (Spw-native components), operator-resonance-alignment slice 4 (one set of mark names). The order, gates and checks for the next session are in [next-session-prime-2026-11.spw](../../.spw/caches/next-session-prime-2026-11.spw); the rules that stuck without a reader are in [spw-tree-shape-2026-11.spw](../../.spw/caches/spw-tree-shape-2026-11.spw).
+
 ## Maintenance Snapshot - 2026-11-08
 
 The creator, 2026-11-08: developing the granularity and alignment of the plans is valuable for foresight and for establishing a communicable backlog.
