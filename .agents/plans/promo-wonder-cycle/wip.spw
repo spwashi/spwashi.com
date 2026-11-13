@@ -58,10 +58,17 @@ promo_wonder_cycle:
  >>[2026-11-06 14:42] probe — /now/ support ladder: $5, $10–$15, $40–$75 (about $1,000 for the season), $50, $150, $500, $1,500; no $250, as the note says (it also has the four lower rungs the note leaves out). /services/ Pricing note: "Start with the smallest honest shape…" is where the line would join.
  >>[2026-11-06 15:05] land — L2: the creator chose ship both on the shown diff; the line is on /services/ (Pricing note) and /now/ (support note) in ee07e7c4. L3 waits on the Services first screen, L4 on the close ledger.
  >>[2026-11-10 11:14] note — lore-land-plans.spw#value: three clocks on the static forecast, and a close a reader can keep. Beside the stones on the 13th and the 26th. P1 stays next. Unlock weights stay in lore.land.
+ >>[2026-11-13 00:09] note — the creator, on TikTok battles: "during TikTok battles, gifts sent to me turn into powerups and easter eggs while gifts sent to my opponents become obstacles in the game on lore.land"; then "the idea is that TikTok gifts can facilitate a transparent process; for example, I describe what I do with the TikTok gifts while I participate with the battling structure, and that makes it possible for me to ground the consequence of entertaining that structure with something tangential to the participation scheme"; "gifts on tikTok mapping onto structures that others can't predict may not be societally good"; "but it is an entertaining reason to support battles, and it describes a tangible mechanism for support"; "not knowing how the story will be written is part of the fun and a reason skill may be recognized". Landed in 0f62c3a9 on Now, Services and the lore.land domain page.
+ >>[2026-11-13 11:20] note — the creator: "yesterday I streamed for 5 hours and made $5.46 which I exchanged immediately to send in battles for other streamers"; then "I'm thinking about what feels psychologically easy and the relative value of the development I do live"; then "I've been updating ~/Development/active/lore.land today and yesterday during battles".
+ >>[2026-11-13 11:25] probe — what landed in lore.land on those dates, by its git log in local time. The commits are not tied to the streamed hours. 2026-11-12: c03627f 23:36 (Release 2026_11_12.A: gifts from a live stream, the Ring Tide, the lanes by ear), ee3ca3b 23:57 (finds, which open only to a carry played well). 2026-11-13: 985e74d 00:13 (Release 2026_11_13.A: a phone's lanes take more of the width), 63c93ec 11:05 (live gift obstacles; not on its origin/main when read), 7a7e2cb 11:17 (a direction cache). The first three are on lore.land's origin/main, and its changes.json says no gift alone opens a find.
+ >>[2026-11-13 11:30] probe — the tension: L2 and L4 put a gift on the watcher's path as build support (/now/ "counts with these rungs" and "counts with the rungs above"; /services/ "A gift counts with the small rungs" and "reaches me the same way as the amounts below"), and the gifts of 2026-11-12 went back out. Proposed, for the creator's review, in the working tree beside this entry: those four phrasings stop linking a gift to the rungs, the dollar pictures read as one-time amounts, and no figure changes. Whether gifts always go back out is wonder_promo_wonder_cycle_gifts_out, not a sentence on the site.
+ >>[2026-11-13 11:31] plan — wonder_promo_wonder_cycle_live_value holds "psychologically easy" in both readings (to give, to ask) and sets the live work beside the figure as facts. No rate and no price is put on it; L7 would start from the plan's own anchors ($20 a question answered, $75 one fix shipped).
 }
 
 ^"open"{
  notice_demo = ~"./index.spw#wonder_promo_wonder_cycle_notice_demo"
+ gifts_out = ~"./index.spw#wonder_promo_wonder_cycle_gifts_out"
+ live_value = ~"./index.spw#wonder_promo_wonder_cycle_live_value"
 }
 
 ^"cache"{
@@ -69,5 +76,5 @@ promo_wonder_cycle:
  ~#next_commit: "+[promo] P1: count each notice shown, accepted or closed, per cadence"
  ~#files_hot: "public/js/interface/discovery-notices.js, public/js/kernel/visit-intent.js, public/data/promo-wonder-cycle.json"
  ~#gate: "the creator's browser approval of the 1a61dc53 demo"
- ~#last_stream: "2026-11-10"
+ ~#last_stream: "2026-11-13"
 }
