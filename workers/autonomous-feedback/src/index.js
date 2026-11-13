@@ -33,7 +33,13 @@ function methodNotAllowed(allow) {
 }
 
 function notFound(request, message) {
-  if (wantsJson(request)) return jsonResponse({ error: "not_found" }, "no-store", 404);
+  if (wantsJson(request)) {
+    return jsonResponse({
+      error: "not_found",
+      hint: message || "Check /start to configure a site, /meter to test reachability, or /{host} to file a card.",
+      routes: ["/", "/start", "/meter", "/{host}", "/{host}/inbox", "/{host}/config.json"],
+    }, "no-store", 404);
+  }
   return htmlResponse(renderNotFound(message), { status: 404, cache: "no-store" });
 }
 
@@ -484,6 +490,9 @@ async function handleSite(request, url, host, rest, org = null, embed = false, e
     return jsonResponse({ error: "bearer_in_query", hint: "Use Authorization: Bearer. Query strings leak." }, "no-store", 400);
   }
   if (rest === "inbox") return handleInbox(request, url, subject, env);
+  if (!embed && (rest === "start" || rest === "setup") && ["GET", "HEAD"].includes(request.method)) {
+    return Response.redirect(`${url.origin}/start?host=${encodeURIComponent(subject)}`, 302);
+  }
   if (rest === "config.json") {
     if (!["GET", "HEAD"].includes(request.method)) return methodNotAllowed("GET, HEAD");
     const config = await loadConfig(subject);
@@ -718,7 +727,7 @@ export default {
     if (url.pathname === "/climate.json") return cachedClimate();
     if (url.pathname === "/alerts.json") return jsonResponse({ version: VERSION, schema: "alerts.v1", events: [] }, "public, max-age=60");
 
-    if (url.pathname === "/meter" || url.pathname === "/now" || url.pathname === "/now/") {
+    if (url.pathname === "/meter" || url.pathname === "/meter/" || url.pathname === "/now" || url.pathname === "/now/") {
       if (!["GET", "HEAD"].includes(request.method)) return methodNotAllowed("GET, HEAD");
       const raw = (url.searchParams.get("host") || "").trim();
       if (!raw) return headOr(request, htmlResponse(renderMeter(), { cache: "no-store" }));
@@ -732,6 +741,25 @@ export default {
       }
       const probe = await probeSite(queryHost);
       return headOr(request, htmlResponse(renderMeter({ host: queryHost, probe }), { cache: "no-store" }));
+    }
+
+    const startPathMatch = url.pathname.match(/^\/start\/([^/]+)\/?$/);
+    if (startPathMatch && ["GET", "HEAD"].includes(request.method)) {
+      const clean = normalizeHost(decodeURIComponent(startPathMatch[1]));
+      if (isPublicSite(clean)) {
+        const next = new URL(`${url.origin}/start`);
+        url.searchParams.forEach((v, k) => next.searchParams.set(k, v));
+        next.searchParams.set("host", clean);
+        return Response.redirect(next.toString(), 302);
+      }
+    }
+
+    const meterPathMatch = url.pathname.match(/^\/(?:meter|now)\/([^/]+)\/?$/);
+    if (meterPathMatch && ["GET", "HEAD"].includes(request.method)) {
+      const clean = normalizeHost(decodeURIComponent(meterPathMatch[1]));
+      if (isPublicSite(clean)) {
+        return Response.redirect(`${url.origin}/meter?host=${encodeURIComponent(clean)}`, 302);
+      }
     }
 
     const kindJson = url.pathname.match(KIND_JSON);
@@ -783,9 +811,23 @@ export default {
       return headOr(request, htmlResponse(renderWrite({ context, host: queryHost }), { cache: "no-store" }));
     }
 
+    const pastedUrlMatch = url.pathname.match(/^\/https?:\/+([^/]+)(?:\/([^/]+))?.*$/i);
+    if (pastedUrlMatch && ["GET", "HEAD"].includes(request.method)) {
+      const clean = normalizeHost(decodeURIComponent(pastedUrlMatch[1]));
+      if (validSubject(clean)) {
+        const tail = pastedUrlMatch[2] ? `/${encodeURIComponent(pastedUrlMatch[2])}` : "";
+        return Response.redirect(`${url.origin}/${clean}${tail}${url.search}`, 302);
+      }
+    }
+
     const embedMatch = url.pathname.match(/^\/embed\/([^/]+)(?:\/([^/]+))?\/?$/);
     if (embedMatch) {
-      return handleSite(request, url, decodeURIComponent(embedMatch[1]), embedMatch[2] || "", org, true, env);
+      const typed = decodeURIComponent(embedMatch[1]);
+      const clean = normalizeHost(typed);
+      if (validSubject(clean) && clean !== typed && ["GET", "HEAD"].includes(request.method)) {
+        return Response.redirect(`${url.origin}/embed/${clean}${embedMatch[2] ? `/${embedMatch[2]}` : ""}${url.search}`, 301);
+      }
+      return handleSite(request, url, clean || typed, embedMatch[2] || "", org, true, env);
     }
 
     const siteMatch = url.pathname.match(/^\/([^/]+)(?:\/([^/]+))?\/?$/);

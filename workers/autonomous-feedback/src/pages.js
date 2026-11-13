@@ -716,7 +716,11 @@ export function renderNotFound(message = "There is nothing at this address.") {
     body: `${kicker()}
 <h1>Not found</h1>
 <p class="lede">${escapeHtml(message)}</p>
-<p class="actions"><a class="door" href="/"><strong>Start over</strong><span>autonomous.feedback</span></a></p>`,
+<p class="actions">
+  <a class="door" href="/"><strong>Start over</strong><span>Write a note</span></a>
+  <a class="door" href="/start"><strong>Set up a site</strong><span>Link, frame, or form</span></a>
+  <a class="door" href="/meter"><strong>Check a site</strong><span>Reachability and config</span></a>
+</p>`,
   });
 }
 

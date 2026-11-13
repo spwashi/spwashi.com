@@ -50,7 +50,8 @@ function clientMain() {
       const form = field.closest("form");
       // Only the open write page names its site in the address; other forms leave the address alone.
       if (!form || form.id !== "write" || form.querySelector('input[type="hidden"][name="host"]') || !validSubject(clean)) return;
-      const kind = form.querySelector('input[name="kind"]:checked')?.value;
+      const what = form.querySelector('input[name="what"]:checked')?.value || "";
+      const kind = what.startsWith("kind:") ? what.slice(5) : form.querySelector('input[name="kind"]:checked')?.value || "";
       const next = `/${clean}${kind ? `/${kind}` : ""}${location.search}`;
       if (next !== location.pathname + location.search) history.pushState(null, "", next);
     });
@@ -157,6 +158,12 @@ function clientMain() {
       if (beginCard) beginCard.dataset.filled = String(Boolean(typed && validSubject(typed)));
     };
     beginSite.addEventListener("input", paintBegin);
+    beginSite.closest("form")?.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" && (event.metaKey || event.ctrlKey)) {
+        event.preventDefault();
+        beginSite.closest("form").requestSubmit();
+      }
+    });
     paintBegin();
   }
 
@@ -287,7 +294,13 @@ function clientMain() {
       note.value = draft.note || "";
       const from = write.querySelector("#from");
       if (from) from.value = draft.from || "";
-      (draft.asks || []).forEach(([id, value]) => { const ask = document.getElementById(id); if (ask) ask.value = value; });
+      (draft.asks || []).forEach(([id, value]) => {
+        const ask = document.getElementById(id);
+        if (ask) {
+          ask.value = value;
+          ask.closest("details")?.setAttribute("open", "");
+        }
+      });
       if (subjectName && subject()?.dataset.name) subjectName.textContent = subject().dataset.name;
       if (question && subject()?.dataset.prompt) question.textContent = subject().dataset.prompt;
       say("Your unsent card was restored.");
