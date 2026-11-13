@@ -49,6 +49,7 @@
     "smoke:nav": "node scripts/headless-nav.mjs",
     "smoke:nav:ci": "node scripts/headless-nav.mjs --require-browser --require-settled --fail-on-console-error --fail-on-overflow-x",
     "smoke:nav:qa": "node scripts/headless-nav.mjs --debug-qa --warm",
+    "smoke:nav:design": "node scripts/headless-nav.mjs --design --stills",
     "bench:nav": "node scripts/perf-matrix.mjs",
     "bench:nav:quick": "node scripts/perf-matrix.mjs --quick --warm",
     "bench:nav:qa": "node scripts/perf-matrix.mjs --quick --warm --debug-qa",
