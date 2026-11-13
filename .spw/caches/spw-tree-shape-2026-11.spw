@@ -41,6 +41,20 @@ expression = ?tree[shape]{kind.subject.depth.sediment}<reader>
   three_kinds = `The workbench journal names three kinds of cache with three freshness rules: computed, kept records and canon (@journal_scales cache_registry). The tree already separates gen, the computed kind and its largest folder by lines, but kept records and canon sit side by side as caches and conventions with no rule for crossing.`
 }[reg=facet]
 
+^"rules_that_stuck"{
+  # 2026-11-12. The creator: consider which rules and patterns got started early and then stuck. A read-only survey of rules begun April to August 2026, ranked by whether anything reads them; rows marked checked were re-run at their source here, the rest are survey.
+  locality = `checked: data-spw-locality, one of four attributes from 9dc84a6b (2026-04-14), sits on 1,167 elements in tracked HTML. Only :root is read (public/css/components/foundation.css:1086–1087, public/js/interface/state-inspector.js:662), and page-metadata.js:1303 infers it where it is missing. One selector reads a "nook" value (public/css/components/card-ecology.css:126) that no page authors; the 981 "medium" and 176 "high" values on sections do nothing. Its three siblings are read: promptability, consequence, collectability. Stuck, unread.`
+  registry = `checked in this repo: ^"registry" in caches/index.spw restates the alias lines above it, and no script here reads it; the workbench's own tools were not checked. Stuck, unread here.`
+  restated_header = `checked: 301 .spw files carry both #:operation in the header and operation = "…" in the body. The body line is read only as a fallback where no header exists (survey: scripts/audit-spw-tree.mjs:103–104, scripts/tending-queue.mjs:80–82). Two generators write both (survey: spw-precipitate.mjs, spw-snippets.mjs); scripts/language-census.mjs writes #:fixity #!volatile at :288 and fixity = "tending" at :300 into the same file, a contradiction in every file it makes (checked).`
+  episode = `checked: no hook under scripts/githooks parses the #[episode] block; survey: 1,378 of 1,425 commits since August carry it, about 41% of a body's bytes. The block is the creator's practice and stays; what is missing is a reader that would make it teach (the workbench journal's updates_that_teach).`
+  stamps = `survey: 7,202 of 7,466 register stamps in .spw restate their bracket (}[reg=facet] after a facet). The workbench reads a restating stamp as teaching nothing (spw-seed canonical/register-stamp.ts); this site's scripts use them as end-of-block anchors in regexes (spw-routes.mjs, maintain-plan-directory-indexes.mjs). Half: removing them breaks those readers first.`
+  layer = `survey: #:layer is on every surface and says pragmatics on 87% of them; one value sorts nothing.`
+  wonders = `survey: 452 questions, 339 open, 21 answered, 0 retired; #:depth is parsed and printed and changes nothing; npm run wonder is report-only in check:local.`
+  earned = `survey: the plan folder triple (read by plan-wip.mjs and the nightly plans index check), the Open first tables (budgeted by check-agent-contracts.mjs), the 44px token (134 uses; its one test, check-hypermedia.mjs:117, is run by no npm script), and the no-new-family rule of 2026-09-04, after which distinct data-spw-* names held near 390 while attributes still grew.`
+  pattern = `What stuck without a reader shares a shape: a rule written once into a template or a generator, copied by every file after, and checked by nothing that runs. What earned its place has a script in a gate. audit:spw-tree, which checks headers, is in no gate (survey).`
+  owner = `Retiring any of these is the creator's: locality on sections, the registry block, restated body lines (and the census generator's contradiction, which is a bug), restating stamps once their regex readers move to the parser. The next-session prime lists them as gated.`
+}[reg=facet]
+
 #>wonder_tree_sediment
 ?["Has theory stopped moving from caches into canon, and is that a loss or a new shape?"]{
   #:depth #!computational ~#lens(memory)
@@ -83,3 +97,12 @@ expression = ?tree[shape]{kind.subject.depth.sediment}<reader>
   !probe{ "show the creator the three placements beside the cache; ask which file a host author would open first" }
   $%[home.language, home.convention, home.philosophy, home.cache]
 }
+
+# 2026-11-12 — what a tree is for, seen from a day that touched three trees. Appended by a workbench session at the creator's ask to update caches with direction. A reading; it moves, renames and promotes nothing.
+
+^"seen_from_three_trees"{
+  read_by_a_program = `lore.land's tree earns its keep where a program reads it: its game rules are a .spw file read by the real parser, with a check that holds the code's own table to it. Its new season is written twice, as a form in a surface and as a table in a module, and only a check ties the two. A surface a program reads cannot go stale quietly, which may be the step missing between cache and canon here (^"reading" sediment_stopped).`
+  kept_lines = `A fourth kind of memory beside computed, kept records and canon: a line a visitor holds. It lives in their browser and in no tree; the tree's part is to say its form and who may read it.`
+  an_example_tree = `If an example tree is wanted for a new host, it needs one of each, small: a surface a program reads with its check, a surface a person keeps true, a dated entry that is never edited, a wonder with a guess written before its probe, and the form of a line a visitor may keep.`
+  labels_as_wrappers = `The workbench's own tree wraps twelve whole surfaces in a labeled brace pair and nothing reads the label: a mark written once and copied, with no reader, the shape ^"rules_that_stuck" describes.`
+}[reg=facet]

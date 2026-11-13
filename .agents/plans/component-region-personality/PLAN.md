@@ -38,6 +38,16 @@ This plan owns the card as real estate. It does not own the words (semantic-copy
 
 The paint of the current ask line, in `cards/index.html` and `public/css/components/cards.css`, shows the expression the page already has and opens the canvas and the pivot. It is not the new abstraction.
 
+## Spw-native components — 2026-11-12
+
+`.spw/caches/spw-native-components-2026-11.spw` names the instrument: one expression a reader can say back with scripts off, the mono face for the marks, the delimiter pair as housing. Read 2026-11-12: a component is a class primitive plus a flat passport of `data-spw-*` fields; a frame carries a median of about 14 of them (survey of 223 route files, not re-checked) and only about one frame in eleven carries a `data-spw-semantic-expression`. The one runtime custom element, `<spw-expression>` (`public/js/interface/spw-expression.js:323`), loads only under the crumb rail (`runtime/attention/section-handle.js:1390`) and has no authored instance in any page. `public/ts/component-fixtures.ts` holds neither it nor the home seat line.
+
+- **N1 · Fixtures for the native pair.** The home seat line and `<spw-expression>` as typed fixtures beside the four that exist, so the instrument has a contract before it spreads. Gate: none. Check: `npm run component:check`.
+- **N2 · One authored `<spw-expression>`, scripts off.** On one route, the element authored in the page with its slots as plain links, so it reads before any script and the script only adds motion. Gate: the look at 390px. Check: `npm run test:modules`.
+- **N3 · Expression first.** On one frame, the slots read from its expression (`readExpressionSlots`, `public/js/semantic/expression-query.js`) stand in for the flat fields that restate them; count the frame's attributes before and after. Gate: whether flat passport fields retire anywhere. Check: `npm run audit:copy:accessor`, `npm run check:runtime`.
+- **N4 · Brace ease** waits on `#>wonder_spw_native_brace_ease`, after H1 and cluster C, as the cache says.
+- **N5 · Which room a pair is.** The site's braces convention reads `( )` as a scene you step into and leave; lore.land reads `( )` as a gathering where everything arrives together and `{ }` as the room you stand in (`.spw/caches/factshift-paste-grounding-2026-11.spw#rooms`). `[ ]` as the look and `< >` as the way out agree across both. Record which reading this site keeps for `( )` before any component spends it. Gate: the creator. Check: `npm run spw:integrity`.
+
 ## Public Goal
 
 Develop meaningful component real estate and region personality across spwashi.com so public copy relates to a growing component ecology — not repeated meta-documentation. Editing-team surfaces should stay inspiration-ready for a media launch; screenshots should remain interpretable by humans and models; copy should be named for later translation.

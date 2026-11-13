@@ -2,7 +2,7 @@
 
 **Asked (2026-11-11).** The creator: make texture.website useful for lore.land's assets; clonable realm packs per account, spwashi first, the folios as textures; textures updated and edited algorithmically; shaders and frames as a product surface with unlockables, collectibles and drops; a more extensible URL; a set of creative textures and a set of broad, simple ones; intricate neogenres; Spw expressions as navigation across the ecosystem. Not a fan of the first seven textures or of /tomorrow as a route: the page should feel like an academic graphic-design slide whose dimensions are tuned in a minimal, geometric interface, days ahead or behind among them. Discovery partly by guessing, later read through autonomous.feedback. Packs that theme other sites, carried on a Spw card. A test bench for components, designs and shaders. A tour of HTML features and tropes, documented on trope.wiki. An architecture other domains can repeat.
 
-**Where it stands.** `workers/texture-website` is files only (`cluster.json` tier files), live at texture.website since 2026-11-11. `src/materials.js` is the material list; `carry.mjs` writes the readings; `assets/texture.js` reads the address in the browser. Direction caches: `.spw/caches/texture-website-redesign-2026-11.spw`, `.spw/caches/ecosystem-direction-2026-11.spw`.
+**Status 2026-11-12.** `workers/texture-website` is files only (`cluster.json` tier files), live at texture.website since 2026-11-11 (97690ef1, deployed). `src/vocabulary.js` holds the classes, materials, ladders, techniques, pivots and views, and `src/raster.js` draws each material's tile; `carry.mjs` writes the readings; `assets/texture.js` reads the address in the browser. Direction caches: `.spw/caches/texture-website-redesign-2026-11.spw`, `.spw/caches/ecosystem-direction-2026-11.spw`.
 
 ## The page: a slide with dimensions
 
@@ -62,5 +62,15 @@ A domain in focus gets: a files-only unit (`cluster.json` tier files), a materia
 4. **The component bench and the first HTML tour slides**, each linked to trope.wiki.
 5. **Packs carried on a Spw card** to one other site that themes itself by it.
 6. **Guesses and near misses**, then their count through the inbox.
+
+### The technique curriculum — 2026-11-12
+
+The studio teaches by changing one thing, so its curriculum is its pivots. Read 2026-11-12: ten pivots reach nine of eleven techniques (`invert` and `lens` both teach describe), so the count "n of 11 tried" (`assets/texture.js:339`) can never pass 9; `tile` and `exclude` have no pivot. The pivots and ladders sections ship `hidden` (`carry.mjs:94–95`) and appear only when the script runs.
+
+- **T1 · Every technique reachable.** A `tile` pivot (the format ladder turned to tile, saying what `--tile` does to an edge) and an `exclude` pivot (`--no` with one quality of the ground material, saying that `--no` is a weight of -0.5). Each says its technique in one line, as the others do. Gate: the two lines' wording. Check: `node --test workers/texture-website/test` gains "every technique has a pivot".
+- **T2 · Read with scripts off.** carry.mjs writes the pivots and techniques as a list of plain links into the page (each pivot an address with its key), so the curriculum reads and works as links before the script dresses it. Gate: none. Check: carry `--check`; the page with scripts off.
+- **T3 · Practice named, not counted.** The tried chips stay in the browser and forgettable. A technique tried shows its source link beside the chip, so the next step is reading Midjourney's own page. Gate: whether the count stays at all. Check: a local preview.
+- **T4 · The Midjourney session.** The creator, in a browser on the Midjourney site: one prompt with no image, with a material's tile as `--sref`, and with a grey tile of the same pattern. Settles whether 384px sixteen-tone tiles are taken and whether the word-hashed hue pulls the result (`.spw/caches/texture-website-redesign-2026-11.spw#wonder_texture_hue_bias`). Gate: the creator's account and time. Then hue by word, class or named colour.
+- **T5 · Deploy the reading for models.** `assets/llms.txt` names the images, the square card and `day=` in the repo (2026-11-12) and not yet live. Gate: the creator's deploy.
 
 Validation: `node --test workers/texture-website/test`, `npm run check:workers`, `npm run check:local`; a local preview of each slice before deploy, which is the creator's call.

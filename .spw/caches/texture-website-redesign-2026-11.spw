@@ -61,7 +61,7 @@ summary = #[
     `whether a hue hashed from the word biases a style reference toward a colour the material never had (sea glass drawn violet); if so, hue by class or by a named colour in the vocabulary`,
   ][reg=set]
   gaps = #[
-    `llms.txt lists .json, .txt and .spw readings and not the .png images or the square card, so a model reading it misses the one reading made for image models; it names d and not day=, the key that fixes a date`,
+    `llms.txt listed .json, .txt and .spw readings and not the .png images, the square card or day=; fixed in the repo 2026-11-12 (carry.mjs, assets/llms.txt), not yet deployed`,
     `share cards per address: a file cannot draw one per URL; the square card is drawn in the reader's browser and saved by them`,
     `the science notes, the reuse line and the page copy are the creator's`,
   ][reg=set]

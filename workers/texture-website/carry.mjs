@@ -59,15 +59,15 @@ A studio for building material prompts. The address is the prompt: each word in 
 
 Ladders, as query keys whose values are words (hyphens for spaces):
 ${Object.entries(LADDERS).map(([key, words]) => `- ${key}: ${words.join(", ")}`).join("\n")}
-r rolls every ladder from a seed; d moves the day's composition by days; say and as put words in a speech bubble.
+With no material in the path, the day composes a pair: day=2026-12-01 fixes a date, d=2 moves from today by days. r rolls every ladder from a seed; say and as put words in a speech bubble.
 
 Views: a first path word ending in @ is whose eyes the page is seen through: ${Object.entries(VIEWS).map(([key, v]) => `/${key}@/ (${v.name}, ${v.says})`).join("; ")}.
 
 Pivots, as query keys, each teaching a technique: perm (a ladder written as a permutation), weigh (materials as weighted multi-prompts), chaos, weird, stylize (numbers), raw, sref (random), seed (a number), invert (reverse the layers by reversing the path). Techniques with their sources are in /vocabulary.json.
 
-The page writes a Midjourney prompt (with --tile or an aspect ratio by format), a plain prompt for any model, a Spw line and the address, and sketches the words with drawn bases lit, worn and printed by an SVG filter.
+The page writes a Midjourney prompt (with --tile or an aspect ratio by format), the same prompt with its materials' images in front, a plain prompt for any model, a Spw line and the address, and sketches the words with drawn bases lit, worn and printed by an SVG filter. Its card takes the composition as .txt, .spw, .json, .md, or a square .svg that marks the day.
 
-Readings: /vocabulary.json (classes, materials, ladders, phrases), /{material}.txt (prompt starters), /{material}.spw (the material as a line).
+Readings: /vocabulary.json (classes, materials, ladders, phrases, techniques, pivots, views), /{material}.png (a seamless 384px tile, open to any origin, to hand an image model as an image prompt or style reference), /{material}.txt (prompt starters with that image's address), /{material}.spw (the material as a line), /images.json (each image's hash).
 
 Classes: ${Object.keys(CLASSES).join(", ")}
 `;

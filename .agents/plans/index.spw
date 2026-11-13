@@ -32,6 +32,13 @@ intent: .{
  regeneration_rule = `Do not regenerate these decisions. Re-read the affected file and edit its disposition deliberately.`
 }[reg=facet]
 
+^"plan_pass_2026_11_12"{
+ census = `The creator's asks of 2026-11-12, given to existing owners with no new folder: the curriculum keeps its promises (topic-building-blocks C1–C5), the technique curriculum on texture.website (texture-website T1–T5), Spw-native components (component-region-personality N1–N5), one set of mark names a learner meets (operator-resonance-alignment slice 4). Public copy that was wrong about texture.website was fixed in the same pass; its domain page landed.`
+ prime = ~"../../.spw/caches/next-session-prime-2026-11.spw"
+ evidence = ~"../../.spw/caches/spw-tree-shape-2026-11.spw"
+ ledger = ~"./README.md"
+}[reg=facet]
+
 ^"plan_pass_2026_11_06"{
  census = `All 54 live plans read against the tree by area, for granularity, meaningful reference, creativity and wonder. Next work is cut into one-session slices with paths, a gate and a check; landed narrative collapsed into Landed lines with commits (PLAN and FIX prose 9,219 -> 7,709 lines). Every kept path, line, anchor and commit was opened; audit:plans went from 27 warn to 0. Plan wonders 74 -> 112, and probes with no ~#expect site-wide 195 -> 140. A finished session's uncommitted drafts in six plans were checked claim by claim: true claims kept, false ones cut.`
  archived = `ecosystem-offer-2026-10, by its own October rule; its two questions moved to promo-wonder-cycle under their names. Held as candidates with evidence, not moved: agentic-dev-contracts, operator-resonance-alignment, shell-model-vocabulary-consolidation, data-attribute-css-token-refinement, model-collaborator-lore-surfaces.`
