@@ -4,24 +4,26 @@
     Mask variant — white strokes on transparent background
     Use as CSS mask: mask-image: url('/public/images/logo/spw-mark-mask.svg')
     The white strokes become the mask shape; transparent areas are cut out
+    Drawn at about 16px in the header and footer, so it uses the compact geometry
   -->
 
   <path
     class="mark-layer mark-layer--arc"
-    d="M 8 20 Q 24 5 40 20"
+    d="M 4 9.19 C 1.83 11.12 1.06 15.45 4.93 16.23 C 10.5 17.31 19.4 10.04 28.3 5.24 C 35.26 1.83 43.16 1.06 45.33 4.93 C 47.26 9.26 43.16 16 35.26 20.72 C 29.85 23.97 23.5 27.22 19.94 26.75 C 17.47 26.44 17.77 22.88 19.63 21.64"
     stroke="white"
-    stroke-width="var(--spw-logo-stroke-width, 2.4)"
+    stroke-width="var(--spw-logo-stroke-width, 3.2)"
     stroke-linecap="round"
     fill="none"
   />
 
   <path
     class="mark-layer mark-layer--w"
-    d="M 8 26 L 16 46 L 24 26 L 32 46 L 40 26"
+    d="M 8.18 24.51 L 9.57 37.66 L 14.37 32.63 L 19.17 49.66 L 22.11 29.54"
     stroke="white"
-    stroke-width="var(--spw-logo-stroke-width, 2.4)"
-    stroke-linecap="round"
-    stroke-linejoin="round"
+    stroke-width="var(--spw-logo-stroke-width, 3.2)"
+    stroke-linecap="butt"
+    stroke-linejoin="miter"
+    stroke-miterlimit="6"
     fill="none"
   />
 </svg>

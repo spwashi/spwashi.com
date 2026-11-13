@@ -143,14 +143,14 @@ export function mountLogo(selector, opts = {}) {
       <path
         id="mark-arc-${Math.random().toString(36).slice(2,6)}"
         class="mark-layer mark-layer--arc"
-        d="M 9 18 C 14 6 28 4 37 10 C 44 14 44 23 38 28 C 32 32 23 32 18 26"
+        d="M 4 9.19 C 1.83 11.12 1.06 15.45 4.93 16.23 C 10.5 17.31 19.4 10.04 28.3 5.24 C 35.26 1.83 43.16 1.06 45.33 4.93 C 47.26 9.26 43.16 16 35.26 20.72 C 29.85 23.97 23.5 27.22 19.94 26.75 C 17.47 26.44 17.77 22.88 19.63 21.64"
         stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"
       />
       <path
         id="mark-w-${Math.random().toString(36).slice(2,6)}"
         class="mark-layer mark-layer--w"
-        d="M 8 26 L 16 45 L 24 27 L 32 45 L 40 26"
-        stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"
+        d="M 8.18 24.51 L 9.57 37.66 L 14.37 32.63 L 19.17 49.66 L 22.11 29.54"
+        stroke="currentColor" stroke-width="2.4" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="6" fill="none"
       />
     </svg>
     <span class="spw-logo-wordmark" aria-hidden="${isLink}">${wordmark}</span>
