@@ -176,8 +176,9 @@ Built in the app (`workers/factshift-center/app/src/js/ui/gestures.ts`) and comm
 
 **The shell (2026-11-08).** The canvas opens offline. The snapshot's own service worker registers at `/v0.0.2-alpha/` with no scope, so it never controlled `/`. The site's worker now serves `/sw.js` (`src/shell.js`) and adds one registration line to the canvas's HTML as it serves it. The app repository is untouched.
 - **Install** keeps every file the snapshot ships.
-- **Navigation** is network first, with the kept canvas after 3.5 s or a failure. A `?spw=` line still lands offline.
-- **A new snapshot's shell** waits until the old pages close.
+- **Navigation** is network first, with the kept canvas after 3.5 s, on a network failure, or on a 5xx server error. A `?spw=` line still lands offline.
+- **A new snapshot's shell** waits until the reader asks for it, offering a non-intrusive reload banner when installed.
+- **PWA architecture (2026-11-10 to 2026-11-11):** file handlers register `.spw` and `.txt` via the PWA File Handling API, routing through `window.launchQueue` into the canvas drop handler; `display_override` supports `window-controls-overlay` and `standalone`; iOS and mobile standalone capability and translucent status bar tags are carried in head; visibility change checks for background updates; share target routes shared text to `?spw=`.
 
 Headless, with the server shut down: Chrome reported no installability errors, and `/?spw=garden[care]{seed, water}` opened with three nodes. Tests are in `test/shell.test.mjs`.
 

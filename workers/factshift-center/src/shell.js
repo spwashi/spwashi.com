@@ -62,7 +62,9 @@ export function factshiftShell({ version, files, waitMs }) {
     if (!home) return network.catch(() => offline(url));
     const slow = new Promise((resolve) => setTimeout(() => resolve(null), waitMs));
     try {
-      return (await Promise.race([network, slow])) || home;
+      const answer = await Promise.race([network, slow]);
+      if (answer && answer.ok) return answer;
+      return home || answer;
     } catch {
       return home;
     }
@@ -99,8 +101,10 @@ export const NAVIGATION_WAIT_MS = 3500;
  * installed app fetches a fresh shell and keeps the new manifest.
  * 2: the site-served manifest and head lines (src/manifest.js), 2026-11-08.
  * 4: the offer of a new shell, the offline page, and the share target, 2026-11-10.
+ * 5: file handling via launchQueue, window-controls-overlay, iOS status bar,
+ *    visibility updates, and server error fallback, 2026-11-11.
  */
-export const SITE_REVISION = 4;
+export const SITE_REVISION = 5;
 export const SHELL_VERSION = `${SNAPSHOT.revision}-${SNAPSHOT.snapshot}-site${SITE_REVISION}`;
 
 /** The script at /sw.js, for a snapshot and the files it keeps; carry-shell.mjs writes it into assets/. */
@@ -145,6 +149,9 @@ export function registerFactshiftShell() {
   };
   const start = () => navigator.serviceWorker.register("/sw.js", { scope: "/", updateViaCache: "none" }).then((registration) => {
     registration.update().catch(() => {});
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") registration.update().catch(() => {});
+    });
     offer(registration);
     const watch = (worker) => worker?.addEventListener("statechange", () => {
       if (worker.state === "installed") offer(registration);
@@ -155,6 +162,23 @@ export function registerFactshiftShell() {
   }).catch(() => {});
   if (document.readyState === "complete") start();
   else addEventListener("load", start, { once: true });
+
+  // PWA File Handling: files opened via OS association (.spw, .txt) dispatch to the canvas drop handler
+  if ("launchQueue" in window && "files" in window.LaunchParams.prototype) {
+    window.launchQueue.setConsumer(async (params) => {
+      if (!params || !params.files || !params.files.length) return;
+      for (const handle of params.files) {
+        try {
+          const file = await handle.getFile();
+          if (file && typeof DataTransfer !== "undefined") {
+            const dt = new DataTransfer();
+            dt.items.add(file);
+            document.dispatchEvent(new DragEvent("drop", { dataTransfer: dt, bubbles: true, cancelable: true }));
+          }
+        } catch {}
+      }
+    });
+  }
 }
 
 export const REGISTER_TAG = `<script data-factshift-shell>(${registerFactshiftShell.toString()})();</script>`;
