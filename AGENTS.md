@@ -165,27 +165,27 @@ As of 2026-04, the site publishes through a local build step rather than serving
 
 | Command | What it does |
 |---------|--------------|
-| `npm run dev` | Vite dev server for the source tree, with Spw HTML template rendering wired through `vite.config.ts`. |
-| `npm run dev:legacy` | Previous zero-dep local dev server for fallback/template debugging. |
-| `npm run build` | Typecheck, CSS bundles, then the static deploy builder into `dist/`. |
-| `npm run build:tools` | Compiles typed build-control modules from `scripts/ts/` into `scripts/typed/` for Node scripts. |
-| `npm run build:runtime` | Compiles selected TypeScript runtime modules from `public/ts/` into browser-ready modules under `public/js/typed/`. |
-| `npm run build:vite` | Vite production smoke build into `dist-vite/` for bundler compatibility checks; not the deploy artifact. |
-| `npm run catalog` | Regenerates the in-tree design catalog at `design/catalog/` (gitignored). |
-| `npm run manifest` | Regenerates the route runtime manifest. |
-| `npm run sitemap` | Generates `dist/sitemap.xml` from tracked route canonicals. |
-| `npm run check:local` | Default offline/local validation: compile, CSS, runtime/site contracts, generated checks, `check:agents`, module tests. Does not copy `dist/`, and does not validate commit grammar. |
-| `npm run check:agents` | Tracked adapters + always-on word budgets (`AGENTS.md`, MEMORY, this track's PLAN.md). A green check on untracked adapters is a lie. |
-| `npm run audit:copy:accessor` | Census of `data-spw-copy-unit` vs Spw handles, topic clusters, voice seams. |
-| `npm run audit:module-selectors` | MODULE_DEFS.selector vs public HTML hosts. |
+| `npm run dev` | Vite dev server with Spw HTML templates (`vite.config.ts`). |
+| `npm run dev:legacy` | Zero-dep local dev server for fallback/template debugging. |
+| `npm run build` | Typecheck, CSS bundles, then static deploy build into `dist/`. |
+| `npm run build:tools` | Compile `scripts/ts/` into `scripts/typed/` for Node scripts. |
+| `npm run build:runtime` | Compile `public/ts/` into browser-ready `public/js/typed/`. |
+| `npm run build:vite` | Vite smoke build into `dist-vite/` (not the deploy artifact). |
+| `npm run catalog` | Regenerate `design/catalog/` (gitignored). |
+| `npm run manifest` | Regenerate route runtime manifest. |
+| `npm run sitemap` | Generate `dist/sitemap.xml` from tracked canonicals. |
+| `npm run check:local` | Offline validation: compile, CSS, runtime/site contracts, generated checks, `check:agents`, module tests. Does not copy `dist/` or check commit grammar. |
+| `npm run check:agents` | Tracked adapters + always-on word budgets (`AGENTS.md`, MEMORY, track PLAN.md). |
+| `npm run audit:copy:accessor` | Census of `data-spw-copy-unit` vs Spw handles, clusters, voice seams. |
+| `npm run audit:module-selectors` | `MODULE_DEFS.selector` vs public HTML hosts. |
 | `npm run visual:checks` | Pocket stills; fail when ink/light ignore attention. |
-| `npm run ecology` / `ecology:language` | Runtime feature packs vs Spw language. Do not merge inventories. |
-| `npm run build:site:run` | Static deploy builder into `dist/`. Registers `scripts/lib/register-public-imports.mjs` so the catalog can load `/public/js` specifiers under Node. |
+| `npm run ecology` / `ecology:language` | Runtime feature packs vs Spw language (keep inventories separate). |
+| `npm run build:site:run` | Static deploy builder into `dist/` (registers `/public/js` specifiers). |
 | `npm run check:pwa` | Service-worker, manifest, offline, and PWA runtime contracts. |
-| `npm run check:runtime` | Validates JS runtime architecture contracts: module definition shape, import ownership, generated typed outputs, and root entrypoint boundaries. |
-| `npm run check` | Full validation for dependency-sensitive or pre-landing sweeps. Includes `npm run audit --audit-level=moderate`, so expect a registry/network call. |
+| `npm run check:runtime` | Validate JS runtime contracts: module shapes, import ownership, typed outputs, root boundaries. |
+| `npm run check` | Full validation including `npm run audit --audit-level=moderate` (network). |
 
-**Deploy:** `.github/workflows/deploy.yml` runs `npm run check:local`, then `npm run build:site:run`, then publishes `dist/` to GitHub Pages. `check:local` passing is not a `dist/` build. Binary deploy artifacts in `dist/` stay ignored; plaintext outputs can be tracked when useful for review. `.github/workflows/nightly.yml` is the notice after that deploy, and again each morning. It writes `notice.json`: smoke reasons, the full plan index, citation verdicts, high advisories, the day's subjects, and a pocket attention receipt for `about-opening` plus the day's still and state, starting on the 1st. Days 7, 14, 21, and 28 also keep that week's climate still. Smoke adds that day's route. Readings use a closed vocabulary. A missed prepare is step-not-landed. A red notice does not stop Pages.
+**Deploy:** `.github/workflows/deploy.yml` runs `check:local`, then `build:site:run`, then publishes `dist/` to GitHub Pages (`check:local` alone does not build `dist/`). `.github/workflows/nightly.yml` writes `notice.json` after deploy and each morning (smoke reasons, plan index, citation verdicts, advisories, day's subjects, and `about-opening` attention receipt; days 7/14/21/28 keep weekly climate stills; red notices do not block Pages).
 
 **Design catalog:** `design/catalog/index.html` is a generated cross-reference of every site-facing `data-spw-*` attribute, custom-property token, CSS file, and `.spw` philosophy doc, with orphan detection. It excludes the installed workbench/tooling subtrees. See `scripts/generate-design-catalog.mjs`.
 
