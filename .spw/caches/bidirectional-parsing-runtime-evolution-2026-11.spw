@@ -65,3 +65,19 @@ contents = #[
   reversibility_as_feature = `Advanced runtimes make user and model exploration fear-free: when memory spaces support instantaneous WAM-style rewinds, visitors and agents can pivot slots, test radical variations, and restore baseline state with zero friction.`
   extensible_abstraction = `By separating the invariant textual expression from the opinionated runtime lenses, spwashi.com remains an extensible laboratory that supplies tokens, concepts, and material physics downstream to spw.quest, factshift.center, and autonomous agents without payload bloating.`
 }[reg=facet]
+
+# 2026-11-12 — measured: one reading scanned from both ends. Appended by a workbench session at the creator's ask to update caches with direction; the claims above stay as written.
+
+^"measured_both_ends"{
+  id = "bpre-measured-both-ends"
+  status = `measured in the workbench's working tree on 2026-11-12, uncommitted there; not in this site's mount until its pin moves`
+  claim = `A label written on a brace pair can be read by a scan from the start of a text or from its end, and the two return the same pairs on any text, garbled text included.`
+  form = `{_label … }_label, the close repeating the label, which the workbench's desugar has always written for A{}; and {_label … lebal_}, the close mirrored, which read leftward from its brace spells what the open spells rightward.`
+  reading = `A label makes a class: a brace pairs only with a brace of its kind carrying the same label, bare with bare. Classes do not see each other, so {_A {_B }_A }_B pairs whichever end is read first, which is this site's own reading of labeled braces (the spw-metaphysical-language plan, drift 006).`
+  what_direction_changes = `Not the pairs. A forward scan holds opens and releases them at closes; a backward scan holds closes. What differs is the order of events and which edges a cut text leaves waiting: the head of a text leaves the same classes open that its tail leaves unopened.`
+  what_a_label_buys = `A missing labeled close loses its own pair and nothing else, where a missing bare close shifts every pair outward. A line cut short in passing does not close, so a host can refuse it.`
+  measured = `Laws held over generated and garbled text; 3,786 .spw surfaces in three repositories read line for line as before, since the scan sits beside the parser. This site's own .spw surfaces hold no labeled pair. The workbench holds twelve, each wrapping a whole surface, and ten that label the open alone.`
+  inversion_note = `The inversion claimed in ^"topological_inversion" (a postfix met first in a backward scan) is not what was measured: for pairing, direction does not change the result. It may still hold for the order things are evaluated in; nothing here tests that.`
+  where_it_lives = `the workbench plan pair-label-reading and its trial card wonder_trial_pair_label. Whether container nodes carry the labels stays the workbench's question, and a tree can carry one only on a pair that nests.`
+  for_this_site = `Selection spans as labeled braces can be checked against a reader once the mount moves: the scan lists each crossing, so an overlap is data and a missing end is an error at its own span. Until then nothing here should say the parser reads them. It reads the label as the first word in the body.`
+}[reg=facet]

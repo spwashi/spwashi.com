@@ -143,3 +143,17 @@ summary = #[
   !probe{ "smut.today with the memory line and its clear control, beside without; ask five readers whether they would use it and why" }
   $%[trust.more, trust.same, trust.less]
 }
+
+# 2026-11-12 — one instance of "a line is a key", built in lore.land's working tree by a workbench session at the creator's ask (uncommitted there, behind a switch that starts off). The proposals above stay as written.
+
+^"a_line_kept"{
+  status = `built and walked in a browser in lore.land's working tree on 2026-11-12; not committed, not deployed, and off for everyone until its maker turns it on`
+  what = `For four days from Thursday 2026-11-26 the pie game sets a place by the road: the cloth, the cup and the plate the city sets early in Chapter 15. Passing it settles the pie. The first time, the game writes one line of Spw into the reader's browser and shows it with their carries.`
+  line = `^kept[thursday]{_thursday .day["2026-11-27"] .chapter[15] .carrier[porter] *kept_place{ ~warm[4] } yadsruht_}`
+  two_halves = `After those days the place stays set, more faintly, only for a browser that holds both halves: a day written by play inside the window, and a sealed line. A line pasted by someone who was not there is shown, with words that say whose it answers to, and is not kept. It never says that anyone was there.`
+  seal = `The line opens with its season as a label and ends with the label mirrored. Cut short on the way, it does not close, and is refused. This is what ^"router" did not have: a key that can tell it arrived whole.`
+  honest = `As ^"router" says, a game and not a lock: both halves sit in localStorage in the open and can be written by hand, and the game's canon says so.`
+  calendar = `The book puts the Feast of the Uneven Slice at the Turning of the Year (Chapter 14), so the Thanksgiving days are not the feast. The season is a Thursday that is kept, beside the Thursday nobody kept. The feast is a second season, proposed for the turn of the year, where a Thursday line could open something.`
+  for_wap = `Proposal only: an issue's door back could greet a sealed Thursday line as it would any kept line, with nothing gated behind it. The route between the two sites is still unbuilt.`
+  memory = `It keeps ^"memory_theory" attachment as written: no streak, no count shown, nothing that marks an absence; what is kept is visible where the carries are and can be let go.`
+}[reg=facet]

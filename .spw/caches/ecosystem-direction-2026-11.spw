@@ -188,3 +188,18 @@ summary = #[
   !probe{ "the dashboard's requests per worker for a week before and after the deploys, beside each worker's run_worker_first list" }
   $%[budget.ample, budget.tight, budget.crawlers]
 }
+
+# 2026-11-12 — direction from a day's work across the workbench and lore.land, appended by a workbench session at the creator's ask. Built pieces say where; the rest is proposal.
+
+^"direction_2026_11_12"{
+  spine = `One thing ran through three repositories: a line of Spw somebody keeps. The workbench learned to read a label on a brace pair from either end; lore.land's game hands a player one sealed line for a season; ^"drops" here already asked that every drop leave one collectible atom.`
+  a_drop_with_residue = `A drop can leave more than an atom: a line that does something later, only for whoever was there. lore.land's first is in its working tree (the pie-loop cache, ^"a_line_kept"). The pattern for any host: the days in a file, being there written only by what a visitor does on the page inside those days, the line shown and copyable, and a plain sentence for anyone else.`
+  calendar = `Thursday 2026-11-26 is a close, a holiday table, and the first day of that season. The book's feast is at the turn of the year, so a feast drop belongs with the New Year pages, not in November.`
+  one_reader = `The seal is read three ways today: by the workbench's experimental scan, by a small reader in lore.land's game, and by a highlighter that draws the mirrored label as a reflection. That is two readers too many, the drift ^"sustainable" names, and its own proposal is the fix: one parser release every consumer takes.`
+  count_before_meaning = `What cost the day most was a reading already written and not found. The workbench had the labeled form in its desugar and this site had its overlap in a plan, and a census found both only after a first design. Before a mark is given a meaning anywhere, count where it is already written, in every repository that mounts the workbench.`
+  next = #[
+    `lore.land's maker decides the days, the words, and whether the switch starts on for those days`,
+    `a route from wap.mom into the game for the Thursday, if the pie loop is wanted this month`,
+    `the workbench's owner reads four trial cards before any of this becomes grammar`,
+  ][reg=set]
+}[reg=facet]
