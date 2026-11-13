@@ -1,0 +1,39 @@
+# Aesthetic Refactor & Ceiling Re-evaluation (2026-11)
+#
+# operation: cache
+# Re-evaluates runtime, CSS, regional composition, copy cohesion, and plan
+# overhead after model capability improvements. Records concrete baselines,
+# landed slices, and open probes so progress stays inspectable across sessions.
+
+#>aesthetic_refactor_2026_11
+#:cache #!aesthetics #!runtime #!css #!composition #!copy #!plans
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@caches_index: ~"./index.spw"
+@history_strands: ~"./history-conflict-strands-2026-09.spw"
+@core_css_plan: ~"../../.agents/plans/core-css-spend-cut/PLAN.md"
+@css_readability_plan: ~"../../.agents/plans/css-architecture-readability/PLAN.md"
+@agent_optimization_plan: ~"../../.agents/plans/agent-optimization/PLAN.md"
+@copy_accessor: ~"../conventions/copy-accessor.spw"
+
+operation = "cache"
+fixity = "tending"
+started = "2026-11-13"
+
+^"baseline_2026_11_13"{
+  css_core_kib = "1728.4 / 1741 KiB (99%, 103 sheets); route:website 140.0/140 KiB (100%); behavior:console 47.8/48 KiB (100%)"
+  runtime_catalog = "147 modules; 3 ungated (semantics-gate, page-universe, cognition); 3 zero-match selectors (annotation-layer, local-memory-controls, spw-hero-kinetic-stage); 1 home-seat-line updates attr-shape warning"
+  component_exchange = "33:1 inheritance to :has(); 14/668 compound expressions"
+  copy_accessor = "405 units across 212 pages; 64 unclustered; 7 voice seams (4 dense-lede, 2 unglossed:lattice, 1 flat-only)"
+  agents_budget = "AGENTS.md 3179/3200w (99%); css-architecture-readability/PLAN.md 400/405L (99%); attention-field.spw 389/400L (97%)"
+  mobile_overflow = "p-home-m.png and p-math-m.png show right-edge horizontal clipping at phone width"
+}[reg=facet]
+
+^"tracks"{
+  t1_runtime_css_diet = "slice_1_landed: expression-resonance.css moved to flourish-pack.css (core.css 1728.4 -> 1714.9 KiB, 102 sheets) with join-specimens/theme-chips layout kept in semantic-resonance.css; home-seat-line updates token fixed to structural:class:.home-seat-line__carried"
+  t2_regional_composition = "verified_baseline: 360px/390px CDP probe on / returned docW=360/390 and 0 overflowing elements (p-home-m.png clipping was macOS --window-size crop); sibling exchange (:has/+ refinements) open"
+  t3_copy_cohesion = "pending: smooth 7 voice seams and settle /design/logos/#logo-signature draft notes"
+  t4_plan_consolidation = "in_progress: core-css-spend-cut/PLAN.md updated; AGENTS.md (99%) and css-architecture-readability/PLAN.md (99%) budget trims next"
+}[reg=facet]

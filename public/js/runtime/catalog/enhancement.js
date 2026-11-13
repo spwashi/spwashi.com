@@ -117,7 +117,7 @@ export const ENHANCEMENT_DEFS = [
     rootMode: 'single',
     describes: 'seat[line]{held.carried}<return> a seat line holds the words a reader carries from other pages',
     updates: [
-      'structural:home-seat-line__carried',
+      'structural:class:.home-seat-line__carried',
     ],
     evaluates: ['semantics', 'state'],
     timingArc: 'immediate-lens',
