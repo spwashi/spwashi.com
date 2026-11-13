@@ -55,6 +55,10 @@ import {
   saveSiteSettings,
   validatePartialSettings,
   validateSetting,
+  formatSettingsSpwExpression,
+  parseSettingsSpwExpression,
+  describeMachineEmpathy,
+  precipitateWonderReason,
 } from '/public/js/kernel/site-settings-engine.js';
 import {
   clearPins,
@@ -593,6 +597,21 @@ const syncSettingsReadouts = (root = document, settings = getSiteSettings()) => 
     const key = node.getAttribute('data-site-setting-value');
     if (!key || !isKnownSetting(key)) return;
     writeTextContent(node, describeSettingValue(key, normalized[key]));
+  });
+
+  const empathy = describeMachineEmpathy(normalized);
+  const wonderReason = precipitateWonderReason(normalized, {
+    route: typeof location !== 'undefined' ? location.pathname : '/settings/',
+    wonder: typeof document !== 'undefined' ? (document.body?.dataset?.spwWonder || '') : '',
+  });
+  root.querySelectorAll?.('[data-settings-empathy-title]').forEach((node) => writeTextContent(node, empathy.title));
+  root.querySelectorAll?.('[data-settings-empathy-summary]').forEach((node) => writeTextContent(node, empathy.summary));
+  root.querySelectorAll?.('[data-settings-spw-line]').forEach((node) => writeTextContent(node, empathy.spwSignature));
+  root.querySelectorAll?.('[data-settings-wonder-line]').forEach((node) => writeTextContent(node, wonderReason));
+  root.querySelectorAll?.('[data-settings-spw-parser-link]').forEach((node) => {
+    if (node instanceof HTMLAnchorElement) {
+      node.href = `/tools/spw-parser/?input=${encodeURIComponent(`${empathy.spwSignature}\n${wonderReason}`)}`;
+    }
   });
 
   syncSettingTriggers(root, normalized);
@@ -1485,6 +1504,56 @@ export const initSiteSettingsPage = () => {
   const onRuntimeTokens = () => syncSiteRhythmReadouts(document);
   document.addEventListener('spw:runtime-tokens-updated', onRuntimeTokens);
 
+  const onSpwExchangeClick = async (event) => {
+    const btn = event.target instanceof Element ? event.target.closest('[data-settings-spw-action]') : null;
+    if (!(btn instanceof HTMLElement)) return;
+    const action = btn.getAttribute('data-settings-spw-action');
+    const current = getSiteSettings();
+    const spwLine = formatSettingsSpwExpression(current);
+    const wonderLine = precipitateWonderReason(current, {
+      route: window.location.pathname,
+      wonder: document.body?.dataset?.spwWonder || '',
+    });
+    const status = btn.closest('fieldset, .settings-category')?.querySelector('[data-settings-spw-status]')
+      || resolveStandaloneStatusNode(btn);
+
+    if (action === 'copy-spw' || action === 'copy-spw-url' || action === 'copy-wonder') {
+      const compact = formatSettingsSpwExpression(current, { defaults: DEFAULT_SITE_SETTINGS, compact: true });
+      const text = action === 'copy-spw'
+        ? spwLine
+        : action === 'copy-wonder'
+          ? wonderLine
+          : `${window.location.origin}/settings/?spw=${encodeURIComponent(compact)}`;
+      try {
+        await navigator.clipboard?.writeText(text);
+        writeSettingsStatus(status, `Copied: ${text}`, 'info');
+      } catch {
+        writeSettingsStatus(status, text, 'info');
+      }
+      return;
+    }
+
+    if (action === 'cast-spw') {
+      const input = document.querySelector('[data-settings-spw-input]');
+      const raw = input && 'value' in input ? String(input.value || '').trim() : '';
+      if (!raw) {
+        writeSettingsStatus(status, 'Paste a Spw configuration expression such as @composer(trace)[banked-ember]{polish+weave}.', 'error');
+        return;
+      }
+      const { partial, recognized, rejected } = parseSettingsSpwExpression(raw, { validateSetting });
+      if (!recognized.length) {
+        writeSettingsStatus(status, `No recognized settings tokens found (${rejected.join(', ') || 'check syntax'}).`, 'error');
+        return;
+      }
+      const saved = saveSiteSettings(partial);
+      syncSettingsUx(document, saved);
+      emitSettingsFeedbackCredit(partial, saved, 'spw-expression');
+      const note = rejected.length ? ` (ignored: ${rejected.join(', ')})` : '';
+      writeSettingsStatus(status, `Applied ${recognized.join(', ')}${note}.`, 'info');
+    }
+  };
+  document.addEventListener('click', onSpwExchangeClick);
+
   let queryComposers = { cleanup() {}, refresh() {} };
   import('/public/js/runtime/navigation/query-link-composer.js')
     .then((mod) => {
@@ -1499,6 +1568,7 @@ export const initSiteSettingsPage = () => {
       queryLab?.cleanup?.();
       queryComposers?.cleanup?.();
       document.removeEventListener('spw:runtime-tokens-updated', onRuntimeTokens);
+      document.removeEventListener('click', onSpwExchangeClick);
     },
     refresh() {
       bindings?.refresh?.();

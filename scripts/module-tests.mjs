@@ -129,4 +129,5 @@ export const MODULE_TEST_FILES = Object.freeze([
   'scripts/tests/seed-rehydration.test.mjs',
   'scripts/tests/shell-chrome-kind.test.mjs',
   'scripts/tests/module-export-contract.test.mjs',
+  'scripts/tests/spw-config-expression.test.mjs',
 ]);

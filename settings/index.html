@@ -1189,6 +1189,68 @@
                                 <a class="spw-chip" data-spw-handle="true" href="/play/#media-cauldron" data-spw-operator="potential" data-spw-action="explore">~media_cauldron</a>
                             </div>
                         </fieldset>
+
+                        <fieldset class="settings-fieldset" data-spw-feature="process-attention">
+                            <legend>Attentional arc &amp; timing cadence</legend>
+                            <label class="settings-option" for="process-attention-select">
+                                <span class="settings-option-copy">
+                                    <strong>Process attention</strong>
+                                    <span>Tunes slot reveal delay, hover dwell patience, and magnetic kin pull across frames.</span>
+                                </span>
+                            </label>
+                            <select id="process-attention-select" name="processAttention">
+                                <option value="breath">Breath — unhurried (1.32× cadence, soft tether)</option>
+                                <option value="scan">Scan — brisk orientation (0.72× cadence)</option>
+                                <option value="trace">Trace — follow kin (1.04× cadence, high magnetism)</option>
+                                <option value="compose">Compose — ready synthesis (0.88× cadence)</option>
+                            </select>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset" data-spw-feature="metacognitive-stance">
+                            <legend>Machine empathy stance</legend>
+                            <label class="settings-option" for="metacognitive-stance-select">
+                                <span class="settings-option-copy">
+                                    <strong>Reader stance</strong>
+                                    <span>Decides which handles step forward subtly and how much timing grace the interface grants.</span>
+                                </span>
+                            </label>
+                            <select id="metacognitive-stance-select" name="metacognitiveStance">
+                                <option value="witness">Witness — calm background + 28% extra hover grace</option>
+                                <option value="composer">Composer — action handles &amp; controls step forward</option>
+                                <option value="explorer">Explorer — probes &amp; wonder paths step forward</option>
+                                <option value="integrator">Integrator — expressions &amp; register panels align</option>
+                                <option value="overflow">Overflow — generous semantic connections &amp; traces</option>
+                            </select>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset" data-spw-feature="spw-disposition-combinatorics">
+                            <legend>Machine empathy &amp; Spw disposition exchange</legend>
+                            <p class="settings-option-hint">
+                                <strong data-settings-empathy-title>@witness(breath) · responsive</strong> —
+                                <span data-settings-empathy-summary>Keeps background calm and yields extra dwell grace.</span>
+                            </p>
+                            <p class="settings-option-hint">
+                                Active Spw configuration: <code data-settings-spw-line>@witness(breath)[neutral-paper.auto]{draft+orient|reading.soft}&lt;nearby.field&gt;</code>
+                            </p>
+                            <p class="settings-option-hint">
+                                Precipitated wonder line: <code data-settings-wonder-line>?[comparison+constraint+locality]{/settings/|draft+orient}&lt;@witness(breath){nearby}&gt;</code>
+                            </p>
+                            <label class="settings-option" for="settings-spw-cast-input">
+                                <span class="settings-option-copy">
+                                    <strong>Cast a Spw expression</strong>
+                                    <span>Paste a disposition shared from another route or ecosystem site (e.g. <code>@composer(trace)[banked-ember.dark]{polish+weave}&lt;sitewide.choral&gt;</code>).</span>
+                                </span>
+                            </label>
+                            <input id="settings-spw-cast-input" data-settings-spw-input type="text" placeholder="@composer(trace)[oxide-ledger.light]{revise+weave}" />
+                            <div class="vibe-widget-actions" role="group" aria-label="Spw disposition actions">
+                                <button class="spw-chip" type="button" data-settings-spw-action="cast-spw" data-spw-operator="action">!cast_spw</button>
+                                <button class="spw-chip" type="button" data-settings-spw-action="copy-spw" data-spw-operator="integration">^copy_spw</button>
+                                <button class="spw-chip" type="button" data-settings-spw-action="copy-spw-url" data-spw-operator="ref">~copy_link</button>
+                                <button class="spw-chip" type="button" data-settings-spw-action="copy-wonder" data-spw-operator="probe">?copy_wonder</button>
+                                <a class="spw-chip" href="/tools/spw-parser/" data-settings-spw-parser-link data-spw-operator="surface">&gt;open_in_parser</a>
+                            </div>
+                            <span aria-live="polite" class="settings-status" data-settings-spw-status role="status"></span>
+                        </fieldset>
                     </div>
                 </details>
 

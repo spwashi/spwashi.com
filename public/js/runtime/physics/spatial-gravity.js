@@ -91,6 +91,7 @@ const GENERATED_DATASET_KEYS = Object.freeze([
   'spwSalienceRank',
   'spwYielded',
   'spwYieldReason',
+  'spwMagnetKin',
 ]);
 
 const GENERATED_STYLE_PROPERTIES = Object.freeze([
@@ -105,6 +106,9 @@ const GENERATED_STYLE_PROPERTIES = Object.freeze([
   '--spw-edge-proximity',
   '--spw-vertical-bias',
   '--spw-horizontal-bias',
+  '--spw-magnet-x',
+  '--spw-magnet-y',
+  '--spw-magnet-pull',
 ]);
 
 function writeGeneratedStyle(el, property, value) {
@@ -120,6 +124,9 @@ function writeGeneratedStyle(el, property, value) {
     case '--spw-edge-proximity': return writeStyleValue(el, '--spw-edge-proximity', value);
     case '--spw-vertical-bias': return writeStyleValue(el, '--spw-vertical-bias', value);
     case '--spw-horizontal-bias': return writeStyleValue(el, '--spw-horizontal-bias', value);
+    case '--spw-magnet-x': return writeStyleValue(el, '--spw-magnet-x', value);
+    case '--spw-magnet-y': return writeStyleValue(el, '--spw-magnet-y', value);
+    case '--spw-magnet-pull': return writeStyleValue(el, '--spw-magnet-pull', value);
     default: return false;
   }
 }
@@ -329,6 +336,95 @@ const measureElement = (el, rect = readElement(el)?.rect, viewport = readViewpor
   }
 };
 
+const collectElementTokens = (el) => {
+  const tokens = new Set();
+  const add = (raw) => {
+    if (!raw) return;
+    String(raw).trim().toLowerCase().split(/\s+/).filter(Boolean).forEach((t) => tokens.add(t));
+  };
+  add(el.dataset?.spwOperator);
+  add(el.dataset?.spwWonder);
+  add(el.dataset?.spwConcept);
+  add(el.dataset?.spwRegion);
+  return tokens;
+};
+
+const isMagneticAttractor = (el, salience) => Boolean(
+  salience === 'focal'
+  || el.dataset?.spwActive === 'true'
+  || el.dataset?.spwChargeState === 'charge'
+  || el.hasAttribute?.('data-spw-expression-resonating')
+  || el.hasAttribute?.('data-spw-target-kin'),
+);
+
+/* Magnetic / gravitational inter-component coupling: computed purely from the
+   already-read bounding rects in elementState (zero extra layout reads). Active
+   or kin components exert an inverse-square unit pull on nearby siblings, while
+   non-kin elements rest at 0. */
+const resolveMagneticField = () => {
+  const items = [...elementState.values()].filter((s) => s?.rect && s.el.isConnected);
+  if (items.length < 2) {
+    items.forEach(({ el }) => {
+      writeGeneratedStyle(el, '--spw-magnet-x', '0');
+      writeGeneratedStyle(el, '--spw-magnet-y', '0');
+      writeGeneratedStyle(el, '--spw-magnet-pull', '0');
+      if (el.dataset.spwMagnetKin) removeDatasetValues(el, ['spwMagnetKin']);
+    });
+    return;
+  }
+
+  const enriched = items.map((item) => ({
+    ...item,
+    cx: item.rect.left + (item.rect.width * 0.5),
+    cy: item.rect.top + (item.rect.height * 0.5),
+    tokens: collectElementTokens(item.el),
+    attractor: isMagneticAttractor(item.el, item.salience),
+  }));
+
+  enriched.forEach((a, i) => {
+    if (a.attractor) {
+      writeGeneratedStyle(a.el, '--spw-magnet-x', '0');
+      writeGeneratedStyle(a.el, '--spw-magnet-y', '0');
+      writeGeneratedStyle(a.el, '--spw-magnet-pull', '1');
+      writeDatasetValues(a.el, { spwMagnetKin: 'attractor' });
+      return;
+    }
+    let fx = 0;
+    let fy = 0;
+    let maxPull = 0;
+    for (let j = 0; j < enriched.length; j += 1) {
+      if (i === j) continue;
+      const b = enriched[j];
+      let affinity = 0;
+      if (b.attractor) affinity = 1;
+      else {
+        for (const token of a.tokens) {
+          if (b.tokens.has(token)) { affinity = 0.52; break; }
+        }
+      }
+      if (!affinity) continue;
+      const dx = b.cx - a.cx;
+      const dy = b.cy - a.cy;
+      const distSq = (dx * dx) + (dy * dy);
+      const dist = Math.sqrt(distSq);
+      if (dist < 4) continue;
+      const pull = affinity / (1 + (distSq / (360 * 360)));
+      fx += (dx / dist) * pull;
+      fy += (dy / dist) * pull;
+      if (pull > maxPull) maxPull = pull;
+    }
+    const mag = Math.hypot(fx, fy);
+    const nx = mag > 0.01 ? clamp(fx / mag, -1, 1) : 0;
+    const ny = mag > 0.01 ? clamp(fy / mag, -1, 1) : 0;
+    const clampedPull = clamp(Math.max(maxPull, mag), 0, 1);
+    writeGeneratedStyle(a.el, '--spw-magnet-x', nx.toFixed(3));
+    writeGeneratedStyle(a.el, '--spw-magnet-y', ny.toFixed(3));
+    writeGeneratedStyle(a.el, '--spw-magnet-pull', clampedPull.toFixed(3));
+    if (clampedPull >= 0.14) writeDatasetValues(a.el, { spwMagnetKin: 'attracted' });
+    else if (a.el.dataset.spwMagnetKin) removeDatasetValues(a.el, ['spwMagnetKin']);
+  });
+};
+
 /* Boundary overlap: when two on-screen tracked elements share pixels, the
    lower-salience one yields (data-spw-yielded) with a reason, so the contest is
    visible and inspectable rather than a silent clip. N is small — only opted-in
@@ -371,6 +467,7 @@ const measureLane = createMeasuredLane({
   apply: ({ viewport, readings }) => {
     readings.forEach(({ el, rect }) => measureElement(el, rect, viewport));
     resolveOverlaps();
+    resolveMagneticField();
   },
 });
 
@@ -577,6 +674,7 @@ export function measureSpatialGravity(target) {
   if (isElement(el)) {
     measureElement(el);
     resolveOverlaps();
+    resolveMagneticField();
   }
   return el || null;
 }
@@ -597,6 +695,7 @@ export const SPW_SPATIAL_GRAVITY_CONTRACT = Object.freeze({
     'data-spw-salience-rank',
     'data-spw-yielded',
     'data-spw-yield-reason',
+    'data-spw-magnet-kin',
   ]),
   customProperties: Object.freeze([
     '--spw-room-above',
@@ -610,9 +709,60 @@ export const SPW_SPATIAL_GRAVITY_CONTRACT = Object.freeze({
     '--spw-edge-proximity',
     '--spw-vertical-bias',
     '--spw-horizontal-bias',
+    '--spw-magnet-x',
+    '--spw-magnet-y',
+    '--spw-magnet-pull',
   ]),
   performanceRule:
     'One shared rAF-throttled scroll/resize listener; IntersectionObserver gates measurement to on-screen tracked elements. Visible response should stay in transform, opacity, and color.',
   lifecycleRule:
     'Mount returns { cleanup, refresh }; removed roots untrack immediately, cleanup disconnects observers/listeners and restores generated DOM state, and refresh adopts new opt-in roots.',
 });
+
+export const SPW_MODULE_EXPORT = Object.freeze({
+  id: 'spatial-gravity',
+  mount: (ctx, root) => initSpwSpatialGravity(ctx, root),
+  describes: 'spatial-gravity[room|edge|gravity|salience] two-axis positioning + overlap resolution',
+  updates: Object.freeze([
+    'structural:data-spw-edge-gravity',
+    'structural:data-spw-edge-x',
+    'structural:data-spw-edge-y',
+    'structural:data-spw-vertical-gravity',
+    'structural:data-spw-horizontal-gravity',
+    'measure:data-spw-extent',
+    'measure:data-spw-measure-band',
+    'structural:data-spw-space-variant',
+    'structural:data-spw-open-direction',
+    'structural:data-spw-open-anchor',
+    'measure:data-spw-salience-rank',
+    'structural:data-spw-yielded',
+    'structural:data-spw-yield-reason',
+    'measure:--spw-room-above',
+    'measure:--spw-room-below',
+    'measure:--spw-room-left',
+    'measure:--spw-room-right',
+    'measure:--spw-proximity-top',
+    'measure:--spw-proximity-bottom',
+    'measure:--spw-proximity-left',
+    'measure:--spw-proximity-right',
+    'measure:--spw-edge-proximity',
+    'measure:--spw-vertical-bias',
+    'measure:--spw-horizontal-bias',
+    'structural:data-spw-magnet-kin',
+    'measure:--spw-magnet-x',
+    'measure:--spw-magnet-y',
+    'measure:--spw-magnet-pull',
+  ]),
+  evaluates: Object.freeze([]),
+  timingArc: 'visible-geometry',
+  effectScope: Object.freeze(['local-dom', 'element-state', 'css-vars', 'listeners', 'observers']),
+  contract: Object.freeze({
+    story: 'Components sense viewport room, salience collisions, and neighboring kin attraction so drawers open toward open space and kin cluster gently without layout thrash.',
+    wonder: Object.freeze(['orientation', 'resonance', 'constraint']),
+    host: '[data-spw-gravity]',
+    css: Object.freeze(['public/css/systems/spatial-gravity.css']),
+    value: 'Replaces hardcoded breakpoint directions with a single rAF-batched read/write physics lens and clean unmount restoration.',
+  }),
+});
+
+export const spwModule = SPW_MODULE_EXPORT;

@@ -88,6 +88,12 @@ import {
   buildQueryString,
 } from './site-settings-profiles.js';
 import { ensureDebugStyles, ensureThemePackStyles } from './deferred-styles.js';
+import {
+  formatSettingsSpwExpression,
+  parseSettingsSpwExpression,
+  describeMachineEmpathy,
+  precipitateWonderReason,
+} from './spw-config-expression.js';
 
 const PWA_PROMPT_DISMISSAL_STORAGE_KEYS = Object.freeze({
   install: 'spw-pwa-install-dismissed',
@@ -152,6 +158,10 @@ const parseSettingsFromSearch = (search = window.location.search) => {
   });
 
   const paramsRaw = new URLSearchParams(String(search || '').replace(/^\?/, ''));
+  if (paramsRaw.has('spw')) {
+    const parsedSpw = parseSettingsSpwExpression(paramsRaw.get('spw') || '', { validateSetting });
+    Object.assign(next, parsedSpw.partial);
+  }
   paramsRaw.forEach((value, key) => {
     const normalizedKey = String(key || '').trim().toLowerCase();
     if (PARITY_QUERY_KEYS.has(normalizedKey)) return;
@@ -1252,7 +1262,11 @@ const applySiteSettings = (settings) => {
       const spellPayload = {
         source: 'settings',
         type: 'settings-bundle',
-        expression: `settings[${flavor || 'balanced'}]{${applied?.authorMode || 'draft'}+${applied?.currentDevelopmentalClimate || 'orient'}}`,
+        expression: formatSettingsSpwExpression(applied, { defaults: DEFAULT_SITE_SETTINGS, compact: true }),
+        wonderReason: precipitateWonderReason(applied, {
+          route: typeof location !== 'undefined' ? location.pathname : '/',
+          wonder: document?.body?.dataset?.spwWonder || '',
+        }),
         label: 'Current settings climate',
         destination: 'cauldron',
         canChain: true,
@@ -1467,6 +1481,20 @@ function installSiteSettingsConsole() {
     buildSettingsQueryHref,
     buildSettingsQuerySearch,
     buildSettingsShareHref,
+    toSpw: (compact = false) => formatSettingsSpwExpression(getSiteSettings(), { defaults: DEFAULT_SITE_SETTINGS, compact }),
+    castSpw: (expression = '', { save = true } = {}) => {
+      const parsed = parseSettingsSpwExpression(expression, { validateSetting });
+      const applied = Object.keys(parsed.partial).length
+        ? (save ? saveSiteSettings(parsed.partial) : applySiteSettings({ ...getSiteSettings(), ...parsed.partial }))
+        : getSiteSettings();
+      return { ...parsed, settings: applied, spw: formatSettingsSpwExpression(applied) };
+    },
+    describeEmpathy: (settings = getSiteSettings()) => describeMachineEmpathy(settings),
+    precipitateWonder: (context = {}, settings = getSiteSettings()) => precipitateWonderReason(settings, {
+      route: typeof location !== 'undefined' ? location.pathname : '/',
+      wonder: typeof document !== 'undefined' ? (document.body?.dataset?.spwWonder || '') : '',
+      ...context,
+    }),
     recipes: UX_RECIPES,
     applyRecipe: (...args) => callSettingsUi('applyUxRecipe', args),
     findActivePreset,
@@ -1522,6 +1550,10 @@ export {
   resolveTuningDiscoverability,
   parseSettingsFromSearch,
   buildSettingsShareHref,
+  formatSettingsSpwExpression,
+  parseSettingsSpwExpression,
+  describeMachineEmpathy,
+  precipitateWonderReason,
 };
 
 export const SPW_MODULE_EXPORT = Object.freeze({

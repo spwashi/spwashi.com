@@ -386,6 +386,15 @@ main {
   max-inline-size: 100%;
 }
 
+/* Article wrappers often hold the page's top-level sections (/settings/, /design/);
+   propagate main's stack rhythm and centered cross-axis alignment inside them. */
+:where(main > article) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spw-main-gap);
+  align-items: stretch;
+}
+
 /* Stack rhythm stays stable while region metadata arrives after first paint. */
 :where(html[data-spw-page-state="booting"], html[data-spw-page-state="interactive"]) :where(main > :where(section, article)) {
   contain: layout style;
@@ -690,6 +699,8 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--spw-card-min, var(--grid-min-card, 15rem))), 1fr));
   gap: var(--page-stack-gap, var(--surface-gap));
+  align-items: stretch;
+  align-content: start;
   min-width: 0;
 }
 
@@ -699,11 +710,27 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min-panel, 17rem)), 1fr));
 }
 
-/* Subgrid coordination for card slots across rows */
+/* Subgrid coordination when a grid carries four-slot cards directly. If a
+   grid also holds plain panels/cards (e.g. two-node cards on /design/runtime/),
+   let non-card rows pack by content instead of inheriting a stretched 1fr band. */
 @supports (grid-template-rows: subgrid) {
-  :where(.spw-grid, .card-grid, .page-grid) {
+  :where(.spw-grid, .card-grid, .page-grid):has(> :where(.spw-card, .frame-card):has(> :nth-child(3))) {
     grid-auto-rows: auto auto 1fr auto;
   }
+}
+
+/* Balanced centering for short reason strips and action runs */
+:where(.spw-reason-strip) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: var(--space-sm, 0.75rem);
+  align-items: start;
+}
+
+:where(.spw-reason-strip > div) {
+  display: grid;
+  gap: 0.2rem;
+  align-content: start;
 }
 
 .spw-cluster,
