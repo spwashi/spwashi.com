@@ -1,0 +1,362 @@
+/* next-surface.css — a proposed surface, set beside the established one.
+ *
+ * Proposal, for the creator's look: nothing outside /design/experiments/next-surface/
+ * loads this sheet. It is written to stand alone: with core.css absent it renders the
+ * same. It still borrows two things from this host, the mark's file and the faces it
+ * names (each with a system fallback).
+ *
+ * Read it top to bottom; each section answers one question.
+ *   1. Tokens    — what can be tuned. Each token is one role; its note lists every place it shows.
+ *   2. Material  — what things are made of: a field, paper on the field, ink on paper.
+ *   3. Type      — three voices with one job each. Mono is kept for Spw lines alone.
+ *   4. Layout    — one focal point per band, then a reading measure.
+ *   5. Actions   — styled by what the element itself does in HTML (a submit
+ *                  button, a link on this site, rel="external"), so the look of
+ *                  a control says what pressing it does, with no extra attribute.
+ *   6. Doors     — navigation that names where it goes and what travels with you.
+ *   7. Tune      — a checkbox, no script: say what each action does, or don't.
+ *   8. States    — focus is always drawn (deep teal on paper, 12.8:1); motion respects the reader.
+ *
+ * Colours come from the creator's two concept boards (premium: deep teal, brushed
+ * gold, cream; common: charcoal, slate). Contrast, measured: cream on teal 12.8:1,
+ * gold on teal 5.7:1, charcoal on cream 12.2:1, slate on cream 8.1:1, deep gold on
+ * cream 4.8:1. Gold is never text on paper (2.3:1); it is a mark, a rule, a fill.
+ */
+@layer routes {
+  /* ── 1. Tokens ───────────────────────────────────────────────────────────
+   * --ns-field     the deep ground: the band, the one strong action and its hover, the
+   *                checkbox, the focus ring, and a tint in the Spw line and the lede
+   * --ns-paper     what reading sits on: the sheet, door faces, text on the band and on
+   *                the strong action, and a tint in the Spw line
+   * --ns-ink       reading ink, rules and door borders (through --ns-line), the outline
+   *                of a page-here action, and hover borders
+   * --ns-quiet     secondary ink on paper: the tune label, external links, door reasons
+   * --ns-gold      the accent: kicker, the title's second voice, the mark, the Spw
+   *                line's rule (never text on paper, and not the focus ring: 2.3:1)
+   * --ns-gold-ink  the accent where it must be text on paper: door marks
+   * --ns-measure the reading width
+   * --ns-step    the spacing unit; every gap is a multiple of it */
+  .ns {
+    --ns-field: #0b2f33;
+    --ns-paper: #f6f2e8;
+    --ns-ink: #2a2e33;
+    --ns-quiet: #3b4a5e;
+    --ns-gold: #c89c4a;
+    --ns-gold-ink: #8a6420;
+    --ns-line: color-mix(in srgb, var(--ns-ink) 18%, transparent);
+    --ns-measure: 38rem;
+    --ns-step: 0.5rem;
+    --ns-radius: 0.375rem;
+    --ns-serif: "Newsreader", Charter, "Iowan Old Style", Georgia, serif;
+    --ns-sans: Inter, "Segoe UI", system-ui, sans-serif;
+    --ns-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --ns-target: 2.75rem;
+  }
+
+  /* ── 2. Material ─────────────────────────────────────────────────────────
+   * A field (deep, still) holds paper (warm, readable). Borders appear only
+   * where something can be pressed; a block of reading is paper, not a box. */
+  .ns {
+    display: block;
+    color: var(--ns-ink);
+    background: var(--ns-paper);
+    border-radius: calc(var(--ns-radius) * 2);
+    overflow: hidden;
+    font-family: var(--ns-serif);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+  }
+
+  .ns *,
+  .ns *::before,
+  .ns *::after {
+    box-sizing: border-box;
+  }
+
+  .ns-band {
+    color: var(--ns-paper);
+    background: var(--ns-field);
+    padding: calc(var(--ns-step) * 6) calc(var(--ns-step) * 4) calc(var(--ns-step) * 5);
+  }
+
+  .ns-sheet {
+    padding: calc(var(--ns-step) * 5) calc(var(--ns-step) * 4);
+  }
+
+  /* ── 3. Type ─────────────────────────────────────────────────────────────
+   * Serif reads and names (the boards' wordmark is a spaced serif); sans
+   * carries controls; mono is the Spw line itself, set as a specimen. */
+  .ns-kicker {
+    margin: 0 0 calc(var(--ns-step) * 2);
+    font-family: var(--ns-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ns-gold);
+  }
+
+  .ns-title {
+    margin: 0;
+    color: var(--ns-paper);
+    font-family: var(--ns-serif);
+    font-size: clamp(2.25rem, 6vw, 3.75rem);
+    font-weight: 500;
+    line-height: 1.04;
+    letter-spacing: -0.01em;
+  }
+
+  .ns-title em {
+    font-style: italic;
+    color: var(--ns-gold);
+  }
+
+  .ns-lede {
+    max-width: var(--ns-measure);
+    margin: calc(var(--ns-step) * 3) 0 0;
+    font-size: 1.1875rem;
+    color: color-mix(in srgb, var(--ns-paper) 88%, var(--ns-field));
+  }
+
+  .ns-heading {
+    margin: 0 0 calc(var(--ns-step) * 2);
+    color: var(--ns-ink);
+    font-family: var(--ns-serif);
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .ns-text {
+    max-width: var(--ns-measure);
+    color: var(--ns-ink);
+    margin: 0 0 calc(var(--ns-step) * 3);
+  }
+
+  .ns-line {
+    display: block;
+    inline-size: 100%;
+    resize: vertical;
+    margin: 0 0 calc(var(--ns-step) * 3);
+    padding: calc(var(--ns-step) * 2) calc(var(--ns-step) * 2.5);
+    font-family: var(--ns-mono);
+    font-size: 0.875rem;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    color: var(--ns-ink);
+    background: color-mix(in srgb, var(--ns-field) 6%, var(--ns-paper));
+    border-left: 3px solid var(--ns-gold);
+    border-radius: 0 var(--ns-radius) var(--ns-radius) 0;
+  }
+
+  /* ── 4. Layout ───────────────────────────────────────────────────────────
+   * The band has one focal point: the mark at scale beside the title. */
+  .ns-band__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: calc(var(--ns-step) * 4);
+    align-items: center;
+  }
+
+  @media (min-width: 40rem) {
+    .ns-band__grid {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+  }
+
+  /* The signature mark at scale: the calligraphic file used as a mask, so the
+     accent token paints it and no second copy of its geometry lives here. */
+  .ns-mark {
+    display: block;
+    inline-size: clamp(6rem, 22vw, 10rem);
+    aspect-ratio: 48 / 52;
+    background: var(--ns-gold);
+    -webkit-mask: url("/public/images/logo/spw-mark.svg") center / contain no-repeat;
+    mask: url("/public/images/logo/spw-mark.svg") center / contain no-repeat;
+  }
+
+  .ns-section + .ns-section {
+    margin-top: calc(var(--ns-step) * 6);
+    padding-top: calc(var(--ns-step) * 5);
+    border-top: 1px solid var(--ns-line);
+  }
+
+  /* ── 5. Actions, by what they do ─────────────────────────────────────────
+   * HTML already says what an action does; the look follows it.
+   *   button[type="submit"]   sends the form: your line goes somewhere to be read → filled, the one strong action
+   *   a[href^="/"]            another page on this site → outlined
+   *   a[rel~="external"]      another site → quiet, with the host named in what it says
+   * One shape family, three weights, so the eye ranks them before reading.
+   * (The site's data-spw-affordance and data-spw-consequence describe regions, not
+   * controls; this sheet does not extend them.) */
+  .ns-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: calc(var(--ns-step) * 1.5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ns-act {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    min-block-size: var(--ns-target);
+    padding: calc(var(--ns-step) * 1.25) calc(var(--ns-step) * 2.25);
+    font-family: var(--ns-sans);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: left;
+    text-decoration: none;
+    color: var(--ns-ink);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--ns-radius);
+    cursor: pointer;
+  }
+
+  .ns-act[type="submit"] {
+    color: var(--ns-paper);
+    background: var(--ns-field);
+  }
+
+  .ns-act[href^="/"] {
+    border-color: color-mix(in srgb, var(--ns-ink) 45%, transparent);
+  }
+
+  .ns-act[rel~="external"] {
+    padding-inline: calc(var(--ns-step) * 1);
+    color: var(--ns-quiet);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--ns-quiet) 45%, transparent);
+    text-underline-offset: 0.2em;
+  }
+
+  .ns-act__says {
+    display: block;
+    margin-top: 0.15rem;
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: inherit;
+    opacity: 0.86;
+  }
+
+  /* ── 6. Doors ────────────────────────────────────────────────────────────
+   * A door names the room in words; the operator rides along as a small mark,
+   * hidden from speech, so a listener hears "About, the person", not a symbol. */
+  .ns-doors {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+    gap: calc(var(--ns-step) * 1.5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ns-door {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: calc(var(--ns-step) * 1.25);
+    align-items: baseline;
+    min-block-size: var(--ns-target);
+    padding: calc(var(--ns-step) * 1.5) calc(var(--ns-step) * 2);
+    color: var(--ns-ink);
+    text-decoration: none;
+    border: 1px solid var(--ns-line);
+    border-radius: var(--ns-radius);
+    background: color-mix(in srgb, var(--ns-paper) 70%, #ffffff);
+  }
+
+  /* A door is read by its words, not an underline; set here so a host's link rules
+     cannot add one. */
+  .ns .ns-door,
+  .ns .ns-door * {
+    text-decoration: none;
+  }
+
+  .ns-door__mark {
+    font-family: var(--ns-mono);
+    font-size: 0.875rem;
+    color: var(--ns-gold-ink);
+  }
+
+  .ns-door__name {
+    color: var(--ns-ink);
+    font-family: var(--ns-sans);
+    font-size: 0.9375rem;
+    font-weight: 600;
+  }
+
+  .ns-door__why {
+    grid-column: 2;
+    font-size: 0.8125rem;
+    color: var(--ns-quiet);
+  }
+
+  .ns-caption {
+    margin-top: calc(var(--ns-step) * 1.5);
+    font-size: 0.875rem;
+    color: var(--ns-quiet);
+  }
+
+  .ns-caption a {
+    color: var(--ns-ink);
+    font-weight: 600;
+  }
+
+  /* ── 7. Tune ─────────────────────────────────────────────────────────────
+   * A plain checkbox decides whether each action says what it does. :has()
+   * reads it, so the choice needs no script and survives with scripts off. */
+  .ns-tune {
+    display: flex;
+    inline-size: fit-content;
+    align-items: center;
+    gap: var(--ns-step);
+    min-block-size: var(--ns-target);
+    margin-bottom: calc(var(--ns-step) * 1.5);
+    font-family: var(--ns-sans);
+    font-size: 0.875rem;
+    color: var(--ns-quiet);
+  }
+
+  .ns-tune input {
+    inline-size: 1.125rem;
+    block-size: 1.125rem;
+    accent-color: var(--ns-field);
+  }
+
+  .ns:has(.ns-tune input:not(:checked)) .ns-act__says {
+    display: none;
+  }
+
+  /* ── 8. States ───────────────────────────────────────────────────────────
+   * Focus is never removed: a deep-teal ring, offset from the control, on paper
+   * (12.8:1). Hover darkens; nothing moves for a reader who asked for stillness. */
+  .ns :is(a, button, input, textarea):focus-visible {
+    outline: 3px solid var(--ns-field);
+    outline-offset: 3px;
+  }
+
+  .ns-act[type="submit"]:hover {
+    background: color-mix(in srgb, var(--ns-field) 85%, #000000);
+  }
+
+  .ns-act[href^="/"]:hover,
+  .ns-door:hover {
+    border-color: var(--ns-ink);
+  }
+
+  .ns-act[rel~="external"]:hover {
+    color: var(--ns-ink);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .ns-act,
+    .ns-door {
+      transition: border-color 140ms ease, background-color 140ms ease, color 140ms ease;
+    }
+  }
+}

@@ -158,6 +158,7 @@
 @cross_product_rederivation_2026_11: ~"./cross-product-rederivation-2026-11.spw"  # cache: two cross products (lore.land and spw.quest against factshift.center) read for the rules that generate them: a join on the line's text and the address, rules that mostly read one table each, two blind re-derivations (8 of 59 cells from rules alone, 19 and 5 conditional with tables and definitions), eight coined factors, lossy loops, the canvas's kept records on a cache's lifecycle, label clusters, what this site can share, and a developmental reading
 @seven_passes_unreported_2026_11: ~"./seven-passes-unreported-2026-11.spw"  # cache: seven read-only passes asked after the cross-product reading (ecology, plans, language, types, products, routing, copy) and stopped before any report; the ask and the stop, then the launching session's own account as lines of Spw, a guess per pass, and, once all seven reported, found, differed and owner rows with one checked row each; ^across says what the seven show together
 @low_sight_wonder_2026_11: ~"./low-sight-wonder-2026-11.spw"  # cache: the wonder about presentation and interactivity asked of a reader who hears or who sees a small window: what the canvas, this site and the sibling hosts say to a screen reader or under magnification, proximity and velocity said from data that exists, colour with reflex as a legend, and seven wonders with probes on deployed pages
+@design_direction_2026_11: ~"./design-direction-2026-11.spw"  # cache: the design read from outside the codebase then inside its physics; a standalone specimen surface beside the established one; what each action carries; prepared CSS slices
 
 operation = "align"
 fixity = "tending"
@@ -259,6 +260,7 @@ fixity = "tending"
   cross_product_rederivation_2026_11 = @cross_product_rederivation_2026_11
   seven_passes_unreported_2026_11 = @seven_passes_unreported_2026_11
   low_sight_wonder_2026_11 = @low_sight_wonder_2026_11
+  design_direction_2026_11 = @design_direction_2026_11
 }[reg=facet]
 
 ^"cache_rules"{

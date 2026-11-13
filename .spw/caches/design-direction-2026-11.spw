@@ -1,0 +1,130 @@
+# A surface to move toward, read from outside the codebase and then inside its physics (2026-11-13) — cache
+#
+# The creator: "tone refinements, button layout improvements; be more mindful of
+# the material / cognitive theory; align CSS more meaningfully with sustainable
+# architecture across semantic tuning; prepare for improvements to the
+# readability and composability of the CSS to be more instrumentally engaging for
+# future readers of the code; improve standalone value of modules and stylesheets
+# for the sake of inoculating a development culture down the line; improve
+# Spw-native navigation semantics, interpretation and serialization consequence
+# of snippets and scripts; mind visual design outside of the context of this
+# codebase then within the context of its physics; consider the current
+# spwashi.com design relatively stale but established; my brand can move forward
+# with something more stunning with the context that some will look for an
+# experience they've had as a prescriptive and potentially creatively generative
+# engagement point".
+#
+# The design was read from renders first, in plain design terms, then each finding
+# was mapped onto a term the site's physics already has. The proposal is one
+# specimen page with its own stylesheet; no existing route was restyled. Another
+# session was refactoring CSS, composition, ledes, module contracts and physics
+# timing in the same tree (aesthetic-refactor-2026-11.spw); this file stays out of
+# those tracks. Rows marked measured were taken by the session that wrote this
+# file, with Chrome driven through scripts/lib/chrome-headless-harness.mjs.
+
+#>design_direction_2026_11
+#:cache #!design #!css #!navigation #!brand
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@specimen: ~"../../design/experiments/next-surface/index.html"
+@specimen_sheet: ~"../../public/css/routes/surfaces/next-surface.css"
+@aesthetic_refactor: ~"./aesthetic-refactor-2026-11.spw"
+@low_sight: ~"./low-sight-wonder-2026-11.spw"
+@material_physics: ~"../conventions/material-physics.spw"
+@doors: ~"../../public/js/modules/tools/spw-doors.js"
+@home: ~"../../index.html"
+
+operation = "cache"
+fixity = "experimental"
+expression = ~surface[next]{field, paper, ink}<brand>
+
+summary = #[
+  `From outside: three typefaces compete on one screen, boxes nest three deep, colour is one low tint everywhere, and one pill shape carries most actions whatever they do. The title is the only focal point.`,
+  `From inside: the physics already has the words for a fix. Material (field, paper, ink), consequence (what pressing does) and the operator family can each carry one job, so colour need not carry four.`,
+  `The proposal is a specimen: one piece of Home set twice, with a stylesheet that stands alone and styles each action by what its HTML element does. It waits on the creator's look.`,
+  `Two findings about what actions carry are recorded, not fixed: Home's sibling links carry a fixed line while its parser button carries what the reader typed, and one chip's declared action names a place it does not go.`,
+][reg=set]
+
+contents = #[
+  ~"./design-direction-2026-11.spw#outside",
+  ~"./design-direction-2026-11.spw#inside",
+  ~"./design-direction-2026-11.spw#readings",
+  ~"./design-direction-2026-11.spw#specimen",
+  ~"./design-direction-2026-11.spw#carries",
+  ~"./design-direction-2026-11.spw#slices",
+][reg=set]
+
+^"outside"{
+  # Plain design terms, from renders of Home, Services, Now, Topics, Math and the logos page at 1280 and 390 px.
+  type = `Three voices on one screen: a grotesque title, a serif lede and body, and mono for labels, chips, the Spw lines and whole paragraphs (Home's seed card body is mono at reading size). Mono paragraphs read slowly at phone width.`
+  boxes = `Borders nest: the page frame, a card inside it, a code box inside the card. Reading sits in a box as often as controls do, so a border no longer says "this can be pressed".`
+  colour = `One low-chroma teal tint over paper on nearly every surface. Nothing is deep and nothing is bright, so nothing is first.`
+  focus = `The title is the only strong focal point on Home. The mark appears at 16 px in the header; the logo plate sits in a side rail.`
+  actions_measured = `Home, 1280 px: 210 actions in 14 style families, 148 of them one shape (JetBrains Mono 12.8 px, weight 700, filled pill with a border). Services: 109 actions, 14 families. Now: 13 actions, 2 families.`
+  contrast_measured = `Action text meets 4.5:1 on Home and Now. Three actions fall short at 4.03:1: two brace marks on Topics and the ^commission chip on Services. Colours were normalised through a canvas, since the site computes them in color() and oklch() forms. The probe reads the first ancestor background more than half opaque and ignores gradients and translucent fills, so a figure here can be off where a chip sits on a wash.`
+  targets_measured = `At 390 px with a coarse pointer, Home has 156 actions under 44 px, Services 4. Home's standalone chips (operator rows, header rooms, the logo plate's chips, the vibe controls) are 34 px. That is above the 24 px floor and below the 44 px ground-control target CLAUDE.md names.`
+}[reg=facet]
+
+^"inside"{
+  # Each outside finding, mapped onto a term the physics already has. Nothing here adds a data-spw-* family.
+  type = `The Spw line is the site's material specimen; giving mono to it alone makes it read as the language, not as the interface's voice. Serif carries reading and names, sans carries controls.`
+  boxes = `Material grammar already separates what a thing is made of. Read as field (deep, still), paper (warm, readable) and ink, a border can be kept for what can be pressed, and reading can sit on paper unboxed.`
+  colour = `The low-sight cache found colour's fill spent three times and its palette unordered. The specimen gives colour four roles and no fifth: field, paper, ink, and one accent (gold, from the premium board) for the mark, rules and focus. Every other distinction is a word or a weight.`
+  focus = `A signature moment per page is the brand's charge: the mark at scale on the field, once, beside the title. It is the one place the accent is large.`
+  actions = `The site's data-spw-affordance and data-spw-consequence describe regions: across the routes, one control carries an affordance and about ninety links carry consequence="entry". Controls carry data-spw-action and data-spw-operator. HTML already says what a control does, so the specimen styles by that: a submit button (your line goes somewhere to be read) is filled, a link on this site is outlined, rel="external" is a quiet link that names the host. Weight ranks an action before it is read, and no stem is extended.`
+  doors = `A door names the room in words and lets the operator ride as a small mark hidden from speech, which answers the low-sight finding that 4,457 links lead with a mark.`
+}[reg=facet]
+
+^"readings"{
+  # Words in the request that read more than one way; which reading this file took.
+  tone = `Taken as visual value: steps of depth and weight, one bright accent, quiet secondary ink. Copy voice was left alone, since the other session had just reworked ledes and tone lives in an expression's mode slot, not an attribute. Action labels in the specimen are verbs in sentence case.`
+  experience_had = `Two readings, both kept. The plainer: the established site is an experience visitors have had, so it stays reachable (as a look, the way /settings/ declares looks) when a new surface arrives. The other: familiar experiences (a listening booth, a recipe card, a level select, a field guide) as prescriptive doors that write a line a visitor can change. The second is a proposal and is not built.`
+  stunning = `Read as one deep field, one bright accent and the mark at scale, drawn from the creator's own premium and common boards, so the brand moves forward from what it already drew rather than from a borrowed style.`
+  prepare = `Read as slices with a testable claim, not a refactor: the specimen stylesheet is the exemplar a future reader can lift.`
+}[reg=facet]
+
+^"specimen"{
+  page = `/design/experiments/next-surface/: Home's seed card and header rooms as the site draws them now, then the same content as proposed, then a table of what each action carries. noindex; no semantic expression was added, so spw.quest's shelf is untouched.`
+  sheet = `public/css/routes/surfaces/next-surface.css, loaded by that page alone. It reads top to bottom in eight sections, each answering one question (tokens, material, type, layout, actions, doors, tune, states). Each colour token's note lists every place it shows.`
+  standalone_measured = `Rendered with core.css absent (the block alone with only this sheet) and inside the page, at 1280 px and 390 px: no horizontal overflow in any of the three.`
+  contrast = `cream on deep teal 12.8:1, gold on teal 5.7:1, charcoal on cream 12.2:1, slate on cream 8.1:1, deep gold on cream 4.8:1; gold is never text on paper (2.3:1).`
+  tune = `A checkbox decides whether each action says what it does; :has() reads it, so the choice needs no script.`
+  focus = `Focus is a 3 px deep-teal ring offset 3 px on every link, button, input and textarea in the specimen (12.8:1 on paper). Gold was tried first and is 2.3:1 on paper, under the 3:1 a focus indicator needs. The low-sight cache counted 14 focus outlines removed elsewhere with no replacement.`
+}[reg=facet]
+
+^"carries"{
+  # What an action serializes, read from Home's markup 2026-11-13.
+  parser = `"Read in the parser" submits Home's seed form by GET to /tools/spw-parser/: whatever is in the box travels in the address.`
+  open = `"Open a .spw file" goes to /open/; its page says a chosen file stays on the device.`
+  sibling_doors = `"lay out on the canvas" and "pivot on spw.quest" carry the fixed line home[hook]{software.art.practice}(atlas)<person> in their addresses, and nothing updates them when a reader edits the box. renderSpwDoors in public/js/modules/tools/spw-doors.js already builds such links from a whole source for the room and the literal parser.`
+  chip_action = `Home's *in_the_scans chip declares data-spw-action="browse-folios" and goes to /design/logos/#logo-signature; nothing in public/js or the CSS reads that value, so the mismatch changes no behaviour, only the record.`
+}[reg=facet]
+
+^"slices"{
+  # Prepared, none taken. Each names its gate.
+  s1_sheet_map = `Give each route and component stylesheet the specimen's opening: a numbered list of the questions its sections answer, and per-token notes of where each shows. Test: a reader changes one token and finds every place it moved from the note alone. Gate: none; one sheet per patch.`
+  s2_actions_by_element = `Style action rows site-wide by what each element does (submit, link here, rel="external"), as the specimen does, starting where a row mixes kinds (Home's seed card). Whether data-spw-action should also weigh an action is a question for the attribute's owner, not this slice. Gate: the creator's look at the specimen.`
+  s3_home_targets = `Home's standalone chips to the 44 px target on coarse pointers. Services reaches it on most actions at 390 px; the rule that does so was not traced (its bundle rows carry the target in public/css/routes/surfaces/services.css), and the base chip is styled in public/css/typography/base.css among others. Find the owner first. If it is core-bundled, it lands after the other session's uncommitted CSS is committed, or is built in a clean worktree. Gate: the creator, since it changes Home's density on phones.`
+  s4_doors_follow = `Home's sibling links follow the box through renderSpwDoors, so every action carries the same line. Gate: none beyond a browser check; JS stays progressive and the authored links remain without it.`
+  s5_standalone_check = `A check that renders a route sheet's own block with core.css absent and fails on horizontal overflow, so "standalone" is a measured property. Gate: none.`
+  s6_as_if_doors = `Experience-led doors ("come in as if at a listening booth") that each write a line and land on an existing route. Gate: the creator's word on the reading in ^"readings".experience_had.`
+}[reg=facet]
+
+#>wonder_design_direction_surface
+?["Does the proposed surface read as the brand moving forward, and where should it land first?"]{
+  #:depth #!experiential ~#lens(comparison)
+  ~#with: @specimen @specimen_sheet
+  ~#expect: "the deep field and the mark at scale read as the brand; mono kept for Spw lines reads as cleaner; the quiet external links may read as too quiet on a phone"
+  !probe{ "the creator opens /design/experiments/next-surface/ on a phone and on a laptop and says which of the two sets of the same content they would rather land on, and what they would keep from the established one" }
+  $%[surface.home_band_first, surface.new_pages_only, surface.offer_as_look, surface.iterate]
+}
+
+#>wonder_design_direction_as_if
+?["Do visitors looking for an experience they have had want to be told how to come in, and does a familiar frame make them make something?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#with: @specimen @home
+  !probe{ "the creator names two or three experiences their audience has had that a door could start from, and whether each door should write a line the visitor can change" }
+  $%[as_if.build_doors, as_if.established_look_only, as_if.both, as_if.neither]
+}
