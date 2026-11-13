@@ -79,8 +79,20 @@ export const SPW_MODULE_EXPORT = Object.freeze({
   id: 'image-utilization',
   mount: (ctx, root) => initImageUtilization(resolveOwnerDocument(ctx, root)),
   describes: 'image[distribution|utilization] performance lazy-priority',
+  updates: [
+    'measure:data-spw-image-utilization',
+    'measure:data-spw-image-distribution',
+  ],
+  evaluates: ['visual', 'visual-model', 'spacing-semantics'],
   timingArc: 'visible-media',
   effectScope: ['local-dom', 'element-state'],
+  contract: Object.freeze({
+    story: 'Distinguishes hero anchor images from below-the-fold figures, setting fetchpriority, decoding, lazy hints, and readable distribution attributes.',
+    wonder: ['orientation', 'constraint'],
+    host: 'main img, [data-spw-image-surface], [data-spw-image-reward], [data-spw-image-discovery]',
+    css: ['public/css/systems/image-utilization.css'],
+    value: 'Makes image loading posture inspectable in HTML attributes rather than buried in ad-hoc markup attrs.',
+  }),
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

@@ -46,10 +46,24 @@ const cancelFrame = (id) => (typeof window.cancelAnimationFrame === 'function'
   ? window.cancelAnimationFrame(id)
   : window.clearTimeout(id));
 
+function summarizeLoadStory(modules, scopes, latestId = '') {
+  const count = modules.size;
+  const scopeList = [...scopes].sort().slice(0, 4).join(', ');
+  const parts = [`${count} module${count === 1 ? '' : 's'} awake`];
+  if (latestId) parts.push(`latest: ${latestId}`);
+  if (scopeList) parts.push(`scopes: ${scopeList}${scopes.size > 4 ? ', …' : ''}`);
+  return parts.join(' · ');
+}
+
 function createModuleEffectsInstance(ctx, doc) {
   const html = doc.documentElement;
   const spool = doc.querySelector(SPOOL_SELECTOR);
+  const initialSpoolTitle = spool?.getAttribute?.('title') ?? spool?.title ?? '';
+  const presenceNodes = [...(doc.querySelectorAll?.('.site-footer__runtime-copy') || [])];
+  const initialPresenceCopy = presenceNodes.map((node) => node.textContent || '');
   const scopes = new Set();
+  const mountedModules = new Set();
+  let latestModuleId = '';
   let stitches = 0;
   let turn = 0;
   let pending = 0;
@@ -60,11 +74,30 @@ function createModuleEffectsInstance(ctx, doc) {
     writeDatasetValue(html, 'spwModuleEffectsActive', scopes.size ? [...scopes].sort() : null);
   };
 
+  const syncPresenceStory = () => {
+    if (!mountedModules.size && !scopes.size) return;
+    const story = summarizeLoadStory(mountedModules, scopes, latestModuleId);
+    if (spool) {
+      spool.title = initialSpoolTitle ? `${initialSpoolTitle} — ${story}` : `#>spwashi · ${story}`;
+    }
+    for (const node of presenceNodes) {
+      node.textContent = story;
+    }
+  };
+
   // Modules that mounted before this one still belong in the ledger.
   for (const record of ctx?.registry?.values?.() || []) {
-    if (record?.status === 'mounted') normalizeEffectScope(record.effectScope).forEach((scope) => scopes.add(scope));
+    if (record?.status === 'mounted') {
+      const moduleName = record.baseId || record.id;
+      if (moduleName) {
+        mountedModules.add(moduleName);
+        latestModuleId = moduleName;
+      }
+      normalizeEffectScope(record.effectScope).forEach((scope) => scopes.add(scope));
+    }
   }
   syncLedger();
+  syncPresenceStory();
 
   if (spool) ensureModuleArrivalStyles();
 
@@ -73,6 +106,7 @@ function createModuleEffectsInstance(ctx, doc) {
     turn = Math.ceil(turn / 360) * 360;
     writeStyleProperty(spool, '--spw-module-effect-turn', `${turn}deg`);
     writeDatasetValue(spool, 'spwModuleEffectPulse', 'settled');
+    syncPresenceStory();
   };
 
   // A burst of mounts in one frame is one notch-and-stitch write.
@@ -86,15 +120,24 @@ function createModuleEffectsInstance(ctx, doc) {
     writeStyleProperty(spool, '--spw-module-effect-stitches', String(stitches));
     writeStyleProperty(spool, '--spw-module-effect-turn', `${turn}deg`);
     writeDatasetValue(spool, 'spwModuleEffectPulse', 'waking');
+    syncPresenceStory();
     if (quietTimer) window.clearTimeout(quietTimer);
     quietTimer = window.setTimeout(settle, QUIET_MS);
   };
 
   const onModuleMounted = (detail = {}) => {
     const known = scopes.size;
+    const moduleName = detail.baseId || detail.id;
+    if (moduleName) {
+      mountedModules.add(moduleName);
+      latestModuleId = moduleName;
+    }
     normalizeEffectScope(detail.effectScope).forEach((scope) => scopes.add(scope));
     if (scopes.size !== known) syncLedger();
-    if (!spool) return;
+    if (!spool) {
+      syncPresenceStory();
+      return;
+    }
     pending += 1;
     if (!frame) frame = requestFrame(flush);
   };
@@ -109,7 +152,12 @@ function createModuleEffectsInstance(ctx, doc) {
     quietTimer = 0;
     pending = 0;
     writeDatasetValue(html, 'spwModuleEffectsActive', null);
+    presenceNodes.forEach((node, index) => {
+      node.textContent = initialPresenceCopy[index];
+    });
     if (!spool) return;
+    if (initialSpoolTitle) spool.title = initialSpoolTitle;
+    else if (typeof spool.removeAttribute === 'function') spool.removeAttribute('title');
     writeDatasetValue(spool, 'spwModuleEffectPulse', null);
     writeStyleProperty(spool, '--spw-module-effect-stitches', null);
     // The turn stays at a whole revolution: removing it would spin the mark
@@ -135,6 +183,24 @@ export { unmountModuleEffects as unmount };
 export const SPW_MODULE_EXPORT = Object.freeze({
   id: 'module-effects',
   mount: (ctx, root) => initModuleEffects(ctx, resolveOwnerDocument(ctx, root)),
+  describes: 'module[effects]{ledger.spool}<shell-mark>',
+  updates: [
+    'html:flourish:data-spw-module-effects-active',
+    'flourish:data-spw-module-effect-pulse',
+    'flourish:--spw-module-effect-stitches',
+    'flourish:--spw-module-effect-turn',
+  ],
+  evaluates: [],
+  timingArc: 'enhance-effects',
+  timingChunk: 'idle-lab',
+  effectScope: ['css-vars', 'element-state', 'root-state'],
+  contract: Object.freeze({
+    story: 'Turns the header spool a notch and stitches a faint thread as modules wake after idle, narrating active scopes and module count into the header mark title and footer colophon.',
+    wonder: ['orientation', 'memory'],
+    host: 'html with optional .header-sigil spool and .site-footer__runtime-copy colophon',
+    css: ['public/css/ornament/module-arrival.css'],
+    value: 'Makes invisible async hydration feel like mechanical watchwork and honest page telemetry rather than mystery background spinners.',
+  }),
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

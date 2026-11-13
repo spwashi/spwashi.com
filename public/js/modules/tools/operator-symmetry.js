@@ -58,6 +58,16 @@ export const SPW_MODULE_EXPORT = Object.freeze({
   id: 'operator-symmetry',
   mount: (_ctx, root) => mountOperatorSymmetry(root),
   describes: 'operator[square]{rotate.reflect.compare} invariant[labels|links]',
+  updates: ['structural:property:childList', 'structural:hidden', 'structural:property:textContent'],
+  evaluates: ['semantics'],
   timingArc: 'visible-feature',
   effectScope: ['local-dom', 'listeners'],
+  contract: Object.freeze({
+    story: 'A four-cell grid permutes through D4 rotations and reflections while every label, destination, and reading order stays honest.',
+    wonder: ['comparison', 'constraint'],
+    host: '[data-spw-feature="operator-symmetry"] with .operator-symmetry__board, .operator-symmetry__controls, output',
+    value: 'Demonstrates reversible symmetry without breaking DOM identity, focus order, or authored links — 3 KiB with zero dependencies.',
+  }),
 });
+
+export const spwModule = SPW_MODULE_EXPORT;

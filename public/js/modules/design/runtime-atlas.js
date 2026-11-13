@@ -66,6 +66,40 @@ function modulesFeeding(atlas, file) {
   return atlas.modules.filter((module) => module.writes.some(({ names }) => names.some((name) => (atlas.readers[name] || []).includes(file))));
 }
 
+const ORIGIN = 'https://spwashi.com';
+
+function normalizeCssPaths(module) {
+  const fromContract = Array.isArray(module.contract?.css) ? module.contract.css : [];
+  const raw = fromContract.length ? fromContract : (module.primaryCss || []);
+  return [...new Set(raw.map((item) => `/${String(item).replace(/^\/+/, '')}`))];
+}
+
+function buildInoculantSnippet(module) {
+  const css = normalizeCssPaths(module)
+    .map((href) => `<link rel="stylesheet" href="${ORIGIN}${href}">`)
+    .join('\n');
+  const exportName = module.exportShape === 'SPW_MODULE_EXPORT' || module.exportShape === 'spwModule'
+    ? module.exportShape
+    : module.exportShape || 'spwModule';
+  const selector = module.contract?.host || module.selector || 'document';
+  const rootExpr = selector === 'document' || selector.startsWith('html') || selector.startsWith('body')
+    ? 'document'
+    : `document.querySelector(${JSON.stringify(selector.split(',')[0].trim())}) || document`;
+  const script = [
+    '<script type="module">',
+    `  import { mountPortableModule } from '${ORIGIN}/public/js/runtime/orchestration/host.js';`,
+    `  import * as mod from '${ORIGIN}${module.file}';`,
+    `  const handle = await mountPortableModule(mod.${exportName} || mod, {`,
+    "    host: 'external',",
+    `    root: ${rootExpr},`,
+    '  });',
+    '  // Later, if unmounting:',
+    '  // handle.unmount();',
+    '</script>',
+  ].join('\n');
+  return css ? `${css}\n${script}` : script;
+}
+
 function renderCard(atlas, module, state) {
   const readersOf = (name) => atlas.readers[name] || [];
   const writes = module.writes.map(({ role, names }) => h('div', { class: 'runtime-atlas__writes' },
@@ -82,16 +116,52 @@ function renderCard(atlas, module, state) {
           : h('span', { class: 'runtime-atlas__readers runtime-atlas__readers--none' }, ' read by no stylesheet'));
     }))));
   const needs = Object.entries(TIER_WORDS).filter(([tier]) => module.tiers.includes(tier) && tier !== 'host');
+  const kib = module.bytes ? `${Math.max(1, Math.round(module.bytes / 1024))} KiB` : null;
+  const files = module.closure ? `${module.closure} file${module.closure === 1 ? '' : 's'}` : null;
+  const contract = module.contract;
+  const canInoculate = module.file && !module.blockers?.length && module.exportShape && module.exportShape !== 'none';
+  const snippet = canInoculate ? buildInoculantSnippet(module) : null;
+  const copyButton = snippet ? h('button', {
+    type: 'button',
+    class: 'runtime-atlas__copy',
+    onclick: async (event) => {
+      const btn = event.currentTarget;
+      try {
+        await navigator.clipboard?.writeText(snippet);
+        btn.textContent = 'Copied snippet';
+      } catch {
+        btn.textContent = 'Copy from box below';
+      }
+      setTimeout(() => { btn.textContent = 'Copy standalone snippet'; }, 1800);
+    },
+  }, 'Copy standalone snippet') : null;
   return h('article', { class: 'runtime-atlas__card', 'aria-labelledby': `atlas-card-${module.id}` },
     h('h3', { id: `atlas-card-${module.id}` }, module.id),
     module.describes ? h('p', { class: 'runtime-atlas__describes' }, module.describes) : null,
     h('p', { class: 'runtime-atlas__where' },
-      `${module.layer} · ${module.when} · `,
+      [module.layer, module.when, kib, files, module.exportShape !== 'none' ? module.exportShape : null].filter(Boolean).join(' · '),
+      ' · ',
       module.file ? h('a', { href: `${REPO}${module.file}`, rel: 'noopener noreferrer', target: '_blank' }, module.file.replace('public/js/', '')) : 'no load path'),
+    contract?.story ? h('p', { class: 'runtime-atlas__story' }, contract.story) : null,
+    contract?.value ? h('p', { class: 'runtime-atlas__value' }, h('strong', {}, 'Standalone value: '), contract.value) : null,
+    contract?.wonder?.length || contract?.host
+      ? h('p', { class: 'runtime-atlas__meta' },
+        contract?.wonder?.length ? `wonder: ${contract.wonder.join(', ')}` : null,
+        contract?.wonder?.length && contract?.host ? ' · ' : null,
+        contract?.host ? ['host: ', h('code', {}, contract.host)] : null)
+      : null,
     h('pre', { class: 'runtime-atlas__spw', 'aria-label': `${module.id} contract as Spw` }, h('code', {}, module.spw.join('\n'))),
     h('p', { class: 'runtime-atlas__host', 'data-runtime-atlas-portability': module.portability },
       h('strong', {}, module.portability), ' — ',
       needs.length ? `another page must provide ${needs.map(([, words]) => words).join('; ')}.` : 'its markup and stylesheet suffice on another page.'),
+    module.blockers?.length
+      ? h('p', { class: 'runtime-atlas__blockers' }, `Verified blockers: ${module.blockers.join('; ')}`)
+      : null,
+    snippet ? h('details', { class: 'runtime-atlas__inoculant' },
+      h('summary', {}, 'Take this home — standalone ESM inoculant'),
+      h('p', { class: 'runtime-atlas__meta' }, 'Zero build step. Reverting calls unmount() and leaves authored HTML intact.'),
+      h('div', { class: 'runtime-atlas__inoculant-actions' }, copyButton),
+      h('pre', { class: 'runtime-atlas__spw', 'aria-label': `${module.id} standalone HTML snippet` }, h('code', {}, snippet))) : null,
     writes.length ? writes : h('p', {}, 'Declares no writes.'),
     module.bus.emits.length || module.bus.hears.length
       ? h('p', { class: 'runtime-atlas__bus' },

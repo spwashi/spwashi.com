@@ -576,11 +576,38 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
 
 .site-footer__legal {
   grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.45rem 1rem;
   padding-top: 0.72rem;
   border-top: 1px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 78%, transparent);
   color: var(--ink-soft, rgba(14, 18, 20, 0.68));
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: var(--text-size-label, 0.76rem);
+}
+
+.site-footer__runtime {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.55rem;
+}
+
+.site-footer__runtime a {
+  color: var(--op-object-color, #9a6500);
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.site-footer__runtime a:is(:hover, :focus-visible) {
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.site-footer__runtime-copy {
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
 }
 
 /* Discovery notices stay fixed, readable, and easy to dismiss. */

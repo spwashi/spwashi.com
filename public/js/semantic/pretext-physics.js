@@ -1491,8 +1491,24 @@ export const SPW_MODULE_EXPORT = Object.freeze({
     });
   },
   describes: 'lab[copy-flow.projection] live-host[wrap.width-class] not-sitewide-physics',
+  updates: [
+    'measure:data-text-wrap',
+    'measure:data-text-measure',
+    'measure:data-text-width-class',
+    'measure:data-spw-pretext-width-class',
+    'measure:--pretext-canonical-width',
+    'measure:--pretext-projected-width',
+  ],
+  evaluates: [],
   timingArc: 'visible-lab',
   effectScope: ['local-dom', 'css-vars', 'geometry'],
+  contract: Object.freeze({
+    story: 'Measures real text measure and width class inside opt-in editorial frames so CSS can adapt wrapping to content geometry without mutating copy globally.',
+    wonder: ['constraint', 'comparison'],
+    host: '[data-spw-pretext-live] or opt-in [data-spw-feature~="pretext-lab"]',
+    css: ['public/css/systems/pretext-physics.css'],
+    value: 'Brings typographic measure awareness as CSS custom properties and legible attributes with clean opt-in containment.',
+  }),
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

@@ -62,6 +62,34 @@ function isFn(value) {
   return typeof value === 'function';
 }
 
+function asContractList(value) {
+  if (value == null || value === '') return [];
+  return (Array.isArray(value) ? value : String(value).split(/[\s,]+/))
+    .map((entry) => String(entry || '').trim())
+    .filter(Boolean);
+}
+
+export function normalizeModuleExportContract(raw = null) {
+  if (!raw || typeof raw !== 'object') return null;
+  const story = typeof raw.story === 'string' ? raw.story.trim() : '';
+  const host = typeof raw.host === 'string' ? raw.host.trim() : '';
+  const value = typeof raw.value === 'string' ? raw.value.trim() : '';
+  const wonder = asContractList(raw.wonder);
+  const css = (Array.isArray(raw.css) ? raw.css : raw.css ? [raw.css] : [])
+    .map((entry) => String(entry || '').trim())
+    .filter(Boolean);
+  if (!story && !host && !value && !wonder.length && !css.length) {
+    return null;
+  }
+  return Object.freeze({
+    ...(story ? { story } : {}),
+    ...(wonder.length ? { wonder: Object.freeze(wonder) } : {}),
+    ...(host ? { host } : {}),
+    ...(css.length ? { css: Object.freeze(css) } : {}),
+    ...(value ? { value } : {}),
+  });
+}
+
 function comparableFieldValue(field, value) {
   if (value == null || value === '') return null;
   if (field === 'updates') {
@@ -116,6 +144,7 @@ export function describeModuleExport(mod, meta = {}) {
     ? Object.keys(exportSurface).filter((field) => !KNOWN_EXPORT_FIELDS.has(field))
     : [];
   const catalogView = meta.orchestration || null;
+  const contract = normalizeModuleExportContract(exportSurface?.contract || meta.contract || null);
 
   return {
     id: exportSurface?.id || meta.id || null,
@@ -123,7 +152,8 @@ export function describeModuleExport(mod, meta = {}) {
     shape: resolved?.shape || 'unresolved',
     mount: Boolean(resolved?.fn),
     hasRefresh: isFn(exportSurface?.refresh) || isFn(mod?.refresh),
-    hasContract: Boolean(exportSurface?.contract || meta.contract),
+    hasContract: Boolean(contract),
+    contract,
     updates,
     updatesDescribe,
     flourishes: updatesDescribe.flourishes || [],
@@ -173,7 +203,7 @@ export function createModuleExport(definition = {}) {
     id: id || null,
     mount,
     refresh: isFn(refresh) ? refresh : null,
-    contract: contract || null,
+    contract: normalizeModuleExportContract(contract),
     updates: normalizeModuleUpdates(updates),
     guild: guild || null,
     describes: describes || null,

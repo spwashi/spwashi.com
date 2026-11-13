@@ -90,7 +90,21 @@ export async function mountSpwCode(code) {
 export const SPW_MODULE_EXPORT = Object.freeze({
   id: 'spw-code',
   mount: (_ctx, root) => mountSpwCode(root),
-  describes: 'code[spw]{read.highlight.edit}<parser> paints each Spw code block as the editor reads it, every mark in its operator color, with Edit and Copy over its corner',
+  describes: 'code[spw]{read.highlight.edit}<parser> paints each Spw code block as the editor reads it, every mark in its operator color, with Edit (the literal parser, carrying this source) and Copy over its corner',
+  updates: [
+    'structural:property:innerHTML',
+    'structural:property:childList',
+  ],
+  evaluates: ['surface'],
   timingArc: 'visible-feature',
   effectScope: ['local-dom', 'listeners', 'network', 'window'],
+  contract: Object.freeze({
+    story: 'Plain-text Spw code blocks wake into operator-colored notation with Edit, Canvas, Quest, and Copy actions over one corner without shifting layout.',
+    wonder: ['inquiry', 'projection'],
+    host: 'pre > code.language-spw',
+    css: ['public/css/components/spw-source.css'],
+    value: 'Drops runnable, readable Spw notation blocks onto any blog or docs page while keeping plain text intact when scripts are off.',
+  }),
 });
+
+export const spwModule = SPW_MODULE_EXPORT;

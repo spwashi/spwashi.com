@@ -305,6 +305,13 @@ export const SPW_MODULE_EXPORT = Object.freeze({
   ],
   timingArc: 'visible-media',
   effectScope: ['local-dom', 'css-vars', 'listeners'],
+  contract: Object.freeze({
+    story: 'Surfaces tagged for texture-slice receive tactile paper, linen, harlequin, or wash crops that respond smoothly to pointer approach and freeze cleanly for capture.',
+    wonder: ['resonance', 'comparison'],
+    host: '[data-spw-texture-slice]',
+    css: ['public/css/effects/texture-slice.css'],
+    value: 'Pairs procedural CSS material surfaces with capture-safe attribute state in a single 10 KiB zero-dependency module.',
+  }),
 });
 
 export const spwModule = SPW_MODULE_EXPORT;

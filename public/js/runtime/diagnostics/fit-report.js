@@ -194,9 +194,10 @@ export function auditFit(root = document, { limit = 400 } = {}) {
   return { scanned: targets.length, findings: found };
 }
 
-export function initFitReport(ctx = {}) {
+export function initFitReport(ctx = {}, root = null) {
   if (typeof document === 'undefined' || typeof ResizeObserver === 'undefined') return () => {};
 
+  const mountRoot = root && typeof root.querySelectorAll === 'function' ? root : document;
   const seen = new Set();
   const observer = new ResizeObserver((entries) => {
     // Inside the callback layout is already resolved for this frame, so these
@@ -204,8 +205,8 @@ export function initFitReport(ctx = {}) {
     for (const entry of entries) write(entry.target, reportFit(entry.target));
   });
 
-  const observe = (root = document) => {
-    for (const el of root.querySelectorAll(FIT_SELECTOR)) {
+  const observe = (scopeRoot = mountRoot) => {
+    for (const el of scopeRoot.querySelectorAll(FIT_SELECTOR)) {
       if (seen.has(el)) continue;
       seen.add(el);
       observer.observe(el);
@@ -237,15 +238,24 @@ export const FIT_REPORT_CONTRACT = Object.freeze({
 
 export const SPW_MODULE_EXPORT = Object.freeze({
   id: 'fit-report',
-  mount: (ctx) => initFitReport(ctx),
-  describes: 'fit[component]{overflowing.starved}<diagnostic>',
+  mount: (ctx, root) => initFitReport(ctx, root),
+  describes: 'fit[component]{overflowing.starved}<diagnostic> demand[wide]{sticky}',
   updates: [
     'diagnostic:data-spw-fit',
     'diagnostic:data-spw-fit-reason',
-    'diagnostic:data-spw-fit-afforded',
-    'diagnostic:data-spw-fit-needs',
+    'measure:data-spw-fit-afforded',
+    'measure:data-spw-fit-needs',
     'structural:data-spw-fit-demand',
   ],
+  evaluates: ['visual', 'spacing-semantics', 'qa-observation'],
   timingArc: 'idle-inspection',
   effectScope: ['element-state', 'geometry', 'observers'],
+  contract: Object.freeze({
+    story: 'Observes resized panels and cards inside settled layout frames, stamping overflowing or starved states without mutating styles.',
+    wonder: ['constraint', 'inquiry'],
+    host: 'body[data-spw-layout="newspaper"], html[data-spw-debug-layout], or any ResizeObserver root matching cards/frames',
+    value: 'Turns ResizeObserver measurements into non-destructive diagnostic attributes — reports fit, never fights CSS.',
+  }),
 });
+
+export const spwModule = SPW_MODULE_EXPORT;
