@@ -26,7 +26,7 @@ import {
   writeDatasetValues,
   writeStyleValue,
 } from '/public/js/kernel/dom-contracts.js';
-import { guardCall } from '/public/js/kernel/dom-render.js';
+import { createMeasuredLane } from '/public/js/kernel/measured-frame.js';
 import {
   MEASURE_BANDS,
   resolveMeasureBand,
@@ -54,8 +54,6 @@ const elementSnapshots = new Map();
 let intersectionObserver = null;
 let resizeObserver = null;
 let mutationObserver = null;
-let rafId = 0;
-let isPassPending = false;
 let initialized = false;
 
 const clamp = (val, min, max) => Math.min(max, Math.max(min, val));
@@ -94,11 +92,8 @@ function computeSpatialMetrics(el, viewportWidth, viewportHeight) {
   };
 }
 
-function runPositioningPass() {
-  isPassPending = false;
-  rafId = 0;
-
-  if (!visibleElements.size && !trackedElements.size) return;
+function measurePositioningTargets() {
+  if (!visibleElements.size && !trackedElements.size) return null;
 
   const vpWidth = window.innerWidth || document.documentElement.clientWidth || 1024;
   const vpHeight = window.innerHeight || document.documentElement.clientHeight || 768;
@@ -122,6 +117,12 @@ function runPositioningPass() {
       /* non-blocking spatial metric catch */
     }
   }
+
+  return measurements;
+}
+
+function applyPositioningMeasurements(measurements) {
+  if (!measurements || !measurements.length) return;
 
   // 2. PROJECT PASS (batched writes)
   let shiftCount = 0;
@@ -155,11 +156,14 @@ function runPositioningPass() {
   }
 }
 
+const positioningLane = createMeasuredLane({
+  name: 'positioning-orchestration',
+  measure: measurePositioningTargets,
+  apply: applyPositioningMeasurements,
+});
+
 export function requestPositioningPass() {
-  if (isPassPending) return;
-  isPassPending = true;
-  if (rafId) cancelAnimationFrame(rafId);
-  rafId = requestAnimationFrame(runPositioningPass);
+  positioningLane.schedule();
 }
 
 export function registerPositionedElement(el) {
@@ -249,7 +253,7 @@ export function initPositioningOrchestration(ctx) {
   requestPositioningPass();
 
   return () => {
-    if (rafId) cancelAnimationFrame(rafId);
+    positioningLane.cancel();
     window.removeEventListener('resize', onResize);
     window.removeEventListener('orientationchange', onResize);
     document.removeEventListener('spw:variant-selected', onVariantSelected);

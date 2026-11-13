@@ -48,14 +48,6 @@
   "public/css/effects/enrichment.css": {
     "--spw-perspective-salience": 2
   },
-  "public/css/effects/grain-texture.css": {
-    "--grain-scope-opacity-multiplier": 16,
-    "--grain-scope-scale-multiplier": 7,
-    "--grain-scope-contrast-multiplier": 6,
-    "--grain-panel-overlay-local-opacity": 2,
-    "--grain-body-opacity": 2,
-    "--grain-surface-opacity": 2
-  },
   "public/css/grammar/syntax.css": {
     "--grammar-motion-budget": 3,
     "--grammar-boundary-weight": 1
