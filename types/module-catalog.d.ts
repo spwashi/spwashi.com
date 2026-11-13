@@ -239,6 +239,19 @@ export type SpwModuleExportField = SpwModuleExportRequiredField | SpwModuleExpor
 
 export type SpwModuleCleanupOwnership = 'handle' | 'none';
 
+export type SpwModuleExportContract = {
+  /** One sentence telling a developer or reader what changes when this wakes. */
+  story: string;
+  /** 1-3 closed wonder questions this module serves on a host page. */
+  wonder?: string | readonly string[];
+  /** Markup selector or attribute shape another origin provides. */
+  host?: string;
+  /** Companion stylesheet path(s) when disposition is not self-contained. */
+  css?: string | readonly string[];
+  /** Cultural / architectural value when dropped standalone into another site. */
+  value?: string;
+};
+
 /**
  * Portable export shape from module-export-contract.js.
  * Catalog owns gates, schedule, effects, and cost. This owns mount/refresh.
@@ -251,7 +264,7 @@ export type SpwModuleExport = {
   ) => SpwModuleMountResult | Promise<SpwModuleMountResult>;
   id?: string;
   refresh?: SpwModuleRefresh;
-  contract?: unknown;
+  contract?: SpwModuleExportContract | Record<string, unknown>;
   updates?: string | readonly string[];
   describes?: string;
   guild?: string;

@@ -24,6 +24,7 @@
 import './lib/register-public-imports.mjs';
 import { execFileSync } from 'node:child_process';
 import { buildCssReaderIndex } from './lib/css-readers.mjs';
+import { analyzePortableModules } from './lib/portable-audit.mjs';
 import { readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -88,12 +89,16 @@ function busEdges(file) {
 }
 
 // ── Modules ─────────────────────────────────────────────────────────────────
+const portableById = new Map(
+  (await analyzePortableModules({ root: ROOT, defs: MODULE_DEFS, readersByToken })).map((row) => [row.id, row]),
+);
 const writtenTokens = new Set();
 const modules = MODULE_DEFS.map((def) => {
   const file = loadTarget(def);
   const writes = groupModuleUpdates(def.updates);
   for (const { names } of writes) for (const name of names) writtenTokens.add(name);
   const host = describeModuleHost(def);
+  const portable = portableById.get(def.id);
   return {
     id: def.id,
     layer: def.layer,
@@ -105,9 +110,16 @@ const modules = MODULE_DEFS.map((def) => {
     features: [].concat(def.features || []),
     route: [].concat(def.route || []),
     describes: def.describes || null,
+    contract: portable?.contract || null,
     effectScope: def.effectScope || [],
     tiers: host.tiers,
-    portability: host.portability,
+    portability: portable?.verdict || host.portability,
+    declaredPortability: host.portability,
+    exportShape: portable?.export || 'none',
+    bytes: portable?.bytes ?? null,
+    closure: portable?.closure ?? null,
+    primaryCss: portable?.css?.primary || [],
+    blockers: portable?.blockers || [],
     evaluates: def.evaluates || [],
     writes,
     cost: def.costLabel || null,

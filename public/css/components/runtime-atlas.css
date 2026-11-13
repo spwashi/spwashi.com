@@ -173,8 +173,52 @@
 }
 
 .runtime-atlas__where,
+.runtime-atlas__meta,
 .runtime-atlas__readers--none {
   color: var(--ink-soft);
+}
+
+.runtime-atlas__story {
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.runtime-atlas__value,
+.runtime-atlas__blockers {
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.runtime-atlas__inoculant {
+  border: 1px solid color-mix(in srgb, var(--atlas-portable) 34%, transparent);
+  border-radius: 0.35rem;
+  padding: 0.55rem 0.7rem;
+  background: color-mix(in srgb, var(--atlas-portable) 5%, transparent);
+}
+
+.runtime-atlas__inoculant > summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.runtime-atlas__inoculant-actions {
+  margin: 0.45rem 0;
+}
+
+.runtime-atlas__copy {
+  padding: 0.25rem 0.6rem;
+  border: 1px solid color-mix(in srgb, currentColor 28%, transparent);
+  border-radius: 0.3rem;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.runtime-atlas__copy:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
 }
 
 .runtime-atlas__spw {

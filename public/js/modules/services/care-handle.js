@@ -154,6 +154,16 @@ export const SPW_MODULE_EXPORT = Object.freeze({
   id: 'care-handle',
   mount: (ctx, root) => initCareHandle({ root: root instanceof Element ? root : ctx?.root }),
   describes: 'care[handle]{state.practice.toward.witness}<form> four choices fill one Spw expression and precipitate a line to say and a name to type; nothing is stored',
+  updates: ['structural:data-care-handle-state', 'structural:data-spw-semantic-expression'],
+  evaluates: [],
   timingArc: 'visible-feature',
   effectScope: ['local-dom', 'element-state', 'listeners'],
+  contract: Object.freeze({
+    story: 'Four gentle choices synthesize a crisp Spw handle, plain sentence, and filename so someone can name what they need without storing any personal data.',
+    wonder: ['orientation', 'projection'],
+    host: '[data-care-handle]',
+    value: 'Models privacy-first interactive synthesis: forms precipitate portable handles and human words with zero persistence.',
+  }),
 });
+
+export const spwModule = SPW_MODULE_EXPORT;
