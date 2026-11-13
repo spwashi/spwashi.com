@@ -32,8 +32,8 @@ started = "2026-11-13"
 }[reg=facet]
 
 ^"tracks"{
-  t1_runtime_css_diet = "slice_1_landed: expression-resonance.css moved to flourish-pack.css (core.css 1728.4 -> 1714.9 KiB, 102 sheets) with join-specimens/theme-chips layout kept in semantic-resonance.css; home-seat-line updates token fixed to structural:class:.home-seat-line__carried"
-  t2_regional_composition = "verified_baseline: 360px/390px CDP probe on / returned docW=360/390 and 0 overflowing elements (p-home-m.png clipping was macOS --window-size crop); sibling exchange (:has/+ refinements) open"
-  t3_copy_cohesion = "pending: smooth 7 voice seams and settle /design/logos/#logo-signature draft notes"
-  t4_plan_consolidation = "in_progress: core-css-spend-cut/PLAN.md updated; AGENTS.md (99%) and css-architecture-readability/PLAN.md (99%) budget trims next"
+  t1_runtime_css_diet = "slice_2_landed: expression-resonance.css and learnability-ledger.css moved to flourish-pack.css (core.css 1728.4 -> 1710.9 KiB, 101 sheets); home-seat-line updates token fixed"
+  t2_regional_composition = "slice_1_landed: 360px/390px CDP probe on / confirmed 0 overflow; added :has() figure-to-shelf-link hover/focus coupling in components/content.css"
+  t3_copy_cohesion = "slice_1_landed: resolved flat-only seam on curriculum.dream.lede (146 with-expression); 6 seams remain (4 dense-lede, 2 unglossed:lattice)"
+  t4_plan_consolidation = "slice_1_landed: core-css-spend-cut/PLAN.md updated; css-architecture-readability/PLAN.md trimmed 400 -> 388/405L; AGENTS.md (99%) still to trim"
 }[reg=facet]
