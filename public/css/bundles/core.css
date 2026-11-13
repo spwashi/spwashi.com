@@ -4259,6 +4259,15 @@ main {
   max-inline-size: 100%;
 }
 
+/* Article wrappers often hold the page's top-level sections (/settings/, /design/);
+   propagate main's stack rhythm and centered cross-axis alignment inside them. */
+:where(main > article) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spw-main-gap);
+  align-items: stretch;
+}
+
 /* Stack rhythm stays stable while region metadata arrives after first paint. */
 :where(html[data-spw-page-state="booting"], html[data-spw-page-state="interactive"]) :where(main > :where(section, article)) {
   contain: layout style;
@@ -4563,6 +4572,8 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--spw-card-min, var(--grid-min-card, 15rem))), 1fr));
   gap: var(--page-stack-gap, var(--surface-gap));
+  align-items: stretch;
+  align-content: start;
   min-width: 0;
 }
 
@@ -4572,11 +4583,27 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min-panel, 17rem)), 1fr));
 }
 
-/* Subgrid coordination for card slots across rows */
+/* Subgrid coordination when a grid carries four-slot cards directly. If a
+   grid also holds plain panels/cards (e.g. two-node cards on /design/runtime/),
+   let non-card rows pack by content instead of inheriting a stretched 1fr band. */
 @supports (grid-template-rows: subgrid) {
-  :where(.spw-grid, .card-grid, .page-grid) {
+  :where(.spw-grid, .card-grid, .page-grid):has(> :where(.spw-card, .frame-card):has(> :nth-child(3))) {
     grid-auto-rows: auto auto 1fr auto;
   }
+}
+
+/* Balanced centering for short reason strips and action runs */
+:where(.spw-reason-strip) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: var(--space-sm, 0.75rem);
+  align-items: start;
+}
+
+:where(.spw-reason-strip > div) {
+  display: grid;
+  gap: 0.2rem;
+  align-content: start;
 }
 
 .spw-cluster,
@@ -21664,13 +21691,31 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
 }
 
 :where(.spw-frame[data-spw-active="true"]) [data-spw-slot] {
-  animation: frame-slot-reveal var(--component-transition-deliberate) cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation: frame-slot-reveal calc(var(--component-transition-deliberate, 320ms) * var(--spw-attention-cadence, 1)) cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
-:where(.spw-frame[data-spw-active="true"]) [data-spw-slot="header"] { animation-delay: 40ms; }
-:where(.spw-frame[data-spw-active="true"]) [data-spw-slot="body"] { animation-delay: 120ms; }
-:where(.spw-frame[data-spw-active="true"]) [data-spw-slot="figure"] { animation-delay: 240ms; }
-:where(.spw-frame[data-spw-active="true"]) [data-spw-slot="actions"] { animation-delay: 360ms; }
+:where(.spw-frame[data-spw-active="true"]) [data-spw-slot="header"] { animation-delay: calc(40ms * var(--spw-attention-cadence, 1) * var(--spw-motion-scale, 1)); }
+:where(.spw-frame[data-spw-active="true"]) [data-spw-slot="body"] { animation-delay: calc(120ms * var(--spw-attention-cadence, 1) * var(--spw-motion-scale, 1)); }
+:where(.spw-frame[data-spw-active="true"]) [data-spw-slot="figure"] { animation-delay: calc(240ms * var(--spw-attention-cadence, 1) * var(--spw-motion-scale, 1)); }
+:where(.spw-frame[data-spw-active="true"]) [data-spw-slot="actions"] { animation-delay: calc(360ms * var(--spw-attention-cadence, 1) * var(--spw-motion-scale, 1)); }
+
+/* Optical vertical and horizontal balance for inset frames and header/action seams */
+:where(.spw-frame > :where(.frame-topline, .frame-heading)) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs, 0.5rem) var(--space-sm, 0.75rem);
+}
+
+:where(.spw-frame[data-spw-seating="inset"]) {
+  margin-inline: auto;
+  align-items: center;
+  text-align: center;
+}
+
+:where(.spw-frame[data-spw-seating="inset"]) > :where(.frame-topline, .frame-heading, .frame-actions, .spw-cluster) {
+  justify-content: center;
+}
 
 
 /* ==========================================================================
@@ -33487,6 +33532,7 @@ html[data-spw-microinteraction-pulse] :where(
       * var(--spw-salience-affordance, 1)
       * var(--spw-salience-charge-runtime, 1)
       * var(--spw-salience-carry, 1)
+      * var(--spw-salience-stance, 1)
       - 0.6
     ) * 2.5),
     1
@@ -33682,6 +33728,54 @@ html[data-spw-microinteraction-pulse] :where(
     var(--line, transparent)
   );
 }
+
+/* ── Attentional Arc & Machine Empathy ────────────────────────────────────
+   site-settings-engine.js writes data-spw-process-attention and
+   data-spw-metacognitive-stance onto <html>. Until now CSS did not spend
+   those two posture dimensions. They modulate timing patience (cadence),
+   dwell forgiveness (empathy grace), and magnetic neighbor coupling without
+   touching text ink or layout geometry. */
+:root {
+  --spw-attention-cadence: 1;
+  --spw-empathy-grace: 1;
+  --spw-magnetic-coupling: 0.45;
+  --spw-salience-stance: 1;
+}
+
+:root[data-spw-process-attention="breath"]  { --spw-attention-cadence: 1.32; --spw-magnetic-coupling: 0.32; }
+:root[data-spw-process-attention="scan"]    { --spw-attention-cadence: 0.72; --spw-magnetic-coupling: 0.52; }
+:root[data-spw-process-attention="trace"]   { --spw-attention-cadence: 1.04; --spw-magnetic-coupling: 0.96; }
+:root[data-spw-process-attention="compose"] { --spw-attention-cadence: 0.88; --spw-magnetic-coupling: 0.82; }
+
+:root[data-spw-metacognitive-stance="witness"]    { --spw-empathy-grace: 1.28; }
+:root[data-spw-metacognitive-stance="composer"]   { --spw-empathy-grace: 0.92; }
+:root[data-spw-metacognitive-stance="explorer"]   { --spw-empathy-grace: 1.08; }
+:root[data-spw-metacognitive-stance="integrator"] { --spw-empathy-grace: 1.18; }
+:root[data-spw-metacognitive-stance="overflow"]   { --spw-empathy-grace: 1.34; }
+
+/* Stance-sensitive border salience: what the posture is listening for
+   quietly steps forward within bounded 4–8% border weight when resting. */
+:root[data-spw-metacognitive-stance="composer"] :where([data-spw-role="control"], [data-spw-affordance~="act"]) {
+  --spw-salience-stance: 1.06;
+}
+:root[data-spw-metacognitive-stance="explorer"] :where([data-spw-role="probe"], [data-spw-operator="wonder"], [data-spw-operator="probe"]) {
+  --spw-salience-stance: 1.07;
+}
+:root[data-spw-metacognitive-stance="integrator"] :where([data-spw-semantic-expression], [data-spw-kind="panel"][data-spw-role="register"]) {
+  --spw-salience-stance: 1.06;
+}
+:root[data-spw-metacognitive-stance="overflow"] :where([data-spw-semantic-expression], [data-spw-wonder]) {
+  --spw-salience-stance: 1.08;
+}
+
+/* Consequence afterglow on discharge: subtle accent halo matching discharge kind */
+[data-spw-discharge-kind] {
+  transition: border-color calc(var(--duration-base, 220ms) * var(--spw-empathy-grace, 1)) var(--ease-settle, ease-out);
+}
+[data-spw-discharge-kind="ground"]  { --component-border: 1px solid color-mix(in oklab, var(--op-frame-color, var(--active-op-color, #008080)) 34%, var(--line, transparent)); }
+[data-spw-discharge-kind="release"] { --component-border: 1px solid color-mix(in oklab, var(--op-probe-color, var(--active-op-color, #008080)) 38%, var(--line, transparent)); }
+[data-spw-discharge-kind="project"] { --component-border: 1px solid color-mix(in oklab, var(--op-object-color, var(--active-op-color, #008080)) 38%, var(--line, transparent)); }
+[data-spw-discharge-kind="situate"] { --component-border: 1px solid color-mix(in oklab, var(--op-ref-color, var(--active-op-color, #008080)) 34%, var(--line, transparent)); }
 }
 
 /* /public/css/systems/arrival-electrostatics.css */

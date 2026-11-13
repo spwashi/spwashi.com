@@ -371,13 +371,31 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
 }
 
 :where(.spw-frame[data-spw-active="true"]) [data-spw-slot] {
-  animation: frame-slot-reveal var(--component-transition-deliberate) cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation: frame-slot-reveal calc(var(--component-transition-deliberate, 320ms) * var(--spw-attention-cadence, 1)) cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
-:where(.spw-frame[data-spw-active="true"]) [data-spw-slot="header"] { animation-delay: 40ms; }
-:where(.spw-frame[data-spw-active="true"]) [data-spw-slot="body"] { animation-delay: 120ms; }
-:where(.spw-frame[data-spw-active="true"]) [data-spw-slot="figure"] { animation-delay: 240ms; }
-:where(.spw-frame[data-spw-active="true"]) [data-spw-slot="actions"] { animation-delay: 360ms; }
+:where(.spw-frame[data-spw-active="true"]) [data-spw-slot="header"] { animation-delay: calc(40ms * var(--spw-attention-cadence, 1) * var(--spw-motion-scale, 1)); }
+:where(.spw-frame[data-spw-active="true"]) [data-spw-slot="body"] { animation-delay: calc(120ms * var(--spw-attention-cadence, 1) * var(--spw-motion-scale, 1)); }
+:where(.spw-frame[data-spw-active="true"]) [data-spw-slot="figure"] { animation-delay: calc(240ms * var(--spw-attention-cadence, 1) * var(--spw-motion-scale, 1)); }
+:where(.spw-frame[data-spw-active="true"]) [data-spw-slot="actions"] { animation-delay: calc(360ms * var(--spw-attention-cadence, 1) * var(--spw-motion-scale, 1)); }
+
+/* Optical vertical and horizontal balance for inset frames and header/action seams */
+:where(.spw-frame > :where(.frame-topline, .frame-heading)) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs, 0.5rem) var(--space-sm, 0.75rem);
+}
+
+:where(.spw-frame[data-spw-seating="inset"]) {
+  margin-inline: auto;
+  align-items: center;
+  text-align: center;
+}
+
+:where(.spw-frame[data-spw-seating="inset"]) > :where(.frame-topline, .frame-heading, .frame-actions, .spw-cluster) {
+  justify-content: center;
+}
 
 
 /* ==========================================================================

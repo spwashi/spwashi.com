@@ -118,6 +118,7 @@
       * var(--spw-salience-affordance, 1)
       * var(--spw-salience-charge-runtime, 1)
       * var(--spw-salience-carry, 1)
+      * var(--spw-salience-stance, 1)
       - 0.6
     ) * 2.5),
     1
@@ -313,3 +314,51 @@
     var(--line, transparent)
   );
 }
+
+/* ── Attentional Arc & Machine Empathy ────────────────────────────────────
+   site-settings-engine.js writes data-spw-process-attention and
+   data-spw-metacognitive-stance onto <html>. Until now CSS did not spend
+   those two posture dimensions. They modulate timing patience (cadence),
+   dwell forgiveness (empathy grace), and magnetic neighbor coupling without
+   touching text ink or layout geometry. */
+:root {
+  --spw-attention-cadence: 1;
+  --spw-empathy-grace: 1;
+  --spw-magnetic-coupling: 0.45;
+  --spw-salience-stance: 1;
+}
+
+:root[data-spw-process-attention="breath"]  { --spw-attention-cadence: 1.32; --spw-magnetic-coupling: 0.32; }
+:root[data-spw-process-attention="scan"]    { --spw-attention-cadence: 0.72; --spw-magnetic-coupling: 0.52; }
+:root[data-spw-process-attention="trace"]   { --spw-attention-cadence: 1.04; --spw-magnetic-coupling: 0.96; }
+:root[data-spw-process-attention="compose"] { --spw-attention-cadence: 0.88; --spw-magnetic-coupling: 0.82; }
+
+:root[data-spw-metacognitive-stance="witness"]    { --spw-empathy-grace: 1.28; }
+:root[data-spw-metacognitive-stance="composer"]   { --spw-empathy-grace: 0.92; }
+:root[data-spw-metacognitive-stance="explorer"]   { --spw-empathy-grace: 1.08; }
+:root[data-spw-metacognitive-stance="integrator"] { --spw-empathy-grace: 1.18; }
+:root[data-spw-metacognitive-stance="overflow"]   { --spw-empathy-grace: 1.34; }
+
+/* Stance-sensitive border salience: what the posture is listening for
+   quietly steps forward within bounded 4–8% border weight when resting. */
+:root[data-spw-metacognitive-stance="composer"] :where([data-spw-role="control"], [data-spw-affordance~="act"]) {
+  --spw-salience-stance: 1.06;
+}
+:root[data-spw-metacognitive-stance="explorer"] :where([data-spw-role="probe"], [data-spw-operator="wonder"], [data-spw-operator="probe"]) {
+  --spw-salience-stance: 1.07;
+}
+:root[data-spw-metacognitive-stance="integrator"] :where([data-spw-semantic-expression], [data-spw-kind="panel"][data-spw-role="register"]) {
+  --spw-salience-stance: 1.06;
+}
+:root[data-spw-metacognitive-stance="overflow"] :where([data-spw-semantic-expression], [data-spw-wonder]) {
+  --spw-salience-stance: 1.08;
+}
+
+/* Consequence afterglow on discharge: subtle accent halo matching discharge kind */
+[data-spw-discharge-kind] {
+  transition: border-color calc(var(--duration-base, 220ms) * var(--spw-empathy-grace, 1)) var(--ease-settle, ease-out);
+}
+[data-spw-discharge-kind="ground"]  { --component-border: 1px solid color-mix(in oklab, var(--op-frame-color, var(--active-op-color, #008080)) 34%, var(--line, transparent)); }
+[data-spw-discharge-kind="release"] { --component-border: 1px solid color-mix(in oklab, var(--op-probe-color, var(--active-op-color, #008080)) 38%, var(--line, transparent)); }
+[data-spw-discharge-kind="project"] { --component-border: 1px solid color-mix(in oklab, var(--op-object-color, var(--active-op-color, #008080)) 38%, var(--line, transparent)); }
+[data-spw-discharge-kind="situate"] { --component-border: 1px solid color-mix(in oklab, var(--op-ref-color, var(--active-op-color, #008080)) 34%, var(--line, transparent)); }
