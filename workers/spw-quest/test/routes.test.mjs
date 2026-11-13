@@ -526,3 +526,14 @@ test('the script leads: a swap rewrites only its focus line, and any script has 
   assert.equal(await download.text(), `${script}\n`);
   assert.equal(download.headers.get('content-disposition'), 'attachment; filename="notes.spw"');
 });
+
+test('a carried word stays through /read navigation and trailing slashes redirect', async () => {
+  const act = await (await get('spw.quest', '/read?step=act&word=river')).text();
+  assert.match(act, /~river/);
+  assert.match(act, /<input type="hidden" name="word" value="river">/);
+  assert.match(act, /href="\/read\?step=hold&word=river"/);
+  assert.match(act, /href="\/learn\?word=river#act"/);
+  const redir = await get('spw.quest', '/learn/?word=river');
+  assert.equal(redir.status, 301);
+  assert.equal(redir.headers.get('location'), 'https://spw.quest/learn?word=river');
+});

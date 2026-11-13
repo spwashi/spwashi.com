@@ -19,20 +19,25 @@ function burstRim(depth = 11, across = 12, down = 4) {
 /** The panel's look, on the guide and on /read. The balloon edge keeps 3:1 against the field; controls keep 44px; the line wraps inside its balloon. */
 export const PANEL_CSS = `:root { --ink-line: rgba(14, 18, 20, .72); --caption: hsl(42 62% 87%); --burst: rgba(27, 92, 93, .2); }
     @media (prefers-color-scheme: dark) { :root { --ink-line: rgba(228, 235, 232, .6); --caption: hsl(38 22% 16%); --burst: rgba(86, 210, 210, .22); } }
-    .step { position: relative; padding: .85rem 1rem 1rem; border: 1px solid var(--edge); border-radius: 4px; background: var(--surface); box-shadow: var(--shadow); scroll-margin-top: 4.5rem; }
-    .step:target { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), var(--shadow); animation: settle 900ms ease-out 1; }
-    @keyframes settle { from { box-shadow: 0 0 0 7px var(--accent-soft), 0 0 0 1px var(--accent), var(--shadow); } to { box-shadow: 0 0 0 1px var(--accent), var(--shadow); } }
+    .step { position: relative; padding: .85rem 1rem 1rem; border: 1px solid var(--edge); border-top: 2px solid color-mix(in srgb, var(--bubble-accent, var(--edge)) 48%, var(--edge)); border-radius: 4px; background: var(--surface); box-shadow: var(--shadow); scroll-margin-top: 4.5rem; }
+    .step:has([data-bubble="thought"]) { --bubble-accent: var(--op-potential-color, var(--accent)); }
+    .step:has([data-bubble="question"]) { --bubble-accent: var(--op-wonder-color, var(--accent)); }
+    .step:has([data-bubble="burst"]) { --bubble-accent: var(--op-action-color, var(--accent)); }
+    .step:has([data-bubble="statement"]) { --bubble-accent: var(--op-binding-color, var(--ink-line)); }
+    .step:has([data-bubble="nameplate"]) { --bubble-accent: var(--op-frame-color, var(--accent)); }
+    .step:target { border-color: var(--bubble-accent, var(--accent)); box-shadow: 0 0 0 1px var(--bubble-accent, var(--accent)), var(--shadow); animation: settle 900ms ease-out 1; }
+    @keyframes settle { from { box-shadow: 0 0 0 7px var(--accent-soft), 0 0 0 1px var(--bubble-accent, var(--accent)), var(--shadow); } to { box-shadow: 0 0 0 1px var(--bubble-accent, var(--accent)), var(--shadow); } }
     .panel-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .25rem .8rem; margin: 0 0 .35rem; }
     .step :is(h1, h2) { display: flex; align-items: baseline; gap: .55rem; margin: 0; font-size: 1.45rem; }
     .step h1 { font-size: clamp(1.8rem, 6.4vw, 2.3rem); }
     .step .n { min-width: 2.2ch; color: var(--muted); font: 600 .9rem/1 var(--mono); font-variant-numeric: tabular-nums; text-align: right; text-decoration: none; }
     .step a.n:hover, .step a.n:focus-visible, .step:target a.n { color: var(--accent); }
-    .scene { margin: 0; padding: .05rem .5rem; border: 1px solid var(--ink-line); background: var(--caption); font: .85rem/1.5 var(--mono); }
+    .scene { margin: 0; padding: .05rem .5rem; border: 1px solid color-mix(in srgb, var(--bubble-accent, var(--ink-line)) 32%, var(--ink-line)); background: var(--caption); font: .85rem/1.5 var(--mono); }
     form.line { margin: 0; }
     form.line label.speaker { display: flex; flex-wrap: wrap; align-items: baseline; gap: .1rem .45rem; margin: .4rem 0 0; color: var(--fg); font: 600 .92rem/1.3 var(--mono); }
     .speaker .kind { color: var(--muted); font: 400 .88rem/1.3 var(--font); }
-    .balloon { position: relative; z-index: 0; margin: 1rem 0 0; padding: 0 1.1rem; border: 2px solid var(--ink-line); border-radius: 1.6rem; background: var(--field); }
-    .balloon:focus-within { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .balloon { position: relative; z-index: 0; margin: 1rem 0 0; padding: 0 1.1rem; border: 2px solid color-mix(in srgb, var(--bubble-accent, var(--ink-line)) 28%, var(--ink-line)); border-radius: 1.6rem; background: var(--field); transition: border-color 140ms ease; }
+    .balloon:focus-within { border-color: var(--bubble-accent, var(--accent)); outline: 2px solid var(--bubble-accent, var(--accent)); outline-offset: 3px; }
     form.line .balloon textarea[name="line"] { display: block; width: 100%; min-height: 48px; max-height: 12rem; margin: 0; padding: .7rem 0; border: 0; border-radius: 0; background: transparent; color: var(--fg); font: 1rem/1.45 var(--mono); resize: none; overflow-y: auto; field-sizing: content; }
     form.line .balloon textarea[name="line"]:focus-visible { outline: none; }
     .balloon:is([data-bubble="statement"], [data-bubble="question"])::before { content: ""; position: absolute; left: 1.4rem; top: -14px; width: 18px; height: 14px; background: var(--ink-line); clip-path: polygon(0 100%, 100% 100%, 12% 0); }
@@ -139,20 +144,21 @@ export function withWord(step, word) {
 }
 
 /** One panel: the line in a balloon inside a GET form to /read (Pivot it sends the same field to /pivot), a link that opens it on the canvas, and the worker's reading of that line. */
-export function stepSurface(step, { index, line = step.try, heading = "h2" }) {
-  const home = heading === "h1" ? "/learn" : "";
+export function stepSurface(step, { index, line = step.try, heading = "h2", word = "" }) {
+  const home = heading === "h1" ? `/learn${word ? `?word=${encodeURIComponent(word)}` : ""}` : "";
   const id = escapeHtml(step.id);
+  const wordParam = word ? `&amp;word=${encodeURIComponent(word)}` : "";
   const terminal = step.check === "commands_pass";
   const reading = readLine(step.id, line);
   const compared = step.then ? nuances(step, line) : null;
-  const then = compared || !step.then ? [] : step.then.map((t) => `<a href="/read?step=${encodeURIComponent(step.id)}&amp;line=${encodeURIComponent(t)}" data-then="${id}">${escapeHtml(t)}</a>`);
+  const then = compared || !step.then ? [] : step.then.map((t) => `<a href="/read?step=${encodeURIComponent(step.id)}&amp;line=${encodeURIComponent(t)}${wordParam}" data-then="${id}">${escapeHtml(t)}</a>`);
   return `<section class="step" id="${id}" aria-labelledby="${id}-title">
     <div class="panel-head">
       <${heading} id="${id}-title"><a class="n" href="${home}#${id}">${index + 1}</a> ${id}</${heading}>
       <p class="scene"><span class="sr-only">Scene: </span>${escapeHtml(step.scene)}</p>
     </div>
     <form class="line" id="form-${id}" method="get" action="/read">
-      <input type="hidden" name="step" value="${id}">
+      <input type="hidden" name="step" value="${id}">${word ? `\n      <input type="hidden" name="word" value="${escapeHtml(word)}">` : ""}
       <label class="speaker" for="line-${id}"><span class="who">${escapeHtml(step.speaker)}</span> <span class="kind">${escapeHtml(BALLOON_WORDS[reading.balloon] || reading.balloon)}</span><span class="sr-only"> balloon, ${terminal ? "the commands" : "your line"}</span></label>
       <div class="balloon" data-bubble="${escapeHtml(reading.balloon)}">
         <textarea id="line-${id}" name="line" rows="${rowsFor(line)}" maxlength="${LINE_LIMIT}" spellcheck="false" autocomplete="off" autocapitalize="none" autocorrect="off" enterkeyhint="go" aria-describedby="check-${id}">${escapeHtml(line)}</textarea>
