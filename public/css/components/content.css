@@ -1171,6 +1171,12 @@ main :where(.frame-card-media, .image-study, .topic-photo-card, figure) figcapti
   box-sizing: border-box;
 }
 
+main :where(.image-study, .topic-photo-card, figure):has(> figcaption > strong > a[href]):is(:hover, :focus-within) > figcaption > strong > a[href] {
+  color: var(--active-op-color, var(--teal, #008080));
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.18em;
+}
+
 /* Tighter, more balanced spacing for long narration / "Current Direction" style blocks on desktop */
 :where(.spw-narration, [data-spw-box-model="narration-card"]) {
   max-inline-size: 72ch;
