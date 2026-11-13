@@ -34,7 +34,12 @@ import {
   waitForHttp,
   withDebugQuery,
   CdpSession,
+  applyViewport,
+  sleep,
 } from './lib/chrome-headless-harness.mjs';
+import { DESIGN_PROBE, DESIGN_VIEWPORTS, designFaults, formatDesignLine, summarizeDesign } from './lib/design-qa.mjs';
+
+const DESIGN_STILLS_DIR = path.join(process.cwd(), '.agents/state/runtime/design-qa');
 
 function parseArgs(argv) {
   const options = {
@@ -42,6 +47,9 @@ function parseArgs(argv) {
     chrome: null,
     debugLayout: false,
     debugQa: false,
+    design: false,
+    failOnDesign: false,
+    stills: false,
     failOnConsoleError: false,
     failOnOverflowX: false,
     help: false,
@@ -67,6 +75,9 @@ function parseArgs(argv) {
     else if (arg === '--debug-layout') options.debugLayout = true;
     else if (arg === '--debug-qa' || arg === '--agent-qa') options.debugQa = true;
     else if (arg === '--require-settled') options.requireSettled = true;
+    else if (arg === '--design') options.design = true;
+    else if (arg === '--fail-on-design') options.failOnDesign = options.design = true;
+    else if (arg === '--stills') options.stills = true;
     else if (arg === '--require-browser') options.requireBrowser = true;
     else if (arg === '--fail-on-console-error') options.failOnConsoleError = true;
     else if (arg === '--fail-on-overflow-x') options.failOnOverflowX = true;
@@ -109,6 +120,12 @@ Options:
   --fail-on-console-error   Fail when page logs console.error / exceptions
   --fail-on-overflow-x      Fail when sampled frames overflow horizontally
   --warm                    Discard a cold first navigation (reduces Chrome cold bias)
+  --design                  Also read each route's controls at a desk and a phone viewport
+                            (scripts/lib/design-qa.mjs): style families, targets, contrast,
+                            focus rings, sideways scroll. Reports; faults print but do not fail
+  --fail-on-design          As --design, and a design fault fails the run
+  --stills                  With --design, save a full-page still per route and viewport to
+                            .agents/state/runtime/design-qa/ (ignored by git)
   --retries N               Retry failed navigations (default 1)
   --settle-ms N             Max wait for runtime ready (default 18000; +grace when boot progresses)
   --observation-ms N        Bounded post-ready observation (default 800, max 60000)
@@ -281,6 +298,46 @@ async function main() {
       }
     }
 
+    const design = [];
+    if (options.design) {
+      if (options.stills) await mkdir(DESIGN_STILLS_DIR, { recursive: true });
+      process.stdout.write('\ndesign\n');
+      for (const route of routes) {
+        for (const viewport of DESIGN_VIEWPORTS) {
+          const target = await newPageTarget(debugPort);
+          const session = new CdpSession(target.webSocketDebuggerUrl);
+          await session.open();
+          try {
+            await session.send('Page.enable');
+            await applyViewport(session, viewport);
+            if (viewport.coarse) {
+              await session.send('Emulation.setEmulatedMedia', { features: [{ name: 'pointer', value: 'coarse' }, { name: 'hover', value: 'none' }] }).catch(() => {});
+            }
+            // Without focus emulation a background tab draws no focus ring, and every control reads as missing one.
+            await session.send('Emulation.setFocusEmulationEnabled', { enabled: true }).catch(() => {});
+            await session.send('Page.navigate', { url: `${base}${route}` });
+            await sleep(Math.min(options.settleMs, 6000));
+            const { result } = await session.send('Runtime.evaluate', { expression: DESIGN_PROBE, returnByValue: true });
+            const summaryRow = summarizeDesign(result?.value, viewport);
+            const faults = designFaults(summaryRow);
+            design.push({ route, viewport: viewport.name, ...summaryRow, faults });
+            process.stdout.write(`${formatDesignLine(route, viewport.name, summaryRow)}\n`);
+            for (const fault of faults) process.stdout.write(`    ${fault}\n`);
+            if (options.stills) {
+              const { data } = await session.send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true });
+              const name = `${route.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '') || 'home'}-${viewport.name}.png`;
+              await writeFile(path.join(DESIGN_STILLS_DIR, name), Buffer.from(data, 'base64'));
+            }
+          } finally {
+            session.close();
+            await closePageTarget(debugPort, target);
+          }
+        }
+      }
+      if (options.stills) process.stdout.write(`stills ${path.relative(process.cwd(), DESIGN_STILLS_DIR)}/\n`);
+    }
+    const designFaultCount = design.reduce((n, row) => n + row.faults.length, 0);
+
     const summary = {
       at: new Date().toISOString(),
       kind: 'headless-nav-smoke',
@@ -295,7 +352,8 @@ async function main() {
       failOnOverflowX: options.failOnOverflowX,
       settleMs: options.settleMs,
       observationMs: options.observationMs,
-      ok: results.every((r) => r.hardOk),
+      ok: results.every((r) => r.hardOk) && !(options.failOnDesign && designFaultCount > 0),
+      design,
       routes: results.length,
       failures: results.filter((r) => !r.hardOk).length,
       settledCount: results.filter((r) => r.settled).length,

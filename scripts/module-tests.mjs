@@ -62,6 +62,7 @@ export const MODULE_TEST_FILES = Object.freeze([
   'scripts/tests/catalog-vocabulary.test.mjs',
   'scripts/tests/css-sheet-shares.test.mjs',
   'scripts/tests/scan-shelf-links.test.mjs',
+  'scripts/tests/design-qa.test.mjs',
   'scripts/tests/host-mount.test.mjs',
   'scripts/tests/day-seed.test.mjs',
   'scripts/tests/engagement.test.mjs',
