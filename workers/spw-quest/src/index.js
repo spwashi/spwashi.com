@@ -237,10 +237,11 @@ const PATH_CSS = `.path { margin: 0 0 1.5rem; }
     @media (prefers-reduced-motion: reduce) { .path .n { transition: none; } }`;
 
 /** The path itself: on the guide each node is a panel on this page; on /read it is that panel's own reading. */
-function pathNav(current = -1) {
+function pathNav(current = -1, word = "") {
+  const wordQuery = word ? `&word=${encodeURIComponent(word)}` : "";
   const nodes = STEPS.map((step, index) => {
     const id = escapeHtml(step.id);
-    const href = current < 0 ? `#${id}` : `/read?step=${id}`;
+    const href = current < 0 ? `#${id}` : `/read?step=${id}${wordQuery}`;
     return `<li><a href="${href}"${index === current ? ' aria-current="step"' : ""}><span class="n">${index + 1}</span><span class="id">${id}</span></a></li>`;
   });
   return `<nav class="path" aria-label="Panels">
@@ -488,7 +489,7 @@ function offerHeldWord(carried) {
 
 /** The seven panels from the workbench's quest, walked as a path; each line is read as it changes. `word` is a word of the reader's, carried through the panels where the quest says door. */
 function renderLearn(word = "") {
-  const steps = STEPS.map((step, index) => `<li>${stepSurface(withWord(step, word), { index })}</li>`).join("\n  ");
+  const steps = STEPS.map((step, index) => `<li>${stepSurface(withWord(step, word), { index, word })}</li>`).join("\n  ");
   return layout({
     title: "spw.quest — learn Spw a mark at a time",
     description: "Seven panels, one line each, from plain words to a question that carries its own probe.",
@@ -571,11 +572,13 @@ ${specimensBody(state)}
   });
 }
 
-function renderRead(step, line, { cut = false } = {}) {
+function renderRead(step, line, { cut = false, word = "" } = {}) {
   const index = STEPS.indexOf(step);
   const next = STEPS[index + 1];
+  const wordQuery = word ? `&word=${encodeURIComponent(word)}` : "";
+  const learnBack = `/learn${word ? `?word=${encodeURIComponent(word)}` : ""}#${escapeHtml(step.id)}`;
   const onward = next
-    ? `<a class="chip" href="/read?step=${escapeHtml(next.id)}">Next: ${escapeHtml(next.id)}</a>`
+    ? `<a class="chip" href="/read?step=${escapeHtml(next.id)}${wordQuery}">Next: ${escapeHtml(next.id)}</a>`
     : `<a class="chip" href="/install">Install the workbench</a>`;
   return layout({
     title: `spw.quest — ${step.id}, panel ${index + 1} of ${STEPS.length}`,
@@ -592,11 +595,11 @@ function renderRead(step, line, { cut = false } = {}) {
     .step-nav .chip { margin: 0; }`,
     body: `${masthead("/learn")}
 <p class="kicker">Panel ${index + 1} of ${STEPS.length}</p>
-${pathNav(index)}
-${stepSurface(step, { index, line, heading: "h1" })}
+${pathNav(index, word)}
+${stepSurface(step, { index, line, heading: "h1", word })}
 ${cut ? `<p class="note">Only the first ${LINE_LIMIT} characters were read.</p>` : ""}
 <nav class="step-nav" aria-label="Panels">
-  <a class="chip" href="/learn#${escapeHtml(step.id)}">Back to the panel</a>
+  <a class="chip" href="${learnBack}">Back to the panel</a>
   ${onward}
 </nav>`,
   });
@@ -624,8 +627,10 @@ function handleRead(url) {
   const asked = url.searchParams.get("step") || "";
   const step = STEPS.find((s) => s.id === asked);
   if (!step) return page(renderNoStep(asked), { status: 404 });
-  const given = url.searchParams.has("line") ? url.searchParams.get("line") : step.try;
-  return page(renderRead(step, given.slice(0, LINE_LIMIT), { cut: given.length > LINE_LIMIT }), { cache: "public, max-age=300" });
+  const word = carriedWord(url.searchParams.get("word"));
+  const fallback = withWord(step, word).try;
+  const given = url.searchParams.has("line") ? url.searchParams.get("line") : fallback;
+  return page(renderRead(step, given.slice(0, LINE_LIMIT), { cut: given.length > LINE_LIMIT, word }), { cache: "public, max-age=300" });
 }
 
 function scriptFile(body, filename) {
@@ -835,5 +840,8 @@ async function route(request, env) {
   // So are /bench/ (src/bench.js) and /arcs/, written by carry-arcs.mjs from the site's history.
   if (["/shelf", "/shelf/plans", "/forms", "/arcs", "/bench"].includes(url.pathname)) return Response.redirect(`${url.origin}${url.pathname}/`, 301);
   if (SHELF_PATHS.has(url.pathname)) return serveShelf(request, url, env);
+  if (["/learn/", "/read/", "/build/", "/install/", "/specimens/", "/constructs/", "/pivot/", "/physics/", "/card/"].includes(url.pathname) && ["GET", "HEAD"].includes(request.method)) {
+    return Response.redirect(`${url.origin}${url.pathname.slice(0, -1)}${url.search}`, 301);
+  }
   return handleQuest(request, url);
 }

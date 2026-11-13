@@ -229,7 +229,7 @@ export const WALK_CSS = `.walk { margin: 0 0 2rem; padding: 1rem 1.1rem 1.05rem;
     .walk-count:empty { display: none; }
     .walk-lede { max-width: 40rem; margin: .4rem 0 .7rem; color: var(--ink-soft); font-size: .95rem; line-height: 1.5; }
     html.js .walk-off { display: none; }
-    .walk pre { margin: 0; padding: .7rem .85rem; border-radius: calc(var(--radius) * .8); background: var(--field); font: .95rem/1.65 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; font-variant-ligatures: none; font-feature-settings: "calt" 0, "liga" 0; }
+    .walk pre { margin: 0; padding: .7rem .85rem; border-left: 3px solid color-mix(in srgb, var(--op-frame-color, var(--accent)) 45%, transparent); border-radius: calc(var(--radius) * .8); background: var(--field); font: .95rem/1.65 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; font-variant-ligatures: none; font-feature-settings: "calt" 0, "liga" 0; }
     .walk-open { display: flex; flex-wrap: wrap; align-items: center; gap: 0 .2rem; margin: .5rem 0 0; color: var(--muted); font-size: .9rem; }
     .walk-open span { margin-right: .3rem; }
     .walk-open a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 .45rem; font-family: var(--mono); }
@@ -237,7 +237,7 @@ export const WALK_CSS = `.walk { margin: 0 0 2rem; padding: 1rem 1.1rem 1.05rem;
     .walk-says summary { min-height: 44px; font-size: .9rem; }
     .walk-says ul { margin: 0 0 .3rem; padding-left: 1.1rem; color: var(--ink-soft); font-size: .92rem; }
     .walk-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .5rem; margin: .6rem 0 0; }
-    .walk-actions a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 .75rem; border-radius: var(--pill); text-decoration: none; }
+    .walk-actions :is(a, button) { display: inline-flex; align-items: center; min-height: 44px; padding: 0 .75rem; border-radius: var(--pill); text-decoration: none; }
     .walk-actions a.walk-primary { border: 1px solid var(--accent); font-weight: 600; }
-    .walk-actions a:hover, .walk-actions a:focus-visible { background: var(--accent-soft); }
+    .walk-actions :is(a, button):hover, .walk-actions :is(a, button):focus-visible { background: var(--accent-soft); }
     html:not(.js) .walk-actions button { display: none; }`;
