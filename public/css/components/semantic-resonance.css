@@ -470,3 +470,19 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
     transform: none;
   }
 }
+
+/* Join specimens & theme chips: structural layout stays synchronous in core. */
+:where([data-spw-feature="join-specimens"]) {
+  display: grid;
+  gap: var(--spw-shell-panel-gap, 0.85rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  margin-block: var(--space-sm, 0.8rem) var(--space-md, 1rem);
+}
+
+:where([data-spw-feature="theme-chips"]) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+  margin-block: 0.7rem 1rem;
+}

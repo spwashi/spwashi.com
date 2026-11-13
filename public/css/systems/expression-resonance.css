@@ -231,23 +231,6 @@
   box-shadow: none;
 }
 
-/* Join specimens: token first, kind next, gloss last — scannable without JS. */
-:where([data-spw-feature="join-specimens"]) {
-  display: grid;
-  gap: var(--spw-shell-panel-gap, 0.85rem);
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
-  margin-block: var(--space-sm, 0.8rem) var(--space-md, 1rem);
-}
-
-/* Theme chips: a linked rail is the theme. A still of the row is the breadth. */
-:where([data-spw-feature="theme-chips"]) {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-  align-items: center;
-  margin-block: 0.7rem 1rem;
-}
-
 :where([data-spw-feature="join-specimens"] .spw-living-term, [data-spw-feature="join-specimens"] [data-spw-living-term]) {
   border-bottom-style: solid;
   background: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 12%, transparent);

@@ -366,20 +366,8 @@ npm run build:tools
 npm run typecheck
 ```
 
-Manual browser checks:
-
-- `/`
-- `/settings/`
-- `/design/`
-- `/about/website/`
-- one content-heavy route such as `/blog/` or `/recipes/`
-
-Debug browser checks:
-
-- `html[data-spw-debug-layers="on"]`
-- `html[data-spw-debug-layers="compact"]`
-- existing `data-spw-debug~="css"`
-- existing `data-spw-debug~="layout"`
+Manual browser checks: `/`, `/settings/`, `/design/`, `/about/website/`, and `/blog/` or `/recipes/`.
+Debug checks: `html[data-spw-debug-layers="on"]`, `html[data-spw-debug-layers="compact"]`, `data-spw-debug~="css"`, `data-spw-debug~="layout"`.
 
 ## Tracking Queries
 
