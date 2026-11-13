@@ -157,3 +157,27 @@ invariants: #[
   ~#answer(2026-11-06): "enigma.not_an_anchor. A note the creator pasted: Enigma is a TikTok LIVE anonymity mode, not a gift and not a price for the work; the unlock is paid to TikTok for the mask, and gifts sent while masked reach the creator as ordinary gifts. Leave it off the support ladder; if it ever appears in copy, one sentence: an Enigma is someone who paid TikTok to send gifts without the room seeing their name."
   $%[enigma.watcher_anchor, enigma.ladder_rung, enigma.both, enigma.not_an_anchor]
 }
+
+# Added 2026-11-13: live gifts read against the watcher's path (PLAN.md, Live gifts).
+#>wonder_promo_wonder_cycle_gifts_out
+?["Where does a gift on a live go: into the build, or back out in battles for other streamers?"]{
+  #:depth #!experiential ~#lens(inquiry)
+  ~#with: @plan @services
+  ~#tension: "L2 and L4 lead a watcher from a gift to build support. On 2026-11-12 the gifts of a five-hour stream went back out in battles for other streamers (the creator, in wip.spw)."
+  ~#expect: "gifts.back_out: the creator called the exchange immediate, which reads as a practice in battles rather than a one-off"
+  ~#unblocks: "L6, and the watcher's path (L4)"
+  ~#probe(read)
+  !probe{ "The creator says whether gifts on a live go back out in battles as a practice, and whether the site should say so, with or without a dated figure." }
+  $%[gifts.back_out, gifts.case_by_case, gifts.into_build, gifts.unsaid]
+}
+
+#>wonder_promo_wonder_cycle_live_value
+?["What feels psychologically easy on a live, and for whom, and what is the development done live worth beside it?"]{
+  #:depth #!experiential ~#lens(comparison)
+  ~#with: @plan @services
+  ~#tension: "Easy may mean easy to give (a viewer's tap) or easy to ask (the creator naming a figure). The work that lands in lore.land during battles has no figure of its own beside a gift."
+  ~#unblocks: "L7, a live-development rung, or a decision that the live work stays unpriced"
+  ~#probe(read)
+  !probe{ "Over the next three lives the creator notes gifts in, gifts sent on, and what landed in lore.land, then says which reading of easy they meant and whether the live work should be priceable." }
+  $%[easy.to_give, easy.to_ask, easy.both, value.public_work, value.live_rung, value.unpriced]
+}
