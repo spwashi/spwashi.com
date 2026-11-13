@@ -17495,15 +17495,37 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
    Packing tiers (density)
    -------------------------------------------------------------------------- */
 
+:where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card, .frame-body) {
+  --spw-flow-space: var(--spw-pack-flow-active, var(--pack-tier-balanced-flow));
+  --component-pad: var(--spw-pack-pad-active, var(--pack-tier-balanced-pad));
+  --component-gap: var(--spw-pack-gap-active, var(--pack-tier-balanced-gap));
+}
+
+/* Packing attributes are state reporting (root field projections, profiler
+   writes on regions) — they tune spacing physics via custom properties but
+   never set their carrier's geometry. Spending --spw-pack-measure-active as
+   max-inline-size here clamped html and every profiled frame to a prose
+   measure; measure belongs to content-role rules (prose, notes, kickers)
+   that spend the token deliberately. */
+:where([data-spw-packing-state], [data-spw-pack-occupancy]) {
+  --component-pad: var(--spw-pack-pad-active, var(--pack-tier-balanced-pad));
+  --component-gap: var(--spw-pack-gap-active, var(--pack-tier-balanced-gap));
+}
+
 :where(
   [data-spw-density="compact"],
   [data-spw-density="dense"],
   [data-spw-component-density="compact"],
   [data-spw-component-density="dense"],
   [data-spw-pinch-variant="compact"],
-  html[data-spw-component-density="dense"] :where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card),
-  html[data-spw-pinch-variant="compact"] :where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card)
+  html[data-spw-density="compact"] :where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card, .frame-body),
+  html[data-spw-component-density="compact"] :where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card, .frame-body),
+  html[data-spw-component-density="dense"] :where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card, .frame-body),
+  html[data-spw-pinch-variant="compact"] :where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card, .frame-body)
 ) {
+  --spw-pack-pad-active: var(--pack-tier-compact-pad);
+  --spw-pack-gap-active: var(--pack-tier-compact-gap);
+  --spw-pack-flow-active: var(--pack-tier-compact-flow);
   --component-pad: var(--pack-tier-compact-pad);
   --component-gap: var(--pack-tier-compact-gap);
   --spw-grid-min-active: var(--pack-tier-compact-grid);
@@ -17526,9 +17548,15 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   [data-spw-density="reading"],
   [data-spw-component-density="roomy"],
   [data-spw-pinch-variant="roomy"],
-  html[data-spw-component-density="roomy"] :where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card),
-  html[data-spw-pinch-variant="roomy"] :where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card)
+  html[data-spw-density="soft"] :where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card, .frame-body),
+  html[data-spw-density="roomy"] :where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card, .frame-body),
+  html[data-spw-density="reading"] :where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card, .frame-body),
+  html[data-spw-component-density="roomy"] :where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card, .frame-body),
+  html[data-spw-pinch-variant="roomy"] :where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card, .frame-body)
 ) {
+  --spw-pack-pad-active: var(--pack-tier-roomy-pad);
+  --spw-pack-gap-active: var(--pack-tier-roomy-gap);
+  --spw-pack-flow-active: var(--pack-tier-roomy-flow);
   --component-pad: var(--pack-tier-roomy-pad);
   --component-gap: var(--pack-tier-roomy-gap);
   --spw-grid-min-active: var(--pack-tier-roomy-grid);
@@ -17543,23 +17571,6 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
     2vw,
     calc(var(--spw-rhythm-unit, 1rem) * 1.45)
   );
-}
-
-:where(.spw-frame, :is(.spw-panel, .frame-panel), .frame-card, .frame-body) {
-  --spw-flow-space: var(--pack-tier-balanced-flow);
-  --component-pad: var(--spw-pack-pad-active, var(--pack-tier-balanced-pad));
-  --component-gap: var(--spw-pack-gap-active, var(--pack-tier-balanced-gap));
-}
-
-/* Packing attributes are state reporting (root field projections, profiler
-   writes on regions) — they tune spacing physics via custom properties but
-   never set their carrier's geometry. Spending --spw-pack-measure-active as
-   max-inline-size here clamped html and every profiled frame to a prose
-   measure; measure belongs to content-role rules (prose, notes, kickers)
-   that spend the token deliberately. */
-:where([data-spw-packing-state], [data-spw-pack-occupancy]) {
-  --component-pad: var(--spw-pack-pad-active);
-  --component-gap: var(--spw-pack-gap-active);
 }
 
 /* Leading only. Block rhythm follows --spw-container-space-scale on the quantum. */
@@ -46066,6 +46077,100 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
       + var(--spw-edge-proximity, 0) * 0.14
     ) * var(--spw-enhancement-factor, 1), 1))
   ), transparent);
+}
+
+/* Global substrate projection via html[data-spw-base-metamaterial] on hosts
+   that have not declared an explicit local data-spw-metamaterial attribute. */
+:where(html[data-spw-base-metamaterial="matte"]) :where(
+  .spw-frame,
+  .frame-card,
+  :is(.spw-panel, .frame-panel),
+  .mode-panel,
+  .operator-card
+):not([data-spw-metamaterial]) {
+  --material-highlight-inset: none;
+  --material-local-background:
+    linear-gradient(
+      180deg,
+      var(--material-surface-matte-strong),
+      color-mix(in oklab, var(--material-surface-matte) 96%, var(--material-prime-color) 4%)
+    );
+  --material-local-border-color: color-mix(in oklab, var(--material-line) 92%, var(--material-prime-color) 8%);
+  --material-local-shadow: 0 1px 0 color-mix(in oklab, var(--material-ink-matte) 8%, transparent);
+  color: var(--material-ink-matte-strong, var(--ink-on-matte-strong, var(--material-ink-matte)));
+}
+
+:where(html[data-spw-base-metamaterial="matte"]) :where(
+  .spw-frame,
+  .frame-card,
+  :is(.spw-panel, .frame-panel),
+  .mode-panel,
+  .operator-card
+):not([data-spw-metamaterial]) :where(p, li, dd, figcaption, [data-spw-textual-role="note"], .spec-kicker) {
+  color: var(--material-ink-matte-soft);
+}
+
+:where(html[data-spw-base-metamaterial="paper"]) :where(
+  .spw-frame,
+  .frame-card,
+  :is(.spw-panel, .frame-panel),
+  .mode-panel,
+  .operator-card
+):not([data-spw-metamaterial]) {
+  --material-local-background: color-mix(in oklab, var(--material-surface) 96%, rgba(215, 193, 160, 0.12));
+  --material-local-border-color: color-mix(in oklab, var(--material-line) 82%, rgba(120, 92, 64, 0.08));
+}
+
+:where(html[data-spw-base-metamaterial="field"]) :where(
+  .spw-frame,
+  .frame-card,
+  :is(.spw-panel, .frame-panel),
+  .mode-panel,
+  .operator-card
+):not([data-spw-metamaterial]) {
+  --material-local-background:
+    radial-gradient(
+      circle at 14% 18%,
+      color-mix(in oklab, var(--material-prime-color) 10%, transparent) 0%,
+      transparent 34%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--material-surface) 94%, transparent) 0%,
+      var(--material-surface) 100%
+    );
+  --material-local-border-color: color-mix(in oklab, var(--material-prime-color) 16%, var(--material-line));
+}
+
+:where(html[data-spw-base-metamaterial="glass"]) :where(
+  .spw-frame,
+  .frame-card,
+  :is(.spw-panel, .frame-panel),
+  .mode-panel,
+  .operator-card
+):not([data-spw-metamaterial]) {
+  --material-local-background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--specular, white) 36%, transparent) 0%,
+      color-mix(in oklab, var(--material-surface) 92%, transparent) 100%
+    );
+  --material-local-border-color: color-mix(in oklab, var(--specular-soft, white) 48%, var(--material-line));
+  --material-local-shadow:
+    var(--material-shadow-rest),
+    var(--material-highlight-inset);
+}
+
+@supports (backdrop-filter: blur(1px)) {
+  :where(html[data-spw-base-metamaterial="glass"]:not([data-spw-filters="off"])) :where(
+    .spw-frame,
+    .frame-card,
+    :is(.spw-panel, .frame-panel),
+    .mode-panel
+  ):not([data-spw-metamaterial]) {
+    backdrop-filter: blur(var(--material-blur-soft)) saturate(1.04);
+    -webkit-backdrop-filter: blur(var(--material-blur-soft)) saturate(1.04);
+  }
 }
 
 :where([data-spw-metamaterial="matte"]) {

@@ -280,6 +280,100 @@
   ), transparent);
 }
 
+/* Global substrate projection via html[data-spw-base-metamaterial] on hosts
+   that have not declared an explicit local data-spw-metamaterial attribute. */
+:where(html[data-spw-base-metamaterial="matte"]) :where(
+  .spw-frame,
+  .frame-card,
+  :is(.spw-panel, .frame-panel),
+  .mode-panel,
+  .operator-card
+):not([data-spw-metamaterial]) {
+  --material-highlight-inset: none;
+  --material-local-background:
+    linear-gradient(
+      180deg,
+      var(--material-surface-matte-strong),
+      color-mix(in oklab, var(--material-surface-matte) 96%, var(--material-prime-color) 4%)
+    );
+  --material-local-border-color: color-mix(in oklab, var(--material-line) 92%, var(--material-prime-color) 8%);
+  --material-local-shadow: 0 1px 0 color-mix(in oklab, var(--material-ink-matte) 8%, transparent);
+  color: var(--material-ink-matte-strong, var(--ink-on-matte-strong, var(--material-ink-matte)));
+}
+
+:where(html[data-spw-base-metamaterial="matte"]) :where(
+  .spw-frame,
+  .frame-card,
+  :is(.spw-panel, .frame-panel),
+  .mode-panel,
+  .operator-card
+):not([data-spw-metamaterial]) :where(p, li, dd, figcaption, [data-spw-textual-role="note"], .spec-kicker) {
+  color: var(--material-ink-matte-soft);
+}
+
+:where(html[data-spw-base-metamaterial="paper"]) :where(
+  .spw-frame,
+  .frame-card,
+  :is(.spw-panel, .frame-panel),
+  .mode-panel,
+  .operator-card
+):not([data-spw-metamaterial]) {
+  --material-local-background: color-mix(in oklab, var(--material-surface) 96%, rgba(215, 193, 160, 0.12));
+  --material-local-border-color: color-mix(in oklab, var(--material-line) 82%, rgba(120, 92, 64, 0.08));
+}
+
+:where(html[data-spw-base-metamaterial="field"]) :where(
+  .spw-frame,
+  .frame-card,
+  :is(.spw-panel, .frame-panel),
+  .mode-panel,
+  .operator-card
+):not([data-spw-metamaterial]) {
+  --material-local-background:
+    radial-gradient(
+      circle at 14% 18%,
+      color-mix(in oklab, var(--material-prime-color) 10%, transparent) 0%,
+      transparent 34%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--material-surface) 94%, transparent) 0%,
+      var(--material-surface) 100%
+    );
+  --material-local-border-color: color-mix(in oklab, var(--material-prime-color) 16%, var(--material-line));
+}
+
+:where(html[data-spw-base-metamaterial="glass"]) :where(
+  .spw-frame,
+  .frame-card,
+  :is(.spw-panel, .frame-panel),
+  .mode-panel,
+  .operator-card
+):not([data-spw-metamaterial]) {
+  --material-local-background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--specular, white) 36%, transparent) 0%,
+      color-mix(in oklab, var(--material-surface) 92%, transparent) 100%
+    );
+  --material-local-border-color: color-mix(in oklab, var(--specular-soft, white) 48%, var(--material-line));
+  --material-local-shadow:
+    var(--material-shadow-rest),
+    var(--material-highlight-inset);
+}
+
+@supports (backdrop-filter: blur(1px)) {
+  :where(html[data-spw-base-metamaterial="glass"]:not([data-spw-filters="off"])) :where(
+    .spw-frame,
+    .frame-card,
+    :is(.spw-panel, .frame-panel),
+    .mode-panel
+  ):not([data-spw-metamaterial]) {
+    backdrop-filter: blur(var(--material-blur-soft)) saturate(1.04);
+    -webkit-backdrop-filter: blur(var(--material-blur-soft)) saturate(1.04);
+  }
+}
+
 :where([data-spw-metamaterial="matte"]) {
   --material-local-background:
     linear-gradient(

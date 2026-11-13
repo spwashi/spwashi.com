@@ -270,6 +270,7 @@ const getRootFontSize = (settings) => {
 };
 
 const getGrainOpacity = (settings) => {
+  if (settings.grainIntensity === 'none') return '0';
   const base = GRAIN_INTENSITY_VALUE[settings.grainIntensity] ?? GRAIN_INTENSITY_VALUE.subtle;
   const semanticOffset = SEMANTIC_GRAIN_OFFSET[settings.semanticDensity] ?? 0;
   return String(clampNumber(base + semanticOffset, 0, 0.08));

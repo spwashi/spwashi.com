@@ -22,30 +22,39 @@
 /* ==========================================================================
    1. Root grain system
    ========================================================================== */
-
+:root {
+  --grain-mode-body-gain: 1;
+  --grain-mode-surface-gain: 1;
+}
 
 /* ==========================================================================
-   2. Global semantic tuning
+   2. Global semantic tuning & intensity gate
    ========================================================================== */
+html[data-spw-grain-intensity="none"] {
+  --grain-body-opacity: 0;
+  --grain-surface-opacity: 0;
+  --grain-handle-opacity: 0;
+}
+
 html[data-spw-semantic-density="minimal"] {
-  --grain-body-opacity: calc(var(--grain-opacity) * 0.62);
-  --grain-surface-opacity: calc(var(--grain-opacity) * 0.46);
+  --grain-body-opacity: calc(var(--grain-opacity) * 0.62 * var(--grain-mode-body-gain, 1));
+  --grain-surface-opacity: calc(var(--grain-opacity) * 0.46 * var(--grain-mode-surface-gain, 1));
   --grain-handle-opacity: calc(var(--grain-opacity) * 0.26);
   --grain-shadow-strength: 0.045;
   --grain-glow-strength: 0.05;
 }
 
 html[data-spw-semantic-density="normal"] {
-  --grain-body-opacity: calc(var(--grain-opacity) * 0.88);
-  --grain-surface-opacity: calc(var(--grain-opacity) * 0.66);
+  --grain-body-opacity: calc(var(--grain-opacity) * 0.88 * var(--grain-mode-body-gain, 1));
+  --grain-surface-opacity: calc(var(--grain-opacity) * 0.66 * var(--grain-mode-surface-gain, 1));
   --grain-handle-opacity: calc(var(--grain-opacity) * 0.4);
   --grain-shadow-strength: 0.06;
   --grain-glow-strength: 0.08;
 }
 
 html[data-spw-semantic-density="rich"] {
-  --grain-body-opacity: calc(var(--grain-opacity) * 1.02);
-  --grain-surface-opacity: calc(var(--grain-opacity) * 0.8);
+  --grain-body-opacity: calc(var(--grain-opacity) * 1.02 * var(--grain-mode-body-gain, 1));
+  --grain-surface-opacity: calc(var(--grain-opacity) * 0.8 * var(--grain-mode-surface-gain, 1));
   --grain-handle-opacity: calc(var(--grain-opacity) * 0.46);
   --grain-shadow-strength: 0.075;
   --grain-glow-strength: 0.1;
@@ -112,15 +121,49 @@ html[data-spw-developmental-climate="offer"] {
   .domain-visual, .spw-console, .spw-nav-panel,
   .payment-card, .seed-card, .profile-card, .svc-wrapper,
   .spw-chip, .spec-pill, .badge, .tag, .pill) {
-  --grain-scope-opacity-multiplier: 1;
-  --grain-scope-scale-multiplier: 1;
-  --grain-scope-contrast-multiplier: 1;
+  --grain-context-opacity: 1;
+  --grain-context-scale: 1;
+  --grain-context-contrast: 1;
+  --grain-room-opacity: 1;
+  --grain-room-scale: 1;
+  --grain-perm-opacity: 1;
+  --grain-perm-contrast: 1;
+  --grain-succ-opacity: 1;
+  --grain-succ-scale: 1;
+  --grain-succ-contrast: 1;
+  --grain-wonder-opacity: 1;
+  --grain-wonder-scale: 1;
+  --grain-wonder-contrast: 1;
+  --grain-state-opacity: 1;
+  --grain-overlay-perm-gain: 1;
+  --grain-overlay-state-gain: 1;
+
+  --grain-scope-opacity-multiplier: calc(
+    var(--grain-context-opacity)
+    * var(--grain-room-opacity)
+    * var(--grain-perm-opacity)
+    * var(--grain-succ-opacity)
+    * var(--grain-wonder-opacity)
+    * var(--grain-state-opacity)
+  );
+  --grain-scope-scale-multiplier: calc(
+    var(--grain-context-scale)
+    * var(--grain-room-scale)
+    * var(--grain-succ-scale)
+    * var(--grain-wonder-scale)
+  );
+  --grain-scope-contrast-multiplier: calc(
+    var(--grain-context-contrast)
+    * var(--grain-perm-contrast)
+    * var(--grain-succ-contrast)
+    * var(--grain-wonder-contrast)
+  );
 
   --grain-panel-shadow-local: var(--grain-shadow-soft);
   --grain-panel-glow-local: var(--grain-panel-glow);
   --grain-panel-fill-local: var(--grain-panel-fill);
   --grain-panel-edge-local: var(--grain-panel-edge);
-  --grain-panel-overlay-local-opacity: var(--grain-panel-overlay-opacity);
+  --grain-panel-overlay-local-opacity: calc(var(--grain-panel-overlay-opacity) * var(--grain-overlay-perm-gain) * var(--grain-overlay-state-gain));
   --grain-panel-rim-local-opacity: var(--grain-panel-rim-opacity);
   --grain-panel-tint-local-opacity: var(--grain-panel-tint-opacity);
 }
@@ -335,124 +378,124 @@ body::after {
 /* (All remaining sections are unchanged in logic – only whitespace / grouping refined for readability) */
 
 :where([data-spw-context="reading"]) {
-  --grain-scope-opacity-multiplier: 0.92;
-  --grain-scope-scale-multiplier: 1.04;
+  --grain-context-opacity: 0.92;
+  --grain-context-scale: 1.04;
 }
 
 :where([data-spw-context="analysis"]) {
-  --grain-scope-opacity-multiplier: 0.8;
-  --grain-scope-scale-multiplier: 0.94;
-  --grain-scope-contrast-multiplier: 1.05;
+  --grain-context-opacity: 0.8;
+  --grain-context-scale: 0.94;
+  --grain-context-contrast: 1.05;
 }
 
 :where([data-spw-context="routing"]) {
-  --grain-scope-opacity-multiplier: 0.66;
-  --grain-scope-scale-multiplier: 0.9;
+  --grain-context-opacity: 0.66;
+  --grain-context-scale: 0.9;
 }
 
 :where([data-spw-context="ritual"]) {
-  --grain-scope-opacity-multiplier: 1.1;
-  --grain-scope-scale-multiplier: 1.08;
-  --grain-scope-contrast-multiplier: 1.06;
+  --grain-context-opacity: 1.1;
+  --grain-context-scale: 1.08;
+  --grain-context-contrast: 1.06;
   --grain-panel-rim-local-opacity: calc(var(--grain-panel-rim-opacity)*1.2);
 }
 
 :where([data-spw-context="play"]) {
-  --grain-scope-opacity-multiplier: 1;
+  --grain-context-opacity: 1;
 }
 
 :where([data-spw-context="settings"]) {
-  --grain-scope-opacity-multiplier: 0.54;
-  --grain-scope-scale-multiplier: 0.9;
+  --grain-context-opacity: 0.54;
+  --grain-context-scale: 0.9;
 }
 
 :where([data-spw-context="publishing"]) {
-  --grain-scope-opacity-multiplier: 0.88;
-  --grain-scope-scale-multiplier: 1.02;
+  --grain-context-opacity: 0.88;
+  --grain-context-scale: 1.02;
 }
 
 :where([data-spw-room="compact"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*0.82);
-  --grain-scope-scale-multiplier: calc(var(--grain-scope-scale-multiplier)*0.9);
+  --grain-room-opacity: 0.82;
+  --grain-room-scale: 0.9;
 }
 
 :where([data-spw-room="roomy"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*1.04);
-  --grain-scope-scale-multiplier: calc(var(--grain-scope-scale-multiplier)*1.04);
+  --grain-room-opacity: 1.04;
+  --grain-room-scale: 1.04;
 }
 
 :where([data-spw-permeability="sealed"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*0.72);
+  --grain-perm-opacity: 0.72;
 }
 
 :where([data-spw-permeability="porous"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*1);
+  --grain-perm-opacity: 1;
 }
 
 :where([data-spw-permeability="annotatable"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*1.08);
+  --grain-perm-opacity: 1.08;
 }
 
 :where([data-spw-permeability="mutable"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*1.12);
-  --grain-scope-contrast-multiplier: calc(var(--grain-scope-contrast-multiplier)*1.05);
-  --grain-panel-overlay-local-opacity: calc(var(--grain-panel-overlay-local-opacity)*1.08);
+  --grain-perm-opacity: 1.12;
+  --grain-perm-contrast: 1.05;
+  --grain-overlay-perm-gain: 1.08;
 }
 
 :where([data-spw-succession="raw"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*1.04);
+  --grain-succ-opacity: 1.04;
 }
 
 :where([data-spw-succession="measured"]) {
-  --grain-scope-contrast-multiplier: calc(var(--grain-scope-contrast-multiplier)*1.03);
+  --grain-succ-contrast: 1.03;
 }
 
 :where([data-spw-succession="resolved"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*0.9);
+  --grain-succ-opacity: 0.9;
 }
 
 :where([data-spw-succession="visited"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*1.02);
-  --grain-scope-scale-multiplier: calc(var(--grain-scope-scale-multiplier)*1.03);
+  --grain-succ-opacity: 1.02;
+  --grain-succ-scale: 1.03;
   --grain-panel-glow-local: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 14%, transparent), 0 0 16px color-mix(in srgb, var(--active-op-color, var(--teal)) 12%, transparent);
 }
 
 :where([data-spw-succession="latched"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*0.86);
-  --grain-scope-contrast-multiplier: calc(var(--grain-scope-contrast-multiplier)*0.96);
+  --grain-succ-opacity: 0.86;
+  --grain-succ-contrast: 0.96;
 }
 
 :where([data-spw-field-wonder="orientation"]) {
-  --grain-scope-scale-multiplier: calc(var(--grain-scope-scale-multiplier)*1.06);
+  --grain-wonder-scale: 1.06;
 }
 
 :where([data-spw-field-wonder="inquiry"]) {
-  --grain-scope-contrast-multiplier: calc(var(--grain-scope-contrast-multiplier)*1.08);
+  --grain-wonder-contrast: 1.08;
 }
 
 :where([data-spw-field-wonder="comparison"]) {
-  --grain-scope-contrast-multiplier: calc(var(--grain-scope-contrast-multiplier)*1.04);
-  --grain-scope-scale-multiplier: calc(var(--grain-scope-scale-multiplier)*0.98);
+  --grain-wonder-contrast: 1.04;
+  --grain-wonder-scale: 0.98;
 }
 
 :where([data-spw-field-wonder="memory"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*1.08);
+  --grain-wonder-opacity: 1.08;
 }
 
 :where([data-spw-field-wonder="projection"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*0.82);
-  --grain-scope-contrast-multiplier: calc(var(--grain-scope-contrast-multiplier)*0.94);
+  --grain-wonder-opacity: 0.82;
+  --grain-wonder-contrast: 0.94;
   --grain-panel-glow-local: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, transparent), 0 0 22px color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, transparent);
 }
 
 :where([data-spw-field-wonder="constraint"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*0.76);
-  --grain-scope-scale-multiplier: calc(var(--grain-scope-scale-multiplier)*0.92);
+  --grain-wonder-opacity: 0.76;
+  --grain-wonder-scale: 0.92;
 }
 
 :where([data-spw-field-wonder="resonance"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*1.1);
-  --grain-scope-scale-multiplier: calc(var(--grain-scope-scale-multiplier)*1.04);
+  --grain-wonder-opacity: 1.1;
+  --grain-wonder-scale: 1.04;
   --grain-panel-glow-local: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 16%, transparent), 0 0 24px color-mix(in srgb, var(--active-op-color, var(--teal)) 14%, transparent);
 }
 
@@ -475,12 +518,12 @@ body::after {
 }
 
 :where([data-spw-grain-state="quiet"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*0.74);
-  --grain-panel-overlay-local-opacity: calc(var(--grain-panel-overlay-local-opacity)*0.72);
+  --grain-state-opacity: 0.74;
+  --grain-overlay-state-gain: 0.72;
 }
 
 :where([data-spw-grain-state="active"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*1.08);
+  --grain-state-opacity: 1.08;
   --grain-panel-glow-local: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 14%, transparent), 0 0 18px color-mix(in srgb, var(--active-op-color, var(--teal)) 12%, transparent);
 }
 
@@ -504,8 +547,8 @@ html[data-spw-color-mode="light"] {
 
 html[data-spw-color-mode="dark"] {
   --grain-blend: screen;
-  --grain-body-opacity: calc(var(--grain-body-opacity)*1.08);
-  --grain-surface-opacity: calc(var(--grain-surface-opacity)*1.04);
+  --grain-mode-body-gain: 1.08;
+  --grain-mode-surface-gain: 1.04;
   --grain-panel-fill: color-mix(in srgb, rgba(255, 255, 255, 0.08) 82%, transparent);
   --grain-panel-fill-strong: color-mix(in srgb, rgba(255, 255, 255, 0.12) 88%, transparent);
   --grain-panel-inset-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.08);
@@ -514,8 +557,8 @@ html[data-spw-color-mode="dark"] {
 @media (prefers-color-scheme: dark) {
   html[data-spw-color-mode="auto"] {
     --grain-blend: screen;
-    --grain-body-opacity: calc(var(--grain-body-opacity)*1.08);
-    --grain-surface-opacity: calc(var(--grain-surface-opacity)*1.04);
+    --grain-mode-body-gain: 1.08;
+    --grain-mode-surface-gain: 1.04;
     --grain-panel-fill: color-mix(in srgb, rgba(255, 255, 255, 0.08) 82%, transparent);
     --grain-panel-fill-strong: color-mix(in srgb, rgba(255, 255, 255, 0.12) 88%, transparent);
     --grain-panel-inset-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.08);
