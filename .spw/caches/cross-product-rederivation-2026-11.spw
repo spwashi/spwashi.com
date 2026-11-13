@@ -310,7 +310,7 @@ contents = #[
 
 #>wonder_rederive_newline
 ?["Does treating a newline as its own separator lose anything an author meant?"]{
-  #:depth #!computational ~#lens(measure)
+  #:depth #!computational ~#lens(comparison)
   ~#expect: "follows ties fall from thousands to the few bodies that write a semicolon, and no author-meant order is lost"
   !probe{ "rerun the corpus harness with the loader's join removed; count follows ties and list the bodies that still carry one" }
   $%[newline.separates, order.lost, loader.right]

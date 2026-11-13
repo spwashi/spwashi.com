@@ -1,0 +1,194 @@
+# The same wonder, asked of a reader who hears or who sees a small window (2026-11-12) — cache
+#
+# The creator, after finding that factshift.center gave a blind reader nothing
+# to hold: "the concept is not adapted at all to screen readers, and I want to
+# extend the wonder about presentation and interactivity into contexts where
+# screen readers may be more necessary". Then: research the corpus with respect
+# to low-sight visitors; consider proximity and velocity summaries; consider
+# colour with the reflex tool as a way to show which information, at which
+# depth or along which progression, a stable or passing container summarizes.
+# "The wonder" is read here as the questions this tree already asks about how a
+# line is shown and what a hand does with it. They were asked of a sighted
+# reader with a pointer. This file asks them again of other readers.
+# Three read-only research passes ran: the canvas, this site's routes, and the
+# sibling hosts with how the corpus sounds. Rows marked checked were re-read or
+# fetched by the session that wrote this file; the rest is survey. Nothing here
+# knows what a screen reader says: every such row is the read-aloud cache's
+# claim or is marked recalled. This file answers no wonder and opens no patch.
+
+#>low_sight_wonder_2026_11
+#:cache #!a11y #!wonder #!factshift #!quest #!voice
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@wonder_architecture: ~"../conventions/wonder-architecture.spw"
+@read_aloud: ~"./read-aloud-typography-2026-11.spw"
+@theory_of_mind: ~"./factshift-theory-of-mind-2026-11.spw"
+@substrate_frames: ~"./factshift-substrate-frames-2026-11.spw"
+@parent: ~"./cross-product-rederivation-2026-11.spw"
+@seven: ~"./seven-passes-unreported-2026-11.spw"
+@surface: ~"../surfaces/factshift-center.spw"
+@interaction: ~"../../.agents/plans/factshift-center/INTERACTION.md"
+@consequence: ~"../conventions/semantic-expression-consequence.spw"
+
+operation = "cache"
+fixity = "experimental"
+expression = ?reader[low-sight]{heard, magnified}<wonder>
+
+summary = #[
+  `The canvas says a node's name and nothing about how it is tied, held or moving. A line read aloud loses its marks, its slots or its joins, depending on how it is read. Most of what would have to be said already exists as text.`,
+  `Seven wonders extend the ones this tree holds. Each has a guess and a probe on something deployed, and each ends with what a blind or low-vision reader says.`,
+  `Two kinds of question are kept apart. What a screen reader says for a mark is a fact the creator can hear on their own machine. Whether any of it is usable is experience, and only such a reader can say.`,
+  `Proximity and velocity can both be said from data the canvas and the corpus already hold. Colour cannot carry a legend alone: its fill is spent three times and its palette has no order.`,
+][reg=set]
+
+contents = #[
+  ~"./low-sight-wonder-2026-11.spw#checked",
+  ~"./low-sight-wonder-2026-11.spw#heard",
+  ~"./low-sight-wonder-2026-11.spw#seen_small",
+  ~"./low-sight-wonder-2026-11.spw#corpus",
+  ~"./low-sight-wonder-2026-11.spw#near_and_moving",
+  ~"./low-sight-wonder-2026-11.spw#legend",
+  ~"./low-sight-wonder-2026-11.spw#corrects",
+  ~"./low-sight-wonder-2026-11.spw#holds",
+][reg=set]
+
+^"checked"{
+  # Re-read or fetched by this session, 2026-11-12. App paths are the canvas checkout's, cited as text.
+  canvas_live = `factshift.center serves the title <concept>, declares lang en, has no noscript, and its built page holds 10 aria-live attributes.`
+  canvas_tab = `From the page body or anywhere in the stage, Tab and Shift+Tab walk the nodes in a ring and are prevented from doing anything else (js/simulation/node-focus.ts:49-54; js/init/hotkeys/_.ts:167-183). From a button or link, Tab is the browser's. With the Spw window open, Tab goes to the prompt field. What takes a keyboard out of the ring was not established.`
+  quest_line = `https://spw.quest/ followed by a line answers 200 with lang, a skip link, and the raw line as its h1.`
+  quest_pivot = `https://spw.quest/pivot?line= followed by a line answers 200. Its h1 is "Pivot a line". A reader passes 14 links before that heading. The slots are served in words, "subject garden mode care body seed, water projection harvest", and 12 links have a mark as their only text.`
+  site_pinch = `This site's own pinch handler calls preventDefault on a two-finger move over text in main (public/js/kernel/pinch-text-scale.js:203), and it is on by default. Whether the browser's zoom is lost with it was not tested on a device.`
+  site_now_at = `The section handle's polite live region is created with the hidden attribute (public/js/runtime/attention/section-handle.js:556), and no line in that file unhides it.`
+}[reg=facet]
+
+^"heard"{
+  # Survey, read from the canvas's code; nothing was run with a screen reader.
+  stage = `The stage is a group named "Force simulation canvas". Its ties, regions, home tether, gesture card and landing preview are hidden from assistive technology.`
+  node = `A node is a button named by its raw name, its kind and its frame. The name keeps its marks. It says nothing of selected, placed, folded or at home.`
+  tie = `A tie is silent. The app holds a sentence for every relation, reached only by clicking a line that is hidden.`
+  face = `A lead confirmed, not a finding: the brief asked whether a text face would be assembly, and it would. The line, its slots in written order, its parts and join, a sentence per tie, a label per home, a sentence per law, the primed act and each receipt are all strings in the app. A slot-by-slot print of the line exists and is focusable, and it is displayed only on a coarse pointer. New would be one ordered list, words for state, and ties without a pointer.`
+  elsewhere = `Text twins that exist: a line for a canvas layout; measured rows and a log for spw.quest's physics stage; a .txt and a .spw for each texture.website tile; a readout sentence for each wap.mom figure; "the card as text" on autonomous.feedback; a says sentence for a lore.land cadence; a status region for its pie game. No twin at all: the look of a texture tile, a played spell, and a Spw line set as a heading.`
+}[reg=facet]
+
+^"seen_small"{
+  # Survey, for a reader with magnification, large text, high contrast or reduced motion.
+  canvas = `Computed against the grey stage: a region title 1.74 to 1, a default tie 1.63, and the slot fills between 1.01 and 1.68. Slot role is told by fill alone. The stage takes a pinch. The keyboard focus ring shows only after Tab. No rule answers prefers-contrast or forced-colors.`
+  site = `Computed from token literals: body ink on paper is 13 to 1; muted ink 4.33 in light; faint ink 2.68. The reading groove dims resting text further and the high-contrast setting does not lift it. 346 declarations set type under 12px. One sheet answers prefers-contrast and one forced-colors, and the operating system's contrast setting seeds nothing. The region rail is removed under 68rem, so zoom removes it. Overflow is clipped, not scrolled. Every setting needs scripts.`
+  hosts = `No sibling host blocks zoom. texture.website has no h1, one title at every address, 91 links named "png", and no description of a tile. lore.land sets type as small as 6.5px.`
+  keep = `What already serves these readers on this site, to keep: one template owns lang, one h1, main and a skip link on every route; zoom is never blocked and type is rem on a percentage root; the scripts-off state is styled on purpose; reduced motion is answered three ways; the folio pattern names its thumbnails through their buttons.`
+}[reg=facet]
+
+^"corpus"{
+  # Survey. What a listener would meet across the site's own text.
+  links = `4,457 links begin with a mark, 52% of the links inside main. 249 carry a spoken name, and 239 of those are chrome. One link text, *ask_for_this_one, names 172 different targets. @read_aloud expects chips to carry a prose name; the links do not.`
+  lines = `Of 1,012 expressions, 634 join their body with a dot, 54 with a semicolon, 22 with a comma and 1 with a path. @read_aloud's one worked example is the comma. What is said for a dot, an underscore or a hyphen is unknown here, and 165 expressions hold a part that is not a plain word.`
+  readings = `Three ways to say one line, and what each loses. Marks dropped: the mark, the slot and the join. Slot names, as @read_aloud proposes: the join, and it needs one name per pair where spw.quest alone uses three or four. spw.quest's verbs: nothing of slot or join, but it has verbs for 3 of 12 marks and leans on connective words the creator ruled out as titles. Choosing among them is the creator's.`
+}[reg=facet]
+
+^"near_and_moving"{
+  # Proximity and velocity summaries. Data and sentences that exist; cadence is a proposal, and pacing ends with a person hearing it.
+  canvas_data = `Each node holds its position, velocity, anchor, placed and flight state. The field holds its heat. Each tie has its ends and a sentence. Each node has a home with a reason and a label. A body holds its members and depth.`
+  canvas_says = `One such line is already printed, in the node tool: "paused | heat 0.12 | still". spw.quest's physics page says more in words: "Farthest from rest 0.0 px: every part is home" and "Warm now: nothing: the floor is at rest", beside a log headed "What happened, newest first".`
+  proximity = `Could be said from what exists: the nearest few nodes with the tie's sentence, which body a part sits in, and how far a node is from its home. For a line among lines, nearness is kinship, and it is countable: a typical expression shares its word with 4 others and a body part with 5 (@consequence).`
+  velocity = `Could be said from what exists: still, settling, drifting or thrown; toward or away from home; and the cause, which is the home's reason, the mark's motion or the body's law. For a line among lines there is nothing to say yet: no specimen or expression carries a date, and fixity sits on files and never reaches a line.`
+  page = `For a page, proximity has sources that are drawn and not said: related routes on every body, kin lighting, and the breadcrumb, which is JSON only. The section handle does name previous, next and kin. For velocity, the catalog knows what arrives with the page, on scroll and after rest; nothing tells a reader that a page has settled.`
+  cadence = `A proposal: never on every tick; always on demand; one clause when focus moves; once when the field comes to rest. The app's summarizer already cuts a line to a budget.`
+  small_window = `A page cannot see an operating system's magnifier (recalled). The canvas does know its own camera, its focus and its pointer, so "near but out of view" is computable for its own zoom only.`
+}[reg=facet]
+
+^"legend"{
+  # Colour with the reflex tool, as the legend of a summary. The creator's idea, kept open.
+  facts = `A folded body keeps its member count, its depth and its stratum, so there is something for a legend to show. Stable containers are authored bodies and scenes. Passing ones are an empty slot, the tether, the primed line and a note that lasts 2.4 seconds.`
+  spent = `Fill is spent three times: it says a node's slot, it sets pull or push on a drawn tie, and the reflex tool's bone card rings nodes of one colour. A fourth meaning on the same channel collides. Three reflex cards also overwrite colours wholesale, so a legend there dies on one press.`
+  no_ramp = `The palette is unordered and two of its indexes are the same colour, so a progression cannot be read off it as it stands.`
+  free = `Free channels: a region's material, which already tells an open well from a folded card; the tab's text; and fill opacity, which only two marks use.`
+  word = `Whatever colour says, a word has to say too. A node's spoken name has no length cap, so "folded, 3 parts, depth 2" fits. A region has no spoken presence, so its legend would ride its word's name or a crumb.`
+}[reg=facet]
+
+^"corrects"{
+  # Each row names what it corrects.
+  read_aloud = `@read_aloud ^"word" spoken_twin says the canvas already names its nodes by a spoken twin. It names them by the raw name with its marks.`
+  mine = `Said in chat by this session on 2026-11-12 and wrong: that the canvas declares no language (it declares en); that many of its tool buttons are named by a mark (one is, with the trail crumbs); and that it has seven live regions (its built page has ten). A commit message that repeated the first was reworded the same day.`
+  mine_link = `This session offered spw.quest/pivot as the better text alternative on a reading of local source. Fetched live, it does serve the slots in words, after 14 links. Neither it nor the line page is a good first hearing.`
+  lens = `@parent's newline wonder was written with a lens named measure. The lenses seen in this tree are the seven types of @wonder_architecture; it now reads comparison.`
+}[reg=facet]
+
+^"holds"{
+  who = `A question of fact goes to the creator's own machine first: turn the screen reader on and listen. A question of experience goes to a reader who uses one daily, or who magnifies daily, with their own tools, on something deployed, and with their yes. This file records nothing about any person.`
+  ungated = #[
+    `10 unlabelled selects and 24 placeholder-only fields on tools/character-sheet and tools/profile`,
+    `two heading skips on design/components, which the structure audit excludes`,
+    `14 rules that set outline none with no replacement in the same rule, the header sigil among them`,
+    `a spoken name for the 12 mark-only links on spw.quest's pivot page`,
+  ][reg=set]
+  none_taken = `None of those was taken here. The canvas's own repairs (a title, a way out of the ring, ties that speak) wait on the wonders below and on the creator.`
+}[reg=facet]
+
+#>wonder_low_sight_line_heard
+?["Heard once, does a line keep its shape?"]{
+  #:depth #!experiential ~#lens(comparison)
+  ~#with: @read_aloud
+  ~#extends: "wonder_spoken_twin"
+  ~#expect: "the marks drop and a dotted body runs together; a list of slots in words is wanted, and one hearing of the raw line is still worth having"
+  !probe{ "first the creator, screen reader on, hears three shelf lines on spw.quest/specimens that differ by join, one with a dot, one with a semicolon, one with a comma, and writes down what was said; then a reader who uses one daily hears a line as the heading of its spw.quest page and as the facts list on its pivot page, and says the slots back" }
+  $%[raw.enough, words.needed, neither.reads]
+}
+
+#>wonder_low_sight_first
+?["After the slots, what does a listener ask for next: what is tied, or what can be done?"]{
+  #:depth #!experiential ~#lens(inquiry)
+  ~#with: @substrate_frames
+  ~#expect: "what can be done comes first, because an act answers back and a tie only describes"
+  !probe{ "after the facts list on a line's pivot page, a reader says what they want to know next before touching anything; note whether they reach for the line's kin, its one-change neighbours, or the canvas" }
+  $%[ties.next, acts.next, kin.next]
+}
+
+#>wonder_low_sight_near
+?["Is nearness wanted in words, or only membership and kinship?"]{
+  #:depth #!experiential ~#lens(resonance)
+  ~#with: @consequence
+  ~#expect: "membership and kinship are wanted; distance in pixels is not, and distance from home is wanted only when something has moved"
+  !probe{ "a reader hears the kin list on a line's spw.quest page and the rest rows on spw.quest/physics, then says which of the two they would ask for again and what was missing from it" }
+  $%[membership.enough, kin.wanted, distance.wanted]
+}
+
+#>wonder_low_sight_moving
+?["When should motion speak?"]{
+  #:depth #!experiential ~#lens(constraint)
+  ~#with: @theory_of_mind
+  ~#extends: "wonder_quick_threshold"
+  ~#expect: "once, when the field comes to rest, and again only when asked; a running account is turned off within a minute"
+  !probe{ "a reader spends two minutes on spw.quest/physics with its log speaking, says when they believe the floor is at rest, and says what they would silence" }
+  $%[rest.once, on.demand, running.wanted, never]
+}
+
+#>wonder_low_sight_window
+?["At a reader's own magnification and contrast, what goes first?"]{
+  #:depth #!experiential ~#lens(orientation)
+  ~#with: @seven
+  ~#expect: "small labels and coloured marks go first; on this site a pinch on body text is taken by the page and tops out; on the canvas the ties and the fills cannot be told apart"
+  !probe{ "with their own zoom and contrast settings a reader opens /about/ on a phone and pinches a paragraph, then opens / at four times, then factshift.center with one line, and says at each what they can no longer read or reach" }
+  $%[reflow.holds, labels.lost, zoom.captured, chrome.crowds]
+}
+
+#>wonder_low_sight_legend
+?["Can a container say what it summarizes without colour, and does colour add anything once it does?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#with: @surface
+  ~#expect: "a word and the region's material are enough to tell folded from open; colour helps a low-vision reader only when it is ordered and no other meaning rides it"
+  !probe{ "on factshift.center a reader folds a body and opens it again under their own high-contrast or forced-colours setting, with labels shown and then hidden, and says how they knew which state it was in and what vanished" }
+  $%[word.enough, material.reads, colour.adds, nothing.reads]
+}
+
+#>wonder_low_sight_out
+?["With a keyboard alone, is there a way out of the stage, and does each host say where you are?"]{
+  #:depth #!experiential ~#lens(orientation)
+  ~#with: @interaction
+  ~#extends: "wonder_edges_undo"
+  ~#expect: "the ring of nodes reads as a trap; a title that is a mark, or one title at every address, loses the place"
+  !probe{ "a reader spends ten minutes on factshift.center with a keyboard only, then follows a line to its spw.quest page and to texture.website/felt, and names each place from its title and first heading" }
+  $%[way.out.found, ring.traps, host.unnamed]
+}
