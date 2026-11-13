@@ -15,14 +15,44 @@ export const SITE_MANIFEST = Object.freeze({
   description: DESCRIPTION,
   // A canvas reads in either direction; the snapshot says portrait-primary.
   orientation: "any",
+  display_override: ["window-controls-overlay", "standalone", "minimal-ui", "browser"],
   // spw.quest's Canvas link and a shared ?spw= line reuse the open window.
   launch_handler: { client_mode: ["navigate-existing", "auto"] },
-  categories: ["education", "productivity"],
+  categories: ["education", "productivity", "utilities"],
   // Text shared from another app lands as a line, by the address the canvas already reads.
   share_target: { action: "/", method: "GET", params: { text: "spw" } },
+  file_handlers: [
+    {
+      action: "/",
+      accept: {
+        "text/plain": [".spw", ".txt"],
+        "application/x-spw": [".spw"],
+      },
+      launch_type: "single-client",
+    },
+  ],
   shortcuts: [
-    { name: "Lay out a line", short_name: "A line", url: "/?spw=garden%5Bcare%5D%7Bseed%2C%20water%7D", description: "garden[care]{seed, water}, as nodes to move and link." },
-    { name: "Help", short_name: "Help", url: "/help", description: "The help topics, open in the Spw window." },
+    {
+      name: "Lay out a line",
+      short_name: "A line",
+      url: "/?spw=garden%5Bcare%5D%7Bseed%2C%20water%7D",
+      description: "garden[care]{seed, water}, as nodes to move and link.",
+      icons: [{ src: "/v0.0.1/favicon/96.png", sizes: "96x96", type: "image/png" }],
+    },
+    {
+      name: "Spw window",
+      short_name: "Spw",
+      url: "/?mode=spw",
+      description: "Open the prompt and thread on the canvas.",
+      icons: [{ src: "/v0.0.1/favicon/96.png", sizes: "96x96", type: "image/png" }],
+    },
+    {
+      name: "Help",
+      short_name: "Help",
+      url: "/help",
+      description: "The help topics, open in the Spw window.",
+      icons: [{ src: "/v0.0.1/favicon/96.png", sizes: "96x96", type: "image/png" }],
+    },
   ],
 });
 
@@ -46,6 +76,9 @@ export function headLines(manifest = {}, document = "/") {
   const icon = (manifest.icons || []).find((entry) => entry.sizes === "192x192")?.src || "/v0.0.1/favicon/192.png";
   return [
     `<meta name="theme-color" content="${manifest.theme_color || "#4c1d1d"}">`,
+    `<meta name="mobile-web-app-capable" content="yes">`,
+    `<meta name="apple-mobile-web-app-capable" content="yes">`,
+    `<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">`,
     `<link rel="apple-touch-icon" href="${icon}">`,
     `<meta name="apple-mobile-web-app-title" content="${manifest.short_name || "factshift"}">`,
     `<meta property="og:type" content="website">`,

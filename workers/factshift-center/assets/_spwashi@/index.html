@@ -11,8 +11,11 @@
   <link rel="modulepreload" crossorigin href="/assets/index-5axlAwnB.js">
   <link rel="stylesheet" crossorigin href="/assets/index-4C-wIQEO.css">
   <link rel="stylesheet" crossorigin href="/assets/spwashi@-g0YoMZaz.css">
-    <meta name="factshift-site-head" content="4" data-factshift-site-head>
+    <meta name="factshift-site-head" content="5" data-factshift-site-head>
     <meta name="theme-color" content="#4c1d1d">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="/v0.0.1/favicon/192.png">
     <meta name="apple-mobile-web-app-title" content="factshift">
     <meta property="og:type" content="website">
@@ -71,6 +74,9 @@
   };
   const start = () => navigator.serviceWorker.register("/sw.js", { scope: "/", updateViaCache: "none" }).then((registration) => {
     registration.update().catch(() => {});
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") registration.update().catch(() => {});
+    });
     offer(registration);
     const watch = (worker) => worker?.addEventListener("statechange", () => {
       if (worker.state === "installed") offer(registration);
@@ -81,6 +87,23 @@
   }).catch(() => {});
   if (document.readyState === "complete") start();
   else addEventListener("load", start, { once: true });
+
+  // PWA File Handling: files opened via OS association (.spw, .txt) dispatch to the canvas drop handler
+  if ("launchQueue" in window && "files" in window.LaunchParams.prototype) {
+    window.launchQueue.setConsumer(async (params) => {
+      if (!params || !params.files || !params.files.length) return;
+      for (const handle of params.files) {
+        try {
+          const file = await handle.getFile();
+          if (file && typeof DataTransfer !== "undefined") {
+            const dt = new DataTransfer();
+            dt.items.add(file);
+            document.dispatchEvent(new DragEvent("drop", { dataTransfer: dt, bubbles: true, cancelable: true }));
+          }
+        } catch {}
+      }
+    });
+  }
 })();</script>
 </body>
 </html>

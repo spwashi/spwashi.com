@@ -188,7 +188,10 @@ test('the installed face: the app\'s name, colors and icons, with the site\'s de
   assert.equal(manifest.theme_color, '#4c1d1d');
   assert.equal(manifest.icons.length, 5);
   assert.equal(manifest.orientation, 'any');
+  assert.deepEqual(manifest.display_override, ['window-controls-overlay', 'standalone', 'minimal-ui', 'browser']);
   assert.deepEqual(manifest.launch_handler, { client_mode: ['navigate-existing', 'auto'] });
+  assert.deepEqual(manifest.categories, ['education', 'productivity', 'utilities']);
+  assert.deepEqual(manifest.file_handlers, SITE_MANIFEST.file_handlers);
   assert.equal(manifest.description, DESCRIPTION);
   // Text shared from another app lands by the address the canvas already reads.
   assert.deepEqual(manifest.share_target, { action: '/', method: 'GET', params: { text: 'spw' } });
@@ -209,6 +212,9 @@ test('the canvas head gains a bar color, an iOS icon and a preview, once', async
   const head = html.slice(0, html.indexOf('</head>'));
   assert.equal(head.split('data-factshift-site-head').length - 1, 1);
   assert.match(head, /<meta name="theme-color" content="#4c1d1d">/);
+  assert.match(head, /<meta name="mobile-web-app-capable" content="yes">/);
+  assert.match(head, /<meta name="apple-mobile-web-app-capable" content="yes">/);
+  assert.match(head, /<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">/);
   assert.match(head, /<link rel="apple-touch-icon" href="\/v0\.0\.1\/favicon\/192\.png">/);
   assert.match(head, /<meta property="og:description" content="factshift\.center lays out a line of Spw/);
   assert.equal(withSiteHead(withSiteHead('<head></head>', 'x'), 'x').split('data-factshift-site-head').length - 1, 1);
@@ -237,7 +243,10 @@ test('a new shell is offered, never forced, and an offline arrival keeps its lin
   assert.match(page, /A new canvas is saved\./);
   assert.match(page, /postMessage\(\{ type: "skip-waiting" \}\)/);
   assert.match(page, /watch\(registration\.installing\)/, 'an install already under way is watched too');
+  assert.match(page, /visibilitychange/, 'checks for updates when page becomes visible');
+  assert.match(page, /launchQueue/, 'file handling dispatches to drop handler');
   const script = readFileSync(new URL('assets/sw.js', root), 'utf8');
   assert.match(script, /Your line is still in this address/);
   assert.match(script, /network\.catch\(\(\) => offline\(url\)\)/);
+  assert.match(script, /answer && answer\.ok/, 'falls back to cached canvas on server error');
 });

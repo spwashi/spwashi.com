@@ -84,6 +84,13 @@ summary = #[
   density = `Prompt density: authored lines carry about five words in 34 characters. Each fold trades characters for structure: {…} costs three characters and keeps the place of everything it holds. A prompt for an image model can take the summary at the width it allows and keep the line's shape.`
 }[reg=facet]
 
+^"fluency"{
+  axis = `Learnability and fluency as an axis for intrinsic reward: Papert's low floor (direct touch, throw-to-home, single ?spw= line), high ceiling (keyboard turns, multi-line AST mutations, gesture compass, #spw64= script ingestion), and wide walls (linguistics, philosophy, story tropes, code architecture).`
+  flow = `Flow state emerges where resistance teaches without hostility (@spirit_cycle). Cognitive friction dissolves into motor reflexes: Esc returns to canvas, Cmd+Enter runs, Tab closes open braces, ‹ n/N › walks threads. The practitioner experiences expressive velocity.`
+  ephemeral = `Ephemeral subtraction: UI exists only when intention calls it; tools put down return the handle to the corner, leaving the stage uncluttered for contemplation. Previews cost zero mutation.`
+  hypermedia = `Hyperspace continuity: URLs are semantic coordinates; #spw64= carries full multi-line scripts in the fragment without leaking to network logs, and peer doors (quest, texture, canvas) bridge modalities with lossless reversibility.`
+}[reg=facet]
+
 ^"holds"{
   owners = `Gestures stay @controls' grammar and the creator's hand; the reading family and particles are @braces'; spw.quest's examples are its plan's. This cache names predictions and gaps, and builds only the summary.`
   opens = `No sigil, no data-spw-* family, no package, no workbench edit.`
