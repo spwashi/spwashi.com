@@ -1,0 +1,333 @@
+/* ==========================================================================
+   components/site-search-dialog.css — route probe dialog
+   --------------------------------------------------------------------------
+   Sitewide search overlay over public/data/site-search-index.json.
+   Deferred until public/js/runtime/navigation/site-search.js builds the
+   dialog; cascade stays components.
+   ========================================================================== */
+
+@layer reset, tokens, shell, typography, grammar, components, systems, routes, handles, effects, ornament;
+
+@layer components {
+:root {
+  --spw-site-search-duration: var(--spw-layout-selection-duration, var(--spw-microinteraction-pulse-duration, 280ms));
+}
+
+.spw-site-search {
+  position: fixed;
+  inset: 0;
+  max-inline-size: none;
+  max-block-size: 100dvh;
+  overflow-y: auto;
+  z-index: calc(var(--z-priority, 2000) + 20);
+  display: grid;
+  /* Stretch the column so max-content hits cannot center-expand the panel. */
+  place-items: start stretch;
+  padding:
+    max(4.5rem, calc(var(--spw-shell-menu-offset, 4rem) + 1rem))
+    max(0.75rem, env(safe-area-inset-right))
+    max(1rem, env(safe-area-inset-bottom))
+    max(0.75rem, env(safe-area-inset-left));
+  background: color-mix(in oklab, var(--bg, #111) 48%, transparent);
+  backdrop-filter: blur(5px) saturate(0.94);
+  -webkit-backdrop-filter: blur(5px) saturate(0.94);
+}
+
+.spw-site-search[hidden],
+.spw-site-search[data-spw-site-search="closed"] {
+  display: none;
+}
+
+.spw-site-search__panel {
+  width: min(36rem, 100%);
+  max-width: 100%;
+  max-height: min(70dvh, 32rem);
+  display: grid;
+  /* header, facets, status, scrolling hits, footer — five children. */
+  grid-template-rows: auto auto auto minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.45rem;
+  min-width: 0;
+  min-inline-size: 0;
+  margin-inline: auto;
+  padding: 0.7rem;
+  border: 1px solid color-mix(in oklab, var(--line, rgba(14, 18, 20, 0.14)) 78%, var(--op-probe-color, #6a3fb8) 22%);
+  border-radius: var(--shape-floating, 16px);
+  background:
+    linear-gradient(180deg, color-mix(in oklab, var(--op-probe-color, #6a3fb8) 6%, transparent), transparent 8rem),
+    color-mix(in oklab, var(--surface-strong, #fff) 96%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, #fff 42%, transparent),
+    0 18px 48px color-mix(in oklab, #000 22%, transparent);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+}
+
+.spw-site-search__header {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: var(--touch-target-min, 2.75rem);
+  padding: 0.28rem 0.42rem;
+  border: 1px solid color-mix(in oklab, var(--line, rgba(14, 18, 20, 0.14)) 84%, transparent);
+  border-radius: var(--shape-control, 0.78rem);
+  background: color-mix(in oklab, var(--surface, #fff) 94%, transparent);
+}
+
+.spw-site-search__op {
+  color: var(--op-probe-color, #4a2180);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-weight: 700;
+}
+
+.spw-site-search__input {
+  min-width: 0;
+  min-height: 2.2rem;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  outline: none;
+}
+
+.spw-site-search__close {
+  min-width: var(--touch-target-min, 2.75rem);
+  min-height: var(--touch-target-min, 2.75rem);
+  border: 0;
+  border-radius: var(--shape-control, 0.78rem);
+  background: transparent;
+  color: inherit;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.spw-site-search__close:is(:hover, :focus-visible) {
+  background: color-mix(in oklab, var(--op-probe-color, #6a3fb8) 12%, transparent);
+  outline: none;
+}
+
+.spw-site-search__facets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28rem;
+  padding-inline: 0.1rem;
+}
+
+.spw-site-search__facet {
+  min-height: 1.9rem;
+  padding: 0.22rem 0.55rem;
+  border: 1px solid color-mix(in oklab, var(--line, rgba(14, 18, 20, 0.14)) 82%, transparent);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--surface, #fff) 94%, transparent);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.72));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+  font-weight: 650;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.spw-site-search__facet[data-active="true"],
+.spw-site-search__facet[aria-selected="true"] {
+  border-color: color-mix(in oklab, var(--op-probe-color, #6a3fb8) 34%, transparent);
+  background: color-mix(in oklab, var(--op-probe-color, #6a3fb8) 12%, var(--surface-strong, #fff));
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+}
+
+.spw-site-search__status {
+  margin: 0;
+  padding-inline: 0.2rem;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: 0.78rem;
+}
+
+.spw-site-search__list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
+.spw-site-search__item {
+  min-width: 0;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+
+.spw-site-search__group {
+  display: grid;
+  gap: 0.18rem;
+}
+
+.spw-site-search__group-label {
+  margin: 0.2rem 0 0.05rem;
+  padding-inline: 0.25rem;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.62));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.spw-site-search__result {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.12rem;
+  width: 100%;
+  min-width: 0;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  /* Floating-chrome marks dialog links nowrap/max-content for compact
+     controls. Hits are body copy inside that dialog — they must wrap. */
+  text-wrap: wrap;
+  white-space: normal;
+  overflow-wrap: break-word;
+  min-height: var(--touch-target-min, 2.75rem);
+  padding: 0.42rem 0.55rem;
+  border: 1px solid transparent;
+  border-radius: var(--shape-control, 0.78rem);
+  color: inherit;
+  text-decoration: none;
+  transition:
+    border-color var(--spw-site-search-duration) var(--ease-settle, ease),
+    background-color var(--spw-site-search-duration) var(--ease-settle, ease),
+    transform var(--spw-site-search-duration) var(--ease-settle, ease);
+}
+
+.spw-site-search__title-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.38rem;
+  width: 100%;
+  min-width: 0;
+}
+
+/* A scanned piece shows itself beside its title and question. */
+.spw-site-search__result--piece {
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, 1fr);
+  column-gap: 0.6rem;
+  align-items: center;
+}
+
+.spw-site-search__result--piece .spw-site-search__thumb {
+  grid-row: span 2;
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
+  object-fit: contain;
+  border-radius: 0.25rem;
+  background: color-mix(in oklab, var(--ink, #111) 6%, transparent);
+}
+
+.spw-site-search__sigil {
+  flex: 0 0 auto;
+  color: var(--op-probe-color, #4a2180);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.78rem;
+  font-weight: 750;
+}
+
+.spw-site-search__result[data-spw-motion="anchor"] .spw-site-search__sigil { color: var(--op-frame-color, #1a9999); }
+.spw-site-search__result[data-spw-motion="collapse"] .spw-site-search__sigil { color: var(--op-probe-color, #6a3fb8); }
+.spw-site-search__result[data-spw-motion="lift"] .spw-site-search__sigil { color: var(--op-object-color, #c48a1a); }
+.spw-site-search__result[data-spw-motion="tether"] .spw-site-search__sigil { color: var(--op-ref-color, #2f6fed); }
+.spw-site-search__result[data-spw-motion="pair"] .spw-site-search__sigil { color: var(--op-topic-color, #2d8a6e); }
+.spw-site-search__result[data-spw-motion="seal"] .spw-site-search__sigil { color: var(--op-action-color, #0f6b6b); }
+.spw-site-search__result[data-spw-motion="discharge"] .spw-site-search__sigil { color: var(--op-action-color, #0f6b6b); }
+
+.spw-site-search__item[data-active="true"] .spw-site-search__result,
+.spw-site-search__result:is(:hover, :focus-visible),
+.spw-site-search__result[aria-selected="true"] {
+  border-color: color-mix(in oklab, var(--op-probe-color, #6a3fb8) 24%, transparent);
+  background: color-mix(in oklab, var(--surface-strong, #fff) 90%, var(--op-probe-color, #6a3fb8) 10%);
+  outline: none;
+}
+
+.spw-site-search__title {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-weight: 650;
+  line-height: 1.25;
+  overflow-wrap: break-word;
+}
+
+.spw-site-search__meta {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.7rem;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.spw-site-search__expression {
+  display: inline-flex;
+  margin: 0.08rem 0.55rem 0.35rem;
+  padding: 0.12rem 0.42rem;
+  border: 1px solid color-mix(in srgb, var(--op-probe-color, #6a3fb8) 28%, transparent);
+  border-radius: var(--shape-control, 0.78rem);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 88%, var(--op-probe-color, #6a3fb8) 12%);
+  color: color-mix(in srgb, var(--ink, #111) 78%, var(--op-probe-color, #6a3fb8) 22%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+  line-height: 1.3;
+  cursor: pointer;
+}
+
+.spw-site-search__expression:is(:hover, :focus-visible) {
+  outline: none;
+  border-color: color-mix(in srgb, var(--op-probe-color, #6a3fb8) 48%, transparent);
+}
+
+.spw-site-search__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.55rem;
+  position: relative;
+  z-index: 1;
+  padding: 0.35rem 0.2rem 0;
+  border-top: 1px solid color-mix(in oklab, var(--line, rgba(14, 18, 20, 0.14)) 72%, transparent);
+  background: var(--surface-strong, #fff);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: 0.72rem;
+}
+
+.spw-site-search__footer .spw-spell {
+  display: inline-flex;
+  padding: 0.08rem 0.28rem;
+  border: 1px solid color-mix(in oklab, var(--line, rgba(14, 18, 20, 0.14)) 80%, transparent);
+  border-radius: 0.35rem;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+}
+
+html[data-spw-search-selection-pulse] {
+  --spw-interaction-phase-weight: max(var(--spw-interaction-phase-weight, 0), 0.36);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spw-site-search__result {
+    transition: none;
+  }
+}
+
+@media (max-width: 45rem) {
+  .spw-site-search__input {
+    /* Keep focus from zooming the viewport on mobile Safari. */
+    font-size: max(1rem, 16px);
+  }
+}
+}

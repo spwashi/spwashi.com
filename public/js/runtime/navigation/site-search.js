@@ -19,6 +19,7 @@
  */
 
 import { dayWindow } from '/public/js/kernel/day-seed.js';
+import { ensureSiteSearchStyles } from '/public/js/kernel/deferred-styles.js';
 import {
   annotateFloatingChromeElement,
   requestFloatingChromeSync,
@@ -435,6 +436,7 @@ function loadIndex() {
 
 function ensureDialog() {
   if (dialog) return dialog;
+  ensureSiteSearchStyles();
 
   dialog = document.createElement('div');
   dialog.className = 'spw-site-search';

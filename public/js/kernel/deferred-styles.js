@@ -200,3 +200,12 @@ export function ensureEnrichmentStyles() {
 export function ensureSpwSourceStyles() {
   return ensureDeferredStyles('spw-source-styles', '/public/css/components/spw-source.css');
 }
+
+/**
+ * Site search dialog (components/site-search-dialog.css): the Ctrl/Cmd+K
+ * route probe overlay. Runtime-owned: site-search.js loads it when first
+ * building the dialog, leaving only the progressive host in core.css.
+ */
+export function ensureSiteSearchStyles() {
+  return ensureDeferredStyles('spw-site-search-styles', '/public/css/components/site-search-dialog.css');
+}
