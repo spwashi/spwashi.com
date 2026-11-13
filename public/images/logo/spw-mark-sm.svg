@@ -3,15 +3,15 @@
   <title id="spw-mark-sm-title">Spwashi mark (compact)</title>
   <!--
     Compact variant — heavier strokes for 16–32px / favicon contexts
-    W reach compressed slightly (±1 unit vertical) to read cleaner at small sizes
+    The loop's curl stops halfway, without the stem, so it reads as a hook and does not clot
   -->
 
   <path
     id="mark-arc"
     class="mark-layer mark-layer--arc"
-    d="M 8 20 Q 24 5 40 20"
+    d="M 4 9.19 C 1.83 11.12 1.06 15.45 4.93 16.23 C 10.5 17.31 19.4 10.04 28.3 5.24 C 35.26 1.83 43.16 1.06 45.33 4.93 C 47.26 9.26 43.16 16 35.26 20.72 C 29.85 23.97 23.5 27.22 19.94 26.75 C 17.47 26.44 17.77 22.88 19.63 21.64"
     stroke="var(--spw-logo-stroke, currentColor)"
-    stroke-width="var(--spw-logo-stroke-width, 3.1)"
+    stroke-width="var(--spw-logo-stroke-width, 2.6)"
     stroke-linecap="round"
     fill="none"
   />
@@ -19,11 +19,12 @@
   <path
     id="mark-w"
     class="mark-layer mark-layer--w"
-    d="M 8 26 L 16 44 L 24 26 L 32 44 L 40 26"
+    d="M 8.18 24.51 L 9.57 37.66 L 14.37 32.63 L 19.17 49.66 L 22.11 29.54"
     stroke="var(--spw-logo-stroke, currentColor)"
-    stroke-width="var(--spw-logo-stroke-width, 3.1)"
-    stroke-linecap="round"
-    stroke-linejoin="round"
+    stroke-width="var(--spw-logo-stroke-width, 2.6)"
+    stroke-linecap="butt"
+    stroke-linejoin="miter"
+    stroke-miterlimit="6"
     fill="none"
   />
 </svg>
