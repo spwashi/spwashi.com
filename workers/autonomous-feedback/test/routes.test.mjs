@@ -935,3 +935,45 @@ test('setup says when no file was found, and checks again at once when asked', a
     restoreFetch();
   }
 });
+
+test('routing ergonomics normalize pasted paths, shortcuts, embeds, and helpful 404s', async () => {
+  const restore = stubFetch();
+  try {
+    const startShortcut = await get('autonomous.feedback', '/start/WWW.Shop.example?how=frame');
+    assert.equal(startShortcut.status, 302);
+    assert.equal(startShortcut.headers.get('location'), 'https://autonomous.feedback/start?how=frame&host=shop.example');
+
+    const siteSetup = await get('autonomous.feedback', '/shop.example/setup');
+    assert.equal(siteSetup.status, 302);
+    assert.equal(siteSetup.headers.get('location'), 'https://autonomous.feedback/start?host=shop.example');
+
+    const meterSlash = await get('autonomous.feedback', '/meter/');
+    assert.equal(meterSlash.status, 200);
+    const meterShortcut = await get('autonomous.feedback', '/meter/www.Shop.example');
+    assert.equal(meterShortcut.status, 302);
+    assert.equal(meterShortcut.headers.get('location'), 'https://autonomous.feedback/meter?host=shop.example');
+
+    const pasted = await get('autonomous.feedback', '/https://www.Shop.example/broken');
+    assert.equal(pasted.status, 302);
+    assert.equal(pasted.headers.get('location'), 'https://autonomous.feedback/shop.example/broken');
+
+    const embedNorm = await get('autonomous.feedback', '/embed/WWW.Shop.example/question');
+    assert.equal(embedNorm.status, 301);
+    assert.equal(embedNorm.headers.get('location'), 'https://autonomous.feedback/embed/shop.example/question');
+
+    const missHtml = await get('autonomous.feedback', '/not-a-domain-at-all');
+    assert.equal(missHtml.status, 404);
+    const missBody = await missHtml.text();
+    assert.match(missBody, /href="\/start"/);
+    assert.match(missBody, /href="\/meter"/);
+
+    const missJson = await get('autonomous.feedback', '/not-a-domain-at-all', { headers: { accept: 'application/json' } });
+    assert.equal(missJson.status, 404);
+    const missData = await missJson.json();
+    assert.equal(missData.error, 'not_found');
+    assert.ok(Array.isArray(missData.routes) && missData.routes.includes('/start'));
+    assert.match(CLIENT_SCRIPT, /input\[name="what"\]:checked/);
+  } finally {
+    restore();
+  }
+});
