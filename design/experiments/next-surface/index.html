@@ -14,7 +14,7 @@
 </head>
 <body data-spw-surface="website" data-spw-stylesheet-mode="scoped" data-spw-features="operators navigator" data-spw-page-family="spec" data-spw-page-role="design-reference" data-spw-page-seed="page_design_experiments_next_surface" data-spw-route-family="editorial design systems" data-spw-related-routes="/design/|/design/logos/|/design/website/|/">
     <a class="skip-link" href="#main-content">Skip to content</a>
-    <spw-site-header current="The next surface" current_href="/design/experiments/next-surface/" indicator="design" nav_items="Design:/design/|Logos:/design/logos/|Home:/"></spw-site-header>
+    <spw-site-header current="The next surface" current_href="/design/experiments/next-surface/" indicator="design" nav_items="Design:/design/|Experiments:/design/experiments/|Logos:/design/logos/|Home:/"></spw-site-header>
     <main id="main-content" tabindex="-1" aria-labelledby="next-surface-title">
         <article>
             <!-- DRAFT copy (2026-11-13), for the creator's review. Nothing outside this page loads next-surface.css. -->
@@ -107,6 +107,13 @@ home[live]{season.close}(production)&lt;now&gt;
                         </nav>
                     </div>
                 </div>
+            </section>
+
+            <section class="spw-frame" id="next-surface-still" data-spw-kind="frame" data-spw-role="reference" aria-labelledby="next-surface-still-title">
+                <h2 id="next-surface-still-title">Taking a still</h2>
+                <p><strong>The question:</strong> which of the two would you rather land on, on a phone and on a laptop, and what would you keep from the one you did not choose?</p>
+                <p><strong>A still should show</strong> each half whole, <a href="#next-surface-established">as drawn now</a> and <a href="#next-surface-proposed">as proposed</a>, at 1280 and at 390 wide, and the proposed half once in dark mode.</p>
+                <p><strong>To check it from a checkout:</strong> <code>npm run smoke:nav:design -- --routes /design/experiments/next-surface/</code> reads every control on this page at both widths and saves stills where git does not keep them. On 2026-11-13 it found two faults, both in the half drawn now: Home's two sibling links are 17 px tall at a desk.</p>
             </section>
 
             <section class="spw-frame" id="next-surface-carries" data-spw-kind="frame" data-spw-role="reference" aria-labelledby="next-surface-carries-title">
