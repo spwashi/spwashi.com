@@ -20,11 +20,13 @@
   surface: "folios"
   role: "folio-scan"
   formats_available: ["avif", "webp"]
+  highres: "folio-unary-motions-of-my-brand-full.webp — 2400px WebP, opened in the weekly five (public/data/folio-highres.json)"
   alt_text: "Laminated folio, pink and magenta paint: UNARY MOTIONS OF MY BRAND heads an operator table from ~ POTENTIAL to ^ INTEGRATION, beside TEAL STRIPES VIBES, Spw dialect, Unified Augmentation Language, Unary Operators, swoop and BINARY"
   tiers: {
     thumb: { width: 202, height: 256, avif_kib: 7, webp_kib: 7 }
     display: { width: 404, height: 512, avif_kib: 42, webp_kib: 27 }
     hero: { width: 809, height: 1024, avif_kib: 119, webp_kib: 94 }
+    full: { width: 1895, height: 2400, webp_kib: 480, opened: "2026-W46" }
   }
 }
 

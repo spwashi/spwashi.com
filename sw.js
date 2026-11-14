@@ -46,7 +46,7 @@ const OFFLINE_FOLIO_THUMB_URL = '/public/images/assets/folios/folio-what-kind-of
 // srcset asks a phone (44vw at DPR 2-3) for the display tier (400-512w), so that
 // tier rides along in avif (the <source type=image/avif> wins wherever it
 // decodes); the thumbs serve DPR-1 screens. Under 200KB for the five.
-const FOLIO_WEEK = '2026-W44';
+const FOLIO_WEEK = '2026-W46';
 const FOLIO_WEEK_RECORD_URL = '/public/data/folio-highres.json';
 const FOLIO_THUMB_BASE = '/public/images/assets/folios/folio-';
 const FOLIO_THUMB_TIERS = ['-thumb.avif', '-thumb.webp', '-display.avif'];

@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-01T16:17:53.779Z",
+  "generatedAt": "2026-11-14T01:43:12.868Z",
   "sourceRoot": "/public/images/",
-  "count": 2555,
+  "count": 2560,
   "concepts": [
     "about",
     "algorithm",
@@ -2379,6 +2379,17 @@
       "swapHint": "Use /public/images/assets/folios/folio-four-screens-dark-arrow-display.webp when a display visual needs a stable tracked asset."
     },
     {
+      "id": "folio-four-screens-dark-arrow-full",
+      "title": "Folio Four Screens Dark Arrow Full",
+      "path": "/public/images/assets/folios/folio-four-screens-dark-arrow-full.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 648074,
+      "role": "image",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-four-screens-dark-arrow-full.webp when a image visual needs a stable tracked asset."
+    },
+    {
       "id": "folio-four-screens-dark-arrow",
       "title": "Folio Four Screens Dark Arrow",
       "path": "/public/images/assets/folios/folio-four-screens-dark-arrow-hero.avif",
@@ -3404,6 +3415,17 @@
       "swapHint": "Use /public/images/assets/folios/folio-how-water-works-agua-display.webp when a display visual needs a stable tracked asset."
     },
     {
+      "id": "folio-how-water-works-agua-full",
+      "title": "Folio How Water Works Agua Full",
+      "path": "/public/images/assets/folios/folio-how-water-works-agua-full.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 493604,
+      "role": "image",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-how-water-works-agua-full.webp when a image visual needs a stable tracked asset."
+    },
+    {
       "id": "folio-how-water-works-agua",
       "title": "Folio How Water Works Agua",
       "path": "/public/images/assets/folios/folio-how-water-works-agua-hero.avif",
@@ -3468,6 +3490,17 @@
       "role": "display",
       "concepts": [],
       "swapHint": "Use /public/images/assets/folios/folio-it-is-my-boonhat-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-it-is-my-boonhat-full",
+      "title": "Folio It Is My Boonhat Full",
+      "path": "/public/images/assets/folios/folio-it-is-my-boonhat-full.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 572344,
+      "role": "image",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-it-is-my-boonhat-full.webp when a image visual needs a stable tracked asset."
     },
     {
       "id": "folio-it-is-my-boonhat",
@@ -5668,6 +5701,19 @@
       "swapHint": "Use /public/images/assets/folios/folio-spwashi-design-and-development-display.webp when a design visual needs a stable tracked asset."
     },
     {
+      "id": "folio-spwashi-design-and-development-full",
+      "title": "Folio Design And Development Full",
+      "path": "/public/images/assets/folios/folio-spwashi-design-and-development-full.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 417350,
+      "role": "image",
+      "concepts": [
+        "design"
+      ],
+      "swapHint": "Use /public/images/assets/folios/folio-spwashi-design-and-development-full.webp when a design visual needs a stable tracked asset."
+    },
+    {
       "id": "folio-spwashi-design-and-development",
       "title": "Folio Design And Development",
       "path": "/public/images/assets/folios/folio-spwashi-design-and-development-hero.avif",
@@ -6106,6 +6152,17 @@
       "role": "display",
       "concepts": [],
       "swapHint": "Use /public/images/assets/folios/folio-unary-motions-of-my-brand-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "folio-unary-motions-of-my-brand-full",
+      "title": "Folio Unary Motions Of My Brand Full",
+      "path": "/public/images/assets/folios/folio-unary-motions-of-my-brand-full.webp",
+      "directory": "public/images/assets/folios",
+      "format": "webp",
+      "bytes": 491498,
+      "role": "image",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/folios/folio-unary-motions-of-my-brand-full.webp when a image visual needs a stable tracked asset."
     },
     {
       "id": "folio-unary-motions-of-my-brand",
@@ -19470,7 +19527,7 @@
       "path": "/public/images/logo/spw-brand-plate.svg",
       "directory": "public/images/logo",
       "format": "svg",
-      "bytes": 3403,
+      "bytes": 4920,
       "role": "vector",
       "concepts": [],
       "swapHint": "Use /public/images/logo/spw-brand-plate.svg when a vector visual needs a stable tracked asset."
@@ -19481,7 +19538,7 @@
       "path": "/public/images/logo/spw-lockup-horizontal.svg",
       "directory": "public/images/logo",
       "format": "svg",
-      "bytes": 1187,
+      "bytes": 2576,
       "role": "vector",
       "concepts": [],
       "swapHint": "Use /public/images/logo/spw-lockup-horizontal.svg when a vector visual needs a stable tracked asset."
@@ -19492,7 +19549,7 @@
       "path": "/public/images/logo/spw-lockup-stacked.svg",
       "directory": "public/images/logo",
       "format": "svg",
-      "bytes": 1354,
+      "bytes": 2680,
       "role": "vector",
       "concepts": [],
       "swapHint": "Use /public/images/logo/spw-lockup-stacked.svg when a vector visual needs a stable tracked asset."
@@ -19503,7 +19560,7 @@
       "path": "/public/images/logo/spw-mark-mask.svg",
       "directory": "public/images/logo",
       "format": "svg",
-      "bytes": 765,
+      "bytes": 1103,
       "role": "vector",
       "concepts": [],
       "swapHint": "Use /public/images/logo/spw-mark-mask.svg when a vector visual needs a stable tracked asset."
@@ -19514,7 +19571,7 @@
       "path": "/public/images/logo/spw-mark-sm.svg",
       "directory": "public/images/logo",
       "format": "svg",
-      "bytes": 894,
+      "bytes": 1160,
       "role": "vector",
       "concepts": [],
       "swapHint": "Use /public/images/logo/spw-mark-sm.svg when a vector visual needs a stable tracked asset."
@@ -19525,7 +19582,7 @@
       "path": "/public/images/logo/spw-mark-stroke.svg",
       "directory": "public/images/logo",
       "format": "svg",
-      "bytes": 1576,
+      "bytes": 1693,
       "role": "vector",
       "concepts": [],
       "swapHint": "Use /public/images/logo/spw-mark-stroke.svg when a vector visual needs a stable tracked asset."
@@ -19536,7 +19593,7 @@
       "path": "/public/images/logo/spw-mark-symbol.svg",
       "directory": "public/images/logo",
       "format": "svg",
-      "bytes": 1577,
+      "bytes": 3224,
       "role": "vector",
       "concepts": [],
       "swapHint": "Use /public/images/logo/spw-mark-symbol.svg when a vector visual needs a stable tracked asset."
@@ -19547,7 +19604,7 @@
       "path": "/public/images/logo/spw-mark.svg",
       "directory": "public/images/logo",
       "format": "svg",
-      "bytes": 1208,
+      "bytes": 2957,
       "role": "vector",
       "concepts": [],
       "swapHint": "Use /public/images/logo/spw-mark.svg when a vector visual needs a stable tracked asset."
