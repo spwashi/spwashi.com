@@ -93,11 +93,12 @@ test('the page and the recipe name the same expected files', () => {
   for (const file of EXPECTED_FILES) assert.ok(INIT_PROMPT.includes(file), `${file} is missing from the recipe`);
 });
 
-// The guide's statement of what the notation is for. It stays verbatim.
+// The guide's about, in the creator's words of 2026-11-14 ("the about should be
+// a bit more direct"). It stays verbatim.
 const ORIGIN = [
-  'This is for work that keeps a reading inspectable. A line stays a note a person can read, and a tool can still find it, check it, and follow its links. A mark says what a word is doing. A brace says which slot that word fills.',
-  'When two readings of one subject are in hand, name the slots they share and the slot where they part. Hold them on the <a href="/specimens">shelf</a>. Edit one slot in the <a href="/build">editor</a>. A question on a line carries the probe that would answer it.',
-  'Joins stay distinct, so a comparison can say which relation moved.',
+  'Spw started while I was exploring <a href="https://github.com/spwashi/factshift">factshift</a>, before it became factshift.com and then <a href="https://factshift.center">factshift.center</a>.',
+  'It was first meant as a tagging system for pivoting across higher dimensions. Then I learned more about cognition and epistemology. Now Spw is a language for navigating the metamaterial properties of linguistics.',
+  'In practice, a mark says what a word is doing and a brace says which slot it fills. Hold two readings on the <a href="/specimens">shelf</a> and name the slot where they part, or change one slot in the <a href="/build">editor</a>. Joins stay distinct, so a comparison can say which relation moved.',
   'The fuller statement is <a href="https://spwashi.com/topics/software/spw/#expressiveness-goals">what Spw should let you say</a>.',
 ];
 const SITE_BUNDLE = new URL('../../../public/js/semantic/spw-workbench-reader.js', import.meta.url);
