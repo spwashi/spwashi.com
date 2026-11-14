@@ -26,8 +26,17 @@
 // do not: how far down a reader can walk, whether a word holds still while its
 // slot changes, whether neighbors under different laws can say why they differ,
 // and what a wide body does on a phone. `asks` says which.
+//
+// The team row is what a software team passes around, written so a reader at
+// any level can find their way in (2026-11-14). The pipeline walks the common
+// data-processing pass with each step wearing the mark that names its job; the
+// review says one point by valence, stance and register; the records are the
+// forms engineering data takes; the surfaces are print's and the screen's; and
+// the primitives and algorithms name the parts most code is built from; a role card holds one member's skills applied to a role, with the snippets
+// they kept; and the onboarding path routes a junior, a mid-level and a senior
+// engineer through the files.
 
-export const EXAMPLE_GROUPS = Object.freeze(["Bench","Study","Board","Stage","Trial"]);
+export const EXAMPLE_GROUPS = Object.freeze(["Bench","Study","Board","Stage","Trial","Team"]);
 
 export const EXAMPLES = Object.freeze([
   {
@@ -377,6 +386,243 @@ pantry = shelf[full]{
   salt, sugar, yeast, honey,
   vinegar, oil, cumin, clove,
   bay, thyme, sage, dill
+}`,
+  },
+  {
+    id: "pipeline",
+    group: "Team",
+    tab: "Data pipeline",
+    file: "pipeline.spw",
+    says: "The common data-processing pass, in order: ground the units, fix the schema, keep valid rows, compute, join, group, sum, rank, index, show, and page on. Each step wears the mark that names its job.",
+    try: "Add a step after &join{customers}: ; ?keep[active]{customer}",
+    script: `#>order_pipeline
+#:pipeline #!data
+@records: ~"./records.spw#schema"
+@review: ~"./review.spw"
+
+source = $orders[csv]{id, customer, qty, price}
+steps = path{
+  .ground{utc, usd};
+  =schema{qty, price};
+  ?keep[valid]{qty, price};
+  !map{total};
+  &join{customers};
+  ^group[by]{customer};
+  %sum{total};
+  *rank[desc]{total};
+  #index{customer};
+  @show[top]{ten};
+  ~next{page}
+}
+run = {source ~> steps ~> report}
+
+?["Which step must run before the sum?"]{
+  ~#expect: \`the keep, so a bad row never reaches %sum\`
+  !probe{ "move ?keep below %sum and read what the total now counts" }
+}`,
+  },
+  {
+    id: "review",
+    group: "Team",
+    tab: "Review voice",
+    file: "review.spw",
+    says: "One review point said three ways: by valence, from warm to blocking; by stance, from a question to a requirement, with a confidence; and by register, for a junior, a mid-level or a senior engineer.",
+    try: "Change confidence to 0.5, and add a boon line of your own.",
+    script: `#>review_voice
+#:nuance #!review
+@pipeline: ~"./pipeline.spw#steps"
+
+point = keep{before ~> sum}
+
+^"valence"{
+  boon = \`Good catch: no bad row reaches the sum.\`
+  bone = \`The keep runs before the sum.\`
+  bane = \`A bad row can still reach the sum.\`
+  bonk = \`The total doubled after this merge.\`
+  honk = \`This blocks the release.\`
+}[reg=facet]
+
+^"stance"{
+  ask = ?point<curious>
+  offer = ~point<suggestion>
+  need = !point<blocking>
+  credit = *point<kept>
+  confidence = 0.8
+}[reg=facet]
+
+^"register"{
+  junior = explain[step]{why, how, try}
+  mid = weigh[trade]{cost, option}
+  senior = flag[risk]{scope, owner}
+}[reg=facet]`,
+  },
+  {
+    id: "records",
+    group: "Team",
+    tab: "Engineering records",
+    file: "records.spw",
+    says: "The records a software team passes around, each in a line: a schema, a config, an API contract, a dependency graph, a test run, a metric, a diff, a ticket, a trace, and a dated log.",
+    try: "Add a line: owner = team[payments]{checkout, refunds}",
+    script: `#>engineering_records
+#:record #!engineering
+@pipeline: ~"./pipeline.spw"
+
+schema = order{id, customer, qty, price}
+config = checkout[prod]{timeout, retries}
+contract = post[orders]{order ~> receipt}<api>
+deps = service{web ~> api, api ~> db}
+tests = suite[checkout]{pass, fail, skip}
+metric = latency[p95]{checkout}<week>
+diff = change[timeout]{ten ~> thirty}
+ticket = bug[open]{checkout, timeout}<t812>
+trace = request{web ~> api ~> db}<span>
+
+^"log"{
+ >>[2026-11-14 09:12] error — checkout timed out at 10s
+ >>[2026-11-14 09:40] change — timeout raised to 30s
+ >>[2026-11-14 10:05] measure — p95 back under 400ms
+}`,
+  },
+  {
+    id: "surfaces",
+    group: "Team",
+    tab: "Publishing surfaces",
+    file: "surfaces.spw",
+    says: "The interactive surfaces of print and of the screen as two censuses, the hand each one asks for, and the print surface each screen surface grew from.",
+    try: "Add a print surface after insert: , bookmark",
+    script: `#>publishing_surfaces
+#:census #!publishing
+@records: ~"./records.spw"
+
+print = book{
+  cover, spine, endpaper, contents,
+  spread, margin, footnote, caption,
+  pull_quote, index, fold_out, insert
+}
+screen = page{
+  link, button, menu, search,
+  form, field, dialog, tab,
+  scroll, carousel, comment, share,
+  player, map, toast, tooltip
+}
+hands = {
+  turn{spread, fold_out, insert},
+  scan{contents, index, caption},
+  tap{link, button, tab, share},
+  type{search, field, comment},
+  drag{scroll, carousel, map}
+}
+lineage = {
+  contents ~> menu, index ~> search,
+  footnote ~> tooltip, spread ~> scroll,
+  margin ~> comment, insert ~> dialog
+}`,
+  },
+  {
+    id: "primitives",
+    group: "Team",
+    tab: "Primitives",
+    file: "primitives.spw",
+    says: "The values and structures most code is built from, each with what it does quickly and what it costs: scalars, then lists, maps and sets, stacks and queues, heaps, trees and graphs.",
+    try: "Add a structure: trie = tree[prefix]{insert, lookup}<log_n>",
+    script: `#>primitives
+#:census #!computing
+@algorithms: ~"./algorithms.spw"
+
+scalars = {number, text, flag, none, time}
+array = list[indexed]{read, append}<constant>
+map = table[hashed]{put, get, has}<constant>
+set = table[unique]{add, has}<constant>
+stack = list[last_in]{push, pop}<constant>
+queue = list[first_in]{enqueue, dequeue}<constant>
+heap = tree[ordered]{push, pop_min}<log_n>
+tree = node{value, children}<log_n>
+graph = node{value, edges}<v_plus_e>
+
+?["Which structure would you reach for to dedupe a stream?"]{
+  ~#expect: \`a set, since has is constant\`
+  !probe{ "count lookups per row with a list, then with a set" }
+}`,
+  },
+  {
+    id: "algorithms",
+    group: "Team",
+    tab: "Algorithms",
+    file: "algorithms.spw",
+    says: "Common algorithms as paths of marked steps: search, sort, walk a graph, slide a window, and remember a subproblem. The cost each one pays rides in the scene.",
+    try: "Add one: two_pointers = path{=left{start}; =right{end}; ~step{inward}; ?meet}<n>",
+    script: `#>algorithms
+#:study #!computing
+@primitives: ~"./primitives.spw"
+@pipeline: ~"./pipeline.spw#steps"
+
+binary_search = path{
+  =range{low, high};
+  ~halve{mid};
+  ?compare{target};
+  @return{index}
+}<log_n>
+merge_sort = path{~split{half}; *sort{each}; ^merge{runs}}<n_log_n>
+bfs = path{=queue{start}; ~visit{edges}; #seen{node}}<v_plus_e>
+dfs = path{=stack{start}; ~descend{edges}; #seen{node}}<v_plus_e>
+window = path{=edges{left, right}; ~slide; %sum{inside}}<n>
+memo = path{?seen{subproblem}; !solve; #keep{answer}}<states>
+
+?["Which of these answers which page links to which?"]{
+  ~#expect: \`bfs, one hop at a time from the page you start on\`
+  !probe{ "walk the site's links from Home and count hops to each page" }
+}`,
+  },
+  {
+    id: "role",
+    group: "Team",
+    tab: "Role card",
+    file: "role.spw",
+    says: "One member's skills applied to a role: what they bring, the snippets they kept and where each came from, and what they will build first. A team can read every card and build from the snippets the cards point to.",
+    try: "Add a kept snippet: ~\"./records.spw#trace\"",
+    script: `#>role_card
+#:role #!team
+@pipeline: ~"./pipeline.spw"
+@records: ~"./records.spw"
+@surfaces: ~"./surfaces.spw"
+
+role = frontend[mid]{pages, forms, speed}<team>
+brings = skill{a11y, testing, design_handoff}
+kept = #[
+  ~"./surfaces.spw#lineage",
+  ~"./records.spw#metric",
+  ~"./pipeline.spw#steps"
+][reg=set]
+first = !build[form]{checkout ~> receipt}
+measure = %latency[p95]{before ~> after}
+
+?["Which kept snippet does the first build lean on?"]{
+  ~#expect: \`the lineage, since a form grew from a printed one\`
+  !probe{ "build the form, then say which snippet you reread twice" }
+}`,
+  },
+  {
+    id: "onboarding",
+    group: "Team",
+    tab: "Onboarding path",
+    file: "onboarding.spw",
+    says: "Three paths through the team's other four files: what a junior, a mid-level and a senior engineer read first, change, and teach in their first week.",
+    try: "Add a path: staff = path{^align{teams}; *shape{records}}",
+    script: `#>team_onboarding
+#:plan #!onboarding
+@pipeline: ~"./pipeline.spw"
+@review: ~"./review.spw#register"
+@records: ~"./records.spw"
+@surfaces: ~"./surfaces.spw"
+
+junior = path{~read{pipeline}; !change{one_step}; ?ask{review}}
+mid = path{^own{pipeline}; ~read{records}; !review{peer}}
+senior = path{*shape{surfaces}; =set{contract}; !teach{review}}
+week = {junior, mid, senior} ~> demo
+
+?["What can each of them change by Friday?"]{
+  ~#expect: \`a junior one step, a mid one record, a senior one contract\`
+  !probe{ "each says in one line what they changed and where it shows" }
 }`,
   },
 ]);
