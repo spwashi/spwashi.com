@@ -73,10 +73,10 @@ const PAYMENT_METHODS = [
 // Displayed as quick-tap chips above the payment links.
 // Selecting one updates PayPal's link to pre-fill the amount.
 const SUGGESTED_AMOUNTS = [
-    { value: 5,  label: '$5',  note: 'signal' },
-    { value: 10, label: '$10', note: 'credits' },
-    { value: 15, label: '$15', note: 'credits' },
-    { value: 50, label: '$50', note: 'day' },
+    { value: 12,  label: '$12',  note: 'reader' },
+    { value: 30,  label: '$30',  note: 'studio' },
+    { value: 50,  label: '$50',  note: 'research' },
+    { value: 150, label: '$150', note: 'week' },
 ];
 
 export { PAYMENT_METHODS, SUGGESTED_AMOUNTS };

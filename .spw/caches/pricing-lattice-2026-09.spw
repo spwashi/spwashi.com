@@ -156,4 +156,62 @@ source = "chat 2026-09-18: research relevant pricing for folios as periodical or
   2 = `If one SKU moves, pick folio_issue or workbench_cohort — not both, and not a paywall.`
   3 = `A marketing card still needs audience, offer, proof, resonance, extension, next_action.`
   skip = #[`checkout`, `lore.land paywall`, `template marketplace`, `1:1 mentor grid`, `services folio prices`, `TikTok RPM copy`][reg=set]
+}[reg=facet]
+
+^"revision_2026_11"{
+  id = "pl-rev-2026-11"
+  date = "2026-11-14"
+  operation = "align"
+  fixity = "experimental"
+  context = `Creator baseline: 2022 W-2 ($150k base / $184k TC) vs. recent $7k–$10k/yr actuals; target includes funding frontier model subscriptions cleanly while matching buyer expectations across four distinct economic groups.`
+  thesis_shift = #[
+    `Stop billing agent-accelerated builds on hours of typed code ("cached labor"); sell outcome sprints, verified harnesses (spw:lint / smoke / contracts), and ongoing cadence.`,
+    `Close the missing middle between $750 diagnostics and $4,000–$12,000 builds with One-Close Micro-Sprints ($1,000–$2,400) aligned to the 13th/26th cadence.`,
+    `Replace personal budget notes ($10 sandwiches, winter transit) and opaque buffer jargon (Signal/Working/Build Buffer) with buyer-legible patronage and outcome lanes.`,
+    `Treat frontier models as a gated Compute Pool: keep 1–2 core daily drivers on annual billing, and gate Ultra/Heavy upgrades to sprint-funded months or dedicated Studio Seat patrons.`
+  ][reg=set]
+  flexible_tracks = .{
+    studio_patron = `Replaces micro-tips and Signal Deposit: $12/mo ($120/yr) Reader, $30/mo ($300/yr) Studio Seat, $600/yr Season Patron — funds continuous releases and frontier compute.`
+    grounded_teardown = `Sliding entry wedge ($250 Indie / $500 Studio / $750 Org): 48–72 hr audit + runnable patch or .spw spec; 100% credited if upgrading within 30 days.`
+    one_close_sprint = `$1,000–$2,400 fixed deliverable shipped on one 13th/26th close (e.g., interactive card studio, feedback endpoint, verification harness), split across two closes if helpful.`
+    modular_home_or_system = `$2,500 Starter or $6,000–$12,000 Full (series home / durable system), billed per close with explicit stop points.`
+    flex_retainer = `Sliding hourly ($110–$140 Indie · $175–$225 Studio · $275+ Org) and Light/Core retainers ($1,200/mo Light · $2,500/mo Core · $4,500/mo Embedded).`
+  }[reg=facet]
+  laminated_folios_in_ecosystem = .{
+    principle = `Folios sit outside commission checkout and settle in a reply via /design/folios/#collect-a-folio once physical availability is confirmed.`
+    ordering_by_ecosystem_value = #[
+      `Study / Seed folio — pocket-sized reading artifact or bookmark token entering the practice at an accessible entry band.`,
+      `Practice / Scratchpad folio — process sheets and collaborator-shared squares carrying live experiments and studio notes.`,
+      `Studio Prime / Show piece — stronger surface density for a desk, shelf, or table showcase once physically verified on hand.`,
+      `Paired / Commissioned companion — original doodle or painted overlay linked to a commissioned cover, site, or worldbuilding pass.`
+    ][reg=set]
+    short_term_constraint = `Physical catalog reconciliation and scan accuracy are ongoing; frame ecosystem value clearly without promising instant off-the-shelf fulfillment by scan number.`
+  }[reg=facet]
+  role_economies = .{
+    software_engineers = `Pay for verified leverage, not keystrokes: deterministic test/lint harnesses, .spw legibility, edge workers, and stopping AI-slop drift. Access via $12–$30/mo Studio Patronage (keeps shared tooling open) or $250–$750 Grounded Teardowns & $1,000–$2,400 One-Close Micro-Sprints.`
+    people_who_lead = `Pay for reduced coordination and decision risk without $180k+ full-time headcount: clear 13th/26th shipping landmarks, Architecture & Diligence Memos ($2,500–$12,000), and Light/Core/Embedded retainers ($1,200–$4,500/mo) or sliding Studio/Org advisory ($175–$275+/hr).`
+    entrepreneurs = `Pay for speed-to-signal before locking capital: $250–$750 Teardowns (100% credited within 30 days), $1,000–$2,400 One-Close Micro-Sprints to test a wedge in one release cycle, and per-close milestone billing with clean stop points.`
+    artists = `Keep creative ownership without prohibitive upfront walls: Indie sliding rates ($110–$140/hr or $250 Teardown), modular closes ($250 plates, $600 chapter/EPUB, $1,500 interactive cover, $2,500 starter home), shared Studio Seat compute support, and laminated folios ordered by ecosystem role.`
+  }[reg=facet]
+  services_page_targets = #[
+    `services/index.html (#compose-a-bundle): keep backwards-compatible presets, refine signal-boost copy, and add the $1,000–$2,400 One-Close Sprint checkbox.`,
+    `services/index.html (#pricing): align Scope/Creator/Systems/Advisory around sliding scales, 13th/26th One-Close Sprints, role-aligned heuristics (engineers, leads, entrepreneurs, artists), and Laminated Folios ordered by ecosystem value.`,
+    `services/index.html (#render-queue): rename opaque buffer jargon to Close Entry, Micro-Sprint Pass, One-Close Sprint, and Season & Compute Pool.`,
+    `services/index.html (#support): replace personal meal/transit notes with Reader/Studio/Season Patron seats funding ongoing releases and gated frontier compute.`
+  ][reg=set]
+  factshift_thought_budget_alignment = .{
+    date = "2026-11-14"
+    premise = `Someone opens factshift.center with an abstract thought about a thing, has a budget, and recognizes the accumulated work already done ahead of them — software engineering, technical-proficiency equity, and educational access that cannot be built retroactively in the past.`
+    perception_shift = `Terms like donation, gift, or tip carry a charity charge that makes people hesitate when they want a real reason to pay. Frame every rung as paying for pre-built open infrastructure or claiming a concrete thought-to-artifact deliverable.`
+    matching_ladder = #[
+      `$12/mo ($120/yr) Reader Seat — keeps factshift.center, spw.quest, guides, and educational access open and maintained on the 13th/26th cadence.`,
+      `$25–$50 Signal Boost — backs a research/access block or pairs a concept line with a study note instead of an unnamed tip.`,
+      `$30/mo ($300/yr) Studio Seat — sustains daily engineering, research, and depiction benches across the open ecosystem.`,
+      `$150 Week & Promo Anchor — funds one steady week of open infrastructure or film/learning media promo.`,
+      `$250–$750 Scope Card & Teardown ($250 Indie · $500 Studio · $750 Org) — turns the thought/line opened on factshift.center into a runnable patch, proof card, risk map, or recorded diagnostic (100% credited within 30 days).`,
+      `$1,000–$2,400 One-Close Micro-Sprint — ships one verified feature, educational harness, or tool slice on the next 13th/26th close.`,
+      `$2,500–$12,000+ & Advisory ($1,200–$8,000/mo) — durable systems, series homes, and architectural stewardship.`
+    ][reg=set]
+    surfaces = #[`@services`, `@services/about/domains/factshift.center`, `now/index.html`, `public/js/modules/cards/payment-card.js`][reg=set]
+  }[reg=facet]
 }

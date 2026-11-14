@@ -475,7 +475,7 @@
                         <fieldset class="bundle-lane" data-lane="small">
                             <legend>Small jobs</legend>
                             <p class="bundle-lane__note">Priced so a small ask never has to wait for a proposal. Set a count where it helps.</p>
-                            <label class="bundle-skill"><input type="checkbox" name="skill" value="lunch" data-lane="small" data-label="Lunch" data-min="20" data-max="20"> <span>Lunch</span> <small>$20 · a thank-you, or a quick question answered</small></label>
+                            <label class="bundle-skill"><input type="checkbox" name="skill" value="lunch" data-lane="small" data-label="Signal boost" data-min="25" data-max="25"> <span>Signal boost</span> <small>$25 · a quick question answered, or a slice of model compute</small></label>
                             <label class="bundle-skill"><input type="checkbox" name="skill" value="fix" data-lane="small" data-label="One fix" data-min="75" data-max="75" data-each="fix"> <span>One fix</span> <input class="bundle-skill__qty" type="number" name="qty" data-qty-for="fix" min="1" max="12" value="1" inputmode="numeric" aria-label="How many: One fix"> <small>$75 each · one bug, layout, or copy change, shipped</small></label>
                             <label class="bundle-skill"><input type="checkbox" name="skill" value="half-hour" data-lane="small" data-label="Half hour" data-min="120" data-max="120" data-each="session"> <span>Half hour</span> <input class="bundle-skill__qty" type="number" name="qty" data-qty-for="half-hour" min="1" max="8" value="1" inputmode="numeric" aria-label="How many: Half hour"> <small>$120 each · a call or pairing session, with notes</small></label>
                             <label class="bundle-skill"><input type="checkbox" name="skill" value="page-check" data-lane="small" data-label="Page check" data-min="150" data-max="150" data-each="page"> <span>Page check</span> <input class="bundle-skill__qty" type="number" name="qty" data-qty-for="page-check" min="1" max="10" value="1" inputmode="numeric" aria-label="How many: Page check"> <small>$150 each · accessibility, phone, and speed read of one page, with fixes listed</small></label>
@@ -486,7 +486,7 @@
                             <label class="bundle-skill"><input type="checkbox" name="skill" value="plate" data-lane="art" data-label="Plate" data-min="250" data-max="250"> <span>Plate</span> <small>$250 · one illustration, one close</small></label>
                             <label class="bundle-skill"><input type="checkbox" name="skill" value="cover" data-lane="art" data-label="Illustrated cover" data-min="1200" data-max="1200"> <span>Illustrated cover</span> <small>$1,200 · genre-aware image and type</small></label>
                             <label class="bundle-skill"><input type="checkbox" name="skill" value="logo" data-lane="art" data-label="Logo design" data-quoted="true"> <span>Logo design</span> <small>quoted · mark, lockup, and a use sheet</small></label>
-                            <label class="bundle-skill"><input type="checkbox" name="skill" value="doodle" data-lane="art" data-label="Concept doodle" data-quoted="true"> <span>Concept doodle</span> <small>quoted · a sketch of your idea; can become a <a href="/design/folios/#collect-a-folio">laminated folio</a> or be painted onto an existing one</small></label>
+                            <label class="bundle-skill"><input type="checkbox" name="skill" value="doodle" data-lane="art" data-label="Concept doodle" data-quoted="true"> <span>Concept doodle</span> <small>quoted · a sketch of your idea; can become a <a href="/design/folios/#collect-a-folio">laminated folio</a> ordered by its ecosystem role or painted onto an existing one</small></label>
                         </fieldset>
                         <fieldset class="bundle-lane" data-lane="design">
                             <legend>Design &amp; websites</legend>
@@ -507,6 +507,7 @@
                         <fieldset class="bundle-lane" data-lane="engineering">
                             <legend>Software &amp; advisory</legend>
                             <label class="bundle-skill"><input type="checkbox" name="skill" value="diagnostic" data-lane="engineering" data-label="Diagnostic session + memo" data-min="750" data-max="750"> <span>Diagnostic session + memo</span> <small>$750 · call plus a written memo</small></label>
+                            <label class="bundle-skill"><input type="checkbox" name="skill" value="micro-sprint" data-lane="engineering" data-label="One-close micro-sprint" data-min="1000" data-max="2400"> <span>One-close micro-sprint</span> <small>$1,000–$2,400 · one feature, harness, or card studio in one 13th/26th close</small></label>
                             <label class="bundle-skill"><input type="checkbox" name="skill" value="arch-memo" data-lane="engineering" data-label="Architecture memo" data-min="5000" data-max="12000"> <span>Architecture memo</span> <small>$5,000–$12,000 · codebase review and sequence</small></label>
                             <label class="bundle-skill"><input type="checkbox" name="skill" value="app-sprint" data-lane="engineering" data-label="Application sprint" data-min="12000" data-max="12000" data-open="true"> <span>Application sprint</span> <small>$12,000+ · workflow, internal tool, or product UI</small></label>
                             <label class="bundle-skill"><input type="checkbox" name="skill" value="retainer" data-lane="engineering" data-label="Advisory retainer" data-min="4000" data-max="8000" data-unit="mo"> <span>Advisory retainer</span> <small>$4,000–$8,000/mo · weekly advisory and decision support</small></label>
@@ -622,56 +623,57 @@
                     <a class="frame-sigil" href="#pricing" data-spw-operator="substrate" data-spw-sigil="$pricing">$pricing</a>
                     <h2>Pricing</h2>
                 </header>
-                <p data-spw-textual-role="note">Start with the smallest thing you can hold. A Scope Card is that thing: $250 is a card you can screenshot and send, $500 is a short note that names the risk and the next move, $750 is a call and a written memo. Anything larger we set in conversation, from what is already made and where the show is. Tune a lane in <a href="#configure">Configure</a> only if you want a finer grain than this list.</p>
+                <p data-spw-textual-role="note">Start with the smallest thing you can hold. If you opened <a href="https://factshift.center">factshift.center</a> with a thought in progress and a real budget, match that thought to a concrete rung below—not as charity, but as investment in pre-built software engineering, technical-proficiency equity, and accessible learning infrastructure that cannot be built in hindsight. A Scope Card or grounded teardown runs on a visible sliding band (<strong>$250 Indie · $500 Studio · $750 Org</strong>), ships in 48–72 hours with a proof card or patch note, and credits 100% toward a sprint started within 30 days. Larger builds break cleanly across <strong>13th and 26th release closes</strong> with explicit stop points, so no one has to fund an oversized retainer just to test fit. Tune a lane in <a href="#configure">Configure</a> if you want a finer grain than this list.</p>
 
                 <div class="frame-grid">
                     <div class="spw-panel" data-spw-brace="objective" data-spw-kind="panel" data-spw-role="reference" data-spw-context="routing" data-spw-category-family="specimen" data-spw-seed="page_services_services__panel_tier_creator">
-                        <h3><span class="spec-pill" data-cluster="tier">Scope Card</span> $250–$750</h3>
-                        <p>You leave with one thing you can hold and send, before the work needs a full proposal.</p>
+                        <h3><span class="spec-pill" data-cluster="tier">Scope Card &amp; Teardown</span> $250–$750</h3>
+                        <p>Sliding by capacity ($250 Indie · $500 Studio · $750 Org). Leave with a concrete artifact; 100% credited if upgraded within 30 days.</p>
                         <ul class="frame-list">
-                            <li><strong>$250 Ask / Proof Card</strong> — screenshot-ready claim, offer, referral, or service card.</li>
-                            <li><strong>$500 Scope Note</strong> — short recommendation, risks, and next move.</li>
+                            <li><strong>$250 Indie Teardown / Proof Card</strong> — screenshot-ready claim, flow review, or small runnable patch.</li>
+                            <li><strong>$500 Studio Scope Note</strong> — prioritized risk map, architecture note, and recommended next close.</li>
                             <li id="taste-pass"><strong>$500 Taste pass</strong> — a page or a flow, read by people in the growing network when they have the initiative and capacity; you get one short note, not a committee report. One close. <a href="/services/ecosystem/#taste">How the network reads →</a></li>
-                            <li><strong>$750 Diagnostic Session + Memo</strong> — call plus written architecture or service memo.</li>
+                            <li><strong>$750 Org Diagnostic + Memo</strong> — recorded call plus codebase or system memo ready for stakeholders.</li>
                         </ul>
                         <p data-spw-textual-role="note"><a href="#render-queue">Open the render queue →</a></p>
                     </div>
 
                     <div class="spw-panel" data-spw-brace="objective" data-spw-kind="panel" data-spw-role="reference" data-spw-context="routing" data-spw-category-family="specimen" data-spw-seed="page_services_services__panel_tier_business">
-                        <h3><span class="spec-pill" data-cluster="tier">Creator Work</span> $600–$12,000+</h3>
-                        <p>For indie authors, illustrators, filmmakers, and independent makers who want the work to land clearly. Pieces compose; story surfaces sit above an author site. Plates are $250 each.</p>
+                        <h3><span class="spec-pill" data-cluster="tier">Creator Work</span> $250–$12,000</h3>
+                        <p>For indie authors, illustrators, filmmakers, and independent makers. Priced per deliverable and split cleanly across closes so work does not stall behind one big invoice.</p>
                         <ul class="frame-list">
                             <li><strong>$250 Plate</strong> — one illustration, one close. Add-on, not a lane of its own.</li>
-                            <li><strong>$600 Ebook formatting</strong> — clean EPUB, reading order, accessibility pass. One close.</li>
-                            <li><strong>$800 Further chapter</strong> — one public chapter page on an existing home. One close.</li>
-                            <li><strong>$1,200 Illustrated cover</strong> — genre-aware image and type. Two to three closes.</li>
-                            <li><strong>$1,500 Interactive cover page</strong> — small hosted page with motion or touch. One to two closes.</li>
-                            <li id="author-site"><strong>$2,500 Author site</strong> — about you: static portfolio or launch surface.</li>
-                            <li><strong>$4,000 Series opening</strong> — home, three chapters, one share image. One or two closes. <a href="/services/creator/#series-home">Composition →</a></li>
-                            <li><strong>$12,000 Series home</strong> — opening plus ten further chapters and a reading path. A season of closes.</li>
+                            <li><strong>$600 Ebook formatting / Extra page</strong> — clean EPUB reading order or one public chapter page. One close.</li>
+                            <li><strong>$1,200 Illustrated cover</strong> — genre-aware image and type. One to two closes.</li>
+                            <li><strong>$1,500 Interactive cover page</strong> — small hosted page with motion, canvas, or card export. One close.</li>
+                            <li id="author-site"><strong>$2,500 Starter author site</strong> — static portfolio, catalog, or launch surface. Two closes.</li>
+                            <li><strong>$4,000 Series opening</strong> — home, three chapters, one share image. Two closes. <a href="/services/creator/#series-home">Composition →</a></li>
+                            <li><strong>$12,000 Series home</strong> — opening plus ten further chapters and a reading path. Billed per close across a season.</li>
                         </ul>
                         <p data-spw-textual-role="note"><a href="/services/creator/">Creator details →</a></p>
                     </div>
 
                     <div class="spw-panel" data-spw-brace="subjective" data-spw-kind="panel" data-spw-role="reference" data-spw-context="routing" data-spw-category-family="specimen" data-spw-seed="page_services_services__panel_tier_staff">
-                        <h3><span class="spec-pill" data-cluster="tier">Systems Sprint</span> $5,000–$12,000+</h3>
-                        <p>For founders, microbusinesses, and technical leads who need software that explains itself and survives handoff.</p>
+                        <h3><span class="spec-pill" data-cluster="tier">Systems Sprint</span> $1,000–$12,000+</h3>
+                        <p>Outcome sprints priced on delivered capability and verification rather than manual typing hours. Available with per-close milestones.</p>
                         <ul class="frame-list">
-                            <li><strong>$5,000+ Launch / repair pass</strong> — stabilize a site or product surface.</li>
-                            <li><strong>$8,000+ Durable business site</strong> — structured routes, copy, components, and handoff.</li>
-                            <li><strong>$12,000+ Application sprint</strong> — custom workflow, internal tool, or product UI.</li>
-                            <li><strong>$2,500–$6,000 QA pass</strong> — release testing, accessibility, and launch readiness.</li>
+                            <li><strong>$1,000–$2,400 One-Close Micro-Sprint</strong> — one verified feature, interactive tool, worker endpoint, or test/lint harness landed on the 13th or 26th (split across two closes if needed).</li>
+                            <li><strong>$2,500–$6,000 QA &amp; Harness pass</strong> — device release testing, accessibility audit, and automated contract checks.</li>
+                            <li><strong>$5,000+ Launch / repair pass</strong> — stabilize an existing site, worker layer, or product surface.</li>
+                            <li><strong>$8,000+ Durable business site</strong> — structured routes, copy, components, and clean handoff.</li>
+                            <li><strong>$12,000+ Application sprint</strong> — custom workflow, internal tool, or full product UI.</li>
                         </ul>
                         <p data-spw-textual-role="note"><a href="/services/systems/">Systems details →</a></p>
                     </div>
 
                     <div class="spw-panel" data-spw-brace="subjective" data-spw-kind="panel" data-spw-role="reference" data-spw-context="routing" data-spw-category-family="specimen" data-spw-seed="page_services_services__panel_tier_advisory">
-                        <h3><span class="spec-pill" data-cluster="tier">Architecture &amp; Advisory</span> $18,000+ or $225/hr</h3>
-                        <p>For teams that need staff-level judgement, technical diligence, or CTO-style support without a full-time hire.</p>
+                        <h3><span class="spec-pill" data-cluster="tier">Architecture &amp; Advisory</span> $1,200–$8,000/mo</h3>
+                        <p>Sliding hourly (<strong>$110–$140 Indie · $175–$225 Studio · $275+ Org</strong>) and flexible retainers for staff-level judgment without full-time overhead.</p>
                         <ul class="frame-list">
-                            <li><strong>$5,000–$12,000 Architecture memo</strong> — codebase review, risks, and recommended sequence.</li>
-                            <li><strong>$18,000–$45,000+ Fixed scope</strong> — architecture, systems design, diligence, and implementation direction.</li>
-                            <li><strong>$4,000–$8,000/mo Retainer</strong> — weekly advisory, written follow-ups, and urgent decision support.</li>
+                            <li><strong>$1,200/mo Light Retainer</strong> — async review, PR/architecture feedback, and one focused check-in per close.</li>
+                            <li><strong>$2,500/mo Core Retainer</strong> — weekly decision support, written follow-ups, and small targeted fixes.</li>
+                            <li><strong>$4,500–$8,000/mo Embedded Advisory</strong> — CTO-style guidance, diligence, and active build oversight.</li>
+                            <li><strong>$5,000–$45,000+ Fixed Architecture Scope</strong> — codebase audit, migration sequence, and handoff spec.</li>
                         </ul>
                         <p data-spw-textual-role="note"><a href="/services/systems/#staff">Advisory details →</a></p>
                     </div>
@@ -689,13 +691,35 @@
                     </div>
 
                     <div class="spw-panel" data-spw-brace="objective" data-spw-kind="panel" data-spw-role="reference" data-spw-context="routing" data-spw-category-family="specimen" data-spw-seed="page_services_services__panel_folio_editions">
-                        <h3><span class="spec-pill" data-cluster="tier">Physical folios</span> in development</h3>
-                        <p>Laminated originals, prints, custom collages, and journals are being prepared from the Art route. Some folios carry squares drawn in person with people over the years. Working original-price bands live there. They are not live offers, and they are not part of this commission ladder.</p>
-                        <p data-spw-textual-role="note"><a href="/design/folios/#collect-a-folio">See formats and working prices →</a></p>
+                        <h3><span class="spec-pill" data-cluster="tier">Laminated Folios</span> ordered by ecosystem value</h3>
+                        <p>People can order different laminated folios with respect to what value the piece plays inside the ecosystem: a <strong>Study / Seed folio</strong> as an accessible reading or bookmark token, a <strong>Practice / Scratchpad folio</strong> carrying working squares and collaborators’ marks, a <strong>Studio Prime / Show piece</strong> to anchor a desk or gift, or a <strong>Paired Companion</strong> drawn onto an idea you commission. Because physical inventory and exact scan pairings are still settling, requests start on the Art route and settle in a reply only after I verify which piece is in hand.</p>
+                        <p data-spw-textual-role="note"><a href="/design/folios/#collect-a-folio">Compare ecosystem roles and request a folio →</a></p>
                     </div>
                 </div>
 
-                <p data-spw-textual-role="note">Still unsure? The configurator above is the fastest way to see which lane feels right. Or skip straight to a <a href="#custom-quote">custom quote</a>. For most projects, paying up front keeps the coordination lighter, the schedule clearer, and the work easier to begin without carrying a lot of administrative drag.</p>
+                <div class="spw-panel" data-spw-brace="subjective" data-spw-kind="panel" data-spw-role="reference" data-spw-context="routing" data-spw-category-family="register" data-spw-seed="page_services_services__panel_role_heuristics">
+                    <h3><span class="spec-pill" data-cluster="heuristics">Four Economies</span> Reasonable alignment across roles</h3>
+                    <div class="spw-reason-strip" aria-label="Economic alignment heuristics">
+                        <div>
+                            <strong>Software Engineers</strong>
+                            <p>You value verified leverage over typed hours: deterministic lint/contract harnesses, readable specs, edge workers, and keeping public tools open. Start with a <strong>$12–$30/mo Studio Seat</strong> to back shared infrastructure, or book a <strong>$250–$750 Teardown</strong> or <strong>$1,000–$2,400 One-Close Micro-Sprint</strong> when AI velocity creates verification debt.</p>
+                        </div>
+                        <div>
+                            <strong>People Who Lead</strong>
+                            <p>You value lower coordination load and honest risk signaling without taking on a $180k+ full-time hire prematurely. Anchor decisions to the <strong>13th/26th cadence</strong> through <strong>Architecture Memos</strong> or <strong>Light / Core / Embedded Retainers ($1,200–$4,500+/mo)</strong> and sliding Org advisory.</p>
+                        </div>
+                        <div>
+                            <strong>Entrepreneurs</strong>
+                            <p>You value speed-to-signal without locking capital into speculative multi-month proposals. Validate first with a <strong>30-day credited Teardown</strong>, ship a flagship wedge in a <strong>One-Close Micro-Sprint ($1,000–$2,400)</strong>, and pay per close with explicit stop points.</p>
+                        </div>
+                        <div>
+                            <strong>Artists</strong>
+                            <p>You value autonomy, tactile craft, and humane pacing without studio gatekeeping. Use <strong>Indie sliding rates ($110–$140/hr or $250 Teardown)</strong>, build modularly by close (<strong>$250 plate</strong> to <strong>$2,500 author home</strong>), share annual model costs through <strong>Studio Seats</strong>, or order <strong>laminated folios</strong> by their ecosystem role.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <p data-spw-textual-role="note">Still unsure? The configurator above is the fastest way to see which lane feels right, or <a href="/tools/budgeting/">check the Year Mix planner</a> to see how a cadence fits. Skip straight to a <a href="#custom-quote">custom quote</a> any time; upfront payment per close keeps coordination light and stops unpaid project-management drag.</p>
             </section>
 
             <section
@@ -711,24 +735,24 @@
                     <h2>Render Queue</h2>
                 </header>
 
-                <p data-spw-textual-role="note">Put down a deposit, name the heading, and add Render Credits over time. Credits stay attached to a project buffer until they are allocated to a visible pass: scoping, research, design, engineering, model-assisted drafting, QA, or handoff.</p>
+                <p data-spw-textual-role="note">Open a heading with a deposit scoped to real 13th/26th deliverables. Prepaid credits stay attached to your work until they are spent on scoping, research, design, engineering, verification harnesses, frontier-model compute bursts, QA, or handoff.</p>
 
                 <div class="frame-grid">
                     <article class="spw-panel" data-spw-kind="panel" data-spw-role="reference">
-                        <h3><span class="spec-pill" data-cluster="tier">Signal Deposit</span> $150</h3>
-                        <p>Open a heading, preserve the context, and create the first proof card.</p>
+                        <h3><span class="spec-pill" data-cluster="tier">Close Entry / Wedge</span> $250</h3>
+                        <p>Open a heading, preserve context, and ship a grounded audit card or runnable patch note (100% credited within 30 days toward a sprint).</p>
                     </article>
                     <article class="spw-panel" data-spw-kind="panel" data-spw-role="reference">
-                        <h3><span class="spec-pill" data-cluster="tier">Working Buffer</span> $500</h3>
-                        <p>Enough for intake, a scope note, reference gathering, or a small first pass.</p>
+                        <h3><span class="spec-pill" data-cluster="tier">Micro-Sprint Pass</span> $500</h3>
+                        <p>Fund intake, architectural synthesis, reference gathering, or half of a single-close delivery.</p>
                     </article>
                     <article class="spw-panel" data-spw-kind="panel" data-spw-role="reference">
-                        <h3><span class="spec-pill" data-cluster="tier">Build Buffer</span> $1,500</h3>
-                        <p>Enough for a visible sprint: draft, prototype, service card, cover pass, or page repair.</p>
+                        <h3><span class="spec-pill" data-cluster="tier">One-Close Sprint</span> $1,200</h3>
+                        <p>Ship one concrete deliverable — a feature, verification harness, service card studio, or cover pass — on the next 13th or 26th close.</p>
                     </article>
                     <article class="spw-panel" data-spw-kind="panel" data-spw-role="reference">
-                        <h3><span class="spec-pill" data-cluster="tier">Render Season</span> $5,000+</h3>
-                        <p>A larger buffer for ongoing work, architecture, recurring tool use, or multi-pass delivery.</p>
+                        <h3><span class="spec-pill" data-cluster="tier">Season &amp; Compute Pool</span> $2,500–$5,000+</h3>
+                        <p>Pooled multi-close capacity funding ongoing builds, architecture advisory, device QA, and frontier-model compute bursts for heavy studio runs.</p>
                     </article>
                 </div>
 
@@ -900,12 +924,12 @@
 
                 <div class="frame-grid frame-grid--dense">
                     <article class="spw-panel" data-spw-kind="card" data-spw-role="reference">
-                        <h3>A gift on a live, or a monthly pledge</h3>
-                        <p>On TikTok, a Heart Me or any gift shows on the stream while the live is open. In a battle, I say what each one does as it lands in lore.land's <a href="https://lore.land/pie/">pie game</a>: a gift to me is a power-up, and a gift to the other side is something in the road to steer round. The small rungs are one-time amounts: $10 is a sandwich on a long build day, $50 is a day that stays in one piece. Patreon or GitHub Sponsors is that same support on a monthly beat. What you get is the public work as it lands on Now: a route, a scan, or a scene.</p>
+                        <h3>Back the open infrastructure, or claim a seat</h3>
+                        <p>If you arrive through <a href="https://factshift.center">factshift.center</a>, <a href="https://spw.quest">spw.quest</a>, or a live stream and want to fund the engineering and educational-access work already built ahead of you, pick a named infrastructure rung instead of an unnamed tip: <strong>$12/mo Reader Seat</strong> keeps open tools and guides free to read, <strong>$30/mo Studio Seat</strong> sustains daily model and engineering benches, <strong>$25–$50 Signal Boost</strong> backs a focused research block, and <strong>$150</strong> anchors a full build week. On TikTok, live battle signals still map onto lore.land's <a href="https://lore.land/pie/">pie game</a>. What returns is public infrastructure on <a href="/now/">Now</a>: a tool, a route, a scan, or a scene.</p>
                         <p>
-                            <a class="spw-chip" data-spw-handle="true" href="https://www.tiktok.com/@spwashi" target="_blank" rel="noopener noreferrer" data-spw-operator="perspective">@tiktok</a>
                             <a class="spw-chip" data-spw-handle="true" href="https://www.patreon.com/spwashi" target="_blank" rel="noopener noreferrer" data-spw-operator="substrate">$patreon</a>
                             <a class="spw-chip" data-spw-handle="true" href="https://github.com/sponsors/spwashi" target="_blank" rel="noopener noreferrer" data-spw-operator="substrate">$github_sponsors</a>
+                            <a class="spw-chip" data-spw-handle="true" href="https://factshift.center" target="_blank" rel="noopener noreferrer" data-spw-operator="surface">&gt;factshift_center</a>
                             <a class="spw-chip" data-spw-handle="true" href="/now/" data-spw-operator="substrate">$now</a>
                         </p>
                     </article>
@@ -1011,25 +1035,23 @@
                     <a class="frame-sigil" href="#support" data-spw-operator="substrate" data-spw-sigil="$support">$support</a>
                     <h2>Support the Work</h2>
                 </header>
-                <p data-spw-textual-role="note">A monthly pledge keeps the practice going, and the week it funds is written on <a href="/now/">Now</a>. A commission is the other door: you leave with the thing named on the price, and it pays before or at kickoff. One-time amounts are the pictures below.</p>
+                <p data-spw-textual-role="note">Infrastructure funding, not charity: software engineering, technical-proficiency equity, and accessible education require work ahead of arrival that cannot be done in hindsight. Ongoing Reader, Studio, and Season seats keep open tools like <a href="https://factshift.center">factshift.center</a>, <a href="https://spw.quest">spw.quest</a>, and twice-monthly releases on the 13th and 26th running—written up publicly on <a href="/now/">Now</a>. Rather than billing five frontier subscriptions into speculative client retainers, annual seats maintain the core daily bench (1–2 primary tools on annual plans), while heavy Ultra bursts unlock only during funded sprints. Commissions are the direct door: you leave with the named deliverable settled at kickoff.</p>
                 <nav class="support-doors frame-operators" aria-label="Recurring support">
                     <a class="spw-chip" data-spw-handle="true" href="https://www.patreon.com/spwashi" target="_blank" rel="noopener noreferrer" data-spw-operator="substrate">$patreon</a>
                     <a class="spw-chip" data-spw-handle="true" href="https://github.com/sponsors/spwashi" target="_blank" rel="noopener noreferrer" data-spw-operator="substrate">$github_sponsors</a>
                 </nav>
-                <p data-spw-textual-role="note">I make art for tips: when a piece is worth something to you, the doors above and the amounts below are how a tip reaches me. <a href="https://dregg.net">Dregg</a> is a medium I make work in with collaborators, not a way to pay me, and I don't hold $DREGG. Of the coins, I'd recommend $DREGG.</p>
-                <p data-spw-textual-role="note">On TikTok, a Heart Me or any gift during a live shows on the stream. An annual SuperGrok or Midjourney plan, gifted outright, keeps the depiction bench running for a year.</p>
+                <p data-spw-textual-role="note">When an open tool, card studio, essay, or artwork is worth something to your practice, a seat or one-time signal above reaches me directly. <a href="https://dregg.net">Dregg</a> is a medium I make work in with collaborators, not a way to pay me, and I don't hold $DREGG. Of the coins, I'd recommend $DREGG.</p>
+                <p data-spw-textual-role="note">People also back specific tools or artwork through annual studio compute credits, or order <a href="/design/folios/#collect-a-folio">laminated folios</a> according to their role and value in the ecosystem.</p>
                 <p data-spw-textual-role="note">This week’s target is on <a href="/now/">Now</a>. A shareable ask can become a <a href="/cards/">Local Proof Card</a> you screenshot and send.</p>
                 <details>
-                    <summary>One-time amount or another method</summary>
+                    <summary>Patron seats, compute pool &amp; one-time signals</summary>
                     <ul class="frame-list frame-list--inline">
-                        <li><strong>$5</strong> keeps this week's signal lit. You see the week on Now.</li>
-                        <li><strong>$10</strong> is a sandwich on a long build day.</li>
-                        <li><strong>$10–$15</strong> covers Midjourney fast hours, or a slice of Codex, SuperGrok, or Claude usage. The pictures show up when a render is published.</li>
-                        <li><strong>$40–$75</strong> covers a week of winter transportation, so the practice can leave the room. About $1,000 carries October through January.</li>
-                        <li><strong>$50</strong> is a full day in one piece: lunch, a small investment, and morale. The same size as a day of the film's promo.</li>
-                        <li><strong>$150</strong> is a week that does not drop a day. The same size as a week of the film's promo.</li>
-                        <li><strong>$500</strong> is a sprint you can point at when it lands: a route, a scan, or a scene with room to finish.</li>
-                        <li><strong>$1,500</strong> is a build cycle that ends with something finished.</li>
+                        <li><strong>$12/mo · $120/yr — Reader Seat</strong> keeps the 13th/26th public cadence and open browser tools free to use.</li>
+                        <li><strong>$30/mo · $300/yr — Studio Seat</strong> sustains daily annual frontier model subscriptions across engineering, research, and depiction benches.</li>
+                        <li><strong>$25–$50 — Signal Boost</strong> backs a focused research day or acts as direct appreciation for a release or study folio.</li>
+                        <li><strong>$150 — Week &amp; Promo Anchor</strong> keeps one steady build week funded without dropping a day, or covers a week of film promo.</li>
+                        <li><strong>$250–$600 — Season Patron</strong> underwrites a quarter or annual model-tier upgrade for heavy creative and verification sprints.</li>
+                        <li><strong>$1,000–$2,400 — One-Close Sprint</strong> sponsors or commissions a finished deliverable landed cleanly on the next 13th or 26th close.</li>
                     </ul>
                     <div
                         class="payment-card"
