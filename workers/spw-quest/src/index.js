@@ -1,4 +1,5 @@
 import { CONTAINERS, OPERATORS } from "./guide.js";
+import { startersSection } from "./starters.js";
 import { EXAMPLES, EXAMPLE_GROUPS, exampleById } from "./examples.js";
 import { EXPECTED_FILES, GIT_GUIDE, GIT_MARKDOWN, INSTRUCTION_SETS, QUEST_PROMPTS, QUEST_TEXT, WORKBENCH } from "./quest.js";
 import { STEPS } from "./steps.js";
@@ -281,6 +282,11 @@ const GUIDE_CSS = `.opening { margin: 0 0 1.6rem; padding-bottom: .2rem; }
     .sigils .name { display: flex; align-items: baseline; gap: .35rem; font-weight: 700; font-size: .95rem; letter-spacing: -.01em; color: var(--fg); }
     .sigils .name code { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
     .sigils .reads { margin-top: .1rem; font-size: .88rem; line-height: 1.48; color: var(--fg); }
+    .sigils .op-line { margin: .25rem 0 0; }
+    .sigils .op-line code { font-size: .82rem; overflow-wrap: anywhere; }
+    .starter p { font-size: .9rem; }
+    .starter strong { margin-right: .3rem; color: var(--fg); }
+    .starter .starter-ways { margin-top: .35rem; font-size: .85rem; }
     .sigils .note { margin-top: .35rem; padding-top: .35rem; border-top: 1px dashed color-mix(in srgb, var(--line) 75%, transparent); font-size: .8rem; line-height: 1.42; color: var(--ink-soft); }
     @media (max-width: 40rem) { .sigils { gap: 0; } .sigils li { padding: .75rem 0 .8rem; border: 0; border-top: 1px solid var(--line); border-radius: 0; background: none; box-shadow: none; } .sigils li:hover, .sigils li:focus-within { transform: none; box-shadow: none; } .sigils li:target { box-shadow: inset 3px 0 0 var(--accent); padding-left: .65rem; } }
     .sigils .in-file { grid-column: 2; font: .78rem/1.2 var(--mono); }
@@ -337,6 +343,7 @@ function renderGuide(parser = null, example = EXAMPLES[0], at = "") {
       <span class="sigil" data-t="${escapeHtml(SIGIL_TYPES.get(op.sigil) || "")}" aria-hidden="true">${escapeHtml(op.sigil)}</span>
       <p class="name">${escapeHtml(op.name)} <code>${escapeHtml(op.sigil)}</code></p>
       <p class="reads">${escapeHtml(op.reads)}</p>
+      <p class="op-line"><code>${escapeHtml(op.line)}</code></p>
       <p class="note">Runtime: ${escapeHtml(op.does)}</p>${EDGES_IN.ops.has(op.name) ? `
       <p class="edges-in">${panelLinks(EDGES_IN.ops.get(op.name))}</p>` : ""}${inFile(op.name)}
     </li>`).join("\n    ");
@@ -359,19 +366,25 @@ function renderGuide(parser = null, example = EXAMPLES[0], at = "") {
     ${WALK_CSS}${parser ? `\n    ${SWITCH_CSS}` : ""}`,
     body: `${masthead("/")}
 ${parser ? `${switchBanner(parser.value, parser.from)}\n` : ""}<section class="opening" aria-labelledby="title">
-  <p class="eyebrow">Spatial typography · Continuous 5-simplex manifold · Bidirectional execution</p>
+  <p class="eyebrow">A language for navigating the metamaterial properties of linguistics</p>
   <h1 id="title">A notation for readings you can compare.</h1>
   <pre class="title-spw" aria-label="The same reading, with one slot changed"><code><span data-t="frame">#&gt;</span>reading<span data-t="b-mode">[</span>compare<span data-t="b-mode">]</span><span data-t="b-direction">{</span>shared<span data-t="b-direction">}</span><span data-t="b-scene">(</span>shelf<span data-t="b-scene">)</span><span data-t="b-concept">&lt;</span>notation<span data-t="b-concept">&gt;</span>
 <span data-t="frame">#&gt;</span>reading<span data-t="b-mode">[</span>compare<span data-t="b-mode">]</span><span data-t="b-direction">{</span>parted<span data-t="b-direction">}</span><span data-t="b-scene">(</span>shelf<span data-t="b-scene">)</span><span data-t="b-concept">&lt;</span>notation<span data-t="b-concept">&gt;</span></code></pre>
   <p class="lede">A mark says what a word is doing. A brace says which slot it fills. Change one slot and the reading updates. Explore lines as discrete monospace stamps here, or project their continuous topological forces on <a href="https://factshift.center" target="_blank" rel="noopener">factshift.center</a>.</p>
   <p class="note">Handed this address and a line? <a href="/llms.txt">How to answer in Spw</a>.</p>
 </section>
+${startersSection(escapeHtml, {
+  editHref: (line) => `/build?script=${encodeURIComponent(line)}#build`,
+  exampleHref: (id) => `/?example=${encodeURIComponent(id)}#try`,
+  canvasHref: (line) => factshiftScriptHref(line),
+  tabOf: (id) => (EXAMPLES.find((item) => item.id === id) || { tab: id }).tab,
+})}
 ${walkSection()}
 ${fileWorkspace(example, at)}
 
 <section id="operators" class="band" aria-labelledby="operators-title">
   <h2 id="operators-title">Marks and braces${selfLink("operators", "operators-title")}</h2>
-  <p>A mark says what a word is doing. The name is the workbench's name for that mark. The runtime line is what the reader does with it today. The numbers open the <a href="/learn">Learn</a> panel that uses it.</p>
+  <p>Twelve marks, each with what it does in a sentence and a line it might start. The name is the workbench's. The runtime line is what the reader does with the mark today, and the numbers open the <a href="/learn">Learn</a> panel that uses it.</p>
   <ul class="sigils">
     ${sigils}
   </ul>
@@ -395,10 +408,10 @@ ${fileWorkspace(example, at)}
 </section>
 
 <details id="origin" class="band origin" open aria-labelledby="origin-title">
-  <summary><h2 id="origin-title">What this is for${selfLink("origin", "origin-title")}</h2></summary>
-  <p>This is for work that keeps a reading inspectable. A line stays a note a person can read, and a tool can still find it, check it, and follow its links. A mark says what a word is doing. A brace says which slot that word fills.</p>
-  <p>When two readings of one subject are in hand, name the slots they share and the slot where they part. Hold them on the <a href="/specimens">shelf</a>. Edit one slot in the <a href="/build">editor</a>. A question on a line carries the probe that would answer it.</p>
-  <p>Joins stay distinct, so a comparison can say which relation moved.</p>
+  <summary><h2 id="origin-title">About${selfLink("origin", "origin-title")}</h2></summary>
+  <p>Spw started while I was exploring <a href="https://github.com/spwashi/factshift">factshift</a>, before it became factshift.com and then <a href="https://factshift.center">factshift.center</a>.</p>
+  <p>It was first meant as a tagging system for pivoting across higher dimensions. Then I learned more about cognition and epistemology. Now Spw is a language for navigating the metamaterial properties of linguistics.</p>
+  <p>In practice, a mark says what a word is doing and a brace says which slot it fills. Hold two readings on the <a href="/specimens">shelf</a> and name the slot where they part, or change one slot in the <a href="/build">editor</a>. Joins stay distinct, so a comparison can say which relation moved.</p>
   <ul class="join-list" aria-label="Joins">
     <li><code data-t="ground">.</code> <span>A dot makes one name.</span></li>
     <li><code>,</code> <span>A comma holds a company.</span></li>
