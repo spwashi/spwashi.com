@@ -1,0 +1,126 @@
+{
+  "schema": "spw.parser-release/2",
+  "name": "2026.11.13",
+  "kind": "release",
+  "day": "2026.11.13",
+  "workbench": {
+    "package": "spw-workbench",
+    "version": "0.3.0",
+    "revision": "0bb93f6082e954cd5280e5e8272a27d509c79d83"
+  },
+  "grammar": "0.3.0",
+  "default": {
+    "variant": "full",
+    "form": "min",
+    "path": "parser.js"
+  },
+  "files": [
+    {
+      "path": "full.min.js",
+      "variant": "full",
+      "form": "min",
+      "bytes": 87105,
+      "sha256": "fb49a380c6c156f1cfe3aa7934f336b4a2e3691a306e73cdce9b8d9443d4b200",
+      "integrity": "sha384-fTYjn50Qin99tzHA2Gw9NT8+8A6Wu+nBxW3aO8NZARNfYxDmsN584atUW02hZDkY"
+    },
+    {
+      "path": "full.debug.js",
+      "variant": "full",
+      "form": "debug",
+      "bytes": 180329,
+      "sha256": "b073d5624e86809bea7ccd8fa813b05d34f5a8883813b22ab48fb2c8a8fc4f0c",
+      "integrity": "sha384-kLAW7Trb16xcmfgHQMN/KX1rEvDuBzOmvA/kU34UTEm5AZP/OcLo/FtQoJrbgOsI"
+    },
+    {
+      "path": "full.debug.js.map",
+      "variant": "full",
+      "form": "debug",
+      "kind": "map",
+      "bytes": 539820,
+      "sha256": "d22a782bc39a60dacf2617e9096bcc6c122af139a6a85261545af15afd978931",
+      "integrity": "sha384-lrcEp6CmfGTzgmhiZX0g6z36YPnI2j7tZZ9M1LN0XYSPpRaU++SuVA9Zn66FMW/Q"
+    },
+    {
+      "path": "lite.min.js",
+      "variant": "lite",
+      "form": "min",
+      "bytes": 3346,
+      "sha256": "5487a56c87632fb3f86dd55910ff860588e0b5853ec155cf29fa60bf812cb525",
+      "integrity": "sha384-BtsJS2yId4i75Rp2DiF/drIoQg0Xvc5EmIxDWGAmLeu2769KdvzvdpmBxOw0X2aJ"
+    },
+    {
+      "path": "lite.debug.js",
+      "variant": "lite",
+      "form": "debug",
+      "bytes": 6399,
+      "sha256": "e20506f821bf6f5cbe0dcea6ae73f517d319d91bc6f65e1a67a7caff16b3c42e",
+      "integrity": "sha384-P5g7q5cqIebfrcnTaeNBdHDfRrnRfRhBVGwz+6vv4xcszBlkpqRndkubO/40H4ef"
+    },
+    {
+      "path": "lite.debug.js.map",
+      "variant": "lite",
+      "form": "debug",
+      "kind": "map",
+      "bytes": 16197,
+      "sha256": "515b7d0c492f26bf8faff13bc3a34526d3fdb616ed786e21271f803f718ded9f",
+      "integrity": "sha384-Tt4C1WuzwALAX7fr5Q/v/oRFWPWwhs87U/9PkbE/pUaeT+NZucw1lTgrgolkdEEl"
+    },
+    {
+      "path": "reader.min.js",
+      "variant": "reader",
+      "form": "min",
+      "bytes": 132964,
+      "sha256": "b3a3085c5687f1c97df3f516a963ff24f396d0f76941d8da15038a28bfe155ed",
+      "integrity": "sha384-gSzEpoyQQfRO2lgen0jaLmxijCjsWB5G7/2t8kEEydbkoRkYSSN//YAzJ9hTZhY9"
+    },
+    {
+      "path": "reader.debug.js",
+      "variant": "reader",
+      "form": "debug",
+      "bytes": 267517,
+      "sha256": "02269220e4e8f65eae72b13f3391d2b7cae1c507ef94340f0ebed0d4a00453f3",
+      "integrity": "sha384-0Op1pjaPCH5H1r/G1g+yfq9P5BIkST/TYyR/Kr08t1ghxN27oT7ccTigzJ8jJYFB"
+    },
+    {
+      "path": "reader.debug.js.map",
+      "variant": "reader",
+      "form": "debug",
+      "kind": "map",
+      "bytes": 718425,
+      "sha256": "4242b744e57e18fb602ad716e91aacc7dcead75c05cb2e1af5d6013dd9f9b2b9",
+      "integrity": "sha384-cbWivfMtI2Fd3Huw2ggfUT7jpULS8rdt3axDZf9DnKcBQqNV4huTbUW00SBGLXK7"
+    },
+    {
+      "path": "workbench.min.js",
+      "variant": "workbench",
+      "form": "min",
+      "bytes": 504657,
+      "sha256": "50971dcde59cf28341ba2ed4155b49b25597e91df4ccca79dc306343c4ff303b",
+      "integrity": "sha384-+3IV9IXl55T632p+zsG1o2XXVomBgkCGaie+zEIs1w3VI00qIYjricKqq0DqcRwX"
+    },
+    {
+      "path": "workbench.debug.js",
+      "variant": "workbench",
+      "form": "debug",
+      "bytes": 920837,
+      "sha256": "d360b7a9f6fd7aed2df4650724d9ea6eca67049e3c5c88e7c4108c11e21bb4bb",
+      "integrity": "sha384-NEmM9U3G2MoLNMO3mQnqqK74Hfi8htuOC0QHWOHSawx+fdtmpaqrMyfB15IhkVRL"
+    },
+    {
+      "path": "workbench.debug.js.map",
+      "variant": "workbench",
+      "form": "debug",
+      "kind": "map",
+      "bytes": 2231248,
+      "sha256": "0944227c5511ee9ae765186cba90e6755a0e0110738dcfcca7ffb6b01e3b40ed",
+      "integrity": "sha384-ip1GvWFaMxiY05mU1TqS1Lk2NSyR2InZHtPsZsqz8uoBNGBA5Rrma/2M522FidA4"
+    },
+    {
+      "path": "parser.js",
+      "alias": "full.min.js",
+      "bytes": 87105,
+      "sha256": "fb49a380c6c156f1cfe3aa7934f336b4a2e3691a306e73cdce9b8d9443d4b200",
+      "integrity": "sha384-fTYjn50Qin99tzHA2Gw9NT8+8A6Wu+nBxW3aO8NZARNfYxDmsN584atUW02hZDkY"
+    }
+  ]
+}
