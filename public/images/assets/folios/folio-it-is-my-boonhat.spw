@@ -20,12 +20,14 @@
   surface: "folios"
   role: "folio-scan"
   formats_available: ["avif", "webp"]
+  highres: "folio-it-is-my-boonhat-full.webp — 2400px WebP, opened in the weekly five (public/data/folio-highres.json)"
   orientation: "upside down as scanned; all lettering reads upright when the piece is turned"
   alt_text: "Laminated folio, blue, violet and rust paint over graph paper: panels read WONDER under a ? glyph, HOW DO I WANT TO RELATE, MOSTLY ITS VIBES and Boon, BANE., bone, BONK; a black blob figure thinks it is my boonhat"
   tiers: {
     thumb: { width: 204, height: 256, avif_kib: 7, webp_kib: 7 }
     display: { width: 408, height: 512, avif_kib: 44, webp_kib: 26 }
     hero: { width: 816, height: 1024, avif_kib: 106, webp_kib: 97 }
+    full: { width: 1913, height: 2400, webp_kib: 559, opened: "2026-W46" }
   }
 }
 

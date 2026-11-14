@@ -22,12 +22,14 @@
   surface: "folios"
   role: "folio-scan"
   formats_available: ["avif", "webp"]
+  highres: "folio-spwashi-design-and-development-full.webp — 2400px WebP, opened in the weekly five (public/data/folio-highres.json)"
   orientation: "Boon HONK on the card runs sideways; the faint HONK and word column under the paint run on a diagonal"
   alt_text: "Laminated folio, teal wash over faint lettering, MOVIES ARE EMOTIONS and ART CARRIES HEALING: a white card taped on reads OCTOBER 04 2026, Spwashi design & development and Boon HONK beside two large looped monogram letters"
   tiers: {
     thumb: { width: 202, height: 256, avif_kib: 4, webp_kib: 5 }
     display: { width: 404, height: 512, avif_kib: 29, webp_kib: 20 }
     hero: { width: 807, height: 1024, avif_kib: 103, webp_kib: 74 }
+    full: { width: 1892, height: 2400, webp_kib: 408, opened: "2026-W46" }
   }
 }
 

@@ -82,6 +82,32 @@
           "slug": "concept-topic-structure-quality"
         }
       ]
+    },
+    {
+      "week": "2026-W46",
+      "opened": "2026-11-13",
+      "folios": [
+        {
+          "id": "folio-2026-10-18-00",
+          "slug": "spwashi-design-and-development"
+        },
+        {
+          "id": "folio-2026-10-18-01",
+          "slug": "it-is-my-boonhat"
+        },
+        {
+          "id": "folio-2026-10-18-02",
+          "slug": "unary-motions-of-my-brand"
+        },
+        {
+          "id": "folio-2026-10-18-05",
+          "slug": "four-screens-dark-arrow"
+        },
+        {
+          "id": "folio-2026-10-18-06",
+          "slug": "how-water-works-agua"
+        }
+      ]
     }
   ]
 }

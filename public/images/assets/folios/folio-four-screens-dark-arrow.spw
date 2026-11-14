@@ -20,11 +20,13 @@
   surface: "folios"
   role: "folio-scan"
   formats_available: ["avif", "webp"]
+  highres: "folio-four-screens-dark-arrow-full.webp — 2400px WebP, opened in the weekly five (public/data/folio-highres.json)"
   alt_text: "Laminated folio, olive, yellow and violet paint, no lettering: four hatched screens wired in a chain to a scribbled ball, a hatched cloud, a faint hatted figure, and below a dark arrow-shaped board crossed by pale wavy lines"
   tiers: {
     thumb: { width: 202, height: 256, avif_kib: 6, webp_kib: 7 }
     display: { width: 403, height: 512, avif_kib: 43, webp_kib: 28 }
     hero: { width: 807, height: 1024, avif_kib: 110, webp_kib: 112 }
+    full: { width: 1890, height: 2400, webp_kib: 633, opened: "2026-W46" }
   }
 }
 

@@ -20,12 +20,14 @@
   surface: "folios"
   role: "folio-scan"
   formats_available: ["avif", "webp"]
+  highres: "folio-how-water-works-agua-full.webp — 2400px WebP, opened in the weekly five (public/data/folio-highres.json)"
   orientation: "upside down as scanned; the lettering reads upright when the piece is turned"
   alt_text: "Laminated folio, lavender, mint and yellow paint: I MEAN... IT WOULDN'T HURT TO LEARN HOW WATER WORKS, a WATER box whose letters start Wonder About. Technology Ever Regressing?, TIDE, an H2O sun, THE WATER CYCLE and AGUA"
   tiers: {
     thumb: { width: 202, height: 256, avif_kib: 7, webp_kib: 7 }
     display: { width: 403, height: 512, avif_kib: 41, webp_kib: 26 }
     hero: { width: 807, height: 1024, avif_kib: 115, webp_kib: 92 }
+    full: { width: 1890, height: 2400, webp_kib: 482, opened: "2026-W46" }
   }
 }
 
