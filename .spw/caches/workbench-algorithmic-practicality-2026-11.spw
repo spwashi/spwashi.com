@@ -1,0 +1,105 @@
+# Workbench algorithmic practicality (2026-11-16) — cache: what this consumer could not write while writing algorithms and numbers for spw.quest and factshift.center, with each line's verdict on both readers
+#
+# The creator, 2026-11-16: "make sure the spw.quest syntax examples are useful
+# for comparison, intro to junior/mid-level/staff engineering, improved
+# mathematical notation, algorithm examples", then "you may propose
+# improvements to the workbench to improve algorithmic practicality". This file
+# holds the proposals and the evidence for them. Most of them already have a
+# question in the workbench; each proposal names it and adds this consumer's
+# readings, and none decides it. Probed with the site bundle at bcf0da18
+# ("now") and spw.quest's pinned reader 2026.10.13 ("pinned"), parse() with no
+# rule trace, and the canvas's line kit (readLine) from release
+# 2026.11.16-pre.1. Nothing here writes .spw/_workbench.
+
+#>workbench_algorithmic_practicality_2026_11
+#:cache #!workbench #!notation #!algorithms #!numbers #!factshift
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@comparison_trial: ~"../_workbench/.agents/plans/interpretation-trials/interpretation-trials.spw#wonder_trial_comparison"
+@math_scope_trial: ~"../_workbench/.agents/plans/interpretation-trials/interpretation-trials.spw#wonder_trial_math_scope"
+@number_questions: ~"../_workbench/.agents/plans/syntax-hardware-alignment/wip.spw"
+@false_friends: ~"../_workbench/.spw/caches/tree/spw/specimens/math-physics-notation.spw"
+@numbers_example: ~"../../workers/spw-quest/src/examples.js"
+@canvas_navigation: ~"./motion-and-marks-2026-11.spw"
+
+operation = "cache"
+fixity = "experimental"
+source = `spw.quest commit cf23af1c (numbers.spw, algorithms.spw, levels.spw); canvas app 314f282 and 0e15d6e; probes in a scratch directory, lines below verbatim`
+do_not = `Do not write to .spw/_workbench from here. Do not decide comparison, math scope, minus_sign, unit_place or ratio_spelling: each proposal adds readings to the trial that owns it.`
+
+summary = #[
+  `What already works for algorithms, on both readers: a cost class in a concept, <O(n log n)>, <O(V + E)>; a range 1..n; a sum's bound in a mode, %sum[i=1..n]; a before ~> after in a body; and a number written whole in a measure's brackets, %p95[412(18)ms], which the workbench's number reader takes as 412 with uncertainty 18 in ms.`,
+  `What does not: a comparison anywhere a check needs one; a group that opens a scope, O((V + E) log V); a sign; and math typography, which is dropped from the token stream with an error.`,
+  `What the canvas cannot show: its line kit reads ; , ~> . as seams inside a body, so -> and a top-level ~> are left unread and a range is one part.`,
+][reg=set]
+
+^"comparison"{
+  question = ~"../_workbench/.agents/plans/interpretation-trials/interpretation-trials.spw#wonder_trial_comparison"
+  lines = #[
+    `?keep{qty > 0}: now and pinned fall to prose (> closes no capsule)`,
+    `?[latency <= 400]: now and pinned fall to prose (COMPARISON lexes, ?[…] does not take it)`,
+    `?latency[p95]{a <= b}: the same`,
+  ][reg=set]
+  why_algorithms = `binary search compares, a filter keeps by a predicate, a budget is a bound: spw.quest's algorithms write ?compare{target} and ?keep[valid]{qty, price} because the comparison itself cannot be written`
+  reading_from_here = `checks only: inside ?[…] and a ? word's body a comparison compares, and everywhere else < opens a capsule; it is the trial's first reading, and spw.quest's compare and keep steps would use it`
+  probe = `write the ?compare and ?keep steps of spw.quest's pipeline and algorithms with their comparison, and count which readers read them whole`
+}[reg=facet]
+
+^"math_scope"{
+  question = ~"../_workbench/.agents/plans/interpretation-trials/interpretation-trials.spw#wonder_trial_math_scope"
+  lines = #[
+    `<O((V + E) log V)>: now and pinned fall to prose; (( lexes as an n-range open, so a group that starts a scope cannot be written`,
+    `<O(E log V)>, <O(V + E)>, <O(n log n)>: read whole on both`,
+    `f(g(a)): whole now, prose on pinned`,
+    `n^2, price_i * qty_i: read whole, as an ascension on 2 and a value mark on qty_i`,
+  ][reg=set]
+  done_here = `spw.quest writes arithmetic the lexer would misread between backticks (recurrence, growth), so no formula counts as a mark on the guide; its cost classes stay in the concept`
+  reading_from_here = `a scope: a capsule or a measure's brackets that hold O(…) or a formula read their inside as arithmetic, which would let (( group and ^ raise there and nowhere else`
+  probe = `parse the guide's 28 files with (( read as a group inside a capsule, and check that no n-range anywhere in the corpus changes`
+}[reg=facet]
+
+^"numbers"{
+  questions = `minus_sign, unit_place and ratio_spelling in syntax-hardware-alignment; number_authority is decided as practice (readNumberForm)`
+  lines = #[
+    `%p95[400ms], %rate[3.8..4.6%], %step[4/3], %count[1e6], %p95[412(18)ms]: read whole on both, and readNumberForm takes each`,
+    `%errors[0.1%]: reads whole, but the percent lexes as a measure mark, so numbers.spw counts 9 measure marks where 7 are written as marks`,
+    `a minus before a number, and 9.81 ± 0.02: a lexer error on both; readNumberForm takes the second`,
+    `10_000 and 0xff: no error, but each splits into a number and a name`,
+  ][reg=set]
+  reading_from_here = `unit_place: a percent or a unit glued to digits belongs to the number, so it never counts as a mark; this consumer would take that reading for the mark census on spw.quest's guide`
+  probe = `count % tokens glued to a digit across the site's .spw files; each is a measure mark the guide now counts`
+}[reg=facet]
+
+^"typography"{
+  lines = #[
+    `≤ ∈ × ± ² Σ μ σ ∞: each a lexer error, and the character is gone from the tokens`,
+  ][reg=set]
+  reading_from_here = `a lexer that keeps an unknown character as a token of its own, with the error, would let a reader show what was written; the math_scope trial already notes that π and ∞ are not lexed`
+}[reg=facet]
+
+^"line_kit"{
+  owner = `the workbench's line reader (readLine), which the canvas reads every held line with`
+  lines = #[
+    `draft -> page: word draft, rest " -> page" unread`,
+    `home ~> topics: word home, rest " ~> topics" unread (inside a body ~> is a seam)`,
+    `%rows{0..n}: one part, 0..n`,
+  ][reg=set]
+  why = `spw.quest's syntax file now teaches -> beside ~>, and its algorithms run on ranges; on the canvas the chain and the reach are drawn as unread text`
+  reading_from_here = `-> and ~> between two words at a line's top level are seams as they are in a body, and a..b in a body is one part with two ends a reader can hold`
+  probe = `read the guide's lines with -> and top-level ~> as seams, and list every line whose parts change`
+}[reg=facet]
+
+^"site_side"{
+  note = `Not workbench asks: spw.quest's guide still reads with the pinned 2026.10.13 reader, which takes f(g(a)) as prose; moving the guide's pin is this repository's call, and the trace-skip pin move left the runtime where it was.`
+}[reg=facet]
+
+contents = #[
+  ~"./workbench-algorithmic-practicality-2026-11.spw#comparison",
+  ~"./workbench-algorithmic-practicality-2026-11.spw#math_scope",
+  ~"./workbench-algorithmic-practicality-2026-11.spw#numbers",
+  ~"./workbench-algorithmic-practicality-2026-11.spw#typography",
+  ~"./workbench-algorithmic-practicality-2026-11.spw#line_kit",
+  ~"./workbench-algorithmic-practicality-2026-11.spw#site_side",
+][reg=set]
