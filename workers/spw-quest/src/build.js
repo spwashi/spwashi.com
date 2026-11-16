@@ -6,7 +6,7 @@ import { readContainers } from "../../../public/js/semantic/expression-query.js"
 import { escapeHtml } from "../../lib/shell.js";
 import { CONTAINERS, OPERATORS, PARTICLE_AIMS } from "./guide.js";
 import { EXAMPLES } from "./examples.js";
-import { editorField, handBar, outlineFile, readFile } from "./file-reader.js";
+import { editorField, handBar, keepReadings, outlineFile, readFile } from "./file-reader.js";
 import { displayMenu } from "./display.js";
 
 const MAX = 60;
@@ -61,6 +61,8 @@ figure<care>(rows)[quiet]{sleeves rolled, a trowel, back to the sun}
 ~argue<rupture>(table)[rising]{the text ~> the joke ~> silence}
 ?stay<repair>(window)[open]{one of them sits down}` },
 ]);
+// A kind is the same file on every request, so it is read once an isolate, on first use.
+keepReadings(BUILD_KINDS.map((entry) => entry.script));
 
 /** A writing line: act (!) on draft, about the chapter, in the study, on a second pass, with three things inside. Slot addresses without a script start here. */
 export const BUILD_DEFAULTS = Object.freeze({ mark: "!", word: "draft", concept: "chapter", scene: "study", mode: "second_pass", definition: "voice, scene, turn" });

@@ -3,8 +3,9 @@ import { startersSection } from "./starters.js";
 import { EXAMPLES, EXAMPLE_GROUPS, exampleById } from "./examples.js";
 import { EXPECTED_FILES, GIT_GUIDE, GIT_MARKDOWN, INSTRUCTION_SETS, QUEST_PROMPTS, QUEST_TEXT, WORKBENCH } from "./quest.js";
 import { STEPS } from "./steps.js";
-import { LINE_LIMIT, liveScript, readLine } from "./reader.js";
-import { FILE_CSS, FILE_LIMIT, docShelf, editorField, handBar, landingLine, liveFileScript, outlineFile, readFile } from "./file-reader.js";
+import { LINE_LIMIT, liveScript } from "./reader.js";
+import { FILE_CSS, FILE_LIMIT, editorField, handBar, keepReadings, landingLine, liveFileScript, outlineFile, readFile } from "./file-reader.js";
+import { PANEL_EDGES, SHELF_LINKS } from "./readings-data.js";
 import { noteBootScript } from "./note.js";
 import { PANEL_CSS, QUEST_WORD, carriedWord, stepSurface, withWord } from "./panel.js";
 import { BUILD_CSS, BUILD_DEFAULTS, MAX_SCRIPT, assemble, buildFrom, buildSurface, factshiftScriptHref, focusLines, focusSlots, formatScript, readSpw64, safeName, toolActions } from "./build.js";
@@ -196,20 +197,13 @@ function forwardOldHash() {
   else if (panels.includes(id)) location.replace(`/learn#${id}`);
 }
 
-/** Which panels' lines use each operator and each brace pair: the edges back from a card to the panels. */
-const EDGES_IN = (() => {
-  const ops = new Map();
-  const braces = new Map();
-  const add = (map, key, index) => (map.get(key) || map.set(key, new Set()).get(key)).add(index);
-  STEPS.forEach((step, index) => {
-    for (const line of [step.try, ...(step.then || [])]) {
-      const reading = readLine(step.id, line);
-      for (const op of reading.operators) if (op.name) add(ops, op.name, index);
-      for (const c of reading.containers) add(braces, c.name, index);
-    }
-  });
-  return { ops, braces };
-})();
+/** Which panels' lines use each operator and each brace pair: the edges back from a card to the panels, carried by carry-readings.mjs. */
+const EDGES_IN = { ops: new Map(Object.entries(PANEL_EDGES.ops)), braces: new Map(Object.entries(PANEL_EDGES.braces)) };
+
+// The guide's files never change, so each is read once an isolate, on first use.
+keepReadings(EXAMPLES.map((example) => example.script));
+/** The files open together, each with the files its paths name (carry-readings.mjs): a path in a reading is a way to the file it names. */
+const SHELF = EXAMPLES.map((example) => ({ ...example, links: SHELF_LINKS[example.id] }));
 
 /** Links to the panels in a set, as number and name. */
 const panelLinks = (indexes) => [...(indexes || [])].sort((a, b) => a - b)
@@ -422,7 +416,7 @@ ${fileWorkspace(example, at)}
 </details>
 <p class="note" data-release-notice hidden>Release <code data-release-name></code> is published. This page keeps <code>reader.min.js</code> of ${PINNED_RELEASE}. <a href="/">Read the guide with the published release</a>; that loads the release's full build and does not change what this page keeps.</p>
 <p class="also"><a href="/init">Recipe for agents</a> · <a href="/quest.json">quest.json</a> · <a href="${QUEST.repository}">Source</a> · <a href="https://autonomous.feedback/spw.quest?at=/">What was hard to follow</a></p>
-${liveFileScript(EXAMPLES, parser ? switchLoader(parser.from) : undefined, { note: true, modulePath: PINNED_READER })}
+${liveFileScript(SHELF, parser ? switchLoader(parser.from) : undefined, { note: true, modulePath: PINNED_READER })}
 ${displayScript()}`,
   });
 }
@@ -431,7 +425,7 @@ ${displayScript()}`,
 function fileWorkspace(example, at = "") {
   const reading = readFile(example.script);
   // The files open together: a path from one to another is a way between them.
-  const shelf = { self: example.file, docs: docShelf(EXAMPLES) };
+  const shelf = { self: example.file, docs: SHELF };
   const display = displayMenu();
   const link = (item) => `<a href="/?example=${escapeHtml(item.id)}#try" data-example="${escapeHtml(item.id)}"${item === example ? ' aria-current="page"' : ""}><span class="tab">${escapeHtml(item.tab)}</span><span class="file">${escapeHtml(item.file)}</span></a>`;
   // One row a group: the bench, the study, the board, the stage, the trial, and the team.

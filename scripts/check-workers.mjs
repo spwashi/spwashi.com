@@ -128,6 +128,8 @@ async function main() {
   const carried = [
     ['--import', './scripts/tests/register-public-imports.mjs', 'workers/spw-quest/carry-specimens.mjs', '--check'],
     ['--import', './scripts/tests/register-public-imports.mjs', 'workers/spw-quest/carry-shelf.mjs', '--check'],
+    // The guide's examples' paths and the panels' edges, against a fresh reading of examples.js and steps.js.
+    ['workers/spw-quest/carry-readings.mjs', '--check'],
     // /arcs/ against its carried season. The season moves with history; carry-arcs.mjs refreshes it.
     ['--import', './scripts/tests/register-public-imports.mjs', 'workers/spw-quest/carry-arcs.mjs', '--check'],
     // llms.txt, init, quest.json and the other constant answers, against what the worker answers.

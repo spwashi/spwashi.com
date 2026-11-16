@@ -594,19 +594,39 @@ export function fileKit(data) {
 
 const kit = fileKit(FILE_DATA);
 
+// A file the worker opens the same on every request (a guide example, a /build
+// kind) is read once an isolate, on first use, and that reading is shared:
+// nothing that takes a reading changes it (rowsOf keeps its rows on it, the
+// same each time). Any other text is read as it comes and never kept.
+const KEPT = new Map();
+/** Name files that never change, so each is read at most once. */
+export function keepReadings(sources) {
+  for (const source of sources) {
+    const text = String(source ?? "").slice(0, FILE_LIMIT);
+    if (!KEPT.has(text)) KEPT.set(text, null);
+  }
+}
+
 /** A file's reading, by the worker. */
-export const readFile = (source) => kit.read(parse, String(source ?? "").slice(0, FILE_LIMIT));
+export function readFile(source) {
+  const text = String(source ?? "").slice(0, FILE_LIMIT);
+  let reading = KEPT.get(text);
+  if (!reading) {
+    reading = kit.read(parse, text);
+    if (KEPT.has(text)) KEPT.set(text, reading);
+  }
+  return reading;
+}
 export const paintFile = (reading) => kit.paint(reading.text, reading.tokens);
 export const outlineFile = (reading, shelf) => kit.outline(reading, shelf);
 
-const SHELVES = new WeakMap();
-/** The files open together, each with the files its links name: what lets a reading's paths be ways between them. */
-export function docShelf(examples) {
-  if (!SHELVES.has(examples)) {
-    SHELVES.set(examples, examples.map(({ id, file, script }) => ({ id, file, links: readFile(script).links.map((link) => ({ name: link.name, ...kit.fileOf(link.path) })) })));
-  }
-  return SHELVES.get(examples);
-}
+/**
+ * The files a file's paths name, each with the line it lands on: what lets a
+ * reading's paths be ways between the files open together. carry-readings.mjs
+ * reads the guide's examples this way into src/readings-data.js, so no request
+ * parses the shelf.
+ */
+export const linksOf = (source) => readFile(source).links.map((link) => ({ name: link.name, ...kit.fileOf(link.path) }));
 
 /** The line a ?at= name lands on in a file, or -1. */
 export const landingLine = (source, name) => kit.lineOf(String(source ?? ""), name);
@@ -980,11 +1000,10 @@ function liveFile(kit, parseFile, examples, noteApi) {
   }
 }
 
-/** The module script that starts liveFile with /parser.js (or a switched build). */
+/** The module script that starts liveFile with /parser.js (or a switched build). Each of `examples` carries its `links` (linksOf). */
 export function liveFileScript(examples = [], loader, { note = false, modulePath = "/parser.js" } = {}) {
   const data = JSON.stringify(FILE_DATA).replace(/</g, "\\u003c");
-  const docs = docShelf(examples);
-  const shelf = JSON.stringify(examples.map(({ id, file, says, try: attempt, asks, script }, index) => ({ id, file, says, try: attempt, asks, script, links: docs[index].links }))).replace(/</g, "\\u003c");
+  const shelf = JSON.stringify(examples.map(({ id, file, says, try: attempt, asks, script, links }) => ({ id, file, says, try: attempt, asks, script, links }))).replace(/</g, "\\u003c");
   const noteApi = note ? `(${noteKit.toString()})()` : "null";
   const start = `(${liveFile.toString()})((${fileKit.toString()})(${data}), parse, ${shelf}, ${noteApi});`;
   if (!loader) return `<script type="module">
