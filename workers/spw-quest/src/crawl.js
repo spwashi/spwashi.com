@@ -52,7 +52,7 @@ ${urls}
  * "/" stays with the worker: it answers text, JSON or a page by Accept.
  */
 export const CONSTANT_ANSWERS = Object.freeze([
-  "/llms.txt", "/llms-full.txt", "/init", "/init.md", "/git.txt", "/git.md", "/quest.json", "/prompts.json", "/parser.js",
+  "/llms.txt", "/llms-full.txt", "/init", "/init.md", "/git.txt", "/git.md", "/quest.json", "/prompts.json",
 ]);
 
 /** The paths wrangler.jsonc sends to the assets layer instead of the worker. */
@@ -60,6 +60,9 @@ export const STATIC_PATTERNS = Object.freeze([
   "/fonts/*", "/peer/*", "/icons/*", "/sw.js", "/robots.txt", "/sitemap.xml",
   "/parser/index.json", "/parser/*/*.js", "/parser/*/*.map", "/parser/*/manifest.json", "/arcs/index.json",
   ...CONSTANT_ANSWERS,
+  // The browser's parser: the site bundle, copied byte for byte by carry-answers.mjs. The worker
+  // no longer holds it (2026-11-16), so its script stays about 140 KiB smaller.
+  "/parser.js",
   // The guide's front page, carried as the worker renders it with no query (carry-guide.mjs).
   "/",
   // The shelf's pages, carried as the worker serves them (shelf.js shelfPages, carry-arcs.mjs).

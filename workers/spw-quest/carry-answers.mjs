@@ -4,6 +4,8 @@
 // exactly what the worker answers;
 // assets/_headers restates its headers, and test/static.test.mjs holds both.
 // --check fails when a file on disk differs from what the worker would send.
+// It also copies the site bundle to assets/parser.js, byte for byte: the browser's
+// /parser.js, which the worker no longer holds.
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -30,5 +32,19 @@ for (const address of CONSTANT_ANSWERS) {
   await mkdir(path.dirname(target), { recursive: true });
   await writeFile(target, body);
   console.log(`[carry-answers] wrote assets${address} (${(body.length / 1024).toFixed(1)} KiB)`);
+}
+// /parser.js is the site bundle itself, not something the worker answers: the worker no longer
+// imports it, and wrangler.jsonc sends the address to the assets layer.
+const BUNDLE = path.join(path.dirname(fileURLToPath(import.meta.url)), "../../public/js/semantic/spw-workbench-reader.js");
+const bundle = await readFile(BUNDLE, "utf8");
+const parserTarget = path.join(ASSETS, "parser.js");
+if (check) {
+  if ((await readFile(parserTarget, "utf8").catch(() => "")) !== bundle) {
+    drift += 1;
+    console.error("[carry-answers] assets/parser.js differs from public/js/semantic/spw-workbench-reader.js; run npm run build:spw-parser, then this");
+  }
+} else {
+  await writeFile(parserTarget, bundle);
+  console.log(`[carry-answers] wrote assets/parser.js (${(bundle.length / 1024).toFixed(1)} KiB), the site bundle byte for byte`);
 }
 if (check && drift) process.exit(1);

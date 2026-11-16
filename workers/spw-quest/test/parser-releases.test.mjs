@@ -2,7 +2,6 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { appendFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
-import { PARSER_JS } from '../src/parser-text.js';
 import { BASE_SECURITY, escapeHtml } from '../../lib/shell.js';
 import { CarryError, DEFAULT_ASSETS, carryRelease, checkAssets } from '../carry-parser-release.mjs';
 import { FILES, IMMUTABLE, REV_A, REV_B, REV_C, SHORT, assetsFrom, editManifest, get, rewriteListed, run, scratch, writeRelease } from './parser-fixtures.mjs';
@@ -292,10 +291,8 @@ test('with no releases carried, /parser/ says so; /parser.js and the other route
   assert.match(html, /No release has been carried here yet\./);
   assert.match(await (await get('/parser/', {})).text(), /No release has been carried here yet\./, 'no binding at all');
   const { env } = await carriedPair();
-  const bundle = await get('/parser.js', { env });
-  assert.equal(await bundle.text(), PARSER_JS);
-  assert.equal(bundle.headers.get('cache-control'), 'public, max-age=3600');
-  assert.equal(bundle.headers.get('access-control-allow-origin'), null);
+  // /parser.js is the assets layer's (test/routes.test.mjs); the worker no longer answers it.
+  assert.equal((await get('/parser.js', { env })).status, 404);
   assert.equal((await get('/', { env })).headers.get('content-security-policy'), `${PAGE_CSP.replace("script-src 'unsafe-inline'", "script-src 'self' 'unsafe-inline'")}; connect-src 'self'`);
   assert.equal((await get('/install', { env })).headers.get('content-security-policy'), PAGE_CSP);
   assert.match(await (await get('/missing', { env })).text(), /^Not found: \/missing\n/);
