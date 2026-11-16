@@ -1,0 +1,127 @@
+/* mutex.buzz. Written by hand; the pages are carried (carry.mjs). */
+:root {
+  color-scheme: dark;
+  /* A hive: wax on a dark comb, honey for what holds. */
+  --bg: #120d07;
+  --well: #0b0805;
+  --fg: #f8efd9;
+  --muted: #cfc2a3;
+  --line: rgba(248, 239, 217, 0.16);
+  --accent: #ffc53d;
+  --ink: #1a1208;
+  --mode: #ff9f43;
+  --scene: #a7e3b4;
+  --concept: #d9bcff;
+  --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--fg); font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+a { color: #ffd98a; text-underline-offset: 3px; }
+a:focus-visible, .spw .line:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Home: the words and the rule on one side, the lock beside them, held in view. */
+.home main { width: min(70rem, calc(100% - 32px)); margin: 0 auto; padding: 40px 0 56px; display: grid; gap: 28px 40px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 56rem) {
+  .home main { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "say lock" "sample lock"; align-items: start; }
+  .say { grid-area: say; }
+  .sample { grid-area: sample; }
+  .lock { grid-area: lock; position: sticky; top: 24px; }
+}
+h1 { margin: 0 0 12px; font-size: clamp(2.2rem, 6vw, 3.6rem); line-height: 0.98; letter-spacing: -0.045em; }
+h1 code { color: var(--accent); font-size: 0.78em; }
+p { margin: 0 0 12px; max-width: 34rem; }
+.kicker { color: var(--muted); font: 13px/1.4 var(--mono); margin: 0 0 14px; transition: color 0.3s ease; }
+.rules { list-style: none; margin: 18px 0; padding: 0; display: grid; gap: 8px; }
+.rules li { padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; }
+.rules b { color: var(--accent); font-family: var(--mono); margin-right: 8px; }
+.quiet { color: var(--muted); }
+.data { font: 13px/1.5 var(--mono); color: var(--muted); }
+.data a { transition: color 0.3s ease; }
+
+/* The lock: a month as a ring of three holds around the window that shows the holder. */
+.lock { margin: 0; }
+.dial { display: block; width: 100%; height: auto; max-width: 34rem; margin: 0 auto; }
+.dial .comb { fill: url(#comb); }
+.dial pattern path { fill: none; stroke: var(--accent); stroke-opacity: 0.07; stroke-width: 1; }
+.dial .track { fill: none; stroke: rgba(248, 239, 217, 0.06); stroke-width: 22; transition: stroke 0.3s ease; }
+.dial .hold { fill: none; stroke: var(--fg); stroke-opacity: 0.22; stroke-width: 22; transition: stroke 0.3s ease, stroke-opacity 0.3s ease; }
+.dial .hold.current { stroke-opacity: 0.5; }
+.dial .labels text { fill: var(--muted); font: 600 22px/1 var(--mono); text-anchor: middle; dominant-baseline: middle; transition: fill 0.3s ease; }
+.dial .labels text.current { fill: var(--fg); }
+.dial .rest { fill: none; stroke: var(--accent); stroke-width: 6; stroke-linecap: round; stroke-dasharray: 0.1 14; animation: buzz 1.4s linear infinite; }
+.dial .shackle { fill: none; stroke: var(--fg); stroke-opacity: 0.85; stroke-width: 10; stroke-linecap: round; transform-box: fill-box; transform-origin: center bottom; transition: stroke 0.3s ease; }
+.letting-go .dial .shackle { animation: lift 2.4s ease-in-out infinite; }
+.dial .window { fill: var(--well); stroke: var(--accent); stroke-opacity: 0.35; stroke-width: 3; stroke-linejoin: round; transition: stroke-opacity 0.3s ease; }
+.dial .window-word { fill: var(--muted); font: 16px/1 var(--mono); text-anchor: middle; }
+.dial .window-word.gone { display: none; }
+/* The bee: honey and ink, wings a blur of wax. It flies along the ring to today (mutex.js). */
+.abdomen { fill: var(--accent); stroke: var(--ink); stroke-width: 1.5; }
+.stripe { stroke: var(--ink); stroke-width: 3.2; }
+.head { fill: var(--ink); }
+.sting { stroke: var(--ink); stroke-width: 2; stroke-linecap: round; }
+.wing { fill: var(--fg); fill-opacity: 0.55; stroke: var(--fg); stroke-opacity: 0.4; transform-box: fill-box; transform-origin: center bottom; animation: flutter 0.11s ease-in-out infinite alternate; }
+.bee-body { animation: bob 1.6s ease-in-out infinite; }
+.dial .bee { filter: drop-shadow(0 0 6px rgba(255, 197, 61, 0.45)); }
+.lock figcaption { max-width: 34rem; margin: 14px auto 0; }
+.holding { font-size: 15px; }
+.holding span { color: var(--muted); font: 13px/1.5 var(--mono); }
+.holds { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 4px; font: 13px/1.4 var(--mono); color: var(--muted); }
+.holds li { display: flex; gap: 10px; padding: 6px 10px; border-radius: 8px; border: 1px solid transparent; }
+.holds li[aria-current] { color: var(--fg); border-color: var(--line); }
+.holds b { color: var(--accent); }
+.holds .who { margin-left: auto; text-align: right; }
+
+/* The rule in Spw: each line lights the part of the lock it governs. */
+.sample { min-width: 0; }
+.spw { margin: 0; padding: 14px 0; font: 14px/1.7 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; color: var(--fg); }
+.spw .line { display: inline-block; width: 100%; padding: 0 10px; border-radius: 6px; cursor: default; transition: background 0.2s ease; }
+.spw .line:hover, .spw .line:focus, .spw .line.lit { background: rgba(255, 197, 61, 0.1); }
+.spw .m { color: var(--accent); }
+.spw .p { color: var(--muted); }
+.spw .w { color: var(--fg); }
+.spw .s { color: #e8cfa8; }
+.spw .j { color: var(--muted); }
+.spw .b-mode { color: var(--mode); }
+.spw .b-scene { color: var(--scene); }
+.spw .b-concept { color: var(--concept); }
+.spw .b-body { color: var(--muted); }
+.spw .now-line { margin-top: 8px; border-top: 1px dashed var(--line); padding-top: 8px; border-radius: 0; }
+
+body[data-part="lock"] .dial .shackle,
+body[data-part="release"] .dial .rest { stroke: var(--accent); stroke-opacity: 1; }
+body[data-part="window"] .dial .window,
+body[data-part="rest"] .dial .window,
+body[data-part="now"] .dial .window { stroke-opacity: 1; }
+body[data-part="clock"] .dial .labels text { fill: var(--accent); }
+body[data-part="clock"] .dial .hold { stroke-opacity: 0.6; }
+body[data-part="hold"] .dial .hold.current,
+body[data-part="now"] .dial .hold.current { stroke: var(--accent); stroke-opacity: 0.75; }
+body[data-part="dial"] .dial .track { stroke: rgba(255, 197, 61, 0.25); }
+body[data-part="wait"] .quiet, body[data-part="wait"] .queue { color: var(--accent); }
+body[data-part="frame"] .data a[href^="https://attention"] { color: var(--accent); }
+body[data-part="name"] .say .kicker:first-child { color: var(--accent); }
+body[data-part="rest"] .holds li[aria-current] { border-color: var(--accent); }
+
+@keyframes buzz { to { stroke-dashoffset: -24; } }
+@keyframes flutter { from { transform: scaleY(1); } to { transform: scaleY(0.35); } }
+@keyframes bob { 50% { transform: translateY(-1.5px); } }
+@keyframes lift { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(-9px); } 44% { transform: translateY(-7px); } 48% { transform: translateY(-9px); } }
+
+/* /now/: the holder, filling whatever frames it, with its hold underneath. */
+.now { min-height: 0; height: 100vh; }
+.frame { position: relative; display: block; height: 100%; min-height: 240px; overflow: hidden; color: var(--fg); text-decoration: none; background: radial-gradient(ellipse at center, #2a1d0c 0%, var(--bg) 70%); }
+.frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.lock-line { position: absolute; left: 12px; right: 12px; bottom: 12px; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; max-width: none; margin: 0; padding: 10px 12px 16px; border-radius: 10px; background: rgba(18, 13, 7, 0.8); border: 1px solid var(--line); }
+/* A bee rides the hold's progress, at the share of it spent. */
+.rider { position: absolute; bottom: 14px; left: calc(12px + (100% - 24px) * var(--k, 0)); width: 30px; height: 22px; margin-left: -15px; z-index: 1; }
+.rider[hidden] { display: none; }
+.lock-line strong { font-size: 15px; }
+.lock-line span { color: var(--muted); font: 12px/1.4 var(--mono); }
+.lock-line .progress { position: absolute; left: 12px; right: 12px; bottom: 6px; width: calc(100% - 24px); height: 4px; }
+.progress .track { stroke: rgba(248, 239, 217, 0.14); stroke-width: 4; stroke-dasharray: 1 3; }
+.progress .spent { stroke: var(--accent); stroke-width: 4; }
+.frame:focus-visible { outline: 2px solid var(--accent); outline-offset: -4px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

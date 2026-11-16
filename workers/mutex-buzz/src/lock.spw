@@ -1,0 +1,17 @@
+#>mutex_buzz
+#:lock #!attention
+
+^lock{hold, rest, wait}<attention>
+=holders[one]{frame}
+$clock[utc]{13th, 26th, last_day}
+!hold{close ~> close}
+.rest[folio]{A, B, C}
+~wait[public]{queue}
+%release{now ~> close}<days>
+@attention.productions{frame}
+&frame{holder, close, queue}
+
+?["What holds the frame now?"]{
+  ~#expect: `one holder, until its close`
+  !probe{ "find the hold whose since is at or before now" }
+}
