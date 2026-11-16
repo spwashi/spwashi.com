@@ -1,9 +1,9 @@
 // Carry the site's browser reader bundle (parse, and what the editor reads) into the spw.quest worker as text.
 //   node workers/spw-quest/carry-parser.mjs          write src/parser-text.js
 //   node workers/spw-quest/carry-parser.mjs --check  exit 1 when it differs from the bundle
-// Run it after `npm run build:spw-parser`. The worker serves the text at /parser.js
-// and imports the bundle itself to read lines on the server; the route test holds
-// the two to the same bytes.
+// Run it after `npm run build:spw-parser`. The worker no longer imports this text
+// (2026-11-16): /parser.js is assets/parser.js, which carry-answers.mjs copies from
+// the bundle. The tests still hold this text, that file, and the bundle to the same bytes.
 import { readFile, writeFile } from "node:fs/promises";
 
 const BUNDLE = new URL("../../public/js/semantic/spw-workbench-reader.js", import.meta.url);
