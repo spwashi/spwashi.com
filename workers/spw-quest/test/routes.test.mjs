@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import worker from '../src/index.js';
+import { STATIC_PATTERNS } from '../src/crawl.js';
 import { EXPECTED_FILES, GROW_CHECKS, INIT_PROMPT, QUEST_PROMPTS, QUEST_TEXT, WORKBENCH } from '../src/quest.js';
 import { OPERATORS, CONTAINERS } from '../src/guide.js';
 import { CHECKS, STEPS, STORYBOARD } from '../src/steps.js';
@@ -270,14 +271,15 @@ test('/learn walks the seven panels, each a line in a balloon and a GET form', a
   assert.match(page, /<script type="module">\nimport \{ parse \} from "\/parser\.js";/);
 });
 
-test('/parser.js is the site bundle, as JavaScript', async () => {
-  const response = await get('spw.quest', '/parser.js');
-  assert.equal(response.status, 200);
-  assert.match(response.headers.get('content-type'), /^text\/javascript/);
+test('/parser.js is the site bundle, served from the assets layer, and the worker holds no copy', async () => {
   const bundle = readFileSync(SITE_BUNDLE, 'utf8');
-  assert.equal(await response.text(), bundle, 'run node workers/spw-quest/carry-parser.mjs');
-  assert.equal(PARSER_JS, bundle);
-  assert.equal(await (await get('spw.quest', '/parser.js', { method: 'HEAD' })).text(), '');
+  // The assets layer answers /parser.js (wrangler.jsonc sends it there); this stub serves assets/ as it does.
+  const assets = { fetch: async (request) => new Response(readFileSync(new URL(`../assets${new URL(request.url).pathname}`, import.meta.url), 'utf8')) };
+  const served = await assets.fetch(new Request('https://spw.quest/parser.js'));
+  assert.equal(await served.text(), bundle, 'run carry-answers.mjs after npm run build:spw-parser');
+  assert.equal(PARSER_JS, bundle, 'run node workers/spw-quest/carry-parser.mjs');
+  assert.ok(STATIC_PATTERNS.includes('/parser.js'), 'the address is the assets layer\'s');
+  assert.equal((await get('spw.quest', '/parser.js')).status, 404, 'the worker no longer answers it, so its script carries no second copy');
 });
 
 test('pages take the site faces from this origin; pages that read as you type also load /parser.js', async () => {

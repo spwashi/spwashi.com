@@ -12,7 +12,6 @@ import { BUILD_CSS, BUILD_DEFAULTS, MAX_SCRIPT, assemble, buildFrom, buildSurfac
 import { PAPER_CSS, PAPER_THEME } from "./paper.js";
 import { LIVE_CSP, PAGE_CSS, QUEST_HEAD, masthead, page } from "./page.js";
 import { displayMenu, displayScript } from "./display.js";
-import { PARSER_JS } from "./parser-text.js";
 import { handleParser, isParserPath } from "./parser-releases.js";
 import { SWITCH_CSS, parserSwitch, switchBanner, switchLoader, switchModulePath } from "./parser-switch.js";
 import { FACTSHIFT_LIMIT, SPECIMENS_CSS, factshiftHref, specimenById, specimenState, specimensBody } from "./specimens.js";
@@ -745,9 +744,6 @@ async function handleQuest(request, url) {
     response = line && line.length <= FACTSHIFT_LIMIT
       ? new Response(null, { status: 302, headers: { ...BASE_SECURITY, Location: factshiftHref(line), "Cache-Control": "public, max-age=300" } })
       : new Response(canvasRefusal(line), { status: line ? 400 : 404, headers: { ...BASE_SECURITY, "Content-Type": "text/plain; charset=UTF-8" } });
-  } else if (url.pathname === "/parser.js") {
-    response = new Response(PARSER_JS, { headers: { ...BASE_SECURITY,
-      "Content-Type": "text/javascript; charset=UTF-8", "Cache-Control": "public, max-age=3600" } });
   } else if (url.pathname === MANIFEST_PATH) {
     return serveManifest(request);
   } else if (url.pathname === "/.well-known/autonomous-feedback.json") {
