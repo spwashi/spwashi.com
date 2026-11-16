@@ -126,5 +126,21 @@ invariants: #[
   ~#probe(run)
   !probe{ "rg -n 'componentExpression|readPageLine' scripts/component-snapshots.mjs public/js/interface/state-inspector.js" }
   ~#probed(2026-11-06): "componentExpression at component-snapshots.mjs:693, read from the target only; readPageLine at state-inspector.js:930; no caption rule in capture.css."
+  ~#probed(2026-11-16): "readPageLine is at state-inspector.js:934-941; componentExpression is null in 527 of 1127 local run entries. Live first screens settle at 7.6 to 17.6 s on a phone (headless, shared machine) and each carries its own line (home[hook]{orient}<atlas>, contact[hook]{intake}<register>); the iPhone install banner arrives at 7 to 20 s and covers that line on every route. The creator asked for each screenshot's Spw-native serializability; the slot disagreement it meets is the workbench report's still_line_slots."
   $%[manifest_only, capture_mode_caption, satchel_copy]
+}
+
+#>wonder_screenshot_semantics_timing_game
+?["Can a still be worth more for the beat it caught, when the motion tells a story?"]{
+  #:depth #!pragmatics ~#lens(capture)
+  ~#with: @plan
+  ~#source(creator, 2026-11-16): "the star animation that appears when someone leaves the first comment on TikTok is valuable because its animation tells a story, so timing the screenshot becomes a game"
+  ~#hypothesis: "Motion that plays in place, each frame a legible beat of one story, makes the shutter a small skill; reflow, which moves what is being read, never does. The craft guard ('screenshot value cannot depend on catching an animation peak') protects calm stills and can stand beside a story whose every beat is worth keeping."
+  ~#tension: "A beat worth catching rewards a hand that is fast or lucky, and a beat that vanishes in 700 ms is lost to most hands; held as residue, or scrubbable after the fact, the beat stays a game without becoming a test."
+  ~#expect: "spwashi.com's first screens play no authored motion in their first six seconds (114 frames sampled at 100 ms, four discrete jumps); factshift.center's 'more' plays three beats, lit and said, said, receipt, and its press light lasts 700 ms."
+  ~#probe(run)
+  !probe{ "sample a route's first screen every 100 ms for six seconds and count frames that change; sample one factshift.center press the same way" }
+  ~#probed(2026-11-16): "as expected; frames in design/components/captures/runs/2026-11-16/ (gitignored)."
+  $%[calm_still, story_beat, scrubbable_residue]
+  ~<"./PLAN.md"> ~<"../../../public/css/modes/capture.css">
 }
