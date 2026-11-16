@@ -9,8 +9,10 @@
 // read from four perspectives. The board lays professional personas side by
 // side around one reference: their loops in parallel and their handoff in
 // series, and the gradient of positions between two stances. The stage shows
-// the syntax itself: joins, three headings kept in company at one subject, and
-// a pattern whose performance sets the theme of the field. Lines are written
+// the syntax itself: joins in pairs worth comparing, three headings kept in
+// company at one subject, a pattern whose performance sets the theme of the
+// field, and numbers written whole the way the workbench's number reader takes
+// them (spw.number-form/1: 400ms, 0.1%, 4/3, 412(18)ms). Lines are written
 // short enough that no word breaks in a phone's editor. The guide opens one at a
 // time in its editor, and the reading beside it says what a tool can take from
 // the file. `try` names one edit whose effect shows in that reading.
@@ -32,9 +34,12 @@
 // data-processing pass with each step wearing the mark that names its job; the
 // review says one point by valence, stance and register; the records are the
 // forms engineering data takes; the surfaces are print's and the screen's; and
-// the primitives and algorithms name the parts most code is built from; a role card holds one member's skills applied to a role, with the snippets
-// they kept; and the onboarding path routes a junior, a mid-level and a senior
-// engineer through the files.
+// the primitives and algorithms name the parts most code is built from, each
+// with its cost class in the concept, <O(n log n)>; a role card holds one
+// member's skills applied to a role, with the snippets they kept; the levels
+// hold one ticket at four rungs, so a hold and a compare on the canvas name
+// the slots that move; and the onboarding path routes a junior, a mid-level, a
+// senior and a staff engineer through the files (2026-11-16).
 
 export const EXAMPLE_GROUPS = Object.freeze(["Bench","Study","Board","Stage","Trial","Team"]);
 
@@ -259,7 +264,7 @@ gradient = #[
     group: "Stage",
     tab: "Syntax",
     file: "syntax.spw",
-    says: "Syntactic and relational joins: associative company, sequential path order, communicative reach with ~>, perspectival regard, and nested constituent hierarchies.",
+    says: "Joins in pairs worth comparing: company and order (no order, then an order), reach and chain (~> goes toward, -> chains into), regard and subject (@ from where, & about what); a nest; and one line beside itself with one slot turned.",
     try: "Change regard to tutor@indexing. The field beside it names tutor.",
     script: `#>syntax_stage
 #:showcase #!syntax
@@ -268,9 +273,12 @@ gradient = #[
 company = {student, classmate, later}
 order = path{~read; *note; ?ask}
 reach = home ~> topics
+chain = draft -> page
 regard = student@indexing
+subject = &indexing{student, classmate}
 nest = shelf{chip{ring, pill}, card{lifted}}
-line = home[hook]{software.art}(atlas)<record>`,
+line = home[hook]{software.art}(atlas)<record>
+turned = home[live]{software.art}(atlas)<record>`,
   },
   {
     id: "headings",
@@ -310,6 +318,32 @@ line = home[hook]{software.art}<atlas>
 ?["When the pivot performs, which theme should the page take?"]{
   ~#expect: \`glass, while one slot moves and the rest stays\`
   !probe{ "change theme to matte and watch the field lose its shadow" }
+}`,
+  },
+  {
+    id: "numbers",
+    group: "Stage",
+    tab: "Numbers",
+    file: "numbers.spw",
+    says: "A number written whole inside a measure's brackets, the way the workbench's number reader takes it: 400ms, 0.1%, 4/3, 1e6, a range 3.8..4.6%, and an uncertainty in its last digits, 412(18)ms. The body says what was measured and the scene when; a cost class rides in the concept; math Spw would misread stays in backticks.",
+    try: "Change 412(18)ms to 412(6)ms. Its low end is now 406ms, over the budget.",
+    script: `#>numbers
+#:showcase #!notation
+@metric: ~"./records.spw#metric"
+@cost: ~"./algorithms.spw#merge_sort"
+
+budget = ^checkout{ %p95[400ms] %errors[0.1%] =retries[3] }
+latency = %p95[412(18)ms]{checkout}(week)
+change = %p95{612ms ~> 412ms}(checkout)
+conversion = %rate[3.8..4.6%]{signup}(week)
+scale = %step[4/3]{type}
+rows = %count[1e6]{orders}
+cost = sort[merge]{runs}<O(n log n)>
+growth = \`1 < log n < n < n log n < n^2 < 2^n\`
+
+?["Is checkout over its budget this week?"]{
+  ~#expect: \`not surely: 412(18)ms reaches down to 394ms, under 400ms\`
+  !probe{ "measure more requests until the uncertainty is under 12ms" }
 }`,
   },
   {
@@ -523,24 +557,24 @@ lineage = {
     group: "Team",
     tab: "Primitives",
     file: "primitives.spw",
-    says: "The values and structures most code is built from, each with what it does quickly and what it costs: scalars, then lists, maps and sets, stacks and queues, heaps, trees and graphs.",
-    try: "Add a structure: trie = tree[prefix]{insert, lookup}<log_n>",
+    says: "The values and structures most code is built from, each with what it does quickly and what that costs in O(): scalars, then lists, maps and sets, stacks and queues, heaps, trees and graphs.",
+    try: "Add a structure: trie = tree[prefix]{insert, lookup}<O(k)>",
     script: `#>primitives
 #:census #!computing
-@algorithms: ~"./algorithms.spw"
+@algorithms: ~"./algorithms.spw#dedupe"
 
 scalars = {number, text, flag, none, time}
-array = list[indexed]{read, append}<constant>
-map = table[hashed]{put, get, has}<constant>
-set = table[unique]{add, has}<constant>
-stack = list[last_in]{push, pop}<constant>
-queue = list[first_in]{enqueue, dequeue}<constant>
-heap = tree[ordered]{push, pop_min}<log_n>
-tree = node{value, children}<log_n>
-graph = node{value, edges}<v_plus_e>
+array = list[indexed]{read, append}<O(1)>
+map = table[hashed]{put, get, has}<O(1)>
+set = table[unique]{add, has}<O(1)>
+stack = list[last_in]{push, pop}<O(1)>
+queue = list[first_in]{enqueue, dequeue}<O(1)>
+heap = tree[ordered]{push, pop_min}<O(log n)>
+tree = node[balanced]{value, children}<O(log n)>
+graph = node{value, edges}<O(V + E)>
 
 ?["Which structure would you reach for to dedupe a stream?"]{
-  ~#expect: \`a set, since has is constant\`
+  ~#expect: \`a set, since has is O(1) where a list's is O(n)\`
   !probe{ "count lookups per row with a list, then with a set" }
 }`,
   },
@@ -549,28 +583,33 @@ graph = node{value, edges}<v_plus_e>
     group: "Team",
     tab: "Algorithms",
     file: "algorithms.spw",
-    says: "Common algorithms as paths of marked steps: search, sort, walk a graph, slide a window, and remember a subproblem. The cost each one pays rides in the scene.",
-    try: "Add one: two_pointers = path{=left{start}; =right{end}; ~step{inward}; ?meet}<n>",
+    says: "Common algorithms as paths of marked steps, each with its cost class in the concept: search two ways, a sort beside its recurrence, three graph walks that differ only in what holds the frontier (a queue, a stack, a heap), an order of dependencies, a dedupe, a window, and a memo.",
+    try: "Add one: two_pointers = path{=left{start}; =right{end}; ~step{inward}; ?meet}<O(n)>",
     script: `#>algorithms
 #:study #!computing
 @primitives: ~"./primitives.spw"
 @pipeline: ~"./pipeline.spw#steps"
 
+linear_search = path{~scan{each}; ?compare{target}}<O(n)>
 binary_search = path{
   =range{low, high};
   ~halve{mid};
   ?compare{target};
   @return{index}
-}<log_n>
-merge_sort = path{~split{half}; *sort{each}; ^merge{runs}}<n_log_n>
-bfs = path{=queue{start}; ~visit{edges}; #seen{node}}<v_plus_e>
-dfs = path{=stack{start}; ~descend{edges}; #seen{node}}<v_plus_e>
-window = path{=edges{left, right}; ~slide; %sum{inside}}<n>
-memo = path{?seen{subproblem}; !solve; #keep{answer}}<states>
+}<O(log n)>
+merge_sort = path{~split{half}; *sort{each}; ^merge{runs}}<O(n log n)>
+recurrence = \`T(n) = 2T(n/2) + n\`
+bfs = path{=queue{start}; ~visit{edges}; #seen{node}}<O(V + E)>
+dfs = path{=stack{start}; ~visit{edges}; #seen{node}}<O(V + E)>
+dijkstra = path{=heap{start}; ~relax{edges}; #seen{node}}<O(E log V)>
+topo_sort = path{=queue{no_incoming}; ~remove{edges}; @emit{order}}<O(V + E)>
+dedupe = path{=set{seen}; ?has{row}; !add{row}}<O(n)>
+window = path{=edges{left, right}; ~slide; %sum{inside}}<O(n)>
+memo = path{?seen{subproblem}; !solve; #keep{answer}}<O(states)>
 
-?["Which of these answers which page links to which?"]{
-  ~#expect: \`bfs, one hop at a time from the page you start on\`
-  !probe{ "walk the site's links from Home and count hops to each page" }
+?["Which two lines differ in one word, and what does it change?"]{
+  ~#expect: \`bfs and dfs: a queue walks out by distance, a stack down by depth\`
+  !probe{ "walk the site's links from Home both ways and list the first five pages each reaches" }
 }`,
   },
   {
@@ -602,26 +641,51 @@ measure = %latency[p95]{before ~> after}
 }`,
   },
   {
+    id: "levels",
+    group: "Team",
+    tab: "Levels",
+    file: "levels.spw",
+    says: "One ticket at four levels. The act and the problem stay the same on every line; what a junior, a mid-level, a senior and a staff engineer touch, where it lives, and how far ahead they plan each move one rung.",
+    try: "Add a rung: principal = !fix[timeout]{strategy, hiring}(company)<years>",
+    script: `#>levels
+#:compare #!engineering
+@ticket: ~"./records.spw#ticket"
+@onboarding: ~"./onboarding.spw"
+
+task = bug[open]{checkout, timeout}<t812>
+junior = !fix[timeout]{checkout}(function)<day>
+mid = !fix[timeout]{checkout, retries}(service)<week>
+senior = !fix[timeout]{retries, alert, budget}(system)<quarter>
+staff = !fix[timeout]{budget, owner, policy}(teams)<year>
+
+?["What moves from one level to the next, and what stays?"]{
+  ~#expect: \`the act and the problem stay; the parts, the place and the horizon move\`
+  !probe{ "hold junior on the canvas, compare it with staff, and name each slot that moved" }
+}`,
+  },
+  {
     id: "onboarding",
     group: "Team",
     tab: "Onboarding path",
     file: "onboarding.spw",
-    says: "Three paths through the team's other four files: what a junior, a mid-level and a senior engineer read first, change, and teach in their first week.",
-    try: "Add a path: staff = path{^align{teams}; *shape{records}}",
+    says: "Four paths through the team's files: what a junior, a mid-level, a senior and a staff engineer read first, change, and teach in their first week.",
+    try: "Add a step to the junior path, after ?ask{review}: ; ~read{levels}",
     script: `#>team_onboarding
 #:plan #!onboarding
 @pipeline: ~"./pipeline.spw"
 @review: ~"./review.spw#register"
 @records: ~"./records.spw"
 @surfaces: ~"./surfaces.spw"
+@levels: ~"./levels.spw"
 
 junior = path{~read{pipeline}; !change{one_step}; ?ask{review}}
 mid = path{^own{pipeline}; ~read{records}; !review{peer}}
 senior = path{*shape{surfaces}; =set{contract}; !teach{review}}
-week = {junior, mid, senior} ~> demo
+staff = path{^align{teams}; *shape{records}; !write{levels}}
+week = {junior, mid, senior, staff} ~> demo
 
 ?["What can each of them change by Friday?"]{
-  ~#expect: \`a junior one step, a mid one record, a senior one contract\`
+  ~#expect: \`a junior one step, a mid one record, a senior one contract, a staff one plan two teams share\`
   !probe{ "each says in one line what they changed and where it shows" }
 }`,
   },

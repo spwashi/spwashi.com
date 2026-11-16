@@ -16,6 +16,7 @@ export const SHELF_LINKS = Object.freeze({
   "syntax": [{"name":"company","file":"headings.spw","at":"headings"}],
   "headings": [],
   "perform": [{"name":"line","file":"syntax.spw","at":"line"}],
+  "numbers": [{"name":"metric","file":"records.spw","at":"metric"},{"name":"cost","file":"algorithms.spw","at":"merge_sort"}],
   "outline": [{"name":"session","file":"session.spw","at":""}],
   "recurrence": [{"name":"headings","file":"headings.spw","at":""}],
   "laws": [{"name":"perform","file":"perform.spw","at":""}],
@@ -24,10 +25,11 @@ export const SHELF_LINKS = Object.freeze({
   "review": [{"name":"pipeline","file":"pipeline.spw","at":"steps"}],
   "records": [{"name":"pipeline","file":"pipeline.spw","at":""}],
   "surfaces": [{"name":"records","file":"records.spw","at":""}],
-  "primitives": [{"name":"algorithms","file":"algorithms.spw","at":""}],
+  "primitives": [{"name":"algorithms","file":"algorithms.spw","at":"dedupe"}],
   "algorithms": [{"name":"primitives","file":"primitives.spw","at":""},{"name":"pipeline","file":"pipeline.spw","at":"steps"}],
   "role": [{"name":"pipeline","file":"pipeline.spw","at":""},{"name":"records","file":"records.spw","at":""},{"name":"surfaces","file":"surfaces.spw","at":""}],
-  "onboarding": [{"name":"pipeline","file":"pipeline.spw","at":""},{"name":"review","file":"review.spw","at":"register"},{"name":"records","file":"records.spw","at":""},{"name":"surfaces","file":"surfaces.spw","at":""}]
+  "levels": [{"name":"ticket","file":"records.spw","at":"ticket"},{"name":"onboarding","file":"onboarding.spw","at":""}],
+  "onboarding": [{"name":"pipeline","file":"pipeline.spw","at":""},{"name":"review","file":"review.spw","at":"register"},{"name":"records","file":"records.spw","at":""},{"name":"surfaces","file":"surfaces.spw","at":""},{"name":"levels","file":"levels.spw","at":""}]
 });
 
 /** The /learn panels (indexes into STEPS) whose lines use each operator and each brace pair. */

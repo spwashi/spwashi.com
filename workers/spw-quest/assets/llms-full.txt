@@ -79,7 +79,7 @@ Every address below answers with a page that reads with no script, except Canvas
 - [Find](https://spw.quest/specimens?q=recipe%5B*%5D): You want every line on spwashi.com with some shape: the same word through other lenses, the same lens on other words. q: slots to match, with * for any value. The page is about 280 KB whatever is asked: the answer comes first, and the whole shelf follows it. Example: q = recipe[*].
 - [Compare](https://spw.quest/specimens?a=h-capsule&b=h-induct_join): You hold two shelf lines and want the slots they share and the slot where they part. a, b: shelf ids, as Find prints them. The page is about 280 KB whatever is asked: the answer comes first, and the whole shelf follows it. Example: a = h-capsule, b = h-induct_join.
 - [Take apart](https://spw.quest/build?script=~door%5Bajar%5D%7Bhinge%7D): You hold a file, or a line among others, and want what a tool reads from it and each slot's alternatives from the file's own lines. script: up to 1800 characters in an address. line: which of its lines to take apart, counted from 1. Example: script = ~door[ajar]{hinge}.
-- [Read a file](https://spw.quest/?example=record): You want a whole example of a kind of file (a log, a catalog record, a question with its probe) and what a tool reads from it. example: notebook, record, vocabulary, question, script, revision, persona, calibration, perspectives, loops, gradient, syntax, headings, perform, outline, recurrence, laws, pantry, pipeline, review, records, surfaces, primitives, algorithms, role or onboarding. at: a name in the file, to land on its line. Example: example = record.
+- [Read a file](https://spw.quest/?example=record): You want a whole example of a kind of file (a log, a catalog record, a question with its probe) and what a tool reads from it. example: notebook, record, vocabulary, question, script, revision, persona, calibration, perspectives, loops, gradient, syntax, headings, perform, numbers, outline, recurrence, laws, pantry, pipeline, review, records, surfaces, primitives, algorithms, role, levels or onboarding. at: a name in the file, to land on its line. Example: example = record.
 - [Check a line](https://spw.quest/read?step=act&line=~door): You are learning one mark and want a single line checked against that panel's rule. step: write, act, hold, name, point, ask or grow. line: up to 400 characters. Example: step = act, line = ~door.
 - [At rest](https://spw.quest/physics?line=home%5Bhook%5D%7Bsoftware.art%7D): You want a line drawn as bodies at rest, with the laws that placed them. line: one line. Example: line = home[hook]{software.art}.
 - [Canvas](https://spw.quest/canvas?line=home%5Bhook%5D%7Bsoftware.art%7D): You want a person to see a line laid out as a force-directed canvas on factshift.center. It draws with scripts, so a reader without them gets only its chrome: use Pivot to read the line. line: up to 400 characters, or s: a shelf id. Answers with a redirect to factshift.center. Example: line = home[hook]{software.art}.
@@ -258,7 +258,7 @@ gradient.spw: Continuous epistemic gradient: parameterizing decisions along a sc
       !probe{ "read each plan's head line and name its place" }
     }
 
-syntax.spw: Syntactic and relational joins: associative company, sequential path order, communicative reach with ~>, perspectival regard, and nested constituent hierarchies.
+syntax.spw: Joins in pairs worth comparing: company and order (no order, then an order), reach and chain (~> goes toward, -> chains into), regard and subject (@ from where, & about what); a nest; and one line beside itself with one slot turned.
 
     #>syntax_stage
     #:showcase #!syntax
@@ -267,9 +267,12 @@ syntax.spw: Syntactic and relational joins: associative company, sequential path
     company = {student, classmate, later}
     order = path{~read; *note; ?ask}
     reach = home ~> topics
+    chain = draft -> page
     regard = student@indexing
+    subject = &indexing{student, classmate}
     nest = shelf{chip{ring, pill}, card{lifted}}
     line = home[hook]{software.art}(atlas)<record>
+    turned = home[live]{software.art}(atlas)<record>
 
 headings.spw: Information organization and subject indexing: multiple competing indexing terms held in associative company, preserving ambiguity prior to catalog authorization.
 
@@ -299,6 +302,27 @@ perform.spw: Dynamic architectural configuration: when a structural pattern perf
     ?["When the pivot performs, which theme should the page take?"]{
       ~#expect: `glass, while one slot moves and the rest stays`
       !probe{ "change theme to matte and watch the field lose its shadow" }
+    }
+
+numbers.spw: A number written whole inside a measure's brackets, the way the workbench's number reader takes it: 400ms, 0.1%, 4/3, 1e6, a range 3.8..4.6%, and an uncertainty in its last digits, 412(18)ms. The body says what was measured and the scene when; a cost class rides in the concept; math Spw would misread stays in backticks.
+
+    #>numbers
+    #:showcase #!notation
+    @metric: ~"./records.spw#metric"
+    @cost: ~"./algorithms.spw#merge_sort"
+
+    budget = ^checkout{ %p95[400ms] %errors[0.1%] =retries[3] }
+    latency = %p95[412(18)ms]{checkout}(week)
+    change = %p95{612ms ~> 412ms}(checkout)
+    conversion = %rate[3.8..4.6%]{signup}(week)
+    scale = %step[4/3]{type}
+    rows = %count[1e6]{orders}
+    cost = sort[merge]{runs}<O(n log n)>
+    growth = `1 < log n < n < n log n < n^2 < 2^n`
+
+    ?["Is checkout over its budget this week?"]{
+      ~#expect: `not surely: 412(18)ms reaches down to 394ms, under 400ms`
+      !probe{ "measure more requests until the uncertainty is under 12ms" }
     }
 
 outline.spw: A course four levels deep: terms hold units, units hold weeks, weeks hold what is read and done.
@@ -463,49 +487,54 @@ surfaces.spw: The interactive surfaces of print and of the screen as two censuse
       margin ~> comment, insert ~> dialog
     }
 
-primitives.spw: The values and structures most code is built from, each with what it does quickly and what it costs: scalars, then lists, maps and sets, stacks and queues, heaps, trees and graphs.
+primitives.spw: The values and structures most code is built from, each with what it does quickly and what that costs in O(): scalars, then lists, maps and sets, stacks and queues, heaps, trees and graphs.
 
     #>primitives
     #:census #!computing
-    @algorithms: ~"./algorithms.spw"
+    @algorithms: ~"./algorithms.spw#dedupe"
 
     scalars = {number, text, flag, none, time}
-    array = list[indexed]{read, append}<constant>
-    map = table[hashed]{put, get, has}<constant>
-    set = table[unique]{add, has}<constant>
-    stack = list[last_in]{push, pop}<constant>
-    queue = list[first_in]{enqueue, dequeue}<constant>
-    heap = tree[ordered]{push, pop_min}<log_n>
-    tree = node{value, children}<log_n>
-    graph = node{value, edges}<v_plus_e>
+    array = list[indexed]{read, append}<O(1)>
+    map = table[hashed]{put, get, has}<O(1)>
+    set = table[unique]{add, has}<O(1)>
+    stack = list[last_in]{push, pop}<O(1)>
+    queue = list[first_in]{enqueue, dequeue}<O(1)>
+    heap = tree[ordered]{push, pop_min}<O(log n)>
+    tree = node[balanced]{value, children}<O(log n)>
+    graph = node{value, edges}<O(V + E)>
 
     ?["Which structure would you reach for to dedupe a stream?"]{
-      ~#expect: `a set, since has is constant`
+      ~#expect: `a set, since has is O(1) where a list's is O(n)`
       !probe{ "count lookups per row with a list, then with a set" }
     }
 
-algorithms.spw: Common algorithms as paths of marked steps: search, sort, walk a graph, slide a window, and remember a subproblem. The cost each one pays rides in the scene.
+algorithms.spw: Common algorithms as paths of marked steps, each with its cost class in the concept: search two ways, a sort beside its recurrence, three graph walks that differ only in what holds the frontier (a queue, a stack, a heap), an order of dependencies, a dedupe, a window, and a memo.
 
     #>algorithms
     #:study #!computing
     @primitives: ~"./primitives.spw"
     @pipeline: ~"./pipeline.spw#steps"
 
+    linear_search = path{~scan{each}; ?compare{target}}<O(n)>
     binary_search = path{
       =range{low, high};
       ~halve{mid};
       ?compare{target};
       @return{index}
-    }<log_n>
-    merge_sort = path{~split{half}; *sort{each}; ^merge{runs}}<n_log_n>
-    bfs = path{=queue{start}; ~visit{edges}; #seen{node}}<v_plus_e>
-    dfs = path{=stack{start}; ~descend{edges}; #seen{node}}<v_plus_e>
-    window = path{=edges{left, right}; ~slide; %sum{inside}}<n>
-    memo = path{?seen{subproblem}; !solve; #keep{answer}}<states>
+    }<O(log n)>
+    merge_sort = path{~split{half}; *sort{each}; ^merge{runs}}<O(n log n)>
+    recurrence = `T(n) = 2T(n/2) + n`
+    bfs = path{=queue{start}; ~visit{edges}; #seen{node}}<O(V + E)>
+    dfs = path{=stack{start}; ~visit{edges}; #seen{node}}<O(V + E)>
+    dijkstra = path{=heap{start}; ~relax{edges}; #seen{node}}<O(E log V)>
+    topo_sort = path{=queue{no_incoming}; ~remove{edges}; @emit{order}}<O(V + E)>
+    dedupe = path{=set{seen}; ?has{row}; !add{row}}<O(n)>
+    window = path{=edges{left, right}; ~slide; %sum{inside}}<O(n)>
+    memo = path{?seen{subproblem}; !solve; #keep{answer}}<O(states)>
 
-    ?["Which of these answers which page links to which?"]{
-      ~#expect: `bfs, one hop at a time from the page you start on`
-      !probe{ "walk the site's links from Home and count hops to each page" }
+    ?["Which two lines differ in one word, and what does it change?"]{
+      ~#expect: `bfs and dfs: a queue walks out by distance, a stack down by depth`
+      !probe{ "walk the site's links from Home both ways and list the first five pages each reaches" }
     }
 
 role.spw: One member's skills applied to a role: what they bring, the snippets they kept and where each came from, and what they will build first. A team can read every card and build from the snippets the cards point to.
@@ -531,7 +560,25 @@ role.spw: One member's skills applied to a role: what they bring, the snippets t
       !probe{ "build the form, then say which snippet you reread twice" }
     }
 
-onboarding.spw: Three paths through the team's other four files: what a junior, a mid-level and a senior engineer read first, change, and teach in their first week.
+levels.spw: One ticket at four levels. The act and the problem stay the same on every line; what a junior, a mid-level, a senior and a staff engineer touch, where it lives, and how far ahead they plan each move one rung.
+
+    #>levels
+    #:compare #!engineering
+    @ticket: ~"./records.spw#ticket"
+    @onboarding: ~"./onboarding.spw"
+
+    task = bug[open]{checkout, timeout}<t812>
+    junior = !fix[timeout]{checkout}(function)<day>
+    mid = !fix[timeout]{checkout, retries}(service)<week>
+    senior = !fix[timeout]{retries, alert, budget}(system)<quarter>
+    staff = !fix[timeout]{budget, owner, policy}(teams)<year>
+
+    ?["What moves from one level to the next, and what stays?"]{
+      ~#expect: `the act and the problem stay; the parts, the place and the horizon move`
+      !probe{ "hold junior on the canvas, compare it with staff, and name each slot that moved" }
+    }
+
+onboarding.spw: Four paths through the team's files: what a junior, a mid-level, a senior and a staff engineer read first, change, and teach in their first week.
 
     #>team_onboarding
     #:plan #!onboarding
@@ -539,13 +586,15 @@ onboarding.spw: Three paths through the team's other four files: what a junior, 
     @review: ~"./review.spw#register"
     @records: ~"./records.spw"
     @surfaces: ~"./surfaces.spw"
+    @levels: ~"./levels.spw"
 
     junior = path{~read{pipeline}; !change{one_step}; ?ask{review}}
     mid = path{^own{pipeline}; ~read{records}; !review{peer}}
     senior = path{*shape{surfaces}; =set{contract}; !teach{review}}
-    week = {junior, mid, senior} ~> demo
+    staff = path{^align{teams}; *shape{records}; !write{levels}}
+    week = {junior, mid, senior, staff} ~> demo
 
     ?["What can each of them change by Friday?"]{
-      ~#expect: `a junior one step, a mid one record, a senior one contract`
+      ~#expect: `a junior one step, a mid one record, a senior one contract, a staff one plan two teams share`
       !probe{ "each says in one line what they changed and where it shows" }
     }
