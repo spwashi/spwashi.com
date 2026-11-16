@@ -325,7 +325,7 @@ line = home[hook]{software.art}<atlas>
     group: "Stage",
     tab: "Numbers",
     file: "numbers.spw",
-    says: "A number written whole inside a measure's brackets, the way the workbench's number reader takes it: 400ms, 0.1%, 4/3, 1e6, a range 3.8..4.6%, and an uncertainty in its last digits, 412(18)ms. The body says what was measured and the scene when; a cost class rides in the concept; math Spw would misread stays in backticks.",
+    says: "A number written whole inside a measure's brackets, the way the workbench's number reader takes it: 400ms, 0.1%, 4/3, 1e6, a range 3.8..4.6%, and an uncertainty in its last digits, 412(18)ms. The body says what was measured and the scene when; a cost class rides in the concept; math Spw would misread stays in backticks. A percent's % still counts as a measure mark on this page.",
     try: "Change 412(18)ms to 412(6)ms. Its low end is now 406ms, over the budget.",
     script: `#>numbers
 #:showcase #!notation
