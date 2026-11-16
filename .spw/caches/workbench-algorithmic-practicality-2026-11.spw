@@ -33,6 +33,7 @@ summary = #[
   `What already works for algorithms, on both readers: a cost class in a concept, <O(n log n)>, <O(V + E)>; a range 1..n; a sum's bound in a mode, %sum[i=1..n]; a before ~> after in a body; and a number written whole in a measure's brackets, %p95[412(18)ms], which the workbench's number reader takes as 412 with uncertainty 18 in ms.`,
   `What does not: a comparison anywhere a check needs one; a group that opens a scope, O((V + E) log V); a sign; and math typography, which is dropped from the token stream with an error.`,
   `What the canvas cannot show: its line kit reads ; , ~> . as seams inside a body, so -> and a top-level ~> are left unread and a range is one part.`,
+  `Several digraphs win over the two marks they are made of where the marks were meant: >> in list<Module<T>>, (( in O((V + E) log V), <= in home<=stable>, >= in <bar>=@boof. )) already reads by the bracket stack; the others could too.`,
 ][reg=set]
 
 ^"comparison"{
@@ -91,6 +92,26 @@ summary = #[
   probe = `read the guide's lines with -> and top-level ~> as seams, and list every line whose parts change`
 }[reg=facet]
 
+^"digraph_priority"{
+  creator = `the creator, 2026-11-16: "(( reading as n-range feels like it's syntax that misplaced priority and I wonder which other syntax is similar"`
+  pattern = `the lexer tries a digraph before the single marks it is made of (connectors .. -> ~> ||, comparisons == != <= >=, the arrow =>, then << >> (( )) in the container matcher), so where two single marks were meant the digraph wins and the line falls to prose`
+  precedent = `)) already reads by context: it closes an n-range only while one is open, so x(a(b)) reads whole (nrange-close.test.ts); the pinned 2026.10.13 reader predates that and reads f(g(a)) as prose`
+  lines = #[
+    `O((V + E) log V) and x((a) b): (( opens an n-range; prose on both`,
+    `list<Module<T>>: >> closes a stream nothing opened; prose on both, so a generic type cannot be written`,
+    `home<record>>[2026]: the same >>`,
+    `home<<atlas> map>: << opens a stream; prose on both`,
+    `home<=stable>: <= is a comparison where a concept opens with a bias; prose on both`,
+    `<bar>=@boof: >= is a comparison where a mark follows a concept; prose on both, while (bar)=@boof reads whole`,
+    `!=retries[3] and mode ==strict: a comparison where an action meets a bias, or a binding meets one`,
+    `home<x=> and home<draft~>: => and ~> where a bias or a potential closes a capsule`,
+    `read whole, as intended or harmlessly: brand..voice (a range), 1...n (a spread), a || b, home<>, https://spw.quest (// keeps the rest as a comment), home<a->, home<tag#>`,
+  ][reg=set]
+  census = `tracked .spw lines, one line at a time (rough: a stream that spans lines looks stuck): => 383 tokens, 220 on lines that do not read whole; << 101, 48; == 7, 7; <= 4, 4; >> 1005, 2; (( 1, 1; != 1, 1. The (( and the != are pasted JavaScript in interaction-paint-cost-2026-09.spw, one of the seven files that already fail`
+  reading_from_here = `read each digraph by the bracket stack, as )) already is: >> closes a stream only while one is open and is otherwise two capsule closes; (( opens an n-range only when its )) closes it; << opens a stream only where a capsule is not being opened; and inside an open capsule <= and => are < with = and = with >, and >= right after a word is > then =. Comparisons inside a check stay the comparison trial's question`
+  probe = `lex the corpus with >> read by the stream stack and count every line whose reading changes; the generics and the concept-then-mark lines should be the only ones`
+}[reg=facet]
+
 ^"site_side"{
   note = `Not workbench asks: spw.quest's guide still reads with the pinned 2026.10.13 reader, which takes f(g(a)) as prose; moving the guide's pin is this repository's call, and the trace-skip pin move left the runtime where it was.`
 }[reg=facet]
@@ -101,5 +122,6 @@ contents = #[
   ~"./workbench-algorithmic-practicality-2026-11.spw#numbers",
   ~"./workbench-algorithmic-practicality-2026-11.spw#typography",
   ~"./workbench-algorithmic-practicality-2026-11.spw#line_kit",
+  ~"./workbench-algorithmic-practicality-2026-11.spw#digraph_priority",
   ~"./workbench-algorithmic-practicality-2026-11.spw#site_side",
 ][reg=set]
