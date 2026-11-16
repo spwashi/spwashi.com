@@ -522,7 +522,8 @@ expression = consumer[report]{defect.gap.built}<upstream>
     `public/js/kernel/operator-detection.js OPERATOR_DEFINITIONS: canon type, physics, interaction (the implementation surface here)`,
     `workers/spw-quest/src/answer.js: a plain job per mark ("how it is being seen", "where or when it stands", "what kind of thing it is")`,
     `the blog's Spw.b dialect legend: a contested rename, recorded in .spw/language/operator-namespace-alignment.spw`,
-    `factshift.center's ephemeral notes, and a proposal to show the spirit word only on a hand's first touches beside the canon mark`
+    `factshift.center's ephemeral notes, and a proposal to show the spirit word only on a hand's first touches beside the canon mark`,
+    `lore.land (pinned at 84cf313): its ring tour orders a book's thirteen slots ~ # . ? ! * & @ <> () [] {} ^, the spirit sequence's order, and book/scripts/modules/spw-resonance.mjs keeps a literary register (~ is "the unspent") beside a role field that joins canon, as contract c021`
   ][reg=set]
   ask = `carry a gloss table beside the operator table, each gloss tagged mnemonic, dated, and pointing at the canon type it glosses, so a host reads its first-touch words from one source and never prints a gloss where the parser or runtime needs a name`
 }[reg=facet]
@@ -548,6 +549,7 @@ expression = consumer[report]{defect.gap.built}<upstream>
     plain_jobs = `spw.quest's answer.js gives [ ] "how it is being seen", ( ) "where or when it stands", < > "what kind of thing it is"`
     first_screens = `every settled first screen on this site carries its own line, home[hook]{orient}<atlas>, contact[hook]{intake}<register>, now[hook]{sprint.dispatch}<live>, services[hook]{lanes}<scope>, and an iPhone install banner covered each of them in captures on 2026-11-16`
     readers = `two models given sixteen screenshots and no context read names, prices, domains and the palette, and read every sigil as "notation I can't decode", though one said the labels "promise a larger system"`
+    neighbour = `lore.land proposes a capture card for a still or a timed clip with say, cue, address, palette, span and kind, which is one more shape to reconcile`
   }[reg=facet]
   ask = `name one shape for a still's line (what it shows, how it is seen, when and where it stands, what kind of thing it is) and give it a read-back test, so a harness line, a caption and a hand screenshot's line mean the same thing`
 }[reg=facet]

@@ -66,6 +66,7 @@ summary = #[
   ~#source(creator): `one of the original spirit sequences: ~ potential, # vibration, . ground, ? wonder, ! action, * value, & something, @ someone, <concept>, (scene), [mode], {definition}, ^ integration; "but it is a useful mnemonic"`
   ~#tension(creator): "distinguishing the useful mnemonics from the implementation surfaces consistently across the various application layers"
   rule = `a mnemonic may gloss a mark where someone is learning (a first touch, a legend); a printed mark, data-spw-operator, and any parser or runtime name follow canon (@operator_canon); say which layer a word belongs to wherever both appear`
+  precedent = `lore.land already keeps the layers apart: its ring tour orders a book's thirteen slots by the spirit sequence, and spw-resonance.mjs holds a literary register beside a canon role field (contract c021 in its workspace.spw)`
   upstream = `@workbench_report mnemonic_and_surface asks the workbench to carry the gloss table beside the operator table`
 }[reg=facet]
 
@@ -94,11 +95,20 @@ summary = #[
 
 ^"lore_land"{
   facts = #[
-    `books run in thirteens (mod 13); a sixteenth chapter was a mistake and lore.land cleared the unscheduled stone 16 on 2026-11-16`,
-    `2026-11-16: twenty-six chapter ecologies under lore.land's .spw/ecologies, and a thirteen-element rule for the progression`,
-    `lore.land pins the workbench at 84cf313, newer than spw.quest's parser (27fa1e3d16ab) and factshift.center's reader (3f53adf2)`,
-    `its autonomous.feedback client file holds 12 subjects, the cap; chapters may become subjects of their own (@feedback_contour)`,
+    `books are rings of thirteen (lore.land .spw/index.spw:139): Book One "The Unspent Wish" 1-13, Book Two "Wonder About Pi(e)" 14-26, a proposed Book Three 27-39; a chapter's place is its number mod 13`,
+    `the ring tour (lore.land .spw/surfaces/rooms.spw ring_tour) gives the thirteen slots as ~ # . ? ! * & @ <> () [] {} ^, the spirit sequence's order; = % $ modulate across slots and take none`,
+    `twenty-six chapter ecologies under lore.land .spw/ecologies (01-15 live, 16 seeded, 17-26 planned); stone 16 was unscheduled on 2026-11-16, not written`,
+    `lore.land's serial.json now says chapters release at the maker's own pace, while nine of its surfaces still name the 13th and 26th; the 13th/26th digest lever held in @feedback_contour waits on that`,
+    `lore.land pins the workbench at 84cf313, newer than spw.quest's parser (27fa1e3d16ab) and factshift.center's reader (3f53adf2); it uses sealed lines, spw-seed and rhymes, and no pivot API yet`,
+    `its autonomous.feedback client file holds 12 subjects, the cap, and lore.land never asks for a name or an email; chapters may become subjects of their own (@feedback_contour)`,
   ][reg=set]
+  neighbours = .{
+    resonance = `lore.land book/scripts/modules/spw-resonance.mjs keeps a literary register (name, reading, library, witness; ~ is "the unspent") apart from its role field, which joins canon; it is offered for spwashi.com to import`
+    captures = `lore.land proposes a still or a timed clip, each with a card (say, cue, address, palette, span, kind), copied and never uploaded; PLAN.E gives every element a screenshot-worthy face`
+    durations = `lore.land .spw/surfaces/seasons.spw: a gift lasts seconds, the tide three days, a sealed line as long as it is kept`
+    live = `lore.land book/scripts/home/pie-live.mjs shows a gifter's name while thanking and never keeps it`
+    factshift = `lore.land names factshift.center its motion hub (site-clusters.spw, domains.spw)`
+  }[reg=facet]
 }[reg=facet]
 
 validation = `the captures folder (@captures, gitignored) holds every frame, timeline and timer cited here; re-measure before carrying a number into public copy`
