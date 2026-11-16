@@ -1,0 +1,21 @@
+# attention.productions
+
+Attention Productions is the name for Spwashi's pictures: a feature in 2027, and a season of daily promo from October 1 through New Year.
+
+The page is a shot composer for image prompts. The address is the shot: the path is the subject, a hyphen is a space, and each ladder is a query key whose value is one of its words (hyphens for spaces). What the address leaves out, the date picks; day=2026-12-01 fixes a date.
+
+- shot: extreme close-up, close-up, medium, wide, establishing, overhead, low angle
+- lens: 24mm, 35mm, 50mm, 85mm, macro, anamorphic
+- light: golden hour, overcast, lamplight, window light, sodium night, neon, candlelight
+- move: still, dolly-in, handheld, rack focus, long exposure
+- ratio: square, portrait, photo, widescreen, scope, vertical
+- focus: center, left third, right third, upper third, lower third
+- material: any of texture.website's listed material words (its /vocabulary.json); the prompt then carries --sref with that material's image from texture.website and --sw 250.
+
+The page writes a Midjourney prompt (--ar in whole numbers, so scope is 239:100; https://docs.midjourney.com/aspect-ratios), a plain prompt for any model, and Spw lines:
+  !shot[close-up]{a laminated folio}(lamplight)<85mm>
+  ^frame{ =ratio[scope] =focus[left_third] ~move[still] }
+
+Example: https://attention.productions/a-laminated-folio?shot=close-up&lens=85mm&light=lamplight&move=dolly-in&ratio=scope&focus=left-third&material=vellum
+
+Readings: /vocabulary.json (ladders, phrases, ratios), /ecosystem.json (the set).

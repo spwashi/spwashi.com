@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Attention Productions</title>
+  <meta name="description" content="I'm Spwashi. Attention Productions is the name for the pictures: a feature in 2027, and a season of daily promo from October 1 through New Year.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://attention.productions/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta property="og:title" content="Attention Productions">
+  <meta property="og:description" content="I'm Spwashi. Attention Productions is the name for the pictures: a feature in 2027, and a season of daily promo from October 1 through New Year.">
+  <link rel="stylesheet" href="/attention.css">
+  <link rel="stylesheet" href="/lights.css">
+  <script type="module" src="/attention.js"></script>
+</head>
+<body>
+  <main id="attention">
+    <header class="head">
+      <p class="kicker">attention.productions</p>
+      <h1>Attention Productions</h1>
+      <p class="lede">I'm Spwashi. This is the name for the pictures. A feature-length film is due in 2027, and I'm doing its marketing.</p>
+    </header>
+    <section class="shot" aria-labelledby="shot-title">
+      <h2 id="shot-title" class="label"><span id="shot-label">A shot</span> <span id="shot-day" class="day"></span></h2>
+      <figure class="finder">
+      <svg class="viewfinder" id="viewfinder" viewBox="0 0 1200 800" role="img" aria-labelledby="vf-title vf-desc" data-move="still" data-light="lamplight">
+        <title id="vf-title">The shot, drawn</title>
+        <desc id="vf-desc">close-up shot of a laminated folio, subject on the left third, 85mm lens, shallow depth of field, warm practical lamplight, cinematic film still</desc>
+        <defs>
+          <radialGradient id="key-light" gradientUnits="userSpaceOnUse" cx="980.8" cy="536.6" r="1033.6"><stop class="key" offset="0"/><stop class="key-mid" offset=".45"/><stop class="fill" offset="1"/></radialGradient>
+          <filter id="b1" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.5"/></filter>
+          <filter id="b2" x="-25%" y="-25%" width="150%" height="150%"><feGaussianBlur stdDeviation="6"/></filter>
+          <filter id="b3" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="11"/></filter>
+          <filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+          <clipPath id="gate"><rect id="gate-rect" x="56" y="172.4" width="1088" height="455.2"/></clipPath>
+          <pattern id="surface" patternUnits="userSpaceOnUse" width="192" height="192"><image id="surface-image" width="192" height="192"/></pattern>
+        </defs>
+        <rect class="ground" width="1200" height="800"/>
+        <g clip-path="url(#gate)">
+          <rect id="wash" class="wash" x="56" y="172.4" width="1088" height="455.2"/>
+          <g id="bokeh" class="bokeh b3"><ellipse cx="186.6" cy="263.4" rx="20.7" ry="20.7"/><ellipse cx="991.7" cy="245.2" rx="28.1" ry="28.1"/><ellipse cx="904.6" cy="545.7" rx="35.5" ry="35.5"/><ellipse cx="273.6" cy="527.5" rx="20.7" ry="20.7"/><ellipse cx="730.6" cy="227" rx="28.1" ry="28.1"/><ellipse cx="1078.7" cy="427.3" rx="35.5" ry="35.5"/></g>
+          <g id="sheets" class="sheets"><g class="sheet b3" data-depth="4" transform="rotate(0 471.95 376.3)"><rect x="72.5" y="110" width="798.9" height="532.6" rx="6"/></g><g class="sheet b1" data-depth="3" transform="rotate(7 235.25 228.35)"><rect x="28.1" y="80.4" width="414.3" height="295.9" rx="6"/></g><g class="sheet b0 subject" data-depth="2" transform="rotate(-2 418.65 400)"><rect x="270.7" y="293.5" width="295.9" height="213" rx="6"/><rect class="surface" x="270.7" y="293.5" width="295.9" height="213" rx="6"/><circle class="point" cx="359.5" cy="383" r="10.4"/><circle class="point" cx="436.4" cy="429.8" r="10.4"/><circle class="point" cx="483.7" cy="365.9" r="10.4"/><circle class="point" cx="400.9" cy="344.6" r="10.4"/></g><g class="sheet b1" data-depth="1" transform="rotate(4 655.35 287.6)"><rect x="492.6" y="172.2" width="325.5" height="230.8" rx="6"/></g><g class="sheet b3" data-depth="0" transform="rotate(-6 137.5 583.45)"><rect x="-84.4" y="450.3" width="443.8" height="266.3" rx="6"/></g></g>
+          <line id="flare" class="flare off" x1="56" y1="400" x2="1144" y2="400"/>
+          <g id="streaks" class="streaks"><line x1="-52.8" y1="272.5" x2="360.6" y2="272.5"/><line x1="-52.8" y1="345.4" x2="491.2" y2="345.4"/><line x1="-52.8" y1="422.8" x2="360.6" y2="422.8"/><line x1="-52.8" y1="491" x2="491.2" y2="491"/><line x1="-52.8" y1="554.8" x2="360.6" y2="554.8"/></g>
+          <rect class="grain" x="56" y="172.4" width="1088" height="455.2"/>
+        </g>
+        <g id="thirds" class="thirds"><line x1="418.7" y1="172.4" x2="418.7" y2="627.6"/><line x1="56" y1="324.1" x2="1144" y2="324.1"/><line x1="781.3" y1="172.4" x2="781.3" y2="627.6"/><line x1="56" y1="475.9" x2="1144" y2="475.9"/></g>
+        <rect id="frame" class="frame" x="56" y="172.4" width="1088" height="455.2"/>
+        <path id="corners" class="corners" d="M56 202.4V172.4H86M1114 172.4H1144V202.4M1144 597.6V627.6H1114M86 627.6H56V597.6"/>
+        <circle id="ring" class="ring" cx="418.7" cy="400" r="94.7"/>
+        <circle id="hand" class="hand" cx="418.7" cy="400" r="14"/>
+        <line id="bar" class="bar" x1="376.7" y1="647.6" x2="460.7" y2="647.6"/>
+      </svg>
+        <figcaption class="note">The address is the shot: the path is the subject, and each word below goes into the prompt. Point at the frame to pull focus; tap it, or use the arrow keys, to put the subject on a third.</figcaption>
+      </figure>
+      <div class="take">
+        <p class="prompt"><code id="prompt">close-up shot of a laminated folio, subject on the left third, 85mm lens, shallow depth of field, warm practical lamplight, cinematic film still --ar 239:100 --no text, letters, logo, watermark</code></p>
+        <p class="ways"><button type="button" id="copy" hidden>Copy prompt</button> <a id="address" href="/?shot=close-up&amp;lens=85mm&amp;light=lamplight&amp;move=still&amp;ratio=scope&amp;focus=left-third">This shot's address</a></p>
+        <details class="more"><summary>Plain prompt and Spw</summary><p><code id="plain">close-up shot of a laminated folio, subject on the left third, 85mm lens, shallow depth of field, warm practical lamplight, cinematic film still</code></p><pre id="spw">!shot[close-up]{a laminated folio}(lamplight)&lt;85mm&gt;
+^frame{ =ratio[scope] =focus[left_third] ~move[still] }</pre></details>
+      </div>
+      <nav class="ladders" aria-label="The words of the shot">
+        <div class="ladder" data-key="shot"><span class="key">shot</span><a href="/?shot=extreme-close-up&amp;lens=85mm&amp;light=lamplight&amp;move=still&amp;ratio=scope&amp;focus=left-third" data-word="extreme close-up">extreme close-up</a><a href="/?shot=close-up&amp;lens=85mm&amp;light=lamplight&amp;move=still&amp;ratio=scope&amp;focus=left-third" data-word="close-up" aria-current="true">close-up</a><a href="/?shot=medium&amp;lens=85mm&amp;light=lamplight&amp;move=still&amp;ratio=scope&amp;focus=left-third" data-word="medium">medium</a><a href="/?shot=wide&amp;lens=85mm&amp;light=lamplight&amp;move=still&amp;ratio=scope&amp;focus=left-third" data-word="wide">wide</a><a href="/?shot=establishing&amp;lens=85mm&amp;light=lamplight&amp;move=still&amp;ratio=scope&amp;focus=left-third" data-word="establishing">establishing</a><a href="/?shot=overhead&amp;lens=85mm&amp;light=lamplight&amp;move=still&amp;ratio=scope&amp;focus=left-third" data-word="overhead">overhead</a><a href="/?shot=low-angle&amp;lens=85mm&amp;light=lamplight&amp;move=still&amp;ratio=scope&amp;focus=left-third" data-word="low angle">low angle</a></div>
+        <div class="ladder" data-key="lens"><span class="key">lens</span><a href="/?shot=close-up&amp;lens=24mm&amp;light=lamplight&amp;move=still&amp;ratio=scope&amp;focus=left-third" data-word="24mm">24mm</a><a href="/?shot=close-up&amp;lens=35mm&amp;light=lamplight&amp;move=still&amp;ratio=scope&amp;focus=left-third" data-word="35mm">35mm</a><a href="/?shot=close-up&amp;lens=50mm&amp;light=lamplight&amp;move=still&amp;ratio=scope&amp;focus=left-third" data-word="50mm">50mm</a><a href="/?shot=close-up&amp;lens=85mm&amp;light=lamplight&amp;move=still&amp;ratio=scope&amp;focus=left-third" data-word="85mm" aria-current="true">85mm</a><a href="/?shot=close-up&amp;lens=macro&amp;light=lamplight&amp;move=still&amp;ratio=scope&amp;focus=left-third" data-word="macro">macro</a><a href="/?shot=close-up&amp;lens=anamorphic&amp;light=lamplight&amp;move=still&amp;ratio=scope&amp;focus=left-third" data-word="anamorphic">anamorphic</a></div>
+        <div class="ladder" data-key="light"><span class="key">light</span><a href="/?shot=close-up&amp;lens=85mm&amp;light=golden-hour&amp;move=still&amp;ratio=scope&amp;focus=left-third" data-word="golden hour">golden hour</a><a href="/?shot=close-up&amp;lens=85mm&amp;light=overcast&amp;move=still&amp;ratio=scope&amp;focus=left-third" data-word="overcast">overcast</a><a href="/?shot=close-up&amp;lens=85mm&amp;light=lamplight&amp;move=still&amp;ratio=scope&amp;focus=left-third" data-word="lamplight" aria-current="true">lamplight</a><a href="/?shot=close-up&amp;lens=85mm&amp;light=window-light&amp;move=still&amp;ratio=scope&amp;focus=left-third" data-word="window light">window light</a><a href="/?shot=close-up&amp;lens=85mm&amp;light=sodium-night&amp;move=still&amp;ratio=scope&amp;focus=left-third" data-word="sodium night">sodium night</a><a href="/?shot=close-up&amp;lens=85mm&amp;light=neon&amp;move=still&amp;ratio=scope&amp;focus=left-third" data-word="neon">neon</a><a href="/?shot=close-up&amp;lens=85mm&amp;light=candlelight&amp;move=still&amp;ratio=scope&amp;focus=left-third" data-word="candlelight">candlelight</a></div>
+        <div class="ladder" data-key="move"><span class="key">move</span><a href="/?shot=close-up&amp;lens=85mm&amp;light=lamplight&amp;move=still&amp;ratio=scope&amp;focus=left-third" data-word="still" aria-current="true">still</a><a href="/?shot=close-up&amp;lens=85mm&amp;light=lamplight&amp;move=dolly-in&amp;ratio=scope&amp;focus=left-third" data-word="dolly-in">dolly-in</a><a href="/?shot=close-up&amp;lens=85mm&amp;light=lamplight&amp;move=handheld&amp;ratio=scope&amp;focus=left-third" data-word="handheld">handheld</a><a href="/?shot=close-up&amp;lens=85mm&amp;light=lamplight&amp;move=rack-focus&amp;ratio=scope&amp;focus=left-third" data-word="rack focus">rack focus</a><a href="/?shot=close-up&amp;lens=85mm&amp;light=lamplight&amp;move=long-exposure&amp;ratio=scope&amp;focus=left-third" data-word="long exposure">long exposure</a></div>
+        <div class="ladder" data-key="ratio"><span class="key">ratio</span><a href="/?shot=close-up&amp;lens=85mm&amp;light=lamplight&amp;move=still&amp;ratio=square&amp;focus=left-third" data-word="square">square</a><a href="/?shot=close-up&amp;lens=85mm&amp;light=lamplight&amp;move=still&amp;ratio=portrait&amp;focus=left-third" data-word="portrait">portrait</a><a href="/?shot=close-up&amp;lens=85mm&amp;light=lamplight&amp;move=still&amp;ratio=photo&amp;focus=left-third" data-word="photo">photo</a><a href="/?shot=close-up&amp;lens=85mm&amp;light=lamplight&amp;move=still&amp;ratio=widescreen&amp;focus=left-third" data-word="widescreen">widescreen</a><a href="/?shot=close-up&amp;lens=85mm&amp;light=lamplight&amp;move=still&amp;ratio=scope&amp;focus=left-third" data-word="scope" aria-current="true">scope</a><a href="/?shot=close-up&amp;lens=85mm&amp;light=lamplight&amp;move=still&amp;ratio=vertical&amp;focus=left-third" data-word="vertical">vertical</a></div>
+        <div class="ladder" data-key="focus"><span class="key">focus</span><a href="/?shot=close-up&amp;lens=85mm&amp;light=lamplight&amp;move=still&amp;ratio=scope&amp;focus=center" data-word="center">center</a><a href="/?shot=close-up&amp;lens=85mm&amp;light=lamplight&amp;move=still&amp;ratio=scope&amp;focus=left-third" data-word="left third" aria-current="true">left third</a><a href="/?shot=close-up&amp;lens=85mm&amp;light=lamplight&amp;move=still&amp;ratio=scope&amp;focus=right-third" data-word="right third">right third</a><a href="/?shot=close-up&amp;lens=85mm&amp;light=lamplight&amp;move=still&amp;ratio=scope&amp;focus=upper-third" data-word="upper third">upper third</a><a href="/?shot=close-up&amp;lens=85mm&amp;light=lamplight&amp;move=still&amp;ratio=scope&amp;focus=lower-third" data-word="lower third">lower third</a></div>
+        <div class="ladder" data-key="material"><span class="key">surface</span><a href="/?shot=close-up&amp;lens=85mm&amp;light=lamplight&amp;move=still&amp;ratio=scope&amp;focus=left-third" data-word="" aria-current="true">none</a><a href="/?shot=close-up&amp;lens=85mm&amp;light=lamplight&amp;move=still&amp;ratio=scope&amp;focus=left-third&amp;material=vellum" data-word="vellum">vellum</a><a href="/?shot=close-up&amp;lens=85mm&amp;light=lamplight&amp;move=still&amp;ratio=scope&amp;focus=left-third&amp;material=terrazzo" data-word="terrazzo">terrazzo</a><a href="/?shot=close-up&amp;lens=85mm&amp;light=lamplight&amp;move=still&amp;ratio=scope&amp;focus=left-third&amp;material=brushed-steel" data-word="brushed-steel">brushed steel</a><a href="/?shot=close-up&amp;lens=85mm&amp;light=lamplight&amp;move=still&amp;ratio=scope&amp;focus=left-third&amp;material=rain-on-glass" data-word="rain-on-glass">rain on glass</a><a href="/?shot=close-up&amp;lens=85mm&amp;light=lamplight&amp;move=still&amp;ratio=scope&amp;focus=left-third&amp;material=risograph-ink" data-word="risograph-ink">risograph ink</a><a href="/?shot=close-up&amp;lens=85mm&amp;light=lamplight&amp;move=still&amp;ratio=scope&amp;focus=left-third&amp;material=moss" data-word="moss">moss</a><a class="out" href="https://texture.website/">from texture.website ↗</a></div>
+      </nav>
+    </section>
+    <section class="season">
+      <p>The production season runs from October 1 through New Year: a little promo every day. A moment holds one concept. That rule is <a href="https://mutex.buzz/">mutex.buzz</a>. The frame is <a href="https://factshift.center/">factshift.center</a>. boon, bane, and bone are that same frame with a pull: toward, away, or still. A sponsored viewport can show a picture. A physics setting is a query on the frame, once those three names serve it.</p>
+      <p class="actions">
+        <a class="primary" href="https://spwashi.com/cards/#back-the-film">Back the season</a>
+        <a href="https://spwashi.com/topics/film/">Film paths</a>
+        <a href="https://autonomous.feedback/attention.productions">Leave a note</a>
+      </p>
+    </section>
+    <figure class="held">
+      <iframe src="https://mutex.buzz/now/" title="What holds the frame now, from mutex.buzz" loading="lazy"></iframe>
+      <figcaption>What holds the frame this cycle, from <a href="https://mutex.buzz/">mutex.buzz</a>. When nothing else holds it, a laminated folio does. <a href="https://mutex.buzz/now/">Open it on its own</a>.</figcaption>
+    </figure>
+    <section class="open">
+      <h2>What is open</h2>
+      <p>Backing keeps the daily promo daily. The card on spwashi.com asks what being part of it would mean to you. Nothing on that card is a promise; we agree on what fits.</p>
+    </section>
+    <footer>
+      <p>Nearby: <a href="https://spwashi.com/">Spwashi</a> · <a href="https://lore.land/">lore.land</a> · <a href="https://texture.website/">Texture</a></p>
+      <p><a href="/ecosystem.json">The set, as data</a> · <a href="/llms.txt">The shot, for a model</a></p>
+    </footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,8 @@
+/* Written by workers/attention-productions/carry.mjs from SHAPES.light in src/vocabulary.js. */
+.viewfinder[data-light="golden-hour"] { --key: #f4b45c; --fill: #2c1a24; --second: #f4b45c; }
+.viewfinder[data-light="overcast"] { --key: #c9d0d8; --fill: #22252c; --second: #c9d0d8; }
+.viewfinder[data-light="lamplight"] { --key: #ffb36b; --fill: #20151a; --second: #ffb36b; }
+.viewfinder[data-light="window-light"] { --key: #f2efe6; --fill: #1a1d24; --second: #f2efe6; }
+.viewfinder[data-light="sodium-night"] { --key: #ff9930; --fill: #120c10; --second: #ff9930; }
+.viewfinder[data-light="neon"] { --key: #ff5ad9; --fill: #170e2a; --second: #3cf0ff; }
+.viewfinder[data-light="candlelight"] { --key: #ffce78; --fill: #140c09; --second: #ffce78; }

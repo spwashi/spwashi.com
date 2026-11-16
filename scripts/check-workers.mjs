@@ -141,10 +141,12 @@ async function main() {
     ['workers/wap-mom/carry-pages.mjs', '--check'],
     // texture.website's materials and readings, against its data and the sidecars.
     ['workers/texture-website/carry.mjs', '--check'],
+    // attention.productions' page, composer and host files, against its vocabulary and texture.website's materials.
+    ['workers/attention-productions/carry.mjs', '--check'],
   ];
   for (const args of carried) run(args);
 
-  for (const dir of ['workers/autonomous-feedback/test', 'workers/spw-quest/test', 'workers/site-hub-next/test', 'workers/factshift-center/test', 'workers/wap-mom/test', 'workers/texture-website/test']) {
+  for (const dir of ['workers/autonomous-feedback/test', 'workers/spw-quest/test', 'workers/site-hub-next/test', 'workers/factshift-center/test', 'workers/wap-mom/test', 'workers/texture-website/test', 'workers/attention-productions/test']) {
     run(['--test', ...testFiles(dir)]);
   }
   const serving = ['files', 'mixed', 'script'].map((tier) => `${servingCount[tier] ?? 0} ${tier}`).join(', ');
