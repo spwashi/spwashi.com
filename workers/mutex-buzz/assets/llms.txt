@@ -1,0 +1,7 @@
+# mutex.buzz
+
+A lock on attention: one concept holds the frame at a time. A hold starts at a close and releases at the next: the 13th, the 26th, and the last day of the month (UTC). When nothing else holds it, a laminated folio does. Anyone waiting lines up in public, in order.
+
+- /lock.spw: the rule written in Spw, every mark doing one job: ^ gathers the lock, = fixes one holder, $ names the clock it runs on, ! is a hold, . the folio that rests, ~ the waiting, % the time to release, @ where it is seen, & what the frame is about, ? asks what holds now, # names the file.
+- /now/: what holds the lock now, framed by attention.productions.
+- /now.json: the schedule, schema mutex.schedule.v1: every hold from 2026-10-01 up to 2028-01-01, each with its cycle, since, releasesAt and holder. What holds now is the hold whose since is at or before now and whose releasesAt is after it.

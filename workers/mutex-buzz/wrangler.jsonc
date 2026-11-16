@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/wrangler.json",
+  "name": "mutex-buzz",
+  "compatibility_date": "2026-11-16",
+  "workers_dev": false,
+  "preview_urls": false,
+  // Files only, no script: the lock, both pages, the schedule and the folios
+  // are carried (carry.mjs); which hold is open now is worked out in the
+  // reader's browser. Until mutex.buzz's route moves here in the dashboard,
+  // site-hub-next still answers it from src/mutex.js.
+  "assets": {
+    "directory": "./assets",
+    "not_found_handling": "404-page"
+  }
+}
