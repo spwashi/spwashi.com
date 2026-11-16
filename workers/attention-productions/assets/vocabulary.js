@@ -10,6 +10,7 @@ export const LADDERS = Object.freeze({
   shot: ["extreme close-up", "close-up", "medium", "wide", "establishing", "overhead", "low angle"],
   lens: ["24mm", "35mm", "50mm", "85mm", "macro", "anamorphic"],
   light: ["golden hour", "overcast", "lamplight", "window light", "sodium night", "neon", "candlelight"],
+  from: ["above", "left", "right", "below", "behind"],
   move: ["still", "dolly-in", "handheld", "rack focus", "long exposure"],
   ratio: ["square", "portrait", "photo", "widescreen", "scope", "vertical"],
   focus: ["center", "left third", "right third", "upper third", "lower third"],
@@ -19,6 +20,7 @@ export const LADDERS = Object.freeze({
 export const PHRASES = Object.freeze({
   shot: { "extreme close-up": "extreme close-up", "close-up": "close-up shot", medium: "medium shot", wide: "wide shot", establishing: "establishing shot", overhead: "overhead shot looking straight down", "low angle": "low-angle shot looking up" },
   lens: { "24mm": "24mm wide lens, deep focus", "35mm": "35mm lens", "50mm": "50mm lens", "85mm": "85mm lens, shallow depth of field", macro: "macro lens, razor-thin focus", anamorphic: "anamorphic lens, oval bokeh, horizontal flare" },
+  from: { above: "lit from above", left: "key light from the left", right: "key light from the right", below: "lit from below", behind: "backlit, rim light" },
   light: { "golden hour": "golden hour backlight", overcast: "soft overcast light", lamplight: "warm practical lamplight", "window light": "single window light", "sodium night": "sodium streetlight at night", neon: "neon signage glow", candlelight: "candlelight" },
   move: { still: "", "dolly-in": "slow dolly-in", handheld: "handheld, slight motion", "rack focus": "rack focus", "long exposure": "long exposure motion blur" },
   ratio: { square: "", portrait: "", photo: "", widescreen: "", scope: "", vertical: "" },
@@ -49,16 +51,21 @@ export const SHAPES = Object.freeze({
   shot: { "extreme close-up": { scale: 1.7 }, "close-up": { scale: 1.3 }, medium: { scale: 0.95 }, wide: { scale: 0.62 }, establishing: { scale: 0.42 }, overhead: { scale: 0.8, flat: true }, "low angle": { scale: 0.9, tilt: -9 } },
   lens: { "24mm": { blur: 0.3 }, "35mm": { blur: 0.55 }, "50mm": { blur: 0.8 }, "85mm": { blur: 1.25 }, macro: { blur: 1.7 }, anamorphic: { blur: 1, flare: true } },
   light: {
-    "golden hour": { key: "#f4b45c", fill: "#2c1a24", from: [0.5, 0] },
-    overcast: { key: "#c9d0d8", fill: "#22252c", from: [0.5, 0.1] },
-    lamplight: { key: "#ffb36b", fill: "#20151a", from: [0.85, 0.8] },
-    "window light": { key: "#f2efe6", fill: "#1a1d24", from: [0, 0.35] },
-    "sodium night": { key: "#ff9930", fill: "#120c10", from: [0.7, 0] },
-    neon: { key: "#ff5ad9", fill: "#170e2a", from: [1, 0.5], second: "#3cf0ff" },
-    candlelight: { key: "#ffce78", fill: "#140c09", from: [0.5, 0.9] },
+    "golden hour": { key: "#f4b45c", fill: "#2c1a24" },
+    overcast: { key: "#c9d0d8", fill: "#22252c" },
+    lamplight: { key: "#ffb36b", fill: "#20151a" },
+    "window light": { key: "#f2efe6", fill: "#1a1d24" },
+    "sodium night": { key: "#ff9930", fill: "#120c10" },
+    neon: { key: "#ff5ad9", fill: "#170e2a", second: "#3cf0ff" },
+    candlelight: { key: "#ffce78", fill: "#140c09" },
   },
+  // Where the light falls from, as a place on the frame (0 to 1 across and down); behind is the subject itself, lit from the back.
+  from: { above: [0.5, 0], left: [0, 0.42], right: [1, 0.42], below: [0.5, 1], behind: null },
   focus: { center: [0.5, 0.5], "left third": [1 / 3, 0.5], "right third": [2 / 3, 0.5], "upper third": [0.5, 1 / 3], "lower third": [0.5, 2 / 3] },
 });
+
+/** The move's tempo, a multiplier of its speed: drawn by the bar under the frame, written as %tempo[n] in Spw, and kept out of the prompt. */
+export const TEMPO = Object.freeze({ min: 0.5, max: 2, step: 0.1, rest: 1 });
 
 /** The subject when the address names none: what holds the frame when nothing else does. */
 export const DEFAULT_SUBJECT = "a laminated folio";

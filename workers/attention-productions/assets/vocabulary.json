@@ -28,6 +28,13 @@
       "neon",
       "candlelight"
     ],
+    "from": [
+      "above",
+      "left",
+      "right",
+      "below",
+      "behind"
+    ],
     "move": [
       "still",
       "dolly-in",
@@ -68,6 +75,13 @@
       "85mm": "85mm lens, shallow depth of field",
       "macro": "macro lens, razor-thin focus",
       "anamorphic": "anamorphic lens, oval bokeh, horizontal flare"
+    },
+    "from": {
+      "above": "lit from above",
+      "left": "key light from the left",
+      "right": "key light from the right",
+      "below": "lit from below",
+      "behind": "backlit, rim light"
     },
     "light": {
       "golden hour": "golden hour backlight",

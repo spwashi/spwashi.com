@@ -77,6 +77,8 @@ function viewfinder(c, shot) {
         <circle id="ring" class="ring" cx="${focus.x}" cy="${focus.y}" r="${focus.r}"/>
         <circle id="hand" class="hand" cx="${focus.x}" cy="${focus.y}" r="14"/>
         <line id="bar" class="bar" x1="${g.bar.x1}" y1="${g.bar.y}" x2="${g.bar.x2}" y2="${g.bar.y}"/>
+        <circle id="beat" class="handle beat" cx="${g.bar.x2}" cy="${g.bar.y}" r="10"/>
+        <g id="lamp" class="handle lamp" transform="translate(${g.lamp.x} ${g.lamp.y})"><circle r="11"/><path d="M0 -19V-15M0 15V19M-19 0H-15M15 0H19M-13.4 -13.4L-10.6 -10.6M10.6 10.6L13.4 13.4M-13.4 13.4L-10.6 10.6M10.6 -10.6L13.4 -13.4"/></g>
       </svg>`;
 }
 
@@ -119,11 +121,11 @@ async function page(c, v) {
       <h2 id="shot-title" class="label"><span id="shot-label">A shot</span> <span id="shot-day" class="day"></span></h2>
       <figure class="finder">
       ${viewfinder(c, shot)}
-        <figcaption class="note">The address is the shot: the path is the subject, and each word below goes into the prompt. Point at the frame to pull focus; tap it, or use the arrow keys, to put the subject on a third.</figcaption>
+        <figcaption class="note">The address is the shot: the path is the subject, and each word below goes into the prompt. Point at the frame to pull focus. Drag the ring to move the subject, the lamp to move the light, and the end of the bar to slow or quicken the move; tap or use the arrow keys to put the subject on a third.</figcaption>
       </figure>
       <div class="take">
         <p class="prompt"><code id="prompt">${escapeHtml(midjourney)}</code></p>
-        <p class="ways"><button type="button" id="copy" hidden>Copy prompt</button> <a id="address" href="${escapeHtml(c.addressOf(shot))}">This shot's address</a></p>
+        <p class="ways"><button type="button" id="copy" hidden>Copy prompt</button> <a id="address" href="${escapeHtml(c.addressOf(shot))}">This shot's address</a> <a id="canvas" href="${escapeHtml(c.canvasHrefOf(shot))}">Open it on the canvas ↗</a></p>
         <details class="more"><summary>Plain prompt and Spw</summary><p><code id="plain">${escapeHtml(plain)}</code></p><pre id="spw">${escapeHtml(c.spwOf(shot))}</pre></details>
       </div>
       <nav class="ladders" aria-label="The words of the shot">

@@ -7,6 +7,7 @@ The page is a shot composer for image prompts. The address is the shot: the path
 - shot: extreme close-up, close-up, medium, wide, establishing, overhead, low angle
 - lens: 24mm, 35mm, 50mm, 85mm, macro, anamorphic
 - light: golden hour, overcast, lamplight, window light, sodium night, neon, candlelight
+- from: above, left, right, below, behind
 - move: still, dolly-in, handheld, rack focus, long exposure
 - ratio: square, portrait, photo, widescreen, scope, vertical
 - focus: center, left third, right third, upper third, lower third

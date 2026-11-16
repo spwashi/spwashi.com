@@ -2,7 +2,8 @@
 // by hand; the composer it imports (compose.js, vocabulary.js, materials.js) is
 // carried from src/ by carry.mjs. With scripts off the page shows its first
 // shot and its links still lead to each word's address.
-import { FIRST_SHOT, SUBJECT_DEPTH, addressOf, cornersOf, geometryOf, nearestFocus, nearestSheet, promptOf, readShot, slug, spwOf } from "/compose.js";
+import { FIRST_SHOT, SUBJECT_DEPTH, addressOf, canvasHrefOf, cornersOf, geometryOf, nearestFocus, nearestFrom, nearestSheet, promptOf, readShot, slug, spwOf, tempoAt, tempoOf } from "/compose.js";
+import { LADDERS, TEMPO } from "/vocabulary.js";
 import { MATERIALS } from "/materials.js";
 
 const svg = document.getElementById("viewfinder");
@@ -15,6 +16,9 @@ let drawn = geometryOf(FIRST_SHOT);
 let pointerDepth = -1;
 let tweenFrame = 0;
 let rackTimer = 0;
+/** What a hand is dragging: "focus", "light" or "tempo"; and whether it moved, so the click that ends a drag is not a tap. */
+let dragging = "";
+let dragged = false;
 
 /** Today in Chicago, where the season is kept, as YYYY-MM-DD. */
 const today = () => new Intl.DateTimeFormat("en-CA", { timeZone: "America/Chicago", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
@@ -40,6 +44,8 @@ function apply(g) {
   svg.querySelectorAll("#streaks line").forEach((l, i) => set(l, { x1: g.streaks[i].x1, x2: g.streaks[i].x2, y1: g.streaks[i].y, y2: g.streaks[i].y }));
   set($("ring"), { cx: g.focus.x, cy: g.focus.y, r: g.focus.r });
   set($("bar"), { x1: g.bar.x1, x2: g.bar.x2, y1: g.bar.y, y2: g.bar.y });
+  set($("beat"), { cx: g.bar.x2, cy: g.bar.y });
+  set($("lamp"), { transform: `translate(${g.lamp.x.toFixed(1)} ${g.lamp.y.toFixed(1)})` });
 }
 
 /** Which sheets are sharp: a class per sheet, from four fixed blurs, so nothing animates a filter. */
@@ -81,10 +87,10 @@ function rackFocus() {
   if (shot.move !== "rack focus" || reduce.matches) return;
   let near = false;
   rackTimer = setInterval(() => {
-    if (pointerDepth >= 0) return;
+    if (pointerDepth >= 0 || dragging) return;
     near = !near;
     sharpen(geometryOf(shot, near ? 0 : SUBJECT_DEPTH));
-  }, 2400);
+  }, 2400 * shot.tempo);
 }
 
 /** Write the shot everywhere it shows: the drawing, the prompt, the lines, the address, the words. */
@@ -107,6 +113,11 @@ function render() {
   // What a lens adds or takes away is shown or hidden, not tweened: the flare and the bokeh.
   $("flare").classList.toggle("off", !target.flare.on);
   svg.querySelectorAll("#bokeh ellipse").forEach((e, i) => e.classList.toggle("off", !target.bokeh[i].on));
+  svg.style.setProperty("--tempo", String(shot.tempo));
+  // Every way to factshift.center opens the canvas on this shot: its Spw and the prompt it makes.
+  for (const link of document.querySelectorAll('a[href^="https://factshift.center/"]')) link.setAttribute("href", canvasHrefOf(shot));
+  set($("beat"), { "aria-valuenow": shot.tempo, "aria-valuetext": `tempo ×${shot.tempo.toFixed(1)}` });
+  set($("lamp"), { "aria-valuetext": `light from ${shot.from}` });
   svg.style.setProperty("--fx", `${target.focus.x}px`);
   svg.style.setProperty("--fy", `${target.focus.y}px`);
   sharpen(target);
@@ -141,12 +152,83 @@ function inView(event) {
   return { x: point.x, y: point.y };
 }
 
+/**
+ * The handles: the focus ring, the lamp and the end of the bar. While a hand
+ * drags one, the drawing follows it at once; when it lets go, the shot takes
+ * the nearest word (or the tempo) and the address keeps it.
+ */
+function wireHandles() {
+  const handles = { focus: $("ring"), light: $("lamp"), tempo: $("beat") };
+  const live = (p) => {
+    if (dragging === "focus") apply(geometryOf(shot, SUBJECT_DEPTH, { at: [(p.x - drawn.frame.x) / drawn.frame.w, (p.y - drawn.frame.y) / drawn.frame.h].map((n) => Math.min(0.92, Math.max(0.08, n))) }));
+    if (dragging === "light") apply(geometryOf(shot, SUBJECT_DEPTH, { lightAt: [(p.x - drawn.frame.x) / drawn.frame.w, (p.y - drawn.frame.y) / drawn.frame.h].map((n) => Math.min(1.05, Math.max(-0.05, n))) }));
+    if (dragging === "tempo") {
+      const tempo = tempoAt(drawn, p.x);
+      svg.style.setProperty("--tempo", String(tempo));
+      apply(geometryOf({ ...shot, tempo }));
+    }
+  };
+  const letGo = (p) => {
+    const kind = dragging;
+    dragging = "";
+    svg.classList.remove("dragging");
+    if (!p) return render();
+    if (kind === "focus") commit({ focus: nearestFocus(drawn, p.x, p.y) });
+    if (kind === "light") commit({ from: nearestFrom(drawn, p.x, p.y) });
+    if (kind === "tempo") commit({ tempo: tempoAt(drawn, p.x) });
+  };
+  for (const [kind, el] of Object.entries(handles)) {
+    if (!el) continue;
+    el.addEventListener("pointerdown", (event) => {
+      if (event.button !== 0) return;
+      event.preventDefault();
+      cancelAnimationFrame(tweenFrame);
+      dragging = kind;
+      dragged = false;
+      svg.classList.add("dragging");
+      el.setPointerCapture(event.pointerId);
+    });
+    el.addEventListener("pointermove", (event) => {
+      if (dragging !== kind) return;
+      const p = inView(event);
+      if (!p) return;
+      dragged = true;
+      live(p);
+    });
+    el.addEventListener("pointerup", (event) => { if (dragging === kind) letGo(dragged ? inView(event) : null); });
+    el.addEventListener("pointercancel", () => { if (dragging === kind) letGo(null); });
+  }
+  // The keys: the lamp steps through the light's directions, the bar through tempos, each a tenth.
+  const lamp = handles.light;
+  set(lamp, { tabindex: "0", role: "slider", "aria-label": "The light's direction", "aria-valuemin": 0, "aria-valuemax": LADDERS.from.length - 1 });
+  lamp.addEventListener("keydown", (event) => {
+    // The frame's own keys stay the frame's: nothing pressed on a handle reaches them.
+    event.stopPropagation();
+    const by = { ArrowLeft: -1, ArrowDown: -1, ArrowRight: 1, ArrowUp: 1 }[event.key];
+    if (!by) return;
+    event.preventDefault();
+    const words = LADDERS.from;
+    commit({ from: words[(words.indexOf(shot.from) + by + words.length) % words.length] });
+  });
+  const beat = handles.tempo;
+  set(beat, { tabindex: "0", role: "slider", "aria-label": "The move's tempo", "aria-valuemin": TEMPO.min, "aria-valuemax": TEMPO.max });
+  beat.addEventListener("keydown", (event) => {
+    // The frame's own keys stay the frame's: nothing pressed on a handle reaches them.
+    event.stopPropagation();
+    const by = { ArrowLeft: -1, ArrowDown: -1, ArrowRight: 1, ArrowUp: 1 }[event.key];
+    if (!by) return;
+    event.preventDefault();
+    commit({ tempo: tempoOf(shot.tempo + by * TEMPO.step) });
+  });
+}
+
 function wire() {
   svg.setAttribute("tabindex", "0");
   svg.setAttribute("aria-keyshortcuts", "ArrowLeft ArrowRight ArrowUp ArrowDown Enter");
   let pending = 0;
+  wireHandles();
   svg.addEventListener("pointermove", (event) => {
-    if (event.pointerType === "touch") return;
+    if (event.pointerType === "touch" || dragging) return;
     cancelAnimationFrame(pending);
     pending = requestAnimationFrame(() => {
       const p = inView(event);
@@ -166,6 +248,9 @@ function wire() {
     sharpen(geometryOf(shot));
   });
   svg.addEventListener("click", (event) => {
+    if (dragged) { dragged = false; return; }
+    // A tap on the lamp or the bar is not a tap on the frame.
+    if (event.target.closest?.("#lamp, #beat")) return;
     const p = inView(event);
     if (p) commit({ focus: nearestFocus(drawn, p.x, p.y) });
   });

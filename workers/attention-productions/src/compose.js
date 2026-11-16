@@ -3,7 +3,7 @@
 // the viewfinder draws. Pure, with no DOM: the carry renders the page's first
 // frame with it, the page (assets/attention.js) redraws with it, and the tests
 // read it. Copied byte for byte into assets/ by carry.mjs.
-import { DEFAULT_SUBJECT, LADDERS, NO, PHRASES, RATIOS, SHAPES, STYLE_WEIGHT } from "./vocabulary.js";
+import { DEFAULT_SUBJECT, LADDERS, NO, PHRASES, RATIOS, SHAPES, STYLE_WEIGHT, TEMPO } from "./vocabulary.js";
 import { MATERIALS } from "./materials.js";
 
 /** A word as a path segment: lower case, hyphens for spaces. */
@@ -14,7 +14,7 @@ const MATERIAL_BY_SLUG = new Map(MATERIALS.map((m) => [m.slug, m]));
 const DAY = /^\d{4}-\d{2}-\d{2}$/;
 
 /** The shot the page draws before it reads an address, and with scripts off. */
-export const FIRST_SHOT = Object.freeze({ subject: DEFAULT_SUBJECT, shot: "close-up", lens: "85mm", light: "lamplight", move: "still", ratio: "scope", focus: "left third", material: null, named: false, day: "" });
+export const FIRST_SHOT = Object.freeze({ subject: DEFAULT_SUBJECT, shot: "close-up", lens: "85mm", light: "lamplight", from: "right", move: "still", ratio: "scope", focus: "left third", tempo: TEMPO.rest, material: null, named: false, day: "" });
 
 /** A word from each ladder, picked by the date, so each day of the season opens on its own shot. */
 export function dayShot(day) {
@@ -30,6 +30,13 @@ export function dayShot(day) {
 
 const decode = (part) => { try { return decodeURIComponent(part); } catch { return ""; } };
 
+/** A tempo from an address or a hand: a number held to its range, to one decimal; anything else is the rest. */
+export function tempoOf(value) {
+  const n = Number.parseFloat(value);
+  if (!Number.isFinite(n)) return TEMPO.rest;
+  return Math.round(Math.min(TEMPO.max, Math.max(TEMPO.min, n)) * 10) / 10;
+}
+
 /**
  * Read an address as a shot. The path is the subject (a hyphen is a space);
  * each ladder is a query key whose value is one of its words; material= is one
@@ -41,7 +48,8 @@ export function readShot(pathname, search, today) {
   const words = String(pathname ?? "").split("/").map(decode).map(slug).filter(Boolean);
   const subject = words.join(" ").replace(/-/g, " ").slice(0, 80).trim();
   const picked = dayShot(day);
-  const shot = { subject: subject || DEFAULT_SUBJECT, material: MATERIAL_BY_SLUG.get(slug(params.get("material"))) ?? null, named: Boolean(subject), day };
+  const shot = { subject: subject || DEFAULT_SUBJECT, material: MATERIAL_BY_SLUG.get(slug(params.get("material"))) ?? null, tempo: tempoOf(params.get("tempo")), named: Boolean(subject), day };
+  if (params.has("tempo")) shot.named = true;
   for (const key of Object.keys(LADDERS)) {
     const word = WORD_BY_SLUG[key].get(slug(params.get(key)));
     if (word) shot.named = true;
@@ -54,6 +62,7 @@ export function readShot(pathname, search, today) {
 export function addressOf(shot) {
   const query = Object.keys(LADDERS).map((key) => `${key}=${slug(shot[key])}`);
   if (shot.material) query.push(`material=${shot.material.slug}`);
+  if (shot.tempo !== TEMPO.rest) query.push(`tempo=${shot.tempo}`);
   const path = shot.subject === DEFAULT_SUBJECT ? "" : slug(shot.subject);
   return `/${path}?${query.join("&")}`;
 }
@@ -65,6 +74,7 @@ export function promptOf(shot) {
     PHRASES.focus[shot.focus],
     PHRASES.lens[shot.lens],
     PHRASES.light[shot.light],
+    PHRASES.from[shot.from],
     PHRASES.move[shot.move],
     shot.material ? `${shot.material.word} surfaces` : "",
     "cinematic film still",
@@ -84,10 +94,23 @@ const under = (word) => String(word).replace(/ /g, "_");
 export function spwOf(shot) {
   return [
     `!shot[${under(shot.shot)}]{${shot.subject}}(${under(shot.light)})<${under(shot.lens)}>`,
-    `^frame{ =ratio[${shot.ratio}] =focus[${under(shot.focus)}] ~move[${under(shot.move)}] }`,
+    `^frame{ =ratio[${shot.ratio}] =focus[${under(shot.focus)}] =light_from[${shot.from}] ~move[${under(shot.move)}] %tempo[${shot.tempo}] }`,
     ...(shot.material ? [`@material: ~"texture.website/${shot.material.slug}.spw"`] : []),
   ].join("\n");
 }
+
+/** Text as base64url, the form factshift.center and spw.quest read from a link's #spw64= fragment. */
+function base64url(text) {
+  let binary = "";
+  for (const byte of new TextEncoder().encode(text)) binary += String.fromCharCode(byte);
+  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+
+/** What the canvas opens with: the shot's Spw, and the prompt it makes, as a phrase it can hold. */
+export const canvasTextOf = (shot) => `${spwOf(shot)}\nprompt = \`${promptOf(shot).midjourney}\``;
+
+/** The shot on factshift.center: the fragment never reaches a server. */
+export const canvasHrefOf = (shot) => `https://factshift.center/#spw64=${base64url(canvasTextOf(shot))}`;
 
 /** The viewfinder's canvas, in its own units. */
 export const VIEW = Object.freeze({ w: 1200, h: 800, margin: 56 });
@@ -113,7 +136,7 @@ const round = (n) => Math.round(n * 10) / 10;
  * that one, times the lens's blur, in four fixed levels (0 to 3), so a pointer
  * never animates a blur.
  */
-export function geometryOf(shot, focusDepth = SUBJECT_DEPTH) {
+export function geometryOf(shot, focusDepth = SUBJECT_DEPTH, { at = null, lightAt = null } = {}) {
   const ratio = RATIOS[shot.ratio];
   const innerW = VIEW.w - VIEW.margin * 2;
   const innerH = VIEW.h - VIEW.margin * 2;
@@ -122,12 +145,18 @@ export function geometryOf(shot, focusDepth = SUBJECT_DEPTH) {
   const fh = fw / r;
   const fx = (VIEW.w - fw) / 2;
   const fy = (VIEW.h - fh) / 2;
-  const [ax, ay] = SHAPES.focus[shot.focus];
+  // A hand dragging the focus or the lamp places them anywhere; a word places them on its mark.
+  const [ax, ay] = at ?? SHAPES.focus[shot.focus];
   const px = fx + fw * ax;
   const py = fy + fh * ay;
   const shape = SHAPES.shot[shot.shot];
   const lens = SHAPES.lens[shot.lens];
   const light = SHAPES.light[shot.light];
+  const [lu, lv] = lightAt ?? SHAPES.from[shot.from] ?? [ax, ay];
+  const lx = fx + fw * lu;
+  const ly = fy + fh * lv;
+  const backlit = !lightAt && SHAPES.from[shot.from] === null;
+  const beat = 84 * (shot.tempo ?? TEMPO.rest);
   // The subject's sheet is half the frame's short side at a scale of 1, so a close-up fills it and an establishing shot leaves room.
   const unit = Math.min(fw, fh) * 0.5 * shape.scale;
   const sheets = SHEETS.map((s, depth) => {
@@ -151,13 +180,16 @@ export function geometryOf(shot, focusDepth = SUBJECT_DEPTH) {
     points: POINTS.map(([u, v]) => ({ x: round(subject.x + subject.w * u), y: round(subject.y + subject.h * v), r: round(Math.max(3, unit * 0.035)) })),
     bokeh: BOKEH.map(([u, v], i) => ({ x: round(fx + fw * u), y: round(fy + fh * v), rx: round(unit * (0.07 + (i % 3) * 0.025)), ry: round(unit * (0.07 + (i % 3) * 0.025) * (lens.flare ? 1.7 : 1)), on: lens.blur >= 1 })),
     flare: { y: round(py), on: Boolean(lens.flare) },
-    light: { cx: round(fx + fw * light.from[0]), cy: round(fy + fh * light.from[1]), r: round(Math.max(fw, fh) * 0.95), key: light.key, fill: light.fill, second: light.second ?? light.key },
+    light: { cx: round(lx), cy: round(ly), r: round(Math.max(fw, fh) * (backlit ? 0.45 : 0.95)), key: light.key, fill: light.fill, second: light.second ?? light.key },
+    // The lamp a hand can drag: where the light falls from, held just inside the frame; behind the subject, just above it.
+    lamp: { x: round(Math.min(fx + fw - 18, Math.max(fx + 18, backlit ? px : lx))), y: round(Math.min(fy + fh - 18, Math.max(fy + 18, backlit ? py - unit * 0.55 : ly))) },
     thirds: [1, 2].flatMap((k) => [
       { x1: round(fx + (fw * k) / 3), y1: round(fy), x2: round(fx + (fw * k) / 3), y2: round(fy + fh) },
       { x1: round(fx), y1: round(fy + (fh * k) / 3), x2: round(fx + fw), y2: round(fy + (fh * k) / 3) },
     ]),
     // Where attention sits, said under the frame: a short bar beneath the subject.
-    bar: { x1: round(px - 42), x2: round(px + 42), y: round(fy + fh + 20) },
+    // Its length is the move's tempo: drag its end to slow the move or quicken it.
+    bar: { x1: round(px - 42), x2: round(px - 42 + beat), y: round(fy + fh + 20) },
     streaks: [0.22, 0.38, 0.55, 0.7, 0.84].map((v, i) => ({ x1: round(fx - fw * 0.1), x2: round(fx + fw * (0.28 + (i % 2) * 0.12)), y: round(fy + fh * v) })),
     move: slug(shot.move),
   };
@@ -181,6 +213,22 @@ export function nearestFocus(geometry, x, y) {
   }
   return best;
 }
+
+/** The light's direction nearest a place in the frame: a side, or behind when the lamp is held near the subject. */
+export function nearestFrom(geometry, x, y) {
+  const { frame, focus } = geometry;
+  let best = "behind";
+  let bestD = Math.hypot(focus.x - x, focus.y - y) * 1.4;
+  for (const [word, place] of Object.entries(SHAPES.from)) {
+    if (!place) continue;
+    const d = Math.hypot(frame.x + frame.w * place[0] - x, frame.y + frame.h * place[1] - y);
+    if (d < bestD) { bestD = d; best = word; }
+  }
+  return best;
+}
+
+/** The tempo a bar of this length says, from where its start sits. */
+export const tempoAt = (geometry, x) => tempoOf((x - geometry.bar.x1) / 84);
 
 /** The sheet whose centre is nearest a place in the frame. */
 export function nearestSheet(geometry, x, y) {
