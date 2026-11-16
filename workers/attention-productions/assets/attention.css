@@ -75,7 +75,15 @@ h1 { font-size: clamp(2.1rem, 7vw, 3.6rem); line-height: 1; letter-spacing: -0.0
 .thirds line { stroke: var(--ink); stroke-opacity: 0.12; stroke-dasharray: 4 8; }
 .frame { fill: none; stroke: var(--ink); stroke-opacity: 0.45; }
 .corners { fill: none; stroke: var(--ink); stroke-width: 3; }
-.ring { fill: none; stroke: var(--lime); stroke-width: 2; stroke-dasharray: 6 7; transform-box: fill-box; transform-origin: center; animation: focus-breathe 3.6s ease-in-out infinite; }
+.ring { fill: transparent; stroke: var(--lime); stroke-width: 2; stroke-dasharray: 6 7; transform-box: fill-box; transform-origin: center; animation: focus-breathe calc(3.6s * var(--tempo, 1)) ease-in-out infinite; }
+/* The handles: the ring, the lamp and the end of the bar are things a hand can take. */
+.ring, .handle { cursor: grab; touch-action: none; }
+.viewfinder.dragging, .viewfinder.dragging .ring, .viewfinder.dragging .handle { cursor: grabbing; }
+.lamp circle { fill: var(--key); stroke: var(--well); stroke-width: 3; filter: drop-shadow(0 0 8px var(--key)); transition: fill 0.9s ease; }
+.lamp path { stroke: var(--key); stroke-width: 2.5; stroke-linecap: round; }
+.beat { fill: var(--lime); stroke: var(--well); stroke-width: 3; }
+.handle:focus-visible { outline: none; stroke: var(--ink); stroke-width: 3; }
+.viewfinder.dragging .ring { animation-play-state: paused; }
 .hand { fill: none; stroke: var(--ink); stroke-width: 1.5; stroke-opacity: 0; transition: stroke-opacity 0.3s ease; pointer-events: none; }
 .viewfinder.pointing .hand { stroke-opacity: 0.7; }
 .bar { stroke: var(--lime); stroke-width: 4; stroke-linecap: round; }
@@ -83,9 +91,10 @@ h1 { font-size: clamp(2.1rem, 7vw, 3.6rem); line-height: 1; letter-spacing: -0.0
 @keyframes focus-breathe { 50% { transform: scale(1.08) rotate(24deg); } }
 /* The move, as the frame performs it. Rack focus is the page's script, swapping which sheet is sharp. */
 .sheets { transform-box: view-box; transform-origin: var(--fx, 50%) var(--fy, 50%); }
-.viewfinder[data-move="dolly-in"] .sheets { animation: dolly-in 9s ease-in-out infinite alternate; }
-.viewfinder[data-move="handheld"] .sheets { animation: handheld 2.8s ease-in-out infinite; }
-.viewfinder[data-move="long-exposure"] .streaks line { animation: streak 2.6s linear infinite; }
+/* The tempo (the bar's length) scales every move: a longer bar is a slower move. */
+.viewfinder[data-move="dolly-in"] .sheets { animation: dolly-in calc(9s * var(--tempo, 1)) ease-in-out infinite alternate; }
+.viewfinder[data-move="handheld"] .sheets { animation: handheld calc(2.8s * var(--tempo, 1)) ease-in-out infinite; }
+.viewfinder[data-move="long-exposure"] .streaks line { animation: streak calc(2.6s * var(--tempo, 1)) linear infinite; }
 .viewfinder[data-move="long-exposure"] .streaks line:nth-child(2) { animation-delay: -0.6s; }
 .viewfinder[data-move="long-exposure"] .streaks line:nth-child(3) { animation-delay: -1.3s; }
 .viewfinder[data-move="long-exposure"] .streaks line:nth-child(4) { animation-delay: -1.9s; }

@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { CSP, MATERIALS_MODULE, carried } from '../carry.mjs';
 import { DEFAULT_SUBJECT, LADDERS, MATERIAL_OFFER, PHRASES, RATIOS, SHAPES } from '../src/vocabulary.js';
 import { MATERIALS } from '../src/materials.js';
-import { FIRST_SHOT, addressOf, dayShot, geometryOf, nearestFocus, promptOf, readShot, slug, spwOf } from '../src/compose.js';
+import { FIRST_SHOT, addressOf, canvasHrefOf, canvasTextOf, dayShot, geometryOf, nearestFocus, nearestFrom, promptOf, readShot, slug, spwOf, tempoAt } from '../src/compose.js';
 import { MATERIALS as TEXTURE_MATERIALS } from '../../texture-website/src/vocabulary.js';
 import { parse } from '../../../public/js/semantic/spw-workbench-reader.js';
 import { parse as parsePinned } from '../../spw-quest/assets/parser/2026.10.13/reader.min.js';
@@ -41,9 +41,10 @@ test('every word has its phrase and its shape, ratios are whole numbers, and the
 });
 
 test('an address reads as a shot and writes back as the same address', () => {
-  const shot = readShot('/a-projector-beam', '?shot=wide&lens=anamorphic&light=sodium-night&move=dolly-in&ratio=scope&focus=right-third&material=rain-on-glass', DAY);
+  const shot = readShot('/a-projector-beam', '?shot=wide&lens=anamorphic&light=sodium-night&from=behind&move=dolly-in&ratio=scope&focus=right-third&material=rain-on-glass&tempo=1.43', DAY);
   assert.equal(shot.subject, 'a projector beam');
-  assert.deepEqual([shot.shot, shot.lens, shot.light, shot.move, shot.ratio, shot.focus, shot.material.slug, shot.named], ['wide', 'anamorphic', 'sodium night', 'dolly-in', 'scope', 'right third', 'rain-on-glass', true]);
+  assert.deepEqual([shot.shot, shot.lens, shot.light, shot.from, shot.move, shot.ratio, shot.focus, shot.material.slug, shot.tempo, shot.named], ['wide', 'anamorphic', 'sodium night', 'behind', 'dolly-in', 'scope', 'right third', 'rain-on-glass', 1.4, true]);
+  assert.deepEqual([readShot('/', '?tempo=9', DAY).tempo, readShot('/', '?tempo=x', DAY).tempo, readShot('/', '', DAY).tempo], [2, 1, 1], 'a tempo is held to its range');
   const again = readShot(...addressOf(shot).split('?').map((part, i) => (i ? `?${part}` : part)), DAY);
   assert.deepEqual({ ...again, day: '' }, { ...shot, day: '' });
   // What the address leaves out, the date picks, and a date can be fixed.
@@ -67,9 +68,9 @@ test('a hostile path is words, an unknown word is the day\'s, and an unlisted ma
 });
 
 test('the prompt is film language with Midjourney\'s parameters, and the plain prompt has none', () => {
-  const shot = readShot('/a-laminated-folio', '?shot=close-up&lens=85mm&light=lamplight&move=still&ratio=scope&focus=left-third&material=vellum', DAY);
+  const shot = readShot('/a-laminated-folio', '?shot=close-up&lens=85mm&light=lamplight&from=left&move=still&ratio=scope&focus=left-third&material=vellum&tempo=1.5', DAY);
   const { midjourney, plain } = promptOf(shot);
-  assert.equal(plain, 'close-up shot of a laminated folio, subject on the left third, 85mm lens, shallow depth of field, warm practical lamplight, vellum surfaces, cinematic film still');
+  assert.equal(plain, 'close-up shot of a laminated folio, subject on the left third, 85mm lens, shallow depth of field, warm practical lamplight, key light from the left, vellum surfaces, cinematic film still');
   assert.equal(midjourney, `${plain} --ar 239:100 --sref https://texture.website/vellum.png --sw 250 --no text, letters, logo, watermark`);
   assert.doesNotMatch(plain, /--/);
 });
@@ -112,4 +113,36 @@ test('the page reads with scripts off: the first prompt is written, and nothing 
   assert.match(CSP, /frame-src https:\/\/mutex\.buzz/);
   const words = [...page.matchAll(/<a href="([^"]+)" data-word=/g)].map((m) => m[1]);
   assert.equal(words.length, Object.values(LADDERS).flat().length + 1 + MATERIAL_OFFER.length, 'each word is a link to its address');
+});
+
+test('the handles move the drawing as a hand drags them, and let go on a word or a tempo the address keeps', () => {
+  const g = geometryOf(FIRST_SHOT);
+  // Dragging the ring places the subject anywhere; letting go snaps it to the nearest third.
+  const dragged = geometryOf(FIRST_SHOT, 2, { at: [0.8, 0.3] });
+  assert.ok(Math.abs(dragged.focus.x - (g.frame.x + g.frame.w * 0.8)) < 1);
+  assert.equal(nearestFocus(g, dragged.focus.x, dragged.focus.y), 'right third', 'in a wide frame, across counts for more than down');
+  const up = geometryOf(FIRST_SHOT, 2, { at: [0.5, 0.12] });
+  assert.equal(nearestFocus(g, up.focus.x, up.focus.y), 'upper third');
+  // The lamp moves the light; let go near a side, it is that side; near the subject, behind it.
+  const lit = geometryOf(FIRST_SHOT, 2, { lightAt: [0, 0.4] });
+  assert.equal(nearestFrom(lit, lit.light.cx, lit.light.cy), 'left');
+  assert.equal(nearestFrom(g, g.focus.x, g.focus.y), 'behind');
+  for (const word of LADDERS.from) { const at = geometryOf({ ...FIRST_SHOT, from: word }).lamp; assert.ok(at.x >= g.frame.x && at.x <= g.frame.x + g.frame.w && at.y >= g.frame.y && at.y <= g.frame.y + g.frame.h, `${word}: the lamp stays in the frame`); }
+  // The bar's length is the tempo.
+  assert.equal(tempoAt(g, g.bar.x1 + 84 * 1.5), 1.5);
+  assert.equal(tempoAt(g, g.bar.x1 + 999), 2);
+  assert.ok(geometryOf({ ...FIRST_SHOT, tempo: 2 }).bar.x2 > g.bar.x2);
+});
+
+test('a link to factshift.center carries the shot: its Spw and its prompt, as text the canvas reads whole', () => {
+  const shot = readShot('/a-projector-beam', '?shot=wide&lens=anamorphic&light=neon&from=left&move=rack-focus&ratio=scope&focus=center&material=vellum&tempo=1.4', DAY);
+  const href = canvasHrefOf(shot);
+  assert.match(href, /^https:\/\/factshift\.center\/#spw64=[A-Za-z0-9_-]+$/);
+  const text = Buffer.from(href.split('#spw64=')[1], 'base64url').toString('utf8');
+  assert.equal(text, canvasTextOf(shot));
+  assert.ok(text.includes(promptOf(shot).midjourney), 'the prompt rides along');
+  assert.ok(text.startsWith(spwOf(shot)));
+  for (const result of [parse(text, { eventPolicy: 'none' }), parsePinned(text)]) assert.ok(result.success && !result.completeness?.proseFallback && result.errors.length === 0, text);
+  const page = readFileSync(path.join(assets, 'index.html'), 'utf8');
+  assert.ok(page.includes(`id="canvas" href="${canvasHrefOf(FIRST_SHOT)}"`), 'the page opens its first shot on the canvas');
 });
