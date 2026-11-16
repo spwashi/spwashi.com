@@ -1,0 +1,104 @@
+# Motion and marks (2026-11-16) — cache
+#
+# What moved on 2026-11-16, measured: how spwashi.com arrives, how
+# factshift.center answers a hand, and the creator's direction for ephemeral
+# UI, the frame's edges, and refresh. Written so the workbench and lore.land
+# can read this repository's direction. This file does not implement.
+
+#>motion_and_marks_2026_11
+#:cache #!motion #!capture #!ephemera #!factshift #!direction
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@workbench_report: ~"../workbench-report.spw"
+@screenshot_semantics: ~"../../.agents/plans/screenshot-semantics/index.spw"
+@feedback_contour: ~"./feedback-contour-2026-11.spw"
+@asset_management: ~"../conventions/asset-management.spw"
+@operator_canon: ~"../../public/js/kernel/operator-detection.js"
+@captures: ~"../../design/components/captures/runs/2026-11-16"
+
+operation = "cache"
+fixity = "experimental"
+source = `chat 2026-11-16; headless captures of live spwashi.com and a local factshift.center build (one machine, shared, so times are rough and ratios sound); two models read sixteen screenshots with no context; the canvas branch edge-submenus`
+do_not = `Do not change spwashi.com's arrival from this file; feel changes end at a proposal and a demo the creator reviews in a browser. Do not print a mnemonic where canon names a thing. Do not write to .spw/_workbench.`
+
+summary = #[
+  `spwashi.com holds still, then jumps: first paint under a second, fonts by two, then late modules reshape the first screen between 7 and 18 seconds.`,
+  `factshift.center already answers in beats; its words are verbose, its fastest beat (a 700 ms press light) is lost to a screenshot, and one press moves the rows under the finger.`,
+  `The creator's direction: tell ephemera in marks with braces as material, keep the mnemonic for first touches, read the frame's edges as sides, refresh by pulling from the top.`,
+][reg=set]
+
+^"arrival"{
+  claim = `A screenshot of spwashi.com at 3 s and one at 12 s are two different pages, because modules arriving late reshape the first screen after it looks finished.`
+  measured: .{
+    settle = `first screen settles, phone, first visit: / 8.3-9.0 s, /about/ 17.6 s, /now/ 7.6 s, /services/ 11.8 s, /contact/ 8.0 s; desktop / 18.8 s`
+    shift = `layout shift over 20 s: /services/ 0.998 (inflated by a block entering below the screen), desktop / 0.840, /about/ 0.428, /contact/ 0.066, /now/ 0.050, / on a phone 0.015`
+    movers = `component-semantics grows each frame's topline about 26 px (/now/, /contact/, /services/); operators arrives with the /services/ shift at 7.6 s; /about/ and desktop / shift near 7.5 s with no module named by the site's audit`
+    motion = `no authored motion plays on any first screen in its first six seconds; transitions render as single jumps because the main thread is busy until about 22 s; the only first-screen motion is the install banner rising`
+    banner = `the iPhone Safari install hint (public/js/runtime/shell/pwa-update-handler.js:52, :439-444) arrives at 7-20 s and covers the page's own key line on every route until "Got it"`
+  }[reg=facet]
+  ~#reading: `a first contact is whatever frame a stranger's shutter catches; today that frame depends on luck and load`
+}[reg=facet]
+
+^"ephemera"{
+  claim = `factshift.center's ephemeral notes run on fixed clocks and say in sentences what a mark could say in a token.`
+  measured: .{
+    clocks = `#handle-said and #hand-on hold 2.4 s (--ephemeral-hold); the menu press light 700 ms; the zoom note 1.1 s; operator play 900 ms; the set-down ring 420 ms`
+    beats = `"more": lit and said at about 0.1 s, the light off at 0.8 s, the note gone at 2.5 s, the receipt kept until the menu closes`
+    layout = `"more" inserts a row and the menu grows 62 px upward on a phone, moving the rows under the finger 13-17 px; the save button widens 24 px when its badge changes`
+    unseen = `Ctrl+S with the menu closed changes nothing on screen; a dragged part stays put while the simulation rests and jumps 84 px on release`
+    words = `sown 13 · down center; &garden{…} · within this line; the frame · between lines; release to refresh · unsaved changes`
+  }[reg=facet]
+  ~#source(creator): "the words in the ephemeral UI feel verbose; I'd rather explore a different visual hierarchy and relationship to Spw braces"
+  proposal = .{
+    kinds = `one mark per kind of moment, as canon names them: ! action (save), ^ integration (more), @ perspective (a color), ~ potential (a pull not yet released), [ ] mode (a rail), ( ) scene (the frame), #> frame address (a landed card), # vibration (a touched body)`
+    material = `braces as material, never empty glyph pairs: a mode is an opening bracket seated on the left edge, a scene the frame's rims bowing, a handle a tab across a card's rim`
+    sides = `the opening side holds where (address, viewpoint), the closing side what came of it`
+    words = `one mark and one token (!save, ^13, @3); the spirit word only on a hand's first touches`
+    residue = `each moment leaves a residue that stays; the beats sit on a clock a hand can scrub back`
+    demo = `the Ephemera in Marks artifact, 2026-11-16: eight moments told today's way and in marks on one scrubbable clock`
+  }[reg=facet]
+  ~#source(creator): "consider making the ephemeral UI scrubbable"
+}[reg=facet]
+
+^"mnemonic_and_surface"{
+  ~#source(creator): `one of the original spirit sequences: ~ potential, # vibration, . ground, ? wonder, ! action, * value, & something, @ someone, <concept>, (scene), [mode], {definition}, ^ integration; "but it is a useful mnemonic"`
+  ~#tension(creator): "distinguishing the useful mnemonics from the implementation surfaces consistently across the various application layers"
+  rule = `a mnemonic may gloss a mark where someone is learning (a first touch, a legend); a printed mark, data-spw-operator, and any parser or runtime name follow canon (@operator_canon); say which layer a word belongs to wherever both appear`
+  upstream = `@workbench_report mnemonic_and_surface asks the workbench to carry the gloss table beside the operator table`
+}[reg=facet]
+
+^"edges"{
+  ~#source(creator): "consider the left and right edges of the frame as objective / subjective or large / small (or context-sensitive versatile)"
+  landed = `canvas edge-submenus: inside a tool, the left walks its cards (or the lines a map or filter reaches) and the right the hand's card's controls; one kind of thing to a rail; with menus closed, the document's nearest dimension, a framed body's siblings, else the thread, else the .spw tree`
+  readings = .{
+    where_how = `1a4157a: the left is where, the right is how`
+    objective_subjective = `this site's canon puts objective on the "opening brace / address side" and subjective on the "closing brace / synthesis side" (@asset_management lines 94-95): the frame's left edge as its opening brace, the right as its closing brace`
+    large_small = `the left as the larger scale (the line, the file, the tool), the right as the smaller (the part, the control)`
+  }[reg=facet]
+  ~#source(creator): "some of the scrubbing and swiping felt like it was on its way to describing hyperbolic geometry, and that made some of the moments along navigation more difficult to appreciate"
+  ~#reading: `one kind to a rail gives each stop room; tapping through still reaches everything, and a scrub is the practiced hand's way along the nearest dimension`
+}[reg=facet]
+
+^"refresh"{
+  ~#source(creator): "the reload button currently is distracting and I would rather swipe down from the top of the frame for reload"
+  landed = `canvas edge-submenus: the ↻ button is gone; a pull down from the header (not a control) or a 32 px band along the stage's top between the side rails refreshes; the note warns of unsaved changes before release, and pulling back up cancels`
+}[reg=facet]
+
+^"timing_game"{
+  ~#source(creator): "the star animation that appears when someone leaves the first comment on TikTok is valuable because its animation tells a story, so timing the screenshot becomes a game"
+  ~#source(creator): "there is value on factshift.center to mind the timing of the ephemeral UI"
+  reading = `motion that plays in place and tells a story makes the shutter a small skill; reflow never does; @screenshot_semantics wonder_screenshot_semantics_timing_game holds the question against the plan's craft guard`
+}[reg=facet]
+
+^"lore_land"{
+  facts = #[
+    `books run in thirteens (mod 13); a sixteenth chapter was a mistake and lore.land cleared the unscheduled stone 16 on 2026-11-16`,
+    `2026-11-16: twenty-six chapter ecologies under lore.land's .spw/ecologies, and a thirteen-element rule for the progression`,
+    `lore.land pins the workbench at 84cf313, newer than spw.quest's parser (27fa1e3d16ab) and factshift.center's reader (3f53adf2)`,
+    `its autonomous.feedback client file holds 12 subjects, the cap; chapters may become subjects of their own (@feedback_contour)`,
+  ][reg=set]
+}[reg=facet]
+
+validation = `the captures folder (@captures, gitignored) holds every frame, timeline and timer cited here; re-measure before carrying a number into public copy`

@@ -25,6 +25,7 @@
 @precipitate: ~"../scripts/spw-precipitate.mjs"
 @recommendations: ~"./reviews/upstream-workbench-recommendations.spw"
 @history_strands: ~"./caches/history-conflict-strands-2026-09.spw"
+@motion_and_marks: ~"./caches/motion-and-marks-2026-11.spw"
 
 operation = "audit"
 fixity = "tending"
@@ -499,6 +500,58 @@ expression = consumer[report]{defect.gap.built}<upstream>
   ~#refuse: "Do not rank features on one axis. A single speed score turns a material into a leaderboard."
 }[reg=facet]
 
+^"trace_cost_when_not_collecting"{
+  ~#goal(creator, 2026-11-16): "the worker on Spw.Quest consistently runs into resource limits"
+  claim = `The bundled reader builds an enter and an exit trace event, each with a performance.now() stamp, for every rule it tries, and every enclosing generator re-yields each event, even when the caller passes collect:false and throws the events away. On a Worker that parses on request, that cost is the request.`
+  measured: .{
+    pin = `public/js/semantic/spw-workbench-reader.js, generated from spw-workbench v0.3.0 @ 27fa1e3d16ab`
+    cold_root = `spw.quest's first "/" in a fresh instance parsed all 26 guide files (docShelf) for their links: 585 to 1512 ms of CPU in node, answered live as HTTP 503 "error code: 1102" (2026-11-14)`
+    self_time = `of a cold "/" profile, the rule wrapper with its trace events 281 ms, the lazy-rule re-yield loop 135 ms, the choice combinator 77 ms, the parse driver 55 ms, the token matcher 34 ms`
+    shape = `cost is not linear in length: the 242-character "revision" example takes 41 ms, the 460-character "notebook" 2 ms; a full pass over the 26 files still costs 340 to 470 ms at the twelfth pass, so it is work, not warm-up`
+  }[reg=facet]
+  ~#reading: `the consumer can carry what it reads (spw.quest now writes its shelf's links when the worker is built), but every host that parses on request pays the trace whether it wants it or not`
+  ask = `build no trace events when collect is false, or offer a parse entry without the tracing generators; and say which inputs make a rule chain backtrack, since 242 characters costing twenty times 460 is a shape a host should be able to see coming`
+  probe: `time parse() over each workers/spw-quest example script in node, with --cpu-prof on a fresh process, and compare self time in the rule wrapper with collect true and false`
+}[reg=facet]
+
+^"mnemonic_and_surface"{
+  ~#goal(creator, 2026-11-16): "one of the tensions in developing Spw has been distinguishing the useful mnemonics from the implementation surfaces consistently across the various application layers"
+  ~#source(creator, 2026-11-16): `one of the original spirit sequences, "but it is a useful mnemonic": ~ potential, # vibration, . ground, ? wonder, ! action, * value, & something, @ someone, <concept>, (scene), [mode], {definition}, ^ integration`
+  claim = `Hosts gloss marks in plain words where people learn them (factshift.center's notes, spw.quest's plain jobs, this site's legends), and the words drift from canon: "& something" against canon's subject, "@ someone" against perspective, "{definition}" against direction. Nothing marks which layer a word belongs to, so a gloss can be promoted to a name by repetition.`
+  consumers = #[
+    `public/js/kernel/operator-detection.js OPERATOR_DEFINITIONS: canon type, physics, interaction (the implementation surface here)`,
+    `workers/spw-quest/src/answer.js: a plain job per mark ("how it is being seen", "where or when it stands", "what kind of thing it is")`,
+    `the blog's Spw.b dialect legend: a contested rename, recorded in .spw/language/operator-namespace-alignment.spw`,
+    `factshift.center's ephemeral notes, and a proposal to show the spirit word only on a hand's first touches beside the canon mark`
+  ][reg=set]
+  ask = `carry a gloss table beside the operator table, each gloss tagged mnemonic, dated, and pointing at the canon type it glosses, so a host reads its first-touch words from one source and never prints a gloss where the parser or runtime needs a name`
+}[reg=facet]
+
+^"host_orders_and_sides"{
+  ~#goal(creator, 2026-11-16): "make the left/right frame scrubbing logic more meaningful per submenu; consider the direction of spw-workbench"
+  claim = `factshift.center's edge rails are now orders a host supplies, one kind to a rail: a tool's cards, the hand's card's controls, the lines a cast reaches, a framed body's siblings, the thread, the .spw tree. pivotsOf turns "a mark ... to its neighbours along an order the host supplies"; these rails are such orders, measured in use.`
+  measured: .{
+    pin = `the canvas bundles reader release 2026.11.07-pre.1 (workbench 3f53adf2), which predates spw.pivots/1, so its rails cannot call pivotsOf yet`
+    breadcrumb = `each stop says what the focal lens says, @node › #select[2/6] and @node.select › !all[1/5]; the › and the [i/n] count are not line syntax, so a stop cannot be read back as a line`
+    one_kind = `with menus closed the left rail had run files, bodies and lines together, up to 34 stops; the creator said scrubbing "felt like it was on its way to describing hyperbolic geometry"; one kind to a rail is the fix the canvas took`
+  }[reg=facet]
+  ~#question(sides): `the act chain theory reads side as mirror or arms. The creator is weighing the frame's left and right edges as objective and subjective, which this site's canon puts on the "opening brace / address side" and the "closing brace / synthesis side" (.spw/conventions/asset-management.spw:94-95), or as large and small, or context-sensitive. Which reading of side should a spatial edge inherit?`
+  ask = `say whether a host's order belongs in the line (a mode or scene slot) or beside it, and give a breadcrumb form the reader can parse, so a scrub stop is a line one nuance from its neighbours rather than a label`
+}[reg=facet]
+
+^"still_line_slots"{
+  ~#goal(creator, 2026-11-16): "the Spw-native serializability of each screenshot"; "consider which information a 0-context model may interpret from a screenshot"
+  claim = `This consumer already writes a screenshot's line in several places, and they disagree on which bracket holds the viewport and which holds the time, so no still line can be read back with one meaning.`
+  measured: .{
+    harness = `scripts/lib/visual-capture-plan.mjs:1384-1397 writes still[pocket]{page.device-reason.dense}<home-kernel-entry>, the device in [ ]; the clock sits outside the line in the manifest; nothing parses it back`
+    authored = `spell[wander]{route.image.chrome}(pocket)<still> (design/experiments/spellcraft/index.html:219) puts the device in ( ); folio[return]{rescan.card}(october_04)<shelf> puts a day in ( ); >>[2026-11-06 12:53] probe stamps a stream entry`
+    plain_jobs = `spw.quest's answer.js gives [ ] "how it is being seen", ( ) "where or when it stands", < > "what kind of thing it is"`
+    first_screens = `every settled first screen on this site carries its own line, home[hook]{orient}<atlas>, contact[hook]{intake}<register>, now[hook]{sprint.dispatch}<live>, services[hook]{lanes}<scope>, and an iPhone install banner covered each of them in captures on 2026-11-16`
+    readers = `two models given sixteen screenshots and no context read names, prices, domains and the palette, and read every sigil as "notation I can't decode", though one said the labels "promise a larger system"`
+  }[reg=facet]
+  ask = `name one shape for a still's line (what it shows, how it is seen, when and where it stands, what kind of thing it is) and give it a read-back test, so a harness line, a caption and a hand screenshot's line mean the same thing`
+}[reg=facet]
+
 #>wonder_workbench_report_axes
 ?["Which way of writing a thing is worth its cost here, and can the editor make that a question worth asking rather than a lint?"]{
   #:depth #!computational ~#lens(comparison)
@@ -514,4 +567,5 @@ expression = consumer[report]{defect.gap.built}<upstream>
   falsification: "a finding here no longer reproduces from its stated probe against the pinned submodule"
   ~#note(pin): "measured against the submodule as mounted; re-run after a bump before carrying anything upstream"
   ~#note(2026-10-05): "the frames from editor_host_shadows_server to optimization_axes are measured at pin 229aedcf9b6f; earlier frames keep the pin they name"
+  ~#note(2026-11-16): "trace_cost_when_not_collecting, mnemonic_and_surface, host_orders_and_sides and still_line_slots name their own pins; the workbench was at 339728cf and lore.land pinned 84cf313 that day"
 }
