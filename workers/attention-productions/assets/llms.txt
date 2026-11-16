@@ -1,6 +1,6 @@
 # attention.productions
 
-Attention Productions is the name for Spwashi's pictures: a feature in 2027, and a season of daily promo from October 1 through New Year.
+Attention Productions is the name for the pictures: a feature in 2027, and a season of daily promo from October 1 through New Year.
 
 The page is a shot composer for image prompts. The address is the shot: the path is the subject, a hyphen is a space, and each ladder is a query key whose value is one of its words (hyphens for spaces). What the address leaves out, the date picks; day=2026-12-01 fixes a date.
 
