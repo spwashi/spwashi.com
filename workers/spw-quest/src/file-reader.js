@@ -3,6 +3,10 @@
 // page, where it reads again as the file changes. Both hand it the parse
 // function from the site's parser bundle.
 import { parse } from "../../../public/js/semantic/spw-workbench-reader.js";
+// The worker keeps no rule trace when it reads: nothing here reads one, and
+// building it was most of a cold parse (workbench bcf0da18). The page's own
+// parse, from /parser.js, keeps the bundle's default.
+const quietParse = (text) => parse(text, { eventPolicy: "none" });
 import { PEER_BRACES, PEER_SIGILS } from "../../lib/peer-kit.js";
 import { escapeHtml } from "../../lib/shell.js";
 import { noteKit } from "./note.js";
@@ -612,7 +616,7 @@ export function readFile(source) {
   const text = String(source ?? "").slice(0, FILE_LIMIT);
   let reading = KEPT.get(text);
   if (!reading) {
-    reading = kit.read(parse, text);
+    reading = kit.read(quietParse, text);
     if (KEPT.has(text)) KEPT.set(text, reading);
   }
   return reading;
@@ -638,7 +642,7 @@ export const landingLine = (source, name) => kit.lineOf(String(source ?? ""), na
  * guide it is the script's alone and stays hidden without one.
  */
 export function handBar(source, { line = -1, anchors = false, ways = [] } = {}) {
-  const view = kit.hand(parse, readFile(source), { line, path: [], held: -1, primed: null, receipt: null }, { anchors, ways });
+  const view = kit.hand(quietParse, readFile(source), { line, path: [], held: -1, primed: null, receipt: null }, { anchors, ways });
   return `<div class="hand" data-hand role="group" aria-label="The line in hand"${anchors ? " data-anchors" : ""}${ways.length ? ` data-ways="${escapeHtml(JSON.stringify(ways))}"` : ""}>
         <input type="hidden" name="at" value="${view.n + 1}">
         <div data-hand-body>

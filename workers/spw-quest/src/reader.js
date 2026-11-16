@@ -2,6 +2,10 @@
 // worker (scripts off, /read) and in the page (scripts on, as the reader types);
 // both pass it the parse function from the site's reader bundle.
 import { parse } from "../../../public/js/semantic/spw-workbench-reader.js";
+// The worker keeps no rule trace when it reads: nothing here reads one, and
+// building it was most of a cold parse (workbench bcf0da18). The page's own
+// parse, from /parser.js, keeps the bundle's default.
+const quietParse = (text) => parse(text, { eventPolicy: "none" });
 import { CONTAINERS, OPERATORS, PARTICLE_AIMS } from "./guide.js";
 import { STEPS } from "./steps.js";
 
@@ -178,7 +182,7 @@ const kit = readingKit(READER_DATA);
 
 /** The reading of one line for one panel, by the worker. */
 export function readLine(stepId, line) {
-  return kit.read(parse, stepId, String(line ?? "").slice(0, LINE_LIMIT));
+  return kit.read(quietParse, stepId, String(line ?? "").slice(0, LINE_LIMIT));
 }
 
 export const renderReading = (reading) => kit.render(reading);
