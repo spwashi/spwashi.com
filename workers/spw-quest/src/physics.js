@@ -50,6 +50,16 @@ export const PHYSICS_LINES = Object.freeze([
   { line: "folio[specimen]{stamp[mount]{value: 12, seal: dated}, glassine: pocket, *intaglio{burin, press}}", says: "a mounted stamp: perforated edge, intaglio line, archival mount" },
 ]);
 
+// The eight lines never change, so each is read and painted once an isolate, the
+// way the guide keeps its files (src/file-reader.js keepReadings), not on every render.
+let PAINTED_LINES = "";
+function paintedLines() {
+  if (!PAINTED_LINES) {
+    PAINTED_LINES = PHYSICS_LINES.map(({ line, says }) => `<li><a href="/physics?line=${encodeURIComponent(line)}">${KIT.paint(line, KIT.read(quietParse, line).tokens)}</a> <span>${escapeHtml(says)}</span></li>`).join("\n    ");
+  }
+  return PAINTED_LINES;
+}
+
 /** What a body inside a marked body feels of that mark's law. The words are the canvas's (alike, softer, faint). */
 export const SHARES = Object.freeze([["alike", 1], ["softer", 0.6], ["faint", 0.3]]);
 const SHARE_DEFAULT = "softer";
@@ -1110,7 +1120,7 @@ ${floor}
     <button type="submit">Lay it out</button>
   </form>
   <ul>
-    ${PHYSICS_LINES.map(({ line, says }) => `<li><a href="/physics?line=${encodeURIComponent(line)}">${KIT.paint(line, KIT.read(quietParse, line).tokens)}</a> <span>${escapeHtml(says)}</span></li>`).join("\n    ")}
+    ${paintedLines()}
   </ul>
 </section>
 </div>`;
