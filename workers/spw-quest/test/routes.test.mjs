@@ -279,6 +279,11 @@ test('/parser.js is the site bundle, served from the assets layer, and the worke
   assert.equal(await served.text(), bundle, 'run carry-answers.mjs after npm run build:spw-parser');
   assert.equal(PARSER_JS, bundle, 'run node workers/spw-quest/carry-parser.mjs');
   assert.ok(STATIC_PATTERNS.includes('/parser.js'), 'the address is the assets layer\'s');
+  // The assets layer sends the headers the worker used to: a script, cached an hour, under the shell's policy.
+  const rule = readFileSync(new URL('../assets/_headers', import.meta.url), 'utf8').split(/\n(?=\S)/).find((block) => block.startsWith('/parser.js\n'));
+  assert.ok(rule, 'assets/_headers has a /parser.js rule');
+  assert.match(rule, /Content-Type: text\/javascript/);
+  assert.match(rule, /Cache-Control: public, max-age=3600/);
   assert.equal((await get('spw.quest', '/parser.js')).status, 404, 'the worker no longer answers it, so its script carries no second copy');
 });
 
