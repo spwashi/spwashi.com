@@ -61,3 +61,110 @@ summary = #[
   canvas = `factshift.center lays the same line out. It is the visualizer. It is not a second inbox.`
   organization = `An organization reads the count: kind, subject, week. Interpreting the line is that count, not a new analyst product.`
 }[reg=facet]
+
+^"ecosystem_direction_2026_11"{
+  id = "feedback-contour-2026-11-ecosystem"
+  date = "2026-11-14"
+  operation = "cache"
+  fixity = "experimental"
+  source = `creator, 2026-11-14: "I believe autonomous.feedback was designed prematurely", then "improve the design within that cache". Code lines were re-read in model.js, config.js, pages.js, client.js, desk.js and wrangler.jsonc (workers/autonomous-feedback), workers/spw-quest/src/index.js, workers/texture-website, and lore.land's client file in its own repository, read and not edited. What a reader sees comes from rendering the worker with the three real client files. Demand is not in the tree: the desk count is unread.`
+  claim = `autonomous.feedback was designed for a market before the tree shows one. The freemium prime landed 2026-09-22 (3014c1cd) and the desk (owner keys, compaction, counts) 2026-09-23 (753bc472). DESK_HOSTS names only the operator's three sites. The gap worth closing now is where copy written for an imagined shop shows on the sites that did arrive. Every other lever waits for a note in hand.`
+  premature = #[
+    `queue.want was named as the signal an owner would send before a desk existed (ce792773, 2026-09-22 16:26). The desk opened about sixteen hours later (753bc472). Whether any owner outside the operator ever sent it is unread.`,
+    `The /for/ door was retired on the day the product was framed, because no site used it.`,
+    `The kind examples and the path hint speak to a shop: a cart, a Pay button, a price, an account, /checkout. Rendered with the real client files, they show on lore.land, spw.quest and spwashi.com.`,
+  ][reg=set]
+  per_domain_fit = .{
+    spwashi_com = `Client file: 8 of 12 subjects, 18 threads (1 with a stance), six kinds, queue.want. Subjects for /about/domains/*, the 13th/26th drop, or the /services/ pricing paths are config, and wait until a note arrives that one of them would have sorted.`
+    lore_land = `Client file in its own repository, last changed 2026-11-09: 12 subjects, which is the cap, 29 threads (8 with a stance), a thanks line, about = "subject", appreciation first. Today the chapters share one subject (/book/chapter). The creator, 2026-11-14: chapters may not be only one subject, books run in thirteens (mod 13), and a 16th chapter was a mistake. book/chapter holds 01 to 15, so by that count 14 and 15 sit in a second book. A cap of 12 cannot hold one book's chapters, and config.js readSubjects drops whatever falls past it with no problem line. Live gap, seen in a browser: /lore.land/broken with no subject opens on the kind's own line ("Something here is broken."). The model.js example ("I chose Pay", "back to the cart", "The price on the list is 12") is what screen readers hear as "For example", and it becomes the visible placeholder once a reader taps "Clear the choice". Behind "Which page?" on every form, pages.js routeField hints "like /checkout". spw.quest and spwashi.com render the same. A model shown the cleared lore.land form with no context took "Pay" to mean lore.land takes payments.`
+    texture_website = `workers/texture-website serves files only. It publishes no client file and links no form. lore.land's "texture.website" subject covers lore.land's own /texture page. A reader can still write to autonomous.feedback/texture.website by hand, and that page uses the same defaults the first patch rewrites. cleanPath stripping ? and # matters once texture.website points readers at a form.`
+    spw_quest = `FEEDBACK_CONFIG: five kinds without appreciation, four routes, no thanks line, no subjects, and an intro scoped to what was hard to follow in the guide or the setup. The narrow scope reads as a stance, not a gap.`
+  }[reg=facet]
+  smallest_patches = #[
+    .{ lever = `Write the defaults for any site, not a shop` ; change = `model.js CONTEXTS examples and NOTE.example, and the routeField hint and placeholder in pages.js, name nothing a store sells: no cart, Pay, price, account, or /checkout` ; serves = `screen-reader users on every kind page, readers who clear a choice or open "Which page?", and anyone who writes to a host with no client file` ; shape = `strings only, with no field, enum, or route` }[reg=facet],
+    .{ lever = `Say when a subject is dropped` ; change = `readSubjects pushes a problem past SUBJECT_LIMITS.subjects, in the voice of "keeping the first", so the setup page shows it` ; serves = `lore.land, which sits at 12, one short of a book` ; shape = `one problem line, and the cap stays 12` }[reg=facet],
+  ][reg=set]
+  held = #[
+    .{ lever = `Carry the line: a query, a fragment, or a line field on the card` ; opens_when = `a received card lost its meaning because cleanPath stripped its ? or #` ; then = `start from the September passage-note shape, where the quote rides in the fragment and no log sees it, before adding a field` }[reg=facet],
+    .{ lever = `A client file for texture.website` ; opens_when = `texture.website links the form, or lore.land's /texture subject receives notes about the material studio` }[reg=facet],
+    .{ lever = `New spwashi.com subjects` ; opens_when = `notes arrive with no subject that one of them would have sorted` }[reg=facet],
+    .{ lever = `13th/26th digest weeks beside Monday weeks` ; opens_when = `someone reads the digest on a cadence and the Monday week misleads them` }[reg=facet],
+    .{ lever = `Appreciation and subjects on spw.quest` ; opens_when = `the creator widens the guide's intro` }[reg=facet],
+    .{ lever = `Size the subject cap in thirteens` ; opens_when = `lore.land gives chapters subjects of their own` ; then = `12 is one short of a book. 26 holds a book's chapters beside thirteen other subjects. Check that the subject chips still read on a phone before the number moves` }[reg=facet],
+  ][reg=set]
+  cut = #[
+    `An "about" archetype enum (serial, studio, guide) for unconfigured hosts. Nothing in the tree shows an unconfigured host in use, and neutral defaults do its job.`,
+    `Surfacing stances on the write card. pages.js already prints each thread's stance and link beside its subject, and client.js says it on tap.`,
+  ][reg=set]
+  desk = `The desk, the paid rung, and the five-minute cron stay as built. Nothing here extends them. Pruning them back is the creator's call, not this file's.`
+  sense_first = `Before either patch, the operator reads the count: the desk's tallies for spwashi.com, spw.quest and lore.land. If no notes have come, the card has not been reached, and the next question is where the card is placed, not what it holds.`
+  do_not_promote_until = `The creator has read this block and named a patch as next. Until then M2 on spw.quest stays next, as the header says.`
+  boundary_preserved = `Keeps the 2026-11-10 contour: six kinds, no new sigil, no auth before another team shares a desk, and factshift.center as a visualizer, not a second inbox.`
+  validation = `rg -n "I chose Pay|back to the cart|/checkout|SUBJECT_LIMITS" workers/autonomous-feedback/src; npm run check:workers. The /checkout fixtures in routes.test.mjs belong to kept.example, a test host, and stay.`
+}[reg=facet]
+
+^"social_surface_2026_11"{
+  id = "feedback-contour-2026-11-social"
+  date = "2026-11-14"
+  operation = "cache"
+  fixity = "experimental"
+  source = #[
+    `creator, 2026-11-14: "reflect more on the interaction model across sites; consider when feedback may feel conversational or enable shared perspective; consider the value of autonomous.feedback partially being in the likelihood that someone will screenshot their form and post it online; consider autonomous.feedback as a surface for socially recognizing an audience from the perspective of a storytelling site owner"`,
+    `creator, same turn: "what if someone scrolls here and the things we can screenshot represent the first thing they've ever seen from my ecosystem"; "imagine a less prescribed foray into the visuals, understanding it's possible to screenshot something across aspect ratios and use the image as a prompt"; "consider which information a 0-context model may interpret from a screenshot"`,
+  ][reg=set]
+  method = `113 screenshots at 9:16, 4:5, 1:1 and 16:9, at phone and desktop sizes. Live spwashi.com, lore.land, spw.quest and texture.website were viewed only. autonomous.feedback was rendered locally from the three real client files, with an open desk simulated in memory, so nothing reached production. Sixteen of the shots, renamed img-01 to img-16, went to two fresh models (Sonnet and Haiku) told to judge only from the pixels. Fable read the caches and code for an independent reflection, and a code map of every entry point backs the per-site lines. Each line carries a grade: seen (in a screenshot), code (read in source), agent (reported, not rechecked), or guess (a model's reading).`
+  limits = #[
+    `The readers were Claude models in this working directory, so CLAUDE.md was in their context, and they read 2x images at full size. A feed thumbnail keeps less: at phone size only the site name and the note survive (agent).`,
+    `Sonnet wrote its answers after seeing all sixteen. Haiku gave no caveat about order.`,
+    `Live pages were captured about 3s after load, and modules can take 9–12s to mount headless, so a region a script fills may show empty.`,
+    `The "as an image prompt" answers are guesses about other models. The real test is the creator's own tools, Grok Imagine and Midjourney.`,
+    `The live pricing captures predate the unpushed feece79f, so they show the older copy.`,
+  ][reg=set]
+  across_sites = .{
+    lore_land = `Reaches toward conversation. Chapter-end slips carry ?at= the chapter, eight threads carry a stance, and appreciation comes first (code). One reader called its home page the best hook of the set (guess, Sonnet). Its own words already set the terms for recognition: "a mark buys a place beside the story, never a word in it" and "credited only as you ask" (code, lore.land client file lines 285 and 498).`
+    spwashi_com = `Between a form and a note. Footer pills on 204 routes carry ?at= the page once scripts run (agent). Its one stance says the conversation happens from the card: "each order starts as a conversation from the card you send" (code).`
+    spw_quest = `A form. Five kinds, no thanks line, no subjects (code). Its scripted front page answered 503, error code 1102, on four requests this session, then 200 on the fifth (seen). Its feedback file names "Reading" at /read, which answers 404 live and from the local worker (seen).`
+    texture_website = `No door to the form (code). The readers took it for "a texture reference library", and "marble · tweed" for a made-up material (guess). Its answer to a visitor is an image, not a note.`
+    attention_productions = `"Leave a note" with no client file, so the defaults answer (agent).`
+  }[reg=facet]
+  conversational = #[
+    `A stance is the one place the tool talks back: "Written before your note, for everyone who raises it" (code, pages.js:684). It is one-to-many, so it reads as a shared answer, not a reply.`,
+    `A thread tap sends "Count me too." (code). That is shared perspective in its smallest form, and the reader never sees the count. Only the owner does (agent).`,
+    `Conversation with the creator happens on the live show and in DMs. /contact/ calls TikTok and Instagram the preferred DM paths, but the card can only point at Bluesky and X (code).`,
+    `A card has no public address: its page is only the response to sending (agent). No site shows anything a reader writes. Recognition can only start from what a reader chose to post.`,
+  ][reg=set]
+  screenshot = #[
+    `The card is the clearest object in the set: the readers called it "a clear object" and "low-pressure" (guess). But it reads as a postcard to the site. The site's name is the largest type, and the writer is a muted last line (seen).`,
+    `The saved PNG drops what a screenshot keeps: subject, thread, chapter, the expression line and the stamp (agent, seen in one PNG). Its lower half is empty (seen). Haiku wanted no more of it; Sonnet called it clean (guess).`,
+    `The post text names the kind and the site, never the writer: "Appreciation about The chapters for lore.land: … (via autonomous.feedback/lore.land)" (code). lore.land's card mentions @spwashi.com, because lore.land's file lists the creator's handles (seen).`,
+    `The only address on a card is the form, autonomous.feedback/{host}, not the work (seen). A stranger who follows it lands on a form.`,
+    `A card someone would post about themselves is an appreciation, a theory, or a charm: a sentence only they could write, or a dated claim. Nobody posts "Broken" about themselves, and those kinds are also the ones where a public post is not a callout (guess, Fable).`,
+  ][reg=set]
+  zero_context = #[
+    `Read reliably: "I'm Spwashi. I build software and make art.", the prices, lore.land's hook ("A dog who follows the heat. A day nobody kept. A hat that never lands."), "Read Chapter One … about 4 minutes", and the domain names (guess, both readers).`,
+    `Read as notation they could not decode: #>, $, ^, ~, @, =, ?, feedback[appreciation]{gift} and home[hook]{…}. Haiku added that the labels "promise a larger system" (guess).`,
+    `Misread: "SENT" as possibly decoration, and "Pay" on the cleared lore.land form as a payment flow (guess). Haiku took the empty desktop "Configure Your Engagement" column for a loading state, and may be right: it is an empty div a script fills (code, services/index.html:597), captured 3s after load.`,
+    `The iPhone install banner ("Tap Share, then 'Add to Home Screen' to install _spwashi.") sat over four of the sixteen, and both readers ranked a pricing shot under the banner worst (seen). It shows to iPhone Safari visitors until they tap "Got it" (code, pwa-update-handler.js:52 and 439–444).`,
+    `No lore.land or texture.website image names its maker (guess, Haiku). The link from the person to the book is visible only on spwashi.com's "Character seed to Lore Land" (seen).`,
+    `Both readers said these would carry into an image model: teal on cream paper, glass or rag-paper cards, serif with grotesk and mono, dashed outlines, a stamped label (guess). Midjourney already reads empty braces as "a malformed permutation" (creator, 2026-11-09).`,
+  ][reg=set]
+  recognition = #[
+    `The tool keeps no history for a writer, so recognizing a person happens by hand, where that person chose to be seen. That fits "the tool receives a note. It does not explain the person" as long as the tool is never asked to do it.`,
+    `Recognize the note and what it changed, not the person or a count. Nothing is ranked, and no gift moves a card (feedback-product-2026-09.spw, fb-009 refuse).`,
+    `Practices that need nothing built:
+      - read the desk count;
+      - on stream, read one note (unnamed, or named with the writer's yes) and say what it changed;
+      - on the 13th and 26th, put counts and what changed in the release notes;
+      - repost only what a reader posted themselves;
+      - answer one card with a card the creator posts;
+      - ask for theories before a release, and let readers show their dated cards after.`,
+  ][reg=set]
+  defects_found = #[
+    `Post skips the DM step: the @mention is prefilled for every kind, and when a card is kept the Message block disappears while Post stays (code, pages.js:645–652).`,
+    `lore.land's file sets from = "optional", while its charm page and its own .spw rule say it "never asks for a name" (code, lore.land repository).`,
+    `After a thread or "Just saying thanks" is sent, the card falls back from the site's label ("Stayed with me") to "Appreciation" (agent).`,
+    `"Run a site? Put this form on it." sits at the foot of the write page, inside a 9:16 crop of a reader's filled card (seen). The product pitch travels with the reader's screenshot.`,
+    `spw.quest's feedback file offers "Reading" at /read, which answers 404 (seen, live and local).`,
+  ][reg=set]
+  do_not_promote_until = `The creator has read this block. Nothing here joins smallest_patches, and the by-hand practices come before any build.`
+}[reg=facet]
