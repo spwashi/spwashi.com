@@ -2,6 +2,10 @@
 // or download. Slot links keep every other slot. The script field can hold any
 // text; format only tightens spacing when the parser accepts the whole script.
 import { parse } from "../../../public/js/semantic/spw-workbench-reader.js";
+// The worker keeps no rule trace when it reads: nothing here reads one, and
+// building it was most of a cold parse (workbench bcf0da18). The page's own
+// parse, from /parser.js, keeps the bundle's default.
+const quietParse = (text) => parse(text, { eventPolicy: "none" });
 import { readContainers } from "../../../public/js/semantic/expression-query.js";
 import { escapeHtml } from "../../lib/shell.js";
 import { CONTAINERS, OPERATORS, PARTICLE_AIMS } from "./guide.js";
@@ -281,7 +285,7 @@ export function formatScript(source) {
   if (!text.trim()) return "";
   let result;
   try {
-    result = parse(text);
+    result = quietParse(text);
   } catch {
     return tidy(text);
   }
@@ -312,7 +316,7 @@ export function formatScript(source) {
 function semantics(source) {
   let result;
   try {
-    result = parse(String(source).slice(0, MAX_SCRIPT));
+    result = quietParse(String(source).slice(0, MAX_SCRIPT));
   } catch {
     return [];
   }

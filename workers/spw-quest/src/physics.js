@@ -24,6 +24,10 @@
 // travels to the page by toString(), so nothing inside it may reach outside it.
 import { escapeHtml, layout } from "../../lib/shell.js";
 import { parse } from "../../../public/js/semantic/spw-workbench-reader.js";
+// The worker keeps no rule trace when it reads: nothing here reads one, and
+// building it was most of a cold parse (workbench bcf0da18). The page's own
+// parse, from /parser.js, keeps the bundle's default.
+const quietParse = (text) => parse(text, { eventPolicy: "none" });
 import { PEER_BRACES, PEER_SIGILS } from "../../lib/peer-kit.js";
 import { scriptAddress } from "./build.js";
 import { OPERATORS } from "./guide.js";
@@ -894,7 +898,7 @@ const KIT = fieldKit(PHYSICS_DATA);
 /** Where a line stands on the floor, when the floor can read it: one expression with a { } body. Other rooms carry a line here only then. */
 export function physicsHref(line) {
   const text = String(line || "").trim();
-  return text && text.length <= PHYSICS_LIMIT && KIT.read(parse, text).ok ? `/physics?line=${encodeURIComponent(text)}` : null;
+  return text && text.length <= PHYSICS_LIMIT && KIT.read(quietParse, text).ok ? `/physics?line=${encodeURIComponent(text)}` : null;
 }
 
 /** What the address asks for: a line (or the opening one) and a share. */
@@ -902,7 +906,7 @@ export function physicsState(params) {
   const asked = String(params.get("line") || "").trim().slice(0, PHYSICS_LIMIT);
   const share = SHARES.some(([name]) => name === params.get("share")) ? params.get("share") : SHARE_DEFAULT;
   const line = asked || PHYSICS_DEFAULT;
-  return { line, asked: Boolean(asked), share, reading: KIT.read(parse, line) };
+  return { line, asked: Boolean(asked), share, reading: KIT.read(quietParse, line) };
 }
 
 export const PHYSICS_CSS = `.physics-page > header, .physics-page > section > h2, .physics-page .axis { max-width: 40rem; margin-inline: auto; text-align: center; }
@@ -1106,7 +1110,7 @@ ${floor}
     <button type="submit">Lay it out</button>
   </form>
   <ul>
-    ${PHYSICS_LINES.map(({ line, says }) => `<li><a href="/physics?line=${encodeURIComponent(line)}">${KIT.paint(line, KIT.read(parse, line).tokens)}</a> <span>${escapeHtml(says)}</span></li>`).join("\n    ")}
+    ${PHYSICS_LINES.map(({ line, says }) => `<li><a href="/physics?line=${encodeURIComponent(line)}">${KIT.paint(line, KIT.read(quietParse, line).tokens)}</a> <span>${escapeHtml(says)}</span></li>`).join("\n    ")}
   </ul>
 </section>
 </div>`;
