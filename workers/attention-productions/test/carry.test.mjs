@@ -102,9 +102,10 @@ test('the viewfinder\'s geometry keeps the frame in the canvas, the focus on its
 test('the page reads with scripts off: the first prompt is written, and nothing inline needs a looser policy', () => {
   const page = readFileSync(path.join(assets, 'index.html'), 'utf8');
   assert.ok(page.includes(promptOf(FIRST_SHOT).midjourney.replace(/&/g, '&amp;')), 'the first prompt is in the page');
-  assert.ok(page.includes("I'm Spwashi. This is the name for the pictures. A feature-length film is due in 2027, and I'm doing its marketing."));
+  // The page is about the pictures and the shot, not about who makes them (the creator, 2026-11-16).
+  assert.doesNotMatch(page, /Spwashi|spwashi\.com|\bI'm\b|\bI\b/, 'no first person and no owner on the page');
   assert.ok(page.includes('<iframe src="https://mutex.buzz/now/"'), 'the frame from mutex.buzz stays');
-  for (const href of ['https://spwashi.com/cards/#back-the-film', 'https://spwashi.com/topics/film/', 'https://autonomous.feedback/attention.productions']) assert.ok(page.includes(`href="${href}"`), href);
+  for (const href of ['https://autonomous.feedback/attention.productions', 'https://texture.website/', 'https://factshift.center/']) assert.ok(page.includes(`href="${href}"`), href);
   assert.doesNotMatch(page, /\sstyle=|<style|<script>|\son[a-z]+=/i, 'no inline style, script or handler');
   assert.doesNotMatch(CSP, /unsafe-inline/);
   assert.match(CSP, /img-src 'self' https:\/\/texture\.website/);

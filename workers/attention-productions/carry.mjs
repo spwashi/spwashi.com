@@ -98,12 +98,12 @@ async function page(c, v) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Attention Productions</title>
-  <meta name="description" content="I'm Spwashi. Attention Productions is the name for the pictures: a feature in 2027, and a season of daily promo from October 1 through New Year.">
+  <meta name="description" content="Attention Productions is the name for the pictures: a feature in 2027, and a season of daily promo from October 1 through New Year. Each address here is a shot, written as an image prompt.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="${ORIGIN}/">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <meta property="og:title" content="Attention Productions">
-  <meta property="og:description" content="I'm Spwashi. Attention Productions is the name for the pictures: a feature in 2027, and a season of daily promo from October 1 through New Year.">
+  <meta property="og:description" content="Attention Productions is the name for the pictures: a feature in 2027, and a season of daily promo from October 1 through New Year. Each address here is a shot, written as an image prompt.">
   <link rel="stylesheet" href="/attention.css">
   <link rel="stylesheet" href="/lights.css">
   <script type="module" src="/attention.js"></script>
@@ -113,7 +113,7 @@ async function page(c, v) {
     <header class="head">
       <p class="kicker">attention.productions</p>
       <h1>Attention Productions</h1>
-      <p class="lede">I'm Spwashi. This is the name for the pictures. A feature-length film is due in 2027, and I'm doing its marketing.</p>
+      <p class="lede">Attention Productions is the name for the pictures. A feature-length film is due in 2027.</p>
     </header>
     <section class="shot" aria-labelledby="shot-title">
       <h2 id="shot-title" class="label"><span id="shot-label">A shot</span> <span id="shot-day" class="day"></span></h2>
@@ -133,8 +133,6 @@ async function page(c, v) {
     <section class="season">
       <p>The production season runs from October 1 through New Year: a little promo every day. A moment holds one concept. That rule is <a href="https://mutex.buzz/">mutex.buzz</a>. The frame is <a href="https://factshift.center/">factshift.center</a>. boon, bane, and bone are that same frame with a pull: toward, away, or still. A sponsored viewport can show a picture. A physics setting is a query on the frame, once those three names serve it.</p>
       <p class="actions">
-        <a class="primary" href="https://spwashi.com/cards/#back-the-film">Back the season</a>
-        <a href="https://spwashi.com/topics/film/">Film paths</a>
         <a href="https://autonomous.feedback/attention.productions">Leave a note</a>
       </p>
     </section>
@@ -142,12 +140,8 @@ async function page(c, v) {
       <iframe src="https://mutex.buzz/now/" title="What holds the frame now, from mutex.buzz" loading="lazy"></iframe>
       <figcaption>What holds the frame this cycle, from <a href="https://mutex.buzz/">mutex.buzz</a>. When nothing else holds it, a laminated folio does. <a href="https://mutex.buzz/now/">Open it on its own</a>.</figcaption>
     </figure>
-    <section class="open">
-      <h2>What is open</h2>
-      <p>Backing keeps the daily promo daily. The card on spwashi.com asks what being part of it would mean to you. Nothing on that card is a promise; we agree on what fits.</p>
-    </section>
     <footer>
-      <p>Nearby: ${neighborLine(["work", "story", "grain"])}</p>
+      <p>Nearby: ${neighborLine(["grain", "frame", "story"])}</p>
       <p><a href="/ecosystem.json">The set, as data</a> · <a href="/llms.txt">The shot, for a model</a></p>
     </footer>
   </main>
@@ -166,7 +160,7 @@ ${Object.entries(v.SHAPES.light).map(([word, l]) => `.viewfinder[data-light="${c
 function llms(v) {
   return `# attention.productions
 
-Attention Productions is the name for Spwashi's pictures: a feature in 2027, and a season of daily promo from October 1 through New Year.
+Attention Productions is the name for the pictures: a feature in 2027, and a season of daily promo from October 1 through New Year.
 
 The page is a shot composer for image prompts. The address is the shot: the path is the subject, a hyphen is a space, and each ladder is a query key whose value is one of its words (hyphens for spaces). What the address leaves out, the date picks; day=2026-12-01 fixes a date.
 
