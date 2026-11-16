@@ -60,6 +60,8 @@ export const STATIC_PATTERNS = Object.freeze([
   "/fonts/*", "/peer/*", "/icons/*", "/sw.js", "/robots.txt", "/sitemap.xml",
   "/parser/index.json", "/parser/*/*.js", "/parser/*/*.map", "/parser/*/manifest.json", "/arcs/index.json",
   ...CONSTANT_ANSWERS,
+  // The guide's front page, carried as the worker renders it with no query (carry-guide.mjs).
+  "/",
   // The shelf's pages, carried as the worker serves them (shelf.js shelfPages, carry-arcs.mjs).
   "/shelf/", "/shelf/plans/", "/forms/", "/arcs/", "/bench/",
 ]);
