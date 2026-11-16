@@ -105,7 +105,8 @@ summary = #[
     `<bar>=@boof: >= is a comparison where a mark follows a concept; prose on both, while (bar)=@boof reads whole`,
     `!=retries[3] and mode ==strict: a comparison where an action meets a bias, or a binding meets one`,
     `home<x=> and home<draft~>: => and ~> where a bias or a potential closes a capsule`,
-    `read whole, as intended or harmlessly: brand..voice (a range), 1...n (a spread), a || b, home<>, https://spw.quest (// keeps the rest as a comment), home<a->, home<tag#>`,
+    `link = https://spw.quest and path = a//b: read whole with no error, but // opens a comment, so the host and the last segment leave the line in silence; the quietest form of the same priority`,
+    `read as intended: brand..voice (a range), 1...n (a spread), a || b, home<> (an empty concept), home<tag#> (a vibration then a close); home<a-> reads a- as one word`,
   ][reg=set]
   census = `tracked .spw lines, one line at a time (rough: a stream that spans lines looks stuck): => 383 tokens, 220 on lines that do not read whole; << 101, 48; == 7, 7; <= 4, 4; >> 1005, 2; (( 1, 1; != 1, 1. The (( and the != are pasted JavaScript in interaction-paint-cost-2026-09.spw, one of the seven files that already fail`
   reading_from_here = `read each digraph by the bracket stack, as )) already is: >> closes a stream only while one is open and is otherwise two capsule closes; (( opens an n-range only when its )) closes it; << opens a stream only where a capsule is not being opened; and inside an open capsule <= and => are < with = and = with >, and >= right after a word is > then =. Comparisons inside a check stay the comparison trial's question`
