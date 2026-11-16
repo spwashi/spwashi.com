@@ -51,7 +51,7 @@ test('wrangler sends the static patterns to the assets layer, and each names fil
   // A folder address is answered by its index.html.
   for (const pattern of STATIC_PATTERNS) assert.ok(FILES.some((file) => glob(pattern.endsWith('/') ? `${pattern}index.html` : pattern).test(file)), pattern);
   // The worker keeps everything that is a page, and the parser's pages and redirects.
-  for (const page of ['/', '/learn', '/install', '/parser/', '/parser/2026.10.13/', '/parser/latest.js', '/manifest.webmanifest', '/offline']) {
+  for (const page of ['/learn', '/install', '/parser/', '/parser/2026.10.13/', '/parser/latest.js', '/manifest.webmanifest', '/offline']) {
     assert.ok(!STATIC_PATTERNS.some((pattern) => glob(pattern).test(page)), page);
   }
 });
@@ -68,6 +68,7 @@ test('assets/_headers restates what the worker sends for each static file', asyn
     '/parser/2026.10.13/manifest.json',
     '/parser/2026.10.13/reader.debug.js.map',
     ...CONSTANT_ANSWERS,
+    '/',
     '/shelf/', '/shelf/plans/', '/forms/', '/arcs/', '/bench/',
   ];
   for (const sample of samples) {
@@ -88,7 +89,13 @@ test('each constant answer is a file that says exactly what the worker says, so 
     assert.equal(readFileSync(path.join(assetsDir, address), 'utf8'), await response.text(), `${address}: run carry-answers.mjs`);
     assert.equal(response.headers.get('Vary'), null, `${address} does not vary by reader, so one file serves everyone`);
   }
-  assert.ok(!CONSTANT_ANSWERS.includes('/'), '/ answers text, JSON or a page by Accept, so it stays with the worker');
+  assert.ok(!CONSTANT_ANSWERS.includes('/'), '/ is carried as a page by carry-guide.mjs, not as a constant answer');
+});
+
+test("the guide's front page is a file that says exactly what the worker renders for / with no query", async () => {
+  const response = await get('/');
+  assert.equal(response.status, 200);
+  assert.equal(readFileSync(path.join(assetsDir, 'index.html'), 'utf8'), await response.text(), '/: run carry-guide.mjs');
 });
 
 test('robots welcomes crawlers to every page and names the sitemap; the sitemap names rooms that open', async () => {

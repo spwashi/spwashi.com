@@ -134,6 +134,8 @@ async function main() {
     ['--import', './scripts/tests/register-public-imports.mjs', 'workers/spw-quest/carry-arcs.mjs', '--check'],
     // llms.txt, init, quest.json and the other constant answers, against what the worker answers.
     ['--import', './scripts/tests/register-public-imports.mjs', 'workers/spw-quest/carry-answers.mjs', '--check'],
+    // The guide's front page, against what the worker renders for / with no query.
+    ['--import', './scripts/tests/register-public-imports.mjs', 'workers/spw-quest/carry-guide.mjs', '--check'],
     ['workers/factshift-center/carry-shell.mjs', '--check'],
     // wap.mom's printed pages, against what its worker prints.
     ['workers/wap-mom/carry-pages.mjs', '--check'],
