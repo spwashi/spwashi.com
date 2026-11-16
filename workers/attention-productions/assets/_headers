@@ -1,0 +1,26 @@
+# Written by workers/attention-productions/carry.mjs.
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: no-referrer
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Content-Security-Policy: default-src 'none'; img-src 'self' https://texture.website; style-src 'self'; script-src 'self'; connect-src 'self'; frame-src https://mutex.buzz; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests
+
+/*.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/*.json
+  Cache-Control: public, max-age=300
+  Access-Control-Allow-Origin: *
+
+/*.js
+  Cache-Control: public, max-age=300
+  Content-Type: text/javascript; charset=UTF-8
+
+/*.css
+  Cache-Control: public, max-age=300
+
+/favicon.svg
+  Cache-Control: public, max-age=86400

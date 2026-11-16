@@ -1,0 +1,135 @@
+/* attention.productions. Written by hand; lights.css (carried) holds each light's colours. */
+@property --key { syntax: "<color>"; inherits: true; initial-value: #ffb36b; }
+@property --fill { syntax: "<color>"; inherits: true; initial-value: #20151a; }
+@property --second { syntax: "<color>"; inherits: true; initial-value: #ffb36b; }
+
+:root {
+  color-scheme: dark;
+  --ground: #120c16;
+  --well: #0c080f;
+  --ink: #ece0f4;
+  --muted: #a99cb6;
+  --line: rgba(236, 224, 244, 0.16);
+  --lime: #c8ff00;
+  --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--ground); color: var(--ink); font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 72rem; margin: 0 auto; padding: 1.75rem 1rem 3rem; }
+a { color: var(--ink); text-decoration-color: color-mix(in srgb, var(--lime) 70%, transparent); text-underline-offset: 0.2em; }
+a:focus-visible, button:focus-visible, summary:focus-visible, .viewfinder:focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; }
+h2 { font-size: 1.05rem; margin: 0 0 0.5rem; }
+
+.head { max-width: 40rem; margin-bottom: 1.5rem; }
+.kicker, .label { font: 600 0.74rem/1 var(--mono); letter-spacing: 0.12em; margin: 0 0 0.6rem; }
+.kicker { color: var(--lime); }
+.label { color: var(--muted); grid-column: 1 / -1; }
+.label .day { color: var(--lime); margin-left: 0.4em; }
+h1 { font-size: clamp(2.1rem, 7vw, 3.6rem); line-height: 1; letter-spacing: -0.02em; font-weight: 650; margin: 0 0 0.7rem; }
+.lede { color: var(--muted); margin: 0; }
+
+/* The shot: the frame first; on a wide screen the prompt and the words beside it. */
+.shot { display: grid; gap: 1rem 1.6rem; margin-bottom: 3rem; }
+@media (min-width: 62rem) {
+  .shot { grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); align-items: start; }
+  .finder { grid-row: span 2; }
+}
+.finder { margin: 0; }
+.note { color: var(--muted); font-size: 0.82rem; margin: 0.55rem 0 0; }
+
+.viewfinder {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  background: var(--well);
+  cursor: crosshair;
+  touch-action: manipulation;
+  transition: --key 0.9s ease, --fill 0.9s ease, --second 0.9s ease;
+}
+.viewfinder .ground { fill: var(--well); }
+.wash { fill: url(#key-light); }
+.key { stop-color: var(--key); stop-opacity: 0.55; }
+.key-mid { stop-color: color-mix(in srgb, var(--key) 30%, var(--fill)); stop-opacity: 0.6; }
+.fill { stop-color: var(--fill); }
+
+/* The sheets are vellum: translucent, edged, nearer ones lit by the second colour. */
+.sheet rect { fill: color-mix(in srgb, var(--key) 18%, transparent); stroke: color-mix(in srgb, var(--key) 55%, #f6eefa); stroke-opacity: 0.45; stroke-width: 1.2; }
+.sheet[data-depth="4"] rect { fill: color-mix(in srgb, var(--key) 8%, transparent); stroke-opacity: 0.2; }
+.sheet[data-depth="3"] rect { fill: color-mix(in srgb, var(--key) 13%, transparent); }
+.sheet[data-depth="0"] rect { fill: color-mix(in srgb, var(--second) 15%, transparent); }
+.sheet.subject > rect:first-child { fill: color-mix(in srgb, var(--key) 30%, transparent); stroke-opacity: 0.85; }
+.surface { fill: url(#surface); opacity: 0; transition: opacity 0.6s ease; }
+.viewfinder[data-surface] .surface { opacity: 0.6; }
+.point { fill: var(--key); filter: drop-shadow(0 0 5px var(--key)); }
+.b1 { filter: url(#b1); }
+.b2 { filter: url(#b2); }
+.b3 { filter: url(#b3); }
+.bokeh ellipse { fill: var(--key); opacity: 0.3; transition: opacity 0.6s ease; }
+.bokeh ellipse:nth-child(even) { fill: var(--second); }
+.bokeh .off { opacity: 0; }
+.flare { stroke: var(--second); stroke-width: 2; opacity: 0.55; transition: opacity 0.6s ease; }
+.flare.off { opacity: 0; }
+.streaks line { stroke: color-mix(in srgb, var(--key) 70%, #fff); stroke-width: 1.5; stroke-linecap: round; opacity: 0; }
+.grain { filter: url(#grain); opacity: 0.08; mix-blend-mode: overlay; pointer-events: none; }
+.thirds line { stroke: var(--ink); stroke-opacity: 0.12; stroke-dasharray: 4 8; }
+.frame { fill: none; stroke: var(--ink); stroke-opacity: 0.45; }
+.corners { fill: none; stroke: var(--ink); stroke-width: 3; }
+.ring { fill: none; stroke: var(--lime); stroke-width: 2; stroke-dasharray: 6 7; transform-box: fill-box; transform-origin: center; animation: focus-breathe 3.6s ease-in-out infinite; }
+.hand { fill: none; stroke: var(--ink); stroke-width: 1.5; stroke-opacity: 0; transition: stroke-opacity 0.3s ease; pointer-events: none; }
+.viewfinder.pointing .hand { stroke-opacity: 0.7; }
+.bar { stroke: var(--lime); stroke-width: 4; stroke-linecap: round; }
+
+@keyframes focus-breathe { 50% { transform: scale(1.08) rotate(24deg); } }
+/* The move, as the frame performs it. Rack focus is the page's script, swapping which sheet is sharp. */
+.sheets { transform-box: view-box; transform-origin: var(--fx, 50%) var(--fy, 50%); }
+.viewfinder[data-move="dolly-in"] .sheets { animation: dolly-in 9s ease-in-out infinite alternate; }
+.viewfinder[data-move="handheld"] .sheets { animation: handheld 2.8s ease-in-out infinite; }
+.viewfinder[data-move="long-exposure"] .streaks line { animation: streak 2.6s linear infinite; }
+.viewfinder[data-move="long-exposure"] .streaks line:nth-child(2) { animation-delay: -0.6s; }
+.viewfinder[data-move="long-exposure"] .streaks line:nth-child(3) { animation-delay: -1.3s; }
+.viewfinder[data-move="long-exposure"] .streaks line:nth-child(4) { animation-delay: -1.9s; }
+.viewfinder[data-move="long-exposure"] .streaks line:nth-child(5) { animation-delay: -2.2s; }
+@keyframes dolly-in { to { transform: scale(1.07); } }
+@keyframes handheld {
+  25% { transform: translate(2px, -1.5px) rotate(0.15deg); }
+  50% { transform: translate(-1.5px, 1px) rotate(-0.1deg); }
+  75% { transform: translate(1px, 2px) rotate(0.08deg); }
+}
+@keyframes streak {
+  0% { transform: translateX(-80px); opacity: 0; }
+  20%, 75% { opacity: 0.45; }
+  100% { transform: translateX(560px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .viewfinder, .viewfinder * { animation: none !important; transition: none !important; }
+}
+
+/* The take: one prompt, one copy, the rest folded. */
+.take { min-width: 0; }
+.prompt { margin: 0; }
+.prompt code { display: block; min-height: 7.5em; font: 0.9rem/1.5 var(--mono); background: rgba(255, 255, 255, 0.035); border: 1px solid var(--line); border-radius: 8px; padding: 0.8rem 0.9rem; overflow-wrap: anywhere; }
+.ways { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1rem; margin: 0.7rem 0; font-size: 0.88rem; }
+#copy { font: 600 0.88rem/1 inherit; color: var(--ground); background: var(--lime); border: 0; border-radius: 999px; padding: 0 1.1rem; min-height: 44px; cursor: pointer; }
+.more { font-size: 0.85rem; }
+.more summary { color: var(--muted); cursor: pointer; min-height: 32px; }
+.more code, .more pre { font: 0.8rem/1.5 var(--mono); color: var(--muted); white-space: pre-wrap; overflow-wrap: anywhere; }
+
+/* The words: each a link to the shot with that word, the one in the shot filled. */
+.ladders { display: grid; gap: 0.5rem; min-width: 0; }
+.ladder { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem; }
+.ladder .key { flex: 0 0 4.4rem; font: 600 0.68rem/1 var(--mono); letter-spacing: 0.06em; color: var(--muted); }
+.ladder a { display: inline-flex; align-items: center; min-height: 30px; padding: 0 0.62rem; font-size: 0.8rem; color: var(--muted); text-decoration: none; border: 1px solid var(--line); border-radius: 999px; }
+.ladder a:hover { color: var(--ink); border-color: var(--ink); }
+.ladder a[aria-current] { color: var(--ground); background: var(--ink); border-color: var(--ink); }
+.ladder a.out { border: 0; padding-left: 0.2rem; }
+@media (pointer: coarse) { .ladder a { min-height: 44px; } }
+
+.season p, .open p { max-width: 42rem; color: var(--muted); }
+.actions { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.actions a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 1rem; text-decoration: none; border: 1px solid var(--line); border-radius: 999px; }
+.actions .primary { color: var(--ground); background: var(--lime); border-color: var(--lime); }
+.held { margin: 2.5rem 0; }
+.held iframe { display: block; width: 100%; height: 22rem; border: 1px solid var(--line); border-radius: 10px; background: var(--well); }
+.held figcaption { color: var(--muted); font-size: 0.85rem; margin-top: 0.5rem; }
+footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.85rem; }

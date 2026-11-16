@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json.schemastore.org/wrangler.json",
+  "name": "attention-productions",
+  "compatibility_date": "2026-11-16",
+  "workers_dev": false,
+  "preview_urls": false,
+  // Files only, no script: the page, its composer and the host's files are
+  // carried (carry.mjs), and every other path falls back to index.html, whose
+  // own script reads the address as a shot in the reader's browser. Until
+  // attention.productions' custom domain moves here in the dashboard,
+  // site-hub-next still answers it.
+  "assets": {
+    "directory": "./assets",
+    "not_found_handling": "single-page-application"
+  }
+}
