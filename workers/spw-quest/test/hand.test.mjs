@@ -8,7 +8,8 @@ import worker from '../src/index.js';
 import { parse } from '../../../public/js/semantic/spw-workbench-reader.js';
 import { BUILD_KINDS } from '../src/build.js';
 import { EXAMPLES, exampleById } from '../src/examples.js';
-import { FILE_DATA, docShelf, fileKit, landingLine } from '../src/file-reader.js';
+import { FILE_DATA, fileKit, landingLine } from '../src/file-reader.js';
+import { SHELF_LINKS } from '../src/readings-data.js';
 import { pivotState } from '../src/pivot.js';
 import { STEPS } from '../src/steps.js';
 
@@ -99,7 +100,8 @@ test('on /build the hand reads with scripts off, and Read takes the line in hand
 });
 
 test('the guide\'s files point to each other, and a reading\'s path is a way to the line it names', async () => {
-  const shelf = docShelf(EXAMPLES);
+  // The paths as the worker carries them; carry-readings.mjs --check holds them to a fresh reading.
+  const shelf = EXAMPLES.map(({ id, file }) => ({ id, file, links: SHELF_LINKS[id] }));
   const files = new Set(EXAMPLES.map((example) => example.file));
   const joins = shelf.flatMap((doc) => doc.links.filter((link) => files.has(link.file)).map((link) => [doc, link]));
   assert.ok(joins.length >= 10, `the files join each other (${joins.length})`);
