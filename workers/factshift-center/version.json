@@ -4,11 +4,11 @@
   "script": "factshift-center",
   "host": "factshift.center",
   "snapshot": "2026-11-16",
-  "revision": "d4e3979",
+  "revision": "4fa3a5f",
   "checkout": "workers/factshift-center/app",
   "reader": {
-    "release": "2026.11.07-pre.1",
-    "workbench": "3f53adf2"
+    "release": "2026.11.16-pre.1",
+    "workbench": "bcf0da18"
   },
   "query": [
     "alpha",
