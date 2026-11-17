@@ -1,12 +1,14 @@
 // Teal Stripes Vibes' page: every address is this one shell, painted here from
-// the address by vibe.js (carried from src/ by carry.mjs). Written by hand; the
-// shader and the keys are the ones the worker's page carried. With scripts off
-// the shell shows the vibe it was written with.
-import { FACETS, SEEDS, SHADER, expressionOf, maskLabel, readAddress, vibe, vibeCss } from "/vibe.js";
+// the address by vibe.js (carried from src/ by carry.mjs). Written by hand. The
+// shader and the keys are the ones the worker's page carried; tuning, the
+// fading card and the share image are this page's own. With scripts off the
+// shell shows the vibe it was written with.
+import { FACETS, SEEDS, SHADER, TUNING, canonicalPath, captionOf, expressionOf, maskLabel, readAddress, tune, tuningQuery, vibe, vibeCss } from "/vibe.js";
 
 const $ = (id) => document.getElementById(id);
 const root = document.documentElement;
 const card = $("card");
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const say = (m) => { const status = $("status"); if (status) { status.textContent = ""; setTimeout(() => { status.textContent = m; }, 40); } };
 
 let place = readAddress(window.location.pathname, window.location.search, new Date());
@@ -16,17 +18,21 @@ if (place.kind === "root") {
   place = readAddress(place.redirect, "", new Date());
 }
 
-if (place.kind === "unknown") {
-  $("seed-name").textContent = "not a vibe";
-  $("mood").textContent = `Try /harbor, /ledger/pr, or /lantern/pram/night. Seeds: ${Object.keys(SEEDS).join(", ")}.`;
-  document.title = "Not a vibe — Teal Stripes Vibes";
-} else {
-  paint(place);
-}
+/* ── the picture, from the place ─────────────────────────── */
 
-function paint({ seed, mask, filters, hour, href }) {
-  const v = vibe(seed, mask, filters);
-  const tuple = `/tuple?seed=${seed}&mask=${maskLabel(mask)}${filters.length ? `&filter=${filters.join(",")}` : ""}`;
+const current = () => tune(vibe(place.seed, place.mask, place.filters), place.tuning);
+const pathOf = () => (place.kind === "moment" ? new URL(place.href).pathname : canonicalPath(place));
+const addressOf = () => {
+  const query = [tuningQuery(place.tuning), place.say ? `say=${encodeURIComponent(place.say)}` : ""].filter(Boolean).join("&");
+  return `${pathOf()}${query ? `?${query}` : ""}`;
+};
+
+let shader = null;
+
+function paint() {
+  const { seed, mask, filters, hour } = place;
+  const v = current();
+  const href = `https://tealstripesvibes.com${addressOf()}`;
   $("vibe-style").textContent = vibeCss(v);
   $("field").setAttribute("aria-label", `${SEEDS[seed].mood}: stripes of ${v.palette.join(", ")} at ${v.angle} degrees`);
   $("seed-name").textContent = seed;
@@ -34,21 +40,122 @@ function paint({ seed, mask, filters, hour, href }) {
   $("mask").textContent = `${maskLabel(mask)}${filters.length ? ` · ${filters.join(", ")}` : ""}`;
   $("hour").textContent = `${hour}Z`;
   $("expr").textContent = expressionOf(seed, mask, filters, v);
-  $("tuple-link").setAttribute("href", tuple);
+  $("tuple-link").setAttribute("href", `/tuple?seed=${seed}&mask=${maskLabel(mask)}${filters.length ? `&filter=${filters.join(",")}` : ""}`);
   $("self-link").setAttribute("href", href);
   $("og-link").setAttribute("href", `/og/${seed}/${maskLabel(mask)}.svg`);
   for (const [i, li] of [...$("facets").children].entries()) li.className = mask.includes(FACETS[i].letter) ? "on" : "off";
+  $("caption").textContent = place.say;
+  $("caption").hidden = !place.say;
   card.dataset.href = href;
-  document.title = `${seed} · ${maskLabel(mask)}${filters.length ? ` · ${filters.join(",")}` : ""} — Teal Stripes Vibes`;
+  document.title = `${place.say ? `${place.say} · ` : ""}${seed} · ${maskLabel(mask)}${filters.length ? ` · ${filters.join(",")}` : ""} — Teal Stripes Vibes`;
   document.querySelector('link[rel="canonical"]')?.setAttribute("href", href);
   // The browser's own chrome takes the vibe's ground.
   document.querySelector('meta[name="theme-color"]')?.setAttribute("content", v.palette[0]);
-  shade(v);
+  if (shader) shader.set(v);
+  else shader = shade(v);
+  showTuning(v);
 }
 
+/** Write the place into the address without a reload: a tuned picture is still a link. */
+function keep() {
+  window.history.replaceState(null, "", addressOf());
+  paint();
+}
+
+if (place.kind === "unknown") {
+  $("seed-name").textContent = "not a vibe";
+  $("mood").textContent = `Try /harbor, /ledger/pr, or /lantern/pram/night. Seeds: ${Object.keys(SEEDS).join(", ")}.`;
+  document.title = "Not a vibe — Teal Stripes Vibes";
+} else {
+  paint();
+  wireTuning();
+  wireShare();
+}
+
+/* ── tuning by hand ──────────────────────────────────────── */
+
+function showTuning(v) {
+  const now = { angle: v.angle, drift: v.motion.drift, breath: v.motion.breath, grain: v.grain.amount, beats: place.tuning.beats ?? 5, steps: place.tuning.steps ?? 8 };
+  for (const key of Object.keys(now)) {
+    const input = $(`t-${key}`);
+    if (input && document.activeElement !== input) input.value = String(now[key]);
+    const out = $(`o-${key}`);
+    if (out) out.textContent = String(now[key]);
+  }
+  for (const button of document.querySelectorAll("[data-filter]")) button.setAttribute("aria-pressed", String(place.filters.includes(button.dataset.filter)));
+  if (document.activeElement !== $("t-say")) $("t-say").value = place.say;
+}
+
+function wireTuning() {
+  $("tune").hidden = false;
+  for (const input of document.querySelectorAll("[data-tune]")) {
+    input.addEventListener("input", () => {
+      const key = input.dataset.tune;
+      const { min, max } = TUNING[key];
+      place.tuning = { ...place.tuning, [key]: Math.min(max, Math.max(min, Number(input.value))) };
+      if ((key === "beats" || key === "steps") && place.tuning.beats !== undefined && place.tuning.steps !== undefined && place.tuning.beats > place.tuning.steps) place.tuning.beats = place.tuning.steps;
+      if (key === "beats" && place.tuning.steps === undefined) place.tuning.steps = 8;
+      if (key === "steps" && place.tuning.beats === undefined) place.tuning.beats = Math.min(5, place.tuning.steps);
+      keep();
+    });
+  }
+  $("t-turn").addEventListener("click", () => {
+    place.tuning = { ...place.tuning, turn: ((place.tuning.turn ?? 0) + 1) % 3 };
+    keep();
+    say("The palette turns.");
+  });
+  for (const button of document.querySelectorAll("[data-filter]")) {
+    button.addEventListener("click", () => {
+      const f = button.dataset.filter;
+      const filters = place.filters.includes(f) ? place.filters.filter((x) => x !== f) : [...place.filters, f];
+      place = { ...place, kind: "vibe", filters, href: `https://tealstripesvibes.com${canonicalPath({ ...place, filters })}` };
+      keep();
+    });
+  }
+  $("t-reset").addEventListener("click", () => {
+    place.tuning = {};
+    keep();
+    say("As written.");
+  });
+  $("t-say").addEventListener("input", (event) => {
+    place.say = captionOf(event.target.value);
+    keep();
+  });
+}
+
+/* ── the fading card ─────────────────────────────────────── */
+
+// The card fades when the hand is still, so the stripes can be taken alone. h holds it hidden; a tap, a key or Escape brings it back.
+const AWAKE_MS = 3500;
+let sleepTimer = 0;
+const setUi = (state) => { root.dataset.ui = state; };
+function wake() {
+  if (root.dataset.ui === "held") return;
+  setUi("awake");
+  clearTimeout(sleepTimer);
+  sleepTimer = setTimeout(() => {
+    // Not while a hand is in the card: a slider being dragged, a caption being typed.
+    if (card.contains(document.activeElement) && document.activeElement !== document.body) return wake();
+    setUi("asleep");
+  }, AWAKE_MS);
+}
+function hold() {
+  if (root.dataset.ui === "held") { setUi("awake"); wake(); say("The card is back."); }
+  else { clearTimeout(sleepTimer); setUi("held"); }
+}
+for (const type of ["pointermove", "pointerdown", "wheel", "touchstart", "focusin"]) addEventListener(type, wake, { passive: true });
+addEventListener("pointerdown", () => { if (root.dataset.ui === "held") hold(); });
+$("hide")?.addEventListener("click", (event) => { event.stopPropagation(); hold(); });
+wake();
+
 addEventListener("keydown", async (e) => {
-  if (e.metaKey || e.ctrlKey || e.altKey || /input|textarea/i.test(e.target.tagName)) return;
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  if (/input|textarea/i.test(e.target.tagName)) { if (e.key === "Escape") e.target.blur(); wake(); return; }
+  if (e.key === "h") return hold();
+  if (e.key === "Escape" && root.dataset.ui === "held") return hold();
+  wake();
   if (e.key === "?") $("grammar").open = !$("grammar").open;
+  if (e.key === "t" && !$("tune").hidden) $("tune").open = !$("tune").open;
   if (e.key === "s") { card.toggleAttribute("data-stamp-large"); say(card.hasAttribute("data-stamp-large") ? "Stamp shown large." : "Stamp back in the card."); }
   if (e.key === "c") {
     try { await navigator.clipboard.writeText(card.dataset.href); say("Link copied."); }
@@ -56,18 +163,19 @@ addEventListener("keydown", async (e) => {
   }
 });
 
-/** The shader: the same stripes as the CSS field, drifting and breathing, landed on the stripes it replaces. */
-function shade(v) {
-  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+/* ── the shader ──────────────────────────────────────────── */
+
+/** The same stripes as the CSS field, drifting and breathing, landed on the stripes they replace; set() retunes it in place. */
+function shade(first) {
   const canvas = $("gl");
   const gl = canvas && canvas.getContext("webgl", { antialias: false, preserveDrawingBuffer: true });
-  if (!gl) return;
+  if (!gl) return null;
   const sh = (type, text) => { const s = gl.createShader(type); gl.shaderSource(s, text); gl.compileShader(s); return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null; };
   const vs = sh(gl.VERTEX_SHADER, "attribute vec2 p; void main(){ gl_Position = vec4(p, 0.0, 1.0); }");
   const fs = sh(gl.FRAGMENT_SHADER, SHADER);
-  if (!vs || !fs) return;
+  if (!vs || !fs) return null;
   const prog = gl.createProgram(); gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
-  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return null;
   gl.useProgram(prog);
   const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
@@ -75,20 +183,28 @@ function shade(v) {
   const u = (n) => gl.getUniformLocation(prog, n);
   const rgb = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
   const dpr = Math.min(2, devicePixelRatio || 1);
-  const widths = v.rhythm.slice(0, 8).map((w) => w * 4 * dpr);
-  while (widths.length < 8) widths.push(0);
+  let v = first;
+  const set = (next) => {
+    v = next;
+    const widths = v.rhythm.slice(0, 8).map((w) => w * 4 * dpr);
+    while (widths.length < 8) widths.push(0);
+    gl.uniform3fv(u("u_c0"), rgb(v.palette[0])); gl.uniform3fv(u("u_c1"), rgb(v.palette[1])); gl.uniform3fv(u("u_c2"), rgb(v.palette[2]));
+    gl.uniform1fv(u("u_w"), widths); gl.uniform1f(u("u_n"), Math.min(8, v.rhythm.length));
+    gl.uniform1f(u("u_period"), widths.reduce((a, b) => a + b, 0));
+    gl.uniform1f(u("u_angle"), v.angle); gl.uniform1f(u("u_grain"), v.grain.amount * 0.5);
+    gl.uniform1f(u("u_drift"), reduce ? 0 : v.motion.drift * dpr); gl.uniform1f(u("u_breath"), reduce ? 0 : v.motion.breath);
+    gl.uniform1f(u("u_moire"), v.moire ? 1 : 0); gl.uniform1f(u("u_turn"), v.moire?.turn ?? 0); gl.uniform1f(u("u_stretch"), v.moire?.stretch ?? 1);
+    resize();
+    if (reduce) gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  };
   const resize = () => {
     canvas.width = innerWidth * dpr; canvas.height = innerHeight * dpr; gl.viewport(0, 0, canvas.width, canvas.height);
     const a = (v.angle * Math.PI) / 180, w = canvas.width, h = canvas.height;
     const len = Math.abs(w * Math.sin(a)) + Math.abs(h * Math.cos(a));
     gl.uniform1f(u("u_offset"), (w / 2) * Math.sin(a) + (h / 2) * Math.cos(a) - len / 2);
   };
-  resize(); addEventListener("resize", resize);
-  gl.uniform3fv(u("u_c0"), rgb(v.palette[0])); gl.uniform3fv(u("u_c1"), rgb(v.palette[1])); gl.uniform3fv(u("u_c2"), rgb(v.palette[2]));
-  gl.uniform1fv(u("u_w"), widths); gl.uniform1f(u("u_n"), Math.min(8, v.rhythm.length));
-  gl.uniform1f(u("u_period"), widths.reduce((a, b) => a + b, 0));
-  gl.uniform1f(u("u_angle"), v.angle); gl.uniform1f(u("u_grain"), v.grain.amount * 0.5);
-  gl.uniform1f(u("u_drift"), reduce ? 0 : v.motion.drift * dpr); gl.uniform1f(u("u_breath"), reduce ? 0 : v.motion.breath);
+  addEventListener("resize", resize);
+  set(first);
   const frame = (ms) => {
     gl.uniform1f(u("u_time"), ms / 1000);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
@@ -96,18 +212,148 @@ function shade(v) {
   };
   requestAnimationFrame((ms) => { frame(ms); root.dataset.gl = "on"; });
   document.addEventListener("visibilitychange", () => { if (!document.hidden && !reduce) requestAnimationFrame(frame); });
+  return { set };
 }
+
+/* ── the share image ─────────────────────────────────────── */
+
+const FORMATS = { post: [1080, 1080], story: [1080, 1920], card: [1200, 630] };
+
+/** A small deterministic noise, so a share of one address grains the same each time. */
+function grainTile(amount, seed) {
+  const tile = document.createElement("canvas");
+  tile.width = tile.height = 160;
+  const g = tile.getContext("2d");
+  const img = g.createImageData(160, 160);
+  let s = seed >>> 0 || 1;
+  for (let i = 0; i < img.data.length; i += 4) {
+    s = (Math.imul(s, 1664525) + 1013904223) >>> 0;
+    const n = s & 255;
+    img.data[i] = img.data[i + 1] = img.data[i + 2] = n;
+    img.data[i + 3] = Math.round(255 * Math.min(0.5, amount * 1.6) * (n / 255));
+  }
+  g.putImageData(img, 0, 0);
+  return tile;
+}
+
+/** Bands of the vibe across the whole picture, at its angle, as the CSS draws them. */
+function bands(ctx, w, h, v, unit, turn = 0) {
+  const diag = Math.hypot(w, h);
+  ctx.save();
+  ctx.translate(w / 2, h / 2);
+  ctx.rotate(((v.angle + turn - 90) * Math.PI) / 180);
+  const period = v.rhythm.reduce((a, b) => a + b, 0) * unit;
+  for (let x = -diag - (diag % period); x < diag; x += period) {
+    let at = x;
+    v.rhythm.forEach((width, i) => {
+      ctx.fillStyle = v.palette[i % v.palette.length];
+      ctx.fillRect(at, -diag, width * unit + 0.5, diag * 2);
+      at += width * unit;
+    });
+  }
+  ctx.restore();
+}
+
+function drawShare(format) {
+  const [w, h] = FORMATS[format];
+  const v = current();
+  const canvas = document.createElement("canvas");
+  canvas.width = w;
+  canvas.height = h;
+  const ctx = canvas.getContext("2d");
+  const unit = 4 * (w / 540);
+  ctx.fillStyle = v.palette[0];
+  ctx.fillRect(0, 0, w, h);
+  bands(ctx, w, h, v, unit);
+  if (v.moire) {
+    ctx.globalCompositeOperation = "difference";
+    ctx.globalAlpha = 0.4;
+    bands(ctx, w, h, v, unit * v.moire.stretch, v.moire.turn);
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = "source-over";
+  }
+  const seed = [...card.dataset.href].reduce((a, c) => Math.imul(a, 31) + c.charCodeAt(0), 7);
+  ctx.fillStyle = ctx.createPattern(grainTile(v.grain.amount, seed), "repeat");
+  ctx.globalCompositeOperation = "overlay";
+  ctx.fillRect(0, 0, w, h);
+  ctx.globalCompositeOperation = "source-over";
+  // The plate: what it is, the caption if there is one, and the address that paints it again.
+  const pad = Math.round(w * 0.05);
+  const plateW = Math.min(w - pad * 2, Math.round(w * 0.62));
+  const plateH = Math.round((place.say ? 0.3 : 0.22) * Math.min(w, h * 1.1));
+  const x = w - pad - plateW, y = h - pad - plateH;
+  ctx.fillStyle = "rgba(4, 14, 16, 0.66)";
+  ctx.beginPath();
+  ctx.roundRect(x, y, plateW, plateH, Math.round(w * 0.022));
+  ctx.fill();
+  const em = Math.round(w * 0.034);
+  ctx.fillStyle = "#f4fbfa";
+  ctx.textBaseline = "top";
+  let line = y + Math.round(em * 0.9);
+  if (place.say) {
+    ctx.font = `700 ${Math.round(em * 1.35)}px ui-sans-serif, system-ui, sans-serif`;
+    ctx.fillText(place.say, x + em, line, plateW - em * 2);
+    line += Math.round(em * 1.9);
+  }
+  ctx.font = `700 ${em}px ui-sans-serif, system-ui, sans-serif`;
+  ctx.fillText(`${place.seed} · ${SEEDS[place.seed].mood}`, x + em, line, plateW - em * 2);
+  line += Math.round(em * 1.5);
+  ctx.font = `${Math.round(em * 0.62)}px ui-monospace, Menlo, monospace`;
+  ctx.fillStyle = "rgba(244, 251, 250, 0.8)";
+  // The address, whole if it fits the plate, else cut with an ellipsis where it stops fitting.
+  const room = plateW - em * 2;
+  let address = `tealstripesvibes.com${addressOf()}`;
+  if (ctx.measureText(address).width > room) {
+    while (address.length > 1 && ctx.measureText(`${address}…`).width > room) address = address.slice(0, -1);
+    address = `${address.replace(/[&?=]+$/, "")}…`;
+  }
+  ctx.fillText(address, x + em, line);
+  return canvas;
+}
+
+function wireShare() {
+  $("share").hidden = false;
+  for (const button of document.querySelectorAll("[data-share]")) {
+    button.addEventListener("click", async () => {
+      const format = button.dataset.share;
+      const canvas = drawShare(format);
+      const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
+      if (!blob) return say("This browser could not draw the share.");
+      const name = `tealstripes-${place.seed}-${format}.png`;
+      const file = new File([blob], name, { type: "image/png" });
+      try {
+        if (navigator.canShare?.({ files: [file] })) {
+          await navigator.share({ files: [file], title: `Teal Stripes Vibes — ${place.seed}`, text: place.say || SEEDS[place.seed].mood, url: card.dataset.href });
+          return say("Shared.");
+        }
+      } catch (error) {
+        if (error?.name === "AbortError") return say("Not shared.");
+      }
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = name;
+      document.body.append(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 4000);
+      say(`Saved ${name}.`);
+    });
+  }
+}
+
+/* ── the app ─────────────────────────────────────────────── */
 
 // Installed, it keeps every vibe offline (sw.js); framed on attention.productions or mutex.buzz, it installs nothing.
 if ("serviceWorker" in navigator && window.top === window) navigator.serviceWorker.register("/sw.js").catch(() => {});
-const keep = $("keep-app");
+const keepButton = $("keep-app");
 let offer = null;
-addEventListener("beforeinstallprompt", (event) => { event.preventDefault(); offer = event; keep.hidden = false; });
-keep.addEventListener("click", async () => {
+addEventListener("beforeinstallprompt", (event) => { event.preventDefault(); offer = event; keepButton.hidden = false; });
+keepButton.addEventListener("click", async () => {
   if (!offer) return;
   offer.prompt();
   await offer.userChoice.catch(() => null);
   offer = null;
-  keep.hidden = true;
+  keepButton.hidden = true;
 });
-addEventListener("appinstalled", () => { keep.hidden = true; });
+addEventListener("appinstalled", () => { keepButton.hidden = true; });
