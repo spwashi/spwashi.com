@@ -198,3 +198,12 @@ test('the mask is six chips a hand can switch, each a link to the address with i
   assert.equal((page.match(/<a class="facet on" href=/g) ?? []).length, 6, 'a seed\'s own page lets every facet through');
   assert.ok(page.includes('<a class="facet on" href="/lantern/ramgs" data-mask="ramgs"'));
 });
+
+test('an address Cloudflare escaped (/@ sent on to /%40) reads as it was written', async () => {
+  const { readAddress } = await import('../src/vibe.js');
+  const at = new Date('2026-11-17T01:30:00Z');
+  assert.equal(readAddress('/%40lock', '', at).kind, 'lock-pending');
+  assert.equal(readAddress('/%402026-11-17T01', '', at).kind, 'moment');
+  assert.equal(readAddress('/%402026-11-17T01', '', at).seed, readAddress('/@2026-11-17T01', '', at).seed);
+  assert.equal(readAddress('/%E0%A4%A', '', at).kind, 'unknown', 'a malformed escape is read as it stands');
+});
