@@ -6,6 +6,15 @@
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
+  "display_override": [
+    "minimal-ui",
+    "standalone"
+  ],
+  "categories": [
+    "books",
+    "education",
+    "magazines"
+  ],
   "background_color": "#f4efe4",
   "theme_color": "#f4efe4",
   "icons": [
@@ -38,6 +47,17 @@
     {
       "name": "Contents",
       "url": "/contents/",
+      "icons": [
+        {
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "22/7",
+      "url": "/22-7/",
       "icons": [
         {
           "src": "/icons/icon-192.png",

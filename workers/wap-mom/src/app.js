@@ -14,6 +14,8 @@ export const MANIFEST = Object.freeze({
   start_url: "/",
   scope: "/",
   display: "standalone",
+  display_override: ["minimal-ui", "standalone"],
+  categories: ["books", "education", "magazines"],
   background_color: "#f4efe4",
   theme_color: "#f4efe4",
   icons: [
@@ -24,6 +26,7 @@ export const MANIFEST = Object.freeze({
   ],
   shortcuts: [
     { name: "Contents", url: "/contents/", icons: [{ src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }] },
+    { name: "22/7", url: "/22-7/", icons: [{ src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }] },
     { name: "The room", url: "/room", icons: [{ src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }] },
   ],
 });
@@ -34,13 +37,15 @@ const ISSUE_ROUTES = printed.flatMap((issue) => [
   ...(issue.clip ? [`/${issue.slug}/clip/`] : []),
 ]);
 
-/** Every page a reader keeps: the front page, index pages, scripts, icons, and every printed issue, offprint, and clipping. */
+/** Every page a reader keeps: the front page, index pages, scripts, feeds, icons, and every printed issue, offprint, and clipping. */
 export const KEPT = Object.freeze([
   "/",
   "/contents/",
   "/room",
   "/colophon/",
   "/corrections/",
+  "/now.json",
+  "/feed.xml",
   "/figures.js",
   "/app.js",
   "/text-scale.js",
@@ -56,7 +61,7 @@ export const KEPT = Object.freeze([
   ...ISSUE_ROUTES,
 ]);
 
-/** The service worker: network first when online, kept offline copy when unreachable, purging older printings cleanly. */
+/** The service worker: instant stale-while-revalidate on kept issues & offline assets, bypassing cabinet and drawn figures cleanly. */
 export const SW_JS = `// Printed by wap.mom's worker (src/app.js). Each printing lists its issues here, so a new one reaches an installed reader.
 const CACHE = "wapmom-pages-${VERSION}";
 const KEPT = ${JSON.stringify(KEPT)};
@@ -79,10 +84,25 @@ self.addEventListener("fetch", (event) => {
   const request = event.request;
   const url = new URL(request.url);
   if (request.method !== "GET" || url.origin !== self.location.origin || LIVE.test(url.pathname)) return;
-  event.respondWith(fetch(request).then((response) => {
-    if (response.ok) { const copy = response.clone(); caches.open(CACHE).then((cache) => cache.put(request, copy)); }
-    return response;
-  }).catch(() => caches.match(request).then((hit) => hit ?? (request.mode === "navigate" ? caches.match("/contents/") : Response.error()))));
+  event.respondWith((async () => {
+    const cache = await caches.open(CACHE);
+    const cached = await cache.match(request);
+    const refreshing = fetch(request).then((response) => {
+      if (response.ok) cache.put(request, response.clone());
+      return response;
+    }).catch(() => null);
+    if (cached) {
+      event.waitUntil(refreshing);
+      return cached;
+    }
+    const fresh = await refreshing;
+    if (fresh) return fresh;
+    if (request.mode === "navigate") {
+      const contents = await cache.match("/contents/");
+      if (contents) return contents;
+    }
+    return Response.error();
+  })());
 });
 `;
 
@@ -93,6 +113,7 @@ const ISSUE_META = numbered.map((i) => ({
   no: i.no,
   status: i.status,
   question: i.question || "",
+  uses: i.uses || {},
 }));
 
 const CURIOSITIES = {
@@ -110,9 +131,11 @@ const CURIOSITIES = {
   ],
 };
 
-/** The script every page loads: pinch-to-scale, PWA install & offline readiness, interactive digits, Euler walk, and Pocket π/e discoverables. */
+/** The script every page loads: pinch-to-scale, PWA install & offline readiness, dog-ears, Uses concordance, ruled proof slips, and Pocket π/e Apparatus. */
 export const APP_JS = `(() => {
-  if ("serviceWorker" in navigator && window.top === window) navigator.serviceWorker.register("/sw.js").catch(() => {});
+  const CACHE_NAME = "wapmom-pages-${VERSION}";
+  const DOGEAR_KEY = "set.wap-dogear/1";
+  const MARGIN_KEY = "set.wap-margin/1";
   const ISSUES = ${JSON.stringify(ISSUE_META)};
   const CURIOSITIES = ${JSON.stringify(CURIOSITIES)};
 
@@ -122,26 +145,64 @@ export const APP_JS = `(() => {
     if (main) mountTextScale(main, { ignore: ".fig-stage, .fig-controls, .pocket-pi" });
   }).catch(() => {});
 
-  /* 2. PWA lifecycle & discreet iOS/offline status cues. */
+  /* 2. PWA lifecycle, offline shelf count, update banner & local shelf wipe. */
   const keep = document.getElementById("keep-app");
+  const reloadBtn = document.getElementById("reload-printing");
+  const clearBtn = document.getElementById("clear-shelf");
   const statusEl = document.getElementById("pwa-status");
   const isStandalone = window.matchMedia?.("(display-mode: standalone)").matches || navigator.standalone === true;
   const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
+
+  const readJson = (key, fallback) => {
+    try { return JSON.parse(localStorage.getItem(key) || "null") ?? fallback; } catch { return fallback; }
+  };
+  const writeJson = (key, val) => {
+    try { localStorage.setItem(key, JSON.stringify(val)); } catch {}
+  };
+
+  let shelfStats = "";
+  const inspectCache = async () => {
+    if (!("caches" in window)) return;
+    try {
+      const cache = await caches.open(CACHE_NAME);
+      const keys = await cache.keys();
+      if (keys.length) shelfStats = keys.length + " files kept offline";
+    } catch {}
+  };
+
   const syncStatus = () => {
     if (!statusEl) return;
     if (!navigator.onLine) {
-      statusEl.textContent = "Offline — reading the kept printing.";
+      statusEl.textContent = "Offline — reading the kept printing" + (shelfStats ? " (" + shelfStats + ")." : ".");
       statusEl.hidden = false;
     } else if (isStandalone) {
-      statusEl.textContent = "Kept on this device · every printed issue available offline.";
+      statusEl.textContent = "Installed locally" + (shelfStats ? " · " + shelfStats : "") + ".";
       statusEl.hidden = false;
     } else if (isIos && keep?.hidden) {
-      statusEl.textContent = "To read offline on iOS: tap Share, then Add to Home Screen.";
+      statusEl.textContent = "Offline reading on iOS: tap Share, then Add to Home Screen." + (shelfStats ? " (" + shelfStats + " cached)" : "");
+      statusEl.hidden = false;
+    } else if (shelfStats) {
+      statusEl.textContent = "Printing ${VERSION} · " + shelfStats + ".";
       statusEl.hidden = false;
     } else {
       statusEl.hidden = true;
     }
   };
+
+  if ("serviceWorker" in navigator && window.top === window) {
+    navigator.serviceWorker.register("/sw.js").then((reg) => {
+      reg.addEventListener("updatefound", () => {
+        const next = reg.installing;
+        next?.addEventListener("statechange", () => {
+          if (next.state === "installed" && navigator.serviceWorker.controller && reloadBtn) {
+            reloadBtn.hidden = false;
+          }
+        });
+      });
+    }).catch(() => {});
+    reloadBtn?.addEventListener("click", () => location.reload());
+  }
+
   let offer = null;
   if (keep) {
     addEventListener("beforeinstallprompt", (event) => {
@@ -156,18 +217,49 @@ export const APP_JS = `(() => {
       await offer.userChoice.catch(() => null);
       offer = null;
       keep.hidden = true;
+      await inspectCache();
       syncStatus();
     });
-    addEventListener("appinstalled", () => {
+    addEventListener("appinstalled", async () => {
       keep.hidden = true;
-      if (statusEl) { statusEl.textContent = "Kept on this device · offline ready."; statusEl.hidden = false; }
+      await inspectCache();
+      syncStatus();
+    });
+  }
+  if (clearBtn) {
+    const syncClearVisible = () => {
+      const hasNotes = Object.keys(readJson(DOGEAR_KEY, {})).length > 0 || Object.keys(readJson(MARGIN_KEY, {})).length > 0;
+      let hasScale = false;
+      try { hasScale = Boolean(localStorage.getItem("set.text-scale/1")); } catch {}
+      clearBtn.hidden = !(hasNotes || hasScale);
+    };
+    syncClearVisible();
+    clearBtn.addEventListener("click", async () => {
+      try {
+        localStorage.removeItem(DOGEAR_KEY);
+        localStorage.removeItem(MARGIN_KEY);
+        localStorage.removeItem("set.text-scale/1");
+      } catch {}
+      location.reload();
     });
   }
   addEventListener("online", syncStatus);
   addEventListener("offline", syncStatus);
-  syncStatus();
+  inspectCache().then(syncStatus);
 
-  /* 3. Interactive masthead decimal expansion: tap a digit to inspect its issue owner. */
+  /* 3. Reader dog-ear memory across printed issues & interactive masthead decimal expansion. */
+  const slugMatch = location.pathname.match(/^\\/([a-z0-9-]+)\\/$/);
+  const currentIssue = slugMatch ? ISSUES.find((i) => i.status !== "open" && i.slug === slugMatch[1]) : null;
+  const dogears = readJson(DOGEAR_KEY, {});
+  if (currentIssue && !dogears[currentIssue.slug]) {
+    dogears[currentIssue.slug] = Date.now();
+    writeJson(DOGEAR_KEY, dogears);
+  }
+  document.querySelectorAll(".back li a[href^='/']").forEach((a) => {
+    const m = a.getAttribute("href")?.match(/^\\/([a-z0-9-]+)\\/$/);
+    if (m && dogears[m[1]]) a.closest("li")?.setAttribute("data-dogeared", "true");
+  });
+
   document.querySelectorAll(".expansion").forEach((exp) => {
     const lead = exp.closest(".supplement") ? "e" : "pi";
     const series = ISSUES.filter((i) => i.series === lead);
@@ -191,6 +283,7 @@ export const APP_JS = `(() => {
       btn.className = "expansion-digit";
       if (visual.children[i]?.classList.contains("here")) btn.classList.add("here");
       else if (owner?.status === "open") btn.classList.add("ahead");
+      if (owner && dogears[owner.slug]) btn.setAttribute("data-dogeared", "true");
       btn.textContent = digits[i];
       btn.title = owner ? \`\${owner.no} — \${owner.title}\` : \`Decimal place \${i + 1}\`;
       btn.setAttribute("aria-pressed", "false");
@@ -212,7 +305,8 @@ export const APP_JS = `(() => {
         if (owner.status === "open") {
           note.textContent = \`No. \${owner.no} (\${owner.title}) — open slot in the room: \${owner.question}\`;
         } else {
-          note.append(document.createTextNode(\`\${owner.no} — \`), Object.assign(document.createElement("a"), { href: \`/\${owner.slug}/\`, textContent: owner.title }), document.createTextNode(location.pathname === \`/\${owner.slug}/\` ? " (this issue)" : " · tap again to read"));
+          const mark = dogears[owner.slug] ? " · dog-eared" : "";
+          note.append(document.createTextNode(\`\${owner.no} — \`), Object.assign(document.createElement("a"), { href: \`/\${owner.slug}/\`, textContent: owner.title }), document.createTextNode(location.pathname === \`/\${owner.slug}/\` ? " (this issue)" : " · tap again to read" + mark));
         }
       });
       buttons.push(btn);
@@ -258,7 +352,7 @@ export const APP_JS = `(() => {
     });
   }
 
-  /* 5. Fleuron curiosities & tactile Uses / Pullquote regions. */
+  /* 5. Fleuron curiosities, Uses cross-issue concordance, ruled Forthcoming margin slips, Pullquote & Citation copy. */
   document.querySelectorAll(".fleuron").forEach((fl) => {
     const series = document.body.classList.contains("series-e") ? "e" : "pi";
     const list = CURIOSITIES[series];
@@ -282,22 +376,47 @@ export const APP_JS = `(() => {
     });
   });
 
-  document.querySelectorAll(".uses dl").forEach((dl) => {
+  const USE_KEYS = ["hand", "table", "work", "mind"];
+  document.querySelectorAll(".uses").forEach((panel) => {
+    const dl = panel.querySelector("dl");
+    if (!dl) return;
+    const conc = document.createElement("p");
+    conc.className = "uses-concordance";
+    conc.setAttribute("aria-live", "polite");
+    conc.hidden = true;
+    dl.after(conc);
     const children = [...dl.children];
+    const wraps = [];
     for (let i = 0; i < children.length; i += 2) {
       const dt = children[i];
       const dd = children[i + 1];
       if (!dt || !dd) continue;
+      const key = USE_KEYS[Math.floor(i / 2)] || "";
       const wrap = document.createElement("div");
       wrap.tabIndex = 0;
       wrap.setAttribute("role", "button");
       wrap.setAttribute("aria-pressed", "false");
       dt.before(wrap);
       wrap.append(dt, dd);
+      wraps.push(wrap);
       const toggle = () => {
         const next = wrap.dataset.picked !== "true";
+        wraps.forEach((w) => { w.dataset.picked = "false"; w.setAttribute("aria-pressed", "false"); });
         wrap.dataset.picked = next ? "true" : "false";
         wrap.setAttribute("aria-pressed", String(next));
+        if (!next || !key) { conc.hidden = true; return; }
+        const peers = ISSUES.filter((each) => each.status !== "open" && each.slug !== currentIssue?.slug && each.uses?.[key]);
+        if (!peers.length) { conc.hidden = true; return; }
+        const pick = peers.slice(0, 2);
+        conc.hidden = false;
+        conc.replaceChildren(document.createTextNode(\`\${dt.textContent} elsewhere: \`));
+        pick.forEach((other, idx) => {
+          if (idx > 0) conc.append(document.createTextNode(" · "));
+          conc.append(
+            Object.assign(document.createElement("a"), { href: \`/\${other.slug}/\`, textContent: \`\${other.no} (\${other.title})\` }),
+            document.createTextNode(\` — \${other.uses[key]}\`),
+          );
+        });
       };
       wrap.addEventListener("click", toggle);
       wrap.addEventListener("keydown", (e) => {
@@ -306,15 +425,53 @@ export const APP_JS = `(() => {
     }
   });
 
-  document.querySelectorAll(".pull").forEach((pull) => {
-    const q = pull.querySelector("blockquote")?.textContent?.trim();
-    if (!q) return;
-    pull.style.cursor = "pointer";
-    pull.title = "Tap to copy quotation";
-    pull.addEventListener("click", async () => {
-      try { await navigator.clipboard?.writeText(q); } catch {}
-      pull.dataset.copied = "true";
-      setTimeout(() => { delete pull.dataset.copied; }, 700);
+  /* Forthcoming ruled slots: turn lined paper into a local margin slip. */
+  const marginNotes = readJson(MARGIN_KEY, {});
+  document.querySelectorAll(".slot").forEach((slotEl) => {
+    const title = slotEl.querySelector("h2")?.textContent?.trim() || "slot";
+    const lines = slotEl.querySelector(".lines");
+    if (!lines) return;
+    lines.dataset.interactive = "true";
+    lines.title = "Tap to leave a margin line for the room (kept locally)";
+    const editor = document.createElement("div");
+    editor.className = "slot-note";
+    const initial = marginNotes[title] || "";
+    editor.hidden = !initial;
+    const input = document.createElement("input");
+    input.type = "text";
+    input.maxLength = 120;
+    input.value = initial;
+    input.placeholder = "Pencil a question or ratio for this column…";
+    input.setAttribute("aria-label", \`Margin note for \${title}\`);
+    const status = document.createElement("span");
+    status.textContent = initial ? \`Margin note kept locally: "\${initial}"\` : "Ruled proof slip (tap lines above to fold or write).";
+    editor.append(input, status);
+    lines.after(editor);
+    lines.addEventListener("click", () => {
+      editor.hidden = !editor.hidden;
+      if (!editor.hidden) input.focus();
+    });
+    input.addEventListener("input", () => {
+      const val = input.value.trim();
+      if (val) marginNotes[title] = val;
+      else delete marginNotes[title];
+      writeJson(MARGIN_KEY, marginNotes);
+      status.textContent = val ? \`Margin note kept locally: "\${val}"\` : "Empty slip.";
+      if (clearBtn) clearBtn.hidden = false;
+    });
+  });
+
+  document.querySelectorAll(".pull, .cite").forEach((el) => {
+    const text = el.classList.contains("pull")
+      ? el.querySelector("blockquote")?.textContent?.trim()
+      : el.textContent.replace(/^Cite\\s+/i, "").trim();
+    if (!text) return;
+    el.style.cursor = "pointer";
+    el.title = el.classList.contains("pull") ? "Tap to copy quotation" : "Tap to copy citation";
+    el.addEventListener("click", async () => {
+      try { await navigator.clipboard?.writeText(text); } catch {}
+      el.dataset.copied = "true";
+      setTimeout(() => { delete el.dataset.copied; }, 700);
     });
   });
 
@@ -334,7 +491,7 @@ export const APP_JS = `(() => {
     door.addEventListener("blur", hide);
   }
 
-  /* 7. Calendar whimsy (π Day 03-14, 22/7 Day 07-22, e Day 02-07) & Pocket π/e Digit Finder (type "314"/"271" or triple-tap volume ear). */
+  /* 7. Calendar whimsy + Pocket π & e Apparatus (colophon trigger, Convergents slider, 240-digit finder, Cross-wall correspondence). */
   const today = new Date();
   const md = \`\${String(today.getMonth() + 1).padStart(2, "0")}-\${String(today.getDate()).padStart(2, "0")}\`;
   const holiday = md === "03-14" ? "π Day · 3.14" : md === "07-22" ? "22/7 Day" : md === "02-07" ? "e Day · 2.7" : "";
@@ -342,7 +499,6 @@ export const APP_JS = `(() => {
   if (volEar && holiday) volEar.textContent = \`\${volEar.textContent} · \${holiday}\`;
 
   function computeDigits() {
-    // 250 digits of pi via Machin's formula and e via factorial series (BigInt exact fixed-point).
     const scale = 10n ** 260n;
     const arccot = (x) => {
       let sum = scale / BigInt(x);
@@ -368,51 +524,106 @@ export const APP_JS = `(() => {
     };
   }
 
+  const CONVERGENTS = [
+    [3, 1, "/pi/"],
+    [22, 7, "/22-7/"],
+    [333, 106, "/355-113/"],
+    [355, 113, "/355-113/"],
+    [103993, 33102, "/355-113/"],
+    [104348, 33215, "/355-113/"],
+    [208341, 66317, "/355-113/"],
+  ];
+
   let pocketEl = null;
+  const pocketTrigger = document.getElementById("pocket-trigger");
+  if (pocketTrigger) pocketTrigger.hidden = false;
+
   function togglePocket() {
     if (pocketEl) {
       pocketEl.hidden = !pocketEl.hidden;
-      if (!pocketEl.hidden) pocketEl.querySelector("input")?.focus();
+      pocketTrigger?.setAttribute("aria-expanded", String(!pocketEl.hidden));
+      if (!pocketEl.hidden) pocketEl.querySelector("input[type='text']")?.focus();
       return;
     }
     const { pi, e } = computeDigits();
     const box = document.createElement("aside");
     box.className = "pocket-pi";
-    box.setAttribute("aria-label", "Pocket pi and e finder");
-    box.innerHTML = \`<p class="caps head">Pocket π &amp; e · first 240 decimals</p>
+    box.setAttribute("aria-label", "Pocket pi and e instrument");
+    box.innerHTML = \`<p class="caps head">Pocket π &amp; e · convergent bench &amp; 240 decimals</p>
       <div class="pocket-pi-row">
         <input type="text" inputmode="numeric" maxlength="12" placeholder="Search digits (e.g. 42, 314, 0722)…" aria-label="Search digits in pi and e">
         <button type="button" data-close>Close</button>
       </div>
-      <p class="pocket-pi-digits" data-out>π^e ≈ \${(Math.PI ** Math.E).toFixed(5)} · e^π ≈ \${(Math.E ** Math.PI).toFixed(5)} (e wins by \${(Math.E ** Math.PI - Math.PI ** Math.E).toFixed(5)}).</p>\`;
-    const input = box.querySelector("input");
+      <div class="pocket-pi-digits" data-out></div>
+      <div class="pocket-range">
+        <label for="conv-slider">Continued fraction convergent of π</label>
+        <output id="conv-out">22/7</output>
+        <input id="conv-slider" type="range" min="0" max="\${CONVERGENTS.length - 1}" step="1" value="1">
+        <p class="muted" id="conv-err"></p>
+      </div>
+      <p class="pocket-wall">Architectural note: <a href="https://smut.today/to-you/" rel="nofollow">smut.today</a> keeps a kitchen across the wall where 22/7 sits for its portraits.</p>\`;
+
+    const input = box.querySelector("input[type='text']");
     const out = box.querySelector("[data-out]");
-    box.querySelector("[data-close]").addEventListener("click", () => { box.hidden = true; });
+    const slider = box.querySelector("#conv-slider");
+    const convOut = box.querySelector("#conv-out");
+    const convErr = box.querySelector("#conv-err");
+    box.querySelector("[data-close]").addEventListener("click", () => {
+      box.hidden = true;
+      pocketTrigger?.setAttribute("aria-expanded", "false");
+    });
+
     const piRaw = pi.slice(2);
     const eRaw = e.slice(2);
+    const sliceAt = (raw, pos, len) => {
+      const start = Math.max(0, pos - 4);
+      const end = Math.min(raw.length, pos + len + 4);
+      const p = document.createElement("span");
+      p.append(
+        document.createTextNode((start > 0 ? "…" : "") + raw.slice(start, pos)),
+        Object.assign(document.createElement("mark"), { textContent: raw.slice(pos, pos + len) }),
+        document.createTextNode(raw.slice(pos + len, end) + (end < raw.length ? "…" : "")),
+      );
+      return p;
+    };
     const lookup = () => {
       const q = input.value.replace(/\\D+/g, "");
+      out.replaceChildren();
       if (!q) {
         out.textContent = \`π^e ≈ \${(Math.PI ** Math.E).toFixed(5)} · e^π ≈ \${(Math.E ** Math.PI).toFixed(5)} (e^π − π ≈ \${(Math.E ** Math.PI - Math.PI).toFixed(5)}).\`;
         return;
       }
       const atPi = piRaw.indexOf(q);
       const atE = eRaw.indexOf(q);
-      const msg = [
-        atPi >= 0 ? \`in π at decimal \${atPi + 1}\` : "not in first 240 digits of π",
-        atE >= 0 ? \`in e at decimal \${atE + 1}\` : "not in first 240 digits of e",
-      ].join(" · ");
-      out.textContent = \`"\${q}": \${msg}.\`;
+      out.append(document.createTextNode(atPi >= 0 ? \`π d.\${atPi + 1} \` : "π — "));
+      if (atPi >= 0) out.append(sliceAt(piRaw, atPi, q.length));
+      out.append(document.createTextNode(atE >= 0 ? \` · e d.\${atE + 1} \` : " · e — "));
+      if (atE >= 0) out.append(sliceAt(eRaw, atE, q.length));
+    };
+    const syncConv = () => {
+      const [num, den, href] = CONVERGENTS[Number(slider.value) || 0];
+      const err = Math.abs(num / den - Math.PI);
+      convOut.textContent = \`\${num}/\${den}\`;
+      convErr.replaceChildren(
+        document.createTextNode(\`≈ \${(num / den).toFixed(7)} · error \${err.toExponential(2)} · \`),
+        Object.assign(document.createElement("a"), { href, textContent: \`Issue \${num}/\${den}\` }),
+      );
     };
     input.addEventListener("input", lookup);
+    slider.addEventListener("input", syncConv);
+    lookup();
+    syncConv();
     document.querySelector(".masthead")?.after(box);
     pocketEl = box;
+    pocketTrigger?.setAttribute("aria-expanded", "true");
     input.focus();
   }
 
+  pocketTrigger?.addEventListener("click", togglePocket);
+
   if (volEar) {
     volEar.dataset.secret = "true";
-    volEar.title = "Triple-tap for the Pocket π & e Explorer";
+    volEar.title = "Triple-tap for the Pocket π & e Instrument";
     let taps = 0;
     let lastTap = 0;
     volEar.addEventListener("click", () => {
@@ -431,6 +642,7 @@ export const APP_JS = `(() => {
       if (keys === "314" || keys === "271") togglePocket();
     } else if (event.key === "Escape" && pocketEl && !pocketEl.hidden) {
       pocketEl.hidden = true;
+      pocketTrigger?.setAttribute("aria-expanded", "false");
     }
   });
 })();

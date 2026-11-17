@@ -156,50 +156,67 @@
   .mark .equation { font-size: 1.9rem; font-style: italic; letter-spacing: .02em; }
   .mark .equation sup { font-size: .6em; }
 
-  /* Region tap transitions, interactive digits, Euler walk & discoverable pocket π/e wonder. */
+  /* Region tap transitions, interactive digits, Euler walk, ruled margin slips, and Pocket π/e Apparatus. */
   .lead, .supplement, .uses, .slot, .back li, .fig, .pull, .clip {
     transition: background-color 180ms ease, border-color 180ms ease, transform 120ms ease;
     -webkit-tap-highlight-color: transparent;
   }
   .lead:active, .supplement:active, .slot:active, .clip:active { transform: scale(.996); }
   .back li:hover, .back li:focus-within, .uses dl div[data-picked="true"], .pull[data-copied="true"] {
-    background: color-mix(in srgb, var(--accent) 7%, var(--card));
+    background: color-mix(in oklab, var(--accent) 8%, var(--card));
   }
-  .back li { padding-inline: .35rem; border-radius: .25rem; }
+  .back li { padding-inline: .45rem; border-radius: .25rem; position: relative; }
+  .back li[data-dogeared="true"]::after {
+    content: "kept · read"; position: absolute; right: .5rem; top: .55rem;
+    font: 600 .68rem/1 ui-sans-serif, system-ui, sans-serif; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); opacity: .78;
+  }
   .uses dl div { padding: .35rem .5rem; margin: 0 -.5rem .25rem; border-left: 2px solid transparent; border-radius: 0 .25rem .25rem 0; cursor: pointer; }
-  .uses dl div:hover { border-left-color: color-mix(in srgb, var(--accent) 45%, transparent); }
+  .uses dl div:hover { border-left-color: color-mix(in oklab, var(--accent) 45%, transparent); }
   .uses dl div[data-picked="true"] { border-left-color: var(--accent); }
+  .uses-concordance { margin: .55rem 0 .25rem; padding: .5rem .7rem; border-left: 2px solid var(--accent); background: color-mix(in oklab, var(--accent) 6%, var(--paper)); font-size: .92rem; color: var(--muted); }
+  .uses-concordance[hidden] { display: none; }
   .uses-note, .expansion-note, .fleuron-note, .euler-card { margin: .5rem 0 0; font-size: .92rem; color: var(--muted); font-style: italic; }
   .expansion-digits { display: inline-flex; flex-wrap: wrap; justify-content: center; gap: 0; letter-spacing: 0; }
   .expansion-digit {
     font: inherit; min-block-size: 32px; min-inline-size: .85ch; padding: 0 .1em; margin: 0; border: 0; border-radius: .2rem;
     background: transparent; color: inherit; cursor: pointer; line-height: 1.2;
   }
-  .expansion-digit:hover, .expansion-digit[aria-pressed="true"] { background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--accent); }
+  .expansion-digit:hover, .expansion-digit[aria-pressed="true"] { background: color-mix(in oklab, var(--accent) 16%, transparent); color: var(--accent); }
   .expansion-digit.here { color: var(--accent); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .25em; font-weight: 600; }
   .expansion-digit.ahead { color: var(--muted); opacity: .55; }
+  .expansion-digit[data-dogeared="true"] { text-decoration: underline dotted var(--accent); text-underline-offset: .32em; }
   @media (pointer: coarse) { .expansion-digit { min-block-size: 40px; min-inline-size: 1.15ch; } }
   .fleuron-btn, .mark-btn {
     font: inherit; color: inherit; border: 0; background: transparent; padding: .15rem .45rem; border-radius: 999px; cursor: pointer; min-block-size: 36px;
   }
-  .fleuron-btn:hover, .mark-btn:hover { background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent); }
+  .fleuron-btn:hover, .mark-btn:hover { background: color-mix(in oklab, var(--accent) 12%, transparent); color: var(--accent); }
   .euler-card { display: grid; grid-template-columns: auto 1fr; gap: .35rem .8rem; align-items: center; padding: .55rem .75rem; margin-top: .5rem; border: 1px solid var(--faint); background: var(--card); border-radius: .4rem; font-style: normal; }
   .euler-card[hidden] { display: none; }
   .euler-svg { width: 52px; height: 52px; display: block; }
   .euler-svg circle { fill: none; stroke: var(--faint); stroke-width: 1.5; }
   .euler-svg line { stroke: var(--ink); stroke-width: 1.2; }
   .euler-svg .dot { fill: var(--accent); stroke: none; }
-  .pocket-pi { margin: .8rem 0 0; padding: .8rem .95rem; border: 1px solid var(--accent); background: var(--card); border-radius: .4rem; text-align: left; }
+  .slot .lines[data-interactive="true"] { cursor: pointer; position: relative; transition: border-color 180ms ease; }
+  .slot .lines[data-interactive="true"]:hover { background: repeating-linear-gradient(to bottom, transparent 0 1.25rem, color-mix(in oklab, var(--accent) 32%, transparent) 1.25rem 1.3rem); }
+  .slot-note { margin: 0 0 .65rem; font-size: .92rem; font-style: italic; color: var(--accent); display: grid; gap: .35rem; }
+  .slot-note input { font: inherit; font-style: normal; padding: .35rem .55rem; min-block-size: 44px; border: 1px solid var(--faint); background: var(--card); color: var(--ink); }
+  .pocket-pi { margin: .8rem 0 0; padding: .9rem 1rem; border: 1px solid var(--accent); background: var(--card); border-radius: .4rem; text-align: left; }
   .pocket-pi[hidden] { display: none; }
   .pocket-pi-row { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin: .45rem 0; }
-  .pocket-pi input { flex: 1 1 9rem; min-block-size: 44px; font-variant-numeric: lining-nums tabular-nums; }
+  .pocket-pi input[type="text"] { flex: 1 1 9rem; min-block-size: 44px; font-variant-numeric: lining-nums tabular-nums; }
+  .pocket-range { display: grid; grid-template-columns: 1fr auto; gap: .25rem .8rem; align-items: center; margin-top: .65rem; padding-top: .6rem; border-top: 1px dashed var(--faint); font-size: .9rem; }
+  .pocket-range input[type="range"] { grid-column: 1 / -1; min-block-size: 44px; accent-color: var(--accent); }
   .pocket-pi-digits { font-family: ui-monospace, Menlo, monospace; font-size: .84rem; overflow-wrap: anywhere; color: var(--muted); margin: .4rem 0 0; }
-  .pocket-pi-digits mark { background: color-mix(in srgb, var(--accent) 26%, transparent); color: var(--ink); padding: 0 .15em; border-radius: .15rem; font-weight: 700; }
-  .fig.scrubbing .fig-stage { cursor: grabbing; background: color-mix(in srgb, var(--accent) 5%, transparent); }
+  .pocket-pi-digits mark { background: color-mix(in oklab, var(--accent) 28%, transparent); color: var(--ink); padding: 0 .15em; border-radius: .15rem; font-weight: 700; }
+  .pocket-wall { margin: .65rem 0 0; padding-top: .55rem; border-top: 1px dashed var(--faint); font-size: .88rem; color: var(--muted); }
+  .cite[data-copied="true"] { color: var(--accent); }
+  .fig.scrubbing .fig-stage { cursor: grabbing; background: color-mix(in oklab, var(--accent) 6%, transparent); }
   .fig-stage.is-scrub { cursor: ew-resize; touch-action: pan-y; border-radius: .35rem; }
-  .fig-stage[data-fig-pulse="true"] { background: color-mix(in srgb, var(--accent) 8%, transparent); }
+  .fig-stage[data-fig-pulse="true"] { background: color-mix(in oklab, var(--accent) 9%, transparent); }
   html[data-spw-pinch-scaling="true"] main { transition: opacity 120ms ease; }
-  .pwa-meta { font-size: .88rem; margin: .35rem 0 0; }
+  .pwa-actions { display: flex; flex-wrap: wrap; gap: .45rem .6rem; align-items: center; margin: .65rem 0 0; }
+  .pwa-actions button { padding: .25rem .85rem; font-size: .88rem; }
+  .pwa-meta { font-size: .88rem; margin: .45rem 0 0; }
   .ears span[data-secret] { cursor: pointer; }
   .door-whisper { position: absolute; right: 2.8rem; bottom: .6rem; font-size: .85rem; color: var(--accent); font-style: italic; pointer-events: none; }
   @media (prefers-reduced-motion: reduce) {
@@ -288,7 +305,7 @@
 </nav>
 <footer class="colophon">
   <p>Wondering About Pi is numbered by the decimal expansion of π; its supplement, by e. Each issue adds a place.</p>
-  <p>It is written in <a href="/room">a room</a>, in conversation. <span class="printers-mark" title="Tap to walk Euler's identity">e<sup>iπ</sup> + 1 = 0</span>. Printing 0.3.0.</p>
+  <p>It is written in <a href="/room">a room</a>, in conversation. <span class="printers-mark" title="Tap to walk Euler's identity">e<sup>iπ</sup> + 1 = 0</span>. Printing 0.4.0.</p>
   <div class="euler-card" id="euler-card" hidden></div>
   <ul class="links" aria-label="Wondering About Pi">
     <li><a href="/">Front page</a></li>
@@ -298,7 +315,12 @@
     <li><a href="/corrections/">Corrections</a></li>
     <li><a href="/feed.xml">Feed</a></li>
   </ul>
-  <p class="keep"><button type="button" id="keep-app" hidden>Keep wap.mom on this device</button></p>
+  <div class="pwa-actions">
+    <button type="button" id="keep-app" hidden>Keep wap.mom on this device</button>
+    <button type="button" id="pocket-trigger" hidden>Pocket π &amp; e</button>
+    <button type="button" id="reload-printing" hidden>Reload printing</button>
+    <button type="button" id="clear-shelf" hidden>Clear shelf notes</button>
+  </div>
   <p class="pwa-meta muted" id="pwa-status" aria-live="polite" hidden></p>
   <a class="door" href="https://smut.today/" rel="nofollow" aria-label="smut.today">π</a>
 </footer>

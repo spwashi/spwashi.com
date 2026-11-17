@@ -64,7 +64,7 @@ test('wap.mom installs as an app and keeps every printed issue for reading offli
 });
 
 test('wap.mom binds cluster pinch-to-scale, keeps offprints/clippings offline, and emits valid client scripts', async () => {
-  const { APP_JS, SW_JS } = await import('../src/app.js');
+  const { APP_JS, KEPT, MANIFEST, SW_JS } = await import('../src/app.js');
   const { FIGURES_JS } = await import('../src/figures.js');
   const { PINCH_TEXT } = await import('../src/layout.js');
   const front = readFileSync(path.join(root, 'assets', 'index.html'), 'utf8');
@@ -74,15 +74,25 @@ test('wap.mom binds cluster pinch-to-scale, keeps offprints/clippings offline, a
     `<link rel="modulepreload" id="text-pinch" href="${PINCH_TEXT}">`,
     'id="euler-card"',
     'id="pwa-status"',
+    'id="pocket-trigger"',
+    'id="reload-printing"',
+    'id="clear-shelf"',
+    'color-mix(in oklab,',
   ]) assert.ok(front.includes(tag), tag);
   for (const file of ['text-scale.css', 'text-scale.js', 'text-scale-head.js', PINCH_TEXT.slice(1)]) {
     assert.ok(existsSync(path.join(root, 'assets', file)), file);
   }
+  assert.ok(KEPT.includes('/now.json') && KEPT.includes('/feed.xml'), 'feeds cached in KEPT');
+  assert.ok(Array.isArray(MANIFEST.display_override) && MANIFEST.display_override.includes('standalone'));
   const sw = readFileSync(path.join(root, 'assets', 'sw.js'), 'utf8');
+  assert.match(sw, /cache\.match\(request\)/, 'SW serves stale-while-revalidate');
   for (const issue of printed) {
     assert.ok(sw.includes(`/${issue.slug}/offprint/`), `${issue.slug} offprint cached`);
     if (issue.clip) assert.ok(sw.includes(`/${issue.slug}/clip/`), `${issue.slug} clip cached`);
   }
+  assert.match(APP_JS, /CONVERGENTS/);
+  assert.match(APP_JS, /uses-concordance/);
+  assert.match(APP_JS, /slot-note/);
   for (const [name, code] of [['APP_JS', APP_JS], ['SW_JS', SW_JS], ['FIGURES_JS', FIGURES_JS]]) {
     assert.doesNotThrow(() => new vm.Script(code), `${name} compiles cleanly`);
   }
