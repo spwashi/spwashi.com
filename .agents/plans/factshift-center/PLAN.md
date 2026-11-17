@@ -1,12 +1,13 @@
 # factshift.center
 
-**Status 2026-11-16.**
+**Status 2026-11-17.**
 - **The site carries the app as of `f4e9ea9d`** (each carry's subject names its app build). It came after a run of carries the same day:
   - one depth axis for the frame (`a170d27e`);
   - the title attention.productions as a viewfinder (`6f0e2648`);
   - the title mutex.buzz reading the lock (`02fb6d21`);
   - entering attention.productions through the lens (`73c808a0`);
   - a sent shot as its dailies (`f4e9ea9d`).
+- **2026-11-17 trajectory refinement:** `factshift.center` operates concurrently as a **brace-pair representation** (wells, dipoles, bonded collars, sleeves, overlapping `{_A ... }_A` scopes) and as an **interstitial delimiter/separator representation** (`. , ; ~> -> || :` joints inside lines and `~ ^ & @` between lines), while serving as the spatial bridge across `spw.quest`, `attention.productions`, `texture.website`, `mutex.buzz`, and `lore.land`. Next app/upstream milestones target dated `.d.ts` `typed_variants` + `spw.pivots/1` upgrades (off legacy March/prerelease bundles), parseable `node[select]` joint rail crumbs, and `entropyForce` rest-equilibrium convergence.
 - **The canvas's side of the set is [hub.spw](./hub.spw).** [HUB.md](./HUB.md) is only the door. The set itself (the ring, both pinches, what each site changes and shows) is [workers-wonder-kit](../workers-wonder-kit/PLAN.md)'s.
 - **Open, the creator's:** whether the title feed for mutex.buzz stays. It was built from a misread request; the lock's consumer on tealstripesvibes.com is `/@lock` (`e9b36d7d`).
 - **Deploy** remains the creator's.
@@ -326,6 +327,15 @@ Each is one session in the app (`workers/factshift-center/app`, its own reposito
 ## The hold as a start (2026-11-16, proposed)
 
 mutex.buzz is the grounding point a reader starts from: one themed hold, said as two lines, in the lock's own marks (`.` the folio, `%` the hour, `@` the shot). attention.productions is where framing and storytelling devices come from: shot, lens, light, move, focus, already named in the lock as `@attention.productions{frame}`. The other workers each spend one mark on that expression and display the line that comes back. The card and the slices are in [hub.spw](./hub.spw), and the set-wide reading in [workers-wonder-kit](../workers-wonder-kit/PLAN.md). `consumeMutex` still loads the pair and then the whole rule.
+
+## Brace pairs & interstitial delimiters (2026-11-17)
+
+`factshift.center` occupies a structural duality in Spw's visual grammar — representing both **containment walls (brace pairs)** and **interstitial joints (delimiters, separators, seams)**:
+
+- **Brace-pair topology:** `{ }` renders as sunk well, raised literal card, or `+q`/`-q` 1/d dipole pair (`?` refuses folding; `~` open vs folded start remains `#>wonder_factshift_body_laws`); `[ ]` renders as tightly bonded mode molecule; `( )` wraps word+body as a scene sleeve; `< >` rims the whole reading; and overlapping `{_A ... }_A` markers prepare non-tree highlight/selection spans (`brace-semantics`).
+- **Interstitials as typed mechanical joints (`#>wonder_factshift_interstitials`):** Intra-line delimiters (`.` fused object-access chain, `,` symmetric co-presence ring, `;` ordinal spine, `~>` directional relay conduit, `->` transition arrow, `||` non-interfering parallel lanes, `:` key-value binding tether — spanning 47–66% of real `.spw` corpus lines) and inter-line bonds (`~`, `^`, `&`, `@`) must each project distinct link rest-lengths, directional gradients, and membrane permeability rather than flattening into uniform lines.
+- **Shared pivot & rail grammar:** Left/right rail crumbs on joints should emit parseable Spw (`node[select]` rather than `@node › #select[2/6]`) aligned with upstream `spw.pivots/1` separator turns (`line-kit`).
+- **Numeric field equilibrium & typed upgrade:** Retire the March/prerelease workbench dependency in Slice 5 once upstream ships `.d.ts` `typed_variants` + `spw.pivots/1` spans; bound `entropyForce` / signal kicks so settled layouts rest cleanly (`hub.spw` `field`), while using golden-angle phyllotaxis (`stage-mark.ts`) and rational harmonic damping ratios to stabilize node clusters.
 
 ## Open questions
 

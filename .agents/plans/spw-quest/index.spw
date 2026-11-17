@@ -212,3 +212,16 @@ invariants: #[
   $%[spend.arrival, spend.aboutness, spend.install_return, spend.none]
   ~<"./expert-rooms.spw"> ~<"./expression-first.md"> ~<"./PLAN.md">
 }
+
+#>wonder_spw_quest_pre_reveal_expect
+?["Should /pivot and /specimens?a=&b= ask the reader for a brief ~#expect guess before revealing the transformed line or shared ground?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#with: @plan @pivot
+  ~#taste: "Prediction before feedback turns passive browsing into active structural fluency, provided guessing stays optional and zero-friction with scripts off."
+  ~#hypothesis: "An optional prediction prompt (guessing which slot moves or whether a ground token holds) improves comprehension of brace roles and interstitials without blocking direct links."
+  ~#expect: "Today /pivot and /specimens show all transformations and comparisons immediately upon load; no surface captures a pre-reveal guess from a guest."
+  ~#unblocks: "extended-wonder pre-reveal inquiry across spw.quest and workbench onboarding-quest ~[expect_before_reveal]"
+  ~#probe(read)
+  !probe{ "rg -n 'expect|guess|predict' workers/spw-quest/src/pivot.js workers/spw-quest/src/specimens.js" }
+  $%[expect.optional_gate, expect.direct_reveal, expect.toggle]
+}

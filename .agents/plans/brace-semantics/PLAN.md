@@ -146,6 +146,10 @@ Not a rewrite: one pilot of each, measured before more.
 - **Peers by generation.** Modules reach spw.quest the way tokens and faces now do: generated, carried, checked.
 - **What factshift.center has taught.** One operator descriptor with lifecycles, primed and actualized chrome with receipts, a preview of what a typed line will do, the `#spw64=` codec for this plan's door (§E), and the thread as the cauldron's shape: `.agents/plans/factshift-center/OPERATORS.md` (2026-11-07).
 
+**What factshift.center and attention.productions have taught (2026-11-17 update):**
+- **Interstitials complete the brace model:** Brace pairs (`< > ( ) [ ] { }`) name containment boundaries, while intra-line separators (`. , ; ~> -> || :` — where key:value bindings make up 47–66% of corpus lines) and inter-line bonds (`~ ^ & @`) determine coupling topology between atoms (`factshift-center` `wonder_factshift_interstitials`, `spw.pivots/1` separator turns).
+- **Collectible slot handles (`compose.js`):** `workers/attention-productions/src/compose.js` proved a script-off-safe slot handle pattern (`<a class="slot">` wrapped in `<span class="br" data-op="...">` via `MARK_OP`/`BRACKET_OP` + horizontal 28px scrubbing), advancing the concrete web semantics of §D alongside `spw.quest/pivot` and `texture.website` ladders. Note also visual vs linear order divergence (`Circle` wheel order `<>, (), [], {}` vs route-atlas order `[ ] { } ( ) < >`).
+
 ## Slices, ranked
 
 One commit each. "Nothing" means the slice can land today.

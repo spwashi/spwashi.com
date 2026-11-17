@@ -48,12 +48,13 @@ expression = title[path]{hold}<frame>
   mutex = `mutex.buzz spends . for the folio, % for the hour, and ! for the hold.`
   attention = `attention.productions spends @. The lock already writes @attention.productions{frame}.`
   stripes = `tealstripesvibes.com spends the mask * # @ ~ . $, one more letter an hour.`
-  canvas = `factshift.center spends a joint of the line, #> to enter, ^ to leave.`
+  canvas = `factshift.center spends brace walls ({ } [ ] ( ) < >) and interstitial separators (. , ; ~> -> || :) as physical joints, #> to enter, ^ to leave.`
   quest = `spw.quest spends one slot.`
-  texture = `texture.website may later spend $.`
+  texture = `texture.website may later spend $ and ~ on parametric material ladders.`
   prime = `A first tap is ~. The path is open and nothing is written.`
   take = `A second tap is !. It leaves a * receipt.`
   planes = `.hold[title] · %turn[n/of], and #>set · 7. @ stays the shot. The cue's @node and @stage tags stay as they are.`
+  crumbs = `Joint/rail breadcrumbs emit valid Spw (node[select], body[fold]) rather than concatenated prose crumbs so pivotsOf and readLine agree on both sides.`
   one = `A crossing changes one thing. Scale and theme do not move together.`
 }[reg=facet]
 
@@ -134,7 +135,8 @@ expression = title[path]{hold}<frame>
   wonders = #[
     `wonder_factshift_hold`,
     `wonder_factshift_field`,
-    `wonder_factshift_ephemeral`
+    `wonder_factshift_ephemeral`,
+    `wonder_factshift_interstitials`
   ][reg=set]
   set = `Where this file and what the set already shipped disagree, the question stays in workers-wonder-kit.`
 }[reg=facet]

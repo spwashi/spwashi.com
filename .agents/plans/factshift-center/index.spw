@@ -450,3 +450,16 @@ invariants: #[
   !probe{ "rg -n \"sayNearHandle|function resolveEdgeScrub|export function jointsOf|ASSETS.fetch\" workers/factshift-center/app/src/js/ui/handle-said.ts workers/factshift-center/app/src/js/ui/edge-scrub.ts workers/factshift-center/app/src/js/modes/spw/line-joints.ts workers/factshift-center/src/index.js" }
   $%[ephemeral.note_on_surface, ephemeral.scrub_speaks, ephemeral.joint_preview, ephemeral.theme_expires, ephemeral.http_line]
 }
+
+#>wonder_factshift_interstitials
+?["Should factshift.center elevate intra-line delimiters (. , ; ~> -> || :) and inter-line ties into distinct physical joint laws beside brace-pair dipole wells?"]{
+  #:depth #!semantic ~#lens(projection)
+  ~#with: @plan @hub
+  ~#taste: "Containers hold things inside; interstitials declare how adjacent things couple, flow, alternate, or bind across seams. Both halves belong in the field."
+  ~#hypothesis: "Giving each delimiter its own joint mechanics (fused chain for ., symmetric ring for ,, directional spline for ; and ~>, parallel non-collision lanes for ||, anchored key-value tether for :) turns layout spacing from arbitrary constants into legible syntax physics."
+  ~#expect: "relations.ts and line-anatomy.ts currently distinguish only . (access), ; / ~> (follows), and comma rings; ||, ->, and key-value : bindings lack distinct joint kinematics, and left/right joint crumbs emit unparseable prose prefixes."
+  ~#unblocks: "typed interstitial joints in app relations.ts and alignment with upstream line-kit ~[interstitial_pivot_turns]"
+  ~#probe(read)
+  !probe{ "rg -n \"follows|accesses|bonded|joint\" workers/factshift-center/app/src/js/simulation/edges/relations.ts workers/factshift-center/app/src/js/modes/spw/line-joints.ts" }
+  $%[interstitial.typed_joints, interstitial.uniform_links, interstitial.crumb_parseable]
+}

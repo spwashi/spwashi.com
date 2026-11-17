@@ -138,3 +138,29 @@ validation: #[
   !probe{ "rg -n \"spw64|spw=mutex\" workers/mutex-buzz/assets/mutex.js" }
   $%[carry.pair, carry.rule, carry.both_folded]
 }
+
+#>wonder_set_collectible_handles
+?["Should attention.productions' <a class=\"slot\"> inline scrubbers and MARK_OP/BRACKET_OP attributes become a shared worker slot-handle convention alongside texture.website ladders and #spw64=?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#with: @plan @set_ring
+  ~#taste: "A collectible line reads alike across studios: every bracket pair is a real link with scripts off and a tactile scrub control with scripts on."
+  ~#hypothesis: "Formalizing compose.js's MARK_OP/BRACKET_OP pattern beside line-kit's collectible slot descriptor lets attention.productions, texture.website, and spw.quest/pivot exchange full four-slot cards cleanly while remaining static HTML first."
+  ~#expect: "compose.js renders <a class=\"slot\"> with <span class=\"br\" data-op> wrappers today, whereas texture.website's spwLayersNode emits plain span wrappers without (scene) or <format> inside the line."
+  ~#unblocks: "texture-website T6 and line-kit ~[collectible_slot_handles]"
+  ~#probe(read)
+  !probe{ "rg -n \"MARK_OP|BRACKET_OP|spwLayersNode\" workers/attention-productions/src/compose.js workers/texture-website/assets/texture.js" }
+  $%[handles.shared_convention, handles.host_local, handles.deferred]
+}
+
+#>wonder_seats_disagree
+?["When multiple cluster seats (canvas, quest, texture, shot, lore, sound) produce conflicting readings of one line, should set-ring hosts surface the divergence as a structured extended-wonder seed?"]{
+  #:depth #!semantic ~#lens(comparison)
+  ~#with: @plan @hub
+  ~#taste: "Disagreement between two honest lenses is wonder fuel, never noise to paper over."
+  ~#hypothesis: "Naming which two seats part and preserving deliberately unfoldable questions (kept_open / never_closes) turns cross-host friction into durable inquiry."
+  ~#expect: "No host today records when two seats part on bracket sequence, slot order, or operator naming beyond local plan caches."
+  ~#unblocks: "extended-wonder convergence across workers-wonder-kit, spw-inquiry-loop, and lore.land story-spw-wonders"
+  ~#probe(read)
+  !probe{ "rg -n \"never_closes|kept_open|wonder_seats_disagree\" .agents/plans/workers-wonder-kit .agents/plans/spw-inquiry-loop" }
+  $%[seats.seed_wonder, seats.cache_only]
+}

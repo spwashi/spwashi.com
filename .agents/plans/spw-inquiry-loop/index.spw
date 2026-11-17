@@ -175,3 +175,16 @@ invariants: #[
   $%[trailing.facet, trailing.this_frame, trailing.both_by_lens]
   ~<"../../../.spw/caches/spw-as-handle-2026-09.spw"> ~<"../../../public/js/semantic/expression-query.js">
 }
+
+#>wonder_spw_inquiry_loop_never_closes
+?["Should --contour distinguish wonders kept open on purpose (kept_open / never_closes) and multi-seat disagreements from stale or unanswered wonders?"]{
+  #:depth #!semantic ~#lens(projection)
+  ~#with: @plan @workbench
+  ~#taste: "An enduring mystery (like factshift.center refusing to fold ? bodies or lore.land's open wonders) is healthy inquiry, not unfinished backlog."
+  ~#hypothesis: "Adding a kept_open rung alongside open, expected (~#expect written before probe), probed, answered, and retired reconciles wonder-architecture with factshift.center, lore.land, and spw-workbench inquiry-loop."
+  ~#expect: "scripts/wonder.mjs currently classifies wonders only into open, probed, answered, or retired."
+  ~#unblocks: "Slice 3 contour parity across spwashi.com, lore.land story-spw-wonders, and workbench ?[never_closes]"
+  ~#probe(read)
+  !probe{ "rg -n 'open|probed|answered|retired' scripts/wonder.mjs" }
+  $%[contour.add_kept_open, contour.four_rungs_only]
+}
