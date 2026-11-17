@@ -8,16 +8,22 @@
 //   dated files and its index) are served by the assets layer, which does not
 //   run the worker; wrangler.jsonc routes them there with negative patterns,
 //   and assets/_headers gives them the headers the worker used to.
-// - Crawlers are welcome on every page. Only the two addresses that are not
-//   pages stay closed: /script.spw (a download) and /canvas (a redirect).
-// - A sitemap names the stable rooms, so a crawler can find them without
-//   walking the query space a pivot opens.
+// - Crawlers keep to the rooms (2026-11-17). Each room is in the sitemap and
+//   asks to be indexed. The views a query or a line opens are endless (one
+//   /specimens offers 572 links into /specimens?, /build?, /pivot? and
+//   /canvas?, and each of those offers more), and every one ran the worker:
+//   about 143k invocations against 881 file requests in a day, against the
+//   account's daily Worker requests, which every host shares. So robots.txt
+//   disallows any address with a query, the line-card paths, /read, /card,
+//   /canvas and /script.spw; every page that is not a room or a dated release
+//   says "noindex, nofollow". A crawler that keeps robots.txt never fetches
+//   a derived view, which is stronger than rel="nofollow" on each link, and
+//   one that ignores it ignores both; the account's WAF rule stays the
+//   backstop. People and their links work as before.
+// - The corpus is one file for a crawler: /specimens.json, every specimen's
+//   line and note, carried like the other constant answers.
 // assets/robots.txt and assets/sitemap.xml are these strings, and a test holds
 // them equal; the worker's own /robots.txt answers the same if it is ever asked.
-// - A page asks to be indexed only when it is a stable room or a dated parser
-//   release, asked without a query (robotsFor). Every other page is followed
-//   but not indexed, so the query space a pivot or a build opens is walked for
-//   its links and never fills an index; a missing page is neither.
 //   The shared layout says "noindex, nofollow" for every worker (autonomous.feedback
 //   keeps it); withRobots restates the chosen value on spw.quest's pages.
 
@@ -29,10 +35,19 @@ export const STABLE_ROOMS = Object.freeze([
   "/parser/", "/bench/", "/arcs/", "/install", "/init", "/llms.txt", "/llms-full.txt",
 ]);
 
-export const ROBOTS = `User-agent: *
+export const ROBOTS = `# The rooms are in the sitemap. A query or a line opens endless views of them; read /specimens.json for the whole corpus in one request.
+User-agent: *
 Allow: /
+Disallow: /*?
 Disallow: /script.spw
 Disallow: /canvas
+Disallow: /read
+Disallow: /card
+Disallow: /*%3C
+Disallow: /*%5B
+Disallow: /*%7B
+Disallow: /*(
+Crawl-delay: 5
 Sitemap: ${ORIGIN}/sitemap.xml
 `;
 
@@ -52,7 +67,7 @@ ${urls}
  * "/" stays with the worker: it answers text, JSON or a page by Accept.
  */
 export const CONSTANT_ANSWERS = Object.freeze([
-  "/llms.txt", "/llms-full.txt", "/init", "/init.md", "/git.txt", "/git.md", "/quest.json", "/prompts.json",
+  "/llms.txt", "/llms-full.txt", "/init", "/init.md", "/git.txt", "/git.md", "/quest.json", "/prompts.json", "/specimens.json",
 ]);
 
 /** The paths wrangler.jsonc sends to the assets layer instead of the worker. */
@@ -74,12 +89,12 @@ const RELEASE_PAGE = /^\/parser\/\d{4}\.\d{2}\.\d{2}[^/]*\/$/;
 
 const INDEXED = new Set(STABLE_ROOMS);
 
-/** The robots value for a page at this address and status. */
+/** The robots value for a page at this address and status: a room or a dated release is indexed and followed; any other view is neither. */
 export function robotsFor(url, status = 200) {
   if (status >= 400) return "noindex";
   if (status >= 300) return null;
-  if (url.search) return "noindex, follow";
-  return INDEXED.has(url.pathname) || RELEASE_PAGE.test(url.pathname) ? "index, follow" : "noindex, follow";
+  if (url.search) return "noindex, nofollow";
+  return INDEXED.has(url.pathname) || RELEASE_PAGE.test(url.pathname) ? "index, follow" : "noindex, nofollow";
 }
 
 // The agents that fetch for a model. Each is told apart from a person's browser

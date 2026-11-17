@@ -242,7 +242,7 @@ test('/physics draws the line at rest with scripts off, and the hand is offered 
 
 test('/physics takes a line and a share from the address, and says so when the reader cannot hold it', async () => {
   const brought = await get(`/physics?line=${encodeURIComponent('^garden{seed: water, sky{sun, rain}}')}&share=alike`);
-  assert.equal(brought.headers.get('X-Robots-Tag'), 'noindex, follow');
+  assert.equal(brought.headers.get('X-Robots-Tag'), 'noindex, nofollow');
   const html = await brought.text();
   assert.match(html, /name="share" value="alike" checked/);
   assert.match(html, /<title>spw\.quest — at rest: \^garden\{seed: water, sky\{sun, rain\}\}<\/title>/);

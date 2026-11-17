@@ -290,7 +290,7 @@ test('?parser= switches the guide to a /parser/ build, with a banner that says s
 
 test('any other ?parser= is ignored: the guide is the default page, and the value is not written into it', async () => {
   // A page asked with a query is followed but not indexed (src/crawl.js); the rest is the default page.
-  const unindexed = (html) => html.replace('<meta name="robots" content="noindex, follow">', '<meta name="robots" content="index, follow">');
+  const unindexed = (html) => html.replace('<meta name="robots" content="noindex, nofollow">', '<meta name="robots" content="index, follow">');
   const plain = await (await get('/')).text();
   assert.ok(plain.includes(PINNED_IMPORT) && !plain.includes(STATIC_IMPORT) && !plain.includes('parser-switch'));
   const ignored = ['', 'nope', 'NEXT', 'next.js', ' next', 'latest ', '2026.10.13.1', '2026.10.13-pre.0', '2026.10.13-pre.01', '2026.10.13-patch',

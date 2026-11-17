@@ -53,6 +53,7 @@ ${ADDRESSES.map((address) => `- [${address.name}](${ORIGIN}${addressHref(address
 
 - [Marks and braces](${ORIGIN}/#operators): each mark and brace pair, what it reads as, and what the runtime does with it.
 - [Constructs](${ORIGIN}/constructs): the shapes a line takes, each with a pressed example.
+- [specimens.json](${ORIGIN}/specimens.json): every specimen on the shelf, its line, where it comes from and its note, in one file.
 - [Dated parser builds](${ORIGIN}/parser/): the parser as a file to load on your own page.
 
 ## Optional

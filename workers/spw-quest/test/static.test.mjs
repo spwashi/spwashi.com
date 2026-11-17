@@ -98,16 +98,19 @@ test("the guide's front page is a file that says exactly what the worker renders
   assert.equal(readFileSync(path.join(assetsDir, 'index.html'), 'utf8'), await response.text(), '/: run carry-guide.mjs');
 });
 
-test('robots welcomes crawlers to every page and names the sitemap; the sitemap names rooms that open', async () => {
+test('robots keeps crawlers to the rooms and names the sitemap; the sitemap names rooms that open', async () => {
   assert.equal(readFileSync(path.join(assetsDir, 'robots.txt'), 'utf8'), ROBOTS);
   assert.equal(readFileSync(path.join(assetsDir, 'sitemap.xml'), 'utf8'), sitemap());
   assert.equal(await (await get('/robots.txt')).text(), ROBOTS);
   assert.match(ROBOTS, /^Allow: \/$/m);
-  assert.deepEqual(ROBOTS.match(/^Disallow: .+$/gm), ['Disallow: /script.spw', 'Disallow: /canvas']);
+  assert.deepEqual(ROBOTS.match(/^Disallow: .+$/gm), ['Disallow: /*?', 'Disallow: /script.spw', 'Disallow: /canvas', 'Disallow: /read', 'Disallow: /card', 'Disallow: /*%3C', 'Disallow: /*%5B', 'Disallow: /*%7B', 'Disallow: /*(']);
+  assert.match(ROBOTS, /^Crawl-delay: \d+$/m);
+  // No room is disallowed: a room's address has no query and no brace.
+  for (const room of STABLE_ROOMS) assert.ok(!/[?<[{(]/.test(room), room);
   for (const room of STABLE_ROOMS) assert.equal((await get(room)).status, 200, room);
 });
 
-test('stable rooms and dated releases ask to be indexed; query variants are followed, not indexed; a missing page is neither', async () => {
+test('stable rooms and dated releases ask to be indexed; query variants are neither indexed nor followed; a missing page is neither', async () => {
   const robots = async (p) => {
     const response = await get(p);
     const html = await response.text();
@@ -128,15 +131,47 @@ test('stable rooms and dated releases ask to be indexed; query variants are foll
   for (const variant of ['/?s=hearth', '/build?subject=garden', '/specimens?q=%5Bearned%5D', '/pivot?a=subject']) {
     const seen = await robots(variant);
     assert.equal(seen.status, 200, variant);
-    assert.equal(seen.header, 'noindex, follow', variant);
-    assert.equal(seen.meta, 'noindex, follow', variant);
+    assert.equal(seen.header, 'noindex, nofollow', variant);
+    assert.equal(seen.meta, 'noindex, nofollow', variant);
   }
   const missing = await robots('/no-such-room');
   assert.equal(missing.status, 404);
   assert.equal(robotsFor(new URL('https://spw.quest/no-such-room'), 404), 'noindex');
   assert.equal(robotsFor(new URL('https://spw.quest/parser/2026.10.13/')), 'index, follow');
-  assert.equal(robotsFor(new URL('https://spw.quest/parser/2026.10.13/reader.min.js')), 'noindex, follow');
+  assert.equal(robotsFor(new URL('https://spw.quest/parser/2026.10.13/reader.min.js')), 'noindex, nofollow');
   // Files that are not pages keep their own headers.
   assert.equal((await get('/robots.txt')).headers.get('X-Robots-Tag'), null);
   assert.equal((await get('/manifest.webmanifest')).headers.get('X-Robots-Tag'), null);
+});
+
+/** Whether robots.txt keeps a crawler from an address, as Google reads it: the longest matching rule wins, and Allow wins a tie. */
+function disallowed(href) {
+  const url = new URL(href.replace(/&amp;/g, '&'), 'https://spw.quest/');
+  const target = url.pathname.replace(/[<>[\]{}]/g, (c) => encodeURIComponent(c)) + url.search;
+  const rules = [...ROBOTS.matchAll(/^(Allow|Disallow): (.+)$/gm)].map(([, kind, pattern]) => ({ kind, pattern, re: new RegExp(`^${pattern.replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\\\*/g, '.*').replace(/\*/g, '.*')}`) }));
+  const hits = rules.filter((rule) => rule.re.test(target)).sort((a, b) => b.pattern.length - a.pattern.length || (a.kind === 'Allow' ? -1 : 1));
+  return hits[0]?.kind === 'Disallow';
+}
+
+test('a crawler that keeps robots.txt reaches only a finite set of addresses from the rooms, and reads the corpus in one file', async () => {
+  for (const room of ['/specimens', '/build', '/pivot', '/constructs', '/learn', '/physics']) {
+    const html = (await (await get(room)).text()).split(/<script\b[\s\S]*?<\/script>/).join('');
+    const reached = new Set();
+    for (const [, href] of html.matchAll(/<a\b[^>]*\shref="([^"]*)"/g)) {
+      const url = new URL(href.replace(/&amp;/g, '&'), 'https://spw.quest/');
+      if (url.origin !== 'https://spw.quest' || disallowed(href)) continue;
+      reached.add(url.pathname);
+    }
+    // What is left is rooms, the parser's dated pages, and a few files: no query, no line, no brace.
+    for (const pathname of reached) assert.ok(!/[<[{(]|%3C|%5B|%7B/i.test(pathname), `${room} lets a crawler reach ${pathname}`);
+    assert.ok(reached.size < 60, `${room} reaches ${reached.size} addresses`);
+  }
+  for (const href of ['/specimens?q=x', '/build?subject=garden', '/pivot?a=subject', '/canvas?s=1', '/script.spw', '/read?line=a', '/card?line=a', '/rpgwednesday%3Ccard%3E', '/rpgwednesday<card>', '/x(scene)']) assert.ok(disallowed(href), href);
+  for (const href of STABLE_ROOMS) assert.ok(!disallowed(href), href);
+  const corpus = JSON.parse(readFileSync(path.join(assetsDir, 'specimens.json'), 'utf8'));
+  assert.equal(corpus.schema, 'specimens.v1');
+  assert.equal(corpus.count, corpus.specimens.length);
+  assert.ok(corpus.count > 1000, `${corpus.count} specimens`);
+  assert.ok(corpus.specimens.every((s) => s.id && s.line), 'each has an id and a line');
+  assert.ok(!('reading' in corpus.specimens[0]), 'the painted reading stays on the page');
 });

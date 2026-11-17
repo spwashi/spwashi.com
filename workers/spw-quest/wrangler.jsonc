@@ -18,6 +18,6 @@
     // Since 2026-11-11 the constant answers models fetch most (llms.txt, init,
     // quest.json, parser.js) are files too, carried by carry-answers.mjs.
     // Since 2026-11-16 "/" is a file too (carry-guide.mjs), the guide with no query.
-    "run_worker_first": ["/*", "!/fonts/*", "!/peer/*", "!/icons/*", "!/sw.js", "!/robots.txt", "!/sitemap.xml", "!/parser/index.json", "!/parser/*/*.js", "!/parser/*/*.map", "!/parser/*/manifest.json", "!/arcs/index.json", "!/llms.txt", "!/llms-full.txt", "!/init", "!/init.md", "!/git.txt", "!/git.md", "!/quest.json", "!/prompts.json", "!/parser.js", "!/", "!/shelf/", "!/shelf/plans/", "!/forms/", "!/arcs/", "!/bench/"]
+    "run_worker_first": ["/*", "!/fonts/*", "!/peer/*", "!/icons/*", "!/sw.js", "!/robots.txt", "!/sitemap.xml", "!/parser/index.json", "!/parser/*/*.js", "!/parser/*/*.map", "!/parser/*/manifest.json", "!/arcs/index.json", "!/llms.txt", "!/llms-full.txt", "!/init", "!/init.md", "!/git.txt", "!/git.md", "!/quest.json", "!/prompts.json", "!/specimens.json", "!/parser.js", "!/", "!/shelf/", "!/shelf/plans/", "!/forms/", "!/arcs/", "!/bench/"]
   }
 }
