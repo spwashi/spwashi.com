@@ -36,6 +36,9 @@ test('each worked answer parses, passes its genre, and appears in the index', ()
   assert.equal(readGenre(parse(ANSWER_EXAMPLES.question), ANSWER_EXAMPLES.question).checks[0].genre, 'wonder');
   assert.equal(readGenre(parse(ANSWER_EXAMPLES.change), ANSWER_EXAMPLES.change).checks[0].genre, 'episode');
   assert.deepEqual(Object.keys(seedOf(ANSWER_EXAMPLES.card, '^seed[Session]')), ['scene', 'carry', 'revisit']);
+  assert.match(ANSWER_EXAMPLES.titled, /\^seed\["porch notes"\]/);
+  assert.match(ADDRESS_INDEX, /#>name \(deixis\).*#:kind \(case\).*#!intent \(mood\).*~#aspect \(aspect\)/);
+  assert.match(ADDRESS_INDEX, /spwashi\.com.*factshift\.center.*texture\.website/);
 });
 
 test('the example fits a post, and nothing in it would mention an account', () => {

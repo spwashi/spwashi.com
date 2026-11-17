@@ -3,10 +3,16 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
 import { parse } from '../../public/js/semantic/spw-workbench-reader.js';
+import { highlightSpw } from '../../public/js/semantic/spw-highlight.js';
 import { PASTE_ACTIONS, actionLabel, doorLabel, readPaste, spwSegments, syncStaticDoors } from '../../public/js/modules/tools/spw-paste.js';
 import { SEED_TEMPLATES, buildSeedText } from '../../public/js/modules/cards/seed-card.js';
+import { ANSWER_EXAMPLES } from '../../workers/spw-quest/src/answer.js';
+import { BUILD_KINDS } from '../../workers/spw-quest/src/build.js';
+import { STARTERS } from '../../workers/spw-quest/src/starters.js';
 
 const join = (segments) => segments.map((segment) => segment.text).join('');
+const decodeHtml = (html) => html.replace(/<[^>]+>/g, '')
+  .replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&quot;', '"').replaceAll('&amp;', '&');
 
 test('segments carry every character of the paste, in order', () => {
   const sources = [
@@ -138,4 +144,45 @@ test('syncStaticDoors keeps canvas and pivot links synced with live Spw and rest
   syncStaticDoors(host, { kind: 'empty', source: '' }, defaults);
   assert.equal(canvasDoor.getAttribute('href'), defaults.canvas);
   assert.equal(pivotDoor.getAttribute('href'), defaults.pivot);
+});
+
+test('spw.quest starters, /llms.txt answers, build kits, and texture.website sheets paste cleanly into spwashi.com', () => {
+  for (const starter of STARTERS) {
+    const reading = readPaste(starter.line, parse);
+    assert.equal(reading.kind, 'expression', `${starter.id} reads as an expression`);
+    assert.deepEqual(reading.doors.map(doorLabel), ['Lay out on the canvas', 'Take apart on spw.quest']);
+    const highlighted = highlightSpw(starter.line, parse(starter.line, { eventPolicy: 'none' }).tokens);
+    assert.equal(decodeHtml(highlighted), starter.line);
+  }
+
+  const cardReading = readPaste(ANSWER_EXAMPLES.card, parse);
+  assert.equal(cardReading.kind, 'seed');
+  assert.equal(cardReading.seed.templateKey, 'session');
+
+  const wonderReading = readPaste(ANSWER_EXAMPLES.unknown, parse);
+  assert.equal(wonderReading.kind, 'seed');
+  assert.equal(wonderReading.seed.templateKey, 'wonder');
+
+  const titledReading = readPaste(ANSWER_EXAMPLES.titled, parse);
+  assert.equal(titledReading.kind, 'document');
+  assert.equal(titledReading.seed, null, 'quoted ^seed["porch notes"] does not hijack a card template');
+  const titledHtml = highlightSpw(ANSWER_EXAMPLES.titled, parse(ANSWER_EXAMPLES.titled, { eventPolicy: 'none' }).tokens);
+  assert.match(titledHtml, /data-op="frame">#&gt;opening<\/span>/);
+  assert.match(titledHtml, /data-op="layer">#:notes<\/span>/);
+  assert.match(titledHtml, /data-op="action">#!draft<\/span>/);
+  assert.match(titledHtml, /data-op="potential">~#expect<\/span>/);
+
+  for (const kind of BUILD_KINDS) {
+    const reading = readPaste(kind.script, parse);
+    assert.equal(reading.kind, 'document', `${kind.kind} opens as a document`);
+    assert.deepEqual(reading.doors.map(doorLabel), ['Lay out on the canvas', 'Take apart on spw.quest']);
+  }
+
+  for (const material of ['vellum.spw', 'risograph-ink.spw', 'kintsugi.spw']) {
+    const src = readFileSync(new URL(`../../workers/texture-website/assets/${material}`, import.meta.url), 'utf8');
+    const reading = readPaste(src, parse);
+    assert.equal(reading.kind, 'document', `${material} pastes as a document`);
+    assert.equal(decodeHtml(highlightSpw(src, parse(src, { eventPolicy: 'none' }).tokens)), src, `${material} highlights losslessly`);
+    assert.deepEqual(reading.doors.map(doorLabel), ['Lay out on the canvas', 'Take apart on spw.quest']);
+  }
 });

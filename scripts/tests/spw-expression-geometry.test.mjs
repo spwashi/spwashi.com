@@ -33,6 +33,11 @@ test('distinguishes medial capsules, couples, and streams', () => {
   assert.deepEqual(couple.channels, []);
   assert.deepEqual(stream.forms, ['stream']);
   assert.equal(stream.balanced, true);
+
+  const proseBeat = scanSpwExpression('<prose> ~^light[green]{"bob clicks the sofa"}');
+  assert.deepEqual(proseBeat.operators, ['potential', 'integration']);
+  assert.deepEqual(proseBeat.channels, ['prose']);
+  assert.equal(proseBeat.balanced, true);
 });
 
 test('keeps quoted delimiters and sigils opaque', () => {
