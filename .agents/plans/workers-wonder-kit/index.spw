@@ -107,7 +107,7 @@ validation: #[
   #:depth #!experiential ~#lens(projection)
   ~#with: @plan @hub @pinch
   ~#taste: "The creator, 2026-11-16, of the picture's pinch: I meant pinch to scale like spwashi.com, but your creative interpretation isn't bad and I appreciate the novelty."
-  ~#tension: "hub.spw: theme and time are not more zoom, and scale and theme do not move in the same gesture. What shipped: a spread on the stripes lets one more facet through, and a spread on the dial goes to the holder."
+  ~#tension: "hub.spw, marks: A crossing changes one thing. Scale and theme do not move together. What shipped: a spread on the stripes lets one more facet through, and a spread on the dial goes to the holder."
   ~#expect: "pinch.js steps each page's own ladder past ×1.35 and ×0.65 and opens the ring out past the widest step; the words take spwashi.com's pinch, which only sizes them."
   ~#unblocks: "hub.spw slice 4 (slats), and whether the stripes' chips are the only way to switch a facet"
   ~#probe(read)
