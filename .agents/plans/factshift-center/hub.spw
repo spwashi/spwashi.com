@@ -1,0 +1,125 @@
+# Review 2026-11-16 — the hold is the start, /{path} is the title, nothing built.
+# The canvas's side of the set. Claims, not a companion essay.
+# workers-wonder-kit owns the set that already shipped. This file owns what the canvas has not.
+
+#>plan_factshift_hub
+#:plan #!factshift #!hold #!frame
+#:operation #!align
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip: ~"./wip.spw"
+@operators: ~"./OPERATORS.md"
+@set_plan: ~"../workers-wonder-kit/index.spw"
+@ecosystem: ~"../ecosystem-architecture/PLAN.md"
+@mutex_lines: ~"../../../workers/factshift-center/app/src/js/ui/mutex-lines.ts"
+@mutex_feed: ~"../../../workers/factshift-center/app/src/js/ui/mutex-feed.ts"
+@lock: ~"../../../workers/mutex-buzz/src/lock.js"
+@scale_cue: ~"../../../workers/factshift-center/app/src/js/ui/scale-cue.ts"
+@scrub: ~"../../../workers/factshift-center/app/src/js/ui/edge-scrub.ts"
+@joints: ~"../../../workers/factshift-center/app/src/js/modes/spw/line-joints.ts"
+@said: ~"../../../workers/factshift-center/app/src/js/ui/handle-said.ts"
+@domains: ~"../../../workers/factshift-center/app/src/ts/domains/config.ts"
+@worker: ~"../../../workers/factshift-center/src/index.js"
+@root: ~"../../../workers/factshift-center/app/src/js/init/root.ts"
+@ring: ~"../../../workers/lib/set-ring.js"
+@format: ~"../../../workers/factshift-center/app/src/js/modes/spw/line-format.ts"
+@anatomy: ~"../../../workers/factshift-center/app/src/js/modes/spw/line-anatomy.ts"
+@arrange: ~"../../../workers/factshift-center/app/src/js/simulation/arrange.ts"
+@forces: ~"../../../workers/factshift-center/app/src/ts/simulation/dimensional-forces.ts"
+
+operation = "align"
+fixity = "experimental"
+built = "nothing"
+
+expression = title[path]{hold}<frame>
+
+^"ground"{
+  start = `mutex.buzz is the start. One hold, said as two lines.`
+  pair = `*holds[cycle]{title}(since ~> until) and %turn[n/of]{hour}.`
+  twice = `lock.js nowLine and turnLine, and mutex-lines.ts liveLines, write that pair twice.`
+  folded = `consumeMutex still appends the whole rule. The rule stays folded until a region grow asks.`
+  voice = `The folio, the bee, and the ordinary words stay mutex's.`
+}[reg=facet]
+
+^"marks"{
+  mutex = `mutex.buzz spends . for the folio, % for the hour, and ! for the hold.`
+  attention = `attention.productions spends @. The lock already writes @attention.productions{frame}.`
+  stripes = `tealstripesvibes.com spends the mask * # @ ~ . $, one more letter an hour.`
+  canvas = `factshift.center spends a joint of the line, #> to enter, ^ to leave.`
+  quest = `spw.quest spends one slot.`
+  texture = `texture.website may later spend $.`
+  prime = `A first tap is ~. The path is open and nothing is written.`
+  take = `A second tap is !. It leaves a * receipt.`
+  planes = `.hold[title] · %turn[n/of], and #>set · 7. @ stays the shot. The cue's @node and @stage tags stay as they are.`
+  one = `A crossing changes one thing. Scale and theme do not move together.`
+}[reg=facet]
+
+^"flow"{
+  rows = #[
+    `mutex.buzz · the hour · one concept in the frame`,
+    `attention.productions · the ladders shot lens light from move ratio focus · a shot of the title`,
+    `tealstripesvibes.com · the mask · the stripes`,
+    `factshift.center · scale, body, slots · the canvas`,
+    `spw.quest · one slot · the build`,
+    `texture.website · a material, later · a grain`,
+    `wap.mom · no mark yet · a page`
+  ][reg=set]
+  ring = `The set ring is the door. Its says line is the sentence, written before the page leaves.`
+  mounted = `factshift.center does not mount the ring. mutex.buzz already fills four carries.`
+}[reg=facet]
+
+^"path"{
+  default = `/{path} is the title. One handler, not a route per domain.`
+  files = `A file answers first. The worker runs only when no file answers.`
+  kept = `/demo and /help stay the switches init/root.ts already has.`
+  read = `Any other miss serves the canvas shell. The path without the leading slash, decoded, is the title, the way a typed title is.`
+  query = `?spw= still holds the line. The handler does not redirect to /?spw=.`
+  domain = `A domain themes because the title is that name. No path is registered for mutex.buzz or any other host.`
+  plain = `Accept: text/plain on / returns the ground line. The path stays /.`
+  extension = `A missing path with a file extension stays a 404, and may answer with one line. It is not a title.`
+}[reg=facet]
+
+^"ephemeral"{
+  now = `sayNearHandle is one note beside the handle, on the 2.4s hold.`
+  seat = `The sentence sits on the surface that earned it. The clock starts when the hand lifts.`
+  scrub = `The left edge is where and the right edge is how. While the finger moves, the stop's line is the lean. Release writes. A return home writes nothing.`
+  joint = `On the held line the left rail is jointsOf and the right rail is that joint's turns. says is the lean. Release is the write.`
+  theme = `A scrub along the known records wears that hue and expires unless kept. No picker, and no hue that is not in a record.`
+  quiet = `No 418 and no secret theme.`
+}[reg=facet]
+
+^"field"{
+  themed = `SITE_CONFIGS themes boon.land, bane.land, bone.land, and lore.land at load. factshift.center is empty. The set's other hosts are absent.`
+  kick = `entropy, force, and signal add a kick every tick while alpha is up, so a line still finding its seats does not arrive.`
+  tune = `The held line may choose the profile that exists: * pulls, . kicks, # damps, ~ steps. @ leans toward a point. % adds nothing.`
+  seats = `formatSpw, bodyPlan, and arrange each read the braces alone. One matrix of written order, slot, and open depth would feed all three.`
+}[reg=facet]
+
+^"shared"{
+  cores = `The workbench pin is the language. workers/lib is a function a second host would otherwise write again, copied byte for byte.`
+  hold = `The pair is that function. A hold module would format the record and not parse.`
+  home = `The bee, the ladders, the mask, the forces, and the brace seats stay with the host that draws them.`
+  rank = `S4a, one paint for the site and the quest, stays the ecosystem plan's next slice.`
+}[reg=facet]
+
+^"slices"{
+  order = #[
+    `settle the scale cue, and offer replay`,
+    `arrive on the pair, with the rule folded`,
+    `mount the set ring, quest carrying the pair`,
+    `slats: first tap shows the sentence, second tap goes`,
+    `/{path} is the title, files and /demo and /help excepted`
+  ][reg=set]
+}[reg=facet]
+
+^"open"{
+  wonders = #[
+    `wonder_factshift_hold`,
+    `wonder_factshift_field`,
+    `wonder_factshift_ephemeral`
+  ][reg=set]
+  set = `Where this file and what the set already shipped disagree, the question stays in workers-wonder-kit.`
+}[reg=facet]

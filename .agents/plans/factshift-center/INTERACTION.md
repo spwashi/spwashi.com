@@ -75,3 +75,7 @@ Still unnamed:
 - An annotation says what the runtime or the relation made of a thing. It does not become a second title on a region. The concept's region stays unlabeled. Its node and its tie carry the name.
 
 A submenu level, a primed act, and an actualized act each need that one sentence before a new control is added.
+
+## Ephemeral UI
+
+The leans, the scrub, the joint preview, and the theme that expires are [hub.spw](./hub.spw) `^"ephemeral"`. `/{path}` is the title by default (`^"path"`): a file answers first, `/demo` and `/help` stay, and any other miss is that title. A domain is not its own route.

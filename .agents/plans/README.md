@@ -100,7 +100,7 @@ Every live folder, once, by area. Open a plan's `index.spw` for its disposition 
 - `literacy-precipitation-press/` — the north-star lore ladder.
 - `folio-worktable/` — folio studies and readings.
 - `model-collaborator-lore-surfaces/` — tools and lore for a human model; parked until a shoot is booked.
-- `workers-wonder-kit/` — the workers' shared shell.
+- `workers-wonder-kit/` — the workers' shared kit and the set since 2026-11-16: the ring, both pinches, and what each site changes about an expression it carries; holds the hold's one writer and the theme record that `ecosystem-architecture` proposed.
 - `smut-today-crew/` — smut.today as a crew world: staff as the leads, a daily draw with pins.
 
 **Reuse, agents and practice**
@@ -112,6 +112,14 @@ Every live folder, once, by area. Open a plan's `index.spw` for its disposition 
 - `agent-optimization/` — the agent gate.
 - `agentic-dev-contracts/` — one validation entrypoint and one manifest.
 - `history-reflow/` — commit grammar and the reflow method.
+
+## Maintenance Snapshot - 2026-11-16
+
+The creator, 2026-11-16: integrate plans more conventionally; update design considerations. No new folder.
+
+- **The set has an owner.** [workers-wonder-kit](./workers-wonder-kit/PLAN.md) took the seven hosts the ring draws: Landed lines for the day's commits, a Design considerations section (cognitive, ergonomic, aesthetic, operational; the form is the workbench's, since no live plan here had one), and numbered slices S2 to S6. Its S1 had landed on 2026-11-11 by `workers/lib/http.js`.
+- **Notes reshaped where they live.** Grok's HUB.md became claims in [factshift-center/hub.spw](./factshift-center/hub.spw), the canvas's side and what it has not built, with HUB.md as its door; the set that shipped and its tables moved to workers-wonder-kit. Grok's `workers/lib` proposals in ecosystem-architecture became S3 and S5 there, cited back.
+- **Disagreements are wonders.** Where the note and what shipped differ (a pinch that steps the theme, which mark names the set in the cue, whether the ring carries the hold's two lines or its rule), the question is a `#>wonder_set_*` block, not a rule.
 
 ## Maintenance Snapshot - 2026-11-12
 
