@@ -8,6 +8,7 @@ import {
   requestLensMode,
   resolveLensRovingIndex,
   resolveLensSeatSubject,
+  lensFilterToggleCopy,
   resolveSustainedLensChoice,
   shouldUseLensViewTransition,
 } from '../../public/js/runtime/page/lens-modes.js';
@@ -187,6 +188,17 @@ function makeFakeEl(tagName = 'div', attrs = {}) {
   };
   return el;
 }
+
+test('the lens filter button says whether cards are hidden', () => {
+  const open = lensFilterToggleCopy(false);
+  const hidden = lensFilterToggleCopy(true);
+  assert.equal(open.state, 'all');
+  assert.equal(open.label, 'Hide other cards');
+  assert.equal(hidden.state, 'matched');
+  assert.equal(hidden.label, 'Show every card');
+  assert.ok(open.title.includes(open.label));
+  assert.ok(hidden.title.includes(hidden.label));
+});
 
 test('sustained lens round-trips via sessionStorage and drives resolveSustainedLensChoice', () => {
   const storage = makeFakeStorage();

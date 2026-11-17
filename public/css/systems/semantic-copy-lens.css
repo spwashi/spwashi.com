@@ -233,3 +233,14 @@
   background: color-mix(in srgb, var(--active-op-color, #7a4fb5) 14%, var(--surface-strong, #fff));
   border-color: color-mix(in srgb, var(--active-op-color, #7a4fb5) 55%, var(--line, currentColor));
 }
+
+/* The shared chip rule clips a label down to a glyph. This control's
+   name is the whole sentence of the last press, so it keeps its width. */
+:where(.spw-lens-filter-toggle) {
+  justify-self: start;
+  inline-size: max-content;
+  max-inline-size: 100%;
+  white-space: nowrap;
+  overflow: visible;
+  text-overflow: clip;
+}
