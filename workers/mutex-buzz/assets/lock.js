@@ -84,6 +84,42 @@ export function untilRelease(holder, now) {
   return `releases in ${Math.round(hours / 24)} days`;
 }
 
+/** A hold's sub-quantum: an hour. */
+export const TURN_MS = 3_600_000;
+const GOLDEN = 2.399963229728653;
+
+/**
+ * Which turn of its hold a moment is in, and what the cell shows then: the
+ * holder whole on its first and last turns, and between them a detail that
+ * walks the work on a golden-angle spiral, one step an hour. (fx, fy) is the
+ * detail's centre, as a share of the picture; zoom is how close it comes.
+ */
+export function turnOf(holder, now) {
+  const since = Date.parse(holder.since);
+  const of = Math.round((Date.parse(holder.releasesAt) - since) / TURN_MS);
+  const index = Math.min(of - 1, Math.max(0, Math.floor((now.getTime() - since) / TURN_MS)));
+  if (index === 0 || index === of - 1) return { index, of, zoom: 1, fx: 0.5, fy: 0.5 };
+  const r = 0.2 * Math.sqrt((index % 97) / 97);
+  const a = index * GOLDEN;
+  return { index, of, zoom: 1.8, fx: Math.round((0.5 + r * Math.cos(a)) * 1000) / 1000, fy: Math.round((0.5 + r * Math.sin(a)) * 1000) / 1000 };
+}
+
+/** The turn as a line of Spw: a measure, its place in the hold as a ratio the number reader takes. */
+export const turnLine = (turn) => `%turn[${turn.index + 1}/${turn.of}]{hour}`;
+
+/** The time left in a hold, to the second: "9d 14h 22m 05s", or "0s" once it has let go. */
+export function countdown(holder, now) {
+  let s = Math.max(0, Math.floor((Date.parse(holder.releasesAt) - now.getTime()) / 1000));
+  const d = Math.floor(s / 86_400); s -= d * 86_400;
+  const h = Math.floor(s / 3600); s -= h * 3600;
+  const m = Math.floor(s / 60); s -= m * 60;
+  const two = (n) => String(n).padStart(2, "0");
+  if (d) return `${d}d ${h}h ${two(m)}m ${two(s)}s`;
+  if (h) return `${h}h ${two(m)}m ${two(s)}s`;
+  if (m) return `${m}m ${two(s)}s`;
+  return `${s}s`;
+}
+
 /** The dial's canvas and ring, in its own units. */
 export const DIAL = Object.freeze({ size: 600, r: 262 });
 

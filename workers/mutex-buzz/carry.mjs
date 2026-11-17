@@ -109,7 +109,7 @@ function dial() {
         <g class="labels">${d.holds.map((h) => `<text data-cycle="${h.cycle}" x="${h.label.x}" y="${h.label.y}">${h.cycle}</text>`).join("")}</g>
         <path class="rest" id="rest" d=""/>
         <polygon class="window" points="${hexagon(c, c, R)}"/>
-        <image class="holder" id="holder-image" x="${Math.round((c - w / 2) * 10) / 10}" y="${c - R}" width="${w}" height="${2 * R}" preserveAspectRatio="xMidYMid meet" clip-path="url(#cell-clip)"/>
+        <g clip-path="url(#cell-clip)"><image class="holder" id="holder-image" x="${Math.round((c - w / 2) * 10) / 10}" y="${c - R}" width="${w}" height="${2 * R}" preserveAspectRatio="xMidYMid meet"/></g>
         <text class="window-word" id="window-word" x="${c}" y="${c + 6}">one to a cell</text>
         <g class="bee" id="bee" transform="translate(${c} ${c - DIAL.r}) scale(1.5)">${BEE}</g>
       </svg>`;
@@ -172,9 +172,31 @@ function sample(source) {
   return `<section class="sample" aria-labelledby="sample-title">
       <h2 class="kicker" id="sample-title">The rule, in Spw</h2>
       <pre class="spw" id="lock-spw">${paintLock(source)}
-<span class="line now-line" data-part="now" id="now-line" hidden></span></pre>
+<span class="line now-line" data-part="now" id="now-line" hidden></span>
+<span class="line" data-part="now" id="turn-line" hidden></span></pre>
       <p class="data"><a href="/lock.spw">lock.spw</a> · <a href="https://factshift.center/#spw64=${b64}">read it on the canvas ↗</a> · <a href="https://spw.quest/build#spw64=${b64}">take it apart on spw.quest ↗</a></p>
     </section>`;
+}
+
+/**
+ * A mutex you can watch: threads, drawn as bees, line up at one cell and take
+ * it one at a time. Drawn here at rest (one inside, two waiting) so it reads
+ * with scripts off; the pages' script sets it going.
+ */
+function threads() {
+  const cell = hexagon(520, 90, 46);
+  const bee = (x, y, cls) => `<use href="#bee-shape" class="${cls}" transform="translate(${x} ${y}) scale(1.3)"/>`;
+  return `<figure class="threads" id="threads">
+          <svg viewBox="0 0 600 180" role="img" aria-labelledby="threads-title">
+            <title id="threads-title">Threads at a mutex: one inside the cell, the rest waiting their turn in line.</title>
+            <defs><g id="bee-shape">${BEE}</g></defs>
+            <line class="lane" x1="30" y1="90" x2="462" y2="90"/>
+            <circle class="turn-ring" id="threads-ring" cx="520" cy="90" r="58" pathLength="1"/>
+            <polygon class="cell held" id="threads-cell" points="${cell}"/>
+            <g id="threads-bees">${bee(520, 90, "inside")}${bee(430, 90, "waiting")}${bee(386, 90, "waiting")}</g>
+          </svg>
+          <figcaption><span id="threads-count">One inside, two waiting.</span> <button type="button" id="send-bee" hidden>Send a bee</button></figcaption>
+        </figure>`;
 }
 
 function head(title, description, canonical) {
@@ -201,6 +223,13 @@ function home(source) {
       <p class="kicker">mutex.buzz · a lock on attention</p>
       <h1 id="t">One concept in the frame <code>at a time</code>.</h1>
       <p>A mutex lets one thread in and makes the rest wait. This one does that for attention: whatever holds the lock is the single thing the frame shows.</p>
+      <section class="explain" aria-labelledby="what-title">
+        <h2 class="kicker" id="what-title">What a mutex is</h2>
+        <p>A mutex, short for <em>mutual exclusion</em>, is a lock a program puts around something several threads might touch at once: a file, a counter, a printer. A thread acquires the lock before it touches the thing and releases it when it is done. If another thread already holds it, the newcomer waits. The code that runs while the lock is held is the critical section, and only one thread is ever inside it.</p>
+        <p>A semaphore can let several in at once; a mutex lets in exactly one, and only the one holding it can let go. One bee to a cell.</p>
+        <p>Here, the shared thing is attention. A hold is the critical section, a close is the release, and the line of anyone waiting is public.</p>
+        ${threads()}
+      </section>
       <ul class="rules">
         <li><b>hold</b>A hold starts at a close and releases at the next: the 13th, the 26th, and the last day of the month.</li>
         <li><b>rest</b>When nothing else holds it, a laminated folio does. The resting state is the work itself.</li>
@@ -260,9 +289,10 @@ const NOT_FOUND = `<!doctype html>
 function llms() {
   return `# mutex.buzz
 
-A lock on attention: one concept holds the frame at a time. A hold starts at a close and releases at the next: the 13th, the 26th, and the last day of the month (UTC). When nothing else holds it, a laminated folio does. Anyone waiting lines up in public, in order.
+A mutex (mutual exclusion) is a lock a program puts around something several threads might touch at once: one thread acquires it, the rest wait, and only the holder releases it. mutex.buzz is a lock on attention: one concept holds the frame at a time. A hold starts at a close and releases at the next: the 13th, the 26th, and the last day of the month (UTC). When nothing else holds it, a laminated folio does. Anyone waiting lines up in public, in order.
 
 - /lock.spw: the rule written in Spw, every mark doing one job: ^ gathers the lock, = fixes one holder, $ names the clock it runs on, ! is a hold, . the folio that rests, ~ the waiting, % the time to release, @ where it is seen, & what the frame is about, ? asks what holds now, # names the file.
+- Each hold is cut into turns of an hour: each turn the cell shows a different detail of the holder, whole on the first and last turns. The page says which turn it is as Spw, %turn[62/312]{hour}, and counts down to the release by the second.
 - /now/: what holds the lock now, framed by attention.productions.
 - /now.json: the schedule, schema mutex.schedule.v1: every hold from ${SCHEDULE.from} up to ${SCHEDULE.until}, each with its cycle, since, releasesAt and holder. What holds now is the hold whose since is at or before now and whose releasesAt is after it.
 `;

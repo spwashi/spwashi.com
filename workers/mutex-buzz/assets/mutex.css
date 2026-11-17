@@ -31,6 +31,24 @@ h1 { margin: 0 0 12px; font-size: clamp(2.2rem, 6vw, 3.6rem); line-height: 0.98;
 h1 code { color: var(--accent); font-size: 0.78em; }
 p { margin: 0 0 12px; max-width: 34rem; }
 .kicker { color: var(--muted); font: 13px/1.4 var(--mono); margin: 0 0 14px; transition: color 0.3s ease; }
+.explain { margin: 22px 0 6px; padding: 14px 16px 4px; border-left: 3px solid var(--accent); background: rgba(255, 197, 61, 0.05); border-radius: 0 10px 10px 0; }
+.explain .kicker { margin-bottom: 8px; color: var(--accent); }
+.explain p { font-size: 15px; color: var(--fg); }
+.explain p + p { color: var(--muted); }
+/* The mutex you can watch. */
+.threads { margin: 4px 0 10px; }
+.threads svg { display: block; width: 100%; height: auto; }
+.threads .lane { stroke: var(--line); stroke-width: 2; stroke-dasharray: 2 8; stroke-linecap: round; }
+.threads .cell { fill: rgba(255, 197, 61, 0.06); stroke: var(--accent); stroke-opacity: 0.5; stroke-width: 2.5; transition: fill 0.4s ease; }
+.threads .cell.held { fill: rgba(255, 197, 61, 0.22); }
+.threads .turn-ring { fill: none; stroke: var(--accent); stroke-width: 4; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; transform: rotate(-90deg); transform-box: fill-box; transform-origin: center; }
+.threads .waiting .abdomen { fill-opacity: 0.75; }
+.threads figcaption { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; font: 13px/1.4 var(--mono); color: var(--muted); }
+#send-bee { font: 600 13px/1 var(--mono); color: var(--ink); background: var(--accent); border: 0; border-radius: 999px; padding: 0 16px; min-height: 44px; cursor: pointer; }
+#send-bee:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+body[data-part="wait"] .threads .lane { stroke: var(--accent); stroke-opacity: 0.6; }
+/* The cell's picture eases from one hour's detail to the next. */
+.dial .holder { transform-box: view-box; transform-origin: 0 0; transition: transform 2.4s ease; }
 .rules { list-style: none; margin: 18px 0; padding: 0; display: grid; gap: 8px; }
 .rules li { padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; }
 .rules b { color: var(--accent); font-family: var(--mono); margin-right: 8px; }
@@ -110,7 +128,7 @@ body[data-part="rest"] .holds li[aria-current] { border-color: var(--accent); }
 /* /now/: the holder, filling whatever frames it, with its hold underneath. */
 .now { min-height: 0; height: 100vh; }
 .frame { position: relative; display: block; height: 100%; min-height: 240px; overflow: hidden; color: var(--fg); text-decoration: none; background: radial-gradient(ellipse at center, #2a1d0c 0%, var(--bg) 70%); }
-.frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; transition: transform 2.4s ease, transform-origin 2.4s ease; }
 .lock-line { position: absolute; left: 12px; right: 12px; bottom: 12px; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; max-width: none; margin: 0; padding: 10px 12px 16px; border-radius: 10px; background: rgba(18, 13, 7, 0.8); border: 1px solid var(--line); }
 /* A bee rides the hold's progress, at the share of it spent. */
 .rider { position: absolute; bottom: 14px; left: calc(12px + (100% - 24px) * var(--k, 0)); width: 30px; height: 22px; margin-left: -15px; z-index: 1; }
