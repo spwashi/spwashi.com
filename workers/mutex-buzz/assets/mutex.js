@@ -3,6 +3,7 @@
 // (lock.js, carried from src/ by carry.mjs). Written by hand. With scripts off
 // the pages list the month's three holds and draw the mutex at rest.
 import { DIAL, countdown, dialOf, holderFor, lastDay, monthDay, nowLine, turnLine, turnOf } from "/lock.js";
+import { mountSetRing, slug as pathWord, spw64 } from "/set-ring.js";
 
 const $ = (id) => document.getElementById(id);
 const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -83,6 +84,13 @@ if (dial) {
     line.addEventListener("blur", () => light(null));
   }
   if ($("now-line")) writeLine($("now-line"), nowLine(holder));
+  // The set's ring, on the lock's own page (never /now/, which other pages frame): where the lock goes from here.
+  mountSetRing("mutex.buzz", () => ({
+    "factshift.center": { href: "https://factshift.center/?spw=mutex.buzz", says: "the lock read on the canvas: what holds it, as a line you can hold" },
+    "tealstripesvibes.com": { href: "https://tealstripesvibes.com/@lock", says: "the stripes this hold fills in, an hour at a time" },
+    "attention.productions": { href: `https://attention.productions/${pathWord(holder.title)}?shot=close-up&light=lamplight&focus=center`, says: `${holder.title}, as a shot` },
+    "spw.quest": { href: `https://spw.quest/build#spw64=${spw64($("lock-spw")?.textContent ?? "")}`, says: "the rule, taken apart a slot at a time" },
+  }));
 }
 
 const image = $("now-image");

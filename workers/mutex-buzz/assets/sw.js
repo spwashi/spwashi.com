@@ -1,5 +1,5 @@
 // Written by workers/mutex-buzz/carry.mjs. The lock works out "now" in the page, so with these kept it keeps time offline.
-const CACHE = "mutex-682139f72ae6";
+const CACHE = "mutex-4ac37d0bfba6";
 const SHELL = ["/","/now/","/mutex.css","/mutex.js","/lock.js","/lock.spw","/now.json","/favicon.svg","/manifest.webmanifest","/folios/lined-stage-facade.webp","/folios/teal-stripes-vibes-wash.webp","/folios/factshift-cabinet.webp","/icons/icon-192.png","/icons/icon-512.png","/icons/icon-maskable-512.png","/icons/apple-touch-icon.png"];
 
 self.addEventListener("install", (event) => {

@@ -69,3 +69,7 @@ details p { margin: 6px 0 0; color: var(--muted); font: 11.5px/1.5 ui-monospace,
 /* What the lock holds, as mutex.buzz says it. */
 .lock { margin: 8px 0 0; padding: 6px 8px; border-left: 2px solid #f5b041; background: rgba(0, 0, 0, 0.2); font: 11.5px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--muted); overflow-wrap: anywhere; }
 .lock a { color: var(--ink); }
+
+/* The set's ring fades with the card, so a screenshot takes the stripes alone. */
+.set-ring { transition: opacity 0.7s ease; }
+:root[data-ui="asleep"] .set-ring:not(.open), :root[data-ui="held"] .set-ring { opacity: 0; pointer-events: none; }

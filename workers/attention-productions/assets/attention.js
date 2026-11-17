@@ -3,7 +3,8 @@
 // carried from src/ by carry.mjs. With scripts off the page shows its first
 // shot and its links still lead to each word's address.
 import { FIRST_SHOT, SUBJECT_DEPTH, addressOf, canvasHrefOf, cornersOf, geometryOf, nearestFocus, nearestFrom, nearestSheet, promptOf, readShot, slug, spwOf, tempoAt, tempoOf } from "/compose.js";
-import { LADDERS, TEMPO } from "/vocabulary.js";
+import { LADDERS, SHAPES, TEMPO } from "/vocabulary.js";
+import { mountSetRing, nearestSeed, slug as pathWord, spw64 } from "/set-ring.js";
 import { MATERIALS } from "/materials.js";
 
 const svg = document.getElementById("viewfinder");
@@ -292,4 +293,15 @@ if (svg) {
   shot = readShot(window.location.pathname, window.location.search, today());
   wire();
   render();
+  // The set's ring: what this shot becomes on each of the other sites.
+  mountSetRing("attention.productions", () => {
+    const seed = nearestSeed(SHAPES.light[shot.light].key);
+    return {
+      "tealstripesvibes.com": { href: `https://tealstripesvibes.com/${seed}?say=${encodeURIComponent(shot.subject.slice(0, 60))}`, says: `this shot as ${seed}'s stripes, captioned "${shot.subject}"` },
+      "factshift.center": { href: canvasHrefOf(shot), says: "this shot's lines and its prompt, held on the canvas" },
+      "mutex.buzz": { href: "https://mutex.buzz/", says: "what holds the frame this cycle" },
+      "spw.quest": { href: `https://spw.quest/build#spw64=${spw64(spwOf(shot))}`, says: "this shot's Spw, to take apart a slot at a time" },
+      ...(shot.material ? { "texture.website": { href: `https://texture.website/${shot.material.slug}`, says: `its surface, ${shot.material.word}` } } : {}),
+    };
+  });
 }
