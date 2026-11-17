@@ -20,6 +20,7 @@ import { escapeHtml } from "../lib/http.js";
 import { writeOrCheck } from "../lib/carry.js";
 import { ecosystemJson } from "../site-hub-next/src/hosts/ecosystem.js";
 import { CYCLES, DIAL, FOLIOS, QUEUE, dialOf, scheduleBetween } from "./src/lock.js";
+import { ICONS, iconPng } from "./src/icon.js";
 import { parse } from "../../public/js/semantic/spw-workbench-reader.js";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -41,8 +42,8 @@ export const SCHEDULE = Object.freeze({ from: "2026-10-01", until: "2028-01-01" 
 const DRAWN_MONTH = new Date(Date.UTC(2026, 10, 1));
 
 const BASE = ["X-Content-Type-Options: nosniff", "Referrer-Policy: strict-origin-when-cross-origin", "Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()"];
-export const CSP_HOME = "default-src 'none'; img-src 'self'; style-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests";
-export const CSP_NOW = "default-src 'none'; img-src 'self'; style-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'self' https://attention.productions; upgrade-insecure-requests";
+export const CSP_HOME = "default-src 'none'; img-src 'self'; style-src 'self'; script-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests";
+export const CSP_NOW = "default-src 'none'; img-src 'self'; style-src 'self'; script-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'self' https://attention.productions; upgrade-insecure-requests";
 
 function headersFile() {
   // Cloudflare joins every rule a path matches, so no two rules here set the same header on one path:
@@ -59,6 +60,10 @@ function headersFile() {
     rule("/*.spw", ["Cache-Control: public, max-age=300", "Content-Type: text/plain; charset=UTF-8", "Access-Control-Allow-Origin: *"]),
     rule("/*.txt", ["Cache-Control: public, max-age=300", "Content-Type: text/plain; charset=UTF-8"]),
     rule("/folios/*", ["Cache-Control: public, max-age=86400"]),
+    rule("/icons/*", ["Cache-Control: public, max-age=86400"]),
+    rule("/manifest.webmanifest", ["Cache-Control: public, max-age=300", "Content-Type: application/manifest+json"]),
+    // The service worker is always asked for afresh, so a deploy reaches an installed app.
+    rule("/sw.js", ["Cache-Control: no-cache"]),
   ].join("\n");
 }
 
@@ -201,11 +206,15 @@ function threads() {
 
 function head(title, description, canonical) {
   return `<meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>${escapeHtml(title)}</title>
   <meta name="description" content="${escapeHtml(description)}">
   <link rel="canonical" href="${canonical}">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#120d07">
+  <meta name="apple-mobile-web-app-title" content="mutex.buzz">
   <link rel="stylesheet" href="/mutex.css">
   <script type="module" src="/mutex.js"></script>`;
 }
@@ -238,6 +247,7 @@ function home(source) {
       <h2 class="kicker">Waiting</h2>
       ${queue}
       <p class="data"><a href="/now/">/now/</a> · <a href="/now.json">/now.json</a> · framed on <a href="https://attention.productions/">attention.productions</a></p>
+      <p class="data"><button type="button" id="keep-app" hidden>Keep it on this device</button></p>
     </section>
     <figure class="lock">
       ${dial()}
@@ -298,6 +308,69 @@ A mutex (mutual exclusion) is a lock a program puts around something several thr
 `;
 }
 
+/** What an installed mutex.buzz is: its names, colours, icons, and a shortcut to what holds now. */
+function manifest() {
+  const icons = Object.entries(ICONS).filter(([name]) => name.startsWith("icon-")).map(([name, icon]) => ({ src: `/icons/${name}`, sizes: `${icon.size}x${icon.size}`, type: "image/png", purpose: icon.purpose ?? "any" }));
+  return `${JSON.stringify({
+    name: "mutex.buzz — one concept in the frame at a time",
+    short_name: "mutex.buzz",
+    description: "A lock on attention: one concept holds the frame, each hold releases at a close, and a laminated folio holds it the rest of the time.",
+    id: "/",
+    start_url: "/",
+    scope: "/",
+    display: "standalone",
+    background_color: "#120d07",
+    theme_color: "#120d07",
+    icons: [...icons, { src: "/favicon.svg", sizes: "any", type: "image/svg+xml", purpose: "any" }],
+    shortcuts: [{ name: "What holds now", short_name: "Now", url: "/now/", icons: [{ src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }] }],
+  }, null, 2)}\n`;
+}
+
+/** Everything the service worker keeps, so the lock opens and keeps time with no network. */
+const SHELL = ["/", "/now/", "/mutex.css", "/mutex.js", "/lock.js", "/lock.spw", "/now.json", "/favicon.svg", "/manifest.webmanifest", ...Object.keys(FOLIO_SOURCES).map((name) => `/folios/${name}`), ...Object.keys(ICONS).map((name) => `/icons/${name}`)];
+
+/**
+ * The service worker. Pages come from the network when there is one and from
+ * the cache when there is not; everything else from the cache, refreshed
+ * behind it. Its cache is named for a hash of what it keeps, so a deploy that
+ * changes any of it takes over cleanly and the old cache goes.
+ */
+function serviceWorker(version) {
+  return `// Written by workers/mutex-buzz/carry.mjs. The lock works out "now" in the page, so with these kept it keeps time offline.
+const CACHE = "mutex-${version}";
+const SHELL = ${JSON.stringify(SHELL)};
+
+self.addEventListener("install", (event) => {
+  event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL)).then(() => self.skipWaiting()));
+});
+
+self.addEventListener("activate", (event) => {
+  event.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((key) => key.startsWith("mutex-") && key !== CACHE).map((key) => caches.delete(key)))).then(() => self.clients.claim()));
+});
+
+self.addEventListener("fetch", (event) => {
+  const request = event.request;
+  const url = new URL(request.url);
+  if (request.method !== "GET" || url.origin !== self.location.origin) return;
+  if (request.mode === "navigate") {
+    event.respondWith(fetch(request).then((response) => {
+      const copy = response.clone();
+      if (response.ok) caches.open(CACHE).then((cache) => cache.put(request, copy));
+      return response;
+    }).catch(() => caches.match(request).then((hit) => hit ?? caches.match(url.pathname.startsWith("/now") ? "/now/" : "/"))));
+    return;
+  }
+  event.respondWith(caches.match(request).then((hit) => {
+    const fresh = fetch(request).then((response) => {
+      if (response.ok) { const copy = response.clone(); caches.open(CACHE).then((cache) => cache.put(request, copy)); }
+      return response;
+    });
+    return hit ?? fresh;
+  }));
+});
+`;
+}
+
 export async function carried() {
   const schedule = { schema: "mutex.schedule.v1", note: "What holds now is the hold whose since is at or before now and whose releasesAt is after it. Times are UTC.", queue: QUEUE.map(({ title, kind }) => ({ title, kind })), holds: scheduleBetween(new Date(`${SCHEDULE.from}T00:00:00Z`), new Date(`${SCHEDULE.until}T00:00:00Z`)) };
   const source = await readFile(path.join(HERE, "src/lock.spw"), "utf8");
@@ -314,7 +387,19 @@ export async function carried() {
     ["registry.json", JSON.stringify(ecosystemJson, null, 2)],
     ["llms.txt", llms()],
     ["_headers", headersFile()],
+    ["manifest.webmanifest", manifest()],
   ];
+}
+
+/** The carried text files and the service worker named for them, with the hand-written page files and the images in its hash. */
+export async function carriedWithWorker() {
+  const files = await carried();
+  const hash = createHash("sha256");
+  for (const [name, body] of files) hash.update(name).update(body);
+  for (const name of ["mutex.css", "mutex.js"]) hash.update(name).update(await readFile(path.join(ASSETS, name)));
+  for (const source of Object.values(FOLIO_SOURCES)) hash.update(await readFile(path.join(ROOT, source)));
+  for (const [name, icon] of Object.entries(ICONS)) hash.update(name).update(iconPng(icon.size, icon));
+  return [...files, ["sw.js", serviceWorker(hash.digest("hex").slice(0, 12))]];
 }
 
 const sha = (bytes) => createHash("sha256").update(bytes).digest("hex");
@@ -336,9 +421,26 @@ async function folios(check) {
   return drift;
 }
 
+/** The app icons, drawn by src/icon.js and compared by hash. */
+async function icons(check) {
+  let drift = 0;
+  for (const [name, icon] of Object.entries(ICONS)) {
+    const want = iconPng(icon.size, icon);
+    const target = path.join(ASSETS, "icons", name);
+    if (check) {
+      const have = await readFile(target).catch(() => null);
+      if (!have || sha(have) !== sha(want)) { drift += 1; console.error(`[mutex-carry] assets/icons/${name} differs from src/icon.js`); }
+      continue;
+    }
+    await mkdir(path.dirname(target), { recursive: true });
+    await writeFile(target, want);
+  }
+  return drift;
+}
+
 if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
   const check = process.argv.includes("--check");
-  const drift = (await writeOrCheck(ASSETS, await carried(), { check, label: "mutex-carry", hint: "run node workers/mutex-buzz/carry.mjs" })) + (await folios(check));
+  const drift = (await writeOrCheck(ASSETS, await carriedWithWorker(), { check, label: "mutex-carry", hint: "run node workers/mutex-buzz/carry.mjs" })) + (await folios(check)) + (await icons(check));
   if (check && drift) process.exit(1);
   if (!check) console.log("[mutex-carry] wrote the lock, both pages, the schedule and the folios into workers/mutex-buzz/assets");
 }
