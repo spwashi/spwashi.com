@@ -80,7 +80,8 @@ export async function mountSpwCode(code) {
   ensureSpwSourceStyles();
   try {
     const reader = await loadReader();
-    code.innerHTML = highlightSpw(source, reader.roles(source));
+    const { tokens } = reader.parse(source, { eventPolicy: 'none' });
+    code.innerHTML = highlightSpw(source, tokens);
   } catch {
     // The text stays as it was; the actions still help.
   }

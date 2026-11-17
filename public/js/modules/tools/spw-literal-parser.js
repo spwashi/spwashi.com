@@ -1,7 +1,7 @@
 // The reader bundle carries parse with the editor's reading (roles, outline, anchors),
 // so the tool proves a source the way the editor reads it without loading the parser twice.
 import { renderSpwDoors } from './spw-doors.js';
-import { anchors, outline, parse, roles, SPW_PARSER_BUILD } from '/public/js/semantic/spw-workbench-reader.js';
+import { anchors, outline, parse, SPW_PARSER_BUILD } from '/public/js/semantic/spw-workbench-reader.js';
 import { bracePairAt, highlightSpw, lineStarts } from '/public/js/semantic/spw-highlight.js';
 import { GENRE_REASONS, readGenre } from '/public/js/semantic/spw-genre-checks.js';
 
@@ -223,7 +223,7 @@ function messageFromEvent(event) {
 
 export function parseLiteralSource(source) {
   const input = String(source ?? '');
-  const output = parse(input);
+  const output = parse(input, { eventPolicy: 'diagnostics' });
   const reconstruction = reconstructTokens(output.tokens);
   const astCensus = countAstNodes(output.ast);
 
@@ -285,11 +285,12 @@ function renderTokens(host, tokens) {
 /** Role classes are prefixed so the editor's role names never meet the site's own spw-* classes. */
 export const READER_CLASS_PREFIX = 'spw-role-';
 
-/** The source as the editor reads it: highlighted HTML (shared with Spw code blocks), the outline, the anchors. */
+/** The source as the editor reads it: kernel-highlighted HTML (shared with Spw code blocks), the outline, and anchors. */
 export function readAsEditor(source, { emphasize = null } = {}) {
   const input = String(source ?? '');
+  const { tokens } = parse(input, { eventPolicy: 'none' });
   return {
-    html: highlightSpw(input, roles(input), { emphasize }),
+    html: highlightSpw(input, tokens, { emphasize }),
     outline: outline(input),
     anchors: anchors(input),
   };
@@ -587,7 +588,7 @@ function initLiteralParser(root) {
       setMetric(root, 'depth', astCensus.maxDepth);
       setMetric(root, 'reconstruction', result.reconstructsExactly ? 'exact' : 'changed', result.reconstructsExactly ? 'ok' : 'error');
       setMetric(root, 'time', `${output.duration.toFixed(2)} ms`);
-      read = { text: source, tokens: output.tokens, spans: roles(source), pair: null };
+      read = { text: source, tokens: output.tokens, spans: output.tokens, pair: null };
       if (document.activeElement === input) read.pair = bracePairAt(read.tokens, input.selectionStart);
       paintRead();
       if (outlineList instanceof HTMLElement) renderOutline(outlineList, outline(source), jump);

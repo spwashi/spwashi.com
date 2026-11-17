@@ -1,16 +1,16 @@
 // Written by workers/spw-quest/carry-arcs.mjs from the site's history; do not edit by hand.
 // Refresh it by running the carry; the page in assets/arcs/ is rendered from it (src/arcs.js).
 export const ARCS = Object.freeze({
-  "asOf": "2026-11-10",
+  "asOf": "2026-11-17",
   "windows": [
     7,
     30,
     90
   ],
   "total": [
-    9,
-    22,
-    862
+    23,
+    43,
+    681
   ],
   "lenses": [
     {
@@ -25,36 +25,80 @@ export const ARCS = Object.freeze({
       "rising": false
     },
     {
-      "key": "reading",
+      "key": "record",
       "counts": [
-        1,
-        1,
-        15
+        2,
+        2,
+        4
       ],
-      "example": "math[reading]{picture.then.formalism}(turn)<paragraph>",
-      "route": "/topics/math/",
-      "rising": false
+      "example": "screenshot[record]{ask.offer.agreement.reference}",
+      "route": "/",
+      "rising": true
+    },
+    {
+      "key": "instrument",
+      "counts": [
+        2,
+        2,
+        2
+      ],
+      "example": "room[instrument]{question;answer;screenshot}",
+      "route": "/design/experiments/",
+      "rising": true
+    },
+    {
+      "key": "playable",
+      "counts": [
+        2,
+        2,
+        2
+      ],
+      "example": "library[playable]{role.artifact.evidence}",
+      "route": "/",
+      "rising": true
+    },
+    {
+      "key": "preview",
+      "counts": [
+        2,
+        2,
+        2
+      ],
+      "example": "specimen[preview]{source,crop,caption,frame}",
+      "route": "/design/cards/render/",
+      "rising": true
     },
     {
       "key": "atlas",
       "counts": [
+        0,
         1,
-        1,
-        8
+        7
       ],
       "example": "operator[atlas]{prime;traverse;precipitate}(brace)<anchor>",
       "route": "/topics/software/spw/",
       "rising": false
     },
     {
-      "key": "play",
+      "key": "reading",
+      "counts": [
+        0,
+        1,
+        6
+      ],
+      "example": "math[reading]{picture.then.formalism}(turn)<paragraph>",
+      "route": "/topics/math/",
+      "rising": false
+    },
+    {
+      "key": "pair",
       "counts": [
         1,
         1,
-        8
+        5
       ],
-      "example": "practice[play]{museum}",
-      "route": "/about/",
+      "example": "card[pair]{subject;caption;frame}",
+      "route": "/design/cards/",
       "rising": false
     },
     {
@@ -69,58 +113,14 @@ export const ARCS = Object.freeze({
       "rising": false
     },
     {
-      "key": "ask",
-      "counts": [
-        0,
-        1,
-        4
-      ],
-      "example": "folio[ask]{card.reply}<studio>",
-      "route": "/design/folios/october-2026/",
-      "rising": false
-    },
-    {
-      "key": "seed",
+      "key": "surface",
       "counts": [
         1,
         1,
-        2
+        5
       ],
-      "example": "prompt[seed]{inspect.prime.rehearse}<workbench>",
-      "route": "/",
-      "rising": false
-    },
-    {
-      "key": "wednesday",
-      "counts": [
-        1,
-        1,
-        2
-      ],
-      "example": "arrive[wednesday]{table.wonder}<pantry>",
-      "route": "/town/",
-      "rising": false
-    },
-    {
-      "key": "hook",
-      "counts": [
-        0,
-        0,
-        47
-      ],
-      "example": "home[hook]{software.art.practice}(atlas)<person>",
-      "route": "/",
-      "rising": false
-    },
-    {
-      "key": "mode",
-      "counts": [
-        0,
-        0,
-        25
-      ],
-      "example": "topics[mode]{open.sit}<display>",
-      "route": "/topics/",
+      "example": "material[surface]{press ~> answer}",
+      "route": "/design/materials/",
       "rising": false
     }
   ],
@@ -139,7 +139,7 @@ export const ARCS = Object.freeze({
     {
       "key": "paragraph",
       "counts": [
-        1,
+        0,
         1,
         4
       ],
@@ -150,7 +150,7 @@ export const ARCS = Object.freeze({
     {
       "key": "anchor",
       "counts": [
-        1,
+        0,
         1,
         3
       ],
@@ -170,6 +170,17 @@ export const ARCS = Object.freeze({
       "rising": false
     },
     {
+      "key": "note",
+      "counts": [
+        1,
+        1,
+        2
+      ],
+      "example": "curriculum[overnight]{expect.check}(question)<note>",
+      "route": "/curriculum/",
+      "rising": false
+    },
+    {
       "key": "studio",
       "counts": [
         0,
@@ -178,17 +189,6 @@ export const ARCS = Object.freeze({
       ],
       "example": "folio[ask]{card.reply}<studio>",
       "route": "/design/folios/october-2026/",
-      "rising": false
-    },
-    {
-      "key": "learn",
-      "counts": [
-        0,
-        0,
-        16
-      ],
-      "example": "count[lab]{paths.beats}<learn>",
-      "route": "/topics/math/combinatorics/",
       "rising": false
     },
     {
@@ -214,17 +214,6 @@ export const ARCS = Object.freeze({
       "rising": false
     },
     {
-      "key": "display",
-      "counts": [
-        0,
-        0,
-        7
-      ],
-      "example": "lens[seat]{choose}<display>",
-      "route": "/design/components/",
-      "rising": false
-    },
-    {
       "key": "india",
       "counts": [
         0,
@@ -234,15 +223,37 @@ export const ARCS = Object.freeze({
       "example": "theory[nyaya]{pramana.inference.example}<india>",
       "route": "/topics/math/logic/",
       "rising": false
+    },
+    {
+      "key": "cell",
+      "counts": [
+        0,
+        0,
+        5
+      ],
+      "example": "pattern[light_harvesting]{pigment.electron.donor}<cell>",
+      "route": "/topics/biochemistry/",
+      "rising": false
     }
   ],
   "marks": [
+    {
+      "key": "~",
+      "counts": [
+        1,
+        1,
+        2
+      ],
+      "example": "~prompt[address]{material.relation.ladder}<midjourney>",
+      "route": "/about/domains/texture.website/",
+      "rising": false
+    },
     {
       "key": "?",
       "counts": [
         0,
         0,
-        11
+        4
       ],
       "example": "?unsure[notice]<myself>",
       "route": "/care/",
@@ -255,7 +266,7 @@ export const ARCS = Object.freeze({
       "counts": [
         0,
         7,
-        39
+        33
       ],
       "example": "folio[ask]{card.reply}<studio>",
       "route": "/design/folios/october-2026/",
@@ -264,29 +275,51 @@ export const ARCS = Object.freeze({
     {
       "key": "arrive",
       "counts": [
-        4,
+        0,
         4,
         4
       ],
       "example": "arrive[wednesday]{table.wonder}<pantry>",
       "route": "/town/",
+      "rising": false
+    },
+    {
+      "key": "library",
+      "counts": [
+        2,
+        2,
+        2
+      ],
+      "example": "library[playable]{role.artifact.evidence}",
+      "route": "/",
       "rising": true
     },
     {
-      "key": "quest",
+      "key": "prompt",
       "counts": [
-        0,
+        1,
         2,
-        13
+        2
       ],
-      "example": "quest[invitation]{mark.braces}<door>",
-      "route": "/projects/spw-workbench/",
+      "example": "~prompt[address]{material.relation.ladder}<midjourney>",
+      "route": "/about/domains/texture.website/",
       "rising": false
+    },
+    {
+      "key": "screenshot",
+      "counts": [
+        2,
+        2,
+        2
+      ],
+      "example": "screenshot[record]{ask.offer.agreement.reference}",
+      "route": "/",
+      "rising": true
     },
     {
       "key": "practice",
       "counts": [
-        1,
+        0,
         1,
         29
       ],
@@ -297,7 +330,7 @@ export const ARCS = Object.freeze({
     {
       "key": "materials",
       "counts": [
-        1,
+        0,
         1,
         21
       ],
@@ -306,20 +339,20 @@ export const ARCS = Object.freeze({
       "rising": false
     },
     {
-      "key": "math",
+      "key": "card",
       "counts": [
         1,
         1,
-        4
+        9
       ],
-      "example": "math[reading]{picture.then.formalism}(turn)<paragraph>",
-      "route": "/topics/math/",
+      "example": "card[pair]{subject;caption;frame}",
+      "route": "/design/cards/",
       "rising": false
     },
     {
       "key": "operator",
       "counts": [
-        1,
+        0,
         1,
         4
       ],
@@ -328,71 +361,49 @@ export const ARCS = Object.freeze({
       "rising": false
     },
     {
-      "key": "panel",
-      "counts": [
-        0,
-        1,
-        2
-      ],
-      "example": "panel[october]{face.stack}<shelf>",
-      "route": "/design/folios/october-2026/",
-      "rising": false
-    },
-    {
-      "key": "prompt",
+      "key": "runtime",
       "counts": [
         1,
         1,
-        2
+        3
       ],
-      "example": "prompt[seed]{inspect.prime.rehearse}<workbench>",
-      "route": "/",
-      "rising": false
-    },
-    {
-      "key": "home",
-      "counts": [
-        0,
-        0,
-        34
-      ],
-      "example": "home[live]{season.close}(production)<now>",
-      "route": "/",
+      "example": "runtime[inoculant]{portable;reversible;transparent}",
+      "route": "/design/runtime/",
       "rising": false
     }
   ],
   "shapes": [
     {
+      "key": "word[lens]{body}",
+      "counts": [
+        20,
+        22,
+        316
+      ],
+      "example": "runtime[inoculant]{portable;reversible;transparent}",
+      "route": "/design/runtime/",
+      "rising": true
+    },
+    {
       "key": "word[lens]{body}<point>",
       "counts": [
-        6,
-        13,
-        293
+        1,
+        12,
+        246
       ],
-      "example": "prompt[seed]{inspect.prime.rehearse}<workbench>",
-      "route": "/",
+      "example": "color[contrast]{field,paper,ink,signal}<token>",
+      "route": "/design/theme/",
       "rising": false
     },
     {
       "key": "word[lens]{body}<point>(scene)",
       "counts": [
-        2,
-        7,
+        1,
+        8,
         78
       ],
-      "example": "math[reading]{picture.then.formalism}(turn)<paragraph>",
-      "route": "/topics/math/",
-      "rising": false
-    },
-    {
-      "key": "word[lens]{body}",
-      "counts": [
-        1,
-        2,
-        430
-      ],
-      "example": "practice[play]{museum}",
-      "route": "/about/",
+      "example": "curriculum[overnight]{expect.check}(question)<note>",
+      "route": "/curriculum/",
       "rising": false
     },
     {
@@ -400,43 +411,10 @@ export const ARCS = Object.freeze({
       "counts": [
         0,
         0,
-        29
+        27
       ],
       "example": "learning[depth]{transfer} ~ service[ritual]{repair.timing}",
       "route": "/topics/fields/teaching/",
-      "rising": false
-    },
-    {
-      "key": "?word{body}<point>",
-      "counts": [
-        0,
-        0,
-        9
-      ],
-      "example": "?about{kin}<learn>",
-      "route": "/topics/",
-      "rising": false
-    },
-    {
-      "key": "{body}<point>(scene)",
-      "counts": [
-        0,
-        0,
-        6
-      ],
-      "example": "(look){stage}<learn>",
-      "route": "/topics/",
-      "rising": false
-    },
-    {
-      "key": "word{body}<point>",
-      "counts": [
-        0,
-        0,
-        6
-      ],
-      "example": "rooms{travel}<navigate>",
-      "route": "/topics/",
       "rising": false
     },
     {
@@ -448,6 +426,17 @@ export const ARCS = Object.freeze({
       ],
       "example": "honk[bonk]{signal}",
       "route": "/about/",
+      "rising": false
+    },
+    {
+      "key": "?word{body}<point>",
+      "counts": [
+        0,
+        0,
+        3
+      ],
+      "example": "?about{kin}<learn>",
+      "route": "/topics/",
       "rising": false
     },
     {
