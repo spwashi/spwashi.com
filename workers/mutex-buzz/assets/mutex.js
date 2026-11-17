@@ -3,7 +3,11 @@
 // (lock.js, carried from src/ by carry.mjs). Written by hand. With scripts off
 // the pages list the month's three holds and draw the mutex at rest.
 import { DIAL, countdown, dialOf, holderFor, lastDay, monthDay, nowLine, turnLine, turnOf } from "/lock.js";
-import { mountSetRing, slug as pathWord, spw64 } from "/set-ring.js";
+import { hasSetRing, mountSetRing, openSetRing, slug as pathWord, spw64 } from "/set-ring.js";
+import { attachPinch } from "/pinch.js";
+
+/** Go to a page once the pinch's cue has been seen. */
+const goTo = (href) => setTimeout(() => window.location.assign(href), 260);
 
 const $ = (id) => document.getElementById(id);
 const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -91,6 +95,12 @@ if (dial) {
     "attention.productions": { href: `https://attention.productions/${pathWord(holder.title)}?shot=close-up&light=lamplight&focus=center`, says: `${holder.title}, as a shot` },
     "spw.quest": { href: `https://spw.quest/build#spw64=${spw64($("lock-spw")?.textContent ?? "")}`, says: "the rule, taken apart a slot at a time" },
   }));
+  // The set's pinch: in is the holder, filling the frame; out is the set.
+  attachPinch(dial, {
+    plane: "lock",
+    toward: (direction) => (direction === "in" ? "the holder" : hasSetRing() ? "the set" : null),
+    go: (direction) => (direction === "in" ? goTo("/now/") : openSetRing()),
+  });
 }
 
 const image = $("now-image");
@@ -101,6 +111,8 @@ if (image) {
   image.height = holder.height;
   image.hidden = false;
   document.title = `${holder.title} holds the lock — mutex.buzz`;
+  // Out from the holder is the lock, unless another page frames this one: then the frame stays where it is.
+  if (window.top === window) attachPinch($("frame"), { plane: "holder", toward: (direction) => (direction === "out" ? "the lock" : null), go: () => goTo("/") });
 }
 
 /** Show an hour's detail of the holder: in the dial's cell, or across /now/. */

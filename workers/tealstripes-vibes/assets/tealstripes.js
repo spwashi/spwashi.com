@@ -5,7 +5,8 @@
 // shell shows the vibe it was written with.
 import { FACETS, LOCK, SEEDS, SHADER, SLOTS, TUNING, holdAt, hourOf, lockVibe, canonicalPath, captionOf, choicesFor, expressionOf, maskLabel, readAddress, said, tune, tuningFor, tuningQuery, valueOf, vibe, vibeCss } from "/vibe.js";
 
-import { mountSetRing, nearestLight, slug as pathWord, spw64 } from "/set-ring.js";
+import { hasSetRing, mountSetRing, nearestLight, openSetRing, slug as pathWord, spw64 } from "/set-ring.js";
+import { attachPinch, wasPinch } from "/pinch.js";
 
 const $ = (id) => document.getElementById(id);
 const root = document.documentElement;
@@ -129,6 +130,26 @@ if (place.kind === "unknown") {
       "spw.quest": { href: `https://spw.quest/build#spw64=${spw64(expression)}`, says: "this vibe's line, taken apart a slot at a time" },
     };
   }, { corner: "top" });
+  // The set's pinch: in, one more of the seed's facets comes through (in their order); out, the last one goes back to the ground; out past the ground is the set.
+  attachPinch([$("field"), $("gl")], {
+    plane: "vibe",
+    toward: (direction) => { if (held) return null; const mask = maskStep(place.mask, direction); return mask === null ? (direction === "out" && hasSetRing() ? "the set" : null) : `${place.seed}/${maskLabel(mask)}`; },
+    go: (direction) => {
+      const mask = maskStep(place.mask, direction);
+      if (mask === null) return openSetRing();
+      place = { ...place, kind: "vibe", mask, href: `https://tealstripesvibes.com${canonicalPath({ ...place, mask })}` };
+      keep();
+    },
+  });
+}
+
+/** The mask a step in (the first facet not yet through) or out (the last one through) lands on, in the facets' order; null past the whole seed or the ground. */
+function maskStep(mask, direction) {
+  const through = FACETS.filter((f) => mask.includes(f.letter));
+  const next = direction === "in" ? FACETS.filter((f) => !mask.includes(f.letter)).slice(0, 1) : [];
+  if (direction === "in" ? !next.length : !through.length) return null;
+  const kept = direction === "in" ? [...through, ...next] : through.slice(0, -1);
+  return FACETS.filter((f) => kept.includes(f)).map((f) => f.letter).join("");
 }
 
 /* ── the expression's handles ───────────────────────────── */
@@ -265,7 +286,7 @@ function wireSlots() {
   let start = null;
   $("field").addEventListener("pointerdown", (event) => { start = { x: event.clientX, y: event.clientY }; });
   addEventListener("pointerup", (event) => {
-    if (!start || !held) { start = null; return; }
+    if (!start || !held || wasPinch()) { start = null; return; }
     const dx = event.clientX - start.x, dy = event.clientY - start.y;
     start = null;
     if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.5) scan(dx < 0 ? 1 : -1);

@@ -46,6 +46,17 @@ const SVG = "http://www.w3.org/2000/svg";
 const R = 15;
 const at = (i) => { const a = (i / SET.length) * Math.PI * 2 - Math.PI / 2; return [22 + R * Math.cos(a), 22 + R * Math.sin(a)]; };
 
+/** Whether the page has the ring, so a pinch out past its widest step can name the set. */
+export const hasSetRing = () => Boolean(document.getElementById("set-ring"));
+
+/** Open the ring, as a pinch out past a page's widest step does; false when there is no ring on the page. */
+export function openSetRing() {
+  const button = document.querySelector("#set-ring .set-ring-button");
+  if (!button) return false;
+  if (button.getAttribute("aria-expanded") !== "true") button.click();
+  return true;
+}
+
 /**
  * Mount the ring on a page. `here` is this site's host; `carry()` returns, for
  * the other hosts it can carry to, { href, says }; a host it leaves out is a
