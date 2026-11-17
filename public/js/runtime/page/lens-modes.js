@@ -61,6 +61,24 @@ const queryModePanels = (group, root = document) =>
 
 export const LENS_MODE_SETTLE_MS = 720;
 
+/* The filter is a choice to hide, said in the words the button shows.
+   The seat itself only leans the page. The accessible name keeps the
+   visible label inside it. */
+export function lensFilterToggleCopy(filtered) {
+  if (filtered) {
+    return {
+      state: 'matched',
+      label: 'Show every card',
+      title: 'Show every card again.',
+    };
+  }
+  return {
+    state: 'all',
+    label: 'Hide other cards',
+    title: 'Hide other cards that do not match this lens. The choice stays with you.',
+  };
+}
+
 /* One writer. A click, an arrow key, the console, a brace edge, a probe sigil,
    and a query all ask for a lens through this request; the core owner
    (site-core-minimal) answers by writing. Nothing else sets aria-pressed,

@@ -11,6 +11,7 @@ import {
   findLensModeSwitches,
   hasLensMode,
   parseLensModeQuery,
+  lensFilterToggleCopy,
   resolveLensRovingIndex,
   resolveSustainedLensChoice,
   writeLensModeState,
@@ -75,10 +76,14 @@ function bindModeGroups(ctx) {
 
   const syncFilterToggleControls = () => {
     const isFiltered = document.documentElement.dataset.spwLensFilter === 'matched';
+    const copy = lensFilterToggleCopy(isFiltered);
     for (const toggle of safeQueryAll('[data-spw-lens-filter-toggle]')) {
       toggle.hidden = false;
       toggle.setAttribute('aria-pressed', String(isFiltered));
-      toggle.dataset.spwFilterState = isFiltered ? 'matched' : 'all';
+      toggle.dataset.spwFilterState = copy.state;
+      if (toggle.textContent !== copy.label) toggle.textContent = copy.label;
+      if (toggle.getAttribute('title') !== copy.title) toggle.setAttribute('title', copy.title);
+      if (toggle.getAttribute('aria-label') !== copy.title) toggle.setAttribute('aria-label', copy.title);
     }
   };
 
