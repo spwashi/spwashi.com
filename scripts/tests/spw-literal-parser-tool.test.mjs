@@ -31,6 +31,11 @@ describe('literal Spw parser proof', () => {
     assert.ok(classes.every((name) => name.startsWith(READER_CLASS_PREFIX)), 'no role class meets a site class');
     assert.deepEqual(editor.anchors.map((anchor) => anchor.name), ['convention_profile']);
     assert.ok(editor.outline.some((symbol) => symbol.name === '#>convention_profile'));
+
+    const titled = readAsEditor('^seed[Title]{\n  #!intent #:layer #>ref ~#aspect #[x]\n}\n^seed["Custom Title"]{\n  note: "ok"\n}');
+    assert.match(titled.html, /data-op="action">#!intent<\/span>/);
+    assert.match(titled.html, /data-op="mode">\[<\/span>Title<span[^>]*data-op="mode">\]<\/span>/);
+    assert.match(titled.html, /data-op="mode">\[<\/span><span class="spw-role-string">&quot;Custom Title&quot;<\/span><span[^>]*data-op="mode">\]<\/span>/);
   });
 
   it('produces a real AST and lossless token reconstruction', () => {

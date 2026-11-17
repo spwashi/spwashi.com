@@ -37,7 +37,10 @@ const INFO_BY_TYPE = Object.fromEntries(OPERATOR_DEFINITIONS.map(({ type, label 
 ]));
 
 export const OPERATOR_INFO = Object.freeze({
-  ...Object.fromEntries(OPERATOR_DEFINITIONS.map(({ prefix, type }) => [prefix, INFO_BY_TYPE[type]])),
+  ...Object.fromEntries(OPERATOR_DEFINITIONS.map(({ prefix, type, label }) => [
+    prefix,
+    Object.freeze({ type, label, ...MEMO_BY_TYPE[type] }),
+  ])),
   ...INFO_BY_TYPE,
   ...Object.fromEntries(Object.entries(OPERATOR_TYPE_ALIASES)
     .filter(([, type]) => INFO_BY_TYPE[type])

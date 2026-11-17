@@ -99,7 +99,7 @@ function operatorToken(value, start, end) {
 }
 
 function canStartOperator(source, index, sigil) {
-  if (sigil === '#>' || sigil === '#:' || sigil === '>') return true;
+  if (sigil === '#>' || sigil === '#:' || sigil === '#!' || sigil === '>') return true;
   const immediate = source[index + sigil.length] || '';
   if (OPERATOR_SUBJECT_RE.test(immediate)) return true;
   if (sigil !== '?') return false;

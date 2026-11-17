@@ -111,6 +111,11 @@ export const PEER_SIGILS = Object.freeze([
     "color": "--op-layer-color"
   },
   {
+    "sigil": "#!",
+    "type": "action",
+    "color": "--op-action-color"
+  },
+  {
     "sigil": "#",
     "type": "vibration",
     "color": "--op-vibration-color"

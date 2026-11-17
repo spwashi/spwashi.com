@@ -68,4 +68,10 @@ test('a seed written without its mark, as a model writes one, still opens as a c
   assert.equal(readSeedText('^seed[Session year:2026]{\n  scene: "a table"\n}').mark, 'year:2026'.slice(5));
   const earliest = readSeedText('^seed[Wonder.Prompt]{\n  question: "why"\n}\n^seed[Session year:2026]{\n  scene: "a table"\n}');
   assert.equal(earliest.templateKey, 'wonder');
+  const quotedKey = readSeedText('^seed["Session" year:"2026"]{\n  scene: "a table"\n}');
+  assert.equal(quotedKey.templateKey, 'session');
+  assert.equal(quotedKey.mark, '2026');
+  assert.equal(readSeedText('^seed["Session"]{\n  scene: "a table"\n}').templateKey, 'session');
+  assert.equal(readSeedText('^seed["A rainy porch session"]{\n  scene: "porch"\n}'), null);
+  assert.equal(readSeedText('^seed[Title]{\n  scene: "porch"\n}'), null);
 });

@@ -54,6 +54,21 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     mnemonic: 'Set the mood.'
   },
   {
+    pattern: /^#!/,
+    type: 'action',
+    label: 'intent tag',
+    prefix: '#!',
+    role: 'intent_tag',
+    physics: 'mood impulse particle',
+    intent: 'act',
+    interaction: 'mark an active intent or mood particle on the resonance plane',
+    family: 'operative',
+    speech: 'intent',
+    reversibility: 'committing',
+    pronunciation: 'intent',
+    mnemonic: 'Declare the stance.'
+  },
+  {
     pattern: /^#/,
     type: 'vibration',
     label: 'vibration',
@@ -553,7 +568,7 @@ const OPERATOR_GEOMETRY = Object.freeze({
   }),
 });
 
-const OPERATOR_PREFIX_RE = /^(#>|#:|#|\.|\^|~|\?|@|\*|&|=|\$|%|!|>|<|\(|\[|\{)/;
+const OPERATOR_PREFIX_RE = /^(#>|#:|#!|#|\.|\^|~|\?|@|\*|&|=|\$|%|!|>|<|\(|\[|\{)/;
 
 
 /* ==========================================================================

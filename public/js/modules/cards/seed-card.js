@@ -175,13 +175,26 @@ export function readSeedText(source) {
   const text = String(source ?? '');
   let found = null;
   for (const [key, template] of Object.entries(SEED_TEMPLATES)) {
-    // A seed may leave its mark out, ^seed[Session], as one written by hand or
-    // by a model does: it does not know the year the card will be filed under.
-    const bare = `${template.sigil.replace(/\s+\w+:$/, '')}]`;
-    const marked = text.indexOf(template.sigil);
-    const plain = text.indexOf(bare);
-    const at = marked >= 0 && (plain < 0 || marked < plain) ? marked : plain;
-    if (at >= 0 && (!found || at < found.at)) found = { at, key, template, head: at === marked ? template.sigil.length : bare.length - 1 };
+    // A seed names its schema key symbolically (^seed[Session] or ^seed[Session year:2026]),
+    // and may also quote the schema key (^seed["Session"] / ^seed["Session" year:2026]).
+    // Arbitrary free-form titles (^seed["Custom Title"]) are not card templates and return null.
+    const unquotedBase = template.sigil.replace(/\s+\w+:$/, '');
+    const stem = unquotedBase.slice('^seed['.length);
+    const markAttr = template.sigil.slice(unquotedBase.length);
+    const bare = `${unquotedBase}]`;
+    const quotedBase = `^seed["${stem}"`;
+    const quotedMarkedSigil = markAttr ? `${quotedBase}${markAttr}` : '';
+    const quotedPlain = `${quotedBase}]`;
+    const candidates = [
+      [template.sigil, template.sigil.length],
+      [bare, bare.length - 1],
+      ...(quotedMarkedSigil ? [[quotedMarkedSigil, quotedMarkedSigil.length]] : []),
+      [quotedPlain, quotedPlain.length - 1],
+    ];
+    for (const [needle, head] of candidates) {
+      const at = text.indexOf(needle);
+      if (at >= 0 && (!found || at < found.at)) found = { at, key, template, head };
+    }
   }
   if (!found) return null;
   const { at, key, template, head } = found;
@@ -199,10 +212,12 @@ export function readSeedText(source) {
     line.lastIndex = end;
     if (/^\s*\}/.test(text.slice(end))) break;
   }
+  const rawMark = text.slice(at + head, close).trim();
+  const mark = /^".*"$/.test(rawMark) ? rawMark.slice(1, -1) : rawMark;
   return {
     templateKey: key,
     template,
-    mark: text.slice(at + head, close).trim(),
+    mark,
     values,
     filled: Object.values(values).filter((value) => value.trim()).length,
   };
