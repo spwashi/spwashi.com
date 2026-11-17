@@ -31,7 +31,15 @@ export const SHELF_LINKS = Object.freeze({
   "role": [{"name":"pipeline","file":"pipeline.spw","at":""},{"name":"records","file":"records.spw","at":""},{"name":"surfaces","file":"surfaces.spw","at":""}],
   "levels": [{"name":"ticket","file":"records.spw","at":"ticket"},{"name":"onboarding","file":"onboarding.spw","at":""}],
   "onboarding": [{"name":"pipeline","file":"pipeline.spw","at":""},{"name":"review","file":"review.spw","at":"register"},{"name":"records","file":"records.spw","at":""},{"name":"surfaces","file":"surfaces.spw","at":""},{"name":"levels","file":"levels.spw","at":""}],
-  "cinema": [{"name":"notes","file":"notebook.spw","at":""},{"name":"feedback","file":"review.spw","at":"valence"}]
+  "cinema": [{"name":"notes","file":"notebook.spw","at":""},{"name":"feedback","file":"review.spw","at":"valence"}],
+  "checkin": [],
+  "decision": [{"name":"records","file":"records.spw","at":""}],
+  "gathering": [{"name":"debate","file":"debate.spw","at":""}],
+  "incident": [{"name":"pipeline","file":"pipeline.spw","at":""},{"name":"records","file":"records.spw","at":"ticket"}],
+  "critique": [{"name":"perspectives","file":"perspectives.spw","at":""},{"name":"headings","file":"headings.spw","at":""}],
+  "negotiation": [{"name":"incident","file":"incident.spw","at":""},{"name":"gradient","file":"gradient.spw","at":""}],
+  "charter": [{"name":"gathering","file":"potluck.spw","at":""},{"name":"debate","file":"debate.spw","at":""}],
+  "synthesis": [{"name":"calibration","file":"calibration.spw","at":""},{"name":"incident","file":"incident.spw","at":""}]
 });
 
 /** The /learn panels (indexes into STEPS) whose lines use each operator and each brace pair. */

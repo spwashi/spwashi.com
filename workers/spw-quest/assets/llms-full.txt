@@ -89,7 +89,7 @@ Every address below answers with a page that reads with no script, except Canvas
 - [Find](https://spw.quest/specimens?q=recipe%5B*%5D): You want every line on spwashi.com with some shape: the same word through other lenses, the same lens on other words. q: slots to match, with * for any value. The page is about 280 KB whatever is asked: the answer comes first, and the whole shelf follows it. Example: q = recipe[*].
 - [Compare](https://spw.quest/specimens?a=h-capsule&b=h-induct_join): You hold two shelf lines and want the slots they share and the slot where they part. a, b: shelf ids, as Find prints them. The page is about 280 KB whatever is asked: the answer comes first, and the whole shelf follows it. Example: a = h-capsule, b = h-induct_join.
 - [Take apart](https://spw.quest/build?script=~door%5Bajar%5D%7Bhinge%7D): You hold a file, or a line among others, and want what a tool reads from it and each slot's alternatives from the file's own lines. script: up to 1800 characters in an address. line: which of its lines to take apart, counted from 1. Example: script = ~door[ajar]{hinge}.
-- [Read a file](https://spw.quest/?example=record): You want a whole example of a kind of file (a log, a catalog record, a question with its probe) and what a tool reads from it. example: notebook, record, vocabulary, question, script, revision, persona, calibration, perspectives, loops, gradient, debate, syntax, headings, perform, numbers, outline, recurrence, laws, pantry, pipeline, review, records, surfaces, primitives, algorithms, role, levels, onboarding or cinema. at: a name in the file, to land on its line. Example: example = record.
+- [Read a file](https://spw.quest/?example=record): You want a whole example of a kind of file (a log, a catalog record, a question with its probe) and what a tool reads from it. example: notebook, record, vocabulary, question, script, revision, persona, calibration, perspectives, loops, gradient, debate, syntax, headings, perform, numbers, outline, recurrence, laws, pantry, pipeline, review, records, surfaces, primitives, algorithms, role, levels, onboarding, cinema, checkin, decision, gathering, incident, critique, negotiation, charter or synthesis. at: a name in the file, to land on its line. Example: example = record.
 - [Check a line](https://spw.quest/read?step=act&line=~door): You are learning one mark and want a single line checked against that panel's rule. step: write, act, hold, name, point, ask or grow. line: up to 400 characters. Example: step = act, line = ~door.
 - [At rest](https://spw.quest/physics?line=home%5Bhook%5D%7Bsoftware.art%7D): You want a line drawn as bodies at rest, with the laws that placed them. line: one line. Example: line = home[hook]{software.art}.
 - [Canvas](https://spw.quest/canvas?line=home%5Bhook%5D%7Bsoftware.art%7D): You want a person to see a line laid out as a force-directed canvas on factshift.center. It draws with scripts, so a reader without them gets only its chrome: use Pivot to read the line. line: up to 400 characters, or s: a shelf id. Answers with a redirect to factshift.center. Example: line = home[hook]{software.art}.
@@ -109,7 +109,7 @@ Every address below answers with a page that reads with no script, except Canvas
 
 ## Example files
 
-lab-notebook.spw: Chronological empirical log: dated entries categorized by epistemological kind, allowing automated synthesis of bench progression across cataloging, experimental trials, metric measurements, and landed invariants.
+lab-notebook.spw: A dated work log tagged by what happened: catalog something noticed, try an alternative, measure what changed, and land the fix.
 
     #>lab_notebook
     #:log #!components #!themes
@@ -123,7 +123,7 @@ lab-notebook.spw: Chronological empirical log: dated entries categorized by epis
      >>[2026-11-06 17:30] land — one inset for every panel on a phone
     }
 
-chip.spw: Bibliographic catalog record grounded in information science: title, cross-reference variants, categorical subjects, and evidentiary provenance.
+chip.spw: A compact library card for one UI component: canonical name, aliases across teams, searchable subjects, and links to related specs.
 
     #>component_chip
     #:record #!component
@@ -138,7 +138,7 @@ chip.spw: Bibliographic catalog record grounded in information science: title, c
       provenance = `cataloged 2026-11-06 from three screens`
     }[reg=facet]
 
-themes.spw: Controlled vocabulary and ontological schema: canonical preferred terms, non-preferred synonyms, and scoping notes ensuring conceptual alignment.
+themes.spw: A shared glossary so designers and engineers use one canonical term instead of drifting between synonyms.
 
     #>theme_vocabulary
     #:vocabulary #!themes
@@ -155,7 +155,7 @@ themes.spw: Controlled vocabulary and ontological schema: canonical preferred te
       broader = `metamaterial`
     }[reg=facet]
 
-experiment.spw: Metacognitive hypothesis testing: an epistemic inquiry pairing an interrogative wonder with an explicit hypothesis, expected outcome, and empirical verification probe.
+experiment.spw: A testable UI question before opening a PR: state the hypothesis, predict the failing edge case, and name the screenshot or check that settles it.
 
     #>wonder_ring_on_glass
     @chip: ~"./chip.spw"
@@ -167,7 +167,7 @@ experiment.spw: Metacognitive hypothesis testing: an epistemic inquiry pairing a
       $%[ring.reads, pill.reads, neither]
     }
 
-session.spw: Procedural session script: sequential operational transitions modeled as ordered path steps, enabling step-by-step execution tracking and state verification.
+session.spw: A short repeatable checklist in execution order, linking to the record it operates on.
 
     #>catalog_session
     #:script #!session
@@ -176,7 +176,7 @@ session.spw: Procedural session script: sequential operational transitions model
     steps = path{~gather; *describe; ^classify; !shelve}
     gather = shelf[ui]{chip.card}<record>
 
-change.spw: Tripartite change episode: context scene, state transformation, and empirical verification criteria—the syntactic contract of every repository mutation.
+change.spw: A three-part changelog or commit contract: what was broken in context, what changed, and how you verified it.
 
     #[episode]{
       ~[scene]{ a panel body drew a second wall on a phone, and its text sat on the line }
@@ -184,7 +184,7 @@ change.spw: Tripartite change episode: context scene, state transformation, and 
       *[verify]{ heading, body and first line share one edge on fourteen frames }
     }
 
-archivist.spw: Situated epistemic persona: communicative voice, observational locus, epistemic axioms, and persistent heuristic habits held in regard.
+archivist.spw: A working persona card for an assistant or teammate: tone, vantage point, core promise, and daily habit.
 
     #>archivist_persona
     #:persona #!library
@@ -196,7 +196,7 @@ archivist.spw: Situated epistemic persona: communicative voice, observational lo
       stayed = `the habit of naming where each thing came from`
     }[reg=facet]
 
-calibration.spw: Metacognitive calibration model: pre-task prediction vs. post-task recall with scalar confidence assessments, quantified by a dimensional gradient %.
+calibration.spw: A confidence check before and after studying or shipping: capture prediction errors early so estimates improve next round.
 
     #>calibration
     #:study #!metacognition
@@ -214,7 +214,7 @@ calibration.spw: Metacognitive calibration model: pre-task prediction vs. post-t
 
     %confidence{before ~> after}
 
-perspectives.spw: Multi-agent deictic perspectivism: examining one focal chapter across four situated epistemic vantage points, aggregated into a unified thematic subject.
+perspectives.spw: Four viewpoints on the same material — self, peer, future self, tutor — showing where each reader sees something different.
 
     #>four_readings
     #:reflection #!metacognition
@@ -227,7 +227,7 @@ perspectives.spw: Multi-agent deictic perspectivism: examining one focal chapter
 
     &ch2{recall, spacing, kept, gap}
 
-loops.spw: Collaborative workflow orchestration: concurrent persona execution loops coordinated through serial handoff gates and inter-loop communicative relays.
+loops.spw: Parallel team tracks that meet at explicit handoffs: spot the single dependency blocking another collaborator before work stalls.
 
     #>persona_loops
     #:board #!loops #!production
@@ -249,7 +249,7 @@ loops.spw: Collaborative workflow orchestration: concurrent persona execution lo
       !probe{ "list what each loop reads; what another loop writes goes in the handoff" }
     }
 
-gradient.spw: Continuous epistemic gradient: parameterizing decisions along a scalar spectrum between polarized stances, replacing binary dichotomy with nuanced spatial positioning.
+gradient.spw: A spectrum of concrete middle-ground options between two extremes, helping teams locate where they actually stand.
 
     #>gradient_space
     #:board #!gradient
@@ -314,7 +314,7 @@ syntax.spw: Joins in pairs worth comparing: company and order (no order, then an
     line = home[hook]{software.art}(atlas)<record>
     turned = home[live]{software.art}(atlas)<record>
 
-headings.spw: Information organization and subject indexing: multiple competing indexing terms held in associative company, preserving ambiguity prior to catalog authorization.
+headings.spw: Candidate taxonomy terms held together before committing one label across docs, navigation, or search.
 
     #>subject_headings
     #:showcase #!indexing #!library
@@ -328,7 +328,7 @@ headings.spw: Information organization and subject indexing: multiple competing 
       !probe{ "read the three names in the brace and say which one a shelf would authorize" }
     }
 
-perform.spw: Dynamic architectural configuration: when a structural pattern performs against an operational slot, the runtime materializes its declared theme consequence.
+perform.spw: A live style directive: changing `theme` between glass, matte, and paper switches this workspace card's material on the spot.
 
     #>pattern_performance
     #:showcase #!pattern #!theme
@@ -659,4 +659,226 @@ film-stages.spw: A film student across four career stages: first-year coverage, 
     ?["Does the corridor cut carry the beat without the temp score?"]{
       ~#expect: `the eyeline turn holds attention when the music drops out`
       !probe{ "mute the score track from slate 04 to the doorway cut and screen with cold ears" }
+    }
+
+studio-sync.spw: Short (6 lines). A lightweight weekly household or shared-studio reset: what is covered, what needs restocking, and one open ask before errands.
+
+    #>studio_weekly_sync
+    #:social #!routine
+
+    @alex[kitchen]{dishes, counters}(sunday)<clear>
+    @sam[floor]{trash, recycling}(sunday)<curb>
+    $pot[shared]{%balance[42usd]; need{filter, tape, soap}}
+    ?["Who can grab oat milk before Tuesday morning?"]{
+      ~#expect: `whoever passes the corner market on Monday evening`
+      !probe{ "reply in the kitchen chat with an emoji if picked up" }
+    }
+
+adr-014.spw: Short (9 lines). A scannable one-screen architecture decision record naming options weighed, chosen boundary, cost, and reversal condition.
+
+    #>adr_014_live_updates
+    #:decision #!architecture
+    @records: ~"./records.spw"
+
+    =revisit[90d]{metrics}
+    considered = #[polling, sse, websocket][reg=set]
+    !choose[sse]{one_way, standard_http}(browser)<stream>
+    ?["When does two-way editing force a move to websockets?"]{
+      ~#expect: `when presence cursors exceed 15fps per room`
+      !probe{ "measure outbound frames per minute once collaborative cursors ship" }
+    }
+
+potluck.spw: Medium (19 lines). Social event organizing with allergy labels, transit/wheelchair access, shift handoffs, and backup seating capacity.
+
+    #>autumn_potluck
+    #:social #!event
+    @debate: ~"./debate.spw"
+
+    cap = %guests[24]{main_room}
+    access = =venue{step_free, quiet_alcove, unscented_soap}
+    hosts = {
+      nina@[welcome]{badges, pronoun_pins, coat_rack}(door)<greeting>,
+      omar@[table]{ingredient_cards, vegan_tray, nut_free_zone}(kitchen)<safety>,
+      lin@[cleanup]{compost_bins, leftovers_jars, dish_wash}(sink)<reset>
+    }
+    flow = path{~arrive[18:00]; *eat[18:45]; ^skill_share[19:45]; !pack[21:15]}
+
+    ^"notes"{
+      >>[2026-11-15 12:00] check — radiator bleed finished; side window latches cleanly
+      >>[2026-11-16 09:30] restock — added compostable containers for unclaimed leftovers
+    }
+
+    ?["Can every guest eat two mains safely without cross-contact?"]{
+      ~#expect: `two labeled nut-free vegan trays sit on a separate counter`
+      !probe{ "walk the serving table with Omar at 18:15 and verify spoon tags" }
+    }
+
+incident.spw: Medium (23 lines). Blameless production P1 postmortem mixing exact SLA numbers, a dated timeline, root cause episode, and concrete follow-ups.
+
+    #>inc_2026_11_12_checkout
+    #:postmortem #!sre
+    @pipeline: ~"./pipeline.spw"
+    @records: ~"./records.spw#ticket"
+
+    impact = ^checkout{ %p95[412ms ~> 1840ms] %errors[0.1 ~> 4.8%] $window[19m] }
+    responders = {
+      @oncall[triage]{rollback, feature_flag}<mitigate>,
+      @db_lead[diagnostics]{connection_pool, lock_wait}<root_cause>,
+      @comms[status_page]{customer_notice, merchant_eta}<trust>
+    }
+
+    #[episode]{
+      ~[scene]{ a catalog sync deployed without jitter drained checkout read replicas }
+      ![change]{ cap sync workers at 4 with exponential backoff and pool isolation }
+      *[verify]{ soak test at 3x Tuesday peak holds p95 below 380ms }
+    }
+
+    ^"timeline"{
+      >>[2026-11-12 14:02] alert — checkout p95 crossed 1200ms threshold in us-east
+      >>[2026-11-12 14:11] isolate — paused catalog sync workers; connection wait dropped
+      >>[2026-11-12 14:21] resolve — error rate returned to 0.08% across all shards
+    }
+
+reading-circle.spw: Medium (16 lines). A structured peer critique or seminar format holding generous timeboxes, concrete text citations, and unanswered questions.
+
+    #>thursday_reading_circle
+    #:social #!study
+    @perspectives: ~"./perspectives.spw"
+    @headings: ~"./headings.spw"
+
+    protocol = =session[60m]{
+      silent_read[10m],
+      descriptive_echo[15m],
+      open_questions[20m],
+      maker_response[15m]
+    }
+    stances = {
+      @first_reader[surface]{pacing, opening_hook}<clarity>,
+      @craft_peer[structure]{transitions, evidence_links}<form>,
+      @skeptic[assumption]{edge_cases, missing_voices}<rigor>
+    }
+
+    ?["Did the group name what the draft actually does before advising fixes?"]{
+      ~#expect: `fifteen minutes of descriptive echo keeps early advice from flattening intent`
+      !probe{ "ask the maker which observation in phase two surprised them most" }
+    }
+
+vendor-sla.spw: Long & detailed (36 lines). Multi-team SaaS procurement and contract negotiation reconciling security, legal, and product constraints into concrete redlines.
+
+    #>vendor_sla_negotiation
+    #:contract #!procurement
+    @incident: ~"./incident.spw"
+    @gradient: ~"./gradient.spw"
+
+    targets = ^sla{ %uptime[99.95%] %rto[4h] %rpo[15m] %p99_webhook[250ms] }
+    non_negotiable = =security{
+      soc2_type2,
+      eu_residency,
+      breach_notice[24h],
+      key_rotation[90d]
+    }
+
+    stances = {
+      @security[compliance]{audit_logs, subprocessor_notice}(pre_sign)<gate>,
+      @legal[liability]{indemnity_cap, termination_notice}(msa)<redline>,
+      @product[timeline]{sandbox_access, webhook_replay}(q4_launch)<value>
+    }
+
+    redlines = path{
+      ~request[48h_breach_window ~> 24h_breach_window];
+      =anchor[cap_2x_annual ~> cap_12m_fees];
+      ^bundle[sso_saml, scim_provisioning]{included_at_tier}
+    }
+
+    ^"rounds"{
+      >>[2026-11-04 11:00] draft — vendor standard MSA omitted subprocessor 30d objection right
+      >>[2026-11-08 15:20] revise — vendor accepted 24h breach notice and EU cluster pinning
+      >>[2026-11-13 10:15] counter — legal swapped unlimited cap for 2x fees plus data escrow
+    }
+
+    #[episode]{
+      ~[scene]{ launch slipped two weeks while security and vendor legal argued indemnity wording }
+      ![change]{ separate operational security controls from liability cap using escrow trigger }
+      *[verify]{ countersigned DPA plus passing sandbox webhook replay test before cutoff }
+    }
+
+coop-charter.spw: Long & detailed (39 lines). Community tool-library and shared press co-op governance: sliding-scale dues, tool checkout safety, conflict repair, and audit ledger.
+
+    #>eastside_tool_coop
+    #:civic #!commons
+    @gathering: ~"./potluck.spw"
+    @debate: ~"./debate.spw"
+
+    stewardship = ^membership{
+      $dues[15..45usd]{sliding_scale, work_trade_option}
+      ?badge[certified]{bandsaw, risograph, kiln}(orientation)<safety>
+      =access{keycard[7..22h], buddy_rule[power_tools]}
+    }
+
+    roles = {
+      @librarian[catalog]{barcodes, overdue_nudges, waitlist}(desk)<circulation>,
+      @mechanic[shop]{blade_tension, belt_check, calibration}(bench)<safety>,
+      @treasurer[ledger]{grants, rent_split, fee_waivers}(books)<solvency>,
+      @mediator[care]{conflict_notes, repair_circle, boundary}(room)<trust>
+    }
+
+    borrow_cycle = path{
+      ~reserve[7d];
+      ?verify_badge;
+      !checkout[log_condition];
+      *use[safe_hours];
+      %inspect[clean, sharp];
+      !return
+    }
+
+    ^"audit"{
+      >>[2026-10-18 14:00] inspect — replaced frayed cord on orbital sander before Sunday hours
+      >>[2026-11-02 19:15] policy — waived late fees during transit strike week for all members
+      >>[2026-11-14 16:40] workshop — certified 9 new risograph stewards with two-color run
+    }
+
+    ?["Do sliding-scale dues and two annual grants cover shop rent plus blades?"]{
+      ~#expect: `38 active members at 26usd median plus grant headroom keeps 3 months reserve`
+      !probe{ "reconcile October bank statements against tool replacement invoices at open meeting" }
+    }
+
+field-study.spw: Long & detailed (38 lines). Research synthesis turning 14 recorded sessions into uncertainty bounds, opposing mental models, and an actionable product bet.
+
+    #>checkout_accessibility_study
+    #:research #!ux
+    @calibration: ~"./calibration.spw"
+    @incident: ~"./incident.spw"
+
+    sample = ^cohort{
+      %sessions[14]{screen_reader[5], low_vision[4], keyboard_only[3], voice[2]}
+      %completion[0.64(0.12)]{coupon_flow}(mobile)
+      %time_on_task[148(31)s ~> 62(14)s]{after_focus_fix}
+    }
+
+    mental_models = {
+      @newcomer[visual]{expects_inline_error_by_button}(card_form)<feedback>,
+      @screen_reader[sequential]{loses_focus_when_promo_drawer_remounts}(dom)<trap>,
+      @keyboard_user[rapid]{needs_skip_to_pay_above_shipping_upsells}(tab_order)<speed>
+    }
+
+    tensions = &friction{
+      speed_upsell ~ accessibility,
+      animation ~ focus_stability,
+      compact_summary ^ full_line_item_clarity
+    }
+
+    ^"bets"{
+      *bet_one[inline_live_region]{announce coupon delta in aria_live instead of modal}<week>
+      *bet_two[preserve_focus]{keep focus on toggle button across drawer open and close}<week>
+      ~bet_three[one_page_summary]{collapse itemized taxes behind explicit disclosure}<quarter>
+    }
+
+    ^"sessions"{
+      >>[2026-11-05 10:30] observe — VoiceOver jumped to footer when discount field cleared DOM
+      >>[2026-11-09 14:15] prototype — stable DOM container cut promo abandonment in 4 of 5 trials
+    }
+
+    ?["Does fixing focus restoration raise VoiceOver completion past 0.85 without slowing sighted users?"]{
+      ~#expect: `keeping one live node lifts screen-reader pass rate and trims median checkout by 18s`
+      !probe{ "re-run the 5-task scripted benchmark with 8 assistive-tech testers on staging build" }
     }

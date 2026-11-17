@@ -41,7 +41,7 @@
 // the slots that move; and the onboarding path routes a junior, a mid-level, a
 // senior and a staff engineer through the files (2026-11-16).
 
-export const EXAMPLE_GROUPS = Object.freeze(["Bench","Study","Board","Stage","Trial","Team"]);
+export const EXAMPLE_GROUPS = Object.freeze(["Bench","Study","Board","Stage","Trial","Team","Practice"]);
 
 export const EXAMPLES = Object.freeze([
   {
@@ -49,7 +49,7 @@ export const EXAMPLES = Object.freeze([
     group: "Bench",
     tab: "Lab notebook",
     file: "lab-notebook.spw",
-    says: "Chronological empirical log: dated entries categorized by epistemological kind, allowing automated synthesis of bench progression across cataloging, experimental trials, metric measurements, and landed invariants.",
+    says: "A dated work log tagged by what happened: catalog something noticed, try an alternative, measure what changed, and land the fix.",
     try: "Add a line inside the braces: >>[2026-11-07 10:00] catalog — the card, in two dialects: lifted and flat",
     script: `#>lab_notebook
 #:log #!components #!themes
@@ -68,7 +68,7 @@ export const EXAMPLES = Object.freeze([
     group: "Bench",
     tab: "Catalog record",
     file: "chip.spw",
-    says: "Bibliographic catalog record grounded in information science: title, cross-reference variants, categorical subjects, and evidentiary provenance.",
+    says: "A compact library card for one UI component: canonical name, aliases across teams, searchable subjects, and links to related specs.",
     try: "Add a see-also inside the braces: related_card = ~\"./card.spw\"",
     script: `#>component_chip
 #:record #!component
@@ -88,7 +88,7 @@ export const EXAMPLES = Object.freeze([
     group: "Bench",
     tab: "Theme vocabulary",
     file: "themes.spw",
-    says: "Controlled vocabulary and ontological schema: canonical preferred terms, non-preferred synonyms, and scoping notes ensuring conceptual alignment.",
+    says: "A shared glossary so designers and engineers use one canonical term instead of drifting between synonyms.",
     try: "Add a metamaterial term: ^\"vellum\"{ broader = `metamaterial` }[reg=facet]",
     script: `#>theme_vocabulary
 #:vocabulary #!themes
@@ -110,7 +110,7 @@ export const EXAMPLES = Object.freeze([
     group: "Bench",
     tab: "Experiment",
     file: "experiment.spw",
-    says: "Metacognitive hypothesis testing: an epistemic inquiry pairing an interrogative wonder with an explicit hypothesis, expected outcome, and empirical verification probe.",
+    says: "A testable UI question before opening a PR: state the hypothesis, predict the failing edge case, and name the screenshot or check that settles it.",
     try: "Delete the !probe line to observe the cognitive check report an ungrounded inquiry.",
     script: `#>wonder_ring_on_glass
 @chip: ~"./chip.spw"
@@ -127,7 +127,7 @@ export const EXAMPLES = Object.freeze([
     group: "Bench",
     tab: "Session script",
     file: "session.spw",
-    says: "Procedural session script: sequential operational transitions modeled as ordered path steps, enabling step-by-step execution tracking and state verification.",
+    says: "A short repeatable checklist in execution order, linking to the record it operates on.",
     try: "Add a step: after !shelve, write ;?review",
     script: `#>catalog_session
 #:script #!session
@@ -141,7 +141,7 @@ gather = shelf[ui]{chip.card}<record>`,
     group: "Bench",
     tab: "Change record",
     file: "change.spw",
-    says: "Tripartite change episode: context scene, state transformation, and empirical verification criteria—the syntactic contract of every repository mutation.",
+    says: "A three-part changelog or commit contract: what was broken in context, what changed, and how you verified it.",
     try: "Delete the *[verify] line, and the check beside it changes.",
     script: `#[episode]{
   ~[scene]{ a panel body drew a second wall on a phone, and its text sat on the line }
@@ -154,7 +154,7 @@ gather = shelf[ui]{chip.card}<record>`,
     group: "Bench",
     tab: "Persona",
     file: "archivist.spw",
-    says: "Situated epistemic persona: communicative voice, observational locus, epistemic axioms, and persistent heuristic habits held in regard.",
+    says: "A working persona card for an assistant or teammate: tone, vantage point, core promise, and daily habit.",
     try: "Add a line inside the braces: still_learning = `when a record should stay open`",
     script: `#>archivist_persona
 #:persona #!library
@@ -171,7 +171,7 @@ gather = shelf[ui]{chip.card}<record>`,
     group: "Study",
     tab: "Calibration",
     file: "calibration.spw",
-    says: "Metacognitive calibration model: pre-task prediction vs. post-task recall with scalar confidence assessments, quantified by a dimensional gradient %.",
+    says: "A confidence check before and after studying or shipping: capture prediction errors early so estimates improve next round.",
     try: "Change the confidence after to 0.8, and the change between the two facets shows beside it.",
     script: `#>calibration
 #:study #!metacognition
@@ -194,7 +194,7 @@ gather = shelf[ui]{chip.card}<record>`,
     group: "Study",
     tab: "Perspectives",
     file: "perspectives.spw",
-    says: "Multi-agent deictic perspectivism: examining one focal chapter across four situated epistemic vantage points, aggregated into a unified thematic subject.",
+    says: "Four viewpoints on the same material — self, peer, future self, tutor — showing where each reader sees something different.",
     try: "Add a reading: kin = parent@ch2[curious]{why}<dinner>",
     script: `#>four_readings
 #:reflection #!metacognition
@@ -212,7 +212,7 @@ tutor = tutor@ch2[watch]{gap}<lesson>
     group: "Board",
     tab: "Persona loops",
     file: "loops.spw",
-    says: "Collaborative workflow orchestration: concurrent persona execution loops coordinated through serial handoff gates and inter-loop communicative relays.",
+    says: "Parallel team tracks that meet at explicit handoffs: spot the single dependency blocking another collaborator before work stalls.",
     try: "Add a loop inside the braces: , conservator@scan{handling}",
     script: `#>persona_loops
 #:board #!loops #!production
@@ -239,7 +239,7 @@ relay = {archivist.provenance ~> editor.caption}
     group: "Board",
     tab: "Gradient space",
     file: "gradient.spw",
-    says: "Continuous epistemic gradient: parameterizing decisions along a scalar spectrum between polarized stances, replacing binary dichotomy with nuanced spatial positioning.",
+    says: "A spectrum of concrete middle-ground options between two extremes, helping teams locate where they actually stand.",
     try: "Add a position: `0.55 keep the slices, ask the reader`",
     script: `#>gradient_space
 #:board #!gradient
@@ -320,7 +320,7 @@ turned = home[live]{software.art}(atlas)<record>`,
     group: "Stage",
     tab: "Headings",
     file: "headings.spw",
-    says: "Information organization and subject indexing: multiple competing indexing terms held in associative company, preserving ambiguity prior to catalog authorization.",
+    says: "Candidate taxonomy terms held together before committing one label across docs, navigation, or search.",
     try: "Add kin inside the brace, or change @indexing to @aboutness. The field lists the company and the subject.",
     script: `#>subject_headings
 #:showcase #!indexing #!library
@@ -339,7 +339,7 @@ headings = {student, classmate, later}@indexing
     group: "Stage",
     tab: "Performs",
     file: "perform.spw",
-    says: "Dynamic architectural configuration: when a structural pattern performs against an operational slot, the runtime materializes its declared theme consequence.",
+    says: "A live style directive: changing `theme` between glass, matte, and paper switches this workspace card's material on the spot.",
     try: "Change theme from glass to matte and watch the field lose its shadow.",
     script: `#>pattern_performance
 #:showcase #!pattern #!theme
@@ -750,6 +750,268 @@ fest = !ship[premiere]{dcp_check, press_kit, q_and_a}(festival)<release>
 ?["Does the corridor cut carry the beat without the temp score?"]{
   ~#expect: \`the eyeline turn holds attention when the music drops out\`
   !probe{ "mute the score track from slate 04 to the doorway cut and screen with cold ears" }
+}`,
+  },
+  {
+    id: "checkin",
+    group: "Practice",
+    tab: "Room check-in",
+    file: "studio-sync.spw",
+    says: "Short (6 lines). A lightweight weekly household or shared-studio reset: what is covered, what needs restocking, and one open ask before errands.",
+    try: "Swap @sam's part from trash to compost, or add a third item to $pot.",
+    script: `#>studio_weekly_sync
+#:social #!routine
+
+@alex[kitchen]{dishes, counters}(sunday)<clear>
+@sam[floor]{trash, recycling}(sunday)<curb>
+$pot[shared]{%balance[42usd]; need{filter, tape, soap}}
+?["Who can grab oat milk before Tuesday morning?"]{
+  ~#expect: \`whoever passes the corner market on Monday evening\`
+  !probe{ "reply in the kitchen chat with an emoji if picked up" }
+}`,
+  },
+  {
+    id: "decision",
+    group: "Practice",
+    tab: "Compact ADR",
+    file: "adr-014.spw",
+    says: "Short (9 lines). A scannable one-screen architecture decision record naming options weighed, chosen boundary, cost, and reversal condition.",
+    try: "Move sse out of considered into chosen, or tighten revisit from 90d to 30d.",
+    script: `#>adr_014_live_updates
+#:decision #!architecture
+@records: ~"./records.spw"
+
+=revisit[90d]{metrics}
+considered = #[polling, sse, websocket][reg=set]
+!choose[sse]{one_way, standard_http}(browser)<stream>
+?["When does two-way editing force a move to websockets?"]{
+  ~#expect: \`when presence cursors exceed 15fps per room\`
+  !probe{ "measure outbound frames per minute once collaborative cursors ship" }
+}`,
+  },
+  {
+    id: "gathering",
+    group: "Practice",
+    tab: "Potluck & access",
+    file: "potluck.spw",
+    says: "Medium (19 lines). Social event organizing with allergy labels, transit/wheelchair access, shift handoffs, and backup seating capacity.",
+    try: "Add a label to dishes, or change cap from 24 to 30 and check what tightens.",
+    script: `#>autumn_potluck
+#:social #!event
+@debate: ~"./debate.spw"
+
+cap = %guests[24]{main_room}
+access = =venue{step_free, quiet_alcove, unscented_soap}
+hosts = {
+  nina@[welcome]{badges, pronoun_pins, coat_rack}(door)<greeting>,
+  omar@[table]{ingredient_cards, vegan_tray, nut_free_zone}(kitchen)<safety>,
+  lin@[cleanup]{compost_bins, leftovers_jars, dish_wash}(sink)<reset>
+}
+flow = path{~arrive[18:00]; *eat[18:45]; ^skill_share[19:45]; !pack[21:15]}
+
+^"notes"{
+  >>[2026-11-15 12:00] check — radiator bleed finished; side window latches cleanly
+  >>[2026-11-16 09:30] restock — added compostable containers for unclaimed leftovers
+}
+
+?["Can every guest eat two mains safely without cross-contact?"]{
+  ~#expect: \`two labeled nut-free vegan trays sit on a separate counter\`
+  !probe{ "walk the serving table with Omar at 18:15 and verify spoon tags" }
+}`,
+  },
+  {
+    id: "incident",
+    group: "Practice",
+    tab: "Incident review",
+    file: "incident.spw",
+    says: "Medium (23 lines). Blameless production P1 postmortem mixing exact SLA numbers, a dated timeline, root cause episode, and concrete follow-ups.",
+    try: "Lower %errors[4.8 ~> 0.04%] target, or add a follow-up item inside corrective.",
+    script: `#>inc_2026_11_12_checkout
+#:postmortem #!sre
+@pipeline: ~"./pipeline.spw"
+@records: ~"./records.spw#ticket"
+
+impact = ^checkout{ %p95[412ms ~> 1840ms] %errors[0.1 ~> 4.8%] $window[19m] }
+responders = {
+  @oncall[triage]{rollback, feature_flag}<mitigate>,
+  @db_lead[diagnostics]{connection_pool, lock_wait}<root_cause>,
+  @comms[status_page]{customer_notice, merchant_eta}<trust>
+}
+
+#[episode]{
+  ~[scene]{ a catalog sync deployed without jitter drained checkout read replicas }
+  ![change]{ cap sync workers at 4 with exponential backoff and pool isolation }
+  *[verify]{ soak test at 3x Tuesday peak holds p95 below 380ms }
+}
+
+^"timeline"{
+  >>[2026-11-12 14:02] alert — checkout p95 crossed 1200ms threshold in us-east
+  >>[2026-11-12 14:11] isolate — paused catalog sync workers; connection wait dropped
+  >>[2026-11-12 14:21] resolve — error rate returned to 0.08% across all shards
+}`,
+  },
+  {
+    id: "critique",
+    group: "Practice",
+    tab: "Reading circle",
+    file: "reading-circle.spw",
+    says: "Medium (16 lines). A structured peer critique or seminar format holding generous timeboxes, concrete text citations, and unanswered questions.",
+    try: "Add a fourth reader stance after @skeptic, or adjust turn length.",
+    script: `#>thursday_reading_circle
+#:social #!study
+@perspectives: ~"./perspectives.spw"
+@headings: ~"./headings.spw"
+
+protocol = =session[60m]{
+  silent_read[10m],
+  descriptive_echo[15m],
+  open_questions[20m],
+  maker_response[15m]
+}
+stances = {
+  @first_reader[surface]{pacing, opening_hook}<clarity>,
+  @craft_peer[structure]{transitions, evidence_links}<form>,
+  @skeptic[assumption]{edge_cases, missing_voices}<rigor>
+}
+
+?["Did the group name what the draft actually does before advising fixes?"]{
+  ~#expect: \`fifteen minutes of descriptive echo keeps early advice from flattening intent\`
+  !probe{ "ask the maker which observation in phase two surprised them most" }
+}`,
+  },
+  {
+    id: "negotiation",
+    group: "Practice",
+    tab: "SLA redlines",
+    file: "vendor-sla.spw",
+    says: "Long & detailed (36 lines). Multi-team SaaS procurement and contract negotiation reconciling security, legal, and product constraints into concrete redlines.",
+    try: "Tighten rto from 4h to 1h, or log a new round in ^\"rounds\".",
+    script: `#>vendor_sla_negotiation
+#:contract #!procurement
+@incident: ~"./incident.spw"
+@gradient: ~"./gradient.spw"
+
+targets = ^sla{ %uptime[99.95%] %rto[4h] %rpo[15m] %p99_webhook[250ms] }
+non_negotiable = =security{
+  soc2_type2,
+  eu_residency,
+  breach_notice[24h],
+  key_rotation[90d]
+}
+
+stances = {
+  @security[compliance]{audit_logs, subprocessor_notice}(pre_sign)<gate>,
+  @legal[liability]{indemnity_cap, termination_notice}(msa)<redline>,
+  @product[timeline]{sandbox_access, webhook_replay}(q4_launch)<value>
+}
+
+redlines = path{
+  ~request[48h_breach_window ~> 24h_breach_window];
+  =anchor[cap_2x_annual ~> cap_12m_fees];
+  ^bundle[sso_saml, scim_provisioning]{included_at_tier}
+}
+
+^"rounds"{
+  >>[2026-11-04 11:00] draft — vendor standard MSA omitted subprocessor 30d objection right
+  >>[2026-11-08 15:20] revise — vendor accepted 24h breach notice and EU cluster pinning
+  >>[2026-11-13 10:15] counter — legal swapped unlimited cap for 2x fees plus data escrow
+}
+
+#[episode]{
+  ~[scene]{ launch slipped two weeks while security and vendor legal argued indemnity wording }
+  ![change]{ separate operational security controls from liability cap using escrow trigger }
+  *[verify]{ countersigned DPA plus passing sandbox webhook replay test before cutoff }
+}`,
+  },
+  {
+    id: "charter",
+    group: "Practice",
+    tab: "Co-op charter",
+    file: "coop-charter.spw",
+    says: "Long & detailed (39 lines). Community tool-library and shared press co-op governance: sliding-scale dues, tool checkout safety, conflict repair, and audit ledger.",
+    try: "Adjust dues sliding range or add a seasonal maintenance task inside care.",
+    script: `#>eastside_tool_coop
+#:civic #!commons
+@gathering: ~"./potluck.spw"
+@debate: ~"./debate.spw"
+
+stewardship = ^membership{
+  $dues[15..45usd]{sliding_scale, work_trade_option}
+  ?badge[certified]{bandsaw, risograph, kiln}(orientation)<safety>
+  =access{keycard[7..22h], buddy_rule[power_tools]}
+}
+
+roles = {
+  @librarian[catalog]{barcodes, overdue_nudges, waitlist}(desk)<circulation>,
+  @mechanic[shop]{blade_tension, belt_check, calibration}(bench)<safety>,
+  @treasurer[ledger]{grants, rent_split, fee_waivers}(books)<solvency>,
+  @mediator[care]{conflict_notes, repair_circle, boundary}(room)<trust>
+}
+
+borrow_cycle = path{
+  ~reserve[7d];
+  ?verify_badge;
+  !checkout[log_condition];
+  *use[safe_hours];
+  %inspect[clean, sharp];
+  !return
+}
+
+^"audit"{
+  >>[2026-10-18 14:00] inspect — replaced frayed cord on orbital sander before Sunday hours
+  >>[2026-11-02 19:15] policy — waived late fees during transit strike week for all members
+  >>[2026-11-14 16:40] workshop — certified 9 new risograph stewards with two-color run
+}
+
+?["Do sliding-scale dues and two annual grants cover shop rent plus blades?"]{
+  ~#expect: \`38 active members at 26usd median plus grant headroom keeps 3 months reserve\`
+  !probe{ "reconcile October bank statements against tool replacement invoices at open meeting" }
+}`,
+  },
+  {
+    id: "synthesis",
+    group: "Practice",
+    tab: "Field research",
+    file: "field-study.spw",
+    says: "Long & detailed (38 lines). Research synthesis turning 14 recorded sessions into uncertainty bounds, opposing mental models, and an actionable product bet.",
+    try: "Adjust %completion[0.64(0.12)] sample stats or add a bet inside ^\"bets\".",
+    script: `#>checkout_accessibility_study
+#:research #!ux
+@calibration: ~"./calibration.spw"
+@incident: ~"./incident.spw"
+
+sample = ^cohort{
+  %sessions[14]{screen_reader[5], low_vision[4], keyboard_only[3], voice[2]}
+  %completion[0.64(0.12)]{coupon_flow}(mobile)
+  %time_on_task[148(31)s ~> 62(14)s]{after_focus_fix}
+}
+
+mental_models = {
+  @newcomer[visual]{expects_inline_error_by_button}(card_form)<feedback>,
+  @screen_reader[sequential]{loses_focus_when_promo_drawer_remounts}(dom)<trap>,
+  @keyboard_user[rapid]{needs_skip_to_pay_above_shipping_upsells}(tab_order)<speed>
+}
+
+tensions = &friction{
+  speed_upsell ~ accessibility,
+  animation ~ focus_stability,
+  compact_summary ^ full_line_item_clarity
+}
+
+^"bets"{
+  *bet_one[inline_live_region]{announce coupon delta in aria_live instead of modal}<week>
+  *bet_two[preserve_focus]{keep focus on toggle button across drawer open and close}<week>
+  ~bet_three[one_page_summary]{collapse itemized taxes behind explicit disclosure}<quarter>
+}
+
+^"sessions"{
+  >>[2026-11-05 10:30] observe — VoiceOver jumped to footer when discount field cleared DOM
+  >>[2026-11-09 14:15] prototype — stable DOM container cut promo abandonment in 4 of 5 trials
+}
+
+?["Does fixing focus restoration raise VoiceOver completion past 0.85 without slowing sighted users?"]{
+  ~#expect: \`keeping one live node lifts screen-reader pass rate and trims median checkout by 18s\`
+  !probe{ "re-run the 5-task scripted benchmark with 8 assistive-tech testers on staging build" }
 }`,
   },
 ]);
