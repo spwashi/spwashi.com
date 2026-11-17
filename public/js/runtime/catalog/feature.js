@@ -151,6 +151,21 @@ export const FEATURE_DEFS = [
     load: () => import('../../modules/tools/spw-code.js'),
   },
   {
+    id: 'theme-expression',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.VISIBLE,
+    selector: '[data-spw-theme-expression]',
+    rootMode: 'each',
+    describes: 'theme@[pack]{color}(posture)<lens> concise syntax-highlighted, scrubbable theming expression synced to settings & sustained lens',
+    updates: [
+      'structural:property:childList',
+    ],
+    evaluates: ['surface', 'semantics'],
+    timingArc: 'visible-feature',
+    effectScope: ['local-dom', 'listeners', 'bus'],
+    load: () => import('../../modules/tools/theme-expression.js'),
+  },
+  {
     id: 'image-tour',
     layer: MODULE_LAYERS.FEATURE,
     when: MOUNT_WHEN.VISIBLE,

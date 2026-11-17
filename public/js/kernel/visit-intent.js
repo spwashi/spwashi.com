@@ -17,6 +17,7 @@
 import { getOperatorDefinition } from '/public/js/kernel/operator-detection.js';
 
 export const INTENT_STORAGE_KEY = 'spw:intent:v1';
+export const LENS_STORAGE_KEY = 'spw:lens:v1';
 
 const PAGE_SEAT_SELECTOR = '.mode-switch .frame-sigil[data-set-mode][aria-pressed="true"][data-spw-operator]';
 
@@ -67,6 +68,36 @@ export function readPageIntent(root = globalThis.document) {
 /** Carried outranks page; null means nothing to meet the reader along. */
 export function readVisitIntent(root = globalThis.document, storage = globalThis.sessionStorage) {
   return readCarriedIntent(storage) || readPageIntent(root);
+}
+
+export function readSustainedLens(storage = globalThis.sessionStorage) {
+  try {
+    const lens = JSON.parse(storage?.getItem(LENS_STORAGE_KEY) || 'null');
+    if (!lens || typeof lens !== 'object') return null;
+    if (!lens.mode && !lens.filterMode && !lens.operator) return null;
+    return lens;
+  } catch {
+    return null;
+  }
+}
+
+export function writeSustainedLens(lens, storage = globalThis.sessionStorage) {
+  try {
+    if (lens && (lens.mode || lens.filterMode || lens.operator)) {
+      storage?.setItem(LENS_STORAGE_KEY, JSON.stringify({
+        mode: String(lens.mode || ''),
+        group: String(lens.group || ''),
+        operator: String(lens.operator || ''),
+        filterMode: lens.filterMode === 'matched' ? 'matched' : 'all',
+        from: String(lens.from || ''),
+        at: Number(lens.at) || Date.now(),
+      }));
+    } else {
+      storage?.removeItem(LENS_STORAGE_KEY);
+    }
+  } catch {
+    /* storage blocked: sustained lens lasts for this page only */
+  }
 }
 
 /** "~ play", the way the site says an intent aloud. */

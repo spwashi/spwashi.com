@@ -2,7 +2,8 @@
  * Minimal core bindings mounted before feature and enhancement layers.
  */
 
-import { FRAME_SELECTOR } from '../../kernel/dom-contracts.js';
+import { FRAME_SELECTOR, writeDatasetValue } from '../../kernel/dom-contracts.js';
+import { readSustainedLens, writeSustainedLens } from '../../kernel/visit-intent.js';
 import { safeQuery, safeQueryAll } from '/public/js/kernel/browser-primitives.js';
 import {
   LENS_MODE_REQUEST_EVENT,
@@ -11,8 +12,13 @@ import {
   hasLensMode,
   parseLensModeQuery,
   resolveLensRovingIndex,
+  resolveSustainedLensChoice,
   writeLensModeState,
 } from './lens-modes.js';
+import {
+  applyProfileLensField,
+  readActiveProfile,
+} from './lens-reach.js';
 import {
   REGION_STATES,
   refreshRegionProfiles,
@@ -45,10 +51,17 @@ export function initMinimalSiteCore(ctx) {
   };
 }
 
+function parseStandaloneLensQuery() {
+  if (typeof window === 'undefined') return '';
+  const params = new URLSearchParams(String(window.location?.search || '').replace(/^\?/, ''));
+  const raw = params.get('spw-lens') || '';
+  if (!raw) return '';
+  const [, mode = raw] = raw.split(':');
+  return String(mode || '').trim();
+}
+
 function bindModeGroups(ctx) {
   const buttons = safeQueryAll('[data-mode-group][data-set-mode]');
-  if (!buttons.length) return () => {};
-
   const grouped = new Map();
   const settleTimers = new WeakMap();
   const activeTimers = new Set();
@@ -59,6 +72,22 @@ function bindModeGroups(ctx) {
     if (!grouped.has(group)) grouped.set(group, []);
     grouped.get(group).push(button);
   }
+
+  const syncFilterToggleControls = () => {
+    const isFiltered = document.documentElement.dataset.spwLensFilter === 'matched';
+    for (const toggle of safeQueryAll('[data-spw-lens-filter-toggle]')) {
+      toggle.hidden = false;
+      toggle.setAttribute('aria-pressed', String(isFiltered));
+      toggle.dataset.spwFilterState = isFiltered ? 'matched' : 'all';
+    }
+  };
+
+  const restoreFilterState = () => {
+    const sustained = readSustainedLens();
+    const filterValue = sustained?.filterMode === 'matched' ? 'matched' : null;
+    writeDatasetValue(document.documentElement, 'spwLensFilter', filterValue);
+    syncFilterToggleControls();
+  };
 
   const setTransientState = (element, state = 'changed') => {
     if (!(element instanceof HTMLElement)) return;
@@ -96,6 +125,7 @@ function bindModeGroups(ctx) {
   }
 
   const handlers = [];
+  restoreFilterState();
 
   for (const button of buttons) {
     const handler = (event) => {
@@ -131,24 +161,109 @@ function bindModeGroups(ctx) {
   // variant query all emit this request; the answer is one write here.
   const offRequest = ctx.bus?.on?.(LENS_MODE_REQUEST_EVENT, (event) => {
     const request = event?.detail || {};
-    if (!request.group || !request.mode || !grouped.has(request.group)) return;
-    applyMode(request.group, request.mode, { source: request.source || 'request' });
+    if (!request.mode) return;
+    if (request.group && grouped.has(request.group)) {
+      applyMode(request.group, request.mode, { source: request.source || 'request' });
+      return;
+    }
+    for (const [group, groupButtons] of grouped.entries()) {
+      if (hasLensMode(groupButtons, request.mode)) {
+        applyMode(group, request.mode, { source: request.source || 'request' });
+        return;
+      }
+    }
+    writeSustainedLens({
+      mode: request.mode,
+      group: request.group || document.documentElement.dataset.spwActiveLensGroup || 'lens',
+      operator: request.operator || '',
+      filterMode: document.documentElement.dataset.spwLensFilter || readSustainedLens()?.filterMode || '',
+    });
+    writeDatasetValue(document.documentElement, 'spwActiveLensGroup', request.group || 'lens');
+    writeDatasetValue(document.documentElement, 'spwActiveLensMode', request.mode);
+    writeDatasetValue(document.documentElement, 'spwActiveLensSource', request.source || 'request');
+    applyProfileLensField(document, {
+      mode: request.mode,
+      operator: request.operator || '',
+      source: request.source || 'request',
+    });
   });
   if (typeof offRequest === 'function') handlers.push(offRequest);
 
-  const initial = parseLensModeQuery(grouped);
-  for (const [group, groupButtons] of grouped.entries()) {
-    const active = initial?.group === group
-      ? groupButtons.find((button) => button.getAttribute('data-set-mode') === initial.mode)
-      : groupButtons.find((button) => button.getAttribute('aria-pressed') === 'true');
-    const mode = active?.getAttribute('data-set-mode') || groupButtons[0]?.getAttribute('data-set-mode');
-    if (mode) {
-      applyMode(group, mode, {
-        source: initial?.group === group ? 'query' : 'initial',
-        initial: true,
+  const onFilterClick = (event) => {
+    const toggle = event.target?.closest?.('[data-spw-lens-filter-toggle]');
+    if (!toggle) return;
+    event.preventDefault();
+    const nextFiltered = document.documentElement.dataset.spwLensFilter !== 'matched';
+    writeDatasetValue(document.documentElement, 'spwLensFilter', nextFiltered ? 'matched' : null);
+    const current = readSustainedLens();
+    if (current?.mode || document.documentElement.dataset.spwActiveLensMode || nextFiltered) {
+      writeSustainedLens({
+        mode: current?.mode || document.documentElement.dataset.spwActiveLensMode || '',
+        group: current?.group || document.documentElement.dataset.spwActiveLensGroup || 'lens',
+        operator: current?.operator || '',
+        filterMode: nextFiltered ? 'matched' : '',
       });
     }
+    syncFilterToggleControls();
+    applyProfileLensField(document, {
+      mode: document.documentElement.dataset.spwActiveLensMode || '',
+      operator: readActiveProfile(document).operator,
+      source: 'mode-switch',
+    });
+  };
+  document.addEventListener('click', onFilterClick);
+  handlers.push(() => document.removeEventListener('click', onFilterClick));
+
+  const syncStandaloneField = (sourceHint = 'initial') => {
+    const sustained = readSustainedLens();
+    const queryMode = parseStandaloneLensQuery();
+    const mode = queryMode || sustained?.mode || document.documentElement.dataset.spwActiveLensMode || '';
+    const source = queryMode ? 'query' : sustained?.mode ? 'sustained' : sourceHint;
+    if (mode && !grouped.size) {
+      writeDatasetValue(document.documentElement, 'spwActiveLensGroup', sustained?.group || 'lens');
+      writeDatasetValue(document.documentElement, 'spwActiveLensMode', mode);
+      writeDatasetValue(document.documentElement, 'spwActiveLensSource', source);
+    }
+    applyProfileLensField(document, {
+      mode,
+      operator: sustained?.operator || readActiveProfile(document, { sustained }).operator,
+      source,
+    });
+  };
+
+  if (grouped.size) {
+    const initial = parseLensModeQuery(grouped);
+    const sustainedChoice = !initial ? resolveSustainedLensChoice(grouped, document) : null;
+    for (const [group, groupButtons] of grouped.entries()) {
+      const queryHit = initial?.group === group ? initial : null;
+      const sustainedHit = !queryHit && sustainedChoice?.group === group ? sustainedChoice : null;
+      const active = queryHit
+        ? groupButtons.find((button) => button.getAttribute('data-set-mode') === queryHit.mode)
+        : sustainedHit
+          ? groupButtons.find((button) => button.getAttribute('data-set-mode') === sustainedHit.mode)
+          : groupButtons.find((button) => button.getAttribute('aria-pressed') === 'true');
+      const mode = active?.getAttribute('data-set-mode') || groupButtons[0]?.getAttribute('data-set-mode');
+      const source = queryHit ? 'query' : sustainedHit ? sustainedHit.source : 'initial';
+      if (mode) {
+        applyMode(group, mode, {
+          source,
+          initial: source === 'initial',
+        });
+      }
+    }
+  } else {
+    syncStandaloneField('initial');
   }
+
+  const offSettings = ctx.bus?.on?.('settings:changed', () => {
+    const currentSource = document.documentElement.dataset.spwActiveLensSource || 'initial';
+    if (grouped.size && currentSource !== 'mode-switch' && currentSource !== 'keyboard' && currentSource !== 'query') {
+      const choice = resolveSustainedLensChoice(grouped, document);
+      if (choice && applyMode(choice.group, choice.mode, { source: choice.source })) return;
+    }
+    syncStandaloneField(currentSource);
+  });
+  if (typeof offSettings === 'function') handlers.push(offSettings);
 
   return () => {
     for (const cleanup of handlers) cleanup();
