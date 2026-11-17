@@ -16,6 +16,23 @@
       <p class="kicker">mutex.buzz · a lock on attention</p>
       <h1 id="t">One concept in the frame <code>at a time</code>.</h1>
       <p>A mutex lets one thread in and makes the rest wait. This one does that for attention: whatever holds the lock is the single thing the frame shows.</p>
+      <section class="explain" aria-labelledby="what-title">
+        <h2 class="kicker" id="what-title">What a mutex is</h2>
+        <p>A mutex, short for <em>mutual exclusion</em>, is a lock a program puts around something several threads might touch at once: a file, a counter, a printer. A thread acquires the lock before it touches the thing and releases it when it is done. If another thread already holds it, the newcomer waits. The code that runs while the lock is held is the critical section, and only one thread is ever inside it.</p>
+        <p>A semaphore can let several in at once; a mutex lets in exactly one, and only the one holding it can let go. One bee to a cell.</p>
+        <p>Here, the shared thing is attention. A hold is the critical section, a close is the release, and the line of anyone waiting is public.</p>
+        <figure class="threads" id="threads">
+          <svg viewBox="0 0 600 180" role="img" aria-labelledby="threads-title">
+            <title id="threads-title">Threads at a mutex: one inside the cell, the rest waiting their turn in line.</title>
+            <defs><g id="bee-shape"><g class="bee-body"><ellipse class="wing" cx="-3" cy="-10" rx="8" ry="5"/><ellipse class="wing" cx="4" cy="-10" rx="7" ry="4.5"/><path class="sting" d="M-12 0h-6"/><ellipse class="abdomen" cx="0" cy="0" rx="13" ry="9"/><path class="stripe" d="M-5 -8.2V8.2M2 -8.8V8.8"/><circle class="head" cx="13" cy="0" r="5.5"/></g></g></defs>
+            <line class="lane" x1="30" y1="90" x2="462" y2="90"/>
+            <circle class="turn-ring" id="threads-ring" cx="520" cy="90" r="58" pathLength="1"/>
+            <polygon class="cell held" id="threads-cell" points="520,44 559.8,67 559.8,113 520,136 480.2,113 480.2,67"/>
+            <g id="threads-bees"><use href="#bee-shape" class="inside" transform="translate(520 90) scale(1.3)"/><use href="#bee-shape" class="waiting" transform="translate(430 90) scale(1.3)"/><use href="#bee-shape" class="waiting" transform="translate(386 90) scale(1.3)"/></g>
+          </svg>
+          <figcaption><span id="threads-count">One inside, two waiting.</span> <button type="button" id="send-bee" hidden>Send a bee</button></figcaption>
+        </figure>
+      </section>
       <ul class="rules">
         <li><b>hold</b>A hold starts at a close and releases at the next: the 13th, the 26th, and the last day of the month.</li>
         <li><b>rest</b>When nothing else holds it, a laminated folio does. The resting state is the work itself.</li>
@@ -40,7 +57,7 @@
         <g class="labels"><text data-cycle="A" x="583.7" y="239.7">A</text><text data-cycle="B" x="65.4" y="470.5">B</text><text data-cycle="C" x="182" y="35.1">C</text></g>
         <path class="rest" id="rest" d=""/>
         <polygon class="window" points="300,115 460.2,207.5 460.2,392.5 300,485 139.8,392.5 139.8,207.5"/>
-        <image class="holder" id="holder-image" x="139.8" y="115" width="320.4" height="370" preserveAspectRatio="xMidYMid meet" clip-path="url(#cell-clip)"/>
+        <g clip-path="url(#cell-clip)"><image class="holder" id="holder-image" x="139.8" y="115" width="320.4" height="370" preserveAspectRatio="xMidYMid meet"/></g>
         <text class="window-word" id="window-word" x="300" y="306">one to a cell</text>
         <g class="bee" id="bee" transform="translate(300 38) scale(1.5)"><g class="bee-body"><ellipse class="wing" cx="-3" cy="-10" rx="8" ry="5"/><ellipse class="wing" cx="4" cy="-10" rx="7" ry="4.5"/><path class="sting" d="M-12 0h-6"/><ellipse class="abdomen" cx="0" cy="0" rx="13" ry="9"/><path class="stripe" d="M-5 -8.2V8.2M2 -8.8V8.8"/><circle class="head" cx="13" cy="0" r="5.5"/></g></g>
       </svg>
@@ -72,7 +89,8 @@
 <span class="line" data-part="now">  <span class="p">~#expect</span><span class="j">:</span> <span class="s">`one holder, until its close`</span></span>
 <span class="line" data-part="now">  <span class="m">!</span><span class="w">probe</span><span class="b-body">{</span> <span class="s">&quot;find the hold whose since is at or before now&quot;</span> <span class="b-body">}</span></span>
 <span class="line" data-part="now"><span class="b-body">}</span></span>
-<span class="line now-line" data-part="now" id="now-line" hidden></span></pre>
+<span class="line now-line" data-part="now" id="now-line" hidden></span>
+<span class="line" data-part="now" id="turn-line" hidden></span></pre>
       <p class="data"><a href="/lock.spw">lock.spw</a> · <a href="https://factshift.center/#spw64=Iz5tdXRleF9idXp6CiM6bG9jayAjIWF0dGVudGlvbgoKXmxvY2t7aG9sZCwgcmVzdCwgd2FpdH08YXR0ZW50aW9uPgo9aG9sZGVyc1tvbmVde2ZyYW1lfQokY2xvY2tbdXRjXXsxM3RoLCAyNnRoLCBsYXN0X2RheX0KIWhvbGR7Y2xvc2Ugfj4gY2xvc2V9Ci5yZXN0W2ZvbGlvXXtBLCBCLCBDfQp-d2FpdFtwdWJsaWNde3F1ZXVlfQolcmVsZWFzZXtub3cgfj4gY2xvc2V9PGRheXM-CkBhdHRlbnRpb24ucHJvZHVjdGlvbnN7ZnJhbWV9CiZmcmFtZXtob2xkZXIsIGNsb3NlLCBxdWV1ZX0KCj9bIldoYXQgaG9sZHMgdGhlIGZyYW1lIG5vdz8iXXsKICB-I2V4cGVjdDogYG9uZSBob2xkZXIsIHVudGlsIGl0cyBjbG9zZWAKICAhcHJvYmV7ICJmaW5kIHRoZSBob2xkIHdob3NlIHNpbmNlIGlzIGF0IG9yIGJlZm9yZSBub3ciIH0KfQo">read it on the canvas ↗</a> · <a href="https://spw.quest/build#spw64=Iz5tdXRleF9idXp6CiM6bG9jayAjIWF0dGVudGlvbgoKXmxvY2t7aG9sZCwgcmVzdCwgd2FpdH08YXR0ZW50aW9uPgo9aG9sZGVyc1tvbmVde2ZyYW1lfQokY2xvY2tbdXRjXXsxM3RoLCAyNnRoLCBsYXN0X2RheX0KIWhvbGR7Y2xvc2Ugfj4gY2xvc2V9Ci5yZXN0W2ZvbGlvXXtBLCBCLCBDfQp-d2FpdFtwdWJsaWNde3F1ZXVlfQolcmVsZWFzZXtub3cgfj4gY2xvc2V9PGRheXM-CkBhdHRlbnRpb24ucHJvZHVjdGlvbnN7ZnJhbWV9CiZmcmFtZXtob2xkZXIsIGNsb3NlLCBxdWV1ZX0KCj9bIldoYXQgaG9sZHMgdGhlIGZyYW1lIG5vdz8iXXsKICB-I2V4cGVjdDogYG9uZSBob2xkZXIsIHVudGlsIGl0cyBjbG9zZWAKICAhcHJvYmV7ICJmaW5kIHRoZSBob2xkIHdob3NlIHNpbmNlIGlzIGF0IG9yIGJlZm9yZSBub3ciIH0KfQo">take it apart on spw.quest ↗</a></p>
     </section>
   </main>

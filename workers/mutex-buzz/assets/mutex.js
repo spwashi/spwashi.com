@@ -1,22 +1,14 @@
-// mutex.buzz's pages: which hold is open is worked out here, in the reader's
-// browser, from the lock (lock.js, carried from src/ by carry.mjs). Written by
-// hand. With scripts off the pages list the month's three holds instead.
-import { DIAL, dialOf, holderFor, lastDay, monthDay, nowLine, untilRelease } from "/lock.js";
+// mutex.buzz's pages: which hold is open, which hour of it, and how long it
+// has left are worked out here, in the reader's browser, from the lock
+// (lock.js, carried from src/ by carry.mjs). Written by hand. With scripts off
+// the pages list the month's three holds and draw the mutex at rest.
+import { DIAL, countdown, dialOf, holderFor, lastDay, monthDay, nowLine, turnLine, turnOf } from "/lock.js";
 
 const $ = (id) => document.getElementById(id);
 const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const now = new Date();
-const holder = holderFor(now);
+const holder = holderFor(new Date());
 const since = Date.parse(holder.since);
 const until = Date.parse(holder.releasesAt);
-const spent = Math.min(1, Math.max(0, (now.getTime() - since) / (until - since)));
-
-/** The words under the holder: its hold, its days, and when it lets go. */
-const when = `holds the lock · cycle ${holder.cycle} · ${monthDay(holder.since)} through ${lastDay(holder)} · ${untilRelease(holder, now)}`;
-if ($("holder-title")) $("holder-title").textContent = holder.title;
-if ($("holder-when")) $("holder-when").textContent = when;
-// In the last day and a half the shackle starts to lift: the hand-off is the loud moment.
-document.body.classList.toggle("letting-go", until - now.getTime() < 36 * 3_600_000);
 
 /** A place on the ring, by its angle from the top, clockwise. */
 const onRing = (angle) => {
@@ -30,10 +22,10 @@ const perch = (bee, angle) => {
   bee.setAttribute("transform", `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${angle.toFixed(1)}) scale(1.5)`);
 };
 
-/** The line beneath lock.spw that says what holds now, painted as the file is. */
-function writeNowLine(el, text) {
+/** A line of Spw beneath lock.spw, painted as the file is. */
+function writeLine(el, text) {
   el.replaceChildren();
-  for (const m of text.matchAll(/(\*)|(\[[^\]]*\])|(\{[^}]*\})|(\([^)]*\))|([^*[{(]+)/g)) {
+  for (const m of text.matchAll(/([*%])|(\[[^\]]*\])|(\{[^}]*\})|(\([^)]*\))|([^*%[{(]+)/g)) {
     const span = document.createElement("span");
     span.className = m[1] ? "m" : m[2] ? "b-mode" : m[3] ? "b-body" : m[4] ? "b-scene" : "w";
     span.textContent = m[0];
@@ -42,9 +34,11 @@ function writeNowLine(el, text) {
   el.hidden = false;
 }
 
+if ($("holder-title")) $("holder-title").textContent = holder.title;
+
 const dial = $("dial");
 if (dial) {
-  const d = dialOf(now);
+  const d = dialOf(new Date());
   for (const path of dial.querySelectorAll(".hold")) {
     const hold = d.holds.find((h) => h.cycle === path.dataset.cycle);
     path.setAttribute("d", hold.path);
@@ -59,29 +53,26 @@ if (dial) {
   $("rest").setAttribute("d", d.rest);
   $("holder-image").setAttribute("href", holder.image);
   $("window-word").classList.add("gone");
-  $("dial-desc").textContent = `${holder.title} holds the lock for cycle ${holder.cycle}, ${monthDay(holder.since)} through ${lastDay(holder)}; it ${untilRelease(holder, now)}.`;
+  $("dial-desc").textContent = `${holder.title} holds the lock for cycle ${holder.cycle}, ${monthDay(holder.since)} through ${lastDay(holder)}.`;
   for (const item of document.querySelectorAll(".holds li")) {
     if (item.dataset.cycle === holder.cycle) item.setAttribute("aria-current", "true");
     else item.removeAttribute("aria-current");
   }
-
-  // The bee flies from where this hold began to today, then rests there.
+  // The bee flies from where this hold began to now, then rests there.
   const bee = $("bee");
   const from = d.holds.find((h) => h.cycle === d.current).from;
   const to = d.needle.angle;
   if (reduce) perch(bee, to);
   else {
     const start = performance.now();
-    const ease = (t) => 1 - (1 - t) ** 3;
     const fly = (t) => {
       const k = Math.min(1, (t - start) / 1400);
-      perch(bee, from + (to - from) * ease(k));
+      perch(bee, from + (to - from) * (1 - (1 - k) ** 3));
       if (k < 1) requestAnimationFrame(fly);
     };
     perch(bee, from);
     requestAnimationFrame(fly);
   }
-
   // Each line of the rule lights the part of the lock it governs.
   const light = (part) => { document.body.dataset.part = part ?? ""; };
   for (const line of document.querySelectorAll("#lock-spw .line")) {
@@ -91,8 +82,7 @@ if (dial) {
     line.addEventListener("focus", () => light(line.dataset.part));
     line.addEventListener("blur", () => light(null));
   }
-  const nowEl = $("now-line");
-  if (nowEl) writeNowLine(nowEl, nowLine(holder));
+  if ($("now-line")) writeLine($("now-line"), nowLine(holder));
 }
 
 const image = $("now-image");
@@ -102,10 +92,161 @@ if (image) {
   image.width = holder.width;
   image.height = holder.height;
   image.hidden = false;
-  $("spent").setAttribute("x2", (spent * 100).toFixed(1));
-  const rider = $("rider");
-  rider.style.setProperty("--k", spent.toFixed(3));
-  // An SVG element has no hidden property: the attribute itself has to go.
-  rider.removeAttribute("hidden");
   document.title = `${holder.title} holds the lock — mutex.buzz`;
+}
+
+/** Show an hour's detail of the holder: in the dial's cell, or across /now/. */
+function showTurn(turn) {
+  const picture = $("holder-image");
+  if (picture) {
+    const x = Number(picture.getAttribute("x")), y = Number(picture.getAttribute("y"));
+    const w = Number(picture.getAttribute("width")), h = Number(picture.getAttribute("height"));
+    const c = DIAL.size / 2;
+    picture.style.transform = `translate(${c}px, ${c}px) scale(${turn.zoom}) translate(${-(x + w * turn.fx)}px, ${-(y + h * turn.fy)}px)`;
+  }
+  if (image) {
+    image.style.transformOrigin = `${(turn.fx * 100).toFixed(1)}% ${(turn.fy * 100).toFixed(1)}%`;
+    image.style.transform = `scale(${turn.zoom})`;
+  }
+  if ($("turn-line")) writeLine($("turn-line"), turnLine(turn));
+  if (dial) {
+    const d = dialOf(new Date());
+    perch($("bee"), d.needle.angle);
+    $("rest").setAttribute("d", d.rest);
+  }
+}
+
+// The clock: the countdown each second, a new turn each hour, the next holder at the close.
+let lastTurn = -1;
+function tick() {
+  const now = new Date();
+  if (now.getTime() >= until) return window.location.reload();
+  const turn = turnOf(holder, now);
+  if (turn.index !== lastTurn) {
+    lastTurn = turn.index;
+    showTurn(turn);
+  }
+  const share = (now.getTime() - since) / (until - since);
+  if ($("holder-when")) $("holder-when").textContent = `holds the lock · cycle ${holder.cycle} · ${monthDay(holder.since)} through ${lastDay(holder)} · turn ${turn.index + 1} of ${turn.of} · releases in ${countdown(holder, now)}`;
+  if ($("spent")) $("spent").setAttribute("x2", (share * 100).toFixed(2));
+  const rider = $("rider");
+  if (rider) {
+    rider.style.setProperty("--k", share.toFixed(4));
+    // An SVG element has no hidden property: the attribute itself has to go.
+    rider.removeAttribute("hidden");
+  }
+  // In the last day and a half the shackle starts to lift: the hand-off is the loud moment.
+  document.body.classList.toggle("letting-go", until - now.getTime() < 36 * 3_600_000);
+}
+tick();
+window.setInterval(tick, 1000);
+
+/**
+ * The mutex you can watch. Bees are threads: they arrive, wait in line, take
+ * the cell one at a time while the ring fills (the critical section), and
+ * leave by the far side as the next one goes in. Send a bee adds a thread.
+ * It runs only while it can be seen; with motion reduced it steps instead of flying.
+ */
+const threads = $("threads");
+if (threads) {
+  const layer = $("threads-bees");
+  const ring = $("threads-ring");
+  const cell = $("threads-cell");
+  const count = $("threads-count");
+  const send = $("send-bee");
+  const CELL = [520, 90];
+  const slot = (i) => [430 - i * 44, 90];
+  const MAX_WAITING = 6;
+  const HOLD_MS = 1600;
+  const bees = [];
+  let inside = null;
+  let heldSince = 0;
+  let acquired = 0;
+  let lastSpawn = 0;
+  let visible = true;
+
+  const make = (x, y) => {
+    const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+    use.setAttribute("href", "#bee-shape");
+    layer.append(use);
+    return { use, x, y, tx: x, ty: y, angle: 0, gone: false, leaving: false };
+  };
+  const draw = (b) => b.use.setAttribute("transform", `translate(${b.x.toFixed(1)} ${b.y.toFixed(1)}) rotate(${b.angle.toFixed(0)}) scale(1.3)`);
+  const waiting = () => bees.filter((b) => b !== inside && !b.leaving);
+  const say = () => {
+    const n = waiting().length;
+    count.textContent = `${acquired} ${acquired === 1 ? "acquire" : "acquires"} · ${inside ? "one inside" : "the cell is free"} · ${n} waiting`;
+  };
+  const arrive = (now) => {
+    lastSpawn = now;
+    if (waiting().length >= MAX_WAITING) return;
+    bees.push(make(-30, 40 + ((acquired * 37 + bees.length * 23) % 100)));
+  };
+  const place = () => {
+    waiting().forEach((b, i) => { [b.tx, b.ty] = slot(i); b.use.setAttribute("class", "waiting"); });
+    if (inside) { [inside.tx, inside.ty] = CELL; inside.use.setAttribute("class", "inside"); }
+  };
+  const step = (now, instant = false) => {
+    // Release: the holder leaves by the far side, and the head of the line acquires.
+    if (inside && (instant || now - heldSince >= HOLD_MS)) {
+      inside.leaving = true;
+      inside.tx = 640;
+      inside.ty = 18;
+      inside = null;
+    }
+    if (!inside) {
+      const next = waiting()[0];
+      if (next) { inside = next; heldSince = now; acquired += 1; }
+    }
+    cell.classList.toggle("held", Boolean(inside));
+    ring.style.strokeDashoffset = inside && !reduce ? String(1 - Math.min(1, (now - heldSince) / HOLD_MS)) : inside ? "0" : "1";
+    place();
+    say();
+  };
+  const move = (b, k) => {
+    const dx = b.tx - b.x, dy = b.ty - b.y;
+    if (Math.abs(dx) + Math.abs(dy) > 0.5) b.angle = (Math.atan2(dy, dx) * 180) / Math.PI;
+    else b.angle *= 0.9;
+    b.x += dx * k;
+    b.y += dy * k;
+    if (b.leaving && b.x > 620) { b.use.remove(); b.gone = true; }
+    else draw(b);
+  };
+  const sweep = () => { for (let i = bees.length - 1; i >= 0; i -= 1) if (bees[i].gone) bees.splice(i, 1); };
+
+  // Start from what the page drew: one inside, two waiting.
+  layer.replaceChildren();
+  for (const [x, y] of [CELL, slot(0), slot(1)]) bees.push(make(x, y));
+  inside = bees[0];
+  heldSince = performance.now();
+  acquired = 1;
+  place();
+  bees.forEach(draw);
+  say();
+
+  send.hidden = false;
+  send.addEventListener("click", () => {
+    const now = performance.now();
+    arrive(now);
+    if (reduce) {
+      // No flight: the line moves up one place, and every bee is set down where it belongs.
+      step(now, true);
+      for (const b of bees) move(b, 1);
+      sweep();
+    }
+  });
+
+  if (!reduce) {
+    new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; }).observe(threads);
+    const frame = (now) => {
+      if (visible && document.visibilityState === "visible") {
+        if (now - lastSpawn > 2300) arrive(now);
+        step(now);
+        for (const b of bees) move(b, 0.07);
+        sweep();
+      }
+      requestAnimationFrame(frame);
+    };
+    requestAnimationFrame(frame);
+  }
 }

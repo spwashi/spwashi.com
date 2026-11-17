@@ -5,7 +5,7 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { CSP_HOME, CSP_NOW, FOLIO_SOURCES, SCHEDULE, carried, paintLock } from '../carry.mjs';
-import { CYCLES, DIAL, FOLIOS, cycleFor, dialOf, holderFor, nowLine } from '../src/lock.js';
+import { CYCLES, DIAL, FOLIOS, TURN_MS, countdown, cycleFor, dialOf, holderFor, nowLine, turnLine, turnOf } from '../src/lock.js';
 import * as served from '../../site-hub-next/src/mutex.js';
 import { parse } from '../../../public/js/semantic/spw-workbench-reader.js';
 import { parse as parsePinned } from '../../spw-quest/assets/parser/2026.10.13/reader.min.js';
@@ -111,5 +111,42 @@ test('the pages read with scripts off, carry nothing inline, and point to no one
   }
   const home = readFileSync(path.join(assets, 'index.html'), 'utf8');
   assert.ok(home.includes('A mutex lets one thread in and makes the rest wait.'));
+  // What a mutex is, said plainly before this lock's own rules.
+  const explain = home.slice(home.indexOf('<section class="explain"'), home.indexOf('</section>', home.indexOf('<section class="explain"')));
+  for (const words of ['mutual exclusion', 'acquires the lock', 'releases it', 'critical section', 'semaphore']) assert.ok(explain.includes(words), words);
+  assert.ok(home.indexOf('class="explain"') < home.indexOf('class="rules"'), 'the explanation comes before the rules');
   for (const { cycle } of CYCLES) assert.ok(home.includes(`<li data-cycle="${cycle}"><b>${cycle}</b>`), `hold ${cycle} is listed`);
+});
+
+test('a hold is cut into turns of an hour: whole at its ends, a detail inside the picture between, each said as Spw', () => {
+  const holder = holderFor(new Date('2026-11-16T12:00:00Z'));
+  const since = Date.parse(holder.since);
+  const first = turnOf(holder, new Date(since));
+  assert.equal(first.of, 13 * 24, 'thirteen days of hours');
+  assert.deepEqual([first.index, first.zoom], [0, 1]);
+  assert.deepEqual([turnOf(holder, new Date(Date.parse(holder.releasesAt) - 1)).index, turnOf(holder, new Date(Date.parse(holder.releasesAt) - 1)).zoom], [first.of - 1, 1]);
+  const seen = new Set();
+  for (let i = 1; i < first.of - 1; i += 1) {
+    const turn = turnOf(holder, new Date(since + i * TURN_MS + 1000));
+    assert.equal(turn.index, i);
+    // At this zoom a detail's centre keeps its whole crop inside the picture.
+    const half = 0.5 / turn.zoom;
+    assert.ok(turn.fx >= half && turn.fx <= 1 - half && turn.fy >= half && turn.fy <= 1 - half, `turn ${i}`);
+    seen.add(`${turn.fx},${turn.fy}`);
+  }
+  assert.ok(seen.size > 90, `the details walk the work (${seen.size} places)`);
+  for (const at of [0, 61, first.of - 1]) assert.ok(whole(turnLine(turnOf(holder, new Date(since + at * TURN_MS)))), `turn ${at}`);
+  assert.equal(turnLine(turnOf(holder, new Date('2026-11-16T13:30:00Z'))), '%turn[62/312]{hour}');
+  assert.equal(countdown(holder, new Date('2026-11-16T13:37:55Z')), '10d 10h 22m 05s');
+  assert.equal(countdown(holder, new Date(Date.parse(holder.releasesAt) - 65_000)), '1m 05s');
+  assert.equal(countdown(holder, new Date(Date.parse(holder.releasesAt) + 5)), '0s');
+});
+
+test('the mutex you can watch is drawn at rest with scripts off: one bee inside the cell, two waiting', () => {
+  const home = readFileSync(path.join(assets, 'index.html'), 'utf8');
+  const figure = home.slice(home.indexOf('<figure class="threads"'), home.indexOf('</figure>', home.indexOf('<figure class="threads"')));
+  assert.equal((figure.match(/class="inside"/g) ?? []).length, 1);
+  assert.equal((figure.match(/class="waiting"/g) ?? []).length, 2);
+  assert.ok(figure.includes('<button type="button" id="send-bee" hidden>Send a bee</button>'), 'its button waits for the script');
+  assert.ok(home.indexOf('class="threads"') > home.indexOf('class="explain"'), 'it sits in the explanation');
 });
