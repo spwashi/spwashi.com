@@ -53,6 +53,24 @@ export const STARTERS = Object.freeze([
     build: "One line per company you talk to, compared two at a time.",
     open: "onboarding",
   }),
+  Object.freeze({
+    id: "incident",
+    setting: "Incident triage",
+    line: "outage[p1]{triage ~> isolate ~> verify}<checkout>",
+    ask: "Which signal tells you the blast radius stopped growing?",
+    talk: "Turn p1 to drill and add the exact smoke check you would automate.",
+    build: "A blameless postmortem keeping latency bounds, owners, and timeline together.",
+    open: "incident",
+  }),
+  Object.freeze({
+    id: "community",
+    setting: "Organizing a gathering",
+    line: "gathering[monthly]{host, access, food}<neighbors>",
+    ask: "Who cannot participate if one default assumption stays unspoken?",
+    talk: "Change monthly to weekly and trim setup so one host can close in 15 minutes.",
+    build: "A lightweight charter naming access promises, shared roles, and cleanup steps.",
+    open: "gathering",
+  }),
 ]);
 
 /** The section the guide shows under its opening. `href` builders come from the worker so links stay in one form. */

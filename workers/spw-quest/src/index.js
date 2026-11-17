@@ -17,6 +17,7 @@ import { SWITCH_CSS, parserSwitch, switchBanner, switchLoader, switchModulePath 
 import { FACTSHIFT_LIMIT, SPECIMENS_CSS, factshiftHref, specimenById, specimenState, specimensBody } from "./specimens.js";
 import { SPECIMENS } from "./specimens-data.js";
 import { renderConstructs } from "./constructs.js";
+import { clientLensInit, clientLensPayload, lensBarHtml, lensCss, lensHtmlAttrs, resolveLens } from "./lens.js";
 import { pivotState, renderPivot } from "./pivot.js";
 import { physicsState, renderPhysics } from "./physics.js";
 import { WALK_CSS, walkSection } from "./walk.js";
@@ -328,7 +329,7 @@ const GUIDE_CSS = `.opening { margin: 0 0 1.6rem; padding-bottom: .2rem; }
     }`;
 
 /** The guide. With `parser` ({ value, from }, from a valid ?parser=), a banner leads and the page reads with that build. */
-function renderGuide(parser = null, example = EXAMPLES[0], at = "") {
+function renderGuide(parser = null, example = EXAMPLES[0], at = "", lens = null) {
   // The edge back from a mark's card to the file open above: how many times that file uses it. The page keeps it in step as the file changes.
   const used = new Map(readFile(example.script).marks.map((mark) => [mark.name, mark.count]));
   const inFile = (name) => `
@@ -347,18 +348,21 @@ function renderGuide(parser = null, example = EXAMPLES[0], at = "") {
       <span class="edges-in">${panelLinks(EDGES_IN.braces.get(c.name))}</span>` : ""}
     </li>`).join("\n    ");
   const setIds = INSTRUCTION_SETS.map((set) => set.id).join(" ");
+  const scopeAttr = lens ? ` data-server-lens="true" ${lensHtmlAttrs(lens)}` : "";
   return layout({
     title: "spw.quest — a guide to the Spw language",
     description: "Spw is a notation for a reading you can check. A mark names a role, a brace names a slot, and a tool reads the line back. How to answer in Spw: spw.quest/llms.txt",
     canonical: "https://spw.quest/",
     head: `${QUEST_HEAD}\n  <link rel="alternate" type="text/plain" href="/llms.txt" title="What can be done here by address, and how to answer in Spw">`,
-    script: `document.documentElement.dataset.setupSets = ${JSON.stringify(setIds)};\ndocument.documentElement.dataset.panels = ${JSON.stringify(STEPS.map((step) => step.id).join(" "))};\n(${forwardOldHash.toString()})();\n(${toolActions.toString()})();\n(${releaseNotice.toString()})(${JSON.stringify(PINNED_RELEASE)}, ${newestPublished.toString()});`,
+    script: `document.documentElement.dataset.setupSets = ${JSON.stringify(setIds)};\ndocument.documentElement.dataset.panels = ${JSON.stringify(STEPS.map((step) => step.id).join(" "))};\n(${forwardOldHash.toString()})();\n(${toolActions.toString()})();\n(${releaseNotice.toString()})(${JSON.stringify(PINNED_RELEASE)}, ${newestPublished.toString()});\n(${clientLensInit.toString()})(${JSON.stringify(clientLensPayload())});`,
     themeCss: `${PAPER_CSS}
     ${PAGE_CSS}
     ${FILE_CSS}
     ${GUIDE_CSS}
-    ${WALK_CSS}${parser ? `\n    ${SWITCH_CSS}` : ""}`,
+    ${WALK_CSS}
+    ${lensCss()}${parser ? `\n    ${SWITCH_CSS}` : ""}`,
     body: `${masthead("/")}
+<div class="lens-scope"${scopeAttr}>
 ${parser ? `${switchBanner(parser.value, parser.from)}\n` : ""}<section class="opening" aria-labelledby="title">
   <p class="eyebrow">A language for navigating the metamaterial properties of linguistics</p>
   <h1 id="title">A notation for readings you can compare.</h1>
@@ -367,6 +371,7 @@ ${parser ? `${switchBanner(parser.value, parser.from)}\n` : ""}<section class="o
   <p class="lede">A mark says what a word is doing. A brace says which slot it fills. Change one slot and the reading updates. Explore lines as discrete monospace stamps here, or project their continuous topological forces on <a href="https://factshift.center" target="_blank" rel="noopener">factshift.center</a>.</p>
   <p class="note">Handed this address and a line? <a href="/llms.txt">How to answer in Spw</a>.</p>
 </section>
+${lensBarHtml(lens)}
 ${startersSection(escapeHtml, {
   editHref: (line) => `/build?script=${encodeURIComponent(line)}#build`,
   exampleHref: (id) => `/?example=${encodeURIComponent(id)}#try`,
@@ -387,6 +392,7 @@ ${fileWorkspace(example, at)}
   </ul>
   <p class="note"><a href="/forms/">Forms, side by side</a>: each brace, join and mark against its neighbors. Marks and braces compose: <code><span data-t="vibration">#</span><span data-t="b-mode">[</span>…<span data-t="b-mode">]</span></code> is a set, <code><span data-t="ground">.</span><span data-t="b-direction">{</span>…<span data-t="b-direction">}</span></code> a property sheet.</p>
 </section>
+</div>
 
 <section id="ways" class="band" aria-labelledby="ways-title">
   <h2 id="ways-title">Tools${selfLink("ways", "ways-title")}</h2>
@@ -432,7 +438,7 @@ function fileWorkspace(example, at = "") {
   const tabs = EXAMPLE_GROUPS.map((group) => `<div class="examples-row" role="group" aria-label="${escapeHtml(group)}"><span class="examples-group" aria-hidden="true">${escapeHtml(group)}</span><div class="examples-files">${EXAMPLES.filter((item) => item.group === group).map(link).join("")}</div></div>`).join("\n    ");
   const themeAttr = reading.theme ? ` data-theme="${escapeHtml(reading.theme)}"` : "";
   return `<section id="try" class="try" aria-labelledby="try-title">
-  <h2 id="try-title" class="eyebrow">${EXAMPLES.length} files, written in Spw: a bench, a study, a board, a stage, a trial for the canvas, and a team's files</h2>
+  <h2 id="try-title" class="eyebrow">${EXAMPLES.length} files, written in Spw: a bench, a study, a board, a stage, a trial for the canvas, a team's files, and field practice</h2>
   <p class="examples-lede">Each works as it stands and is yours to change: edit it here, keep it as your note, or download it. On the stage, a pattern that performs sets this field's theme. Where one file points to another, its reading opens that file at the line it names.</p>
   <nav class="examples" aria-label="Files">
     ${tabs}
@@ -535,28 +541,33 @@ ${displayScript()}`,
   });
 }
 
-function renderBuild(slots, script = assemble(slots), filename = `${slots.word || "line"}.spw`, focus = {}) {
+function renderBuild(slots, script = assemble(slots), filename = `${slots.word || "line"}.spw`, focus = {}, lens = null) {
+  const scopeAttr = lens ? ` data-server-lens="true" ${lensHtmlAttrs(lens)}` : "";
   return layout({
     title: "spw.quest — take one line apart",
     description: "Start from a song, a picture brief or a scene: edit the file, see what a tool reads from it, and take any line apart, each slot offering the words the rest of the file already uses.",
     canonical: "https://spw.quest/build",
     head: QUEST_HEAD,
-    script: `(${readSpw64.toString()})();\n(${toolActions.toString()})();`,
+    script: `(${readSpw64.toString()})();\n(${toolActions.toString()})();\n(${clientLensInit.toString()})(${JSON.stringify(clientLensPayload())});`,
     themeCss: `${PAPER_CSS}
     ${PAGE_CSS}
     ${FILE_CSS}
     ${BUILD_CSS}
+    ${lensCss()}
     .opening { margin: 0 0 1.2rem; }
     .opening h1 { margin: 0 0 .5rem; font-size: clamp(1.8rem, 5vw, 2.4rem); }
     .opening .lede { max-width: 42rem; margin: 0; color: var(--ink-soft); }`,
     body: `${masthead("/build")}
+<div class="lens-scope"${scopeAttr}>
 <section class="opening" aria-labelledby="build-title">
   <h1 id="build-title">Take one line apart</h1>
   <p class="lede">Start from a song, a picture or a scene. Edit the file and the reading follows; any line can be taken apart, and each slot offers the words the rest of the file already uses. <a href="/forms/">Forms, side by side</a> shows what each change does.</p>
 </section>
+${lensBarHtml(lens)}
 <section id="build" aria-labelledby="build-title">
   ${buildSurface(slots, script, filename, focus)}
 </section>
+</div>
 <p class="also"><a href="/">Back to the guide</a> · <a href="/learn">Learn it a mark at a time</a> · <a href="/specimens">Specimens</a> · <a href="/constructs">Constructs</a> · <a href="/pivot">Pivot a line</a> · <a href="/install">Install the workbench</a></p>
 ${liveFileScript()}
 ${displayScript()}`,
@@ -678,6 +689,7 @@ async function handleQuest(request, url) {
     return new Response("Method not allowed", { status: 405, headers: { ...BASE_SECURITY, Allow: "GET, HEAD" } });
   }
   let response;
+  const lens = resolveLens({ params: url.searchParams, referer: request.headers.get("Referer") || "" });
   if (url.pathname === "/git.txt") {
     response = new Response(GIT_GUIDE, { headers: { ...BASE_SECURITY,
       "Content-Type": "text/plain; charset=UTF-8", "Cache-Control": "public, max-age=300" } });
@@ -712,17 +724,18 @@ async function handleQuest(request, url) {
     response = page(renderOffline());
   } else if (url.pathname === "/") {
     // ?parser= tries another build in the page; an invalid value is ignored, and the page is the default.
-    // ?example= opens one of the files; an unknown one opens the first.
+    // ?example= opens one of the files; an unknown one opens the first (or lens signature file).
     const value = parserSwitch(url.searchParams);
-    const example = exampleById(url.searchParams.get("example")) || EXAMPLES[0];
+    const lensDefault = lens && !url.searchParams.has("example") ? exampleById(lens.lens.examples[0]) : null;
+    const example = exampleById(url.searchParams.get("example")) || lensDefault || EXAMPLES[0];
     // ?at= names a line of that file (a #>frame, a ^"block", a field): the hand lands on it.
-    response = page(renderGuide(value && { value, from: switchModulePath(value) }, example, String(url.searchParams.get("at") || "").slice(0, 80)), {}, LIVE_CSP);
+    response = page(renderGuide(value && { value, from: switchModulePath(value) }, example, String(url.searchParams.get("at") || "").slice(0, 80), lens), {}, LIVE_CSP);
   } else if (url.pathname === "/learn") {
     // ?word= carries one word of the reader's through the panels; anything but a plain name is ignored.
     response = page(renderLearn(carriedWord(url.searchParams.get("word"))), {}, LIVE_CSP);
   } else if (url.pathname === "/build") {
     const asked = buildFrom(url.searchParams);
-    response = page(renderBuild(asked.slots, asked.script, asked.filename, asked), { cache: "public, max-age=300" }, LIVE_CSP);
+    response = page(renderBuild(asked.slots, asked.script, asked.filename, asked, lens), { cache: "public, max-age=300" }, LIVE_CSP);
   } else if (url.pathname === "/script.spw") {
     const asked = buildFrom(url.searchParams);
     response = scriptFile(asked.script, asked.filename);
@@ -733,7 +746,7 @@ async function handleQuest(request, url) {
   } else if (url.pathname === "/constructs") {
     response = page(renderConstructs(), { cache: "public, max-age=300" });
   } else if (url.pathname === "/pivot") {
-    response = page(renderPivot(pivotState(url.searchParams)), { cache: "public, max-age=300" });
+    response = page(renderPivot(pivotState(url.searchParams), lens), { cache: "public, max-age=300" });
   } else if (url.pathname === "/physics") {
     // A line at rest: the worker reads it and draws it still; the page's hand reads with /parser.js.
     response = page(renderPhysics(physicsState(url.searchParams)), { cache: "public, max-age=300" }, LIVE_CSP);

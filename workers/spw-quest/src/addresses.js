@@ -12,11 +12,16 @@
 // example is called in test/addresses.test.mjs.
 import { ANSWER_FORM, fullIndex } from "./answer.js";
 import { SHARE_MAX } from "./build.js";
+import { EXAMPLES } from "./examples.js";
 import { PIVOT_LIMIT } from "./pivot.js";
 import { LINE_LIMIT } from "./reader.js";
 import { FACTSHIFT_LIMIT } from "./specimens.js";
 
 const SHELF_WEIGHT = "The page is about 280 KB whatever is asked: the answer comes first, and the whole shelf follows it.";
+const EXAMPLE_IDS = (() => {
+  const ids = EXAMPLES.map(({ id }) => id);
+  return ids.length > 1 ? `${ids.slice(0, -1).join(", ")} or ${ids.at(-1)}` : ids[0] ?? "";
+})();
 
 export const ADDRESSES = Object.freeze([
   { name: "Card", path: "/card.txt", params: [["line", "rpgwednesday<card>"]], when: "You hold a line and want what the site holds for its word before answering it, as text.", takes: `line: one line, ${PIVOT_LIMIT} characters. /card with the same line is a small page that unfurls as a link card, and spw.quest/ followed by the line itself answers the same.` },
@@ -24,7 +29,7 @@ export const ADDRESSES = Object.freeze([
   { name: "Find", path: "/specimens", params: [["q", "recipe[*]"]], when: "You want every line on spwashi.com with some shape: the same word through other lenses, the same lens on other words.", takes: `q: slots to match, with * for any value. ${SHELF_WEIGHT}` },
   { name: "Compare", path: "/specimens", params: [["a", "h-capsule"], ["b", "h-induct_join"]], when: "You hold two shelf lines and want the slots they share and the slot where they part.", takes: `a, b: shelf ids, as Find prints them. ${SHELF_WEIGHT}` },
   { name: "Take apart", path: "/build", params: [["script", "~door[ajar]{hinge}"]], when: "You hold a file, or a line among others, and want what a tool reads from it and each slot's alternatives from the file's own lines.", takes: `script: up to ${SHARE_MAX} characters in an address. line: which of its lines to take apart, counted from 1.` },
-  { name: "Read a file", path: "/", params: [["example", "record"]], when: "You want a whole example of a kind of file (a log, a catalog record, a question with its probe) and what a tool reads from it.", takes: "example: notebook, record, vocabulary, question, script, revision, persona, calibration, perspectives, loops, gradient, debate, syntax, headings, perform, numbers, outline, recurrence, laws, pantry, pipeline, review, records, surfaces, primitives, algorithms, role, levels, onboarding or cinema. at: a name in the file, to land on its line." },
+  { name: "Read a file", path: "/", params: [["example", "record"]], when: "You want a whole example of a kind of file (a log, a catalog record, a question with its probe) and what a tool reads from it.", takes: `example: ${EXAMPLE_IDS}. at: a name in the file, to land on its line.` },
   { name: "Check a line", path: "/read", params: [["step", "act"], ["line", "~door"]], when: "You are learning one mark and want a single line checked against that panel's rule.", takes: `step: write, act, hold, name, point, ask or grow. line: up to ${LINE_LIMIT} characters.` },
   { name: "At rest", path: "/physics", params: [["line", "home[hook]{software.art}"]], when: "You want a line drawn as bodies at rest, with the laws that placed them.", takes: "line: one line." },
   { name: "Canvas", path: "/canvas", params: [["line", "home[hook]{software.art}"]], when: "You want a person to see a line laid out as a force-directed canvas on factshift.center. It draws with scripts, so a reader without them gets only its chrome: use Pivot to read the line.", takes: `line: up to ${FACTSHIFT_LIMIT} characters, or s: a shelf id. Answers with a redirect to factshift.center.` },

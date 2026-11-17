@@ -223,3 +223,31 @@ test('cinema and debate examples pass both log and wonder checks, open on /, and
   assert.equal(readFile(exampleById('debate').script).marks.find((mark) => mark.name === 'perspective')?.count, 4);
   assert.match(ADDRESS_INDEX, /Persona@\[mode\]/);
 });
+
+test('practice examples span short, medium, and long detail across social and professional settings', async () => {
+  const lineCount = (script) => script.split('\n').filter((line) => line.trim()).length;
+  const practiceIds = ['checkin', 'decision', 'gathering', 'incident', 'critique', 'negotiation', 'charter', 'synthesis'];
+  const counts = Object.fromEntries(practiceIds.map((id) => {
+    const example = exampleById(id);
+    assert.ok(example, `example ${id} exists`);
+    const parsed = quietParse(example.script);
+    assert.equal(parsed.success, true, `${id} parses cleanly`);
+    assert.deepEqual(parsed.errors, [], `${id} has zero parse errors`);
+    const reading = readFile(example.script);
+    assert.equal(reading.ok, true, `${id} passes file-reader`);
+    assert.deepEqual(reading.checks.filter((check) => check.state === 'fail'), [], `${id} has zero failed checks`);
+    return [id, lineCount(example.script)];
+  }));
+
+  // Verify true length & detail stratification: short (<=11), medium (12..25), long (>=28).
+  assert.ok(counts.checkin <= 11 && counts.decision <= 11, `compact examples stay crisp: ${JSON.stringify(counts)}`);
+  assert.ok(counts.gathering >= 12 && counts.incident >= 12 && counts.critique >= 12, `medium examples carry structure: ${JSON.stringify(counts)}`);
+  assert.ok(counts.negotiation >= 25 && counts.charter >= 25 && counts.synthesis >= 25, `long examples hold full scenarios: ${JSON.stringify(counts)}`);
+
+  // Both social and professional examples render on / and bridge to /llms-full.txt & canvas.
+  const practicePage = await text('/?example=charter');
+  assert.ok(practicePage.includes('coop-charter.spw'));
+  assert.ok(practicePage.includes('eastside_tool_coop'));
+  const incidentStarter = await text('/pivot?line=' + encodeURIComponent(STARTERS.find((s) => s.id === 'incident').line));
+  assert.match(incidentStarter, /id="turn-mode"/);
+});
