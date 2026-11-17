@@ -7,6 +7,7 @@ import { FACETS, LOCK, facetChips, SEEDS, SHADER, SLOTS, TUNING, holdAt, hourOf,
 
 import { hasSetRing, mountSetRing, nearestLight, openSetRing, slug as pathWord, spw64 } from "/set-ring.js";
 import { attachPinch, wasPinch } from "/pinch.js";
+import { mountTextScale } from "/text-scale.js";
 
 const $ = (id) => document.getElementById(id);
 const root = document.documentElement;
@@ -622,3 +623,6 @@ keepButton.addEventListener("click", async () => {
   keepButton.hidden = true;
 });
 addEventListener("appinstalled", () => { keepButton.hidden = true; });
+
+// spwashi.com's pinch on the card's words sizes them; the stripes keep their own pinch (text-scale.js).
+mountTextScale(document.getElementById("card"));

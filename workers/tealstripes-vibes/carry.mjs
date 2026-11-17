@@ -13,6 +13,7 @@
 // - _headers.
 // --check fails when a carried file differs from what this would write.
 import { createHash } from "node:crypto";
+import { peerScriptPath } from "../lib/peer-kit.js";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -21,6 +22,9 @@ import { writeOrCheck } from "../lib/carry.js";
 import { rgbOf, squarePng } from "../lib/png.js";
 import { ecosystemJson } from "../site-hub-next/src/hosts/ecosystem.js";
 import { ALL, FACETS, FILTERS, GROUND, HOST, SEEDS, TUNING, canonicalPath, expressionOf, facetChips, maskLabel, vibe, vibeCss } from "./src/vibe.js";
+
+/** spwashi.com's pinch for text, carried by scripts/build-peer-kit.mjs (workers/lib/text-scale.js binds it). */
+const PINCH_TEXT = peerScriptPath("pinch-text-scale");
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ASSETS = path.join(HERE, "assets");
@@ -61,6 +65,9 @@ function shell({ seed, mask, filters, title, mood, canonical, ground = false }) 
 <link rel="stylesheet" href="/tealstripes.css">
 <link rel="stylesheet" href="/set-ring.css">
 <link rel="stylesheet" href="/pinch.css">
+<link rel="stylesheet" href="/text-scale.css">
+<script src="/text-scale-head.js"></script>
+<link rel="modulepreload" id="text-pinch" href="${PINCH_TEXT}">
 <style id="vibe-style">${vibeCss(v)}</style>
 <script type="module" src="/tealstripes.js"></script>
 </head>
@@ -143,7 +150,7 @@ function manifest() {
 }
 
 /** Every file a vibe needs; with these kept, any address paints offline, since the shell reads it in the page. */
-const SHELL = ["/", "/index.html", ...Object.keys(SEEDS).map((s) => `/${s}`), "/tealstripes.js", "/vibe.js", "/tealstripes.css", "/set-ring.js", "/set-ring.css", "/pinch.js", "/pinch.css", "/favicon.svg", "/manifest.webmanifest", ...Object.keys(ICONS).map((n) => `/icons/${n}`)];
+const SHELL = ["/", "/index.html", ...Object.keys(SEEDS).map((s) => `/${s}`), "/tealstripes.js", "/vibe.js", "/tealstripes.css", "/set-ring.js", "/set-ring.css", "/pinch.js", "/pinch.css", "/text-scale.js", "/text-scale.css", "/text-scale-head.js", PINCH_TEXT, "/favicon.svg", "/manifest.webmanifest", ...Object.keys(ICONS).map((n) => `/icons/${n}`)];
 
 function serviceWorker(version) {
   return `// Written by workers/tealstripes-vibes/carry.mjs. Pages from the network when there is one, else the kept shell, which paints any address.
@@ -218,6 +225,9 @@ export async function carried() {
     ["set-ring.css", await readFile(path.join(HERE, "../lib/set-ring.css"), "utf8")],
     ["pinch.js", await readFile(path.join(HERE, "../lib/pinch.js"), "utf8")],
     ["pinch.css", await readFile(path.join(HERE, "../lib/pinch.css"), "utf8")],
+    ["text-scale.js", await readFile(path.join(HERE, "../lib/text-scale.js"), "utf8")],
+    ["text-scale.css", await readFile(path.join(HERE, "../lib/text-scale.css"), "utf8")],
+    ["text-scale-head.js", await readFile(path.join(HERE, "../lib/text-scale-head.js"), "utf8")],
     ["index.html", shell({ seed: Object.keys(SEEDS)[0], mask: "", filters: [], title: "Teal Stripes Vibes", mood: "teal stripes", canonical: `${ORIGIN}/`, ground: true })],
     ...Object.keys(SEEDS).map((seed) => [`${seed}.html`, seedPage(seed)]),
     ["favicon.svg", FAVICON],

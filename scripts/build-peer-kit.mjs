@@ -76,10 +76,13 @@ const BRACE_TYPES = Object.freeze({ '<': 'concept', '(': 'scene', '[': 'mode', '
  * workbench's esbuild, as build:spw-parser uses). An entry should be import-free
  * or close to it: the bundle carries whatever it imports.
  */
+const PINCH_TEXT_SCALE = Object.freeze({ name: 'pinch-text-scale', entry: 'public/js/kernel/pinch-text-scale.js' });
 const SCRIPTS = Object.freeze({
-  'spw-quest': [
-    { name: 'pinch-text-scale', entry: 'public/js/kernel/pinch-text-scale.js' },
-  ],
+  'spw-quest': [PINCH_TEXT_SCALE],
+  // The set's pages pinch their words as spwashi.com does (workers/lib/text-scale.js).
+  'attention-productions': [PINCH_TEXT_SCALE],
+  'mutex-buzz': [PINCH_TEXT_SCALE],
+  'tealstripes-vibes': [PINCH_TEXT_SCALE],
 });
 const ESBUILD = path.join(ROOT, '.spw/_workbench/node_modules/esbuild/lib/main.js');
 

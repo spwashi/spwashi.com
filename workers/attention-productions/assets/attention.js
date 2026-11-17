@@ -6,6 +6,7 @@ import { FIRST_SHOT, SUBJECT_DEPTH, addressOf, canvasHrefOf, stepShot, cornersOf
 import { LADDERS, SHAPES, TEMPO } from "/vocabulary.js";
 import { hasSetRing, mountSetRing, nearestSeed, openSetRing, slug as pathWord, spw64 } from "/set-ring.js";
 import { attachPinch, wasPinch } from "/pinch.js";
+import { mountTextScale } from "/text-scale.js";
 import { MATERIALS } from "/materials.js";
 
 const svg = document.getElementById("viewfinder");
@@ -313,3 +314,6 @@ if (svg) {
     go: (direction) => { const next = stepShot(shot, direction); if (next) commit({ shot: next }); else openSetRing(); },
   });
 }
+
+// spwashi.com's pinch on the words sizes them; the viewfinder keeps its own pinch (text-scale.js).
+mountTextScale(document.querySelector("main"), { ignore: ".pinchable" });
