@@ -217,6 +217,9 @@ test('cinema and debate examples pass both log and wonder checks, open on /, and
   // Career stages and multiparty speaker readings share uniform slot geometry for side-by-side comparison.
   const senior = '!lock[cut_two]{color, foley, title_cards}(thesis_suite)<master>';
   assert.match(await text(`/pivot?line=${encodeURIComponent(senior)}`), /id="turn-mode"/);
-  const maya = '@maya[picture]{pacing, sound_lock}(friday)<cut>';
+  const maya = 'maya@[picture]{pacing, sound_lock}(friday)<cut>';
   assert.match(await text(`/pivot?line=${encodeURIComponent(maya)}`), /id="turn-scope"/);
+  assert.match(await text(`/pivot?line=${encodeURIComponent(maya)}`), /id="turn-subject"/);
+  assert.equal(readFile(exampleById('debate').script).marks.find((mark) => mark.name === 'perspective')?.count, 4);
+  assert.match(ADDRESS_INDEX, /Persona@\[mode\]/);
 });
