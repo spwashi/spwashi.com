@@ -3,7 +3,7 @@
 // shader and the keys are the ones the worker's page carried; tuning, the
 // fading card and the share image are this page's own. With scripts off the
 // shell shows the vibe it was written with.
-import { FACETS, SEEDS, SHADER, SLOTS, TUNING, canonicalPath, captionOf, choicesFor, expressionOf, maskLabel, readAddress, said, tune, tuningFor, tuningQuery, valueOf, vibe, vibeCss } from "/vibe.js";
+import { FACETS, LOCK, SEEDS, SHADER, SLOTS, TUNING, holdAt, hourOf, lockVibe, canonicalPath, captionOf, choicesFor, expressionOf, maskLabel, readAddress, said, tune, tuningFor, tuningQuery, valueOf, vibe, vibeCss } from "/vibe.js";
 
 const $ = (id) => document.getElementById(id);
 const root = document.documentElement;
@@ -26,7 +26,7 @@ let trying = null;
 let held = null;
 const shown = () => trying ?? place;
 const current = () => { const p = shown(); return tune(vibe(p.seed, p.mask, p.filters), p.tuning); };
-const pathOf = () => (place.kind === "moment" ? new URL(place.href).pathname : canonicalPath(place));
+const pathOf = () => (place.kind === "lock" ? LOCK.path : place.kind === "moment" ? new URL(place.href).pathname : canonicalPath(place));
 const addressOf = () => {
   const query = [tuningQuery(place.tuning), place.say ? `say=${encodeURIComponent(place.say)}` : ""].filter(Boolean).join("&");
   return `${pathOf()}${query ? `?${query}` : ""}`;
@@ -43,7 +43,17 @@ function paint() {
   $("seed-name").textContent = seed;
   $("mood").textContent = SEEDS[seed].mood;
   $("mask").textContent = `${maskLabel(mask)}${filters.length ? ` · ${filters.join(", ")}` : ""}`;
-  $("hour").textContent = `${hour}Z`;
+  const p = shown();
+  $("hour").textContent = p.kind === "lock" ? `${hour}Z · turn ${p.turn} of ${p.of}` : `${hour}Z`;
+  const lock = $("lock");
+  if (p.kind === "lock") {
+    lock.replaceChildren(document.createTextNode(`${p.lines.join("\n")} · `));
+    const from = document.createElement("a");
+    from.href = LOCK.home;
+    from.textContent = "from mutex.buzz";
+    lock.append(from);
+    lock.hidden = false;
+  } else lock.hidden = true;
   writeExpression(v);
   $("tuple-link").setAttribute("href", `/tuple?seed=${seed}&mask=${maskLabel(mask)}${filters.length ? `&filter=${filters.join(",")}` : ""}`);
   $("self-link").setAttribute("href", href);
@@ -65,6 +75,34 @@ function paint() {
 function keep() {
   window.history.replaceState(null, "", addressOf());
   paint();
+}
+
+if (place.kind === "lock-pending") {
+  // The lock's vibe: the hour's ground first, then what mutex.buzz says the lock holds.
+  place = { ...readAddress(`/@${hourOf(new Date())}`, "", new Date()), seed: Object.keys(SEEDS)[0], mask: "" };
+  readLock();
+}
+
+/** Read the lock from mutex.buzz and paint what it holds; each hour fill in a facet more; at the close, read it again. */
+async function readLock() {
+  try {
+    const response = await fetch(LOCK.schedule);
+    if (!response.ok) throw new Error(String(response.status));
+    const hold = holdAt((await response.json()).holds ?? [], Date.now());
+    if (!hold) throw new Error("no hold");
+    const fill = () => {
+      if (Date.now() >= Date.parse(hold.releasesAt)) return readLock();
+      if (place.kind !== "lock" && place.kind !== "moment") return;
+      place = { ...lockVibe(hold, Date.now()), tuning: place.tuning ?? {}, say: place.say ?? "" };
+      paint();
+    };
+    fill();
+    clearInterval(readLock.timer);
+    readLock.timer = setInterval(fill, 60_000);
+    say(`${hold.title} holds the lock; turn ${place.turn} of ${place.of}.`);
+  } catch {
+    say("mutex.buzz did not answer; this is the hour's ground.");
+  }
 }
 
 if (place.kind === "unknown") {
@@ -179,7 +217,8 @@ function rerollAll() {
 
 function keepHeld() {
   if (trying) {
-    place = { ...trying, href: place.href };
+    // A change kept from the lock's vibe is a vibe of its own now, at its own address, and stops following the hold.
+    place = { ...trying, kind: trying.kind === "lock" ? "vibe" : trying.kind, href: place.href };
     trying = null;
     keep();
     say("Kept.");

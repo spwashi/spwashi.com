@@ -456,6 +456,8 @@ export function readAddress(pathname, search, now) {
   const params = new URLSearchParams(search);
   const path = String(pathname || "/").replace(/\/index\.html$/, "/").replace(/\.html$/, "");
   if (path === "/" && !params.has("seed")) return { kind: "root", redirect: `/@${hourOf(now)}` };
+  // /@lock is the vibe mutex.buzz's lock holds; the page reads the lock to paint it.
+  if (path === LOCK.path || path === `${LOCK.path}/`) return { kind: "lock-pending" };
   const moment = path.match(/^\/@(\d{4}-\d{2}-\d{2})(?:T(\d{2}))?\/?$/);
   if (moment) {
     if (Number.isNaN(Date.parse(`${moment[1]}T00:00:00Z`))) return { kind: "unknown" };
@@ -481,4 +483,46 @@ function queryOf(params) {
   const { tuning, say } = tuned(params);
   const query = [tuningQuery(tuning), say ? `say=${encodeURIComponent(say)}` : ""].filter(Boolean).join("&");
   return query ? `?${query}` : "";
+}
+
+/* ── the lock's vibe ─────────────────────────────────────── */
+
+/** Where the lock is kept, and the address on this host that shows what it holds. */
+export const LOCK = Object.freeze({ schedule: "https://mutex.buzz/now.json", home: "https://mutex.buzz/", path: "/@lock" });
+const LOCK_HOUR = 3_600_000;
+
+/** The hold open at a moment, from mutex.buzz's schedule (mutex.schedule.v1); null when it has none. */
+export const holdAt = (holds, now) => holds.find((h) => Date.parse(h.since) <= now && now < Date.parse(h.releasesAt)) ?? null;
+
+/**
+ * The vibe the lock holds: one seed for the whole hold, chosen by its holder,
+ * that fills in as the hold runs. On its first hour the frame is the ground's
+ * teal stripes; each hour more of the seed comes through, facet by facet in
+ * their order (palette, rhythm, angle, motion, grain, plate), and on its last
+ * hour the seed is whole. At the close the next hold starts over from the ground.
+ */
+export function lockVibe(hold, now) {
+  const since = Date.parse(hold.since);
+  const of = Math.round((Date.parse(hold.releasesAt) - since) / LOCK_HOUR);
+  const index = Math.min(of - 1, Math.max(0, Math.floor((now - since) / LOCK_HOUR)));
+  const names = Object.keys(SEEDS);
+  const seed = names[fnv(hold.title) % names.length];
+  const through = Math.min(FACETS.length, Math.floor((index / Math.max(1, of - 1)) * FACETS.length));
+  const mask = FACETS.slice(0, through).map((f) => f.letter).join("");
+  const words = (t) => String(t).toLowerCase().replace(/[^a-z0-9 ]+/g, " ").replace(/\s+/g, " ").trim();
+  const day = (ms) => words(new Date(ms).toLocaleDateString("en-US", { month: "long", day: "numeric", timeZone: "UTC" }));
+  return {
+    kind: "lock",
+    seed,
+    mask,
+    filters: [],
+    hour: hourOf(new Date(now)),
+    href: `https://${HOST}${LOCK.path}`,
+    tuning: {},
+    say: "",
+    hold,
+    turn: index + 1,
+    of,
+    lines: [`*holds[${hold.cycle}]{${words(hold.title)}}(${day(since)} ~> ${day(Date.parse(hold.releasesAt) - 1)})`, `%turn[${index + 1}/${of}]{hour}`],
+  };
 }

@@ -154,3 +154,31 @@ test('a held slot scans its choices: the others seeds\' values first, then its o
   const kept = tune(v, { beats: 3, steps: 8, ...tuningFor('rhythm', [4, 4, 9]) });
   assert.deepEqual(kept.rhythm, [4, 4, 9]);
 });
+
+test('/@lock is the vibe mutex.buzz\'s lock holds: one seed a hold, filling in from the ground to the whole seed', async () => {
+  const { lockVibe, holdAt, LOCK, FACETS } = await import('../src/vibe.js');
+  const { CSP } = await import('../carry.mjs');
+  const hold = { cycle: 'B', title: 'Teal Stripes Vibes wash', since: '2026-11-14T00:00:00.000Z', releasesAt: '2026-11-27T00:00:00.000Z' };
+  const at = (iso) => lockVibe(hold, Date.parse(iso));
+  assert.equal(at('2026-11-14T00:30:00Z').mask, '', 'its first hour is the ground');
+  assert.equal(at('2026-11-26T23:30:00Z').mask, ALL, 'its last hour is the whole seed');
+  let last = -1;
+  const seeds = new Set();
+  for (let h = 0; h < 312; h += 1) {
+    const v = lockVibe(hold, Date.parse(hold.since) + h * 3_600_000 + 60_000);
+    assert.ok(v.mask.length >= last, `hour ${h}: facets only come through`);
+    assert.equal(v.mask, FACETS.slice(0, v.mask.length).map((f) => f.letter).join(''), 'in the facets\' order');
+    last = v.mask.length;
+    seeds.add(v.seed);
+  }
+  assert.equal(seeds.size, 1, 'one seed for the whole hold');
+  // The lines are mutex.buzz's own for the moment (workers/mutex-buzz/src/lock.js nowLine and turnLine).
+  assert.deepEqual(at('2026-11-16T13:30:00Z').lines, ['*holds[B]{teal stripes vibes wash}(november 14 ~> november 26)', '%turn[62/312]{hour}']);
+  const { holderFor, nowLine, turnLine, turnOf } = await import('../../mutex-buzz/src/lock.js');
+  const moment = new Date('2026-11-16T13:30:00Z');
+  assert.deepEqual(at(moment.toISOString()).lines, [nowLine(holderFor(moment)), turnLine(turnOf(holderFor(moment), moment))]);
+  assert.equal(holdAt([hold], Date.parse('2027-01-01T00:00:00Z')), null);
+  assert.equal(readAddress(LOCK.path, '', new Date(NOW)).kind, 'lock-pending');
+  assert.match(CSP, /connect-src 'self' https:\/\/mutex\.buzz;/, 'the page may read the lock');
+  assert.ok(readFileSync(path.join(assets, 'index.html'), 'utf8').includes('<a id="lock-link" href="/@lock"'));
+});
