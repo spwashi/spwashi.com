@@ -564,10 +564,33 @@ expression = consumer[report]{defect.gap.built}<upstream>
   $%[feature.axes, token.dormant, snippet.receipt]
 }
 
+^"corpus_audit_2026_11_17"{
+  pin = `bcf0da18b840`
+  measured: .{
+    tracked_spw_files = `1322 outside .spw/_workbench (8.41 MB)`
+    parse_diagnostics_s = 8.55
+    parse_none_s = 8.58
+    clean_files = 1311
+    error_files = `3 (.agents/plans/archive/module-export-uniformity/wip.spw, .spw/caches/factshift-paste-grounding-2026-11.spw, .spw/caches/factshift-tooling-2026-11.spw — backslash escapes and unquoted ellipses)`
+    warning_files = `9 (prose-degradation: unclosed backticks in comparison-differentials.spw and runtime-goals-pipeline.spw; morphism -> keys in semantics-rigor.spw; bare > contours in interaction-paint-cost-2026-09.spw; multi-line ?< ... >[reg=stream] in spw-language-utilization-2026-07.spw and recursive-improvement.spw; => / == in modules.spw and thermodynamics.spw; and wip.spw recovery)`
+    html_expressions = `1018 distinct (1114 total attributes) across routes, 0 errors, 0 warnings`
+    trace_skip_site_semantics_ms = `715.6 default trace → 117.7 diagnostics → 105.8 none (153 KB surface)`
+  }[reg=facet]
+  open_parser_classes = #[
+    `greedy digraph priority (>> << (( <= >= => //) overriding bracket stack in list<Module<T>>, O((V + E) log V), ?[latency <= 400], https://spw.quest)`,
+    `tokenizer dropping unrecognized glyphs (x = -5, bound ≤ 10) and backslash-escaped quotes in snippets`,
+    `trailing % unit inside %errors[0.1%] tokenizing as OPERATOR:% (keyword) rather than unit`,
+    `secondary extractors: expression-query.js non-recursive {([^}]*)} leaving 9 of 27 herbarium specimens partial; readLine ignoring top-level -> and ~>; PAIR_SOUND / TEXTURES omitting < >`,
+  ][reg=set]
+  published_route = ~"../projects/spw-workbench/index.html#parsing-issues"
+  probe: `node -e "import('./public/js/semantic/spw-workbench-reader.js')..." over git ls-files '*.spw' with eventPolicy:'diagnostics'`
+}[reg=facet]
+
 ^"validation"{
   probe: `npm run spw:integrity && npm run spw:dimensions`
   falsification: "a finding here no longer reproduces from its stated probe against the pinned submodule"
   ~#note(pin): "measured against the submodule as mounted; re-run after a bump before carrying anything upstream"
   ~#note(2026-10-05): "the frames from editor_host_shadows_server to optimization_axes are measured at pin 229aedcf9b6f; earlier frames keep the pin they name"
   ~#note(2026-11-16): "trace_cost_when_not_collecting, mnemonic_and_surface, host_orders_and_sides and still_line_slots name their own pins; the workbench was at 339728cf and lore.land pinned 84cf313 that day"
+  ~#note(2026-11-17): "corpus_audit_2026_11_17 was measured at pin bcf0da18b840 against spw-workbench-reader.js and mirrored to /projects/spw-workbench/#parsing-issues"
 }

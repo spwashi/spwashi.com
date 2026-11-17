@@ -3,7 +3,7 @@
     description="The parser, runtime, language server, command line and editor extensions for Spw: what they do, where to try them, how long they took, and what using them taught."
     canonical="https://spwashi.com/projects/spw-workbench/"
     og_title="Spwashi • Spw Workbench"
-    og_description="The language workbench this site mounts: 513 commits across 71 active days, January to September 2026."
+    og_description="The language workbench this site mounts at bcf0da18: 682 commits across 87 active days, January 8 to November 16, 2026 — kernel architecture, live corpus parsing status, and open parser issues."
     og_image="https://spwashi.com/public/images/routes/software-parser-weather-og.jpg"
     og_image_alt="A dense software weather collage of parser circles, fibers, symbols, and measured structure."
     keywords="spw-workbench, Spw language, parser, runtime, language server, LSP, CLI, VS Code extension, IntelliJ, Neovim, time spent, workbench report"
@@ -38,22 +38,22 @@
         </div>
         <p class="spec-kicker">Projects / Spw Workbench</p>
         <h1 id="workbench-title">Spw Workbench</h1>
-        <p id="projects-workbench-lede" data-spw-textual-role="lede" data-spw-copy-unit="projects.workbench.lede" data-spw-copy-depth="entry" data-spw-semantic-expression="workbench[mount]{parse.run.answer}&lt;tool&gt;"><span class="spw-living-term" data-spw-living-term data-spw-concept="spw">Spw</span> is a small notation I write ideas in. The workbench is where it is kept working: a parser, a runtime, a language server, a command line, and extensions for VS Code, IntelliJ and Neovim. This site mounts it at <code>.spw/_workbench</code> and reads its own <code>.spw</code> files through it.</p>
+        <p id="projects-workbench-lede" data-spw-textual-role="lede" data-spw-copy-unit="projects.workbench.lede" data-spw-copy-depth="entry" data-spw-semantic-expression="workbench[mount]{parse.run.answer}&lt;tool&gt;"><span class="spw-living-term" data-spw-living-term data-spw-concept="spw">Spw</span> is a small notation I write ideas in. The workbench keeps its parser (<code>spw-seed</code>), runtime (<code>spw-runtime</code>), language server (<code>spw-lsp</code>), CLI (<code>spw-cli</code>), and editor plugins in one system mounted at <code>.spw/_workbench</code> (<code>bcf0da18</code>).</p>
         <div class="spw-reason-strip" aria-label="How the workbench works and where to touch it">
             <div id="workbench-quest" data-spw-emphasis="primary">
-                <strong>Start at spw.quest</strong>
-                <p id="projects-workbench-quest" data-spw-copy-unit="projects.workbench.quest" data-spw-semantic-expression="quest[invitation]{mark.braces}&lt;door&gt;"><a href="https://spw.quest/">spw.quest</a> is the way into the language: what one mark in front of a word does, and what a pair of braces holds, a few minutes at a time. Its words and its layout are still being playtested, so expect both to move while people try it.</p>
+                <strong>Start across spw.quest</strong>
+                <p id="projects-workbench-quest" data-spw-copy-unit="projects.workbench.quest" data-spw-semantic-expression="quest[invitation]{mark.braces}&lt;door&gt;"><a href="https://spw.quest/">spw.quest</a> teaches the twelve marks, four brace containers, four <code>#</code>/<code>~</code> particles (<code>#&gt;</code>, <code>#:</code>, <code>#!</code>, <code>~#</code>), <code>Persona@</code> perspective holders, and the <code>/llms.txt</code> format across worked scenes that travel directly to <code>factshift.center</code> and this site.</p>
             </div>
             <div data-spw-emphasis="primary">
-                <strong>How it works</strong>
-                <p>Spw is brace-first: operators carry what a thing does, containers carry its shape — <code>&lt;channel&gt;</code>, <code>(group)</code>, <code>[selection]</code>, <code>{scope}</code>. Four packages hold it: <code>spw-seed</code> lexes and parses, <code>spw-runtime</code> runs, <code>spw-lsp</code> answers the editor, and <code>spw-cli</code> gives 40 commands, from <code>census</code> and <code>lint</code> to <code>fingerprint</code> and <code>resolve</code>.</p>
+                <strong>One kernel, isolated physics</strong>
+                <p>Structural syntax stays inside an immutable <code>Seed</code> record in <code>spw-seed</code>, while charges, lens focus, and ink stay in external host profiles. Callers pick lexing, AST, and trace depth via <code>eventPolicy</code> (<code>none</code>, <code>diagnostics</code>, or <code>trace</code>) instead of duplicating scanners.</p>
             </div>
             <div data-spw-emphasis="secondary">
                 <strong>Touch it live</strong>
-                <p>Type Spw into the <a href="/tools/spw-parser/#literal-parser">literal parser</a> and watch it come back as tokens and structure, or load the <a href="/tools/spw-parser/#v04-specimen-suite">next-version specimens</a>. The source is public on <a href="https://github.com/spwashi/spw-workbench">GitHub</a>.</p>
+                <p>Type Spw into the <a href="/tools/spw-parser/#literal-parser">literal parser</a> (running the bundled <code>bcf0da18</code> reader), inspect <a href="#parsing-issues">open parsing issues</a>, or browse source on <a href="https://github.com/spwashi/spw-workbench">GitHub</a>.</p>
             </div>
         </div>
-        <p data-spw-textual-role="note">The workbench is an organelle, not a center: this site owns <code>.spw/</code>, the workbench owns <code>.spw/_workbench</code>, and either can be upgraded or removed without making the other illegible. The site mounts it at <code>be2df2ff</code>.</p>
+        <p data-spw-textual-role="note">The workbench is an organelle, not a center: this site owns <code>.spw/</code>, the workbench owns <code>.spw/_workbench</code>, and either can be upgraded or removed without making the other illegible. The site mounts it at <code>bcf0da18</code> (<time datetime="2026-11-16">2026-11-16</time>).</p>
         <figure class="spw-svg-figure">
             <svg class="spw-svg-surface workbench-dimensions" viewBox="0 0 320 248" role="img" aria-labelledby="workbench-dimensions-title workbench-dimensions-desc">
                 <title id="workbench-dimensions-title">Syntax and runtime of one line</title>
@@ -87,20 +87,74 @@
         </nav>
     </section>
 
+    <section class="spw-frame" id="workbench-direction" aria-labelledby="workbench-direction-title" data-spw-kind="frame" data-spw-role="reference" data-spw-semantic-expression="workbench[direction]{kernel.policy.slots}&lt;align&gt;">
+        <header class="frame-heading" data-spw-slot="header">
+            <a class="frame-sigil" href="#workbench-direction" data-spw-operator="concept-edge">&gt;direction</a>
+            <h2 id="workbench-direction-title">Project direction</h2>
+        </header>
+        <p id="projects-workbench-direction" data-spw-textual-role="lede" data-spw-copy-unit="projects.workbench.direction" data-spw-semantic-expression="kernel[separation]{seed.policy.tokens}&lt;align&gt;">As of <time datetime="2026-11-17">November 17, 2026</time>, workbench work focuses on unifying parsing, highlighting, slot reading, and editor tooling behind one parameterized kernel rather than maintaining separate workarounds per consumer.</p>
+        <div class="frame-grid frame-grid--dense">
+            <article class="spw-panel">
+                <h3>Parameterized parse depth</h3>
+                <p>Commit <code>bcf0da18</code> adds <code>eventPolicy</code> (<code>none</code>, <code>diagnostics</code>, <code>trace</code>) to <code>spw-seed</code>. Callers that skip rule traces avoid per-step generator allocations without changing tokens, ASTs, or errors — dropping a 153&nbsp;KB surface parse from 715.6&nbsp;ms to 105.8&nbsp;ms.</p>
+            </article>
+            <article class="spw-panel">
+                <h3>Kernel tokens for every highlighter</h3>
+                <p>Browser syntax highlighting in <code>spw-code.js</code> and the literal parser now paints directly from kernel tokens via <code>tokenSpans()</code>, retiring duplicate regex scanners that drifted on <code>#!</code> intent tags, compound prefixes (<code>~^light</code>), quoted headings (<code>^seed["Title"]</code>), and postfix <code>Persona@</code> perspectives.</p>
+            </article>
+            <article class="spw-panel">
+                <h3>Seed purity vs. host physics</h3>
+                <p>Structural coupling (token spans, brace pairs, container depth) stays immutable inside <code>Seed</code> records, while charges, resonance, lens focus, and spoken/earcon renderers stay in external host profiles across <code>spwashi.com</code>, <code>spw.quest</code>, and <code>factshift.center</code>.</p>
+            </article>
+            <article class="spw-panel">
+                <h3>Scoped contexts &amp; uniform braces</h3>
+                <p>Next architectural targets replace file-wide rewinds and per-sigil special cases with container-scoped parsing contexts, stack-aware digraph handling (extending <code>))</code> to <code>&gt;&gt;</code>, <code>&lt;&lt;</code>, <code>((</code>, and comparisons), and one prefix/postfix combinator algebra.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="spw-frame" id="parsing-issues" aria-labelledby="parsing-issues-title" data-spw-kind="frame" data-spw-role="reference" data-spw-semantic-expression="workbench[issues]{digraph.escape.slot}&lt;audit&gt;">
+        <header class="frame-heading" data-spw-slot="header">
+            <a class="frame-sigil" href="#parsing-issues" data-spw-operator="probe">?parsing_issues</a>
+            <h2 id="parsing-issues-title">Open parsing issues</h2>
+        </header>
+        <p id="projects-workbench-issues" data-spw-textual-role="lede" data-spw-copy-unit="projects.workbench.issues" data-spw-semantic-expression="corpus[parse]{clean.error.degrade}&lt;audit&gt;">Measured live on <time datetime="2026-11-17">November 17, 2026</time> at <code>bcf0da18</code> against <code>spw-workbench-reader.js</code>: 1,311 of 1,322 tracked <code>.spw</code> files parse cleanly and four parser issue classes remain open.</p>
+        <dl class="context-readout" aria-label="Corpus parse census at bcf0da18">
+            <div><dt>tracked .spw files</dt><dd><data value="1322">1,322</data> (8.41&nbsp;MB outside <code>_workbench</code>)</dd></div>
+            <div><dt>parse time</dt><dd>8.55&nbsp;s (<code>eventPolicy: 'diagnostics'</code>)</dd></div>
+            <div><dt>clean</dt><dd><data value="1311">1,311</data></dd></div>
+            <div><dt>tokenizer errors</dt><dd><data value="3">3</data> files (8 errors)</dd></div>
+            <div><dt>prose-degradation</dt><dd><data value="9">9</data> files (11 non-clean total)</dd></div>
+            <div><dt>HTML expressions</dt><dd><data value="1018">1,018</data> distinct (0 errors)</dd></div>
+        </dl>
+        <ul class="frame-list">
+            <li><strong>Greedy digraph priority beats bracket-stack context.</strong> While <code>))</code> now checks whether an n-range is open (<code>f(g(a))</code> parses whole), <code>&gt;&gt;</code>, <code>&lt;&lt;</code>, <code>((</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>=&gt;</code>, and <code>//</code> still match ahead of single-mark context. Measured live at <code>bcf0da18</code>: nested generics (<code>list&lt;Module&lt;T&gt;&gt;</code>), double-grouped math (<code>O((V + E) log V)</code>), and predicates (<code>?keep{qty &gt; 0}</code>, <code>?[latency &lt;= 400]</code>) degrade to <code>Prose</code>; unquoted URLs (<code>link = https://spw.quest</code>) turn <code>//spw.quest</code> into a <code>COMMENT</code> token and drop the host. (<a href="/topics/software/spw/#workbench-improvements">workbench asks</a> · <code>workbench-algorithmic-practicality-2026-11.spw#digraph_priority</code>)</li>
+            <li><strong>Tokenizer drops unrecognized glyphs &amp; trips on escaped quotes (3 corpus files, 8 errors).</strong> Backslash escapes (<code>\"</code>, <code>\'</code>) inside CLI command probes, negative numbers (<code>x = -5</code>), and unquoted Unicode punctuation or math symbols (<code>…</code>, <code>≤</code>, <code>±</code>, <code>∞</code>) raise <code>Unexpected character</code> tokenize errors, drop the symbol from the token stream, or trigger <code>Unterminated string literal</code> and downstream degradation in <code>wip.spw</code>, <code>factshift-paste-grounding-2026-11.spw</code>, and <code>factshift-tooling-2026-11.spw</code>.</li>
+            <li><strong>Inline arrows, contours, and unclosed backticks trigger <code>prose-degradation</code> (9 corpus files).</strong> Unclosed inline backtick spans in attribute notes (<code>comparison-differentials.spw</code>, <code>runtime-goals-pipeline.spw</code>), morphism arrow keys (<code>authored -&gt; parsed:</code> in <code>semantics-rigor.spw</code>), bare <code>&gt;</code> contour chains (<code>interaction-paint-cost-2026-09.spw</code>), multi-line <code>?&lt; ... &gt;[reg=stream]</code> blocks (<code>spw-language-utilization-2026-07.spw</code>, <code>recursive-improvement.spw</code>), and <code>=&gt;</code> or <code>==</code> operators inside spec blocks (<code>modules.spw</code>, <code>thermodynamics.spw</code>) halt structured parsing cleanly into <code>Prose</code> warnings.</li>
+            <li><strong>Trailing units, regex slot readers, and silent channels still split consumers from the kernel.</strong> A percent unit glued to a number (<code>%errors[0.1%]</code>) parses clean yet tokenizes the trailing <code>%</code> as <code>OPERATOR:%</code> (<code>keyword</code>), inflating measure counts. Site search still keeps a non-recursive <code>{([^}]*)}</code> matcher alongside kernel parses in <code>expression-query.js</code>, leaving 9 of 27 herbarium specimens partial; <code>readLine</code> leaves top-level <code>-&gt;</code> and <code>~&gt;</code> joins unread while parsing them inside <code>{body}</code>; <code>PAIR_SOUND</code>/<code>TEXTURES</code> leave <code>&lt; &gt;</code> silent despite <code>spokenLine</code> naming it; and WebStorm/IntelliJ regex folders still shadow LSP <code>documentSymbol</code>, which itself reparses open buffers.</li>
+        </ul>
+        <nav class="frame-operators" aria-label="Test parsing issues live">
+            <a class="spw-chip" data-spw-handle="true" href="/tools/spw-parser/#literal-parser" data-spw-operator="probe" data-spw-action="enter">?open_literal_parser</a>
+            <a class="spw-chip" data-spw-handle="true" href="/tools/spw-parser/?spw_source=list%3CModule%3CT%3E%3E%0AO((V%20%2B%20E)%20log%20V)%0A%3Fkeep%7Bqty%20%3E%200%7D#literal-parser" data-spw-operator="probe" data-spw-action="enter">?reproduce[digraphs]</a>
+            <a class="spw-chip" data-spw-handle="true" href="/tools/spw-parser/?spw_source=maya%40%5Bpicture%5D%7Bpacing%2C%20sound_lock%7D(friday)%3Ccut%3E%0A%3Cprose%3E%20~%5Elight%5Bgreen%5D%7B%22bob%20clicks%20the%20sofa%22%7D#literal-parser" data-spw-operator="perspective" data-spw-action="enter">@verify[Persona.prefix]</a>
+            <a class="spw-chip" data-spw-handle="true" href="https://github.com/spwashi/spw-workbench" data-spw-operator="potential">~spw-workbench</a>
+        </nav>
+    </section>
+
     <section class="spw-frame" id="workbench-time" aria-labelledby="workbench-time-title" data-spw-kind="frame" data-spw-role="reference" data-spw-semantic-expression="workbench[time]{commit.day}">
         <header class="frame-heading" data-spw-slot="header">
             <a class="frame-sigil" href="#workbench-time" data-spw-operator="stream">*time_spent</a>
             <h2 id="workbench-time-title">Time spent</h2>
         </header>
-        <dl class="context-readout" aria-label="Spw Workbench time spent, as of 2026-10-05">
+        <dl class="context-readout" aria-label="Spw Workbench time spent, as of 2026-11-16">
             <div><dt>first commit</dt><dd><time datetime="2026-01-08">2026-01-08</time></dd></div>
-            <div><dt>last commit</dt><dd><time datetime="2026-09-30">2026-09-30</time></dd></div>
-            <div><dt>commits</dt><dd><data value="513">513</data></dd></div>
-            <div><dt>active days</dt><dd><data value="71">71</data></dd></div>
-            <div><dt>busiest month</dt><dd>February 2026, 146 commits</dd></div>
+            <div><dt>last commit</dt><dd><time datetime="2026-11-16">2026-11-16</time> (<code>bcf0da18</code>)</dd></div>
+            <div><dt>commits</dt><dd><data value="682">682</data></dd></div>
+            <div><dt>active days</dt><dd><data value="87">87</data></dd></div>
+            <div><dt>busiest months</dt><dd>February 2026 (146), March 2026 (130), July 2026 (112), October 2026 (103)</dd></div>
             <div><dt>longest streak</dt><dd>11 days</dd></div>
         </dl>
-        <p data-spw-textual-role="note">Read off the repository's history at the pinned commit on 2026-10-05. An active day is a date with at least one commit.</p>
+        <p data-spw-textual-role="note">Read off the submodule's git history at pinned commit <code>bcf0da18</code> on <time datetime="2026-11-17">2026-11-17</time>. An active day is a date with at least one commit.</p>
     </section>
 
     <section class="spw-frame" id="workbench-lineage" aria-labelledby="workbench-lineage-title" data-spw-kind="frame" data-spw-role="reference" data-spw-semantic-expression="workbench[lineage]{parser.return}">
@@ -116,19 +170,21 @@
             <a class="frame-sigil" href="#workbench-taught" data-spw-operator="probe">?taught</a>
             <h2 id="workbench-taught-title">What using it taught</h2>
         </header>
-        <p id="projects-workbench-taught" data-spw-textual-role="lede" data-spw-copy-unit="projects.workbench.taught" data-spw-semantic-expression="workbench[consumer]{measure.report}&lt;record&gt;">This site keeps a report addressed to the workbench: what it learned by using Spw, "measured on a mounted consumer, not theorised." As of <time datetime="2026-09-29">September 29</time>, eight of its findings have been fixed upstream, one of them after a day spent superseded. The rest are still open, most with the probe that found them.</p>
+        <p id="projects-workbench-taught" data-spw-textual-role="lede" data-spw-copy-unit="projects.workbench.taught" data-spw-semantic-expression="workbench[consumer]{measure.report}&lt;record&gt;">This site keeps <code>.spw/workbench-report.spw</code> addressed to the workbench, measured on a mounted consumer rather than theorised. Between <time datetime="2026-09-29">September 29</time> and <time datetime="2026-11-17">November 17, 2026</time>, walk, alignment, and trace fixes landed upstream.</p>
+        <p data-spw-textual-role="note">Resolved findings from the consumer report include walk isolation, <code>parse()</code>/<code>parseExpression()</code> alignment, <code>~&gt;</code> project-joins, <code>spw lint</code>/<code>resolve</code>/<code>fingerprint</code>, <code>))</code> n-range closing, and zero-trace <code>eventPolicy</code> modes, while the open cases above remain tracked against <code>bcf0da18</code>.</p>
         <ul class="frame-list">
-            <li><strong>One character can cost seconds.</strong> A single stray backtick took one file from 514 ms to 7,062 ms to parse. Restoring it brought the errors to zero.</li>
-            <li><strong>The whole corpus fits in a minute.</strong> A bundled parser read all 923 of the site's <code>.spw</code> files, 5.94 MB, in 53.3 seconds: 839 clean, 84 with errors.</li>
-            <li><strong>Paths can be checked.</strong> An integrity walk confirms that 5,166 path references across 373 surfaces resolve, in about 80 seconds.</li>
-            <li><strong>The editor can show the weaker outline.</strong> In WebStorm the plugin draws its own outline and folds with a line scanner, and the editor shows that copy instead of the language server's. One apostrophe inside a backtick sentence, <q>Jake Parker's list</q>, left a frame that would not fold. The server folds it correctly.</li>
-            <li><strong>Repetition costs the reader more than the parser.</strong> A month of drawing prompts repeated one plate of instructions 31 times, 41% of the file. Taking it out made the parse only 11% faster. Writing the days as rows made it 58% slower. I would take a slower parse for a form that reads better, so the question becomes how often each file needs reading, which a project can set.</li>
-            <li><strong>One command said something new.</strong> The report singles out <code>spw form --stdin</code> as "the only command that said something countable-by-hand was not already known."</li>
+            <li><strong>One stray mark can dominate parse cost — and trace skipping cut full-corpus reads 6×.</strong> In September, one stray backtick pushed a single file from 514&nbsp;ms to 7,062&nbsp;ms. With <code>bcf0da18</code>'s zero-trace mode, reading all 1,322 tracked <code>.spw</code> files (8.41&nbsp;MB) dropped from September's 53.3&nbsp;s (923 files, 839 clean) to 8.55&nbsp;s (1,311 clean).</li>
+            <li><strong>Shared-parse gaps explain the remaining latency.</strong> Even with faster individual parses, CLI corpus commands (<code>census</code>, <code>graph</code>, <code>measure</code>) still key memos on projection options such as <code>hubTop</code> instead of shared content hashes, preventing cross-command reuse.</li>
+            <li><strong>Paths can be checked across the corpus.</strong> An integrity walk resolves path citations across the site's <code>.spw</code> surfaces and HTML anchors; upstream <code>spw resolve</code> now classifies citation kinds without misreading prose colons.</li>
+            <li><strong>The editor can show the weaker outline.</strong> In WebStorm the plugin draws its own outline and folds with a line scanner, and the editor shows that copy instead of the language server's. One apostrophe inside a backtick sentence, <q>Jake Parker's list</q>, or a mid-line <code>~#landed</code> leaves a frame that will not fold; the server handles both, though <code>documentSymbol</code> still reparses open buffers.</li>
+            <li><strong>Repetition costs the reader more than the parser.</strong> A month of drawing prompts repeated one plate of instructions 31 times, 41% of the file. Taking it out made the parse 11% faster; writing the days as record rows made it 58% slower. A slower parse is worth a form that reads cleanly when a project schedules which surfaces are parsed on save vs. on demand.</li>
+            <li><strong>One command said something new.</strong> The report singles out <code>spw form --stdin</code> as "the only command that said something countable-by-hand was not already known," establishing the contour template that <code>spw fingerprint</code> later brought to single expressions.</li>
         </ul>
         <nav class="frame-operators" aria-label="Workbench bridges">
             <a class="spw-chip" data-spw-handle="true" href="/projects/">← projects hub</a>
+            <a class="spw-chip" data-spw-handle="true" href="#parsing-issues" data-spw-operator="probe">?parsing_issues</a>
             <a class="spw-chip" data-spw-handle="true" href="/tools/spw-parser/#literal-parser" data-spw-operator="probe" data-spw-action="enter">?parse</a>
-            <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/" data-spw-operator="frame" data-spw-action="address">#&gt;operators</a>
+            <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/#workbench-improvements" data-spw-operator="frame" data-spw-action="address">#&gt;workbench_improvements</a>
             <a class="spw-chip" data-spw-handle="true" href="/about/website/#spw-arc" data-spw-operator="ref">~spw_arc</a>
         </nav>
     </section>
