@@ -5,6 +5,8 @@
 // shell shows the vibe it was written with.
 import { FACETS, LOCK, SEEDS, SHADER, SLOTS, TUNING, holdAt, hourOf, lockVibe, canonicalPath, captionOf, choicesFor, expressionOf, maskLabel, readAddress, said, tune, tuningFor, tuningQuery, valueOf, vibe, vibeCss } from "/vibe.js";
 
+import { mountSetRing, nearestLight, slug as pathWord, spw64 } from "/set-ring.js";
+
 const $ = (id) => document.getElementById(id);
 const root = document.documentElement;
 const card = $("card");
@@ -114,6 +116,19 @@ if (place.kind === "unknown") {
   wireSlots();
   wireTuning();
   wireShare();
+  // The set's ring, top left (the card keeps the bottom right): what this vibe becomes on each of the other sites.
+  mountSetRing("tealstripesvibes.com", () => {
+    const v = current();
+    const p = shown();
+    const light = nearestLight(v.palette[1]);
+    const expression = expressionOf(p.seed, p.mask, p.filters, v);
+    return {
+      "attention.productions": { href: `https://attention.productions/${pathWord(SEEDS[p.seed].mood)}?light=${pathWord(light)}&shot=wide&ratio=widescreen`, says: `this vibe as a shot of "${SEEDS[p.seed].mood}", lit by ${light}` },
+      "factshift.center": { href: `https://factshift.center/?spw=${encodeURIComponent(expression)}`, says: "this vibe's line, held on the canvas" },
+      "mutex.buzz": { href: "https://mutex.buzz/", says: "the lock that /@lock here follows" },
+      "spw.quest": { href: `https://spw.quest/build#spw64=${spw64(expression)}`, says: "this vibe's line, taken apart a slot at a time" },
+    };
+  }, { corner: "top" });
 }
 
 /* ── the expression's handles ───────────────────────────── */

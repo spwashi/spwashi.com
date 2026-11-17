@@ -216,6 +216,7 @@ function head(title, description, canonical) {
   <meta name="theme-color" content="#120d07">
   <meta name="apple-mobile-web-app-title" content="mutex.buzz">
   <link rel="stylesheet" href="/mutex.css">
+  <link rel="stylesheet" href="/set-ring.css">
   <script type="module" src="/mutex.js"></script>`;
 }
 
@@ -289,6 +290,7 @@ const NOT_FOUND = `<!doctype html>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Not held — mutex.buzz</title>
   <link rel="stylesheet" href="/mutex.css">
+  <link rel="stylesheet" href="/set-ring.css">
 </head>
 <body class="home">
   <main><section class="say"><p class="kicker">mutex.buzz</p><h1>Nothing holds this address.</h1><p><a href="/">The lock</a> · <a href="/now/">what holds it now</a></p></section></main>
@@ -374,7 +376,10 @@ self.addEventListener("fetch", (event) => {
 export async function carried() {
   const schedule = { schema: "mutex.schedule.v1", note: "What holds now is the hold whose since is at or before now and whose releasesAt is after it. Times are UTC.", queue: QUEUE.map(({ title, kind }) => ({ title, kind })), holds: scheduleBetween(new Date(`${SCHEDULE.from}T00:00:00Z`), new Date(`${SCHEDULE.until}T00:00:00Z`)) };
   const source = await readFile(path.join(HERE, "src/lock.spw"), "utf8");
+  // The set's ring, shared by the set's pages (workers/lib/set-ring.js).
+  const ring = await Promise.all(["set-ring.js", "set-ring.css"].map(async (file) => [file, await readFile(path.join(HERE, "../lib", file), "utf8")]));
   return [
+    ...ring,
     ["lock.js", await readFile(path.join(HERE, "src/lock.js"), "utf8")],
     ["lock.spw", source],
     ["index.html", home(source)],
