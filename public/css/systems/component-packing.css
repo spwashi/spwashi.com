@@ -134,11 +134,7 @@
     --spw-pack-gap: var(--space-xs, 0.5rem);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    [data-spw-pack-regions] {
-        transition: gap var(--duration-base, 200ms) var(--ease-smooth, ease);
-    }
-}
+/* Keep pack rhythm crisp without animating flex/grid track gaps across nested cards. */
 
 /* ─── Composition-lab demo ──────────────────────────────────────────────── */
 /*

@@ -20770,7 +20770,6 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
   min-width: 0;
   max-width: 100%;
   list-style: none;
-  transition: gap var(--component-transition-base);
 }
 
 :where(.spw-route-bridge__links > li) {
@@ -20780,17 +20779,19 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 :where(.spw-copy-motif-strip, [data-spw-list-behavior]) {
   --spw-list-charge-gap: 0.38rem;
   gap: var(--spw-list-charge-gap);
-  transition: gap var(--component-transition-base);
 }
 
-:where([data-spw-charge="arming"]) :where(.spw-route-bridge__links, .spw-copy-motif-strip, [data-spw-list-behavior]),
-:where(.spw-route-bridge__links, .spw-copy-motif-strip, [data-spw-list-behavior])[data-spw-charge="arming"] {
-  --spw-list-charge-gap: 0.68rem;
+/* Express arming/preview via non-reflowing luminance/ring accents rather than
+   changing flex/grid track gap (which forced document reflow on pointer sweep). */
+:where([data-spw-charge="arming"]) :where(.spw-route-bridge__links, .spw-copy-motif-strip, [data-spw-list-behavior]) > *,
+:where(.spw-route-bridge__links, .spw-copy-motif-strip, [data-spw-list-behavior])[data-spw-charge="arming"] > * {
+  border-color: color-mix(in oklab, var(--active-op-color, var(--component-accent, #008080)) 40%, var(--line, transparent));
 }
 
-:where([data-spw-charge="preview"]) :where(.spw-route-bridge__links, .spw-copy-motif-strip, [data-spw-list-behavior]),
-:where(.spw-route-bridge__links, .spw-copy-motif-strip, [data-spw-list-behavior])[data-spw-charge="preview"] {
-  --spw-list-charge-gap: 0.78rem;
+:where([data-spw-charge="preview"]) :where(.spw-route-bridge__links, .spw-copy-motif-strip, [data-spw-list-behavior]) > *,
+:where(.spw-route-bridge__links, .spw-copy-motif-strip, [data-spw-list-behavior])[data-spw-charge="preview"] > * {
+  border-color: color-mix(in oklab, var(--active-op-color, var(--component-accent, #008080)) 58%, var(--line, transparent));
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--active-op-color, var(--component-accent, #008080)) 16%, transparent);
 }
 
 :where(.spw-route-bridge__links a) {
@@ -28825,7 +28826,7 @@ html[data-spw-site-rhythm-authority="runtime"] {
   font-size: 0.78rem;
   font-weight: 550;
   cursor: pointer;
-  transition: all 160ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: border-color 160ms cubic-bezier(0.2, 0.8, 0.2, 1), background-color 160ms cubic-bezier(0.2, 0.8, 0.2, 1), color 160ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 160ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 :where(.specimen-lens-btn:hover) {
@@ -28970,7 +28971,7 @@ html[data-spw-site-rhythm-authority="runtime"] {
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
-  transition: all 140ms ease;
+  transition: border-color 140ms ease, background-color 140ms ease, color 140ms ease;
 }
 
 :where(.specimen-action-btn:hover) {
@@ -29058,7 +29059,7 @@ html[data-spw-site-rhythm-authority="runtime"] {
   overflow-wrap: anywhere;
   vertical-align: middle;
   cursor: text;
-  transition: all 140ms ease;
+  transition: border-color 140ms ease, background-color 140ms ease, box-shadow 140ms ease;
   user-select: text;
 }
 
@@ -29243,7 +29244,7 @@ html[data-spw-site-rhythm-authority="runtime"] {
   font-family: inherit;
   font-size: 0.74rem;
   cursor: pointer;
-  transition: all 120ms ease;
+  transition: border-color 120ms ease, background-color 120ms ease, color 120ms ease;
 }
 
 :where(.spw-form-morph-btn:hover) {
@@ -29280,7 +29281,7 @@ html[data-spw-site-rhythm-authority="runtime"] {
   color: var(--ink-soft, rgba(0, 0, 0, 0.7));
   font-size: 0.72rem;
   cursor: pointer;
-  transition: all 120ms ease;
+  transition: border-color 120ms ease, background-color 120ms ease, color 120ms ease;
 }
 
 :where(.spw-suggestion-chip:hover) {
@@ -29312,7 +29313,7 @@ html[data-spw-site-rhythm-authority="runtime"] {
   font-size: 0.72rem;
   font-weight: 600;
   text-decoration: none;
-  transition: all 120ms ease;
+  transition: border-color 120ms ease, background-color 120ms ease, color 120ms ease;
 }
 
 :where(.spw-hud-nav-link:hover) {
@@ -29333,7 +29334,7 @@ html[data-spw-site-rhythm-authority="runtime"] {
   font-family: inherit;
   font-size: 0.72rem;
   cursor: pointer;
-  transition: all 120ms ease;
+  transition: border-color 120ms ease, background-color 120ms ease, color 120ms ease;
 }
 
 :where(.spw-hud-search-btn:hover) {
@@ -29734,9 +29735,9 @@ html[data-spw-image-provenance="off"] .spw-provenance-mark {
    at the frame instead of at the scan), inherits a capped frame's max-block-size, and lies
    on a mat (--laminate-mat) with room for its tilt, rim, and shadow. */
 :root {
-  --laminate-rim: color-mix(in oklch, white 78%, transparent);
-  --laminate-edge: color-mix(in oklch, #1d1b18 24%, transparent);
-  --laminate-shadow: color-mix(in oklch, #2a2118 30%, transparent);
+  --laminate-rim: color-mix(in oklab, white 78%, transparent);
+  --laminate-edge: color-mix(in oklab, #1d1b18 24%, transparent);
+  --laminate-shadow: color-mix(in oklab, #2a2118 30%, transparent);
   --laminate-glare: calc(var(--material-specular, 0.28) * 0.7);
   --laminate-glare-angle: 112deg;
   --laminate-tilt: -0.35deg;
@@ -29745,17 +29746,17 @@ html[data-spw-image-provenance="off"] .spw-provenance-mark {
 
 html[data-spw-color-mode="dark"],
 html[data-spw-theme-pack="banked-ember"]:not([data-spw-color-mode="light"]) {
-  --laminate-rim: color-mix(in oklch, #f2c27c 36%, transparent);
-  --laminate-edge: color-mix(in oklch, black 58%, transparent);
-  --laminate-shadow: color-mix(in oklch, black 52%, transparent);
+  --laminate-rim: color-mix(in oklab, #f2c27c 36%, transparent);
+  --laminate-edge: color-mix(in oklab, black 58%, transparent);
+  --laminate-shadow: color-mix(in oklab, black 52%, transparent);
   --laminate-glare: calc(var(--material-specular, 0.28) * 0.18);
 }
 
 @media (prefers-color-scheme: dark) {
   html[data-spw-color-mode="auto"] {
-    --laminate-rim: color-mix(in oklch, #f2c27c 36%, transparent);
-    --laminate-edge: color-mix(in oklch, black 58%, transparent);
-    --laminate-shadow: color-mix(in oklch, black 52%, transparent);
+    --laminate-rim: color-mix(in oklab, #f2c27c 36%, transparent);
+    --laminate-edge: color-mix(in oklab, black 58%, transparent);
+    --laminate-shadow: color-mix(in oklab, black 52%, transparent);
     --laminate-glare: calc(var(--material-specular, 0.28) * 0.18);
   }
 }
@@ -30828,11 +30829,7 @@ html[data-spw-enhancement-level="minimal"] {
     --spw-pack-gap: var(--space-xs, 0.5rem);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    [data-spw-pack-regions] {
-        transition: gap var(--duration-base, 200ms) var(--ease-smooth, ease);
-    }
-}
+/* Keep pack rhythm crisp without animating flex/grid track gaps across nested cards. */
 
 /* ─── Composition-lab demo ──────────────────────────────────────────────── */
 /*
@@ -40733,13 +40730,16 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
   font-size: 0.66rem;
 }
 
-:where(.frame-topline .frame-sigil, .frame-heading .frame-sigil):hover,
-:where(.frame-topline .frame-sigil, .frame-heading .frame-sigil):focus-visible {
+:where(.frame-topline .frame-sigil, .frame-heading .frame-sigil):is(:hover, :focus-visible) {
   opacity: 1;
   color: var(--active-op-color, var(--teal));
   border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 36%, transparent);
   background: color-mix(in srgb, var(--surface-strong, #fff) 90%, var(--active-op-color, var(--teal)) 10%);
-  outline: none;
+}
+
+:where(.frame-topline .frame-sigil, .frame-heading .frame-sigil):focus-visible {
+  outline: 2px solid var(--focus-ring-color, var(--active-op-color, var(--teal, #008080)));
+  outline-offset: var(--focus-ring-offset, 2px);
 }
 
 .frame-topline > .spw-delimiter + .frame-sigil,
@@ -45828,7 +45828,7 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
   --material-duration-deliberate: var(--duration-deliberate, 360ms);
 
   --material-prime-color:   var(--active-op-color, #008080);
-  --material-highlight-inset: inset 0 1px 0 var(--specular, color-mix(in oklch, white 52%, transparent));
+  --material-highlight-inset: inset 0 1px 0 var(--specular, color-mix(in oklab, white 52%, transparent));
 
   --material-depth-opacity-1: 0.88;
   --material-depth-opacity-2: 0.93;
@@ -46069,7 +46069,7 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
    the host: the root biome attenuation has already computed before local
    canopy reports arrive. Only the inset changes; ink keeps its own budget. */
 :where(.spw-frame, .spw-svg-figure) {
-  --material-highlight-inset: inset 0 1px 0 color-mix(in oklch, white calc(
+  --material-highlight-inset: inset 0 1px 0 color-mix(in oklab, white calc(
     100% * clamp(0, var(--material-specular, 0.28), 1)
     * (1 - clamp(0, (
       var(--spw-canopy, 0) + var(--spw-canopy-depth, 0)

@@ -1396,6 +1396,12 @@ main > :where(.spw-frame):last-of-type:not(:first-of-type):not([data-spw-stage])
   font-weight: 750;
 }
 
+.spw-ornament-rail :is(.spw-chip, .frame-sigil):focus-visible,
+.spw-ornament-ribbon:where(a, button, [tabindex]):focus-visible {
+  outline: 2px solid var(--focus-ring-color, var(--ornament-local-accent, var(--teal, #008080)));
+  outline-offset: var(--focus-ring-offset, 2px);
+}
+
 .spw-frame > .spw-ornament-rail,
 .frame-topline > .spw-ornament-rail,
 .hook-call > .spw-ornament-rail {
@@ -1471,8 +1477,8 @@ hr[data-spw-ornament="rule"]::before {
   background: var(--ornament-local-accent, var(--ornament-accent, var(--active-op-color, #008080)));
   opacity: calc(0.72 + (var(--ornament-rule-light) * 0.28));
   transition:
-    inline-size var(--ornament-duration-base, 220ms) var(--ornament-ease, ease),
-    opacity var(--ornament-duration-base, 220ms) var(--ornament-ease, ease);
+    inline-size calc(var(--ornament-duration-base, 220ms) * var(--spw-attention-cadence, 1)) var(--ornament-ease, ease),
+    opacity calc(var(--ornament-duration-base, 220ms) * var(--spw-empathy-grace, 1)) var(--ornament-ease, ease);
 }
 
 :where(.spw-frame, .spw-panel, .frame-card):has(> .spw-ornament-corner) {
@@ -1509,7 +1515,7 @@ hr[data-spw-ornament="rule"]::before {
     right bottom, right bottom;
   background-repeat: no-repeat;
   opacity: calc(0.28 + (var(--ornament-corner-light) * 0.62));
-  transition: opacity var(--ornament-duration-base, 220ms) var(--ornament-ease, ease);
+  transition: opacity calc(var(--ornament-duration-base, 220ms) * var(--spw-empathy-grace, 1)) var(--ornament-ease, ease);
 }
 
 :where([data-spw-attention="dimmed"]) > .spw-ornament-corner {
@@ -1602,8 +1608,8 @@ hr[data-spw-ornament="rule"]::before {
   opacity: calc(0.24 + (var(--ornament-brace-light) * 0.56));
   translate: 0 -50%;
   transition:
-    block-size var(--ornament-duration-deliberate, 320ms) var(--ornament-settle-ease, ease),
-    opacity var(--ornament-duration-base, 220ms) var(--ornament-ease, ease);
+    block-size calc(var(--ornament-duration-deliberate, 320ms) * var(--spw-empathy-grace, 1)) var(--ornament-settle-ease, ease),
+    opacity calc(var(--ornament-duration-base, 220ms) * var(--spw-attention-cadence, 1)) var(--ornament-ease, ease);
 }
 
 .spw-ornament-brace::before {
@@ -1617,6 +1623,21 @@ hr[data-spw-ornament="rule"]::before {
 
 :where(.spw-frame, .spw-panel, .frame-card):is(:hover, :focus-within, :target) > .spw-ornament-brace {
   --ornament-brace-span: 4.6rem;
+}
+
+/* Pragmatic stance layering on active inspection without changing rest pixels:
+   explorer/integrator postures and wonder-marked containers invite deeper reach
+   once hovered, focused, or landed. */
+html:is([data-spw-metacognitive-stance="explorer"], [data-spw-metacognitive-stance="integrator"])
+  :where(.spw-frame, .spw-panel, .frame-card):is(:hover, :focus-within):not(:target) > .spw-ornament-corner,
+:where(.spw-frame, .spw-panel, .frame-card)[data-spw-wonder]:is(:hover, :focus-within):not(:target) > .spw-ornament-corner {
+  --ornament-corner-len: 1.08rem;
+}
+
+html:is([data-spw-metacognitive-stance="explorer"], [data-spw-metacognitive-stance="integrator"])
+  :where(.spw-frame, .spw-panel, .frame-card):is(:hover, :focus-within, :target) > .spw-ornament-brace,
+:where(.spw-frame, .spw-panel, .frame-card)[data-spw-wonder]:is(:hover, :focus-within, :target) > .spw-ornament-brace {
+  --ornament-brace-span: 4.95rem;
 }
 
 :where([data-spw-attention="dimmed"]) > .spw-ornament-brace::before,
@@ -1636,6 +1657,35 @@ hr[data-spw-ornament="rule"]::before {
 }
 
 @media (forced-colors: active) {
+  hr[data-spw-ornament="rule"] {
+    background: none;
+    border-top: 1px solid CanvasText;
+  }
+
+  hr[data-spw-ornament="rule"]::before {
+    background: Highlight;
+  }
+
+  .spw-ornament-corner {
+    background: none;
+    border: 1px dotted CanvasText;
+  }
+
+  :where(.spw-frame, .spw-panel, .frame-card):target {
+    outline: 2px solid Highlight;
+  }
+
+  .spw-ornament-rail :is(.spw-chip, .frame-sigil):is([data-site-setting-active="true"], [aria-pressed="true"]) {
+    border-color: Highlight;
+    outline: 1px solid Highlight;
+  }
+
+  .spw-ornament-rail :is(.spw-chip, .frame-sigil):focus-visible,
+  .spw-ornament-ribbon:where(a, button, [tabindex]):focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+
   .spw-ornament-brace::before,
   .spw-ornament-brace::after {
     background: CanvasText;

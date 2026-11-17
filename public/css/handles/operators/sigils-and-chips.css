@@ -71,13 +71,16 @@
   font-size: 0.66rem;
 }
 
-:where(.frame-topline .frame-sigil, .frame-heading .frame-sigil):hover,
-:where(.frame-topline .frame-sigil, .frame-heading .frame-sigil):focus-visible {
+:where(.frame-topline .frame-sigil, .frame-heading .frame-sigil):is(:hover, :focus-visible) {
   opacity: 1;
   color: var(--active-op-color, var(--teal));
   border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 36%, transparent);
   background: color-mix(in srgb, var(--surface-strong, #fff) 90%, var(--active-op-color, var(--teal)) 10%);
-  outline: none;
+}
+
+:where(.frame-topline .frame-sigil, .frame-heading .frame-sigil):focus-visible {
+  outline: 2px solid var(--focus-ring-color, var(--active-op-color, var(--teal, #008080)));
+  outline-offset: var(--focus-ring-offset, 2px);
 }
 
 .frame-topline > .spw-delimiter + .frame-sigil,
