@@ -182,3 +182,19 @@ test('/@lock is the vibe mutex.buzz\'s lock holds: one seed a hold, filling in f
   assert.match(CSP, /connect-src 'self' https:\/\/mutex\.buzz;/, 'the page may read the lock');
   assert.ok(readFileSync(path.join(assets, 'index.html'), 'utf8').includes('<a id="lock-link" href="/@lock"'));
 });
+
+test('the mask is six chips a hand can switch, each a link to the address with its facet switched', async () => {
+  const { facetChips } = await import('../src/vibe.js');
+  const chips = facetChips('lantern', 'pramgs', []);
+  assert.deepEqual(chips.map((c) => [c.name, c.on, c.href]), [
+    ['palette', true, '/lantern/ramgs'], ['rhythm', true, '/lantern/pamgs'], ['angle', true, '/lantern/prmgs'],
+    ['motion', true, '/lantern/prags'], ['grain', true, '/lantern/prams'], ['plate', true, '/lantern/pramg'],
+  ]);
+  assert.equal(facetChips('lantern', '', [])[0].href, '/lantern/p', 'from the ground, a chip brings its facet through');
+  assert.equal(facetChips('harbor', 'p', ['moire'])[0].href, '/harbor/-/moire', 'the filters stay');
+  assert.match(facetChips('lantern', 'p', [])[0].title, /palette from lantern; tap for the teal ground's/);
+  const page = readFileSync(path.join(assets, 'lantern.html'), 'utf8');
+  assert.ok(page.includes('<dt id="mask-from">from lantern</dt>'));
+  assert.equal((page.match(/<a class="facet on" href=/g) ?? []).length, 6, 'a seed\'s own page lets every facet through');
+  assert.ok(page.includes('<a class="facet on" href="/lantern/ramgs" data-mask="ramgs"'));
+});

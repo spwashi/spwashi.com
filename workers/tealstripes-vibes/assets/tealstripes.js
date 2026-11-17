@@ -3,7 +3,7 @@
 // shader and the keys are the ones the worker's page carried; tuning, the
 // fading card and the share image are this page's own. With scripts off the
 // shell shows the vibe it was written with.
-import { FACETS, LOCK, SEEDS, SHADER, SLOTS, TUNING, holdAt, hourOf, lockVibe, canonicalPath, captionOf, choicesFor, expressionOf, maskLabel, readAddress, said, tune, tuningFor, tuningQuery, valueOf, vibe, vibeCss } from "/vibe.js";
+import { FACETS, LOCK, facetChips, SEEDS, SHADER, SLOTS, TUNING, holdAt, hourOf, lockVibe, canonicalPath, captionOf, choicesFor, expressionOf, maskLabel, readAddress, said, tune, tuningFor, tuningQuery, valueOf, vibe, vibeCss } from "/vibe.js";
 
 import { hasSetRing, mountSetRing, nearestLight, openSetRing, slug as pathWord, spw64 } from "/set-ring.js";
 import { attachPinch, wasPinch } from "/pinch.js";
@@ -45,7 +45,7 @@ function paint() {
   $("field").setAttribute("aria-label", `${SEEDS[seed].mood}: stripes of ${v.palette.join(", ")} at ${v.angle} degrees`);
   $("seed-name").textContent = seed;
   $("mood").textContent = SEEDS[seed].mood;
-  $("mask").textContent = `${maskLabel(mask)}${filters.length ? ` · ${filters.join(", ")}` : ""}`;
+  writeFacets(seed, mask, filters);
   const p = shown();
   $("hour").textContent = p.kind === "lock" ? `${hour}Z · turn ${p.turn} of ${p.of}` : `${hour}Z`;
   const lock = $("lock");
@@ -72,6 +72,36 @@ function paint() {
   if (shader) shader.set(v);
   else shader = shade(v);
   showTuning(v);
+}
+
+/** The mask's chips: lit from the seed, dim where the teal ground stands in, each a link that switches its facet (keeping the tuning). */
+function writeFacets(seed, mask, filters) {
+  const query = addressOf().split("?")[1];
+  $("mask-from").textContent = `from ${seed}`;
+  $("mask").replaceChildren(...facetChips(seed, mask, filters).map((c) => {
+    const a = document.createElement("a");
+    a.className = `facet${c.on ? " on" : ""}`;
+    a.href = `${c.href}${query ? `?${query}` : ""}`;
+    a.dataset.mask = c.mask;
+    a.title = c.title;
+    const letter = document.createElement("span");
+    letter.className = "facet-letter";
+    letter.textContent = c.letter;
+    a.append(letter, c.name);
+    return a;
+  }));
+  $("filters").textContent = filters.join(", ");
+  $("filters").hidden = $("filters-name").hidden = !filters.length;
+}
+
+/** Let a different set of facets through: the vibe becomes one of its own, at its own address. */
+function setMask(mask) {
+  const wasHeld = held !== null;
+  trying = null;
+  held = null;
+  place = { ...place, kind: "vibe", mask, href: `https://tealstripesvibes.com${canonicalPath({ ...place, mask })}` };
+  keep();
+  if (wasHeld) showHeld();
 }
 
 /** Write the place into the address without a reload: a tuned picture is still a link. */
@@ -117,6 +147,15 @@ if (place.kind === "unknown") {
   wireSlots();
   wireTuning();
   wireShare();
+  // A chip switches its facet in place; a new tab or a page without the script follows its link.
+  $("mask").addEventListener("click", (event) => {
+    const chip = event.target.closest?.("a.facet");
+    if (!chip || event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+    event.preventDefault();
+    const name = chip.textContent.slice(1);
+    setMask(chip.dataset.mask);
+    say(chip.classList.contains("on") ? `${name} from the teal ground.` : `${name} from ${place.seed}.`);
+  });
   // The set's ring, top left (the card keeps the bottom right): what this vibe becomes on each of the other sites.
   mountSetRing("tealstripesvibes.com", () => {
     const v = current();
@@ -137,8 +176,7 @@ if (place.kind === "unknown") {
     go: (direction) => {
       const mask = maskStep(place.mask, direction);
       if (mask === null) return openSetRing();
-      place = { ...place, kind: "vibe", mask, href: `https://tealstripesvibes.com${canonicalPath({ ...place, mask })}` };
-      keep();
+      setMask(mask);
     },
   });
 }
