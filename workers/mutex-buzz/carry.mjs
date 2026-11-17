@@ -341,7 +341,7 @@ function manifest() {
 }
 
 /** Everything the service worker keeps, so the lock opens and keeps time with no network. */
-const SHELL = ["/", "/now/", "/mutex.css", "/mutex.js", "/lock.js", "/lock.spw", "/set-ring.js", "/set-ring.css", "/pinch.js", "/pinch.css", "/text-scale.js", "/text-scale.css", "/text-scale-head.js", PINCH_TEXT, "/now.json", "/favicon.svg", "/manifest.webmanifest", ...Object.keys(FOLIO_SOURCES).map((name) => `/folios/${name}`), ...Object.keys(ICONS).map((name) => `/icons/${name}`)];
+const SHELL = ["/", "/now/", "/mutex.css", "/mutex.js", "/lock.js", "/lock.spw", "/lib/hold.js", "/set-ring.js", "/set-ring.css", "/pinch.js", "/pinch.css", "/text-scale.js", "/text-scale.css", "/text-scale-head.js", PINCH_TEXT, "/now.json", "/favicon.svg", "/manifest.webmanifest", ...Object.keys(FOLIO_SOURCES).map((name) => `/folios/${name}`), ...Object.keys(ICONS).map((name) => `/icons/${name}`)];
 
 /**
  * The service worker. Pages come from the network when there is one and from
@@ -393,6 +393,7 @@ export async function carried() {
   return [
     ...ring,
     ["lock.js", await readFile(path.join(HERE, "src/lock.js"), "utf8")],
+    ["lib/hold.js", await readFile(path.join(HERE, "../lib/hold.js"), "utf8")],
     ["lock.spw", source],
     ["index.html", home(source)],
     ["now/index.html", now()],

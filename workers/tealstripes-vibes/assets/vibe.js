@@ -1,10 +1,13 @@
 // Teal Stripes Vibes, the pure part: the facets, the seeds, the filters, the
 // grammar of an address, the masked and filtered vibe, its hour, and how it is
-// painted (a stripe gradient, grain, the shader, a preview card). No imports
-// and no secrets, so the same code runs in the worker (site-hub-next until the
-// host's route moves, then this unit's /m/ and /stamp/ routes) and in the
-// reader's browser (assets/tealstripes.js, which carry.mjs copies this beside).
-// Moved here from site-hub-next/src/tealstripes.js on 2026-11-16, unchanged.
+// painted (a stripe gradient, grain, the shader, a preview card). No secrets,
+// so the same code runs in the worker (site-hub-next until the host's route
+// moves, then this unit's /m/ and /stamp/ routes) and in the reader's browser
+// (assets/vibe.js, which carry.mjs copies this beside). The hold's two lines
+// come from workers/lib/hold.js; from this file that import is /lib/hold.js
+// in the browser. Moved here from site-hub-next/src/tealstripes.js on 2026-11-16.
+
+import { holdLines, holdTurn } from "../../lib/hold.js";
 
 const escapeHtml = (value) => String(value ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 
@@ -516,7 +519,6 @@ function queryOf(params) {
 
 /** Where the lock is kept, and the address on this host that shows what it holds. */
 export const LOCK = Object.freeze({ schedule: "https://mutex.buzz/now.json", home: "https://mutex.buzz/", path: "/@lock" });
-const LOCK_HOUR = 3_600_000;
 
 /** The hold open at a moment, from mutex.buzz's schedule (mutex.schedule.v1); null when it has none. */
 export const holdAt = (holds, now) => holds.find((h) => Date.parse(h.since) <= now && now < Date.parse(h.releasesAt)) ?? null;
@@ -529,15 +531,11 @@ export const holdAt = (holds, now) => holds.find((h) => Date.parse(h.since) <= n
  * hour the seed is whole. At the close the next hold starts over from the ground.
  */
 export function lockVibe(hold, now) {
-  const since = Date.parse(hold.since);
-  const of = Math.round((Date.parse(hold.releasesAt) - since) / LOCK_HOUR);
-  const index = Math.min(of - 1, Math.max(0, Math.floor((now - since) / LOCK_HOUR)));
+  const { index, of } = holdTurn(hold, now);
   const names = Object.keys(SEEDS);
   const seed = names[fnv(hold.title) % names.length];
   const through = Math.min(FACETS.length, Math.floor((index / Math.max(1, of - 1)) * FACETS.length));
   const mask = FACETS.slice(0, through).map((f) => f.letter).join("");
-  const words = (t) => String(t).toLowerCase().replace(/[^a-z0-9 ]+/g, " ").replace(/\s+/g, " ").trim();
-  const day = (ms) => words(new Date(ms).toLocaleDateString("en-US", { month: "long", day: "numeric", timeZone: "UTC" }));
   return {
     kind: "lock",
     seed,
@@ -550,6 +548,6 @@ export function lockVibe(hold, now) {
     hold,
     turn: index + 1,
     of,
-    lines: [`*holds[${hold.cycle}]{${words(hold.title)}}(${day(since)} ~> ${day(Date.parse(hold.releasesAt) - 1)})`, `%turn[${index + 1}/${of}]{hour}`],
+    lines: holdLines(hold, now),
   };
 }

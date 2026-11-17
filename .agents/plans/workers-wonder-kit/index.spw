@@ -1,4 +1,4 @@
-# Review 2026-11-16 — the plan owns the set as well as the shell: the ring, both pinches and the carries landed 2026-11-16; S1 landed 2026-11-11 by http.js; S3 (the hold's one writer) is next; three wonders hold where hub.spw and what shipped disagree.
+# Review 2026-11-16 — the plan owns the set as well as the shell: the ring, both pinches and the carries landed 2026-11-16; S1 landed 2026-11-11 by http.js; S3 (the hold's one writer) is this patch; S4 waits on the creator; three wonders hold where hub.spw and what shipped disagree.
 # Plan Index — Workers Wonder Kit
 #
 # The workers share one kit and keep their own voices; since 2026-11-16 the kit includes
@@ -132,8 +132,8 @@ validation: #[
   #:depth #!pragmatics ~#lens(projection)
   ~#with: @plan @hub @set_ring
   ~#tension: "hub.spw: the quest and the canvas receive the pair, *holds[cycle]{title}(since ~> until) and %turn[n/of]{hour}, with the rule folded. What shipped: mutex.buzz's ring sends spw.quest the whole of lock.spw and the canvas ?spw=mutex.buzz, which reads the pair and then the rule."
-  ~#expect: "S3's holdLines would give the ring the pair without a second copy."
-  ~#unblocks: "S3, hub.spw slice 2"
+  ~#expect: "holdLines writes the pair for the lock and the stripes. The ring still sends the whole rule."
+  ~#unblocks: "hub.spw slice 2"
   ~#probe(read)
   !probe{ "rg -n \"spw64|spw=mutex\" workers/mutex-buzz/assets/mutex.js" }
   $%[carry.pair, carry.rule, carry.both_folded]

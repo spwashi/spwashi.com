@@ -150,7 +150,7 @@ function manifest() {
 }
 
 /** Every file a vibe needs; with these kept, any address paints offline, since the shell reads it in the page. */
-const SHELL = ["/", "/index.html", ...Object.keys(SEEDS).map((s) => `/${s}`), "/tealstripes.js", "/vibe.js", "/tealstripes.css", "/set-ring.js", "/set-ring.css", "/pinch.js", "/pinch.css", "/text-scale.js", "/text-scale.css", "/text-scale-head.js", PINCH_TEXT, "/favicon.svg", "/manifest.webmanifest", ...Object.keys(ICONS).map((n) => `/icons/${n}`)];
+const SHELL = ["/", "/index.html", ...Object.keys(SEEDS).map((s) => `/${s}`), "/tealstripes.js", "/vibe.js", "/lib/hold.js", "/tealstripes.css", "/set-ring.js", "/set-ring.css", "/pinch.js", "/pinch.css", "/text-scale.js", "/text-scale.css", "/text-scale-head.js", PINCH_TEXT, "/favicon.svg", "/manifest.webmanifest", ...Object.keys(ICONS).map((n) => `/icons/${n}`)];
 
 function serviceWorker(version) {
   return `// Written by workers/tealstripes-vibes/carry.mjs. Pages from the network when there is one, else the kept shell, which paints any address.
@@ -220,6 +220,7 @@ Seeds: ${Object.entries(SEEDS).map(([s, x]) => `${s} (${x.mood})`).join(", ")}. 
 export async function carried() {
   return [
     ["vibe.js", await readFile(path.join(HERE, "src/vibe.js"), "utf8")],
+    ["lib/hold.js", await readFile(path.join(HERE, "../lib/hold.js"), "utf8")],
     // The set's ring, shared by the set's pages (workers/lib/set-ring.js).
     ["set-ring.js", await readFile(path.join(HERE, "../lib/set-ring.js"), "utf8")],
     ["set-ring.css", await readFile(path.join(HERE, "../lib/set-ring.css"), "utf8")],
