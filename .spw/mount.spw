@@ -43,7 +43,7 @@
 workbench: .{
  # Pin tracks submodule HEAD (see git submodule status .spw/_workbench).
  version = `0.3.0`
- workbench_pin = `850077ab48e0`
+ workbench_pin = `bcf0da18b840`
  pin_note = `bcf0da18 (2026-11-16): seed builds no rule trace when nothing keeps it (eventPolicy none or diagnostics); trees, tokens, errors and warnings are unchanged, and the default stays trace. The move from 9ef3d22 also brings 45 more commits: numbers read through one scanner (percent, measured quantities, settings lines with dimensions), only %-led terms read as quantities, brace labels read from either end, fragments read with what surrounds them, every name kept through a pivot, the spoken line and brace sounds, and CLI renames that keep the old names as aliases.`
  canon = @canon
  canon_mount = @canon_mount
