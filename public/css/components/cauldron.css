@@ -831,7 +831,7 @@ html[data-spw-cauldron-resonance-operators] .site-footer__cauldron[data-spw-caul
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: var(--text-size-2xs, 0.72rem);
   color: var(--ink-muted, rgba(14, 18, 20, 0.58));
-  transition: all 180ms ease;
+  transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
 }
 
 .site-footer__cauldron-slot[data-spw-slot-state="filled"] {

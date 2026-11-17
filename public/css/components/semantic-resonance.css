@@ -165,7 +165,6 @@
   min-width: 0;
   max-width: 100%;
   list-style: none;
-  transition: gap var(--component-transition-base);
 }
 
 :where(.spw-route-bridge__links > li) {
@@ -175,17 +174,19 @@
 :where(.spw-copy-motif-strip, [data-spw-list-behavior]) {
   --spw-list-charge-gap: 0.38rem;
   gap: var(--spw-list-charge-gap);
-  transition: gap var(--component-transition-base);
 }
 
-:where([data-spw-charge="arming"]) :where(.spw-route-bridge__links, .spw-copy-motif-strip, [data-spw-list-behavior]),
-:where(.spw-route-bridge__links, .spw-copy-motif-strip, [data-spw-list-behavior])[data-spw-charge="arming"] {
-  --spw-list-charge-gap: 0.68rem;
+/* Express arming/preview via non-reflowing luminance/ring accents rather than
+   changing flex/grid track gap (which forced document reflow on pointer sweep). */
+:where([data-spw-charge="arming"]) :where(.spw-route-bridge__links, .spw-copy-motif-strip, [data-spw-list-behavior]) > *,
+:where(.spw-route-bridge__links, .spw-copy-motif-strip, [data-spw-list-behavior])[data-spw-charge="arming"] > * {
+  border-color: color-mix(in oklab, var(--active-op-color, var(--component-accent, #008080)) 40%, var(--line, transparent));
 }
 
-:where([data-spw-charge="preview"]) :where(.spw-route-bridge__links, .spw-copy-motif-strip, [data-spw-list-behavior]),
-:where(.spw-route-bridge__links, .spw-copy-motif-strip, [data-spw-list-behavior])[data-spw-charge="preview"] {
-  --spw-list-charge-gap: 0.78rem;
+:where([data-spw-charge="preview"]) :where(.spw-route-bridge__links, .spw-copy-motif-strip, [data-spw-list-behavior]) > *,
+:where(.spw-route-bridge__links, .spw-copy-motif-strip, [data-spw-list-behavior])[data-spw-charge="preview"] > * {
+  border-color: color-mix(in oklab, var(--active-op-color, var(--component-accent, #008080)) 58%, var(--line, transparent));
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--active-op-color, var(--component-accent, #008080)) 16%, transparent);
 }
 
 :where(.spw-route-bridge__links a) {

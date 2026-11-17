@@ -123,9 +123,9 @@ html[data-spw-image-provenance="off"] .spw-provenance-mark {
    at the frame instead of at the scan), inherits a capped frame's max-block-size, and lies
    on a mat (--laminate-mat) with room for its tilt, rim, and shadow. */
 :root {
-  --laminate-rim: color-mix(in oklch, white 78%, transparent);
-  --laminate-edge: color-mix(in oklch, #1d1b18 24%, transparent);
-  --laminate-shadow: color-mix(in oklch, #2a2118 30%, transparent);
+  --laminate-rim: color-mix(in oklab, white 78%, transparent);
+  --laminate-edge: color-mix(in oklab, #1d1b18 24%, transparent);
+  --laminate-shadow: color-mix(in oklab, #2a2118 30%, transparent);
   --laminate-glare: calc(var(--material-specular, 0.28) * 0.7);
   --laminate-glare-angle: 112deg;
   --laminate-tilt: -0.35deg;
@@ -134,17 +134,17 @@ html[data-spw-image-provenance="off"] .spw-provenance-mark {
 
 html[data-spw-color-mode="dark"],
 html[data-spw-theme-pack="banked-ember"]:not([data-spw-color-mode="light"]) {
-  --laminate-rim: color-mix(in oklch, #f2c27c 36%, transparent);
-  --laminate-edge: color-mix(in oklch, black 58%, transparent);
-  --laminate-shadow: color-mix(in oklch, black 52%, transparent);
+  --laminate-rim: color-mix(in oklab, #f2c27c 36%, transparent);
+  --laminate-edge: color-mix(in oklab, black 58%, transparent);
+  --laminate-shadow: color-mix(in oklab, black 52%, transparent);
   --laminate-glare: calc(var(--material-specular, 0.28) * 0.18);
 }
 
 @media (prefers-color-scheme: dark) {
   html[data-spw-color-mode="auto"] {
-    --laminate-rim: color-mix(in oklch, #f2c27c 36%, transparent);
-    --laminate-edge: color-mix(in oklch, black 58%, transparent);
-    --laminate-shadow: color-mix(in oklch, black 52%, transparent);
+    --laminate-rim: color-mix(in oklab, #f2c27c 36%, transparent);
+    --laminate-edge: color-mix(in oklab, black 58%, transparent);
+    --laminate-shadow: color-mix(in oklab, black 52%, transparent);
     --laminate-glare: calc(var(--material-specular, 0.28) * 0.18);
   }
 }

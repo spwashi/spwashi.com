@@ -23,7 +23,7 @@
   overflow-wrap: anywhere;
   vertical-align: middle;
   cursor: text;
-  transition: all 140ms ease;
+  transition: border-color 140ms ease, background-color 140ms ease, box-shadow 140ms ease;
   user-select: text;
 }
 
@@ -208,7 +208,7 @@
   font-family: inherit;
   font-size: 0.74rem;
   cursor: pointer;
-  transition: all 120ms ease;
+  transition: border-color 120ms ease, background-color 120ms ease, color 120ms ease;
 }
 
 :where(.spw-form-morph-btn:hover) {
@@ -245,7 +245,7 @@
   color: var(--ink-soft, rgba(0, 0, 0, 0.7));
   font-size: 0.72rem;
   cursor: pointer;
-  transition: all 120ms ease;
+  transition: border-color 120ms ease, background-color 120ms ease, color 120ms ease;
 }
 
 :where(.spw-suggestion-chip:hover) {
@@ -277,7 +277,7 @@
   font-size: 0.72rem;
   font-weight: 600;
   text-decoration: none;
-  transition: all 120ms ease;
+  transition: border-color 120ms ease, background-color 120ms ease, color 120ms ease;
 }
 
 :where(.spw-hud-nav-link:hover) {
@@ -298,7 +298,7 @@
   font-family: inherit;
   font-size: 0.72rem;
   cursor: pointer;
-  transition: all 120ms ease;
+  transition: border-color 120ms ease, background-color 120ms ease, color 120ms ease;
 }
 
 :where(.spw-hud-search-btn:hover) {

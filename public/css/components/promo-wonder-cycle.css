@@ -232,7 +232,7 @@
 /* The card that serves the visit's intent (kernel/visit-intent.js) wears a
    ring in the active ink. An outline, so nothing moves. */
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card.is-intent-match {
-  outline: 2px solid color-mix(in oklch, var(--active-op-color, var(--teal, #008080)) 62%, transparent);
+  outline: 2px solid color-mix(in oklab, var(--active-op-color, var(--teal, #008080)) 62%, transparent);
   outline-offset: 3px;
 }
 
