@@ -1,5 +1,7 @@
 # Route audit — routes, query keys, components and forms, against common protocols
 
+**Status 2026-11-17.** Inventory and protocol comparison updated for 2026-11-16–2026-11-17 ecosystem shifts (`spw.quest` `/specimens.json` + crawler `robots.txt` / `noindex, nofollow` query fence in `569490f8`, `attention.productions` live slot-handle URL grammar in `c8a11758`, `tealstripesvibes.com` `/@lock` Cloudflare `%40` decoding in `4febe319`, and `gemini-4-argon-2026-11.spw` `#^wonder_llms_tagged_bot` covering non-X social links and `/forms/`). Still read-only: no route or key renames until step 3's shared parameter table is chosen.
+
 **Asked (2026-11-11).** The creator: audit routes, compare query parameters, reflect on components and forms, and compare with popular protocols and services.
 
 **Why now.** Six workers and spwashi.com answer about 230 routes between them, and each host grew its own address grammar. Some keys already mean two things: `r` is a radius on factshift.center and a roll on texture.website; a day is `day=` and `d=` on texture and absent elsewhere; a line travels as `?spw=` and as `#spw64=`. Cloudflare rewrites `@` in a path to `%40` with a 307. A reader who learns one site's addresses should be able to guess another's.

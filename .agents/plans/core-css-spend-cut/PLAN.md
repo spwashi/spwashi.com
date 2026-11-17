@@ -1,6 +1,6 @@
 # core-css-spend-cut
 
-**Status 2026-11-13.** `expression-resonance.css` (~13.9 KiB) and `surfaces/learnability-ledger.css` (~4.2 KiB, 100% `IDLE`-mounted) moved from `style-core.css` into `effects/flourish-pack.css` (`layer(systems)`), with `[data-spw-feature="join-specimens"]` / `[data-spw-feature="theme-chips"]` layout rules kept synchronous in `components/semantic-resonance.css`. Committed `public/css/bundles/core.css` dropped **1,728.4 → 1,710.9 KiB** (101 sheets, 1,291 KiB delivered / 195 KiB gzip; `npm run css:payload`). Remaining candidates (`legibility-lens.css`, `spell-breadcrumbs.css`, `tuning.css`, `spw-key-events.css`, `site-search.css`) stay in core until probed.
+**Status 2026-11-17.** `expression-resonance.css` (~13.9 KiB) and `surfaces/learnability-ledger.css` (~4.2 KiB, 100% `IDLE`-mounted) moved from `style-core.css` into `effects/flourish-pack.css` (`layer(systems)`), and `site-search-dialog.css` deferred (`a6f808a3`). Current `css:payload` measures committed `public/css/bundles/core.css` at **1,711.1 / 1,741 KiB** (98%), `route:website` **140.0 / 140 KiB** (100%), `behavior:console` **47.8 / 48 KiB** (100%), and `behavior:svg-surfaces` **46.8 / 48 KiB** (98%). Remaining candidates (`legibility-lens.css`, `spell-breadcrumbs.css`, `tuning.css`, `spw-key-events.css`) stay in core until probed. Aligned below with modern web standards: neutral `color-mix(in oklab, ...)`, explicit upfront `@layer` discipline (`css-cascade-stratification`), below-the-fold `content-visibility: auto`, and `:focus-visible` / `forced-colors` parity.
 
 ## Public Goal
 First paint ships structure. Wonder, grain, cinematic, and ornament arrive after interactive so core CSS can shrink. Late restyle may only add atmosphere — not hide, move, or resize what the visitor already read.
@@ -23,6 +23,13 @@ Delivery is what file is requested, when, and how it is cached (`style-core`, ro
 
 ## Readable CSS
 The literature is the selectors: `>` a child, `+` the next sibling, `:has()` a parent that knows what it holds. Banner comments are not a substitute.
+
+## Web Standards & Care Alignment (2026-11-17)
+- **Neutral `color-mix(in oklab, ...)`:** Low-chroma/neutral mixes (`white`, `black`, dark greys) must default to `in oklab` rather than `in oklch` to avoid powerless-hue magenta shifts in Chromium (`effects/material.css:32,273`, `systems/image-utilization.css:126-147`).
+- **Content visibility:** Keep `content-visibility: auto` and content-derived `contain-intrinsic-size` (`auto <length>`) strictly on below-the-fold frames (`frame-size-memory.js`), never on entry spines.
+- **Focus & contrast parity:** Pair any outline override with a `>= 3:1` `:focus-visible` ring and preserve structural edges under `@media (forced-colors: active)` and `prefers-contrast: more` (`design-direction-2026-11.spw`, `low-sight-wonder-2026-11.spw`).
+- **Cascade clarity:** Keep `@layer` order explicit upfront in standalone and deferred sheets (`css-cascade-stratification` Phase 1 owns emitting it in bundles).
+- **Semantic tree & Language Arts legibility:** Track folder-to-selector coherence via `npm run css:tree` (`routes/widgets`, `components/spw`, `routes/surfaces/tools`, and `systems/component` currently measure `fit 0.00`) and keep `ornament/` layered as communicative handles reading `--spw-field-intensity`, `--spw-resonance`, and `--active-op-color`.
 
 ## Landed
 - `public/css/tokens/flourish-defaults.css` — always-on `:root` / `@property` names

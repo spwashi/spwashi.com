@@ -44,6 +44,7 @@ fixity = "tending"
  >>[2026-11-16 20:05] plan — Shared function, host voice. Two cores stay: the workbench pin for the language, workers/lib for a function a second host would rewrite, copied byte for byte by each carry. The hold's two lines are the function already written twice (lock.js nowLine and turnLine, factshift liveLines); a workers/lib/hold.js would format the record and not parse. A theme record rides with the set ring (mark and the kind of start); the canvas, the shot, the mask, the forces and the brace seats stay home. S4a stays next. Nothing built.
  >>[2026-11-16 20:16] align — workers/lib/hold.js is the hold's writer. mutex and tealstripes call it. liveLines still copies the pair, and the ring does not call the module. S4a stays next.
  >>[2026-11-16 19:56] align — Peers re-counted (ten units) and the kit's one script now reaches four (6f001c50). The hold's one writer and the theme record are workers-wonder-kit S3 and S5, since workers/lib is that plan's seam; this plan cites them, and S3 no longer waits on S4a because it does not touch public/.
+ >>[2026-11-17 09:24] align — Reconciled Status with 2026-11-11..2026-11-17 landings (workers-wonder-kit file units, set-ring, pinches, hold.js, spw.quest crawler/specimens.json 569490f8, attention.productions slot-handle c8a11758, gemini-4-argon cache eef0c22b) and added the return leg into spwashi.com (live Home door serialization, unconsumed reader speech/earcon parity, and modern web standards).
 }
 
 ^"s0_rows"{  # owner plan text the tree no longer matches, measured 2026-10-25
@@ -80,6 +81,6 @@ fixity = "tending"
  ~#status: "waiting on the creator"
  ~#next_commit: "S4a, one paint: spw.quest's file reader calls spw-highlight through the peer kit, once the creator answers the first-portable wonder"
  ~#files_hot: "scripts/build-peer-kit.mjs, workers/spw-quest/src/file-reader.js (paint, and since cd0c0012 the hand over it), public/js/semantic/spw-highlight.js, public/js/semantic/spw-genre-checks.js"
- ~#gate: "the creator's answer to wonder_site_starter_first_portable for S4; S5 and the playground's look are also the creator's"
- ~#last_stream: "2026-11-10"
+  ~#gate: "the creator's answer to wonder_site_starter_first_portable for S4; S5 and the playground's look are also the creator's"
+ ~#last_stream: "2026-11-17"
 }
