@@ -89,3 +89,42 @@ test('it installs: a manifest with a shortcut per seed, icons, and a worker that
   assert.match(sw, /SCRIPTED = /, 'the worker\'s routes are never kept');
   assert.match(readFileSync(path.join(assets, 'tealstripes.js'), 'utf8'), /"serviceWorker" in navigator && window\.top === window/);
 });
+
+test('the new stripes: a Euclidean rhythm by Bjorklund\'s algorithm, Fibonacci at the golden angle, and a moiré', async () => {
+  const { bjorklund, euclidRhythm, EUCLID } = await import('../src/vibe.js');
+  // The rhythms a drummer would name.
+  assert.equal(bjorklund(3, 8).join(''), '10010010', 'the tresillo');
+  assert.equal(bjorklund(5, 8).join(''), '10110110', 'the cinquillo');
+  assert.equal(bjorklund(7, 16).join(''), '1001010100101010');
+  assert.equal(bjorklund(4, 12).join(''), '100100100100');
+  for (let n = 2; n <= 16; n += 1) for (let k = 1; k <= n; k += 1) {
+    const p = bjorklund(k, n);
+    assert.equal(p.length, n);
+    assert.equal(p.filter(Boolean).length, k, `E(${k},${n}) has ${k} beats`);
+    assert.equal(euclidRhythm(k, n, 1).reduce((a, b) => a + b, 0), n, `E(${k},${n}) widths fill the steps`);
+  }
+  assert.deepEqual(vibe('harbor', ALL, ['euclid']).rhythm, euclidRhythm(EUCLID.k, EUCLID.n));
+  const golden = vibe('ledger', ALL, ['golden']);
+  assert.deepEqual([golden.angle, golden.rhythm], [137.5, [2, 2, 4, 6, 10, 16, 26]]);
+  assert.ok(vibeCss(vibe('lantern', ALL, ['moire'])).includes('.field::after'), 'the moiré is a second layer');
+  assert.ok(!vibeCss(vibe('lantern', ALL, [])).includes('::after'));
+  // The worker reads the new filters too.
+  assert.equal((await serve('/harbor/-/moire,euclid')).status, 200);
+});
+
+test('a hand\'s tuning is held to its ranges, carried in the address, and read back as the same picture', async () => {
+  const { readTuning, tune, TUNING } = await import('../src/vibe.js');
+  const t = readTuning(new URLSearchParams('angle=400&drift=1.23&grain=x&beats=9&steps=5&turn=1'));
+  assert.deepEqual(t, { angle: TUNING.angle.max, drift: 1.2, turn: 1, beats: 5, steps: 5 });
+  const place = readAddress('/lantern/pr/moire', '?angle=40&drift=1.2&beats=3&steps=8&turn=1&say=%3Cb%3Ehello%3C%2Fb%3E%20there', new Date(NOW));
+  assert.equal(place.say, 'bhello/b there', 'a caption keeps no markup');
+  assert.equal(place.href, 'https://tealstripesvibes.com/lantern/pr/moire?angle=40&drift=1.2&turn=1&beats=3&steps=8&say=bhello%2Fb%20there');
+  const again = readAddress(...new URL(place.href).pathname.split('?'), new URL(place.href).search, new Date(NOW));
+  assert.deepEqual([again.tuning, again.say], [place.tuning, place.say], 'the address reads back as itself');
+  const v = tune(vibe(place.seed, place.mask, place.filters), place.tuning);
+  assert.equal(v.angle, 40);
+  assert.equal(v.motion.drift, 1.2);
+  assert.deepEqual(v.rhythm, [9, 9, 6], 'three beats in eight steps');
+  assert.equal(v.palette[0], vibe(place.seed, place.mask, place.filters).palette[1], 'the palette turned once');
+  assert.ok(v.moire, 'the filter survives tuning');
+});

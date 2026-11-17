@@ -31,3 +31,24 @@ details p { margin: 6px 0 0; color: var(--muted); font: 11.5px/1.5 ui-monospace,
 .closed h2 { margin: 0 0 4px; font-size: 1rem; }
 .closed p { margin: 0; color: var(--muted); }
 @media (max-width: 30rem) { .card { left: 16px; right: 16px; width: auto; } }
+
+/* The card fades when the hand is still, so the stripes can be taken alone; h holds it hidden. */
+.card { transition: opacity 0.7s ease, transform 0.7s ease; }
+:root[data-ui="asleep"] .card, :root[data-ui="held"] .card { opacity: 0; transform: translateY(10px); pointer-events: none; }
+:root[data-ui="asleep"] body, :root[data-ui="held"] body { cursor: none; }
+.caption { margin: 8px 0 0; font-size: 1.05rem; font-weight: 600; letter-spacing: -0.01em; overflow-wrap: anywhere; }
+.tune { margin-top: 8px; }
+.tune-grid { display: grid; gap: 4px 10px; margin: 8px 0; }
+.tune-grid label { display: grid; grid-template-columns: 3.4rem 1fr 2.6rem; align-items: center; gap: 8px; font: 12px/1 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--muted); }
+.tune-grid input[type="range"] { width: 100%; min-height: 28px; accent-color: #5eead4; }
+.tune-grid output { color: var(--ink); text-align: right; }
+.tune-ways, .share { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 8px 0 0; font-size: 13px; }
+.share > span { color: var(--muted); margin-right: 2px; }
+.tune-ways button, .share button { font: 600 12.5px/1 ui-sans-serif, system-ui, sans-serif; color: var(--ink); background: rgba(255, 255, 255, 0.06); border: 1px solid var(--line); border-radius: 999px; padding: 0 12px; min-height: 36px; cursor: pointer; }
+.tune-ways button[aria-pressed="true"] { background: var(--ink); color: #062a2b; border-color: var(--ink); }
+.tune-ways button:focus-visible, .share button:focus-visible, .tune input:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+@media (pointer: coarse) { .tune-ways button, .share button { min-height: 44px; } }
+.say { display: grid; grid-template-columns: 3.4rem 1fr; align-items: center; gap: 8px; margin-top: 8px; font: 12px/1 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--muted); }
+.say input { font: 14px/1.2 ui-sans-serif, system-ui, sans-serif; color: var(--ink); background: rgba(0, 0, 0, 0.25); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; min-height: 40px; }
+.card { max-height: calc(100vh - 32px); overflow: auto; }
+@media (prefers-reduced-motion: reduce) { .card { transition: none; } }

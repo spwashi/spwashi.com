@@ -75,6 +75,9 @@ export const FILTERS = Object.freeze({
   night: "shift toward dark",
   hush: "stop motion",
   mono: "keep one hue",
+  euclid: "space the stripes as a Euclidean rhythm",
+  golden: "Fibonacci widths at the golden angle",
+  moire: "a second stripe a hair off the first, so they interfere",
 });
 
 /* ── grammar ─────────────────────────────────────────────── */
@@ -160,6 +163,99 @@ export function vibe(seedName, mask, filters) {
       const [h, s] = rgbToHsl(hexToRgb(out.palette[1]));
       out.palette = out.palette.map((c) => hslToHex([h, s, rgbToHsl(hexToRgb(c))[2]]));
     }
+    if (f === "euclid") out.rhythm = euclidRhythm(EUCLID.k, EUCLID.n);
+    if (f === "golden") {
+      out.rhythm = [1, 1, 2, 3, 5, 8, 13].map((w) => w * 2);
+      out.angle = 137.5;
+    }
+    if (f === "moire") out.moire = { turn: 2.5, stretch: 1.04 };
+  }
+  return out;
+}
+
+/* ── the algorithms ──────────────────────────────────────── */
+
+/** The Euclidean rhythm the euclid filter uses unless a hand tunes it: five beats in eight steps, the cinquillo. */
+export const EUCLID = Object.freeze({ k: 5, n: 8, step: 3 });
+
+/**
+ * Bjorklund's algorithm: k onsets spread as evenly as they can go over n
+ * steps (E(3,8) is the tresillo, x..x..x.), the way a drummer, a neutron
+ * accelerator's timing system and a leap-year calendar all spread them.
+ */
+export function bjorklund(k, n) {
+  if (k <= 0) return Array(n).fill(0);
+  if (k >= n) return Array(n).fill(1);
+  let groups = [...Array(k).fill(null).map(() => [1]), ...Array(n - k).fill(null).map(() => [0])];
+  while (true) {
+    const heads = groups.filter((g) => g === groups[0] || JSON.stringify(g) === JSON.stringify(groups[0]));
+    const tails = groups.slice(heads.length);
+    if (tails.length <= 1) break;
+    const pairs = Math.min(heads.length, tails.length);
+    groups = [...Array(pairs).fill(null).map((_, i) => [...heads[i], ...tails[i]]), ...heads.slice(pairs), ...tails.slice(pairs)];
+  }
+  return groups.flat();
+}
+
+/** A Euclidean rhythm as stripe widths: each onset starts a stripe that runs to the next. */
+export function euclidRhythm(k, n, step = EUCLID.step) {
+  const pattern = bjorklund(k, n);
+  const widths = [];
+  for (const beat of pattern) {
+    if (beat || !widths.length) widths.push(step);
+    else widths[widths.length - 1] += step;
+  }
+  return widths;
+}
+
+/* ── tuning by hand ──────────────────────────────────────── */
+
+/** What a hand may tune, each held to a range, kept in the address so a link is still the picture. */
+export const TUNING = Object.freeze({
+  angle: { min: 0, max: 180, step: 1 },
+  drift: { min: 0, max: 3, step: 0.1 },
+  breath: { min: 0, max: 60, step: 1 },
+  grain: { min: 0, max: 0.5, step: 0.01 },
+  turn: { min: 0, max: 2, step: 1 },
+  beats: { min: 1, max: 15, step: 1 },
+  steps: { min: 2, max: 16, step: 1 },
+});
+
+const held = (key, value) => {
+  const { min, max, step } = TUNING[key];
+  const n = Math.min(max, Math.max(min, Number(value)));
+  return Math.round(n / step) * step === 0 ? 0 : Number((Math.round(n / step) * step).toFixed(2));
+};
+
+/** The tuning an address carries: only the keys it names that read as numbers. */
+export function readTuning(params) {
+  const out = {};
+  for (const key of Object.keys(TUNING)) {
+    if (!params.has(key)) continue;
+    const n = Number.parseFloat(params.get(key));
+    if (Number.isFinite(n)) out[key] = held(key, n);
+  }
+  if (out.beats !== undefined && out.steps !== undefined && out.beats > out.steps) out.beats = out.steps;
+  return out;
+}
+
+/** A tuning as the query that reads back as it. */
+export const tuningQuery = (tuning) => Object.keys(TUNING).filter((key) => tuning[key] !== undefined).map((key) => `${key}=${tuning[key]}`).join("&");
+
+/** A caption, as the address may carry one: plain characters, no more than sixty. */
+export const captionOf = (raw) => String(raw ?? "").replace(/[\u0000-\u001f\u007f<>]/g, "").replace(/\s+/g, " ").trim().slice(0, 60);
+
+/** A vibe with a hand's tuning on it: the angle, the motion, the grain, the palette turned, and a Euclidean rhythm of its own. */
+export function tune(v, tuning = {}) {
+  const out = { ...v, palette: [...v.palette], rhythm: [...v.rhythm], motion: { ...v.motion }, grain: { ...v.grain } };
+  if (tuning.angle !== undefined) out.angle = tuning.angle;
+  if (tuning.drift !== undefined) out.motion.drift = tuning.drift;
+  if (tuning.breath !== undefined) out.motion.breath = tuning.breath;
+  if (tuning.grain !== undefined) out.grain.amount = tuning.grain;
+  for (let i = 0; i < (tuning.turn ?? 0); i += 1) out.palette.push(out.palette.shift());
+  if (tuning.beats !== undefined || tuning.steps !== undefined) {
+    const n = tuning.steps ?? EUCLID.n;
+    out.rhythm = euclidRhythm(Math.min(n, tuning.beats ?? EUCLID.k), n);
   }
   return out;
 }
@@ -214,6 +310,7 @@ export const SHADER = `
 precision mediump float;
 uniform vec2 u_res; uniform float u_time, u_angle, u_drift, u_breath, u_grain, u_period, u_offset;
 uniform vec3 u_c0, u_c1, u_c2; uniform float u_w[8]; uniform float u_n;
+uniform float u_moire, u_turn, u_stretch;
 float h(vec2 p){ return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
 vec3 pal(float i){ float k = mod(i, 3.0); return k < 0.5 ? u_c0 : (k < 1.5 ? u_c1 : u_c2); }
 void main(){
@@ -229,6 +326,20 @@ void main(){
     float w = u_w[i];
     if (t >= acc && t < acc + w) { col = pal(float(i)); }
     acc += w;
+  }
+  if (u_moire > 0.5) {
+    // A second band, a hair turned and stretched: where the two disagree, the difference shows.
+    float a2 = radians(u_angle + u_turn);
+    float x2 = dot(p, vec2(sin(a2), cos(a2))) / breath - u_time * u_drift * 18.0;
+    float t2 = mod(x2 - u_offset, u_period * u_stretch);
+    float acc2 = 0.0; vec3 col2 = u_c0;
+    for (int i = 0; i < 8; i++) {
+      if (float(i) >= u_n) break;
+      float w2 = u_w[i] * u_stretch;
+      if (t2 >= acc2 && t2 < acc2 + w2) { col2 = pal(float(i)); }
+      acc2 += w2;
+    }
+    col = mix(col, abs(col - col2), 0.4);
   }
   float g = (h(p + floor(u_time * 12.0)) - 0.5) * u_grain;
   gl_FragColor = vec4(col + g, 1.0);
@@ -255,10 +366,12 @@ export function ogSvg(seed, mask, v) {
 export function vibeCss(v) {
   const { css, period } = stripeGradient(v);
   const drift = v.motion.drift ? `@keyframes drift { to { background-position: ${period}px 0, 0 0; } }` : "";
+  // Moiré: the same stripes a hair turned and stretched, laid over by difference, so the two interfere in slow waves.
+  const moire = v.moire ? `.field::after { content: ""; position: absolute; inset: -12%; background: ${stripeGradient({ ...v, angle: v.angle + v.moire.turn }, 4 * v.moire.stretch).css}; mix-blend-mode: difference; opacity: 0.4; }` : "";
   return `body { background: ${v.palette[0]}; }
 .field { background: ${grainUri(v)}, ${css}; background-size: 220px 220px, auto; }
 @media (prefers-reduced-motion: no-preference) { .field { animation: drift ${v.motion.drift ? (8 / v.motion.drift).toFixed(2) : 0}s linear infinite; } }
-${drift}`;
+${drift}${moire ? `\n${moire}` : ""}`;
 }
 
 /**
@@ -275,7 +388,7 @@ export function readAddress(pathname, search, now) {
   if (moment) {
     if (Number.isNaN(Date.parse(`${moment[1]}T00:00:00Z`))) return { kind: "unknown" };
     const bucket = moment[2] ? `${moment[1]}T${moment[2]}` : moment[1];
-    return { kind: "moment", seed: seedForMoment(bucket), mask: ALL, filters: [], hour: moment[2] ? bucket : `${moment[1]}T00`, href: `https://${HOST}/@${bucket}` };
+    return { kind: "moment", seed: seedForMoment(bucket), mask: ALL, filters: [], hour: moment[2] ? bucket : `${moment[1]}T00`, ...tuned(params), href: `https://${HOST}/@${bucket}${queryOf(params)}` };
   }
   let parts;
   if (path === "/" && params.has("seed")) parts = { seed: params.get("seed"), mask: parseMask(params.get("mask")), filters: parseFilters(params.get("filter")) };
@@ -285,5 +398,15 @@ export function readAddress(pathname, search, now) {
     parts = { seed: segs[0], mask: parseMask(segs[1]), filters: parseFilters(segs[2]) };
   }
   if (!Object.hasOwn(SEEDS, parts.seed) || parts.mask === null || parts.filters === null) return { kind: "unknown" };
-  return { kind: "vibe", ...parts, hour: hourOf(now), href: `https://${HOST}${canonicalPath(parts)}` };
+  return { kind: "vibe", ...parts, hour: hourOf(now), ...tuned(params), href: `https://${HOST}${canonicalPath(parts)}${queryOf(params)}` };
+}
+
+/** What a hand added to an address: its tuning and its caption. */
+const tuned = (params) => ({ tuning: readTuning(params), say: captionOf(params.get("say")) });
+
+/** The tuning and caption as the query that keeps them. */
+function queryOf(params) {
+  const { tuning, say } = tuned(params);
+  const query = [tuningQuery(tuning), say ? `say=${encodeURIComponent(say)}` : ""].filter(Boolean).join("&");
+  return query ? `?${query}` : "";
 }

@@ -20,7 +20,7 @@ import { escapeHtml } from "../lib/http.js";
 import { writeOrCheck } from "../lib/carry.js";
 import { rgbOf, squarePng } from "../lib/png.js";
 import { ecosystemJson } from "../site-hub-next/src/hosts/ecosystem.js";
-import { ALL, FACETS, FILTERS, GROUND, HOST, SEEDS, canonicalPath, expressionOf, maskLabel, vibe, vibeCss } from "./src/vibe.js";
+import { ALL, FACETS, FILTERS, GROUND, HOST, SEEDS, TUNING, canonicalPath, expressionOf, maskLabel, vibe, vibeCss } from "./src/vibe.js";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ASSETS = path.join(HERE, "assets");
@@ -80,8 +80,18 @@ function shell({ seed, mask, filters, title, mood, canonical, ground = false }) 
   <details id="grammar">
     <summary>Read the address <kbd>?</kbd></summary>
     <ul id="facets">${facets}</ul>
-    <p>/seed/mask/filters · mask letters or sigils · filters: ${Object.keys(FILTERS).join(", ")} · <kbd>s</kbd> stamp · <kbd>c</kbd> copy</p>
+    <p>/seed/mask/filters · mask letters or sigils · filters: ${Object.keys(FILTERS).join(", ")} · ?angle= drift= breath= grain= turn= beats= steps= say= · <kbd>t</kbd> tune · <kbd>h</kbd> hide · <kbd>s</kbd> stamp · <kbd>c</kbd> copy</p>
   </details>
+  <p class="caption" id="caption" hidden></p>
+  <details class="tune" id="tune" hidden>
+    <summary>Tune it <kbd>t</kbd></summary>
+    <div class="tune-grid">
+${["angle", "drift", "breath", "grain", "beats", "steps"].map((key) => `      <label><span>${key}</span><input type="range" id="t-${key}" data-tune="${key}" min="${TUNING[key].min}" max="${TUNING[key].max}" step="${TUNING[key].step}"><output id="o-${key}"></output></label>`).join("\n")}
+    </div>
+    <p class="tune-ways"><button type="button" id="t-turn">turn the palette</button> <button type="button" data-filter="moire" aria-pressed="false">moiré</button> <button type="button" data-filter="golden" aria-pressed="false">golden</button> <button type="button" data-filter="euclid" aria-pressed="false">euclid</button> <button type="button" id="t-reset">as written</button></p>
+    <label class="say"><span>say</span><input type="text" id="t-say" maxlength="60" placeholder="a caption, for the card and the share"></label>
+  </details>
+  <p class="share" id="share" hidden><span>share as</span> <button type="button" data-share="post">post</button> <button type="button" data-share="story">story</button> <button type="button" data-share="card">card</button> <button type="button" id="hide">hide <kbd>h</kbd></button></p>
   <p class="status" id="status" role="status" aria-live="polite"></p>
   <p class="keep"><button type="button" id="keep-app" hidden>Keep it on this device</button></p>
 </main>
@@ -185,6 +195,8 @@ A proof card you can link to. A seed is a named look (palette, stripe rhythm, an
 - /harbor/pr/night,hush        then filters, in order
 - /tuple?seed=harbor&mask=pr   the filtered seed as data (JSON, or Spw lines with Accept: text/plain)
 - /og/harbor/pr.svg            a preview image
+- /harbor/-/moire,euclid       new filters: moire (a second stripe a hair off the first, interfering), euclid (a Euclidean rhythm, Bjorklund's algorithm), golden (Fibonacci widths at the golden angle)
+- /harbor?angle=40&drift=1.2&beats=3&steps=8&turn=1&say=hello   tuned by hand: angle, drift, breath, grain, a palette turn, a Euclidean rhythm of beats in steps, and a caption; the page writes the address as it is tuned, so the link is still the picture
 
 Seeds: ${Object.entries(SEEDS).map(([s, x]) => `${s} (${x.mood})`).join(", ")}. Mask letters: ${FACETS.map((f) => `${f.letter} ${f.name} (${f.sigil})`).join(", ")}. Filters: ${Object.entries(FILTERS).map(([f, says]) => `${f} (${says})`).join(", ")}.
 `;

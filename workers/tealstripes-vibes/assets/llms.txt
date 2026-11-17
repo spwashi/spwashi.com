@@ -9,5 +9,7 @@ A proof card you can link to. A seed is a named look (palette, stripe rhythm, an
 - /harbor/pr/night,hush        then filters, in order
 - /tuple?seed=harbor&mask=pr   the filtered seed as data (JSON, or Spw lines with Accept: text/plain)
 - /og/harbor/pr.svg            a preview image
+- /harbor/-/moire,euclid       new filters: moire (a second stripe a hair off the first, interfering), euclid (a Euclidean rhythm, Bjorklund's algorithm), golden (Fibonacci widths at the golden angle)
+- /harbor?angle=40&drift=1.2&beats=3&steps=8&turn=1&say=hello   tuned by hand: angle, drift, breath, grain, a palette turn, a Euclidean rhythm of beats in steps, and a caption; the page writes the address as it is tuned, so the link is still the picture
 
-Seeds: harbor (harbor at dusk), ledger (ink on a ledger line), lantern (a lamp through teal glass). Mask letters: p palette (*), r rhythm (#), a angle (@), m motion (~), g grain (.), s plate ($). Filters: night (shift toward dark), hush (stop motion), mono (keep one hue).
+Seeds: harbor (harbor at dusk), ledger (ink on a ledger line), lantern (a lamp through teal glass). Mask letters: p palette (*), r rhythm (#), a angle (@), m motion (~), g grain (.), s plate ($). Filters: night (shift toward dark), hush (stop motion), mono (keep one hue), euclid (space the stripes as a Euclidean rhythm), golden (Fibonacci widths at the golden angle), moire (a second stripe a hair off the first, so they interfere).
