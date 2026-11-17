@@ -48,6 +48,36 @@
     --spw-op-direction: hsl(180 62% 62%);
   }
 
+  :where(html[data-spw-theme-pack="glass-console"] :is(pre:has(> code.language-spw), .spw-source)) {
+    --spw-source-ink: #e8f4f8;
+    --spw-op-frame: hsl(190 76% 68%);
+    --spw-op-perspective: hsl(172 72% 62%);
+    --spw-op-mode: hsl(258 64% 76%);
+  }
+
+  :where(html[data-spw-theme-pack="banked-ember"] :is(pre:has(> code.language-spw), .spw-source)) {
+    --spw-source-ink: #fce4cb;
+    --spw-op-integration: hsl(26 86% 66%);
+    --spw-op-frame: hsl(38 80% 66%);
+    --spw-op-perspective: hsl(12 72% 68%);
+  }
+
+  :where(html[data-spw-theme-pack="electric-studio"] :is(pre:has(> code.language-spw), .spw-source)) {
+    --spw-op-wonder: hsl(280 72% 76%);
+    --spw-op-perspective: hsl(176 74% 62%);
+    --spw-op-mode: hsl(312 66% 74%);
+  }
+
+  :where(html[data-spw-theme-pack="oxide-ledger"] :is(pre:has(> code.language-spw), .spw-source)) {
+    --spw-op-frame: hsl(168 58% 64%);
+    --spw-op-ground: hsl(44 38% 70%);
+  }
+
+  :where(html[data-spw-theme-pack="copper-brace"] :is(pre:has(> code.language-spw), .spw-source)) {
+    --spw-op-integration: hsl(28 74% 64%);
+    --spw-op-mode: hsl(24 58% 68%);
+  }
+
   /* Roles: what the editor paints. Marks below override with their operator color. */
   :where(.spw-role-string) { color: var(--spw-source-soft, var(--ink-mid)); }
   :where(.spw-role-comment) { color: var(--spw-source-faint, var(--ink-faint)); font-style: italic; }

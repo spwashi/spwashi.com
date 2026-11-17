@@ -296,7 +296,14 @@ export function mountCrumbExpression(shell, { route, routes = [], lenses = [], s
   const element = doc.createElement('spw-expression');
   element.setAttribute('aria-label', 'Where you are, as Spw. Turn a slot to move: page, lens, section');
   const slots = [{ name: 'subject', value: route, choices: routes.some((choice) => choice.value === route) ? routes : [{ value: route, label: route }, ...routes] }];
-  if (lenses.length) slots.push({ name: 'mode', value: (lenses.find((lens) => lens.pressed) || lenses[0]).value, choices: lenses });
+  const activeLens = doc.documentElement?.dataset?.spwActiveLensMode || '';
+  if (lenses.length) {
+    const pressedLens = lenses.find((lens) => lens.pressed)?.value || '';
+    const matchedActive = activeLens ? lenses.find((lens) => lens.value === activeLens)?.value || '' : '';
+    slots.push({ name: 'mode', value: pressedLens || matchedActive || lenses[0].value, choices: lenses });
+  } else if (activeLens) {
+    slots.push({ name: 'mode', value: activeLens, choices: [{ value: activeLens, label: `${activeLens} (active lens)` }] });
+  }
   slots.push({ name: 'body', value: sections[current]?.value || '', choices: sections });
   element.model = { operator: '#>', slots };
   element.addEventListener(EXPRESSION_CHANGE_EVENT, (event) => {
@@ -319,6 +326,8 @@ export function syncCrumbExpression(shell, { section } = {}) {
   const element = shell?.querySelector?.(':scope > spw-expression');
   if (!element) return;
   if (section) element.setValue('body', section);
-  const pressed = (shell.ownerDocument || document).querySelector('main .mode-switch [data-set-mode][aria-pressed="true"]');
-  if (pressed) element.setValue('mode', pressed.getAttribute('data-set-mode'));
+  const doc = shell.ownerDocument || document;
+  const pressed = doc.querySelector('main .mode-switch [data-set-mode][aria-pressed="true"]');
+  const modeValue = pressed?.getAttribute('data-set-mode') || doc.documentElement?.dataset?.spwActiveLensMode || '';
+  if (modeValue) element.setValue('mode', modeValue);
 }

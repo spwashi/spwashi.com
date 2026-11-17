@@ -40,9 +40,48 @@ const EXPRESSION_LEAD = new RegExp(
    read the same slots, and {chronicles} <of> (narnia) has no word at all. */
 const CONTAINER_SLOT = Object.freeze({ '[': 'mode', '{': 'body', '(': 'scope', '<': 'projection' });
 const CONTAINER_CLOSE = Object.freeze({ '[': ']', '{': '}', '(': ')', '<': '>' });
+const QUOTES = new Set(['"', "'", '`']);
+const LEADING_PARTICLE_RE = /^(#>|#:|#!|~#|[~?!*.^#@&=%$]+)\s*/;
+
+/** Find the matching closer for `open` at `openIndex`, respecting nested pairs and quotes. */
+export function findBalancedClose(source = '', openIndex = 0, openChar = '{', closeChar = '}') {
+  let depth = 0;
+  let quote = '';
+  for (let i = openIndex; i < source.length; i += 1) {
+    const ch = source[i];
+    if (quote) {
+      if (ch === '\\') {
+        i += 1;
+        continue;
+      }
+      if (ch === quote) quote = '';
+      continue;
+    }
+    if (QUOTES.has(ch)) {
+      quote = ch;
+      continue;
+    }
+    if (ch === openChar) depth += 1;
+    else if (ch === closeChar) {
+      depth -= 1;
+      if (depth === 0) return i;
+    }
+  }
+  return -1;
+}
+
+/** Extract perspective holder (`maya@`, `viewer@subject`) from a subject nucleus. */
+export function parseSubjectPersona(subject = '') {
+  const clean = String(subject || '').trim().replace(LEADING_PARTICLE_RE, '');
+  const at = clean.indexOf('@');
+  if (at < 0) return { persona: '', target: clean, perspective: false };
+  const persona = clean.slice(0, at).trim();
+  const target = clean.slice(at + 1).trim();
+  return { persona, target, perspective: true };
+}
 
 /** The brace pairs after the word, each slot once, in the order written; `end` is where reading stopped. */
-export function readContainers(rest = '') {
+export function readContainers(rest = '', { balanced = false } = {}) {
   const found = {};
   const order = [];
   let at = 0;
@@ -51,6 +90,14 @@ export function readContainers(rest = '') {
     const open = rest[at];
     const slot = CONTAINER_SLOT[open];
     if (!slot || slot in found) break;
+    if (balanced) {
+      const close = findBalancedClose(rest, at, open, CONTAINER_CLOSE[open]);
+      if (close < 0) break;
+      found[slot] = rest.slice(at + 1, close);
+      order.push(slot);
+      at = close + 1;
+      continue;
+    }
     const close = rest.indexOf(CONTAINER_CLOSE[open], at + 1);
     if (close < 0) break;
     const held = rest.slice(at + 1, close);
@@ -157,9 +204,16 @@ function prefixOrEqual(hay = '', needle = '') {
   return left === right || left.startsWith(right);
 }
 
-function captureGroup(raw, open, close) {
+function captureGroup(raw, open, close, { balanced = false } = {}) {
   const start = raw.indexOf(open);
   if (start < 0) return { present: false, value: '' };
+  if (balanced) {
+    const balancedEnd = findBalancedClose(raw, start, open, close);
+    return {
+      present: true,
+      value: (balancedEnd < 0 ? raw.slice(start + open.length) : raw.slice(start + open.length, balancedEnd)).trim(),
+    };
+  }
   const rest = raw.slice(start + open.length);
   const end = rest.indexOf(close);
   return {
@@ -170,12 +224,17 @@ function captureGroup(raw, open, close) {
 
 export function parseExpressionQuery(query = '') {
   const raw = String(query || '').trim();
-  const mode = captureGroup(raw, '[', ']');
-  const body = captureGroup(raw, '{', '}');
-  const projection = captureGroup(raw, '<', '>');
+  const mode = captureGroup(raw, '[', ']', { balanced: true });
+  const body = captureGroup(raw, '{', '}', { balanced: true });
+  const scene = captureGroup(raw, '(', ')', { balanced: true });
+  const projection = captureGroup(raw, '<', '>', { balanced: true });
   const chargePrefix = raw.match(/^(?:bone|boon|bane|bonk|honk)(?:\.(?:bone|boon|bane|bonk|honk))*(?:\s+|(?=\[))/);
   const afterCharge = chargePrefix ? raw.slice(chargePrefix[0].length) : raw;
-  const subject = afterCharge.match(/^([A-Za-z_][\w-]*)/)?.[1] || '';
+  const particleMatch = afterCharge.match(LEADING_PARTICLE_RE);
+  const afterParticle = particleMatch ? afterCharge.slice(particleMatch[0].length) : afterCharge;
+  const subjectMatch = afterParticle.match(/^([A-Za-z_][\w-]*(?:@[A-Za-z0-9_-]*)?)/);
+  const subject = subjectMatch?.[1] || '';
+  const { persona, target: personaTarget, perspective } = parseSubjectPersona(subject || afterCharge);
   const charge = chargePrefix ? chargePrefix[0].trim().split('.').filter(Boolean) : [];
   const join = body.value ? readBodyJoins(body.value) : { kind: JOIN_KINDS.none, parts: [] };
   const parts = join.parts;
@@ -191,11 +250,17 @@ export function parseExpressionQuery(query = '') {
   return {
     raw,
     subject,
+    persona,
+    personaTarget,
+    perspective: perspective || Boolean(particleMatch?.[1]?.includes('@')),
+    operator: particleMatch?.[1] || (perspective ? '@' : ''),
     charge,
     mode: mode.value,
     hasModeSlot: mode.present,
     parts,
     join: join.kind,
+    scope: scene.value,
+    hasScopeSlot: scene.present,
     hasBodySlot: body.present,
     projection: projection.value,
     hasProjectionSlot: projection.present,
@@ -208,7 +273,10 @@ export function scoreExpressionShape(shape = {}, queryShape = {}) {
   if (!shape || !queryShape) return 0;
   let hits = 0;
 
+  const parsedSubject = parseSubjectPersona(shape.subject || '');
   if (queryShape.subject && prefixOrEqual(shape.subject, queryShape.subject)) hits += 4;
+  else if (queryShape.persona && prefixOrEqual(parsedSubject.persona, queryShape.persona)) hits += 3;
+  else if (queryShape.personaTarget && prefixOrEqual(parsedSubject.target, queryShape.personaTarget)) hits += 2;
   if (queryShape.hasModeSlot) {
     hits += queryShape.mode
       ? (prefixOrEqual(shape.mode, queryShape.mode) ? 4 : 0)
@@ -230,7 +298,16 @@ export function scoreExpressionShape(shape = {}, queryShape = {}) {
   }
 
   for (const token of queryShape.freeTokens || []) {
-    const slots = [shape.subject, shape.mode, shape.projection, ...(shape.parts || [])];
+    const slots = [
+      shape.subject,
+      parsedSubject.persona,
+      parsedSubject.target,
+      shape.mode,
+      shape.scope,
+      shape.projection,
+      ...(shape.parts || []),
+      ...(shape.charge || []),
+    ];
     if (slots.some((slot) => prefixOrEqual(slot, token))) hits += 2;
   }
 
@@ -465,4 +542,204 @@ export function bestExpressionMatch(expressions = [], query = '') {
     if (!best || hits > best.hits) best = { expression: text, hits };
   }
   return best;
+}
+
+const THEME_PROFILE_TERMS = Object.freeze({
+  'neutral-paper': Object.freeze(['paper', 'neutral', 'default', 'reading', 'hearth', 'clear']),
+  'oxide-ledger': Object.freeze(['ledger', 'oxide', 'records', 'archive', 'editorial', 'memory', 'audit', 'folio']),
+  'electric-studio': Object.freeze(['studio', 'electric', 'weave', 'art', 'craft', 'canvas', 'visual', 'making', 'loom']),
+  'ritual-vellum': Object.freeze(['ritual', 'vellum', 'season', 'myth', 'play', 'table', 'lore', 'costume']),
+  'copper-brace': Object.freeze(['copper', 'brace', 'craft', 'grammar', 'syntax', 'material', 'design']),
+  'glass-console': Object.freeze(['console', 'glass', 'workshop', 'runtime', 'systems', 'syntax', 'inspect', 'workbench', 'parser']),
+  'banked-ember': Object.freeze(['ember', 'dark', 'charge', 'mood', 'night', 'contrast', 'depth', 'fire']),
+});
+
+const LENS_AFFINITY_TERMS = Object.freeze({
+  reading: Object.freeze(['read', 'reading', 'editorial', 'narrative', 'prose', 'story', 'essay', 'person']),
+  systems: Object.freeze(['systems', 'system', 'syntax', 'runtime', 'kernel', 'structure', 'build', 'software', 'workbench', 'parser', 'lattice', 'machine']),
+  play: Object.freeze(['play', 'table', 'lore', 'game', 'boonhonk', 'magic', 'card', 'quest', 'world', 'rpg']),
+  studio: Object.freeze(['studio', 'art', 'craft', 'design', 'folio', 'material', 'texture', 'canvas', 'visual', 'making']),
+  syntax: Object.freeze(['syntax', 'grammar', 'parser', 'operator', 'operators', 'brace', 'token', 'ast']),
+  inspect: Object.freeze(['inspect', 'audit', 'diagnostics', 'probe', 'parse', 'structure', 'measure', 'receipt']),
+  workbench: Object.freeze(['workbench', 'parser', 'cli', 'lsp', 'seed', 'runtime', 'kernel']),
+  memory: Object.freeze(['memory', 'archive', 'folio', 'history', 'lineage', 'session', 'record', 'return']),
+  making: Object.freeze(['making', 'craft', 'build', 'workshop', 'practice', 'tool']),
+  reuse: Object.freeze(['reuse', 'portable', 'bundle', 'library', 'compose', 'token']),
+});
+
+function splitProfileTerms(value = '') {
+  const out = [];
+  for (const raw of String(value || '').toLowerCase().split(/[^a-z0-9-]+/)) {
+    const clean = raw.replace(/^-+|-+$/g, '');
+    if (clean.length < 2) continue;
+    out.push(clean);
+    if (clean.includes('-')) {
+      for (const part of clean.split('-')) {
+        if (part.length >= 2) out.push(part);
+      }
+    }
+  }
+  return [...new Set(out)];
+}
+
+/**
+ * Derive weighted direct and affinity term maps from an active site profile
+ * (`lens`, `sustainedLens`, `themePack`, `colorMode`, `posture`, `flavor`, `authorMode`, `density`, `climate`, `stance`).
+ */
+export function buildActiveProfileTerms(profile = {}) {
+  const direct = new Set();
+  const affinity = new Set();
+  const activeLens = String(profile.lens || profile.sustainedLens || '').trim().toLowerCase();
+  const themePack = String(profile.themePack || '').trim().toLowerCase();
+  const colorMode = String(profile.colorMode || '').trim().toLowerCase();
+  const posture = String(profile.posture || profile.explorePosture || '').trim().toLowerCase();
+  const flavor = String(profile.flavor || profile.pedagogicalFlavor || '').trim().toLowerCase();
+  const authorMode = String(profile.authorMode || '').trim().toLowerCase();
+  const density = String(profile.density || profile.semanticDensity || '').trim().toLowerCase();
+  const climate = String(profile.climate || '').trim().toLowerCase();
+  const stance = String(profile.stance || '').trim().toLowerCase();
+  const operator = String(profile.operator || profile.carriedOperator || '').trim().toLowerCase();
+
+  for (const val of [activeLens, posture, flavor, authorMode, climate, stance]) {
+    if (!val) continue;
+    direct.add(val);
+    for (const term of splitProfileTerms(val)) direct.add(term);
+    for (const aliased of LENS_AFFINITY_TERMS[val] || []) affinity.add(aliased);
+  }
+  if (colorMode && colorMode !== 'auto') direct.add(colorMode);
+  if (density && density !== 'minimal') direct.add(density);
+  if (themePack) {
+    direct.add(themePack);
+    for (const term of splitProfileTerms(themePack)) affinity.add(term);
+    for (const mapped of THEME_PROFILE_TERMS[themePack] || []) affinity.add(mapped);
+  }
+  for (const term of LENS_AFFINITY_TERMS[activeLens] || []) affinity.add(term);
+  for (const extra of profile.extraTerms || []) {
+    for (const term of splitProfileTerms(extra)) direct.add(term);
+  }
+
+  return { direct, affinity, activeLens, themePack, colorMode, operator };
+}
+
+function collectShapeTokens(shape, target = { primary: new Set(), secondary: new Set() }) {
+  if (!shape) return target;
+  const { persona, target: personaTarget } = parseSubjectPersona(shape.subject || '');
+  for (const val of [shape.subject, persona, personaTarget, shape.mode, shape.projection]) {
+    for (const token of splitProfileTerms(val)) target.primary.add(token);
+  }
+  for (const val of [shape.scope, ...(shape.parts || []), ...(shape.charge || [])]) {
+    for (const token of splitProfileTerms(val)) target.secondary.add(token);
+  }
+  if (shape.compound?.right) collectShapeTokens(shape.compound.right, target);
+  return target;
+}
+
+/**
+ * Evaluate whether an element's Spw expression / lens declarations match the active profile.
+ * Pure, deterministic, and dependency-free for search, reach filtering, variant bias, and copy layers.
+ */
+export function matchesActiveProfile(candidate = '', profile = {}) {
+  const terms = buildActiveProfileTerms(profile);
+  const item = typeof candidate === 'string'
+    ? { expression: candidate }
+    : (candidate || {});
+
+  const matchedTerms = [];
+  const reasons = [];
+  let score = 0;
+
+  const lensPass = splitProfileTerms(item.lensPass);
+  const copyLens = splitProfileTerms(item.copyLens);
+  const variantTokens = splitProfileTerms(item.variant);
+  const themeAffinity = splitProfileTerms(item.themeAffinity);
+  const itemOperator = String(item.operator || '').trim().toLowerCase();
+
+  for (const tok of lensPass) {
+    if (tok === terms.activeLens || terms.direct.has(tok)) {
+      score += 4;
+      matchedTerms.push(tok);
+      reasons.push('lens-pass');
+    } else if (terms.affinity.has(tok)) {
+      score += 2;
+      matchedTerms.push(tok);
+      reasons.push('lens-pass-affinity');
+    }
+  }
+
+  for (const tok of copyLens) {
+    if (tok === 'default' || tok === 'always') continue;
+    if (tok === terms.themePack || tok === terms.activeLens || tok === terms.colorMode || terms.direct.has(tok)) {
+      score += 4;
+      matchedTerms.push(tok);
+      reasons.push('copy-lens');
+    } else if (terms.affinity.has(tok)) {
+      score += 2;
+      matchedTerms.push(tok);
+      reasons.push('copy-affinity');
+    }
+  }
+
+  for (const tok of variantTokens) {
+    if (tok === terms.activeLens || terms.direct.has(tok)) {
+      score += 3;
+      matchedTerms.push(tok);
+      reasons.push('variant');
+    } else if (terms.affinity.has(tok)) {
+      score += 1;
+      matchedTerms.push(tok);
+      reasons.push('variant-affinity');
+    }
+  }
+
+  for (const tok of themeAffinity) {
+    if (tok === terms.themePack || tok === terms.colorMode || terms.direct.has(tok)) {
+      score += 3;
+      matchedTerms.push(tok);
+      reasons.push('theme');
+    } else if (terms.affinity.has(tok)) {
+      score += 1;
+      matchedTerms.push(tok);
+      reasons.push('theme-affinity');
+    }
+  }
+
+  if (terms.operator && itemOperator && itemOperator === terms.operator) {
+    score += 2;
+    matchedTerms.push(itemOperator);
+    reasons.push('operator');
+  }
+
+  const exprText = String(item.expression || '').trim();
+  if (exprText) {
+    const tokens = collectShapeTokens(shapeFromExpression(exprText));
+    for (const tok of tokens.primary) {
+      if (terms.direct.has(tok)) {
+        score += 3;
+        matchedTerms.push(tok);
+        reasons.push('expr-slot');
+      } else if (terms.affinity.has(tok)) {
+        score += 2;
+        matchedTerms.push(tok);
+        reasons.push('expr-affinity');
+      }
+    }
+    for (const tok of tokens.secondary) {
+      if (terms.direct.has(tok)) {
+        score += 2;
+        matchedTerms.push(tok);
+        reasons.push('expr-body');
+      } else if (terms.affinity.has(tok)) {
+        score += 1;
+        matchedTerms.push(tok);
+        reasons.push('expr-body-affinity');
+      }
+    }
+  }
+
+  return {
+    matched: score > 0,
+    score,
+    reasons: [...new Set(reasons)],
+    matchedTerms: [...new Set(matchedTerms)],
+  };
 }

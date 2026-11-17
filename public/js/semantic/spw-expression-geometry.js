@@ -29,11 +29,12 @@ const OPEN_BOUNDARIES = Object.freeze({
 });
 
 const CLOSE_BOUNDARIES = new Set([']', '}', ')', '))', '>', '>>']);
-// The canon's prefixes, less the openers above; the canon lists #> and #: before #, so the longest mark wins.
+// The canon's prefixes, less the openers above; the canon lists #>, #:, and #! before #, so the longest mark wins.
 const OPERATOR_SIGILS = Object.freeze(OPERATOR_DEFINITIONS.map(({ prefix }) => prefix).filter((prefix) => !OPEN_BOUNDARIES[prefix]));
 const QUOTES = new Set(['"', "'", '`']);
-const ROOT_RE = /^\s*([A-Za-z_][A-Za-z0-9_.-]*)/;
+const ROOT_RE = /^\s*(?:(?:#>|#:|#!|~#|[~?!*.^#@&=%$]+)\s*)*([A-Za-z_][A-Za-z0-9_.-]*)/;
 const OPERATOR_SUBJECT_RE = /[A-Za-z_"'([{<]/;
+const EMAIL_AFTER_AT_RE = /^[A-Za-z0-9_-]+(?:\.[A-Za-z0-9_-]+)*\.[A-Za-z]{2,}(?:$|[\s,;)\]}<>])/;
 
 export const SPW_DIMENSIONAL_ASCENT = Object.freeze([
   Object.freeze({ order: 0, label: '0D', role: 'handle', source: 'authored' }),
@@ -100,7 +101,17 @@ function operatorToken(value, start, end) {
 
 function canStartOperator(source, index, sigil) {
   if (sigil === '#>' || sigil === '#:' || sigil === '#!' || sigil === '>') return true;
+  const before = index > 0 ? source[index - 1] : '';
   const immediate = source[index + sigil.length] || '';
+  if (sigil === '.' && /[A-Za-z0-9_-]+@[A-Za-z0-9_.-]*$/.test(source.slice(0, index))) {
+    const atIndex = source.lastIndexOf('@', index);
+    if (atIndex >= 0 && EMAIL_AFTER_AT_RE.test(source.slice(atIndex + 1))) return false;
+  }
+  if (sigil === '@' && /[A-Za-z0-9_-]/.test(before)) {
+    // Email addresses like name@host.tld stay plain text in prose; Persona@ and viewer@subject stay perspective operators.
+    if (EMAIL_AFTER_AT_RE.test(source.slice(index + 1))) return false;
+    return immediate === '' || /[\s,;\])}>]/.test(immediate) || OPERATOR_SUBJECT_RE.test(immediate);
+  }
   if (OPERATOR_SUBJECT_RE.test(immediate)) return true;
   if (sigil !== '.' && immediate && OPERATOR_SIGILS.some((next) => (
     source.startsWith(next, index + sigil.length)
@@ -290,16 +301,32 @@ export function describeSpwExpression(source = '', options = {}) {
 export function parseSpwExpression(expression = '', options = {}) {
   const text = String(expression || '').trim();
   const described = describeSpwExpression(text, options);
-  const prefix = described.tokens.find((token) => token.type === 'operator')?.value || '';
+  let leadingEnd = 0;
+  const leadingTokens = [];
+  for (const token of described.tokens) {
+    if (token.type === 'operator' && token.start === leadingEnd) {
+      leadingTokens.push(token);
+      leadingEnd = token.end;
+    } else {
+      break;
+    }
+  }
+  const prefix = leadingTokens.map((token) => token.value).join('');
   const nucleus = prefix ? text.slice(prefix.length) : text;
-  const operatorType = described.operators[0] || '';
-  const operator = detectOperator(prefix || text);
+  const atToken = described.tokens.find((token) => token.type === 'operator' && token.value === '@' && token.start > 0);
+  const perspectiveHolder = atToken ? text.slice(0, atToken.start).trim().match(/([A-Za-z_][\w-]*)$/)?.[1] || '' : '';
+  const perspective = atToken
+    ? { holder: perspectiveHolder, offset: atToken.start }
+    : null;
+  const operatorType = leadingTokens[0]?.operator || described.operators[0] || '';
+  const operator = detectOperator(prefix || (atToken ? '@' : text));
 
   return {
     ...described,
     expression: text,
     prefix,
     nucleus,
+    perspective,
     operatorType,
     operator,
   };

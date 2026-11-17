@@ -3,6 +3,7 @@ import {
   applyOperatorGeometryToElement,
   parseSpwExpression,
 } from '/public/js/semantic/link-copy.js';
+import { parseSubjectPersona } from '/public/js/semantic/expression-query.js';
 import { writeDatasetValue } from '/public/js/kernel/dom-contracts.js';
 import { detectOperator } from '/public/js/kernel/shared.js';
 import { normalizePathname } from '/public/js/kernel/route-utils.js';
@@ -120,7 +121,7 @@ function resolveBaseToken(link, url, scope, label) {
 
   const visible = getVisibleLabel(link);
   const detected = detectOperator(visible);
-  if (detected) {
+  if (detected || parseSubjectPersona(visible).perspective) {
     return visible.trim();
   }
 
@@ -151,12 +152,16 @@ function resolveBaseToken(link, url, scope, label) {
 
 function resolvePrefix(baseToken = '') {
   const detected = detectOperator(baseToken);
-  return detected?.prefix || baseToken.match(/^(#>|#:|\.|\^|~|\?|@|\*|&|=|\$|%|!|>|<)/)?.[0] || '~';
+  if (detected?.prefix) return detected.prefix;
+  const matched = baseToken.match(/^(#>|#:|#!|~#|~\^|\.|\^|~|\?|@|\*|&|=|\$|%|!|>|<)/)?.[0];
+  if (matched) return matched;
+  return parseSubjectPersona(baseToken).perspective ? '@' : '~';
 }
 
 function resolveOperatorType(baseToken = '', scope = 'section') {
   const detected = detectOperator(baseToken);
   if (detected) return detected.type;
+  if (parseSubjectPersona(baseToken).perspective) return 'perspective';
 
   switch (scope) {
     case 'shell':
@@ -238,6 +243,7 @@ function setLinkDataset(link, entries = {}) {
 }
 
 function applyNavigationSpellRecord(link, record, url, { tokenized = 'true', operatorGeometry = true } = {}) {
+  const hadAuthoredAriaLabel = Boolean(link.getAttribute('aria-label')?.trim());
   setLinkDataset(link, {
     spwNavTokenized: tokenized,
     spwGroundable: record.groundable,
@@ -322,27 +328,30 @@ function applyNavigationSpellRecord(link, record, url, { tokenized = 'true', ope
   }
 
   // Operator-prefixed visible text is often opaque to AT. Provide descriptive aria-label when helpful.
-  const hasOperatorPrefix = /^[#>^~?@*<&=$.!%]./.test(link.textContent.trim());
-  if (hasOperatorPrefix && record.label && record.label !== link.getAttribute('aria-label')) {
-    // Avoid clobbering an author-provided descriptive label
-    const existing = link.getAttribute('aria-label') || '';
-    if (!existing || existing.length < 4) {
-      link.setAttribute('aria-label', record.label);
-      // Hide the raw operator prefix from AT while keeping it in the visual tree (safe single pass)
-      const walker = document.createTreeWalker(link, NodeFilter.SHOW_TEXT);
-      let textNode = walker.nextNode();
-      if (textNode) {
-        const prefixMatch = textNode.textContent.match(/^([#>^~?@*<&=$.!%]+[\w-]*)/);
-        if (prefixMatch) {
-          const span = document.createElement('span');
-          span.setAttribute('aria-hidden', 'true');
-          span.textContent = prefixMatch[1];
-          const restText = textNode.textContent.slice(prefixMatch[1].length);
-          textNode.replaceWith(span);
-          if (restText) {
-            span.after(document.createTextNode(restText));
-          }
-        }
+  const visibleTrimmed = link.textContent.trim();
+  const compoundPrefix = visibleTrimmed.match(/^(#>|#:|#!|~#|~\^)/)?.[1] || '';
+  const opPrefix = compoundPrefix || detectOperator(visibleTrimmed)?.prefix || '';
+  const hasOperatorPrefix = Boolean(opPrefix) && visibleTrimmed.length > opPrefix.length;
+  if (hasOperatorPrefix && record.label && (!hadAuthoredAriaLabel || (link.getAttribute('aria-label') || '').length < 4)) {
+    link.setAttribute('aria-label', record.label);
+    // Hide the raw operator prefix from AT while keeping it in the visual tree (safe single pass)
+    const textFilter = globalThis.NodeFilter?.SHOW_TEXT ?? 4;
+    const walker = document.createTreeWalker(link, textFilter);
+    const textNode = walker.nextNode();
+    if (textNode) {
+      const escaped = opPrefix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const prefixMatch = textNode.textContent.match(new RegExp(`^(\\s*)(${escaped})`));
+      if (prefixMatch) {
+        const span = document.createElement('span');
+        span.setAttribute('aria-hidden', 'true');
+        span.textContent = prefixMatch[2];
+        const leading = prefixMatch[1];
+        const restText = textNode.textContent.slice(prefixMatch[0].length);
+        const frag = document.createDocumentFragment();
+        if (leading) frag.appendChild(document.createTextNode(leading));
+        frag.appendChild(span);
+        if (restText) frag.appendChild(document.createTextNode(restText));
+        textNode.replaceWith(frag);
       }
     }
   }

@@ -5,7 +5,10 @@ import {
   bestExpressionMatch,
   expressionLayers,
   GESTURE_CHARGE,
+  matchesActiveProfile,
   parseExpressionQuery,
+  parseSubjectPersona,
+  readContainers,
   readExpressionSlots,
   readJoinChain,
   readSlotOrder,
@@ -220,4 +223,60 @@ test('wrap-job copy variants stay exclusive by depth', () => {
   assert.equal(variants.entry, 'change view');
   assert.equal(variants.normal, '[systems] sit lens');
   assert.equal(variants.technical, 'home[systems]{open.sit}<display>');
+});
+
+test('Persona@ postfix perspectives, leading particles, and opt-in balanced containers parse cleanly', () => {
+  assert.deepEqual(parseSubjectPersona('maya@'), { persona: 'maya', target: '', perspective: true });
+  assert.deepEqual(parseSubjectPersona('viewer@subject'), { persona: 'viewer', target: 'subject', perspective: true });
+  assert.deepEqual(parseSubjectPersona('#>frame'), { persona: '', target: 'frame', perspective: false });
+
+  const q = parseExpressionQuery('maya@[picture]{pacing, sound_lock}(friday)<cut>');
+  assert.equal(q.subject, 'maya@');
+  assert.equal(q.persona, 'maya');
+  assert.equal(q.perspective, true);
+  assert.equal(q.operator, '@');
+  assert.equal(q.mode, 'picture');
+  assert.deepEqual(q.parts, ['pacing', 'sound_lock']);
+  assert.equal(q.scope, 'friday');
+  assert.equal(q.projection, 'cut');
+
+  const lead = parseExpressionQuery('#!deploy[prod]{seed}');
+  assert.equal(lead.operator, '#!');
+  assert.equal(lead.subject, 'deploy');
+
+  assert.deepEqual(readContainers('{a{b}}[mode]').found, {});
+  assert.deepEqual(readContainers('{a{b}}[mode]', { balanced: true }).found, {
+    body: 'a{b}',
+    mode: 'mode',
+  });
+});
+
+test('matchesActiveProfile scores lens, themePack, colorMode, and expression alignment', () => {
+  const glassProfile = {
+    lens: 'systems',
+    themePack: 'glass-console',
+    colorMode: 'light',
+    posture: 'workshop',
+  };
+  const directMatch = matchesActiveProfile({
+    expression: 'workbench[systems.console]{seed.tokenSpans}<workbench>',
+    copyLens: 'glass-console workbench systems',
+  }, glassProfile);
+  assert.equal(directMatch.matched, true);
+  assert.ok(directMatch.score >= 8);
+
+  const unrelated = matchesActiveProfile({
+    expression: 'play[table]{dice.campaign}<lore>',
+    copyLens: 'play',
+  }, glassProfile);
+  assert.equal(unrelated.matched, false);
+  assert.equal(unrelated.score, 0);
+
+  const emberMatch = matchesActiveProfile({
+    copyLens: 'banked-ember dark',
+    expression: 'composition[ember]{contrast}<night>',
+  }, { themePack: 'banked-ember', colorMode: 'dark' });
+  assert.equal(emberMatch.matched, true);
+  assert.ok(emberMatch.matchedTerms.includes('banked-ember'));
+  assert.ok(emberMatch.matchedTerms.includes('dark'));
 });

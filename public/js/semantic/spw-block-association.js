@@ -32,7 +32,7 @@ function expressionLineFrom(source = '') {
   const line = text
     .split('\n')
     .map((entry) => entry.trim())
-    .find((entry) => entry && !entry.startsWith('#:') && !entry.startsWith('#!'))
+    .find((entry) => entry && !entry.startsWith('#') && !entry.startsWith('~#'))
     || text;
   return line.replace(/^#>[A-Za-z0-9_-]+\s*/, '').trim() || line;
 }
@@ -48,8 +48,12 @@ export function parseSpwDefinition(source = '') {
   const geometry = scanSpwExpression(expression);
 
   const claims = {};
-  for (const match of text.matchAll(/#:([A-Za-z0-9_-]+)\s+#!([^\n]+)/g)) {
+  for (const match of text.matchAll(/#:([A-Za-z0-9_-]+)\s+#!([^\s\n]+)/g)) {
     claims[match[1]] = match[2].trim();
+  }
+  const aspects = {};
+  for (const match of text.matchAll(/^~#([A-Za-z0-9_-]+):\s*(.+)$/gm)) {
+    aspects[match[1]] = match[2].trim().replace(/^["`]|["`]$/g, '');
   }
 
   return {
@@ -57,6 +61,7 @@ export function parseSpwDefinition(source = '') {
     handle,
     expression: shape.raw || expression,
     claims,
+    aspects,
     geometry,
     shape,
     join: shape.join,
@@ -107,16 +112,17 @@ export function serializeElementToSpw(element) {
   if (!(element instanceof HTMLElement)) return '';
 
   const handle = element.id ? `#>${element.id.replace(/-/g, '_')}` : '';
-  const expression = element.dataset.spwSemanticExpression || element.dataset.spwDefinition || '';
+  const expression = (element.dataset.spwSemanticExpression || element.dataset.spwDefinition || '').trim();
   const lines = [];
 
-  if (expression) {
-    lines.push(expression.startsWith('#>') ? expression : `${handle || '#>item'}[${expression}]`);
-  } else if (handle) {
+  if (handle && !expression.startsWith('#>')) {
     lines.push(handle);
   }
 
   const claims = [];
+  if (element.dataset.spwKind) claims.push(`#:kind #!${element.dataset.spwKind}`);
+  if (element.dataset.spwRole) claims.push(`#:role #!${element.dataset.spwRole}`);
+  if (element.dataset.spwOperator) claims.push(`#!${element.dataset.spwOperator}`);
   if (element.dataset.spwFixity) claims.push(`#:fixity #!${element.dataset.spwFixity}`);
   if (element.dataset.spwPhase) claims.push(`#:phase #!${element.dataset.spwPhase}`);
   if (element.dataset.spwTangibility) claims.push(`#:tangibility #!${element.dataset.spwTangibility}`);
@@ -124,8 +130,19 @@ export function serializeElementToSpw(element) {
   if (element.dataset.spwCoherence) claims.push(`#:coherence #!${element.dataset.spwCoherence}`);
   if (element.dataset.spwBiome) claims.push(`#:biome #!${element.dataset.spwBiome}`);
   if (element.dataset.spwChargeState) claims.push(`#:charge_state #!${element.dataset.spwChargeState}`);
+  if (claims.length) lines.push(claims.join(' '));
 
-  return [...lines, ...claims].join('\n');
+  if (element.dataset.spwCopyUnit) lines.push(`~#copy_unit: "${element.dataset.spwCopyUnit}"`);
+  if (element.dataset.spwComponentVariantActive) lines.push(`~#variant: "${element.dataset.spwComponentVariantActive}"`);
+  if (element.dataset.spwLensPass) lines.push(`~#lens_pass: "${element.dataset.spwLensPass}"`);
+
+  if (expression) {
+    lines.push(expression);
+  } else if (!handle && !lines.length) {
+    lines.push('#>item');
+  }
+
+  return lines.join('\n');
 }
 
 export function hydrateElementFromSpw(element, spwSource) {
