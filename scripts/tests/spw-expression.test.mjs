@@ -2,6 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { SLOT_WALLS, expressionText, slotSummary, stepChoice } from '../../public/js/interface/spw-expression.js';
 import { crumbLabel, crumbPlace } from '../../public/js/runtime/attention/rail-crumb.js';
+import { highlightSpw, highlightSpwInline } from '../../public/js/semantic/spw-highlight.js';
+import { buildThemeExpressionModel } from '../../public/js/modules/tools/theme-expression.js';
 
 const sections = [
   { value: 'home_frame', label: "I'm Spwashi." },
@@ -41,4 +43,31 @@ test('the crumb names a place by its sigil and its heading', () => {
     { route: '#>home', token: '#>home_frame', label: "I'm Spwashi." });
   assert.equal(crumbPlace({}, '', handle).label, 'this section');
   assert.equal(crumbLabel({ token: '*folio_stack', label: 'The October drop' }, 1, 17, true), 'The October drop, *folio_stack, section 2 of 17. Show the moves');
+});
+
+test('highlightSpwInline paints Persona@, operators, and slot delimiters with data-op roles', () => {
+  const html = highlightSpwInline('maya@[glass-console]{dark}(workshop)<systems>');
+  assert.match(html, /class="spw-role-variable" data-op="perspective">maya<\/span>/);
+  assert.match(html, /data-op="perspective">@<\/span>/);
+  assert.match(html, /data-op="mode">\[<\/span>glass-console<span class="spw-role-operator" data-op="mode">\]<\/span>/);
+  assert.match(html, /data-op="ground">\{<\/span>dark/);
+  assert.match(html, /data-op="scene">\(<\/span>workshop/);
+  assert.match(html, /data-op="concept">&lt;<\/span>systems/);
+
+  const kernelAt = highlightSpw('maya@[ok]', [{ type: 'OPERATOR', value: '@', span: { start: { line: 1, column: 5, offset: 4 }, end: { line: 1, column: 6, offset: 5 } } }]);
+  assert.match(kernelAt, /data-op="perspective">@<\/span>/);
+});
+
+test('buildThemeExpressionModel maps settings & sustained lens into a 5-slot scrubbable Spw expression', () => {
+  const fakeDoc = {
+    documentElement: { dataset: { spwActiveLensMode: 'systems' } },
+    querySelectorAll: () => [],
+  };
+  const model = buildThemeExpressionModel(fakeDoc, {
+    themePack: 'glass-console',
+    colorMode: 'dark',
+    explorePosture: 'workshop',
+  });
+  assert.equal(model.slots.map((slot) => `${slot.name}:${slot.value}`).join(' '), 'subject:workshop@ mode:glass-console body:dark scene:workshop projection:systems');
+  assert.equal(expressionText(model), 'workshop@[glass-console]{dark}(workshop)<systems>');
 });

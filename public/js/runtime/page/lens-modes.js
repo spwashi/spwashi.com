@@ -5,13 +5,14 @@ import {
 } from '/public/js/kernel/dom-contracts.js';
 import { composeModeSeatExpression } from '/public/js/semantic/spw-compose.js';
 import { ensureViewTransitionTap } from '/public/js/kernel/view-transition-tap.js';
+import { readSustainedLens, writeSustainedLens } from '/public/js/kernel/visit-intent.js';
+import { matchesActiveProfile } from '/public/js/semantic/expression-query.js';
 import './lens-term-note-row.js';
 import {
-  clearLensReach,
+  applyProfileLensField,
   describeLensReachSummary,
   pageTakesLensReach,
-  readLensReach,
-  writeLensReach,
+  readActiveProfile,
 } from './lens-reach.js';
 
 const LENS_MODE_QUERY_KEYS = Object.freeze(['spw-lens', 'lens', 'mode']);
@@ -241,6 +242,44 @@ export function parseLensModeQuery(grouped, search = getLocationRef().search) {
   return null;
 }
 
+/** Resolve a sustained lens (across navigations) or profile-biased seat when no query overrides. */
+export function resolveSustainedLensChoice(grouped, doc = globalThis.document) {
+  if (!(grouped instanceof Map) || !grouped.size) return null;
+
+  const sustained = readSustainedLens();
+  if (sustained?.mode) {
+    if (sustained.group && grouped.has(sustained.group) && hasLensMode(grouped.get(sustained.group), sustained.mode)) {
+      return { group: sustained.group, mode: sustained.mode, source: 'sustained' };
+    }
+    for (const [group, buttons] of grouped.entries()) {
+      if (hasLensMode(buttons, sustained.mode)) {
+        return { group, mode: sustained.mode, source: 'sustained' };
+      }
+    }
+  }
+
+  const profile = readActiveProfile(doc, { sustained });
+  if (!profile.isCustom) return null;
+
+  let best = null;
+  for (const [group, buttons] of grouped.entries()) {
+    for (const button of buttons) {
+      const mode = button.getAttribute('data-set-mode');
+      if (!mode) continue;
+      const match = matchesActiveProfile({
+        lensPass: mode,
+        expression: button.dataset?.spwSemanticExpression || '',
+        operator: button.getAttribute('data-spw-operator') || '',
+      }, profile);
+      if (match.score >= 4 && (!best || match.score > best.score)) {
+        best = { group, mode, score: match.score, source: 'profile' };
+      }
+    }
+  }
+
+  return best ? { group: best.group, mode: best.mode, source: best.source } : null;
+}
+
 export function writeLensModeState({
   group,
   mode,
@@ -319,20 +358,18 @@ export function writeLensModeState({
   const deepLink = buildLensModeDeepLink(group, resolvedMode, primaryHost, getLocationRef(doc));
   const lensImpact = activeButton?.dataset?.spwLensImpact
     || LENS_MODE_IMPACTS[resolvedMode] || `${group}-emphasis`;
-  // The page's two readings of the seat, declared and parsed: written for a
-  // seat a reader or a link chose, cleared for the one the page opens on.
-  let reach = '';
-  if (pageTakesLensReach(doc)) {
-    if (source === 'initial') {
-      clearLensReach(doc);
-    } else {
-      reach = describeLensReachSummary(writeLensReach(readLensReach(doc, {
-        mode: resolvedMode,
-        operator: activeButton?.dataset?.spwOperator || '',
-        exclude: activeButton?.closest?.('section.spw-frame') || null,
-      })));
-    }
-  }
+  // The page's two readings of the seat, declared and parsed, plus profile reach
+  // across cards/frames/copy layers when a reader or active profile drives the seat.
+  const activeOperator = activeButton?.dataset?.spwOperator || readSustainedLens()?.operator || '';
+  const fieldResult = applyProfileLensField(doc, {
+    mode: resolvedMode,
+    operator: activeOperator,
+    exclude: activeButton?.closest?.('section.spw-frame') || null,
+    source,
+  });
+  const reach = pageTakesLensReach(doc) && fieldResult?.reachSummary
+    ? describeLensReachSummary(fieldResult.reachSummary)
+    : (fieldResult?.profileMatched ? `${fieldResult.profileMatched} profile match${fieldResult.profileMatched === 1 ? '' : 'es'}` : '');
   const lensFeedback = describeLensFeedback({
     mode: resolvedMode,
     impact: lensImpact,
@@ -375,7 +412,16 @@ export function writeLensModeState({
   // Route CSS reads the source to tell the seat a page opens on from one a
   // reader or a link chose: the opening seat reweights nothing.
   doc.documentElement.dataset.spwActiveLensSource = source;
-  if (readerChose) rememberLensMode(group, resolvedMode, view);
+  if (readerChose) {
+    rememberLensMode(group, resolvedMode, view);
+    const current = readSustainedLens();
+    writeSustainedLens({
+      mode: resolvedMode,
+      group,
+      operator: activeButton?.dataset?.spwOperator || '',
+      filterMode: doc.documentElement?.dataset?.spwLensFilter || current?.filterMode || '',
+    });
+  }
 
   return {
     group,

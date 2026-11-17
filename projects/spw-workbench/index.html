@@ -93,20 +93,26 @@
             <h2 id="workbench-direction-title">Project direction</h2>
         </header>
         <p id="projects-workbench-direction" data-spw-textual-role="lede" data-spw-copy-unit="projects.workbench.direction" data-spw-semantic-expression="kernel[separation]{seed.policy.tokens}&lt;align&gt;">As of <time datetime="2026-11-17">November 17, 2026</time>, workbench work focuses on unifying parsing, highlighting, slot reading, and editor tooling behind one parameterized kernel rather than maintaining separate workarounds per consumer.</p>
+        <div class="spw-theme-bench" data-spw-theme-expression><code class="language-spw">theme@[neutral-paper]{auto}(reading)&lt;systems&gt;</code></div>
+        <div class="spw-copy-variants" aria-live="polite">
+            <p data-spw-copy-lens="default" data-spw-copy-label="overview" data-spw-semantic-expression="workbench[direction]{seed.kernel}&lt;align&gt;">Consumers across <code>spwashi.com</code>, <code>spw.quest</code>, and <code>factshift.center</code> share this kernel contract while keeping domain-specific readings local.</p>
+            <p data-spw-copy-lens="glass-console workbench systems" data-spw-copy-label="workbench profile" data-spw-semantic-expression="workbench[systems.console]{eventPolicy.tokenSpans}&lt;seed&gt;">For systems and Glass Console profiles: <code>eventPolicy: 'diagnostics'</code> skips trace generator allocations while <code>tokenSpans()</code> drives every browser highlighter from kernel tokens.</p>
+            <p data-spw-copy-lens="electric-studio studio craft" data-spw-copy-label="studio profile" data-spw-semantic-expression="workbench[studio.craft]{persona.scene}&lt;prose&gt;">For Studio and editorial readers: <code>Persona@</code> perspectives, <code>&lt;prose&gt;</code> beats, and inline scene notation parse into inspectable structure shared across creative tools.</p>
+        </div>
         <div class="frame-grid frame-grid--dense">
-            <article class="spw-panel">
+            <article class="spw-panel" data-spw-semantic-expression="workbench[policy]{eventPolicy.seed}&lt;systems&gt;">
                 <h3>Parameterized parse depth</h3>
                 <p>Commit <code>bcf0da18</code> adds <code>eventPolicy</code> (<code>none</code>, <code>diagnostics</code>, <code>trace</code>) to <code>spw-seed</code>. Callers that skip rule traces avoid per-step generator allocations without changing tokens, ASTs, or errors — dropping a 153&nbsp;KB surface parse from 715.6&nbsp;ms to 105.8&nbsp;ms.</p>
             </article>
-            <article class="spw-panel">
+            <article class="spw-panel" data-spw-semantic-expression="workbench[tokens]{tokenSpans.persona}&lt;syntax&gt;">
                 <h3>Kernel tokens for every highlighter</h3>
                 <p>Browser syntax highlighting in <code>spw-code.js</code> and the literal parser now paints directly from kernel tokens via <code>tokenSpans()</code>, retiring duplicate regex scanners that drifted on <code>#!</code> intent tags, compound prefixes (<code>~^light</code>), quoted headings (<code>^seed["Title"]</code>), and postfix <code>Persona@</code> perspectives.</p>
             </article>
-            <article class="spw-panel">
+            <article class="spw-panel" data-spw-semantic-expression="workbench[physics]{seed.host}&lt;runtime&gt;">
                 <h3>Seed purity vs. host physics</h3>
                 <p>Structural coupling (token spans, brace pairs, container depth) stays immutable inside <code>Seed</code> records, while charges, resonance, lens focus, and spoken/earcon renderers stay in external host profiles across <code>spwashi.com</code>, <code>spw.quest</code>, and <code>factshift.center</code>.</p>
             </article>
-            <article class="spw-panel">
+            <article class="spw-panel" data-spw-semantic-expression="workbench[context]{digraph.combinator}&lt;workbench&gt;">
                 <h3>Scoped contexts &amp; uniform braces</h3>
                 <p>Next architectural targets replace file-wide rewinds and per-sigil special cases with container-scoped parsing contexts, stack-aware digraph handling (extending <code>))</code> to <code>&gt;&gt;</code>, <code>&lt;&lt;</code>, <code>((</code>, and comparisons), and one prefix/postfix combinator algebra.</p>
             </article>
@@ -137,6 +143,7 @@
             <a class="spw-chip" data-spw-handle="true" href="/tools/spw-parser/#literal-parser" data-spw-operator="probe" data-spw-action="enter">?open_literal_parser</a>
             <a class="spw-chip" data-spw-handle="true" href="/tools/spw-parser/?spw_source=list%3CModule%3CT%3E%3E%0AO((V%20%2B%20E)%20log%20V)%0A%3Fkeep%7Bqty%20%3E%200%7D#literal-parser" data-spw-operator="probe" data-spw-action="enter">?reproduce[digraphs]</a>
             <a class="spw-chip" data-spw-handle="true" href="/tools/spw-parser/?spw_source=maya%40%5Bpicture%5D%7Bpacing%2C%20sound_lock%7D(friday)%3Ccut%3E%0A%3Cprose%3E%20~%5Elight%5Bgreen%5D%7B%22bob%20clicks%20the%20sofa%22%7D#literal-parser" data-spw-operator="perspective" data-spw-action="enter">@verify[Persona.prefix]</a>
+            <button class="spw-chip spw-lens-filter-toggle" type="button" hidden data-spw-lens-filter-toggle data-spw-operator="probe" aria-pressed="false" title="Filter panels to those matching the active lens or profile">?filter[matched]</button>
             <a class="spw-chip" data-spw-handle="true" href="https://github.com/spwashi/spw-workbench" data-spw-operator="potential">~spw-workbench</a>
         </nav>
     </section>

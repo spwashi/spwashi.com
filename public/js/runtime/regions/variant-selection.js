@@ -15,7 +15,9 @@
 import { bus } from '/public/js/kernel/bus.js';
 import { parseModularQuery } from '/public/js/kernel/query-composer.js';
 import { queryParamsToSettingsPartial } from '/public/js/kernel/settings-query-parity.js';
+import { matchesActiveProfile } from '/public/js/semantic/expression-query.js';
 import { requestLensMode } from '../page/lens-modes.js';
+import { readActiveProfile, readCandidateSpwMetadata } from '../page/lens-reach.js';
 import { readMicrointeractionPulseMs } from '../physics/pulse-timing.js';
 
 const VARIANT_CONTAINER_SELECTOR = '.spw-frame, [data-spw-kind="frame"], .spw-card, .frame-card, [data-spw-feature]';
@@ -199,6 +201,63 @@ export function resolveMeasureTierVariant(measureBandOrTier = '', variantMap = {
   return fallback;
 }
 
+function readCandidateVariantName(candidate) {
+  if (!candidate || typeof candidate !== 'object') return '';
+  if (typeof candidate.getAttribute === 'function') {
+    return (
+      candidate.getAttribute('data-mode-panel')
+      || candidate.dataset?.spwSemanticVariant
+      || candidate.dataset?.spwContentVariant
+      || ''
+    );
+  }
+  return String(candidate.variant || candidate.mode || candidate.name || '').trim();
+}
+
+export function selectProfileBiasedVariant(candidates = [], profile = {}) {
+  if (!Array.isArray(candidates) || !candidates.length || !profile) return null;
+  const hasAnySignal = Boolean(
+    profile.lens
+    || profile.sustainedLens
+    || profile.themePack
+    || profile.colorMode
+    || profile.posture
+    || profile.flavor
+    || profile.authorMode
+    || profile.operator
+    || profile.climate
+    || profile.stance,
+  );
+  if (!hasAnySignal) return null;
+
+  let best = null;
+  for (const candidate of candidates) {
+    const meta = typeof candidate?.getAttribute === 'function'
+      ? readCandidateSpwMetadata(candidate)
+      : {
+          expression: candidate?.expression || '',
+          lensPass: candidate?.lensPass || '',
+          copyLens: candidate?.copyLens || '',
+          variant: candidate?.variant || candidate?.mode || '',
+          themeAffinity: candidate?.themeAffinity || '',
+          operator: candidate?.operator || '',
+        };
+    const match = matchesActiveProfile(meta, profile);
+    const variant = readCandidateVariantName(candidate);
+    if (!variant || !match.matched) continue;
+    if (!best || match.score > best.score) {
+      best = {
+        variant,
+        score: match.score,
+        reasons: match.reasons,
+        matchedTerms: match.matchedTerms,
+        candidate,
+      };
+    }
+  }
+  return best;
+}
+
 function primeFromQuery(root) {
   const variant = readQueryVariant();
   if (!variant) return;
@@ -262,10 +321,55 @@ export function initVariantSelection(root = document) {
   // local starting point, preserving a truthful from → to edge in the event.
   primeFromQuery(root);
 
+  const biasVariantsFromProfile = (trigger = 'profile') => {
+    if (readQueryVariant()) return;
+    const profile = readActiveProfile(root);
+    if (!profile.isCustom) return;
+
+    const standalone = [...root.querySelectorAll('[data-spw-semantic-variant], [data-spw-content-variant]')]
+      .filter((host) => !host.hasAttribute('data-mode-group'));
+    if (standalone.length > 1) {
+      const siblingsByParent = new Map();
+      for (const node of standalone) {
+        const container = node.parentElement || root;
+        if (!siblingsByParent.has(container)) siblingsByParent.set(container, []);
+        siblingsByParent.get(container).push(node);
+      }
+      for (const siblings of siblingsByParent.values()) {
+        if (siblings.length < 2) continue;
+        const winner = selectProfileBiasedVariant(siblings, profile);
+        if (!winner) continue;
+        for (const sibling of siblings) {
+          const isWin = sibling === winner.candidate;
+          if (isWin) applyVariant(sibling, winner.variant, 'profile');
+          else if (sibling.dataset?.spwVariantSelected) delete sibling.dataset.spwVariantSelected;
+        }
+      }
+    }
+
+    const html = root.documentElement || document.documentElement;
+    const activeSource = html?.dataset?.spwActiveLensSource || '';
+    if (activeSource === 'mode-switch' || activeSource === 'keyboard' || activeSource === 'query') return;
+    for (const group of groups) {
+      const panels = readGroupPanels(group, root);
+      if (panels.length < 2) continue;
+      const biased = selectProfileBiasedVariant(panels, profile);
+      if (!biased || biased.score < 4) continue;
+      const current = readActiveMode(group, root);
+      if (biased.variant !== current) {
+        requestLensMode(bus, { group, mode: biased.variant, source: trigger === 'settings' ? 'profile' : trigger });
+      }
+    }
+  };
+
+  biasVariantsFromProfile('profile');
+
   const onChange = (event) => onLensChange(event, root);
   document.addEventListener(LENS_CHANGE_EVENT, onChange, { signal: controller.signal });
+  const offSettings = bus.on('settings:changed', () => biasVariantsFromProfile('settings'));
 
   controller.signal.addEventListener('abort', () => {
+    if (typeof offSettings === 'function') offSettings();
     if (selectionPulseTimer) window.clearTimeout(selectionPulseTimer);
     selectionPulseTimer = null;
     const html = root.documentElement || document.documentElement;

@@ -1,7 +1,7 @@
 {
   "version": "0.1.0",
   "schema": "specimens.v1",
-  "count": 1116,
+  "count": 1125,
   "specimens": [
     {
       "id": "h-capsule",
@@ -1626,6 +1626,16 @@
       "line": "composition[bundle]{contract}(home)<route>"
     },
     {
+      "id": "r-b7550ddb",
+      "source": "routes",
+      "line": "composition[console]{inspect.timing}<workbench>"
+    },
+    {
+      "id": "r-5ae32ffe",
+      "source": "routes",
+      "line": "composition[ember]{contrast.charge}<night>"
+    },
+    {
       "id": "r-27a45f0b",
       "source": "routes",
       "line": "composition[read]{open.sit}"
@@ -2716,9 +2726,19 @@
       "line": "workbench[consumer]{measure.report}<record>"
     },
     {
+      "id": "r-c0cfa315",
+      "source": "routes",
+      "line": "workbench[context]{digraph.combinator}<workbench>"
+    },
+    {
       "id": "r-f3f4e438",
       "source": "routes",
       "line": "workbench[direction]{kernel.policy.slots}<align>"
+    },
+    {
+      "id": "r-d98935b4",
+      "source": "routes",
+      "line": "workbench[direction]{seed.kernel}<align>"
     },
     {
       "id": "r-4210dbeb",
@@ -2736,14 +2756,39 @@
       "line": "workbench[mount]{parse.run.answer}<tool>"
     },
     {
+      "id": "r-a76d454c",
+      "source": "routes",
+      "line": "workbench[physics]{seed.host}<runtime>"
+    },
+    {
+      "id": "r-2a3a58a1",
+      "source": "routes",
+      "line": "workbench[policy]{eventPolicy.seed}<systems>"
+    },
+    {
       "id": "r-e8d1a015",
       "source": "routes",
       "line": "workbench[report]{measure.repair}"
     },
     {
+      "id": "r-37d114ab",
+      "source": "routes",
+      "line": "workbench[studio.craft]{persona.scene}<prose>"
+    },
+    {
+      "id": "r-c951da24",
+      "source": "routes",
+      "line": "workbench[systems.console]{eventPolicy.tokenSpans}<seed>"
+    },
+    {
       "id": "r-14ebb8ea",
       "source": "routes",
       "line": "workbench[time]{commit.day}"
+    },
+    {
+      "id": "r-19d33a53",
+      "source": "routes",
+      "line": "workbench[tokens]{tokenSpans.persona}<syntax>"
     },
     {
       "id": "r-80f0e07c",

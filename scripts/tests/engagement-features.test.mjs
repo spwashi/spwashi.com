@@ -46,11 +46,13 @@ import {
   resolveVariantChoice,
   resolveMeasureTierVariant,
   selectMode,
+  selectProfileBiasedVariant,
   initVariantSelection,
   VARIANT_EVENT,
   SPW_MODULE_EXPORT as variantSelectionExport,
   spwModule as variantSelectionModule,
 } from '../../public/js/runtime/regions/variant-selection.js';
+import { parseSpwDefinition, serializeElementToSpw } from '../../public/js/semantic/spw-block-association.js';
 import {
   SPW_MODULE_EXPORT as compositionBoxModelExport,
   spwModule as compositionBoxModelModule,
@@ -1404,4 +1406,53 @@ test('mountVisibleFeatures deduplicates visible single-root definitions across m
   } finally {
     globalThis.IntersectionObserver = originalObserver;
   }
+});
+
+test('selectProfileBiasedVariant picks matching panel for active theme and lens profile', () => {
+  const candidates = [
+    { variant: 'reading', expression: 'about[reading]{prose}<craft>', lensPass: 'reading' },
+    { variant: 'systems', expression: 'workbench[systems.console]{seed.tokenSpans}<workbench>', lensPass: 'systems workbench' },
+    { variant: 'studio', expression: 'studio[art.craft]{canvas}<loom>', lensPass: 'studio' },
+  ];
+
+  const match = selectProfileBiasedVariant(candidates, {
+    themePack: 'glass-console',
+    posture: 'workshop',
+  });
+  assert.ok(match);
+  assert.equal(match.variant, 'systems');
+  assert.ok(match.score > 0);
+  assert.equal(selectProfileBiasedVariant(candidates, {}), null);
+});
+
+test('serializeElementToSpw and parseSpwDefinition round-trip without wrapping handles around expressions', () => {
+  const BaseEl = globalThis.HTMLElement;
+  class FakeSection extends BaseEl {
+    constructor() {
+      super();
+      this.id = 'bench-panel';
+      this.tagName = 'SECTION';
+      this.dataset = {
+        spwSemanticExpression: 'maya@[picture]{pacing}<cut>',
+        spwKind: 'frame',
+        spwRole: 'perspective',
+        spwCopyUnit: 'workbench.bench',
+      };
+      this.textContent = 'Picture lock beat for director review.';
+    }
+    getAttribute() { return null; }
+  }
+  const fakeEl = new FakeSection();
+
+  const spwText = serializeElementToSpw(fakeEl);
+  assert.ok(spwText.startsWith('#>bench_panel\n'));
+  assert.ok(spwText.includes('maya@[picture]{pacing}<cut>'));
+  assert.equal(spwText.includes('bench_panel[maya@'), false);
+
+  const reparsed = parseSpwDefinition(spwText);
+  assert.equal(reparsed.handle, 'bench_panel');
+  assert.equal(reparsed.claims.kind, 'frame');
+  assert.equal(reparsed.claims.role, 'perspective');
+  assert.equal(reparsed.aspects.copy_unit, 'workbench.bench');
+  assert.equal(reparsed.expression, 'maya@[picture]{pacing}<cut>');
 });

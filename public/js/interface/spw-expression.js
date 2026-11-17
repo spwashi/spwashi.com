@@ -33,6 +33,28 @@ export const SLOT_WALLS = Object.freeze({
 
 /** What a slot is called aloud. */
 const SLOT_SAYS = Object.freeze({ subject: 'Page', mode: 'Lens', scene: 'Scene', body: 'Section', projection: 'About' });
+const SLOT_OPERATOR_TYPES = Object.freeze({
+  subject: 'subject',
+  mode: 'mode',
+  body: 'ground',
+  scene: 'scene',
+  projection: 'concept',
+});
+const PREFIX_OPERATOR_TYPE = Object.freeze({
+  '#>': 'frame',
+  '#:': 'layer',
+  '#!': 'action',
+  '^': 'integration',
+  '@': 'perspective',
+  '~': 'potential',
+  '?': 'wonder',
+  '!': 'action',
+  '.': 'ground',
+  '*': 'value',
+  '&': 'merge',
+  '$': 'substrate',
+});
+const SCRUB_STEP_PX = 26;
 
 /** The neighbour of a value among a slot's choices, or null at an edge. */
 export function stepChoice(choices = [], value = '', delta = 1) {
@@ -71,6 +93,7 @@ const normalizeModel = (model = {}) => ({
         value: String(choice.value ?? ''),
         label: String(choice.label ?? choice.value ?? ''),
         href: choice.href ? String(choice.href) : '',
+        note: choice.note ? String(choice.note) : '',
       })),
     })),
 });
@@ -78,10 +101,24 @@ const normalizeModel = (model = {}) => ({
 const STYLE_ID = 'spw-expression-style';
 const CSS = `
 spw-expression { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0; min-inline-size: 0; font-family: var(--site-mono-font, ui-monospace, monospace); }
-spw-expression .spw-expression__op { color: var(--op-frame-color, currentColor); font-weight: 600; }
-spw-expression .spw-expression__wall { font-weight: 600; }
-spw-expression .spw-expression__wall[data-half="open"] { color: var(--grammar-objective-brace-color, hsl(188 58% 32%)); }
-spw-expression .spw-expression__wall[data-half="close"] { color: var(--grammar-subjective-brace-color, hsl(342 48% 36%)); }
+spw-expression .spw-expression__op { color: var(--op-frame-color, currentColor); font-weight: 700; }
+spw-expression .spw-expression__op[data-op="integration"] { color: var(--op-integration-color, var(--op-frame-color, currentColor)); }
+spw-expression .spw-expression__op[data-op="perspective"],
+spw-expression .spw-expression__slot .spw-expression__op[data-spw-operator="perspective"] { color: var(--op-perspective-color, var(--op-subject-color, currentColor)); }
+spw-expression .spw-expression__op[data-op="potential"] { color: var(--op-potential-color, currentColor); }
+spw-expression .spw-expression__op[data-op="wonder"] { color: var(--op-wonder-color, currentColor); }
+spw-expression .spw-expression__op[data-op="action"] { color: var(--op-action-color, currentColor); }
+spw-expression .spw-expression__op[data-op="ground"] { color: var(--op-ground-color, currentColor); }
+spw-expression .spw-expression__wall { font-weight: 700; }
+spw-expression .spw-expression__wall[data-op="mode"] { color: var(--op-mode-color, var(--grammar-objective-brace-color, hsl(268 48% 48%))); }
+spw-expression .spw-expression__wall[data-op="ground"] { color: var(--op-ground-color, var(--grammar-subjective-brace-color, hsl(38 44% 42%))); }
+spw-expression .spw-expression__wall[data-op="scene"] { color: var(--op-scene-color, hsl(180 54% 38%)); }
+spw-expression .spw-expression__wall[data-op="concept"] { color: var(--op-concept-color, hsl(168 54% 38%)); }
+spw-expression .spw-expression__slot[data-spw-slot="mode"] { color: var(--op-mode-color, inherit); }
+spw-expression .spw-expression__slot[data-spw-slot="body"] { color: var(--op-ground-color, inherit); }
+spw-expression .spw-expression__slot[data-spw-slot="scene"] { color: var(--op-scene-color, inherit); }
+spw-expression .spw-expression__slot[data-spw-slot="projection"] { color: var(--op-concept-color, inherit); }
+spw-expression[data-spw-scrubbing="true"] .spw-expression__slot { cursor: ew-resize; }
 spw-expression .spw-expression__slot {
   appearance: none; display: inline-flex; align-items: center; min-block-size: var(--touch-target-compact, 2.25rem);
   margin: 0; padding: 0 0.15em; border: 0; border-radius: 0.3em;
@@ -171,9 +208,13 @@ export class SpwExpressionElement extends ElementBase {
     slot.value = choice.value;
     this.#open = '';
     this.#render();
-    this.#say(slot.name === 'body' && choice.label ? `${choice.value}: ${choice.label}` : `${SLOT_SAYS[name] || name}: ${choice.value}`);
+    this.#say(choice.note || (slot.name === 'body' && choice.label ? `${choice.value}: ${choice.label}` : `${SLOT_SAYS[name] || name}: ${choice.value}`));
     if (followed && choice.href) globalThis.location?.assign(choice.href);
     return true;
+  }
+
+  say(text = '') {
+    this.#say(text);
   }
 
   #say(text) {
@@ -185,19 +226,33 @@ export class SpwExpressionElement extends ElementBase {
     const doc = this.ownerDocument;
     const focused = this.contains(doc.activeElement) ? doc.activeElement?.dataset?.spwSlot || doc.activeElement?.dataset?.choice : '';
     const parts = [];
-    if (this.#model.operator) parts.push(span(doc, 'spw-expression__op', this.#model.operator, { 'aria-hidden': 'true' }));
+    if (this.#model.operator) {
+      const opType = PREFIX_OPERATOR_TYPE[this.#model.operator] || '';
+      parts.push(span(doc, 'spw-expression__op', this.#model.operator, {
+        ...(opType ? { 'data-op': opType } : {}),
+        'aria-hidden': 'true',
+      }));
+    }
     for (const slot of this.#model.slots) {
       const [open, close] = SLOT_WALLS[slot.name];
-      if (open) parts.push(span(doc, 'spw-expression__wall', open, { 'data-half': 'open', 'aria-hidden': 'true' }));
+      const wallOp = SLOT_OPERATOR_TYPES[slot.name] || '';
+      if (open) parts.push(span(doc, 'spw-expression__wall', open, { 'data-half': 'open', ...(wallOp ? { 'data-op': wallOp } : {}), 'aria-hidden': 'true' }));
       const button = doc.createElement('button');
       button.type = 'button';
       button.className = 'spw-expression__slot';
       button.dataset.spwSlot = slot.name;
-      button.textContent = slot.value || '…';
+      if (slot.name === 'subject' && slot.value.endsWith('@') && slot.value.length > 1) {
+        button.append(
+          doc.createTextNode(slot.value.slice(0, -1)),
+          span(doc, 'spw-expression__op', '@', { 'data-spw-operator': 'perspective', 'data-op': 'perspective', 'aria-hidden': 'true' }),
+        );
+      } else {
+        button.textContent = slot.value || '…';
+      }
       button.setAttribute('aria-expanded', String(this.#open === slot.name));
-      button.setAttribute('aria-label', `${slotSummary(slot)}. Open choices; arrow keys step`);
+      button.setAttribute('aria-label', `${slotSummary(slot)}. Open choices; arrow keys or horizontal drag scrub`);
       parts.push(button);
-      if (close) parts.push(span(doc, 'spw-expression__wall', close, { 'data-half': 'close', 'aria-hidden': 'true' }));
+      if (close) parts.push(span(doc, 'spw-expression__wall', close, { 'data-half': 'close', ...(wallOp ? { 'data-op': wallOp } : {}), 'aria-hidden': 'true' }));
     }
     const open = this.#model.slots.find((slot) => slot.name === this.#open);
     if (open) {
@@ -280,34 +335,69 @@ export class SpwExpressionElement extends ElementBase {
         return;
       }
       if (!slot) return;
-      if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+      if (event.key === 'ArrowRight' || event.key === 'ArrowLeft' || event.key === 'ArrowUp' || event.key === 'ArrowDown') {
         event.preventDefault();
         event.stopPropagation();
-        this.#step(slot, event.key === 'ArrowRight' ? 1 : -1, 'key');
+        const delta = event.key === 'ArrowRight' || event.key === 'ArrowDown' ? 1 : -1;
+        this.#step(slot, delta, 'key');
       }
     });
     this.addEventListener('pointerdown', (event) => {
       const slot = this.#slotFor(event.target);
       if (!slot || (event.pointerType === 'mouse' && event.button !== 0)) return;
-      const press = { slot, x: event.clientX, y: event.clientY, held: false, timer: 0 };
+      const press = { slotName: slot.name, x: event.clientX, y: event.clientY, delta: 0, held: false, scrubbed: false, timer: 0 };
       press.timer = setTimeout(() => {
         press.held = true;
-        this.#peek(slot);
+        const liveSlot = this.#model.slots.find((item) => item.name === press.slotName);
+        if (liveSlot) this.#peek(liveSlot);
       }, GESTURE_MEASURE.holdMs);
       this.#press = press;
+    });
+    this.addEventListener('pointermove', (event) => {
+      const press = this.#press;
+      if (!press) return;
+      const dx = (event.clientX ?? press.x) - press.x;
+      const dy = (event.clientY ?? press.y) - press.y;
+      if (!press.scrubbed && Math.abs(dx) < SCRUB_STEP_PX) return;
+      if (!press.scrubbed && Math.abs(dx) < Math.abs(dy)) return;
+      clearTimeout(press.timer);
+      if (!press.scrubbed) {
+        press.scrubbed = true;
+        this.dataset.spwScrubbing = 'true';
+      }
+      const step = Math.trunc(dx / SCRUB_STEP_PX);
+      if (step === press.delta) return;
+      const liveSlot = this.#model.slots.find((item) => item.name === press.slotName);
+      if (!liveSlot) {
+        press.delta = step;
+        return;
+      }
+      const dir = step > press.delta ? 1 : -1;
+      const ticks = Math.abs(step - press.delta);
+      press.delta = step;
+      for (let i = 0; i < ticks; i += 1) {
+        this.#step(liveSlot, dir, 'scrub');
+      }
     });
     const release = (event) => {
       const press = this.#press;
       this.#press = null;
+      delete this.dataset.spwScrubbing;
       if (!press) return;
       clearTimeout(press.timer);
+      if (press.scrubbed) {
+        this.#suppressClick = true;
+        event.stopPropagation();
+        return;
+      }
+      const liveSlot = this.#model.slots.find((item) => item.name === press.slotName);
       const dx = (event.clientX ?? press.x) - press.x;
       const dy = (event.clientY ?? press.y) - press.y;
       const swipe = Math.abs(dx) >= GESTURE_MEASURE.swipeMinPx && Math.abs(dx) >= Math.abs(dy) * GESTURE_MEASURE.swipeDominance;
-      if (swipe) {
+      if (swipe && liveSlot) {
         this.#suppressClick = true;
         event.stopPropagation();
-        this.#step(press.slot, dx < 0 ? 1 : -1, 'swipe');
+        this.#step(liveSlot, dx < 0 ? 1 : -1, 'swipe');
       } else if (press.held) {
         this.#suppressClick = true;
       }
@@ -316,6 +406,7 @@ export class SpwExpressionElement extends ElementBase {
     this.addEventListener('pointercancel', () => {
       if (this.#press) clearTimeout(this.#press.timer);
       this.#press = null;
+      delete this.dataset.spwScrubbing;
     });
   }
 }

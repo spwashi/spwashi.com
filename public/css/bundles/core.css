@@ -38448,6 +38448,30 @@ html[data-spw-interactive-medium-ready="true"] {
   animation: spw-lens-copy-in 420ms var(--ease-smooth, ease);
 }
 
+/* Selected, theme-pack, posture, or active profile copy variants */
+:where(
+  [data-spw-copy-lens][data-spw-variant-selected="true"],
+  [data-spw-copy-lens][data-spw-lens-reach~="profile"],
+  html[data-spw-theme-pack="banked-ember"] :is([data-spw-copy-lens~="ember"], [data-spw-copy-lens~="banked-ember"]),
+  html[data-spw-theme-pack="electric-studio"] [data-spw-copy-lens~="studio"],
+  html[data-spw-theme-pack="glass-console"] :is([data-spw-copy-lens~="workbench"], [data-spw-copy-lens~="console"]),
+  html[data-spw-theme-pack="oxide-ledger"] :is([data-spw-copy-lens~="records"], [data-spw-copy-lens~="ledger"]),
+  html[data-spw-theme-pack="ritual-vellum"] :is([data-spw-copy-lens~="ritual"], [data-spw-copy-lens~="play"]),
+  html[data-spw-theme-pack="copper-brace"] :is([data-spw-copy-lens~="craft"], [data-spw-copy-lens~="copper"]),
+  html[data-spw-theme-pack="neutral-paper"] [data-spw-copy-lens~="paper"],
+  html[data-spw-color-mode="dark"] [data-spw-copy-lens~="dark"],
+  html[data-spw-explore-posture="workshop"] [data-spw-copy-lens~="workshop"],
+  html[data-spw-explore-posture="field"] [data-spw-copy-lens~="field"]
+) {
+  display: block;
+  animation: spw-lens-copy-in 420ms var(--ease-smooth, ease);
+}
+
+/* When profile selection chose a variant in this group, hide unselected siblings */
+:where(*:has(> [data-spw-copy-lens][data-spw-variant-selected="true"]) > [data-spw-copy-lens]:not([data-spw-variant-selected="true"])) {
+  display: none;
+}
+
 @keyframes spw-lens-copy-in {
   from {
     opacity: 0;
@@ -38539,6 +38563,25 @@ html[data-spw-interactive-medium-ready="true"] {
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--spw-variant-accent, var(--active-op-color)) 28%, transparent),
     0 0 14px color-mix(in srgb, var(--spw-variant-accent, var(--active-op-color)) 12%, transparent);
+}
+
+/* Cross-route lens reach + progressive filter mode */
+:where(main [data-spw-lens-reach~="profile"]:not([data-spw-copy-lens])) {
+  box-shadow: inset 3px 0 0 color-mix(in srgb, var(--active-op-color, var(--op-probe-color, #7a4fb5)) 52%, transparent);
+}
+
+:where(main [data-spw-lens-reach="recede"]) {
+  opacity: 0.72;
+  filter: saturate(0.55);
+}
+
+:where(html[data-spw-lens-filter="matched"] main :is(.spw-card, .frame-card)[data-spw-lens-reach="recede"]) {
+  display: none;
+}
+
+:where([data-spw-lens-filter-toggle][aria-pressed="true"]) {
+  background: color-mix(in srgb, var(--active-op-color, #7a4fb5) 14%, var(--surface-strong, #fff));
+  border-color: color-mix(in srgb, var(--active-op-color, #7a4fb5) 55%, var(--line, currentColor));
 }
 }
 
