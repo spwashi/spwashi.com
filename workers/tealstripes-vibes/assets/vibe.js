@@ -474,7 +474,14 @@ ${drift}${moire ? `\n${moire}` : ""}`;
  */
 export function readAddress(pathname, search, now) {
   const params = new URLSearchParams(search);
-  const path = String(pathname || "/").replace(/\/index\.html$/, "/").replace(/\.html$/, "");
+  // Cloudflare's assets send /@lock on to /%40lock, so an address is read as it was written.
+  let written = String(pathname || "/");
+  try {
+    written = decodeURIComponent(written);
+  } catch {
+    // A malformed escape is read as it stands.
+  }
+  const path = written.replace(/\/index\.html$/, "/").replace(/\.html$/, "");
   if (path === "/" && !params.has("seed")) return { kind: "root", redirect: `/@${hourOf(now)}` };
   // /@lock is the vibe mutex.buzz's lock holds; the page reads the lock to paint it.
   if (path === LOCK.path || path === `${LOCK.path}/`) return { kind: "lock-pending" };
