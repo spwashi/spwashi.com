@@ -1,0 +1,194 @@
+# Gemini 4 Argon extends what the creator asked Claude (2026-11-17) — cache
+#
+# The creator, after Claude session 8e1467b9-490a-4e8e-9c14-7c67049f5de3
+# stopped on its weekly limit: "cache the wonder for Gemini 4 Argon to extend."
+# A first draft of this file took the set's pinch. The creator corrected it:
+# "I meant more from what I asked Claude."
+# The wonder is that ask. Readings of pieces of it already exist. This file
+# is the seat Argon opens. It does not answer the wonder, and it writes
+# nothing in the workbench or the workers.
+
+#>gemini_4_argon_2026_11
+#:cache #!session #!gemini #!wonder #!rederivation
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@cross: ~"./cross-product-rederivation-2026-11.spw"
+@seven: ~"./seven-passes-unreported-2026-11.spw"
+@low_sight: ~"./low-sight-wonder-2026-11.spw"
+@design: ~"./design-direction-2026-11.spw"
+@practicality: ~"./workbench-algorithmic-practicality-2026-11.spw"
+@answer: ~"../../workers/spw-quest/src/answer.js"
+@addresses: ~"../../workers/spw-quest/src/addresses.js"
+@gemini: ~"../../GEMINI.md"
+@gemini_shelf: ~"./gemini-multimodal-evaluation-2026-11.spw"
+@fable: ~"./fable-session-2026-11.spw"
+@wonder_architecture: ~"../conventions/wonder-architecture.spw"
+@wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
+@material_physics: ~"../conventions/material-physics.spw"
+@motion: ~"./motion-and-marks-2026-11.spw"
+@reader: ~"../../public/js/semantic/spw-workbench-reader.js"
+@specimen: ~"../../design/experiments/next-surface/index.html"
+@specimen_sheet: ~"../../public/css/routes/surfaces/next-surface.css"
+
+operation = "cache"
+fixity = "experimental"
+source = "the creator's asks in Claude session 8e1467b9-490a-4e8e-9c14-7c67049f5de3, 2026-11-12 through 2026-11-17; the caches named above; Google, Introducing Gemini 4 Argon, 2026-09-30, https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/; model id gemini-4-argon"
+audience = "a Gemini 4 Argon session extending the creator's ask, not the set's pinch"
+element = "one syntax whose priority was placed on the wrong thing, shown where a person can use it"
+expression = session[argon]{asked.rederived.shown}<syntax>
+
+summary = #[
+  `The ask opens as two products, lore.land and spw.quest each crossed with factshift.center, evaluated toward a theory that can be derived again.`,
+  `The same sitting then asks that theory to teach: a founder onboarding an engineer, syntax a junior and a staff engineer can compare, mathematics heard as music, and the canvas using that syntax when a frame is entered.`,
+  `Readings of the early asks are already cached. Five wonders now hold the remaining thread: misplaced digraph priority on a frame round-trip, tagged social bots on llms.txt, orthogonal design depth, silent < > slots in the workbench reader's speech/audio exports, and mathematics heard as music alongside ephemeral momentum.`,
+][reg=set]
+
+do_not = `Do not implement from this file. Do not re-run the seven passes. Do not answer the five wonders in @cross. Do not decide a workbench trial named from @practicality. Do not edit .spw/_workbench. Do not push or deploy. Do not add a data-spw-* family or a wonder type. Do not put a private design aim for attention.productions into page copy.`
+
+^"products"{
+  lore = `{ lore.land[gameplay, memory address, computer science metaphor, trope culture, design bed, <card>, <trope>, <scene>, <character>, <physics>, <snippet>, <poem>, <game>] ⨯ factshift.center(tool{windows, submenus, edges}) }`
+  quest = `{ spw.quest[library information sciences, material sciences, algorithms, production snippets, nuance router] ⨯ factshift.center[grounding abstraction, navigational convenience, token store, register manifold] }`
+  aim = `The creator, 2026-11-12: evaluate the cross products and design loops; aim to improve the theory towards re-derivation.`
+  held = `That evaluation is @cross. A cell is theory when a reader holding the factor names, a rule, and the one table that rule reads can produce it again.`
+}[reg=facet]
+
+^"asked"{
+  # The creator's words, in the order they were said. Each line names the cache that already holds a reading, where one does.
+  same_day = #[
+    `interface momentum, interpretability across contexts, toggleable labels, refining the semantics of label clusters, and testing the canvas against more of the workbench's caches (@cross)`,
+    `factshift.center harmonized with the workbench's memory; its product surfaces challenging the workbench's internals and intermediate forms; spw.quest's regions presenting the fundamentals so a naming incongruence or a particle's semantics can be resolved; an onboarding arc into VS Code, Vim, and IntelliJ (@cross)`,
+    `a developmental reading: mastery-first rigor, a reader raised on screens, mathematical proficiency for musical appreciation, physics for trope appreciation, the canvas as an evolving surface, spw.quest as a self-optimizing library, autonomous.feedback (@cross, development)`,
+    `seven read-only passes: ecosystem ecology, plan accuracy, linguistic utilization, audit scripts into types, sellable products, routing and file types, and the public copy as a learning environment for junior to senior engineers (@seven; they reported)`,
+  ][reg=set]
+  following_days = #[
+    `2026-11-13: the canvas is not adapted to screen readers; extend the wonder about presentation and interactivity into where a screen reader is necessary (@low_sight)`,
+    `2026-11-13: tone, the material and cognitive theory, CSS as an instrument for a later reader, modules that inoculate a development culture, Spw-native navigation, design read outside this codebase and then inside its physics (@design)`,
+    `2026-11-14: spw.quest useful in a conversation with founders and directors who onboard motivated junior, mid-level, and senior engineers; scripts that show a common data-processing algorithm, communication nuance, forms of data for engineering, and the interactive surfaces of print and digital publishing`,
+    `2026-11-16: syntax examples useful for comparison, an introduction across those levels, improved mathematical notation, algorithm examples; factshift.center making better use of syntax, in its interaction and in frame navigation (@practicality)`,
+    `2026-11-16: "(( reading as n-range feels like it's syntax that misplaced priority and I wonder which other syntax is similar" (@practicality; the census names >>, <<, <=, >=, => beside (( )`,
+    `2026-11-17: "I also wonder about a more useful llms.txt such that I can project into forms through bots that I tag on social media" (@answer, @addresses)`,
+  ][reg=set]
+  shipped_later = `The same session then built the worker set, a pinch that scales and a pinch that steps, the plans' design considerations, and a crawl policy for spw.quest. Those commits are on main. They are not this wonder. While the crawl tests still expected "noindex, follow", the session noted social-media bots on llms.txt and left them. Those three assertions now read "noindex, nofollow", in physics.test.mjs, routes.test.mjs and parser-prereleases.test.mjs, matching crawl.js.`
+}[reg=facet]
+
+^"llms"{
+  teaches = `ANSWER_FORM in @answer is the form half of /llms.txt. It shows card, question, change, and any other concept, each as an indented example. The file's own comment says a person types "spw.quest rpgwednesday<card>" or tags a model on a social site, the model may open one page, and the page describes a format.`
+  social = `One sentence names X: an answer fits 280 characters, an @ directly before a name notifies that account, a # before a letter shows as a tag, and /card?line= unfurls. test/answer.test.mjs holds every example to 280 characters and to no @ before a name.`
+  forms = `The address list in @addresses names Card, Pivot, Find, Compare, Take apart, Read a file, Check a line, At rest, and Canvas. /forms/ is a page of forms side by side and is not in that list.`
+}[reg=facet]
+
+^"seat"{
+  open = `This file, then the products in @cross, then the digraph census in @practicality, then GEMINI.md.`
+  extend = `Take the syntax the creator wondered about. Name one sibling that misplaced its priority the same way. Write one example a founder could show a junior and a staff engineer, and the one frame step on factshift.center that would use it. The example has to be producible again from the line's text.`
+  instruments = `GEMINI.md: wonder, lattice, visual checks. One example. The cross-product survey is already written.`
+}[reg=facet]
+
+^"model"{
+  id = `gemini-4-argon`
+  announced = `Google, 2026-09-30. Google describes long-horizon software work, multimodal input, and text output. This repo has not measured those claims.`
+  house = `GEMINI.md is the gate this repo wrote.`
+}[reg=facet]
+
+^"design_depth"{
+  # Extending the wonder into design depth across @design, @low_sight, @material_physics, @cross, and @practicality.
+  hierarchy = `Four roles for colour (field, paper, ink, and one gold accent that is never body text on paper at 2.3:1), three voices for type (serif reads and names, sans carries controls, mono is kept for the Spw specimen alone), two states for material (rest and lift), and one job for borders (only what can be pressed or entered).`
+  slot_material = `On the canvas with container labels hidden (@cross ^"labels".material), only a { } body has material today while a ( ) scene and a #[ ] set draw as the same dashed rectangle (1.01 to 1.68:1 on the stage in @low_sight). For labels-off to be learnable from material before glyph labels, each slot in word[mode]{body}(scene)<concept> needs its own optical signature: [mode] as a bonded glass collar on the word, {body} as a recessed matte well at rest and a top-edge specular card when folded, (scene) as a grounded paper mat wrapping word and body, and <concept> as a threshold rim that signals an enterable frame.`
+  consequence_weight = `HTML already names what an action does (@design ^"inside".actions): button[type="submit"] commits the live box (filled field), a[href^="/"] opens a room here (outlined on paper, prose name first, operator mark aria-hidden in gold-ink so 4,457 links do not lead with raw punctuation in speech), and a[rel~="external"] projects across hosts (quiet underline naming the host and carrying the live box via renderSpwDoors rather than a hardcoded seed). A :has() tune checkbox toggles the one-sentence consequence under each control without scripts.`
+  expression_as_handle = `When a line is rendered as an interactive specimen (as c8a11758 landed for slot scrubbing and frame-page.ts does for entering a slot), syntax priority becomes a visual-design invariant: entering <concept> on !fix[timeout]{checkout; retries}(service)<team<cache> > opens team<cache> whole, and saving back through writeLineSlots must not collapse <team<cache>> into Prose via >> (STREAM_CLOSE) and erase the concept node from the stage.`
+  sensory_parity = `Node fill on the canvas is spent three times on an unordered palette (@low_sight ^"legend"). Depth and summary belong on orthogonal channels: material + tab text for open vs folded, the focusable slot-by-slot print exposed beyond coarse pointers, and one rest-time summary clause ("once when the field comes to rest, and on demand") assembled from strings the app already holds.`
+  inoculant_css = `A stylesheet teaches a later reader when it opens with the numbered questions its sections answer, records every selector each token feeds (@material_physics ^"integrity"), and passes a standalone render at 1280 and 390 px with core.css absent (@specimen_sheet).`
+}[reg=facet]
+
+^"sensory_exports"{
+  # Unconsumed speech and earcon exports already carried in @reader (public/js/semantic/spw-workbench-reader.js).
+  unconsumed = `Zero files under public/js/ or workers/ currently import spokenLine, SPOKEN_NAMES_SITE, scanPairLabels, pairSound, pairMoves, readEarcons, TEXTURES, PAIR_SOUND, or wavBytes from @reader, even though @reader already exports them.`
+  spoken_coupling = `spokenLine("!fix[timeout]{checkout; retries}(service)<team<cache> >") returns unread: 0 ("action fix, mode timeout, definition, sequence of 2: checkout, retries; scene service, concept team, concept cache", or "body / scope / projection" with SPOKEN_NAMES_SITE). Saving back without the space as <team<cache>> drops spokenLine to unread: 13 ("unread <team<cache>>"), and O((V + E) log V) drops to unread: 4. Visual handle failure, readLine().whole = false, and speech failure happen on the same byte.`
+  silent_concept = `PAIR_SOUND pitches { at 392 Hz, [ at 523.25 Hz, ( at 659.25 Hz (stepPerDepth = 2 semitones, unpaired rough = sqrt(2)), and TEXTURES assigns physical overtone ratios to { ("bar": [1, 2.756, 5.404, 8.933]), [ ("string": [1, 2, 3, 4, 5, 6]), and ( ("membrane": [1, 1.594, 2.136, 2.296, 2.653, 2.918]). scanPairLabels, PAIR_SOUND, and TEXTURES omit < > (<concept>), leaving the enterable concept slot silent in pairSound and pairMoves even when spokenLine names it.`
+  word_seam = `Default spokenLine calls { } "definition", ( ) "scene", and < > "concept"; SPOKEN_NAMES_SITE calls them "body" (matching @surface d_2026_10_30_body), "scope", and "projection".`
+}[reg=facet]
+
+^"math_and_music"{
+  # Extending ^"asked" (mathematics heard as music, algorithmic practicality) through @cross, @reader, and @wonder_doctrine.
+  derivable_comma = `Under @wonder_doctrine, hearing mathematics earns wonder only when the discrepancy can be derived afterward. @cross records log2(3/2) = [0; 1, 1, 2, 2, 3, 1, 5] (convergents 1/2, 3/5, 7/12, 24/41, 31/53; 2^(7/12) = 1.49831 against 3/2 = 1.5) and pi convergents 22/7, 355/113.`
+  reader_probe = `!tune[3/2]{2^(7/12) ~> 3/2}(octave)<pythagorean<comma> > parses whole (Sequence, errors: 0, readLine().whole: true, spokenLine unread: 0). readNumberForm resolves "3/2" (ratio [3,2] = 1.5), "7/12" (ratio [7,12]), "22/7", "355/113", and "1.49831" (number), while returning problem: "not_a_number" for "2^(7/12)" and "3:2".`
+  acoustic_bridge = `TEXTURES already separates harmonic integer strings ([ ], [1..6]) from inharmonic bars ({ }) and Bessel membranes (( )), while EARCON_WORDS models equal-temperament semitone steps and tritone dissonance (sqrt(2)). The primitives to hear a ratio against its tempered convergent already sit in @reader; what lacks a surface is a two-voice ratio or loop specimen (three against two, 3/2 against 2^(7/12)) where the formula stays live Spw instead of backtick prose.`
+}[reg=facet]
+
+^"ephemeral_momentum"{
+  # Extending ^"asked" (interface momentum, memory planes, print and digital publishing) through @motion, @cross, and c8a11758.
+  address_as_handle = `c8a11758 (attention.productions) and spw.quest/pivot turn the expression itself into the handle: stepping one slot rewrites the line and URL in place while keeping plain links underneath for scripts-off and print.`
+  fixed_clocks = `@motion measures factshift.center's transient UI on fixed clocks (2.4 s, 700 ms, 900 ms, 420 ms) and prose notes ("sown 13 · down center") where opening "more" shifts finger targets 13-17 px. Marks (!save, ^13, @3) on a scrubbable clock plus edge separation (left = opening/where, right = closing/how) make ephemera inspectable both in motion and on a still print.`
+  memory_seam = `Across the four memory planes (visit, browser, file, repository), momentum breaks where persistence keys outlive or fight slot turns: factshift.center's saved frames key on whole-line hash (orphaned by any single-slot pivot, while pins survive by word), and spwashi.com Home's sibling links stay frozen on one line while the parser button carries the live textarea.`
+}[reg=facet]
+
+#>wonder_argon_asked
+?["Which syntax misplaced its priority the way `((` did, and what does one re-derived example of it show a founder onboarding an engineer and a frame step on factshift.center?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#with: @cross @practicality @gemini
+  ~#asked: "the creator, 2026-11-12, two products evaluated toward re-derivation; 2026-11-16, which other syntax is similar to (( read as an n-range; 2026-11-17, cache that wonder for Gemini 4 Argon to extend"
+  ~#taste: "(( reading as n-range feels like it's syntax that misplaced priority."
+  ~#expect: "Argon names one sibling digraph from the practicality census, writes one example that still reads whole, and says the frame step that would use it. The five wonders in the cross-product cache stay open. The workbench trials stay the workbench's."
+  ~#tension: "The practicality cache already lists the sibling digraphs and stops at the workbench's trials. The founder, the levels of engineer, and the frame step are the part that cache does not show."
+  ~#unblocks: "the 2026-11-14 ask, that spw.quest be useful while a founder brings an engineer onto a team"
+  ~#probe(read)
+  !probe{ "rg -n \"misplaced priority\" .spw/caches/workbench-algorithmic-practicality-2026-11.spw .spw/caches/gemini-4-argon-2026-11.spw" }
+  $%[syntax.compare, syntax.stream, syntax.scope, syntax.range]
+}
+
+#>wonder_llms_tagged_bot
+?["What would llms.txt have to say so that a bot the creator tags on social media can project the post into a form?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#with: @answer @addresses @gemini
+  ~#asked: "the creator, 2026-11-17: I also wonder about a more useful llms.txt such that I can project into forms through bots that I tag on social media"
+  ~#taste: "The page describes a format. It does not tell a model what to do. A careful model takes its instructions from the person asking."
+  ~#expect: "Argon names the one page a tagged bot fetches, the form that page can already project into, and the sentence it still lacks for a tag that is not on X. /forms/ stays unlisted until that sentence earns it. llms.txt is not rewritten from this cache."
+  ~#tension: "The file already teaches card, question, change, and one X-sized post. A tag on another network, and the forms page, have no sentence. The crawl note that deferred this was about robots, and that patch has landed."
+  ~#unblocks: "a post that tags a bot and comes back as a form the site already opens"
+  ~#probe(read)
+  !probe{ "rg -n \"tags one on a social|On X an answer fits\" workers/spw-quest/src/answer.js workers/spw-quest/assets/llms.txt" }
+  $%[form.card, form.question, form.change, form.page]
+}
+
+#>wonder_design_depth
+?["How do material, action weight, and slot handles carry the structure of a Spw line across paper, the canvas with labels off, and a screen reader without spending colour four times or adding a data-spw-* family?"]{
+  #:depth #!experiential ~#lens(comparison)
+  ~#with: @design @low_sight @material_physics @specimen @specimen_sheet
+  ~#asked: "the creator, 2026-11-13: tone, the material and cognitive theory, CSS as an instrument for a later reader, modules that inoculate a development culture, Spw-native navigation, design read outside this codebase and then inside its physics; 2026-11-17: extend wonder into design depth"
+  ~#taste: "Material before glyph labels; one voice for the Spw specimen, one weight per HTML consequence, and every primed or actualized act has one sentence."
+  ~#expect: "Four channels stay orthogonal: (1) paper/field/ink/gold-mark hierarchy with borders reserved for pressable or enterable targets, (2) distinct slot materials for [mode], {body}, (scene), and <concept> so labels-off and high-contrast stills read without brace text, (3) submit / internal-door / external-projection weight tied to HTML elements and live box serialization, and (4) a spoken + keyboard slot print with a single rest-time summary clause."
+  ~#tension: "On spwashi.com 148 of 210 Home actions share one mono pill and borders nest three deep; on factshift.center fill colour is spent three times, ( ) and #[ ] share one dashed rectangle at 1.01–1.68:1 when labels hide, and saving an entered <concept> frame back into a parent line can collapse a nested capsule into Prose when >> steals priority."
+  ~#unblocks: "a design surface where a still, a phone thumb, a keyboard ring, and a screen reader each recover the same four slots and what pressing an action carries"
+  ~#probe(read)
+  !probe{ "node scripts/wonder.mjs --surface gemini-4-argon-2026-11 && rg -n \"1\\. Tokens|5\\. Actions|6\\. Doors|7\\. Tune\" public/css/routes/surfaces/next-surface.css" }
+  $%[material.slot_signature, action.element_weight, handle.round_trip, sensory.rest_clause, css.standalone_inoculant]
+}
+
+#>wonder_sensory_slot_completeness
+?["Why does the shipped workbench reader already carry speech and physical bracket acoustics for [ ], { }, and ( ) with zero site consumers, while < > stays silent and >> breaks speech at the same byte as the canvas?"]{
+  #:depth #!computational ~#lens(comparison)
+  ~#with: @reader @low_sight @practicality @surface
+  ~#asked: "the creator, 2026-11-12 through 2026-11-17: screen-reader extension, syntax priority, and the canvas harmonized with the workbench's forms"
+  ~#taste: "A convention that only holds in one medium is a style, not a convention."
+  ~#expect: "Only public/js/semantic/spw-workbench-reader.js matches outside parser bundles, meaning zero consumer files import spokenLine, pairSound, readEarcons, or TEXTURES; adding < > as a fourth scanned/sounded slot or fixing >> restores parity across visual frame entry, readLine().whole, spokenLine(), and pairMoves() without inventing a new data-spw-* attribute."
+  ~#tension: "@reader already computes Euler-Bernoulli bar, harmonic string, and Bessel membrane acoustics plus spokenLine(), yet nothing on spwashi.com, spw.quest, or factshift.center calls them — and < > (the enterable concept frame) has no pair entry in scanPairLabels or PAIR_SOUND."
+  ~#unblocks: "one line of Spw yielding aligned visual material, keyboard/screen-reader speech, and earcon feedback from the same parse"
+  ~#probe(run)
+  !probe{ "rg -l \"spokenLine|pairSound|readEarcons|SPOKEN_NAMES_SITE|TEXTURES\" --glob \"!*parser*\" public/js/ workers/" }
+  $%[reader.spoken_consumers, reader.earcon_consumers, slot.angle_sound, digraph.speech_parity]
+}
+
+#>wonder_math_music_and_momentum
+?["When a ratio line like !tune[3/2]{2^(7/12) ~> 3/2}(octave)<pythagorean<comma> > keeps its math live in Spw rather than in backticks, how do audible discrepancy and scrubbable ephemeral marks turn math and motion into derivable wonder?"]{
+  #:depth #!experiential ~#lens(resonance)
+  ~#with: @cross @motion @wonder_doctrine @reader
+  ~#asked: "the creator, 2026-11-12 through 2026-11-16: mathematics heard as music, improved mathematical notation, interface momentum, and ephemeral UI in marks on a scrubbable clock"
+  ~#taste: "Decoration produces surprise; structure produces wonder when a reader can derive why it sounded or moved afterward."
+  ~#expect: "Exposing readNumberForm ratios (3/2, 7/12) alongside TEXTURES overtones and replacing fixed-timer ephemeral prose with scrubbable marks (!save, ^13, @3) + slot-stable memory keys lets a listener derive the Pythagorean comma by ear and recover any transient beat on a still."
+  ~#tension: "Formulas in spw.quest's examples still retreat to backticks, readNumberForm rejects 3:2 and 2^(7/12), saved canvas frames still hash the whole line instead of slot identity, and ephemeral timers vanish before a screenshot or slow reader can inspect them."
+  ~#unblocks: "a math-as-music learning specimen and a print-inspectable ephemeral UI whose states all re-derive from bare Spw"
+  ~#probe(read)
+  !probe{ "compare what readNumberForm and pairSound emit for !tune[3/2]{2^(7/12) ~> 3/2}(octave)<pythagorean<comma> > against a two-voice 3/2 vs 2^(7/12) playback and a scrubbable @motion clock" }
+  $%[music.comma_audible, ratio.form_coverage, ephemera.mark_clock, memory.slot_keyed]
+}
