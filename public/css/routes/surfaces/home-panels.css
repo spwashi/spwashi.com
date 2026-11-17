@@ -619,7 +619,11 @@ body[data-spw-surface="home"] .spw-frame > .frame-actions:has(> .spw-delimiter:o
   border-color: color-mix(in srgb, var(--home-discovery-accent) 48%, var(--line, rgba(14, 18, 20, 0.14)));
   box-shadow: var(--home-shadow-quiet, 0 8px 22px rgba(0, 0, 0, 0.08));
   transform: translateY(-2px);
-  outline: none;
+}
+
+:where(body[data-spw-surface="home"] .home-discovery-card:focus-visible) {
+  outline: 2px solid var(--focus-ring-color, var(--home-discovery-accent, var(--teal, #008080)));
+  outline-offset: var(--focus-ring-offset, 3px);
 }
 
 :where(body[data-spw-surface="home"] .home-discovery-card .frame-card-media) {

@@ -482,7 +482,7 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
     "narration"
     "rooms";
   align-content: start;
-  gap: var(--home-gap-lg);
+  gap: var(--home-gap-md);
   min-width: 0;
   max-inline-size: none;
 }
@@ -629,6 +629,13 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
   box-shadow: none;
 }
 
+@media (min-width: 48rem) {
+  :where([data-spw-feature="home-kernel-entry"] .hook-call .mode-panels) {
+    min-block-size: clamp(7.25rem, 11vw, 9rem);
+    align-content: start;
+  }
+}
+
 :where([data-spw-feature="home-kernel-entry"] .hook-call .spw-playable-hook) {
   margin-block: 0;
   padding: 0.52rem 0.7rem;
@@ -772,23 +779,20 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
 }
 
 @media (min-width: 72rem) {
-  /* Broadsheet is two columns. The copy's children join the hero grid, so the
-     masthead holds the left and the right gives the hook the top and the rail
-     the foot. The empty 1fr row between them takes the masthead's extra
-     height: a lens whose panel runs a line longer moves nothing below it, and
-     the rail's foot meets the masthead's. */
+  /* Broadsheet pairs visual craft directly beside the masthead title above the
+     fold ("masthead rail") and seats the interactive working lens directly under
+     the artwork ("masthead hook") with no empty grid crater between them. */
   :where([data-spw-feature="home-kernel-entry"] .home-hero-grid) {
-    grid-template-columns: minmax(24rem, 0.82fr) minmax(0, 1fr);
-    grid-template-rows: auto 1fr auto;
+    grid-template-columns: minmax(24rem, 0.92fr) minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
     grid-template-areas:
-      "masthead hook"
-      "masthead ."
       "masthead rail"
+      "masthead hook"
       "motifs motifs"
       "reasons reasons"
       "narration narration"
       "rooms rooms";
-    column-gap: clamp(0.95rem, 1.9vw, 1.6rem);
+    column-gap: clamp(1rem, 2vw, 1.75rem);
     align-items: start;
   }
 
@@ -1251,6 +1255,7 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
 
 :where([data-spw-feature="home-entrance-sorter"] .entrance-role-hooks) {
   --spw-role-hook-min: 15.5rem;
+  align-items: stretch;
   margin-block: 0;
   max-inline-size: none;
   inline-size: 100%;
@@ -1258,7 +1263,10 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
 
 :where([data-spw-feature="home-entrance-sorter"] .entrance-role-hooks > li) {
   display: grid;
-  gap: 0.42rem;
+  grid-template-rows: auto 1fr auto;
+  align-content: stretch;
+  gap: 0.45rem;
+  border-inline-start: 0.2rem solid color-mix(in srgb, var(--home-accent-primary) 42%, transparent);
   transition:
       transform var(--home-transition-fast),
       border-color var(--home-transition-base),
@@ -1268,6 +1276,7 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
 :where([data-spw-feature="home-entrance-sorter"] .entrance-role-hooks > li:is(:hover, :focus-within)) {
   transform: translateY(-2px);
   border-color: color-mix(in srgb, var(--home-accent-primary) 28%, transparent);
+  border-inline-start-color: color-mix(in srgb, var(--home-accent-primary) 74%, transparent);
   box-shadow:
       inset 0 0 0 1px color-mix(in srgb, var(--home-accent-primary) 10%, transparent),
       0 10px 24px color-mix(in oklab, var(--bg, #111) 38%, transparent);
@@ -1276,8 +1285,9 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
 :where([data-spw-feature="home-entrance-sorter"] .spw-role-hooks__routes) {
   display: flex;
   flex-wrap: wrap;
+  align-self: end;
   gap: 0.38rem;
-  margin: 0.12rem 0 0;
+  margin: 0.2rem 0 0;
 }
 
 /* The entrance is a small ecology, not a directory of interchangeable tiles.
@@ -1873,6 +1883,16 @@ body[data-spw-surface="home"] .frame-topline .spw-component-tag {
   background:
     linear-gradient(145deg, color-mix(in srgb, var(--home-reason-accent) 9%, transparent), transparent 54%),
     var(--component-surface-strong, var(--home-surface-bg-strong));
+}
+
+:where([data-spw-feature="home-kernel-entry"] .spw-reason-strip > * > strong) {
+  font-family: var(--site-editorial-font, "Newsreader", Georgia, serif);
+  font-optical-sizing: auto;
+  font-size: clamp(1.02rem, 0.96rem + 0.18vw, 1.14rem);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.18;
+  text-transform: none;
 }
 
 :where([data-spw-feature="home-kernel-entry"] .spw-reason-strip > *) {
