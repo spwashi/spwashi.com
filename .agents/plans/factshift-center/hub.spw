@@ -39,7 +39,7 @@ expression = title[path]{hold}<frame>
 ^"ground"{
   start = `mutex.buzz is the start. One hold, said as two lines.`
   pair = `*holds[cycle]{title}(since ~> until) and %turn[n/of]{hour}.`
-  twice = `lock.js nowLine and turnLine, and mutex-lines.ts liveLines, write that pair twice.`
+  twice = `workers/lib/hold.js writes the pair. mutex and tealstripes call it. mutex-lines.ts liveLines still writes it itself.`
   folded = `consumeMutex still appends the whole rule. The rule stays folded until a region grow asks.`
   voice = `The folio, the bee, and the ordinary words stay mutex's.`
 }[reg=facet]
@@ -100,7 +100,7 @@ expression = title[path]{hold}<frame>
 
 ^"shared"{
   cores = `The workbench pin is the language. workers/lib is a function a second host would otherwise write again, copied byte for byte.`
-  hold = `The pair is that function. A hold module would format the record and not parse.`
+  hold = `The pair is that function. workers/lib/hold.js formats the record and does not parse. The canvas's liveLines still writes its own.`
   home = `The bee, the ladders, the mask, the forces, and the brace seats stay with the host that draws them.`
   rank = `S4a, one paint for the site and the quest, stays the ecosystem plan's next slice.`
 }[reg=facet]

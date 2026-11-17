@@ -7,8 +7,13 @@
 // Pure, with no DOM: the carry writes the schedule and the pages' first state
 // with it, the pages' script (assets/mutex.js) works out "now" with it in the
 // reader's browser, and the tests read it. Copied byte for byte into assets/
-// by carry.mjs. The rule and the folios are the ones site-hub-next/src/mutex.js
-// served; the folios' images are this host's own files now.
+// by carry.mjs. The hold's two lines come from workers/lib/hold.js; the
+// browser loads that import at /lib/hold.js, which the carry copies byte for
+// byte. The rule and the folios
+// are the ones site-hub-next/src/mutex.js served; the folios' images are this
+// host's own files now.
+
+import { formatTurn, HOLD_MS, holdLines, holdTurn } from "../../lib/hold.js";
 
 /** Resting holders: one laminated folio per cycle, from the September 26 release. */
 export const FOLIOS = Object.freeze({
@@ -71,8 +76,7 @@ export const lastDay = (holder) => monthDay(new Date(Date.parse(holder.releasesA
  * scene, from its first day toward its last.
  */
 export function nowLine(holder) {
-  const words = (s) => String(s).toLowerCase().replace(/[^a-z0-9 ]+/g, " ").replace(/\s+/g, " ").trim();
-  return `*holds[${holder.cycle}]{${words(holder.title)}}(${words(monthDay(holder.since))} ~> ${words(lastDay(holder))})`;
+  return holdLines(holder, holder.since)[0];
 }
 
 /** How long until a hold lets go, said plainly. */
@@ -84,8 +88,8 @@ export function untilRelease(holder, now) {
   return `releases in ${Math.round(hours / 24)} days`;
 }
 
-/** A hold's sub-quantum: an hour. */
-export const TURN_MS = 3_600_000;
+/** A hold's sub-quantum: an hour. The same hour workers/lib/hold.js counts. */
+export const TURN_MS = HOLD_MS;
 const GOLDEN = 2.399963229728653;
 
 /**
@@ -95,9 +99,7 @@ const GOLDEN = 2.399963229728653;
  * detail's centre, as a share of the picture; zoom is how close it comes.
  */
 export function turnOf(holder, now) {
-  const since = Date.parse(holder.since);
-  const of = Math.round((Date.parse(holder.releasesAt) - since) / TURN_MS);
-  const index = Math.min(of - 1, Math.max(0, Math.floor((now.getTime() - since) / TURN_MS)));
+  const { index, of } = holdTurn(holder, now);
   if (index === 0 || index === of - 1) return { index, of, zoom: 1, fx: 0.5, fy: 0.5 };
   const r = 0.2 * Math.sqrt((index % 97) / 97);
   const a = index * GOLDEN;
@@ -105,7 +107,7 @@ export function turnOf(holder, now) {
 }
 
 /** The turn as a line of Spw: a measure, its place in the hold as a ratio the number reader takes. */
-export const turnLine = (turn) => `%turn[${turn.index + 1}/${turn.of}]{hour}`;
+export const turnLine = (turn) => formatTurn(turn.index, turn.of);
 
 /** The time left in a hold, to the second: "9d 14h 22m 05s", or "0s" once it has let go. */
 export function countdown(holder, now) {

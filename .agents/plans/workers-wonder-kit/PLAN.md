@@ -1,6 +1,6 @@
 # Plan: workers-wonder-kit
 
-**Status 2026-11-16.** The plan now owns the set as well as the shell: the seven hosts the ring draws, and what their pages share from `workers/lib` (`set-ring.js`, `pinch.js`, `text-scale.js`, `png.js`, `shell.js`, `carry.js`). attention.productions, mutex.buzz and tealstripesvibes.com became file units on 2026-11-16 and carry the ring and both pinches; wap.mom installs as an app. Landed lines are below. S1 landed by another road on 2026-11-11 (`5229b7b9`): both workers take `escapeHtml` and `securityHeaders` from `workers/lib/http.js`. Next slice: S3, the hold's one writer, because the two lines are already written three times. Deploy stays the creator's.
+**Status 2026-11-16.** The plan now owns the set as well as the shell: the seven hosts the ring draws, and what their pages share from `workers/lib` (`set-ring.js`, `pinch.js`, `text-scale.js`, `png.js`, `shell.js`, `carry.js`). attention.productions, mutex.buzz and tealstripesvibes.com became file units on 2026-11-16 and carry the ring and both pinches; wap.mom installs as an app. Landed lines are below. S1 landed by another road on 2026-11-11 (`5229b7b9`): both workers take `escapeHtml` and `securityHeaders` from `workers/lib/http.js`. S3, the hold's one writer, lands in this patch (`workers/lib/hold.js`): mutex and tealstripes call it, and factshift's `liveLines` keeps its own copy. Next slice: S4, the rest of the ring, which waits on the creator for which doors have a sentence. Deploy stays the creator's.
 
 **Related:** [ecosystem-architecture](../ecosystem-architecture/PLAN.md) (what may travel, and the stays-home table; cites S3 and S5 here) · [factshift-center](../factshift-center/PLAN.md) and its [hub.spw](../factshift-center/hub.spw) (the canvas's side of the set; HUB.md is its door) · [spw-quest](../spw-quest/PLAN.md) · [texture-website](../texture-website/PLAN.md) · [smut-today-crew](../smut-today-crew/PLAN.md).
 
@@ -74,7 +74,7 @@ Read off what shipped on 2026-11-16 and off Grok's note the same day, first HUB.
 
 - `workers/lib/http.js` exports `escapeHtml` (:9) and `securityHeaders`; `workers/lib/shell.js` re-exports `escapeHtml` (:25) and exports `BASE_SECURITY` (:6), `jsonResponse(body, cache, status)` (:27) and `layout`.
 - wap.mom and smut.today import `escapeHtml` from `http.js` (`workers/wap-mom/src/layout.js:7`, re-exported at :14 for `feeds.js`, `cabinet.js` and `pages.js`; `workers/smut-today/src/index.js:149`). Each keeps its own `BASE_SECURITY` (wap.mom :16, smut.today :151) and `FAVICON` (:21, :156); wap.mom keeps `jsonResponse(body, extra)` (:299). `workers/README.md` names neither shared file.
-- The hold as two lines is written twice: `nowLine` and `turnLine` in `workers/mutex-buzz/src/lock.js`, and `liveLines` in `workers/factshift-center/app/src/js/ui/mutex-lines.ts`; tealstripes' `lockVibe` (`workers/tealstripes-vibes/src/vibe.js`) builds the same pair a third time, held to mutex's by a test.
+- The hold as two lines has one writer, `workers/lib/hold.js`. mutex's `nowLine` and `turnLine` and tealstripes' `lockVibe` call it; a test still holds the stripes' lines to the lock's. factshift's `liveLines` (`workers/factshift-center/app/src/js/ui/mutex-lines.ts`) keeps its own copy.
 - `workers/lib/set-ring.js` holds the seven hosts, their colours, attention's lights and the stripes' seeds (held to their sources by `workers/attention-productions/test/set-ring.test.mjs`).
 - The ring mounts on three pages. spw.quest, wap.mom, texture.website and factshift.center do not mount it.
 
@@ -86,10 +86,11 @@ Both workers import it from `workers/lib/http.js`; each kept its headers, CSP, `
 
 One line per unit: what it takes from `workers/lib` and what it keeps (`wap-mom  takes escapeHtml · keeps BASE_SECURITY (script-src 'self'), FAVICON, layout`; `mutex-buzz  copies set-ring, pinch, text-scale, png`). A local copy byte-identical to a shared export fails. Touches `scripts/check-workers.mjs` and one line in `workers/README.md`; verify by reading the lines before and after.
 
-## S3. The hold's one writer
+## S3. The hold's one writer (this patch)
 
-- Touches: `workers/lib/hold.js` (proposed, new); `workers/mutex-buzz/src/lock.js` and `carry.mjs`; `workers/tealstripes-vibes/src/vibe.js` and `carry.mjs`; the tests in both units.
-- `holdLines({ cycle, title, since, releasesAt }, moment)` returns the two lines and nothing else. It formats a record and does not parse. mutex's page and tealstripes' `/@lock` take it; factshift's `liveLines` keeps its copy (the app is its own repository), already held to mutex's strings by `test/mutex-lines.test.mjs` there.
+- `workers/lib/hold.js`. `holdLines({ cycle, title, since, releasesAt }, moment)` returns the two lines and nothing else. It formats a record and does not parse.
+- mutex's `nowLine` and `turnLine`, and tealstripes' `lockVibe` lines, call it. Each carry copies the file to `assets/lib/hold.js`. The source import `../../lib/hold.js` is `/lib/hold.js` in the browser, and the shell keeps it.
+- factshift's `liveLines` keeps its copy. The app is its own repository, and `test/mutex-lines.test.mjs` there already holds the strings to mutex's.
 - Verify: the unit tests, `carry --check`, `npm run check:workers`. Gate: none.
 
 ## S4. The rest of the ring

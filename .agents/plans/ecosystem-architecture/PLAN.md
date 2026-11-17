@@ -122,7 +122,7 @@ What stays a host's own medium, even when two hosts rhyme:
 | the quest's build and its slot turns | the lesson's voice |
 | boon, bane, bone, lore profiles | an older axis in factshift's `SITE_CONFIGS`, not the set of seven |
 
-The one function that has already been written twice is the hold as a line. mutex's `nowLine` and `turnLine` (`workers/mutex-buzz/src/lock.js`) and factshift's `liveLines` (`workers/factshift-center/app/src/js/ui/mutex-lines.ts`) each produce `*holds[cycle]{title}(since ~> until)` and `%turn[n/of]{hour}`. The canvas comment says it writes them the way the lock does. A `workers/lib/hold.js`, given `{ cycle, title, since, releasesAt }` and a moment, returns those two lines and nothing else. mutex's page, the ring's carry, and the canvas's card call it. It formats a record. It does not parse. tealstripes' `lockVibe` writes the pair a third time. This is [workers-wonder-kit](../workers-wonder-kit/PLAN.md) S3, which owns `workers/lib` and orders it.
+The hold as a line has one writer, `workers/lib/hold.js`. Given `{ cycle, title, since, releasesAt }` and a moment, it returns `*holds[cycle]{title}(since ~> until)` and `%turn[n/of]{hour}` and nothing else. It formats a record. It does not parse. mutex's `nowLine` and `turnLine`, and tealstripes' `lockVibe`, call it. factshift's `liveLines` still writes the pair itself. The ring does not call it. This is [workers-wonder-kit](../workers-wonder-kit/PLAN.md) S3.
 
 The theme a typed domain shows is a record, not a skin. `set-ring.js` already holds host, name, and colour for the seven. A sibling record, carried with the ring, adds the mark and the kind of expression that host starts from (`hold`, `shot`, `mask`, `line`, `slot`). factshift looks up a typed name there first. The four `.land` profiles stay in `SITE_CONFIGS` until one of those names is in the set. An unknown name stays the ground. No host's drawing code moves to make that lookup true. This is workers-wonder-kit S5, gated on its `#>wonder_set_cue_planes`.
 
@@ -130,7 +130,7 @@ The brace matrix and the expression-tuned forces stay inside factshift, on the p
 
 ## Order
 
-S4a → S4b → H → I. S5 lands when the creator has reviewed it; S7 follows the creator's answer. The hold's one writer is ordered in workers-wonder-kit (S3); it touches `workers/lib` and not `public/`, so it does not wait on S4a.
+S4a → S4b → H → I. S5 lands when the creator has reviewed it; S7 follows the creator's answer. The hold's one writer landed in workers-wonder-kit (S3); it touches `workers/lib` and not `public/`, so it did not wait on S4a.
 
 ## Guards
 
