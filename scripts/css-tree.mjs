@@ -34,9 +34,44 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CSS_ROOT = 'public/css/';
 const STOP = new Set(['and', 'the', 'of', 'a', 'spw', 'is', 'has', 'not', 'data', 'css']);
 const LOW_FIT = 0.34;
+const LAYER_ROLES = Object.freeze([
+  ['reset', 'base element hygiene'],
+  ['tokens', 'registered properties, palettes, and scales'],
+  ['shell', 'chrome, navigation, footer, and page grid'],
+  ['typography', 'measures, optical faces, and editorial rhythm'],
+  ['grammar', 'structural delimiters and operator syntax'],
+  ['components', 'frames, cards, panels, dialogs, and controls'],
+  ['systems', 'cross-route field physics, packing, and image ecology'],
+  ['routes', 'page surfaces and interactive widgets'],
+  ['handles', 'sigils, chips, breadcrumbs, and cognitive chrome'],
+  ['effects', 'material, grain, lighting, motion, and wonder'],
+  ['ornament', 'additive rails, ribbons, braces, and landing marks'],
+  ['modes', 'display-layer, hydration, and capture modes'],
+  ['themes', 'deferred visual theme packs'],
+]);
 
 // One word per concept: plurals fold into their singular, so cards and card agree.
-const words = (s) => s.split(/[^a-z0-9]+/).filter((w) => w.length > 1 && !STOP.has(w)).map((w) => (/[^s]s$/.test(w) ? w.slice(0, -1) : w));
+const words = (s, { keepStop = false } = {}) => s
+  .split(/[^a-z0-9]+/)
+  .filter((w) => w.length > 1 && (keepStop || !STOP.has(w)))
+  .map((w) => (/[^s]s$/.test(w) ? w.slice(0, -1) : w));
+
+function summaryOf(text) {
+  const header = text.match(/\/\*([\s\S]*?)\*\//)?.[1] || '';
+  if (!header) return '';
+  const readsAs = header.match(/Reads as:\s*(.+)/i)?.[1]?.trim();
+  if (readsAs) return readsAs;
+  const purpose = header.match(/Purpose\s*\n(?:\s*\*?\s*[-•]\s*(.+))/i)?.[1]?.trim();
+  if (purpose) return purpose;
+  const lines = header
+    .split('\n')
+    .map((line) => line.replace(/^\s*\*?\s*(?:[-•]\s*)?/, '').trim())
+    .filter((line) => line
+      && !/^[=\-─]{4,}$/.test(line)
+      && !/\.css\b/.test(line)
+      && !/^(?:Purpose|Architecture|Notes|Contract|Was|Genome|Probe|Design stance|Design goals|Reading|Layer):?/i.test(line));
+  return (lines[0] || '').slice(0, 96);
+}
 
 function listFiles() {
   return execFileSync('git', ['ls-files', `${CSS_ROOT}*.css`], { cwd: ROOT, encoding: 'utf8' })
@@ -47,23 +82,35 @@ function listFiles() {
 /** Evidence words a file's selectors carry: data-spw-* stems and class blocks. */
 function evidenceOf(text) {
   const counts = new Map();
+  const raw = new Set();
   const add = (w) => counts.set(w, (counts.get(w) || 0) + 1);
   const selectors = text.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\{[^{}]*\}/g, '{}');
-  for (const m of selectors.matchAll(/data-spw-([a-z0-9-]+)/g)) words(m[1]).forEach(add);
-  for (const m of selectors.matchAll(/\.([a-z][a-z0-9-]*)(?:__|--)?/g)) words(m[1].split(/__|--/)[0]).forEach(add);
-  return counts;
+  for (const m of selectors.matchAll(/data-spw-([a-z0-9-]+)/g)) {
+    words(m[1]).forEach(add);
+    words(m[1], { keepStop: true }).forEach((w) => raw.add(w));
+  }
+  for (const m of selectors.matchAll(/\.([a-z][a-z0-9-]*)(?:__|--)?/g)) {
+    const block = m[1].split(/__|--/)[0];
+    words(block).forEach(add);
+    words(block, { keepStop: true }).forEach((w) => raw.add(w));
+  }
+  return { counts, raw };
 }
 
 export function readTree() {
   const files = listFiles().map((file) => {
     const rel = file.slice(CSS_ROOT.length).replace(/\.css$/, '');
     const text = readFileSync(path.join(ROOT, file), 'utf8');
+    const { counts, raw } = evidenceOf(text);
     return {
       path: rel,
+      layer: rel.split('/')[0],
       granular: rel.replace(/-/g, '/'),
       kib: +(statSync(path.join(ROOT, file)).size / 1024).toFixed(1),
       joined: /(^|\/)[^/]*-and-[^/]*$/.test(rel),
-      evidence: evidenceOf(text),
+      readsAs: summaryOf(text),
+      evidence: counts,
+      rawEvidence: raw,
     };
   });
 
@@ -80,7 +127,12 @@ export function readTree() {
   const rows = [...folders.values()].map((folder) => {
     const n = folder.files.length;
     const nameWords = words(folder.name);
-    const fits = folder.files.filter((f) => nameWords.some((w) => f.evidence.has(w))).length;
+    const rawNameWords = words(folder.name, { keepStop: true });
+    const fits = folder.files.filter((f) => (
+      nameWords.length > 0
+        ? nameWords.some((w) => f.evidence.has(w))
+        : rawNameWords.some((w) => f.rawEvidence.has(w))
+    )).length;
     const shared = new Map();
     for (const f of folder.files) for (const w of f.evidence.keys()) shared.set(w, (shared.get(w) || 0) + 1);
     const seeds = [...shared.entries()]
@@ -117,9 +169,38 @@ export function readTree() {
   const depthToday = Math.max(...files.map((f) => f.path.split('/').length));
   const depthGranular = Math.max(...files.map((f) => f.granular.split('/').length));
   const foldersToday = new Set(files.map((f) => path.posix.dirname(f.path))).size;
+  const byLayer = new Map();
+  for (const f of files) {
+    if (!byLayer.has(f.layer)) byLayer.set(f.layer, []);
+    byLayer.get(f.layer).push(f);
+  }
+  const roleMap = new Map(LAYER_ROLES);
+  const orderedLayerNames = [
+    ...LAYER_ROLES.map(([name]) => name).filter((name) => byLayer.has(name)),
+    ...[...byLayer.keys()].filter((name) => !roleMap.has(name)).sort(),
+  ];
+  const layers = orderedLayerNames.map((name) => {
+    const group = byLayer.get(name);
+    const totals = new Map();
+    for (const f of group) {
+      for (const [w, count] of f.evidence.entries()) totals.set(w, (totals.get(w) || 0) + count);
+    }
+    const stems = [...totals.entries()]
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+      .slice(0, 5)
+      .map(([w]) => w);
+    return {
+      layer: name,
+      role: roleMap.get(name) || 'extension layer',
+      files: group.length,
+      kib: +group.reduce((sum, f) => sum + f.kib, 0).toFixed(1),
+      stems,
+    };
+  });
   return {
-    files: files.map(({ evidence, ...f }) => ({ ...f, top: [...evidence.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5) })),
+    files: files.map(({ evidence, rawEvidence: _r, ...f }) => ({ ...f, top: [...evidence.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5) })),
     folders: rows.map(({ words: _w, ...r }) => r),
+    layers,
     summary: {
       files: files.length,
       hyphenated: files.filter((f) => f.path.split('/').at(-1).includes('-')).length,
@@ -143,6 +224,20 @@ if (isMain) {
     const s = tree.summary;
     console.log(`[css-tree] ${s.files} files, ${s.hyphenated} hyphenated, ${s.joined} joined with "and"`);
     console.log(`[css-tree] folders ${s.foldersToday} → ${s.foldersGranular} granular; depth ${s.depthToday} → ${s.depthGranular}`);
+    console.log('[css-tree] cascade outline');
+    for (const l of tree.layers) {
+      console.log(`  ${l.layer.padEnd(13)} ${String(l.files).padStart(3)} files  ${l.kib.toFixed(1).padStart(6)} KiB  ${l.role} (${l.stems.join(', ') || '—'})`);
+    }
+    if (process.argv.includes('--outline')) {
+      console.log('[css-tree] semantic file outline');
+      for (const l of tree.layers) {
+        console.log(`\n${l.layer} — ${l.role}`);
+        for (const f of tree.files.filter((item) => item.layer === l.layer)) {
+          const voice = f.readsAs ? ` — ${f.readsAs}` : '';
+          console.log(`  ${f.path.padEnd(36)} ${f.kib.toFixed(1).padStart(5)} KiB${voice}`);
+        }
+      }
+    }
     console.log(`[css-tree] ${s.lowFit} folders whose name few of their files carry; ${s.lone} lone folders`);
     const look = tree.folders
       .filter((r) => !r.layer && ((r.files > 1 && r.fit < LOW_FIT) || r.files >= 4))
