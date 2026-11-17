@@ -2,13 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Patience — Wondering About Pi, no. 3.141592653</title>
   <meta name="description" content="One, minus a third, plus a fifth, and so on. Wondering About Pi, no. 3.141592653.">
   <link rel="canonical" href="https://wap.mom/patience/">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="wap.mom">
   <link rel="alternate" type="application/atom+xml" title="Wondering About Pi" href="/feed.xml">
   <meta property="og:site_name" content="Wondering About Pi">
   <meta property="og:type" content="article">
@@ -18,6 +21,9 @@
   <meta name="twitter:card" content="summary">
   <meta name="theme-color" content="#f4efe4" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#15120e" media="(prefers-color-scheme: dark)">
+  <link rel="stylesheet" href="/text-scale.css">
+  <script src="/text-scale-head.js"></script>
+  <link rel="modulepreload" id="text-pinch" href="/peer/pinch-text-scale.c898b03dd8.js">
   <style>
   :root {
     color-scheme: light dark;
@@ -150,10 +156,60 @@
   .mark .equation { font-size: 1.9rem; font-style: italic; letter-spacing: .02em; }
   .mark .equation sup { font-size: .6em; }
 
+  /* Region tap transitions, interactive digits, Euler walk & discoverable pocket π/e wonder. */
+  .lead, .supplement, .uses, .slot, .back li, .fig, .pull, .clip {
+    transition: background-color 180ms ease, border-color 180ms ease, transform 120ms ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .lead:active, .supplement:active, .slot:active, .clip:active { transform: scale(.996); }
+  .back li:hover, .back li:focus-within, .uses dl div[data-picked="true"], .pull[data-copied="true"] {
+    background: color-mix(in srgb, var(--accent) 7%, var(--card));
+  }
+  .back li { padding-inline: .35rem; border-radius: .25rem; }
+  .uses dl div { padding: .35rem .5rem; margin: 0 -.5rem .25rem; border-left: 2px solid transparent; border-radius: 0 .25rem .25rem 0; cursor: pointer; }
+  .uses dl div:hover { border-left-color: color-mix(in srgb, var(--accent) 45%, transparent); }
+  .uses dl div[data-picked="true"] { border-left-color: var(--accent); }
+  .uses-note, .expansion-note, .fleuron-note, .euler-card { margin: .5rem 0 0; font-size: .92rem; color: var(--muted); font-style: italic; }
+  .expansion-digits { display: inline-flex; flex-wrap: wrap; justify-content: center; gap: 0; letter-spacing: 0; }
+  .expansion-digit {
+    font: inherit; min-block-size: 32px; min-inline-size: .85ch; padding: 0 .1em; margin: 0; border: 0; border-radius: .2rem;
+    background: transparent; color: inherit; cursor: pointer; line-height: 1.2;
+  }
+  .expansion-digit:hover, .expansion-digit[aria-pressed="true"] { background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--accent); }
+  .expansion-digit.here { color: var(--accent); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .25em; font-weight: 600; }
+  .expansion-digit.ahead { color: var(--muted); opacity: .55; }
+  @media (pointer: coarse) { .expansion-digit { min-block-size: 40px; min-inline-size: 1.15ch; } }
+  .fleuron-btn, .mark-btn {
+    font: inherit; color: inherit; border: 0; background: transparent; padding: .15rem .45rem; border-radius: 999px; cursor: pointer; min-block-size: 36px;
+  }
+  .fleuron-btn:hover, .mark-btn:hover { background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent); }
+  .euler-card { display: grid; grid-template-columns: auto 1fr; gap: .35rem .8rem; align-items: center; padding: .55rem .75rem; margin-top: .5rem; border: 1px solid var(--faint); background: var(--card); border-radius: .4rem; font-style: normal; }
+  .euler-card[hidden] { display: none; }
+  .euler-svg { width: 52px; height: 52px; display: block; }
+  .euler-svg circle { fill: none; stroke: var(--faint); stroke-width: 1.5; }
+  .euler-svg line { stroke: var(--ink); stroke-width: 1.2; }
+  .euler-svg .dot { fill: var(--accent); stroke: none; }
+  .pocket-pi { margin: .8rem 0 0; padding: .8rem .95rem; border: 1px solid var(--accent); background: var(--card); border-radius: .4rem; text-align: left; }
+  .pocket-pi[hidden] { display: none; }
+  .pocket-pi-row { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin: .45rem 0; }
+  .pocket-pi input { flex: 1 1 9rem; min-block-size: 44px; font-variant-numeric: lining-nums tabular-nums; }
+  .pocket-pi-digits { font-family: ui-monospace, Menlo, monospace; font-size: .84rem; overflow-wrap: anywhere; color: var(--muted); margin: .4rem 0 0; }
+  .pocket-pi-digits mark { background: color-mix(in srgb, var(--accent) 26%, transparent); color: var(--ink); padding: 0 .15em; border-radius: .15rem; font-weight: 700; }
+  .fig.scrubbing .fig-stage { cursor: grabbing; background: color-mix(in srgb, var(--accent) 5%, transparent); }
+  .fig-stage.is-scrub { cursor: ew-resize; touch-action: pan-y; border-radius: .35rem; }
+  .fig-stage[data-fig-pulse="true"] { background: color-mix(in srgb, var(--accent) 8%, transparent); }
+  html[data-spw-pinch-scaling="true"] main { transition: opacity 120ms ease; }
+  .pwa-meta { font-size: .88rem; margin: .35rem 0 0; }
+  .ears span[data-secret] { cursor: pointer; }
+  .door-whisper { position: absolute; right: 2.8rem; bottom: .6rem; font-size: .85rem; color: var(--accent); font-style: italic; pointer-events: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .lead, .supplement, .uses, .slot, .back li, .fig, .pull, .clip { transition: none; transform: none !important; }
+  }
+
   .colophon { margin-top: 3rem; padding-top: .8rem; border-top: 3px double var(--rule); position: relative; font-size: .95rem; color: var(--muted); }
   .colophon p { margin: 0 0 .3rem; max-width: 30rem; }
   .colophon .printers-mark { font-style: italic; }
-  .door { position: absolute; right: 0; bottom: 0; min-inline-size: 44px; min-block-size: 44px; display: inline-flex; align-items: center; justify-content: center; opacity: .12; text-decoration: none; }
+  .door { position: absolute; right: 0; bottom: 0; min-inline-size: 44px; min-block-size: 44px; display: inline-flex; align-items: center; justify-content: center; opacity: .16; text-decoration: none; }
   .door:hover, .door:focus-visible { opacity: 1; color: var(--accent); }
 
   /* Offprint and clipping: chrome-free, meant to be sent. */
@@ -231,7 +287,8 @@
 </nav>
 <footer class="colophon">
   <p>Wondering About Pi is numbered by the decimal expansion of π; its supplement, by e. Each issue adds a place.</p>
-  <p>It is written in <a href="/room">a room</a>, in conversation. <span class="printers-mark">e<sup>iπ</sup> + 1 = 0</span>. Printing 0.2.1.</p>
+  <p>It is written in <a href="/room">a room</a>, in conversation. <span class="printers-mark" title="Tap to walk Euler's identity">e<sup>iπ</sup> + 1 = 0</span>. Printing 0.3.0.</p>
+  <div class="euler-card" id="euler-card" hidden></div>
   <ul class="links" aria-label="Wondering About Pi">
     <li><a href="/">Front page</a></li>
     <li><a href="/contents/">Contents</a></li>
@@ -241,6 +298,7 @@
     <li><a href="/feed.xml">Feed</a></li>
   </ul>
   <p class="keep"><button type="button" id="keep-app" hidden>Keep wap.mom on this device</button></p>
+  <p class="pwa-meta muted" id="pwa-status" aria-live="polite" hidden></p>
   <a class="door" href="https://smut.today/" rel="nofollow" aria-label="smut.today">π</a>
 </footer>
 </main>

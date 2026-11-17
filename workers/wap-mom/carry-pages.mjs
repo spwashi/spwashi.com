@@ -33,12 +33,20 @@ export function addresses() {
   return out;
 }
 
-/** Every file with its body, plus 404.html and _headers. */
+/** Every file with its body, plus carried shared text-scale helpers, 404.html and _headers. */
 export async function carried() {
   const rendered = await render(worker, ORIGIN, addresses());
   const missing = await worker.fetch(new Request(`${ORIGIN}/no-such-page`), {});
+  const shared = await Promise.all(["text-scale.js", "text-scale.css", "text-scale-head.js"].map(async (file) => ({
+    url: `/${file}`,
+    file,
+    body: await readFile(new URL(`../lib/${file}`, import.meta.url), "utf8"),
+    type: file.endsWith(".css") ? "text/css; charset=UTF-8" : "text/javascript; charset=UTF-8",
+    cache: "public, max-age=3600",
+  })));
   return [
     ...rendered.map(({ file, body }) => [file, body]),
+    ...shared.map(({ file, body }) => [file, body]),
     ["404.html", await missing.text()],
     ["_headers", headersFile(BASE_SECURITY, rendered, { note: "workers/wap-mom/carry-pages.mjs: the headers src/index.js sends" })],
   ];

@@ -1,5 +1,5 @@
 {
-  "version": "0.2.1",
+  "version": "0.3.0",
   "name": "Wondering About Pi",
   "numbering": "Issue n of a series is its constant to n decimal places.",
   "series": {

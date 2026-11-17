@@ -7,7 +7,7 @@
  * then gets out of the way. No script, no accounts, no images: the words carry.
  */
 
-const VERSION = "0.0.2";
+const VERSION = "0.0.3";
 
 const WORDS_PER_MINUTE = 220;
 
@@ -147,11 +147,395 @@ function murmur(now) {
 }
 
 import { escapeHtml, securityHeaders } from "../../lib/http.js";
+import { rgbOf, squarePng } from "../../lib/png.js";
 
 const BASE_SECURITY = securityHeaders({
   corp: "same-origin",
-  csp: "default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+  csp: "default-src 'none'; style-src 'unsafe-inline'; script-src 'self'; img-src 'self'; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
 });
+
+const SMUT_BG = rgbOf("#14040a");
+const SMUT_CRIMSON = rgbOf("#ff3366");
+const SMUT_RING_SOFT = rgbOf("#6b1833");
+
+function smutIconPng(size, { scale = 1 } = {}) {
+  return squarePng(size, (x, y) => {
+    const u = (x / size - 0.5) / scale;
+    const v = (y / size - 0.5) / scale;
+    const d = Math.hypot(u, v);
+    if (d <= 0.085) return SMUT_CRIMSON;
+    if (d >= 0.23 && d <= 0.30) return SMUT_CRIMSON;
+    if (d >= 0.36 && d <= 0.39) return SMUT_RING_SOFT;
+    return SMUT_BG;
+  });
+}
+
+const ICONS = Object.freeze({
+  "icon-192.png": { size: 192 },
+  "icon-512.png": { size: 512 },
+  "icon-maskable-512.png": { size: 512, scale: 0.78 },
+  "apple-touch-icon.png": { size: 180 },
+});
+
+const MANIFEST = Object.freeze({
+  name: "smut.today",
+  short_name: "smut.today",
+  description: "One scene a day, door shut. Short explicit fiction for adults.",
+  id: "/",
+  start_url: "/",
+  scope: "/",
+  display: "standalone",
+  background_color: "#14040a",
+  theme_color: "#14040a",
+  icons: [
+    { src: "/icons/icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },
+    { src: "/icons/icon-512.png", sizes: "512x512", type: "image/png", purpose: "any" },
+    { src: "/icons/icon-maskable-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
+    { src: "/favicon.svg", sizes: "any", type: "image/svg+xml", purpose: "any" },
+  ],
+  shortcuts: [
+    { name: "Today", url: "/", icons: [{ src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }] },
+    { name: "The letter", url: "/to-you/", icons: [{ src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }] },
+    { name: "Settle in", url: "/settle/", icons: [{ src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }] },
+  ],
+});
+
+const TEXT_SCALE_HEAD_JS = `(() => {
+  try {
+    const step = localStorage.getItem("set.text-scale/1");
+    if (["70", "80", "90", "110", "120"].includes(step)) document.documentElement.setAttribute("data-text-scale", step);
+  } catch {}
+})();
+`;
+
+const STORY_SLUGS = STORIES.map((s) => `/${s.slug}/`);
+const SW_JS = `const CACHE = "smut-today-${VERSION}";
+const KEPT = ${JSON.stringify([
+  "/",
+  "/to-you/",
+  "/pitches/",
+  ...STORY_SLUGS,
+  "/app.js",
+  "/text-scale-head.js",
+  "/favicon.svg",
+  "/manifest.webmanifest",
+  "/icons/icon-192.png",
+  "/icons/icon-512.png",
+  "/icons/apple-touch-icon.png",
+])};
+
+self.addEventListener("install", (event) => {
+  event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(KEPT)).then(() => self.skipWaiting()));
+});
+
+self.addEventListener("activate", (event) => {
+  event.waitUntil((async () => {
+    for (const key of await caches.keys()) {
+      if (key.startsWith("smut-today-") && key !== CACHE) await caches.delete(key);
+    }
+    await self.clients.claim();
+  })());
+});
+
+self.addEventListener("fetch", (event) => {
+  const req = event.request;
+  const url = new URL(req.url);
+  if (req.method !== "GET" || url.origin !== self.location.origin || url.pathname.startsWith("/settle")) return;
+  event.respondWith(
+    fetch(req)
+      .then((res) => {
+        if (res.ok && !res.headers.get("Set-Cookie")) {
+          const copy = res.clone();
+          caches.open(CACHE).then((cache) => cache.put(req, copy));
+        }
+        return res;
+      })
+      .catch(() => caches.match(req).then((hit) => hit ?? (req.mode === "navigate" ? caches.match("/") : Response.error())))
+  );
+});
+`;
+
+const APP_JS = `(() => {
+  if ("serviceWorker" in navigator && window.top === window) navigator.serviceWorker.register("/sw.js").catch(() => {});
+
+  /* 1. Cluster-shared two-finger pinch to scale (70%-120%, key "set.text-scale/1"). */
+  const STEPS = ["70", "80", "90", "100", "110", "120"];
+  const TEXT_KEY = "set.text-scale/1";
+  const IGNORE = "a, button, input, select, textarea, label, summary, details, video, audio, iframe";
+  let badge = null;
+  let badgeTimer = 0;
+  const sayScale = (text) => {
+    if (!badge) {
+      badge = document.createElement("p");
+      badge.className = "text-scale-badge";
+      badge.setAttribute("role", "status");
+      badge.setAttribute("aria-live", "polite");
+      document.body.append(badge);
+    }
+    badge.textContent = text;
+    badge.classList.add("on");
+    clearTimeout(badgeTimer);
+    badgeTimer = setTimeout(() => badge.classList.remove("on"), 1100);
+  };
+  const getScale = () => {
+    const v = document.documentElement.getAttribute("data-text-scale");
+    return STEPS.includes(v) ? v : "100";
+  };
+  const setScale = (step) => {
+    if (!STEPS.includes(step)) return;
+    if (step === "100") document.documentElement.removeAttribute("data-text-scale");
+    else document.documentElement.setAttribute("data-text-scale", step);
+    try {
+      if (step === "100") localStorage.removeItem(TEXT_KEY);
+      else localStorage.setItem(TEXT_KEY, step);
+    } catch {}
+    sayScale("Text " + step + "%");
+  };
+  const main = document.querySelector("main");
+  const canTouch = (Number(navigator.maxTouchPoints) || 0) >= 2 || matchMedia("(any-pointer: coarse)").matches;
+  if (main && canTouch) {
+    let active = false;
+    let startDist = 0;
+    let startIdx = 3;
+    let previewIdx = 3;
+    const dist = (ts) => Math.hypot(ts[1].clientX - ts[0].clientX, ts[1].clientY - ts[0].clientY);
+    const ok = (el) => el instanceof Element && main.contains(el) && !el.closest(IGNORE);
+    const clear = () => {
+      active = false;
+      startDist = 0;
+      document.documentElement.removeAttribute("data-spw-pinch-scaling");
+    };
+    document.addEventListener("touchstart", (e) => {
+      if (e.touches.length !== 2 || ![...e.touches].every((t) => ok(t.target))) {
+        if (active) clear();
+        return;
+      }
+      active = true;
+      startDist = dist(e.touches);
+      startIdx = STEPS.indexOf(getScale());
+      previewIdx = startIdx;
+      document.documentElement.setAttribute("data-spw-pinch-scaling", "true");
+    }, { passive: true });
+    document.addEventListener("touchmove", (e) => {
+      if (!active || e.touches.length !== 2) { if (active) clear(); return; }
+      const d = dist(e.touches);
+      if (!(d > 0) || !(startDist > 0)) return;
+      e.preventDefault();
+      const change = Math.round(Math.log2(d / startDist) / 0.12);
+      const next = Math.max(0, Math.min(STEPS.length - 1, startIdx + change));
+      if (next !== previewIdx) { previewIdx = next; setScale(STEPS[next]); }
+    }, { passive: false });
+    document.addEventListener("touchend", clear, { passive: true });
+    document.addEventListener("touchcancel", clear, { passive: true });
+  }
+
+  /* 2. PWA controls & privacy sweep on Forget me. */
+  const keep = document.getElementById("keep-app");
+  const pwaNote = document.getElementById("pwa-status");
+  const isStandalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+  const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
+  if (pwaNote) {
+    if (!navigator.onLine) { pwaNote.textContent = "Offline — reading saved copy on device."; pwaNote.hidden = false; }
+    else if (isStandalone) { pwaNote.textContent = "Kept privately on this device. Tapping Forget clears saved offline copies too."; pwaNote.hidden = false; }
+    else if (isIos) { pwaNote.textContent = "For offline reading on iOS: tap Share, then Add to Home Screen."; pwaNote.hidden = false; }
+  }
+  let offer = null;
+  if (keep) {
+    addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      offer = e;
+      keep.hidden = false;
+    });
+    keep.addEventListener("click", async () => {
+      if (!offer) return;
+      offer.prompt();
+      await offer.userChoice.catch(() => null);
+      offer = null;
+      keep.hidden = true;
+    });
+    addEventListener("appinstalled", () => {
+      keep.hidden = true;
+      if (pwaNote) { pwaNote.textContent = "Kept offline on this device."; pwaNote.hidden = false; }
+    });
+  }
+  const forgetBtn = document.querySelector('form.settle button[name="forget"]');
+  forgetBtn?.addEventListener("click", async () => {
+    try { localStorage.removeItem(TEXT_KEY); } catch {}
+    try {
+      if ("caches" in window) {
+        for (const k of await caches.keys()) {
+          if (k.startsWith("smut-today-")) await caches.delete(k);
+        }
+      }
+      const regs = await navigator.serviceWorker?.getRegistrations?.();
+      if (regs) await Promise.all(regs.map((r) => r.unregister()));
+    } catch {}
+  });
+
+  /* 3. Scroll-tracking crimson reading thread on prose/letter pages. */
+  const prose = document.querySelector(".prose");
+  const thread = document.querySelector(".reading-thread");
+  if (prose && thread) {
+    const syncThread = () => {
+      const rect = prose.getBoundingClientRect();
+      const total = Math.max(1, prose.offsetHeight - window.innerHeight * 0.65);
+      const passed = Math.min(total, Math.max(0, -rect.top + window.innerHeight * 0.2));
+      thread.style.setProperty("--read-progress", (passed / total).toFixed(4));
+    };
+    addEventListener("scroll", syncThread, { passive: true });
+    addEventListener("resize", syncThread, { passive: true });
+    syncThread();
+  }
+
+  /* 4. "One breath at a time" focused reading mode for late-night mobile reading. */
+  const focusBtn = document.getElementById("focus-toggle");
+  if (prose && focusBtn) {
+    const paras = [...prose.querySelectorAll("p")];
+    let focusedIdx = -1;
+    const paintFocus = () => {
+      const on = focusedIdx >= 0;
+      prose.classList.toggle("is-focused", on);
+      focusBtn.setAttribute("aria-pressed", String(on));
+      focusBtn.textContent = on ? "Open full page" : "One breath at a time";
+      paras.forEach((p, idx) => p.classList.toggle("is-lit", !on || idx === focusedIdx));
+      if (on && paras[focusedIdx]) paras[focusedIdx].scrollIntoView({ behavior: document.documentElement.dataset.move === "still" ? "auto" : "smooth", block: "center" });
+    };
+    focusBtn.hidden = false;
+    focusBtn.addEventListener("click", () => {
+      focusedIdx = focusedIdx >= 0 ? -1 : 0;
+      paintFocus();
+    });
+    paras.forEach((p, idx) => {
+      p.addEventListener("click", () => {
+        if (focusedIdx < 0) return;
+        if (idx === focusedIdx) {
+          focusedIdx = idx + 1 < paras.length ? idx + 1 : -1;
+        } else {
+          focusedIdx = idx;
+        }
+        paintFocus();
+      });
+    });
+  }
+
+  /* 5. Interactive "Words this piece keeps" -> locate and pulse phrase right in the prose. */
+  const escapeRe = (s) => s.replace(/[.*+?^$\{\}()|[\\]\\\\]/g, "\\\\$&");
+  document.querySelectorAll(".keeps li").forEach((li) => {
+    const phrase = li.textContent.trim();
+    if (!prose || !phrase) return;
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "keep-jump";
+    btn.textContent = phrase;
+    btn.title = "Find this phrase in the piece";
+    li.replaceChildren(btn);
+    btn.addEventListener("click", () => {
+      prose.querySelectorAll("mark.prose-echo").forEach((m) => m.replaceWith(document.createTextNode(m.textContent)));
+      const re = new RegExp(escapeRe(phrase), "i");
+      for (const p of prose.querySelectorAll("p")) {
+        const hit = p.textContent.match(re);
+        if (!hit) continue;
+        const idx = hit.index;
+        const txt = p.textContent;
+        p.replaceChildren(
+          document.createTextNode(txt.slice(0, idx)),
+          Object.assign(document.createElement("mark"), { className: "prose-echo", textContent: txt.slice(idx, idx + hit[0].length) }),
+          document.createTextNode(txt.slice(idx + hit[0].length)),
+        );
+        p.scrollIntoView({ behavior: document.documentElement.dataset.move === "still" ? "auto" : "smooth", block: "center" });
+        break;
+      }
+    });
+  });
+
+  /* 6. Interactive murmur cycle, .end closing whisper, 22/7 letter note & colophon pace slider. */
+  const murmurEl = document.querySelector(".murmur");
+  const MURMURS_ALL = ${JSON.stringify(MURMURS)};
+  if (murmurEl && MURMURS_ALL.length > 1) {
+    murmurEl.setAttribute("role", "button");
+    murmurEl.tabIndex = 0;
+    murmurEl.title = "Tap for another line under the door";
+    let at = Math.max(0, MURMURS_ALL.indexOf(murmurEl.textContent.trim()));
+    const nextMurmur = () => {
+      at = (at + 1) % MURMURS_ALL.length;
+      murmurEl.dataset.turn = "true";
+      murmurEl.textContent = MURMURS_ALL[at];
+      setTimeout(() => { delete murmurEl.dataset.turn; }, 220);
+    };
+    murmurEl.addEventListener("click", nextMurmur);
+    murmurEl.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); nextMurmur(); } });
+  }
+
+  document.querySelectorAll(".end").forEach((end) => {
+    end.removeAttribute("aria-hidden");
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "end-btn";
+    btn.textContent = end.textContent;
+    btn.title = "Tap";
+    end.replaceChildren(btn);
+    const whisper = document.createElement("p");
+    whisper.className = "end-whisper note";
+    whisper.hidden = true;
+    whisper.innerHTML = 'Nothing here kept your name. <a href="#main">Top</a> · <a href="/">Today</a>';
+    end.after(whisper);
+    btn.addEventListener("click", () => { whisper.hidden = !whisper.hidden; });
+  });
+
+  /* Highlight 22/7 reference inside /to-you/ letter when hovered or tapped. */
+  if (location.pathname.startsWith("/to-you") && prose) {
+    for (const p of prose.querySelectorAll("p")) {
+      if (!p.textContent.includes("22/7")) continue;
+      p.innerHTML = p.innerHTML.replace(/22\\/7/, '<a class="pi-wink" href="https://wap.mom/22-7/" title="The periodical next door (off by 1 part in 2,500)">22/7</a>');
+      break;
+    }
+  }
+
+  /* Colophon pace calibrator & Leave shortcut (double-Escape or "l"). */
+  const verNote = document.getElementById("footer-colophon");
+  const paceDrawer = document.getElementById("pace-drawer");
+  if (verNote && paceDrawer) {
+    verNote.setAttribute("role", "button");
+    verNote.tabIndex = 0;
+    verNote.setAttribute("aria-expanded", "false");
+    const toggle = () => {
+      const open = paceDrawer.hidden;
+      paceDrawer.hidden = !open;
+      verNote.setAttribute("aria-expanded", String(open));
+    };
+    verNote.addEventListener("click", toggle);
+    verNote.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
+    const wpmInput = paceDrawer.querySelector("input[type='range']");
+    const wpmOut = paceDrawer.querySelector("output");
+    if (wpmInput && wpmOut) {
+      const syncWpm = () => {
+        const wpm = Number(wpmInput.value) || 220;
+        wpmOut.textContent = wpm + " wpm";
+        document.querySelectorAll("[data-words]").forEach((el) => {
+          const words = Number(el.dataset.words);
+          if (!words) return;
+          const mins = Math.max(1, Math.round(words / wpm));
+          el.textContent = mins + " min";
+        });
+      };
+      wpmInput.addEventListener("input", syncWpm);
+    }
+  }
+
+  let lastEsc = 0;
+  const leaveLink = document.querySelector("a.leave")?.getAttribute("href");
+  addEventListener("keydown", (e) => {
+    if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target?.tagName) || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.key === "Escape") {
+      const now = Date.now();
+      if (now - lastEsc < 500 && leaveLink) location.replace(leaveLink);
+      lastEsc = now;
+    } else if (e.key === "l" && leaveLink) {
+      location.replace(leaveLink);
+    }
+  });
+})();
+`;
 
 const FAVICON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <rect width="32" height="32" rx="6" fill="#14040a"/>
@@ -279,7 +663,7 @@ function renderMeta(story, { brief = false } = {}) {
   const head = brief
     ? ""
     : `<dt>Pace</dt><dd><span class="badge badge-${escapeHtml(reg.name)}">${escapeHtml(reg.name)}</span> ${escapeHtml(reg.promise)}</dd>
-    <dt>Takes</dt><dd>${escapeHtml(readLength(story))}</dd>`;
+    <dt>Takes</dt><dd data-words="${wordCount(story)}">${escapeHtml(readLength(story))}</dd>`;
   const tags = story.tags?.length
     ? `<dt>Inside</dt><dd>${story.tags.map((t) => `<span class="tag">${escapeHtml(t)}</span>`).join(" ")}</dd>`
     : "";
@@ -352,17 +736,24 @@ function layout({ title, description, canonical, body, crumb = "", prefs = SETTL
 <html lang="en"${htmlAttrs}>
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>${escapeHtml(title)}</title>
   <meta name="description" content="${escapeHtml(description)}">
   <meta name="robots" content="noindex, nofollow">
   <meta name="rating" content="adult">
   <meta name="theme-color" content="#14040a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="smut.today">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
   <link rel="canonical" href="${escapeHtml(canonical)}">
   <meta property="og:title" content="${escapeHtml(title)}">
   <meta property="og:description" content="${escapeHtml(description)}">
   <meta property="og:url" content="${escapeHtml(canonical)}">
+  <script src="/text-scale-head.js"></script>
+  <script src="/app.js" defer></script>
   <style>
     :root {
       color-scheme: dark;
@@ -387,9 +778,19 @@ function layout({ title, description, canonical, body, crumb = "", prefs = SETTL
       background: radial-gradient(circle at 85% -10%, rgba(255, 51, 102, .14), transparent 42%), var(--bg);
       color: var(--fg);
     }
-    body > header, main, body > footer { width: min(var(--measure), 100% - 2rem); margin-inline: auto; }
-    body > header { padding: 1rem 0 .25rem; }
+    body > header, main, body > footer { width: min(var(--measure), 100% - 2rem); margin-inline: auto; padding-inline: env(safe-area-inset-left) env(safe-area-inset-right); }
+    body > header { padding-top: max(1rem, env(safe-area-inset-top)); padding-bottom: .25rem; }
     main { padding: 1rem 0 3rem; }
+    /* Cluster-shared pinch-to-scale steps & transient badge. */
+    html[data-text-scale="70"] { font-size: 70%; }
+    html[data-text-scale="80"] { font-size: 80%; }
+    html[data-text-scale="90"] { font-size: 90%; }
+    html[data-text-scale="110"] { font-size: 110%; }
+    html[data-text-scale="120"] { font-size: 120%; }
+    .text-scale-badge { position: fixed; left: 50%; top: max(14px, env(safe-area-inset-top)); z-index: 60; margin: 0; padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line); background: rgba(20, 4, 10, .9); color: var(--fg); font: 600 13px/1 ui-monospace, SFMono-Regular, Menlo, monospace; transform: translateX(-50%); opacity: 0; pointer-events: none; transition: opacity .2s ease; }
+    .text-scale-badge.on { opacity: 1; }
+    .reading-thread { position: fixed; inset: 0 0 auto; height: 2px; z-index: 50; background: var(--accent); transform-origin: left center; transform: scaleX(var(--read-progress, 0)); opacity: .7; pointer-events: none; }
+    html[data-move="still"] .reading-thread { display: none; }
     main > section + section { margin-top: 1.75rem; }
     h1, h2, h3 { line-height: 1.12; letter-spacing: -.02em; margin: 0 0 .5rem; text-wrap: balance; }
     h1 { font-size: clamp(1.9rem, 6vw, 2.7rem); color: var(--accent); }
@@ -489,6 +890,39 @@ function layout({ title, description, canonical, body, crumb = "", prefs = SETTL
     .keeps { margin: 1.75rem 0 0; border-top: 1px dashed var(--line); padding-top: 1rem; }
     .keeps ul { margin: 0; padding-left: 1.1rem; columns: 2 12rem; column-gap: 1.5rem; }
     .keeps li { margin: .2rem 0; break-inside: avoid; }
+    /* Region tap effects & tactile reading affordances. */
+    .card, .before, .registers li, .linger-item summary, .keeps li {
+      transition: transform 120ms ease, border-color 180ms ease, background-color 180ms ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .card:active, .before:active, .registers li:active { transform: scale(.994); border-color: var(--accent); }
+    .focus-toggle, .keep-jump, .end-btn {
+      font: inherit; color: var(--accent); background: transparent; border: 1px solid var(--line); border-radius: 999px;
+      padding: .15rem .75rem; min-height: 36px; cursor: pointer; font-size: .85rem;
+    }
+    .focus-toggle:hover, .keep-jump:hover, .end-btn:hover { border-color: var(--accent); background: rgba(255, 51, 102, .1); }
+    .focus-toggle[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+    .keep-jump { color: var(--fg); border: 0; border-bottom: 1px dashed var(--line); border-radius: .2rem; padding: .15rem .25rem; text-align: left; font-size: 1rem; }
+    .keep-jump:hover { border-bottom-color: var(--accent); color: var(--accent); }
+    .prose.is-focused p { opacity: .28; cursor: pointer; transition: opacity .25s ease; }
+    .prose.is-focused p.is-lit { opacity: 1; }
+    mark.prose-echo { background: rgba(255, 51, 102, .28); color: var(--fg); padding: .05em .2em; border-radius: .2rem; border-bottom: 1px solid var(--accent); }
+    .murmur { cursor: pointer; border-radius: .4rem; padding: .2rem .5rem; transition: opacity 180ms ease, color 180ms ease; }
+    .murmur:hover, .murmur[data-turn="true"] { color: var(--fg); }
+    .end-btn { border: 0; color: var(--muted); letter-spacing: .4em; padding-inline: .8rem; }
+    .end-whisper { text-align: center; margin: .4rem 0 0; }
+    .pi-wink { text-decoration-style: dotted; }
+    .pace-drawer { margin: .75rem 0; padding: .75rem .9rem; border: 1px solid var(--line); border-radius: .8rem; background: var(--panel); }
+    .pace-drawer[hidden] { display: none; }
+    .pace-drawer label { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .8rem; font-size: .9rem; }
+    .pace-drawer input[type="range"] { flex: 1 1 8rem; min-height: 44px; accent-color: var(--accent); }
+    #footer-colophon { cursor: pointer; text-decoration: underline dotted var(--line); text-underline-offset: .25em; }
+    .pwa-note { margin: .5rem 0 0; }
+    @media (pointer: coarse) { .focus-toggle, .keep-jump, .end-btn { min-height: 44px; } }
+    html[data-move="still"] *, html[data-move="still"] *::before, html[data-move="still"] *::after { transition: none !important; transform: none !important; }
+    @media (prefers-reduced-motion: reduce) {
+      .card, .before, .registers li, .linger-item summary, .keeps li, .text-scale-badge, .prose.is-focused p { transition: none; transform: none !important; }
+    }
     .next { margin: 2rem 0 0; }
     .next .card { margin-top: .5rem; }
 
@@ -519,6 +953,7 @@ function layout({ title, description, canonical, body, crumb = "", prefs = SETTL
   </style>
 </head>
 <body>
+  <div class="reading-thread" aria-hidden="true"></div>
   <a class="skip" href="#main">Skip to content</a>
   <header>
     <div class="topbar">
@@ -545,7 +980,11 @@ function layout({ title, description, canonical, body, crumb = "", prefs = SETTL
       <a href="/today.json">today.json</a>
       <a href="https://wap.mom/">wap.mom</a>
     </nav>
-    <p class="note">smut.today ${escapeHtml(VERSION)}. The periodical is next door.</p>
+    <p class="note" id="footer-colophon">smut.today ${escapeHtml(VERSION)}. The periodical is next door.</p>
+    <aside class="pace-drawer" id="pace-drawer" hidden>
+      <label><span>Your reading pace</span><input type="range" min="150" max="320" step="10" value="220" aria-label="Reading pace in words per minute"><output>220 wpm</output></label>
+      <p class="note">Recalculates reading time locally. Choosing Forget me in Settle in clears offline copies too.</p>
+    </aside>
   </footer>
 </body>
 </html>`;
@@ -618,6 +1057,7 @@ function renderLetter(prefs) {
   <header class="piece-head">
     <p class="kicker">A letter · ${escapeHtml(LETTER.kicker)}</p>
     <h1>${escapeHtml(LETTER.title)}</h1>
+    <p><button type="button" class="focus-toggle" id="focus-toggle" aria-pressed="false" hidden>One breath at a time</button></p>
   </header>
   <div class="prose">${renderParagraphs(LETTER.body)}</div>
   <p class="end" aria-hidden="true">· · ·</p>
@@ -670,14 +1110,14 @@ function renderStory(story, prefs) {
     canonical: `https://smut.today/${story.slug}/`,
     body: `<article>
   <header class="piece-head">
-    <p class="kicker"><span class="badge badge-${escapeHtml(reg.name)}">${escapeHtml(reg.name)}</span> ${escapeHtml(reg.promise)} · ${escapeHtml(readLength(story))}</p>
+    <p class="kicker"><span class="badge badge-${escapeHtml(reg.name)}">${escapeHtml(reg.name)}</span> ${escapeHtml(reg.promise)} · <span data-words="${wordCount(story)}">${escapeHtml(readLength(story))}</span></p>
     <h1>${escapeHtml(story.title)}</h1>
     ${renderShift(story)}
   </header>
   <aside class="before" aria-labelledby="before-title">
     <h2 id="before-title" class="kicker">Before the door shuts</h2>
     ${renderMeta(story, { brief: true })}
-    <p class="note">Told to you, in second person. Everyone here is grown and says yes. <a href="#text">Go straight in</a>.</p>
+    <p class="note">Told to you, in second person. Everyone here is grown and says yes. <a href="#text">Go straight in</a> · <button type="button" class="focus-toggle" id="focus-toggle" aria-pressed="false" hidden>One breath at a time</button></p>
   </aside>
   <div class="prose" id="text">${renderParagraphs(story.body)}</div>
   <p class="end" aria-hidden="true">· · ·</p>
@@ -732,6 +1172,8 @@ function renderSettle(prefs) {
     <button class="cta" type="submit" name="keep" value="1">Keep this</button>
     <button class="cta cta-quiet" type="submit" name="forget" value="1">Forget me</button>
   </p>
+  <p class="keep"><button type="button" class="cta cta-quiet" id="keep-app" hidden>Keep smut.today offline on this device</button></p>
+  <p class="note pwa-note" id="pwa-status" aria-live="polite" hidden></p>
 </form>`,
   });
 }
@@ -782,6 +1224,57 @@ export default {
         headers: {
           ...BASE_SECURITY,
           "Content-Type": "image/svg+xml; charset=UTF-8",
+          "Cache-Control": "public, max-age=86400",
+        },
+      });
+    }
+
+    if (url.pathname === "/manifest.webmanifest") {
+      return new Response(`${JSON.stringify(MANIFEST, null, 2)}\n`, {
+        headers: {
+          ...BASE_SECURITY,
+          "Content-Type": "application/manifest+json; charset=UTF-8",
+          "Cache-Control": cache,
+        },
+      });
+    }
+
+    if (url.pathname === "/text-scale-head.js") {
+      return new Response(TEXT_SCALE_HEAD_JS, {
+        headers: {
+          ...BASE_SECURITY,
+          "Content-Type": "text/javascript; charset=UTF-8",
+          "Cache-Control": "public, max-age=3600",
+        },
+      });
+    }
+
+    if (url.pathname === "/app.js") {
+      return new Response(APP_JS, {
+        headers: {
+          ...BASE_SECURITY,
+          "Content-Type": "text/javascript; charset=UTF-8",
+          "Cache-Control": "public, max-age=3600",
+        },
+      });
+    }
+
+    if (url.pathname === "/sw.js") {
+      return new Response(SW_JS, {
+        headers: {
+          ...BASE_SECURITY,
+          "Content-Type": "text/javascript; charset=UTF-8",
+          "Cache-Control": "no-cache",
+        },
+      });
+    }
+
+    const iconName = url.pathname.startsWith("/icons/") ? url.pathname.slice(7) : "";
+    if (iconName && ICONS[iconName]) {
+      return new Response(smutIconPng(ICONS[iconName].size, ICONS[iconName]), {
+        headers: {
+          ...BASE_SECURITY,
+          "Content-Type": "image/png",
           "Cache-Control": "public, max-age=86400",
         },
       });

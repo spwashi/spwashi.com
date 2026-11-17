@@ -83,6 +83,7 @@ const SCRIPTS = Object.freeze({
   'attention-productions': [PINCH_TEXT_SCALE],
   'mutex-buzz': [PINCH_TEXT_SCALE],
   'tealstripes-vibes': [PINCH_TEXT_SCALE],
+  'wap-mom': [PINCH_TEXT_SCALE],
 });
 const ESBUILD = path.join(ROOT, '.spw/_workbench/node_modules/esbuild/lib/main.js');
 

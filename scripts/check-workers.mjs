@@ -150,7 +150,7 @@ async function main() {
   ];
   for (const args of carried) run(args);
 
-  for (const dir of ['workers/autonomous-feedback/test', 'workers/spw-quest/test', 'workers/site-hub-next/test', 'workers/factshift-center/test', 'workers/wap-mom/test', 'workers/texture-website/test', 'workers/attention-productions/test', 'workers/mutex-buzz/test', 'workers/tealstripes-vibes/test']) {
+  for (const dir of ['workers/autonomous-feedback/test', 'workers/spw-quest/test', 'workers/site-hub-next/test', 'workers/factshift-center/test', 'workers/smut-today/test', 'workers/wap-mom/test', 'workers/texture-website/test', 'workers/attention-productions/test', 'workers/mutex-buzz/test', 'workers/tealstripes-vibes/test']) {
     run(['--test', ...testFiles(dir)]);
   }
   const serving = ['files', 'mixed', 'script'].map((tier) => `${servingCount[tier] ?? 0} ${tier}`).join(', ');
