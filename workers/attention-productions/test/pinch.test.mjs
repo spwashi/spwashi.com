@@ -44,7 +44,7 @@ test('on attention.productions, in is a tighter shot and out a wider one', () =>
 
 test('each page in the set carries the same pinch', () => {
   const lib = (file) => readFileSync(new URL(`../../lib/${file}`, import.meta.url), 'utf8');
-  for (const unit of ['attention-productions', 'mutex-buzz', 'tealstripes-vibes']) {
+  for (const unit of ['attention-productions', 'mutex-buzz', 'tealstripesvibes']) {
     for (const file of ['pinch.js', 'pinch.css']) assert.equal(readFileSync(new URL(`../../${unit}/assets/${file}`, import.meta.url), 'utf8'), lib(file), `${unit}/assets/${file}`);
   }
 });

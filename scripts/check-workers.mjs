@@ -146,11 +146,11 @@ async function main() {
     // mutex.buzz's lock, pages, schedule and folios, against src/lock.js, lock.spw and the site's images.
     ['workers/mutex-buzz/carry.mjs', '--check'],
     // tealstripesvibes.com's shell, seeds, app files and icons, against src/vibe.js.
-    ['workers/tealstripes-vibes/carry.mjs', '--check'],
+    ['workers/tealstripesvibes/carry.mjs', '--check'],
   ];
   for (const args of carried) run(args);
 
-  for (const dir of ['workers/autonomous-feedback/test', 'workers/spw-quest/test', 'workers/site-hub-next/test', 'workers/factshift-center/test', 'workers/smut-today/test', 'workers/wap-mom/test', 'workers/texture-website/test', 'workers/attention-productions/test', 'workers/mutex-buzz/test', 'workers/tealstripes-vibes/test']) {
+  for (const dir of ['workers/autonomous-feedback/test', 'workers/spw-quest/test', 'workers/site-hub-next/test', 'workers/factshift-center/test', 'workers/smut-today/test', 'workers/wap-mom/test', 'workers/texture-website/test', 'workers/attention-productions/test', 'workers/mutex-buzz/test', 'workers/tealstripesvibes/test']) {
     run(['--test', ...testFiles(dir)]);
   }
   const serving = ['files', 'mixed', 'script'].map((tier) => `${servingCount[tier] ?? 0} ${tier}`).join(', ');

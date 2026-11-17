@@ -82,7 +82,7 @@ const SCRIPTS = Object.freeze({
   // The set's pages pinch their words as spwashi.com does (workers/lib/text-scale.js).
   'attention-productions': [PINCH_TEXT_SCALE],
   'mutex-buzz': [PINCH_TEXT_SCALE],
-  'tealstripes-vibes': [PINCH_TEXT_SCALE],
+  'tealstripesvibes': [PINCH_TEXT_SCALE],
   'wap-mom': [PINCH_TEXT_SCALE],
 });
 const ESBUILD = path.join(ROOT, '.spw/_workbench/node_modules/esbuild/lib/main.js');

@@ -100,7 +100,7 @@ expression = sigil[canon]{alias.copy}<one_table>
     `workers/spw-quest/src/guide.js · harmony`,
     `workers/spw-quest/src/constructs.js · harmony`,
     `workers/spw-quest/src/pivot.js · extension`,
-    `workers/tealstripes-vibes/src/vibe.js · extension`,
+    `workers/tealstripesvibes/src/vibe.js · extension`,
     `blog/index.html · harmony`,
     `.spw/conventions/operator-semantics.spw · extension`,
     `.spw/conventions/operator-alignment.spw · mutation`,

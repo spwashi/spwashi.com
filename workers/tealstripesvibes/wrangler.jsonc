@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/wrangler.json",
-  "name": "tealstripes-vibes",
+  "name": "tealstripesvibes",
   "main": "src/index.js",
   "compatibility_date": "2026-11-16",
   "workers_dev": false,
