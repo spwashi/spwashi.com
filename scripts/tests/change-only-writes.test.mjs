@@ -211,3 +211,55 @@ test('reader shell nav links do not write and delete spwOperatorGeometry', () =>
     globalThis.HTMLAnchorElement = prevAnchor;
   }
 });
+
+test('annotateLink handles Persona@ perspectives without slicing and wraps multi-char prefixes cleanly', () => {
+  const prevAnchor = globalThis.HTMLAnchorElement;
+  const makeLink = (href, text, closestFn = () => null) => {
+    const link = new WriteCountingElement();
+    link.attrs = new Map();
+    link.getAttribute = (name) => (link.attrs.has(name) ? link.attrs.get(name) : null);
+    link.setAttribute = (name, value) => { link.writes += 1; link.attrs.set(name, String(value)); };
+    link.removeAttribute = (name) => { link.writes += 1; link.attrs.delete(name); };
+    link.href = href;
+    link.closest = closestFn;
+    link.matches = () => false;
+    link.querySelector = () => null;
+    link.querySelectorAll = () => [];
+    let currentText = text;
+    Object.defineProperty(link, 'textContent', {
+      get: () => currentText,
+      set: (v) => { currentText = v; },
+    });
+    return link;
+  };
+
+  try {
+    const personaLink = makeLink(`${globalThis.location.origin}/projects/`, 'maya@[picture]');
+    globalThis.HTMLAnchorElement = personaLink.constructor;
+    annotateLink(personaLink);
+    assert.equal(personaLink.dataset.spwNavPrefix, '@');
+    assert.equal(personaLink.dataset.spwOperator, 'perspective');
+    assert.equal(personaLink.textContent, 'maya@[picture]');
+
+    const intentLink = makeLink(`${globalThis.location.origin}/tools/`, '#!action Commit');
+    const origWalker = document.createTreeWalker;
+    const textNode = {
+      textContent: '#!action Commit',
+      replacedWith: [],
+      replaceWith(...nodes) {
+        this.replacedWith.push(...nodes);
+      },
+    };
+    document.createTreeWalker = () => ({ nextNode: () => textNode });
+    try {
+      annotateLink(intentLink);
+      assert.equal(intentLink.dataset.spwNavPrefix, '#!');
+      assert.equal(intentLink.dataset.spwOperator, 'action');
+      assert.equal(textNode.replacedWith.length, 1);
+    } finally {
+      document.createTreeWalker = origWalker;
+    }
+  } finally {
+    globalThis.HTMLAnchorElement = prevAnchor;
+  }
+});

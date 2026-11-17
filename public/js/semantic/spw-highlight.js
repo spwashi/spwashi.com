@@ -13,6 +13,7 @@
  * the offsets a caller asks to emphasize (a brace and its partner).
  */
 import { OPERATOR_DEFINITIONS } from '/public/js/kernel/operator-detection.js';
+import { scanSpwExpression } from '/public/js/semantic/spw-expression-geometry.js';
 
 /** Longest prefix first, so #> / #: / #! win over #. Stream and n-range pairs keep their own types before < or (. */
 // Workbench relation: harmony with the workbench reader's tokens/roles; mutation, via the kernel, for paint types; extension: << / >> stream, (( / )) scene.
@@ -64,6 +65,12 @@ const OPERATOR_ROLE_BY_SIGIL = Object.freeze({
   '?': { role: 'function', modifiers: ['async'] },
   '~': { role: 'variable', modifiers: [] },
   '$': { role: 'variable', modifiers: [] },
+  '@': { role: 'keyword', modifiers: ['declaration'] },
+  '.': { role: 'punct', modifiers: [] },
+  '#': { role: 'keyword', modifiers: ['declaration'] },
+  '&': { role: 'operator', modifiers: [] },
+  '<': { role: 'operator', modifiers: ['declaration'] },
+  '>': { role: 'operator', modifiers: [] },
 });
 
 const isKernelToken = (entry) => Boolean(entry && typeof entry.type === 'string' && entry.span?.start && entry.span?.end);
@@ -243,4 +250,59 @@ export function bracePairAt(tokens = [], offset = 0) {
     if (pairs.has(at)) return [Math.min(at, pairs.get(at)), Math.max(at, pairs.get(at))];
   }
   return null;
+}
+
+const INLINE_FORM_OP = Object.freeze({
+  frame: 'mode',
+  body: 'ground',
+  scope: 'scene',
+  scene: 'scene',
+  capsule: 'concept',
+  stream: 'stream',
+  couple: 'concept',
+});
+
+/**
+ * Synchronous, kernel-free syntax highlighter for concise inline expressions and
+ * instant pre-worker painting of Spw source blocks before `parse()` resolves.
+ */
+export function highlightSpwInline(source = '') {
+  const text = String(source ?? '');
+  if (!text) return '';
+  const { tokens } = scanSpwExpression(text);
+  let out = '';
+  let cursor = 0;
+
+  for (let i = 0; i < tokens.length; i += 1) {
+    const token = tokens[i];
+    if (token.start > cursor) out += escapeHtml(text.slice(cursor, token.start));
+    const piece = text.slice(token.start, token.end);
+    if (token.type === 'operator') {
+      const meta = OPERATOR_ROLE_BY_SIGIL[piece] || { role: 'operator', modifiers: ['declaration'] };
+      const opType = token.operator || operatorTypeOf(piece, meta.role);
+      const classes = [meta.role, ...(meta.modifiers || [])].map((name) => `spw-role-${name}`);
+      out += `<span class="${classes.join(' ')}"${opType ? ` data-op="${opType}"` : ''}>${escapeHtml(piece)}</span>`;
+    } else if (token.type === 'boundary') {
+      const opType = INLINE_FORM_OP[token.form] || operatorTypeOf(piece, 'operator') || 'operator';
+      const classes = ['spw-role-operator'];
+      if (token.direction === 'open') classes.push('spw-role-declaration');
+      out += `<span class="${classes.join(' ')}" data-op="${opType}">${escapeHtml(piece)}</span>`;
+    } else if (/^["'`]/.test(piece)) {
+      out += `<span class="spw-role-string">${escapeHtml(piece)}</span>`;
+    } else if (tokens[i + 1]?.type === 'operator' && tokens[i + 1]?.value === '@' && /[A-Za-z0-9_-]$/.test(piece)) {
+      const split = piece.match(/^(.*?)([A-Za-z0-9_-]+)$/);
+      if (split && split[2]) {
+        out += escapeHtml(split[1]);
+        out += `<span class="spw-role-variable" data-op="perspective">${escapeHtml(split[2])}</span>`;
+      } else {
+        out += escapeHtml(piece);
+      }
+    } else {
+      out += escapeHtml(piece);
+    }
+    cursor = token.end;
+  }
+
+  if (cursor < text.length) out += escapeHtml(text.slice(cursor));
+  return out;
 }

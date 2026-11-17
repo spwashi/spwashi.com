@@ -209,3 +209,25 @@ test('microinteraction narration keeps event-derived delimiters parseable', () =
   );
   assert.equal(describeSpwExpression(formatted).balanced, true);
 });
+
+test('parseSpwExpression and scanSpwExpression preserve Persona@, compound prefixes, and prose emails', () => {
+  const personaExpr = parseSpwExpression('maya@[picture]{pacing}<cut>');
+  assert.equal(personaExpr.prefix, '');
+  assert.equal(personaExpr.nucleus, 'maya@[picture]{pacing}<cut>');
+  assert.equal(personaExpr.operatorType, 'perspective');
+  assert.deepEqual(personaExpr.perspective, { holder: 'maya', offset: 4 });
+
+  const personaTokens = scanSpwExpression('maya@[picture]');
+  assert.ok(personaTokens.tokens.some((token) => token.type === 'operator' && token.value === '@'));
+
+  const emailTokens = scanSpwExpression('write alice@example.com soon');
+  assert.equal(emailTokens.tokens.some((token) => token.type === 'operator'), false);
+
+  const intent = parseSpwExpression('#!deploy[prod]');
+  assert.equal(intent.prefix, '#!');
+  assert.equal(intent.nucleus, 'deploy[prod]');
+
+  const compound = parseSpwExpression('~^light[green]');
+  assert.equal(compound.prefix, '~^');
+  assert.equal(compound.nucleus, 'light[green]');
+});

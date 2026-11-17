@@ -11,7 +11,7 @@
 import { ensureSpwSourceStyles } from '../../kernel/deferred-styles.js';
 import { parserHref } from '../../kernel/parser-link.js';
 import { canvasHref, questBuildHref, questPivotHref } from '../../kernel/ecosystem-links.js';
-import { highlightSpw } from '../../semantic/spw-highlight.js';
+import { highlightSpw, highlightSpwInline } from '../../semantic/spw-highlight.js';
 
 let readerLoad = null;
 const loadReader = () => (readerLoad ||= import('../../semantic/spw-workbench-reader.js'));
@@ -78,12 +78,15 @@ export async function mountSpwCode(code) {
   painted.add(code);
   const source = code.textContent;
   ensureSpwSourceStyles();
+  if (!code.children.length) {
+    code.innerHTML = highlightSpwInline(source);
+  }
   try {
     const reader = await loadReader();
     const { tokens } = reader.parse(source, { eventPolicy: 'none' });
     code.innerHTML = highlightSpw(source, tokens);
   } catch {
-    // The text stays as it was; the actions still help.
+    // Synchronous inline spans stay active; action bar still attaches.
   }
   pre.append(actionsFor(code, source));
 }
