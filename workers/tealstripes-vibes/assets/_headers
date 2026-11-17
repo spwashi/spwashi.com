@@ -1,0 +1,27 @@
+# Written by workers/tealstripes-vibes/carry.mjs. These cover files; the worker's routes send their own.
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'self' https://attention.productions https://mutex.buzz; upgrade-insecure-requests
+
+/*.js
+  Cache-Control: public, max-age=300
+  Content-Type: text/javascript; charset=UTF-8
+
+/*.css
+  Cache-Control: public, max-age=300
+
+/icons/*
+  Cache-Control: public, max-age=86400
+
+/manifest.webmanifest
+  Cache-Control: public, max-age=300
+  Content-Type: application/manifest+json
+
+/sw.js
+  Cache-Control: no-cache
+
+/*.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=UTF-8
