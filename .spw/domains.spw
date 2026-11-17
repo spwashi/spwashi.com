@@ -101,7 +101,7 @@ active_surfaces: .{
  `spw.quest` = .{
    status = linked
    role = guide
-   note = `A paced path into Spw: the sigils a mark at a time, eighteen example files, a line taken apart and put back. Moved here from the unlinked set on 2026-11-12; it was already linked from the footer and the domain register.`
+   note = `A paced path into Spw: the sigils a mark at a time, thirty-eight example files across seven groups (Bench, Study, Board, Stage, Trial, Team, Practice), a line taken apart and put back. Moved here from the unlinked set on 2026-11-12; it was already linked from the footer and the domain register.`
    hosted = `about/domains/spw.quest/`
    href = `https://spw.quest`
    worker = `workers/spw-quest/`
@@ -116,7 +116,15 @@ active_surfaces: .{
    repo = `https://github.com/lore-land/lore.land`
    archetype = `installable_book`
  }[reg=facet]
- `tealstripesvibes.com` = .{ status = linked, role = secondary, archetype = `orienting_hub` }[reg=facet]
+ `tealstripesvibes.com` = .{
+   status = linked
+   role = `generative-art`
+   note = `Generative stripe and vibe proof cards from URL seeds (harbor, lantern, ledger), six-facet mask (pramgs), Euclidean Bjorklund rhythms, golden-angle spacing, and moire filters, with /tuple JSON feeding factshift.center.`
+   hosted = `about/domains/tealstripesvibes.com/`
+   href = `https://tealstripesvibes.com`
+   worker = `workers/tealstripesvibes/`
+   archetype = `orienting_hub`
+ }[reg=facet]
  `wap.mom` = .{
    status = linked
    role = periodical
