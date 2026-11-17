@@ -40,6 +40,7 @@ export function applyInteractionSemanticsToLink(link, {
   expression = '',
   scope = 'section',
   label = '',
+  operatorGeometry = true,
 } = {}) {
   if (!(link instanceof HTMLElement)) return;
 
@@ -59,7 +60,7 @@ export function applyInteractionSemanticsToLink(link, {
 
   if (operator) {
     writeDatasetValueIfMissing(link, 'spwOperator', operator);
-    applyOperatorGeometryToElement(link, operator);
+    if (operatorGeometry) applyOperatorGeometryToElement(link, operator);
   }
 
   if (label && !link.getAttribute('aria-label')) {

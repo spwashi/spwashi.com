@@ -719,8 +719,8 @@ function initSemanticTokenInteractions() {
   document.addEventListener('click', handleClick);
   document.addEventListener('keydown', handleKeydown);
   document.addEventListener('focusout', handleFocusOut);
-  window.addEventListener('scroll', handleViewportChange, true);
-  window.addEventListener('resize', handleViewportChange);
+  window.addEventListener('scroll', handleViewportChange, { passive: true, capture: true });
+  window.addEventListener('resize', handleViewportChange, { passive: true });
 
   return () => {
     dismissPopover();
@@ -732,7 +732,7 @@ function initSemanticTokenInteractions() {
     document.removeEventListener('click', handleClick);
     document.removeEventListener('keydown', handleKeydown);
     document.removeEventListener('focusout', handleFocusOut);
-    window.removeEventListener('scroll', handleViewportChange, true);
+    window.removeEventListener('scroll', handleViewportChange, { capture: true });
     window.removeEventListener('resize', handleViewportChange);
   };
 }

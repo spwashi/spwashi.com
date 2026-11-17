@@ -19,7 +19,7 @@
 
 import { OPERATOR_INFO } from '../../runtime/experiential/operator-info.js';
 import { PARSER_LINK_MAX_SOURCE, parserHref } from '../../kernel/parser-link.js';
-import { ecosystemLinks } from '../../kernel/ecosystem-links.js';
+import { canvasHref, ecosystemLinks, questPivotHref } from '../../kernel/ecosystem-links.js';
 import { MAX_DOCUMENT_BYTES, deliverDocumentLaunch, isSpwDocument } from '../../runtime/shell/spw-document-launch.js';
 import { downloadSpwText } from '../../interface/seed-exits.js';
 import { SEED_HOMES, SeedCard, deliverSeedHome, ensureSeedCardStyles, readSeedText } from '../cards/seed-card.js';
@@ -237,6 +237,45 @@ function act(action, reading, button, into) {
 
 const isEditable = (node) => Boolean(node?.closest?.('input, textarea, select, [contenteditable=""], [contenteditable="true"]'));
 
+const firstExpressionLine = (source) => String(source ?? '')
+  .split(/\r?\n/)
+  .map((line) => line.trim())
+  .find((line) => line && !line.startsWith('#>') && !line.startsWith('#:')) || '';
+
+/**
+ * Keep static cross-site doors (.spw-card-door-canvas / .spw-card-door-pivot)
+ * aligned with live pasted Spw, restoring authored fallback URLs for default,
+ * empty, or prose input.
+ */
+export function syncStaticDoors(host, reading, defaults = {}) {
+  if (!host) return;
+  const canvasDoor = host.querySelector?.('.spw-card-door-canvas');
+  const pivotDoor = host.querySelector?.('.spw-card-door-pivot');
+  const isLiveSpw = Boolean(
+    reading
+    && ['seed', 'document', 'expression'].includes(reading.kind)
+    && String(reading.source ?? '').trim(),
+  );
+
+  if (canvasDoor) {
+    const nextCanvas = isLiveSpw ? canvasHref(reading.source) : '';
+    const resolvedCanvas = nextCanvas || defaults.canvas || canvasDoor.getAttribute('href') || '';
+    if (resolvedCanvas && canvasDoor.getAttribute('href') !== resolvedCanvas) {
+      canvasDoor.setAttribute('href', resolvedCanvas);
+    }
+  }
+
+  if (pivotDoor) {
+    const nextPivot = isLiveSpw
+      ? (questPivotHref(reading.source) || questPivotHref(firstExpressionLine(reading.source)) || '')
+      : '';
+    const resolvedPivot = nextPivot || defaults.pivot || pivotDoor.getAttribute('href') || '';
+    if (resolvedPivot && pivotDoor.getAttribute('href') !== resolvedPivot) {
+      pivotDoor.setAttribute('href', resolvedPivot);
+    }
+  }
+}
+
 export async function initSpwPaste() {
   const host = document.querySelector(HOST_SELECTOR);
   if (!host || mounted) return () => {};
@@ -253,11 +292,22 @@ export async function initSpwPaste() {
   let timer = null;
   let dialog = null;
 
+  const doorDefaults = {
+    canvas: host.querySelector('.spw-card-door-canvas')?.getAttribute('href') || '',
+    pivot: host.querySelector('.spw-card-door-pivot')?.getAttribute('href') || '',
+  };
   const hint = host.dataset.pasteOpen === 'page' ? 'Pasting anywhere on this page works too.' : '';
   const show = (reading, into = out) => {
     current = reading;
     renderReading(into, reading, hint);
     host.dataset.pasteOpenState = reading.kind;
+    if (into === out) {
+      syncStaticDoors(
+        host,
+        field.value === field.defaultValue ? { kind: 'empty', source: '' } : reading,
+        doorDefaults,
+      );
+    }
   };
   show(current);
   // The page's own Spw, as authored, waits for an edit; a value the browser restored, or one dropped in, is read now.

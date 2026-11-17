@@ -50,6 +50,7 @@ import { createSpwLogger, markInstrumented } from '../../kernel/instrumentation.
 import { ensureSpatialGravityStyles } from '../../kernel/deferred-styles.js';
 import { observeIntersections } from '/public/js/kernel/browser-primitives.js';
 import { createMeasuredLane } from '/public/js/kernel/measured-frame.js';
+import { readViewportBox } from '/public/js/kernel/viewport.js';
 
 const GRAVITY_SELECTOR = '[data-spw-gravity]';
 
@@ -258,10 +259,13 @@ const resolveSpatial = (rect, vw, vh) => {
 };
 
 /* Read phase: the viewport once, and each on-screen rect, before any write. */
-const readViewport = () => ({
-  viewportWidth: window.innerWidth || document.documentElement.clientWidth || 1,
-  viewportHeight: window.innerHeight || document.documentElement.clientHeight || 1,
-});
+const readViewport = () => {
+  const { innerWidth, innerHeight } = readViewportBox();
+  return {
+    viewportWidth: innerWidth || 1,
+    viewportHeight: innerHeight || 1,
+  };
+};
 
 const readElement = (el) => {
   if (!isElement(el) || !el.isConnected) return null;

@@ -22,17 +22,21 @@
  */
 
 import { FRAME_SELECTOR } from '/public/js/kernel/dom-contracts.js';
+import { readViewportBox, readViewportInlineSize } from '/public/js/kernel/viewport.js';
 
 const STORAGE_PREFIX = 'spw:frame-sizes:v1';
 const WIDTH_STEP = 40;
 const MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
 const SETTLE_FALLBACK_MS = 4000;
+const INTERACTION_QUIET_MS = 250;
+const VIEWPORT_BUFFER_RATIO = 1.1;
+const MAX_DEFERRED_STEPS = 8;
 const PLACEHOLDER_FRAMES = `:is(${FRAME_SELECTOR}):not([data-spw-region-role="entry-spine"])`;
 
 let mounted = null;
 
 function storageKey() {
-  const bucket = Math.round(window.innerWidth / WIDTH_STEP) * WIDTH_STEP;
+  const bucket = Math.round(readViewportInlineSize() / WIDTH_STEP) * WIDTH_STEP;
   return `${STORAGE_PREFIX}:${location.pathname}:${bucket}`;
 }
 
@@ -85,15 +89,25 @@ export function initFrameSizeMemory() {
   const key = storageKey();
   const memory = readMemory(key);
   const frames = [...document.querySelectorAll(PLACEHOLDER_FRAMES)].filter(frameKey);
+  const frameSet = new Set(frames);
   const heights = { ...memory };
   const rendered = new Set();
+  let lastInteractionAt = 0;
+  let retryTimer = 0;
+
+  const noteInteraction = () => {
+    lastInteractionAt = performance.now();
+  };
+  document.addEventListener('scroll', noteInteraction, { passive: true, capture: true });
+  document.addEventListener('pointerdown', noteInteraction, { passive: true, capture: true });
+  document.addEventListener('keydown', noteInteraction, { passive: true, capture: true });
 
   for (const frame of frames) placehold(frame, memory[frameKey(frame)]);
 
   // A frame that renders on its own tells us its size; remember it.
   const onState = (event) => {
     const frame = event.target;
-    if (event.skipped || !frameKey(frame) || !frames.includes(frame)) return;
+    if (event.skipped || !frameKey(frame) || !frameSet.has(frame)) return;
     rendered.add(frame);
     requestAnimationFrame(() => {
       const height = frame.getBoundingClientRect().height;
@@ -107,27 +121,45 @@ export function initFrameSizeMemory() {
   document.addEventListener('visibilitychange', onHide);
   window.addEventListener('pagehide', save);
 
-  // Render never-seen frames once, nearest first, one per idle slice.
+  // Render never-seen frames once, nearest below the viewport first, one per quiet idle slice.
   const warm = () => {
+    const minTop = (readViewportBox().innerHeight || 768) * VIEWPORT_BUFFER_RATIO;
     const queue = frames
       .filter((frame) => !rendered.has(frame) && !(frameKey(frame) in memory))
-      .sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
-    // Exactly one frame per slice, even on a timed-out deadline: a frame's
-    // style and layout is the whole cost, and two in one task is a stall.
+      .map((frame) => ({ frame, top: frame.getBoundingClientRect().top }))
+      .filter((entry) => entry.top > minTop)
+      .sort((a, b) => a.top - b.top)
+      .map((entry) => entry.frame);
+    let deferredSteps = 0;
+    // Exactly one frame per quiet slice: never force synchronous layout during
+    // scroll/input or inside an expired timeout, and never update heights above view.
     const step = (deadline) => {
-      if (deadline.timeRemaining() > 6 || deadline.didTimeout) {
-        let frame = queue.shift();
-        while (frame && (!frame.isConnected || rendered.has(frame))) frame = queue.shift();
-        if (frame) {
+      const quiet = performance.now() - lastInteractionAt >= INTERACTION_QUIET_MS;
+      const idleBudget = !deadline.didTimeout && deadline.timeRemaining() >= 10;
+      if (!quiet || !idleBudget) {
+        deferredSteps += 1;
+        if (deferredSteps <= MAX_DEFERRED_STEPS && queue.length) {
+          retryTimer = window.setTimeout(() => idle(step), INTERACTION_QUIET_MS);
+        } else {
+          save();
+        }
+        return;
+      }
+      deferredSteps = 0;
+      let frame = queue.shift();
+      while (frame && (!frame.isConnected || rendered.has(frame))) frame = queue.shift();
+      if (frame) {
+        const threshold = (readViewportBox().innerHeight || 768) * VIEWPORT_BUFFER_RATIO;
+        if (frame.getBoundingClientRect().top > threshold) {
           frame.style.contentVisibility = 'visible';
           const height = frame.getBoundingClientRect().height;
           frame.style.contentVisibility = '';
-          if (height > 0) {
+          if (height > 0 && frame.getBoundingClientRect().top > threshold) {
             heights[frameKey(frame)] = Math.round(height);
             placehold(frame, height);
           }
-          rendered.add(frame);
         }
+        rendered.add(frame);
       }
       if (queue.length) idle(step);
       else save();
@@ -136,15 +168,19 @@ export function initFrameSizeMemory() {
   };
 
   const cancelSettle = whenSettled(warm);
-  mounted = { onState, onHide, save, cancelSettle };
+  mounted = { onState, onHide, save, cancelSettle, noteInteraction, clearRetry: () => clearTimeout(retryTimer) };
 }
 
 export function unmountFrameSizeMemory() {
   if (!mounted) return;
   document.removeEventListener('contentvisibilityautostatechange', mounted.onState, true);
+  document.removeEventListener('scroll', mounted.noteInteraction, { capture: true });
+  document.removeEventListener('pointerdown', mounted.noteInteraction, { capture: true });
+  document.removeEventListener('keydown', mounted.noteInteraction, { capture: true });
   document.removeEventListener('visibilitychange', mounted.onHide);
   window.removeEventListener('pagehide', mounted.save);
   mounted.cancelSettle?.();
+  mounted.clearRetry?.();
   mounted.save();
   mounted = null;
 }

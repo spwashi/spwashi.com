@@ -466,6 +466,7 @@ fixity = "tending"
  >>[2026-11-06 12:27] hygiene — inferModuleDimensions lives in runtime/orchestration/loader.js and reads def.layer plus the closed evaluates vocabulary since 25246624, not regexes over ids; Phase 5's last open item retired with that reason. Index paths moved off runtime/module-loader.js. Re-probed: 1,332 raw dataset writes against 597 writeDatasetValue across the six planes (interface 349/32), 956 addEventListener against 411 removeEventListener, 69 dispatchEvent(new CustomEvent(, 13 files reading getComputedStyle(document.documentElement).
  >>[2026-11-06 12:29] probe — wonder_runtime_plane_consolidation_file_ceiling: haptics.js 1,452, shell-disclosure.js 1,249, shared.js 1,528 lines; none split since 2026-10-10.
  >>[2026-11-17 09:24] align — Verified positioning-orchestration.js already runs positioningLane = createMeasuredLane(...) since a22227fb (2026-11-13); remaining direct window.innerWidth reads at positioning-orchestration.js:98, spatial-gravity.js:262, and frame-size-memory.js:35 fold into ungated P2 readViewportInlineSize() adoption alongside modern-web-guidance INP/CRP discipline.
+ >>[2026-11-17 09:38] land — P2 width-cache consolidation shipped in positioning-orchestration.js, spatial-gravity.js, and frame-size-memory.js via kernel/viewport.js; frame-size-memory warm() now yields during active input and skips frames above viewportHeight * 1.1.
 }[reg=facet]
 
 ^"open"{
@@ -474,10 +475,10 @@ fixity = "tending"
 }
 
 ^"cache"{
- ~#status: "implementing"
- ~#next_commit: "^[runtime] Route remaining runtime viewport-width readers through kernel/viewport.js (P2)"
- ~#files_hot: "public/js/kernel/viewport.js, public/js/runtime/regions/positioning-orchestration.js, public/js/runtime/physics/spatial-gravity.js, public/js/runtime/arrival/frame-size-memory.js"
- ~#gate: "none for P2 (ungated width-cache adoption); browser demo for Phase 3 modules/ and observers"
+ ~#status: "paused on browser demo"
+ ~#next_commit: "Phase 2/3 browser demo: frame/region observer consolidation and interaction listener hygiene"
+ ~#files_hot: "public/js/interface/contextual-ui.js, public/js/runtime/diagnostics/observation-beats.js, public/js/runtime/diagnostics/layout-qa.js"
+ ~#gate: "browser demo for Phase 2/3 modules/ and observers; P2 and semantic-chrome passive listeners landed"
  ~#last_stream: "2026-11-17"
  ~#taste_debt: "Phase 6 catalog splits must not change felt chrome timing without a demo."
 }[reg=facet]
