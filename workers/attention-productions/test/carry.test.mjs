@@ -165,6 +165,9 @@ test('a link to factshift.center carries the shot: its Spw and its prompt, as te
 test('the expression names the address\'s subject in its own element, so the page can say it whatever it arrived carrying', async () => {
   const { expressionHtml, readShot } = await import('../src/compose.js');
   const shot = readShot('/a-lamp-through-teal-glass', '?shot=wide', '2026-11-17');
-  assert.match(expressionHtml(shot), /<span class="mark subject">\{a lamp through teal glass\}<\/span>/);
+  const html = expressionHtml(shot);
+  assert.match(html, /<span class="mark subject">\{a lamp through teal glass\}<\/span>/);
+  assert.match(html, /<span class="mark" data-op="action">!shot<\/span>/);
+  assert.match(html, /<span class="mark" data-op="perspective">@material<\/span>/);
   assert.match(readFileSync(new URL('../assets/attention.js', import.meta.url), 'utf8'), /querySelector\(".subject"\)/, 'the page repaints it');
 });

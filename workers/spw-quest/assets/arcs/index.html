@@ -383,10 +383,17 @@
     button.door { flex: 1 1 9rem; align-items: flex-start; margin-top: .6rem; font: inherit; text-align: left; cursor: pointer; }
     footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--line); }
     @media (max-width: 40rem) {
+      main { padding-inline: max(.85rem, env(safe-area-inset-left)); padding-right: max(.85rem, env(safe-area-inset-right)); }
       h1 { font-size: 1.55rem; }
       .weather { font-size: 2.2rem; }
       .codeblock pre { font-size: .78rem; }
       fieldset { padding: .6rem .7rem .7rem; }
+      .actions { display: grid; grid-template-columns: 1fr; }
+      .actions > *, .actions button, .actions a { width: 100%; min-height: 44px; }
+      .score li { flex-wrap: wrap; }
+    }
+    @media (pointer: coarse) {
+      button, .door, summary, input[type="submit"] { min-height: 44px; }
     }
     @media (min-width: 60rem) {
       main { padding-top: 2.4rem; }
@@ -688,7 +695,7 @@
 <header>
   <h1>Arcs in season</h1>
   <p class="lede">Which shapes of Spw the site has been writing lately. Each line is counted once, on the day it first appeared on a page, over the last 7, 30 and 90 days. A count says how often a hand reached for it, not how good it is.</p>
-  <p>Read from the site's history up to <time datetime="2026-11-17">2026-11-17</time>: 23 new lines this week, 43 this month, 681 this season. <em>Rising</em> marks an arc whose share of this week is well above its share of the month. Each arc opens the lines that answer it.</p>
+  <p>Read from the site's history up to <time datetime="2026-11-17">2026-11-17</time>: 36 new lines this week, 56 this month, 694 this season. <em>Rising</em> marks an arc whose share of this week is well above its share of the month. Each arc opens the lines that answer it.</p>
 </header>
 <section class="arcs-section" aria-labelledby="arcs-lenses">
   <h2 id="arcs-lenses">Lenses</h2>
@@ -703,6 +710,10 @@
     <tr>
       <td><a href="/specimens?q=%5Brecord%5D#found"><code>[record]</code></a><span class="rising">rising</span><span class="example">screenshot<span data-t="b-mode">[</span>record<span data-t="b-mode">]</span><span data-t="b-direction">{</span>ask.offer.agreement.reference<span data-t="b-direction">}</span></span></td>
       <td>2</td><td>2</td><td>4</td>
+    </tr>
+    <tr>
+      <td><a href="/specimens?q=%5Bdirection%5D#found"><code>[direction]</code></a><span class="rising">rising</span><span class="example">workbench<span data-t="b-mode">[</span>direction<span data-t="b-mode">]</span><span data-t="b-direction">{</span>kernel.policy.slots<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>align<span data-t="b-concept">&gt;</span></span></td>
+      <td>2</td><td>2</td><td>3</td>
     </tr>
     <tr>
       <td><a href="/specimens?q=%5Binstrument%5D#found"><code>[instrument]</code></a><span class="rising">rising</span><span class="example">room<span data-t="b-mode">[</span>instrument<span data-t="b-mode">]</span><span data-t="b-direction">{</span>question;answer;screenshot<span data-t="b-direction">}</span></span></td>
@@ -732,10 +743,6 @@
       <td><a href="/specimens?q=%5Breturn%5D#found"><code>[return]</code></a><span class="example">folio<span data-t="b-mode">[</span>return<span data-t="b-mode">]</span><span data-t="b-direction">{</span>rescan.card<span data-t="b-direction">}</span><span data-t="b-scene">(</span>october_04<span data-t="b-scene">)</span><span data-t="b-concept">&lt;</span>shelf<span data-t="b-concept">&gt;</span></span></td>
       <td><span class="quiet">·</span></td><td>1</td><td>5</td>
     </tr>
-    <tr>
-      <td><a href="/specimens?q=%5Bsurface%5D#found"><code>[surface]</code></a><span class="example">material<span data-t="b-mode">[</span>surface<span data-t="b-mode">]</span><span data-t="b-direction">{</span>press ~&gt; answer<span data-t="b-direction">}</span></span></td>
-      <td>1</td><td>1</td><td>5</td>
-    </tr>
     </tbody>
   </table>
 </section>
@@ -750,12 +757,28 @@
       <td><span class="quiet">·</span></td><td>5</td><td>6</td>
     </tr>
     <tr>
+      <td><a href="/specimens?q=%3Calign%3E#found"><code>&lt;align&gt;</code></a><span class="rising">rising</span><span class="example">kernel<span data-t="b-mode">[</span>separation<span data-t="b-mode">]</span><span data-t="b-direction">{</span>seed.policy.tokens<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>align<span data-t="b-concept">&gt;</span></span></td>
+      <td>3</td><td>3</td><td>3</td>
+    </tr>
+    <tr>
+      <td><a href="/specimens?q=%3Cworkbench%3E#found"><code>&lt;workbench&gt;</code></a><span class="example">workbench<span data-t="b-mode">[</span>context<span data-t="b-mode">]</span><span data-t="b-direction">{</span>digraph.combinator<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>workbench<span data-t="b-concept">&gt;</span></span></td>
+      <td>2</td><td>3</td><td>3</td>
+    </tr>
+    <tr>
+      <td><a href="/specimens?q=%3Caudit%3E#found"><code>&lt;audit&gt;</code></a><span class="rising">rising</span><span class="example">corpus<span data-t="b-mode">[</span>parse<span data-t="b-mode">]</span><span data-t="b-direction">{</span>clean.error.degrade<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>audit<span data-t="b-concept">&gt;</span></span></td>
+      <td>2</td><td>2</td><td>2</td>
+    </tr>
+    <tr>
       <td><a href="/specimens?q=%3Cparagraph%3E#found"><code>&lt;paragraph&gt;</code></a><span class="example">math<span data-t="b-mode">[</span>reading<span data-t="b-mode">]</span><span data-t="b-direction">{</span>picture.then.formalism<span data-t="b-direction">}</span><span data-t="b-scene">(</span>turn<span data-t="b-scene">)</span><span data-t="b-concept">&lt;</span>paragraph<span data-t="b-concept">&gt;</span></span></td>
       <td><span class="quiet">·</span></td><td>1</td><td>4</td>
     </tr>
     <tr>
       <td><a href="/specimens?q=%3Canchor%3E#found"><code>&lt;anchor&gt;</code></a><span class="example">operator<span data-t="b-mode">[</span>atlas<span data-t="b-mode">]</span><span data-t="b-direction">{</span>prime;traverse;precipitate<span data-t="b-direction">}</span><span data-t="b-scene">(</span>brace<span data-t="b-scene">)</span><span data-t="b-concept">&lt;</span>anchor<span data-t="b-concept">&gt;</span></span></td>
       <td><span class="quiet">·</span></td><td>1</td><td>3</td>
+    </tr>
+    <tr>
+      <td><a href="/specimens?q=%3Cseed%3E#found"><code>&lt;seed&gt;</code></a><span class="example">workbench<span data-t="b-mode">[</span>systems.console<span data-t="b-mode">]</span><span data-t="b-direction">{</span>eventPolicy.tokenSpans<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>seed<span data-t="b-concept">&gt;</span></span></td>
+      <td>1</td><td>1</td><td>3</td>
     </tr>
     <tr>
       <td><a href="/specimens?q=%3Cbrowser%3E#found"><code>&lt;browser&gt;</code></a><span class="example">folio<span data-t="b-mode">[</span>order<span data-t="b-mode">]</span><span data-t="b-direction">{</span>scan.open.note<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>browser<span data-t="b-concept">&gt;</span></span></td>
@@ -766,24 +789,8 @@
       <td>1</td><td>1</td><td>2</td>
     </tr>
     <tr>
-      <td><a href="/specimens?q=%3Cstudio%3E#found"><code>&lt;studio&gt;</code></a><span class="example">folio<span data-t="b-mode">[</span>ask<span data-t="b-mode">]</span><span data-t="b-direction">{</span>card.reply<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>studio<span data-t="b-concept">&gt;</span></span></td>
-      <td><span class="quiet">·</span></td><td>1</td><td>2</td>
-    </tr>
-    <tr>
-      <td><a href="/specimens?q=%3Cchina%3E#found"><code>&lt;china&gt;</code></a><span class="example">theory<span data-t="b-mode">[</span>mohist_logic<span data-t="b-mode">]</span><span data-t="b-direction">{</span>names.distinctions.analogy<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>china<span data-t="b-concept">&gt;</span></span></td>
-      <td><span class="quiet">·</span></td><td><span class="quiet">·</span></td><td>11</td>
-    </tr>
-    <tr>
-      <td><a href="/specimens?q=%3Creceipt%3E#found"><code>&lt;receipt&gt;</code></a><span class="example">spell<span data-t="b-mode">[</span>wander<span data-t="b-mode">]</span><span data-t="b-direction">{</span>seed.route.hold.cast.notice.upkeep<span data-t="b-direction">}</span><span data-t="b-scene">(</span>bench<span data-t="b-scene">)</span><span data-t="b-concept">&lt;</span>receipt<span data-t="b-concept">&gt;</span></span></td>
-      <td><span class="quiet">·</span></td><td><span class="quiet">·</span></td><td>11</td>
-    </tr>
-    <tr>
-      <td><a href="/specimens?q=%3Cindia%3E#found"><code>&lt;india&gt;</code></a><span class="example">theory<span data-t="b-mode">[</span>nyaya<span data-t="b-mode">]</span><span data-t="b-direction">{</span>pramana.inference.example<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>india<span data-t="b-concept">&gt;</span></span></td>
-      <td><span class="quiet">·</span></td><td><span class="quiet">·</span></td><td>7</td>
-    </tr>
-    <tr>
-      <td><a href="/specimens?q=%3Ccell%3E#found"><code>&lt;cell&gt;</code></a><span class="example">pattern<span data-t="b-mode">[</span>light_harvesting<span data-t="b-mode">]</span><span data-t="b-direction">{</span>pigment.electron.donor<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>cell<span data-t="b-concept">&gt;</span></span></td>
-      <td><span class="quiet">·</span></td><td><span class="quiet">·</span></td><td>5</td>
+      <td><a href="/specimens?q=%3Cprose%3E#found"><code>&lt;prose&gt;</code></a><span class="example">workbench<span data-t="b-mode">[</span>studio.craft<span data-t="b-mode">]</span><span data-t="b-direction">{</span>persona.scene<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>prose<span data-t="b-concept">&gt;</span></span></td>
+      <td>1</td><td>1</td><td>2</td>
     </tr>
     </tbody>
   </table>
@@ -812,12 +819,20 @@
     <thead><tr><th scope="col">arc</th><th scope="col" title="the last 7 days">week</th><th scope="col" title="the last 30 days">month</th><th scope="col" title="the last 90 days">season</th></tr></thead>
     <tbody>
     <tr>
+      <td><a href="/specimens?q=workbench%5B*%5D#found"><code>workbench</code></a><span class="rising">rising</span><span class="example">workbench<span data-t="b-mode">[</span>issues<span data-t="b-mode">]</span><span data-t="b-direction">{</span>digraph.escape.slot<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>audit<span data-t="b-concept">&gt;</span></span></td>
+      <td>9</td><td>9</td><td>24</td>
+    </tr>
+    <tr>
       <td><a href="/specimens?q=folio%5B*%5D#found"><code>folio</code></a><span class="example">folio<span data-t="b-mode">[</span>ask<span data-t="b-mode">]</span><span data-t="b-direction">{</span>card.reply<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>studio<span data-t="b-concept">&gt;</span></span></td>
       <td><span class="quiet">·</span></td><td>7</td><td>33</td>
     </tr>
     <tr>
       <td><a href="/specimens?q=arrive%5B*%5D#found"><code>arrive</code></a><span class="example">arrive<span data-t="b-mode">[</span>wednesday<span data-t="b-mode">]</span><span data-t="b-direction">{</span>table.wonder<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>pantry<span data-t="b-concept">&gt;</span></span></td>
       <td><span class="quiet">·</span></td><td>4</td><td>4</td>
+    </tr>
+    <tr>
+      <td><a href="/specimens?q=composition%5B*%5D#found"><code>composition</code></a><span class="rising">rising</span><span class="example">composition<span data-t="b-mode">[</span>console<span data-t="b-mode">]</span><span data-t="b-direction">{</span>inspect.timing<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>workbench<span data-t="b-concept">&gt;</span></span></td>
+      <td>2</td><td>2</td><td>4</td>
     </tr>
     <tr>
       <td><a href="/specimens?q=library%5B*%5D#found"><code>library</code></a><span class="rising">rising</span><span class="example">library<span data-t="b-mode">[</span>playable<span data-t="b-mode">]</span><span data-t="b-direction">{</span>role.artifact.evidence<span data-t="b-direction">}</span></span></td>
@@ -843,14 +858,6 @@
       <td><a href="/specimens?q=card%5B*%5D#found"><code>card</code></a><span class="example">card<span data-t="b-mode">[</span>pair<span data-t="b-mode">]</span><span data-t="b-direction">{</span>subject;caption;frame<span data-t="b-direction">}</span></span></td>
       <td>1</td><td>1</td><td>9</td>
     </tr>
-    <tr>
-      <td><a href="/specimens?q=operator%5B*%5D#found"><code>operator</code></a><span class="example">operator<span data-t="b-mode">[</span>atlas<span data-t="b-mode">]</span><span data-t="b-direction">{</span>prime;traverse;precipitate<span data-t="b-direction">}</span><span data-t="b-scene">(</span>brace<span data-t="b-scene">)</span><span data-t="b-concept">&lt;</span>anchor<span data-t="b-concept">&gt;</span></span></td>
-      <td><span class="quiet">·</span></td><td>1</td><td>4</td>
-    </tr>
-    <tr>
-      <td><a href="/specimens?q=runtime%5B*%5D#found"><code>runtime</code></a><span class="example">runtime<span data-t="b-mode">[</span>inoculant<span data-t="b-mode">]</span><span data-t="b-direction">{</span>portable;reversible;transparent<span data-t="b-direction">}</span></span></td>
-      <td>1</td><td>1</td><td>3</td>
-    </tr>
     </tbody>
   </table>
 </section>
@@ -861,12 +868,12 @@
     <thead><tr><th scope="col">shape</th><th scope="col" title="the last 7 days">week</th><th scope="col" title="the last 30 days">month</th><th scope="col" title="the last 90 days">season</th></tr></thead>
     <tbody>
     <tr>
-      <td><a href="/constructs"><code>word[lens]{body}</code></a><span class="rising">rising</span><span class="example">runtime<span data-t="b-mode">[</span>inoculant<span data-t="b-mode">]</span><span data-t="b-direction">{</span>portable;reversible;transparent<span data-t="b-direction">}</span></span></td>
-      <td>20</td><td>22</td><td>316</td>
+      <td><a href="/constructs"><code>word[lens]{body}&lt;point&gt;</code></a><span class="example">corpus<span data-t="b-mode">[</span>parse<span data-t="b-mode">]</span><span data-t="b-direction">{</span>clean.error.degrade<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>audit<span data-t="b-concept">&gt;</span></span></td>
+      <td>14</td><td>25</td><td>259</td>
     </tr>
     <tr>
-      <td><a href="/constructs"><code>word[lens]{body}&lt;point&gt;</code></a><span class="example">color<span data-t="b-mode">[</span>contrast<span data-t="b-mode">]</span><span data-t="b-direction">{</span>field,paper,ink,signal<span data-t="b-direction">}</span><span data-t="b-concept">&lt;</span>token<span data-t="b-concept">&gt;</span></span></td>
-      <td>1</td><td>12</td><td>246</td>
+      <td><a href="/constructs"><code>word[lens]{body}</code></a><span class="rising">rising</span><span class="example">runtime<span data-t="b-mode">[</span>inoculant<span data-t="b-mode">]</span><span data-t="b-direction">{</span>portable;reversible;transparent<span data-t="b-direction">}</span></span></td>
+      <td>20</td><td>22</td><td>316</td>
     </tr>
     <tr>
       <td><a href="/constructs"><code>word[lens]{body}&lt;point&gt;(scene)</code></a><span class="example">curriculum<span data-t="b-mode">[</span>overnight<span data-t="b-mode">]</span><span data-t="b-direction">{</span>expect.check<span data-t="b-direction">}</span><span data-t="b-scene">(</span>question<span data-t="b-scene">)</span><span data-t="b-concept">&lt;</span>note<span data-t="b-concept">&gt;</span></span></td>

@@ -162,3 +162,10 @@ test('/learn carries a word of the reader\'s through the panels, and each line g
   const grow = plain.slice(plain.indexOf('id="form-grow"'), plain.indexOf('id="reading-grow"'));
   assert.doesNotMatch(grow, /formaction|data-canvas/, 'the commands are not a line to turn');
 });
+
+test('paint highlights Persona holders preceding @ with perspective data-t', () => {
+  const src = 'maya@ ~garden[open]{seed}';
+  const painted = kit.paint(src, parse(src).tokens);
+  const atType = FILE_DATA.types['@'];
+  assert.ok(painted.includes(`<span data-t="${atType}">maya</span><span data-t="${atType}">@</span>`), painted);
+});

@@ -202,7 +202,7 @@ export function withFrontMark(line, operator) {
   const reading = readSpecimen(line);
   const subject = reading.slots.subject || "";
   if (reading.file || !subject || subject.startsWith("#>")) return null;
-  const bare = subject.replace(/^[~?!*.^#@&=%$]+/, "");
+  const bare = subject.replace(/^(?:#[:!>]|~[#^*]|[~?!*.^#@&=%$]+)/, "");
   if (!bare) return null;
   const next = lineFrom({ ...reading.slots, subject: `${operator.sigil}${bare}` }, layoutOf(line));
   return readSpecimen(next).slots.subject === `${operator.sigil}${bare}` ? next : null;
@@ -647,12 +647,19 @@ export const PIVOT_CSS = `${CARD_CSS}
     .instrument-out { display: grid; gap: .25rem; margin: .5rem 0 0; padding: .55rem .75rem; border: 1px dashed var(--accent); border-radius: var(--radius); }
     .instrument-out .says { color: var(--muted); font: .78rem/1.35 var(--mono); }
     .instrument-out code { font: 600 1rem/1.5 var(--mono); font-variant-ligatures: none; overflow-wrap: anywhere; }
-    .op-field { display: grid; gap: .25rem; margin: .6rem 0 0; }
-    .op-field input[type="range"] { width: 100%; min-height: 44px; margin: 0; accent-color: var(--accent); }
+    .op-field { display: grid; gap: .35rem; margin: .6rem 0 0; }
+    .op-field input[type="range"] { width: 100%; min-height: 44px; margin: 0; accent-color: var(--accent); cursor: ew-resize; }
     .op-ticks { display: grid; grid-template-columns: repeat(var(--ticks), minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; text-align: center; font: 700 .95rem/1 var(--mono); }
-    .op-ticks a { display: inline-flex; align-items: center; justify-content: center; min-width: 24px; min-height: 36px; color: var(--muted); text-decoration: none; }
-    .op-ticks a[aria-current] { color: var(--accent); }
+    .op-ticks a { display: inline-flex; align-items: center; justify-content: center; min-width: 24px; min-height: 36px; border-radius: .35rem; color: var(--muted); text-decoration: none; }
+    .op-ticks a:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+    .op-ticks a[aria-current] { color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); }
     @media (pointer: coarse) { .op-ticks a { min-height: 44px; } }
+    @media (max-width: 30rem) {
+      .op-ticks { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: .2rem; }
+      .op-ticks a { min-height: 44px; }
+      .find-row { flex-direction: column; }
+      .find-row button { width: 100%; min-height: 44px; }
+    }
     .op-field button { justify-self: start; min-height: 44px; }
     /* Between lines the card moves rather than blinks; reduced motion keeps every state and drops the travel. */
     @view-transition { navigation: auto; }

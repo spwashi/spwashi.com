@@ -384,10 +384,17 @@
     button.door { flex: 1 1 9rem; align-items: flex-start; margin-top: .6rem; font: inherit; text-align: left; cursor: pointer; }
     footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--line); }
     @media (max-width: 40rem) {
+      main { padding-inline: max(.85rem, env(safe-area-inset-left)); padding-right: max(.85rem, env(safe-area-inset-right)); }
       h1 { font-size: 1.55rem; }
       .weather { font-size: 2.2rem; }
       .codeblock pre { font-size: .78rem; }
       fieldset { padding: .6rem .7rem .7rem; }
+      .actions { display: grid; grid-template-columns: 1fr; }
+      .actions > *, .actions button, .actions a { width: 100%; min-height: 44px; }
+      .score li { flex-wrap: wrap; }
+    }
+    @media (pointer: coarse) {
+      button, .door, summary, input[type="submit"] { min-height: 44px; }
     }
     @media (min-width: 60rem) {
       main { padding-top: 2.4rem; }
@@ -1976,7 +1983,8 @@ import { parse } from "/parser/2026.10.13/reader.min.js";
     let at = 0;
     let out = "";
     const sorted = (tokens || []).filter((t) => t.span && t.span.start && t.span.end).sort((a, b) => a.span.start.offset - b.span.start.offset);
-    for (const t of sorted) {
+    for (let i = 0; i < sorted.length; i += 1) {
+      const t = sorted[i];
       const start = t.span.start.offset;
       const end = t.span.end.offset;
       if (start < at || end <= start) continue;
@@ -1984,10 +1992,15 @@ import { parse } from "/parser/2026.10.13/reader.min.js";
       const raw = esc(text.slice(start, end));
       let kind = "";
       if (t.type === "OPERATOR") kind = data.types[t.value] || "op";
-      else if (t.type === "PARTICLE") kind = data.types[t.value.slice(0, 2)] || data.types["#"] || "op";
+      else if (t.type === "PARTICLE") kind = data.types[t.value.slice(0, 2)] || data.types[t.value.slice(0, 1)] || data.types["#"] || "op";
       else if (t.type === "CONTAINER_OPEN" || t.type === "CAPSULE_OPEN") kind = `b-${data.braces[t.value] || "x"}`;
       else if (t.type === "CONTAINER_CLOSE" || t.type === "CAPSULE_CLOSE") kind = `b-${data.braces[CLOSES[t.value]] || "x"}`;
-      else if (t.type === "STRING" || t.type === "PHRASE") kind = "s";
+      else if (t.type === "IDENTIFIER") {
+        const next = sorted[i + 1];
+        if (next && next.type === "OPERATOR" && next.value === "@" && next.span && next.span.start.offset === end) {
+          kind = data.types["@"] || "op";
+        }
+      } else if (t.type === "STRING" || t.type === "PHRASE") kind = "s";
       else if (t.type === "ANNOTATION") kind = "a";
       else if (t.type === "STREAM_CLOSE" || t.type === "STREAM_OPEN") kind = "stream";
       else if (t.type === "COMMENT") kind = "c";

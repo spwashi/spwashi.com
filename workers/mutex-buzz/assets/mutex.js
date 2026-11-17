@@ -31,9 +31,9 @@ const perch = (bee, angle) => {
 /** A line of Spw beneath lock.spw, painted as the file is. */
 function writeLine(el, text) {
   el.replaceChildren();
-  for (const m of text.matchAll(/([*%])|(\[[^\]]*\])|(\{[^}]*\})|(\([^)]*\))|([^*%[{(]+)/g)) {
+  for (const m of text.matchAll(/(#[>:!]?[A-Za-z0-9_-]+)|([A-Za-z0-9_-]+)(?=@)|([*@~?!^%=&$])|(\[[^\]]*\])|(\{[^}]*\})|(\([^)]*\))|("[^"]*")|([^\s#@~?!^%=&$*\[{("]+|\s+|[^\S\r\n]*.)/g)) {
     const span = document.createElement("span");
-    span.className = m[1] ? "m" : m[2] ? "b-mode" : m[3] ? "b-body" : m[4] ? "b-scene" : "w";
+    span.className = m[1] ? "m" : m[2] ? "m-at" : m[3] ? "m" : m[4] ? "b-mode" : m[5] ? "b-body" : m[6] ? "b-scene" : m[7] ? "s" : "w";
     span.textContent = m[0];
     el.append(span);
   }
@@ -79,15 +79,45 @@ if (dial) {
     perch(bee, from);
     requestAnimationFrame(fly);
   }
-  // Each line of the rule lights the part of the lock it governs.
+  // Each line of the rule lights the part of the lock it governs. Tap or press Enter to pin.
+  const lines = [...document.querySelectorAll("#lock-spw .line")];
+  let pinned = null;
   const light = (part) => { document.body.dataset.part = part ?? ""; };
-  for (const line of document.querySelectorAll("#lock-spw .line")) {
+  const syncPin = () => {
+    for (const line of lines) line.setAttribute("aria-pressed", String(Boolean(pinned && line === pinned)));
+    light(pinned ? pinned.dataset.part : null);
+  };
+  const togglePin = (line) => {
+    pinned = pinned === line ? null : line;
+    syncPin();
+  };
+  lines.forEach((line, index) => {
     line.tabIndex = 0;
-    line.addEventListener("pointerenter", () => light(line.dataset.part));
-    line.addEventListener("pointerleave", () => light(null));
-    line.addEventListener("focus", () => light(line.dataset.part));
-    line.addEventListener("blur", () => light(null));
-  }
+    line.setAttribute("role", "button");
+    line.setAttribute("aria-pressed", "false");
+    line.addEventListener("pointerenter", () => { if (!pinned) light(line.dataset.part); });
+    line.addEventListener("pointerleave", () => light(pinned ? pinned.dataset.part : null));
+    line.addEventListener("focus", () => { if (!pinned) light(line.dataset.part); });
+    line.addEventListener("blur", () => light(pinned ? pinned.dataset.part : null));
+    line.addEventListener("click", () => togglePin(line));
+    line.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        togglePin(line);
+      } else if (event.key === "Escape" && pinned) {
+        pinned = null;
+        syncPin();
+      } else if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+        event.preventDefault();
+        const next = lines[(index + (event.key === "ArrowDown" ? 1 : -1) + lines.length) % lines.length];
+        if (pinned) {
+          pinned = next;
+          syncPin();
+        }
+        next.focus();
+      }
+    });
+  });
   if ($("now-line")) writeLine($("now-line"), nowLine(holder));
   // The set's ring, on the lock's own page (never /now/, which other pages frame): where the lock goes from here.
   mountSetRing("mutex.buzz", () => ({

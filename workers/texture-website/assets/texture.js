@@ -137,12 +137,126 @@ function prompts(vocab, state) {
  * sit in the first material's mode and the rest nest in its body, so the line
  * pastes onto factshift.center (2026-11-11: written mode-after-body, it held nothing).
  */
+const OP_KIND = { "~": "potential", "?": "wonder", "*": "value", ".": "ground", "^": "integration", "@": "perspective", "!": "action", "&": "measure", "%": "measure", "=": "configuration", "#": "frame" };
+
 const spwLine = (state) => {
   const [first, ...rest] = state.layers;
   const inner = rest.reduceRight((acc, { material, mark }) => `${mark}${material.slug}${acc ? `{${acc}}` : ""}`, "");
   const mode = [state.ladders.light, state.ladders.wear, state.ladders.process].map(slug).join(", ");
-  return `${first.mark}${first.material.slug}[${mode}]${inner ? `{${inner}}` : ""}`;
+  const view = state.view && state.view !== "studio" ? `${state.view}@ ` : "";
+  return `${view}${first.mark}${first.material.slug}[${mode}]${inner ? `{${inner}}` : ""}`;
 };
+
+function spwLayersNode(layers) {
+  if (!layers.length) return [];
+  const [{ material, mark }, ...rest] = layers;
+  const children = [
+    node("span", { class: "spw-op", "data-op": OP_KIND[mark] || "potential" }, [mark]),
+    node("span", { class: "spw-word" }, [material.slug]),
+  ];
+  if (rest.length) {
+    children.push(
+      node("span", { class: "spw-br", "data-op": "direction" }, ["{"]),
+      ...spwLayersNode(rest),
+      node("span", { class: "spw-br", "data-op": "direction" }, ["}"]),
+    );
+  }
+  return children;
+}
+
+function spwSlotButton(vocab, state, key, onStep) {
+  const words = vocab.ladders[key];
+  const current = state.ladders[key];
+  const idx = Math.max(0, words.indexOf(current));
+  const btn = node("button", {
+    type: "button",
+    class: "spw-slot",
+    role: "slider",
+    "data-key": key,
+    "aria-label": key,
+    "aria-valuemin": "0",
+    "aria-valuemax": String(Math.max(0, words.length - 1)),
+    "aria-valuenow": String(idx),
+    "aria-valuetext": current,
+    title: `${key}: drag horizontally or click to step`,
+  }, [slug(current)]);
+  let moved = false;
+  btn.addEventListener("pointerdown", (e) => {
+    if (e.button && e.button !== 0) return;
+    e.preventDefault();
+    let lastX = e.clientX;
+    let acc = 0;
+    moved = false;
+    const onMove = (ev) => {
+      const dx = ev.clientX - lastX;
+      lastX = ev.clientX;
+      acc += dx;
+      while (Math.abs(acc) >= 26) {
+        const dir = acc > 0 ? 1 : -1;
+        acc -= dir * 26;
+        moved = true;
+        onStep(key, dir, true);
+      }
+    };
+    const onUp = () => {
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onUp);
+      window.removeEventListener("pointercancel", onUp);
+      if (moved) {
+        onStep(key, 0, false);
+        setTimeout(() => { moved = false; }, 0);
+      }
+    };
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+    window.addEventListener("pointercancel", onUp);
+  });
+  btn.addEventListener("click", (e) => {
+    if (moved) { moved = false; return; }
+    onStep(key, e.shiftKey ? -1 : 1, false);
+  });
+  btn.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight" || e.key === "ArrowUp") { e.preventDefault(); onStep(key, 1, false); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowDown") { e.preventDefault(); onStep(key, -1, false); }
+  });
+  return btn;
+}
+
+function spwLineNode(vocab, state, onStep, onCycleView) {
+  const [first, ...rest] = state.layers;
+  const parts = [];
+  const viewLabel = state.view && vocab.views[state.view] ? vocab.views[state.view].name.slice(0, -1) : "studio";
+  const personaBtn = node("button", {
+    type: "button",
+    class: "spw-persona-btn",
+    title: "Switch perspective view",
+    "aria-label": `Perspective view: ${viewLabel}. Click to cycle.`,
+  }, [
+    node("span", { class: "spw-persona", "data-op": "perspective" }, [viewLabel]),
+    node("span", { class: "spw-op", "data-op": "perspective" }, ["@"]),
+  ]);
+  personaBtn.addEventListener("click", () => onCycleView?.());
+  parts.push(personaBtn, " ");
+  parts.push(
+    node("span", { class: "spw-op", "data-op": OP_KIND[first.mark] || "potential" }, [first.mark]),
+    node("span", { class: "spw-word" }, [first.material.slug]),
+    node("span", { class: "spw-br", "data-op": "mode" }, ["["]),
+    spwSlotButton(vocab, state, "light", onStep),
+    node("span", { class: "spw-sep" }, [", "]),
+    spwSlotButton(vocab, state, "wear", onStep),
+    node("span", { class: "spw-sep" }, [", "]),
+    spwSlotButton(vocab, state, "process", onStep),
+    node("span", { class: "spw-br", "data-op": "mode" }, ["]"]),
+  );
+  if (rest.length) {
+    parts.push(
+      node("span", { class: "spw-br", "data-op": "direction" }, ["{"]),
+      ...spwLayersNode(rest),
+      node("span", { class: "spw-br", "data-op": "direction" }, ["}"]),
+    );
+  }
+  return node("code", { class: "spw-expr" }, parts);
+}
 
 /* ── the sketch ──────────────────────────────────────────────── */
 
@@ -447,7 +561,7 @@ function drawStyleCard(vocab, state) {
   return square;
 }
 
-function drawCard(vocab, state, address) {
+function drawCard(vocab, state, address, onStep, onCycleView) {
   const { midjourney, plain } = prompts(vocab, state);
   const line = spwLine(state);
   const name = state.layers.map(({ material, mark }) => `${mark === "?" ? "q" : mark === "." ? "" : mark}${material.slug}`).join("").replace(/[^a-z0-9~*^=@!%-]/g, "") || "texture";
@@ -467,7 +581,7 @@ function drawCard(vocab, state, address) {
         node("p", { class: "card-prompt" }, [plain]),
         node("ol", { class: "anatomy" }, [...anatomy(vocab, state).filter(([, text]) => text).map(([part, text]) => node("li", {}, [node("span", { class: "key" }, [part]), " ", text])), node("li", {}, [node("span", { class: "key" }, ["parameters"]), " ", parameters(vocab, state)])]),
         node("p", { class: "card-facets" }, [facets.join(" · ")]),
-        node("p", { class: "card-line" }, [node("code", {}, [line])]),
+        node("p", { class: "card-line" }, [onStep ? spwLineNode(vocab, state, onStep, onCycleView) : node("code", {}, [line])]),
       ]),
     ]),
     drawStyleCard(vocab, state),
@@ -526,8 +640,33 @@ async function main() {
       history.replaceState(null, "", url);
       render(key);
     });
-    drawCard(vocab, state, url.href);
-    if (focusKey) document.querySelector(`.rungs[aria-label="${focusKey}"] [aria-checked="true"]`)?.focus();
+    drawCard(vocab, state, url.href, (slotKey, delta, scrubbing) => {
+      if (delta) {
+        const live = stateOf(url, vocab);
+        const words = vocab.ladders[slotKey] || [];
+        const idx = Math.max(0, words.indexOf(live.ladders[slotKey]));
+        const next = words[(idx + delta + words.length) % words.length];
+        if (next) url.searchParams.set(slotKey, slug(next));
+        history.replaceState(null, "", url);
+      }
+      render(scrubbing ? undefined : `slot:${slotKey}`);
+      if (scrubbing) {
+        document.querySelector(`.card-line .spw-slot[data-key="${slotKey}"]`)?.classList.add("scrubbing");
+      }
+    }, () => {
+      const viewKeys = ["", ...Object.keys(vocab.views)];
+      const nextKey = viewKeys[(viewKeys.indexOf(state.view) + 1) % viewKeys.length];
+      url.pathname = `${nextKey ? `/${nextKey}@` : ""}${words ? `/${words}` : "/"}`;
+      history.replaceState(null, "", url);
+      render("persona");
+    });
+    if (focusKey === "persona") {
+      document.querySelector(".card-line .spw-persona-btn")?.focus();
+    } else if (focusKey && focusKey.startsWith("slot:")) {
+      document.querySelector(`.card-line .spw-slot[data-key="${focusKey.slice(5)}"]`)?.focus();
+    } else if (focusKey) {
+      document.querySelector(`.rungs[aria-label="${focusKey}"] [aria-checked="true"]`)?.focus();
+    }
   };
   render();
 }

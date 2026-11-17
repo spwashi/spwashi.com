@@ -251,7 +251,8 @@ export function fileKit(data) {
     let at = 0;
     let out = "";
     const sorted = (tokens || []).filter((t) => t.span && t.span.start && t.span.end).sort((a, b) => a.span.start.offset - b.span.start.offset);
-    for (const t of sorted) {
+    for (let i = 0; i < sorted.length; i += 1) {
+      const t = sorted[i];
       const start = t.span.start.offset;
       const end = t.span.end.offset;
       if (start < at || end <= start) continue;
@@ -259,10 +260,15 @@ export function fileKit(data) {
       const raw = esc(text.slice(start, end));
       let kind = "";
       if (t.type === "OPERATOR") kind = data.types[t.value] || "op";
-      else if (t.type === "PARTICLE") kind = data.types[t.value.slice(0, 2)] || data.types["#"] || "op";
+      else if (t.type === "PARTICLE") kind = data.types[t.value.slice(0, 2)] || data.types[t.value.slice(0, 1)] || data.types["#"] || "op";
       else if (t.type === "CONTAINER_OPEN" || t.type === "CAPSULE_OPEN") kind = `b-${data.braces[t.value] || "x"}`;
       else if (t.type === "CONTAINER_CLOSE" || t.type === "CAPSULE_CLOSE") kind = `b-${data.braces[CLOSES[t.value]] || "x"}`;
-      else if (t.type === "STRING" || t.type === "PHRASE") kind = "s";
+      else if (t.type === "IDENTIFIER") {
+        const next = sorted[i + 1];
+        if (next && next.type === "OPERATOR" && next.value === "@" && next.span && next.span.start.offset === end) {
+          kind = data.types["@"] || "op";
+        }
+      } else if (t.type === "STRING" || t.type === "PHRASE") kind = "s";
       else if (t.type === "ANNOTATION") kind = "a";
       else if (t.type === "STREAM_CLOSE" || t.type === "STREAM_OPEN") kind = "stream";
       else if (t.type === "COMMENT") kind = "c";
