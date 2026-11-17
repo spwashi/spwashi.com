@@ -20,7 +20,7 @@ import { escapeHtml } from "../lib/http.js";
 import { writeOrCheck } from "../lib/carry.js";
 import { rgbOf, squarePng } from "../lib/png.js";
 import { ecosystemJson } from "../site-hub-next/src/hosts/ecosystem.js";
-import { ALL, FACETS, FILTERS, GROUND, HOST, SEEDS, TUNING, canonicalPath, expressionOf, maskLabel, vibe, vibeCss } from "./src/vibe.js";
+import { ALL, FACETS, FILTERS, GROUND, HOST, SEEDS, TUNING, canonicalPath, expressionOf, facetChips, maskLabel, vibe, vibeCss } from "./src/vibe.js";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ASSETS = path.join(HERE, "assets");
@@ -39,6 +39,8 @@ function shell({ seed, mask, filters, title, mood, canonical, ground = false }) 
   const v = vibe(seed, mask, filters);
   const expression = ground ? "" : expressionOf(seed, mask, filters, v);
   const facets = FACETS.map((f) => `<li class="${mask.includes(f.letter) ? "on" : "off"}"><code>${escapeHtml(f.sigil)}</code><code>${f.letter}</code> ${f.name}</li>`).join("");
+  // The mask, as six chips a hand can switch: each one is a link to the address with that facet switched.
+  const chips = facetChips(seed, mask, filters).map((c) => `<a class="facet${c.on ? " on" : ""}" href="${escapeHtml(c.href)}" data-mask="${c.mask}" title="${escapeHtml(c.title)}"><span class="facet-letter">${c.letter}</span>${c.name}</a>`).join("");
   const tuple = `/tuple?seed=${seed}&mask=${maskLabel(mask)}${filters.length ? `&filter=${filters.join(",")}` : ""}`;
   const og = `/og/${seed}/${maskLabel(mask)}.svg`;
   return `<!doctype html>
@@ -69,7 +71,8 @@ function shell({ seed, mask, filters, title, mood, canonical, ground = false }) 
   <h1 id="seed-name">${escapeHtml(ground ? "teal stripes" : seed)}</h1>
   <p class="mood" id="mood">${escapeHtml(mood)}</p>
   <dl>
-    <dt>mask</dt><dd id="mask">${escapeHtml(maskLabel(mask))}${filters.length ? ` · ${escapeHtml(filters.join(", "))}` : ""}</dd>
+    <dt id="mask-from">from ${escapeHtml(seed)}</dt><dd class="facet-row" id="mask">${chips}</dd>
+    <dt id="filters-name"${filters.length ? "" : " hidden"}>filters</dt><dd id="filters"${filters.length ? "" : " hidden"}>${escapeHtml(filters.join(", "))}</dd>
     <dt>hour</dt><dd id="hour">this hour</dd>
     <dt>stamp</dt><dd id="stamp">unsigned</dd>
   </dl>

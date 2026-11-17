@@ -111,6 +111,26 @@ export function parseFilters(raw) {
 export const maskLabel = (mask) => (mask === "" ? "-" : mask);
 export const filterLabel = (filters) => (filters.length ? filters.join(",") : "-");
 
+/**
+ * The six facets as the card shows them: each lit when it comes from the seed
+ * and dim when the teal ground stands in, with the address that switches it
+ * (`mask` is that address's letters) and words for a hand about to tap it.
+ */
+export function facetChips(seed, mask, filters) {
+  return FACETS.map((f) => {
+    const on = mask.includes(f.letter);
+    const switched = FACETS.filter((g) => (g === f ? !on : mask.includes(g.letter))).map((g) => g.letter).join("");
+    return {
+      letter: f.letter,
+      name: f.name,
+      on,
+      mask: switched,
+      href: canonicalPath({ seed, mask: switched, filters }),
+      title: on ? `${f.name} from ${seed}; tap for the teal ground's` : `${f.name} from the teal ground; tap for ${seed}'s`,
+    };
+  });
+}
+
 export function canonicalPath({ seed, mask, filters }) {
   let path = `/${seed}`;
   if (mask !== ALL || filters.length) path += `/${maskLabel(mask)}`;
