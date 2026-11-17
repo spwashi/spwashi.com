@@ -1,95 +1,273 @@
 /**
- * smut.today — a small daily erotic zine, a letter to the person in the room,
- * and a shelf of book pitches. The wink lives off-page.
+ * smut.today — a small daily erotic zine, four rooms down one corridor,
+ * a letter to the person in the room, and a shelf of book pitches.
  *
- * The reader is an adult who reads porn on purpose. The page tells them what
- * a piece is, how long it takes, and what is in it before the first line, and
- * then gets out of the way. No script, no accounts, no images: the words carry.
+ * The reader is an adult who reads porn on purpose. Every piece names its
+ * mood, its audience, its pairing, and its length before the door shuts,
+ * and then gets out of the way. Scripts optional, zero tracking, zero ads.
  */
 
-const VERSION = "0.0.3";
+import { escapeHtml, securityHeaders } from "../../lib/http.js";
+import { rgbOf, squarePng } from "../../lib/png.js";
+import { DEFAULT_SPW_PRESETS, evalSpwDynamics, highlightSpw, serializeSpwClient } from "./spw.js";
+
+const VERSION = "0.1.0";
 
 const WORDS_PER_MINUTE = 220;
 
 const STORIES = [
   {
-    slug: "meeting",
-    title: "Before the meeting",
+    slug: "after-hours",
+    title: "Closing the press",
     register: "slow",
-    since: "2026-09-19",
-    kicker: "twelve minutes, glass walls, a lock that actually works",
-    summary: "You already know how the pitch will go. You do not know if you can stand up without giving yourself away.",
-    pairing: "Jules (they/them), a coworker who notices",
-    tags: ["glass walls", "made to wait", "tongue", "two fingers", "fucked on the table", "quiet"],
+    audience: "For unhurried readers who want sensory craft, withheld touch, and tension held past the last second.",
+    since: "2026-11-17",
+    cadence: { baseMs: 2800, jitterMs: 900 },
+    kicker: "turpentine, rag paper, the last bus already gone",
+    summary: "The drying racks are full and your shift ended forty minutes ago. Nadia still has two plates left to wipe.",
+    pairing: "Nadia (she/her), master printer · you, the apprentice who stayed",
+    tags: ["print studio", "ink on wrists", "held still", "tongue", "slow buildup", "consent asked twice"],
     body: [
-      "The twelfth-floor conference room still smells like dry-erase and the coffee nobody finished. Your deck is open on a laptop you are not looking at. Two desks over, Jules has been watching your mouth all morning like it is a problem they intend to solve carefully, with both hands.",
-      "You have been wet since the standup. Not the poetic kind. The kind that ruins an afternoon by degrees, so that every time you uncross your legs the fabric drags and you have to swallow before you can say a number out loud. Jules notices. Jules always notices; it is the least professional thing about them and the reason you are still here. When the calendar pings they mouth conference B without looking up, and you stand like a person with somewhere to be.",
-      "The lock clicks. The blinds come down one slat at a time, which is a cruelty, because you have to stand there while the room turns private. Jules does not touch you. That is the filthy part. They lean on the far end of the table and wait: for your palms to find the wood, for you to look back over your shoulder, for you to say it.",
-      "“Please.” It comes out under the HVAC. They cross the room slowly enough that you feel each step in your knees. The first kiss lands on the hinge of your jaw, the second under your ear, in the place that makes your knees dishonest. Your skirt goes up an inch at a time. Their knuckles trace the soaked cotton the way a hand traces a sentence it wants to remember, and then they are on the floor, and their tongue takes one long, mean stripe through you and stops, breathing, until you rock back onto their mouth and ask again without words.",
-      "They take their time because time is the whole point. Circling. Sucking just enough to make you say their name into your own wrist. Two fingers slide in when you are already shaking and curl until your thighs try to close; they hold you open with a forearm and keep going, patient as a proof, until you come on their tongue with your teeth in your sleeve, ugly and grateful and quieter than you thought you could be.",
-      "Only then do they stand. Spit-slick, smiling, unhurried. They push into you in one stroke slow enough to count, a hand on your clit in the same rhythm, their breath on the back of your neck saying nothing at all. You come again with the table edge in your palms, clenching around them, and Jules follows with a sound they will deny in the hallway.",
-      "Eleven minutes. The blinds go up one slat at a time. You fix your hair in the black of the screen and they fix your collar, and when the room fills you sit across from each other and you give the pitch, and you are very good, and nobody on the twelfth floor ever finds out why.",
+      "The Vandercook press clicks as it cools, iron ticking back toward room temperature. Outside, the avenue drains from wet headlights to sodium amber. Nadia wipes black oil ink from a copperplate with the heel of her rag, forearms corded, sleeves rolled above the elbow where a smudge of Prussian blue sits like a thumbprint nobody washed away.",
+      {
+        text: "You stayed to stack the rag paper because she asked if you wanted a ride home, and neither of you mentioned the rain stopped twenty minutes ago. When she rinses her hands at the deep porcelain sink, she does not reach for a towel. She walks behind your stool instead and sets both cool, damp {slot:touch|palms|knuckles|fingers|mouth} over your collarbones, waiting there until your breathing shifts under them.",
+        beat: {
+          kind: "linger",
+          label: "Hold this moment",
+          alt: "Her thumb finds the hollow at the base of your throat and rests on the pulse there—not pressing, only measuring how long it takes you to tilt your head back into her ribs.",
+        },
+      },
+      "“You’re allowed to walk out,” she says near your temple, voice dry as cotton rag. You turn in your stool until your knees bracket hers and pull her apron ties loose with two fingers. The heavy canvas drops around her ankles. Underneath she wears an unbuttoned work shirt and nothing that pretends she isn’t warm.",
+      "She keeps your wrists pinned loosely to the edge of the proofing table—not hard, only enough to establish who gets to set the pace. Her mouth starts at the pulse below your jaw and takes an unholy amount of time crossing your sternum. When she slides your trousers down to mid-thigh and parts you with her thumbs, she stops completely just to watch your stomach tighten in the cold studio air.",
+      {
+        text: "“Ask me properly,” she says, breath brushing the inside of your thigh. When you say {slot:honorific|please|ma’am|don’t stop|right there}, she answers with the flat of her tongue, broad and deliberate, circling until the rag paper rustles behind your elbows. She works two fingers inside you slowly enough that you count every ridge, curling upward against the place that makes your ankles lock around her shoulders while she keeps her eyes open on your face.",
+        beat: {
+          kind: "sharpen",
+          label: "Cut closer",
+          alt: "“Don’t look away,” she mutters against your skin, mouth slick, dragging one crooked knuckle deep while her other hand flattens over your hip to keep you from escaping the table.",
+        },
+      },
+      "You come quietly into the crook of your own forearm, hips lifting off the oak while she stays right where she is, humming against you until the aftershocks thin out to shivers. She stands only when your legs go slack, climbs onto the low bench beside you, and pulls you down across her lap with your chest flush to hers so she can grind lazily against your thigh until she breaks too—a sharp, bitten-off curse straight into your collar.",
+      "Afterward she hands you a clean shop rag and a paper cup of lukewarm {slot:aftertaste|chamomile|peppermint|tap water|ginger tea} from the kettle by the paper cutter. Her knuckles are red from turpentine and warm water. When she finally unlocks the steel alley door, the street is clean and silver, and she walks you to your bike without letting go of your coat sleeve once.",
     ],
     keeps: [
-      "dishonest knees",
-      "the room turns private",
-      "patient as a proof",
-      "ugly and grateful",
+      "ticking back toward room temperature",
+      "nobody washed away",
+      "flat of her tongue",
+      "without letting go",
     ],
+    edition: {
+      tease: "Cool, damp {slot:touch|palms} on dry collarbones—waiting there without reaching for a towel until your {slot:honorific|please} changes the speed limit of the room.",
+      couplePrompt: "Tonight: agree that the slower person keeps both hands still for sixty seconds before naming what they want.",
+      circleNote: "Craft lens: physical labor (ink, rag paper, cooling iron) doubles as pacing clock—try writing an encounter timed to an object cooling down.",
+    },
     linger: [
       {
-        ask: "Where did you stop breathing?",
-        say: "Probably at the blinds. Most people do. The room turns private one slat at a time and you have to stand there and want it, in full view of nothing.",
-        shift: "one slat at a time, and you stood there and wanted it",
+        ask: "Where did the balance tip?",
+        say: "At the sink, when she skipped the towel. Cool wet hands on dry skin say more than a speech ever does.",
+        shift: "cool hands, dry collarbones, no towel reached for",
       },
       {
-        ask: "What would you have said instead of please?",
-        say: "Nothing. That is what the scene knows about you. The asking was the whole pitch, and you gave it before the lock clicked.",
-        shift: "the asking was the pitch; the lock was a formality",
+        ask: "Why keep your eyes open?",
+        say: "Because slow is only slow when both people have to witness the speed limit. Hiding makes it quick.",
+        shift: "both people watching the speed limit hold",
       },
       {
-        ask: "Read it again, slower.",
-        say: "Skip the first paragraph. Start at the lock. Count the steps across the room with them, and do not let yourself get to the table before they do.",
-        shift: "start at the lock. count the steps. do not get there first",
+        ask: "Go back through at half speed.",
+        say: "Start right after the apron drops. Stay at the proofing table until you hear the paper rustle twice.",
+        shift: "start where the apron drops. let the paper rustle twice",
         again: true,
       },
     ],
   },
   {
-    slug: "train",
-    title: "The last car",
+    slug: "dispatch",
+    title: "Mile marker 47",
     register: "dirty",
-    since: "2026-09-19",
-    kicker: "coat, pole, a question asked with a look",
-    summary: "Late train. Almost empty. You did not get on this car by accident.",
-    pairing: "Ren (they/them), a stranger on the platform",
-    tags: ["last car", "in public", "gloves", "fingers", "fast", "not a word"],
+    audience: "For readers who want blunt spoken heat, zero preamble, and kinetic rhythm.",
+    since: "2026-11-17",
+    cadence: { baseMs: 1100, jitterMs: 450 },
+    kicker: "ice machine humming, neon bleeding under the door",
+    summary: "You split the same storm corridor in two cars and took adjacent rooms. Nobody made it past the coat rack.",
+    pairing: "Mateo (he/him), courier running the same route · you",
+    tags: ["motel stop", "spoken filth", "against the wall", "fast", "hands and mouth", "no preamble"],
     body: [
-      "Last car. Fluorescent. A balloon from three stops ago stuck to the ceiling. Ren stands close enough that their coat brushes yours when the train leans, and they smell like cold air and the peppermint from the platform.",
-      "You look at their mouth. They look at your hand on the pole. The look is the consent form. You nod. Ren’s gloved fingers find the inside of your wrist, the gap in your coat, the heat of you through clothes that were not designed for this.",
-      "The tunnel takes the lights. Their hand is already in your underwear, already slick, already rubbing you in tight filthy circles while the car rattles. Nobody is watching. That is the lie you both keep. You come before the announcement finishes saying the name of the stop, biting the collar of your own coat, knees a rumor.",
-      "Ren licks their fingers without theater, straightens your coat, and steps off at your stop as if they had only ever been holding the pole. You ride one more. Because you can.",
+      "Room 11 smells like cedar air freshener and wet wool. You barely have the deadbolt thrown before Mateo’s boots hit the linoleum and his hands catch the waistband of your jeans—not asking about the pass, not shaking off his jacket, just hauling you backward until the light switch clicks off behind your shoulder blades.",
+      {
+        text: "“I stared at your tail-lights for ninety miles,” he says against your mouth, {slot:touch|teeth|tongue|thumb|knuckles} catching your lower lip until you groan into him. His palm slides straight down the front of your shirt, rough-knuckled and hot from the truck heater. “Tell me you weren’t driving with one hand between your legs around Baker’s Ridge.”",
+        beat: {
+          kind: "sharpen",
+          label: "Say what he asked",
+          alt: "“Only past the tunnel,” you admit, grabbing the hair at his nape to pull his mouth back onto yours. He laughs low in his throat and shoves your jeans down around your calves in one impatient yank.",
+        },
+      },
+      "“You’re soaked,” he rasps, thumb parting you through cotton already ruined. No ceremony, no soft lighting—just the green vacancy sign cutting stripes across his collarbone while he drops to his knees on the thin carpet and hooks one of your thighs over his shoulder. His stubble scrapes the inside of your leg and his tongue goes straight to work, hungry and noisy, sucking your clit between his lips while two thick fingers slam home.",
+      "You brace one palm flat against the painted cinderblock to stay upright while he fucks you with his hand, wrist turning in crisp, filthy strokes that splash loud against your skin. “Keep talking,” you pant, fingers digging into his shoulder through damp denim, and he looks up from between your legs with spit shining on his chin. “{slot:honorific|Baby|Good girl|Good boy|Look at yourself},” he says, voice wrecked. “Taking my whole hand in a thirty-dollar room.”",
+      {
+        text: "You break hard enough to slap the drywall, thighs clamping his ears while he rides it out with short, ruthless flicks of his tongue. Before your breath comes back, he is up, kicking off his soaked jeans, rolling a foil wrapper open with his teeth, and pressing you face-first into the stiff motel spread with one hand flat between your shoulder blades.",
+        beat: {
+          kind: "linger",
+          label: "Catch one breath",
+          alt: "For two heartbeats he pauses flush over your back, sweating into your neck, giving you time to widen your stance and reach back to guide him home yourself.",
+        },
+      },
+      "He pushes in {slot:paceWord|hard|deep|fast|steady} on the first thrust—heavy, hot, zero hesitation—and sets a brutal, knocking rhythm that makes the headboard thud once before you wedge a pillow behind it with your fist. His grip bruises slightly on your hipbone; yours twists in the coarse sheet until he spills against your back with a ragged {slot:sound|curse|groan|whisper|laugh} and drops his forehead straight between your shoulders.",
+      "Ten minutes later the highway wind rattles the windowpane and he is pulling fresh coffee out of a battered thermos on the nightstand. He hands you the lid cup without a word, kisses the sweaty hairline behind your ear, and checks the radar while your knees are still shaking.",
     ],
     keeps: [
-      "the look is the consent form",
-      "knees a rumor",
-      "without theater",
+      "deadbolt thrown",
+      "rough-knuckled and hot",
+      "green vacancy sign",
+      "without a word",
     ],
+    edition: {
+      tease: "“I stared at your tail-lights for ninety miles,” he says, {slot:touch|teeth} at your lower lip—not even taking off the wet jacket before the deadbolt throws.",
+      couplePrompt: "Tonight: skip the warm-up talk; describe the first thirty seconds when one of you walks through the door.",
+      circleNote: "Craft lens: ambient budget motel cues (thermos, ice machine, drywall) make fast heat credible—where does speed feel earned rather than rushed?",
+    },
     linger: [
       {
-        ask: "Why did you ride one more stop?",
-        say: "Because it was yours. Ren stepped off into the ordinary and you stayed in the last car with the balloon and the heat, and nobody told you when the scene ended. You decided.",
-        shift: "the balloon, the heat, a stop that was yours to call",
+        ask: "Why didn’t either of you unpack?",
+        say: "Because the whole point of mile marker 47 is not pretending you are staying for breakfast.",
+        shift: "nobody unpacked; nobody lied about staying till morning",
       },
       {
-        ask: "What did the look actually say?",
-        say: "Yes. And: not here. And: here. All three at once, which is the trick of a train at night. A form you sign with your face.",
-        shift: "yes. not here. here. a form you signed with your face",
+        ask: "What ruined you faster—the mouth or the talking?",
+        say: "The talking. Cold motel glass and a voice that does not edit itself once the lock catches.",
+        shift: "the voice that stopped editing the second the lock caught",
       },
       {
-        ask: "Read it again, faster.",
-        say: "Do not stop at the tunnel this time. Let the stop get called. Let the doors open on you still shaking.",
-        shift: "do not stop at the tunnel. let the doors open on you",
+        ask: "Hit it from the deadbolt again.",
+        say: "Skip the first line. Go straight to the light switch clicking off behind your shoulder blades.",
+        shift: "straight to the light switch clicking behind your shoulders",
+        again: true,
+      },
+    ],
+  },
+  {
+    slug: "threshold",
+    title: "Salt on the counter",
+    register: "warm",
+    audience: "For readers who want domestic affection, unforced humor, shared breath, and greedy closeness.",
+    since: "2026-11-17",
+    cadence: { baseMs: 1900, jitterMs: 650 },
+    kicker: "rain on the skylight, wooden spoon, nobody dressed for company",
+    summary: "You both meant to cook dinner properly. Instead, Eli steals an olive off your thumb and forgets the burner is off.",
+    pairing: "Eli (they/them), years in and still greedy · you",
+    tags: ["domestic warmth", "teasing", "laughter mid-kiss", "mouths and hands", "familiar touch", "aftercare baked in"],
+    body: [
+      "The garlic is already minced and the pot isn’t even warm yet when Eli crowds you back against the butcher block, hips settling between yours with the shameless ease of someone who knows where all the drawers stick. They smell like cedar soap, rosemary, and the wool sweater they stole from your closet three winters ago.",
+      {
+        text: "“Taste,” they say, holding a brined olive between two fingers right at your {slot:touch|mouth|lips|chin|throat}, except when you part for it they nudge it against your bottom lip slowly and kiss the salt right off instead. You laugh against them, hands slipping up under the hem of their oversized sweater where the skin over their ribs is always {slot:temperature|three degrees warmer|fever-warm|flush with heat|soft under wool} than yours.",
+        beat: {
+          kind: "linger",
+          label: "Stay in the laugh",
+          alt: "Eli grins into your cheek, nose cold from stepping onto the porch for herbs, and murmurs, “Dinner was a polite fiction twenty minutes ago,” before lifting you onto the counter next to the cutting board.",
+        },
+      },
+      "You kick a flour canister sideways with your heel as they step right up into the V of your knees. Nothing about this is rehearsed or stern—Eli’s thumbs hook your pajama waist down with an affectionate tug, kissing the crease of your hipbone like they’re greeting an old friend they missed all Tuesday.",
+      "When their mouth meets you, it isn’t hurried theater; it is an absurdly specific education in everything you like. Two slow passes flat and warm, a soft hum right over your clit that makes your heels dig into their lower back, and then one finger gliding easily inside because you’ve been winding each other up since noon.",
+      {
+        text: "“Wait—look at me,” you gasp, grabbing the front of their sweater because you want to see their eyelashes flutter when you arch. Eli looks up immediately, mouth shining, smiling crookedly around the edge of the syllable as they slide a second finger beside the first and press their palm down gently against your lower belly so the angle catches everything.",
+        beat: {
+          kind: "sharpen",
+          label: "Turn the heat up",
+          alt: "“You’re getting prettier every time you talk back, {slot:honorific|sweetheart|trouble|gorgeous|love},” Eli mutters, rolling their wrist sharper until your knees tremble against their ears and laughter turns straight into a sharp whine.",
+        },
+      },
+      "You come clinging to their shoulders with your forehead pressed to their temple, half-crying with relief while they keep whispering nonsense praise into your hair. Before you catch your breath, you drag them up beside you on the wide lip of the sink, tugging their sweats down until you can wrap your slick hand around them—thumbing the wet tip while you kiss them slow and messy, sharing the taste of you until Eli bucks into your fist with a shaky {slot:sound|laugh|sigh|groan|cry} that turns into a long, shuddering groan against your neck.",
+      "Eli fetches two damp washcloths from the utility drawer, wipes your thighs clean with absurd tenderness, and drops their forehead against your collarbone while the rain beats silver across the skylight. Five minutes later you turn the stove back on in nothing but two unmatched socks and the same borrowed sweater.",
+    ],
+    keeps: [
+      "where all the drawers stick",
+      "polite fiction",
+      "specific education",
+      "unmatched socks",
+    ],
+    edition: {
+      tease: "“Taste,” Eli says with an olive at your {slot:touch|mouth}, grinning against your skin: dinner was a polite fiction twenty minutes ago.",
+      couplePrompt: "Tonight: pause halfway through a mundane chore and refuse to explain why you’re grinning until the other person guesses.",
+      circleNote: "Craft lens: laughter mid-climax dissolves stiffness fast—notice how humor raises stakes by making both characters dangerously unguarded.",
+    },
+    linger: [
+      {
+        ask: "Why does laughter make it hotter?",
+        say: "Because nobody is performing invulnerability. If you can grin mid-sentence and still fall apart thirty seconds later, the room is actually safe.",
+        shift: "no performance; just safe enough to laugh and fall apart",
+      },
+      {
+        ask: "Who turns the burner back on?",
+        say: "Whichever one remembers first—and even then, dinner is going to be twenty minutes late and nobody cares.",
+        shift: "the garlic is still on the board; dinner can wait",
+      },
+      {
+        ask: "Take the kitchen counter again.",
+        say: "Go back to the olive at your bottom lip. Don’t rush past the part where they smile against your mouth.",
+        shift: "back to the olive. stay inside the grin",
+        again: true,
+      },
+    ],
+  },
+  {
+    slug: "dossier",
+    title: "Clause four",
+    register: "sharp",
+    audience: "For readers who want negotiated authority, crisp protocol, and precise psychological edge.",
+    since: "2026-11-17",
+    cadence: { baseMs: 3200, jitterMs: 850 },
+    kicker: "brass desk lamp, fountain pen, three rules spoken before touching",
+    summary: "Every Tuesday she drafts the terms on heavy cream cardstock. Tonight you asked her to underline clause four twice.",
+    pairing: "Dr. Vale (she/her) · you, who signed the margin",
+    tags: ["structured protocol", "praise and edge", "kneeling", "spoken terms", "controlled pace", "clear safeword"],
+    body: [
+      "The study holds one warm cone of light from the green glass banker’s lamp; everything outside it is bookshelves and quiet street noise three floors down. Dr. Vale sits in the leather wingback with a fountain pen capped beside a single index card. You kneel on the folded wool rug to the left of her knee, posture {slot:stance|straight|still|open|composed}, hands open palms-up on your thighs because that was clause one.",
+      {
+        text: "“Color check first,” she says, voice calm and exact. “{slot:checkWord|Green|Steady|Clear|Ready},” you answer without shifting. She sets a brass kitchen timer face-down on the desk blotter so only she sees the dial, then reaches down to tilt your chin up with two dry knuckles. “Clause four,” she reads smoothly. “You do not touch yourself, and you do not come without naming the exact sensation that would push you over.”",
+        beat: {
+          kind: "sharpen",
+          label: "Read the fine print",
+          alt: "“If you lose words,” she adds, {slot:touch|thumb|knuckle|fingertip|pen} stroking once across your lower lip, “we drop back down to stillness for sixty seconds and start over. Clear?”",
+        },
+      },
+      "“Yes, {slot:honorific|ma’am|doctor|sir|mistress}.” Your pulse kicks clean into your throat. She leans forward and unbuttons your collar one notch at a time, taking infuriating care not to brush your collarbone until the shirt hangs open. Then her bare hand slides down your ribcage—firm, cool, unhurried—stopping flush over your navel until your stomach flattens under the pressure.",
+      "She stands, guides you cleanly onto the low ottoman with your thighs parted over the leather edge, and kneels in front of you in tailored slacks without once breaking composure. Her first touch between your legs is dry fingertips framing you cleanly, testing how wet you already are before she lets out a quiet, approving breath. “Good. You kept your head all week.”",
+      {
+        text: "When she puts her mouth on you, the control is terrifyingly precise: flat broad strokes until your hips lift off the leather, then an immediate pause—just her warm breath hovering an inch away while her fingers press into your inner thighs to hold you still. “Name it,” she orders softly. “Your tongue at the top edge,” you manage, voice thin. She rewards the precision immediately: two thick, steady passes right there until your knees shake, followed by two fingers sinking deep and stroking smoothly against the front wall.",
+        beat: {
+          kind: "linger",
+          label: "Hold the edge",
+          alt: "Twice more she brings you right up to the shelf—letting heat flood behind your eyelids—and stops dead the instant your heels dig into the rug, making you articulate every millimeter before she resumes.",
+        },
+      },
+      "On the fourth climb you barely hold syntax together: “Your thumb circling while your fingers stay still—please, {slot:honorific|ma’am|doctor|sir|mistress}, that’s it.” She doesn’t hesitate. She holds the exact rhythm she promised, speaking steady low praise against your hipbone until you break violently, arching off the ottoman with both hands white-knuckled on its sides while she anchors you cleanly through the crest.",
+      "When the timer rings softly from the blotter three minutes later, you are wrapped in her cashmere cardigan on the rug, sipping cold mineral water from a heavy tumbler while she initials the index card in wet black ink and drops it into the cedar box between you.",
+    ],
+    keeps: [
+      "hands open palms-up",
+      "timer face-down",
+      "kept your head all week",
+      "initialed in wet black ink",
+    ],
+    edition: {
+      tease: "“You do not come,” she reads from clause four, “without naming the exact sensation that pushes you over.” Answer cleanly—{slot:honorific|ma’am} is listening.",
+      couplePrompt: "Tonight: write three short rules on a scrap of paper before undressing, and require plain spoken syntax right at the brink.",
+      circleNote: "Craft lens: forcing articulate speech inside peak arousal creates instant dramatic friction—test what happens when consent rules double as dirty talk.",
+    },
+    linger: [
+      {
+        ask: "Why write three lines down beforehand?",
+        say: "Because ambiguity is sloppy. When the boundary is inked in daylight, nobody has to guess how far the floor can drop.",
+        shift: "ambiguity is sloppy; ink in daylight sets the floor free",
+      },
+      {
+        ask: "Was stopping hardest, or naming it?",
+        say: "Naming it. Having to use clean English right when your body wants only vowels.",
+        shift: "clean English required at the exact moment you only want vowels",
+      },
+      {
+        ask: "Go back to clause one.",
+        say: "Sit straight on the wool rug. Wait for the fountain pen cap to click before moving a finger.",
+        shift: "back on the rug. wait for the fountain pen cap to click",
         again: true,
       },
     ],
@@ -133,21 +311,18 @@ const LEAVE_URL = "https://en.wikipedia.org/wiki/Main_Page";
 
 /* The site talking to itself, one line a day, under the door. */
 const MURMURS = [
-  "The door is shut. Tomorrow it is a different door.",
+  "Turpentine, neon, kitchen salt, brass ink. Four doors down the same corridor.",
   "You came here for a scene. Stay for the sentence you did not expect to keep.",
-  "Slow is not a length. It is a decision about who gets to hurry.",
-  "Nobody on this page is in a rush. That includes you, if you let it.",
-  "Read it once for the heat. Read it again for the room.",
-  "The lock, the coat, the look. Small things carry the weight here.",
+  "Slow, dirty, warm, sharp: every reader deserves a door built for how they actually want it.",
+  "Nobody on this page is in a rush. Even the fast door waits for your signal first.",
+  "Read it once for the heat. Open a margin beat for the edge you almost missed.",
+  "The press, the deadbolt, the olive, the timer. Small things carry the weight here.",
   "You do not owe anyone an explanation for the tab you have open.",
 ];
 
 function murmur(now) {
   return MURMURS[dayIndex(now) % MURMURS.length];
 }
-
-import { escapeHtml, securityHeaders } from "../../lib/http.js";
-import { rgbOf, squarePng } from "../../lib/png.js";
 
 const BASE_SECURITY = securityHeaders({
   corp: "same-origin",
@@ -261,6 +436,7 @@ const APP_JS = `(() => {
   /* 1. Cluster-shared two-finger pinch to scale (70%-120%, key "set.text-scale/1"). */
   const STEPS = ["70", "80", "90", "100", "110", "120"];
   const TEXT_KEY = "set.text-scale/1";
+  const ROOM_KEY = "set.spw-room/1";
   const IGNORE = "a, button, input, select, textarea, label, summary, details, video, audio, iframe";
   let badge = null;
   let badgeTimer = 0;
@@ -360,7 +536,7 @@ const APP_JS = `(() => {
   }
   const forgetBtn = document.querySelector('form.settle button[name="forget"]');
   forgetBtn?.addEventListener("click", async () => {
-    try { localStorage.removeItem(TEXT_KEY); } catch {}
+    try { localStorage.removeItem(TEXT_KEY); localStorage.removeItem(ROOM_KEY); } catch {}
     try {
       if ("caches" in window) {
         for (const k of await caches.keys()) {
@@ -387,27 +563,33 @@ const APP_JS = `(() => {
     syncThread();
   }
 
-  /* 4. "One breath at a time" focused reading mode for late-night mobile reading. */
+  /* 4. Scene chamber: "One breath at a time", "Voices only", keyboard stepping, and scale step. */
+  const paras = prose ? [...prose.querySelectorAll(":scope > p, .beat-wrap > p")] : [];
   const focusBtn = document.getElementById("focus-toggle");
-  if (prose && focusBtn) {
-    const paras = [...prose.querySelectorAll("p")];
-    let focusedIdx = -1;
-    const paintFocus = () => {
-      const on = focusedIdx >= 0;
-      prose.classList.toggle("is-focused", on);
-      focusBtn.setAttribute("aria-pressed", String(on));
-      focusBtn.textContent = on ? "Open full page" : "One breath at a time";
-      paras.forEach((p, idx) => p.classList.toggle("is-lit", !on || idx === focusedIdx));
-      if (on && paras[focusedIdx]) paras[focusedIdx].scrollIntoView({ behavior: document.documentElement.dataset.move === "still" ? "auto" : "smooth", block: "center" });
-    };
+  const breathCount = document.getElementById("breath-count");
+  let focusedIdx = -1;
+  const paintFocus = () => {
+    if (!prose || !focusBtn) return;
+    const on = focusedIdx >= 0;
+    prose.classList.toggle("is-focused", on);
+    focusBtn.setAttribute("aria-pressed", String(on));
+    focusBtn.textContent = on ? "Open full page" : "One breath";
+    paras.forEach((p, idx) => p.classList.toggle("is-lit", !on || idx === focusedIdx));
+    if (breathCount) {
+      breathCount.textContent = on ? (focusedIdx + 1) + " / " + paras.length : "";
+      breathCount.hidden = !on;
+    }
+    if (on && paras[focusedIdx]) paras[focusedIdx].scrollIntoView({ behavior: document.documentElement.dataset.move === "still" ? "auto" : "smooth", block: "center" });
+  };
+  if (prose && focusBtn && paras.length) {
     focusBtn.hidden = false;
     focusBtn.addEventListener("click", () => {
       focusedIdx = focusedIdx >= 0 ? -1 : 0;
       paintFocus();
     });
     paras.forEach((p, idx) => {
-      p.addEventListener("click", () => {
-        if (focusedIdx < 0) return;
+      p.addEventListener("click", (e) => {
+        if (focusedIdx < 0 || e.target.closest(".beat-note")) return;
         if (idx === focusedIdx) {
           focusedIdx = idx + 1 < paras.length ? idx + 1 : -1;
         } else {
@@ -416,9 +598,242 @@ const APP_JS = `(() => {
         paintFocus();
       });
     });
+    addEventListener("keydown", (e) => {
+      if (focusedIdx < 0 || /^(INPUT|TEXTAREA|SELECT)$/.test(e.target?.tagName) || e.metaKey || e.ctrlKey || e.altKey) return;
+      if (e.key === "ArrowDown" || e.key === "j") {
+        e.preventDefault();
+        focusedIdx = Math.min(paras.length - 1, focusedIdx + 1);
+        paintFocus();
+      } else if (e.key === "ArrowUp" || e.key === "k") {
+        e.preventDefault();
+        focusedIdx = Math.max(0, focusedIdx - 1);
+        paintFocus();
+      }
+    });
   }
 
-  /* 5. Interactive "Words this piece keeps" -> locate and pulse phrase right in the prose. */
+  const voicesBtn = document.getElementById("voices-toggle");
+  if (prose && voicesBtn && paras.length) {
+    const voiced = paras.filter((p) => /[“”"]/.test(p.textContent));
+    if (voiced.length) {
+      voiced.forEach((p) => p.classList.add("has-voice"));
+      voicesBtn.hidden = false;
+      voicesBtn.addEventListener("click", () => {
+        const next = voicesBtn.getAttribute("aria-pressed") !== "true";
+        voicesBtn.setAttribute("aria-pressed", String(next));
+        prose.classList.toggle("is-voices", next);
+      });
+    }
+  }
+
+  const scaleBtn = document.getElementById("scale-step");
+  if (scaleBtn) {
+    const CYCLE = ["90", "100", "110", "120"];
+    const paintScaleBtn = () => { scaleBtn.textContent = "Text " + getScale() + "%"; };
+    scaleBtn.hidden = false;
+    paintScaleBtn();
+    scaleBtn.addEventListener("click", () => {
+      const cur = getScale();
+      const idx = CYCLE.indexOf(cur);
+      const next = CYCLE[(idx + 1) % CYCLE.length];
+      setScale(next);
+      paintScaleBtn();
+    });
+  }
+
+  document.querySelectorAll("details.beat-note").forEach((note) => {
+    note.addEventListener("toggle", () => {
+      if (!note.open) return;
+      note.dataset.turn = "true";
+      setTimeout(() => { delete note.dataset.turn; }, 260);
+    });
+  });
+
+  /* 4b. Room dial on "/" — instant oklab temperature + shelf filter with ?mood= URL parity. */
+  const dial = document.getElementById("room-dial");
+  const shelf = document.querySelector("ul.pieces");
+  const dialStatus = document.getElementById("dial-status");
+  if (dial && shelf) {
+    const pills = [...dial.querySelectorAll("a[data-mood]")];
+    const applyMood = (mood, push = true) => {
+      const next = mood || "all";
+      if (next === "all") delete document.documentElement.dataset.moodTint;
+      else document.documentElement.dataset.moodTint = next;
+      pills.forEach((a) => {
+        if (a.dataset.mood === next) a.setAttribute("aria-current", "true");
+        else a.removeAttribute("aria-current");
+      });
+      let visible = 0;
+      shelf.querySelectorAll(":scope > li").forEach((li) => {
+        const card = li.querySelector("[data-register]");
+        const show = next === "all" || (card && card.dataset.register === next);
+        li.hidden = !show;
+        if (show) visible += 1;
+      });
+      if (dialStatus) {
+        dialStatus.textContent = next === "all"
+          ? "Showing all four doors in the corridor."
+          : "Tuned to " + next + " — " + visible + (visible === 1 ? " scene open below." : " scenes open below.");
+      }
+      if (push && "replaceState" in history) {
+        const target = next === "all" ? "/" : "/?mood=" + encodeURIComponent(next);
+        history.replaceState(null, "", target);
+      }
+    };
+    dial.addEventListener("click", (e) => {
+      const a = e.target.closest("a[data-mood]");
+      if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      applyMood(a.dataset.mood, true);
+    });
+    document.querySelectorAll(".registers a[data-mood]").forEach((a) => {
+      a.addEventListener("click", (e) => {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        e.preventDefault();
+        applyMood(a.dataset.mood, true);
+        shelf.scrollIntoView({ behavior: document.documentElement.dataset.move === "still" ? "auto" : "smooth", block: "nearest" });
+      });
+    });
+  }
+
+  /* 4c. Configurable steamy word slots & editorial screenshot framing. */
+  const slotState = (() => {
+    try { return JSON.parse(localStorage.getItem(ROOM_KEY) || "{}") || {}; } catch { return {}; }
+  })();
+  const saveRoomState = (patch) => {
+    Object.assign(slotState, patch);
+    try { localStorage.setItem(ROOM_KEY, JSON.stringify(slotState)); } catch {}
+  };
+  const paintSlots = (overrides = {}) => {
+    document.querySelectorAll(".word-slot[data-slot]").forEach((btn) => {
+      const key = (btn.dataset.slot || "").toLowerCase();
+      const val = overrides[key] || (slotState.words && slotState.words[key]);
+      if (val) btn.textContent = val;
+    });
+  };
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest(".word-slot[data-slot]");
+    if (!btn) return;
+    const key = (btn.dataset.slot || "").toLowerCase();
+    const choices = (btn.dataset.choices || "").split("|").filter(Boolean);
+    if (!choices.length) return;
+    const cur = btn.textContent.trim();
+    const idx = choices.indexOf(cur);
+    const next = choices[(idx + 1) % choices.length];
+    const words = { ...(slotState.words || {}), [key]: next };
+    saveRoomState({ words });
+    paintSlots(words);
+    btn.dataset.turn = "true";
+    setTimeout(() => { delete btn.dataset.turn; }, 240);
+  });
+
+  document.addEventListener("click", (e) => {
+    const shotBtn = e.target.closest("[data-shot-btn]");
+    if (!shotBtn) return;
+    const card = shotBtn.closest(".tease-shot");
+    const nextClean = document.documentElement.dataset.shot !== "clean";
+    if (nextClean) {
+      document.documentElement.dataset.shot = "clean";
+      card?.setAttribute("data-shot-focus", "true");
+      shotBtn.textContent = "Exit frame";
+      shotBtn.setAttribute("aria-pressed", "true");
+    } else {
+      delete document.documentElement.dataset.shot;
+      document.querySelectorAll("[data-shot-focus]").forEach((el) => el.removeAttribute("data-shot-focus"));
+      document.querySelectorAll("[data-shot-btn]").forEach((b) => {
+        b.textContent = "Frame card";
+        b.setAttribute("aria-pressed", "false");
+      });
+    }
+  });
+
+  /* 4d. Short & variable timeouts ("Timed unfold") calibrated to mood, syntax, and Spw pause. */
+  const timedBtn = document.getElementById("timed-toggle");
+  const timedBar = document.getElementById("timed-bar");
+  const timedFill = document.getElementById("timed-fill");
+  const timedLabel = document.getElementById("timed-label");
+  const timedSkip = document.getElementById("timed-skip");
+  let timedBaseOverride = null;
+  let timedHandle = 0;
+  let timedIdx = -1;
+  const beatNodes = prose ? [...prose.querySelectorAll(":scope > p, .beat-wrap")] : [];
+  const nextTimedDelay = (node, idx) => {
+    const still = document.documentElement.dataset.move === "still" || matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (still) return 150;
+    const base = timedBaseOverride || Number(timedBtn?.dataset.baseMs) || 2000;
+    const jitter = Number(timedBtn?.dataset.jitterMs) || 600;
+    const txt = node.textContent || "";
+    const words = txt.split(/\s+/).length;
+    const weight = Math.min(1.45, Math.max(0.65, words / 42));
+    const wave = ((idx * 37) % 100) / 100 - 0.5;
+    return Math.max(550, Math.round(base * weight + wave * jitter));
+  };
+  const stopTimed = () => {
+    clearTimeout(timedHandle);
+    timedHandle = 0;
+    timedIdx = -1;
+    prose?.classList.remove("is-timed");
+    beatNodes.forEach((n) => n.classList.remove("is-veiled", "is-current-beat"));
+    if (timedBar) timedBar.hidden = true;
+    if (timedBtn) {
+      timedBtn.setAttribute("aria-pressed", "false");
+      timedBtn.textContent = "Timed unfold";
+    }
+  };
+  const stepTimed = () => {
+    if (timedIdx < 0) return;
+    if (timedIdx >= beatNodes.length) {
+      stopTimed();
+      return;
+    }
+    clearTimeout(timedHandle);
+    const node = beatNodes[timedIdx];
+    beatNodes.forEach((n, i) => {
+      n.classList.toggle("is-veiled", i > timedIdx);
+      n.classList.toggle("is-current-beat", i === timedIdx);
+    });
+    node.scrollIntoView({ behavior: document.documentElement.dataset.move === "still" ? "auto" : "smooth", block: "center" });
+    if (timedIdx + 1 >= beatNodes.length) {
+      if (timedLabel) timedLabel.textContent = "Final beat reached.";
+      if (timedFill) timedFill.style.transform = "scaleX(1)";
+      return;
+    }
+    const ms = nextTimedDelay(node, timedIdx);
+    if (timedLabel) timedLabel.textContent = "Next beat in " + (ms / 1000).toFixed(1) + "s";
+    if (timedFill) {
+      timedFill.style.transition = "none";
+      timedFill.style.transform = "scaleX(0)";
+      void timedFill.offsetWidth;
+      timedFill.style.transition = "transform " + ms + "ms linear";
+      timedFill.style.transform = "scaleX(1)";
+    }
+    timedHandle = setTimeout(() => {
+      timedIdx += 1;
+      stepTimed();
+    }, ms);
+  };
+  if (prose && timedBtn && beatNodes.length > 1) {
+    timedBtn.hidden = false;
+    timedBtn.addEventListener("click", () => {
+      if (timedIdx >= 0) {
+        stopTimed();
+      } else {
+        timedIdx = 0;
+        prose.classList.add("is-timed");
+        timedBtn.setAttribute("aria-pressed", "true");
+        timedBtn.textContent = "Show whole page";
+        if (timedBar) timedBar.hidden = false;
+        stepTimed();
+      }
+    });
+    timedSkip?.addEventListener("click", () => {
+      if (timedIdx < 0) return;
+      timedIdx += 1;
+      stepTimed();
+    });
+  }
+
+  /* 5. Interactive "Words this piece keeps" -> locate and pulse phrase right in the prose without breaking .word-slot buttons. */
   const escapeRe = (s) => s.replace(/[.*+?^$\{\}()|[\\]\\\\]/g, "\\\\$&");
   document.querySelectorAll(".keeps li").forEach((li) => {
     const phrase = li.textContent.trim();
@@ -432,18 +847,27 @@ const APP_JS = `(() => {
     btn.addEventListener("click", () => {
       prose.querySelectorAll("mark.prose-echo").forEach((m) => m.replaceWith(document.createTextNode(m.textContent)));
       const re = new RegExp(escapeRe(phrase), "i");
-      for (const p of prose.querySelectorAll("p")) {
-        const hit = p.textContent.match(re);
-        if (!hit) continue;
-        const idx = hit.index;
-        const txt = p.textContent;
-        p.replaceChildren(
-          document.createTextNode(txt.slice(0, idx)),
-          Object.assign(document.createElement("mark"), { className: "prose-echo", textContent: txt.slice(idx, idx + hit[0].length) }),
-          document.createTextNode(txt.slice(idx + hit[0].length)),
-        );
-        p.scrollIntoView({ behavior: document.documentElement.dataset.move === "still" ? "auto" : "smooth", block: "center" });
-        break;
+      for (const p of paras) {
+        const walker = document.createTreeWalker(p, NodeFilter.SHOW_TEXT);
+        let node;
+        let matched = false;
+        while ((node = walker.nextNode())) {
+          const hit = node.nodeValue.match(re);
+          if (!hit) continue;
+          const idx = hit.index;
+          const val = node.nodeValue;
+          const frag = document.createDocumentFragment();
+          if (idx > 0) frag.append(document.createTextNode(val.slice(0, idx)));
+          frag.append(Object.assign(document.createElement("mark"), { className: "prose-echo", textContent: val.slice(idx, idx + hit[0].length) }));
+          if (idx + hit[0].length < val.length) frag.append(document.createTextNode(val.slice(idx + hit[0].length)));
+          node.parentNode.replaceChild(frag, node);
+          matched = true;
+          break;
+        }
+        if (matched) {
+          p.scrollIntoView({ behavior: document.documentElement.dataset.move === "still" ? "auto" : "smooth", block: "center" });
+          break;
+        }
       }
     });
   });
@@ -484,14 +908,90 @@ const APP_JS = `(() => {
 
   /* Highlight 22/7 reference inside /to-you/ letter when hovered or tapped. */
   if (location.pathname.startsWith("/to-you") && prose) {
-    for (const p of prose.querySelectorAll("p")) {
+    for (const p of paras) {
       if (!p.textContent.includes("22/7")) continue;
       p.innerHTML = p.innerHTML.replace(/22\\/7/, '<a class="pi-wink" href="https://wap.mom/22-7/" title="The periodical next door (off by 1 part in 2,500)">22/7</a>');
       break;
     }
   }
 
-  /* Colophon pace calibrator & Leave shortcut (double-Escape or "l"). */
+  /* 7. Hidden Spw room parser & syntactically-highlighted configuration panel. */
+` + "  " + serializeSpwClient() + `
+  const spwDoor = document.getElementById("spw-door");
+  const spwPanel = document.getElementById("spw-panel");
+  const spwInput = document.getElementById("spw-input");
+  const spwHl = document.getElementById("spw-hl");
+  const spwStatus = document.getElementById("spw-status");
+  const applySpwExpression = (src, persist = true) => {
+    if (spwHl) spwHl.innerHTML = highlightSpw(src) + "\\n";
+    const { config, ast } = evalSpwDynamics(src);
+    if (spwStatus) {
+      const errCount = ast.errors.length;
+      spwStatus.textContent = errCount
+        ? ast.errors[0].message + " (char " + ast.errors[0].pos + ")"
+        : ast.frames.length + " Spw frames · pause " + (config.pauseMs ? config.pauseMs + "ms" : "story default");
+      spwStatus.dataset.valid = errCount ? "false" : "true";
+    }
+    if (config.mood) {
+      if (config.mood === "all") delete document.documentElement.dataset.moodTint;
+      else document.documentElement.dataset.moodTint = config.mood;
+    }
+    if (config.pauseMs) timedBaseOverride = config.pauseMs;
+    if (config.scale) setScale(config.scale);
+    if (Object.keys(config.words).length) paintSlots(config.words);
+    if (config.focus === "voices" && voicesBtn && prose && !prose.classList.contains("is-voices")) voicesBtn.click();
+    if (config.focus === "breath" && focusBtn && paras.length && focusedIdx < 0) { focusedIdx = 0; paintFocus(); }
+    if (config.focus === "full" && focusBtn && focusedIdx >= 0) { focusedIdx = -1; paintFocus(); }
+    if (persist) saveRoomState({ spw: src, words: { ...(slotState.words || {}), ...config.words } });
+  };
+  if (spwDoor && spwPanel && spwInput) {
+    const syncScroll = () => {
+      if (!spwHl) return;
+      spwHl.scrollTop = spwInput.scrollTop;
+      spwHl.scrollLeft = spwInput.scrollLeft;
+    };
+    spwInput.addEventListener("scroll", syncScroll);
+    spwInput.addEventListener("input", () => applySpwExpression(spwInput.value, true));
+    spwPanel.querySelectorAll("[data-spw-preset]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const expr = DEFAULT_SPW_PRESETS[btn.dataset.spwPreset] || "";
+        if (!expr) return;
+        spwInput.value = expr;
+        applySpwExpression(expr, true);
+      });
+    });
+    document.getElementById("spw-reset")?.addEventListener("click", () => {
+      timedBaseOverride = null;
+      delete document.documentElement.dataset.moodTint;
+      try { localStorage.removeItem(ROOM_KEY); } catch {}
+      location.reload();
+    });
+    const toggleSpwPanel = () => {
+      const open = spwPanel.hidden;
+      spwPanel.hidden = !open;
+      spwDoor.setAttribute("aria-expanded", String(open));
+      if (open) {
+        if (spwHl) spwHl.innerHTML = highlightSpw(spwInput.value) + "\\n";
+        spwInput.focus();
+      }
+    };
+    spwDoor.addEventListener("click", toggleSpwPanel);
+    if (slotState.spw) {
+      spwInput.value = slotState.spw;
+      applySpwExpression(slotState.spw, false);
+    } else {
+      paintSlots();
+      if (spwHl) spwHl.innerHTML = highlightSpw(spwInput.value) + "\\n";
+    }
+    document.getElementById("spw-hide")?.addEventListener("click", () => {
+      spwPanel.hidden = true;
+      spwDoor.setAttribute("aria-expanded", "false");
+    });
+  } else {
+    paintSlots();
+  }
+
+  /* Colophon pace calibrator & Leave shortcut (double-Escape or "l"; "\\" opens Spw panel). */
   const verNote = document.getElementById("footer-colophon");
   const paceDrawer = document.getElementById("pace-drawer");
   if (verNote && paceDrawer) {
@@ -527,11 +1027,19 @@ const APP_JS = `(() => {
   addEventListener("keydown", (e) => {
     if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target?.tagName) || e.metaKey || e.ctrlKey || e.altKey) return;
     if (e.key === "Escape") {
+      if (document.documentElement.dataset.shot === "clean") {
+        delete document.documentElement.dataset.shot;
+        document.querySelectorAll("[data-shot-focus]").forEach((el) => el.removeAttribute("data-shot-focus"));
+        document.querySelectorAll("[data-shot-btn]").forEach((b) => { b.textContent = "Frame card"; b.setAttribute("aria-pressed", "false"); });
+        return;
+      }
       const now = Date.now();
       if (now - lastEsc < 500 && leaveLink) location.replace(leaveLink);
       lastEsc = now;
     } else if (e.key === "l" && leaveLink) {
       location.replace(leaveLink);
+    } else if (e.key === "\\\\" && spwDoor) {
+      spwDoor.click();
     }
   });
 })();
@@ -556,7 +1064,8 @@ function storyBySlug(slug) {
 }
 
 function otherStory(story) {
-  return STORIES.find((s) => s.slug !== story.slug) || null;
+  const idx = STORIES.findIndex((s) => s.slug === story.slug);
+  return idx >= 0 ? STORIES[(idx + 1) % STORIES.length] : STORIES[0] || null;
 }
 
 /* Settling in. One small cookie, set only when the reader asks, holding how
@@ -564,7 +1073,13 @@ function otherStory(story) {
    the page moves. Cleared with one button. Never read for anything else. */
 const SETTLE_COOKIE = "settle";
 const SETTLE = Object.freeze({
-  pace: Object.freeze({ day: "let the day pick", slow: "slow first", dirty: "dirty first" }),
+  pace: Object.freeze({
+    day: "let the day pick",
+    slow: "slow first",
+    dirty: "dirty first",
+    warm: "warm first",
+    sharp: "sharp first",
+  }),
   type: Object.freeze({ set: "as they are", larger: "larger" }),
   move: Object.freeze({ breathe: "let it breathe", still: "hold still" }),
 });
@@ -609,16 +1124,26 @@ function settleLine(prefs) {
   return parts.join(", ");
 }
 
-function leadStory(now, prefs) {
-  if (prefs.pace === "slow" || prefs.pace === "dirty") {
-    const own = STORIES.filter((s) => s.register === prefs.pace);
+function leadStory(now, prefs, mood = "") {
+  const target = mood && Object.hasOwn(REGISTER, mood) ? mood : prefs.pace;
+  if (Object.hasOwn(REGISTER, target)) {
+    const own = STORIES.filter((s) => s.register === target);
     if (own.length) return own[dayIndex(now) % own.length];
   }
   return featuredStory(now);
 }
 
+function plainSlotText(str) {
+  return String(str).replace(/\{slot:[^|}]+?\|([^|}]+)(?:\|[^}]*)?\}/g, "$1");
+}
+
+function paraText(item) {
+  const raw = typeof item === "string" ? item : item.text;
+  return plainSlotText(raw);
+}
+
 function wordCount(story) {
-  return story.body.join(" ").split(/\s+/).filter(Boolean).length;
+  return story.body.map(paraText).join(" ").split(/\s+/).filter(Boolean).length;
 }
 
 function readMinutes(story) {
@@ -637,19 +1162,35 @@ const LEXICON = STORIES.flatMap((story) =>
   (story.keeps || []).map((phrase) => ({ phrase, from: story.slug, register: story.register, since: story.since }))
 );
 
-/* Two registers. The reader picks a mood, not a genre. */
+/* Four registers across four distinct adult audiences. */
 const REGISTER = Object.freeze({
   slow: {
     name: "slow",
     promise: "make me wait",
-    pick: "Takes its time. The heat builds by degrees and the payoff is earned. For nights you want to be kept waiting.",
-    handoff: "Want it faster? The dirty one is next."
+    audience: "Sensory & unhurried",
+    pick: "Takes its time. Sensory craft, quiet tension, and patience held past the last possible second.",
+    handoff: "Want the pace turned up or warmer? Try another door."
   },
   dirty: {
     name: "dirty",
     promise: "now",
-    pick: "Blunt and fast and done before the stop is called. For when the wait is already over.",
-    handoff: "Want to be kept waiting? The slow one is next."
+    audience: "Direct & kinetic",
+    pick: "Blunt, fast, and spoken out loud. No preamble once the deadbolt clicks.",
+    handoff: "Want domestic heat or cool restraint instead? Try another door."
+  },
+  warm: {
+    name: "warm",
+    promise: "stay inside",
+    audience: "Affectionate & playful",
+    pick: "Domestic closeness, unforced humor, shared breath, and chemistry between people who know each other.",
+    handoff: "Want sharper edges or quiet restraint next? Try another door."
+  },
+  sharp: {
+    name: "sharp",
+    promise: "keep score",
+    audience: "Protocol & exchange",
+    pick: "Consented authority, explicit rules spoken up front, praise, and deliberate edge control.",
+    handoff: "Want to loosen the collar? Try another door."
   },
 });
 
@@ -657,7 +1198,7 @@ function registerOf(story) {
   return REGISTER[story.register] || REGISTER.slow;
 }
 
-/* brief: the page head already said register and length; only say who and what. */
+/* brief: the page head already said register and length; only say who, who it fits, and what. */
 function renderMeta(story, { brief = false } = {}) {
   const reg = registerOf(story);
   const head = brief
@@ -669,6 +1210,7 @@ function renderMeta(story, { brief = false } = {}) {
     : "";
   return `<dl class="meta">
     ${head}
+    ${story.audience ? `<dt>Room</dt><dd>${escapeHtml(story.audience)}</dd>` : ""}
     ${story.pairing ? `<dt>With</dt><dd>${escapeHtml(story.pairing)}</dd>` : ""}
     ${tags}
   </dl>`;
@@ -713,14 +1255,63 @@ function renderKeeps(story) {
   </section>`;
 }
 
+function renderInlineSlots(raw) {
+  const src = String(raw);
+  const re = /\{slot:([a-zA-Z0-9_-]+)\|([^}]+)\}/g;
+  let out = "";
+  let last = 0;
+  let m;
+  while ((m = re.exec(src))) {
+    out += escapeHtml(src.slice(last, m.index));
+    const slotName = m[1];
+    const choices = m[2].split("|").filter(Boolean);
+    const first = choices[0] || "";
+    out += `<button type="button" class="word-slot" data-slot="${escapeHtml(slotName)}" data-choices="${escapeHtml(choices.join("|"))}" title="Tap to change wording">${escapeHtml(first)}</button>`;
+    last = re.lastIndex;
+  }
+  out += escapeHtml(src.slice(last));
+  return out;
+}
+
 function renderParagraphs(lines) {
-  return lines.map((line) => `<p>${escapeHtml(line)}</p>`).join("");
+  return lines
+    .map((item) => {
+      if (typeof item === "string") return `<p>${renderInlineSlots(item)}</p>`;
+      const text = `<p>${renderInlineSlots(item.text)}</p>`;
+      if (!item.beat) return text;
+      const kind = item.beat.kind === "sharpen" ? "sharpen" : "linger";
+      const glyph = kind === "sharpen" ? "!" : "~";
+      return `<div class="beat-wrap">${text}<details class="beat-note beat-${kind}" data-beat-kind="${kind}">
+        <summary><span class="beat-glyph" aria-hidden="true">${glyph}</span> <span class="beat-label">${escapeHtml(item.beat.label)}</span></summary>
+        <p>${renderInlineSlots(item.beat.alt)}</p>
+      </details></div>`;
+    })
+    .join("");
+}
+
+function renderEditorialShot(story, { showLink = false } = {}) {
+  const ed = story.edition;
+  if (!ed) return "";
+  const reg = registerOf(story);
+  return `<section class="tease-shot tease-${escapeHtml(reg.name)}" data-shot-card="${escapeHtml(story.slug)}" aria-label="${escapeHtml(story.title)} discussable prompt card">
+  <div class="shot-head">
+    <span class="badge badge-${escapeHtml(reg.name)}">${escapeHtml(reg.name)}</span>
+    <span class="shot-brand">smut.today · ${escapeHtml(story.title)}</span>
+    <button type="button" class="focus-toggle shot-btn" data-shot-btn aria-pressed="false">Frame card</button>
+  </div>
+  <blockquote class="shot-tease">${renderInlineSlots(ed.tease)}</blockquote>
+  <dl class="shot-notes">
+    <dt>Try tonight</dt><dd>${escapeHtml(ed.couplePrompt)}</dd>
+    <dt>Writing circle</dt><dd>${escapeHtml(ed.circleNote)}</dd>
+  </dl>
+  ${showLink ? `<p class="shot-foot"><a href="/${escapeHtml(story.slug)}/">Open full scene →</a></p>` : ""}
+</section>`;
 }
 
 function renderStoryCard(story, { today = false } = {}) {
   const reg = registerOf(story);
-  return `<article class="card card-${escapeHtml(reg.name)}${today ? " card-today" : ""}">
-  <p class="kicker">${escapeHtml(reg.name)} · ${escapeHtml(reg.promise)}</p>
+  return `<article class="card card-${escapeHtml(reg.name)}${today ? " card-today" : ""}" data-register="${escapeHtml(reg.name)}">
+  <p class="kicker"><span class="badge badge-${escapeHtml(reg.name)}">${escapeHtml(reg.name)}</span> · ${escapeHtml(reg.promise)}</p>
   <h3 class="card-title"><a href="/${escapeHtml(story.slug)}/">${escapeHtml(story.title)}</a></h3>
   <p class="card-kicker">${escapeHtml(story.kicker)}</p>
   <p class="card-summary">${escapeHtml(story.summary)}</p>
@@ -729,9 +1320,10 @@ function renderStoryCard(story, { today = false } = {}) {
 </article>`;
 }
 
-function layout({ title, description, canonical, body, crumb = "", prefs = SETTLE_DEFAULT }) {
+function layout({ title, description, canonical, body, crumb = "", prefs = SETTLE_DEFAULT, mood = "" }) {
   const current = (name) => (crumb === name ? ' aria-current="page"' : "");
-  const htmlAttrs = [prefs.type === "larger" ? ' data-type="larger"' : "", prefs.move === "still" ? ' data-move="still"' : ""].join("");
+  const moodAttr = mood && Object.hasOwn(REGISTER, mood) ? ` data-mood-tint="${escapeHtml(mood)}"` : "";
+  const htmlAttrs = [prefs.type === "larger" ? ' data-type="larger"' : "", prefs.move === "still" ? ' data-move="still"' : "", moodAttr].join("");
   return `<!DOCTYPE html>
 <html lang="en"${htmlAttrs}>
 <head>
@@ -762,21 +1354,29 @@ function layout({ title, description, canonical, body, crumb = "", prefs = SETTL
       --panel-2: #23101a;
       --fg: #f6e3ea;
       --muted: #c9a3b1;
-      --line: rgba(255, 51, 102, .26);
       --accent: #ff3366;
       --accent-ink: #14040a;
       --slow: #ffb3c6;
       --dirty: #ff6b8f;
+      --warm: #f2be9a;
+      --sharp: #d5a6e6;
+      --room-accent: var(--accent);
+      --line: color-mix(in oklab, var(--room-accent) 28%, transparent);
       --touch: 44px;
       --measure: 36rem;
     }
+    html[data-mood-tint="slow"] { --room-accent: var(--slow); }
+    html[data-mood-tint="dirty"] { --room-accent: var(--dirty); }
+    html[data-mood-tint="warm"] { --room-accent: var(--warm); }
+    html[data-mood-tint="sharp"] { --room-accent: var(--sharp); }
     * { box-sizing: border-box; }
     html { -webkit-text-size-adjust: 100%; }
     body {
       margin: 0;
       font: 1.0625rem/1.65 ui-serif, Georgia, "Times New Roman", serif;
-      background: radial-gradient(circle at 85% -10%, rgba(255, 51, 102, .14), transparent 42%), var(--bg);
+      background: radial-gradient(circle at 85% -10%, color-mix(in oklab, var(--room-accent) 16%, transparent), transparent 46%), var(--bg);
       color: var(--fg);
+      transition: background 240ms ease;
     }
     body > header, main, body > footer { width: min(var(--measure), 100% - 2rem); margin-inline: auto; padding-inline: env(safe-area-inset-left) env(safe-area-inset-right); }
     body > header { padding-top: max(1rem, env(safe-area-inset-top)); padding-bottom: .25rem; }
@@ -787,9 +1387,9 @@ function layout({ title, description, canonical, body, crumb = "", prefs = SETTL
     html[data-text-scale="90"] { font-size: 90%; }
     html[data-text-scale="110"] { font-size: 110%; }
     html[data-text-scale="120"] { font-size: 120%; }
-    .text-scale-badge { position: fixed; left: 50%; top: max(14px, env(safe-area-inset-top)); z-index: 60; margin: 0; padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line); background: rgba(20, 4, 10, .9); color: var(--fg); font: 600 13px/1 ui-monospace, SFMono-Regular, Menlo, monospace; transform: translateX(-50%); opacity: 0; pointer-events: none; transition: opacity .2s ease; }
+    .text-scale-badge { position: fixed; left: 50%; top: max(14px, env(safe-area-inset-top)); z-index: 60; margin: 0; padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line); background: color-mix(in oklab, var(--bg) 92%, black); color: var(--fg); font: 600 13px/1 ui-monospace, SFMono-Regular, Menlo, monospace; transform: translateX(-50%); opacity: 0; pointer-events: none; transition: opacity .2s ease; }
     .text-scale-badge.on { opacity: 1; }
-    .reading-thread { position: fixed; inset: 0 0 auto; height: 2px; z-index: 50; background: var(--accent); transform-origin: left center; transform: scaleX(var(--read-progress, 0)); opacity: .7; pointer-events: none; }
+    .reading-thread { position: fixed; inset: 0 0 auto; height: 2px; z-index: 50; background: var(--room-accent); transform-origin: left center; transform: scaleX(var(--read-progress, 0)); opacity: .75; pointer-events: none; }
     html[data-move="still"] .reading-thread { display: none; }
     main > section + section { margin-top: 1.75rem; }
     h1, h2, h3 { line-height: 1.12; letter-spacing: -.02em; margin: 0 0 .5rem; text-wrap: balance; }
@@ -798,8 +1398,8 @@ function layout({ title, description, canonical, body, crumb = "", prefs = SETTL
     p { margin: 0 0 1rem; text-wrap: pretty; }
     a { color: var(--accent); text-underline-offset: .15em; }
     a:hover { text-decoration-thickness: 2px; }
-    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: .2rem; }
-    .kicker, .note, .meta, .tag, .badge, .topbar, body > footer, .cta {
+    :focus-visible { outline: 2px solid var(--room-accent); outline-offset: 3px; border-radius: .2rem; }
+    .kicker, .note, .meta, .tag, .badge, .topbar, body > footer, .cta, .room-dial, .scene-stage, .beat-note summary {
       font: .92rem/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
     }
     .kicker, .note, .meta, body > footer { color: var(--muted); }
@@ -819,9 +1419,33 @@ function layout({ title, description, canonical, body, crumb = "", prefs = SETTL
     .leave { color: var(--fg); border: 1px solid var(--line); }
     .age { font-size: .85rem; margin: .25rem 0 0; }
 
+    /* Room dial filter pills */
+    .room-dial { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; margin: .75rem 0 .25rem; }
+    .dial-pill {
+      display: inline-flex; align-items: center; gap: .35rem; min-height: var(--touch); padding: 0 .85rem;
+      border-radius: 999px; border: 1px solid var(--line); background: var(--panel); color: var(--muted);
+      text-decoration: none; font-weight: 500; transition: transform 120ms ease, border-color 180ms ease, background-color 180ms ease, color 180ms ease;
+    }
+    .dial-pill:hover { color: var(--fg); border-color: var(--room-accent); background: color-mix(in oklab, var(--panel) 84%, var(--room-accent)); }
+    .dial-pill:active { transform: scale(.97); }
+    .dial-pill[aria-current="true"] {
+      color: var(--accent-ink); background: var(--room-accent); border-color: var(--room-accent); font-weight: 600;
+    }
+    .dial-pill[data-mood="slow"]:not([aria-current="true"]) { color: var(--slow); }
+    .dial-pill[data-mood="dirty"]:not([aria-current="true"]) { color: var(--dirty); }
+    .dial-pill[data-mood="warm"]:not([aria-current="true"]) { color: var(--warm); }
+    .dial-pill[data-mood="sharp"]:not([aria-current="true"]) { color: var(--sharp); }
+
     /* Cards */
     .card { border: 1px solid var(--line); border-radius: 1.1rem; padding: 1.15rem 1.15rem 1.1rem; background: var(--panel); margin: 1rem 0; }
-    .card-today { background: linear-gradient(160deg, var(--panel-2), var(--panel)); border-color: rgba(255, 51, 102, .5); }
+    .card-slow { border-color: color-mix(in oklab, var(--slow) 26%, transparent); }
+    .card-dirty { border-color: color-mix(in oklab, var(--dirty) 30%, transparent); }
+    .card-warm { border-color: color-mix(in oklab, var(--warm) 28%, transparent); }
+    .card-sharp { border-color: color-mix(in oklab, var(--sharp) 28%, transparent); }
+    .card-today {
+      background: linear-gradient(160deg, color-mix(in oklab, var(--panel-2) 88%, var(--room-accent)), var(--panel));
+      border-color: color-mix(in oklab, var(--room-accent) 52%, transparent);
+    }
     .card-title { font-size: 1.6rem; margin-bottom: .15rem; }
     .card-title a { color: var(--fg); text-decoration: none; }
     .card-title a:hover, .card-title a:focus-visible { color: var(--accent); }
@@ -839,32 +1463,70 @@ function layout({ title, description, canonical, body, crumb = "", prefs = SETTL
     .badge { display: inline-block; padding: .05rem .5rem; border-radius: 999px; font-weight: 600; font-size: .8rem; letter-spacing: .04em; text-transform: uppercase; border: 1px solid currentColor; }
     .badge-slow { color: var(--slow); }
     .badge-dirty { color: var(--dirty); }
+    .badge-warm { color: var(--warm); }
+    .badge-sharp { color: var(--sharp); }
     .tag { display: inline-block; padding: .05rem .5rem; border-radius: 999px; background: var(--panel-2); border: 1px solid var(--line); color: var(--fg); font-size: .82rem; margin: .1rem .1rem .1rem 0; }
 
     /* Register picker on the index */
-    .registers { display: grid; gap: .75rem; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); margin: .5rem 0 1.5rem; padding: 0; list-style: none; }
-    .registers li { border: 1px solid var(--line); border-radius: .9rem; padding: .9rem 1rem; background: var(--panel); }
-    .registers .badge { margin-bottom: .35rem; }
-    .registers p { margin: 0; color: var(--muted); font-size: .98rem; }
+    .registers { display: grid; gap: .75rem; grid-template-columns: repeat(auto-fit, minmax(13.5rem, 1fr)); margin: .5rem 0 1.5rem; padding: 0; list-style: none; }
+    .registers li { border: 1px solid var(--line); border-radius: .9rem; padding: .9rem 1rem; background: var(--panel); display: grid; gap: .35rem; align-content: start; }
+    .registers .badge { justify-self: start; }
+    .registers p { margin: 0; color: var(--muted); font-size: .96rem; }
+    .register-link { display: inline-flex; align-items: center; min-height: var(--touch); font: 600 .88rem/1 ui-sans-serif, system-ui, sans-serif; text-decoration: none; color: var(--fg); }
+    .register-link:hover { color: var(--room-accent); }
 
-    /* The piece itself. The text is the whole point; give it room. */
+    /* The piece itself & Scene Chamber toolbar. */
     .piece-head { margin-bottom: 1.25rem; }
     .piece-head .card-kicker { font-size: 1.05rem; }
-    .before { border: 1px solid var(--line); border-radius: .9rem; padding: .9rem 1rem; background: var(--panel); margin: 0 0 1.75rem; }
+    .before { border: 1px solid var(--line); border-radius: .9rem; padding: .95rem 1rem; background: var(--panel); margin: 0 0 1.75rem; }
     .before .kicker { margin-bottom: .35rem; }
     .before .note { margin: .6rem 0 0; }
+    .scene-stage { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem .65rem; margin-top: .75rem; padding-top: .65rem; border-top: 1px dashed var(--line); }
+    .scene-stage .stage-link { display: inline-flex; align-items: center; min-height: var(--touch); padding-right: .25rem; font-weight: 600; text-decoration: none; }
+    .breath-count { font: 600 .82rem/1 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--room-accent); }
     .prose { font-size: 1.15rem; line-height: 1.75; }
-    .prose p { margin: 0 0 1.25rem; }
-    .prose p:first-of-type::first-letter { font-size: 2.6em; line-height: .85; float: left; padding: .12em .12em 0 0; color: var(--accent); }
+    .prose > p, .beat-wrap > p { margin: 0 0 1.25rem; }
+    .prose > p:first-of-type::first-letter { font-size: 2.6em; line-height: .85; float: left; padding: .12em .12em 0 0; color: var(--room-accent); }
+    .prose.is-focused > p, .prose.is-focused .beat-wrap > p { opacity: .26; cursor: pointer; transition: opacity .25s ease; }
+    .prose.is-focused > p.is-lit, .prose.is-focused .beat-wrap > p.is-lit { opacity: 1; }
+    .prose.is-voices > p:not(.has-voice), .prose.is-voices .beat-wrap > p:not(.has-voice) { opacity: .38; transition: opacity .25s ease; }
+    .prose.is-voices > p.has-voice, .prose.is-voices .beat-wrap > p.has-voice { opacity: 1; border-left: 2px solid color-mix(in oklab, var(--room-accent) 55%, transparent); padding-left: .85rem; }
+
+    /* Inline margin beats (~ linger / ! sharpen) */
+    .beat-wrap { margin: 0 0 1.25rem; }
+    .beat-wrap > p { margin-bottom: .55rem; }
+    .beat-note {
+      margin: 0 0 .25rem .4rem;
+      padding-left: .85rem;
+      border-left: 2px solid color-mix(in oklab, var(--room-accent) 42%, transparent);
+    }
+    .beat-note[data-turn="true"] { border-left-color: var(--room-accent); }
+    .beat-note summary {
+      display: inline-flex; align-items: center; gap: .45rem; min-height: var(--touch);
+      padding: .15rem .4rem; border-radius: 999px; color: var(--muted); cursor: pointer; list-style: none;
+    }
+    .beat-note summary::-webkit-details-marker { display: none; }
+    .beat-note summary:hover, .beat-note[open] summary { color: var(--fg); }
+    .beat-glyph {
+      display: inline-grid; place-items: center; width: 1.35rem; height: 1.35rem; border-radius: 999px;
+      border: 1px solid color-mix(in oklab, var(--room-accent) 50%, transparent);
+      color: var(--room-accent); font: 700 .85rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    .beat-note[open] .beat-glyph { background: var(--room-accent); color: var(--accent-ink); border-color: var(--room-accent); }
+    .beat-note p {
+      margin: .35rem 0 .25rem; font-size: 1.02rem; line-height: 1.65; font-style: italic;
+      color: color-mix(in oklab, var(--fg) 88%, var(--room-accent));
+    }
+
     .end { margin: 1.25rem 0 0; color: var(--muted); text-align: center; letter-spacing: .4em; }
     .linger { margin: 1.5rem 0 0; border-top: 1px dashed var(--line); padding-top: 1rem; }
     .linger .note { margin-bottom: .25rem; }
     .linger-item { border-bottom: 1px solid var(--line); }
     .linger-item summary { display: flex; align-items: center; gap: .6rem; min-height: var(--touch); padding: .35rem 0; cursor: pointer; font-style: italic; font-size: 1.1rem; list-style: none; }
     .linger-item summary::-webkit-details-marker { display: none; }
-    .linger-item summary::before { content: "○"; color: var(--accent); font-style: normal; flex: none; }
+    .linger-item summary::before { content: "○"; color: var(--room-accent); font-style: normal; flex: none; }
     .linger-item[open] summary::before { content: "●"; }
-    .linger-item summary:hover { color: var(--accent); }
+    .linger-item summary:hover { color: var(--room-accent); }
     .linger-item p { margin: 0 0 1rem 1.5rem; color: var(--fg); line-height: 1.65; }
     .murmur { font-style: italic; color: var(--muted); text-align: center; margin: .25rem 0 0; }
     .shift { display: grid; }
@@ -875,7 +1537,7 @@ function layout({ title, description, canonical, body, crumb = "", prefs = SETTL
     @media (prefers-reduced-motion: reduce) { .shift > span { transition: none; } }
     html[data-type="larger"] { font-size: 118%; }
     html[data-type="larger"] body { line-height: 1.7; }
-    html[data-move="still"] .prose p:first-of-type::first-letter { font-size: inherit; float: none; padding: 0; color: inherit; line-height: inherit; }
+    html[data-move="still"] .prose > p:first-of-type::first-letter { font-size: inherit; float: none; padding: 0; color: inherit; line-height: inherit; }
     html[data-move="still"] .shift > span { transition: none; }
     html[data-move="still"] body { background: var(--bg); }
     .settle fieldset { border: 1px solid var(--line); border-radius: .9rem; padding: .75rem 1rem .5rem; margin: 0 0 1rem; background: var(--panel); }
@@ -891,22 +1553,65 @@ function layout({ title, description, canonical, body, crumb = "", prefs = SETTL
     .keeps ul { margin: 0; padding-left: 1.1rem; columns: 2 12rem; column-gap: 1.5rem; }
     .keeps li { margin: .2rem 0; break-inside: avoid; }
     /* Region tap effects & tactile reading affordances. */
-    .card, .before, .registers li, .linger-item summary, .keeps li {
+    .card, .before, .registers li, .linger-item summary, .keeps li, .beat-note {
       transition: transform 120ms ease, border-color 180ms ease, background-color 180ms ease;
       -webkit-tap-highlight-color: transparent;
     }
-    .card:active, .before:active, .registers li:active { transform: scale(.994); border-color: var(--accent); }
+    .card:active, .before:active, .registers li:active, .tease-shot:active { transform: scale(.994); border-color: var(--room-accent); }
     .focus-toggle, .keep-jump, .end-btn {
-      font: inherit; color: var(--accent); background: transparent; border: 1px solid var(--line); border-radius: 999px;
-      padding: .15rem .75rem; min-height: 36px; cursor: pointer; font-size: .85rem;
+      font: inherit; color: var(--room-accent); background: transparent; border: 1px solid var(--line); border-radius: 999px;
+      padding: .15rem .8rem; min-height: var(--touch); cursor: pointer; font-size: .85rem;
     }
-    .focus-toggle:hover, .keep-jump:hover, .end-btn:hover { border-color: var(--accent); background: rgba(255, 51, 102, .1); }
-    .focus-toggle[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
-    .keep-jump { color: var(--fg); border: 0; border-bottom: 1px dashed var(--line); border-radius: .2rem; padding: .15rem .25rem; text-align: left; font-size: 1rem; }
-    .keep-jump:hover { border-bottom-color: var(--accent); color: var(--accent); }
-    .prose.is-focused p { opacity: .28; cursor: pointer; transition: opacity .25s ease; }
-    .prose.is-focused p.is-lit { opacity: 1; }
-    mark.prose-echo { background: rgba(255, 51, 102, .28); color: var(--fg); padding: .05em .2em; border-radius: .2rem; border-bottom: 1px solid var(--accent); }
+    .focus-toggle:hover, .keep-jump:hover, .end-btn:hover { border-color: var(--room-accent); background: color-mix(in oklab, var(--room-accent) 12%, transparent); }
+    .focus-toggle[aria-pressed="true"] { background: var(--room-accent); color: var(--accent-ink); border-color: var(--room-accent); font-weight: 600; }
+    .keep-jump { color: var(--fg); border: 0; border-bottom: 1px dashed var(--line); border-radius: .2rem; padding: .15rem .25rem; text-align: left; font-size: 1rem; min-height: 36px; }
+    .keep-jump:hover { border-bottom-color: var(--room-accent); color: var(--room-accent); }
+    mark.prose-echo { background: color-mix(in oklab, var(--room-accent) 28%, transparent); color: var(--fg); padding: .05em .2em; border-radius: .2rem; border-bottom: 1px solid var(--room-accent); }
+
+    /* Configurable steamy word slots inside prose and tease cards */
+    .word-slot {
+      font: inherit; color: color-mix(in oklab, var(--fg) 76%, var(--room-accent)); background: transparent;
+      border: 0; border-bottom: 1px dotted color-mix(in oklab, var(--room-accent) 62%, transparent);
+      border-radius: .15rem; padding: 0 .12em; margin: 0 -.06em; cursor: pointer; line-height: inherit;
+      transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease;
+    }
+    .word-slot:hover, .word-slot:focus-visible { color: var(--fg); background: color-mix(in oklab, var(--room-accent) 14%, transparent); border-bottom-style: solid; }
+    .word-slot[data-turn="true"] { color: var(--room-accent); }
+
+    /* Variable-timeout prose reveal */
+    .timed-bar {
+      display: grid; grid-template-columns: 1fr auto; gap: .35rem .75rem; align-items: center;
+      margin: 0 0 1.25rem; padding: .55rem .8rem; border: 1px solid var(--line); border-radius: .8rem; background: var(--panel);
+      font: .88rem/1.3 ui-sans-serif, system-ui, sans-serif; color: var(--muted);
+    }
+    .timed-bar[hidden] { display: none; }
+    .timed-track { grid-column: 1 / -1; height: 2px; background: color-mix(in oklab, var(--line) 45%, transparent); overflow: hidden; border-radius: 2px; }
+    .timed-fill { height: 100%; background: var(--room-accent); transform-origin: left center; transform: scaleX(0); }
+    .prose.is-timed .is-veiled { display: none; }
+    .prose.is-timed .is-current-beat { animation: beatIn .35s ease; }
+    @keyframes beatIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+    /* Discussable editorial & screenshotable tease surface */
+    .tease-grid { display: grid; gap: .9rem; margin: .5rem 0 0; }
+    .tease-shot {
+      margin: 1.5rem 0 0; padding: 1.05rem 1.1rem; border-radius: 1.05rem;
+      border: 1px solid color-mix(in oklab, var(--room-accent) 38%, transparent);
+      background: linear-gradient(155deg, color-mix(in oklab, var(--panel-2) 86%, var(--room-accent)), var(--panel));
+    }
+    .shot-head { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .6rem; margin-bottom: .65rem; font: .86rem/1.3 ui-sans-serif, system-ui, sans-serif; color: var(--muted); }
+    .shot-brand { margin-right: auto; }
+    .shot-tease { margin: 0 0 .8rem; padding: 0 0 0 .85rem; border-left: 2px solid var(--room-accent); font-size: 1.12rem; line-height: 1.55; color: var(--fg); }
+    .shot-notes { display: grid; grid-template-columns: max-content 1fr; gap: .3rem .8rem; margin: 0; font: .9rem/1.45 ui-sans-serif, system-ui, sans-serif; }
+    .shot-notes dt { color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .74rem; padding-top: .18rem; }
+    .shot-notes dd { margin: 0; color: var(--fg); }
+    .shot-foot { margin: .7rem 0 0; font: .9rem/1.4 ui-sans-serif, system-ui, sans-serif; }
+    html[data-shot="clean"] body > header,
+    html[data-shot="clean"] body > footer,
+    html[data-shot="clean"] main > :not([data-shot-focus]):not(:has([data-shot-focus])),
+    html[data-shot="clean"] article > :not([data-shot-focus]),
+    html[data-shot="clean"] .tease-grid > :not([data-shot-focus]) { opacity: .08; filter: blur(1px); }
+    html[data-shot="clean"] [data-shot-focus="true"] { position: relative; z-index: 30; box-shadow: 0 18px 48px color-mix(in oklab, black 68%, transparent); }
+
     .murmur { cursor: pointer; border-radius: .4rem; padding: .2rem .5rem; transition: opacity 180ms ease, color 180ms ease; }
     .murmur:hover, .murmur[data-turn="true"] { color: var(--fg); }
     .end-btn { border: 0; color: var(--muted); letter-spacing: .4em; padding-inline: .8rem; }
@@ -916,12 +1621,47 @@ function layout({ title, description, canonical, body, crumb = "", prefs = SETTL
     .pace-drawer[hidden] { display: none; }
     .pace-drawer label { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .8rem; font-size: .9rem; }
     .pace-drawer input[type="range"] { flex: 1 1 8rem; min-height: 44px; accent-color: var(--accent); }
-    #footer-colophon { cursor: pointer; text-decoration: underline dotted var(--line); text-underline-offset: .25em; }
+    .colophon-row { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem .75rem; }
+    #footer-colophon { cursor: pointer; text-decoration: underline dotted var(--line); text-underline-offset: .25em; margin: 0; }
+    .spw-door {
+      font: 600 .8rem/1 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--muted);
+      background: transparent; border: 1px solid transparent; border-radius: .45rem;
+      min-height: 36px; padding: 0 .45rem; cursor: pointer; margin-left: auto;
+    }
+    .spw-door:hover, .spw-door[aria-expanded="true"] { color: var(--room-accent); border-color: var(--line); }
+
+    /* Hidden syntactically-highlighted Spw configuration panel */
+    .spw-panel { margin: .85rem 0 0; padding: .9rem; border: 1px solid var(--line); border-radius: .9rem; background: color-mix(in oklab, var(--bg) 60%, var(--panel)); }
+    .spw-panel[hidden] { display: none; }
+    .spw-presets { display: flex; flex-wrap: wrap; gap: .35rem; margin: 0 0 .65rem; }
+    .spw-editor { position: relative; border: 1px solid var(--line); border-radius: .65rem; background: color-mix(in oklab, var(--bg) 88%, black); overflow: hidden; }
+    .spw-hl, .spw-input {
+      margin: 0; padding: .75rem .85rem; width: 100%; min-height: 9.5rem;
+      font: 400 .86rem/1.55 ui-monospace, SFMono-Regular, Menlo, monospace; tab-size: 2;
+      white-space: pre-wrap; word-wrap: break-word; overflow: auto; border: 0;
+    }
+    .spw-hl { pointer-events: none; color: var(--fg); }
+    .spw-input {
+      position: absolute; inset: 0; resize: vertical; background: transparent; color: transparent; caret-color: var(--room-accent);
+      outline: none;
+    }
+    .spw-tok.spw-op { color: var(--accent); font-weight: 700; }
+    .spw-tok.spw-brace { color: var(--warm); }
+    .spw-tok.spw-head { color: var(--fg); font-weight: 600; }
+    .spw-tok.spw-key { color: var(--slow); }
+    .spw-tok.spw-string { color: var(--sharp); }
+    .spw-tok.spw-number { color: var(--dirty); }
+    .spw-tok.spw-comment { color: var(--muted); font-style: italic; }
+    .spw-tok.spw-error { color: #ff5566; text-decoration: wavy underline; }
+    .spw-bar { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem .65rem; margin-top: .6rem; font: .84rem/1.4 ui-sans-serif, system-ui, sans-serif; color: var(--muted); }
+    .spw-status { margin-right: auto; }
+    .spw-status[data-valid="false"] { color: var(--dirty); }
+
     .pwa-note { margin: .5rem 0 0; }
-    @media (pointer: coarse) { .focus-toggle, .keep-jump, .end-btn { min-height: 44px; } }
-    html[data-move="still"] *, html[data-move="still"] *::before, html[data-move="still"] *::after { transition: none !important; transform: none !important; }
+    @media (pointer: coarse) { .focus-toggle, .keep-jump, .end-btn, .beat-note summary, .spw-door { min-height: 44px; } }
+    html[data-move="still"] *, html[data-move="still"] *::before, html[data-move="still"] *::after { transition: none !important; transform: none !important; animation: none !important; }
     @media (prefers-reduced-motion: reduce) {
-      .card, .before, .registers li, .linger-item summary, .keeps li, .text-scale-badge, .prose.is-focused p { transition: none; transform: none !important; }
+      .card, .before, .registers li, .linger-item summary, .keeps li, .text-scale-badge, .prose > p, .beat-wrap > p, .dial-pill, .tease-shot, .word-slot, body { transition: none; transform: none !important; animation: none !important; }
     }
     .next { margin: 2rem 0 0; }
     .next .card { margin-top: .5rem; }
@@ -939,14 +1679,14 @@ function layout({ title, description, canonical, body, crumb = "", prefs = SETTL
     body > footer nav a { display: inline-flex; align-items: center; min-height: var(--touch); padding: 0 .7rem; }
 
     @media (max-width: 30rem) {
-      .meta { grid-template-columns: 1fr; gap: .05rem; }
-      .meta dt { margin-top: .4rem; font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; }
+      .meta, .shot-notes { grid-template-columns: 1fr; gap: .05rem; }
+      .meta dt, .shot-notes dt { margin-top: .4rem; font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; }
     }
     @media (hover: hover) and (pointer: fine) {
       :root { --touch: 36px; }
     }
     @media print {
-      body > header, body > footer, .before, .next, .cta-row { display: none; }
+      body > header, body > footer, .before, .next, .cta-row, .room-dial, .beat-note, .timed-bar, .shot-btn { display: none; }
       body { background: #fff; color: #000; }
       h1, a { color: #000; }
     }
@@ -980,55 +1720,100 @@ function layout({ title, description, canonical, body, crumb = "", prefs = SETTL
       <a href="/today.json">today.json</a>
       <a href="https://wap.mom/">wap.mom</a>
     </nav>
-    <p class="note" id="footer-colophon">smut.today ${escapeHtml(VERSION)}. The periodical is next door.</p>
+    <div class="colophon-row">
+      <p class="note" id="footer-colophon">smut.today ${escapeHtml(VERSION)}. The periodical is next door.</p>
+      <button type="button" class="spw-door" id="spw-door" aria-expanded="false" aria-controls="spw-panel" title="Room configuration">[ ~ ]</button>
+    </div>
     <aside class="pace-drawer" id="pace-drawer" hidden>
       <label><span>Your reading pace</span><input type="range" min="150" max="320" step="10" value="220" aria-label="Reading pace in words per minute"><output>220 wpm</output></label>
       <p class="note">Recalculates reading time locally. Choosing Forget me in Settle in clears offline copies too.</p>
     </aside>
+    <section class="spw-panel" id="spw-panel" hidden aria-label="Spw room configuration">
+      <p class="kicker">Room dynamics · Spw</p>
+      <div class="spw-presets">
+        <button type="button" class="focus-toggle" data-spw-preset="couple">Couple in bed</button>
+        <button type="button" class="focus-toggle" data-spw-preset="circle">Writing circle</button>
+        <button type="button" class="focus-toggle" data-spw-preset="urgent">Urgent cadence</button>
+        <button type="button" class="focus-toggle" data-spw-preset="protocol">Strict protocol</button>
+      </div>
+      <div class="spw-editor">
+        <pre class="spw-hl" id="spw-hl" aria-hidden="true">${highlightSpw(DEFAULT_SPW_PRESETS.couple)}</pre>
+        <textarea class="spw-input" id="spw-input" spellcheck="false" rows="7" aria-label="Spw room expression">${escapeHtml(DEFAULT_SPW_PRESETS.couple)}</textarea>
+      </div>
+      <div class="spw-bar">
+        <span class="spw-status" id="spw-status">4 Spw frames · pause 2200ms</span>
+        <button type="button" class="focus-toggle" id="spw-reset">Reset</button>
+        <button type="button" class="focus-toggle" id="spw-hide">Hide</button>
+      </div>
+    </section>
   </footer>
 </body>
 </html>`;
 }
 
-function renderIndex(now, prefs) {
-  const featured = leadStory(now, prefs);
+function renderIndex(now, prefs, mood = "") {
+  const activeMood = mood && Object.hasOwn(REGISTER, mood) ? mood : "";
+  const featured = leadStory(now, prefs, activeMood);
   const others = STORIES.filter((s) => s.slug !== featured.slug);
   const settled = isSettled(prefs)
     ? `<p class="settled note">The room remembers: ${escapeHtml(settleLine(prefs))}. <a href="/settle/">Change it</a>, or forget it there.</p>`
-    : `<p class="note">Want slow first every time, or larger words? <a href="/settle/">Settle in</a> and the room will remember.</p>`;
+    : `<p class="note">Want a different default room or larger words? <a href="/settle/">Settle in</a> and this device remembers.</p>`;
+
+  const dialPills = [
+    `<a class="dial-pill" data-mood="all" href="/"${!activeMood ? ' aria-current="true"' : ""}>Everything</a>`,
+    ...Object.values(REGISTER).map(
+      (reg) => `<a class="dial-pill" data-mood="${escapeHtml(reg.name)}" href="/?mood=${escapeHtml(reg.name)}"${activeMood === reg.name ? ' aria-current="true"' : ""}>${escapeHtml(reg.name)}</a>`
+    ),
+  ].join("");
+
   const registers = Object.values(REGISTER)
     .map(
       (reg) => `<li>
     <span class="badge badge-${escapeHtml(reg.name)}">${escapeHtml(reg.name)}</span> <span class="note">${escapeHtml(reg.promise)}</span>
     <p>${escapeHtml(reg.pick)}</p>
+    <a class="register-link" data-mood="${escapeHtml(reg.name)}" href="/?mood=${escapeHtml(reg.name)}">${escapeHtml(reg.audience)} →</a>
   </li>`
     )
     .join("");
-  const list = others.map((s) => `<li>${renderStoryCard(s)}</li>`).join("");
+
+  const list = others
+    .map((s) => `<li${activeMood && s.register !== activeMood ? " hidden" : ""}>${renderStoryCard(s)}</li>`)
+    .join("");
+
+  const editorialTeases = STORIES.map((s) => renderEditorialShot(s, { showLink: true })).join("");
+
   return layout({
     prefs,
+    mood: activeMood,
     crumb: "home",
-    title: "smut.today — one scene a day, door shut",
-    description: "Short, explicit fiction for adults. One scene a day: slow when you want to be kept waiting, dirty when you don't. You know how long it takes and what happens before the first line.",
+    title: "smut.today — four rooms down one corridor",
+    description: "Short, explicit fiction for adults across four distinct moods: slow, dirty, warm, and sharp. Transparent tags, timed beat pacing, and discussable teases.",
     canonical: "https://smut.today/",
     body: `<section aria-labelledby="site-title">
   <h1 id="site-title">Something to read with the door shut.</h1>
-  <p class="lede">One scene a day. Slow when you want to be kept waiting, dirty when you don’t. You’ll know how long it takes and what happens before the first line, and after that it’s only the words and you.</p>
+  <p class="lede">Four rooms down one corridor: slow restraint, urgent dispatch, domestic warmth, or strict protocol. You know what’s inside before the first line—read solo, share in bed, or dissect the craft.</p>
   <p class="age">18+. If that isn’t you, or this isn’t the night for it, <a href="${escapeHtml(LEAVE_URL)}" rel="noreferrer">leave</a>. Nothing here follows you out.</p>
+  <nav class="room-dial" id="room-dial" aria-label="Room mood filter">${dialPills}</nav>
+  <p class="note" id="dial-status" aria-live="polite">${activeMood ? `Tuned to ${escapeHtml(activeMood)} — ${escapeHtml(REGISTER[activeMood].audience)}.` : "Showing all four doors in the corridor."}</p>
 </section>
 <section aria-labelledby="today-title">
-  <h2 id="today-title" class="kicker">Today · ${escapeHtml(new Date(now).toISOString().slice(0, 10))}</h2>
+  <h2 id="today-title" class="kicker">${activeMood ? `${escapeHtml(activeMood)} lead` : `Today · ${escapeHtml(new Date(now).toISOString().slice(0, 10))}`}</h2>
   ${renderStoryCard(featured, { today: true })}
   <p class="murmur">${escapeHtml(murmur(now))}</p>
   ${settled}
 </section>
 <section aria-labelledby="registers-title">
-  <h2 id="registers-title" class="kicker">Two ways in</h2>
+  <h2 id="registers-title" class="kicker">Four ways in</h2>
   <ul class="registers">${registers}</ul>
 </section>
 <section aria-labelledby="pieces-title">
   <h2 id="pieces-title" class="kicker">Still warm</h2>
   <ul class="pieces">${list}</ul>
+</section>
+<section aria-labelledby="teases-title">
+  <h2 id="teases-title" class="kicker">For two in bed · or the workshop table</h2>
+  <p class="note">Tap underlined phrases to adjust phrasing, or tap Frame card for a clean screenshot to pass across a pillow or writing circle.</p>
+  <div class="tease-grid">${editorialTeases}</div>
 </section>
 <section aria-labelledby="also-title">
   <h2 id="also-title" class="kicker">Down the hall</h2>
@@ -1057,7 +1842,11 @@ function renderLetter(prefs) {
   <header class="piece-head">
     <p class="kicker">A letter · ${escapeHtml(LETTER.kicker)}</p>
     <h1>${escapeHtml(LETTER.title)}</h1>
-    <p><button type="button" class="focus-toggle" id="focus-toggle" aria-pressed="false" hidden>One breath at a time</button></p>
+    <div class="scene-stage">
+      <button type="button" class="focus-toggle" id="focus-toggle" aria-pressed="false" hidden>One breath</button>
+      <span class="breath-count" id="breath-count" hidden></span>
+      <button type="button" class="focus-toggle" id="scale-step" hidden>Text 100%</button>
+    </div>
   </header>
   <div class="prose">${renderParagraphs(LETTER.body)}</div>
   <p class="end" aria-hidden="true">· · ·</p>
@@ -1097,6 +1886,7 @@ ${cards}
 function renderStory(story, prefs) {
   const other = otherStory(story);
   const reg = registerOf(story);
+  const cadence = story.cadence || { baseMs: 2200, jitterMs: 650 };
   const next = other
     ? `<nav class="next" aria-labelledby="next-title">
   <h2 id="next-title" class="kicker">${escapeHtml(reg.handoff)}</h2>
@@ -1105,6 +1895,7 @@ function renderStory(story, prefs) {
     : "";
   return layout({
     prefs,
+    mood: reg.name,
     title: `${story.title} — smut.today`,
     description: `${story.summary} ${reg.name[0].toUpperCase()}${reg.name.slice(1)}, ${readLength(story)}.`,
     canonical: `https://smut.today/${story.slug}/`,
@@ -1117,26 +1908,46 @@ function renderStory(story, prefs) {
   <aside class="before" aria-labelledby="before-title">
     <h2 id="before-title" class="kicker">Before the door shuts</h2>
     ${renderMeta(story, { brief: true })}
-    <p class="note">Told to you, in second person. Everyone here is grown and says yes. <a href="#text">Go straight in</a> · <button type="button" class="focus-toggle" id="focus-toggle" aria-pressed="false" hidden>One breath at a time</button></p>
+    <p class="note">Told to you, in second person. Everyone here is grown and says yes. Dotted phrases swap on tap.</p>
+    <div class="scene-stage" role="group" aria-label="Reading controls">
+      <a class="stage-link" href="#text">Go straight in</a>
+      <button type="button" class="focus-toggle" id="focus-toggle" aria-pressed="false" hidden>One breath</button>
+      <span class="breath-count" id="breath-count" hidden></span>
+      <button type="button" class="focus-toggle" id="voices-toggle" aria-pressed="false" hidden>Voices</button>
+      <button type="button" class="focus-toggle" id="timed-toggle" aria-pressed="false" data-base-ms="${escapeHtml(cadence.baseMs)}" data-jitter-ms="${escapeHtml(cadence.jitterMs)}" hidden>Timed unfold</button>
+      <button type="button" class="focus-toggle" id="scale-step" hidden>Text 100%</button>
+    </div>
   </aside>
+  <div class="timed-bar" id="timed-bar" hidden>
+    <span id="timed-label">Pacing...</span>
+    <button type="button" class="focus-toggle" id="timed-skip">Take it now</button>
+    <div class="timed-track"><div class="timed-fill" id="timed-fill"></div></div>
+  </div>
   <div class="prose" id="text">${renderParagraphs(story.body)}</div>
   <p class="end" aria-hidden="true">· · ·</p>
   ${renderLinger(story)}
   ${renderKeeps(story)}
+  ${renderEditorialShot(story)}
 </article>
 ${next}`,
   });
 }
 
 const SETTLE_ASK = Object.freeze({
-  pace: "Which do you want first?",
+  pace: "Which room leads for you?",
   type: "How big should the words be?",
   move: "How much should the page move?",
 });
 const SETTLE_HINT = Object.freeze({
-  pace: { day: "the date decides, and both are always one link away", slow: "make me wait, every time", dirty: "now, every time" },
+  pace: {
+    day: "let today's calendar pick; all four are one tap away",
+    slow: "make me wait — sensory craft and withheld touch first",
+    dirty: "now — direct dialogue and heat first",
+    warm: "stay inside — laughter and domestic closeness first",
+    sharp: "keep score — negotiated authority and precision first",
+  },
   type: { set: "", larger: "a size up, everywhere" },
-  move: { breathe: "the drop cap, the line that turns, the glow", still: "no fades, no flourishes, just the page" },
+  move: { breathe: "the drop cap, the line that turns, the timed pulse", still: "no fades, no waits, just the static page" },
 });
 
 function renderSettle(prefs) {
@@ -1158,7 +1969,7 @@ function renderSettle(prefs) {
     prefs,
     crumb: "settle",
     title: "Settle in — smut.today",
-    description: "Tell the room how you like it: slow or dirty first, how big the words are, whether the page moves. Kept on this device until you say forget.",
+    description: "Tell the room how you like it: which register leads, how big the words are, whether the page moves. Kept on this device until you say forget.",
     canonical: "https://smut.today/settle/",
     body: `<header class="piece-head">
   <p class="kicker">Settle in</p>
@@ -1193,17 +2004,21 @@ function jsonToday(now) {
     site: "smut.today",
     date: new Date(now).toISOString().slice(0, 10),
     featured: featured.slug,
+    registers: Object.keys(REGISTER),
     murmur: murmur(now),
     stories: STORIES.map((s) => ({
       slug: s.slug,
       title: s.title,
       summary: s.summary,
       register: s.register,
+      audience: s.audience,
       since: s.since,
       minutes: readMinutes(s),
       pairing: s.pairing,
       tags: s.tags,
+      cadence: s.cadence,
       linger: (s.linger || []).map((l) => l.ask),
+      edition: s.edition,
     })),
     language: LEXICON,
   };
@@ -1328,7 +2143,8 @@ export default {
     }
 
     if (url.pathname === "/" || url.pathname === "") {
-      return new Response(renderIndex(now, prefs), { headers: htmlHeaders });
+      const mood = url.searchParams.get("mood") || "";
+      return new Response(renderIndex(now, prefs, mood), { headers: htmlHeaders });
     }
 
     if (url.pathname === "/to-you" || url.pathname === "/to-you/") {
