@@ -22,6 +22,7 @@ fixity = "tending"
  >>[2026-11-06 12:44] verify — since the 2026-10-10 Status: 49cb094e (one table, 2026-10-25), 25b7fb0a (@ reads as perspective) and 7f7e091c (each sigil table names its workbench relation; operator-alignment.spw says mutation). Of the four weak chips, $current sprint and ^quick starts are gone; @play (tools/index.html:105) and ~services (offline/index.html:61) remain. Slice 5 has no commit since a664caf5.
  >>[2026-11-06 12:46] plan — PLAN.md collapses Current Slice and Slices 1–4 into Landed lines with commits, names three next slices (the decision, the two chips, dormant prompt paths written as path{~prompt; $substrate; !transform; ^proof}), and marks the plan near archive.
  >>[2026-11-10 11:14] note — lore-land-plans.spw#value: one shared table, five names still parting, a sigil whose move a reader can say. Beside PLAN.A's one row and f5. The @play and ~services read stays next.
+ >>[2026-11-17 13:37] align — Updated Slice 4 in PLAN.md to align host alias columns with the ecosystem domain-cluster map in workers-wonder-kit and attention.productions compose.js MARK_OP/BRACKET_OP data-op slots beside upstream audit-ui-data-models SPW_OPERATORS.
 }
 
 ^"open"{
@@ -33,5 +34,5 @@ fixity = "tending"
  ~#next_commit: "~[operators] Read @play and ~services against the alignment rules, and give each the sigil its move makes or a reason to keep its own"
  ~#files_hot: "public/js/semantic/sigil-annotation.js, public/css/effects/wonder.css, tools/index.html, offline/index.html, tools/budgeting/index.html"
  ~#gate: "nothing for the two chips; the creator's call on the family attributes: per-family colour, then a browser review, or stop writing them"
- ~#last_stream: "2026-11-10"
+ ~#last_stream: "2026-11-17"
 }

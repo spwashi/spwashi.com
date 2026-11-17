@@ -38,11 +38,13 @@ fixity = "tending"
  >>[2026-11-08 16:44] plan — slice 3 is cluster F in semantic-copy-depth/update-clusters-2026-11.spw. It stays third. When it lands, wonder_update_clusters_gesture_cohesion should print as a contour line. Join laws stay in dot-join, linguistic-affordances, and theory-map.
  >>[2026-11-08 17:26] plan — if that contour line does not parse, the prose contour stays. Cluster E's join bend is wonder_update_clusters_join_law. Measures follow measurement-contract: objective, subjective, hybrid only when both are named.
  >>[2026-11-10 11:14] note — lore-land-plans.spw#value: an answer names one alternative left in the set. Beside lore.land's f6, a proposal the parser reads first. Settled-wonder answers stay next.
+ >>[2026-11-17 13:37] align — Synced mount pin reference in PLAN.md from stale 27fa1e3d to live mount bcf0da18b840 (rule_trace_when_kept trace-skip 8.55 s -> 105.8 ms across 1,322 tracked .spw files, 1,311 clean, 1,018 HTML expressions). Extended wonder lifecycle adds kept_open (never_closes) and pre-reveal ~#expect alongside open/probed/answered/retired, plus math-practice-labs % objective/subjective measure parity across topics/math/number-theory/ and wap.mom/lore.land convergents. Added #>wonder_spw_inquiry_loop_never_closes in index.spw.
 }
 
 ^"open"{
  trailing_probe = ~"./index.spw#wonder_spw_inquiry_loop_trailing_probe"
  help_json = ~"./index.spw#wonder_plan_help_json"
+ never_closes = ~"./index.spw#wonder_spw_inquiry_loop_never_closes"
  name = ~"../../../.spw/language/v04/roadmap.spw#wonder_v04_name"
  claims_wonders = ~"../../../.spw/language/v04/roadmap.spw#wonder_v04_claims_wonders"
  fixity_name = ~"../../../.spw/language/v04/roadmap.spw#wonder_v04_fixity_name"
@@ -53,5 +55,5 @@ fixity = "tending"
  ~#next_commit: "~[wonder] Answer the wonders a decision or a commit settled, each ~#answer citing it"
  ~#files_hot: "scripts/wonder.mjs, .spw/language/v04/roadmap.spw, .spw/reviews/upstream-workbench-recommendations/capabilities.spw, public/js/semantic/expression-query.js"
  ~#gate: "nothing for the answers or the prefix half; the trailing ?# half, the name v0.4, the claim question and fixity's two meanings wait on the creator"
- ~#last_stream: "2026-11-10"
+ ~#last_stream: "2026-11-17"
 }
