@@ -74,6 +74,8 @@ intent: .{
 @concept_routes: ~"../../../.spw/caches/concept-route-physics-2026-11.spw"
 # One align: a lean that expires, the document cursor, a hand that writes on a keep, and the hosts that own the grammar.
 @hosts: ~"./HOSTS.md"
+# The open hold as the expression a reader starts from, and attention's ladders as the devices that frame it.
+@hub: ~"./hub.spw"
 
 dispatch: .{
  plan = @plan
@@ -83,6 +85,7 @@ dispatch: .{
  parser_releases = @parser_releases
  interaction = @interaction
  hosts = @hosts
+ hub = @hub
  ui_model = @ui_model
 }[reg=facet]
 
@@ -114,6 +117,7 @@ editor_prompts: #[
  .{ ask = `Which file should I open first to implement the next slice of factshift-center?`, see = @wip }[reg=facet],
  .{ ask = `Where does the canvas decide where a slot of a line sits?`, see = @plan }[reg=facet],
  .{ ask = `Where do the workbench and lore.land sit relative to this canvas?`, see = @hosts }[reg=facet],
+ .{ ask = `Where does a reader start, and which worker changes the expression next?`, see = @hub }[reg=facet],
 ][reg=set]
 
 invariants: #[
@@ -408,4 +412,41 @@ invariants: #[
   ~#probe(read)
   !probe{ "rg -n \"QUICK_MS|FLICK_PX|EDGE_PX|QUICK_CLOSE|QUICK_SPREAD\" workers/factshift-center/app/src/js/modes/spw/body-gestures.ts" }
   $%[hand.as_built, hand.tuned_on_a_phone, hand.strata_everywhere]
+}
+
+#>wonder_factshift_hold
+?["Is the open hold on mutex.buzz the expression a reader starts from, and are attention.productions' ladders the storytelling devices that frame it on the way?"]{
+  #:depth #!pragmatics ~#lens(projection)
+  ~#with: @hub @plan
+  ~#taste: "mutex.buzz is the friendly, themed ground. One hold, said as two lines, in the lock's own marks. attention.productions supplies novelty in framing by spending @, the viewpoint the lock already names. Each other worker spends one mark and displays the line that comes back. A first tap primes. A second writes."
+  ~#expect: "liveLines already writes the pair, and consumeMutex then appends the whole rule. The set ring's four carries already leave mutex for the canvas, the stripes, the shot, and the build. The canvas does not mount the ring, and no slat shows a sentence before it leaves."
+  ~#unblocks: "hub.spw slices"
+  ~#probe(read)
+  !probe{ "hold mutex.buzz as the title and say whether the thread opens on the two live lines with the rule folded, or on the whole of lock.spw" }
+  $%[hold.pair_first, hold.rule_folded, hold.shot_returns, hold.ring_mounted]
+}
+
+#>wonder_factshift_field
+?["Should typing a domain show the theme it already has, and should the held line tune the forces and the alignment?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#with: @hub @plan
+  ~#taste: "factshift.center is a creative surface for an idea. A domain typed into the title shows how that idea has been themed, from a record that already exists, and the field can be pushed. The expression, not the hostname, chooses the force profile and the seats."
+  ~#tension: "entropy, force, and signal add a kick every tick while alpha is up, so a line that is still finding its slots never arrives. formatSpw, bodyPlan, and arrange each read the braces on their own."
+  ~#expect: "SITE_CONFIGS themes four hostnames at load and leaves factshift.center empty. The set's other hosts are not in that table. A title that names one of them does not apply a hue, a mark, or a profile."
+  ~#unblocks: "hub.spw path, and hub.spw field"
+  ~#probe(read)
+  !probe{ "rg -n \"SITE_CONFIGS|entropyForce|function arrange|function formatSpw|function bodyPlan\" workers/factshift-center/app/src/ts/domains/config.ts workers/factshift-center/app/src/ts/simulation/dimensional-forces.ts workers/factshift-center/app/src/js/simulation/arrange.ts workers/factshift-center/app/src/js/modes/spw/line-format.ts workers/factshift-center/app/src/js/modes/spw/line-anatomy.ts" }
+  $%[field.theme_on_type, field.expression_tunes, field.one_matrix, field.as_built]
+}
+
+#>wonder_factshift_ephemeral
+?["Which lean is worth a sitting: the note on its own surface, the scrub speaking before it commits, a joint's turn shown before it writes, a theme that expires unless kept, or an HTTP reply that is one line?"]{
+  #:depth #!experiential ~#lens(choice)
+  ~#with: @interaction @hub
+  ~#taste: "One sentence at a time. The clock starts when the hand lifts. A scrub that returns home writes nothing. A theme you only looked at returns to the ground. /{path} is the title by default, files and /demo and /help excepted. A domain is that title, not its own route. curl of / returns the line."
+  ~#expect: "sayNearHandle is one output on one 2.4s hold. resolveEdgeScrub already splits where and how, and a scrub that ends at its start commits nothing. jointsOf names the places a line can change. The worker returns whatever the asset returned, including a 404."
+  ~#unblocks: "INTERACTION.md, Ephemeral UI"
+  ~#probe(read)
+  !probe{ "rg -n \"sayNearHandle|function resolveEdgeScrub|export function jointsOf|ASSETS.fetch\" workers/factshift-center/app/src/js/ui/handle-said.ts workers/factshift-center/app/src/js/ui/edge-scrub.ts workers/factshift-center/app/src/js/modes/spw/line-joints.ts workers/factshift-center/src/index.js" }
+  $%[ephemeral.note_on_surface, ephemeral.scrub_speaks, ephemeral.joint_preview, ephemeral.theme_expires, ephemeral.http_line]
 }

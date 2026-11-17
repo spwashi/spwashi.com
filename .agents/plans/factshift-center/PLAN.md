@@ -1,6 +1,17 @@
 # factshift.center
 
-**Status 2026-11-08.** The site now serves two things around the snapshot. One is the canvas's offline shell (`58db05a9`). The other is its installed face: the snapshot's manifest with the site's description, any orientation, a launch handler and two shortcuts, plus a theme color, an iOS icon and a link preview in the head (`src/manifest.js`). The app's main is at 8de4f19 (edge-history fast-forwarded, 2026-11-08). Another session's uncommitted work from 2026-11-06 (tie modes, camera zoom from the focal square, line stepping, a formatted print face) is preserved whole on branch `wip/other-session-2026-11-06` (8fbfef2) and restored in the checkout as uncommitted changes. Its three overlapping files were then reconciled there by device (uncommitted): its 72px side band carries history steps on touch, and its print face is the prompt at rest on a coarse pointer while a fine pointer keeps the painted editor (`wonder_factshift_devices`). *Was, on 2026-11-06:* nothing had moved in either repository since 2026-10-30. The snapshot in `workers/factshift-center/version.json` is the app's last commit, the `revision` it records, carried on the site as `aece505a`; the app's own hashes resolve only in `workers/factshift-center/app` (gitignored here), so they sit in the pins below. factshift.com is the prototype, settled October 2024; factshift.center examines which concepts a particular set of physics can represent (*The difference*, below, in the creator's words). Next on the canvas: slice 5, one reading from the workbench in place of the app's second slot reader; slice 1a and slice 2 need no gate. Interaction depth is in [INTERACTION.md](./INTERACTION.md) and is not yet a patch. Deploy remains the creator's.
+**Status 2026-11-16.**
+- **The site carries the app as of `84740905`** (each carry's subject names its app build). It came after a run of carries the same day:
+  - one depth axis for the frame (`9d079e58`);
+  - the title attention.productions as a viewfinder (`3681aca2`);
+  - the title mutex.buzz reading the lock (`845ea9fe`);
+  - entering attention.productions through the lens (`f4d44391`);
+  - a sent shot as its dailies (`84740905`).
+- **The canvas's side of the set is [hub.spw](./hub.spw).** [HUB.md](./HUB.md) is only the door. The set itself (the ring, both pinches, what each site changes and shows) is [workers-wonder-kit](../workers-wonder-kit/PLAN.md)'s.
+- **Open, the creator's:** whether the title feed for mutex.buzz stays. It was built from a misread request; the lock's consumer on tealstripesvibes.com is `/@lock` (`5fc4d357`).
+- **Deploy** remains the creator's.
+
+*Status 2026-11-08, as it stood:* The site now serves two things around the snapshot. One is the canvas's offline shell (`58db05a9`). The other is its installed face: the snapshot's manifest with the site's description, any orientation, a launch handler and two shortcuts, plus a theme color, an iOS icon and a link preview in the head (`src/manifest.js`). The app's main is at 8de4f19 (edge-history fast-forwarded, 2026-11-08). Another session's uncommitted work from 2026-11-06 (tie modes, camera zoom from the focal square, line stepping, a formatted print face) is preserved whole on branch `wip/other-session-2026-11-06` (8fbfef2) and restored in the checkout as uncommitted changes. Its three overlapping files were then reconciled there by device (uncommitted): its 72px side band carries history steps on touch, and its print face is the prompt at rest on a coarse pointer while a fine pointer keeps the painted editor (`wonder_factshift_devices`). *Was, on 2026-11-06:* nothing had moved in either repository since 2026-10-30. The snapshot in `workers/factshift-center/version.json` is the app's last commit, the `revision` it records, carried on the site as `aece505a`; the app's own hashes resolve only in `workers/factshift-center/app` (gitignored here), so they sit in the pins below. factshift.com is the prototype, settled October 2024; factshift.center examines which concepts a particular set of physics can represent (*The difference*, below, in the creator's words). Next on the canvas: slice 5, one reading from the workbench in place of the app's second slot reader; slice 1a and slice 2 need no gate. Interaction depth is in [INTERACTION.md](./INTERACTION.md) and is not yet a patch. Deploy remains the creator's.
 
 **Related:** [the UI model](../../../.spw/surfaces/factshift-center.spw) (the canvas as the site's .spw tree holds it: decisions apart from readings, and known gaps) · [spw-quest](../spw-quest/PLAN.md) (its pivot and construct cards can open a line here) · [spw-inquiry-loop](../spw-inquiry-loop/PLAN.md) (parser releases, the capability ledger) · [brace-semantics](../brace-semantics/PLAN.md) (`[ ]` as a frame) · [spw-metaphysical-language](../spw-metaphysical-language/PLAN.md) (depth passes) · [ecosystem-architecture](../ecosystem-architecture/PLAN.md) (peers).
 
@@ -67,6 +78,18 @@ ee32665  05ab385c   the nub steps in three levels
 2fb7184  3cb5fde6   ( ) applies to the word with its body; containers resize
 99c10e6  aece505a   < > refers to the whole reading, unlabeled
 ```
+
+## Landed 2026-11-16 (site commits that carried the app)
+
+- **`9d079e58`:** one depth axis for the frame, the trail always in sight, and the framed body in the address.
+- **`3681aca2`:** the title attention.productions rolls the canvas into its viewfinder.
+- **`845ea9fe`:** the title mutex.buzz reads `now.json` and `lock.spw` from mutex.buzz and holds what holds the lock now.
+- **`f4d44391`:** entering a node that reads attention.productions closes the iris on it, and the entered page opens from that spot with an `#>enter` slate.
+- **`84740905`:** a shot sent by attention.productions' link plays as its dailies.
+  - A clapper claps.
+  - The frame takes the shot's ratio, light, direction and focus.
+  - Then it settles to a slate, and lifts when another line is held.
+  - A typed Midjourney prompt stays a line.
 
 ## Layout
 
@@ -300,6 +323,10 @@ Each is one session in the app (`workers/factshift-center/app`, its own reposito
 
    The gesture collisions in the verbs audit (two taps on a container's corner also make a loose node) wait on its `#>wonder_factshift_gesture_meanings`.
 
+## The hold as a start (2026-11-16, proposed)
+
+mutex.buzz is the grounding point a reader starts from: one themed hold, said as two lines, in the lock's own marks (`.` the folio, `%` the hour, `@` the shot). attention.productions is where framing and storytelling devices come from: shot, lens, light, move, focus, already named in the lock as `@attention.productions{frame}`. The other workers each spend one mark on that expression and display the line that comes back. The card and the slices are in [hub.spw](./hub.spw), and the set-wide reading in [workers-wonder-kit](../workers-wonder-kit/PLAN.md). `consumeMutex` still loads the pair and then the whole rule.
+
 ## Open questions
 
-Thirteen, held as wonders in `index.spw` (`npm run wonder -- --contour --surface .agents/plans/factshift-center/index.spw`). They run from the line's spaces, frames and channels, its gaps and parity with the workbench, through the rebundle, which relations pull, priming in dialects and the gestures each tool takes, to spells over a set, containers as physics and frames, sizes along arcs, the examination itself, and interaction depth (`wonder_factshift_interaction`, [INTERACTION.md](./INTERACTION.md)). Gesture meanings, one per gesture, are asked in the verbs audit as `#>wonder_factshift_gesture_meanings`.
+Thirteen, held as wonders in `index.spw` (`npm run wonder -- --contour --surface .agents/plans/factshift-center/index.spw`). They run from the line's spaces, frames and channels, its gaps and parity with the workbench, through the rebundle, which relations pull, priming in dialects and the gestures each tool takes, to spells over a set, containers as physics and frames, sizes along arcs, the examination itself, and interaction depth (`wonder_factshift_interaction`, [INTERACTION.md](./INTERACTION.md)). Gesture meanings, one per gesture, are asked in the verbs audit as `#>wonder_factshift_gesture_meanings`. Whether the open hold is the expression a reader starts from, and attention's ladders the devices that frame it, is `#>wonder_factshift_hold` ([hub.spw](./hub.spw)).

@@ -10,7 +10,7 @@ A ranked route through the CSS and runtime owner plans, chosen by what each move
 
 The public CSS and JS pay three ways beyond the page that loads them. Each slice below moves at least one of them.
 
-- **Peers.** Six worker units in `workers/` (autonomous-feedback, factshift-center, site-hub-next, smut-today, spw-quest, wap-mom). `npm run build:peer-kit` carries the site's tokens, faces, sigil colors and one script, and today only spw-quest takes them: autonomous-feedback and site-hub-next share `workers/lib/shell.js` but not the kit (checked 2026-11-08). The next peer site costs what the peer kit cannot carry. lore.land, its own repo, takes nothing from it yet ([lore-land-support.spw](lore-land-support.spw)).
+- **Peers.** Ten worker units in `workers/` (`npm run check:workers`, 2026-11-16): attention-productions, autonomous-feedback, factshift-center, mutex-buzz, site-hub-next, smut-today, spw-quest, tealstripes-vibes, texture-website, wap-mom. `npm run build:peer-kit` carries the site's tokens, faces, sigil colors and one script. spw.quest takes all of it; attention-productions, mutex-buzz and tealstripes-vibes take the script since `1942a277`; autonomous-feedback and site-hub-next share `workers/lib/shell.js` but not the kit. The next peer site costs what the peer kit cannot carry. lore.land, its own repo, takes nothing from it yet ([lore-land-support.spw](lore-land-support.spw)).
 - **Adoption.** spw.quest is Spw's front door. Its first reward is a line read on the worker. The specimens, joins, query and comparison stay on spwashi.com, and agents reach the quest through `/init` and `/llms.txt`.
 - **Asset.** A forkable, measured codebase is teaching material and the strongest proof of the practice the site offers. It loses that value when an owner plan disagrees with the tree, and when one concept has five tables.
 - **Risk.** The cascade the site ships is not the one its source declares, and two budgets sit at their edge.
@@ -58,7 +58,7 @@ A peer may take these from `public/` through the peer kit, and nothing else:
 
 - **The genre rules (2026-11-10, not carried):** `public/js/semantic/spw-genre-checks.js`, what a log, a question and a change record are each asked, with the reason for the rule. The quest's `fileKit` says the same sentences in its own copy, because it travels into its page by `toString`, and `workers/spw-quest/test/genre.test.mjs` holds the two equal. It becomes part of the instrument once `fileKit` takes readers as arguments.
 
-Atmosphere, route surfaces, chrome and the catalog stay home. Anything travels once a peer uses it, and `build:peer-kit -- --check` holds the drift. Today the kit's `SCRIPTS` (in `scripts/build-peer-kit.mjs`) carries one entry, `pinch-text-scale` for spw-quest.
+Atmosphere, route surfaces, chrome and the catalog stay home. Anything travels once a peer uses it, and `build:peer-kit -- --check` holds the drift. Today the kit's `SCRIPTS` (in `scripts/build-peer-kit.mjs`) carries one script, `pinch-text-scale`, to four units: spw-quest, and since `1942a277` attention-productions, mutex-buzz and tealstripes-vibes.
 
 ## Slices, ranked
 
@@ -103,9 +103,34 @@ A fixed answer is a file: served at the edge without running code, faster, clean
 5. smut.today and autonomous.feedback by their tiers in `workers/cluster.json`; tealstripesvibes.com stays scripted.
 Every refactor saves `npm run workers:fingerprint -- --save .tmp/before.json` first and ends with `--compare` clean. www Redirect Rules are the creator's.
 
+## Shared function, host voice (2026-11-16, proposed)
+
+Two cores already exist, and this note does not add a third. The language core is the workbench: the parser, the slot reader, the operator's identity. A host consumes a pin. It does not fork a reader. The worker core is `workers/lib`: what a page on any host may share. A unit's carry copies a file from there into its assets, byte for byte, and a test fails when a copy drifts. A file-only unit can hold that copy. It cannot import another origin, and it must not fetch one at request time.
+
+A function moves into `workers/lib` when a second host would otherwise write it again. Until then it stays with the host that has the voice. The module imports nothing from a host and nothing from `public/js`. The host passes its voice in as data.
+
+What is already shared this way: `http.js` (headers, escape), `shell.js`, `carry.js` (a fixed answer rendered once), `pinch.js` (the picture's step), `text-scale.js` (which binds spwashi.com's own pinch, the one script the peer kit carries to these units), `set-ring.js` (the seven hosts, their colours, and `mountSetRing`, which each page fills with its own `says` and `href`). The peer kit is the other door, and it stays the door for anything that starts in `public/`: tokens, faces, the operator colours, and, when S4a lands, one paint. S4a stays next. This note does not jump it.
+
+What stays a host's own medium, even when two hosts rhyme:
+
+| stays home | why |
+| --- | --- |
+| mutex's folio, the bee, the schedule | the hold's voice |
+| attention's ladders and the viewfinder | the shot's voice (`vocabulary.js`, `compose.js`) |
+| the stripe mask and its seeds | the vibe's voice (`vibe.js`) |
+| the canvas forces, `arrange`, `formatSpw`, `bodyPlan` | the frame's voice; they need the pinned reader, so they do not enter `workers/lib` |
+| the quest's build and its slot turns | the lesson's voice |
+| boon, bane, bone, lore profiles | an older axis in factshift's `SITE_CONFIGS`, not the set of seven |
+
+The one function that has already been written twice is the hold as a line. mutex's `nowLine` and `turnLine` (`workers/mutex-buzz/src/lock.js`) and factshift's `liveLines` (`workers/factshift-center/app/src/js/ui/mutex-lines.ts`) each produce `*holds[cycle]{title}(since ~> until)` and `%turn[n/of]{hour}`. The canvas comment says it writes them the way the lock does. A `workers/lib/hold.js`, given `{ cycle, title, since, releasesAt }` and a moment, returns those two lines and nothing else. mutex's page, the ring's carry, and the canvas's card call it. It formats a record. It does not parse. tealstripes' `lockVibe` writes the pair a third time. This is [workers-wonder-kit](../workers-wonder-kit/PLAN.md) S3, which owns `workers/lib` and orders it.
+
+The theme a typed domain shows is a record, not a skin. `set-ring.js` already holds host, name, and colour for the seven. A sibling record, carried with the ring, adds the mark and the kind of expression that host starts from (`hold`, `shot`, `mask`, `line`, `slot`). factshift looks up a typed name there first. The four `.land` profiles stay in `SITE_CONFIGS` until one of those names is in the set. An unknown name stays the ground. No host's drawing code moves to make that lookup true. This is workers-wonder-kit S5, gated on its `#>wonder_set_cue_planes`.
+
+The brace matrix and the expression-tuned forces stay inside factshift, on the pinned reader, one reading shared by `formatSpw`, `bodyPlan`, and `arrange`. They become a peer-kit script only if a second host asks to seat a line the same way. attention's `addressOf` stays in `compose.js` until the canvas is the second caller; the ring may store the href before that. lore.land stays in its own repo and takes a pin, not a copy of `workers/lib`.
+
 ## Order
 
-S4a → S4b → H → I. S5 lands when the creator has reviewed it; S7 follows the creator's answer.
+S4a → S4b → H → I. S5 lands when the creator has reviewed it; S7 follows the creator's answer. The hold's one writer is ordered in workers-wonder-kit (S3); it touches `workers/lib` and not `public/`, so it does not wait on S4a.
 
 ## Guards
 

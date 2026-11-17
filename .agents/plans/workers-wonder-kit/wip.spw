@@ -1,4 +1,4 @@
-# Review 2026-11-06 — hot notes for moving two workers onto the shared shell; the sense, S1, the proposed S2 and the boundaries stay in PLAN.md.
+# Review 2026-11-16 — hot notes for the shared kit and the set; the landed lines, design considerations, slices and boundaries stay in PLAN.md.
 # wip — workers-wonder-kit
 #
 #>plan_workers_wonder_kit_wip
@@ -10,6 +10,7 @@
 @index: ~"./index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @shell: ~"../../../workers/lib/shell.js"
+@set_ring: ~"../../../workers/lib/set-ring.js"
 @smut_today: ~"../../../workers/smut-today/src/index.js"
 @wap_layout: ~"../../../workers/wap-mom/src/layout.js"
 @workers_readme: ~"../../../workers/README.md"
@@ -21,14 +22,15 @@ fixity = "tending"
  >>[2026-10-12 10:59] verify — spw-quest, site-hub-next and autonomous-feedback import workers/lib/shell.js (d2c16bff); smut-today and wap-mom still carry their own escapeHtml, BASE_SECURITY and FAVICON. Both took copy commits today (b6d6a1df, 012fba4c) that left those copies alone, and both are clean in this tree. smut-today-crew's first slice also edits workers/smut-today/src/index.js.
  >>[2026-11-06 12:26] verify — nothing in workers/wap-mom, workers/smut-today or workers/README.md changed since 10-12; shell.js changed once (5cad3133, a head slot in layout). Every line number in PLAN.md's Sense still holds. wap.mom's feeds.js, cabinet.js and pages.js import escapeHtml from layout.js, so S1 keeps that export as a re-export. smut.today's CSP names no script-src, a third policy beside shell's and wap.mom's. workers/README.md does not name shell.js. Both workers are clean; smut-today-crew has built nothing.
  >>[2026-11-06 12:29] plan — PLAN.md names S1 with its touches and verification, and proposes S2: one kinship line per unit in check:workers (what it takes from shell.js, what it keeps), failing on a byte-identical local copy.
+ >>[2026-11-16 19:54] plan — The creator asked to integrate plans more conventionally and update design considerations. This plan takes the set: the ring (89cae479), the picture's pinch (09a723fe), the words' pinch through the peer kit (1942a277), and the three units that became files the same day. S1 had landed by http.js (5229b7b9, 2026-11-11); its README line moved to S2. Design considerations (cognitive, ergonomic, aesthetic, operational) are read off what shipped and off Grok's HUB.md the same day; the form is the workbench's, since no live plan here had the section. Where HUB.md and what shipped disagree is three wonders, not a rule: wonder_set_scale_and_theme, wonder_set_cue_planes, wonder_set_hold_carry. Grok's workers/lib proposals in ecosystem-architecture (the hold's one writer, a theme record beside the ring) became S3 and S5 here, cited from there.
 }
 
 ^"open"{ }
 
 ^"cache"{
  ~#status: "implementing"
- ~#next_commit: "&[workers] Let wap.mom and smut.today take escapeHtml from the shared shell, and keep their own headers and voice"
- ~#files_hot: "workers/lib/shell.js, workers/smut-today/src/index.js, workers/wap-mom/src/layout.js, workers/README.md, scripts/check-workers.mjs"
- ~#gate: "neither worker dirty in another session's tree; both are clean on 2026-11-06"
- ~#last_stream: "2026-11-06"
+ ~#next_commit: "+[workers] Write the hold's two lines once, in workers/lib, for the lock and the stripes"
+ ~#files_hot: "workers/lib/hold.js (new), workers/mutex-buzz/src/lock.js, workers/tealstripes-vibes/src/vibe.js, their carries and tests"
+ ~#gate: "none for S3; S4 waits on the creator saying which doors have a sentence"
+ ~#last_stream: "2026-11-16"
 }

@@ -1,25 +1,25 @@
-# Review 2026-11-06 — keep as the server-side reuse experiment: S1 moves escapeHtml onto the shell for wap.mom and smut.today; S2 proposes a kinship line in check:workers.
+# Review 2026-11-16 — the plan owns the set as well as the shell: the ring, both pinches and the carries landed 2026-11-16; S1 landed 2026-11-11 by http.js; S3 (the hold's one writer) is next; three wonders hold where hub.spw and what shipped disagree.
 # Plan Index — Workers Wonder Kit
 #
-# wap.mom and smut.today share one worker skeleton by copy; make the shared third one kit,
-# and keep each voice its own.
+# The workers share one kit and keep their own voices; since 2026-11-16 the kit includes
+# moving between them, with the expression carried and each site changing one thing.
 
 #>plan_workers_wonder_kit_index
 #:index #!plan
 #:operation #!prime
 #:layer #!pragmatics
 
-expression = #>workers_wonder_kit[prime]{shell.kinship}(workers)<shared_server>
+expression = #>workers_wonder_kit[prime]{shell.ring.pinch.carry}(workers)<the_set>
 
 operation = "prime"
 fixity = "experimental"
 
 intent: .{
- goal = `Make the shared third of the wap.mom and smut.today workers one kit, workers/lib/shell.js, and keep each worker's voice its own.`
+ goal = `Make what the workers share one kit in workers/lib, keep each site's voice its own, and let an expression travel across the set with each site changing one thing.`
  owner = `workers-wonder-kit`
  kind = `plan`
  bucket = `active_backlog`
- artifact_shape = `PLAN.md | index.spw`
+ artifact_shape = `PLAN.md | index.spw | wip.spw`
 }[reg=facet]
 
 ^"dimensions"{
@@ -31,43 +31,110 @@ intent: .{
 }[reg=facet]
 
 ^"conceptual_model"{
- thesis = `Three workers already import the shell and two still carry it by copy. The kit is the maintainability; each worker's headers, masthead and copy are its voice, and stay home.`
+ thesis = `A function moves into workers/lib when a second host would write it again; each carry copies it byte for byte and a test holds the copy. The voice (headers, masthead, copy, the medium) stays home. Moving between sites carries the expression and says, before leaving, what will arrive.`
  concepts = #[
   `worker-kit`,
-  `shared-helper`,
   `local-voice`,
-  `csp-per-worker`,
-  `kinship-line`,
+  `the-set`,
+  `says-before-it-goes`,
+  `pinch-words-size-picture-steps`,
+  `one-change-per-site`,
+  `files-first`,
  ][reg=set]
  surfaces = #[
+  `workers/lib/http.js`,
   `workers/lib/shell.js`,
-  `workers/wap-mom/src/layout.js`,
-  `workers/smut-today/src/index.js`,
+  `workers/lib/set-ring.js`,
+  `workers/lib/pinch.js`,
+  `workers/lib/text-scale.js`,
+  `workers/attention-productions/assets/attention.js`,
+  `workers/mutex-buzz/assets/mutex.js`,
+  `workers/tealstripes-vibes/assets/tealstripes.js`,
   `scripts/check-workers.mjs`,
+  `scripts/build-peer-kit.mjs`,
  ][reg=set]
- audience = `wap.mom: mothers with master's degrees and professionals who own verticals and brands — ambition and depth of wonder, never named`
+ audience = `wap.mom: mothers with master's degrees and professionals who own verticals and brands — ambition and depth of wonder, never named; attention.productions: about the pictures, never the maker`
  fixity_tier = `experimental`
 }[reg=facet]
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
 @shell: ~"../../../workers/lib/shell.js"
-@wap_mom: ~"../../../workers/wap-mom/src/layout.js"
-@smut_today: ~"../../../workers/smut-today/src/index.js"
+@set_ring: ~"../../../workers/lib/set-ring.js"
+@pinch: ~"../../../workers/lib/pinch.js"
+@text_scale: ~"../../../workers/lib/text-scale.js"
+@hub: ~"../factshift-center/hub.spw"
+@ecosystem: ~"../ecosystem-architecture/PLAN.md"
 @folio_soil: ~"../../../.spw/caches/folio-soil-ecosystem-2026-09.spw"
-@what_im_learning: ~"../../../.spw/conventions/what-im-learning.spw"
 
 dispatch: .{
  plan = @plan
+ wip = @wip
  shell = @shell
- wap_mom = @wap_mom
- smut_today = @smut_today
+ set_ring = @set_ring
+ pinch = @pinch
+ text_scale = @text_scale
+ hub = @hub
+ ecosystem = @ecosystem
  folio_soil = @folio_soil
- what_im_learning = @what_im_learning
 }[reg=facet]
 
 ^"connection_points"{
  owner_rail = `folio-worktable`
- hold = `neither worker may be dirty in another session's tree when S1 lands; both are clean on 2026-11-06`
+ related_plans = `ecosystem-architecture (cites S3 and S5: what may travel, and what stays home) · factshift-center (hub.spw is the canvas's side of the set) · spw-quest · texture-website · smut-today-crew`
+ seam = `workers/lib is this plan's; ecosystem-architecture ranks what travels and cites the slice here`
+ hold = `do not touch a worker while it is dirty in another session's tree`
 }[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `Which file does a page in the set take the ring, the pinch or the text size from?`, see = @plan }[reg=facet],
+ .{ ask = `What does each site change about the expression, and what does it show?`, see = @plan }[reg=facet],
+ .{ ask = `Where does the canvas meet the set?`, see = @hub }[reg=facet],
+][reg=set]
+
+validation: #[
+ `node --test workers/attention-productions/test/*.test.mjs workers/mutex-buzz/test/*.test.mjs workers/tealstripes-vibes/test/*.test.mjs`,
+ `node workers/<unit>/carry.mjs --check`,
+ `npm run check:workers`,
+ `npm run build:peer-kit -- --check`,
+][reg=set]
+
+#>wonder_set_scale_and_theme
+?["Should a pinch on the picture step the theme (the shot's depth, the stripes' facets, the lock to its holder), or should scale and theme never move in one gesture?"]{
+  #:depth #!experiential ~#lens(projection)
+  ~#with: @plan @hub @pinch
+  ~#taste: "The creator, 2026-11-16, of the picture's pinch: I meant pinch to scale like spwashi.com, but your creative interpretation isn't bad and I appreciate the novelty."
+  ~#tension: "hub.spw: theme and time are not more zoom, and scale and theme do not move in the same gesture. What shipped: a spread on the stripes lets one more facet through, and a spread on the dial goes to the holder."
+  ~#expect: "pinch.js steps each page's own ladder past ×1.35 and ×0.65 and opens the ring out past the widest step; the words take spwashi.com's pinch, which only sizes them."
+  ~#unblocks: "hub.spw slice 4 (slats), and whether the stripes' chips are the only way to switch a facet"
+  ~#probe(read)
+  !probe{ "on a phone, spread on the stripes at /lantern/p and on the card's words, and say whether either surprised" }
+  $%[pinch.steps_theme, pinch.scale_only, pinch.per_site]
+}
+
+#>wonder_set_cue_planes
+?["Which mark names a site's plane and the set in the cue: @shot, @lock, @vibe and ^up · the set as built, or .hold[title], %turn and #>set as hub.spw proposes, keeping @ for the shot?"]{
+  #:depth #!pragmatics ~#lens(projection)
+  ~#with: @plan @hub @pinch
+  ~#tension: "The canvas's own cue tags are @node, @sel and @stage (formatScaleCue), so @ already names a view there; hub.spw reserves @ for the viewpoint the lock names as @attention.productions{frame}."
+  ~#expect: "pinch.js writes cueOf(plane, scale, action) with the plane each page passes (shot, lock, holder, vibe) and ^up · the set when the ring opens."
+  ~#unblocks: "S5 (the theme record's marks), and hub.spw slice 1 if the canvas's cue gains planes"
+  ~#probe(read)
+  !probe{ "rg -n \"plane:\" workers/attention-productions/assets/attention.js workers/mutex-buzz/assets/mutex.js workers/tealstripes-vibes/assets/tealstripes.js" }
+  $%[cue.at_names_view, cue.at_is_shot, cue.set_as_frame]
+}
+
+#>wonder_set_hold_carry
+?["Does the ring carry the open hold as its two live lines, or as the whole rule?"]{
+  #:depth #!pragmatics ~#lens(projection)
+  ~#with: @plan @hub @set_ring
+  ~#tension: "hub.spw: the quest and the canvas receive the pair, *holds[cycle]{title}(since ~> until) and %turn[n/of]{hour}, with the rule folded. What shipped: mutex.buzz's ring sends spw.quest the whole of lock.spw and the canvas ?spw=mutex.buzz, which reads the pair and then the rule."
+  ~#expect: "S3's holdLines would give the ring the pair without a second copy."
+  ~#unblocks: "S3, hub.spw slice 2"
+  ~#probe(read)
+  !probe{ "rg -n \"spw64|spw=mutex\" workers/mutex-buzz/assets/mutex.js" }
+  $%[carry.pair, carry.rule, carry.both_folded]
+}
