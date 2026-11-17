@@ -16,6 +16,7 @@
 import { bySlug } from "./catalog.js";
 import { cabinet } from "./cabinet.js";
 import { FIGURES_JS } from "./figures.js";
+import { APP_JS, MANIFEST, SW_JS } from "./app.js";
 import { atom, nowJson, sitemap } from "./feeds.js";
 import { BASE_SECURITY, FAVICON, html, jsonResponse, textResponse } from "./layout.js";
 import {
@@ -46,6 +47,10 @@ export default {
       return textResponse("User-agent: *\nAllow: /\nDisallow: /cabinet\nSitemap: https://wap.mom/sitemap.xml\n", "text/plain");
     }
     if (path === "/figures.js") return textResponse(FIGURES_JS, "text/javascript", "public, max-age=3600");
+    // wap.mom as an app (src/app.js): the manifest, the script that keeps it, and the worker that keeps it readable offline.
+    if (path === "/app.js") return textResponse(APP_JS, "text/javascript", "public, max-age=3600");
+    if (path === "/sw.js") return textResponse(SW_JS, "text/javascript", "no-cache");
+    if (path === "/manifest.webmanifest") return textResponse(`${JSON.stringify(MANIFEST, null, 2)}\n`, "application/manifest+json", "public, max-age=300");
     if (path === "/feed.xml") return textResponse(atom(), "application/atom+xml");
     if (path === "/sitemap.xml") return textResponse(sitemap(), "application/xml");
     if (path === "/now.json") return jsonResponse(nowJson());

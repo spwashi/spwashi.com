@@ -40,3 +40,24 @@ test('a figure posts its controls to the issue\'s /draw, which the worker draws 
   assert.equal(drawn.headers.get('X-Robots-Tag'), 'noindex, follow');
   assert.match(await drawn.text(), /class="fig-controls"/);
 });
+
+test('wap.mom installs as an app and keeps every printed issue for reading offline', async () => {
+  const { ICONS, iconPng } = await import('../src/icon.js');
+  const { KEPT } = await import('../src/app.js');
+  const manifest = JSON.parse(readFileSync(path.join(root, 'assets', 'manifest.webmanifest'), 'utf8'));
+  assert.equal(manifest.display, 'standalone');
+  assert.ok(manifest.icons.some((i) => i.purpose === 'maskable' && i.sizes === '512x512'));
+  for (const [name, icon] of Object.entries(ICONS)) assert.ok(readFileSync(path.join(root, 'assets', 'icons', name)).equals(iconPng(icon.size, icon)), name);
+  // Every kept address is a file the assets layer has, and every printed issue is kept.
+  for (const issue of printed) assert.ok(KEPT.includes(`/${issue.slug}/`), issue.slug);
+  const sw = readFileSync(path.join(root, 'assets', 'sw.js'), 'utf8');
+  assert.ok(sw.includes(JSON.stringify(KEPT)), 'the worker lists what it keeps');
+  assert.match(sw, /LIVE = /, 'the cabinet and the drawn figures are never kept');
+  const front = readFileSync(path.join(root, 'assets', 'index.html'), 'utf8');
+  for (const tag of ['<link rel="manifest" href="/manifest.webmanifest">', '<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">', '<script src="/app.js" defer></script>', '<button type="button" id="keep-app" hidden>']) assert.ok(front.includes(tag), tag);
+  const headers = readFileSync(path.join(root, 'assets', '_headers'), 'utf8');
+  assert.match(headers, /manifest-src 'self'/);
+  // A service worker runs under the policy its script is served with: without connect-src it could keep nothing.
+  assert.match(headers, /connect-src 'self'/);
+  assert.match(headers, /\/sw\.js\n(?:  .*\n)*?  Cache-Control: no-cache/);
+});
