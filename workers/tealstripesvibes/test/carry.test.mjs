@@ -22,7 +22,7 @@ test('the unit runs its worker only for the routes that need one, and falls back
 });
 
 test('each carried file is what carry.mjs writes, and the pure part the page imports is the one the worker uses', async () => {
-  for (const [file, body] of await carriedWithWorker()) assert.equal(readFileSync(path.join(assets, file), 'utf8'), body, `assets/${file}: run node workers/tealstripes-vibes/carry.mjs`);
+  for (const [file, body] of await carriedWithWorker()) assert.equal(readFileSync(path.join(assets, file), 'utf8'), body, `assets/${file}: run node workers/tealstripesvibes/carry.mjs`);
   assert.equal(readFileSync(path.join(assets, 'vibe.js'), 'utf8'), readFileSync(path.join(root, 'src/vibe.js'), 'utf8'));
 });
 

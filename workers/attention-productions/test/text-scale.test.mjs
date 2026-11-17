@@ -6,7 +6,7 @@ import { TEXT_KEY, TEXT_STEPS } from '../../lib/text-scale.js';
 import { peerScriptPath } from '../../lib/peer-kit.js';
 
 const read = (rel) => readFileSync(new URL(rel, import.meta.url), 'utf8');
-const UNITS = ['attention-productions', 'mutex-buzz', 'tealstripes-vibes'];
+const UNITS = ['attention-productions', 'mutex-buzz', 'tealstripesvibes'];
 
 test('the ladder is spwashi.com\'s, and the head and the styles name every step of it', () => {
   const site = /FONT_SCALE_STEPS = Object\.freeze\((\[[^\]]+\])\)/.exec(read('../../../public/js/runtime/attention/shared.js'));

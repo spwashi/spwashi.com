@@ -153,7 +153,7 @@ function manifest() {
 const SHELL = ["/", "/index.html", ...Object.keys(SEEDS).map((s) => `/${s}`), "/tealstripes.js", "/vibe.js", "/lib/hold.js", "/tealstripes.css", "/set-ring.js", "/set-ring.css", "/pinch.js", "/pinch.css", "/text-scale.js", "/text-scale.css", "/text-scale-head.js", PINCH_TEXT, "/favicon.svg", "/manifest.webmanifest", ...Object.keys(ICONS).map((n) => `/icons/${n}`)];
 
 function serviceWorker(version) {
-  return `// Written by workers/tealstripes-vibes/carry.mjs. Pages from the network when there is one, else the kept shell, which paints any address.
+  return `// Written by workers/tealstripesvibes/carry.mjs. Pages from the network when there is one, else the kept shell, which paints any address.
 const CACHE = "tealstripes-${version}";
 const SHELL = ${JSON.stringify(SHELL)};
 const SCRIPTED = /^\\/(m|stamp|og)\\/|^\\/tuple$|\\.json$/;
@@ -188,7 +188,7 @@ self.addEventListener("fetch", (event) => {
 function headersFile() {
   const rule = (pattern, lines) => [pattern, ...lines.map((line) => `  ${line}`), ""].join("\n");
   return [
-    "# Written by workers/tealstripes-vibes/carry.mjs. These cover files; the worker's routes send their own.",
+    "# Written by workers/tealstripesvibes/carry.mjs. These cover files; the worker's routes send their own.",
     rule("/*", ["X-Content-Type-Options: nosniff", "Referrer-Policy: strict-origin-when-cross-origin", "Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()", `Content-Security-Policy: ${CSP}`]),
     rule("/*.js", ["Cache-Control: public, max-age=300", "Content-Type: text/javascript; charset=UTF-8"]),
     rule("/*.css", ["Cache-Control: public, max-age=300"]),
@@ -271,7 +271,7 @@ async function icons(check) {
 
 if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
   const check = process.argv.includes("--check");
-  const drift = (await writeOrCheck(ASSETS, await carriedWithWorker(), { check, label: "tealstripes-carry", hint: "run node workers/tealstripes-vibes/carry.mjs" })) + (await icons(check));
+  const drift = (await writeOrCheck(ASSETS, await carriedWithWorker(), { check, label: "tealstripes-carry", hint: "run node workers/tealstripesvibes/carry.mjs" })) + (await icons(check));
   if (check && drift) process.exit(1);
-  if (!check) console.log("[tealstripes-carry] wrote the shell, the seeds, the host's files and the app into workers/tealstripes-vibes/assets");
+  if (!check) console.log("[tealstripes-carry] wrote the shell, the seeds, the host's files and the app into workers/tealstripesvibes/assets");
 }
