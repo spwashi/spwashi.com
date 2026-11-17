@@ -187,6 +187,19 @@ test('spw.quest starters, /llms.txt answers, build kits, and texture.website she
     assert.deepEqual(reading.doors.map(doorLabel), ['Lay out on the canvas', 'Take apart on spw.quest']);
   }
 
+  for (const personaLine of [
+    'maya@[picture]{pacing, sound_lock}(friday)<cut>',
+    'devon@[budget]{overtime, gear_return}(friday)<cut>',
+    'priya@[story]{opening_scene, title_card}(tuesday)<cut>',
+  ]) {
+    const reading = readPaste(personaLine, parse);
+    assert.equal(reading.kind, 'expression', `${personaLine} pastes as one perspective expression`);
+    assert.match(
+      highlightSpw(personaLine, parse(personaLine, { eventPolicy: 'none' }).tokens),
+      /data-op="perspective">@<\/span>/,
+    );
+  }
+
   for (const material of ['vellum.spw', 'risograph-ink.spw', 'kintsugi.spw']) {
     const src = readFileSync(new URL(`../../workers/texture-website/assets/${material}`, import.meta.url), 'utf8');
     const reading = readPaste(src, parse);

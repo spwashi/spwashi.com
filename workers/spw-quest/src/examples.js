@@ -265,7 +265,7 @@ gradient = #[
     tab: "Debate & repair",
     file: "debate.spw",
     says: "Three collaborators heard one word — cut — and walked away with three different plans. Putting every reading into the same slots exposes which constraint parted them, names quiet assumptions beside the lines, and logs each round toward repair.",
-    try: "Change @priya's scene from (tuesday) to (friday), or add a @alex reading.",
+    try: "Change priya@[story]'s scene from (tuesday) to (friday), or add an alex@[...] reading.",
     asks: "Before debating who is wrong, which slot did the speakers read differently?",
     script: `#>resolve_misunderstanding
 #:dialogue #!mediation
@@ -273,9 +273,9 @@ gradient = #[
 
 topic = term[shared]{"hold the cut on Friday"}
 
-@maya[picture]{pacing, sound_lock}(friday)<cut>
-@devon[budget]{overtime, gear_return}(friday)<cut>
-@priya[story]{opening_scene, title_card}(tuesday)<cut>
+maya@[picture]{pacing, sound_lock}(friday)<cut>
+devon@[budget]{overtime, gear_return}(friday)<cut>
+priya@[story]{opening_scene, title_card}(tuesday)<cut>
 
 ^"assumptions"{
   ~#maya_expects(friday locks picture; mix runs next week)
@@ -285,7 +285,7 @@ topic = term[shared]{"hold the cut on Friday"}
 
 ^"rounds"{
   >>[2026-11-12 10:00] crux — Maya heard timing, Devon heard spend, Priya heard deletion
-  >>[2026-11-12 10:15] reframe — separate @priya<trim> on Tuesday from @maya<lock> and @devon<wrap> on Friday
+  >>[2026-11-12 10:15] reframe — separate priya@<trim> on Tuesday from maya@<lock> and devon@<wrap> on Friday
   >>[2026-11-12 10:30] settle — three named milestones replace the single overloaded word
 }
 
