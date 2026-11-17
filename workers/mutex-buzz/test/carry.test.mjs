@@ -4,7 +4,8 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { CSP_HOME, CSP_NOW, FOLIO_SOURCES, SCHEDULE, carried, paintLock } from '../carry.mjs';
+import { CSP_HOME, CSP_NOW, FOLIO_SOURCES, SCHEDULE, carried, carriedWithWorker, paintLock } from '../carry.mjs';
+import { ICONS, iconPng } from '../src/icon.js';
 import { CYCLES, DIAL, FOLIOS, TURN_MS, countdown, cycleFor, dialOf, holderFor, nowLine, turnLine, turnOf } from '../src/lock.js';
 import * as served from '../../site-hub-next/src/mutex.js';
 import { parse } from '../../../public/js/semantic/spw-workbench-reader.js';
@@ -23,7 +24,7 @@ test('the unit is files only, and an unknown path is a page that says nothing ho
 });
 
 test('each carried file is what carry.mjs writes, and the folios are the site\'s own bytes', async () => {
-  for (const [file, body] of await carried()) assert.equal(readFileSync(path.join(assets, file), 'utf8'), body, `assets/${file}: run node workers/mutex-buzz/carry.mjs`);
+  for (const [file, body] of await carriedWithWorker()) assert.equal(readFileSync(path.join(assets, file), 'utf8'), body, `assets/${file}: run node workers/mutex-buzz/carry.mjs`);
   for (const [name, source] of Object.entries(FOLIO_SOURCES)) assert.ok(readFileSync(path.join(assets, 'folios', name)).equals(readFileSync(path.join(repo, source))), name);
   for (const folio of Object.values(FOLIOS)) assert.ok(Object.keys(FOLIO_SOURCES).includes(folio.image.replace('/folios/', '')), folio.title);
 });
@@ -149,4 +150,35 @@ test('the mutex you can watch is drawn at rest with scripts off: one bee inside 
   assert.equal((figure.match(/class="waiting"/g) ?? []).length, 2);
   assert.ok(figure.includes('<button type="button" id="send-bee" hidden>Send a bee</button>'), 'its button waits for the script');
   assert.ok(home.indexOf('class="threads"') > home.indexOf('class="explain"'), 'it sits in the explanation');
+});
+
+test('mutex.buzz installs: a manifest with its icons and a shortcut, and a worker that keeps the whole lock', async () => {
+  const manifest = JSON.parse(readFileSync(path.join(assets, 'manifest.webmanifest'), 'utf8'));
+  assert.equal(manifest.display, 'standalone');
+  assert.equal(manifest.start_url, '/');
+  const sizes = manifest.icons.filter((i) => i.type === 'image/png').map((i) => `${i.sizes}:${i.purpose}`);
+  for (const want of ['192x192:any', '512x512:any', '512x512:maskable']) assert.ok(sizes.includes(want), want);
+  for (const icon of manifest.icons) assert.ok(readFileSync(path.join(assets, icon.src)).length > 0, icon.src);
+  assert.equal(manifest.shortcuts[0].url, '/now/');
+  for (const [name, icon] of Object.entries(ICONS)) {
+    const png = readFileSync(path.join(assets, 'icons', name));
+    assert.ok(png.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])), `${name} is a PNG`);
+    assert.equal(png.readUInt32BE(16), icon.size, `${name} is ${icon.size} wide`);
+    assert.ok(png.equals(iconPng(icon.size, icon)), `${name} is what src/icon.js draws`);
+  }
+  // The worker keeps every file the lock needs, each one real, and names its cache for them.
+  const sw = readFileSync(path.join(assets, 'sw.js'), 'utf8');
+  const shell = JSON.parse(sw.match(/const SHELL = (\[.*\]);/)[1]);
+  for (const file of shell) assert.ok(file === '/' || file === '/now/' || readFileSync(path.join(assets, file.slice(1))).length >= 0, file);
+  for (const needed of ['/', '/now/', '/lock.js', '/mutex.js', '/mutex.css', '/now.json']) assert.ok(shell.includes(needed), needed);
+  assert.match(sw, /const CACHE = "mutex-[0-9a-f]{12}";/);
+  const headers = readFileSync(path.join(assets, '_headers'), 'utf8');
+  assert.match(headers, /\/sw\.js\n  Cache-Control: no-cache/);
+  assert.match(headers, /\/manifest\.webmanifest\n  Cache-Control: public, max-age=300\n  Content-Type: application\/manifest\+json/);
+  for (const page of ['index.html', 'now/index.html']) {
+    const html = readFileSync(path.join(assets, page), 'utf8');
+    for (const tag of ['<link rel="manifest" href="/manifest.webmanifest">', '<meta name="theme-color" content="#120d07">', '<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">']) assert.ok(html.includes(tag), `${page}: ${tag}`);
+  }
+  // Framed on attention.productions, /now/ registers nothing.
+  assert.match(readFileSync(path.join(assets, 'mutex.js'), 'utf8'), /"serviceWorker" in navigator && window\.top === window/);
 });

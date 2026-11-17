@@ -2,11 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>mutex.buzz — one concept in the frame at a time</title>
   <meta name="description" content="A lock on attention: one concept holds the frame, each hold releases at a close, and a laminated folio holds it the rest of the time.">
   <link rel="canonical" href="https://mutex.buzz/">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#120d07">
+  <meta name="apple-mobile-web-app-title" content="mutex.buzz">
   <link rel="stylesheet" href="/mutex.css">
   <script type="module" src="/mutex.js"></script>
 </head>
@@ -41,6 +45,7 @@
       <h2 class="kicker">Waiting</h2>
       <p class="quiet">Nobody is waiting. The folio rests in the frame.</p>
       <p class="data"><a href="/now/">/now/</a> · <a href="/now.json">/now.json</a> · framed on <a href="https://attention.productions/">attention.productions</a></p>
+      <p class="data"><button type="button" id="keep-app" hidden>Keep it on this device</button></p>
     </section>
     <figure class="lock">
       <svg class="dial" id="dial" viewBox="0 0 600 600" role="img" aria-labelledby="dial-title dial-desc">

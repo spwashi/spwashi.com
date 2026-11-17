@@ -127,7 +127,8 @@ function tick() {
     showTurn(turn);
   }
   const share = (now.getTime() - since) / (until - since);
-  if ($("holder-when")) $("holder-when").textContent = `holds the lock · cycle ${holder.cycle} · ${monthDay(holder.since)} through ${lastDay(holder)} · turn ${turn.index + 1} of ${turn.of} · releases in ${countdown(holder, now)}`;
+  const away = navigator.onLine === false ? " · offline, kept by this device" : "";
+  if ($("holder-when")) $("holder-when").textContent = `holds the lock · cycle ${holder.cycle} · ${monthDay(holder.since)} through ${lastDay(holder)} · turn ${turn.index + 1} of ${turn.of} · releases in ${countdown(holder, now)}${away}`;
   if ($("spent")) $("spent").setAttribute("x2", (share * 100).toFixed(2));
   const rider = $("rider");
   if (rider) {
@@ -140,6 +141,24 @@ function tick() {
 }
 tick();
 window.setInterval(tick, 1000);
+
+// Installed, mutex.buzz keeps the lock with no network (sw.js); framed on attention.productions, /now/ installs nothing.
+if ("serviceWorker" in navigator && window.top === window) navigator.serviceWorker.register("/sw.js").catch(() => {});
+const keep = $("keep-app");
+let offer = null;
+window.addEventListener("beforeinstallprompt", (event) => {
+  event.preventDefault();
+  offer = event;
+  if (keep) keep.hidden = false;
+});
+keep?.addEventListener("click", async () => {
+  if (!offer) return;
+  offer.prompt();
+  await offer.userChoice.catch(() => null);
+  offer = null;
+  keep.hidden = true;
+});
+window.addEventListener("appinstalled", () => { if (keep) keep.hidden = true; });
 
 /**
  * The mutex you can watch. Bees are threads: they arrive, wait in line, take
