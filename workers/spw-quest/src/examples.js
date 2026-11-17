@@ -260,6 +260,41 @@ gradient = #[
 }`,
   },
   {
+    id: "debate",
+    group: "Board",
+    tab: "Debate & repair",
+    file: "debate.spw",
+    says: "Three collaborators heard one word — cut — and walked away with three different plans. Putting every reading into the same slots exposes which constraint parted them, names quiet assumptions beside the lines, and logs each round toward repair.",
+    try: "Change @priya's scene from (tuesday) to (friday), or add a @alex reading.",
+    asks: "Before debating who is wrong, which slot did the speakers read differently?",
+    script: `#>resolve_misunderstanding
+#:dialogue #!mediation
+@critique: ~"./review.spw#stance"
+
+topic = term[shared]{"hold the cut on Friday"}
+
+@maya[picture]{pacing, sound_lock}(friday)<cut>
+@devon[budget]{overtime, gear_return}(friday)<cut>
+@priya[story]{opening_scene, title_card}(tuesday)<cut>
+
+^"assumptions"{
+  ~#maya_expects(friday locks picture; mix runs next week)
+  ~#devon_expects(friday ends stage rental and overtime)
+  ~#priya_expects(tuesday trims narrative before sound mixes)
+}
+
+^"rounds"{
+  >>[2026-11-12 10:00] crux — Maya heard timing, Devon heard spend, Priya heard deletion
+  >>[2026-11-12 10:15] reframe — separate @priya<trim> on Tuesday from @maya<lock> and @devon<wrap> on Friday
+  >>[2026-11-12 10:30] settle — three named milestones replace the single overloaded word
+}
+
+?["Can Tuesday narrative trim clear before Friday sound and wrap without overtime?"]{
+  ~#expect: \`naming trim and wrap separately turns one impasse into an ordered sequence\`
+  !probe{ "trace Tuesday trim ~> Thursday mix ~> Friday wrap and ask each speaker which blocker remains" }
+}`,
+  },
+  {
     id: "syntax",
     group: "Stage",
     tab: "Syntax",
@@ -687,6 +722,34 @@ week = {junior, mid, senior, staff} ~> demo
 ?["What can each of them change by Friday?"]{
   ~#expect: \`a junior one step, a mid one record, a senior one contract, a staff one plan two teams share\`
   !probe{ "each says in one line what they changed and where it shows" }
+}`,
+  },
+  {
+    id: "cinema",
+    group: "Team",
+    tab: "Film career",
+    file: "film-stages.spw",
+    says: "A film student across four career stages: first-year coverage, junior sound and assembly cut, senior thesis lock, and festival release. Keeping every stage in the same slots shows what shifts from shoot to mix to release.",
+    try: "Change cut_two to picture_lock in senior, or add an alum line.",
+    asks: "As the crew and stakes change from freshman exercises to festival distribution, which slot carries the shift first?",
+    script: `#>film_career
+#:curriculum #!film
+@notes: ~"./notebook.spw"
+@feedback: ~"./review.spw#valence"
+
+year_1 = !shoot[coverage]{framing, eyeline, room_tone}(hallway)<assembly>
+junior = !cut[rough_cut]{rhythm, dialogue, temp_mix}(edit_bay)<screening>
+senior = !lock[cut_two]{color, foley, title_cards}(thesis_suite)<master>
+fest = !ship[premiere]{dcp_check, press_kit, q_and_a}(festival)<release>
+
+^"dailies"{
+  >>[2026-11-10 18:40] take_04 — corridor walk holds focus past the doorway turn
+  >>[2026-11-11 09:15] mix — drop temp score under the kitchen line so the mug lands
+}
+
+?["Does the corridor cut carry the beat without the temp score?"]{
+  ~#expect: \`the eyeline turn holds attention when the music drops out\`
+  !probe{ "mute the score track from slate 04 to the doorway cut and screen with cold ears" }
 }`,
   },
 ]);

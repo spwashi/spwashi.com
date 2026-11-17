@@ -9,6 +9,7 @@ import { SEED_TEMPLATES, buildSeedText } from '../../public/js/modules/cards/see
 import { ANSWER_EXAMPLES } from '../../workers/spw-quest/src/answer.js';
 import { BUILD_KINDS } from '../../workers/spw-quest/src/build.js';
 import { STARTERS } from '../../workers/spw-quest/src/starters.js';
+import { exampleById } from '../../workers/spw-quest/src/examples.js';
 
 const join = (segments) => segments.map((segment) => segment.text).join('');
 const decodeHtml = (html) => html.replace(/<[^>]+>/g, '')
@@ -175,6 +176,14 @@ test('spw.quest starters, /llms.txt answers, build kits, and texture.website she
   for (const kind of BUILD_KINDS) {
     const reading = readPaste(kind.script, parse);
     assert.equal(reading.kind, 'document', `${kind.kind} opens as a document`);
+    assert.deepEqual(reading.doors.map(doorLabel), ['Lay out on the canvas', 'Take apart on spw.quest']);
+  }
+
+  for (const id of ['cinema', 'debate']) {
+    const example = exampleById(id);
+    const reading = readPaste(example.script, parse);
+    assert.equal(reading.kind, 'document', `${id} opens as a document`);
+    assert.equal(decodeHtml(highlightSpw(example.script, parse(example.script, { eventPolicy: 'none' }).tokens)), example.script);
     assert.deepEqual(reading.doors.map(doorLabel), ['Lay out on the canvas', 'Take apart on spw.quest']);
   }
 
