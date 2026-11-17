@@ -67,7 +67,7 @@ Read off what shipped on 2026-11-16 and off Grok's note the same day, first HUB.
 - **Cloudflare joins every `_headers` rule a path matches,** so a header is set once per path: a CSP for `/` and another for `/now/`, and no second `Cache-Control` for `/peer/*`.
 - **A service worker answers to its own script's CSP,** so it needs `connect-src`; a manifest needs `manifest-src` under `default-src 'none'`.
 - **Cloudflare's assets send `/@x` on to `/%40x`.** An address is decoded before it is read.
-- **A cache-first shell shows the old page once after a deploy.** S6 below.
+- **One stale load after a deploy.** Both service workers fetch a page from the network but answer its scripts stale-while-revalidate, and `/*.js` carries a five-minute `Cache-Control`; the first visit after a deploy can run the old script. S6 below.
 - **One copy, byte for byte.** Each carry copies `workers/lib` files into its assets; a test fails when a copy drifts; `build:peer-kit -- --check` holds the carried kernel.
 
 ## Sense (re-read 2026-11-16)
@@ -101,9 +101,9 @@ One line per unit: what it takes from `workers/lib` and what it keeps (`wap-mom 
 
 Each host's mark and the kind of expression it starts from (`hold`, `shot`, `mask`, `line`, `slot`), carried with `set-ring.js`, so factshift.center can show a typed domain's theme from a record that exists (hub.spw `field` and `path`). Gate: `#>wonder_set_cue_planes`, since the marks are the question.
 
-## S6. One stale page after a deploy
+## S6. One stale load after a deploy
 
-tealstripes' and mutex's service workers answer the shell from cache first, so the first visit after a deploy runs the old script (seen on `/@lock`, 2026-11-16). Either name shell scripts by content, as the peer kit does, or answer the shell network-first as wap.mom does. Touches the two carries' `SW_JS` and shell lists. Verify: deploy-free, by serving a changed asset locally and loading once.
+tealstripes' and mutex's service workers fetch navigations from the network and answer every other file from the cache while fetching a fresh copy for next time (stale-while-revalidate, `SW_JS` in each carry); `/*.js` also carries `Cache-Control: max-age=300`. So the first visit after a deploy can run the old script with the new page (seen on `/@lock`, 2026-11-16: "not a vibe" once, then the lock). Options: name the shell's scripts by content, as the peer kit names its own; answer scripts network-first, as wap.mom answers everything; or reload once when a new worker takes control. Touches the two carries' `SW_JS`, their shell lists and perhaps their `_headers`. Verify without a deploy: serve a changed script locally, load once, and see the new one run.
 
 ## Boundaries
 
