@@ -102,6 +102,10 @@ function canStartOperator(source, index, sigil) {
   if (sigil === '#>' || sigil === '#:' || sigil === '#!' || sigil === '>') return true;
   const immediate = source[index + sigil.length] || '';
   if (OPERATOR_SUBJECT_RE.test(immediate)) return true;
+  if (sigil !== '.' && immediate && OPERATOR_SIGILS.some((next) => (
+    source.startsWith(next, index + sigil.length)
+    && canStartOperator(source, index + sigil.length, next)
+  ))) return true;
   if (sigil !== '?') return false;
   const rest = source.slice(index + sigil.length);
   return /^\s+\(/.test(rest);

@@ -61,6 +61,11 @@ export const ANSWER_EXAMPLES = Object.freeze({
   ![change]{ every bed is covered before dusk in November }
   *[verify]{ all four beds came through the next frost }
 }`,
+  titled: `^seed["porch notes"]{
+  #>opening
+  #:notes #!draft
+  ~#expect: "keep what changes when one slot turns"
+}`,
   other: `garden[weekly]{beds, compost}(saturday)<plot>
 *says = "a shared plot, tended on Saturdays"`,
 });
@@ -82,15 +87,21 @@ A mark goes right before a word, with no space after it:
 
 ${MARK_SAYS.map(([sigil, name, says]) => `- ${sigil} ${name}: ${says}`).join("\n")}
 
-Quoted text takes double quotes. #>name names a file or a line, and #:kind says what kind of file it is.
+Quoted text takes double quotes. Four particles sit on the # plane and ~ aspect axis: #>name (deixis) points forward to a file or block, #:kind (case) classifies its layer or role, #!intent (mood) marks active intent or stance, and ~#aspect (aspect) marks deferred expectation or reading (~#expect: "...", ~#lens(comparison)).
 
-A word<card> is the line with its [mode], {body} and (scene) filled in from what is known, then a seed card, and a seed card always names its template. For a thing you know about, ^seed[Session] has the fields date, scene, turn, carry and revisit, and a field with nothing known is left out. Asked garden<card>, this is an answer, and pasted on spwashi.com it opens as a card:
+Unquoted words in brackets (^seed[Session], #[episode], ~[scene]) key structured schema frames with no spaces and field: "value" slots. Quoted text in brackets (^seed["porch notes"]) or scopes (^"section", ?["question?"]) holds free titles or prose without claiming a fixed template key. Top-level bindings use name = "value"; leading marks hug their word, joins between two lines (a ~ b, a ^ b, a @ b) take spaces, >>[date] tag — note opens a stream entry, and ~"./file.spw#name" cites another surface.
+
+A word<card> is the line with its [mode], {body} and (scene) filled in from what is known, then a seed card, and a seed card always names its schema template. Known templates on spwashi.com (Session, Wonder.Prompt, NewYear.Joy, Services.Offer, Folio.Order, Ask.Card, Costuming.Way) open directly into cards when pasted. ^seed[Session] has fields date, scene, turn, carry and revisit (unknown fields omitted). Asked garden<card>, this is an answer:
 
 ${indented(ANSWER_EXAMPLES.card)}
 
 For a word you know nothing about, not knowing is the card. ^seed[Wonder.Prompt] has the fields question, tension, material, relay and revisit, and each says what would have to be found out:
 
 ${indented(ANSWER_EXAMPLES.unknown)}
+
+For a free-form heading instead of a template card, quote the title in brackets:
+
+${indented(ANSWER_EXAMPLES.titled)}
 
 A word<question> is the question, what is expected, and the probe that would answer it:
 
@@ -104,7 +115,7 @@ Any other <concept> is the line with its slots filled and one plain sentence:
 
 ${indented(ANSWER_EXAMPLES.other)}
 
-Facts about a word come from the Card address below, which lists what the site holds for it. On X an answer fits 280 characters and has no @ directly before a name, since that notifies the account; a # before a letter shows as a tag. A link to ${ORIGIN}/card?line= with the line percent-encoded unfurls as a link card.`;
+Facts about a word come from the Card address below, which lists what the site holds for it. When revising a line for meaning or logic, edit inside its word, [mode], {body}, or (scene) while keeping its marks and braces intact so the parse tree holds. Lines travel across peer surfaces: paste on spwashi.com (opens known seeds as cards or inspects AST at /tools/spw-parser/), lay out spatially on factshift.center (?spw= line, #spw64= script), or compose material specs on texture.website (/{material}.spw). On X an answer fits 280 characters and has no @ directly before a name, since that notifies the account; a # before a letter shows as a tag. A link to ${ORIGIN}/card?line= with the line percent-encoded unfurls as a link card.`;
 
 const compact = (value) => String(value || "").toLowerCase().replace(/[^a-z0-9]/g, "");
 
