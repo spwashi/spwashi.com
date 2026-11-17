@@ -15,7 +15,7 @@ export { escapeHtml };
 
 export const BASE_SECURITY = securityHeaders({
   corp: "same-origin",
-  csp: "default-src 'none'; style-src 'unsafe-inline'; script-src 'self'; img-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+  csp: "default-src 'none'; style-src 'unsafe-inline'; script-src 'self'; img-src 'self'; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
 });
 
 export const FAVICON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
@@ -179,7 +179,8 @@ const STYLE = `
 export function page({ title, description, canonical, body, robots = "", bodyClass = "", type = "website", scripts = [] }) {
   const robotsTag = robots ? `\n  <meta name="robots" content="${escapeHtml(robots)}">` : "";
   const cls = bodyClass ? ` class="${escapeHtml(bodyClass)}"` : "";
-  const scriptTags = scripts.map((src) => `\n  <script src="${escapeHtml(src)}" defer></script>`).join("");
+  // Every page loads the app's script (src/app.js), so wap.mom can be kept on a device from any of them.
+  const scriptTags = [...scripts, "/app.js"].map((src) => `\n  <script src="${escapeHtml(src)}" defer></script>`).join("");
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -189,6 +190,8 @@ export function page({ title, description, canonical, body, robots = "", bodyCla
   <meta name="description" content="${escapeHtml(description)}">${robotsTag}
   <link rel="canonical" href="${escapeHtml(canonical)}">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
   <link rel="alternate" type="application/atom+xml" title="${NAME}" href="/feed.xml">
   <meta property="og:site_name" content="${NAME}">
   <meta property="og:type" content="${escapeHtml(type)}">
@@ -265,6 +268,7 @@ function colophon() {
     <li><a href="/corrections/">Corrections</a></li>
     <li><a href="/feed.xml">Feed</a></li>
   </ul>
+  <p class="keep"><button type="button" id="keep-app" hidden>Keep wap.mom on this device</button></p>
   <a class="door" href="https://smut.today/" rel="nofollow" aria-label="smut.today">π</a>
 </footer>`;
 }
