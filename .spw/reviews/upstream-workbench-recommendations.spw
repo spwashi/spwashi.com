@@ -39,6 +39,9 @@
 @workspace_manifest: ~"../workspace.spw"
 @operator_namespace: ~"../language/operator-namespace-alignment.spw"
 @plans_index: ~"../../.agents/plans/README.md"
+@practicality: ~"../caches/workbench-algorithmic-practicality-2026-11.spw"
+@linguistic_affordances: ~"../caches/linguistic-affordances-2026-11.spw"
+@workbench_page: ~"../../projects/spw-workbench/index.html"
 @asks_context: ~"./upstream-workbench-recommendations/context.spw"
 @asks_corpus: ~"./upstream-workbench-recommendations/corpus-and-cli.spw"
 @asks_editor: ~"./upstream-workbench-recommendations/editor.spw"
@@ -418,6 +421,33 @@ expression = consumer[recommendations]{performance.cli.intermediate.culture}<ups
   ][reg=set]
   ~#taste: "A charge you can ask along is useful. A sixth sigil for a mood is not."
   consume = `Until the selector can ask for the turn, the site keeps reading charge plus mode in expression-tone.js and keeps brace color on the objective to subjective tokens.`
+}[reg=facet]
+
+^"week_2026_11_17"{
+  standing = `Measured at submodule HEAD bcf0da18b840 (2026-11-16, mirrored on @workbench_page#parsing-issues and @workbench_report#corpus_audit_2026_11_17). eventPolicy: 'none' | 'diagnostics' landed and cut full-corpus parse time across 1,322 tracked .spw files (8.41 MB outside _workbench) to 8.55 s (site-semantics.spw 153 KB: 715.6 ms default trace → 105.8 ms none / 117.7 ms diagnostics). 1,311 files parse clean, 3 hit tokenizer errors, and 9 hit prose-degradation warnings (11 distinct non-clean files); all 1,018 distinct HTML semantic expressions parse clean. This consumer also switched browser highlighters (spw-code, spw-literal-parser) directly onto kernel tokens via tokenSpans(), eliminating duplicate scanners.`
+  proposals = #[
+    `=[seed] Single parameterized kernel across contexts: keep immutable Seed records and structural coupling ports isolated from host physical profiles (charges, resonance, lens focus); eliminate remaining file-wide binary rewinds and backward scans using lexer-provided indentation metadata and container-scoped parsing contexts :: kernel[policy]{tokens.ast.trace}<single>`,
+    `=[seed] Unify four particle axes (#> #: #! ~#) into one inspectable AST shape so dialects transform explicitly, and express prefix/postfix operators (including Persona@[mode] postfix vantage vs @alias: ~"..." handles, ~^ compound prefixes, and <prose> ~^light) under one combinator algebra instead of per-sigil special cases :: particle[axes]{deixis.case.intent.aspect}<algebra>`,
+    `=[seed] Stack-aware digraph priority over greedy token match: extend the )) n-range guard in @practicality#digraph_priority to >>, <<, ((, <=, >=, =>, and // in value/URL contexts (list<Module<T>>, O((V + E) log V), ?keep{qty > 0}, ?[latency <= 400], link = https://spw.quest) :: digraph[stack]{capsule.nrange.compare}<recover>`,
+    `=[lexer] Preserve unrecognized glyphs, negative numbers, escaped quotes, and % units: stop tokenization from dropping ≤ / ± / ∞ / - or choking on \" / \' in probes, and lex trailing % glued to digits (%errors[0.1%]) as unit rather than OPERATOR:% :: lexer[escapes]{glyph.unit.sign}<lossless>`,
+    `=[seed] Accept quoted titles (^seed["Title"]) without special-casing capitalization or overriding explicit frame schemas, and accept hyphenated valence anchors (@page#bane-frame) :: seed[titles]{quoted.schema.anchor}<predictable>`,
+    `=[reader] Add balanced recursive slot parsing (solving 9/27 partial herbarium specs in @linguistic_affordances la-math-003), parse top-level -> and ~> in readLine, and include < > (<concept>) timbre in PAIR_SOUND and TEXTURES beside spokenLine :: reader[slots]{recursive.line.sound}<parity>`,
+    `=[lsp] Reuse the warm held parse in outlineFromSource (documentSymbol 267-510 ms vs 3-8 ms for folding/tokens), ship editor-trusted outline/folding to supersede IntelliJ regex fallback, and support @handle#fragment binder resolution :: lsp[outline]{cached.binder.fold}<warm>`
+  ][reg=set]
+  measured = .{
+    pin = `bcf0da18b840 (spw-workbench@0.3.0)`
+    tracked_spw_corpus = `1322 files, 8.41 MB, 8.55 s diagnostics (8.58 s none), 1311 clean, 3 error files (8 errors), 9 prose-degradation warnings`
+    trace_skip_benchmark = `site-semantics.spw (153 KB): 715.6 ms trace → 117.7 ms diagnostics → 105.8 ms none`
+    html_route_expressions = `1018 distinct (1114 attributes) across 211 routes, 0 errors`
+    greedy_digraph_repros = `list<Module<T>> (EOF Prose), O((V + E) log V) (CONTAINER_CLOSE Prose), ?keep{qty > 0} (CAPSULE_CLOSE Prose), ?[latency <= 400] (COMPARISON Prose), link = https://spw.quest (//spw.quest cut as COMMENT)`
+    tokenizer_drops = `x = -5 (Unexpected -), bound ≤ 10 (Unexpected ≤), %errors[0.1%] (trailing % lexed as keyword operator)`
+  }[reg=facet]
+  probes = #[
+    `node -e "import('./public/js/semantic/spw-workbench-reader.js').then(m=>{for(const s of ['list<Module<T>>','O((V + E) log V)','?[latency <= 400]','link = https://spw.quest','%errors[0.1%]','x = -5'])console.log(s,m.parse(s,{eventPolicy:'diagnostics'}).warnings?.map(w=>w.data?.message)||m.parse(s).errors?.map(e=>e.data?.message))})"`
+    `npm run spw:doctor && npm run check:agents`
+  ][reg=set]
+  ~#taste: "One parameterized kernel with scoped contexts beats every downstream regex workaround; keep Seed structural and let hosts paint physics."
+  consume = `This site now drives highlighting from kernel tokens, documents all four open parser issue classes at @workbench_page#parsing-issues, and syncs @mount to bcf0da18b840.`
 }[reg=facet]
 
 ^"validation"{
