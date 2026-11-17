@@ -13,6 +13,7 @@ export const SHELF_LINKS = Object.freeze({
   "perspectives": [{"name":"measured","file":"calibration.spw","at":""}],
   "loops": [{"name":"archivist","file":"archivist.spw","at":""}],
   "gradient": [],
+  "debate": [{"name":"critique","file":"review.spw","at":"stance"}],
   "syntax": [{"name":"company","file":"headings.spw","at":"headings"}],
   "headings": [],
   "perform": [{"name":"line","file":"syntax.spw","at":"line"}],
@@ -29,7 +30,8 @@ export const SHELF_LINKS = Object.freeze({
   "algorithms": [{"name":"primitives","file":"primitives.spw","at":""},{"name":"pipeline","file":"pipeline.spw","at":"steps"}],
   "role": [{"name":"pipeline","file":"pipeline.spw","at":""},{"name":"records","file":"records.spw","at":""},{"name":"surfaces","file":"surfaces.spw","at":""}],
   "levels": [{"name":"ticket","file":"records.spw","at":"ticket"},{"name":"onboarding","file":"onboarding.spw","at":""}],
-  "onboarding": [{"name":"pipeline","file":"pipeline.spw","at":""},{"name":"review","file":"review.spw","at":"register"},{"name":"records","file":"records.spw","at":""},{"name":"surfaces","file":"surfaces.spw","at":""},{"name":"levels","file":"levels.spw","at":""}]
+  "onboarding": [{"name":"pipeline","file":"pipeline.spw","at":""},{"name":"review","file":"review.spw","at":"register"},{"name":"records","file":"records.spw","at":""},{"name":"surfaces","file":"surfaces.spw","at":""},{"name":"levels","file":"levels.spw","at":""}],
+  "cinema": [{"name":"notes","file":"notebook.spw","at":""},{"name":"feedback","file":"review.spw","at":"valence"}]
 });
 
 /** The /learn panels (indexes into STEPS) whose lines use each operator and each brace pair. */

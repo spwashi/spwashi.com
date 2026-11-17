@@ -196,3 +196,27 @@ test('capsule-prefixed prose beats and compound marks (~^) preserve parse shape 
   assert.equal(readFile(before).ok, true);
   assert.match(await text(`/pivot?line=${encodeURIComponent('<prose> ~^light[green]{"bob clicks the sofa"}')}`), /id="turn-mode"/);
 });
+
+test('cinema and debate examples pass both log and wonder checks, open on /, and pivot per line', async () => {
+  for (const id of ['cinema', 'debate']) {
+    const example = exampleById(id);
+    assert.ok(example, `${id} exists in EXAMPLES`);
+    const reading = readFile(example.script);
+    assert.equal(reading.ok, true, id);
+    const failed = reading.checks.filter((check) => check.state === 'fail');
+    assert.deepEqual(failed, [], `${id} checks pass without failure`);
+    assert.ok(reading.checks.some((check) => /date and a kind/.test(check.says)), `${id} passes log check`);
+    assert.ok(reading.checks.some((check) => /carries a probe/.test(check.says)), `${id} passes wonder check`);
+
+    const page = await text(`/?example=${encodeURIComponent(id)}`);
+    assert.ok(page.includes(example.file), `${id} renders on /`);
+    assert.ok(canvasHref(example.script, { name: id })?.includes('#spw64='), `${id} links to canvas`);
+    assert.ok(page.includes(`https://spwashi.com/tools/spw-parser/?spw_source=${encodeURIComponent(example.script)}#literal-parser`), `${id} links straight to spwashi.com parser`);
+  }
+
+  // Career stages and multiparty speaker readings share uniform slot geometry for side-by-side comparison.
+  const senior = '!lock[cut_two]{color, foley, title_cards}(thesis_suite)<master>';
+  assert.match(await text(`/pivot?line=${encodeURIComponent(senior)}`), /id="turn-mode"/);
+  const maya = '@maya[picture]{pacing, sound_lock}(friday)<cut>';
+  assert.match(await text(`/pivot?line=${encodeURIComponent(maya)}`), /id="turn-scope"/);
+});
