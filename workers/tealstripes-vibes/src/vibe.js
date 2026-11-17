@@ -227,9 +227,23 @@ const held = (key, value) => {
   return Math.round(n / step) * step === 0 ? 0 : Number((Math.round(n / step) * step).toFixed(2));
 };
 
-/** The tuning an address carries: only the keys it names that read as numbers. */
+const HEX6 = /^[0-9a-f]{6}$/i;
+
+/** A palette or a rhythm an address carries, as palette=062a2b-0f766e-a7f3d0 and rhythm=14-3-8-3; null when it does not read. */
+export function readList(key, raw) {
+  const parts = String(raw ?? "").split(/[-.,]/).filter(Boolean);
+  if (key === "palette") return parts.length >= 2 && parts.length <= 4 && parts.every((p) => HEX6.test(p)) ? parts.map((p) => `#${p.toLowerCase()}`) : null;
+  if (key === "rhythm") return parts.length >= 1 && parts.length <= 12 && parts.every((p) => /^\d{1,2}$/.test(p) && Number(p) >= 1 && Number(p) <= 40) ? parts.map(Number) : null;
+  return null;
+}
+
+/** The tuning an address carries: only the keys it names that read as numbers, and a palette or rhythm that reads whole. */
 export function readTuning(params) {
   const out = {};
+  for (const key of ["palette", "rhythm"]) {
+    const list = params.has(key) ? readList(key, params.get(key)) : null;
+    if (list) out[key] = list;
+  }
   for (const key of Object.keys(TUNING)) {
     if (!params.has(key)) continue;
     const n = Number.parseFloat(params.get(key));
@@ -240,7 +254,11 @@ export function readTuning(params) {
 }
 
 /** A tuning as the query that reads back as it. */
-export const tuningQuery = (tuning) => Object.keys(TUNING).filter((key) => tuning[key] !== undefined).map((key) => `${key}=${tuning[key]}`).join("&");
+export const tuningQuery = (tuning) => [
+  ...(tuning.palette ? [`palette=${tuning.palette.map((c) => c.slice(1)).join("-")}`] : []),
+  ...(tuning.rhythm ? [`rhythm=${tuning.rhythm.join("-")}`] : []),
+  ...Object.keys(TUNING).filter((key) => tuning[key] !== undefined).map((key) => `${key}=${tuning[key]}`),
+].join("&");
 
 /** A caption, as the address may carry one: plain characters, no more than sixty. */
 export const captionOf = (raw) => String(raw ?? "").replace(/[\u0000-\u001f\u007f<>]/g, "").replace(/\s+/g, " ").trim().slice(0, 60);
@@ -257,7 +275,61 @@ export function tune(v, tuning = {}) {
     const n = tuning.steps ?? EUCLID.n;
     out.rhythm = euclidRhythm(Math.min(n, tuning.beats ?? EUCLID.k), n);
   }
+  // A palette or rhythm a hand kept stands over the seed's, and turns as the seed's would.
+  if (tuning.palette) {
+    out.palette = [...tuning.palette];
+    for (let i = 0; i < (tuning.turn ?? 0); i += 1) out.palette.push(out.palette.shift());
+  }
+  if (tuning.rhythm) out.rhythm = [...tuning.rhythm];
   return out;
+}
+
+/* ── scanning a slot ─────────────────────────────────────── */
+
+/** The parts of a tuple a hand can hold, in the order the expression says them. */
+export const SLOTS = Object.freeze(["seed", "palette", "rhythm", "angle", "drift", "breath", "grain"]);
+
+/** A palette turned around the colour wheel, its lightness kept: a sibling of itself. */
+export function turnHue(palette, degrees) {
+  return palette.map((c) => {
+    const [h, s, l] = rgbToHsl(hexToRgb(c));
+    return hslToHex([(((h * 360 + degrees) % 360) + 360) % 360 / 360, s, l]);
+  });
+}
+
+const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+const unique = (list) => list.filter((item, i) => list.findIndex((other) => same(other, item)) === i);
+
+/**
+ * What a held slot can become, in the order a scan walks it: the values the
+ * other seeds use, borrowed as factshift.center borrows a slot from the other
+ * lines, then the family of the value it holds (a palette's hue turns, the
+ * Euclidean rhythms, a number's steps). The current value is always among them.
+ */
+export function choicesFor(slot, v) {
+  const seeds = Object.values(SEEDS);
+  if (slot === "palette") return unique([v.palette, ...seeds.map((s) => s.palette), GROUND.palette, ...[30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map((d) => turnHue(v.palette, d))]);
+  if (slot === "rhythm") {
+    const euclids = [];
+    for (let n = 5; n <= 13; n += 1) for (let k = 2; k <= n - 2; k += 1) euclids.push(euclidRhythm(k, n));
+    return unique([v.rhythm, ...seeds.map((s) => s.rhythm), GROUND.rhythm, [2, 2, 4, 6, 10, 16, 26], ...euclids]);
+  }
+  const steps = { angle: [0, 15, 30, 45, 60, 64, 75, 90, 105, 112, 120, 135, 137.5, 150, 165], drift: [0, 0.2, 0.4, 0.6, 0.9, 1.2, 1.8, 2.4], breath: [0, 4, 8, 13, 21, 26, 34], grain: [0, 0.04, 0.06, 0.08, 0.12, 0.18, 0.25, 0.35] }[slot];
+  const now = { angle: v.angle, drift: v.motion.drift, breath: v.motion.breath, grain: v.grain.amount }[slot];
+  return [...new Set([...steps, now])].sort((a, b) => a - b);
+}
+
+/** The value a vibe holds in a slot. */
+export const valueOf = (slot, v) => ({ palette: v.palette, rhythm: v.rhythm, angle: v.angle, drift: v.motion.drift, breath: v.motion.breath, grain: v.grain.amount })[slot];
+
+/** A slot's value as the tuning that keeps it. */
+export const tuningFor = (slot, value) => (slot === "palette" || slot === "rhythm" ? { [slot]: value, ...(slot === "palette" ? { turn: undefined } : { beats: undefined, steps: undefined }) } : { [slot]: value });
+
+/** A slot's value as the expression writes it. */
+export function said(slot, value) {
+  if (slot === "palette") return value.join(" ");
+  if (slot === "rhythm") return value.join(" ");
+  return String(value);
 }
 
 export const TUPLE_NAMES = ["palette", "rhythm", "angle", "drift", "breath", "grain", "grainKind", "plate"];
