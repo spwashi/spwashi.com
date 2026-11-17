@@ -342,6 +342,10 @@ export function figureClient(kit) {
     const readout = fig.querySelector(".fig-readout");
     if (!def || !form || !stage || !readout) return;
     fig.classList.add("is-live");
+    const pulse = () => {
+      stage.dataset.figPulse = "true";
+      setTimeout(() => { delete stage.dataset.figPulse; }, 180);
+    };
     const current = () =>
       kit.read(kind, (name) => {
         const el = form.elements.namedItem(name);
@@ -372,6 +376,86 @@ export function figureClient(kit) {
       if (button && button.name) values[button.name] = kit.clamp(def, button.name, button.value);
       draw(values);
     });
+
+    const visibleParams = def.params.filter((p) => p.kind !== "hidden");
+    if (visibleParams.length) {
+      const primary = visibleParams[0];
+      const totalSteps = Math.max(1, Math.round((primary.max - primary.min) / primary.step));
+      const pxPerStep = Math.max(4, Math.min(28, 160 / totalSteps));
+      stage.classList.add("is-scrub");
+      stage.title = "Drag sideways to move the instrument; double-tap to reset";
+      stage.addEventListener("pointerdown", (event) => {
+        if (event.button && event.button !== 0) return;
+        let lastX = event.clientX;
+        let acc = 0;
+        let moved = false;
+        const onMove = (ev) => {
+          const dx = ev.clientX - lastX;
+          lastX = ev.clientX;
+          acc += dx;
+          if (Math.abs(acc) < pxPerStep) return;
+          const delta = Math.trunc(acc / pxPerStep);
+          acc -= delta * pxPerStep;
+          if (!delta) return;
+          moved = true;
+          fig.classList.add("scrubbing");
+          const values = current();
+          values[primary.name] = kit.clamp(def, primary.name, values[primary.name] + delta * primary.step);
+          draw(values);
+        };
+        const onUp = () => {
+          window.removeEventListener("pointermove", onMove);
+          window.removeEventListener("pointerup", onUp);
+          window.removeEventListener("pointercancel", onUp);
+          fig.classList.remove("scrubbing");
+          if (moved) pulse();
+        };
+        window.addEventListener("pointermove", onMove);
+        window.addEventListener("pointerup", onUp);
+        window.addEventListener("pointercancel", onUp);
+      });
+      stage.addEventListener("dblclick", () => {
+        const defaults = {};
+        for (const p of def.params) defaults[p.name] = p.value;
+        draw(defaults);
+        pulse();
+      });
+    } else if (kind === "buffon") {
+      stage.style.cursor = "pointer";
+      stage.title = "Tap to scatter 10 needles";
+      stage.addEventListener("click", () => {
+        const values = current();
+        values.drops = kit.clamp(def, "drops", values.drops + 10);
+        draw(values);
+        pulse();
+      });
+      const buttons = form.querySelector(".fig-buttons");
+      if (buttons) {
+        const auto = document.createElement("button");
+        auto.type = "button";
+        auto.textContent = "Rain needles";
+        let timer = 0;
+        const stop = () => {
+          if (timer) clearInterval(timer);
+          timer = 0;
+          auto.textContent = "Rain needles";
+          auto.setAttribute("aria-pressed", "false");
+        };
+        auto.setAttribute("aria-pressed", "false");
+        auto.addEventListener("click", () => {
+          if (timer) return stop();
+          auto.textContent = "Pause rain";
+          auto.setAttribute("aria-pressed", "true");
+          timer = setInterval(() => {
+            const values = current();
+            if (values.drops >= def.params[0].max) return stop();
+            values.drops = kit.clamp(def, "drops", values.drops + 10);
+            draw(values);
+          }, 120);
+        });
+        buttons.append(" ", auto);
+      }
+    }
   });
 }
 

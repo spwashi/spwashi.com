@@ -2,6 +2,7 @@
 // and the worker runs only where it reads something (carry-pages.mjs, wrangler.jsonc).
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import vm from 'node:vm';
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -60,4 +61,29 @@ test('wap.mom installs as an app and keeps every printed issue for reading offli
   // A service worker runs under the policy its script is served with: without connect-src it could keep nothing.
   assert.match(headers, /connect-src 'self'/);
   assert.match(headers, /\/sw\.js\n(?:  .*\n)*?  Cache-Control: no-cache/);
+});
+
+test('wap.mom binds cluster pinch-to-scale, keeps offprints/clippings offline, and emits valid client scripts', async () => {
+  const { APP_JS, SW_JS } = await import('../src/app.js');
+  const { FIGURES_JS } = await import('../src/figures.js');
+  const { PINCH_TEXT } = await import('../src/layout.js');
+  const front = readFileSync(path.join(root, 'assets', 'index.html'), 'utf8');
+  for (const tag of [
+    '<link rel="stylesheet" href="/text-scale.css">',
+    '<script src="/text-scale-head.js"></script>',
+    `<link rel="modulepreload" id="text-pinch" href="${PINCH_TEXT}">`,
+    'id="euler-card"',
+    'id="pwa-status"',
+  ]) assert.ok(front.includes(tag), tag);
+  for (const file of ['text-scale.css', 'text-scale.js', 'text-scale-head.js', PINCH_TEXT.slice(1)]) {
+    assert.ok(existsSync(path.join(root, 'assets', file)), file);
+  }
+  const sw = readFileSync(path.join(root, 'assets', 'sw.js'), 'utf8');
+  for (const issue of printed) {
+    assert.ok(sw.includes(`/${issue.slug}/offprint/`), `${issue.slug} offprint cached`);
+    if (issue.clip) assert.ok(sw.includes(`/${issue.slug}/clip/`), `${issue.slug} clip cached`);
+  }
+  for (const [name, code] of [['APP_JS', APP_JS], ['SW_JS', SW_JS], ['FIGURES_JS', FIGURES_JS]]) {
+    assert.doesNotThrow(() => new vm.Script(code), `${name} compiles cleanly`);
+  }
 });
