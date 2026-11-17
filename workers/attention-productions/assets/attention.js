@@ -2,9 +2,10 @@
 // by hand; the composer it imports (compose.js, vocabulary.js, materials.js) is
 // carried from src/ by carry.mjs. With scripts off the page shows its first
 // shot and its links still lead to each word's address.
-import { FIRST_SHOT, SUBJECT_DEPTH, addressOf, canvasHrefOf, cornersOf, geometryOf, nearestFocus, nearestFrom, nearestSheet, promptOf, readShot, slug, spwOf, tempoAt, tempoOf } from "/compose.js";
+import { FIRST_SHOT, SUBJECT_DEPTH, addressOf, canvasHrefOf, stepShot, cornersOf, geometryOf, nearestFocus, nearestFrom, nearestSheet, promptOf, readShot, slug, spwOf, tempoAt, tempoOf } from "/compose.js";
 import { LADDERS, SHAPES, TEMPO } from "/vocabulary.js";
-import { mountSetRing, nearestSeed, slug as pathWord, spw64 } from "/set-ring.js";
+import { hasSetRing, mountSetRing, nearestSeed, openSetRing, slug as pathWord, spw64 } from "/set-ring.js";
+import { attachPinch, wasPinch } from "/pinch.js";
 import { MATERIALS } from "/materials.js";
 
 const svg = document.getElementById("viewfinder");
@@ -250,6 +251,7 @@ function wire() {
   });
   svg.addEventListener("click", (event) => {
     if (dragged) { dragged = false; return; }
+    if (wasPinch()) return;
     // A tap on the lamp or the bar is not a tap on the frame.
     if (event.target.closest?.("#lamp, #beat")) return;
     const p = inView(event);
@@ -303,5 +305,11 @@ if (svg) {
       "spw.quest": { href: `https://spw.quest/build#spw64=${spw64(spwOf(shot))}`, says: "this shot's Spw, to take apart a slot at a time" },
       ...(shot.material ? { "texture.website": { href: `https://texture.website/${shot.material.slug}`, says: `its surface, ${shot.material.word}` } } : {}),
     };
+  });
+  // The set's pinch: in is a tighter shot, out a wider one, and out past establishing is the set.
+  attachPinch(svg, {
+    plane: "shot",
+    toward: (direction) => stepShot(shot, direction) ?? (direction === "out" && hasSetRing() ? "the set" : null),
+    go: (direction) => { const next = stepShot(shot, direction); if (next) commit({ shot: next }); else openSetRing(); },
   });
 }

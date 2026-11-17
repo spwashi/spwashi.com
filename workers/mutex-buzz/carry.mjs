@@ -217,6 +217,7 @@ function head(title, description, canonical) {
   <meta name="apple-mobile-web-app-title" content="mutex.buzz">
   <link rel="stylesheet" href="/mutex.css">
   <link rel="stylesheet" href="/set-ring.css">
+  <link rel="stylesheet" href="/pinch.css">
   <script type="module" src="/mutex.js"></script>`;
 }
 
@@ -291,6 +292,7 @@ const NOT_FOUND = `<!doctype html>
   <title>Not held — mutex.buzz</title>
   <link rel="stylesheet" href="/mutex.css">
   <link rel="stylesheet" href="/set-ring.css">
+  <link rel="stylesheet" href="/pinch.css">
 </head>
 <body class="home">
   <main><section class="say"><p class="kicker">mutex.buzz</p><h1>Nothing holds this address.</h1><p><a href="/">The lock</a> · <a href="/now/">what holds it now</a></p></section></main>
@@ -329,7 +331,7 @@ function manifest() {
 }
 
 /** Everything the service worker keeps, so the lock opens and keeps time with no network. */
-const SHELL = ["/", "/now/", "/mutex.css", "/mutex.js", "/lock.js", "/lock.spw", "/now.json", "/favicon.svg", "/manifest.webmanifest", ...Object.keys(FOLIO_SOURCES).map((name) => `/folios/${name}`), ...Object.keys(ICONS).map((name) => `/icons/${name}`)];
+const SHELL = ["/", "/now/", "/mutex.css", "/mutex.js", "/lock.js", "/lock.spw", "/set-ring.js", "/set-ring.css", "/pinch.js", "/pinch.css", "/now.json", "/favicon.svg", "/manifest.webmanifest", ...Object.keys(FOLIO_SOURCES).map((name) => `/folios/${name}`), ...Object.keys(ICONS).map((name) => `/icons/${name}`)];
 
 /**
  * The service worker. Pages come from the network when there is one and from
@@ -377,7 +379,7 @@ export async function carried() {
   const schedule = { schema: "mutex.schedule.v1", note: "What holds now is the hold whose since is at or before now and whose releasesAt is after it. Times are UTC.", queue: QUEUE.map(({ title, kind }) => ({ title, kind })), holds: scheduleBetween(new Date(`${SCHEDULE.from}T00:00:00Z`), new Date(`${SCHEDULE.until}T00:00:00Z`)) };
   const source = await readFile(path.join(HERE, "src/lock.spw"), "utf8");
   // The set's ring, shared by the set's pages (workers/lib/set-ring.js).
-  const ring = await Promise.all(["set-ring.js", "set-ring.css"].map(async (file) => [file, await readFile(path.join(HERE, "../lib", file), "utf8")]));
+  const ring = await Promise.all(["set-ring.js", "set-ring.css", "pinch.js", "pinch.css"].map(async (file) => [file, await readFile(path.join(HERE, "../lib", file), "utf8")]));
   return [
     ...ring,
     ["lock.js", await readFile(path.join(HERE, "src/lock.js"), "utf8")],

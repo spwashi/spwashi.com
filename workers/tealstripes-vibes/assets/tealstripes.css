@@ -73,3 +73,7 @@ details p { margin: 6px 0 0; color: var(--muted); font: 11.5px/1.5 ui-monospace,
 /* The set's ring fades with the card, so a screenshot takes the stripes alone. */
 .set-ring { transition: opacity 0.7s ease; }
 :root[data-ui="asleep"] .set-ring:not(.open), :root[data-ui="held"] .set-ring { opacity: 0; pointer-events: none; }
+
+/* The shader keeps its fade as it takes the set's pinch (pinch.css). */
+#gl.pinchable { transition: opacity 0.6s ease, scale 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.15); }
+#gl.pinchable[data-pinching] { transition: opacity 0.6s ease; }

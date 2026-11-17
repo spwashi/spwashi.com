@@ -240,3 +240,13 @@ export function nearestSheet(geometry, x, y) {
   }
   return best;
 }
+
+/** How deep a shot goes, widest first: a pinch steps along it (workers/lib/pinch.js). */
+export const SHOT_DEPTH = Object.freeze(["establishing", "wide", "medium", "close-up", "extreme close-up"]);
+
+/** The shot one step in (tighter) or out (wider); an overhead or a low angle stands at a medium's depth. Null past either end. */
+export function stepShot(shot, direction) {
+  const at = SHOT_DEPTH.indexOf(shot.shot);
+  const next = (at >= 0 ? at : SHOT_DEPTH.indexOf("medium")) + (direction === "in" ? 1 : -1);
+  return next >= 0 && next < SHOT_DEPTH.length ? SHOT_DEPTH[next] : null;
+}

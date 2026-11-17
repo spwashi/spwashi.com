@@ -58,6 +58,7 @@ function shell({ seed, mask, filters, title, mood, canonical, ground = false }) 
 <meta name="theme-color" content="${v.palette[0]}">
 <link rel="stylesheet" href="/tealstripes.css">
 <link rel="stylesheet" href="/set-ring.css">
+<link rel="stylesheet" href="/pinch.css">
 <style id="vibe-style">${vibeCss(v)}</style>
 <script type="module" src="/tealstripes.js"></script>
 </head>
@@ -139,7 +140,7 @@ function manifest() {
 }
 
 /** Every file a vibe needs; with these kept, any address paints offline, since the shell reads it in the page. */
-const SHELL = ["/", "/index.html", ...Object.keys(SEEDS).map((s) => `/${s}`), "/tealstripes.js", "/vibe.js", "/tealstripes.css", "/set-ring.js", "/set-ring.css", "/favicon.svg", "/manifest.webmanifest", ...Object.keys(ICONS).map((n) => `/icons/${n}`)];
+const SHELL = ["/", "/index.html", ...Object.keys(SEEDS).map((s) => `/${s}`), "/tealstripes.js", "/vibe.js", "/tealstripes.css", "/set-ring.js", "/set-ring.css", "/pinch.js", "/pinch.css", "/favicon.svg", "/manifest.webmanifest", ...Object.keys(ICONS).map((n) => `/icons/${n}`)];
 
 function serviceWorker(version) {
   return `// Written by workers/tealstripes-vibes/carry.mjs. Pages from the network when there is one, else the kept shell, which paints any address.
@@ -212,6 +213,8 @@ export async function carried() {
     // The set's ring, shared by the set's pages (workers/lib/set-ring.js).
     ["set-ring.js", await readFile(path.join(HERE, "../lib/set-ring.js"), "utf8")],
     ["set-ring.css", await readFile(path.join(HERE, "../lib/set-ring.css"), "utf8")],
+    ["pinch.js", await readFile(path.join(HERE, "../lib/pinch.js"), "utf8")],
+    ["pinch.css", await readFile(path.join(HERE, "../lib/pinch.css"), "utf8")],
     ["index.html", shell({ seed: Object.keys(SEEDS)[0], mask: "", filters: [], title: "Teal Stripes Vibes", mood: "teal stripes", canonical: `${ORIGIN}/`, ground: true })],
     ...Object.keys(SEEDS).map((seed) => [`${seed}.html`, seedPage(seed)]),
     ["favicon.svg", FAVICON],

@@ -1,0 +1,7 @@
+/* The set's pinch (pinch.js): what is pinched scales with the fingers and settles back, and the cue says the step in factshift.center's words. Copied into each unit's assets. */
+.pinchable { touch-action: pan-x pan-y; scale: var(--pinch-scale, 1); transform-origin: var(--pinch-x, 50%) var(--pinch-y, 50%); transition: scale 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.15); }
+.pinchable[data-pinching] { transition: none; }
+.pinch-cue { position: fixed; left: var(--at-x, 50%); top: var(--at-y, 50%); z-index: 60; margin: 0; padding: 8px 14px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.22); background: rgba(10, 8, 12, 0.78); color: #f4f0f6; font: 600 13px/1 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 0.03em; white-space: nowrap; transform: translate(-50%, calc(-100% - 36px)); opacity: 0; pointer-events: none; transition: opacity 0.2s ease; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.pinch-cue.on { opacity: 1; }
+.pinch-cue[data-armed] { border-color: #f4f0f6; background: rgba(244, 240, 246, 0.92); color: #0c0a0e; }
+@media (prefers-reduced-motion: reduce) { .pinchable, .pinch-cue { transition: none; } }
