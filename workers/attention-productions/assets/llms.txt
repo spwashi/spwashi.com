@@ -1,8 +1,8 @@
 # attention.productions
 
-Attention Productions is the name for the pictures: a feature in 2027, and a season of daily promo from October 1 through New Year.
+Each address is a shot, written as an image prompt.
 
-The page is a shot composer for image prompts. The address is the shot: the path is the subject, a hyphen is a space, and each ladder is a query key whose value is one of its words (hyphens for spaces). What the address leaves out, the date picks; day=2026-12-01 fixes a date.
+The path is the subject, a hyphen is a space, and each ladder is a query key whose value is one of its words (hyphens for spaces). What the address leaves out, the date picks; day=2026-12-01 fixes a date.
 
 - shot: extreme close-up, close-up, medium, wide, establishing, overhead, low angle
 - lens: 24mm, 35mm, 50mm, 85mm, macro, anamorphic

@@ -5,9 +5,9 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { CSP, MATERIALS_MODULE, carried } from '../carry.mjs';
-import { DEFAULT_SUBJECT, LADDERS, MATERIAL_OFFER, PHRASES, RATIOS, SHAPES } from '../src/vocabulary.js';
+import { DEFAULT_SUBJECT, LADDERS, MATERIAL_OFFER, PHRASES, RATIOS, SHAPES, TEMPO } from '../src/vocabulary.js';
 import { MATERIALS } from '../src/materials.js';
-import { FIRST_SHOT, addressOf, canvasHrefOf, canvasTextOf, dayShot, geometryOf, nearestFocus, nearestFrom, promptOf, readShot, slug, spwOf, tempoAt } from '../src/compose.js';
+import { FIRST_SHOT, addressOf, canvasHrefOf, canvasTextOf, dayShot, expressionHtml, geometryOf, nearestFocus, nearestFrom, promptOf, readShot, slug, spwOf, stepKey, tempoAt } from '../src/compose.js';
 import { MATERIALS as TEXTURE_MATERIALS } from '../../texture-website/src/vocabulary.js';
 import { parse } from '../../../public/js/semantic/spw-workbench-reader.js';
 import { parse as parsePinned } from '../../spw-quest/assets/parser/2026.10.13/reader.min.js';
@@ -134,6 +134,21 @@ test('the handles move the drawing as a hand drags them, and let go on a word or
   assert.ok(geometryOf({ ...FIRST_SHOT, tempo: 2 }).bar.x2 > g.bar.x2);
 });
 
+test('each bracket steps its own ladder, and the tempo and the surfaces are rings', () => {
+  assert.equal(stepKey(FIRST_SHOT, 'shot', 1).shot, 'medium');
+  assert.equal(stepKey(FIRST_SHOT, 'shot', -1).shot, 'extreme close-up');
+  assert.equal(stepKey({ ...FIRST_SHOT, tempo: 2 }, 'tempo', 1).tempo, TEMPO.min);
+  assert.equal(stepKey({ ...FIRST_SHOT, tempo: TEMPO.min }, 'tempo', -1).tempo, 2);
+  assert.equal(stepKey(FIRST_SHOT, 'material', 1).material.slug, 'vellum');
+  assert.equal(stepKey({ ...FIRST_SHOT, material: MATERIALS.find((m) => m.slug === 'moss') }, 'material', 1).material, null);
+  const html = expressionHtml(FIRST_SHOT);
+  for (const key of [...Object.keys(LADDERS), 'tempo', 'material']) assert.match(html, new RegExp(`data-key="${key}"`));
+  assert.match(html, /!shot/);
+  assert.match(html, /close-up/);
+  assert.match(html, /@material/);
+  assert.doesNotMatch(html, /<script|style=/);
+});
+
 test('a link to factshift.center carries the shot: its Spw and its prompt, as text the canvas reads whole', () => {
   const shot = readShot('/a-projector-beam', '?shot=wide&lens=anamorphic&light=neon&from=left&move=rack-focus&ratio=scope&focus=center&material=vellum&tempo=1.4', DAY);
   const href = canvasHrefOf(shot);
@@ -145,4 +160,11 @@ test('a link to factshift.center carries the shot: its Spw and its prompt, as te
   for (const result of [parse(text, { eventPolicy: 'none' }), parsePinned(text)]) assert.ok(result.success && !result.completeness?.proseFallback && result.errors.length === 0, text);
   const page = readFileSync(path.join(assets, 'index.html'), 'utf8');
   assert.ok(page.includes(`id="canvas" href="${canvasHrefOf(FIRST_SHOT)}"`), 'the page opens its first shot on the canvas');
+});
+
+test('the expression names the address\'s subject in its own element, so the page can say it whatever it arrived carrying', async () => {
+  const { expressionHtml, readShot } = await import('../src/compose.js');
+  const shot = readShot('/a-lamp-through-teal-glass', '?shot=wide', '2026-11-17');
+  assert.match(expressionHtml(shot), /<span class="mark subject">\{a lamp through teal glass\}<\/span>/);
+  assert.match(readFileSync(new URL('../assets/attention.js', import.meta.url), 'utf8'), /querySelector\(".subject"\)/, 'the page repaints it');
 });

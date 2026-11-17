@@ -3,7 +3,7 @@
 // the viewfinder draws. Pure, with no DOM: the carry renders the page's first
 // frame with it, the page (assets/attention.js) redraws with it, and the tests
 // read it. Copied byte for byte into assets/ by carry.mjs.
-import { DEFAULT_SUBJECT, LADDERS, NO, PHRASES, RATIOS, SHAPES, STYLE_WEIGHT, TEMPO } from "./vocabulary.js";
+import { DEFAULT_SUBJECT, LADDERS, MATERIAL_OFFER, NO, PHRASES, RATIOS, SHAPES, STYLE_WEIGHT, TEMPO } from "./vocabulary.js";
 import { MATERIALS } from "./materials.js";
 
 /** A word as a path segment: lower case, hyphens for spaces. */
@@ -84,6 +84,67 @@ export function promptOf(shot) {
 }
 
 const under = (word) => String(word).replace(/ /g, "_");
+const mod = (n, m) => ((n % m) + m) % m;
+const MATERIAL_RING = [null, ...MATERIAL_OFFER.map((s) => MATERIAL_BY_SLUG.get(s)).filter(Boolean)];
+
+/** The brackets a slot wears, so the expression reads as Spw and the word is the handle. */
+const BRACKET = Object.freeze({
+  shot: ["[", "]"], light: ["(", ")"], lens: ["<", ">"],
+  ratio: ["[", "]"], focus: ["[", "]"], from: ["[", "]"], move: ["[", "]"], tempo: ["[", "]"],
+  material: ["[", "]"],
+});
+
+/** The word a slot shows. A space is an underscore, as in the Spw. */
+export function slotText(shot, key) {
+  if (key === "tempo") return String(shot.tempo);
+  if (key === "material") return shot.material?.slug ?? "none";
+  if (key === "ratio" || key === "from") return String(shot[key]);
+  return under(shot[key]);
+}
+
+/**
+ * Step one ladder from the shot's current word. Every slot is a ring, including
+ * the tempo and the surfaces, so a scrub past the end comes back in the other side.
+ */
+export function stepKey(shot, key, by = 1) {
+  if (key === "tempo") {
+    const count = Math.round((TEMPO.max - TEMPO.min) / TEMPO.step) + 1;
+    const i = Math.round((tempoOf(shot.tempo) - TEMPO.min) / TEMPO.step);
+    return { tempo: tempoOf(TEMPO.min + mod(i + by, count) * TEMPO.step) };
+  }
+  if (key === "material") {
+    const i = Math.max(0, MATERIAL_RING.findIndex((m) => (m?.slug ?? null) === (shot.material?.slug ?? null)));
+    return { material: MATERIAL_RING[mod(i + by, MATERIAL_RING.length)] };
+  }
+  const words = LADDERS[key];
+  if (!words) return {};
+  const i = Math.max(0, words.indexOf(shot[key]));
+  return { [key]: words[mod(i + by, words.length)] };
+}
+
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+/** The shot as Spw, with each ladder's word a link to the next word on that ladder. */
+export function expressionHtml(shot) {
+  const slot = (key) => ({ key, text: slotText(shot, key) });
+  const mark = (text, cls = "") => ({ text, cls });
+  const glue = (...parts) => ({ glue: true, parts });
+  const free = (...parts) => ({ glue: false, parts });
+  const lines = [
+    [glue(mark("!shot"), slot("shot")), free(mark(`{${shot.subject}}`, "subject")), glue(slot("light")), glue(slot("lens"))],
+    [free(mark("^frame{")), glue(mark(" =ratio"), slot("ratio")), glue(mark(" =focus"), slot("focus")), glue(mark(" =light_from"), slot("from")), glue(mark(" ~move"), slot("move")), glue(mark(" %tempo"), slot("tempo")), free(mark(" }"))],
+    [glue(mark("@material"), slot("material"))],
+  ];
+  const one = (part) => {
+    if (!part.key) return `<span class="mark${part.cls ? ` ${part.cls}` : ""}">${esc(part.text)}</span>`;
+    const [open, close] = BRACKET[part.key];
+    const href = addressOf({ ...shot, ...stepKey(shot, part.key, 1) });
+    const brackets = `${open ? `<span class="br">${esc(open)}</span>` : ""}<span class="word">${esc(part.text)}</span>${close ? `<span class="br">${esc(close)}</span>` : ""}`;
+    return `<a class="slot" data-key="${part.key}" href="${esc(href)}">${brackets}</a>`;
+  };
+  const group = (item) => `<span class="${item.glue ? "glue" : "free"}">${item.parts.map(one).join("")}</span>`;
+  return lines.map((line) => `<span class="line">${line.map(group).join("")}</span>`).join("");
+}
 
 /**
  * The shot as Spw: the mark acts, the mode is the shot, the body the subject,
