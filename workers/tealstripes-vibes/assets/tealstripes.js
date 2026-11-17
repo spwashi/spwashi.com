@@ -3,7 +3,7 @@
 // shader and the keys are the ones the worker's page carried; tuning, the
 // fading card and the share image are this page's own. With scripts off the
 // shell shows the vibe it was written with.
-import { FACETS, SEEDS, SHADER, TUNING, canonicalPath, captionOf, expressionOf, maskLabel, readAddress, tune, tuningQuery, vibe, vibeCss } from "/vibe.js";
+import { FACETS, SEEDS, SHADER, SLOTS, TUNING, canonicalPath, captionOf, choicesFor, expressionOf, maskLabel, readAddress, said, tune, tuningFor, tuningQuery, valueOf, vibe, vibeCss } from "/vibe.js";
 
 const $ = (id) => document.getElementById(id);
 const root = document.documentElement;
@@ -20,7 +20,12 @@ if (place.kind === "root") {
 
 /* ── the picture, from the place ─────────────────────────── */
 
-const current = () => tune(vibe(place.seed, place.mask, place.filters), place.tuning);
+/** A place being tried before it is kept: a held slot's choice, or a reroll. Null when nothing is held. */
+let trying = null;
+/** The slot a hand holds, or null. */
+let held = null;
+const shown = () => trying ?? place;
+const current = () => { const p = shown(); return tune(vibe(p.seed, p.mask, p.filters), p.tuning); };
 const pathOf = () => (place.kind === "moment" ? new URL(place.href).pathname : canonicalPath(place));
 const addressOf = () => {
   const query = [tuningQuery(place.tuning), place.say ? `say=${encodeURIComponent(place.say)}` : ""].filter(Boolean).join("&");
@@ -30,7 +35,7 @@ const addressOf = () => {
 let shader = null;
 
 function paint() {
-  const { seed, mask, filters, hour } = place;
+  const { seed, mask, filters, hour } = shown();
   const v = current();
   const href = `https://tealstripesvibes.com${addressOf()}`;
   $("vibe-style").textContent = vibeCss(v);
@@ -39,7 +44,7 @@ function paint() {
   $("mood").textContent = SEEDS[seed].mood;
   $("mask").textContent = `${maskLabel(mask)}${filters.length ? ` · ${filters.join(", ")}` : ""}`;
   $("hour").textContent = `${hour}Z`;
-  $("expr").textContent = expressionOf(seed, mask, filters, v);
+  writeExpression(v);
   $("tuple-link").setAttribute("href", `/tuple?seed=${seed}&mask=${maskLabel(mask)}${filters.length ? `&filter=${filters.join(",")}` : ""}`);
   $("self-link").setAttribute("href", href);
   $("og-link").setAttribute("href", `/og/${seed}/${maskLabel(mask)}.svg`);
@@ -68,8 +73,149 @@ if (place.kind === "unknown") {
   document.title = "Not a vibe — Teal Stripes Vibes";
 } else {
   paint();
+  wireSlots();
   wireTuning();
   wireShare();
+}
+
+/* ── the expression's handles ───────────────────────────── */
+
+// As on factshift.center: a part of the line is held, its choices are scanned
+// and shown on the stripes before anything is written, and keep writes it into
+// the address while let go puts it back. Its choices are borrowed from the
+// other seeds, then its own family (a palette's hue turns, Euclidean rhythms,
+// a number's steps). (held is declared with trying, above, since the first paint reads it.)
+
+/** The expression, its tuple's parts as handles. */
+function writeExpression(v) {
+  const p = shown();
+  const expr = $("expr");
+  expr.replaceChildren();
+  const text = (t) => expr.append(document.createTextNode(t));
+  const slot = (name, label) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "slot";
+    button.dataset.slot = name;
+    button.textContent = label;
+    button.setAttribute("aria-pressed", String(held?.slot === name));
+    button.title = `Hold the ${name}: scan its choices, reroll it, keep it`;
+    expr.append(button);
+  };
+  text("^vibe[");
+  slot("seed", p.seed);
+  text(`]{${[maskLabel(p.mask), ...p.filters].join(",")}}<`);
+  slot("palette", said("palette", v.palette));
+  text("|");
+  slot("rhythm", said("rhythm", v.rhythm));
+  text("|");
+  slot("angle", said("angle", v.angle));
+  text("|");
+  slot("drift", said("drift", v.motion.drift));
+  text(" ");
+  slot("breath", said("breath", v.motion.breath));
+  text("|");
+  slot("grain", said("grain", v.grain.amount));
+  text(` ${v.grain.kind}|${v.plate || "-"}>`);
+}
+
+const choices = (slot) => (slot === "seed" ? Object.keys(SEEDS) : choicesFor(slot, tune(vibe(place.seed, place.mask, place.filters), place.tuning)));
+const valueNow = (slot) => (slot === "seed" ? shown().seed : valueOf(slot, current()));
+const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+
+/** Try a choice for the held slot: the stripes show it; the address does not change until it is kept. */
+function tryChoice(slot, value) {
+  trying = slot === "seed" ? { ...place, seed: value } : { ...place, tuning: { ...place.tuning, ...tuningFor(slot, value) } };
+  paint();
+  showHeld();
+}
+
+function showHeld() {
+  const bar = $("held");
+  if (!held) { bar.hidden = true; return; }
+  const list = choices(held.slot);
+  const at = list.findIndex((c) => same(c, valueNow(held.slot)));
+  bar.hidden = false;
+  $("held-name").textContent = held.slot;
+  $("held-value").textContent = held.slot === "seed" ? valueNow("seed") : said(held.slot, valueNow(held.slot));
+  $("held-count").textContent = `${at + 1} of ${list.length}`;
+}
+
+function holdSlot(slot) {
+  if (held?.slot === slot) return letGo();
+  trying = null;
+  held = { slot };
+  paint();
+  showHeld();
+  say(`Holding the ${slot}. Arrows scan, r rerolls, Enter keeps.`);
+}
+
+function scan(by) {
+  if (!held) return;
+  const list = choices(held.slot);
+  const at = list.findIndex((c) => same(c, valueNow(held.slot)));
+  tryChoice(held.slot, list[(at + by + list.length) % list.length]);
+}
+
+function reroll() {
+  if (!held) return;
+  const list = choices(held.slot).filter((c) => !same(c, valueNow(held.slot)));
+  tryChoice(held.slot, list[Math.floor(Math.random() * list.length)]);
+}
+
+/** Reroll the whole tuple at once: every slot but the seed takes a choice of its own, shown before it is kept. */
+function rerollAll() {
+  const base = { ...place, tuning: { ...place.tuning } };
+  for (const slot of SLOTS.filter((s) => s !== "seed")) {
+    const list = choicesFor(slot, tune(vibe(base.seed, base.mask, base.filters), base.tuning));
+    Object.assign(base.tuning, tuningFor(slot, list[Math.floor(Math.random() * list.length)]));
+  }
+  held = held ?? { slot: "palette" };
+  trying = base;
+  paint();
+  showHeld();
+  say("A new tuple. Enter keeps it, Escape lets it go.");
+}
+
+function keepHeld() {
+  if (trying) {
+    place = { ...trying, href: place.href };
+    trying = null;
+    keep();
+    say("Kept.");
+  }
+  held = null;
+  showHeld();
+  paint();
+}
+
+function letGo() {
+  trying = null;
+  held = null;
+  paint();
+  showHeld();
+  say("Let go.");
+}
+
+function wireSlots() {
+  $("expr").addEventListener("click", (event) => {
+    const button = event.target.closest?.("button.slot");
+    if (button) holdSlot(button.dataset.slot);
+  });
+  $("held-prev").addEventListener("click", () => scan(-1));
+  $("held-next").addEventListener("click", () => scan(1));
+  $("held-reroll").addEventListener("click", reroll);
+  $("held-keep").addEventListener("click", keepHeld);
+  $("held-go").addEventListener("click", letGo);
+  // A swipe across the stripes scans the held slot, as a swipe steps lines on the canvas.
+  let start = null;
+  $("field").addEventListener("pointerdown", (event) => { start = { x: event.clientX, y: event.clientY }; });
+  addEventListener("pointerup", (event) => {
+    if (!start || !held) { start = null; return; }
+    const dx = event.clientX - start.x, dy = event.clientY - start.y;
+    start = null;
+    if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.5) scan(dx < 0 ? 1 : -1);
+  });
 }
 
 /* ── tuning by hand ──────────────────────────────────────── */
@@ -151,6 +297,12 @@ wake();
 addEventListener("keydown", async (e) => {
   if (e.metaKey || e.ctrlKey || e.altKey) return;
   if (/input|textarea/i.test(e.target.tagName)) { if (e.key === "Escape") e.target.blur(); wake(); return; }
+  if (held && e.key === "ArrowLeft") { e.preventDefault(); wake(); return scan(-1); }
+  if (held && e.key === "ArrowRight") { e.preventDefault(); wake(); return scan(1); }
+  if (held && e.key === "r") { wake(); return reroll(); }
+  if (e.key === "R") { wake(); return rerollAll(); }
+  if (held && e.key === "Enter" && !e.target.closest?.("button")) { wake(); return keepHeld(); }
+  if (held && e.key === "Escape") { wake(); return letGo(); }
   if (e.key === "h") return hold();
   if (e.key === "Escape" && root.dataset.ui === "held") return hold();
   wake();

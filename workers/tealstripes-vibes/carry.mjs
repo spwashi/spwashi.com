@@ -80,8 +80,9 @@ function shell({ seed, mask, filters, title, mood, canonical, ground = false }) 
   <details id="grammar">
     <summary>Read the address <kbd>?</kbd></summary>
     <ul id="facets">${facets}</ul>
-    <p>/seed/mask/filters · mask letters or sigils · filters: ${Object.keys(FILTERS).join(", ")} · ?angle= drift= breath= grain= turn= beats= steps= say= · <kbd>t</kbd> tune · <kbd>h</kbd> hide · <kbd>s</kbd> stamp · <kbd>c</kbd> copy</p>
+    <p>/seed/mask/filters · mask letters or sigils · filters: ${Object.keys(FILTERS).join(", ")} · ?angle= drift= breath= grain= turn= beats= steps= say= · tap a part of the expression to hold it: <kbd>←</kbd><kbd>→</kbd> scan, <kbd>r</kbd> reroll, <kbd>Enter</kbd> keep, <kbd>Esc</kbd> let go; <kbd>R</kbd> rerolls them all · <kbd>t</kbd> tune · <kbd>h</kbd> hide · <kbd>s</kbd> stamp · <kbd>c</kbd> copy</p>
   </details>
+  <p class="held" id="held" hidden><span class="held-name" id="held-name"></span> <button type="button" id="held-prev" aria-label="The choice before">‹</button> <output id="held-value"></output> <button type="button" id="held-next" aria-label="The choice after">›</button> <span class="held-count" id="held-count"></span> <button type="button" id="held-reroll">reroll <kbd>r</kbd></button> <button type="button" id="held-keep">keep</button> <button type="button" id="held-go">let go</button></p>
   <p class="caption" id="caption" hidden></p>
   <details class="tune" id="tune" hidden>
     <summary>Tune it <kbd>t</kbd></summary>

@@ -128,3 +128,29 @@ test('a hand\'s tuning is held to its ranges, carried in the address, and read b
   assert.equal(v.palette[0], vibe(place.seed, place.mask, place.filters).palette[1], 'the palette turned once');
   assert.ok(v.moire, 'the filter survives tuning');
 });
+
+test('a held slot scans its choices: the others seeds\' values first, then its own family, always including where it is', async () => {
+  const { SLOTS, choicesFor, valueOf, turnHue, readTuning, tuningQuery, tuningFor, tune } = await import('../src/vibe.js');
+  const v = vibe('harbor', ALL, []);
+  for (const slot of SLOTS.filter((s) => s !== 'seed')) {
+    const list = choicesFor(slot, v);
+    assert.ok(list.some((c) => JSON.stringify(c) === JSON.stringify(valueOf(slot, v))), `${slot}: the scan starts where it is`);
+    assert.ok(list.length >= 7, `${slot}: ${list.length} choices`);
+  }
+  for (const seed of Object.values(SEEDS)) {
+    assert.ok(choicesFor('palette', v).some((c) => JSON.stringify(c) === JSON.stringify(seed.palette)), `borrows ${seed.name}'s palette`);
+    assert.ok(choicesFor('rhythm', v).some((c) => JSON.stringify(c) === JSON.stringify(seed.rhythm)), `borrows ${seed.name}'s rhythm`);
+  }
+  // A hue turn keeps each colour's lightness, so the palette stays itself.
+  const turned = turnHue(v.palette, 120);
+  assert.notDeepEqual(turned, v.palette);
+  assert.equal(turnHue(turned, 240).join(), v.palette.join(), 'a full turn comes home');
+  // A kept palette and rhythm read back from the address; bad ones are not read.
+  const t = readTuning(new URLSearchParams('palette=062a2b-0f766e-a7f3d0&rhythm=3-5-8&angle=45'));
+  assert.deepEqual(t, { palette: ['#062a2b', '#0f766e', '#a7f3d0'], rhythm: [3, 5, 8], angle: 45 });
+  assert.equal(tuningQuery(t), 'palette=062a2b-0f766e-a7f3d0&rhythm=3-5-8&angle=45');
+  assert.deepEqual(readTuning(new URLSearchParams('palette=zzz&rhythm=0-99')), {});
+  // A kept rhythm stands over a Euclidean tuning.
+  const kept = tune(v, { beats: 3, steps: 8, ...tuningFor('rhythm', [4, 4, 9]) });
+  assert.deepEqual(kept.rhythm, [4, 4, 9]);
+});
