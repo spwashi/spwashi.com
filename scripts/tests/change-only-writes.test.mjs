@@ -3,6 +3,7 @@ import test from 'node:test';
 import { bus } from '../../public/js/kernel/bus.js';
 import { initSpwSemanticCrossrefs } from '../../public/js/semantic/semantic-crossrefs.js';
 import { syncUtilityRow } from '../../public/js/runtime/shell/utility-row.js';
+import { annotateLink } from '../../public/js/runtime/navigation/navigation-spells.js';
 
 // Scroll and pointer paths repeat one state many times a second; a writer that
 // rewrites an unchanged value still queues mutation records and dirties style.
@@ -186,5 +187,27 @@ test('the utility row writes pressed state, titles and labels once, not on every
     assert.equal(writes(), 3, 'auto to dark moves the row mode and the dark button\'s pressed state and title');
   } finally {
     delete document.documentElement.dataset.spwColorMode;
+  }
+});
+
+test('reader shell nav links do not write and delete spwOperatorGeometry', () => {
+  const prevAnchor = globalThis.HTMLAnchorElement;
+  const link = new WriteCountingElement();
+  link.href = `${globalThis.location.origin}/topics/software/`;
+  link.title = 'Topics';
+  link.closest = (selector) => (
+    String(selector).includes('site-header nav') ? {} : null
+  );
+  link.matches = () => false;
+  link.querySelector = () => null;
+  link.querySelectorAll = () => [];
+  globalThis.HTMLAnchorElement = link.constructor;
+
+  try {
+    annotateLink(link);
+    assert.equal(link.dataset.spwNavTokenized, 'inspect');
+    assert.equal('spwOperatorGeometry' in link.dataset, false);
+  } finally {
+    globalThis.HTMLAnchorElement = prevAnchor;
   }
 });

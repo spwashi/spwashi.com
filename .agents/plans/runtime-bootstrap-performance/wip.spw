@@ -26,14 +26,15 @@ fixity = "tending"
  >>[2026-11-06 12:14] probe — B3 reader check: rg -n -e 'var\(--spw-(perspective-weight|potential-weight|salience-weight|dimension-count|context-bias-count|context-projection-count|context-match-weight)' public/css public/js -g '!**/bundles/**' finds one hit, interaction-progression.css:80, where html's --spw-salience-weight reads itself. applyModuleSemantics writes all seven through writeStyleValue, which is change-only, so the ~800 panel writes on 09-28 were first writes on mount, and none has a reader.
  >>[2026-11-06 12:18] probe — wonder_runtime_bootstrap_performance_idle_pulse: four source sheets key on data-spw-beat-prime or data-spw-freshness-pulse (systems/interaction-progression.css, systems/palette-treat.css, routes/surfaces/blog-frames.css, ornament/ornament.css), every rule anchored on html; interaction-progression.css:344 names every chip, syntax token, operator, interaction contract, module and image reward as consumers. So narrowing means a shorter consumer list, not moving one rule.
  >>[2026-11-17 09:24] align — Re-verified B1 at navigation-spells.js:390-397 (applyNavigationSpellRecord writes data-spw-operator-geometry and shellReader deletes it immediately) and aligned Phase 2/3 with motion-and-marks-2026-11.spw (first-paint CLS stability) and modern-web-guidance INP/CRP standards (50ms task slicing with scheduler.yield(), progressive live paste-door sync on edit).
+ >>[2026-11-17 09:38] land — B1 shipped in navigation-spells.js + link-copy.js (operatorGeometry=false option avoids writing/deleting spwOperatorGeometry on shellReader nav links), frame-size-memory.js stops warming frames above the viewport or forcing layout inside expired/active frames, and semantic-chrome.js scroll/resize listeners are passive; unit tests in change-only-writes.test.mjs pass.
 }
 
 ^"open"{ }
 
 ^"cache"{
  ~#status: "implementing"
- ~#next_commit: "~[runtime] Skip the operator geometry the reader layer would strip from shell nav, so a pass stops flipping it"
- ~#files_hot: "public/js/runtime/navigation/navigation-spells.js, public/js/semantic/link-copy.js, scripts/tests/change-only-writes.test.mjs; then public/js/interface/contextual-ui.js for B3"
-  ~#gate: "the /about/ pocket scroll receipt before and after (two interleaved runs a side, HEAD through CDP Fetch)"
+ ~#next_commit: "^[interface] Guard unconsumed --spw-context-* panel writes in contextual-ui.js (B3), gated on browser verification"
+ ~#files_hot: "public/js/interface/contextual-ui.js, scripts/tests/change-only-writes.test.mjs"
+  ~#gate: "the /about/ pocket scroll receipt before and after (interleaved CDP Fetch run)"
  ~#last_stream: "2026-11-17"
 }

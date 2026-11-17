@@ -237,7 +237,7 @@ function setLinkDataset(link, entries = {}) {
   });
 }
 
-function applyNavigationSpellRecord(link, record, url, { tokenized = 'true' } = {}) {
+function applyNavigationSpellRecord(link, record, url, { tokenized = 'true', operatorGeometry = true } = {}) {
   setLinkDataset(link, {
     spwNavTokenized: tokenized,
     spwGroundable: record.groundable,
@@ -258,8 +258,9 @@ function applyNavigationSpellRecord(link, record, url, { tokenized = 'true' } = 
     expression: record.expression,
     scope: record.scope,
     label: record.label,
+    operatorGeometry,
   });
-  applyOperatorGeometryToElement(link, record.operator);
+  if (operatorGeometry) applyOperatorGeometryToElement(link, record.operator);
 
   if (record.isGroundable) {
     setLinkDataset(link, {
@@ -366,7 +367,7 @@ function isReaderDisplayLayer() {
   return (document.body?.dataset?.spwDisplayLayer || 'reader') === 'reader';
 }
 
-function annotateLink(link) {
+export function annotateLink(link) {
   if (!(link instanceof HTMLAnchorElement)) return;
   if (link.closest('[data-spw-nav-tokenized="false"]')) return;
 
@@ -385,14 +386,14 @@ function annotateLink(link) {
   /*
    * Shell nav first-paint is the contracted look. In the reader layer we
    * still write inspect datasets, but we do not paint prefixes or operator
-   * geometry — those attrs are what overflowed the authored list after idle.
+   * geometry — skip writing operator geometry here instead of flip-flopping it.
    */
   if (shellReader) {
     applyNavigationSpellRecord(link, {
       ...record,
       isGroundable: false,
-    }, url, { tokenized: 'inspect' });
-    delete link.dataset.spwOperatorGeometry;
+    }, url, { tokenized: 'inspect', operatorGeometry: false });
+    if ('spwOperatorGeometry' in link.dataset) delete link.dataset.spwOperatorGeometry;
     return;
   }
 

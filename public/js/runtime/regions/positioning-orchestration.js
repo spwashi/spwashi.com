@@ -27,6 +27,7 @@ import {
   writeStyleValue,
 } from '/public/js/kernel/dom-contracts.js';
 import { createMeasuredLane } from '/public/js/kernel/measured-frame.js';
+import { readViewportBox } from '/public/js/kernel/viewport.js';
 import {
   MEASURE_BANDS,
   resolveMeasureBand,
@@ -95,8 +96,7 @@ function computeSpatialMetrics(el, viewportWidth, viewportHeight) {
 function measurePositioningTargets() {
   if (!visibleElements.size && !trackedElements.size) return null;
 
-  const vpWidth = window.innerWidth || document.documentElement.clientWidth || 1024;
-  const vpHeight = window.innerHeight || document.documentElement.clientHeight || 768;
+  const { innerWidth: vpWidth, innerHeight: vpHeight } = readViewportBox();
 
   const measurements = [];
   const activeTargets = visibleElements.size ? visibleElements : trackedElements;

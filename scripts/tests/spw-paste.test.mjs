@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
 import { parse } from '../../public/js/semantic/spw-workbench-reader.js';
-import { PASTE_ACTIONS, actionLabel, doorLabel, readPaste, spwSegments } from '../../public/js/modules/tools/spw-paste.js';
+import { PASTE_ACTIONS, actionLabel, doorLabel, readPaste, spwSegments, syncStaticDoors } from '../../public/js/modules/tools/spw-paste.js';
 import { SEED_TEMPLATES, buildSeedText } from '../../public/js/modules/cards/seed-card.js';
 
 const join = (segments) => segments.map((segment) => segment.text).join('');
@@ -99,4 +99,43 @@ test('a costume sheet goes home to Costuming', () => {
   const reading = readPaste(buildSeedText(SEED_TEMPLATES.costuming, '2026', { appeared: 'a heron', affirms: 'patience' }), parse);
   assert.equal(reading.kind, 'seed');
   assert.equal(actionLabel('home', reading), 'Fill its card on Costuming');
+});
+
+test('syncStaticDoors keeps canvas and pivot links synced with live Spw and restores defaults on empty or prose', () => {
+  const makeLink = (href) => {
+    const attrs = new Map([['href', href]]);
+    return {
+      getAttribute: (name) => attrs.get(name) ?? null,
+      setAttribute: (name, value) => attrs.set(name, String(value)),
+    };
+  };
+  const canvasDoor = makeLink('https://factshift.center/?spw=default');
+  const pivotDoor = makeLink('https://spw.quest/pivot?line=default');
+  const host = {
+    querySelector: (selector) => {
+      if (selector === '.spw-card-door-canvas') return canvasDoor;
+      if (selector === '.spw-card-door-pivot') return pivotDoor;
+      return null;
+    },
+  };
+  const defaults = {
+    canvas: 'https://factshift.center/?spw=default',
+    pivot: 'https://spw.quest/pivot?line=default',
+  };
+
+  syncStaticDoors(host, readPaste('leaf[moss]{listen}<grove>', parse), defaults);
+  assert.equal(new URL(canvasDoor.getAttribute('href')).searchParams.get('spw'), 'leaf[moss]{listen}<grove>');
+  assert.equal(new URL(pivotDoor.getAttribute('href')).searchParams.get('line'), 'leaf[moss]{listen}<grove>');
+
+  syncStaticDoors(host, readPaste('#>custom\nstream[river]{carry}<bank>', parse), defaults);
+  assert.ok(canvasDoor.getAttribute('href').includes('#spw64='));
+  assert.equal(new URL(pivotDoor.getAttribute('href')).searchParams.get('line'), 'stream[river]{carry}<bank>');
+
+  syncStaticDoors(host, readPaste('plain english words only', parse), defaults);
+  assert.equal(canvasDoor.getAttribute('href'), defaults.canvas);
+  assert.equal(pivotDoor.getAttribute('href'), defaults.pivot);
+
+  syncStaticDoors(host, { kind: 'empty', source: '' }, defaults);
+  assert.equal(canvasDoor.getAttribute('href'), defaults.canvas);
+  assert.equal(pivotDoor.getAttribute('href'), defaults.pivot);
 });
