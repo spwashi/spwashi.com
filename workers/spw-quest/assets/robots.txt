@@ -1,5 +1,14 @@
+# The rooms are in the sitemap. A query or a line opens endless views of them; read /specimens.json for the whole corpus in one request.
 User-agent: *
 Allow: /
+Disallow: /*?
 Disallow: /script.spw
 Disallow: /canvas
+Disallow: /read
+Disallow: /card
+Disallow: /*%3C
+Disallow: /*%5B
+Disallow: /*%7B
+Disallow: /*(
+Crawl-delay: 5
 Sitemap: https://spw.quest/sitemap.xml

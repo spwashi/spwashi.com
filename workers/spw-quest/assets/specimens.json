@@ -1,0 +1,5795 @@
+{
+  "version": "0.1.0",
+  "schema": "specimens.v1",
+  "count": 1112,
+  "specimens": [
+    {
+      "id": "h-capsule",
+      "source": "herbarium",
+      "name": "capsule",
+      "file": ".spw/language/expressions/container-formations.spw",
+      "group": "stable",
+      "line": "host[mode]{one.two.three}",
+      "note": "The site's whole corpus. Subject, the mode it is read under, the parts it is made of."
+    },
+    {
+      "id": "h-projected",
+      "source": "herbarium",
+      "name": "projected",
+      "file": ".spw/language/expressions/container-formations.spw",
+      "group": "stable",
+      "line": "surfaces[route]{path.role}<publish>",
+      "note": "Adds where it goes. The only form that produces a Capsule, and zero of 441 authored expressions use it."
+    },
+    {
+      "id": "h-frame_path",
+      "source": "herbarium",
+      "name": "frame_path",
+      "file": ".spw/language/expressions/container-formations.spw",
+      "group": "stable",
+      "line": "host[a.b.c]{body}",
+      "note": "A mode may itself be a path. The frame is not restricted to one token."
+    },
+    {
+      "id": "h-one_deep",
+      "source": "herbarium",
+      "name": "one_deep",
+      "file": ".spw/language/expressions/container-formations.spw",
+      "group": "nesting",
+      "line": "outer[mode]{inner[deep]{leaf}}"
+    },
+    {
+      "id": "h-three_deep",
+      "source": "herbarium",
+      "name": "three_deep",
+      "file": ".spw/language/expressions/container-formations.spw",
+      "group": "nesting",
+      "line": "a[b]{c[d]{e[f]{g}}}",
+      "note": "Each level adds exactly one Frame and one Body. No ceiling was found."
+    },
+    {
+      "id": "h-nest_projected",
+      "source": "herbarium",
+      "name": "nest_projected",
+      "file": ".spw/language/expressions/container-formations.spw",
+      "group": "nesting",
+      "line": "outer[m]{inner[d]{leaf}}<publish>",
+      "note": "A projection applies to the whole nest, not to the innermost leaf."
+    },
+    {
+      "id": "h-induct_join",
+      "source": "herbarium",
+      "name": "induct_join",
+      "file": ".spw/language/expressions/container-formations.spw",
+      "group": "compounds",
+      "line": "a[x]{p} ~ b[y]{q}",
+      "note": "Coupled by induction. The bond kind is the operator, which inference over shared vocabulary cannot recover."
+    },
+    {
+      "id": "h-project_join",
+      "source": "herbarium",
+      "name": "project_join",
+      "file": ".spw/language/expressions/container-formations.spw",
+      "group": "compounds",
+      "line": "parts[evidence]{raw} ^ whole[inspect]{lift}",
+      "note": "One projects into the other. Falsifiable: if nothing downstream changes when the source does, the projection was asserted and never held."
+    },
+    {
+      "id": "h-subject_join",
+      "source": "herbarium",
+      "name": "subject_join",
+      "file": ".spw/language/expressions/container-formations.spw",
+      "group": "compounds",
+      "line": "claim[binding]{owner} & proof[probe]{falsify}"
+    },
+    {
+      "id": "h-triple",
+      "source": "herbarium",
+      "name": "triple",
+      "file": ".spw/language/expressions/container-formations.spw",
+      "group": "compounds",
+      "line": "a[1]{x} ~ b[2]{y} ~ c[3]{z}",
+      "note": "Joins scale linearly. Three operands, three of everything."
+    },
+    {
+      "id": "h-mixed",
+      "source": "herbarium",
+      "name": "mixed",
+      "file": ".spw/language/expressions/container-formations.spw",
+      "group": "compounds",
+      "line": "a[1]{x} ~ b[2]{y} ^ c[3]{z}",
+      "note": "Bond kinds may differ within one chain. Induction then projection."
+    },
+    {
+      "id": "h-list_separator",
+      "source": "herbarium",
+      "name": "list_separator",
+      "file": ".spw/language/expressions/container-formations.spw",
+      "group": "compounds",
+      "line": "a[x]{p} ; b[y]{q}",
+      "note": "NOT a compound. Two frames but one Operation — the semicolon separates, it does not relate."
+    },
+    {
+      "id": "h-prefixed_compound",
+      "source": "herbarium",
+      "name": "prefixed_compound",
+      "file": ".spw/language/expressions/container-formations.spw",
+      "group": "exotic",
+      "line": "?open[edge]{aperture} ~ ^lift[whole]{parts}",
+      "note": "Two prefixed capsules joined. Op:4 — two operators plus two capsules — and ModifierChain drops to zero, so prefixing both sides changes the shape of the join itself."
+    },
+    {
+      "id": "h-lens_over_compound",
+      "source": "herbarium",
+      "name": "lens_over_compound",
+      "file": ".spw/language/expressions/container-formations.spw",
+      "group": "exotic",
+      "line": "reader@atlas[route]{a} ~ writer@folio[craft]{b}",
+      "note": "Two viewpoints, coupled. Reader and writer are different lenses on a related pair."
+    },
+    {
+      "id": "h-nest_compound",
+      "source": "herbarium",
+      "name": "nest_compound",
+      "file": ".spw/language/expressions/container-formations.spw",
+      "group": "exotic",
+      "line": "a[b]{c[d]{e}} ~ f[g]{h}",
+      "note": "A nest may be one operand of a compound. Depth and relation compose."
+    },
+    {
+      "id": "h-chained_modifiers",
+      "source": "herbarium",
+      "name": "chained_modifiers",
+      "file": ".spw/language/expressions/container-formations.spw",
+      "group": "exotic",
+      "line": "a[b]{c[d]{e}}<x><y><z>",
+      "note": "Three modifiers, three Capsules. A projection chain — where it goes, then where that goes."
+    },
+    {
+      "id": "h-operators_in_body",
+      "source": "herbarium",
+      "name": "operators_in_body",
+      "file": ".spw/language/expressions/container-formations.spw",
+      "group": "exotic",
+      "line": "host[mode]{~carry.^lift.?ask}",
+      "note": "The strangest verified form. Operators live inside a body as parts — the body holds operations rather than names. Op:4 from three inner operators plus the host."
+    },
+    {
+      "id": "h-transdimensional_microinteraction",
+      "source": "herbarium",
+      "name": "transdimensional_microinteraction",
+      "file": ".spw/language/expressions/container-formations.spw",
+      "group": "exotic",
+      "line": "<input>{gesture} (( !action ~> $result )) <destination>[reg=sink@\"state\"]",
+      "note": "Transdimensional microinteraction expression. Bounds an input capsule prefix, gesture direction, transformation scene (( )), destination postfix, and perspective/register state."
+    },
+    {
+      "id": "h-ground",
+      "source": "herbarium",
+      "name": "ground",
+      "file": ".spw/language/expressions/positional-sets.spw",
+      "group": "prefix",
+      "line": "#>site{route.surface}",
+      "note": "Grounds without a frame. #> is the only prefix here that takes no [mode] — an address is not read under a mode, it simply holds."
+    },
+    {
+      "id": "h-probe",
+      "source": "herbarium",
+      "name": "probe",
+      "file": ".spw/language/expressions/positional-sets.spw",
+      "group": "prefix",
+      "line": "?atlas[open]{aperture.edge}",
+      "note": "The question is stated and what is already known is not. Two questions share that niche and compete for it."
+    },
+    {
+      "id": "h-induct",
+      "source": "herbarium",
+      "name": "induct",
+      "file": ".spw/language/expressions/positional-sets.spw",
+      "group": "prefix",
+      "line": "~carry[register]{loss.less}",
+      "note": "Charge moves register without loss. The observer is unstated, so a reader can occupy it."
+    },
+    {
+      "id": "h-project",
+      "source": "herbarium",
+      "name": "project",
+      "file": ".spw/language/expressions/positional-sets.spw",
+      "group": "prefix",
+      "line": "^lift[evidence]{parts.whole}",
+      "note": "Implicit made explicit. Geometry is lift."
+    },
+    {
+      "id": "h-subject",
+      "source": "herbarium",
+      "name": "subject",
+      "file": ".spw/language/expressions/positional-sets.spw",
+      "group": "prefix",
+      "line": "&subject[claim]{binding}"
+    },
+    {
+      "id": "h-substrate",
+      "source": "herbarium",
+      "name": "substrate",
+      "file": ".spw/language/expressions/positional-sets.spw",
+      "group": "prefix",
+      "line": "$ground[material]{grain.tooth}"
+    },
+    {
+      "id": "h-settle",
+      "source": "herbarium",
+      "name": "settle",
+      "file": ".spw/language/expressions/positional-sets.spw",
+      "group": "postfix",
+      "line": "orientation.",
+      "note": "A trailing . produces a ModifierChain and no Frame or Body at all. Postfix modifies rather than operates, which is why it can attach to a bare identifier and a prefix cannot."
+    },
+    {
+      "id": "h-lens_bare",
+      "source": "herbarium",
+      "name": "lens_bare",
+      "file": ".spw/language/expressions/positional-sets.spw",
+      "group": "infix",
+      "line": "viewer@subject",
+      "note": "Both sides claimed, so nothing is left open. The most complete and least extensible position."
+    },
+    {
+      "id": "h-lens_framed",
+      "source": "herbarium",
+      "name": "lens_framed",
+      "file": ".spw/language/expressions/positional-sets.spw",
+      "group": "infix",
+      "line": "reader@atlas[route]{path}",
+      "note": "Infix survives containers. The lens sits outside the frame and reads the whole capsule through a viewpoint."
+    },
+    {
+      "id": "g-proof",
+      "source": "gallery",
+      "name": "minimal proof",
+      "line": "proof[parser]{literal.ast.lossless}"
+    },
+    {
+      "id": "g-contract",
+      "source": "gallery",
+      "name": "contract",
+      "line": "^[literal_parser]{\n  source = \"Spw stays readable.\"\n  proof = #[tokens, ast, diagnostics]\n  ~<authority>\"spw-workbench\"\n}"
+    },
+    {
+      "id": "g-navigation",
+      "source": "gallery",
+      "name": "navigation",
+      "line": "#>navigation[section]{\n  @reads=\"authored expression\"\n  @emits=#[label, syntax_wake]\n}"
+    },
+    {
+      "id": "g-diagnostic",
+      "source": "gallery",
+      "name": "diagnostic",
+      "line": "proof § unsupported_character"
+    },
+    {
+      "id": "g-beans",
+      "source": "gallery",
+      "name": "beans combinatorics",
+      "line": "<beans>\n[beans]\n{beans}\n(beans)\nbeans.<\n<beans>#\nbeans.[stew]"
+    },
+    {
+      "id": "g-practices",
+      "source": "gallery",
+      "name": "practices",
+      "line": "practice[software]{business}\npractice[learning]{text}\npractice[illustration]{folios}\npractice[design]{components}\npractice[oration]{comedy}\npractice[organization]{sprint}"
+    },
+    {
+      "id": "g-sync",
+      "source": "gallery",
+      "name": "language sync",
+      "line": "language[sync]{\n  ~<god>\n  ~<ideas>\n}"
+    },
+    {
+      "id": "g-film",
+      "source": "gallery",
+      "name": "film",
+      "line": "practice[film]{release}\n~<shot>\n~<voice>"
+    },
+    {
+      "id": "g-year",
+      "source": "gallery",
+      "name": "year mix",
+      "line": "budget[year]{income.skill.expectation}\ncareer[year]{heard.unknown}"
+    },
+    {
+      "id": "g-v04_claims",
+      "source": "gallery",
+      "name": "v0.4 claims",
+      "line": "^\"claim_probe_synthesis\"{\n  hypothesis = \"Every claim declares its falsification criteria.\"\n  spec_ref = ~\"./pillars/claim-probe-syntax.spw\"\n  probe = ?[claim_probes]{ !run{validate_spw} }\n  falsification = \"Any claim without an executable probe is rejected.\"\n}[reg=facet]"
+    },
+    {
+      "id": "g-profiles",
+      "source": "gallery",
+      "name": "profiles",
+      "line": "!:profile \"convention\"\n#>convention_profile[spec]{\n  required_blocks = #[intent, dimensions, validation]\n  fixity = #!stable\n  operation = #!align\n}"
+    },
+    {
+      "id": "g-dot_crawl",
+      "source": "gallery",
+      "name": "dot crawl",
+      "line": "{kitchen}.{prep}.{bake} ~> [loaf]\n(arrival).(settle).(resonate)\nharvest[crop].store[silo].mill[flour]"
+    },
+    {
+      "id": "g-stem_projection",
+      "source": "gallery",
+      "name": "stem projection",
+      "line": ">stem[hero_banner]{\n  copy = \"One root, multiple substrates.\"\n  tokens = #[\"--spw-hero-intensity\", \"--spw-tangibility\"]\n  runtime = \"data-spw-hero-kinetic\"\n  inspect = ~\"#>hero_inspection\"\n}"
+    },
+    {
+      "id": "g-boonhonk",
+      "source": "gallery",
+      "name": "boonhonk genre",
+      "line": "boonhonk[genre]{combine.discover.reward}\nboon[honk]{invite}\nbane[bone]{limit}\nbone[bonk]{hit}\nboon[bane]{cost}\nhonk[bonk]{signal}"
+    },
+    {
+      "id": "g-paths",
+      "source": "gallery",
+      "name": "paths",
+      "line": "paths[grid]{east.north}\ncount[paths]{binomial}"
+    },
+    {
+      "id": "g-gradient",
+      "source": "gallery",
+      "name": "gradient",
+      "line": "field[gradient]{uphill}\nslice[x]{hold.y}\nslice[y]{hold.x}"
+    },
+    {
+      "id": "g-holdings",
+      "source": "gallery",
+      "name": "holdings",
+      "line": "hold[seed.season.table]{identity.boundary.ledger}<policy>\nseed[identity]{render.twice}\nseason[boundary]{no.silent.mint}"
+    },
+    {
+      "id": "g-beat",
+      "source": "gallery",
+      "name": "beat",
+      "line": "beat[unary]{close}<offer>\nbeat[pair]{pieces}<compose>\nbeat[season]{portfolio}<dwell>"
+    },
+    {
+      "id": "r-f1dfe4e7",
+      "source": "routes",
+      "line": "adult[study]{practice}"
+    },
+    {
+      "id": "r-8fa51462",
+      "source": "routes",
+      "line": "atlas[integration]{loop.category.behavior.tool}"
+    },
+    {
+      "id": "r-34835381",
+      "source": "routes",
+      "line": "attention[posture]{self.local.global}"
+    },
+    {
+      "id": "r-11b84cb4",
+      "source": "routes",
+      "line": "brace[containment]{charge;prime;release}"
+    },
+    {
+      "id": "r-08901680",
+      "source": "routes",
+      "line": "cauldron[garden]{hold.grow}"
+    },
+    {
+      "id": "r-86c41bed",
+      "source": "routes",
+      "line": "cauldron[garden]{sow;tend;harvest}"
+    },
+    {
+      "id": "r-d16c5cc9",
+      "source": "routes",
+      "line": "cauldron[garden]{sow;tend;harvest} ~ media[cauldron]{attention;prime;generate}"
+    },
+    {
+      "id": "r-c186c584",
+      "source": "routes",
+      "line": "character[hook]{pressure.voice.proof}"
+    },
+    {
+      "id": "r-4c7b5640",
+      "source": "routes",
+      "line": "climate[reading]{orient.anchor.offer}"
+    },
+    {
+      "id": "r-4fad0a49",
+      "source": "routes",
+      "line": "component[hydration]{canopy.local-system}"
+    },
+    {
+      "id": "r-0a09caaf",
+      "source": "routes",
+      "line": "component[machine]{attention}"
+    },
+    {
+      "id": "r-8fd81268",
+      "source": "routes",
+      "line": "components[discover]{image.route.region}"
+    },
+    {
+      "id": "r-cb4e0397",
+      "source": "routes",
+      "line": "concepts[atlas]{discover.use.extend}"
+    },
+    {
+      "id": "r-7ff30a1b",
+      "source": "routes",
+      "line": "concepts[circulation]{notice;name;connect;practice;return}"
+    },
+    {
+      "id": "r-6f09ecc3",
+      "source": "routes",
+      "line": "concepts[living]{inspect;prime;carry}"
+    },
+    {
+      "id": "r-83bc1a0a",
+      "source": "routes",
+      "line": "css[behavior]{state.charge.gesture}"
+    },
+    {
+      "id": "r-cd08e594",
+      "source": "routes",
+      "line": "culture[context]{substrate;threshold;response}<residue> ~ arc[relation]{input;condition;consequence}<receipt>"
+    },
+    {
+      "id": "r-e4ef05bf",
+      "source": "routes",
+      "line": "handle[field-guide]{mark}"
+    },
+    {
+      "id": "r-d7132227",
+      "source": "routes",
+      "line": "home[hook]{orient}<atlas>"
+    },
+    {
+      "id": "r-e6f488e3",
+      "source": "routes",
+      "line": "home[hook]{software.art.practice}(atlas)<person>"
+    },
+    {
+      "id": "r-51bf5e1c",
+      "source": "routes",
+      "line": "home[hook]{wash}<entry>"
+    },
+    {
+      "id": "r-65e3fc2c",
+      "source": "routes",
+      "line": "home[learning.surface]{route-bridge}"
+    },
+    {
+      "id": "r-ddf097b3",
+      "source": "routes",
+      "line": "home[live]{season.close}(production)<now>"
+    },
+    {
+      "id": "r-92b64bd0",
+      "source": "routes",
+      "line": "home[play]{table}<session>"
+    },
+    {
+      "id": "r-e1a3c0e3",
+      "source": "routes",
+      "line": "home[reader]{patron}"
+    },
+    {
+      "id": "r-e5f051d2",
+      "source": "routes",
+      "line": "home[reading]{craft}<entry>"
+    },
+    {
+      "id": "r-ab2ae992",
+      "source": "routes",
+      "line": "home[reading]{open.sit}"
+    },
+    {
+      "id": "r-cc09d0e1",
+      "source": "routes",
+      "line": "home[studio]{commission}<offer>"
+    },
+    {
+      "id": "r-856696e7",
+      "source": "routes",
+      "line": "home[systems]{parser}<inspect>"
+    },
+    {
+      "id": "r-1c7f2ab7",
+      "source": "routes",
+      "line": "home[takeaway]{handle}"
+    },
+    {
+      "id": "r-93ab177a",
+      "source": "routes",
+      "line": "home[why]{notice}"
+    },
+    {
+      "id": "r-a6a58e6e",
+      "source": "routes",
+      "line": "home[wrap]{rail}"
+    },
+    {
+      "id": "r-9fcefb57",
+      "source": "routes",
+      "line": "image[field]{microcosm.hydrate}"
+    },
+    {
+      "id": "r-ed0de51d",
+      "source": "routes",
+      "line": "kernel[entry]{orient}"
+    },
+    {
+      "id": "r-e4055fc8",
+      "source": "routes",
+      "line": "learning.step[1]{question}"
+    },
+    {
+      "id": "r-002866e9",
+      "source": "routes",
+      "line": "learning.step[2]{artifact}"
+    },
+    {
+      "id": "r-720f3e1f",
+      "source": "routes",
+      "line": "learning.step[3]{transfer}"
+    },
+    {
+      "id": "r-ec505db5",
+      "source": "routes",
+      "line": "library[playable]{role;artifact;evidence}"
+    },
+    {
+      "id": "r-29138c20",
+      "source": "routes",
+      "line": "library[story]{atlas}"
+    },
+    {
+      "id": "r-ca63394d",
+      "source": "routes",
+      "line": "media[cauldron]{attention;prime;generate}"
+    },
+    {
+      "id": "r-75e3c6e4",
+      "source": "routes",
+      "line": "navigation[resonance]{parallel.paths}"
+    },
+    {
+      "id": "r-d3a90b25",
+      "source": "routes",
+      "line": "notice[circulate]{handle}"
+    },
+    {
+      "id": "r-e2c28238",
+      "source": "routes",
+      "line": "occasion[threshold]{celebrate.return}"
+    },
+    {
+      "id": "r-36699fca",
+      "source": "routes",
+      "line": "operator[handle]{address.probe.commit}"
+    },
+    {
+      "id": "r-b7db60bb",
+      "source": "routes",
+      "line": "pantry[loop]{scarcity.substitute.trade}"
+    },
+    {
+      "id": "r-416a3cbb",
+      "source": "routes",
+      "line": "privacy[direct]{local}"
+    },
+    {
+      "id": "r-dcef76d1",
+      "source": "routes",
+      "line": "prompt[seed]{inspect.prime.rehearse}<workbench>"
+    },
+    {
+      "id": "r-0c0d957c",
+      "source": "routes",
+      "line": "proof[card]{claim.evidence.action}"
+    },
+    {
+      "id": "r-5374f71f",
+      "source": "routes",
+      "line": "recipe[category]{technique.scene.prompt}"
+    },
+    {
+      "id": "r-9e2a0ef7",
+      "source": "routes",
+      "line": "resonance[ground]{stable}"
+    },
+    {
+      "id": "r-343ad185",
+      "source": "routes",
+      "line": "resonance[precision]{tune}"
+    },
+    {
+      "id": "r-f13c7a7f",
+      "source": "routes",
+      "line": "resonance[projection]{practice}"
+    },
+    {
+      "id": "r-37fc5523",
+      "source": "routes",
+      "line": "return[change]{welcome}"
+    },
+    {
+      "id": "r-324aa17d",
+      "source": "routes",
+      "line": "return[depth]{novelty.integration}"
+    },
+    {
+      "id": "r-11e14347",
+      "source": "routes",
+      "line": "return[proof]{artifact}"
+    },
+    {
+      "id": "r-78a21404",
+      "source": "routes",
+      "line": "return[wonder]{neighbor}"
+    },
+    {
+      "id": "r-3f5c8f6a",
+      "source": "routes",
+      "line": "reward[collection]{notice}"
+    },
+    {
+      "id": "r-32520dea",
+      "source": "routes",
+      "line": "reward[cross-link]{transfer}"
+    },
+    {
+      "id": "r-9c56ce83",
+      "source": "routes",
+      "line": "reward[next.step]{action}"
+    },
+    {
+      "id": "r-9cf7dcf3",
+      "source": "routes",
+      "line": "reward[rediscovery]{search}"
+    },
+    {
+      "id": "r-8a467f27",
+      "source": "routes",
+      "line": "reward[spell]{replay}"
+    },
+    {
+      "id": "r-b6d13ca5",
+      "source": "routes",
+      "line": "runtime[noscript]{fallback}"
+    },
+    {
+      "id": "r-458a01ce",
+      "source": "routes",
+      "line": "screenshot[record]{ask,offer,agreement,reference}"
+    },
+    {
+      "id": "r-fb86126d",
+      "source": "routes",
+      "line": "sticker[motif]{theme.pressure}"
+    },
+    {
+      "id": "r-92e7eea0",
+      "source": "routes",
+      "line": "svg[behavior]{path.field.handoff}"
+    },
+    {
+      "id": "r-89d5be31",
+      "source": "routes",
+      "line": "technique[list]{inventory}"
+    },
+    {
+      "id": "r-06de3b4d",
+      "source": "routes",
+      "line": "tool[loop]{local;seed;export}"
+    },
+    {
+      "id": "r-1c39db5d",
+      "source": "routes",
+      "line": "town[atlas]{place.rule.guide}"
+    },
+    {
+      "id": "r-b769ca35",
+      "source": "routes",
+      "line": "website[practice]{semantic}"
+    },
+    {
+      "id": "r-8651490e",
+      "source": "routes",
+      "line": "?topics{kin}<learn>"
+    },
+    {
+      "id": "r-755c824b",
+      "source": "routes",
+      "line": "(look){stage}<learn>"
+    },
+    {
+      "id": "r-ba001ce4",
+      "source": "routes",
+      "line": "about[hook]{orient}<hospitality>"
+    },
+    {
+      "id": "r-6357ac8d",
+      "source": "routes",
+      "line": "about[hospitality]{recipe.venue.learning}(table)<horizon>"
+    },
+    {
+      "id": "r-492532a8",
+      "source": "routes",
+      "line": "about[kernel]{identity.compass}<person>"
+    },
+    {
+      "id": "r-4563321a",
+      "source": "routes",
+      "line": "about[lattice]{code.print.lore.artifact}<crossing>"
+    },
+    {
+      "id": "r-13d212a2",
+      "source": "routes",
+      "line": "about[reading]{open.sit}"
+    },
+    {
+      "id": "r-cea5485a",
+      "source": "routes",
+      "line": "about[reading]{open.sit}<display>"
+    },
+    {
+      "id": "r-c42a42ca",
+      "source": "routes",
+      "line": "about[reading]{software.art}(person)<lattice>"
+    },
+    {
+      "id": "r-ebe5569e",
+      "source": "routes",
+      "line": "about[wrap]{rail}"
+    },
+    {
+      "id": "r-4da10cbb",
+      "source": "routes",
+      "line": "architecture[contract]{public}"
+    },
+    {
+      "id": "r-b6e948b8",
+      "source": "routes",
+      "line": "architecture[kernel]{stable}"
+    },
+    {
+      "id": "r-de23ed95",
+      "source": "routes",
+      "line": "architecture[lattice]{varied}"
+    },
+    {
+      "id": "r-b217b200",
+      "source": "routes",
+      "line": "architecture[projection]{local}"
+    },
+    {
+      "id": "r-244bc297",
+      "source": "routes",
+      "line": "attention[action]{conversion}"
+    },
+    {
+      "id": "r-af2937aa",
+      "source": "routes",
+      "line": "attention[aerodynamics]{communication}"
+    },
+    {
+      "id": "r-248a2fad",
+      "source": "routes",
+      "line": "attention[analytical]{convert.name.decide}<asset>"
+    },
+    {
+      "id": "r-a58078d1",
+      "source": "routes",
+      "line": "attention[output]{assets}"
+    },
+    {
+      "id": "r-211ec289",
+      "source": "routes",
+      "line": "attention[practice]{compounding}"
+    },
+    {
+      "id": "r-752e7c81",
+      "source": "routes",
+      "line": "attention[volume]{lattice}"
+    },
+    {
+      "id": "r-e9dc9b1e",
+      "source": "routes",
+      "line": "bane[bone]{limit}"
+    },
+    {
+      "id": "r-8806f8e7",
+      "source": "routes",
+      "line": "bane[constraint]{limit}"
+    },
+    {
+      "id": "r-3a51f434",
+      "source": "routes",
+      "line": "bone[bonk]{hit}"
+    },
+    {
+      "id": "r-0b62342c",
+      "source": "routes",
+      "line": "bone[skeleton]{persist}"
+    },
+    {
+      "id": "r-5bba5c09",
+      "source": "routes",
+      "line": "bonk[event]{change}"
+    },
+    {
+      "id": "r-c9b8efaf",
+      "source": "routes",
+      "line": "boon[arrival]{invite}"
+    },
+    {
+      "id": "r-3da65bbc",
+      "source": "routes",
+      "line": "boon[bane]{cost}"
+    },
+    {
+      "id": "r-1468ec72",
+      "source": "routes",
+      "line": "boon[crown]{pearl}<valence>"
+    },
+    {
+      "id": "r-a3625e3a",
+      "source": "routes",
+      "line": "boon[honk]{invite}"
+    },
+    {
+      "id": "r-5e3f3470",
+      "source": "routes",
+      "line": "boonhonk[genre]{travel}"
+    },
+    {
+      "id": "r-48fe416c",
+      "source": "routes",
+      "line": "career[direction]{staff}"
+    },
+    {
+      "id": "r-ac370193",
+      "source": "routes",
+      "line": "claim[meaning]{relation;witness;check}<receipt>"
+    },
+    {
+      "id": "r-7fbd396c",
+      "source": "routes",
+      "line": "direction[personal]{discipline}"
+    },
+    {
+      "id": "r-0ae2c938",
+      "source": "routes",
+      "line": "discipline[website]{tangible}"
+    },
+    {
+      "id": "r-5c195378",
+      "source": "routes",
+      "line": "dropout[reason]{mismatch}"
+    },
+    {
+      "id": "r-fff0562a",
+      "source": "routes",
+      "line": "experience[software]{frontend}"
+    },
+    {
+      "id": "r-518ac8cf",
+      "source": "routes",
+      "line": "factoid[discovery]{material.process.screenshot}"
+    },
+    {
+      "id": "r-d9ffc0f3",
+      "source": "routes",
+      "line": "honk[bonk]{signal}"
+    },
+    {
+      "id": "r-fb2d0847",
+      "source": "routes",
+      "line": "honk[signal]{resonance}"
+    },
+    {
+      "id": "r-c5dc6291",
+      "source": "routes",
+      "line": "hospitality[modality]{extension}"
+    },
+    {
+      "id": "r-7a6f1ac7",
+      "source": "routes",
+      "line": "hospitality[restaurant]{horizon}"
+    },
+    {
+      "id": "r-f1633eea",
+      "source": "routes",
+      "line": "hospitality[system]{readable}"
+    },
+    {
+      "id": "r-481a7b52",
+      "source": "routes",
+      "line": "index[navigational]{question.route}<register>"
+    },
+    {
+      "id": "r-05e3d466",
+      "source": "routes",
+      "line": "kernel[about]{orient}"
+    },
+    {
+      "id": "r-d1a6d630",
+      "source": "routes",
+      "line": "kernel[threshold]{context.re_enter}<revisit>"
+    },
+    {
+      "id": "r-1e0463fc",
+      "source": "routes",
+      "line": "knowledge[work]{economics}"
+    },
+    {
+      "id": "r-1f8efdec",
+      "source": "routes",
+      "line": "language[sync]{synchronization}"
+    },
+    {
+      "id": "r-fcf3a840",
+      "source": "routes",
+      "line": "narrative[topography]{skim}"
+    },
+    {
+      "id": "r-64b04546",
+      "source": "routes",
+      "line": "practice[design]{components}"
+    },
+    {
+      "id": "r-b1454b53",
+      "source": "routes",
+      "line": "practice[film]{release}"
+    },
+    {
+      "id": "r-b613d8d0",
+      "source": "routes",
+      "line": "practice[illustration]{folios}"
+    },
+    {
+      "id": "r-af5a6f6e",
+      "source": "routes",
+      "line": "practice[learning]{founding}"
+    },
+    {
+      "id": "r-ec95a1fc",
+      "source": "routes",
+      "line": "practice[learning]{language}"
+    },
+    {
+      "id": "r-7aef8477",
+      "source": "routes",
+      "line": "practice[learning]{sciences}"
+    },
+    {
+      "id": "r-29c68f01",
+      "source": "routes",
+      "line": "practice[oration]{comedy}"
+    },
+    {
+      "id": "r-1adb7d76",
+      "source": "routes",
+      "line": "practice[organization]{creative}"
+    },
+    {
+      "id": "r-e618329d",
+      "source": "routes",
+      "line": "practice[oscillation]{decision}"
+    },
+    {
+      "id": "r-8871a1aa",
+      "source": "routes",
+      "line": "practice[play]{museum}"
+    },
+    {
+      "id": "r-8b2f5f7c",
+      "source": "routes",
+      "line": "practice[rhythm]{pacing}"
+    },
+    {
+      "id": "r-d7f59245",
+      "source": "routes",
+      "line": "practice[software]{business}"
+    },
+    {
+      "id": "r-41e2d522",
+      "source": "routes",
+      "line": "practice[software]{engineering}"
+    },
+    {
+      "id": "r-e382289b",
+      "source": "routes",
+      "line": "practice[software]{founding}"
+    },
+    {
+      "id": "r-c9ce989f",
+      "source": "routes",
+      "line": "practice[software]{framework}"
+    },
+    {
+      "id": "r-5e077fbb",
+      "source": "routes",
+      "line": "practice[software]{frontend}"
+    },
+    {
+      "id": "r-ca22f527",
+      "source": "routes",
+      "line": "practice[software]{meditation}"
+    },
+    {
+      "id": "r-b480ea98",
+      "source": "routes",
+      "line": "return[context]{changed}"
+    },
+    {
+      "id": "r-dcfa6b9e",
+      "source": "routes",
+      "line": "return[practice]{changed}"
+    },
+    {
+      "id": "r-dee0b698",
+      "source": "routes",
+      "line": "return[wonder]{changed}"
+    },
+    {
+      "id": "r-535959b8",
+      "source": "routes",
+      "line": "rooms{travel}<navigate>"
+    },
+    {
+      "id": "r-03146dbb",
+      "source": "routes",
+      "line": "routing[genre]{transformation}"
+    },
+    {
+      "id": "r-7784d76c",
+      "source": "routes",
+      "line": "school[relief]{language}"
+    },
+    {
+      "id": "r-648b0ee3",
+      "source": "routes",
+      "line": "seed[lore]{publish}"
+    },
+    {
+      "id": "r-ec2603b6",
+      "source": "routes",
+      "line": "seed[package]{travel}"
+    },
+    {
+      "id": "r-38f2d904",
+      "source": "routes",
+      "line": "seed[print]{hold}"
+    },
+    {
+      "id": "r-3685e84b",
+      "source": "routes",
+      "line": "seed[texture]{feel}"
+    },
+    {
+      "id": "r-9589fcdd",
+      "source": "routes",
+      "line": "systems[legibility]{inspection}"
+    },
+    {
+      "id": "r-71e727f7",
+      "source": "routes",
+      "line": "systems[output]{architecture}"
+    },
+    {
+      "id": "r-6bb7d22b",
+      "source": "routes",
+      "line": "systems[relevance]{adaptation}"
+    },
+    {
+      "id": "r-fc5c57d5",
+      "source": "routes",
+      "line": "systems[workbench]{kernel}"
+    },
+    {
+      "id": "r-5426ccb5",
+      "source": "routes",
+      "line": "trajectory[practical]{integration}"
+    },
+    {
+      "id": "r-f6573630",
+      "source": "routes",
+      "line": "website[blog]{interpretation}"
+    },
+    {
+      "id": "r-2a5f858b",
+      "source": "routes",
+      "line": "website[craft]{editorial}"
+    },
+    {
+      "id": "r-0fe69989",
+      "source": "routes",
+      "line": "website[home]{orientation}"
+    },
+    {
+      "id": "r-fb15096a",
+      "source": "routes",
+      "line": "website[play]{experimentation}"
+    },
+    {
+      "id": "r-15ea4e1e",
+      "source": "routes",
+      "line": "website[services]{conversion}"
+    },
+    {
+      "id": "r-50cbbdba",
+      "source": "routes",
+      "line": "website[software]{depth}"
+    },
+    {
+      "id": "r-9dd0fba4",
+      "source": "routes",
+      "line": "work[method]{care}"
+    },
+    {
+      "id": "r-cdb0da25",
+      "source": "routes",
+      "line": "years[record]{paper}<path>"
+    },
+    {
+      "id": "r-c6308c3d",
+      "source": "routes",
+      "line": "doodle[table]{artifact}<show>"
+    },
+    {
+      "id": "r-f0a2663b",
+      "source": "routes",
+      "line": "folio[table]{issue}"
+    },
+    {
+      "id": "r-4aad8557",
+      "source": "routes",
+      "line": "seed[nebula]{husk}<series>"
+    },
+    {
+      "id": "r-4970b43e",
+      "source": "routes",
+      "line": "series[home]{season}"
+    },
+    {
+      "id": "r-f091bcc7",
+      "source": "routes",
+      "line": "show[table]{seed.close}"
+    },
+    {
+      "id": "r-a74fa036",
+      "source": "routes",
+      "line": "bin[feedstock]{cullet,grog,fiber}"
+    },
+    {
+      "id": "r-47dfce9a",
+      "source": "routes",
+      "line": "board[workshop]{mill.laminate.cure}"
+    },
+    {
+      "id": "r-ae09a013",
+      "source": "routes",
+      "line": "quest[agent]{construct.tool}"
+    },
+    {
+      "id": "r-e6ea2f42",
+      "source": "routes",
+      "line": "quest[agent]{try.check.refuse}(sensor)<map>"
+    },
+    {
+      "id": "r-49e52643",
+      "source": "routes",
+      "line": "quest[install]{choose.copy.run}(root)<doctor>"
+    },
+    {
+      "id": "r-b5a55b98",
+      "source": "routes",
+      "line": "quest[neighbor]{path.grain}<texture>"
+    },
+    {
+      "id": "r-778e1369",
+      "source": "routes",
+      "line": "quest[spw]{mount.doctor.guide}"
+    },
+    {
+      "id": "r-df2680c9",
+      "source": "routes",
+      "line": "quest[spw]{mount.doctor.stop}<guide>"
+    },
+    {
+      "id": "r-3cf4781c",
+      "source": "routes",
+      "line": "quest[start]{choose.copy.run}(root)<doctor>"
+    },
+    {
+      "id": "r-6b0c3e11",
+      "source": "routes",
+      "line": "quest[start]{shell.claude.codex}<mount>"
+    },
+    {
+      "id": "r-5b9ab304",
+      "source": "routes",
+      "line": "~prompt[address]{material.relation.ladder}<midjourney>"
+    },
+    {
+      "id": "r-c4de67a4",
+      "source": "routes",
+      "line": "studio[material]{address.ladder.pivot}"
+    },
+    {
+      "id": "r-3260e6cf",
+      "source": "routes",
+      "line": "periodical[pi]{issue.figure.uses}"
+    },
+    {
+      "id": "r-1253153c",
+      "source": "routes",
+      "line": "wap[periodical]{pi.pie.e}(issue)<record>"
+    },
+    {
+      "id": "r-fb3e17a9",
+      "source": "routes",
+      "line": "plans[hook]{enter;inspect;continue}(door)<route>"
+    },
+    {
+      "id": "r-195455d6",
+      "source": "routes",
+      "line": "plans[hook]{horizons.verbs}<strategic>"
+    },
+    {
+      "id": "r-61bae51d",
+      "source": "routes",
+      "line": "plans[production]{seed.frame.anchor}<strategic>"
+    },
+    {
+      "id": "r-7f474ee7",
+      "source": "routes",
+      "line": "blog[hook]{kernel.fragments}<editorial>"
+    },
+    {
+      "id": "r-41a9d21f",
+      "source": "routes",
+      "line": "card[ask]{need,deadline,budget}"
+    },
+    {
+      "id": "r-2657eb95",
+      "source": "routes",
+      "line": "card[catalyst]{claim;state;evidence}<next>"
+    },
+    {
+      "id": "r-986c14fc",
+      "source": "routes",
+      "line": "card[consensus]{agreement,status,participants}"
+    },
+    {
+      "id": "r-6f253498",
+      "source": "routes",
+      "line": "card[membership]{role,tier,practice}"
+    },
+    {
+      "id": "r-a77b3dc7",
+      "source": "routes",
+      "line": "card[offer]{provide,terms,capacity}"
+    },
+    {
+      "id": "r-5217af63",
+      "source": "routes",
+      "line": "card[pledge]{support,intent,continuity}"
+    },
+    {
+      "id": "r-0b77018c",
+      "source": "routes",
+      "line": "card[reference]{source,citation,revisit}"
+    },
+    {
+      "id": "r-64214252",
+      "source": "routes",
+      "line": "?unsure[notice]<myself>"
+    },
+    {
+      "id": "r-548ebdf5",
+      "source": "routes",
+      "line": "care[handle]{choose.fill.say.type}<form>"
+    },
+    {
+      "id": "r-1d35310c",
+      "source": "routes",
+      "line": "care[handle]{state.practice.toward.witness}<form>"
+    },
+    {
+      "id": "r-b57ee488",
+      "source": "routes",
+      "line": "care[hook]{stabilize}<protocol>"
+    },
+    {
+      "id": "r-a0e11ae3",
+      "source": "routes",
+      "line": "contact[hook]{intake}<register>"
+    },
+    {
+      "id": "r-b84cca3b",
+      "source": "routes",
+      "line": "contact[inquiry]{name.context.need.constraint}"
+    },
+    {
+      "id": "r-7a382488",
+      "source": "routes",
+      "line": "coordination[hook]{roles}<loop>"
+    },
+    {
+      "id": "r-342b0689",
+      "source": "routes",
+      "line": "learning[now]{together}"
+    },
+    {
+      "id": "r-32c198dc",
+      "source": "routes",
+      "line": "curriculum[hook]{learn}<surface>"
+    },
+    {
+      "id": "r-50a2581e",
+      "source": "routes",
+      "line": "curriculum[map]{mechanism.analogy.boundary}"
+    },
+    {
+      "id": "r-c25ceab8",
+      "source": "routes",
+      "line": "curriculum[overnight]{expect.check}(question)<note>"
+    },
+    {
+      "id": "r-e13d810f",
+      "source": "routes",
+      "line": "bench[live]{mounted.changing.combining}<reader>"
+    },
+    {
+      "id": "r-ee349d47",
+      "source": "routes",
+      "line": "bench[live]{runtime.root.combinations}<readout>"
+    },
+    {
+      "id": "r-932fde81",
+      "source": "routes",
+      "line": "byproduct[component]{recover.value} ~ sauce[byproduct]{recover.value}"
+    },
+    {
+      "id": "r-d87829f5",
+      "source": "routes",
+      "line": "color[resonance]{contrast.flavor.state}"
+    },
+    {
+      "id": "r-411efb62",
+      "source": "routes",
+      "line": "component-specimen[message-surface]{build.tune.serialize}"
+    },
+    {
+      "id": "r-cd506ef6",
+      "source": "routes",
+      "line": "component-specimen[message-surface]{environment.variant.behavior.posture}"
+    },
+    {
+      "id": "r-b8f0fa17",
+      "source": "routes",
+      "line": "component[resonance]{practice.with.models}"
+    },
+    {
+      "id": "r-680d0d69",
+      "source": "routes",
+      "line": "component[technique]{list.character.scene}"
+    },
+    {
+      "id": "r-4d1b283c",
+      "source": "routes",
+      "line": "copy[render]{question.live}<measure>"
+    },
+    {
+      "id": "r-c838a780",
+      "source": "routes",
+      "line": "design[worktable]{slots.kinds.contracts}(route)<part>"
+    },
+    {
+      "id": "r-f3e99f29",
+      "source": "routes",
+      "line": "emulsion[interface]{bind.unlike}"
+    },
+    {
+      "id": "r-85551076",
+      "source": "routes",
+      "line": "interface[field-guide]{handle.not.widget}"
+    },
+    {
+      "id": "r-eba2a729",
+      "source": "routes",
+      "line": "light[component]{stage.reveal}"
+    },
+    {
+      "id": "r-68c71814",
+      "source": "routes",
+      "line": "method-ecology[layout]{pack.reflow.settle}"
+    },
+    {
+      "id": "r-1d3f39f7",
+      "source": "routes",
+      "line": "provision[component]{batch.reuse.extend}"
+    },
+    {
+      "id": "r-01a3c2f7",
+      "source": "routes",
+      "line": "reduction[copy]{compress.signal}"
+    },
+    {
+      "id": "r-16f98d4e",
+      "source": "routes",
+      "line": "render[ladder]{root.frame.component.token}<probe>"
+    },
+    {
+      "id": "r-c0308c7e",
+      "source": "routes",
+      "line": "runtime[design]{mounted}<page>"
+    },
+    {
+      "id": "r-5c1b3747",
+      "source": "routes",
+      "line": "service[component]{test.in.company}"
+    },
+    {
+      "id": "r-b21c735e",
+      "source": "routes",
+      "line": "specimen[calm]{soft.rest.split}"
+    },
+    {
+      "id": "r-3a3cfdaf",
+      "source": "routes",
+      "line": "theatre[lighting]{stage.material.behavior}"
+    },
+    {
+      "id": "r-c82bc54a",
+      "source": "routes",
+      "line": "accessibility[discipline]{meaning,operability}"
+    },
+    {
+      "id": "r-5c363398",
+      "source": "routes",
+      "line": "affordance[attribute]{invites;commit}"
+    },
+    {
+      "id": "r-063b5680",
+      "source": "routes",
+      "line": "affordance[spec]{orient.read.tune.act}<field>"
+    },
+    {
+      "id": "r-3d1109c2",
+      "source": "routes",
+      "line": "card[pair]{subject;caption;frame}"
+    },
+    {
+      "id": "r-6989d0b5",
+      "source": "routes",
+      "line": "specimen[preview]{source,crop,caption,frame}"
+    },
+    {
+      "id": "r-cc1cae6f",
+      "source": "routes",
+      "line": "bench_a[reading]{open.sit}"
+    },
+    {
+      "id": "r-25887bdc",
+      "source": "routes",
+      "line": "bench_b[reading]{open.sit}"
+    },
+    {
+      "id": "r-cbe32ca1",
+      "source": "routes",
+      "line": "bench_c[reading]{open.sit}"
+    },
+    {
+      "id": "r-8e9043f1",
+      "source": "routes",
+      "line": "bridge[route]{one.handle.away}"
+    },
+    {
+      "id": "r-0fdf2496",
+      "source": "routes",
+      "line": "builder[character-card]{slot.identity}"
+    },
+    {
+      "id": "r-2bc0a637",
+      "source": "routes",
+      "line": "builder[living-component]{tune.serialize}"
+    },
+    {
+      "id": "r-6d1e5177",
+      "source": "routes",
+      "line": "builder[profile]{context.surface}"
+    },
+    {
+      "id": "r-78e8eafb",
+      "source": "routes",
+      "line": "builder[prompt-packet]{material.image}"
+    },
+    {
+      "id": "r-066141f9",
+      "source": "routes",
+      "line": "builder[proof-card]{keep.share}"
+    },
+    {
+      "id": "r-69d313ea",
+      "source": "routes",
+      "line": "builder[svg-specimen]{diagram.capture}"
+    },
+    {
+      "id": "r-037c68ef",
+      "source": "routes",
+      "line": "card[reason]{produce.artifact}"
+    },
+    {
+      "id": "r-a7d6ea43",
+      "source": "routes",
+      "line": "collaboration[component]{name.surface}"
+    },
+    {
+      "id": "r-e2c02508",
+      "source": "routes",
+      "line": "component[spw-serialization]{expand.with.context}"
+    },
+    {
+      "id": "r-c005a45d",
+      "source": "routes",
+      "line": "components[hook]{anatomy}<kit>"
+    },
+    {
+      "id": "r-70e4fd83",
+      "source": "routes",
+      "line": "components[machine]{size;name;card;chip}(desk)<attention>"
+    },
+    {
+      "id": "r-5edbe68d",
+      "source": "routes",
+      "line": "components[specimen]{invitation;operator;handoff}(threshold)<prose>"
+    },
+    {
+      "id": "r-786bc54d",
+      "source": "routes",
+      "line": "emulsion[component]{bind.unlike}"
+    },
+    {
+      "id": "r-5e0aa77a",
+      "source": "routes",
+      "line": "ferment[component]{conditions.evolve}"
+    },
+    {
+      "id": "r-2e5b4fba",
+      "source": "routes",
+      "line": "figure[mascot]{guide.vocabulary}"
+    },
+    {
+      "id": "r-81ed5b29",
+      "source": "routes",
+      "line": "frame[landing]{orient.next}"
+    },
+    {
+      "id": "r-750ce155",
+      "source": "routes",
+      "line": "glossary[component]{return.hub}"
+    },
+    {
+      "id": "r-83e5953c",
+      "source": "routes",
+      "line": "lens[seat]{chassis.row.silent}<compare>"
+    },
+    {
+      "id": "r-8018aeff",
+      "source": "routes",
+      "line": "lens[seat]{choose}<display>"
+    },
+    {
+      "id": "r-cf07b54b",
+      "source": "routes",
+      "line": "mise[component]{declare.slots}"
+    },
+    {
+      "id": "r-83ec0c56",
+      "source": "routes",
+      "line": "playtest[component]{stress.readability}"
+    },
+    {
+      "id": "r-f1ccfda3",
+      "source": "routes",
+      "line": "reduction[component]{compress.signal}"
+    },
+    {
+      "id": "r-31c0ad36",
+      "source": "routes",
+      "line": "soup[component]{base.integrate.serve}"
+    },
+    {
+      "id": "r-b50dba36",
+      "source": "routes",
+      "line": "specimen-builder[component]{choose.create.carry}"
+    },
+    {
+      "id": "r-80a81af7",
+      "source": "routes",
+      "line": "support[component]{sustain.practice}"
+    },
+    {
+      "id": "r-2728eff0",
+      "source": "routes",
+      "line": "compare[energy]{query.fleet}"
+    },
+    {
+      "id": "r-ae4babf6",
+      "source": "routes",
+      "line": "composition[bundle]{contract}(home)<route>"
+    },
+    {
+      "id": "r-27a45f0b",
+      "source": "routes",
+      "line": "composition[read]{open.sit}"
+    },
+    {
+      "id": "r-c85ac69a",
+      "source": "routes",
+      "line": "density[spec]{balance.measure}<lattice>"
+    },
+    {
+      "id": "r-c91fd386",
+      "source": "routes",
+      "line": "spacing[scales]{density.attributes}"
+    },
+    {
+      "id": "r-d6edf275",
+      "source": "routes",
+      "line": "room[instrument]{question;answer;screenshot}"
+    },
+    {
+      "id": "r-86caeeb2",
+      "source": "routes",
+      "line": "~structure"
+    },
+    {
+      "id": "r-0bac29bf",
+      "source": "routes",
+      "line": "spell[wander]{route.image.chrome}(pocket)<still>"
+    },
+    {
+      "id": "r-d4750ce2",
+      "source": "routes",
+      "line": "spell[wander]{route.image.ink}(wash)<still>"
+    },
+    {
+      "id": "r-62e70e9c",
+      "source": "routes",
+      "line": "spell[wander]{route.image.scan}(lamina)<notice>"
+    },
+    {
+      "id": "r-4d4827ce",
+      "source": "routes",
+      "line": "spell[wander]{route.term.depth}(siblings)<notice>"
+    },
+    {
+      "id": "r-c1551052",
+      "source": "routes",
+      "line": "spell[wander]{route.term.home}(anchor)<notice>"
+    },
+    {
+      "id": "r-6b030a21",
+      "source": "routes",
+      "line": "spell[wander]{route.variant.lens}(seats)<notice>"
+    },
+    {
+      "id": "r-3a03a651",
+      "source": "routes",
+      "line": "spell[wander]{seed.route.hold.cast.notice.upkeep}(bench)<receipt>"
+    },
+    {
+      "id": "r-bb1ed61e",
+      "source": "routes",
+      "line": "spell[wander]{walk.hold.cast.notice}(seed)<walk>"
+    },
+    {
+      "id": "r-d41c28e9",
+      "source": "routes",
+      "line": "svg[factoid]{material.process.capture}"
+    },
+    {
+      "id": "r-cdbd9004",
+      "source": "routes",
+      "line": "atlas[topic]{orient}"
+    },
+    {
+      "id": "r-6753db29",
+      "source": "routes",
+      "line": "posture[build]{craft}"
+    },
+    {
+      "id": "r-afd68ff3",
+      "source": "routes",
+      "line": "posture[play]{probe}"
+    },
+    {
+      "id": "r-88d85a59",
+      "source": "routes",
+      "line": "posture[stabilize]{baseline}"
+    },
+    {
+      "id": "r-e7280e01",
+      "source": "routes",
+      "line": "posture[study]{model}"
+    },
+    {
+      "id": "r-2db3c9a0",
+      "source": "routes",
+      "line": "return[habit]{portable}"
+    },
+    {
+      "id": "r-58b5ffd0",
+      "source": "routes",
+      "line": "return[habit]{pressure}"
+    },
+    {
+      "id": "r-ef71621c",
+      "source": "routes",
+      "line": "return[habit]{sideways}"
+    },
+    {
+      "id": "r-6a3bc007",
+      "source": "routes",
+      "line": "reward[pattern]{transfer}"
+    },
+    {
+      "id": "r-dd64fe8f",
+      "source": "routes",
+      "line": "reward[question]{narrow}"
+    },
+    {
+      "id": "r-f5c6cadf",
+      "source": "routes",
+      "line": "reward[spell]{repeatable}"
+    },
+    {
+      "id": "r-81f4fa0e",
+      "source": "routes",
+      "line": "symphony[movement]{cadence}"
+    },
+    {
+      "id": "r-0b2626a2",
+      "source": "routes",
+      "line": "topic[systems]{open.sit}"
+    },
+    {
+      "id": "r-cb68f531",
+      "source": "routes",
+      "line": "folio[art]{branch.open}"
+    },
+    {
+      "id": "r-8ab01a56",
+      "source": "routes",
+      "line": "folio[art]{crease.open}"
+    },
+    {
+      "id": "r-62d326f1",
+      "source": "routes",
+      "line": "folio[art]{stack.open}"
+    },
+    {
+      "id": "r-645d6cdd",
+      "source": "routes",
+      "line": "folio[ground]{paper.master.tier}(archive)<scan>"
+    },
+    {
+      "id": "r-3052f5dd",
+      "source": "routes",
+      "line": "folio[hook]{collage.laminate.season}(year)<scan>"
+    },
+    {
+      "id": "r-4306455d",
+      "source": "routes",
+      "line": "folio[october]{drop.door}<shelf>"
+    },
+    {
+      "id": "r-c0949f7f",
+      "source": "routes",
+      "line": "folio[october]{drop}"
+    },
+    {
+      "id": "r-30e80512",
+      "source": "routes",
+      "line": "folio[release]{question.orient.note}(day_after)<browser>"
+    },
+    {
+      "id": "r-78654169",
+      "source": "routes",
+      "line": "folio[release]{scan.ask}"
+    },
+    {
+      "id": "r-8b174320",
+      "source": "routes",
+      "line": "folio[release]{scan.open.ask}(stack)<card>"
+    },
+    {
+      "id": "r-0397d6b9",
+      "source": "routes",
+      "line": "folio[request]{card}"
+    },
+    {
+      "id": "r-23eb68d0",
+      "source": "routes",
+      "line": "folio[season]{scan.imagine.lineage}(sidecar)<derivative>"
+    },
+    {
+      "id": "r-f9c8898e",
+      "source": "routes",
+      "line": "folio[studio]{collage.laminate.paint}(year)<stack>"
+    },
+    {
+      "id": "r-f8092e58",
+      "source": "routes",
+      "line": "folio[studio]{return}<stack>"
+    },
+    {
+      "id": "r-4117dedf",
+      "source": "routes",
+      "line": "folio[table]{seed.custom}(scene)<order>"
+    },
+    {
+      "id": "r-422354a4",
+      "source": "routes",
+      "line": "panel[faces]{front.back}(two_passes)<pairing>"
+    },
+    {
+      "id": "r-21cb1aed",
+      "source": "routes",
+      "line": "cutout[arrange]{move.rescan}(clear_sheet)<ground>"
+    },
+    {
+      "id": "r-b8e45697",
+      "source": "routes",
+      "line": "folio[ask]{card.reply}<studio>"
+    },
+    {
+      "id": "r-ebab4149",
+      "source": "routes",
+      "line": "folio[october]{scan.open.ask}(five_days)<shelf>"
+    },
+    {
+      "id": "r-4cf1bb32",
+      "source": "routes",
+      "line": "folio[october]{wash.letter.show_through}<shelf>"
+    },
+    {
+      "id": "r-eea71c93",
+      "source": "routes",
+      "line": "folio[order]{scan.open.note}<browser>"
+    },
+    {
+      "id": "r-df5f7ba4",
+      "source": "routes",
+      "line": "folio[return]{rescan.card}(october_04)<shelf>"
+    },
+    {
+      "id": "r-fe0edb4b",
+      "source": "routes",
+      "line": "pad[plan]{pencil.pen.marker}(january)<scratchpad>"
+    },
+    {
+      "id": "r-3aca3bba",
+      "source": "routes",
+      "line": "panel[october]{face.stack}<shelf>"
+    },
+    {
+      "id": "r-ce672cc7",
+      "source": "routes",
+      "line": "dimensional[surface]{open.sit}"
+    },
+    {
+      "id": "r-7bfb0aa3",
+      "source": "routes",
+      "line": "interaction[behavior]{structure,consequences,actions}"
+    },
+    {
+      "id": "r-0c5bab5c",
+      "source": "routes",
+      "line": "directions[compare]{option,suggests,recognize}"
+    },
+    {
+      "id": "r-32e59388",
+      "source": "routes",
+      "line": "material[surface]{press ~> answer}"
+    },
+    {
+      "id": "r-5e2a426e",
+      "source": "routes",
+      "line": "materials[earned]{folio.press.ground}<work>"
+    },
+    {
+      "id": "r-c2ef42b0",
+      "source": "routes",
+      "line": "materials[spec]{paper,glass,matte,field,bioplastic,ledger}<metamaterial>"
+    },
+    {
+      "id": "r-8eb441df",
+      "source": "routes",
+      "line": "operator[force]{press.lens.thread.lift}<material>"
+    },
+    {
+      "id": "r-02fad9a1",
+      "source": "routes",
+      "line": "ornament[map]{author.paint.gate}"
+    },
+    {
+      "id": "r-d36f7357",
+      "source": "routes",
+      "line": "ornament[map]{operator;warmth;collection;drift}(field)<rule>"
+    },
+    {
+      "id": "r-2ec6cd61",
+      "source": "routes",
+      "line": "cauldron[mix]{gather;mix;cast}"
+    },
+    {
+      "id": "r-26c96126",
+      "source": "routes",
+      "line": "cauldron[primed]{gather;mix;cast}"
+    },
+    {
+      "id": "r-a62c9962",
+      "source": "routes",
+      "line": "colors[projected]{handles,resonance,contexts}"
+    },
+    {
+      "id": "r-64096221",
+      "source": "routes",
+      "line": "concept_cluster[render]{light.color.semantic}"
+    },
+    {
+      "id": "r-01780560",
+      "source": "routes",
+      "line": "rail[dimension]{select.read.shift} ~ dimension_rail[concept]{select.read.shift}"
+    },
+    {
+      "id": "r-8702ab01",
+      "source": "routes",
+      "line": "spell[behavior]{repeat.move}"
+    },
+    {
+      "id": "r-006bd947",
+      "source": "routes",
+      "line": "workshop[palette]{resonance.play}"
+    },
+    {
+      "id": "r-aff0131a",
+      "source": "routes",
+      "line": "behavior[tuned]{declare;inspect;explain}"
+    },
+    {
+      "id": "r-4a4c10d0",
+      "source": "routes",
+      "line": "interaction[brace]{prime.local_value}"
+    },
+    {
+      "id": "r-dafe7012",
+      "source": "routes",
+      "line": "runtime[atlas]{family.contract.writes}(stylesheet)<sentence>"
+    },
+    {
+      "id": "r-af4a0010",
+      "source": "routes",
+      "line": "runtime[inoculant]{portable;reversible;transparent}"
+    },
+    {
+      "id": "r-6a4143b0",
+      "source": "routes",
+      "line": "slots[predictable]{frame-card,spw-panel}"
+    },
+    {
+      "id": "r-27d5f1ca",
+      "source": "routes",
+      "line": "slots[spec]{header.meta.body.figure.actions.footer}<anatomy>"
+    },
+    {
+      "id": "r-83c6c85d",
+      "source": "routes",
+      "line": "color[contrast]{field,paper,ink,signal}<token>"
+    },
+    {
+      "id": "r-288380df",
+      "source": "routes",
+      "line": "family[preview]{field,paper,ink,signal}"
+    },
+    {
+      "id": "r-a169077e",
+      "source": "routes",
+      "line": "website[instrument]{thresholds,structure,navigation,interaction}"
+    },
+    {
+      "id": "r-fc9e0e93",
+      "source": "routes",
+      "line": "holiday[threshold]{table;toast;name}<meaning>"
+    },
+    {
+      "id": "r-c3191bd8",
+      "source": "routes",
+      "line": "practice[holiday]{folio;table;recipe;seed}<share>"
+    },
+    {
+      "id": "r-49d074e0",
+      "source": "routes",
+      "line": "season[boundary]{name;version;next}<attention>"
+    },
+    {
+      "id": "r-22cd9852",
+      "source": "routes",
+      "line": "season[holiday]{costuming;table;gift;threshold}<growth>"
+    },
+    {
+      "id": "r-bee7ab0a",
+      "source": "routes",
+      "line": "wonder[holiday]{make;grow;carry}<together>"
+    },
+    {
+      "id": "r-b45c0516",
+      "source": "routes",
+      "line": "costume[sheet]{appeared.affirms.source.stayed.learning}(costuming)<regard>"
+    },
+    {
+      "id": "r-2a65a070",
+      "source": "routes",
+      "line": "costuming[returning]{sheet.voice}<time>"
+    },
+    {
+      "id": "r-68adcb5a",
+      "source": "routes",
+      "line": "way[regard]{appear.affirm.stay.learn}(costuming)<perspective>"
+    },
+    {
+      "id": "r-53959e13",
+      "source": "routes",
+      "line": "loop[behavior]{svg.css.gesture}"
+    },
+    {
+      "id": "r-4531f529",
+      "source": "routes",
+      "line": "loop[character]{hook.sheet.cast} ~ play[character]{hook.sheet.cast}"
+    },
+    {
+      "id": "r-38245c83",
+      "source": "routes",
+      "line": "loop[creative]{prompt.artifact.publish}"
+    },
+    {
+      "id": "r-aa8e538e",
+      "source": "routes",
+      "line": "loop[economics]{budget.trade.sprint}"
+    },
+    {
+      "id": "r-fe52eefd",
+      "source": "routes",
+      "line": "loop[kitchen]{category.scene.host}"
+    },
+    {
+      "id": "r-847cee49",
+      "source": "routes",
+      "line": "loop[reference]{cite.archive.clarify}"
+    },
+    {
+      "id": "r-d11a8bd6",
+      "source": "routes",
+      "line": "membership[coordination]{issue.visit}(return)<shape>"
+    },
+    {
+      "id": "r-5fccbb3c",
+      "source": "routes",
+      "line": "membership[hook]{belong}<register>"
+    },
+    {
+      "id": "r-2dab67bc",
+      "source": "routes",
+      "line": "membership[join]{role.offer}(card)<cycle>"
+    },
+    {
+      "id": "r-64f7a492",
+      "source": "routes",
+      "line": "membership[read]{issue}(near)<shape>"
+    },
+    {
+      "id": "r-4cfb1275",
+      "source": "routes",
+      "line": "membership[return]{depth.loop.evidence}"
+    },
+    {
+      "id": "r-51d69252",
+      "source": "routes",
+      "line": "book[november]{chapters.moments}(writing)<lore>"
+    },
+    {
+      "id": "r-b8eb632c",
+      "source": "routes",
+      "line": "cycle[a]{receipt}(progress)<live>"
+    },
+    {
+      "id": "r-da372849",
+      "source": "routes",
+      "line": "cycle[b]{receipt}(record)<archive>"
+    },
+    {
+      "id": "r-424cef3f",
+      "source": "routes",
+      "line": "cycle[opening]{notice.stay.form}(meditation)<mind>"
+    },
+    {
+      "id": "r-ddba4380",
+      "source": "routes",
+      "line": "now[hook]{season.practice}(production)<tradition>"
+    },
+    {
+      "id": "r-06d96cac",
+      "source": "routes",
+      "line": "now[hook]{sprint.dispatch}<live>"
+    },
+    {
+      "id": "r-d5b0ce94",
+      "source": "routes",
+      "line": "practice[study]{math.art.language}(session)<trace>"
+    },
+    {
+      "id": "r-19b76b6d",
+      "source": "routes",
+      "line": "practice[tiktok]{start.promote.balance.team}(years)<seed>"
+    },
+    {
+      "id": "r-d54e009b",
+      "source": "routes",
+      "line": "sprint[now]{live.dispatch}"
+    },
+    {
+      "id": "r-c5a22045",
+      "source": "routes",
+      "line": "support[input]{change;continuity}<receipt>"
+    },
+    {
+      "id": "r-f932fdbb",
+      "source": "routes",
+      "line": "document[spw]{parse.room.export}<local>"
+    },
+    {
+      "id": "r-92c03253",
+      "source": "routes",
+      "line": "artifact[recipe]{prop.memory}"
+    },
+    {
+      "id": "r-3283d5ca",
+      "source": "routes",
+      "line": "cauldron[pair]{garden.media}"
+    },
+    {
+      "id": "r-2c4574dd",
+      "source": "routes",
+      "line": "garden[clock]{return.season}"
+    },
+    {
+      "id": "r-c3cc5fe6",
+      "source": "routes",
+      "line": "pantry[scene]{resource.choice}"
+    },
+    {
+      "id": "r-2786244b",
+      "source": "routes",
+      "line": "play[catalog]{campaign.tool.not-yet-game}"
+    },
+    {
+      "id": "r-144e8509",
+      "source": "routes",
+      "line": "play[character]{hook.sheet.cast} ~ loop[character]{hook.sheet.cast}"
+    },
+    {
+      "id": "r-deac03e7",
+      "source": "routes",
+      "line": "play[css]{charge.state.cauldron}"
+    },
+    {
+      "id": "r-33c82d0c",
+      "source": "routes",
+      "line": "play[hook]{table.canon}(stage)<orientation>"
+    },
+    {
+      "id": "r-e30936d4",
+      "source": "routes",
+      "line": "play[integration]{recipe.svg.tool.character}"
+    },
+    {
+      "id": "r-8168b11e",
+      "source": "routes",
+      "line": "play[making]{sheet.card.prompt}(table)<studio>"
+    },
+    {
+      "id": "r-b73b9337",
+      "source": "routes",
+      "line": "play[memory]{log.pressure.canon}<recap>"
+    },
+    {
+      "id": "r-8d227689",
+      "source": "routes",
+      "line": "play[orientation]{table.canon.humor}(session)<evidence>"
+    },
+    {
+      "id": "r-6343a0b7",
+      "source": "routes",
+      "line": "play[play]{open.sit}"
+    },
+    {
+      "id": "r-b1bdc115",
+      "source": "routes",
+      "line": "play[play]{open.sit}<display>"
+    },
+    {
+      "id": "r-3430d96a",
+      "source": "routes",
+      "line": "play[recipe]{technique.prop.festival}"
+    },
+    {
+      "id": "r-db472d14",
+      "source": "routes",
+      "line": "play[svg]{bubble.token.silhouette}"
+    },
+    {
+      "id": "r-827bd673",
+      "source": "routes",
+      "line": "play[table]{space.laughter.stakes}<share>"
+    },
+    {
+      "id": "r-46321e67",
+      "source": "routes",
+      "line": "play[wrap]{rail}"
+    },
+    {
+      "id": "r-03e72f5b",
+      "source": "routes",
+      "line": "projection[trig.geometry]{angle.depth}(shared-table)"
+    },
+    {
+      "id": "r-29156aca",
+      "source": "routes",
+      "line": "soup[system]{base.integrate.serve}"
+    },
+    {
+      "id": "r-7e2e5e80",
+      "source": "routes",
+      "line": "?orientation{kin}<learn>"
+    },
+    {
+      "id": "r-60e36caa",
+      "source": "routes",
+      "line": "analog[worldbuilding]{study.play.return}"
+    },
+    {
+      "id": "r-860a6164",
+      "source": "routes",
+      "line": "bonewap[scientist]{trope.magic.invent}"
+    },
+    {
+      "id": "r-2f2b48d7",
+      "source": "routes",
+      "line": "boonhonk[cluster]{pressure.associate.name}"
+    },
+    {
+      "id": "r-33f8dba7",
+      "source": "routes",
+      "line": "boonhonk[genre]{count}"
+    },
+    {
+      "id": "r-489efa7b",
+      "source": "routes",
+      "line": "boonhonk[genre]{harlequin}<mix>"
+    },
+    {
+      "id": "r-a83db268",
+      "source": "routes",
+      "line": "boonhonk[prop]{reward.experiment}"
+    },
+    {
+      "id": "r-ab783dbf",
+      "source": "routes",
+      "line": "boonwap[protagonist]{ar.story.gustation}"
+    },
+    {
+      "id": "r-3a1b94e0",
+      "source": "routes",
+      "line": "boonwap[prototype]{ar.story.restaurant}"
+    },
+    {
+      "id": "r-49afd267",
+      "source": "routes",
+      "line": "cadence[play]{close.reflect.produce}"
+    },
+    {
+      "id": "r-b55fb657",
+      "source": "routes",
+      "line": "canon[promote]{repeat.cite.share}"
+    },
+    {
+      "id": "r-d298d40e",
+      "source": "routes",
+      "line": "cauldron[cluster]{gather.adjacent}"
+    },
+    {
+      "id": "r-905fcc48",
+      "source": "routes",
+      "line": "concept_cluster[story]{name;gather;cast;test;render}"
+    },
+    {
+      "id": "r-57ac334c",
+      "source": "routes",
+      "line": "concept_matrix[palette]{mark.layer.orbit}"
+    },
+    {
+      "id": "r-7fd30aac",
+      "source": "routes",
+      "line": "concept[name]{label.handle}"
+    },
+    {
+      "id": "r-b561241f",
+      "source": "routes",
+      "line": "contact[ask]{next}"
+    },
+    {
+      "id": "r-02c5f8ec",
+      "source": "routes",
+      "line": "crop[clock]{season.return}"
+    },
+    {
+      "id": "r-0042cfa8",
+      "source": "routes",
+      "line": "cycle[release]{object.bind}"
+    },
+    {
+      "id": "r-df6b4308",
+      "source": "routes",
+      "line": "day[monday]{probe.prepare}"
+    },
+    {
+      "id": "r-07140834",
+      "source": "routes",
+      "line": "day[wednesday]{frame.play}"
+    },
+    {
+      "id": "r-49fb975a",
+      "source": "routes",
+      "line": "dimension_rail[concept]{select.read.shift} ~ rail[dimension]{select.read.shift}"
+    },
+    {
+      "id": "r-13185583",
+      "source": "routes",
+      "line": "dish[topic]{make.concrete}"
+    },
+    {
+      "id": "r-a098e154",
+      "source": "routes",
+      "line": "doodle[table]{artifact}"
+    },
+    {
+      "id": "r-48c361a3",
+      "source": "routes",
+      "line": "ferment[magic-system]{conditions.transform}"
+    },
+    {
+      "id": "r-5ba40a02",
+      "source": "routes",
+      "line": "hymenoptera[late_summer]{wasp}"
+    },
+    {
+      "id": "r-f62c24d3",
+      "source": "routes",
+      "line": "image[publish]{caption}"
+    },
+    {
+      "id": "r-9461b5b0",
+      "source": "routes",
+      "line": "image[publishing]{render.session.memory}"
+    },
+    {
+      "id": "r-46251522",
+      "source": "routes",
+      "line": "ink[13]{A}"
+    },
+    {
+      "id": "r-6c6d4291",
+      "source": "routes",
+      "line": "ink[26]{B}"
+    },
+    {
+      "id": "r-289a9c4c",
+      "source": "routes",
+      "line": "ink[31]{C}"
+    },
+    {
+      "id": "r-b5fce341",
+      "source": "routes",
+      "line": "ink[october]{thirty.one}"
+    },
+    {
+      "id": "r-0acad6b4",
+      "source": "routes",
+      "line": "ink[shelf]{scan.caption}"
+    },
+    {
+      "id": "r-8a6a51d0",
+      "source": "routes",
+      "line": "investor[proof]{audience.offer.evidence}"
+    },
+    {
+      "id": "r-e568a5fc",
+      "source": "routes",
+      "line": "joke[prep]{hide.reveal.reuse}"
+    },
+    {
+      "id": "r-35b665c9",
+      "source": "routes",
+      "line": "language_evolution[posture]{linguistics.storytelling.communication}"
+    },
+    {
+      "id": "r-a1da1caa",
+      "source": "routes",
+      "line": "learning[depth]{transfer} ~ rpg[table]{stage}"
+    },
+    {
+      "id": "r-072001e7",
+      "source": "routes",
+      "line": "matrix[concept]{slot.mark.orbit}"
+    },
+    {
+      "id": "r-276641c5",
+      "source": "routes",
+      "line": "mime[faction]{oppose.trigger.protect.person}"
+    },
+    {
+      "id": "r-f7528ea4",
+      "source": "routes",
+      "line": "occasion[specialty]{prepare;celebrate;return}"
+    },
+    {
+      "id": "r-f38f6d1c",
+      "source": "routes",
+      "line": "pie[attention]{background.motion.service}"
+    },
+    {
+      "id": "r-870f0a99",
+      "source": "routes",
+      "line": "promotion[ladder]{scratch;resonance;grammar;canon;publish}"
+    },
+    {
+      "id": "r-73d5d3c7",
+      "source": "routes",
+      "line": "rail[dimension]{select.posture}"
+    },
+    {
+      "id": "r-3b0b1e75",
+      "source": "routes",
+      "line": "render[packet]{light.palette.material}"
+    },
+    {
+      "id": "r-2251c922",
+      "source": "routes",
+      "line": "rpg[orientation]{open.sit}"
+    },
+    {
+      "id": "r-2ebf83da",
+      "source": "routes",
+      "line": "rpg[orientation]{open.sit}<display>"
+    },
+    {
+      "id": "r-790369c6",
+      "source": "routes",
+      "line": "rpg[table]{stage}"
+    },
+    {
+      "id": "r-c63347b4",
+      "source": "routes",
+      "line": "rpg[wrap]{rail}"
+    },
+    {
+      "id": "r-c9a192a1",
+      "source": "routes",
+      "line": "sauce[byproduct]{recover.value}"
+    },
+    {
+      "id": "r-cd8ca7c8",
+      "source": "routes",
+      "line": "service[ritual]{repair.timing}"
+    },
+    {
+      "id": "r-3c8819da",
+      "source": "routes",
+      "line": "snack[vegetable]{weekly.reward}"
+    },
+    {
+      "id": "r-0e09eb86",
+      "source": "routes",
+      "line": "soup[topic]{base.integrate.serve}"
+    },
+    {
+      "id": "r-eb725151",
+      "source": "routes",
+      "line": "spell[projection]{navigate;collect;actualize} ~ link[projection]{navigate;collect;actualize}"
+    },
+    {
+      "id": "r-d25d0b55",
+      "source": "routes",
+      "line": "spell[trope]{cast.consequence}"
+    },
+    {
+      "id": "r-b34fa847",
+      "source": "routes",
+      "line": "storyboard[copy]{panel.layout.handoff}"
+    },
+    {
+      "id": "r-25c54096",
+      "source": "routes",
+      "line": "stranger[name]{one.three}"
+    },
+    {
+      "id": "r-f24e612a",
+      "source": "routes",
+      "line": "streak[spark]{reward.production}"
+    },
+    {
+      "id": "r-3e9e3afa",
+      "source": "routes",
+      "line": "table[late_summer]{sale}"
+    },
+    {
+      "id": "r-a06c34a8",
+      "source": "routes",
+      "line": "topic[rigor]{route.evidence.limit}"
+    },
+    {
+      "id": "r-d3587cea",
+      "source": "routes",
+      "line": "trade[ingredient]{route.character}"
+    },
+    {
+      "id": "r-7bd9fe1a",
+      "source": "routes",
+      "line": "trope[ingredient]{dose.timing.service}"
+    },
+    {
+      "id": "r-ef6f86b3",
+      "source": "routes",
+      "line": "bane[profile]{fail.constrain}"
+    },
+    {
+      "id": "r-6599bf90",
+      "source": "routes",
+      "line": "bone[profile]{stabilize.default}"
+    },
+    {
+      "id": "r-d6e7517b",
+      "source": "routes",
+      "line": "bonk[profile]{experiment.collide}"
+    },
+    {
+      "id": "r-19b524a6",
+      "source": "routes",
+      "line": "boon[profile]{support.reveal}"
+    },
+    {
+      "id": "r-b6b9e80e",
+      "source": "routes",
+      "line": "character[boonhonk]{mix.relationship}"
+    },
+    {
+      "id": "r-129ea455",
+      "source": "routes",
+      "line": "honk[profile]{reward.discovery}"
+    },
+    {
+      "id": "r-98c61ae4",
+      "source": "routes",
+      "line": "profile[character]{mix.disposition}"
+    },
+    {
+      "id": "r-04d6d115",
+      "source": "routes",
+      "line": "containment[attention]{prime.gather}"
+    },
+    {
+      "id": "r-5ba10aaf",
+      "source": "routes",
+      "line": "garden[memory]{mix.tend.plant}"
+    },
+    {
+      "id": "r-1b9ede8f",
+      "source": "routes",
+      "line": "label[world]{remember.become}"
+    },
+    {
+      "id": "r-a2ef010d",
+      "source": "routes",
+      "line": "library[analog]{study.quest.play}"
+    },
+    {
+      "id": "r-5ce17cd2",
+      "source": "routes",
+      "line": "prompt[direct]{curriculum.prime}"
+    },
+    {
+      "id": "r-bcc1d724",
+      "source": "routes",
+      "line": "trail[attention]{follow.replay.share}"
+    },
+    {
+      "id": "r-6692fcf0",
+      "source": "routes",
+      "line": "hymenoptera[late_summer]{keep}"
+    },
+    {
+      "id": "r-dd3210e6",
+      "source": "routes",
+      "line": "wasp[garden]{keep}"
+    },
+    {
+      "id": "r-58ab0bc9",
+      "source": "routes",
+      "line": "world[analog]{promote.test.play}"
+    },
+    {
+      "id": "r-fa7a4d5c",
+      "source": "routes",
+      "line": "world[late_summer]{season}"
+    },
+    {
+      "id": "r-db8311f9",
+      "source": "routes",
+      "line": "projects[lineage]{tag.fit.learner}<record>"
+    },
+    {
+      "id": "r-6e3df767",
+      "source": "routes",
+      "line": "projects[lineage]{year.return}"
+    },
+    {
+      "id": "r-52564a25",
+      "source": "routes",
+      "line": "projects[memory]{open.measure}<person>"
+    },
+    {
+      "id": "r-ef3c48ca",
+      "source": "routes",
+      "line": "site[publish]{page.check}"
+    },
+    {
+      "id": "r-51f72c4b",
+      "source": "routes",
+      "line": "workbench[tool]{parse.report}"
+    },
+    {
+      "id": "r-b559c40f",
+      "source": "routes",
+      "line": "folio[practice]{paint.seal.repaint}<artifact>"
+    },
+    {
+      "id": "r-2cd1b2c6",
+      "source": "routes",
+      "line": "folio[record]{face.piece}"
+    },
+    {
+      "id": "r-94dbe4df",
+      "source": "routes",
+      "line": "folio[release]{scan.record}"
+    },
+    {
+      "id": "r-77c88b0d",
+      "source": "routes",
+      "line": "folio[scan]{hold.season}"
+    },
+    {
+      "id": "r-f38982ca",
+      "source": "routes",
+      "line": "folio[scan]{name.hold}<record>"
+    },
+    {
+      "id": "r-92789d21",
+      "source": "routes",
+      "line": "folio[time]{commit.season}"
+    },
+    {
+      "id": "r-986baaa7",
+      "source": "routes",
+      "line": "quest[invitation]{mark.braces}<door>"
+    },
+    {
+      "id": "r-29f883a7",
+      "source": "routes",
+      "line": "workbench[consumer]{measure.report}<record>"
+    },
+    {
+      "id": "r-598dc60c",
+      "source": "routes",
+      "line": "workbench[lineage]{parser.return}"
+    },
+    {
+      "id": "r-bc11aceb",
+      "source": "routes",
+      "line": "workbench[mount]{parse.run.answer}<tool>"
+    },
+    {
+      "id": "r-e8d1a015",
+      "source": "routes",
+      "line": "workbench[report]{measure.repair}"
+    },
+    {
+      "id": "r-14ebb8ea",
+      "source": "routes",
+      "line": "workbench[time]{commit.day}"
+    },
+    {
+      "id": "r-80f0e07c",
+      "source": "routes",
+      "line": "site[lineage]{framework.page}"
+    },
+    {
+      "id": "r-a8db8161",
+      "source": "routes",
+      "line": "site[practice]{sentence.hold}"
+    },
+    {
+      "id": "r-03fec60d",
+      "source": "routes",
+      "line": "site[practice]{write.measure.claim}<record>"
+    },
+    {
+      "id": "r-2421213c",
+      "source": "routes",
+      "line": "site[surface]{write.publish.check}<person>"
+    },
+    {
+      "id": "r-16dc555a",
+      "source": "routes",
+      "line": "site[time]{commit.day}"
+    },
+    {
+      "id": "r-70854302",
+      "source": "routes",
+      "line": "?cook{kin}<learn>"
+    },
+    {
+      "id": "r-7c6a0cb6",
+      "source": "routes",
+      "line": "agriculture[process]{soil.seed.product.factoid}"
+    },
+    {
+      "id": "r-57b85a85",
+      "source": "routes",
+      "line": "american[cluster]{region.memory.practice}"
+    },
+    {
+      "id": "r-aeaae691",
+      "source": "routes",
+      "line": "appetizer[service]{arrival.preference.skill}"
+    },
+    {
+      "id": "r-180edb09",
+      "source": "routes",
+      "line": "base[batch]{portion.freeze.share}"
+    },
+    {
+      "id": "r-65ff3d55",
+      "source": "routes",
+      "line": "batch[base]{portion.share.freeze}(family-table)"
+    },
+    {
+      "id": "r-c6edb574",
+      "source": "routes",
+      "line": "batch[base]{portion.store.return}"
+    },
+    {
+      "id": "r-8e22718b",
+      "source": "routes",
+      "line": "batch[provisions]"
+    },
+    {
+      "id": "r-fef98862",
+      "source": "routes",
+      "line": "boon[dough]{pearl}<close>"
+    },
+    {
+      "id": "r-4db721a7",
+      "source": "routes",
+      "line": "bread.cheese[occasion]{share.texture.pause}"
+    },
+    {
+      "id": "r-947258a2",
+      "source": "routes",
+      "line": "bread.pastry[culture]{proof.layer.remember}"
+    },
+    {
+      "id": "r-061296f5",
+      "source": "routes",
+      "line": "bread[companion]{carry.share}"
+    },
+    {
+      "id": "r-31bcab76",
+      "source": "routes",
+      "line": "byproduct[alchemy]"
+    },
+    {
+      "id": "r-62dcd9c8",
+      "source": "routes",
+      "line": "byproduct[magic]{recover.realm.character}"
+    },
+    {
+      "id": "r-4d46e0ab",
+      "source": "routes",
+      "line": "byproduct[realm]{recover.magic}"
+    },
+    {
+      "id": "r-c379e385",
+      "source": "routes",
+      "line": "byproduct[realm]{recover.story}"
+    },
+    {
+      "id": "r-f1915300",
+      "source": "routes",
+      "line": "cauldron[recipe]{collect.return.cast}"
+    },
+    {
+      "id": "r-f0b578dd",
+      "source": "routes",
+      "line": "character[art]{context.hydrate.scene}"
+    },
+    {
+      "id": "r-1ef351cc",
+      "source": "routes",
+      "line": "cheese.bread[occasion]{texture.preference.service}"
+    },
+    {
+      "id": "r-736fa4cf",
+      "source": "routes",
+      "line": "cheese[occasion]{sharp.soft.rich}"
+    },
+    {
+      "id": "r-f67b2f46",
+      "source": "routes",
+      "line": "chicagoland[late_summer]{corn}"
+    },
+    {
+      "id": "r-525b7fe8",
+      "source": "routes",
+      "line": "chicagoland[late_summer]{corn}<kitchen>"
+    },
+    {
+      "id": "r-c178036a",
+      "source": "routes",
+      "line": "classic[pivot]{amount.story.screenshot}"
+    },
+    {
+      "id": "r-b578b981",
+      "source": "routes",
+      "line": "cluster[ingredient]{name.recipe}"
+    },
+    {
+      "id": "r-b99fc158",
+      "source": "routes",
+      "line": "compare[benefit]{protein.nitrogen}"
+    },
+    {
+      "id": "r-2d998ce4",
+      "source": "routes",
+      "line": "compare[light]{jar.pond}"
+    },
+    {
+      "id": "r-d1f379f0",
+      "source": "routes",
+      "line": "component[occasion]{update.rhythm.return}"
+    },
+    {
+      "id": "r-3c97ccae",
+      "source": "routes",
+      "line": "corn[snack]{chili}"
+    },
+    {
+      "id": "r-d6fc29f3",
+      "source": "routes",
+      "line": "cuisine[base]{mastery.palette.staple}"
+    },
+    {
+      "id": "r-17dba09a",
+      "source": "routes",
+      "line": "cuisine[taxonomy]{notice.combine.share}"
+    },
+    {
+      "id": "r-0ad06edc",
+      "source": "routes",
+      "line": "culture[context]{input;dose;condition;consequence}(cook)<residue>"
+    },
+    {
+      "id": "r-b4c6cadd",
+      "source": "routes",
+      "line": "culture[neighbors]{hold.inspect}"
+    },
+    {
+      "id": "r-35e34c0b",
+      "source": "routes",
+      "line": "culture[publisher]{generous.precise.gather}<scene>"
+    },
+    {
+      "id": "r-589d6662",
+      "source": "routes",
+      "line": "december[holiday]{close.host.return}"
+    },
+    {
+      "id": "r-b8305df6",
+      "source": "routes",
+      "line": "dialogue[bubble]{intent.timing.repair}"
+    },
+    {
+      "id": "r-800d2bfe",
+      "source": "routes",
+      "line": "etiquette[preference]{behavior.repair}(shared-table)"
+    },
+    {
+      "id": "r-e65393ea",
+      "source": "routes",
+      "line": "expertise[domain]{batch}"
+    },
+    {
+      "id": "r-c789d145",
+      "source": "routes",
+      "line": "expertise[domain]{prep}"
+    },
+    {
+      "id": "r-fb1e1e8d",
+      "source": "routes",
+      "line": "family[nutrition]{plan.preference.recover}"
+    },
+    {
+      "id": "r-328e6631",
+      "source": "routes",
+      "line": "ferment[world-rule]{conditions.transform}"
+    },
+    {
+      "id": "r-6e7518ca",
+      "source": "routes",
+      "line": "garden[system]{season.return}"
+    },
+    {
+      "id": "r-f1ab621e",
+      "source": "routes",
+      "line": "grower[start]{source.exchange.horizon}"
+    },
+    {
+      "id": "r-187bc806",
+      "source": "routes",
+      "line": "halloween[episode]{roast.share.release}<tradition>"
+    },
+    {
+      "id": "r-c60d4da7",
+      "source": "routes",
+      "line": "ingredient[ground]{source.season}"
+    },
+    {
+      "id": "r-5470f87e",
+      "source": "routes",
+      "line": "inline[vocab]{tag.collect.project}"
+    },
+    {
+      "id": "r-b081e136",
+      "source": "routes",
+      "line": "january[coda]{archive.thank.rest}"
+    },
+    {
+      "id": "r-b122cbc1",
+      "source": "routes",
+      "line": "link[projection]{navigate;collect;actualize} ~ spell[projection]{navigate;collect;actualize}"
+    },
+    {
+      "id": "r-64c5bfd2",
+      "source": "routes",
+      "line": "mascot[guide]{garden.vocabulary.wonder}"
+    },
+    {
+      "id": "r-ae3c0893",
+      "source": "routes",
+      "line": "meal.cluster[planning]{list.character.route}"
+    },
+    {
+      "id": "r-4a925e72",
+      "source": "routes",
+      "line": "mediterranean[cluster]{oil.lemon.herb}"
+    },
+    {
+      "id": "r-0bc4a2a6",
+      "source": "routes",
+      "line": "mise[practice]{lower.search.cost}"
+    },
+    {
+      "id": "r-93b892bc",
+      "source": "routes",
+      "line": "mise[presence]"
+    },
+    {
+      "id": "r-c782c9bb",
+      "source": "routes",
+      "line": "name[recipe]{promise.scene}"
+    },
+    {
+      "id": "r-6f21a738",
+      "source": "routes",
+      "line": "november[novel]{draft.episode.release}"
+    },
+    {
+      "id": "r-f7c9e39e",
+      "source": "routes",
+      "line": "october[ink]{mark.gather.halloween}"
+    },
+    {
+      "id": "r-38602398",
+      "source": "routes",
+      "line": "pantry[traveling]{stock.trade.prepare}"
+    },
+    {
+      "id": "r-7e0a7577",
+      "source": "routes",
+      "line": "pastry[attention]{frame.fill.reveal}"
+    },
+    {
+      "id": "r-fe5d73b2",
+      "source": "routes",
+      "line": "peach[late_summer]{yogurt}"
+    },
+    {
+      "id": "r-73afc192",
+      "source": "routes",
+      "line": "pickle[quick]{cucumber}"
+    },
+    {
+      "id": "r-bbe1f7ae",
+      "source": "routes",
+      "line": "pickle[trickster]{acid.reset}"
+    },
+    {
+      "id": "r-602b1038",
+      "source": "routes",
+      "line": "prep[trope]{ingredient.character.dialogue}"
+    },
+    {
+      "id": "r-610c6de5",
+      "source": "routes",
+      "line": "recipe[cook]{mise.timing.execution}"
+    },
+    {
+      "id": "r-4e04c145",
+      "source": "routes",
+      "line": "recipe[cook]{open.sit}"
+    },
+    {
+      "id": "r-58658b0f",
+      "source": "routes",
+      "line": "recipe[cook]{open.sit}<display>"
+    },
+    {
+      "id": "r-db28f784",
+      "source": "routes",
+      "line": "recipe[garden]{soil.companion.season}"
+    },
+    {
+      "id": "r-2cd04e84",
+      "source": "routes",
+      "line": "recipe[genre]{mise.reduce.ferment.share}"
+    },
+    {
+      "id": "r-4d0be869",
+      "source": "routes",
+      "line": "recipe[hospitality]{service.pacing.room}"
+    },
+    {
+      "id": "r-99422f91",
+      "source": "routes",
+      "line": "recipe[theory]{flavor.chemistry.grammar}"
+    },
+    {
+      "id": "r-699b4ea3",
+      "source": "routes",
+      "line": "recipe[wrap]{rail}"
+    },
+    {
+      "id": "r-5ace8ac5",
+      "source": "routes",
+      "line": "recipes[hook]{mise.timing}<cook>"
+    },
+    {
+      "id": "r-5d464624",
+      "source": "routes",
+      "line": "reduction[technique]{concentrate.signal}"
+    },
+    {
+      "id": "r-a3f7a3e6",
+      "source": "routes",
+      "line": "romance[fantasy]{freshen.attention.service}"
+    },
+    {
+      "id": "r-9e7cfd68",
+      "source": "routes",
+      "line": "sauce[batch]{tomato}"
+    },
+    {
+      "id": "r-f6b6e761",
+      "source": "routes",
+      "line": "sauce[byproduct]{recover.value} ~ byproduct[component]{recover.value}"
+    },
+    {
+      "id": "r-0fda8d59",
+      "source": "routes",
+      "line": "sauce[classic]{consistency.pivot.rehearse}"
+    },
+    {
+      "id": "r-8949d680",
+      "source": "routes",
+      "line": "sauce[mediator]{bind.recover}"
+    },
+    {
+      "id": "r-abdc4ff8",
+      "source": "routes",
+      "line": "season[production]{ink.write.release.coda}<tradition>"
+    },
+    {
+      "id": "r-65d64e0b",
+      "source": "routes",
+      "line": "sensory[dimensions]{appetizer.service.bake}"
+    },
+    {
+      "id": "r-000339a3",
+      "source": "routes",
+      "line": "service[repair]"
+    },
+    {
+      "id": "r-ea927c1b",
+      "source": "routes",
+      "line": "service[scene]{company.rhythm}"
+    },
+    {
+      "id": "r-6becca39",
+      "source": "routes",
+      "line": "shopping[list]{ingredient.character.scene}"
+    },
+    {
+      "id": "r-d8fc10d3",
+      "source": "routes",
+      "line": "shopping[list]{plan.character}"
+    },
+    {
+      "id": "r-98409378",
+      "source": "routes",
+      "line": "skillet[late_summer]{zucchini}"
+    },
+    {
+      "id": "r-32c81c3d",
+      "source": "routes",
+      "line": "snack[rotation]{crunch.dip.return}"
+    },
+    {
+      "id": "r-4bde313d",
+      "source": "routes",
+      "line": "snack[vegetable]{weekly.rotation}"
+    },
+    {
+      "id": "r-455f1945",
+      "source": "routes",
+      "line": "social[kitchen]{hosting.grammar}"
+    },
+    {
+      "id": "r-5a1748fe",
+      "source": "routes",
+      "line": "soup[technique]{worthwhile.sequence}(studio-table)"
+    },
+    {
+      "id": "r-d16cefde",
+      "source": "routes",
+      "line": "stock[mentor]{base.memory}"
+    },
+    {
+      "id": "r-33bff098",
+      "source": "routes",
+      "line": "stock[recovery]{bones.trim.simmer}"
+    },
+    {
+      "id": "r-0b865ffd",
+      "source": "routes",
+      "line": "substitute[magic]{modern.fantasy}"
+    },
+    {
+      "id": "r-c72c3924",
+      "source": "routes",
+      "line": "succotash[late_summer]{corn}"
+    },
+    {
+      "id": "r-95aebefc",
+      "source": "routes",
+      "line": "technique[action]{transform.threshold}"
+    },
+    {
+      "id": "r-e71a79f7",
+      "source": "routes",
+      "line": "technique[shopping-list]{prompt.character.scene}"
+    },
+    {
+      "id": "r-b48d81cc",
+      "source": "routes",
+      "line": "texture[variant]{contrast.memory}"
+    },
+    {
+      "id": "r-e605bdb1",
+      "source": "routes",
+      "line": "tradition[hybrid]{host.witness.contribute}"
+    },
+    {
+      "id": "r-3295f58a",
+      "source": "routes",
+      "line": "tradition[local]{cook.table.close}"
+    },
+    {
+      "id": "r-c1415017",
+      "source": "routes",
+      "line": "tradition[remote]{cook.exchange.compare}"
+    },
+    {
+      "id": "r-c9ad2df5",
+      "source": "routes",
+      "line": "weather[wash]{cream.ochre}<mise>"
+    },
+    {
+      "id": "r-6afac324",
+      "source": "routes",
+      "line": "wings[sauce]{technique.contrast}"
+    },
+    {
+      "id": "r-931d2f69",
+      "source": "routes",
+      "line": "ferment[conditions]{expertise.domain}"
+    },
+    {
+      "id": "r-9a462155",
+      "source": "routes",
+      "line": "mise[presence]{expertise.domain}"
+    },
+    {
+      "id": "r-f153df27",
+      "source": "routes",
+      "line": "reduction[essence]{expertise.domain}"
+    },
+    {
+      "id": "r-8fc773f4",
+      "source": "routes",
+      "line": "research[claim]{relation;condition;consequence}<receipt>"
+    },
+    {
+      "id": "r-fc3e39bb",
+      "source": "routes",
+      "line": "research[decide]{ladder.signal.record}"
+    },
+    {
+      "id": "r-173f1b36",
+      "source": "routes",
+      "line": "rpg[portal]{campaign.character_sheet.sessions}"
+    },
+    {
+      "id": "r-10d44c30",
+      "source": "routes",
+      "line": "services[bundle]{art.page.software}(person)<ladder>"
+    },
+    {
+      "id": "r-8175c689",
+      "source": "routes",
+      "line": "services[bundle]{compose.range.send}<product>"
+    },
+    {
+      "id": "r-b6df38c2",
+      "source": "routes",
+      "line": "services[bundle]{record.since}"
+    },
+    {
+      "id": "r-1993519b",
+      "source": "routes",
+      "line": "services[hook]{lanes}<scope>"
+    },
+    {
+      "id": "r-efdb90b5",
+      "source": "routes",
+      "line": "services[lane]{service.product.commission}(ask)<shape>"
+    },
+    {
+      "id": "r-1232fbf4",
+      "source": "routes",
+      "line": "services[register]{software.art}(lane)<product>"
+    },
+    {
+      "id": "r-acc885de",
+      "source": "routes",
+      "line": "beat[gather]{count}<lab>"
+    },
+    {
+      "id": "r-361fd9ca",
+      "source": "routes",
+      "line": "beat[pair]{pieces}<compose>"
+    },
+    {
+      "id": "r-fb108d38",
+      "source": "routes",
+      "line": "beat[precipitate]{rates}<dwell>"
+    },
+    {
+      "id": "r-aca1156d",
+      "source": "routes",
+      "line": "beat[register]{unary.pair}<offer>"
+    },
+    {
+      "id": "r-8b64f6aa",
+      "source": "routes",
+      "line": "beat[season]{portfolio}<dwell>"
+    },
+    {
+      "id": "r-fa241b2e",
+      "source": "routes",
+      "line": "beat[unary.pair.season]{close.pieces.portfolio}<offer>"
+    },
+    {
+      "id": "r-2865f56a",
+      "source": "routes",
+      "line": "beat[unary]{close}<offer>"
+    },
+    {
+      "id": "r-5c275c99",
+      "source": "routes",
+      "line": "creator[beat]{voices.scenes.porch}"
+    },
+    {
+      "id": "r-5149f212",
+      "source": "routes",
+      "line": "creator[offer]{author,illustrator,musician,actor,maker}(land)<season>"
+    },
+    {
+      "id": "r-f59dd83f",
+      "source": "routes",
+      "line": "creator[series]{public.chapters}"
+    },
+    {
+      "id": "r-e013e1da",
+      "source": "routes",
+      "line": "home[series]{seed}<offer>"
+    },
+    {
+      "id": "r-84ba592e",
+      "source": "routes",
+      "line": "ecosystem[orbit]{close,taste,seed,series,referral}(room)<hold>"
+    },
+    {
+      "id": "r-c2df1266",
+      "source": "routes",
+      "line": "orbit[region]{studio.table.lab}<relation>"
+    },
+    {
+      "id": "r-e83a1172",
+      "source": "routes",
+      "line": "region[close]{cadence}<landmark>"
+    },
+    {
+      "id": "r-2586fee2",
+      "source": "routes",
+      "line": "region[lab]{count}<next>"
+    },
+    {
+      "id": "r-d243e736",
+      "source": "routes",
+      "line": "region[orbit]{taste}<note>"
+    },
+    {
+      "id": "r-7d8a1d05",
+      "source": "routes",
+      "line": "region[studio]{beat}<offer>"
+    },
+    {
+      "id": "r-fd59c02d",
+      "source": "routes",
+      "line": "region[table]{figure}<play>"
+    },
+    {
+      "id": "r-a6ea5ddb",
+      "source": "routes",
+      "line": "region[vault]{seed.season.table}<policy>"
+    },
+    {
+      "id": "r-ad3f4807",
+      "source": "routes",
+      "line": "pricing[ladder]{systems}"
+    },
+    {
+      "id": "r-1aace375",
+      "source": "routes",
+      "line": "site[clone]{engine}"
+    },
+    {
+      "id": "r-0c940e85",
+      "source": "routes",
+      "line": "appetizer[service]{arrival.preference.room}"
+    },
+    {
+      "id": "r-506feee0",
+      "source": "routes",
+      "line": "emulsion[technique]{bind.unlike}"
+    },
+    {
+      "id": "r-ce4d5252",
+      "source": "routes",
+      "line": "fermentation[technique]{conditions.evolve}"
+    },
+    {
+      "id": "r-66f89ff1",
+      "source": "routes",
+      "line": "mise[technique]{prepare.slots}"
+    },
+    {
+      "id": "r-062bd90d",
+      "source": "routes",
+      "line": "pedagogy[flavor]{link.metaphor}"
+    },
+    {
+      "id": "r-3cb0dec2",
+      "source": "routes",
+      "line": "reduction[technique]{compress.signal}"
+    },
+    {
+      "id": "r-031db7b4",
+      "source": "routes",
+      "line": "settings[hook]{presets.climate}<observatory>"
+    },
+    {
+      "id": "r-3345101b",
+      "source": "routes",
+      "line": "settings[region-menu]{prepare.reading}"
+    },
+    {
+      "id": "r-cd08fead",
+      "source": "routes",
+      "line": "settings[specimen]{posture.deep-link}"
+    },
+    {
+      "id": "r-00bf4ca2",
+      "source": "routes",
+      "line": "settings[tune]{vocabulary.presentation-content}"
+    },
+    {
+      "id": "r-6eb9e316",
+      "source": "routes",
+      "line": "soup[system]{integrate.leftovers}"
+    },
+    {
+      "id": "r-adf47b44",
+      "source": "routes",
+      "line": "specimen[settings]{tune.link.build}"
+    },
+    {
+      "id": "r-12f86dbc",
+      "source": "routes",
+      "line": "tuning:primary"
+    },
+    {
+      "id": "r-e6d6067f",
+      "source": "routes",
+      "line": "tuning:reference"
+    },
+    {
+      "id": "r-c5730251",
+      "source": "routes",
+      "line": "variant[frame]{weight.density}"
+    },
+    {
+      "id": "r-670dbb3b",
+      "source": "routes",
+      "line": "variant[probe]{measure.bias}"
+    },
+    {
+      "id": "r-363cf2c2",
+      "source": "routes",
+      "line": "variant[ref]{companion.actions}"
+    },
+    {
+      "id": "r-8b4ad0ae",
+      "source": "routes",
+      "line": "loop[budget.pantry]{scarcity.trade.sprint}"
+    },
+    {
+      "id": "r-f4fed450",
+      "source": "routes",
+      "line": "loop[css.gesture]{state.cauldron.learn}"
+    },
+    {
+      "id": "r-44813536",
+      "source": "routes",
+      "line": "loop[image.prompt]{svg.midjourney.scene}"
+    },
+    {
+      "id": "r-f2753f49",
+      "source": "routes",
+      "line": "loop[profile.character]{identity.play.proof}"
+    },
+    {
+      "id": "r-1c0389aa",
+      "source": "routes",
+      "line": "loop[source.parser]{tokens.ast.app}"
+    },
+    {
+      "id": "r-e90b8195",
+      "source": "routes",
+      "line": "proof[parser]{source.tokens.ast}"
+    },
+    {
+      "id": "r-411e24b6",
+      "source": "routes",
+      "line": "career[year]{heard.unknown}"
+    },
+    {
+      "id": "r-43711fe0",
+      "source": "routes",
+      "line": "career[year]{jobs}"
+    },
+    {
+      "id": "r-c22481d8",
+      "source": "routes",
+      "line": "career[year]{sprint}"
+    },
+    {
+      "id": "r-ab6c5bd7",
+      "source": "routes",
+      "line": "character[taxonomy]{navigate.tropes}"
+    },
+    {
+      "id": "r-745630ff",
+      "source": "routes",
+      "line": "capture[route]{still}<seed>"
+    },
+    {
+      "id": "r-ffec72a1",
+      "source": "routes",
+      "line": "daily-vision-seed[journal]{real-life~kernel-tag~prompt-packet~in-world-artifact}"
+    },
+    {
+      "id": "r-8b9aaeca",
+      "source": "routes",
+      "line": "fold[crane]{counter}<share>"
+    },
+    {
+      "id": "r-1f3c1ffb",
+      "source": "routes",
+      "line": "generator-shelf[prompt]{travel.season.compare}"
+    },
+    {
+      "id": "r-26c6ceba",
+      "source": "routes",
+      "line": "identity-ref[character]{silhouette.gesture.prop}"
+    },
+    {
+      "id": "r-69bd8bca",
+      "source": "routes",
+      "line": "image-resource[filter]{concept.role.format}"
+    },
+    {
+      "id": "r-e89cf0cb",
+      "source": "routes",
+      "line": "image-resource[live]{reference.update.inspire}"
+    },
+    {
+      "id": "r-82da6f06",
+      "source": "routes",
+      "line": "image-resource[manifest]{scan.classify.write}"
+    },
+    {
+      "id": "r-4500fa21",
+      "source": "routes",
+      "line": "image-resource[swap]{choose.alt.caption.route}"
+    },
+    {
+      "id": "r-7353c6ca",
+      "source": "routes",
+      "line": "imagine[still]{room}<reading>"
+    },
+    {
+      "id": "r-42fa69ca",
+      "source": "routes",
+      "line": "midjourney[cta]{mine.prompt}"
+    },
+    {
+      "id": "r-7d40bbb6",
+      "source": "routes",
+      "line": "midjourney[cta]{publish.session}"
+    },
+    {
+      "id": "r-e25a77cd",
+      "source": "routes",
+      "line": "midjourney[usage]{practice.volume}"
+    },
+    {
+      "id": "r-680b9287",
+      "source": "routes",
+      "line": "omni-ref[world]{light.motif.rule}"
+    },
+    {
+      "id": "r-7d2124c2",
+      "source": "routes",
+      "line": "orbit[chat]{still}<share>"
+    },
+    {
+      "id": "r-32f93a24",
+      "source": "routes",
+      "line": "prompt-axis[operation]{sustain.mutate.release}"
+    },
+    {
+      "id": "r-e3741ceb",
+      "source": "routes",
+      "line": "prompt-axis[proof]{screenshot.readable}"
+    },
+    {
+      "id": "r-cd08c18c",
+      "source": "routes",
+      "line": "prompt-axis[session]{publish.return}"
+    },
+    {
+      "id": "r-454f1108",
+      "source": "routes",
+      "line": "prompt-axis[substrate]{receive.sustain.mutate}"
+    },
+    {
+      "id": "r-5c70d654",
+      "source": "routes",
+      "line": "share[screenshot]{imagine}<orbit>"
+    },
+    {
+      "id": "r-6ef019d5",
+      "source": "routes",
+      "line": "shotboard[scene]{sequence.camera.caption}"
+    },
+    {
+      "id": "r-78e48ef5",
+      "source": "routes",
+      "line": "slice[seed]{glitch}<variety>"
+    },
+    {
+      "id": "r-ef5a535d",
+      "source": "routes",
+      "line": "style-ref[image]{material.light.palette}"
+    },
+    {
+      "id": "r-2d4b2201",
+      "source": "routes",
+      "line": "literal_parser[source]{tokens.ast.diagnostics.reconstruction}"
+    },
+    {
+      "id": "r-c9d584e7",
+      "source": "routes",
+      "line": "proof[boundary]{works.claims.not_claimed}"
+    },
+    {
+      "id": "r-9a11c959",
+      "source": "routes",
+      "line": "proof[parser]{source;tokens;ast;diagnostics;reconstruction}(browser)<exact>"
+    },
+    {
+      "id": "r-de528032",
+      "source": "routes",
+      "line": "workbench[v04]{claims.profiles.crawl.stems}"
+    },
+    {
+      "id": "r-c76c2bf7",
+      "source": "routes",
+      "line": "?about{kin}<learn>"
+    },
+    {
+      "id": "r-d7a60467",
+      "source": "routes",
+      "line": "andragogy[topics]{portal}"
+    },
+    {
+      "id": "r-1478e6ab",
+      "source": "routes",
+      "line": "biochemistry[topics]{portal}"
+    },
+    {
+      "id": "r-6b12016c",
+      "source": "routes",
+      "line": "blog[interpret]{fragments.wonder.essays}"
+    },
+    {
+      "id": "r-f23dc111",
+      "source": "routes",
+      "line": "care[mentalhealth]{support.continuity.practice}"
+    },
+    {
+      "id": "r-19f0187d",
+      "source": "routes",
+      "line": "cinema[film]{shotlanguage.editing.storyboard}"
+    },
+    {
+      "id": "r-f8cd4bca",
+      "source": "routes",
+      "line": "craft[author]{files.fragments.svg}"
+    },
+    {
+      "id": "r-20353e18",
+      "source": "routes",
+      "line": "design[topography]{layout.palettes.components}"
+    },
+    {
+      "id": "r-ff87330e",
+      "source": "routes",
+      "line": "fields[topics]{portal}"
+    },
+    {
+      "id": "r-d6a98475",
+      "source": "routes",
+      "line": "graphics[renderers]{transforms.shaping.gpu}"
+    },
+    {
+      "id": "r-75bb0d80",
+      "source": "routes",
+      "line": "knowledge[bases]{markdown.notes.curriculum}"
+    },
+    {
+      "id": "r-06c65bba",
+      "source": "routes",
+      "line": "learning[pedagogy]{science.play.depth}"
+    },
+    {
+      "id": "r-61281c02",
+      "source": "routes",
+      "line": "materials[hook]{becoming}"
+    },
+    {
+      "id": "r-af6123ec",
+      "source": "routes",
+      "line": "math[signals]{topology.calculus.fields}"
+    },
+    {
+      "id": "r-c65c62c8",
+      "source": "routes",
+      "line": "rpg[wednesday]{sessions.cast.world}"
+    },
+    {
+      "id": "r-f7345385",
+      "source": "routes",
+      "line": "site[guide]{pwa.frames.exploration}"
+    },
+    {
+      "id": "r-4627e483",
+      "source": "routes",
+      "line": "software[runtime]{parsers.algorithms.lattices}"
+    },
+    {
+      "id": "r-a63fb571",
+      "source": "routes",
+      "line": "space[hyperbolic]{manifolds.poincare.projection}"
+    },
+    {
+      "id": "r-71e19667",
+      "source": "routes",
+      "line": "spw[atlas]{sigils.braces.projections}"
+    },
+    {
+      "id": "r-964e91af",
+      "source": "routes",
+      "line": "systems[architecture]{protocols.localfirst.observability}"
+    },
+    {
+      "id": "r-b8a589d2",
+      "source": "routes",
+      "line": "time[schedulers]{multitasking.queues.eventloop}"
+    },
+    {
+      "id": "r-b6ac6670",
+      "source": "routes",
+      "line": "topics[atlas]{question;neighbor;issue}(return)<shelf>"
+    },
+    {
+      "id": "r-eb496a7e",
+      "source": "routes",
+      "line": "topics[hook]{atlas}<register>"
+    },
+    {
+      "id": "r-ac1dffee",
+      "source": "routes",
+      "line": "topics[mode]{open.sit}<display>"
+    },
+    {
+      "id": "r-aa5cb78d",
+      "source": "routes",
+      "line": "topics[wrap]{rail}"
+    },
+    {
+      "id": "r-b826f890",
+      "source": "routes",
+      "line": "theory[critical_pedagogy]{reading_the_word.reading_the_world.dialogue}<brazil>"
+    },
+    {
+      "id": "r-9467d4a9",
+      "source": "routes",
+      "line": "theory[folk_high_school]{conversation.no_exams.enlightenment}<denmark>"
+    },
+    {
+      "id": "r-9a704ee6",
+      "source": "routes",
+      "line": "architecture[hook]{durability}<systems>"
+    },
+    {
+      "id": "r-808519e8",
+      "source": "routes",
+      "line": "architecture[pattern]{language}"
+    },
+    {
+      "id": "r-0f701411",
+      "source": "routes",
+      "line": "architecture[protocol]{durable}"
+    },
+    {
+      "id": "r-38aa68e5",
+      "source": "routes",
+      "line": "architecture[surface]{readable}"
+    },
+    {
+      "id": "r-aff6776f",
+      "source": "routes",
+      "line": "learning[depth]{transfer} ~ ferment[magic-system]{conditions.transform}"
+    },
+    {
+      "id": "r-ac7797d0",
+      "source": "routes",
+      "line": "pattern[energy_currency]{atp.coupling.work}<cell>"
+    },
+    {
+      "id": "r-250e3091",
+      "source": "routes",
+      "line": "pattern[enzyme_selection]{catalysis.specificity.regulation}<cell>"
+    },
+    {
+      "id": "r-fff52f23",
+      "source": "routes",
+      "line": "pattern[light_harvesting]{pigment.electron.donor}<cell>"
+    },
+    {
+      "id": "r-8049a199",
+      "source": "routes",
+      "line": "pattern[metabolic_network]{nodes.reactions.routing}<cell>"
+    },
+    {
+      "id": "r-4b6837db",
+      "source": "routes",
+      "line": "pattern[redox_flow]{donor.acceptor.gradient}<cell>"
+    },
+    {
+      "id": "r-3bf50e41",
+      "source": "routes",
+      "line": "pattern[transfer]{state;constraint;response}<receipt>"
+    },
+    {
+      "id": "r-509072b6",
+      "source": "routes",
+      "line": "theory[artemisinin]{ancient_text.extraction.malaria}<china>"
+    },
+    {
+      "id": "r-73767bcf",
+      "source": "routes",
+      "line": "theory[qu_koji]{mold.enzyme.fermentation}<china>"
+    },
+    {
+      "id": "r-e13c1e3f",
+      "source": "routes",
+      "line": "transfer[currency]{intermediate;handoff}<receipt>"
+    },
+    {
+      "id": "r-0ef989a9",
+      "source": "routes",
+      "line": "transfer[dose]{threshold;saturation;stress}<curve>"
+    },
+    {
+      "id": "r-4aaf3bba",
+      "source": "routes",
+      "line": "transfer[gradient]{donor;steps;remainder}<field>"
+    },
+    {
+      "id": "r-0dab80bd",
+      "source": "routes",
+      "line": "transfer[light]{source;donor;oxygen}<culture>"
+    },
+    {
+      "id": "r-c8f3afc0",
+      "source": "routes",
+      "line": "transfer[network]{nodes;edges;direction}<graph>"
+    },
+    {
+      "id": "r-135260f8",
+      "source": "routes",
+      "line": "collaboration[craft]{factoid.material.process}"
+    },
+    {
+      "id": "r-3b540e65",
+      "source": "routes",
+      "line": "collaboration[developer]{surface}"
+    },
+    {
+      "id": "r-534f0a6f",
+      "source": "routes",
+      "line": "collaboration[illustrator]{motifs}"
+    },
+    {
+      "id": "r-4833c7bb",
+      "source": "routes",
+      "line": "craft[author]{orient}"
+    },
+    {
+      "id": "r-7bf07dba",
+      "source": "routes",
+      "line": "craft[collaboration]{author.illustrator.developer}"
+    },
+    {
+      "id": "r-72090c71",
+      "source": "routes",
+      "line": "craft[fragments]{html.css.specimens}"
+    },
+    {
+      "id": "r-1b361088",
+      "source": "routes",
+      "line": "craft[hook]{touch.material}<tactile>"
+    },
+    {
+      "id": "r-b8c1129c",
+      "source": "routes",
+      "line": "craft[svg]{vector.motif.illustrator}"
+    },
+    {
+      "id": "r-2991542b",
+      "source": "routes",
+      "line": "craft[tactile]{open.sit}"
+    },
+    {
+      "id": "r-6e1c9a33",
+      "source": "routes",
+      "line": "craft[tactile]{touch.material.paper}"
+    },
+    {
+      "id": "r-ed397e6b",
+      "source": "routes",
+      "line": "fold[crane]{flock}<share>"
+    },
+    {
+      "id": "r-8444e730",
+      "source": "routes",
+      "line": "notebook[pressure]{name}"
+    },
+    {
+      "id": "r-47997631",
+      "source": "routes",
+      "line": "notebook[private]{scratch}"
+    },
+    {
+      "id": "r-5fdf9064",
+      "source": "routes",
+      "line": "notebook[promotion]{durable}"
+    },
+    {
+      "id": "r-5369a9dc",
+      "source": "routes",
+      "line": "notebook[residue]{catch}"
+    },
+    {
+      "id": "r-70991855",
+      "source": "routes",
+      "line": "craft[files]{ritual}"
+    },
+    {
+      "id": "r-57572bbc",
+      "source": "routes",
+      "line": "learning[depth]{transfer} ~ service[ritual]{repair.timing}"
+    },
+    {
+      "id": "r-a5d71245",
+      "source": "routes",
+      "line": "principle[cbt]{thought.evidence.action}<method>"
+    },
+    {
+      "id": "r-d70cfb0c",
+      "source": "routes",
+      "line": "principle[crisis_988]{call.text.support}<now>"
+    },
+    {
+      "id": "r-cc4f146b",
+      "source": "routes",
+      "line": "principle[motivational_interviewing]{ask.reflect.own_reasons}<method>"
+    },
+    {
+      "id": "r-87472dcd",
+      "source": "routes",
+      "line": "theory[friendship_bench]{lay_workers.problem_solving.community}<zimbabwe>"
+    },
+    {
+      "id": "r-8a8c0deb",
+      "source": "routes",
+      "line": "theory[vipassana]{observe.sensation.equanimity}<india>"
+    },
+    {
+      "id": "r-b0767e86",
+      "source": "routes",
+      "line": "model[el_sistema]{ensemble.youth.social}<venezuela>"
+    },
+    {
+      "id": "r-f8a6a933",
+      "source": "routes",
+      "line": "model[muralism]{public_wall.history.civic}<mexico>"
+    },
+    {
+      "id": "r-bda815fd",
+      "source": "routes",
+      "line": "model[theatre_of_the_oppressed]{spect_actor.rehearsal.change}<brazil>"
+    },
+    {
+      "id": "r-7a322446",
+      "source": "routes",
+      "line": "theory[maya_zero]{place_value.zero.long_count}<mesoamerica>"
+    },
+    {
+      "id": "r-856edcae",
+      "source": "routes",
+      "line": "culture[returning]{entry.voice}<time>"
+    },
+    {
+      "id": "r-10469d81",
+      "source": "routes",
+      "line": "culture[tradition]{met.taught.stayed}<source>"
+    },
+    {
+      "id": "r-90ecc367",
+      "source": "routes",
+      "line": "reflection[card]{met.taught.not_mine.stayed}<source>"
+    },
+    {
+      "id": "r-3ec9126f",
+      "source": "routes",
+      "line": "way[cross]{threshold.vow.revisit}<charge>"
+    },
+    {
+      "id": "r-bb36e69a",
+      "source": "routes",
+      "line": "way[gather]{table.dish.seat}<kin>"
+    },
+    {
+      "id": "r-586d6366",
+      "source": "routes",
+      "line": "way[give]{gift.recipe.offering}<reader>"
+    },
+    {
+      "id": "r-37bb3a8a",
+      "source": "routes",
+      "line": "way[keep_time]{week.market.close}<register>"
+    },
+    {
+      "id": "r-db676926",
+      "source": "routes",
+      "line": "way[regard]{costume.name.light}<perspective>"
+    },
+    {
+      "id": "r-68f2ad79",
+      "source": "routes",
+      "line": "way[remember]{name.anniversary.dish}<anchor>"
+    },
+    {
+      "id": "r-f03f9d26",
+      "source": "routes",
+      "line": "way[tradition]{regard.gather.give.cross.keep_time.remember}<practice>"
+    },
+    {
+      "id": "r-ce844700",
+      "source": "routes",
+      "line": "principle[faith_stages]{meaning.stage.maturity}<spirit>"
+    },
+    {
+      "id": "r-57848132",
+      "source": "routes",
+      "line": "principle[psychosocial_crisis]{stage.tension.resolution}<life>"
+    },
+    {
+      "id": "r-321b7a57",
+      "source": "routes",
+      "line": "principle[return_version]{history.revert.safety}<software>"
+    },
+    {
+      "id": "r-97586428",
+      "source": "routes",
+      "line": "theory[ashramas]{student.householder.retreat.renunciation}<india>"
+    },
+    {
+      "id": "r-62e069be",
+      "source": "routes",
+      "line": "theory[ox_herding]{search.tame.forget.return}<china>"
+    },
+    {
+      "id": "r-cc26fc58",
+      "source": "routes",
+      "line": "learning[depth]{retrieve}"
+    },
+    {
+      "id": "r-9934fdcb",
+      "source": "routes",
+      "line": "learning[depth]{retrieve} ~ rpg[table]{stage}"
+    },
+    {
+      "id": "r-7b3b7642",
+      "source": "routes",
+      "line": "place[adult_learning_lab]{assessment.aging.reading}<illinois>"
+    },
+    {
+      "id": "r-fb637506",
+      "source": "routes",
+      "line": "principle[construction_integration]{proposition.situation_model.prior_knowledge}<comprehension>"
+    },
+    {
+      "id": "r-9e5ad8fb",
+      "source": "routes",
+      "line": "principle[testing_effect]{retrieval.spacing.memory}<learning>"
+    },
+    {
+      "id": "r-1ffd9a92",
+      "source": "routes",
+      "line": "principle[working_memory]{chunks.load.budget}<limit>"
+    },
+    {
+      "id": "r-81fa6ecb",
+      "source": "routes",
+      "line": "theory[analects_2_15]{learning.thought.balance}<china>"
+    },
+    {
+      "id": "r-7493cf43",
+      "source": "routes",
+      "line": "theory[sankofa]{return.retrieval.heritage}<ghana>"
+    },
+    {
+      "id": "r-a23de62b",
+      "source": "routes",
+      "line": "learning[depth]{scaffold.retrieve.transfer}<index>"
+    },
+    {
+      "id": "r-56dc5ba2",
+      "source": "routes",
+      "line": "learning[depth]{scaffold}"
+    },
+    {
+      "id": "r-e014c845",
+      "source": "routes",
+      "line": "learning[depth]{transfer}"
+    },
+    {
+      "id": "r-7347fd88",
+      "source": "routes",
+      "line": "learning[depth]{transfer} ~ crop[clock]{season.return}"
+    },
+    {
+      "id": "r-b9508358",
+      "source": "routes",
+      "line": "principle[kirchhoff]{node_current.loop_voltage.conservation}<circuit>"
+    },
+    {
+      "id": "r-ec22e04c",
+      "source": "routes",
+      "line": "principle[maxwell_local]{divergence.curl.field}<electromagnetism>"
+    },
+    {
+      "id": "r-89db4406",
+      "source": "routes",
+      "line": "principle[mosfet_switch]{cutoff.triode.saturation}<logic>"
+    },
+    {
+      "id": "r-925e4319",
+      "source": "routes",
+      "line": "principle[nyquist_rate]{sample_rate.bandwidth.aliasing}<signal>"
+    },
+    {
+      "id": "r-6794cbfc",
+      "source": "routes",
+      "line": "theory[bose_millimeter_waves]{waveguide.detector.microwave}<india>"
+    },
+    {
+      "id": "r-642cde54",
+      "source": "routes",
+      "line": "theory[shen_kuo_compass]{magnetic_needle.declination.navigation}<china>"
+    },
+    {
+      "id": "r-d2957b9b",
+      "source": "routes",
+      "line": "principle[filing_sequence]{receive.catalog.cross_reference.shelve}<archive>"
+    },
+    {
+      "id": "r-4d6502e2",
+      "source": "routes",
+      "line": "principle[petroleum_system]{source.reservoir.seal.trap}<timing>"
+    },
+    {
+      "id": "r-a6037a27",
+      "source": "routes",
+      "line": "principle[superposition]{layer.depth.age}<time>"
+    },
+    {
+      "id": "r-167a67af",
+      "source": "routes",
+      "line": "theory[seismoscope]{vessel.direction.earthquake}<china>"
+    },
+    {
+      "id": "r-b1bd11fa",
+      "source": "routes",
+      "line": "theory[shen_kuo_landforms]{fossils.sediment.uplift}<china>"
+    },
+    {
+      "id": "r-75d257a1",
+      "source": "routes",
+      "line": "channel[kanpur_programme]{consortium.laboratories.curriculum}<india_us>"
+    },
+    {
+      "id": "r-64876f45",
+      "source": "routes",
+      "line": "channel[student_flows]{enrollment.graduate.stem}<india_china_us>"
+    },
+    {
+      "id": "r-b4124cbe",
+      "source": "routes",
+      "line": "channel[tsinghua_indemnity]{preparatory_school.scholarship.exchange}<china_us>"
+    },
+    {
+      "id": "r-c1f3e693",
+      "source": "routes",
+      "line": "theory[super_app]{messaging.payments.services}<china>"
+    },
+    {
+      "id": "r-0ad1363e",
+      "source": "routes",
+      "line": "theory[upi]{public_rail.interoperability.payments}<india>"
+    },
+    {
+      "id": "r-d32fb597",
+      "source": "routes",
+      "line": "principle[nested_systems]{family.community.culture}<context>"
+    },
+    {
+      "id": "r-ec10a9a3",
+      "source": "routes",
+      "line": "principle[scaffold]{support.fade.independence}<growth>"
+    },
+    {
+      "id": "r-debb45ae",
+      "source": "routes",
+      "line": "principle[serve_and_return]{reach.response.architecture}<childhood>"
+    },
+    {
+      "id": "r-ebefc818",
+      "source": "routes",
+      "line": "theory[analects_2_4]{learning.standing.discernment}<china>"
+    },
+    {
+      "id": "r-adbf1699",
+      "source": "routes",
+      "line": "theory[ubuntu]{personhood.relation.community}<africa>"
+    },
+    {
+      "id": "r-62dfe632",
+      "source": "routes",
+      "line": "principle[forecast_baseline]{naive.seasonal_naive.holdout}<trust>"
+    },
+    {
+      "id": "r-a80837ca",
+      "source": "routes",
+      "line": "principle[linear_program]{objective.constraints.decisions}<choice>"
+    },
+    {
+      "id": "r-2e61ff69",
+      "source": "routes",
+      "line": "principle[littles_law]{work_in_progress.arrival_rate.time_in_system}<flow>"
+    },
+    {
+      "id": "r-3241a116",
+      "source": "routes",
+      "line": "theory[dabbawala]{flow.coding.reliability}<india>"
+    },
+    {
+      "id": "r-cb3417f3",
+      "source": "routes",
+      "line": "theory[m_pesa]{agents.phones.payments}<kenya>"
+    },
+    {
+      "id": "r-6dcc7deb",
+      "source": "routes",
+      "line": "model[australian_commons]{medicare.compulsory_voting.turnout}<australia>"
+    },
+    {
+      "id": "r-ff133ef8",
+      "source": "routes",
+      "line": "model[folk_high_school]{conversation.no_exams.adults}<denmark>"
+    },
+    {
+      "id": "r-af66a7fe",
+      "source": "routes",
+      "line": "model[social_insurance]{sickness.accident.old_age}<germany>"
+    },
+    {
+      "id": "r-271429cb",
+      "source": "routes",
+      "line": "model[truth_reconciliation]{testimony.amnesty.repair}<south_africa>"
+    },
+    {
+      "id": "r-723d4a20",
+      "source": "routes",
+      "line": "model[umuganda]{shared_work.community.monthly}<rwanda>"
+    },
+    {
+      "id": "r-2ec96c98",
+      "source": "routes",
+      "line": "principle[backward_design]{understanding.evidence.activities}<plan>"
+    },
+    {
+      "id": "r-365a228b",
+      "source": "routes",
+      "line": "principle[district_access]{budget.calendar.staff}<district>"
+    },
+    {
+      "id": "r-46b6ee1f",
+      "source": "routes",
+      "line": "principle[formative_evidence]{check.feedback.adjust}<classroom>"
+    },
+    {
+      "id": "r-e34120cd",
+      "source": "routes",
+      "line": "theory[critical_pedagogy]{dialogue.problem_posing.literacy}<brazil>"
+    },
+    {
+      "id": "r-7eaf5e7c",
+      "source": "routes",
+      "line": "theory[santiniketan]{open_air.art.freedom}<india>"
+    },
+    {
+      "id": "r-0d9c2948",
+      "source": "routes",
+      "line": "theory[school_of_the_air]{distance.radio.public}<australia>"
+    },
+    {
+      "id": "r-4a4768fa",
+      "source": "routes",
+      "line": "film[release]{bind.circulation}"
+    },
+    {
+      "id": "r-a8560b8a",
+      "source": "routes",
+      "line": "film[scene]{kitchen.staging}"
+    },
+    {
+      "id": "r-6210f530",
+      "source": "routes",
+      "line": "film[shot]{address.blocking}"
+    },
+    {
+      "id": "r-098931ac",
+      "source": "routes",
+      "line": "film[storyboard]{stage.scene}"
+    },
+    {
+      "id": "r-72ad9c9f",
+      "source": "routes",
+      "line": "film[voice]{wonder.rehearsal}"
+    },
+    {
+      "id": "r-fd363928",
+      "source": "routes",
+      "line": "film[edit]{flow.cadence}"
+    },
+    {
+      "id": "r-e38e0a5d",
+      "source": "routes",
+      "line": "film[kitchen]{scene.metaphor}"
+    },
+    {
+      "id": "r-191f8863",
+      "source": "routes",
+      "line": "fermentation[bubble]{open.sit}"
+    },
+    {
+      "id": "r-7e3ed5fe",
+      "source": "routes",
+      "line": "scene[ferment]{hold.release}"
+    },
+    {
+      "id": "r-8c122b7c",
+      "source": "routes",
+      "line": "mise[prep]{open.sit}"
+    },
+    {
+      "id": "r-54bedae3",
+      "source": "routes",
+      "line": "scene[mise]{prep.before.fire}"
+    },
+    {
+      "id": "r-ac924839",
+      "source": "routes",
+      "line": "reduction[wide]{open.sit}"
+    },
+    {
+      "id": "r-ae987fce",
+      "source": "routes",
+      "line": "scene[reduction]{concentrate.beat}"
+    },
+    {
+      "id": "r-dce19017",
+      "source": "routes",
+      "line": "grammar[spw]{sigil.handle.expression}<move>"
+    },
+    {
+      "id": "r-5d31ebec",
+      "source": "routes",
+      "line": "medium[capability]{offer.boundary}<link>"
+    },
+    {
+      "id": "r-cfd2ccab",
+      "source": "routes",
+      "line": "medium[open]{surface.capability.receipt}<host>"
+    },
+    {
+      "id": "r-023bbe47",
+      "source": "routes",
+      "line": "medium[receipt]{rerun.witness}<stranger>"
+    },
+    {
+      "id": "r-e87a4061",
+      "source": "routes",
+      "line": "medium[surface]{document.reread}<host>"
+    },
+    {
+      "id": "r-420df3e7",
+      "source": "routes",
+      "line": "move[action]{commit}<change>"
+    },
+    {
+      "id": "r-88572f73",
+      "source": "routes",
+      "line": "move[direction]{practice}<hold>"
+    },
+    {
+      "id": "r-bcdbd36b",
+      "source": "routes",
+      "line": "move[edge]{project}<surface>"
+    },
+    {
+      "id": "r-5da699ed",
+      "source": "routes",
+      "line": "move[frame]{address}<handle>"
+    },
+    {
+      "id": "r-fa4d6225",
+      "source": "routes",
+      "line": "move[scene]{stage}<midprocess>"
+    },
+    {
+      "id": "r-81ad5239",
+      "source": "routes",
+      "line": "move[wonder]{probe}<question>"
+    },
+    {
+      "id": "r-4302ce84",
+      "source": "routes",
+      "line": "claim[relation]{source;state;witness}<receipt>"
+    },
+    {
+      "id": "r-0811349f",
+      "source": "routes",
+      "line": "hold[seed.season.table]{identity.boundary.ledger}<policy>"
+    },
+    {
+      "id": "r-682f411e",
+      "source": "routes",
+      "line": "scene[condition]{effect;exit}<receipt>"
+    },
+    {
+      "id": "r-c3f90a45",
+      "source": "routes",
+      "line": "track[authorable]{shape;rule;witness}<receipt>"
+    },
+    {
+      "id": "r-44ad2272",
+      "source": "routes",
+      "line": "materials[bench]{sheet;collage;laminate;paint;varnish;repaint}(year)<folio>"
+    },
+    {
+      "id": "r-baca0afb",
+      "source": "routes",
+      "line": "materials[crystal]{framework}"
+    },
+    {
+      "id": "r-a400ff4b",
+      "source": "routes",
+      "line": "materials[fermented]{bioplastic}"
+    },
+    {
+      "id": "r-5d85886d",
+      "source": "routes",
+      "line": "materials[grown]{mycelium}"
+    },
+    {
+      "id": "r-8bc73899",
+      "source": "routes",
+      "line": "materials[healing]{polymer}"
+    },
+    {
+      "id": "r-f39cb3da",
+      "source": "routes",
+      "line": "materials[hook]{becoming}<bench>"
+    },
+    {
+      "id": "r-ee466755",
+      "source": "routes",
+      "line": "materials[hook]{paper.laminate.tempera.varnish}(year)<folio>"
+    },
+    {
+      "id": "r-e79bdf77",
+      "source": "routes",
+      "line": "materials[laminated]{timber}"
+    },
+    {
+      "id": "r-6c9a9b8e",
+      "source": "routes",
+      "line": "materials[porous]{aerogel}"
+    },
+    {
+      "id": "r-ad00ca21",
+      "source": "routes",
+      "line": "materials[recovered]{composite}"
+    },
+    {
+      "id": "r-f5f159a6",
+      "source": "routes",
+      "line": "materials[skill]{origin;want;fail;repair;after}(material)<process>"
+    },
+    {
+      "id": "r-8defbe86",
+      "source": "routes",
+      "line": "materials[thermal]{phase-change}"
+    },
+    {
+      "id": "r-dfa8598f",
+      "source": "routes",
+      "line": "process[additive]{layer}"
+    },
+    {
+      "id": "r-c079fd94",
+      "source": "routes",
+      "line": "process[coat]{spray}"
+    },
+    {
+      "id": "r-842668e6",
+      "source": "routes",
+      "line": "process[grown]{ferment}"
+    },
+    {
+      "id": "r-35896330",
+      "source": "routes",
+      "line": "process[knit]{whole-garment}"
+    },
+    {
+      "id": "r-c660f79a",
+      "source": "routes",
+      "line": "process[laminated]{sheet}"
+    },
+    {
+      "id": "r-ca1cc1cc",
+      "source": "routes",
+      "line": "process[subtractive]{robot}"
+    },
+    {
+      "id": "r-d2ffc9cb",
+      "source": "routes",
+      "line": "arc[relation]{input;constraint;response}<receipt>"
+    },
+    {
+      "id": "r-046acded",
+      "source": "routes",
+      "line": "claim[receipt]{relation;result;witness}<handoff>"
+    },
+    {
+      "id": "r-6c024abd",
+      "source": "routes",
+      "line": "math[atlas]{count.rate.invariant.receipt}"
+    },
+    {
+      "id": "r-b2ba7cd6",
+      "source": "routes",
+      "line": "math[hook]{topology.symmetry}<structure>"
+    },
+    {
+      "id": "r-f80ad2f0",
+      "source": "routes",
+      "line": "math[reading]{picture.then.formalism}(turn)<paragraph>"
+    },
+    {
+      "id": "r-c650889d",
+      "source": "routes",
+      "line": "relation[invariant]{before;transform;after}<witness>"
+    },
+    {
+      "id": "r-0a0a4521",
+      "source": "routes",
+      "line": "response[dose]{threshold;saturation;stress}<curve>"
+    },
+    {
+      "id": "r-5d162879",
+      "source": "routes",
+      "line": "state[transition]{initial;law;next}<trace>"
+    },
+    {
+      "id": "r-348eb7f4",
+      "source": "routes",
+      "line": "slice[state]{next}<channel>"
+    },
+    {
+      "id": "r-53a1a411",
+      "source": "routes",
+      "line": "category[bridges]{open.sit}"
+    },
+    {
+      "id": "r-d31a6863",
+      "source": "routes",
+      "line": "beat[pair]{pieces}<channel>"
+    },
+    {
+      "id": "r-212bc909",
+      "source": "routes",
+      "line": "count[dummy]{paths.mix}<next>"
+    },
+    {
+      "id": "r-44ef427a",
+      "source": "routes",
+      "line": "count[lab]{paths.beats}<learn>"
+    },
+    {
+      "id": "r-940d0af9",
+      "source": "routes",
+      "line": "count[state]{next}<channel>"
+    },
+    {
+      "id": "r-b40265fc",
+      "source": "routes",
+      "line": "count[structure]{paths.partitions.graphs}<lab>"
+    },
+    {
+      "id": "r-268c743c",
+      "source": "routes",
+      "line": "complexity[time]{open.sit}"
+    },
+    {
+      "id": "r-7fefcb40",
+      "source": "routes",
+      "line": "learning[depth]{transfer} ~ succotash[late_summer]{corn}"
+    },
+    {
+      "id": "r-fb3280c7",
+      "source": "routes",
+      "line": "theory[fangcheng]{coefficient_grid.elimination.systems}<china>"
+    },
+    {
+      "id": "r-81003422",
+      "source": "routes",
+      "line": "theory[mohist_logic]{names.distinctions.analogy}<china>"
+    },
+    {
+      "id": "r-33e722f6",
+      "source": "routes",
+      "line": "theory[nyaya]{pramana.inference.example}<india>"
+    },
+    {
+      "id": "r-fe92e1fa",
+      "source": "routes",
+      "line": "field[state]{next}<channel>"
+    },
+    {
+      "id": "r-7800a620",
+      "source": "routes",
+      "line": "mental[return]{wonder.receipt.card}(walk)<care>"
+    },
+    {
+      "id": "r-f60945d3",
+      "source": "routes",
+      "line": "mental[walk]{stabilize.wonder.receipt}<now>"
+    },
+    {
+      "id": "r-a142a1b9",
+      "source": "routes",
+      "line": "streak[return]{leaf,joke,hat,soup}(count)<pet>"
+    },
+    {
+      "id": "r-5804fa27",
+      "source": "routes",
+      "line": "learning[depth]{scaffold.retrieve.transfer}"
+    },
+    {
+      "id": "r-54d4292d",
+      "source": "routes",
+      "line": "learning[interleaving]{neighboring.practice.fields}"
+    },
+    {
+      "id": "r-51243b0c",
+      "source": "routes",
+      "line": "learning[production_event]{artifact.makes.return}"
+    },
+    {
+      "id": "r-93b141e0",
+      "source": "routes",
+      "line": "learning[query_reformulation]{miss.teaches.term}"
+    },
+    {
+      "id": "r-d378285d",
+      "source": "routes",
+      "line": "learning[retrieval_cue]{remember.by.handle} ~ term[retrieval_cue]{remember.by.handle}"
+    },
+    {
+      "id": "r-c3a2a1a5",
+      "source": "routes",
+      "line": "learning[search]{retrieve.reformulate.interleave.publish}"
+    },
+    {
+      "id": "r-19109f9b",
+      "source": "routes",
+      "line": "search[hook]{sigils.wraps}<rediscovery>"
+    },
+    {
+      "id": "r-f00520c7",
+      "source": "routes",
+      "line": "search[loop]{notice.name.gather.compare.compose.publish.return}"
+    },
+    {
+      "id": "r-31968981",
+      "source": "routes",
+      "line": "spell[anchor]{route.fragment.return}"
+    },
+    {
+      "id": "r-e2158957",
+      "source": "routes",
+      "line": "spell[attributes]{data-spw.inspect}"
+    },
+    {
+      "id": "r-041b8082",
+      "source": "routes",
+      "line": "spell[cluster]{terms.relate.transfer}"
+    },
+    {
+      "id": "r-8d21bbe0",
+      "source": "routes",
+      "line": "spell[component]{slot.kind.behavior}"
+    },
+    {
+      "id": "r-6b3c7e4d",
+      "source": "routes",
+      "line": "spell[event]{curiosity.output.return}"
+    },
+    {
+      "id": "r-a90e4a1d",
+      "source": "routes",
+      "line": "spell[settings]{density.climate.visibility}"
+    },
+    {
+      "id": "r-a3eba994",
+      "source": "routes",
+      "line": "term[arc]{sequence.return.transform}"
+    },
+    {
+      "id": "r-de9d8820",
+      "source": "routes",
+      "line": "term[conduit]{curiosity.to.output}"
+    },
+    {
+      "id": "r-bb0750d6",
+      "source": "routes",
+      "line": "term[pair]{subject.and.partner}"
+    },
+    {
+      "id": "r-6ff392b5",
+      "source": "routes",
+      "line": "term[proof]{show.result.return}"
+    },
+    {
+      "id": "r-4a75c3af",
+      "source": "routes",
+      "line": "term[region]{place.changes.behavior}"
+    },
+    {
+      "id": "r-ee83e0d5",
+      "source": "routes",
+      "line": "term[retrieval_cue]{remember.by.handle} ~ learning[retrieval_cue]{remember.by.handle}"
+    },
+    {
+      "id": "r-3cbcd9d8",
+      "source": "routes",
+      "line": "term[substrate]{receive.sustain.mutate}"
+    },
+    {
+      "id": "r-8b590fc5",
+      "source": "routes",
+      "line": "behavior[css]{charge.gesture.cauldron}"
+    },
+    {
+      "id": "r-2dfc9f9b",
+      "source": "routes",
+      "line": "behavior[play]{consequence.memory.tool}"
+    },
+    {
+      "id": "r-13806bf5",
+      "source": "routes",
+      "line": "behavior[recipe]{texture.service.scene}"
+    },
+    {
+      "id": "r-6d5f66ec",
+      "source": "routes",
+      "line": "behavior[svg]{path.label.handoff}"
+    },
+    {
+      "id": "r-393b6e99",
+      "source": "routes",
+      "line": "component[payload]{input;relation;consequence}<receipt>"
+    },
+    {
+      "id": "r-e8eff54a",
+      "source": "routes",
+      "line": "design[integration]{svg.css.recipe.play.tool}"
+    },
+    {
+      "id": "r-b3f0c100",
+      "source": "routes",
+      "line": "effort[dial]{evidence.stop}<spend>"
+    },
+    {
+      "id": "r-a0c0db9c",
+      "source": "routes",
+      "line": "instruction[stale]{ritual.scaffold}<cost>"
+    },
+    {
+      "id": "r-b9d7e669",
+      "source": "routes",
+      "line": "measure[borrow]{journey.ratchet.ritual}<project>"
+    },
+    {
+      "id": "r-a81232e4",
+      "source": "routes",
+      "line": "measure[journey]{gesture.paint}<latency>"
+    },
+    {
+      "id": "r-f4a7093f",
+      "source": "routes",
+      "line": "measure[ratchet]{count.down}<ci>"
+    },
+    {
+      "id": "r-a9f2e722",
+      "source": "routes",
+      "line": "medium[surface]{static.copy}<handoff>"
+    },
+    {
+      "id": "r-943eb15c",
+      "source": "routes",
+      "line": "selector[tax]{root.has}<style>"
+    },
+    {
+      "id": "r-9be857e3",
+      "source": "routes",
+      "line": "shift[named]{region.phase}<layout>"
+    },
+    {
+      "id": "r-3a8e2738",
+      "source": "routes",
+      "line": "slop[accusation]{suspicion.gate}<comment>"
+    },
+    {
+      "id": "r-80a241f3",
+      "source": "routes",
+      "line": "slop[cheer]{positive.tone}<web>"
+    },
+    {
+      "id": "r-4921d058",
+      "source": "routes",
+      "line": "slop[climate]{platform.fatigue.accusation}<feed>"
+    },
+    {
+      "id": "r-db8b0452",
+      "source": "routes",
+      "line": "slop[feeling]{cheap.cheerful.interchangeable}<feed>"
+    },
+    {
+      "id": "r-d32ca327",
+      "source": "routes",
+      "line": "slop[field]{feeling.tell.measure}<reader>"
+    },
+    {
+      "id": "r-9649ea5a",
+      "source": "routes",
+      "line": "slop[tell]{emptiness.glue.shape}<paragraph>"
+    },
+    {
+      "id": "r-002a6888",
+      "source": "routes",
+      "line": "taste[refuse]{milliseconds.complexity}<review>"
+    },
+    {
+      "id": "r-926a2efc",
+      "source": "routes",
+      "line": "tell[authority]{unnamed.source}<claim>"
+    },
+    {
+      "id": "r-0a670b0e",
+      "source": "routes",
+      "line": "tell[balance]{hedge.nostance}<paragraph>"
+    },
+    {
+      "id": "r-94eebadf",
+      "source": "routes",
+      "line": "tell[fluency]{words.missing}<paragraph>"
+    },
+    {
+      "id": "r-13b8163c",
+      "source": "routes",
+      "line": "tell[glue]{opener.hedge}<sentence>"
+    },
+    {
+      "id": "r-44d89f87",
+      "source": "routes",
+      "line": "tell[picture]{poster.tilt}<image>"
+    },
+    {
+      "id": "r-5a59d671",
+      "source": "routes",
+      "line": "tell[shape]{triad.echo}<page>"
+    },
+    {
+      "id": "r-20423916",
+      "source": "routes",
+      "line": "codebase[components]{rationale}"
+    },
+    {
+      "id": "r-daf9641a",
+      "source": "routes",
+      "line": "codebase[events]{vocabulary}"
+    },
+    {
+      "id": "r-cb007b97",
+      "source": "routes",
+      "line": "codebase[memory]{queues.buffers}"
+    },
+    {
+      "id": "r-400621ed",
+      "source": "routes",
+      "line": "codebase[pages]{data}"
+    },
+    {
+      "id": "r-7a9ea301",
+      "source": "routes",
+      "line": "codebase[types]{seams}"
+    },
+    {
+      "id": "r-3b0bded2",
+      "source": "routes",
+      "line": "codebase[video]{frames.budgets}"
+    },
+    {
+      "id": "r-17b9c259",
+      "source": "routes",
+      "line": "component[behavior]{register}"
+    },
+    {
+      "id": "r-ffec7d82",
+      "source": "routes",
+      "line": "component[host]{semantic}"
+    },
+    {
+      "id": "r-fb7f5bcb",
+      "source": "routes",
+      "line": "component[machine]{attention} ~ copy[hook]{wrap}"
+    },
+    {
+      "id": "r-bd53782f",
+      "source": "routes",
+      "line": "component[safety]{no-op}"
+    },
+    {
+      "id": "r-ccf96ba3",
+      "source": "routes",
+      "line": "component[structure]{blocks}"
+    },
+    {
+      "id": "r-8c3f7003",
+      "source": "routes",
+      "line": "component[symmetry]{intent.target}"
+    },
+    {
+      "id": "r-d0371d51",
+      "source": "routes",
+      "line": "cookbook[theory]{adult.study.practice}"
+    },
+    {
+      "id": "r-7afa8e17",
+      "source": "routes",
+      "line": "design[literate-ui]{syntax}"
+    },
+    {
+      "id": "r-6a1af19c",
+      "source": "routes",
+      "line": "design[ocean-ux]{familiarity}"
+    },
+    {
+      "id": "r-bb36c194",
+      "source": "routes",
+      "line": "design[style]{reproducible}"
+    },
+    {
+      "id": "r-5d68693e",
+      "source": "routes",
+      "line": "design[symmetry]{physics}"
+    },
+    {
+      "id": "r-e0fcb4d1",
+      "source": "routes",
+      "line": "editing[clients]{projections}"
+    },
+    {
+      "id": "r-4e51d07c",
+      "source": "routes",
+      "line": "editing[codeblocks]{interactive}"
+    },
+    {
+      "id": "r-7be18759",
+      "source": "routes",
+      "line": "editing[curricula]{literate}"
+    },
+    {
+      "id": "r-2b7ce3de",
+      "source": "routes",
+      "line": "editing[files]{plain-text}"
+    },
+    {
+      "id": "r-fec57ac9",
+      "source": "routes",
+      "line": "editing[sections]{frames}"
+    },
+    {
+      "id": "r-540c7b0f",
+      "source": "routes",
+      "line": "editing[semantics]{lsp}"
+    },
+    {
+      "id": "r-3686a40e",
+      "source": "routes",
+      "line": "expression[dimension]{handle.vector.form.field.path}<channel>"
+    },
+    {
+      "id": "r-74494aa9",
+      "source": "routes",
+      "line": "grammar[operators]{open.sit}"
+    },
+    {
+      "id": "r-1badb3de",
+      "source": "routes",
+      "line": "interactive[markdown]{open.sit}"
+    },
+    {
+      "id": "r-cfbe8f9f",
+      "source": "routes",
+      "line": "map[shared]{convergence}"
+    },
+    {
+      "id": "r-2e528c96",
+      "source": "routes",
+      "line": "name[handle]{addressable}"
+    },
+    {
+      "id": "r-30ce3c44",
+      "source": "routes",
+      "line": "operator[intent]{topology}"
+    },
+    {
+      "id": "r-33c33248",
+      "source": "routes",
+      "line": "probe[fit]{rationale} ~ copy[hook]{wrap.align}"
+    },
+    {
+      "id": "r-ab429e74",
+      "source": "routes",
+      "line": "projection[deterministic]{manifestation}"
+    },
+    {
+      "id": "r-68bdbef0",
+      "source": "routes",
+      "line": "resonance[ground]{invariant}"
+    },
+    {
+      "id": "r-18ba0872",
+      "source": "routes",
+      "line": "resonance[precision]{audit}"
+    },
+    {
+      "id": "r-d158ac9f",
+      "source": "routes",
+      "line": "resonance[projection]{genre}"
+    },
+    {
+      "id": "r-e3c8bf40",
+      "source": "routes",
+      "line": "runtime[handle]{field-guide}<inspect>"
+    },
+    {
+      "id": "r-84e47eab",
+      "source": "routes",
+      "line": "runtime[projection]{schedule.render.inspect}"
+    },
+    {
+      "id": "r-9745cac4",
+      "source": "routes",
+      "line": "software[field]{orient}<register>"
+    },
+    {
+      "id": "r-ab587b7d",
+      "source": "routes",
+      "line": "software[hook]{plain_text.grammar}<surface>"
+    },
+    {
+      "id": "r-6356bc5f",
+      "source": "routes",
+      "line": "software[model]{constraint.resource.projection}"
+    },
+    {
+      "id": "r-5fb4c15d",
+      "source": "routes",
+      "line": "software[pipeline]{transformation}"
+    },
+    {
+      "id": "r-bb1dcafa",
+      "source": "routes",
+      "line": "source[readable]{artifact}"
+    },
+    {
+      "id": "r-79c9b653",
+      "source": "routes",
+      "line": "syntax[reference]{model}<atlas>"
+    },
+    {
+      "id": "r-624ab67b",
+      "source": "routes",
+      "line": "syntax[source]{open.sit}"
+    },
+    {
+      "id": "r-c000f860",
+      "source": "routes",
+      "line": "tooling[authorship]{continuity}"
+    },
+    {
+      "id": "r-1145a96d",
+      "source": "routes",
+      "line": "parser[syntax]{open.sit}"
+    },
+    {
+      "id": "r-9f5a1c2b",
+      "source": "routes",
+      "line": "?copy[fit]{brace.select}"
+    },
+    {
+      "id": "r-76dac9c1",
+      "source": "routes",
+      "line": "copy[bubble]{height.reserve}<paint>"
+    },
+    {
+      "id": "r-be9bbfc8",
+      "source": "routes",
+      "line": "copy[hook]{wrap.align}<live>"
+    },
+    {
+      "id": "r-3e48ee39",
+      "source": "routes",
+      "line": "copy[hook]{wrap.align}<pack>"
+    },
+    {
+      "id": "r-8e07faf7",
+      "source": "routes",
+      "line": "copy[script]{prepare.once}<handle>"
+    },
+    {
+      "id": "r-40bd2f61",
+      "source": "routes",
+      "line": "pretext[orientation]{open.sit}"
+    },
+    {
+      "id": "r-ddbfe0a1",
+      "source": "routes",
+      "line": "beans[form]{wrap.edge}"
+    },
+    {
+      "id": "r-4a51f434",
+      "source": "routes",
+      "line": "beans[practice]{soak,cook,serve}"
+    },
+    {
+      "id": "r-574d6033",
+      "source": "routes",
+      "line": "boonhonk[genre]{combine.discover.reward}"
+    },
+    {
+      "id": "r-b58c1ee0",
+      "source": "routes",
+      "line": "brace[boundary]{transform}"
+    },
+    {
+      "id": "r-01fdd623",
+      "source": "routes",
+      "line": "brace[projection]"
+    },
+    {
+      "id": "r-bcdfe9e6",
+      "source": "routes",
+      "line": "brace{transform}"
+    },
+    {
+      "id": "r-5c85e1f3",
+      "source": "routes",
+      "line": "cauldron[mounted]{experiment.elaborate}"
+    },
+    {
+      "id": "r-65826d8c",
+      "source": "routes",
+      "line": "cauldron{elaborate}"
+    },
+    {
+      "id": "r-490808a2",
+      "source": "routes",
+      "line": "cauldron{experiment.protocol}"
+    },
+    {
+      "id": "r-57fe8d1c",
+      "source": "routes",
+      "line": "cauldron{invite}"
+    },
+    {
+      "id": "r-89ab6ec4",
+      "source": "routes",
+      "line": "cauldron{merchant.path}"
+    },
+    {
+      "id": "r-f426d893",
+      "source": "routes",
+      "line": "cauldron{precipitate.signal}"
+    },
+    {
+      "id": "r-784eb90a",
+      "source": "routes",
+      "line": "cauldron{read.state}"
+    },
+    {
+      "id": "r-39079f38",
+      "source": "routes",
+      "line": "compare[binding]{wrap.edge}"
+    },
+    {
+      "id": "r-842d051d",
+      "source": "routes",
+      "line": "compare[genre]{kitchen.session}"
+    },
+    {
+      "id": "r-1771801e",
+      "source": "routes",
+      "line": "concept[variant]{behavior}"
+    },
+    {
+      "id": "r-44c9df07",
+      "source": "routes",
+      "line": "css[cascade]{projection}"
+    },
+    {
+      "id": "r-ce1e0d55",
+      "source": "routes",
+      "line": "hierarchy[composition]{ownership}"
+    },
+    {
+      "id": "r-b7607fd2",
+      "source": "routes",
+      "line": "medium[living]{page.parser.sidecar}"
+    },
+    {
+      "id": "r-65de7298",
+      "source": "routes",
+      "line": "operator[atlas]{prime;traverse;precipitate}(brace)<anchor>"
+    },
+    {
+      "id": "r-4ebfba02",
+      "source": "routes",
+      "line": "operator[prefix]{postfix}"
+    },
+    {
+      "id": "r-c1d39e3c",
+      "source": "routes",
+      "line": "operators[square]{rotate.reflect.compare}"
+    },
+    {
+      "id": "r-e64664f5",
+      "source": "routes",
+      "line": "page[structure]{composition}"
+    },
+    {
+      "id": "r-e1556474",
+      "source": "routes",
+      "line": "sigil[prefix]{postfix}"
+    },
+    {
+      "id": "r-36e42976",
+      "source": "routes",
+      "line": "symmetry[positions]{preserve.relations}"
+    },
+    {
+      "id": "r-50d6eb81",
+      "source": "routes",
+      "line": "voice[field_guide]{habitat.notice}"
+    },
+    {
+      "id": "r-4ec0921e",
+      "source": "routes",
+      "line": "voice[spellbook]{cast.token}<outcome>"
+    },
+    {
+      "id": "r-44516483",
+      "source": "routes",
+      "line": "voice[workshop]{source.revise}"
+    },
+    {
+      "id": "r-ed5991b5",
+      "source": "routes",
+      "line": "workbench[consumer]{report.measure.repair}"
+    },
+    {
+      "id": "r-2a32a5f8",
+      "source": "routes",
+      "line": "workbench[cost]{scan.memo.boot}"
+    },
+    {
+      "id": "r-fc613808",
+      "source": "routes",
+      "line": "workbench[improvement]{reproduce.measure.repair}"
+    },
+    {
+      "id": "r-3e517e97",
+      "source": "routes",
+      "line": "workbench[loop]{edit.outline.instrument}"
+    },
+    {
+      "id": "r-19dd5fd7",
+      "source": "routes",
+      "line": "workbench[mounted]{cli.lsp.editors}"
+    },
+    {
+      "id": "r-f92fc5dd",
+      "source": "routes",
+      "line": "workbench[sensor]{probe.claim.kin.axes}"
+    },
+    {
+      "id": "r-92b88f7c",
+      "source": "routes",
+      "line": "workbench[target]{path.force.wonder}"
+    },
+    {
+      "id": "r-bc87fb5c",
+      "source": "routes",
+      "line": "workshop[practice]{cure}"
+    },
+    {
+      "id": "r-00968246",
+      "source": "routes",
+      "line": "workshop[practice]{laminate}"
+    },
+    {
+      "id": "r-7dd34ba1",
+      "source": "routes",
+      "line": "workshop[practice]{mill}"
+    },
+    {
+      "id": "r-40539866",
+      "source": "routes",
+      "line": "arrive[dawn]{feeder.question}<garden>"
+    },
+    {
+      "id": "r-ebb062df",
+      "source": "routes",
+      "line": "arrive[night]{bins.scrap}<spell>"
+    },
+    {
+      "id": "r-b4b36892",
+      "source": "routes",
+      "line": "arrive[noon]{fence.figure}<character>"
+    },
+    {
+      "id": "r-ac6d9605",
+      "source": "routes",
+      "line": "arrive[wednesday]{table.wonder}<pantry>"
+    },
+    {
+      "id": "r-38673b02",
+      "source": "routes",
+      "line": "town[visitor]{library.table.card}"
+    },
+    {
+      "id": "r-3baba08a",
+      "source": "routes",
+      "line": "town[world]{districts.factions.sessions}"
+    },
+    {
+      "id": "p-agent-optimization",
+      "source": "plans",
+      "name": "agent-optimization",
+      "file": ".agents/plans/agent-optimization/index.spw",
+      "line": "#>agent_optimization[contract]{census.budget.gate}(agents)<smaller_read>"
+    },
+    {
+      "id": "p-agentic-dev-contracts",
+      "source": "plans",
+      "name": "agentic-dev-contracts",
+      "file": ".agents/plans/agentic-dev-contracts/index.spw",
+      "line": "#>agentic_dev_contracts[contract]{check_local.manifest}(scripts)<one_door>"
+    },
+    {
+      "id": "p-blog-blob-spw",
+      "source": "plans",
+      "name": "blog-blob-spw",
+      "file": ".agents/plans/blog-blob-spw/index.spw",
+      "line": "#>blog_blob_spw[prime]{post.starter}(blog)<first_post>"
+    },
+    {
+      "id": "p-brace-semantics",
+      "source": "plans",
+      "name": "brace-semantics",
+      "file": ".agents/plans/brace-semantics/index.spw",
+      "line": "#>brace_semantics[prime]{pairs.labels.serializer}(language)<one_reading>"
+    },
+    {
+      "id": "p-cauldron-lens-composition",
+      "source": "plans",
+      "name": "cauldron-lens-composition",
+      "file": ".agents/plans/cauldron-lens-composition/index.spw",
+      "line": "#>cauldron_lens_composition[prime]{lens.mix.receipt}(cauldron)<mode_slot>"
+    },
+    {
+      "id": "p-chrome-navigation-wonder",
+      "source": "plans",
+      "name": "chrome-navigation-wonder",
+      "file": ".agents/plans/chrome-navigation-wonder/index.spw",
+      "line": "#>chrome_navigation_wonder[prime]{header.rail.breadcrumbs}(shell)<way_back>"
+    },
+    {
+      "id": "p-color-motion",
+      "source": "plans",
+      "name": "color-motion",
+      "file": ".agents/plans/color-motion/index.spw",
+      "line": "#>color_motion[prime]{palette.timing.focus}(css)<one_key>"
+    },
+    {
+      "id": "p-component-region-personality",
+      "source": "plans",
+      "name": "component-region-personality",
+      "file": ".agents/plans/component-region-personality/index.spw",
+      "line": "#>component_region_personality[contract]{role.region.shape}(components)<harmony>"
+    },
+    {
+      "id": "p-copy-localization",
+      "source": "plans",
+      "name": "copy-localization",
+      "file": ".agents/plans/copy-localization/index.spw",
+      "line": "#>copy_localization[prime]{keys.terms.locale}(copy)<first_edition>"
+    },
+    {
+      "id": "p-core-css-spend-cut",
+      "source": "plans",
+      "name": "core-css-spend-cut",
+      "file": ".agents/plans/core-css-spend-cut/index.spw",
+      "line": "#>core_css_spend_cut[align]{first_paint.atmosphere}(core_css)<lighter_arrival>"
+    },
+    {
+      "id": "p-css-architecture-readability",
+      "source": "plans",
+      "name": "css-architecture-readability",
+      "file": ".agents/plans/css-architecture-readability/index.spw",
+      "line": "#>css_architecture_readability[prime]{ownership.banners.overlay}(css)<findable_dimension>"
+    },
+    {
+      "id": "p-css-cascade-stratification",
+      "source": "plans",
+      "name": "css-cascade-stratification",
+      "file": ".agents/plans/css-cascade-stratification/index.spw",
+      "line": "#>css_cascade_stratification[prime]{layers.readings}(bundles)<one_order>"
+    },
+    {
+      "id": "p-data-attribute-css-token-refinement",
+      "source": "plans",
+      "name": "data-attribute-css-token-refinement",
+      "file": ".agents/plans/data-attribute-css-token-refinement/index.spw",
+      "line": "#>data_attribute_css_token_refinement[align]{tokens.fallbacks}(css)<one_definition>"
+    },
+    {
+      "id": "p-deploy-module-graph",
+      "source": "plans",
+      "name": "deploy-module-graph",
+      "file": ".agents/plans/deploy-module-graph/index.spw",
+      "line": "#>deploy_module_graph[prime]{packs.pulls.schedule}(boot)<fewer_bytes>"
+    },
+    {
+      "id": "p-designer-conversation-canvas",
+      "source": "plans",
+      "name": "designer-conversation-canvas",
+      "file": ".agents/plans/designer-conversation-canvas/index.spw",
+      "line": "#>designer_conversation_canvas[prime]{annotation.specimen}(design)<named_review>"
+    },
+    {
+      "id": "p-ecosystem-architecture",
+      "source": "plans",
+      "name": "ecosystem-architecture",
+      "file": ".agents/plans/ecosystem-architecture/index.spw",
+      "line": "#>ecosystem_architecture[prime]{peer_kit.carries.releases}(cluster)<one_paint>"
+    },
+    {
+      "id": "p-engagement-clusters",
+      "source": "plans",
+      "name": "engagement-clusters",
+      "file": ".agents/plans/engagement-clusters/index.spw",
+      "line": "#>engagement_clusters[prime]{wakes.arming.clusters}(runtime)<quiet_arrival>"
+    },
+    {
+      "id": "p-factshift-center",
+      "source": "plans",
+      "name": "factshift-center",
+      "file": ".agents/plans/factshift-center/index.spw",
+      "line": "#>factshift_center[prime]{canvas.reader.tools}(app)<hyperindex>"
+    },
+    {
+      "id": "p-floating-chrome-stack",
+      "source": "plans",
+      "name": "floating-chrome-stack",
+      "file": ".agents/plans/floating-chrome-stack/index.spw",
+      "line": "#>floating_chrome_stack[audit]{rail.satchel.cauldron}(pocket)<one_expression>"
+    },
+    {
+      "id": "p-folio-worktable",
+      "source": "plans",
+      "name": "folio-worktable",
+      "file": ".agents/plans/folio-worktable/index.spw",
+      "line": "#>folio_worktable[prime]{week.calendar.primes}(folios)<soil>"
+    },
+    {
+      "id": "p-history-reflow",
+      "source": "plans",
+      "name": "history-reflow",
+      "file": ".agents/plans/history-reflow/index.spw",
+      "line": "#>history_reflow[prime]{episode.symbols}(commits)<readable_history>"
+    },
+    {
+      "id": "p-homonym-renaming",
+      "source": "plans",
+      "name": "homonym-renaming",
+      "file": ".agents/plans/homonym-renaming/index.spw",
+      "line": "#>homonym_renaming[prime]{settle.tempo.lexicon}(words)<one_meaning>"
+    },
+    {
+      "id": "p-interaction-grammar",
+      "source": "plans",
+      "name": "interaction-grammar",
+      "file": ".agents/plans/interaction-grammar/index.spw",
+      "line": "#>interaction_grammar[prime]{loop.hold.receipt}(gestures)<reward>"
+    },
+    {
+      "id": "p-landing-visual-hierarchy",
+      "source": "plans",
+      "name": "landing-visual-hierarchy",
+      "file": ".agents/plans/landing-visual-hierarchy/index.spw",
+      "line": "#>landing_visual_hierarchy[audit]{rank.promise.art}(landings)<one_next_move>"
+    },
+    {
+      "id": "p-layout-seat-squeeze",
+      "source": "plans",
+      "name": "layout-seat-squeeze",
+      "file": ".agents/plans/layout-seat-squeeze/index.spw",
+      "line": "#>layout_seat_squeeze[prime]{seats.squeeze.edges}(layout)<one_edge>"
+    },
+    {
+      "id": "p-literacy-precipitation-press",
+      "source": "plans",
+      "name": "literacy-precipitation-press",
+      "file": ".agents/plans/literacy-precipitation-press/index.spw",
+      "line": "#>literacy_precipitation_press[prime]{bulletin.spell}(press)<publication>"
+    },
+    {
+      "id": "p-midjourney-design-concepts",
+      "source": "plans",
+      "name": "midjourney-design-concepts",
+      "file": ".agents/plans/midjourney-design-concepts/index.spw",
+      "line": "#>midjourney_design_concepts[prime]{own_art.renders.intake}(images)<belongs_to_page>"
+    },
+    {
+      "id": "p-model-collaborator-lore-surfaces",
+      "source": "plans",
+      "name": "model-collaborator-lore-surfaces",
+      "file": ".agents/plans/model-collaborator-lore-surfaces/index.spw",
+      "line": "#>model_collaborator_lore_surfaces[prime]{terms.cast.lore}(collaboration)<consent_first>"
+    },
+    {
+      "id": "p-modular-experience-slices",
+      "source": "plans",
+      "name": "modular-experience-slices",
+      "file": ".agents/plans/modular-experience-slices/index.spw",
+      "line": "#>modular_experience_slices[contract]{slices.labs.scripts_off}(math)<pilot>"
+    },
+    {
+      "id": "p-module-contract-overhaul",
+      "source": "plans",
+      "name": "module-contract-overhaul",
+      "file": ".agents/plans/module-contract-overhaul/index.spw",
+      "line": "#>module_contract_overhaul[prime]{mounts.reads.writes.rests}(runtime)<declared_rest>"
+    },
+    {
+      "id": "p-neuroplasticity-topic",
+      "source": "plans",
+      "name": "neuroplasticity-topic",
+      "file": ".agents/plans/neuroplasticity-topic/index.spw",
+      "line": "#>neuroplasticity_topic[prime]{ideas.figures.sources}(topics)<learner>"
+    },
+    {
+      "id": "p-operator-resonance-alignment",
+      "source": "plans",
+      "name": "operator-resonance-alignment",
+      "file": ".agents/plans/operator-resonance-alignment/index.spw",
+      "line": "#>operator_resonance_alignment[prime]{sigils.chips.capture}(routes)<one_table>"
+    },
+    {
+      "id": "p-profile-character-card-development",
+      "source": "plans",
+      "name": "profile-character-card-development",
+      "file": ".agents/plans/profile-character-card-development/index.spw",
+      "line": "#>profile_character_card_development[prime]{cards.cast.sheet}(rpg_wednesday)<profile>"
+    },
+    {
+      "id": "p-promo-wonder-cycle",
+      "source": "plans",
+      "name": "promo-wonder-cycle",
+      "file": ".agents/plans/promo-wonder-cycle/index.spw",
+      "line": "#>promo_wonder_cycle[prime]{closes.offers.paths}(now)<what_you_leave_with>"
+    },
+    {
+      "id": "p-reference-assignment-template",
+      "source": "plans",
+      "name": "reference-assignment-template",
+      "file": ".agents/plans/reference-assignment-template/index.spw",
+      "line": "#>reference_assignment_template[prime]{brief.mentee}(practice)<first_brief>"
+    },
+    {
+      "id": "p-runtime-bootstrap-performance",
+      "source": "plans",
+      "name": "runtime-bootstrap-performance",
+      "file": ".agents/plans/runtime-bootstrap-performance/index.spw",
+      "line": "#>runtime_bootstrap_performance[prime]{boot.recalc.receipts}(runtime)<quiet_frames>"
+    },
+    {
+      "id": "p-runtime-plane-consolidation",
+      "source": "plans",
+      "name": "runtime-plane-consolidation",
+      "file": ".agents/plans/runtime-plane-consolidation/index.spw",
+      "line": "#>runtime_plane_consolidation[prime]{write.observe.schedule}(runtime)<one_lane>"
+    },
+    {
+      "id": "p-screenshot-semantics",
+      "source": "plans",
+      "name": "screenshot-semantics",
+      "file": ".agents/plans/screenshot-semantics/index.spw",
+      "line": "#>screenshot_semantics[prime]{still.line.capture}(stills)<carried_intent>"
+    },
+    {
+      "id": "p-semantic-copy-depth",
+      "source": "plans",
+      "name": "semantic-copy-depth",
+      "file": ".agents/plans/semantic-copy-depth/index.spw",
+      "line": "#>semantic_copy_depth[contract]{depth.register.expressions}(copy)<readable_depth>"
+    },
+    {
+      "id": "p-semantic-html-normalization",
+      "source": "plans",
+      "name": "semantic-html-normalization",
+      "file": ".agents/plans/semantic-html-normalization/index.spw",
+      "line": "#>semantic_html_normalization[prime]{landmarks.scripts_off.access}(html)<honest_page>"
+    },
+    {
+      "id": "p-settings-ornament-resonance",
+      "source": "plans",
+      "name": "settings-ornament-resonance",
+      "file": ".agents/plans/settings-ornament-resonance/index.spw",
+      "line": "#>settings_ornament_resonance[prime]{shelf.try_a_look}(settings)<seen_change>"
+    },
+    {
+      "id": "p-settings-theme-wiring",
+      "source": "plans",
+      "name": "settings-theme-wiring",
+      "file": ".agents/plans/settings-theme-wiring/index.spw",
+      "line": "#>settings_theme_wiring[audit]{controls.readers}(settings)<no_dead_control>"
+    },
+    {
+      "id": "p-shell-model-vocabulary-consolidation",
+      "source": "plans",
+      "name": "shell-model-vocabulary-consolidation",
+      "file": ".agents/plans/shell-model-vocabulary-consolidation/index.spw",
+      "line": "#>shell_model_vocabulary_consolidation[prime]{glossary.pocket.chrome}(shell)<one_word>"
+    },
+    {
+      "id": "p-site-source-layout",
+      "source": "plans",
+      "name": "site-source-layout",
+      "file": ".agents/plans/site-source-layout/index.spw",
+      "line": "#>site_source_layout[prime]{bins.ships}(repo)<one_list>"
+    },
+    {
+      "id": "p-site-starter-component-kit",
+      "source": "plans",
+      "name": "site-starter-component-kit",
+      "file": ".agents/plans/site-starter-component-kit/index.spw",
+      "line": "#>site_starter_component_kit[prime]{compose.inventory.peer}(kit)<second_site>"
+    },
+    {
+      "id": "p-smut-today-crew",
+      "source": "plans",
+      "name": "smut-today-crew",
+      "file": ".agents/plans/smut-today-crew/index.spw",
+      "line": "#>smut_today_crew[prime]{crew.draw.pins}(smut.today)<daily_world>"
+    },
+    {
+      "id": "p-spellcraft-authoring",
+      "source": "plans",
+      "name": "spellcraft-authoring",
+      "file": ".agents/plans/spellcraft-authoring/index.spw",
+      "line": "#>spellcraft_authoring[prime]{select.compose.cast}(cauldron)<operators>"
+    },
+    {
+      "id": "p-spw-inquiry-loop",
+      "source": "plans",
+      "name": "spw-inquiry-loop",
+      "file": ".agents/plans/spw-inquiry-loop/index.spw",
+      "line": "#>spw_inquiry_loop[contract]{probe.answer.refactor}(wonders)<settled_question>"
+    },
+    {
+      "id": "p-spw-metaphysical-language",
+      "source": "plans",
+      "name": "spw-metaphysical-language",
+      "file": ".agents/plans/spw-metaphysical-language/index.spw",
+      "line": "#>spw_metaphysical_language[prime]{passes.codex.drift}(language)<theory>"
+    },
+    {
+      "id": "p-spw-quest",
+      "source": "plans",
+      "name": "spw-quest",
+      "file": ".agents/plans/spw-quest/index.spw",
+      "line": "#>spw_quest[prime]{guide.pivot.build}(worker)<clarity>"
+    },
+    {
+      "id": "p-state-block-projections",
+      "source": "plans",
+      "name": "state-block-projections",
+      "file": ".agents/plans/state-block-projections/index.spw",
+      "line": "#>state_block_projections[prime]{lens.seat.receipt}(home)<readable_state>"
+    },
+    {
+      "id": "p-topic-building-blocks",
+      "source": "plans",
+      "name": "topic-building-blocks",
+      "file": ".agents/plans/topic-building-blocks/index.spw",
+      "line": "#>topic_building_blocks[align]{course.shelf.figures}(topics)<path>"
+    },
+    {
+      "id": "p-workers-wonder-kit",
+      "source": "plans",
+      "name": "workers-wonder-kit",
+      "file": ".agents/plans/workers-wonder-kit/index.spw",
+      "line": "#>workers_wonder_kit[prime]{shell.ring.pinch.carry}(workers)<the_set>"
+    }
+  ]
+}

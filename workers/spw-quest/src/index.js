@@ -15,6 +15,7 @@ import { displayMenu, displayScript } from "./display.js";
 import { handleParser, isParserPath } from "./parser-releases.js";
 import { SWITCH_CSS, parserSwitch, switchBanner, switchLoader, switchModulePath } from "./parser-switch.js";
 import { FACTSHIFT_LIMIT, SPECIMENS_CSS, factshiftHref, specimenById, specimenState, specimensBody } from "./specimens.js";
+import { SPECIMENS } from "./specimens-data.js";
 import { renderConstructs } from "./constructs.js";
 import { pivotState, renderPivot } from "./pivot.js";
 import { physicsState, renderPhysics } from "./physics.js";
@@ -700,6 +701,10 @@ async function handleQuest(request, url) {
     response = jsonResponse({ version: VERSION, schema: "quest.v2", ...QUEST, prompts: QUEST_PROMPTS }, "public, max-age=300");
   } else if (url.pathname === "/prompts.json") {
     response = jsonResponse({ version: VERSION, schema: "prompts.v1", prompts: QUEST_PROMPTS }, "public, max-age=300");
+  } else if (url.pathname === "/specimens.json") {
+    // The shelf in one file, so a crawler reads the corpus in one request instead of walking its views (src/crawl.js).
+    const specimens = SPECIMENS.map(({ id, source, name, file, group, line, note }) => ({ id, source, name, file, group, line, note }));
+    response = jsonResponse({ version: VERSION, schema: "specimens.v1", count: specimens.length, specimens }, "public, max-age=300");
   } else if (url.pathname === "/install") {
     // A phone link lands here first, so /install registers the shell too (worker-src 'self' only).
     response = page(renderInstall(), { shell: true });
