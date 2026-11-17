@@ -2,7 +2,7 @@
 // by hand; the composer it imports (compose.js, vocabulary.js, materials.js) is
 // carried from src/ by carry.mjs. With scripts off the page shows its first
 // shot and its links still lead to each word's address.
-import { FIRST_SHOT, SUBJECT_DEPTH, addressOf, canvasHrefOf, stepShot, cornersOf, geometryOf, nearestFocus, nearestFrom, nearestSheet, promptOf, readShot, slug, spwOf, tempoAt, tempoOf } from "/compose.js";
+import { FIRST_SHOT, SUBJECT_DEPTH, addressOf, canvasHrefOf, expressionHtml, stepKey, stepShot, cornersOf, geometryOf, nearestFocus, nearestFrom, nearestSheet, promptOf, readShot, slug, slotText, spwOf, tempoAt, tempoOf } from "/compose.js";
 import { LADDERS, SHAPES, TEMPO } from "/vocabulary.js";
 import { hasSetRing, mountSetRing, nearestSeed, openSetRing, slug as pathWord, spw64 } from "/set-ring.js";
 import { attachPinch, wasPinch } from "/pinch.js";
@@ -22,6 +22,11 @@ let rackTimer = 0;
 /** What a hand is dragging: "focus", "light" or "tempo"; and whether it moved, so the click that ends a drag is not a tap. */
 let dragging = "";
 let dragged = false;
+/** A scrub across a bracket in the expression: the ladder it holds, where the hand started, and how many words it has crossed. */
+let scrub = null;
+let scrubbed = false;
+/** One word of travel per this many pixels, the same kind of step the lamp takes. */
+const SCRUB_PX = 28;
 
 /** Today in Chicago, where the season is kept, as YYYY-MM-DD. */
 const today = () => new Intl.DateTimeFormat("en-CA", { timeZone: "America/Chicago", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
@@ -101,9 +106,8 @@ function render() {
   const { midjourney, plain } = promptOf(shot);
   $("prompt").textContent = midjourney;
   $("plain").textContent = plain;
-  $("spw").textContent = spwOf(shot);
+  paintExpr();
   $("vf-desc").textContent = plain;
-  $("address").setAttribute("href", addressOf(shot));
   $("shot-label").textContent = shot.named ? "Your shot" : "Today's shot";
   $("shot-day").textContent = shot.named ? "" : shot.day;
   svg.dataset.light = slug(shot.light);
@@ -124,7 +128,9 @@ function render() {
   svg.style.setProperty("--fx", `${target.focus.x}px`);
   svg.style.setProperty("--fy", `${target.focus.y}px`);
   sharpen(target);
-  moveTo(target);
+  // A scrub steps through words; the frame follows at once, as a handle does, and eases only when the hand lets go.
+  if (scrub) { cancelAnimationFrame(tweenFrame); drawn = target; apply(target); }
+  else moveTo(target);
   rackFocus();
   for (const row of document.querySelectorAll(".ladder")) {
     const key = row.dataset.key;
@@ -138,6 +144,83 @@ function render() {
       else link.removeAttribute("aria-current");
     }
   }
+}
+
+/** The expression: each bracket is the word it holds. The nodes stay, so a scrub keeps its hand. */
+function paintExpr() {
+  const expr = $("expr");
+  if (!expr) return;
+  if (!expr.querySelector(".slot")) expr.innerHTML = expressionHtml(shot);
+  // The subject is the address's own words; the page may arrive carrying another's.
+  const subject = expr.querySelector(".subject");
+  if (subject && subject.textContent !== `{${shot.subject}}`) subject.textContent = `{${shot.subject}}`;
+  for (const slot of expr.querySelectorAll(".slot")) {
+    const key = slot.dataset.key;
+    const word = slotText(shot, key);
+    const shown = slot.querySelector(".word");
+    if (shown && shown.textContent !== word) shown.textContent = word;
+    const href = addressOf({ ...shot, ...stepKey(shot, key, 1) });
+    if (slot.getAttribute("href") !== href) slot.setAttribute("href", href);
+    slot.classList.toggle("scrubbing", scrub?.key === key);
+  }
+}
+
+/**
+ * The brackets. A drag sideways steps that ladder, one word per SCRUB_PX, and
+ * the frame follows; letting go keeps the word. A tap, or the arrow keys, steps
+ * once. The link underneath is the next word, for when scripts are off.
+ */
+function wireExpr() {
+  const expr = $("expr");
+  if (!expr) return;
+  const end = (event) => {
+    if (!scrub) return;
+    const slot = expr.querySelector(`[data-key="${scrub.key}"]`);
+    slot?.classList.remove("scrubbing");
+    const done = scrub;
+    scrub = null;
+    if (!done.moved) return;
+    scrubbed = true;
+    commit(stepKey(done.base, done.key, done.delta));
+    if (event?.pointerId != null) slot?.releasePointerCapture?.(event.pointerId);
+  };
+  expr.addEventListener("pointerdown", (event) => {
+    const slot = event.target.closest?.(".slot");
+    if (!slot || event.button !== 0) return;
+    event.preventDefault();
+    scrub = { key: slot.dataset.key, x: event.clientX, base: shot, delta: 0, moved: false };
+    slot.classList.add("scrubbing");
+    slot.setPointerCapture(event.pointerId);
+  });
+  expr.addEventListener("pointermove", (event) => {
+    if (!scrub) return;
+    const delta = Math.round((event.clientX - scrub.x) / SCRUB_PX);
+    if (!scrub.moved && Math.abs(event.clientX - scrub.x) < 6) return;
+    if (delta === scrub.delta && scrub.moved) return;
+    scrub.moved = true;
+    scrub.delta = delta;
+    shot = { ...scrub.base, ...stepKey(scrub.base, scrub.key, delta) };
+    render();
+    expr.querySelector(`[data-key="${scrub.key}"]`)?.classList.add("scrubbing");
+  });
+  expr.addEventListener("pointerup", end);
+  expr.addEventListener("pointercancel", end);
+  expr.addEventListener("click", (event) => {
+    const slot = event.target.closest?.(".slot");
+    if (!slot || event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+    event.preventDefault();
+    if (scrubbed) { scrubbed = false; return; }
+    commit(stepKey(shot, slot.dataset.key, 1));
+  });
+  expr.addEventListener("keydown", (event) => {
+    const slot = event.target.closest?.(".slot");
+    if (!slot) return;
+    const by = { ArrowRight: 1, ArrowUp: 1, ArrowLeft: -1, ArrowDown: -1 }[event.key];
+    if (!by) return;
+    event.preventDefault();
+    event.stopPropagation();
+    commit(stepKey(shot, slot.dataset.key, by));
+  });
 }
 
 /** Keep a change: the address becomes the shot's, so a reload or a shared link is this shot. */
@@ -272,22 +355,21 @@ function wire() {
     if (key === "material") commit({ material: MATERIALS.find((m) => m.slug === link.dataset.word) ?? null });
     else commit({ [key]: link.dataset.word });
   });
-  const copy = $("copy");
-  copy.hidden = false;
-  copy.addEventListener("click", async () => {
-    const text = $("prompt").textContent;
+  wireExpr();
+  const prompt = $("prompt");
+  prompt?.closest(".prompt")?.addEventListener("click", async () => {
+    const el = prompt.closest(".prompt");
     try {
-      await navigator.clipboard.writeText(text);
-      copy.textContent = "Copied";
+      await navigator.clipboard.writeText(prompt.textContent);
     } catch {
       const range = document.createRange();
-      range.selectNodeContents($("prompt"));
+      range.selectNodeContents(prompt);
       const selection = window.getSelection();
       selection.removeAllRanges();
       selection.addRange(range);
-      copy.textContent = "Selected: copy it";
     }
-    setTimeout(() => { copy.textContent = "Copy prompt"; }, 1600);
+    el.dataset.copied = "";
+    setTimeout(() => { delete el.dataset.copied; }, 1200);
   });
   reduce.addEventListener?.("change", () => { apply(drawn); rackFocus(); });
 }

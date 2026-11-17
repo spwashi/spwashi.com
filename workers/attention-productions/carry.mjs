@@ -24,6 +24,7 @@ import { neighborLine } from "../site-hub-next/src/set.js";
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ASSETS = path.join(HERE, "assets");
 const ORIGIN = "https://attention.productions";
+const BLURB = "Each address is a shot, written as an image prompt.";
 const SHARED = ["vocabulary.js", "compose.js", "materials.js"];
 
 const MATERIALS_MODULE = `// Written by workers/attention-productions/carry.mjs from texture.website's vocabulary; do not edit.
@@ -91,7 +92,7 @@ function ladders(c, v, shot) {
   const row = (key, words, label = key, note = "") => `<div class="ladder" data-key="${key}"><span class="key">${escapeHtml(label)}</span>${words.map(([word, value, href]) => `<a href="${escapeHtml(href)}" data-word="${escapeHtml(value)}"${value === (key === "material" ? shot.material?.slug ?? "" : shot[key]) ? ' aria-current="true"' : ""}>${escapeHtml(word)}</a>`).join("")}${note}</div>`;
   const rows = Object.entries(v.LADDERS).map(([key, words]) => row(key, words.map((word) => [word, word, c.addressOf({ ...shot, [key]: word })])));
   const offer = v.MATERIAL_OFFER.map((s) => c.MATERIAL_BY_SLUG_FOR_CARRY(s));
-  rows.push(row("material", [["none", "", c.addressOf({ ...shot, material: null })], ...offer.map((m) => [m.word, m.slug, c.addressOf({ ...shot, material: m })])], "surface", `<a class="out" href="https://texture.website/">from texture.website ↗</a>`));
+  rows.push(row("material", [["none", "", c.addressOf({ ...shot, material: null })], ...offer.map((m) => [m.word, m.slug, c.addressOf({ ...shot, material: m })])], "surface", `<a class="out" href="https://texture.website/">texture ↗</a>`));
   return rows.join("\n        ");
 }
 
@@ -104,12 +105,12 @@ async function page(c, v) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Attention Productions</title>
-  <meta name="description" content="Attention Productions is the name for the pictures: a feature in 2027, and a season of daily promo from October 1 through New Year. Each address here is a shot, written as an image prompt.">
+  <meta name="description" content="${BLURB}">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="${ORIGIN}/">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <meta property="og:title" content="Attention Productions">
-  <meta property="og:description" content="Attention Productions is the name for the pictures: a feature in 2027, and a season of daily promo from October 1 through New Year. Each address here is a shot, written as an image prompt.">
+  <meta property="og:description" content="${BLURB}">
   <link rel="stylesheet" href="/attention.css">
   <link rel="stylesheet" href="/lights.css">
   <link rel="stylesheet" href="/set-ring.css">
@@ -124,36 +125,31 @@ async function page(c, v) {
     <header class="head">
       <p class="kicker">attention.productions</p>
       <h1>Attention Productions</h1>
-      <p class="lede">Attention Productions is the name for the pictures. A feature-length film is due in 2027.</p>
     </header>
     <section class="shot" aria-labelledby="shot-title">
       <h2 id="shot-title" class="label"><span id="shot-label">A shot</span> <span id="shot-day" class="day"></span></h2>
       <figure class="finder">
       ${viewfinder(c, shot)}
-        <figcaption class="note">The address is the shot: the path is the subject, and each word below goes into the prompt. Point at the frame to pull focus. Drag the ring to move the subject, the lamp to move the light, and the end of the bar to slow or quicken the move; tap or use the arrow keys to put the subject on a third.</figcaption>
+        <figcaption class="note">The path is the subject.</figcaption>
       </figure>
       <div class="take">
-        <p class="prompt"><code id="prompt">${escapeHtml(midjourney)}</code></p>
-        <p class="ways"><button type="button" id="copy" hidden>Copy prompt</button> <a id="address" href="${escapeHtml(c.addressOf(shot))}">This shot's address</a> <a id="canvas" href="${escapeHtml(c.canvasHrefOf(shot))}">Open it on the canvas ↗</a></p>
-        <details class="more"><summary>Plain prompt and Spw</summary><p><code id="plain">${escapeHtml(plain)}</code></p><pre id="spw">${escapeHtml(c.spwOf(shot))}</pre></details>
+        <div class="slip">
+          <p class="prompt"><code id="prompt">${escapeHtml(midjourney)}</code></p>
+          <div class="expr" id="expr">${c.expressionHtml(shot)}</div>
+        </div>
+        <details class="more"><summary>Plain</summary><p><code id="plain">${escapeHtml(plain)}</code></p></details>
       </div>
       <nav class="ladders" aria-label="The words of the shot">
         ${ladders(c, v, shot)}
       </nav>
     </section>
-    <section class="season">
-      <p>The production season runs from October 1 through New Year: a little promo every day. A moment holds one concept. That rule is <a href="https://mutex.buzz/">mutex.buzz</a>. The frame is <a href="https://factshift.center/">factshift.center</a>. boon, bane, and bone are that same frame with a pull: toward, away, or still. A sponsored viewport can show a picture. A physics setting is a query on the frame, once those three names serve it.</p>
-      <p class="actions">
-        <a href="https://autonomous.feedback/attention.productions">Leave a note</a>
-      </p>
-    </section>
     <figure class="held">
       <iframe src="https://mutex.buzz/now/" title="What holds the frame now, from mutex.buzz" loading="lazy"></iframe>
-      <figcaption>What holds the frame this cycle, from <a href="https://mutex.buzz/">mutex.buzz</a>. When nothing else holds it, a laminated folio does. <a href="https://mutex.buzz/now/">Open it on its own</a>.</figcaption>
+      <figcaption><a href="https://mutex.buzz/">mutex.buzz</a> · <a href="https://mutex.buzz/now/">on its own</a></figcaption>
     </figure>
     <footer>
       <p>Nearby: ${neighborLine(["grain", "frame", "story"])}</p>
-      <p><a href="/ecosystem.json">The set, as data</a> · <a href="/llms.txt">The shot, for a model</a></p>
+      <p><a id="canvas" href="${escapeHtml(c.canvasHrefOf(shot))}">Canvas</a> · <a href="/ecosystem.json">ecosystem.json</a> · <a href="/llms.txt">llms.txt</a> · <a href="https://autonomous.feedback/attention.productions">Leave a note</a></p>
     </footer>
   </main>
 </body>
@@ -171,9 +167,9 @@ ${Object.entries(v.SHAPES.light).map(([word, l]) => `.viewfinder[data-light="${c
 function llms(v) {
   return `# attention.productions
 
-Attention Productions is the name for the pictures: a feature in 2027, and a season of daily promo from October 1 through New Year.
+${BLURB}
 
-The page is a shot composer for image prompts. The address is the shot: the path is the subject, a hyphen is a space, and each ladder is a query key whose value is one of its words (hyphens for spaces). What the address leaves out, the date picks; day=2026-12-01 fixes a date.
+The path is the subject, a hyphen is a space, and each ladder is a query key whose value is one of its words (hyphens for spaces). What the address leaves out, the date picks; day=2026-12-01 fixes a date.
 
 ${Object.entries(v.LADDERS).map(([key, words]) => `- ${key}: ${words.join(", ")}`).join("\n")}
 - material: any of texture.website's listed material words (its /vocabulary.json); the prompt then carries --sref with that material's image from texture.website and ${v.STYLE_WEIGHT}.
