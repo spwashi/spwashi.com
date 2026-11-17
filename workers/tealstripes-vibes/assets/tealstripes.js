@@ -205,31 +205,53 @@ function writeExpression(v) {
   const expr = $("expr");
   expr.replaceChildren();
   const text = (t) => expr.append(document.createTextNode(t));
+  const tok = (cls, op, label) => {
+    const span = document.createElement("span");
+    span.className = cls;
+    if (op) span.dataset.op = op;
+    span.textContent = label;
+    expr.append(span);
+  };
   const slot = (name, label) => {
+    const list = choices(name);
+    const idx = Math.max(0, list.findIndex((c) => same(c, valueNow(name))));
     const button = document.createElement("button");
     button.type = "button";
     button.className = "slot";
     button.dataset.slot = name;
+    button.setAttribute("role", "slider");
+    button.setAttribute("aria-label", name);
+    button.setAttribute("aria-valuemin", "0");
+    button.setAttribute("aria-valuemax", String(Math.max(0, list.length - 1)));
+    button.setAttribute("aria-valuenow", String(idx));
+    button.setAttribute("aria-valuetext", label);
     button.textContent = label;
     button.setAttribute("aria-pressed", String(held?.slot === name));
-    button.title = `Hold the ${name}: scan its choices, reroll it, keep it`;
+    button.title = `Hold ${name} · drag sideways or use arrows to scrub`;
     expr.append(button);
   };
-  text("^vibe[");
+  tok("mark", "integration", "^");
+  tok("mark", "label", "vibe");
+  tok("br", "mode", "[");
   slot("seed", p.seed);
-  text(`]{${[maskLabel(p.mask), ...p.filters].join(",")}}<`);
+  tok("br", "mode", "]");
+  tok("br", "direction", "{");
+  text([maskLabel(p.mask), ...p.filters].join(","));
+  tok("br", "direction", "}");
+  tok("br", "concept", "<");
   slot("palette", said("palette", v.palette));
-  text("|");
+  tok("br", "concept", "|");
   slot("rhythm", said("rhythm", v.rhythm));
-  text("|");
+  tok("br", "concept", "|");
   slot("angle", said("angle", v.angle));
-  text("|");
+  tok("br", "concept", "|");
   slot("drift", said("drift", v.motion.drift));
   text(" ");
   slot("breath", said("breath", v.motion.breath));
-  text("|");
+  tok("br", "concept", "|");
   slot("grain", said("grain", v.grain.amount));
-  text(` ${v.grain.kind}|${v.plate || "-"}>`);
+  text(` ${v.grain.kind}|${v.plate || "-"}`);
+  tok("br", "concept", ">");
 }
 
 const choices = (slot) => (slot === "seed" ? Object.keys(SEEDS) : choicesFor(slot, tune(vibe(place.seed, place.mask, place.filters), place.tuning)));
@@ -312,7 +334,64 @@ function letGo() {
 }
 
 function wireSlots() {
+  let scrubbedSlot = false;
+  $("expr").addEventListener("pointerdown", (event) => {
+    const button = event.target.closest?.("button.slot");
+    if (!button || (event.button && event.button !== 0)) return;
+    const slotName = button.dataset.slot;
+    let lastX = event.clientX;
+    let acc = 0;
+    let moved = false;
+    const onMove = (ev) => {
+      const dx = ev.clientX - lastX;
+      lastX = ev.clientX;
+      acc += dx;
+      while (Math.abs(acc) >= 24) {
+        const dir = acc > 0 ? 1 : -1;
+        acc -= dir * 24;
+        moved = true;
+        scrubbedSlot = true;
+        if (held?.slot !== slotName) {
+          trying = null;
+          held = { slot: slotName };
+        }
+        scan(dir);
+        $("expr").querySelector(`button.slot[data-slot="${slotName}"]`)?.classList.add("scrubbing");
+      }
+    };
+    const onUp = () => {
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onUp);
+      window.removeEventListener("pointercancel", onUp);
+      if (moved) {
+        const active = $("expr").querySelector(`button.slot[data-slot="${slotName}"]`);
+        active?.classList.remove("scrubbing");
+        active?.focus();
+        say(`Scrubbing ${slotName}: Enter or Keep saves, Escape lets go.`);
+        setTimeout(() => { scrubbedSlot = false; }, 0);
+      }
+    };
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+    window.addEventListener("pointercancel", onUp);
+  });
+  $("expr").addEventListener("keydown", (event) => {
+    const button = event.target.closest?.("button.slot");
+    if (!button) return;
+    const dir = event.key === "ArrowRight" || event.key === "ArrowUp" ? 1 : event.key === "ArrowLeft" || event.key === "ArrowDown" ? -1 : 0;
+    if (!dir) return;
+    event.preventDefault();
+    event.stopPropagation();
+    const slotName = button.dataset.slot;
+    if (held?.slot !== slotName) {
+      trying = null;
+      held = { slot: slotName };
+    }
+    scan(dir);
+    $("expr").querySelector(`button.slot[data-slot="${slotName}"]`)?.focus();
+  });
   $("expr").addEventListener("click", (event) => {
+    if (scrubbedSlot) { scrubbedSlot = false; return; }
     const button = event.target.closest?.("button.slot");
     if (button) holdSlot(button.dataset.slot);
   });

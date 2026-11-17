@@ -125,9 +125,22 @@ export function stepKey(shot, key, by = 1) {
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
 /** The shot as Spw, with each ladder's word a link to the next word on that ladder. */
+const MARK_OP = { "!": "action", "^": "integration", "=": "configuration", "~": "potential", "%": "measure", "@": "perspective" };
+const BRACKET_OP = { shot: "action", light: "scene", lens: "concept", ratio: "mode", focus: "mode", from: "mode", move: "mode", tempo: "mode", material: "concept" };
+
+/**
+ * The interactive Spw expression inside the card: each slot is an <a class="slot">
+ * whose fallback link steps forward; JS handles horizontal drag scrubbing
+ * and vertical dragging without stealing page scroll.
+ */
 export function expressionHtml(shot) {
   const slot = (key) => ({ key, text: slotText(shot, key) });
-  const mark = (text, cls = "") => ({ text, cls });
+  const mark = (text, cls = "") => {
+    const trimmed = text.trim();
+    const head = trimmed[0];
+    const op = cls ? "" : (MARK_OP[head] || (head === "{" || head === "}" ? "direction" : ""));
+    return { text, cls, op };
+  };
   const glue = (...parts) => ({ glue: true, parts });
   const free = (...parts) => ({ glue: false, parts });
   const lines = [
@@ -136,10 +149,12 @@ export function expressionHtml(shot) {
     [glue(mark("@material"), slot("material"))],
   ];
   const one = (part) => {
-    if (!part.key) return `<span class="mark${part.cls ? ` ${part.cls}` : ""}">${esc(part.text)}</span>`;
+    if (!part.key) return `<span class="mark${part.cls ? ` ${part.cls}` : ""}"${part.op ? ` data-op="${part.op}"` : ""}>${esc(part.text)}</span>`;
     const [open, close] = BRACKET[part.key];
     const href = addressOf({ ...shot, ...stepKey(shot, part.key, 1) });
-    const brackets = `${open ? `<span class="br">${esc(open)}</span>` : ""}<span class="word">${esc(part.text)}</span>${close ? `<span class="br">${esc(close)}</span>` : ""}`;
+    const brOp = BRACKET_OP[part.key] || "";
+    const brAttr = brOp ? ` data-op="${brOp}"` : "";
+    const brackets = `${open ? `<span class="br"${brAttr}>${esc(open)}</span>` : ""}<span class="word">${esc(part.text)}</span>${close ? `<span class="br"${brAttr}>${esc(close)}</span>` : ""}`;
     return `<a class="slot" data-key="${part.key}" href="${esc(href)}">${brackets}</a>`;
   };
   const group = (item) => `<span class="${item.glue ? "glue" : "free"}">${item.parts.map(one).join("")}</span>`;

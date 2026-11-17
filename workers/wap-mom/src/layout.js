@@ -43,8 +43,9 @@ const STYLE = `
   body {
     margin: 0; background: var(--paper); color: var(--ink);
     font: 1.1rem/1.62 var(--serif); font-variant-numeric: oldstyle-nums proportional-nums;
+    overflow-x: clip;
   }
-  main { width: min(36rem, calc(100% - 2rem)); margin: 0 auto; padding: 1.6rem 0 3rem; }
+  main { width: min(36rem, calc(100% - 2rem)); margin: 0 auto; padding: 1.6rem env(safe-area-inset-right) 3rem env(safe-area-inset-left); }
   a { color: inherit; text-decoration-color: var(--accent); text-underline-offset: .18em; }
   a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   .caps { font-variant-caps: all-small-caps; letter-spacing: .07em; }
@@ -137,6 +138,7 @@ const STYLE = `
   .lead h2 { font-size: clamp(1.8rem, 6vw, 2.3rem); }
   .back { list-style: none; padding: 0; margin: 0; }
   .back li { padding: .55rem 0; border-bottom: 1px solid var(--faint); }
+  .back a { display: inline-flex; align-items: center; min-block-size: 44px; }
   .back .no { display: block; color: var(--muted); font-size: .92rem; font-variant-caps: all-small-caps; letter-spacing: .07em; }
   .supplement { margin: 2rem 0 0; padding: .9rem 1rem; border: 1px solid var(--faint); border-top: 3px double var(--rule); background: var(--card); --accent: var(--rise); }
   .supplement .expansion { text-align: left; font-size: .95rem; }

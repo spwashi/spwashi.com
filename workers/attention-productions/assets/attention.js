@@ -161,6 +161,9 @@ function paintExpr() {
     if (shown && shown.textContent !== word) shown.textContent = word;
     const href = addressOf({ ...shot, ...stepKey(shot, key, 1) });
     if (slot.getAttribute("href") !== href) slot.setAttribute("href", href);
+    slot.setAttribute("role", "slider");
+    slot.setAttribute("aria-label", key);
+    slot.setAttribute("aria-valuetext", word);
     slot.classList.toggle("scrubbing", scrub?.key === key);
   }
 }

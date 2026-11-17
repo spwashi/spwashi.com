@@ -163,6 +163,8 @@ test('into a line and between lines: its parts as handles, the operators primed 
   // An operator in front: added, or replacing the mark there; a frame is left alone.
   assert.equal(withFrontMark(line, { sigil: '~' }), '~garden[care]{seed}');
   assert.equal(withFrontMark('?garden[care]{seed}', { sigil: '!' }), '!garden[care]{seed}');
+  assert.equal(withFrontMark('#:garden[care]{seed}', { sigil: '~' }), '~garden[care]{seed}');
+  assert.equal(withFrontMark('#!garden[care]{seed}', { sigil: '?' }), '?garden[care]{seed}');
   assert.equal(withFrontMark('#>plan[prime]{a}', { sigil: '~' }), null);
   const primed = await text(`/pivot?line=${encodeURIComponent(line)}&op=potential`);
   assertBalanced(primed);

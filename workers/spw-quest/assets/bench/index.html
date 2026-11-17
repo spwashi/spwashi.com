@@ -383,10 +383,17 @@
     button.door { flex: 1 1 9rem; align-items: flex-start; margin-top: .6rem; font: inherit; text-align: left; cursor: pointer; }
     footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--line); }
     @media (max-width: 40rem) {
+      main { padding-inline: max(.85rem, env(safe-area-inset-left)); padding-right: max(.85rem, env(safe-area-inset-right)); }
       h1 { font-size: 1.55rem; }
       .weather { font-size: 2.2rem; }
       .codeblock pre { font-size: .78rem; }
       fieldset { padding: .6rem .7rem .7rem; }
+      .actions { display: grid; grid-template-columns: 1fr; }
+      .actions > *, .actions button, .actions a { width: 100%; min-height: 44px; }
+      .score li { flex-wrap: wrap; }
+    }
+    @media (pointer: coarse) {
+      button, .door, summary, input[type="submit"] { min-height: 44px; }
     }
     @media (min-width: 60rem) {
       main { padding-top: 2.4rem; }
@@ -963,7 +970,7 @@
       <span class="read">read here as <code>word { 1 part } &amp;  word…</code></span>
     </li>
     <li>
-      <code class="line">you<span data-t="perspective">@</span>guide</code>
+      <code class="line"><span data-t="perspective">you</span><span data-t="perspective">@</span>guide</code>
       <span class="presses">@ perspective, unspaced: context @ subject</span>
       <a class="open" href="https://factshift.center/?spw=you%40guide">on the canvas</a>
       <span class="look">the guide seen from you</span>

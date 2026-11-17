@@ -8,9 +8,9 @@ export const ARCS = Object.freeze({
     90
   ],
   "total": [
-    23,
-    43,
-    681
+    36,
+    56,
+    694
   ],
   "lenses": [
     {
@@ -33,6 +33,17 @@ export const ARCS = Object.freeze({
       ],
       "example": "screenshot[record]{ask.offer.agreement.reference}",
       "route": "/",
+      "rising": true
+    },
+    {
+      "key": "direction",
+      "counts": [
+        2,
+        2,
+        3
+      ],
+      "example": "workbench[direction]{kernel.policy.slots}<align>",
+      "route": "/projects/spw-workbench/",
       "rising": true
     },
     {
@@ -111,17 +122,6 @@ export const ARCS = Object.freeze({
       "example": "folio[return]{rescan.card}(october_04)<shelf>",
       "route": "/design/folios/october-2026/",
       "rising": false
-    },
-    {
-      "key": "surface",
-      "counts": [
-        1,
-        1,
-        5
-      ],
-      "example": "material[surface]{press ~> answer}",
-      "route": "/design/materials/",
-      "rising": false
     }
   ],
   "projections": [
@@ -135,6 +135,39 @@ export const ARCS = Object.freeze({
       "example": "panel[october]{face.stack}<shelf>",
       "route": "/design/folios/october-2026/",
       "rising": false
+    },
+    {
+      "key": "align",
+      "counts": [
+        3,
+        3,
+        3
+      ],
+      "example": "kernel[separation]{seed.policy.tokens}<align>",
+      "route": "/projects/spw-workbench/",
+      "rising": true
+    },
+    {
+      "key": "workbench",
+      "counts": [
+        2,
+        3,
+        3
+      ],
+      "example": "workbench[context]{digraph.combinator}<workbench>",
+      "route": "/projects/spw-workbench/",
+      "rising": false
+    },
+    {
+      "key": "audit",
+      "counts": [
+        2,
+        2,
+        2
+      ],
+      "example": "corpus[parse]{clean.error.degrade}<audit>",
+      "route": "/projects/spw-workbench/",
+      "rising": true
     },
     {
       "key": "paragraph",
@@ -156,6 +189,17 @@ export const ARCS = Object.freeze({
       ],
       "example": "operator[atlas]{prime;traverse;precipitate}(brace)<anchor>",
       "route": "/topics/software/spw/",
+      "rising": false
+    },
+    {
+      "key": "seed",
+      "counts": [
+        1,
+        1,
+        3
+      ],
+      "example": "workbench[systems.console]{eventPolicy.tokenSpans}<seed>",
+      "route": "/projects/spw-workbench/",
       "rising": false
     },
     {
@@ -181,58 +225,14 @@ export const ARCS = Object.freeze({
       "rising": false
     },
     {
-      "key": "studio",
+      "key": "prose",
       "counts": [
-        0,
+        1,
         1,
         2
       ],
-      "example": "folio[ask]{card.reply}<studio>",
-      "route": "/design/folios/october-2026/",
-      "rising": false
-    },
-    {
-      "key": "china",
-      "counts": [
-        0,
-        0,
-        11
-      ],
-      "example": "theory[mohist_logic]{names.distinctions.analogy}<china>",
-      "route": "/topics/math/logic/",
-      "rising": false
-    },
-    {
-      "key": "receipt",
-      "counts": [
-        0,
-        0,
-        11
-      ],
-      "example": "spell[wander]{seed.route.hold.cast.notice.upkeep}(bench)<receipt>",
-      "route": "/design/experiments/spellcraft/",
-      "rising": false
-    },
-    {
-      "key": "india",
-      "counts": [
-        0,
-        0,
-        7
-      ],
-      "example": "theory[nyaya]{pramana.inference.example}<india>",
-      "route": "/topics/math/logic/",
-      "rising": false
-    },
-    {
-      "key": "cell",
-      "counts": [
-        0,
-        0,
-        5
-      ],
-      "example": "pattern[light_harvesting]{pigment.electron.donor}<cell>",
-      "route": "/topics/biochemistry/",
+      "example": "workbench[studio.craft]{persona.scene}<prose>",
+      "route": "/projects/spw-workbench/",
       "rising": false
     }
   ],
@@ -262,6 +262,17 @@ export const ARCS = Object.freeze({
   ],
   "subjects": [
     {
+      "key": "workbench",
+      "counts": [
+        9,
+        9,
+        24
+      ],
+      "example": "workbench[issues]{digraph.escape.slot}<audit>",
+      "route": "/projects/spw-workbench/",
+      "rising": true
+    },
+    {
       "key": "folio",
       "counts": [
         0,
@@ -282,6 +293,17 @@ export const ARCS = Object.freeze({
       "example": "arrive[wednesday]{table.wonder}<pantry>",
       "route": "/town/",
       "rising": false
+    },
+    {
+      "key": "composition",
+      "counts": [
+        2,
+        2,
+        4
+      ],
+      "example": "composition[console]{inspect.timing}<workbench>",
+      "route": "/design/composition/",
+      "rising": true
     },
     {
       "key": "library",
@@ -348,31 +370,20 @@ export const ARCS = Object.freeze({
       "example": "card[pair]{subject;caption;frame}",
       "route": "/design/cards/",
       "rising": false
-    },
-    {
-      "key": "operator",
-      "counts": [
-        0,
-        1,
-        4
-      ],
-      "example": "operator[atlas]{prime;traverse;precipitate}(brace)<anchor>",
-      "route": "/topics/software/spw/",
-      "rising": false
-    },
-    {
-      "key": "runtime",
-      "counts": [
-        1,
-        1,
-        3
-      ],
-      "example": "runtime[inoculant]{portable;reversible;transparent}",
-      "route": "/design/runtime/",
-      "rising": false
     }
   ],
   "shapes": [
+    {
+      "key": "word[lens]{body}<point>",
+      "counts": [
+        14,
+        25,
+        259
+      ],
+      "example": "corpus[parse]{clean.error.degrade}<audit>",
+      "route": "/projects/spw-workbench/",
+      "rising": false
+    },
     {
       "key": "word[lens]{body}",
       "counts": [
@@ -383,17 +394,6 @@ export const ARCS = Object.freeze({
       "example": "runtime[inoculant]{portable;reversible;transparent}",
       "route": "/design/runtime/",
       "rising": true
-    },
-    {
-      "key": "word[lens]{body}<point>",
-      "counts": [
-        1,
-        12,
-        246
-      ],
-      "example": "color[contrast]{field,paper,ink,signal}<token>",
-      "route": "/design/theme/",
-      "rising": false
     },
     {
       "key": "word[lens]{body}<point>(scene)",
