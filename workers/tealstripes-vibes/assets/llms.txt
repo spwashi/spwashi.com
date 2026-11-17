@@ -1,0 +1,13 @@
+# tealstripesvibes.com
+
+A proof card you can link to. A seed is a named look (palette, stripe rhythm, angle, motion, grain, an optional plate). A mask lets some of its facets through and the canonical teal stripes stand in for the rest; filters then change what passed, in order. The same address always paints the same picture.
+
+- /                            this hour's vibe (it becomes /@2026-11-16T21)
+- /@2026-11-16T21              the hour's vibe, a seed picked by the hour
+- /harbor                      a seed, every facet
+- /harbor/pr                   palette and rhythm through; the rest is the ground
+- /harbor/pr/night,hush        then filters, in order
+- /tuple?seed=harbor&mask=pr   the filtered seed as data (JSON, or Spw lines with Accept: text/plain)
+- /og/harbor/pr.svg            a preview image
+
+Seeds: harbor (harbor at dusk), ledger (ink on a ledger line), lantern (a lamp through teal glass). Mask letters: p palette (*), r rhythm (#), a angle (@), m motion (~), g grain (.), s plate ($). Filters: night (shift toward dark), hush (stop motion), mono (keep one hue).

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json.schemastore.org/wrangler.json",
+  "name": "tealstripes-vibes",
+  "main": "src/index.js",
+  "compatibility_date": "2026-11-16",
+  "workers_dev": false,
+  "preview_urls": false,
+  // Files first: every page is the shell in assets/, painted in the reader's
+  // browser, and an unknown address falls back to it. The worker runs only for
+  // the routes below (src/index.js). Signing uses the secret TSV_SIGNING_KEY,
+  // which is not set: signed masks and stamps answer 503, and pages say
+  // "unsigned", as they did under site-hub-next. Until tealstripesvibes.com's
+  // route moves here in the dashboard, site-hub-next still answers it.
+  "assets": {
+    "directory": "./assets",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/m/*", "/stamp/*", "/tuple", "/og/*", "/*.json"]
+  }
+}
