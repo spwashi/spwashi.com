@@ -26,7 +26,7 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ASSETS = path.join(HERE, "assets");
 const ORIGIN = `https://${HOST}`;
 
-export const CSP = "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'self' https://attention.productions https://mutex.buzz; upgrade-insecure-requests";
+export const CSP = "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://mutex.buzz; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'self' https://attention.productions https://mutex.buzz; upgrade-insecure-requests";
 
 /** The routes the worker answers; everything else is a file. */
 export const SCRIPT_ROUTES = Object.freeze(["/m/*", "/stamp/*", "/tuple", "/og/*", "/*.json"]);
@@ -76,7 +76,9 @@ function shell({ seed, mask, filters, title, mood, canonical, ground = false }) 
     <a id="tuple-link" href="${escapeHtml(tuple)}">tuple</a>
     <a id="self-link" href="${escapeHtml(canonical)}">link</a>
     <a id="og-link" href="${escapeHtml(og)}">preview</a>
+    <a id="lock-link" href="/@lock" title="The vibe mutex.buzz's lock holds, filling in as the hold runs">the lock</a>
   </nav>
+  <p class="lock" id="lock" hidden></p>
   <details id="grammar">
     <summary>Read the address <kbd>?</kbd></summary>
     <ul id="facets">${facets}</ul>
@@ -196,6 +198,7 @@ A proof card you can link to. A seed is a named look (palette, stripe rhythm, an
 - /harbor/pr/night,hush        then filters, in order
 - /tuple?seed=harbor&mask=pr   the filtered seed as data (JSON, or Spw lines with Accept: text/plain)
 - /og/harbor/pr.svg            a preview image
+- /@lock                       the vibe mutex.buzz's lock holds: one seed for the whole hold, chosen by its holder, that fills in facet by facet as the hold runs, from the ground's teal on its first hour to the whole seed on its last (read from https://mutex.buzz/now.json)
 - /harbor/-/moire,euclid       new filters: moire (a second stripe a hair off the first, interfering), euclid (a Euclidean rhythm, Bjorklund's algorithm), golden (Fibonacci widths at the golden angle)
 - /harbor?angle=40&drift=1.2&beats=3&steps=8&turn=1&say=hello   tuned by hand: angle, drift, breath, grain, a palette turn, a Euclidean rhythm of beats in steps, and a caption; the page writes the address as it is tuned, so the link is still the picture
 

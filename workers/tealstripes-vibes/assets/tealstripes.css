@@ -65,3 +65,7 @@ details p { margin: 6px 0 0; color: var(--muted); font: 11.5px/1.5 ui-monospace,
 .held button { font: 600 12.5px/1 ui-sans-serif, system-ui, sans-serif; color: var(--ink); background: rgba(255, 255, 255, 0.06); border: 1px solid var(--line); border-radius: 999px; padding: 0 11px; min-height: 34px; cursor: pointer; }
 .held #held-keep { background: var(--ink); color: #062a2b; border-color: var(--ink); }
 @media (pointer: coarse) { .held button { min-height: 44px; } .expr .slot { padding: 4px 2px; } }
+
+/* What the lock holds, as mutex.buzz says it. */
+.lock { margin: 8px 0 0; padding: 6px 8px; border-left: 2px solid #f5b041; background: rgba(0, 0, 0, 0.2); font: 11.5px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--muted); overflow-wrap: anywhere; }
+.lock a { color: var(--ink); }
