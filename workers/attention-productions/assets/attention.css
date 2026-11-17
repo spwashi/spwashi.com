@@ -14,7 +14,7 @@
   --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 }
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--ground); color: var(--ink); font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+body { margin: 0; background: var(--ground); color: var(--ink); font: 1rem/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
 main { max-width: 72rem; margin: 0 auto; padding: 1.75rem 1rem 3rem; }
 a { color: var(--ink); text-decoration-color: color-mix(in srgb, var(--lime) 70%, transparent); text-underline-offset: 0.2em; }
 a:focus-visible, button:focus-visible, summary:focus-visible, .viewfinder:focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; }

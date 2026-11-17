@@ -11,6 +11,7 @@
 //   ecosystem.json, registry.json; and llms.txt, vocabulary.json, _headers.
 // --check fails when a carried file differs from what this would write.
 import { readFile } from "node:fs/promises";
+import { peerScriptPath } from "../lib/peer-kit.js";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { escapeHtml, securityHeaders } from "../lib/http.js";
@@ -29,6 +30,9 @@ const MATERIALS_MODULE = `// Written by workers/attention-productions/carry.mjs 
 // A material= in an address is one of these, so its --sref is an image texture.website serves.
 export const MATERIALS = Object.freeze(${JSON.stringify(TEXTURE_MATERIALS.map(({ slug, word, cls }) => ({ slug, word, cls })))});
 `;
+
+/** spwashi.com's pinch for text, carried by scripts/build-peer-kit.mjs (workers/lib/text-scale.js binds it). */
+const PINCH_TEXT = peerScriptPath("pinch-text-scale");
 
 const CSP = "default-src 'none'; img-src 'self' https://texture.website; style-src 'self'; script-src 'self'; connect-src 'self'; frame-src https://mutex.buzz; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests";
 
@@ -110,6 +114,9 @@ async function page(c, v) {
   <link rel="stylesheet" href="/lights.css">
   <link rel="stylesheet" href="/set-ring.css">
   <link rel="stylesheet" href="/pinch.css">
+  <link rel="stylesheet" href="/text-scale.css">
+  <script src="/text-scale-head.js"></script>
+  <link rel="modulepreload" id="text-pinch" href="${PINCH_TEXT}">
   <script type="module" src="/attention.js"></script>
 </head>
 <body>
@@ -191,7 +198,7 @@ export async function carried() {
   const vocabulary = { site: "attention.productions", note: "a draft vocabulary; Midjourney parameters change between versions, so each source says where to check", ladders: v.LADDERS, phrases: v.PHRASES, ratios: v.RATIOS, subject: v.DEFAULT_SUBJECT, materials: "https://texture.website/vocabulary.json", sources: v.SOURCES };
   const shared = await Promise.all(SHARED.map(async (file) => [file, await readFile(path.join(HERE, "src", file), "utf8")]));
   // The set's ring, shared by the set's pages (workers/lib/set-ring.js).
-  for (const file of ["set-ring.js", "set-ring.css", "pinch.js", "pinch.css"]) shared.push([file, await readFile(path.join(HERE, "../lib", file), "utf8")]);
+  for (const file of ["set-ring.js", "set-ring.css", "pinch.js", "pinch.css", "text-scale.js", "text-scale.css", "text-scale-head.js"]) shared.push([file, await readFile(path.join(HERE, "../lib", file), "utf8")]);
   return [
     ...shared,
     ["index.html", await page(helpers, v)],

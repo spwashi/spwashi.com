@@ -5,6 +5,7 @@
 import { DIAL, countdown, dialOf, holderFor, lastDay, monthDay, nowLine, turnLine, turnOf } from "/lock.js";
 import { hasSetRing, mountSetRing, openSetRing, slug as pathWord, spw64 } from "/set-ring.js";
 import { attachPinch } from "/pinch.js";
+import { mountTextScale } from "/text-scale.js";
 
 /** Go to a page once the pinch's cue has been seen. */
 const goTo = (href) => setTimeout(() => window.location.assign(href), 260);
@@ -289,3 +290,6 @@ if (threads) {
     requestAnimationFrame(frame);
   }
 }
+
+// spwashi.com's pinch on the words sizes them; the dial and the holder keep their own pinch (text-scale.js).
+mountTextScale(document.querySelector("main"), { ignore: ".pinchable" });

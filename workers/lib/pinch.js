@@ -8,8 +8,8 @@
 // + and −, with nothing being typed, take one step. Each page says what in and
 // out are on it; past a page's widest step, out is the set (its ring).
 //
-// It listens only on the artwork it is given, so the page's text still zooms
-// the way the reader's browser zooms it. Each unit's carry copies this file
+// It listens only on the artwork it is given; the page's words keep
+// spwashi.com's pinch, which sizes them (text-scale.js). Each unit's carry copies this file
 // and pinch.css into its assets; workers/attention-productions/test/pinch.test.mjs
 // holds the thresholds to factshift's.
 

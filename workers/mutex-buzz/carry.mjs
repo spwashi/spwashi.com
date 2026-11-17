@@ -13,6 +13,7 @@
 //   answered under site-hub-next), llms.txt, 404.html and _headers.
 // --check fails when a carried file differs from what this would write.
 import { createHash } from "node:crypto";
+import { peerScriptPath } from "../lib/peer-kit.js";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -44,6 +45,9 @@ const DRAWN_MONTH = new Date(Date.UTC(2026, 10, 1));
 const BASE = ["X-Content-Type-Options: nosniff", "Referrer-Policy: strict-origin-when-cross-origin", "Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()"];
 export const CSP_HOME = "default-src 'none'; img-src 'self'; style-src 'self'; script-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests";
 export const CSP_NOW = "default-src 'none'; img-src 'self'; style-src 'self'; script-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'self' https://attention.productions; upgrade-insecure-requests";
+
+/** spwashi.com's pinch for text, carried by scripts/build-peer-kit.mjs (workers/lib/text-scale.js binds it). */
+const PINCH_TEXT = peerScriptPath("pinch-text-scale");
 
 function headersFile() {
   // Cloudflare joins every rule a path matches, so no two rules here set the same header on one path:
@@ -218,6 +222,9 @@ function head(title, description, canonical) {
   <link rel="stylesheet" href="/mutex.css">
   <link rel="stylesheet" href="/set-ring.css">
   <link rel="stylesheet" href="/pinch.css">
+  <link rel="stylesheet" href="/text-scale.css">
+  <script src="/text-scale-head.js"></script>
+  <link rel="modulepreload" id="text-pinch" href="${PINCH_TEXT}">
   <script type="module" src="/mutex.js"></script>`;
 }
 
@@ -293,6 +300,9 @@ const NOT_FOUND = `<!doctype html>
   <link rel="stylesheet" href="/mutex.css">
   <link rel="stylesheet" href="/set-ring.css">
   <link rel="stylesheet" href="/pinch.css">
+  <link rel="stylesheet" href="/text-scale.css">
+  <script src="/text-scale-head.js"></script>
+  <link rel="modulepreload" id="text-pinch" href="${PINCH_TEXT}">
 </head>
 <body class="home">
   <main><section class="say"><p class="kicker">mutex.buzz</p><h1>Nothing holds this address.</h1><p><a href="/">The lock</a> · <a href="/now/">what holds it now</a></p></section></main>
@@ -331,7 +341,7 @@ function manifest() {
 }
 
 /** Everything the service worker keeps, so the lock opens and keeps time with no network. */
-const SHELL = ["/", "/now/", "/mutex.css", "/mutex.js", "/lock.js", "/lock.spw", "/set-ring.js", "/set-ring.css", "/pinch.js", "/pinch.css", "/now.json", "/favicon.svg", "/manifest.webmanifest", ...Object.keys(FOLIO_SOURCES).map((name) => `/folios/${name}`), ...Object.keys(ICONS).map((name) => `/icons/${name}`)];
+const SHELL = ["/", "/now/", "/mutex.css", "/mutex.js", "/lock.js", "/lock.spw", "/set-ring.js", "/set-ring.css", "/pinch.js", "/pinch.css", "/text-scale.js", "/text-scale.css", "/text-scale-head.js", PINCH_TEXT, "/now.json", "/favicon.svg", "/manifest.webmanifest", ...Object.keys(FOLIO_SOURCES).map((name) => `/folios/${name}`), ...Object.keys(ICONS).map((name) => `/icons/${name}`)];
 
 /**
  * The service worker. Pages come from the network when there is one and from
@@ -379,7 +389,7 @@ export async function carried() {
   const schedule = { schema: "mutex.schedule.v1", note: "What holds now is the hold whose since is at or before now and whose releasesAt is after it. Times are UTC.", queue: QUEUE.map(({ title, kind }) => ({ title, kind })), holds: scheduleBetween(new Date(`${SCHEDULE.from}T00:00:00Z`), new Date(`${SCHEDULE.until}T00:00:00Z`)) };
   const source = await readFile(path.join(HERE, "src/lock.spw"), "utf8");
   // The set's ring, shared by the set's pages (workers/lib/set-ring.js).
-  const ring = await Promise.all(["set-ring.js", "set-ring.css", "pinch.js", "pinch.css"].map(async (file) => [file, await readFile(path.join(HERE, "../lib", file), "utf8")]));
+  const ring = await Promise.all(["set-ring.js", "set-ring.css", "pinch.js", "pinch.css", "text-scale.js", "text-scale.css", "text-scale-head.js"].map(async (file) => [file, await readFile(path.join(HERE, "../lib", file), "utf8")]));
   return [
     ...ring,
     ["lock.js", await readFile(path.join(HERE, "src/lock.js"), "utf8")],

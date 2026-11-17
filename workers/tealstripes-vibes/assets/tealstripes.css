@@ -85,3 +85,7 @@ details p { margin: 6px 0 0; color: var(--muted); font: 11.5px/1.5 ui-monospace,
 .card .facet:hover { border-color: var(--ink); }
 .facet-letter { font-weight: 700; opacity: 0.6; }
 @media (pointer: coarse) { .card .facet { min-height: 44px; } }
+
+/* The card is built in px, so the set's text size (text-scale.css) zooms it, never wider than the screen; the root keeps its size, so nothing in rem is scaled twice. */
+:root[data-text-scale] { font-size: 100%; }
+.card { zoom: var(--text-scale, 1); max-width: calc((100vw - 32px) / var(--text-scale, 1)); }
