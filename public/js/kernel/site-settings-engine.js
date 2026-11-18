@@ -1508,11 +1508,39 @@ function installSiteSettingsConsole() {
   };
 }
 
+const SETTINGS_REQUEST_EVENT = 'spw:settings-request';
+
+function handleSettingsRequest(payload = {}) {
+  if (!payload || typeof payload !== 'object') return null;
+  if (typeof payload.resetKey === 'string' && payload.resetKey) {
+    return resetSingleSetting(payload.resetKey);
+  }
+  const patch = payload.patch && typeof payload.patch === 'object' ? payload.patch : null;
+  if (!patch || !Object.keys(patch).length) return null;
+  return saveSiteSettings(patch);
+}
+
+let settingsRequestListenersBound = false;
+function bindSettingsRequestListeners() {
+  if (settingsRequestListenersBound) return;
+  settingsRequestListenersBound = true;
+  if (typeof bus?.on === 'function') {
+    bus.on(SETTINGS_REQUEST_EVENT, handleSettingsRequest);
+  }
+  if (typeof document !== 'undefined') {
+    document.addEventListener(SETTINGS_REQUEST_EVENT, (event) => {
+      handleSettingsRequest(event?.detail);
+    });
+  }
+}
+
+bindSettingsRequestListeners();
 installSiteSettingsConsole();
 
 
 export {
   manager,
+  SETTINGS_REQUEST_EVENT,
   buildPersistenceRegistries,
   PWA_PROMPT_DISMISSAL_STORAGE_KEYS,
   humanizeSettingName,

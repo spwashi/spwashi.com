@@ -11,14 +11,6 @@ import {
   markInstrumented,
   snapshotInstrumentationTarget,
 } from '/public/js/kernel/instrumentation.js';
-import {
-  getSiteSettings,
-  saveSiteSettings,
-  setBaseMetamaterial,
-  setClearContrastMatte,
-  setHighContrast,
-  validatePartialSettings
-} from '/public/js/kernel/site-settings.js';
 import { readJson, removeJson, writeJson } from '/public/js/kernel/storage-utils.js';
 
 const ROOT_SELECTOR = '[data-design-experiments-root]';
@@ -117,6 +109,31 @@ const logger = createSpwLogger('design-experiments', {
 
 function clampNumber(value, min, max) {
   return Math.min(max, Math.max(min, value));
+}
+
+function readRootSettings() {
+  const hostSettings = globalThis.window?.spwSettings?.get?.();
+  if (hostSettings && typeof hostSettings === 'object') return hostSettings;
+  const dataset = document.documentElement?.dataset || {};
+  const derived = {};
+  Object.entries(dataset).forEach(([key, value]) => {
+    if (!key.startsWith('spw') || key.length <= 3) return;
+    const rawName = key.slice(3);
+    const settingKey = `${rawName.charAt(0).toLowerCase()}${rawName.slice(1)}`;
+    derived[settingKey] = value;
+  });
+  return derived;
+}
+
+function requestSettingsPatch(patch = {}) {
+  const root = document.documentElement;
+  if (root?.dataset) {
+    Object.entries(patch).forEach(([key, value]) => {
+      root.dataset[`spw${key.charAt(0).toUpperCase()}${key.slice(1)}`] = String(value);
+    });
+  }
+  bus.emit('spw:settings-request', { patch, source: 'design-experiments' });
+  return readRootSettings();
 }
 
 function parseBundle(bundle = '') {
@@ -921,16 +938,7 @@ function createDesignExperimentsConsole(roots) {
       // The setter will re-apply the authoritative datasets via applySiteSettings.
       root.dataset.spwBaseMetamaterial = 'matte';
       if (root.dataset.spwHighContrast !== 'on') root.dataset.spwHighContrast = 'on';
-      try {
-        if (typeof setClearContrastMatte === 'function') {
-          setClearContrastMatte(true);
-        } else if (typeof setBaseMetamaterial === 'function' && typeof setHighContrast === 'function') {
-          setBaseMetamaterial('matte');
-          setHighContrast('on');
-        } else if (typeof saveSiteSettings === 'function') {
-          saveSiteSettings({ baseMetamaterial: 'matte', highContrast: 'on' });
-        }
-      } catch {}
+      requestSettingsPatch({ baseMetamaterial: 'matte', highContrast: 'on' });
       // Refresh local benches to match
       getMaterialBenchList().forEach((b) => { b.dataset.designMaterialMode = 'matte'; syncMaterialBench(b); });
       return { baseMetamaterial: 'matte', highContrast: 'on' };
@@ -1018,7 +1026,7 @@ function syncTokenValues(root) {
   });
 }
 
-function syncBundleButtons(root, settings = getSiteSettings()) {
+function syncBundleButtons(root, settings = readRootSettings()) {
   if (!(root instanceof HTMLElement)) return;
 
   root.querySelectorAll(BUNDLE_SELECTOR).forEach((button) => {
@@ -1036,7 +1044,7 @@ function syncBundleButtons(root, settings = getSiteSettings()) {
   });
 }
 
-function syncRoot(root, settings = getSiteSettings()) {
+function syncRoot(root, settings = readRootSettings()) {
   syncTokenValues(root);
   syncBundleButtons(root, settings);
   getVariableLabs(root).forEach((lab) => {
@@ -1053,14 +1061,16 @@ function applyBundle(button, root) {
   const bundle = parseBundle(button.getAttribute('data-design-setting-bundle'));
   if (!bundle) return null;
 
-  const validation = validatePartialSettings(bundle);
-  if (!validation.valid) {
-    writeStatus(findStatusNode(root), 'Bundle contains an invalid setting.', 'info');
-    return null;
+  const validator = globalThis.window?.spwSettings?.validatePartialSettings;
+  if (typeof validator === 'function') {
+    const validation = validator(bundle);
+    if (!validation?.valid) {
+      writeStatus(findStatusNode(root), 'Bundle contains an invalid setting.', 'info');
+      return null;
+    }
   }
 
-  // Bundle paths already go through canonical saveSiteSettings (validate + normalize + apply + bus).
-  const saved = saveSiteSettings(bundle);
+  const saved = requestSettingsPatch(bundle);
   const label = button.getAttribute('data-design-bundle-label') || button.textContent?.trim() || 'bundle';
 
   syncRoot(root, saved);
@@ -1197,14 +1207,14 @@ export function initDesignExperiments(ctx, root) {
     });
   });
 
-  const syncAll = (settings = getSiteSettings()) => {
+  const syncAll = (settings = readRootSettings()) => {
     roots.forEach((scope) => syncRoot(scope, settings));
   };
 
   syncAll();
 
   const off = bus.on('settings:changed', (event) => {
-    syncAll(event.detail || getSiteSettings());
+    syncAll(event.detail || readRootSettings());
   });
 
   return {

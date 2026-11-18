@@ -10,7 +10,6 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
-import { getSiteSettings, saveSiteSettings, THEME_PACK_OPTIONS } from '/public/js/kernel/site-settings.js';
 import { readSustainedLens } from '/public/js/kernel/visit-intent.js';
 import { EXPRESSION_CHANGE_EVENT } from '/public/js/interface/spw-expression.js';
 import { LENS_MODE_REQUEST_EVENT } from '/public/js/runtime/page/lens-modes.js';
@@ -77,6 +76,25 @@ const PRESET_CHOICES = Object.freeze([
 
 const BASE_LENSES = Object.freeze(['reading', 'systems', 'studio', 'play', 'workbench', 'inspect', 'reuse']);
 
+function readRootSettings(doc = globalThis.document) {
+  const dataset = doc?.documentElement?.dataset || {};
+  return {
+    themePack: dataset.spwThemePack || 'neutral-paper',
+    colorMode: dataset.spwColorMode || 'auto',
+    explorePosture: dataset.spwExplorePosture || 'reading',
+  };
+}
+
+function requestSettingsPatch(doc, patch = {}) {
+  const dataset = doc?.documentElement?.dataset;
+  if (dataset) {
+    if (patch.themePack) dataset.spwThemePack = patch.themePack;
+    if (patch.colorMode) dataset.spwColorMode = patch.colorMode;
+    if (patch.explorePosture) dataset.spwExplorePosture = patch.explorePosture;
+  }
+  bus.emit('spw:settings-request', { patch, source: 'theme-expression' });
+}
+
 function ensureStyles(doc) {
   if (!doc?.head || doc.getElementById(STYLE_ID)) return;
   const style = doc.createElement('style');
@@ -124,9 +142,9 @@ function inferSubjectValue(settings) {
   return 'theme@';
 }
 
-export function buildThemeExpressionModel(doc = globalThis.document, settings = getSiteSettings?.() || {}) {
+export function buildThemeExpressionModel(doc = globalThis.document, settings = readRootSettings(doc)) {
   const profile = readActiveProfile(doc);
-  const themeChoices = THEME_PACK_OPTIONS.map((value) => ({
+  const themeChoices = Object.keys(THEME_PACK_META).map((value) => ({
     value,
     label: THEME_PACK_META[value]?.label || value,
     note: THEME_PACK_META[value]?.note || value,
@@ -177,12 +195,12 @@ export function mountThemeExpression(host) {
   const status = doc.createElement('p');
   status.className = 'spw-theme-expression__status';
   status.setAttribute('aria-live', 'polite');
-  status.textContent = describeCurrentReceipt(doc, getSiteSettings?.() || {});
+  status.textContent = describeCurrentReceipt(doc, readRootSettings(doc));
 
   host.replaceChildren(kicker, expr, status);
 
   const sync = () => {
-    const settings = getSiteSettings?.() || {};
+    const settings = readRootSettings(doc);
     const nextModel = buildThemeExpressionModel(doc, settings);
     for (const slot of nextModel.slots) {
       expr.setValue(slot.name, slot.value);
@@ -197,7 +215,7 @@ export function mountThemeExpression(host) {
 
     if (slot === 'subject') {
       const preset = PRESET_CHOICES.find((item) => item.value === value);
-      if (preset?.patch) saveSiteSettings?.(preset.patch);
+      if (preset?.patch) requestSettingsPatch(doc, preset.patch);
       if (preset?.lens) {
         const match = collectLensChoices(doc).find((item) => item.value === preset.lens);
         bus.emit(LENS_MODE_REQUEST_EVENT, {
@@ -207,11 +225,11 @@ export function mountThemeExpression(host) {
         });
       }
     } else if (slot === 'mode') {
-      saveSiteSettings?.({ themePack: value });
+      requestSettingsPatch(doc, { themePack: value });
     } else if (slot === 'body') {
-      saveSiteSettings?.({ colorMode: value });
+      requestSettingsPatch(doc, { colorMode: value });
     } else if (slot === 'scene') {
-      saveSiteSettings?.({ explorePosture: value });
+      requestSettingsPatch(doc, { explorePosture: value });
     } else if (slot === 'projection') {
       bus.emit(LENS_MODE_REQUEST_EVENT, {
         group: choice?.group || doc.documentElement?.dataset?.spwActiveLensGroup || 'lens',
