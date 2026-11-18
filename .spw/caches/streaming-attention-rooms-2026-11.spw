@@ -1,0 +1,98 @@
+# Streaming Attention and Rooms (2026-11-17) — cache
+#
+# operation: cache
+# Captures the creator's reflection on TikTok ebb-and-flow, co-host room
+# contracts, streaming vs. physical-media attention economics, and Spw
+# expressions as collectible cognitive atoms across index.html surfaces.
+
+#>streaming_attention_rooms_2026_11
+#:cache #!attention #!streaming #!tiktok #!economics #!rooms #!expressions
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@copy_hypermedia_key: ~"./copy-hypermedia-key-2026-09.spw"
+@cognitive_toy: ~"./cognitive-toy-2026-09.spw"
+@motion_and_marks: ~"./motion-and-marks-2026-11.spw"
+@product_lines: ~"../surfaces/product-lines.spw"
+@page_model: ~"../surfaces/page-model.spw"
+@now_route: ~"../../now/index.html"
+@domains_route: ~"../../about/domains/index.html"
+@membership_route: ~"../../membership/index.html"
+@coordination_route: ~"../../coordination/index.html"
+@cards_route: ~"../../cards/index.html"
+@contact_route: ~"../../contact/index.html"
+@lore_route: ~"../../about/domains/lore.land/index.html"
+@services_systems_route: ~"../../services/systems/index.html"
+
+operation = "cache"
+fixity = "experimental"
+source = `voice reflection 2026-11-17: TikTok live motion, co-host invite friction, link-in-bio and promoted-video windows, streaming vs. physical media attention economics, ten-domain constellation, and lore.land gameplay mechanics vs. spwashi.com Spw expressions`
+do_not = `Do not add XP, points, streaks-as-obligation, or a new data-spw-* attribute family. Do not build a per-video landing CMS; reuse /now/, promo-wonder-cycle.json, and #fragment addresses.`
+
+summary = #[
+  `Flat-rate streaming ($10-$15/month for hours of watch time) trains viewers neither to value their own hours nor to pay a living rate to the people holding the room; physical media and venues priced an encounter or artifact that made attention do different things.`,
+  `Live social rooms (TikTok co-host invites, gifts, subscriptions) are interruptible and ephemeral; accepting a co-host mid-conversation can silently alter the room contract and push a guest out of the frame.`,
+  `Across spwashi.com and its ten-domain constellation, each index.html acts as a stable counterpart: clear room contract in the first fold, immediate reward on arrival, and a named handoff to the next surface.`,
+  `Like lore.land's /pie/ game (satisfying movement, sound, skill-earned easter eggs, almanac persistence), authored Spw expressions across spwashi.com are bite-sized atoms of cognitive moments meant to be collected and carried onto developed surfaces.`,
+][reg=set]
+
+^"sa-001_streaming_vs_physical_attention"{
+  id = "sa-001"
+  operation = "cache"
+  fixity = "experimental"
+  claim = `The streaming economy and the physical-media economy have not reconciled. Flat-rate subscriptions collapse the price of an hour of attention near zero, leaving visitors with hours spent and nothing held in hand.`
+  contrast = .{
+    streaming_feed = `Monthly flat fee buys unlimited passive hours; neither the viewer's focus nor the host's labor is priced per encounter.`
+    physical_and_venue = `Going somewhere or buying an object prices a bounded encounter that changes what attention does, leaving a memory, artifact, or paid craft behind.`
+    site_counterweight = `Treat TikTok and live streams as the open porch where ebb-and-flow is welcome; let each index.html turn arrival into a tangible artifact (proof card, local .spw room, laminated folio) or a plainly named exchange (membership role, scoped service).`
+  }[reg=facet]
+  owners = #[@membership_route, @cards_route, @domains_route][reg=set]
+}
+
+^"sa-002_room_contract_and_cohost_friction"{
+  id = "sa-002"
+  operation = "cache"
+  fixity = "experimental"
+  claim = `When a live medium's affordance (such as accepting a co-host invite mid-conversation) shifts the room silently, guests leave because the frame broke without consent. Ebb-and-flow is healthy when the structure stays legible.`
+  html_consequence = .{
+    first_fold = `Every index.html hook (data-spw-region="hook") states what room this is, offers one immediate thing to touch or verify (@copy_hypermedia_key#hk-004_shop_talk), and names the next door via data-spw-related-routes and .spw-chip exits.`
+    continuity = `@coordination_route protects the difference between live chat momentum, midprocess state, and durable agreement so people can step out and return without losing the thread.`
+  }[reg=facet]
+  owners = #[@coordination_route, @page_model][reg=set]
+}
+
+^"sa-003_bio_link_and_promoted_window"{
+  id = "sa-003"
+  operation = "cache"
+  fixity = "experimental"
+  claim = `Pointing to a link in bio during live conversation and occasionally promoting a video needs time-bounded relevance without spawning throwaway landing pages.`
+  mechanism = .{
+    bio_home = `@now_route carries #tiktok-seed and dated cycle receipts (13th and 26th) as the standing bio destination.`
+    promoted_window = `Align a promoted video's active window with cycle.promo and cycle.wonder in public/data/promo-wonder-cycle.json, deep-linking to an exact index.html#fragment.`
+    social_switchboard = `@contact_route surfaces X (@spwashi), TikTok (@spwashi), Instagram (@spwashi), Bluesky (@spwashi.com), and YouTube (@spwashi) in the opening fold alongside Services and Proof Cards.`
+  }[reg=facet]
+  owners = #[@now_route, @contact_route, @product_lines][reg=set]
+}
+
+^"sa-004_spw_expression_atoms"{
+  id = "sa-004"
+  operation = "cache"
+  fixity = "experimental"
+  claim = `Authored Spw expressions (data-spw-semantic-expression, operator sigils, living terms) are bite-sized atoms of cognitive moments. Their reward comes from tactile physics, collection, and interaction across developed surfaces—not from points or streaks.`
+  analogy = `@lore_route demonstrates the standard in /pie/: gifts and inputs trigger readable motion, sound, and visual state, while skill-earned easter eggs and the almanac reward attentive play without letting payment bypass skill.`
+  open_loops = `Per @cognitive_toy#ct-002_where_the_loops_are_open, Spark and Ground already close; the next felt wins are Carry (feeling an expression land in the cauldron and charge field between index.html pages) and Return (seeing collected expressions visibly connect or unlock moves on /open/, /cards/, /tools/spw-parser/, spw.quest, and factshift.center).`
+  owners = #[@cognitive_toy, @lore_route, @motion_and_marks][reg=set]
+}
+
+^"sa-005_software_cognition_and_junior_capacity"{
+  id = "sa-005"
+  operation = "cache"
+  fixity = "experimental"
+  claim = `Software engineering as a service contextualizes the socially relatable surfaces of mathematics and team cognition inside a developed business—making technical decisions clear enough that senior, mid, and staff engineers can see where hiring junior engineers strengthens the work over the decision's timeline.`
+  ecosystem_note = `When significant money (e.g., ~$90k entering and leaving an adjacent space) circulates through dynamics nobody holds cleanly, shared structures and clear roles make sustainable outcomes more likely across both engineering teams and independent art practices.`
+  open_question = `Which pricing handles feel most comfortable for senior/staff teams evaluating mentorship- and architecture-led work alongside hiring junior engineers? Pricing stays the creator's call.`
+  owners = #[@services_systems_route, @coordination_route, @membership_route][reg=set]
+}
+
+validation = `npm run spw:integrity && npm run audit:copy:accessor`

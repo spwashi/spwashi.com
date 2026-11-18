@@ -162,6 +162,7 @@
 @low_sight_wonder_2026_11: ~"./low-sight-wonder-2026-11.spw"  # cache: the wonder about presentation and interactivity asked of a reader who hears or who sees a small window: what the canvas, this site and the sibling hosts say to a screen reader or under magnification, proximity and velocity said from data that exists, colour with reflex as a legend, and seven wonders with probes on deployed pages
 @design_direction_2026_11: ~"./design-direction-2026-11.spw"  # cache: the design read from outside the codebase then inside its physics; a standalone specimen surface beside the established one; what each action carries; prepared CSS slices
 @gemini_4_argon_2026_11: ~"./gemini-4-argon-2026-11.spw"  # cache: what the creator asked Claude, extended across misplaced digraph priority (>> beside (() on a frame round-trip, tagged bots on llms.txt, orthogonal design depth, unconsumed speech/earcon exports with silent < >, audible math ratios, and ephemeral momentum; five wonders open
+@streaming_attention_rooms_2026_11: ~"./streaming-attention-rooms-2026-11.spw"  # cache: streaming vs. physical-media attention economics, TikTok ebb-and-flow and co-host room contracts, bio-link and promoted-video windows, and Spw expressions as collectible cognitive atoms across index.html surfaces
 
 operation = "align"
 fixity = "tending"
@@ -265,6 +266,7 @@ fixity = "tending"
   low_sight_wonder_2026_11 = @low_sight_wonder_2026_11
   design_direction_2026_11 = @design_direction_2026_11
   gemini_4_argon_2026_11 = @gemini_4_argon_2026_11
+  streaming_attention_rooms_2026_11 = @streaming_attention_rooms_2026_11
 }[reg=facet]
 
 ^"cache_rules"{
