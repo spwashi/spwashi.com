@@ -84,24 +84,22 @@
                     </div>
                 </div>
                 <h1 id="parser-title">Literal Spw Parser</h1>
-                <p id="parser-lede" data-spw-textual-role="lede" data-spw-copy-unit="parser.hook.lede" data-spw-semantic-expression="proof[parser]{source;tokens;ast;diagnostics;reconstruction}(browser)<exact>">This is the parser, running in your browser. Change the source and watch Spw become tokens, an abstract syntax tree, diagnostics, and an exact reconstruction.</p>
-                <p>This page runs the reader from <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a>, the same family <a href="https://spw.quest/parser/">spw.quest</a> serves. A sample is a script from a page on this site. The line under the list says what that script is doing and links to its page. Paste another source, or open a <code>.spw</code> file. Outline, tokens, tree, and diagnostics are the parse.</p>
+                <p id="parser-lede" data-spw-textual-role="lede" data-spw-copy-unit="parser.hook.lede" data-spw-semantic-expression="proof[parser]{source;tokens;ast;diagnostics;reconstruction}(browser)<exact>">This is the parser, running in your browser. Edit Spw on the left and inspect its live outline, tokens, AST, diagnostics, and exact reconstruction right beside it.</p>
+                <p class="literal-parser-intro-note">Runs the pinned <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a> reader shared with <a href="https://spw.quest/parser/">spw.quest</a>. Pick a starter scene, click a specimen from across the site, or open any local <code>.spw</code> file.</p>
                 <nav class="frame-operators" aria-label="Parser proof routes">
                     <a class="spw-chip" data-spw-handle="true" href="#literal-parser" data-spw-operator="perspective" data-spw-action="enter">@parse_source</a>
-                    <a class="spw-chip" data-spw-handle="true" href="?spw_source=beans%5Bmode%5D%7Bstew%7D%20beans(scene)%7Bsimmer%7D#literal-parser" data-spw-operator="probe" data-spw-action="enter">?mode.scene</a>
-                    <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/#workbench-improvements" data-spw-operator="frame" data-spw-action="address">#&gt;workbench_targets</a>
                     <a class="spw-chip" data-spw-handle="true" href="#proof-output" data-spw-operator="action">!inspect[ast]</a>
                     <a class="spw-chip" data-spw-handle="true" href="?spw_sample=practices#literal-parser" data-spw-operator="integration">^practices</a>
                     <a class="spw-chip" data-spw-handle="true" href="?spw_sample=year#literal-parser" data-spw-operator="potential">~year_mix</a>
-                    <a class="spw-chip" data-spw-handle="true" href="/about/#resume-practices" data-spw-operator="ref">~doors</a>
-                    <a class="spw-chip" data-spw-handle="true" href="/topics/film/" data-spw-operator="stream">*film</a>
-                    <a class="spw-chip" data-spw-handle="true" href="#app-loading" data-spw-operator="frame">#&gt;load_in_app</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#v04-specimen-suite" data-spw-operator="frame">#&gt;v04_specimens</a>
+                    <a class="spw-chip" data-spw-handle="true" href="#what-this-proves" data-spw-operator="frame">#&gt;proof_boundary</a>
                     <a class="spw-chip" data-spw-handle="true" href="https://github.com/spwashi/spw-workbench/tree/main/packages/spw-seed/src/parser" data-spw-operator="potential" data-spw-action="explore">~parser_source</a>
                 </nav>
             </section>
 
             <section class="spw-frame literal-parser" id="literal-parser"
                 data-parser-tool
+                data-parser-view="all"
                 data-spw-feature="spw-literal-parser"
                 data-spw-kind="frame"
                 data-spw-role="reference"
@@ -117,121 +115,163 @@
                 data-spw-collectability="high"
                 data-spw-seed="page_tools_spw_parser__tool"
                 data-spw-semantic-expression="literal_parser[source]{tokens.ast.diagnostics.reconstruction}">
-                <header class="frame-heading" data-spw-slot="header">
-                    <a class="frame-sigil" href="#literal-parser" data-spw-operator="perspective">@parse</a>
-                    <div>
+                <header class="frame-heading literal-parser-topline" data-spw-slot="header">
+                    <div class="literal-parser-heading-main">
+                        <a class="frame-sigil" href="#literal-parser" data-spw-operator="perspective">@parse</a>
                         <h2>Source → evidence</h2>
-                        <p data-spw-textual-role="note">Parser build: <strong data-parser-provenance>spw-workbench</strong></p>
                     </div>
+                    <p class="literal-parser-provenance-note" data-spw-textual-role="note">Parser build: <strong data-parser-provenance>spw-workbench</strong></p>
                 </header>
 
-                <div class="literal-parser-samples" aria-label="Parser samples">
-                    <span>Try:</span>
-                    <button type="button" data-parser-sample="proof">minimal proof</button>
-                    <button type="button" data-parser-sample="contract">contract</button>
-                    <button type="button" data-parser-sample="navigation">navigation</button>
-                    <button type="button" data-parser-sample="diagnostic">diagnostic</button>
-                    <button type="button" data-parser-sample="beans">beans combinatorics</button>
-                    <button type="button" data-parser-sample="practices">practices</button>
-                    <button type="button" data-parser-sample="sync">language sync</button>
-                    <button type="button" data-parser-sample="film">film</button>
-                    <button type="button" data-parser-sample="year">year mix</button>
-                    <button type="button" data-parser-sample="v04_claims">v0.4 claims</button>
-                    <button type="button" data-parser-sample="profiles">profiles</button>
-                    <button type="button" data-parser-sample="dot_crawl">dot crawl</button>
-                    <button type="button" data-parser-sample="stem_projection">stem projection</button>
-                    <button type="button" data-parser-sample="boonhonk">boonhonk genre</button>
+                <nav class="literal-parser-scenes" aria-label="Start from a scene">
+                    <span class="literal-parser-tray-label">Scenes</span>
+                    <div class="literal-parser-scene-grid">
+                        <a class="literal-parser-scene-card" data-parser-scene="character-beat" href="?spw_source=%23%3Echaracter_beat%0Ascene%5Bcrossroads%5D%7B%0A++stance+%3D+%22hold+the+gate%22%0A++tension+%3D+%22two+promises+collide%22%0A++%7E%3Cnext%3E%22release+the+key%22%0A%7D&amp;spw_source_name=character-beat.spw#literal-parser">
+                            <strong>Character Beat</strong>
+                            <span>Stance, colliding tension, and a queued next turn.</span>
+                        </a>
+                        <a class="literal-parser-scene-card" data-parser-scene="site-card" href="?spw_source=%23%3Esite_card%0Acard%5Bcatalyst%5D%7B%0A++claim+%3D+%22proof+stays+local%22%0A++evidence+%3D+%23%5Bsource%2C+tokens%2C+ast%5D%0A%7D%3Cnext%3E&amp;spw_source_name=site-card.spw#literal-parser">
+                            <strong>Site Card</strong>
+                            <span>Catalyst claim holding evidence and projecting forward.</span>
+                        </a>
+                        <a class="literal-parser-scene-card" data-parser-scene="system-transition" href="?spw_source=%23%3Esystem_transition%0A%7Barrival%7D.%7Bprepare%7D.%7Bcommit%7D+%7E%3E+%5Bsettled%5D%0Atransition%5Bmode%5D%7B%0A++before+%3D+%22draft%22%0A++after+%3D+%22published%22%0A%7D&amp;spw_source_name=system-transition.spw#literal-parser">
+                            <strong>System Transition</strong>
+                            <span>Dot-crawl sequence resolving into a settled mode.</span>
+                        </a>
+                    </div>
+                </nav>
+
+                <div class="literal-parser-samples-row">
+                    <span class="literal-parser-tray-label">Specimens</span>
+                    <div class="literal-parser-samples" role="group" aria-label="Parser samples">
+                        <button type="button" data-parser-sample="proof">minimal proof</button>
+                        <button type="button" data-parser-sample="contract">contract</button>
+                        <button type="button" data-parser-sample="navigation">navigation</button>
+                        <button type="button" data-parser-sample="diagnostic">diagnostic</button>
+                        <button type="button" data-parser-sample="beans">beans combinatorics</button>
+                        <button type="button" data-parser-sample="practices">practices</button>
+                        <button type="button" data-parser-sample="sync">language sync</button>
+                        <button type="button" data-parser-sample="film">film</button>
+                        <button type="button" data-parser-sample="year">year mix</button>
+                        <button type="button" data-parser-sample="v04_claims">v0.4 claims</button>
+                        <button type="button" data-parser-sample="profiles">profiles</button>
+                        <button type="button" data-parser-sample="dot_crawl">dot crawl</button>
+                        <button type="button" data-parser-sample="stem_projection">stem projection</button>
+                        <button type="button" data-parser-sample="boonhonk">boonhonk genre</button>
+                    </div>
                 </div>
+
                 <p class="literal-parser-place" id="parser-place" data-parser-place hidden>
                     <span data-parser-place-says></span>
                     <a data-parser-place-link href="#what-this-proves">What this proves</a>
                 </p>
 
                 <div class="literal-parser-workspace">
-                    <section class="literal-parser-editor" id="parser-source" aria-labelledby="parser-source-title">
-                        <header>
-                            <div>
-                                <h3 id="parser-source-title">Literal source</h3>
-                                <span class="literal-parser-source-name" data-parser-source-name>editable literal</span>
-                            </div>
-                            <label class="literal-parser-file-action">
-                                <span>Open .spw file</span>
-                                <input type="file" accept=".spw,text/plain" data-parser-file>
-                            </label>
-                        </header>
-                        <div class="literal-parser-field spw-source" data-parser-field>
-                            <pre class="literal-parser-paint" aria-hidden="true"><code data-parser-paint></code></pre>
-                            <textarea data-parser-source aria-label="Literal Spw source" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="parser-live-status parser-keys">^[literal_parser]{
+                    <div class="literal-parser-pane literal-parser-pane--source">
+                        <section class="literal-parser-editor" id="parser-source" aria-labelledby="parser-source-title">
+                            <header>
+                                <div class="literal-parser-editor-title">
+                                    <h3 id="parser-source-title">Literal source</h3>
+                                    <span class="literal-parser-source-name" data-parser-source-name>editable literal</span>
+                                </div>
+                                <div class="literal-parser-editor-controls">
+                                    <button type="button" class="literal-parser-tool-btn" data-parser-copy>Copy</button>
+                                    <button type="button" class="literal-parser-tool-btn" data-parser-clear>Clear</button>
+                                    <label class="literal-parser-file-action">
+                                        <span>Open .spw</span>
+                                        <input type="file" accept=".spw,text/plain" data-parser-file>
+                                    </label>
+                                </div>
+                            </header>
+                            <div class="literal-parser-field spw-source" data-parser-field>
+                                <pre class="literal-parser-paint" aria-hidden="true"><code data-parser-paint></code></pre>
+                                <textarea data-parser-source aria-label="Literal Spw source" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="parser-live-status parser-keys">^[literal_parser]{
   source = "Spw stays readable."
   proof = #[tokens, ast, diagnostics]
   ~&lt;authority&gt;"spw-workbench"
 }</textarea>
-                        </div>
-                        <p class="literal-parser-keys" id="parser-keys">Tab indents, Shift + Tab outdents, Enter keeps the indent. Press Esc, then Tab, to leave the editor. A brace lights with its partner under the caret.</p>
-                        <p data-spw-textual-role="note" id="parser-live-status" data-parser-status aria-live="polite">Waiting for the parser.</p>
-                    </section>
+                            </div>
+                            <footer class="literal-parser-editor-footer">
+                                <div class="literal-parser-editor-meta">
+                                    <output class="literal-parser-cursor" data-parser-cursor aria-label="Caret position">Ln 1, Col 1</output>
+                                    <p class="literal-parser-keys" id="parser-keys">Tab indent · Shift+Tab outdent · Enter keeps indent · Esc then Tab leaves</p>
+                                </div>
+                                <p data-spw-textual-role="note" id="parser-live-status" data-parser-status aria-live="polite">Waiting for the parser.</p>
+                            </footer>
+                        </section>
 
-                    <aside class="literal-parser-metrics" aria-label="Parse proof">
-                        <div>
-                            <span>parse</span>
-                            <output data-parser-metric="parse">—</output>
+                        <aside class="literal-parser-metrics" aria-label="Parse proof">
+                            <div>
+                                <span>parse</span>
+                                <output data-parser-metric="parse">—</output>
+                            </div>
+                            <div>
+                                <span>reconstruction</span>
+                                <output data-parser-metric="reconstruction">—</output>
+                            </div>
+                            <div>
+                                <span>tokens</span>
+                                <output data-parser-metric="tokens">—</output>
+                            </div>
+                            <div>
+                                <span>AST nodes</span>
+                                <output data-parser-metric="nodes">—</output>
+                            </div>
+                            <div>
+                                <span>depth</span>
+                                <output data-parser-metric="depth">—</output>
+                            </div>
+                            <div>
+                                <span>anchors</span>
+                                <output data-parser-metric="anchors">—</output>
+                            </div>
+                            <div>
+                                <span>time</span>
+                                <output data-parser-metric="time">—</output>
+                            </div>
+                        </aside>
+                    </div>
+
+                    <section class="literal-parser-pane literal-parser-pane--inspector" id="proof-inspector" aria-label="Parse output inspector">
+                        <div class="literal-parser-view-bar" role="group" aria-label="Inspector view filter">
+                            <button type="button" data-parser-view="all" aria-pressed="true">All panes</button>
+                            <button type="button" data-parser-view="outline" aria-pressed="false">Outline <span class="literal-parser-count" data-parser-count="outline">0</span></button>
+                            <button type="button" data-parser-view="tokens" aria-pressed="false">Tokens <span class="literal-parser-count" data-parser-count="tokens">0</span></button>
+                            <button type="button" data-parser-view="ast" aria-pressed="false">AST <span class="literal-parser-count" data-parser-count="nodes">0</span></button>
+                            <button type="button" data-parser-view="diagnostics" aria-pressed="false">Diagnostics <span class="literal-parser-count" data-parser-count="diagnostics">0</span></button>
                         </div>
-                        <div>
-                            <span>tokens</span>
-                            <output data-parser-metric="tokens">—</output>
+
+                        <div class="literal-parser-output" id="proof-output">
+                            <details open class="literal-parser-reading-panel" data-parser-panel="outline">
+                                <summary><span>Outline</span><small>select a row to jump cursor</small></summary>
+                                <ol class="literal-parser-outline" data-parser-outline aria-label="Outline, as the editor shows it"></ol>
+                            </details>
+                            <details open data-parser-panel="diagnostics">
+                                <summary><span>Diagnostics</span><small>errors, warnings, and file checks</small></summary>
+                                <ul class="literal-parser-diagnostics" data-parser-diagnostics aria-live="polite"></ul>
+                            </details>
+                            <details open data-parser-panel="tokens">
+                                <summary><span>Tokens</span><small>lexer order + spans</small></summary>
+                                <ol class="literal-parser-token-list" data-parser-tokens></ol>
+                            </details>
+                            <details open data-parser-panel="ast">
+                                <summary><span>AST</span><small>parser-owned node types + spans</small></summary>
+                                <pre class="literal-parser-ast" data-parser-ast aria-label="Abstract syntax tree">null</pre>
+                            </details>
                         </div>
-                        <div>
-                            <span>AST nodes</span>
-                            <output data-parser-metric="nodes">—</output>
-                        </div>
-                        <div>
-                            <span>tree depth</span>
-                            <output data-parser-metric="depth">—</output>
-                        </div>
-                        <div>
-                            <span>reconstruction</span>
-                            <output data-parser-metric="reconstruction">—</output>
-                        </div>
-                        <div>
-                            <span>parser time</span>
-                            <output data-parser-metric="time">—</output>
-                        </div>
-                        <div>
-                            <span>anchors</span>
-                            <output data-parser-metric="anchors">—</output>
-                        </div>
-                    </aside>
+                    </section>
                 </div>
 
                 <p class="spw-card-doors" data-parser-doors hidden></p>
-
-                <div class="literal-parser-actions" id="app-loading">
-                    <a class="spw-chip" data-spw-handle="true" href="/tools/spw-parser/#literal-parser" data-parser-app-link data-spw-operator="action">!load[source_into_app]</a>
-                    <button class="spw-chip" data-spw-handle="true" type="button" data-parser-install data-spw-operator="potential" data-spw-action="explore">~install_spw_app</button>
-                    <p>The first action creates an app-safe URL containing this exact source. The installed Spw app opens that URL at this parser; registered <code>.spw</code> files can open here directly on supporting systems.</p>
-                </div>
 
                 <noscript>
                     <p data-spw-textual-role="note">JavaScript is required to run the parser. The source remains readable without it.</p>
                 </noscript>
 
-                <div class="literal-parser-output" id="proof-output">
-                    <details open class="literal-parser-reading-panel">
-                        <summary><span>Outline</span><small>as your editor shows it; select a row to go there</small></summary>
-                        <ol class="literal-parser-outline" data-parser-outline aria-label="Outline, as the editor shows it"></ol>
-                    </details>
-                    <details open>
-                        <summary><span>Tokens</span><small>lexer order + source positions</small></summary>
-                        <ol class="literal-parser-token-list" data-parser-tokens></ol>
-                    </details>
-                    <details open>
-                        <summary><span>AST</span><small>parser-owned node types + spans</small></summary>
-                        <pre class="literal-parser-ast" data-parser-ast aria-label="Abstract syntax tree">null</pre>
-                    </details>
-                    <details open>
-                        <summary><span>Diagnostics</span><small>errors and warnings are not hidden; then what this kind of file is asked, and why</small></summary>
-                        <ul class="literal-parser-diagnostics" data-parser-diagnostics aria-live="polite"></ul>
-                    </details>
+                <div class="literal-parser-actions" id="app-loading">
+                    <a class="spw-chip" data-spw-handle="true" href="/tools/spw-parser/#literal-parser" data-parser-app-link data-spw-operator="action">!load[source_into_app]</a>
+                    <button class="spw-chip" data-spw-handle="true" type="button" data-parser-install data-spw-operator="potential" data-spw-action="explore">~install_spw_app</button>
+                    <p>Creates a shareable URL holding this exact source for the installed Spw app or direct <code>.spw</code> handoff.</p>
                 </div>
             </section>
 
