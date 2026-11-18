@@ -60,7 +60,7 @@ Next slices, one session and one commit each:
    1. `public/css/systems/legibility-lens.css` (25.2 KiB). Diagnostic and inspect lens rules. `prepaint-state.js` writes `html[data-spw-legible]` before first paint, so a reader's saved lens paints on load. Split the lens a reader chose from inspect-only rules; do not defer the whole sheet.
    2. `public/css/handles/operators/spell-breadcrumbs.css` (24.0 KiB). The spell bar, mounted from `public/js/runtime/experiential/experiential.js` through `breadcrumb-spell.js`. It is a candidate only if the shell reserves the bar's box at first paint.
    3. `public/css/systems/surfaces/tuning.css` (17.4 KiB). Tuning discovery and slider chrome; its catalog module `tuning-discovery` mounts at `IDLE`.
-   4. `public/css/systems/expression-resonance.css` (13.9 KiB). The catalog's `expression-resonance` mounts at `IDLE` and declares only `flourish:`, `residue:` and `measure:` updates. This is the likeliest to be atmosphere.
+   4. Moved (`ff480e81`): `public/css/systems/expression-resonance.css` now arrives through `public/css/effects/flourish-pack.css`. It is no longer a core candidate.
    5. `public/css/systems/spw-key-events.css` (13.6 KiB). The keyboard chord HUD; `spw-key-events` mounts `VISIBLE` on `html`.
 - The website route bundle is 143,360 B, exactly its 140 KiB soft budget (`CSS_BUNDLE_SOFT_BUDGETS.route`). Whether it gets a hard ceiling is `index.spw#wonder_core_css_spend_cut_website_ceiling`. Split route-local enhancement families further only if it does, and never move their grid geometry into an idle sheet.
 - Page-anatomy stays in core until a first-paint probe says it is atmosphere.

@@ -1,5 +1,7 @@
 # Chrome Navigation And Hover Stability Fix
 
+**Status 2026-07.** The width hold landed in `public/css/shell/chrome/navigation.css`. Later chrome belongs to this folder's `PLAN.md`. Left: a feel check on one narrow, one mid, and one wide route.
+
 ## Visible Failures
 
 - Primary header navigation shifts subtly when hover/focus state changes because some chrome affordances are visually rich but not geometry-stable.
