@@ -1,3 +1,5 @@
+import { readViewportBox } from '/public/js/kernel/viewport.js';
+
 const LOCAL_NOTE_KEY = 'spwashi:local-notes:v1';
 const LOCAL_NOTE_LIMIT = 32;
 
@@ -53,7 +55,7 @@ const readRegionReference = () => {
         .find((href) => href && href !== '#main-content' && document.getElementById(href.slice(1)));
     let section = handleLink ? document.getElementById(handleLink.slice(1)) : null;
     if (!(section instanceof HTMLElement)) {
-        const midpoint = window.innerHeight / 2;
+        const midpoint = readViewportBox().innerHeight / 2;
         section = [...document.querySelectorAll('main section[id]')].find((candidate) => {
             const rect = candidate.getBoundingClientRect();
             return rect.top <= midpoint && rect.bottom >= midpoint;

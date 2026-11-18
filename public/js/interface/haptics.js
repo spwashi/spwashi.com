@@ -34,6 +34,7 @@ import { bus } from '/public/js/kernel/bus.js';
 import { COMPONENT_KIND_MIRROR_SELECTOR, groundInteraction, isOwnAffordanceTarget, observeAddedMatches, writeRuntimeDatasetValues } from '/public/js/kernel/dom-contracts.js';
 import { guardCall } from '/public/js/kernel/dom-render.js';
 import { runCriticalPath } from '/public/js/kernel/storage-utils.js';
+import { resolvePopoverPosition } from '/public/js/kernel/viewport.js';
 import {
   addToGroundedRegistry as addToRegistry,
   clearGroundedMemory,
@@ -944,18 +945,10 @@ function buildConceptPopover(term) {
 function positionConceptPopover(popover, term) {
   const rect = term.getBoundingClientRect();
   const popRect = popover.getBoundingClientRect();
-  const edge = 10;
-  const menuClearance = Number.parseFloat(
+  const bottomClearance = Number.parseFloat(
     getComputedStyle(document.documentElement).getPropertyValue('--spw-floating-menu-clearance')
   ) || 0;
-  const bottomLimit = window.innerHeight - edge - menuClearance;
-  let top = rect.bottom + edge;
-  let left = rect.left + (rect.width / 2) - (popRect.width / 2);
-
-  left = Math.max(edge, Math.min(left, window.innerWidth - popRect.width - edge));
-  if (top + popRect.height > bottomLimit) {
-    top = Math.max(edge, rect.top - popRect.height - edge);
-  }
+  const { top, left } = resolvePopoverPosition(rect, popRect, { edge: 10, bottomClearance });
 
   popover.style.top = `${top}px`;
   popover.style.left = `${left}px`;

@@ -5,6 +5,7 @@
  */
 
 import { createMeasuredLane } from '/public/js/kernel/measured-frame.js';
+import { readViewportBox } from '/public/js/kernel/viewport.js';
 
 const INDEX_SELECTOR = '[data-home-section-index]';
 const FILTER_SELECTOR = '[data-home-section-filter]';
@@ -122,7 +123,7 @@ function initHomeSectionIndex(ctx = {}) {
     const visibleEntries = entries.filter((entry) => !entry.item.hidden && entry.section);
     if (!visibleEntries.length) return '';
 
-    const anchorY = window.scrollY + Math.min(Math.max(window.innerHeight * 0.24, 120), 260);
+    const anchorY = window.scrollY + Math.min(Math.max(readViewportBox().innerHeight * 0.24, 120), 260);
     let nextEntry = visibleEntries[visibleEntries.length - 1];
 
     for (const entry of visibleEntries) {

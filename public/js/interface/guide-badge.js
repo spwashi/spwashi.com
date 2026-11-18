@@ -39,6 +39,8 @@ import {
   getOperatorThresholdState,
   splitOperatorExpression,
 } from '/public/js/kernel/shared.js';
+import { readJson, writeJson } from '/public/js/kernel/storage-utils.js';
+import { readViewportBox } from '/public/js/kernel/viewport.js';
 
 const COLLECTION_KEY = 'spw-badge-collection';
 
@@ -76,22 +78,11 @@ const logger = createSpwLogger('guide-badge', {
 
 const store = {
   read() {
-    try {
-      const raw = localStorage.getItem(COLLECTION_KEY);
-      if (!raw) return [];
-      const parsed = JSON.parse(raw);
-      return Array.isArray(parsed) ? parsed : [];
-    } catch {
-      return [];
-    }
+    return readJson(COLLECTION_KEY, [], { requireArray: true });
   },
   write(entries) {
-    try {
-      localStorage.setItem(COLLECTION_KEY, JSON.stringify(entries));
-    } catch {
-      /* non-fatal */
-    }
-  }
+    writeJson(COLLECTION_KEY, entries);
+  },
 };
 
 function isCollectible(element) {
@@ -240,7 +231,7 @@ function emitTransientBadgeToast(anchor, message) {
     chip.style.position = 'fixed';
     chip.style.zIndex = 'var(--z-toast, 2200)';
     const rect = (anchor && anchor.getBoundingClientRect) ? anchor.getBoundingClientRect() : { right: 20, bottom: 60 };
-    chip.style.left = `${Math.min(rect.right + 6, window.innerWidth - 120)}px`;
+    chip.style.left = `${Math.min(rect.right + 6, readViewportBox().innerWidth - 120)}px`;
     chip.style.top = `${Math.max(8, rect.bottom - 8)}px`;
     document.body.appendChild(chip);
     setTimeout(() => {

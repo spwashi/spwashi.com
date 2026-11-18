@@ -1,5 +1,6 @@
 import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
 import { appendToDocument, guardCall } from '/public/js/kernel/dom-render.js';
+import { readViewportBox } from '/public/js/kernel/viewport.js';
 import { applyCauldronState, computeCauldronPhase } from '/public/js/semantic/cauldron/contract.js';
 import { getCauldron } from '/public/js/semantic/cauldron/storage.js';
 import { composeLiveExpression } from '/public/js/interface/cauldron/live-expression.js';
@@ -180,7 +181,7 @@ let footerPanelObserver = null;
 
 function measureFooterPanelVisible(host) {
   const rect = host.getBoundingClientRect();
-  return rect.top < window.innerHeight * 0.82 && rect.bottom > 0;
+  return rect.top < readViewportBox().innerHeight * 0.82 && rect.bottom > 0;
 }
 
 function readFooterPanelVisible() {

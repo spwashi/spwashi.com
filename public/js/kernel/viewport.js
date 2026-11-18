@@ -76,3 +76,16 @@ export function readViewportInlineSize(view = resolveView()) {
 export function invalidateViewportBox() {
   invalidate();
 }
+
+/** Compute clamped top/left coordinates for a popover anchored to a rect. */
+export function resolvePopoverPosition(anchorRect, boxRect, { edge = 10, bottomClearance = 0, view } = {}) {
+  const viewport = readViewportBox(view);
+  const bottomLimit = viewport.innerHeight - edge - bottomClearance;
+  let top = anchorRect.bottom + edge;
+  const rawLeft = anchorRect.left + (anchorRect.width / 2) - (boxRect.width / 2);
+  const left = Math.max(edge, Math.min(rawLeft, viewport.innerWidth - boxRect.width - edge));
+  if (top + boxRect.height > bottomLimit) {
+    top = Math.max(edge, anchorRect.top - boxRect.height - edge);
+  }
+  return { top, left };
+}
