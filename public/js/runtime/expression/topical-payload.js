@@ -137,7 +137,7 @@ function collectPromptChips(root = document) {
       let generator = '';
       let focus = '';
       try {
-        const url = new URL(element.href, window.location.origin);
+        const url = new URL(element.href, document.baseURI || window.location.href);
         host = url.searchParams.get('spw_prompt_host') || '';
         target = url.searchParams.get('spw_prompt_target') || '';
         generator = url.searchParams.get('spw_prompt_generator') || '';

@@ -15,9 +15,9 @@
  */
 
 import { SPW_REGION_PROFILER_CONTRACT } from '/public/js/runtime/regions/region-profiler.js';
-import { COMPONENT_COLLECTION_STORAGE_KEY } from '/public/js/kernel/site-settings-profiles.js';
+import { STORAGE_KEYS } from '/public/js/kernel/storage-utils.js';
 
-const STORAGE_KEY = COMPONENT_COLLECTION_STORAGE_KEY;
+const STORAGE_KEY = STORAGE_KEYS.COMPONENT_COLLECTION;
 const FRESH_PULSE_MS = 2400;
 
 // Rank the diversity tiers from the profiler so "best surface seen" is ordinal.

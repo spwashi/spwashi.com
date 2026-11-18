@@ -17,8 +17,9 @@ function toLocalUrl(href = '') {
   if (!href) return null;
 
   try {
-    const url = new URL(href, document.baseURI);
-    if (url.origin !== window.location.origin) return null;
+    const base = new URL(document.baseURI || window.location.href);
+    const url = new URL(href, base);
+    if (url.origin !== base.origin) return null;
     return url;
   } catch {
     return null;

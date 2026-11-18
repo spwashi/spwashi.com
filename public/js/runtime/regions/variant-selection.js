@@ -14,7 +14,6 @@
 
 import { bus } from '/public/js/kernel/bus.js';
 import { parseModularQuery } from '/public/js/kernel/query-composer.js';
-import { queryParamsToSettingsPartial } from '/public/js/kernel/settings-query-parity.js';
 import { matchesActiveProfile } from '/public/js/semantic/expression-query.js';
 import { requestLensMode } from '../page/lens-modes.js';
 import { readActiveProfile, readCandidateSpwMetadata } from '../page/lens-reach.js';
@@ -31,8 +30,7 @@ let selectionPulseTimer = null;
 
 function readQueryVariant() {
   const { params } = parseModularQuery(window.location.search);
-  const partial = queryParamsToSettingsPartial(params);
-  return partial.componentVariant || params.variant || '';
+  return params.variant || '';
 }
 
 export function buildVariantEdge(from = '', to = '') {
