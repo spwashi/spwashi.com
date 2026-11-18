@@ -266,32 +266,82 @@ export function selectScheduleItems(feed, date = new Date()) {
 }
 
 /**
+ * Extract lowercase concept/wonder tokens from the current surface so
+ * scheduled wonder and promo entries match what the reader is actually exploring.
+ */
+export function readPageRelevanceTokens(doc = globalThis.document) {
+  const dataset = doc?.body?.dataset;
+  if (!dataset) return [];
+  const raw = [
+    dataset.spwWonder,
+    dataset.spwContextRelevance,
+    dataset.spwCopyMotifs,
+    dataset.spwRouteFamily,
+    dataset.spwSurface,
+  ]
+    .filter(Boolean)
+    .join(' ');
+  return [...new Set(cleanText(raw).toLowerCase().split(/[\s,/|.:;()[\]{}<>]+/).filter((token) => token.length >= 2))];
+}
+
+/** Score how strongly a notice matches a visitor's active surface tokens. */
+export function scoreNoticeRelevance(source = {}, contextTerms = []) {
+  const terms = new Set((Array.isArray(contextTerms) ? contextTerms : []).map((t) => String(t).toLowerCase()).filter(Boolean));
+  if (!terms.size) return 0;
+  const hay = [
+    ...(Array.isArray(source?.promotion?.handles) ? source.promotion.handles : []),
+    source?.promotion?.kind || '',
+    source?.title || '',
+    source?.href || '',
+  ]
+    .join(' ')
+    .toLowerCase();
+  let score = 0;
+  for (const term of terms) {
+    if (hay.includes(term)) score += 1;
+  }
+  return score;
+}
+
+/**
  * The promo that meets the reader along their intent, or nothing.
  *
  * Every feed entry names the intents it serves (promo-wonder-cycle.json
  * `intents`, operator sigils). The pool is the whole feed, promo and wonder
- * halves alike, so a day's promo differs by intent; the day picks among the
- * matches so a visit that keeps an intent still sees the pool turn. No intent,
- * or no entry that serves it, says nothing: a promotion that ignores intent is
- * the one people learn to skip (.spw/caches/intent-across-pages-2026-09.spw s3).
+ * halves alike, so a day's promo differs by intent; when surface relevance
+ * tokens are present, only matching entries stay in contention so unrelated
+ * promos never surface as noise. No intent, or no entry that serves it, says
+ * nothing (.spw/caches/intent-across-pages-2026-09.spw s3).
  */
-export function selectIntentNotice(feed, date = new Date(), intent = null) {
+export function selectIntentNotice(feed, date = new Date(), intent = null, options = {}) {
   const sigil = cleanText(intent?.sigil || '');
   if (!sigil) return [];
+  const current = options.currentPath ? normalizeHref(options.currentPath) : '';
+  const terms = Array.isArray(options.contextTerms) ? options.contextTerms.filter(Boolean) : [];
   const pool = [];
   for (const cadence of ['daily', 'weekly']) {
     const rows = Array.isArray(feed?.[cadence]) ? feed[cadence] : [];
     rows.forEach((row, index) => {
       for (const half of ['promo', 'wonder']) {
         const source = row?.[half];
-        if (Array.isArray(source?.intents) && source.intents.includes(sigil)) pool.push({ cadence, index, source });
+        if (!Array.isArray(source?.intents) || !source.intents.includes(sigil)) continue;
+        if (current && normalizeHref(source.href) === current) continue;
+        pool.push({ cadence, index, source, score: scoreNoticeRelevance(source, terms) });
       }
     });
   }
   if (!pool.length) return [];
+
+  let eligible = pool;
+  if (terms.length) {
+    const maxScore = Math.max(...pool.map((entry) => entry.score));
+    if (options.requireContextMatch && maxScore === 0) return [];
+    if (maxScore > 0) eligible = pool.filter((entry) => entry.score === maxScore);
+  }
+
   const { isoDay } = getDateKeys(date);
   const dayOrdinal = Math.floor(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) / 86400000);
-  const pick = pool[clampIndex(dayOrdinal % pool.length, pool.length)];
+  const pick = eligible[clampIndex(dayOrdinal % eligible.length, eligible.length)];
   return [{
     cadence: pick.cadence,
     scheduleKey: `${isoDay}:${sigil}`,
@@ -755,7 +805,11 @@ export function buildVisibleNotices(feed, date = new Date(), dismissals = readDi
 
   const locale = cleanText(feed?.sourceLocale || 'en') || 'en';
   const selected = 'intent' in options
-    ? selectIntentNotice(feed, date, options.intent)
+    ? selectIntentNotice(feed, date, options.intent, {
+        currentPath,
+        contextTerms: options.contextTerms,
+        requireContextMatch: Boolean(options.requireContextMatch),
+      })
     : selectScheduleItems(feed, date);
   const visible = [];
 
@@ -1117,6 +1171,8 @@ export async function initSpwDiscoveryNotices(ctx = {}) {
   const feed = await loadFeed();
   const { dismissals, visible } = buildVisibleNotices(feed, new Date(), readDismissals(), window.location.pathname, {
     intent: readVisitIntent(document),
+    contextTerms: readPageRelevanceTokens(document),
+    requireContextMatch: true,
   });
   if (!visible.length) {
     return cleanupEventApi;

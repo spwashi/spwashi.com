@@ -813,6 +813,25 @@ test('an intent picks the promo that serves it, and no intent says nothing', () 
   assert.equal(met.visible.length, 1);
   assert.equal(met.visible[0].presentation, 'toast');
   assert.equal(met.visible[0].label, 'Along your ~ play');
+
+  const multiFeed = {
+    daily: [
+      {
+        promo: { operator: '@', intents: ['~'], title: 'Print folios', summary: 'Scans.', href: '/design/folios/', promotion: { handles: ['folios', 'art'] } },
+        wonder: { operator: '?', intents: ['~'], title: 'Portable modules', summary: 'Runtime.', href: '/projects/', promotion: { handles: ['modules', 'runtime', 'portable'] } },
+      },
+    ],
+  };
+  const matched = selectIntentNotice(multiFeed, date, play, { contextTerms: ['portable', 'modules'], requireContextMatch: true });
+  assert.equal(matched[0].source.href, '/projects/');
+  assert.deepEqual(
+    selectIntentNotice(multiFeed, date, play, { contextTerms: ['nutrition', 'recipes'], requireContextMatch: true }),
+    [],
+  );
+  assert.equal(
+    selectIntentNotice(multiFeed, date, play, { currentPath: '/projects/' })[0].source.href,
+    '/design/folios/',
+  );
 });
 
 test('a promo waits for a resting seat', () => {
