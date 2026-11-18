@@ -323,7 +323,7 @@ export const FEATURE_DEFS = [
     route: 'tools-spw-parser',
     selector: '[data-parser-tool]',
     describes: 'parser[source|tokens|ast|diagnostics] type or drop a .spw file and read its tokens and tree',
-    updates: ['structural:data-parser-state', 'structural:data-parser-metric'],
+    updates: ['structural:data-parser-state', 'structural:data-parser-metric', 'structural:data-parser-view'],
     evaluates: [],
     timingArc: 'visible-feature',
     effectScope: ['local-dom'],

@@ -165,7 +165,7 @@ export function actionLabel(action, reading) {
 }
 
 /** A door to a peer, in the words every component uses for it (ecosystem-links.js). */
-export const doorLabel = (door) => String(door?.label || '').replace(/^./, (first) => first.toUpperCase());
+export const doorLabel = (door) => String(door?.label || '');
 
 function renderReading(out, reading, hint = '') {
   if (reading.kind === 'empty') {
