@@ -23,6 +23,22 @@ export const SITE_COUPLED = Object.freeze([
   [/^public\/js\/interface\//, "this site's interface layer"],
 ]);
 
+/** Interface primitives whose own closures stay free of site settings, chrome, or memory. */
+export const INTERFACE_PORTABLE = new Map([
+  ['public/js/interface/arc-lifecycle.js', 'delegated gesture-loop states on semantic elements'],
+  ['public/js/interface/field-composition.js', 'standalone interactive field canvas with lazy ingredient storage'],
+  ['public/js/interface/guide-badge.js', 'bus-backed collectible badge tracker over kernel storage'],
+  ['public/js/interface/image-discovery-rewards.js', 'sessionStorage image reveal dispatcher over kernel utilities'],
+  ['public/js/interface/intake.js', 'namespaced data-<ns>-* intake form primitive'],
+  ['public/js/interface/local-memory-controls.js', 'scoped bus reset trigger and status text feedback'],
+  ['public/js/interface/local-notes.js', 'per-origin localStorage note rail over kernel utilities'],
+  ['public/js/interface/logo-runtime.js', 'measured-frame wordmark mount driven by bus events'],
+  ['public/js/interface/pronunciation.js', 'operator pronunciation popover over shared definitions'],
+  ['public/js/interface/seed-exits.js', 'clipboard copy, .spw.txt download, and capture toggle'],
+  ['public/js/interface/semantic-chrome.js', 'semantic component token chips and inspect popover'],
+  ['public/js/interface/spw-expression.js', 'portable <spw-expression> custom element'],
+]);
+
 /** Strings that resolve against the host document instead of this module's URL. */
 export const DOCUMENT_URLS = Object.freeze([
   [/fetch\(\s*['"`]\/(?!\/)/, 'fetch of a root-relative URL'],
@@ -188,6 +204,7 @@ export async function analyzePortableModules({
     const closure = staticClosure(entry);
     const coupled = [];
     for (const file of closure.files) {
+      if (INTERFACE_PORTABLE.has(file)) continue;
       for (const [pattern, reason] of SITE_COUPLED) if (pattern.test(file)) coupled.push({ file, reason });
     }
     const urls = documentUrls(closure.files);
