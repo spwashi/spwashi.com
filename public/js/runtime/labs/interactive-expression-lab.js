@@ -12,6 +12,8 @@ import {
   describeSpwExpression,
 } from '/public/js/semantic/spw-expression-geometry.js';
 import { writeDatasetValue } from '/public/js/kernel/dom-contracts.js';
+import { readJson, writeJson } from '/public/js/kernel/storage-utils.js';
+import { readViewportBox } from '/public/js/kernel/viewport.js';
 
 const STORAGE_KEY = 'spw-edited-expressions';
 
@@ -80,20 +82,11 @@ const BOUNDARY_SEMANTICS = Object.freeze({
 });
 
 function readStoredExpressions() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : {};
-  } catch {
-    return {};
-  }
+  return readJson(STORAGE_KEY, {}, { requireObject: true });
 }
 
 function writeStoredExpressions(data) {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  } catch {
-    /* ignore */
-  }
+  writeJson(STORAGE_KEY, data);
 }
 
 function resolveRouteForExpression(geometry) {
@@ -133,11 +126,11 @@ function syncHudPosition() {
 
   const targetRect = activeHudTarget.getBoundingClientRect();
   const hudRect = activeHud.getBoundingClientRect();
-  const viewport = window.visualViewport;
-  const viewportLeft = viewport?.offsetLeft || 0;
-  const viewportTop = viewport?.offsetTop || 0;
-  const viewportWidth = viewport?.width || window.innerWidth;
-  const viewportHeight = viewport?.height || window.innerHeight;
+  const viewport = readViewportBox();
+  const viewportLeft = viewport.left;
+  const viewportTop = viewport.top;
+  const viewportWidth = viewport.width;
+  const viewportHeight = viewport.height;
   const gutter = 12;
   const minLeft = viewportLeft + gutter;
   const maxLeft = Math.max(minLeft, viewportLeft + viewportWidth - hudRect.width - gutter);

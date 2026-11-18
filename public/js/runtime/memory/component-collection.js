@@ -15,7 +15,7 @@
  */
 
 import { SPW_REGION_PROFILER_CONTRACT } from '/public/js/runtime/regions/region-profiler.js';
-import { STORAGE_KEYS } from '/public/js/kernel/storage-utils.js';
+import { readJson, removeJson, STORAGE_KEYS, writeJson } from '/public/js/kernel/storage-utils.js';
 
 const STORAGE_KEY = STORAGE_KEYS.COMPONENT_COLLECTION;
 const FRESH_PULSE_MS = 2400;
@@ -66,52 +66,28 @@ export const ACHIEVEMENTS = Object.freeze([
   { id: 'kind-spectrum', label: 'Kind Spectrum', test: (s) => s.distinctKinds >= 6 },
 ]);
 
-function getStore() {
-  try {
-    return globalThis.localStorage || null;
-  } catch {
-    // Access itself can throw in sandboxed / privacy contexts.
-    return null;
-  }
-}
-
 function emptyCollection() {
   return { kinds: {}, routes: [], maxTier: 'singular', achievements: [], updatedAt: 0 };
 }
 
-function readCollection(store) {
-  if (!store) return emptyCollection();
-  try {
-    const parsed = JSON.parse(store.getItem(STORAGE_KEY) || 'null');
-    if (!parsed || typeof parsed !== 'object') return emptyCollection();
-    return {
-      kinds: parsed.kinds && typeof parsed.kinds === 'object' ? parsed.kinds : {},
-      routes: Array.isArray(parsed.routes) ? parsed.routes : [],
-      maxTier: typeof parsed.maxTier === 'string' ? parsed.maxTier : 'singular',
-      achievements: Array.isArray(parsed.achievements) ? parsed.achievements : [],
-      updatedAt: Number(parsed.updatedAt) || 0,
-    };
-  } catch {
-    return emptyCollection();
-  }
+function readCollection() {
+  const parsed = readJson(STORAGE_KEY, null, { requireObject: true });
+  if (!parsed) return emptyCollection();
+  return {
+    kinds: parsed.kinds && typeof parsed.kinds === 'object' ? parsed.kinds : {},
+    routes: Array.isArray(parsed.routes) ? parsed.routes : [],
+    maxTier: typeof parsed.maxTier === 'string' ? parsed.maxTier : 'singular',
+    achievements: Array.isArray(parsed.achievements) ? parsed.achievements : [],
+    updatedAt: Number(parsed.updatedAt) || 0,
+  };
 }
 
-function writeCollection(store, collection) {
-  if (!store) return;
-  try {
-    store.setItem(STORAGE_KEY, JSON.stringify(collection));
-  } catch {
-    // Quota / privacy mode — collection stays in-memory for this session only.
-  }
+function writeCollection(collection) {
+  writeJson(STORAGE_KEY, collection);
 }
 
-function removeCollection(store) {
-  if (!store) return;
-  try {
-    store.removeItem(STORAGE_KEY);
-  } catch {
-    // Storage can be unavailable in private or sandboxed contexts.
-  }
+function removeCollection() {
+  removeJson(STORAGE_KEY);
 }
 
 function tierRank(tier) {
@@ -162,9 +138,8 @@ export function initComponentCollection(ctx = {}) {
   }
   html.dataset.spwComponentCollectionInit = '1';
 
-  const store = getStore();
   const bus = ctx.bus || null;
-  let collection = readCollection(store);
+  let collection = readCollection();
   let freshTimer = 0;
 
   const writeTokens = () => {
@@ -230,7 +205,7 @@ export function initComponentCollection(ctx = {}) {
     collection.achievements = earned;
     collection.updatedAt = Date.now();
 
-    writeCollection(store, collection);
+    writeCollection(collection);
     writeTokens();
     pulseFresh(newKinds);
 
@@ -274,7 +249,7 @@ export function initComponentCollection(ctx = {}) {
     },
     reset(reason = 'reset') {
       collection = emptyCollection();
-      removeCollection(store);
+      removeCollection();
       writeTokens();
       delete html.dataset.spwCollectionFresh;
       emitReset(reason);

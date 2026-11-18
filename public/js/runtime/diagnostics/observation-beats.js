@@ -28,6 +28,7 @@ import {
   writeDatasetValue,
   writeDatasetValues,
 } from '/public/js/kernel/dom-contracts.js';
+import { readViewportBox } from '/public/js/kernel/viewport.js';
 import { hasAgentQa, readDebugQaPosture } from './debug-qa-posture.js';
 
 const logger = createSpwLogger('observation-beats', {
@@ -82,6 +83,8 @@ function readRoutePosition() {
   const activeFrame = document.querySelector('.spw-frame[data-state~="active"], .spw-frame:target, #home-frame');
   const activeRect = activeFrame?.getBoundingClientRect?.();
 
+  const viewport = readViewportBox();
+
   return {
     route: window.location.pathname || '/',
     hash: window.location.hash || '',
@@ -91,11 +94,11 @@ function readRoutePosition() {
     scroll: {
       x: Math.round(window.scrollX || 0),
       y: Math.round(window.scrollY || 0),
-      progress: Math.round(((window.scrollY || 0) / Math.max(1, document.documentElement.scrollHeight - window.innerHeight)) * 1000) / 1000,
+      progress: Math.round(((window.scrollY || 0) / Math.max(1, document.documentElement.scrollHeight - viewport.innerHeight)) * 1000) / 1000,
     },
     viewport: {
-      width: window.innerWidth,
-      height: window.innerHeight,
+      width: viewport.innerWidth,
+      height: viewport.innerHeight,
     },
     activeFrame: activeFrame ? {
       selector: activeFrame.id ? `#${activeFrame.id}` : activeFrame.dataset.spwFeature || activeFrame.tagName.toLowerCase(),

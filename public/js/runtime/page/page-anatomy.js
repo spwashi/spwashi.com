@@ -3,6 +3,7 @@ import {
   annotateFloatingChromeElement,
   writeDatasetValue,
 } from '/public/js/kernel/dom-contracts.js';
+import { readJson, writeJson } from '/public/js/kernel/storage-utils.js';
 import {
   anatomyToken as normalizeToken,
   collapseText as normalizeText,
@@ -98,18 +99,12 @@ function readElementLabel(element) {
 }
 
 function readPaletteTrace() {
-  try {
-    const parsed = JSON.parse(localStorage.getItem(PALETTE_TRACE_STORAGE_KEY) || '[]');
-    return Array.isArray(parsed) ? parsed.filter(Boolean).slice(0, PALETTE_TRACE_LIMIT) : [];
-  } catch {
-    return [];
-  }
+  const parsed = readJson(PALETTE_TRACE_STORAGE_KEY, [], { requireArray: true });
+  return parsed.filter(Boolean).slice(0, PALETTE_TRACE_LIMIT);
 }
 
 function writePaletteTrace(trace = []) {
-  try {
-    localStorage.setItem(PALETTE_TRACE_STORAGE_KEY, JSON.stringify(trace.slice(0, PALETTE_TRACE_LIMIT)));
-  } catch {}
+  writeJson(PALETTE_TRACE_STORAGE_KEY, trace.slice(0, PALETTE_TRACE_LIMIT));
 }
 
 function recordPaletteTrace({ themePack, paletteResonance, themeBiome, materialLens }) {

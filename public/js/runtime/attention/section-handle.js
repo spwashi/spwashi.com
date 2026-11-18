@@ -6,6 +6,7 @@ import {
 } from '/public/js/kernel/dom-contracts.js';
 import { appendToDocument } from '/public/js/kernel/dom-render.js';
 import { createMeasuredLane } from '/public/js/kernel/measured-frame.js';
+import { readViewportBox } from '/public/js/kernel/viewport.js';
 import { computeLocomotionFieldBalance } from '/public/js/runtime/memory/wonder-memory.js';
 import { describeSpwExpression } from '/public/js/semantic/spw-expression-geometry.js';
 import { describeWrapScan, sanitizeHandle } from '/public/js/semantic/spw-compose.js';
@@ -970,7 +971,7 @@ function measureSectionHandleState(sections, state) {
   const activeIndex = resolveActiveIndex(sections);
   const activeSection = sections[activeIndex] || null;
   const compactViewport = Boolean(window.matchMedia?.(HANDLE_COMPACT_QUERY).matches);
-  const viewportHeight = window.innerHeight || 800;
+  const viewportHeight = readViewportBox().innerHeight || 800;
   const scrollThreshold = compactViewport
     ? Math.min(HANDLE_VISIBILITY_SCROLL, Math.max(160, viewportHeight * 0.18))
     : Math.max(HANDLE_VISIBILITY_SCROLL, viewportHeight * 0.34);
@@ -1719,19 +1720,20 @@ function resolveActiveIndex(sections) {
   ].join(', ')));
   if (selectedIndex >= 0) return selectedIndex;
 
+  const viewportHeight = readViewportBox().innerHeight;
   const target = document.querySelector(':target');
   const targetedIndex = indexForNode(target);
   if (targetedIndex >= 0 && target instanceof HTMLElement) {
     const targetRect = target.getBoundingClientRect();
-    const attentionMargin = window.innerHeight * 0.25;
+    const attentionMargin = viewportHeight * 0.25;
     const targetInLocalField = (
       targetRect.bottom >= -attentionMargin
-      && targetRect.top <= window.innerHeight + attentionMargin
+      && targetRect.top <= viewportHeight + attentionMargin
     );
     if (targetInLocalField) return targetedIndex;
   }
 
-  const anchorY = window.scrollY + Math.min(Math.max(window.innerHeight * 0.28, 120), 320);
+  const anchorY = window.scrollY + Math.min(Math.max(viewportHeight * 0.28, 120), 320);
   let activeIndex = sections.length - 1;
 
   for (let index = 0; index < sections.length; index += 1) {

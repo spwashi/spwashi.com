@@ -1,3 +1,4 @@
+import { readViewportBox } from '/public/js/kernel/viewport.js';
 import {
   READING_BEAT_CURRENT_ATTR,
   READING_BEAT_FOCUS_ATTR,
@@ -104,7 +105,8 @@ export function initReadingGroove(root) {
   const beatIndexes = new Map(beats.map((beat, index) => [beat, index]));
 
   const resolveLeadIndex = () => {
-    const anchorY = Math.min(Math.max(window.innerHeight * 0.38, 120), 320);
+    const viewportHeight = readViewportBox().innerHeight;
+    const anchorY = Math.min(Math.max(viewportHeight * 0.38, 120), 320);
     if (!state.visible.size) return Math.max(0, state.leadIndex);
     let bestIndex = state.leadIndex;
     let bestDistance = Number.POSITIVE_INFINITY;

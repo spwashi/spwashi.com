@@ -26,6 +26,7 @@ function invalidate() {
 function bind(view) {
   if (boundView === view) return;
   boundView = view;
+  cached = null;
   if (typeof view.addEventListener !== 'function') return;
   view.addEventListener('resize', invalidate, { passive: true });
   view.addEventListener('orientationchange', invalidate, { passive: true });
