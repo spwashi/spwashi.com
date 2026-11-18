@@ -1,7 +1,7 @@
 {
   "version": "0.1.0",
   "schema": "specimens.v1",
-  "count": 1125,
+  "count": 1129,
   "specimens": [
     {
       "id": "h-capsule",
@@ -3559,6 +3559,26 @@
       "id": "r-363cf2c2",
       "source": "routes",
       "line": "variant[ref]{companion.actions}"
+    },
+    {
+      "id": "r-e1a9fb1e",
+      "source": "routes",
+      "line": "tiktok[fan]{heart_me.remember}(live)<team>"
+    },
+    {
+      "id": "r-1f8366f3",
+      "source": "routes",
+      "line": "tiktok[hook]{fan.subscriber}(live)<team>"
+    },
+    {
+      "id": "r-80e616fb",
+      "source": "routes",
+      "line": "tiktok[live]{heart.subscribe}(team)<entry>"
+    },
+    {
+      "id": "r-f2503258",
+      "source": "routes",
+      "line": "tiktok[subscriber]{recurring.back}(studio)<cycle>"
     },
     {
       "id": "r-8b4ad0ae",
