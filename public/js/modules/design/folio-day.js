@@ -15,7 +15,7 @@
 import { dayKey, dayWindow, pickForDay } from '../../kernel/day-seed.js';
 
 const HOST_SELECTOR = '[data-folio-day]';
-const SOURCE = '/public/data/folio-days.json';
+const SOURCE = new URL('../../../data/folio-days.json', import.meta.url).href;
 const SALT = 'folio-day';
 
 let mounted = null;

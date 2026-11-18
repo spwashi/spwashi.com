@@ -22,7 +22,7 @@ type FocusOptions = {
   daily?: boolean;
 };
 
-const MEDIA_FOCUS_URL = '/public/data/media-focus.json';
+const MEDIA_FOCUS_URL = new URL('../../data/media-focus.json', import.meta.url).href;
 const SOURCE_LOCALE = 'en';
 const loadMediaConfig = createJsonFeedLoader<MediaPublishingConfig | null>(MEDIA_FOCUS_URL, null, {
   label: 'media-focus',

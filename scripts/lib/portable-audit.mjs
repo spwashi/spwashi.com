@@ -50,6 +50,7 @@ export const DOCUMENT_URLS = Object.freeze([
 export const URL_SAFE = new Map([
   ['public/js/kernel/deferred-styles.js', 'resolves each href against its own module URL'],
   ['public/js/generated/image-provenance.js', 'stems matched against image sources, never requested'],
+  ['public/js/runtime/expression/image-provenance.js', 'folder rules matched against existing img src strings, never requested'],
   ['public/js/runtime/orchestration/behavior-scopes.js', 'bundle hrefs reach the page only through the settings UI, which is site-coupled on its own'],
 ]);
 

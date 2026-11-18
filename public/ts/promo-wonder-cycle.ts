@@ -31,7 +31,7 @@ type ReleaseForecast = Readonly<{
   daysAway: number;
 }>;
 
-const FEED_URL = '/public/data/promo-wonder-cycle.json';
+const FEED_URL = new URL('../../data/promo-wonder-cycle.json', import.meta.url).href;
 /* Same words as the static fallback's closed disclosure, so hydration swaps nothing the reader can see. */
 const WEEKLY_SUMMARY = "This week's quieter pair";
 const SOURCE_LOCALE = 'en';

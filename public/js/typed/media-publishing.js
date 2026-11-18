@@ -1,7 +1,7 @@
 import { createCardSigil } from './kernel-dom-contracts.js';
 import { DAY_KEYS, cleanText, createJsonFeedLoader, el, } from './feed-utils.js';
 import { validateMediaPublishingConfig } from './json-feeds.js';
-const MEDIA_FOCUS_URL = '/public/data/media-focus.json';
+const MEDIA_FOCUS_URL = new URL('../../data/media-focus.json', import.meta.url).href;
 const SOURCE_LOCALE = 'en';
 const loadMediaConfig = createJsonFeedLoader(MEDIA_FOCUS_URL, null, {
     label: 'media-focus',
