@@ -63,7 +63,7 @@ Route surfaces can split under `routes/surfaces/` when a route grows into clear 
 
 Focused review slices can live under `routes/surfaces/` as well when they are meant to sit beside a longer catalog or experiment page. Keep them narrow and route-local, and let shared enhancement JS fill in any generated rail or SVG summary.
 
-Reusable component styles belong under `components/`. The component layer is split by family (`foundation`, `surfaces`, `signals`, `cards`, `frames`, `pretext`, `content`, `controls`, and `runtime-states`) so filenames describe the local contract instead of repeating the project prefix. Card-specific component styles live in `components/cards/`; route folders should only own route-local layout and page identity.
+Reusable component styles belong under `components/`. The component layer is split by family (`foundation`, `surfaces`, `signals`, `cards`, `frames`, `pretext`, `content`, `controls`, and `runtime-states`) so filenames describe the local contract instead of repeating the project prefix. Card-specific component styles live in `components/cards/` (including `variants.css` and `hygiene.css` split from `cards.css`); route folders should only own route-local layout and page identity.
 
 Use `compose.css` when another site wants the theme/component language but should keep its own page shell and route layout. The durable boundary is tracked in `.spw/conventions/site-starter-component-kit.spw`.
 

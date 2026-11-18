@@ -314,8 +314,10 @@
   font-size: 0.68rem;
 }
 
+/* Set directly on root rather than self-referencing var(--spw-interaction-phase-weight, 0);
+   systems/interaction-progression.css still wins whenever an explicit phase is active. */
 html[data-spw-search-selection-pulse] {
-  --spw-interaction-phase-weight: max(var(--spw-interaction-phase-weight, 0), 0.36);
+  --spw-interaction-phase-weight: 0.36;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,11 +1,13 @@
 @layer reset, tokens, shell, typography, grammar, components, systems, routes, handles, effects, ornament;
 
+/* Pour 1 (Substrate): browser baseline, font faces, @property physics, raw scales. */
 @import url('/public/css/reset/base.css') layer(reset);
 @import url('/public/css/tokens/fonts.css') layer(tokens);
 @import url('/public/css/tokens/core.css') layer(tokens);
 @import url('/public/css/tokens/dimensions.css') layer(tokens);
 @import url('/public/css/tokens/flourish-defaults.css') layer(tokens);
 
+/* Pour 2 (Meaning): structural room, display modes, editorial measures, brace syntax. */
 @import url('/public/css/shell/layout.css') layer(shell);
 @import url('/public/css/shell/chrome/header.css') layer(shell);
 @import url('/public/css/shell/chrome/navigation.css') layer(shell);
@@ -22,11 +24,14 @@
 
 @import url('/public/css/grammar/syntax.css') layer(grammar);
 
+/* Pour 3 (Composition): named component anatomy, card variants, and inner hygiene. */
 @import url('/public/css/components/foundation.css') layer(components);
 @import url('/public/css/components/typography-packing.css') layer(components);
 @import url('/public/css/components/surfaces.css') layer(components);
 @import url('/public/css/components/signals.css') layer(components);
 @import url('/public/css/components/cards.css') layer(components);
+@import url('/public/css/components/cards/variants.css') layer(components);
+@import url('/public/css/components/cards/hygiene.css') layer(components);
 @import url('/public/css/components/folio-strip.css') layer(components);
 @import url('/public/css/components/hook-visual.css') layer(components);
 /* profile-card.css moved to the tools-profile route bundle 2026-08-12:
@@ -53,6 +58,7 @@
 @import url('/public/css/components/frame-controls.css') layer(components);
 @import url('/public/css/components/charge-cycle.css') layer(components);
 
+/* Pour 3b (Field Ecology): cross-route packing, postures, resonance, and surface tones. */
 @import url('/public/css/systems/image-utilization.css') layer(systems);
 @import url('/public/css/systems/image-interaction.css') layer(systems);
 @import url('/public/css/systems/image-theming.css') layer(systems);
@@ -92,6 +98,7 @@
 @import url('/public/css/systems/surfaces/reading-layout.css') layer(systems);
 @import url('/public/css/systems/surfaces/philosophy.css') layer(systems);
 
+/* Pour 4 (Time & Affordance): interactive sigils, cognitive handles, and breadcrumbs. */
 @import url('/public/css/handles/cognitive-handles.css') layer(handles);
 @import url('/public/css/handles/operators/tokens.css') layer(handles);
 @import url('/public/css/handles/operators/primitive.css') layer(handles);
