@@ -95,4 +95,17 @@ summary = #[
   owners = #[@services_systems_route, @coordination_route, @membership_route][reg=set]
 }
 
+^"sa-006_highlights_squares_and_software_factory"{
+  id = "sa-006"
+  operation = "cache"
+  fixity = "experimental"
+  claim = `Live highlights, signed/dated physical artifacts (the Squares watercolor cards sketched in bars and rooms), and self-prompting websites turn ephemeral social conversations into indexable, hydratable seeds without forcing an artificial feed CMS.`
+  mechanism = .{
+    squares_pattern = `Outline on the front, sign and date the back: a bounded physical card that later hydrates into narrative, image context, or proof-card specimens.`
+    software_factory = `Websites authored as self-prompting products allow marketing and live dialogue (including Live Fest streams or X threads) to point directly to working surfaces instead of unpaid hiring voids.`
+    conversational_indexing = `Live clips and named moments anchor why an artifact exists; public git/site artifacts let outside listeners and search assistants verify the work directly.`
+  }[reg=facet]
+  owners = #[@now_route, @cards_route, @domains_route][reg=set]
+}
+
 validation = `npm run spw:integrity && npm run audit:copy:accessor`

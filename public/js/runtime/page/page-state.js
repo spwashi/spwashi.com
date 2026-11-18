@@ -4,6 +4,7 @@ import {
   writeDatasetValue,
 } from '/public/js/kernel/dom-contracts.js';
 import { createMeasuredLane } from '/public/js/kernel/measured-frame.js';
+import { readViewportBox } from '/public/js/kernel/viewport.js';
 
 /**
  * Page state models the visible lifecycle of a page shell: booting,
@@ -287,7 +288,7 @@ function measureBottomFloatingChrome(element) {
 let appliedCorrectionY = 0;
 
 function measureFixedViewportCorrection(root = document) {
-  const viewportHeight = window.visualViewport?.height || window.innerHeight || 0;
+  const viewportHeight = readViewportBox().height || 0;
   if (!viewportHeight) return 0;
   const chrome = Array.from(root.querySelectorAll?.(BOTTOM_FLOATING_CHROME_SELECTOR) || []);
   // Bail before any computed-style read — each one can force a full style
@@ -373,10 +374,11 @@ function initFixedViewportCorrection() {
      scroll re-measures only in that state or while a correction is still applied. */
   const scheduleOnScroll = () => {
     const viewport = window.visualViewport;
+    const box = readViewportBox();
     const displaced = !viewport
       || Math.abs(viewport.scale - 1) > 0.01
-      || Math.abs(viewport.offsetTop) > 0.5
-      || Math.abs(viewport.height - window.innerHeight) > 0.5;
+      || Math.abs(box.top) > 0.5
+      || Math.abs(box.height - box.innerHeight) > 0.5;
     if (displaced || appliedCorrectionY !== 0) schedule();
   };
 

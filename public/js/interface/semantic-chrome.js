@@ -5,6 +5,7 @@ import {
   writeRuntimeDatasetValues,
 } from '/public/js/kernel/dom-contracts.js';
 import { snapshotComponentSemantics } from '/public/js/semantic/component-semantics.js';
+import { resolvePopoverPosition } from '/public/js/kernel/viewport.js';
 import {
   humanizeToken,
   normalizeText,
@@ -504,18 +505,10 @@ function createSemanticPopover(token, host) {
 function positionSemanticPopover(popover, token) {
   const rect = token.getBoundingClientRect();
   const popRect = popover.getBoundingClientRect();
-  const edge = 10;
-  const menuClearance = Number.parseFloat(
+  const bottomClearance = Number.parseFloat(
     getComputedStyle(document.documentElement).getPropertyValue('--spw-floating-menu-clearance')
   ) || 0;
-  const bottomLimit = window.innerHeight - edge - menuClearance;
-  let top = rect.bottom + edge;
-  let left = rect.left + rect.width / 2 - popRect.width / 2;
-
-  left = Math.max(edge, Math.min(left, window.innerWidth - popRect.width - edge));
-  if (top + popRect.height > bottomLimit) {
-    top = Math.max(edge, rect.top - popRect.height - edge);
-  }
+  const { top, left } = resolvePopoverPosition(rect, popRect, { edge: 10, bottomClearance });
 
   popover.style.top = `${top}px`;
   popover.style.left = `${left}px`;

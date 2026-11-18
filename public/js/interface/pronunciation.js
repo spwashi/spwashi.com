@@ -10,6 +10,7 @@
 import { bus } from '/public/js/kernel/bus.js';
 import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
 import { getOperatorDefinition, normalizeText } from '/public/js/kernel/shared.js';
+import { readViewportBox } from '/public/js/kernel/viewport.js';
 
 const HINT_CLASS = 'spw-pronunciation-hint';
 let initialized = false;
@@ -83,7 +84,7 @@ function showHint(element, definition) {
 
   // Bounds check
   if (top < 8) top = rect.bottom + 8;
-  left = Math.max(8, Math.min(left, window.innerWidth - hintRect.width - 8));
+  left = Math.max(8, Math.min(left, readViewportBox().innerWidth - hintRect.width - 8));
 
   hintEl.style.top = `${top + window.scrollY}px`;
   hintEl.style.left = `${left}px`;

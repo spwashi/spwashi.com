@@ -20,6 +20,7 @@
  */
 
 import { ensureViewTransitionTap } from '/public/js/kernel/view-transition-tap.js';
+import { readViewportBox } from '/public/js/kernel/viewport.js';
 
 const ROOT_SELECTOR = '.folio-release';
 const VIEW_SELECTOR = '.folio-view';
@@ -137,7 +138,7 @@ function focusFlip(view, direction) {
 
 function bringIntoView(tile) {
   const rect = tile.getBoundingClientRect();
-  if (rect.top >= 0 && rect.bottom <= window.innerHeight) return;
+  if (rect.top >= 0 && rect.bottom <= readViewportBox().innerHeight) return;
   tile.scrollIntoView({ block: 'nearest', behavior: 'instant' });
 }
 

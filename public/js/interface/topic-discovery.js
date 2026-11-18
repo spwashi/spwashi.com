@@ -25,6 +25,7 @@
 import { bus } from '/public/js/kernel/bus.js';
 import { GESTURE_MEASURE } from '/public/js/kernel/gesture-measure.js';
 import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
+import { readViewportBox, resolvePopoverPosition } from '/public/js/kernel/viewport.js';
 
 const TOPIC_SELECTOR = '.spw-topic, [data-spw-topic]';
 const BADGE_SELECTOR = '.spec-pill, .spw-chip';
@@ -138,7 +139,7 @@ function navigateToIndex(idx) {
     // Smooth scroll into view with offset for header
     const headerH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 64;
     const rect = target.getBoundingClientRect();
-    const inView = rect.top > headerH && rect.bottom < window.innerHeight;
+    const inView = rect.top > headerH && rect.bottom < readViewportBox().innerHeight;
     if (!inView) {
         target.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
@@ -219,20 +220,12 @@ function showPopover(el) {
     popoverEl.innerHTML = html;
     document.body.appendChild(popoverEl);
 
-    const edge = 10;
     const rect = el.getBoundingClientRect();
     const popRect = popoverEl.getBoundingClientRect();
-    const menuClearance = Number.parseFloat(
+    const bottomClearance = Number.parseFloat(
         getComputedStyle(document.documentElement).getPropertyValue('--spw-floating-menu-clearance')
     ) || 0;
-    const bottomLimit = window.innerHeight - edge - menuClearance;
-    let top = rect.bottom + edge;
-    let left = rect.left + rect.width / 2 - popRect.width / 2;
-
-    left = Math.max(edge, Math.min(left, window.innerWidth - popRect.width - edge));
-    if (top + popRect.height > bottomLimit) {
-        top = Math.max(edge, rect.top - popRect.height - edge);
-    }
+    const { top, left } = resolvePopoverPosition(rect, popRect, { edge: 10, bottomClearance });
 
     popoverEl.style.top = `${top}px`;
     popoverEl.style.left = `${left}px`;

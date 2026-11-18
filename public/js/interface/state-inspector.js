@@ -16,6 +16,7 @@ import { readRoom } from '/public/js/semantic/room-signal.js';
 import { saveSiteSettings } from '/public/js/kernel/site-settings.js';
 import { ensureDebugStyles } from '/public/js/kernel/deferred-styles.js';
 import { ECOSYSTEM_JOBS, ecosystemLinks } from '/public/js/kernel/ecosystem-links.js';
+import { readViewportBox } from '/public/js/kernel/viewport.js';
 
 const ROOT_ATTR = 'data-spw-state-inspector-root';
 const PANEL_ID = 'spw-state-inspector-panel';
@@ -127,16 +128,16 @@ function readRootRemPx(value, fallbackRem = 0) {
 }
 
 function getViewportBox() {
-  const viewport = window.visualViewport;
+  const viewport = readViewportBox();
   return {
     width: Math.max(1, Math.min(
-      viewport?.width || Number.POSITIVE_INFINITY,
-      window.innerWidth || Number.POSITIVE_INFINITY,
+      viewport.width || Number.POSITIVE_INFINITY,
+      viewport.innerWidth || Number.POSITIVE_INFINITY,
       document.documentElement?.clientWidth || Number.POSITIVE_INFINITY
     )),
     height: Math.max(1, Math.min(
-      viewport?.height || Number.POSITIVE_INFINITY,
-      window.innerHeight || Number.POSITIVE_INFINITY,
+      viewport.height || Number.POSITIVE_INFINITY,
+      viewport.innerHeight || Number.POSITIVE_INFINITY,
       document.documentElement?.clientHeight || Number.POSITIVE_INFINITY
     )),
   };
