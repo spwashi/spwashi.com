@@ -1,0 +1,132 @@
+# The example leads: a line a peer can try (2026-11-18) — cache
+#
+# Named for the example, which is what a person at the bench can point to.
+# The belief about the profession stays in #belief, in the creator's words.
+# Hiring, training, and support show up as one line a stranger can try.
+# The tune facets name the knob and the check. This file does not implement,
+# post, or retune.
+
+#>example_leads_2026_11
+#:cache #!example #!tune #!quest #!factshift
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+operation = "cache"
+fixity = "experimental"
+source = "chat 2026-11-18, retuned the same day for tone, leadership by example, and feature tuning; @spwashi posts that day; workers/spw-quest/src/examples.js; workers/factshift-center/app force-config.ts, forces.ts, node-panel.ts, spw-talk.ts, held-expressions.ts"
+boundary = `A later patch plays one tune row. Leave restAlphaTarget at 0.1. Leave the generated figures 240, 320, and 4px per tick unadopted. Leave the belief as a belief. Add no data-spw family and no plan folder.`
+
+expression = lead[example]{hire, train, support}(line)<peer>
+
+summary = #[
+  `Show a line a peer can try. That example is the hiring, the training, and the support.`,
+  `The creator's belief stays: software engineering has died where peers are watched through months of looking for work while hiring, training, and peer support stay unfixed.`,
+  `Tune one row at a time. Each row names the feature, the knob, and the check a still or a reading can settle.`,
+][reg=set]
+
+contents = #[
+  ~"./example-leads-2026-11.spw#tone",
+  ~"./example-leads-2026-11.spw#belief",
+  ~"./example-leads-2026-11.spw#day",
+  ~"./example-leads-2026-11.spw#tune_sample",
+  ~"./example-leads-2026-11.spw#tune_rest",
+  ~"./example-leads-2026-11.spw#tune_reach",
+  ~"./example-leads-2026-11.spw#tune_frame",
+  ~"./example-leads-2026-11.spw#tune_post",
+  ~"./example-leads-2026-11.spw#stream",
+][reg=set]
+
+^"tone"{
+  id = "el-tone"
+  read = `The first draft led with the death sentence and then scored the day's posts. That voice watches. Leadership by example speaks as the maker of the line.`
+  voice = `Short. One object, one relation, one next touch. The belief is quoted once. A tune row says what to set and how to see that it holds.`
+  charge = `Spw charge for the knob and the check. The social warmth stays in the example a peer can finish, say, and keep.`
+}[reg=facet]
+
+^"belief"{
+  id = "el-belief"
+  claim = `Software engineering has died because of how many software engineers are willing to see their peers struggle looking for work for months without actually fixing the core problems with hiring, training, and peer support.`
+  whose = `The creator, 2026-11-18. The words stay.`
+  watch = engineering[watch]{hiring, training, support}(months)<peer>
+  example = `The answer this cache holds is the example. Hire: the try is a skill a stranger can repeat. Train: the place they get stuck names the move. Support: the second host shows the same line after that try.`
+}[reg=facet]
+
+^"day"{
+  id = "el-day"
+  claim = `The posts of 2026-11-18 are the material the tune rows spend. About 19:57 to 21:47 GMT.`
+  logging = `2123143692693426513 points at spw.quest as the logging language for design. A sample is that log.`
+  portfolio = `2123149929874960444 names attention.productions, lore.land, factshift.center, mutex.buzz, spw.quest, and spwashi.com. The next picture shows one line on two of those hosts.`
+  curriculum = `2123171167234379935, from the prompt in 2123169981986685009. Keep the order of rooms and the probe: the place a learner stops names the move. Spend it as one subject, four times, with the order as a path. The reading lives in says. The episode of the failing focus contract can be the try.`
+  shelf = `outline.spw nests a course. levels.spw keeps one subject and moves the slots. experiment.spw holds the probe. kitchen.spw sets four neighbors under four laws. examples.js: a line stays short enough for a phone editor, the reading sits beside the file, and try names one edit whose effect shows in that reading.`
+  calm = `The canvas stills (2123158390881013765, 2123158632699138258) hold factshift[calm]{settle, local, pinned}(canvas)<physics>. Keep the say: a node sits still enough to remember. The app already rests at 0.1 so a pushed part can finish its seat. The open tune is how far charge and gravity reach, and whether the held line is whole in the picture.`
+  picture = `The same hours asked for local motion and landmarks, for presence without another fixed panel, and for the line to stay ahead of a picture of the metaphor. The gear image spends the second episode. The tune spends the line.`
+}[reg=facet]
+
+^"tune_sample"{
+  id = "el-tune-sample"
+  feature = `spw.quest samples`
+  owner = `@examples`
+  status = "proposed"
+  knob = `script, says, try. One subject across the rooms. A sequence joins with ~>. says carries the English. try changes one slot.`
+  lead = `The file is the example a peer trains on. levels.spw is the shape to follow: the act stays, the slots move.`
+  check = `Open the file in the guide. The try's effect shows in the reading. Each line fits the phone editor. The probe's expect names where the learner stops.`
+}[reg=facet]
+
+^"tune_rest"{
+  id = "el-tune-rest"
+  feature = `factshift.center rest`
+  owner = `@force_config and @forces`
+  status = "proposed"
+  knob = `Leave alphaTarget at 0, restAlphaTarget at 0.1, restStillSpeed at 0.02, restMs at 3000. The 2026-11-11 note records a part 0.22px off at 0.1 and 0.63px off at 0.06. If one drag stays warm, the stack to shorten is reinit (0.15, up to 4000ms) and then rest, in warmUntilHome and restLine.`
+  lead = `The example is a canvas that comes to rest where the reader left it, so a peer can point at a seat and find it again.`
+  check = `With the node tool open, one drag. [data-role=motion-state] reads still. The card lives in @motion and speaks only while that tool is open.`
+}[reg=facet]
+
+^"tune_reach"{
+  id = "el-tune-reach"
+  feature = `factshift.center charge and gravity`
+  owner = `@forces`
+  status = "proposed"
+  knob = `Charge is forceManyBody with no distance max. gravityWellForce pulls with no far cutoff when a node has mass above 2. Give each a far cutoff. A pin stays fixed. The cutoff is the distance at which a landmark keeps its neighborhood.`
+  lead = `A peer can pin one node, drag another, and trust the rest of the document.`
+  check = `One phone still. The pinned node is where it was. A node past the cutoff is where it was. Set the cutoff from that still.`
+}[reg=facet]
+
+^"tune_frame"{
+  id = "el-tune-frame"
+  feature = `factshift.center picture of a held line`
+  owner = `@talk and @held`
+  status = "proposed"
+  knob = `The stepper in spw-talk.ts (the "of" count) and the stage chip in held-expressions.ts (.stage · ×1.00) sit clear of the held line. A pasted file is /.spw/pasted/. The line in the picture is whole.`
+  lead = `The screenshot is the example. A peer sees the line they are asked to try.`
+  check = `A phone still of a short file shows the last line of that file, including its verify.`
+}[reg=facet]
+
+^"tune_post"{
+  id = "el-tune-post"
+  feature = `the X post that carries the line`
+  owner = `the example, once #tune_sample and #tune_frame hold`
+  status = "proposed"
+  knob = `Caption: the host the line left, the host it entered, the try. Two pictures of that same line.`
+  lead = `Post the example. Hire from the try, train from the stuck place, support by showing the second host.`
+  check = `?["Can a stranger do the one try from the screenshot alone?"]{ ~#expect: "the line is whole, the two hosts are named, and the try changes one slot" }`
+}[reg=facet]
+
+^"stream"{
+  >>[2026-11-18 16:25] note — The belief and the wish for a useful X post are cached together, with the day's posts and the shelf and canvas readings as context.
+  >>[2026-11-18 16:29] note — Reread for tone. The angle is leadership by example. Five tune rows name a knob and a check. Nothing was posted, sampled, or retuned.
+  >>[2026-11-18 16:36] note — Renamed from profession-peer-support. The file is the example a person at the bench can point to. The belief stays in #belief.
+}[reg=facet]
+
+@examples: ~"../../workers/spw-quest/src/examples.js"
+@force_config: ~"../../workers/factshift-center/app/src/ts/simulation/force-config.ts"
+@forces: ~"../../workers/factshift-center/app/src/ts/simulation/forces.ts"
+@motion: ~"../../workers/factshift-center/app/src/js/ui/node-panel.ts"
+@talk: ~"../../workers/factshift-center/app/src/js/modes/spw/spw-talk.ts"
+@held: ~"../../workers/factshift-center/app/src/js/ui/held-expressions.ts"
+@direction: ~"./ecosystem-direction-2026-11.spw"
+@composition: ~"./factshift-composition-2026-11.spw"
+@paste: ~"./factshift-paste-grounding-2026-11.spw"
+@router: ~"./quest-library-router-2026-11.spw"
+@collectible: ~"./collectible-expressions-2026-09.spw"
