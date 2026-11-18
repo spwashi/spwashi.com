@@ -6,6 +6,7 @@
 import { escapeHtml, layout } from "../../lib/shell.js";
 import { scriptAddress } from "./build.js";
 import { CARD_CSS, cardFacts, cardLink, questCard } from "./cards.js";
+import { clientLensInit, clientLensPayload, lensBarHtml, lensCss, lensHtmlAttrs } from "./lens.js";
 import { COMPOUND_JOIN_OPERATORS, readBodyJoins, readSlotOrder } from "../../../public/js/semantic/expression-query.js";
 import { OPERATORS } from "./guide.js";
 import { PAGE_CSS, QUEST_HEAD, masthead } from "./page.js";
@@ -346,13 +347,14 @@ function slotHandles(reading, pivots, state) {
  * there. With scripts off the slider submits as a form and each sigil under it
  * is a link that primes its operator; a second press of the active one lets it go.
  */
-function operatorBand(state) {
+function operatorBand(state, lens = null) {
   const field = OPERATORS.map((operator, index) => ({ operator, index, next: withFrontMark(state.line, operator) })).filter(({ next }) => next);
   if (!field.length) return "";
   const active = state.op ? field.find(({ operator }) => operator.name === state.op.name) : null;
   const ticks = field.map(({ operator }) => {
     const on = active?.operator.name === operator.name;
-    return `<li><a href="${escapeHtml(on ? selfHref(state) : selfHref(state, { op: operator.name }))}#operators"${on ? ' aria-current="true"' : ""} title="${escapeHtml(`${operator.name}: ${operator.reads}`)}">${escapeHtml(operator.sigil)}</a></li>`;
+    const accented = lens?.lens?.ops?.includes(operator.sigil);
+    return `<li><a href="${escapeHtml(on ? selfHref(state) : selfHref(state, { op: operator.name }))}#operators"${on ? ' aria-current="true"' : ""} title="${escapeHtml(`${operator.name}: ${operator.reads}`)}"${accented ? ' data-lens-accent="true"' : ""}>${escapeHtml(operator.sigil)}</a></li>`;
   }).join("");
   const hidden = [["line", state.line], ["from", state.from], ...state.trail.map((step) => ["t", step])].filter(([, value]) => value)
     .map(([name, value]) => `<input type="hidden" name="${name}" value="${escapeHtml(value)}">`).join("");
@@ -410,7 +412,7 @@ function form(state) {
   </form>`;
 }
 
-export function pivotBody(state) {
+export function pivotBody(state, lens = null) {
   const opening = `<section class="opening" aria-labelledby="pivot-title">
   <h1 id="pivot-title">Pivot a line</h1>
   <p class="lede">Change one slot, keep the rest, and see the line before you go. <a href="/forms/">Forms, side by side</a> shows what each slot does.</p>
@@ -461,7 +463,7 @@ export function pivotBody(state) {
     links: [here ? standsLink(here) : "", scriptAddress(state.line) ? cardLink(scriptAddress(state.line), "Take it apart") : "", cardLink(`/physics?line=${encodeURIComponent(state.line)}`, "Feel it at rest"), cardLink(`/canvas?line=${encodeURIComponent(state.line)}`, "Open it on the canvas"), cardLink("/constructs#c-expression", "What each slot is")],
   })}
   ${added}${slotHandles(reading, pivots, state)}
-  ${operatorBand(state)}
+  ${operatorBand(state, lens)}
   ${addForm(state, reading)}
   ${back}${families.length ? `
   <h3>Families it belongs to</h3>
@@ -685,7 +687,9 @@ export const PIVOT_CSS = `${CARD_CSS}
     .join-choice code { min-width: 2.5ch; font: 700 1rem/1 var(--mono); font-variant-ligatures: none; color: var(--accent); }
     @media (pointer: coarse) { .starts a, .families-list a { min-height: 44px; } }`;
 
-export function renderPivot(state) {
+export function renderPivot(state, lens = null) {
+  const scopeAttr = lens ? ` data-server-lens="true" ${lensHtmlAttrs(lens)}` : "";
+  const lensScript = `(${clientLensInit.toString()})(${JSON.stringify(clientLensPayload())});`;
   return layout({
     title: state.line ? `spw.quest — pivot ${state.line.slice(0, 60)}` : "spw.quest — pivot a line",
     description: "One line of Spw and the lines one change away from it, each shown before you go, with the way back kept.",
@@ -693,10 +697,14 @@ export function renderPivot(state) {
     head: QUEST_HEAD,
     themeCss: `${PAPER_CSS}
     ${PAGE_CSS}
-    ${PIVOT_CSS}`,
-    script: state.line ? `(${instrument.toString()})();` : "",
+    ${PIVOT_CSS}
+    ${lensCss()}`,
+    script: [state.line ? `(${instrument.toString()})();` : "", lensScript].filter(Boolean).join("\n"),
     body: `${masthead("/pivot")}
-${pivotBody(state)}
+<div class="lens-scope"${scopeAttr}>
+${lensBarHtml(lens)}
+${pivotBody(state, lens)}
+</div>
 <p class="also"><a href="/constructs">Constructs</a> · <a href="/specimens">Specimens</a> · <a href="/build">Take one line apart</a> · <a href="/learn">Learn it a mark at a time</a></p>`,
   });
 }

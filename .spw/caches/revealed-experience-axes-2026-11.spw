@@ -1,0 +1,36 @@
+# Revealed Experience Along Thematic Axes
+#
+# operation: cache
+# Captures where landing pages and worker surfaces can shift from
+# explanatory prose to revealed experience along thematic axes.
+
+#>revealed_experience_axes_2026_11
+#:cache #!wonder #!landing #!ecosystem
+#:operation #!cache
+#:fixity #!working
+#:layer #!pragmatics
+
+@wonder_architecture: ~"../conventions/wonder-architecture.spw"
+@domains: ~"../domains.spw"
+
+operation = "cache"
+fixity = "working"
+
+^"thesis"{
+  claim = `First-time visitors recognize design and feel warmth faster when thematic axes reveal themselves through interaction, visual framing, and one clear invitation—rather than front-loading prose explanations.`
+}
+
+^"axes"{
+  folios = .{
+    surface = `index.html#home-frame (.home-folio-preview)`
+    shift = `Lead with the visual drop card and one warm invitation; trim competing prose around it.`
+  }
+  production_season = .{
+    surface = `attention.productions`
+    shift = `Use production season as a light stage/frame on spwashi.com; let attention.productions carry the interactive season and attention mechanics.`
+  }
+  bee_motif = .{
+    surface = `mutext.buzz`
+    shift = `Develop the bee/hive whimsy as a small, pokeable utility or status toy nested on the homepage rather than prose-only lore.`
+  }
+}
