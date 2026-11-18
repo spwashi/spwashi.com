@@ -506,9 +506,14 @@ function initLiteralParser(root) {
   const fileInput = root.querySelector('[data-parser-file]');
   const sourceName = root.querySelector('[data-parser-source-name]');
   const status = root.querySelector('[data-parser-status]');
+  const cursorOut = root.querySelector('[data-parser-cursor]');
   const outlineList = root.querySelector('[data-parser-outline]');
   const field = root.querySelector('[data-parser-field]');
   const paint = root.querySelector('[data-parser-paint]');
+  const copyButton = root.querySelector('[data-parser-copy]');
+  const clearButton = root.querySelector('[data-parser-clear]');
+  const sceneLinks = [...root.querySelectorAll('[data-parser-scene]')];
+  const viewButtons = [...root.querySelectorAll('[data-parser-view]')];
 
   if (!(input instanceof HTMLTextAreaElement)
     || !(tokenList instanceof HTMLElement)
@@ -516,9 +521,59 @@ function initLiteralParser(root) {
     || !(diagnostics instanceof HTMLElement)) return;
 
   let activeName = '';
+  let activeScene = '';
   let timer = 0;
+  let copyResetTimer = 0;
   // The last full reading, kept so the caret can light a brace pair without parsing again.
   let read = { text: null, tokens: [], spans: [], pair: null };
+
+  const setCount = (name, value, tone = '') => {
+    const badge = root.querySelector(`[data-parser-count="${name}"]`);
+    if (!(badge instanceof HTMLElement)) return;
+    badge.textContent = String(value);
+    if (tone) badge.dataset.tone = tone;
+    else delete badge.dataset.tone;
+  };
+
+  const setView = (view) => {
+    const next = view || 'all';
+    root.dataset.parserView = next;
+    viewButtons.forEach((button) => {
+      const pressed = button.dataset.parserView === next;
+      button.setAttribute('aria-pressed', String(pressed));
+      if (pressed && document.activeElement === button) {
+        button.scrollIntoView?.({ block: 'nearest', inline: 'nearest' });
+      }
+    });
+    if (next !== 'all') {
+      const panel = root.querySelector(`[data-parser-panel="${next}"]`);
+      if (panel instanceof HTMLDetailsElement) panel.open = true;
+    }
+  };
+
+  const updateCursor = () => {
+    if (!(cursorOut instanceof HTMLElement)) return;
+    const pos = Math.max(0, Math.min(input.selectionStart ?? 0, input.value.length));
+    const starts = lineStarts(input.value);
+    let line = 0;
+    for (let i = 0; i < starts.length; i += 1) {
+      if (starts[i] <= pos) line = i;
+      else break;
+    }
+    const column = pos - (starts[line] ?? 0) + 1;
+    cursorOut.textContent = `Ln ${line + 1}, Col ${column}`;
+  };
+
+  const markScene = (sceneSlug = '') => {
+    activeScene = sceneSlug;
+    sceneLinks.forEach((link) => {
+      if (sceneSlug && link.dataset.parserScene === sceneSlug) {
+        link.setAttribute('aria-current', 'true');
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
+  };
 
   /* ---- The painted field: the source drawn under a clear textarea, character for character. ---- */
   const live = field instanceof HTMLElement && paint instanceof HTMLElement;
@@ -591,12 +646,24 @@ function initLiteralParser(root) {
       read = { text: source, tokens: output.tokens, spans: output.tokens, pair: null };
       if (document.activeElement === input) read.pair = bracePairAt(read.tokens, input.selectionStart);
       paintRead();
-      if (outlineList instanceof HTMLElement) renderOutline(outlineList, outline(source), jump);
+      const outlineSymbols = outline(source);
+      if (outlineList instanceof HTMLElement) renderOutline(outlineList, outlineSymbols, jump);
       setMetric(root, 'anchors', anchors(source).length);
+      const genre = readGenre(output, source);
+      const genreFails = genre.checks.filter((check) => check.state === 'fail').length;
+      const diagCount = output.errors.length + output.warnings.length + genreFails;
+      setCount('outline', outlineSymbols.length);
+      setCount('tokens', output.tokens.length);
+      setCount('nodes', astCensus.total);
+      setCount('diagnostics', diagCount, diagCount > 0 ? 'error' : 'ok');
       setAppLink(appLink, source, activeName);
       renderSpwDoors(doors, source, activeName);
       const key = sampleKey(activeName);
       showPlace(root, key && source === SPW_LITERAL_PARSER_SAMPLES[key] ? key : '');
+      if (!activeScene || !sceneLinks.some((link) => link.dataset.parserScene === activeScene && new URL(link.href, window.location.href).searchParams.get(SOURCE_PARAM) === source)) {
+        markScene('');
+      }
+      updateCursor();
       if (status instanceof HTMLElement) {
         status.textContent = output.success && !output.errors.length
           ? `Parsed ${output.tokens.length} tokens into ${astCensus.total} AST nodes.`
@@ -608,6 +675,10 @@ function initLiteralParser(root) {
       read = { text: null, tokens: [], spans: [], pair: null };
       paintPlain();
       if (outlineList instanceof HTMLElement) outlineList.replaceChildren();
+      setCount('outline', 0);
+      setCount('tokens', 0);
+      setCount('nodes', 0);
+      setCount('diagnostics', 1, 'error');
       diagnostics.replaceChildren();
       const item = document.createElement('li');
       item.dataset.tone = 'error';
@@ -637,9 +708,15 @@ function initLiteralParser(root) {
   // color follows on the next read.
   input.addEventListener('input', () => {
     paintPlain();
+    updateCursor();
     scheduleRender();
   });
-  for (const type of ['keyup', 'click', 'select', 'focus']) input.addEventListener(type, updatePair);
+  for (const type of ['keyup', 'click', 'select', 'focus']) {
+    input.addEventListener(type, () => {
+      updatePair();
+      updateCursor();
+    });
+  }
   input.addEventListener('blur', () => {
     releaseTab = false;
     if (read.pair) { read.pair = null; paintRead(); }
@@ -702,9 +779,69 @@ function initLiteralParser(root) {
   root.querySelectorAll('[data-parser-sample]').forEach((button) => {
     button.addEventListener('click', () => {
       const sample = SPW_LITERAL_PARSER_SAMPLES[button.dataset.parserSample];
-      if (sample) loadSource(sample, `${button.dataset.parserSample}.spw`);
+      if (sample) {
+        markScene('');
+        loadSource(sample, `${button.dataset.parserSample}.spw`);
+        button.scrollIntoView?.({ block: 'nearest', inline: 'nearest' });
+      }
     });
   });
+
+  sceneLinks.forEach((link) => {
+    link.addEventListener('click', (event) => {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      const url = new URL(link.href, window.location.href);
+      const source = url.searchParams.get(SOURCE_PARAM);
+      if (!source) return;
+      event.preventDefault();
+      const name = url.searchParams.get(NAME_PARAM) || `${link.dataset.parserScene || 'scene'}.spw`;
+      markScene(link.dataset.parserScene || '');
+      loadSource(source, name);
+      try {
+        window.history.replaceState(null, '', `${url.pathname}${url.search}#literal-parser`);
+      } catch {
+        // Ignore history restriction on file:// or sandboxed origins.
+      }
+    });
+  });
+
+  viewButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      setView(button.dataset.parserView || 'all');
+    });
+  });
+
+  if (copyButton instanceof HTMLButtonElement) {
+    copyButton.addEventListener('click', async () => {
+      const value = input.value;
+      try {
+        if (navigator.clipboard?.writeText) {
+          await navigator.clipboard.writeText(value);
+        } else {
+          input.select();
+          document.execCommand?.('copy');
+        }
+        window.clearTimeout(copyResetTimer);
+        copyButton.textContent = 'Copied';
+        copyButton.dataset.copied = 'true';
+        if (status instanceof HTMLElement) status.textContent = 'Copied literal source to clipboard.';
+        copyResetTimer = window.setTimeout(() => {
+          copyButton.textContent = 'Copy';
+          delete copyButton.dataset.copied;
+        }, 1600);
+      } catch {
+        if (status instanceof HTMLElement) status.textContent = 'Clipboard write unavailable; select and copy from the editor.';
+      }
+    });
+  }
+
+  if (clearButton instanceof HTMLButtonElement) {
+    clearButton.addEventListener('click', () => {
+      markScene('');
+      loadSource('', 'untitled.spw');
+      input.focus();
+    });
+  }
 
   if (fileInput instanceof HTMLInputElement) {
     fileInput.addEventListener('change', async () => {
@@ -723,6 +860,12 @@ function initLiteralParser(root) {
   const launched = readLaunchSource();
   const initial = launched.source || input.value || SPW_LITERAL_PARSER_SAMPLES.contract;
   const initialName = launched.name || (initial === SPW_LITERAL_PARSER_SAMPLES.contract ? 'contract.spw' : '');
+  const matchingScene = sceneLinks.find((link) => {
+    const url = new URL(link.href, window.location.href);
+    return url.searchParams.get(SOURCE_PARAM) === initial;
+  });
+  if (matchingScene) markScene(matchingScene.dataset.parserScene || '');
+  setView(root.dataset.parserView || 'all');
   loadSource(initial, initialName);
 
   initAppInstallAction(root.querySelector('[data-parser-install]'));
