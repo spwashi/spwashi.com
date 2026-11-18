@@ -35,6 +35,9 @@ public_routes: .{
  care = .{ path = ~"../care/index.html", role = `care interface`, bridge = `non-clinical translation layer for language, cards, peer witness, privacy, and escalation boundaries before or alongside formal support` }[reg=facet]
  website_field_guide = .{ path = ~"../about/website/index.html", role = `media field guide`, bridge = `public translation layer for the site's PWA shell, frame navigation, Spw surfaces, Pretext lab, and cognitive-surface direction` }[reg=facet]
  contact = .{ path = ~"../contact/index.html", role = `contact route`, bridge = `direct path for conversation and collaboration` }[reg=facet]
+ membership = .{ path = ~"../membership/index.html", role = `membership register`, bridge = `participatory roles, continuity, and non-platform support paths` }[reg=facet]
+ services = .{ path = ~"../services/index.html", role = `services ladder`, bridge = `three-layer pricing (anchors, media, conversation), Scope Card ($250-$750), and scope sketch composer` }[reg=facet]
+ tiktok = .{ path = ~"../tiktok/index.html", role = `tiktok entry`, bridge = `TikTok Live Fan (Heart Me) and Subscriber onboarding plus direct non-TikTok doors into projects, folios, and services` }[reg=facet]
  software = .{ path = ~"../topics/software/index.html", role = `grammar surface`, bridge = `public syntax, interaction grammar, and workbench-facing translation layer` }[reg=facet]
  spw_operator_atlas = .{ path = ~"../topics/software/spw/index.html", role = `operator atlas`, bridge = `one public route per operator, translating Spw grammar into interaction semantics, brace physics, and inspectable metaphysics` }[reg=facet]
  pretext = .{ path = ~"../topics/software/pretext/index.html", role = `probe surface`, bridge = `live lab that projects grammar into a concrete device-oriented interface` }[reg=facet]
@@ -96,6 +99,9 @@ canon_alignment: .{
   play = `exploratory_biome`
   rpg_wednesday = `exploratory_biome`
   recipes = `guided_curriculum`
+  membership = `orienting_hub`
+  services = `orienting_hub`
+  tiktok = `orienting_hub`
  }[reg=facet]
 }[reg=facet]
 

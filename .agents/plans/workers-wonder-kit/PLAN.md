@@ -44,7 +44,7 @@ Read off what shipped on 2026-11-16 and off Grok's note the same day, first HUB.
   | smut.today | `\|\|` / `#` | alternating daily/weekly adult intimacy cadence | a single paced issue | standalone zine card |
   | autonomous.feedback | `?` / `*` / `~#answer` | consentful signal / near-miss -> `result_ref` loop | feedback receipt desk | well-known `.json` schema (`autonomous-feedback.client.v0`) |
   | boon / bane / bone.land | valence `+1` / `-1` / `0` | attraction well / climbing pressure / neutral skeleton | seed themes in `SITE_CONFIGS` | typed domain arrival on factshift.center |
-  | brainstorm.monster & trope.wiki | `@trait` / `<grammar>` | composite RPG character cards & HTML trope encyclopedia | persona workbench & web trope glossary | `#spw64` pack handoff / texture HTML tour links |
+  | brainstorm.monster & trope.wiki | `@trait` / `<grammar>` | hibernating personal `hash + word` idea seed evolved via `autonomous.feedback/{seed}` (S7) & HTML trope glossary | personal ideation monster / web trope glossary | `autonomous.feedback/{seed}` loop + `#spw64` pack handoff |
 
 - **Collectible syntax affordances (`attention.productions` ↔ `texture.website`):** `attention.productions` (`src/compose.js`) already renders each shot's line as interactive `<a class="slot">` handles wrapped in `<span class="br" data-op="...">` (`MARK_OP` / `BRACKET_OP`), functioning as plain `href` ladder links with scripts off and horizontal 28px scrubbers with scripts on (`#>wonder_set_collectible_handles`). Aligning `texture.website`'s `spwLine` to carry all four slots (`~material[...]{layer}(scene)<format>`) and exposing the same slot-handle markup lets `attention.productions`, `texture.website`, `spw.quest/pivot`, and `spwashi.com`'s Home paste/cauldron exchange collectible expressions losslessly via `#spw64=`.
 - **Extended wonder across seats (`#>wonder_seats_disagree`):** Disagreements across seats (bracket sequences `<>, (), [], {}` vs `[], {}, (), <>`, operator aliases, `!` action vs `?` non-folding bodies) are retained as structured wonder seeds rather than papered over, pairing pre-reveal `~#expect` prompts with the `kept_open` (`never_closes`) stage.
@@ -114,6 +114,15 @@ Each host's mark and the kind of expression it starts from (`hold`, `shot`, `mas
 ## S6. One stale load after a deploy
 
 tealstripes' and mutex's service workers fetch navigations from the network and answer every other file from the cache while fetching a fresh copy for next time (stale-while-revalidate, `SW_JS` in each carry); `/*.js` also carries `Cache-Control: max-age=300`. So the first visit after a deploy can run the old script with the new page (seen on `/@lock`, 2026-11-16: "not a vibe" once, then the lock). Options: name the shell's scripts by content, as the peer kit names its own; answer scripts network-first, as wap.mom answers everything; or reload once when a new worker takes control. Touches the two carries' `SW_JS`, their shell lists and perhaps their `_headers`. Verify without a deploy: serve a changed script locally, load once, and see the new one run.
+
+## S7 (proposed). Personal loop: `brainstorm.monster` + `autonomous.feedback` (2026-11-17)
+
+Whereas `mutex.buzz` holds one ecosystem-wide concept per cycle, a collaborator starting an idea wants a personal growth loop without competing for the cluster slot:
+
+- **Zero-ceremony seed (`brainstorm.monster`):** A visitor picks or generates a random `hash + word` identity with minimal upfront thought; it hibernates cleanly if left alone (`.spw/domains.spw#brainstorm.monster`) and wakes when they return.
+- **Scoped evolution (`autonomous.feedback`):** They point hopes, notes, and prompts at `autonomous.feedback/{seed}`, reusing the existing card-slip `POST`, `/.well-known/autonomous-feedback.json` config, and `desk.js` tally/compaction pipeline.
+- **Creator/digest bridge:** Settled notes (manual live-stream pass or desk digest) evolve *their* monster's parameters on `brainstorm.monster`.
+- **Gate:** Creator confirms the first landing surface — either an `/about/domains/brainstorm.monster/` domain card on `spwashi.com` or the `{seed}` namespace contract in `workers/autonomous-feedback/src/index.js`. Verify: `npm run check:workers` (including fresh `workers/spw-quest/carry-specimens.mjs` harvest after route/copy edits).
 
 ## Boundaries
 

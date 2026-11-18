@@ -54,6 +54,10 @@ No plan owned the parser's arrival in the site, so this plan does, as the workbe
 
 Invariants: build-time parse first, runtime parse on demand, the page complete without either; the site consumes the pinned grammar and forks nothing. A grammar bump is a workbench pin plus `build:spw-parser` plus `manifest:expressions` in one commit, verified by `spw:integrity`, `ecology:language`, and `check:local`.
 
+## Parser scenes — 2026-11-17
+
+The operator leaves under `topics/software/spw/operators/` already open a worked example in `/tools/spw-parser/#literal-parser`. The tool page, `tools/spw-parser/index.html`, still opens as token inspection. One preset row on that page: a character beat, a site card, and a system transition, each a link that fills `spw_source` the way those leaves do. The grammar stays the pinned one. Check: `npm run spw:integrity`.
+
 ## Workbench consumer pin
 
 Operation `align`: the mount moves to an upstream revision, the browser parser and expression manifest are rebuilt from that same revision in the same commit, and the move claims nothing about the language version. Pins so far: `3eaab6377672` to `229aedcf` (2026-09-30), seven moves on 2026-10-12 and 2026-10-13 recorded in `wip.spw` (to `0eb1d1c0`, f51b316c), `850077a` (b956329b, 2026-10-27), `27fa1e3d` (2026-11-06, `3f53adf2` slot reader), and the current `bcf0da18b840` (`rule_trace_when_kept` trace-skip, `spw.pivots/1`, `spw.quantity-sheet/1`, `readNumberForm`, `1,322` `.spw` files with `1,311` clean and `1,018` HTML expressions). Pre-push extracts workbench sources and citation targets at the site commit's exact gitlink; no packages are installed.
