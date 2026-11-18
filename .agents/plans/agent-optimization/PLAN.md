@@ -1,6 +1,6 @@
 # Agent Optimization for spwashi.com
 
-**Status 2026-11-06.** The gate holds and the census shrank. `AGENTS.md` is 3179 words against the 3200 in `ALWAYS_ON_SPECS` (`scripts/check-agent-contracts.mjs`), unchanged since 280c5a84 removed the archived-plan lines. Live plans fell from 154 `PLAN.md` (2026-09-20) to 52, with 186 archived; agentic-dev-contracts can follow. Next: A2 can land today; A1 waits only on the creator's review.
+**Status 2026-11-06.** The gate holds and the census shrank. `AGENTS.md` is 3179 words against the 3200 in `ALWAYS_ON_SPECS` (`scripts/check-agent-contracts.mjs`), unchanged since 280c5a84 removed the archived-plan lines. Live plans fell from 154 `PLAN.md` (2026-09-20) to 52 on this date, with 186 archived. On 2026-11-17 the count is 55 live `PLAN.md` and 187 archived; agentic-dev-contracts can follow. Next: A2 can land today; A1 waits only on the creator's review.
 
 **Related:** [history-reflow](../history-reflow/PLAN.md) · [agentic-dev-contracts](../agentic-dev-contracts/PLAN.md) (archive candidate) · [spw-architecture-ecology](../archive/spw-architecture-ecology/PLAN.md) (wave H absorbed 2026-10-10).
 
