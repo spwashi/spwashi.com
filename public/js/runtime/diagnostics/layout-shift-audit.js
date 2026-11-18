@@ -345,6 +345,13 @@ const buildAuditDetail = (ctx, entries, state, history, recentMounts = [], now =
   });
 };
 
+let activeAuditApi = null;
+
+/** Return the currently active layout-shift audit handle, if mounted. */
+export function getLayoutShiftAudit() {
+  return activeAuditApi;
+}
+
 export function initSpwLayoutShiftAudit(ctx = {}) {
   const logger = createSpwLogger('layout-shift', {
     namespace: 'layout-shift',
@@ -415,7 +422,7 @@ export function initSpwLayoutShiftAudit(ctx = {}) {
   let observer = null;
   let active = true;
 
-  ctx.layoutShiftAudit = auditApi;
+  activeAuditApi = auditApi;
 
   /* ----------------------------------------------------------------------
      Debug-only post-load instrumentation (activated only when the module
@@ -481,10 +488,11 @@ export function initSpwLayoutShiftAudit(ctx = {}) {
     });
   }
 
-  // Snapshot already-mounted modules at audit init time (many immediate layers precede this enhancement)
-  if (ctx?.registry && typeof ctx.registry.values === 'function') {
-    for (const rec of ctx.registry.values()) {
-      if (rec && rec.mountedAt != null) {
+  // Snapshot already-mounted modules via bus reply when hosted inside an orchestrator.
+  if (ctx?.bus && typeof ctx.bus.emit === 'function') {
+    ctx.bus.emit('spw:layout-shift-sync-mounts', {
+      record(rec) {
+        if (!rec || rec.mountedAt == null) return;
         debugModuleMounts.push({
           id: rec.baseId || rec.id || 'unknown',
           layer: rec.layer || '',
@@ -501,8 +509,8 @@ export function initSpwLayoutShiftAudit(ctx = {}) {
           root: rec.root && rec.root.nodeType === 1 ? rec.root : null,
           mountedAt: rec.mountedAt,
         });
-      }
-    }
+      },
+    });
   }
 
   // Persistent (audit-lifetime) subscription that keeps the attribution ring
@@ -673,20 +681,6 @@ export function initSpwLayoutShiftAudit(ctx = {}) {
     entries.push(detail);
     if (entries.length > HISTORY_LIMIT) entries.splice(0, entries.length - HISTORY_LIMIT);
 
-    // Enrich the component model: attribute this shift's cost back onto the
-    // arriving module's registry record so tuning/inspection surfaces can read
-    // per-component reflow as a first-class signal, and mark it settled.
-    if (detail.attributedTo?.id && detail.batchValue > 0 && typeof ctx.registry?.get === 'function') {
-      const record = ctx.registry.get(detail.attributedTo.id);
-      if (record) {
-        record.reflowValue = roundValue((record.reflowValue || 0) + detail.batchValue);
-        record.reflowClass = detail.reflowClass;
-        record.reflowWithinMs = detail.attributedWithinMs;
-        record.reflowAttributedBy = detail.attributedBy;
-        if (record.settledAt == null) record.settledAt = Math.round(now);
-      }
-    }
-
     syncState(detail);
     return emit(detail, detail.batchValue > 0 ? 'warn' : 'info');
   };
@@ -703,8 +697,8 @@ export function initSpwLayoutShiftAudit(ctx = {}) {
     observer?.disconnect?.();
     ctx?.observers?.delete?.(observer);
     clearAuditDataset(ctx);
-    if (ctx.layoutShiftAudit === auditApi) {
-      ctx.layoutShiftAudit = null;
+    if (activeAuditApi === auditApi) {
+      activeAuditApi = null;
     }
 
     // Stop any active 5s debug collectors (mutation + mount listeners)
