@@ -24,6 +24,8 @@
 @import url('./components/surfaces.css') layer(components);
 @import url('./components/signals.css') layer(components);
 @import url('./components/cards.css') layer(components);
+@import url('./components/cards/variants.css') layer(components);
+@import url('./components/cards/hygiene.css') layer(components);
 @import url('./components/semantic-learning.css') layer(components);
 @import url('./components/semantic-variants.css') layer(components);
 @import url('./components/semantic-resonance.css') layer(components);

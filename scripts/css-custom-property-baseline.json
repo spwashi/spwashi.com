@@ -1,12 +1,12 @@
 {
-  "public/css/components/cards.css": {
-    "--card-rhythm": 1
-  },
   "public/css/components/cards/profile-card.css": {
     "--card-charge": 4
   },
   "public/css/components/cards/seed-card.css": {
     "--card-charge": 3
+  },
+  "public/css/components/cards/variants.css": {
+    "--card-rhythm": 1
   },
   "public/css/components/foundation.css": {
     "--spw-variant-accent": 1,
@@ -38,9 +38,6 @@
   },
   "public/css/components/signals.css": {
     "--spw-site-rhythm-tempo": 1
-  },
-  "public/css/components/site-search.css": {
-    "--spw-interaction-phase-weight": 1
   },
   "public/css/components/typography-packing.css": {
     "--spw-grid-min-active": 1

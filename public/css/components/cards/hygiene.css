@@ -1,0 +1,133 @@
+/* ==========================================================================
+   components/cards/hygiene.css
+   --------------------------------------------------------------------------
+   Pour 3 (Composition): inner typography floor, overflow bounds, and container-
+   query card rhythm responses across wide, standard, narrow, and micro cards.
+   Split verbatim from components/cards.css to preserve exact cascade order.
+   ========================================================================== */
+
+/* ==========================================================================
+   11. Inner type hygiene
+   ========================================================================== */
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  :is(.spw-panel, .frame-panel),
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column,
+  .ref-card
+) :is(
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  ul,
+  ol,
+  li,
+  blockquote,
+  pre,
+  code,
+  figure,
+  figcaption,
+  [data-spw-textual-role="note"],
+  .frame-copy,
+  .specimen-material,
+  .operator-snippet-note,
+  .plan-thesis,
+  .plan-wonder p
+) {
+  min-width: 0;
+}
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  :is(.spw-panel, .frame-panel),
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column,
+  .ref-card
+) :is(h2, h3, h4, p, ul, ol, pre, figure, figcaption) {
+  margin: 0;
+}
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  :is(.spw-panel, .frame-panel),
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column,
+  .ref-card
+) :where(
+  p,
+  li,
+  span:not(.frame-card-sigil):not(.media-card-tag):not(.media-focus-operator):not(.operator-symbol):not(.spec-pill):not(.plan-status)
+) {
+  line-height: 1.46;
+  /* A reading floor, not a verdict. :where() keeps this at zero specificity so a
+     component that owns a decorated surface can state its own measure and win.
+     As :is(), the :not(.class) arguments raised this ancestor sweep to class
+     specificity — it then outranked .spw-playable-hook's own 64ch and capped a
+     full-width chip at 60ch, stranding the rest of the carrier as space nothing
+     could claim. */
+  max-inline-size: min(100%, 60ch);
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* Container query responses for cards across wide, standard, narrow, and micro containers */
+@container spw-card (min-width: 36rem) {
+  :where(.spw-card, .frame-card, :is(.spw-panel, .frame-panel), .media-card, .software-card, .operator-card, .plan-card, .ref-card) {
+    --card-rhythm: 0.82rem;
+    --card-internal-gap: 0.65rem;
+    padding: clamp(1rem, 2.5cqi, 1.4rem);
+  }
+}
+
+@container spw-card (max-width: 24rem) {
+  :where(.spw-card, .frame-card, :is(.spw-panel, .frame-panel), .media-card, .software-card, .operator-card, .plan-card, .ref-card) {
+    --card-rhythm: 0.5rem;
+    --card-internal-gap: 0.35rem;
+    padding: clamp(0.5rem, 3.5cqi, 0.75rem);
+  }
+  :where(.spw-card, .frame-card, :is(.spw-panel, .frame-panel)) :is(h2, h3, h4) {
+    font-size: clamp(0.92rem, 4.5cqi, 1.1rem);
+  }
+}
+
+@container spw-card (max-width: 18rem) {
+  :where(.spw-card, .frame-card, :is(.spw-panel, .frame-panel), .media-card, .software-card, .operator-card, .plan-card, .ref-card) {
+    --card-rhythm: 0.38rem;
+    --card-internal-gap: 0.28rem;
+    padding: 0.45rem;
+  }
+}
+
+@container spw-card (max-width: 14rem) {
+  :where(.spw-card, .frame-card, :is(.spw-panel, .frame-panel), .media-card, .software-card, .operator-card, .plan-card, .ref-card) {
+    --card-rhythm: 0.28rem;
+    --card-internal-gap: 0.2rem;
+    padding: 0.35rem;
+  }
+  :where(.spw-card, .frame-card, :is(.spw-panel, .frame-panel)) :is(h2, h3, h4) {
+    font-size: 0.85rem;
+  }
+}

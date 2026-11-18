@@ -19077,6 +19077,17 @@ html[data-spw-color-mode="dark"] :where(
   transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
   transition-duration: 480ms;
 }
+}
+
+/* /public/css/components/cards/variants.css */
+@layer components {
+/* ==========================================================================
+   components/cards/variants.css
+   --------------------------------------------------------------------------
+   Pour 3 (Composition): environmental physics, pretext text-variant extensions,
+   authored tone postures, and screenshot-utility defaults for card anatomy.
+   Split verbatim from components/cards.css to preserve exact cascade order.
+   ========================================================================== */
 
 /* ==========================================================================
    Environmental Physics & Pretext Text-Variant Extensions
@@ -19793,7 +19804,17 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 .card-sub-links a[data-spw-nav-tokenized="true"]::after {
   content: attr(data-spw-nav-postfix);
 }
+}
 
+/* /public/css/components/cards/hygiene.css */
+@layer components {
+/* ==========================================================================
+   components/cards/hygiene.css
+   --------------------------------------------------------------------------
+   Pour 3 (Composition): inner typography floor, overflow bounds, and container-
+   query card rhythm responses across wide, standard, narrow, and micro cards.
+   Split verbatim from components/cards.css to preserve exact cascade order.
+   ========================================================================== */
 
 /* ==========================================================================
    11. Inner type hygiene
