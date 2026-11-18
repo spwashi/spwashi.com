@@ -39,9 +39,9 @@ export const SCRIPT_MAX = 65536;
 
 /** What each door does, said once so every component offers it in the same words. */
 export const ECOSYSTEM_JOBS = Object.freeze({
-  canvas: Object.freeze({ host: 'factshift.center', label: 'lay out on the canvas', title: 'Opens factshift.center with this Spw laid out as a canvas' }),
-  build: Object.freeze({ host: 'spw.quest', label: 'take apart on spw.quest', title: "Opens spw.quest's editor holding this Spw" }),
-  pivot: Object.freeze({ host: 'spw.quest', label: 'pivot on spw.quest', title: 'Opens spw.quest one change away from this line' }),
+  canvas: Object.freeze({ host: 'factshift.center', label: 'factshift.center', title: 'Opens factshift.center with this Spw laid out as a canvas' }),
+  build: Object.freeze({ host: 'spw.quest', label: 'spw.quest', title: "Opens spw.quest's editor holding this Spw" }),
+  pivot: Object.freeze({ host: 'spw.quest', label: 'spw.quest', title: 'Opens spw.quest one change away from this line' }),
 });
 
 const WORD = /^[A-Za-z_][\w-]*$/;

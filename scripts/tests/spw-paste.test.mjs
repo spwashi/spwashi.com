@@ -79,7 +79,7 @@ test('Spw that reads as Spw offers the canvas and spw.quest; prose and seeds do 
     .replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&quot;/g, '"').replace(/&amp;/g, '&');
   const doc = readPaste(authored, parse);
   assert.equal(doc.kind, 'document');
-  assert.deepEqual(doc.doors.map(doorLabel), ['Lay out on the canvas', 'Take apart on spw.quest']);
+  assert.deepEqual(doc.doors.map(doorLabel), ['factshift.center', 'spw.quest']);
   const [canvas, build] = doc.doors.map((door) => new URL(door.href));
   assert.equal(Buffer.from(canvas.hash.replace('#spw64=', ''), 'base64url').toString('utf8'), authored.trim());
   assert.equal(build.searchParams.get('filename'), 'home_frame.spw');
@@ -151,7 +151,7 @@ test('spw.quest starters, /llms.txt answers, build kits, and texture.website she
   for (const starter of STARTERS) {
     const reading = readPaste(starter.line, parse);
     assert.equal(reading.kind, 'expression', `${starter.id} reads as an expression`);
-    assert.deepEqual(reading.doors.map(doorLabel), ['Lay out on the canvas', 'Take apart on spw.quest']);
+    assert.deepEqual(reading.doors.map(doorLabel), ['factshift.center', 'spw.quest']);
     const highlighted = highlightSpw(starter.line, parse(starter.line, { eventPolicy: 'none' }).tokens);
     assert.equal(decodeHtml(highlighted), starter.line);
   }
@@ -176,7 +176,7 @@ test('spw.quest starters, /llms.txt answers, build kits, and texture.website she
   for (const kind of BUILD_KINDS) {
     const reading = readPaste(kind.script, parse);
     assert.equal(reading.kind, 'document', `${kind.kind} opens as a document`);
-    assert.deepEqual(reading.doors.map(doorLabel), ['Lay out on the canvas', 'Take apart on spw.quest']);
+    assert.deepEqual(reading.doors.map(doorLabel), ['factshift.center', 'spw.quest']);
   }
 
   for (const id of ['cinema', 'debate']) {
@@ -184,7 +184,7 @@ test('spw.quest starters, /llms.txt answers, build kits, and texture.website she
     const reading = readPaste(example.script, parse);
     assert.equal(reading.kind, 'document', `${id} opens as a document`);
     assert.equal(decodeHtml(highlightSpw(example.script, parse(example.script, { eventPolicy: 'none' }).tokens)), example.script);
-    assert.deepEqual(reading.doors.map(doorLabel), ['Lay out on the canvas', 'Take apart on spw.quest']);
+    assert.deepEqual(reading.doors.map(doorLabel), ['factshift.center', 'spw.quest']);
   }
 
   for (const personaLine of [
@@ -205,6 +205,6 @@ test('spw.quest starters, /llms.txt answers, build kits, and texture.website she
     const reading = readPaste(src, parse);
     assert.equal(reading.kind, 'document', `${material} pastes as a document`);
     assert.equal(decodeHtml(highlightSpw(src, parse(src, { eventPolicy: 'none' }).tokens)), src, `${material} highlights losslessly`);
-    assert.deepEqual(reading.doors.map(doorLabel), ['Lay out on the canvas', 'Take apart on spw.quest']);
+    assert.deepEqual(reading.doors.map(doorLabel), ['factshift.center', 'spw.quest']);
   }
 });

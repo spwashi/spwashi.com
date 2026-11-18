@@ -10,7 +10,13 @@ import { ecosystemLinks } from '../../kernel/ecosystem-links.js';
 export function renderSpwDoors(host, source, name = '') {
   if (!(host instanceof HTMLElement)) return;
   const text = String(source ?? '').trim();
-  const doors = text ? ecosystemLinks(text, { jobs: ['pivot', 'build', 'canvas'], name: String(name).replace(/\.spw$/, '') }) : [];
+  const seen = new Set();
+  const doors = (text ? ecosystemLinks(text, { jobs: ['pivot', 'build', 'canvas'], name: String(name).replace(/\.spw$/, '') }) : [])
+    .filter((door) => {
+      if (seen.has(door.label)) return false;
+      seen.add(door.label);
+      return true;
+    });
   host.replaceChildren(...doors.map((door) => {
     const link = document.createElement('a');
     link.className = door.job === 'canvas' ? 'spw-card-door-canvas' : 'spw-card-door-pivot';

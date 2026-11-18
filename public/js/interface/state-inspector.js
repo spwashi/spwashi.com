@@ -951,7 +951,8 @@ function syncPageLine(root) {
   const doors = new Map(ecosystemLinks(line, { jobs: ['pivot', 'build', 'canvas'], name }).map((door) => [door.job, door.href]));
   for (const link of root.querySelectorAll('[data-spw-state-inspector-quest]')) {
     if (!(link instanceof HTMLAnchorElement)) continue;
-    const href = doors.get(link.dataset.spwStateInspectorQuest) || '';
+    const job = link.dataset.spwStateInspectorQuest;
+    const href = job === 'build' && doors.has('pivot') ? '' : (doors.get(job) || '');
     if (href && link.href !== href) link.href = href;
     link.hidden = !href;
   }

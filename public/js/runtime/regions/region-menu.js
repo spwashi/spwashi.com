@@ -617,7 +617,7 @@ function buildMenuContent(target, semantic, frame) {
   const parseHref = parserHref(source, `${normalizeToken(location.pathname || 'site') || 'site'}.spw`);
   // The same source, carried to the peers; the region's id names it where a door has room.
   const doors = new Map(ecosystemLinks(source, { name: target.id || frame?.id || '' }).map((door) => [door.job, door.href]));
-  const doorLabel = (job) => ECOSYSTEM_JOBS[job].label.replace(/^./, (first) => first.toUpperCase());
+  const doorLabel = (job) => ECOSYSTEM_JOBS[job].label;
   const actionGroups = [
     [
       'inspect',
