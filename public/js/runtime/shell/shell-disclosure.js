@@ -7,6 +7,7 @@ import {
   writeRuntimeDatasetValues,
 } from '/public/js/kernel/dom-contracts.js';
 import { createMeasuredLane } from '/public/js/kernel/measured-frame.js';
+import { readViewportInlineSize } from '/public/js/kernel/viewport.js';
 import { TUNING_SURFACES_EVENT } from '/public/js/runtime/shell/tuning-contract.js';
 import { releaseShellLock, syncShellLock } from './scroll-lock.js';
 import {
@@ -306,7 +307,7 @@ function resolveMenuClarity(snapshot, changedAxes) {
 
 function buildMenuSnapshot(header, nav, navList, state, open, source) {
   const html = document.documentElement;
-  const tier = html.dataset.spwViewportTier || getViewportTier(window.innerWidth, state.config);
+  const tier = html.dataset.spwViewportTier || getViewportTier(readViewportInlineSize(), state.config);
   const pointer = html.dataset.spwPointerMode || getPointerMode();
   const navFit = header.dataset.spwNavFit || 'roomy';
   // Pocket toggle pressure is crowded whatever the strip would measure, so the

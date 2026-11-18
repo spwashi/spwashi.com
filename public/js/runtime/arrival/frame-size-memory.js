@@ -22,6 +22,7 @@
  */
 
 import { FRAME_SELECTOR } from '/public/js/kernel/dom-contracts.js';
+import { readJson, writeJson } from '/public/js/kernel/storage-utils.js';
 import { readViewportBox, readViewportInlineSize } from '/public/js/kernel/viewport.js';
 
 const STORAGE_PREFIX = 'spw:frame-sizes:v1';
@@ -45,22 +46,14 @@ function frameKey(frame) {
 }
 
 function readMemory(key) {
-  try {
-    const record = JSON.parse(localStorage.getItem(key) || 'null');
-    if (!record || typeof record.heights !== 'object') return {};
-    if (Date.now() - (record.savedAt || 0) > MAX_AGE_MS) return {};
-    return record.heights;
-  } catch {
-    return {};
-  }
+  const record = readJson(key, null, { requireObject: true });
+  if (!record || typeof record.heights !== 'object' || !record.heights) return {};
+  if (Date.now() - (record.savedAt || 0) > MAX_AGE_MS) return {};
+  return record.heights;
 }
 
 function writeMemory(key, heights) {
-  try {
-    localStorage.setItem(key, JSON.stringify({ savedAt: Date.now(), heights }));
-  } catch {
-    /* storage full or blocked: the page still works with CSS placeholders */
-  }
+  writeJson(key, { savedAt: Date.now(), heights });
 }
 
 function placehold(frame, height) {

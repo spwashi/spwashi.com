@@ -1,4 +1,5 @@
 import { writeDatasetValues } from '/public/js/kernel/dom-contracts.js';
+import { readViewportBox } from '/public/js/kernel/viewport.js';
 import {
   TUNING_LEXICON,
   TUNING_LEXICON_BY_SETTING,
@@ -276,7 +277,7 @@ export function scrollToNearestTuningSurface() {
 
   if (!surfaces.length) return false;
 
-  const viewportMid = window.scrollY + (window.innerHeight * 0.35);
+  const viewportMid = window.scrollY + (readViewportBox().innerHeight * 0.35);
   const target = surfaces.reduce((best, node) => {
     const distance = Math.abs(node.getBoundingClientRect().top + window.scrollY - viewportMid);
     if (!best) return { node, distance };

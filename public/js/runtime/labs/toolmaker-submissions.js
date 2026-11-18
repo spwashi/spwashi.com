@@ -9,6 +9,7 @@
  * ========================================================================== */
 
 import { writeDatasetValue } from '/public/js/kernel/dom-contracts.js';
+import { readJson, writeJson } from '/public/js/kernel/storage-utils.js';
 import { toggleFeatureLabToken } from '../discovery/feature-lab.js';
 import { composeSurface, sigilFor, sanitizeHandle } from '/public/js/semantic/spw-compose.js';
 
@@ -139,37 +140,26 @@ export function initToolmakerSubmissions(root = document) {
   }
 
   function saveToStorage() {
-    try {
-      const state = getFormState();
-      localStorage.setItem(NOTEBOOK_STORAGE_KEY, JSON.stringify(state));
-    } catch {
-      /* ignore storage errors */
-    }
+    writeJson(NOTEBOOK_STORAGE_KEY, getFormState());
   }
 
   function restoreFromStorage() {
-    try {
-      const raw = localStorage.getItem(NOTEBOOK_STORAGE_KEY);
-      if (!raw) return false;
-      const state = JSON.parse(raw);
-      if (!state || typeof state !== 'object') return false;
+    const state = readJson(NOTEBOOK_STORAGE_KEY, null, { requireObject: true });
+    if (!state) return false;
 
-      currentMode = state.mode || 'specimen';
-      if (titleInput && state.title) titleInput.value = state.title;
-      if (categorySelect && state.category) categorySelect.value = state.category;
-      if (operatorSelect && state.operator) operatorSelect.value = state.operator;
-      if (roleSelect && state.role) roleSelect.value = state.role;
-      if (bodyTextarea && state.body) bodyTextarea.value = state.body;
+    currentMode = state.mode || 'specimen';
+    if (titleInput && state.title) titleInput.value = state.title;
+    if (categorySelect && state.category) categorySelect.value = state.category;
+    if (operatorSelect && state.operator) operatorSelect.value = state.operator;
+    if (roleSelect && state.role) roleSelect.value = state.role;
+    if (bodyTextarea && state.body) bodyTextarea.value = state.body;
 
-      modeButtons.forEach((btn) => {
-        const isActive = btn.getAttribute('data-submission-mode') === currentMode;
-        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-      });
+    modeButtons.forEach((btn) => {
+      const isActive = btn.getAttribute('data-submission-mode') === currentMode;
+      btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
 
-      return true;
-    } catch {
-      return false;
-    }
+    return true;
   }
 
   function syncPreview() {
