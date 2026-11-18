@@ -1,5 +1,4 @@
 import { writeDatasetValues } from '/public/js/kernel/dom-contracts.js';
-import { getSiteSettings, resolveTuningDiscoverability } from '/public/js/kernel/site-settings.js';
 import { registerDomSyncTask } from '/public/js/runtime/orchestration/dom-sync-hub.js';
 import { isReadingQuietChrome } from '/public/js/runtime/orchestration/policy.js';
 
@@ -47,18 +46,28 @@ const GESTURE_CONTRACT_SELECTOR = [
 
 const SLOT_HOST_SELECTOR = '.spw-frame, .frame-card, .vibe-widget, [data-spw-component-kind], [data-spw-kind="frame"]';
 
+function resolveDiscoverabilityFromDataset(dataset = {}) {
+  if (dataset.spwTuningDiscoverability) return dataset.spwTuningDiscoverability;
+  if (dataset.spwCognitiveHandles === 'on') return 'revealed';
+  if (dataset.spwExplorePosture === 'workshop') return 'revealed';
+  if (dataset.spwExplorePosture === 'field') return 'ambient';
+  if (dataset.spwExplorePosture === 'reading') return 'quiet';
+  if (dataset.spwSemanticDensity === 'rich') return 'revealed';
+  if (dataset.spwSemanticDensity === 'normal') return 'ambient';
+  return 'quiet';
+}
+
 function shouldAnnotate() {
   if (isReadingQuietChrome()) return false;
 
-  const settings = getSiteSettings();
-  const mode = document.documentElement.dataset.spwTuningDiscoverability
-    || resolveTuningDiscoverability(settings);
-  const stance = settings.metacognitiveStance || 'witness';
-  if (settings.cognitiveHandles === 'on') return true;
-  if (document.documentElement.dataset.spwDebugMode === 'on') return true;
+  const dataset = document.documentElement?.dataset || {};
+  const mode = resolveDiscoverabilityFromDataset(dataset);
+  const stance = dataset.spwMetacognitiveStance || 'witness';
+  if (dataset.spwCognitiveHandles === 'on') return true;
+  if (dataset.spwDebugMode === 'on') return true;
   if (mode !== 'quiet') return true;
   if (stance === 'composer' || stance === 'overflow') return true;
-  if (stance === 'integrator' && settings.developmentalIndicators === 'on') return true;
+  if (stance === 'integrator' && dataset.spwDevelopmentalIndicators === 'on') return true;
   return false;
 }
 
@@ -198,10 +207,9 @@ function annotateAnatomyStacks(root = document) {
 
 function projectAnatomyRootState() {
   const html = document.documentElement;
-  const settings = getSiteSettings();
-  const mode = html.dataset.spwTuningDiscoverability
-    || resolveTuningDiscoverability(settings);
-  const handles = settings.cognitiveHandles === 'on' || html.dataset.spwCognitiveHandles === 'on';
+  const dataset = html.dataset || {};
+  const mode = resolveDiscoverabilityFromDataset(dataset);
+  const handles = dataset.spwCognitiveHandles === 'on';
   const themeBiome = html.dataset.spwThemeBiome || '';
   const metamaterial = html.dataset.spwBaseMetamaterial || '';
   const colorMode = html.dataset.spwColorMode || '';

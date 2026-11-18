@@ -380,14 +380,16 @@ export function annotateLink(link) {
   if (!(link instanceof HTMLAnchorElement)) return;
   if (link.closest('[data-spw-nav-tokenized="false"]')) return;
 
+  let base;
   let url;
   try {
-    url = new URL(link.href, window.location.href);
+    base = new URL(document.baseURI || window.location.href);
+    url = new URL(link.href, base);
   } catch {
     return;
   }
 
-  if (url.origin !== window.location.origin) return;
+  if (url.origin !== base.origin) return;
 
   const record = buildNavigationSpellRecord(link, url);
   const shellReader = isShellNavLink(link) && isReaderDisplayLayer();

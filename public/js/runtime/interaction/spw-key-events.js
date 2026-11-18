@@ -800,7 +800,7 @@ function onWrapJobActivate(event) {
     const href = job.getAttribute('href') || '';
     if (href.includes('/topics/search/') && window.spwSearch?.open) {
       event.preventDefault();
-      const query = new URL(href, window.location.origin).searchParams.get('q') || `[${readCurrentWrapSeat()}]`;
+      const query = new URL(href, document.baseURI || window.location.href).searchParams.get('q') || `[${readCurrentWrapSeat()}]`;
       window.spwSearch.open({ query, facet: 'expressions', source: 'wrap-job' });
       markWrapJobCurrent(job);
     }

@@ -4,11 +4,6 @@ import {
   writeDatasetValue,
   writeDatasetValues,
 } from '/public/js/kernel/dom-contracts.js';
-import {
-  describeSettingValue,
-  getSiteSettings,
-  resolveTuningDiscoverability,
-} from '/public/js/kernel/site-settings.js';
 import { registerDomSyncTask } from '/public/js/runtime/orchestration/dom-sync-hub.js';
 
 export const LEARNABILITY_LEDGER_CONTRACT = Object.freeze({
@@ -59,10 +54,38 @@ const FEATURE_SELECTOR = '[data-spw-feature]';
 const GESTURE_SELECTOR = '[data-spw-gesture-contract], [data-spw-interaction-contract]';
 const SLOT_HOST_SELECTOR = '.spw-frame, .spw-card, .frame-card, .spw-panel, .frame-panel, .mode-panel, .vibe-widget, [data-spw-kind="frame"], [data-spw-kind="card"]';
 
+const STANCE_LABELS = Object.freeze({
+  witness: 'Witness',
+  composer: 'Composer',
+  explorer: 'Explorer',
+  integrator: 'Integrator',
+  overflow: 'Overflow',
+});
+
 let pulseTimer = 0;
 
+function resolveDiscoverabilityFromDataset(dataset = {}) {
+  if (dataset.spwTuningDiscoverability) return dataset.spwTuningDiscoverability;
+  if (dataset.spwCognitiveHandles === 'on') return 'revealed';
+  if (dataset.spwExplorePosture === 'workshop') return 'revealed';
+  if (dataset.spwExplorePosture === 'field') return 'ambient';
+  if (dataset.spwExplorePosture === 'reading') return 'quiet';
+  if (dataset.spwSemanticDensity === 'rich') return 'revealed';
+  if (dataset.spwSemanticDensity === 'normal') return 'ambient';
+  return 'quiet';
+}
+
+function readRootPosture() {
+  const dataset = document.documentElement?.dataset || {};
+  return {
+    metacognitiveStance: dataset.spwMetacognitiveStance || 'witness',
+    processAttention: dataset.spwProcessAttention || 'breath',
+    tuningMode: resolveDiscoverabilityFromDataset(dataset),
+  };
+}
+
 function describeStance(stance = 'witness') {
-  return describeSettingValue('metacognitiveStance', stance);
+  return STANCE_LABELS[stance] || String(stance || 'witness');
 }
 
 function inferFeatureTier(node) {
@@ -132,11 +155,10 @@ export function pulseLearnabilityResonance(kind = 'sync') {
 }
 
 export function syncLearnabilityLedger(root = document) {
-  const settings = getSiteSettings();
-  const stance = settings.metacognitiveStance || 'witness';
-  const process = settings.processAttention || 'breath';
-  const tuningMode = document.documentElement.dataset.spwTuningDiscoverability
-    || resolveTuningDiscoverability(settings);
+  const posture = readRootPosture();
+  const stance = posture.metacognitiveStance;
+  const process = posture.processAttention;
+  const tuningMode = posture.tuningMode;
 
   const features = root.querySelectorAll(FEATURE_SELECTOR);
   const gestures = root.querySelectorAll(GESTURE_SELECTOR);
@@ -144,7 +166,7 @@ export function syncLearnabilityLedger(root = document) {
 
   auditLayoutContracts(root);
   annotateFeatureClusters(root);
-  syncFooterPosture(settings);
+  syncFooterPosture(posture);
 
   writeDatasetValues(document.documentElement, {
     spwLearnabilityPosture: stance,

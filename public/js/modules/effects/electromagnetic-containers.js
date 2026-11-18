@@ -5,7 +5,6 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
-import { getSiteSettings } from '/public/js/kernel/site-settings.js';
 import { ensureElectromagneticContainerStyles } from '/public/js/kernel/deferred-styles.js';
 
 const CHARGE_STATES = Object.freeze(['conception', 'potential', 'kinetic', 'manifest']);
@@ -22,7 +21,7 @@ function writeCharge(element, charge, { emit = true } = {}) {
   element.dataset.charge = next;
   element.dataset.chargeIndex = String(CHARGE_INDEX[next]);
   element.dataset.chargeLabel = `#{${next}}`;
-  const density = getSiteSettings()?.semanticDensity || 'normal';
+  const density = document.documentElement?.dataset?.spwSemanticDensity || 'normal';
   const densityWeight = density === 'minimal' ? 0.86 : density === 'rich' ? 1.12 : 1;
   element.style.setProperty('--spw-container-density', String(densityWeight));
 
