@@ -1302,13 +1302,35 @@ function refreshRuntime(ctx) {
 
     const onMounted = () => scheduleRuntimeTokenUpdate(ctx);
     const onFailed = () => scheduleRuntimeTokenUpdate(ctx);
+    const onSyncShiftMounts = (detail = {}) => {
+      if (typeof detail?.record !== 'function' || !ctx.registry) return;
+      for (const rec of ctx.registry.values()) {
+        detail.record(rec);
+      }
+    };
+    const onLayoutShift = (detail = {}) => {
+      const targetId = detail?.attributedTo?.id;
+      const batchValue = Number(detail?.batchValue) || 0;
+      if (!targetId || batchValue <= 0 || !ctx.registry?.get) return;
+      const record = ctx.registry.get(targetId);
+      if (!record) return;
+      record.reflowValue = Math.round(((record.reflowValue || 0) + batchValue) * 10000) / 10000;
+      record.reflowClass = detail.reflowClass;
+      record.reflowWithinMs = detail.attributedWithinMs;
+      record.reflowAttributedBy = detail.attributedBy;
+      if (record.settledAt == null) record.settledAt = Math.round(detail.timestamp ?? ctx.now?.() ?? performance.now());
+    };
     const unsubscribeMounted = ctx.bus.on('spw:module-mounted', onMounted);
     const unsubscribeFailed = ctx.bus.on('spw:module-failed', onFailed);
+    const unsubscribeShiftSync = ctx.bus.on('spw:layout-shift-sync-mounts', onSyncShiftMounts);
+    const unsubscribeShift = ctx.bus.on('spw:layout-shift', onLayoutShift);
     updateRuntimeStateTokens(ctx);
 
     const cleanup = () => {
       unsubscribeMounted?.();
       unsubscribeFailed?.();
+      unsubscribeShiftSync?.();
+      unsubscribeShift?.();
       delete ctx.runtimeTokensCleanup;
       resetMountBatchState();
       html?.style?.removeProperty('--spw-runtime-enhancement-intensity');

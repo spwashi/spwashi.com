@@ -26,6 +26,7 @@ import {
   readDebugQaPosture,
   SPW_DEBUG_QA_PRESETS,
 } from './debug-qa-posture.js';
+import { getLayoutShiftAudit } from './layout-shift-audit.js';
 
 export const SPW_LAYOUT_QA_CONTRACT = Object.freeze({
   id: 'layout-qa',
@@ -193,6 +194,7 @@ export function snapshotPacking(root = document, options = {}) {
 function readLayoutShift(ctx = null) {
   try {
     const api = ctx?.layoutShiftAudit
+      || getLayoutShiftAudit()
       || globalThis.__SPW_SITE__?.runtimeCtx?.layoutShiftAudit
       || null;
     if (api?.snapshot) return api.snapshot();
