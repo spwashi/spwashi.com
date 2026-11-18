@@ -1,0 +1,61 @@
+# Spwashi
+
+> I'm Spwashi. I build software and make art. This site documents Spw (a symbolic seed and structure notation), the spw-workbench language tooling, fluid layered CSS studies, interactive tools, physical/laminated art folios, and tabletop RPG worlds.
+
+## How to read this site
+
+- Canonical public pages live at clean directory paths (`/now/`, `/tools/spw-parser/`, `/design/experiments/css/`). Avoid indexing `?spw_source=` or `?spw_sample=` query permutations; see `/robots.txt`.
+- Machine-readable and author-facing `.spw` specification files live under `/.spw/` as plain UTF-8 text. Lines use sigils (`#>` anchor, `#:` layer/role header, `@` reference, `^` facet/integration, `?` probe, `~` potential/ref, `!` action, `*` verify) and containers (`{}`, `[]`, `()`, `<>`). `.spw/_workbench/` and `/.agents/` are excluded from production deploys.
+- Every route also embeds `data-spw-semantic-expression` handles on key sections and keeps interactive tools usable as static HTML.
+
+## Core Orientation & Studies
+
+- [Home](https://spwashi.com/): Creator landing surface, live Spw paste prompt, and primary constellation doors.
+- [Now & Active Studies](https://spwashi.com/now/#studies): Current focus, cycle receipts, and active studies across software studies, mechanics studies, and studies in dynamics.
+- [About](https://spwashi.com/about/): Biography, resume practices, and ecosystem background.
+- [Ten-Domain Constellation](https://spwashi.com/about/domains/): Map of connected sites (`spw.quest`, `factshift.center`, `lore.land`, `texture.website`, and sibling rooms).
+
+## Language, Workbench & Interactive Tools
+
+- [Spw Language Hub](https://spwashi.com/topics/software/spw/): Operator atlas, join crawl semantics, and language evolution (`v0.4` claims, probes, and header axes).
+- [Spw Workbench](https://spwashi.com/projects/spw-workbench/): Architecture overview for `spw-seed` and `spw-runtime` tooling.
+- [Editor Tooling](https://spwashi.com/topics/software/editor-tooling/): Language server, syntax inspection, and editor integration direction.
+- [Parsers](https://spwashi.com/topics/software/parsers/): Parsing notes and grammar architecture.
+- [Literal Spw Parser](https://spwashi.com/tools/spw-parser/): Interactive browser parser backed by the pinned `spw-workbench` reader (`tokens`, `AST`, `diagnostics`, `outline`, and lossless token reconstruction).
+- [Character Sheet](https://spwashi.com/tools/character-sheet/): Tabletop character sheet workspace.
+- [Tools Index](https://spwashi.com/tools/): Registry of interactive browser tools.
+- [Software Topics](https://spwashi.com/topics/software/): Index of software architecture notes.
+
+## Design, CSS & Visual Craft
+
+- [Design Studio](https://spwashi.com/design/): Visual identity, composition, materials, and surface studies.
+- [Layered CSS Architecture](https://spwashi.com/design/experiments/css/): The cascade stratification model (`reset` to `ornament`), fluid fields (`oklab`), liquid glass, and calm workspace studies.
+- [Laminated Folios](https://spwashi.com/design/folios/): Physical/scanned artwork folios and tangible artifact notes.
+
+## Research, Services & Live Rooms
+
+- [Research & Insights](https://spwashi.com/research/): Provenance, evidence ladders, local-first records, and decision engines.
+- [Local Proof Cards](https://spwashi.com/cards/): Screenshot-native catalysing records for claims, asks, offers, and pledges.
+- [Services](https://spwashi.com/services/): Software consulting, mentoring, commissions, and scoped offers.
+- [Membership](https://spwashi.com/membership/): Ongoing support tiers and collaborator rooms.
+- [TikTok Live Arrival](https://spwashi.com/tiktok/): Stream entry room (Fan / Heart Me and Subscriber paths into the site).
+- [RPG Wednesday](https://spwashi.com/play/rpg-wednesday/): Boonhonk pantry, table culture, and campaign play rooms.
+- [Contact](https://spwashi.com/contact/): Social channels and direct contact surface.
+
+## Public `.spw` Caches & Conventions
+
+- [Site Orientation (`site.spw`)](https://spwashi.com/.spw/site.spw): Top-level map linking publishing surfaces, conventions, caches, and workbench mount paths.
+- [Caches Index (`caches/index.spw`)](https://spwashi.com/.spw/caches/index.spw): Master catalog of research judgments, design precipitates, and active operational notes.
+- [Plugin Ecology Improvements](https://spwashi.com/.spw/caches/plugin-ecology-improvements-2026-11.spw): Deep technical notes for VS Code, JetBrains, Neovim, Vite, and plugin transport contracts.
+- [Streaming Attention & Rooms](https://spwashi.com/.spw/caches/streaming-attention-rooms-2026-11.spw): Attention economics across live streams, physical media, room contracts, and collectible Spw expressions.
+- [CSS Cascade Stratification](https://spwashi.com/.spw/caches/css-cascade-stratification-2026-09.spw): Layer model organized as care signal from substrate (`reset`) to reader (`ornament`).
+- [Spw as Handle](https://spwashi.com/.spw/caches/spw-as-handle-2026-09.spw): Unified expression grammar across search, cauldron, satchel, and `texture.website`.
+- [Cognitive Toy](https://spwashi.com/.spw/caches/cognitive-toy-2026-09.spw): Electrostatic interaction loops and wonder/promo pacing.
+- [Copy Hypermedia Key](https://spwashi.com/.spw/caches/copy-hypermedia-key-2026-09.spw): First-fold voice, copy-unit addressing, and hypermedia verification.
+- [Spw Tree Shape](https://spwashi.com/.spw/caches/spw-tree-shape-2026-11.spw): Filing taxonomy and subject-projection conventions across `.spw/`.
+- [Conventions Index](https://spwashi.com/.spw/conventions/index.spw): Registry of site semantic conventions.
+- [Wonder Architecture](https://spwashi.com/.spw/conventions/wonder-architecture.spw): Six altitudes and seven types of wonder across doctrine, field, and ornament.
+- [Copy Accessor](https://spwashi.com/.spw/conventions/copy-accessor.spw): Dotted localization keys (`data-spw-copy-unit`) vs. multidimensional `data-spw-semantic-expression` handles.
+- [Language Utilization](https://spwashi.com/.spw/language/feature-utilization.spw): Spw language operators and v0.4 syntax capabilities kept distinct from browser runtime feature packs.
+- [Page Model](https://spwashi.com/.spw/surfaces/page-model.spw): Canonical shell surfaces, wonders, roles, and modes.
+- [Product Lines](https://spwashi.com/.spw/surfaces/product-lines.spw): Creator offers, audiences, proofs, and collaborator lanes.

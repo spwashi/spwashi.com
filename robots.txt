@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /*?
+Disallow: /.agents/
+Disallow: /.spw/_workbench/
+Disallow: /scripts/
+Disallow: /workers/
+
+Crawl-delay: 5
+Sitemap: https://spwashi.com/sitemap.xml
