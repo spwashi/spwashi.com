@@ -4,7 +4,7 @@ import { validatePromoWonderFeed } from './json-feeds.js';
 import { describeIntent, readVisitIntent } from './kernel-visit-intent.js';
 /** The intent this render meets the reader along (kernel/visit-intent.js); set per render. */
 let visitIntent = null;
-const FEED_URL = '/public/data/promo-wonder-cycle.json';
+const FEED_URL = new URL('../../data/promo-wonder-cycle.json', import.meta.url).href;
 /* Same words as the static fallback's closed disclosure, so hydration swaps nothing the reader can see. */
 const WEEKLY_SUMMARY = "This week's quieter pair";
 const SOURCE_LOCALE = 'en';

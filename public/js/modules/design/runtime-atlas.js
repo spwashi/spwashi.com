@@ -15,7 +15,7 @@
 import { parserHref } from '../../kernel/parser-link.js';
 
 const HOST_SELECTOR = '[data-runtime-atlas]';
-const SOURCE = '/public/data/runtime-atlas.json';
+const SOURCE = new URL('../../../data/runtime-atlas.json', import.meta.url).href;
 const REPO = 'https://github.com/spwashi/spwashi.com/blob/main/';
 const TIER_WORDS = Object.freeze({
   host: 'its own markup',

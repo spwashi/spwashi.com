@@ -746,7 +746,10 @@ const activeInstances = new Set();
 export function ensureSeedCardStyles(el) {
   if (!el || typeof getComputedStyle !== 'function') return false;
   if (getComputedStyle(el).getPropertyValue('--seed-depth').trim()) return true;
-  return ensureDeferredStyles('spw-seed-card-styles', '/public/css/components/cards/seed-card.css');
+  return ensureDeferredStyles(
+    'spw-seed-card-styles',
+    new URL('../../../css/components/cards/seed-card.css', import.meta.url).href,
+  );
 }
 
 /** Initialize all .seed-card elements on the page */

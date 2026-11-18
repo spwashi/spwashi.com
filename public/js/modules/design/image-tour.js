@@ -14,7 +14,7 @@
 import { dayNumber, dayWindow } from '../../kernel/day-seed.js';
 
 const HOST_SELECTOR = '[data-image-tour]';
-const SOURCE = '/public/data/image-tour.json';
+const SOURCE = new URL('../../../data/image-tour.json', import.meta.url).href;
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 let mounted = null;
