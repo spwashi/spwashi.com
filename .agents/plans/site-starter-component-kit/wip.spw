@@ -24,6 +24,7 @@ fixity = "tending"
  >>[2026-11-06 12:52] verify — the second road: build-peer-kit.mjs (5cad3133) carries tokens, faces and operator colours to the workers, and 0913b945 added pinch-text-scale to its SCRIPTS for spw.quest, the first public/js module to run on another site. None of pinch-text-scale, texture-slice or the Spw instrument is a compose.js export. Recorded as K2, a proposal.
  >>[2026-11-06 12:54] probe — wonder_site_starter_first_portable: three lines, design-hub's Status, ecosystem-architecture S4 naming this wonder as its gate, and designer-conversation-canvas's review sitting (calls.first_portable). The expect held. The $% set now names the three pieces; the old terms (firstPortable, consumer) named the question, not its answers.
  >>[2026-11-06 12:56] probe — wonder_site_starter_layer_set: compose.css:11 declares seven layers without reset; portable-css-2026-09.spw:68-69 holds pc-006's reset-first set and its refusal of systems. The expect held. Found beside it: compose.css's only systems import is semantic-copy-lens.css, and frame-grid--2up lives in systems/surfaces/base.css, which only style-core.css imports, so a compose-only host gets no two-up packing.
+ >>[2026-11-17 21:46] align — 8-commit decoupling arc (1739fcb1..2b7d8055) plus 67261257 unified kernel gestures raised audit:portable to 45 portable / 71 host-policy / 32 site-only (148 modules, 11 blocked). Triaged the 11 remaining blockers into K4a (module-effects ctx.registry + header-sigil spool rotation; spw-document-room and spw-paste parameterized launch), K4b (query-link-composer boundary call), and K4c (reclassify 7 site cockpit modules as explicit site-only).
 }
 
 ^"open"{
@@ -33,8 +34,8 @@ fixity = "tending"
 
 ^"cache"{
  ~#status: "implementing"
- ~#next_commit: "![starter] Resolve compose's root-relative re-exports, so the inventory stops calling four present files missing"
- ~#files_hot: "scripts/starter-inventory.mjs, scripts/portable-audit.mjs, scripts/module-tests.mjs, public/js/compose.js"
- ~#gate: "nothing for K1; the pilot waits on the creator's first-portable answer, and any emitted bundle on the layer set"
- ~#last_stream: "2026-11-06"
+ ~#next_commit: "K1 (starter-inventory root-relative resolver) or K4a/K4c (module-effects spool + 11-blocker portability triage)"
+ ~#files_hot: "scripts/starter-inventory.mjs, public/js/runtime/arrival/module-effects.js, public/js/runtime/shell/spw-document-launch.js, public/js/runtime/catalog/"
+ ~#gate: "nothing for K1 or K4c; module-effects visual cue gets a quick browser check; the pilot waits on first_portable and any emitted bundle on layer_set"
+ ~#last_stream: "2026-11-17"
 }

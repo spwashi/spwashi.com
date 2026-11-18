@@ -88,7 +88,7 @@ Every live folder, once, by area. Open a plan's `index.spw` for its disposition 
 - `semantic-copy-depth/` — copy depth and tone; holds voice, typography, `editorial-readability` and `audience-onboarding-copy`.
 - `copy-localization/` — copy keys that land search on a sentence; locale editions later.
 - `semantic-html-normalization/` — landmarks, ids, ARIA; JS-off parity.
-- `topic-building-blocks/` — topics as a course: the root shelf, one home for each repeated figure, and the shared tuner; holds the field guides and `living-learning-surface`.
+- `topic-building-blocks/` — topics as a course: the root shelf, one home for each repeated figure, and the shared tuner; holds the field guides, `living-learning-surface`, and since 2026-11-17 the career hubs (art business, engineering network).
 - `blog-blob-spw/` — the blog unit (Starter) and its `.spw`.
 - `promo-wonder-cycle/` — daily and weekly lanes; holds the release-day receipts, and since 2026-11-06 the season offer's two creator questions (prices as shipped, the film backer) and `funding-proof-cards`' rule.
 
@@ -112,6 +112,10 @@ Every live folder, once, by area. Open a plan's `index.spw` for its disposition 
 - `agent-optimization/` — the agent gate.
 - `agentic-dev-contracts/` — one validation entrypoint and one manifest.
 - `history-reflow/` — commit grammar and the reflow method.
+
+## Maintenance Snapshot - 2026-11-17
+
+`curricular-wonder-architecture/` opened its own folder in `04409995` and was removed the same day. The standing rule holds: no new folder. What survived a read of the tree went to the owners that already hold the seams. Career hubs and the film bridge are in [topic-building-blocks](./topic-building-blocks/PLAN.md). The software collectible is in [semantic-copy-depth](./semantic-copy-depth/PLAN.md). Parser presets are in [spw-inquiry-loop](./spw-inquiry-loop/PLAN.md). Feed entries are in [promo-wonder-cycle](./promo-wonder-cycle/PLAN.md). The curriculum link on `/topics/software/` is already in the hook. `/play/` already links the character sheet. The tool benches are five.
 
 ## Maintenance Snapshot - 2026-11-16
 

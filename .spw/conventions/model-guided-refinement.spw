@@ -16,6 +16,7 @@
 @product_lines: ~"../surfaces/product-lines.spw"
 @promo_feed: ~"../../public/data/promo-wonder-cycle.json"
 @promo_runtime: ~"../../public/ts/promo-wonder-cycle.ts"
+@streaming_attention_rooms: ~"../caches/streaming-attention-rooms-2026-11.spw"
 @daily_kernel: ~"./daily-kernel.spw"
 
 ^"thesis"{
@@ -140,6 +141,11 @@
   }[reg=facet]
   implementation_rule = "Before editing promo copy or visual marketing surfaces, name audience, offer, proof, resonance, extension, and next_action. If one is missing, fill the contract before polishing words."
   anti_pattern = "Generic creative marketing that says artists are welcome but gives them no motif, surface, proof, or way to extend the work."
+  wonder_promo_bridge = .{
+    rule = "Pair ?/~ wonder (zero-pressure curiosity or tool proof) with @/! promo (concrete next action) across features, onboarding, and community."
+    attention_gate = "Notices speak only from a resting seat and only when page tokens overlap (restingSeatDecision + scoreNoticeRelevance); prefer data-spw-cta-shape=here when the route hosts the capability."
+    pricing_layers = "Anchors (tangible micro-items + $250/$500/$750 Scope Card + 13th/26th micro-sprints) x Media (Heart Me/Sub, Patreon, Proof Cards) x Conversation (wide custom ranges). See @streaming_attention_rooms#sa-007_wonder_promo_psychology_and_pricing."
+  }[reg=facet]
 }
 
 ^"model_handoff_checklist"{

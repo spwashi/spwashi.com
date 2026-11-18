@@ -1,4 +1,4 @@
-# Review 2026-11-06 — keep as the authored cadence and offer owner: the rotating layer and the toast stand, closes fall on the 13th and 26th, and P1 (the counter) waits on the creator's look at the 9b149fec demo.
+# Review 2026-11-17 — keep as the authored cadence, layered pricing, and integrated wonder/promo offer owner: resting-seat + context-matched notices (60ec8391), /tiktok/ tiers (2695d825), closes on the 13th and 26th, and P1/L3/L6/L7/L8 sequenced in PLAN.md.
 # Plan Index — Promo / Wonder Cycle Plan
 #
 # Promo and wonder lanes that change by day, week and close, served from authored HTML first and a JSON feed second.
@@ -51,7 +51,9 @@ intent: .{
 @cycle: ~"../../../public/js/typed/promo-wonder-cycle.js"
 @notices: ~"../../../public/js/interface/discovery-notices.js"
 @services: ~"../../../services/index.html"
+@tiktok: ~"../../../tiktok/index.html"
 @film: ~"../../../topics/film/index.html"
+@streaming_attention_rooms: ~"../../../.spw/caches/streaming-attention-rooms-2026-11.spw"
 
 dispatch: .{
  plan = @plan
@@ -59,6 +61,8 @@ dispatch: .{
  feed = @feed
  cycle = @cycle
  notices = @notices
+ tiktok = @tiktok
+ streaming_attention_rooms = @streaming_attention_rooms
 }[reg=facet]
 
 ^"connection_points"{

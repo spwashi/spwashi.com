@@ -43,6 +43,16 @@ Read 2026-11-12 from `curriculum/index.html` and the hosts that teach beside it.
 
 texture.website's technique curriculum has its own slices in [texture-website](../texture-website/PLAN.md).
 
+## Career tracks — 2026-11-17
+
+Folded here the day `curricular-wonder-architecture/` was removed. New work stays in the plan that already owns the seam.
+
+Read against the tree the same day: `/topics/art-business/` and `/topics/software/engineering-network/` are absent. `/topics/software/` already links `/curriculum/` in the hook and at `#memory-buffers`. The open software gap is the missing collectible `topics.software.hook.lede`, and that sentence belongs to [semantic-copy-depth](../semantic-copy-depth/PLAN.md). `/tools/character-sheet/` is already linked from `/play/`, `/play/rpg-wednesday/`, `/topics/`, and `/topics/craft/`. `/topics/film/` has no such link. The card stays with [profile-character-card-development](../profile-character-card-development/PLAN.md). The benches on disk are `tools/budgeting/`, `tools/character-sheet/`, `tools/midjourney/`, `tools/profile/`, and `tools/spw-parser/`. A three-track root with Prev, Tool, and Next waits on the root shelf above.
+
+1. **H1. Art-business hub.** A proposed page at `topics/art-business/index.html`: editions, provenance, commissions, domain identity, with a reason on each bridge to `/tools/midjourney/` and `/services/`. Stub shape is the one this plan already uses. Gate: the creator's words. Check: `node --test scripts/tests/topic-wiring.test.mjs`, `npm run audit:copy:accessor`.
+2. **H2. Engineering-network hub.** A proposed page at `topics/software/engineering-network/index.html`: a public commit, a small pull request, and `npm run check:local`, with bridges to `/tools/profile/` and `/tools/spw-parser/`. Gate: the creator's words. Same check.
+3. **H3. Film's sheet.** One link from `topics/film/index.html` to `/tools/character-sheet/`, with a reason. Check: `npm run audit:copy:accessor`.
+
 ## Still open
 
 - More field portals as more peers and mentors name their fields. Both pedagogy and andragogy keep their names and state the pairing.

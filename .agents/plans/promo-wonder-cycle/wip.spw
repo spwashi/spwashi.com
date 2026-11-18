@@ -63,6 +63,8 @@ promo_wonder_cycle:
  >>[2026-11-13 11:25] probe — what landed in lore.land on those dates, by its git log in local time. The commits are not tied to the streamed hours. 2026-11-12: c03627f 23:36 (Release 2026_11_12.A: gifts from a live stream, the Ring Tide, the lanes by ear), ee3ca3b 23:57 (finds, which open only to a carry played well). 2026-11-13: 985e74d 00:13 (Release 2026_11_13.A: a phone's lanes take more of the width), 63c93ec 11:05 (live gift obstacles; not on its origin/main when read), 7a7e2cb 11:17 (a direction cache). The first three are on lore.land's origin/main, and its changes.json says no gift alone opens a find.
  >>[2026-11-13 11:30] probe — the tension: L2 and L4 put a gift on the watcher's path as build support (/now/ "counts with these rungs" and "counts with the rungs above"; /services/ "A gift counts with the small rungs" and "reaches me the same way as the amounts below"), and the gifts of 2026-11-12 went back out. Proposed, for the creator's review, in the working tree beside this entry: those four phrasings stop linking a gift to the rungs, the dollar pictures read as one-time amounts, and no figure changes. Whether gifts always go back out is wonder_promo_wonder_cycle_gifts_out, not a sentence on the site.
  >>[2026-11-13 11:31] plan — wonder_promo_wonder_cycle_live_value holds "psychologically easy" in both readings (to give, to ask) and sets the live work beside the figure as facts. No rate and no price is put on it; L7 would start from the plan's own anchors ($20 a question answered, $75 one fix shipped).
+ >>[2026-11-17 21:13] land — 2695d825 added /tiktok/ (Fan Heart Me + Subscriber + non-TikTok doors); 60ec8391 added readPageRelevanceTokens() and scoreNoticeRelevance() in discovery-notices.js so intent notices exclude currentPath and stay silent without context overlap.
+ >>[2026-11-17 21:55] align — Synced PLAN.md Status to 2026-11-17 and added integrated psychology/pricing/wonder-promo guidance across features, onboarding, and community; bridged to .spw/caches/streaming-attention-rooms-2026-11.spw#sa-007_wonder_promo_psychology_and_pricing and .spw/conventions/model-guided-refinement.spw#creative_marketing_engine.
 }
 
 ^"open"{
@@ -73,8 +75,8 @@ promo_wonder_cycle:
 
 ^"cache"{
  ~#status: "waiting"
- ~#next_commit: "+[promo] P1: count each notice shown, accepted or closed, per cadence"
- ~#files_hot: "public/js/interface/discovery-notices.js, public/js/kernel/visit-intent.js, public/data/promo-wonder-cycle.json"
- ~#gate: "the creator's browser approval of the 9b149fec demo"
- ~#last_stream: "2026-11-13"
+ ~#next_commit: "P1 (notice counter), L3 (Services top Scope Card door), or L8 (career + website-wonder entries in promo-wonder-cycle.json)"
+ ~#files_hot: "public/js/interface/discovery-notices.js, public/data/promo-wonder-cycle.json, tiktok/index.html, services/index.html"
+ ~#gate: "the creator's browser approval of the 9b149fec demo (P1); topic-building-blocks H1/H2 (L8); wonder_promo_wonder_cycle_gifts_out (L6)"
+ ~#last_stream: "2026-11-17"
 }

@@ -23,7 +23,11 @@
 @cards_route: ~"../../cards/index.html"
 @contact_route: ~"../../contact/index.html"
 @lore_route: ~"../../about/domains/lore.land/index.html"
+@services_route: ~"../../services/index.html"
 @services_systems_route: ~"../../services/systems/index.html"
+@tiktok_route: ~"../../tiktok/index.html"
+@discovery_notices: ~"../../public/js/interface/discovery-notices.js"
+@model_guided_refinement: ~"../conventions/model-guided-refinement.spw"
 
 operation = "cache"
 fixity = "experimental"
@@ -106,6 +110,31 @@ summary = #[
     conversational_indexing = `Live clips and named moments anchor why an artifact exists; public git/site artifacts let outside listeners and search assistants verify the work directly.`
   }[reg=facet]
   owners = #[@now_route, @cards_route, @domains_route][reg=set]
+}
+
+^"sa-007_wonder_promo_psychology_and_pricing"{
+  id = "sa-007"
+  operation = "cache"
+  fixity = "experimental"
+  claim = `Conversion and community trust work without coercive funnels when visit-posture routing, earned resting-seat timing, and three-layer pricing (Anchors × Media × Conversation) pair ?/~ wonder with @/! promo across features, onboarding, and community.`
+  psychology = .{
+    intent_over_identity = `Speak to the visit posture (watching_unsure vs ready_to_decide), never a boxed persona.`
+    earned_attention = `restingSeatDecision + scoreNoticeRelevance in @discovery_notices keep notices silent until the read finishes and surface context overlaps.`
+    visible_consequence = `Every rung names what the visitor leaves holding and distinguishes battle-recycled TikTok gifts from direct studio funding.`
+    delight_over_bureaucracy = `Reframe intake as goal + limit + visual reference (screenshots, Canva, PowerPoint, folio strip) via interface/intake.js.`
+  }[reg=facet]
+  pricing_layers = .{
+    anchors = `$10 sandwich, $20 quick question, $50 day, $75 one fix; Scope Card ($250 Indie / $500 Studio / $750 Org, 48-72h, 100% credited within 30 days); $1,000-$2,400 one-close micro-sprint on 13th/26th boundaries; $150/mo keep-alive, $600/mo tending.`
+    media = `TikTok Fan (Heart Me + lore.land/pie) and Subscriber on @tiktok_route, Patreon, tips, Local Proof Cards, gifted tool seats. Keep Enigma off the support ladder.`
+    conversation = `Wide ranges (Creator $600-$12,000+, Systems $5,000-$12,000+, App $12,000+, Retainer $4,000-$8,000/mo) start a conversation; /services/#configure sketches scope without quoting.`
+  }[reg=facet]
+  integration_matrix = .{
+    features = `Wonder: <10s browser-local tool proof (spw-parser presets, character-sheet, layout-shift-audit). Promo: prefer data-spw-cta-shape="here" over premature external pitches.`
+    onboarding = `Wonder: zero-login foothold (folio strip on /tiktok/, hibernating hash+word seed on brainstorm.monster, editable paste on Home). Promo: two exits — Heart Me / autonomous.feedback/{seed} vs Scope Card / light intake.`
+    community = `Wonder: open story in live battles, RPG Wednesday, and brainstorm.monster loops. Promo: 13th/26th aggregate close ledger on /now/ (explicit "no receipts filed" when quiet) + off-platform exits.`
+  }[reg=facet]
+  contract_gate = `All offers must satisfy @model_guided_refinement#creative_marketing_engine (audience, offer, proof, resonance, extension, next_action) and match data-spw-cta-shape (here|there|out).`
+  owners = #[@tiktok_route, @services_route, @now_route, @discovery_notices][reg=set]
 }
 
 validation = `npm run spw:integrity && npm run audit:copy:accessor`

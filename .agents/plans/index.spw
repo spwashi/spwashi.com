@@ -32,6 +32,11 @@ intent: .{
  regeneration_rule = `Do not regenerate these decisions. Re-read the affected file and edit its disposition deliberately.`
 }[reg=facet]
 
+^"plan_pass_2026_11_17"{
+ census = `curricular-wonder-architecture opened its own folder in 04409995 and was removed the same day. Slices that survived a read of the tree went to topic-building-blocks, semantic-copy-depth, spw-inquiry-loop, and promo-wonder-cycle. No new folder.`
+ ledger = ~"./README.md"
+}[reg=facet]
+
 ^"plan_pass_2026_11_12"{
  census = `The creator's asks of 2026-11-12, given to existing owners with no new folder: the curriculum keeps its promises (topic-building-blocks C1–C5), the technique curriculum on texture.website (texture-website T1–T5), Spw-native components (component-region-personality N1–N5), one set of mark names a learner meets (operator-resonance-alignment slice 4). Public copy that was wrong about texture.website was fixed in the same pass; its domain page landed.`
  prime = ~"../../.spw/caches/next-session-prime-2026-11.spw"
