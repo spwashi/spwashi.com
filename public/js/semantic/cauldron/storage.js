@@ -1,6 +1,7 @@
 import { CAULDRON_KEY } from '/public/js/semantic/cauldron/contract.js';
 import { deriveNumericityQuantifiers, isNumericalConcept, parseNumericalValue } from '/public/js/semantic/cauldron/helpers.js';
 import { getOperatorThresholdState, splitOperatorExpression } from '/public/js/kernel/shared.js';
+import { readJson } from '/public/js/kernel/storage-utils.js';
 import { operatorSpaces } from '/public/js/semantic/operator-spaces.js';
 import { CAULDRON_REGISTERS, project } from '/public/js/semantic/cauldron/registers.js';
 
@@ -526,12 +527,8 @@ export function normalizeIngredient(item) {
 }
 
 export function getCauldron() {
-  try {
-    const raw = JSON.parse(localStorage.getItem(CAULDRON_KEY) || '[]');
-    return raw.map(normalizeIngredient).filter(Boolean);
-  } catch {
-    return [];
-  }
+  const raw = readJson(CAULDRON_KEY, [], { requireArray: true });
+  return raw.map(normalizeIngredient).filter(Boolean);
 }
 
 let cauldronChannel = null;

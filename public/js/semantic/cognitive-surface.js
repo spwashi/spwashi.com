@@ -11,23 +11,16 @@ import { bus } from '/public/js/kernel/bus.js';
 import { getGroundedRegistry } from '/public/js/kernel/grounded-registry.js';
 import { LATTICE } from '/public/js/semantic/lattice.js';
 import { getSiteSettings } from '/public/js/kernel/site-settings.js';
+import { readJson, writeJson } from '/public/js/kernel/storage-utils.js';
 
 const COUPLING_KEY = (path = window.location.pathname) => `spw-coupling:${path}`;
 
-const safeJsonParse = (raw, fallback) => {
-    try {
-        return raw ? JSON.parse(raw) : fallback;
-    } catch {
-        return fallback;
-    }
-};
-
 const writeCouplingMap = (map, path = window.location.pathname) => {
-    localStorage.setItem(COUPLING_KEY(path), JSON.stringify(map));
+    writeJson(COUPLING_KEY(path), map);
 };
 
 function getCouplingMap(path = window.location.pathname) {
-    return safeJsonParse(localStorage.getItem(COUPLING_KEY(path)), {});
+    return readJson(COUPLING_KEY(path), {}, { requireObject: true });
 }
 
 function getCurrentPageMetadata() {

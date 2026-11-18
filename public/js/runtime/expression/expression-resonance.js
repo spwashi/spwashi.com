@@ -36,7 +36,7 @@
  * full-document sweep.
  */
 
-import { NATIVE_CONTROL_SELECTOR } from '/public/js/kernel/dom-contracts.js';
+import { FRAME_SELECTOR, NATIVE_CONTROL_SELECTOR } from '/public/js/kernel/dom-contracts.js';
 import { GESTURE_MEASURE } from '/public/js/kernel/gesture-measure.js';
 import { readJson, writeJson } from '/public/js/kernel/storage-utils.js';
 import { expressionLayers, GESTURE_CHARGE } from '/public/js/semantic/expression-query.js';
@@ -66,7 +66,7 @@ const SWIPE_MIN_PX = GESTURE_MEASURE.swipeMinPx;
 const SWIPE_DOMINANCE = GESTURE_MEASURE.swipeDominance;
 const HOLD_MS = GESTURE_MEASURE.holdMs;
 const TRACE_CONTRACT = 'tap:prime hold:inspect swipe:cycle';
-const TRACE_CARD = '[data-spw-kind="panel"], [data-spw-kind="frame"], .spw-panel, .spw-frame';
+const TRACE_CARD = `[data-spw-kind="panel"], .spw-panel, ${FRAME_SELECTOR}`;
 /** A tap collects the layer's tokens. Rarer layers are worth more than the address. */
 const LAYER_WEIGHT = Object.freeze({
   subject: 1,

@@ -13,13 +13,14 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
+import { FRAME_SELECTOR } from '/public/js/kernel/dom-contracts.js';
 import { parseModularQuery } from '/public/js/kernel/query-composer.js';
 import { matchesActiveProfile } from '/public/js/semantic/expression-query.js';
 import { requestLensMode } from '../page/lens-modes.js';
 import { readActiveProfile, readCandidateSpwMetadata } from '../page/lens-reach.js';
 import { readMicrointeractionPulseMs } from '../physics/pulse-timing.js';
 
-const VARIANT_CONTAINER_SELECTOR = '.spw-frame, [data-spw-kind="frame"], .spw-card, .frame-card, [data-spw-feature]';
+const VARIANT_CONTAINER_SELECTOR = `${FRAME_SELECTOR}, .spw-card, .frame-card, [data-spw-feature]`;
 const MODE_BUTTON_SELECTOR = '.mode-switch [data-set-mode]';
 const VARIANT_EVENT = 'spw:variant-selected';
 const LENS_CHANGE_EVENT = 'spw:mode-change';

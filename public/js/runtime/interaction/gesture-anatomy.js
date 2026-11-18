@@ -1,4 +1,4 @@
-import { writeDatasetValues } from '/public/js/kernel/dom-contracts.js';
+import { FRAME_SELECTOR, writeDatasetValues } from '/public/js/kernel/dom-contracts.js';
 import { registerDomSyncTask } from '/public/js/runtime/orchestration/dom-sync-hub.js';
 import { isReadingQuietChrome } from '/public/js/runtime/orchestration/policy.js';
 
@@ -44,7 +44,7 @@ const GESTURE_CONTRACT_SELECTOR = [
   '[data-spw-living-term]',
 ].join(', ');
 
-const SLOT_HOST_SELECTOR = '.spw-frame, .frame-card, .vibe-widget, [data-spw-component-kind], [data-spw-kind="frame"]';
+const SLOT_HOST_SELECTOR = `${FRAME_SELECTOR}, .frame-card, .vibe-widget, [data-spw-component-kind]`;
 
 function resolveDiscoverabilityFromDataset(dataset = {}) {
   if (dataset.spwTuningDiscoverability) return dataset.spwTuningDiscoverability;
