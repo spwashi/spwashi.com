@@ -17,7 +17,11 @@
  * lens). When nothing prevents it and the choice carries an href, the element
  * follows it. The expression's text is the caption a screenshot keeps.
  */
-import { GESTURE_MEASURE } from '/public/js/kernel/gesture-measure.js';
+import {
+  GESTURE_MEASURE,
+  scrubStepDelta,
+  stepLadderIndex,
+} from '/public/js/kernel/gesture-measure.js';
 
 export const SPW_EXPRESSION_TAG = 'spw-expression';
 export const EXPRESSION_CHANGE_EVENT = 'spw:expression-change';
@@ -54,14 +58,14 @@ const PREFIX_OPERATOR_TYPE = Object.freeze({
   '&': 'merge',
   '$': 'substrate',
 });
-const SCRUB_STEP_PX = 26;
+const SCRUB_STEP_PX = GESTURE_MEASURE.scrubStepPx;
 
 /** The neighbour of a value among a slot's choices, or null at an edge. */
 export function stepChoice(choices = [], value = '', delta = 1) {
   if (!Array.isArray(choices) || !choices.length) return null;
   const index = choices.findIndex((choice) => choice.value === value);
-  const next = (index < 0 ? 0 : index) + delta;
-  return next >= 0 && next < choices.length ? choices[next] : null;
+  const next = stepLadderIndex(index, choices.length, delta);
+  return next >= 0 ? choices[next] : null;
 }
 
 /** The expression as one line of Spw. */
@@ -365,7 +369,7 @@ export class SpwExpressionElement extends ElementBase {
         press.scrubbed = true;
         this.dataset.spwScrubbing = 'true';
       }
-      const step = Math.trunc(dx / SCRUB_STEP_PX);
+      const step = scrubStepDelta(dx, SCRUB_STEP_PX);
       if (step === press.delta) return;
       const liveSlot = this.#model.slots.find((item) => item.name === press.slotName);
       if (!liveSlot) {

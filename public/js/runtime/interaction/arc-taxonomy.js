@@ -1,3 +1,5 @@
+import { stepLadderIndex } from '/public/js/kernel/gesture-measure.js';
+
 /** Ordered arcs share traversal, while each consumer keeps its own boundaries. */
 export const PHASE_ARC = Object.freeze({
   states: Object.freeze(['idle', 'approach', 'prime', 'charge', 'inspect', 'discover', 'settle']),
@@ -20,9 +22,5 @@ export const LOOP_ARC = Object.freeze({
 // Section states are supplied from the live landmark list, never cached here.
 export function arcNeighborIndex(states, currentIndex, direction, { wrap = false } = {}) {
   if (!states.length || (direction !== 1 && direction !== -1)) return -1;
-  const from = currentIndex >= 0 && currentIndex < states.length ? currentIndex : 0;
-  const next = from + direction;
-  return wrap
-    ? (next + states.length) % states.length
-    : Math.max(0, Math.min(states.length - 1, next));
+  return stepLadderIndex(currentIndex, states.length, direction, { wrap, clamp: !wrap });
 }

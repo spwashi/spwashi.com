@@ -13,7 +13,13 @@ import {
 
 import { PHASE_ARC } from './arc-taxonomy.js';
 
-export { GESTURE_MEASURE } from '/public/js/kernel/gesture-measure.js';
+export {
+  GESTURE_MEASURE,
+  PINCH_MEASURE,
+  pinchThresholdOf,
+  scrubStepDelta,
+  stepLadderIndex,
+} from '/public/js/kernel/gesture-measure.js';
 
 export const INTERACTION_PHASES = PHASE_ARC.states;
 
