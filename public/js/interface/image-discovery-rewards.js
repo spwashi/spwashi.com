@@ -1,31 +1,26 @@
 import { cleanText } from '/public/js/kernel/feed-utils.js';
+import { readJson, writeJson } from '/public/js/kernel/storage-utils.js';
 
 const FIGURE_SELECTOR = '[data-spw-image-reward], [data-spw-image-discovery]';
 const STORAGE_KEY = 'spw-image-discovery-rewards';
 const REWARD_EVENT = 'spw:discovery-reward';
 
-function safeParse(value, fallback) {
+function getSessionStorage() {
   try {
-    return value ? JSON.parse(value) : fallback;
+    return typeof sessionStorage !== 'undefined' ? sessionStorage : null;
   } catch {
-    return fallback;
+    return null;
   }
 }
 
 function readSeen() {
-  try {
-    return safeParse(sessionStorage.getItem(STORAGE_KEY), {});
-  } catch {
-    return {};
-  }
+  const storage = getSessionStorage();
+  return storage ? readJson(STORAGE_KEY, {}, { storage, requireObject: true }) : {};
 }
 
 function writeSeen(next) {
-  try {
-    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-  } catch {
-    // Session storage is optional; rewards still work without persistence.
-  }
+  const storage = getSessionStorage();
+  if (storage) writeJson(STORAGE_KEY, next, { storage });
 }
 
 function figureKey(figure) {
