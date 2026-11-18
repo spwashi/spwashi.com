@@ -142,6 +142,7 @@ export const ROUTE_SCOPES: Readonly<Record<string, readonly string[]>> = Object.
     '/public/css/systems/scene-interaction.css',
     '/public/css/effects/enhancements.css',
   ],
+  tiktok: [],
   town: [],
   tools: [],
   'tools-budgeting': ['/public/css/routes/surfaces/tools-budgeting-surface.css'],

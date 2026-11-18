@@ -124,6 +124,7 @@ export const ROUTE_SCOPES = Object.freeze({
         '/public/css/systems/scene-interaction.css',
         '/public/css/effects/enhancements.css',
     ],
+    tiktok: [],
     town: [],
     tools: [],
     'tools-budgeting': ['/public/css/routes/surfaces/tools-budgeting-surface.css'],
