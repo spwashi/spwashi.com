@@ -17,13 +17,12 @@
  * Settings are persisted via the site settings bus so they survive navigation.
  *
  * Agent note (external):
- *   This file is standalone and imports only from bus.js and site-settings.js.
+ *   This file is standalone and imports only bus.js and instrumentation.js.
  *   To add a new pivot dimension, add an entry to PIVOT_SEQUENCES and wire a wall
  *   element via data-spw-pivot="<key>".
  */
 
 import { bus } from '/public/js/kernel/bus.js';
-import { getSettingValue, saveSiteSettings } from '/public/js/kernel/site-settings.js';
 import { markLayoutTrope } from '/public/js/kernel/instrumentation.js';
 
 const PIVOT_SEQUENCES = {
@@ -49,12 +48,21 @@ function cycleValue(sequence, current) {
     return sequence[(idx + 1) % sequence.length];
 }
 
+function datasetKeyFor(settingKey) {
+    return `spw${settingKey.charAt(0).toUpperCase()}${settingKey.slice(1)}`;
+}
+
 function getCurrentSetting(key) {
-    return getSettingValue(key) ?? null;
+    const datasetValue = document.documentElement?.dataset?.[datasetKeyFor(key)];
+    if (datasetValue) return datasetValue;
+    return globalThis.window?.spwSettings?.getValue?.(key) ?? null;
 }
 
 function setSetting(key, value) {
-    const saved = saveSiteSettings({ [key]: value });
+    const html = document.documentElement;
+    if (html?.dataset) html.dataset[datasetKeyFor(key)] = value;
+    bus.emit('spw:settings-request', { patch: { [key]: value }, source: 'brace-pivots' });
+    const saved = globalThis.window?.spwSettings?.get?.() ?? { [key]: value };
     bus.emit('brace:pivoted', { key, value, settings: saved });
 
     // Enhance brace behavior as expressive topology/phase change.
@@ -140,8 +148,9 @@ function installPivotAffordance(wall, settingKey, labelMap) {
     }, { signal });
 
     // Listen for external settings changes (e.g. from settings page)
-    const unsub = bus.on('settings:changed', ({ key, value }) => {
-        if (key === settingKey) updateLabel(value);
+    const unsub = bus.on('settings:changed', (payload) => {
+        const nextValue = payload?.key === settingKey ? payload.value : payload?.[settingKey];
+        if (nextValue) updateLabel(nextValue);
     });
 
     return () => {

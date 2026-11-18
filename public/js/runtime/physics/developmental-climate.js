@@ -47,11 +47,6 @@
  *   Optional authored hint for scaffolding and recipe systems.
  */
 
-import {
-  getSiteSettings,
-  saveSiteSettings
-} from '/public/js/kernel/site-settings.js';
-
 import { bus } from '/public/js/kernel/bus.js';
 import {
   ensureDevelopmentalClimateStyles,
@@ -242,20 +237,29 @@ const getClimateDetail = (phase, source = 'runtime') => {
    2. Settings resolution
    ========================================================================== */
 
-const resolveCurrentClimateFromSettings = (settings = getSiteSettings()) => (
-  normalizeDevelopmentalClimate(settings.currentDevelopmentalClimate || DEFAULT_CLIMATE_ID)
+const resolveCurrentClimateFromSettings = (settings = null) => (
+  normalizeDevelopmentalClimate(
+    settings?.currentDevelopmentalClimate
+    || document.documentElement?.dataset?.spwDevelopmentalClimate
+    || DEFAULT_CLIMATE_ID
+  )
 );
 
-const resolveAutoCycleSetting = (settings = getSiteSettings()) => (
-  settings.developmentalClimateAutoCycle || 'off'
+const resolveAutoCycleSetting = (settings = null) => (
+  settings?.developmentalClimateAutoCycle
+  || document.documentElement?.dataset?.spwDevelopmentalClimateAutoCycle
+  || 'off'
 );
 
 const persistClimate = (phase, extra = {}) => {
   const normalized = normalizeDevelopmentalClimate(phase);
 
-  saveSiteSettings({
-    currentDevelopmentalClimate: normalized,
-    ...extra
+  bus.emit('spw:settings-request', {
+    patch: {
+      currentDevelopmentalClimate: normalized,
+      ...extra
+    },
+    source: 'developmental-climate',
   });
 
   return normalized;
@@ -359,7 +363,7 @@ const stopDevelopmentalCycle = () => {
   climateAutoCycleTimer = null;
 };
 
-const syncDevelopmentalCycle = (settings = getSiteSettings()) => {
+const syncDevelopmentalCycle = (settings = null) => {
   if (resolveAutoCycleSetting(settings) === 'on') {
     startDevelopmentalCycle();
     return;
@@ -529,7 +533,7 @@ const initDevelopmentalClimate = () => {
     ensureEnrichmentStyles();
   }
 
-  const settings = getSiteSettings();
+  const settings = globalThis.window?.spwSettings?.get?.() || null;
   const current = resolveCurrentClimateFromSettings(settings);
 
   applyDevelopmentalClimate(current, { source: 'init' });
