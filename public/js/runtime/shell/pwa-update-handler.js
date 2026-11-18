@@ -16,6 +16,7 @@
  */
 import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
 import { shouldDisableServiceWorkerInDevelopment } from '/public/js/kernel/runtime-environment.js';
+import { readStorageText, removeJson, writeStorageText } from '/public/js/kernel/storage-utils.js';
 
 const APP_THEME_COLOR = '#1a9999';
 const UPDATE_CHECK_INTERVAL = 30 * 60 * 1000;
@@ -35,14 +36,14 @@ const noop = () => {};
 // ── Global state & helpers ─────────────────────────────────────────────
 const storage = {
     get(key) {
-        try { return window.localStorage.getItem(key); } catch { return null; }
+        return readStorageText(key, null);
     },
     set(key, value) {
-        try { window.localStorage.setItem(key, value); } catch {}
+        writeStorageText(key, value);
     },
     clear(key) {
-        try { window.localStorage.removeItem(key); } catch {}
-    }
+        removeJson(key);
+    },
 };
 
 const isStandalone = () =>

@@ -19,6 +19,8 @@
  * browser only.
  */
 
+import { readJson, writeJson } from '/public/js/kernel/storage-utils.js';
+
 export const STORAGE_KEY = 'spw.rpg-wednesday.inktober-2026.morale';
 
 export const CLOSES = Object.freeze([
@@ -59,19 +61,11 @@ export function moraleReadout(marks) {
 }
 
 function readMarks() {
-  try {
-    return normalizeMarks(JSON.parse(window.localStorage.getItem(STORAGE_KEY) || '[]'));
-  } catch {
-    return [];
-  }
+  return normalizeMarks(readJson(STORAGE_KEY, [], { requireArray: true }));
 }
 
 function writeMarks(marks) {
-  try {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(marks));
-  } catch {
-    /* Private windows and blocked storage still get the in-page response. */
-  }
+  writeJson(STORAGE_KEY, marks);
 }
 
 const setCollected = (element, reach, on, strength) => {

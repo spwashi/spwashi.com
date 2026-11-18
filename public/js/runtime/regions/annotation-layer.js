@@ -4,7 +4,7 @@ import {
   markInstrumented,
 } from '/public/js/kernel/instrumentation.js';
 import { humanizeToken, semanticToken as normalizeToken } from '/public/js/kernel/text-normalization.js';
-import { isOwnAffordanceTarget } from '/public/js/kernel/dom-contracts.js';
+import { FRAME_SELECTOR, isOwnAffordanceTarget } from '/public/js/kernel/dom-contracts.js';
 import { collectAnnotationRegions } from '/public/js/semantic/role-inference.js';
 
 const ROOT = document.documentElement;
@@ -14,7 +14,7 @@ const HANDLE_SELECTOR = '[data-spw-annotation-handle], [data-spw-header-annotati
    container (.spw-frame, .frame-card, etc.) so memory + annotation create
    observable resonance across the container topology. This turns passive
    reading surfaces into active wonder participants. */
-const COGNITIVE_CONTAINER_SELECTOR = '.spw-frame, [data-spw-kind="frame"], .spw-card, .frame-card, .spw-panel, .frame-panel, .mode-panel, [data-spw-form="brace"]';
+const COGNITIVE_CONTAINER_SELECTOR = `${FRAME_SELECTOR}, .spw-card, .frame-card, .spw-panel, .frame-panel, .mode-panel, [data-spw-form="brace"]`;
 const ACTIVE_SECTION_EVENT = 'spw:section-locomotion-state';
 const ANNOTATION_EVENT = 'spw:annotation-layer-state';
 const HOLD_MS = 420;

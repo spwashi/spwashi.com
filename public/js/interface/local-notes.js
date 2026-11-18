@@ -1,15 +1,8 @@
+import { readJson, removeJson, writeJson } from '/public/js/kernel/storage-utils.js';
 import { readViewportBox } from '/public/js/kernel/viewport.js';
 
 const LOCAL_NOTE_KEY = 'spwashi:local-notes:v1';
 const LOCAL_NOTE_LIMIT = 32;
-
-const safeParse = (value) => {
-    try {
-        return JSON.parse(value);
-    } catch {
-        return null;
-    }
-};
 
 const makeId = () => {
     if (globalThis.crypto?.randomUUID) {
@@ -73,25 +66,15 @@ const readRegionReference = () => {
 };
 
 const readNotes = () => {
-    try {
-        const raw = localStorage.getItem(LOCAL_NOTE_KEY);
-        const parsed = safeParse(raw);
-        if (!Array.isArray(parsed)) return [];
-        return parsed
-            .map(normalizeNote)
-            .filter((note) => cleanLine(note.text))
-            .sort((left, right) => new Date(right.createdAt) - new Date(left.createdAt));
-    } catch {
-        return [];
-    }
+    const parsed = readJson(LOCAL_NOTE_KEY, [], { requireArray: true });
+    return parsed
+        .map(normalizeNote)
+        .filter((note) => cleanLine(note.text))
+        .sort((left, right) => new Date(right.createdAt) - new Date(left.createdAt));
 };
 
 const writeNotes = (notes) => {
-    try {
-        localStorage.setItem(LOCAL_NOTE_KEY, JSON.stringify(notes.slice(0, LOCAL_NOTE_LIMIT)));
-    } catch {
-        /* non-fatal */
-    }
+    writeJson(LOCAL_NOTE_KEY, notes.slice(0, LOCAL_NOTE_LIMIT));
 };
 
 const formatTimestamp = (value) => {
@@ -251,11 +234,7 @@ const deleteLocalNote = (id, notes) => {
 };
 
 const clearAllLocalNotes = () => {
-    try {
-        localStorage.removeItem(LOCAL_NOTE_KEY);
-    } catch {
-        /* non-fatal */
-    }
+    removeJson(LOCAL_NOTE_KEY);
     return [];
 };
 

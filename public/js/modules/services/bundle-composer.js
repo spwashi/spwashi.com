@@ -16,6 +16,7 @@
  * Share: /services/?bundle=fix:3,page-check,author-site#compose-a-bundle
  */
 import { emitSpwAction } from '/public/js/kernel/shared.js';
+import { readJson, writeJson } from '/public/js/kernel/storage-utils.js';
 import { copySeed, downloadSpwText } from '/public/js/interface/seed-exits.js';
 import { NAME_SETS, SEQUENCE, dealFor, dealRule, dealsVisible, inSeason, isMutated, normalizeMutation, rhythmFor, rhythmLine } from './offer-rhythm.js';
 
@@ -46,11 +47,11 @@ const LANE_SHORT = {
 const MUTATION_KEY = 'spw.services.rhythm-mutation';
 
 function loadMutation() {
-  try { return normalizeMutation(JSON.parse(localStorage.getItem(MUTATION_KEY) || '{}')); } catch { return normalizeMutation(); }
+  return normalizeMutation(readJson(MUTATION_KEY, {}, { requireObject: true }));
 }
 
 function saveMutation(mutation) {
-  try { localStorage.setItem(MUTATION_KEY, JSON.stringify(mutation)); } catch { /* per-reader convenience only */ }
+  writeJson(MUTATION_KEY, mutation);
 }
 
 const money = (n) => `$${Math.round(n).toLocaleString('en-US')}`;

@@ -5,6 +5,7 @@
  * Shared by interaction-progression, learnability surfaces, and inspection.
  */
 
+import { FRAME_SELECTOR } from '/public/js/kernel/dom-contracts.js';
 import {
   composeOpBundle,
   getOperatorThresholdState,
@@ -170,7 +171,7 @@ const WRAP_CONTEXT = Object.freeze({
 export function resolveInteractionSemantics(element) {
   if (!element || typeof element !== 'object') return null;
 
-  const host = element.closest?.('.mode-switch, [data-spw-scene-interpret], .spw-frame, [data-spw-kind="frame"]') || element;
+  const host = element.closest?.(`.mode-switch, [data-spw-scene-interpret], ${FRAME_SELECTOR}`) || element;
   const seatOpen = Boolean(host?.closest?.('.mode-switch')?.dataset?.spwModeSeat === 'open'
     || host?.dataset?.spwModeSeat === 'open');
   const sceneEntered = host?.dataset?.spwSceneState === 'entered'

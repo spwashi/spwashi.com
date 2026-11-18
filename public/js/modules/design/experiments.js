@@ -19,6 +19,7 @@ import {
   setHighContrast,
   validatePartialSettings
 } from '/public/js/kernel/site-settings.js';
+import { readJson, removeJson, writeJson } from '/public/js/kernel/storage-utils.js';
 
 const ROOT_SELECTOR = '[data-design-experiments-root]';
 const BUNDLE_SELECTOR = '[data-design-setting-bundle]';
@@ -136,33 +137,16 @@ function parseNumericToken(value = '') {
   return Number.isFinite(parsed) ? parsed : null;
 }
 
-function safeParseJson(value, fallback) {
-  try {
-    return value ? JSON.parse(value) : fallback;
-  } catch {
-    return fallback;
-  }
-}
-
 function readVariableStore() {
-  try {
-    return safeParseJson(window.localStorage.getItem(VARIABLE_STORAGE_KEY), {});
-  } catch {
-    return {};
-  }
+  return readJson(VARIABLE_STORAGE_KEY, {}, { requireObject: true });
 }
 
 function writeVariableStore(next) {
-  try {
-    if (!next || !Object.keys(next).length) {
-      window.localStorage.removeItem(VARIABLE_STORAGE_KEY);
-      return;
-    }
-
-    window.localStorage.setItem(VARIABLE_STORAGE_KEY, JSON.stringify(next));
-  } catch {
-    // Local storage is optional here.
+  if (!next || !Object.keys(next).length) {
+    removeJson(VARIABLE_STORAGE_KEY);
+    return;
   }
+  writeJson(VARIABLE_STORAGE_KEY, next);
 }
 
 function findVariableStatusNode(root) {

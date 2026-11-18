@@ -1,5 +1,6 @@
 import {
   COMPONENT_KIND_MIRROR_SELECTOR,
+  FRAME_SELECTOR,
   syncComponentKindMirrors,
   writeDatasetValue,
   writeDatasetValues,
@@ -36,7 +37,7 @@ const PROCESS_CUES = Object.freeze({
 });
 
 const LAYOUT_HOST_SELECTOR = [
-  '.spw-frame',
+  FRAME_SELECTOR,
   '.spw-card',
   '.frame-card',
   '.spw-panel',
@@ -44,15 +45,11 @@ const LAYOUT_HOST_SELECTOR = [
   '.mode-panel',
   '.vibe-widget',
   '[data-spw-feature]',
-  '[data-spw-kind="frame"]',
-  '[data-spw-kind="card"]',
-  '[data-spw-kind="panel"]',
-  '[data-spw-kind="hook"]',
   COMPONENT_KIND_MIRROR_SELECTOR,
 ].join(', ');
 const FEATURE_SELECTOR = '[data-spw-feature]';
 const GESTURE_SELECTOR = '[data-spw-gesture-contract], [data-spw-interaction-contract]';
-const SLOT_HOST_SELECTOR = '.spw-frame, .spw-card, .frame-card, .spw-panel, .frame-panel, .mode-panel, .vibe-widget, [data-spw-kind="frame"], [data-spw-kind="card"]';
+const SLOT_HOST_SELECTOR = `${FRAME_SELECTOR}, .spw-card, .frame-card, .spw-panel, .frame-panel, .mode-panel, .vibe-widget, [data-spw-kind="card"]`;
 
 const STANCE_LABELS = Object.freeze({
   witness: 'Witness',

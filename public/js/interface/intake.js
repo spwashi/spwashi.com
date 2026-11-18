@@ -18,22 +18,19 @@
  * under `storageKey`; nothing leaves the device.
  */
 
+import { readJson, removeJson, writeJson } from '/public/js/kernel/storage-utils.js';
+
 const DEFAULT_LABELS = Object.freeze({
   generate: '!generate',
   regenerate: '!regenerate',
 });
 
 function readState(storageKey) {
-  try {
-    const parsed = JSON.parse(localStorage.getItem(storageKey) || '{}');
-    return parsed && typeof parsed === 'object' ? parsed : {};
-  } catch {
-    return {};
-  }
+  return readJson(storageKey, {}, { requireObject: true });
 }
 
 function writeState(storageKey, state) {
-  try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch { /* storage is a convenience */ }
+  writeJson(storageKey, state);
 }
 
 /**
@@ -136,7 +133,7 @@ export function createIntake(root, options = {}) {
   };
 
   const reset = () => {
-    try { localStorage.removeItem(storageKey); } catch { /* see writeState */ }
+    removeJson(storageKey);
     Object.keys(state).forEach((key) => delete state[key]);
     root.querySelectorAll(chipSelector).forEach((chip) => chip.setAttribute('aria-pressed', 'false'));
     if (note && 'value' in note) note.value = '';
