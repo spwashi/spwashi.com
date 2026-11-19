@@ -175,8 +175,8 @@
                             <h3>Skills &amp; Context</h3>
                             <p data-spw-textual-role="note">Comma-separated. Each entry becomes a badge.</p>
                             <div class="badge-input-row">
-                                <input id="badge-input" type="text" placeholder="React, TypeScript, …" spellcheck="false"/>
-                                <select id="badge-cluster">
+                                <input id="badge-input" type="text" aria-label="Skill or context badge name" placeholder="React, TypeScript, …" spellcheck="false"/>
+                                <select id="badge-cluster" aria-label="Skill or context badge category">
                                     <option value="stack">stack</option>
                                     <option value="domain">domain</option>
                                     <option value="approach">approach</option>
@@ -194,30 +194,30 @@
 
                             <div class="profile-field" style="margin-bottom:0.75rem">
                                 <div style="display:grid;grid-template-columns:auto 1fr;gap:0.4rem;align-items:center">
-                                    <select class="section-operator" style="width:auto">
+                                    <select class="section-operator" style="width:auto" aria-label="First section operator">
                                         <option value="^">^</option>
                                         <option value="~">~</option>
                                         <option value="@">@</option>
                                         <option value="?[">?[</option>
                                         <option value=">">></option>
                                     </select>
-                                    <input class="section-heading" type="text" placeholder="What I bring" spellcheck="false"/>
+                                    <input class="section-heading" type="text" aria-label="First section heading" placeholder="What I bring" spellcheck="false"/>
                                 </div>
-                                <textarea class="section-body" style="margin-top:0.3rem" placeholder="2–4 sentences about your work, approach, or what you are looking for." rows="3"></textarea>
+                                <textarea class="section-body" style="margin-top:0.3rem" aria-label="First section details" placeholder="2–4 sentences about your work, approach, or what you are looking for." rows="3"></textarea>
                             </div>
 
                             <div class="profile-field">
                                 <div style="display:grid;grid-template-columns:auto 1fr;gap:0.4rem;align-items:center">
-                                    <select class="section-operator" style="width:auto">
+                                    <select class="section-operator" style="width:auto" aria-label="Second section operator">
                                         <option value="^">^</option>
                                         <option value="~" selected>~</option>
                                         <option value="@">@</option>
                                         <option value="?[">?[</option>
                                         <option value=">">></option>
                                     </select>
-                                    <input class="section-heading" type="text" placeholder="Context" spellcheck="false"/>
+                                    <input class="section-heading" type="text" aria-label="Second section heading" placeholder="Context" spellcheck="false"/>
                                 </div>
-                                <textarea class="section-body" style="margin-top:0.3rem" placeholder="Where your work is visible — GitHub, portfolio, past roles, open source." rows="3"></textarea>
+                                <textarea class="section-body" style="margin-top:0.3rem" aria-label="Second section details" placeholder="Where your work is visible — GitHub, portfolio, past roles, open source." rows="3"></textarea>
                             </div>
                         </div>
 
@@ -238,8 +238,8 @@
                                     <span class="profile-field-hint">label + URL</span>
                                 </label>
                                 <div class="badge-input-row">
-                                    <input id="link-input" type="text" placeholder="GitHub" spellcheck="false"/>
-                                    <input id="link-href" type="url" placeholder="https://…" spellcheck="false" style="grid-column:span 2"/>
+                                    <input id="link-input" type="text" aria-label="Link label" placeholder="GitHub" spellcheck="false"/>
+                                    <input id="link-href" type="url" aria-label="Link URL" placeholder="https://…" spellcheck="false" style="grid-column:span 2"/>
                                 </div>
                                 <button id="link-add" type="button" class="profile-add-btn" style="margin-top:0.3rem">add link</button>
                                 <div class="profile-tag-strip" id="link-strip" style="margin-top:0.4rem"></div>
@@ -278,7 +278,7 @@
                 </header>
                 <p data-spw-textual-role="note">Paste a previously exported profile JSON to restore it. The card format is stable — a JSON exported today will still work here later.</p>
                 <div class="profile-field">
-                    <textarea id="json-import-area" rows="6" placeholder='{"header":{"name":"..."},...}'></textarea>
+                    <textarea id="json-import-area" rows="6" aria-label="Profile JSON to import" placeholder='{"header":{"name":"..."},...}'></textarea>
                 </div>
                 <div class="profile-export-actions" style="margin-top:0.5rem">
                     <button type="button" class="profile-export-btn" id="json-import-btn">load JSON</button>
