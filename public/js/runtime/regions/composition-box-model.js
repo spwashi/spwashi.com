@@ -404,16 +404,16 @@ export function annotateCompositionBox(target, options = {}) {
 function applyCompositionBox(el, snapshot, options = {}) {
   if (!snapshot || !isElement(el)) return null;
 
-  // Only write layout-triggering attributes (spwBoxModel, spwCompositionFlow)
-  // onto elements that already authored them in HTML; backfilling them onto
-  // un-authored frames/features activates grid/stack rules in content.css
-  // after first paint and causes arrival reflow.
+  // Do not backfill or rewrite layout-triggering authored attributes
+  // (spwBoxModel, spwCompositionFlow, spwContentTone) after first paint:
+  // cards/variants.css, frames.css, and content.css key padding/gap/grid
+  // geometry on them, so mutating them at VISIBLE causes arrival reflow.
+  // Authored values stay untouched on the host and remain readable on snapshot.
   const entries = {
     spwBoxMeasure: snapshot.pretext?.measure || snapshot.measure,
     spwBoxPresence: snapshot.presence,
     spwBoxOverflow: snapshot.box.overflowX || snapshot.box.overflowY ? 'true' : 'false',
     spwSizeContext: snapshot.sizeContext,
-    spwContentTone: snapshot.pretext?.wrap || snapshot.contentTone,
     spwBoxSettlePhase: snapshot.settlePhase,
     spwTextWrap: snapshot.pretext?.wrap || '',
     spwTextMeasure: snapshot.pretext?.measure || '',
@@ -421,12 +421,6 @@ function applyCompositionBox(el, snapshot, options = {}) {
     spwMeasureKind: snapshot.pretext ? 'objective' : '',
     spwMeasureSource: snapshot.pretext?.source || '',
   };
-  if (el.hasAttribute?.('data-spw-box-model')) {
-    entries.spwBoxModel = snapshot.role;
-  }
-  if (el.hasAttribute?.('data-spw-composition-flow')) {
-    entries.spwCompositionFlow = snapshot.flow;
-  }
 
   writeDatasetValues(el, entries, { missingOnly: options.missingOnly === true });
 

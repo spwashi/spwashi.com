@@ -95,7 +95,6 @@ html[data-spw-anatomy-theme-link*="semantics"] {
   html[data-spw-cognitive-handles="on"],
   html[data-spw-capture-mode="screenshot"],
   html[data-spw-capture-mode="study"],
-  html[data-spw-tuning-discoverability="ambient"],
   html[data-spw-tuning-discoverability="revealed"]
 ) :where(
   .spw-frame [data-spw-slot],
@@ -125,7 +124,6 @@ html[data-spw-anatomy-theme-link*="semantics"] {
   html[data-spw-cognitive-handles="on"],
   html[data-spw-capture-mode="screenshot"],
   html[data-spw-capture-mode="study"],
-  html[data-spw-tuning-discoverability="ambient"],
   html[data-spw-tuning-discoverability="revealed"]
 ) :where([data-spw-slot-label])::before {
   content: attr(data-spw-slot-label);
@@ -233,12 +231,6 @@ html[data-spw-anatomy-theme-link*="semantics"] {
   html[data-spw-tuning-discoverability="revealed"]
 ) :where(.spw-anatomy-stack-rail) {
   display: flex;
-}
-
-:where(html[data-spw-tuning-discoverability="ambient"]) :where(.spw-anatomy-stack-rail) {
-  display: flex;
-  opacity: 0.62;
-  border-style: dotted;
 }
 
 /* Theming posture from component-semantics — rail personality without new chrome. */

@@ -15,7 +15,6 @@
 }
 
 :where(
-  html[data-spw-tuning-discoverability="ambient"],
   html[data-spw-tuning-discoverability="revealed"],
   html[data-spw-capture-mode="screenshot"],
   html[data-spw-capture-mode="study"]
@@ -49,7 +48,6 @@
 }
 
 :where(
-  html[data-spw-tuning-discoverability="ambient"],
   html[data-spw-tuning-discoverability="revealed"],
   html[data-spw-capture-mode="screenshot"],
   html[data-spw-capture-mode="study"]

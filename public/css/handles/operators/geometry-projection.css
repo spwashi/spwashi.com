@@ -313,7 +313,6 @@
 
 :where([data-spw-address-role="identifier"]:not([data-spw-sigil-role="grammar"])) {
   color: color-mix(in srgb, var(--ink-soft, currentColor) 82%, var(--active-op-color, var(--teal)) 18%);
-  font-size: 0.92em;
 }
 
 :where([data-spw-sigil-role="grammar"][data-spw-address-role="identifier"]) :where(.syntax-token, [data-spw-operator]) {

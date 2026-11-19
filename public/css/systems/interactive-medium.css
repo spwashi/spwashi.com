@@ -132,7 +132,7 @@ html[data-spw-interactive-medium-ready="true"] {
    Container queries — scene bed layout variants inside route measure
    -------------------------------------------------------------------------- */
 
-:where(.spw-scene-bed[data-spw-scene-interactive], .spw-scene-bed[data-spw-scene-posture]) {
+:where(.spw-scene-bed) {
   container-type: inline-size;
   container-name: spw-scene-bed;
 }
