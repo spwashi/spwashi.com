@@ -7,15 +7,15 @@
 # implement, post, or retune.
 
 #>example_leads_2026_11
-#:cache #!example #!tune #!quest #!factshift
+#:cache #!example #!tune #!quest #!factshift #!leadership #!onboarding #!culture
 #:operation #!cache
 #:fixity #!experimental
 #:layer #!pragmatics
 
 operation = "cache"
 fixity = "experimental"
-source = "chat 2026-11-18; the creator's belief; @spwashi posts that day; the shelf and the canvas, read the same sitting"
-boundary = `A later patch plays one tune row. Leave restAlphaTarget at 0.1. Leave the generated figures 240, 320, and 4px per tick unadopted. Leave the belief in the creator's words. Add no data-spw family and no plan folder.`
+source = "chat 2026-11-18; the creator's belief; @spwashi posts that day; the shelf and the canvas, read the same sitting; extended for leadership, engineering culture, and incremental onboarding product loops"
+boundary = `A later patch plays one tune row or one product loop. Leave restAlphaTarget at 0.1. Leave the generated figures 240, 320, and 4px per tick unadopted. Leave the belief in the creator's words. Add no data-spw family and no plan folder.`
 
 expression = lead[example]{hire, train, support}(line)<peer>
 
@@ -23,12 +23,15 @@ summary = #[
   `Software engineering has died because of how many software engineers are willing to see their peers struggle looking for work for months without actually fixing the core problems with hiring, training, and peer support.`,
   `From the bench the fix is a line a stranger can try. Hiring is the try they can repeat. Training is the place they get stuck, which names the move. Support is the same line on the second host, after that try.`,
   `X is liked because a project can be shown. A screenshot is useful there when the line is whole, the two hosts are named, and the try is one slot. The tune rows exist so that picture can be posted.`,
+  `For leadership, engineering culture, and product development, the same line acts as an incremental onboarding ladder: each layer deepens shared product awareness and stability without requiring a heavyweight wiki or breaking existing seats.`,
 ][reg=set]
 
 contents = #[
   ~"./example-leads-2026-11.spw#direction",
   ~"./example-leads-2026-11.spw#belief",
   ~"./example-leads-2026-11.spw#day",
+  ~"./example-leads-2026-11.spw#onboarding_layers",
+  ~"./example-leads-2026-11.spw#product_loops",
   ~"./example-leads-2026-11.spw#tune_sample",
   ~"./example-leads-2026-11.spw#tune_rest",
   ~"./example-leads-2026-11.spw#tune_reach",
@@ -60,6 +63,45 @@ contents = #[
   portfolio = `2123149929874960444 names attention.productions, lore.land, factshift.center, mutex.buzz, spw.quest, and spwashi.com, inside a hiring conversation. The hosts were named. No line moved between them. That picture cannot hire anyone.`
   curriculum = `2123171167234379935, from "level design for curricula". The probe is the training: a learner can tell what a room teaches by where they get stuck. The file as posted gives each room a new subject, writes the order as a comma set, and then changes course. The shelf already knows the shape that holds: levels.spw keeps one subject and moves the slots. outline.spw nests a course. experiment.spw holds the probe. The reading lives in says. try names one edit. A line stays short enough for a phone editor.`
   calm = `The canvas stills (2123158390881013765, 2123158632699138258) say a node should sit still enough to be remembered. That is support: a peer can point at a seat and find it again. The app already rests at 0.1 so a pushed part can finish its seat (0.22px off at 0.1, 0.63px off at 0.06, noted 2026-11-11). Charge still reaches the whole canvas, and gravity wells have no far cutoff. The stage bar covered the verify line. A later image of the same text became a gear poster and lost the second episode. The peer never got the try.`
+}[reg=facet]
+
+^"onboarding_layers"{
+  id = "el-onboarding-layers"
+  claim = `Incremental onboarding builds layered team product awareness and stability by moving a person from one concrete try to shared stewardship, without asking them to swallow the whole system on day one.`
+  expression = onboard[layered]{arrival, orientation, stewardship, loop}(product)<stability>
+  l1_arrival = `First contact (stranger or new hire): one self-contained line and one slot to change (#tune_sample, #tune_post). Success is a repeatable first run in under a minute; wherever they hesitate names the real training defect.`
+  l2_orientation = `Spatial seat (contributor or cross-functional partner): a whole unclipped frame (#tune_frame) and calm neighborhood invariants (#tune_rest, #tune_reach). Returning to the same landmark and finding it where it was left turns exploration into durable product awareness.`
+  l3_stewardship = `Engineering culture (junior, mid, senior, and staff working together): hiring, training, and peer support live inside inspectable artifacts (lines, checks, and visible verifies) rather than separate HR memos. Senior judgment is legible in the rail; junior engineers can land real work along it (@services_systems, @coordination, @streaming_rooms#sa-005_software_cognition_and_junior_capacity).`
+  l4_product_loop = `Organizational stability (product development): every onboarding snag from L1 or spatial drift from L2 enters one bounded design loop — observe the snag, name the slot, tune one knob, verify on a still, publish the updated example.`
+}[reg=facet]
+
+^"product_loops"{
+  id = "el-product-loops"
+  claim = `Leadership and product development stay grounded when each culture pillar runs as a small, falsifiable product design loop.`
+  loop_onboarding_friction = .{
+    pillar = `engineering culture · training`
+    trigger = `A newcomer or peer stalls on the first try or misreads what a control changes.`
+    move = `Treat the stall as a product surface defect; tighten one slot, one English says line, or one transition (#tune_sample).`
+    verify = `?["Does a first-time reader spot the intended move without asking for a walkthrough?"]{ ~#expect: "one slot changes and the reading visibly reflects it" }`
+  }[reg=facet]
+  loop_shared_frame = .{
+    pillar = `leadership · hiring`
+    trigger = `A team talks about craft, architecture, or role fit in abstractions that cannot be inspected across surfaces.`
+    move = `Put one whole, unclipped line across two hosts (spw.quest -> factshift.center) so the artifact carries both the work and its verification (#tune_frame).`
+    verify = `?["Can a hiring reader and a junior teammate both read the same artifact and see how it was verified?"]{ ~#expect: "the verify line stays unobstructed on a phone still" }`
+  }[reg=facet]
+  loop_spatial_stability = .{
+    pillar = `product stability · peer support`
+    trigger = `Adding a feature or dragging one element scrambles distant seats or forces teammates to re-orient every release.`
+    move = `Guard rest and locality cutoffs (#tune_rest, #tune_reach) so local experiments never break unrelated landmarks.`
+    verify = `?["Do pinned landmarks and nodes past the cutoff keep their seats after an adjacent change?"]{ ~#expect: "motion-state settles to still and untouched landmarks do not drift" }`
+  }[reg=facet]
+  loop_public_cadence = .{
+    pillar = `product development · external feedback`
+    trigger = `Internal tuning drifts away from what a real stranger can actually operate.`
+    move = `Close each internal loop with one public example (#tune_post) naming origin host, destination host, and the single-slot try.`
+    verify = `?["Can an outside peer reproduce the try from the public post alone?"]{ ~#expect: "the two hosts are named, the line is whole, and one edit reproduces the result" }`
+  }[reg=facet]
 }[reg=facet]
 
 ^"tune_sample"{
@@ -122,6 +164,7 @@ contents = #[
   >>[2026-11-18 16:29] note — Reread for tone. The angle is leadership by example. Five tune rows name a knob and a check.
   >>[2026-11-18 16:36] note — Renamed from profession-peer-support. The file is the example a person at the bench can point to. The belief stays in #belief.
   >>[2026-11-18 16:40] note — The knob list had lost the stake. The belief leads again. Each tune row says which of hiring, training, or support it serves. The direction is one line a stranger can try, posted across two hosts.
+  >>[2026-11-18 19:45] note — Added #onboarding_layers and #product_loops so leadership, engineering culture, and product development can run incremental onboarding loops for layered team product awareness and stability.
 }[reg=facet]
 
 @examples: ~"../../workers/spw-quest/src/examples.js"
@@ -130,6 +173,9 @@ contents = #[
 @motion: ~"../../workers/factshift-center/app/src/js/ui/node-panel.ts"
 @talk: ~"../../workers/factshift-center/app/src/js/modes/spw/spw-talk.ts"
 @held: ~"../../workers/factshift-center/app/src/js/ui/held-expressions.ts"
+@services_systems: ~"../../services/systems/index.html"
+@coordination: ~"../../coordination/index.html"
+@streaming_rooms: ~"./streaming-attention-rooms-2026-11.spw"
 @direction: ~"./ecosystem-direction-2026-11.spw"
 @composition: ~"./factshift-composition-2026-11.spw"
 @paste: ~"./factshift-paste-grounding-2026-11.spw"
