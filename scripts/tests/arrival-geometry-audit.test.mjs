@@ -74,11 +74,10 @@ test('matches exact attribute boundaries and ignores inspect/capture/editor gate
   assert.deepEqual(findings[0].props, ['gap']);
 });
 
-test('foundation.css and frames.css have zero passive layout rules on [data-spw-component-kind]', () => {
+test('no authored CSS file has passive layout rules on [data-spw-component-kind]', () => {
   const scan = scanArrivalGeometry();
   const forbidden = scan.findings.filter(
-    (row) => row.attr === 'data-spw-component-kind'
-      && (row.file === 'public/css/components/foundation.css' || row.file === 'public/css/components/frames.css'),
+    (row) => row.attr === 'data-spw-component-kind',
   );
   assert.deepEqual(forbidden, []);
 });

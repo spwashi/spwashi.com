@@ -195,6 +195,7 @@ test('annotateCompositionBox does not backfill layout-triggering attributes onto
     annotateCompositionBox(el, { story: false });
     assert.equal(el.dataset.spwBoxModel, undefined);
     assert.equal(el.dataset.spwCompositionFlow, undefined);
+    assert.equal(el.dataset.spwContentTone, undefined);
     assert.ok(el.dataset.spwBoxMeasure, 'non-layout inspect metrics still record');
   });
 });

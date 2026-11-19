@@ -707,17 +707,17 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
   color: var(--active-op-color, var(--component-accent));
 }
 
-.card-sub-links a[data-spw-nav-tokenized="true"]::before,
-.card-sub-links a[data-spw-nav-tokenized="true"]::after {
+:where(body[data-spw-display-layer="editor"], body[data-spw-display-layer="inspect"]) .card-sub-links a[data-spw-nav-tokenized="true"]::before,
+:where(body[data-spw-display-layer="editor"], body[data-spw-display-layer="inspect"]) .card-sub-links a[data-spw-nav-tokenized="true"]::after {
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: 0.76em;
   color: color-mix(in srgb, var(--component-accent) 58%, transparent);
 }
 
-.card-sub-links a[data-spw-nav-tokenized="true"]::before {
+:where(body[data-spw-display-layer="editor"], body[data-spw-display-layer="inspect"]) .card-sub-links a[data-spw-nav-tokenized="true"]::before {
   content: attr(data-spw-nav-prefix);
 }
 
-.card-sub-links a[data-spw-nav-tokenized="true"]::after {
+:where(body[data-spw-display-layer="editor"], body[data-spw-display-layer="inspect"]) .card-sub-links a[data-spw-nav-tokenized="true"]::after {
   content: attr(data-spw-nav-postfix);
 }

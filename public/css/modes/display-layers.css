@@ -20,32 +20,14 @@
  * Authored header links keep first-paint geometry.
  *
  * navigation-spells writes data-spw-nav-tokenized / data-spw-operator-geometry
- * on idle. That is an annotate (inspect) effect, not a layout effect. If those
- * attrs change padding, prefixes, or box-shadow here, screenshots race the
- * idle callback and agents cannot tell which look is contracted.
- *
- * Reader (default) = first paint. Inspect/editor may show prefixes.
+ * on idle. Nav prefix/postfix rules in navigation.css, footer.css,
+ * cards/variants.css, and section-context.css are gated directly to
+ * body[data-spw-display-layer="editor"|"inspect"], so reader and unlabelled
+ * routes never shift at idle.
  */
 :where(body[data-spw-display-layer="reader"])
   :where(.site-header nav a, body > header nav a):not(.spw-chip) {
   color: var(--ink, #14181a);
-}
-
-:where(body[data-spw-display-layer="reader"])
-  :where(.site-header, body > header)[data-spw-nav-visual="authored"]
-  nav a:not(.spw-chip)[data-spw-nav-tokenized="true"] {
-  gap: var(--spw-shell-link-gap, 0.38rem);
-}
-
-/* Route links read as plain words in the reader layer: header nav, the
-   footer site map, and card sub-links alike. The operator sigils stay in the
-   datasets and paint in the inspect and editor layers. */
-:where(body[data-spw-display-layer="reader"])
-  :where(.site-header nav a, body > header nav a, .site-footer__nav a, .card-sub-links a):not(.spw-chip)[data-spw-nav-tokenized="true"]::before,
-:where(body[data-spw-display-layer="reader"])
-  :where(.site-header nav a, body > header nav a, .site-footer__nav a, .card-sub-links a):not(.spw-chip)[data-spw-nav-tokenized="true"]::after {
-  content: none !important;
-  display: none !important;
 }
 
 :where(body[data-spw-display-layer="reader"])

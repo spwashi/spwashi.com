@@ -50,14 +50,12 @@
 }
 
 :where(
-  [data-spw-component-kind]:not(body):not(main),
   [data-spw-kind]:not(body):not(main)
 )[data-spw-route-state]:not([data-spw-route-state="none"]) {
   padding-block-start: calc(var(--component-pad) + 0.82rem);
 }
 
 :where(
-  [data-spw-component-kind]:not(body):not(main),
   [data-spw-kind]:not(body):not(main)
 )[data-spw-route-state]:not([data-spw-route-state="none"]):not(.media-focus-card):not(.plan-card)::before,
 :where(.media-focus-card, .plan-card)[data-spw-route-state]:not([data-spw-route-state="none"])::after {
@@ -92,7 +90,6 @@
 }
 
 :where(
-  [data-spw-component-kind]:not(body):not(main),
   [data-spw-kind]:not(body):not(main)
 )[data-spw-route-state="branching"] {
   box-shadow: inset 0 1px 0 color-mix(in srgb, var(--component-route-accent) 12%, transparent),
@@ -100,7 +97,6 @@
 }
 
 :where(
-  [data-spw-component-kind]:not(body):not(main),
   [data-spw-kind]:not(body):not(main)
 )[data-spw-route-state="branching"] :where(.card-sub-links, .frame-operators, [data-spw-slot="actions"]) {
   padding-top: 0.14rem;
@@ -108,7 +104,6 @@
 }
 
 :where(
-  [data-spw-component-kind]:not(body):not(main),
   [data-spw-kind]:not(body):not(main)
 )[data-spw-route-state]:not([data-spw-route-state="none"]):not(.media-focus-card):not(.plan-card):is(:hover, :focus-within)::before,
 :where(.media-focus-card, .plan-card)[data-spw-route-state]:not([data-spw-route-state="none"]):is(:hover, :focus-within)::after {

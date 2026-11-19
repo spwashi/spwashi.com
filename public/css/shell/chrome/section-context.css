@@ -736,11 +736,11 @@ body:has(.spw-section-handle-shell[data-spw-handle-enhanced="true"]) > .spw-sect
     text-overflow: ellipsis;
   }
 
-  :where(.site-header[data-spw-menu-mode="toggle"] nav a, body > header[data-spw-menu-mode="toggle"] nav a)[data-spw-nav-tokenized="true"]:not(.spw-chip) {
+  :where(body[data-spw-display-layer="editor"], body[data-spw-display-layer="inspect"]) :where(.site-header[data-spw-menu-mode="toggle"] nav a, body > header[data-spw-menu-mode="toggle"] nav a)[data-spw-nav-tokenized="true"]:not(.spw-chip) {
     gap: 0.42rem;
   }
 
-  :where(.site-header[data-spw-menu-mode="toggle"] nav a, body > header[data-spw-menu-mode="toggle"] nav a)[data-spw-nav-tokenized="true"]:not(.spw-chip)::before {
+  :where(body[data-spw-display-layer="editor"], body[data-spw-display-layer="inspect"]) :where(.site-header[data-spw-menu-mode="toggle"] nav a, body > header[data-spw-menu-mode="toggle"] nav a)[data-spw-nav-tokenized="true"]:not(.spw-chip)::before {
     content: attr(data-spw-nav-prefix);
     display: inline-flex;
     align-items: center;
@@ -780,11 +780,11 @@ body:has(.spw-section-handle-shell[data-spw-handle-enhanced="true"]) > .spw-sect
     text-overflow: ellipsis;
   }
 
-  :where(.site-header[data-spw-menu-topology="screen-field"] nav a, body > header[data-spw-menu-topology="screen-field"] nav a)[data-spw-nav-tokenized="true"]:not(.spw-chip) {
+  :where(body[data-spw-display-layer="editor"], body[data-spw-display-layer="inspect"]) :where(.site-header[data-spw-menu-topology="screen-field"] nav a, body > header[data-spw-menu-topology="screen-field"] nav a)[data-spw-nav-tokenized="true"]:not(.spw-chip) {
     gap: 0.42rem;
   }
 
-  :where(.site-header[data-spw-menu-topology="screen-field"] nav a, body > header[data-spw-menu-topology="screen-field"] nav a)[data-spw-nav-tokenized="true"]:not(.spw-chip)::before {
+  :where(body[data-spw-display-layer="editor"], body[data-spw-display-layer="inspect"]) :where(.site-header[data-spw-menu-topology="screen-field"] nav a, body > header[data-spw-menu-topology="screen-field"] nav a)[data-spw-nav-tokenized="true"]:not(.spw-chip)::before {
     content: attr(data-spw-nav-prefix);
     display: inline-flex;
     align-items: center;

@@ -174,13 +174,20 @@
 }
 
 html[data-spw-pointer-mode="coarse"] [data-spw-features~="svg-surfaces"] .spw-svg-figure,
-html[data-spw-hover-mode="touch"] [data-spw-features~="svg-surfaces"] .spw-svg-figure,
-[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-device="coarse"],
-[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-device="hoverless"] {
+html[data-spw-hover-mode="touch"] [data-spw-features~="svg-surfaces"] .spw-svg-figure {
     --spw-svg-device-pointer-lift: 0.12;
     --spw-svg-hit-min: var(--spw-medium-touch-min, var(--touch-target-min, 2.75rem));
     --spw-svg-device-stroke: 1.15;
     gap: max(0.8rem, var(--spw-svg-space, 0.6rem));
+}
+
+@media (pointer: coarse), (hover: none) {
+    [data-spw-features~="svg-surfaces"] .spw-svg-figure {
+        --spw-svg-device-pointer-lift: 0.12;
+        --spw-svg-hit-min: var(--spw-medium-touch-min, var(--touch-target-min, 2.75rem));
+        --spw-svg-device-stroke: 1.15;
+        gap: max(0.8rem, var(--spw-svg-space, 0.6rem));
+    }
 }
 
 html[data-spw-viewport-tier="compact"] [data-spw-features~="svg-surfaces"] .spw-svg-figure,
@@ -215,11 +222,18 @@ html[data-spw-hover-mode="touch"] [data-spw-features~="svg-surfaces"] .spw-svg-f
 }
 
 html[data-spw-pointer-mode="coarse"] [data-spw-features~="svg-surfaces"] .spw-svg-figure .spw-svg-rail > *,
-html[data-spw-hover-mode="touch"] [data-spw-features~="svg-surfaces"] .spw-svg-figure .spw-svg-rail > *,
-[data-spw-features~="svg-surfaces"] .spw-svg-figure:is([data-spw-svg-device="coarse"], [data-spw-svg-device="hoverless"]) .spw-svg-rail > * {
+html[data-spw-hover-mode="touch"] [data-spw-features~="svg-surfaces"] .spw-svg-figure .spw-svg-rail > * {
     min-height: max(2.15rem, var(--spw-svg-hit-min, var(--touch-target-min, 2.75rem)));
     display: flex;
     align-items: center;
+}
+
+@media (pointer: coarse), (hover: none) {
+    [data-spw-features~="svg-surfaces"] .spw-svg-figure .spw-svg-rail > * {
+        min-height: max(2.15rem, var(--spw-svg-hit-min, var(--touch-target-min, 2.75rem)));
+        display: flex;
+        align-items: center;
+    }
 }
 
 /* ─── Declarative scale variants ────────────────────────────────────────── */

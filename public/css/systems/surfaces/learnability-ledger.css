@@ -10,11 +10,14 @@
   --learnability-resonance-color: var(--active-op-color, #008080);
 }
 
-/* Footer posture accounting */
-.site-footer__page-architecture-meta[data-spw-learnability-posture] {
-  color: var(--ink-muted, rgba(14, 18, 20, 0.58));
+/* Footer posture accounting — typography authored from first paint so idle ledger mount does not resize the footer. */
+.site-footer__page-architecture-meta {
   font-size: var(--text-size-2xs, 0.72rem);
   line-height: 1.45;
+}
+
+.site-footer__page-architecture-meta[data-spw-learnability-posture] {
+  color: var(--ink-muted, rgba(14, 18, 20, 0.58));
 }
 
 .site-footer__page-architecture-meta [data-spw-learnability-stance-label] {

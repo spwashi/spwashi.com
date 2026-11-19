@@ -506,7 +506,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
     transform var(--shell-duration-fast) var(--shell-settle-ease);
 }
 
-.site-footer__nav a[data-spw-nav-tokenized="true"]::before {
+:where(body[data-spw-display-layer="editor"], body[data-spw-display-layer="inspect"]) .site-footer__nav a[data-spw-nav-tokenized="true"]::before {
   content: attr(data-spw-nav-prefix);
   flex: 0 0 auto;
   color: color-mix(in oklab, var(--active-op-color, var(--teal, #008080)) 62%, transparent);

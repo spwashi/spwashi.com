@@ -6923,11 +6923,11 @@ body > header:empty {
   clip-path: inset(0 0 0 0 round 999px);
 }
 
-:where(.site-header nav a, body > header nav a)[data-spw-nav-tokenized="true"]:not(.spw-chip) {
+:where(body[data-spw-display-layer="editor"], body[data-spw-display-layer="inspect"]) :where(.site-header nav a, body > header nav a)[data-spw-nav-tokenized="true"]:not(.spw-chip) {
   gap: 0.34rem;
 }
 
-:where(.site-header nav a, body > header nav a)[data-spw-nav-tokenized="true"]:not(.spw-chip)::before {
+:where(body[data-spw-display-layer="editor"], body[data-spw-display-layer="inspect"]) :where(.site-header nav a, body > header nav a)[data-spw-nav-tokenized="true"]:not(.spw-chip)::before {
   content: attr(data-spw-nav-prefix);
   display: inline-flex;
   align-items: center;
@@ -6941,7 +6941,7 @@ body > header:empty {
   flex: 0 0 auto;
 }
 
-:where(.site-header nav a, body > header nav a)[data-spw-nav-tokenized="true"]:not(.spw-chip)::after {
+:where(body[data-spw-display-layer="editor"], body[data-spw-display-layer="inspect"]) :where(.site-header nav a, body > header nav a)[data-spw-nav-tokenized="true"]:not(.spw-chip)::after {
   display: none;
 }
 
@@ -7729,8 +7729,8 @@ body > header[data-spw-shell-tune-surface="strip"] .spw-attention-posture-panel 
     0 0 0 0 transparent;
 }
 
-:where(.site-header[data-spw-menu-mode="toggle"] nav a, body > header[data-spw-menu-mode="toggle"] nav a)[data-spw-nav-tokenized="true"]:not(.spw-chip)::before,
-:where(.site-header[data-spw-menu-mode="toggle"] nav a, body > header[data-spw-menu-mode="toggle"] nav a)[data-spw-nav-tokenized="true"]:not(.spw-chip)::after {
+:where(body[data-spw-display-layer="editor"], body[data-spw-display-layer="inspect"]) :where(.site-header[data-spw-menu-mode="toggle"] nav a, body > header[data-spw-menu-mode="toggle"] nav a)[data-spw-nav-tokenized="true"]:not(.spw-chip)::before,
+:where(body[data-spw-display-layer="editor"], body[data-spw-display-layer="inspect"]) :where(.site-header[data-spw-menu-mode="toggle"] nav a, body > header[data-spw-menu-mode="toggle"] nav a)[data-spw-nav-tokenized="true"]:not(.spw-chip)::after {
   content: none;
   display: none;
 }
@@ -8449,7 +8449,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
     transform var(--shell-duration-fast) var(--shell-settle-ease);
 }
 
-.site-footer__nav a[data-spw-nav-tokenized="true"]::before {
+:where(body[data-spw-display-layer="editor"], body[data-spw-display-layer="inspect"]) .site-footer__nav a[data-spw-nav-tokenized="true"]::before {
   content: attr(data-spw-nav-prefix);
   flex: 0 0 auto;
   color: color-mix(in oklab, var(--active-op-color, var(--teal, #008080)) 62%, transparent);
@@ -11372,11 +11372,11 @@ body:has(.spw-section-handle-shell[data-spw-handle-enhanced="true"]) > .spw-sect
     text-overflow: ellipsis;
   }
 
-  :where(.site-header[data-spw-menu-mode="toggle"] nav a, body > header[data-spw-menu-mode="toggle"] nav a)[data-spw-nav-tokenized="true"]:not(.spw-chip) {
+  :where(body[data-spw-display-layer="editor"], body[data-spw-display-layer="inspect"]) :where(.site-header[data-spw-menu-mode="toggle"] nav a, body > header[data-spw-menu-mode="toggle"] nav a)[data-spw-nav-tokenized="true"]:not(.spw-chip) {
     gap: 0.42rem;
   }
 
-  :where(.site-header[data-spw-menu-mode="toggle"] nav a, body > header[data-spw-menu-mode="toggle"] nav a)[data-spw-nav-tokenized="true"]:not(.spw-chip)::before {
+  :where(body[data-spw-display-layer="editor"], body[data-spw-display-layer="inspect"]) :where(.site-header[data-spw-menu-mode="toggle"] nav a, body > header[data-spw-menu-mode="toggle"] nav a)[data-spw-nav-tokenized="true"]:not(.spw-chip)::before {
     content: attr(data-spw-nav-prefix);
     display: inline-flex;
     align-items: center;
@@ -11416,11 +11416,11 @@ body:has(.spw-section-handle-shell[data-spw-handle-enhanced="true"]) > .spw-sect
     text-overflow: ellipsis;
   }
 
-  :where(.site-header[data-spw-menu-topology="screen-field"] nav a, body > header[data-spw-menu-topology="screen-field"] nav a)[data-spw-nav-tokenized="true"]:not(.spw-chip) {
+  :where(body[data-spw-display-layer="editor"], body[data-spw-display-layer="inspect"]) :where(.site-header[data-spw-menu-topology="screen-field"] nav a, body > header[data-spw-menu-topology="screen-field"] nav a)[data-spw-nav-tokenized="true"]:not(.spw-chip) {
     gap: 0.42rem;
   }
 
-  :where(.site-header[data-spw-menu-topology="screen-field"] nav a, body > header[data-spw-menu-topology="screen-field"] nav a)[data-spw-nav-tokenized="true"]:not(.spw-chip)::before {
+  :where(body[data-spw-display-layer="editor"], body[data-spw-display-layer="inspect"]) :where(.site-header[data-spw-menu-topology="screen-field"] nav a, body > header[data-spw-menu-topology="screen-field"] nav a)[data-spw-nav-tokenized="true"]:not(.spw-chip)::before {
     content: attr(data-spw-nav-prefix);
     display: inline-flex;
     align-items: center;
@@ -12035,32 +12035,14 @@ body > header[data-spw-menu-mode="inline"] .spw-route-menu-panel {
  * Authored header links keep first-paint geometry.
  *
  * navigation-spells writes data-spw-nav-tokenized / data-spw-operator-geometry
- * on idle. That is an annotate (inspect) effect, not a layout effect. If those
- * attrs change padding, prefixes, or box-shadow here, screenshots race the
- * idle callback and agents cannot tell which look is contracted.
- *
- * Reader (default) = first paint. Inspect/editor may show prefixes.
+ * on idle. Nav prefix/postfix rules in navigation.css, footer.css,
+ * cards/variants.css, and section-context.css are gated directly to
+ * body[data-spw-display-layer="editor"|"inspect"], so reader and unlabelled
+ * routes never shift at idle.
  */
 :where(body[data-spw-display-layer="reader"])
   :where(.site-header nav a, body > header nav a):not(.spw-chip) {
   color: var(--ink, #14181a);
-}
-
-:where(body[data-spw-display-layer="reader"])
-  :where(.site-header, body > header)[data-spw-nav-visual="authored"]
-  nav a:not(.spw-chip)[data-spw-nav-tokenized="true"] {
-  gap: var(--spw-shell-link-gap, 0.38rem);
-}
-
-/* Route links read as plain words in the reader layer: header nav, the
-   footer site map, and card sub-links alike. The operator sigils stay in the
-   datasets and paint in the inspect and editor layers. */
-:where(body[data-spw-display-layer="reader"])
-  :where(.site-header nav a, body > header nav a, .site-footer__nav a, .card-sub-links a):not(.spw-chip)[data-spw-nav-tokenized="true"]::before,
-:where(body[data-spw-display-layer="reader"])
-  :where(.site-header nav a, body > header nav a, .site-footer__nav a, .card-sub-links a):not(.spw-chip)[data-spw-nav-tokenized="true"]::after {
-  content: none !important;
-  display: none !important;
 }
 
 :where(body[data-spw-display-layer="reader"])
@@ -18028,14 +18010,12 @@ html[data-spw-color-mode="dark"] :where(
 }
 
 :where(
-  [data-spw-component-kind]:not(body):not(main),
   [data-spw-kind]:not(body):not(main)
 )[data-spw-route-state]:not([data-spw-route-state="none"]) {
   padding-block-start: calc(var(--component-pad) + 0.82rem);
 }
 
 :where(
-  [data-spw-component-kind]:not(body):not(main),
   [data-spw-kind]:not(body):not(main)
 )[data-spw-route-state]:not([data-spw-route-state="none"]):not(.media-focus-card):not(.plan-card)::before,
 :where(.media-focus-card, .plan-card)[data-spw-route-state]:not([data-spw-route-state="none"])::after {
@@ -18070,7 +18050,6 @@ html[data-spw-color-mode="dark"] :where(
 }
 
 :where(
-  [data-spw-component-kind]:not(body):not(main),
   [data-spw-kind]:not(body):not(main)
 )[data-spw-route-state="branching"] {
   box-shadow: inset 0 1px 0 color-mix(in srgb, var(--component-route-accent) 12%, transparent),
@@ -18078,7 +18057,6 @@ html[data-spw-color-mode="dark"] :where(
 }
 
 :where(
-  [data-spw-component-kind]:not(body):not(main),
   [data-spw-kind]:not(body):not(main)
 )[data-spw-route-state="branching"] :where(.card-sub-links, .frame-operators, [data-spw-slot="actions"]) {
   padding-top: 0.14rem;
@@ -18086,7 +18064,6 @@ html[data-spw-color-mode="dark"] :where(
 }
 
 :where(
-  [data-spw-component-kind]:not(body):not(main),
   [data-spw-kind]:not(body):not(main)
 )[data-spw-route-state]:not([data-spw-route-state="none"]):not(.media-focus-card):not(.plan-card):is(:hover, :focus-within)::before,
 :where(.media-focus-card, .plan-card)[data-spw-route-state]:not([data-spw-route-state="none"]):is(:hover, :focus-within)::after {
@@ -19783,18 +19760,18 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
   color: var(--active-op-color, var(--component-accent));
 }
 
-.card-sub-links a[data-spw-nav-tokenized="true"]::before,
-.card-sub-links a[data-spw-nav-tokenized="true"]::after {
+:where(body[data-spw-display-layer="editor"], body[data-spw-display-layer="inspect"]) .card-sub-links a[data-spw-nav-tokenized="true"]::before,
+:where(body[data-spw-display-layer="editor"], body[data-spw-display-layer="inspect"]) .card-sub-links a[data-spw-nav-tokenized="true"]::after {
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: 0.76em;
   color: color-mix(in srgb, var(--component-accent) 58%, transparent);
 }
 
-.card-sub-links a[data-spw-nav-tokenized="true"]::before {
+:where(body[data-spw-display-layer="editor"], body[data-spw-display-layer="inspect"]) .card-sub-links a[data-spw-nav-tokenized="true"]::before {
   content: attr(data-spw-nav-prefix);
 }
 
-.card-sub-links a[data-spw-nav-tokenized="true"]::after {
+:where(body[data-spw-display-layer="editor"], body[data-spw-display-layer="inspect"]) .card-sub-links a[data-spw-nav-tokenized="true"]::after {
   content: attr(data-spw-nav-postfix);
 }
 }
@@ -24973,7 +24950,6 @@ html[data-spw-anatomy-theme-link*="semantics"] {
   html[data-spw-cognitive-handles="on"],
   html[data-spw-capture-mode="screenshot"],
   html[data-spw-capture-mode="study"],
-  html[data-spw-tuning-discoverability="ambient"],
   html[data-spw-tuning-discoverability="revealed"]
 ) :where(
   .spw-frame [data-spw-slot],
@@ -25003,7 +24979,6 @@ html[data-spw-anatomy-theme-link*="semantics"] {
   html[data-spw-cognitive-handles="on"],
   html[data-spw-capture-mode="screenshot"],
   html[data-spw-capture-mode="study"],
-  html[data-spw-tuning-discoverability="ambient"],
   html[data-spw-tuning-discoverability="revealed"]
 ) :where([data-spw-slot-label])::before {
   content: attr(data-spw-slot-label);
@@ -25111,12 +25086,6 @@ html[data-spw-anatomy-theme-link*="semantics"] {
   html[data-spw-tuning-discoverability="revealed"]
 ) :where(.spw-anatomy-stack-rail) {
   display: flex;
-}
-
-:where(html[data-spw-tuning-discoverability="ambient"]) :where(.spw-anatomy-stack-rail) {
-  display: flex;
-  opacity: 0.62;
-  border-style: dotted;
 }
 
 /* Theming posture from component-semantics — rail personality without new chrome. */
@@ -29392,7 +29361,6 @@ html[data-spw-site-rhythm-authority="runtime"] {
 }
 
 :where(
-  html[data-spw-tuning-discoverability="ambient"],
   html[data-spw-tuning-discoverability="revealed"],
   html[data-spw-capture-mode="screenshot"],
   html[data-spw-capture-mode="study"]
@@ -29426,7 +29394,6 @@ html[data-spw-site-rhythm-authority="runtime"] {
 }
 
 :where(
-  html[data-spw-tuning-discoverability="ambient"],
   html[data-spw-tuning-discoverability="revealed"],
   html[data-spw-capture-mode="screenshot"],
   html[data-spw-capture-mode="study"]
@@ -36566,13 +36533,24 @@ html[data-spw-page-section-phase="idle"] {
   --tuning-edge-strength: 0.28;
 }
 
+/* Anchor context authored at first paint so idle tuning-discovery does not flip positioning. */
+:where(
+  [data-site-settings-scope],
+  [data-spw-affordance="tune"],
+  .page-panel,
+  .generic-panel,
+  .reading-card,
+  .note-card
+) {
+  position: relative;
+}
+
 /* Ambient vellum edge on outermost tunable scopes */
 :where(html[data-spw-tuning-discoverability="ambient"], html[data-spw-tuning-discoverability="revealed"])
   :where(
     [data-spw-tuning-surface="true"][data-site-settings-scope],
     [data-spw-tuning-surface="true"][data-spw-affordance="tune"]
   ) {
-  position: relative;
   border-inline-start: 2px solid color-mix(
     in srgb,
     var(--tuning-pulse-color) calc(var(--tuning-edge-strength) * 100%),
@@ -36634,10 +36612,6 @@ html[data-spw-page-section-phase="idle"] {
 }
 
 /* Embedded extension handles: component anatomy, not separate settings panels. */
-:where([data-spw-embedded-tuning-host="true"]) {
-  position: relative;
-}
-
 :where(.spw-embedded-tuning-handle) {
   --embedded-tuning-accent: var(--active-op-color, #008080);
   position: absolute;
@@ -36705,7 +36679,9 @@ html[data-spw-page-section-phase="idle"] {
   appearance: none;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.22rem;
+  min-inline-size: 3.2rem;
   min-block-size: 1.35rem;
   padding: 0.12rem 0.38rem;
   border: 1px solid color-mix(in srgb, var(--embedded-tuning-accent) 18%, var(--line, rgba(0, 0, 0, 0.14)));
@@ -36715,11 +36691,6 @@ html[data-spw-page-section-phase="idle"] {
   cursor: pointer;
   font: inherit;
   letter-spacing: 0.04em;
-}
-
-:where(.spw-embedded-tuning-handle[data-spw-hypermedia-extension] .spw-embedded-tuning-handle__chip) {
-  min-inline-size: 3.2rem;
-  justify-content: center;
 }
 
 :where(.spw-embedded-tuning-handle__chip:is(:hover, :focus-visible)) {
@@ -38127,7 +38098,7 @@ html[data-spw-interactive-medium-ready="true"] {
    Container queries — scene bed layout variants inside route measure
    -------------------------------------------------------------------------- */
 
-:where(.spw-scene-bed[data-spw-scene-interactive], .spw-scene-bed[data-spw-scene-posture]) {
+:where(.spw-scene-bed) {
   container-type: inline-size;
   container-name: spw-scene-bed;
 }
@@ -45276,7 +45247,6 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
 
 :where([data-spw-address-role="identifier"]:not([data-spw-sigil-role="grammar"])) {
   color: color-mix(in srgb, var(--ink-soft, currentColor) 82%, var(--active-op-color, var(--teal)) 18%);
-  font-size: 0.92em;
 }
 
 :where([data-spw-sigil-role="grammar"][data-spw-address-role="identifier"]) :where(.syntax-token, [data-spw-operator]) {
