@@ -364,12 +364,16 @@ function renderGuide(parser = null, example = EXAMPLES[0], at = "", lens = null)
     body: `${masthead("/")}
 <div class="lens-scope"${scopeAttr}>
 ${parser ? `${switchBanner(parser.value, parser.from)}\n` : ""}<section class="opening" aria-labelledby="title">
-  <p class="eyebrow">A language for navigating the metamaterial properties of linguistics</p>
+  <p class="eyebrow">Spw · readable marks and containers for people, editors, and tools</p>
   <h1 id="title">A notation for readings you can compare.</h1>
-  <pre class="title-spw" aria-label="The same reading, with one slot changed"><code><span data-t="frame">#&gt;</span>reading<span data-t="b-mode">[</span>compare<span data-t="b-mode">]</span><span data-t="b-direction">{</span>shared<span data-t="b-direction">}</span><span data-t="b-scene">(</span>shelf<span data-t="b-scene">)</span><span data-t="b-concept">&lt;</span>notation<span data-t="b-concept">&gt;</span>
-<span data-t="frame">#&gt;</span>reading<span data-t="b-mode">[</span>compare<span data-t="b-mode">]</span><span data-t="b-direction">{</span>parted<span data-t="b-direction">}</span><span data-t="b-scene">(</span>shelf<span data-t="b-scene">)</span><span data-t="b-concept">&lt;</span>notation<span data-t="b-concept">&gt;</span></code></pre>
-  <p class="lede">A mark says what a word is doing. A brace says which slot it fills. Change one slot and the reading updates. Explore lines as discrete monospace stamps here, or project their continuous topological forces on <a href="https://factshift.center" target="_blank" rel="noopener">factshift.center</a>.</p>
-  <p class="note">Handed this address and a line? <a href="/llms.txt">How to answer in Spw</a>.</p>
+  <pre class="title-spw" aria-label="Two Spw lines showing prefix force, perspective, path, and containment"><code><span data-t="perspective">editor@</span>cut<span data-t="b-direction">{</span>rough <span data-t="stream">~&gt;</span> fine <span data-t="stream">~&gt;</span> locked<span data-t="b-direction">}</span><span data-t="b-scene">(</span>deadline<span data-t="b-scene">)</span><span data-t="b-concept">&lt;</span>reel<span data-t="b-concept">&gt;</span>
+<span data-t="wonder">?</span><span data-t="b-mode">[</span>"what broke the pacing?"<span data-t="b-mode">]</span><span data-t="b-direction">{</span> <span data-t="action">!</span>probe<span data-t="b-direction">{</span> "watch scene 3 muted" <span data-t="b-direction">}</span> <span data-t="b-direction">}</span></code></pre>
+  <p class="lede">A mark says how you stand toward a word. A container bounds what belongs inside — in any order, nested, or alone. Read and compare lines here, or project them onto a spatial canvas at <a href="https://factshift.center" target="_blank" rel="noopener">factshift.center</a>.</p>
+  <div class="doors" aria-label="Choose your path into Spw">
+    <article class="door"><h3><a href="/learn">New to Spw</a></h3><p>Seven one-line storyboard panels starting from plain prose — no jargon required.</p></article>
+    <article class="door"><h3><a href="/build">Engineer or editor</a></h3><p>Take a line apart, compare <a href="/forms/">forms side by side</a>, or mount <a href="/install#repository">.spw/_workbench</a>.</p></article>
+    <article class="door"><h3><a href="/llms.txt">How to answer in Spw</a></h3><p>For language models and agents: the plain-text grammar, worked answers, <a href="/llms-full.txt">full corpus</a>, and <a href="/init">repo setup</a>.</p></article>
+  </div>
 </section>
 ${lensBarHtml(lens)}
 ${startersSection(escapeHtml, {
@@ -400,7 +404,7 @@ ${fileWorkspace(example, at)}
     <article class="door"><h3><a href="/forms/">Forms, side by side</a></h3><p>Compare lines that differ in one slot.</p></article>
     <article class="door"><h3><a href="/build">Take one line apart</a></h3><p>Edit one slot. The reading updates.</p><p><code>${escapeHtml(assemble(BUILD_DEFAULTS))}</code></p></article>
     <article class="door"><h3><a href="/learn">Learn it a mark at a time</a></h3><p>Seven panels. Each panel is one line.</p></article>
-    <article class="door"><h3><a href="https://factshift.center" target="_blank" rel="noopener">Canvas on factshift.center</a></h3><p>Continuous 5-simplex topological manifold: local body forces, gesture physics, and spatial wells.</p></article>
+    <article class="door"><h3><a href="https://factshift.center" target="_blank" rel="noopener">Canvas on factshift.center</a></h3><p>Spatial canvas: lay any Spw line or script out as movable connected nodes.</p></article>
     <article class="door"><h3><a href="/install#phone">Keep it on your phone</a></h3><p>Install the guide. It opens in its own window.</p></article>
     <article class="door"><h3><a href="/install#repository">Keep it in a repository</a></h3><p>Parser, CLI, and editor tooling at <code>.spw/_workbench</code>.</p></article>
     <article class="door"><h3><a href="/parser/">Read it on your own page</a></h3><p>Dated parser builds. Each build has an integrity hash.</p></article>

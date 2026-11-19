@@ -1,7 +1,7 @@
 {
   "version": "0.1.0",
   "schema": "specimens.v1",
-  "count": 1129,
+  "count": 1131,
   "specimens": [
     {
       "id": "h-capsule",
@@ -351,6 +351,41 @@
       "line": "beat[unary]{close}<offer>\nbeat[pair]{pieces}<compose>\nbeat[season]{portfolio}<dwell>"
     },
     {
+      "id": "r-9930db65",
+      "source": "routes",
+      "line": "(production)season{ oct; nov; close }<now>"
+    },
+    {
+      "id": "r-3bd953e1",
+      "source": "routes",
+      "line": "(reading)craft{ notes, essays, kitchen }"
+    },
+    {
+      "id": "r-6f521d93",
+      "source": "routes",
+      "line": "@studio{ briefs, prints, editions }"
+    },
+    {
+      "id": "r-9b1d027e",
+      "source": "routes",
+      "line": "#>home_frame{ software, art, spw }<atlas>"
+    },
+    {
+      "id": "r-031797c0",
+      "source": "routes",
+      "line": "^systems{ grammar, parsers, components }<inspect>"
+    },
+    {
+      "id": "r-5ca78cf3",
+      "source": "routes",
+      "line": "~play(wednesday){ table; canon; lore }"
+    },
+    {
+      "id": "r-21778fa8",
+      "source": "routes",
+      "line": "~prompt{ inspect; prime; rehearse }<workbench>"
+    },
+    {
       "id": "r-f1dfe4e7",
       "source": "routes",
       "line": "adult[study]{practice}"
@@ -441,16 +476,6 @@
       "line": "handle[field-guide]{mark}"
     },
     {
-      "id": "r-d7132227",
-      "source": "routes",
-      "line": "home[hook]{orient}<atlas>"
-    },
-    {
-      "id": "r-e6f488e3",
-      "source": "routes",
-      "line": "home[hook]{software.art.practice}(atlas)<person>"
-    },
-    {
       "id": "r-51bf5e1c",
       "source": "routes",
       "line": "home[hook]{wash}<entry>"
@@ -461,39 +486,14 @@
       "line": "home[learning.surface]{route-bridge}"
     },
     {
-      "id": "r-ddf097b3",
-      "source": "routes",
-      "line": "home[live]{season.close}(production)<now>"
-    },
-    {
-      "id": "r-92b64bd0",
-      "source": "routes",
-      "line": "home[play]{table}<session>"
-    },
-    {
       "id": "r-e1a3c0e3",
       "source": "routes",
       "line": "home[reader]{patron}"
     },
     {
-      "id": "r-e5f051d2",
-      "source": "routes",
-      "line": "home[reading]{craft}<entry>"
-    },
-    {
       "id": "r-ab2ae992",
       "source": "routes",
       "line": "home[reading]{open.sit}"
-    },
-    {
-      "id": "r-cc09d0e1",
-      "source": "routes",
-      "line": "home[studio]{commission}<offer>"
-    },
-    {
-      "id": "r-856696e7",
-      "source": "routes",
-      "line": "home[systems]{parser}<inspect>"
     },
     {
       "id": "r-1c7f2ab7",
@@ -581,11 +581,6 @@
       "line": "privacy[direct]{local}"
     },
     {
-      "id": "r-dcef76d1",
-      "source": "routes",
-      "line": "prompt[seed]{inspect.prime.rehearse}<workbench>"
-    },
-    {
       "id": "r-0c0d957c",
       "source": "routes",
       "line": "proof[card]{claim.evidence.action}"
@@ -666,6 +661,11 @@
       "line": "screenshot[record]{ask,offer,agreement,reference}"
     },
     {
+      "id": "r-6040b7cc",
+      "source": "routes",
+      "line": "spwashi@home{ software, art ~> print }<tradition>"
+    },
+    {
       "id": "r-fb86126d",
       "source": "routes",
       "line": "sticker[motif]{theme.pressure}"
@@ -706,24 +706,19 @@
       "line": "(look){stage}<learn>"
     },
     {
-      "id": "r-ba001ce4",
+      "id": "r-747f736d",
       "source": "routes",
-      "line": "about[hook]{orient}<hospitality>"
+      "line": "@hospitality(table){ recipe; venue; learning }"
     },
     {
-      "id": "r-6357ac8d",
+      "id": "r-2ae9fb32",
       "source": "routes",
-      "line": "about[hospitality]{recipe.venue.learning}(table)<horizon>"
+      "line": "^kernel(person){ software, art }<compass>"
     },
     {
-      "id": "r-492532a8",
+      "id": "r-3f0b8df2",
       "source": "routes",
-      "line": "about[kernel]{identity.compass}<person>"
-    },
-    {
-      "id": "r-4563321a",
-      "source": "routes",
-      "line": "about[lattice]{code.print.lore.artifact}<crossing>"
+      "line": "~lattice{ code, print, lore, folio }<crossing>"
     },
     {
       "id": "r-13d212a2",
@@ -1021,6 +1016,11 @@
       "line": "practice[software]{meditation}"
     },
     {
+      "id": "r-c5947025",
+      "source": "routes",
+      "line": "reader@about{ kernel; lattice }<hospitality>"
+    },
+    {
       "id": "r-b480ea98",
       "source": "routes",
       "line": "return[context]{changed}"
@@ -1256,11 +1256,6 @@
       "line": "card[ask]{need,deadline,budget}"
     },
     {
-      "id": "r-2657eb95",
-      "source": "routes",
-      "line": "card[catalyst]{claim;state;evidence}<next>"
-    },
-    {
       "id": "r-986c14fc",
       "source": "routes",
       "line": "card[consensus]{agreement,status,participants}"
@@ -1286,6 +1281,11 @@
       "line": "card[reference]{source,citation,revisit}"
     },
     {
+      "id": "r-0043a3b7",
+      "source": "routes",
+      "line": "card{ claim; state ~> evidence }<next>"
+    },
+    {
       "id": "r-64214252",
       "source": "routes",
       "line": "?unsure[notice]<myself>"
@@ -1306,9 +1306,9 @@
       "line": "care[hook]{stabilize}<protocol>"
     },
     {
-      "id": "r-a0e11ae3",
+      "id": "r-8fd0f14c",
       "source": "routes",
-      "line": "contact[hook]{intake}<register>"
+      "line": "@contact{ context; need; decision }"
     },
     {
       "id": "r-b84cca3b",
@@ -1339,6 +1339,11 @@
       "id": "r-c25ceab8",
       "source": "routes",
       "line": "curriculum[overnight]{expect.check}(question)<note>"
+    },
+    {
+      "id": "r-8ec099cb",
+      "source": "routes",
+      "line": "^worktable[design]{ slots, palettes, rules }<route>"
     },
     {
       "id": "r-e13d810f",
@@ -1384,11 +1389,6 @@
       "id": "r-4d1b283c",
       "source": "routes",
       "line": "copy[render]{question.live}<measure>"
-    },
-    {
-      "id": "r-c838a780",
-      "source": "routes",
-      "line": "design[worktable]{slots.kinds.contracts}(route)<part>"
     },
     {
       "id": "r-f3e99f29",
@@ -1771,6 +1771,16 @@
       "line": "topic[systems]{open.sit}"
     },
     {
+      "id": "r-a4d0ff48",
+      "source": "routes",
+      "line": "*folios{ collage; laminate; paint }<scan>"
+    },
+    {
+      "id": "r-edffc679",
+      "source": "routes",
+      "line": "~studio{ collage; laminate; paint }<stack>"
+    },
+    {
       "id": "r-cb68f531",
       "source": "routes",
       "line": "folio[art]{branch.open}"
@@ -1789,16 +1799,6 @@
       "id": "r-645d6cdd",
       "source": "routes",
       "line": "folio[ground]{paper.master.tier}(archive)<scan>"
-    },
-    {
-      "id": "r-3052f5dd",
-      "source": "routes",
-      "line": "folio[hook]{collage.laminate.season}(year)<scan>"
-    },
-    {
-      "id": "r-4306455d",
-      "source": "routes",
-      "line": "folio[october]{drop.door}<shelf>"
     },
     {
       "id": "r-c0949f7f",
@@ -1836,14 +1836,14 @@
       "line": "folio[studio]{collage.laminate.paint}(year)<stack>"
     },
     {
-      "id": "r-f8092e58",
-      "source": "routes",
-      "line": "folio[studio]{return}<stack>"
-    },
-    {
       "id": "r-4117dedf",
       "source": "routes",
       "line": "folio[table]{seed.custom}(scene)<order>"
+    },
+    {
+      "id": "r-485e1870",
+      "source": "routes",
+      "line": "maker@folio{ scan, caption, sheet }<october>"
     },
     {
       "id": "r-422354a4",
@@ -2086,9 +2086,9 @@
       "line": "loop[reference]{cite.archive.clarify}"
     },
     {
-      "id": "r-d11a8bd6",
+      "id": "r-a575ea8f",
       "source": "routes",
-      "line": "membership[coordination]{issue.visit}(return)<shape>"
+      "line": "member@issue{ observe, cite, build, sponsor }<return>"
     },
     {
       "id": "r-5fccbb3c",
@@ -2111,59 +2111,79 @@
       "line": "membership[return]{depth.loop.evidence}"
     },
     {
-      "id": "r-51d69252",
+      "id": "r-72ca08ed",
       "source": "routes",
-      "line": "book[november]{chapters.moments}(writing)<lore>"
+      "line": "!dispatch(nov_19){ arrival; lenses; parser }<now>"
     },
     {
-      "id": "r-b8eb632c",
+      "id": "r-d9a760e5",
       "source": "routes",
-      "line": "cycle[a]{receipt}(progress)<live>"
+      "line": "(live)stream[tiktok]{ fan, subscriber }<door>"
     },
     {
-      "id": "r-da372849",
+      "id": "r-c5ab7a75",
       "source": "routes",
-      "line": "cycle[b]{receipt}(record)<archive>"
+      "line": "(production)season{ oct; nov; close }<tradition>"
     },
     {
-      "id": "r-424cef3f",
+      "id": "r-dc00e71f",
       "source": "routes",
-      "line": "cycle[opening]{notice.stay.form}(meditation)<mind>"
+      "line": "^receipt(nov_19){ before ~> after }<live>"
     },
     {
-      "id": "r-ddba4380",
+      "id": "r-6403f1e4",
       "source": "routes",
-      "line": "now[hook]{season.practice}(production)<tradition>"
+      "line": "~archive(sept_oct){ css; shelf }<record>"
     },
     {
-      "id": "r-06d96cac",
+      "id": "r-10c701e4",
       "source": "routes",
-      "line": "now[hook]{sprint.dispatch}<live>"
+      "line": "book(november){ chapters ~> 50000_moments }<lore>"
     },
     {
-      "id": "r-d5b0ce94",
+      "id": "r-f3434f7d",
       "source": "routes",
-      "line": "practice[study]{math.art.language}(session)<trace>"
+      "line": "edit(session){ ?attention; !revise }<mind>"
     },
     {
-      "id": "r-19b76b6d",
+      "id": "r-17106c3a",
       "source": "routes",
-      "line": "practice[tiktok]{start.promote.balance.team}(years)<seed>"
+      "line": "home{ hook; doors } ~ now{ receipt; close }"
     },
     {
-      "id": "r-d54e009b",
+      "id": "r-a6a3e75c",
       "source": "routes",
-      "line": "sprint[now]{live.dispatch}"
-    },
-    {
-      "id": "r-c5a22045",
-      "source": "routes",
-      "line": "support[input]{change;continuity}<receipt>"
+      "line": "practice{ math, art ~> language }<trace>"
     },
     {
       "id": "r-f932fdbb",
       "source": "routes",
       "line": "document[spw]{parse.room.export}<local>"
+    },
+    {
+      "id": "r-2c934199",
+      "source": "routes",
+      "line": "(table)session{ joke ~> evidence }<canon>"
+    },
+    {
+      "id": "r-bb907ee5",
+      "source": "routes",
+      "line": "@table{ laughter, stakes }<share>"
+    },
+    {
+      "id": "r-9bc8ad13",
+      "source": "routes",
+      "line": "*memory(campaign){ logs; pressure; canon }<recap>"
+    },
+    {
+      "id": "r-72448981",
+      "source": "routes",
+      "line": "^making(table){ sheets, cards, prompts }<studio>"
+    },
+    {
+      "id": "r-ec984e88",
+      "source": "routes",
+      "line": "~play(wednesday){ table; canon }<stage>"
     },
     {
       "id": "r-92c03253",
@@ -2201,29 +2221,9 @@
       "line": "play[css]{charge.state.cauldron}"
     },
     {
-      "id": "r-33c82d0c",
-      "source": "routes",
-      "line": "play[hook]{table.canon}(stage)<orientation>"
-    },
-    {
       "id": "r-e30936d4",
       "source": "routes",
       "line": "play[integration]{recipe.svg.tool.character}"
-    },
-    {
-      "id": "r-8168b11e",
-      "source": "routes",
-      "line": "play[making]{sheet.card.prompt}(table)<studio>"
-    },
-    {
-      "id": "r-b73b9337",
-      "source": "routes",
-      "line": "play[memory]{log.pressure.canon}<recap>"
-    },
-    {
-      "id": "r-8d227689",
-      "source": "routes",
-      "line": "play[orientation]{table.canon.humor}(session)<evidence>"
     },
     {
       "id": "r-6343a0b7",
@@ -2244,11 +2244,6 @@
       "id": "r-db472d14",
       "source": "routes",
       "line": "play[svg]{bubble.token.silhouette}"
-    },
-    {
-      "id": "r-827bd673",
-      "source": "routes",
-      "line": "play[table]{space.laughter.stakes}<share>"
     },
     {
       "id": "r-46321e67",
@@ -3341,6 +3336,21 @@
       "line": "rpg[portal]{campaign.character_sheet.sessions}"
     },
     {
+      "id": "r-3ab1e649",
+      "source": "routes",
+      "line": "@services{ scope, creator, systems, ecosystem }<lane>"
+    },
+    {
+      "id": "r-e0aac9ea",
+      "source": "routes",
+      "line": "bundle{ art, web ~> software }<deliverable>"
+    },
+    {
+      "id": "r-f93edd38",
+      "source": "routes",
+      "line": "producer@services{ brief; sprint; deliverable }"
+    },
+    {
       "id": "r-10d44c30",
       "source": "routes",
       "line": "services[bundle]{art.page.software}(person)<ladder>"
@@ -3354,21 +3364,6 @@
       "id": "r-b6df38c2",
       "source": "routes",
       "line": "services[bundle]{record.since}"
-    },
-    {
-      "id": "r-1993519b",
-      "source": "routes",
-      "line": "services[hook]{lanes}<scope>"
-    },
-    {
-      "id": "r-efdb90b5",
-      "source": "routes",
-      "line": "services[lane]{service.product.commission}(ask)<shape>"
-    },
-    {
-      "id": "r-1232fbf4",
-      "source": "routes",
-      "line": "services[register]{software.art}(lane)<product>"
     },
     {
       "id": "r-acc885de",
@@ -3581,6 +3576,16 @@
       "line": "tiktok[subscriber]{recurring.back}(studio)<cycle>"
     },
     {
+      "id": "r-ba3eb33c",
+      "source": "routes",
+      "line": "?benches{ parse, sheet, budget, prompt }<local>"
+    },
+    {
+      "id": "r-adb6a336",
+      "source": "routes",
+      "line": "^software(learning){ parser, tokens, ast }"
+    },
+    {
       "id": "r-8b4ad0ae",
       "source": "routes",
       "line": "loop[budget.pantry]{scarcity.trade.sprint}"
@@ -3746,6 +3751,16 @@
       "line": "style-ref[image]{material.light.palette}"
     },
     {
+      "id": "r-20352115",
+      "source": "routes",
+      "line": "!parse{ source; tokens; ast; reconstruction }"
+    },
+    {
+      "id": "r-218ac153",
+      "source": "routes",
+      "line": "^parser(browser){ source ~> tokens ~> ast }<exact>"
+    },
+    {
       "id": "r-2d4b2201",
       "source": "routes",
       "line": "literal_parser[source]{tokens.ast.diagnostics.reconstruction}"
@@ -3756,11 +3771,6 @@
       "line": "proof[boundary]{works.claims.not_claimed}"
     },
     {
-      "id": "r-9a11c959",
-      "source": "routes",
-      "line": "proof[parser]{source;tokens;ast;diagnostics;reconstruction}(browser)<exact>"
-    },
-    {
       "id": "r-de528032",
       "source": "routes",
       "line": "workbench[v04]{claims.profiles.crawl.stems}"
@@ -3769,6 +3779,11 @@
       "id": "r-c76c2bf7",
       "source": "routes",
       "line": "?about{kin}<learn>"
+    },
+    {
+      "id": "r-893ed6bc",
+      "source": "routes",
+      "line": "?topics{ film, software, craft, math }<atlas>"
     },
     {
       "id": "r-d7a60467",
@@ -3836,6 +3851,11 @@
       "line": "math[signals]{topology.calculus.fields}"
     },
     {
+      "id": "r-53e22742",
+      "source": "routes",
+      "line": "reader@topics{ question ~> neighbor }<shelf>"
+    },
+    {
       "id": "r-c65c62c8",
       "source": "routes",
       "line": "rpg[wednesday]{sessions.cast.world}"
@@ -3869,16 +3889,6 @@
       "id": "r-b8a589d2",
       "source": "routes",
       "line": "time[schedulers]{multitasking.queues.eventloop}"
-    },
-    {
-      "id": "r-b6ac6670",
-      "source": "routes",
-      "line": "topics[atlas]{question;neighbor;issue}(return)<shelf>"
-    },
-    {
-      "id": "r-eb496a7e",
-      "source": "routes",
-      "line": "topics[hook]{atlas}<register>"
     },
     {
       "id": "r-ac1dffee",

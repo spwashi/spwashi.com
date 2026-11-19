@@ -75,13 +75,13 @@ const indented = (text) => text.split("\n").map((line) => `    ${line}`).join("\
 /** The part of /llms.txt that teaches the form. No headings: the llms.txt form keeps them for its lists of links. */
 export const ANSWER_FORM = `An address and a line together, as in "spw.quest rpgwednesday<card>", ask for an answer written in Spw. The line names the subject and its <concept> names the kind of answer. An answer is plain Spw text, with no code fence and no sentence before it. A person setting up a repository wants [the recipe](${ORIGIN}/init) instead.
 
-A line is word[mode]{body}(scene)<concept>, and only the word is required.
+Containers ([], {}, (), <>) are independent boundaries, not a fixed template. word[mode]{body}(scene)<concept> is one shorthand; containers may stand alone (?["question"], (rehearsal), {a, b}), reorder ((live)stream{a, b}), nest (cut{[rough] ~> [locked]}), or lead with a mark (!ship{page}). Include only meaningful containers.
 
-- word: what the line is about, one name with no spaces.
-- [mode]: how it is being seen.
-- {body}: what belongs to it. A dot makes one name, a comma holds a company, a semicolon keeps an order, ~> is a path.
+- word: optional subject (or Persona@subject).
+- [mode]: stance, lens, or schema key.
+- {body}: parts inside (dot = one name, comma = company, semicolon = order, ~> = path).
 - (scene): where or when it stands.
-- <concept>: what kind of thing it is.
+- <concept>: kind or outward channel.
 
 A mark goes right before a word, with no space after it:
 
