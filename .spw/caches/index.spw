@@ -166,6 +166,7 @@
 @streaming_attention_rooms_2026_11: ~"./streaming-attention-rooms-2026-11.spw"  # cache: streaming vs. physical-media attention economics, TikTok ebb-and-flow and co-host room contracts, bio-link and promoted-video windows, Spw expressions as collectible cognitive atoms, and the integrated psychology/pricing/wonder-promo matrix (#sa-007)
 @example_leads_2026_11: ~"./example-leads-2026-11.spw"  # cache: the belief leads, the example is the answer from the bench. Watching peers through months of looking for work, while hiring, training, and support stay unfixed, is the stake. Direction is one line a stranger can try, posted from spw.quest onto factshift.center. Tune rows say which of the three they serve (#el-direction, #el-belief)
 @gemini_neon_high_wedge_2026_11: ~"./gemini-neon-high-wedge-2026-11.spw"  # cache: one question for Gemini 4 Neon high. The open work is staged as bench[open]{arrival, example, copy}, and the reply moves one slot so two strategies diff (#gnh-staged, #gnh-reply)
+@expression_stagnation_and_variety_2026_11: ~"./expression-stagnation-and-variety-2026-11.spw"  # cache: 1,030-expression stagnation census (94% flat abc[def]{ghi}<jkl>), five false container implications, 32-shape live spw-seed 0.3.0 parse matrix, expression-query.js and lexer ceilings, and 7-family variety direction (#esv-001..#esv-005)
 
 operation = "align"
 fixity = "tending"
@@ -272,6 +273,7 @@ fixity = "tending"
   streaming_attention_rooms_2026_11 = @streaming_attention_rooms_2026_11
   example_leads_2026_11 = @example_leads_2026_11
   gemini_neon_high_wedge_2026_11 = @gemini_neon_high_wedge_2026_11
+  expression_stagnation_and_variety_2026_11 = @expression_stagnation_and_variety_2026_11
 }[reg=facet]
 
 ^"cache_rules"{

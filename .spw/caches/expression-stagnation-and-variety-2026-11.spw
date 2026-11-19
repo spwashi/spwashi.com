@@ -1,0 +1,153 @@
+# Expression Stagnation & Container Variety (2026-11)
+#
+# operation: cache
+# Empirical census of where Spw expressions on spwashi.com have stagnated into
+# a single flat `abc[def]{ghi}<jkl>` template, what that template falsely
+# implies about containers and constituent parts, what the pinned workbench
+# parser ALREADY accepts cleanly, and where the runtime reader or language
+# itself is genuinely limited.
+
+#>expression_stagnation_and_variety_2026_11
+#:cache #!language #!expressions #!containers #!stagnation #!variety
+#:operation #!cache
+#:fixity #!tending
+#:layer #!semantics
+
+@feature_utilization: ~"../language/feature-utilization.spw"
+@dot_join: ~"../language/dot-join.spw"
+@semantic_braces: ~"../conventions/semantic-braces.spw"
+@copy_accessor: ~"../conventions/copy-accessor.spw"
+@expression_projection: ~"./expression-projection-precipitation-2026-11.spw"
+@expression_query: ~"../../public/js/semantic/expression-query.js"
+@expression_tone: ~"../../public/js/semantic/expression-tone.js"
+@manifest_builder: ~"../../scripts/build-expression-manifest.mjs"
+@expression_manifest: ~"../../public/js/generated/spw-expressions.js"
+
+operation = "cache"
+fixity = "tending"
+source = "2026-11-19 census of 1,030 unique data-spw-semantic-expression hosts + 32-shape live parse matrix against pinned spw-seed 0.3.0"
+
+^"thesis"{
+  claim = `Over 94% of authored Spw expressions on spwashi.com follow one flat left-to-right template (abc[def]{ghi}<jkl>). That shape is not invalid, but its monoculture is stagnant and implies five false things about containers and their constituent parts. The pinned workbench parser already parses rich nested, operator-led, wordless, reordered, persona, crawl, and transition forms cleanly; stagnation lives in authoring habit, convention examples, and four bounded blind spots in expression-query.js — alongside three real language-level ceilings in spw-seed 0.3.0.`
+  probe_ref = `node --import ./.spw/_workbench/node_modules/tsx/dist/loader.mjs scripts/build-expression-manifest.mjs`
+}[reg=facet]
+
+^"stagnation_census_2026_11_19"{
+  %total_unique {
+    kind = "objective"
+    value = 1030
+    source = "public/js/generated/spw-expressions.js (pre-diversification baseline)"
+  }
+  %monoculture_flat_chain {
+    kind = "objective"
+    value = 961
+    share = "93.3%"
+    breakdown = #[
+      `596  W[W]{W}`,
+      `255  W[W]{W}<W>`,
+      `57   W[W]{W}(W)<W>`,
+      `53   W[W]{W;W...} / W[W]{W,W...} variants of the same skeleton`
+    ][reg=set]
+  }
+  %underused_shapes {
+    kind = "objective"
+    prefix_operated = 5    # 4 ?W{W}<W>, 1 ~W[W]{W}<W>; 0 ^ / ! / @ / #> / * / . / $
+    standalone_or_wordless = 1  # (W){W}<W>; 0 bare (scene) / <capsule> / {a,b} / ?[...]
+    nested_containers = 0
+    reordered_containers = 0
+    persona_perspectives = 0
+    brace_crawls = 0       # {a}.{b}.{c}
+    project_transitions = 0 # a ~> b
+  }
+}[reg=facet]
+
+^"five_false_implications"{
+  # What ubiquitous abc[def]{ghi}<jkl> teaches readers, editors, and agents by accident.
+  insight #esv-001 {
+    status = "open"
+    name = "fixed_four_column_struct"
+    claim = `Lining up [], {}, (), <> in one fixed left-to-right order implies a rigid 4-field schema (noun[adjective]{verbs}<tag>) rather than independent containers that stand alone, reorder freely, omit a leading word ({chronicles} <of> (narnia)), or repeat.`
+  }
+  insight #esv-002 {
+    status = "open"
+    name = "flat_suffix_instead_of_containment"
+    claim = `Bolting every container onto abc as a flat sibling hides the primary behavior of a container: governing what sits inside its boundary (e.g., cut{ [rough] ~> [locked] }, scene(rehearsal){ ~cue_a; !cue_b }, ^"atlas"{ [study]{ math, craft } }).`
+  }
+  insight #esv-003 {
+    status = "open"
+    name = "tight_dot_bag_flattening"
+    claim = `Tight dots inside {} ({software.art.practice}, {notice.stay.form}) parse as one qualified identifier (@dot_join), erasing the distinction between company ({a, b}), irreversible sequence ({a; b}), directional transfer (a ~> b), and brace crawl ({a}.{b}).`
+  }
+  insight #esv-004 {
+    status = "open"
+    name = "operator_free_passive_taxonomy"
+    claim = `Starting 99%+ of expressions with a bare word removes prefix force (?, ~, ^, !, @, #, *, ., $), infix relation (~>, &, editor@cut), and postfix residue (Persona@, [reg=facet]) — turning live moves into static filing labels.`
+  }
+  insight #esv-005 {
+    status = "open"
+    name = "ritual_slot_padding"
+    claim = `Expecting all 3-4 slots pressures authors to pad generic fillers ([hook], <entry>, <register>) where a single sharp container or edge would say more with less noise.`
+  }
+}[reg=facet]
+
+^"parser_vs_runtime_vs_language_ceilings"{
+  # Live 32-shape test against pinned spw-seed 0.3.0 (parse("expression = ...")) + manifest AST gate.
+  workbench_parses_today = .{
+    verified = "32 of 32 varied shapes parsed with 0 errors and passed the build-expression-manifest Capsule/Operation gate on 2026-11-19."
+    accepted_families = #[
+      `wordless & standalone: {chronicles} <of> (narnia), (rehearsal), <pacing>, [reading], ?["what stayed"], {soak, cook, serve}, {sow; tend; harvest}`,
+      `prefix-operated containers: ^"section"{ rough ~> locked }, !commit{ cut; receipt }, ~"/now/"<dispatch>, @editor[cut]{ pacing, sound }, #>home_frame{ hook; doors }, *folio{ collage, laminate, paint }, .ground(arrival), $budget[season]{ week; close }`,
+      `reordered & scene-led: story<film>(scene)[edit]{ cut; sound }, (live)stream[tiktok]{ fan, subscriber }<door>`,
+      `nested containment: cut{ [rough] ~> [locked] }, scene(rehearsal){ ~cue_a; !cue_b }, folio{ *scan & <caption_note> }, ^"atlas"{ [study]{ math, craft } }`,
+      `relational, persona & crawl: editor@cut{ pacing; rhythm }, Persona@, {mill}.{laminate}.{cure}, rough ~> fine ~> print, sound & picture, A ~ B`,
+      `charge & postfix facet: boon.honk table[generous]{ share; stay }, note{ claim; proof }[reg=facet]`
+    ][reg=set]
+  }[reg=facet]
+
+  runtime_reader_limits = .{
+    # Bounded gaps in public/js/semantic/expression-query.js and expression-tone.js
+    limit_1 = `readContainers() defaults to balanced: false, so nested same-kind braces (^"atlas"{ [study]{ math, craft } }) return an empty body.`
+    limit_2 = `readContainers() stops when a container kind repeats (slot in found), dropping later bodies in brace crawls ({mill}.{laminate}.{cure}).`
+    limit_3 = `readCompoundJoin() can fire on top-level operators (&, ~) that actually live inside braces (folio{ *scan & <caption_note> }).`
+    limit_4 = `expression-tone.js only reads slots.mode ([...]), nudging authors to add [mode] brackets even when an operator, scene, or charge carries the posture.`
+  }[reg=facet]
+
+  language_level_stagnation = .{
+    # Genuine ceilings in pinned spw-seed 0.3.0 — candidates for future workbench offerings, NOT site forks.
+    gap_1_semicolon_lexer = `Default spw-seed lexer drops ';' tokens, so ordinal schedules ({a; b; c}) are preserved only by source-string scanning in expression-query.js (@dot_join).`
+    gap_2_disjunction_and_arrows = `No dedicated AST node for disjunction (read | inspect) or thin/fat arrows (a -> b, a => b); they parse cleanly as flat ModifierChain sequences without structural distinction.`
+    gap_3_parse_expression_truncation = `parseExpression() silently truncates multi-container forms; build-expression-manifest must wrap inputs as 'expression = <src>' under parse().`
+    gap_4_repeated_container_kinship = `Manifest shape flattens expressions into 5 scalar/list slots (subject, mode, parts, projection, scope), losing container nesting depth and operator prefix force for runtime kinship.`
+  }[reg=facet]
+}[reg=facet]
+
+^"variety_direction"{
+  # Seven honest container patterns to use across HTML data-spw-semantic-expression hosts.
+  # Rule: pick the smallest container structure that tells the truth about the host.
+  f1_prefix_force = `Lead with an operator when the host performs a move: ?probe{...}, ~path<surface>, ^lift{...}, !action{...}, @viewpoint[...], #>handle{...}, *artifact{...}, .ground(...), $resource[...].`
+  f2_standalone_and_wordless = `Drop the leading noun when the container itself is the unit: (rehearsal), <pacing>, ?["what stayed"], {soak, cook, serve}, {chronicles} <of> (narnia).`
+  f3_nested_containment = `Put parts inside the boundary that governs them: cut{ [rough] ~> [locked] }, scene(rehearsal){ ~cue_a; !cue_b }, folio{ *scan & <caption_note> }.`
+  f4_scene_led_and_reordered = `Put the framing container first when context precedes mode: (live)stream[tiktok]{ fan, subscriber }<door>, (production)season{ oct; nov; close }<tradition>.`
+  f5_honest_body_joins = `Use , for co-present company ({software, art, print}), ; for ordered steps ({collage; laminate; paint}), ~> for directional transition (draft ~> press ~> folio), and {a}.{b} for crawl between complete practices — reserve tight a.b only for one qualified identifier.`
+  f6_persona_perspective = `Bind whose eyes are looking with @: producer@services{ brief; sprint }, reader@topics<atlas>, editor@cut{ pacing; rhythm }.`
+  f7_compound_circuits = `Couple two hosts explicitly when one moves the other: home[hook]{orient} ~ now{receipt; close}, (rehearsal)cue & *folio{scan}.`
+}[reg=facet]
+
+^"owner_claim"{
+  claim #esv-claim-001 {
+    layer = "semantic"
+    hypothesis = `Diversifying public data-spw-semantic-expression hosts across prefix-operated, nested, scene-led, persona, relational, and honest-separator forms parses cleanly under pinned spw-seed 0.3.0 without breaking manifest generation, copy-accessor audits, or expression tests, while exposing where expression-query.js needs balanced/nested awareness.`
+    spec_ref = ~"./expression-stagnation-and-variety-2026-11.spw"
+    impl_ref = ~"../../public/js/generated/spw-expressions.js"
+    probe_ref = `npm run manifest:expressions && npm run audit:copy:accessor && node --import ./scripts/tests/setup-dom-globals.mjs --import ./scripts/lib/register-public-imports.mjs --test scripts/tests/expression-query.test.mjs scripts/tests/expression-tone.test.mjs scripts/tests/page-copy-audit.test.mjs`
+    falsification = `Any diversified public expression fails spw-seed parse(), gets skipped by build-expression-manifest.mjs, or breaks copy-accessor/runtime tests.`
+    status = "active"
+  }
+}[reg=facet]
+
+validation: #[
+  `npm run manifest:expressions`
+  `npm run ecology:language`
+  `npm run audit:copy:accessor`
+  `npm run spw:doctor`
+][reg=set]
