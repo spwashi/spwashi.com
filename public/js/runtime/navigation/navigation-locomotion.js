@@ -48,12 +48,8 @@ function syncNavigationLocomotionState(detail = {}, reason = 'section-locomotion
   if (phase === 'traveling') {
     writeDatasetValue(html, 'spwNavigationLocomotion', 'traveling');
     writeDatasetValue(html, 'spwNavigationTransition', detail.direction || 'steady');
-    writeDatasetValue(html, 'spwSpellMomentum', 'locomotion');
     writeDatasetValue(html, 'spwNavigationSection', detail.currentId || detail.currentLabel || null);
   } else {
-    if (html.dataset.spwSpellMomentum === 'locomotion') {
-      delete html.dataset.spwSpellMomentum;
-    }
     writeDatasetValue(html, 'spwNavigationLocomotion', null);
     writeDatasetValue(html, 'spwNavigationTransition', null);
     writeDatasetValue(html, 'spwNavigationSection', detail.currentId || null);
@@ -156,9 +152,6 @@ export function initNavigationLocomotion(ctx) {
     window.clearTimeout(locomotionTimer);
     locomotionTimer = 0;
     const html = document.documentElement;
-    if (html.dataset.spwSpellMomentum === 'locomotion') {
-      delete html.dataset.spwSpellMomentum;
-    }
     delete html.dataset.spwNavigationLocomotion;
     delete html.dataset.spwNavigationTransition;
     delete html.dataset.spwNavigationSection;

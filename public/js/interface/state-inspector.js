@@ -83,16 +83,16 @@ function getToggleState(config) {
   return config.inverted ? value !== config.off : value === config.on;
 }
 
-function syncSatchelMaterial(root, launch, panel) {
+function syncSatchelMaterial(satchelEl, launch, panel) {
   const base = document.documentElement.dataset.spwBaseMetamaterial
     || document.documentElement.dataset.spwMetamaterial
     || 'glass';
 
-  if (root) root.dataset.spwMetamaterial = base;
+  if (satchelEl) satchelEl.dataset.spwMetamaterial = base;
   if (panel) panel.dataset.spwMetamaterial = base;
   if (launch) launch.dataset.spwMetamaterial = base;
 
-  root
+  satchelEl
     ?.querySelectorAll?.('[data-spw-floating-chrome]')
     .forEach((element) => {
       element.dataset.spwMetamaterial = base;

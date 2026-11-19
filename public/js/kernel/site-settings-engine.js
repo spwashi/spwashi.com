@@ -404,13 +404,11 @@ const clearCurrentPinState = () => {
 };
 
 const clearComponentCollectionState = () => {
-  const html = document.documentElement;
-  if (!html) return;
-  html.dataset.spwCollectionKinds = '0';
-  html.dataset.spwCollectionTotal = '0';
-  html.dataset.spwCollectionTier = 'singular';
-  delete html.dataset.spwCollectionAchievements;
-  delete html.dataset.spwCollectionFresh;
+  // Component-collection owns html[data-spw-collection-*] tokens; delegate reset
+  // when mounted instead of writing another module's root attributes directly.
+  if (typeof window !== 'undefined' && typeof window.spwComponentCollection?.reset === 'function') {
+    window.spwComponentCollection.reset('settings-clear');
+  }
 };
 
 const buildPersistenceRegistries = () => ([

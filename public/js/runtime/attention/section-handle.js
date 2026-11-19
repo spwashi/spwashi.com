@@ -554,7 +554,7 @@ function createHandleShell(origin, doc = document) {
       <span class="spw-region-kin-label" data-spw-kin-rung="balanced" aria-hidden="true">#resonate</span>
     </button>
     <!-- Polite live region for button-driven section travel only (gesture-aria-hygiene/FIX.md) -->
-    <span class="spw-section-handle-live" aria-live="polite" aria-atomic="true" hidden></span>
+    <span class="spw-section-handle-live" aria-live="polite" aria-atomic="true"></span>
   `;
   return shell;
 }
