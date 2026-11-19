@@ -1,0 +1,107 @@
+# One wedge for Gemini 4 Neon, high (2026-11-19) — cache
+#
+# A question for a Neon high session. The answer is one edit in #reply,
+# diffable against #staged. This file does not pick the slot, and it does
+# not implement the edit.
+
+#>gemini_neon_high_wedge_2026_11
+#:cache #!gemini #!wonder #!wedge #!diff
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+operation = "cache"
+fixity = "experimental"
+source = "chat 2026-11-19; local main 1d5da7f3, 12 commits ahead of origin/main at 5611e440 as last resolved, no fetch this sitting; GEMINI.md; example-leads; the arrival commits f1c1d19a and 2bce8620; layout-shift-audit.js"
+audience = "Gemini 4 Neon, high setting. Reply in the #reply skeleton. One slot, one path, one check."
+boundary = `Do not implement the reply into the tree from this file. Do not add a plan folder or a data-spw family. Do not re-answer the five wonders in @argon. Do not treat a new subject beside bench as the same edit as a slot change: the diff is the finding.`
+
+expression = ask[neon]{one.slot, one.path, one.check}(diff)<high>
+
+summary = #[
+  `Neon high landed the arrival probe and then kept going: a ladder beside the tune rows, a sweep across 204 routes, six programs in one map.`,
+  `Three words name the open work, and the comma does not say whether they are company, an order, or aliases of one wedge.`,
+  `The reply moves one slot of #staged and names one path. A later diff of two replies is the strategy.`,
+][reg=set]
+
+contents = #[
+  ~"./gemini-neon-high-wedge-2026-11.spw#seat",
+  ~"./gemini-neon-high-wedge-2026-11.spw#staged",
+  ~"./gemini-neon-high-wedge-2026-11.spw#wonder",
+  ~"./gemini-neon-high-wedge-2026-11.spw#reply",
+  ~"./gemini-neon-high-wedge-2026-11.spw#stream",
+][reg=set]
+
+^"ask"{
+  id = "gnh-ask"
+  paste = `Read .spw/caches/gemini-neon-high-wedge-2026-11.spw and the files it names. Reply with only the #reply skeleton, filled. Change one slot of one staged expression. Name one path that exists in the repo. Name one check. Say which of understand, tooling, architecture, or agents the edit is. If you replace the subject bench, remove it in the same edit. Do not apply the edit.`
+}[reg=facet]
+
+^"seat"{
+  id = "gnh-seat"
+  tip = `Local main 1d5da7f3 on 2026-11-19 05:58. git status read ahead 12 of origin/main, which resolved to 5611e440 without a fetch.`
+  adapter = `@gemini asks for one probe, then a surgical edit, then check:local. High is not a second adapter.`
+  landed = #[
+    `f1c1d19a decouples CSS layout from runtime-backfilled semantics, in the files @motion#arrival_contract_gap names.`,
+    `2bce8620 holds the arrival baseline at 63, down from 80, by excluding prepaint-settled root attributes and out-of-flow absolute or fixed pseudos. In-flow pseudos stay enforced.`,
+    `@sensor still attributes a shift inside 500ms of a containing mount to REFLOW_CLASS.MOUNT, and the outcome string for that class with a positive count is arrival-reflow.`,
+    `e0555d4c authors a first-paint reader layer across 204 routes. cb09ef97 names 344 folio links. 1d5da7f3 writes Nov 17-19 receipts on /now/ and tightens hub copy.`,
+    `@example_leads keeps five tune rows at status proposed, and also holds #onboarding_layers and #product_loops from 6904a8ee.`,
+  ][reg=set]
+  pressure = `Each of those lines is a true next edit. The gap is which one a high session calls the wedge when all of them are already open.`
+}[reg=facet]
+
+^"staged"{
+  id = "gnh-staged"
+  claim = `These four lines are the instrument. A reply that adds a fifth subject beside them is a different strategy from a reply that moves one slot.`
+  next = bench[open]{arrival, example, copy}(1d5da7f3)<wedge>
+  gate = session[high]{probe, sweep, ladder}(gemini)<adapter>
+  shift = mount[class]{arrival.reflow, excused, owned}(500ms)<sensor>
+  spend = spend[one]{understand, tooling, architecture, agents}(reply)<diff>
+  comma = `The braces hold a set: arrival, example, and copy are company. A path would be arrival ~> example ~> copy. A schedule would separate them with semicolons. Rewriting the join is an edit, and it is visible.`
+  aliases = `The same three words can be read as one wedge seen from three seats. Arrival: the first paint holds. Example: a peer can point at the seat again. Copy: a stranger can read the line. Collapsing them to one slot is an edit. Keeping all three and adding onboard[layered] beside them is the edit high already made.`
+  shift_read = `arrival.reflow is what @sensor says now. excused is a name for the 17 baseline rows 2bce8620 let go. owned is a name for a shift that still has a module. Which word is the live defect is the question. The file that answers it is either @audit, @sensor, or the invariant sentence in @motion.`
+  gate_read = `probe is f1c1d19a. sweep is e0555d4c. ladder is #onboarding_layers. High can call the sweep the rest of the probe, because a reader layer is first paint. High can call it a second operation. The adapter has one sentence either way, and it lives in @gemini.`
+}[reg=facet]
+
+^"wonder"{
+  id = "gnh-wonder"
+  w1 = `?["Which one word is the wedge, and which two are only its company?"]{ ~#expect: "one slot of bench[open] moves or the subject is replaced outright, and the other staged lines stay" !probe{ "diff the reply against #staged and count subjects added against slots changed" } }`
+  w2 = `?["When the mount outcome already says arrival-reflow, did letting 17 rows out of the baseline close the gap or relocate it?"]{ ~#expect: "the reply names @audit or @sensor or the invariant sentence, and does not name all three" !probe{ "read the exclusion in 2bce8620 against MOUNT_ATTRIBUTION_WINDOW_MS and say which file would change if the exclusion were reversed" } }`
+  w3 = `?["After the probe has landed, is the sweep still the probe?"]{ ~#expect: "spend[one] carries a single word, and the path is either @gemini or a file the sweep already touched" !probe{ "if the reply edits @gemini, the edit is one sentence a later high session can obey; if it does not, the reply says who owns the stop" } }`
+  w4 = `?["Does a new subject beside bench teach the peer something bench does not?"]{ ~#expect: "either bench loses a slot, or the new subject replaces bench in the same edit, with the removed line present in the diff" !probe{ "hold #onboarding_layers next to the reply; a second ladder that restates hire, train, and support is the pattern this wonder is built to see" } }`
+}[reg=facet]
+
+^"reply"{
+  id = "gnh-reply"
+  claim = `Fill this skeleton. Leave every line you do not change. The comparison is a diff against this facet.`
+  skeleton = #[
+    `#>neon_reply`,
+    `edited = spend[one]{understand, tooling, architecture, agents}(reply)<diff>`,
+    `slot = ""`,
+    `path = ""`,
+    `check = ""`,
+    `subject = bench[open]{arrival, example, copy}(1d5da7f3)<wedge>`,
+    `reading = ""`,
+  ][reg=set]
+  fill = `slot is the one word that moved, or the word that replaced the subject. path is one file that exists. check is one command or one still. reading is one paragraph on how you took the comma. edited keeps a single word of its set and drops the other three, so the spend is visible.`
+  kinds = #[
+    `understand: a facet in a cache that already exists, @example_leads or @motion or @direction`,
+    `tooling: one assertion in @audit or in @sensor`,
+    `architecture: one owner of resting layout, CSS or JS, already named by @motion#arrival_contract_gap`,
+    `agents: one sentence in @gemini, or the place a high session is told to stop`,
+  ][reg=set]
+}[reg=facet]
+
+^"stream"{
+  >>[2026-11-19 05:58] note — Staged the open wedge as one set of three, with the reply skeleton empty, for a Neon high session to fill with one slot.
+}[reg=facet]
+
+@example_leads: ~"./example-leads-2026-11.spw"
+@motion: ~"./motion-and-marks-2026-11.spw"
+@direction: ~"./ecosystem-direction-2026-11.spw"
+@argon: ~"./gemini-4-argon-2026-11.spw"
+@gemini: ~"../../GEMINI.md"
+@audit: ~"../../scripts/audit-arrival-geometry.mjs"
+@sensor: ~"../../public/js/runtime/diagnostics/layout-shift-audit.js"
+@agents: ~"../../AGENTS.md"
