@@ -118,6 +118,8 @@ source = "2026-11-19 census of 1,030 unique data-spw-semantic-expression hosts +
     gap_2_disjunction_and_arrows = `No dedicated AST node for disjunction (read | inspect) or thin/fat arrows (a -> b, a => b); they parse cleanly as flat ModifierChain sequences without structural distinction.`
     gap_3_parse_expression_truncation = `parseExpression() silently truncates multi-container forms; build-expression-manifest must wrap inputs as 'expression = <src>' under parse().`
     gap_4_repeated_container_kinship = `Manifest shape flattens expressions into 5 scalar/list slots (subject, mode, parts, projection, scope), losing container nesting depth and operator prefix force for runtime kinship.`
+    gap_5_physics_and_prefix_capsule = `In spw-seed 0.3.0, prefix-operated ~word[mode]{body}<concept> wraps in a Capsule node without exposing expr.body (unlike ~word(scene)[mode]{body}<concept>), and infix persona editor@cut[...] parses as 2 top-level expressions — blocking spw.quest/physics resting-floor rendering on those forms.`
+    gap_6_postfix_project_arrow = `Placing ~> between containers (card{a; b} ~> <next>) parses under spw-seed but triggers partial-read truncation in expression-query.js/specimen-reading.js; keeping ~> inside {a ~> b} reads whole across both parser and shelf.`
   }[reg=facet]
 }[reg=facet]
 
@@ -131,6 +133,54 @@ source = "2026-11-19 census of 1,030 unique data-spw-semantic-expression hosts +
   f5_honest_body_joins = `Use , for co-present company ({software, art, print}), ; for ordered steps ({collage; laminate; paint}), ~> for directional transition (draft ~> press ~> folio), and {a}.{b} for crawl between complete practices — reserve tight a.b only for one qualified identifier.`
   f6_persona_perspective = `Bind whose eyes are looking with @: producer@services{ brief; sprint }, reader@topics<atlas>, editor@cut{ pacing; rhythm }.`
   f7_compound_circuits = `Couple two hosts explicitly when one moves the other: home[hook]{orient} ~ now{receipt; close}, (rehearsal)cue & *folio{scan}.`
+}[reg=facet]
+
+^"cross_domain_utility"{
+  # Spw as a communicative language across the domain constellation:
+  # what each host already speaks well, where it stagnates, and what handoffs unlock next.
+  claim = `Spw earns its place across domains when a single parsed expression moves cleanly between a person, a sibling web host, and an agent without translating into a bespoke schema per domain.`
+
+  spwashi_com = .{
+    role = `Personal studio, cross-discipline shelves, and proof cards`
+    state = `Diversified 38 flagship hub expressions on 2026-11-19 (12938024); 900+ secondary/leaf expressions remain flat W[W]{W}.`
+    next = `Use prefix force, persona perspectives, and honest joins (, ; ~> {a}.{b}) on topic leaves as routes are edited.`
+  }[reg=facet]
+
+  spw_quest = .{
+    role = `Public grammar door, comparative guide, and LLM answer contract (/llms.txt)`
+    state = `Upgraded front-door hero, 8 starters (adding editorial cut), plain-English container definitions, 3-audience entry (novice, engineer/editor, LLM), and /llms.txt container composability rules.`
+    next = `Keep carry-specimens, carry-shelf, carry-answers, and carry-guide synced whenever spwashi.com expressions move.`
+  }[reg=facet]
+
+  factshift_center = .{
+    role = `Spatial canvas (?spw= line, #spw64= script)`
+    state = `Already receives Spw lines from spwashi.com and spw.quest as visual nodes.`
+    next = `Ensure nested containers (cut{ [rough] ~> [locked] }) and scene-led expressions render containment visually rather than flattening to top-level badges.`
+  }[reg=facet]
+
+  texture_website = .{
+    role = `Material prompt composer (/{material}.spw, /minimalist@/)`
+    state = `Strongest existing non-monoculture dialect: operator-prefixed material paths (. ^ * ~ = @ ? ! %) and postfix persona views.`
+    next = `Use texture.website as the cross-domain proof that Spw works naturally in URLs and visual production without forcing abc[def]{ghi}<jkl>.`
+  }[reg=facet]
+
+  mutex_and_tealstripes = .{
+    role = `Shared timed single-concept lock (mutex.buzz/now.json -> tealstripesvibes/@lock)`
+    state = `Already uses one Spw seed as a live communicative state token across two origins.`
+    next = `Preserve as reference pattern for low-noise cross-domain state handoff.`
+  }[reg=facet]
+
+  autonomous_feedback = .{
+    role = `Cross-host issue, question, and appreciation inbox (/{host}/{kind}?at={path})`
+    state = `Biggest unrealized communicative handoff: speaks URL path + form JSON, not yet Spw #[episode] or ?["..."]{ !probe } exports.`
+    next = `Add optional copy/export of a submitted note as a Spw ?["..."] or #[episode] block so feedback pastes straight into a repo cache or spw.quest/build.`
+  }[reg=facet]
+
+  story_and_media_hosts = .{
+    hosts = #[`lore.land`, `wap.mom`, `smut.today`, `attention.productions`][reg=set]
+    role = `Serialized fiction, periodicals, and media production surfaces`
+    next = `Author scene-led (beat), persona (character@), and causal ({a; b; c} / ~>) expressions instead of software-flavored section[where]{nouns}.`
+  }[reg=facet]
 }[reg=facet]
 
 ^"owner_claim"{

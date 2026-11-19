@@ -19,17 +19,17 @@ export const OPERATORS = Object.freeze([
   { sigil: "$", name: "substrate", reads: "Names what something runs on: time, money, machines.", line: "$runway{months, team}", does: "Materializes underlying runtime metadata, exposing memory layout, latency bounds, and platform resource footprints." },
 ]);
 
-/** The four interpretive brace profiles, in the order the compositional form reads them. */
+/** The four interpretive brace profiles — independent containers that can stand alone, nest, reorder, or repeat. */
 export const CONTAINERS = Object.freeze([
-  { open: "<", close: ">", name: "concept", reads: "Ontological boundary: encapsulates the semantic universe of discourse and categorical domain." },
-  { open: "(", close: ")", name: "scene", reads: "Situational context: situates the spatiotemporal setting, environmental locus, and pragmatic frame." },
-  { open: "[", close: "]", name: "mode", reads: "Modal aspect: specifies the grammatical register, epistemic modality, and operational variant." },
-  { open: "{", close: "}", name: "definition", reads: "Constituent enclosure: encapsulates compositional definitions, internal clauses, and structural relations." },
+  { open: "<", close: ">", name: "concept", reads: "Names the kind of thing, outward channel, or domain boundary — can wrap a concept on its own or sit beside other containers." },
+  { open: "(", close: ")", name: "scene", reads: "Sets where or when the line happens — before a word, after a body, or alone as a witnessed moment." },
+  { open: "[", close: "]", name: "mode", reads: "Selects a stance, lens, or schema key while leaving sibling options visible." },
+  { open: "{", close: "}", name: "definition", reads: "Holds what lives inside: commas for company, semicolons for sequence, ~> for a path, or nested containers governed by this boundary." },
 ]);
 
 /** What a # particle's aim adds when the reader meets one in a line. */
 export const PARTICLE_AIMS = Object.freeze({
-  ">": "A frame locator: declares an addressable routing destination and canonical page identity.",
-  ":": "A stratum layer: classifies the epistemological genre and architectural tier of the expression.",
-  "!": "A definitive tag: assigns categorical indexing metadata to support multi-faceted taxonomy.",
+  ">": "A frame address: names a destination or block another file can cite.",
+  ":": "A role or layer tag: classifies what kind of record or tier this is.",
+  "!": "An intent mark: declares the active stance or operational focus.",
 });

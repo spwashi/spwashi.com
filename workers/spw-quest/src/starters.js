@@ -11,16 +11,25 @@ export const STARTERS = Object.freeze([
   Object.freeze({
     id: "marketing",
     setting: "Marketing",
-    line: "launch[soft]{waitlist, story, proof}<audience>",
+    line: "~launch(soft)[beta]{waitlist, story, proof}<audience>",
     ask: "Which of the three would you cut first?",
-    talk: "Change soft to loud and say what each part has to become.",
+    talk: "Change ~ to ! and soft to loud — say what each part has to become.",
     build: "One line per launch you have run, so the next one starts from them.",
     open: "review",
   }),
   Object.freeze({
+    id: "editorial",
+    setting: "Editorial cut",
+    line: "^cut(deadline)[rough]{pacing ~> sound ~> locked}<reel>",
+    ask: "What breaks the pacing between rough and locked?",
+    talk: "Change rough to fine and add the one cue that holds the cut together.",
+    build: "A scene sheet keeping cut stage, pacing notes, and sound cues together.",
+    open: "cinema",
+  }),
+  Object.freeze({
     id: "growth",
     setting: "Growth",
-    line: "funnel[weekly]{visit ~> signup ~> paid}<cohort>",
+    line: "%funnel(weekly)[cohort]{visit ~> signup ~> paid}<growth>",
     ask: "Where does this funnel leak most?",
     talk: "Add a step between signup and paid, and say what it measures.",
     build: "A pipeline that counts each step by cohort, week over week.",
@@ -29,16 +38,16 @@ export const STARTERS = Object.freeze([
   Object.freeze({
     id: "frontend",
     setting: "Frontend",
-    line: "page[slow]{bundle, images, fonts}<phone>",
+    line: "bane page[slow]{bundle, images, fonts}<phone>",
     ask: "Which of these would you measure first?",
-    talk: "Change phone to desk, and say what drops off the list.",
+    talk: "Change bane to boon and slow to crisp — say what made the difference.",
     build: "A record of each fix: the metric, the diff, and the test run.",
     open: "records",
   }),
   Object.freeze({
     id: "hiring",
     setting: "Finding talent",
-    line: "role[frontend]{react, a11y, design}<team>",
+    line: "=role(team)[frontend]{react, a11y, design}<hiring>",
     ask: "Which skill is this role really asking for?",
     talk: "Write the same role at junior and at senior, and say which parts move.",
     build: "A role card per person, pointing to the snippets they kept.",
@@ -47,7 +56,7 @@ export const STARTERS = Object.freeze([
   Object.freeze({
     id: "search",
     setting: "Finding a company",
-    line: "search[senior]{fit, pay, growth}<company>",
+    line: ".search(senior)[open]{fit, pay, growth}<company>",
     ask: "Which of the three would you trade first?",
     talk: "Add a fourth part, and say what it costs the other three.",
     build: "One line per company you talk to, compared two at a time.",
@@ -56,7 +65,7 @@ export const STARTERS = Object.freeze([
   Object.freeze({
     id: "incident",
     setting: "Incident triage",
-    line: "outage[p1]{triage ~> isolate ~> verify}<checkout>",
+    line: "!outage(p1)[active]{triage ~> isolate ~> verify}<checkout>",
     ask: "Which signal tells you the blast radius stopped growing?",
     talk: "Turn p1 to drill and add the exact smoke check you would automate.",
     build: "A blameless postmortem keeping latency bounds, owners, and timeline together.",
@@ -65,7 +74,7 @@ export const STARTERS = Object.freeze([
   Object.freeze({
     id: "community",
     setting: "Organizing a gathering",
-    line: "gathering[monthly]{host, access, food}<neighbors>",
+    line: "*gathering(monthly)[open]{host, access, food}<neighbors>",
     ask: "Who cannot participate if one default assumption stays unspoken?",
     talk: "Change monthly to weekly and trim setup so one host can close in 15 minutes.",
     build: "A lightweight charter naming access promises, shared roles, and cleanup steps.",
@@ -85,7 +94,7 @@ export function startersSection(escapeHtml, { editHref, exampleHref, canvasHref,
     </article>`).join("\n    ");
   return `<section id="start" class="band" aria-labelledby="start-title">
   <h2 id="start-title">Start from a line</h2>
-  <p>Each line below is a question to ask in one reply, a turn that keeps a longer conversation going, and a seed for a file. Change any slot to make it yours.</p>
+  <p>Each line uses a different Spw shape — a prefix mark, a persona perspective, a scene first, or a transition path. Pick one to ask a question, open a full example file, or pivot any part.</p>
   <div class="doors">
     ${cards}
   </div>

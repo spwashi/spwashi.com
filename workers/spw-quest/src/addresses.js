@@ -17,7 +17,7 @@ import { PIVOT_LIMIT } from "./pivot.js";
 import { LINE_LIMIT } from "./reader.js";
 import { FACTSHIFT_LIMIT } from "./specimens.js";
 
-const SHELF_WEIGHT = "The page is about 280 KB whatever is asked: the answer comes first, and the whole shelf follows it.";
+const SHELF_WEIGHT = "The page is about 305 KB whatever is asked: the answer comes first, and the whole shelf follows it.";
 const EXAMPLE_IDS = (() => {
   const ids = EXAMPLES.map(({ id }) => id);
   return ids.length > 1 ? `${ids.slice(0, -1).join(", ")} or ${ids.at(-1)}` : ids[0] ?? "";
