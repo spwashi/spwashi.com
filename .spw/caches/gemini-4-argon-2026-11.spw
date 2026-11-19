@@ -31,6 +31,10 @@
 @reader: ~"../../public/js/semantic/spw-workbench-reader.js"
 @specimen: ~"../../design/experiments/next-surface/index.html"
 @specimen_sheet: ~"../../public/css/routes/surfaces/next-surface.css"
+@factshift_navigation: ~"./factshift-navigation-and-physics-2026-11.spw"
+@ecosystem_direction: ~"./ecosystem-direction-2026-11.spw"
+@attention_stage: ~"../../workers/factshift-center/app/src/js/ui/attention-stage.ts"
+@attention_dailies: ~"../../workers/factshift-center/app/src/js/ui/attention-dailies.ts"
 
 operation = "cache"
 fixity = "experimental"
@@ -121,6 +125,12 @@ do_not = `Do not implement from this file. Do not re-run the seven passes. Do no
   address_as_handle = `3af0b843 (attention.productions) and spw.quest/pivot turn the expression itself into the handle: stepping one slot rewrites the line and URL in place while keeping plain links underneath for scripts-off and print.`
   fixed_clocks = `@motion measures factshift.center's transient UI on fixed clocks (2.4 s, 700 ms, 900 ms, 420 ms) and prose notes ("sown 13 · down center") where opening "more" shifts finger targets 13-17 px. Marks (!save, ^13, @3) on a scrubbable clock plus edge separation (left = opening/where, right = closing/how) make ephemera inspectable both in motion and on a still print.`
   memory_seam = `Across the four memory planes (visit, browser, file, repository), momentum breaks where persistence keys outlive or fight slot turns: factshift.center's saved frames key on whole-line hash (orphaned by any single-slot pivot, while pins survive by word), and spwashi.com Home's sibling links stay frozen on one line while the parser button carries the live textarea.`
+}[reg=facet]
+
+^"triad_synthesis_2026_11_19"{
+  # Extending ^"design_depth", ^"sensory_exports", and ^"ephemeral_momentum" into the 2026-11-19 spw.quest / attention.productions / factshift.center triad.
+  claim = `The 2026-11-19 triad closes the design-depth loop around factshift.center as spatial fulcrum (@factshift_navigation#triad_alignment, @ecosystem_direction#triad_direction_2026_11_19): spw.quest supplies bounded specimens, 6 elemental operator pairs, and short-ID Canvas redirects (/canvas?s=<id>); attention.productions supplies expression-as-handle horizontal slot scrubbing (SCRUB_PX = 28) and the first live three-mode arrival choreography (@attention_stage viewfinder + iris enter; @attention_dailies clapper + 8%-capped letterbox); and factshift.center generalizes those proven seams across every peer host, document, and hand-typed line.`
+  factshift_convergence = `Five Argon design invariants land together on factshift.center without adding a data-spw-* family: (1) generalized pre-parse arrival routing and declarative host stages, (2) canvas-vs-frame touch separation (settle-only bare tap, 2px rim seam + frozen alpha), (3) explicit vertical collection grains (TREE/NODE/LINE) split from horizontal expression-as-handle scrubbing (PART/CHAR), (4) orthogonal slot materials + already-bundled bcf0da18 spokenLine/pairSound parity (fixing silent < > and >> collapse), and (5) slot-stable memory keys + calm far-cutoff neighborhood physics.`
 }[reg=facet]
 
 #>wonder_argon_asked

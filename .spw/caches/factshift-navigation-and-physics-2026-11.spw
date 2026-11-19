@@ -1,68 +1,114 @@
-# Factshift navigation, scrub grains, and operator physics (2026-11-19) — cache
+# Factshift navigation, scrub grains, operator physics, and triad direction (2026-11-19) — cache
 #
-# Architectural cache for factshift.center: three input arrivals (domain/URL,
-# document, hand-typed Spw), eight directional navigation moves on four spatial
-# axes plus meta inspection, separating canvas vs. frame touches, explicit
-# scrub-layer grain identity (tree, graph/cloud, lines, parts, characters),
-# elemental operator-to-physics mapping, and ecosystem readiness.
-# This file holds design contracts and probes; it does not implement into the app.
+# Architectural cache for factshift.center as the spatial fulcrum of the
+# spw.quest <-> attention.productions <-> factshift.center triad:
+# generalized host-stage & arrival routing (building on live attention-stage.ts
+# and attention-dailies.ts), eight directional moves on four spatial axes plus
+# meta inspection, canvas-vs-frame touch separation, explicit five-grain scrub
+# identity (TREE/NODE/LINE vs. PART/CHAR), six elemental operator physics pairs
+# with orthogonal slot materials & sensory parity, and post-bcf0da18 ecosystem
+# readiness. This file holds design contracts and probes; it does not implement.
 
 #>factshift_navigation_and_physics_2026_11
-#:cache #!factshift #!navigation #!physics #!scrub #!operators
+#:cache #!factshift #!navigation #!physics #!scrub #!operators #!triad #!argon
 #:operation #!cache
 #:fixity #!experimental
 #:layer #!pragmatics
 
 @paste_grounding: ~"./factshift-paste-grounding-2026-11.spw"
 @substrate_frames: ~"./factshift-substrate-frames-2026-11.spw"
+@theory_of_mind: ~"./factshift-theory-of-mind-2026-11.spw"
+@cognitive_substrate: ~"./factshift-cognitive-substrate-2026-11.spw"
 @motion: ~"./motion-and-marks-2026-11.spw"
 @example_leads: ~"./example-leads-2026-11.spw"
 @expression_variety: ~"./expression-stagnation-and-variety-2026-11.spw"
+@ecosystem_direction: ~"./ecosystem-direction-2026-11.spw"
+@gemini_argon: ~"./gemini-4-argon-2026-11.spw"
 @workbench_report: ~"../workbench-report.spw"
 @quest_guide: ~"../../workers/spw-quest/src/guide.js"
 @quest_specimens: ~"../../workers/spw-quest/src/specimens.js"
+@attention_carry: ~"../../workers/attention-productions/carry.mjs"
+@attention_script: ~"../../workers/attention-productions/assets/attention.js"
+@factshift_version: ~"../../workers/factshift-center/version.json"
+@attention_stage: ~"../../workers/factshift-center/app/src/js/ui/attention-stage.ts"
+@attention_dailies: ~"../../workers/factshift-center/app/src/js/ui/attention-dailies.ts"
+@line_summary: ~"../../workers/factshift-center/app/src/js/modes/spw/line-summary.ts"
+@body_gestures: ~"../../workers/factshift-center/app/src/js/modes/spw/body-gestures.ts"
 @cluster: ~"../../workers/cluster.json"
 
 operation = "cache"
 fixity = "experimental"
-source = "chat 2026-11-19; creator inquiry on domain/document/Spw input support, eight-way navigation, accidental canvas-vs-frame taps, scrub-grain ambiguity (tree vs. cloud vs. lines vs. parts/characters), and operator-to-physics mapping on factshift.center"
-boundary = `Do not implement into workers/factshift-center from this file. Do not add a new data-spw-* family or deploy from this cache. Keep the canvas app's resting layout calm and undoable.`
+source = "chat 2026-11-19 (extended with Gemini 4 Argon triad synthesis); creator inquiry on domain/document/Spw arrivals, eight-way navigation, canvas-vs-frame touch seams, scrub-grain clarity, operator-to-physics mapping, and aligned direction for spw.quest, attention.productions, and factshift.center"
+boundary = `Do not implement into workers/factshift-center, workers/attention-productions, or workers/spw-quest from this file. Do not add a new data-spw-* family or deploy from this cache. Keep the canvas app's resting layout calm and undoable.`
 
-expression = ~canvas(factshift)[arrivals, grains, physics]{recognize; navigate; settle}<ecosystem>
+expression = ~canvas(factshift)[triad, arrivals, grains, physics]{recognize; navigate; settle}<ecosystem>
 
 summary = #[
-  `Recognize input kind before parsing — domain/URL portal, multi-line document topography, or hand-typed Spw expression — and emit a quiet undoable one-line receipt.`,
-  `Map all eight directional moves (into/out of, forward/back, up/down, across, about) onto four spatial axes plus reflexive inspection so visitors never memorize hidden commands.`,
-  `Eliminate accidental canvas-vs-frame taps by making empty canvas taps settle-only and lighting a 2px perimeter seam (with frozen simulation alpha) while the hand holds the frame rim.`,
-  `Eliminate scrub ambiguity by keeping vertical edge rails on one declared collection grain (TREE, NODE, LINE) with an ephemeral thumb-clear badge, while horizontal scrubbing along the held-line bar walks parts/nodes inside one expression and drops to characters on intentional edit.`,
-  `Map the six elemental operator symmetry pairs from @quest_guide onto dual canvas forces, and prepare factshift.center for bcf0da18+ readers, free container order, and symmetric cross-host transport.`,
+  `Across the 2026-11-19 triad, spw.quest owns grammar, bounded specimens, and short-ID address brokering (/canvas?s=<id>); attention.productions proves expression-as-handle slot scrubbing (SCRUB_PX = 28) and host-native visual staging; and factshift.center serves as the spatial fulcrum where lines from every host arrive, unfold into force-directed topology, and return.`,
+  `factshift.center already runs bcf0da18 (2026.11.16-pre.1, eventPolicy:'none', pivotsOf) and already ships a live three-mode host choreography for attention.productions (typed viewfinder in @attention_stage, entered iris step via frame+in, and sent #spw64= dailies in @attention_dailies). The architectural move is generalizing that single-host prototype into a pre-parse arrival router for all cluster peers, external URLs, documents, and hand-typed Spw.`,
+  `Map all eight directional moves (into/out of, forward/back, up/down, across, about) onto four spatial axes plus reflexive inspection, reconciling @body_gestures with edge rails and held-line navigation.`,
+  `Eliminate accidental canvas-vs-frame taps by making empty canvas taps settle-only and lighting a 2px perimeter seam (with frozen simulation alpha) while the hand holds the frame rim, buffered by a 12-16 px dead zone.`,
+  `Eliminate scrub ambiguity by locking vertical edge rails to one declared collection grain (TREE, NODE, LINE) with an ephemeral thumb-clear badge, while adopting attention.productions' horizontal expression-as-handle scrub along the held-line bar for PART/CHAR navigation.`,
+  `Bind the six elemental operator symmetry pairs (@quest_guide) to dual canvas forces, orthogonal optical slot materials ([mode], {body}, (scene), <concept>), slot-stable memory keys, and the already-bundled bcf0da18 speech/acoustic exports (@gemini_argon#sensory_exports).`,
 ][reg=set]
 
 contents = #[
+  ~"./factshift-navigation-and-physics-2026-11.spw#triad_alignment",
   ~"./factshift-navigation-and-physics-2026-11.spw#three_arrivals",
   ~"./factshift-navigation-and-physics-2026-11.spw#directional_navigation",
   ~"./factshift-navigation-and-physics-2026-11.spw#canvas_vs_frame_seam",
   ~"./factshift-navigation-and-physics-2026-11.spw#scrub_grains",
   ~"./factshift-navigation-and-physics-2026-11.spw#operator_physics",
+  ~"./factshift-navigation-and-physics-2026-11.spw#material_and_sensory_parity",
   ~"./factshift-navigation-and-physics-2026-11.spw#ecosystem_readiness",
   ~"./factshift-navigation-and-physics-2026-11.spw#wonders",
   ~"./factshift-navigation-and-physics-2026-11.spw#stream",
 ][reg=set]
 
+^"triad_alignment"{
+  id = "fnp-triad"
+  claim = `spw.quest, attention.productions, and factshift.center form one closed linguistic-visual-spatial loop: each host keeps one verb, shares one bcf0da18+ reader family and one operator symmetry table, and hands off live expressions without a shared database.`
+
+  spw_quest: .{
+    verb = `learn · pivot · broker`
+    live_now = `Diversified starter expressions across 7 families (@expression_variety), 6 elemental operator symmetry pairs (@quest_guide), bounded /specimens drawers (ROUTE_KIND_LIMIT = 24, deduplicated, 33.4 KB gz wire weight), universal Canvas doors via /canvas?s=<id> 302 redirect (~36 B in HTML vs. inline #spw64= bloat), two-way specimen interactivity, and P0-P3 workbench AST queue (@workbench_report).`
+    direction = `Stay the canonical grammar shelf, single-slot pivot laboratory (/pivot, /build), llms.txt / social-bot projection format, and short-ID address broker for the ecosystem.`
+  }[reg=facet]
+
+  attention_productions: .{
+    verb = `picture · frame a shot`
+    live_now = `File-only shot composer (@attention_carry) where each address is a shot (!shot[close-up]{subject}(light)<lens> + ^frame{ =ratio =focus =light_from ~move %tempo }), live expression-as-handle horizontal slot scrubbing (SCRUB_PX = 28 in @attention_script), zero-filter-animation SVG viewfinder, cross-host material federation from texture.website/vocabulary.json (--sref), mutex.buzz/now/ held slot embed, and live #spw64= handoff to factshift.center.`
+    direction = `Serve as the kinetic and optical reference instrument for expression-as-handle scrubbing, fixed-blur viewfinder composition, seasonal mutex holds, and host-native arrival choreography (viewfinder, iris enter, dailies slate) without leaking private aims into public copy.`
+  }[reg=facet]
+
+  factshift_center: .{
+    verb = `frame · navigate · settle (spatial fulcrum)`
+    live_now = `File-only static canvas (@factshift_version: rev 635d551, reader 2026.11.16-pre.1 @ bcf0da18, eventPolicy:'none', pivotsOf), fractal width/depth folding (@line_summary), quick/slow 8-sector body gestures (@body_gestures), 40-row thread + #spw64= codec, and the first live host-stage choreography (@attention_stage viewfinder + iris enter; @attention_dailies clapper, aspect-ratio letterbox easing to SETTLED_CAP = 0.08, directional key-light wash, corner slate).`
+    direction = `Become the calm, undoable spatial substrate where any host's expression, URL, or multi-line document lands legibly: generalize the attention.productions stage/dailies protocol across all cluster peers, lock vertical vs. horizontal scrub grains, separate canvas-vs-frame touches, give all four slots distinct material & acoustic signatures, preserve node/frame identity across single-slot pivots, and enforce calm neighborhood physics.`
+  }[reg=facet]
+}[reg=facet]
+
 ^"three_arrivals"{
   id = "fnp-arrivals"
   rule = `Before running the Spw parser on title or input text, classify what arrived and print a quiet undoable receipt: "read as <kind> · replaced <previous> · ← to go back".`
 
+  live_precedent = `@attention_stage and @attention_dailies already prove three distinct arrival modes for one host: (1) typed as title -> host viewfinder overlay (pointer-transparent, bars capped at 8% so top words stay clear), (2) entered as a node -> iris closes on the source node and opens out of the same spot on the entered page with slate "#>enter · <host> · from <parent>", (3) sent via #spw64= -> dailies clapper and ratio bars that ease back to a corner slate until another line is held.`
+
   domain_or_url: .{
-    input = `spwashi.com, texture.website/sea-glass, spw.quest, https://example.org`
-    problem = `Default lexer slices // as COMMENT and turns bare URLs into single broken nodes.`
-    cluster_peer = `Recognize hosts in @cluster: render a Domain Root Node orbited by known entry doors (manifest, llms.txt, specimens.json, or .spw routes); stepping into a satellite loads its Spw line onto the canvas, and <passage> opens the live site.`
+    input = `spwashi.com, texture.website/sea-glass, spw.quest, attention.productions, https://example.org`
+    problem = `Default lexer slices // as COMMENT and turns bare URLs into single broken nodes; currently only attention.productions has a dedicated stage.`
+    cluster_peer = `Generalize @attention_stage across @cluster: resolve peers offline-first from the carried cluster registry; render either the peer's lightweight pointer-transparent stage cue or a Domain Root Node orbited by known entry doors (manifest, llms.txt, specimens.json, vocabulary.json, or .spw routes); stepping into a satellite loads its Spw line onto the canvas via the same iris/enter provenance slate, and <passage> opens the live host.`
     external_url = `Create a grounded ~"https://..." reference node that the user can surround with ?probe, @perspective, or {notes} without misparsing.`
+  }[reg=facet]
+
+  sent_payload: .{
+    input = `?spw=<line>, #spw64=<script>, or spw.quest/canvas?s=<id> redirect`
+    behavior = `Generalize @attention_dailies into a quiet, pointer-transparent arrival slate for any cross-host arrival (shot dailies for !shot[...], specimen card provenance for spw.quest, material grain tint for texture.website) that settles cleanly to <= 8% rim chrome and lifts as soon as the user holds another line.`
   }[reg=facet]
 
   pasted_document: .{
     input = `multi-line .spw file, Markdown, prose notes, image prompt (--ar, ::), or canvas JSON`
-    spw_doc = `Do not explode every line into one hairball. Show a Document Topography view of top-level ^"blocks" / #>frames / headings with a grain badge (Document · 6 frames · 24 lines); stepping into one frame unwraps only that frame while siblings fold to compact rim chips.`
+    spw_doc = `Do not explode every line into one hairball. Show a Document Topography view of top-level ^"blocks" / #>frames / headings with a grain badge (Document · 6 frames · 24 lines); stepping into one frame unwraps only that frame while siblings fold to compact rim chips via @line_summary.`
     non_spw = `Keep prompts and plain prose as one prose node with a clear receipt rather than partial parse fragments.`
   }[reg=facet]
 
@@ -75,31 +121,31 @@ contents = #[
 
 ^"directional_navigation"{
   id = "fnp-directions"
-  claim = `All eight natural prepositions collapse cleanly onto four spatial axes plus reflexive meta inspection.`
+  claim = `All eight natural prepositions collapse cleanly onto four spatial axes plus reflexive meta inspection, unifying @body_gestures' three-axis hand with thread history and cross-host pivots.`
 
   into_out_of: .{
     axis = `Depth (Grain)`
     moves = `Document <-> Frame <-> Line <-> Container <-> Part <-> Character`
-    room_rule = `{ } enter room, ( ) gather scene, [ ] peek lens without moving focus, < > pass through to target/host (@paste_grounding#rooms)`
+    room_rule = `{ } enter room, ( ) gather scene, [ ] peek lens without moving focus, < > pass through to target/host (@paste_grounding#rooms); entering carries origin coordinates and provenance slate (#>enter · <target> · from <parent>) as @attention_stage already proves.`
     gesture = `Enter / Esc, pinch in/out, double-tap node`
   }[reg=facet]
 
   forward_back: .{
     axis = `Time (Thread / Causal Path)`
     moves = `Held-line history, paste undo, or next/prev step along ~> / ; / >>[date]`
-    gesture = `Left / Right arrows or thread breadcrumb trail`
+    gesture = `Left / Right arrows or thread breadcrumb trail (harmonizing ‹/› direction with edge cues so inverses always undo each other per @theory_of_mind#hands)`
   }[reg=facet]
 
   up_down: .{
-    axis = `Altitude (Hierarchy / Siblings)`
-    moves = `Sibling frames or parts, or climbing toward ^ integration and settling toward . ground`
-    gesture = `Up / Down arrows or vertical left edge rail (one declared grain per rail)`
+    axis = `Altitude (Hierarchy / Siblings / Strata)`
+    moves = `Sibling frames or parts along vertical rail, or stepping reading strata (as written <-> parts <-> particles <-> live) and climbing toward ^ integration vs. settling toward . ground`
+    gesture = `Up / Down arrows or vertical left edge rail (strictly one declared grain per rail)`
   }[reg=facet]
 
   across: .{
     axis = `Lateral (Pivot / Symmetry / Peer)`
-    moves = `Same stem in another [mode], operator symmetry partner (~ <-> @, ? <-> !), or same line on a peer host (spw.quest <-> factshift.center <-> spwashi.com)`
-    gesture = `Tab, right edge rail, or pivot ring`
+    moves = `Same stem in another [mode], operator symmetry partner (~ <-> @, ? <-> !), or same line on a peer host (spw.quest <-> attention.productions <-> factshift.center <-> spwashi.com)`
+    gesture = `Tab, right edge rail, pivot ring, or horizontal slot scrub`
   }[reg=facet]
 
   about: .{
@@ -114,9 +160,9 @@ contents = #[
   claim = `Accidental taps happen when blank canvas space and perimeter frame chrome share the same bare-tap behavior.`
   rules = #[
     `Empty canvas tap = settle only: deselect the current node or close an ephemeral drawer, never create a node, fire a move, or toggle a tool.`,
-    `Direct node tap selects; drag repositions; double-tap or Enter steps into a { } room or ( ) scene.`,
+    `Direct node tap selects (or primes on marked nodes per @cognitive_substrate); drag repositions; double-tap or Enter steps into a { } room or ( ) scene.`,
     `Touching the Frame rim (title/held-line bar or side scrub rails) lights a crisp 2px perimeter seam and temporarily freezes simulation alpha until finger lift, so the canvas visibly rests while the hand steers the frame.`,
-    `Maintain a 12-16 px dead-zone buffer between active rim scrub zones and outer canvas hitboxes.`,
+    `Maintain a 12-16 px dead-zone buffer between active rim scrub zones and outer canvas hitboxes, and keep host-stage overlays pointer-transparent (pointer-events: none, bars <= 8% at rest) as @attention_stage and @attention_dailies enforce.`,
   ][reg=set]
 }[reg=facet]
 
@@ -132,7 +178,8 @@ contents = #[
   }[reg=facet]
 
   horizontal_line_grains: .{
-    part = `PART · [mode] — horizontal scrub along the held-line bar walks tokens/containers (~, (), [], {}, <>), lighting the exact text span and pulsing its matching canvas node simultaneously`
+    part = `PART · [mode] — horizontal scrub along the held-line bar (borrowing @attention_script's SCRUB_PX = 28 expression-as-handle rhythm) walks tokens/containers (~, (), [], {}, <>), lighting the exact text span and pulsing its matching canvas node simultaneously without jostling neighbor positions`
+    slot_turn = `When scrubbing directly on a bracketed slot that has a finite ladder or pivot set (pivotsOf / attention.productions ladders), horizontal drag steps the slot value in place while keeping plain links underneath for scripts-off and print parity.`
     char = `CHAR · col 18 — tapping inside the monospace text face (or pausing during fine horizontal scrub) drops to the native browser character caret with canvas physics paused`
   }[reg=facet]
 }[reg=facet]
@@ -156,22 +203,35 @@ contents = #[
   }[reg=facet]
 }[reg=facet]
 
+^"material_and_sensory_parity"{
+  id = "fnp-parity"
+  claim = `For factshift.center to stay legible with labels off, on a phone still, and on a screen reader, structure must ride orthogonal channels — optical material, slot-stable memory, and the speech/earcon exports already carried in bcf0da18 (@gemini_argon#design_depth, #sensory_exports, #ephemeral_momentum).`
+
+  slot_materials = `[mode] as a bonded glass collar on the word; {body} as a recessed matte well at rest and a top-edge specular card when folded; (scene) as a grounded paper mat wrapping word and body; <concept> as a threshold rim signaling an enterable frame or host passage.`
+  sensory_bridge = `Consume the already-bundled bcf0da18 reader exports (spokenLine, SPOKEN_NAMES_SITE, pairSound, TEXTURES) for focusable slot-by-slot speech and one rest-time summary clause ("once when the field settles, and on demand"), and close the silent < > slot gap in scanPairLabels / PAIR_SOUND.`
+  memory_stability = `Key saved frames and pinned nodes by (identity, slot-seat) rather than whole-line hash (@gemini_argon#ephemeral_momentum, @cognitive_substrate#fcs-001), so pivoting one slot or flipping ~rain to !rain updates operator state without orphaning the frame or throwing away simulation momentum.`
+  scrubbable_ephemera = `Replace disappearing fixed-clock prose toasts with compact scrubbable marks (!save, ^13, @3) and calm host slates (@motion) so both performers and screenshot readers can inspect cause and effect at rest.`
+}[reg=facet]
+
 ^"ecosystem_readiness"{
   id = "fnp-ecosystem"
+  live_baseline = `factshift.center ALREADY ships reader 2026.11.16-pre.1 @ bcf0da18 (@factshift_version, rev 635d551) with eventPolicy:'none' and pivotsOf in line-slots.ts, and attention.productions + spw.quest also consume bcf0da18.`
   steps = #[
-    `Upgrade bundled reader from 3f53adf2 (2026.11.07-pre.1) to bcf0da18+ with eventPolicy: 'none', tokenSpans(), and spw.pivots/1 (pivotsOf).`,
-    `Support standalone containers (?["question"], (scene), {a, b}), free container order, nested containers, and Persona@subject as first-class spatial assemblies as spw-seed P0 lands (@workbench_report#expression_variety_ast_asymmetry_2026_11_19).`,
-    `Keep symmetric cross-host transport: inbound ?spw= (<=400 chars), #spw64= (full scripts in fragment), spw.quest/canvas?s=<id> redirects (@quest_specimens), plus peer URL ingestion; outbound dual-clipboard (canonical Spw text/plain first + canvas JSON sidecar) and one-click round-trip to spw.quest /pivot and /build.`,
-    `Enforce far cutoffs on forceManyBody and gravityWellForce (@example_leads#tune_rest, #tune_reach) so local edits never scramble distant landmarks, and keep stage chrome clear of the held line for clean phone stills.`,
+    `Advance past bcf0da18's Nov 19 AST asymmetries as spw-seed P0-P3 lands (@workbench_report#expression_variety_ast_asymmetry_2026_11_19): standalone containers (?["question"], (scene), {a, b}), free container order (~launch[soft]{...}<audience>), Persona@subject as first-class spatial assemblies, nested <team<cache> > round-trips without >> (STREAM_CLOSE) collapse (@gemini_argon#design_depth), and juxtaposition inside commit-episode { } bodies (@theory_of_mind#stress).`,
+    `Generalize @attention_stage and @attention_dailies into a cluster-driven host-stage registry so spw.quest, texture.website, spwashi.com, lore.land, mutex.buzz, and wap.mom each arrive with one unmistakable low-chrome signature without duplicating bespoke overlays.`,
+    `Keep symmetric zero-backend cross-host transport: inbound ?spw= (<=400 chars), #spw64= (full scripts in client fragment), spw.quest/canvas?s=<id> short redirects (@quest_specimens), and peer URL ingestion; outbound dual-clipboard (canonical Spw text/plain first + canvas JSON sidecar) and one-click round-trips to spw.quest (/pivot, /build), attention.productions, and spwashi.com/tools/spw-parser/.`,
+    `Enforce far cutoffs on forceManyBody and gravityWellForce while leaving restAlphaTarget = 0.1 (@example_leads#tune_rest, #tune_reach) so local edits never scramble distant landmarks, and keep stage chrome clear of the held line and verify slot for clean phone stills.`,
   ][reg=set]
 }[reg=facet]
 
 ^"wonders"{
   id = "fnp-wonders"
-  w1 = `?["Does separating vertical collection scrub (TREE/NODE/LINE) from horizontal held-line scrub (PART/CHAR) eliminate grain confusion on a phone within three gestures?"]{ ~#expect: "first-time testers name which grain they are moving without opening a legend" !probe{ "prototype the ephemeral grain pill and horizontal held-line part scrubber on one phone capture and inspect whether the thumb stays clear of the badge" } }`
-  w2 = `?["When a peer URL like spwashi.com/projects/spw-workbench/ is typed into the title bar, should the canvas fetch live metadata via CORS or resolve from a carried cluster index first?"]{ ~#expect: "carried cluster index answers instantaneously offline with 0ms latency, with live fetch strictly opt-in" !probe{ "measure offline arrival for cluster peer URLs against workers/cluster.json and spw.quest/specimens.json" } }`
+  w1 = `?["Does separating vertical collection scrub (TREE/NODE/LINE) from horizontal held-line scrub (PART/CHAR, SCRUB_PX = 28) eliminate grain confusion on a phone within three gestures?"]{ ~#expect: "first-time testers name which grain they are moving without opening a legend" !probe{ "prototype the ephemeral grain pill and horizontal held-line part scrubber on one phone capture and inspect whether the thumb stays clear of the badge" } }`
+  w2 = `?["When a peer URL like spwashi.com/projects/spw-workbench/ or spw.quest/specimens is typed into factshift.center's title bar, should the canvas resolve from a carried cluster index first (0ms offline) and keep live metadata fetches strictly opt-in?"]{ ~#expect: "carried cluster index answers instantaneously offline with 0ms latency, matching the static-first host-stage rule of @attention_stage" !probe{ "measure offline arrival for cluster peer URLs against workers/cluster.json and spw.quest/specimens.json" } }`
+  w3 = `?["Can one lightweight host-stage contract replace host-specific overlay code while preserving the unmistakable arrival feel of @attention_stage (viewfinder + iris) and @attention_dailies (clapper + 8%-capped letterbox)?"]{ ~#expect: "a declarative host stage spec (ratio, key wash, entry cue, corner slate) reproduces attention.productions cleanly and gives spw.quest and texture.website first-class arrivals without per-host DOM bloat" !probe{ "compare the DOM and CSS footprint of attention-stage.ts + attention-dailies.ts against a declarative stage descriptor table" } }`
 }[reg=facet]
 
 ^"stream"{
   >>[2026-11-19 07:22] cache — Recorded factshift.center three-arrival input recognition, eight-way navigation axes, canvas-vs-frame touch seam, five-grain scrub architecture, six-pair operator physics, and ecosystem readiness contract.
+  >>[2026-11-19 07:30] align (Gemini 4 Argon) — Corrected live reader baseline to bcf0da18 (rev 635d551, @factshift_version); added #triad_alignment unifying spw.quest, attention.productions, and factshift.center; grounded #three_arrivals and #scrub_grains on live @attention_stage, @attention_dailies, and @attention_script (SCRUB_PX = 28); added #material_and_sensory_parity (four slot materials, bcf0da18 speech/acoustic exports, slot-stable memory keys) and generalized host-stage wonder w3.
 }[reg=facet]
