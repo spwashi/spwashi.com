@@ -4,6 +4,7 @@ import test from 'node:test';
 import {
   analyzeCssSource,
   collectPassiveRuntimeAttrs,
+  collectPrepaintSettledRootAttrs,
   diffAgainstBaseline,
   scanArrivalGeometry,
 } from '../audit-arrival-geometry.mjs';
@@ -72,6 +73,39 @@ test('matches exact attribute boundaries and ignores inspect/capture/editor gate
   assert.equal(findings[0].attr, 'data-spw-op');
   assert.equal(findings[0].count, 1);
   assert.deepEqual(findings[0].props, ['gap']);
+});
+
+test('ignores out-of-flow absolute/fixed pseudo-elements while catching in-flow pseudo-elements', () => {
+  const owners = collectPassiveRuntimeAttrs([
+    { id: 'late-ornament', when: 'idle', updates: ['flourish:data-spw-late-dot'] },
+  ]);
+  const css = `
+    [data-spw-late-dot="true"]::before { content: ""; position: absolute; width: 0.36rem; height: 0.36rem; }
+    [data-spw-late-dot="true"]::after { content: "→"; display: inline-flex; width: 1rem; }
+  `;
+  const findings = analyzeCssSource(css, owners, 'public/css/test.css');
+  assert.equal(findings.length, 1);
+  assert.equal(findings[0].count, 1);
+  assert.deepEqual(findings[0].props, ['content', 'display', 'width']);
+});
+
+test('excludes site-settings root attributes that prepaint-state.js seeds synchronously before first paint', () => {
+  const prepaintSettled = collectPrepaintSettledRootAttrs();
+  assert.ok(prepaintSettled.has('data-spw-color-mode'), 'prepaint-state seeds data-spw-color-mode');
+  assert.ok(prepaintSettled.has('data-spw-semantic-density'), 'prepaint-state seeds data-spw-semantic-density');
+
+  const owners = collectPassiveRuntimeAttrs(
+    [
+      {
+        id: 'site-settings',
+        when: 'immediate',
+        updates: ['html:structural:data-spw-color-mode', 'html:structural:data-spw-unprepainted'],
+      },
+    ],
+    { prepaintSettled },
+  );
+  assert.equal(owners.has('data-spw-color-mode'), false);
+  assert.equal(owners.has('data-spw-unprepainted'), true);
 });
 
 test('no authored CSS file has passive layout rules on [data-spw-component-kind]', () => {

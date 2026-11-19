@@ -19,6 +19,7 @@ import { MODULE_DEFS } from '../public/js/runtime/catalog/index.js';
 
 const ROOT_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DEFAULT_BASELINE_PATH = path.join(ROOT_DIR, 'scripts', 'arrival-geometry-baseline.json');
+const PREPAINT_STATE_PATH = path.join(ROOT_DIR, 'public', 'js', 'runtime', 'arrival', 'prepaint-state.js');
 
 export const PASSIVE_MOUNT_PHASES = Object.freeze(new Set([
   'immediate',
@@ -32,7 +33,48 @@ export const LAYOUT_MUTATING_PROPERTY_RE = /^(container-type|container|display|p
 
 export const INTERACTION_OR_DEBUG_GATE_RE = /(:hover|:focus|:active|data-spw-gesture|data-spw-debug|data-spw-legible|data-spw-inspect|data-spw-module-visuals="on"|data-spw-capture-mode|data-spw-cognitive-handles="on"|data-spw-show-semantic-metadata="on"|data-spw-feature-learning="on"|data-spw-display-layer="(?:inspect|editor)"|data-state~="active"|data-spw-region-mark|data-spw-region-charge|data-spw-state-inspector|data-spw-cauldron-open|data-spw-open|aria-expanded="true"|aria-pressed="true")/;
 
-export function collectPassiveRuntimeAttrs(catalog = MODULE_DEFS) {
+function camelToDataAttr(key) {
+  return `data-${String(key).replace(/[A-Z]/g, (ch) => `-${ch.toLowerCase()}`)}`;
+}
+
+export function collectPrepaintSettledRootAttrs(rootDir = ROOT_DIR) {
+  const prepaintFile = rootDir === ROOT_DIR
+    ? PREPAINT_STATE_PATH
+    : path.join(rootDir, 'public', 'js', 'runtime', 'arrival', 'prepaint-state.js');
+  const settled = new Set();
+  if (!fs.existsSync(prepaintFile)) return settled;
+  const source = fs.readFileSync(prepaintFile, 'utf8');
+  for (const m of source.matchAll(/html\.dataset\.(spw[A-Za-z0-9]+)\s*=/g)) {
+    settled.add(camelToDataAttr(m[1]));
+  }
+  return settled;
+}
+
+function splitTopLevelSelectors(selector) {
+  const parts = [];
+  let depth = 0;
+  let start = 0;
+  for (let i = 0; i < selector.length; i += 1) {
+    const ch = selector[i];
+    if (ch === '(' || ch === '[') depth += 1;
+    else if (ch === ')' || ch === ']') depth = Math.max(0, depth - 1);
+    else if (ch === ',' && depth === 0) {
+      parts.push(selector.slice(start, i).trim());
+      start = i + 1;
+    }
+  }
+  parts.push(selector.slice(start).trim());
+  return parts.filter(Boolean);
+}
+
+export function isOutOfFlowPseudoRule(selector, declMap) {
+  const pos = (declMap.get('position') || '').replace(/\s*!important\s*$/i, '').trim().toLowerCase();
+  if (pos !== 'absolute' && pos !== 'fixed') return false;
+  const branches = splitTopLevelSelectors(selector);
+  return branches.length > 0 && branches.every((branch) => /::(?:before|after)\s*$/.test(branch));
+}
+
+export function collectPassiveRuntimeAttrs(catalog = MODULE_DEFS, { prepaintSettled = null } = {}) {
   const attrOwners = new Map();
   for (const def of catalog) {
     if (!PASSIVE_MOUNT_PHASES.has(def?.when)) continue;
@@ -42,6 +84,14 @@ export function collectPassiveRuntimeAttrs(catalog = MODULE_DEFS) {
       const attr = match[1];
       if (!attrOwners.has(attr)) attrOwners.set(attr, []);
       attrOwners.get(attr).push(`${def.id}(${def.when})`);
+    }
+  }
+  if (prepaintSettled && prepaintSettled.size > 0) {
+    for (const [attr, owners] of [...attrOwners.entries()]) {
+      const unique = [...new Set(owners)];
+      if (prepaintSettled.has(attr) && unique.length === 1 && unique[0] === 'site-settings(immediate)') {
+        attrOwners.delete(attr);
+      }
     }
   }
   return attrOwners;
@@ -65,13 +115,17 @@ export function analyzeCssSource(cssText, attrOwners, fileLabel = '<inline>') {
     if (!selector || INTERACTION_OR_DEBUG_GATE_RE.test(selector)) continue;
 
     const props = [];
+    const declMap = new Map();
     for (const decl of body.split(';')) {
       const idx = decl.indexOf(':');
       if (idx < 0) continue;
       const prop = decl.slice(0, idx).trim().toLowerCase();
+      const val = decl.slice(idx + 1).trim();
+      declMap.set(prop, val);
       if (LAYOUT_MUTATING_PROPERTY_RE.test(prop)) props.push(prop);
     }
     if (!props.length) continue;
+    if (isOutOfFlowPseudoRule(selector, declMap)) continue;
 
     for (const [attr, owners, attrRe] of attrMatchers) {
       if (!attrRe.test(selector)) continue;
@@ -116,7 +170,8 @@ function walkAuthoredCss(dir, out = []) {
 }
 
 export function scanArrivalGeometry({ rootDir = ROOT_DIR, catalog = MODULE_DEFS } = {}) {
-  const attrOwners = collectPassiveRuntimeAttrs(catalog);
+  const prepaintSettled = collectPrepaintSettledRootAttrs(rootDir);
+  const attrOwners = collectPassiveRuntimeAttrs(catalog, { prepaintSettled });
   const cssDir = path.join(rootDir, 'public', 'css');
   const cssFiles = walkAuthoredCss(cssDir).sort();
   const findings = [];
