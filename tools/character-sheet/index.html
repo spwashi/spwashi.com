@@ -276,8 +276,8 @@
                                 <h3>Signals</h3>
                                 <p data-spw-textual-role="note">Use badges for stack, domain, approach, context, and role. Think of them as known spells, tools, habitats, and party signals.</p>
                                 <div class="badge-input-row">
-                                    <input id="badge-input" type="text" placeholder="TypeScript, note-taking, encounter design, accessibility ..." spellcheck="false"/>
-                                    <select id="badge-cluster">
+                                    <input id="badge-input" type="text" aria-label="Signal badge name" placeholder="TypeScript, note-taking, encounter design, accessibility ..." spellcheck="false"/>
+                                    <select id="badge-cluster" aria-label="Signal badge category">
                                         <option value="stack">stack</option>
                                         <option value="domain">domain</option>
                                         <option value="approach">approach</option>
@@ -302,81 +302,81 @@
                                 <h3>Sections and beats</h3>
                                 <div class="profile-field">
                                     <div class="profile-section-row">
-                                        <select class="section-operator">
+                                        <select class="section-operator" aria-label="Origin and tradition operator">
                                             <option value="^">^</option>
                                             <option value="~">~</option>
                                             <option value="@">@</option>
                                             <option value="?[">?[</option>
                                             <option value=">">></option>
                                         </select>
-                                        <input class="section-heading" type="text" placeholder="Origin and tradition" spellcheck="false"/>
+                                        <input class="section-heading" type="text" aria-label="Origin and tradition heading" placeholder="Origin and tradition" spellcheck="false"/>
                                     </div>
-                                    <textarea class="section-body" placeholder="What kind of world made this character, and what does that reveal about your working perspective?" rows="3"></textarea>
+                                    <textarea class="section-body" aria-label="Origin and tradition details" placeholder="What kind of world made this character, and what does that reveal about your working perspective?" rows="3"></textarea>
                                 </div>
                                 <div class="profile-field">
                                     <div class="profile-section-row">
-                                        <select class="section-operator">
+                                        <select class="section-operator" aria-label="Party role operator">
                                             <option value="^">^</option>
                                             <option value="~" selected>~</option>
                                             <option value="@">@</option>
                                             <option value="?[">?[</option>
                                             <option value=">">></option>
                                         </select>
-                                        <input class="section-heading" type="text" placeholder="Party role" spellcheck="false"/>
+                                        <input class="section-heading" type="text" aria-label="Party role heading" placeholder="Party role" spellcheck="false"/>
                                     </div>
-                                    <textarea class="section-body" placeholder="How do you help a group move: translator, repairer, scout, synthesizer, host, builder?" rows="3"></textarea>
+                                    <textarea class="section-body" aria-label="Party role details" placeholder="How do you help a group move: translator, repairer, scout, synthesizer, host, builder?" rows="3"></textarea>
                                 </div>
                                 <div class="profile-field">
                                     <div class="profile-section-row">
-                                        <select class="section-operator">
+                                        <select class="section-operator" aria-label="Voice, habits, and contradiction operator">
                                             <option value="^">^</option>
                                             <option value="~" selected>~</option>
                                             <option value="@">@</option>
                                             <option value="?[">?[</option>
                                             <option value=">">></option>
                                         </select>
-                                        <input class="section-heading" type="text" placeholder="Voice, habits, and contradiction" spellcheck="false"/>
+                                        <input class="section-heading" type="text" aria-label="Voice, habits, and contradiction heading" placeholder="Voice, habits, and contradiction" spellcheck="false"/>
                                     </div>
-                                    <textarea class="section-body" placeholder="What does this character notice first? What do they repeat, avoid, misread, or reveal by accident when pressure rises?" rows="3"></textarea>
+                                    <textarea class="section-body" aria-label="Voice, habits, and contradiction details" placeholder="What does this character notice first? What do they repeat, avoid, misread, or reveal by accident when pressure rises?" rows="3"></textarea>
                                 </div>
                                 <div class="profile-field">
                                     <div class="profile-section-row">
-                                        <select class="section-operator">
+                                        <select class="section-operator" aria-label="Pressure, wound, or private rule operator">
                                             <option value="^">^</option>
                                             <option value="~">~</option>
                                             <option value="@" selected>@</option>
                                             <option value="?[">?[</option>
                                             <option value=">">></option>
                                         </select>
-                                        <input class="section-heading" type="text" placeholder="Pressure, wound, or private rule" spellcheck="false"/>
+                                        <input class="section-heading" type="text" aria-label="Pressure, wound, or private rule heading" placeholder="Pressure, wound, or private rule" spellcheck="false"/>
                                     </div>
-                                    <textarea class="section-body" placeholder="What private rule, fear, debt, promise, or hunger keeps generating decisions for this person?" rows="3"></textarea>
+                                    <textarea class="section-body" aria-label="Pressure, wound, or private rule details" placeholder="What private rule, fear, debt, promise, or hunger keeps generating decisions for this person?" rows="3"></textarea>
                                 </div>
                                 <div class="profile-field">
                                     <div class="profile-section-row">
-                                        <select class="section-operator">
+                                        <select class="section-operator" aria-label="Quest and next arc operator">
                                             <option value="^">^</option>
                                             <option value="~">~</option>
                                             <option value="@">@</option>
                                             <option value="?[">?[</option>
                                             <option value=">" selected>></option>
                                         </select>
-                                        <input class="section-heading" type="text" placeholder="Quest and next arc" spellcheck="false"/>
+                                        <input class="section-heading" type="text" aria-label="Quest and next arc heading" placeholder="Quest and next arc" spellcheck="false"/>
                                     </div>
-                                    <textarea class="section-body" placeholder="What are you learning now, and what table, shot, or public fragment would make the next arc real?" rows="3"></textarea>
+                                    <textarea class="section-body" aria-label="Quest and next arc details" placeholder="What are you learning now, and what table, shot, or public fragment would make the next arc real?" rows="3"></textarea>
                                 </div>
                                 <div class="profile-field">
                                     <div class="profile-section-row">
-                                        <select class="section-operator">
+                                        <select class="section-operator" aria-label="Evidence, notebooks, and world state operator">
                                             <option value="^">^</option>
                                             <option value="~">~</option>
                                             <option value="@" selected>@</option>
                                             <option value="?[">?[</option>
                                             <option value=">">></option>
                                         </select>
-                                        <input class="section-heading" type="text" placeholder="Evidence, notebooks, and world state" spellcheck="false"/>
+                                        <input class="section-heading" type="text" aria-label="Evidence, notebooks, and world state heading" placeholder="Evidence, notebooks, and world state" spellcheck="false"/>
                                     </div>
-                                    <textarea class="section-body" placeholder="Point to the site, notes, repos, scene logs, public fragments, readings, or repeated production rhythms that make the work easier to understand." rows="3"></textarea>
+                                    <textarea class="section-body" aria-label="Evidence, notebooks, and world state details" placeholder="Point to the site, notes, repos, scene logs, public fragments, readings, or repeated production rhythms that make the work easier to understand." rows="3"></textarea>
                                 </div>
                             </div>
                         </details>
@@ -403,8 +403,8 @@
                                         <span class="profile-field-hint">label + URL</span>
                                     </label>
                                     <div class="profile-link-row">
-                                        <input id="link-input" type="text" placeholder="world notes" spellcheck="false"/>
-                                        <input id="link-href" type="url" placeholder="https://..." spellcheck="false"/>
+                                        <input id="link-input" type="text" aria-label="Link label" placeholder="world notes" spellcheck="false"/>
+                                        <input id="link-href" type="url" aria-label="Link URL" placeholder="https://..." spellcheck="false"/>
                                         <button id="link-add" type="button">add</button>
                                     </div>
                                     <div class="profile-tag-strip" id="link-strip"></div>
@@ -452,7 +452,7 @@
                 </header>
                 <p data-spw-textual-role="note">Paste a saved profile JSON when you want to continue from an earlier draft or move the card to another local machine.</p>
                 <div class="profile-field">
-                    <textarea id="json-import-area" rows="6" placeholder='{"header":{"name":"..."},...}'></textarea>
+                    <textarea id="json-import-area" rows="6" aria-label="Character sheet JSON to import" placeholder='{"header":{"name":"..."},...}'></textarea>
                 </div>
                 <div class="profile-export-actions">
                     <button type="button" class="profile-export-btn" id="json-import-btn">load JSON</button>
