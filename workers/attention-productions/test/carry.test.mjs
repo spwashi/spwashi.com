@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { CSP, MATERIALS_MODULE, carried } from '../carry.mjs';
 import { DEFAULT_SUBJECT, LADDERS, MATERIAL_OFFER, PHRASES, RATIOS, SHAPES, TEMPO } from '../src/vocabulary.js';
 import { MATERIALS } from '../src/materials.js';
-import { FIRST_SHOT, addressOf, canvasHrefOf, canvasTextOf, dayShot, expressionHtml, geometryOf, nearestFocus, nearestFrom, promptOf, readShot, slug, spwOf, stepKey, tempoAt } from '../src/compose.js';
+import { FIRST_SHOT, addressOf, beatHrefOf, beatScriptOf, canvasHrefOf, canvasTextOf, dayShot, expressionHtml, geometryOf, nearestFocus, nearestFrom, promptOf, readShot, slug, spwOf, stepKey, tempoAt } from '../src/compose.js';
 import { MATERIALS as TEXTURE_MATERIALS } from '../../texture-website/src/vocabulary.js';
 import { parse } from '../../../public/js/semantic/spw-workbench-reader.js';
 import { parse as parsePinned } from '../../spw-quest/assets/parser/2026.10.13/reader.min.js';
@@ -170,4 +170,19 @@ test('the expression names the address\'s subject in its own element, so the pag
   assert.match(html, /<span class="mark" data-op="action">!shot<\/span>/);
   assert.match(html, /<span class="mark" data-op="perspective">@material<\/span>/);
   assert.match(readFileSync(new URL('../assets/attention.js', import.meta.url), 'utf8'), /querySelector\(".subject"\)/, 'the page repaints it');
+});
+
+test('the three-shot beat parses whole on both readers and the page carries inline subject editing and all 91 surfaces', () => {
+  const shot = readShot('/a-ceramic-teapot', '?shot=close-up&lens=85mm&light=lamplight&from=right&move=still&ratio=scope&focus=left-third&material=terrazzo', DAY);
+  const script = beatScriptOf(shot);
+  for (const framing of ['establishing', 'medium', 'close-up']) assert.ok(script.includes(`!shot[${framing}]{a ceramic teapot}`), framing);
+  assert.match(beatHrefOf(shot), /^https:\/\/factshift\.center\/#spw64=[A-Za-z0-9_-]+$/);
+  for (const result of [parse(script, { eventPolicy: 'none' }), parsePinned(script)]) {
+    assert.ok(result.success && !result.completeness?.proseFallback && result.errors.length === 0, script);
+  }
+  const page = readFileSync(path.join(assets, 'index.html'), 'utf8');
+  assert.ok(page.includes('id="subject-input"'), 'inline subject input');
+  assert.ok(page.includes('id="material-select"'), 'all-materials picker');
+  assert.ok(page.includes('id="beat-canvas"'), 'three-shot beat link');
+  for (const m of MATERIALS) assert.ok(page.includes(`value="${m.slug}"`), `${m.slug} in picker`);
 });

@@ -87,12 +87,23 @@ function viewfinder(c, shot) {
       </svg>`;
 }
 
+/** All 91 surfaces grouped by class, so every texture.website material is reachable without leaving the page. */
+function surfaceSelect(shot) {
+  const byClass = new Map();
+  for (const m of TEXTURE_MATERIALS) {
+    if (!byClass.has(m.cls)) byClass.set(m.cls, []);
+    byClass.get(m.cls).push(m);
+  }
+  const groups = [...byClass.entries()].map(([cls, list]) => `<optgroup label="${escapeHtml(cls)}">${list.map((m) => `<option value="${escapeHtml(m.slug)}"${shot.material?.slug === m.slug ? " selected" : ""}>${escapeHtml(m.word)}</option>`).join("")}</optgroup>`).join("");
+  return `<select id="material-select" class="surface-select" aria-label="All ${TEXTURE_MATERIALS.length} surfaces from texture.website"><option value="">All ${TEXTURE_MATERIALS.length} surfaces…</option>${groups}</select>`;
+}
+
 /** Each ladder as a row of links; each link is the address of the shot with that word. */
 function ladders(c, v, shot) {
   const row = (key, words, label = key, note = "") => `<div class="ladder" data-key="${key}"><span class="key">${escapeHtml(label)}</span>${words.map(([word, value, href]) => `<a href="${escapeHtml(href)}" data-word="${escapeHtml(value)}"${value === (key === "material" ? shot.material?.slug ?? "" : shot[key]) ? ' aria-current="true"' : ""}>${escapeHtml(word)}</a>`).join("")}${note}</div>`;
   const rows = Object.entries(v.LADDERS).map(([key, words]) => row(key, words.map((word) => [word, word, c.addressOf({ ...shot, [key]: word })])));
   const offer = v.MATERIAL_OFFER.map((s) => c.MATERIAL_BY_SLUG_FOR_CARRY(s));
-  rows.push(row("material", [["none", "", c.addressOf({ ...shot, material: null })], ...offer.map((m) => [m.word, m.slug, c.addressOf({ ...shot, material: m })])], "surface", `<a class="out" href="https://texture.website/">texture ↗</a>`));
+  rows.push(row("material", [["none", "", c.addressOf({ ...shot, material: null })], ...offer.map((m) => [m.word, m.slug, c.addressOf({ ...shot, material: m })])], "surface", `${surfaceSelect(shot)}<a class="out" id="texture-link" href="https://texture.website/">texture ↗</a>`));
   return rows.join("\n        ");
 }
 
@@ -130,14 +141,27 @@ async function page(c, v) {
       <h2 id="shot-title" class="label"><span id="shot-label">A shot</span> <span id="shot-day" class="day"></span></h2>
       <figure class="finder">
       ${viewfinder(c, shot)}
-        <figcaption class="note">The path is the subject.</figcaption>
+        <figcaption class="note">Drag the focus ring, lamp, or tempo bar — or scrub any bracket horizontally.</figcaption>
       </figure>
       <div class="take">
+        <div class="subject-bar">
+          <label class="subject-label" for="subject-input">Subject</label>
+          <input id="subject-input" class="subject-input" type="text" maxlength="80" value="${escapeHtml(shot.subject)}" placeholder="Describe the subject" autocomplete="off">
+        </div>
         <div class="slip">
           <p class="prompt"><code id="prompt">${escapeHtml(midjourney)}</code></p>
           <div class="expr" id="expr">${c.expressionHtml(shot)}</div>
+          <div class="slip-actions">
+            <button type="button" id="copy-mj">Copy Midjourney</button>
+            <button type="button" id="copy-plain">Copy Plain</button>
+            <button type="button" id="copy-spw">Copy Spw</button>
+            <button type="button" id="roll-shot">Roll</button>
+            <button type="button" id="today-shot">Today</button>
+            <a class="action-link" id="beat-canvas" href="${escapeHtml(c.beatHrefOf(shot))}">3-shot beat ↗</a>
+          </div>
         </div>
         <details class="more"><summary>Plain</summary><p><code id="plain">${escapeHtml(plain)}</code></p></details>
+        <div class="takes" id="takes" aria-label="Recent takes" hidden></div>
       </div>
       <nav class="ladders" aria-label="The words of the shot">
         ${ladders(c, v, shot)}

@@ -6,6 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { carried } from '../carry.mjs';
 import { CLASSES, FORMATS, LADDERS, MATERIALS, PHRASES, PIVOTS, RELATIONS, TECHNIQUES, VIEWS, slug } from '../src/vocabulary.js';
+import { parse } from '../../../public/js/semantic/spw-workbench-reader.js';
 
 const root = path.dirname(fileURLToPath(new URL('../wrangler.jsonc', import.meta.url)));
 const assets = path.join(root, 'assets');
@@ -32,10 +33,26 @@ test('every material has a class, a unique slug and its readings; every ladder w
   assert.equal(Object.keys(RELATIONS).filter(Boolean).join(''), '.^*~=@?!%');
 });
 
-test('every pivot teaches a technique with a source, and every view has a name read as a path word', () => {
+test('every pivot teaches a technique with a source, every technique has a pivot, and every view has a name read as a path word', () => {
   for (const p of PIVOTS) assert.ok(TECHNIQUES[p.technique], p.id);
+  const covered = new Set(PIVOTS.map((p) => p.technique));
+  for (const id of Object.keys(TECHNIQUES)) assert.ok(covered.has(id), `technique ${id} has a pivot`);
   for (const t of Object.values(TECHNIQUES)) assert.match(t.source, /^https:\/\//, t.name);
   for (const [key, view] of Object.entries(VIEWS)) { assert.equal(slug(key), key); assert.match(view.name, /@$/); }
+});
+
+test('the page carries scripts-off pivot links, visual catalog swatches, layer composer hooks, and four-slot Spw parses whole', () => {
+  const page = readFileSync(path.join(assets, 'index.html'), 'utf8');
+  assert.ok(page.includes('class="tile-toggle"'), '2x2 tile toggle');
+  assert.ok(page.includes('class="layer-bar"'), 'inline layer bar');
+  assert.ok(page.includes('id="material-list"'), 'material datalist');
+  assert.ok(page.includes('class="catalog-filters"'), 'class filter bar');
+  assert.ok(page.includes('class="pivot-link"'), 'scripts-off pivot links');
+  assert.ok(page.includes('loading="lazy"'), 'lazy swatch thumbnails');
+  assert.doesNotMatch(page, /\sstyle=|<style|<script>|\son[a-z]+=/i, 'no inline style, script or handler');
+  const line = '~terrazzo[lamplight, worn, riso]{~sea-glass}(wall)<tile>';
+  const res = parse(line, { eventPolicy: 'none' });
+  assert.ok(res.success && !res.completeness?.proseFallback && res.errors.length === 0, line);
 });
 
 test('every material has an image Midjourney can fetch: a small PNG whose hash its manifest holds', () => {

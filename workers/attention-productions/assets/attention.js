@@ -2,8 +2,8 @@
 // by hand; the composer it imports (compose.js, vocabulary.js, materials.js) is
 // carried from src/ by carry.mjs. With scripts off the page shows its first
 // shot and its links still lead to each word's address.
-import { FIRST_SHOT, SUBJECT_DEPTH, addressOf, canvasHrefOf, expressionHtml, stepKey, stepShot, cornersOf, geometryOf, nearestFocus, nearestFrom, nearestSheet, promptOf, readShot, slug, slotText, spwOf, tempoAt, tempoOf } from "/compose.js";
-import { LADDERS, SHAPES, TEMPO } from "/vocabulary.js";
+import { FIRST_SHOT, SUBJECT_DEPTH, addressOf, beatHrefOf, canvasHrefOf, dayShot, expressionHtml, stepKey, stepShot, cornersOf, geometryOf, nearestFocus, nearestFrom, nearestSheet, promptOf, readShot, slug, slotText, spwOf, tempoAt, tempoOf } from "/compose.js";
+import { DEFAULT_SUBJECT, LADDERS, SHAPES, TEMPO } from "/vocabulary.js";
 import { hasSetRing, mountSetRing, nearestSeed, openSetRing, slug as pathWord, spw64 } from "/set-ring.js";
 import { attachPinch, wasPinch } from "/pinch.js";
 import { mountTextScale } from "/text-scale.js";
@@ -27,6 +27,9 @@ let scrub = null;
 let scrubbed = false;
 /** One word of travel per this many pixels, the same kind of step the lamp takes. */
 const SCRUB_PX = 28;
+/** Up to six recent takes kept in memory for one-tap A/B comparison. */
+const MAX_TAKES = 6;
+let takes = [];
 
 /** Today in Chicago, where the season is kept, as YYYY-MM-DD. */
 const today = () => new Intl.DateTimeFormat("en-CA", { timeZone: "America/Chicago", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
@@ -122,7 +125,15 @@ function render() {
   svg.querySelectorAll("#bokeh ellipse").forEach((e, i) => e.classList.toggle("off", !target.bokeh[i].on));
   svg.style.setProperty("--tempo", String(shot.tempo));
   // Every way to factshift.center opens the canvas on this shot: its Spw and the prompt it makes.
-  for (const link of document.querySelectorAll('a[href^="https://factshift.center/"]')) link.setAttribute("href", canvasHrefOf(shot));
+  for (const link of document.querySelectorAll('a[href^="https://factshift.center/"]:not(#beat-canvas)')) link.setAttribute("href", canvasHrefOf(shot));
+  $("beat-canvas")?.setAttribute("href", beatHrefOf(shot));
+  const textureLink = $("texture-link");
+  if (textureLink) textureLink.setAttribute("href", shot.material ? `https://texture.website/${shot.material.slug}` : "https://texture.website/");
+  const subjectInput = $("subject-input");
+  if (subjectInput && document.activeElement !== subjectInput && subjectInput.value !== shot.subject) subjectInput.value = shot.subject;
+  const materialSelect = $("material-select");
+  if (materialSelect) materialSelect.value = shot.material?.slug ?? "";
+  paintTakes();
   set($("beat"), { "aria-valuenow": shot.tempo, "aria-valuetext": `tempo ×${shot.tempo.toFixed(1)}` });
   set($("lamp"), { "aria-valuetext": `light from ${shot.from}` });
   svg.style.setProperty("--fx", `${target.focus.x}px`);
@@ -226,9 +237,62 @@ function wireExpr() {
   });
 }
 
+/** Remember up to MAX_TAKES distinct framings for quick A/B comparison. */
+function rememberTake(entry) {
+  const addr = addressOf(entry);
+  takes = [{ ...entry, addr }, ...takes.filter((t) => t.addr !== addr)].slice(0, MAX_TAKES);
+}
+
+/** Paint the recent-take strip once more than one take exists. */
+function paintTakes() {
+  const box = $("takes");
+  if (!box) return;
+  if (takes.length < 2) { box.hidden = true; return; }
+  box.hidden = false;
+  const currentAddr = addressOf(shot);
+  box.replaceChildren();
+  const label = document.createElement("span");
+  label.className = "takes-label";
+  label.textContent = "Takes";
+  box.append(label);
+  for (const entry of takes) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "take-chip";
+    btn.textContent = `${entry.shot} · ${entry.lens} · ${entry.light}`;
+    if (entry.addr === currentAddr) btn.setAttribute("aria-current", "true");
+    btn.addEventListener("click", () => {
+      const { addr: _addr, ...rest } = entry;
+      shot = { ...rest };
+      window.history.replaceState(null, "", addressOf(shot));
+      render();
+    });
+    box.append(btn);
+  }
+}
+
+/** Copy text with explicit temporary confirmation on the pressed button. */
+async function copyWithReceipt(button, text) {
+  const original = button.dataset.label || button.textContent;
+  button.dataset.label = original;
+  try {
+    await navigator.clipboard.writeText(text);
+    button.textContent = "Copied";
+  } catch {
+    button.textContent = "Select prompt";
+  }
+  button.dataset.copied = "";
+  clearTimeout(button._copyTimer);
+  button._copyTimer = setTimeout(() => {
+    button.textContent = original;
+    delete button.dataset.copied;
+  }, 1400);
+}
+
 /** Keep a change: the address becomes the shot's, so a reload or a shared link is this shot. */
-function commit(change) {
+function commit(change, { record = true } = {}) {
   shot = { ...shot, ...change, named: true };
+  if (record) rememberTake(shot);
   window.history.replaceState(null, "", addressOf(shot));
   render();
 }
@@ -359,6 +423,40 @@ function wire() {
     else commit({ [key]: link.dataset.word });
   });
   wireExpr();
+  const subjectInput = $("subject-input");
+  subjectInput?.addEventListener("input", () => {
+    const clean = subjectInput.value.replace(/\s+/g, " ").trim().slice(0, 80);
+    commit({ subject: clean || DEFAULT_SUBJECT }, { record: false });
+  });
+  subjectInput?.addEventListener("change", () => rememberTake(shot));
+  $("expr")?.addEventListener("click", (event) => {
+    if (event.target.closest?.(".subject")) {
+      subjectInput?.focus();
+      subjectInput?.select();
+    }
+  });
+  $("material-select")?.addEventListener("change", (event) => {
+    const chosen = event.target.value;
+    commit({ material: MATERIALS.find((m) => m.slug === chosen) ?? null });
+  });
+  $("copy-mj")?.addEventListener("click", (event) => copyWithReceipt(event.currentTarget, promptOf(shot).midjourney));
+  $("copy-plain")?.addEventListener("click", (event) => copyWithReceipt(event.currentTarget, promptOf(shot).plain));
+  $("copy-spw")?.addEventListener("click", (event) => copyWithReceipt(event.currentTarget, spwOf(shot)));
+  $("roll-shot")?.addEventListener("click", () => {
+    const next = {};
+    for (const [key, words] of Object.entries(LADDERS)) {
+      const others = words.filter((w) => w !== shot[key]);
+      next[key] = others[Math.floor(Math.random() * others.length)] ?? words[0];
+    }
+    commit(next);
+  });
+  $("today-shot")?.addEventListener("click", () => {
+    const d = today();
+    shot = { ...shot, ...dayShot(d), day: d, named: shot.subject !== DEFAULT_SUBJECT };
+    rememberTake(shot);
+    window.history.replaceState(null, "", addressOf(shot));
+    render();
+  });
   const prompt = $("prompt");
   prompt?.closest(".prompt")?.addEventListener("click", async () => {
     const el = prompt.closest(".prompt");
@@ -379,6 +477,7 @@ function wire() {
 
 if (svg) {
   shot = readShot(window.location.pathname, window.location.search, today());
+  rememberTake(shot);
   wire();
   render();
   // The set's ring: what this shot becomes on each of the other sites.

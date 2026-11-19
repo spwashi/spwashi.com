@@ -72,6 +72,21 @@ Readings: /vocabulary.json (classes, materials, ladders, phrases, techniques, pi
 Classes: ${Object.keys(CLASSES).join(", ")}
 `;
 
+const PIVOT_FALLBACK_HREF = {
+  invert: "/sea-glass/~terrazzo",
+  tile: "/?format=tile",
+  permute: "/?perm=light",
+  weigh: "/?weigh=1",
+  exclude: "/?exclude=foxing",
+  chaos: "/?chaos=25",
+  weird: "/?weird=250",
+  stylize: "/?stylize=250",
+  raw: "/?raw=1",
+  sref: "/?sref=random",
+  seed: "/?seed=42",
+  lens: "/?lens=risograph-botanica",
+};
+
 const PAGE = `<!doctype html>
 <html lang="en">
 <head>
@@ -87,16 +102,22 @@ const PAGE = `<!doctype html>
   <main id="texture">
     <figure class="slide">
       <nav class="views" aria-label="Views"><a href="/">texture.website</a>${Object.entries(VIEWS).map(([key, v]) => `<a href="/${key}@/">${escapeHtml(v.name)}</a>`).join("")}</nav>
-      <header class="slide-head"><span class="fig">Fig.</span> <span class="title">texture.website</span> <span class="when"></span></header>
-      <div class="stage" aria-label="A sketch of the prompt"><div class="layers"></div><p class="bubble" hidden></p></div>
+      <header class="slide-head"><span class="fig">Fig.</span> <span class="title">texture.website</span> <span class="when"></span> <button type="button" class="tile-toggle" aria-pressed="false" title="Inspect 2×2 tile repeat and seam lines">2×2 tile</button></header>
+      <div class="stage" aria-label="A sketch of the prompt"><div class="layers"></div><div class="seam-grid" aria-hidden="true"></div><p class="bubble" hidden></p></div>
       <figcaption class="caption">A studio for building material prompts. Each word in the address is a material; each ladder is a word in the sentence.</figcaption>
+      <div class="layer-bar" aria-label="Material layers" hidden></div>
     </figure>
+    <datalist id="material-list">${MATERIALS.map((m) => `<option value="${escapeHtml(m.word)}"></option>`).join("")}</datalist>
     <section class="ladders" aria-label="Ladders" hidden></section>
-    <section class="pivots" aria-label="Pivots" hidden></section>
+    <section class="pivots" aria-label="Pivots">
+      <h2 class="band-name">pivot</h2>
+      <div class="pivot-row">${PIVOTS.map((p) => `<div class="pivot"><a class="pivot-link" href="${escapeHtml(PIVOT_FALLBACK_HREF[p.id] ?? "/")}">${escapeHtml(p.label)}</a><span class="says">${escapeHtml(p.says)}</span></div>`).join("")}</div>
+    </section>
     <article class="card" aria-label="The composition, to share and take"></article>
     <section class="catalog" aria-labelledby="catalog-head">
       <h2 id="catalog-head">Materials by class</h2>
-${Object.entries(CLASSES).map(([cls, c]) => `      <article class="class"><h3>${escapeHtml(cls)}</h3><p>${escapeHtml(c.science)}</p><p class="words">${c.materials.map((word) => { const m = MATERIALS.find((each) => each.word === word); return `<a href="/${m.slug}">${escapeHtml(word)}</a> <a class="png" href="/${m.slug}.png" title="the image of ${escapeHtml(word)}, for Midjourney">png</a>`; }).join(" · ")}</p></article>`).join("\n")}
+      <nav class="catalog-filters" aria-label="Filter materials by class"><button type="button" data-class="all" aria-pressed="true">all (${MATERIALS.length})</button>${Object.entries(CLASSES).map(([cls, c]) => `<button type="button" data-class="${escapeHtml(cls)}" aria-pressed="false">${escapeHtml(cls)} (${c.materials.length})</button>`).join("")}</nav>
+${Object.entries(CLASSES).map(([cls, c]) => `      <article class="class" data-class="${escapeHtml(cls)}"><h3>${escapeHtml(cls)}</h3><p>${escapeHtml(c.science)}</p><div class="swatches">${c.materials.map((word) => { const m = MATERIALS.find((each) => each.word === word); return `<span class="swatch-item"><a class="swatch" href="/${m.slug}"><img src="/${m.slug}.png" alt="" width="36" height="36" loading="lazy"><span>${escapeHtml(word)}</span></a> <a class="png" href="/${m.slug}.png" title="the image of ${escapeHtml(word)}, for Midjourney">png</a></span>`; }).join("")}</div></article>`).join("\n")}
     </section>
   </main>
 </body>
@@ -152,6 +173,7 @@ async function images(check) {
     }
     return drift;
   }
+  if (!check && !process.argv.includes("--force-images") && (await images(true)) === 0) return 0;
   const files = {};
   for (const m of MATERIALS) {
     const bytes = materialPng(m);
