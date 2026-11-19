@@ -66,6 +66,7 @@ function shell({ seed, mask, filters, title, mood, canonical, ground = false }) 
 <link rel="stylesheet" href="/set-ring.css">
 <link rel="stylesheet" href="/pinch.css">
 <link rel="stylesheet" href="/text-scale.css">
+<link rel="stylesheet" href="/clean-still.css">
 <script src="/text-scale-head.js"></script>
 <link rel="modulepreload" id="text-pinch" href="${PINCH_TEXT}">
 <style id="vibe-style">${vibeCss(v)}</style>
@@ -150,7 +151,7 @@ function manifest() {
 }
 
 /** Every file a vibe needs; with these kept, any address paints offline, since the shell reads it in the page. */
-const SHELL = ["/", "/index.html", ...Object.keys(SEEDS).map((s) => `/${s}`), "/tealstripes.js", "/vibe.js", "/lib/hold.js", "/tealstripes.css", "/set-ring.js", "/set-ring.css", "/pinch.js", "/pinch.css", "/text-scale.js", "/text-scale.css", "/text-scale-head.js", PINCH_TEXT, "/favicon.svg", "/manifest.webmanifest", ...Object.keys(ICONS).map((n) => `/icons/${n}`)];
+const SHELL = ["/", "/index.html", ...Object.keys(SEEDS).map((s) => `/${s}`), "/tealstripes.js", "/vibe.js", "/lib/hold.js", "/tealstripes.css", "/set-ring.js", "/set-ring.css", "/pinch.js", "/pinch.css", "/text-scale.js", "/text-scale.css", "/text-scale-head.js", "/clean-still.js", "/clean-still.css", PINCH_TEXT, "/favicon.svg", "/manifest.webmanifest", ...Object.keys(ICONS).map((n) => `/icons/${n}`)];
 
 function serviceWorker(version) {
   return `// Written by workers/tealstripesvibes/carry.mjs. Pages from the network when there is one, else the kept shell, which paints any address.
@@ -229,6 +230,8 @@ export async function carried() {
     ["text-scale.js", await readFile(path.join(HERE, "../lib/text-scale.js"), "utf8")],
     ["text-scale.css", await readFile(path.join(HERE, "../lib/text-scale.css"), "utf8")],
     ["text-scale-head.js", await readFile(path.join(HERE, "../lib/text-scale-head.js"), "utf8")],
+    ["clean-still.js", await readFile(path.join(HERE, "../lib/clean-still.js"), "utf8")],
+    ["clean-still.css", await readFile(path.join(HERE, "../lib/clean-still.css"), "utf8")],
     ["index.html", shell({ seed: Object.keys(SEEDS)[0], mask: "", filters: [], title: "Teal Stripes Vibes", mood: "teal stripes", canonical: `${ORIGIN}/`, ground: true })],
     ...Object.keys(SEEDS).map((seed) => [`${seed}.html`, seedPage(seed)]),
     ["favicon.svg", FAVICON],

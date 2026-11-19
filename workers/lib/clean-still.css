@@ -1,0 +1,88 @@
+/* Shared clean-still capture bar (workers/lib/clean-still.js).
+   Each host defines what hides in :root[data-still="plate"] (prompt-ready)
+   and :root[data-still="pure"] (visual only); this sheet styles the quiet
+   corner toggle and fades it out automatically during still captures. */
+
+.still-bar {
+  position: fixed;
+  left: max(12px, env(safe-area-inset-left));
+  bottom: max(12px, env(safe-area-inset-bottom));
+  z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 999px;
+  border: 1px solid rgba(128, 128, 128, 0.32);
+  background: rgba(14, 14, 16, 0.78);
+  color: #f4f4f6;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font: 600 11.5px/1 ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  letter-spacing: 0.04em;
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.still-bar button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: none;
+  cursor: pointer;
+}
+
+.still-bar button:hover {
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.still-bar button:focus-visible {
+  outline: 2px solid #c8ff00;
+  outline-offset: 2px;
+}
+
+.still-bar .still-btn[aria-pressed="true"],
+.still-bar .still-auto[aria-pressed="true"] {
+  background: #f4f4f6;
+  color: #111114;
+}
+
+.still-bar .still-auto {
+  opacity: 0.78;
+}
+
+.still-bar .still-auto[aria-pressed="true"] {
+  opacity: 1;
+}
+
+/* During a clean still capture, the toggle itself fades out so it never enters the screenshot. */
+:root[data-still-chrome="asleep"] .still-bar {
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+}
+
+/* Also tuck the set ring away in still captures on hosts that mount it. */
+:root[data-still] .set-ring:not(.open) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (pointer: coarse) {
+  .still-bar button {
+    min-height: 40px;
+    padding: 0 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .still-bar {
+    transition: none;
+  }
+}

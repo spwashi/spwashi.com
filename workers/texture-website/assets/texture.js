@@ -1,4 +1,5 @@
 // texture.website: a studio for building material prompts. The address is the
+import { mountCleanStill } from "/clean-still.js";
 // prompt. Each word in the path is a material, bottom first; a mark before a word
 // is how it meets the one before (~ drifting through, * heavy with). Each ladder
 // (scale, light, wear, process, scene, format) is a row of words written into the
@@ -358,6 +359,14 @@ function drawSlide(vocab, state) {
   $(".slide .when").textContent = state.byDay ? state.day : "";
   const first = state.layers[0].material;
   $(".caption").textContent = [first.cls ? vocab.classes[first.cls].science : `${first.word}: a material of no listed class; the prompt takes the word as it is.`, state.gatheredFor ? `Gathered for ${state.gatheredFor}.` : ""].filter(Boolean).join(" ");
+  const stillCtx = $(".still-context");
+  if (stillCtx) {
+    const { plain } = prompts(vocab, state);
+    stillCtx.replaceChildren(
+      node("p", { class: "still-prompt" }, [plain]),
+      node("code", { class: "still-spw" }, [spwLine(state)]),
+    );
+  }
 }
 
 /** Two neighbours in a material's class: the words beside it. */
@@ -792,6 +801,7 @@ async function main() {
     }
   });
   render();
+  mountCleanStill({ key: "p", idleMs: 4500 });
 }
 
 main().catch(() => document.body.classList.remove("composed"));
