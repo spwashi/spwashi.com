@@ -711,17 +711,27 @@ function applySemanticSnapshot(el, snapshot, options = {}) {
   const { overwrite = true } = options;
   const writer = overwrite ? setOrReplace : setIfMissing;
 
-  // Chrome is described, not classed as a component (kernel/dom-contracts.js).
-  if (!isInsideShellChrome(el)) writer(el, 'spwKind', snapshot.kind);
+  // Never backfill geometry-driving base attributes (data-spw-kind, data-spw-form,
+  // data-spw-density) onto elements that did not author them in HTML: those
+  // attributes trigger containment, brace borders, and spacing in core CSS and
+  // cause post-paint arrival reflow. Inferred kind rides in spwComponentKind
+  // (decoupled from layout CSS) and the in-memory semantic registry.
+  if (!isInsideShellChrome(el) && el.hasAttribute?.('data-spw-kind')) {
+    writer(el, 'spwKind', snapshot.kind);
+  }
   writer(el, 'spwRole', snapshot.role);
   writer(el, 'spwMeaning', snapshot.meaning);
-  writer(el, 'spwForm', snapshot.form);
+  if (el.hasAttribute?.('data-spw-form')) {
+    writer(el, 'spwForm', snapshot.form);
+  }
   writer(el, 'spwSubstrate', snapshot.substrate);
   writer(el, 'spwPhrase', snapshot.phrase);
   writer(el, 'spwContext', snapshot.context);
 
   writer(el, 'spwImportance', snapshot.importance);
-  writer(el, 'spwDensity', snapshot.density);
+  if (el.hasAttribute?.('data-spw-density')) {
+    writer(el, 'spwDensity', snapshot.density);
+  }
   writer(el, 'spwEmphasis', snapshot.emphasis);
   writer(el, 'spwInteractivity', snapshot.interactivity);
   writer(el, 'spwInspectability', snapshot.inspectability);

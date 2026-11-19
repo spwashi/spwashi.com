@@ -404,14 +404,14 @@ const wirePwaStatusMessages = () => {
     });
 };
 
-const maybeShowInstallPrompt = () => {
+const maybeShowInstallPrompt = ({ userInitiated = false } = {}) => {
     if (shouldDisableServiceWorkerInDevelopment()) return;
     if (!initialized) return;
     if (isStandalone()) return;
     if (toastManager.current) return;
 
     // Web install prompt (Android/Chrome/Edge etc.)
-    if (deferredInstallPrompt && !promptIsDismissed(DISMISS_INSTALL_KEY)) {
+    if (deferredInstallPrompt && (userInitiated || !promptIsDismissed(DISMISS_INSTALL_KEY))) {
         toastManager.show({
             kind: 'install',
             message: 'Add _spwashi to your home screen. Works offline, loads instantly.',
@@ -435,8 +435,9 @@ const maybeShowInstallPrompt = () => {
         return;
     }
 
-    // iOS Safari hint
-    if (isIosSafari() && !promptIsDismissed(DISMISS_IOS_HINT_KEY)) {
+    // iOS Safari hint: user-initiated only so cold arrivals and first-fold
+    // screenshots are never covered by an unsolicited install banner.
+    if (userInitiated && isIosSafari() && !promptIsDismissed(DISMISS_IOS_HINT_KEY)) {
         toastManager.show({
             kind: 'install',
             message: 'Tap Share, then "Add to Home Screen" to install _spwashi.',
@@ -558,7 +559,7 @@ const initPwaUpdateHandler = async () => {
     // Expose for debugging / advanced usage
     window.spwPwa = {
         init: initPwaUpdateHandler,
-        showInstallPrompt: maybeShowInstallPrompt,
+        showInstallPrompt: () => maybeShowInstallPrompt({ userInitiated: true }),
         showUpdatePrompt: async (reg) => {
             const registration = reg || await navigator.serviceWorker?.getRegistration?.();
             return maybeShowUpdatePrompt(registration);

@@ -697,18 +697,14 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
 
 :where(
   .frame-body > [data-spw-kind="hook"]:first-child,
-  .frame-body > [data-spw-component-kind="hook"]:first-child,
-  .spw-frame > [data-spw-kind="hook"]:first-child,
-  .spw-frame > [data-spw-component-kind="hook"]:first-child
+  .spw-frame > [data-spw-kind="hook"]:first-child
 ) {
   margin-block-end: var(--component-gap-tight, 0.55rem);
 }
 
 :where(
   .frame-body [data-spw-kind="hook"],
-  .frame-body [data-spw-component-kind="hook"],
-  .spw-frame [data-spw-kind="hook"]:not(.spw-frame),
-  .spw-frame [data-spw-component-kind="hook"]:not(.spw-frame)
+  .spw-frame [data-spw-kind="hook"]:not(.spw-frame)
 ) {
   scroll-margin-top: calc(var(--header-height, 4rem) + 0.75rem);
 }
@@ -718,7 +714,7 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
   outline-offset: 3px;
 }
 
-:where([data-spw-kind="hook"], [data-spw-component-kind="hook"]) {
+:where([data-spw-kind="hook"]) {
   /* Slightly more charged than default frame for "volatile" entry presence */
   border-color: color-mix(in srgb, var(--active-op-color, var(--component-accent)) 38%, transparent);
   background: color-mix(
@@ -736,9 +732,9 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, [data-spw-kind="frame"]) {
 }
 
 /* Text fit inside hooks: ensure body paragraphs and direct content wrap well in narrow viewports or grid columns */
-:where([data-spw-kind="hook"], [data-spw-component-kind="hook"]) > p,
-:where([data-spw-kind="hook"], [data-spw-component-kind="hook"]) [data-spw-textual-role="note"],
-:where([data-spw-kind="hook"], [data-spw-component-kind="hook"]) [data-spw-textual-role="lede"] {
+:where([data-spw-kind="hook"]) > p,
+:where([data-spw-kind="hook"]) [data-spw-textual-role="note"],
+:where([data-spw-kind="hook"]) [data-spw-textual-role="lede"] {
   text-wrap: pretty;
   max-inline-size: 62ch;
 }

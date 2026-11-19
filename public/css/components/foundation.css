@@ -118,7 +118,6 @@
    silently overrode the header's own stacking and made every open-menu raise
    unwinnable until it was escalated to a literal in the `ornament` layer. */
 :where(
-  [data-spw-component-kind]:not(.site-header),
   [data-spw-kind]:not(.site-header),
   .spw-frame,
   .spw-card,
@@ -160,15 +159,11 @@
 }
 
 /* `container-type` implies `contain: layout`, which establishes a containing
-   block and removes intrinsic inline contribution. Shell chrome, anatomy slots,
-   lens controls, and compact metadata tags are not component containers even when the runtime
-   annotates them with data-spw-kind; containing those labels collapses their
-   max-content width to zero. That holds for everything inside the header too:
-   the header actions sit end-aligned at fit-content width, so a runtime
-   annotation arriving after load used to fold them to two pixels and push the
-   page down. */
+   block and removes intrinsic inline contribution. Key containment strictly on
+   authored HTML nouns (static classes and authored [data-spw-kind]) — never on
+   runtime-inferred [data-spw-component-kind] — so late hydration cannot collapse
+   or wrap elements seconds after first paint. */
 :where(
-  [data-spw-component-kind]:not(body):not(main):not(.site-header):not(:is(.site-header, body > header) *):not([data-spw-slot]):not(.spw-component-tag):not(.mode-switch):not([data-spw-floating-chrome="true"]),
   [data-spw-kind]:not(body):not(main):not(.site-header):not(:is(.site-header, body > header) *):not([data-spw-slot]):not(.spw-component-tag):not(.mode-switch):not([data-spw-floating-chrome="true"]),
   .spw-frame,
   .spw-card,
@@ -204,12 +199,11 @@
 :where(
   :where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .spw-panel, .frame-panel, .mode-panel, .plan-card, .compare-card, .spec-column, .ref-card, .settings-state-card, .math-lens-card, .topic-reference-card)
   > :is(
-    [data-spw-component-kind],
     [data-spw-kind],
     .spw-frame, .spw-card, .frame-card, .media-card, .media-focus-card, .topic-reference-card,
     .software-card, .operator-card, .spw-panel, .frame-panel, .mode-panel, .plan-card,
     .compare-card, .spec-column, .ref-card, .payment-card, .seed-card,
-    :has(> :is([data-spw-component-kind], [data-spw-kind], .spw-card, .frame-card, .spw-panel, .frame-panel))
+    :has(> :is([data-spw-kind], .spw-card, .frame-card, .spw-panel, .frame-panel))
   ):not([data-spw-slot], .spw-component-tag, .mode-switch, [data-spw-floating-chrome="true"], .spw-chip, a, button)
 ) {
   align-self: stretch;
@@ -640,7 +634,6 @@
    surface's `z-index: -1`. */
 :where(
   :is(
-    [data-spw-component-kind]:not(.site-header),
     [data-spw-kind]:not(.site-header),
     .spw-frame,
     .frame-card,

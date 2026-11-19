@@ -404,9 +404,11 @@ export function annotateCompositionBox(target, options = {}) {
 function applyCompositionBox(el, snapshot, options = {}) {
   if (!snapshot || !isElement(el)) return null;
 
-  writeDatasetValues(el, {
-    spwBoxModel: snapshot.role,
-    spwCompositionFlow: snapshot.flow,
+  // Only write layout-triggering attributes (spwBoxModel, spwCompositionFlow)
+  // onto elements that already authored them in HTML; backfilling them onto
+  // un-authored frames/features activates grid/stack rules in content.css
+  // after first paint and causes arrival reflow.
+  const entries = {
     spwBoxMeasure: snapshot.pretext?.measure || snapshot.measure,
     spwBoxPresence: snapshot.presence,
     spwBoxOverflow: snapshot.box.overflowX || snapshot.box.overflowY ? 'true' : 'false',
@@ -418,7 +420,15 @@ function applyCompositionBox(el, snapshot, options = {}) {
     spwTextWidthClass: snapshot.pretext?.widthClass || '',
     spwMeasureKind: snapshot.pretext ? 'objective' : '',
     spwMeasureSource: snapshot.pretext?.source || '',
-  }, { missingOnly: options.missingOnly === true });
+  };
+  if (el.hasAttribute?.('data-spw-box-model')) {
+    entries.spwBoxModel = snapshot.role;
+  }
+  if (el.hasAttribute?.('data-spw-composition-flow')) {
+    entries.spwCompositionFlow = snapshot.flow;
+  }
+
+  writeDatasetValues(el, entries, { missingOnly: options.missingOnly === true });
 
   if (options.story !== false) {
     writeDatasetValue(el, 'spwBoxStory', snapshot.story);
