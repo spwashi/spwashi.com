@@ -17,14 +17,26 @@
 
 ## Language, Workbench & Interactive Tools
 
-- [Spw Language Hub](https://spwashi.com/topics/software/spw/): Operator atlas, join crawl semantics, and language evolution (`v0.4` claims, probes, and header axes).
-- [Spw Workbench](https://spwashi.com/projects/spw-workbench/): Architecture overview for `spw-seed` and `spw-runtime` tooling.
+- [Spw Language Hub](https://spwashi.com/topics/software/spw/): Operator atlas, join crawl semantics, expressiveness goals, and language evolution (`v0.4` capability contracts).
+- [Spw Workbench & Agent Queue](https://spwashi.com/projects/spw-workbench/): Architecture overview for `spw-seed`/`spw-runtime`/`spw-lsp`/`spw-cli`, live `bcf0da18` corpus parse census, open parser issues, and the prioritized P0–P3 development queue.
 - [Editor Tooling](https://spwashi.com/topics/software/editor-tooling/): Language server, syntax inspection, and editor integration direction.
 - [Parsers](https://spwashi.com/topics/software/parsers/): Parsing notes and grammar architecture.
 - [Literal Spw Parser](https://spwashi.com/tools/spw-parser/): Interactive browser parser backed by the pinned `spw-workbench` reader (`tokens`, `AST`, `diagnostics`, `outline`, and lossless token reconstruction).
 - [Character Sheet](https://spwashi.com/tools/character-sheet/): Tabletop character sheet workspace.
 - [Tools Index](https://spwashi.com/tools/): Registry of interactive browser tools.
 - [Software Topics](https://spwashi.com/topics/software/): Index of software architecture notes.
+
+## For `spw-workbench` Agents (What to Develop Next)
+
+`spwashi.com` is the primary live test corpus for `spw-workbench` (mounted at `.spw/_workbench` pin `bcf0da18b840`: 1,322 `.spw` files, 1,035 distinct HTML expressions, and `spw.quest`'s 157 worker tests). Start here when deciding what to fix or build upstream:
+
+- [Prioritized P0–P3 Development Queue (with parseable Spw manifest)](https://spwashi.com/projects/spw-workbench/#workbench-backlog): Ranked `spw-seed` / `spw-cli` / `spw-lsp` / consumer-contract priorities with minimal repros and acceptance checks.
+- [Open Parsing Issues (`bcf0da18` live census)](https://spwashi.com/projects/spw-workbench/#parsing-issues): Five open issue classes — container-order & prefix/`Persona@` AST asymmetry, greedy digraph priority, tokenizer drops/escapes, prose degradation, and trailing units/slot readers.
+- [Expressiveness Goals & Workbench Improvements](https://spwashi.com/topics/software/spw/#expressiveness-goals): Eight falsifiable language goals and historical consumer measurements (`/topics/software/spw/#workbench-improvements`).
+- [Measured Consumer Report (`workbench-report.spw`)](https://spwashi.com/.spw/workbench-report.spw): Timed probes, CLI memo keys, LSP `documentSymbol` reparse latency, trace-cost profiles, and Nov 19 container-variety AST receipts.
+- [Upstream Recommendations (`upstream-workbench-recommendations.spw`)](https://spwashi.com/.spw/reviews/upstream-workbench-recommendations.spw): Synthesized capability contracts (`operator.table/1`, `inquiry.loop/1`, `reading.ground-edge/1`, `citation.resolve/1`) and themed ask tree.
+- [Expression Stagnation & Container Variety Cache](https://spwashi.com/.spw/caches/expression-stagnation-and-variety-2026-11.spw): Empirical 1,033-expression census, parse matrix, cross-domain utility audit, and exact parser ceilings hit on `spwashi.com` and `spw.quest`.
+- [Algorithmic Practicality Cache](https://spwashi.com/.spw/caches/workbench-algorithmic-practicality-2026-11.spw): Digraph priority, single-pass scanner, and bounded recovery notes.
 
 ## Design, CSS & Visual Craft
 
