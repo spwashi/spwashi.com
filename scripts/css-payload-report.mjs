@@ -222,8 +222,8 @@ Usage:
   }
 
   console.log('CSS payload report (scoped delivery vs all bundles)');
-  console.log(`  core.css: ${report.coreKiB} KiB committed (soft budget ${report.coreSoftBudgetKiB} KiB)`);
-  console.log(`            ${report.coreDeliveredKiB} KiB delivered — dist strips prose, rules unchanged`);
+  console.log(`  core.css: ${report.coreDeliveredKiB} KiB delivered (soft budget ${report.coreSoftBudgetKiB} KiB)`);
+  console.log(`            ${report.coreKiB} KiB committed — dist strips prose, rules unchanged`);
   console.log(`  over the wire (gzip): ${report.coreGzipKiB} → ${report.coreDeliveredGzipKiB} KiB, ${report.coreTransferSavedPercent}% smaller`);
   console.log(`  all bundles (full approx): ${report.fullAllBundlesKiB} KiB`);
   if (coreSheets) {

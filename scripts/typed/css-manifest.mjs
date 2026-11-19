@@ -474,9 +474,13 @@ export function onlyTokensForTargets(targets) {
     }
     return tokens;
 }
-/** Soft budgets (bytes) for agent/publish hygiene — warn only unless --strict-budget. */
+/**
+ * Soft budgets in delivered bytes (after cssForDelivery() strips prose comments
+ * and indentation, matching what dist/ actually ships to visitors). Warn only
+ * unless --strict-budget. Never penalizes literate CSS banners or comments.
+ */
 export const CSS_BUNDLE_SOFT_BUDGETS = Object.freeze({
-    core: 1.7 * 1024 * 1024,
-    route: 140 * 1024,
+    core: 1360 * 1024,
+    route: 136 * 1024,
     behavior: 48 * 1024,
 });
