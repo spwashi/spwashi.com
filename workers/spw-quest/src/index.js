@@ -4,7 +4,7 @@ import { EXAMPLES, EXAMPLE_GROUPS, exampleById } from "./examples.js";
 import { EXPECTED_FILES, GIT_GUIDE, GIT_MARKDOWN, INSTRUCTION_SETS, QUEST_PROMPTS, QUEST_TEXT, WORKBENCH } from "./quest.js";
 import { STEPS } from "./steps.js";
 import { LINE_LIMIT, liveScript } from "./reader.js";
-import { FILE_CSS, FILE_LIMIT, editorField, handBar, keepReadings, landingLine, liveFileScript, outlineFile, readFile } from "./file-reader.js";
+import { FILE_CSS, FILE_LIMIT, editorField, handBar, keepReadings, landingLine, liveFileScript, outlineFile, paintFile, readFile } from "./file-reader.js";
 import { PANEL_EDGES, SHELF_LINKS } from "./readings-data.js";
 import { noteBootScript } from "./note.js";
 import { PANEL_CSS, QUEST_WORD, carriedWord, stepSurface, withWord } from "./panel.js";
@@ -47,6 +47,188 @@ const FEEDBACK_CONFIG = {
 };
 const SIGIL_TYPES = new Map(PEER_SIGILS.map(({ sigil, type }) => [sigil, type]));
 const BRACE_TYPES = new Map(PEER_BRACES.map(({ open, type }) => [open, type]));
+const OP_BY_NAME = new Map(OPERATORS.map((op) => [op.name, op]));
+const PAINTED_CACHE = new Map();
+const paintOneLine = (line) => {
+  if (!PAINTED_CACHE.has(line)) PAINTED_CACHE.set(line, paintFile(line, readFile(line).tokens));
+  return PAINTED_CACHE.get(line);
+};
+
+/**
+ * Two-way line <-> interpretation controller on `/` (progressive enhancement only).
+ * - Click any painted mark/brace token inside an expression -> illuminate all matching expressions,
+ *   highlight its definition card, and open the compact interpretive dock (cycle matches, copy, canvas, partner).
+ * - Click "Highlight on page" on an operator/brace card -> light and cycle every matching expression.
+ * - Click any Copy button -> copy the raw Spw line with inline "Copied" confirmation.
+ * - Click an interpretive row inside #reading -> jump to that exact line in the live #try editor.
+ */
+function interactiveInterpretations(catalog) {
+  const byToken = new Map(catalog.map((item) => [item.token, item]));
+  const dock = document.querySelector("[data-interpret-dock]");
+  const exprs = [...document.querySelectorAll("[data-spw-expr]")];
+  const cards = [...document.querySelectorAll("#operators li[id], #braces li[id]")];
+  let activeToken = "";
+  let matches = [];
+  let cursor = 0;
+
+  const clear = () => {
+    activeToken = "";
+    matches = [];
+    cursor = 0;
+    for (const el of exprs) {
+      delete el.dataset.spwMatch;
+      delete el.dataset.spwCurrent;
+    }
+    for (const card of cards) delete card.dataset.spwActive;
+    for (const btn of document.querySelectorAll("[data-highlight-token]")) btn.setAttribute("aria-pressed", "false");
+    if (dock) dock.hidden = true;
+  };
+
+  const renderDock = (item, line) => {
+    if (!dock || !item) return;
+    const set = (sel, text) => { const n = dock.querySelector(sel); if (n) n.textContent = text; };
+    const sigil = dock.querySelector("[data-dock-sigil]");
+    if (sigil) {
+      sigil.textContent = item.sigil;
+      sigil.dataset.t = item.token;
+    }
+    set("[data-dock-name]", item.name);
+    set("[data-dock-meta]", item.meta);
+    set("[data-dock-reads]", item.reads);
+    set("[data-dock-count]", matches.length ? `${cursor + 1} / ${matches.length} on page` : "0 matches");
+    const defLink = dock.querySelector("[data-dock-def]");
+    if (defLink) defLink.href = `#${item.id}`;
+    const partnerLink = dock.querySelector("[data-dock-partner]");
+    if (partnerLink) {
+      if (item.partnerId) {
+        partnerLink.hidden = false;
+        partnerLink.href = `#${item.partnerId}`;
+        partnerLink.textContent = `↔ ${item.partnerLabel}`;
+      } else {
+        partnerLink.hidden = true;
+      }
+    }
+    const copyBtn = dock.querySelector("[data-dock-copy]");
+    const activeLine = line || matches[cursor]?.dataset.spwExpr || item.line || "";
+    if (copyBtn) {
+      copyBtn.dataset.copyLine = activeLine;
+      copyBtn.hidden = !activeLine;
+      copyBtn.textContent = "Copy line";
+    }
+    const canvasLink = dock.querySelector("[data-dock-canvas]");
+    if (canvasLink) {
+      if (activeLine && !activeLine.includes("\n")) {
+        canvasLink.hidden = false;
+        canvasLink.href = `https://factshift.center/?spw=${encodeURIComponent(activeLine)}`;
+      } else {
+        canvasLink.hidden = true;
+      }
+    }
+    const prevBtn = dock.querySelector("[data-dock-prev]");
+    const nextBtn = dock.querySelector("[data-dock-next]");
+    if (prevBtn) prevBtn.disabled = matches.length < 2;
+    if (nextBtn) nextBtn.disabled = matches.length < 2;
+    dock.hidden = false;
+  };
+
+  const focusMatch = (index, scroll = true) => {
+    if (!matches.length) return;
+    cursor = ((index % matches.length) + matches.length) % matches.length;
+    matches.forEach((el, i) => {
+      if (i === cursor) el.dataset.spwCurrent = "true";
+      else delete el.dataset.spwCurrent;
+    });
+    const el = matches[cursor];
+    if (scroll && el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+    renderDock(byToken.get(activeToken), el?.dataset.spwExpr || "");
+  };
+
+  const activate = (token, { sourceExpr = null, scroll = false } = {}) => {
+    const item = byToken.get(token);
+    if (!item) return;
+    if (activeToken === token && !sourceExpr) {
+      clear();
+      return;
+    }
+    activeToken = token;
+    matches = exprs.filter((el) => el.querySelector(`[data-t="${CSS.escape(token)}"]`));
+    for (const el of exprs) {
+      if (matches.includes(el)) el.dataset.spwMatch = "true";
+      else delete el.dataset.spwMatch;
+      delete el.dataset.spwCurrent;
+    }
+    for (const card of cards) {
+      if (card.id === item.id) card.dataset.spwActive = "true";
+      else delete card.dataset.spwActive;
+    }
+    for (const btn of document.querySelectorAll("[data-highlight-token]")) {
+      btn.setAttribute("aria-pressed", String(btn.dataset.highlightToken === token));
+    }
+    const idx = sourceExpr ? Math.max(0, matches.indexOf(sourceExpr)) : 0;
+    cursor = idx;
+    if (matches[cursor]) matches[cursor].dataset.spwCurrent = "true";
+    renderDock(item, sourceExpr?.dataset.spwExpr || matches[cursor]?.dataset.spwExpr || item.line || "");
+    if (scroll && matches[cursor]) matches[cursor].scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+
+  const copyText = async (button, text) => {
+    if (!text) return;
+    const prev = button.textContent;
+    try {
+      await navigator.clipboard.writeText(text);
+      button.textContent = "Copied";
+      setTimeout(() => { button.textContent = prev; }, 1400);
+    } catch {
+      button.textContent = "Select to copy";
+      setTimeout(() => { button.textContent = prev; }, 1400);
+    }
+  };
+
+  document.addEventListener("click", (event) => {
+    const copyBtn = event.target.closest("[data-copy-line]");
+    if (copyBtn) {
+      event.preventDefault();
+      copyText(copyBtn, copyBtn.dataset.copyLine);
+      return;
+    }
+    const hlBtn = event.target.closest("[data-highlight-token]");
+    if (hlBtn) {
+      event.preventDefault();
+      activate(hlBtn.dataset.highlightToken, { scroll: true });
+      return;
+    }
+    if (event.target.closest("[data-dock-close]")) { clear(); return; }
+    if (event.target.closest("[data-dock-prev]")) { focusMatch(cursor - 1, true); return; }
+    if (event.target.closest("[data-dock-next]")) { focusMatch(cursor + 1, true); return; }
+    const tokenEl = event.target.closest("[data-spw-expr] [data-t]");
+    if (tokenEl && byToken.has(tokenEl.dataset.t)) {
+      event.preventDefault();
+      activate(tokenEl.dataset.t, { sourceExpr: tokenEl.closest("[data-spw-expr]"), scroll: false });
+      return;
+    }
+    const readingRow = event.target.closest("#reading .pairs li, #reading .frames li, #reading .entries li, #reading .facts .q");
+    if (readingRow && !event.target.closest("a")) {
+      const needle = (readingRow.querySelector(".key")?.textContent || readingRow.querySelector(".what")?.textContent || readingRow.textContent || "").replace(/^\[|\]$/g, "").trim();
+      const field = document.getElementById("script");
+      if (needle && field) {
+        const at = field.value.indexOf(needle);
+        if (at >= 0) {
+          const lineStart = field.value.lastIndexOf("\n", at) + 1;
+          const nextNl = field.value.indexOf("\n", at);
+          const lineEnd = nextNl < 0 ? field.value.length : nextNl;
+          field.focus();
+          field.setSelectionRange(lineStart, lineEnd);
+          field.dispatchEvent(new Event("keyup", { bubbles: true }));
+          document.getElementById("try")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+      }
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && activeToken) clear();
+  });
+}
 const QUEST = Object.freeze({
   designer: "Spwashi",
   ...WORKBENCH,
@@ -277,11 +459,41 @@ const GUIDE_CSS = `.opening { margin: 0 0 1.6rem; padding-bottom: .2rem; }
     .sigils .name { display: flex; align-items: baseline; gap: .35rem; font-weight: 700; font-size: .95rem; letter-spacing: -.01em; color: var(--fg); }
     .sigils .name code { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
     .sigils .reads { margin-top: .1rem; font-size: .88rem; line-height: 1.48; color: var(--fg); }
+    .sigils .op-meta { display: flex; flex-wrap: wrap; align-items: center; gap: .2rem .55rem; margin: .15rem 0 .2rem; font: .76rem/1.3 var(--mono); color: var(--muted); }
+    .sigils .op-valence { padding: .08rem .38rem; border-radius: 3px; background: color-mix(in srgb, var(--accent) 10%, var(--surface)); color: var(--fg); border: 1px solid color-mix(in srgb, var(--line) 80%, transparent); }
+    .sigils .op-partner { color: var(--accent); text-decoration: none; }
+    .sigils .op-partner:hover, .sigils .op-partner:focus-visible { text-decoration: underline; }
     .sigils .op-line { margin: .25rem 0 0; }
     .sigils .op-line code { font-size: .82rem; overflow-wrap: anywhere; }
+    .expr-row { display: flex; align-items: flex-start; justify-content: space-between; gap: .4rem; }
+    [data-spw-expr] [data-t] { cursor: pointer; border-radius: 2px; transition: background-color 120ms ease; }
+    [data-spw-expr] [data-t]:hover { background: color-mix(in srgb, currentColor 18%, transparent); }
+    [data-spw-match="true"] { border-radius: 4px; background: color-mix(in srgb, var(--accent) 10%, transparent); box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent); }
+    [data-spw-current="true"] { background: color-mix(in srgb, var(--accent) 20%, transparent); box-shadow: 0 0 0 2px var(--accent); }
+    .sigils li[data-spw-active="true"], .braces li[data-spw-active="true"] { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent), 0 8px 24px -4px color-mix(in srgb, var(--accent) 22%, transparent); }
+    .copy-expr, .op-find { flex: none; padding: .15rem .45rem; border: 1px solid var(--line); border-radius: var(--pill); background: var(--surface); color: var(--muted); font: 600 .74rem/1.3 var(--mono); cursor: pointer; }
+    .copy-expr:hover, .copy-expr:focus-visible, .op-find:hover, .op-find:focus-visible, .op-find[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+    html:not(.js) .copy-expr, html:not(.js) .op-find, html:not(.js) .interpret-dock { display: none; }
+    .op-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .25rem .55rem; margin-top: .35rem; font-size: .8rem; }
+    .title-spw-wrap { position: relative; width: min(100%, 42rem); }
+    .title-spw-wrap .copy-expr { position: absolute; top: .5rem; right: .55rem; }
     .starter p { font-size: .9rem; }
     .starter strong { margin-right: .3rem; color: var(--fg); }
     .starter .starter-ways { margin-top: .35rem; font-size: .85rem; }
+    .interpret-dock { position: sticky; bottom: .75rem; z-index: 20; max-width: 54rem; margin: 1.4rem auto 0; padding: .7rem .95rem; border: 1px solid var(--accent); border-radius: var(--radius); background: color-mix(in srgb, var(--field) 96%, transparent); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: 0 10px 28px -6px rgba(0, 0, 0, .2); display: grid; gap: .35rem; }
+    .interpret-dock[hidden] { display: none; }
+    .interpret-dock-head { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem .65rem; }
+    .interpret-dock-sigil { display: inline-flex; align-items: center; justify-content: center; min-width: 1.85rem; padding: .15rem .45rem; border-radius: 4px; background: color-mix(in srgb, currentColor 12%, var(--surface)); border: 1px solid currentColor; font: 700 1rem/1.1 var(--mono); }
+    .interpret-dock-meta { color: var(--muted); font: .78rem/1.2 var(--mono); }
+    .interpret-dock-reads { margin: 0; font-size: .88rem; line-height: 1.42; color: var(--fg); }
+    .interpret-dock-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem .65rem; font-size: .82rem; }
+    .interpret-dock-actions button { padding: .2rem .55rem; border: 1px solid var(--line); border-radius: var(--pill); background: var(--surface); color: var(--fg); font: 600 .78rem/1.2 var(--mono); cursor: pointer; }
+    .interpret-dock-actions button:hover:not(:disabled), .interpret-dock-actions button:focus-visible:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+    .interpret-dock-actions button:disabled { opacity: .4; cursor: default; }
+    .interpret-dock-count { color: var(--muted); font: .78rem/1.2 var(--mono); font-variant-numeric: tabular-nums; }
+    .interpret-dock-close { margin-left: auto; }
+    #reading .pairs li, #reading .frames li, #reading .entries li, #reading .facts .q { cursor: pointer; border-radius: 3px; }
+    #reading .pairs li:hover, #reading .frames li:hover, #reading .entries li:hover, #reading .facts .q:hover { background: color-mix(in srgb, var(--accent) 8%, transparent); }
     .sigils .note { margin-top: .35rem; padding-top: .35rem; border-top: 1px dashed color-mix(in srgb, var(--line) 75%, transparent); font-size: .8rem; line-height: 1.42; color: var(--ink-soft); }
     @media (max-width: 40rem) { .sigils { gap: 0; } .sigils li { padding: .75rem 0 .8rem; border: 0; border-top: 1px solid var(--line); border-radius: 0; background: none; box-shadow: none; } .sigils li:hover, .sigils li:focus-within { transform: none; box-shadow: none; } .sigils li:target { box-shadow: inset 3px 0 0 var(--accent); padding-left: .65rem; } }
     .sigils .in-file { grid-column: 2; font: .78rem/1.2 var(--mono); }
@@ -334,19 +546,59 @@ function renderGuide(parser = null, example = EXAMPLES[0], at = "", lens = null)
   const used = new Map(readFile(example.script).marks.map((mark) => [mark.name, mark.count]));
   const inFile = (name) => `
       <p class="in-file" data-in-file="${escapeHtml(name)}"${used.has(name) ? "" : " hidden"}><a href="#try">in <span data-in-file-name>${escapeHtml(example.file)}</span> <span class="count">×<span data-in-file-count>${used.get(name) || 0}</span></span></a></p>`;
-  const sigils = OPERATORS.map((op) => `<li id="op-${escapeHtml(op.name)}">
-      <span class="sigil" data-t="${escapeHtml(SIGIL_TYPES.get(op.sigil) || "")}" aria-hidden="true">${escapeHtml(op.sigil)}</span>
+  const sigils = OPERATORS.map((op) => {
+    const tok = SIGIL_TYPES.get(op.sigil) || "";
+    const partnerOp = OP_BY_NAME.get(op.partner);
+    const partnerHtml = partnerOp
+      ? `<a class="op-partner" href="#op-${escapeHtml(partnerOp.name)}" title="Jump to dimensional symmetry partner">↔ ${escapeHtml(partnerOp.sigil)} ${escapeHtml(partnerOp.name)}</a>`
+      : "";
+    return `<li id="op-${escapeHtml(op.name)}">
+      <span class="sigil" data-t="${escapeHtml(tok)}" aria-hidden="true">${escapeHtml(op.sigil)}</span>
       <p class="name">${escapeHtml(op.name)} <code>${escapeHtml(op.sigil)}</code></p>
+      <p class="op-meta"><span class="op-valence">${escapeHtml(op.valence)}</span><span>${escapeHtml(op.axis)}</span>${partnerHtml}</p>
       <p class="reads">${escapeHtml(op.reads)}</p>
-      <p class="op-line"><code>${escapeHtml(op.line)}</code></p>
+      <p class="op-line expr-row"><code class="spw-expr" data-spw-expr="${escapeHtml(op.line)}">${paintOneLine(op.line)}</code><button type="button" class="copy-expr" data-copy-line="${escapeHtml(op.line)}" aria-label="Copy ${escapeHtml(op.name)} example">Copy</button></p>
+      <p class="op-actions"><button type="button" class="op-find" data-highlight-token="${escapeHtml(tok)}" aria-pressed="false">Find on page</button><a href="/build?script=${encodeURIComponent(op.line)}#build">Edit</a> · <a href="${escapeHtml(factshiftHref(op.line))}" target="_blank" rel="noopener">Canvas ↗</a></p>
       <p class="note">Runtime: ${escapeHtml(op.does)}</p>${EDGES_IN.ops.has(op.name) ? `
       <p class="edges-in">${panelLinks(EDGES_IN.ops.get(op.name))}</p>` : ""}${inFile(op.name)}
-    </li>`).join("\n    ");
-  const braces = CONTAINERS.map((c) => `<li id="brace-${escapeHtml(c.name)}">
-      <code class="pair" data-t="b-${escapeHtml(BRACE_TYPES.get(c.open) || "")}"><span>${escapeHtml(c.open)}</span><span>${escapeHtml(c.close)}</span></code>
-      <span class="brace-reads"><strong>${escapeHtml(c.name)}</strong> ${escapeHtml(c.reads)}</span>${EDGES_IN.braces.has(c.name) ? `
+    </li>`;
+  }).join("\n    ");
+  const braces = CONTAINERS.map((c) => {
+    const btok = `b-${BRACE_TYPES.get(c.open) || ""}`;
+    return `<li id="brace-${escapeHtml(c.name)}">
+      <code class="pair" data-t="${escapeHtml(btok)}"><span>${escapeHtml(c.open)}</span><span>${escapeHtml(c.close)}</span></code>
+      <span class="brace-reads"><strong>${escapeHtml(c.name)}</strong> <em>(${escapeHtml(c.axis)})</em> ${escapeHtml(c.reads)} <button type="button" class="op-find" data-highlight-token="${escapeHtml(btok)}" aria-pressed="false">Find on page</button></span>${EDGES_IN.braces.has(c.name) ? `
       <span class="edges-in">${panelLinks(EDGES_IN.braces.get(c.name))}</span>` : ""}
-    </li>`).join("\n    ");
+    </li>`;
+  }).join("\n    ");
+  const interpretCatalog = [
+    ...OPERATORS.map((op) => {
+      const partnerOp = OP_BY_NAME.get(op.partner);
+      return {
+        token: SIGIL_TYPES.get(op.sigil) || "",
+        id: `op-${op.name}`,
+        sigil: op.sigil,
+        name: op.name,
+        meta: `${op.valence} · ${op.axis}`,
+        reads: op.reads,
+        line: op.line,
+        partnerId: partnerOp ? `op-${partnerOp.name}` : "",
+        partnerLabel: partnerOp ? `${partnerOp.sigil} ${partnerOp.name}` : "",
+      };
+    }),
+    ...CONTAINERS.map((c) => ({
+      token: `b-${BRACE_TYPES.get(c.open) || ""}`,
+      id: `brace-${c.name}`,
+      sigil: `${c.open}${c.close}`,
+      name: c.name,
+      meta: `${c.axis} · objective open → subjective close`,
+      reads: c.reads,
+      line: "",
+      partnerId: "",
+      partnerLabel: "",
+    })),
+  ];
+  const heroExpr = `editor@cut{rough ~> fine ~> locked}(deadline)<reel>\n?["what broke the pacing?"]{ !probe{ "watch scene 3 muted" } }`;
   const setIds = INSTRUCTION_SETS.map((set) => set.id).join(" ");
   const scopeAttr = lens ? ` data-server-lens="true" ${lensHtmlAttrs(lens)}` : "";
   return layout({
@@ -354,7 +606,7 @@ function renderGuide(parser = null, example = EXAMPLES[0], at = "", lens = null)
     description: "Spw is a notation for a reading you can check. A mark names a role, a brace names a slot, and a tool reads the line back. How to answer in Spw: spw.quest/llms.txt",
     canonical: "https://spw.quest/",
     head: `${QUEST_HEAD}\n  <link rel="alternate" type="text/plain" href="/llms.txt" title="What can be done here by address, and how to answer in Spw">`,
-    script: `document.documentElement.dataset.setupSets = ${JSON.stringify(setIds)};\ndocument.documentElement.dataset.panels = ${JSON.stringify(STEPS.map((step) => step.id).join(" "))};\n(${forwardOldHash.toString()})();\n(${toolActions.toString()})();\n(${releaseNotice.toString()})(${JSON.stringify(PINNED_RELEASE)}, ${newestPublished.toString()});\n(${clientLensInit.toString()})(${JSON.stringify(clientLensPayload())});`,
+    script: `document.documentElement.dataset.setupSets = ${JSON.stringify(setIds)};\ndocument.documentElement.dataset.panels = ${JSON.stringify(STEPS.map((step) => step.id).join(" "))};\n(${forwardOldHash.toString()})();\n(${toolActions.toString()})();\n(${interactiveInterpretations.toString()})(${JSON.stringify(interpretCatalog).replace(/</g, "\\u003c")});\n(${releaseNotice.toString()})(${JSON.stringify(PINNED_RELEASE)}, ${newestPublished.toString()});\n(${clientLensInit.toString()})(${JSON.stringify(clientLensPayload())});`,
     themeCss: `${PAPER_CSS}
     ${PAGE_CSS}
     ${FILE_CSS}
@@ -366,9 +618,12 @@ function renderGuide(parser = null, example = EXAMPLES[0], at = "", lens = null)
 ${parser ? `${switchBanner(parser.value, parser.from)}\n` : ""}<section class="opening" aria-labelledby="title">
   <p class="eyebrow">Spw · readable marks and containers for people, editors, and tools</p>
   <h1 id="title">A notation for readings you can compare.</h1>
-  <pre class="title-spw" aria-label="Two Spw lines showing prefix force, perspective, path, and containment"><code><span data-t="perspective">editor@</span>cut<span data-t="b-direction">{</span>rough <span data-t="stream">~&gt;</span> fine <span data-t="stream">~&gt;</span> locked<span data-t="b-direction">}</span><span data-t="b-scene">(</span>deadline<span data-t="b-scene">)</span><span data-t="b-concept">&lt;</span>reel<span data-t="b-concept">&gt;</span>
+  <div class="title-spw-wrap">
+    <pre class="title-spw" data-spw-expr="${escapeHtml(heroExpr)}" aria-label="Two Spw lines showing prefix force, perspective, path, and containment"><code><span data-t="perspective">editor@</span>cut<span data-t="b-direction">{</span>rough <span data-t="stream">~&gt;</span> fine <span data-t="stream">~&gt;</span> locked<span data-t="b-direction">}</span><span data-t="b-scene">(</span>deadline<span data-t="b-scene">)</span><span data-t="b-concept">&lt;</span>reel<span data-t="b-concept">&gt;</span>
 <span data-t="wonder">?</span><span data-t="b-mode">[</span>"what broke the pacing?"<span data-t="b-mode">]</span><span data-t="b-direction">{</span> <span data-t="action">!</span>probe<span data-t="b-direction">{</span> "watch scene 3 muted" <span data-t="b-direction">}</span> <span data-t="b-direction">}</span></code></pre>
-  <p class="lede">A mark says how you stand toward a word. A container bounds what belongs inside — in any order, nested, or alone. Read and compare lines here, or project them onto a spatial canvas at <a href="https://factshift.center" target="_blank" rel="noopener">factshift.center</a>.</p>
+    <button type="button" class="copy-expr" data-copy-line="${escapeHtml(heroExpr)}" aria-label="Copy opening Spw example">Copy</button>
+  </div>
+  <p class="lede">A mark says how you stand toward a word. A container bounds what belongs inside — in any order, nested, or alone. Click any colored mark or brace to trace it across the page, or project lines onto a spatial canvas at <a href="https://factshift.center" target="_blank" rel="noopener">factshift.center</a>.</p>
   <div class="doors" aria-label="Choose your path into Spw">
     <article class="door"><h3><a href="/learn">New to Spw</a></h3><p>Seven one-line storyboard panels starting from plain prose — no jargon required.</p></article>
     <article class="door"><h3><a href="/build">Engineer or editor</a></h3><p>Take a line apart, compare <a href="/forms/">forms side by side</a>, or mount <a href="/install#repository">.spw/_workbench</a>.</p></article>
@@ -381,13 +636,14 @@ ${startersSection(escapeHtml, {
   exampleHref: (id) => `/?example=${encodeURIComponent(id)}#try`,
   canvasHref: (line) => factshiftScriptHref(line),
   tabOf: (id) => (EXAMPLES.find((item) => item.id === id) || { tab: id }).tab,
+  paintLine: paintOneLine,
 })}
 ${walkSection()}
 ${fileWorkspace(example, at)}
 
 <section id="operators" class="band" aria-labelledby="operators-title">
   <h2 id="operators-title">Marks and braces${selfLink("operators", "operators-title")}</h2>
-  <p>Twelve marks, each with what it does in a sentence and a line it might start. The name is the workbench's. The runtime line is what the reader does with the mark today, and the numbers open the <a href="/learn">Learn</a> panel that uses it.</p>
+  <p>Twelve marks organized as six dimensional symmetry pairs — each with its spatial axis, elemental valence, partner, and a live specimen line you can copy, edit, or open on <code>factshift.center</code>. Click <strong>Find on page</strong> on any card (or click any colored mark inside an expression) to trace where it appears.</p>
   <ul class="sigils">
     ${sigils}
   </ul>
@@ -397,6 +653,24 @@ ${fileWorkspace(example, at)}
   <p class="note"><a href="/forms/">Forms, side by side</a>: each brace, join and mark against its neighbors. Marks and braces compose: <code><span data-t="vibration">#</span><span data-t="b-mode">[</span>…<span data-t="b-mode">]</span></code> is a set, <code><span data-t="ground">.</span><span data-t="b-direction">{</span>…<span data-t="b-direction">}</span></code> a property sheet.</p>
 </section>
 </div>
+<aside class="interpret-dock" data-interpret-dock role="region" aria-label="Selected Spw mark" hidden>
+  <div class="interpret-dock-head">
+    <span class="interpret-dock-sigil" data-dock-sigil></span>
+    <strong data-dock-name></strong>
+    <span class="interpret-dock-meta" data-dock-meta></span>
+    <button type="button" class="copy-expr interpret-dock-close" data-dock-close aria-label="Clear highlight">×</button>
+  </div>
+  <p class="interpret-dock-reads" data-dock-reads></p>
+  <div class="interpret-dock-actions">
+    <button type="button" data-dock-prev aria-label="Previous match">↑ Prev</button>
+    <button type="button" data-dock-next aria-label="Next match">↓ Next</button>
+    <span class="interpret-dock-count" data-dock-count></span>
+    <button type="button" data-dock-copy>Copy line</button>
+    <a data-dock-def href="#operators">Definition</a>
+    <a data-dock-partner href="#operators" hidden></a>
+    <a data-dock-canvas href="https://factshift.center" target="_blank" rel="noopener" hidden>Canvas ↗</a>
+  </div>
+</aside>
 
 <section id="ways" class="band" aria-labelledby="ways-title">
   <h2 id="ways-title">Tools${selfLink("ways", "ways-title")}</h2>
@@ -746,7 +1020,7 @@ async function handleQuest(request, url) {
   } else if (url.pathname === "/read") {
     response = handleRead(url);
   } else if (url.pathname === "/specimens") {
-    response = page(renderSpecimens(specimenState(url.searchParams)), { cache: "public, max-age=300" });
+    response = page(renderSpecimens(specimenState(url.searchParams)), { cache: "public, max-age=300, s-maxage=3600, stale-while-revalidate=86400" });
   } else if (url.pathname === "/constructs") {
     response = page(renderConstructs(), { cache: "public, max-age=300" });
   } else if (url.pathname === "/pivot") {

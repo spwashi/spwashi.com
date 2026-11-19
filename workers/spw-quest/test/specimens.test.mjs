@@ -3,8 +3,9 @@
 // `carry-specimens.mjs --check`, which npm run check:workers runs.
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { gzipSync } from 'node:zlib';
 import worker from '../src/index.js';
-import { SPECIMENS, compareSpecimens, findSpecimens, readQuery, specimenById } from '../src/specimens.js';
+import { ROUTE_KIND_LIMIT, SPECIMENS, compareSpecimens, findSpecimens, readQuery, specimenById } from '../src/specimens.js';
 import { SPW_EXPRESSION_MANIFEST } from '../../../public/js/generated/spw-expressions.js';
 import { BASE_SECURITY } from '../../lib/shell.js';
 
@@ -33,12 +34,14 @@ test('the shelf reads with scripts off: pressed forms, the pages\' rarer lines, 
   assert.match(response.headers.get('cache-control'), /max-age=300/);
   const page = await response.text();
   assertBalanced(page);
-  // 260 KB until 2026-11-06; the plans band then added 53 lines painted like every card (about 15 KB of paint).
-  // 275 KB until 2026-11-12 (the creator's call): the page stood 360 characters under it, and each rarer line
-  // spwashi.com gains is about 1.1 KB here. The texture.website domain page's lede was the line that crossed it.
-  // 280 KB until 2026-11-18: /tiktok/ added four scened lines and the page stood at 282168.
-  // 285 KB until 2026-11-19: diversifying 38 hub expressions off flat abc[def]{ghi} promoted ~20 marked/scened/joined lines onto the shelf (~304 KB).
-  assert.ok(page.length < 315_000, `the shelf stays under 315 KB (${page.length})`);
+  // Bounded drawers (ROUTE_KIND_LIMIT = 24 per kind) decouple shelf HTML weight from spwashi.com expression variety,
+  // while gating Cloudflare wire cost directly via gzipped bytes (< 48 KB) so rich factshift.center examples never compete with markup.
+  const gzipped = gzipSync(page, { level: 9 }).length;
+  assert.ok(gzipped < 48_000, `the shelf stays under 48 KB gzipped (${gzipped} B gzip / ${page.length} B raw)`);
+  assert.ok(page.length < 280_000, `bounded drawers keep raw shelf HTML under 280 KB (${page.length})`);
+  // Non-plan specimens (herbarium & route cards) also carry compact /canvas?s=<id> doors for factshift.center.
+  assert.match(page, /href="\/canvas\?s=h-capsule">Canvas<\/a>/);
+  assert.ok(ROUTE_KIND_LIMIT >= 12 && ROUTE_KIND_LIMIT <= 32, 'drawer cap keeps variety visible without unbounded bloat');
   assert.match(page, /<h1 id="specimens-title">Specimens<\/h1>/);
   for (const id of ['pressed', 'pages', 'gallery', 'plans']) assert.match(page, new RegExp(`<section id="${id}" class="band"`), id);
   for (const specimen of SPECIMENS.filter(({ source }) => source !== 'routes')) {

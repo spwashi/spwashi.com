@@ -83,18 +83,21 @@ export const STARTERS = Object.freeze([
 ]);
 
 /** The section the guide shows under its opening. `href` builders come from the worker so links stay in one form. */
-export function startersSection(escapeHtml, { editHref, exampleHref, canvasHref, tabOf }) {
-  const cards = STARTERS.map((s) => `<article class="door starter" id="start-${escapeHtml(s.id)}">
+export function startersSection(escapeHtml, { editHref, exampleHref, canvasHref, tabOf, paintLine }) {
+  const cards = STARTERS.map((s) => {
+    const painted = paintLine ? paintLine(s.line) : escapeHtml(s.line);
+    return `<article class="door starter" id="start-${escapeHtml(s.id)}">
       <h3>${escapeHtml(s.setting)}</h3>
-      <p><code>${escapeHtml(s.line)}</code></p>
+      <p class="expr-row"><code class="spw-expr" data-spw-expr="${escapeHtml(s.line)}">${painted}</code><button type="button" class="copy-expr" data-copy-line="${escapeHtml(s.line)}" aria-label="Copy ${escapeHtml(s.setting)} line">Copy</button></p>
       <p><strong>Ask</strong> ${escapeHtml(s.ask)}</p>
       <p><strong>Talk</strong> ${escapeHtml(s.talk)}</p>
       <p><strong>Build</strong> ${escapeHtml(s.build)}</p>
       <p class="starter-ways"><a href="${escapeHtml(editHref(s.line))}">Change a slot</a> · <a href="${escapeHtml(exampleHref(s.open))}">Open ${escapeHtml(tabOf(s.open))}</a> · <a href="${escapeHtml(canvasHref(s.line))}" target="_blank" rel="noopener">Canvas ↗</a></p>
-    </article>`).join("\n    ");
+    </article>`;
+  }).join("\n    ");
   return `<section id="start" class="band" aria-labelledby="start-title">
   <h2 id="start-title">Start from a line</h2>
-  <p>Each line uses a different Spw shape — a prefix mark, a persona perspective, a scene first, or a transition path. Pick one to ask a question, open a full example file, or pivot any part.</p>
+  <p>Each line uses a different Spw shape — a prefix mark, a persona perspective, a scene first, or a transition path. Click any colored mark or brace to highlight matching expressions and inspect its role, or copy a line straight into your notes.</p>
   <div class="doors">
     ${cards}
   </div>
