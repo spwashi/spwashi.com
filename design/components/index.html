@@ -197,7 +197,7 @@
                 </div>
                 <aside class="spw-cuisine-taxonomy" data-spw-semantic-cluster="culinary programming learning" data-spw-semantic-expression="component[spw-serialization]{expand.with.context}" aria-labelledby="component-serialization-title">
                     <header>
-                        <h3 id="component-serialization-title">Spw serialization as recipe card</h3>
+                        <h2 id="component-serialization-title">Spw serialization as recipe card</h2>
                         <p>A component can be written as a compact Spw label, then expanded by a person, crawler, or model into a route, prompt, screenshot brief, or implementation note.</p>
                     </header>
                     <dl>
@@ -389,7 +389,7 @@
                 <div class="frame-grid frame-grid--2up">
                     <article class="spw-panel">
                         <p data-spw-textual-role="note">macro layout wrapper</p>
-                        <h3>.site-frame</h3>
+                        <h3>.spw-frame</h3>
                         <p>The primary block-level section element <code>&lt;section class="spw-frame" data-spw-kind="frame"&gt;</code>. These define large vertical stopping points down the scroll. They often host <code>id</code> attributes and <code>data-spw-*</code> rendering attributes to bias their local contents.</p>
                         <ul class="spw-list-plain">
                             <li>Supports <code>.frame-heading</code> and <code>.frame-topline</code> composition.</li>
@@ -935,44 +935,44 @@
                     <div class="lab-controls">
                         <div class="demo-control-bank">
                             <section class="demo-control-group">
-                                <h4>Scene</h4>
+                                <h3>Scene</h3>
                                 <p data-spw-textual-role="note">Jump to a meaningful room before tweaking local states.</p>
                                 <div class="demo-control-row">
-                                    <button class="spw-chip" data-spw-handle="true" data-preset="hearth" data-spw-operator="potential" data-spw-action="explore">~cozy</button>
-                                    <button class="spw-chip" data-spw-handle="true" data-preset="loom" data-spw-operator="potential" data-spw-action="explore">~loom</button>
-                                    <button class="spw-chip" data-spw-handle="true" data-preset="access" data-spw-operator="potential" data-spw-action="explore">~readable</button>
+                                    <button type="button" class="spw-chip" data-spw-handle="true" data-preset="hearth" data-spw-operator="potential" data-spw-action="explore">~cozy</button>
+                                    <button type="button" class="spw-chip" data-spw-handle="true" data-preset="loom" data-spw-operator="potential" data-spw-action="explore">~loom</button>
+                                    <button type="button" class="spw-chip" data-spw-handle="true" data-preset="access" data-spw-operator="potential" data-spw-action="explore">~readable</button>
                                 </div>
                             </section>
 
                             <section class="demo-control-group">
-                                <h4>Physical Density</h4>
+                                <h3>Physical Density</h3>
                                 <p data-spw-textual-role="note">Compact flow versus more breathing room.</p>
                                 <div class="demo-control-row">
-                                    <button class="spw-chip" data-spw-handle="true" data-site-setting-set="componentDensity:dense" data-spw-operator="potential" data-spw-action="explore">~dense</button>
-                                    <button class="spw-chip" data-spw-handle="true" data-site-setting-set="componentDensity:soft" data-spw-operator="potential" data-spw-action="explore">~soft</button>
-                                    <button class="spw-chip" data-spw-handle="true" data-site-setting-set="componentDensity:roomy" data-spw-operator="potential" data-spw-action="explore">~roomy</button>
+                                    <button type="button" class="spw-chip" data-spw-handle="true" data-site-setting-set="componentDensity:dense" data-spw-operator="potential" data-spw-action="explore">~dense</button>
+                                    <button type="button" class="spw-chip" data-spw-handle="true" data-site-setting-set="componentDensity:soft" data-spw-operator="potential" data-spw-action="explore">~soft</button>
+                                    <button type="button" class="spw-chip" data-spw-handle="true" data-site-setting-set="componentDensity:roomy" data-spw-operator="potential" data-spw-action="explore">~roomy</button>
                                 </div>
                                 <spw-include src="scripts-off-tuning"></spw-include>
                             </section>
 
                             <section class="demo-control-group">
-                                <h4>Operator Resonance</h4>
+                                <h3>Operator Resonance</h3>
                                 <p data-spw-textual-role="note">Decide how loudly related operators should echo.</p>
                                 <div class="demo-control-row">
-                                    <button class="spw-chip" data-spw-handle="true" data-site-setting-set="fieldResonance:local" data-spw-operator="potential" data-spw-action="explore">~local</button>
-                                    <button class="spw-chip" data-spw-handle="true" data-site-setting-set="fieldResonance:field" data-spw-operator="potential" data-spw-action="explore">~field</button>
-                                    <button class="spw-chip" data-spw-handle="true" data-site-setting-set="fieldResonance:choral" data-spw-operator="potential" data-spw-action="explore">~choral</button>
+                                    <button type="button" class="spw-chip" data-spw-handle="true" data-site-setting-set="fieldResonance:local" data-spw-operator="potential" data-spw-action="explore">~local</button>
+                                    <button type="button" class="spw-chip" data-spw-handle="true" data-site-setting-set="fieldResonance:field" data-spw-operator="potential" data-spw-action="explore">~field</button>
+                                    <button type="button" class="spw-chip" data-spw-handle="true" data-site-setting-set="fieldResonance:choral" data-spw-operator="potential" data-spw-action="explore">~choral</button>
                                 </div>
                                 <spw-include src="scripts-off-tuning"></spw-include>
                             </section>
 
                             <section class="demo-control-group">
-                                <h4>Material Kind</h4>
+                                <h3>Material Kind</h3>
                                 <p data-spw-textual-role="note">Treat the specimen as glass, paper, or matte support.</p>
                                 <div class="demo-control-row">
-                                    <button class="spw-chip" data-spw-handle="true" data-site-setting-set="baseMetamaterial:glass" data-spw-operator="potential" data-spw-action="explore">~glass</button>
-                                    <button class="spw-chip" data-spw-handle="true" data-site-setting-set="baseMetamaterial:paper" data-spw-operator="potential" data-spw-action="explore">~paper</button>
-                                    <button class="spw-chip" data-spw-handle="true" data-site-setting-set="baseMetamaterial:matte" data-spw-operator="potential" data-spw-action="explore">~matte</button>
+                                    <button type="button" class="spw-chip" data-spw-handle="true" data-site-setting-set="baseMetamaterial:glass" data-spw-operator="potential" data-spw-action="explore">~glass</button>
+                                    <button type="button" class="spw-chip" data-spw-handle="true" data-site-setting-set="baseMetamaterial:paper" data-spw-operator="potential" data-spw-action="explore">~paper</button>
+                                    <button type="button" class="spw-chip" data-spw-handle="true" data-site-setting-set="baseMetamaterial:matte" data-spw-operator="potential" data-spw-action="explore">~matte</button>
                                 </div>
                                 <spw-include src="scripts-off-tuning"></spw-include>
                             </section>
@@ -991,7 +991,7 @@
                             <p>This specimen responds to the same settings that shape the rest of the site. The point is not only to see a card move. The point is to judge whether the interaction still means the same thing after the environment changes.</p>
                             <p>The <code>data-site-setting-set</code> and <code>data-preset</code> attributes let an ordinary button act like a remote handle for the runtime. That keeps the demos declarative enough for later passes to extend without inventing a new widget language.</p>
                             <footer class="frame-actions">
-                                <button class="spw-chip" data-spw-handle="true" data-spw-operator="action">!tune</button>
+                                <button type="button" class="spw-chip" data-spw-handle="true" data-spw-operator="action">!tune</button>
                                 <a class="spw-chip" data-spw-handle="true" href="/design/#promptability-studio" data-spw-operator="potential" data-spw-action="explore">~design_hub</a>
                             </footer>
                         </article>
