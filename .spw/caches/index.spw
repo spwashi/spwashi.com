@@ -167,6 +167,7 @@
 @example_leads_2026_11: ~"./example-leads-2026-11.spw"  # cache: the belief leads, the example is the answer from the bench. Watching peers through months of looking for work, while hiring, training, and support stay unfixed, is the stake. Direction is one line a stranger can try, posted from spw.quest onto factshift.center. Tune rows say which of the three they serve (#el-direction, #el-belief)
 @gemini_neon_high_wedge_2026_11: ~"./gemini-neon-high-wedge-2026-11.spw"  # cache: one question for Gemini 4 Neon high. The open work is staged as bench[open]{arrival, example, copy}, and the reply moves one slot so two strategies diff (#gnh-staged, #gnh-reply)
 @expression_stagnation_and_variety_2026_11: ~"./expression-stagnation-and-variety-2026-11.spw"  # cache: 1,030-expression stagnation census (94% flat abc[def]{ghi}<jkl>), five false container implications, 32-shape live spw-seed 0.3.0 parse matrix, expression-query.js and lexer ceilings, and 7-family variety direction (#esv-001..#esv-005)
+@model_metacognition_and_elemental_tasks_2026_11: ~"./model-metacognition-and-elemental-tasks-2026-11.spw"  # cache: cross-model metacognitive calibration protocol (4 fixed wedges, pre-registered ~#expect, consensus-vs-divergence rule), hydrogen/carbon/neon/argon elemental task router, and dated comparison ledger (#mmet-protocol..#mmet-ledger)
 
 operation = "align"
 fixity = "tending"
@@ -274,6 +275,7 @@ fixity = "tending"
   example_leads_2026_11 = @example_leads_2026_11
   gemini_neon_high_wedge_2026_11 = @gemini_neon_high_wedge_2026_11
   expression_stagnation_and_variety_2026_11 = @expression_stagnation_and_variety_2026_11
+  model_metacognition_and_elemental_tasks_2026_11 = @model_metacognition_and_elemental_tasks_2026_11
 }[reg=facet]
 
 ^"cache_rules"{
