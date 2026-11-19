@@ -568,10 +568,7 @@ export const FEATURE_DEFS = [
     selector: '[data-promo-wonder-cycle]',
     describes: 'promo-wonder-cycle[daily|weekly] feed card rotation',
     updates: [
-      'structural:data-spw-cadence',
-      'flourish:data-spw-presentation',
       'structural:data-spw-promotion-kind',
-      'structural:data-spw-region-flow',
     ],
     evaluates: ['visual', 'visual-model'],
     timingArc: 'visible-media',
@@ -824,7 +821,6 @@ export const FEATURE_DEFS = [
     selector: '#pretext-input, .pretext-lab-grid',
     describes: 'pretext[layout|sandbox|projection] lab[observe|resize|inspect]',
     updates: [
-      'structural:data-spw-flow',
       'structural:data-text-wrap',
       'structural:data-text-mode',
     ],
