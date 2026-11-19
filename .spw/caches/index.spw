@@ -168,6 +168,7 @@
 @gemini_neon_high_wedge_2026_11: ~"./gemini-neon-high-wedge-2026-11.spw"  # cache: one question for Gemini 4 Neon high. The open work is staged as bench[open]{arrival, example, copy}, and the reply moves one slot so two strategies diff (#gnh-staged, #gnh-reply)
 @expression_stagnation_and_variety_2026_11: ~"./expression-stagnation-and-variety-2026-11.spw"  # cache: 1,030-expression stagnation census (94% flat abc[def]{ghi}<jkl>), five false container implications, 32-shape live spw-seed 0.3.0 parse matrix, expression-query.js and lexer ceilings, and 7-family variety direction (#esv-001..#esv-005)
 @model_metacognition_and_elemental_tasks_2026_11: ~"./model-metacognition-and-elemental-tasks-2026-11.spw"  # cache: cross-model metacognitive calibration protocol (4 fixed wedges, pre-registered ~#expect, consensus-vs-divergence rule), hydrogen/carbon/neon/argon elemental task router, and dated comparison ledger (#mmet-protocol..#mmet-ledger)
+@factshift_navigation_and_physics_2026_11: ~"./factshift-navigation-and-physics-2026-11.spw"  # cache: factshift.center three-arrival input recognition (domain/URL, document, hand-typed Spw), eight-way navigation axes, canvas-vs-frame touch seam, five-grain scrub architecture (TREE/NODE/LINE vs. PART/CHAR), six-pair operator physics, and ecosystem readiness (#fnp-arrivals..#fnp-ecosystem)
 
 operation = "align"
 fixity = "tending"
@@ -276,6 +277,7 @@ fixity = "tending"
   gemini_neon_high_wedge_2026_11 = @gemini_neon_high_wedge_2026_11
   expression_stagnation_and_variety_2026_11 = @expression_stagnation_and_variety_2026_11
   model_metacognition_and_elemental_tasks_2026_11 = @model_metacognition_and_elemental_tasks_2026_11
+  factshift_navigation_and_physics_2026_11 = @factshift_navigation_and_physics_2026_11
 }[reg=facet]
 
 ^"cache_rules"{
