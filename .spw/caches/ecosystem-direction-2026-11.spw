@@ -45,6 +45,13 @@
 @spw_design_improvements: ~"./spw-design-improvements-2026-11.spw"
 @character_onboarding: ~"./character-constraint-onboarding-2026-11.spw"
 @seven_passes: ~"./seven-passes-unreported-2026-11.spw"
+@factshift_navigation: ~"./factshift-navigation-and-physics-2026-11.spw"
+@expression_variety: ~"./expression-stagnation-and-variety-2026-11.spw"
+@gemini_argon: ~"./gemini-4-argon-2026-11.spw"
+@attention_carry: ~"../../workers/attention-productions/carry.mjs"
+@attention_stage: ~"../../workers/factshift-center/app/src/js/ui/attention-stage.ts"
+@attention_dailies: ~"../../workers/factshift-center/app/src/js/ui/attention-dailies.ts"
+@factshift_version: ~"../../workers/factshift-center/version.json"
 
 operation = "cache"
 fixity = "experimental"
@@ -237,4 +244,28 @@ summary = #[
     `One cadence clock: aligning 13th/26th closes, month-end, and self-paced serials across /now/, promo-wonder-cycle.json, lore.land, and autonomous.feedback.`,
     `First closed wedge: arrival geometry contract + reflow fix, cross-host example-leads loop, or autonomous.feedback constellation card rethink.`,
   ][reg=set]
+}[reg=facet]
+
+^"triad_direction_2026_11_19"{
+  id = "ed-triad-2026-11-19"
+  dated = "2026-11-19"
+  operation = "align"
+  fixity = "experimental"
+  source = `Gemini 4 Argon synthesis pass on 2026-11-19 after live spw.quest deploy (a7a0d7ff), attention.productions file-only shot composer (c8a11758), and factshift.center bcf0da18 navigation/physics framing (@factshift_navigation, @expression_variety, @gemini_argon)`
+  claim = `spw.quest, attention.productions, and factshift.center now converge as one closed three-host instrument on a shared bcf0da18 reader baseline: spw.quest owns grammar, bounded specimens, and short-ID address brokering; attention.productions proves expression-as-handle slot scrubbing and host-native arrival staging; and factshift.center serves as the spatial fulcrum where lines from every host arrive, unfold into calm force-directed topology, and return.`
+
+  spw_quest: .{
+    built_2026_11_19 = `Live on Cloudflare Workers (a7a0d7ff): diversified 7-family starters (@expression_variety), 6 elemental operator symmetry pairs, bounded /specimens drawers (ROUTE_KIND_LIMIT = 24, 33.4 KB gz wire weight), universal /canvas?s=<id> 302 redirects (~36 B in HTML), and two-way specimen/operator interactivity.`
+    direction = `Remain the canonical lexicon, single-slot pivot shelf (/pivot, /build), llms.txt / social-bot projection format, and short-ID Canvas redirector so index pages stay light while every expression stays one click from spatial play.`
+  }[reg=facet]
+
+  attention_productions: .{
+    built = `File-only shot composer (@attention_carry, c8a11758): address-is-the-shot Spw (!shot[...] + ^frame{...}), horizontal expression-as-handle scrubbing (SCRUB_PX = 28), fixed-blur SVG viewfinder, texture.website material federation (--sref), mutex.buzz/now/ held slot, and #spw64= Canvas handoff.`
+    direction = `Stand as the reference kinetic/optical instrument for slot scrubbing, seasonal mutex holds, and host-native arrival choreography — already paired with factshift.center via @attention_stage (viewfinder + iris enter) and @attention_dailies (clapper + 8%-capped ratio letterbox).`
+  }[reg=facet]
+
+  factshift_center: .{
+    built = `File-only static canvas (@factshift_version: rev 635d551, reader 2026.11.16-pre.1 @ bcf0da18, eventPolicy:'none', pivotsOf), fractal width/depth folding, 8-sector quick/slow body gestures, 40-row thread + #spw64= codec, and live attention.productions stage/dailies choreography.`
+    direction = `Primary architectural focus (@factshift_navigation): (1) generalize @attention_stage and @attention_dailies into a pre-parse arrival router across all @cluster peers, external URLs, multi-line documents, and hand-typed Spw with an undoable one-line receipt; (2) map all eight directional prepositions onto four spatial axes plus meta inspection; (3) lock vertical edge rails to one declared collection grain (TREE/NODE/LINE) with a thumb-clear badge while adopting attention.productions' horizontal SCRUB_PX = 28 expression-as-handle scrub for PART/CHAR; (4) separate bare canvas taps (settle-only) from 2px frame-rim touches (frozen alpha + 12-16 px dead zone); (5) bind the 6 elemental operator pairs to dual forces, 4 orthogonal slot materials, slot-stable memory keys, and already-bundled bcf0da18 speech/earcon exports (@gemini_argon#sensory_exports); (6) prepare for post-bcf0da18 spw-seed P0-P3 shapes and calm far-cutoff neighborhood physics (@example_leads#tune_rest, #tune_reach).`
+  }[reg=facet]
 }[reg=facet]
