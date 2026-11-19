@@ -13,7 +13,7 @@
 - [Home](https://spwashi.com/): Creator landing surface, live Spw paste prompt, and primary constellation doors.
 - [Now & Active Studies](https://spwashi.com/now/#studies): Current focus, cycle receipts, and active studies across software studies, mechanics studies, and studies in dynamics.
 - [About](https://spwashi.com/about/): Biography, resume practices, and ecosystem background.
-- [Ten-Domain Constellation](https://spwashi.com/about/domains/): Map of connected sites (`spw.quest`, `factshift.center`, `lore.land`, `texture.website`, and sibling rooms).
+- [Ten-Domain Constellation](https://spwashi.com/about/domains/): Map of connected sites (`spw.quest`, `factshift.center`, `attention.productions`, `texture.website`, `lore.land`, and sibling rooms).
 
 ## Language, Workbench & Interactive Tools
 
@@ -36,6 +36,7 @@
 - [Measured Consumer Report (`workbench-report.spw`)](https://spwashi.com/.spw/workbench-report.spw): Timed probes, CLI memo keys, LSP `documentSymbol` reparse latency, trace-cost profiles, and Nov 19 container-variety AST receipts.
 - [Upstream Recommendations (`upstream-workbench-recommendations.spw`)](https://spwashi.com/.spw/reviews/upstream-workbench-recommendations.spw): Synthesized capability contracts (`operator.table/1`, `inquiry.loop/1`, `reading.ground-edge/1`, `citation.resolve/1`) and themed ask tree.
 - [Expression Stagnation & Container Variety Cache](https://spwashi.com/.spw/caches/expression-stagnation-and-variety-2026-11.spw): Empirical 1,033-expression census, parse matrix, cross-domain utility audit, and exact parser ceilings hit on `spwashi.com` and `spw.quest`.
+- [Factshift Navigation, Scrub Grains & Operator Physics](https://spwashi.com/.spw/caches/factshift-navigation-and-physics-2026-11.spw): Spatial fulcrum direction across `spw.quest`, `attention.productions`, and `factshift.center` — arrivals, eight-way navigation, five scrub grains, and six-pair operator physics.
 - [Algorithmic Practicality Cache](https://spwashi.com/.spw/caches/workbench-algorithmic-practicality-2026-11.spw): Digraph priority, single-pass scanner, and bounded recovery notes.
 
 ## Design, CSS & Visual Craft
