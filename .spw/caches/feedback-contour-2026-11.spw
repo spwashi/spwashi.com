@@ -168,3 +168,34 @@ summary = #[
   ][reg=set]
   do_not_promote_until = `The creator has read this block. Nothing here joins smallest_patches, and the by-hand practices come before any build.`
 }[reg=facet]
+
+^"constellation_rethink_2026_11"{
+  id = "fc-constellation-rethink"
+  dated = "2026-11-18"
+  operation = "cache"
+  fixity = "experimental"
+  source = `creator, 2026-11-18: "copy across the surfaces needs refinement; autonomous.feedback was not very thoughtfully designed, though the direction is there and it needs to be considered more deeply w/r to the other domains"`
+  claim = `autonomous.feedback has the right core impulse — a low-pressure, screenshot-native receipt with an honest limit — but was designed as a standalone SaaS/shop form rather than as a thin constellation layer that inherits each host's real craft object, vocabulary, and return address.`
+  why_unthoughtful_today = #[
+    `Generic shop defaults bleed onto creative/language hosts (Pay, cart, price, /checkout) instead of matching the craft each domain actually makes.`,
+    `The saved/screenshot card advertises the form (autonomous.feedback/{host}) and a self-promotional footer ("Run a site? Put this form on it.") instead of pointing a zero-context stranger back to the specific chapter, line, swatch, or proof card the note responded to.`,
+    `Across spwashi.com and sibling hosts, surface copy still mixes schema/form boilerplate ("Helpful inquiry shape", verbose ephemeral labels, raw operator jargon before plain words) with creator-first voice, so newcomers see paperwork before the artifact.`,
+    `No return loop exists between the note and the host: a visitor leaves spwashi.com or lore.land to fill a form, and nothing brings the note's consequence or recognition back to the work cleanly.`,
+  ][reg=set]
+  domain_alignment = .{
+    spwashi_com = `Bind notes to a concrete study, folio, or proof card (#fragment), framed as constrained agency (goal + limit per @character) rather than institutional intake; copy names the artifact first and states plainly that a reply is not promised.`
+    spw_quest = `Bind notes to a specimen or a stalled try (the training signal in example-leads-2026-11.spw#tune_sample): "where did this line lose you?" returning straight to that line or /pivot URL, fixing broken route links such as /read.`
+    factshift_center = `Bind notes to a held line or calm-canvas still (spatial/legibility friction or a discovered layout) while keeping factshift.center strictly a visualizer, never a second inbox.`
+    lore_land = `Reader recognition beside a chapter or ring-of-thirteen slot (appreciation, resonance, continuity) with zero payment/shop copy, subject capacity mindful of 13-chapter books, and a card that links back to the chapter itself so strangers enter the story, not the form.`
+    texture_website = `Material response tied to a specific swatch/grain address — what looked right or broke — pointing back to the texture URL rather than an unconfigured default.`
+    wap_mom = `Edition/issue response tied to a specific printed issue or figure readout, preserving the quiet printed-matter voice.`
+    attention_productions_and_mutex = `Scoped room/lock receipts only when real traffic arrives; neutral non-shop defaults until each host earns its own client config.`
+  }[reg=facet]
+  copy_refinement_rules = #[
+    `Artifact before form: every surface opens with what the person can read, touch, or try right now — never schema jargon, internal tier names, or shop placeholders.`,
+    `Words first, notation beside them: pair Spw expressions and sigils with plain spoken English (matching direct domain door labels like spw.quest and factshift.center) so a zero-context reader understands the move before learning the grammar.`,
+    `One honest limit per prompt: state clearly what a note or sheet does and does not promise (no implied ticket queue or guaranteed reply).`,
+    `Cards carry their home address: every shareable PNG/screenshot card prints the origin artifact URL, subject/line, and writer credit cleanly inside 9:16 and 4:5 crops without promotional form footers.`,
+  ][reg=set]
+  next_inquiry = `?["If autonomous.feedback is redesigned around the artifact a reader came from, what single minimal card contract fits spwashi.com, lore.land, spw.quest, and factshift.center without adding a CMS or auth?"]{ ~#expect: "origin artifact URL + host-owned kind label + one claim/try + one honest limit, with zero shop defaults and no form footer inside the card crop" }`
+}[reg=facet]
