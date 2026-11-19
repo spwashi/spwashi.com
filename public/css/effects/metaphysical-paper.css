@@ -364,7 +364,7 @@
   pointer-events: none;
   transition:
     opacity 220ms ease,
-    width 220ms ease,
+    transform 220ms ease,
     background 220ms ease;
 }
 
@@ -375,7 +375,7 @@
 }
 
 .spw-metaphysics-host[data-spw-image-state="primed"] .spw-image-hint {
-  width: 3.4rem;
+  transform: translateX(-50%) scaleX(1.3);
   opacity: 0.96;
 }
 
@@ -746,10 +746,14 @@ html[data-spw-pointer-mode="coarse"] .spw-metaphysics-host .spw-image-hint {
   }
 }
 
-html[data-spw-show-semantic-metadata="off"] .spw-image-memory__value {
+.spw-image-memory__value {
   max-width: 8.5rem;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+html[data-spw-show-semantic-metadata="on"] .spw-image-memory__value {
+  max-width: none;
 }
 
 .spw-metaphysics-host[data-spw-visited="true"] {

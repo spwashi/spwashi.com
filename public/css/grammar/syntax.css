@@ -2337,11 +2337,12 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
 }
 
 :where([data-spw-selection="selected"].spw-delimiter) {
-  padding: 0 3px;
   border-radius: 3px;
   background: color-mix(in srgb, var(--delight-color, var(--spw-operator-color, var(--teal, #008080))) 18%, transparent);
   color: var(--ink-strong) !important;
-  box-shadow: 0 0 6px color-mix(in srgb, var(--delight-color, var(--spw-operator-color, var(--teal, #008080))) 32%, transparent);
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--delight-color, var(--spw-operator-color, var(--teal, #008080))) 18%, transparent),
+    0 0 6px color-mix(in srgb, var(--delight-color, var(--spw-operator-color, var(--teal, #008080))) 32%, transparent);
 }
 
 :where(.spw-delimiter[data-spw-pivot]) {

@@ -790,7 +790,7 @@
   display: none;
 }
 
-:where(.spw-semantic-seam[data-spw-generated="semantic-chrome"]) {
+:where(.spw-semantic-seam) {
   display: none;
 }
 
