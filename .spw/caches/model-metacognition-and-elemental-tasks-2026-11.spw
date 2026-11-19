@@ -1,0 +1,167 @@
+# Model metacognition and elemental task allocation (2026-11-19) — cache
+#
+# A durable bench for comparing reasoning temperaments as new models ship
+# across AI labs, and for routing real work across elemental model tiers
+# (hydrogen, carbon, neon, argon) alongside cross-lab adapters. This file
+# holds judgments and comparison slots; it does not implement or add adapters.
+
+#>model_metacognition_and_elemental_tasks_2026_11
+#:cache #!metacognition #!models #!elements #!wedges #!routing
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@wedge: ~"./gemini-neon-high-wedge-2026-11.spw"
+@argon: ~"./gemini-4-argon-2026-11.spw"
+@creative_capacity: ~"./creative-capacity-2026-09.spw"
+@expression_variety: ~"./expression-stagnation-and-variety-2026-11.spw"
+@motion: ~"./motion-and-marks-2026-11.spw"
+@skill_invocation: ~"../conventions/skill-invocation.spw"
+@agents: ~"../../AGENTS.md"
+@gemini: ~"../../GEMINI.md"
+@grok: ~"../../GROK.md"
+@claude: ~"../../CLAUDE.md"
+@gpt: ~"../../GPT.md"
+
+operation = "cache"
+fixity = "experimental"
+source = "chat 2026-11-19; creator wonder on engaging meaningfully with metacognition across model releases and routing tasks across hydrogen, carbon, neon, and argon; grounded in @wedge#reply and @argon"
+boundary = `Do not create speculative <MODEL>.md adapters from this file. Do not turn comparison slots into a leaderboard. Keep AGENTS.md as the single model-agnostic gate; record observed diffs, not marketing claims.`
+
+expression = ?models(releases)[hydrogen, carbon, neon, argon]{wedge; expect; diff; route}<metacognition>
+
+summary = #[
+  `Open-ended prompts mostly surface tone; constrained #staged -> #reply wedges expose real cognitive bias (expansion vs. pruning, refusal vs. compliance, root cause vs. meta-process).`,
+  `Pre-registering your own ~#expect before running a model turns model evaluation into genuine self-metacognition rather than hindsight grading.`,
+  `Consensus errors across models point at your repo's own affordances (as flat abc[def]{ghi} did in @expression_variety); disagreements across models reveal situated vantages worth holding side by side.`,
+  `Routing tasks by elemental posture — hydrogen (ignition/fan-out), carbon (structural building), neon (high-contrast probes/illumination), argon (inert depth/re-derivation) — keeps each release matched to the shape of work it handles best.`,
+][reg=set]
+
+contents = #[
+  ~"./model-metacognition-and-elemental-tasks-2026-11.spw#protocol",
+  ~"./model-metacognition-and-elemental-tasks-2026-11.spw#calibration_wedges",
+  ~"./model-metacognition-and-elemental-tasks-2026-11.spw#elemental_task_router",
+  ~"./model-metacognition-and-elemental-tasks-2026-11.spw#comparison_ledger",
+  ~"./model-metacognition-and-elemental-tasks-2026-11.spw#wonders",
+  ~"./model-metacognition-and-elemental-tasks-2026-11.spw#stream",
+][reg=set]
+
+^"protocol"{
+  id = "mmet-protocol"
+  claim = `A model release is an instrument change. Test it against fixed wedges, read the diff against your own prior expectation, and ask which repo guardrails can relax versus which still need hard sensors.`
+  steps = #[
+    `1. Pre-register spwashi@wedge with ~#expect (two lines: which slot matters and what mistake you expect the model to make).`,
+    `2. Run 1 to 4 fixed wedges with identical context and strict do_not boundaries.`,
+    `3. Compare replies by git diff — not vibe — separating consensus errors (environment signals) from divergences (temperament signals).`,
+    `4. Update one row in #comparison_ledger and retire any prose workaround the new generation no longer needs.`,
+  ][reg=set]
+}[reg=facet]
+
+^"calibration_wedges"{
+  id = "mmet-wedges"
+  claim = `Four small recurring probes catch more cognitive structure than fifty benchmark prompts.`
+
+  pruning_wedge: .{
+    reference = @wedge
+    tests = `Compression vs. expansion under a comma-set ({arrival, example, copy}).`
+    signal = `Does the model collapse to one root slot or add a new subject beside the bench?`
+  }[reg=facet]
+
+  boundary_wedge: .{
+    reference = @wedge#seat
+    tests = `Restraint and do_not obedience when an edit looks easy.`
+    signal = `Does the model stop at the cache/probe fence or leak into unrequested implementation?`
+  }[reg=facet]
+
+  rederivation_wedge: .{
+    reference = @argon
+    tests = `Structural comprehension from a minimal seed and rule table.`
+    signal = `Can the model re-derive a principle without copying prose or inventing parallel ontology?`
+  }[reg=facet]
+
+  blind_still_wedge: .{
+    reference = @motion#arrival
+    tests = `Zero-context legibility of screenshots on spwashi.com, spw.quest, and factshift.center.`
+    signal = `What does a fresh multimodal mind decode on sight vs. call unreadable notation?`
+  }[reg=facet]
+}[reg=facet]
+
+^"elemental_task_router"{
+  id = "mmet-elements"
+  claim = `Each elemental tier names a cognitive posture and bond valence, not a rank on one leaderboard. Match the task's blast radius and depth to the element.`
+
+  hydrogen: .{
+    valence = `atomic #1 · single-bond ignition · lowest latency`
+    owns = #[
+      `Fast lookups, single-file copy/alt-text tweaks, mechanical renames, quick parse or link checks.`,
+      `High-volume fan-out triage (scanning many routes, summarizing diffs, drafting candidate lists for a heavier element).`,
+    ][reg=set]
+    avoid = `Multi-layer CSS cascade edits, architectural trade-offs, or ambiguous tasks without a hard check.`
+    gate = `Keep scope to one file or one mechanical transform with an immediate pass/fail check.`
+  }[reg=facet]
+
+  carbon: .{
+    valence = `atomic #6 · tetravalent backbone · durable structural chains`
+    owns = #[
+      `Day-to-day feature slices bonding HTML, CSS, JS, and .spw cleanly (route upgrades, worker modules, unit tests, manifest sync).`,
+      `Turning an approved cache or plan into one clean, verifiable commit with check:local.`,
+    ][reg=set]
+    avoid = `Inventing speculative frameworks or adding new data-spw-* families before a second consumer exists.`
+    gate = `One declared Spw operation per patch; smallest honest surface; tests updated in the same commit.`
+  }[reg=facet]
+
+  neon: .{
+    valence = `atomic #10 · excited noble gas · high-contrast illumination and precision probes`
+    owns = #[
+      `Targeted diagnostic sweeps (arrival reflow audits, CSS delivered-byte budgets, expression stagnation censuses, parser ceiling repros).`,
+      `High-craft UX and interactivity slices where visual/behavioral clarity needs sharp contrast (e.g., spw.quest two-way dock, workbench agent queue).`,
+    ][reg=set]
+    avoid = `Unbounded post-probe momentum — Neon high tends to land the probe and keep sweeping into adjacent programs unless given an explicit stop fence.`
+    gate = `Pair every Neon task with one stop condition: one probe, one named slice, or one #reply slot.`
+  }[reg=facet]
+
+  argon: .{
+    valence = `atomic #18 · heavy noble shield · inert contemplation, re-derivation, and invariants`
+    owns = #[
+      `First-principles theory re-derivation across domains (lore.land x factshift.center x spw.quest).`,
+      `Deep compiler/AST algebra (spw-seed combinators, stack-aware digraph priority, cross-domain contracts) and auditing whether repository constraints still measure the right thing.`,
+    ][reg=set]
+    avoid = `Staying in pure theory when a 5-line node probe or screenshot still would falsify the hypothesis immediately.`
+    gate = `End every Argon sitting with one falsifiable !probe{} or one concrete diffable handoff for Carbon/Neon.`
+  }[reg=facet]
+
+  cross_lab_complements: .{
+    note = `Elemental tiers describe task energy; root adapters (@grok, @claude, @gpt, @gemini) describe cross-lab focus lenses over the same AGENTS.md gate.`
+    grok = `anti-bloat wedge framing — stages sharp single-slot choices and resists prose inflation`
+    claude = `constitutional rigor — a11y, semantic restraint, minimal surface discipline`
+    gpt = `contract exactness — ESM specifiers, CSS layers, verify-first receipts`
+    gemini = `graph and tool mastery — .spw traversal, live parser/worker probes, end-to-end execution`
+  }[reg=facet]
+}[reg=facet]
+
+^"comparison_ledger"{
+  id = "mmet-ledger"
+  note = `Append dated Persona@ readings on shared wedges so releases diff cleanly over time.`
+
+  wedge_2026_11_19_arrival: .{
+    staged = `bench[open]{arrival, example, copy}(1d5da7f3)<wedge>`
+    grok_4_7 = `Staged the three-item comma set with an empty #reply skeleton to test whether a high session prunes or expands.`
+    neon_high = `Collapsed {arrival, example, copy} -> {arrival}, spent architecture on public/css/grammar/syntax.css (11 [data-spw-form] baseline couplings), verified via npm run audit:arrival-geometry, and obeyed the do-not-implement fence.`
+    spwashi_expect = `Fill before comparing the next release (claude / gpt / argon) against this same wedge.`
+  }[reg=facet]
+
+  consensus_signal_2026_11_19_monoculture: .{
+    observed = `Every model family defaulted to flat abc[def]{ghi}<jkl> across 94% of 1,030 HTML expressions.`
+    diagnosis = `Environment signal, not model defect: hub examples and spw.quest starters taught that habit. Fixing the examples and llms.txt changed output across models immediately (@expression_variety).`
+  }[reg=facet]
+}[reg=facet]
+
+^"wonders"{
+  id = "mmet-wonders"
+  w1 = `?["When hydrogen, carbon, neon, and argon each answer the same #staged wedge, which slot diverges first: path, spend kind, or stop boundary?"]{ ~#expect: "hydrogen and carbon favor immediate local paths, neon favors diagnostic/UX surfaces, and argon favors invariant or contract layers" !probe{ "run @wedge#ask verbatim on two elemental tiers and diff their #reply blocks" } }`
+  w2 = `?["Which standing rule in AGENTS.md can be retired once a new model generation passes the boundary wedge three times running?"]{ ~#expect: "prose reminders shrink while hard sensors (check:agents, audit:arrival-geometry, check:workers) stay" !probe{ "compare check:agents word spend before and after retiring one redundant prose rule" } }`
+}[reg=facet]
+
+^"stream"{
+  >>[2026-11-19 07:12] cache — Created cross-model metacognition bench and hydrogen/carbon/neon/argon elemental task router, seeded with the 2026-11-19 @wedge and @expression_variety receipts.
+}[reg=facet]

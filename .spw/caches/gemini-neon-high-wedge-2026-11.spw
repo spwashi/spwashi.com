@@ -77,12 +77,12 @@ contents = #[
   claim = `Fill this skeleton. Leave every line you do not change. The comparison is a diff against this facet.`
   skeleton = #[
     `#>neon_reply`,
-    `edited = spend[one]{understand, tooling, architecture, agents}(reply)<diff>`,
-    `slot = ""`,
-    `path = ""`,
-    `check = ""`,
-    `subject = bench[open]{arrival, example, copy}(1d5da7f3)<wedge>`,
-    `reading = ""`,
+    `edited = spend[one]{architecture}(reply)<diff>`,
+    `slot = "{arrival, example, copy} -> {arrival}"`,
+    `path = "public/css/grammar/syntax.css"`,
+    `check = "npm run audit:arrival-geometry"`,
+    `subject = bench[open]{arrival}(1d5da7f3)<wedge>`,
+    `reading = "I took the comma in {arrival, example, copy} as flat company hiding a dependency: copy and live examples already shipped across spwashi.com and spw.quest, yet neither holds steady until resting layout stops shifting after paint. In 2bce8620, @audit rightly excluded 17 zero-shift prepaint root attributes and out-of-flow pseudo overlays rather than relocating the gap; the 63 remaining baseline rows are real owned in-flow couplings, and public/css/grammar/syntax.css (already named in @motion#arrival_contract_gap) holds 11 layout-mutating [data-spw-form] rules plus [data-spw-operator]/[data-spw-region-flow]/[data-spw-state] triggers waiting to shrink next."`,
   ][reg=set]
   fill = `slot is the one word that moved, or the word that replaced the subject. path is one file that exists. check is one command or one still. reading is one paragraph on how you took the comma. edited keeps a single word of its set and drops the other three, so the spend is visible.`
   kinds = #[
@@ -95,6 +95,7 @@ contents = #[
 
 ^"stream"{
   >>[2026-11-19 05:58] note — Staged the open wedge as one set of three, with the reply skeleton empty, for a Neon high session to fill with one slot.
+  >>[2026-11-19 07:10] reply — Filled #reply with one slot move ({arrival, example, copy} -> {arrival}), one spend word (architecture), one existing layout owner (public/css/grammar/syntax.css), and one check (npm run audit:arrival-geometry), without implementing into the tree.
 }[reg=facet]
 
 @example_leads: ~"./example-leads-2026-11.spw"
