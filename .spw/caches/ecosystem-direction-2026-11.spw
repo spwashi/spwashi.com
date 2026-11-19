@@ -34,6 +34,17 @@
 @wap_pages: ~"../../workers/wap-mom/carry-pages.mjs"
 @factshift_carry: ~"../../workers/factshift-center/carry-shell.mjs"
 @check_workers: ~"../../scripts/check-workers.mjs"
+@motion_and_marks: ~"./motion-and-marks-2026-11.spw"
+@feedback_contour: ~"./feedback-contour-2026-11.spw"
+@example_leads: ~"./example-leads-2026-11.spw"
+@low_sight: ~"./low-sight-wonder-2026-11.spw"
+@chrome_ecology: ~"./chrome-ecology-2026-11.spw"
+@cognitive_toy: ~"./cognitive-toy-2026-09.spw"
+@home_renovation: ~"./home-renovation-2026-11.spw"
+@design_direction: ~"./design-direction-2026-11.spw"
+@spw_design_improvements: ~"./spw-design-improvements-2026-11.spw"
+@character_onboarding: ~"./character-constraint-onboarding-2026-11.spw"
+@seven_passes: ~"./seven-passes-unreported-2026-11.spw"
 
 operation = "cache"
 fixity = "experimental"
@@ -201,5 +212,29 @@ summary = #[
     `lore.land's maker decides the days, the words, and whether the switch starts on for those days`,
     `a route from wap.mom into the game for the Thursday, if the pie loop is wanted this month`,
     `the workbench's owner reads four trial cards before any of this becomes grammar`,
+  ][reg=set]
+}[reg=facet]
+
+^"six_refinements_2026_11"{
+  id = "ed-six-refinements"
+  dated = "2026-11-18"
+  operation = "cache"
+  fixity = "experimental"
+  source = `theory pass across .spw/caches/, confirmed relevant by creator 2026-11-18 alongside copy refinement, arrival reflow remediation, and deeper cross-domain redesign of autonomous.feedback`
+  claim = `Across the cache corpus, product direction and UX converge on six structural refinements: closing round-trip loops, stopping post-paint arrival reflow, refining copy and onboarding around constrained agency and cross-domain feedback, unifying expression/chrome/state into one instrument, building spoken/low-sight parity in by structure, and keeping the constellation static-first on one parser release.`
+  refinements = .{
+    r1_close_loops = `End one-way outflow and stalled succession (@seven_passes, @cognitive_toy, @spw_design_improvements, @example_leads): measure health by closed round-trips (try -> carry -> receipt/return) rather than page or cache count, and wire existing split event/ledger seams before inventing new mechanics.`
+    r2_arrival_and_first_contact = `Hold still at 1s = still at 20s = legible at zero context (@motion_and_marks#arrival_contract_gap, @design_direction): decouple CSS layout from runtime-backfilled semantics, enforce a CSS-to-JS geometry contract gate, stop blessing post-mount shifts as purposeful, and keep shareable stills unobstructed.`
+    r3_copy_onboarding_and_feedback = `Refine copy across surfaces and rethink autonomous.feedback around each host's real artifact (@feedback_contour#constellation_rethink_2026_11, @character_onboarding): replace shop/intake boilerplate with plain creator-first words, goal+limit constraints, and feedback cards that point back to the work rather than a bare form.`
+    r4_one_instrument = `Unify expression reading, opaque role-styled chrome, and computed-state visibility (@spw_design_improvements, @chrome_ecology, @home_renovation): one force+slots reader, one operator name table, one mutating settings line, and receipts painted inside existing satchel chrome.`
+    r5_low_sight_and_spoken_parity = `Make non-colour channels and plain spoken twins structural (@low_sight, @design_direction): lead links with clear words (sigil beside as aria-hidden), keep focus rings and native zoom intact, unhide live regions, and announce spatial proximity/motion on demand or settle.`
+    r6_static_and_shared_release = `Keep files first with multi-extension readings (.html .spw .txt .json .svg .ics), write-ahead data schedules for recurring drops/dailies, and one dated workbench parser release + lite profile kits across all sibling hosts (@product).`
+  }[reg=facet]
+  creator_gates = #[
+    `Canonical naming & link voice: one operator table across hosts, and word-first vs. sigil-first public links.`,
+    `Container semantics across hosts: ( ) as scene-you-enter vs. gathering beside { } room.`,
+    `Home's primary spine & onboarding door: which 3-4 frames lead Home, and whether the constrained character sheet supersedes card[ask].`,
+    `One cadence clock: aligning 13th/26th closes, month-end, and self-paced serials across /now/, promo-wonder-cycle.json, lore.land, and autonomous.feedback.`,
+    `First closed wedge: arrival geometry contract + reflow fix, cross-host example-leads loop, or autonomous.feedback constellation card rethink.`,
   ][reg=set]
 }[reg=facet]

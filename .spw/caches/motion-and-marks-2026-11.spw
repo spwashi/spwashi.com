@@ -17,6 +17,12 @@
 @asset_management: ~"../conventions/asset-management.spw"
 @operator_canon: ~"../../public/js/kernel/operator-detection.js"
 @captures: ~"../../design/components/captures/runs/2026-11-16"
+@component_semantics: ~"../../public/js/semantic/component-semantics.js"
+@foundation_css: ~"../../public/css/components/foundation.css"
+@composition_box: ~"../../public/js/runtime/regions/composition-box-model.js"
+@layout_shift_audit: ~"../../public/js/runtime/diagnostics/layout-shift-audit.js"
+@runtime_contracts: ~"../../scripts/ts/runtime-contracts.mts"
+@pwa_handler: ~"../../public/js/runtime/shell/pwa-update-handler.js"
 
 operation = "cache"
 fixity = "experimental"
@@ -109,6 +115,30 @@ summary = #[
     live = `lore.land book/scripts/home/pie-live.mjs shows a gifter's name while thanking and never keeps it`
     factshift = `lore.land names factshift.center its motion hub (site-clusters.spw, domains.spw)`
   }[reg=facet]
+}[reg=facet]
+
+^"arrival_contract_gap"{
+  id = "mm-contract-gap"
+  dated = "2026-11-18"
+  operation = "cache"
+  fixity = "experimental"
+  source = `creator, 2026-11-18: "the arrival reflow is pretty bad; I don't like this dimension of spwashi.com, and the module contracts don't seem to have improved the relationship between styles and layout and semantics"; code trace across @component_semantics, @foundation_css, @composition_box, @layout_shift_audit, @runtime_contracts, and @pwa_handler`
+  claim = `Arrival reflow persists because runtime semantic inference writes directly into CSS layout triggers after first paint, while the module contract audits naming hygiene instead of CSS-to-JS geometry stability and the site's own CLS audit excuses post-mount shifts as purposeful.`
+  causes = #[
+    `Late semantic backfill triggers layout CSS: @component_semantics (applySemanticSnapshot, lines 710-783, mounted VISIBLE) stamps 50+ data-spw-* attributes onto elements after paint, including data-spw-kind, data-spw-component-kind, data-spw-form, and data-spw-density.`,
+    `Containment and box geometry react to those runtime attributes: @foundation_css (lines 120-216, 641-662) applies container-type: inline-size (implying contain: layout and collapsing intrinsic inline width), align-self: stretch, and relative/z-index stacking to [data-spw-component-kind], while syntax.css and frames.css apply spacing and brace rules to [data-spw-form] and [data-spw-component-kind="hook"].`,
+    `JS duplicates CSS layout decisions post-paint: @composition_box measures contentInline after load and writes data-spw-pack-layout (stack|split|feature), flipping flex/grid layouts that native CSS @container already knows at T=0.`,
+    `Module contracts do not check CSS geometry coupling: @runtime_contracts and module-writer-audit verify updates[] role prefixes and costClass metadata, but never cross-check whether a CSS rule keyed on a runtime-written attribute mutates layout properties (display, container-type, padding, margin, gap, width/height, grid-*, flex-*, font-size, content).`,
+    `The CLS sensor hides the regression: @layout_shift_audit (lines 32-89) classifies any shift within 500ms of a module mount as outcome="purposeful" (REFLOW_CLASS.MOUNT) and stays disabled unless ?debug=layout is set.`,
+    `Unsolicited arrival overlay: @pwa_handler (lines 438-446) shows the iOS Safari install toast over first-fold copy 7-20s after load.`,
+  ][reg=set]
+  architectural_invariants = #[
+    `Zero-geometry-mutation after first paint: HTML + CSS own 100% of resting layout at T=0. Non-user-triggered mounts (IMMEDIATE, VISIBLE, IDLE, SETTLED) may only change paint/compositor state or in-memory state, never box geometry.`,
+    `Separate authored structure from inferred semantics: key container-type and box layout only on static HTML classes/authored attributes (.spw-frame, .spw-card, .spw-panel), never on runtime-backfilled [data-spw-component-kind]; emit build-time structure in templates or keep inferred metadata on-demand (INVITED / debug).`,
+    `Cross-layer geometry contract gate: join module-writer-audit against parsed public/css/ rules and fail when a passive runtime-written attribute triggers a layout-mutating CSS property outside :hover, :focus-visible, [data-spw-gesture], or [data-spw-debug-*].`,
+    `Honest CLS reporting & native @container: stop classifying unprompted post-mount shifts as purposeful in @layout_shift_audit, let CSS @container own packing without JS mirrors, and keep install prompts user-initiated.`,
+  ][reg=set]
+  probe = `?["Which runtime-written attributes currently match layout-mutating CSS rules across public/css/?"]{ ~#expect: "data-spw-component-kind, data-spw-form, data-spw-pack-layout, and data-spw-density account for the bulk of passive arrival shifts" }`
 }[reg=facet]
 
 validation = `the captures folder (@captures, gitignored) holds every frame, timeline and timer cited here; re-measure before carrying a number into public copy`
