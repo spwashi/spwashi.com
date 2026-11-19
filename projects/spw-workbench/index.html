@@ -1,9 +1,9 @@
 <spw-page
     title="Spwashi • Spw Workbench"
-    description="The parser, runtime, language server, command line and editor extensions for Spw: what they do, where to try them, how long they took, and what using them taught."
+    description="The parser, runtime, language server, command line and editor extensions for Spw: architecture, live corpus parsing status, and the prioritized development queue for spw-workbench agents."
     canonical="https://spwashi.com/projects/spw-workbench/"
     og_title="Spwashi • Spw Workbench"
-    og_description="The language workbench this site mounts at bcf0da18: 682 commits across 87 active days, January 8 to November 16, 2026 — kernel architecture, live corpus parsing status, and open parser issues."
+    og_description="The language workbench this site mounts at bcf0da18: kernel architecture, live corpus parsing status across 1,322 .spw files and 1,035 HTML expressions, and the prioritized P0–P3 development queue for spw-workbench agents."
     og_image="https://spwashi.com/public/images/routes/software-parser-weather-og.jpg"
     og_image_alt="A dense software weather collage of parser circles, fibers, symbols, and measured structure."
     keywords="spw-workbench, Spw language, parser, runtime, language server, LSP, CLI, VS Code extension, IntelliJ, Neovim, time spent, workbench report"
@@ -49,8 +49,8 @@
                 <p>Structural syntax stays inside an immutable <code>Seed</code> record in <code>spw-seed</code>, while charges, lens focus, and ink stay in external host profiles. Callers pick lexing, AST, and trace depth via <code>eventPolicy</code> (<code>none</code>, <code>diagnostics</code>, or <code>trace</code>) instead of duplicating scanners.</p>
             </div>
             <div data-spw-emphasis="secondary">
-                <strong>Touch it live</strong>
-                <p>Type Spw into the <a href="/tools/spw-parser/#literal-parser">literal parser</a> (running the bundled <code>bcf0da18</code> reader), inspect <a href="#parsing-issues">open parsing issues</a>, or browse source on <a href="https://github.com/spwashi/spw-workbench">GitHub</a>.</p>
+                <strong>Touch it live &amp; build next</strong>
+                <p>Type Spw into the <a href="/tools/spw-parser/#literal-parser">literal parser</a> (running the bundled <code>bcf0da18</code> reader), read the <a href="#workbench-backlog">P0–P3 agent development queue</a> and <a href="#parsing-issues">open parsing issues</a>, or browse source on <a href="https://github.com/spwashi/spw-workbench">GitHub</a>.</p>
             </div>
         </div>
         <p data-spw-textual-role="note">The workbench is an organelle, not a center: this site owns <code>.spw/</code>, the workbench owns <code>.spw/_workbench</code>, and either can be upgraded or removed without making the other illegible. The site mounts it at <code>bcf0da18</code> (<time datetime="2026-11-16">2026-11-16</time>).</p>
@@ -92,7 +92,7 @@
             <a class="frame-sigil" href="#workbench-direction" data-spw-operator="concept-edge">&gt;direction</a>
             <h2 id="workbench-direction-title">Project direction</h2>
         </header>
-        <p id="projects-workbench-direction" data-spw-textual-role="lede" data-spw-copy-unit="projects.workbench.direction" data-spw-semantic-expression="kernel[separation]{seed.policy.tokens}&lt;align&gt;">As of <time datetime="2026-11-17">November 17, 2026</time>, workbench work focuses on unifying parsing, highlighting, slot reading, and editor tooling behind one parameterized kernel rather than maintaining separate workarounds per consumer.</p>
+        <p id="projects-workbench-direction" data-spw-textual-role="lede" data-spw-copy-unit="projects.workbench.direction" data-spw-semantic-expression="kernel[separation]{seed.policy.tokens}&lt;align&gt;">As of <time datetime="2026-11-19">November 19, 2026</time>, workbench work unifies parsing, container-order reading, highlighting, and editor tooling behind one parameterized kernel—see the <a href="#workbench-backlog">agent queue</a> below.</p>
         <div class="spw-theme-bench" data-spw-theme-expression><code class="language-spw">theme@[neutral-paper]{auto}(reading)&lt;systems&gt;</code></div>
         <div class="spw-copy-variants" aria-live="polite">
             <p data-spw-copy-lens="default" data-spw-copy-label="overview" data-spw-semantic-expression="workbench[direction]{seed.kernel}&lt;align&gt;">Consumers across <code>spwashi.com</code>, <code>spw.quest</code>, and <code>factshift.center</code> share this kernel contract while keeping domain-specific readings local.</p>
@@ -124,27 +124,154 @@
             <a class="frame-sigil" href="#parsing-issues" data-spw-operator="probe">?parsing_issues</a>
             <h2 id="parsing-issues-title">Open parsing issues</h2>
         </header>
-        <p id="projects-workbench-issues" data-spw-textual-role="lede" data-spw-copy-unit="projects.workbench.issues" data-spw-semantic-expression="corpus[parse]{clean.error.degrade}&lt;audit&gt;">Measured live on <time datetime="2026-11-17">November 17, 2026</time> at <code>bcf0da18</code> against <code>spw-workbench-reader.js</code>: 1,311 of 1,322 tracked <code>.spw</code> files parse cleanly and four parser issue classes remain open.</p>
+        <p id="projects-workbench-issues" data-spw-textual-role="lede" data-spw-copy-unit="projects.workbench.issues" data-spw-semantic-expression="corpus[parse]{clean.error.degrade}&lt;audit&gt;">Measured live at <code>bcf0da18</code> against <code>spw-workbench-reader.js</code> (<time datetime="2026-11-17">Nov 17</time> full corpus sweep; <time datetime="2026-11-19">Nov 19</time> container-variety AST audit): 1,311 of 1,322 tracked <code>.spw</code> files and all 1,035 distinct HTML expressions parse without errors, and five parser issue classes remain open.</p>
         <dl class="context-readout" aria-label="Corpus parse census at bcf0da18">
             <div><dt>tracked .spw files</dt><dd><data value="1322">1,322</data> (8.41&nbsp;MB outside <code>_workbench</code>)</dd></div>
             <div><dt>parse time</dt><dd>8.55&nbsp;s (<code>eventPolicy: 'diagnostics'</code>)</dd></div>
             <div><dt>clean</dt><dd><data value="1311">1,311</data></dd></div>
             <div><dt>tokenizer errors</dt><dd><data value="3">3</data> files (8 errors)</dd></div>
             <div><dt>prose-degradation</dt><dd><data value="9">9</data> files (11 non-clean total)</dd></div>
-            <div><dt>HTML expressions</dt><dd><data value="1018">1,018</data> distinct (0 errors)</dd></div>
+            <div><dt>HTML expressions</dt><dd><data value="1035">1,035</data> distinct (0 errors)</dd></div>
         </dl>
         <ul class="frame-list">
-            <li><strong>Greedy digraph priority beats bracket-stack context.</strong> While <code>))</code> now checks whether an n-range is open (<code>f(g(a))</code> parses whole), <code>&gt;&gt;</code>, <code>&lt;&lt;</code>, <code>((</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>=&gt;</code>, and <code>//</code> still match ahead of single-mark context. Measured live at <code>bcf0da18</code>: nested generics (<code>list&lt;Module&lt;T&gt;&gt;</code>), double-grouped math (<code>O((V + E) log V)</code>), and predicates (<code>?keep{qty &gt; 0}</code>, <code>?[latency &lt;= 400]</code>) degrade to <code>Prose</code>; unquoted URLs (<code>link = https://spw.quest</code>) turn <code>//spw.quest</code> into a <code>COMMENT</code> token and drop the host. (<a href="/topics/software/spw/#workbench-improvements">workbench asks</a> · <code>workbench-algorithmic-practicality-2026-11.spw#digraph_priority</code>)</li>
+            <li><strong>Container-order, prefix-operator, and <code>Persona@</code> AST asymmetry (measured Nov 19 at <code>bcf0da18</code>).</strong> Expressive forms beyond flat <code>abc[def]{ghi}&lt;jkl&gt;</code> diverge in AST shape: <code>~launch[soft]{waitlist, story, proof}&lt;audience&gt;</code> wraps as <code>Capsule&lt;audience&gt;</code> (hiding the body) while adding a scene <code>~launch(soft)[beta]{...}&lt;audience&gt;</code> produces <code>Operation(~)</code>; prefix <code>?</code> probes (<code>?page(phone)[slow]{measure; trim}&lt;audit&gt;</code>) still wrap as <code>Capsule&lt;audit&gt;</code>; both infix and postfix persona forms (<code>editor@cut[rough]{pacing ~&gt; sound}&lt;reel&gt;</code> and <code>maya@[picture]{pacing, sound_lock}(friday)&lt;cut&gt;</code>) split into <strong>2 top-level expressions</strong> (<code>Identifier</code> + <code>Reference</code> / <code>Operation(@)</code>); and reordered containers (<code>word&lt;concept&gt;(scene)[mode]{body}</code>) split into <code>Capsule&lt;concept&gt;</code> + <code>Frame</code> instead of reading slots by brace pair in any order. (<a href="/.spw/caches/expression-stagnation-and-variety-2026-11.spw">expression variety cache</a> · <a href="/topics/software/spw/#expressiveness-goals">expressiveness goals</a>)</li>
+            <li><strong>Greedy digraph priority beats bracket-stack context.</strong> While <code>))</code> now checks whether an n-range is open (<code>f(g(a))</code> parses whole), <code>&gt;&gt;</code>, <code>&lt;&lt;</code>, <code>((</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>=&gt;</code>, and <code>//</code> still match ahead of single-mark context. Measured live at <code>bcf0da18</code>: nested generics (<code>list&lt;Module&lt;T&gt;&gt;</code>), double-grouped math (<code>O((V + E) log V)</code>), and predicates (<code>?keep{qty &gt; 0}</code>, <code>?[latency &lt;= 400]</code>) degrade to <code>Prose</code>; unquoted URLs (<code>link = https://spw.quest</code>) turn <code>//spw.quest</code> into a <code>COMMENT</code> token and drop the host. (<a href="/topics/software/spw/#workbench-improvements">workbench asks</a> · <a href="/.spw/caches/workbench-algorithmic-practicality-2026-11.spw">practicality cache</a>)</li>
             <li><strong>Tokenizer drops unrecognized glyphs &amp; trips on escaped quotes (3 corpus files, 8 errors).</strong> Backslash escapes (<code>\"</code>, <code>\'</code>) inside CLI command probes, negative numbers (<code>x = -5</code>), and unquoted Unicode punctuation or math symbols (<code>…</code>, <code>≤</code>, <code>±</code>, <code>∞</code>) raise <code>Unexpected character</code> tokenize errors, drop the symbol from the token stream, or trigger <code>Unterminated string literal</code> and downstream degradation in <code>wip.spw</code>, <code>factshift-paste-grounding-2026-11.spw</code>, and <code>factshift-tooling-2026-11.spw</code>.</li>
             <li><strong>Inline arrows, contours, and unclosed backticks trigger <code>prose-degradation</code> (9 corpus files).</strong> Unclosed inline backtick spans in attribute notes (<code>comparison-differentials.spw</code>, <code>runtime-goals-pipeline.spw</code>), morphism arrow keys (<code>authored -&gt; parsed:</code> in <code>semantics-rigor.spw</code>), bare <code>&gt;</code> contour chains (<code>interaction-paint-cost-2026-09.spw</code>), multi-line <code>?&lt; ... &gt;[reg=stream]</code> blocks (<code>spw-language-utilization-2026-07.spw</code>, <code>recursive-improvement.spw</code>), and <code>=&gt;</code> or <code>==</code> operators inside spec blocks (<code>modules.spw</code>, <code>thermodynamics.spw</code>) halt structured parsing cleanly into <code>Prose</code> warnings.</li>
             <li><strong>Trailing units, regex slot readers, and silent channels still split consumers from the kernel.</strong> A percent unit glued to a number (<code>%errors[0.1%]</code>) parses clean yet tokenizes the trailing <code>%</code> as <code>OPERATOR:%</code> (<code>keyword</code>), inflating measure counts. Site search still keeps a non-recursive <code>{([^}]*)}</code> matcher alongside kernel parses in <code>expression-query.js</code>, leaving 9 of 27 herbarium specimens partial; <code>readLine</code> leaves top-level <code>-&gt;</code> and <code>~&gt;</code> joins unread while parsing them inside <code>{body}</code>; <code>PAIR_SOUND</code>/<code>TEXTURES</code> leave <code>&lt; &gt;</code> silent despite <code>spokenLine</code> naming it; and WebStorm/IntelliJ regex folders still shadow LSP <code>documentSymbol</code>, which itself reparses open buffers.</li>
         </ul>
         <nav class="frame-operators" aria-label="Test parsing issues live">
             <a class="spw-chip" data-spw-handle="true" href="/tools/spw-parser/#literal-parser" data-spw-operator="probe" data-spw-action="enter">?open_literal_parser</a>
+            <a class="spw-chip" data-spw-handle="true" href="/tools/spw-parser/?spw_source=~launch%5Bsoft%5D%7Bwaitlist%2C%20story%2C%20proof%7D%3Caudience%3E%0A%3Fpage(phone)%5Bslow%5D%7Bmeasure%3B%20trim%7D%3Caudit%3E%0Aeditor%40cut%5Brough%5D%7Bpacing%20~%3E%20sound%7D%3Creel%3E%0Aword%3Cconcept%3E(scene)%5Bmode%5D%7Bbody%7D#literal-parser" data-spw-operator="probe" data-spw-action="enter">?reproduce[slots.persona]</a>
             <a class="spw-chip" data-spw-handle="true" href="/tools/spw-parser/?spw_source=list%3CModule%3CT%3E%3E%0AO((V%20%2B%20E)%20log%20V)%0A%3Fkeep%7Bqty%20%3E%200%7D#literal-parser" data-spw-operator="probe" data-spw-action="enter">?reproduce[digraphs]</a>
             <a class="spw-chip" data-spw-handle="true" href="/tools/spw-parser/?spw_source=maya%40%5Bpicture%5D%7Bpacing%2C%20sound_lock%7D(friday)%3Ccut%3E%0A%3Cprose%3E%20~%5Elight%5Bgreen%5D%7B%22bob%20clicks%20the%20sofa%22%7D#literal-parser" data-spw-operator="perspective" data-spw-action="enter">@verify[Persona.prefix]</a>
             <button class="spw-chip spw-lens-filter-toggle" type="button" hidden data-spw-lens-filter-toggle data-spw-operator="probe" aria-pressed="false" title="Hide other cards that do not match this lens. The choice stays with you.">Hide other cards</button>
             <a class="spw-chip" data-spw-handle="true" href="https://github.com/spwashi/spw-workbench" data-spw-operator="potential">~spw-workbench</a>
+        </nav>
+    </section>
+
+    <section class="spw-frame" id="workbench-backlog" aria-labelledby="workbench-backlog-title" data-spw-kind="frame" data-spw-role="reference" data-spw-semantic-expression="!queue(spw_workbench)[prioritized]{repro; fix; verify}&lt;handoff&gt;">
+        <header class="frame-heading" data-spw-slot="header">
+            <a class="frame-sigil" href="#workbench-backlog" data-spw-operator="integration">^workbench_backlog</a>
+            <div class="spec-strip">
+                <span class="spec-pill">for spw-workbench agents</span>
+                <span class="spec-pill">pin: bcf0da18</span>
+                <span class="spec-pill">updated 2026-11-19</span>
+            </div>
+        </header>
+        <h2 id="workbench-backlog-title">What to develop next (agent queue)</h2>
+        <p id="projects-workbench-backlog" data-spw-textual-role="lede" data-spw-copy-unit="projects.workbench.backlog" data-spw-semantic-expression="workbench[backlog]{seed.cli.lsp.contracts}&lt;handoff&gt;">If you are an agent or engineer working on <code>spw-workbench</code>, this queue turns live evidence from <code>spwashi.com</code> (1,322 <code>.spw</code> files, 1,035 HTML expressions), <code>spw.quest</code> (157 worker tests), and <code>factshift.center</code> into ranked work packages with minimal repros and acceptance checks.</p>
+        <div class="frame-grid frame-grid--dense">
+            <article class="spw-panel">
+                <h3>P0 · <code>spw-seed</code> Parser &amp; AST Uniformity</h3>
+                <ul>
+                    <li><strong>Container-order &amp; prefix-body parity:</strong> Read <code>[mode]</code>, <code>{body}</code>, <code>(scene)</code>, and <code>&lt;concept&gt;</code> in any order as one expression (<code>word&lt;concept&gt;(scene)[mode]{body}</code> currently splits into 2), and expose bodies uniformly across prefix operators (<code>~launch[soft]{...}&lt;audience&gt;</code> and <code>?page(phone)[slow]{...}&lt;audit&gt;</code> currently wrap into <code>Capsule</code> without <code>Operation</code> + body).</li>
+                    <li><strong>Single-expression <code>Persona@</code> binding:</strong> Parse both <code>editor@cut[rough]{pacing ~&gt; sound}&lt;reel&gt;</code> and <code>maya@[picture]{pacing, sound_lock}(friday)&lt;cut&gt;</code> as 1 perspective-bound expression instead of 2 top-level expressions.</li>
+                    <li><strong>Stack-aware digraphs &amp; lossless lexer:</strong> Extend the <code>))</code> guard to <code>&gt;&gt;</code>, <code>&lt;&lt;</code>, <code>((</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>=&gt;</code>, and <code>//</code> (URLs); stop dropping <code>-</code> (<code>x = -5</code>), <code>≤</code>/<code>±</code>/<code>∞</code>/<code>…</code>, or choking on <code>\"</code>/<code>\'</code>; lex trailing <code>%</code> on numbers (<code>%errors[0.1%]</code>) as unit, not <code>OPERATOR:%</code>.</li>
+                </ul>
+            </article>
+            <article class="spw-panel">
+                <h3>P1 · <code>spw-cli</code> &amp; Shared Parse Cache</h3>
+                <ul>
+                    <li><strong>Content-addressed scan memo:</strong> Key corpus scans on <code>(roots, sha256(content), dialect)</code> and apply projection flags like <code>hubTop</code> after reading — ending the 28-product / 87&nbsp;MB unshared memo split between <code>census</code>, <code>graph</code>, <code>measure</code>, and <code>query</code>.</li>
+                    <li><strong>One AST facts module + emitted JS:</strong> Ship emitted JS beside TS to remove the ~1&nbsp;s <code>tsx</code> CLI boot cost, and expose one shared facts extractor (citations, anchors, annotations, expressions, wonders) that CLI, LSP, and <code>spw-workbench-reader.js</code> all consume instead of regex-first selectors.</li>
+                    <li><strong>Bounded recovery &amp; stray-backtick precheck:</strong> Flag unbalanced backticks before full recovery so a single syntax typo never multiplies parse time 7×, and accept <code>.agents/plans</code> as a declared root with tier tags (<code>authored</code>, <code>generated</code>, <code>archived</code>).</li>
+                </ul>
+            </article>
+            <article class="spw-panel">
+                <h3>P2 · <code>spw-lsp</code> &amp; Editor Plugins</h3>
+                <ul>
+                    <li><strong>Warm parse reuse in <code>outlineFromSource</code>:</strong> Pass the server's held parse into <code>documentSymbol</code> (currently 267–510&nbsp;ms reparse vs. 3–8&nbsp;ms for folding/tokens) so IntelliJ/WebStorm can retire its line-regex outline/folder that breaks on apostrophes in backticks and mid-line <code>#</code>.</li>
+                    <li><strong>File-scoped <code>@alias</code> &amp; <code>@handle#fragment</code> binder:</strong> Wire definition, references, and rename across file aliases (3,977 declarations, 2,947 uses on this site) and resolve fragments without turning <code>#anchor</code> into part of the filename.</li>
+                    <li><strong>Live buffer instruments &amp; cost cards:</strong> Route IDE <em>Spw Instruments</em> (<code>spw/formContext</code>, <code>spw/resonance</code>, <code>spw/geometry</code>) through the warm LSP instead of spawning CLI on saved files (2.9&nbsp;s), and surface meaning-first hovers plus dormant-expression wake actions.</li>
+                </ul>
+            </article>
+            <article class="spw-panel">
+                <h3>P3 · Cross-Domain Contracts</h3>
+                <ul>
+                    <li><strong>Recursive slots &amp; top-level <code>~&gt;</code>/<code>-&gt;</code> in <code>readLine</code>:</strong> Replace flat <code>{([^}]*)}</code> slot matching (fixes 9/27 partial herbarium specs and unblocks postfix <code>~&gt;</code> on HTML routes), and add <code>&lt; &gt;</code> concept timbre to <code>PAIR_SOUND</code>/<code>TEXTURES</code> beside <code>spokenLine</code>.</li>
+                    <li><strong><code>operator.table/1</code> + dated mnemonic glosses:</strong> Ship one canonical operator table paired with a dated mnemonic gloss layer (distinguishing spirit-sequence mnemonics from canon types) so <code>spwashi.com</code>, <code>spw.quest</code>, <code>factshift.center</code>, and <code>lore.land</code> never drift.</li>
+                    <li><strong><code>inquiry.loop/1</code> &amp; canonical still-line slot contract:</strong> Land runnable wonder receipts (<code>?["..."]{ !probe{} }</code> → <code>result_ref</code>) and one parseable still-line shape across screenshot harnesses, captions, and <code>factshift.center</code> scrub rails.</li>
+                </ul>
+            </article>
+        </div>
+        <details open>
+            <summary>Machine-readable queue block (parse directly as Spw)</summary>
+            <pre><code class="language-spw">#&gt;workbench_agent_queue
+#:contract #!align #!agent_handoff
+
+^"consumer_pin"{
+  host = "https://spwashi.com"
+  submodule_pin = "bcf0da18b840"
+  measured_on = "2026-11-19"
+  corpus_spw_files = 1322
+  corpus_clean_files = 1311
+  html_expressions = 1035
+  spw_quest_tests = 157
+}
+
+^"priority_queue"{
+  p0_slot_order_and_prefix_body: .{
+    target = "spw-seed"
+    repros = #[
+      "~launch[soft]{waitlist, story, proof}&lt;audience&gt;",
+      "?page(phone)[slow]{measure; trim}&lt;audit&gt;",
+      "word&lt;concept&gt;(scene)[mode]{body}"
+    ]
+    expect = "one expression; read [mode] {body} (scene) &lt;concept&gt; in any order; expose Operation and body uniformly across all prefix sigils"
+  }
+  p0_persona_binding: .{
+    target = "spw-seed"
+    repros = #[
+      "editor@cut[rough]{pacing ~&gt; sound}&lt;reel&gt;",
+      "maya@[picture]{pacing, sound_lock}(friday)&lt;cut&gt;"
+    ]
+    expect = "one perspective-bound expression instead of two top-level expressions"
+  }
+  p0_digraph_stack_and_lexer: .{
+    target = "spw-seed"
+    repros = #[
+      "list&lt;Module&lt;T&gt;&gt;",
+      "O((V + E) log V)",
+      "?keep{qty &gt; 0}",
+      "?[latency &lt;= 400]",
+      "link = https://spw.quest",
+      "x = -5",
+      "%errors[0.1%]"
+    ]
+    expect = "stack-aware digraph priority; lossless glyphs/signs/escapes; trailing % on numbers lexed as unit"
+  }
+  p1_shared_scan_memo_and_facts: .{
+    target = "spw-cli"
+    repro = "spw census followed by spw graph writes separate memos keyed by hubTop"
+    expect = "content-addressed parse cache keyed by roots + sha256 + dialect; shared AST facts module; emitted JS CLI entry"
+  }
+  p2_lsp_outline_and_binder: .{
+    target = "spw-lsp"
+    repro = "documentSymbol reparses open buffer (267-510 ms vs 3-8 ms folding); @alias definition returns empty"
+    expect = "reuse held parse in outlineFromSource; resolve file-scoped @alias and @handle#fragment; route IDE instruments to warm LSP"
+  }
+  p3_consumer_contracts: .{
+    target = "spw-seed, spw-runtime"
+    contracts = #["operator.table/1", "inquiry.loop/1", "reading.ground-edge/1", "citation.resolve/1"]
+    expect = "recursive slot reader + top-level ~&gt; in readLine; &lt; &gt; timbre in PAIR_SOUND; dated mnemonic gloss table; canonical still-line shape"
+  }
+}
+
+^"verification_loop"{
+  step_1 = "Add a minimal failing fixture in spw-workbench for the chosen queue item"
+  step_2 = "Bundle updated spw-workbench-reader.js and run spwashi.com corpus sweep (target: 1322/1322 clean or fewer warnings, 0 HTML expression regressions)"
+  step_3 = "Run spwashi.com checks: npm run spw:doctor &amp;&amp; npm run manifest:expressions &amp;&amp; node --test workers/spw-quest/test/*.test.mjs"
+  step_4 = "Run LSP probes: node scripts/lsp-probe.mjs . .spw/site.spw definition 195:15"
+}</code></pre>
+        </details>
+        <nav class="frame-operators" aria-label="Raw .spw evidence and consumer specifications">
+            <a class="spw-chip" data-spw-handle="true" href="/.spw/workbench-report.spw" data-spw-operator="potential">~workbench-report.spw</a>
+            <a class="spw-chip" data-spw-handle="true" href="/.spw/reviews/upstream-workbench-recommendations.spw" data-spw-operator="potential">~upstream-recommendations.spw</a>
+            <a class="spw-chip" data-spw-handle="true" href="/.spw/caches/expression-stagnation-and-variety-2026-11.spw" data-spw-operator="potential">~expression-variety.spw</a>
+            <a class="spw-chip" data-spw-handle="true" href="/.spw/caches/workbench-algorithmic-practicality-2026-11.spw" data-spw-operator="potential">~practicality-cache.spw</a>
+            <a class="spw-chip" data-spw-handle="true" href="/topics/software/spw/#expressiveness-goals" data-spw-operator="frame">#&gt;expressiveness_goals</a>
+            <a class="spw-chip" data-spw-handle="true" href="/llms.txt" data-spw-operator="concept-edge">&gt;llms.txt</a>
         </nav>
     </section>
 

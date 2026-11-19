@@ -586,6 +586,24 @@ expression = consumer[report]{defect.gap.built}<upstream>
   probe: `node -e "import('./public/js/semantic/spw-workbench-reader.js')..." over git ls-files '*.spw' with eventPolicy:'diagnostics'`
 }[reg=facet]
 
+^"expression_variety_ast_asymmetry_2026_11_19"{
+  ~#severity(high): "blocks expressive container variety across spwashi.com, spw.quest, and factshift.center"
+  pin = `bcf0da18b840`
+  claim: "Diversifying public expressions off flat abc[def]{ghi}<jkl> across spwashi.com (1,035 HTML expressions) and spw.quest (8 starters, 157 worker tests) hit three live AST asymmetries in spw-seed 0.3.0."
+  measured: .{
+    prefix_capsule_no_scene = `~launch[soft]{waitlist, story, proof}<audience> parses as 1 expression containing only Capsule<audience> (body hidden); adding (soft) before [beta] yields Operation(~)`
+    probe_with_scene = `?page(phone)[slow]{measure; trim}<audit> still wraps as Capsule<audit> even with a scene present`
+    persona_split = `editor@cut[rough]{pacing ~> sound}<reel> splits into 2 expressions (Identifier + Reference); maya@[picture]{pacing, sound_lock}(friday)<cut> splits into 2 expressions (Identifier + Operation(@)+body+frame)`
+    reordered_slots = `word<concept>(scene)[mode]{body} splits into 2 expressions (Capsule<concept> + Frame) instead of reading slots by brace pair in any order`
+    pipe_and_semicolon = `; lexes as CONNECTOR:; and | lexes as CONNECTOR:| inside {a | b}, though downstream consumers still need uniform separator/disjunction AST conventions`
+    html_expressions = `1,035 distinct expressions across spwashi.com routes, 0 parse errors; 157/157 spw.quest worker tests passing after aligning whole-read shapes`
+  }[reg=facet]
+  ask = `read [mode], {body}, (scene), and <concept> in any order as one expression; expose Operation and body uniformly across all prefix sigils including ~ and ?; bind infix and postfix Persona@ into one perspective expression`
+  published_route = ~"../projects/spw-workbench/index.html#workbench-backlog"
+  cache_ref = ~"./caches/expression-stagnation-and-variety-2026-11.spw"
+  probe: `node -e "import('./public/js/semantic/spw-workbench-reader.js').then(m=>{for(const s of ['~launch[soft]{waitlist, story, proof}<audience>','?page(phone)[slow]{measure; trim}<audit>','editor@cut[rough]{pacing ~> sound}<reel>','maya@[picture]{pacing, sound_lock}(friday)<cut>','word<concept>(scene)[mode]{body}'])console.log(s,m.parse(s,{eventPolicy:'diagnostics'}).ast?.expression?.expressions?.map(e=>e.terms?.map(t=>t.type)))})"`
+}[reg=facet]
+
 ^"validation"{
   probe: `npm run spw:integrity && npm run spw:dimensions`
   falsification: "a finding here no longer reproduces from its stated probe against the pinned submodule"
@@ -593,4 +611,5 @@ expression = consumer[report]{defect.gap.built}<upstream>
   ~#note(2026-10-05): "the frames from editor_host_shadows_server to optimization_axes are measured at pin 229aedcf9b6f; earlier frames keep the pin they name"
   ~#note(2026-11-16): "trace_cost_when_not_collecting, mnemonic_and_surface, host_orders_and_sides and still_line_slots name their own pins; the workbench was at 339728cf and lore.land pinned 84cf313 that day"
   ~#note(2026-11-17): "corpus_audit_2026_11_17 was measured at pin bcf0da18b840 against spw-workbench-reader.js and mirrored to /projects/spw-workbench/#parsing-issues"
+  ~#note(2026-11-19): "expression_variety_ast_asymmetry_2026_11_19 was measured at pin bcf0da18b840 and published to /projects/spw-workbench/#workbench-backlog and /llms.txt"
 }

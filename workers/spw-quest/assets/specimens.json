@@ -1,7 +1,7 @@
 {
   "version": "0.1.0",
   "schema": "specimens.v1",
-  "count": 1131,
+  "count": 1133,
   "specimens": [
     {
       "id": "h-capsule",
@@ -2701,6 +2701,11 @@
       "line": "folio[time]{commit.season}"
     },
     {
+      "id": "r-153f2645",
+      "source": "routes",
+      "line": "!queue(spw_workbench)[prioritized]{repro; fix; verify}<handoff>"
+    },
+    {
       "id": "r-0b7902b0",
       "source": "routes",
       "line": "corpus[parse]{clean.error.degrade}<audit>"
@@ -2714,6 +2719,11 @@
       "id": "r-986baaa7",
       "source": "routes",
       "line": "quest[invitation]{mark.braces}<door>"
+    },
+    {
+      "id": "r-92d446aa",
+      "source": "routes",
+      "line": "workbench[backlog]{seed.cli.lsp.contracts}<handoff>"
     },
     {
       "id": "r-29f883a7",
