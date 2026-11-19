@@ -183,3 +183,18 @@ test('a refresh reads every box before it writes any', () => {
   assert.ok(firstWrite > 0, 'the refresh writes');
   assert.ok(lastRead < firstWrite, `reads interleaved with writes: ${log.join(', ')}`);
 });
+
+test('annotateCompositionBox does not backfill layout-triggering attributes onto unauthored hosts', () => {
+  withComputedStyle(() => {
+    const el = new FakeElement({
+      tag: 'section',
+      attrs: { class: 'spw-frame' },
+      display: 'grid',
+      childCount: 3,
+    });
+    annotateCompositionBox(el, { story: false });
+    assert.equal(el.dataset.spwBoxModel, undefined);
+    assert.equal(el.dataset.spwCompositionFlow, undefined);
+    assert.ok(el.dataset.spwBoxMeasure, 'non-layout inspect metrics still record');
+  });
+});

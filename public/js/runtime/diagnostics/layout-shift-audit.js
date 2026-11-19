@@ -30,9 +30,8 @@ const HISTORY_LIMIT = 12;
 const SOURCE_LIMIT = 3;
 
 // Reflow attribution: a counted shift whose start lands within this window
-// *after* a module mount is read as purposeful (a component arriving into
-// place), not incidental instability. The ring stays short — only the last
-// few mounts can plausibly own a shift, so older mounts fall off cheaply.
+// *after* a module mount is attributed to that arriving module so arrival
+// reflow regressions surface directly instead of hiding behind generic noise.
 const MOUNT_ATTRIBUTION_WINDOW_MS = 500;
 const MOUNT_RING_LIMIT = 16;
 
@@ -83,8 +82,8 @@ const describeOutcome = (detail = {}) => {
 
   if (detail.reflowClass === REFLOW_CLASS.MOUNT && detail.count > 0) {
     return {
-      outcome: 'purposeful',
-      summary: 'reflow attributed to an arriving component',
+      outcome: 'arrival-reflow',
+      summary: 'arrival reflow attributed to a mounting module; candidate for static CSS or paint-only hydration',
     };
   }
 
