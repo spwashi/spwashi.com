@@ -1015,10 +1015,14 @@ function cycleSemanticDensity(direction = 1) {
   const nextIndex = (currentIndex + direction + DENSITY_TIERS.length) % DENSITY_TIERS.length;
   const nextDensity = DENSITY_TIERS[nextIndex];
 
-  writeDatasetValue(html, 'spwSemanticDensity', nextDensity, {
-    source: 'spw-key-events',
-    reason: 'cycle-semantic-density',
-  });
+  if (typeof window !== 'undefined' && typeof window.spwSettings?.set === 'function') {
+    window.spwSettings.set('semanticDensity', nextDensity);
+  } else {
+    bus.emit('spw:settings-request', {
+      patch: { semanticDensity: nextDensity },
+      source: 'spw-key-events',
+    });
+  }
   bus.emit('settings:density-changed', { density: nextDensity });
   document.dispatchEvent(new CustomEvent('spw:density-changed', {
     bubbles: true,

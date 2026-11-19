@@ -43,10 +43,6 @@
     "attention-section-handle": [
       "attr:data-spw-region-preview"
     ],
-    "blog-interpreter": [
-      "attr:data-spw-lifecycle-beat",
-      "attr:data-spw-lifecycle-beat-resolved"
-    ],
     "boonhonk-mixer": [
       "css-var:--bane",
       "css-var:--bone",
@@ -190,10 +186,6 @@
       "attr:data-spw-pwa-offline-url",
       "attr:data-spw-pwa-worker-version"
     ],
-    "region-enhancer": [
-      "attr:data-spw-region-layer",
-      "css-var:--region-harmonic-weight"
-    ],
     "region-menu": [
       "attr:data-spw-inspect-semantic-focus-count",
       "attr:data-spw-region-menu-init",
@@ -312,28 +304,9 @@
       "attr:data-spw-grounded",
       "attr:data-spw-grounded-operator",
       "attr:data-spw-interaction-context",
-      "attr:data-spw-semantic-density",
       "css-var:--spw-reveal-phase-weight",
       "css-var:--spw-reveal-stagger-step",
       "css-var:--spw-scene-depth"
-    ],
-    "state-inspector": [
-      "attr:data-spw-chrome-fluid",
-      "attr:data-spw-dismissible",
-      "attr:data-spw-drag-state",
-      "attr:data-spw-page-state-mirror",
-      "attr:data-spw-room-affords",
-      "attr:data-spw-room-family",
-      "attr:data-spw-room-form",
-      "attr:data-spw-room-region",
-      "attr:data-spw-room-register",
-      "attr:data-spw-room-subject",
-      "attr:data-spw-satchel-positioned",
-      "attr:data-spw-satchel-rail",
-      "attr:data-spw-satchel-snap",
-      "attr:data-spw-snap",
-      "attr:data-spw-state-serialization",
-      "css-var:--spw-room-accent"
     ],
     "tuning-discovery": [
       "attr:data-spw-tuning-surfaces-present"

@@ -8,30 +8,30 @@ import {
   setRegionState,
 } from './region-profiler.js';
 
-export function initRegionEnhancer(ctx, root) {
-  if (!(root instanceof HTMLElement)) return;
+export function initRegionEnhancer(ctx, regionEl) {
+  if (!(regionEl instanceof HTMLElement)) return;
 
-  const region = ctx.regions.find((entry) => entry.el === root);
+  const region = ctx.regions.find((entry) => entry.el === regionEl);
   if (!region) return;
 
-  setRegionState(root, REGION_STATES.HYDRATING);
+  setRegionState(regionEl, REGION_STATES.HYDRATING);
 
   const { profile } = region;
 
-  root.dataset.spwEnhanced = 'true';
-  root.dataset.spwMotionFamily = profile.tempo;
-  root.dataset.spwHarmony = profile.harmony;
-  root.dataset.spwDensity = profile.density;
-  root.dataset.spwRegionGenome = profile.genome;
-  root.dataset.spwRegionLayer = 'enhanced';
-  root.style.setProperty('--region-harmonic-weight', String(region.profile.index + 1));
+  regionEl.dataset.spwEnhanced = 'true';
+  regionEl.dataset.spwMotionFamily = profile.tempo;
+  regionEl.dataset.spwHarmony = profile.harmony;
+  regionEl.dataset.spwDensity = profile.density;
+  regionEl.dataset.spwRegionGenome = profile.genome;
+  regionEl.dataset.spwRegionLayer = 'enhanced';
+  regionEl.style.setProperty('--region-harmonic-weight', String(region.profile.index + 1));
 
-  const chips = root.querySelector('.spec-strip, .frame-operators, [data-spw-slot="meta"]');
+  const chips = regionEl.querySelector('.spec-strip, .frame-operators, [data-spw-slot="meta"]');
   if (chips) {
     chips.dataset.spwRegionLinked = 'true';
   }
 
-  setRegionState(root, REGION_STATES.ENHANCED);
+  setRegionState(regionEl, REGION_STATES.ENHANCED);
   region.enhanced = true;
 
   ctx.bus.emit('spw:region-enhanced', {
@@ -41,31 +41,31 @@ export function initRegionEnhancer(ctx, root) {
     harmony: profile.harmony,
     tempo: profile.tempo,
     density: profile.density,
-    root,
+    root: regionEl,
   });
 
   return {
     cleanup() {
       region.enhanced = false;
-      root.dataset.spwRegionLayer = 'settling';
-      setRegionState(root, REGION_STATES.SETTLING);
-      delete root.dataset.spwEnhanced;
-      delete root.dataset.spwMotionFamily;
-      delete root.dataset.spwHarmony;
-      delete root.dataset.spwDensity;
-      delete root.dataset.spwRegionGenome;
-      root.style.removeProperty('--region-harmonic-weight');
-      const linked = root.querySelector('.spec-strip, .frame-operators, [data-spw-slot="meta"]');
+      regionEl.dataset.spwRegionLayer = 'settling';
+      setRegionState(regionEl, REGION_STATES.SETTLING);
+      delete regionEl.dataset.spwEnhanced;
+      delete regionEl.dataset.spwMotionFamily;
+      delete regionEl.dataset.spwHarmony;
+      delete regionEl.dataset.spwDensity;
+      delete regionEl.dataset.spwRegionGenome;
+      regionEl.style.removeProperty('--region-harmonic-weight');
+      const linked = regionEl.querySelector('.spec-strip, .frame-operators, [data-spw-slot="meta"]');
       if (linked) delete linked.dataset.spwRegionLinked;
     },
     refresh(nextCtx) {
-      const nextRegion = (nextCtx || ctx).regions.find((entry) => entry.el === root);
+      const nextRegion = (nextCtx || ctx).regions.find((entry) => entry.el === regionEl);
       if (!nextRegion) return;
-      applyRegionProfile(root, nextRegion.profile);
-      root.dataset.spwMotionFamily = nextRegion.profile.tempo;
-      root.dataset.spwHarmony = nextRegion.profile.harmony;
-      root.dataset.spwDensity = nextRegion.profile.density;
-      root.dataset.spwRegionGenome = nextRegion.profile.genome;
+      applyRegionProfile(regionEl, nextRegion.profile);
+      regionEl.dataset.spwMotionFamily = nextRegion.profile.tempo;
+      regionEl.dataset.spwHarmony = nextRegion.profile.harmony;
+      regionEl.dataset.spwDensity = nextRegion.profile.density;
+      regionEl.dataset.spwRegionGenome = nextRegion.profile.genome;
     },
   };
 }
